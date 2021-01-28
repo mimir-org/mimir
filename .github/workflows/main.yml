@@ -19,6 +19,9 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./src
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -30,5 +33,5 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
       - run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:${{ github.sha }}
+          docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:${{ github.sha }}
