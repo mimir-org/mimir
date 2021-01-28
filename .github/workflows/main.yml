@@ -35,4 +35,4 @@ jobs:
       - run: |
           # docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:${{ github.sha }}
           # docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:${{ github.sha }}
-          ls -R
+          ls
