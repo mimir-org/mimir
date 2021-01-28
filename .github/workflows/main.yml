@@ -34,6 +34,6 @@ jobs:
           password: ${{ secrets.REGISTRY_PASSWORD }}
           working-directory: ./src/client
       - run: |
-          # docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:dev
-          # docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:dev
-          ls
+          docker build -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:dev -f src/client/dockerfile .
+          docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:dev
+          
