@@ -1,0 +1,21 @@
+.appbar {
+    width: 100%;
+    display: flex;
+    flex-grow: 12;
+    flex-direction: row;
+    background-color: #243746 !important;
+
+    .menu_button {
+        flex-grow: 1;
+    }
+
+    .title_text {
+        flex-grow: 9;
+    }
+
+    .login_button {
+        flex-grow: 2;
+        align-self: center;
+    }
+
+}
