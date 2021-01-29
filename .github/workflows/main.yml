@@ -42,7 +42,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./src/server
+        working-directory: ./src/service
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -54,6 +54,6 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}          
       - run: |
-          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-server:dev
-          docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-server:dev
+          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:dev
+          docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:dev
           
