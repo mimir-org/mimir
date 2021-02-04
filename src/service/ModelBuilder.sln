@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelBuilder", "ModelBuilder\ModelBuilder.csproj", "{8B96CE58-9994-44D0-971F-9F69C068B00E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelBuilder", "ModelBuilder\ModelBuilder.csproj", "{8B96CE58-9994-44D0-971F-9F69C068B00E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7C74EBBC-C332-45D2-87C4-90B3FBB2D512}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelBuilder.Api.Tests", "ModelBuilder.Api.Tests\ModelBuilder.Api.Tests.csproj", "{E7D46B6A-2280-4129-BAED-E49848EDF1F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +19,16 @@ Global
 		{8B96CE58-9994-44D0-971F-9F69C068B00E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B96CE58-9994-44D0-971F-9F69C068B00E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B96CE58-9994-44D0-971F-9F69C068B00E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7D46B6A-2280-4129-BAED-E49848EDF1F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7D46B6A-2280-4129-BAED-E49848EDF1F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7D46B6A-2280-4129-BAED-E49848EDF1F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7D46B6A-2280-4129-BAED-E49848EDF1F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E7D46B6A-2280-4129-BAED-E49848EDF1F0} = {7C74EBBC-C332-45D2-87C4-90B3FBB2D512}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61D7DEB6-5F0A-42C7-BDD9-B863F85B57F4}
