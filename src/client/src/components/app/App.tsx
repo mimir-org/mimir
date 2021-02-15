@@ -1,19 +1,16 @@
-import { Component } from "react";
+import { Route } from 'react-router';
 import Container from '@material-ui/core/Container';
 
-import { Header, Home, Footer } from './../../components';
+import { Header, Home, Footer } from '..';
 
-class App extends Component {
-  
-  render() {
+const App = () => {  
     return (
       <Container className="app">
         <Header />
-        <Home />
+        <Route exact path='/' component={Home} />
         <Footer />
       </Container>
-    );
-  }
-}
+    ); 
+};
 
 export default App;
