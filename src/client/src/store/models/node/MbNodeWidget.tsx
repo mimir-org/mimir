@@ -25,7 +25,7 @@ export interface MbNodeWidgetProps {
 export class MbNodeWidget extends Component<MbNodeWidgetProps> {
 	render() {
 		return (
-			<div className='md-node'
+			<div className='mb-node'
 			// style={{
 			// 	position: 'relative',
 			// 	width: this.props.size,
@@ -35,9 +35,9 @@ export class MbNodeWidget extends Component<MbNodeWidgetProps> {
 				<h1>{this.props.node.getOptions().name}</h1>
 				<h2>{this.props.node.getOptions().title}</h2>
 
-				{<PortWidget port={this.props.node.getPort(PortModelAlignment.LEFT)} engine={this.props.engine }>
+				{/* {<PortWidget port={this.props.node.getPort(PortModelAlignment.LEFT)} engine={this.props.engine }>
 					<Port>Out</Port>
-				</PortWidget> }
+				</PortWidget> } */}
 				
 			</div>
 		);

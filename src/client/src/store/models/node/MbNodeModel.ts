@@ -12,12 +12,11 @@ export interface MbNodeModelGenerics extends NodeModelGenerics {
 }
 
 export class MbNodeModel extends NodeModel<MbNodeModelGenerics> {
+	protected portsIn: MbPortModel[];
+	protected portsOut: MbPortModel[];
+
+
 	constructor(options?: MbModelOptions) {
 		super({ type: 'mb', ...options });
-		
-		// this.addPort(new MbPortModel(true, "port"));
-		// this.addPort(new MdPortModel(PortModelAlignment.LEFT));
-		// this.addPort(new MdPortModel(PortModelAlignment.BOTTOM));
-		// this.addPort(new MdPortModel(PortModelAlignment.RIGHT));
 	}
 }

@@ -3,7 +3,7 @@ import { NodeTypeOverview } from '..';
 import createEngine, { DefaultNodeModel, DiagramModel, PortModelAlignment } from '@projectstorm/react-diagrams';
 import { CanvasWidget } from '@projectstorm/react-canvas-core';
 import { PortType, Workspace } from '../../store/workspace/types';
-import { MdNodeFactory, MbPortFactory, MbPortModel, MbNodeModel } from '../../store/models';
+import { MbNodeFactory, MbPortFactory, MbPortModel, MbNodeModel } from '../../store/models';
 
 
 const WorkspaceComponent : FC<Workspace> = ({id, name, nodes }: Workspace) => {
@@ -16,20 +16,20 @@ const WorkspaceComponent : FC<Workspace> = ({id, name, nodes }: Workspace) => {
   engine
     .getPortFactories()
 		.registerFactory(new MbPortFactory());
-	engine.getNodeFactories().registerFactory(new MdNodeFactory());
+	engine.getNodeFactories().registerFactory(new MbNodeFactory());
 
   const model = new DiagramModel();
 
   if(nodes) {
     nodes.forEach(node => {
-    const n = new DefaultNodeModel({ name: node.name, color: node.nodeType.color});
+    const n = new MbNodeModel({ name: node.name});
     n.setPosition(node.x, node.y);
       node.ports.forEach(port => {
-        if(port.type === PortType.In) {
-          n.addInPort(port.name);
-        } else {
-          n.addOutPort(port.name);
-        }
+        // if(port.type === PortType.In) {
+        //   n.addInPort(port.name);
+        // } else {
+        //   n.addOutPort(port.name);
+        // }
       });
 
       n.setLocked(false);
