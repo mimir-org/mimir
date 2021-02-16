@@ -1,5 +1,4 @@
 import React, { FC, useState } from 'react';
-import { NodeTypeOverview } from '..';
 import createEngine, { DiagramModel } from '@projectstorm/react-diagrams';
 import { CanvasWidget } from '@projectstorm/react-canvas-core';
 import { PortType, Workspace, Node } from '../../store/workspace/types';
@@ -23,7 +22,7 @@ const WorkspaceComponent : FC<Workspace> = ({id, name, nodes }: Workspace) => {
   if(nodes) {
     nodes.forEach(node => {
 
-    const n = new MbNodeModel({name: node.name });
+    const n = new MbNodeModel({rdfType: node.name, rdfId: node.id });
     n.setPosition(node.x, node.y);
       node.ports.forEach(port => {
         if(port.type === PortType.In) {
@@ -108,7 +107,11 @@ model.registerListener({
 
           
 
-          const n = new MbNodeModel({name: node.name});
+          const n = new MbNodeModel({rdfType: node.name, rdfId: node.id});
+          n.addInPort('In', true);
+          n.addInPort('In 2', true);
+          n.addOutPort('Out', true);
+
           // let newNode = new FamNode();
           // newNode.id = '';
 
@@ -133,9 +136,9 @@ model.registerListener({
           
         }}  
         onDragOver={ e => { e.preventDefault(); } }>
-      <CanvasWidget engine={engine} className='canvas' />
+      <CanvasWidget engine={engine} className='canvas'  />
       </div>
-      <NodeTypeOverview />
+      {/* <NodeTypeOverview /> */}
     </React.Fragment>
   );
 }

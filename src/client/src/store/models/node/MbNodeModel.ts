@@ -3,10 +3,9 @@ import { NodeModel, NodeModelGenerics, PortModelAlignment } from '@projectstorm/
 import { MbPortModel } from '../port/MbPortModel';
 import { BasePositionModelOptions, DeserializeEvent } from '@projectstorm/react-canvas-core';
 
-import { Node, PortType } from './../../workspace/types';
-
 export interface MbModelOptions extends BasePositionModelOptions {
-	name?: string;	
+	rdfId?: string;
+	rdfType?: string;
 }
 
 export interface MbNodeModelGenerics extends NodeModelGenerics {
@@ -17,16 +16,16 @@ export class MbNodeModel extends NodeModel<MbNodeModelGenerics> {
 	protected portsIn: MbPortModel[];
 	protected portsOut: MbPortModel[];
 
-	constructor(name: string, color: string);
+	constructor(rdfId: string, rdfType: string);
 	constructor(options?: MbModelOptions);
 	constructor(options: any = {}) {
 		if (typeof options === 'string') {
 			options = {
-				name: options				
+				rdfType: options				
 			};
 		}
 		super({
-			type: 'default',
+			type: 'mb',
 			name: 'Untitled',
 			// color: 'rgb(0,192,255)',
 			...options
@@ -41,12 +40,10 @@ export class MbNodeModel extends NodeModel<MbNodeModelGenerics> {
 		super.addPort(port);
 		if (port.getOptions().in) {
 			if (this.portsIn.indexOf(port) === -1) {
-				console.log(port.getParent().getID());
 				this.portsIn.push(port);
 			}
 		} else {
 			if (this.portsOut.indexOf(port) === -1) {
-				console.log(port.getParent().getID());
 				this.portsOut.push(port);
 			}
 		}
@@ -81,14 +78,12 @@ export class MbNodeModel extends NodeModel<MbNodeModelGenerics> {
 
 	deserialize(event: DeserializeEvent<this>) {
 		super.deserialize(event);
-		this.options.name = event.data.name;
-		// this.options.color = event.data.color;
+		this.options.rdfId = event.data.rdfId;
+		this.options.rdfType = event.data.rdfType;		
 		this.portsIn = _.map(event.data.portsInOrder, (id) => {
-			console.log('deserialize: ' + JSON.stringify(this.portsIn));
 			return this.getPortFromID(id);
 		}) as MbPortModel[];
 		this.portsOut = _.map(event.data.portsOutOrder, (id) => {
-			console.log('deserialize: ' + JSON.stringify(this.portsOut));
 			return this.getPortFromID(id);
 		}) as MbPortModel[];
 	}
@@ -96,14 +91,12 @@ export class MbNodeModel extends NodeModel<MbNodeModelGenerics> {
 	serialize(): any {
 		return {
 			...super.serialize(),
-			name: this.options.name,
-			// color: this.options.color,
+			rdfId: this.options.rdfId,
+			rdfType: this.options.rdfType,
 			portsInOrder: _.map(this.portsIn, (port) => {
-				console.log('serialize IN: ' + port.getID());
 				return port.getID();
 			}),
 			portsOutOrder: _.map(this.portsOut, (port) => {
-				console.log('serialize OUT: ' + port.getID());
 				return port.getID();
 			})
 		};

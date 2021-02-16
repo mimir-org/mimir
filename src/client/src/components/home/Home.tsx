@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { WorkspaceComponent } from '..';
+import { WorkspaceComponent, ToolboxComponent } from '..';
 import { getWorkspace } from '../../store/workspace/actions';
 import { WorkspaceState } from '../../store/workspace/types';
 import { RootState } from './../../store/index';
@@ -17,10 +17,15 @@ const Home = () => {
 
     return(
         <React.Fragment>
-            {/* <button onClick={() => dispatch(getWorkspace({ id: 1, name: 'jsv', nodes: [] }))}>Hent workspace</button> */}
-            {workspaceState && workspaceState.workspace && !workspaceState.fetching &&
-                <WorkspaceComponent id={workspaceState.workspace.id} name={workspaceState.workspace.name} nodes={workspaceState.workspace.nodes} />
-            }
+            <div>
+                <ToolboxComponent />
+            </div>
+
+            <div>
+                {workspaceState && workspaceState.workspace && !workspaceState.fetching &&
+                    <WorkspaceComponent id={workspaceState.workspace.id} name={workspaceState.workspace.name} nodes={workspaceState.workspace.nodes} />
+                }
+            </div>
         </React.Fragment>
     );
 }

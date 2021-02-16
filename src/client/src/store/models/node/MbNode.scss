@@ -6,36 +6,62 @@
     border: 2px solid #c8c8c8;
     border-radius: 5px;
     padding: 5px;
-    
-    h1, h2, h3, h4 {
-        font-size: 14px;
+
+    h1,
+    h2,
+    h3,
+    h4 {
+        font-size: 12px;
         margin-top: 2px;
         margin-bottom: 0px;
         padding: 0;
         line-height: 12px;
     }
 
-    h1, h2 {
+    h1,
+    h2 {
         &:after {
-            content:'';
-            display:inline-block;
-            width:100%; 
+            content: '';
+            display: inline-block;
+            width: 100%;
             height: 0.5px;
-            border-bottom:1px dashed #c8c8c8;
+            border-bottom: 1px dashed #c8c8c8;
             margin: 0;
             margin-bottom: 5px;
             padding: 0;
-            
         }
     }
 
     h1 {
-        font-size: 14px;        
+        font-size: 12px;
     }
 
-    h2 {
-        font-size: 12px;
+    h2,
+    h3 {
+        font-size: 10px;
         color: #c8c8c8
     }
-    
+
+    &__selected {
+        border-color: rgb(0, 192, 255);
+    }
+
+    .ports {
+        display: flex;
+        background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+
+        .ports-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+
+            &:first-of-type {
+                margin-right: 10px;
+            }
+
+            &:only-child {
+                margin-right: 0px;
+            }
+        }
+    }
 }

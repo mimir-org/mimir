@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { MbLabelModel } from './MbLabelModel';
 import { MbLabelWidget } from './MbLabelWidget';
 import { AbstractReactFactory } from '@projectstorm/react-canvas-core';
