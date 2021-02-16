@@ -6,7 +6,7 @@ import { css, keyframes } from '@emotion/core';
 import { AbstractReactFactory } from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
 
-namespace S {
+
 	export const Keyframes = keyframes`
 		from {
 			stroke-dashoffset: 24;
@@ -26,7 +26,7 @@ namespace S {
 		fill: none;
 		pointer-events: all;
 	`;
-}
+
 
 export class MbLinkFactory<Link extends MbLinkModel = MbLinkModel> extends AbstractReactFactory<Link, DiagramEngine> {
 	constructor(type = 'mb') {
@@ -43,7 +43,7 @@ export class MbLinkFactory<Link extends MbLinkModel = MbLinkModel> extends Abstr
 
 	generateLinkSegment(model: Link, selected: boolean, path: string) {
 		return (
-			<S.Path
+			<Path
 				selected={selected}
 				stroke={selected ? model.getOptions().selectedColor : model.getOptions().color}
 				strokeWidth={model.getOptions().width}

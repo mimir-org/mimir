@@ -12,11 +12,10 @@ export interface MbLinkPointWidgetState {
 	selected: boolean;
 }
 
-namespace S {
-	export const PointTop = styled.circle`
-		pointer-events: all;
-	`;
-}
+export const PointTop = styled.circle`
+	pointer-events: all;
+`;
+
 
 export class MbLinkPointWidget extends React.Component<MbLinkPointWidgetProps, MbLinkPointWidgetState> {
 	constructor(props) {
@@ -36,7 +35,7 @@ export class MbLinkPointWidget extends React.Component<MbLinkPointWidgetProps, M
 					r={5}
 					fill={this.state.selected || this.props.point.isSelected() ? this.props.colorSelected : this.props.color}
 				/>
-				<S.PointTop
+				<PointTop
 					className="point"
 					onMouseLeave={() => {
 						this.setState({ selected: false });

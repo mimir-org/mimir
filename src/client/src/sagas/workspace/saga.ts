@@ -7,8 +7,7 @@ import WorkspaceDataset from '../../data/WorkspaceDataset';
 export function* getWorkspace(action: WorkspaceActionTypes) {
     try {
         const data = yield call(WorkspaceDataset.getAll);
-        console.log(data);
-
+        
         const payload = {
             workspace: data[0],
             hasError: false,

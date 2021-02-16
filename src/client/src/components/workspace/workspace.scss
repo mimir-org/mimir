@@ -1,17 +1,17 @@
 .canvas {
-    height: 100vh;
     height: 100%;
     width: 100%;
-    background-color: blanchedalmond;
+    background: white;
+    background-image: linear-gradient(rgba(248, 248, 248, 0.5) .1em, transparent .1em), linear-gradient(90deg, rgba(248, 248, 248, 0.5) .1em, transparent .1em);
+    background-size: 2em 2em;
+    border: 1px solid black;  
   }
 
 .graph {
-    height: 600px;
-    width: 1200px;
+    position:fixed;
+    left:300px;
+    top: 80px;
+    width:85%;
+    height:50%;
 }
 
-.srd-diagram {
-    height: 100%;
-    width: 100%;
-    background-color: blanchedalmond;
-}

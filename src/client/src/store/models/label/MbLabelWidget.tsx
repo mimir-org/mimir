@@ -6,8 +6,8 @@ export interface DefaultLabelWidgetProps {
 	model: MbLabelModel;
 }
 
-namespace S {
-	export const Label = styled.div`
+
+	export const Labelx = styled.div`
 		background: rgba(0, 0, 0, 0.8);
 		border-radius: 5px;
 		color: white;
@@ -16,10 +16,10 @@ namespace S {
 		font-family: sans-serif;
 		user-select: none;
 	`;
-}
+
 
 export class MbLabelWidget extends React.Component<DefaultLabelWidgetProps> {
 	render() {
-		return <S.Label>{this.props.model.getOptions().label}</S.Label>;
+		return <Labelx>{this.props.model.getOptions().label}</Labelx>;
 	}
 }

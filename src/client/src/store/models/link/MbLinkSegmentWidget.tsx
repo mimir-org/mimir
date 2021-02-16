@@ -41,9 +41,9 @@ export class MbLinkSegmentWidget extends React.Component<MbLinkSegmentWidgetProp
 			strokeOpacity: this.props.selected ? 0.1 : 0,
 			strokeWidth: 20,
 			fill: 'none',
-			onContextMenu: () => {
+			onContextMenu: (e: Event) => {
 				if (!this.props.link.isLocked()) {
-					event.preventDefault();
+					e.preventDefault();
 					this.props.link.remove();
 				}
 			}

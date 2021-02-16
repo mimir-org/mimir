@@ -1,4 +1,8 @@
 .node-types {
+    position: fixed;
+    left: 10px;
+    top: 80px;
+    z-index: 50000000;
     .node-type {
         display: block;
         width: 200px;

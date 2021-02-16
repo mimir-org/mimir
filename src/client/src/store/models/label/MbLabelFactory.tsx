@@ -4,9 +4,6 @@ import { MbLabelWidget } from './MbLabelWidget';
 import { AbstractReactFactory } from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
 
-/**
- * @author Dylan Vorster
- */
 export class MbLabelFactory extends AbstractReactFactory<MbLabelModel, DiagramEngine> {
 	constructor() {
 		super('mb');

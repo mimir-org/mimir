@@ -1,9 +1,9 @@
 import React, { FC, useState } from 'react';
 import { NodeTypeOverview } from '..';
-import createEngine, { DefaultNodeModel, DiagramModel, PortModelAlignment } from '@projectstorm/react-diagrams';
+import createEngine, { DiagramModel } from '@projectstorm/react-diagrams';
 import { CanvasWidget } from '@projectstorm/react-canvas-core';
-import { PortType, Workspace } from '../../store/workspace/types';
-import { MbNodeFactory, MbPortFactory, MbPortModel, MbNodeModel } from '../../store/models';
+import { PortType, Workspace, Node } from '../../store/workspace/types';
+import { MbNodeFactory, MbPortFactory, MbNodeModel, MbLinkFactory, MbLabelFactory } from '../../store/models';
 
 
 const WorkspaceComponent : FC<Workspace> = ({id, name, nodes }: Workspace) => {
@@ -13,23 +13,24 @@ const WorkspaceComponent : FC<Workspace> = ({id, name, nodes }: Workspace) => {
   });
 
   const engine = createEngine();
-  engine
-    .getPortFactories()
-		.registerFactory(new MbPortFactory());
+  engine.getPortFactories().registerFactory(new MbPortFactory());
 	engine.getNodeFactories().registerFactory(new MbNodeFactory());
+  engine.getLinkFactories().registerFactory(new MbLinkFactory());
+  engine.getLabelFactories().registerFactory(new MbLabelFactory());
 
   const model = new DiagramModel();
 
   if(nodes) {
     nodes.forEach(node => {
-    const n = new MbNodeModel({ name: node.name});
+
+    const n = new MbNodeModel({name: node.name });
     n.setPosition(node.x, node.y);
       node.ports.forEach(port => {
-        // if(port.type === PortType.In) {
-        //   n.addInPort(port.name);
-        // } else {
-        //   n.addOutPort(port.name);
-        // }
+        if(port.type === PortType.In) {
+          n.addInPort(port.name, true);
+        } else {
+          n.addOutPort(port.name, true);
+        }
       });
 
       n.setLocked(false);
@@ -94,10 +95,20 @@ model.registerListener({
       {/* <button onClick={() => dispatch(getWorkspace({ id: 1, name: 'jsv', nodes: [] }))}>Hent graf</button> */}
       <br /><br />
       <div id="canvas" className='graph' onDrop={ e => { 
-          let nodeType = JSON.parse(e.dataTransfer.getData("node_type"));
+          // let nodeType = JSON.parse(e.dataTransfer.getData("node_type"));
+          
+          const node: Node = {
+             id: '123',
+             name: 'Heisann',
+             x: 200,
+             y: 200,
+             ports: [],
+             nodeType: null
+          };
+
           
 
-          const n = new MbNodeModel({name: "Krafla", title: "Dette er en lang"});
+          const n = new MbNodeModel({name: node.name});
           // let newNode = new FamNode();
           // newNode.id = '';
 

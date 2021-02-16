@@ -16,11 +16,11 @@ const NodeTypeOverview = () => {
       }, [dispatch]);
     
     return (
-    <React.Fragment>
+    <div className='node-types'>
         {state.nodetypes && state.nodetypes.map(item => {
             return <NodeTypeComponent key={item.id} id={item.id}  name={item.name} color={item.color} />
         })}
-        </React.Fragment>)
+        </div>)
 }
 
 export default NodeTypeOverview;

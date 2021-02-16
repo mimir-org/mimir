@@ -7,8 +7,7 @@ import NodeTypeDataset from '../../data/NodeTypeDataset';
 export function* getNodetypes(action: NodetypesActionTypes) {
     try {
         const data = yield call(NodeTypeDataset.getAll);
-        console.log(data);
-
+        
         const payload = {
             nodetypes: data,
             hasError: false,

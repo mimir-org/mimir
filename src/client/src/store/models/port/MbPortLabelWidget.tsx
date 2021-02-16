@@ -8,7 +8,7 @@ export interface MbPortLabelProps {
 	engine: DiagramEngine;
 }
 
-namespace S {
+
 	export const PortLabel = styled.div`
 		display: flex;
 		margin-top: 1px;
@@ -28,22 +28,22 @@ namespace S {
 			background: rgb(192, 255, 0);
 		}
 	`;
-}
+
 
 export class MbPortLabel extends React.Component<MbPortLabelProps> {
 	render() {
 		const port = (
 			<PortWidget engine={this.props.engine} port={this.props.port}>
-				<S.Port />
+				<Port />
 			</PortWidget>
 		);
-		const label = <S.Label>{this.props.port.getOptions().label}</S.Label>;
+		const label = <Label>{this.props.port.getOptions().label}</Label>;
 
 		return (
-			<S.PortLabel>
+			<PortLabel>				
 				{this.props.port.getOptions().in ? port : label}
 				{this.props.port.getOptions().in ? label : port}
-			</S.PortLabel>
+			</PortLabel>
 		);
 	}
 }
