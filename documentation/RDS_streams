@@ -1,0 +1,39 @@
+Stream types 
+
+The following main Stream types are defined: 
+
+Forces - such as transferred by a bracket, bolts, flanges, etc. 
+
+Information - such as exchanged with a control system, sensor, etc. 
+
+Energy (power) - see subdivision below 
+
+Material flow - see subdivision below 
+
+Of these Stream types the following two are subdivided: 
+
+Energy (power) 
+
+Electric - such as power from supply and to a motor 
+
+Thermal - such as cooling or heating 
+
+Solar - such as PV panels 
+
+Mechanical - such as a motor drive shaft 
+
+Sound (noise) - such as noise emitted from a machinery 
+
+Wind - such as that acting on wind turbine blades 
+
+Hydropower - such as that acting on a water turbine 
+
+Material flow 
+
+Fluid (liquid) - such as water, oil, chemical fluids, low gas ratio multiphase fluids 
+
+Gas - such as methane, air, nitrogen, high gas ratio multiphase fluids 
+
+Dry granulated - such as sand, powder 
+
+Solid pieces - such as bricks, boxes, pieces 
