@@ -1,0 +1,29 @@
+Functional System Block types 
+
+The following Functional System Block types are defined:  
+
+Functional System Blocks providing a Stream 
+
+Convert one type of Stream to another type of Stream (Example of products used to fulfil the function are Motors, Turbines) 
+
+Dividing one Stream into several of the same kind of Stream (Example of products used to fulfil the function are Separators, Centrifuges) 
+
+Functional System Block transporting a Stream 
+
+Transporting or moving one Stream from one point to another (Example of products used to fulfil the function are pipes, cables) 
+
+Storage of a Stream (Example of products used to fulfil the function are tanks, caverns) 
+
+Functional System Block Receiving a Stream 
+
+Collecting several Streams of the same kind into fewer Streams of the same kind (Example of products used to fulfil the function are manifolds, cable terminals, radio receiver) 
+
+Functional System Block Controlling a Stream 
+
+Controlling a Stream of the same kind by means of controlling the Stream rate (Example of product is a switch, regulator, control valve, isolation valve) 
+
+Functional System Block Blocking a Stream 
+
+Blocking a Stream of the same kind by means of obstructing the Stream  
+
+(Example of product is a blind flange, an enclosure, insulation) 
