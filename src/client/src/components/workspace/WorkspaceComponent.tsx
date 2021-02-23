@@ -1,15 +1,15 @@
 import React, { FC, useState } from "react";
 import createEngine, { DiagramModel } from "@projectstorm/react-diagrams";
 import { CanvasWidget } from "@projectstorm/react-canvas-core";
-import { Workspace, Node } from "../../models/workspace";
+import { Workspace, Node, Edge } from "../../models/workspace";
 import {
   MbNodeFactory,
   MbPortFactory,
   MbNodeModel,
   MbLinkFactory,
   MbLabelFactory,
-  MbLinkModel,
-  MbPortModel
+  // MbLinkModel,
+  // MbPortModel
 } from "../../store/models";
 import { ToolboxComponent } from "..";
 
@@ -25,6 +25,20 @@ const WorkspaceComponent: FC<Workspace> = ({ root, aspects }: Workspace) => {
   engine.getLabelFactories().registerFactory(new MbLabelFactory());
 
   const model = new DiagramModel();
+  const mainAspect = aspects.filter(x => x.aspect === "1" && x.category === "1")[0];
+  
+
+  // if(mainAspect) {
+  //   var nodeMap = new Map(mainAspect.graph.nodes.map(obj => [obj.id, obj] as [string, Node]));
+  //   var edgeMap = new Map(mainAspect.graph.edges.map(obj => [obj.id, obj] as [string, Edge]));
+
+  //   var rootNodes = mainAspect.graph.edges.filter(x => x.to === 'root' && x.type === 'imfo:partOf');
+
+  //   console.log(nodeMap);
+  //   console.log(edgeMap);
+  //   console.log(rootNodes);
+  // }
+
 
   // const map = Object.assign({}, ...workspace2.nodes.map(s => ({[s.id]: s.value})));
 
@@ -33,11 +47,13 @@ const WorkspaceComponent: FC<Workspace> = ({ root, aspects }: Workspace) => {
 
   // var map = new Map(workspace2.nodes.map(i => [i.id, {i}]));
 
-  interface LinkMap {
-    from: MbPortModel,
-    to: MbPortModel
-    label: string
-  };
+  // interface LinkMap {
+  //   from: MbPortModel,
+  //   to: MbPortModel
+  //   label: string
+  // };
+
+
 
 //  let linkMap: LinkMap[] = [];  
 

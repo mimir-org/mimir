@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { WorkspaceComponent, DiagramComponent } from "..";
-import { getWorkspace } from "../../store/workspace/actions";
-import { WorkspaceState } from "../../store/workspace/types";
-import { RootState } from "./../../store/index";
+import React from "react";
+// import { useDispatch, useSelector } from "react-redux";
+import { DiagramComponent } from "..";
+// import { getWorkspace } from "../../store/workspace/actions";
+// import { WorkspaceState } from "../../store/workspace/types";
+// import { RootState } from "./../../store/index";
 
 const Home = () => {
   // const workspaceState = useSelector<RootState>(

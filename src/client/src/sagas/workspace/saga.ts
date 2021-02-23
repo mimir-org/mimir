@@ -3,7 +3,7 @@ import { FETCHING_WORKSPACE_SUCCESS_OR_ERROR, WorkspaceActionTypes, WorkspaceSta
 import { Workspace } from '../../models/workspace';
 import WorkspaceDataset from '../../data/WorkspaceDataset';
 
-import { get } from './../../models/webclient';
+// import { get } from './../../models/webclient';
 
 
 // eslint-disable-next-line require-yield
