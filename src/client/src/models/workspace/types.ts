@@ -9,7 +9,8 @@ export interface Graph {
 
 export interface Node {
     id: string,
-    type: string
+    type: string,
+    label: string
 }
 
 export interface Edge {

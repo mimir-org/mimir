@@ -11,6 +11,7 @@ import {
   // MbLinkModel,
   // MbPortModel
 } from "../../store/models";
+import { WorkspaceService } from './../../services/';
 import { ToolboxComponent } from "..";
 
 const WorkspaceComponent: FC<Workspace> = ({ root, aspects }: Workspace) => {
@@ -27,17 +28,29 @@ const WorkspaceComponent: FC<Workspace> = ({ root, aspects }: Workspace) => {
   const model = new DiagramModel();
   const mainAspect = aspects.filter(x => x.aspect === "1" && x.category === "1")[0];
   
+  
 
-  // if(mainAspect) {
-  //   var nodeMap = new Map(mainAspect.graph.nodes.map(obj => [obj.id, obj] as [string, Node]));
-  //   var edgeMap = new Map(mainAspect.graph.edges.map(obj => [obj.id, obj] as [string, Edge]));
+  if(mainAspect) {
+    var service = new WorkspaceService({root, aspects});
+    
 
-  //   var rootNodes = mainAspect.graph.edges.filter(x => x.to === 'root' && x.type === 'imfo:partOf');
 
-  //   console.log(nodeMap);
-  //   console.log(edgeMap);
-  //   console.log(rootNodes);
-  // }
+    
+    
+
+    var rootEdges = service.getRootEdges('n4');
+
+    // console.log(service.functionalNodeMap);
+    // console.log(edgeMap);
+    // console.log(rootNodes);
+    // console.log(service.productNodeMap);
+  }
+
+
+  rootEdges.forEach(edge => {
+    var m = new MbNodeModel({ rdfType: service.getProductLabel(edge.from), rdfId: edge.from });
+    model.addNode(m);
+  });
 
 
   // const map = Object.assign({}, ...workspace2.nodes.map(s => ({[s.id]: s.value})));
