@@ -4,13 +4,8 @@ export default class NodeTypeDataset {
             let dataset = [
                 {
                     id: 1,
-                    name: "Reidar",
+                    name: "Reservoir",
                     color: "rgb(0,192,255)"
-                },
-                {
-                    id: 2,
-                    name: "Reidar 2",
-                    color: "rgb(0,192,255)"     
                 }
             ];
 

@@ -1,18 +1,26 @@
 import { call, put } from 'redux-saga/effects';
 import { FETCHING_WORKSPACE_SUCCESS_OR_ERROR, WorkspaceActionTypes, WorkspaceState } from './../../store/workspace/types';
+import { Workspace } from '../../models/workspace';
 import WorkspaceDataset from '../../data/WorkspaceDataset';
+
+import { get } from './../../models/webclient';
 
 
 // eslint-disable-next-line require-yield
 export function* getWorkspace(action: WorkspaceActionTypes) {
     try {
-        const data = yield call(WorkspaceDataset.getAll);
+
+        // const response = yield call(get, process.env.REACT_APP_API_BASE_URL + 'todos');
         
+
+        const data = yield call(WorkspaceDataset.get);
+        const workspace = data as Workspace;
+                
         const payload = {
-            workspace: data[0],
+            workspace: workspace,
             hasError: false,
             errorMsg: null,
-            fetching: false
+            fetching: false            
         }
 
         yield put({

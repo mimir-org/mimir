@@ -4,7 +4,7 @@ const initialState: WorkspaceState = {
     fetching: false,
     workspace: null,
     hasError: false,
-    errorMsg: null
+    errorMsg: null    
 }
 
 export function workspaceReducer(state = initialState, action: WorkspaceActionTypes) : WorkspaceState {

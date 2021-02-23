@@ -1,5 +1,4 @@
 import { MbNodeWidget, MbNodeModel } from '..';
-import * as React from 'react';
 import { AbstractReactFactory } from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
 

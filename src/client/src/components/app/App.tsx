@@ -1,15 +1,17 @@
+import React from 'react';
 import { Route } from 'react-router';
-import Container from '@material-ui/core/Container';
 
-import { Header, Home, Footer } from '..';
+import { Header, Home, Footer, DiagramComponent } from '..';
 
 const App = () => {  
     return (
-      <Container className="app">
+      <React.Fragment>
         <Header />
         <Route exact path='/' component={Home} />
+        <Route exact path='/diagram' component={DiagramComponent} />
+        <Route exact path='/treeview' component={Header} />
         <Footer />
-      </Container>
+      </React.Fragment>
     ); 
 };
 

@@ -1,6 +1,6 @@
-import { Workspace, FETCHING_WORKSPACE, WorkspaceActionTypes, WorkspaceState } from './types';
+import { FETCHING_WORKSPACE, WorkspaceActionTypes, WorkspaceState } from './types';
 
-export function getWorkspace(workspace: Workspace): WorkspaceActionTypes {
+export function getWorkspace(): WorkspaceActionTypes {
 
     return {
         type: FETCHING_WORKSPACE,
@@ -8,7 +8,7 @@ export function getWorkspace(workspace: Workspace): WorkspaceActionTypes {
             hasError: false,
             errorMsg: null,
             fetching: true,
-            workspace: workspace
+            workspace: null
         } as WorkspaceState
     }    
 }

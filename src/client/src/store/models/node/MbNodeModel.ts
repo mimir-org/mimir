@@ -6,6 +6,7 @@ import { BasePositionModelOptions, DeserializeEvent } from '@projectstorm/react-
 export interface MbModelOptions extends BasePositionModelOptions {
 	rdfId?: string;
 	rdfType?: string;
+	svg?: boolean;
 }
 
 export interface MbNodeModelGenerics extends NodeModelGenerics {
@@ -16,7 +17,7 @@ export class MbNodeModel extends NodeModel<MbNodeModelGenerics> {
 	protected portsIn: MbPortModel[];
 	protected portsOut: MbPortModel[];
 
-	constructor(rdfId: string, rdfType: string);
+	constructor(rdfId: string, rdfType: string, svg: false);
 	constructor(options?: MbModelOptions);
 	constructor(options: any = {}) {
 		if (typeof options === 'string') {
@@ -79,7 +80,8 @@ export class MbNodeModel extends NodeModel<MbNodeModelGenerics> {
 	deserialize(event: DeserializeEvent<this>) {
 		super.deserialize(event);
 		this.options.rdfId = event.data.rdfId;
-		this.options.rdfType = event.data.rdfType;		
+		this.options.rdfType = event.data.rdfType;
+		this.options.svg = event.data.svg;		
 		this.portsIn = _.map(event.data.portsInOrder, (id) => {
 			return this.getPortFromID(id);
 		}) as MbPortModel[];
@@ -93,6 +95,7 @@ export class MbNodeModel extends NodeModel<MbNodeModelGenerics> {
 			...super.serialize(),
 			rdfId: this.options.rdfId,
 			rdfType: this.options.rdfType,
+			svg: this.options.svg,
 			portsInOrder: _.map(this.portsIn, (port) => {
 				return port.getID();
 			}),
