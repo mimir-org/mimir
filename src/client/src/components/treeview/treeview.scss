@@ -1,0 +1,30 @@
+.treeviewComponent {
+    display: flex;
+    flex-direction: row;
+
+    img {
+        width: 35px;
+        height: 35px;
+    }
+
+    .aspect {
+        flex: 1;
+        padding: 10px 10px 0px 10px;
+        border: 1px solid black;
+
+        .aspect_heading {
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+
+            p {
+                margin-left: 20px;
+            }
+        }
+
+        .treestructure_container {
+            padding-top: 10px;
+
+        }
+    }    
+}
