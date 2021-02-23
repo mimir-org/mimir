@@ -1,8 +1,6 @@
 import React, { useEffect, FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './treeview.scss';
-import { TreeviewState } from '../../store/treeview/types';
-import { getTreeview } from '../../store/treeview/actions'; 
 import {  getWorkspace } from '../../store/workspace/actions'; 
 import { Workspace, Node, Edge } from "../../models/workspace";
 import { RootState } from './../../store/index';

@@ -3,7 +3,6 @@ import createSagaMiddleware from 'redux-saga';
 
 import { workspaceReducer } from './workspace/reducers';
 import { nodetypeReducer } from './nodetypes/reducers';
-import { treeviewReducer } from './treeview/reducers';
 import { sagas } from './../sagas';
 
 const sagaMiddleware = createSagaMiddleware();
@@ -12,8 +11,7 @@ const composeEnhancer = (process.env.NODE_ENV !== 'production' && window['__REDU
 
 const rootReducers = combineReducers({
     workspace: workspaceReducer,
-    nodetype: nodetypeReducer,
-    treeview: treeviewReducer
+    nodetype: nodetypeReducer
 });
 
 const store = createStore(

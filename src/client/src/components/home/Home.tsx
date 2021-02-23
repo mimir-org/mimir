@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { DiagramComponent } from "..";
-import TreeviewComponent from "../../components/treeview/TreeviewComponent";
+import { DiagramComponent, TreeviewComponent } from "..";
 import { getWorkspace } from "../../store/workspace/actions";
 import { WorkspaceState } from "../../store/workspace/types";
 import { RootState } from "./../../store/index";
@@ -17,11 +16,11 @@ const Home = () => {
 
   return (
     <React.Fragment>
-      {/* <DiagramComponent /> */}
       {workspaceState &&
         workspaceState.workspace &&
         !workspaceState.fetching && (
-          <TreeviewComponent root={workspaceState.workspace.root} aspects={workspaceState.workspace.aspects}/>
+          // <DiagramComponent root={workspaceState.workspace.root} aspects={workspaceState.workspace.aspects} /> 
+          <TreeviewComponent root={workspaceState.workspace.root} aspects={workspaceState.workspace.aspects} />
         )}
       
 

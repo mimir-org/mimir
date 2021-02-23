@@ -13,6 +13,6 @@ export * from './link/MbLinkPointWidget';
 export * from './link/MbLinkSegmentWidget';
 export * from './link/MbLinkWidget';
 
-export * from './label/MbLabelFactory';
-export * from './label/MbLabelModel';
-export * from './label/MbLabelWidget';
+export * from '../../models/diagram/label/MbLabelFactory';
+export * from '../../models/diagram/label/MbLabelModel';
+export * from '../../models/diagram/label/MbLabelWidget';
