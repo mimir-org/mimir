@@ -20,7 +20,7 @@ const Home = () => {
         workspaceState.workspace &&
         !workspaceState.fetching && (
           // <DiagramComponent root={workspaceState.workspace.root} aspects={workspaceState.workspace.aspects} /> 
-          <TreeviewComponent root={workspaceState.workspace.root} aspects={workspaceState.workspace.aspects} />
+          <TreeviewComponent root={workspaceState.workspace.root} aspects={workspaceState.workspace.aspects} aspectDescriptors={workspaceState.workspace.aspectDescriptors}/>
         )}
       
 

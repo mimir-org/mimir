@@ -3,23 +3,18 @@
     flex-direction: row;
     align-items: center;
 
+    img {
+        width: 30px;
+        height: 30px;
+    }
+
+
     p{
-        margin: 0;
         padding-left: 10px;
     }
 
     .h-line {
-        width: 40px;
+        width: 30px;
         border-top: 1px dashed black;
     }
-
-    .connection_line {
-        border-top: 2px solid #2E9CCA;
-    }
-
-    // .v-line {
-    //     border-left: 1px dashed black;
-    //     height: 525px;
-    //     display: inline-block;
-    // }
 }

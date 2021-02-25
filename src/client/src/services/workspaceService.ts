@@ -1,4 +1,4 @@
-import { Workspace, Node, Edge } from '../models/workspace';
+import { Workspace, Node, Edge, AspectDescriptor } from '../models/workspace';
 
 export class WorkspaceService {
     private workspace: Workspace;

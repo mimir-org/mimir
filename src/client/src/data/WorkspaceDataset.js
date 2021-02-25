@@ -9,6 +9,10 @@ export default class WorkspaceDataset {
                     {
                         aspect: "1",
                         category: "1",
+                        descriptor: {
+                            name: 'process',
+                            description: ''
+                        },
                         graph: {
                             nodes: [
                                 {
@@ -165,6 +169,10 @@ export default class WorkspaceDataset {
                     {
                         aspect: "1",
                         category: "2",
+                        descriptor: {
+                            name: 'power',
+                            description: ''
+                        },
                         graph: {
                             nodes: [
                                 {
@@ -201,6 +209,10 @@ export default class WorkspaceDataset {
                     {
                         aspect: "2",
                         category: "1",
+                        descriptor: {
+                            name: 'product',
+                            description: ''
+                        },
                         graph: {
                             nodes: [
                                 {
@@ -230,6 +242,11 @@ export default class WorkspaceDataset {
                             ]
                         }
                     }
+                ],
+                aspectDescriptors: [
+                    {id: '1', name: 'function', color: 'yellow', description: ''},
+                    {id: '2', name: 'product', color: 'cyan', description: ''},
+                    {id: '3', name: 'area', color: 'magenta', description: ''},
                 ]
             }
 

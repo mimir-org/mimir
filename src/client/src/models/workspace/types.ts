@@ -1,3 +1,5 @@
+import { WorkspaceService } from "../../services";
+
 export interface Root {
     title: string
 }
@@ -24,9 +26,27 @@ export interface Aspects {
     aspect: string,
     category: string,
     graph: Graph
+    descriptor: CategoryDescriptor
 }
 
 export interface Workspace {
     root: Root,
-    aspects: Aspects[] 
+    aspects: Aspects[],
+    aspectDescriptors: AspectDescriptor[]
+}
+
+export interface CategoryDescriptor {
+    name: string,
+    description: string
+}
+
+export interface Type {
+    type: String
+}
+
+export interface AspectDescriptor {
+    id: string,
+    name: string,
+    color: string,
+    description: string
 }

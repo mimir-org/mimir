@@ -15,7 +15,7 @@ import {
 import { WorkspaceService } from './../../services/';
 import { ToolboxComponent } from "..";
 
-const DiagramComponent: FC<Workspace> = ({ root, aspects }: Workspace) => {
+const DiagramComponent: FC<Workspace> = ({ root, aspects, aspectDescriptors }: Workspace) => {
 
   const engine = createEngine();
   engine.getPortFactories().registerFactory(new MbPortFactory());
@@ -29,7 +29,7 @@ const DiagramComponent: FC<Workspace> = ({ root, aspects }: Workspace) => {
   
 
   if(mainAspect) {
-    var service = new WorkspaceService({root, aspects});
+    var service = new WorkspaceService({root, aspects, aspectDescriptors});
     
 
 
