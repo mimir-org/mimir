@@ -30,3 +30,11 @@ export interface Workspace {
     root: Root,
     aspects: Aspects[] 
 }
+
+export interface Connection {
+    id: string,
+    type: string,
+    from: string,
+    to: string,
+    connector: string
+}

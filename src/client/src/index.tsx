@@ -13,7 +13,7 @@ const rootElement = document.getElementById('root');
 ReactDOM.render(
   // <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
+      <BrowserRouter forceRefresh={true}>
         <App />
       </BrowserRouter>
     </Provider>, rootElement
