@@ -26,21 +26,23 @@ const Home = () => {
   const params = useParams<RouteParams>();
 
   return (
-    <React.Fragment>
+    <>
+
       {workspaceState && workspaceState.workspace && !workspaceState.fetching &&
-      <React.Fragment>
+      <>
          
         {params.type === 'treeview' &&
-            <TreeviewComponent root={workspaceState.workspace.root} aspects={workspaceState.workspace.aspects} />
+            <TreeviewComponent root={workspaceState.workspace.root} aspects={workspaceState.workspace.aspects} aspectDescriptors={workspaceState.workspace.aspectDescriptors} />
         }
 
         {params.type === 'diagram' &&
-            <DiagramComponent root={workspaceState.workspace.root} aspects={workspaceState.workspace.aspects} />           
+            <DiagramComponent root={workspaceState.workspace.root} aspects={workspaceState.workspace.aspects} aspectDescriptors={workspaceState.workspace.aspectDescriptors} />           
         }
 
-        </React.Fragment>
+
+        </>
       }
-    </React.Fragment>
+    </>
   );
 };
 
