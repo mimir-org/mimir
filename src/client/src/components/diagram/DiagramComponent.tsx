@@ -55,11 +55,11 @@ const nodeTypes = {
 
 
 
-const DiagramComponent: FC<Workspace> = ({ root, aspects }: Workspace) => {
+const DiagramComponent: FC<Workspace> = ({ root, aspects, aspectDescriptors }: Workspace) => {
 
   const currentState = (useSelector<RootState>((state) => state.workspace)) as WorkspaceState;
   const [elements, setElements] = useState<Elements>([]);
-  const service = new WorkspaceService({ root, aspects });
+  const service = new WorkspaceService({ root, aspects, aspectDescriptors });
 
   
 

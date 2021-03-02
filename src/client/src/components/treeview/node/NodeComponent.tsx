@@ -1,21 +1,22 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
+import { Type } from '../../../models/workspace';
 import './node.scss';
 
-// import { NodeType } from '../../../store/treeview/types';
-
+import ExpandedNode from '../../../assets/expanded-nodecircle.png';
 import UnexpandedNode from '../../../assets/unexpanded-nodecircle.png';
 import Functionbox from '../../../assets/functionbox.png';
 import PlattForm from '../../../assets/plattform.svg';
 
-const NodeComponent  = () => {
+const NodeComponent : FC<Type>  = ({ type }: Type) => {
+
+    const [isExpanded, setExpanded] = useState(false);
+
     return (
-        <div className='NodeComponent'>
-            <img className='node' src={UnexpandedNode} alt='unexpanded-node-icon'/>
+        <div className='NodeComponent' onClick={() => setExpanded(!isExpanded)}>
+            {/* expand node? */}
+            <img className='expand' src={isExpanded ? ExpandedNode : UnexpandedNode} alt='node-icon'/>
+            {/* root eller function eller connector */}
             <div className='h-line'></div>
-            {/* { type === 'root' ? <><img src={PlattForm} alt='plattForm-icon'/> <p>{name}</p></> 
-            : type === 'function' ? <><img src={Functionbox} alt='function-icon'/> <p>{name}</p></> 
-            : type === 'children' ? <><div className="connection_line"></div> <p>{name}</p></> 
-            : null } */}
         </div>
     )
 } 

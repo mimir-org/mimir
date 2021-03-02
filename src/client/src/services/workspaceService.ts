@@ -1,5 +1,4 @@
-import { Workspace, Node, Edge, Connection } from '../models/workspace';
-
+import { Workspace, Node, Edge, AspectDescriptor, Connection } from '../models/workspace';
 export class WorkspaceService {
     private workspace: Workspace;
     functionalNodeMap: Map<string, Node>;
