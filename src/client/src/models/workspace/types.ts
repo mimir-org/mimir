@@ -36,12 +36,9 @@ export interface Workspace {
 }
 
 export interface CategoryDescriptor {
+    id: string,
     name: string,
     description: string
-}
-
-export interface Type {
-    type: String
 }
 
 export interface AspectDescriptor {

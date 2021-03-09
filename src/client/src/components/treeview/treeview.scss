@@ -1,100 +1,116 @@
 .treeview_component {
-    display: flex;
-    flex-direction: row;
-    font-family: roboto;
+	display: flex;
+	flex-direction: row;
+	font-family: roboto;
 
-    .treestructur_container {
-        flex: 3;
+	.treestructur_container {
+		flex: 3.5;
 
-        .heading {
-            border-bottom: 1px solid black;
-            text-align: center;
-            font-weight: 500;
-            font-size: 16px;
-        }
-    
-        .aspects_container {
-            display: flex;
-            flex-direction: row;
-    
-            .aspect_container {
-                flex: 1;
-                padding: 10px 10px 0px 10px;
-                border: 1px solid black; 
-                border-width: 0px 0px 0px 1px;
-    
-                .aspect_heading {
-                    display: flex;
-                    align-items: center;
-        
-                    p {
-                        margin: 0px 20px;
-                    }
-    
-                    p:first-letter {
-                        text-transform: uppercase;
-                    }
-        
-                    img {
-                        width: 30px;
-                        height: 30px;
-                    }
-                }
-            }        
-        }
-    }
+		.heading {
+			text-align: center;
+			font-weight: 500;
+			font-size: 18px;
+		}
+	
+		.aspects_container {
+			display: flex;
+			flex-direction: row;
+	
+			.aspect_container {
+				flex: 1;
+				padding: 10px;
+				border: 2px solid grey;
+				border-width: 2px 0px 0px 2px;
+				margin: 0px 0px;
+	
+				.aspect_heading {
+					display: flex;
+					align-items: center;
+		
+					p {
+						margin: 0px 20px;
+					}
+	
+					p:first-letter {
+						text-transform: uppercase;
+					}
+		
+					img {
+						width: 30px;
+						height: 30px;
+					}
+				}
 
-    .inspector_container {
-        flex: 1;
-        background-color: #e8f5ff;
+				.aspect_category {
+					display: flex;
+					margin: 10px 0px 10px 0px; 
 
-        .heading {
-            border-bottom: 1px solid black;
-            text-align: center;
-            font-weight: 500;
-            font-size: 16px;
-        }
+					.select_category {
+						flex: 1;
+						background-color: #e8f5ff;
+						padding: 8px 6px;
+						border-radius: 4px;
+						border: 2px solid grey;
+					}
+				}
 
-        .info_container {
-            display: flex;
-            padding: 0px 10px 0px 10px;
-            border-left: 1px solid black;
-        }
-    }
+				.select_category:hover {
+					background-color: #b2ddff;
+				}
+			}        
+		}
+	}
+
+	.inspector_container {
+		flex: 1;
+		background-color: #e8f5ff;
+		border-left: 2px solid grey;
+
+		.heading {
+			text-align: center;
+			font-weight: 500;
+			font-size: 18px;
+		}
+
+		.info_container {
+			display: flex;
+			padding: 0px 10px 0px 10px;
+		}
+	}
 }   
 
-    // .aspect {
-    //     flex: 1;
-    //     padding: 10px 10px 0px 10px;
-    //     border-right: 1px solid black;
+	// .aspect {
+	//     flex: 1;
+	//     padding: 10px 10px 0px 10px;
+	//     border-right: 1px solid black;
 
-        // .aspect_heading {
-        //     display: flex;
-        //     align-items: center;
-        //     font-weight: 500;
+		// .aspect_heading {
+		//     display: flex;
+		//     align-items: center;
+		//     font-weight: 500;
 
-        //     p {
-        //         margin-left: 20px;
-        //     }
-        // }
+		//     p {
+		//         margin-left: 20px;
+		//     }
+		// }
 
-        // .treestructure_container {
-        //     position: relative;
+		// .treestructure_container {
+		//     position: relative;
 
-        //     .root {
-        //         display: flex;
+		//     .root {
+		//         display: flex;
 
-        //         p {
-        //             margin-left: 20px;
-        //         }
-        //     }
+		//         p {
+		//             margin-left: 20px;
+		//         }
+		//     }
 
-        //     .vertical-line {
-        //         border-left: 1px dashed black;
-        //         position: fixed;
-        //         top: 165px;
-        //         bottom: 0;
-        //         margin-left: 80px;
-        //     }
-        // }
-    
+		//     .vertical-line {
+		//         border-left: 1px dashed black;
+		//         position: fixed;
+		//         top: 165px;
+		//         bottom: 0;
+		//         margin-left: 80px;
+		//     }
+		// }
+	
