@@ -1,6 +1,6 @@
 import { AspectRatioSharp } from '@material-ui/icons';
 import { brotliDecompress } from 'zlib';
-import { Workspace, Node, Edge, Graph, Aspects, CategoryDescriptor } from '../models/workspace';
+import { Workspace, Node, Edge, Graph, Aspects, CategoryDescriptor, AspectDescriptor, Connection } from '../models/workspace';
 import { nodetypeReducer } from '../store/nodetypes/reducers';
 
 export class WorkspaceService {
@@ -158,6 +158,34 @@ export class WorkspaceService {
 	// 		}	
 	// 	})
 
+    getConnectionEdges(nodeId: string): Connection[] {
+        var aspects = this.workspace.aspects.filter(x => x.aspect === '1' && x.category === '1');
+        
+        if(!aspects && aspects.length <= 0)
+            return [];
+
+            const edges = aspects[0].graph.edges.filter(x => x.to === nodeId && x.type !== 'imfo:partOf');
+            let filteredConnections: Connection[] = [];
+
+        // TODO: Use Typeregister
+        edges.forEach(edge => {
+            if(edge) {           
+                var parent = aspects[0].graph.edges.filter(x => x.from === edge.from && x.type === 'imfo:partOf');
+                if(parent && parent.length > 0)
+                {
+                    filteredConnections.push({
+                        id: edge.id,
+                        type: edge.type,
+                        from: parent[0].to,
+                        to: edge.to,
+                        connector: parent[0].id
+                    });
+                }
+            }              
+        });
+
+        return filteredConnections;
+    }
 }
 
 

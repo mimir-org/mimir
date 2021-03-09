@@ -47,3 +47,11 @@ export interface AspectDescriptor {
     color: string,
     description: string
 }
+
+export interface Connection {
+    id: string,
+    type: string,
+    from: string,
+    to: string,
+    connector: string
+}

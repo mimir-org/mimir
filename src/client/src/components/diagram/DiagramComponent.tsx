@@ -1,256 +1,199 @@
-import React, { FC } from 'react';
-// import { useDispatch } from 'react-redux';
-import createEngine, { DiagramModel } from '@projectstorm/react-diagrams';
-import { CanvasWidget } from '@projectstorm/react-canvas-core';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { FC, useEffect, useState, MouseEvent, ChangeEvent  } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
+import ReactFlow, {
+  isEdge,
+  removeElements,
+  addEdge,
+  MiniMap,
+  Controls,
+  Node,
+  FlowElement,
+  OnLoadParams,
+  Elements,
+  Position,
+  SnapGrid,
+  Connection,
+  Edge,
+  ArrowHeadType,
+} from 'react-flow-renderer';
+
+import DefaultSelectorNode from './DefaultSelectorNode';
+import ConnectSelectorNode from './ConnectSelectorNode';
 import { Workspace, } from '../../models/workspace';
-import {
-  MbNodeFactory,
-  MbPortFactory,
-  MbNodeModel,
-  MbLinkFactory,
-  MbLabelFactory,
-  // MbLinkModel,
-  // MbPortModel
-} from './../../models/diagram';
-import { WorkspaceService } from './../../services/';
-import { ToolboxComponent } from "..";
+import { RootState } from "../../store/index";
+import { WorkspaceState } from "../../store/workspace/types";
+
+import { WorkspaceService } from './../../services/workspaceService';
+
+let clickTimeout = null;
+
+// const onLoad = (reactFlowInstance: OnLoadParams) => console.log('flow loaded:', reactFlowInstance);
+// const onNodeDragStop = (_: MouseEvent, node: Node) => console.log('drag stop', node);
+const onElementClick = (e: MouseEvent, element: FlowElement) => {
+  if (clickTimeout !== null) {
+    console.log('DOUBLE: ', element)
+    clearTimeout(clickTimeout)
+    clickTimeout = null
+  } else {
+    console.log('SINGLE: ', element)  
+    clickTimeout = setTimeout(()=>{    
+    clearTimeout(clickTimeout)
+      clickTimeout = null
+    }, 2000)
+  }
+};
+
+// const initBgColor = '#1A192B';
+const connectionLineStyle = { stroke: '#888' };
+const snapGrid: SnapGrid = [16, 16];
+const nodeTypes = {
+  selectorNode: DefaultSelectorNode,
+  connectorNode: ConnectSelectorNode
+};
+
+
 
 const DiagramComponent: FC<Workspace> = ({ root, aspects, aspectDescriptors }: Workspace) => {
 
-  const engine = createEngine();
-  engine.getPortFactories().registerFactory(new MbPortFactory());
-  engine.getNodeFactories().registerFactory(new MbNodeFactory());
-  engine.getLinkFactories().registerFactory(new MbLinkFactory());
-  engine.getLabelFactories().registerFactory(new MbLabelFactory());
-
-  const model = new DiagramModel();
-  const mainAspect = aspects.filter(x => x.aspect === "1" && x.category === "1")[0];
-  
-  
-
-  if(mainAspect) {
-    var service = new WorkspaceService({root, aspects, aspectDescriptors});
-    
-
-
-    
-    
-
-    var rootEdges = service.getRootEdges('n4');
-
-    // console.log(service.functionalNodeMap);
-    // console.log(edgeMap);
-    // console.log(rootNodes);
-    // console.log(service.productNodeMap);
-  }
-
-
-  rootEdges.forEach(edge => {
-    var m = new MbNodeModel({ rdfType: service.getProductLabel(edge.from), rdfId: edge.from });
-    model.addNode(m);
-  });
-
-
-  // const map = Object.assign({}, ...workspace2.nodes.map(s => ({[s.id]: s.value})));
-
-  // var nodeMap = new Map(workspace2.nodes.map(obj => [obj.id, obj] as [string, Node2]));
-  // var links = workspace2.edges.filter(x => x.type === "consumedBy");
-
-  // var map = new Map(workspace2.nodes.map(i => [i.id, {i}]));
-
-  // interface LinkMap {
-  //   from: MbPortModel,
-  //   to: MbPortModel
-  //   label: string
-  // };
-
-
-
-//  let linkMap: LinkMap[] = [];  
-
-//   workspace2.nodes.forEach(node => {
-//     var connections = workspace2.edges.filter(x => x.to === node.id && x.type === "hasParent");
-//     if(connections.length > 0) {
-//       var m = new MbNodeModel({ rdfType: node.label, rdfId: node.id });
-
-//       if(node && node.label && node.label.toLowerCase().includes('reservoir')) {
-//         m.getOptions().svg = true;
-//       }
-
-//       connections.forEach(c => {
-//         var mapNode = nodeMap.get(c.from);
-//         if(mapNode && mapNode.label && mapNode.label.toLowerCase().includes('out')) {
-//           m.addOutPort(mapNode.label);
-          
-
-//         } else {
-//           m.addInPort(mapNode.label);
-//         }        
-//       });
-//       m.setLocked(false);
-//       m.registerListener({
-//         // selectionChanged: () => { console.log(n.getOptions()) },
-//         positionChanged: () => {
-//           // console.log(m.getPosition());
-//         },
-//       });      
-//       model.addNode(m);
-//     }    
-//   });
+  const currentState = (useSelector<RootState>((state) => state.workspace)) as WorkspaceState;
+  const [elements, setElements] = useState<Elements>([]);
+  const service = new WorkspaceService({ root, aspects, aspectDescriptors });
 
   
 
-  // links.forEach(x => {
-  //   // model.getNode
-  // })
-
-        // link them and add a label to the link
-        // const link = port1.link<MbLinkModel>(port2);
-        // link.addLabel('Hello World!');
-
-
   
-      model.setLocked(false);
+  
+  
+  
+  // const [bgColor, setBgColor] = useState<string>(initBgColor);
 
-
-  // const xxx = workspace2.nodes.map(node => {
-  //   let m = new MbNodeModel({ rdfType: node.label, rdfId: node.id });
-  //   let connections = workspace2.edges.filter(edge => edge.type === "hasParent" && edge.to === node.id).map(e => {
+  useEffect(() => {
+    setElements((els) =>
+        els.map((e) => {
+          return e;
+        })
+      ); 
       
-  //   });
-    
+  const initialElements: Elements = [];
+  const inputConnectorsElemement: Elements = [];
 
-  //   return m;
-  // });
+  
+  const rootEdges = service.getRootEdges("root");
+      rootEdges.forEach(edge => {
+
+        // Find connectors
+        const connectorEdges = service.getConnectorEdges(edge.from);
+
+        const connectors = connectorEdges.map(connector => {
+          var node = service.functionalNodeMap.get(connector.from);
+          return {
+            id: connector.id,
+            type: node.type.toLowerCase().includes('input') ? 'target' : 'source',
+            label: node.type
+          };          
+        });
+
+        // Create the node with connectors
+        initialElements.push({
+          id: edge.from,
+          type: 'selectorNode',
+          data: { label: service.getProductLabel(edge.from), id: edge.from, connectors: connectors },
+          position: { x: 300, y: 50 },
+        });
+
+        // Create connections
+        const connections = service.getConnectionEdges(edge.from);
+        // console.log(connections);
+
+        connections.forEach(con => {
+
+          initialElements.push(
+            {
+              id: con.id,
+              source: con.from,
+              target: con.to,
+              sourceHandle: con.connector,
+              animated: true,
+              style: { stroke: '#888' },
+              label: con.type,
+              arrowHeadType: ArrowHeadType.ArrowClosed
+            }
+          );
+        });
 
 
 
+        
 
+        // initialElements.push({
+        //   id: 'e1-2', 
+        //   type: 'step', 
+        //   source: '1', 
+        //   target: '2', 
+        //   animated: true, 
+        //   label: 'Gas', 
+        //   arrowHeadType: ArrowHeadType.ArrowClosed
+        // });
 
-  // if (nodes) {
-  //   nodes.forEach((node) => {
-  //     const n = new MbNodeModel({ rdfType: node.name, rdfId: node.id });
-  //     n.setPosition(node.x, node.y);
-  //     node.ports.forEach((port) => {
-  //       if (port.type === PortType.In) {
-  //         n.addInPort(port.name, true);
-  //       } else {
-  //         n.addOutPort(port.name, true);
-  //       }
-
-  //       // // link them and add a label to the link
-  //       // const link = n.link<DefaultLinkModel>(port2);
-  //       // link.addLabel('Hello World!');
-
-  //     });
-
-  //     n.setLocked(false);
-
-  //     n.registerListener({
-  //       // selectionChanged: () => { console.log(n.getOptions()) },
-  //       positionChanged: () => {
-  //         console.log(n.getPosition());
-  //       },
-  //     });
-
-  //     // these are never triggered
-  //     // zoomUpdated: e => console.log("zoomUpdated", e),
-  //     // gridUpdated: e => console.log("gridUpdated", e),
-  //     // offsetUpdated: e => console.log("offsetUpdated", e),
-  //     // entityRemoved: e => console.log("entityRemoved", e),
-  //     // n.registerListener({
-  //     //   eventDidFire: (event) => {console.log("", event)})
-  //     // });
-
-  //     model.addNode(n);
-  //     model.setLocked(false);
-  //   });
-  // }
-
-  // model.registerListener({
-  //   // nodesUpdated: (event) => {console.log(event)},
-  //   // linksUpdated: (event) => {console.log(event)},
-  //   // entityRemoved: (event) => {console.log(event)}
-  //   eventDidFire: (event) => {console.log(event)}
-  // });
-  model.registerListener({
-    nodesUpdated: () => {
-      console.log("Event nodesUpdated");
-    },
-    offsetUpdated: () => {
-      console.log("Event offsetUpdated");
-    },
+        
   });
 
-  engine.setModel(model);
+    setElements(initialElements);
+  }, []);
+
+  const onElementsRemove = (elementsToRemove: Elements) => setElements((els) => removeElements(elementsToRemove, els));
+  const onConnect = (params: Connection | Edge) => setElements((els) => {
+    const node = service.functionalNodeMap.get(service.functionalEdgeMap.get(params.sourceHandle).from);
+    return addEdge({ ...params, animated: true, arrowHeadType: ArrowHeadType.ArrowClosed, label: node.type, style: { stroke: '#888' } }, els);
+  });
 
   return (
-    <div className='diagram'>
-     <React.Fragment>
-      <div className="workspace">
-        <div className="workspace__left-area">
-          <ToolboxComponent />
-        </div>
-
-        <div className="workspace__right-area">
-          <h1>{root.title}</h1>
-          <div
-            id="canvas"
-            className="graph"
-            onDrop={(e) => {
-              // let nodeType = JSON.parse(e.dataTransfer.getData("node_type"));
-
-              // const node: Node = {
-              //   id: "123",
-              //   // name: "Reservoir",
-              //   // x: 200,
-              //   // y: 200,
-              //   // ports: [],
-              //   // nodeType: null,
-              // };
-
-              const n = new MbNodeModel({
-                rdfType: '',
-                rdfId: '',
-                svg: true,
-              });
-              
-              n.addOutPort("Well fluid", true);
-              n.addOutPort("Gas", true);
-
-              // let newNode = new FamNode();
-              // newNode.id = '';
-
-              //       id: string,
-              // name: string,
-              // x: number,
-              // y: number,
-              // ports: Port[],
-              // nodeType: Nodetype
-
-              var pos = engine.getRelativeMousePoint(e);
-              n.setPosition(pos.x, pos.y);
-              model.addNode(n);
-              engine.setModel(model);
-
-              // var nodes = model.getNodes();
-              // console.log(nodes);
-            }}
-            onDragOver={(e) => {
-              e.preventDefault();
-            }}
-          >
-            <CanvasWidget engine={engine} className="canvas" />
-          </div>
-        </div>
+    <div className='wrapper'>
+      <div className='col'>
+        Left
       </div>
+      <div className='col'>
+        <ReactFlow
+          elements={elements}
+          onElementClick={onElementClick}
+          onElementsRemove={onElementsRemove}
+          onConnect={onConnect}
+          // onNodeDragStop={onNodeDragStop}
+          // style={{ background: initBgColor }}
+          // onLoad={onLoad}
+          nodeTypes={nodeTypes}
+          connectionLineStyle={connectionLineStyle}
+          snapToGrid={true}
+          snapGrid={snapGrid}
+          defaultZoom={1.5}      
+        >
+          <MiniMap
+            nodeStrokeColor={(n: Node): string => {
+              if (n.type === 'input') return '#0041d0';
+              if (n.type === 'selectorNode') return '#ccc';
+              if (n.type === 'output') return '#ff0072';
 
-      {/* <button onClick={() => dispatch(getWorkspace({ id: 1, name: 'jsv', nodes: [] }))}>Hent graf</button> */}
+              return '#eee';
+            }}
+            nodeColor={(n: Node): string => {
+              if (n.type === 'selectorNode') return '#ccc';
 
-      {/* <NodeTypeOverview /> */}
-    </React.Fragment>
+              return '#fff';
+            }}
+          />
+          <Controls />
+        </ReactFlow>
+      </div>
+      <div className='col'>Right</div>
     </div>
   );
 };
+  
+
+
+  
+
 
 export default DiagramComponent;

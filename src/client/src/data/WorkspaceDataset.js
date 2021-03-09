@@ -130,7 +130,7 @@ export default class WorkspaceDataset {
                                 {
                                     id: "e12",
                                     type: "imft:indirectlySupplies",
-                                    from: "n1",
+                                    from: "n2",
                                     to: "n4"
                                 },
                                 {
