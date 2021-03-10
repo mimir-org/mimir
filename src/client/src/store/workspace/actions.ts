@@ -8,7 +8,7 @@ export function getWorkspace(): WorkspaceActionTypes {
             hasError: false,
             errorMsg: null,
             fetching: true,
-            workspace: null
+            workspace: null            
         } as WorkspaceState
     }    
 }

@@ -1,5 +1,3 @@
-import { WorkspaceService } from "../../services";
-
 export interface Root {
     title: string
 }
@@ -34,7 +32,6 @@ export interface Workspace {
     aspects: Aspects[],
     aspectDescriptors: AspectDescriptor[]
 }
-
 export interface CategoryDescriptor {
     name: string,
     description: string

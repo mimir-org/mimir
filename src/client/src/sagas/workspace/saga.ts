@@ -2,20 +2,19 @@ import { call, put } from 'redux-saga/effects';
 import { FETCHING_WORKSPACE_SUCCESS_OR_ERROR, WorkspaceActionTypes, WorkspaceState } from './../../store/workspace/types';
 import { Workspace } from '../../models/workspace';
 import WorkspaceDataset from '../../data/WorkspaceDataset';
+import { WorkspaceService } from './../../services/workspaceService';
 
-// import { get } from './../../models/webclient';
-
-
-// eslint-disable-next-line require-yield
 export function* getWorkspace(action: WorkspaceActionTypes) {
     try {
 
-        // const response = yield call(get, process.env.REACT_APP_API_BASE_URL + 'todos');
-        
-
         const data = yield call(WorkspaceDataset.get);
         const workspace = data as Workspace;
-                
+        const workspaceService = new WorkspaceService(workspace);
+
+        // Need to create proxy connectors for all nodes
+        let aspect = workspace.aspects.filter(x => x.aspect === '1' && x.category === '1')[0];
+        workspaceService.getProxyNodes(aspect);
+
         const payload = {
             workspace: workspace,
             hasError: false,

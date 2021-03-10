@@ -1,18 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { FC, useEffect, useState, MouseEvent, ChangeEvent  } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { FC, useEffect, useState, MouseEvent  } from 'react';
 
-import ReactFlow, {
-  isEdge,
+import ReactFlow, {  
   removeElements,
   addEdge,
   MiniMap,
   Controls,
   Node,
-  FlowElement,
-  OnLoadParams,
-  Elements,
-  Position,
+  FlowElement,  
+  Elements,  
   SnapGrid,
   Connection,
   Edge,
@@ -22,22 +18,18 @@ import ReactFlow, {
 import DefaultSelectorNode from './DefaultSelectorNode';
 import ConnectSelectorNode from './ConnectSelectorNode';
 import { Workspace, } from '../../models/workspace';
-import { RootState } from "../../store/index";
-import { WorkspaceState } from "../../store/workspace/types";
-
 import { WorkspaceService } from './../../services/workspaceService';
 
 let clickTimeout = null;
 
 // const onLoad = (reactFlowInstance: OnLoadParams) => console.log('flow loaded:', reactFlowInstance);
 // const onNodeDragStop = (_: MouseEvent, node: Node) => console.log('drag stop', node);
+
 const onElementClick = (e: MouseEvent, element: FlowElement) => {
   if (clickTimeout !== null) {
-    console.log('DOUBLE: ', element)
     clearTimeout(clickTimeout)
     clickTimeout = null
   } else {
-    console.log('SINGLE: ', element)  
     clickTimeout = setTimeout(()=>{    
     clearTimeout(clickTimeout)
       clickTimeout = null
@@ -45,7 +37,6 @@ const onElementClick = (e: MouseEvent, element: FlowElement) => {
   }
 };
 
-// const initBgColor = '#1A192B';
 const connectionLineStyle = { stroke: '#888' };
 const snapGrid: SnapGrid = [16, 16];
 const nodeTypes = {
@@ -53,121 +44,82 @@ const nodeTypes = {
   connectorNode: ConnectSelectorNode
 };
 
-
-
 const DiagramComponent: FC<Workspace> = ({ root, aspects, aspectDescriptors }: Workspace) => {
 
-  const currentState = (useSelector<RootState>((state) => state.workspace)) as WorkspaceState;
+  const defaultZoomFactor = 1.5;
   const [elements, setElements] = useState<Elements>([]);
   const service = new WorkspaceService({ root, aspects, aspectDescriptors });
-
   
-
-  
-  
-  
-  
-  // const [bgColor, setBgColor] = useState<string>(initBgColor);
 
   useEffect(() => {
     setElements((els) =>
         els.map((e) => {
           return e;
         })
-      ); 
-      
-  const initialElements: Elements = [];
-  const inputConnectorsElemement: Elements = [];
+      );
+    
+    const initialElements: Elements = [];
+    const diagram = service.getDiagram("root");
 
-  
-  const rootEdges = service.getRootEdges("root");
-      rootEdges.forEach(edge => {
+    diagram.nodes.forEach(x => {
 
-        // Find connectors
-        const connectorEdges = service.getConnectorEdges(edge.from);
-
-        const connectors = connectorEdges.map(connector => {
-          var node = service.functionalNodeMap.get(connector.from);
+      // Map connectors
+          const connectors = x.connectors.map(connector => {
           return {
             id: connector.id,
-            type: node.type.toLowerCase().includes('input') ? 'target' : 'source',
-            label: node.type
+            type: connector.type,
+            label: connector.label
           };          
         });
 
-        // Create the node with connectors
+      // Create the node with connectors
         initialElements.push({
-          id: edge.from,
+          id: x.id,
           type: 'selectorNode',
-          data: { label: service.getProductLabel(edge.from), id: edge.from, connectors: connectors },
+          data: { label: x.label, id: x.id, connectors: connectors },
           position: { x: 300, y: 50 },
         });
+    });
 
-        // Create connections
-        const connections = service.getConnectionEdges(edge.from);
-        // console.log(connections);
+    // Create connections
+    diagram.connections.forEach(con => {
 
-        connections.forEach(con => {
+      initialElements.push(
+        {
+          id: con.id,
+          source: con.source,
+          sourceHandle: con.sourceHandle,
+          target: con.target,
+          targetHandle: con.targetHandle,
+          animated: true,
+          style: { stroke: '#888' },
+          label: con.label,
+          arrowHeadType: ArrowHeadType.ArrowClosed
+        }
+      );
 
-          initialElements.push(
-            {
-              id: con.id,
-              source: con.from,
-              target: con.to,
-              sourceHandle: con.connector,
-              animated: true,
-              style: { stroke: '#888' },
-              label: con.type,
-              arrowHeadType: ArrowHeadType.ArrowClosed
-            }
-          );
-        });
-
-
-
-        
-
-        // initialElements.push({
-        //   id: 'e1-2', 
-        //   type: 'step', 
-        //   source: '1', 
-        //   target: '2', 
-        //   animated: true, 
-        //   label: 'Gas', 
-        //   arrowHeadType: ArrowHeadType.ArrowClosed
-        // });
-
-        
   });
-
     setElements(initialElements);
   }, []);
 
   const onElementsRemove = (elementsToRemove: Elements) => setElements((els) => removeElements(elementsToRemove, els));
-  const onConnect = (params: Connection | Edge) => setElements((els) => {
-    const node = service.functionalNodeMap.get(service.functionalEdgeMap.get(params.sourceHandle).from);
-    return addEdge({ ...params, animated: true, arrowHeadType: ArrowHeadType.ArrowClosed, label: node.type, style: { stroke: '#888' } }, els);
+  const onConnect = (params: Connection | Edge) => setElements((els) => { 
+    const node = service.functionalNodeMap.get(service.functionalEdgeMap.get(params.sourceHandle)?.from);
+    return addEdge({ ...params, animated: true, arrowHeadType: ArrowHeadType.ArrowClosed, label: node.label, style: { stroke: '#888' } }, els);
   });
 
   return (
-    <div className='wrapper'>
-      <div className='col'>
-        Left
-      </div>
-      <div className='col'>
+    <>      
         <ReactFlow
           elements={elements}
           onElementClick={onElementClick}
           onElementsRemove={onElementsRemove}
           onConnect={onConnect}
-          // onNodeDragStop={onNodeDragStop}
-          // style={{ background: initBgColor }}
-          // onLoad={onLoad}
           nodeTypes={nodeTypes}
           connectionLineStyle={connectionLineStyle}
           snapToGrid={true}
           snapGrid={snapGrid}
-          defaultZoom={1.5}      
+          defaultZoom={defaultZoomFactor}             
         >
           <MiniMap
             nodeStrokeColor={(n: Node): string => {
@@ -183,11 +135,11 @@ const DiagramComponent: FC<Workspace> = ({ root, aspects, aspectDescriptors }: W
               return '#fff';
             }}
           />
+          <hr className='divider divider--left' />
+          <hr className='divider divider--right' />
           <Controls />
         </ReactFlow>
-      </div>
-      <div className='col'>Right</div>
-    </div>
+    </>
   );
 };
   

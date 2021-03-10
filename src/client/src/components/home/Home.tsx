@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from 'react-router';
 import { DiagramComponent, TreeviewComponent } from "..";
 import { getWorkspace } from "../../store/workspace/actions";
-import { getUser } from "../../store/user/actions";
+// import { getUser } from "../../store/user/actions";
 import { WorkspaceState } from "../../store/workspace/types";
 import { RootState } from "./../../store/index";
-import { UserState } from "../../store/user/types";
-import { SETTING_KEY, SETTING_VALUE } from "./../../models/user";
+// import { UserState } from "../../store/user/types";
+// import { SETTING_KEY, SETTING_VALUE } from "./../../models/user";
 
 interface RouteParams {
   type: string
@@ -27,10 +27,8 @@ const Home = () => {
 
   return (
     <>
-
       {workspaceState && workspaceState.workspace && !workspaceState.fetching &&
-      <>
-         
+      <>         
         {params.type === 'treeview' &&
             <TreeviewComponent root={workspaceState.workspace.root} aspects={workspaceState.workspace.aspects} aspectDescriptors={workspaceState.workspace.aspectDescriptors} />
         }
@@ -38,8 +36,6 @@ const Home = () => {
         {params.type === 'diagram' &&
             <DiagramComponent root={workspaceState.workspace.root} aspects={workspaceState.workspace.aspects} aspectDescriptors={workspaceState.workspace.aspectDescriptors} />           
         }
-
-
         </>
       }
     </>

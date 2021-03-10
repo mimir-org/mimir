@@ -1,25 +1,52 @@
-.wrapper {
-    display: flex;
-    flex-direction: row;
-    height: 100%;   
+.divider {
+    height: 100%;
+    border: 1px solid black;
+    width: 0px;    
+
+    &--left {
+        position: absolute;
+        left: 190px;
+        top: 0px;
+    }
+
+    &--right {
+        position: absolute;
+        right: 190px;
+        top: 0px;
+    }
 }
 
-.col {
-    flex: 1;
-    
+.connector-node {
+    padding: 10px;
+    width: 100px;
+    color: #111;
+    background-color: #f0f2f3;
+    font-size: 12px;
+
+    label {
+        display: none;
+        font-size: 10px;
+        line-height: 10px;
+        padding: 3px;
+        position: relative;
+        top: -17px;
+        white-space: nowrap;
+        color:white;
+        background-color: black;
+        
+        &_show {
+            display: block;
+        }
+    }
+
+    .react-flow__handle.connectable {
+        &:hover {
+            label {
+                display: inline;
+            }
+        }
+    }
 }
-
-.col:first-child {
-    width: 200px; /* Or a percentage value */
-    flex:initial;
-    background: #ccc;
-  }
-
-  .col:last-child {
-    width: 200px; /* Or a percentage value */
-    flex:initial;
-    background: #ccc;
-  }
 
 
 
@@ -65,7 +92,7 @@
         display: none;
         font-size: 10px;
         line-height: 10px;
-        padding: 1px;
+        padding: 3px;
         position: relative;
         top: -17px;
         white-space: nowrap;

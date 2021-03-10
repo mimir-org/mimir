@@ -8,7 +8,7 @@ export interface WorkspaceState {
     fetching: boolean,
     workspace: Workspace | null,
     hasError: boolean,
-    errorMsg: string | null    
+    errorMsg: string | null
 }
 
 // Action types

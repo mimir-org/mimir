@@ -23,18 +23,18 @@ export default class WorkspaceDataset {
                                     id: "n2",
                                     type: "imft:WellfluidOutput"
                                 },
-                                {
-                                    id: "n3",
-                                    type: "imfo:InputProxy"
-                                },
+                                // {
+                                //     id: "n3",
+                                //     type: "imfo:InputProxy"
+                                // },
                                 {
                                     id: "n4",
                                     type: "imft:FlowSystem"
                                 },
-                                {
-                                    id: "n5",
-                                    type: "imfo:InputProxy"
-                                },
+                                // {
+                                //     id: "n5",
+                                //     type: "imfo:InputProxy"
+                                // },
                                 {
                                     id: "n6",
                                     type: "imft:SatelliteFacility"
@@ -43,10 +43,10 @@ export default class WorkspaceDataset {
                                     id: "n7",
                                     type: "imft:WellfluidInput"
                                 },
-                                {
-                                    id: "n8",
-                                    type: "imfo:InputProxy"
-                                },
+                                // {
+                                //     id: "n8",
+                                //     type: "imfo:InputProxy"
+                                // },
                                 {
                                     id: "n9",
                                     type: "imft:Pipeline"
@@ -73,24 +73,24 @@ export default class WorkspaceDataset {
                                     from: "n2",
                                     to: "n1"
                                 },
-                                {
-                                    id: "e3",
-                                    type: "imfo:partOf",
-                                    from: "n3",
-                                    to: "n4"
-                                },
+                                // {
+                                //     id: "e3",
+                                //     type: "imfo:partOf",
+                                //     from: "n3",
+                                //     to: "n4"
+                                // },
                                 {
                                     id: "e4",
                                     type: "imfo:partOf",
                                     from: "n4",
                                     to: "root"
                                 },
-                                {
-                                    id: "e5",
-                                    type: "imfo:partOf",
-                                    from: "n5",
-                                    to: "n4"
-                                },
+                                // {
+                                //     id: "e5",
+                                //     type: "imfo:partOf",
+                                //     from: "n5",
+                                //     to: "n4"
+                                // },
                                 {
                                     id: "e6",
                                     type: "imfo:partOf",
@@ -103,12 +103,12 @@ export default class WorkspaceDataset {
                                     from: "n7",
                                     to: "n6"
                                 },
-                                {
-                                    id: "e8",
-                                    type: "imfo:partOf",
-                                    from: "n8",
-                                    to: "n6"
-                                },
+                                // {
+                                //     id: "e8",
+                                //     type: "imfo:partOf",
+                                //     from: "n8",
+                                //     to: "n6"
+                                // },
                                 {
                                     id: "e9",
                                     type: "imfo:partOf",
