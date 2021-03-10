@@ -1,5 +1,8 @@
-import { Workspace, Node, Edge, Connection, Aspects } from '../models/workspace';
+import { Workspace, Node, Edge, Aspects, Graph, CategoryDescriptor, AspectDescriptor, Connection } from '../models/workspace';
 import { Diagram, DiagramNode, DiagramConnector, DiagramConnectorType, DiagramConnectionType,  DiagramConnection, DIAGRAM_CONNECTOR_TYPE, DIAGRAM_CONNECTION_TYPE } from './../models/diagram';
+import { AspectRatioSharp } from '@material-ui/icons';
+import { brotliDecompress } from 'zlib';
+import { nodetypeReducer } from '../store/nodetypes/reducers';
 
 export class WorkspaceService {
     private workspace: Workspace;
@@ -88,6 +91,78 @@ export class WorkspaceService {
         });
         return filteredEdges;
     }
+
+    getFunctionalAspect(): Aspects[] {
+        return this.workspace.aspects.filter(x => x.aspect === '1');
+    }
+
+    getProductAspect(): Aspects[] {
+        return this.workspace.aspects.filter(x => x.aspect === '2');
+    }
+
+    getAreaAspect(): Aspects[] {
+        return this.workspace.aspects.filter(x => x.aspect === '3');
+    }
+
+    getFunctionalAspectCategories() : CategoryDescriptor[] {
+        let functionalCategories: CategoryDescriptor[] = [];
+        const fAspect = this.getFunctionalAspect();
+        fAspect.forEach(aspect => {
+            functionalCategories.push({
+                id: aspect.category,
+                name: aspect.descriptor.name,
+                description: aspect.descriptor.description
+            });
+        })
+        return functionalCategories;
+    }
+
+    getProductAspectCategories() : CategoryDescriptor[] {
+        let productCategories: CategoryDescriptor[] = [];
+        const pAspect = this.getProductAspect();
+        pAspect.forEach(aspect => {
+            productCategories.push({
+                id: aspect.category,
+                name: aspect.descriptor.name,
+                description: aspect.descriptor.description
+            });
+        })
+        return productCategories;
+    }
+
+    getAreaAspectCategories() : CategoryDescriptor[] {
+        let areaCategories: CategoryDescriptor[] = [];
+        const aAspect = this.getAreaAspect();
+        aAspect.forEach(aspect => {
+            areaCategories.push({
+                id: aspect.category,
+                name: aspect.descriptor.name,
+                description: aspect.descriptor.description
+            });
+        })
+        if(!areaCategories || areaCategories.length <= 0){
+            areaCategories.push({
+                id: null,
+                name: 'default',
+                description: ''
+            });
+        }
+        return areaCategories;
+    }
+
+    // getNodesConnectedToRoot(aspectId: string): Node[] {
+    //     const aspectEdges: Edge[] = [];
+    //     const aspectNodes: Node[] = [];
+    //     const chosenAspect = this.workspace.aspects
+	// 	.filter(x => x.aspect === aspectId);
+
+	// 	chosenAspect.forEach(aspect => {
+	// 		if(aspect.graph.edges.filter(e => e.to === 'root' && e.type === 'imfo:partOf')){
+	// 			aspectEdges.push({
+	// 				id: e.id;
+	// 			});
+	// 		}	
+	// 	})
 
     getConnectionEdges(nodeId: string): Connection[] {
         var aspects = this.workspace.aspects.filter(x => x.aspect === '1' && x.category === '1');
