@@ -1,0 +1,120 @@
+.divider {
+    height: 100%;
+    border: 1px solid black;
+    width: 0px;    
+
+    &--left {
+        position: absolute;
+        left: 190px;
+        top: 0px;
+    }
+
+    &--right {
+        position: absolute;
+        right: 190px;
+        top: 0px;
+    }
+}
+
+.connector-node {
+    padding: 10px;
+    width: 100px;
+    color: #111;
+    background-color: #f0f2f3;
+    font-size: 12px;
+
+    label {
+        display: none;
+        font-size: 10px;
+        line-height: 10px;
+        padding: 3px;
+        position: relative;
+        top: -17px;
+        white-space: nowrap;
+        color:white;
+        background-color: black;
+        
+        &_show {
+            display: block;
+        }
+    }
+
+    .react-flow__handle.connectable {
+        &:hover {
+            label {
+                display: inline;
+            }
+        }
+    }
+}
+
+
+
+.react-flow__controls {
+    bottom: 150px !important;
+}
+.react-flow__node a {
+    font-weight: 700;
+    color: #111;
+  }
+  
+  .react-flow__node.dark-node {
+    background: #0041d0;
+    color: #f8f8f8;
+  }
+  
+  .react-flow__node.dark {
+    background: #557;
+    color: #f8f8f8;
+  }
+  
+  .react-flow__node-selectorNode {
+    font-size: 12px;
+    background: #f0f2f3;
+    border: 1px solid 555;
+    border-radius: 5px;
+    text-align: center;
+  }
+  
+  .react-flow__node-selectorNode .react-flow__handle {
+    border-color: #f0f2f3;
+  }
+
+.default-node {
+    // background-color:#fff; 
+    padding: 10px;
+    width: 150px;
+    font-family: sans-serif;
+  color: #111;
+  background-color: #a8a8a8;
+
+    label {
+        display: none;
+        font-size: 10px;
+        line-height: 10px;
+        padding: 3px;
+        position: relative;
+        top: -17px;
+        white-space: nowrap;
+        color:white;
+        background-color: black;
+        
+        &_show {
+            display: block;
+        }
+    }
+
+    .react-flow__handle.connectable {
+        &:hover {
+            label {
+                display: inline;
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .overview-example__add {
+        display: block;
+    }
+}
