@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { FC, useEffect, useState, MouseEvent } from "react";
-
 import ReactFlow, {
   removeElements,
   addEdge,
@@ -15,8 +14,8 @@ import ReactFlow, {
   ArrowHeadType,
 } from "react-flow-renderer";
 
-import DefaultSelectorNode from "./DefaultSelectorNode";
-import ConnectSelectorNode from "./ConnectSelectorNode";
+import DefaultSelectorNode from "./selectorNodes/DefaultSelectorNode";
+import ConnectSelectorNode from "./selectorNodes/ConnectSelectorNode";
 import { Workspace } from "../../models/workspace";
 import { WorkspaceService } from "./../../services/workspaceService";
 import { DiagramAddNodes, DiagramAddConnections } from "./";
@@ -103,15 +102,15 @@ const DiagramComponent: FC<Workspace> = ({
         defaultZoom={defaultZoomFactor}
       >
         <MiniMap
-          nodeStrokeColor={(n: Node): string => {
-            if (n.type === "input") return "#0041d0";
-            if (n.type === "selectorNode") return "#ccc";
-            if (n.type === "output") return "#ff0072";
+          nodeStrokeColor={(node: Node): string => {
+            if (node.type === "input") return "#0041d0";
+            if (node.type === "selectorNode") return "#ccc";
+            if (node.type === "output") return "#ff0072";
 
             return "#eee";
           }}
-          nodeColor={(n: Node): string => {
-            if (n.type === "selectorNode") return "#ccc";
+          nodeColor={(node: Node): string => {
+            if (node.type === "selectorNode") return "#ccc";
 
             return "#fff";
           }}
