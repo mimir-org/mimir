@@ -1,2 +1,2 @@
-import './app.scss';
-export { default } from './App';
+import "./app.scss";
+export { default } from "./App";

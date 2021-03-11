@@ -1,12 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { FC, useEffect, useState } from "react";
-
 import ReactFlow, {
   removeElements,
   addEdge,
-  MiniMap,
   Controls,
-  Node,
   Elements,
   SnapGrid,
   Connection,
@@ -17,6 +14,7 @@ import ReactFlow, {
 import DefaultSelectorNode from "./selectorNodes/defaultSelectors/DefaultSelectorNode";
 import ConnectSelectorNode from "./selectorNodes/connectSelectors/ConnectSelectorNode";
 import { WorkspaceService } from "./../../services/workspaceService";
+import DrawMiniMap from "./DrawMiniMap";
 
 interface Props {
   workspaceService: WorkspaceService;
@@ -82,20 +80,7 @@ const DiagramSelectorComponent: FC<Props> = ({
           snapGrid={snapGrid}
           defaultZoom={1.5}
         >
-          <MiniMap
-            nodeStrokeColor={(n: Node): string => {
-              if (n.type === "input") return "#0041d0";
-              if (n.type === "selectorNode") return "#ccc";
-              if (n.type === "output") return "#ff0072";
-
-              return "#eee";
-            }}
-            nodeColor={(n: Node): string => {
-              if (n.type === "selectorNode") return "#ccc";
-
-              return "#fff";
-            }}
-          />
+          {DrawMiniMap()}
           <Controls />
         </ReactFlow>
       </div>

@@ -19,6 +19,7 @@ import ConnectSelectorNode from "./selectorNodes/connectSelectors/ConnectSelecto
 import { Workspace } from "../../models/workspace";
 import { WorkspaceService } from "./../../services/workspaceService";
 import { DiagramAddNodes, DiagramAddConnections } from "./";
+import DrawMiniMap from "./DrawMiniMap";
 
 let clickTimeout = null;
 
@@ -101,20 +102,7 @@ const DiagramComponent: FC<Workspace> = ({
         snapGrid={snapGrid}
         defaultZoom={defaultZoomFactor}
       >
-        <MiniMap
-          nodeStrokeColor={(node: Node): string => {
-            if (node.type === "input") return "#0041d0";
-            if (node.type === "selectorNode") return "#ccc";
-            if (node.type === "output") return "#ff0072";
-
-            return "#eee";
-          }}
-          nodeColor={(node: Node): string => {
-            if (node.type === "selectorNode") return "#ccc";
-
-            return "#fff";
-          }}
-        />
+        {DrawMiniMap()}
         <hr className="divider divider--left" />
         <hr className="divider divider--right" />
         <Controls />
