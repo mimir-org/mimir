@@ -3,9 +3,7 @@ import { FC, useEffect, useState, MouseEvent } from "react";
 import ReactFlow, {
   removeElements,
   addEdge,
-  MiniMap,
   Controls,
-  Node,
   FlowElement,
   Elements,
   SnapGrid,
@@ -72,6 +70,7 @@ const DiagramComponent: FC<Workspace> = ({
 
   const onElementsRemove = (elementsToRemove: Elements) =>
     setElements((els) => removeElements(elementsToRemove, els));
+
   const onConnect = (params: Connection | Edge) =>
     setElements((els) => {
       const node = service.functionalNodeMap.get(

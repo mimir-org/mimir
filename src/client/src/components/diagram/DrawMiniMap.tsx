@@ -1,19 +1,23 @@
 import { MiniMap, Node } from "react-flow-renderer";
 
 const DrawMiniMap = () => {
+  let color: string;
+
   return (
     <MiniMap
       nodeStrokeColor={(node: Node): string => {
-        if (node.type === "input") return "#0041d0";
-        if (node.type === "selectorNode") return "#ccc";
-        if (node.type === "output") return "#ff0072";
-
-        return "#eee";
+        return node.type === "input"
+          ? (color = "#00041d0")
+          : node.type === "selectorNode"
+          ? (color = "#ccc")
+          : node.type === "output"
+          ? (color = "#ff0072")
+          : (color = "#eee");
       }}
       nodeColor={(node: Node): string => {
-        if (node.type === "selectorNode") return "#ccc";
-
-        return "#fff";
+        return node.type === "selectorNode"
+          ? (color = "#ccc")
+          : (color = "#fff");
       }}
     />
   );

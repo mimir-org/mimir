@@ -49,6 +49,7 @@ const DiagramSelectorComponent: FC<Props> = ({
 
   const onElementsRemove = (elementsToRemove: Elements) =>
     setElements((els) => removeElements(elementsToRemove, els));
+
   const onConnect = (params: Connection | Edge) =>
     setElements((els) => {
       const node = workspaceService.functionalNodeMap.get(

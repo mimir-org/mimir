@@ -1,29 +1,29 @@
-import { User } from './../../models/user'; 
+import { User } from "./../../models/user";
 
-export const FETCHING_USER = 'FETCHING_USER';
-export const FETCHING_USER_SUCCESS_OR_ERROR = 'FETCHING_USER_SUCCESS_OR_ERROR';
+export const FETCHING_USER = "FETCHING_USER";
+export const FETCHING_USER_SUCCESS_OR_ERROR = "FETCHING_USER_SUCCESS_OR_ERROR";
 
 // State types
 export interface UserState {
-    fetching: boolean,
-    user: User | null,
-    hasError: boolean,
-    errorMsg: string | null    
+  fetching: boolean;
+  user: User | null;
+  hasError: boolean;
+  errorMsg: string | null;
 }
 
 export interface LoginUser {
-    username: string,
-    password: string
+  username: string;
+  password: string;
 }
 
 // Action types
 interface FetchUserAction {
-    type: typeof FETCHING_USER,
-    payload: LoginUser
+  type: typeof FETCHING_USER;
+  payload: LoginUser;
 }
 interface FetchUserActionFinished {
-    type: typeof FETCHING_USER_SUCCESS_OR_ERROR,
-    payload: UserState
+  type: typeof FETCHING_USER_SUCCESS_OR_ERROR;
+  payload: UserState;
 }
 
-export type UserActionTypes = FetchUserAction | FetchUserActionFinished
+export type UserActionTypes = FetchUserAction | FetchUserActionFinished;
