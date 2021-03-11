@@ -1,6 +1,6 @@
 import { memo, FC } from "react";
-import DefaultInputConnect from "./DefaultInputConnect";
-import DefaultOutputConnect from "./DefaultOutputConnect";
+import InputConnect from "./InputConnect";
+import OutputConnect from "./OutputConnect";
 import { NodeProps, Connection, Edge } from "react-flow-renderer";
 
 const onConnect = (params: Connection | Edge) =>
@@ -17,9 +17,9 @@ const DefaultSelectorNode: FC<NodeProps> = ({ data }) => {
   return (
     <>
       <div className="default-node" key={data.id}>
-        {DefaultInputConnect(inputConnectors, onConnect)}
+        {InputConnect(inputConnectors, onConnect)}
         <div>{data.label}</div>
-        {DefaultOutputConnect(outputConnectors)}
+        {OutputConnect(outputConnectors)}
       </div>
     </>
   );

@@ -1,6 +1,6 @@
 import { Handle, Position } from "react-flow-renderer";
 
-const DefaultOutputConnect = (outputConnectors) => {
+const OutputConnect = (outputConnectors) => {
   let outputTop = -5;
 
   return (
@@ -23,4 +23,4 @@ const DefaultOutputConnect = (outputConnectors) => {
   );
 };
 
-export default DefaultOutputConnect;
+export default OutputConnect;

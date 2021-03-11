@@ -14,8 +14,8 @@ import ReactFlow, {
   ArrowHeadType,
 } from "react-flow-renderer";
 
-import DefaultSelectorNode from "./selectorNodes/DefaultSelectorNode";
-import ConnectSelectorNode from "./selectorNodes/ConnectSelectorNode";
+import DefaultSelectorNode from "./selectorNodes/defaultSelectors/DefaultSelectorNode";
+import ConnectSelectorNode from "./selectorNodes/connectSelectors/ConnectSelectorNode";
 import { Workspace } from "../../models/workspace";
 import { WorkspaceService } from "./../../services/workspaceService";
 import { DiagramAddNodes, DiagramAddConnections } from "./";
