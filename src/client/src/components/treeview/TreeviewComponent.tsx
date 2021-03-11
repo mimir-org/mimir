@@ -1,7 +1,8 @@
 import { FC } from "react";
 import "./treeview.scss";
 import { Workspace } from "../../models/workspace";
-import { TreeviewInspectorComponent, TreeviewHeader, TreeviewBody } from "./";
+import { TreeviewHeader, TreeviewBody } from "./";
+import { TreeviewInspectorComponent } from "./inspector";
 
 const TreeviewComponent: FC<Workspace> = ({
   root,
