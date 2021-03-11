@@ -1,5 +1,5 @@
 // import { useState } from "react";
-import { NodeTypeOverview } from '..';
+import { NodeTypeOverview } from "..";
 
 const ToolboxComponent = () => {
   // useState(() => {
@@ -7,9 +7,9 @@ const ToolboxComponent = () => {
   // });
 
   return (
-  <div className="toolbox">
-    <NodeTypeOverview />
-  </div>
+    <div className="toolbox">
+      <NodeTypeOverview />
+    </div>
   );
 };
 
