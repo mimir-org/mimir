@@ -1,6 +1,10 @@
 const textResources = {
-  Heading_Inspector: "Inspector",
-  Heading_content: "Info to come",
+  MainHeader_App_Name: "ModelBuilder",
+  MainHeader_Treeview_Heading: "TRESTRUKTUR",
+  MainHeader_Diagram_Heading: "BLOKKDIAGRAM",
+  MainHeader_Login_Heading: "Login",
+  Treeview_Inspector_Heading: "Inspector",
+  Treeview_Inspector_Content: "Info to come",
 };
 
 export default textResources;

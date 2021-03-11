@@ -1,5 +1,4 @@
 import { Route } from "react-router";
-
 import { Header, Home, Footer } from "..";
 
 const App = () => {

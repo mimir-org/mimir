@@ -5,8 +5,7 @@ const InspectorComponent = () => {
   return (
     <div className="inspector_container">
       <div className="heading">
-        {/* <p>Inspector</p> */}
-        <p>{textResources.Heading_Inspector}</p>
+        <p>{textResources.Treeview_Inspector_Heading}</p>
       </div>
       <TreeviewInspectorContent />
     </div>

@@ -1,22 +1,23 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { BrowserRouter } from 'react-router-dom';
-import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from "react-router-dom";
+import reportWebVitals from "./reportWebVitals";
 
-import store from './store/index';
-import { App } from './components';
-import './index.scss';
+import store from "./store/index";
+import { App } from "./components";
+import "./index.scss";
 
-const rootElement = document.getElementById('root');
+const rootElement = document.getElementById("root");
 
 ReactDOM.render(
   // <React.StrictMode>
-    <Provider store={store}>
-      <BrowserRouter forceRefresh={true}>
-        <App />
-      </BrowserRouter>
-    </Provider>, rootElement
+  <Provider store={store}>
+    <BrowserRouter forceRefresh={true}>
+      <App />
+    </BrowserRouter>
+  </Provider>,
+  rootElement
   // </React.StrictMode>, rootElement
 );
 
