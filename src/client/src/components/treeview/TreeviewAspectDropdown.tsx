@@ -13,15 +13,21 @@ const AspectDropdown = ({ id, functional, product, location }: Props) => {
       <select className="select_category">
         {id === "1"
           ? functional.map((category) => (
-              <option value={category.name}>{category.name}</option>
+              <option key={category.id} value={category.name}>
+                {category.name}
+              </option>
             ))
           : id === "2"
           ? product.map((category) => (
-              <option value={category.name}>{category.name}</option>
+              <option key={category.id} value={category.name}>
+                {category.name}
+              </option>
             ))
           : id === "3"
           ? location.map((category) => (
-              <option value={category.name}>{category.name}</option>
+              <option key={category.id} value={category.name}>
+                {category.name}
+              </option>
             ))
           : null}
       </select>

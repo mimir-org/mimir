@@ -23,7 +23,7 @@ const TreeviewBody = ({ aspectDescriptors, root, aspects }: Props) => {
   return (
     <div className="aspects_container">
       {aspectDescriptors.map((aspect) => (
-        <div className="aspect_container">
+        <div key={aspect.id} className="aspect_container">
           <TreeviewAspectInfo id={aspect.id} name={aspect.name} />
           <TreeviewAspectDropdown
             id={aspect.id}
