@@ -1,116 +1,117 @@
 .treeview_component {
-	display: flex;
-	flex-direction: row;
-	font-family: roboto;
+  display: flex;
+  flex-direction: row;
+  font-family: roboto;
 
-	.treestructur_container {
-		flex: 3.5;
+  .treestructur_container {
+    flex: 3.5;
 
-		.heading {
-			text-align: center;
-			font-weight: 500;
-			font-size: 18px;
-		}
-	
-		.aspects_container {
-			display: flex;
-			flex-direction: row;
-	
-			.aspect_container {
-				flex: 1;
-				padding: 10px;
-				border: 2px solid grey;
-				border-width: 2px 0px 0px 2px;
-				margin: 0px 0px;
-	
-				.aspect_heading {
-					display: flex;
-					align-items: center;
-		
-					p {
-						margin: 0px 20px;
-					}
-	
-					p:first-letter {
-						text-transform: uppercase;
-					}
-		
-					img {
-						width: 30px;
-						height: 30px;
-					}
-				}
+    .heading {
+      text-align: center;
+      font-weight: 500;
+      font-size: 18px;
+    }
 
-				.aspect_category {
-					display: flex;
-					margin: 10px 0px 10px 0px; 
+    .aspects_container {
+      display: flex;
+      flex-direction: row;
 
-					.select_category {
-						flex: 1;
-						background-color: #e8f5ff;
-						padding: 8px 6px;
-						border-radius: 4px;
-						border: 2px solid grey;
-					}
-				}
+      .aspect_container {
+        flex: 1;
+        padding: 10px;
+        border: 2px solid grey;
+        border-width: 2px 0px 0px 2px;
+        margin: 0px 0px;
+        height: 100vh;
 
-				.select_category:hover {
-					background-color: #b2ddff;
-				}
-			}        
-		}
-	}
+        .aspect_heading {
+          display: flex;
+          align-items: center;
 
-	.inspector_container {
-		flex: 1;
-		background-color: #e8f5ff;
-		border-left: 2px solid grey;
+          p {
+            margin: 0px 20px;
+          }
 
-		.heading {
-			text-align: center;
-			font-weight: 500;
-			font-size: 18px;
-		}
+          p:first-letter {
+            text-transform: uppercase;
+          }
 
-		.info_container {
-			display: flex;
-			padding: 0px 10px 0px 10px;
-		}
-	}
-}   
+          img {
+            width: 30px;
+            height: 30px;
+          }
+        }
 
-	// .aspect {
-	//     flex: 1;
-	//     padding: 10px 10px 0px 10px;
-	//     border-right: 1px solid black;
+        .aspect_category {
+          display: flex;
+          margin: 10px 0px 10px 0px;
 
-		// .aspect_heading {
-		//     display: flex;
-		//     align-items: center;
-		//     font-weight: 500;
+          .select_category {
+            flex: 1;
+            background-color: #e8f5ff;
+            padding: 8px 6px;
+            border-radius: 4px;
+            border: 2px solid grey;
+          }
+        }
 
-		//     p {
-		//         margin-left: 20px;
-		//     }
-		// }
+        .select_category:hover {
+          background-color: #b2ddff;
+        }
+      }
+    }
+  }
 
-		// .treestructure_container {
-		//     position: relative;
+  .inspector_container {
+    flex: 1;
+    background-color: #e8f5ff;
+    border-left: 2px solid grey;
+    height: 100vh;
 
-		//     .root {
-		//         display: flex;
+    .heading {
+      text-align: center;
+      font-weight: 500;
+      font-size: 18px;
+    }
 
-		//         p {
-		//             margin-left: 20px;
-		//         }
-		//     }
+    .info_container {
+      display: flex;
+      padding: 0px 10px 0px 10px;
+    }
+  }
+}
 
-		//     .vertical-line {
-		//         border-left: 1px dashed black;
-		//         position: fixed;
-		//         top: 165px;
-		//         bottom: 0;
-		//         margin-left: 80px;
-		//     }
-		// }
-	
+// .aspect {
+//     flex: 1;
+//     padding: 10px 10px 0px 10px;
+//     border-right: 1px solid black;
+
+// .aspect_heading {
+//     display: flex;
+//     align-items: center;
+//     font-weight: 500;
+
+//     p {
+//         margin-left: 20px;
+//     }
+// }
+
+// .treestructure_container {
+//     position: relative;
+
+//     .root {
+//         display: flex;
+
+//         p {
+//             margin-left: 20px;
+//         }
+//     }
+
+//     .vertical-line {
+//         border-left: 1px dashed black;
+//         position: fixed;
+//         top: 165px;
+//         bottom: 0;
+//         margin-left: 80px;
+//     }
+// }
