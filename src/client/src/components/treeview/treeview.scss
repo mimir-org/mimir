@@ -63,10 +63,14 @@
   }
 
   .inspector_container {
-    flex: 1;
-    background-color: #e8f5ff;
-    border-left: 2px solid grey;
-    height: 100vh;
+    width: 100% !important;
+    background-color: #e8f5ff !important;
+    position: fixed;
+    bottom: 0;
+    overflow: hidden;
+    left: 0;
+    border: 2px solid grey;
+    height: 20%;
 
     .heading {
       text-align: center;
