@@ -22,7 +22,7 @@
         border-top: 2px solid grey;
         border-width: 2px 0px 0px 2px;
         margin: 0px 0px;
-        height: 100vh;
+        // height: 100vh;
 
         .aspect_heading {
           display: flex;
@@ -80,38 +80,3 @@
     }
   }
 }
-
-// .aspect {
-//     flex: 1;
-//     padding: 10px 10px 0px 10px;
-//     border-right: 1px solid black;
-
-// .aspect_heading {
-//     display: flex;
-//     align-items: center;
-//     font-weight: 500;
-
-//     p {
-//         margin-left: 20px;
-//     }
-// }
-
-// .treestructure_container {
-//     position: relative;
-
-//     .root {
-//         display: flex;
-
-//         p {
-//             margin-left: 20px;
-//         }
-//     }
-
-//     .vertical-line {
-//         border-left: 1px dashed black;
-//         position: fixed;
-//         top: 165px;
-//         bottom: 0;
-//         margin-left: 80px;
-//     }
-// }
