@@ -1,4 +1,4 @@
-import { TreeviewInspectorContent } from ".";
+import { InspectorContent } from ".";
 import textResources from "../../../textResources";
 
 const InspectorComponent = () => {
@@ -7,7 +7,7 @@ const InspectorComponent = () => {
       <div className="heading">
         <p>{textResources.Treeview_Inspector_Heading}</p>
       </div>
-      <TreeviewInspectorContent />
+      <InspectorContent />
     </div>
   );
 };

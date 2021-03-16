@@ -2,7 +2,7 @@ import { FC } from "react";
 import "./treeview.scss";
 import { Workspace } from "../../models/workspace";
 import { TreeviewHeader, TreeviewBody } from "./";
-import { TreeviewInspectorComponent } from "./inspector";
+import { InspectorComponent } from "../modules/inspectorModule";
 
 const TreeviewComponent: FC<Workspace> = ({
   root,
@@ -18,7 +18,7 @@ const TreeviewComponent: FC<Workspace> = ({
         aspects={aspects}
       />
     </div>
-    <TreeviewInspectorComponent />
+    <InspectorComponent />
   </div>
 );
 export default TreeviewComponent;
