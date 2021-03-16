@@ -16,7 +16,7 @@ const textResources = {
   Inspector_Relations: "Relations",
   Inspector_Inhereted: "Inhereted req.",
 
-  /*****  Blockiew *****/
+  /*****  Blockview *****/
 };
 
 export default textResources;
