@@ -1,21 +1,24 @@
-export const FACET_CHANGED = "FACET_CHANGED";
+export const FACET_CHANGED = "Facet changed";
+export const FACET_CHANGED_COMPLETED = "FACET_CHANGED_COMPLETED";
 
 const initialState = {
   value: "",
 };
 
 const testReducer = (state = initialState, action) => {
-  console.log("Testing state and action:", state, action);
   switch (action.type) {
-    case FACET_CHANGED:
-      console.log("Testing state:", state);
+    case FACET_CHANGED_COMPLETED:
       return {
         ...state,
-        // value: state.value,
+        type: action.type,
       };
     default:
       return state;
   }
 };
+
+export const changeFacet = () => ({
+  type: FACET_CHANGED,
+});
 
 export default testReducer;

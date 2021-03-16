@@ -1,13 +1,11 @@
-import { useCallback } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/index";
 
+// Work in progress...
 const useTreeviewChangeHandler = () => {
-  // const aspectList = useSelector<RootState>((state) => state.workspace);
+  const aspectList = useSelector<RootState>((state) => state.workspace);
 
-  const test = "one";
-  console.log(test);
-  return test;
+  return aspectList;
 };
 
 export default useTreeviewChangeHandler;

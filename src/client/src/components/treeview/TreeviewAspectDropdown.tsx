@@ -12,14 +12,14 @@ interface Props {
 
 const AspectDropdown = ({ id, functional, product, location }: Props) => {
   const dispatch = useDispatch();
-  const HandleChange = () => {
-    console.log("test handle change");
+  const handleChange = (e) => {
+    const value = e.target.value;
     dispatch(getAspect());
   };
 
   return (
     <div className="aspect_category">
-      <select onChange={HandleChange} className="select_category">
+      <select onChange={handleChange} className="select_category">
         {id === "1"
           ? functional.map((category) => (
               <option key={category.id} value={category.name}>

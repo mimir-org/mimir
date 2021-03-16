@@ -10,6 +10,8 @@ const textResources = {
   // Treeview
   Treeview_Inspector_Heading: "Inspector",
   Treeview_Inspector_Content: "Info to come",
+
+  // Diagram
 };
 
 export default textResources;

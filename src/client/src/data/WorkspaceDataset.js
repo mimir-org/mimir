@@ -207,6 +207,38 @@ export default class WorkspaceDataset {
             },
           },
           {
+            aspect: "1",
+            category: "3",
+            descriptor: {
+              name: "test",
+              description: "",
+            },
+          },
+          {
+            aspect: "1",
+            category: "4",
+            descriptor: {
+              name: "test",
+              description: "",
+            },
+          },
+          {
+            aspect: "1",
+            category: "5",
+            descriptor: {
+              name: "test",
+              description: "",
+            },
+          },
+          {
+            aspect: "1",
+            category: "6",
+            descriptor: {
+              name: "test",
+              description: "",
+            },
+          },
+          {
             aspect: "2",
             category: "1",
             descriptor: {
