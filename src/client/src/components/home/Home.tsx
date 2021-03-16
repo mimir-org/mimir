@@ -32,32 +32,32 @@ const Home = () => {
 
   return (
     <div className="container">
-		<div className="explorer_view">{textResources.Explorer_view}</div>
-		<div className="middle_content">
-			<div className="workspace">
-				{isOnline && (
-					<>
-						{params.type === "treeview" && (
-							<TreeviewComponent
-							root={workspaceState.workspace.root}
-							aspects={workspaceState.workspace.aspects}
-							aspectDescriptors={workspaceState.workspace.aspectDescriptors}
-							/>
-						)}
-						{params.type === "diagram" && (
-							<DiagramComponent
-							root={workspaceState.workspace.root}
-							aspects={workspaceState.workspace.aspects}
-							aspectDescriptors={workspaceState.workspace.aspectDescriptors}
-							/>
-						)}
-					</>
-				)}
-			</div>
-			<div className="inspector">{textResources.Inspector}</div>
-		</div>
-		<div className="library">{textResources.Library}</div>
-	</div>
+      <div className="explorer_view">{textResources.Explorer_view}</div>
+      <div className="middle_content">
+        <div className="workspace">
+          {isOnline && (
+            <>
+              {params.type === "treeview" && (
+                <TreeviewComponent
+                  root={workspaceState.workspace.root}
+                  aspects={workspaceState.workspace.aspects}
+                  aspectDescriptors={workspaceState.workspace.aspectDescriptors}
+                />
+              )}
+              {params.type === "diagram" && (
+                <DiagramComponent
+                  root={workspaceState.workspace.root}
+                  aspects={workspaceState.workspace.aspects}
+                  aspectDescriptors={workspaceState.workspace.aspectDescriptors}
+                />
+              )}
+            </>
+          )}
+        </div>
+        <div className="inspector">{textResources.Inspector}</div>
+      </div>
+      <div className="library">{textResources.Library}</div>
+    </div>
   );
 };
 
