@@ -1,7 +1,12 @@
 import textResources from "../../../../../textResources";
+import FragmentHeader from "../styled/FragmentHeader";
 
 const BodyFragment = () => {
-  return <p>{textResources.Inspector_Body}</p>;
+  return (
+    <FragmentHeader color="#9ACD32">
+      {textResources.Inspector_Body}
+    </FragmentHeader>
+  );
 };
 
 export default BodyFragment;
