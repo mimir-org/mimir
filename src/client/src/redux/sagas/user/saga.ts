@@ -5,8 +5,8 @@ import {
   UserState,
   LoginUser,
 } from "./../../store/user/types";
-import { User } from "../../models/user";
-import UserDataset from "../../data/UserDataset";
+import { User } from "../../../models/user";
+import UserDataset from "../../../data/UserDataset";
 
 // eslint-disable-next-line require-yield
 export function* getUser(action: UserActionTypes) {

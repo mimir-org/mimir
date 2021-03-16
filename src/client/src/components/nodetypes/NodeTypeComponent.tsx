@@ -1,5 +1,5 @@
 import React from "react";
-import { Nodetype } from "../../store/nodetypes/types";
+import { Nodetype } from "../../redux/store/nodetypes/types";
 
 export const NodeTypeComponent: React.FC<Nodetype> = ({
   id,

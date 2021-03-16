@@ -4,7 +4,7 @@ import {
   NodetypesActionTypes,
   NodetypesState,
 } from "./../../store/nodetypes/types";
-import NodeTypeDataset from "../../data/NodeTypeDataset";
+import NodeTypeDataset from "../../../data/NodeTypeDataset";
 
 // eslint-disable-next-line require-yield
 export function* getNodetypes(action: NodetypesActionTypes) {

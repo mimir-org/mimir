@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
-import { NodetypesState } from "./../../store/nodetypes/types";
-import { getnodetypes } from "./../../store/nodetypes/actions";
+import { NodetypesState } from "./../../redux/store/nodetypes/types";
+import { getnodetypes } from "./../../redux/store/nodetypes/actions";
 import { NodeTypeComponent } from "./NodeTypeComponent";
-import { RootState } from "./../../store/index";
+import { RootState } from "./../../redux/store/index";
 
 const NodeTypeOverview = () => {
   const dispatch = useDispatch();
+
   const state = useSelector<RootState>(
     (state) => state.nodetype
   ) as NodetypesState;

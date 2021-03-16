@@ -1,4 +1,4 @@
-import { User } from "./../../models/user";
+import { User } from "./../../../models/user";
 
 export const FETCHING_USER = "FETCHING_USER";
 export const FETCHING_USER_SUCCESS_OR_ERROR = "FETCHING_USER_SUCCESS_OR_ERROR";

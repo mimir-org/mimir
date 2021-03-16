@@ -1,4 +1,4 @@
-import { Workspace } from "./../../models/workspace";
+import { Workspace } from "./../../../models/workspace";
 
 export const FETCHING_WORKSPACE = "FETCHING_WORKSPACE";
 export const FETCHING_WORKSPACE_SUCCESS_OR_ERROR =

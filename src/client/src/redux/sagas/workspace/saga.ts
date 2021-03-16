@@ -4,9 +4,9 @@ import {
   WorkspaceActionTypes,
   WorkspaceState,
 } from "./../../store/workspace/types";
-import { Workspace } from "../../models/workspace";
-import WorkspaceDataset from "../../data/WorkspaceDataset";
-import { WorkspaceService } from "./../../services/workspaceService";
+import { Workspace } from "../../../models/workspace";
+import WorkspaceDataset from "../../../data/WorkspaceDataset";
+import { WorkspaceService } from "../../../services/workspaceService";
 
 export function* getWorkspace(action: WorkspaceActionTypes) {
   try {
