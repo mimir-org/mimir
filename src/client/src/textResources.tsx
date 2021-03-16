@@ -7,11 +7,16 @@ const textResources = {
   MainHeader_Diagram_Heading: "BLOKKDIAGRAM",
   MainHeader_Login_Heading: "Login",
 
-  // Treeview
-  Treeview_Inspector_Heading: "Inspector",
-  Treeview_Inspector_Content: "Info to come",
+  /*****  Treeview *****/
+  // InspectorModule
+  Inspector_Heading: "Inspector",
+  Inspector_Content: "Info to come",
+  Inspector_Header: "Header",
+  Inspector_Body: "Body",
+  Inspector_Relations: "Relations",
+  Inspector_Inhereted: "Inhereted req.",
 
-  // Diagram
+  /*****  Blockiew *****/
 };
 
 export default textResources;
