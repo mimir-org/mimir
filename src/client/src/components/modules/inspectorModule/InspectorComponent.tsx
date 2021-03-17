@@ -1,12 +1,7 @@
 import { InspectorContent } from ".";
 import textResources from "../../../textResources";
 import { useState } from "react";
-import {
-  AnimatedMenuIn,
-  AnimatedMenuOut,
-  AnimatedButtonIn,
-  AnimatedButtonOut,
-} from "./styled/animated/";
+import { AnimatedMenu, AnimatedToggleButton } from "./styled/animated/";
 
 const InspectorComponent = () => {
   const [showInspector, setShowInspector] = useState(true);
@@ -17,21 +12,21 @@ const InspectorComponent = () => {
 
   return showInspector ? (
     <>
-      <AnimatedButtonIn onClick={handleClick} height="346">
+      <AnimatedToggleButton onClick={handleClick} start="0" stop="346">
         {textResources.Inspector_Close}
-      </AnimatedButtonIn>
-      <AnimatedMenuIn height="346">
+      </AnimatedToggleButton>
+      <AnimatedMenu start="0" stop="346">
         <InspectorContent />
-      </AnimatedMenuIn>
+      </AnimatedMenu>
     </>
   ) : (
     <>
-      <AnimatedButtonOut onClick={handleClick} height="0">
+      <AnimatedToggleButton onClick={handleClick} start="346" stop="0">
         {textResources.Inspector_Open}
-      </AnimatedButtonOut>
-      <AnimatedMenuOut height="0">
+      </AnimatedToggleButton>
+      <AnimatedMenu start="346" stop="0">
         <InspectorContent />
-      </AnimatedMenuOut>
+      </AnimatedMenu>
     </>
   );
 };
