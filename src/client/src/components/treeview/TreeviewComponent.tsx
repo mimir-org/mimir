@@ -18,7 +18,7 @@ const TreeviewComponent: FC<Workspace> = ({
         aspects={aspects}
       />
     </div>
-    {/* <InspectorComponent /> */}
+    <InspectorComponent />
   </div>
 );
 export default TreeviewComponent;

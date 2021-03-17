@@ -3,9 +3,10 @@ import styled from "styled-components";
 const StyledToggleButton = styled.div`
   position: absolute;
   bottom: ${(props: { height: string }) => props.height}%;
-  right: 0%;
-  border: 1px solid grey;
-  width: auto;
+  right: 20%;
+  border-top: 1px solid grey;
+  border-left: 1px solid grey;
+  margin-bottom: 1px;
   height: 20px;
   font-family: roboto;
   background-color: ${(props: { color: string }) => props.color};

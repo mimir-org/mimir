@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
 const StyledInspectorComponent = styled.div`
-  width: 100% !important;
-  background-color: #e8f5ff !important;
-  position: fixed;
+  position: absolute;
+  margin-bottom: 1px;
   bottom: 0;
-  left: 0;
+  left: 20%;
+  right: 20%;
   overflow: hidden;
-  border-top: 4px solid grey;
+  border-top: 1px solid #000;
   height: ${(props: { height: string }) => props.height}%;
 `;
 

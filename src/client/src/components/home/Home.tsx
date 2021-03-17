@@ -6,6 +6,7 @@ import { getWorkspace } from "../../redux/store/workspace/actions";
 import { WorkspaceState } from "../../redux/store/workspace/types";
 import { RootState } from "./../../redux/store/index";
 import textResources from "../../textResources";
+import { InspectorComponent } from "../modules/inspectorModule";
 // import { UserState } from "../../store/user/types";
 // import { SETTING_KEY, SETTING_VALUE } from "./../../models/user";
 // import { getUser } from "../../store/user/actions";
@@ -54,7 +55,10 @@ const Home = () => {
             </>
           )}
         </div>
-        <div className="inspector">{textResources.Inspector}</div>
+        {/* <div className="inspector">
+          {textResources.Inspector}
+          <InspectorComponent />
+        </div> */}
       </div>
       <div className="library">{textResources.Library}</div>
     </div>

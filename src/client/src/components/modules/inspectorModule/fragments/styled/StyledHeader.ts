@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const StyledHeader = styled.div`
+  display: inline-block;
   margin-right: 0;
   margin-top: 5px;
   border: 1px solid grey;

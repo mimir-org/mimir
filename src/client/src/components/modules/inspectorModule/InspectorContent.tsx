@@ -5,12 +5,12 @@ import InheritedFragment from "./fragments/inhereted/InheretedFragment";
 
 const InspectorContent = () => {
   return (
-    <div className="info_container">
+    <>
       <HeaderFragment />
       <BodyFragment />
       <RelationsFragment />
       <InheritedFragment />
-    </div>
+    </>
   );
 };
 
