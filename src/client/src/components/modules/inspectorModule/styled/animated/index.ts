@@ -1,4 +1,2 @@
-export { default as AnimatedButtonIn } from "./AnimatedButtonIn";
-export { default as AnimatedButtonOut } from "./AnimatedButtonOut";
-export { default as AnimatedMenuIn } from "./AnimatedMenuIn";
-export { default as AnimatedMenuOut } from "./AnimatedMenuOut";
+export { default as AnimatedToggleButton } from "./AnimatedToggleButton";
+export { default as AnimatedMenu } from "./AnimatedMenu";

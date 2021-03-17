@@ -8,7 +8,7 @@ const StyledInspectorComponent = styled.div`
   right: 20%;
   overflow: hidden;
   border-top: 1px solid #000;
-  height: ${(props: { height: string }) => props.height}px;
+  height: ${(props: { stop: string }) => props.stop}px;
 `;
 
 export default StyledInspectorComponent;
