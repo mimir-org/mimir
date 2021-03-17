@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const StyledInspectorComponent = styled.div`
-  position: absolute;
+  position: fixed;
   margin-bottom: 1px;
   bottom: 0;
   left: 20%;
