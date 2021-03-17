@@ -17,15 +17,20 @@ const InheritFragment = () => {
     <>
       {isOpen ? (
         <>
-          <StyledHeader color={color} active="true" onClick={handleClick}>
+          <StyledHeader
+            color={color}
+            text="white"
+            active="true"
+            onClick={handleClick}
+          >
             {textResources.Inspector_Inhereted}
           </StyledHeader>
-          <StyledInspectorInfo color={color}>
+          <StyledInspectorInfo color={color} text="white">
             Info inherited etc
           </StyledInspectorInfo>
         </>
       ) : (
-        <StyledHeader color={color} onClick={handleClick}>
+        <StyledHeader color={color} text="white" onClick={handleClick}>
           {textResources.Inspector_Inhereted}
         </StyledHeader>
       )}
