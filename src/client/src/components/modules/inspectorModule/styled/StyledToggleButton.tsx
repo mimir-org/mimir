@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const StyledToggleButton = styled.div`
   position: absolute;
-  bottom: ${(props: { height: string }) => props.height}%;
+  bottom: ${(props: { height: string }) => props.height}px;
   right: 20%;
   border-top: 1px solid grey;
   border-left: 1px solid grey;
