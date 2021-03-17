@@ -15,6 +15,8 @@ const textResources = {
   Inspector_Body: "Body",
   Inspector_Relations: "Relations",
   Inspector_Inhereted: "Inhereted req.",
+  Inspector_Close: "x",
+  Inspector_Open: "Open",
 
   /*****  Blockview *****/
 };
