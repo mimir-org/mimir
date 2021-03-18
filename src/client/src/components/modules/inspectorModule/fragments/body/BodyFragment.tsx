@@ -4,12 +4,13 @@ import textResources from "../../../../../textResources";
 import StyledHeader from "../styled/StyledHeader";
 import StyledInspectorInfo from "../styled/StyledInspectorInfo";
 import { useInspectorChangeHandler } from "../../hooks/useInspectorChangeHandler";
+import BodyContent from "./BodyConent";
 
 const BodyFragment = () => {
   const dispatch = useDispatch();
   const handleClick = useInspectorChangeHandler("body", dispatch);
   const isOpen = useSelector<RootState>(
-    (state) => state.inspectorReducer.list[1].visible
+    (state) => state.inspectorReducer.list[2].visible
   );
   const color = "#9ACD32";
 
@@ -20,7 +21,9 @@ const BodyFragment = () => {
           <StyledHeader color={color} active="true" onClick={handleClick}>
             {textResources.Inspector_Body}
           </StyledHeader>
-          <StyledInspectorInfo color={color}>Info body etc</StyledInspectorInfo>
+          <StyledInspectorInfo color={color}>
+            <BodyContent />
+          </StyledInspectorInfo>
         </>
       ) : (
         <StyledHeader color={color} onClick={handleClick}>

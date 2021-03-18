@@ -4,36 +4,34 @@ import textResources from "../../../../../textResources";
 import StyledHeader from "../styled/StyledHeader";
 import StyledInspectorInfo from "../styled/StyledInspectorInfo";
 import { useInspectorChangeHandler } from "../../hooks/useInspectorChangeHandler";
-import HeaderContent from "./HeaderContent";
+import ObjectContent from "./ObjectContent";
 
-const HeaderFragment = () => {
+const ObjectFragment = () => {
   const dispatch = useDispatch();
-  const handleClick = useInspectorChangeHandler("header", dispatch);
-
+  const handleClick = useInspectorChangeHandler("object", dispatch);
   const isOpen = useSelector<RootState>(
-    (state) => state.inspectorReducer.list[1].visible
+    (state) => state.inspectorReducer.list[0].visible
   );
-
-  const color = "#FFDEAD";
+  const color = "#fff";
 
   return (
     <>
       {isOpen ? (
         <>
           <StyledHeader color={color} active="true" onClick={handleClick}>
-            {textResources.Inspector_Header}
+            {textResources.Inspector_Object}
           </StyledHeader>
           <StyledInspectorInfo color={color}>
-            <HeaderContent />
+            <ObjectContent />
           </StyledInspectorInfo>
         </>
       ) : (
         <StyledHeader color={color} onClick={handleClick}>
-          {textResources.Inspector_Header}
+          {textResources.Inspector_Object}
         </StyledHeader>
       )}
     </>
   );
 };
 
-export default HeaderFragment;
+export default ObjectFragment;

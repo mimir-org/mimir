@@ -4,12 +4,13 @@ import textResources from "../../../../../textResources";
 import StyledHeader from "../styled/StyledHeader";
 import StyledInspectorInfo from "../styled/StyledInspectorInfo";
 import { useInspectorChangeHandler } from "../../hooks/useInspectorChangeHandler";
+import RelationContent from "./RelationsContent";
 
 const RelationsFragment = () => {
   const dispatch = useDispatch();
   const handleClick = useInspectorChangeHandler("relations", dispatch);
   const isOpen = useSelector<RootState>(
-    (state) => state.inspectorReducer.list[2].visible
+    (state) => state.inspectorReducer.list[3].visible
   );
   const color = "#FF7F50";
 
@@ -21,7 +22,7 @@ const RelationsFragment = () => {
             {textResources.Inspector_Relations}
           </StyledHeader>
           <StyledInspectorInfo color={color}>
-            Info relations etc
+            <RelationContent />
           </StyledInspectorInfo>
         </>
       ) : (
