@@ -1,7 +1,7 @@
-import { CategoryDescriptor } from "../../models/workspace";
+import { CategoryDescriptor } from "../../../models/workspace";
 import "react-dropdown/style.css";
 import { useDispatch } from "react-redux";
-import { getAspect } from "../../redux/testing/getAspect";
+import { getAspect } from "../../../redux/testing/getAspect";
 
 interface Props {
   id: string;

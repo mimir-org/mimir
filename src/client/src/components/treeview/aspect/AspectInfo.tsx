@@ -1,4 +1,4 @@
-import { FunctionalIcon, ProductionIcon, LocationIcon } from "../../assets";
+import { FunctionalIcon, ProductionIcon, LocationIcon } from "../../../assets";
 
 interface Props {
   id: string;

@@ -1,4 +1,4 @@
-import { TreeviewAspectInfo, TreeviewAspectDropdown } from "./";
+import { AspectInfo, AspectDropdown } from "./aspect";
 import { WorkspaceService } from "../../services";
 import {
   AspectDescriptor,
@@ -24,8 +24,8 @@ const TreeviewBody = ({ aspectDescriptors, root, aspects }: Props) => {
     <div className="aspects_container">
       {aspectDescriptors.map((aspect) => (
         <div key={aspect.id} className="aspect_container">
-          <TreeviewAspectInfo id={aspect.id} name={aspect.name} />
-          <TreeviewAspectDropdown
+          <AspectInfo id={aspect.id} name={aspect.name} />
+          <AspectDropdown
             id={aspect.id}
             functional={fcat}
             product={pcat}
