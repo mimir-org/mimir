@@ -4,17 +4,19 @@ import textResources from "../../../../../textResources";
 import StyledHeader from "../styled/StyledHeader";
 import StyledInspectorInfo from "../styled/StyledInspectorInfo";
 import { useInspectorChangeHandler } from "../../hooks/useInspectorChangeHandler";
-import HeaderContent from "./HeaderContent";
+import { FragmentContent } from "../";
+import GetContentData from "../data/GetContentData";
 
 const HeaderFragment = () => {
   const dispatch = useDispatch();
-  const handleClick = useInspectorChangeHandler("header", dispatch);
+  const index = 1;
+  const color = "#FFDEAD";
+  const data = GetContentData(index);
+  const handleClick = useInspectorChangeHandler(index, dispatch);
 
   const isOpen = useSelector<RootState>(
-    (state) => state.inspectorReducer.list[1].visible
+    (state) => state.inspectorReducer.list[index].visible
   );
-
-  const color = "#FFDEAD";
 
   return (
     <>
@@ -24,7 +26,7 @@ const HeaderFragment = () => {
             {textResources.Inspector_Header}
           </StyledHeader>
           <StyledInspectorInfo color={color}>
-            <HeaderContent />
+            <FragmentContent data={data.content} />
           </StyledInspectorInfo>
         </>
       ) : (

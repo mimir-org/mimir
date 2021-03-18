@@ -4,15 +4,19 @@ import textResources from "../../../../../textResources";
 import StyledHeader from "../styled/StyledHeader";
 import StyledInspectorInfo from "../styled/StyledInspectorInfo";
 import { useInspectorChangeHandler } from "../../hooks/useInspectorChangeHandler";
-import RelationContent from "./RelationsContent";
+import { FragmentContent } from "../";
+import GetContentData from "../data/GetContentData";
 
 const RelationsFragment = () => {
   const dispatch = useDispatch();
-  const handleClick = useInspectorChangeHandler("relations", dispatch);
+  const index = 3;
+  const color = "#FF7F50";
+  const data = GetContentData(index);
+  const handleClick = useInspectorChangeHandler(index, dispatch);
+
   const isOpen = useSelector<RootState>(
     (state) => state.inspectorReducer.list[3].visible
   );
-  const color = "#FF7F50";
 
   return (
     <>
@@ -22,7 +26,7 @@ const RelationsFragment = () => {
             {textResources.Inspector_Relations}
           </StyledHeader>
           <StyledInspectorInfo color={color}>
-            <RelationContent />
+            <FragmentContent data={data.content} />
           </StyledInspectorInfo>
         </>
       ) : (

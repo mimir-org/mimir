@@ -4,15 +4,19 @@ import textResources from "../../../../../textResources";
 import StyledHeader from "../styled/StyledHeader";
 import StyledInspectorInfo from "../styled/StyledInspectorInfo";
 import { useInspectorChangeHandler } from "../../hooks/useInspectorChangeHandler";
-import InheretedContent from "./InheretedContent";
+import { FragmentContent } from "../";
+import GetContentData from "../data/GetContentData";
 
 const InheritFragment = () => {
   const dispatch = useDispatch();
-  const handleClick = useInspectorChangeHandler("inherit", dispatch);
-  const isOpen = useSelector<RootState>(
-    (state) => state.inspectorReducer.list[4].visible
-  );
+  const index = 4;
   const color = "#8B008B";
+  const data = GetContentData(index);
+  const handleClick = useInspectorChangeHandler(index, dispatch);
+
+  const isOpen = useSelector<RootState>(
+    (state) => state.inspectorReducer.list[index].visible
+  );
 
   return (
     <>
@@ -27,7 +31,7 @@ const InheritFragment = () => {
             {textResources.Inspector_Inhereted}
           </StyledHeader>
           <StyledInspectorInfo color={color} text="white">
-            <InheretedContent />
+            <FragmentContent data={data.content} />
           </StyledInspectorInfo>
         </>
       ) : (
