@@ -2,10 +2,8 @@ import styled from "styled-components";
 
 const StyledInspectorInfo = styled.div`
   background-color: ${(props: { color: string }) => props.color};
-  color: ${(props: { text: string }) => (props.text ? "#fff" : "#000")};
+  color: ${(props: { text: string }) => props.text};
   width: auto;
-  left: ${(props: { position: string }) =>
-    props.position ? props.position : "0"}%;
   min-width: 25%;
   height: 250px;
   position: absolute;

@@ -1,17 +1,13 @@
-import ObjectFragment from "./fragments/object/ObjectFragment";
-import HeaderFragment from "./fragments/header/HeaderFragment";
-import BodyFragment from "./fragments/body/BodyFragment";
-import RelationsFragment from "./fragments/relations/RelationsFragment";
-import InheritedFragment from "./fragments/inhereted/InheretedFragment";
+import { FragmentContent } from "./fragments/";
 
 const InspectorContent = () => {
   return (
     <>
-      <ObjectFragment />
-      <HeaderFragment />
-      <BodyFragment />
-      <RelationsFragment />
-      <InheritedFragment />
+      <FragmentContent index={0} />
+      <FragmentContent index={1} />
+      <FragmentContent index={2} />
+      <FragmentContent index={3} />
+      <FragmentContent index={4} />
     </>
   );
 };

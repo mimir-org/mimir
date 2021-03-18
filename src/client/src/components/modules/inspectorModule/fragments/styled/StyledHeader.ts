@@ -8,7 +8,7 @@ const StyledHeader = styled.div`
   width: auto;
   height: 20px;
   font-family: roboto;
-  color: ${(props: { text: string }) => (props.text ? "#fff" : "#000")};
+  color: ${(props: { text: string }) => props.text};
   text-decoration: ${(props: { active: string }) =>
     props.active ? "underline" : "none"};
   font-weight: ${(props: { active: string }) =>

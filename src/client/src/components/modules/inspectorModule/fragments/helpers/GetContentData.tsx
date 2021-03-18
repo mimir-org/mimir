@@ -47,6 +47,34 @@ const GetContentData = (index: number) => {
         type: "Version",
         value: "",
       },
+      // {
+      //   type: "Kind",
+      //   value: "",
+      // },
+      // {
+      //   type: "Status",
+      //   value: "",
+      // },
+      // {
+      //   type: "Project",
+      //   value: "",
+      // },
+      // {
+      //   type: "Long Description",
+      //   value: "",
+      // },
+      // {
+      //   type: "Long Local Decription",
+      //   value: "",
+      // },
+      // {
+      //   type: "Updated by",
+      //   value: "",
+      // },
+      // {
+      //   type: "Contractor",
+      //   value: "",
+      // },
     ],
   };
 
