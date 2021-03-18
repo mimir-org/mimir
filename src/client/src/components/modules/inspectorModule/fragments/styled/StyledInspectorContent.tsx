@@ -1,10 +1,11 @@
 import styled from "styled-components";
 
-const InspectorInfo = styled.div`
+const StyledInspectorContent = styled.div`
   background-color: ${(props: { color: string }) => props.color};
-  color: ${(props: { text: string }) => (props.text ? "#fff" : "#000")};
-  width: 25%;
-  height: 150px;
+  color: ${(props: { text: string }) => props.text};
+  width: auto;
+  min-width: 25%;
+  height: 250px;
   position: absolute;
   margin-top: 0px;
   border: 1px solid grey;
@@ -12,4 +13,4 @@ const InspectorInfo = styled.div`
   font-family: roboto;
 `;
 
-export default InspectorInfo;
+export default StyledInspectorContent;

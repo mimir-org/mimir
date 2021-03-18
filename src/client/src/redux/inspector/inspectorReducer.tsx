@@ -5,6 +5,10 @@ export const INSPECTOR_ELEMENT_CHANGED_COMPLETED =
 const initialState = {
   list: [
     {
+      type: "object",
+      visible: false,
+    },
+    {
       type: "header",
       visible: false,
     },
