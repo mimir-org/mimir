@@ -101,10 +101,10 @@ const DiagramComponent: FC<Workspace> = ({
         snapGrid={snapGrid}
         defaultZoom={defaultZoomFactor}
       >
-        {DrawMiniMap()}
+        {/* {DrawMiniMap()} */}
         <hr className="divider divider--left" />
         <hr className="divider divider--right" />
-        <Controls />
+        {/* <Controls /> */}
       </ReactFlow>
     </>
   );

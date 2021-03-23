@@ -5,8 +5,12 @@ import { nodetypeReducer } from "./nodetypes/reducers";
 import { userReducer } from "./user/reducers";
 import { sagas } from "../sagas";
 import aspectReducer from "../testing/aspectReducer";
+<<<<<<< HEAD
 import inspectorReducer from "../inspector/reducers/inspectorReducer";
 import showInspectorReducer from "../inspector/reducers/showInspectorReducer";
+=======
+import inspectorReducer from "../inspector/reducer/inspectorReducer";
+>>>>>>> 279cc55 (Add flow elements)
 
 const sagaMiddleware = createSagaMiddleware();
 

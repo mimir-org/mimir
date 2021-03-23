@@ -6,7 +6,12 @@ import { FragmentData } from ".";
 import { GetContentData, GetTextResource } from "./helpers";
 
 const FragmentContent = ({ index }) => {
+<<<<<<< HEAD
   const backgroundColor = "#C0C0C0";
+=======
+  const textColor = GetColor(index, "text");
+  const backgroundColor = GetColor(index);
+>>>>>>> 279cc55 (Add flow elements)
   const header = GetTextResource(index);
 
   const dispatch = useDispatch();

@@ -11,7 +11,7 @@ const InputConnect = (inputConnectors, onConnect) => {
       return (
         <Handle
           type="target"
-          position={Position.Left}
+          position={Position.Left} // connector på venstre side
           style={{ top: inputTop, bottom: "auto" }}
           id={connector.id}
           key={connector.id}

@@ -1,6 +1,7 @@
 import { AspectInfo, AspectDropdown } from "./aspect";
 import { WorkspaceService } from "../../services";
-import DnDFlow from "./flow/";
+import DnDFlow from "./flow/dragAndDrop";
+import LayoutFlow from "./flow/layouting/index";
 import {
   AspectDescriptor,
   Aspects,
@@ -22,7 +23,10 @@ const TreeviewBody = ({ aspectDescriptors, root, aspects }: Props) => {
   // const fgraph = service.getNodesConnectedToRoot('1');
 
   return (
-    <DnDFlow />
+    <>
+      {/* <LayoutFlow /> */}
+      <DnDFlow />
+    </>
     // <div className="aspects_container">
 
     //   {aspectDescriptors.map((aspect) => (
