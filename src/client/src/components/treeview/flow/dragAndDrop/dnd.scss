@@ -1,0 +1,105 @@
+.react-flow__node-location,
+.react-flow__node-function,
+.react-flow__node-product {
+  padding: 10px;
+  border-radius: 3px;
+  width: 150px;
+  font-size: 12px;
+  color: #222;
+  text-align: center;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.react-flow__node-function,
+.react-flow__node-product,
+.react-flow__node-location {
+  border-color: #000;
+  width: 100px;
+  height: 25px;
+}
+
+.react-flow__node-function {
+  background: yellow;
+}
+
+.react-flow__node-product {
+  background: turquoise;
+}
+
+.react-flow__node-location {
+  background: magenta;
+}
+
+/* Tegnebrettet */
+.dndflow {
+  flex-direction: column;
+  display: flex;
+  height: 50vh;
+  background-color: #f8f8f8;
+}
+
+/* Sidebar */
+.dndflow aside {
+  border-right: 1px solid #eee;
+  padding: 15px 10px;
+  font-size: 12px;
+  background: #fcfcfc;
+}
+
+.dndflow aside .description {
+  margin-bottom: 10px;
+}
+
+.dndflow .dndnode {
+  height: 50px;
+  padding: 4px;
+  border: 2px solid #1a192b;
+  font-size: 16px;
+  border-radius: 2px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: grab;
+}
+
+.dndflow .dndnode.function {
+  background-color: yellow;
+  border-color: #000000;
+}
+
+.dndflow .dndnode.location {
+  background-color: magenta;
+  border-color: #000000;
+}
+
+.dndflow .dndnode.product {
+  background-color: turquoise;
+  border-color: #000000;
+}
+
+.dndflow .dndnode.input {
+  border-color: #0041d0;
+}
+
+.dndflow .dndnode.output {
+  border-color: #ff0072;
+}
+
+/* Hovedscenen */
+.dndflow .reactflow-wrapper {
+  flex-grow: 1;
+  height: 100%;
+}
+
+@media screen and (min-width: 768px) {
+  .dndflow {
+    flex-direction: row;
+  }
+
+  .dndflow aside {
+    width: 20%;
+    max-width: 250px;
+  }
+}
