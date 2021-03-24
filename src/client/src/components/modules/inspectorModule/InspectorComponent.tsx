@@ -1,31 +1,27 @@
-import { InspectorContent } from ".";
-import textResources from "../../../textResources";
-import { useState } from "react";
-import { AnimatedMenu, AnimatedToggleButton } from "./styled/animated/";
+import { InspectorHeader } from ".";
+import { AnimatedMenu } from "./styled/animated/";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
 
 const InspectorComponent = () => {
-  const [showInspector, setShowInspector] = useState(true);
+  const inspectorMaxHeight = "290";
+  const inspectorMinHeight = "0";
+  const inspectorHiddenHeight = "38";
 
-  const handleClick = () => {
-    setShowInspector(!showInspector);
-  };
+  const showInspector = useSelector<RootState>(
+    (state) => state.showInspectorReducer.visible
+  );
 
   return showInspector ? (
     <>
-      <AnimatedToggleButton onClick={handleClick} start="0" stop="346">
-        {textResources.Inspector_Close}
-      </AnimatedToggleButton>
-      <AnimatedMenu start="0" stop="346">
-        <InspectorContent />
+      <AnimatedMenu start={inspectorMinHeight} stop={inspectorMaxHeight}>
+        <InspectorHeader />
       </AnimatedMenu>
     </>
   ) : (
     <>
-      <AnimatedToggleButton onClick={handleClick} start="346" stop="0">
-        {textResources.Inspector_Open}
-      </AnimatedToggleButton>
-      <AnimatedMenu start="346" stop="0">
-        <InspectorContent />
+      <AnimatedMenu start={inspectorMaxHeight} stop={inspectorHiddenHeight}>
+        <InspectorHeader />
       </AnimatedMenu>
     </>
   );

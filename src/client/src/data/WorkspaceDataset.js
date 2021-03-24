@@ -3,7 +3,7 @@ export default class WorkspaceDataset {
     return new Promise((resolve) => {
       let dataset = {
         root: {
-          title: "Equinor Asset Model",
+          title: "<Facility>",
         },
         aspects: [
           {

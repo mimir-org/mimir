@@ -1,21 +1,25 @@
 .appbar {
-    width: 100%;
-    display: flex;
-    flex-grow: 12;
-    flex-direction: row;
-    background-color: #243746 !important;
+  width: 100%;
+  display: flex;
+  flex-grow: 12;
+  flex-direction: row;
+  max-height: 44px;
+  background-color: #007079 !important;
+  position: relative !important;
 
-    .menu_button {
-        flex-grow: 1;
-    }
+  .menu_button {
+    flex-grow: 1;
+    margin-bottom: 20px;
+  }
 
-    .title_text {
-        flex-grow: 9;
-    }
+  .title_text {
+    flex-grow: 9;
+    margin-bottom: 20px;
+  }
 
-    .login_button {
-        flex-grow: 2;
-        align-self: center;
-    }
-
+  .login_button {
+    flex-grow: 2;
+    align-self: center;
+    margin-bottom: 20px;
+  }
 }

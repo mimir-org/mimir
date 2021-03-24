@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { useSelector } from "react-redux";
 import { Dispatch } from "redux";
-import { changeInspector } from "../../../../redux/inspector/changeInspector";
+import { changeInspector } from "../../../../redux/inspector/actions/changeInspector";
 import { RootState } from "../../../../redux/store";
 
 export const useInspectorChangeHandler = (

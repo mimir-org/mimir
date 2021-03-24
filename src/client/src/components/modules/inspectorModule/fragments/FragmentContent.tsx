@@ -1,13 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
-import { StyledHeader, StyledInspectorContent } from "./styled";
+import { FragmentHeader, FragmentDataWrapper } from "./styled";
 import { useInspectorChangeHandler } from "../hooks/useInspectorChangeHandler";
 import { FragmentData } from ".";
-import { GetContentData, GetTextResource, GetColor } from "./helpers";
+import { GetContentData, GetTextResource } from "./helpers";
 
 const FragmentContent = ({ index }) => {
-  const textColor = GetColor(index, "text");
-  const backgroundColor = GetColor(index, "");
+  const backgroundColor = "#C0C0C0";
   const header = GetTextResource(index);
 
   const dispatch = useDispatch();
@@ -22,26 +21,21 @@ const FragmentContent = ({ index }) => {
     <>
       {isOpen ? (
         <>
-          <StyledHeader
+          <FragmentHeader
             color={backgroundColor}
             active="true"
-            text={textColor}
             onClick={handleClick}
           >
             {header}
-          </StyledHeader>
-          <StyledInspectorContent color={backgroundColor} text={textColor}>
+          </FragmentHeader>
+          <FragmentDataWrapper color={backgroundColor}>
             <FragmentData data={data.content} />
-          </StyledInspectorContent>
+          </FragmentDataWrapper>
         </>
       ) : (
-        <StyledHeader
-          color={backgroundColor}
-          text={textColor}
-          onClick={handleClick}
-        >
+        <FragmentHeader color={backgroundColor} onClick={handleClick}>
           {header}
-        </StyledHeader>
+        </FragmentHeader>
       )}
     </>
   );
