@@ -9,8 +9,14 @@ const ToggleRightButton = styled.div`
     props.visible ? "0px" : "17px solid #007079"};
   border-top: 17px solid transparent;
   border-bottom: 17px solid transparent;
-  border-bottom-left-radius: 0px;
-  border-top-left-radius: 0px;
+  border-bottom-left-radius: ${(props: { visible: boolean }) =>
+    props.visible ? "5px" : "0px"};
+  border-top-left-radius: ${(props: { visible: boolean }) =>
+    props.visible ? "5px" : "0px"};
+  border-bottom-right-radius: ${(props: { visible: boolean }) =>
+    props.visible ? "0px" : "5px"};
+  border-top-right-radius: ${(props: { visible: boolean }) =>
+    props.visible ? "0px" : "5px"};
 
   &: hover {
     cursor: pointer;
