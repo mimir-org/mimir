@@ -1,34 +1,21 @@
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../redux/store";
 import textResources from "../../../textResources";
-import styled from "styled-components";
+
+import AnimatedMenu from "./styled/animated/AnimatedMenu";
+import useLibraryToggleChangeHandler from "./hooks/useLibraryToggleChangeHandler";
+import { LibraryIcon } from "../../../assets";
+import { Header, ToggleBox } from "./styled";
 import {
   ToggleRightButton,
   ToggleLeftButton,
 } from "../../../assets/buttons/ToggleButton";
-import AnimatedMenu from "./styled/animated/AnimatedMenu";
-import useLibraryToggleChangeHandler from "./hooks/useLibraryToggleChangeHandler";
-import { LibraryIcon } from "../../../assets";
-
-const ToggleBox = styled.div`
-  display: flex;
-  float: left;
-  margin-left: 7px;
-  margin-top: 13px;
-`;
-
-const Header = styled.div`
-  margin-left: 120px;
-  margin-top: 7px;
-  font-family: roboto;
-  color: #000;
-  size: 18px;
-  font-weight: 700;
-  display: inline-flex;
-  align-items: center;
-`;
 
 const LibraryModule = () => {
+  const maxHeight = "331";
+  const minHeight = "0";
+  const hiddenHeight = "35";
+
   const dispatch = useDispatch();
   const showModule = useSelector<RootState>(
     (state) => state.showLibraryReducer.visible
@@ -36,7 +23,7 @@ const LibraryModule = () => {
   const handleClick = useLibraryToggleChangeHandler(dispatch, showModule);
 
   return showModule ? (
-    <AnimatedMenu start="0" stop="331">
+    <AnimatedMenu start={minHeight} stop={maxHeight}>
       <ToggleBox>
         <ToggleRightButton onClick={handleClick} />
         <Header>
@@ -46,7 +33,7 @@ const LibraryModule = () => {
       </ToggleBox>
     </AnimatedMenu>
   ) : (
-    <AnimatedMenu start="331" stop="35">
+    <AnimatedMenu start={maxHeight} stop={hiddenHeight}>
       <ToggleBox>
         <ToggleLeftButton onClick={handleClick} />
         <Header>
