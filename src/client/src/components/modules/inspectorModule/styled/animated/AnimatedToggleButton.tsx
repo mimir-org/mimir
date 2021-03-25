@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import { ToggleInspectorIcon } from "../../fragments/styled";
+import ToggleButton from "../../../../../assets/icons/ToggleButton";
 
 const animation = (props: {
   start: string;
@@ -14,7 +14,7 @@ const animation = (props: {
   }
 `;
 
-const AnimatedToggleButton = styled(ToggleInspectorIcon)`
+const AnimatedToggleButton = styled(ToggleButton)`
   animation: ${animation} 0.4s ease-in-out;
 `;
 

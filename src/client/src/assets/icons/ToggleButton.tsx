@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const ToggleInspectorIcon = styled.div`
+const ToggleButton = styled.div`
   width: 0;
   height: 0;
   border-left: 20px solid transparent;
@@ -19,4 +19,4 @@ const ToggleInspectorIcon = styled.div`
   }
 `;
 
-export default ToggleInspectorIcon;
+export default ToggleButton;
