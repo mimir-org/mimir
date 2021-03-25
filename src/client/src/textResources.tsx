@@ -9,10 +9,7 @@ const textResources = {
 
   // Content
   Explorer_view: "Explorer View",
-  Inspector: "Inspector",
-  Library: "Library",
 
-  /*****  Treeview *****/
   // InspectorModule
   Inspector_Heading: "Inspector",
   Inspector_Content: "Info to come",
@@ -21,10 +18,9 @@ const textResources = {
   Inspector_Body: "Body",
   Inspector_Relations: "Relations",
   Inspector_Inhereted: "Inhereted Requirements",
-  Inspector_Close: "x",
-  Inspector_Open: "Open",
 
-  /*****  Blockview *****/
+  // LibraryModule
+  Library_Heading: "Library",
 };
 
 export default textResources;

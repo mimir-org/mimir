@@ -22,7 +22,6 @@ const FragmentHeader = styled.div`
     props.active ? "8px 20px 27px 20px;" : "8px 20px 0px 20px"};
   box-shadow: ${(props: { active: string }) =>
     props.active ? "" : "inset -2px -4px 4px rgba(0, 0, 0, 0.25)"};
-
   &: hover {
     cursor: pointer;
   }
