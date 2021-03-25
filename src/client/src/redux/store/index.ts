@@ -3,6 +3,7 @@ import createSagaMiddleware from "redux-saga";
 import { workspaceReducer } from "./workspace/reducers";
 import { nodetypeReducer } from "./nodetypes/reducers";
 import { userReducer } from "./user/reducers";
+import { projectReducer } from "./project/reducers";
 import { sagas } from "../sagas";
 import aspectReducer from "../testing/aspectReducer";
 import inspectorReducer from "../inspector/inspectorReducer";
@@ -20,6 +21,7 @@ const rootReducers = combineReducers({
   workspace: workspaceReducer,
   nodetype: nodetypeReducer,
   user: userReducer,
+  projeject: projectReducer
 });
 
 const store = createStore(
