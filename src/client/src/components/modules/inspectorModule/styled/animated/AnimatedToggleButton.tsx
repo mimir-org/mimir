@@ -1,16 +1,18 @@
+import { FC } from "react";
 import styled, { keyframes } from "styled-components";
-import ToggleButton from "../../../../../assets/icons/ToggleButton";
+import { ToggleButton } from "../../../../../assets/icons/ToggleButton/";
 
-const animation = (props: {
+interface Props {
   start: string;
   stop: string;
-  visible;
-}) => keyframes`
+}
+
+const animation: FC<Props> = ({ start, stop }) => keyframes`
   from {
-    bottom: ${props.start}px;
+    bottom: ${start}px;
   },
   to {
-    bottom: ${props.stop}px;
+    bottom: ${stop}px;
   }
 `;
 

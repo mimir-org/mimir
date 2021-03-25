@@ -1,12 +1,18 @@
+import { FC } from "react";
 import styled, { keyframes } from "styled-components";
 import { StyledInspectorComponent } from "..";
 
-const animation = (props: { start: string; stop: string }) => keyframes`
+interface Props {
+  start: string;
+  stop: string;
+}
+
+const animation: FC<Props> = ({ start, stop }) => keyframes`
   from {
-    height: ${props.start}px;
+    height: ${start}px;
   },
   to {
-    height: ${props.stop}px;
+    height: ${stop}px;
   }
 `;
 
