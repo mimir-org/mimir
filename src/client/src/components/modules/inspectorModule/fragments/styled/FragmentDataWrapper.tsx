@@ -6,7 +6,7 @@ const FragmentDataWrapper = styled.div`
   min-width: 25%;
   height: 100vh;
   position: absolute;
-  padding: 10px 20px 10px 20px;
+  padding: 10px 10px 10px 2px;
   font-family: roboto;
   margin-top: 0px;
 `;
