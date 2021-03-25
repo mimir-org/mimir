@@ -21,6 +21,9 @@ const textResources = {
 
   // LibraryModule
   Library_Heading: "Library",
+  Library_Function: "Fuction",
+  Library_Product: "Product",
+  Library_Location: "Location",
 };
 
 export default textResources;
