@@ -1,0 +1,26 @@
+{
+	"Default export": {
+		"prefix": "export-default",
+		"description": "Exports the default export from another module",
+		"body": [
+			"export { default } from \"./${1:Name}\""
+		],
+		"scope": "typescript"
+	},
+	"React Component": {
+		"prefix": "react-component",
+		"description": "Scaffolds a React component with props",
+		"body": [
+			"interface ${1:ComponentName}Props {",
+			"\t${0}",
+			"}",
+			"",
+			"export const ${1} = ({}: ${1}Props) => {",
+			"\treturn (<div></div>)",
+			"}",
+			"",
+			"export default ${1}"
+		],
+		"scope": "typescriptreact"
+	}
+}
