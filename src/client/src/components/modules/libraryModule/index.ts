@@ -1,1 +1,1 @@
-export { default as LibraryComponent } from "./LibraryComponent";
+export { default as LibraryModule } from "./LibraryModule";

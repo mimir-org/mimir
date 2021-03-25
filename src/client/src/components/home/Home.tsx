@@ -7,7 +7,8 @@ import { WorkspaceState } from "../../redux/store/workspace/types";
 import { RootState } from "./../../redux/store/index";
 import textResources from "../../textResources";
 import { ExplorerComponent } from "../modules/explorerModule";
-import { InspectorComponent } from "../modules/inspectorModule";
+import { InspectorModule } from "../modules/inspectorModule";
+import { LibraryModule } from "../modules/libraryModule";
 // import { UserState } from "../../store/user/types";
 // import { SETTING_KEY, SETTING_VALUE } from "./../../models/user";
 // import { getUser } from "../../store/user/actions";
@@ -58,12 +59,9 @@ const Home = () => {
             </>
           )}
         </div>
-        {/* <div className="inspector">
-          {textResources.Inspector}
-          <InspectorComponent />
-        </div> */}
+        <InspectorModule />
       </div>
-      <div className="library">{textResources.Library}</div>
+      <LibraryModule />
     </div>
   );
 };

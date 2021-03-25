@@ -7,7 +7,7 @@ import {
 
 const initialState: NodetypesState = {
   fetching: false,
-  nodetypes: null,
+  nodetypes: null, // blir en liste med typer
   hasError: false,
   errorMsg: null,
 };
