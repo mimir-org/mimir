@@ -8,8 +8,7 @@ import {
 const FragmentData = ({ data }) => {
   const CreateColumn = (start: number, stop: number) => {
     // Fix when data content is known
-    if (stop > data.length || start > data.length) {
-      start = data.length - 4;
+    if (stop > data.length) {
       stop = data.length;
     }
 
@@ -17,7 +16,7 @@ const FragmentData = ({ data }) => {
       <StyledColumn>
         {data.slice(start, stop).map((data) => (
           <>
-            <StyledParagraph key={Math.random()}>{data.type}</StyledParagraph>
+            <StyledParagraph key={data.id}>{data.type}</StyledParagraph>
             <StyledInput />
           </>
         ))}
