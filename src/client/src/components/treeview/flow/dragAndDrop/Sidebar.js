@@ -6,7 +6,7 @@ import {
 
 const Sidebar = () => {
   const onDragStart = (event, nodeType) => {
-    event.dataTransfer.setData("application/reactflow", nodeType, "test");
+    event.dataTransfer.setData("application/reactflow", nodeType);
     event.dataTransfer.effectAllowed = "move";
   };
 
@@ -15,10 +15,10 @@ const Sidebar = () => {
       <div className="description">Aspects</div>
       <div
         className="dndnode function"
-        onDragStart={(event) => onDragStart(event, "function")} // function, area, product
+        onDragStart={(event) => onDragStart(event, "function")}
         draggable
       >
-        <div>Function</div>
+        Function
         <img
           src={FunctionalIcon}
           width="30px"
@@ -28,7 +28,7 @@ const Sidebar = () => {
       </div>
 
       <div
-        className="dndnode product" //className="dndnode"
+        className="dndnode product"
         onDragStart={(event) => onDragStart(event, "product")}
         draggable
       >

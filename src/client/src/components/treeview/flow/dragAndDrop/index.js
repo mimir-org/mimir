@@ -7,7 +7,6 @@ import ReactFlow, {
   removeElements,
   Controls,
 } from "react-flow-renderer";
-import GetLabel from "./helpers/GetLabel";
 
 const initialElements = [
   {
@@ -25,7 +24,6 @@ const DnDFlow = () => {
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState(initialElements);
-  console.log("elem: ", elements);
 
   const onConnect = (params) => setElements((els) => addEdge(params, els));
   const onElementsRemove = (elementsToRemove) =>
@@ -44,20 +42,17 @@ const DnDFlow = () => {
 
     const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
     const type = event.dataTransfer.getData("application/reactflow");
-    console.log("test: ", event);
 
     const position = reactFlowInstance.project({
       x: event.clientX - reactFlowBounds.left,
       y: event.clientY - reactFlowBounds.top,
     });
 
-    const label = GetLabel(type);
-
     const newNode = {
       id: getId(),
       type,
       position,
-      data: { label: `${label}` },
+      data: { label: `${type}` },
     };
 
     setElements((es) => es.concat(newNode));
@@ -76,7 +71,6 @@ const DnDFlow = () => {
             onDragOver={onDragOver}
           >
             <Controls />
-            {/* Controls: kontroll av brettet, zoom etc */}
           </ReactFlow>
         </div>
         <Sidebar />

@@ -1,12 +1,7 @@
 import { FC } from "react";
 import "./treeview.scss";
 import { Workspace } from "../../models/workspace";
-<<<<<<< HEAD
 import { TreeviewHeader, TreeviewBody } from "./";
-=======
-import { TreeviewHeader, TreeviewBody } from ".";
-import { InspectorComponent } from "../modules/inspectorModule";
->>>>>>> d6073ee (Add flow to treeview)
 
 const TreeviewComponent: FC<Workspace> = ({
   root,

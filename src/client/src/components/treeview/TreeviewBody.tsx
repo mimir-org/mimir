@@ -1,7 +1,6 @@
 import { AspectInfo, AspectDropdown } from "./aspect";
 import { WorkspaceService } from "../../services";
 import DnDFlow from "./flow/dragAndDrop";
-import LayoutFlow from "./flow/layouting/index";
 import {
   AspectDescriptor,
   Aspects,
@@ -24,11 +23,11 @@ const TreeviewBody = ({ aspectDescriptors, root, aspects }: Props) => {
 
   return (
     <>
-      {/* <LayoutFlow /> */}
       <DnDFlow />
     </>
-    // <div className="aspects_container">
 
+    /***  ORIGINAL DROPDOWNS ***/
+    // <div className="aspects_container">
     //   {aspectDescriptors.map((aspect) => (
     //     <div key={aspect.id} className="aspect_container">
     //       <AspectInfo id={aspect.id} name={aspect.name} />

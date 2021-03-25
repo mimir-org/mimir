@@ -3,20 +3,12 @@
 .react-flow__node-product {
   padding: 10px;
   border-radius: 3px;
-  width: 150px;
+  width: 100px;
   font-size: 12px;
   color: #222;
   text-align: center;
   border-width: 1px;
   border-style: solid;
-}
-
-.react-flow__node-function,
-.react-flow__node-product,
-.react-flow__node-location {
-  border-color: #000;
-  width: 100px;
-  height: 25px;
 }
 
 .react-flow__node-function {
@@ -52,10 +44,11 @@
 }
 
 .dndflow .dndnode {
-  height: 50px;
+  height: 25px;
+  width: 150px;
   padding: 4px;
-  border: 2px solid #1a192b;
-  font-size: 16px;
+  border: 1px solid #1a192b;
+  font-size: 14px;
   border-radius: 2px;
   margin-bottom: 10px;
   display: flex;

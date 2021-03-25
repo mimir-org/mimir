@@ -17,7 +17,7 @@ const FragmentData = ({ data }) => {
       <StyledColumn>
         {data.slice(start, stop).map((data) => (
           <>
-            <StyledParagraph key={data.type}>{data.type}</StyledParagraph>
+            <StyledParagraph key={Math.random()}>{data.type}</StyledParagraph>
             <StyledInput />
           </>
         ))}

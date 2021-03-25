@@ -6,14 +6,7 @@ import { FragmentData } from ".";
 import { GetContentData, GetTextResource } from "./helpers";
 
 const FragmentContent = ({ index }) => {
-<<<<<<< HEAD
-  const backgroundColor = "#C0C0C0";
-=======
-  const textColor = GetColor(index, "text");
-  const backgroundColor = GetColor(index);
->>>>>>> 279cc55 (Add flow elements)
   const header = GetTextResource(index);
-
   const dispatch = useDispatch();
   const data = GetContentData(index);
   const handleClick = useInspectorChangeHandler(index, dispatch);
@@ -26,21 +19,15 @@ const FragmentContent = ({ index }) => {
     <>
       {isOpen ? (
         <>
-          <FragmentHeader
-            color={backgroundColor}
-            active="true"
-            onClick={handleClick}
-          >
+          <FragmentHeader active="true" onClick={handleClick}>
             {header}
           </FragmentHeader>
-          <FragmentDataWrapper color={backgroundColor}>
+          <FragmentDataWrapper>
             <FragmentData data={data.content} />
           </FragmentDataWrapper>
         </>
       ) : (
-        <FragmentHeader color={backgroundColor} onClick={handleClick}>
-          {header}
-        </FragmentHeader>
+        <FragmentHeader onClick={handleClick}>{header}</FragmentHeader>
       )}
     </>
   );
