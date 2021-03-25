@@ -1,6 +1,6 @@
 import { FC } from "react";
 import styled, { keyframes } from "styled-components";
-import { ToggleButton } from "../../../../../assets/icons/ToggleButton/";
+import { ToggleButton } from "../../../../../assets/buttons/ToggleButton";
 
 interface Props {
   start: string;

@@ -4,6 +4,8 @@ import { AnimatedToggleButton } from "./styled/animated/";
 import useInspectorToggleChangeHandler from "./hooks/useInspectorToggleChangeHandler";
 import { RootState } from "../../../redux/store";
 import textResources from "../../../textResources";
+import { EyeIcon } from "../../../assets";
+import { IconWrapper } from "./styled/";
 
 const ToggleBox = () => {
   const dispatch = useDispatch();
@@ -16,6 +18,9 @@ const ToggleBox = () => {
   );
   return (
     <StyledToggleBox>
+      <IconWrapper>
+        <img src={EyeIcon} alt="inspector-icon" />
+      </IconWrapper>
       <StyledInspectorTitle>
         {textResources.Inspector_Heading}
       </StyledInspectorTitle>

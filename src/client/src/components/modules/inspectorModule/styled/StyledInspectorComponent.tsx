@@ -5,7 +5,6 @@ const StyledInspectorComponent = styled.div`
   bottom: 0;
   left: 20%;
   right: 20%;
-  overflow: hidden;
   border: 0px solid #000;
   height: ${(props: { stop: string }) => props.stop}px;
   background-color: #f2f2f2;

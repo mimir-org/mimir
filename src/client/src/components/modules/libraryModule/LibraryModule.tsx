@@ -5,9 +5,10 @@ import styled from "styled-components";
 import {
   ToggleRightButton,
   ToggleLeftButton,
-} from "../../../assets/icons/ToggleButton";
+} from "../../../assets/buttons/ToggleButton";
 import AnimatedMenu from "./styled/animated/AnimatedMenu";
 import useLibraryToggleChangeHandler from "./hooks/useLibraryToggleChangeHandler";
+import { LibraryIcon } from "../../../assets";
 
 const ToggleBox = styled.div`
   display: flex;
@@ -23,6 +24,8 @@ const Header = styled.div`
   color: #000;
   size: 18px;
   font-weight: 700;
+  display: inline-flex;
+  align-items: center;
 `;
 
 const LibraryModule = () => {
@@ -36,7 +39,10 @@ const LibraryModule = () => {
     <AnimatedMenu start="0" stop="331">
       <ToggleBox>
         <ToggleRightButton onClick={handleClick} />
-        <Header>{textResources.Library_Heading}</Header>
+        <Header>
+          <img src={LibraryIcon} alt="library-icon" />
+          {textResources.Library_Heading}
+        </Header>
       </ToggleBox>
     </AnimatedMenu>
   ) : (
