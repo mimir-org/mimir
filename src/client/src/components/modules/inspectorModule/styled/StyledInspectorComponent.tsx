@@ -7,8 +7,10 @@ const StyledInspectorComponent = styled.div`
   left: 20%;
   right: 20%;
   overflow: hidden;
-  border-top: 1px solid #000;
+  border: 0px solid #000;
   height: ${(props: { stop: string }) => props.stop}px;
+  background-color: #f2f2f2;
+  z-index: 5;
 `;
 
 export default StyledInspectorComponent;

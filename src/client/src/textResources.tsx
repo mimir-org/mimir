@@ -20,7 +20,7 @@ const textResources = {
   Inspector_Object: "Object",
   Inspector_Body: "Body",
   Inspector_Relations: "Relations",
-  Inspector_Inhereted: "Inhereted req.",
+  Inspector_Inhereted: "Inhereted Requirements",
   Inspector_Close: "x",
   Inspector_Open: "Open",
 

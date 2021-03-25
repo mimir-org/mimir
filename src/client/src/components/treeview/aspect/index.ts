@@ -1,2 +1,2 @@
-import './aspect.scss';
-export { default } from './AspectComponent'; 
+export { default as AspectDropdown } from "./AspectDropdown";
+export { default as AspectInfo } from "./AspectInfo";

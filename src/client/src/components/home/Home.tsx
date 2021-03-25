@@ -55,10 +55,7 @@ const Home = () => {
             </>
           )}
         </div>
-        {/* <div className="inspector">
-          {textResources.Inspector}
-          <InspectorComponent />
-        </div> */}
+        <InspectorComponent />
       </div>
       <div className="library">{textResources.Library}</div>
     </div>
