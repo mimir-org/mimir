@@ -49,7 +49,10 @@ const LibraryModule = () => {
     <AnimatedMenu start="331" stop="35">
       <ToggleBox>
         <ToggleLeftButton onClick={handleClick} />
-        <Header>{textResources.Library_Heading}</Header>
+        <Header>
+          <img src={LibraryIcon} alt="library-icon" />
+          {textResources.Library_Heading}
+        </Header>
       </ToggleBox>
     </AnimatedMenu>
   );
