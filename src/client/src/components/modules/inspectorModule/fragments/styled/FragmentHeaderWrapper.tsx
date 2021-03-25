@@ -4,7 +4,6 @@ const FragmentHeaderWrapper = styled.div`
   background-color: #f2f2f2;
   color: #000;
   height: 35px;
-  width: -webkit-fill-available;
   border-top: 2px solid #000;
   border-bottom: 2px solid #000;
   font-family: roboto;
