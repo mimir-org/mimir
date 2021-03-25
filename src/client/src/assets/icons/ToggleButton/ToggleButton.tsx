@@ -1,4 +1,5 @@
-/* This is a dynamic version of the ToggleButton. Props define which way the button points. */
+/* This is a dynamic version of the ToggleButton. 
+Props define the look and direction of the button. */
 
 import styled from "styled-components";
 
@@ -13,8 +14,7 @@ const ToggleButton = styled.div`
     props.visible ? "0px" : "20px solid #007079"};
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
-  float: right;
-  margin-top: 4px;
+  float: ${(props: { float: string }) => props.float};
 
   &: hover {
     cursor: pointer;

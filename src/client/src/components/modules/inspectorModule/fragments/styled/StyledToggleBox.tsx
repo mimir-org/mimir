@@ -6,7 +6,7 @@ const StyledToggleBox = styled.div`
   float: right;
   width: 140px;
   font-family: roboto;
-  padding-top: 3px;
+  padding-top: 6px;
   margin-right: 10px;
 `;
 

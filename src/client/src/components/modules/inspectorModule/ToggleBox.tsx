@@ -24,6 +24,7 @@ const ToggleBox = () => {
         visible={isInspectorVisible}
         start="0"
         stop="305"
+        float="right"
       />
     </StyledToggleBox>
   );
