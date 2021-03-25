@@ -1,8 +1,27 @@
-import {
-  ProductionIcon,
-  FunctionalIcon,
-  LocationIcon,
-} from "../../../../assets/";
+import styled from "styled-components";
+import { ProductIcon, FunctionIcon, LocationIcon } from "../../../../assets/";
+
+const StyledBendik = styled.div`
+  width: 294px;
+  height: 41px;
+  border: 1px solid #444;
+  background-color: #fff;
+  margin-bottom: 5px;
+`;
+
+const IconWrapper = styled.div`
+  float: right;
+  margin-right: 5px;
+  margin-top: 5px;
+`;
+
+const TextWrapper = styled.div`
+  font-family: roboto;
+  display: inline;
+  padding: 10px;
+  position: absolute;
+  size: 18px;
+`;
 
 const Sidebar = () => {
   const onDragStart = (event, nodeType) => {
@@ -11,49 +30,40 @@ const Sidebar = () => {
   };
 
   return (
-    <aside>
-      <div className="description">Aspects</div>
-      <div
+    <>
+      <StyledBendik
         className="dndnode function"
         onDragStart={(event) => onDragStart(event, "function")}
         draggable
       >
-        Function
-        <img
-          src={FunctionalIcon}
-          width="30px"
-          height="30px"
-          alt="func-icon"
-        ></img>
-      </div>
+        <TextWrapper>Function</TextWrapper>
+        <IconWrapper>
+          <img src={FunctionIcon} width="30px" height="30px" alt="func-icon" />
+        </IconWrapper>
+      </StyledBendik>
 
-      <div
+      <StyledBendik
         className="dndnode product"
         onDragStart={(event) => onDragStart(event, "product")}
         draggable
       >
-        Product
-        <img
-          src={ProductionIcon}
-          width="30px"
-          height="30px"
-          alt="prod-icon"
-        ></img>
-      </div>
-      <div
+        <TextWrapper>Product</TextWrapper>
+        <IconWrapper>
+          <img src={ProductIcon} width="30px" height="30px" alt="func-icon" />
+        </IconWrapper>
+      </StyledBendik>
+
+      <StyledBendik
         className="dndnode location"
         onDragStart={(event) => onDragStart(event, "location")}
         draggable
       >
-        Location
-        <img
-          src={LocationIcon}
-          width="30px"
-          height="30px"
-          alt="location-icon"
-        ></img>
-      </div>
-    </aside>
+        <TextWrapper>Location</TextWrapper>
+        <IconWrapper>
+          <img src={LocationIcon} width="30px" height="30px" alt="func-icon" />
+        </IconWrapper>
+      </StyledBendik>
+    </>
   );
 };
 
