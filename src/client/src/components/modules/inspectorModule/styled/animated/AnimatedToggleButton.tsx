@@ -1,6 +1,6 @@
 import { FC } from "react";
 import styled, { keyframes } from "styled-components";
-import { ToggleButton } from "../../../../../assets/buttons/ToggleButton";
+import { ToggleInspectorButton } from "../../../../../assets/buttons/index";
 
 interface Props {
   start: string;
@@ -16,7 +16,7 @@ const animation: FC<Props> = ({ start, stop }) => keyframes`
   }
 `;
 
-const AnimatedToggleButton = styled(ToggleButton)`
+const AnimatedToggleButton = styled(ToggleInspectorButton)`
   animation: ${animation} 0.4s ease-in-out;
 `;
 

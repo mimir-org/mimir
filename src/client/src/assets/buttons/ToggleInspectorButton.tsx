@@ -1,9 +1,6 @@
-/* This is a dynamic version of the ToggleButton. 
-Props define the look and direction of the button. */
-
 import styled from "styled-components";
 
-const ToggleButton = styled.div`
+const ToggleInspectorButton = styled.div`
   display: inline;
   margin-top: 3px;
   border-left: 17px solid transparent;
@@ -22,4 +19,4 @@ const ToggleButton = styled.div`
   }
 `;
 
-export default ToggleButton;
+export default ToggleInspectorButton;
