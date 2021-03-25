@@ -10,6 +10,7 @@ const StyledWrapper = styled.div`
   border-left: 2px solid black;
   background: #e5e5e5;
   width: ${(props: { stop: string }) => props.stop}px;
+  overflow: hidden;
 `;
 
 const animation: FC<Props> = ({ start, stop }) => keyframes`
