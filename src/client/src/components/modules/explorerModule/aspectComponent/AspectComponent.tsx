@@ -1,8 +1,4 @@
-import {
-  FunctionalIcon,
-  ProductionIcon,
-  LocationIcon,
-} from "../../../../assets";
+import { FunctionIcon, ProductIcon, LocationIcon } from "../../../../assets";
 import CheckboxComponent from "../checkboxComponent/CheckboxComponent";
 import FacetComponent from "../facetComponent/FacetComponent";
 import "./aspect.scss";
@@ -16,11 +12,11 @@ interface AspectComponentProps {
 export const AspectComponent = ({ id, name, facet }: AspectComponentProps) => {
   const Icon =
     id === "1"
-      ? FunctionalIcon
+      ? FunctionIcon
       : id === "2"
       ? LocationIcon
       : id === "3"
-      ? ProductionIcon
+      ? ProductIcon
       : null;
   return (
     <div className="aspect_container">
