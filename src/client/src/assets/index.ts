@@ -4,3 +4,4 @@ export { default as LocationIcon } from "./icons/locationbox.png";
 export { default as EyeIcon } from "./icons/inspectorIcon.svg";
 export { default as LibraryIcon } from "./icons/libraryIcon.svg";
 export { default as SearchIcon } from "./icons/searchIcon.svg";
+export { default as ExplorerIcon } from "./icons/explorer.svg";

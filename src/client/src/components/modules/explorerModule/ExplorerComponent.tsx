@@ -1,6 +1,5 @@
 import { projectData } from "./helpers/GetProjectData";
-import explorerIcon from "../../../assets/icons/explorer.svg";
-import explorerExpanded from "../../../assets/icons/explorerExpanded.svg";
+import { ExplorerIcon } from "../../../assets/";
 import FacilityComponent from "./facilityComponent/FacilityComponent";
 import textResources from "../../../textResources";
 
@@ -8,13 +7,8 @@ export const ExplorerComponent = () => {
   return (
     <div className="explorer_container">
       <div className="header">
-        <img className="explorerIcon" src={explorerIcon} alt="explorerIcon" />
+        <img className="explorerIcon" src={ExplorerIcon} alt="explorerIcon" />
         <>{textResources.Explorer_view}</>
-        <img
-          className="expand_icon"
-          src={explorerExpanded}
-          alt="expandedIcon"
-        />
       </div>
       <div className="scrollable_container">
         <FacilityComponent
