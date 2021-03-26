@@ -1,14 +1,14 @@
 import styled from "styled-components";
 
 const SearchBox = styled.input`
-  width: 285px;
+  width: 287px;
   height: 36px;
   font-style: italic;
   font-family: roboto;
-  font-size: 18px;
-  padding-left: 7px;
-  margin-bottom: 7px;
-  border: 1px solid #444;
+  font-size: 17px;
+  padding-left: 8px;
+  margin-bottom: 10px;
+  border: 0px solid #444;
 `;
 
 export default SearchBox;

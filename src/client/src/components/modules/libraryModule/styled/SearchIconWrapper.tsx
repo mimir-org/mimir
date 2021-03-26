@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 const SearchIconWrapper = styled.div`
   margin-left: 265px;
-  margin-top: 9px;
-  position: absolute;
+  margin-bottom: -35px;
+  position: relative;
 `;
 
 export default SearchIconWrapper;

@@ -2,9 +2,8 @@ import styled from "styled-components";
 
 const TextWrapper = styled.div`
   font-family: roboto;
-  display: inline;
+  display: inline-flex;
   padding: 10px;
-  position: absolute;
   size: 18px;
 `;
 
