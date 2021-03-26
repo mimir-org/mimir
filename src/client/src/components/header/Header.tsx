@@ -1,12 +1,5 @@
 import { useHistory } from "react-router-dom";
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  Typography,
-  Button,
-} from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
+import { AppBar, Toolbar, Typography } from "@material-ui/core";
 import textResources from "../../textResources";
 import { TreeviewIcon, BlockviewIcon } from "../../assets/index";
 import styled from "styled-components";
@@ -15,13 +8,22 @@ const TreeviewWrapper = styled.div`
   cursor: pointer;
   position: relative;
   bottom: 7px;
+  left: 76%;
 `;
 
 const BlockviewWrapper = styled.div`
   cursor: pointer;
   position: relative;
-  left: 50px;
+  left: 79%;
   bottom: 7px;
+`;
+
+const TitleWrapper = styled.div`
+  position: relative;
+  font-family: roboto;
+  font-size: 18px;
+  bottom: 9px;
+  left: 47%;
 `;
 
 const Header = () => {
@@ -30,21 +32,9 @@ const Header = () => {
   return (
     <AppBar className="appbar">
       <Toolbar>
-        <IconButton
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          className="menu_button"
-        >
-          <MenuIcon />
-        </IconButton>
-        <Typography
-          variant="h6"
-          className="title_text"
-          onClick={() => push("/")}
-        >
-          {textResources.MainHeader_App_Name}
-        </Typography>
+        <TitleWrapper>
+          <Typography>{textResources.MainHeader_App_Name}</Typography>
+        </TitleWrapper>
 
         <BlockviewWrapper>
           <img
@@ -53,6 +43,7 @@ const Header = () => {
             onClick={() => push("/home/diagram")}
           />
         </BlockviewWrapper>
+
         <TreeviewWrapper>
           <img
             src={TreeviewIcon}
@@ -60,10 +51,6 @@ const Header = () => {
             onClick={() => push("/home/treeview")}
           />
         </TreeviewWrapper>
-
-        <Button color="inherit" className="login_button">
-          {textResources.MainHeader_Login_Heading}
-        </Button>
       </Toolbar>
     </AppBar>
   );
