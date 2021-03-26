@@ -21,6 +21,10 @@ const textResources = {
 
   // LibraryModule
   Library_Heading: "Library",
+  Library_Function: "Function",
+  Library_Product: "Product",
+  Library_Location: "Location",
+  Library_SearchBox_Placeholder: "Søk i biblioteket",
 };
 
 export default textResources;

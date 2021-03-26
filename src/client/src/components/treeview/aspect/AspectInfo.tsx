@@ -1,4 +1,4 @@
-import { FunctionalIcon, ProductionIcon, LocationIcon } from "../../../assets";
+import { FunctionIcon, ProductIcon, LocationIcon } from "../../../assets";
 
 interface Props {
   id: string;
@@ -8,9 +8,9 @@ interface Props {
 const AspectInfo = ({ id, name }: Props) => {
   const Icon =
     id === "1"
-      ? FunctionalIcon
+      ? FunctionIcon
       : id === "2"
-      ? ProductionIcon
+      ? ProductIcon
       : id === "3"
       ? LocationIcon
       : null;

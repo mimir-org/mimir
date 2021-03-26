@@ -1,5 +1,4 @@
 import { useState, useRef } from "react";
-import Sidebar from "./Sidebar";
 import "./dnd.scss";
 import ReactFlow, {
   ReactFlowProvider,
@@ -73,7 +72,6 @@ const DnDFlow = () => {
             <Controls />
           </ReactFlow>
         </div>
-        <Sidebar />
       </ReactFlowProvider>
     </div>
   );

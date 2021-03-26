@@ -4,8 +4,9 @@ import textResources from "../../../textResources";
 import AnimatedMenu from "./styled/animated/AnimatedMenu";
 import useLibraryToggleChangeHandler from "./hooks/useLibraryToggleChangeHandler";
 import { LibraryIcon } from "../../../assets";
-import { Header, ToggleBox } from "./styled";
+import { Header, SidebarWrapper, ToggleBox } from "./styled";
 import { ToggleLibraryButton } from "../../../assets/buttons/index";
+import Sidebar from "../../treeview/flow/dragAndDrop/Sidebar";
 
 const LibraryModule = () => {
   const dispatch = useDispatch();
@@ -26,6 +27,9 @@ const LibraryModule = () => {
           {textResources.Library_Heading}
         </Header>
       </ToggleBox>
+      <SidebarWrapper>
+        <Sidebar />
+      </SidebarWrapper>
     </AnimatedMenu>
   );
 };
