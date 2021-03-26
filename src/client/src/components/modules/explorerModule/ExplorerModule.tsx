@@ -2,8 +2,20 @@ import { projectData } from "./helpers/GetProjectData";
 import { ExplorerIcon } from "../../../assets";
 import FacilityComponent from "./facilityComponent/FacilityComponent";
 import textResources from "../../../textResources";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
+import useLibraryToggleChangeHandler from "../libraryModule/hooks/useLibraryToggleChangeHandler";
 
 export const ExplorerModule = () => {
+  const dispatch = useDispatch();
+  const isOpen = useSelector<RootState>(
+    (state) => state.showLibraryReducer.visible
+  );
+  const handleClick = useLibraryToggleChangeHandler(dispatch, isOpen);
+
+  const startHeight = isOpen ? "0" : "331";
+  const stopHeight = isOpen ? "331" : "35";
+
   return (
     <div className="explorer_view">
       <div className="explorer_container">
