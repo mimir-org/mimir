@@ -2,29 +2,7 @@ import { useHistory } from "react-router-dom";
 import { AppBar, Toolbar, Typography } from "@material-ui/core";
 import textResources from "../../textResources";
 import { TreeviewIcon, BlockviewIcon } from "../../assets/index";
-import styled from "styled-components";
-
-const TreeviewWrapper = styled.div`
-  cursor: pointer;
-  position: relative;
-  bottom: 7px;
-  left: 76%;
-`;
-
-const BlockviewWrapper = styled.div`
-  cursor: pointer;
-  position: relative;
-  left: 79%;
-  bottom: 7px;
-`;
-
-const TitleWrapper = styled.div`
-  position: relative;
-  font-family: roboto;
-  font-size: 18px;
-  bottom: 9px;
-  left: 47%;
-`;
+import { TitleWrapper, BlockviewWrapper, TreeviewWrapper } from "./styled";
 
 const Header = () => {
   const { push } = useHistory();
