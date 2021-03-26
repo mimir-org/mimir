@@ -5,14 +5,14 @@ import textResources from "../../../textResources";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { ToggleExplorerButton } from "../../../assets/buttons/index";
-import useLibraryToggleChangeHandler from "../libraryModule/hooks/useLibraryToggleChangeHandler";
+import useExplorerToggleChangeHandler from "../explorerModule/hooks/useExplorerToggleChangeHandler";
 
 export const ExplorerModule = () => {
   const dispatch = useDispatch();
   const isOpen = useSelector<RootState>(
     (state) => state.showLibraryReducer.visible
   );
-  const handleClick = useLibraryToggleChangeHandler(dispatch, isOpen);
+  const handleClick = useExplorerToggleChangeHandler(dispatch, isOpen);
 
   const startHeight = isOpen ? "0" : "331";
   const stopHeight = isOpen ? "331" : "35";

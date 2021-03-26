@@ -1,6 +1,6 @@
-export const EXPLORER_TOGGLE_CHANGED = "Library toggle changed";
+export const EXPLORER_TOGGLE_CHANGED = "Explorer toggle changed";
 export const EXPLORER_TOGGLE_CHANGED_COMPLETED =
-  "LIBRARY_TOGGLE_CHANGED_COMPLETED";
+  "EXPLORER_TOGGLE_CHANGED_COMPLETED";
 
 const initialState = { visible: true };
 

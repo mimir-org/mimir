@@ -10,11 +10,9 @@ import Sidebar from "../../treeview/flow/dragAndDrop/Sidebar";
 
 const LibraryModule = () => {
   const dispatch = useDispatch();
-  //   const isOpen = useSelector<RootState>(
-  //     (state) => state.showLibraryReducer.visible
-  //   );
-
-  const isOpen = true;
+  const isOpen = useSelector<RootState>(
+    (state) => state.showLibraryReducer.visible
+  );
   const handleClick = useLibraryToggleChangeHandler(dispatch, isOpen);
 
   const startHeight = isOpen ? "0" : "331";
