@@ -4,6 +4,7 @@ import FacilityComponent from "./facilityComponent/FacilityComponent";
 import textResources from "../../../textResources";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
+import { ToggleExplorerButton } from "../../../assets/buttons/index";
 import useLibraryToggleChangeHandler from "../libraryModule/hooks/useLibraryToggleChangeHandler";
 
 export const ExplorerModule = () => {
@@ -22,6 +23,7 @@ export const ExplorerModule = () => {
         <div className="header">
           <img className="explorerIcon" src={ExplorerIcon} alt="explorerIcon" />
           <>{textResources.Explorer_view}</>
+          <ToggleExplorerButton visible={isOpen} onClick={handleClick} />
         </div>
         <div className="scrollable_container">
           <FacilityComponent
