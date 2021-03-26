@@ -11,8 +11,8 @@ import ReactFlow, {
 } from "react-flow-renderer";
 
 import { addNode } from '../../../../redux/store/project/actions';
-import AspectNode from '../../../flow/AspectNode';
-import DefaultEdgeType from '../../../flow/DefaultEdgeType';
+import AspectNode from '../../../flow/nodes/AspectNode';
+import DefaultEdgeType from '../../../flow/edges/DefaultEdgeType';
 
 const nodeTypes = {
   aspectNode: AspectNode  
@@ -73,14 +73,8 @@ const DnDFlow = () => {
   
   
   const onElementsRemove = (elementsToRemove) => setElements((els) => removeElements(elementsToRemove, els));
-
-  const onLoad = (_reactFlowInstance) =>
-    setReactFlowInstance(_reactFlowInstance);
-
-  const onDragOver = (event) => {
-    event.preventDefault();
-    event.dataTransfer.dropEffect = "move";
-  };
+  const onLoad = (_reactFlowInstance) => setReactFlowInstance(_reactFlowInstance);
+  const onDragOver = (event) => { event.preventDefault(); event.dataTransfer.dropEffect = "move"; };
 
   const onDrop = (event) => {
     event.preventDefault();

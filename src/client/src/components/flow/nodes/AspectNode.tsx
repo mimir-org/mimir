@@ -1,8 +1,8 @@
 import { memo, FC } from "react";
 import { NodeProps, Handle, Position } from "react-flow-renderer";
-import { ReactComponent as FunctionIcon } from '../../assets/icons/function-icon.svg'
-import { ReactComponent as LocationIcon } from '../../assets/icons/location-icon.svg'
-import { ReactComponent as ProductIcon } from '../../assets/icons/product-icon.svg'
+import { ReactComponent as FunctionIcon } from '../../../assets/icons/function-icon.svg'
+import { ReactComponent as LocationIcon } from '../../../assets/icons/location-icon.svg'
+import { ReactComponent as ProductIcon } from '../../../assets/icons/product-icon.svg'
 
 const icon = (label: string) => {
   switch(label) {

@@ -1,6 +1,6 @@
 import React from "react";
 import { getBezierPath, getMarkerEnd, getSmoothStepPath, EdgeText } from "react-flow-renderer";
-import { getCenter } from './utils';
+import { getCenter } from '../utils';
 
 export default function DefaultEdgeType({
   id,
@@ -16,7 +16,7 @@ export default function DefaultEdgeType({
   markerEndId,
 }) {
 
-
+    
 
   const edgePath = getBezierPath({
     sourceX,
