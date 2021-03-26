@@ -1,17 +1,11 @@
 import { FC } from "react";
 import styled, { keyframes } from "styled-components";
+import { LibraryContainer } from "../";
 
 interface Props {
   start: string;
   stop: string;
 }
-
-const StyledWrapper = styled.div`
-  border-left: 2px solid black;
-  background: #f2f2f2;
-  width: ${(props: { stop: string }) => props.stop}px;
-  overflow: hidden;
-`;
 
 const animation: FC<Props> = ({ start, stop }) => keyframes`
   from {
@@ -22,7 +16,7 @@ const animation: FC<Props> = ({ start, stop }) => keyframes`
   }
 `;
 
-const AnimatedMenu = styled(StyledWrapper)`
+const AnimatedMenu = styled(LibraryContainer)`
   animation: ${animation} 0.4s ease-in-out;
 `;
 

@@ -10,13 +10,13 @@ const ToggleExplorerButton = styled.div`
   border-top: 17px solid transparent;
   border-bottom: 17px solid transparent;
   border-bottom-left-radius: ${(props: { visible: boolean }) =>
-    props.visible ? "5px" : "0px"};
+    props.visible ? "0px" : "5px"};
   border-top-left-radius: ${(props: { visible: boolean }) =>
-    props.visible ? "5px" : "0px"};
+    props.visible ? "0px" : "5px"};
   border-bottom-right-radius: ${(props: { visible: boolean }) =>
-    props.visible ? "0px" : "5px"};
+    props.visible ? "5px" : "0px"};
   border-top-right-radius: ${(props: { visible: boolean }) =>
-    props.visible ? "0px" : "5px"};
+    props.visible ? "5px" : "0px"};
 
   &: hover {
     cursor: pointer;
