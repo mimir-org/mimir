@@ -1,0 +1,7 @@
+.checkbox_container {
+  display: flex;
+  flex-direction: row;
+  .checkbox_label::first-letter {
+    text-transform: uppercase;
+  }
+}
