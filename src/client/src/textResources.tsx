@@ -7,8 +7,8 @@ const textResources = {
   MainHeader_Diagram_Heading: "BLOKKDIAGRAM",
   MainHeader_Login_Heading: "Login",
 
-  // Content
-  Explorer_view: "Explorer View",
+  // ExplorerModule
+  Explorer_view: "Explorer",
 
   // InspectorModule
   Inspector_Heading: "Inspector",
