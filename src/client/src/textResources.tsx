@@ -2,9 +2,7 @@
 
 const textResources = {
   // Top-menu
-  MainHeader_App_Name: "ModelBuilder",
-  MainHeader_Treeview_Heading: "TRESTRUKTUR",
-  MainHeader_Diagram_Heading: "BLOKKDIAGRAM",
+  MainHeader_App_Name: "Model Builder",
   MainHeader_Login_Heading: "Login",
 
   // ExplorerModule
