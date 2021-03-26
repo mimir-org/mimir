@@ -3,6 +3,7 @@ import {
     FETCHING_PROJECT_SUCCESS_OR_ERROR,
     CREATING_PROJECT,
     CREATING_PROJECT_SUCCESS_OR_ERROR,
+    ADD_NODE,
     ProjectActionTypes,
     ProjectState
 } from "./types";
@@ -56,6 +57,9 @@ export function projectReducer(
                 hasError: action.payload.hasError,
                 errorMsg: action.payload.errorMsg,
             };
+        case ADD_NODE:
+            console.log(action.payload);
+            return state;
 
         default:
             return state;

@@ -44,5 +44,6 @@ export interface Node {
     label: string,
     type: NodeType,
     children: Node[],
-    position: Position
+    position: Position,
+    obj: object
 }

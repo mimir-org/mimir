@@ -1,6 +1,8 @@
 .react-flow__node-location,
 .react-flow__node-function,
-.react-flow__node-product {
+.react-flow__node-product,
+.react-flow__node-aspectNode
+ {
   padding: 10px;
   border-radius: 3px;
   width: 100px;
@@ -9,6 +11,10 @@
   text-align: center;
   border-width: 1px;
   border-style: solid;
+}
+
+.react-flow__node-aspectNode {
+  border: none;
 }
 
 .react-flow__node-function {

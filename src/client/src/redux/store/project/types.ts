@@ -1,9 +1,10 @@
-import { Project } from '../../../models/project';
+import { Project, Node } from '../../../models/project';
 
 export const FETCHING_PROJECT = "FETCHING_PROJECT";
 export const FETCHING_PROJECT_SUCCESS_OR_ERROR =  "FETCHING_PROJECT_SUCCESS_OR_ERROR";
 export const CREATING_PROJECT =  "CREATING_PROJECT";
 export const CREATING_PROJECT_SUCCESS_OR_ERROR =  "CREATING_PROJECT_SUCCESS_OR_ERROR";
+export const ADD_NODE =  "ADD_NODE";
 
 // State types
 export interface ProjectState {
@@ -37,8 +38,17 @@ interface CreatingProjectActionFinished {
     payload: ProjectState;
 }
 
+interface AddNodeAction {
+  type: typeof ADD_NODE;
+  payload: {
+    node: Node,
+    parentId: string
+  };
+}
+
 export type ProjectActionTypes =
   | FetchingProjectAction
   | FetchingProjectActionFinished
   | CreatingProjectAction
-  | CreatingProjectActionFinished;
+  | CreatingProjectActionFinished
+  | AddNodeAction;
