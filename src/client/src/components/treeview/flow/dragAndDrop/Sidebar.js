@@ -1,9 +1,16 @@
-import { ProductIcon, FunctionIcon, LocationIcon } from "../../../../assets/";
 import textResources from "../../../../textResources";
+import {
+  ProductIcon,
+  FunctionIcon,
+  LocationIcon,
+  SearchIcon,
+} from "../../../../assets/";
 import {
   TextWrapper,
   IconWrapper,
   ContentWrapper,
+  SearchBox,
+  SearchIconWrapper,
 } from "../../../modules/libraryModule/styled";
 
 const Sidebar = () => {
@@ -14,6 +21,11 @@ const Sidebar = () => {
 
   return (
     <>
+      <SearchIconWrapper>
+        <img src={SearchIcon} width="24px" height="24px" alt="search-icon" />
+      </SearchIconWrapper>
+      <SearchBox placeholder={textResources.Library_SearchBox_Placeholder} />
+
       <ContentWrapper
         className="dndnode function"
         onDragStart={(event) => onDragStart(event, "function")}
