@@ -1,20 +1,22 @@
+import { FC } from "react";
 import styled, { keyframes } from "styled-components";
-import { ToggleInspectorIcon } from "../../fragments/styled";
+import { ToggleInspectorButton } from "../../../../../assets/buttons/index";
 
-const animation = (props: {
+interface Props {
   start: string;
   stop: string;
-  visible;
-}) => keyframes`
+}
+
+const animation: FC<Props> = ({ start, stop }) => keyframes`
   from {
-    bottom: ${props.start}px;
+    bottom: ${start}px;
   },
   to {
-    bottom: ${props.stop}px;
+    bottom: ${stop}px;
   }
 `;
 
-const AnimatedToggleButton = styled(ToggleInspectorIcon)`
+const AnimatedToggleButton = styled(ToggleInspectorButton)`
   animation: ${animation} 0.4s ease-in-out;
 `;
 

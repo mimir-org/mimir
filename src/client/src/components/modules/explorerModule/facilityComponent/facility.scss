@@ -1,0 +1,21 @@
+.facility_container {
+  display: flex;
+  flex-direction: column;
+
+  .facility_header {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    padding: 14px 0px;
+
+    .facility::first-letter {
+      text-transform: capitalize;
+    }
+  }
+
+  .aspects_container {
+    display: flex;
+    flex-direction: column;
+    flex: 4;
+  }
+}

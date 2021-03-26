@@ -1,8 +1,17 @@
+import textResources from "../../../../textResources";
 import {
-  ProductionIcon,
-  FunctionalIcon,
+  ProductIcon,
+  FunctionIcon,
   LocationIcon,
+  SearchIcon,
 } from "../../../../assets/";
+import {
+  TextWrapper,
+  IconWrapper,
+  ContentWrapper,
+  SearchBox,
+  SearchIconWrapper,
+} from "../../../modules/libraryModule/styled";
 
 const Sidebar = () => {
   const onDragStart = (event, nodeType) => {
@@ -11,49 +20,45 @@ const Sidebar = () => {
   };
 
   return (
-    <aside>
-      <div className="description">Aspects</div>
-      <div
+    <>
+      <SearchIconWrapper>
+        <img src={SearchIcon} width="24px" height="24px" alt="search-icon" />
+      </SearchIconWrapper>
+      <SearchBox placeholder={textResources.Library_SearchBox_Placeholder} />
+
+      <ContentWrapper
         className="dndnode function"
         onDragStart={(event) => onDragStart(event, "function")}
         draggable
       >
-        Function
-        <img
-          src={FunctionalIcon}
-          width="30px"
-          height="30px"
-          alt="func-icon"
-        ></img>
-      </div>
+        <TextWrapper>{textResources.Library_Function}</TextWrapper>
+        <IconWrapper>
+          <img src={FunctionIcon} width="30px" height="30px" alt="func-icon" />
+        </IconWrapper>
+      </ContentWrapper>
 
-      <div
+      <ContentWrapper
         className="dndnode product"
         onDragStart={(event) => onDragStart(event, "product")}
         draggable
       >
-        Product
-        <img
-          src={ProductionIcon}
-          width="30px"
-          height="30px"
-          alt="prod-icon"
-        ></img>
-      </div>
-      <div
+        <TextWrapper>{textResources.Library_Product}</TextWrapper>
+        <IconWrapper>
+          <img src={ProductIcon} width="30px" height="30px" alt="func-icon" />
+        </IconWrapper>
+      </ContentWrapper>
+
+      <ContentWrapper
         className="dndnode location"
         onDragStart={(event) => onDragStart(event, "location")}
         draggable
       >
-        Location
-        <img
-          src={LocationIcon}
-          width="30px"
-          height="30px"
-          alt="location-icon"
-        ></img>
-      </div>
-    </aside>
+        <TextWrapper>{textResources.Library_Location}</TextWrapper>
+        <IconWrapper>
+          <img src={LocationIcon} width="30px" height="30px" alt="func-icon" />
+        </IconWrapper>
+      </ContentWrapper>
+    </>
   );
 };
 
