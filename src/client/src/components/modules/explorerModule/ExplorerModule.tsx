@@ -7,6 +7,7 @@ import { RootState } from "../../../redux/store";
 import { ToggleExplorerButton } from "../../../assets/buttons/index";
 import AnimatedMenu from "./styled/animated/AnimatedMenu";
 import useExplorerToggleChangeHandler from "../explorerModule/hooks/useExplorerToggleChangeHandler";
+import { ExplorerContainer, HeaderWrapper } from "./styled";
 
 export const ExplorerModule = () => {
   const dispatch = useDispatch();
@@ -20,13 +21,13 @@ export const ExplorerModule = () => {
   const stopHeight = isOpen ? "331" : "35";
 
   return (
-    <div className="explorer_view">
-      <div className="explorer_container">
-        <div className="header">
+    <>
+      <ExplorerContainer stop={stopHeight}>
+        <HeaderWrapper>
           <img className="explorerIcon" src={ExplorerIcon} alt="explorerIcon" />
-          <>{textResources.Explorer_view}</>
+          {textResources.Explorer_view}
           <ToggleExplorerButton visible={isOpen} onClick={handleClick} />
-        </div>
+        </HeaderWrapper>
         <div className="scrollable_container">
           <FacilityComponent
             name={projectData[0].name}
@@ -34,8 +35,8 @@ export const ExplorerModule = () => {
             aspect={projectData[0].aspect}
           />
         </div>
-      </div>
-    </div>
+      </ExplorerContainer>
+    </>
   );
 };
 
