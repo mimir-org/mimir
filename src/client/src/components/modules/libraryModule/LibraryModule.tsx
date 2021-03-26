@@ -4,7 +4,7 @@ import textResources from "../../../textResources";
 import AnimatedMenu from "./styled/animated/AnimatedMenu";
 import useLibraryToggleChangeHandler from "./hooks/useLibraryToggleChangeHandler";
 import { LibraryIcon } from "../../../assets";
-import { Header, SidebarWrapper, ToggleBox } from "./styled";
+import { Header, SidebarWrapper, HeaderWrapper } from "./styled";
 import { ToggleLibraryButton } from "../../../assets/buttons/index";
 import Sidebar from "../../treeview/flow/dragAndDrop/Sidebar";
 
@@ -20,13 +20,13 @@ const LibraryModule = () => {
 
   return (
     <AnimatedMenu start={startHeight} stop={stopHeight}>
-      <ToggleBox>
+      <HeaderWrapper>
         <ToggleLibraryButton visible={isOpen} onClick={handleClick} />
         <Header>
           <img src={LibraryIcon} alt="library-icon" />
           {textResources.Library_Heading}
         </Header>
-      </ToggleBox>
+      </HeaderWrapper>
       <SidebarWrapper>
         <Sidebar />
       </SidebarWrapper>

@@ -5,6 +5,7 @@ const HeaderWrapper = styled.div`
   float: right;
   margin-left: 7px;
   margin-top: 13px;
+  margin-right: 7px;
 `;
 
 export default HeaderWrapper;
