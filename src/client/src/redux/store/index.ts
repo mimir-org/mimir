@@ -7,6 +7,7 @@ import { sagas } from "../sagas";
 import inspectorReducer from "../inspector/reducers/inspectorReducer";
 import showInspectorReducer from "../inspector/reducers/showInspectorReducer";
 import showLibraryReducer from "../library/reducers/showLibraryReducer";
+import showExplorerReducer from "../explorer/reducers/showExplorerReducer";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -19,6 +20,7 @@ const rootReducers = combineReducers({
   inspectorReducer: inspectorReducer,
   showInspectorReducer: showInspectorReducer,
   showLibraryReducer: showLibraryReducer,
+  showExplorerReducer: showExplorerReducer,
   workspace: workspaceReducer,
   nodetype: nodetypeReducer,
   user: userReducer,
