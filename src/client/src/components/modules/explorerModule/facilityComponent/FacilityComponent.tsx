@@ -1,6 +1,7 @@
 import "./facility.scss";
 import AspectComponent from "../aspectComponent/AspectComponent";
 import CheckboxComponent from "../checkboxComponent/CheckboxComponent";
+import { AspectWrapper, FacilityHeader } from "../styled";
 
 interface FacilityComponentProps {
   name: string;
@@ -16,11 +17,11 @@ export const FacilityComponent = ({
   aspect,
 }: FacilityComponentProps) => {
   return (
-    <div className="facility_container">
-      <div className="facility_header">
+    <>
+      <FacilityHeader>
         <CheckboxComponent id={id} inputLabel={name} checked={checked} />
-      </div>
-      <div className="aspects_container">
+      </FacilityHeader>
+      <AspectWrapper>
         {aspect.map(function (a, index) {
           return (
             <AspectComponent
@@ -31,8 +32,8 @@ export const FacilityComponent = ({
             />
           );
         })}
-      </div>
-    </div>
+      </AspectWrapper>
+    </>
   );
 };
 

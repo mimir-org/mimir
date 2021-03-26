@@ -7,12 +7,7 @@ import { RootState } from "../../../redux/store";
 import { ToggleExplorerButton } from "../../../assets/buttons/index";
 import AnimatedMenu from "./styled/animated/AnimatedMenu";
 import useExplorerToggleChangeHandler from "../explorerModule/hooks/useExplorerToggleChangeHandler";
-import {
-  ExplorerContainer,
-  HeaderWrapper,
-  Header,
-  ContentWrapper,
-} from "./styled";
+import { HeaderWrapper, Header, ContentWrapper } from "./styled";
 
 export const ExplorerModule = () => {
   const dispatch = useDispatch();
@@ -20,7 +15,6 @@ export const ExplorerModule = () => {
     (state) => state.showExplorerReducer.visible
   );
   const handleClick = useExplorerToggleChangeHandler(dispatch, isOpen);
-
   const startHeight = isOpen ? "0" : "331";
   const stopHeight = isOpen ? "331" : "35";
 
