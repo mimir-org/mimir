@@ -13,12 +13,10 @@ import {
 } from "../../../redux/store/localStorage/localStorage";
 
 const InspectorModule = () => {
-  const module = "inspector";
-  const [showInspector, setShowInspector] = useState(
-    loadStateFromStorage(module)
-  );
+  const key = "inspector";
+  const [showInspector, setShowInspector] = useState(loadStateFromStorage(key));
   const handleClick = () => {
-    saveStateToStorage(!showInspector, module);
+    saveStateToStorage(!showInspector, key);
     setShowInspector(!showInspector);
   };
 

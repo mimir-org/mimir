@@ -17,11 +17,11 @@ import {
 } from "../../../redux/store/localStorage/localStorage";
 
 export const ExplorerModule = () => {
-  const module = "explorer";
-  const [isOpen, setIsOpen] = useState(loadStateFromStorage(module));
+  const key = "explorer";
+  const [isOpen, setIsOpen] = useState(loadStateFromStorage(key));
 
   const handleClick = () => {
-    saveStateToStorage(!isOpen, module);
+    saveStateToStorage(!isOpen, key);
     setIsOpen(!isOpen);
   };
   const startHeight = isOpen ? "0" : "331";

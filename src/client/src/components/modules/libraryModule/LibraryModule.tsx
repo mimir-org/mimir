@@ -11,11 +11,11 @@ import {
 } from "../../../redux/store/localStorage/localStorage";
 
 const LibraryModule = () => {
-  const module = "library";
-  const [isOpen, setIsOpen] = useState(loadStateFromStorage(module));
+  const key = "library";
+  const [isOpen, setIsOpen] = useState(loadStateFromStorage(key));
 
   const handleClick = () => {
-    saveStateToStorage(!isOpen, module);
+    saveStateToStorage(!isOpen, key);
     setIsOpen(!isOpen);
   };
 
