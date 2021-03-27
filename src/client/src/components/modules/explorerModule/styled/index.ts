@@ -5,3 +5,4 @@ export { default as ContentWrapper } from "./ContentWrapper";
 export { default as FacilityHeader } from "./FacilityHeader";
 export { default as AspectWrapper } from "./AspectWrapper";
 export { default as ExplorerTitle } from "./ExplorerTitle";
+export { default as HiddenIcon } from "./HiddenIcon";

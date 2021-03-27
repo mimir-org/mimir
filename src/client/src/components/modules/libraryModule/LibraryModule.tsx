@@ -19,7 +19,7 @@ const LibraryModule = () => {
     setIsOpen(!isOpen);
   };
 
-  const startHeight = isOpen ? "0" : "331";
+  const startHeight = isOpen ? "35" : "331";
   const stopHeight = isOpen ? "331" : "35";
 
   return (

@@ -9,6 +9,7 @@ import {
   IconWrapper,
   ContentWrapper,
   ExplorerTitle,
+  HiddenIcon,
 } from "./styled";
 import { useState } from "react";
 import {
@@ -36,6 +37,9 @@ export const ExplorerModule = () => {
         </IconWrapper>
         <ToggleExplorerButton visible={isOpen} onClick={handleClick} />
       </HeaderWrapper>
+      <HiddenIcon visible={isOpen}>
+        <img src={ExplorerIcon} alt="explorerIcon" />
+      </HiddenIcon>
       <ContentWrapper>
         <FacilityComponent
           name={projectData[0].name}
