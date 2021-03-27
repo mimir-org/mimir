@@ -17,9 +17,15 @@ import {
   IconsWrapper,
   SwitchWrapper,
 } from "./styled";
+import { useState } from "react";
 
 const Header = () => {
   const { push } = useHistory();
+  const [isSwitched, setIsSwitched] = useState(false);
+
+  const handleClick = () => {
+    setIsSwitched(!isSwitched);
+  };
 
   return (
     <AppBar className="appbar">
@@ -44,7 +50,11 @@ const Header = () => {
             />
           </BlockviewWrapper>
           <SwitchWrapper>
-            <img src={SwitchOnIcon} alt="switchicon" onClick={() => null} />
+            {isSwitched ? (
+              <img src={SwitchOnIcon} alt="switchicon" onClick={handleClick} />
+            ) : (
+              <img src={SwitchOffIcon} alt="switchicon" onClick={handleClick} />
+            )}
           </SwitchWrapper>
         </IconsWrapper>
 
