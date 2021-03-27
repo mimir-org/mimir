@@ -10,7 +10,7 @@ import { InspectorTitle } from "./styled";
 import {
   loadStateFromStorage,
   saveStateToStorage,
-} from "../../../redux/store/localStorage/localStorage";
+} from "../../../redux/store/localStorage/LocalStorage";
 
 const InspectorModule = () => {
   const key = "inspector";
