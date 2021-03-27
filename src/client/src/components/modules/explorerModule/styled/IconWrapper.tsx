@@ -1,8 +1,7 @@
 import styled from "styled-components";
 
-const Header = styled.div`
+const IconWrapper = styled.div`
   margin-right: 120px;
-  margin-top: 7px;
   font-family: roboto;
   color: #000;
   font-size: 18px;
@@ -11,4 +10,4 @@ const Header = styled.div`
   align-items: center;
 `;
 
-export default Header;
+export default IconWrapper;

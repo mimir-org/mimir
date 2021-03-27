@@ -4,7 +4,7 @@ import FacilityComponent from "./facilityComponent/FacilityComponent";
 import textResources from "../../../textResources";
 import { ToggleExplorerButton } from "../../../assets/buttons/index";
 import AnimatedMenu from "./styled/animated/AnimatedMenu";
-import { HeaderWrapper, Header, ContentWrapper } from "./styled";
+import { HeaderWrapper, IconWrapper, ContentWrapper } from "./styled";
 import { useState } from "react";
 import {
   loadStateFromStorage,
@@ -25,10 +25,10 @@ export const ExplorerModule = () => {
   return (
     <AnimatedMenu start={startHeight} stop={stopHeight}>
       <HeaderWrapper>
-        <Header>
+        <IconWrapper>
           {textResources.Explorer_view}
           <img src={ExplorerIcon} alt="explorerIcon" />
-        </Header>
+        </IconWrapper>
         <ToggleExplorerButton visible={isOpen} onClick={handleClick} />
       </HeaderWrapper>
       <ContentWrapper>

@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 const Header = styled.div`
   margin-left: 120px;
-  margin-top: 7px;
   font-family: roboto;
   color: #000;
   font-size: 18px;
