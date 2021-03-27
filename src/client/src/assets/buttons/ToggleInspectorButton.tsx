@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const ToggleInspectorButton = styled.div`
   display: inline;
-  margin-top: 3px;
+  margin-top: 8px;
   border-left: 17px solid transparent;
   border-right: 17px solid transparent;
   border-top: ${(props: { visible: boolean }) =>
@@ -11,7 +11,8 @@ const ToggleInspectorButton = styled.div`
     props.visible ? "0px" : "17px solid #007079"};
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
-  float: ${(props: { float: string }) => props.float};
+  float: right;
+  margin-right: 10px;
 
   &: hover {
     cursor: pointer;

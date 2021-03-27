@@ -1,8 +1,9 @@
 import styled from "styled-components";
 
 const IconWrapper = styled.div`
-  float: left;
-  margin-right: 5px;
+  float: right;
+  margin-right: 60px;
+  margin-top: 7px;
 `;
 
 export default IconWrapper;

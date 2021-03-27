@@ -1,6 +1,6 @@
 export const loadStateFromStorage = (module: string) => {
   try {
-    const serializedState = localStorage.getItem(module);
+    const serializedState = localStorage.getItem(`show_${module}`);
     console.log(localStorage);
 
     if (serializedState === null) {
@@ -15,7 +15,7 @@ export const loadStateFromStorage = (module: string) => {
 export const saveStateToStorage = (state: boolean, module: string) => {
   try {
     const serializedState = JSON.stringify(state);
-    localStorage.setItem(module, serializedState);
+    localStorage.setItem(`show_${module}`, serializedState);
   } catch {
     return undefined;
   }
