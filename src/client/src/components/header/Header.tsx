@@ -10,7 +10,8 @@ import {
   TextWrapper,
   BlockviewWrapper,
   TreeviewWrapper,
-  VisualFilterWrapper,
+  VisualIconWrapper,
+  TitleWrapper,
 } from "./styled";
 
 const Header = () => {
@@ -19,9 +20,9 @@ const Header = () => {
   return (
     <AppBar className="appbar">
       <Toolbar>
-        <TextWrapper target="title">
+        <TitleWrapper>
           <Typography>{textResources.MainHeader_App_Name}</Typography>
-        </TextWrapper>
+        </TitleWrapper>
 
         <BlockviewWrapper>
           <img
@@ -39,10 +40,10 @@ const Header = () => {
           />
         </TreeviewWrapper>
 
-        <VisualFilterWrapper>
+        <VisualIconWrapper>
           <img src={VisualFilterIcon} alt="visualfilter" onClick={() => null} />
-        </VisualFilterWrapper>
-        <TextWrapper target="visual">
+        </VisualIconWrapper>
+        <TextWrapper>
           <Typography>{textResources.MainHeader_VisualFilter}</Typography>
         </TextWrapper>
       </Toolbar>
