@@ -1,11 +1,11 @@
 export const loadStateFromStorage = (module: string) => {
   try {
     const serializedState = localStorage.getItem(`show_${module}`);
-    console.log(localStorage);
 
-    if (serializedState === null) {
+    if (serializedState === null || serializedState === undefined) {
       return JSON.parse("true");
     }
+
     return JSON.parse(serializedState);
   } catch (err) {
     return undefined;
