@@ -4,23 +4,16 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 
 const InspectorModule = () => {
-  const inspectorMaxHeight = "290";
-  const inspectorMinHeight = "0";
-  const inspectorHiddenHeight = "38";
-
   const showInspector = useSelector<RootState>(
     (state) => state.showInspectorReducer.visible
   );
 
-  return showInspector ? (
+  const startHeight = showInspector ? "0" : "290";
+  const stopHeight = showInspector ? "290" : "38";
+
+  return (
     <>
-      <AnimatedMenu start={inspectorMinHeight} stop={inspectorMaxHeight}>
-        <InspectorHeader />
-      </AnimatedMenu>
-    </>
-  ) : (
-    <>
-      <AnimatedMenu start={inspectorMaxHeight} stop={inspectorHiddenHeight}>
+      <AnimatedMenu start={startHeight} stop={stopHeight}>
         <InspectorHeader />
       </AnimatedMenu>
     </>
