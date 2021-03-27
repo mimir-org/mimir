@@ -5,7 +5,8 @@ import {
   TreeviewIcon,
   BlockviewIcon,
   VisualFilterIcon,
-  SwitchIcon,
+  SwitchOnIcon,
+  SwitchOffIcon,
 } from "../../assets/index";
 import {
   TextWrapper,
@@ -43,7 +44,7 @@ const Header = () => {
             />
           </BlockviewWrapper>
           <SwitchWrapper>
-            <img src={SwitchIcon} alt="switchicon" onClick={() => null} />
+            <img src={SwitchOnIcon} alt="switchicon" onClick={() => null} />
           </SwitchWrapper>
         </IconsWrapper>
 
