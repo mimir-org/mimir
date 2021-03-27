@@ -29,6 +29,8 @@ const Home = () => {
   }, [dispatch]);
 
   const params = useParams<RouteParams>();
+  params.type = "treeview"; // App starts at treeView until further notice
+
   const isOnline =
     workspaceState && workspaceState.workspace && !workspaceState.fetching;
 

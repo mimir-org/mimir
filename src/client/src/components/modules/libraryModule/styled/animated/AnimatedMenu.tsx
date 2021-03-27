@@ -5,9 +5,10 @@ import { LibraryContainer } from "../";
 interface Props {
   start: string;
   stop: string;
+  shouldRun?: boolean;
 }
 
-const animation: FC<Props> = ({ start, stop }) => keyframes`
+const animation: FC<Props> = ({ start, stop, shouldRun }) => keyframes`
   from {
     width: ${start}px;
   },
