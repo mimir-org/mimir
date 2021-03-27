@@ -6,10 +6,9 @@ import { ToggleLibraryButton } from "../../../assets/buttons/index";
 import Sidebar from "../../treeview/flow/dragAndDrop/Sidebar";
 import { useState } from "react";
 import {
-  saveStateToAllModules,
   loadStateFromStorage,
   saveStateToStorage,
-} from "../../../redux/store/localStorage/LocalStorage";
+} from "../../../redux/store/localStorage/localStorage";
 
 const LibraryModule = () => {
   const key = "library";
@@ -18,7 +17,6 @@ const LibraryModule = () => {
   const handleClick = () => {
     saveStateToStorage(!isOpen, key);
     setIsOpen(!isOpen);
-    saveStateToAllModules("false");
   };
 
   const startHeight = isOpen ? "0" : "331";

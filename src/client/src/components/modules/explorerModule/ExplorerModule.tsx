@@ -14,7 +14,7 @@ import { useState } from "react";
 import {
   loadStateFromStorage,
   saveStateToStorage,
-} from "../../../redux/store/localStorage/LocalStorage";
+} from "../../../redux/store/localStorage/localStorage";
 
 export const ExplorerModule = () => {
   const key = "explorer";
