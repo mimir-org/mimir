@@ -8,7 +8,7 @@ import { useState } from "react";
 import {
   loadStateFromStorage,
   saveStateToStorage,
-} from "../../../redux/localStorage/localStorage";
+} from "../../../redux/store/localStorage/localStorage";
 
 const LibraryModule = () => {
   const [isOpen, setIsOpen] = useState(loadStateFromStorage("library"));
