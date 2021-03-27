@@ -1,8 +1,8 @@
 import {
-  StyledParagraph,
-  StyledColumn,
-  StyledInput,
-  StyledContainer,
+  FragmentParagraph,
+  FragmentColumn,
+  FragmentInput,
+  FragmentContainer,
 } from "./styled";
 
 const FragmentData = ({ data }) => {
@@ -13,24 +13,24 @@ const FragmentData = ({ data }) => {
     }
 
     return (
-      <StyledColumn>
+      <FragmentColumn>
         {data.slice(start, stop).map((data) => (
           <>
-            <StyledParagraph key={data.id}>{data.type}</StyledParagraph>
-            <StyledInput />
+            <FragmentParagraph key={data.id}>{data.type}</FragmentParagraph>
+            <FragmentInput />
           </>
         ))}
-      </StyledColumn>
+      </FragmentColumn>
     );
   };
 
   return (
-    <StyledContainer>
+    <FragmentContainer>
       {CreateColumn(0, 4)}
       {CreateColumn(4, 8)}
       {CreateColumn(8, 12)}
       {CreateColumn(12, 16)}
-    </StyledContainer>
+    </FragmentContainer>
   );
 };
 

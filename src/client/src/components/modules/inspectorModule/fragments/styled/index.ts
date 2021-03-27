@@ -1,9 +1,7 @@
 export { default as FragmentHeaderWrapper } from "./FragmentHeaderWrapper";
 export { default as FragmentHeader } from "./FragmentHeader";
 export { default as FragmentDataWrapper } from "./FragmentDataWrapper";
-export { default as StyledToggleBox } from "./StyledToggleBox";
-export { default as InspectorTitle } from "./InspectorTitle";
-export { default as StyledColumn } from "./StyledColumn";
-export { default as StyledContainer } from "./StyledContainer";
-export { default as StyledParagraph } from "./StyledParagraph";
-export { default as StyledInput } from "./StyledInput";
+export { default as FragmentColumn } from "./FragmentColumn";
+export { default as FragmentContainer } from "./FragmentContainer";
+export { default as FragmentParagraph } from "./FragmentParagraph";
+export { default as FragmentInput } from "./FragmentInput";
