@@ -17,7 +17,7 @@ const animation: FC<Props> = ({ start, stop }) => keyframes`
 `;
 
 const AnimatedMenu = styled(LibraryContainer)`
-  animation: ${animation} 0.4s ease-in-out;
+  animation: ${animation} 0.2s ease-in-out;
 `;
 
 export default AnimatedMenu;

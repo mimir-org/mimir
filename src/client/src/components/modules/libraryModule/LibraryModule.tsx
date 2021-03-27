@@ -1,7 +1,7 @@
 import textResources from "../../../textResources";
 import AnimatedMenu from "./styled/animated/AnimatedMenu";
 import { LibraryIcon } from "../../../assets";
-import { Header, SidebarWrapper, HeaderWrapper } from "./styled";
+import { Header, SidebarWrapper, HeaderWrapper, CollapsedIcon } from "./styled";
 import { ToggleLibraryButton } from "../../../assets/buttons/index";
 import Sidebar from "../../treeview/flow/dragAndDrop/Sidebar";
 import { useState } from "react";
@@ -31,7 +31,10 @@ const LibraryModule = () => {
           {textResources.Library_Heading}
         </Header>
       </HeaderWrapper>
-      <SidebarWrapper>
+      <CollapsedIcon visible={isOpen}>
+        <img src={LibraryIcon} alt="explorerIcon" />
+      </CollapsedIcon>
+      <SidebarWrapper visible={isOpen}>
         <Sidebar />
       </SidebarWrapper>
     </AnimatedMenu>

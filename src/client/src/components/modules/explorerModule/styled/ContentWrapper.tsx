@@ -1,8 +1,7 @@
 import styled from "styled-components";
 
 const ContentWrapper = styled.div`
-  margin-top: 25px;
-  padding: 15px;
+  padding: 10px;
   display: flex;
   overflow: hidden;
   width: 331px;
