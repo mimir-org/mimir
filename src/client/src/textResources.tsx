@@ -10,7 +10,6 @@ const textResources = {
 
   // InspectorModule
   Inspector_Heading: "Inspector",
-  Inspector_Content: "Info to come",
   Inspector_Header: "Header",
   Inspector_Object: "Object",
   Inspector_Body: "Body",
