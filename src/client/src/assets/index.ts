@@ -8,3 +8,4 @@ export { default as ExplorerIcon } from "./icons/explorer.svg";
 export { default as TreeviewIcon } from "./icons/treeviewIcon.svg";
 export { default as BlockviewIcon } from "./icons/blockviewIcon.svg";
 export { default as VisualFilterIcon } from "./icons/visualFilterIcon.svg";
+export { default as SwitchIcon } from "./icons/switchIcon.svg";

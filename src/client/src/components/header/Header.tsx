@@ -5,6 +5,7 @@ import {
   TreeviewIcon,
   BlockviewIcon,
   VisualFilterIcon,
+  SwitchIcon,
 } from "../../assets/index";
 import {
   TextWrapper,
@@ -12,6 +13,8 @@ import {
   TreeviewWrapper,
   VisualIconWrapper,
   TitleWrapper,
+  IconsWrapper,
+  SwitchWrapper,
 } from "./styled";
 
 const Header = () => {
@@ -24,21 +27,25 @@ const Header = () => {
           <Typography>{textResources.MainHeader_App_Name}</Typography>
         </TitleWrapper>
 
-        <BlockviewWrapper>
-          <img
-            src={BlockviewIcon}
-            alt="blockview"
-            onClick={() => push("/home/diagram")}
-          />
-        </BlockviewWrapper>
-
-        <TreeviewWrapper>
-          <img
-            src={TreeviewIcon}
-            alt="treeview"
-            onClick={() => push("/home/treeview")}
-          />
-        </TreeviewWrapper>
+        <IconsWrapper>
+          <TreeviewWrapper>
+            <img
+              src={TreeviewIcon}
+              alt="treeview"
+              onClick={() => push("/home/treeview")}
+            />
+          </TreeviewWrapper>
+          <BlockviewWrapper>
+            <img
+              src={BlockviewIcon}
+              alt="blockview"
+              onClick={() => push("/home/diagram")}
+            />
+          </BlockviewWrapper>
+          <SwitchWrapper>
+            <img src={SwitchIcon} alt="switchicon" onClick={() => null} />
+          </SwitchWrapper>
+        </IconsWrapper>
 
         <VisualIconWrapper>
           <img src={VisualFilterIcon} alt="visualfilter" onClick={() => null} />
