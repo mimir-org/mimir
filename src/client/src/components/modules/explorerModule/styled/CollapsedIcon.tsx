@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const HiddenIcon = styled.div`
+const CollapsedIcon = styled.div`
   float: right;
   margin-left: 200px;
   margin-top: 14px;
@@ -9,4 +9,4 @@ const HiddenIcon = styled.div`
     props.visible ? "hidden" : "initial"};
 `;
 
-export default HiddenIcon;
+export default CollapsedIcon;
