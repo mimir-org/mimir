@@ -2,7 +2,7 @@ export { default as FragmentHeaderWrapper } from "./FragmentHeaderWrapper";
 export { default as FragmentHeader } from "./FragmentHeader";
 export { default as FragmentDataWrapper } from "./FragmentDataWrapper";
 export { default as StyledToggleBox } from "./StyledToggleBox";
-export { default as StyledInspectorTitle } from "./StyledInspectorTitle";
+export { default as InspectorTitle } from "./InspectorTitle";
 export { default as StyledColumn } from "./StyledColumn";
 export { default as StyledContainer } from "./StyledContainer";
 export { default as StyledParagraph } from "./StyledParagraph";

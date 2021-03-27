@@ -26,8 +26,8 @@ export const ExplorerModule = () => {
     <AnimatedMenu start={startHeight} stop={stopHeight}>
       <HeaderWrapper>
         <Header>
-          <img src={ExplorerIcon} alt="explorerIcon" />
           {textResources.Explorer_view}
+          <img src={ExplorerIcon} alt="explorerIcon" />
         </Header>
         <ToggleExplorerButton visible={isOpen} onClick={handleClick} />
       </HeaderWrapper>

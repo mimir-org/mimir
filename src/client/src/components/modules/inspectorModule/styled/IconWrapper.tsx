@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const IconWrapper = styled.div`
   float: right;
-  margin-right: 60px;
+  margin-right: 20px;
   margin-top: 7px;
 `;
 

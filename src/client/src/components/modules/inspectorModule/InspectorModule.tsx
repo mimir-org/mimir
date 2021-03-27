@@ -5,10 +5,7 @@ import { useState } from "react";
 import { EyeIcon } from "../../../assets";
 import { IconWrapper } from "./styled";
 import textResources from "../../../textResources";
-import {
-  FragmentHeaderWrapper,
-  StyledInspectorTitle,
-} from "./fragments/styled";
+import { FragmentHeaderWrapper, InspectorTitle } from "./fragments/styled";
 import {
   loadStateFromStorage,
   saveStateToStorage,
@@ -37,9 +34,7 @@ const InspectorModule = () => {
             onClick={handleClick}
           />
           <IconWrapper>
-            <StyledInspectorTitle>
-              {textResources.Inspector_Heading}
-            </StyledInspectorTitle>
+            <InspectorTitle>{textResources.Inspector_Heading}</InspectorTitle>
             <img src={EyeIcon} alt="inspector-icon" />
           </IconWrapper>
         </FragmentHeaderWrapper>
