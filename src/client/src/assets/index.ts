@@ -7,3 +7,4 @@ export { default as SearchIcon } from "./icons/searchIcon.svg";
 export { default as ExplorerIcon } from "./icons/explorer.svg";
 export { default as TreeviewIcon } from "./icons/treeviewIcon.svg";
 export { default as BlockviewIcon } from "./icons/blockviewIcon.svg";
+export { default as VisualFilterIcon } from "./icons/visualFilterIcon.svg";

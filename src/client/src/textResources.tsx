@@ -4,6 +4,7 @@ const textResources = {
   // Top-menu
   MainHeader_App_Name: "Model Builder",
   MainHeader_Login_Heading: "Login",
+  MainHeader_VisualFilter: "Visual Filter",
 
   // ExplorerModule
   Explorer_view: "Explorer",
