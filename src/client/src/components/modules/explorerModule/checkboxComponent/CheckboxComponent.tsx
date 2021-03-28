@@ -16,7 +16,7 @@ export const CheckboxComponent = ({
     setChecked(!isChecked);
   };
   return (
-    <label className="container">
+    <label className="checkbox">
       <input
         type="checkbox"
         checked={isChecked}
