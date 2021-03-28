@@ -11,9 +11,14 @@
   }
 }
 
+input[type="checkbox"]:focus {
+  outline: 0;
+}
+
 .checkbox {
   -webkit-appearance: none;
   -moz-appearance: none;
+  -o-appearance: none;
   appearance: none;
   background-color: #fafafa;
   border: 2.5px solid #007079;
