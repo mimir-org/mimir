@@ -15,17 +15,20 @@ import {
 const InspectorModule = () => {
   const key = "inspector";
   const [showInspector, setShowInspector] = useState(loadStateFromStorage(key));
+  const [animate, setAnimate] = useState(false);
+
   const handleClick = () => {
     saveStateToStorage(!showInspector, key);
     setShowInspector(!showInspector);
+    setAnimate(true);
   };
 
-  const startHeight = showInspector ? "0" : "290";
+  const startHeight = showInspector ? "38" : "290";
   const stopHeight = showInspector ? "290" : "38";
 
   return (
     <>
-      <AnimatedMenu start={startHeight} stop={stopHeight}>
+      <AnimatedMenu start={startHeight} stop={stopHeight} run={animate}>
         <FragmentHeaderWrapper>
           <InspectorHeader />
           <ToggleInspectorButton

@@ -13,17 +13,19 @@ import {
 const LibraryModule = () => {
   const key = "library";
   const [isOpen, setIsOpen] = useState(loadStateFromStorage(key));
+  const [animate, setAnimate] = useState(false);
 
   const handleClick = () => {
     saveStateToStorage(!isOpen, key);
     setIsOpen(!isOpen);
+    setAnimate(true);
   };
 
   const startHeight = isOpen ? "35" : "331";
   const stopHeight = isOpen ? "331" : "35";
 
   return (
-    <AnimatedMenu start={startHeight} stop={stopHeight}>
+    <AnimatedMenu start={startHeight} stop={stopHeight} run={animate}>
       <HeaderWrapper>
         <ToggleLibraryButton visible={isOpen} onClick={handleClick} />
         <Header>
