@@ -1,6 +1,9 @@
+import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { AppBar, Toolbar, Typography } from "@material-ui/core";
 import textResources from "../../textResources";
+import SaveViewState from "./hooks/SaveViewState";
+import { loadStateFromStorage } from "../../redux/store/localStorage/localStorage";
 import {
   TreeviewIcon,
   BlockviewIcon,
@@ -17,14 +20,18 @@ import {
   IconsWrapper,
   SwitchWrapper,
 } from "./styled";
-import { useState } from "react";
 
 const Header = () => {
   const { push } = useHistory();
-  const [isSwitched, setIsSwitched] = useState(false);
+  const [showDiagram, setShowDiagram] = useState(
+    loadStateFromStorage("diagram")
+  );
 
-  const handleClick = () => {
-    setIsSwitched(!isSwitched);
+  const handleClick = (e) => {
+    const key = e.target.alt;
+    const view = SaveViewState(key);
+    push(`/home/${view}`);
+    setShowDiagram(loadStateFromStorage("diagram"));
   };
 
   return (
@@ -36,24 +43,16 @@ const Header = () => {
 
         <IconsWrapper>
           <TreeviewWrapper>
-            <img
-              src={TreeviewIcon}
-              alt="treeview"
-              onClick={() => push("/home/treeview")}
-            />
+            <img src={TreeviewIcon} alt="treeview" onClick={handleClick} />
           </TreeviewWrapper>
           <BlockviewWrapper>
-            <img
-              src={BlockviewIcon}
-              alt="blockview"
-              onClick={() => push("/home/diagram")}
-            />
+            <img src={BlockviewIcon} alt="diagram" onClick={handleClick} />
           </BlockviewWrapper>
           <SwitchWrapper>
-            {isSwitched ? (
-              <img src={SwitchOnIcon} alt="switchicon" onClick={handleClick} />
+            {showDiagram ? (
+              <img src={SwitchOnIcon} alt="switch" onClick={handleClick} />
             ) : (
-              <img src={SwitchOffIcon} alt="switchicon" onClick={handleClick} />
+              <img src={SwitchOffIcon} alt="switch" onClick={handleClick} />
             )}
           </SwitchWrapper>
         </IconsWrapper>
