@@ -9,24 +9,14 @@ interface Props {
 }
 
 const animation: FC<Props> = ({ start, stop, run }) => keyframes`
-${
-  run
-    ? `from {
-      width: ${start}px;
-    },
-    to {
-      width: ${stop}px;
-    }
-  `
-    : `from {
-      width: ${stop}px;
-    },
-    to {
-      width: ${stop}px;
-    }
-  `
-}  
-  `;
+${!run ? (start = stop) : null}
+  from {
+    width: ${start}px;
+  },
+  to {
+    width: ${stop}px;
+  }  
+`;
 
 const AnimatedMenu = styled(ExplorerContainer)`
   animation: ${animation} 0.3s ease-in-out;

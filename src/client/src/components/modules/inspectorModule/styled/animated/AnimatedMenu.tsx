@@ -9,24 +9,14 @@ interface Props {
 }
 
 const animation: FC<Props> = ({ start, stop, run }) => keyframes`
-${
-  run
-    ? `from {
-      height: ${start}px;
-    },
-    to {
-      height: ${stop}px;
-    }
-  `
-    : `from {
-      heigth: ${stop}px;
-    },
-    to {
-      height: ${stop}px;
-    }
-  `
-}  
-  `;
+${!run ? (start = stop) : null}
+  from {
+    height: ${start}px;
+  },
+  to {
+    height: ${stop}px;
+  }  
+`;
 
 const AnimatedMenu = styled(StyledInspectorComponent)`
   animation: ${animation} 0.3s ease-in-out;
