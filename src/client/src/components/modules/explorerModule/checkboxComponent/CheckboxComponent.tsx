@@ -16,15 +16,15 @@ export const CheckboxComponent = ({
     setChecked(!isChecked);
   };
   return (
-    <div className="checkbox_container">
+    <label className="container">
       <input
         type="checkbox"
-        className="checkbox"
         checked={isChecked}
         onChange={handleCheckboxChange}
       />
+      <span className="checkmark"></span>
       <label className="checkbox_label">{inputLabel}</label>
-    </div>
+    </label>
   );
 };
 
