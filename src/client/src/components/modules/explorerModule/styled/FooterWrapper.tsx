@@ -11,6 +11,8 @@ const FooterWrapper = styled.div`
   -webkit-box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.15);
   -moz-box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.15);
   box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.15);
+  opacity: ${(props: { visible: boolean }) => (props.visible ? "1" : "0")};
+  transition: visibility 0.2s linear, opacity 0.3s linear;
 `;
 
 export default FooterWrapper;

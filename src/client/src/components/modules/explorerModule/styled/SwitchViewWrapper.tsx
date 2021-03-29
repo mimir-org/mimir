@@ -7,6 +7,7 @@ const SwitchViewWrapper = styled.div`
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
+  overflow: hidden;
 `;
 
 export default SwitchViewWrapper;
