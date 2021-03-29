@@ -51,7 +51,7 @@ export const ExplorerModule = () => {
           aspect={projectData[0].aspect}
         />
       </ContentWrapper>
-      <FooterWrapper>
+      <FooterWrapper visible={isOpen}>
         <SwitchViewComponent />
       </FooterWrapper>
     </AnimatedMenu>

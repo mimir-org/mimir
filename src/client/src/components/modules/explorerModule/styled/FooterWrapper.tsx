@@ -6,6 +6,8 @@ const FooterWrapper = styled.div`
   width: inherit;
   position: absolute;
   bottom: 0;
+  visibility: ${(props: { visible: boolean }) =>
+    props.visible ? "initial" : "hidden"};
   -webkit-box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.15);
   -moz-box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.15);
   box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.15);

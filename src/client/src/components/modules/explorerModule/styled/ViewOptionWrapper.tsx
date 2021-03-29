@@ -11,6 +11,7 @@ const ViewOptionWrapper = styled.div`
   border: 1px solid #007079;
   border-radius: 2px;
   background-color: rgba(140, 138, 138, 0.4);
+  cursor: pointer;
   font-family: roboto;
   color: #000;
   font-size: 14px;
