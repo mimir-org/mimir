@@ -9,7 +9,7 @@ import ReactFlow, {
   ArrowHeadType,
 } from "react-flow-renderer";
 
-import { addNode } from '../../redux/store/project/actions';
+import { addNode, create } from '../../redux/store/project/actions';
 import { ProjectState } from '../../redux/store/project/types';
 import RootState from "./../../redux/store/index";
 
@@ -30,12 +30,11 @@ const DnDFlow = () => {
   const dispatch = useDispatch();
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
-  const [elements, setElements] = useState(null);
   const project = useSelector<RootState>((state) => state.project);
+  const [elements, setElements] = useState(project);
 
   useEffect(() => {
-    setElements(project);
-    console.log('Hi loaded');
+    // setElements(project);    
   }, []);
 
   // On connect
@@ -112,6 +111,11 @@ const DnDFlow = () => {
           </div>
           <Sidebar />
         </ReactFlowProvider>
+      }
+      {!project &&
+      <div>
+        <input type='button' value='Hello' onClick={() => dispatch(create())}></input>
+        </div>
       }
     </div>
   );
