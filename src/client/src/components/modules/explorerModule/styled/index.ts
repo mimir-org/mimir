@@ -6,3 +6,6 @@ export { default as FacilityHeader } from "./FacilityHeader";
 export { default as AspectWrapper } from "./AspectWrapper";
 export { default as ExplorerTitle } from "./ExplorerTitle";
 export { default as CollapsedIcon } from "./CollapsedIcon";
+export { default as FooterWrapper } from "./FooterWrapper";
+export { default as SwitchViewWrapper } from "./SwitchViewWrapper";
+export { default as ViewOptionWrapper } from "./ViewOptionWrapper";

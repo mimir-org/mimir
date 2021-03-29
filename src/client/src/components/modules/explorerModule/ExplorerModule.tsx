@@ -1,6 +1,7 @@
 import { projectData } from "./helpers/GetProjectData";
 import { ExplorerIcon } from "../../../assets";
 import FacilityComponent from "./facilityComponent/FacilityComponent";
+import { SwitchViewComponent } from "./switchviewComponent/SwitchViewComponent";
 import textResources from "../../../textResources";
 import { ToggleExplorerButton } from "../../../assets/buttons/index";
 import AnimatedMenu from "./styled/animated/AnimatedMenu";
@@ -10,6 +11,7 @@ import {
   ContentWrapper,
   ExplorerTitle,
   CollapsedIcon,
+  FooterWrapper,
 } from "./styled";
 import { useState } from "react";
 import {
@@ -49,6 +51,9 @@ export const ExplorerModule = () => {
           aspect={projectData[0].aspect}
         />
       </ContentWrapper>
+      <FooterWrapper>
+        <SwitchViewComponent />
+      </FooterWrapper>
     </AnimatedMenu>
   );
 };
