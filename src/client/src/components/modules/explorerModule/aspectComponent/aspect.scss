@@ -1,26 +1,40 @@
 .aspect_container {
-  display: flex;
-  flex-direction: column;
-
   .aspect_header {
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-left: -10px;
-    margin-top: 10px;
+    margin-bottom: 8px;
+    margin-right: 35px;
 
     .aspectIcon {
-      width: 18px;
-      height: 18px;
-      padding: 5px 5px;
-      margin-bottom: 11px;
-      margin-right: 10px;
+      flex: 0.5;
+      width: 25px;
+      height: 25px;
+      padding-right: 20px;
+      padding-bottom: 15px;
+    }
+
+    .checkbox_container {
+      flex: 2;
+    }
+
+    .placeholder_container {
+      flex: 2;
+      p {
+        display: none;
+      }
+    }
+
+    .expandIcon {
+      flex: 1;
+      width: 13px;
+      height: 13px;
+      padding-bottom: 10px;
     }
   }
 
   .facets_container {
     display: flex;
     flex-direction: column;
-    padding-left: 60px;
   }
 }
