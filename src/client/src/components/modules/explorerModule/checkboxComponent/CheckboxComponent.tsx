@@ -4,19 +4,30 @@ interface CheckboxComponentProps {
   id: string;
   inputLabel: string;
   checked?: boolean;
+  aspect?: string;
 }
 
 export const CheckboxComponent = ({
   id,
   inputLabel,
   checked,
+  aspect,
 }: CheckboxComponentProps) => {
   const [isChecked, setChecked] = useState(false);
   const handleCheckboxChange = (event) => {
     setChecked(!isChecked);
   };
+  const underlineColor =
+    aspect === "function"
+      ? "function_underline"
+      : aspect === "location"
+      ? "location_underline"
+      : aspect === "product"
+      ? "product_underline"
+      : null;
+
   return (
-    <label className="checkbox">
+    <label className={"checkbox " + underlineColor}>
       <input
         type="checkbox"
         checked={isChecked}

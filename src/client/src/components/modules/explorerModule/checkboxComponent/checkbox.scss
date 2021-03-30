@@ -1,7 +1,7 @@
 .checkbox {
   display: flex;
   position: relative;
-  padding-left: 29px;
+  padding: 0px 0px 2px 29px;
   margin-bottom: 12px;
   cursor: pointer;
   font-size: 18px;
@@ -15,6 +15,18 @@
   }
 }
 
+.function_underline {
+  border-bottom: 2px solid #fef445;
+}
+
+.location_underline {
+  border-bottom: 2px solid #fa00ff;
+}
+
+.product_underline {
+  border-bottom: 2px solid #00f0ff;
+}
+
 .checkbox input {
   position: absolute;
   opacity: 0;
@@ -26,8 +38,8 @@
 .checkmark {
   position: absolute;
   left: 0;
-  height: 20px;
-  width: 20px;
+  height: 17px;
+  width: 17px;
   background-color: #f2f2f2;
   border: 2px solid #007079;
   border-radius: 3px;

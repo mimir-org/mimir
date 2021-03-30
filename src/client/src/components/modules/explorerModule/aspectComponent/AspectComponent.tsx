@@ -18,15 +18,23 @@ export const AspectComponent = ({ id, name, facet }: AspectComponentProps) => {
       : id === "3"
       ? ProductIcon
       : null;
+
   return (
     <div className="aspect_container">
       <div className="aspect_header">
         <img className="aspectIcon" src={Icon} alt="aspect-icon"></img>
-        <CheckboxComponent id={id} inputLabel={name} />
+        <CheckboxComponent id={id} inputLabel={name} aspect={name} />
       </div>
       <div className="facets_container">
         {facet.map(function (f, index) {
-          return <FacetComponent key={index} id={f["id"]} name={f["name"]} />;
+          return (
+            <FacetComponent
+              key={index}
+              id={f["id"]}
+              name={f["name"]}
+              aspect={name}
+            />
+          );
         })}
       </div>
     </div>
