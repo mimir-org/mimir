@@ -8,8 +8,8 @@ const textResources = {
 
   // ExplorerModule
   Explorer_view: "Explorer",
-  Combined_view: "Combined view",
-  Split_view: "Split view",
+  Combined_view: "Connections",
+  Split_view: "Split View",
 
   // InspectorModule
   Inspector_Heading: "Inspector",
