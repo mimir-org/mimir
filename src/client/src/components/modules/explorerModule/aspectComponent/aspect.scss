@@ -1,20 +1,20 @@
 .aspect_container {
+  padding-bottom: 30px;
+
   .aspect_header {
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-bottom: 8px;
-    margin-right: 35px;
 
     .aspectIcon {
       flex: 0.5;
       width: 25px;
       height: 25px;
-      padding-right: 20px;
-      padding-bottom: 15px;
+      padding: 0px 24px 1px 30px;
     }
 
     .checkbox_container {
+      padding-top: 7px;
       flex: 2;
     }
 
@@ -29,12 +29,24 @@
       flex: 1;
       width: 13px;
       height: 13px;
-      padding-bottom: 10px;
     }
+  }
+
+  .function_header {
+    background-color: rgba(254, 244, 69, 0.15);
+  }
+
+  .location_header {
+    background-color: rgba(250, 0, 255, 0.15);
+  }
+
+  .product_header {
+    background-color: rgba(0, 240, 255, 0.15);
   }
 
   .facets_container {
     display: flex;
     flex-direction: column;
+    padding-top: 6px;
   }
 }

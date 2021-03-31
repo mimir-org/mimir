@@ -31,11 +31,20 @@ export const AspectComponent = ({ id, name, facet }: AspectComponentProps) => {
       ? ProductIcon
       : null;
 
+  const aspectHeader =
+    name === "function"
+      ? "function_header"
+      : name === "location"
+      ? "location_header"
+      : name === "product"
+      ? "product_header"
+      : null;
+
   const expandIcon = expanded ? expandedIcon : unexpandedIcon;
 
   return (
     <div className="aspect_container">
-      <div className="aspect_header">
+      <div className={"aspect_header " + aspectHeader}>
         <img className="aspectIcon" src={aspectIcon} alt="aspect-icon"></img>
         <div className="checkbox_container">
           <CheckboxComponent id={id} inputLabel={name} aspect={name} />

@@ -44,7 +44,7 @@ export const ExplorerModule = () => {
       <CollapsedIcon visible={isOpen}>
         <img src={ExplorerIcon} alt="explorerIcon" />
       </CollapsedIcon>
-      <ContentWrapper>
+      <ContentWrapper visible={isOpen}>
         <FacilityComponent
           name={projectData[0].name}
           id={projectData[0].id}

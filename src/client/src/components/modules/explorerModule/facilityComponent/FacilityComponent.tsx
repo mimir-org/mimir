@@ -18,7 +18,9 @@ export const FacilityComponent = ({
 }: FacilityComponentProps) => {
   return (
     <>
-      <CheckboxComponent id={id} inputLabel={name} checked={checked} />
+      <FacilityHeader>
+        <CheckboxComponent id={id} inputLabel={name} checked={checked} />
+      </FacilityHeader>
       <AspectWrapper>
         {aspect.map(function (a, index) {
           return (
