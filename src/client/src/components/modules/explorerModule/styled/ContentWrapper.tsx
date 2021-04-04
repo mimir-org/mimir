@@ -1,11 +1,8 @@
 import styled from "styled-components";
 
 const ContentWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+  float: right;
   width: 331px;
-  height: 80%;
-  overflow: hidden;
   visibility: ${(props: { visible: boolean }) =>
     props.visible ? "initial" : "hidden"};
   opacity: ${(props: { visible: boolean }) => (props.visible ? "1" : "0")};
