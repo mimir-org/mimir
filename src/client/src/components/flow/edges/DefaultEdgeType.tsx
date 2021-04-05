@@ -1,6 +1,6 @@
-import React from "react";
-import { getBezierPath, getMarkerEnd, getSmoothStepPath, EdgeText } from "react-flow-renderer";
+import { getBezierPath, getMarkerEnd, getSmoothStepPath, EdgeText } from 'react-flow-renderer';
 import { getCenter } from '../utils';
+import { EDGE_TYPE, EdgeType, Node, NODE_TYPE } from '../../../models/project';
 
 export default function DefaultEdgeType({
   id,
@@ -13,50 +13,64 @@ export default function DefaultEdgeType({
   style = {},
   data,
   arrowHeadType,
-  markerEndId,
+  markerEndId
 }) {
 
-    
+    const markerEnd = getMarkerEnd(arrowHeadType, markerEndId);
+    const [centerX, centerY] = getCenter({ sourceX, sourceY, targetX, targetY });
 
-  const edgePath = getBezierPath({
-    sourceX,
-    sourceY,
-    sourcePosition,
-    targetX,
-    targetY,
-    targetPosition,
-  });
+    const edgePathBezier = getBezierPath({
+        sourceX,
+        sourceY,
+        sourcePosition,
+        targetX,
+        targetY,
+        targetPosition,
+    });
   
-  const edgePath2 = getSmoothStepPath({
-    sourceX,
-    sourceY,
-    sourcePosition,
-    targetX,
-    targetY,
-    targetPosition,
-  });
+    const edgePathSmoothStep = getSmoothStepPath({
+        sourceX,
+        sourceY,
+        sourcePosition,
+        targetX,
+        targetY,
+        targetPosition,
+    });
 
-  
+    const pathType = (source: Node, target: Node) => {
+        const pathType = source.type === NODE_TYPE.ASPECT ? EDGE_TYPE.STEP as EdgeType : source.type !== target.type ? EDGE_TYPE.BEZIER as EdgeType : EDGE_TYPE.STEP as EdgeType;
+        return  pathType === EDGE_TYPE.BEZIER ? edgePathBezier : edgePathSmoothStep;
+    }
 
+    const edgeText = (source: Node, target: Node) => {
+        let text = null;
 
+        if(!source || !target)
+            return null;
 
-  const markerEnd = getMarkerEnd(arrowHeadType, markerEndId);
-  
+        if(source.type === NODE_TYPE.ASPECT) {
+            return null;
+        } else if(source.type === target.type) {
+            text = 'partof';
+        } else if(target.type === NODE_TYPE.PRODUCT) {
+            text = 'fulfilledBy';
+        } else if(target.type === NODE_TYPE.LOCATION) {
+            text = 'locatedAt';
+        }
 
-  const [centerX, centerY] = getCenter({ sourceX, sourceY, targetX, targetY });
-  
-  const text = data.text ? (
-    <EdgeText
-      x={centerX}
-      y={centerY}
-      label={data.text}
-    //   labelStyle={labelStyle}
-    //   labelShowBg={labelShowBg}
-    //   labelBgStyle={labelBgStyle}
-    //   labelBgPadding={labelBgPadding}
-    //   labelBgBorderRadius={labelBgBorderRadius}
-    />
-  ) : null;
+        
+        return text ? (
+            <EdgeText
+                x={centerX}
+                y={centerY}
+                label={text}
+                //   labelStyle={labelStyle}
+                //   labelShowBg={labelShowBg}
+                //   labelBgStyle={labelBgStyle}
+                //   labelBgPadding={labelBgPadding}
+                //   labelBgBorderRadius={labelBgBorderRadius}
+            />) : null;              
+    }
 
   return (
     <>
@@ -64,14 +78,10 @@ export default function DefaultEdgeType({
         id={id}
         style={style}
         className="react-flow__edge-path"
-        d={edgePath2}
+        d={pathType(data.source, data.target)}
         markerEnd={markerEnd}
-      />
-     
-        
-          {text}
-        
-     
+      />            
+          {edgeText(data.source, data.target)}
     </>
   );
 }

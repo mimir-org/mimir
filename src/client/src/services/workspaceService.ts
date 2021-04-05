@@ -20,7 +20,7 @@ import {
 } from "./../models/diagram";
 import { AspectRatioSharp } from "@material-ui/icons";
 import { brotliDecompress } from "zlib";
-import { nodetypeReducer } from "../redux/store/nodetypes/reducers";
+// import { nodetypeReducer } from "../redux/store/library/reducers";
 
 export class WorkspaceService {
   private workspace: Workspace;

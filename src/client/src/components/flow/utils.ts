@@ -1,3 +1,5 @@
+import { Project, Node } from '../../models/project';
+import { Elements, FlowElement } from "react-flow-renderer";
 export interface GetCenterParams {
     sourceX: number;
     sourceY: number;
@@ -5,7 +7,7 @@ export interface GetCenterParams {
     targetY: number;
   }
   
-  export const getCenter = ({
+export const getCenter = ({
     sourceX,
     sourceY,
     targetX,
@@ -26,6 +28,36 @@ export interface GetCenterParams {
       return s ? "-" + p.substr(0, 4) + "-" + p.substr(4, 4) : p;
     }
     return _p8(false) + _p8(true) + _p8(true) + _p8(false);
+}
 
-  }
+export const CreateElementNode = (node: Node): FlowElement => {
+    let elementNode = null;
+
+    if (!node)
+        return elementNode;
+
+    elementNode = {
+        id: node.id,
+        type: node.type.charAt(0).toUpperCase() + node.type.substring(1).toLowerCase(),
+        data: node,
+        position: node.position
+    }
+
+    return elementNode;
+}
+
+export const CreateProjectNodes = (project: Project ) :Elements => {
+
+    const initialElements: Elements = [];
+
+    if (!project)
+        return;
+
+    project.nodes.forEach(node => {
+        const elementNode = CreateElementNode(node);
+        if (elementNode)
+            initialElements.push(elementNode);
+    });
+    return initialElements;
+};
   

@@ -1,27 +1,45 @@
 import { InspectorHeader } from ".";
-import { AnimatedMenu } from "./styled/animated";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/store";
+import AnimatedMenu from "./styled/animated/AnimatedMenu";
+import { ToggleInspectorButton } from "../../../assets/buttons";
+import { useState } from "react";
+import { EyeIcon } from "../../../assets";
+import { IconWrapper } from "./styled";
+import textResources from "../../../textResources";
+import { FragmentHeaderWrapper } from "./fragments/styled";
+import { InspectorTitle } from "./styled";
+import {
+  loadStateFromStorage,
+  saveStateToStorage,
+} from "../../../redux/store/localStorage/localStorage";
 
 const InspectorModule = () => {
-  const inspectorMaxHeight = "290";
-  const inspectorMinHeight = "0";
-  const inspectorHiddenHeight = "38";
+  const key = "inspector";
+  const [showInspector, setShowInspector] = useState(loadStateFromStorage(key));
+  const [animate, setAnimate] = useState(false);
 
-  const showInspector = useSelector<RootState>(
-    (state) => state.showInspectorReducer.visible
-  );
+  const handleClick = () => {
+    saveStateToStorage(!showInspector, key);
+    setShowInspector(!showInspector);
+    setAnimate(true);
+  };
 
-  return showInspector ? (
+  const startHeight = showInspector ? "38" : "290";
+  const stopHeight = showInspector ? "290" : "38";
+
+  return (
     <>
-      <AnimatedMenu start={inspectorMinHeight} stop={inspectorMaxHeight}>
-        <InspectorHeader />
-      </AnimatedMenu>
-    </>
-  ) : (
-    <>
-      <AnimatedMenu start={inspectorMaxHeight} stop={inspectorHiddenHeight}>
-        <InspectorHeader />
+      <AnimatedMenu start={startHeight} stop={stopHeight} run={animate}>
+        <FragmentHeaderWrapper>
+          <InspectorHeader />
+          <ToggleInspectorButton
+            visible={showInspector}
+            onClick={handleClick}
+          />
+          <IconWrapper>
+            <InspectorTitle>{textResources.Inspector_Heading}</InspectorTitle>
+            <img src={EyeIcon} alt="inspector-icon" />
+          </IconWrapper>
+        </FragmentHeaderWrapper>
       </AnimatedMenu>
     </>
   );

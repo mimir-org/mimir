@@ -1,52 +1,68 @@
+import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  Typography,
-  Button,
-} from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
+import { AppBar, Toolbar, Typography } from "@material-ui/core";
 import textResources from "../../textResources";
+import SaveViewState from "./helpers/SaveViewState";
+import { loadStateFromStorage } from "../../redux/store/localStorage/localStorage";
+import {
+  TreeviewIcon,
+  BlockviewIcon,
+  VisualFilterIcon,
+  SwitchOnIcon,
+  SwitchOffIcon,
+} from "../../assets/index";
+import {
+  TextWrapper,
+  BlockviewWrapper,
+  TreeviewWrapper,
+  VisualIconWrapper,
+  TitleWrapper,
+  IconsWrapper,
+  SwitchWrapper,
+} from "./styled";
 
 const Header = () => {
   const { push } = useHistory();
+  const [showDiagram, setShowDiagram] = useState(
+    loadStateFromStorage("diagram")
+  );
+
+  const handleClick = (e) => {
+    const key = e.target.alt;
+    const view = SaveViewState(key);
+    push(`/home/${view}`);
+    setShowDiagram(loadStateFromStorage("diagram"));
+  };
 
   return (
     <AppBar className="appbar">
       <Toolbar>
-        <IconButton
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          className="menu_button"
-        >
-          <MenuIcon />
-        </IconButton>
-        <Typography
-          variant="h6"
-          className="title_text"
-          onClick={() => push("/")}
-        >
-          {textResources.MainHeader_App_Name}
-        </Typography>
-        <Button
-          color="inherit"
-          className="login_button"
-          onClick={() => push("/home/diagram")}
-        >
-          {textResources.MainHeader_Diagram_Heading}
-        </Button>
-        <Button
-          color="inherit"
-          className="login_button"
-          onClick={() => push("/home/treeview")}
-        >
-          {textResources.MainHeader_Treeview_Heading}
-        </Button>
-        <Button color="inherit" className="login_button">
-          {textResources.MainHeader_Login_Heading}
-        </Button>
+        <TitleWrapper>
+          <Typography>{textResources.MainHeader_App_Name}</Typography>
+        </TitleWrapper>
+
+        <IconsWrapper>
+          <TreeviewWrapper>
+            <img src={TreeviewIcon} alt="treeview" onClick={handleClick} />
+          </TreeviewWrapper>
+          <BlockviewWrapper>
+            <img src={BlockviewIcon} alt="diagram" onClick={handleClick} />
+          </BlockviewWrapper>
+          <SwitchWrapper>
+            {showDiagram ? (
+              <img src={SwitchOnIcon} alt="switch" onClick={handleClick} />
+            ) : (
+              <img src={SwitchOffIcon} alt="switch" onClick={handleClick} />
+            )}
+          </SwitchWrapper>
+        </IconsWrapper>
+
+        <VisualIconWrapper>
+          <img src={VisualFilterIcon} alt="visualfilter" onClick={() => null} />
+        </VisualIconWrapper>
+        <TextWrapper>
+          <Typography>{textResources.MainHeader_VisualFilter}</Typography>
+        </TextWrapper>
       </Toolbar>
     </AppBar>
   );

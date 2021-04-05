@@ -2,6 +2,7 @@ import {
     FETCHING_PROJECT,
     CREATING_PROJECT,
     ADD_NODE,
+    REMOVE_NODE,
     ProjectActionTypes    
   } from './types';
 
@@ -23,13 +24,17 @@ import {
     };
   }
 
-  export function addNode(node: Node, parentId: string) {
+  export function addNode(node: Node) {
     return {
       type: ADD_NODE,
-      payload: {
-        node: node,
-        parentId: parentId
-      }
+      payload: node
+    }
+  }
+
+  export function removeNode(nodeId: string) {
+    return {
+      type: REMOVE_NODE,
+      payload: nodeId
     }
   }
   

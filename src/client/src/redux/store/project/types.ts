@@ -5,6 +5,7 @@ export const FETCHING_PROJECT_SUCCESS_OR_ERROR =  "FETCHING_PROJECT_SUCCESS_OR_E
 export const CREATING_PROJECT =  "CREATING_PROJECT";
 export const CREATING_PROJECT_SUCCESS_OR_ERROR =  "CREATING_PROJECT_SUCCESS_OR_ERROR";
 export const ADD_NODE =  "ADD_NODE";
+export const REMOVE_NODE =  "REMOVE_NODE";
 
 // State types
 export interface ProjectState {
@@ -40,15 +41,18 @@ interface CreatingProjectActionFinished {
 
 interface AddNodeAction {
   type: typeof ADD_NODE;
-  payload: {
-    node: Node,
-    parentId: string
-  };
+  payload: Node;
 }
+
+interface RemoveNodeAction {
+    type: typeof REMOVE_NODE;
+    payload: string
+  }
 
 export type ProjectActionTypes =
   | FetchingProjectAction
   | FetchingProjectActionFinished
   | CreatingProjectAction
   | CreatingProjectActionFinished
-  | AddNodeAction;
+  | AddNodeAction
+  | RemoveNodeAction;

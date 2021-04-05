@@ -1,2 +1,2 @@
-import './explorer.scss';
-export { default as ExplorerComponent } from "./ExplorerComponent";
+import "./explorer.scss";
+export { default as ExplorerModule } from "./ExplorerModule";

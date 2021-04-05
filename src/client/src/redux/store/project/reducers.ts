@@ -4,6 +4,7 @@ import {
     CREATING_PROJECT,
     CREATING_PROJECT_SUCCESS_OR_ERROR,
     ADD_NODE,
+    REMOVE_NODE,
     ProjectActionTypes,
     ProjectState
 } from "./types";
@@ -58,8 +59,21 @@ export function projectReducer(
                 errorMsg: action.payload.errorMsg,
             };
         case ADD_NODE:
-            console.log(action.payload);
-            return state;
+            return {
+                ...state,
+                project: {
+                    ...state.project,
+                    nodes: [...state.project.nodes, action.payload] 
+                }
+            }
+        case REMOVE_NODE:
+            return {
+                ...state,
+                project: {
+                    ...state.project,
+                    nodes: state.project.nodes.filter((node) => node.id !== action.payload)
+                }
+            }
 
         default:
             return state;

@@ -1,34 +1,53 @@
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../../redux/store";
 import textResources from "../../../textResources";
 import AnimatedMenu from "./styled/animated/AnimatedMenu";
-import useLibraryToggleChangeHandler from "./hooks/useLibraryToggleChangeHandler";
 import { LibraryIcon } from "../../../assets";
-import { Header, SidebarWrapper, ToggleBox } from "./styled";
+import { Header, SidebarWrapper, HeaderWrapper, CollapsedIcon } from "./styled";
 import { ToggleLibraryButton } from "../../../assets/buttons/index";
 import Sidebar from "../../treeview/flow/dragAndDrop/Sidebar";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../../../redux/store';
+import { LibraryState } from '../../../redux/store/library/types';
+import { searcLibrary } from '../../../redux/store/library/actions';
+import {
+  loadStateFromStorage,
+  saveStateToStorage,
+} from "../../../redux/store/localStorage/localStorage";
 
 const LibraryModule = () => {
+  const key = "library";
   const dispatch = useDispatch();
-  const isOpen = useSelector<RootState>(
-    (state) => state.showLibraryReducer.visible
-  );
-  const handleClick = useLibraryToggleChangeHandler(dispatch, isOpen);
+  const [isOpen, setIsOpen] = useState(loadStateFromStorage(key));
+  const [animate, setAnimate] = useState(false);
+  const state = useSelector<RootState>((state) => state.library) as LibraryState;  
 
-  const startHeight = isOpen ? "0" : "331";
+  useEffect(() => {
+    dispatch(searcLibrary(""));    
+  }, [dispatch]);
+
+  const handleClick = () => {
+    saveStateToStorage(!isOpen, key);
+    setIsOpen(!isOpen);
+    setAnimate(true);
+  };
+
+  const startHeight = isOpen ? "35" : "331";
   const stopHeight = isOpen ? "331" : "35";
 
   return (
-    <AnimatedMenu start={startHeight} stop={stopHeight}>
-      <ToggleBox>
+    <AnimatedMenu start={startHeight} stop={stopHeight} run={animate}>
+      <HeaderWrapper>
         <ToggleLibraryButton visible={isOpen} onClick={handleClick} />
         <Header>
           <img src={LibraryIcon} alt="library-icon" />
           {textResources.Library_Heading}
         </Header>
-      </ToggleBox>
-      <SidebarWrapper>
-        <Sidebar />
+      </HeaderWrapper>
+      <CollapsedIcon visible={isOpen}>
+        <img src={LibraryIcon} alt="explorerIcon" />
+      </CollapsedIcon>
+      <SidebarWrapper visible={isOpen}>
+        <Sidebar nodes={state.nodes} />
       </SidebarWrapper>
     </AnimatedMenu>
   );
