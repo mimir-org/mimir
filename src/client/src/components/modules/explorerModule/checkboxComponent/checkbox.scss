@@ -1,8 +1,8 @@
 .checkbox {
   display: flex;
   position: relative;
-  padding-left: 29px;
-  margin-bottom: 12px;
+  padding: 0px 0px 0px 29px;
+  margin-bottom: 6px;
   cursor: pointer;
   font-size: 18px;
   -webkit-user-select: none;
@@ -10,9 +10,25 @@
   -ms-user-select: none;
   user-select: none;
 
+  .checkbox_label {
+    padding-top: 1.5px;
+  }
+
   .checkbox_label::first-letter {
     text-transform: uppercase;
   }
+}
+
+.function_underline {
+  border-bottom: 2px solid #fef445;
+}
+
+.location_underline {
+  border-bottom: 2px solid #fa00ff;
+}
+
+.product_underline {
+  border-bottom: 2px solid #00f0ff;
 }
 
 .checkbox input {
@@ -26,8 +42,8 @@
 .checkmark {
   position: absolute;
   left: 0;
-  height: 20px;
-  width: 20px;
+  height: 17px;
+  width: 17px;
   background-color: #f2f2f2;
   border: 2px solid #007079;
   border-radius: 3px;
@@ -48,7 +64,7 @@
 }
 
 .checkbox .checkmark:after {
-  left: 6px;
+  left: 5px;
   top: 0px;
   width: 5px;
   height: 13px;

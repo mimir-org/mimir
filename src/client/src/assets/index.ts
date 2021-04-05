@@ -10,6 +10,8 @@ export { default as BlockviewIcon } from "./icons/blockviewIcon.svg";
 export { default as VisualFilterIcon } from "./icons/visualFilterIcon.svg";
 export { default as SwitchOnIcon } from "./icons/switchOnIcon.svg";
 export { default as SwitchOffIcon } from "./icons/switchOffIcon.svg";
+export { default as expandedIcon } from "./icons/expandedIcon.svg";
+export { default as unexpandedIcon } from "./icons/unexpandedIcon.svg";
 export { default as CombinedViewOnIcon } from "./icons/combinedViewOnIcon.svg";
 export { default as CombinedViewOffIcon } from "./icons/combinedViewOffIcon.svg";
 export { default as SplitViewIcon } from "./icons/splitViewIcon.svg";

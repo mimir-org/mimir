@@ -1,4 +1,11 @@
-import { FunctionIcon, ProductIcon, LocationIcon } from "../../../../assets";
+import { useState } from "react";
+import {
+  FunctionIcon,
+  ProductIcon,
+  LocationIcon,
+  expandedIcon,
+  unexpandedIcon,
+} from "../../../../assets";
 import CheckboxComponent from "../checkboxComponent/CheckboxComponent";
 import FacetComponent from "../facetComponent/FacetComponent";
 import "./aspect.scss";
@@ -10,7 +17,12 @@ interface AspectComponentProps {
 }
 
 export const AspectComponent = ({ id, name, facet }: AspectComponentProps) => {
-  const Icon =
+  const [expanded, setExpanded] = useState(true);
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
+
+  const aspectIcon =
     id === "1"
       ? FunctionIcon
       : id === "2"
@@ -18,17 +30,49 @@ export const AspectComponent = ({ id, name, facet }: AspectComponentProps) => {
       : id === "3"
       ? ProductIcon
       : null;
+
+  const aspectHeader =
+    name === "function"
+      ? "function_header"
+      : name === "location"
+      ? "location_header"
+      : name === "product"
+      ? "product_header"
+      : null;
+
+  const expandIcon = expanded ? expandedIcon : unexpandedIcon;
+
   return (
     <div className="aspect_container">
-      <div className="aspect_header">
-        <img className="aspectIcon" src={Icon} alt="aspect-icon"></img>
-        <CheckboxComponent id={id} inputLabel={name} />
+      <div className={"aspect_header " + aspectHeader}>
+        <img className="aspectIcon" src={aspectIcon} alt="aspect-icon"></img>
+        <div className="checkbox_container">
+          <CheckboxComponent id={id} inputLabel={name} aspect={name} />
+        </div>
+        <div className="placeholder_container">
+          <p>Placeholder</p>
+        </div>
+        <img
+          className="expandIcon"
+          src={expandIcon}
+          alt="expand-icon"
+          onClick={() => handleExpandClick()}
+        ></img>
       </div>
-      <div className="facets_container">
-        {facet.map(function (f, index) {
-          return <FacetComponent key={index} id={f["id"]} name={f["name"]} />;
-        })}
-      </div>
+      {expanded && (
+        <div className="facets_container">
+          {facet.map(function (f, index) {
+            return (
+              <FacetComponent
+                key={index}
+                id={f["id"]}
+                name={f["name"]}
+                aspect={name}
+              />
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };

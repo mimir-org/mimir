@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const FacilityHeader = styled.div`
-  margin-left: 23px;
+  padding-left: 30px;
 `;
 
 export default FacilityHeader;
