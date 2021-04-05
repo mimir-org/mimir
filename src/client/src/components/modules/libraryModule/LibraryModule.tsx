@@ -4,7 +4,11 @@ import { LibraryIcon } from "../../../assets";
 import { Header, SidebarWrapper, HeaderWrapper, CollapsedIcon } from "./styled";
 import { ToggleLibraryButton } from "../../../assets/buttons/index";
 import Sidebar from "../../treeview/flow/dragAndDrop/Sidebar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../../../redux/store';
+import { LibraryState } from '../../../redux/store/library/types';
+import { searcLibrary } from '../../../redux/store/library/actions';
 import {
   loadStateFromStorage,
   saveStateToStorage,
@@ -12,8 +16,14 @@ import {
 
 const LibraryModule = () => {
   const key = "library";
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(loadStateFromStorage(key));
   const [animate, setAnimate] = useState(false);
+  const state = useSelector<RootState>((state) => state.library) as LibraryState;  
+
+  useEffect(() => {
+    dispatch(searcLibrary(""));    
+  }, [dispatch]);
 
   const handleClick = () => {
     saveStateToStorage(!isOpen, key);
@@ -37,7 +47,7 @@ const LibraryModule = () => {
         <img src={LibraryIcon} alt="explorerIcon" />
       </CollapsedIcon>
       <SidebarWrapper visible={isOpen}>
-        <Sidebar />
+        <Sidebar nodes={state.nodes} />
       </SidebarWrapper>
     </AnimatedMenu>
   );

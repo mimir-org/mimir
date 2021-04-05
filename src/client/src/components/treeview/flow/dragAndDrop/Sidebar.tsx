@@ -1,10 +1,11 @@
 import textResources from "../../../../textResources";
+import { LibNode } from '../../../../models/project';
 import {
   ProductIcon,
   FunctionIcon,
   LocationIcon,
   SearchIcon,
-} from "../../../../assets/";
+} from "../../../../assets";
 import {
   TextWrapper,
   IconWrapper,
@@ -13,9 +14,27 @@ import {
   SearchIconWrapper,
 } from "../../../modules/libraryModule/styled";
 
-const Sidebar = () => {
-  const onDragStart = (event, nodeType) => {
-    event.dataTransfer.setData("application/reactflow", nodeType);
+interface Props {
+    nodes: LibNode[];
+}
+
+const icon = (icon: string) => {
+    switch(icon) {
+      case "FunctionIcon":
+        return <img src={FunctionIcon} width="30px" height="30px" alt="func-icon" />
+      case "ProductIcon":
+          return <img src={ProductIcon} width="30px" height="30px" alt="prod-icon" />
+      case "LocationIcon":
+          return <img src={LocationIcon} width="30px" height="30px" alt="loc-icon" />
+      default:
+          return <img src={SearchIcon} width="30px" height="30px" alt="search-icon" />
+    }
+  } 
+
+const Sidebar = ({ nodes }: Props) => {
+
+  const onDragStart = (event, node) => {
+    event.dataTransfer.setData("application/reactflow", node);
     event.dataTransfer.effectAllowed = "move";
   };
 
@@ -26,7 +45,7 @@ const Sidebar = () => {
       </SearchIconWrapper>
       <SearchBox placeholder={textResources.Library_SearchBox_Placeholder} />
 
-      <ContentWrapper
+      {/* <ContentWrapper
         className="dndnode function"
         onDragStart={(event) => onDragStart(event, "function")}
         draggable
@@ -35,9 +54,9 @@ const Sidebar = () => {
         <IconWrapper>
           <img src={FunctionIcon} width="30px" height="30px" alt="func-icon" />
         </IconWrapper>
-      </ContentWrapper>
+      </ContentWrapper> */}
 
-      <ContentWrapper
+      {/* <ContentWrapper
         className="dndnode product"
         onDragStart={(event) => onDragStart(event, "product")}
         draggable
@@ -46,9 +65,9 @@ const Sidebar = () => {
         <IconWrapper>
           <img src={ProductIcon} width="30px" height="30px" alt="func-icon" />
         </IconWrapper>
-      </ContentWrapper>
+      </ContentWrapper> */}
 
-      <ContentWrapper
+      {/* <ContentWrapper
         className="dndnode location"
         onDragStart={(event) => onDragStart(event, "location")}
         draggable
@@ -57,7 +76,17 @@ const Sidebar = () => {
         <IconWrapper>
           <img src={LocationIcon} width="30px" height="30px" alt="func-icon" />
         </IconWrapper>
+      </ContentWrapper> */}
+
+    {nodes && nodes.map(node => {
+        return <ContentWrapper className="dndnode location" onDragStart={(event) => onDragStart(event, JSON.stringify(node))} key={node.id} draggable>
+        <TextWrapper>{node.name}</TextWrapper>
+        <IconWrapper>
+          {icon(node.icon)}
+        </IconWrapper>
       </ContentWrapper>
+    })}
+
     </>
   );
 };

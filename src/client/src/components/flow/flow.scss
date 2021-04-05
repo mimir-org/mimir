@@ -1,7 +1,10 @@
 .react-flow__node-location,
 .react-flow__node-function,
 .react-flow__node-product,
-.react-flow__node-aspectNode
+.react-flow__node-Aspect,
+.react-flow__node-Function,
+.react-flow__node-Product,
+.react-flow__node-Location
  {
   padding: 10px;
   border-radius: 3px;
@@ -15,21 +18,29 @@
   &.selected {
     border: 2px solid #1a192b;
   }
+
+  .aspect-icon {
+      width: 25px;
+      height: 25px;
+  }
 }
 
-.react-flow__node-aspectNode {
-  border: none;
+.react-flow__node-Aspect {
+  border: none;  
 }
 
-.react-flow__node-function {
+.react-flow__node-function,
+.react-flow__node-Function {
   background: yellow;
 }
 
-.react-flow__node-product {
+.react-flow__node-product,
+.react-flow__node-Product {
   background: turquoise;
 }
 
-.react-flow__node-location {
+.react-flow__node-location,
+.react-flow__node-Location {
   background: magenta;
 }
 
@@ -37,8 +48,8 @@
 .dndflow {
   flex-direction: column;
   display: flex;
-  height: 60vh;
-  background-color: #fff;
+  height: 100%;
+  background-color: #f8f8f8;
 }
 
 /* Sidebar */

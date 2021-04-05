@@ -52,3 +52,4 @@ export interface Connection {
     to: string,
     connector: string
 }
+

@@ -2,7 +2,7 @@ export const INSPECTOR_TOGGLE_CHANGED = "Insceptor toggle changed";
 export const INSPECTOR_TOGGLE_CHANGED_COMPLETED =
   "INSPECTOR_TOGGLE_CHANGED_COMPLETED";
 
-const initialState = { visible: true };
+const initialState = { visible: false };
 
 const showInspectorReducer = (state = initialState, action) => {
   switch (action.type) {

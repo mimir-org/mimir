@@ -1,6 +1,7 @@
 import { AspectInfo, AspectDropdown } from "./aspect";
 import { WorkspaceService } from "../../services";
 import DnDFlow from "./flow/dragAndDrop";
+import { FlowTree } from '../flow';
 import {
   AspectDescriptor,
   Aspects,
@@ -23,7 +24,7 @@ const TreeviewBody = ({ aspectDescriptors, root, aspects }: Props) => {
 
   return (
     <>
-      <DnDFlow />
+      <FlowTree />
     </>
 
     /***  ORIGINAL DROPDOWNS ***/
