@@ -10,10 +10,10 @@ import ReactFlow, {
   Elements
 } from "react-flow-renderer";
 
-import { addNode, create, removeNode } from '../../redux/store/project/actions';
+import { addNode, create, removeNode, createEdge, removeEdge, get, updatePosition } from '../../redux/store/project/actions';
 import { ProjectState } from '../../redux/store/project/types';
 import { RootState } from './../../redux/store/index';
-import { NodeType, Node, LibNode } from '../../models/project';
+import { NodeType, Node, LibNode, Edge, EDGE_TYPE } from '../../models/project';
 
 import { Aspect, Function, Product, Location } from './nodes';
 import{ DefaultEdgeType } from './edges';
@@ -29,42 +29,61 @@ const nodeTypes = {
 };
 
 const edgeTypes = {
-  defaultEdgeType: DefaultEdgeType,
+  DefaultEdgeType: DefaultEdgeType
 };
 
-const DnDFlow = () => { 
+const FlowTree = () => { 
   const dispatch = useDispatch();
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
-  const projectState = useSelector<RootState>((state) => state.project) as ProjectState;
+  const projectState = useSelector<RootState>((state) => state.projectState) as ProjectState;
   const [elements, setElements] = useState<Elements>();
     
   // On connect
   const onConnect = (params) => {
-    return setElements((els) => {
-
-        const source = els.find(x => x.id === params.source)?.data as Node;
-        const target = els.find(x => x.id === params.target)?.data as Node;
+    const createdId =  createId();
+    const sourceNode = projectState.project.nodes.find(x => x.id === params.source) as Node;
+    const targetNode = projectState.project.nodes.find(x => x.id === params.target) as Node;
+    const existingEdge = projectState.project.edges.find(x => x.fromConnector === params.sourceHandle && x.toConnector === params.targetHandle && x.fromNode === sourceNode.id && x.toNode === targetNode.id);
     
-        return addEdge({
-            ...params,
-            type: 'defaultEdgeType',
-            arrowHeadType: ArrowHeadType.ArrowClosed,
-            label: '',
-            data: {
-                source: source,
-                target: target
-            }
-            },
-            els
+    if(!existingEdge) {
+
+        const edge: Edge = {
+            id: createdId,
+            fromConnector: params.sourceHandle,
+            toConnector: params.targetHandle,
+            fromNode: sourceNode.id,
+            toNode: targetNode.id
+        };
+
+        dispatch(createEdge(edge));
+    }
+
+    return setElements((els) => {        
+        return addEdge(
+            {
+                ...params,
+                id: createdId,
+                type: EDGE_TYPE.DEFAULT,
+                arrowHeadType: ArrowHeadType.ArrowClosed,
+                label: '',
+                data: {
+                    source: sourceNode,
+                    target: targetNode
+                }
+            }, els
         );
     }); 
 } 
   
     // On element remove
-  const onElementsRemove = (elementsToRemove) => { 
+  const onElementsRemove = (elementsToRemove) => {
     elementsToRemove.forEach(element => {
-        dispatch(removeNode(element.id));        
+        if(element.type === EDGE_TYPE.DEFAULT) {
+            dispatch(removeEdge(element.id));        
+        } else {
+            dispatch(removeNode(element.id));
+        }        
     });
     
     return setElements((els) => removeElements(elementsToRemove, els));
@@ -82,6 +101,10 @@ const DnDFlow = () => {
     event.dataTransfer.dropEffect = "move";
   };
 
+  const onNodeDragStop = (_event, node) => {
+    dispatch(updatePosition(node.id, node.position.x, node.position.y));
+  }
+
   // On drop
   const onDrop = (event) => {
     event.preventDefault();
@@ -90,11 +113,9 @@ const DnDFlow = () => {
         
     const position = reactFlowInstance.project({
       x: event.clientX - reactFlowBounds.left,
-      y: event.clientY - reactFlowBounds.top,
+      y: event.clientY - reactFlowBounds.top
     });
     
-
-    // TODO:: Implement data from type register
     const node = { id: createId(), name: data.name, label: data.label ?? data.name, type: data.type as NodeType, position: position, connectors: data.connectors, icon: data.icon} as Node;
     dispatch(addNode(node));
     setElements((es) => es.concat(CreateElementNode(node)));    
@@ -112,6 +133,7 @@ const DnDFlow = () => {
               onLoad={onLoad}
               onDrop={onDrop}
               onDragOver={onDragOver}
+              onNodeDragStop={onNodeDragStop}
               nodeTypes={nodeTypes}
               edgeTypes={edgeTypes}
             >
@@ -124,10 +146,11 @@ const DnDFlow = () => {
       {!projectState.project &&
       <div>
         <input type='button' value='Opprett nytt prosjekt' onClick={() => dispatch(create())}></input>
+        <input type='button' value='Hent prosjekt' onClick={() => dispatch(get('95C10DAB-0DAD-4CBB-B33E-CA0A3CBC500C'))}></input>
         </div>
       }
     </div>
   );
 };
 
-export default DnDFlow;
+export default FlowTree;

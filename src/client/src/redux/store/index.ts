@@ -25,7 +25,7 @@ const rootReducers = combineReducers({
   workspace: workspaceReducer,
   library: libraryReducer,
   user: userReducer,
-  project: projectReducer
+  projectState: projectReducer
 });
 
 const store = createStore(
