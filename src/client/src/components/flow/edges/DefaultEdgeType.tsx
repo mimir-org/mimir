@@ -1,6 +1,6 @@
 import { getBezierPath, getMarkerEnd, getSmoothStepPath, EdgeText } from 'react-flow-renderer';
 import { getCenter } from '../utils';
-import { EDGE_TYPE, EdgeType, Node, NODE_TYPE } from '../../../models/project';
+import { LINE_EDGE_TYPE, LineEdgeType, Node, NODE_TYPE } from '../../../models/project';
 
 export default function DefaultEdgeType({
   id,
@@ -38,8 +38,8 @@ export default function DefaultEdgeType({
     });
 
     const pathType = (source: Node, target: Node) => {
-        const pathType = source.type === NODE_TYPE.ASPECT ? EDGE_TYPE.STEP as EdgeType : source.type !== target.type ? EDGE_TYPE.BEZIER as EdgeType : EDGE_TYPE.STEP as EdgeType;
-        return  pathType === EDGE_TYPE.BEZIER ? edgePathBezier : edgePathSmoothStep;
+        const pathType = source.type === NODE_TYPE.ASPECT ? LINE_EDGE_TYPE.STEP as LineEdgeType : source.type !== target.type ? LINE_EDGE_TYPE.BEZIER as LineEdgeType : LINE_EDGE_TYPE.STEP as LineEdgeType;
+        return  pathType === LINE_EDGE_TYPE.BEZIER ? edgePathBezier : edgePathSmoothStep;
     }
 
     const edgeText = (source: Node, target: Node) => {

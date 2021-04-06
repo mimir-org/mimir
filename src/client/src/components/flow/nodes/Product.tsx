@@ -1,14 +1,15 @@
 import { memo, FC } from 'react';
-import { NodeProps, Handle, Position } from 'react-flow-renderer';
+import { NodeProps, Handle } from 'react-flow-renderer';
+import { processType } from '../utils';
 
 const Product: FC<NodeProps> = ({data}) => {
     
   return (
       <>
-        <Handle type="target" position={Position.Top} id={'t1_' + data.id} key={'t1_' + data.id} />
-        <Handle type="source" position={Position.Bottom} id={'s1_' + data.id} key={'s1_' + data.id} />
-        <Handle type="source" position={Position.Right} id={'s2_' + data.id} key={'s2_' + data.id} />        
-        <Handle type="target" position={Position.Left} id={'t2_' + data.id} key={'t2_' + data.id} />        
+        {data.connectors && data.connectors.map(connector => {
+            const [typeHandler, positionHandler] = processType(connector);
+            return <Handle type={typeHandler} position={positionHandler} id={connector.id} key={connector.id} />
+        })}      
         <div>{data.label ?? data.name}</div>
       </>
     );

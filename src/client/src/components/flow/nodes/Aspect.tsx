@@ -1,7 +1,7 @@
 import { memo, FC } from 'react';
-import { NodeProps, Handle, Position } from 'react-flow-renderer';
+import { NodeProps, Handle } from 'react-flow-renderer';
 import { ProductIcon, FunctionIcon, LocationIcon } from '../../../assets';
-import { Connector, CONNECTOR_TYPE } from '../../../models/project';
+import { processType } from '../utils';
 
 const icon = (icon: string) => {
   switch(icon) {
@@ -16,17 +16,13 @@ const icon = (icon: string) => {
   }
 }
 
-const handleType = (connector: Connector) => {
-    return connector.type === CONNECTOR_TYPE.RELATION_OUTPUT || connector.type === CONNECTOR_TYPE.TRANSPORT_OUTPUT ?
-        "source" : "target";
-}
-
 const Aspect: FC<NodeProps> = ({data}) => {
    
   return (
       <>
         {data.connectors && data.connectors.map(connector => {
-            return <Handle type={handleType(connector)} position={Position.Bottom} id={connector.id + '_' + data.id} key={connector.id + '_' + data.id} />
+            const [typeHandler, positionHandler] = processType(connector);
+            return <Handle type={typeHandler} position={positionHandler} id={connector.id} key={connector.id} />
         })}
         
         {icon(data.icon)}
