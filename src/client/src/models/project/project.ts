@@ -80,6 +80,7 @@ export interface Node {
   isLocked?: boolean | false;
   isSelected?: boolean | false;
   Attributes?: Attribute[] | null;
+  isVisible: boolean | true;
 }
 
 export interface LibNode {

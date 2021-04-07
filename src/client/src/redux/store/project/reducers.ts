@@ -123,16 +123,14 @@ export function projectReducer(
       };
 
     case CHANGE_VISIBILITY:
+      const id = action.payload.nodeId;
       return {
         ...state,
         project: {
-          ...state.project,
-          nodes: state.project.nodes.map((node) =>
-            node.id === action.payload.nodeId
-              ? {
-                  ...node,
-                }
-              : node
+          nodes: state.project.nodes.map((nodes, i) =>
+            state.project.nodes[i].id === id
+              ? { ...nodes, isVisible: action.payload.visible }
+              : nodes
           ),
         },
       };
