@@ -1,14 +1,16 @@
-import { Project, Node, Edge } from '../../../models/project';
+import { Project, Node, Edge } from "../../../models/project";
 
 export const FETCHING_PROJECT = "FETCHING_PROJECT";
-export const FETCHING_PROJECT_SUCCESS_OR_ERROR =  "FETCHING_PROJECT_SUCCESS_OR_ERROR";
-export const CREATING_PROJECT =  "CREATING_PROJECT";
-export const CREATING_PROJECT_SUCCESS_OR_ERROR =  "CREATING_PROJECT_SUCCESS_OR_ERROR";
-export const ADD_NODE =  "ADD_NODE";
-export const REMOVE_NODE =  "REMOVE_NODE";
-export const ADD_EDGE =  "ADD_EDGE";
-export const REMOVE_EDGE =  "REMOVE_EDGE";
-export const UPDATE_POSITION =  "UPDATE_POSITION";
+export const FETCHING_PROJECT_SUCCESS_OR_ERROR =
+  "FETCHING_PROJECT_SUCCESS_OR_ERROR";
+export const CREATING_PROJECT = "CREATING_PROJECT";
+export const CREATING_PROJECT_SUCCESS_OR_ERROR =
+  "CREATING_PROJECT_SUCCESS_OR_ERROR";
+export const ADD_NODE = "ADD_NODE";
+export const REMOVE_NODE = "REMOVE_NODE";
+export const ADD_EDGE = "ADD_EDGE";
+export const REMOVE_EDGE = "REMOVE_EDGE";
+export const UPDATE_POSITION = "UPDATE_POSITION";
 
 // State types
 export interface ProjectState {
@@ -22,7 +24,7 @@ export interface ProjectState {
 // Action types
 interface FetchingProjectAction {
   type: typeof FETCHING_PROJECT;
-  payload: string
+  payload: string;
 }
 
 interface FetchingProjectActionFinished {
@@ -31,13 +33,13 @@ interface FetchingProjectActionFinished {
 }
 
 interface CreatingProjectAction {
-    type: typeof CREATING_PROJECT;
-    payload: object
+  type: typeof CREATING_PROJECT;
+  payload: object;
 }
 
 interface CreatingProjectActionFinished {
-    type: typeof CREATING_PROJECT_SUCCESS_OR_ERROR;
-    payload: ProjectState;
+  type: typeof CREATING_PROJECT_SUCCESS_OR_ERROR;
+  payload: ProjectState;
 }
 
 interface AddNodeAction {
@@ -46,27 +48,27 @@ interface AddNodeAction {
 }
 
 interface RemoveNodeAction {
-    type: typeof REMOVE_NODE;
-    payload: string
+  type: typeof REMOVE_NODE;
+  payload: string;
 }
 
 interface AddEdgeAction {
-    type: typeof ADD_EDGE,
-    payload: Edge
+  type: typeof ADD_EDGE;
+  payload: Edge;
 }
 
 interface RemoveEdgeAction {
-    type: typeof REMOVE_EDGE,
-    payload: string
+  type: typeof REMOVE_EDGE;
+  payload: string;
 }
 
 interface UpdatePositionAction {
-    type: typeof UPDATE_POSITION,
-    payload: {
-        nodeId: string,
-        x: number,
-        y: number
-    }
+  type: typeof UPDATE_POSITION;
+  payload: {
+    nodeId: string;
+    x: number;
+    y: number;
+  };
 }
 
 export type ProjectActionTypes =
