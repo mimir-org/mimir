@@ -72,6 +72,7 @@ export default class ProjectDataset {
               type: NODE_TYPE.ASPECT,
               position: { x: 150, y: 5 },
               icon: ICON_TYPE.FUNCTION_ICON,
+              isVisible: true,
               connectors: [
                 {
                   id: "38f08e68-b8f8-62cd-b710-9a6e8ca97b06",
@@ -87,6 +88,7 @@ export default class ProjectDataset {
               type: NODE_TYPE.ASPECT,
               position: { x: 600, y: 5 },
               icon: ICON_TYPE.PRODUCT_ICON,
+              isVisible: false,
               connectors: [
                 {
                   id: createId(),
@@ -102,6 +104,7 @@ export default class ProjectDataset {
               type: NODE_TYPE.ASPECT,
               position: { x: 1050, y: 5 },
               icon: ICON_TYPE.LOCATION_ICON,
+              isVisible: false,
               connectors: [
                 {
                   id: createId(),
