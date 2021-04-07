@@ -18,6 +18,8 @@ import {
   loadStateFromStorage,
   saveStateToStorage,
 } from "../../../redux/store/localStorage/localStorage";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
 
 export const ExplorerModule = () => {
   const key = "explorer";
@@ -32,6 +34,10 @@ export const ExplorerModule = () => {
   const startHeight = isOpen ? "35" : "331";
   const stopHeight = isOpen ? "331" : "35";
 
+  const hasProject = useSelector<RootState>(
+    (state) => state.projectState.project !== null
+  );
+
   return (
     <AnimatedMenu start={startHeight} stop={stopHeight} run={animate}>
       <HeaderWrapper>
@@ -44,13 +50,11 @@ export const ExplorerModule = () => {
       <CollapsedIcon visible={isOpen}>
         <img src={ExplorerIcon} alt="explorerIcon" />
       </CollapsedIcon>
-      <ContentWrapper visible={isOpen}>
-        <FacilityComponent
-          name={projectData[0].name}
-          id={projectData[0].id}
-          aspect={projectData[0].aspect}
-        />
-      </ContentWrapper>
+      {hasProject && (
+        <ContentWrapper visible={isOpen}>
+          <FacilityComponent />
+        </ContentWrapper>
+      )}
       <FooterWrapper visible={isOpen}>
         <SwitchViewComponent />
       </FooterWrapper>

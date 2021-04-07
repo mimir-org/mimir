@@ -2,27 +2,24 @@ import "./facility.scss";
 import AspectComponent from "../aspectComponent/AspectComponent";
 import CheckboxComponent from "../checkboxComponent/CheckboxComponent";
 import { AspectWrapper, FacilityHeader } from "../styled";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../redux/store";
 
-interface FacilityComponentProps {
-  name: string;
-  id: string;
-  checked?: boolean;
-  aspect: object[];
-}
+export const FacilityComponent = () => {
+  const aspects = useSelector<RootState>(
+    (state) => state.projectState.project?.nodes
+  );
 
-export const FacilityComponent = ({
-  name,
-  id,
-  checked,
-  aspect,
-}: FacilityComponentProps) => {
   return (
     <>
       <FacilityHeader>
-        <CheckboxComponent id={id} inputLabel={name} checked={checked} />
+        <CheckboxComponent id="1" inputLabel="Facility" />
       </FacilityHeader>
       <AspectWrapper>
-        {aspect.map(function (a, index) {
+        <AspectComponent key={null} id={null} name={aspects[0].name} />
+        <AspectComponent key={null} id={null} name={aspects[1].name} />
+        <AspectComponent key={null} id={null} name={aspects[2].name} />
+        {/* {aspect.map(function (a, index) {
           return (
             <AspectComponent
               key={index}
@@ -31,7 +28,7 @@ export const FacilityComponent = ({
               facet={a["facet"]}
             />
           );
-        })}
+        })} */}
       </AspectWrapper>
     </>
   );

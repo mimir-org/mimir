@@ -13,7 +13,7 @@ import "./aspect.scss";
 interface AspectComponentProps {
   id: string;
   name: string;
-  facet: object[];
+  facet?: object[];
 }
 
 export const AspectComponent = ({ id, name, facet }: AspectComponentProps) => {
@@ -23,20 +23,20 @@ export const AspectComponent = ({ id, name, facet }: AspectComponentProps) => {
   };
 
   const aspectIcon =
-    id === "1"
+    name === "Function"
       ? FunctionIcon
-      : id === "2"
+      : name === "Location"
       ? LocationIcon
-      : id === "3"
+      : name === "Product"
       ? ProductIcon
       : null;
 
   const aspectHeader =
-    name === "function"
+    name === "Function"
       ? "function_header"
-      : name === "location"
+      : name === "Location"
       ? "location_header"
-      : name === "product"
+      : name === "Product"
       ? "product_header"
       : null;
 
@@ -61,7 +61,7 @@ export const AspectComponent = ({ id, name, facet }: AspectComponentProps) => {
       </div>
       {expanded && (
         <div className="facets_container">
-          {facet.map(function (f, index) {
+          {/* {facet.map(function (f, index) {
             return (
               <FacetComponent
                 key={index}
@@ -70,7 +70,7 @@ export const AspectComponent = ({ id, name, facet }: AspectComponentProps) => {
                 aspect={name}
               />
             );
-          })}
+          })} */}
         </div>
       )}
     </div>
