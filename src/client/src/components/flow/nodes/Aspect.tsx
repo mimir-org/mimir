@@ -1,6 +1,7 @@
 import { memo, FC } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
 import { ProductIcon, FunctionIcon, LocationIcon } from "../../../assets";
+import { AspectWrapper } from "../../modules/explorerModule/styled";
 import { processType } from "../utils";
 
 const icon = (icon: string) => {
@@ -46,7 +47,7 @@ const icon = (icon: string) => {
 
 const Aspect: FC<NodeProps> = ({ data }) => {
   return (
-    <>
+    <AspectWrapper visible={true}>
       {data.connectors &&
         data.connectors.map((connector) => {
           const [typeHandler, positionHandler] = processType(connector);
@@ -62,7 +63,7 @@ const Aspect: FC<NodeProps> = ({ data }) => {
 
       {icon(data.icon)}
       <div>{data.label ?? data.name}</div>
-    </>
+    </AspectWrapper>
   );
 };
 
