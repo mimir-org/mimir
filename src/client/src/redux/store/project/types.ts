@@ -11,6 +11,7 @@ export const REMOVE_NODE = "REMOVE_NODE";
 export const ADD_EDGE = "ADD_EDGE";
 export const REMOVE_EDGE = "REMOVE_EDGE";
 export const UPDATE_POSITION = "UPDATE_POSITION";
+export const CHANGE_VISIBILITY = "CHANGE_VISIBILITY";
 
 // State types
 export interface ProjectState {
@@ -71,6 +72,11 @@ interface UpdatePositionAction {
   };
 }
 
+interface ChangeVisibility {
+  type: typeof CHANGE_VISIBILITY;
+  payload: { nodeId: string; visible: boolean };
+}
+
 export type ProjectActionTypes =
   | FetchingProjectAction
   | FetchingProjectActionFinished
@@ -80,4 +86,5 @@ export type ProjectActionTypes =
   | RemoveNodeAction
   | AddEdgeAction
   | RemoveEdgeAction
-  | UpdatePositionAction;
+  | UpdatePositionAction
+  | ChangeVisibility;
