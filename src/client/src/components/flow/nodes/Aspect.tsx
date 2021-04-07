@@ -2,8 +2,8 @@ import { memo, FC } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { GetAspectIcon } from "../helpers/";
-import { AspectWrapper } from "../styled/";
+import { GetFlowAspectIcon } from "../helpers/";
+import { AspectFlowWrapper } from "../styled/";
 import { processType } from "../utils";
 
 const Aspect: FC<NodeProps> = ({ data }) => {
@@ -11,16 +11,11 @@ const Aspect: FC<NodeProps> = ({ data }) => {
     (state) => state.projectState.project.nodes
   );
 
-  let node: any = true;
-  for (let i = 0; i < nodes.length; i++) {
-    if (nodes[i].id === data.id) {
-      node = nodes[i];
-    }
-  }
+  const node = nodes.find((node) => node.id === data.id);
   const isVisible = node.isVisible;
 
   return (
-    <AspectWrapper visible={isVisible}>
+    <AspectFlowWrapper visible={isVisible}>
       {data.connectors &&
         data.connectors.map((connector) => {
           const [typeHandler, positionHandler] = processType(connector);
@@ -34,9 +29,9 @@ const Aspect: FC<NodeProps> = ({ data }) => {
           );
         })}
 
-      {GetAspectIcon(data.icon)}
+      {GetFlowAspectIcon(data.icon)}
       <div>{data.label ?? data.name}</div>
-    </AspectWrapper>
+    </AspectFlowWrapper>
   );
 };
 

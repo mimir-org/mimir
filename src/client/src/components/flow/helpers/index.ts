@@ -1,1 +1,1 @@
-export { default as GetAspectIcon } from "./GetAspectIcon";
+export { default as GetFlowAspectIcon } from "./GetFlowAspectIcon";

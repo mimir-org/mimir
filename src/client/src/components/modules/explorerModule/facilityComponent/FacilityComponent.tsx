@@ -13,7 +13,7 @@ export const FacilityComponent = () => {
   return (
     <>
       <FacilityHeader>
-        <CheckboxComponent id="1" inputLabel="Facility" />
+        {/* <CheckboxComponent id="1" inputLabel="Facility" /> */}
       </FacilityHeader>
       <AspectWrapper>
         <AspectComponent

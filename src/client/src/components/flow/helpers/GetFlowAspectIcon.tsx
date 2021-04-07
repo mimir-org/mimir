@@ -1,6 +1,6 @@
 import { ProductIcon, FunctionIcon, LocationIcon } from "../../../assets";
 
-const GetAspectIcon = (icon: any) => {
+const GetFlowAspectIcon = (icon: any) => {
   switch (icon) {
     case "FunctionIcon":
       return (
@@ -41,4 +41,4 @@ const GetAspectIcon = (icon: any) => {
   }
 };
 
-export default GetAspectIcon;
+export default GetFlowAspectIcon;
