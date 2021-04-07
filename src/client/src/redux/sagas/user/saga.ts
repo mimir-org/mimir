@@ -6,12 +6,18 @@ import {
 } from "./../../store/user/types";
 import { User } from "../../../models/user";
 import { authProvider } from '../../../providers/authProvider';
+// import { get } from '../../../models/webclient';
 
 // eslint-disable-next-line require-yield
 export function* getUser(action: UserActionTypes) {
   try {
 
-    const userAccount = yield authProvider.getAccount();
+    const userAccount = yield authProvider.getAccount(); 
+    // const url = process.env.REACT_APP_API_BASE_URL + 'WeatherForecast';
+    // const test = yield call(get, url);
+    // console.log(test);
+    
+    
     const user : User = {
         id: userAccount.userName,
         username: userAccount.userName,

@@ -1,7 +1,6 @@
 import { MsalAuthProvider, LoginType } from 'react-aad-msal';
 
-// 'api://xxx/user_impersonation'
-const regularScopes = [ "openid","user.read", "profile"];
+const regularScopes = [ "api://" + process.env.REACT_APP_APP_ID + "/user_impersonation", "openid","user.read", "profile"];
 
 const regularMsalConfig = {
     auth: {
