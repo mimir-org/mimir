@@ -7,7 +7,7 @@ import { RootState } from "../../../../redux/store";
 
 export const FacilityComponent = () => {
   const aspects = useSelector<RootState>(
-    (state) => state.projectState.project?.nodes
+    (state) => state.projectState.project.nodes
   );
 
   return (
@@ -16,9 +16,9 @@ export const FacilityComponent = () => {
         <CheckboxComponent id="1" inputLabel="Facility" />
       </FacilityHeader>
       <AspectWrapper>
-        <AspectComponent key={null} id={null} name={aspects[0].name} />
-        <AspectComponent key={null} id={null} name={aspects[1].name} />
-        <AspectComponent key={null} id={null} name={aspects[2].name} />
+        <AspectComponent key={null} id={aspects[0].id} name={aspects[0].name} />
+        <AspectComponent key={null} id={aspects[1].id} name={aspects[1].name} />
+        <AspectComponent key={null} id={aspects[2].id} name={aspects[2].name} />
         {/* {aspect.map(function (a, index) {
           return (
             <AspectComponent
