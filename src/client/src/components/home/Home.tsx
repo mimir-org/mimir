@@ -10,7 +10,7 @@ import { InspectorModule } from "../modules/inspectorModule";
 import { LibraryModule } from "../modules/libraryModule";
 // import { UserState } from "../../store/user/types";
 // import { SETTING_KEY, SETTING_VALUE } from "./../../models/user";
-// import { getUser } from "../../store/user/actions";
+import { getUser } from '../../redux/store/user/actions';
 
 interface RouteParams {
   type: string;
@@ -25,7 +25,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(getWorkspace());
-    // dispatch(getUser("rl", "rl"));
+    dispatch(getUser("rl", "rl"));
   }, [dispatch]);
 
   const params = useParams<RouteParams>();
