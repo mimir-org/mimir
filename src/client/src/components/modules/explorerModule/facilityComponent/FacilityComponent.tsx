@@ -16,8 +16,13 @@ export const FacilityComponent = () => {
         {/* <CheckboxComponent id="1" inputLabel="Facility" /> */}
       </FacilityHeader>
       <AspectWrapper>
-        {aspects.map(function (a, index) {
-          return <AspectComponent key={index} id={a["id"]} name={a["name"]} />;
+        {aspects.map((obj: object, i: number) => {
+          while (i < 3) {
+            return (
+              <AspectComponent key={i} id={obj["id"]} name={obj["name"]} />
+            );
+          }
+          return null;
         })}
       </AspectWrapper>
     </>

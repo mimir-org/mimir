@@ -120,6 +120,7 @@ export default class ProjectDataset {
               type: NODE_TYPE.FUNCTION,
               position: { x: 50, y: 150 },
               icon: ICON_TYPE.FUNCTION_ICON,
+              isVisible: true,
               connectors: [
                 {
                   id: "C02AD125-8619-4C8C-841D-FBED1588F6A4",
@@ -145,6 +146,7 @@ export default class ProjectDataset {
               type: NODE_TYPE.FUNCTION,
               position: { x: 250, y: 150 },
               icon: ICON_TYPE.FUNCTION_ICON,
+              isVisible: true,
               connectors: [
                 {
                   id: "6A29EC2B-7DA8-4EC4-8C0A-FFAE083930C9",

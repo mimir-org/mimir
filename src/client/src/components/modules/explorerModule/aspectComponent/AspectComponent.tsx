@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { expandedIcon, unexpandedIcon } from "../../../../assets";
+import { RootState } from "../../../../redux/store";
 import CheckboxComponent from "../checkboxComponent/CheckboxComponent";
 import FacetComponent from "../facetComponent/FacetComponent";
 import { GetAspectIcon, GetAspectHeader } from "../helpers/";
@@ -8,10 +10,9 @@ import "./aspect.scss";
 interface Props {
   id: string;
   name: string;
-  facet?: object[];
 }
 
-export const AspectComponent = ({ id, name, facet }: Props) => {
+export const AspectComponent = ({ id, name }: Props) => {
   const [expanded, setExpanded] = useState(true);
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -20,6 +21,13 @@ export const AspectComponent = ({ id, name, facet }: Props) => {
   const aspectIcon = GetAspectIcon(name);
   const aspectHeader = GetAspectHeader(name);
   const expandIcon = expanded ? expandedIcon : unexpandedIcon;
+
+  const aspects: any = useSelector<RootState>(
+    (state) => state.projectState.project.nodes
+  );
+  let facets: any[] = [];
+  facets.push(aspects[3]);
+  facets.push(aspects[4]);
 
   return (
     <div className="aspect_container">
@@ -38,18 +46,18 @@ export const AspectComponent = ({ id, name, facet }: Props) => {
           onClick={() => handleExpandClick()}
         ></img>
       </div>
-      {expanded && (
+      {expanded && name === "Function" && (
         <div className="facets_container">
-          {/* {facet.map(function (f, index) {
+          {facets.map((obj, i) => {
             return (
               <FacetComponent
-                key={index}
-                id={f["id"]}
-                name={f["name"]}
+                key={i}
+                id={obj["id"]}
+                name={obj["name"]}
                 aspect={name}
               />
             );
-          })} */}
+          })}
         </div>
       )}
     </div>
