@@ -10,6 +10,7 @@ import {
   ProjectActionTypes,
   ProjectState,
   UPDATE_POSITION,
+  CHANGE_VISIBILITY,
 } from "./types";
 
 const initialState: ProjectState = {
@@ -115,6 +116,21 @@ export function projectReducer(
               ? {
                   ...node,
                   position: { x: action.payload.x, y: action.payload.y },
+                }
+              : node
+          ),
+        },
+      };
+
+    case CHANGE_VISIBILITY:
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          nodes: state.project.nodes.map((node) =>
+            node.id === action.payload.nodeId
+              ? {
+                  ...node,
                 }
               : node
           ),
