@@ -1,4 +1,3 @@
-import { projectData } from "./helpers/GetProjectData";
 import { ExplorerIcon } from "../../../assets";
 import FacilityComponent from "./facilityComponent/FacilityComponent";
 import { SwitchViewComponent } from "./switchviewComponent/SwitchViewComponent";
