@@ -1,4 +1,5 @@
-import react, { useState } from "react";
+import { useState } from "react";
+import { GetCheckboxColor } from "../helpers";
 import "./checkbox.scss";
 interface CheckboxComponentProps {
   id: string;
@@ -17,14 +18,7 @@ export const CheckboxComponent = ({
   const handleCheckboxChange = (event) => {
     setChecked(!isChecked);
   };
-  const underlineColor =
-    aspect === "function"
-      ? "function_underline"
-      : aspect === "location"
-      ? "location_underline"
-      : aspect === "product"
-      ? "product_underline"
-      : null;
+  const underlineColor = GetCheckboxColor(aspect);
 
   return (
     <label className={"checkbox " + underlineColor}>
