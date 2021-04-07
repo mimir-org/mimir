@@ -173,6 +173,7 @@ export default class ProjectDataset {
               toConnector: "C02AD125-8619-4C8C-841D-FBED1588F6A4",
               fromNode: "1236538d-0015-e5ea-ea4d-d2dce68e3ce5",
               toNode: "88ab517b-a575-3760-4860-f2cb6848c30a",
+              isVisible: true,
             },
             {
               id: "f6cb4e3c-5793-c402-fb94-feb5ee1d8484",
@@ -180,6 +181,7 @@ export default class ProjectDataset {
               toConnector: "6A29EC2B-7DA8-4EC4-8C0A-FFAE083930C9",
               fromNode: "1236538d-0015-e5ea-ea4d-d2dce68e3ce5",
               toNode: "373425a5-6c3d-8e68-4348-a8306fdcfc81",
+              isVisible: true,
             },
           ],
         },

@@ -12,6 +12,7 @@ const Function: FC<NodeProps> = ({ data }) => {
 
   const node = nodes.find((node) => node.id === data.id);
   const isVisible = node.isVisible;
+
   return (
     <FunctionFlowWrapper visible={isVisible}>
       {data.connectors &&

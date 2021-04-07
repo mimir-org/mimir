@@ -10,7 +10,8 @@ import {
   ProjectActionTypes,
   ProjectState,
   UPDATE_POSITION,
-  CHANGE_VISIBILITY,
+  CHANGE_NODE_VISIBILITY,
+  CHANGE_EDGE_VISIBILITY,
 } from "./types";
 
 const initialState: ProjectState = {
@@ -122,13 +123,27 @@ export function projectReducer(
         },
       };
 
-    case CHANGE_VISIBILITY:
+    case CHANGE_NODE_VISIBILITY:
       const id = action.payload.nodeId;
       return {
         ...state,
         project: {
           nodes: state.project.nodes.map((nodes, i) =>
             state.project.nodes[i].id === id
+              ? { ...nodes, isVisible: action.payload.visible }
+              : nodes
+          ),
+          edges: state.project.edges,
+        },
+      };
+
+    case CHANGE_EDGE_VISIBILITY:
+      const edgeId = action.payload.nodeId;
+      return {
+        ...state,
+        project: {
+          edges: state.project.edges.map((nodes, i) =>
+            state.project.edges[i].id === edgeId
               ? { ...nodes, isVisible: action.payload.visible }
               : nodes
           ),

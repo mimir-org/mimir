@@ -6,7 +6,8 @@ import {
   ADD_EDGE,
   REMOVE_EDGE,
   UPDATE_POSITION,
-  CHANGE_VISIBILITY,
+  CHANGE_NODE_VISIBILITY,
+  CHANGE_EDGE_VISIBILITY,
   ProjectActionTypes,
 } from "./types";
 
@@ -69,9 +70,16 @@ export function updatePosition(
   };
 }
 
-export function changeVisibility(nodeId: string, visible: boolean) {
+export function changeNodeVisibility(nodeId: string, visible: boolean) {
   return {
-    type: CHANGE_VISIBILITY,
+    type: CHANGE_NODE_VISIBILITY,
+    payload: { nodeId, visible },
+  };
+}
+
+export function changeEdgeVisibility(nodeId: string, visible: boolean) {
+  return {
+    type: CHANGE_EDGE_VISIBILITY,
     payload: { nodeId, visible },
   };
 }
