@@ -1,45 +1,24 @@
 import { useState } from "react";
-import {
-  FunctionIcon,
-  ProductIcon,
-  LocationIcon,
-  expandedIcon,
-  unexpandedIcon,
-} from "../../../../assets";
+import { expandedIcon, unexpandedIcon } from "../../../../assets";
 import CheckboxComponent from "../checkboxComponent/CheckboxComponent";
 import FacetComponent from "../facetComponent/FacetComponent";
+import { GetAspectIcon, GetAspectHeader } from "../helpers/";
 import "./aspect.scss";
 
-interface AspectComponentProps {
+interface Props {
   id: string;
   name: string;
   facet?: object[];
 }
 
-export const AspectComponent = ({ id, name, facet }: AspectComponentProps) => {
+export const AspectComponent = ({ id, name, facet }: Props) => {
   const [expanded, setExpanded] = useState(true);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  const aspectIcon =
-    name === "Function"
-      ? FunctionIcon
-      : name === "Location"
-      ? LocationIcon
-      : name === "Product"
-      ? ProductIcon
-      : null;
-
-  const aspectHeader =
-    name === "Function"
-      ? "function_header"
-      : name === "Location"
-      ? "location_header"
-      : name === "Product"
-      ? "product_header"
-      : null;
-
+  const aspectIcon = GetAspectIcon(name);
+  const aspectHeader = GetAspectHeader(name);
   const expandIcon = expanded ? expandedIcon : unexpandedIcon;
 
   return (
