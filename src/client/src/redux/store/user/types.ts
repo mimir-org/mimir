@@ -11,15 +11,10 @@ export interface UserState {
   errorMsg: string | null;
 }
 
-export interface LoginUser {
-  username: string;
-  password: string;
-}
-
 // Action types
 interface FetchUserAction {
   type: typeof FETCHING_USER;
-  payload: LoginUser;
+  payload: null;
 }
 interface FetchUserActionFinished {
   type: typeof FETCHING_USER_SUCCESS_OR_ERROR;

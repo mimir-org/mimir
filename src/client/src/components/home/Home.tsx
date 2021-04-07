@@ -25,7 +25,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(getWorkspace());
-    dispatch(getUser("rl", "rl"));
+    dispatch(getUser());
   }, [dispatch]);
 
   const params = useParams<RouteParams>();
