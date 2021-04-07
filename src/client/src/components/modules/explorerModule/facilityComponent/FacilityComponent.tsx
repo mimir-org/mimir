@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 
 export const FacilityComponent = () => {
-  const aspects = useSelector<RootState>(
+  const aspects: any = useSelector<RootState>(
     (state) => state.projectState.project.nodes
   );
 
@@ -16,31 +16,9 @@ export const FacilityComponent = () => {
         {/* <CheckboxComponent id="1" inputLabel="Facility" /> */}
       </FacilityHeader>
       <AspectWrapper>
-        <AspectComponent
-          key={aspects[0].id}
-          id={aspects[0].id}
-          name={aspects[0].name}
-        />
-        <AspectComponent
-          key={aspects[1].id}
-          id={aspects[1].id}
-          name={aspects[1].name}
-        />
-        <AspectComponent
-          key={aspects[2].id}
-          id={aspects[2].id}
-          name={aspects[2].name}
-        />
-        {/* {aspect.map(function (a, index) {
-          return (
-            <AspectComponent
-              key={index}
-              id={a["id"]}
-              name={a["name"]}
-              facet={a["facet"]}
-            />
-          );
-        })} */}
+        {aspects.map(function (a, index) {
+          return <AspectComponent key={index} id={a["id"]} name={a["name"]} />;
+        })}
       </AspectWrapper>
     </>
   );

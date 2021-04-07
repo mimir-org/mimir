@@ -7,7 +7,7 @@ import {
 
 const FragmentData = ({ data }) => {
   const CreateColumn = (start: number, stop: number) => {
-    // Fix when data content is known
+    // TODO: Fix when data content is known
     if (stop > data.length) {
       stop = data.length;
     }
