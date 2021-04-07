@@ -80,7 +80,7 @@ interface ChangeNodeVisibility {
 
 interface ChangeEdgeVisibility {
   type: typeof CHANGE_EDGE_VISIBILITY;
-  payload: { nodeId: string; visible: boolean };
+  payload: { edgeId: string; visible: boolean };
 }
 
 export type ProjectActionTypes =

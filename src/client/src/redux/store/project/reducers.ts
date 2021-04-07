@@ -138,14 +138,14 @@ export function projectReducer(
       };
 
     case CHANGE_EDGE_VISIBILITY:
-      const edgeId = action.payload.nodeId;
+      const edgeId = action.payload.edgeId;
       return {
         ...state,
         project: {
-          edges: state.project.edges.map((nodes, i) =>
+          edges: state.project.edges.map((edges, i) =>
             state.project.edges[i].id === edgeId
-              ? { ...nodes, isVisible: action.payload.visible }
-              : nodes
+              ? { ...edges, isVisible: action.payload.visible }
+              : edges
           ),
         },
       };

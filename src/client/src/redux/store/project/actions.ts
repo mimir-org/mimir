@@ -77,9 +77,9 @@ export function changeNodeVisibility(nodeId: string, visible: boolean) {
   };
 }
 
-export function changeEdgeVisibility(nodeId: string, visible: boolean) {
+export function changeEdgeVisibility(edgeId: string, visible: boolean) {
   return {
     type: CHANGE_EDGE_VISIBILITY,
-    payload: { nodeId, visible },
+    payload: { edgeId, visible },
   };
 }
