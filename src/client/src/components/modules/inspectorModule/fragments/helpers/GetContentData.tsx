@@ -175,13 +175,35 @@ const GetContentData = (index: number) => {
     ],
   };
 
+  const commentsData = {
+    content: [
+      {
+        type: "Comments",
+        value: "",
+        id: "31",
+      },
+    ],
+  };
+
+  const changelogData = {
+    content: [
+      {
+        type: "Changelog",
+        value: "",
+        id: "32",
+      },
+    ],
+  };
+
   const contentData = [];
   contentData.push(
     objectData,
     headerData,
     bodyData,
     relationsData,
-    inheretedData
+    inheretedData,
+    commentsData,
+    changelogData
   );
   return contentData[index];
 };

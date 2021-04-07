@@ -24,6 +24,14 @@ const initialState = {
       type: "inherit",
       visible: false,
     },
+    {
+      type: "comments",
+      visible: false,
+    },
+    {
+      type: "changelog",
+      visible: false,
+    },
   ],
 };
 

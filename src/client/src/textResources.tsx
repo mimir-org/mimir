@@ -18,6 +18,8 @@ const textResources = {
   Inspector_Body: "Body",
   Inspector_Relations: "Relations",
   Inspector_Inhereted: "Inhereted Requirements",
+  Inspector_Comments: "Comments",
+  Inspector_Changelog: "Changelog",
 
   // LibraryModule
   Library_Heading: "Library",
