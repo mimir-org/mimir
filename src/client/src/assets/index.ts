@@ -15,3 +15,4 @@ export { default as unexpandedIcon } from "./icons/unexpandedIcon.svg";
 export { default as CombinedViewOnIcon } from "./icons/combinedViewOnIcon.svg";
 export { default as CombinedViewOffIcon } from "./icons/combinedViewOffIcon.svg";
 export { default as SplitViewIcon } from "./icons/splitViewIcon.svg";
+export { default as LoginIcon } from "./icons/loginIcon.svg";
