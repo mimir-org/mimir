@@ -44,7 +44,7 @@ export default class ProjectDataset {
               { id: createId(), name: "", type: CONNECTOR_TYPE.PARTOF_OUTPUT },
             ],
             icon: ICON_TYPE.LOCATION_ICON,
-            isVisible: true,
+            isVisible: false,
           },
         ],
         edges: [],
