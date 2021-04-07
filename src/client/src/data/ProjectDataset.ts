@@ -20,6 +20,7 @@ export default class ProjectDataset {
               { id: createId(), name: "", type: CONNECTOR_TYPE.PARTOF_OUTPUT },
             ],
             icon: ICON_TYPE.FUNCTION_ICON,
+            isVisible: true,
           },
           {
             id: createId(),
@@ -31,6 +32,7 @@ export default class ProjectDataset {
               { id: createId(), name: "", type: CONNECTOR_TYPE.PARTOF_OUTPUT },
             ],
             icon: ICON_TYPE.PRODUCT_ICON,
+            isVisible: true,
           },
           {
             id: createId(),
@@ -42,6 +44,7 @@ export default class ProjectDataset {
               { id: createId(), name: "", type: CONNECTOR_TYPE.PARTOF_OUTPUT },
             ],
             icon: ICON_TYPE.LOCATION_ICON,
+            isVisible: true,
           },
         ],
         edges: [],
