@@ -6,6 +6,7 @@ import {
   ADD_EDGE,
   REMOVE_EDGE,
   UPDATE_POSITION,
+  CHANGE_VISIBILITY,
   ProjectActionTypes,
 } from "./types";
 
@@ -65,5 +66,12 @@ export function updatePosition(
       x: x,
       y: y,
     },
+  };
+}
+
+export function changeVisibility(nodeId: string, visible: boolean) {
+  return {
+    type: CHANGE_VISIBILITY,
+    payload: { nodeId, visible },
   };
 }
