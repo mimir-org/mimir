@@ -165,32 +165,6 @@ export default class ProjectDataset {
                 },
               ],
             },
-            {
-              id: "88ab517b-a575-3760-4860-f2cb6848c30ab",
-              name: "NOAKA2",
-              label: "NOAKA2",
-              type: NODE_TYPE.PRODUCT,
-              position: { x: 500, y: 150 },
-              icon: null,
-              isHidden: false,
-              connectors: [
-                {
-                  id: "C02AD125-8619-4C8C-841D-FBED1588F6A4",
-                  name: "",
-                  type: CONNECTOR_TYPE.PARTOF_INPUT,
-                },
-                {
-                  id: "16B36F07-2885-4DB6-AAF7-A3122B740EB4",
-                  name: "",
-                  type: CONNECTOR_TYPE.PARTOF_OUTPUT,
-                },
-                {
-                  id: "31A53D61-0D3F-4CA8-A693-C797CDA5F89D",
-                  name: "",
-                  type: CONNECTOR_TYPE.RELATION_OUTPUT,
-                },
-              ],
-            },
           ],
           edges: [
             {
@@ -207,14 +181,6 @@ export default class ProjectDataset {
               toConnector: "6A29EC2B-7DA8-4EC4-8C0A-FFAE083930C9",
               fromNode: "1236538d-0015-e5ea-ea4d-d2dce68e3ce5",
               toNode: "373425a5-6c3d-8e68-4348-a8306fdcfc81",
-              isHidden: false,
-            },
-            {
-              id: "f6cb4e3c-5793-c402-fb94-feb5ee1d8484",
-              fromConnector: "38f08e68-b8f8-62cd-b710-9a6e8ca97b06",
-              toConnector: "6A29EC2B-7DA8-4EC4-8C0A-FFAE083930C9",
-              fromNode: "c000cbb3-771a-9d9f-5439-fa2cb78b758f",
-              toNode: "88ab517b-a575-3760-4860-f2cb6848c30ab",
               isHidden: false,
             },
           ],
