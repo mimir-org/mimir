@@ -1,6 +1,10 @@
 /* All static text in the app is placed here */
 
 const textResources = {
+  // Log in
+  Login_label: "Log in",
+  Login_label_email: "SSO e-mail",
+
   // Top-menu
   MainHeader_App_Name: "Model Builder",
   MainHeader_Login_Heading: "Login",

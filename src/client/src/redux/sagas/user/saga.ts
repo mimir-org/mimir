@@ -1,23 +1,33 @@
-import { call, put } from "redux-saga/effects";
+import { put } from "redux-saga/effects";
 import {
   FETCHING_USER_SUCCESS_OR_ERROR,
   UserActionTypes,
-  UserState,
-  LoginUser,
+  UserState  
 } from "./../../store/user/types";
 import { User } from "../../../models/user";
-import UserDataset from "../../../data/UserDataset";
+import { authProvider } from '../../../providers/authProvider';
+// import { get } from '../../../models/webclient';
 
 // eslint-disable-next-line require-yield
 export function* getUser(action: UserActionTypes) {
   try {
-    const data = (yield call(UserDataset.getAll)) as User[];
-    const loginUser = action.payload as LoginUser;
-    const currentUser = data.find((x) => x.username === loginUser.username);
+
+    const userAccount = yield authProvider.getAccount(); 
+    // const url = process.env.REACT_APP_API_BASE_URL + 'WeatherForecast';
+    // const test = yield call(get, url);
+    // console.log(test);
+    
+    
+    const user : User = {
+        id: userAccount.userName,
+        username: userAccount.userName,
+        name: userAccount.name,
+        settings: new Map<string, string>()
+    };
 
     const payload = {
       fetching: false,
-      user: currentUser,
+      user: user,
       hasError: false,
       errorMsg: null,
     };
