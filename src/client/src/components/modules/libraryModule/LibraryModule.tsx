@@ -3,12 +3,12 @@ import AnimatedMenu from "./styled/animated/AnimatedMenu";
 import { LibraryIcon } from "../../../assets";
 import { Header, SidebarWrapper, HeaderWrapper, CollapsedIcon } from "./styled";
 import { ToggleLibraryButton } from "../../../assets/buttons/index";
-import Sidebar from "../../treeview/flow/dragAndDrop/Sidebar";
+import { LibrarySidebar } from "./index";
 import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../../../redux/store';
-import { LibraryState } from '../../../redux/store/library/types';
-import { searcLibrary } from '../../../redux/store/library/actions';
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../../redux/store";
+import { LibraryState } from "../../../redux/store/library/types";
+import { searcLibrary } from "../../../redux/store/library/actions";
 import {
   loadStateFromStorage,
   saveStateToStorage,
@@ -19,10 +19,12 @@ const LibraryModule = () => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(loadStateFromStorage(key));
   const [animate, setAnimate] = useState(false);
-  const state = useSelector<RootState>((state) => state.library) as LibraryState;  
+  const state = useSelector<RootState>(
+    (state) => state.library
+  ) as LibraryState;
 
   useEffect(() => {
-    dispatch(searcLibrary(""));    
+    dispatch(searcLibrary(""));
   }, [dispatch]);
 
   const handleClick = () => {
@@ -47,7 +49,7 @@ const LibraryModule = () => {
         <img src={LibraryIcon} alt="explorerIcon" />
       </CollapsedIcon>
       <SidebarWrapper visible={isOpen}>
-        <Sidebar nodes={state.nodes} />
+        <LibrarySidebar nodes={state.nodes} />
       </SidebarWrapper>
     </AnimatedMenu>
   );
