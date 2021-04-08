@@ -1,11 +1,8 @@
-import { FETCHING_USER, UserActionTypes, LoginUser } from "./types";
+import { FETCHING_USER, UserActionTypes } from "./types";
 
-export function getUser(username: string, password: string): UserActionTypes {
+export function getUser(): UserActionTypes {
   return {
     type: FETCHING_USER,
-    payload: {
-      username: username,
-      password: password,
-    } as LoginUser,
+    payload: null
   };
 }

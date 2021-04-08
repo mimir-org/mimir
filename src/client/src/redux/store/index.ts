@@ -24,7 +24,7 @@ const rootReducers = combineReducers({
   showExplorerReducer: showExplorerReducer,
   workspace: workspaceReducer,
   library: libraryReducer,
-  user: userReducer,
+  userState: userReducer,
   projectState: projectReducer
 });
 
