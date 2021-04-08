@@ -82,6 +82,11 @@ const GetContentData = (index: number) => {
         value: "",
         id: "15",
       },
+      {
+        type: "Updated Date",
+        value: "",
+        id: "16",
+      },
     ],
   };
 
@@ -90,37 +95,37 @@ const GetContentData = (index: number) => {
       {
         type: "Saturation Pressure",
         value: "",
-        id: "16",
+        id: "17",
       },
       {
         type: "Saturation Temperature",
         value: "",
-        id: "17",
+        id: "18",
       },
       {
         type: "Maximum gas processing capacity",
         value: "",
-        id: "18",
+        id: "19",
       },
       {
         type: "Maximum oil processing capacity",
         value: "",
-        id: "19",
+        id: "20",
       },
       {
         type: "Maximum produced water capacity",
         value: "",
-        id: "20",
+        id: "21",
       },
       {
         type: "Total liquid capacity",
         value: "",
-        id: "21",
+        id: "22",
       },
       {
         type: "Total injection water rate",
         value: "",
-        id: "22",
+        id: "23",
       },
     ],
   };
@@ -130,32 +135,52 @@ const GetContentData = (index: number) => {
       {
         type: "Relation name",
         value: "",
-        id: "23",
-      },
-      {
-        type: "Connected to",
-        value: "",
         id: "24",
-      },
-      {
-        type: "Relation to",
-        value: "",
-        id: "25",
-      },
-      {
-        type: "Part of",
-        value: "",
-        id: "26",
       },
       {
         type: "Has function",
         value: "",
+        id: "25",
+      },
+      {
+        type: "Updated by",
+        value: "",
+        id: "26",
+      },
+      {
+        type: "Connected to",
+        value: "",
         id: "27",
+      },
+      {
+        type: "Project",
+        value: "",
+        id: "28",
+      },
+      {
+        type: "Updated Date",
+        value: "",
+        id: "29",
+      },
+      {
+        type: "Relation out",
+        value: "",
+        id: "30",
+      },
+      {
+        type: "Another field",
+        value: "",
+        id: "31",
+      },
+      {
+        type: "Has location",
+        value: "",
+        id: "32",
       },
       {
         type: "Fulfilled by",
         value: "",
-        id: "28",
+        id: "33",
       },
     ],
   };
@@ -165,12 +190,12 @@ const GetContentData = (index: number) => {
       {
         type: "Header + Body",
         value: "",
-        id: "29",
+        id: "34",
       },
       {
         type: "Requirements from parents",
         value: "",
-        id: "30",
+        id: "35",
       },
     ],
   };
@@ -180,7 +205,7 @@ const GetContentData = (index: number) => {
       {
         type: "Comments",
         value: "",
-        id: "31",
+        id: "36",
       },
     ],
   };
@@ -190,7 +215,7 @@ const GetContentData = (index: number) => {
       {
         type: "Changelog",
         value: "",
-        id: "32",
+        id: "37",
       },
     ],
   };
