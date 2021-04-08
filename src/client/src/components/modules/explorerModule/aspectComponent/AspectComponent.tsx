@@ -1,18 +1,18 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import { expandedIcon, unexpandedIcon } from "../../../../assets";
-import { RootState } from "../../../../redux/store";
+import { GetEdgesFromState, GetNodesFromState } from "../../../flow/helpers";
 import CheckboxComponent from "../checkboxComponent/CheckboxComponent";
 import FacetComponent from "../facetComponent/FacetComponent";
 import { GetAspectIcon, GetAspectHeader } from "../helpers/";
 import "./aspect.scss";
 
 interface Props {
-  id: string;
+  nodeId: string;
   name: string;
+  type: string;
 }
 
-export const AspectComponent = ({ id, name }: Props) => {
+export const AspectComponent = ({ nodeId, name, type }: Props) => {
   const [expanded, setExpanded] = useState(true);
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -22,19 +22,26 @@ export const AspectComponent = ({ id, name }: Props) => {
   const aspectHeader = GetAspectHeader(name);
   const expandIcon = expanded ? expandedIcon : unexpandedIcon;
 
-  const aspects: any = useSelector<RootState>(
-    (state) => state.projectState.project.nodes
-  );
-  let facets: any[] = [];
-  facets.push(aspects[3]);
-  facets.push(aspects[4]);
+  const aspects = GetNodesFromState();
+  const facets = aspects.slice(3);
+
+  const edges = GetEdgesFromState();
+  const edge = edges.find((edge) => edge.fromNode === nodeId);
+  const edgeId = edge === undefined ? undefined : edge.id;
 
   return (
     <div className="aspect_container">
       <div className={"aspect_header " + aspectHeader}>
         <img className="aspectIcon" src={aspectIcon} alt="aspect-icon"></img>
         <div className="checkbox_container">
-          <CheckboxComponent id={id} inputLabel={name} aspect={name} />
+          <CheckboxComponent
+            nodeId={nodeId}
+            edgeId={edgeId}
+            inputLabel={name}
+            aspect={name}
+            isParent={true}
+            type={type}
+          />
         </div>
         <div className="placeholder_container">
           <p>Placeholder</p>
@@ -49,14 +56,54 @@ export const AspectComponent = ({ id, name }: Props) => {
       {expanded && name === "Function" && (
         <div className="facets_container">
           {facets.map((obj, i) => {
-            return (
-              <FacetComponent
-                key={i}
-                id={obj["id"]}
-                name={obj["name"]}
-                aspect={name}
-              />
-            );
+            if (facets[i].type === "Function") {
+              return (
+                <FacetComponent
+                  key={i}
+                  edgeId={undefined}
+                  nodeId={obj["id"]}
+                  name={obj["name"]}
+                  aspect={name}
+                />
+              );
+            }
+            return null;
+          })}
+        </div>
+      )}
+      {expanded && name === "Product" && (
+        <div className="facets_container">
+          {facets.map((obj, i) => {
+            if (facets[i].type === "Product") {
+              return (
+                <FacetComponent
+                  key={i}
+                  edgeId={undefined}
+                  nodeId={obj["id"]}
+                  name={obj["name"]}
+                  aspect={name}
+                />
+              );
+            }
+            return null;
+          })}
+        </div>
+      )}
+      {expanded && name === "Location" && (
+        <div className="facets_container">
+          {facets.map((obj, i) => {
+            if (facets[i].type === "Location") {
+              return (
+                <FacetComponent
+                  key={i}
+                  edgeId={undefined}
+                  nodeId={obj["id"]}
+                  name={obj["name"]}
+                  aspect={name}
+                />
+              );
+            }
+            return null;
           })}
         </div>
       )}

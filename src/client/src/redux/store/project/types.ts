@@ -75,12 +75,17 @@ interface UpdatePositionAction {
 
 interface ChangeNodeVisibility {
   type: typeof CHANGE_NODE_VISIBILITY;
-  payload: { nodeId: string; visible: boolean };
+  payload: {
+    nodeId: string;
+    isHidden: boolean;
+    isParent: boolean | false;
+    type: string;
+  };
 }
 
 interface ChangeEdgeVisibility {
   type: typeof CHANGE_EDGE_VISIBILITY;
-  payload: { edgeId: string; visible: boolean };
+  payload: { edgeId: string; isHidden: boolean };
 }
 
 export type ProjectActionTypes =

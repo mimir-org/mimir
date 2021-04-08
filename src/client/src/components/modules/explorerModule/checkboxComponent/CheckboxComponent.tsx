@@ -1,22 +1,41 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../redux/store";
+import { GetEdgesFromState, GetNodesFromState } from "../../../flow/helpers";
 import { GetCheckboxColor } from "../helpers";
 import useChangeNodeVisibility from "../hooks/useChangeNodeVisibility";
 import "./checkbox.scss";
 
 interface Props {
-  id: string;
+  nodeId: string;
+  edgeId: string | undefined;
   inputLabel: string;
   aspect?: string;
+  isParent?: boolean;
+  type: string;
 }
 
-export const CheckboxComponent = ({ id, inputLabel, aspect }: Props) => {
-  const nodes: any = useSelector<RootState>(
-    (state) => state.projectState.project.nodes
+export const CheckboxComponent = ({
+  nodeId,
+  edgeId,
+  inputLabel,
+  isParent,
+  aspect,
+  type,
+}: Props) => {
+  const nodes = GetNodesFromState();
+  const node = nodes.find((node) => node.id === nodeId);
+  const isHidden: any = node.isHidden;
+
+  const edges = GetEdgesFromState();
+  const edge = edges.find((edge) => edge.id === edgeId);
+  const edgeHidden = edge === undefined ? false : edge.isHidden;
+
+  const handleCheckboxChange = useChangeNodeVisibility(
+    nodeId,
+    type,
+    edgeId,
+    isParent,
+    isHidden,
+    edgeHidden
   );
-  const node = nodes.find((node) => node.id === id);
-  const isChecked: any = node.isVisible;
-  const handleCheckboxChange = useChangeNodeVisibility(id, isChecked);
 
   const underlineColor = GetCheckboxColor(aspect);
 
@@ -24,7 +43,7 @@ export const CheckboxComponent = ({ id, inputLabel, aspect }: Props) => {
     <label className={"checkbox " + underlineColor}>
       <input
         type="checkbox"
-        checked={isChecked}
+        checked={!isHidden}
         onChange={handleCheckboxChange}
       />
       <span className="checkmark"></span>

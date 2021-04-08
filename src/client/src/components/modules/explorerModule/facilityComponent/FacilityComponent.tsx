@@ -2,13 +2,10 @@ import "./facility.scss";
 import AspectComponent from "../aspectComponent/AspectComponent";
 import CheckboxComponent from "../checkboxComponent/CheckboxComponent";
 import { AspectWrapper, FacilityHeader } from "../styled";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../redux/store";
+import { GetNodesFromState } from "../../../flow/helpers";
 
 export const FacilityComponent = () => {
-  const aspects: any = useSelector<RootState>(
-    (state) => state.projectState.project.nodes
-  );
+  const aspects = GetNodesFromState();
 
   return (
     <>
@@ -19,7 +16,12 @@ export const FacilityComponent = () => {
         {aspects.map((obj: object, i: number) => {
           while (i < 3) {
             return (
-              <AspectComponent key={i} id={obj["id"]} name={obj["name"]} />
+              <AspectComponent
+                key={i}
+                nodeId={obj["id"]}
+                name={obj["name"]}
+                type={obj["label"]}
+              />
             );
           }
           return null;

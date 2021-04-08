@@ -11,9 +11,6 @@ import {
   Node,
   NODE_TYPE,
 } from "../../../models/project";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/store";
-import { EdgeFlowWrapper } from "../styled";
 
 export default function DefaultEdgeType({
   id,
@@ -90,14 +87,8 @@ export default function DefaultEdgeType({
     ) : null;
   };
 
-  const edges: any = useSelector<RootState>(
-    (state) => state.projectState.project.edges
-  );
-  const edge = edges.find((node) => node.id === id);
-  const isVisible = edge.isVisible;
-
   return (
-    <EdgeFlowWrapper visible={isVisible}>
+    <>
       <path
         id={id}
         style={style}
@@ -106,6 +97,6 @@ export default function DefaultEdgeType({
         markerEnd={markerEnd}
       />
       {edgeText(data.source, data.target)}
-    </EdgeFlowWrapper>
+    </>
   );
 }

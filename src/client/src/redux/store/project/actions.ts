@@ -70,16 +70,21 @@ export function updatePosition(
   };
 }
 
-export function changeNodeVisibility(nodeId: string, visible: boolean) {
+export function changeNodeVisibility(
+  nodeId: string,
+  isHidden: boolean,
+  isParent: boolean | false,
+  type: string
+) {
   return {
     type: CHANGE_NODE_VISIBILITY,
-    payload: { nodeId, visible },
+    payload: { nodeId, isHidden, isParent, type },
   };
 }
 
-export function changeEdgeVisibility(edgeId: string, visible: boolean) {
+export function changeEdgeVisibility(edgeId: string, isHidden: boolean) {
   return {
     type: CHANGE_EDGE_VISIBILITY,
-    payload: { edgeId, visible },
+    payload: { edgeId, isHidden: isHidden },
   };
 }

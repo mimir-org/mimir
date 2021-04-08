@@ -108,6 +108,7 @@ export function projectReducer(
       };
 
     case UPDATE_POSITION:
+      console.log("update position");
       return {
         ...state,
         project: {
@@ -124,13 +125,29 @@ export function projectReducer(
       };
 
     case CHANGE_NODE_VISIBILITY:
-      const id = action.payload.nodeId;
+      const nodeId = action.payload.nodeId;
+      const isParent = action.payload.isParent;
+      const type = action.payload.type;
+      //   if (isParent) {
+      //     return {
+      //         ...state,
+      //         project: {
+      //           nodes: state.project.nodes.map((nodes, i) =>
+      //             state.project.nodes[i].type === type
+      //               ? { ...nodes, isVisible: action.payload.visible }
+      //               : nodes
+      //           ),
+      //           edges: state.project.edges,
+      //         },
+      //       };
+      //   }
+
       return {
         ...state,
         project: {
           nodes: state.project.nodes.map((nodes, i) =>
-            state.project.nodes[i].id === id
-              ? { ...nodes, isVisible: action.payload.visible }
+            state.project.nodes[i].id === nodeId
+              ? { ...nodes, isHidden: action.payload.isHidden }
               : nodes
           ),
           edges: state.project.edges,
@@ -144,9 +161,10 @@ export function projectReducer(
         project: {
           edges: state.project.edges.map((edges, i) =>
             state.project.edges[i].id === edgeId
-              ? { ...edges, isVisible: action.payload.visible }
+              ? { ...edges, isHidden: action.payload.isHidden }
               : edges
           ),
+          nodes: state.project.nodes,
         },
       };
 

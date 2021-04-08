@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import ReactFlow, {
@@ -23,17 +23,22 @@ import { ProjectState } from "../../redux/store/project/types";
 import { RootState } from "./../../redux/store/index";
 import { NodeType, Node, LibNode, Edge, EDGE_TYPE } from "../../models/project";
 
-import { Aspect, Function, Product, Location } from "./nodes";
+import { Aspect, FunctionFacet, ProductFacet, LocationFacet } from "./nodes";
 import { DefaultEdgeType } from "./edges";
 import { createId } from "./utils";
 import { MiniMap } from "./";
-import { CreateProjectNodes, CreateElementNode } from "./utils";
+import {
+  CreateProjectNodes,
+  CreateElementNode,
+  UpdateProjectNodes,
+} from "./utils";
+import { GetNodesFromState } from "./helpers";
 
 const nodeTypes = {
   Aspect: Aspect,
-  Function: Function,
-  Product: Product,
-  Location: Location,
+  Function: FunctionFacet,
+  Product: ProductFacet,
+  Location: LocationFacet,
 };
 
 const edgeTypes = {
@@ -49,7 +54,7 @@ const FlowTree = () => {
   ) as ProjectState;
   const [elements, setElements] = useState<Elements>();
 
-  // On connect
+  //On connect
   const onConnect = (params) => {
     const createdId = createId();
     const sourceNode = projectState.project.nodes.find(
@@ -151,6 +156,14 @@ const FlowTree = () => {
     setElements((es) => es.concat(CreateElementNode(node)));
   };
 
+  const nodes: any = useSelector<RootState>(
+    (state) => state.projectState.project?.nodes
+  );
+
+  useEffect(() => {
+    setElements(UpdateProjectNodes(projectState.project));
+  }, [projectState, nodes]);
+
   return (
     <div className="dndflow">
       {projectState.project && (
@@ -168,6 +181,7 @@ const FlowTree = () => {
               edgeTypes={edgeTypes}
             >
               <Controls />
+
               <MiniMap />
             </ReactFlow>
           </div>
