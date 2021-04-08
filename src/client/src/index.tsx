@@ -11,13 +11,13 @@ const rootElement = document.getElementById("root");
 
 ReactDOM.render(
   // <React.StrictMode>
-  //   <AzureAD provider={authProvider} forceLogin={true}>
-  <Provider store={store}>
-    <BrowserRouter forceRefresh={true}>
-      <App />
-    </BrowserRouter>
-  </Provider>,
-  //   </AzureAD>
+  <AzureAD provider={authProvider} forceLogin={true}>
+    <Provider store={store}>
+      <BrowserRouter forceRefresh={true}>
+        <App />
+      </BrowserRouter>
+    </Provider>
+  </AzureAD>,
   rootElement
   // </React.StrictMode>, rootElement
 );
