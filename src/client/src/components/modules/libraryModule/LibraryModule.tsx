@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { LibraryState } from "../../../redux/store/library/types";
-import { searcLibrary } from "../../../redux/store/library/actions";
+import { searchLibrary } from "../../../redux/store/library/actions";
 import {
   loadStateFromStorage,
   saveStateToStorage,
@@ -24,7 +24,7 @@ const LibraryModule = () => {
   ) as LibraryState;
 
   useEffect(() => {
-    dispatch(searcLibrary(""));
+    dispatch(searchLibrary(""));
   }, [dispatch]);
 
   const handleClick = () => {
