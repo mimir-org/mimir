@@ -52,7 +52,7 @@ export const AspectComponent = ({ nodeId, name, type }: Props) => {
       </div>
       <div className="facets_container">
         {expanded &&
-          facets.map((obj, i) => {
+          facets.map((obj: object, i: number) => {
             if (facets[i].type === name) {
               return (
                 <FacetComponent
@@ -61,6 +61,7 @@ export const AspectComponent = ({ nodeId, name, type }: Props) => {
                   nodeId={obj["id"]}
                   name={obj["name"]}
                   aspect={name}
+                  margin="85"
                 />
               );
             }

@@ -1,16 +1,23 @@
 import CheckboxComponent from "../checkboxComponent/CheckboxComponent";
-import "./facet.scss";
+import { FacetWrapper } from "../styled";
 
 interface Props {
   nodeId: string;
   edgeId: string | undefined;
   name: string;
   aspect?: string;
+  margin: string;
 }
 
-export const FacetComponent = ({ nodeId, edgeId, name, aspect }: Props) => {
+export const FacetComponent = ({
+  nodeId,
+  edgeId,
+  name,
+  aspect,
+  margin,
+}: Props) => {
   return (
-    <div className="facet_container">
+    <FacetWrapper margin={margin}>
       <CheckboxComponent
         nodeId={nodeId}
         edgeId={edgeId}
@@ -18,7 +25,7 @@ export const FacetComponent = ({ nodeId, edgeId, name, aspect }: Props) => {
         aspect={aspect}
         type=""
       />
-    </div>
+    </FacetWrapper>
   );
 };
 
