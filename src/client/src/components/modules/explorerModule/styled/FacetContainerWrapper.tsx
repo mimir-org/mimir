@@ -4,7 +4,7 @@ const FacetContainerWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding-top: 6px;
-  background-color: ${(props) =>
+  background-color: ${(props: { color: string }) =>
     props.color === "Function"
       ? "rgba(254, 244, 69, 0.15)"
       : props.color === "Product"

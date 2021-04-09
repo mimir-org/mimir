@@ -1,4 +1,5 @@
 import { MiniMap, Node } from "react-flow-renderer";
+import { NODE_TYPE } from "../../models/project";
 
 const MiniMapComponent = () => {
   let color: string;
@@ -6,18 +7,40 @@ const MiniMapComponent = () => {
   return (
     <MiniMap
       nodeStrokeColor={(node: Node): string => {
-        return node.type === "input"
-          ? (color = "#00041d0")
-          : node.type === "selectorNode"
-          ? (color = "#ccc")
-          : node.type === "output"
-          ? (color = "#ff0072")
-          : (color = "#eee");
+        return node.type === NODE_TYPE.FUNCTION
+          ? (color = "yellow")
+          : node.type === NODE_TYPE.PRODUCT
+          ? (color = "turquoise")
+          : node.type === NODE_TYPE.LOCATION
+          ? (color = "magenta")
+          : node.type === NODE_TYPE.ASPECT &&
+            node.data.name === NODE_TYPE.FUNCTION
+          ? (color = "yellow")
+          : node.type === NODE_TYPE.ASPECT &&
+            node.data.name === NODE_TYPE.PRODUCT
+          ? (color = "turquoise")
+          : node.type === NODE_TYPE.ASPECT &&
+            node.data.name === NODE_TYPE.LOCATION
+          ? (color = "magenta")
+          : null;
       }}
       nodeColor={(node: Node): string => {
-        return node.type === "selectorNode"
-          ? (color = "#ccc")
-          : (color = "#888");
+        return node.type === NODE_TYPE.FUNCTION
+          ? (color = "yellow")
+          : node.type === NODE_TYPE.PRODUCT
+          ? (color = "turquoise")
+          : node.type === NODE_TYPE.LOCATION
+          ? (color = "magenta")
+          : node.type === NODE_TYPE.ASPECT &&
+            node.data.name === NODE_TYPE.FUNCTION
+          ? (color = "yellow")
+          : node.type === NODE_TYPE.ASPECT &&
+            node.data.name === NODE_TYPE.PRODUCT
+          ? (color = "turquoise")
+          : node.type === NODE_TYPE.ASPECT &&
+            node.data.name === NODE_TYPE.LOCATION
+          ? (color = "magenta")
+          : null;
       }}
     />
   );
