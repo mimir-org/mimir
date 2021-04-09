@@ -4,6 +4,7 @@ export { default as ExplorerContainer } from "./ExplorerContainer";
 export { default as ContentWrapper } from "./ContentWrapper";
 export { default as FacilityHeader } from "./FacilityHeader";
 export { default as AspectWrapper } from "./AspectWrapper";
+export { default as FacetContainerWrapper } from "./FacetContainerWrapper";
 export { default as FacetWrapper } from "./FacetWrapper";
 export { default as ExplorerTitle } from "./ExplorerTitle";
 export { default as CollapsedIcon } from "./CollapsedIcon";

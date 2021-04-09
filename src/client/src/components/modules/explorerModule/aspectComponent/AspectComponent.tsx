@@ -5,6 +5,7 @@ import { GetEdgesFromState, GetNodesFromState } from "../../../flow/helpers";
 import CheckboxComponent from "../checkboxComponent/CheckboxComponent";
 import FacetComponent from "../facetComponent/FacetComponent";
 import { GetAspectIcon, GetAspectHeader } from "../helpers/";
+import { FacetContainerWrapper } from "../styled";
 import "./aspect.scss";
 
 interface Props {
@@ -52,7 +53,7 @@ export const AspectComponent = ({ nodeId, name, type }: Props) => {
           onClick={() => handleExpandClick()}
         ></img>
       </div>
-      <div className="facets_container">
+      <FacetContainerWrapper color={name}>
         {expanded &&
           facets.map((obj: object, i: number) => {
             if (facets[i].type === name) {
@@ -69,7 +70,7 @@ export const AspectComponent = ({ nodeId, name, type }: Props) => {
             }
             return null;
           })}
-      </div>
+      </FacetContainerWrapper>
     </div>
   );
 };
