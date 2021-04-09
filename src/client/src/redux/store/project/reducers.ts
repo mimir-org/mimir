@@ -1,4 +1,3 @@
-import { GetEdgesFromState } from "../../../components/flow/helpers";
 import {
   FETCHING_PROJECT,
   FETCHING_PROJECT_SUCCESS_OR_ERROR,

@@ -3,9 +3,7 @@ import {
   Node,
   Edge,
   Aspects,
-  Graph,
   CategoryDescriptor,
-  AspectDescriptor,
   Connection,
 } from "../models/workspace";
 import {
@@ -18,9 +16,6 @@ import {
   DIAGRAM_CONNECTOR_TYPE,
   DIAGRAM_CONNECTION_TYPE,
 } from "./../models/diagram";
-import { AspectRatioSharp } from "@material-ui/icons";
-import { brotliDecompress } from "zlib";
-// import { nodetypeReducer } from "../redux/store/library/reducers";
 
 export class WorkspaceService {
   private workspace: Workspace;
@@ -185,20 +180,6 @@ export class WorkspaceService {
     }
     return areaCategories;
   }
-
-  // getNodesConnectedToRoot(aspectId: string): Node[] {
-  //     const aspectEdges: Edge[] = [];
-  //     const aspectNodes: Node[] = [];
-  //     const chosenAspect = this.workspace.aspects
-  // 	.filter(x => x.aspect === aspectId);
-
-  // 	chosenAspect.forEach(aspect => {
-  // 		if(aspect.graph.edges.filter(e => e.to === 'root' && e.type === 'imfo:partOf')){
-  // 			aspectEdges.push({
-  // 				id: e.id;
-  // 			});
-  // 		}
-  // 	})
 
   getConnectionEdges(nodeId: string): Connection[] {
     var aspects = this.workspace.aspects.filter(

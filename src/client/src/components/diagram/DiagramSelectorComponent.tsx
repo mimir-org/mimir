@@ -14,7 +14,6 @@ import ReactFlow, {
 import DefaultSelectorNode from "./selectorNodes/defaultSelectors/DefaultSelectorNode";
 import ConnectSelectorNode from "./selectorNodes/connectSelectors/ConnectSelectorNode";
 import { WorkspaceService } from "./../../services/workspaceService";
-import DrawMiniMap from "./DrawMiniMap";
 
 interface Props {
   workspaceService: WorkspaceService;
@@ -81,7 +80,6 @@ const DiagramSelectorComponent: FC<Props> = ({
           snapGrid={snapGrid}
           defaultZoom={1.5}
         >
-          {DrawMiniMap()}
           <Controls />
         </ReactFlow>
       </div>

@@ -18,7 +18,7 @@ export const useChangeNodeVisibility = (
 
   return useCallback(() => {
     dispatch(changeNodeVisibility(id, !isHidden, isAspect, type));
-
+    console.log("test edge: ", edgeId);
     if (edgeId !== undefined) {
       dispatch(changeEdgeVisibility(edgeId, !edgeHidden));
     }

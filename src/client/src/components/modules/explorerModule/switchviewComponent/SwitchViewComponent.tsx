@@ -3,9 +3,7 @@ import SplitViewIcon from "../../../../assets/icons/splitViewIcon.svg";
 import textResources from "../../../../textResources";
 import { SwitchViewWrapper, ViewOptionWrapper } from "../styled";
 
-interface SwitchViewComponentProps {}
-
-export const SwitchViewComponent = ({}: SwitchViewComponentProps) => {
+export const SwitchViewComponent = () => {
   return (
     <>
       <SwitchViewWrapper>

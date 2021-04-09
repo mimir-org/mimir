@@ -3,7 +3,6 @@ import { FC, useEffect, useState, MouseEvent } from "react";
 import ReactFlow, {
   removeElements,
   addEdge,
-  Controls,
   FlowElement,
   Elements,
   SnapGrid,
@@ -17,7 +16,6 @@ import ConnectSelectorNode from "./selectorNodes/connectSelectors/ConnectSelecto
 import { Workspace } from "../../models/workspace";
 import { WorkspaceService } from "./../../services/workspaceService";
 import { DiagramAddNodes, DiagramAddConnections } from "./";
-import DrawMiniMap from "./DrawMiniMap";
 
 let clickTimeout = null;
 
@@ -101,10 +99,8 @@ const DiagramComponent: FC<Workspace> = ({
         snapGrid={snapGrid}
         defaultZoom={defaultZoomFactor}
       >
-        {/* {DrawMiniMap()} */}
         <hr className="divider divider--left" />
         <hr className="divider divider--right" />
-        {/* <Controls /> */}
       </ReactFlow>
     </>
   );

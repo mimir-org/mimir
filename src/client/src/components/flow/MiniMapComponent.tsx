@@ -39,7 +39,8 @@ const MiniMapComponent = () => {
           ? (color = "turquoise")
           : node.type === NODE_TYPE.ASPECT &&
             node.data.name === NODE_TYPE.LOCATION
-          ? (color = "magenta")
+          ? // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            (color = "magenta")
           : null;
       }}
     />
