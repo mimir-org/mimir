@@ -103,27 +103,6 @@ export const CreateProjectNodes = (project: Project): Elements => {
   return initialElements;
 };
 
-// TODO: check this
-export const UpdateProjectNodes = (project: Project): Elements => {
-  const initialElements: Elements = [];
-
-  if (!project) return;
-
-  project.nodes.forEach((node) => {
-    const elementNode = CreateElementNode(node);
-    if (elementNode) initialElements.push(elementNode);
-  });
-
-  project.edges.forEach((edge) => {
-    const fromNode = project.nodes.find((x) => x.id === edge.fromNode);
-    const toNode = project.nodes.find((x) => x.id === edge.toNode);
-    const elementEdge = CreateElementEdge(edge, fromNode, toNode);
-    if (elementEdge) initialElements.push(elementEdge);
-  });
-
-  return initialElements;
-};
-
 export const processType = (connector: Connector): [HandleType, Position] => {
   switch (connector.type) {
     case CONNECTOR_TYPE.RELATION_OUTPUT || CONNECTOR_TYPE.TRANSPORT_OUTPUT:

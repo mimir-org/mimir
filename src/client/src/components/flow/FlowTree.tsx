@@ -27,11 +27,7 @@ import { Aspect, FunctionFacet, ProductFacet, LocationFacet } from "./nodes";
 import { DefaultEdgeType } from "./edges";
 import { createId } from "./utils";
 import { MiniMap } from "./";
-import {
-  CreateProjectNodes,
-  CreateElementNode,
-  UpdateProjectNodes,
-} from "./utils";
+import { CreateProjectNodes, CreateElementNode } from "./utils";
 
 const nodeTypes = {
   Aspect: Aspect,
@@ -158,13 +154,10 @@ const FlowTree = () => {
     setElements((es) => es.concat(CreateElementNode(node)));
   };
 
-  const nodes: any = useSelector<RootState>(
-    (state) => state.projectState.project?.nodes
-  );
-
-  useEffect(() => {
-    setElements(UpdateProjectNodes(projectState.project));
-  }, [projectState, nodes]);
+  // Force rerender
+  //   useEffect(() => {
+  //     onLoad(reactFlowInstance);
+  //   });
 
   return (
     <div className="dndflow">

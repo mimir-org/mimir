@@ -3,9 +3,11 @@ import AspectComponent from "../aspectComponent/AspectComponent";
 import CheckboxComponent from "../checkboxComponent/CheckboxComponent";
 import { AspectWrapper, FacilityHeader } from "../styled";
 import { GetNodesFromState } from "../../../flow/helpers";
+import { NODE_TYPE } from "../../../../models/project";
 
 export const FacilityComponent = () => {
   const aspects = GetNodesFromState();
+  console.log("aspects: ", aspects);
 
   return (
     <>
@@ -14,7 +16,7 @@ export const FacilityComponent = () => {
       </FacilityHeader>
       <AspectWrapper>
         {aspects.map((obj: object, i: number) => {
-          while (i < 3) {
+          if (aspects[i].type === NODE_TYPE.ASPECT) {
             return (
               <AspectComponent
                 key={i}
