@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import ReactFlow, {
@@ -113,10 +113,13 @@ const FlowTree = () => {
   };
 
   // On load
-  const onLoad = (_reactFlowInstance) => {
-    setElements(CreateProjectNodes(projectState.project));
-    return setReactFlowInstance(_reactFlowInstance);
-  };
+  const onLoad = useCallback(
+    (_reactFlowInstance) => {
+      setElements(CreateProjectNodes(projectState.project));
+      return setReactFlowInstance(_reactFlowInstance);
+    },
+    [projectState.project]
+  );
 
   // On drag over
   const onDragOver = (event) => {
@@ -155,9 +158,9 @@ const FlowTree = () => {
   };
 
   // Force rerender
-  //   useEffect(() => {
-  //     onLoad(reactFlowInstance);
-  //   });
+  useEffect(() => {
+    onLoad(reactFlowInstance);
+  }, [onLoad, reactFlowInstance]);
 
   return (
     <div className="dndflow">

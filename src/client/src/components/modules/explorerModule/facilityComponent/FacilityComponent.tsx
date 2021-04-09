@@ -7,7 +7,6 @@ import { NODE_TYPE } from "../../../../models/project";
 
 export const FacilityComponent = () => {
   const aspects = GetNodesFromState();
-  console.log("aspects: ", aspects);
 
   return (
     <>

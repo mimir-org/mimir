@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { expandedIcon, unexpandedIcon } from "../../../../assets";
+import { NODE_TYPE } from "../../../../models/project";
 import { GetEdgesFromState, GetNodesFromState } from "../../../flow/helpers";
 import CheckboxComponent from "../checkboxComponent/CheckboxComponent";
 import FacetComponent from "../facetComponent/FacetComponent";
@@ -22,8 +23,8 @@ export const AspectComponent = ({ nodeId, name, type }: Props) => {
   const aspectHeader = GetAspectHeader(name);
   const expandIcon = expanded ? expandedIcon : unexpandedIcon;
 
-  const aspects = GetNodesFromState();
-  const facets = aspects.slice(3);
+  const nodes = GetNodesFromState();
+  const facets = nodes.filter((node) => node.type !== NODE_TYPE.ASPECT);
 
   // Find edges that are linked to the node
   const edges = GetEdgesFromState();
