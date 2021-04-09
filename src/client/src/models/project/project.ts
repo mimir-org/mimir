@@ -58,6 +58,7 @@ export interface Edge {
   fromNode: string;
   toNode: string;
   isHidden: boolean | false;
+  parentType: NodeType;
 }
 
 export interface Position {

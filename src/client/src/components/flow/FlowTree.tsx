@@ -79,6 +79,7 @@ const FlowTree = () => {
         fromNode: sourceNode.id,
         toNode: targetNode.id,
         isHidden: sourceNode.isHidden,
+        parentType: sourceNode.type,
       };
 
       dispatch(createEdge(edge));

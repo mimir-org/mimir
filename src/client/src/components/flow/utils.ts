@@ -78,6 +78,7 @@ export const CreateElementEdge = (
       target: toNode,
     },
     isHidden: edge.isHidden,
+    parentType: fromNode.type,
   };
   return elem;
 };

@@ -174,6 +174,7 @@ export default class ProjectDataset {
               fromNode: "1236538d-0015-e5ea-ea4d-d2dce68e3ce5",
               toNode: "88ab517b-a575-3760-4860-f2cb6848c30a",
               isHidden: false,
+              parentType: NODE_TYPE.FUNCTION,
             },
             {
               id: "f6cb4e3c-5793-c402-fb94-feb5ee1d8484",
@@ -182,6 +183,7 @@ export default class ProjectDataset {
               fromNode: "1236538d-0015-e5ea-ea4d-d2dce68e3ce5",
               toNode: "373425a5-6c3d-8e68-4348-a8306fdcfc81",
               isHidden: false,
+              parentType: NODE_TYPE.FUNCTION,
             },
           ],
         },

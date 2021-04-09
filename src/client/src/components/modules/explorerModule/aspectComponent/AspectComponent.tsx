@@ -25,6 +25,7 @@ export const AspectComponent = ({ nodeId, name, type }: Props) => {
   const aspects = GetNodesFromState();
   const facets = aspects.slice(3);
 
+  // Find edges that are linked to the node
   const edges = GetEdgesFromState();
   const edge = edges.find((edge) => edge.fromNode === nodeId);
   const edgeId = edge === undefined ? undefined : edge.id;
