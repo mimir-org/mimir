@@ -78,7 +78,7 @@ interface ChangeNodeVisibility {
   payload: {
     nodeId: string;
     isHidden: boolean;
-    isParent: boolean | false;
+    isAspect: boolean;
     type: string;
   };
 }

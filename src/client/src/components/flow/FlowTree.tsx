@@ -32,7 +32,6 @@ import {
   CreateElementNode,
   UpdateProjectNodes,
 } from "./utils";
-import { GetNodesFromState } from "./helpers";
 
 const nodeTypes = {
   Aspect: Aspect,
@@ -181,7 +180,6 @@ const FlowTree = () => {
               edgeTypes={edgeTypes}
             >
               <Controls />
-
               <MiniMap />
             </ReactFlow>
           </div>

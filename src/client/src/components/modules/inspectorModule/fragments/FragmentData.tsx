@@ -1,3 +1,4 @@
+import { createId } from "../../../flow/utils";
 import {
   FragmentParagraph,
   FragmentColumn,
@@ -16,8 +17,8 @@ const FragmentData = ({ data }) => {
       <FragmentColumn>
         {data.slice(start, stop).map((data) => (
           <>
-            <FragmentParagraph key={data.id}>{data.type}</FragmentParagraph>
-            <FragmentInput />
+            <FragmentParagraph key={createId()}>{data.type}</FragmentParagraph>
+            <FragmentInput key={createId()} />
           </>
         ))}
       </FragmentColumn>

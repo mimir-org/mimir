@@ -102,7 +102,7 @@ export const CreateProjectNodes = (project: Project): Elements => {
   return initialElements;
 };
 
-// TODO: Double-check this
+// TODO: check this
 export const UpdateProjectNodes = (project: Project): Elements => {
   const initialElements: Elements = [];
 

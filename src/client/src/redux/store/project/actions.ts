@@ -73,12 +73,12 @@ export function updatePosition(
 export function changeNodeVisibility(
   nodeId: string,
   isHidden: boolean,
-  isParent: boolean | false,
+  isAspect: boolean,
   type: string
 ) {
   return {
     type: CHANGE_NODE_VISIBILITY,
-    payload: { nodeId, isHidden, isParent, type },
+    payload: { nodeId, isHidden, isAspect, type },
   };
 }
 

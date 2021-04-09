@@ -8,7 +8,7 @@ interface Props {
   edgeId: string | undefined;
   inputLabel: string;
   aspect?: string;
-  isParent?: boolean;
+  isAspect?: boolean;
   type: string;
 }
 
@@ -16,7 +16,7 @@ export const CheckboxComponent = ({
   nodeId,
   edgeId,
   inputLabel,
-  isParent,
+  isAspect,
   aspect,
   type,
 }: Props) => {
@@ -32,7 +32,7 @@ export const CheckboxComponent = ({
     nodeId,
     type,
     edgeId,
-    isParent,
+    isAspect,
     isHidden,
     edgeHidden
   );

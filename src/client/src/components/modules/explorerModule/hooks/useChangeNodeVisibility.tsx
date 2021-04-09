@@ -9,19 +9,19 @@ export const useChangeNodeVisibility = (
   id: string,
   type: string,
   edgeId: string,
-  isParent: boolean,
+  isAspect: boolean,
   isHidden: boolean,
   edgeHidden: boolean
 ) => {
   const dispatch = useDispatch();
 
   return useCallback(() => {
-    dispatch(changeNodeVisibility(id, !isHidden, isParent, type));
+    dispatch(changeNodeVisibility(id, !isHidden, isAspect, type));
 
     // if (edgeId !== undefined) {
     //   dispatch(changeEdgeVisibility(edgeId, !edgeHidden));
     // }
-  }, [dispatch, id, isHidden, isParent, type]);
+  }, [dispatch, id, isHidden, isAspect, type]);
 };
 
 export default useChangeNodeVisibility;

@@ -16,7 +16,7 @@ export const FacetComponent = ({ nodeId, edgeId, name, aspect }: Props) => {
         edgeId={edgeId}
         inputLabel={name}
         aspect={aspect}
-        type="test"
+        type=""
       />
     </div>
   );

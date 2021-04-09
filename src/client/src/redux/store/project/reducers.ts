@@ -125,10 +125,10 @@ export function projectReducer(
 
     case CHANGE_NODE_VISIBILITY:
       const nodeId = action.payload.nodeId;
-      const isParent = action.payload.isParent;
+      const isAspect = action.payload.isAspect;
       const type = action.payload.type;
 
-      if (isParent) {
+      if (isAspect) {
         return {
           ...state,
           project: {

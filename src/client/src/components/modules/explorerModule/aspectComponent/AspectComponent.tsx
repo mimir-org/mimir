@@ -39,12 +39,9 @@ export const AspectComponent = ({ nodeId, name, type }: Props) => {
             edgeId={edgeId}
             inputLabel={name}
             aspect={name}
-            isParent={true}
+            isAspect={true}
             type={type}
           />
-        </div>
-        <div className="placeholder_container">
-          <p>Placeholder</p>
         </div>
         <img
           className="expandIcon"
@@ -53,10 +50,10 @@ export const AspectComponent = ({ nodeId, name, type }: Props) => {
           onClick={() => handleExpandClick()}
         ></img>
       </div>
-      {expanded && name === "Function" && (
-        <div className="facets_container">
-          {facets.map((obj, i) => {
-            if (facets[i].type === "Function") {
+      <div className="facets_container">
+        {expanded &&
+          facets.map((obj, i) => {
+            if (facets[i].type === name) {
               return (
                 <FacetComponent
                   key={i}
@@ -69,44 +66,7 @@ export const AspectComponent = ({ nodeId, name, type }: Props) => {
             }
             return null;
           })}
-        </div>
-      )}
-      {expanded && name === "Product" && (
-        <div className="facets_container">
-          {facets.map((obj, i) => {
-            if (facets[i].type === "Product") {
-              return (
-                <FacetComponent
-                  key={i}
-                  edgeId={undefined}
-                  nodeId={obj["id"]}
-                  name={obj["name"]}
-                  aspect={name}
-                />
-              );
-            }
-            return null;
-          })}
-        </div>
-      )}
-      {expanded && name === "Location" && (
-        <div className="facets_container">
-          {facets.map((obj, i) => {
-            if (facets[i].type === "Location") {
-              return (
-                <FacetComponent
-                  key={i}
-                  edgeId={undefined}
-                  nodeId={obj["id"]}
-                  name={obj["name"]}
-                  aspect={name}
-                />
-              );
-            }
-            return null;
-          })}
-        </div>
-      )}
+      </div>
     </div>
   );
 };
