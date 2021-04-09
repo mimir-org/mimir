@@ -1,3 +1,4 @@
+import { GetEdgesFromState } from "../../../components/flow/helpers";
 import {
   FETCHING_PROJECT,
   FETCHING_PROJECT_SUCCESS_OR_ERROR,
@@ -129,6 +130,7 @@ export function projectReducer(
       const type = action.payload.type;
 
       if (isAspect) {
+        // Nuke all nodes and edges
         return {
           ...state,
           project: {
@@ -138,7 +140,11 @@ export function projectReducer(
                 ? { ...nodes, isHidden: action.payload.isHidden }
                 : nodes
             ),
-            edges: state.project.edges,
+            edges: state.project.edges.map((edges, i) =>
+              state.project.edges[i].fromNode === nodeId
+                ? { ...edges, isHidden: action.payload.isHidden }
+                : edges
+            ),
           },
         };
       }

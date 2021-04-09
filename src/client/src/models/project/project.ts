@@ -57,6 +57,7 @@ export interface Edge {
   toConnector: string;
   fromNode: string;
   toNode: string;
+  isHidden: boolean | false;
 }
 
 export interface Position {

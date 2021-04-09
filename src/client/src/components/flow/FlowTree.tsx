@@ -67,7 +67,8 @@ const FlowTree = () => {
         x.fromConnector === params.sourceHandle &&
         x.toConnector === params.targetHandle &&
         x.fromNode === sourceNode.id &&
-        x.toNode === targetNode.id
+        x.toNode === targetNode.id &&
+        x.isHidden === targetNode.isHidden
     );
 
     if (!existingEdge) {
@@ -77,6 +78,7 @@ const FlowTree = () => {
         toConnector: params.targetHandle,
         fromNode: sourceNode.id,
         toNode: targetNode.id,
+        isHidden: sourceNode.isHidden,
       };
 
       dispatch(createEdge(edge));

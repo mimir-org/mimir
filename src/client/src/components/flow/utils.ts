@@ -77,8 +77,8 @@ export const CreateElementEdge = (
       source: fromNode,
       target: toNode,
     },
+    isHidden: edge.isHidden,
   };
-
   return elem;
 };
 
