@@ -11,7 +11,7 @@ import {
   ProjectActionTypes,
 } from "./types";
 
-import { Node, Edge } from "../../../models/project";
+import { Node, Edge, NODE_TYPE } from "../../../models/project";
 
 export function get(id: string): ProjectActionTypes {
   return {
@@ -74,7 +74,7 @@ export function changeNodeVisibility(
   nodeId: string,
   isHidden: boolean,
   isAspect: boolean,
-  type: string
+  type: typeof NODE_TYPE
 ) {
   return {
     type: CHANGE_NODE_VISIBILITY,

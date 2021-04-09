@@ -1,11 +1,12 @@
+import { NODE_TYPE } from "../../../../models/project";
 import CheckboxComponent from "../checkboxComponent/CheckboxComponent";
 import { FacetWrapper } from "../styled";
 
 interface Props {
   nodeId: string;
   edgeId: string | undefined;
-  name: string;
-  aspect?: string;
+  name: typeof NODE_TYPE;
+  aspect?: typeof NODE_TYPE;
   margin: string;
 }
 
@@ -23,7 +24,6 @@ export const FacetComponent = ({
         edgeId={edgeId}
         inputLabel={name}
         aspect={aspect}
-        type=""
       />
     </FacetWrapper>
   );

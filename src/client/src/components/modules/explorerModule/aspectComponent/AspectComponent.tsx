@@ -9,8 +9,8 @@ import "./aspect.scss";
 
 interface Props {
   nodeId: string;
-  name: string;
-  type: string;
+  name: typeof NODE_TYPE;
+  type: typeof NODE_TYPE;
 }
 
 export const AspectComponent = ({ nodeId, name, type }: Props) => {
@@ -19,8 +19,8 @@ export const AspectComponent = ({ nodeId, name, type }: Props) => {
     setExpanded(!expanded);
   };
 
-  const aspectIcon = GetAspectIcon(name);
-  const aspectHeader = GetAspectHeader(name);
+  const aspectIcon = GetAspectIcon(name.toString());
+  const aspectHeader = GetAspectHeader(name.toString());
   const expandIcon = expanded ? expandedIcon : unexpandedIcon;
 
   const nodes = GetNodesFromState();
@@ -63,7 +63,7 @@ export const AspectComponent = ({ nodeId, name, type }: Props) => {
                   nodeId={obj["id"]}
                   name={obj["name"]}
                   aspect={name}
-                  margin="85"
+                  margin="85" // TODO: fix dynamic indentation
                 />
               );
             }

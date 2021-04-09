@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
+import { NODE_TYPE } from "../../../../models/project";
 import {
   changeNodeVisibility,
   changeEdgeVisibility,
@@ -7,7 +8,7 @@ import {
 
 export const useChangeNodeVisibility = (
   id: string,
-  type: string,
+  type: typeof NODE_TYPE,
   edgeId: string,
   isAspect: boolean,
   isHidden: boolean,

@@ -135,13 +135,13 @@ export function projectReducer(
           ...state,
           project: {
             nodes: state.project.nodes.map((nodes, i) =>
-              state.project.nodes[i].type === type ||
-              state.project.nodes[i].label === type
+              state.project.nodes[i].type === type.toString() ||
+              state.project.nodes[i].label === type.toString()
                 ? { ...nodes, isHidden: action.payload.isHidden }
                 : nodes
             ),
             edges: state.project.edges.map((edges, i) =>
-              state.project.edges[i].parentType === type
+              state.project.edges[i].parentType === type.toString()
                 ? { ...edges, isHidden: action.payload.isHidden }
                 : edges
             ),

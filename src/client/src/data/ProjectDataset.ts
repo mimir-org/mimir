@@ -67,8 +67,8 @@ export default class ProjectDataset {
           nodes: [
             {
               id: "1236538d-0015-e5ea-ea4d-d2dce68e3ce5",
-              name: "Function",
-              label: "Function",
+              name: NODE_TYPE.FUNCTION,
+              label: NODE_TYPE.FUNCTION,
               type: NODE_TYPE.ASPECT,
               position: { x: 150, y: 5 },
               icon: ICON_TYPE.FUNCTION_ICON,
@@ -83,8 +83,8 @@ export default class ProjectDataset {
             },
             {
               id: "c000cbb3-771a-9d9f-5439-fa2cb78b758f",
-              name: "Product",
-              label: "Product",
+              name: NODE_TYPE.PRODUCT,
+              label: NODE_TYPE.PRODUCT,
               type: NODE_TYPE.ASPECT,
               position: { x: 600, y: 5 },
               icon: ICON_TYPE.PRODUCT_ICON,
@@ -99,8 +99,8 @@ export default class ProjectDataset {
             },
             {
               id: createId(),
-              name: "Location",
-              label: "Location",
+              name: NODE_TYPE.LOCATION,
+              label: NODE_TYPE.LOCATION,
               type: NODE_TYPE.ASPECT,
               position: { x: 1050, y: 5 },
               icon: ICON_TYPE.LOCATION_ICON,
