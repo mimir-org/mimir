@@ -4,27 +4,15 @@ import { FacetWrapper } from "../styled";
 
 interface Props {
   nodeId: string;
-  edgeId: string | undefined;
   name: typeof NODE_TYPE;
   aspect?: typeof NODE_TYPE;
   margin: string;
 }
 
-export const FacetComponent = ({
-  nodeId,
-  edgeId,
-  name,
-  aspect,
-  margin,
-}: Props) => {
+export const FacetComponent = ({ nodeId, name, aspect, margin }: Props) => {
   return (
     <FacetWrapper margin={margin}>
-      <CheckboxComponent
-        nodeId={nodeId}
-        edgeId={edgeId}
-        inputLabel={name}
-        aspect={aspect}
-      />
+      <CheckboxComponent nodeId={nodeId} inputLabel={name} aspect={aspect} />
     </FacetWrapper>
   );
 };

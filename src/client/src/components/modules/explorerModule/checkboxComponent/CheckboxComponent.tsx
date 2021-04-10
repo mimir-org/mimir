@@ -1,12 +1,11 @@
 import { NODE_TYPE } from "../../../../models/project";
-import { GetEdgesFromState, GetNodesFromState } from "../../../flow/helpers";
+import { GetNodesFromState } from "../../../flow/helpers";
 import { GetCheckboxColor } from "../helpers";
 import useChangeNodeVisibility from "../hooks/useChangeNodeVisibility";
 import "./checkbox.scss";
 
 interface Props {
   nodeId: string;
-  edgeId: string | undefined;
   inputLabel: typeof NODE_TYPE;
   aspect?: typeof NODE_TYPE;
   isAspect?: boolean;
@@ -15,27 +14,21 @@ interface Props {
 
 export const CheckboxComponent = ({
   nodeId,
-  edgeId,
   inputLabel,
   isAspect,
   aspect,
   type,
 }: Props) => {
+  // Check if node is hidden
   const nodes = GetNodesFromState();
   const node = nodes.find((node) => node.id === nodeId);
   const isHidden: any = node.isHidden;
 
-  const edges = GetEdgesFromState();
-  const edge = edges.find((edge) => edge.id === edgeId);
-  const edgeHidden = edge === undefined ? false : edge.isHidden;
-
   const handleCheckboxChange = useChangeNodeVisibility(
     nodeId,
     type,
-    edgeId,
     isAspect,
-    isHidden,
-    edgeHidden
+    isHidden
   );
 
   const underlineColor = GetCheckboxColor(aspect.toString());

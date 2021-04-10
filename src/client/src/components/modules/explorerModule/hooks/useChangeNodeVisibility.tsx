@@ -5,24 +5,27 @@ import {
   changeNodeVisibility,
   changeEdgeVisibility,
 } from "../../../../redux/store/project/actions";
+import { GetEdgesFromState } from "../../../flow/helpers";
 
 export const useChangeNodeVisibility = (
-  id: string,
+  nodeId: string,
   type: typeof NODE_TYPE,
-  edgeId: string,
   isAspect: boolean,
-  isHidden: boolean,
-  edgeHidden: boolean
+  isHidden: boolean
 ) => {
   const dispatch = useDispatch();
 
+  // Find edges that are linked to the node
+  const edges = GetEdgesFromState();
+  const edge = edges.find((edge) => edge.toNode === nodeId);
+  const edgeId = edge === undefined ? undefined : edge.id;
+
   return useCallback(() => {
-    dispatch(changeNodeVisibility(id, !isHidden, isAspect, type));
-    console.log("test edge: ", edgeId);
+    dispatch(changeNodeVisibility(nodeId, !isHidden, isAspect, type));
     if (edgeId !== undefined) {
-      dispatch(changeEdgeVisibility(edgeId, !edgeHidden));
+      dispatch(changeEdgeVisibility(edgeId, !isHidden));
     }
-  }, [dispatch, id, isHidden, isAspect, type, edgeId, edgeHidden]);
+  }, [dispatch, nodeId, isHidden, isAspect, type, edgeId]);
 };
 
 export default useChangeNodeVisibility;
