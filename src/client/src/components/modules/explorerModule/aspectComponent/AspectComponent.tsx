@@ -36,7 +36,6 @@ export const AspectComponent = ({ nodeId, name, type }: Props) => {
             nodeId={nodeId}
             inputLabel={name}
             aspect={name}
-            isAspect={true}
             type={type}
           />
         </div>
@@ -57,6 +56,7 @@ export const AspectComponent = ({ nodeId, name, type }: Props) => {
                   nodeId={obj["id"]}
                   name={obj["name"]}
                   aspect={name}
+                  type={type}
                   margin="85" // TODO: fix dynamic indentation
                 />
               );

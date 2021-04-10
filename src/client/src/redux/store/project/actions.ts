@@ -74,11 +74,12 @@ export function changeNodeVisibility(
   nodeId: string,
   isHidden: boolean,
   isAspect: boolean,
+  isParent: boolean,
   type: typeof NODE_TYPE
 ) {
   return {
     type: CHANGE_NODE_VISIBILITY,
-    payload: { nodeId, isHidden, isAspect, type },
+    payload: { nodeId, isHidden, isAspect, isParent, type },
   };
 }
 

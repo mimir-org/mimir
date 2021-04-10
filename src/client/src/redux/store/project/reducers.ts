@@ -126,16 +126,36 @@ export function projectReducer(
     case CHANGE_NODE_VISIBILITY:
       const nodeId = action.payload.nodeId;
       const isAspect = action.payload.isAspect;
+      const isParent = action.payload.isParent;
       const type = action.payload.type;
 
       if (isAspect) {
-        // Nuke all nodes and edges
+        // Nuke all nodes and edges for one aspect
         return {
           ...state,
           project: {
             nodes: state.project.nodes.map((nodes, i) =>
               state.project.nodes[i].type === type.toString() ||
               state.project.nodes[i].label === type.toString()
+                ? { ...nodes, isHidden: action.payload.isHidden }
+                : nodes
+            ),
+            edges: state.project.edges.map((edges, i) =>
+              state.project.edges[i].parentType === type.toString()
+                ? { ...edges, isHidden: action.payload.isHidden }
+                : edges
+            ),
+          },
+        };
+      }
+      if (isParent) {
+        console.log("bendikg: ", type);
+        // Nuke all children nodes and edges
+        return {
+          ...state,
+          project: {
+            nodes: state.project.nodes.map((nodes, i) =>
+              state.project.nodes[i].type === type.toString()
                 ? { ...nodes, isHidden: action.payload.isHidden }
                 : nodes
             ),

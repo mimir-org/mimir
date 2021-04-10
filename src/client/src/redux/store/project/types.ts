@@ -79,6 +79,7 @@ interface ChangeNodeVisibility {
     nodeId: string;
     isHidden: boolean;
     isAspect: boolean;
+    isParent: boolean;
     type: typeof NODE_TYPE;
   };
 }

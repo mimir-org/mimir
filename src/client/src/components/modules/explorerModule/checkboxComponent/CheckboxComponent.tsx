@@ -8,14 +8,12 @@ interface Props {
   nodeId: string;
   inputLabel: typeof NODE_TYPE;
   aspect?: typeof NODE_TYPE;
-  isAspect?: boolean;
-  type?: typeof NODE_TYPE;
+  type: typeof NODE_TYPE;
 }
 
 export const CheckboxComponent = ({
   nodeId,
   inputLabel,
-  isAspect,
   aspect,
   type,
 }: Props) => {
@@ -24,12 +22,7 @@ export const CheckboxComponent = ({
   const node = nodes.find((node) => node.id === nodeId);
   const isHidden: any = node.isHidden;
 
-  const handleCheckboxChange = useChangeNodeVisibility(
-    nodeId,
-    type,
-    isAspect,
-    isHidden
-  );
+  const handleCheckboxChange = useChangeNodeVisibility(nodeId, type, isHidden);
 
   const underlineColor = GetCheckboxColor(aspect.toString());
 
