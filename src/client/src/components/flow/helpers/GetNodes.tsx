@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 
-const GetNodesFromState = () => {
+const GetNodes = () => {
   const nodes: any = useSelector<RootState>(
     (state) => state.projectState.project.nodes
   );
@@ -9,4 +9,4 @@ const GetNodesFromState = () => {
   return nodes;
 };
 
-export default GetNodesFromState;
+export default GetNodes;

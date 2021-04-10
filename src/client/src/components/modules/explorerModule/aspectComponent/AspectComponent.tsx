@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { expandedIcon, unexpandedIcon } from "../../../../assets";
 import { NODE_TYPE } from "../../../../models/project";
-import { GetNodesFromState } from "../../../flow/helpers";
+import { GetNodes } from "../../../flow/helpers";
 import CheckboxComponent from "../checkboxComponent/CheckboxComponent";
 import FacetComponent from "../facetComponent/FacetComponent";
 import { GetAspectIcon, GetAspectHeader } from "../helpers/";
@@ -24,7 +24,7 @@ export const AspectComponent = ({ nodeId, name, type }: Props) => {
   const aspectHeader = GetAspectHeader(name.toString());
   const expandIcon = expanded ? expandedIcon : unexpandedIcon;
 
-  const nodes = GetNodesFromState();
+  const nodes = GetNodes();
   const facets = nodes.filter((node) => node.type !== NODE_TYPE.ASPECT);
 
   return (
@@ -49,7 +49,7 @@ export const AspectComponent = ({ nodeId, name, type }: Props) => {
       <FacetContainerWrapper color={name}>
         {expanded &&
           facets.map((obj: object, i: number) => {
-            if (facets[i].type === name) {
+            if (facets[i].type === type) {
               return (
                 <FacetComponent
                   key={i}

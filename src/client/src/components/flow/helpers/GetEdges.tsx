@@ -1,11 +1,11 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 
-const GetEdgesFromState = () => {
+const GetEdges = () => {
   const edges: any = useSelector<RootState>(
     (state) => state.projectState.project.edges
   );
   return edges;
 };
 
-export default GetEdgesFromState;
+export default GetEdges;

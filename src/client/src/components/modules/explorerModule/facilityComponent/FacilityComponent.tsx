@@ -2,11 +2,11 @@ import "./facility.scss";
 import AspectComponent from "../aspectComponent/AspectComponent";
 import CheckboxComponent from "../checkboxComponent/CheckboxComponent";
 import { AspectWrapper, FacilityHeader } from "../styled";
-import { GetNodesFromState } from "../../../flow/helpers";
+import { GetNodes } from "../../../flow/helpers";
 import { NODE_TYPE } from "../../../../models/project";
 
 export const FacilityComponent = () => {
-  const aspects = GetNodesFromState();
+  const aspects = GetNodes();
 
   return (
     <>

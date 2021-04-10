@@ -1,5 +1,5 @@
 import { NODE_TYPE } from "../../../../models/project";
-import { GetNodesFromState } from "../../../flow/helpers";
+import { GetNodes } from "../../../flow/helpers";
 import { GetCheckboxColor } from "../helpers";
 import useChangeNodeVisibility from "../hooks/useChangeNodeVisibility";
 import "./checkbox.scss";
@@ -18,7 +18,7 @@ export const CheckboxComponent = ({
   type,
 }: Props) => {
   // Check if node is hidden
-  const nodes = GetNodesFromState();
+  const nodes = GetNodes();
   const node = nodes.find((node) => node.id === nodeId);
   const isHidden: any = node.isHidden;
 

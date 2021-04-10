@@ -5,7 +5,7 @@ import {
   changeNodeVisibility,
   changeEdgeVisibility,
 } from "../../../../redux/store/project/actions";
-import { GetEdgesFromState, GetNodesFromState } from "../../../flow/helpers";
+import { GetEdges, GetNodes } from "../../../flow/helpers";
 
 export const useChangeNodeVisibility = (
   nodeId: string,
@@ -15,15 +15,15 @@ export const useChangeNodeVisibility = (
   const dispatch = useDispatch();
 
   // Handle nodes
-  const nodes = GetNodesFromState();
+  const nodes = GetNodes();
   const node = nodes.find((node) => node.id === nodeId);
-  const isAspect: any = node.type === NODE_TYPE.ASPECT;
+  const isAspect: boolean = node.type === NODE_TYPE.ASPECT;
 
   // Handles edges linked to the node
-  const edges = GetEdgesFromState();
+  const edges = GetEdges();
   const edge = edges.find((edge) => edge.toNode === nodeId);
-  const edgeId = edge === undefined ? undefined : edge.id;
-  const isParent = edges.find((edge) => edge.fromNode === nodeId)
+  const edgeId: string = edge === undefined ? undefined : edge.id;
+  const isParent: boolean = edges.find((edge) => edge.fromNode === nodeId)
     ? true
     : false;
 

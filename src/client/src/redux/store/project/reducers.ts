@@ -149,18 +149,28 @@ export function projectReducer(
         };
       }
       if (isParent) {
-        console.log("bendikg: ", type);
-        // Nuke all children nodes and edges
+        // Nuke all children
+        const childId = state.project.nodes.find(
+          (node) =>
+            node.id ===
+            state.project.edges.find((edge) => edge.fromNode === nodeId).toNode
+        ).id;
+        console.log("test: ", childId);
+        console.log("isHidden: ", action.payload.isHidden);
+
         return {
           ...state,
           project: {
             nodes: state.project.nodes.map((nodes, i) =>
-              state.project.nodes[i].type === type.toString()
+              state.project.nodes[i].id === nodeId ||
+              state.project.nodes[i].id === childId
                 ? { ...nodes, isHidden: action.payload.isHidden }
                 : nodes
             ),
             edges: state.project.edges.map((edges, i) =>
-              state.project.edges[i].parentType === type.toString()
+              state.project.edges[i].toNode === nodeId ||
+              state.project.edges[i].fromNode === nodeId ||
+              state.project.nodes.find((node) => node.id === nodeId).isHidden
                 ? { ...edges, isHidden: action.payload.isHidden }
                 : edges
             ),
