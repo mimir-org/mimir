@@ -150,13 +150,31 @@ export function projectReducer(
       }
       if (isParent) {
         // Nuke all children
+        // let idList = [];
+
+        // for (let i = 0; i < state.project.edges.length; i++) {
+        //   if (state.project.edges[i].fromNode === nodeId) {
+        //     idList.push(
+        //       state.project.nodes.find(
+        //         (nodes) => nodes.id === state.project.edges[i].fromNode
+        //       )
+        //     );
+        //   }
+        //   if (state.project.edges[i].toNode === nodeId) {
+        //     idList.push(
+        //       state.project.nodes.find(
+        //         (nodes) => nodes.id === state.project.edges[i].toNode
+        //       )
+        //     );
+        //   }
+        // }
+        // console.log("testing: ", idList);
+
         const childId = state.project.nodes.find(
           (node) =>
             node.id ===
             state.project.edges.find((edge) => edge.fromNode === nodeId).toNode
         ).id;
-        console.log("test: ", childId);
-        console.log("isHidden: ", action.payload.isHidden);
 
         return {
           ...state,

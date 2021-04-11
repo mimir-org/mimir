@@ -7,7 +7,7 @@ interface Props {
   name: typeof NODE_TYPE;
   type: typeof NODE_TYPE;
   aspect?: typeof NODE_TYPE;
-  margin: string;
+  indent: number;
 }
 
 export const FacetComponent = ({
@@ -15,10 +15,10 @@ export const FacetComponent = ({
   name,
   type,
   aspect,
-  margin,
+  indent,
 }: Props) => {
   return (
-    <FacetWrapper margin={margin}>
+    <FacetWrapper indent={indent}>
       <CheckboxComponent
         nodeId={nodeId}
         inputLabel={name}
