@@ -11,7 +11,6 @@ const SetIndentLevel = (facets: any, edges: any, i: number) => {
 
   indentCount++;
   let id = edge.fromNode;
-  console.log("bendik: ", id);
 
   while (edge.parentType !== NODE_TYPE.ASPECT) {
     // eslint-disable-next-line no-loop-func
