@@ -151,39 +151,32 @@ export function projectReducer(
       }
       if (isParent) {
         // Nuke all children
-        // let idList = [];
+        let childrenList = [];
+        childrenList.push(nodeId);
 
-        // for (let i = 0; i < state.project.edges.length; i++) {
-        //   if (state.project.edges[i].fromNode === nodeId) {
-        //     idList.push(
-        //       state.project.nodes.find(
-        //         (nodes) => nodes.id === state.project.edges[i].fromNode
-        //       )
-        //     );
-        //   }
-        //   if (state.project.edges[i].toNode === nodeId) {
-        //     idList.push(
-        //       state.project.nodes.find(
-        //         (nodes) => nodes.id === state.project.edges[i].toNode
-        //       )
-        //     );
-        //   }
-        // }
-        // console.log("testing: ", idList);
+        let childId = nodeId;
 
-        // const childId = state.project.nodes.find(
-        //   (node) =>
-        //     node.id ===
-        //     state.project.edges.find((edge) => edge.fromNode === nodeId).toNode
-        // ).id;
+        while (childId !== undefined) {
+          let edge = state.project.edges.find(
+            // eslint-disable-next-line no-loop-func
+            (edge) => edge.fromNode === childId
+          );
+          if (edge === undefined) break;
+
+          let newChildId = state.project.nodes.find(
+            (node) => node.id === edge.toNode
+          ).id;
+
+          childrenList.push(newChildId);
+          childId = newChildId;
+        }
 
         return {
           ...state,
           project: {
             nodes: state.project.nodes.map((nodes, i) =>
-              state.project.nodes[i].id === nodeId
-                ? //   state.project.nodes[i].id === childId
-                  { ...nodes, isHidden: action.payload.isHidden }
+              childrenList.includes(state.project.nodes[i].id)
+                ? { ...nodes, isHidden: action.payload.isHidden }
                 : nodes
             ),
             edges: state.project.edges.map((edges, i) =>
