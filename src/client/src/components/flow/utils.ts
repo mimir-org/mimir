@@ -79,6 +79,7 @@ export const CreateElementEdge = (
     },
     isHidden: edge.isHidden,
     parentType: fromNode.type,
+    parentName: fromNode.name,
   };
   return elem;
 };

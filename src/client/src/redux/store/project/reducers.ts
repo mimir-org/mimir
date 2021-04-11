@@ -141,7 +141,8 @@ export function projectReducer(
                 : nodes
             ),
             edges: state.project.edges.map((edges, i) =>
-              state.project.edges[i].parentType === type.toString()
+              state.project.edges[i].parentType === type.toString() ||
+              state.project.edges[i].parentName === type.toString()
                 ? { ...edges, isHidden: action.payload.isHidden }
                 : edges
             ),
@@ -170,19 +171,19 @@ export function projectReducer(
         // }
         // console.log("testing: ", idList);
 
-        const childId = state.project.nodes.find(
-          (node) =>
-            node.id ===
-            state.project.edges.find((edge) => edge.fromNode === nodeId).toNode
-        ).id;
+        // const childId = state.project.nodes.find(
+        //   (node) =>
+        //     node.id ===
+        //     state.project.edges.find((edge) => edge.fromNode === nodeId).toNode
+        // ).id;
 
         return {
           ...state,
           project: {
             nodes: state.project.nodes.map((nodes, i) =>
-              state.project.nodes[i].id === nodeId ||
-              state.project.nodes[i].id === childId
-                ? { ...nodes, isHidden: action.payload.isHidden }
+              state.project.nodes[i].id === nodeId
+                ? //   state.project.nodes[i].id === childId
+                  { ...nodes, isHidden: action.payload.isHidden }
                 : nodes
             ),
             edges: state.project.edges.map((edges, i) =>

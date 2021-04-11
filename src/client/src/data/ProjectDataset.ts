@@ -254,6 +254,7 @@ export default class ProjectDataset {
               toNode: "88ab517b-a575-3760-4860-f2cb6848c30a",
               isHidden: false,
               parentType: NODE_TYPE.ASPECT,
+              parentName: NODE_TYPE.FUNCTION,
             },
             {
               id: "d938feda-5f65-07f0-99c7-523f85821a86b",
@@ -263,6 +264,7 @@ export default class ProjectDataset {
               toNode: "88ab517b-a575-3760-4860-f2cb6848c30ab",
               isHidden: false,
               parentType: NODE_TYPE.FUNCTION,
+              parentName: NODE_TYPE.FUNCTION,
             },
             {
               id: "d938feda-5f65-07f0-99c7-523f85821a86bzz",
@@ -272,6 +274,7 @@ export default class ProjectDataset {
               toNode: "88ab517b-a575-3760-4860-f2cb6848c30abzz",
               isHidden: false,
               parentType: NODE_TYPE.FUNCTION,
+              parentName: NODE_TYPE.FUNCTION,
             },
             {
               id: "c858f277-e248-d92a-f23c-1db0335de446",
@@ -281,6 +284,7 @@ export default class ProjectDataset {
               toNode: "373425a5-6c3d-8e68-4348-a8306fdcfc81",
               isHidden: false,
               parentType: NODE_TYPE.ASPECT,
+              parentName: NODE_TYPE.FUNCTION,
             },
             {
               id: "50740a21-401e-d614-034a-5226db792930",
@@ -290,6 +294,7 @@ export default class ProjectDataset {
               toNode: "365bf405-a2db-cf39-5a9f-8b9c1a615fc4",
               isHidden: false,
               parentType: NODE_TYPE.FUNCTION,
+              parentName: NODE_TYPE.FUNCTION,
             },
           ],
         },
