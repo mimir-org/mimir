@@ -23,7 +23,6 @@ export const CheckboxComponent = ({
   const isHidden: any = node.isHidden;
 
   const handleCheckboxChange = useChangeNodeVisibility(nodeId, type, isHidden);
-
   const underlineColor = GetCheckboxColor(aspect.toString());
 
   return (
