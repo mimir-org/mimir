@@ -151,8 +151,9 @@ export function projectReducer(
       }
       if (isParent) {
         // Nuke all children
-        let childrenList = [];
-        childrenList.push(nodeId);
+        let childrenNodeList = [];
+        let childrenEdgeList = [];
+        childrenNodeList.push(nodeId);
 
         let childId = nodeId;
 
@@ -167,7 +168,8 @@ export function projectReducer(
             (node) => node.id === edge.toNode
           ).id;
 
-          childrenList.push(newChildId);
+          childrenEdgeList.push(edge.id);
+          childrenNodeList.push(newChildId);
           childId = newChildId;
         }
 
@@ -175,14 +177,12 @@ export function projectReducer(
           ...state,
           project: {
             nodes: state.project.nodes.map((nodes, i) =>
-              childrenList.includes(state.project.nodes[i].id)
+              childrenNodeList.includes(state.project.nodes[i].id)
                 ? { ...nodes, isHidden: action.payload.isHidden }
                 : nodes
             ),
             edges: state.project.edges.map((edges, i) =>
-              state.project.edges[i].toNode === nodeId ||
-              state.project.edges[i].fromNode === nodeId ||
-              state.project.nodes.find((node) => node.id === nodeId).isHidden
+              childrenEdgeList.includes(state.project.edges[i].id)
                 ? { ...edges, isHidden: action.payload.isHidden }
                 : edges
             ),
