@@ -1,16 +1,16 @@
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { NODE_TYPE } from "../../../../models/project";
+import { NodeType } from "../../../../models/project";
+import { GetEdges, GetNodes } from "../../../flow/helpers";
+import { isAspectNode } from "../../../flow/utils";
 import {
   changeNodeVisibility,
   changeEdgeVisibility,
 } from "../../../../redux/store/project/actions";
-import { GetEdges, GetNodes } from "../../../flow/helpers";
-import { isAspectNode } from "../../../flow/utils";
 
 export const useChangeNodeVisibility = (
   nodeId: string,
-  type: typeof NODE_TYPE,
+  type: NodeType,
   isHidden: boolean
 ) => {
   const dispatch = useDispatch();

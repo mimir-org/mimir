@@ -128,7 +128,6 @@ export function projectReducer(
       const isAspect = action.payload.isAspect;
       const isParent = action.payload.isParent;
       const type = action.payload.type;
-      console.log("test type: ", type);
 
       if (isAspect) {
         return {

@@ -1,12 +1,12 @@
-import { NODE_TYPE } from "../../../../models/project";
+import { NodeType } from "../../../../models/project";
 import CheckboxComponent from "../checkboxComponent/CheckboxComponent";
 import { FacetWrapper } from "../styled";
 
 interface Props {
   nodeId: string;
-  name: typeof NODE_TYPE;
-  type: typeof NODE_TYPE;
-  aspect?: typeof NODE_TYPE;
+  name: NodeType;
+  type: NodeType;
+  aspect?: NodeType;
   indent: number;
 }
 

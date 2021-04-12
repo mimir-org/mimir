@@ -27,8 +27,8 @@ const Home = () => {
         <div className="workspace">
           <>
             {params.type === "treeview" && <TreeviewComponent />}
-            {params.type === "diagram" && <TreeviewComponent />}
             {/* BlockView kommer her */}
+            {params.type === "diagram" && <TreeviewComponent />}
           </>
         </div>
         <InspectorModule />

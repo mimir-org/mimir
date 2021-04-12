@@ -1,6 +1,6 @@
-import { NODE_TYPE } from "../../../../models/project";
+import { NodeType, NODE_TYPE } from "../../../../models/project";
 
-const GetCheckboxColor = (aspect: string) => {
+const GetCheckboxColor = (aspect: NodeType): string => {
   if (aspect === NODE_TYPE.FUNCTION) return "function_underline";
   if (aspect === NODE_TYPE.PRODUCT) return "product_underline";
   if (aspect === NODE_TYPE.LOCATION) return "location_underline";

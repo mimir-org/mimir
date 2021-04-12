@@ -1,10 +1,10 @@
 import { FunctionIcon, ProductIcon, LocationIcon } from "../../../../assets";
-import { NODE_TYPE } from "../../../../models/project";
+import { NodeType, NODE_TYPE } from "../../../../models/project";
 
-const GetAspectIcon = (name: string) => {
-  if (name === NODE_TYPE.FUNCTION) return FunctionIcon;
-  if (name === NODE_TYPE.PRODUCT) return ProductIcon;
-  if (name === NODE_TYPE.LOCATION) return LocationIcon;
+const GetAspectIcon = (node: NodeType): string => {
+  if (node === NODE_TYPE.FUNCTION) return FunctionIcon;
+  if (node === NODE_TYPE.PRODUCT) return ProductIcon;
+  if (node === NODE_TYPE.LOCATION) return LocationIcon;
   return null;
 };
 

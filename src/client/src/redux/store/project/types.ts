@@ -1,4 +1,4 @@
-import { Project, Node, Edge, NODE_TYPE } from "../../../models/project";
+import { Project, Node, Edge, NodeType } from "../../../models/project";
 
 export const FETCHING_PROJECT = "FETCHING_PROJECT";
 export const FETCHING_PROJECT_SUCCESS_OR_ERROR =
@@ -80,7 +80,7 @@ interface ChangeNodeVisibility {
     isHidden: boolean;
     isAspect: boolean;
     isParent: boolean;
-    type: typeof NODE_TYPE;
+    type: NodeType;
   };
 }
 

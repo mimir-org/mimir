@@ -10,7 +10,6 @@ import { authProvider } from "./providers/authProvider";
 const rootElement = document.getElementById("root");
 
 ReactDOM.render(
-  // <React.StrictMode>
   <AzureAD provider={authProvider} forceLogin={true}>
     <Provider store={store}>
       <BrowserRouter forceRefresh={true}>
@@ -19,5 +18,4 @@ ReactDOM.render(
     </Provider>
   </AzureAD>,
   rootElement
-  // </React.StrictMode>, rootElement
 );

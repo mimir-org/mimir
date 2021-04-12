@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { expandedIcon, unexpandedIcon } from "../../../../assets";
-import { NODE_TYPE } from "../../../../models/project";
+import { NodeType } from "../../../../models/project";
 import { GetEdges, GetNodes } from "../../../flow/helpers";
 import { isAspectNode } from "../../../flow/utils";
 import CheckboxComponent from "../checkboxComponent/CheckboxComponent";
@@ -11,8 +11,8 @@ import "./aspect.scss";
 
 interface Props {
   nodeId: string;
-  name: typeof NODE_TYPE;
-  type: typeof NODE_TYPE;
+  name: NodeType;
+  type: NodeType;
 }
 
 export const AspectComponent = ({ nodeId, name, type }: Props) => {
@@ -21,8 +21,8 @@ export const AspectComponent = ({ nodeId, name, type }: Props) => {
     setExpanded(!expanded);
   };
 
-  const aspectIcon = GetAspectIcon(name.toString());
-  const aspectHeader = GetAspectHeader(name.toString());
+  const aspectIcon = GetAspectIcon(name);
+  const aspectHeader = GetAspectHeader(name);
   const expandIcon = expanded ? expandedIcon : unexpandedIcon;
 
   const nodes = GetNodes();
