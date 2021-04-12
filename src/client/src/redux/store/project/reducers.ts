@@ -1,3 +1,4 @@
+import { NodeType } from "../../../models/project";
 import {
   FETCHING_PROJECT,
   FETCHING_PROJECT_SUCCESS_OR_ERROR,
@@ -124,24 +125,24 @@ export function projectReducer(
       };
 
     case CHANGE_NODE_VISIBILITY:
-      const nodeId = action.payload.nodeId;
-      const isAspect = action.payload.isAspect;
-      const isParent = action.payload.isParent;
-      const type = action.payload.type;
+      const nodeId: string = action.payload.nodeId;
+      const isAspect: boolean = action.payload.isAspect;
+      const isParent: boolean = action.payload.isParent;
+      const type: NodeType = action.payload.type;
 
       if (isAspect) {
         return {
           ...state,
           project: {
             nodes: state.project.nodes.map((nodes, i) =>
-              state.project.nodes[i].type === type.toString() ||
-              state.project.nodes[i].label === type.toString()
+              state.project.nodes[i].type === type ||
+              state.project.nodes[i].label === type
                 ? { ...nodes, isHidden: action.payload.isHidden }
                 : nodes
             ),
             edges: state.project.edges.map((edges, i) =>
-              state.project.edges[i].parentType === type.toString() ||
-              state.project.edges[i].parentType === type.toString()
+              state.project.edges[i].parentType === type ||
+              state.project.edges[i].parentType === type
                 ? { ...edges, isHidden: action.payload.isHidden }
                 : edges
             ),
