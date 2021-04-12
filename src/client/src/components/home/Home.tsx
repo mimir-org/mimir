@@ -5,12 +5,13 @@ import { DiagramComponent, TreeviewComponent } from "..";
 import { getWorkspace } from "../../redux/store/workspace/actions";
 import { WorkspaceState } from "../../redux/store/workspace/types";
 import { RootState } from "./../../redux/store/index";
+import { ProjectModule } from "./../modules/projectModule";
 import { ExplorerModule } from "../modules/explorerModule";
 import { InspectorModule } from "../modules/inspectorModule";
 import { LibraryModule } from "../modules/libraryModule";
 // import { UserState } from "../../store/user/types";
 // import { SETTING_KEY, SETTING_VALUE } from "./../../models/user";
-import { getUser } from '../../redux/store/user/actions';
+import { getUser } from "../../redux/store/user/actions";
 
 interface RouteParams {
   type: string;
@@ -38,6 +39,7 @@ const Home = () => {
       <ExplorerModule />
       <div className="middle_content">
         <div className="workspace">
+          {/* <ProjectModule /> */}
           {isOnline && (
             <>
               {params.type === "treeview" && (
