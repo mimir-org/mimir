@@ -28,7 +28,6 @@ export const AspectComponent = ({ nodeId, name, type }: Props) => {
   const nodes = GetNodes();
   const facets = nodes.filter((node) => !isAspectNode(node.type));
   const edges = GetEdges();
-  console.log("check edges: ", edges);
 
   return (
     <div className="aspect_container">
