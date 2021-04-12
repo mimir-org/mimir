@@ -4,7 +4,7 @@ import {
   getSmoothStepPath,
   EdgeText,
 } from "react-flow-renderer";
-import { getCenter } from "../utils";
+import { getCenter, isAspectNode } from "../utils";
 import {
   LINE_EDGE_TYPE,
   LineEdgeType,
@@ -47,12 +47,11 @@ export default function DefaultEdgeType({
   });
 
   const pathType = (source: Node, target: Node) => {
-    const pathType =
-      source.type === NODE_TYPE.ASPECT
-        ? (LINE_EDGE_TYPE.STEP as LineEdgeType)
-        : source.type !== target.type
-        ? (LINE_EDGE_TYPE.BEZIER as LineEdgeType)
-        : (LINE_EDGE_TYPE.STEP as LineEdgeType);
+    const pathType = isAspectNode(source.type)
+      ? (LINE_EDGE_TYPE.STEP as LineEdgeType)
+      : source.type !== target.type
+      ? (LINE_EDGE_TYPE.BEZIER as LineEdgeType)
+      : (LINE_EDGE_TYPE.STEP as LineEdgeType);
     return pathType === LINE_EDGE_TYPE.BEZIER
       ? edgePathBezier
       : edgePathSmoothStep;
@@ -63,7 +62,7 @@ export default function DefaultEdgeType({
 
     if (!source || !target) return null;
 
-    if (source.type === NODE_TYPE.ASPECT) {
+    if (isAspectNode(source.type)) {
       return null;
     } else if (source.type === target.type) {
       text = "partof";

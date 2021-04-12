@@ -2,6 +2,7 @@ import { useState } from "react";
 import { expandedIcon, unexpandedIcon } from "../../../../assets";
 import { NODE_TYPE } from "../../../../models/project";
 import { GetEdges, GetNodes } from "../../../flow/helpers";
+import { isAspectNode } from "../../../flow/utils";
 import CheckboxComponent from "../checkboxComponent/CheckboxComponent";
 import FacetComponent from "../facetComponent/FacetComponent";
 import { GetAspectIcon, GetAspectHeader, SetIndentLevel } from "../helpers/";
@@ -25,8 +26,9 @@ export const AspectComponent = ({ nodeId, name, type }: Props) => {
   const expandIcon = expanded ? expandedIcon : unexpandedIcon;
 
   const nodes = GetNodes();
-  const facets = nodes.filter((node) => node.type !== NODE_TYPE.ASPECT);
+  const facets = nodes.filter((node) => !isAspectNode(node.type));
   const edges = GetEdges();
+  console.log("check edges: ", edges);
 
   return (
     <div className="aspect_container">

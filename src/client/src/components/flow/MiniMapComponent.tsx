@@ -7,40 +7,27 @@ const MiniMapComponent = () => {
   return (
     <MiniMap
       nodeStrokeColor={(node: Node): string => {
-        return node.type === NODE_TYPE.FUNCTION
+        return node.type === NODE_TYPE.FUNCTION ||
+          node.type === NODE_TYPE.ASPECT_FUNCTION
           ? (color = "yellow")
-          : node.type === NODE_TYPE.PRODUCT
+          : node.type === NODE_TYPE.PRODUCT ||
+            node.type === NODE_TYPE.ASPECT_PRODUCT
           ? (color = "turquoise")
-          : node.type === NODE_TYPE.LOCATION
-          ? (color = "magenta")
-          : node.type === NODE_TYPE.ASPECT &&
-            node.data.name === NODE_TYPE.FUNCTION
-          ? (color = "yellow")
-          : node.type === NODE_TYPE.ASPECT &&
-            node.data.name === NODE_TYPE.PRODUCT
-          ? (color = "turquoise")
-          : node.type === NODE_TYPE.ASPECT &&
-            node.data.name === NODE_TYPE.LOCATION
+          : node.type === NODE_TYPE.LOCATION ||
+            node.type === NODE_TYPE.ASPECT_LOCATION
           ? (color = "magenta")
           : null;
       }}
       nodeColor={(node: Node): string => {
-        return node.type === NODE_TYPE.FUNCTION
+        return node.type === NODE_TYPE.FUNCTION ||
+          node.type === NODE_TYPE.ASPECT_FUNCTION
           ? (color = "yellow")
-          : node.type === NODE_TYPE.PRODUCT
+          : node.type === NODE_TYPE.PRODUCT ||
+            node.type === NODE_TYPE.ASPECT_PRODUCT
           ? (color = "turquoise")
-          : node.type === NODE_TYPE.LOCATION
+          : node.type === NODE_TYPE.LOCATION ||
+            node.type === NODE_TYPE.ASPECT_LOCATION
           ? (color = "magenta")
-          : node.type === NODE_TYPE.ASPECT &&
-            node.data.name === NODE_TYPE.FUNCTION
-          ? (color = "yellow")
-          : node.type === NODE_TYPE.ASPECT &&
-            node.data.name === NODE_TYPE.PRODUCT
-          ? (color = "turquoise")
-          : node.type === NODE_TYPE.ASPECT &&
-            node.data.name === NODE_TYPE.LOCATION
-          ? // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            (color = "magenta")
           : null;
       }}
     />

@@ -5,6 +5,8 @@ import {
   CONNECTOR_TYPE,
   Edge,
   EDGE_TYPE,
+  NodeType,
+  NODE_TYPE,
 } from "../../models/project";
 import {
   Elements,
@@ -49,8 +51,9 @@ export const CreateElementNode = (node: Node): FlowElement => {
 
   elementNode = {
     id: node.id,
-    type:
-      node.type.charAt(0).toUpperCase() + node.type.substring(1).toLowerCase(),
+    type: !isAspectNode(node.type)
+      ? node.type.charAt(0).toUpperCase() + node.type.substring(1).toLowerCase()
+      : node.type,
     data: node,
     position: node.position,
     isHidden: node.isHidden,
@@ -82,6 +85,14 @@ export const CreateElementEdge = (
     parentName: fromNode.name,
   };
   return elem;
+};
+
+export const isAspectNode = (nodeType: NodeType): boolean => {
+  return (
+    nodeType === (NODE_TYPE.ASPECT_FUNCTION as NodeType) ||
+    nodeType === (NODE_TYPE.ASPECT_PRODUCT as NodeType) ||
+    nodeType === (NODE_TYPE.ASPECT_LOCATION as NodeType)
+  );
 };
 
 export const CreateProjectNodes = (project: Project): Elements => {

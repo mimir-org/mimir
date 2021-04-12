@@ -1,3 +1,6 @@
+.react-flow__node-AspectLocation,
+.react-flow__node-AspectFunction,
+.react-flow__node-AspectProduct,
 .react-flow__node-location,
 .react-flow__node-function,
 .react-flow__node-product,
@@ -24,7 +27,9 @@
   }
 }
 
-.react-flow__node-Aspect {
+.react-flow__node-AspectLocation,
+.react-flow__node-AspectFunction,
+.react-flow__node-AspectProduct {
   border: none;
 }
 

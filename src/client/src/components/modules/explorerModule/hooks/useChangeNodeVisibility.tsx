@@ -6,6 +6,7 @@ import {
   changeEdgeVisibility,
 } from "../../../../redux/store/project/actions";
 import { GetEdges, GetNodes } from "../../../flow/helpers";
+import { isAspectNode } from "../../../flow/utils";
 
 export const useChangeNodeVisibility = (
   nodeId: string,
@@ -17,7 +18,7 @@ export const useChangeNodeVisibility = (
   // Handle nodes
   const nodes = GetNodes();
   const node = nodes.find((node) => node.id === nodeId);
-  const isAspect: boolean = node.type === NODE_TYPE.ASPECT;
+  const isAspect: boolean = isAspectNode(node.type);
 
   // Handles edges linked to the node
   const edges = GetEdges();

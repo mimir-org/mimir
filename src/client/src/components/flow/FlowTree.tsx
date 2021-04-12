@@ -23,17 +23,19 @@ import { ProjectState } from "../../redux/store/project/types";
 import { RootState } from "./../../redux/store/index";
 import { NodeType, Node, LibNode, Edge, EDGE_TYPE } from "../../models/project";
 
-import { Aspect, FunctionFacet, ProductFacet, LocationFacet } from "./nodes";
+import { Aspect, Function, Product, Location } from "./nodes";
 import { DefaultEdgeType } from "./edges";
 import { createId } from "./utils";
 import { MiniMap } from "./";
 import { CreateProjectNodes, CreateElementNode } from "./utils";
 
 const nodeTypes = {
-  Aspect: Aspect,
-  Function: FunctionFacet,
-  Product: ProductFacet,
-  Location: LocationFacet,
+  AspectFunction: Aspect,
+  AspectLocation: Aspect,
+  AspectProduct: Aspect,
+  Function: Function,
+  Product: Product,
+  Location: Location,
 };
 
 const edgeTypes = {

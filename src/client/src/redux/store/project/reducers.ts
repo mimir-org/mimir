@@ -128,6 +128,7 @@ export function projectReducer(
       const isAspect = action.payload.isAspect;
       const isParent = action.payload.isParent;
       const type = action.payload.type;
+      console.log("test type: ", type);
 
       if (isAspect) {
         return {
@@ -141,7 +142,7 @@ export function projectReducer(
             ),
             edges: state.project.edges.map((edges, i) =>
               state.project.edges[i].parentType === type.toString() ||
-              state.project.edges[i].parentName === type.toString()
+              state.project.edges[i].parentType === type.toString()
                 ? { ...edges, isHidden: action.payload.isHidden }
                 : edges
             ),

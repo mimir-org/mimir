@@ -1,6 +1,6 @@
 import { memo, FC } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
-import { GetFlowAspectIcon } from "../helpers/";
+import { GetFlowAspectIcon } from "../helpers";
 import { processType } from "../utils";
 
 const Aspect: FC<NodeProps> = ({ data }) => {

@@ -2,7 +2,7 @@ import { memo, FC } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
 import { processType } from "../utils";
 
-const FunctionFacet: FC<NodeProps> = ({ data }) => {
+const Function: FC<NodeProps> = ({ data }) => {
   return (
     <>
       {data.connectors &&
@@ -22,4 +22,4 @@ const FunctionFacet: FC<NodeProps> = ({ data }) => {
   );
 };
 
-export default memo(FunctionFacet);
+export default memo(Function);

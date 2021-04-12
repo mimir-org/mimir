@@ -14,7 +14,9 @@ export const LINE_EDGE_TYPE = {
 export type NodeType = keyof typeof NODE_TYPE;
 
 export const NODE_TYPE = {
-  ASPECT: "Aspect",
+  ASPECT_FUNCTION: "AspectFunction",
+  ASPECT_PRODUCT: "AspectProduct",
+  ASPECT_LOCATION: "AspectLocation",
   FUNCTION: "Function",
   PRODUCT: "Product",
   LOCATION: "Location",

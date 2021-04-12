@@ -1,21 +1,12 @@
-import { FC } from "react";
 import "./treeview.scss";
-import { Workspace } from "../../models/workspace";
-import { TreeviewHeader, TreeviewBody } from "./";
+import { TreeviewHeader } from "./";
+import { FlowTree } from "../flow";
 
-const TreeviewComponent: FC<Workspace> = ({
-  root,
-  aspects,
-  aspectDescriptors,
-}: Workspace) => (
+const TreeviewComponent = () => (
   <div className="treeview_component">
     <div className="treestructur_container">
-      <TreeviewHeader title={root.title} />
-      <TreeviewBody
-        aspectDescriptors={aspectDescriptors}
-        root={root}
-        aspects={aspects}
-      />
+      <TreeviewHeader title="Treeview" />
+      <FlowTree />
     </div>
   </div>
 );

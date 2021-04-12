@@ -13,7 +13,11 @@ const SetIndentLevel = (facets: any, edges: any, i: number) => {
     return id;
   };
 
-  while (edge.parentType !== NODE_TYPE.ASPECT) {
+  while (
+    edge.parentType !== NODE_TYPE.ASPECT_FUNCTION ||
+    edge.parentType !== NODE_TYPE.ASPECT_PRODUCT ||
+    edge.parentType !== NODE_TYPE.ASPECT_LOCATION
+  ) {
     edge = edges.find((edge) => edge.toNode === getChildId());
     if (edge !== undefined) {
       indentCount++;
