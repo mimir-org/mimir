@@ -130,7 +130,6 @@ export function projectReducer(
       const type = action.payload.type;
 
       if (isAspect) {
-        // Nuke all nodes and edges for one aspect
         return {
           ...state,
           project: {
@@ -150,11 +149,8 @@ export function projectReducer(
         };
       }
       if (isParent) {
-        // Nuke all children
-        let childrenNodeList = [];
-        let childrenEdgeList = [];
-        childrenNodeList.push(nodeId);
-
+        let children = [];
+        children.push(nodeId);
         let childId = nodeId;
 
         while (childId !== undefined) {
@@ -168,8 +164,7 @@ export function projectReducer(
             (node) => node.id === edge.toNode
           ).id;
 
-          childrenEdgeList.push(edge.id);
-          childrenNodeList.push(newChildId);
+          children.push(edge.id, newChildId);
           childId = newChildId;
         }
 
@@ -177,12 +172,12 @@ export function projectReducer(
           ...state,
           project: {
             nodes: state.project.nodes.map((nodes, i) =>
-              childrenNodeList.includes(state.project.nodes[i].id)
+              children.includes(state.project.nodes[i].id)
                 ? { ...nodes, isHidden: action.payload.isHidden }
                 : nodes
             ),
             edges: state.project.edges.map((edges, i) =>
-              childrenEdgeList.includes(state.project.edges[i].id)
+              children.includes(state.project.edges[i].id)
                 ? { ...edges, isHidden: action.payload.isHidden }
                 : edges
             ),
