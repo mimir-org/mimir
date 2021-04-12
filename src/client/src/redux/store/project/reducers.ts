@@ -153,19 +153,22 @@ export function projectReducer(
         children.push(nodeId);
         let childId = nodeId;
 
+        const getChildId = () => {
+          return childId;
+        };
+
         while (childId !== undefined) {
-          let edge = state.project.edges.find(
-            // eslint-disable-next-line no-loop-func
-            (edge) => edge.fromNode === childId
+          const edge = state.project.edges.find(
+            (edge) => edge.fromNode === getChildId()
           );
           if (edge === undefined) break;
 
-          let newChildId = state.project.nodes.find(
+          const nextChild = state.project.nodes.find(
             (node) => node.id === edge.toNode
           ).id;
 
-          children.push(edge.id, newChildId);
-          childId = newChildId;
+          children.push(edge.id, nextChild);
+          childId = nextChild;
         }
 
         return {

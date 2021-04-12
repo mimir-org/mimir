@@ -9,10 +9,12 @@ const SetIndentLevel = (facets: any, edges: any, i: number) => {
   indentCount++;
 
   let id = edge.fromNode;
+  const getChildId = () => {
+    return id;
+  };
 
   while (edge.parentType !== NODE_TYPE.ASPECT) {
-    // eslint-disable-next-line no-loop-func
-    edge = edges.find((edge) => edge.toNode === id); // TODO: check this
+    edge = edges.find((edge) => edge.toNode === getChildId());
     if (edge !== undefined) {
       indentCount++;
       id = edge.fromNode;
