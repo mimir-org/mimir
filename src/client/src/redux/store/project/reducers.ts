@@ -142,7 +142,7 @@ export function projectReducer(
             ),
             edges: state.project.edges.map((edges, i) =>
               state.project.edges[i].parentType === type ||
-              state.project.edges[i].parentType === type
+              state.project.edges[i].fromNode === nodeId
                 ? { ...edges, isHidden: action.payload.isHidden }
                 : edges
             ),
