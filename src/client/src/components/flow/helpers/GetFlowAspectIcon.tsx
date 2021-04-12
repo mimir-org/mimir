@@ -1,6 +1,6 @@
 import { ProductIcon, FunctionIcon, LocationIcon } from "../../../assets";
 
-const GetFlowAspectIcon = (icon: any) => {
+const GetFlowAspectIcon = (icon: string) => {
   switch (icon) {
     case "FunctionIcon":
       return (

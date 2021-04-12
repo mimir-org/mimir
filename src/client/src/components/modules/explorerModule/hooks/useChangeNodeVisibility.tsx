@@ -17,14 +17,16 @@ export const useChangeNodeVisibility = (
 
   // Handle nodes
   const nodes = GetNodes();
-  const node = nodes.find((node) => node.id === nodeId);
+  const node = nodes.find((node: { id: string }) => node.id === nodeId);
   const isAspect: boolean = isAspectNode(node.type);
 
   // Handles edges linked to the node
   const edges = GetEdges();
-  const edge = edges.find((edge) => edge.toNode === nodeId);
+  const edge = edges.find((edge: { toNode: string }) => edge.toNode === nodeId);
   const edgeId: string = edge === undefined ? undefined : edge.id;
-  const isParent: boolean = edges.find((edge) => edge.fromNode === nodeId)
+  const isParent: boolean = edges.find(
+    (edge: { fromNode: string }) => edge.fromNode === nodeId
+  )
     ? true
     : false;
 

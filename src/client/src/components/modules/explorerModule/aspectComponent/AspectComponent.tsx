@@ -26,7 +26,9 @@ export const AspectComponent = ({ nodeId, name, type }: Props) => {
   const expandIcon = expanded ? expandedIcon : unexpandedIcon;
 
   const nodes = GetNodes();
-  const facets = nodes.filter((node) => !isAspectNode(node.type));
+  const facets = nodes.filter(
+    (node: { type: NodeType }) => !isAspectNode(node.type)
+  );
   const edges = GetEdges();
 
   return (

@@ -19,7 +19,7 @@ export const CheckboxComponent = ({
 }: Props) => {
   // Check if node is hidden
   const nodes = GetNodes();
-  const node = nodes.find((node) => node.id === nodeId);
+  const node = nodes.find((node: { id: string }) => node.id === nodeId);
   const isHidden = node.isHidden;
 
   const handleCheckboxChange = useChangeNodeVisibility(nodeId, type, isHidden);
