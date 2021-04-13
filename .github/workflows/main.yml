@@ -43,14 +43,14 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./src/service
+        working-directory: ./src/service/ModelBuilder.Api
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v2
       - uses: microsoft/variable-substitution@v1
         with:
-          files: 'ModelBuilder\.Api/appsettings.json'
+          files: 'appsettings.json'
         env:
           ConnectionStrings.Default: ${{ secrets.CONNECTION_STRING_DEV }} 
       - run: |
