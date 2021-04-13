@@ -24,7 +24,7 @@ jobs:
           configurationFile: 'appsettings.json'
           format: 'json'
           # Replace <ConnectionString> with the name of the secret in your repository
-          connectionString: ${{ secrets.CONNECTION_STRING }}
+          connectionString: ${{ secrets.CONNECTION_STRING_DEV }}
           separator: ':'  
 
   # This workflow contains a single job called "build"
