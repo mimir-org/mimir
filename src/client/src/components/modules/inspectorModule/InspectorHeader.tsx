@@ -1,4 +1,4 @@
-import { FragmentContent } from "./fragments";
+import { FragmentContent, RelationsContent } from "./fragments";
 
 const InspectorHeader = () => {
   return (
@@ -6,7 +6,7 @@ const InspectorHeader = () => {
       <FragmentContent index={0} />
       <FragmentContent index={1} />
       <FragmentContent index={2} />
-      <FragmentContent index={3} />
+      <RelationsContent index={3} />
       <FragmentContent index={4} />
       <FragmentContent index={5} />
       <FragmentContent index={6} />

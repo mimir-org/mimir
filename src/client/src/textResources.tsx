@@ -25,6 +25,19 @@ const textResources = {
   Inspector_Comments: "Comments",
   Inspector_Changelog: "Changelog",
 
+  Inspector_Relations_name: "Relation name",
+  Inspector_Relations_hasFunction: "Has function",
+  Inspector_Relations_updatedBy: "Updated by",
+  Inspector_Relations_connectedTo: "Connected to",
+  Inspector_Relations_project: "Project",
+  Inspector_Relations_updatedDate: "Updated Date",
+  Inspector_Relations_relationOut: "Relation out",
+  Inspector_Relations_anotherField: "Another field",
+  Inspector_Relations_hasLocation: "Has location",
+  Inspector_Relations_fulfilledBy: "Fulfilled by",
+  Inspector_Relations_gotoLocation: "Go to location",
+  Inspector_Relations_gotoProduct: "Go to product",
+
   // LibraryModule
   Library_Heading: "Library",
   Library_Function: "Function",
