@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ModelBuilder\ModelBuilder.Api.csproj" />
+    <ProjectReference Include="..\ModelBuilder.Api\ModelBuilder.Api.csproj" />
   </ItemGroup>
 
 </Project>
