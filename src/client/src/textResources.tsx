@@ -17,9 +17,9 @@ const textResources = {
 
   // InspectorModule
   Inspector_Heading: "Inspector",
-  Inspector_Header: "Header",
+  Inspector_AdminInfo: "Admin info",
   Inspector_Object: "Object",
-  Inspector_Body: "Body",
+  Inspector_TechInfo: "Tech info",
   Inspector_Relations: "Relations",
   Inspector_Inhereted: "Inhereted Requirements",
   Inspector_Comments: "Comments",

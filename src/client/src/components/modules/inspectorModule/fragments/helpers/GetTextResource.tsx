@@ -4,9 +4,9 @@ const GetTextResource = (index: number) => {
   return index === 0
     ? textResources.Inspector_Object
     : index === 1
-    ? textResources.Inspector_Header
+    ? textResources.Inspector_AdminInfo
     : index === 2
-    ? textResources.Inspector_Body
+    ? textResources.Inspector_TechInfo
     : index === 3
     ? textResources.Inspector_Relations
     : index === 4
