@@ -34,6 +34,7 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}          
       - run: |
+          ls -l
           docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:dev
           docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:dev
     
@@ -47,15 +48,12 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: actions/checkout@v2
-      - run: |
-          echo ${{working-directory}}
-    
+      
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       - uses: microsoft/variable-substitution@v1      
         with: 
-          files: './src/service/ModelBuilder.Api/appsettings.json'
+          files: 'ModelBuilder.Api/appsettings.json'
         env:
           ConnectionStrings.Default: ${{ secrets.CONNECTION_STRING_DEV }} 
       - uses: azure/docker-login@v1
