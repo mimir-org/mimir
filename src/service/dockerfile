@@ -1,19 +1,19 @@
-FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 WORKDIR /app
 EXPOSE 80
  
-FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["ModelBuilder/ModelBuilder.csproj", "ModelBuilder/"]
-RUN dotnet restore "ModelBuilder/ModelBuilder.csproj"
+COPY ["ModelBuilder.Api/ModelBuilder.Api.csproj", "ModelBuilder.Api/"]
+RUN dotnet restore "ModelBuilder.Api/ModelBuilder.Api.csproj"
 COPY . .
-WORKDIR "/src/ModelBuilder"
-RUN dotnet build "ModelBuilder.csproj" -c Release -o /app/build
+WORKDIR "/src/ModelBuilder.Api"
+RUN dotnet build "ModelBuilder.Api.csproj" -c Release -o /app/build
  
 FROM build AS publish
-RUN dotnet publish "ModelBuilder.csproj" -c Release -o /app/publish
+RUN dotnet publish "ModelBuilder.Api.csproj" -c Release -o /app/publish
  
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "ModelBuilder.dll"]
+ENTRYPOINT ["dotnet", "ModelBuilder.Api.dll"]
