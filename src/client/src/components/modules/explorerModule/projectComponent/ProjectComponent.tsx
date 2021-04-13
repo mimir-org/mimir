@@ -1,6 +1,6 @@
 import "./project.scss";
 import AspectComponent from "../aspectComponent/AspectComponent";
-import CheckboxComponent from "../checkboxComponent/CheckboxComponent";
+// import CheckboxComponent from "../checkboxComponent/CheckboxComponent";
 import { AspectWrapper, ProjectHeader } from "../styled";
 import { GetNodes } from "../../../flow/helpers";
 import { isAspectNode } from "../../../flow/utils";
@@ -11,7 +11,7 @@ export const ProjectComponent = () => {
   return (
     <>
       <ProjectHeader>
-        {/* <CheckboxComponent id="1" inputLabel="Facility" /> */}
+        {/* <CheckboxComponent nodeId={null} inputLabel={null} type={null} /> */}
       </ProjectHeader>
       <AspectWrapper>
         {aspects.map((obj: object, i: number) => {
