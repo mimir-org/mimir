@@ -47,20 +47,9 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      - uses: microsoft/variable-substitution@v1      
-        with: 
-          files: '${{env.DOTNET_ROOT}}/ModelBuilder.Api/appsettings.json'
-        env:
-          ConnectionStrings.Default: ${{ secrets.CONNECTION_STRING_DEV }} 
-      - uses: azure/docker-login@v1
-        with:
-          login-server: ${{ secrets.REGISTRY_SERVER_URL }}
-          username: ${{ secrets.REGISTRY_USERNAME }}
-          password: ${{ secrets.REGISTRY_PASSWORD }}          
       - run: |
-          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:dev
-          docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:dev
+          ls -l
+      
+      
           
