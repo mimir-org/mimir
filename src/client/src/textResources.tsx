@@ -38,6 +38,23 @@ const textResources = {
   Inspector_Relations_gotoLocation: "Go to location",
   Inspector_Relations_gotoProduct: "Go to product",
 
+  Inspector_Admin_id: "ID",
+  Inspector_Admin_semanticID: "Semantic ID",
+  Inspector_Admin_tagNumber: "Tag Number",
+  Inspector_Admin_referenceDesignation: "Reference Designation",
+  Inspector_Admin_serviceDescription: "Service Description",
+  Inspector_Admin_changeMode: "Change mode",
+  Inspector_Admin_version: "Version",
+  Inspector_Admin_kind: "Kind",
+  Inspector_Admin_status: "Status",
+  Inspector_Admin_project: "Project",
+  Inspector_Admin_longDescription: "Long Description",
+  Inspector_Admin_interface: "Interface",
+  Inspector_Admin_updatedBy: "Updated by",
+  Inspector_Admin_contractor: "Contractor",
+  Inspector_Admin_Updated: "Updated Date",
+  Inspector_Admin_longLocalDescription: "Long Local Description",
+
   // LibraryModule
   Library_Heading: "Library",
   Library_Function: "Function",
