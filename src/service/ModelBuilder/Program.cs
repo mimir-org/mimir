@@ -1,13 +1,10 @@
+using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace ModelBuilder
+namespace Mb.Api
 {
     public class Program
     {
@@ -18,9 +15,19 @@ namespace ModelBuilder
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    logging.AddConsole();
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder.UseStartup<Startup>()
+                        .ConfigureAppConfiguration(configurationBuilder =>
+                        {
+                            configurationBuilder.AddJsonFile($"{Directory.GetCurrentDirectory()}/appsettings.local.json");
+                        });
                 });
+
     }
 }
