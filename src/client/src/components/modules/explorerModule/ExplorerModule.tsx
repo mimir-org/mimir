@@ -1,9 +1,16 @@
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
+import { useState } from "react";
 import { ExplorerIcon } from "../../../assets";
-import FacilityComponent from "./facilityComponent/FacilityComponent";
+import ProjectComponent from "./projectComponent/ProjectComponent";
 import { SwitchViewComponent } from "./switchviewComponent/SwitchViewComponent";
 import textResources from "../../../textResources";
 import { ToggleExplorerButton } from "../../../assets/buttons/index";
 import AnimatedMenu from "./styled/animated/AnimatedMenu";
+import {
+  loadStateFromStorage,
+  saveStateToStorage,
+} from "../../../redux/store/localStorage/localStorage";
 import {
   HeaderWrapper,
   IconWrapper,
@@ -12,13 +19,6 @@ import {
   CollapsedIcon,
   FooterWrapper,
 } from "./styled";
-import { useState } from "react";
-import {
-  loadStateFromStorage,
-  saveStateToStorage,
-} from "../../../redux/store/localStorage/localStorage";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/store";
 
 export const ExplorerModule = () => {
   const key = "explorer";
@@ -51,7 +51,7 @@ export const ExplorerModule = () => {
       </CollapsedIcon>
       {hasProject && (
         <ContentWrapper visible={isOpen}>
-          <FacilityComponent />
+          <ProjectComponent />
         </ContentWrapper>
       )}
       <FooterWrapper visible={isOpen}>
