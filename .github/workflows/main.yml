@@ -15,18 +15,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  syncconfig:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: azure/appconfiguration-sync@v1
-        with:
-          configurationFile: 'appsettings.json'
-          format: 'json'
-          # Replace <ConnectionString> with the name of the secret in your repository
-          ConnectionStrings: ${{ secrets.CONNECTION_STRING_DEV }}
-          separator: ':'  
-
+  
   # This workflow contains a single job called "build"
   build-client:
     # The type of runner that the job will run on
@@ -39,6 +28,11 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+      - uses: microsoft/variable-substitution@v1
+        with: 
+          files: '${{env.DOTNET_ROOT}}/ModelBuilder.Api/appsettings.json'
+        env:
+          ConnectionStrings.Default: ${{ secrets.CONNECTION_STRING_DEV }} 
       - uses: azure/docker-login@v1
         with:
           login-server: ${{ secrets.REGISTRY_SERVER_URL }}
