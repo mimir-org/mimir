@@ -13,16 +13,20 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-env:
-  REACT_APP_ENV: Development
-  REACT_APP_API_BASE_URL: https://dev-spine-modelbuilder-service.azurewebsites.net/
-  REACT_APP_APP_ID: 2967244a-662f-4462-82bd-7f9bca0a3683
-  REACT_APP_TENANT_ID: 3aa4a235-b6e2-48d5-9195-7fcf05b459b0
-  REACT_APP_REDIRECT_URI: https://dev-spine-modelbuilder.azurewebsites.net
-  REACT_APP_REDIRECT_LOGOUT_URI: https://dev-spine-modelbuilder.azurewebsites.net
-
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  syncconfig:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: azure/appconfiguration-sync@v1
+        with:
+          configurationFile: 'appsettings.json'
+          format: 'json'
+          # Replace <ConnectionString> with the name of the secret in your repository
+          ConnectionStrings: ${{ secrets.CONNECTION_STRING_DEV }}
+          separator: ':'  
+
   # This workflow contains a single job called "build"
   build-client:
     # The type of runner that the job will run on
