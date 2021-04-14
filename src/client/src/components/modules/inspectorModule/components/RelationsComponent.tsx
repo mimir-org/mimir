@@ -1,5 +1,8 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
+import { useInspectorChangeHandler } from "../hooks/useInspectorChangeHandler";
+import { GetTextResource } from "./helpers";
+import textResources from "../../../../textResources";
 import {
   FragmentHeader,
   FragmentDataWrapper,
@@ -8,9 +11,6 @@ import {
   FragmentParagraph,
   FragmentContainer,
 } from "../styled";
-import { useInspectorChangeHandler } from "../hooks/useInspectorChangeHandler";
-import { GetTextResource } from "./helpers";
-import textResources from "../../../../textResources";
 
 const RelationsComponent = ({ index }) => {
   const header = GetTextResource(index);

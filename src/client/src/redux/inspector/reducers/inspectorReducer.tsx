@@ -1,6 +1,7 @@
-export const INSPECTOR_CHANGED = "Insceptor changed";
-export const INSPECTOR_ELEMENT_CHANGED_COMPLETED =
-  "INSPECTOR_ELEMENT_CHANGED_COMPLETED";
+export const INSPECTOR_VISIBILITY_CHANGED: string =
+  "Insceptor visibility changed";
+export const INSPECTOR_VISIBILITY_CHANGED_COMPLETED: string =
+  "INSPECTOR_VISIBILITY_CHANGED_COMPLETED";
 
 const initialState = {
   list: [
@@ -9,11 +10,11 @@ const initialState = {
       visible: false,
     },
     {
-      type: "header",
+      type: "admin info",
       visible: false,
     },
     {
-      type: "body",
+      type: "tech info",
       visible: false,
     },
     {
@@ -35,9 +36,12 @@ const initialState = {
   ],
 };
 
-const inspectorReducer = (state = initialState, action) => {
+const inspectorReducer = (
+  state = initialState,
+  action: { type: string; payload: [] }
+) => {
   switch (action.type) {
-    case INSPECTOR_ELEMENT_CHANGED_COMPLETED:
+    case INSPECTOR_VISIBILITY_CHANGED_COMPLETED:
       return {
         ...state,
         type: action.type,
@@ -49,7 +53,7 @@ const inspectorReducer = (state = initialState, action) => {
 };
 
 export const changeInspector = () => ({
-  type: INSPECTOR_CHANGED,
+  type: INSPECTOR_VISIBILITY_CHANGED,
 });
 
 export default inspectorReducer;

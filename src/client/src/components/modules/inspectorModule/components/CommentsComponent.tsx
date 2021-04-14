@@ -1,5 +1,8 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
+import { useInspectorChangeHandler } from "../hooks/useInspectorChangeHandler";
+import { GetTextResource } from "./helpers";
+import textResources from "../../../../textResources";
 import {
   FragmentHeader,
   FragmentDataWrapper,
@@ -10,9 +13,6 @@ import {
   CustomInput,
   CustomColumn,
 } from "../styled";
-import { useInspectorChangeHandler } from "../hooks/useInspectorChangeHandler";
-import { GetTextResource } from "./helpers";
-import textResources from "../../../../textResources";
 
 const CommentsComponent = ({ index }) => {
   const header = GetTextResource(index);

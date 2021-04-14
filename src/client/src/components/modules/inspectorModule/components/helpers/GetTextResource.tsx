@@ -1,6 +1,6 @@
 import textResources from "../../../../../textResources";
 
-const GetTextResource = (index: number) => {
+const GetTextResource = (index: number): string => {
   return index === 0
     ? textResources.Inspector_Object
     : index === 1

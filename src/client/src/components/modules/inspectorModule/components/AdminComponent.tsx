@@ -1,5 +1,8 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
+import { useInspectorChangeHandler } from "../hooks/useInspectorChangeHandler";
+import { GetTextResource } from "./helpers";
+import textResources from "../../../../textResources";
 import {
   FragmentHeader,
   FragmentDataWrapper,
@@ -10,17 +13,14 @@ import {
   CustomInput,
   CustomColumn,
 } from "../styled";
-import { useInspectorChangeHandler } from "../hooks/useInspectorChangeHandler";
-import { GetTextResource } from "./helpers";
-import textResources from "../../../../textResources";
 
-const AdminComponent = ({ index }) => {
+const AdminComponent = (index: number) => {
   const header = GetTextResource(index);
   const handleClick = useInspectorChangeHandler(index);
 
   const isOpen = useSelector<RootState>(
     (state) => state.inspectorReducer.list[index].visible
-  );
+  ) as boolean;
 
   return (
     <>

@@ -5,7 +5,7 @@ import {
   CommentsComponent,
   ChangelogComponent,
   TechComponent,
-} from "./fragments";
+} from "./components";
 
 const InspectorComponents = () => {
   return (
