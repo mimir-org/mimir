@@ -9,13 +9,11 @@ import {
   FragmentContainer,
 } from "./styled";
 import { useInspectorChangeHandler } from "../hooks/useInspectorChangeHandler";
-import { FragmentData } from ".";
-import { GetContentData, GetTextResource } from "./helpers";
+import { GetTextResource } from "./helpers";
 import textResources from "../../../../textResources";
 
 const RelationsComponent = ({ index }) => {
   const header = GetTextResource(index);
-  const data = GetContentData(index);
   const handleClick = useInspectorChangeHandler(index);
 
   const isOpen = useSelector<RootState>(
@@ -30,53 +28,52 @@ const RelationsComponent = ({ index }) => {
             {header}
           </FragmentHeader>
           <FragmentDataWrapper>
-            {/* <FragmentData data={data.content} /> */}
             <FragmentContainer>
               <FragmentColumn>
                 <FragmentParagraph key={null}>
-                  {textResources.Inspector_Relations_name}
+                  {textResources.Inspector_Relations_Name}
                 </FragmentParagraph>
                 <FragmentInput key={null} />
                 <FragmentParagraph key={null}>
-                  {textResources.Inspector_Relations_hasFunction}
+                  {textResources.Inspector_Relations_Has_Function}
                 </FragmentParagraph>
                 <FragmentInput key={null} />
                 <FragmentParagraph key={null}>
-                  {textResources.Inspector_Relations_updatedBy}
-                </FragmentParagraph>
-                <FragmentInput key={null} />
-              </FragmentColumn>
-              <FragmentColumn>
-                <FragmentParagraph key={null}>
-                  {textResources.Inspector_Relations_connectedTo}
-                </FragmentParagraph>
-                <FragmentInput key={null} />
-                <FragmentParagraph key={null}>
-                  {textResources.Inspector_Relations_project}
-                </FragmentParagraph>
-                <FragmentInput key={null} />
-                <FragmentParagraph key={null}>
-                  {textResources.Inspector_Relations_updatedDate}
+                  {textResources.Inspector_Relations_Updated_By}
                 </FragmentParagraph>
                 <FragmentInput key={null} />
               </FragmentColumn>
               <FragmentColumn>
                 <FragmentParagraph key={null}>
-                  {textResources.Inspector_Relations_relationOut}
+                  {textResources.Inspector_Relations_Connected_To}
                 </FragmentParagraph>
                 <FragmentInput key={null} />
                 <FragmentParagraph key={null}>
-                  {textResources.Inspector_Relations_anotherField}
+                  {textResources.Inspector_Relations_Project}
+                </FragmentParagraph>
+                <FragmentInput key={null} />
+                <FragmentParagraph key={null}>
+                  {textResources.Inspector_Relations_Updated_Date}
                 </FragmentParagraph>
                 <FragmentInput key={null} />
               </FragmentColumn>
               <FragmentColumn>
                 <FragmentParagraph key={null}>
-                  {textResources.Inspector_Relations_hasLocation}
+                  {textResources.Inspector_Relations_Relation_Out}
                 </FragmentParagraph>
                 <FragmentInput key={null} />
                 <FragmentParagraph key={null}>
-                  {textResources.Inspector_Relations_fulfilledBy}
+                  {textResources.Inspector_Relations_Another_Field}
+                </FragmentParagraph>
+                <FragmentInput key={null} />
+              </FragmentColumn>
+              <FragmentColumn>
+                <FragmentParagraph key={null}>
+                  {textResources.Inspector_Relations_Has_Location}
+                </FragmentParagraph>
+                <FragmentInput key={null} />
+                <FragmentParagraph key={null}>
+                  {textResources.Inspector_Relations_Fulfilled_By}
                 </FragmentParagraph>
                 <FragmentInput key={null} />
               </FragmentColumn>

@@ -11,13 +11,11 @@ import {
   CustomColumn,
 } from "./styled";
 import { useInspectorChangeHandler } from "../hooks/useInspectorChangeHandler";
-import { FragmentData } from ".";
-import { GetContentData, GetTextResource } from "./helpers";
+import { GetTextResource } from "./helpers";
 import textResources from "../../../../textResources";
 
 const InheritedComponent = ({ index }) => {
   const header = GetTextResource(index);
-  const data = GetContentData(index);
   const handleClick = useInspectorChangeHandler(index);
 
   const isOpen = useSelector<RootState>(
@@ -32,79 +30,78 @@ const InheritedComponent = ({ index }) => {
             {header}
           </FragmentHeader>
           <FragmentDataWrapper>
-            {/* <FragmentData data={data.content} /> */}
             <FragmentContainer>
               <FragmentColumn>
                 <FragmentParagraph key={null}>
-                  {textResources.Inspector_Admin_id}
+                  {textResources.Inspector_Admin_Id}
                 </FragmentParagraph>
                 <FragmentInput key={null} />
                 <FragmentParagraph key={null}>
-                  {textResources.Inspector_Admin_semanticID}
+                  {textResources.Inspector_Admin_Semantic_Id}
                 </FragmentParagraph>
                 <FragmentInput key={null} />
                 <FragmentParagraph key={null}>
-                  {textResources.Inspector_Admin_tagNumber}
+                  {textResources.Inspector_Admin_Tag}
                 </FragmentParagraph>
                 <FragmentInput key={null} />
                 <FragmentParagraph key={null}>
-                  {textResources.Inspector_Admin_referenceDesignation}
-                </FragmentParagraph>
-                <FragmentInput key={null} />
-              </FragmentColumn>
-              <FragmentColumn>
-                <FragmentParagraph key={null}>
-                  {textResources.Inspector_Admin_serviceDescription}
-                </FragmentParagraph>
-                <FragmentInput key={null} />
-                <FragmentParagraph key={null}>
-                  {textResources.Inspector_Admin_changeMode}
-                </FragmentParagraph>
-                <FragmentInput key={null} />
-                <FragmentParagraph key={null}>
-                  {textResources.Inspector_Admin_version}
-                </FragmentParagraph>
-                <FragmentInput key={null} />
-                <FragmentParagraph key={null}>
-                  {textResources.Inspector_Admin_kind}
+                  {textResources.Inspector_Admin_Designation}
                 </FragmentParagraph>
                 <FragmentInput key={null} />
               </FragmentColumn>
               <FragmentColumn>
                 <FragmentParagraph key={null}>
-                  {textResources.Inspector_Admin_status}
+                  {textResources.Inspector_Admin_Service}
                 </FragmentParagraph>
                 <FragmentInput key={null} />
                 <FragmentParagraph key={null}>
-                  {textResources.Inspector_Admin_project}
+                  {textResources.Inspector_Admin_Change}
                 </FragmentParagraph>
                 <FragmentInput key={null} />
                 <FragmentParagraph key={null}>
-                  {textResources.Inspector_Admin_longDescription}
+                  {textResources.Inspector_Admin_Version}
+                </FragmentParagraph>
+                <FragmentInput key={null} />
+                <FragmentParagraph key={null}>
+                  {textResources.Inspector_Admin_Kind}
+                </FragmentParagraph>
+                <FragmentInput key={null} />
+              </FragmentColumn>
+              <FragmentColumn>
+                <FragmentParagraph key={null}>
+                  {textResources.Inspector_Admin_Status}
+                </FragmentParagraph>
+                <FragmentInput key={null} />
+                <FragmentParagraph key={null}>
+                  {textResources.Inspector_Admin_Project}
+                </FragmentParagraph>
+                <FragmentInput key={null} />
+                <FragmentParagraph key={null}>
+                  {textResources.Inspector_Admin_Long_Description}
                 </FragmentParagraph>
                 <CustomInput key={null} width="400" />
               </FragmentColumn>
               <CustomColumn>
                 <FragmentParagraph key={null}>
-                  {textResources.Inspector_Admin_interface}
+                  {textResources.Inspector_Admin_Interface}
                 </FragmentParagraph>
                 <FragmentInput key={null} />
                 <FragmentParagraph key={null}>
-                  {textResources.Inspector_Admin_updatedBy}
+                  {textResources.Inspector_Admin_Updated_By}
                 </FragmentParagraph>
                 <FragmentInput key={null} />
               </CustomColumn>
               <FragmentColumn>
                 <FragmentParagraph key={null}>
-                  {textResources.Inspector_Admin_contractor}
+                  {textResources.Inspector_Admin_Contractor}
                 </FragmentParagraph>
                 <FragmentInput key={null} />
                 <FragmentParagraph key={null}>
-                  {textResources.Inspector_Admin_updatedDate}
+                  {textResources.Inspector_Admin_Updated_Date}
                 </FragmentParagraph>
                 <FragmentInput key={null} />
                 <FragmentParagraph key={null}>
-                  {textResources.Inspector_Admin_longLocalDescription}
+                  {textResources.Inspector_Admin_Local_Description}
                 </FragmentParagraph>
                 <CustomInput key={null} width="344" />
               </FragmentColumn>
