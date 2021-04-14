@@ -19,4 +19,5 @@ export { default as LoginIcon } from "./icons/loginIcon.svg";
 export { default as NewProjectIcon } from "./icons/newProjectIcon.svg";
 export { default as OpenProjectIcon } from "./icons/openProjectIcon.svg";
 export { default as RightArrowIcon } from "./icons/rightArrowIcon.svg";
+export { default as LeftArrowIcon } from "./icons/leftArrowIcon.svg";
 export { default as WhiteRightArrowIcon } from "./icons/whiteRightArrowIcon.svg";

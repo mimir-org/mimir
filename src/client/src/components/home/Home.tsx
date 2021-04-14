@@ -5,7 +5,6 @@ import { DiagramComponent, TreeviewComponent } from "..";
 import { getWorkspace } from "../../redux/store/workspace/actions";
 import { WorkspaceState } from "../../redux/store/workspace/types";
 import { RootState } from "./../../redux/store/index";
-import { ProjectModule } from "./../modules/projectModule";
 import { ExplorerModule } from "../modules/explorerModule";
 import { InspectorModule } from "../modules/inspectorModule";
 import { LibraryModule } from "../modules/libraryModule";
@@ -39,7 +38,6 @@ const Home = () => {
       <ExplorerModule />
       <div className="middle_content">
         <div className="workspace">
-          {/* <ProjectModule /> */}
           {isOnline && (
             <>
               {params.type === "treeview" && (

@@ -1,14 +1,18 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import {
   NewProjectIcon,
   OpenProjectIcon,
   RightArrowIcon,
   WhiteRightArrowIcon,
-} from "../../../../assets";
-import textResources from "../../../../textResources";
-import { EarlierProjectComponent } from "../earlierProjectComponent";
+} from "../../assets";
+import { create, get } from "../../redux/store/project/actions";
+import textResources from "../../textResources";
+import { EarlierProjectComponent } from "./earlierProjectComponent";
 
-export const OptionsComponent = () => {
+export const ProjectOptions = () => {
+  const dispatch = useDispatch();
+
   const [arrowIconImgSrc, setArrowIconImgSrc] = useState(RightArrowIcon);
   const [secondArrowIconImgSrc, setSecondArrowIconImgSrc] = useState(
     RightArrowIcon
@@ -35,6 +39,7 @@ export const OptionsComponent = () => {
             onMouseOut={() => {
               setArrowIconImgSrc(RightArrowIcon);
             }}
+            onClick={() => dispatch(create())}
           >
             <img
               className="option_icon"
@@ -56,7 +61,10 @@ export const OptionsComponent = () => {
             onMouseOut={() => {
               setSecondArrowIconImgSrc(RightArrowIcon);
             }}
-            onClick={() => onClickEarlierProject()}
+            // onClick={() => onClickEarlierProject()}
+            onClick={() =>
+              dispatch(get("95C10DAB-0DAD-4CBB-B33E-CA0A3CBC500C"))
+            }
           >
             <img
               className="option_icon"
@@ -76,4 +84,4 @@ export const OptionsComponent = () => {
   );
 };
 
-export default OptionsComponent;
+export default ProjectOptions;
