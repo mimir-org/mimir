@@ -1,3 +1,4 @@
+import { createId } from "../../../flow/utils";
 import {
   FragmentParagraph,
   FragmentColumn,
@@ -7,7 +8,7 @@ import {
 
 const FragmentData = ({ data }) => {
   const CreateColumn = (start: number, stop: number) => {
-    // Fix when data content is known
+    // TODO: Fix when data content is known
     if (stop > data.length) {
       stop = data.length;
     }
@@ -16,8 +17,8 @@ const FragmentData = ({ data }) => {
       <FragmentColumn>
         {data.slice(start, stop).map((data) => (
           <>
-            <FragmentParagraph key={data.id}>{data.type}</FragmentParagraph>
-            <FragmentInput />
+            <FragmentParagraph key={createId()}>{data.type}</FragmentParagraph>
+            <FragmentInput key={createId()} />
           </>
         ))}
       </FragmentColumn>

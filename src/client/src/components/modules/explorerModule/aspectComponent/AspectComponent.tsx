@@ -1,56 +1,47 @@
 import { useState } from "react";
-import {
-  FunctionIcon,
-  ProductIcon,
-  LocationIcon,
-  expandedIcon,
-  unexpandedIcon,
-} from "../../../../assets";
+import { expandedIcon, unexpandedIcon } from "../../../../assets";
+import { NodeType } from "../../../../models/project";
+import { GetEdges, GetNodes } from "../../../flow/helpers";
+import { isAspectNode } from "../../../flow/utils";
 import CheckboxComponent from "../checkboxComponent/CheckboxComponent";
 import FacetComponent from "../facetComponent/FacetComponent";
+import { GetAspectIcon, GetAspectHeader, SetIndentLevel } from "../helpers/";
+import { FacetContainerWrapper } from "../styled";
 import "./aspect.scss";
 
-interface AspectComponentProps {
-  id: string;
-  name: string;
-  facet: object[];
+interface Props {
+  nodeId: string;
+  name: NodeType;
+  type: NodeType;
 }
 
-export const AspectComponent = ({ id, name, facet }: AspectComponentProps) => {
+export const AspectComponent = ({ nodeId, name, type }: Props) => {
   const [expanded, setExpanded] = useState(true);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  const aspectIcon =
-    id === "1"
-      ? FunctionIcon
-      : id === "2"
-      ? LocationIcon
-      : id === "3"
-      ? ProductIcon
-      : null;
-
-  const aspectHeader =
-    name === "function"
-      ? "function_header"
-      : name === "location"
-      ? "location_header"
-      : name === "product"
-      ? "product_header"
-      : null;
-
+  const aspectIcon = GetAspectIcon(name);
+  const aspectHeader = GetAspectHeader(name);
   const expandIcon = expanded ? expandedIcon : unexpandedIcon;
+
+  const nodes = GetNodes();
+  const facets = nodes.filter(
+    (node: { type: NodeType }) => !isAspectNode(node.type)
+  );
+  const edges = GetEdges();
 
   return (
     <div className="aspect_container">
       <div className={"aspect_header " + aspectHeader}>
         <img className="aspectIcon" src={aspectIcon} alt="aspect-icon"></img>
         <div className="checkbox_container">
-          <CheckboxComponent id={id} inputLabel={name} aspect={name} />
-        </div>
-        <div className="placeholder_container">
-          <p>Placeholder</p>
+          <CheckboxComponent
+            nodeId={nodeId}
+            inputLabel={name}
+            aspect={name}
+            type={type}
+          />
         </div>
         <img
           className="expandIcon"
@@ -59,20 +50,26 @@ export const AspectComponent = ({ id, name, facet }: AspectComponentProps) => {
           onClick={() => handleExpandClick()}
         ></img>
       </div>
-      {expanded && (
-        <div className="facets_container">
-          {facet.map(function (f, index) {
-            return (
-              <FacetComponent
-                key={index}
-                id={f["id"]}
-                name={f["name"]}
-                aspect={name}
-              />
-            );
+      <FacetContainerWrapper color={name}>
+        {expanded &&
+          facets.map((obj: object, i: number) => {
+            if (facets[i].type === type) {
+              const indent = SetIndentLevel(facets, edges, i);
+
+              return (
+                <FacetComponent
+                  key={i}
+                  nodeId={obj["id"]}
+                  name={obj["name"]}
+                  aspect={name}
+                  type={type}
+                  indent={indent}
+                />
+              );
+            }
+            return null;
           })}
-        </div>
-      )}
+      </FacetContainerWrapper>
     </div>
   );
 };

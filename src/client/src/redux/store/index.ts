@@ -1,14 +1,10 @@
 import { combineReducers, createStore, compose, applyMiddleware } from "redux";
 import createSagaMiddleware from "redux-saga";
-import { workspaceReducer } from "./workspace/reducers";
 import { libraryReducer } from "./library/reducers";
 import { userReducer } from "./user/reducers";
 import { projectReducer } from "./project/reducers";
 import { sagas } from "../sagas";
 import inspectorReducer from "../inspector/reducers/inspectorReducer";
-import showInspectorReducer from "../inspector/reducers/showInspectorReducer";
-import showLibraryReducer from "../library/reducers/showLibraryReducer";
-import showExplorerReducer from "../explorer/reducers/showExplorerReducer";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -19,13 +15,9 @@ const composeEnhancer =
 
 const rootReducers = combineReducers({
   inspectorReducer: inspectorReducer,
-  showInspectorReducer: showInspectorReducer,
-  showLibraryReducer: showLibraryReducer,
-  showExplorerReducer: showExplorerReducer,
-  workspace: workspaceReducer,
   library: libraryReducer,
   userState: userReducer,
-  projectState: projectReducer
+  projectState: projectReducer,
 });
 
 const store = createStore(

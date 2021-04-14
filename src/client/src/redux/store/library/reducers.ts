@@ -18,13 +18,13 @@ export function libraryReducer(
 ): LibraryState {
   switch (action.type) {
     case FETCHING_LIBRARY:
-        return {
-            ...state,
-            fetching: true,
-            nodes: [],
-            hasError: false,
-            errorMsg: null,
-          };
+      return {
+        ...state,
+        fetching: true,
+        nodes: [],
+        hasError: false,
+        errorMsg: null,
+      };
     case FETCHING_LIBRARY_SUCCESS_OR_ERROR:
       return {
         ...state,

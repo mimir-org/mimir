@@ -1,11 +1,8 @@
-import {
-  FETCHING_LIBRARY,
-  LibraryActionTypes  
-} from "./types";
+import { FETCHING_LIBRARY, LibraryActionTypes } from "./types";
 
-export function searcLibrary(searchString: string): LibraryActionTypes {
+export function searchLibrary(searchString: string): LibraryActionTypes {
   return {
     type: FETCHING_LIBRARY,
-    payload: searchString
+    payload: searchString,
   };
 }

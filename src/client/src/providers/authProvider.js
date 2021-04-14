@@ -1,6 +1,9 @@
-import { MsalAuthProvider, LoginType } from 'react-aad-msal';
+import {
+    MsalAuthProvider,
+    LoginType
+} from 'react-aad-msal';
 
-const regularScopes = [ "api://" + process.env.REACT_APP_APP_ID + "/user_impersonation", "openid","user.read", "profile"];
+const regularScopes = ["api://" + process.env.REACT_APP_APP_ID + "/user_impersonation", "openid", "user.read", "profile"];
 
 const regularMsalConfig = {
     auth: {
@@ -11,7 +14,7 @@ const regularMsalConfig = {
     },
     cache: {
         cacheLocation: 'localStorage',
-        storeAuthStateInCookie: true
+        storeAuthStateInCookie: false
     }
 }
 

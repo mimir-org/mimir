@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import ReactFlow, {
@@ -31,7 +31,9 @@ import { CreateProjectNodes, CreateElementNode } from "./utils";
 import { ProjectOptions } from "../project";
 
 const nodeTypes = {
-  Aspect: Aspect,
+  AspectFunction: Aspect,
+  AspectLocation: Aspect,
+  AspectProduct: Aspect,
   Function: Function,
   Product: Product,
   Location: Location,
@@ -50,7 +52,7 @@ const FlowTree = () => {
   ) as ProjectState;
   const [elements, setElements] = useState<Elements>();
 
-  // On connect
+  //On connect
   const onConnect = (params) => {
     const createdId = createId();
     const sourceNode = projectState.project.nodes.find(
@@ -64,7 +66,8 @@ const FlowTree = () => {
         x.fromConnector === params.sourceHandle &&
         x.toConnector === params.targetHandle &&
         x.fromNode === sourceNode.id &&
-        x.toNode === targetNode.id
+        x.toNode === targetNode.id &&
+        x.isHidden === targetNode.isHidden
     );
 
     if (!existingEdge) {
@@ -74,6 +77,9 @@ const FlowTree = () => {
         toConnector: params.targetHandle,
         fromNode: sourceNode.id,
         toNode: targetNode.id,
+        isHidden: sourceNode.isHidden,
+        parentType: sourceNode.type,
+        parentName: sourceNode.name,
       };
 
       dispatch(createEdge(edge));
@@ -111,10 +117,13 @@ const FlowTree = () => {
   };
 
   // On load
-  const onLoad = (_reactFlowInstance) => {
-    setElements(CreateProjectNodes(projectState.project));
-    return setReactFlowInstance(_reactFlowInstance);
-  };
+  const onLoad = useCallback(
+    (_reactFlowInstance) => {
+      setElements(CreateProjectNodes(projectState.project));
+      return setReactFlowInstance(_reactFlowInstance);
+    },
+    [projectState.project]
+  );
 
   // On drag over
   const onDragOver = (event) => {
@@ -151,6 +160,11 @@ const FlowTree = () => {
     dispatch(addNode(node));
     setElements((es) => es.concat(CreateElementNode(node)));
   };
+
+  // Force rerender
+  useEffect(() => {
+    onLoad(reactFlowInstance);
+  }, [onLoad, reactFlowInstance]);
 
   return (
     <div className="dndflow">

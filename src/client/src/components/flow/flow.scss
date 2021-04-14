@@ -1,11 +1,13 @@
+.react-flow__node-AspectLocation,
+.react-flow__node-AspectFunction,
+.react-flow__node-AspectProduct,
 .react-flow__node-location,
 .react-flow__node-function,
 .react-flow__node-product,
 .react-flow__node-Aspect,
 .react-flow__node-Function,
 .react-flow__node-Product,
-.react-flow__node-Location
- {
+.react-flow__node-Location {
   padding: 10px;
   border-radius: 3px;
   width: 100px;
@@ -20,13 +22,15 @@
   }
 
   .aspect-icon {
-      width: 25px;
-      height: 25px;
+    width: 25px;
+    height: 25px;
   }
 }
 
-.react-flow__node-Aspect {
-  border: none;  
+.react-flow__node-AspectLocation,
+.react-flow__node-AspectFunction,
+.react-flow__node-AspectProduct {
+  border: none;
 }
 
 .react-flow__node-function,
@@ -42,6 +46,14 @@
 .react-flow__node-location,
 .react-flow__node-Location {
   background: magenta;
+}
+
+.react-flow__minimap {
+  background-color: #f8f8f8;
+  box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.15);
+  margin-bottom: 56px;
+  max-height: 78px;
+  max-width: 161px;
 }
 
 /* Tegnebrettet */

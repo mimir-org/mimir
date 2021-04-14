@@ -11,6 +11,10 @@ const GetTextResource = (index: number) => {
     ? textResources.Inspector_Relations
     : index === 4
     ? textResources.Inspector_Inhereted
+    : index === 5
+    ? textResources.Inspector_Comments
+    : index === 6
+    ? textResources.Inspector_Changelog
     : textResources.Inspector_Object;
 };
 
