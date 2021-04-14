@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { create, get } from "../../redux/store/project/actions";
+
 import {
   NewProjectIcon,
   OpenProjectIcon,
   RightArrowIcon,
   WhiteRightArrowIcon,
 } from "../../assets";
-import { create, get } from "../../redux/store/project/actions";
 import textResources from "../../textResources";
 import { EarlierProjectComponent } from "./earlierProjectComponent";
 
@@ -21,7 +22,6 @@ export const ProjectOptions = () => {
 
   const onClickEarlierProject = () => {
     setshowEarlierProject(true);
-    console.log(showEarlierProject);
   };
 
   return (
