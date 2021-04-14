@@ -11,13 +11,8 @@ namespace Mb.Core.Extensions
 {
     public static class ModelBuilderModuleExtensions
     {
-        public static IServiceCollection AddModelBuilderModule(this IServiceCollection services, string connectionString)
+        public static IServiceCollection AddModelBuilderModule(this IServiceCollection services)
         {
-            // Entity framework
-            services.AddDbContext<ModelBuilderDbContext>(options =>
-                options.UseSqlServer(connectionString, sqlOptions =>
-                    sqlOptions.MigrationsAssembly("ModelBuilder.Core")));
-
             // Auto-mapper
             var configuration = new MapperConfiguration(cfg =>
             {
@@ -36,7 +31,7 @@ namespace Mb.Core.Extensions
             return services;
         }
 
-        public static IApplicationBuilder AddModelBuilderModule(this IApplicationBuilder app)
+        public static IApplicationBuilder UseModelBuilderModule(this IApplicationBuilder app)
         {
             using var serviceScope = app.ApplicationServices.CreateScope();
             var context = serviceScope.ServiceProvider.GetRequiredService<ModelBuilderDbContext>();

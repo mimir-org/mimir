@@ -1,6 +1,7 @@
 using Mb.Core.Extensions;
 using Mb.Modules.AzureActiveDirectory.Extensions;
 using Mb.Modules.AzureActiveDirectory.Models;
+using Mb.Modules.MsSql.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -52,11 +53,8 @@ namespace Mb.Api
             _activeDirectoryConfiguration = activeDirectoryConfiguration;
             _swaggerConfiguration = swaggerConfiguration;
 
-            // Add Entity Framework
-            // Database and Entity Framework settings
-            var connectionString = Configuration.GetConnectionString("DefaultConnection");
-            services.AddModelBuilderModule(connectionString);
-
+            services.AddMsSqlServerModule();
+            services.AddModelBuilderModule();
         }
 
         public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -79,7 +77,7 @@ namespace Mb.Api
                 endpoints.MapControllers();
             });
 
-            app.AddModelBuilderModule();
+            app.UseModelBuilderModule();
         }
     }
 }
