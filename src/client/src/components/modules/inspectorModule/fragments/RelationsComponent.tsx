@@ -7,7 +7,7 @@ import {
   FragmentInput,
   FragmentParagraph,
   FragmentContainer,
-} from "./styled";
+} from "../styled";
 import { useInspectorChangeHandler } from "../hooks/useInspectorChangeHandler";
 import { GetTextResource } from "./helpers";
 import textResources from "../../../../textResources";

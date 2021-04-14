@@ -1,3 +1,13 @@
 export { default as StyledInspectorComponent } from "./StyledInspectorComponent";
 export { default as IconWrapper } from "./IconWrapper";
 export { default as InspectorTitle } from "./InspectorTitle";
+export { default as FragmentHeaderWrapper } from "./FragmentHeaderWrapper";
+export { default as FragmentHeader } from "./FragmentHeader";
+export { default as FragmentDataWrapper } from "./FragmentDataWrapper";
+export { default as FragmentColumn } from "./FragmentColumn";
+export { default as FragmentContainer } from "./FragmentContainer";
+export { default as FragmentParagraph } from "./FragmentParagraph";
+export { default as FragmentInput } from "./FragmentInput";
+export { default as CustomInput } from "./CustomInput";
+export { default as CustomColumn } from "./CustomColumn";
+export { default as InspectorButton } from "./InspectorButton";

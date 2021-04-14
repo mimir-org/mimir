@@ -4,7 +4,7 @@ import { useState } from "react";
 import { EyeIcon } from "../../../assets";
 import { IconWrapper } from "./styled";
 import textResources from "../../../textResources";
-import { FragmentHeaderWrapper } from "./fragments/styled";
+import { FragmentHeaderWrapper } from "./styled";
 import { InspectorTitle } from "./styled";
 import {
   loadStateFromStorage,
