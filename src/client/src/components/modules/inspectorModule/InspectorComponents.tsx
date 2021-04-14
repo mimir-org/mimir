@@ -1,14 +1,15 @@
-import { AdminComponent } from "./components";
+import {
+  AdminComponent,
+  TechComponent,
+  RelationsComponent,
+} from "./components";
 
 const InspectorComponents = () => {
   return (
     <>
-      <AdminComponent type="admin" />
-      {/* <TechComponent type="tech" />
-      <RelationsComponent type="relations" />
-      <InheritedComponent type="inherited" />
-      <CommentsComponent type="comments" />
-      <ChangelogComponent type="changeLog" /> */}
+      <AdminComponent index={0} />
+      <TechComponent index={1} />
+      <RelationsComponent index={2} />
     </>
   );
 };

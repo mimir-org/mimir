@@ -15,7 +15,7 @@ import {
 } from "../styled";
 import { RootState } from "../../../../redux/store";
 
-const AdminComponent = ({ index }) => {
+const TechComponent = ({ index }) => {
   const dispatch = useDispatch();
   const header = GetTextResource(index);
   const list = useSelector<RootState>((state) => state.inspector.list);
@@ -121,4 +121,4 @@ const AdminComponent = ({ index }) => {
   );
 };
 
-export default AdminComponent;
+export default TechComponent;

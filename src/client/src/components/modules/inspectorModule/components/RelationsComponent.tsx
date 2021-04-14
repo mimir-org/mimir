@@ -39,77 +39,51 @@ const AdminComponent = ({ index }) => {
             <FragmentContainer>
               <FragmentColumn>
                 <FragmentParagraph key={null}>
-                  {textResources.Inspector_Admin_Id}
+                  {textResources.Inspector_Relations_Name}
                 </FragmentParagraph>
                 <FragmentInput key={null} />
                 <FragmentParagraph key={null}>
-                  {textResources.Inspector_Admin_Semantic_Id}
+                  {textResources.Inspector_Relations_Has_Function}
                 </FragmentParagraph>
                 <FragmentInput key={null} />
                 <FragmentParagraph key={null}>
-                  {textResources.Inspector_Admin_Tag}
-                </FragmentParagraph>
-                <FragmentInput key={null} />
-                <FragmentParagraph key={null}>
-                  {textResources.Inspector_Admin_Designation}
+                  {textResources.Inspector_Relations_Updated_By}
                 </FragmentParagraph>
                 <FragmentInput key={null} />
               </FragmentColumn>
               <FragmentColumn>
                 <FragmentParagraph key={null}>
-                  {textResources.Inspector_Admin_Service}
+                  {textResources.Inspector_Relations_Connected_To}
                 </FragmentParagraph>
                 <FragmentInput key={null} />
                 <FragmentParagraph key={null}>
-                  {textResources.Inspector_Admin_Change}
+                  {textResources.Inspector_Relations_Project}
                 </FragmentParagraph>
                 <FragmentInput key={null} />
                 <FragmentParagraph key={null}>
-                  {textResources.Inspector_Admin_Version}
-                </FragmentParagraph>
-                <FragmentInput key={null} />
-                <FragmentParagraph key={null}>
-                  {textResources.Inspector_Admin_Kind}
+                  {textResources.Inspector_Relations_Updated_Date}
                 </FragmentParagraph>
                 <FragmentInput key={null} />
               </FragmentColumn>
               <FragmentColumn>
                 <FragmentParagraph key={null}>
-                  {textResources.Inspector_Admin_Status}
+                  {textResources.Inspector_Relations_Relation_Out}
                 </FragmentParagraph>
                 <FragmentInput key={null} />
                 <FragmentParagraph key={null}>
-                  {textResources.Inspector_Admin_Project}
+                  {textResources.Inspector_Relations_Another_Field}
                 </FragmentParagraph>
                 <FragmentInput key={null} />
-                <FragmentParagraph key={null}>
-                  {textResources.Inspector_Admin_Long_Description}
-                </FragmentParagraph>
-                <CustomInput key={null} width="400" />
               </FragmentColumn>
-              <CustomColumn>
-                <FragmentParagraph key={null}>
-                  {textResources.Inspector_Admin_Interface}
-                </FragmentParagraph>
-                <FragmentInput key={null} />
-                <FragmentParagraph key={null}>
-                  {textResources.Inspector_Admin_Updated_By}
-                </FragmentParagraph>
-                <FragmentInput key={null} />
-              </CustomColumn>
               <FragmentColumn>
                 <FragmentParagraph key={null}>
-                  {textResources.Inspector_Admin_Contractor}
+                  {textResources.Inspector_Relations_Has_Location}
                 </FragmentParagraph>
                 <FragmentInput key={null} />
                 <FragmentParagraph key={null}>
-                  {textResources.Inspector_Admin_Updated_Date}
+                  {textResources.Inspector_Relations_Fulfilled_By}
                 </FragmentParagraph>
                 <FragmentInput key={null} />
-                <FragmentParagraph key={null}>
-                  {textResources.Inspector_Admin_Local_Description}
-                </FragmentParagraph>
-                <CustomInput key={null} width="344" />
               </FragmentColumn>
             </FragmentContainer>
           </FragmentDataWrapper>

@@ -1,19 +1,17 @@
 import textResources from "../../../../../textResources";
 
-const GetTextResource = (type: string): string => {
-  return type === "object"
-    ? textResources.Inspector_Object
-    : type === "admin"
+const GetTextResource = (index: number) => {
+  return index === 0
     ? textResources.Inspector_AdminInfo
-    : type === "tech"
+    : index === 1
     ? textResources.Inspector_TechInfo
-    : type === "relations"
+    : index === 2
     ? textResources.Inspector_Relations
-    : type === "inherited"
+    : index === 3
     ? textResources.Inspector_Inhereted
-    : type === "comments"
+    : index === 4
     ? textResources.Inspector_Comments
-    : type === "changeLog"
+    : index === 5
     ? textResources.Inspector_Changelog
     : textResources.Inspector_Object;
 };
