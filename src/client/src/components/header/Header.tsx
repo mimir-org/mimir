@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { AppBar, Toolbar, Typography } from "@material-ui/core";
 import textResources from "../../textResources";
 import SaveViewState from "./helpers/SaveViewState";
-import { loadStateFromStorage } from "../../redux/store/localStorage/localStorage";
+import { loadStateFromStorage } from "../../redux/store/localStorage/LocalStorage";
 import {
   TreeviewIcon,
   BlockviewIcon,

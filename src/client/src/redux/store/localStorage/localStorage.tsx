@@ -21,13 +21,13 @@ export const saveStateToStorage = (state: boolean, key: string) => {
   }
 };
 
-export const saveStateToAllModules = (state: string) => {
-  try {
-    const serializedState = JSON.parse(state);
-    localStorage.setItem("show_library", serializedState);
-    localStorage.setItem("show_inspector", serializedState);
-    localStorage.setItem("show_explorer", serializedState);
-  } catch {
-    return undefined;
-  }
-};
+// export const saveStateToAllModules = (state: string) => {
+//   try {
+//     const serializedState = JSON.parse(state);
+//     localStorage.setItem("show_library", serializedState);
+//     localStorage.setItem("show_inspector", serializedState);
+//     localStorage.setItem("show_explorer", serializedState);
+//   } catch {
+//     return undefined;
+//   }
+// };

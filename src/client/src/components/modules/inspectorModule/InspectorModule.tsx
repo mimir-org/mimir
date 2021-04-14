@@ -9,7 +9,7 @@ import { InspectorTitle } from "./styled";
 import {
   loadStateFromStorage,
   saveStateToStorage,
-} from "../../../redux/store/localStorage/localStorage";
+} from "../../../redux/store/localStorage/LocalStorage";
 import InspectorComponents from "./InspectorComponents";
 
 const InspectorModule = () => {

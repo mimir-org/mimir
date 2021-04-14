@@ -1,5 +1,10 @@
+import { useState } from "react";
 import { GetTextResource } from "./helpers";
 import textResources from "../../../../textResources";
+import {
+  loadStateFromStorage,
+  saveStateToStorage,
+} from "../../../../redux/store/localStorage/LocalStorage";
 import {
   FragmentHeader,
   FragmentDataWrapper,
@@ -17,13 +22,18 @@ interface Props {
 
 const AdminComponent = ({ type }: Props) => {
   const header = GetTextResource(type);
-  const handleClick = null;
+  const [showComponent, setShowComponent] = useState(
+    loadStateFromStorage(type)
+  );
 
-  const isOpen = true;
+  const handleClick = () => {
+    saveStateToStorage(!showComponent, type);
+    setShowComponent(!showComponent);
+  };
 
   return (
     <>
-      {isOpen ? (
+      {showComponent ? (
         <>
           <FragmentHeader active="true" onClick={handleClick}>
             {header}
