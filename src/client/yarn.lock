@@ -2,20 +2,6 @@
 # yarn lockfile v1
 
 
-"@azure/msal-browser@^2.13.1":
-  "integrity" "sha512-kJD8WYzwc9xQtdDbps1j7egEOeqSDBB6GGeTLbMAy9uvhR0u6TgqXDJm/wQO2bXH/mHnARoZrcCmSmnwfWqGZg=="
-  "resolved" "https://registry.npmjs.org/@azure/msal-browser/-/msal-browser-2.13.1.tgz"
-  "version" "2.13.1"
-  dependencies:
-    "@azure/msal-common" "^4.1.1"
-
-"@azure/msal-common@^4.1.1":
-  "integrity" "sha512-CC/rlUl437mLEJVObKbiFSaG/JzSYWSo4lmePRXzZ7fQdLg91otWIGXlrIlrGuk5Htea6J6Wh43a5qXQuPv6GA=="
-  "resolved" "https://registry.npmjs.org/@azure/msal-common/-/msal-common-4.1.1.tgz"
-  "version" "4.1.1"
-  dependencies:
-    "debug" "^4.1.1"
-
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.10.4", "@babel/code-frame@^7.12.13", "@babel/code-frame@^7.5.5":
   "integrity" "sha512-HV1Cm0Q3ZrpCR93tkWOYiuYIgLxZXZFVG2VgK+MBWjUqZTundupbfx2aXarXuw5Ko5aMcjtJgbSs4vUGBS5v6g=="
   "resolved" "https://registry.npmjs.org/@babel/code-frame/-/code-frame-7.12.13.tgz"
@@ -8372,13 +8358,6 @@
   "resolved" "https://registry.npmjs.org/ms/-/ms-2.1.1.tgz"
   "version" "2.1.1"
 
-"msal@^1.4.9":
-  "integrity" "sha512-UPNG8AgGAWJbW6JbY2K8EYrrAbSmFrXicdk6Klpfy7u6Lszhop+5vi2eWGmM39ul7DQfq5p2qUlehAMF5yb2Vg=="
-  "resolved" "https://registry.npmjs.org/msal/-/msal-1.4.9.tgz"
-  "version" "1.4.9"
-  dependencies:
-    "tslib" "^1.9.3"
-
 "multicast-dns-service-types@^1.1.0":
   "integrity" "sha1-iZ8R2WhuXgXLkbNdXw5jt3PPyQE="
   "resolved" "https://registry.npmjs.org/multicast-dns-service-types/-/multicast-dns-service-types-1.1.0.tgz"
@@ -10168,13 +10147,6 @@
     "iconv-lite" "0.4.24"
     "unpipe" "1.0.0"
 
-"react-aad-msal@^2.3.5":
-  "integrity" "sha512-QCJXk7LtAf8ssbcuLT6glFZNmqcc6d2dy1ek+GY/feiNE3RM+bCxnH53VOPytV1h7EsUP9IvwOFum2fHcITo5A=="
-  "resolved" "https://registry.npmjs.org/react-aad-msal/-/react-aad-msal-2.3.5.tgz"
-  "version" "2.3.5"
-  dependencies:
-    "redux" "4.0.4"
-
 "react-app-polyfill@^2.0.0":
   "integrity" "sha512-0sF4ny9v/B7s6aoehwze9vJNWcmCemAUYBVasscVr92+UYiEqDXOxfKjXN685mDaMRNF3WdhHQs76oTODMocFA=="
   "resolved" "https://registry.npmjs.org/react-app-polyfill/-/react-app-polyfill-2.0.0.tgz"
@@ -10548,14 +10520,6 @@
   "integrity" "sha512-VSz1uMAH24DM6MF72vcojpYPtrTUu3ByVWfPL1nPfVRb5mZVTve5GnNCUV53QM/BZ66xfWrm0CTWoM+Xlz8V1w=="
   "resolved" "https://registry.npmjs.org/redux/-/redux-4.0.5.tgz"
   "version" "4.0.5"
-  dependencies:
-    "loose-envify" "^1.4.0"
-    "symbol-observable" "^1.2.0"
-
-"redux@4.0.4":
-  "integrity" "sha512-vKv4WdiJxOWKxK0yRoaK3Y4pxxB0ilzVx6dszU2W8wLxlb2yikRph4iV/ymtdJ6ZxpBLFbyrxklnT5yBbQSl3Q=="
-  "resolved" "https://registry.npmjs.org/redux/-/redux-4.0.4.tgz"
-  "version" "4.0.4"
   dependencies:
     "loose-envify" "^1.4.0"
     "symbol-observable" "^1.2.0"
@@ -12184,7 +12148,7 @@
     "minimist" "^1.2.0"
     "strip-bom" "^3.0.0"
 
-"tslib@^1.8.1", "tslib@^1.9.0", "tslib@^1.9.3":
+"tslib@^1.8.1", "tslib@^1.9.0":
   "integrity" "sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg=="
   "resolved" "https://registry.npmjs.org/tslib/-/tslib-1.14.1.tgz"
   "version" "1.14.1"
