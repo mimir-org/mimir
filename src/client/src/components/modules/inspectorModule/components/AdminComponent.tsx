@@ -1,6 +1,3 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../redux/store";
-import { useInspectorChangeHandler } from "../hooks/useInspectorChangeHandler";
 import { GetTextResource } from "./helpers";
 import textResources from "../../../../textResources";
 import {
@@ -14,13 +11,15 @@ import {
   CustomColumn,
 } from "../styled";
 
-const AdminComponent = (index: number) => {
-  const header = GetTextResource(index);
-  const handleClick = useInspectorChangeHandler(index);
+interface Props {
+  type: string;
+}
 
-  const isOpen = useSelector<RootState>(
-    (state) => state.inspectorReducer.list[index].visible
-  ) as boolean;
+const AdminComponent = ({ type }: Props) => {
+  const header = GetTextResource(type);
+  const handleClick = null;
+
+  const isOpen = true;
 
   return (
     <>
