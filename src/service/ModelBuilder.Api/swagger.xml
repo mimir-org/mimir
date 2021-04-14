@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ModelBuilder.Api</name>
+    </assembly>
+    <members>
+        <member name="T:Mb.Api.Controllers.V1.ProjectController">
+            <summary>
+            Project services
+            </summary>
+        </member>
+        <member name="M:Mb.Api.Controllers.V1.ProjectController.#ctor(Mb.Core.Services.IProjectService,Microsoft.Extensions.Logging.ILogger{Mb.Api.Controllers.V1.ProjectController})">
+            <summary>
+            Project Controller Constructor
+            </summary>
+        </member>
+        <member name="M:Mb.Api.Controllers.V1.ProjectController.CreateNewProject(System.String,System.String)">
+            <summary>
+            Create a new empty project
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Mb.Api.Controllers.V1.ProjectController.Get">
+            <summary>
+            List all available projects
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Mb.Api.Controllers.V1.ProjectController.GetById(System.String)">
+            <summary>
+            Get project by given id
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Mb.Api.Controllers.V1.ProjectController.SaveProject(Mb.Models.Data.ProjectAm)">
+            <summary>
+            Save a project
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

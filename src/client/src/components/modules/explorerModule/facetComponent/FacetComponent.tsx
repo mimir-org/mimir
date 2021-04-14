@@ -1,17 +1,31 @@
+import { NodeType } from "../../../../models/project";
 import CheckboxComponent from "../checkboxComponent/CheckboxComponent";
-import "./facet.scss";
+import { FacetWrapper } from "../styled";
 
-interface FacetComponentProps {
-  id: string;
-  name: string;
-  aspect?: string;
+interface Props {
+  nodeId: string;
+  name: NodeType;
+  type: NodeType;
+  aspect?: NodeType;
+  indent: number;
 }
 
-export const FacetComponent = ({ id, name, aspect }: FacetComponentProps) => {
+export const FacetComponent = ({
+  nodeId,
+  name,
+  type,
+  aspect,
+  indent,
+}: Props) => {
   return (
-    <div className="facet_container">
-      <CheckboxComponent id={id} inputLabel={name} aspect={aspect} />
-    </div>
+    <FacetWrapper indent={indent}>
+      <CheckboxComponent
+        nodeId={nodeId}
+        inputLabel={name}
+        aspect={aspect}
+        type={type}
+      />
+    </FacetWrapper>
   );
 };
 

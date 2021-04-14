@@ -1,6 +1,7 @@
-import { LibNode } from '../../../models/project';
+import { LibNode } from "../../../models/project";
 export const FETCHING_LIBRARY = "FETCHING_LIBRARY";
-export const FETCHING_LIBRARY_SUCCESS_OR_ERROR = "FETCHING_LIBRARY_SUCCESS_OR_ERROR";
+export const FETCHING_LIBRARY_SUCCESS_OR_ERROR =
+  "FETCHING_LIBRARY_SUCCESS_OR_ERROR";
 
 // State types
 export interface LibraryState {

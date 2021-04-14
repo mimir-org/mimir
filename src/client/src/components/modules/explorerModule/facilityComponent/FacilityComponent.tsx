@@ -2,35 +2,30 @@ import "./facility.scss";
 import AspectComponent from "../aspectComponent/AspectComponent";
 import CheckboxComponent from "../checkboxComponent/CheckboxComponent";
 import { AspectWrapper, FacilityHeader } from "../styled";
+import { GetNodes } from "../../../flow/helpers";
+import { isAspectNode } from "../../../flow/utils";
 
-interface FacilityComponentProps {
-  name: string;
-  id: string;
-  checked?: boolean;
-  aspect: object[];
-}
+export const FacilityComponent = () => {
+  const aspects = GetNodes();
 
-export const FacilityComponent = ({
-  name,
-  id,
-  checked,
-  aspect,
-}: FacilityComponentProps) => {
   return (
     <>
       <FacilityHeader>
-        <CheckboxComponent id={id} inputLabel={name} checked={checked} />
+        {/* <CheckboxComponent id="1" inputLabel="Facility" /> */}
       </FacilityHeader>
       <AspectWrapper>
-        {aspect.map(function (a, index) {
-          return (
-            <AspectComponent
-              key={index}
-              id={a["id"]}
-              name={a["name"]}
-              facet={a["facet"]}
-            />
-          );
+        {aspects.map((obj: object, i: number) => {
+          if (isAspectNode(aspects[i].type)) {
+            return (
+              <AspectComponent
+                key={i}
+                nodeId={obj["id"]}
+                name={obj["name"]}
+                type={obj["label"]}
+              />
+            );
+          }
+          return null;
         })}
       </AspectWrapper>
     </>

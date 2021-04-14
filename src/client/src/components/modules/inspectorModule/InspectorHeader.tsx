@@ -8,6 +8,8 @@ const InspectorHeader = () => {
       <FragmentContent index={2} />
       <FragmentContent index={3} />
       <FragmentContent index={4} />
+      <FragmentContent index={5} />
+      <FragmentContent index={6} />
     </>
   );
 };

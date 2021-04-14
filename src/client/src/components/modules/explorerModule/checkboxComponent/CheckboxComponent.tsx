@@ -1,36 +1,35 @@
-import react, { useState } from "react";
+import { NodeType } from "../../../../models/project";
+import { GetNodes } from "../../../flow/helpers";
+import { GetCheckboxColor } from "../helpers";
+import useChangeNodeVisibility from "../hooks/useChangeNodeVisibility";
 import "./checkbox.scss";
-interface CheckboxComponentProps {
-  id: string;
-  inputLabel: string;
-  checked?: boolean;
-  aspect?: string;
+
+interface Props {
+  nodeId: string;
+  inputLabel: NodeType;
+  aspect?: NodeType;
+  type: NodeType;
 }
 
 export const CheckboxComponent = ({
-  id,
+  nodeId,
   inputLabel,
-  checked,
   aspect,
-}: CheckboxComponentProps) => {
-  const [isChecked, setChecked] = useState(false);
-  const handleCheckboxChange = (event) => {
-    setChecked(!isChecked);
-  };
-  const underlineColor =
-    aspect === "function"
-      ? "function_underline"
-      : aspect === "location"
-      ? "location_underline"
-      : aspect === "product"
-      ? "product_underline"
-      : null;
+  type,
+}: Props) => {
+  // Check if node is hidden
+  const nodes = GetNodes();
+  const node = nodes.find((node: { id: string }) => node.id === nodeId);
+  const isHidden = node.isHidden;
+
+  const handleCheckboxChange = useChangeNodeVisibility(nodeId, type, isHidden);
+  const underlineColor = GetCheckboxColor(aspect);
 
   return (
     <label className={"checkbox " + underlineColor}>
       <input
         type="checkbox"
-        checked={isChecked}
+        checked={!isHidden}
         onChange={handleCheckboxChange}
       />
       <span className="checkmark"></span>
