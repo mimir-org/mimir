@@ -13,9 +13,9 @@ export function* getUser(action: UserActionTypes) {
     try {
 
         const userAccount = yield authProvider.getAccount();
-        const url = process.env.REACT_APP_API_BASE_URL + 'Project';
-        const test = yield call(get, url);
-        console.log(test);
+        // const url = process.env.REACT_APP_API_BASE_URL + 'Project';
+        // const test = yield call(get, url);
+        // console.log(test);
 
         // authProvider.logout();
 
