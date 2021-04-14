@@ -52,7 +52,7 @@ const textResources = {
   Inspector_Admin_interface: "Interface",
   Inspector_Admin_updatedBy: "Updated by",
   Inspector_Admin_contractor: "Contractor",
-  Inspector_Admin_Updated: "Updated Date",
+  Inspector_Admin_updatedDate: "Updated Date",
   Inspector_Admin_longLocalDescription: "Long Local Description",
 
   // LibraryModule

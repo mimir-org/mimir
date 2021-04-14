@@ -7,13 +7,15 @@ import {
   FragmentInput,
   FragmentParagraph,
   FragmentContainer,
+  CustomInput,
+  CustomColumn,
 } from "./styled";
 import { useInspectorChangeHandler } from "../hooks/useInspectorChangeHandler";
 import { FragmentData } from ".";
 import { GetContentData, GetTextResource } from "./helpers";
 import textResources from "../../../../textResources";
 
-const AdminContent = ({ index }) => {
+const ChangelogComponent = ({ index }) => {
   const header = GetTextResource(index);
   const data = GetContentData(index);
   const handleClick = useInspectorChangeHandler(index);
@@ -80,9 +82,9 @@ const AdminContent = ({ index }) => {
                 <FragmentParagraph key={null}>
                   {textResources.Inspector_Admin_longDescription}
                 </FragmentParagraph>
-                <FragmentInput key={null} />
+                <CustomInput key={null} width="400" />
               </FragmentColumn>
-              <FragmentColumn>
+              <CustomColumn>
                 <FragmentParagraph key={null}>
                   {textResources.Inspector_Admin_interface}
                 </FragmentParagraph>
@@ -91,20 +93,20 @@ const AdminContent = ({ index }) => {
                   {textResources.Inspector_Admin_updatedBy}
                 </FragmentParagraph>
                 <FragmentInput key={null} />
-              </FragmentColumn>
+              </CustomColumn>
               <FragmentColumn>
                 <FragmentParagraph key={null}>
                   {textResources.Inspector_Admin_contractor}
                 </FragmentParagraph>
                 <FragmentInput key={null} />
                 <FragmentParagraph key={null}>
-                  {textResources.Inspector_Admin_Updated}
+                  {textResources.Inspector_Admin_updatedDate}
                 </FragmentParagraph>
                 <FragmentInput key={null} />
                 <FragmentParagraph key={null}>
                   {textResources.Inspector_Admin_longLocalDescription}
                 </FragmentParagraph>
-                <FragmentInput key={null} />
+                <CustomInput key={null} width="344" />
               </FragmentColumn>
             </FragmentContainer>
           </FragmentDataWrapper>
@@ -116,4 +118,4 @@ const AdminContent = ({ index }) => {
   );
 };
 
-export default AdminContent;
+export default ChangelogComponent;

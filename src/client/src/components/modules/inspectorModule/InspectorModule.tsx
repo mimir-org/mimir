@@ -1,4 +1,3 @@
-import { InspectorHeader } from ".";
 import AnimatedMenu from "./styled/animated/AnimatedMenu";
 import { ToggleInspectorButton } from "../../../assets/buttons";
 import { useState } from "react";
@@ -11,6 +10,7 @@ import {
   loadStateFromStorage,
   saveStateToStorage,
 } from "../../../redux/store/localStorage/localStorage";
+import InspectorComponents from "./InspectorComponents";
 
 const InspectorModule = () => {
   const key = "inspector";
@@ -30,7 +30,7 @@ const InspectorModule = () => {
     <>
       <AnimatedMenu start={startHeight} stop={stopHeight} run={animate}>
         <FragmentHeaderWrapper>
-          <InspectorHeader />
+          <InspectorComponents />
           <ToggleInspectorButton
             visible={showInspector}
             onClick={handleClick}

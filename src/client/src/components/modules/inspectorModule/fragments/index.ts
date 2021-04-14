@@ -1,4 +1,6 @@
-export { default as FragmentData } from "./FragmentData";
-export { default as FragmentContent } from "./FragmentContent";
-export { default as RelationsContent } from "./RelationsContent";
-export { default as AdminContent } from "./AdminContent";
+export { default as RelationsComponent } from "./RelationsComponent";
+export { default as AdminComponent } from "./AdminComponent";
+export { default as ChangelogComponent } from "./ChangelogComponent";
+export { default as CommentsComponent } from "./CommentsComponent";
+export { default as InheritedComponent } from "./InheritedComponent";
+export { default as TechComponent } from "./TechComponent";

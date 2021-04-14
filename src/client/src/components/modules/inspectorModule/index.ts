@@ -1,2 +1,2 @@
 export { default as InspectorModule } from "./InspectorModule";
-export { default as InspectorHeader } from "./InspectorHeader";
+export { default as InspectorComponents } from "./InspectorComponents";
