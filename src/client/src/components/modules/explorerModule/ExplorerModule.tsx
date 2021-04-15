@@ -1,9 +1,16 @@
 import { ExplorerIcon } from "../../../assets";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
 import FacilityComponent from "./facilityComponent/FacilityComponent";
 import { SwitchViewComponent } from "./switchviewComponent/SwitchViewComponent";
 import textResources from "../../../textResources";
 import { ToggleExplorerButton } from "../../../assets/buttons/index";
 import AnimatedMenu from "./styled/animated/AnimatedMenu";
+import {
+  loadStateFromStorage,
+  saveStateToStorage,
+} from "../../../redux/store/localStorage/LocalStorage";
 import {
   HeaderWrapper,
   IconWrapper,
@@ -12,13 +19,6 @@ import {
   CollapsedIcon,
   FooterWrapper,
 } from "./styled";
-import { useState } from "react";
-import {
-  loadStateFromStorage,
-  saveStateToStorage,
-} from "../../../redux/store/localStorage/localStorage";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/store";
 
 export const ExplorerModule = () => {
   const key = "explorer";

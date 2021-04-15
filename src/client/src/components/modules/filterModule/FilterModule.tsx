@@ -1,14 +1,15 @@
+import textResources from "../../../textResources";
+import { useState } from "react";
+import { VisualFilterWrapper, IconWrapper, IconTextWrapper } from "./styled";
 import {
   loadStateFromStorage,
   saveStateToStorage,
-} from "../../../redux/store/localStorage/localStorage";
-import textResources from "../../../textResources";
-import { VisualFilterWrapper, IconWrapper, IconTextWrapper } from "./styled";
+} from "../../../redux/store/localStorage/LocalStorage";
+
 import {
   VisualFilterIconClosed,
   VisualFilterIconOpen,
 } from "../../../assets/index";
-import { useState } from "react";
 
 const FilterModule = () => {
   const [showFilter, setShowFilter] = useState(loadStateFromStorage("filter"));
