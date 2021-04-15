@@ -18,10 +18,13 @@ const FilterModule = () => {
 
   return (
     <>
-      <IconTextWrapper>{textResources.MainHeader_VisualFilter}</IconTextWrapper>
+      <IconTextWrapper isOpen={isOpen}>
+        {textResources.MainHeader_VisualFilter}
+      </IconTextWrapper>
       <IconWrapper>
         <img src={VisualFilterIcon} alt="filter" onClick={handleClick} />
       </IconWrapper>
+
       {isOpen && (
         <VisualFilterWrapper>{textResources.Filter_Types}</VisualFilterWrapper>
       )}
