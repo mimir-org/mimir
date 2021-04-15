@@ -11,7 +11,6 @@ import {
   SwitchOffIcon,
 } from "../../assets/index";
 import {
-  TextWrapper,
   BlockviewWrapper,
   TreeviewWrapper,
   TitleWrapper,
@@ -54,9 +53,6 @@ const Header = () => {
             )}
           </SwitchWrapper>
         </IconsWrapper>
-        <TextWrapper>
-          <Typography>{textResources.MainHeader_VisualFilter}</Typography>
-        </TextWrapper>
       </Toolbar>
     </AppBar>
   );

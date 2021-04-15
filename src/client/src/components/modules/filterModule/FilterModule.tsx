@@ -3,7 +3,7 @@ import {
   saveStateToStorage,
 } from "../../../redux/store/localStorage/localStorage";
 import textResources from "../../../textResources";
-import { VisualFilterWrapper, IconWrapper } from "./styled";
+import { VisualFilterWrapper, IconWrapper, IconTextWrapper } from "./styled";
 import { VisualFilterIcon } from "../../../assets/index";
 import { useState } from "react";
 
@@ -18,6 +18,7 @@ const FilterModule = () => {
 
   return (
     <>
+      <IconTextWrapper>{textResources.MainHeader_VisualFilter}</IconTextWrapper>
       <IconWrapper>
         <img src={VisualFilterIcon} alt="filter" onClick={handleClick} />
       </IconWrapper>
