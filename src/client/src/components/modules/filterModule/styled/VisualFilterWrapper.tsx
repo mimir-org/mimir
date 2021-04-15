@@ -1,7 +1,9 @@
 import styled from "styled-components";
 
 const VisualFilterWrapper = styled.div`
-  background: #e5e5e5;
+  position: absolute;
+  right: 0px;
+  background: #fff;
   width: 334px;
   height: 650px;
   border: 2px solid #007079;
