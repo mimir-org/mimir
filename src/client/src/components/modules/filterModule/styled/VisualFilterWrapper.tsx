@@ -11,6 +11,7 @@ const VisualFilterWrapper = styled.div`
   font-family: roboto;
   color: #007079;
   padding: 10px;
+  z-index: 1;
 `;
 
 export default VisualFilterWrapper;
