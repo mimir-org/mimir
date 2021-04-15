@@ -3,10 +3,9 @@ import styled from "styled-components";
 const IconWrapper = styled.div`
   cursor: pointer;
   position: absolute;
-  margin-top: 10px;
+  top: 11px;
   right: 117px;
-  z-index: 1102;
-  top: 0;
+  z-index: 1103;
 `;
 
 export default IconWrapper;

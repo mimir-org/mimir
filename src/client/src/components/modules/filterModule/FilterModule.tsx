@@ -4,7 +4,10 @@ import {
 } from "../../../redux/store/localStorage/localStorage";
 import textResources from "../../../textResources";
 import { VisualFilterWrapper, IconWrapper, IconTextWrapper } from "./styled";
-import { VisualFilterIcon } from "../../../assets/index";
+import {
+  VisualFilterIconClosed,
+  VisualFilterIconOpen,
+} from "../../../assets/index";
 import { useState } from "react";
 
 const FilterModule = () => {
@@ -22,7 +25,15 @@ const FilterModule = () => {
         {textResources.MainHeader_VisualFilter}
       </IconTextWrapper>
       <IconWrapper>
-        <img src={VisualFilterIcon} alt="filter" onClick={handleClick} />
+        {isOpen ? (
+          <img src={VisualFilterIconOpen} alt="filter" onClick={handleClick} />
+        ) : (
+          <img
+            src={VisualFilterIconClosed}
+            alt="filter"
+            onClick={handleClick}
+          />
+        )}
       </IconWrapper>
 
       {isOpen && (
