@@ -1,11 +1,11 @@
 import textResources from "../../../textResources";
+import FilterContent from "./FilterContent";
 import { useState } from "react";
 import { VisualFilterWrapper, IconWrapper, IconTextWrapper } from "./styled";
 import {
   loadStateFromStorage,
   saveStateToStorage,
 } from "../../../redux/store/localStorage/LocalStorage";
-
 import {
   VisualFilterIconClosed,
   VisualFilterIconOpen,
@@ -36,9 +36,11 @@ const FilterModule = () => {
           />
         )}
       </IconWrapper>
-
       {isOpen && (
-        <VisualFilterWrapper>{textResources.Filter_Types}</VisualFilterWrapper>
+        <VisualFilterWrapper>
+          {textResources.Filter_Types}
+          <FilterContent />
+        </VisualFilterWrapper>
       )}
     </>
   );
