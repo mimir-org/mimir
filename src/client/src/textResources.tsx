@@ -31,6 +31,32 @@ const textResources = {
   Library_Product: "Product",
   Library_Location: "Location",
   Library_SearchBox_Placeholder: "Søk i biblioteket",
+
+  // FilterModule
+  Filter_Types: "Transport/Interfaces/Terminals:",
+  Filter_Sub_Types: "Sub-Types:",
+  Filter_Other: "Other:",
+  Filter_Designations: "Designations:",
+
+  Filter_Forces: "Forces",
+  Filter_Information: "Information",
+  Filter_Energy: "Energy [power]",
+  Filter_Flow: "Material flow",
+  Filter_Electric: "Electric",
+  Filter_Thermal: "Thermal",
+  Filter_Solar: "Solar",
+  Filter_Dry: "Dry granulated",
+  Filter_Mechanical: "Mechanical",
+  Filter_Sound: "Sound",
+  Filter_Wind: "Wind",
+  Filter_Hydro: "Hydro",
+  Filter_Fluid: "Fluid",
+  Filter_Solid: "Solid pieces",
+  Filter_Has_Location: "Has location",
+  Filter_Fulfilled_By: "Fulfilled by",
+  Filter_Explorer: "Explorer RDS",
+  Filter_Show_Local: "Show local",
+  Filter_Show_Path: "Show path",
 };
 
 export default textResources;
