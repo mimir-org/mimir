@@ -12,8 +12,8 @@ const textResources = {
 
   // Project options
   Project_heading: "Projects",
-  Project_new_project: "Start a new project",
-  Project_open_project: "Open earlier project",
+  Project_new_project: "Create project",
+  Project_open_project: "Load project",
 
   // ExplorerModule
   Explorer_view: "Explorer",
