@@ -25,7 +25,7 @@ namespace Mb.Api
                     webBuilder.UseStartup<Startup>()
                         .ConfigureAppConfiguration(configurationBuilder =>
                         {
-                            configurationBuilder.AddJsonFile($"{Directory.GetCurrentDirectory()}/appsettings.local.json");
+                            configurationBuilder.AddJsonFile($"{Directory.GetCurrentDirectory()}/appsettings.local.json", true);
                         });
                 });
 

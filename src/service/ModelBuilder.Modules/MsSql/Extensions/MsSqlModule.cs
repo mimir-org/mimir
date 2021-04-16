@@ -16,7 +16,7 @@ namespace Mb.Modules.MsSql.Extensions
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory());
             
-            builder.AddJsonFile("appsettings.json", true, true);
+            builder.AddJsonFile("appsettings.json");
             builder.AddJsonFile($"appsettings.{environment}.json", true);
             builder.AddJsonFile("appsettings.local.json", true);
             builder.AddEnvironmentVariables();
@@ -27,11 +27,11 @@ namespace Mb.Modules.MsSql.Extensions
             var databaseConfigSection = config.GetSection("DatabaseConfiguration");
             databaseConfigSection.Bind(dbConfig);
             
-            var dataSource = Environment.GetEnvironmentVariable("DatabaseConfiguration.DataSource");
-            var port = Environment.GetEnvironmentVariable("DatabaseConfiguration.Port");
-            var initialCatalog = Environment.GetEnvironmentVariable("DatabaseConfiguration.InitialCatalog");
-            var dbUser = Environment.GetEnvironmentVariable("DatabaseConfiguration.DbUser");
-            var password = Environment.GetEnvironmentVariable("DatabaseConfiguration.Password");
+            var dataSource = Environment.GetEnvironmentVariable("DatabaseConfiguration_DataSource");
+            var port = Environment.GetEnvironmentVariable("DatabaseConfiguration_Port");
+            var initialCatalog = Environment.GetEnvironmentVariable("DatabaseConfiguration_InitialCatalog");
+            var dbUser = Environment.GetEnvironmentVariable("DatabaseConfiguration_DbUser");
+            var password = Environment.GetEnvironmentVariable("DatabaseConfiguration_Password");
 
             if (!string.IsNullOrEmpty(dataSource))
                 dbConfig.DataSource = dataSource;
