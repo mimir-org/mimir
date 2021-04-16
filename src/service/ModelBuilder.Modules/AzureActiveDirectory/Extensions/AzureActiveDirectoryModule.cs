@@ -111,6 +111,8 @@ namespace Mb.Modules.AzureActiveDirectory.Extensions
                 c.OAuthAppName("Azure Active Directory");
                 c.DisplayOperationId();
                 c.DisplayRequestDuration();
+                c.RoutePrefix = string.Empty;
+
             });
 
             app.UseAuthentication();
