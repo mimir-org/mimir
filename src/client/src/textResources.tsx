@@ -69,23 +69,30 @@ export const VisualFilterResources = [
   "Sub-Types:",
   "Other:",
   "Designations:",
+
   "Forces",
   "Information",
   "Energy [power]",
   "Material flow",
+
+  "Energy [power]",
   "Electric",
   "Thermal",
   "Solar",
+  "Material flow",
   "Dry granulated",
   "Mechanical",
   "Sound",
   "Wind",
-  "Hydro",
+  "Hydro power",
   "Fluid",
   "Solid pieces",
+
   "Has location",
   "Fulfilled by",
+  "Has function",
   "Explorer RDS",
+
   "Show local",
   "Show path",
 ];
