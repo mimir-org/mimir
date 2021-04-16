@@ -28,6 +28,7 @@ import { DefaultEdgeType } from "./edges";
 import { createId } from "./utils";
 import { MiniMap } from "./";
 import { CreateProjectNodes, CreateElementNode } from "./utils";
+import { ProjectOptions } from "../project";
 
 const nodeTypes = {
   AspectFunction: Aspect,
@@ -189,18 +190,7 @@ const FlowTree = () => {
       )}
       {!projectState.project && (
         <div>
-          <input
-            type="button"
-            value="Opprett nytt prosjekt"
-            onClick={() => dispatch(create())}
-          ></input>
-          <input
-            type="button"
-            value="Hent prosjekt"
-            onClick={() =>
-              dispatch(get("95C10DAB-0DAD-4CBB-B33E-CA0A3CBC500C"))
-            }
-          ></input>
+          <ProjectOptions />
         </div>
       )}
     </div>
