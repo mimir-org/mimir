@@ -64,4 +64,30 @@ const textResources = {
   Filter_Show_Path: "Show path",
 };
 
+export const VisualFilterResources = [
+  "Transport/Interfaces/Terminals:",
+  "Sub-Types:",
+  "Other:",
+  "Designations:",
+  "Forces",
+  "Information",
+  "Energy [power]",
+  "Material flow",
+  "Electric",
+  "Thermal",
+  "Solar",
+  "Dry granulated",
+  "Mechanical",
+  "Sound",
+  "Wind",
+  "Hydro",
+  "Fluid",
+  "Solid pieces",
+  "Has location",
+  "Fulfilled by",
+  "Explorer RDS",
+  "Show local",
+  "Show path",
+];
+
 export default textResources;

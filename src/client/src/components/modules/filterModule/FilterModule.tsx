@@ -38,7 +38,6 @@ const FilterModule = () => {
       </IconWrapper>
       {isOpen && (
         <VisualFilterWrapper>
-          {textResources.Filter_Types}
           <FilterContent />
         </VisualFilterWrapper>
       )}

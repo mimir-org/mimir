@@ -4,7 +4,7 @@ const VisualFilterWrapper = styled.div`
   position: absolute;
   right: 0px;
   background: #fff;
-  width: 334px;
+  width: 342px;
   height: 650px;
   border: 2px solid #007079;
   font-size: 18px;
