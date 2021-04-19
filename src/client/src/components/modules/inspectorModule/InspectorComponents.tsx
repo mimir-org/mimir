@@ -8,8 +8,8 @@ const InspectorComponents = () => {
   return (
     <>
       <AdminComponent index={0} />
-      <TechComponent index={1} />
-      <RelationsComponent index={2} />
+      {/* <TechComponent index={1} />
+      <RelationsComponent index={2} /> */}
     </>
   );
 };

@@ -15,6 +15,7 @@ import {
   CustomColumn,
 } from "../../styled";
 import { RootState } from "../../../../../redux/store";
+import { createId } from "../../../../flow/utils";
 
 const AdminComponent = ({ index }) => {
   const dispatch = useDispatch();

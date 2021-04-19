@@ -1,4 +1,5 @@
 import textResources from "../../../../../textResources";
+import { createId } from "../../../../flow/utils";
 import { FragmentColumn, FragmentInput, FragmentParagraph } from "../../styled";
 
 interface Props {
@@ -21,8 +22,7 @@ const AdminContent = ({
   return (
     <FragmentColumn position={position}>
       {[...Array(index)].map((index: number) => (
-        <>
-          {console.log("test i: ", index)}
+        <div key={createId()}>
           <FragmentParagraph>
             {textResources.Inspector_Admin_Id}
           </FragmentParagraph>
@@ -31,7 +31,7 @@ const AdminContent = ({
           ) : (
             <FragmentInput width={width} height={height} />
           )}
-        </>
+        </div>
       ))}
     </FragmentColumn>
   );
