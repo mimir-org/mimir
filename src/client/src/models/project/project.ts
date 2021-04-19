@@ -103,7 +103,7 @@ export interface Node {
     connectors: Connector[];
     isLocked?: boolean | false;
     isSelected?: boolean | false;
-    Attributes?: Attribute[] | null;
+    attributes?: Attribute[] | null;
     isHidden: boolean | false;
 }
 
