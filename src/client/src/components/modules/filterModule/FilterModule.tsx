@@ -5,7 +5,7 @@ import { VisualFilterWrapper, IconWrapper, IconTextWrapper } from "./styled";
 import {
   loadStateFromStorage,
   saveStateToStorage,
-} from "../../../redux/store/localStorage/LocalStorage";
+} from "../../../redux/store/localStorage/localStorage";
 import {
   VisualFilterIconClosed,
   VisualFilterIconOpen,

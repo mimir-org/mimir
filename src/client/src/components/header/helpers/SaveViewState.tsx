@@ -1,7 +1,7 @@
 import {
   loadStateFromStorage,
   saveStateToStorage,
-} from "../../../redux/store/localStorage/LocalStorage";
+} from "../../../redux/store/localStorage/localStorage";
 
 const SaveViewState = (key: string) => {
   if (key === "treeview") {
