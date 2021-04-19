@@ -103,7 +103,7 @@ export interface Node {
     connectors: Connector[];
     isLocked?: boolean | false;
     isSelected?: boolean | false;
-    Attributes?: Attribute[] | null;
+    attributes?: Attribute[] | null;
     isHidden: boolean | false;
 }
 
@@ -115,5 +115,5 @@ export interface LibNode {
     type: NodeType;
     connectors: Connector[];
     category: string;
-    Attributes?: Attribute[] | null;
+    attributes?: Attribute[] | null;
 }

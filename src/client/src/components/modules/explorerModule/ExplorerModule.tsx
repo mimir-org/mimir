@@ -10,7 +10,7 @@ import AnimatedMenu from "./styled/animated/AnimatedMenu";
 import {
   loadStateFromStorage,
   saveStateToStorage,
-} from "../../../redux/store/localStorage/LocalStorage";
+} from "../../../redux/store/localStorage/localStorage";
 import {
   HeaderWrapper,
   IconWrapper,

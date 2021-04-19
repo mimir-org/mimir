@@ -12,7 +12,7 @@ import { searchLibrary } from "../../../redux/store/library/actions";
 import {
   loadStateFromStorage,
   saveStateToStorage,
-} from "../../../redux/store/localStorage/LocalStorage";
+} from "../../../redux/store/localStorage/localStorage";
 
 const LibraryModule = () => {
   const key = "library";

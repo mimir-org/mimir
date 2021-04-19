@@ -23,7 +23,6 @@ const LibrarySidebar = ({ nodes }: Props) => {
     <>
       <SearchIconWrapper>{GetIcon("", "24")}</SearchIconWrapper>
       <SearchBox placeholder={textResources.Library_SearchBox_Placeholder} />
-
       {nodes &&
         nodes.map((node) => {
           return (

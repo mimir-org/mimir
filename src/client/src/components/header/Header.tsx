@@ -3,19 +3,16 @@ import { useHistory } from "react-router-dom";
 import { AppBar, Toolbar, Typography } from "@material-ui/core";
 import textResources from "../../textResources";
 import SaveViewState from "./helpers/SaveViewState";
-import { loadStateFromStorage } from "../../redux/store/localStorage/LocalStorage";
+import { loadStateFromStorage } from "../../redux/store/localStorage/localStorage";
 import {
   TreeviewIcon,
   BlockviewIcon,
-  VisualFilterIcon,
   SwitchOnIcon,
   SwitchOffIcon,
 } from "../../assets/index";
 import {
-  TextWrapper,
   BlockviewWrapper,
   TreeviewWrapper,
-  VisualIconWrapper,
   TitleWrapper,
   IconsWrapper,
   SwitchWrapper,
@@ -56,13 +53,6 @@ const Header = () => {
             )}
           </SwitchWrapper>
         </IconsWrapper>
-
-        <VisualIconWrapper>
-          <img src={VisualFilterIcon} alt="visualfilter" onClick={() => null} />
-        </VisualIconWrapper>
-        <TextWrapper>
-          <Typography>{textResources.MainHeader_VisualFilter}</Typography>
-        </TextWrapper>
       </Toolbar>
     </AppBar>
   );
