@@ -10,6 +10,11 @@ const textResources = {
   MainHeader_Login_Heading: "Login",
   MainHeader_VisualFilter: "Visual Filter",
 
+  // Project options
+  Project_heading: "Projects",
+  Project_new_project: "Start a new project",
+  Project_open_project: "Open earlier project",
+
   // ExplorerModule
   Explorer_view: "Explorer",
   Combined_view: "Connections",
