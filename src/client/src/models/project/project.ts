@@ -115,5 +115,5 @@ export interface LibNode {
     type: NodeType;
     connectors: Connector[];
     category: string;
-    Attributes?: Attribute[] | null;
+    attributes?: Attribute[] | null;
 }
