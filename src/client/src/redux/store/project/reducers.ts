@@ -1,4 +1,3 @@
-import { GetEdges } from "../../../components/flow/helpers";
 import { NodeType } from "../../../models/project";
 import {
   FETCHING_PROJECT,
@@ -14,7 +13,7 @@ import {
   UPDATE_POSITION,
   CHANGE_NODE_VISIBILITY,
   CHANGE_EDGE_VISIBILITY,
-  CHANGE_SELECTED_NODE,
+  CHANGE_ACTIVE_NODE,
 } from "./types";
 
 const initialState: ProjectState = {
@@ -217,9 +216,8 @@ export function projectReducer(
         },
       };
 
-    case CHANGE_SELECTED_NODE:
+    case CHANGE_ACTIVE_NODE:
       const id = action.payload.nodeId;
-      console.log(id);
       return {
         ...state,
         project: {

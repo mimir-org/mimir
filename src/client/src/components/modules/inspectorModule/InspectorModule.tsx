@@ -6,11 +6,11 @@ import { IconWrapper } from "./styled";
 import textResources from "../../../textResources";
 import { FragmentHeaderWrapper } from "./styled";
 import { InspectorTitle } from "./styled";
+import InspectorComponents from "./InspectorComponents";
 import {
   loadStateFromStorage,
   saveStateToStorage,
 } from "../../../redux/store/localStorage/localStorage";
-import InspectorComponents from "./InspectorComponents";
 
 const InspectorModule = () => {
   const key = "inspector";

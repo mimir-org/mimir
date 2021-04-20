@@ -16,7 +16,7 @@ import {
   createEdge,
   removeEdge,
   updatePosition,
-  changeSelectedNode,
+  changeActiveNode,
 } from "../../redux/store/project/actions";
 import { ProjectState } from "../../redux/store/project/types";
 import { RootState } from "./../../redux/store/index";
@@ -157,7 +157,7 @@ const FlowTree = () => {
   };
 
   const onElementClick = (event, element) => {
-    dispatch(changeSelectedNode(element.id));
+    dispatch(changeActiveNode(element.id));
   };
 
   // Force rerender
