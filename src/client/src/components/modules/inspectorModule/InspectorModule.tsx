@@ -6,7 +6,7 @@ import { useState } from "react";
 import { EyeIcon } from "../../../assets";
 import { IconWrapper } from "./styled";
 import textResources from "../../../textResources";
-import { FragmentHeaderWrapper } from "./styled";
+import { TabHeaderWrapper } from "./styled";
 import { InspectorTitle } from "./styled";
 import InspectorComponents from "./InspectorComponents";
 import {
@@ -22,7 +22,6 @@ const InspectorModule = () => {
   const hasProject = useSelector<RootState>(
     (state) => state.projectState.project !== null
   );
-  console.log("has project: ", hasProject);
 
   const handleClick = () => {
     saveStateToStorage(!showInspector, key);
@@ -36,7 +35,7 @@ const InspectorModule = () => {
   return (
     <>
       <AnimatedMenu start={startHeight} stop={stopHeight} run={animate}>
-        <FragmentHeaderWrapper>
+        <TabHeaderWrapper>
           {hasProject && <InspectorComponents />}
           <ToggleInspectorButton
             visible={showInspector}
@@ -46,7 +45,7 @@ const InspectorModule = () => {
             <InspectorTitle>{textResources.Inspector_Heading}</InspectorTitle>
             <img src={EyeIcon} alt="inspector-icon" />
           </IconWrapper>
-        </FragmentHeaderWrapper>
+        </TabHeaderWrapper>
       </AnimatedMenu>
     </>
   );

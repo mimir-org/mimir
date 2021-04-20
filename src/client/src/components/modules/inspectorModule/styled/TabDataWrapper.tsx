@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const FragmentDataWrapper = styled.div`
+const TabDataWrapper = styled.div`
   background-color: #f2f2f2;
   color: #000;
   min-width: 25%;
@@ -11,4 +11,4 @@ const FragmentDataWrapper = styled.div`
   margin-top: 0px;
 `;
 
-export default FragmentDataWrapper;
+export default TabDataWrapper;

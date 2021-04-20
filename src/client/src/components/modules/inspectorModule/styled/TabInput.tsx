@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const FragmentInput = styled.input`
+const TabInput = styled.input`
   border: 1px solid #898787;
   box-sizing: border-box;
   border-radius: 5px;
@@ -10,6 +10,7 @@ const FragmentInput = styled.input`
     props.height ? props.height : "31"}px;
   width: ${(props: { width: string }) => (props.width ? props.width : "183")}px;
   margin-bottom: 10px;
+  padding: 5px;
 `;
 
-export default FragmentInput;
+export default TabInput;

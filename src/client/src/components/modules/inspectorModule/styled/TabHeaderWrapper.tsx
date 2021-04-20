@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const FragmentHeaderWrapper = styled.div`
+const TabHeaderWrapper = styled.div`
   background-color: #f2f2f2;
   color: #000;
   height: 35px;
@@ -10,4 +10,4 @@ const FragmentHeaderWrapper = styled.div`
   box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.15);
 `;
 
-export default FragmentHeaderWrapper;
+export default TabHeaderWrapper;

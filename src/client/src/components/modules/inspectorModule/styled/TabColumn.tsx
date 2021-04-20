@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const FragmentColumn = styled.div`
+const TabColumn = styled.div`
   padding-top: 15px;
   padding-left: 15px;
   min-width: 200px;
@@ -8,4 +8,4 @@ const FragmentColumn = styled.div`
   right:${(props) => (props.position ? "351" : "0")}px;
 `;
 
-export default FragmentColumn;
+export default TabColumn;
