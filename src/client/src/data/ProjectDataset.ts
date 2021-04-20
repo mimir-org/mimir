@@ -21,6 +21,7 @@ export default class ProjectDataset {
             ],
             icon: ICON_TYPE.FUNCTION_ICON,
             isHidden: false,
+            isSelected: false,
           },
           {
             id: createId(),
@@ -33,6 +34,7 @@ export default class ProjectDataset {
             ],
             icon: ICON_TYPE.PRODUCT_ICON,
             isHidden: false,
+            isSelected: false,
           },
           {
             id: createId(),
@@ -45,6 +47,7 @@ export default class ProjectDataset {
             ],
             icon: ICON_TYPE.LOCATION_ICON,
             isHidden: false,
+            isSelected: false,
           },
         ],
         edges: [],
@@ -73,6 +76,7 @@ export default class ProjectDataset {
               position: { x: 150, y: 5 },
               icon: ICON_TYPE.FUNCTION_ICON,
               isHidden: false,
+              isSelected: false,
               connectors: [
                 {
                   id: "38f08e68-b8f8-62cd-b710-9a6e8ca97b06",
@@ -89,6 +93,7 @@ export default class ProjectDataset {
               position: { x: 600, y: 5 },
               icon: ICON_TYPE.PRODUCT_ICON,
               isHidden: false,
+              isSelected: false,
               connectors: [
                 {
                   id: createId(),
@@ -105,6 +110,7 @@ export default class ProjectDataset {
               position: { x: 1050, y: 5 },
               icon: ICON_TYPE.LOCATION_ICON,
               isHidden: false,
+              isSelected: false,
               connectors: [
                 {
                   id: createId(),
@@ -121,6 +127,7 @@ export default class ProjectDataset {
               position: { x: 50, y: 150 },
               icon: ICON_TYPE.FUNCTION_ICON,
               isHidden: false,
+              isSelected: false,
               connectors: [
                 {
                   id: "C02AD125-8619-4C8C-841D-FBED1588F6A4",
@@ -147,6 +154,7 @@ export default class ProjectDataset {
               position: { x: 50, y: 300 },
               icon: ICON_TYPE.FUNCTION_ICON,
               isHidden: false,
+              isSelected: false,
               connectors: [
                 {
                   id: "C02AD125-8619-4C8C-841D-FBED1588F6A4b",
@@ -174,6 +182,7 @@ export default class ProjectDataset {
               position: { x: 50, y: 450 },
               icon: ICON_TYPE.FUNCTION_ICON,
               isHidden: false,
+              isSelected: false,
               connectors: [
                 {
                   id: "C02AD125-8619-4C8C-841D-FBED1588F6A4bzz",
@@ -200,6 +209,7 @@ export default class ProjectDataset {
               position: { x: 250, y: 150 },
               icon: ICON_TYPE.FUNCTION_ICON,
               isHidden: false,
+              isSelected: false,
               connectors: [
                 {
                   id: "6A29EC2B-7DA8-4EC4-8C0A-FFAE083930C9",
@@ -226,6 +236,7 @@ export default class ProjectDataset {
               position: { x: 250, y: 300 },
               icon: ICON_TYPE.FUNCTION_ICON,
               isHidden: false,
+              isSelected: false,
               connectors: [
                 {
                   id: "DCAE455A-EC46-4FFA-BCE5-958B5AC557B4",
