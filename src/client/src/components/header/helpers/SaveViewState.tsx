@@ -6,10 +6,10 @@ import {
 const SaveViewState = (key: string) => {
   if (key === "treeview") {
     saveStateToStorage(true, key);
-    saveStateToStorage(false, "diagram");
+    saveStateToStorage(false, "blockview");
   }
 
-  if (key === "diagram") {
+  if (key === "blockview") {
     saveStateToStorage(true, key);
     saveStateToStorage(false, "treeview");
   }
@@ -17,10 +17,10 @@ const SaveViewState = (key: string) => {
   if (key === "switch") {
     if (loadStateFromStorage("treeview") === true) {
       saveStateToStorage(false, "treeview");
-      saveStateToStorage(true, "diagram");
-      key = "diagram";
+      saveStateToStorage(true, "blockview");
+      key = "blockview";
     } else {
-      saveStateToStorage(false, "diagram");
+      saveStateToStorage(false, "blockview");
       saveStateToStorage(true, "treeview");
       key = "treeview";
     }
