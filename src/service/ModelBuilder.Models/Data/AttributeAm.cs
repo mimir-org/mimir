@@ -12,6 +12,10 @@ namespace Mb.Models.Data
         
         public string Unit { get; set; }
 
+        public AttributeTypeAm Type { get; set; }
+
+        public AttributeInputTypeAm InputType { get; set; }
+
         [Required]
         public string NodeId { get; set; }
     }

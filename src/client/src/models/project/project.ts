@@ -89,6 +89,7 @@ export interface Position {
 export interface Attribute {
     key: string;
     value: string;
+    unit: string;
     type: AttributeType,
     inputType: AttributeInputType
 }

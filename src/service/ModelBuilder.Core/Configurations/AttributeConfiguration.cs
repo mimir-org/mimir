@@ -13,8 +13,10 @@ namespace Mb.Core.Configurations
             builder.Property(p => p.Key).HasColumnName("Key").IsRequired();
             builder.Property(p => p.Value).HasColumnName("Value");
             builder.Property(p => p.Unit).HasColumnName("Unit");
-            builder.Property(p => p.NodeId).HasColumnName("NodeId").IsRequired();
+            builder.Property(p => p.Type).HasColumnName("Type");
+            builder.Property(p => p.InputType).HasColumnName("InputType");
 
+            builder.Property(p => p.NodeId).HasColumnName("NodeId").IsRequired();
             builder.HasOne(x => x.Node).WithMany(y => y.Attributes).HasForeignKey(x => x.NodeId).OnDelete(DeleteBehavior.Cascade);
         }
     }
