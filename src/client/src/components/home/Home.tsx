@@ -20,7 +20,6 @@ const Home = () => {
   }, [dispatch]);
 
   const params = useParams<RouteParams>();
-  console.log("test : ", params);
 
   return (
     <div className="home_container">

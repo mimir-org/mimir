@@ -6,7 +6,7 @@ import {
 } from "./components";
 
 const InspectorComponents = () => {
-  //   const nodes = GetNodes();
+  const nodes = GetNodes();
   //   const activeNode = nodes.find((node) => node.isSelected).id;
 
   return (

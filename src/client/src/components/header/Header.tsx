@@ -37,7 +37,6 @@ const Header = () => {
         <TitleWrapper>
           <Typography>{textResources.MainHeader_App_Name}</Typography>
         </TitleWrapper>
-
         <IconsWrapper>
           <TreeviewWrapper>
             <img src={TreeviewIcon} alt="treeview" onClick={handleClick} />

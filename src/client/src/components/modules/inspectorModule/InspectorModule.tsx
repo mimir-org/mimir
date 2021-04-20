@@ -1,3 +1,5 @@
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
 import AnimatedMenu from "./styled/animated/AnimatedMenu";
 import { ToggleInspectorButton } from "../../../assets/buttons";
 import { useState } from "react";
@@ -17,6 +19,11 @@ const InspectorModule = () => {
   const [showInspector, setShowInspector] = useState(loadStateFromStorage(key));
   const [animate, setAnimate] = useState(false);
 
+  const hasProject = useSelector<RootState>(
+    (state) => state.projectState.project !== null
+  );
+  console.log("has project: ", hasProject);
+
   const handleClick = () => {
     saveStateToStorage(!showInspector, key);
     setShowInspector(!showInspector);
@@ -30,7 +37,7 @@ const InspectorModule = () => {
     <>
       <AnimatedMenu start={startHeight} stop={stopHeight} run={animate}>
         <FragmentHeaderWrapper>
-          <InspectorComponents />
+          {hasProject && <InspectorComponents />}
           <ToggleInspectorButton
             visible={showInspector}
             onClick={handleClick}
