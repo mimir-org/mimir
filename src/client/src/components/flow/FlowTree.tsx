@@ -162,7 +162,6 @@ const FlowTree = () => {
   }, [onLoad, reactFlowInstance]);
 
   const onElementClick = (event, element) => {
-    console.log("click", element.id);
     // dispatch(changeSelectedNode(element.id));
   };
 
