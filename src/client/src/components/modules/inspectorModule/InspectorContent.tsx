@@ -11,7 +11,7 @@ interface Props {
 const InspectorContent = ({ width, height, node }: Props) => {
   return (
     <TabColumn>
-      {node !== undefined &&
+      {node &&
         node.attributes.map((j, i) => (
           <div key={createId()}>
             <TabParagraph>{node.attributes[i].key}</TabParagraph>
