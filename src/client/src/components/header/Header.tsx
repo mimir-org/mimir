@@ -7,15 +7,12 @@ import { loadStateFromStorage } from "../../redux/store/localStorage/localStorag
 import {
   TreeviewIcon,
   BlockviewIcon,
-  VisualFilterIcon,
   SwitchOnIcon,
   SwitchOffIcon,
 } from "../../assets/index";
 import {
-  TextWrapper,
   BlockviewWrapper,
   TreeviewWrapper,
-  VisualIconWrapper,
   TitleWrapper,
   IconsWrapper,
   SwitchWrapper,
@@ -56,13 +53,6 @@ const Header = () => {
             )}
           </SwitchWrapper>
         </IconsWrapper>
-
-        <VisualIconWrapper>
-          <img src={VisualFilterIcon} alt="visualfilter" onClick={() => null} />
-        </VisualIconWrapper>
-        <TextWrapper>
-          <Typography>{textResources.MainHeader_VisualFilter}</Typography>
-        </TextWrapper>
       </Toolbar>
     </AppBar>
   );

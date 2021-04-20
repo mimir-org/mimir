@@ -5,6 +5,8 @@ import { TreeviewComponent } from "..";
 import { ExplorerModule } from "../modules/explorerModule";
 import { InspectorModule } from "../modules/inspectorModule";
 import { LibraryModule } from "../modules/libraryModule";
+import { FilterModule } from "../modules/filterModule";
+
 import { getUser } from "../../redux/store/user/actions";
 
 interface RouteParams {
@@ -33,6 +35,7 @@ const Home = () => {
         </div>
         <InspectorModule />
       </div>
+      <FilterModule />
       <LibraryModule />
     </div>
   );
