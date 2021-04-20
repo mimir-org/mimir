@@ -57,6 +57,7 @@ export const CreateElementNode = (node: Node): FlowElement => {
     data: node,
     position: node.position,
     isHidden: node.isHidden,
+    isSelected: node.isSelected,
   };
 
   return elementNode;

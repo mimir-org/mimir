@@ -12,12 +12,11 @@ import ReactFlow, {
 
 import {
   addNode,
-  create,
   removeNode,
   createEdge,
   removeEdge,
-  get,
   updatePosition,
+  changeSelectedNode,
 } from "../../redux/store/project/actions";
 import { ProjectState } from "../../redux/store/project/types";
 import { RootState } from "./../../redux/store/index";
@@ -47,12 +46,12 @@ const FlowTree = () => {
   const dispatch = useDispatch();
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
+  const [elements, setElements] = useState<Elements>();
+
   const projectState = useSelector<RootState>(
     (state) => state.projectState
   ) as ProjectState;
-  const [elements, setElements] = useState<Elements>();
 
-  //On connect
   const onConnect = (params) => {
     const createdId = createId();
     const sourceNode = projectState.project.nodes.find(
@@ -103,7 +102,6 @@ const FlowTree = () => {
     });
   };
 
-  // On element remove
   const onElementsRemove = (elementsToRemove) => {
     elementsToRemove.forEach((element) => {
       if (element.type === EDGE_TYPE.DEFAULT) {
@@ -116,7 +114,6 @@ const FlowTree = () => {
     return setElements((els) => removeElements(elementsToRemove, els));
   };
 
-  // On load
   const onLoad = useCallback(
     (_reactFlowInstance) => {
       setElements(CreateProjectNodes(projectState.project));
@@ -125,7 +122,6 @@ const FlowTree = () => {
     [projectState.project]
   );
 
-  // On drag over
   const onDragOver = (event) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = "move";
@@ -135,7 +131,6 @@ const FlowTree = () => {
     dispatch(updatePosition(node.id, node.position.x, node.position.y));
   };
 
-  // On drop
   const onDrop = (event) => {
     event.preventDefault();
     const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
@@ -166,6 +161,11 @@ const FlowTree = () => {
     onLoad(reactFlowInstance);
   }, [onLoad, reactFlowInstance]);
 
+  const onElementClick = (event, element) => {
+    console.log("click", element.id);
+    // dispatch(changeSelectedNode(element.id));
+  };
+
   return (
     <div className="dndflow">
       {projectState.project && (
@@ -179,6 +179,7 @@ const FlowTree = () => {
               onDrop={onDrop}
               onDragOver={onDragOver}
               onNodeDragStop={onNodeDragStop}
+              onElementClick={onElementClick}
               nodeTypes={nodeTypes}
               edgeTypes={edgeTypes}
             >
