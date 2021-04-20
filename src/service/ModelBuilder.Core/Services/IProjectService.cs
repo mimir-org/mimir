@@ -13,5 +13,6 @@ namespace Mb.Core.Services
         Task<ProjectAm> CreateNewProject(string name, string description);
         Task<ProjectAm> UpdateProject(ProjectAm project);
         Project CreateInitProject(string name, string description);
+        IEnumerable<LibNodeAm> GetLibNodes(string searchString);
     }
 }

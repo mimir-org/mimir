@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -17,12 +15,14 @@ namespace Mb.Core.Services
     public class ProjectService : IProjectService
     {
         private readonly IProjectRepository _projectRepository;
+        private readonly ILibraryRepository _libraryRepository;
         private readonly IMapper _mapper;
 
-        public ProjectService(IProjectRepository projectRepository, IMapper mapper)
+        public ProjectService(IProjectRepository projectRepository, IMapper mapper, ILibraryRepository libraryRepository)
         {
             _projectRepository = projectRepository;
             _mapper = mapper;
+            _libraryRepository = libraryRepository;
         }
 
         public IEnumerable<ProjectSimpleAm> GetProjectList()
@@ -84,6 +84,11 @@ namespace Mb.Core.Services
             };
 
             return project;
+        }
+
+        public IEnumerable<LibNodeAm> GetLibNodes(string searchString)
+        {
+            return _mapper.Map<IEnumerable<LibNodeAm>>(_libraryRepository.GetAll(searchString));
         }
 
         private Node CreateInitAspectNode(NodeType nodeType)

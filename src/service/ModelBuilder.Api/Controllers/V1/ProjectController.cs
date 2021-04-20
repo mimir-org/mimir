@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Mb.Api.Controllers.V1
 {
@@ -19,6 +20,7 @@ namespace Mb.Api.Controllers.V1
     [ApiController]
     [ApiVersion("0.1")]
     [Route("V{version:apiVersion}/[controller]")]
+    [SwaggerTag("Project")]
     public class ProjectController : ControllerBase
     {
         private readonly IProjectService _projectService;

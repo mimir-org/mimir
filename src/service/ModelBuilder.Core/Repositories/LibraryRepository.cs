@@ -1,0 +1,172 @@
+﻿using System.Collections.Generic;
+using Mb.Core.Enums;
+using Mb.Core.Models;
+using Attribute = Mb.Core.Models.Attribute;
+
+namespace Mb.Core.Repositories
+{
+    public class LibraryRepository : ILibraryRepository
+    {
+        public IEnumerable<LibNode> GetAll(string searchString)
+        {
+            // TODO: Fetch data from external lib service
+            return GenerateTestNodes();
+        }
+
+        private static IEnumerable<LibNode> GenerateTestNodes()
+        {
+            var seperatorNode = new LibNode
+            {
+                Id = "123",
+                Name = "Separation System (20)",
+                Category = "Main Process Systems",
+                Icon = IconType.FunctionIcon,
+                Label = "Separation System (20)",
+                Connectors = new List<Connector>
+                {
+                    new Connector
+                    {
+                        Id = "SS20_123",
+                        Name = "WellFluid",
+                        NodeId = "",
+                        Type = ConnectorType.TransportInput
+                    },
+                    new Connector
+                    {
+                        Id = "SS20_1234",
+                        Name = "Gas",
+                        NodeId = "",
+                        Type = ConnectorType.TransportOutput
+                    },
+                    new Connector
+                    {
+                        Id = "SS20_12345",
+                        Name = "Oil",
+                        NodeId = "",
+                        Type = ConnectorType.TransportOutput
+                    },
+                    new Connector
+                    {
+                        Id = "C02AD125-8619-4C8C-841D-FBED1588F6A4",
+                        Name = "",
+                        NodeId = "",
+                        Type = ConnectorType.PartofInput
+                    },
+                    new Connector
+                    {
+                        Id = "16B36F07-2885-4DB6-AAF7-A3122B740EB4",
+                        Name = "",
+                        NodeId = "",
+                        Type = ConnectorType.PartofOutput
+                    },
+                    new Connector
+                    {
+                        Id = "31A53D61-0D3F-4CA8-A693-C797CDA5F89D",
+                        Name = "",
+                        NodeId = "",
+                        Type = ConnectorType.RelationOutput
+                    }
+
+                },
+                Type = NodeType.Function,
+                Attributes = new List<Attribute>
+                {
+                    new Attribute
+                    {
+                        NodeId = "",
+                        Type = AttributeType.AdminInfo,
+                        Key = "ID",
+                        Value = "=KC2",
+                        InputType = AttributeInputType.Text,
+                        Unit = null
+                    },
+                    new Attribute
+                    {
+                        NodeId = "",
+                        Type = AttributeType.AdminInfo,
+                        Key = "Semantic ID",
+                        Value = "http://vg.no",
+                        InputType = AttributeInputType.Text,
+                        Unit = null
+                    },
+                    new Attribute
+                    {
+                        NodeId = "",
+                        Type = AttributeType.TechInfo,
+                        Key = "Maximum gas processing capacity",
+                        Value = "2000000",
+                        InputType = AttributeInputType.Text,
+                        Unit = "Cubic"
+                    }
+                }
+            };
+
+            yield return seperatorNode;
+
+            var productNode = new LibNode
+            {
+                Id = "789",
+                Name = "SQ Motor",
+                Category = "Motors",
+                Icon = IconType.ProductIcon,
+                Label = "IC411 SQ Motor",
+                Connectors = new List<Connector>
+                {
+                    new Connector
+                    {
+                        Id = "6BB587DF-6FCF-4C75-B16B-6E7FAEF936ED",
+                        Name = "",
+                        NodeId = "",
+                        Type = ConnectorType.PartofInput
+                    },
+                    new Connector
+                    {
+                        Id = "AB15C15A-079C-4D07-808D-20948D209872",
+                        Name = "",
+                        NodeId = "",
+                        Type = ConnectorType.PartofOutput
+                    },
+                    new Connector
+                    {
+                        Id = "547B96ED-0A77-465F-9F9C-18E9876CA1FE",
+                        Name = "",
+                        NodeId = "",
+                        Type = ConnectorType.RelationInput
+                    },
+                    new Connector
+                    {
+                        Id = "0600DC82-3103-426A-B0C0-F8C35BAA46FF",
+                        Name = "",
+                        NodeId = "",
+                        Type = ConnectorType.RelationOutput
+                    }
+
+                },
+                Type = NodeType.Product,
+                Attributes = new List<Attribute>
+                {
+                    new Attribute
+                    {
+                        NodeId = "",
+                        Type = AttributeType.AdminInfo,
+                        Key = "ID",
+                        Value = "-KC1",
+                        InputType = AttributeInputType.Text,
+                        Unit = null
+                    },
+                    new Attribute
+                    {
+                        NodeId = "",
+                        Type = AttributeType.AdminInfo,
+                        Key = "Semantic ID",
+                        Value = "http://vg.no",
+                        InputType = AttributeInputType.Text,
+                        Unit = null
+                    }
+                }
+            };
+
+            yield return productNode;
+        }
+    }
+}

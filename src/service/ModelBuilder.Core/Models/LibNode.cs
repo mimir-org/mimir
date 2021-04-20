@@ -8,7 +8,7 @@ namespace Mb.Core.Models
         public string Id { get; set; }
         public string Name { get; set; }
         public string Label { get; set; }
-        public string Icon { get; set; }
+        public IconType Icon { get; set; }
         public NodeType Type { get; set; }
         public ICollection<Connector> Connectors { get; set; }
         public string Category { get; set; }
