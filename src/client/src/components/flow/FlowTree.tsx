@@ -156,14 +156,14 @@ const FlowTree = () => {
     setElements((es) => es.concat(CreateElementNode(node)));
   };
 
+  const onElementClick = (event, element) => {
+    dispatch(changeSelectedNode(element.id));
+  };
+
   // Force rerender
   useEffect(() => {
     onLoad(reactFlowInstance);
   }, [onLoad, reactFlowInstance]);
-
-  const onElementClick = (event, element) => {
-    // dispatch(changeSelectedNode(element.id));
-  };
 
   return (
     <div className="dndflow">
