@@ -64,6 +64,7 @@ namespace Mb.Modules.AzureActiveDirectory.Extensions
 
                 c.IncludeXmlComments(xmlPath, true);
                 c.CustomSchemaIds(x => x.FullName);
+                c.EnableAnnotations();
 
                 c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                 {
@@ -85,6 +86,7 @@ namespace Mb.Modules.AzureActiveDirectory.Extensions
                     }] = new string[] { }
                 });
             });
+            services.AddSwaggerGenNewtonsoftSupport();
 
 
             return (swaggerConfiguration, activeDirectoryConfiguration);
