@@ -150,6 +150,7 @@ const FlowTree = () => {
       type: data.type as NodeType,
       position: position,
       connectors: data.connectors,
+      attributes: data.attributes,
       icon: data.icon,
     } as Node;
     dispatch(addNode(node));
