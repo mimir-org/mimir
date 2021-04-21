@@ -2,9 +2,10 @@
 {
     public enum TerminalCategory
     {
-        Forces = 0,
-        Information = 1,
-        Energy = 2,
-        MaterialFlow = 3
+        NotSet = 0,
+        Forces = 1,
+        Information = 2,
+        Energy = 3,
+        MaterialFlow = 4
     }
 }

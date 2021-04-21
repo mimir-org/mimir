@@ -4,8 +4,8 @@ namespace Mb.Core.Models
 {
     public class Terminal
     {
-        public TerminalType TerminalType { get; set; }
-        public TerminalCategory TerminalCategory { get; set; }
-        public TerminalDirection TerminalDirection { get; set; }
+        public TerminalCategory Category { get; set; }
+        public TerminalSubCategory SubCategory { get; set; }
+        public TerminalType Type { get; set; }
     }
 }

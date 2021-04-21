@@ -1,9 +1,10 @@
 ﻿namespace Mb.Core.Enums
 {
-    public enum AttributeType
+    public enum AttributeInputType
     {
-        AdminInfo = 0,
-        TechInfo = 1,
-        Relations = 2
+        Text = 0,
+        LongText = 1,
+        Dropdown = 2,
+        Date = 3
     }
 }
