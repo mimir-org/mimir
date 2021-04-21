@@ -8,6 +8,8 @@ namespace Mb.Core.Models
         public string Id { get; set; } = Guid.NewGuid().ToString();
         public string Name { get; set; }
         public string Description { get; set; }
+        public string ProjectOwner { get; set; }
+        public DateTime? LastEdited { get; set; }
         public virtual ICollection<Node> Nodes { get; set; }
         public virtual ICollection<Edge> Edges { get; set; }
     }
