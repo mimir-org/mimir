@@ -50,13 +50,61 @@ export const ICON_TYPE = {
 export type ConnectorType = keyof typeof CONNECTOR_TYPE;
 
 export const CONNECTOR_TYPE = {
-    RELATION_INPUT: "RelationInput",
-    RELATION_OUTPUT: "RelationOutput",
-    TRANSPORT_INPUT: "TransportInput",
-    TRANSPORT_OUTPUT: "TransportOutput",
-    PARTOF_INPUT: "PartofInput",
-    PARTOF_OUTPUT: "PartofOutput",
+    INPUT: "Input",
+    OUTPUT: "Output",
 };
+
+export type TerminalType = keyof typeof TERMINAL_TYPE;
+
+export const TERMINAL_TYPE = {
+    NotSet: "NotSet",
+    Electric: "Electric",
+    Thermal: "Thermal",
+    Solar: "Solar",
+    Mechanical: "Mechanical",
+    Sound: "Sound",
+    Wind: "Wind",
+    HydroPower: "HydroPower",
+    Fluid: "Fluid",
+    DryGranulated: "DryGranulated",
+    SolidPieces: "SolidPieces",
+    Bracket: "Bracket",
+    Bolts: "Bolts",
+    Flanges: "Flanges",
+    Sensor: "Sensor",
+    Water: "Water",
+    Oil: "Oil",
+    ChemicalFluids: "ChemicalFluids",
+    MultiphaseFluids: "MultiphaseFluids",
+    WetGas: "WetGas",
+    Vapour: "Vapour",
+    Gas: "Gas",
+    Sand: "Sand",
+    Powder: "Powder",
+    Bricks: "Bricks",
+    Boxes: "Boxes",
+    Pieces: "Pieces",
+};
+
+export type TerminalCategory = keyof typeof TERMINAL_CATEGORY;
+
+export const TERMINAL_CATEGORY = {
+    NotSet: "NotSet",
+    Forces: "Forces",
+    Information: "Information",
+    Energy: "Energy",
+    MaterialFlow: "MaterialFlow",
+};
+
+export type RelationType = keyof typeof RELATION_TYPE;
+
+export const RELATION_TYPE = {
+    NotSet: "NotSet",
+    Relation: "Relation",
+    PartOf: "PartOf",
+    Transport: "Transport",
+};
+
 export interface Project {
     id: string;
     name: string;
@@ -68,6 +116,9 @@ export interface Connector {
     id: string;
     name: string;
     type: ConnectorType;
+    terminalCategory: TerminalCategory;
+    terminalType: TerminalType;
+    relationType: RelationType;
 }
 
 export interface Edge {
