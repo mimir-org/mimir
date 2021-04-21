@@ -23,7 +23,7 @@ const authenticationParameters = {
 };
 
 const commonMsalOptions = {
-    loginType: LoginType.Popup,
+    loginType: LoginType.Redirect,
     tokenRefreshUri: window.location.origin + '/'
 }
 
