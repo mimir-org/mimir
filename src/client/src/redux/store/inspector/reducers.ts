@@ -5,15 +5,11 @@ export const INSPECTOR_ELEMENT_CHANGED_COMPLETED =
 const initialState = {
   list: [
     {
-      type: "object",
+      type: "admin",
       visible: false,
     },
     {
-      type: "header",
-      visible: false,
-    },
-    {
-      type: "body",
+      type: "tech",
       visible: false,
     },
     {
@@ -35,7 +31,7 @@ const initialState = {
   ],
 };
 
-const inspectorReducer = (state = initialState, action) => {
+export const inspectorReducer = (state = initialState, action) => {
   switch (action.type) {
     case INSPECTOR_ELEMENT_CHANGED_COMPLETED:
       return {

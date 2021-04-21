@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const FragmentHeader = styled.div`
+const TabHeader = styled.div`
   display: inline-block;
   height: 35.4px;
   box-sizing: border-box;
@@ -27,4 +27,4 @@ const FragmentHeader = styled.div`
   }
 `;
 
-export default FragmentHeader;
+export default TabHeader;

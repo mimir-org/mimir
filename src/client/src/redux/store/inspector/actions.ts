@@ -1,4 +1,4 @@
-import { INSPECTOR_ELEMENT_CHANGED_COMPLETED } from "../reducers/inspectorReducer";
+import { INSPECTOR_ELEMENT_CHANGED_COMPLETED } from "../inspector/reducers";
 
 export function changeInspector(index: number, list) {
   if (list.length > 1) {

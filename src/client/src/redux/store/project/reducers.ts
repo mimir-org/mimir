@@ -13,6 +13,7 @@ import {
   UPDATE_POSITION,
   CHANGE_NODE_VISIBILITY,
   CHANGE_EDGE_VISIBILITY,
+  CHANGE_ACTIVE_NODE,
 } from "./types";
 
 const initialState: ProjectState = {
@@ -212,6 +213,20 @@ export function projectReducer(
               : edges
           ),
           nodes: state.project.nodes,
+        },
+      };
+
+    case CHANGE_ACTIVE_NODE:
+      const id = action.payload.nodeId;
+      return {
+        ...state,
+        project: {
+          nodes: state.project.nodes.map((nodes, i) =>
+            state.project.nodes[i].id === id
+              ? { ...nodes, isSelected: true }
+              : { ...nodes, isSelected: false }
+          ),
+          edges: state.project.edges,
         },
       };
 

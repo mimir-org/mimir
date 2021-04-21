@@ -8,7 +8,6 @@ const Function: FC<NodeProps> = ({ data }) => {
       {data.connectors &&
         data.connectors.map((connector) => {
           const [typeHandler, positionHandler] = processType(connector);
-          console.log(connector.type);
           return (
             <Handle
               type={typeHandler}

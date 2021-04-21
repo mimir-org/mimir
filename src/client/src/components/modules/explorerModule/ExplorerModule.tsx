@@ -1,8 +1,8 @@
-import { ExplorerIcon } from "../../../assets";
-import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import FacilityComponent from "./facilityComponent/FacilityComponent";
+import { useState } from "react";
+import { ExplorerIcon } from "../../../assets";
+import ProjectComponent from "./projectComponent/ProjectComponent";
 import { SwitchViewComponent } from "./switchviewComponent/SwitchViewComponent";
 import textResources from "../../../textResources";
 import { ToggleExplorerButton } from "../../../assets/buttons/index";
@@ -51,7 +51,7 @@ export const ExplorerModule = () => {
       </CollapsedIcon>
       {hasProject && (
         <ContentWrapper visible={isOpen}>
-          <FacilityComponent />
+          <ProjectComponent />
         </ContentWrapper>
       )}
       <FooterWrapper visible={isOpen}>

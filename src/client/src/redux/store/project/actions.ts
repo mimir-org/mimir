@@ -8,6 +8,7 @@ import {
   UPDATE_POSITION,
   CHANGE_NODE_VISIBILITY,
   CHANGE_EDGE_VISIBILITY,
+  CHANGE_ACTIVE_NODE,
   ProjectActionTypes,
 } from "./types";
 
@@ -87,5 +88,12 @@ export function changeEdgeVisibility(edgeId: string, isHidden: boolean) {
   return {
     type: CHANGE_EDGE_VISIBILITY,
     payload: { edgeId, isHidden: isHidden },
+  };
+}
+
+export function changeActiveNode(nodeId: string) {
+  return {
+    type: CHANGE_ACTIVE_NODE,
+    payload: { nodeId },
   };
 }

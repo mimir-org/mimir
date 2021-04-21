@@ -6,7 +6,6 @@ import { ExplorerModule } from "../modules/explorerModule";
 import { InspectorModule } from "../modules/inspectorModule";
 import { LibraryModule } from "../modules/libraryModule";
 import { FilterModule } from "../modules/filterModule";
-
 import { getUser } from "../../redux/store/user/actions";
 
 interface RouteParams {
@@ -30,7 +29,7 @@ const Home = () => {
           <>
             {params.type === "treeview" && <TreeviewComponent />}
             {/* BlockView kommer her */}
-            {params.type === "diagram" && <TreeviewComponent />}
+            {params.type === "blockview" && <TreeviewComponent />}
           </>
         </div>
         <InspectorModule />

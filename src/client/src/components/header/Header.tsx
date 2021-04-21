@@ -20,15 +20,15 @@ import {
 
 const Header = () => {
   const { push } = useHistory();
-  const [showDiagram, setShowDiagram] = useState(
-    loadStateFromStorage("diagram")
+  const [showBlockView, setShowBlockView] = useState(
+    loadStateFromStorage("blockview")
   );
 
   const handleClick = (e) => {
     const key = e.target.alt;
     const view = SaveViewState(key);
     push(`/home/${view}`);
-    setShowDiagram(loadStateFromStorage("diagram"));
+    setShowBlockView(loadStateFromStorage("blockview"));
   };
 
   return (
@@ -37,16 +37,15 @@ const Header = () => {
         <TitleWrapper>
           <Typography>{textResources.MainHeader_App_Name}</Typography>
         </TitleWrapper>
-
         <IconsWrapper>
           <TreeviewWrapper>
             <img src={TreeviewIcon} alt="treeview" onClick={handleClick} />
           </TreeviewWrapper>
           <BlockviewWrapper>
-            <img src={BlockviewIcon} alt="diagram" onClick={handleClick} />
+            <img src={BlockviewIcon} alt="blockview" onClick={handleClick} />
           </BlockviewWrapper>
           <SwitchWrapper>
-            {showDiagram ? (
+            {showBlockView ? (
               <img src={SwitchOnIcon} alt="switch" onClick={handleClick} />
             ) : (
               <img src={SwitchOffIcon} alt="switch" onClick={handleClick} />

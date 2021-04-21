@@ -4,9 +4,10 @@ import { isAspectNode } from "../../../flow/utils";
 const SetIndentLevel = (facets: Node[], edges: Edge[], i: number) => {
   let indentCount = 0;
   const facetId = facets[i].id;
-
   let edge = edges.find((edge: { toNode: string }) => edge.toNode === facetId);
+
   if (edge === undefined) return null;
+
   indentCount++;
 
   let id = edge.fromNode;

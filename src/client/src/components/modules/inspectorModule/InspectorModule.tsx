@@ -1,12 +1,14 @@
-import { InspectorHeader } from ".";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
 import AnimatedMenu from "./styled/animated/AnimatedMenu";
 import { ToggleInspectorButton } from "../../../assets/buttons";
 import { useState } from "react";
 import { EyeIcon } from "../../../assets";
 import { IconWrapper } from "./styled";
 import textResources from "../../../textResources";
-import { FragmentHeaderWrapper } from "./fragments/styled";
+import { TabHeaderWrapper } from "./styled";
 import { InspectorTitle } from "./styled";
+import InspectorComponents from "./InspectorComponents";
 import {
   loadStateFromStorage,
   saveStateToStorage,
@@ -16,6 +18,10 @@ const InspectorModule = () => {
   const key = "inspector";
   const [showInspector, setShowInspector] = useState(loadStateFromStorage(key));
   const [animate, setAnimate] = useState(false);
+
+  const hasProject = useSelector<RootState>(
+    (state) => state.projectState.project !== null
+  );
 
   const handleClick = () => {
     saveStateToStorage(!showInspector, key);
@@ -29,8 +35,8 @@ const InspectorModule = () => {
   return (
     <>
       <AnimatedMenu start={startHeight} stop={stopHeight} run={animate}>
-        <FragmentHeaderWrapper>
-          <InspectorHeader />
+        <TabHeaderWrapper>
+          {hasProject && <InspectorComponents />}
           <ToggleInspectorButton
             visible={showInspector}
             onClick={handleClick}
@@ -39,7 +45,7 @@ const InspectorModule = () => {
             <InspectorTitle>{textResources.Inspector_Heading}</InspectorTitle>
             <img src={EyeIcon} alt="inspector-icon" />
           </IconWrapper>
-        </FragmentHeaderWrapper>
+        </TabHeaderWrapper>
       </AnimatedMenu>
     </>
   );

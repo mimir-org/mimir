@@ -1,18 +1,18 @@
-import "./facility.scss";
+import "./project.scss";
 import AspectComponent from "../aspectComponent/AspectComponent";
-import CheckboxComponent from "../checkboxComponent/CheckboxComponent";
-import { AspectWrapper, FacilityHeader } from "../styled";
+// import CheckboxComponent from "../checkboxComponent/CheckboxComponent";
+import { AspectWrapper, ProjectHeader } from "../styled";
 import { GetNodes } from "../../../flow/helpers";
 import { isAspectNode } from "../../../flow/utils";
 
-export const FacilityComponent = () => {
+export const ProjectComponent = () => {
   const aspects = GetNodes();
 
   return (
     <>
-      <FacilityHeader>
-        {/* <CheckboxComponent id="1" inputLabel="Facility" /> */}
-      </FacilityHeader>
+      <ProjectHeader>
+        {/* <CheckboxComponent nodeId={null} inputLabel={null} type={null} /> */}
+      </ProjectHeader>
       <AspectWrapper>
         {aspects.map((obj: object, i: number) => {
           if (isAspectNode(aspects[i].type)) {
@@ -32,4 +32,4 @@ export const FacilityComponent = () => {
   );
 };
 
-export default FacilityComponent;
+export default ProjectComponent;

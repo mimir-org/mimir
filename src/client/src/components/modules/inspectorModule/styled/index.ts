@@ -1,3 +1,13 @@
 export { default as StyledInspectorComponent } from "./StyledInspectorComponent";
 export { default as IconWrapper } from "./IconWrapper";
 export { default as InspectorTitle } from "./InspectorTitle";
+export { default as TabHeaderWrapper } from "./TabHeaderWrapper";
+export { default as TabHeader } from "./TabHeader";
+export { default as TabDataWrapper } from "./TabDataWrapper";
+export { default as TabColumn } from "./TabColumn";
+export { default as TabContainer } from "./TabContainer";
+export { default as TabParagraph } from "./TabParagraph";
+export { default as TabInput } from "./TabInput";
+export { default as CustomInput } from "./CustomInput";
+export { default as CustomColumn } from "./CustomColumn";
+export { default as InspectorButton } from "./InspectorButton";
