@@ -141,8 +141,11 @@ namespace Mb.Core.Services
             var connector = new Connector
             {
                 Name = connectorName,
-                Type = ConnectorType.PartofOutput,
-                NodeId = node.Id
+                Type = ConnectorType.Output,
+                NodeId = node.Id,
+                RelationType = RelationType.PartOf,
+                TerminalType = TerminalType.NotSet,
+                TerminalCategory = TerminalCategory.NotSet
             };
 
             node.Connectors.Add(connector);

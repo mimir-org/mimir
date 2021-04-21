@@ -1,6 +1,6 @@
-﻿namespace Mb.Core.Enums
+﻿namespace Mb.Models.Data
 {
-    public enum TerminalType
+    public enum TerminalTypeAm
     {
         NotSet = 0,
         Electric = 1,

@@ -14,6 +14,10 @@ namespace Mb.Core.Configurations
             builder.Property(p => p.Name).HasColumnName("Name").IsRequired();
             builder.Property(p => p.Type).HasColumnName("Type").IsRequired().HasConversion<string>();
             builder.Property(p => p.NodeId).HasColumnName("NodeId").IsRequired();
+            
+            builder.Property(p => p.TerminalType).HasColumnName("TerminalType").IsRequired().HasConversion<string>();
+            builder.Property(p => p.TerminalCategory).HasColumnName("TerminalCategory").IsRequired().HasConversion<string>();
+            builder.Property(p => p.RelationType).HasColumnName("RelationType").IsRequired().HasConversion<string>();
 
             builder.HasOne(x => x.Node).WithMany(y => y.Connectors).HasForeignKey(x => x.NodeId).OnDelete(DeleteBehavior.Cascade);
         }

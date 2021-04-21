@@ -29,42 +29,60 @@ namespace Mb.Core.Repositories
                         Id = "SS20_123",
                         Name = "WellFluid",
                         NodeId = "",
-                        Type = ConnectorType.TransportInput
+                        Type = ConnectorType.Input,
+                        RelationType = RelationType.Transport,
+                        TerminalType = TerminalType.Fluid,
+                        TerminalCategory = TerminalCategory.MaterialFlow
                     },
                     new Connector
                     {
                         Id = "SS20_1234",
                         Name = "Gas",
                         NodeId = "",
-                        Type = ConnectorType.TransportOutput
+                        Type = ConnectorType.Output,
+                        RelationType = RelationType.Transport,
+                        TerminalType = TerminalType.Gas,
+                        TerminalCategory = TerminalCategory.MaterialFlow
                     },
                     new Connector
                     {
                         Id = "SS20_12345",
                         Name = "Oil",
                         NodeId = "",
-                        Type = ConnectorType.TransportOutput
+                        Type = ConnectorType.Output,
+                        RelationType = RelationType.Transport,
+                        TerminalType = TerminalType.Oil,
+                        TerminalCategory = TerminalCategory.MaterialFlow
                     },
                     new Connector
                     {
                         Id = "C02AD125-8619-4C8C-841D-FBED1588F6A4",
                         Name = "",
                         NodeId = "",
-                        Type = ConnectorType.PartofInput
+                        Type = ConnectorType.Input,
+                        RelationType = RelationType.PartOf,
+                        TerminalType = TerminalType.NotSet,
+                        TerminalCategory = TerminalCategory.NotSet
                     },
                     new Connector
                     {
                         Id = "16B36F07-2885-4DB6-AAF7-A3122B740EB4",
                         Name = "",
                         NodeId = "",
-                        Type = ConnectorType.PartofOutput
+                        Type = ConnectorType.Output,
+                        RelationType = RelationType.PartOf,
+                        TerminalType = TerminalType.NotSet,
+                        TerminalCategory = TerminalCategory.NotSet
                     },
                     new Connector
                     {
                         Id = "31A53D61-0D3F-4CA8-A693-C797CDA5F89D",
                         Name = "",
                         NodeId = "",
-                        Type = ConnectorType.RelationOutput
+                        Type = ConnectorType.Output,
+                        RelationType = RelationType.Relation,
+                        TerminalType = TerminalType.NotSet,
+                        TerminalCategory = TerminalCategory.NotSet
                     }
 
                 },
@@ -117,28 +135,40 @@ namespace Mb.Core.Repositories
                         Id = "6BB587DF-6FCF-4C75-B16B-6E7FAEF936ED",
                         Name = "",
                         NodeId = "",
-                        Type = ConnectorType.PartofInput
+                        Type = ConnectorType.Output,
+                        RelationType = RelationType.PartOf,
+                        TerminalType = TerminalType.NotSet,
+                        TerminalCategory = TerminalCategory.NotSet
                     },
                     new Connector
                     {
                         Id = "AB15C15A-079C-4D07-808D-20948D209872",
                         Name = "",
                         NodeId = "",
-                        Type = ConnectorType.PartofOutput
+                        Type = ConnectorType.Output,
+                        RelationType = RelationType.PartOf,
+                        TerminalType = TerminalType.NotSet,
+                        TerminalCategory = TerminalCategory.NotSet
                     },
                     new Connector
                     {
                         Id = "547B96ED-0A77-465F-9F9C-18E9876CA1FE",
                         Name = "",
                         NodeId = "",
-                        Type = ConnectorType.RelationInput
+                        Type = ConnectorType.Input,
+                        RelationType = RelationType.Relation,
+                        TerminalType = TerminalType.NotSet,
+                        TerminalCategory = TerminalCategory.NotSet
                     },
                     new Connector
                     {
                         Id = "0600DC82-3103-426A-B0C0-F8C35BAA46FF",
                         Name = "",
                         NodeId = "",
-                        Type = ConnectorType.RelationOutput
+                        Type = ConnectorType.Output,
+                        RelationType = RelationType.Relation,
+                        TerminalType = TerminalType.NotSet,
+                        TerminalCategory = TerminalCategory.NotSet
                     }
 
                 },

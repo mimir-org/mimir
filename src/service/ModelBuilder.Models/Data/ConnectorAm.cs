@@ -13,6 +13,15 @@ namespace Mb.Models.Data
         public ConnectorTypeAm Type { get; set; }
 
         [Required]
+        public TerminalCategoryAm TerminalCategory { get; set; }
+
+        [Required]
+        public TerminalTypeAm TerminalType { get; set; }
+
+        [Required]
+        public RelationTypeAm RelationType { get; set; }
+
+        [Required]
         public string NodeId { get; set; }
     }
 }
