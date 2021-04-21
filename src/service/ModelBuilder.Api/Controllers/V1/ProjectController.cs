@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Mb.Core.Exceptions;
 using Mb.Core.Services;
@@ -62,14 +63,17 @@ namespace Mb.Api.Controllers.V1
         /// List all available projects
         /// </summary>
         /// <returns></returns>
-        [HttpGet("")]
+        [HttpGet("search")]
         [ProducesResponseType(typeof(IEnumerable<ProjectSimpleAm>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public IActionResult Get()
+        public IActionResult Get(string name)
         {
             try
             {
                 var data = _projectService.GetProjectList();
+                if (!string.IsNullOrEmpty(name))
+                    data = data.Where(x => x.Name.ToLower().StartsWith(name.ToLower()));
+                    
                 return Ok(data);
             }
             catch (Exception e)

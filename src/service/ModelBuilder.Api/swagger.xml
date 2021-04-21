@@ -31,7 +31,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Mb.Api.Controllers.V1.ProjectController.Get">
+        <member name="M:Mb.Api.Controllers.V1.ProjectController.Get(System.String)">
             <summary>
             List all available projects
             </summary>
