@@ -22,6 +22,7 @@ namespace Mb.Core.Repositories
                 Category = "Main Process Systems",
                 Icon = IconType.FunctionIcon,
                 Label = "Separation System (20)",
+                Type = NodeType.Function,
                 Connectors = new List<Connector>
                 {
                     new Connector
@@ -86,7 +87,6 @@ namespace Mb.Core.Repositories
                     }
 
                 },
-                Type = NodeType.Function,
                 Attributes = new List<Attribute>
                 {
                     new Attribute
@@ -128,6 +128,7 @@ namespace Mb.Core.Repositories
                 Category = "Motors",
                 Icon = IconType.ProductIcon,
                 Label = "IC411 SQ Motor",
+                Type = NodeType.Product,
                 Connectors = new List<Connector>
                 {
                     new Connector
@@ -135,7 +136,7 @@ namespace Mb.Core.Repositories
                         Id = "6BB587DF-6FCF-4C75-B16B-6E7FAEF936ED",
                         Name = "",
                         NodeId = "",
-                        Type = ConnectorType.Output,
+                        Type = ConnectorType.Input,
                         RelationType = RelationType.PartOf,
                         TerminalType = TerminalType.NotSet,
                         TerminalCategory = TerminalCategory.NotSet
@@ -172,7 +173,6 @@ namespace Mb.Core.Repositories
                     }
 
                 },
-                Type = NodeType.Product,
                 Attributes = new List<Attribute>
                 {
                     new Attribute
@@ -197,6 +197,82 @@ namespace Mb.Core.Repositories
             };
 
             yield return productNode;
+
+            var noakaLocationNode = new LibNode
+            {
+                Id = "458",
+                Name = "Noaka Field",
+                Category = "Field Location",
+                Icon = IconType.LocationIcon,
+                Label = "Noaka Field",
+                Type = NodeType.Location,
+                Connectors = new List<Connector>
+                {
+                    new Connector
+                    {
+                        Id = "1D01DE66-C5DE-4D62-8645-1B041B673735",
+                        Name = "",
+                        NodeId = "",
+                        Type = ConnectorType.Input,
+                        RelationType = RelationType.Relation,
+                        TerminalType = TerminalType.NotSet,
+                        TerminalCategory = TerminalCategory.NotSet
+                    },
+                    new Connector
+                    {
+                        Id = "7D14C392-62AF-4A78-8A3B-D73937811241",
+                        Name = "",
+                        NodeId = "",
+                        Type = ConnectorType.Input,
+                        RelationType = RelationType.PartOf,
+                        TerminalType = TerminalType.NotSet,
+                        TerminalCategory = TerminalCategory.NotSet
+                    },
+                    new Connector
+                    {
+                        Id = "D7D0EDB1-09C3-4A6E-AF1A-5243821C0347",
+                        Name = "",
+                        NodeId = "",
+                        Type = ConnectorType.Output,
+                        RelationType = RelationType.PartOf,
+                        TerminalType = TerminalType.NotSet,
+                        TerminalCategory = TerminalCategory.NotSet
+                    }
+
+                },
+                Attributes = new List<Attribute>
+                {
+                    new Attribute
+                    {
+                        NodeId = "",
+                        Type = AttributeType.AdminInfo,
+                        Key = "ID",
+                        Value = "=KC2",
+                        InputType = AttributeInputType.Text,
+                        Unit = null
+                    },
+                    new Attribute
+                    {
+                        NodeId = "",
+                        Type = AttributeType.AdminInfo,
+                        Key = "Semantic ID",
+                        Value = "http://vg.no",
+                        InputType = AttributeInputType.Text,
+                        Unit = null
+                    },
+                    new Attribute
+                    {
+                        NodeId = "",
+                        Type = AttributeType.TechInfo,
+                        Key = "Maximum gas processing capacity",
+                        Value = "2000000",
+                        InputType = AttributeInputType.Text,
+                        Unit = "Cubic"
+                    }
+                }
+            };
+
+            yield return noakaLocationNode;
         }
     }
 }
