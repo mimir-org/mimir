@@ -6,7 +6,6 @@ import {
     SAVE_PROJECT_SUCCESS_OR_ERROR,
     ProjectState,
 } from "../../store/project/types";
-import ProjectDataset from "../../../data/ProjectDataset";
 import { Project } from "../../../models/project";
 import { get, post } from "../../../models/webclient";
 
