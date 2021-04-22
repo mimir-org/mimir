@@ -1,10 +1,13 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { get } from "../../../../redux/store/project/actions";
 import GetImg from "../../helpers/GetImg";
 import textResources from "../../../../textResources";
 
 interface OpenProjectButtonComponentProps {}
 
 export const OpenProjectButtonComponent = ({}: OpenProjectButtonComponentProps) => {
+  const dispatch = useDispatch();
   const [buttonHover, setbuttonHover] = useState(false);
 
   return (
@@ -17,6 +20,7 @@ export const OpenProjectButtonComponent = ({}: OpenProjectButtonComponentProps) 
         onMouseOut={() => {
           setbuttonHover(false);
         }}
+        onClick={() => dispatch(get("95C10DAB-0DAD-4CBB-B33E-CA0A3CBC500C"))}
       >
         <p className="open_project_button_text">
           {textResources.Project_recent_open}

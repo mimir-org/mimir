@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { RootState } from "./../../../../redux/store/index";
 import { ProjectSimple } from "../../../../models/project";
+import Moment from "react-moment";
 import textResources from "../../../../textResources";
 
 export const RecentProjectsListComponent = () => {
@@ -20,13 +21,13 @@ export const RecentProjectsListComponent = () => {
       </div>
       {projectList &&
         projectList.map((project) => {
-          console.log("test");
-          console.log("La oss logge projectlist[0]", projectList[0]);
           return (
             <div key={project.id} className="project_list_data">
               <p className="project_name_data">{project.name}</p>
               <p className="project_owner_data">{project.projectOwner}</p>
-              <p className="last_edited">{project.lastEdited}</p>
+              <p className="last_edited">
+                <Moment format="DD/MM/YY h:mm A">{project.lastEdited}</Moment>
+              </p>
             </div>
           );
         })}

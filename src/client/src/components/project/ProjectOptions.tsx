@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { create, get } from "../../redux/store/project/actions";
+import { create } from "../../redux/store/project/actions";
 
 import GetImg from "./helpers/GetImg";
 import textResources from "../../textResources";
@@ -47,7 +47,6 @@ export const ProjectOptions = () => {
               onMouseOut={() => {
                 setOpenImgHover(false);
               }}
-              //   onClick={() => dispatch(get("95C10DAB-0DAD-4CBB-B33E-CA0A3CBC500C"))}
               onClick={() => setOpenProjectComponent(true)}
             >
               <GetImg icon="OpenProjectIcon" />

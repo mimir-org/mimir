@@ -19,16 +19,20 @@
     }
 
     .project_name {
-      width: 30%;
+      width: auto;
+      position: relative;
     }
 
     .project_owner {
-      width: 52%;
+      width: auto;
+      position: relative;
+      left: 65px;
     }
 
     .last_edited {
-      width: 18%;
-      text-align: right;
+      width: auto;
+      position: relative;
+      left: 242px;
     }
   }
 
@@ -36,12 +40,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 20px;
+    height: auto;
     flex-direction: row;
     font-weight: normal;
     font-size: 12px;
     color: #000000;
     cursor: pointer;
+    padding-top: 3px;
+    padding-bottom: 3px;
 
     p {
       margin: 0px;
@@ -50,16 +56,17 @@
 
     .project_name_data {
       padding-left: 3px;
-      width: 30%;
+      width: 35%;
     }
 
     .project_owner_data {
-      width: 52%;
+      width: 55%;
     }
 
     .last_edited {
-      width: 18%;
+      width: 25%;
       text-align: right;
+      white-space: pre-wrap;
     }
   }
 
