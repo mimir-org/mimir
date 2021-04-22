@@ -23,6 +23,7 @@
     "lodash": "^4.17.20",
     "mathjs": "^9.2.0",
     "ml-matrix": "^6.6.0",
+    "moment": "^2.29.1",
     "msal": "^1.4.9",
     "node-sass": "^4.14.1",
     "pathfinding": "^0.4.18",

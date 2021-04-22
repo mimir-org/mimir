@@ -26,7 +26,7 @@ export const RecentProjectsListComponent = () => {
               <p className="project_name_data">{project.name}</p>
               <p className="project_owner_data">{project.projectOwner}</p>
               <p className="last_edited">
-                <Moment format="DD/MM/YY">{project.lastEdited}</Moment>
+                <Moment format="DD/MM/YY h:mm A">{project.lastEdited}</Moment>
               </p>
             </div>
           );
