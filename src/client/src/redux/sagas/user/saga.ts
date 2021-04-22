@@ -30,8 +30,6 @@ export function* getUser(action: UserActionTypes) {
             payload: payload as UserState,
         });
     } catch (error) {
-        console.log("Error getting user data: " + error);
-
         const payload = {
             fetching: false,
             user: null,

@@ -17,5 +17,11 @@ namespace Mb.Models.Data
 
         [Required]
         public string ToNode { get; set; }
+
+        [Required]
+        public NodeTypeAm ParentType { get; set; }
+
+        [Required]
+        public string ParentName { get; set; }
     }
 }

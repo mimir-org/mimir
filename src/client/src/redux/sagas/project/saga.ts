@@ -12,8 +12,9 @@ import { get, post } from "../../../models/webclient";
 
 export function* getProject(action) {
     try {
-        const data = yield call(ProjectDataset.get, action.payload);
-        const project = data as Project;
+        const url = process.env.REACT_APP_API_BASE_URL + "project/" + action.payload;
+        const response = yield call(get, url);
+        const project = response.data as Project;
 
         const payload = {
             project: project,
@@ -28,6 +29,7 @@ export function* getProject(action) {
             payload: payload as ProjectState,
         });
     } catch (error) {
+
         const payload = {
             project: null,
             hasError: true,
@@ -115,7 +117,6 @@ export function* createProject(action) {
 
 export function* saveProject(action) {
     try {
-        console.log(action.payload);
         const url = process.env.REACT_APP_API_BASE_URL + "project/save";
         const response = yield call(post, url, action.payload);
         const project = response.data as Project;
