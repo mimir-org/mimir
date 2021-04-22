@@ -29,7 +29,7 @@ export const ProjectOptions = () => {
               onMouseOut={() => {
                 setNewImgHover(false);
               }}
-              onClick={() => dispatch(create())}
+              onClick={() => dispatch(create("unnamed", "unnamed"))}
             >
               <GetImg icon="NewProjectIcon" />
               <p className="option_text">{textResources.Project_new_project}</p>

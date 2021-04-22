@@ -56,7 +56,7 @@ export const CreateElementNode = (node: Node): FlowElement => {
             ? node.type.charAt(0).toUpperCase() + node.type.substring(1).toLowerCase()
             : node.type,
         data: node,
-        position: node.position,
+        position: { x: node.positionX, y: node.positionY },
         isHidden: node.isHidden,
         isSelected: node.isSelected,
     };

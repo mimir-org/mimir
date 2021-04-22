@@ -73,6 +73,11 @@ namespace Mb.Core.Repositories
             Context.Entry(entity).State = EntityState.Detached;
         }
 
+        public void Attach(TEntity entity, EntityState state)
+        {
+            Context.Entry(entity).State = state;
+        }
+
         public async Task<int> SaveAsync()
         {
             return await Context.SaveChangesAsync();

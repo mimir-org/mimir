@@ -2,9 +2,11 @@
 {
     public enum NodeTypeAm
     {
-        Aspect = 0,
-        Function = 1,
-        Product = 2,
-        Location = 3
+        AspectFunction = 0,
+        AspectLocation = 1,
+        AspectProduct = 2,
+        Function = 3,
+        Product = 4,
+        Location = 5
     }
 }

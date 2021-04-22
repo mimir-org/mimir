@@ -113,11 +113,11 @@ export interface Project {
     edges: Edge[];
 }
 export interface ProjectSimple {
-  id: string;
-  name: string;
-  description: string;
-  projectOwner: string;
-  lastEdited: Date;
+    id: string;
+    name: string;
+    description: string;
+    projectOwner: string;
+    lastEdited: Date;
 }
 export interface Connector {
     id: string;
@@ -126,6 +126,7 @@ export interface Connector {
     terminalCategory: TerminalCategory;
     terminalType: TerminalType;
     relationType: RelationType;
+    nodeId: string;
 }
 
 export interface Edge {
@@ -138,18 +139,13 @@ export interface Edge {
     parentType: NodeType;
     parentName: string;
 }
-
-export interface Position {
-    x: number;
-    y: number;
-}
-
 export interface Attribute {
     key: string;
     value: string;
     unit: string;
-    type: AttributeType,
-    inputType: AttributeInputType
+    type: AttributeType;
+    inputType: AttributeInputType;
+    nodeId: string;
 }
 
 export interface Node {
@@ -158,7 +154,8 @@ export interface Node {
     icon: IconType;
     label: string;
     type: NodeType;
-    position: Position;
+    positionX: number;
+    positionY: number;
     connectors: Connector[];
     isLocked?: boolean | false;
     isSelected?: boolean | false;
@@ -176,3 +173,4 @@ export interface LibNode {
     category: string;
     attributes?: Attribute[] | null;
 }
+

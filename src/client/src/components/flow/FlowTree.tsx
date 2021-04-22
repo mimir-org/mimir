@@ -148,11 +148,22 @@ const FlowTree = () => {
       name: data.name,
       label: data.label ?? data.name,
       type: data.type as NodeType,
-      position: position,
+      positionX: position.x,
+      positionY: position.y,
       connectors: data.connectors,
       attributes: data.attributes,
       icon: data.icon,
     } as Node;
+
+    node.connectors?.forEach((c) => {
+      c.id = createId();
+      c.nodeId = node.id;
+    });
+
+    node.attributes?.forEach((a) => {
+      a.nodeId = node.id;
+    });
+
     dispatch(addNode(node));
     setElements((es) => es.concat(CreateElementNode(node)));
   };
