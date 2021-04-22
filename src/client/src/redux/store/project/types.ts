@@ -1,6 +1,9 @@
 import { Project, Node, Edge, NodeType } from "../../../models/project";
 
 export const FETCHING_PROJECT = "FETCHING_PROJECT";
+export const SEARCH_PROJECT = "SEARCH_PROJECT";
+export const SEARCH_PROJECT_SUCCESS_OR_ERROR =
+  "SEARCH_PROJECT_SUCCESS_OR_ERROR";
 export const FETCHING_PROJECT_SUCCESS_OR_ERROR =
   "FETCHING_PROJECT_SUCCESS_OR_ERROR";
 export const CREATING_PROJECT = "CREATING_PROJECT";
@@ -21,12 +24,23 @@ export interface ProjectState {
   project: Project | null;
   hasError: boolean;
   errorMsg: string | null;
+  projectList: [] | null;
 }
 
 // Action types
 interface FetchingProjectAction {
   type: typeof FETCHING_PROJECT;
   payload: string;
+}
+
+interface SearchProjectAction {
+  type: typeof SEARCH_PROJECT;
+  payload: string;
+}
+
+interface SearchProjectActionFinished {
+  type: typeof SEARCH_PROJECT_SUCCESS_OR_ERROR;
+  payload: ProjectState;
 }
 
 interface FetchingProjectActionFinished {
@@ -91,6 +105,8 @@ interface ChangeEdgeVisibility {
 
 export type ProjectActionTypes =
   | FetchingProjectAction
+  | SearchProjectAction
+  | SearchProjectActionFinished
   | FetchingProjectActionFinished
   | CreatingProjectAction
   | CreatingProjectActionFinished

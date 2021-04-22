@@ -47,6 +47,13 @@ export interface Project {
   nodes: Node[];
   edges: Edge[];
 }
+export interface ProjectSimple {
+  id: string;
+  name: string;
+  description: string;
+  projectOwner: string;
+  lastEdited: Date;
+}
 export interface Connector {
   id: string;
   name: string;

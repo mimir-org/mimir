@@ -4,19 +4,19 @@ import { create, get } from "../../redux/store/project/actions";
 
 import GetImg from "./helpers/GetImg";
 import textResources from "../../textResources";
-import { EarlierProjectComponent } from "../project/earlierProjectComponent";
+import { OpenProjectComponent } from "./openProjectComponent";
 
 export const ProjectOptions = () => {
   const dispatch = useDispatch();
 
   const [newImgHover, setNewImgHover] = useState(false);
-  const [earlierImgHover, setEarlierImgHover] = useState(false);
-  const [earlierProjectComponent, setEarlierProjectComponent] = useState(false);
+  const [openImgHover, setOpenImgHover] = useState(false);
+  const [openProjectComponent, setOpenProjectComponent] = useState(false);
 
   return (
     <div className="project_options_wrapper">
-      {earlierProjectComponent ? (
-        <EarlierProjectComponent />
+      {openProjectComponent ? (
+        <OpenProjectComponent />
       ) : (
         <div className="options_component_container">
           <div className="options_content">
@@ -42,19 +42,19 @@ export const ProjectOptions = () => {
             <div
               className="option_container"
               onMouseOver={() => {
-                setEarlierImgHover(true);
+                setOpenImgHover(true);
               }}
               onMouseOut={() => {
-                setEarlierImgHover(false);
+                setOpenImgHover(false);
               }}
               //   onClick={() => dispatch(get("95C10DAB-0DAD-4CBB-B33E-CA0A3CBC500C"))}
-              onClick={() => setEarlierProjectComponent(true)}
+              onClick={() => setOpenProjectComponent(true)}
             >
               <GetImg icon="OpenProjectIcon" />
               <p className="option_text">
                 {textResources.Project_open_project}
               </p>
-              {earlierImgHover ? (
+              {openImgHover ? (
                 <GetImg icon="WhiteRightArrowIcon" />
               ) : (
                 <GetImg icon="" />
