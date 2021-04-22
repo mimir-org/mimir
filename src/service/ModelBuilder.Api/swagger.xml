@@ -4,6 +4,17 @@
         <name>ModelBuilder.Api</name>
     </assembly>
     <members>
+        <member name="T:Mb.Api.Controllers.V1.LibraryController">
+            <summary>
+            Project services
+            </summary>
+        </member>
+        <member name="M:Mb.Api.Controllers.V1.LibraryController.GetAll">
+            <summary>
+            Get all from library
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Mb.Api.Controllers.V1.ProjectController">
             <summary>
             Project services
@@ -14,13 +25,13 @@
             Project Controller Constructor
             </summary>
         </member>
-        <member name="M:Mb.Api.Controllers.V1.ProjectController.CreateNewProject(System.String,System.String)">
+        <member name="M:Mb.Api.Controllers.V1.ProjectController.CreateNewProject(Mb.Models.Data.CreateProjectAm)">
             <summary>
             Create a new empty project
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Mb.Api.Controllers.V1.ProjectController.Get">
+        <member name="M:Mb.Api.Controllers.V1.ProjectController.Get(System.String)">
             <summary>
             List all available projects
             </summary>

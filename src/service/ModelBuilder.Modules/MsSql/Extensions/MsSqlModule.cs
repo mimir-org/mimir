@@ -16,7 +16,7 @@ namespace Mb.Modules.MsSql.Extensions
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory());
             
-            builder.AddJsonFile("appsettings.json", true, true);
+            builder.AddJsonFile("appsettings.json");
             builder.AddJsonFile($"appsettings.{environment}.json", true);
             builder.AddJsonFile("appsettings.local.json", true);
             builder.AddEnvironmentVariables();

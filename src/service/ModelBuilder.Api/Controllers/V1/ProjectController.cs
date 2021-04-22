@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Mb.Core.Exceptions;
 using Mb.Core.Services;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Mb.Api.Controllers.V1
 {
@@ -19,6 +21,7 @@ namespace Mb.Api.Controllers.V1
     [ApiController]
     [ApiVersion("0.1")]
     [Route("V{version:apiVersion}/[controller]")]
+    [SwaggerTag("Project")]
     public class ProjectController : ControllerBase
     {
         private readonly IProjectService _projectService;
@@ -37,16 +40,19 @@ namespace Mb.Api.Controllers.V1
         /// Create a new empty project
         /// </summary>
         /// <returns></returns>
-        [HttpGet("new/{name}/{description}")]
+        [HttpPost("")]
         [ProducesResponseType(typeof(ProjectAm), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> CreateNewProject(string name, string description)
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> CreateNewProject([FromBody] CreateProjectAm project)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             try
             {
-                var data = await _projectService.CreateNewProject(name, description);
+                var data = await _projectService.CreateNewProject(project);
                 return Ok(data);
             }
             catch (Exception e)
@@ -60,14 +66,15 @@ namespace Mb.Api.Controllers.V1
         /// List all available projects
         /// </summary>
         /// <returns></returns>
-        [HttpGet("")]
+        [HttpGet("search")]
         [ProducesResponseType(typeof(IEnumerable<ProjectSimpleAm>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public IActionResult Get()
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult Get(string name)
         {
             try
             {
-                var data = _projectService.GetProjectList();
+                var data = _projectService.GetProjectList(name).ToList();
                 return Ok(data);
             }
             catch (Exception e)
@@ -108,7 +115,7 @@ namespace Mb.Api.Controllers.V1
         /// Save a project
         /// </summary>
         /// <returns></returns>
-        [HttpPost("")]
+        [HttpPost("save")]
         [ProducesResponseType(typeof(ProjectAm), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]

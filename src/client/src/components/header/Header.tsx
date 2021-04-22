@@ -7,15 +7,12 @@ import { loadStateFromStorage } from "../../redux/store/localStorage/localStorag
 import {
   TreeviewIcon,
   BlockviewIcon,
-  VisualFilterIcon,
   SwitchOnIcon,
   SwitchOffIcon,
 } from "../../assets/index";
 import {
-  TextWrapper,
   BlockviewWrapper,
   TreeviewWrapper,
-  VisualIconWrapper,
   TitleWrapper,
   IconsWrapper,
   SwitchWrapper,
@@ -23,15 +20,15 @@ import {
 
 const Header = () => {
   const { push } = useHistory();
-  const [showDiagram, setShowDiagram] = useState(
-    loadStateFromStorage("diagram")
+  const [showBlockView, setShowBlockView] = useState(
+    loadStateFromStorage("blockview")
   );
 
   const handleClick = (e) => {
     const key = e.target.alt;
     const view = SaveViewState(key);
     push(`/home/${view}`);
-    setShowDiagram(loadStateFromStorage("diagram"));
+    setShowBlockView(loadStateFromStorage("blockview"));
   };
 
   return (
@@ -40,29 +37,21 @@ const Header = () => {
         <TitleWrapper>
           <Typography>{textResources.MainHeader_App_Name}</Typography>
         </TitleWrapper>
-
         <IconsWrapper>
           <TreeviewWrapper>
             <img src={TreeviewIcon} alt="treeview" onClick={handleClick} />
           </TreeviewWrapper>
           <BlockviewWrapper>
-            <img src={BlockviewIcon} alt="diagram" onClick={handleClick} />
+            <img src={BlockviewIcon} alt="blockview" onClick={handleClick} />
           </BlockviewWrapper>
           <SwitchWrapper>
-            {showDiagram ? (
+            {showBlockView ? (
               <img src={SwitchOnIcon} alt="switch" onClick={handleClick} />
             ) : (
               <img src={SwitchOffIcon} alt="switch" onClick={handleClick} />
             )}
           </SwitchWrapper>
         </IconsWrapper>
-
-        <VisualIconWrapper>
-          <img src={VisualFilterIcon} alt="visualfilter" onClick={() => null} />
-        </VisualIconWrapper>
-        <TextWrapper>
-          <Typography>{textResources.MainHeader_VisualFilter}</Typography>
-        </TextWrapper>
       </Toolbar>
     </AppBar>
   );

@@ -2,11 +2,7 @@
 {
     public enum ConnectorType
     {
-        RelationInput = 0,
-        RelationOutput = 1,
-        TransportInput = 2,
-        TransportOutput = 3,
-        PartofInput = 4,
-        PartofOutput = 5
+        Input = 0,
+        Output = 1
     }
 }

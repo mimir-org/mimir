@@ -11,5 +11,5 @@ export const SETTING_KEY = {
 
 export const SETTING_VALUE = {
   TREE_VIEW: "TREE_VIEW",
-  DIAGRAM_VIEW: "DIAGRAM_VIEW",
+  BLOCK_VIEW: "BLOCK_VIEW",
 };

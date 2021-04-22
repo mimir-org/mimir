@@ -4,14 +4,16 @@ import {
   LibraryActionTypes,
   LibraryState,
 } from "../../store/library/types";
-import LibraryDataset from "../../../data/LibraryDataset";
+
+import { get } from "../../../models/webclient";
 
 export function* searchLibrary(action: LibraryActionTypes) {
   try {
-    const data = yield call(LibraryDataset.getAll);
-    
+    const url = process.env.REACT_APP_API_BASE_URL + "library";
+    const response = yield call(get, url);
+
     const payload = {
-      nodes: data,
+      nodes: response.data,
       hasError: false,
       errorMsg: null,
       fetching: false,

@@ -35,6 +35,16 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.IsSelected, opt => opt.MapFrom(src => src.IsSelected))
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
                 .ForMember(dest => dest.Projects, opt => opt.Ignore());
+
+            CreateMap<LibNode, LibNodeAm>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Label, opt => opt.MapFrom(src => src.Label))
+                .ForMember(dest => dest.Icon, opt => opt.MapFrom(src => src.Icon))
+                .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type))
+                .ForMember(dest => dest.Connectors, opt => opt.MapFrom(src => src.Connectors))
+                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category))
+                .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes));
         }
     }
 }

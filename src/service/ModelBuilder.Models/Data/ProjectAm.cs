@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Mb.Models.Data
@@ -11,6 +12,10 @@ namespace Mb.Models.Data
         public string Name { get; set; }
 
         public string Description { get; set; }
+
+        public string ProjectOwner { get; set; }
+
+        public DateTime? LastEdited { get; set; }
 
         public ICollection<NodeAm> Nodes { get; set; }
 
