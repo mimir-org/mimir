@@ -1,0 +1,77 @@
+.project_list {
+  .recent_projects_text {
+    font-weight: bold;
+    font-size: 16px;
+    color: #007079;
+  }
+
+  .project_list_labels {
+    display: flex;
+    flex-direction: row;
+    font-weight: normal;
+    font-size: 14px;
+    color: #000000;
+    margin: -10px 0px 0px 0px;
+    border-bottom: 1px solid #007079;
+
+    p {
+      margin: 0px;
+    }
+
+    .project_name {
+      width: 30%;
+    }
+
+    .project_owner {
+      width: 52%;
+    }
+
+    .last_edited {
+      width: 18%;
+      text-align: right;
+    }
+  }
+
+  .project_list_data {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 20px;
+    flex-direction: row;
+    font-weight: normal;
+    font-size: 12px;
+    color: #000000;
+    cursor: pointer;
+
+    p {
+      margin: 0px;
+      white-space: nowrap;
+    }
+
+    .project_name_data {
+      padding-left: 3px;
+      width: 30%;
+    }
+
+    .project_owner_data {
+      width: 52%;
+    }
+
+    .last_edited {
+      width: 18%;
+      text-align: right;
+    }
+  }
+
+  .selected_project {
+    border: 1px solid #007079;
+  }
+}
+
+.project_list_data:nth-of-type(even) {
+  background: rgba(0, 112, 121, 0.15);
+}
+
+.project_list_data:nth-of-type(odd) {
+  background: rgba(255, 255, 255, 0.15);
+}

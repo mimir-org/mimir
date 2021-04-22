@@ -1,6 +1,7 @@
 import {
   FETCHING_PROJECT,
   CREATING_PROJECT,
+  SEARCH_PROJECT,
   ADD_NODE,
   REMOVE_NODE,
   ADD_EDGE,
@@ -18,6 +19,13 @@ export function get(id: string): ProjectActionTypes {
   return {
     type: FETCHING_PROJECT,
     payload: id,
+  };
+}
+
+export function search(name: string): ProjectActionTypes {
+  return {
+    type: SEARCH_PROJECT,
+    payload: name,
   };
 }
 
