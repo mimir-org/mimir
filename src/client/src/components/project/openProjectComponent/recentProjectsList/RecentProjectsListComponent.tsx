@@ -20,8 +20,6 @@ export const RecentProjectsListComponent = () => {
       </div>
       {projectList &&
         projectList.map((project) => {
-          console.log("test");
-          console.log("La oss logge projectlist[0]", projectList[0]);
           return (
             <div key={project.id} className="project_list_data">
               <p className="project_name_data">{project.name}</p>
