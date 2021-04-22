@@ -192,6 +192,51 @@ namespace Mb.Core.Repositories
                         Value = "http://vg.no",
                         InputType = AttributeInputType.Text,
                         Unit = null
+                    },
+                    new Attribute
+                    {
+                        NodeId = "",
+                        Type = AttributeType.Relations,
+                        Key = "Relation name",
+                        Value = "Name of relation",
+                        InputType = AttributeInputType.Text,
+                        Unit = null
+                    },
+                    new Attribute
+                    {
+                        NodeId = "",
+                        Type = AttributeType.Relations,
+                        Key = "Has function",
+                        Value = "Pumping oil",
+                        InputType = AttributeInputType.Text,
+                        Unit = null
+                    },
+                    new Attribute
+                    {
+                        NodeId = "",
+                        Type = AttributeType.Relations,
+                        Key = "Updated by",
+                        Value = "Arnulf Arnulfsen",
+                        InputType = AttributeInputType.Text,
+                        Unit = null
+                    },
+                    new Attribute
+                    {
+                        NodeId = "",
+                        Type = AttributeType.Relations,
+                        Key = "Connected to",
+                        Value = "stuff",
+                        InputType = AttributeInputType.Text,
+                        Unit = null
+                    },
+                    new Attribute
+                    {
+                        NodeId = "",
+                        Type = AttributeType.Relations,
+                        Key = "Project",
+                        Value = "NOAKA",
+                        InputType = AttributeInputType.Text,
+                        Unit = null
                     }
                 }
             };
