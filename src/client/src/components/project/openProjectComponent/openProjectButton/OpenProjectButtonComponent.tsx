@@ -20,7 +20,7 @@ export const OpenProjectButtonComponent = ({}: OpenProjectButtonComponentProps) 
         onMouseOut={() => {
           setbuttonHover(false);
         }}
-        onClick={() => dispatch(get("6d3c301c-fa02-4fc5-a49b-f423cd32ce96"))}
+        onClick={() => dispatch(get("a9ad42e5-a88c-4195-afce-7d00d926a28d"))}
       >
         <p className="open_project_button_text">
           {textResources.Project_recent_open}
