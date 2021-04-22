@@ -25,7 +25,7 @@
             Project Controller Constructor
             </summary>
         </member>
-        <member name="M:Mb.Api.Controllers.V1.ProjectController.CreateNewProject(System.String,System.String)">
+        <member name="M:Mb.Api.Controllers.V1.ProjectController.CreateNewProject(Mb.Models.Data.CreateProjectAm)">
             <summary>
             Create a new empty project
             </summary>

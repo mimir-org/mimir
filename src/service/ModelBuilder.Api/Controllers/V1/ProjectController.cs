@@ -40,16 +40,19 @@ namespace Mb.Api.Controllers.V1
         /// Create a new empty project
         /// </summary>
         /// <returns></returns>
-        [HttpGet("new/{name}/{description}")]
+        [HttpPost("")]
         [ProducesResponseType(typeof(ProjectAm), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> CreateNewProject(string name, string description)
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> CreateNewProject([FromBody] CreateProjectAm project)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             try
             {
-                var data = await _projectService.CreateNewProject(name, description);
+                var data = await _projectService.CreateNewProject(project);
                 return Ok(data);
             }
             catch (Exception e)
@@ -66,14 +69,12 @@ namespace Mb.Api.Controllers.V1
         [HttpGet("search")]
         [ProducesResponseType(typeof(IEnumerable<ProjectSimpleAm>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult Get(string name)
         {
             try
             {
-                var data = _projectService.GetProjectList();
-                if (!string.IsNullOrEmpty(name))
-                    data = data.Where(x => x.Name.ToLower().StartsWith(name.ToLower()));
-                    
+                var data = _projectService.GetProjectList(name).ToList();
                 return Ok(data);
             }
             catch (Exception e)
@@ -114,7 +115,7 @@ namespace Mb.Api.Controllers.V1
         /// Save a project
         /// </summary>
         /// <returns></returns>
-        [HttpPost("")]
+        [HttpPost("save")]
         [ProducesResponseType(typeof(ProjectAm), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]

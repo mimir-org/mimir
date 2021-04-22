@@ -4,8 +4,10 @@ using Mb.Core.Profiles;
 using Mb.Core.Repositories;
 using Mb.Core.Services;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Mb.Core.Extensions
 {
@@ -28,6 +30,9 @@ namespace Mb.Core.Extensions
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<ILibraryRepository, LibraryRepository>();
             services.AddScoped<IProjectService, ProjectService>();
+
+            services.AddHttpContextAccessor();
+            services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
             return services;
         }

@@ -7,10 +7,10 @@ namespace Mb.Core.Services
 {
     public interface IProjectService
     {
-        IEnumerable<ProjectSimpleAm> GetProjectList();
+        IEnumerable<ProjectSimpleAm> GetProjectList(string name);
         Task<ProjectAm> GetProject(string id);
         Task<ProjectAm> CreateProject(ProjectAm project);
-        Task<ProjectAm> CreateNewProject(string name, string description);
+        Task<ProjectAm> CreateNewProject(CreateProjectAm createProjectAm);
         Task<ProjectAm> UpdateProject(ProjectAm project);
         Project CreateInitProject(string name, string description);
         IEnumerable<LibNodeAm> GetLibNodes(string searchString);

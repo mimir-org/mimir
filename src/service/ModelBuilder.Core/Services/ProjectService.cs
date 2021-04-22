@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -8,6 +9,7 @@ using Mb.Core.Exceptions;
 using Mb.Core.Models;
 using Mb.Core.Repositories;
 using Mb.Models.Data;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace Mb.Core.Services
@@ -17,17 +19,31 @@ namespace Mb.Core.Services
         private readonly IProjectRepository _projectRepository;
         private readonly ILibraryRepository _libraryRepository;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _contextAccessor; 
 
-        public ProjectService(IProjectRepository projectRepository, IMapper mapper, ILibraryRepository libraryRepository)
+        public ProjectService(IProjectRepository projectRepository, IMapper mapper, ILibraryRepository libraryRepository, IHttpContextAccessor contextAccessor)
         {
             _projectRepository = projectRepository;
             _mapper = mapper;
             _libraryRepository = libraryRepository;
+            _contextAccessor = contextAccessor;
         }
 
-        public IEnumerable<ProjectSimpleAm> GetProjectList()
+        public IEnumerable<ProjectSimpleAm> GetProjectList(string name)
         {
-            return _projectRepository.GetAll().ProjectTo<ProjectSimpleAm>(_mapper.ConfigurationProvider).ToList();
+            if(string.IsNullOrEmpty(name))
+                return _projectRepository.GetAll()
+                    .OrderByDescending(x => x.LastEdited)
+                    .Take(10)
+                    .ProjectTo<ProjectSimpleAm>(_mapper.ConfigurationProvider)
+                    .ToList();
+            else
+                return _projectRepository.GetAll()
+                    .Where(x => x.Name.ToLower().StartsWith(name.ToLower()))
+                    .OrderByDescending(x => x.LastEdited)
+                    .Take(10)
+                    .ProjectTo<ProjectSimpleAm>(_mapper.ConfigurationProvider)
+                    .ToList();
         }
 
         public async Task<ProjectAm> GetProject(string id)
@@ -53,9 +69,11 @@ namespace Mb.Core.Services
             return _mapper.Map<ProjectAm>(p);
         }
 
-        public async Task<ProjectAm> CreateNewProject(string name, string description)
+        public async Task<ProjectAm> CreateNewProject(CreateProjectAm createProjectAm)
         {
-            var project = CreateInitProject(name, description);
+            var project = CreateInitProject(createProjectAm.Name, createProjectAm.Description);
+            project.LastEdited = DateTime.Now.ToUniversalTime();
+            project.ProjectOwner = _contextAccessor.HttpContext?.User?.Identity?.Name;
             await _projectRepository.CreateAsync(project);
             await _projectRepository.SaveAsync();
             return _mapper.Map<ProjectAm>(project);
