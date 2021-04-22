@@ -13,6 +13,8 @@ import {
   UPDATE_POSITION,
   CHANGE_NODE_VISIBILITY,
   CHANGE_EDGE_VISIBILITY,
+  SEARCH_PROJECT,
+  SEARCH_PROJECT_SUCCESS_OR_ERROR,
   CHANGE_ACTIVE_NODE,
 } from "./types";
 
@@ -22,6 +24,7 @@ const initialState: ProjectState = {
   project: null,
   hasError: false,
   errorMsg: null,
+  projectList: null,
 };
 
 export function projectReducer(
@@ -29,6 +32,24 @@ export function projectReducer(
   action: ProjectActionTypes
 ) {
   switch (action.type) {
+    case SEARCH_PROJECT:
+      return {
+        ...state,
+        fetching: true,
+        creating: false,
+        hasError: false,
+        errorMsg: null,
+        projectList: null,
+      };
+    case SEARCH_PROJECT_SUCCESS_OR_ERROR:
+      return {
+        ...state,
+        fetching: false,
+        creating: false,
+        hasError: action.payload.hasError,
+        errorMsg: action.payload.errorMsg,
+        projectList: action.payload.projectList,
+      };
     case FETCHING_PROJECT:
       return {
         ...state,

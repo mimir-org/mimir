@@ -1,0 +1,21 @@
+.open_project_container {
+  display: flex;
+  flex-direction: column;
+  font-family: Roboto;
+  width: 502px;
+  height: 463px;
+  margin: auto;
+  background: #ffffff;
+  border: 2px solid #007079;
+  box-shadow: 0px 5px 6px rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
+  position: absolute;
+  top: 25%;
+  bottom: 25%;
+  left: 25%;
+  right: 25%;
+
+  .open_project_content {
+    margin: 10px;
+  }
+}
