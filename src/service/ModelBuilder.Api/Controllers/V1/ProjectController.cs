@@ -41,9 +41,10 @@ namespace Mb.Api.Controllers.V1
         /// </summary>
         /// <returns></returns>
         [HttpPost("")]
-        [ProducesResponseType(typeof(ProjectAm), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProjectAm), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> CreateNewProject([FromBody] CreateProjectAm project)
         {
@@ -53,7 +54,7 @@ namespace Mb.Api.Controllers.V1
             try
             {
                 var data = await _projectService.CreateNewProject(project);
-                return Ok(data);
+                return CreatedAtAction(nameof(GetById), new { id = data.Id }, data);
             }
             catch (Exception e)
             {
@@ -63,12 +64,13 @@ namespace Mb.Api.Controllers.V1
         }
 
         /// <summary>
-        /// List all available projects
+        /// List last 10 available projects by search on project name
         /// </summary>
         /// <returns></returns>
         [HttpGet("search")]
         [ProducesResponseType(typeof(IEnumerable<ProjectSimpleAm>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult Get(string name)
         {
@@ -93,8 +95,13 @@ namespace Mb.Api.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetById(string id)
         {
+            if (string.IsNullOrEmpty(id))
+                return BadRequest("The id can not be null or empty");
+
             try
             {
                 var data = await _projectService.GetProject(id);
@@ -117,9 +124,11 @@ namespace Mb.Api.Controllers.V1
         /// <returns></returns>
         [HttpPost("save")]
         [ProducesResponseType(typeof(ProjectAm), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProjectAm), StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> SaveProject([FromBody] ProjectAm project)
         {
             if (!ModelState.IsValid)
@@ -130,9 +139,9 @@ namespace Mb.Api.Controllers.V1
                 var data = await _projectService.CreateProject(project);
                 return Ok(data);
             }
-            catch (ModelBuilderDuplicateException)
+            catch (ModelBuilderDuplicateException e)
             {
-                return BadRequest("Can't create a duplicate project");
+                return Conflict(e.Message);
             }
             catch (Exception e)
             {

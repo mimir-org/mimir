@@ -33,7 +33,7 @@
         </member>
         <member name="M:Mb.Api.Controllers.V1.ProjectController.Get(System.String)">
             <summary>
-            List all available projects
+            List last 10 available projects by search on project name
             </summary>
             <returns></returns>
         </member>
