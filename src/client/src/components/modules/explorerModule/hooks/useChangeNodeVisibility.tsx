@@ -28,8 +28,19 @@ export const useChangeNodeVisibility = (
 
   // Handles edges linked to the node
   const edges = GetEdges();
+  let edgesToChange = [];
   const edge = edges.find((edge: { toNode: string }) => edge.toNode === nodeId);
   const edgeId: string = edge === undefined ? undefined : edge.id;
+
+  for (let i = 0; i < edges.length; i++) {
+    if (edges[i].toNode === nodeId || edges[i].fromNode === nodeId)
+      edgesToChange.push(edges[i]);
+  }
+  //   edgesToChange.push(
+  //     edges.find((x) => x.toNode === nodeId || x.fromNode === nodeId)
+  //   );
+
+  console.log("edges to change: ", edgesToChange);
 
   const connector =
     edge === undefined
