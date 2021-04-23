@@ -10,7 +10,7 @@ export const EarlierProjectComponent = () => {
         <OpenProjectHeader />
         <SearchBarComponent />
         <RecentProjectsList />
-        <OpenProjectButton />
+        <OpenProjectButton id="test" />
       </div>
     </div>
   );
