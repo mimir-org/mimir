@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "./../../../../redux/store/index";
 import { ProjectSimple } from "../../../../models/project";
@@ -29,7 +28,6 @@ export const RecentProjectsListComponent = () => {
               projectName={project.name}
               projectOwner={project.projectOwner}
               lastEdited={project.lastEdited}
-              selected={project.selected}
             />
           );
         })}

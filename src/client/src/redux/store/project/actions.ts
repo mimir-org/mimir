@@ -10,12 +10,14 @@ import {
   CHANGE_NODE_VISIBILITY,
   CHANGE_EDGE_VISIBILITY,
   CHANGE_ACTIVE_NODE,
+  CHANGE_SELECTED_PROJECT,
   ProjectActionTypes,
 } from "./types";
 
 import { Node, Edge, NodeType } from "../../../models/project";
 
 export function get(id: string): ProjectActionTypes {
+  console.log("test action: ", id);
   return {
     type: FETCHING_PROJECT,
     payload: id,
@@ -103,5 +105,12 @@ export function changeActiveNode(nodeId: string) {
   return {
     type: CHANGE_ACTIVE_NODE,
     payload: { nodeId },
+  };
+}
+
+export function changeSelectedProject(projectId: string) {
+  return {
+    type: CHANGE_SELECTED_PROJECT,
+    payload: { projectId },
   };
 }

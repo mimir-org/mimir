@@ -17,6 +17,7 @@ export const UPDATE_POSITION = "UPDATE_POSITION";
 export const CHANGE_NODE_VISIBILITY = "CHANGE_NODE_VISIBILITY";
 export const CHANGE_EDGE_VISIBILITY = "CHANGE_EDGE_VISIBILITY";
 export const CHANGE_ACTIVE_NODE = "CHANGE_ACTIVE_NODE";
+export const CHANGE_SELECTED_PROJECT = "CHANGE_SELECTED_PROJECT";
 
 // State types
 export interface ProjectState {
@@ -111,6 +112,13 @@ interface ChangeActiveNode {
   };
 }
 
+interface ChangeSelectedProject {
+  type: typeof CHANGE_SELECTED_PROJECT;
+  payload: {
+    projectId: string;
+  };
+}
+
 export type ProjectActionTypes =
   | FetchingProjectAction
   | SearchProjectAction
@@ -125,4 +133,5 @@ export type ProjectActionTypes =
   | UpdatePositionAction
   | ChangeNodeVisibility
   | ChangeEdgeVisibility
-  | ChangeActiveNode;
+  | ChangeActiveNode
+  | ChangeSelectedProject;

@@ -1,4 +1,5 @@
-import { NodeType } from "../../../models/project";
+import ProjectDataset from "../../../data/ProjectDataset";
+import { NodeType, ProjectSimple } from "../../../models/project";
 import {
   FETCHING_PROJECT,
   FETCHING_PROJECT_SUCCESS_OR_ERROR,
@@ -16,6 +17,7 @@ import {
   SEARCH_PROJECT,
   SEARCH_PROJECT_SUCCESS_OR_ERROR,
   CHANGE_ACTIVE_NODE,
+  CHANGE_SELECTED_PROJECT,
 } from "./types";
 
 const initialState: ProjectState = {
@@ -51,6 +53,7 @@ export function projectReducer(
         projectList: action.payload.projectList,
       };
     case FETCHING_PROJECT:
+      console.log("fetching project: ", action, state);
       return {
         ...state,
         fetching: true,
@@ -61,6 +64,7 @@ export function projectReducer(
       };
 
     case FETCHING_PROJECT_SUCCESS_OR_ERROR:
+      console.log("fetching project2: ", action, state);
       return {
         ...state,
         fetching: action.payload.fetching,
@@ -242,13 +246,28 @@ export function projectReducer(
       return {
         ...state,
         project: {
-          nodes: state.project.nodes.map((nodes, i) =>
+          nodes: state.project.nodes.map((x, i) =>
             state.project.nodes[i].id === id
-              ? { ...nodes, isSelected: true }
-              : { ...nodes, isSelected: false }
+              ? { ...x, isSelected: true }
+              : { ...x, isSelected: false }
           ),
           edges: state.project.edges,
         },
+      };
+
+    case CHANGE_SELECTED_PROJECT:
+      const projectId = action.payload.projectId;
+      const projectList = state.projectList as ProjectSimple[];
+
+      for (let i = 0; i < projectList.length; i++) {
+        if (projectList[i].id === projectId) {
+          projectList[i].selected = true;
+        } else projectList[i].selected = false;
+      }
+
+      return {
+        ...state,
+        projectList: projectList,
       };
 
     default:

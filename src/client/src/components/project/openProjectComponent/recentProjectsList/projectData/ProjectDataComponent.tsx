@@ -1,13 +1,14 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
 import Moment from "react-moment";
+import { useDispatch, useSelector } from "react-redux";
+import { changeSelectedProject } from "../../../../../redux/store/project/actions";
+import { RootState } from "../../../../../redux/store";
+import { ProjectSimple } from "../../../../../models/project";
 
-interface ProjectDataComponentProps {
-  projectId: String;
-  projectName: String;
-  projectOwner: String;
+interface Props {
+  projectId: string;
+  projectName: string;
+  projectOwner: string;
   lastEdited: Date;
-  selected: boolean;
 }
 
 export const ProjectDataComponent = ({
@@ -15,13 +16,21 @@ export const ProjectDataComponent = ({
   projectName,
   projectOwner,
   lastEdited,
-  selected,
-}: ProjectDataComponentProps) => {
-  const handleClick = () => {};
+}: Props) => {
+  const dispatch = useDispatch();
+  const projects = useSelector<RootState>(
+    (state) => state.projectState.projectList
+  ) as ProjectSimple[];
+  const isSelected = projects.find((x) => x.id === projectId).selected;
+
+  const handleClick = () => {
+    dispatch(changeSelectedProject(projectId));
+  };
+
   return (
     <div
       className={
-        "project_data " + (selected ? "selected_project" : "not_selected")
+        "project_data " + (isSelected ? "selected_project" : "not_selected")
       }
       onClick={handleClick}
     >
