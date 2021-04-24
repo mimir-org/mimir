@@ -11,14 +11,15 @@ namespace Mb.Core.Repositories
     {
         TContext Context { get; set; }
         DbSet<TEntity> DbSet { get; set; }
-        IQueryable<TEntity> GetAll(bool asNoTracking = true);
-        IQueryable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate, bool asNoTracking = true);
+        IQueryable<TEntity> GetAll(bool noTracking = true);
+        IQueryable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate, bool noTracking = true);
         Task<TEntity> GetAsync(int id);
         Task<TEntity> GetAsync(string id);
         Task<EntityEntry<TEntity>> CreateAsync(TEntity entity);
         void Update(TEntity entity);
         Task Delete(int id);
         void Detach(TEntity entity);
+        void Attach(TEntity entity, EntityState state);
         Task<int> SaveAsync();
     }
 }

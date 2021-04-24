@@ -11,7 +11,6 @@ namespace Mb.Core.Services
         Task<ProjectAm> GetProject(string id);
         Task<ProjectAm> CreateProject(ProjectAm project);
         Task<ProjectAm> CreateNewProject(CreateProjectAm createProjectAm);
-        Task<ProjectAm> UpdateProject(ProjectAm project);
         Project CreateInitProject(string name, string description);
         IEnumerable<LibNodeAm> GetLibNodes(string searchString);
     }

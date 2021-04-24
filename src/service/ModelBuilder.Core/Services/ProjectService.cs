@@ -19,19 +19,23 @@ namespace Mb.Core.Services
         private readonly IProjectRepository _projectRepository;
         private readonly ILibraryRepository _libraryRepository;
         private readonly IMapper _mapper;
-        private readonly IHttpContextAccessor _contextAccessor; 
+        private readonly IHttpContextAccessor _contextAccessor;
+        private readonly INodeRepository _nodeRepository;
+        private readonly IEdgeRepository _edgeRepository;
 
-        public ProjectService(IProjectRepository projectRepository, IMapper mapper, ILibraryRepository libraryRepository, IHttpContextAccessor contextAccessor)
+        public ProjectService(IProjectRepository projectRepository, IMapper mapper, ILibraryRepository libraryRepository, IHttpContextAccessor contextAccessor, INodeRepository nodeRepository, IEdgeRepository edgeRepository)
         {
             _projectRepository = projectRepository;
             _mapper = mapper;
             _libraryRepository = libraryRepository;
             _contextAccessor = contextAccessor;
+            _nodeRepository = nodeRepository;
+            _edgeRepository = edgeRepository;
         }
 
         public IEnumerable<ProjectSimpleAm> GetProjectList(string name)
         {
-            if(string.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(name))
                 return _projectRepository.GetAll()
                     .OrderByDescending(x => x.LastEdited)
                     .Take(10)
@@ -48,7 +52,14 @@ namespace Mb.Core.Services
 
         public async Task<ProjectAm> GetProject(string id)
         {
-            var project = await _projectRepository.FindBy(x => x.Id == id).Include(x => x.Nodes).FirstOrDefaultAsync();
+            var project = await _projectRepository
+                .FindBy(x => x.Id == id)
+                .Include(x => x.Edges)
+                .Include(x => x.Nodes)
+                .Include("Nodes.Attributes")
+                .Include("Nodes.Connectors")
+                .AsSplitQuery()
+                .FirstOrDefaultAsync();
 
             if (project == null)
                 throw new ModelBuilderNotFoundException();
@@ -58,10 +69,10 @@ namespace Mb.Core.Services
 
         public async Task<ProjectAm> CreateProject(ProjectAm project)
         {
-            var existingProject = await _projectRepository.FindBy(x => x.Id == project.Id).Include(x => x.Nodes).FirstOrDefaultAsync();
+            var existingProject = await GetProject(project.Id);
 
             if (existingProject != null)
-                return await UpdateProject(project);
+                return await UpdateProject(existingProject, project);
 
             var p = _mapper.Map<Project>(project);
             await _projectRepository.CreateAsync(p);
@@ -72,20 +83,12 @@ namespace Mb.Core.Services
         public async Task<ProjectAm> CreateNewProject(CreateProjectAm createProjectAm)
         {
             var project = CreateInitProject(createProjectAm.Name, createProjectAm.Description);
-            project.LastEdited = DateTime.Now.ToUniversalTime();
-            project.ProjectOwner = _contextAccessor.HttpContext?.User?.Identity?.Name;
             await _projectRepository.CreateAsync(project);
             await _projectRepository.SaveAsync();
             return _mapper.Map<ProjectAm>(project);
         }
 
-        public async Task<ProjectAm> UpdateProject(ProjectAm project)
-        {
-            var p = _mapper.Map<Project>(project);
-            _projectRepository.Update(p);
-            await _projectRepository.SaveAsync();
-            return _mapper.Map<ProjectAm>(project);
-        }
+
 
         public Project CreateInitProject(string name, string description)
         {
@@ -93,6 +96,8 @@ namespace Mb.Core.Services
             {
                 Name = name,
                 Description = description,
+                ProjectOwner = _contextAccessor.HttpContext?.User?.Claims?.FirstOrDefault(x => x.Type == "name")?.Value,
+                LastEdited = DateTime.Now,
                 Nodes = new List<Node>
                 {
                     CreateInitAspectNode(NodeType.AspectFunction),
@@ -126,17 +131,18 @@ namespace Mb.Core.Services
                     icon = IconType.FunctionIcon;
                     break;
 
+                case NodeType.AspectProduct:
+                    name = "Product";
+                    positionX = 600.0m;
+                    icon = IconType.ProductIcon;
+                    break;
+
                 case NodeType.AspectLocation:
                     name = "Location";
-                    positionX = 600.0m;
+                    positionX = 1050.0m;
                     icon = IconType.LocationIcon;
                     break;
 
-                case NodeType.AspectProduct:
-                    name = "Product";
-                    positionX = 1050.0m;
-                    icon = IconType.ProductIcon;
-                    break;
                 default:
                     name = "";
                     positionX = 0.0m;
@@ -168,6 +174,40 @@ namespace Mb.Core.Services
 
             node.Connectors.Add(connector);
             return node;
+        }
+
+        private async Task<ProjectAm> UpdateProject(ProjectAm existingProject, ProjectAm project)
+        {
+            var p = _mapper.Map<Project>(project);
+
+            // Nodes
+            var nodesToUpdate = p.Nodes.Where(x => existingProject.Nodes.Any(y => y.Id == x.Id)).Select(y => { y.Projects = new List<Project> { p }; return y; }).ToList();
+            var nodesToCreate = p.Nodes.Where(x => existingProject.Nodes.All(y => y.Id != x.Id)).Select(y => { y.Projects = new List<Project> { p }; return y; }).ToList();
+            p.Nodes.Clear();
+
+            // Edges
+            var edgesToUpdate = p.Edges.Where(x => existingProject.Edges.Any(y => y.Id == x.Id)).Select(y => { y.Projects = new List<Project> { p }; return y; }).ToList();
+            var edgesToCreate = p.Edges.Where(x => existingProject.Edges.All(y => y.Id != x.Id)).Select(y => { y.Projects = new List<Project> { p }; return y; }).ToList();
+            p.Edges.Clear();
+
+            foreach (var node in nodesToUpdate)
+                _nodeRepository.Update(node);
+
+            foreach (var node in nodesToCreate)
+                await _nodeRepository.CreateAsync(node);
+
+            foreach (var edge in edgesToUpdate)
+                _edgeRepository.Update(edge);
+
+            foreach (var edge in edgesToCreate)
+                await _edgeRepository.CreateAsync(edge);
+
+            _projectRepository.Update(p);
+            await _nodeRepository.SaveAsync();
+            await _edgeRepository.SaveAsync();
+            await _projectRepository.SaveAsync();
+
+            return await GetProject(p.Id);
         }
     }
 }

@@ -120,6 +120,7 @@ export interface ProjectSimple {
   lastEdited: Date;
   selected: boolean;
 }
+
 export interface Connector {
   id: string;
   name: string;
@@ -127,6 +128,7 @@ export interface Connector {
   terminalCategory: TerminalCategory;
   terminalType: TerminalType;
   relationType: RelationType;
+  nodeId: string;
 }
 
 export interface Edge {
@@ -140,17 +142,13 @@ export interface Edge {
   parentName: string;
 }
 
-export interface Position {
-  x: number;
-  y: number;
-}
-
 export interface Attribute {
   key: string;
   value: string;
   unit: string;
   type: AttributeType;
   inputType: AttributeInputType;
+  nodeId: string;
 }
 
 export interface Node {
@@ -159,7 +157,8 @@ export interface Node {
   icon: IconType;
   label: string;
   type: NodeType;
-  position: Position;
+  positionX: number;
+  positionY: number;
   connectors: Connector[];
   isLocked?: boolean | false;
   isSelected?: boolean | false;

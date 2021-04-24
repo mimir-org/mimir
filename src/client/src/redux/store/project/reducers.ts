@@ -16,6 +16,8 @@ import {
   SEARCH_PROJECT,
   SEARCH_PROJECT_SUCCESS_OR_ERROR,
   CHANGE_ACTIVE_NODE,
+  SAVE_PROJECT,
+  SAVE_PROJECT_SUCCESS_OR_ERROR,
   CHANGE_SELECTED_PROJECT,
 } from "./types";
 
@@ -33,6 +35,25 @@ export function projectReducer(
   action: ProjectActionTypes
 ) {
   switch (action.type) {
+    case SAVE_PROJECT:
+      return {
+        ...state,
+        fetching: true,
+        creating: false,
+        hasError: false,
+        errorMsg: null,
+      };
+
+    case SAVE_PROJECT_SUCCESS_OR_ERROR:
+      return {
+        ...state,
+        fetching: false,
+        creating: false,
+        hasError: action.payload.hasError,
+        errorMsg: action.payload.errorMsg,
+        project: action.payload.project,
+      };
+
     case SEARCH_PROJECT:
       return {
         ...state,
@@ -140,7 +161,8 @@ export function projectReducer(
             node.id === action.payload.nodeId
               ? {
                   ...node,
-                  position: { x: action.payload.x, y: action.payload.y },
+                  positionX: action.payload.x,
+                  positionY: action.payload.y,
                 }
               : node
           ),

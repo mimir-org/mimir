@@ -14,6 +14,8 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.ToConnector, opt => opt.MapFrom(src => src.ToConnector))
                 .ForMember(dest => dest.FromNode, opt => opt.MapFrom(src => src.FromNode))
                 .ForMember(dest => dest.ToNode, opt => opt.MapFrom(src => src.ToNode))
+                .ForMember(dest => dest.ParentType, opt => opt.MapFrom(src => src.ParentType))
+                .ForMember(dest => dest.ParentName, opt => opt.MapFrom(src => src.ParentName))
                 .PreserveReferences();
 
             CreateMap<EdgeAm, Edge>()
@@ -22,6 +24,8 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.ToConnector, opt => opt.MapFrom(src => src.ToConnector))
                 .ForMember(dest => dest.FromNode, opt => opt.MapFrom(src => src.FromNode))
                 .ForMember(dest => dest.ToNode, opt => opt.MapFrom(src => src.ToNode))
+                .ForMember(dest => dest.ParentType, opt => opt.MapFrom(src => src.ParentType))
+                .ForMember(dest => dest.ParentName, opt => opt.MapFrom(src => src.ParentName))
                 .ForMember(dest => dest.Projects, opt => opt.Ignore());
         }
     }

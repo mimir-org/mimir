@@ -1,4 +1,5 @@
 import {
+  SAVE_PROJECT,
   FETCHING_PROJECT,
   CREATING_PROJECT,
   SEARCH_PROJECT,
@@ -14,10 +15,18 @@ import {
   ProjectActionTypes,
 } from "./types";
 
+import { Project } from "../../../models/project";
+
 import { Node, Edge, NodeType } from "../../../models/project";
 
+export function save(project: Project): ProjectActionTypes {
+  return {
+    type: SAVE_PROJECT,
+    payload: project,
+  };
+}
+
 export function get(id: string): ProjectActionTypes {
-  console.log("test action: ", id);
   return {
     type: FETCHING_PROJECT,
     payload: id,
@@ -31,10 +40,13 @@ export function search(name: string): ProjectActionTypes {
   };
 }
 
-export function create(): ProjectActionTypes {
+export function create(name: string, description: string): ProjectActionTypes {
   return {
     type: CREATING_PROJECT,
-    payload: null,
+    payload: {
+      name: name,
+      description: description,
+    },
   };
 }
 

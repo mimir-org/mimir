@@ -17,7 +17,6 @@ export const OptionsComponent = () => {
 
   const onClickEarlierProject = () => {
     setshowEarlierProject(true);
-    console.log(showEarlierProject);
   };
 
   return (

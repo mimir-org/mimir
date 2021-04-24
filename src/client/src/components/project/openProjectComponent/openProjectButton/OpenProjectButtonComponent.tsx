@@ -7,13 +7,12 @@ import { RootState } from "../../../../redux/store";
 import { ProjectSimple } from "../../../../models/project";
 
 export const OpenProjectButtonComponent = ({ projectId }) => {
-  console.log("test projectid: ", projectId);
   const dispatch = useDispatch();
   const [buttonHover, setbuttonHover] = useState(false);
   const projects = useSelector<RootState>(
     (state) => state.projectState.projectList
   ) as ProjectSimple[];
-  console.log(projects);
+
   const isVisible = projects ? projects.length > 0 : false;
 
   return (

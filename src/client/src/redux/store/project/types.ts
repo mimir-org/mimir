@@ -1,5 +1,7 @@
 import { Project, Node, Edge, NodeType } from "../../../models/project";
 
+export const SAVE_PROJECT = "SAVE_PROJECT";
+export const SAVE_PROJECT_SUCCESS_OR_ERROR = "SAVE_PROJECT_SUCCESS_OR_ERROR";
 export const FETCHING_PROJECT = "FETCHING_PROJECT";
 export const SEARCH_PROJECT = "SEARCH_PROJECT";
 export const SEARCH_PROJECT_SUCCESS_OR_ERROR =
@@ -112,6 +114,16 @@ interface ChangeActiveNode {
   };
 }
 
+interface SaveProjectAction {
+  type: typeof SAVE_PROJECT;
+  payload: Project;
+}
+
+interface SaveProjectActionFinished {
+  type: typeof SAVE_PROJECT_SUCCESS_OR_ERROR;
+  payload: ProjectState;
+}
+
 interface ChangeSelectedProject {
   type: typeof CHANGE_SELECTED_PROJECT;
   payload: {
@@ -134,4 +146,6 @@ export type ProjectActionTypes =
   | ChangeNodeVisibility
   | ChangeEdgeVisibility
   | ChangeActiveNode
+  | SaveProjectAction
+  | SaveProjectActionFinished
   | ChangeSelectedProject;
