@@ -1,4 +1,4 @@
-import GetImg from "../../helpers/GetImg";
+import { GetIcon } from "../../helpers";
 import textResources from "../../../../textResources";
 import { useHistory } from "react-router-dom";
 
@@ -10,7 +10,7 @@ export const OpenProjectHeader = () => {
 
   return (
     <div className="open_project_header">
-      <GetImg icon="LeftArrowIcon" imgOnClick={() => goback()} />
+      <GetIcon icon="LeftArrowIcon" imgOnClick={() => goback()} />
       <p className="open_project_header_text">
         {textResources.Project_open_project}
       </p>

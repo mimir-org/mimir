@@ -12,8 +12,8 @@ export const EarlierProjectComponent = () => {
   ) as ProjectSimple[];
 
   const project =
-    projects !== null ? projects.find((x) => x.selected === true) : "";
-  const projectId = project ? project.id : "";
+    projects !== null ? projects.find((x) => x.selected === true) : undefined;
+  const projectId = project ? project.id : undefined;
 
   return (
     <div className="open_project_container">

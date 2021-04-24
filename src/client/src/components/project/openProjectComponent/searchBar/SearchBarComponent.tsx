@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { search } from "../../../../redux/store/project/actions";
-import GetImg from "../../helpers/GetImg";
+import { GetIcon } from "../../helpers";
 
 export let SearchBarComponent = () => {
   const dispatch = useDispatch();
@@ -23,7 +23,7 @@ export let SearchBarComponent = () => {
         onChange={handleChange}
         autoFocus
       />
-      <GetImg icon="SearchIcon" />
+      <GetIcon icon="SearchIcon" />
     </div>
   );
 };

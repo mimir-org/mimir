@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { get } from "../../../../redux/store/project/actions";
-import GetImg from "../../helpers/GetImg";
+import { GetIcon } from "../../helpers";
 import textResources from "../../../../textResources";
 import { RootState } from "../../../../redux/store";
 import { ProjectSimple } from "../../../../models/project";
@@ -9,6 +9,7 @@ import { ProjectSimple } from "../../../../models/project";
 export const OpenProjectButtonComponent = ({ projectId }) => {
   const dispatch = useDispatch();
   const [buttonHover, setbuttonHover] = useState(false);
+
   const projects = useSelector<RootState>(
     (state) => state.projectState.projectList
   ) as ProjectSimple[];
@@ -26,15 +27,15 @@ export const OpenProjectButtonComponent = ({ projectId }) => {
           onMouseOut={() => {
             setbuttonHover(false);
           }}
-          onClick={() => dispatch(get(projectId))} //"95C10DAB-0DAD-4CBB-B33E-CA0A3CBC500C"
+          onClick={() => dispatch(get(projectId))}
         >
           <p className="open_project_button_text">
             {textResources.Project_recent_open}
           </p>
           {buttonHover ? (
-            <GetImg icon="WhiteRightArrowIcon" />
+            <GetIcon icon="WhiteRightArrowIcon" />
           ) : (
-            <GetImg icon="" />
+            <GetIcon icon="" />
           )}
         </div>
       </div>
@@ -43,5 +44,3 @@ export const OpenProjectButtonComponent = ({ projectId }) => {
 };
 
 export default OpenProjectButtonComponent;
-
-//
