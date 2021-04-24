@@ -19,7 +19,7 @@ export const OpenProjectButtonComponent = ({ projectId }) => {
         onMouseOut={() => {
           setbuttonHover(false);
         }}
-        onClick={() => dispatch(get("95C10DAB-0DAD-4CBB-B33E-CA0A3CBC500C"))}
+        onClick={() => dispatch(get(projectId))} //"95C10DAB-0DAD-4CBB-B33E-CA0A3CBC500C"
       >
         <p className="open_project_button_text">
           {textResources.Project_recent_open}
