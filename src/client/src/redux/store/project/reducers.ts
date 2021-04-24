@@ -1,4 +1,3 @@
-import ProjectDataset from "../../../data/ProjectDataset";
 import { NodeType, ProjectSimple } from "../../../models/project";
 import {
   FETCHING_PROJECT,
@@ -53,7 +52,6 @@ export function projectReducer(
         projectList: action.payload.projectList,
       };
     case FETCHING_PROJECT:
-      console.log("fetching project: ", action, state);
       return {
         ...state,
         fetching: true,
@@ -64,7 +62,6 @@ export function projectReducer(
       };
 
     case FETCHING_PROJECT_SUCCESS_OR_ERROR:
-      console.log("fetching project2: ", action, state);
       return {
         ...state,
         fetching: action.payload.fetching,
@@ -257,17 +254,15 @@ export function projectReducer(
 
     case CHANGE_SELECTED_PROJECT:
       const projectId = action.payload.projectId;
-      const projectList = state.projectList as ProjectSimple[];
-
-      for (let i = 0; i < projectList.length; i++) {
-        if (projectList[i].id === projectId) {
-          projectList[i].selected = true;
-        } else projectList[i].selected = false;
-      }
+      const projects = state.projectList as ProjectSimple[];
 
       return {
         ...state,
-        projectList: projectList,
+        projectList: projects.map((x, i) =>
+          projects[i].id === projectId
+            ? { ...x, selected: true }
+            : { ...x, selected: false }
+        ),
       };
 
     default:
