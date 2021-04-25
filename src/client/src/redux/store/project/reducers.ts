@@ -174,6 +174,7 @@ export function projectReducer(
       const isParent = action.payload.isParent;
       const type = action.payload.type;
       const edgeId = action.payload.edgeId;
+      const isHidden = !node.isHidden;
 
       if (isAspect) {
         return {
@@ -182,7 +183,7 @@ export function projectReducer(
             nodes: state.project.nodes.map((nodes, i) =>
               state.project.nodes[i].type === type ||
               state.project.nodes[i].label === type
-                ? { ...nodes, isHidden: action.payload.isHidden }
+                ? { ...nodes, isHidden: isHidden }
                 : nodes
             ),
             edges: state.project.edges.map((edges, i) =>
@@ -190,7 +191,7 @@ export function projectReducer(
               state.project.edges[i].fromNode === node.id ||
               state.project.edges[i].toNode === node.id ||
               state.project.edges[i].id === edgeId
-                ? { ...edges, isHidden: action.payload.isHidden }
+                ? { ...edges, isHidden: isHidden }
                 : edges
             ),
           },
@@ -229,14 +230,14 @@ export function projectReducer(
           project: {
             nodes: state.project.nodes.map((nodes, i) =>
               children.includes(state.project.nodes[i])
-                ? { ...nodes, isHidden: action.payload.isHidden }
+                ? { ...nodes, isHidden: isHidden }
                 : nodes
             ),
             edges: state.project.edges.map((edges, i) =>
               children.includes(state.project.edges[i]) ||
               state.project.edges[i].toNode === node.id ||
               state.project.edges[i].id === edgeId
-                ? { ...edges, isHidden: action.payload.isHidden }
+                ? { ...edges, isHidden: isHidden }
                 : edges
             ),
           },
@@ -248,14 +249,14 @@ export function projectReducer(
         project: {
           nodes: state.project.nodes.map((nodes, i) =>
             state.project.nodes[i].id === node.id
-              ? { ...nodes, isHidden: action.payload.isHidden }
+              ? { ...nodes, isHidden: isHidden }
               : nodes
           ),
           edges: state.project.edges.map((edges, i) =>
             state.project.edges[i].fromNode === node.id ||
             state.project.edges[i].toNode === node.id ||
             state.project.edges[i].id === edgeId
-              ? { ...edges, isHidden: action.payload.isHidden }
+              ? { ...edges, isHidden: isHidden }
               : edges
           ),
         },

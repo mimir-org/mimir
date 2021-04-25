@@ -94,7 +94,6 @@ interface ChangeNodeVisibility {
   type: typeof CHANGE_NODE_VISIBILITY;
   payload: {
     node: Node;
-    isHidden: boolean;
     isAspect: boolean;
     isParent: boolean;
     type: NodeType;

@@ -92,7 +92,6 @@ export function updatePosition(
 
 export function changeNodeVisibility(
   node: Node,
-  isHidden: boolean,
   isAspect: boolean,
   isParent: boolean,
   type: NodeType,
@@ -100,7 +99,7 @@ export function changeNodeVisibility(
 ) {
   return {
     type: CHANGE_NODE_VISIBILITY,
-    payload: { node, isHidden, isAspect, isParent, type, edgeId },
+    payload: { node, isAspect, isParent, type, edgeId },
   };
 }
 
