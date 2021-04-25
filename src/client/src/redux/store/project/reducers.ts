@@ -121,6 +121,7 @@ export function projectReducer(
       };
 
     case REMOVE_NODE:
+      // TODO: nuke all children
       return {
         ...state,
         project: {
