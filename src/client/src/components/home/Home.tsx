@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router";
-import { TreeviewComponent } from "..";
 import { ExplorerModule } from "../modules/explorerModule";
 import { InspectorModule } from "../modules/inspectorModule";
 import { LibraryModule } from "../modules/libraryModule";
 import { FilterModule } from "../modules/filterModule";
 import { getUser } from "../../redux/store/user/actions";
+import { FlowTree, FlowBlock } from "../flow";
 
 interface RouteParams {
   type: string;
@@ -27,9 +27,27 @@ const Home = () => {
       <div className="middle_content">
         <div className="workspace">
           <>
-            {params.type === "treeview" && <TreeviewComponent />}
+            {params.type === "treeview" && (
+              <div className="treeview_component">
+                <div className="treestructur_container">
+                  <div className="heading">
+                    <p>Treeview</p>
+                  </div>
+                  <FlowTree />
+                </div>
+              </div>
+            )}
             {/* BlockView kommer her */}
-            {params.type === "blockview" && <TreeviewComponent />}
+            {params.type === "blockview" && (
+              <div className="treeview_component">
+                <div className="treestructur_container">
+                  <div className="heading">
+                    <p>Blockview</p>
+                  </div>
+                  <FlowBlock />
+                </div>
+              </div>
+            )}
           </>
         </div>
         <InspectorModule />

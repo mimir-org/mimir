@@ -18,6 +18,7 @@ namespace Mb.Core.Repositories
         Task<EntityEntry<TEntity>> CreateAsync(TEntity entity);
         void Update(TEntity entity);
         Task Delete(int id);
+        Task Delete(string id);
         void Detach(TEntity entity);
         void Attach(TEntity entity, EntityState state);
         Task<int> SaveAsync();

@@ -46,20 +46,42 @@ export const createId = () => {
     return _p8(false) + _p8(true) + _p8(true) + _p8(false);
 };
 
-export const CreateElementNode = (node: Node): FlowElement => {
+export const CreateElementNode = (node: Node, isBlockView: boolean): FlowElement => {
     let elementNode = null;
     if (!node) return elementNode;
 
+    let type = !isAspectNode(node.type)
+        ? node.type.charAt(0).toUpperCase() + node.type.substring(1).toLowerCase()
+        : node.type;
+
+    let position = {};
+
+    if (isBlockView) {
+        type += '_block';
+        var elem = document.getElementsByClassName("react-flow")[0].getBoundingClientRect();
+        console.log(elem.width);
+
+
+        position = { x: elem.width / 2 - 300, y: 0 };
+
+    } else {
+        position = { x: node.positionX, y: node.positionY };
+    }
+
+
+
     elementNode = {
         id: node.id,
-        type: !isAspectNode(node.type)
-            ? node.type.charAt(0).toUpperCase() + node.type.substring(1).toLowerCase()
-            : node.type,
+        type: type,
         data: node,
-        position: { x: node.positionX, y: node.positionY },
+        position: position,
         isHidden: node.isHidden,
         isSelected: node.isSelected,
     };
+
+
+    //   document.querySelectorAll('[data-foo="value"]');
+
 
     return elementNode;
 };
@@ -102,7 +124,7 @@ export const CreateProjectNodes = (project: Project): Elements => {
     if (!project) return;
 
     project.nodes.forEach((node) => {
-        const elementNode = CreateElementNode(node);
+        const elementNode = CreateElementNode(node, false);
         if (elementNode) initialElements.push(elementNode);
     });
 
@@ -115,6 +137,39 @@ export const CreateProjectNodes = (project: Project): Elements => {
 
     return initialElements;
 };
+
+export const CreateProjectBlockViewNodes = (project: Project): Elements => {
+    const initialElements: Elements = [];
+
+    if (!project) return;
+
+    const actualNode = project.nodes.find(node => node.id === '09f6c8ff-bd9e-39c2-16b4-af45d33bfcf0');
+    const elementNode = CreateElementNode(actualNode, true);
+    if (elementNode) initialElements.push(elementNode);
+
+    const fromNodes = [];
+    const toNodes = [];
+
+    // project.nodes.forEach((node) => {
+    //     const elementNode = CreateElementNode(node);
+    //     if (elementNode) initialElements.push(elementNode);
+    // });
+
+    project.edges.forEach((edge) => {
+        const fromNode = project.nodes.find((x) => x.id === edge.fromNode);
+        const toNode = project.nodes.find((x) => x.id === edge.toNode);
+        if (fromNode.id === actualNode.id)
+            fromNodes.push(edge);
+
+        if (toNode.id === actualNode.id)
+            toNodes.push(edge);
+
+        // const elementEdge = CreateElementEdge(edge, fromNode, toNode);
+        // if (elementEdge) initialElements.push(elementEdge);
+    });
+
+    return initialElements;
+}
 
 export const processType = (connector: Connector): [HandleType, Position] => {
     if (connector.type === CONNECTOR_TYPE.OUTPUT && connector.relationType === RELATION_TYPE.Relation)
