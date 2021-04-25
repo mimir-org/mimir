@@ -94,7 +94,7 @@ interface UpdatePositionAction {
 interface ChangeNodeVisibility {
   type: typeof CHANGE_NODE_VISIBILITY;
   payload: {
-    nodeId: string;
+    node: Node;
     isHidden: boolean;
     isAspect: boolean;
     isParent: boolean;

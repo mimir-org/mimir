@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import {
   Connector,
   NodeType,
+  NODE_TYPE,
   RELATION_TYPE,
   TERMINAL_CATEGORY,
   TERMINAL_TYPE,
@@ -13,6 +14,7 @@ import {
   changeNodeVisibility,
   changeEdgeVisibility,
 } from "../../../../redux/store/project/actions";
+// import { Edge, Node } from "../../../../models/project";
 
 export const useChangeNodeVisibility = (
   nodeId: string,
@@ -23,45 +25,36 @@ export const useChangeNodeVisibility = (
 
   // Handle nodes
   const nodes = GetNodes();
-  const node = nodes.find((node: { id: string }) => node.id === nodeId);
-  const isAspect: boolean = isAspectNode(node.type);
+  const node = nodes.find((node) => node.id === nodeId);
+  const nodeType = node.type;
+  const isAspect = isAspectNode(node.type);
 
   // Handles edges linked to the node
   const edges = GetEdges();
-  let edgesToChange = [];
-  const edge = edges.find((edge: { toNode: string }) => edge.toNode === nodeId);
-  const edgeId: string = edge === undefined ? undefined : edge.id;
+  const edge = edges.find((edge) => edge.toNode === nodeId);
+  const edgeId = edge === undefined ? undefined : edge.id;
 
-  for (let i = 0; i < edges.length; i++) {
-    if (edges[i].toNode === nodeId || edges[i].fromNode === nodeId)
-      edgesToChange.push(edges[i]);
-  }
-  //   edgesToChange.push(
-  //     edges.find((x) => x.toNode === nodeId || x.fromNode === nodeId)
-  //   );
-
-  const connector =
-    edge === undefined
+  // Child node if parent
+  const nodeNextEdge = edges.find((x) => x.fromNode === nodeId);
+  const nextChildNode =
+    nodeNextEdge === undefined
       ? undefined
-      : node.connectors.find((x) => x.id === edge.fromConnector);
+      : nodes.find((x) => x.id === nodeNextEdge.toNode);
+  const nextChildType =
+    nextChildNode === undefined ? undefined : nextChildNode.type;
 
-  const isParent: boolean = edges.find(
-    (edge: { fromNode: string }) =>
-      edge.fromNode === nodeId &&
-      connector !== undefined &&
-      connector.relationType === RELATION_TYPE.PartOf
-  )
-    ? true
-    : false;
+  const isLinkedToNode = nodeNextEdge === undefined ? false : true;
+  const hasRelationConnector =
+    nextChildType === undefined ? false : nextChildType === nodeType;
 
-  //   console.log("isparent: ", isParent);
+  const isParent = isLinkedToNode && hasRelationConnector;
 
   return useCallback(() => {
-    dispatch(changeNodeVisibility(nodeId, !isHidden, isAspect, isParent, type));
+    dispatch(changeNodeVisibility(node, !isHidden, isAspect, isParent, type));
     if (edgeId !== undefined) {
       dispatch(changeEdgeVisibility(edgeId, !isHidden));
     }
-  }, [dispatch, nodeId, isHidden, isAspect, isParent, type, edgeId]);
+  }, [dispatch, node, isHidden, isAspect, isParent, type, edgeId]);
 };
 
 export default useChangeNodeVisibility;

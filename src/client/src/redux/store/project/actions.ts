@@ -1,3 +1,5 @@
+import { Project } from "../../../models/project";
+import { Node, Edge, NodeType } from "../../../models/project";
 import {
   SAVE_PROJECT,
   FETCHING_PROJECT,
@@ -14,10 +16,6 @@ import {
   CHANGE_SELECTED_PROJECT,
   ProjectActionTypes,
 } from "./types";
-
-import { Project } from "../../../models/project";
-
-import { Node, Edge, NodeType } from "../../../models/project";
 
 export function save(project: Project): ProjectActionTypes {
   return {
@@ -94,7 +92,7 @@ export function updatePosition(
 }
 
 export function changeNodeVisibility(
-  nodeId: string,
+  node: Node,
   isHidden: boolean,
   isAspect: boolean,
   isParent: boolean,
@@ -102,7 +100,7 @@ export function changeNodeVisibility(
 ) {
   return {
     type: CHANGE_NODE_VISIBILITY,
-    payload: { nodeId, isHidden, isAspect, isParent, type },
+    payload: { node, isHidden, isAspect, isParent, type },
   };
 }
 

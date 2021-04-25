@@ -1,4 +1,4 @@
-import { NodeType, ProjectSimple } from "../../../models/project";
+import { NodeType, ProjectSimple, Node, Edge } from "../../../models/project";
 import {
   FETCHING_PROJECT,
   FETCHING_PROJECT_SUCCESS_OR_ERROR,
@@ -170,10 +170,11 @@ export function projectReducer(
       };
 
     case CHANGE_NODE_VISIBILITY:
-      const nodeId: string = action.payload.nodeId;
-      const isAspect: boolean = action.payload.isAspect;
-      const isParent: boolean = action.payload.isParent;
-      const type: NodeType = action.payload.type;
+      const node = action.payload.node;
+      const nodeId = action.payload.node.id;
+      const isAspect = action.payload.isAspect;
+      const isParent = action.payload.isParent;
+      const type = action.payload.type;
 
       if (isAspect) {
         return {
@@ -195,40 +196,42 @@ export function projectReducer(
         };
       }
       if (isParent) {
-        console.log("test parent");
         let children = [];
-        children.push(nodeId);
-        let childId = nodeId;
+        children.push(node);
+        let childNode = node;
 
-        const getChildId = () => {
-          return childId;
+        const getChild = () => {
+          return childNode.id;
         };
 
-        while (childId !== undefined) {
+        while (childNode !== undefined) {
           const edge = state.project.edges.find(
-            (edge) => edge.fromNode === getChildId()
+            (edge) => edge.fromNode === getChild()
           );
           if (edge === undefined) break;
 
           const nextChild = state.project.nodes.find(
             (node) => node.id === edge.toNode
-          ).id;
+          );
 
-          children.push(edge.id, nextChild);
-          childId = nextChild;
+          // Only change nodes of same type
+          if (nextChild.type === type) {
+            children.push(nextChild);
+          }
+          children.push(edge);
+          childNode = nextChild;
         }
-        console.log("test list of children: ", children);
 
         return {
           ...state,
           project: {
             nodes: state.project.nodes.map((nodes, i) =>
-              children.includes(state.project.nodes[i].id)
+              children.includes(state.project.nodes[i])
                 ? { ...nodes, isHidden: action.payload.isHidden }
                 : nodes
             ),
             edges: state.project.edges.map((edges, i) =>
-              children.includes(state.project.edges[i].id)
+              children.includes(state.project.edges[i])
                 ? { ...edges, isHidden: action.payload.isHidden }
                 : edges
             ),
