@@ -68,6 +68,17 @@ namespace Mb.Core.Repositories
             DbSet.Remove(entityToDelete);
         }
 
+        public virtual async Task Delete(string id)
+        {
+            var entityToDelete = await DbSet.FindAsync(id);
+            if (Context.Entry(entityToDelete).State == EntityState.Detached)
+            {
+                DbSet.Attach(entityToDelete);
+            }
+
+            DbSet.Remove(entityToDelete);
+        }
+
         public virtual void Detach(TEntity entity)
         {
             Context.Entry(entity).State = EntityState.Detached;

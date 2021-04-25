@@ -183,11 +183,13 @@ namespace Mb.Core.Services
             // Nodes
             var nodesToUpdate = p.Nodes.Where(x => existingProject.Nodes.Any(y => y.Id == x.Id)).Select(y => { y.Projects = new List<Project> { p }; return y; }).ToList();
             var nodesToCreate = p.Nodes.Where(x => existingProject.Nodes.All(y => y.Id != x.Id)).Select(y => { y.Projects = new List<Project> { p }; return y; }).ToList();
+            var nodesToDelete = existingProject.Nodes.Where(x => p.Nodes.All(y => y.Id != x.Id)).ToList();
             p.Nodes.Clear();
 
             // Edges
             var edgesToUpdate = p.Edges.Where(x => existingProject.Edges.Any(y => y.Id == x.Id)).Select(y => { y.Projects = new List<Project> { p }; return y; }).ToList();
             var edgesToCreate = p.Edges.Where(x => existingProject.Edges.All(y => y.Id != x.Id)).Select(y => { y.Projects = new List<Project> { p }; return y; }).ToList();
+            var edgesToDelete = existingProject.Edges.Where(x => p.Edges.All(y => y.Id != x.Id)).ToList();
             p.Edges.Clear();
 
             foreach (var node in nodesToUpdate)
@@ -196,11 +198,17 @@ namespace Mb.Core.Services
             foreach (var node in nodesToCreate)
                 await _nodeRepository.CreateAsync(node);
 
+            foreach (var node in nodesToDelete)
+                await _nodeRepository.Delete(node.Id);
+
             foreach (var edge in edgesToUpdate)
                 _edgeRepository.Update(edge);
 
             foreach (var edge in edgesToCreate)
                 await _edgeRepository.CreateAsync(edge);
+
+            foreach (var edge in edgesToDelete)
+                await _edgeRepository.Delete(edge.Id);
 
             _projectRepository.Update(p);
             await _nodeRepository.SaveAsync();

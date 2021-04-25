@@ -41,6 +41,7 @@ const Header = () => {
   };
 
   const handleSave = () => {
+    console.log("Save");
     if (project) dispatch(save(project));
   };
 
