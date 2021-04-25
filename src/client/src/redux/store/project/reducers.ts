@@ -176,7 +176,6 @@ export function projectReducer(
       const isAspect = action.payload.isAspect;
       const isParent = action.payload.isParent;
       const type = action.payload.type;
-      const edgeId = action.payload.edgeId;
       const isHidden = !node.isHidden;
 
       if (isAspect) {
@@ -190,9 +189,7 @@ export function projectReducer(
             ),
             edges: edgeList.map((edges, i) =>
               edgeList[i].parentType === type ||
-              edgeList[i].fromNode === node.id ||
-              edgeList[i].toNode === node.id ||
-              edgeList[i].id === edgeId
+              edgeList[i].fromNode === node.id
                 ? { ...edges, isHidden: isHidden }
                 : edges
             ),
@@ -234,9 +231,7 @@ export function projectReducer(
                 : nodes
             ),
             edges: edgeList.map((edges, i) =>
-              children.includes(edgeList[i]) ||
-              edgeList[i].toNode === node.id ||
-              edgeList[i].id === edgeId
+              children.includes(edgeList[i]) || edgeList[i].toNode === node.id
                 ? { ...edges, isHidden: isHidden }
                 : edges
             ),
@@ -253,9 +248,7 @@ export function projectReducer(
               : nodes
           ),
           edges: edgeList.map((edges, i) =>
-            edgeList[i].fromNode === node.id ||
-            edgeList[i].toNode === node.id ||
-            edgeList[i].id === edgeId
+            edgeList[i].fromNode === node.id || edgeList[i].toNode === node.id
               ? { ...edges, isHidden: isHidden }
               : edges
           ),

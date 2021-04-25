@@ -97,7 +97,6 @@ interface ChangeNodeVisibility {
     isAspect: boolean;
     isParent: boolean;
     type: NodeType;
-    edgeId: string;
   };
 }
 
