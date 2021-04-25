@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { create } from "../../redux/store/project/actions";
-
-import GetImg from "./helpers/GetImg";
+import { GetIcon } from "./helpers";
 import textResources from "../../textResources";
 import { OpenProjectComponent } from "./openProjectComponent";
 
@@ -31,12 +30,12 @@ export const ProjectOptions = () => {
               }}
               onClick={() => dispatch(create("unnamed", "unnamed"))}
             >
-              <GetImg icon="NewProjectIcon" />
+              <GetIcon icon="NewProjectIcon" />
               <p className="option_text">{textResources.Project_new_project}</p>
               {newImgHover ? (
-                <GetImg icon="WhiteRightArrowIcon" />
+                <GetIcon icon="WhiteRightArrowIcon" />
               ) : (
-                <GetImg icon="" />
+                <GetIcon icon="" />
               )}
             </div>
             <div
@@ -49,14 +48,14 @@ export const ProjectOptions = () => {
               }}
               onClick={() => setOpenProjectComponent(true)}
             >
-              <GetImg icon="OpenProjectIcon" />
+              <GetIcon icon="OpenProjectIcon" />
               <p className="option_text">
                 {textResources.Project_open_project}
               </p>
               {openImgHover ? (
-                <GetImg icon="WhiteRightArrowIcon" />
+                <GetIcon icon="WhiteRightArrowIcon" />
               ) : (
-                <GetImg icon="" />
+                <GetIcon icon="" />
               )}
             </div>
           </div>

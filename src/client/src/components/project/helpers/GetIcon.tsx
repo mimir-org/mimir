@@ -6,14 +6,14 @@ import {
   LeftArrowIcon,
   SearchIcon,
 } from "../../../assets";
-import "./getimg.scss";
+import "./getIcon.scss";
 
-interface GetImgProps {
+interface Props {
   icon: String;
   imgOnClick?: Function;
 }
 
-const GetImg = ({ icon, imgOnClick }: GetImgProps) => {
+const GetIcon = ({ icon, imgOnClick }: Props) => {
   switch (icon) {
     case "NewProjectIcon":
       return (
@@ -57,4 +57,4 @@ const GetImg = ({ icon, imgOnClick }: GetImgProps) => {
   }
 };
 
-export default GetImg;
+export default GetIcon;

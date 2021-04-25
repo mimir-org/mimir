@@ -1,37 +1,45 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { get } from "../../../../redux/store/project/actions";
-import GetImg from "../../helpers/GetImg";
+import { GetIcon } from "../../helpers";
 import textResources from "../../../../textResources";
+import { RootState } from "../../../../redux/store";
+import { ProjectSimple } from "../../../../models/project";
 
-interface OpenProjectButtonComponentProps {}
-
-export const OpenProjectButtonComponent = ({}: OpenProjectButtonComponentProps) => {
+export const OpenProjectButtonComponent = ({ projectId }) => {
   const dispatch = useDispatch();
   const [buttonHover, setbuttonHover] = useState(false);
 
+  const projects = useSelector<RootState>(
+    (state) => state.projectState.projectList
+  ) as ProjectSimple[];
+
+  const isVisible = projects ? projects.length > 0 : false;
+
   return (
-    <div className="open_project_button_wrapper">
-      <div
-        className="open_project_button"
-        onMouseOver={() => {
-          setbuttonHover(true);
-        }}
-        onMouseOut={() => {
-          setbuttonHover(false);
-        }}
-        onClick={() => dispatch(get("a9ad42e5-a88c-4195-afce-7d00d926a28d"))}
-      >
-        <p className="open_project_button_text">
-          {textResources.Project_recent_open}
-        </p>
-        {buttonHover ? (
-          <GetImg icon="WhiteRightArrowIcon" />
-        ) : (
-          <GetImg icon="" />
-        )}
+    isVisible && (
+      <div className="open_project_button_wrapper">
+        <div
+          className="open_project_button"
+          onMouseOver={() => {
+            setbuttonHover(true);
+          }}
+          onMouseOut={() => {
+            setbuttonHover(false);
+          }}
+          onClick={() => dispatch(get(projectId))}
+        >
+          <p className="open_project_button_text">
+            {textResources.Project_recent_open}
+          </p>
+          {buttonHover ? (
+            <GetIcon icon="WhiteRightArrowIcon" />
+          ) : (
+            <GetIcon icon="" />
+          )}
+        </div>
       </div>
-    </div>
+    )
   );
 };
 

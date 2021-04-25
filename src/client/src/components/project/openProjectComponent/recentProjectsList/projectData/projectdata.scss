@@ -1,0 +1,50 @@
+.project_data {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: auto;
+  flex-direction: row;
+  font-weight: normal;
+  font-size: 12px;
+  color: #000000;
+  cursor: pointer;
+  padding-top: 3px;
+  padding-bottom: 3px;
+
+  p {
+    margin: 0px;
+    white-space: nowrap;
+  }
+
+  .project_name {
+    padding-left: 3px;
+    width: 35%;
+  }
+
+  .project_owner {
+    width: 50%;
+  }
+
+  .last_edited {
+    width: 30%;
+    text-align: right;
+    white-space: pre-wrap;
+  }
+}
+
+.project_data:nth-of-type(even) {
+  background: rgba(0, 112, 121, 0.15);
+}
+
+.project_data:nth-of-type(odd) {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.selected_project {
+  border: 1px solid #007079;
+  font-weight: bold;
+}
+
+.not_selected {
+  border: none;
+}

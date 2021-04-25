@@ -1,4 +1,4 @@
-import { NodeType } from "../../../models/project";
+import { NodeType, ProjectSimple } from "../../../models/project";
 import {
   FETCHING_PROJECT,
   FETCHING_PROJECT_SUCCESS_OR_ERROR,
@@ -18,6 +18,7 @@ import {
   CHANGE_ACTIVE_NODE,
   SAVE_PROJECT,
   SAVE_PROJECT_SUCCESS_OR_ERROR,
+  CHANGE_SELECTED_PROJECT,
 } from "./types";
 
 const initialState: ProjectState = {
@@ -173,8 +174,6 @@ export function projectReducer(
       const isAspect: boolean = action.payload.isAspect;
       const isParent: boolean = action.payload.isParent;
       const type: NodeType = action.payload.type;
-      console.log("node: ", nodeId);
-      console.log("isParent: ", isParent);
 
       if (isAspect) {
         return {
@@ -249,7 +248,6 @@ export function projectReducer(
 
     case CHANGE_EDGE_VISIBILITY:
       const edgeId = action.payload.edgeId;
-      //   console.log("edge: ", edgeId);
       return {
         ...state,
         project: {
@@ -267,13 +265,26 @@ export function projectReducer(
       return {
         ...state,
         project: {
-          nodes: state.project.nodes.map((nodes, i) =>
+          nodes: state.project.nodes.map((x, i) =>
             state.project.nodes[i].id === id
-              ? { ...nodes, isSelected: true }
-              : { ...nodes, isSelected: false }
+              ? { ...x, isSelected: true }
+              : { ...x, isSelected: false }
           ),
           edges: state.project.edges,
         },
+      };
+
+    case CHANGE_SELECTED_PROJECT:
+      const projectId = action.payload.projectId;
+      const projects = state.projectList as ProjectSimple[];
+
+      return {
+        ...state,
+        projectList: projects.map((x, i) =>
+          projects[i].id === projectId
+            ? { ...x, selected: true }
+            : { ...x, selected: false }
+        ),
       };
 
     default:
