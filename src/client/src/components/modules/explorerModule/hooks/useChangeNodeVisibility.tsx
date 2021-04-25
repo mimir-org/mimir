@@ -40,23 +40,21 @@ export const useChangeNodeVisibility = (
   //     edges.find((x) => x.toNode === nodeId || x.fromNode === nodeId)
   //   );
 
-  console.log("edges to change: ", edgesToChange);
-
   const connector =
     edge === undefined
       ? undefined
       : node.connectors.find((x) => x.id === edge.fromConnector);
 
-  const isParent: boolean =
-    connector === undefined
-      ? false
-      : edges.find(
-          (edge: { fromNode: string }) =>
-            edge.fromNode === nodeId &&
-            connector.relationType === RELATION_TYPE.PartOf
-        )
-      ? true
-      : false;
+  const isParent: boolean = edges.find(
+    (edge: { fromNode: string }) =>
+      edge.fromNode === nodeId &&
+      connector !== undefined &&
+      connector.relationType === RELATION_TYPE.PartOf
+  )
+    ? true
+    : false;
+
+  //   console.log("isparent: ", isParent);
 
   return useCallback(() => {
     dispatch(changeNodeVisibility(nodeId, !isHidden, isAspect, isParent, type));

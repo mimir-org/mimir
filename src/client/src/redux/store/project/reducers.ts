@@ -195,6 +195,7 @@ export function projectReducer(
         };
       }
       if (isParent) {
+        console.log("test parent");
         let children = [];
         children.push(nodeId);
         let childId = nodeId;
@@ -216,6 +217,7 @@ export function projectReducer(
           children.push(edge.id, nextChild);
           childId = nextChild;
         }
+        console.log("test list of children: ", children);
 
         return {
           ...state,
