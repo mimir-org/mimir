@@ -1,4 +1,4 @@
-import { NodeType, ProjectSimple, Node, Edge } from "../../../models/project";
+import { ProjectSimple } from "../../../models/project";
 import {
   FETCHING_PROJECT,
   FETCHING_PROJECT_SUCCESS_OR_ERROR,
@@ -12,7 +12,6 @@ import {
   ProjectState,
   UPDATE_POSITION,
   CHANGE_NODE_VISIBILITY,
-  CHANGE_EDGE_VISIBILITY,
   SEARCH_PROJECT,
   SEARCH_PROJECT_SUCCESS_OR_ERROR,
   CHANGE_ACTIVE_NODE,
@@ -171,10 +170,10 @@ export function projectReducer(
 
     case CHANGE_NODE_VISIBILITY:
       const node = action.payload.node;
-      const nodeId = action.payload.node.id;
       const isAspect = action.payload.isAspect;
       const isParent = action.payload.isParent;
       const type = action.payload.type;
+      const edgeId = action.payload.edgeId;
 
       if (isAspect) {
         return {
@@ -188,13 +187,16 @@ export function projectReducer(
             ),
             edges: state.project.edges.map((edges, i) =>
               state.project.edges[i].parentType === type ||
-              state.project.edges[i].fromNode === nodeId
+              state.project.edges[i].fromNode === node.id ||
+              state.project.edges[i].toNode === node.id ||
+              state.project.edges[i].id === edgeId
                 ? { ...edges, isHidden: action.payload.isHidden }
                 : edges
             ),
           },
         };
       }
+
       if (isParent) {
         let children = [];
         children.push(node);
@@ -231,7 +233,9 @@ export function projectReducer(
                 : nodes
             ),
             edges: state.project.edges.map((edges, i) =>
-              children.includes(state.project.edges[i])
+              children.includes(state.project.edges[i]) ||
+              state.project.edges[i].toNode === node.id ||
+              state.project.edges[i].id === edgeId
                 ? { ...edges, isHidden: action.payload.isHidden }
                 : edges
             ),
@@ -243,25 +247,17 @@ export function projectReducer(
         ...state,
         project: {
           nodes: state.project.nodes.map((nodes, i) =>
-            state.project.nodes[i].id === nodeId
+            state.project.nodes[i].id === node.id
               ? { ...nodes, isHidden: action.payload.isHidden }
               : nodes
           ),
-          edges: state.project.edges,
-        },
-      };
-
-    case CHANGE_EDGE_VISIBILITY:
-      const edgeId = action.payload.edgeId;
-      return {
-        ...state,
-        project: {
           edges: state.project.edges.map((edges, i) =>
+            state.project.edges[i].fromNode === node.id ||
+            state.project.edges[i].toNode === node.id ||
             state.project.edges[i].id === edgeId
               ? { ...edges, isHidden: action.payload.isHidden }
               : edges
           ),
-          nodes: state.project.nodes,
         },
       };
 

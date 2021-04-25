@@ -11,7 +11,6 @@ import {
   REMOVE_EDGE,
   UPDATE_POSITION,
   CHANGE_NODE_VISIBILITY,
-  CHANGE_EDGE_VISIBILITY,
   CHANGE_ACTIVE_NODE,
   CHANGE_SELECTED_PROJECT,
   ProjectActionTypes,
@@ -96,18 +95,12 @@ export function changeNodeVisibility(
   isHidden: boolean,
   isAspect: boolean,
   isParent: boolean,
-  type: NodeType
+  type: NodeType,
+  edgeId: string
 ) {
   return {
     type: CHANGE_NODE_VISIBILITY,
-    payload: { node, isHidden, isAspect, isParent, type },
-  };
-}
-
-export function changeEdgeVisibility(edgeId: string, isHidden: boolean) {
-  return {
-    type: CHANGE_EDGE_VISIBILITY,
-    payload: { edgeId, isHidden: isHidden },
+    payload: { node, isHidden, isAspect, isParent, type, edgeId },
   };
 }
 
