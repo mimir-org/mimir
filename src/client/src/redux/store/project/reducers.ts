@@ -171,6 +171,8 @@ export function projectReducer(
 
     case CHANGE_NODE_VISIBILITY:
       const node = action.payload.node;
+      const nodeList = state.project.nodes;
+      const edgeList = state.project.edges;
       const isAspect = action.payload.isAspect;
       const isParent = action.payload.isParent;
       const type = action.payload.type;
@@ -181,17 +183,16 @@ export function projectReducer(
         return {
           ...state,
           project: {
-            nodes: state.project.nodes.map((nodes, i) =>
-              state.project.nodes[i].type === type ||
-              state.project.nodes[i].label === type
+            nodes: nodeList.map((nodes, i) =>
+              nodeList[i].type === type || nodeList[i].label === type
                 ? { ...nodes, isHidden: isHidden }
                 : nodes
             ),
-            edges: state.project.edges.map((edges, i) =>
-              state.project.edges[i].parentType === type ||
-              state.project.edges[i].fromNode === node.id ||
-              state.project.edges[i].toNode === node.id ||
-              state.project.edges[i].id === edgeId
+            edges: edgeList.map((edges, i) =>
+              edgeList[i].parentType === type ||
+              edgeList[i].fromNode === node.id ||
+              edgeList[i].toNode === node.id ||
+              edgeList[i].id === edgeId
                 ? { ...edges, isHidden: isHidden }
                 : edges
             ),
@@ -209,9 +210,7 @@ export function projectReducer(
         };
 
         while (childNode !== undefined) {
-          const edge = state.project.edges.find(
-            (edge) => edge.fromNode === getChild()
-          );
+          const edge = edgeList.find((edge) => edge.fromNode === getChild());
           if (edge === undefined) break;
 
           const nextChild = state.project.nodes.find(
@@ -234,10 +233,10 @@ export function projectReducer(
                 ? { ...nodes, isHidden: isHidden }
                 : nodes
             ),
-            edges: state.project.edges.map((edges, i) =>
-              children.includes(state.project.edges[i]) ||
-              state.project.edges[i].toNode === node.id ||
-              state.project.edges[i].id === edgeId
+            edges: edgeList.map((edges, i) =>
+              children.includes(edgeList[i]) ||
+              edgeList[i].toNode === node.id ||
+              edgeList[i].id === edgeId
                 ? { ...edges, isHidden: isHidden }
                 : edges
             ),
@@ -253,10 +252,10 @@ export function projectReducer(
               ? { ...nodes, isHidden: isHidden }
               : nodes
           ),
-          edges: state.project.edges.map((edges, i) =>
-            state.project.edges[i].fromNode === node.id ||
-            state.project.edges[i].toNode === node.id ||
-            state.project.edges[i].id === edgeId
+          edges: edgeList.map((edges, i) =>
+            edgeList[i].fromNode === node.id ||
+            edgeList[i].toNode === node.id ||
+            edgeList[i].id === edgeId
               ? { ...edges, isHidden: isHidden }
               : edges
           ),
