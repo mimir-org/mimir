@@ -198,7 +198,7 @@ export function projectReducer(
       }
 
       if (isParent) {
-        let children: (Node | Edge)[];
+        let children: (Node | Edge)[] = [];
         children.push(node);
         let childNode = node;
 
