@@ -17,10 +17,10 @@ export const CheckboxComponent = ({ nodeId, inputLabel, type }: Props) => {
   const isHidden = node.isHidden;
 
   const handleCheckboxChange = useChangeNodeVisibility(node, type);
-  const underlineColor = GetCheckboxColor(type);
+  const textDecoration = GetCheckboxColor(type);
 
   return (
-    <label className={"checkbox " + underlineColor}>
+    <label className={"checkbox " + textDecoration}>
       <input
         type="checkbox"
         checked={!isHidden}

@@ -49,7 +49,7 @@ export const AspectComponent = ({ nodeId, name, aspectType }: Props) => {
         {GetDropdownIcon(expandIcon, handleExpandClick)}
       </div>
 
-      <AspectChildContainer color={name}>
+      <AspectChildContainer color={childType}>
         {expanded &&
           children.map((obj: object, i: number) => {
             if (children[i].type === childType) {
