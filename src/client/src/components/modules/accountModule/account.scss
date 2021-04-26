@@ -1,0 +1,44 @@
+.account_container {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  margin-left: 36px;
+  padding-left: 8px;
+  padding-right: 8px;
+  z-index: 1103;
+  height: auto;
+  font-family: roboto;
+  background-color: #007079;
+  color: #ffffff;
+  border-color: #007079;
+  border: 2px 2px 0px 2px;
+
+  .account_clickable {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+    height: 44px;
+
+    .project_name {
+      text-transform: uppercase;
+    }
+
+    .project_name_opened {
+      text-decoration: underline;
+      font-weight: bold;
+    }
+  }
+
+  .account_details {
+    width: 250px;
+    font-size: 18px;
+    padding-bottom: 12px;
+  }
+}
+
+.is_opened {
+  background-color: #ffffff;
+  color: #007079;
+  border: 2px solid #007079;
+}

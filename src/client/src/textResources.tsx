@@ -80,6 +80,11 @@ const textResources = {
   Library_Location: "Location",
   Library_SearchBox_Placeholder: "Søk i biblioteket",
 
+  // AccountModule
+  Account_Save_Label: "Save a project copy locally?",
+  Account_Save_Button: "Save",
+  Account_Logout: "Log out",
+
   // FilterModule
   Filter_Types: "Transport/Interfaces/Terminals:",
   Filter_Sub_Types: "Sub-Types:",
