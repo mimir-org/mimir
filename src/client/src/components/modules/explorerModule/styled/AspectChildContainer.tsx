@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const FacetContainerWrapper = styled.div`
+const AspectChildContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding-top: 6px;
@@ -14,4 +14,4 @@ const FacetContainerWrapper = styled.div`
       : "#f2f2f2"};
 `;
 
-export default FacetContainerWrapper;
+export default AspectChildContainer;

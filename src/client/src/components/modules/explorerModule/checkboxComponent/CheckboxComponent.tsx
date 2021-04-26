@@ -6,24 +6,18 @@ import "./checkbox.scss";
 
 interface Props {
   nodeId: string;
-  inputLabel: NodeType;
-  aspect?: NodeType;
+  inputLabel: string;
   type: NodeType;
 }
 
-export const CheckboxComponent = ({
-  nodeId,
-  inputLabel,
-  aspect,
-  type,
-}: Props) => {
+export const CheckboxComponent = ({ nodeId, inputLabel, type }: Props) => {
   // Check if node is hidden
   const nodes = GetNodes();
   const node = nodes.find((x) => x.id === nodeId);
   const isHidden = node.isHidden;
 
   const handleCheckboxChange = useChangeNodeVisibility(node, type);
-  const underlineColor = GetCheckboxColor(aspect);
+  const underlineColor = GetCheckboxColor(type);
 
   return (
     <label className={"checkbox " + underlineColor}>

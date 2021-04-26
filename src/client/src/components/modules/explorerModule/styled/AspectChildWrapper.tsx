@@ -6,11 +6,11 @@ const calculate = (indent: number) => {
   return margin + indent * increase;
 };
 
-const FacetWrapper = styled.div`
+const AspectChildWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   margin-left: ${(props: { indent: number }) => calculate(props.indent)}px;
 `;
 
-export default FacetWrapper;
+export default AspectChildWrapper;

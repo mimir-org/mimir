@@ -1,9 +1,9 @@
 import { NodeType, NODE_TYPE } from "../../../../models/project";
 
-const GetAspectHeader = (name: NodeType): string => {
-  if (name === NODE_TYPE.FUNCTION) return "function_header";
-  if (name === NODE_TYPE.PRODUCT) return "product_header";
-  if (name === NODE_TYPE.LOCATION) return "location_header";
+const GetAspectHeader = (node: NodeType): string => {
+  if (node === NODE_TYPE.ASPECT_FUNCTION) return "function_header";
+  if (node === NODE_TYPE.ASPECT_PRODUCT) return "product_header";
+  if (node === NODE_TYPE.ASPECT_LOCATION) return "location_header";
   return null;
 };
 

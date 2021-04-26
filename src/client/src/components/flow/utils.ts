@@ -109,14 +109,10 @@ export const CreateElementEdge = (
   return elem;
 };
 
-export const isAspectNode = (nodeType: NodeType): boolean => {
-  //   console.log(nodeType);
-  return (
-    nodeType === (NODE_TYPE.ASPECT_FUNCTION as NodeType) ||
-    nodeType === (NODE_TYPE.ASPECT_PRODUCT as NodeType) ||
-    nodeType === (NODE_TYPE.ASPECT_LOCATION as NodeType)
-  );
-};
+export const isAspectNode = (nodeType: NodeType): boolean =>
+  nodeType === (NODE_TYPE.ASPECT_FUNCTION as NodeType) ||
+  nodeType === (NODE_TYPE.ASPECT_PRODUCT as NodeType) ||
+  nodeType === (NODE_TYPE.ASPECT_LOCATION as NodeType);
 
 export const CreateProjectNodes = (project: Project): Elements => {
   const initialElements: Elements = [];
