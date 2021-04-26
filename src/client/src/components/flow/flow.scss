@@ -8,142 +8,142 @@
 .react-flow__node-Function,
 .react-flow__node-Product,
 .react-flow__node-Location {
-    padding: 10px;
-    border-radius: 3px;
-    width: 100px;
-    font-size: 12px;
-    color: #222;
-    text-align: center;
-    border-width: 1px;
-    border-style: solid;
+  padding: 10px;
+  border-radius: 3px;
+  width: 100px;
+  font-size: 12px;
+  color: #222;
+  text-align: center;
+  border-width: 1px;
+  border-style: solid;
 
-    &.selected {
-        border: 2px solid #1a192b;
-    }
+  &.selected {
+    border: 2px solid #1a192b;
+  }
 
-    .aspect-icon {
-        width: 25px;
-        height: 25px;
-    }
+  .aspect-icon {
+    width: 25px;
+    height: 25px;
+  }
 }
 
 .react-flow__controls {
-    position: absolute;
-    z-index: 5;
-    bottom: 80px;
-    left: 10px;
+  position: absolute;
+  z-index: 5;
+  bottom: 80px !important;
+  left: 10px;
 }
 
 .react-flow__node-AspectLocation,
 .react-flow__node-AspectFunction,
 .react-flow__node-AspectProduct {
-    border: none;
+  border: none;
 }
 
 .react-flow__node-function,
 .react-flow__node-Function {
-    background: yellow;
+  background: yellow;
 }
 
 .react-flow__node-product,
 .react-flow__node-Product {
-    background: turquoise;
+  background: turquoise;
 }
 
 .react-flow__node-location,
 .react-flow__node-Location {
-    background: magenta;
+  background: magenta;
 }
 
 .react-flow__minimap {
-    background-color: #f8f8f8;
-    box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.15);
-    margin-bottom: 56px;
-    max-height: 78px;
-    max-width: 161px;
+  background-color: #f8f8f8;
+  box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.15);
+  margin-bottom: 56px;
+  max-height: 78px;
+  max-width: 161px;
 }
 
 /* Tegnebrettet */
 .dndflow {
-    flex-direction: column;
-    display: flex;
-    height: 100%;
-    background-color: #f8f8f8;
+  flex-direction: column;
+  display: flex;
+  height: 100%;
+  background-color: #f8f8f8;
 }
 
 /* Sidebar */
 .dndflow aside {
-    border-right: 1px solid #eee;
-    padding: 15px 10px;
-    font-size: 12px;
-    background: #fcfcfc;
+  border-right: 1px solid #eee;
+  padding: 15px 10px;
+  font-size: 12px;
+  background: #fcfcfc;
 }
 
 .dndflow aside .description {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .dndflow .dndnode {
-    height: 25px;
-    width: 150px;
-    padding: 4px;
-    border: 1px solid #1a192b;
-    font-size: 14px;
-    border-radius: 2px;
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: grab;
+  height: 25px;
+  width: 150px;
+  padding: 4px;
+  border: 1px solid #1a192b;
+  font-size: 14px;
+  border-radius: 2px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: grab;
 }
 
 .dndflow .dndnode.function {
-    background-color: yellow;
-    border-color: #000000;
+  background-color: yellow;
+  border-color: #000000;
 }
 
 .dndflow .dndnode.location {
-    background-color: magenta;
-    border-color: #000000;
+  background-color: magenta;
+  border-color: #000000;
 }
 
 .dndflow .dndnode.product {
-    background-color: turquoise;
-    border-color: #000000;
+  background-color: turquoise;
+  border-color: #000000;
 }
 
 .dndflow .dndnode.input {
-    border-color: #0041d0;
+  border-color: #0041d0;
 }
 
 .dndflow .dndnode.output {
-    border-color: #ff0072;
+  border-color: #ff0072;
 }
 
 /* Hovedscenen */
 .dndflow .reactflow-wrapper {
-    flex-grow: 1;
-    height: 100%;
+  flex-grow: 1;
+  height: 100%;
 }
 
 @media screen and (min-width: 768px) {
-    .dndflow {
-        flex-direction: row;
-    }
+  .dndflow {
+    flex-direction: row;
+  }
 
-    .dndflow aside {
-        width: 20%;
-        max-width: 250px;
-    }
+  .dndflow aside {
+    width: 20%;
+    max-width: 250px;
+  }
 }
 
 .function-block {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 
-    &__content {
-        border: 1px solid black;
-        width: 600px;
-        height: 400px;
-    }
+  &__content {
+    border: 1px solid black;
+    width: 600px;
+    height: 400px;
+  }
 }
