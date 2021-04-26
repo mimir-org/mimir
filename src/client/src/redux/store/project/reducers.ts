@@ -1,5 +1,5 @@
 import { isAspectNode } from "../../../components/flow/utils";
-import { ProjectSimple } from "../../../models/project";
+import { Edge, Node, ProjectSimple } from "../../../models/project";
 import {
   FETCHING_PROJECT,
   FETCHING_PROJECT_SUCCESS_OR_ERROR,
@@ -198,7 +198,7 @@ export function projectReducer(
       }
 
       if (isParent) {
-        let children = [];
+        let children: (Node | Edge)[] = [];
         children.push(node);
         let childNode = node;
 
