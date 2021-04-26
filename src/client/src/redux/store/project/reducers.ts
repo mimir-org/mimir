@@ -1,3 +1,4 @@
+import { isAspectNode } from "../../../components/flow/utils";
 import { ProjectSimple } from "../../../models/project";
 import {
   FETCHING_PROJECT,
@@ -173,12 +174,11 @@ export function projectReducer(
       const node = action.payload.node;
       const nodeList = state.project.nodes;
       const edgeList = state.project.edges;
-      const isAspect = action.payload.isAspect;
       const isParent = action.payload.isParent;
       const type = action.payload.type;
       const isHidden = !node.isHidden;
 
-      if (isAspect) {
+      if (isAspectNode(node.type)) {
         return {
           ...state,
           project: {
