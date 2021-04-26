@@ -139,6 +139,7 @@ export interface Edge {
   toNode: string;
   isHidden: boolean | false;
   parentType: NodeType;
+  targetType: NodeType;
   parentName: string;
 }
 

@@ -84,6 +84,7 @@ const FlowBlock = () => {
         isHidden: sourceNode.isHidden,
         parentType: sourceNode.type,
         parentName: sourceNode.name,
+        targetType: targetNode.type,
       };
 
       dispatch(createEdge(edge));

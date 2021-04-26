@@ -189,6 +189,7 @@ export function projectReducer(
             ),
             edges: edgeList.map((edges, i) =>
               edgeList[i].parentType === type ||
+              edgeList[i].targetType === type ||
               edgeList[i].fromNode === node.id
                 ? { ...edges, isHidden: isHidden }
                 : edges

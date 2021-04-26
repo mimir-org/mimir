@@ -105,6 +105,7 @@ export const CreateElementEdge = (
     },
     isHidden: edge.isHidden,
     parentType: fromNode.type,
+    targetType: toNode.type,
   };
   return elem;
 };
