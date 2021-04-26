@@ -83,7 +83,6 @@ const FlowBlock = () => {
         toNode: targetNode.id,
         isHidden: sourceNode.isHidden,
         parentType: sourceNode.type,
-        parentName: sourceNode.name,
         targetType: targetNode.type,
       };
 

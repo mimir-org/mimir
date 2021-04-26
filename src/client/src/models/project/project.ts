@@ -140,7 +140,6 @@ export interface Edge {
   isHidden: boolean | false;
   parentType: NodeType;
   targetType: NodeType;
-  parentName: string;
 }
 
 export interface Attribute {
