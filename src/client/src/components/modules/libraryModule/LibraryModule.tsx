@@ -39,9 +39,19 @@ const LibraryModule = () => {
     <AnimatedMenu start={startHeight} stop={stopHeight} run={animate}>
       <HeaderWrapper>
         {isOpen ? (
-          <img src={ToggleIconRight} alt="toggle-icon" onClick={handleClick} />
+          <img
+            src={ToggleIconRight}
+            alt="toggle-icon"
+            style={{ cursor: "pointer" }}
+            onClick={handleClick}
+          />
         ) : (
-          <img src={ToggleIconLeft} alt="toggle-icon" onClick={handleClick} />
+          <img
+            src={ToggleIconLeft}
+            alt="toggle-icon"
+            style={{ cursor: "pointer" }}
+            onClick={handleClick}
+          />
         )}
         <Header>
           <img src={LibraryIcon} alt="library-icon" />

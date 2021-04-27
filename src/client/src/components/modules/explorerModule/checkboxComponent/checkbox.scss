@@ -19,18 +19,6 @@
   }
 }
 
-.function_underline {
-  border-bottom: 2px solid #fef445;
-}
-
-.location_underline {
-  border-bottom: 2px solid #fa00ff;
-}
-
-.product_underline {
-  border-bottom: 2px solid #00f0ff;
-}
-
 .checkbox input {
   position: absolute;
   opacity: 0;
@@ -66,8 +54,8 @@
 .checkbox .checkmark:after {
   left: 5px;
   top: 0px;
-  width: 3px;
-  height: 9px;
+  width: 4px;
+  height: 10px;
   border: solid white;
   border-width: 0 2px 2px 0;
   -webkit-transform: rotate(45deg);

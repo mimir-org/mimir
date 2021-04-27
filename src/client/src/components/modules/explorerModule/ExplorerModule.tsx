@@ -44,9 +44,19 @@ export const ExplorerModule = () => {
           <img src={ExplorerIcon} alt="explorerIcon" />
         </IconWrapper>
         {isOpen ? (
-          <img src={ToggleIconLeft} alt="toggle-icon" onClick={handleClick} />
+          <img
+            src={ToggleIconLeft}
+            alt="toggle-icon"
+            style={{ cursor: "pointer" }}
+            onClick={handleClick}
+          />
         ) : (
-          <img src={ToggleIconRight} alt="toggle-icon" onClick={handleClick} />
+          <img
+            src={ToggleIconRight}
+            alt="toggle-icon"
+            style={{ cursor: "pointer" }}
+            onClick={handleClick}
+          />
         )}
       </HeaderWrapper>
       <CollapsedIcon visible={isOpen}>
