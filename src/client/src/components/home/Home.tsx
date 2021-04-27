@@ -31,9 +31,6 @@ const Home = () => {
             {params.type === "treeview" && (
               <div className="treeview_component">
                 <div className="treestructur_container">
-                  <div className="heading">
-                    <p>Treeview</p>
-                  </div>
                   <FlowTree />
                 </div>
               </div>
@@ -42,9 +39,6 @@ const Home = () => {
             {params.type === "blockview" && (
               <div className="treeview_component">
                 <div className="treestructur_container">
-                  <div className="heading">
-                    <p>Blockview</p>
-                  </div>
                   <FlowBlock />
                 </div>
               </div>

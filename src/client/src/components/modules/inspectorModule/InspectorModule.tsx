@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import AnimatedMenu from "./styled/animated/AnimatedMenu";
 import { useState } from "react";
-import { EyeIcon, ToggleIconDown } from "../../../assets";
+import { EyeIcon, ToggleIconDown, ToggleIconUp } from "../../../assets";
 import { IconWrapper, ToggleButtonWrapper } from "./styled";
 import textResources from "../../../textResources";
 import { TabHeaderWrapper } from "./styled";
@@ -44,11 +44,7 @@ const InspectorModule = () => {
                 onClick={handleClick}
               />
             ) : (
-              <img
-                src={ToggleIconDown}
-                alt="toggle-icon"
-                onClick={handleClick}
-              />
+              <img src={ToggleIconUp} alt="toggle-icon" onClick={handleClick} />
             )}
           </ToggleButtonWrapper>
 
