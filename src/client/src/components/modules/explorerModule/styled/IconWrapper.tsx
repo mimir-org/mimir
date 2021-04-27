@@ -5,7 +5,6 @@ const IconWrapper = styled.div`
   font-family: roboto;
   color: #000;
   font-size: 18px;
-  font-weight: 700;
   display: inline-flex;
   align-items: center;
 `;
