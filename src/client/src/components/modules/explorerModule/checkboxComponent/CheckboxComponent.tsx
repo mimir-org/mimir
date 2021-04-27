@@ -1,5 +1,6 @@
 import { NodeType } from "../../../../models/project";
 import { GetNodes } from "../../../flow/helpers";
+import { isAspectNode } from "../../../flow/utils";
 import { GetCheckboxColor } from "../helpers";
 import useChangeNodeVisibility from "../hooks/useChangeNodeVisibility";
 import "./checkbox.scss";
@@ -17,7 +18,8 @@ export const CheckboxComponent = ({ nodeId, inputLabel, type }: Props) => {
   const isHidden = node.isHidden;
 
   const handleCheckboxChange = useChangeNodeVisibility(node, type);
-  const textDecoration = GetCheckboxColor(type);
+  const isAspect = isAspectNode(node.type);
+  const textDecoration = isAspect ? GetCheckboxColor(type) : "none";
 
   return (
     <label className={"checkbox " + textDecoration}>
