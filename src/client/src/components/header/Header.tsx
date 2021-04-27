@@ -6,10 +6,10 @@ import textResources from "../../textResources";
 import SaveViewState from "./helpers/SaveViewState";
 import { loadStateFromStorage } from "../../redux/store/localStorage/localStorage";
 import {
-  TreeviewIcon,
-  BlockviewIcon,
-  SwitchOnIcon,
-  SwitchOffIcon,
+  TreeviewOn,
+  TreeviewOff,
+  BlockviewOn,
+  BlockviewOff,
 } from "../../assets/index";
 import {
   BlockviewWrapper,
@@ -59,19 +59,41 @@ const Header = () => {
           </Typography>
         </TitleWrapper>
         <IconsWrapper>
-          <TreeviewWrapper>
-            <img src={TreeviewIcon} alt="treeview" onClick={handleClick} />
-          </TreeviewWrapper>
-          <BlockviewWrapper>
-            <img src={BlockviewIcon} alt="blockview" onClick={handleClick} />
-          </BlockviewWrapper>
-          <SwitchWrapper>
+          <TreeviewWrapper on={!showBlockView}>
             {showBlockView ? (
-              <img src={SwitchOnIcon} alt="switch" onClick={handleClick} />
+              <img
+                src={TreeviewOff}
+                alt="treeview"
+                onClick={handleClick}
+                className="view_icon"
+              />
             ) : (
-              <img src={SwitchOffIcon} alt="switch" onClick={handleClick} />
+              <img
+                src={TreeviewOn}
+                alt="treeview"
+                onClick={handleClick}
+                className="view_icon"
+              />
             )}
-          </SwitchWrapper>
+          </TreeviewWrapper>
+          <div className="line"></div>
+          <BlockviewWrapper on={showBlockView}>
+            {showBlockView ? (
+              <img
+                src={BlockviewOn}
+                alt="blockview"
+                onClick={handleClick}
+                className="view_icon"
+              />
+            ) : (
+              <img
+                src={BlockviewOff}
+                alt="blockview"
+                onClick={handleClick}
+                className="view_icon"
+              />
+            )}
+          </BlockviewWrapper>
         </IconsWrapper>
       </Toolbar>
     </AppBar>
