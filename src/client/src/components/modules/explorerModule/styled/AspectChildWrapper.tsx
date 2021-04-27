@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 const calculate = (indent: number) => {
-  const margin = 55;
-  const increase = 25;
+  const margin = 50;
+  const increase = 20;
   return margin + indent * increase;
 };
 
