@@ -6,8 +6,6 @@ const SetIndentLevel = (nodes: Node[], edges: Edge[], i: number) => {
   const node = nodes[i];
   const nodeId = node.id;
   const type = node.type;
-  console.log({ type });
-  console.log({ edges });
 
   let edge = edges.find((edge) => edge.toNode === nodeId);
 
