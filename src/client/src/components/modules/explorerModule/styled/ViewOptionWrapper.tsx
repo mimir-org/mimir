@@ -10,7 +10,7 @@ const ViewOptionWrapper = styled.div`
   padding: 0px 10px;
   border: 1px solid #007079;
   border-radius: 2px;
-  background-color: rgba(140, 138, 138, 0.4);
+  background-color: #fff;
   cursor: pointer;
   font-family: roboto;
   color: #000;

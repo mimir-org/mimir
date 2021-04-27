@@ -16,7 +16,7 @@ import {
   ContentWrapper,
   ExplorerTitle,
   CollapsedIcon,
-  FooterWrapper,
+  ExplorerFooterWrapper,
 } from "./styled";
 
 export const ExplorerModule = () => {
@@ -57,9 +57,9 @@ export const ExplorerModule = () => {
           <ProjectComponent />
         </ContentWrapper>
       )}
-      <FooterWrapper visible={isOpen}>
+      <ExplorerFooterWrapper visible={isOpen}>
         <SwitchViewComponent />
-      </FooterWrapper>
+      </ExplorerFooterWrapper>
     </AnimatedMenu>
   );
 };
