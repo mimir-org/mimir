@@ -1,8 +1,7 @@
 import textResources from "../../../textResources";
 import AnimatedMenu from "./styled/animated/AnimatedMenu";
-import { LibraryIcon } from "../../../assets";
+import { LibraryIcon, ToggleIconLeft, ToggleIconRight } from "../../../assets";
 import { Header, SidebarWrapper, HeaderWrapper, CollapsedIcon } from "./styled";
-import { ToggleLibraryButton } from "../../../assets/buttons/index";
 import { LibrarySidebar } from "./index";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -39,7 +38,11 @@ const LibraryModule = () => {
   return (
     <AnimatedMenu start={startHeight} stop={stopHeight} run={animate}>
       <HeaderWrapper>
-        <ToggleLibraryButton visible={isOpen} onClick={handleClick} />
+        {isOpen ? (
+          <img src={ToggleIconRight} alt="toggle-icon" onClick={handleClick} />
+        ) : (
+          <img src={ToggleIconLeft} alt="toggle-icon" onClick={handleClick} />
+        )}
         <Header>
           <img src={LibraryIcon} alt="library-icon" />
           {textResources.Library_Heading}
