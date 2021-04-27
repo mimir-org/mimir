@@ -1,43 +1,40 @@
 import { GetNodes } from "../../flow/helpers";
-import InspectorContent from "./InspectorContent";
-import { useCallback } from "react";
-import { RootState } from "../../../redux/store";
-import { useDispatch, useSelector } from "react-redux";
-import { changeInspector } from "../../../redux/store/inspector/actions";
-import { TabHeader, TabDataWrapper, TabContainer } from "./styled";
+import { Attribute, ATTRIBUTE_TYPE, Node } from "../../../models/project";
+import { TabComponent } from "./";
 
 const InspectorComponents = () => {
-  const index = 0;
-  const dispatch = useDispatch();
-  const header = "Admin Info";
-  const list = useSelector<RootState>((state) => state.inspector.list);
-
-  const handleClick = useCallback(() => {
-    dispatch(changeInspector(index, list));
-  }, [dispatch, index, list]);
-
-  const isOpen = true;
-  //useSelector<RootState>((state) => state.inspector.list[index].visible);
-
   const nodes = GetNodes();
-  const node = nodes.find((node) => node.isSelected);
+  const node: Node = nodes.find((node) => node.isSelected);
+  const nodeLabel: string = node !== undefined ? node.label : "";
+
+  let attributesAdmin: Attribute[] = [];
+  let attributesTech: Attribute[] = [];
+  let attributesRelation: Attribute[] = [];
+
+  if (node !== undefined) {
+    attributesAdmin = node.attributes.filter(
+      (x) => x.type === ATTRIBUTE_TYPE.ADMIN_INFO
+    );
+
+    attributesTech = node.attributes.filter(
+      (x) => x.type === ATTRIBUTE_TYPE.TECH_INFO
+    );
+
+    attributesRelation = node.attributes.filter(
+      (x) => x.type === ATTRIBUTE_TYPE.RELATIONS
+    );
+  }
+  console.log(attributesAdmin);
 
   return (
     <>
-      {isOpen ? (
-        <>
-          <TabHeader active="true" onClick={handleClick}>
-            {header}
-          </TabHeader>
-          <TabDataWrapper>
-            <TabContainer>
-              <InspectorContent node={node} />
-            </TabContainer>
-          </TabDataWrapper>
-        </>
-      ) : (
-        <TabHeader onClick={handleClick}>{header}</TabHeader>
-      )}
+      <TabComponent
+        attributes={attributesAdmin}
+        index={0}
+        nodeLabel={nodeLabel}
+      />
+      <TabComponent attributes={attributesTech} index={1} />
+      <TabComponent attributes={attributesRelation} index={2} />
     </>
   );
 };

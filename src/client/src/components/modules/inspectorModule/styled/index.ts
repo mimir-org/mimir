@@ -11,3 +11,5 @@ export { default as TabInput } from "./TabInput";
 export { default as CustomInput } from "./CustomInput";
 export { default as CustomColumn } from "./CustomColumn";
 export { default as InspectorButton } from "./InspectorButton";
+export { default as NodeTitle } from "./NodeTitle";
+export { default as TabTitle } from "./TabTitle";
