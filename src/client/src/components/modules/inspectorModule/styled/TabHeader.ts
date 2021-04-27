@@ -5,8 +5,7 @@ const TabHeader = styled.div`
   height: 35.4px;
   box-sizing: border-box;
   border-right: ${(props: { active: string }) =>
-    props.active ? "2px solid #000" : "1px solid #000"};
-  border-left: 1px solid #000;
+    props.active ? "1px solid #cbcbcb" : "1px solid #cbcbcb"};
   border-bottom: ${(props: { active: string }) =>
     props.active ? "3px solid #f2f2f2" : "0px"};
   border-top-right-radius: 8px;
@@ -17,7 +16,7 @@ const TabHeader = styled.div`
   font-weight: ${(props: { active: string }) =>
     props.active ? "bold" : "none"};
   background-color: ${(props: { active: string }) =>
-    props.active ? "#f2f2f2" : "#c4c4c4"};
+    props.active ? "#f2f2f2" : "#cbcbcb"};
   padding: ${(props: { active: string }) =>
     props.active ? "8px 20px 27px 20px;" : "8px 20px 0px 20px"};
   box-shadow: ${(props: { active: string }) =>
