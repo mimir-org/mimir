@@ -26,3 +26,4 @@ export { default as WhiteRightArrowIcon } from "./icons/whiteRightArrowIcon.svg"
 export { default as UserIconOpen } from "./icons/userIconOpen.svg";
 export { default as UserIconClosed } from "./icons/userIconClosed.svg";
 export { default as SaveIcon } from "./icons/saveIcon.svg";
+export { default as ToggleIconDown } from "./icons/toggleIconDown.svg";
