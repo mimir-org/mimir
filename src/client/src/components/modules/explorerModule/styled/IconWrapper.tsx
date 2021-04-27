@@ -1,8 +1,7 @@
 import styled from "styled-components";
 
 const IconWrapper = styled.div`
-  position: absolute;
-  left: 17px;
+  margin-right: 170px;
   display: inline-flex;
   align-items: center;
 `;
