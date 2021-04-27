@@ -32,29 +32,23 @@ const InspectorModule = () => {
   const stopHeight = showInspector ? "290" : "38";
 
   return (
-    <>
-      <AnimatedMenu start={startHeight} stop={stopHeight} run={animate}>
-        <TabHeaderWrapper>
-          {hasProject && <InspectorComponents />}
-          <ToggleButtonWrapper>
-            {showInspector ? (
-              <img
-                src={ToggleIconDown}
-                alt="toggle-icon"
-                onClick={handleClick}
-              />
-            ) : (
-              <img src={ToggleIconUp} alt="toggle-icon" onClick={handleClick} />
-            )}
-          </ToggleButtonWrapper>
+    <AnimatedMenu start={startHeight} stop={stopHeight} run={animate}>
+      <TabHeaderWrapper>
+        {hasProject && <InspectorComponents />}
+        <ToggleButtonWrapper>
+          {showInspector ? (
+            <img src={ToggleIconDown} alt="toggle-icon" onClick={handleClick} />
+          ) : (
+            <img src={ToggleIconUp} alt="toggle-icon" onClick={handleClick} />
+          )}
+        </ToggleButtonWrapper>
 
-          <IconWrapper>
-            <InspectorTitle>{textResources.Inspector_Heading}</InspectorTitle>
-            <img src={EyeIcon} alt="inspector-icon" />
-          </IconWrapper>
-        </TabHeaderWrapper>
-      </AnimatedMenu>
-    </>
+        <IconWrapper>
+          <InspectorTitle>{textResources.Inspector_Heading}</InspectorTitle>
+          <img src={EyeIcon} alt="inspector-icon" />
+        </IconWrapper>
+      </TabHeaderWrapper>
+    </AnimatedMenu>
   );
 };
 
