@@ -1,10 +1,15 @@
 import { Node, Edge } from "../../../../models/project";
 import { isAspectNode } from "../../../flow/utils";
 
-const SetIndentLevel = (facets: Node[], edges: Edge[], i: number) => {
+const SetIndentLevel = (nodes: Node[], edges: Edge[], i: number) => {
   let indentCount = 0;
-  const facetId = facets[i].id;
-  let edge = edges.find((edge: { toNode: string }) => edge.toNode === facetId);
+  const node = nodes[i];
+  const nodeId = node.id;
+  const type = node.type;
+  console.log({ type });
+  console.log({ edges });
+
+  let edge = edges.find((edge) => edge.toNode === nodeId);
 
   if (edge === undefined) return null;
 
@@ -19,9 +24,11 @@ const SetIndentLevel = (facets: Node[], edges: Edge[], i: number) => {
     edge = edges.find((edge) => edge.toNode === getChildId());
     if (edge === undefined) break;
 
-    indentCount++;
+    if (edge.targetType === type) indentCount++;
+
     id = edge.fromNode;
   }
   return indentCount;
 };
+
 export default SetIndentLevel;

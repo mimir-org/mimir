@@ -1,4 +1,3 @@
-import { FC } from "react";
 import styled, { keyframes } from "styled-components";
 import ExplorerContainer from "../ExplorerContainer";
 
@@ -8,7 +7,7 @@ interface Props {
   run: boolean;
 }
 
-const animation: FC<Props> = ({ start, stop, run }) => keyframes`
+const animation = ({ start, stop, run }: Props) => keyframes`
 ${!run ? (start = stop) : null}
   from {
     width: ${start}px;

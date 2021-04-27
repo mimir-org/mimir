@@ -1,4 +1,3 @@
-import { FC } from "react";
 import styled, { keyframes } from "styled-components";
 import { StyledInspectorComponent } from "..";
 
@@ -8,7 +7,7 @@ interface Props {
   run: boolean;
 }
 
-const animation: FC<Props> = ({ start, stop, run }) => keyframes`
+const animation = ({ start, stop, run }: Props) => keyframes`
 ${!run ? (start = stop) : null}
   from {
     height: ${start}px;

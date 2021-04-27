@@ -110,7 +110,7 @@ export const CreateElementEdge = (
   return elem;
 };
 
-export const isAspectNode = (nodeType: NodeType): boolean =>
+export const isAspectNode = (nodeType: NodeType) =>
   nodeType === (NODE_TYPE.ASPECT_FUNCTION as NodeType) ||
   nodeType === (NODE_TYPE.ASPECT_PRODUCT as NodeType) ||
   nodeType === (NODE_TYPE.ASPECT_LOCATION as NodeType);
