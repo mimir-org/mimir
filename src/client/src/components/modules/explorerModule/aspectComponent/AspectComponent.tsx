@@ -3,7 +3,7 @@ import { useState } from "react";
 import { expandedIcon, unexpandedIcon } from "../../../../assets";
 import { NodeType } from "../../../../models/project";
 import { GetEdges, GetNodes } from "../../../flow/helpers";
-import { isAspectNode } from "../../../flow/utils";
+import { IsAspectNode } from "../../../flow/helpers";
 import CheckboxComponent from "../checkboxComponent/CheckboxComponent";
 import { AspectChildComponent } from "../aspectChildComponent";
 import { AspectChildContainer } from "../styled";
@@ -33,7 +33,7 @@ export const AspectComponent = ({ nodeId, name, aspectType }: Props) => {
   const childType = GetType(aspectType);
   const edges = GetEdges();
   const nodes = GetNodes();
-  const children = nodes.filter((node) => !isAspectNode(node.type));
+  const children = nodes.filter((node) => !IsAspectNode(node.type));
 
   return (
     <div className="aspect_container">

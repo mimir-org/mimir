@@ -7,7 +7,6 @@ import {
     NodeType,
     NODE_TYPE,
     RELATION_TYPE,
-    EdgeEvent,
     EdgeType
 } from "../../models/project";
 import {
@@ -16,7 +15,8 @@ import {
     Position,
     HandleType
 } from "react-flow-renderer";
-import { CreateElementEdge } from "./helpers";
+import { CreateElementEdge, CreateElementBlockNode, IsAspectNode } from "./helpers";
+
 export interface GetCenterParams {
     sourceX: number;
     sourceY: number;
@@ -44,7 +44,7 @@ export const CreateElementNode = (node: Node): FlowElement => {
     let elementNode = null;
     if (!node) return elementNode;
 
-    let type = !isAspectNode(node.type)
+    let type = !IsAspectNode(node.type)
         ? node.type.charAt(0).toUpperCase() + node.type.substring(1).toLowerCase()
         : node.type;
 
@@ -65,52 +65,6 @@ export const CreateElementNode = (node: Node): FlowElement => {
 
     return elementNode;
 };
-
-export const CreateElementBlockNode = (node: Node, width: number, height: number): FlowElement => {
-
-    let elementNode = null;
-    if (!node)
-        return elementNode;
-
-    const type = "Functionblock";
-
-    const elem = document.getElementById("function-block-" + node.id);
-    const calculatedWidth = (width * 70) / 100;
-    const calculatedHeight = (height * 80) / 100;
-    const calculatedX = (width - calculatedWidth) / 2;
-
-    if (elem) {
-        elem.style.width = calculatedWidth + "px";
-        elem.style.height = calculatedHeight + "px";
-        elem.style.zIndex = "-10000";
-    }
-
-    const position = { x: calculatedX, y: 0 };
-
-    elementNode = {
-        id: node.id,
-        type: type,
-        data: node,
-        position: position,
-        isHidden: node.isHidden,
-        isSelected: false,
-        draggable: false,
-        selectable: false
-    };
-
-    return elementNode;
-};
-
-export const CreateElementOffPageNode = (project: Project, edgeEvent: EdgeEvent) => {
-
-
-    console.log("CreateElementOffPageNode", edgeEvent);
-}
-
-export const isAspectNode = (nodeType: NodeType) =>
-    nodeType === (NODE_TYPE.ASPECT_FUNCTION as NodeType) ||
-    nodeType === (NODE_TYPE.ASPECT_PRODUCT as NodeType) ||
-    nodeType === (NODE_TYPE.ASPECT_LOCATION as NodeType);
 
 export const CreateProjectNodes = (project: Project): Elements => {
     const initialElements: Elements = [];

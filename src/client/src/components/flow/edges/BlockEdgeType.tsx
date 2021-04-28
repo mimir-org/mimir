@@ -4,7 +4,7 @@ import {
   getSmoothStepPath,
   EdgeText,
 } from "react-flow-renderer";
-import { getCenter, isAspectNode } from "../utils";
+import { getCenter } from "../utils";
 import {
   LINE_EDGE_TYPE,
   LineEdgeType,
@@ -12,7 +12,7 @@ import {
   NODE_TYPE,
 } from "../../../models/project";
 
-import { GetTransportTypeColor } from "../helpers";
+import { GetTransportTypeColor, IsAspectNode } from "../helpers";
 
 export default function BlockEdgeType({
   id,
@@ -86,7 +86,7 @@ export default function BlockEdgeType({
 
     if (!source || !target) return null;
 
-    if (isAspectNode(source.type)) {
+    if (IsAspectNode(source.type)) {
       return null;
     } else if (source.type === target.type) {
       text = "partof";

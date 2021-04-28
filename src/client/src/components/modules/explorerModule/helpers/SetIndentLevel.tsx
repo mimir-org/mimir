@@ -1,5 +1,5 @@
 import { Node, Edge } from "../../../../models/project";
-import { isAspectNode } from "../../../flow/utils";
+import { IsAspectNode } from "../../../flow/helpers";
 
 const SetIndentLevel = (nodes: Node[], edges: Edge[], i: number) => {
   let indentCount = 0;
@@ -18,7 +18,7 @@ const SetIndentLevel = (nodes: Node[], edges: Edge[], i: number) => {
     return id;
   };
 
-  while (!isAspectNode(edge.parentType)) {
+  while (!IsAspectNode(edge.parentType)) {
     edge = edges.find((edge) => edge.toNode === getChildId());
     if (edge === undefined) break;
 

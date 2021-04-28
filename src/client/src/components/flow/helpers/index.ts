@@ -6,4 +6,7 @@ export { default as GetTransportTypeColor } from "./GetTransportTypeColor";
 export { default as GetReactFlowBoundingRectData } from "./GetReactFlowBoundingRectData";
 export { default as CreateElementEdge } from "./CreateElementEdge";
 export { default as CreateId } from "./CreateId";
+export { default as CreateElementBlockNode } from "./CreateElementBlockNode";
+export { default as CreateElementNode } from "./CreateElementNode";
+export { default as IsAspectNode } from "./IsAspectNode";
 export * from "./CreateOffPageNode";
