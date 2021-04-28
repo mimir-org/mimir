@@ -4,9 +4,10 @@ const VisualFilterWrapper = styled.div`
   position: absolute;
   right: 0px;
   background: #fff;
-  height: 650px;
-  border: 2px solid #007079;
-  border-top: none;
+  height: min-content;
+  border-style: solid;
+  border-color: #007079;
+  border-width: 0px 2px 2px 2px;
   font-family: roboto;
   padding: 10px;
   z-index: 1102;

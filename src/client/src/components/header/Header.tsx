@@ -5,7 +5,12 @@ import { AppBar, Toolbar, Typography } from "@material-ui/core";
 import textResources from "../../textResources";
 import SaveViewState from "./helpers/SaveViewState";
 import { loadStateFromStorage } from "../../redux/store/localStorage/localStorage";
-import { TreeviewIcon, BlockviewIcon } from "../../assets/index";
+import {
+  TreeviewOff,
+  TreeviewOn,
+  BlockviewOff,
+  BlockviewOn,
+} from "../../assets/index";
 import {
   BlockviewWrapper,
   TreeviewWrapper,
@@ -19,9 +24,9 @@ import { save } from "../../redux/store/project/actions";
 
 const Header = () => {
   const { push } = useHistory();
-  //   const [showBlockView, setShowBlockView] = useState(
-  //     loadStateFromStorage("blockview")
-  //   );
+  const [showBlockView, setShowBlockView] = useState(
+    loadStateFromStorage("blockview")
+  );
   const dispatch = useDispatch();
   const project = useSelector<RootState>(
     (state) => state.projectState.project
@@ -31,7 +36,7 @@ const Header = () => {
     const key = e.target.alt;
     const view = SaveViewState(key);
     push(`/home/${view}`);
-    // setShowBlockView(loadStateFromStorage("blockview"));
+    setShowBlockView(loadStateFromStorage("blockview"));
   };
 
   const handleSave = () => {
@@ -53,11 +58,40 @@ const Header = () => {
           </Typography>
         </TitleWrapper>
         <IconsWrapper>
-          <TreeviewWrapper>
-            <img src={TreeviewIcon} alt="treeview" onClick={handleClick} />
+          <TreeviewWrapper on={!showBlockView}>
+            {showBlockView ? (
+              <img
+                src={TreeviewOff}
+                alt="treeview"
+                onClick={handleClick}
+                className="view_icon"
+              />
+            ) : (
+              <img
+                src={TreeviewOn}
+                alt="treeview"
+                onClick={handleClick}
+                className="view_icon"
+              />
+            )}
           </TreeviewWrapper>
-          <BlockviewWrapper>
-            <img src={BlockviewIcon} alt="blockview" onClick={handleClick} />
+          <div className="line"></div>
+          <BlockviewWrapper on={showBlockView}>
+            {showBlockView ? (
+              <img
+                src={BlockviewOn}
+                alt="blockview"
+                onClick={handleClick}
+                className="view_icon"
+              />
+            ) : (
+              <img
+                src={BlockviewOff}
+                alt="blockview"
+                onClick={handleClick}
+                className="view_icon"
+              />
+            )}
           </BlockviewWrapper>
         </IconsWrapper>
       </Toolbar>

@@ -38,8 +38,11 @@ const AccountModule = () => {
   const userDetails = () => {};
 
   return (
-    <div className={"account_container " + (isOpen && "is_opened")}>
-      <div className="account_clickable" onClick={handleClick}>
+    <div className="account_container">
+      <div
+        className={"account_clickable " + (isOpen && "is_opened")}
+        onClick={handleClick}
+      >
         {isOpen ? <GetImg icon="UserIconOpen" /> : <GetImg icon="" />}
         <p className={"project_name " + (isOpen && "project_name_opened")}>
           noaka
