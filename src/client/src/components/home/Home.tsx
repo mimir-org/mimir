@@ -39,7 +39,10 @@ const Home = () => {
             {params.type === "blockview" && (
               <div className="treeview_component">
                 <div className="treestructur_container">
-                  <FlowBlock />
+                  <div className="heading">
+                    <p>Blockview</p>
+                  </div>
+                  <FlowBlock nodeId="e1dbb139-f033-d15a-6fb0-e4fce18c46fc" />
                 </div>
               </div>
             )}

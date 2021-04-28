@@ -165,7 +165,7 @@ const FlowTree = () => {
     });
 
     dispatch(addNode(node));
-    setElements((es) => es.concat(CreateElementNode(node, false)));
+    setElements((es) => es.concat(CreateElementNode(node)));
   };
 
   const onElementClick = (event, element) => {
