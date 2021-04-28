@@ -1,3 +1,4 @@
+import "./filter.scss";
 import textResources from "../../../textResources";
 import FilterContent from "./FilterContent";
 import { useState } from "react";
@@ -22,20 +23,25 @@ const FilterModule = () => {
 
   return (
     <>
-      <IconTextWrapper isOpen={isOpen}>
-        {textResources.MainHeader_VisualFilter}
-      </IconTextWrapper>
-      <IconWrapper>
+      <div
+        className={"clickable_field " + (isOpen && "isOpen")}
+        onClick={handleClick}
+      >
         {isOpen ? (
-          <img src={VisualFilterIconOpen} alt="filter" onClick={handleClick} />
+          <img
+            src={VisualFilterIconOpen}
+            alt="filter"
+            className="filter_icon"
+          />
         ) : (
           <img
             src={VisualFilterIconClosed}
             alt="filter"
-            onClick={handleClick}
+            className="filter_icon"
           />
         )}
-      </IconWrapper>
+        <p>{textResources.MainHeader_VisualFilter}</p>
+      </div>
       {isOpen && (
         <VisualFilterWrapper>
           <FilterContent />
