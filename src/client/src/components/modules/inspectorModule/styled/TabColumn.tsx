@@ -1,9 +1,11 @@
 import styled from "styled-components";
 
 const TabColumn = styled.div`
-  padding-top: 15px;
-  padding-left: 15px;
-  min-width: 200px;
+  padding: 15px 0px 0px 15px;
+  margin: auto;
+  margin-left: inherit;
+  min-width: 220px;
+
   position: ${(props) => (props.position ? "absolute" : "relative")};
   right: ${(props) => (props.position ? "351" : "0")}px;
 `;
