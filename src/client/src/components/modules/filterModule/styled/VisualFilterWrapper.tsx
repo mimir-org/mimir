@@ -5,9 +5,10 @@ const VisualFilterWrapper = styled.div`
   right: 0px;
   background: #fff;
   width: 342px;
-  height: 650px;
-  border: 2px solid #007079;
-  border-top: none;
+  height: min-content;
+  border-style: solid;
+  border-color: #007079;
+  border-width: 0px 2px 2px 2px;
   font-size: 18px;
   font-family: roboto;
   color: #007079;

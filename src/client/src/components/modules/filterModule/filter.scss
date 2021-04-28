@@ -1,0 +1,29 @@
+.clickable_field {
+  cursor: pointer;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  z-index: 1103;
+  display: flex;
+  flex-direction: row;
+  height: 46px;
+  width: 160px;
+  font-family: roboto;
+  font-size: 16px;
+  color: white;
+  background-color: #007079;
+  align-items: center;
+
+  .filter_icon {
+    height: 26px;
+    padding: 0px 12px;
+  }
+}
+
+.isOpen {
+  background-color: #ffffff;
+  color: #007079;
+  border-width: 0px 2px 0px 0px;
+  border-style: solid;
+  border-color: #007079;
+}
