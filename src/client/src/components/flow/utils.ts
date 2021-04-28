@@ -1,13 +1,14 @@
 import {
-  Project,
-  Node,
-  Connector,
-  CONNECTOR_TYPE,
-  Edge,
-  EDGE_TYPE,
-  NodeType,
-  NODE_TYPE,
-  RELATION_TYPE,
+    Project,
+    Node,
+    Connector,
+    CONNECTOR_TYPE,
+    Edge,
+    EDGE_TYPE,
+    NodeType,
+    NODE_TYPE,
+    RELATION_TYPE,
+    EdgeEvent,
 } from "../../models/project";
 import {
   Elements,
@@ -46,44 +47,77 @@ export const createId = () => {
   return _p8(false) + _p8(true) + _p8(true) + _p8(false);
 };
 
-export const CreateElementNode = (
-  node: Node,
-  isBlockView: boolean
-): FlowElement => {
-  let elementNode = null;
-  if (!node) return elementNode;
+
+
+export const CreateElementNode = (node: Node): FlowElement => {
+    let elementNode = null;
+    if (!node) return elementNode;
 
   let type = !isAspectNode(node.type)
     ? node.type.charAt(0).toUpperCase() + node.type.substring(1).toLowerCase()
     : node.type;
 
-  let position = {};
-
-  if (isBlockView) {
-    type += "_block";
-    var elem = document
-      .getElementsByClassName("react-flow")[0]
-      .getBoundingClientRect();
-    console.log(elem.width);
-
-    position = { x: elem.width / 2 - 300, y: 0 };
-  } else {
+    let position = {};
     position = { x: node.positionX, y: node.positionY };
-  }
 
-  elementNode = {
-    id: node.id,
-    type: type,
-    data: node,
-    position: position,
-    isHidden: node.isHidden,
-    isSelected: node.isSelected,
-  };
+    elementNode = {
+        id: node.id,
+        type: type,
+        data: node,
+        position: position,
+        isHidden: node.isHidden,
+        isSelected: node.isSelected,
+        draggable: true,
+        selectable: true,
+        connectable: true
+    };
 
-  //   document.querySelectorAll('[data-foo="value"]');
-
-  return elementNode;
+    return elementNode;
 };
+
+export const CreateElementBlockNode = (node: Node, width: number, height: number): FlowElement => {
+
+    let elementNode = null;
+    if (!node) return elementNode;
+
+    let type = !isAspectNode(node.type)
+        ? node.type.charAt(0).toUpperCase() + node.type.substring(1).toLowerCase()
+        : node.type;
+
+    type += '_block';
+
+    const elem = document.getElementById("function-block-" + node.id);
+    const calculatedWidth = (width * 70) / 100;
+    const calculatedHeight = (height * 80) / 100;
+    const calculatedX = (width - calculatedWidth) / 2;
+
+    if (elem) {
+        elem.style.width = calculatedWidth + "px";
+        elem.style.height = calculatedHeight + "px";
+        elem.style.zIndex = "-10000";
+    }
+
+    const position = { x: calculatedX, y: 0 };
+
+    elementNode = {
+        id: node.id,
+        type: type,
+        data: node,
+        position: position,
+        isHidden: node.isHidden,
+        isSelected: false,
+        draggable: false,
+        selectable: false
+    };
+
+    return elementNode;
+};
+
+export const CreateElementOffPageNode = (project: Project, edgeEvent: EdgeEvent) => {
+
+
+    console.log("CreateElementOffPageNode", edgeEvent);
+}
 
 export const CreateElementEdge = (
   edge: Edge,
@@ -120,10 +154,10 @@ export const CreateProjectNodes = (project: Project): Elements => {
 
   if (!project) return;
 
-  project.nodes.forEach((node) => {
-    const elementNode = CreateElementNode(node, false);
-    if (elementNode) initialElements.push(elementNode);
-  });
+    project.nodes.forEach((node) => {
+        const elementNode = CreateElementNode(node);
+        if (elementNode) initialElements.push(elementNode);
+    });
 
   project.edges.forEach((edge) => {
     const fromNode = project.nodes.find((x) => x.id === edge.fromNode);
@@ -135,35 +169,56 @@ export const CreateProjectNodes = (project: Project): Elements => {
   return initialElements;
 };
 
-export const CreateProjectBlockViewNodes = (project: Project): Elements => {
-  const initialElements: Elements = [];
+export const CreateProjectBlockViewNodes = (project: Project, nodeId: string, width: number, height: number): Elements => {
+    const initialElements: Elements = [];
+    const childrenNodes = [];
 
-  if (!project) return;
+    if (!project)
+        return;
 
-  const actualNode = project.nodes.find(
-    (node) => node.id === "09f6c8ff-bd9e-39c2-16b4-af45d33bfcf0"
-  );
-  const elementNode = CreateElementNode(actualNode, true);
-  if (elementNode) initialElements.push(elementNode);
+    const actualNode = project.nodes.find(node => node.id === nodeId);
+    const elementNode = CreateElementBlockNode(actualNode, width, height);
+    if (elementNode) {
+        initialElements.push(elementNode);
+    }
 
-  const fromNodes = [];
-  const toNodes = [];
+    project.edges.forEach((edge) => {
+        if (edge.fromNode === nodeId) {
 
-  // project.nodes.forEach((node) => {
-  //     const elementNode = CreateElementNode(node);
-  //     if (elementNode) initialElements.push(elementNode);
-  // });
+            const fromNode = project.nodes.find((x) => x.id === edge.fromNode);
 
-  project.edges.forEach((edge) => {
-    const fromNode = project.nodes.find((x) => x.id === edge.fromNode);
-    const toNode = project.nodes.find((x) => x.id === edge.toNode);
-    if (fromNode.id === actualNode.id) fromNodes.push(edge);
+            const currentConnector = fromNode.connectors.find(x => x.id === edge.fromConnector);
 
-    if (toNode.id === actualNode.id) toNodes.push(edge);
+            if (currentConnector && currentConnector.relationType === RELATION_TYPE.PartOf) {
 
-    // const elementEdge = CreateElementEdge(edge, fromNode, toNode);
-    // if (elementEdge) initialElements.push(elementEdge);
-  });
+
+                const toNode = project.nodes.find((x) => x.id === edge.toNode);
+                const elementToNode = CreateElementNode(toNode);
+                if (elementNode) {
+                    initialElements.push(elementToNode);
+                    childrenNodes.push(toNode);
+                }
+            }
+        }
+    });
+
+    project.edges.forEach((edge) => {
+
+        const fromNode = childrenNodes.find((x) => x.id === edge.fromNode);
+        const toNode = childrenNodes.find((x) => x.id === edge.toNode);
+
+        if (fromNode && toNode) {
+            const fromConnector = fromNode.connectors.find(x => x.id === edge.fromConnector);
+            const toConnector = toNode.connectors.find(x => x.id === edge.toConnector);
+
+            if (fromConnector && fromConnector.relationType === RELATION_TYPE.Transport && toConnector && toConnector.relationType === RELATION_TYPE.Transport) {
+                const elementEdge = CreateElementEdge(edge, fromNode, toNode);
+                if (elementEdge)
+                    initialElements.push(elementEdge);
+            }
+
+        }
+    });
 
   return initialElements;
 };

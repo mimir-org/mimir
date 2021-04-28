@@ -9,7 +9,7 @@ const Function_block: FC<NodeProps> = ({ data }) => {
 
   return (
     <>
-      <div className="function-block">
+      <div id={"function-block-" + data.id} className="function-block">
         <h3 className="function-block__header">{data.label ?? data.name}</h3>
         <div className="function-block__content"></div>
       </div>
