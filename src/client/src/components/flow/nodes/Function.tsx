@@ -4,7 +4,6 @@ import { processType } from "../utils";
 import { RELATION_TYPE } from "../../../models/project";
 
 const Function: FC<NodeProps> = ({ data }) => {
-  console.log(data);
   return (
     <>
       {data.connectors &&
