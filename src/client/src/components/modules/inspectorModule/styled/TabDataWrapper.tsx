@@ -6,7 +6,7 @@ const TabDataWrapper = styled.div`
   overflow-y: auto;
   height: 230px;
   width: inherit;
-  padding: 10px 0px 10px 0px;
+  padding: 10px 0px 10px 10px;
 `;
 
 export default TabDataWrapper;
