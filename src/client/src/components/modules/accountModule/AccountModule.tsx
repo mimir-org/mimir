@@ -1,41 +1,29 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/index";
-import { Project } from "../../../models/project";
-import {
-  loadStateFromStorage,
-  saveStateToStorage,
-} from "../../../redux/store/localStorage/localStorage";
-import { save } from "../../../redux/store/project/actions";
-import { getUser } from "../../../redux/store/user/actions";
+import { UserState } from "../../../redux/store/user/types";
+import { ProjectState } from "../../../redux/store/project/types";
 
 import GetImg from "./helpers/GetImg";
 import Button from "./helpers/Button";
 import textResources from "../../../textResources";
 
 const AccountModule = () => {
-  const [showAccountSettings, setshowAccountSettings] = useState(
-    // loadStateFromStorage("account")
-    false
-  );
+  const [showAccountSettings, setshowAccountSettings] = useState(false);
+
+  const projectState = useSelector<RootState>(
+    (state) => state.projectState
+  ) as ProjectState;
+
+  const userState = useSelector<RootState>(
+    (state) => state.userState
+  ) as UserState;
+
   const handleClick = (e) => {
     setshowAccountSettings(!showAccountSettings);
-    // const key = e.target.alt;
-    // saveStateToStorage(!showAccount, key);
   };
-  //   const isOpen = loadStateFromStorage("account");
+
   const isOpen = showAccountSettings;
-
-  const dispatch = useDispatch();
-  const project = useSelector<RootState>(
-    (state) => state.projectState.project
-  ) as Project;
-
-  const handleSave = () => {
-    if (project) dispatch(save(project));
-  };
-
-  const userDetails = () => {};
 
   return (
     <div className="account_container">
@@ -45,21 +33,17 @@ const AccountModule = () => {
       >
         {isOpen ? <GetImg icon="UserIconOpen" /> : <GetImg icon="" />}
         <p className={"project_name " + (isOpen && "project_name_opened")}>
-          noaka
+          {projectState.project && projectState.project.name}
         </p>
       </div>
       {isOpen && (
         <div className="account_details">
           <div className="save_container">
             <p>{textResources.Account_Save_Label}</p>
-            <Button
-              icon="SaveIcon"
-              text={textResources.Account_Save_Button}
-              onclick={handleSave}
-            />
+            <Button icon="SaveIcon" text={textResources.Account_Save_Button} />
           </div>
           <div className="user_container">
-            <p>User Usersen</p>
+            <p>{userState.user && userState.user.name}</p>
             <Button icon="LogoutIcon" text={textResources.Account_Logout} />
           </div>
         </div>
