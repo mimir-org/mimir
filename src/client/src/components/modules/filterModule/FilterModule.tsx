@@ -2,7 +2,7 @@ import "./filter.scss";
 import textResources from "../../../textResources";
 import FilterContent from "./FilterContent";
 import { useState } from "react";
-import { VisualFilterWrapper, IconWrapper, IconTextWrapper } from "./styled";
+import { VisualFilterWrapper } from "./styled";
 import {
   loadStateFromStorage,
   saveStateToStorage,

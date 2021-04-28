@@ -1,6 +1,5 @@
 import { memo, FC } from "react";
-import { NodeProps, Handle } from "react-flow-renderer";
-import { processType } from "../utils";
+import { NodeProps } from "react-flow-renderer";
 
 const Function_block: FC<NodeProps> = ({ data }) => {
   //   var x = document.querySelectorAll(".react-flow").forEach((x) => {

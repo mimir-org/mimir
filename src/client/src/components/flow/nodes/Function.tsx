@@ -19,6 +19,7 @@ const Function: FC<NodeProps> = ({ data }) => {
               />
             );
           }
+          return null;
         })}
       <div>{data.label ?? data.name}</div>
     </>
