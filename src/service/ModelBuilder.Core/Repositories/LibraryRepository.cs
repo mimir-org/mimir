@@ -196,39 +196,58 @@ namespace Mb.Core.Repositories
                     new Attribute
                     {
                         NodeId = "",
-                        Type = AttributeType.Relations,
-                        Key = "Relation name",
-                        Value = "Name of relation",
+                        Type = AttributeType.AdminInfo,
+                        Key = "Reference Designation",
+                        Value = "IEC 81346 identifier",
                         InputType = AttributeInputType.Text,
                         Unit = null
                     },
                     new Attribute
                     {
                         NodeId = "",
-                        Type = AttributeType.Relations,
-                        Key = "Has function",
-                        Value = "Pumping oil",
+                        Type = AttributeType.AdminInfo,
+                        Key = "Service Description",
+                        Value = "Description of service",
                         InputType = AttributeInputType.Text,
                         Unit = null
                     },
                     new Attribute
                     {
                         NodeId = "",
-                        Type = AttributeType.Relations,
-                        Key = "Updated by",
-                        Value = "Arnulf Arnulfsen",
+                        Type = AttributeType.AdminInfo,
+                        Key = "Change Mode",
+                        Value = "The change state of the object",
                         InputType = AttributeInputType.Text,
                         Unit = null
                     },
                     new Attribute
                     {
                         NodeId = "",
-                        Type = AttributeType.Relations,
-                        Key = "Connected to",
-                        Value = "stuff",
+                        Type = AttributeType.AdminInfo,
+                        Key = "Version",
+                        Value = "Version information",
                         InputType = AttributeInputType.Text,
                         Unit = null
                     },
+                    new Attribute
+                    {
+                        NodeId = "",
+                        Type = AttributeType.AdminInfo,
+                        Key = "Kind",
+                        Value = "Either template or instance",
+                        InputType = AttributeInputType.Dropdown,
+                        Unit = null
+                    },
+                    new Attribute
+                    {
+                        NodeId = "",
+                        Type = AttributeType.AdminInfo,
+                        Key = "Status",
+                        Value = "",
+                        InputType = AttributeInputType.Dropdown,
+                        Unit = null
+                    },
+
                     new Attribute
                     {
                         NodeId = "",
