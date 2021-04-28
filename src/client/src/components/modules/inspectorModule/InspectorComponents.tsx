@@ -1,21 +1,22 @@
 import { GetNodes } from "../../flow/helpers";
 import { GetAttributes } from "./helpers";
 import { TabComponent } from "./";
-import { Attribute, ATTRIBUTE_TYPE } from "../../../models/project";
+import { Attribute } from "../../../models/project";
 
 const InspectorComponents = () => {
   const nodes = GetNodes();
   const node = nodes.find((node) => node.isSelected);
-  const nodeLabel = node !== undefined ? node.label : "";
+  const nodeLabel = node ? node.label : "";
 
   let adminData: Attribute[] = [];
   let techData: Attribute[] = [];
   let relationData: Attribute[] = [];
+  let index = 0;
 
-  if (node !== undefined) {
-    adminData = GetAttributes(node, ATTRIBUTE_TYPE.ADMIN_INFO);
-    techData = GetAttributes(node, ATTRIBUTE_TYPE.TECH_INFO);
-    relationData = GetAttributes(node, ATTRIBUTE_TYPE.RELATIONS);
+  if (node) {
+    adminData = GetAttributes(node, index++);
+    techData = GetAttributes(node, index++);
+    relationData = GetAttributes(node, index++);
   }
 
   return (
