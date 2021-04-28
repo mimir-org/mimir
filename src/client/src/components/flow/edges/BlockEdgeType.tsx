@@ -12,7 +12,9 @@ import {
   NODE_TYPE,
 } from "../../../models/project";
 
-export default function DefaultEdgeType({
+import { GetTransportTypeColor } from "../helpers";
+
+export default function BlockEdgeType({
   id,
   sourceX,
   sourceY,
@@ -20,7 +22,6 @@ export default function DefaultEdgeType({
   targetY,
   sourcePosition,
   targetPosition,
-  style = {},
   data,
   arrowHeadType,
   markerEndId,
@@ -46,16 +47,38 @@ export default function DefaultEdgeType({
     targetPosition,
   });
 
-  const pathType = (source: Node, target: Node) => {
-    const pathType = isAspectNode(source.type)
-      ? (LINE_EDGE_TYPE.STEP as LineEdgeType)
-      : source.type !== target.type
-      ? (LINE_EDGE_TYPE.BEZIER as LineEdgeType)
-      : (LINE_EDGE_TYPE.STEP as LineEdgeType);
+  const getConnectors = () => {
+    const fromConnector = data.source.connectors.find(
+      (x) => x.id === data.edge.fromConnector
+    );
+    const toConnector = data.target.connectors.find(
+      (x) => x.id === data.edge.toConnector
+    );
+    return {
+      fromConnector: fromConnector,
+      toConnector: toConnector,
+    };
+  };
 
-    return pathType === LINE_EDGE_TYPE.BEZIER
-      ? edgePathBezier
-      : edgePathSmoothStep;
+  const getStyle = () => {
+    var connector = getConnectors().toConnector;
+    return {
+      stroke: GetTransportTypeColor(connector.terminalType),
+    };
+  };
+
+  const pathType = (source: Node, target: Node) => {
+    getConnectors();
+    return edgePathSmoothStep;
+    //   const pathType = isAspectNode(source.type)
+    //     ? (LINE_EDGE_TYPE.STEP as LineEdgeType)
+    //     : source.type !== target.type
+    //     ? (LINE_EDGE_TYPE.BEZIER as LineEdgeType)
+    //     : (LINE_EDGE_TYPE.STEP as LineEdgeType);
+
+    //   return pathType === LINE_EDGE_TYPE.BEZIER
+    //     ? edgePathBezier
+    //     : edgePathSmoothStep;
   };
 
   const edgeText = (source: Node, target: Node) => {
@@ -91,7 +114,7 @@ export default function DefaultEdgeType({
     <>
       <path
         id={id}
-        style={style}
+        style={getStyle()}
         className="react-flow__edge-path"
         d={pathType(data.source, data.target)}
         markerEnd={markerEnd}

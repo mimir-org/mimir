@@ -4,22 +4,20 @@ import { processType } from "../utils";
 import { RELATION_TYPE } from "../../../models/project";
 
 const Function: FC<NodeProps> = ({ data }) => {
+  console.log(data);
   return (
     <>
       {data.connectors &&
         data.connectors.map((connector) => {
           const [typeHandler, positionHandler] = processType(connector);
-          if (connector.relationType !== RELATION_TYPE.Relation) {
-            return (
-              <Handle
-                type={typeHandler}
-                position={positionHandler}
-                id={connector.id}
-                key={connector.id}
-              />
-            );
-          }
-          return null;
+          return (
+            <Handle
+              type={typeHandler}
+              position={positionHandler}
+              id={connector.id}
+              key={connector.id}
+            />
+          );
         })}
       <div>{data.label ?? data.name}</div>
     </>

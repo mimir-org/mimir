@@ -19,6 +19,7 @@ export type EdgeType = keyof typeof EDGE_TYPE;
 
 export const EDGE_TYPE = {
     DEFAULT: "DefaultEdgeType",
+    BLOCK: "BlockEdgeType",
 };
 
 export type LineEdgeType = keyof typeof LINE_EDGE_TYPE;
@@ -133,14 +134,14 @@ export interface Connector {
 }
 
 export interface Edge {
-  id: string;
-  fromConnector: string;
-  toConnector: string;
-  fromNode: string;
-  toNode: string;
-  isHidden: boolean | false;
-  parentType: NodeType;
-  targetType: NodeType;
+    id: string;
+    fromConnector: string;
+    toConnector: string;
+    fromNode: string;
+    toNode: string;
+    isHidden: boolean | false;
+    parentType: NodeType;
+    targetType: NodeType;
 }
 
 export interface Attribute {

@@ -1,5 +1,5 @@
 import { VisualFilterResources } from "../../../../textResources";
-import { createId } from "../../../flow/utils";
+import { CreateId } from "../../../flow/helpers";
 import { ContentColumn, Header } from "../styled";
 
 const GetContent = (items: number, section: number) => {
@@ -8,20 +8,20 @@ const GetContent = (items: number, section: number) => {
   // TODO: fix this when content for filter is known
 
   return (
-    <div key={createId()}>
+    <div key={CreateId()}>
       <ContentColumn>
         {[...Array(items)].map((i, index: number) => {
           return (
-            <div key={createId()}>
+            <div key={CreateId()}>
               {index === 0 && <Header>{VisualFilterResources[section]}</Header>}
-              <label className={"checkbox"} key={createId()}>
+              <label className={"checkbox"} key={CreateId()}>
                 <input
                   type="checkbox"
-                  key={createId()}
+                  key={CreateId()}
                   checked={false}
                   onChange={() => null}
                 />
-                <span className="checkmark" key={createId()}></span>
+                <span className="checkmark" key={CreateId()}></span>
                 <label className="checkbox_label">{text[index]}</label>
               </label>
             </div>
@@ -31,15 +31,15 @@ const GetContent = (items: number, section: number) => {
       <ContentColumn>
         {[...Array(items)].map((i, index: number) => {
           return (
-            <label className={"checkbox"} key={createId()}>
+            <label className={"checkbox"} key={CreateId()}>
               <input
                 type="checkbox"
-                key={createId()}
+                key={CreateId()}
                 checked={false}
                 onChange={() => null}
               />
-              <span className="checkmark" key={createId()}></span>
-              <label className="checkbox_label" key={createId()}>
+              <span className="checkmark" key={CreateId()}></span>
+              <label className="checkbox_label" key={CreateId()}>
                 {text[index + 2]}
               </label>
             </label>

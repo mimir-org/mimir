@@ -27,6 +27,7 @@ import {
   Edge,
   EDGE_TYPE,
   EdgeEvent,
+  NODE_TYPE,
 } from "../../models/project";
 
 import {
@@ -34,11 +35,10 @@ import {
   Function,
   Product,
   Location,
-  Function_block,
+  FunctionBlock,
   OffPage,
 } from "./nodes";
-import { DefaultEdgeType } from "./edges";
-import { createId, CreateElementEdge } from "./utils";
+import { DefaultEdgeType, BlockEdgeType } from "./edges";
 import { MiniMap } from "./";
 import {
   CreateProjectNodes,
@@ -51,7 +51,12 @@ import {
   loadEventDataFromStorage,
   saveEventDataToStorage,
 } from "../../redux/store/localStorage/localStorage";
-import { CreateOffPageNode } from "./helpers";
+import {
+  CreateOffPageNode,
+  CreateOffPageData,
+  GetReactFlowBoundingRectData,
+  CreateId,
+} from "./helpers";
 
 interface FlowBlockProps {
   nodeId: string;
@@ -64,12 +69,13 @@ const nodeTypes = {
   Function: Function,
   Product: Product,
   Location: Location,
-  Function_block: Function_block,
+  Functionblock: FunctionBlock,
   Offpage: OffPage,
 };
 
 const edgeTypes = {
   DefaultEdgeType: DefaultEdgeType,
+  BlockEdgeType: BlockEdgeType,
 };
 
 const FlowBlock: React.FC<FlowBlockProps> = ({ nodeId }: FlowBlockProps) => {
@@ -86,7 +92,7 @@ const FlowBlock: React.FC<FlowBlockProps> = ({ nodeId }: FlowBlockProps) => {
     e.preventDefault();
     const edgeEvent = loadEventDataFromStorage("edgeEvent") as EdgeEvent;
 
-    if (edgeEvent.nodeId && edgeEvent.sourceId) {
+    if (edgeEvent) {
       const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
 
       const position = reactFlowInstance.project({
@@ -94,25 +100,21 @@ const FlowBlock: React.FC<FlowBlockProps> = ({ nodeId }: FlowBlockProps) => {
         y: e.clientY - reactFlowBounds.top,
       });
 
-      const node = CreateOffPageNode(
-        edgeEvent,
-        position.x,
-        position.y,
-        projectState,
-        nodeId
-      );
+      const createOffPageData = {
+        parentNodeId: nodeId,
+        fromNodeId: edgeEvent.nodeId,
+        fromConnectorId: edgeEvent.sourceId,
+        x: position.x,
+        y: position.y,
+      } as CreateOffPageData;
+
+      const node = CreateOffPageNode(projectState, createOffPageData);
 
       dispatch(addNode(node.node));
       dispatch(createEdge(node.partOfEdge));
       dispatch(createEdge(node.transportEdge));
 
-      const resetData = {
-        nodeId: null,
-        handleType: null,
-        sourceId: null,
-      } as EdgeEvent;
-
-      saveEventDataToStorage(resetData, "edgeEvent");
+      saveEventDataToStorage(null, "edgeEvent");
     }
   };
 
@@ -123,27 +125,24 @@ const FlowBlock: React.FC<FlowBlockProps> = ({ nodeId }: FlowBlockProps) => {
       nodeId: nodeId,
       handleType: handleType,
       sourceId: handleId,
-    };
+    } as EdgeEvent;
 
     saveEventDataToStorage(eventdata, "edgeEvent");
   };
 
   const onConnect = (params) => {
-    const resetData = {
-      nodeId: null,
-      handleType: null,
-      sourceId: null,
-    } as EdgeEvent;
+    saveEventDataToStorage(null, "edgeEvent");
 
-    saveEventDataToStorage(resetData, "edgeEvent");
-
-    const createdId = createId();
+    const createdId = CreateId();
     const sourceNode = projectState.project.nodes.find(
       (x) => x.id === params.source
     ) as Node;
     const targetNode = projectState.project.nodes.find(
       (x) => x.id === params.target
     ) as Node;
+
+    let currentEdge = null;
+
     const existingEdge = projectState.project.edges.find(
       (x) =>
         x.fromConnector === params.sourceHandle &&
@@ -164,8 +163,10 @@ const FlowBlock: React.FC<FlowBlockProps> = ({ nodeId }: FlowBlockProps) => {
         parentType: sourceNode.type,
         targetType: targetNode.type,
       };
-
+      currentEdge = edge;
       dispatch(createEdge(edge));
+    } else {
+      currentEdge = existingEdge;
     }
 
     return setElements((els) => {
@@ -179,6 +180,7 @@ const FlowBlock: React.FC<FlowBlockProps> = ({ nodeId }: FlowBlockProps) => {
           data: {
             source: sourceNode,
             target: targetNode,
+            edge: currentEdge,
           },
         },
         els
@@ -200,7 +202,7 @@ const FlowBlock: React.FC<FlowBlockProps> = ({ nodeId }: FlowBlockProps) => {
 
   const onLoad = useCallback(
     (_reactFlowInstance) => {
-      const [width, height] = getBoundingRectData();
+      const [width, height] = GetReactFlowBoundingRectData();
 
       setElements(
         CreateProjectBlockViewNodes(projectState.project, nodeId, width, height)
@@ -216,7 +218,9 @@ const FlowBlock: React.FC<FlowBlockProps> = ({ nodeId }: FlowBlockProps) => {
   };
 
   const onNodeDragStop = (_event, node) => {
-    // dispatch(updatePosition(node.id, 0, 0));
+    const [width] = GetReactFlowBoundingRectData();
+    const x = node.type === NODE_TYPE.OFF_PAGE ? width - 120 : node.position.x;
+    dispatch(updatePosition(node.id, x, node.position.y));
   };
 
   const onDrop = (event) => {
@@ -232,7 +236,7 @@ const FlowBlock: React.FC<FlowBlockProps> = ({ nodeId }: FlowBlockProps) => {
     });
 
     const node = {
-      id: createId(),
+      id: CreateId(),
       name: data.name,
       label: data.label ?? data.name,
       type: data.type as NodeType,
@@ -244,7 +248,7 @@ const FlowBlock: React.FC<FlowBlockProps> = ({ nodeId }: FlowBlockProps) => {
     } as Node;
 
     node.connectors?.forEach((c) => {
-      c.id = createId();
+      c.id = CreateId();
       c.nodeId = node.id;
     });
 
@@ -258,17 +262,6 @@ const FlowBlock: React.FC<FlowBlockProps> = ({ nodeId }: FlowBlockProps) => {
 
   const onElementClick = (event, element) => {
     dispatch(changeActiveNode(element.id));
-  };
-
-  const getBoundingRectData = () => {
-    var elem = document.getElementsByClassName("react-flow")[0];
-
-    if (elem) {
-      const rect = elem.getBoundingClientRect();
-      return [rect.width, rect.height];
-    } else {
-      return [0, 0];
-    }
   };
 
   // Force rerender

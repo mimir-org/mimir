@@ -1,5 +1,5 @@
 import { Attribute } from "../../../models/project";
-import { createId } from "../../flow/utils";
+import { CreateId } from "../../flow/helpers";
 import { TabColumn, TabInput, TabParagraph } from "./styled";
 
 interface Props {
@@ -13,10 +13,10 @@ const TabContent = ({ attr, columns }: Props) => {
   return (
     <>
       {[...Array(columns)].map(() => (
-        <TabColumn key={createId()}>
+        <TabColumn key={CreateId()}>
           {isValid &&
             attr.map((j, i) => (
-              <div key={createId()}>
+              <div key={CreateId()}>
                 <TabParagraph>{attr[i].key}</TabParagraph>
                 <TabInput
                   value={attr[i].value}
