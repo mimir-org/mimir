@@ -1,9 +1,9 @@
 import { GetNodes } from "../../flow/helpers";
 import { GetAttributes } from "./helpers";
-import { TabComponent } from "./";
+import { TabComponent } from ".";
 import { Attribute } from "../../../models/project";
 
-const InspectorComponents = () => {
+const InspectorTabs = () => {
   const nodes = GetNodes();
   const node = nodes.find((node) => node.isSelected);
   const nodeLabel = node ? node.label : "";
@@ -28,4 +28,4 @@ const InspectorComponents = () => {
   );
 };
 
-export default InspectorComponents;
+export default InspectorTabs;

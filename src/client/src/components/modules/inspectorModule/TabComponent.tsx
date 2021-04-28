@@ -21,11 +21,13 @@ interface Props {
 
 const TabComponent = ({ attributes, index, nodeLabel }: Props) => {
   const dispatch = useDispatch();
-  const list = useSelector<RootState>((state) => state.inspector.tabs);
+  const list = useSelector<RootState>(
+    (state) => state.inspector.tabs
+  ) as string[];
 
   const isOpen = useSelector<RootState>(
     (state) => state.inspector.tabs[index].visible
-  );
+  ) as boolean;
 
   const handleClick = useCallback(() => {
     dispatch(changeInspector(index, list));
@@ -41,7 +43,7 @@ const TabComponent = ({ attributes, index, nodeLabel }: Props) => {
           </TabHeader>
           <TabDataWrapper>
             <TabContainer>
-              <TabContent attributes={attributes} columns={4} />
+              <TabContent attr={attributes} columns={4} />
             </TabContainer>
           </TabDataWrapper>
         </>

@@ -3,25 +3,25 @@ import { createId } from "../../flow/utils";
 import { TabColumn, TabInput, TabParagraph } from "./styled";
 
 interface Props {
-  attributes: Attribute[];
+  attr: Attribute[];
   columns: number;
 }
 
-const TabContent = ({ attributes, columns }: Props) => {
-  const isValid = attributes[0] !== undefined;
+const TabContent = ({ attr, columns }: Props) => {
+  const isValid = attr[0] !== undefined;
 
   return (
     <>
       {[...Array(columns)].map(() => (
         <TabColumn key={createId()}>
           {isValid &&
-            attributes.map((j, i) => (
+            attr.map((j, i) => (
               <div key={createId()}>
-                <TabParagraph>{attributes[i].key}</TabParagraph>
+                <TabParagraph>{attr[i].key}</TabParagraph>
                 <TabInput
-                  value={attributes[i].value}
+                  value={attr[i].value}
                   onChange={() => null}
-                  inputType={attributes[i].inputType}
+                  inputType={attr[i].inputType}
                 />
               </div>
             ))}

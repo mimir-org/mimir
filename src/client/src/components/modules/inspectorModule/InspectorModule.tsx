@@ -7,7 +7,7 @@ import { IconWrapper, ToggleButtonWrapper } from "./styled";
 import textResources from "../../../textResources";
 import { TabHeaderWrapper } from "./styled";
 import { InspectorTitle } from "./styled";
-import InspectorComponents from "./InspectorComponents";
+import InspectorTabs from "./InspectorTabs";
 import {
   loadStateFromStorage,
   saveStateToStorage,
@@ -34,7 +34,7 @@ const InspectorModule = () => {
   return (
     <AnimatedMenu start={startHeight} stop={stopHeight} run={animate}>
       <TabHeaderWrapper>
-        {hasProject && <InspectorComponents />}
+        {hasProject && <InspectorTabs />}
         <ToggleButtonWrapper>
           {showInspector ? (
             <img src={ToggleIconDown} alt="toggle-icon" onClick={handleClick} />
