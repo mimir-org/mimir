@@ -6,7 +6,7 @@ const TabInput = styled.input`
   border-radius: 5px;
   margin-bottom: 10px;
   padding: 5px;
-  width: 100%;
+  width: 90%;
   height: 31px;
 `;
 
