@@ -1,15 +1,15 @@
 import { INSPECTOR_ELEMENT_CHANGED_COMPLETED } from "../inspector/reducers";
 
-export function changeInspector(index: number, list) {
-  if (list.length > 1) {
-    list.forEach((fragment: { visible: boolean }) => {
-      fragment.visible = false;
+export function changeInspector(index: number, tabs) {
+  if (tabs.length > 1) {
+    tabs.forEach((element: { visible: boolean }) => {
+      element.visible = false;
     });
-    list[index].visible = true;
+    tabs[index].visible = true;
   }
 
   return {
     type: INSPECTOR_ELEMENT_CHANGED_COMPLETED,
-    payload: list,
+    payload: tabs,
   };
 }

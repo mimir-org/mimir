@@ -1,31 +1,21 @@
+import { ATTRIBUTE_TYPE } from "../../../models/project";
+
 export const INSPECTOR_CHANGED = "Insceptor changed";
 export const INSPECTOR_ELEMENT_CHANGED_COMPLETED =
   "INSPECTOR_ELEMENT_CHANGED_COMPLETED";
 
 const initialState = {
-  list: [
+  tabs: [
     {
-      type: "admin",
+      type: ATTRIBUTE_TYPE.ADMIN_INFO,
       visible: false,
     },
     {
-      type: "tech",
+      type: ATTRIBUTE_TYPE.TECH_INFO,
       visible: false,
     },
     {
-      type: "relations",
-      visible: false,
-    },
-    {
-      type: "inherit",
-      visible: false,
-    },
-    {
-      type: "comments",
-      visible: false,
-    },
-    {
-      type: "changelog",
+      type: ATTRIBUTE_TYPE.RELATIONS,
       visible: false,
     },
   ],
@@ -37,7 +27,7 @@ export const inspectorReducer = (state = initialState, action) => {
       return {
         ...state,
         type: action.type,
-        list: action.payload,
+        tabs: action.payload,
       };
     default:
       return state;
