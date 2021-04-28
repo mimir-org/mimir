@@ -5,6 +5,8 @@ import { ContentColumn, Header } from "../styled";
 const GetContent = (items: number, section: number) => {
   let text = VisualFilterResources.slice(section + items * 2);
 
+  // TODO: fix this when content for filter is known
+
   return (
     <div key={createId()}>
       <ContentColumn>
