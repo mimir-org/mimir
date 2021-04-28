@@ -22,6 +22,6 @@ namespace Mb.Models.Data
         public NodeTypeAm ParentType { get; set; }
 
         [Required]
-        public string ParentName { get; set; }
+        public NodeTypeAm TargetType { get; set; }
     }
 }

@@ -4,7 +4,7 @@ const IconWrapper = styled.div`
   cursor: pointer;
   position: absolute;
   top: 11px;
-  right: 117px;
+  right: 108px;
   z-index: 1103;
 `;
 

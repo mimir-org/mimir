@@ -4,16 +4,16 @@ const IconTextWrapper = styled.div`
   position: absolute;
   float: right;
   font-family: roboto;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: ${(props: { isOpen: boolean }) =>
     props.isOpen ? "bold" : "normal"};
   text-decoration: ${(props: { isOpen: boolean }) =>
     props.isOpen ? "underline" : "none"};
-  right: 2px;
+  right: 3px;
   color: ${(props: { isOpen: boolean }) => (props.isOpen ? "#007079" : "#fff")};
   background-color: ${(props: { isOpen: boolean }) =>
     props.isOpen ? "#fff" : "#007079"};
-  top: 1px;
+  top: 2px;
   z-index: 1103;
   width: 155px;
   height: ${(props: { isOpen: boolean }) => (props.isOpen ? "45" : "32")}px;

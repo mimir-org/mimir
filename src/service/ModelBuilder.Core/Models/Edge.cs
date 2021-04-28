@@ -11,7 +11,7 @@ namespace Mb.Core.Models
         public string FromNode { get; set; }
         public string ToNode { get; set; }
         public NodeType ParentType { get; set; }
-        public string ParentName { get; set; }
+        public NodeType TargetType { get; set; }
         public virtual ICollection<Project> Projects { get; set; }
     }
 }

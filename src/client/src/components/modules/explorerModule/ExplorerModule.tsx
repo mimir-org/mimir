@@ -1,11 +1,10 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { useState } from "react";
-import { ExplorerIcon } from "../../../assets";
+import { ExplorerIcon, ToggleIconLeft, ToggleIconRight } from "../../../assets";
 import ProjectComponent from "./projectComponent/ProjectComponent";
 import { SwitchViewComponent } from "./switchviewComponent/SwitchViewComponent";
 import textResources from "../../../textResources";
-import { ToggleExplorerButton } from "../../../assets/buttons/index";
 import AnimatedMenu from "./styled/animated/AnimatedMenu";
 import {
   loadStateFromStorage,
@@ -17,7 +16,7 @@ import {
   ContentWrapper,
   ExplorerTitle,
   CollapsedIcon,
-  FooterWrapper,
+  ExplorerFooterWrapper,
 } from "./styled";
 
 export const ExplorerModule = () => {
@@ -44,7 +43,21 @@ export const ExplorerModule = () => {
           <ExplorerTitle>{textResources.Explorer_view}</ExplorerTitle>
           <img src={ExplorerIcon} alt="explorerIcon" />
         </IconWrapper>
-        <ToggleExplorerButton visible={isOpen} onClick={handleClick} />
+        {isOpen ? (
+          <img
+            src={ToggleIconLeft}
+            alt="toggle-icon"
+            style={{ cursor: "pointer" }}
+            onClick={handleClick}
+          />
+        ) : (
+          <img
+            src={ToggleIconRight}
+            alt="toggle-icon"
+            style={{ cursor: "pointer" }}
+            onClick={handleClick}
+          />
+        )}
       </HeaderWrapper>
       <CollapsedIcon visible={isOpen}>
         <img src={ExplorerIcon} alt="explorerIcon" />
@@ -54,9 +67,9 @@ export const ExplorerModule = () => {
           <ProjectComponent />
         </ContentWrapper>
       )}
-      <FooterWrapper visible={isOpen}>
+      <ExplorerFooterWrapper visible={isOpen}>
         <SwitchViewComponent />
-      </FooterWrapper>
+      </ExplorerFooterWrapper>
     </AnimatedMenu>
   );
 };

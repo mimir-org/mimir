@@ -5,18 +5,12 @@ import { AppBar, Toolbar, Typography } from "@material-ui/core";
 import textResources from "../../textResources";
 import SaveViewState from "./helpers/SaveViewState";
 import { loadStateFromStorage } from "../../redux/store/localStorage/localStorage";
-import {
-  TreeviewOn,
-  TreeviewOff,
-  BlockviewOn,
-  BlockviewOff,
-} from "../../assets/index";
+import { TreeviewIcon, BlockviewIcon } from "../../assets/index";
 import {
   BlockviewWrapper,
   TreeviewWrapper,
   TitleWrapper,
   IconsWrapper,
-  SwitchWrapper,
 } from "./styled";
 
 import { RootState } from "../../redux/store/index";
@@ -25,9 +19,9 @@ import { save } from "../../redux/store/project/actions";
 
 const Header = () => {
   const { push } = useHistory();
-  const [showBlockView, setShowBlockView] = useState(
-    loadStateFromStorage("blockview")
-  );
+  //   const [showBlockView, setShowBlockView] = useState(
+  //     loadStateFromStorage("blockview")
+  //   );
   const dispatch = useDispatch();
   const project = useSelector<RootState>(
     (state) => state.projectState.project
@@ -37,7 +31,7 @@ const Header = () => {
     const key = e.target.alt;
     const view = SaveViewState(key);
     push(`/home/${view}`);
-    setShowBlockView(loadStateFromStorage("blockview"));
+    // setShowBlockView(loadStateFromStorage("blockview"));
   };
 
   const handleSave = () => {
@@ -52,7 +46,7 @@ const Header = () => {
             {textResources.MainHeader_App_Name}{" "}
             <span
               onClick={handleSave}
-              style={{ background: "black", padding: "2px" }}
+              style={{ background: "black", padding: "2px", cursor: "pointer" }}
             >
               SAVE
             </span>

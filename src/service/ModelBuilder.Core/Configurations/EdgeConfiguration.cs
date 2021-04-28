@@ -17,7 +17,7 @@ namespace Mb.Core.Configurations
             builder.Property(p => p.FromNode).HasColumnName("FromNode").IsRequired();
             builder.Property(p => p.ToNode).HasColumnName("ToNode").IsRequired();
             builder.Property(p => p.ParentType).HasColumnName("ParentType").IsRequired().HasConversion<string>();
-            builder.Property(p => p.ParentName).HasColumnName("ParentName").IsRequired().HasConversion<string>();
+            builder.Property(p => p.TargetType).HasColumnName("TargetType").IsRequired().HasConversion<string>();
 
             builder.HasMany(x => x.Projects).WithMany(y => y.Edges).UsingEntity<Dictionary<string, object>>("ProjectEdge", 
                 x => x.HasOne<Project>().WithMany().HasForeignKey("ProjectId"),

@@ -14,7 +14,7 @@ const VisualFilterWrapper = styled.div`
   color: #007079;
   padding: 10px;
   z-index: 1102;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+  box-shadow: -1px 4px 5px rgba(0, 0, 0, 0.15);
 `;
 
 export default VisualFilterWrapper;

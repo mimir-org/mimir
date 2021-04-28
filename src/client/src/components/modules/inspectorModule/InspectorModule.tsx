@@ -1,10 +1,9 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import AnimatedMenu from "./styled/animated/AnimatedMenu";
-import { ToggleInspectorButton } from "../../../assets/buttons";
 import { useState } from "react";
-import { EyeIcon } from "../../../assets";
-import { IconWrapper } from "./styled";
+import { EyeIcon, ToggleIconDown, ToggleIconUp } from "../../../assets";
+import { IconWrapper, ToggleButtonWrapper } from "./styled";
 import textResources from "../../../textResources";
 import { TabHeaderWrapper } from "./styled";
 import { InspectorTitle } from "./styled";
@@ -37,10 +36,18 @@ const InspectorModule = () => {
       <AnimatedMenu start={startHeight} stop={stopHeight} run={animate}>
         <TabHeaderWrapper>
           {hasProject && <InspectorComponents />}
-          <ToggleInspectorButton
-            visible={showInspector}
-            onClick={handleClick}
-          />
+          <ToggleButtonWrapper>
+            {showInspector ? (
+              <img
+                src={ToggleIconDown}
+                alt="toggle-icon"
+                onClick={handleClick}
+              />
+            ) : (
+              <img src={ToggleIconUp} alt="toggle-icon" onClick={handleClick} />
+            )}
+          </ToggleButtonWrapper>
+
           <IconWrapper>
             <InspectorTitle>{textResources.Inspector_Heading}</InspectorTitle>
             <img src={EyeIcon} alt="inspector-icon" />

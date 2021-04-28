@@ -1,11 +1,9 @@
 .appbar {
-  width: 100%;
   display: flex;
-  flex-grow: 12;
-  flex-direction: row;
-  max-height: 44px;
+  max-height: 46px;
   background-color: #007079 !important;
   position: relative !important;
+  box-shadow: none !important;
 
   .menu_button {
     flex-grow: 1;

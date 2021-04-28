@@ -11,8 +11,6 @@ export { default as BlockviewOn } from "./icons/blockviewOn.svg";
 export { default as BlockviewOff } from "./icons/blockviewOff.svg";
 export { default as VisualFilterIconClosed } from "./icons/visualFilterIconClosed.svg";
 export { default as VisualFilterIconOpen } from "./icons/VisualFilterIconOpen.svg";
-export { default as SwitchOnIcon } from "./icons/switchOnIcon.svg";
-export { default as SwitchOffIcon } from "./icons/switchOffIcon.svg";
 export { default as expandedIcon } from "./icons/expandedIcon.svg";
 export { default as unexpandedIcon } from "./icons/unexpandedIcon.svg";
 export { default as CombinedViewOnIcon } from "./icons/combinedViewOnIcon.svg";
@@ -28,3 +26,7 @@ export { default as WhiteRightArrowIcon } from "./icons/whiteRightArrowIcon.svg"
 export { default as UserIconOpen } from "./icons/userIconOpen.svg";
 export { default as UserIconClosed } from "./icons/userIconClosed.svg";
 export { default as SaveIcon } from "./icons/saveIcon.svg";
+export { default as ToggleIconDown } from "./icons/toggleIconDown.svg";
+export { default as ToggleIconLeft } from "./icons/toggleIconLeft.svg";
+export { default as ToggleIconRight } from "./icons/toggleIconRight.svg";
+export { default as ToggleIconUp } from "./icons/toggleIconUp.svg";
