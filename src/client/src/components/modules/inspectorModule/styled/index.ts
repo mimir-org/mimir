@@ -1,7 +1,7 @@
-export { default as StyledInspectorComponent } from "./StyledInspectorComponent";
+export { default as InspectorWrapper } from "./InspectorWrapper";
 export { default as IconWrapper } from "./IconWrapper";
 export { default as InspectorTitle } from "./InspectorTitle";
-export { default as TabHeaderWrapper } from "./TabHeaderWrapper";
+export { default as InspectorTabsHeader } from "./InspectorTabsHeader";
 export { default as TabHeader } from "./TabHeader";
 export { default as TabDataWrapper } from "./TabDataWrapper";
 export { default as TabColumn } from "./TabColumn";

@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import { StyledInspectorComponent } from "..";
+import { InspectorWrapper } from "..";
 
 interface Props {
   start: string;
@@ -17,8 +17,8 @@ ${!run ? (start = stop) : null}
   }  
 `;
 
-const AnimatedMenu = styled(StyledInspectorComponent)`
+const AnimatedInspectorMenu = styled(InspectorWrapper)`
   animation: ${animation} 0.3s ease-in-out;
 `;
 
-export default AnimatedMenu;
+export default AnimatedInspectorMenu;
