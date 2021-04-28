@@ -24,7 +24,7 @@ import { NodeType, Node, LibNode, Edge, EDGE_TYPE } from "../../models/project";
 
 import { Aspect, Function, Product, Location } from "./nodes";
 import { DefaultEdgeType } from "./edges";
-import { createId } from "./utils";
+import { CreateId } from "./helpers";
 import { MiniMap } from "./";
 import { CreateProjectNodes, CreateElementNode } from "./utils";
 import { ProjectOptions } from "../project";
@@ -53,7 +53,7 @@ const FlowTree = () => {
   ) as ProjectState;
 
   const onConnect = (params) => {
-    const createdId = createId();
+    const createdId = CreateId();
     const sourceNode = projectState.project.nodes.find(
       (x) => x.id === params.source
     ) as Node;
@@ -144,7 +144,7 @@ const FlowTree = () => {
     });
 
     const node = {
-      id: createId(),
+      id: CreateId(),
       name: data.name,
       label: data.label ?? data.name,
       type: data.type as NodeType,
@@ -156,7 +156,7 @@ const FlowTree = () => {
     } as Node;
 
     node.connectors?.forEach((c) => {
-      c.id = createId();
+      c.id = CreateId();
       c.nodeId = node.id;
     });
 

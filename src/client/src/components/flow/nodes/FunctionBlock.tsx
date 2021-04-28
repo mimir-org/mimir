@@ -1,7 +1,8 @@
 import { memo, FC } from "react";
-import { NodeProps } from "react-flow-renderer";
+import { NodeProps, Handle } from "react-flow-renderer";
+import { processType } from "../utils";
 
-const Function_block: FC<NodeProps> = ({ data }) => {
+const FunctionBlock: FC<NodeProps> = ({ data }) => {
   //   var x = document.querySelectorAll(".react-flow").forEach((x) => {
   //     console.log(x);
   //   });
@@ -16,4 +17,4 @@ const Function_block: FC<NodeProps> = ({ data }) => {
   );
 };
 
-export default memo(Function_block);
+export default memo(FunctionBlock);
