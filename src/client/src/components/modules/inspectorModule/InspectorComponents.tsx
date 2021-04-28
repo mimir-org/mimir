@@ -1,40 +1,28 @@
 import { GetNodes } from "../../flow/helpers";
-import { Attribute, ATTRIBUTE_TYPE, Node } from "../../../models/project";
+import { GetAttributes } from "./helpers";
 import { TabComponent } from "./";
+import { Attribute, ATTRIBUTE_TYPE } from "../../../models/project";
 
 const InspectorComponents = () => {
   const nodes = GetNodes();
-  const node: Node = nodes.find((node) => node.isSelected);
-  const nodeLabel: string = node !== undefined ? node.label : "";
+  const node = nodes.find((node) => node.isSelected);
+  const nodeLabel = node !== undefined ? node.label : "";
 
-  let attributesAdmin: Attribute[] = [];
-  let attributesTech: Attribute[] = [];
-  let attributesRelation: Attribute[] = [];
+  let adminData: Attribute[] = [];
+  let techData: Attribute[] = [];
+  let relationData: Attribute[] = [];
 
   if (node !== undefined) {
-    attributesAdmin = node.attributes.filter(
-      (x) => x.type === ATTRIBUTE_TYPE.ADMIN_INFO
-    );
-
-    attributesTech = node.attributes.filter(
-      (x) => x.type === ATTRIBUTE_TYPE.TECH_INFO
-    );
-
-    attributesRelation = node.attributes.filter(
-      (x) => x.type === ATTRIBUTE_TYPE.RELATIONS
-    );
+    adminData = GetAttributes(node, ATTRIBUTE_TYPE.ADMIN_INFO);
+    techData = GetAttributes(node, ATTRIBUTE_TYPE.TECH_INFO);
+    relationData = GetAttributes(node, ATTRIBUTE_TYPE.RELATIONS);
   }
-  console.log(attributesAdmin);
 
   return (
     <>
-      <TabComponent
-        attributes={attributesAdmin}
-        index={0}
-        nodeLabel={nodeLabel}
-      />
-      <TabComponent attributes={attributesTech} index={1} />
-      <TabComponent attributes={attributesRelation} index={2} />
+      <TabComponent attributes={adminData} index={0} nodeLabel={nodeLabel} />
+      <TabComponent attributes={techData} index={1} />
+      <TabComponent attributes={relationData} index={2} />
     </>
   );
 };

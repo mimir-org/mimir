@@ -8,11 +8,11 @@ interface Props {
 }
 
 const TabContent = ({ attributes, columns }: Props) => {
-  const isValid: boolean = attributes[0] !== undefined;
+  const isValid = attributes[0] !== undefined;
 
   return (
     <>
-      {[...Array(columns)].map((i, index) => (
+      {[...Array(columns)].map(() => (
         <TabColumn key={createId()}>
           {isValid &&
             attributes.map((j, i) => (
