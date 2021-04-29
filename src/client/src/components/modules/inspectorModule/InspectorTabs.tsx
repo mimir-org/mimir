@@ -1,10 +1,11 @@
-import { GetNodes } from "../../flow/helpers";
 import { GetAttributes } from "./helpers";
 import { TabComponent } from ".";
 import { Attribute } from "../../../models/project";
+import store from "../../../redux/store";
 
 const InspectorTabs = () => {
-  const nodes = GetNodes();
+  const project = store.getState().projectState.project;
+  const nodes = project ? project.nodes : [];
   const node = nodes.find((node) => node.isSelected);
   const nodeLabel = node ? node.label : "";
 

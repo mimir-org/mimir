@@ -43,3 +43,34 @@ export const LoadEventData = (key: string): object => {
     return undefined;
   }
 };
+
+export const GetProject = (): string => {
+  try {
+    const project = localStorage.getItem(`Project`);
+
+    if (project === null || project === undefined) {
+      return null;
+    }
+
+    return project;
+  } catch (err) {
+    return undefined;
+  }
+};
+
+export const SetProject = (projectId: string): void => {
+  try {
+    localStorage.setItem(`Project`, projectId);
+  } catch {
+    return undefined;
+  }
+};
+
+export const HasProject = (): boolean => {
+  try {
+    const project = localStorage.getItem(`Project`);
+    return project !== null;
+  } catch (err) {
+    return undefined;
+  }
+};

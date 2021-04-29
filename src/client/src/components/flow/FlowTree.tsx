@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { get } from "../../redux/store/project/actions";
 
 import ReactFlow, {
   ReactFlowProvider,
@@ -31,6 +32,10 @@ import {
 } from "./helpers";
 import { MiniMap } from "./";
 import { ProjectOptions } from "../project";
+import {
+  GetProject,
+  HasProject,
+} from "../../redux/store/localStorage/localStorage";
 
 const nodeTypes = {
   AspectFunction: Aspect,
@@ -180,6 +185,14 @@ const FlowTree = () => {
     onLoad(reactFlowInstance);
   }, [onLoad, reactFlowInstance]);
 
+  // Handling of project loading
+  useEffect(() => {
+    if (projectState.project === null) {
+      const projectId = GetProject();
+      dispatch(get(projectId));
+    }
+  }, [dispatch, projectState.project]);
+
   return (
     <div className="dndflow">
       {projectState.project && (
@@ -203,7 +216,7 @@ const FlowTree = () => {
           </div>
         </ReactFlowProvider>
       )}
-      {!projectState.project && (
+      {!projectState.project && !HasProject() && (
         <div>
           <ProjectOptions />
         </div>

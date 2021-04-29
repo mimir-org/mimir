@@ -56,7 +56,7 @@ const Header = () => {
           </Typography>
         </TitleWrapper>
         <IconsWrapper>
-          <TreeviewWrapper selected={!showBlockView.toString()}>
+          <TreeviewWrapper selected={!showBlockView}>
             {showBlockView ? (
               <img
                 src={TreeviewOff}

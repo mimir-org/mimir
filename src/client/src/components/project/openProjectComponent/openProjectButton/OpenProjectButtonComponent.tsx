@@ -5,6 +5,7 @@ import { GetIcon } from "../../helpers";
 import textResources from "../../../../textResources";
 import { RootState } from "../../../../redux/store";
 import { ProjectSimple } from "../../../../models/project";
+import { SetProject } from "../../../../redux/store/localStorage/localStorage";
 
 export const OpenProjectButtonComponent = ({ projectId }) => {
   const dispatch = useDispatch();
@@ -14,6 +15,19 @@ export const OpenProjectButtonComponent = ({ projectId }) => {
     (state) => state.projectState.projectList
   ) as ProjectSimple[];
 
+  const handleMouseOver = () => {
+    setbuttonHover(!buttonHover);
+  };
+
+  const handleMouseOut = () => {
+    setbuttonHover(!buttonHover);
+  };
+
+  const handleClick = () => {
+    SetProject(projectId); // LocalStorage update
+    dispatch(get(projectId)); // Redux update
+  };
+
   const isVisible = projects ? projects.length > 0 : false;
 
   return (
@@ -21,13 +35,9 @@ export const OpenProjectButtonComponent = ({ projectId }) => {
       <div className="open_project_button_wrapper">
         <div
           className="open_project_button"
-          onMouseOver={() => {
-            setbuttonHover(true);
-          }}
-          onMouseOut={() => {
-            setbuttonHover(false);
-          }}
-          onClick={() => dispatch(get(projectId))}
+          onMouseOver={handleMouseOver}
+          onMouseOut={handleMouseOut}
+          onClick={handleClick}
         >
           <p className="open_project_button_text">
             {textResources.Project_recent_open}

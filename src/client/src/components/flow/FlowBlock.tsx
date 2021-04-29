@@ -17,6 +17,7 @@ import {
   removeEdge,
   updatePosition,
   changeActiveNode,
+  get,
 } from "../../redux/store/project/actions";
 import { ProjectState } from "../../redux/store/project/types";
 import { RootState } from "./../../redux/store/index";
@@ -42,6 +43,8 @@ import { DefaultEdgeType, BlockEdgeType } from "./edges";
 import { MiniMap } from "./";
 import { ProjectOptions } from "../project";
 import {
+  GetProject,
+  HasProject,
   LoadEventData,
   SaveEventData,
 } from "../../redux/store/localStorage/localStorage";
@@ -269,6 +272,14 @@ const FlowBlock: React.FC<FlowBlockProps> = ({ nodeId }: FlowBlockProps) => {
     onLoad(reactFlowInstance);
   };
 
+  // Handling of project loading
+  useEffect(() => {
+    if (projectState.project === null) {
+      const projectId = GetProject();
+      dispatch(get(projectId));
+    }
+  }, [dispatch, projectState.project]);
+
   return (
     <div className="dndflow">
       {projectState.project && (
@@ -294,7 +305,7 @@ const FlowBlock: React.FC<FlowBlockProps> = ({ nodeId }: FlowBlockProps) => {
           </div>
         </ReactFlowProvider>
       )}
-      {!projectState.project && (
+      {!projectState.project && !HasProject() && (
         <div>
           <ProjectOptions />
         </div>
