@@ -40,12 +40,7 @@ import {
 } from "./nodes";
 import { DefaultEdgeType, BlockEdgeType } from "./edges";
 import { MiniMap } from "./";
-import {
-  CreateProjectNodes,
-  CreateElementNode,
-  CreateProjectBlockViewNodes,
-  CreateElementOffPageNode,
-} from "./utils";
+import { CreateElementNode, CreateProjectBlockViewNodes } from "./utils";
 import { ProjectOptions } from "../project";
 import {
   loadEventDataFromStorage,
