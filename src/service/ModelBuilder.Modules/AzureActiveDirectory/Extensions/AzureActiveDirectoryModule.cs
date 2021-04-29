@@ -39,7 +39,7 @@ namespace Mb.Modules.AzureActiveDirectory.Extensions
             services.AddApiVersioning(o =>
             {
                 o.AssumeDefaultVersionWhenUnspecified = false;
-                o.DefaultApiVersion = new ApiVersion(1, 0);
+                o.DefaultApiVersion = new ApiVersion(0, 1);
                 o.ReportApiVersions = true;
             });
 
