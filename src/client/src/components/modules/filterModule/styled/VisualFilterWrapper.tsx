@@ -1,12 +1,13 @@
 import styled from "styled-components";
+import { Color } from "../../../../componentLibrary";
 
 const VisualFilterWrapper = styled.div`
   position: absolute;
   right: 0px;
-  background: #fff;
+  background: ${Color.White};
   height: min-content;
   border-style: solid;
-  border-color: #007079;
+  border-color: ${Color.DeepCyan};
   border-width: 0px 2px 2px 2px;
   font-family: roboto;
   padding: 10px;

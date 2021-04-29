@@ -2,7 +2,7 @@ import "./filter.scss";
 import textResources from "../../../textResources";
 import FilterContent from "./FilterContent";
 import { useState } from "react";
-import { VisualFilterWrapper } from "./styled";
+import { VisualFilterWrapper, IconWrapper, IconTextWrapper } from "./styled";
 import {
   LoadState,
   SaveState,
@@ -13,37 +13,32 @@ import {
 } from "../../../assets/index";
 
 const FilterModule = () => {
-  const [showFilter, setShowFilter] = useState(LoadState("filter"));
-  const handleClick = (e) => {
-    const key = e.target.alt;
+  const key = "filter";
+  const [showFilter, setShowFilter] = useState(LoadState(key));
+
+  const handleClick = () => {
     setShowFilter(!showFilter);
     SaveState(!showFilter, key);
   };
-  const isOpen = LoadState("filter");
+  const isOpen = LoadState(key);
 
   return (
     <>
-      <div
-        className={"clickable_field " + (isOpen && "isOpen")}
-        onClick={handleClick}
-      >
+      <IconTextWrapper isOpen={isOpen}>
+        <div onClick={handleClick} style={{ cursor: "pointer" }}>
+          {textResources.MainHeader_VisualFilter}
+        </div>
+      </IconTextWrapper>
+      <IconWrapper>
         {isOpen ? (
-          <img
-            src={VisualFilterIconOpen}
-            alt="filter"
-            className="filter_icon"
-          />
+          <img src={VisualFilterIconOpen} alt={key} onClick={handleClick} />
         ) : (
-          <img
-            src={VisualFilterIconClosed}
-            alt="filter"
-            className="filter_icon"
-          />
+          <img src={VisualFilterIconClosed} alt={key} onClick={handleClick} />
         )}
-        <p>{textResources.MainHeader_VisualFilter}</p>
-      </div>
+      </IconWrapper>
       {isOpen && (
         <VisualFilterWrapper>
+          {textResources.Filter_Types}
           <FilterContent />
         </VisualFilterWrapper>
       )}
