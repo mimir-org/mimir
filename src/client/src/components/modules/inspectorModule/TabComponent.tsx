@@ -43,7 +43,7 @@ const TabComponent = ({ attributes, index, nodeLabel }: Props) => {
           </TabHeader>
           <TabDataWrapper>
             <TabContainer>
-              <TabContent attr={attributes} columns={4} />
+              <TabContent attr={attributes} />
             </TabContainer>
           </TabDataWrapper>
         </>

@@ -1,14 +1,16 @@
 import { Attribute } from "../../../models/project";
 import { CreateId } from "../../flow/helpers";
-import { TabColumn, TabInput, TabParagraph } from "./styled";
+import { TabColumn, TabInput } from "./styled";
 
 interface Props {
   attr: Attribute[];
-  columns: number;
 }
 
-const TabContent = ({ attr, columns }: Props) => {
+const TabContent = ({ attr }: Props) => {
   const isValid = attr[0] !== undefined;
+  const columns = 4;
+  //   const elements = attr.length;
+  //   const rows = elements/columns;
 
   return (
     <>
@@ -17,7 +19,7 @@ const TabContent = ({ attr, columns }: Props) => {
           {isValid &&
             attr.map((j, i) => (
               <div key={CreateId()}>
-                <TabParagraph>{attr[i].key}</TabParagraph>
+                <div>{attr[i].key}</div>
                 <TabInput
                   value={attr[i].value}
                   onChange={() => null}

@@ -5,6 +5,7 @@ const TabColumn = styled.div`
   margin: auto;
   margin-left: inherit;
   width: 100%;
+  font-size: 14px;
 
   position: ${(props) => (props.position ? "absolute" : "relative")};
   right: ${(props) => (props.position ? "351" : "0")}px;
