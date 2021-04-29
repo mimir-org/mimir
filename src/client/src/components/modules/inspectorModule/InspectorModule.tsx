@@ -9,13 +9,13 @@ import { InspectorTabsHeader } from "./styled";
 import { InspectorTitle } from "./styled";
 import InspectorTabs from "./InspectorTabs";
 import {
-  loadStateFromStorage,
-  saveStateToStorage,
+  LoadState,
+  SaveState,
 } from "../../../redux/store/localStorage/localStorage";
 
 const InspectorModule = () => {
   const key = "inspector";
-  const [showInspector, setShowInspector] = useState(loadStateFromStorage(key));
+  const [showInspector, setShowInspector] = useState(LoadState(key));
   const [animate, setAnimate] = useState(false);
 
   const hasProject = useSelector<RootState>(
@@ -23,7 +23,7 @@ const InspectorModule = () => {
   );
 
   const handleClick = () => {
-    saveStateToStorage(!showInspector, key);
+    SaveState(!showInspector, key);
     setShowInspector(!showInspector);
     setAnimate(true);
   };

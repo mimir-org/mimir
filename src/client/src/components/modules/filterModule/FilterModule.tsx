@@ -4,8 +4,8 @@ import FilterContent from "./FilterContent";
 import { useState } from "react";
 import { VisualFilterWrapper } from "./styled";
 import {
-  loadStateFromStorage,
-  saveStateToStorage,
+  LoadState,
+  SaveState,
 } from "../../../redux/store/localStorage/localStorage";
 import {
   VisualFilterIconClosed,
@@ -13,13 +13,13 @@ import {
 } from "../../../assets/index";
 
 const FilterModule = () => {
-  const [showFilter, setShowFilter] = useState(loadStateFromStorage("filter"));
+  const [showFilter, setShowFilter] = useState(LoadState("filter"));
   const handleClick = (e) => {
     const key = e.target.alt;
     setShowFilter(!showFilter);
-    saveStateToStorage(!showFilter, key);
+    SaveState(!showFilter, key);
   };
-  const isOpen = loadStateFromStorage("filter");
+  const isOpen = LoadState("filter");
 
   return (
     <>

@@ -7,8 +7,8 @@ import { SwitchViewComponent } from "./switchviewComponent/SwitchViewComponent";
 import textResources from "../../../textResources";
 import AnimatedMenu from "./styled/animated/AnimatedMenu";
 import {
-  loadStateFromStorage,
-  saveStateToStorage,
+  LoadState,
+  SaveState,
 } from "../../../redux/store/localStorage/localStorage";
 import {
   HeaderWrapper,
@@ -21,11 +21,11 @@ import {
 
 export const ExplorerModule = () => {
   const key = "explorer";
-  const [isOpen, setIsOpen] = useState(loadStateFromStorage(key));
+  const [isOpen, setIsOpen] = useState(LoadState(key));
   const [animate, setAnimate] = useState(false);
 
   const handleClick = () => {
-    saveStateToStorage(!isOpen, key);
+    SaveState(!isOpen, key);
     setIsOpen(!isOpen);
     setAnimate(true);
   };
