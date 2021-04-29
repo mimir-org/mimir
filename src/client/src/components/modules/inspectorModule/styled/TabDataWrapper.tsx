@@ -1,7 +1,8 @@
 import styled from "styled-components";
+import { Color } from "../../../../componentLibrary";
 
 const TabDataWrapper = styled.div`
-  background-color: #f2f2f2;
+  background-color: ${Color.LightGrey};
   position: absolute;
   overflow-y: auto;
   height: 230px;

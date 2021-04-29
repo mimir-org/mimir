@@ -1,9 +1,10 @@
 import styled from "styled-components";
+import { Color } from "../../../../componentLibrary";
 
 const InspectorWrapper = styled.div`
-  border: 0px solid #000;
+  border: 0px solid ${Color.Black};
   height: ${(props: { stop: string }) => props.stop}px;
-  background-color: #f2f2f2;
+  background-color: ${Color.LightGrey};
   width: 100%;
   z-index: 5;
   overflow: hidden;

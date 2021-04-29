@@ -1,6 +1,7 @@
 import { Attribute } from "../../../models/project";
 import { CreateId } from "../../flow/helpers";
-import { TabColumn, TabInput } from "./styled";
+import { TabColumn } from "./styled";
+import { Input } from "../../../componentLibrary";
 
 interface Props {
   attr: Attribute[];
@@ -20,7 +21,7 @@ const TabContent = ({ attr }: Props) => {
             attr.map((j, i) => (
               <div key={CreateId()}>
                 <div>{attr[i].key}</div>
-                <TabInput
+                <Input
                   value={attr[i].value}
                   onChange={() => null}
                   inputType={attr[i].inputType}

@@ -1,11 +1,12 @@
 import styled from "styled-components";
+import { Color } from "../../../../componentLibrary";
 
 const InspectorTabsHeader = styled.div`
-  background-color: #f2f2f2;
-  color: #000;
+  background-color: ${Color.LightGrey};
+  color: ${Color.Black};
   height: 35px;
-  border-top: 1px solid #cbcbcb;
-  border-bottom: 1px solid #cbcbcb;
+  border-top: 1px solid ${Color.Grey};
+  border-bottom: 1px solid ${Color.Grey};
   font-family: roboto;
   width: 100%;
 `;
