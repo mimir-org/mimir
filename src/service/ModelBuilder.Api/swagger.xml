@@ -49,5 +49,16 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:Mb.Api.Controllers.V1.TypeEditorController">
+            <summary>
+            Project services
+            </summary>
+        </member>
+        <member name="M:Mb.Api.Controllers.V1.TypeEditorController.GetRdsCodes">
+            <summary>
+            Get all RDS codes
+            </summary>
+            <returns></returns>
+        </member>
     </members>
 </doc>

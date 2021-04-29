@@ -27,6 +27,8 @@ namespace Mb.Core.Extensions
 
             // Dependency injection
             services.AddSingleton(s => configuration.CreateMapper());
+            services.AddSingleton<IFileRepository, JsonFileRepository>();
+
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<INodeRepository, NodeRepository>();
             services.AddScoped<IEdgeRepository, EdgeRepository>();
