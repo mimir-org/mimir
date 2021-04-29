@@ -40,7 +40,6 @@ import {
 } from "./nodes";
 import { DefaultEdgeType, BlockEdgeType } from "./edges";
 import { MiniMap } from "./";
-import { CreateElementNode, CreateProjectBlockViewNodes } from "./utils";
 import { ProjectOptions } from "../project";
 import {
   loadEventDataFromStorage,
@@ -51,6 +50,9 @@ import {
   CreateOffPageData,
   GetReactFlowBoundingRectData,
   CreateId,
+  CreateElementNode,
+  CreateProjectElementBlockNodes,
+  OffPageNodeCreator,
 } from "./helpers";
 
 interface FlowBlockProps {
@@ -103,7 +105,10 @@ const FlowBlock: React.FC<FlowBlockProps> = ({ nodeId }: FlowBlockProps) => {
         y: position.y,
       } as CreateOffPageData;
 
-      const node = CreateOffPageNode(projectState, createOffPageData);
+      const node = CreateOffPageNode(
+        projectState,
+        createOffPageData
+      ) as OffPageNodeCreator;
 
       dispatch(addNode(node.node));
       dispatch(createEdge(node.partOfEdge));
@@ -197,11 +202,7 @@ const FlowBlock: React.FC<FlowBlockProps> = ({ nodeId }: FlowBlockProps) => {
 
   const onLoad = useCallback(
     (_reactFlowInstance) => {
-      const [width, height] = GetReactFlowBoundingRectData();
-
-      setElements(
-        CreateProjectBlockViewNodes(projectState.project, nodeId, width, height)
-      );
+      setElements(CreateProjectElementBlockNodes(projectState.project, nodeId));
       return setReactFlowInstance(_reactFlowInstance);
     },
     [nodeId, projectState.project]

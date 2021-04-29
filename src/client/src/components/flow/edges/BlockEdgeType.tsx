@@ -4,7 +4,6 @@ import {
   getSmoothStepPath,
   EdgeText,
 } from "react-flow-renderer";
-import { getCenter } from "../utils";
 import {
   LINE_EDGE_TYPE,
   LineEdgeType,
@@ -12,7 +11,7 @@ import {
   NODE_TYPE,
 } from "../../../models/project";
 
-import { GetTransportTypeColor, IsAspectNode } from "../helpers";
+import { GetTransportTypeColor, IsAspectNode, GetCenter } from "../helpers";
 
 export default function BlockEdgeType({
   id,
@@ -27,7 +26,7 @@ export default function BlockEdgeType({
   markerEndId,
 }) {
   const markerEnd = getMarkerEnd(arrowHeadType, markerEndId);
-  const [centerX, centerY] = getCenter({ sourceX, sourceY, targetX, targetY });
+  const [centerX, centerY] = GetCenter({ sourceX, sourceY, targetX, targetY });
 
   const edgePathBezier = getBezierPath({
     sourceX,

@@ -1,12 +1,7 @@
 import { memo, FC } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
-import { processType } from "../utils";
 
 const FunctionBlock: FC<NodeProps> = ({ data }) => {
-  //   var x = document.querySelectorAll(".react-flow").forEach((x) => {
-  //     console.log(x);
-  //   });
-
   return (
     <>
       <div id={"function-block-" + data.id} className="function-block">

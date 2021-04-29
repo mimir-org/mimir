@@ -1,13 +1,12 @@
 import { memo, FC } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
-import { processType } from "../utils";
 import {
   RELATION_TYPE,
   TerminalType,
   CONNECTOR_TYPE,
 } from "../../../models/project";
 import { OffPageWrapper } from "../styled";
-import { GetTransportTypeColor } from "../helpers";
+import { GetTransportTypeColor, GetHandleType } from "../helpers";
 
 const OffPage: FC<NodeProps> = ({ data }) => {
   const transportConnectors = data.connectors?.filter(
@@ -37,7 +36,7 @@ const OffPage: FC<NodeProps> = ({ data }) => {
     <OffPageWrapper background={background} fontColor={fontColor}>
       {transportConnectors &&
         transportConnectors.map((connector) => {
-          const [typeHandler, positionHandler] = processType(connector);
+          const [typeHandler, positionHandler] = GetHandleType(connector);
 
           return (
             <Handle

@@ -1,14 +1,14 @@
 import { memo, FC } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
 import { GetFlowAspectIcon } from "../helpers";
-import { processType } from "../utils";
+import { GetHandleType } from "../helpers";
 
 const Aspect: FC<NodeProps> = ({ data }) => {
   return (
     <>
       {data.connectors &&
         data.connectors.map((connector) => {
-          const [typeHandler, positionHandler] = processType(connector);
+          const [typeHandler, positionHandler] = GetHandleType(connector);
           return (
             <Handle
               type={typeHandler}

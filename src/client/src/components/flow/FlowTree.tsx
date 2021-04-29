@@ -24,9 +24,12 @@ import { NodeType, Node, LibNode, Edge, EDGE_TYPE } from "../../models/project";
 
 import { Aspect, Function, Product, Location } from "./nodes";
 import { DefaultEdgeType } from "./edges";
-import { CreateId } from "./helpers";
+import {
+  CreateId,
+  CreateElementNode,
+  CreateProjectElementNodes,
+} from "./helpers";
 import { MiniMap } from "./";
-import { CreateProjectNodes, CreateElementNode } from "./utils";
 import { ProjectOptions } from "../project";
 
 const nodeTypes = {
@@ -116,7 +119,7 @@ const FlowTree = () => {
 
   const onLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(CreateProjectNodes(projectState.project));
+      setElements(CreateProjectElementNodes(projectState.project));
       return setReactFlowInstance(_reactFlowInstance);
     },
     [projectState.project]

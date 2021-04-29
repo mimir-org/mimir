@@ -1,21 +1,7 @@
 import { Node, Edge, NODE_TYPE, NodeType, ICON_TYPE, IconType, CONNECTOR_TYPE, ConnectorType, TERMINAL_CATEGORY, TerminalCategory, TERMINAL_TYPE, TerminalType, RELATION_TYPE, RelationType } from '../../../models/project';
 import { CreateId } from '../helpers';
 import { ProjectState } from "../../../redux/store/project/types";
-import { GetReactFlowBoundingRectData } from '../helpers';
-
-export interface OffPageNodeCreator {
-    node: Node;
-    partOfEdge: Edge;
-    transportEdge: Edge;
-};
-
-export interface CreateOffPageData {
-    parentNodeId: string;
-    fromNodeId: string;
-    fromConnectorId: string;
-    x: number;
-    y: number;
-};
+import { GetReactFlowBoundingRectData, CreateOffPageData, OffPageNodeCreator } from '.';
 
 const CreateOffPageNode = (projectState: ProjectState, data: CreateOffPageData): OffPageNodeCreator => {
 
