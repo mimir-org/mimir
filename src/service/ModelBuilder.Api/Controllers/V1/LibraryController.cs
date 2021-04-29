@@ -12,7 +12,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace Mb.Api.Controllers.V1
 {
     /// <summary>
-    /// Project services
+    /// Library services
     /// </summary>
     [Produces("application/json")]
     [Authorize]

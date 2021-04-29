@@ -6,7 +6,7 @@
     <members>
         <member name="T:Mb.Api.Controllers.V1.LibraryController">
             <summary>
-            Project services
+            Library services
             </summary>
         </member>
         <member name="M:Mb.Api.Controllers.V1.LibraryController.GetAll">
@@ -51,7 +51,7 @@
         </member>
         <member name="T:Mb.Api.Controllers.V1.TypeEditorController">
             <summary>
-            Project services
+            Type editor services
             </summary>
         </member>
         <member name="M:Mb.Api.Controllers.V1.TypeEditorController.GetRdsCodes">

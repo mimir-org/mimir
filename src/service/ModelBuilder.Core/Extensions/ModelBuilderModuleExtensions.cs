@@ -23,12 +23,14 @@ namespace Mb.Core.Extensions
                 cfg.AddProfile<EdgeProfile>();
                 cfg.AddProfile<NodeProfile>();
                 cfg.AddProfile<ProjectProfile>();
+                cfg.AddProfile<RdsProfile>();
             });
 
             // Dependency injection
             services.AddSingleton(s => configuration.CreateMapper());
             services.AddSingleton<IFileRepository, JsonFileRepository>();
 
+            services.AddScoped<ITypeEditorService, TypeEditorService>();
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<INodeRepository, NodeRepository>();
             services.AddScoped<IEdgeRepository, EdgeRepository>();

@@ -35,7 +35,7 @@ namespace Mb.Core.Repositories
             var filepath = $"{_rootPath}/{fileNameWithoutExtension}.json";
             using var r = new StreamReader(filepath);
             var json = r.ReadToEnd();
-            var items = JsonConvert.DeserializeObject<List<T>>(json);
+            var items = JsonConvert.DeserializeObject<IEnumerable<T>>(json);
             return items;
         }
     }
