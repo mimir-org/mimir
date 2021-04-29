@@ -1,7 +1,8 @@
 import styled from "styled-components";
+import { Color } from "../../../../componentLibrary";
 
 const Header = styled.p`
-  color: #007079;
+  color: ${Color.DeepCyan};
   margin-bottom: 10px;
 `;
 

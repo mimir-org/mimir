@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Color } from "../../../../componentLibrary";
 
 const TabHeader = styled.div`
   display: inline-block;
@@ -6,7 +7,7 @@ const TabHeader = styled.div`
   border-top-right-radius: 8px;
   border-top-left-radius: 6px;
   font-family: roboto;
-  color: #000;
+  color: ${Color.Black};
   border-right: 1px solid #cbcbcb;
   height: ${(props: { active: string }) => (props.active ? "36px" : "32px")};
 
@@ -22,7 +23,7 @@ const TabHeader = styled.div`
     props.active ? "none !important" : "1px solid #cbcbcb"};
 
   background-color: ${(props: { active: string }) =>
-    props.active ? "#f2f2f2" : "#c4c4c4"};
+    props.active ? `${Color.LightGrey}` : `${Color.DarkGrey}`};
 
   padding: ${(props: { active: string }) =>
     props.active ? "12px 20px 0px 20px;" : "8px 20px 0px 20px"};

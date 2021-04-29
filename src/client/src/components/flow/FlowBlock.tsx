@@ -42,8 +42,8 @@ import { DefaultEdgeType, BlockEdgeType } from "./edges";
 import { MiniMap } from "./";
 import { ProjectOptions } from "../project";
 import {
-  loadEventDataFromStorage,
-  saveEventDataToStorage,
+  LoadEventData,
+  SaveEventData,
 } from "../../redux/store/localStorage/localStorage";
 import {
   CreateOffPageNode,
@@ -87,7 +87,7 @@ const FlowBlock: React.FC<FlowBlockProps> = ({ nodeId }: FlowBlockProps) => {
 
   const onConnectStop = (e) => {
     e.preventDefault();
-    const edgeEvent = loadEventDataFromStorage("edgeEvent") as EdgeEvent;
+    const edgeEvent = LoadEventData("edgeEvent") as EdgeEvent;
 
     if (edgeEvent) {
       const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
@@ -114,7 +114,7 @@ const FlowBlock: React.FC<FlowBlockProps> = ({ nodeId }: FlowBlockProps) => {
       dispatch(createEdge(node.partOfEdge));
       dispatch(createEdge(node.transportEdge));
 
-      saveEventDataToStorage(null, "edgeEvent");
+      SaveEventData(null, "edgeEvent");
     }
   };
 
@@ -127,11 +127,11 @@ const FlowBlock: React.FC<FlowBlockProps> = ({ nodeId }: FlowBlockProps) => {
       sourceId: handleId,
     } as EdgeEvent;
 
-    saveEventDataToStorage(eventdata, "edgeEvent");
+    SaveEventData(eventdata, "edgeEvent");
   };
 
   const onConnect = (params) => {
-    saveEventDataToStorage(null, "edgeEvent");
+    SaveEventData(null, "edgeEvent");
 
     const createdId = CreateId();
     const sourceNode = projectState.project.nodes.find(

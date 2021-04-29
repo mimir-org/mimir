@@ -9,14 +9,14 @@ import { RootState } from "../../../redux/store";
 import { LibraryState } from "../../../redux/store/library/types";
 import { searchLibrary } from "../../../redux/store/library/actions";
 import {
-  loadStateFromStorage,
-  saveStateToStorage,
+  LoadState,
+  SaveState,
 } from "../../../redux/store/localStorage/localStorage";
 
 const LibraryModule = () => {
   const key = "library";
   const dispatch = useDispatch();
-  const [isOpen, setIsOpen] = useState(loadStateFromStorage(key));
+  const [isOpen, setIsOpen] = useState(LoadState(key));
   const [animate, setAnimate] = useState(false);
   const state = useSelector<RootState>(
     (state) => state.library
@@ -27,7 +27,7 @@ const LibraryModule = () => {
   }, [dispatch]);
 
   const handleClick = () => {
-    saveStateToStorage(!isOpen, key);
+    SaveState(!isOpen, key);
     setIsOpen(!isOpen);
     setAnimate(true);
   };

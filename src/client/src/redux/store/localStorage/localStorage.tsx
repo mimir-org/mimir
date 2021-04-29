@@ -1,4 +1,4 @@
-export const loadStateFromStorage = (key: string) => {
+export const LoadState = (key: string) => {
   try {
     const serializedState = localStorage.getItem(`show_${key}`);
 
@@ -12,7 +12,7 @@ export const loadStateFromStorage = (key: string) => {
   }
 };
 
-export const saveStateToStorage = (state: boolean, key: string) => {
+export const SaveState = (state: boolean, key: string) => {
   try {
     const serializedState = JSON.stringify(state);
     localStorage.setItem(`show_${key}`, serializedState);
@@ -21,7 +21,7 @@ export const saveStateToStorage = (state: boolean, key: string) => {
   }
 };
 
-export const saveEventDataToStorage = (state: object, key: string) => {
+export const SaveEventData = (state: object, key: string) => {
   try {
     const serializedState = JSON.stringify(state);
     localStorage.setItem(`mb_event_${key}`, serializedState);
@@ -30,7 +30,7 @@ export const saveEventDataToStorage = (state: object, key: string) => {
   }
 };
 
-export const loadEventDataFromStorage = (key: string): object => {
+export const LoadEventData = (key: string): object => {
   try {
     const serializedState = localStorage.getItem(`mb_event_${key}`);
 
@@ -43,14 +43,3 @@ export const loadEventDataFromStorage = (key: string): object => {
     return undefined;
   }
 };
-
-// export const saveStateToAllModules = (state: string) => {
-//   try {
-//     const serializedState = JSON.parse(state);
-//     localStorage.setItem("show_library", serializedState);
-//     localStorage.setItem("show_inspector", serializedState);
-//     localStorage.setItem("show_explorer", serializedState);
-//   } catch {
-//     return undefined;
-//   }
-// };

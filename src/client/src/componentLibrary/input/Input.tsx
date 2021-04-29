@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const TabInput = styled.input`
+const Input = styled.input`
   border: 1px solid #898787;
   box-sizing: border-box;
   border-radius: 5px;
@@ -10,4 +10,4 @@ const TabInput = styled.input`
   height: 31px;
 `;
 
-export default TabInput;
+export default Input;

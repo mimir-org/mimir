@@ -1,13 +1,9 @@
 import styled from "styled-components";
 
 const TabColumn = styled.div`
-  padding: 15px 0px 0px 25px;
-  margin: auto;
-  margin-left: inherit;
+  padding: 15px 15px 15px 15px;
   width: 100%;
-
-  position: ${(props) => (props.position ? "absolute" : "relative")};
-  right: ${(props) => (props.position ? "351" : "0")}px;
+  font-size: 14px;
 `;
 
 export default TabColumn;

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Color } from "../../../../componentLibrary";
 
 const IconTextWrapper = styled.div`
   position: absolute;
@@ -18,9 +19,10 @@ const IconTextWrapper = styled.div`
   text-decoration: ${(props: { isOpen: boolean }) =>
     props.isOpen ? "underline" : "none"};
   height: ${(props: { isOpen: boolean }) => (props.isOpen ? "45" : "32")}px;
-  color: ${(props: { isOpen: boolean }) => (props.isOpen ? "#007079" : "#fff")};
+  color: ${(props: { isOpen: boolean }) =>
+    props.isOpen ? `${Color.DeepCyan}` : `${Color.White}`};
   background-color: ${(props: { isOpen: boolean }) =>
-    props.isOpen ? "#fff" : "#007079"};
+    props.isOpen ? `${Color.White}` : `${Color.DeepCyan}`};
 `;
 
 export default IconTextWrapper;
