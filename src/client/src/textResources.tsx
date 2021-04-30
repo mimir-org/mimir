@@ -13,7 +13,7 @@ const textResources = {
   // Project options
   Project_heading: "Projects",
   Project_new_project: "Create project",
-  Project_open_project: "Load project",
+  Project_open_project: "Open project",
   Project_recent_project: "Recent projects",
   Project_recent_name: "Project name",
   Project_recent_owner: "Project owner",
@@ -83,8 +83,8 @@ const textResources = {
   // AccountModule
   Account_Save_Label: "Save project",
   Account_Save_Button: "Save",
-  Account_Load_Label: "Load project",
-  Account_Load_Button: "Load",
+  Account_Load_Label: "Open project",
+  Account_Load_Button: "Open",
   Account_Logout: "Log out",
 
   // FilterModule

@@ -30,3 +30,4 @@ export { default as ToggleIconDown } from "./icons/toggleIconDown.svg";
 export { default as ToggleIconLeft } from "./icons/toggleIconLeft.svg";
 export { default as ToggleIconRight } from "./icons/toggleIconRight.svg";
 export { default as ToggleIconUp } from "./icons/toggleIconUp.svg";
+export { default as OpenProjectIconSmall } from "./icons/openProjectIconSmall.svg";

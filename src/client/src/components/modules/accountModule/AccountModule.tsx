@@ -57,7 +57,7 @@ const AccountModule = () => {
           <div className="save_container">
             <p>{textResources.Account_Load_Label}</p>
             <Button
-              icon="SaveIcon"
+              icon="OpenIcon"
               text={textResources.Account_Load_Button}
               onClick={handleLoadClick}
             />
