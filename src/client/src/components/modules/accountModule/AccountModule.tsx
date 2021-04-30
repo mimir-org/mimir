@@ -7,7 +7,6 @@ import { save } from "../../../redux/store/project/actions";
 import GetIcon from "./helpers/GetIcon";
 import Button from "./helpers/Button";
 import textResources from "../../../textResources";
-import { SaveIcon } from "../../../assets";
 
 const AccountModule = () => {
   const dispatch = useDispatch();
