@@ -24,6 +24,7 @@
     .project_name {
       font-size: 16px;
       text-transform: uppercase;
+      width: max-content;
     }
 
     .project_name_opened {
@@ -38,6 +39,14 @@
     border-color: #007079;
     border-style: solid;
     border-width: 2px 2px 0px 2px;
+  }
+
+  .open_project {
+    position: absolute;
+    top: 25%;
+    bottom: 25%;
+    left: 25%;
+    right: 25%;
   }
 
   .account_details {
