@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import { Color } from "../../../../componentLibrary";
+import { Color, FontSize, FontType } from "../../../../componentLibrary";
 
 const IconTextWrapper = styled.div`
   position: absolute;
   float: right;
-  font-family: roboto;
-  font-size: 16px;
+  font-family: ${FontType.Standard};
+  font-size: ${FontSize.SubHeader};
   right: 2px;
   top: 2px;
   z-index: 1103;

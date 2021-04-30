@@ -6,9 +6,7 @@ const TreeviewWrapper = styled.div`
   position: absolute;
   margin-left: 20px;
   border: ${(props: { selected: string }) =>
-    props.selected
-      ? "1px solid " + `${Color.White}`
-      : "1px solid " + `${Color.Grey}`};
+    props.selected ? `1px solid ${Color.White}` : `1px solid ${Color.Grey}`};
   border-radius: 2px;
 `;
 

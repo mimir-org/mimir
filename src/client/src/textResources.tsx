@@ -78,7 +78,7 @@ const textResources = {
   Library_Function: "Function",
   Library_Product: "Product",
   Library_Location: "Location",
-  Library_SearchBox_Placeholder: "Søk i biblioteket",
+  Library_SearchBox_Placeholder: "Search the Library",
 
   // AccountModule
   Account_Save_Label: "Save a project copy locally?",
