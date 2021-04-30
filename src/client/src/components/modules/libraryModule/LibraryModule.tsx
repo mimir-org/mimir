@@ -1,7 +1,15 @@
 import textResources from "../../../textResources";
 import AnimatedMenu from "./styled/animated/AnimatedMenu";
 import { LibraryIcon, ToggleIconLeft, ToggleIconRight } from "../../../assets";
-import { Header, SidebarWrapper, HeaderWrapper, CollapsedIcon } from "./styled";
+import {
+  Header,
+  SidebarWrapper,
+  HeaderWrapper,
+  CollapsedIcon,
+  LibraryWrapper,
+} from "./styled";
+import { LegendWrapper } from "../legendModule/styled";
+import { LegendModule } from "../legendModule";
 import { LibrarySidebar } from "./index";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -37,33 +45,38 @@ const LibraryModule = () => {
 
   return (
     <AnimatedMenu start={startHeight} stop={stopHeight} run={animate}>
-      <HeaderWrapper>
-        {isOpen ? (
-          <img
-            src={ToggleIconRight}
-            alt="toggle-icon"
-            style={{ cursor: "pointer" }}
-            onClick={handleClick}
-          />
-        ) : (
-          <img
-            src={ToggleIconLeft}
-            alt="toggle-icon"
-            style={{ cursor: "pointer" }}
-            onClick={handleClick}
-          />
-        )}
-        <Header>
+      <LibraryWrapper visible={isOpen}>
+        <HeaderWrapper>
+          {isOpen ? (
+            <img
+              src={ToggleIconRight}
+              alt="toggle-icon"
+              style={{ cursor: "pointer" }}
+              onClick={handleClick}
+            />
+          ) : (
+            <img
+              src={ToggleIconLeft}
+              alt="toggle-icon"
+              style={{ cursor: "pointer" }}
+              onClick={handleClick}
+            />
+          )}
+          <Header>
+            <img src={LibraryIcon} alt="library-icon" />
+            {textResources.Library_Heading}
+          </Header>
+        </HeaderWrapper>
+        <CollapsedIcon visible={isOpen}>
           <img src={LibraryIcon} alt="library-icon" />
-          {textResources.Library_Heading}
-        </Header>
-      </HeaderWrapper>
-      <CollapsedIcon visible={isOpen}>
-        <img src={LibraryIcon} alt="explorerIcon" />
-      </CollapsedIcon>
-      <SidebarWrapper visible={isOpen}>
-        <LibrarySidebar nodes={state.nodes} />
-      </SidebarWrapper>
+        </CollapsedIcon>
+        <SidebarWrapper visible={isOpen}>
+          <LibrarySidebar nodes={state.nodes} />
+        </SidebarWrapper>
+      </LibraryWrapper>
+      <LegendWrapper visible={isOpen}>
+        <LegendModule visible={isOpen} />
+      </LegendWrapper>
     </AnimatedMenu>
   );
 };

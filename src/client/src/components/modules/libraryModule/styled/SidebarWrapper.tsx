@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const SidebarWrapper = styled.div`
-  margin-top: 70px;
+  margin-top: 10px;
   padding: 20px;
   overflow: hidden;
   visibility: ${(props: { visible: boolean }) =>
