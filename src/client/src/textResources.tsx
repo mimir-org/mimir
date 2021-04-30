@@ -79,6 +79,7 @@ const textResources = {
   Library_Product: "Product",
   Library_Location: "Location",
   Library_SearchBox_Placeholder: "Search the Library",
+  Legend_Heading: "Legend",
 
   // AccountModule
   Account_Save_Label: "Save project",

@@ -8,3 +8,4 @@ export { default as SearchBox } from "./SearchBox";
 export { default as SearchIconWrapper } from "./SearchIconWrapper";
 export { default as LibraryContainer } from "./LibraryContainer";
 export { default as CollapsedIcon } from "./CollapsedIcon";
+export { default as LibraryWrapper } from "./LibraryWrapper";
