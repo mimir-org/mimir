@@ -1,4 +1,4 @@
-﻿namespace Mb.Core.Models
+﻿namespace Mb.Core.Models.TypeEditor
 {
     public class Rds
     {

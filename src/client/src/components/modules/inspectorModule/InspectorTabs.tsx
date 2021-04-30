@@ -1,10 +1,15 @@
-import { GetNodes } from "../../flow/helpers";
 import { GetAttributes } from "./helpers";
 import { TabComponent } from ".";
-import { Attribute } from "../../../models/project";
+import { Attribute, Project } from "../../../models/project";
+import { RootState } from "../../../redux/store";
+import { useSelector } from "react-redux";
 
 const InspectorTabs = () => {
-  const nodes = GetNodes();
+  const project = useSelector<RootState>(
+    (state) => state.projectState.project
+  ) as Project;
+
+  const nodes = project ? project.nodes : [];
   const node = nodes.find((node) => node.isSelected);
   const nodeLabel = node ? node.label : "";
 

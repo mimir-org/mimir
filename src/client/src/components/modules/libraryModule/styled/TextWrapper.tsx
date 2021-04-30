@@ -1,10 +1,11 @@
 import styled from "styled-components";
+import { FontSize, FontType } from "../../../../componentLibrary";
 
 const TextWrapper = styled.div`
-  font-family: roboto;
+  font-family: ${FontType.Standard};
   display: inline-flex;
   padding: 10px;
-  size: 18px;
+  size: ${FontSize.Header};
 `;
 
 export default TextWrapper;

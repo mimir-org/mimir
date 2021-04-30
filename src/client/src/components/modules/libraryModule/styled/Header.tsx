@@ -1,10 +1,11 @@
 import styled from "styled-components";
+import { Color, FontSize, FontType } from "../../../../componentLibrary";
 
 const Header = styled.div`
   margin-left: 120px;
-  font-family: roboto;
-  color: #000;
-  font-size: 18px;
+  font-family: ${FontType.Standard};
+  color: ${Color.Black};
+  font-size: ${FontSize.Header};
   display: inline-flex;
   align-items: center;
 `;

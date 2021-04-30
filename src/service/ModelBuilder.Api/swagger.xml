@@ -54,6 +54,12 @@
             Type editor services
             </summary>
         </member>
+        <member name="M:Mb.Api.Controllers.V1.TypeEditorController.GetAspects">
+            <summary>
+            Get all RDS codes
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Mb.Api.Controllers.V1.TypeEditorController.GetRdsCodes">
             <summary>
             Get all RDS codes

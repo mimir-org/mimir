@@ -1,5 +1,3 @@
-export { default as GetNodes } from "./GetNodes";
-export { default as GetEdges } from "./GetEdges";
 export { default as GetFlowAspectIcon } from "./GetFlowAspectIcon";
 export { default as CreateOffPageNode } from "./CreateOffPageNode";
 export { default as GetTransportTypeColor } from "./GetTransportTypeColor";
@@ -13,4 +11,6 @@ export { default as CreateProjectElementNodes } from "./CreateProjectElementNode
 export { default as CreateProjectElementBlockNodes } from "./CreateProjectElementBlockNodes";
 export { default as GetCenter } from "./GetCenter";
 export { default as GetHandleType } from "./GetHandleType";
+export { default as GetNodes } from "./GetNodes";
+export { default as GetEdges } from "./GetEdges";
 export * from "./types";

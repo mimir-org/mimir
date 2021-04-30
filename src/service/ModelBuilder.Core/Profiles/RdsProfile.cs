@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Mb.Core.Models;
+using Mb.Core.Models.TypeEditor;
 using Mb.Models.Data;
+using Mb.Models.Data.TypeEditor;
 
 namespace Mb.Core.Profiles
 {

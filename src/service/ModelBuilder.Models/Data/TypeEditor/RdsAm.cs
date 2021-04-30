@@ -1,4 +1,4 @@
-﻿namespace Mb.Models.Data
+﻿namespace Mb.Models.Data.TypeEditor
 {
     public class RdsAm
     {

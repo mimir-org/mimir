@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Color, FontSize, FontType } from "../../../../componentLibrary";
 
 const ViewOptionWrapper = styled.div`
   display: flex;
@@ -8,13 +9,13 @@ const ViewOptionWrapper = styled.div`
   width: 110px;
   height: 38px;
   padding: 0px 10px;
-  border: 1px solid #007079;
+  border: 1px solid ${Color.DeepCyan};
   border-radius: 2px;
-  background-color: #fff;
+  background-color: ${Color.White};
   cursor: pointer;
-  font-family: roboto;
-  color: #000;
-  font-size: 14px;
+  font-family: ${FontType.Standard};
+  color: ${Color.Black};
+  font-size: ${FontSize.Standard};
   white-space: nowrap;
 `;
 

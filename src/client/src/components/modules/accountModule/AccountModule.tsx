@@ -1,14 +1,15 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../redux/store/index";
 import { UserState } from "../../../redux/store/user/types";
 import { ProjectState } from "../../../redux/store/project/types";
-
-import GetImg from "./helpers/GetImg";
+import { save } from "../../../redux/store/project/actions";
+import GetIcon from "./helpers/GetIcon";
 import Button from "./helpers/Button";
 import textResources from "../../../textResources";
 
 const AccountModule = () => {
+  const dispatch = useDispatch();
   const [showAccountSettings, setshowAccountSettings] = useState(false);
 
   const projectState = useSelector<RootState>(
@@ -23,6 +24,11 @@ const AccountModule = () => {
     setshowAccountSettings(!showAccountSettings);
   };
 
+  const handleSaveClick = (e) => {
+    if (projectState.project) dispatch(save(projectState.project));
+    alert("Project saved");
+  };
+
   const isOpen = showAccountSettings;
 
   return (
@@ -31,7 +37,7 @@ const AccountModule = () => {
         className={"account_clickable " + (isOpen && "is_opened")}
         onClick={handleClick}
       >
-        {isOpen ? <GetImg icon="UserIconOpen" /> : <GetImg icon="" />}
+        {isOpen ? <GetIcon icon="UserIconOpen" /> : <GetIcon icon="" />}
         <p className={"project_name " + (isOpen && "project_name_opened")}>
           {projectState.project && projectState.project.name}
         </p>
@@ -40,7 +46,11 @@ const AccountModule = () => {
         <div className="account_details">
           <div className="save_container">
             <p>{textResources.Account_Save_Label}</p>
-            <Button icon="SaveIcon" text={textResources.Account_Save_Button} />
+            <Button
+              icon="SaveIcon"
+              text={textResources.Account_Save_Button}
+              onClick={handleSaveClick}
+            />
           </div>
           <div className="user_container">
             <p>{userState.user && userState.user.name}</p>
