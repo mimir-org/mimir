@@ -6,7 +6,7 @@
     <members>
         <member name="T:Mb.Api.Controllers.V1.LibraryController">
             <summary>
-            Project services
+            Library services
             </summary>
         </member>
         <member name="M:Mb.Api.Controllers.V1.LibraryController.GetAll">
@@ -46,6 +46,17 @@
         <member name="M:Mb.Api.Controllers.V1.ProjectController.SaveProject(Mb.Models.Data.ProjectAm)">
             <summary>
             Save a project
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Mb.Api.Controllers.V1.TypeEditorController">
+            <summary>
+            Type editor services
+            </summary>
+        </member>
+        <member name="M:Mb.Api.Controllers.V1.TypeEditorController.GetRdsCodes">
+            <summary>
+            Get all RDS codes
             </summary>
             <returns></returns>
         </member>

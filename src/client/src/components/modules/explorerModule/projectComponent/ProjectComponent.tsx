@@ -2,11 +2,12 @@ import "./project.scss";
 import AspectComponent from "../aspectComponent/AspectComponent";
 // import CheckboxComponent from "../checkboxComponent/CheckboxComponent";
 import { AspectWrapper, ProjectHeader } from "../styled";
-import { GetNodes } from "../../../flow/helpers";
 import { IsAspectNode } from "../../../flow/helpers";
+import store from "../../../../redux/store";
 
 export const ProjectComponent = () => {
-  const aspects = GetNodes();
+  const project = store.getState().projectState.project;
+  const aspects = project ? project.nodes : [];
 
   return (
     <>

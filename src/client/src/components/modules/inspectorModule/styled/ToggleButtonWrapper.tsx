@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { FontWeight } from "../../../../componentLibrary";
 
 const ToggleButtonWrapper = styled.div`
   display: inline;
@@ -6,9 +7,9 @@ const ToggleButtonWrapper = styled.div`
   margin-right: 10px;
   float: right;
 
-  &: hover {
+  :hover {
     cursor: pointer;
-    font-weight: bold;
+    font-weight: ${FontWeight.Bold};
   }
 `;
 

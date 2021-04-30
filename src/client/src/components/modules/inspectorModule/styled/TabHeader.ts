@@ -1,40 +1,29 @@
 import styled from "styled-components";
-import { Color } from "../../../../componentLibrary";
+import { Color, FontType, FontWeight } from "../../../../componentLibrary";
 
 const TabHeader = styled.div`
   display: inline-block;
   box-sizing: border-box;
   border-top-right-radius: 8px;
   border-top-left-radius: 6px;
-  font-family: roboto;
+  font-family: ${FontType.Standard};
   color: ${Color.Black};
-  border-right: 1px solid #cbcbcb;
+  border-right: 1px solid ${Color.Grey};
+  border-left: 1px solid ${Color.Grey};
+  border-top: 0px solid ${Color.Grey};
+
   height: ${(props: { active: string }) => (props.active ? "36px" : "32px")};
-
   margin-top: ${(props: { active: string }) => (props.active ? "0px" : "4px")};
-
-  border-left: ${(props: { active: string }) =>
-    props.active ? "1px solid #cbcbcb" : "1px solid #cbcbcb"};
-
-  border-top: ${(props: { active: string }) =>
-    props.active ? "0px solid #cbcbcb" : "0px solid #cbcbcb"};
-
-  border-bottom: ${(props: { active: string }) =>
-    props.active ? "none !important" : "1px solid #cbcbcb"};
-
   background-color: ${(props: { active: string }) =>
     props.active ? `${Color.LightGrey}` : `${Color.DarkGrey}`};
-
   padding: ${(props: { active: string }) =>
     props.active ? "12px 20px 0px 20px;" : "8px 20px 0px 20px"};
-
   text-decoration: ${(props: { active: string }) =>
     props.active ? "underline" : "none"};
-
   font-weight: ${(props: { active: string }) =>
-    props.active ? "bold" : "none"};
+    props.active ? `${FontWeight.Bold}` : `${FontWeight.Normal}`};
 
-  &: hover {
+  :hover {
     cursor: pointer;
   }
 `;

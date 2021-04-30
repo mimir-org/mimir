@@ -3,32 +3,31 @@ import {
   UserIconOpen,
   SaveIcon,
   LogoutIcon,
+  OpenProjectIconSmall,
 } from "../../../../assets";
 import "./getimg.scss";
 
-interface GetImgProps {
+interface Props {
   icon: String;
 }
 
-const GetImg = ({ icon }: GetImgProps) => {
+const GetIcon = ({ icon }: Props) => {
   switch (icon) {
     case "UserIconOpen":
-      return (
-        <img src={UserIconOpen} alt="user_open" className="user_icon" />
-      );
+      return <img src={UserIconOpen} alt="user_open" className="user_icon" />;
     case "SaveIcon":
       return <img src={SaveIcon} alt="save_icon" className="save_icon" />;
     case "LogoutIcon":
       return <img src={LogoutIcon} alt="logout_icon" className="logout_icon" />;
+    case "OpenIcon":
+      return (
+        <img src={OpenProjectIconSmall} alt="open_icon" className="save_icon" />
+      );
     default:
       return (
-        <img
-          src={UserIconClosed}
-          alt="user_closed"
-          className="user_icon"
-        />
+        <img src={UserIconClosed} alt="user_closed" className="user_icon" />
       );
   }
 };
 
-export default GetImg;
+export default GetIcon;

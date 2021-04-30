@@ -243,7 +243,7 @@ namespace Mb.Core.Repositories
                         NodeId = "",
                         Type = AttributeType.AdminInfo,
                         Key = "Status",
-                        Value = "",
+                        Value = "Her kommer dropdown",
                         InputType = AttributeInputType.Dropdown,
                         Unit = null
                     },

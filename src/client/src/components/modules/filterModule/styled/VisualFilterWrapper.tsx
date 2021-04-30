@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../../componentLibrary";
+import { Color, FontType } from "../../../../componentLibrary";
 
 const VisualFilterWrapper = styled.div`
   position: absolute;
@@ -9,7 +9,7 @@ const VisualFilterWrapper = styled.div`
   border-style: solid;
   border-color: ${Color.DeepCyan};
   border-width: 0px 2px 2px 2px;
-  font-family: roboto;
+  font-family: ${FontType.Standard};
   padding: 10px;
   z-index: 1102;
   box-shadow: -1px 4px 5px rgba(0, 0, 0, 0.15);

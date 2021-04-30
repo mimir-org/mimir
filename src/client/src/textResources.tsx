@@ -13,7 +13,7 @@ const textResources = {
   // Project options
   Project_heading: "Projects",
   Project_new_project: "Create project",
-  Project_open_project: "Load project",
+  Project_open_project: "Open project",
   Project_recent_project: "Recent projects",
   Project_recent_name: "Project name",
   Project_recent_owner: "Project owner",
@@ -78,12 +78,14 @@ const textResources = {
   Library_Function: "Function",
   Library_Product: "Product",
   Library_Location: "Location",
-  Library_SearchBox_Placeholder: "Search in the Library",
+  Library_SearchBox_Placeholder: "Search the Library",
   Legend_Heading: "Legend",
 
   // AccountModule
-  Account_Save_Label: "Save a project copy locally?",
+  Account_Save_Label: "Save project",
   Account_Save_Button: "Save",
+  Account_Load_Label: "Open project",
+  Account_Load_Button: "Open",
   Account_Logout: "Log out",
 
   // FilterModule
