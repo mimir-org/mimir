@@ -124,7 +124,6 @@ const FlowTree = () => {
 
   const onLoad = useCallback(
     (_reactFlowInstance) => {
-      console.log("load");
       setElements(CreateProjectElementNodes(projectState.project));
       return setReactFlowInstance(_reactFlowInstance);
     },
@@ -188,9 +187,7 @@ const FlowTree = () => {
 
   // Handling of project loading
   useEffect(() => {
-    console.log("test");
     if (projectState.project === null) {
-      console.log("test dispatch");
       const projectId = GetProject();
       dispatch(get(projectId));
     }
