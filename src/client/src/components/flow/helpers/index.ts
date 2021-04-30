@@ -11,4 +11,6 @@ export { default as CreateProjectElementNodes } from "./CreateProjectElementNode
 export { default as CreateProjectElementBlockNodes } from "./CreateProjectElementBlockNodes";
 export { default as GetCenter } from "./GetCenter";
 export { default as GetHandleType } from "./GetHandleType";
+export { default as GetNodes } from "./GetNodes";
+export { default as GetEdges } from "./GetEdges";
 export * from "./types";

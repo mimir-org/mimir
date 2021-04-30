@@ -1,8 +1,6 @@
 import { NodeType } from "../../../../models/project";
 import useChangeNodeVisibility from "../hooks/useChangeNodeVisibility";
-import { useSelector } from "react-redux";
-import { Node } from "../../../../models/project";
-import { RootState } from "../../../../redux/store";
+import { GetNodes } from "../../../flow/helpers";
 import "./checkbox.scss";
 
 interface Props {
@@ -13,9 +11,7 @@ interface Props {
 
 export const CheckboxComponent = ({ nodeId, inputLabel, type }: Props) => {
   // Check if node is hidden
-  const nodes = useSelector<RootState>(
-    (state) => state.projectState.project.nodes
-  ) as Node[];
+  const nodes = GetNodes();
   const node = nodes.find((x) => x.id === nodeId);
   const isHidden = node.isHidden;
 

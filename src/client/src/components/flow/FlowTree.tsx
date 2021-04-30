@@ -189,7 +189,7 @@ const FlowTree = () => {
   useEffect(() => {
     if (projectState.project === null) {
       const projectId = GetProject();
-      dispatch(get(projectId));
+      if (projectId) dispatch(get(projectId));
     }
   }, [dispatch, projectState.project]);
 

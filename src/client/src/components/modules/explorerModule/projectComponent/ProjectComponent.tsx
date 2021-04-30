@@ -3,15 +3,10 @@ import AspectComponent from "../aspectComponent/AspectComponent";
 // import CheckboxComponent from "../checkboxComponent/CheckboxComponent";
 import { AspectWrapper, ProjectHeader } from "../styled";
 import { IsAspectNode } from "../../../flow/helpers";
-import { useSelector } from "react-redux";
-import { Project } from "../../../../models/project";
-import { RootState } from "../../../../redux/store";
+import store from "../../../../redux/store";
 
 export const ProjectComponent = () => {
-  const project = useSelector<RootState>(
-    (state) => state.projectState.project
-  ) as Project;
-
+  const project = store.getState().projectState.project;
   const aspects = project ? project.nodes : [];
 
   return (
