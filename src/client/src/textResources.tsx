@@ -83,6 +83,8 @@ const textResources = {
   // AccountModule
   Account_Save_Label: "Save project",
   Account_Save_Button: "Save",
+  Account_Load_Label: "Load project",
+  Account_Load_Button: "Load",
   Account_Logout: "Log out",
 
   // FilterModule

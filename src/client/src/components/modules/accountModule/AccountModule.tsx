@@ -29,6 +29,8 @@ const AccountModule = () => {
     alert("Project saved");
   };
 
+  const handleLoadClick = (e) => {};
+
   const isOpen = showAccountSettings;
 
   return (
@@ -50,6 +52,14 @@ const AccountModule = () => {
               icon="SaveIcon"
               text={textResources.Account_Save_Button}
               onClick={handleSaveClick}
+            />
+          </div>
+          <div className="save_container">
+            <p>{textResources.Account_Load_Label}</p>
+            <Button
+              icon="SaveIcon"
+              text={textResources.Account_Load_Button}
+              onClick={handleLoadClick}
             />
           </div>
           <div className="user_container">
