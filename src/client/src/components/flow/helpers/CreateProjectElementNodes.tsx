@@ -4,6 +4,7 @@ import { Elements } from "react-flow-renderer";
 
 const CreateProjectElementNodes = (project: Project): Elements => {
   const initialElements: Elements = [];
+  console.log({ project });
 
   if (!project) return initialElements;
 

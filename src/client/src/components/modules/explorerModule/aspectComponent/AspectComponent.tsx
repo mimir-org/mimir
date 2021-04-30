@@ -6,7 +6,9 @@ import { IsAspectNode } from "../../../flow/helpers";
 import CheckboxComponent from "../checkboxComponent/CheckboxComponent";
 import { AspectChildComponent } from "../aspectChildComponent";
 import { AspectChildContainer } from "../styled";
-import store from "../../../../redux/store";
+import { useSelector } from "react-redux";
+import { Node, Edge } from "../../../../models/project";
+import { RootState } from "../../../../redux/store";
 import {
   GetAspectIcon,
   GetAspectHeader,
@@ -31,8 +33,12 @@ export const AspectComponent = ({ nodeId, name, aspectType }: Props) => {
   const aspectHeader = GetAspectHeader(aspectType);
   const expandIcon = expanded ? expandedIcon : unexpandedIcon;
   const childType = GetType(aspectType);
-  const edges = store.getState().projectState.project.edges;
-  const nodes = store.getState().projectState.project.nodes;
+  const edges = useSelector<RootState>(
+    (state) => state.projectState.project.edges
+  ) as Edge[];
+  const nodes = useSelector<RootState>(
+    (state) => state.projectState.project.nodes
+  ) as Node[];
   const children = nodes.filter((node) => !IsAspectNode(node.type));
 
   return (
