@@ -5,10 +5,13 @@ const SearchBox = styled.input`
   height: 36px;
   font-style: italic;
   font-family: roboto;
-  font-size: 17px;
+  font-weight: 400;
+  font-size: 16px;
   padding-left: 8px;
   margin-bottom: 10px;
-  border: 0px solid #444;
+  border-color: #007079;
+  border-style: solid;
+  border-width: 0px 0px 1px 0px;
 `;
 
 export default SearchBox;
