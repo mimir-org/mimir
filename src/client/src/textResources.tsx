@@ -81,7 +81,7 @@ const textResources = {
   Library_SearchBox_Placeholder: "Search the Library",
 
   // AccountModule
-  Account_Save_Label: "Save a project copy locally?",
+  Account_Save_Label: "Save project",
   Account_Save_Button: "Save",
   Account_Logout: "Log out",
 

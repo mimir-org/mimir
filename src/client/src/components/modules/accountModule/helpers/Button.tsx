@@ -1,15 +1,16 @@
 import "./button.scss";
-import GetImg from "./GetImg";
-interface ButtonProps {
+import GetIcon from "./GetIcon";
+
+interface Props {
   icon: String;
   text: String;
-  onclick?: () => void;
+  onClick?: any;
 }
 
-export const Button = ({ icon, text, onclick }: ButtonProps) => {
+export const Button = ({ icon, text, onClick }: Props) => {
   return (
-    <div className="button_container" onClick={() => onclick}>
-      <GetImg icon={icon} />
+    <div className="button_container" onClick={onClick}>
+      <GetIcon icon={icon} />
       <p>{text}</p>
     </div>
   );
