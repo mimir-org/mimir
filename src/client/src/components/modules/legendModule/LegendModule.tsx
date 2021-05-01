@@ -9,7 +9,7 @@ import {
 import { SidebarWrapper } from "../libraryModule/styled";
 import textResources from "../../../textResources";
 interface Props {
-  visible: any;
+  visible: boolean;
 }
 
 const LegendModule = ({ visible }: Props) => {
