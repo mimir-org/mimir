@@ -13,4 +13,6 @@ export { default as GetCenter } from "./GetCenter";
 export { default as GetHandleType } from "./GetHandleType";
 export { default as GetNodes } from "./GetNodes";
 export { default as GetEdges } from "./GetEdges";
+export { default as GetRelationshipColor } from "./GetRelationshipColor";
+export { default as GetLegendData } from "./GetLegendData";
 export * from "./types";

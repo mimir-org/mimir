@@ -1,4 +1,4 @@
-import { Edge, Node } from "../../../models/project";
+import { Edge, Node, NodeType } from "../../../models/project";
 
 export interface OffPageNodeCreator {
     node: Node;
@@ -20,3 +20,10 @@ export interface GetCenterParams {
     targetX: number;
     targetY: number;
 }
+export interface Legend {
+    name: string,
+    color: string,
+    nodeType: NodeType,
+    // TODO: En type striplet, pil etc.
+}
+
