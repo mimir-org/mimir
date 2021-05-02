@@ -21,9 +21,10 @@ export interface GetCenterParams {
     targetY: number;
 }
 export interface Legend {
+    key: string,
     name: string,
-    color: string,
-    nodeType: NodeType,
+    color: string
+
     // TODO: En type striplet, pil etc.
 }
 
