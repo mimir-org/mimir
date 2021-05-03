@@ -46,7 +46,7 @@ const LegendModule = ({ visible }: Props) => {
 
   return (
     <>
-      <VerticalScrollbar>
+      <VerticalScrollbar visible={visible}>
         <LegendHeader visible={visible}>
           <LegendIconWrapper>
             <img src={LegendIcon} alt="legend-icon" />

@@ -20,6 +20,9 @@ const VerticalScrollbar = styled.div`
   ::-webkit-scrollbar-thumb:hover {
     background: #dcdcdc;
   }
+
+  visibility: ${(props: { visible: boolean }) =>
+    props.visible ? "initial" : "hidden"};
 `;
 
 export default VerticalScrollbar;
