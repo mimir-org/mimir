@@ -1,6 +1,6 @@
 ﻿namespace Mb.Models.Enums
 {
-    public enum AttributeType
+    public enum AttributeTab
     {
         AdminInfo = 0,
         TechInfo = 1,

@@ -1,0 +1,32 @@
+﻿[
+  {
+    "Id":  1, 
+    "Entity": "Flowrate, volumetric",
+    "Qualifier": 1,
+    "Source": 1,
+    "Condition": 1,
+    "Units": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "Aspect": 1,
+    "Format": 1
+  },
+  {
+    "Id": 2,
+    "Entity": "Flowrate, volumetric",
+    "Qualifier": 1,
+    "Source": 2,
+    "Condition": 2,
+    "Units": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "Aspect": 2,
+    "Format": 1
+  }
+]

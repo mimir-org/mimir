@@ -7,9 +7,9 @@ export const ATTRIBUTE_INPUT_TYPE = {
     DATE: "Date",
 };
 
-export type AttributeType = keyof typeof ATTRIBUTE_TYPE;
+export type AttributeTab = keyof typeof ATTRIBUTE_TAB;
 
-export const ATTRIBUTE_TYPE = {
+export const ATTRIBUTE_TAB = {
     ADMIN_INFO: "AdminInfo",
     TECH_INFO: "TechInfo",
     RELATIONS: "Relations",
@@ -148,7 +148,7 @@ export interface Attribute {
     key: string;
     value: string;
     unit: string;
-    type: AttributeType;
+    type: AttributeTab;
     inputType: AttributeInputType;
     nodeId: string;
 }

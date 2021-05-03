@@ -7,7 +7,7 @@ namespace Mb.Models
         public string Key { get; set; }
         public string Value { get; set; }
         public string Unit { get; set; }
-        public AttributeType Type { get; set; }
+        public AttributeTab Type { get; set; }
         public AttributeInputType InputType { get; set; }
 
         public virtual string NodeId { get; set; }

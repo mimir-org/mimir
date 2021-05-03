@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Mb.Models;
 using Mb.Models.Enums;
-using AttributeType = Mb.Models.Enums.AttributeType;
+using AttributeTab = Mb.Models.Enums.AttributeTab;
 
 namespace Mb.Core.Repositories
 {
@@ -92,7 +92,7 @@ namespace Mb.Core.Repositories
                     new Attribute
                     {
                         NodeId = "",
-                        Type = AttributeType.AdminInfo,
+                        Type = AttributeTab.AdminInfo,
                         Key = "ID",
                         Value = "=KC2",
                         InputType = AttributeInputType.Text,
@@ -101,7 +101,7 @@ namespace Mb.Core.Repositories
                     new Attribute
                     {
                         NodeId = "",
-                        Type = AttributeType.AdminInfo,
+                        Type = AttributeTab.AdminInfo,
                         Key = "Semantic ID",
                         Value = "http://vg.no",
                         InputType = AttributeInputType.Text,
@@ -110,7 +110,7 @@ namespace Mb.Core.Repositories
                     new Attribute
                     {
                         NodeId = "",
-                        Type = AttributeType.TechInfo,
+                        Type = AttributeTab.TechInfo,
                         Key = "Maximum gas processing capacity",
                         Value = "2000000",
                         InputType = AttributeInputType.Text,
@@ -178,7 +178,7 @@ namespace Mb.Core.Repositories
                     new Attribute
                     {
                         NodeId = "",
-                        Type = AttributeType.AdminInfo,
+                        Type = AttributeTab.AdminInfo,
                         Key = "ID",
                         Value = "-KC1",
                         InputType = AttributeInputType.Text,
@@ -187,7 +187,7 @@ namespace Mb.Core.Repositories
                     new Attribute
                     {
                         NodeId = "",
-                        Type =AttributeType.AdminInfo,
+                        Type =AttributeTab.AdminInfo,
                         Key = "Semantic ID",
                         Value = "http://vg.no",
                         InputType = AttributeInputType.Text,
@@ -196,7 +196,7 @@ namespace Mb.Core.Repositories
                     new Attribute
                     {
                         NodeId = "",
-                        Type = AttributeType.AdminInfo,
+                        Type = AttributeTab.AdminInfo,
                         Key = "Reference Designation",
                         Value = "IEC 81346 identifier",
                         InputType = AttributeInputType.Text,
@@ -205,7 +205,7 @@ namespace Mb.Core.Repositories
                     new Attribute
                     {
                         NodeId = "",
-                        Type = AttributeType.AdminInfo,
+                        Type = AttributeTab.AdminInfo,
                         Key = "Service Description",
                         Value = "Description of service",
                         InputType = AttributeInputType.Text,
@@ -214,7 +214,7 @@ namespace Mb.Core.Repositories
                     new Attribute
                     {
                         NodeId = "",
-                        Type = AttributeType.AdminInfo,
+                        Type = AttributeTab.AdminInfo,
                         Key = "Change Mode",
                         Value = "The change state of the object",
                         InputType = AttributeInputType.Text,
@@ -223,7 +223,7 @@ namespace Mb.Core.Repositories
                     new Attribute
                     {
                         NodeId = "",
-                        Type = AttributeType.AdminInfo,
+                        Type = AttributeTab.AdminInfo,
                         Key = "Version",
                         Value = "Version information",
                         InputType = AttributeInputType.Text,
@@ -232,7 +232,7 @@ namespace Mb.Core.Repositories
                     new Attribute
                     {
                         NodeId = "",
-                        Type = AttributeType.AdminInfo,
+                        Type = AttributeTab.AdminInfo,
                         Key = "Kind",
                         Value = "Either template or instance",
                         InputType = AttributeInputType.Dropdown,
@@ -241,7 +241,7 @@ namespace Mb.Core.Repositories
                     new Attribute
                     {
                         NodeId = "",
-                        Type = AttributeType.AdminInfo,
+                        Type = AttributeTab.AdminInfo,
                         Key = "Status",
                         Value = "Her kommer dropdown",
                         InputType = AttributeInputType.Dropdown,
@@ -251,7 +251,7 @@ namespace Mb.Core.Repositories
                     new Attribute
                     {
                         NodeId = "",
-                        Type = AttributeType.Relations,
+                        Type = AttributeTab.Relations,
                         Key = "Project",
                         Value = "NOAKA",
                         InputType = AttributeInputType.Text,
@@ -309,7 +309,7 @@ namespace Mb.Core.Repositories
                     new Attribute
                     {
                         NodeId = "",
-                        Type =AttributeType.AdminInfo,
+                        Type =AttributeTab.AdminInfo,
                         Key = "ID",
                         Value = "=KC2",
                         InputType = AttributeInputType.Text,
@@ -318,7 +318,7 @@ namespace Mb.Core.Repositories
                     new Attribute
                     {
                         NodeId = "",
-                        Type = AttributeType.AdminInfo,
+                        Type = AttributeTab.AdminInfo,
                         Key = "Semantic ID",
                         Value = "http://vg.no",
                         InputType = AttributeInputType.Text,
@@ -327,7 +327,7 @@ namespace Mb.Core.Repositories
                     new Attribute
                     {
                         NodeId = "",
-                        Type = AttributeType.TechInfo,
+                        Type = AttributeTab.TechInfo,
                         Key = "Maximum gas processing capacity",
                         Value = "2000000",
                         InputType = AttributeInputType.Text,

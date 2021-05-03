@@ -56,13 +56,25 @@
         </member>
         <member name="M:Mb.Api.Controllers.V1.TypeEditorController.GetAspects">
             <summary>
-            Get all RDS codes
+            Get all aspects
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Mb.Api.Controllers.V1.TypeEditorController.GetObjectTypes">
+            <summary>
+            Get all object types
             </summary>
             <returns></returns>
         </member>
         <member name="M:Mb.Api.Controllers.V1.TypeEditorController.GetRdsCodes">
             <summary>
             Get all RDS codes
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Mb.Api.Controllers.V1.TypeEditorController.GetAttributeTypes">
+            <summary>
+            Get all attribute types
             </summary>
             <returns></returns>
         </member>
