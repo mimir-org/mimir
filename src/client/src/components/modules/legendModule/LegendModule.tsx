@@ -8,6 +8,7 @@ import {
   TransportWrapper,
   TransportColor,
 } from "./styled";
+import { VerticalScrollbar } from "../../../componentLibrary";
 import { SidebarWrapper } from "../libraryModule/styled";
 import textResources from "../../../textResources";
 import { ProjectState } from "../../../redux/store/project/types";
@@ -45,25 +46,27 @@ const LegendModule = ({ visible }: Props) => {
 
   return (
     <>
-      <LegendHeader visible={visible}>
-        <LegendIconWrapper>
-          <img src={LegendIcon} alt="legend-icon" />
-        </LegendIconWrapper>
-        {textResources.Legend_Heading}
-      </LegendHeader>
-      <SidebarWrapper visible={visible}>
-        {legends &&
-          legends.map((legend) => {
-            return (
-              <LegendContent key={legend.key}>
-                <TransportWrapper>
-                  <p>{legend.name}</p>
-                  <TransportColor color={legend.color}></TransportColor>
-                </TransportWrapper>
-              </LegendContent>
-            );
-          })}
-      </SidebarWrapper>
+      <VerticalScrollbar>
+        <LegendHeader visible={visible}>
+          <LegendIconWrapper>
+            <img src={LegendIcon} alt="legend-icon" />
+          </LegendIconWrapper>
+          {textResources.Legend_Heading}
+        </LegendHeader>
+        <SidebarWrapper visible={visible}>
+          {legends &&
+            legends.map((legend) => {
+              return (
+                <LegendContent key={legend.key}>
+                  <TransportWrapper>
+                    <p>{legend.name}</p>
+                    <TransportColor color={legend.color}></TransportColor>
+                  </TransportWrapper>
+                </LegendContent>
+              );
+            })}
+        </SidebarWrapper>
+      </VerticalScrollbar>
     </>
   );
 };
