@@ -25,7 +25,7 @@
             Project Controller Constructor
             </summary>
         </member>
-        <member name="M:Mb.Api.Controllers.V1.ProjectController.CreateNewProject(Mb.Models.Data.CreateProjectAm)">
+        <member name="M:Mb.Api.Controllers.V1.ProjectController.CreateNewProject(Mb.Models.Data.CreateProject)">
             <summary>
             Create a new empty project
             </summary>
@@ -43,7 +43,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Mb.Api.Controllers.V1.ProjectController.SaveProject(Mb.Models.Data.ProjectAm)">
+        <member name="M:Mb.Api.Controllers.V1.ProjectController.SaveProject(Mb.Models.Project)">
             <summary>
             Save a project
             </summary>

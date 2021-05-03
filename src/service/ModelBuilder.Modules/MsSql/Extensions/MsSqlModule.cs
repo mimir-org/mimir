@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using Mb.Core.Models;
+using Mb.Core;
 using Mb.Modules.MsSql.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

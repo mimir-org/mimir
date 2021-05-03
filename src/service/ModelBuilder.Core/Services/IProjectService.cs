@@ -1,17 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Mb.Core.Models;
+using Mb.Models;
 using Mb.Models.Data;
 
 namespace Mb.Core.Services
 {
     public interface IProjectService
     {
-        IEnumerable<ProjectSimpleAm> GetProjectList(string name);
-        Task<ProjectAm> GetProject(string id);
-        Task<ProjectAm> CreateProject(ProjectAm project);
-        Task<ProjectAm> CreateNewProject(CreateProjectAm createProjectAm);
+        IEnumerable<ProjectSimple> GetProjectList(string name);
+        Task<Project> GetProject(string id);
+        Task<Project> CreateProject(Project project);
+        Task<Project> CreateNewProject(CreateProject createProjectAm);
         Project CreateInitProject(string name, string description);
-        IEnumerable<LibNodeAm> GetLibNodes(string searchString);
+        IEnumerable<LibNode> GetLibNodes(string searchString);
     }
 }

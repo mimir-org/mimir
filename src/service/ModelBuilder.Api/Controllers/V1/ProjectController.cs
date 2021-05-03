@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Mb.Core.Exceptions;
 using Mb.Core.Services;
+using Mb.Models;
 using Mb.Models.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -41,12 +42,12 @@ namespace Mb.Api.Controllers.V1
         /// </summary>
         /// <returns></returns>
         [HttpPost("")]
-        [ProducesResponseType(typeof(ProjectAm), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(Project), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> CreateNewProject([FromBody] CreateProjectAm project)
+        public async Task<ActionResult> CreateNewProject([FromBody] CreateProject project)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -68,7 +69,7 @@ namespace Mb.Api.Controllers.V1
         /// </summary>
         /// <returns></returns>
         [HttpGet("search")]
-        [ProducesResponseType(typeof(IEnumerable<ProjectSimpleAm>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<ProjectSimple>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -91,7 +92,7 @@ namespace Mb.Api.Controllers.V1
         /// </summary>
         /// <returns></returns>
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(ProjectAm), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Project), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -123,13 +124,13 @@ namespace Mb.Api.Controllers.V1
         /// </summary>
         /// <returns></returns>
         [HttpPost("save")]
-        [ProducesResponseType(typeof(ProjectAm), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ProjectAm), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(Project), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Project), StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> SaveProject([FromBody] ProjectAm project)
+        public async Task<IActionResult> SaveProject([FromBody] Project project)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

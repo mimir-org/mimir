@@ -1,4 +1,4 @@
-﻿using Mb.Core.Models;
+﻿using Mb.Models;
 
 namespace Mb.Core.Repositories
 {

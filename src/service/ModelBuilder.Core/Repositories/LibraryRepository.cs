@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Mb.Core.Enums;
-using Mb.Core.Models;
-using Attribute = Mb.Core.Models.Attribute;
+using Mb.Models;
+using Mb.Models.Enums;
+using AttributeType = Mb.Models.Enums.AttributeType;
 
 namespace Mb.Core.Repositories
 {
@@ -187,7 +187,7 @@ namespace Mb.Core.Repositories
                     new Attribute
                     {
                         NodeId = "",
-                        Type = AttributeType.AdminInfo,
+                        Type =AttributeType.AdminInfo,
                         Key = "Semantic ID",
                         Value = "http://vg.no",
                         InputType = AttributeInputType.Text,
@@ -309,7 +309,7 @@ namespace Mb.Core.Repositories
                     new Attribute
                     {
                         NodeId = "",
-                        Type = AttributeType.AdminInfo,
+                        Type =AttributeType.AdminInfo,
                         Key = "ID",
                         Value = "=KC2",
                         InputType = AttributeInputType.Text,

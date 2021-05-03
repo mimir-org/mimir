@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
 using Mb.Core.Extensions;
-using Mb.Core.Models.TypeEditor;
 using Mb.Core.Repositories;
-using Mb.Models.Data.TypeEditor;
+using Mb.Models;
+using Mb.Models.Enums;
 
 namespace Mb.Core.Services
 {
@@ -22,13 +22,13 @@ namespace Mb.Core.Services
 
         public Dictionary<int, string> GetAspects()
         {
-            return EnumExtensions.ToDictionary<AspectAm>();
+            return EnumExtensions.ToDictionary<Aspect>();
         }
 
-        public IEnumerable<RdsAm> GetRds()
+        public IEnumerable<Rds> GetRds()
         {
             var data = _fileRepository.ReadFile<Rds>(RdsFileName);
-            return _mapper.Map<IEnumerable<RdsAm>>(data);
+            return _mapper.Map<IEnumerable<Rds>>(data);
         }
     }
 }

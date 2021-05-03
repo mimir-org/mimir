@@ -4,11 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Mb.Core.Enums;
 using Mb.Core.Exceptions;
-using Mb.Core.Models;
 using Mb.Core.Repositories;
+using Mb.Models;
 using Mb.Models.Data;
+using Mb.Models.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
@@ -33,24 +33,24 @@ namespace Mb.Core.Services
             _edgeRepository = edgeRepository;
         }
 
-        public IEnumerable<ProjectSimpleAm> GetProjectList(string name)
+        public IEnumerable<ProjectSimple> GetProjectList(string name)
         {
             if (string.IsNullOrEmpty(name))
                 return _projectRepository.GetAll()
                     .OrderByDescending(x => x.LastEdited)
                     .Take(10)
-                    .ProjectTo<ProjectSimpleAm>(_mapper.ConfigurationProvider)
+                    .ProjectTo<ProjectSimple>(_mapper.ConfigurationProvider)
                     .ToList();
             else
                 return _projectRepository.GetAll()
                     .Where(x => x.Name.ToLower().StartsWith(name.ToLower()))
                     .OrderByDescending(x => x.LastEdited)
                     .Take(10)
-                    .ProjectTo<ProjectSimpleAm>(_mapper.ConfigurationProvider)
+                    .ProjectTo<ProjectSimple>(_mapper.ConfigurationProvider)
                     .ToList();
         }
 
-        public async Task<ProjectAm> GetProject(string id)
+        public async Task<Project> GetProject(string id)
         {
             var project = await _projectRepository
                 .FindBy(x => x.Id == id)
@@ -64,10 +64,10 @@ namespace Mb.Core.Services
             if (project == null)
                 throw new ModelBuilderNotFoundException();
 
-            return _mapper.Map<ProjectAm>(project);
+            return _mapper.Map<Project>(project);
         }
 
-        public async Task<ProjectAm> CreateProject(ProjectAm project)
+        public async Task<Project> CreateProject(Project project)
         {
             var existingProject = await GetProject(project.Id);
 
@@ -77,15 +77,15 @@ namespace Mb.Core.Services
             var p = _mapper.Map<Project>(project);
             await _projectRepository.CreateAsync(p);
             await _projectRepository.SaveAsync();
-            return _mapper.Map<ProjectAm>(p);
+            return _mapper.Map<Project>(p);
         }
 
-        public async Task<ProjectAm> CreateNewProject(CreateProjectAm createProjectAm)
+        public async Task<Project> CreateNewProject(CreateProject createProjectAm)
         {
             var project = CreateInitProject(createProjectAm.Name, createProjectAm.Description);
             await _projectRepository.CreateAsync(project);
             await _projectRepository.SaveAsync();
-            return _mapper.Map<ProjectAm>(project);
+            return _mapper.Map<Project>(project);
         }
 
 
@@ -109,9 +109,9 @@ namespace Mb.Core.Services
             return project;
         }
 
-        public IEnumerable<LibNodeAm> GetLibNodes(string searchString)
+        public IEnumerable<LibNode> GetLibNodes(string searchString)
         {
-            return _mapper.Map<IEnumerable<LibNodeAm>>(_libraryRepository.GetAll(searchString));
+            return _mapper.Map<IEnumerable<LibNode>>(_libraryRepository.GetAll(searchString));
         }
 
         private Node CreateInitAspectNode(NodeType nodeType)
@@ -176,7 +176,7 @@ namespace Mb.Core.Services
             return node;
         }
 
-        private async Task<ProjectAm> UpdateProject(ProjectAm existingProject, ProjectAm project)
+        private async Task<Project> UpdateProject(Project existingProject, Project project)
         {
             var p = _mapper.Map<Project>(project);
 

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Mb.Core.Models;
 using Mb.Core.Profiles;
 using Mb.Core.Repositories;
 using Mb.Core.Services;
@@ -23,7 +22,6 @@ namespace Mb.Core.Extensions
                 cfg.AddProfile<EdgeProfile>();
                 cfg.AddProfile<NodeProfile>();
                 cfg.AddProfile<ProjectProfile>();
-                cfg.AddProfile<RdsProfile>();
             });
 
             // Dependency injection
