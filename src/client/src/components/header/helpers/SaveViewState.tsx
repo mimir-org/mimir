@@ -1,15 +1,11 @@
 import { SaveState } from "../../../redux/store/localStorage/localStorage";
 
 const SaveViewState = (key: string): void => {
-  if (key === "treeview") {
-    SaveState(true, key);
-    SaveState(false, "blockview");
-  }
+  key === "treeview"
+    ? SaveState(false, "blockview")
+    : SaveState(false, "treeview");
 
-  if (key === "blockview") {
-    SaveState(true, key);
-    SaveState(false, "treeview");
-  }
+  SaveState(true, key);
 };
 
 export default SaveViewState;

@@ -24,6 +24,7 @@ import {
 const Header = () => {
   const dispatch = useDispatch();
   const { push } = useHistory();
+
   const projectState = useSelector<RootState>(
     (state) => state.projectState
   ) as ProjectState;
@@ -40,7 +41,7 @@ const Header = () => {
       setShowBlockView(LoadState(key));
       setTimeout(() => {
         push(`/home/${view}`);
-      }, 900);
+      }, 900); // TODO fix
       return;
     }
     setShowBlockView(LoadState(key));
