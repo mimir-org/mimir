@@ -53,39 +53,21 @@ const Header = () => {
         </TitleWrapper>
         <IconsWrapper>
           <TreeviewWrapper selected={!showBlockView}>
-            {showBlockView ? (
-              <img
-                src={TreeviewOff}
-                alt="treeview"
-                onClick={handleClick}
-                className="view_icon"
-              />
-            ) : (
-              <img
-                src={TreeviewOn}
-                alt="treeview"
-                onClick={handleClick}
-                className="view_icon"
-              />
-            )}
+            <img
+              src={showBlockView ? TreeviewOff : TreeviewOn}
+              alt="treeview"
+              onClick={handleClick}
+              className="view_icon"
+            />
           </TreeviewWrapper>
           <div className="line"></div>
           <BlockviewWrapper selected={showBlockView}>
-            {showBlockView ? (
-              <img
-                src={BlockviewOn}
-                alt="blockview"
-                onClick={handleClick}
-                className="view_icon"
-              />
-            ) : (
-              <img
-                src={BlockviewOff}
-                alt="blockview"
-                onClick={handleClick}
-                className="view_icon"
-              />
-            )}
+            <img
+              src={showBlockView ? BlockviewOn : BlockviewOff}
+              alt="blockview"
+              onClick={handleClick}
+              className="view_icon"
+            />
           </BlockviewWrapper>
         </IconsWrapper>
       </Toolbar>
