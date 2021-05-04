@@ -58,8 +58,6 @@ import {
   OffPageNodeCreator,
 } from "./helpers";
 
-import store from "../../redux/store";
-
 const nodeTypes = {
   AspectFunction: Aspect,
   AspectLocation: Aspect,
@@ -83,6 +81,7 @@ const FlowBlock = () => {
   const [elements, setElements] = useState<Elements>();
 
   let nodeId: string;
+  const widthLimit = 120;
 
   const projectState = useSelector<RootState>(
     (state) => state.projectState
@@ -222,9 +221,9 @@ const FlowBlock = () => {
   //   };
 
   const onNodeDragStop = (_event, node) => {
-    console.log("drop");
     const [width] = GetReactFlowBoundingRectData();
-    const x = node.type === NODE_TYPE.OFF_PAGE ? width - 120 : node.position.x;
+    const x =
+      node.type === NODE_TYPE.OFF_PAGE ? width - widthLimit : node.position.x;
     dispatch(updatePosition(node.id, x, node.position.y));
   };
 
@@ -270,14 +269,15 @@ const FlowBlock = () => {
   };
 
   const onReposition = () => {
-    const nodes = store.getState().projectState.project.nodes;
+    const nodes = projectState.project.nodes;
     const [width] = GetReactFlowBoundingRectData();
-    const x = width - 120;
+    const x = width - widthLimit;
 
-    for (let i = 0; i < nodes.length; i++) {
-      if (nodes[i].type === NODE_TYPE.OFF_PAGE)
-        dispatch(updatePosition(nodes[i].id, x, nodes[i].positionY));
-    }
+    nodes.forEach((node) => {
+      if (node.type === NODE_TYPE.OFF_PAGE) {
+        dispatch(updatePosition(node.id, x, node.positionY));
+      }
+    });
   };
 
   // Force rerender
