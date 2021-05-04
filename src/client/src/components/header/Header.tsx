@@ -28,17 +28,21 @@ const Header = () => {
     (state) => state.projectState
   ) as ProjectState;
   const [showBlockView, setShowBlockView] = useState(LoadState("blockview"));
-  console.log(projectState.project);
 
   const handleClick = (e) => {
     const key = e.target.alt;
     const view = SaveViewState(key);
-    dispatch(save(projectState.project));
 
-    setTimeout(() => {
-      setShowBlockView(LoadState("blockview"));
-      push(`/home/${view}`);
-    }, 900);
+    if (view === "blockview") {
+      dispatch(save(projectState.project));
+      setTimeout(() => {
+        setShowBlockView(LoadState("blockview"));
+        push(`/home/${view}`);
+      }, 900);
+      return;
+    }
+    setShowBlockView(LoadState("blockview"));
+    push(`/home/${view}`);
   };
 
   return (
