@@ -84,6 +84,8 @@ const textResources = {
   Account_Save_Label: "Save project",
   Account_Save_Button: "Save",
   Account_Logout: "Log out",
+  Account_Load_Label: "Load project",
+  Account_Load_Button: "Load",
 
   // LegendModule
   Legend_Heading: "Legend",
