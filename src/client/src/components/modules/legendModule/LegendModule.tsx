@@ -1,13 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { LegendIcon } from "../../../assets";
-import {
-  LegendHeader,
-  LegendIconWrapper,
-  LegendContent,
-  TransportWrapper,
-  TransportColor,
-} from "./styled";
 import { VerticalScrollbar } from "../../../componentLibrary";
 import { SidebarWrapper } from "../libraryModule/styled";
 import textResources from "../../../textResources";
@@ -15,6 +8,13 @@ import { ProjectState } from "../../../redux/store/project/types";
 import { RootState } from "../../../redux/store";
 import { LoadState } from "../../../redux/store/localStorage/localStorage";
 import { GetLegendData, Legend } from "../../flow/helpers";
+import {
+  LegendHeader,
+  LegendIconWrapper,
+  LegendContent,
+  TransportWrapper,
+  TransportColor,
+} from "./styled";
 
 interface Props {
   visible: boolean;

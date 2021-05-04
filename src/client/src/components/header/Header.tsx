@@ -4,6 +4,10 @@ import { AppBar, Toolbar, Typography } from "@material-ui/core";
 import textResources from "../../textResources";
 import SaveViewState from "./helpers/SaveViewState";
 import { LoadState } from "../../redux/store/localStorage/localStorage";
+import { useDispatch, useSelector } from "react-redux";
+import { save } from "../../redux/store/project/actions";
+import { RootState } from "../../redux/store";
+import { ProjectState } from "../../redux/store/project/types";
 import {
   TreeviewOff,
   TreeviewOn,
@@ -18,14 +22,23 @@ import {
 } from "./styled";
 
 const Header = () => {
+  const dispatch = useDispatch();
   const { push } = useHistory();
+  const projectState = useSelector<RootState>(
+    (state) => state.projectState
+  ) as ProjectState;
   const [showBlockView, setShowBlockView] = useState(LoadState("blockview"));
+  console.log(projectState.project);
 
   const handleClick = (e) => {
     const key = e.target.alt;
     const view = SaveViewState(key);
-    push(`/home/${view}`);
-    setShowBlockView(LoadState("blockview"));
+    dispatch(save(projectState.project));
+
+    setTimeout(() => {
+      setShowBlockView(LoadState("blockview"));
+      push(`/home/${view}`);
+    }, 900);
   };
 
   return (

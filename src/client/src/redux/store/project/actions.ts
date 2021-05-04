@@ -17,6 +17,7 @@ import {
 } from "./types";
 
 export function save(project: Project): ProjectActionTypes {
+  console.log("saved");
   return {
     type: SAVE_PROJECT,
     payload: project,

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import ReactFlow, {
@@ -58,10 +58,6 @@ import {
   OffPageNodeCreator,
 } from "./helpers";
 
-interface FlowBlockProps {
-  nodeId: string;
-}
-
 const nodeTypes = {
   AspectFunction: Aspect,
   AspectLocation: Aspect,
@@ -78,15 +74,22 @@ const edgeTypes = {
   BlockEdgeType: BlockEdgeType,
 };
 
-const FlowBlock: React.FC<FlowBlockProps> = ({ nodeId }: FlowBlockProps) => {
+const FlowBlock = () => {
   const dispatch = useDispatch();
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>();
 
+  let nodeId: string;
+
   const projectState = useSelector<RootState>(
     (state) => state.projectState
   ) as ProjectState;
+
+  if (projectState.project) {
+    const node = projectState.project.nodes.find((node) => node.isSelected);
+    nodeId = node ? node.id : "";
+  }
 
   const onConnectStop = (e) => {
     e.preventDefault();
