@@ -26,6 +26,7 @@ const CreateOffPageNode = (
   projectState: ProjectState,
   data: CreateOffPageData
 ): OffPageNodeCreator => {
+  console.log("create node");
   const parentNode = projectState.project.nodes.find(
     (x) => x.id === data.parentNodeId
   );

@@ -15,4 +15,5 @@ export { default as GetNodes } from "./GetNodes";
 export { default as GetEdges } from "./GetEdges";
 export { default as GetRelationshipColor } from "./GetRelationshipColor";
 export { default as GetLegendData } from "./GetLegendData";
+export { default as UseRepositionNodes } from "./UseRepositionNodes";
 export * from "./types";

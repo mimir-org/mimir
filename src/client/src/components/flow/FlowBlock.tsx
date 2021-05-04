@@ -58,6 +58,8 @@ import {
   OffPageNodeCreator,
 } from "./helpers";
 
+import store from "../../redux/store";
+
 const nodeTypes = {
   AspectFunction: Aspect,
   AspectLocation: Aspect,
@@ -214,12 +216,13 @@ const FlowBlock = () => {
     [nodeId, projectState.project]
   );
 
-  const onDragOver = (event) => {
-    event.preventDefault();
-    event.dataTransfer.dropEffect = "move";
-  };
+  //   const onDragOver = (event) => {
+  //     event.preventDefault();
+  //     event.dataTransfer.dropEffect = "move";
+  //   };
 
   const onNodeDragStop = (_event, node) => {
+    console.log("drop");
     const [width] = GetReactFlowBoundingRectData();
     const x = node.type === NODE_TYPE.OFF_PAGE ? width - 120 : node.position.x;
     dispatch(updatePosition(node.id, x, node.position.y));
@@ -266,6 +269,17 @@ const FlowBlock = () => {
     dispatch(changeActiveNode(element.id));
   };
 
+  const onReposition = () => {
+    const nodes = store.getState().projectState.project.nodes;
+    const [width] = GetReactFlowBoundingRectData();
+    const x = width - 120;
+
+    for (let i = 0; i < nodes.length; i++) {
+      if (nodes[i].type === NODE_TYPE.OFF_PAGE)
+        dispatch(updatePosition(nodes[i].id, x, nodes[i].positionY));
+    }
+  };
+
   // Force rerender
   useEffect(() => {
     onLoad(reactFlowInstance);
@@ -273,6 +287,7 @@ const FlowBlock = () => {
 
   window.onresize = () => {
     onLoad(reactFlowInstance);
+    onReposition();
   };
 
   // Handling of project loading
@@ -294,7 +309,7 @@ const FlowBlock = () => {
               onElementsRemove={onElementsRemove}
               onLoad={onLoad}
               onDrop={onDrop}
-              onDragOver={onDragOver}
+              //   onDragOver={onDragOver}
               onNodeDragStop={onNodeDragStop}
               onElementClick={onElementClick}
               nodeTypes={nodeTypes}
@@ -303,7 +318,7 @@ const FlowBlock = () => {
               onConnectStart={onConnectStart}
             >
               <Controls />
-              <MiniMap />
+              {/* <MiniMap /> */}
             </ReactFlow>
           </div>
         </ReactFlowProvider>
