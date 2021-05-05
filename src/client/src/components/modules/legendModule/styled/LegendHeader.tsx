@@ -8,7 +8,7 @@ const LegendHeader = styled.div`
   font-size: 18px;
   display: inline-flex;
   align-items: center;
-  margin: 18px 0px 0px 28px;
+  margin: 18px 0px 0px 138px;
   visibility: ${(props: { visible: boolean }) =>
     props.visible ? "initial" : "hidden"};
 `;

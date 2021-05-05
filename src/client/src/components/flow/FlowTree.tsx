@@ -1,54 +1,29 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { get } from "../../redux/store/project/actions";
-
-import ReactFlow, {
-  ReactFlowProvider,
-  addEdge,
-  removeElements,
-  Controls,
-  ArrowHeadType,
-  Elements,
-} from "react-flow-renderer";
-
-import {
-  addNode,
-  removeNode,
-  createEdge,
-  removeEdge,
-  updatePosition,
-  changeActiveNode,
-} from "../../redux/store/project/actions";
-import { ProjectState } from "../../redux/store/project/types";
-import { RootState } from "./../../redux/store/index";
-import { NodeType, Node, LibNode, Edge, EDGE_TYPE } from "../../models/project";
-
-import { Aspect, Function, Product, Location } from "./nodes";
-import { DefaultEdgeType } from "./edges";
-import {
-  CreateId,
-  CreateElementNode,
-  CreateProjectElementNodes,
-} from "./helpers";
 import { MiniMap } from "./";
 import { ProjectOptions } from "../project";
+import { ProjectState } from "../../redux/store/project/types";
+import { RootState } from "./../../redux/store/index";
+import { useOnConnect, useOnDrop, useOnElementsRemove } from "./hooks";
 import {
   GetProject,
   HasProject,
 } from "../../redux/store/localStorage/localStorage";
-
-const nodeTypes = {
-  AspectFunction: Aspect,
-  AspectLocation: Aspect,
-  AspectProduct: Aspect,
-  Function: Function,
-  Product: Product,
-  Location: Location,
-};
-
-const edgeTypes = {
-  DefaultEdgeType: DefaultEdgeType,
-};
+import {
+  updatePosition,
+  changeActiveNode,
+} from "../../redux/store/project/actions";
+import {
+  CreateProjectElementNodes,
+  GetTreeNodeTypes,
+  GetTreeEdgeTypes,
+} from "./helpers";
+import ReactFlow, {
+  ReactFlowProvider,
+  Controls,
+  Elements,
+} from "react-flow-renderer";
 
 const FlowTree = () => {
   const dispatch = useDispatch();
@@ -60,69 +35,11 @@ const FlowTree = () => {
     (state) => state.projectState
   ) as ProjectState;
 
-  const onConnect = (params) => {
-    const createdId = CreateId();
-    const sourceNode = projectState.project.nodes.find(
-      (x) => x.id === params.source
-    ) as Node;
-    const targetNode = projectState.project.nodes.find(
-      (x) => x.id === params.target
-    ) as Node;
-    const existingEdge = projectState.project.edges.find(
-      (x) =>
-        x.fromConnector === params.sourceHandle &&
-        x.toConnector === params.targetHandle &&
-        x.fromNode === sourceNode.id &&
-        x.toNode === targetNode.id &&
-        x.isHidden === targetNode.isHidden
-    );
-
-    if (!existingEdge) {
-      const edge: Edge = {
-        id: createdId,
-        fromConnector: params.sourceHandle,
-        toConnector: params.targetHandle,
-        fromNode: sourceNode.id,
-        toNode: targetNode.id,
-        isHidden: sourceNode.isHidden,
-        parentType: sourceNode.type,
-        targetType: targetNode.type,
-      };
-
-      dispatch(createEdge(edge));
-    }
-
-    return setElements((els) => {
-      return addEdge(
-        {
-          ...params,
-          id: createdId,
-          type: EDGE_TYPE.DEFAULT,
-          arrowHeadType: ArrowHeadType.ArrowClosed,
-          label: "",
-          data: {
-            source: sourceNode,
-            target: targetNode,
-          },
-        },
-        els
-      );
-    });
+  const OnElementsRemove = (elementsToRemove) => {
+    return useOnElementsRemove(elementsToRemove, setElements, dispatch);
   };
 
-  const onElementsRemove = (elementsToRemove) => {
-    elementsToRemove.forEach((element) => {
-      if (element.type === EDGE_TYPE.DEFAULT) {
-        dispatch(removeEdge(element.id));
-      } else {
-        dispatch(removeNode(element.id));
-      }
-    });
-
-    return setElements((els) => removeElements(elementsToRemove, els));
-  };
-
-  const onLoad = useCallback(
+  const OnLoad = useCallback(
     (_reactFlowInstance) => {
       setElements(CreateProjectElementNodes(projectState.project));
       return setReactFlowInstance(_reactFlowInstance);
@@ -130,60 +47,37 @@ const FlowTree = () => {
     [projectState.project]
   );
 
-  const onDragOver = (event) => {
+  const OnConnect = (params) => {
+    return useOnConnect(params, projectState, setElements, dispatch);
+  };
+
+  const OnDragOver = (event) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = "move";
   };
 
-  const onNodeDragStop = (_event, node) => {
+  const OnNodeDragStop = (_event, node) => {
     dispatch(updatePosition(node.id, node.position.x, node.position.y));
   };
 
-  const onDrop = (event) => {
-    event.preventDefault();
-    const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
-    const data = JSON.parse(
-      event.dataTransfer.getData("application/reactflow")
-    ) as LibNode;
-
-    const position = reactFlowInstance.project({
-      x: event.clientX - reactFlowBounds.left,
-      y: event.clientY - reactFlowBounds.top,
-    });
-
-    const node = {
-      id: CreateId(),
-      name: data.name,
-      label: data.label ?? data.name,
-      type: data.type as NodeType,
-      positionX: position.x,
-      positionY: position.y,
-      connectors: data.connectors,
-      attributes: data.attributes,
-      icon: data.icon,
-    } as Node;
-
-    node.connectors?.forEach((c) => {
-      c.id = CreateId();
-      c.nodeId = node.id;
-    });
-
-    node.attributes?.forEach((a) => {
-      a.nodeId = node.id;
-    });
-
-    dispatch(addNode(node));
-    setElements((es) => es.concat(CreateElementNode(node)));
+  const OnDrop = (_event) => {
+    return useOnDrop(
+      _event,
+      dispatch,
+      setElements,
+      reactFlowInstance,
+      reactFlowWrapper
+    );
   };
 
-  const onElementClick = (event, element) => {
+  const OnElementClick = (event, element) => {
     dispatch(changeActiveNode(element.id));
   };
 
   // Force rerender
   useEffect(() => {
-    onLoad(reactFlowInstance);
-  }, [onLoad, reactFlowInstance]);
+    OnLoad(reactFlowInstance);
+  }, [OnLoad, reactFlowInstance]);
 
   // Handling of project loading
   useEffect(() => {
@@ -194,21 +88,21 @@ const FlowTree = () => {
   }, [dispatch, projectState.project]);
 
   return (
-    <div className="dndflow">
+    <>
       {projectState.project && (
         <ReactFlowProvider>
           <div className="reactflow-wrapper" ref={reactFlowWrapper}>
             <ReactFlow
               elements={elements}
-              onConnect={onConnect}
-              onElementsRemove={onElementsRemove}
-              onLoad={onLoad}
-              onDrop={onDrop}
-              onDragOver={onDragOver}
-              onNodeDragStop={onNodeDragStop}
-              onElementClick={onElementClick}
-              nodeTypes={nodeTypes}
-              edgeTypes={edgeTypes}
+              onConnect={OnConnect}
+              onElementsRemove={OnElementsRemove}
+              onLoad={OnLoad}
+              onDrop={OnDrop}
+              onDragOver={OnDragOver}
+              onNodeDragStop={OnNodeDragStop}
+              onElementClick={OnElementClick}
+              nodeTypes={GetTreeNodeTypes}
+              edgeTypes={GetTreeEdgeTypes}
             >
               <Controls />
               <MiniMap />
@@ -221,7 +115,7 @@ const FlowTree = () => {
           <ProjectOptions />
         </div>
       )}
-    </div>
+    </>
   );
 };
 

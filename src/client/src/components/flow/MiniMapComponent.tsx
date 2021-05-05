@@ -1,4 +1,5 @@
 import { MiniMap, Node } from "react-flow-renderer";
+import { Color } from "../../componentLibrary";
 import { NODE_TYPE } from "../../models/project";
 
 const MiniMapComponent = () => {
@@ -6,13 +7,13 @@ const MiniMapComponent = () => {
 
   const GetColor = (node: Node): string => {
     node.type === NODE_TYPE.FUNCTION || node.type === NODE_TYPE.ASPECT_FUNCTION
-      ? (color = "yellow")
+      ? (color = Color.AspectFunction)
       : node.type === NODE_TYPE.PRODUCT ||
         node.type === NODE_TYPE.ASPECT_PRODUCT
-      ? (color = "turquoise")
+      ? (color = Color.AspectProduct)
       : node.type === NODE_TYPE.LOCATION ||
         node.type === NODE_TYPE.ASPECT_LOCATION
-      ? (color = "magenta")
+      ? (color = Color.AspectLocation)
       : (color = null);
     return color;
   };

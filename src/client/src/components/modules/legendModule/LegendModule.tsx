@@ -1,6 +1,13 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { LegendIcon } from "../../../assets";
+import { VerticalScrollbar } from "../../../componentLibrary";
+import { SidebarWrapper } from "../libraryModule/styled";
+import textResources from "../../../textResources";
+import { ProjectState } from "../../../redux/store/project/types";
+import { RootState } from "../../../redux/store";
+import { LoadState } from "../../../redux/store/localStorage/localStorage";
+import { GetLegendData, Legend } from "../../flow/helpers";
 import {
   LegendHeader,
   LegendIconWrapper,
@@ -8,12 +15,6 @@ import {
   TransportWrapper,
   TransportColor,
 } from "./styled";
-import { SidebarWrapper } from "../libraryModule/styled";
-import textResources from "../../../textResources";
-import { ProjectState } from "../../../redux/store/project/types";
-import { RootState } from "../../../redux/store";
-import { LoadState } from "../../../redux/store/localStorage/localStorage";
-import { GetLegendData, Legend } from "../../flow/helpers";
 
 interface Props {
   visible: boolean;
@@ -45,25 +46,27 @@ const LegendModule = ({ visible }: Props) => {
 
   return (
     <>
-      <LegendHeader visible={visible}>
-        <LegendIconWrapper>
-          <img src={LegendIcon} alt="legend-icon" />
-        </LegendIconWrapper>
-        {textResources.Legend_Heading}
-      </LegendHeader>
-      <SidebarWrapper visible={visible}>
-        {legends &&
-          legends.map((legend) => {
-            return (
-              <LegendContent key={legend.key}>
-                <TransportWrapper>
-                  <p>{legend.name}</p>
-                  <TransportColor color={legend.color}></TransportColor>
-                </TransportWrapper>
-              </LegendContent>
-            );
-          })}
-      </SidebarWrapper>
+      <VerticalScrollbar visible={visible}>
+        <LegendHeader visible={visible}>
+          <LegendIconWrapper>
+            <img src={LegendIcon} alt="legend-icon" />
+          </LegendIconWrapper>
+          {textResources.Legend_Heading}
+        </LegendHeader>
+        <SidebarWrapper visible={visible}>
+          {legends &&
+            legends.map((legend) => {
+              return (
+                <LegendContent key={legend.key}>
+                  <TransportWrapper>
+                    <p>{legend.name}</p>
+                    <TransportColor color={legend.color}></TransportColor>
+                  </TransportWrapper>
+                </LegendContent>
+              );
+            })}
+        </SidebarWrapper>
+      </VerticalScrollbar>
     </>
   );
 };
