@@ -4,14 +4,16 @@ using Mb.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Mb.Core.Migrations
 {
     [DbContext(typeof(ModelBuilderDbContext))]
-    partial class ModelBuilderDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210505071902_LibraryTypeComponentJsonData")]
+    partial class LibraryTypeComponentJsonData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -238,10 +240,6 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("Id");
 
-                    b.Property<int>("Height")
-                        .HasColumnType("int")
-                        .HasColumnName("Height");
-
                     b.Property<string>("Icon")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -259,22 +257,10 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Label");
 
-                    b.Property<int>("Length")
-                        .HasColumnType("int")
-                        .HasColumnName("Length");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Name");
-
-                    b.Property<decimal>("PositionBlockX")
-                        .HasColumnType("decimal(18,4)")
-                        .HasColumnName("PositionBlockX");
-
-                    b.Property<decimal>("PositionBlockY")
-                        .HasColumnType("decimal(18,4)")
-                        .HasColumnName("PositionBlockY");
 
                     b.Property<decimal>("PositionX")
                         .HasColumnType("decimal(18,4)")
@@ -284,31 +270,10 @@ namespace Mb.Core.Migrations
                         .HasColumnType("decimal(18,4)")
                         .HasColumnName("PositionY");
 
-                    b.Property<string>("SemanticId")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("SemanticId");
-
-                    b.Property<string>("TagNumber")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("TagNumber");
-
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Type");
-
-                    b.Property<DateTime>("Updated")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("Updated");
-
-                    b.Property<string>("UpdatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("UpdatedBy");
-
-                    b.Property<int>("Width")
-                        .HasColumnType("int")
-                        .HasColumnName("Width");
 
                     b.HasKey("Id");
 

@@ -4,847 +4,968 @@
     "Name": "Drilling system",
     "IsFunction": true,
     "IsProduct": false,
-    "IsLocation": false
+    "IsLocation": false,
+    "Category": "FunctionalSystems"
   },
   {
     "Code": "B",
     "Name": "Production system",
     "IsFunction": true,
     "IsProduct": false,
-    "IsLocation": false
+    "IsLocation": false,
+    "Category": "FunctionalSystems"
   },
   {
     "Code": "C",
     "Name": "Transportation system",
     "IsFunction": true,
     "IsProduct": false,
-    "IsLocation": false
+    "IsLocation": false,
+    "Category": "FunctionalSystems"
   },
   {
     "Code": "D",
     "Name": "Processing system",
     "IsFunction": true,
     "IsProduct": false,
-    "IsLocation": false
+    "IsLocation": false,
+    "Category": "FunctionalSystems"
   },
   {
     "Code": "E",
     "Name": "Injection system",
     "IsFunction": true,
     "IsProduct": false,
-    "IsLocation": false
+    "IsLocation": false,
+    "Category": "FunctionalSystems"
   },
   {
     "Code": "F",
     "Name": "Storage system",
     "IsFunction": true,
     "IsProduct": false,
-    "IsLocation": false
+    "IsLocation": false,
+    "Category": "FunctionalSystems"
   },
   {
     "Code": "G",
     "Name": "Fixation system",
     "IsFunction": true,
     "IsProduct": false,
-    "IsLocation": false
+    "IsLocation": false,
+    "Category": "FunctionalSystems"
   },
   {
     "Code": "H",
     "Name": "Safety system",
     "IsFunction": true,
     "IsProduct": false,
-    "IsLocation": false
+    "IsLocation": false,
+    "Category": "FunctionalSystems"
   },
   {
     "Code": "J",
     "Name": "Infrastructure system",
     "IsFunction": true,
     "IsProduct": false,
-    "IsLocation": false
+    "IsLocation": false,
+    "Category": "FunctionalSystems"
   },
   {
     "Code": "HA",
     "Name": "Fluid supply system",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "TechnicalSystems"
   },
   {
     "Code": "HC",
     "Name": "Solid matter supply system",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "TechnicalSystems"
   },
   {
     "Code": "HD",
     "Name": "Electrical power supply system",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "TechnicalSystems"
   },
   {
     "Code": "HF",
     "Name": "Thermal energy supply system",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "TechnicalSystems"
   },
   {
     "Code": "HE",
     "Name": "Mechanical energy supply system",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "TechnicalSystems"
   },
   {
     "Code": "JA",
     "Name": "Fluid transport/distribution system",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "TechnicalSystems"
   },
   {
     "Code": "JC",
     "Name": "Solid matter transport/distribution system",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "TechnicalSystems"
   },
   {
     "Code": "JD",
     "Name": "Electrical power transport/distribution system",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "TechnicalSystems"
   },
   {
     "Code": "JF",
     "Name": "Thermal energy transport/distribution system",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "TechnicalSystems"
   },
   {
     "Code": "JE",
     "Name": "Mechanical energy transport/distribution system",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "TechnicalSystems"
   },
   {
     "Code": "KA",
     "Name": "Flow controlling system",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "TechnicalSystems"
   },
   {
     "Code": "KB",
     "Name": "Threshold controlling system",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "TechnicalSystems"
   },
   {
     "Code": "KC",
     "Name": "Separation system",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "TechnicalSystems"
   },
   {
     "Code": "KD",
     "Name": "Mixing system",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "TechnicalSystems"
   },
   {
     "Code": "KE",
     "Name": "Pumping system",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "TechnicalSystems"
   },
   {
     "Code": "KF",
     "Name": "Transforming system",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "TechnicalSystems"
   },
   {
     "Code": "KG",
     "Name": "Signal transformer system",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "TechnicalSystems"
   },
   {
     "Code": "KH",
     "Name": "Solid matter transformation system",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "TechnicalSystems"
   },
   {
     "Code": "QA",
     "Name": "Fluid storage system",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "TechnicalSystems"
   },
   {
     "Code": "QD",
     "Name": "Electrical energy storage system",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "TechnicalSystems"
   },
   {
     "Code": "QF",
     "Name": "Thermal energy storage system",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "TechnicalSystems"
   },
   {
     "Code": "SA",
     "Name": "Mechanical - electrical conversion system",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "TechnicalSystems"
   },
   {
     "Code": "SB",
     "Name": "Mechanical - pressure - kinetic conversion system",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "TechnicalSystems"
   },
   {
     "Code": "SC",
     "Name": "Mechanical - enthalpy conversion system",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "TechnicalSystems"
   },
   {
     "Code": "SD",
     "Name": "Chemical - enthalpy conversion system",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "TechnicalSystems"
   },
   {
     "Code": "SE",
     "Name": "Chemical - electrical conversion system",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "TechnicalSystems"
   },
   {
     "Code": "BFA",
     "Name": "Flow transmitter",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "BGA",
     "Name": "Position transmitter",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "BLA",
     "Name": "Level transmitter",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "BPA",
     "Name": "Absolute pressure transmitter",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "BPC",
     "Name": "Differential pressure transmitter",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "BTA",
     "Name": "Temperature transmitter",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "CCA",
     "Name": "Rechargeable battery",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "CLA",
     "Name": "Pool",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "CMA",
     "Name": "Tank",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "EBA",
     "Name": "Electric boiler",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "EGC",
     "Name": "Heat exchanger",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "EQB",
     "Name": "Cooling panel (condenser)",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "FCA",
     "Name": "Fuse, overcurrent",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "FCB",
     "Name": "Circuit-breaker, overcurrent",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "FLA",
     "Name": "Safety valve",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "FLB",
     "Name": "Safety damper",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "FLD",
     "Name": "Rupture disc",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "FLE",
     "Name": "Expansion tank",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "GAA",
     "Name": "AC generator",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "GAB",
     "Name": "DC generator",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "GPA",
     "Name": "Positive displacement pump",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "GPB",
     "Name": "Liquid velocity pump",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "GQA",
     "Name": "Gas compressor",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "HMA",
     "Name": "Settling tank (gravity based separator)",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "HMB",
     "Name": "Centrifuge (centrifugal separator)",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "HMC",
     "Name": "Cyclone (vortex separator)",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "HPA",
     "Name": "Dryer",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "HPB",
     "Name": "Distillation column",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "HRA",
     "Name": "Electrostatic separator (Electrocoalescer)",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "HSA",
     "Name": "Ion exchanger (Eletrolyser, Electrochlorinator)",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "HSB",
     "Name": "Absorber",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "HSC",
     "Name": "Adsorber",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "HVB",
     "Name": "Flocculator",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "HWA",
     "Name": "Mixer",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "HXA",
     "Name": "Chemical reactor",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "MAA",
     "Name": "Electric motor",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "MLE",
     "Name": "Gas turbine",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "MSB",
     "Name": "Diesel cycle engine",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "QAB",
     "Name": "Circuit breaker, electrical circuit control",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "QMA",
     "Name": "Shutoff valve, fluid on/off control",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "QNA",
     "Name": "Control valve, fluid regulation control",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "RMA",
     "Name": "Non-return valve, fluid one-way barrier",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "RQA",
     "Name": "Insulation, thermal",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "RQC",
     "Name": "Noise barrier",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "TAA",
     "Name": "Transformer, electrical",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "TAB",
     "Name": "DC/DC converter, electrical",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "TAC",
     "Name": "Frequency converter, electrical",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "TBA",
     "Name": "Rectifier, electrical",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "TBB",
     "Name": "Inverter, electrical",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "TLA",
     "Name": "Gear, mechanical",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "TLB",
     "Name": "Torque converter",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Components"
   },
   {
     "Code": "WB",
     "Name": "High Voltage Transport ",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Transports"
   },
   {
     "Code": "WD",
     "Name": "Low Voltage Transport ",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Transports"
   },
   {
     "Code": "WG",
     "Name": "Communication Transport ",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Transports"
   },
   {
     "Code": "WM",
     "Name": "Fluid open conduit Transport ",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Transports"
   },
   {
     "Code": "WP",
     "Name": "Fluid closed conduit Transport ",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Transports"
   },
   {
     "Code": "WQ",
     "Name": "Mechanical energy Transport ",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Transports"
   },
   {
     "Code": "WV",
     "Name": "Thermal energy Transport ",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Transports"
   },
   {
     "Code": "WZ",
     "Name": "Multiple kinds combined Transport ",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Transports"
   },
   {
     "Code": "XB",
     "Name": "High Voltage  Interface",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": false
+    "IsLocation": false,
+    "Category": "Interfaces"
   },
   {
     "Code": "XD",
     "Name": "Low Voltage  Interface",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": false
+    "IsLocation": false,
+    "Category": "Interfaces"
   },
   {
     "Code": "XG",
     "Name": "Communication  Interface",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": false
+    "IsLocation": false,
+    "Category": "Interfaces"
   },
   {
     "Code": "XK",
     "Name": "Fluid open conduit  Interface",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": false
+    "IsLocation": false,
+    "Category": "Interfaces"
   },
   {
     "Code": "XM",
     "Name": "Fluid closed conduit  Interface",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": false
+    "IsLocation": false,
+    "Category": "Interfaces"
   },
   {
     "Code": "XN",
     "Name": "Mechanical energy  Interface",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": false
+    "IsLocation": false,
+    "Category": "Interfaces"
   },
   {
     "Code": "XV",
     "Name": "Thermal energy  Interface",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": false
+    "IsLocation": false,
+    "Category": "Interfaces"
   },
   {
     "Code": "XZ",
     "Name": "Multiple kinds combined  Interface",
     "IsFunction": true,
     "IsProduct": true,
-    "IsLocation": false
+    "IsLocation": false,
+    "Category": "Interfaces"
   },
   {
     "Code": "BAA",
     "Name": "Working space",
     "IsFunction": false,
     "IsProduct": false,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Spaces"
   },
   {
     "Code": "CAA",
     "Name": "Storage space",
     "IsFunction": false,
     "IsProduct": false,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Spaces"
   },
   {
     "Code": "DAA",
     "Name": "Equipment space",
     "IsFunction": false,
     "IsProduct": false,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Spaces"
   },
   {
     "Code": "EAA",
     "Name": "Connecting space",
     "IsFunction": false,
     "IsProduct": false,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Spaces"
   },
   {
     "Code": "PAA",
     "Name": "Processing space",
     "IsFunction": false,
     "IsProduct": false,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "Spaces"
   },
   {
     "Code": "AAA",
     "Name": "Underground reservoir",
     "IsFunction": false,
     "IsProduct": false,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "ConstructionEntities"
   },
   {
     "Code": "BBA",
     "Name": "Integrated extraction entity",
     "IsFunction": false,
     "IsProduct": false,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "ConstructionEntities"
   },
   {
     "Code": "BBB",
     "Name": "Drilling entity",
     "IsFunction": false,
     "IsProduct": false,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "ConstructionEntities"
   },
   {
     "Code": "BBC",
     "Name": "Well interface entity",
     "IsFunction": false,
     "IsProduct": false,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "ConstructionEntities"
   },
   {
     "Code": "BBD",
     "Name": "Transportation entity",
     "IsFunction": false,
     "IsProduct": false,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "ConstructionEntities"
   },
   {
     "Code": "BBE",
     "Name": "Routing entity",
     "IsFunction": false,
     "IsProduct": false,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "ConstructionEntities"
   },
   {
     "Code": "BBF",
     "Name": "Processing entity",
     "IsFunction": false,
     "IsProduct": false,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "ConstructionEntities"
   },
   {
     "Code": "BBG",
     "Name": "Matter storage entity",
     "IsFunction": false,
     "IsProduct": false,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "ConstructionEntities"
   },
   {
     "Code": "BBH",
     "Name": "Disposal entity",
     "IsFunction": false,
     "IsProduct": false,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "ConstructionEntities"
   },
   {
     "Code": "BBJ",
     "Name": "Injection entity",
     "IsFunction": false,
     "IsProduct": false,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "ConstructionEntities"
   },
   {
     "Code": "A",
     "Name": "Offshore complex",
     "IsFunction": false,
     "IsProduct": false,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "ConstructionEntities"
   },
   {
     "Code": "B",
     "Name": "Onshore complex",
     "IsFunction": false,
     "IsProduct": false,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "ConstructionEntities"
   },
   {
     "Code": "C",
     "Name": "Transition complex",
     "IsFunction": false,
     "IsProduct": false,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "ConstructionEntities"
   },
   {
     "Code": "D",
     "Name": "Interconnection complex",
     "IsFunction": false,
     "IsProduct": false,
-    "IsLocation": true
+    "IsLocation": true,
+    "Category": "ConstructionEntities"
   }
 ]
 

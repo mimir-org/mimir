@@ -4,14 +4,16 @@ using Mb.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Mb.Core.Migrations
 {
     [DbContext(typeof(ModelBuilderDbContext))]
-    partial class ModelBuilderDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210504161346_AttributeTypesConverter")]
+    partial class AttributeTypesConverter
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -183,64 +185,11 @@ namespace Mb.Core.Migrations
                     b.ToTable("Edge");
                 });
 
-            modelBuilder.Entity("Mb.Models.LibraryTypeComponent", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("Id");
-
-                    b.Property<string>("Aspect")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Aspect");
-
-                    b.Property<string>("AttributeJson")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("AttributeJson");
-
-                    b.Property<string>("ObjectType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ObjectType");
-
-                    b.Property<string>("Rds")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Rds");
-
-                    b.Property<string>("RdsCategory")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("RdsCategory");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Status");
-
-                    b.Property<string>("TerminalJson")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("TerminalJson");
-
-                    b.Property<string>("TypeName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("TypeName");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("LibraryTypeComponent");
-                });
-
             modelBuilder.Entity("Mb.Models.Node", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("Id");
-
-                    b.Property<int>("Height")
-                        .HasColumnType("int")
-                        .HasColumnName("Height");
 
                     b.Property<string>("Icon")
                         .IsRequired()
@@ -259,22 +208,10 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Label");
 
-                    b.Property<int>("Length")
-                        .HasColumnType("int")
-                        .HasColumnName("Length");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Name");
-
-                    b.Property<decimal>("PositionBlockX")
-                        .HasColumnType("decimal(18,4)")
-                        .HasColumnName("PositionBlockX");
-
-                    b.Property<decimal>("PositionBlockY")
-                        .HasColumnType("decimal(18,4)")
-                        .HasColumnName("PositionBlockY");
 
                     b.Property<decimal>("PositionX")
                         .HasColumnType("decimal(18,4)")
@@ -284,31 +221,10 @@ namespace Mb.Core.Migrations
                         .HasColumnType("decimal(18,4)")
                         .HasColumnName("PositionY");
 
-                    b.Property<string>("SemanticId")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("SemanticId");
-
-                    b.Property<string>("TagNumber")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("TagNumber");
-
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Type");
-
-                    b.Property<DateTime>("Updated")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("Updated");
-
-                    b.Property<string>("UpdatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("UpdatedBy");
-
-                    b.Property<int>("Width")
-                        .HasColumnType("int")
-                        .HasColumnName("Width");
 
                     b.HasKey("Id");
 
