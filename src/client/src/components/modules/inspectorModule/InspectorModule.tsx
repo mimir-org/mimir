@@ -9,6 +9,7 @@ import { InspectorTabsHeader } from "./styled";
 import { InspectorTitle } from "./styled";
 import InspectorTabs from "./InspectorTabs";
 import { Size } from "../../../componentLibrary";
+import { MODULE_TYPE } from "../../../models/project";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import {
   LoadState,
@@ -17,7 +18,7 @@ import {
 
 const InspectorModule = () => {
   const dispatch = useDispatch();
-  const key = "inspector";
+  const key = MODULE_TYPE.INSPECTOR;
   const [isOpen, setIsOpen] = useState(LoadState(key));
   const [animate, setAnimate] = useState(false);
 

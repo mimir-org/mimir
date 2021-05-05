@@ -10,6 +10,8 @@ import { LibraryState } from "../../../redux/store/library/types";
 import { searchLibrary } from "../../../redux/store/library/actions";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import { LibraryIcon, ToggleIconLeft, ToggleIconRight } from "../../../assets";
+import { MODULE_TYPE } from "../../../models/project";
+import { Size } from "../../../componentLibrary";
 import {
   LoadState,
   SaveState,
@@ -22,10 +24,9 @@ import {
   CollapsedIcon,
   LibraryWrapper,
 } from "./styled";
-import { Size } from "../../../componentLibrary";
 
 const LibraryModule = () => {
-  const key = "library";
+  const key = MODULE_TYPE.LIBRARY;
   const dispatch = useDispatch();
   const [isOpen, setIsOpen]: [boolean, any] = useState(LoadState(key));
   const [animate, setAnimate] = useState(false);

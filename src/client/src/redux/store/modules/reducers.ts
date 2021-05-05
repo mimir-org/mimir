@@ -1,19 +1,20 @@
+import { MODULE_TYPE } from "../../../models/project";
 import { LoadState } from "../localStorage/localStorage";
 import { CHANGE_MODULE_VISIBILITY } from "./types";
 
 const initialState = {
   type: [
     {
-      type: "inspector",
-      visible: LoadState("inspector"),
+      type: MODULE_TYPE.INSPECTOR,
+      visible: LoadState(MODULE_TYPE.INSPECTOR),
     },
     {
-      type: "library",
-      visible: LoadState("library"),
+      type: MODULE_TYPE.LIBRARY,
+      visible: LoadState(MODULE_TYPE.LIBRARY),
     },
     {
-      type: "explorer",
-      visible: LoadState("explorer"),
+      type: MODULE_TYPE.EXPLORER,
+      visible: LoadState(MODULE_TYPE.EXPLORER),
     },
   ],
 };

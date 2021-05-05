@@ -8,6 +8,7 @@ import textResources from "../../../textResources";
 import AnimatedMenu from "./styled/animated/AnimatedMenu";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import { Size } from "../../../componentLibrary";
+import { MODULE_TYPE } from "../../../models/project";
 import {
   LoadState,
   SaveState,
@@ -23,7 +24,7 @@ import {
 
 export const ExplorerModule = () => {
   const dispatch = useDispatch();
-  const key = "explorer";
+  const key = MODULE_TYPE.EXPLORER;
   const [isOpen, setIsOpen] = useState(LoadState(key));
   const [animate, setAnimate] = useState(false);
 
@@ -36,7 +37,6 @@ export const ExplorerModule = () => {
 
   const start = isOpen ? Size.ModuleClosed : Size.ModuleOpen;
   const stop = isOpen ? Size.ModuleOpen : Size.ModuleClosed;
-  console.log(start, stop);
 
   const hasProject = useSelector<RootState>(
     (state) => state.projectState.project !== null
