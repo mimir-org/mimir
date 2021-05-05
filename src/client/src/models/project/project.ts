@@ -52,6 +52,13 @@ export const MODULE_TYPE = {
   LEGEND: "Legend",
 };
 
+export type ViewType = keyof typeof VIEW_TYPE;
+
+export const VIEW_TYPE = {
+  BLOCKVIEW: "Blockview",
+  TREEVIEW: "Treeview",
+};
+
 export type IconType = keyof typeof ICON_TYPE;
 
 export const ICON_TYPE = {
