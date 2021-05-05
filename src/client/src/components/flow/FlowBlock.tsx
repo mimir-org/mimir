@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { ProjectOptions } from "../project";
 import { ProjectState } from "../../redux/store/project/types";
 import { RootState } from "./../../redux/store/index";
-
 import ReactFlow, { ReactFlowProvider, Elements } from "react-flow-renderer";
 import { changeActiveNode, get } from "../../redux/store/project/actions";
 import {
@@ -15,7 +14,6 @@ import {
   GetBlockNodeTypes,
   GetBlockEdgeTypes,
 } from "./helpers";
-
 import {
   useOnConnect,
   useOnConnectStart,

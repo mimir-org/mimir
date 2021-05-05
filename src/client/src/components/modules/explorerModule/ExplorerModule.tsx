@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { useState } from "react";
 import { ExplorerIcon, ToggleIconLeft, ToggleIconRight } from "../../../assets";
@@ -6,6 +6,7 @@ import ProjectComponent from "./projectComponent/ProjectComponent";
 import { SwitchViewComponent } from "./switchviewComponent/SwitchViewComponent";
 import textResources from "../../../textResources";
 import AnimatedMenu from "./styled/animated/AnimatedMenu";
+import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import {
   LoadState,
   SaveState,
@@ -20,6 +21,7 @@ import {
 } from "./styled";
 
 export const ExplorerModule = () => {
+  const dispatch = useDispatch();
   const key = "explorer";
   const [isOpen, setIsOpen] = useState(LoadState(key));
   const [animate, setAnimate] = useState(false);
@@ -28,7 +30,9 @@ export const ExplorerModule = () => {
     SaveState(!isOpen, key);
     setIsOpen(!isOpen);
     setAnimate(true);
+    dispatch(changeModuleVisibility(key, !isOpen));
   };
+
   const startHeight = isOpen ? "35" : "331";
   const stopHeight = isOpen ? "331" : "35";
 
@@ -43,21 +47,12 @@ export const ExplorerModule = () => {
           <ExplorerTitle>{textResources.Explorer_view}</ExplorerTitle>
           <img src={ExplorerIcon} alt="explorerIcon" />
         </IconWrapper>
-        {isOpen ? (
-          <img
-            src={ToggleIconLeft}
-            alt="toggle-icon"
-            style={{ cursor: "pointer" }}
-            onClick={handleClick}
-          />
-        ) : (
-          <img
-            src={ToggleIconRight}
-            alt="toggle-icon"
-            style={{ cursor: "pointer" }}
-            onClick={handleClick}
-          />
-        )}
+        <img
+          src={isOpen ? ToggleIconLeft : ToggleIconRight}
+          alt="toggle-icon"
+          style={{ cursor: "pointer" }}
+          onClick={handleClick}
+        />
       </HeaderWrapper>
       <CollapsedIcon visible={isOpen}>
         <img src={ExplorerIcon} alt="explorerIcon" />

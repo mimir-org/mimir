@@ -1,31 +1,34 @@
-import {
-  CHANGE_EXPLORER_VISIBILITY,
-  CHANGE_INSPECTOR_VISIBILITY,
-  CHANGE_LIBRARY_VISIBILITY,
-} from "./types";
+import { LoadState } from "../localStorage/localStorage";
+import { CHANGE_MODULE_VISIBILITY } from "./types";
 
 const initialState = {
-  visible: false,
+  type: [
+    {
+      type: "inspector",
+      visible: LoadState("inspector"),
+    },
+    {
+      type: "library",
+      visible: LoadState("library"),
+    },
+    {
+      type: "explorer",
+      visible: LoadState("explorer"),
+    },
+  ],
 };
 
 export function moduleReducer(state = initialState, action) {
   switch (action.type) {
-    case CHANGE_EXPLORER_VISIBILITY:
+    case CHANGE_MODULE_VISIBILITY:
       return {
         ...state,
-        visible: action.payload.visible,
+        type: state.type.map((x, i) =>
+          state.type[i].type === action.payload.key
+            ? { ...x, visible: action.payload.visible }
+            : { ...x }
+        ),
       };
-    case CHANGE_INSPECTOR_VISIBILITY:
-      return {
-        ...state,
-        visible: action.payload.visible,
-      };
-    case CHANGE_LIBRARY_VISIBILITY:
-      return {
-        ...state,
-        visible: action.payload.visible,
-      };
-
     default:
       return state;
   }

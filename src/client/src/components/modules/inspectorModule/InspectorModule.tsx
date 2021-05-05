@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import AnimatedInspectorMenu from "./styled/animated/AnimatedInspectorMenu";
 import { useState } from "react";
@@ -8,14 +8,16 @@ import textResources from "../../../textResources";
 import { InspectorTabsHeader } from "./styled";
 import { InspectorTitle } from "./styled";
 import InspectorTabs from "./InspectorTabs";
+import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import {
   LoadState,
   SaveState,
 } from "../../../redux/store/localStorage/localStorage";
 
 const InspectorModule = () => {
+  const dispatch = useDispatch();
   const key = "inspector";
-  const [showInspector, setShowInspector] = useState(LoadState(key));
+  const [isOpen, setIsOpen] = useState(LoadState(key));
   const [animate, setAnimate] = useState(false);
 
   const hasProject = useSelector<RootState>(
@@ -23,20 +25,21 @@ const InspectorModule = () => {
   );
 
   const handleClick = () => {
-    SaveState(!showInspector, key);
-    setShowInspector(!showInspector);
+    SaveState(!isOpen, key);
+    setIsOpen(!isOpen);
     setAnimate(true);
+    dispatch(changeModuleVisibility(key, !isOpen));
   };
 
-  const startHeight = showInspector ? "38" : "290";
-  const stopHeight = showInspector ? "290" : "38";
+  const startHeight = isOpen ? "38" : "290";
+  const stopHeight = isOpen ? "290" : "38";
 
   return (
     <AnimatedInspectorMenu start={startHeight} stop={stopHeight} run={animate}>
       <InspectorTabsHeader>
         {hasProject && <InspectorTabs />}
         <ToggleButtonWrapper>
-          {showInspector ? (
+          {isOpen ? (
             <img src={ToggleIconDown} alt="toggle-icon" onClick={handleClick} />
           ) : (
             <img src={ToggleIconUp} alt="toggle-icon" onClick={handleClick} />
