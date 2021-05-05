@@ -4,4 +4,6 @@ export { default as FontSize } from "./font/FontSize";
 export { default as FontType } from "./font/FontType";
 export { default as FontWeight } from "./font/FontWeight";
 export { default as Size } from "./size/Size";
+export { default as ModuleBox } from "./box/modules/ModuleBox";
+export { default as AnimatedModule } from "./animated/AnimatedModule";
 export { default as VerticalScrollbar } from "./scrollbars/VerticalScrollbar";

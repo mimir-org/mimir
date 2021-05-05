@@ -1,5 +1,4 @@
 import textResources from "../../../textResources";
-import AnimatedMenu from "./styled/animated/AnimatedMenu";
 import { LegendWrapper } from "../legendModule/styled";
 import { LegendModule } from "../legendModule";
 import { LibrarySidebar } from "./index";
@@ -11,7 +10,7 @@ import { searchLibrary } from "../../../redux/store/library/actions";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import { LibraryIcon, ToggleIconLeft, ToggleIconRight } from "../../../assets";
 import { MODULE_TYPE } from "../../../models/project";
-import { Size } from "../../../componentLibrary";
+import { AnimatedModule, Size } from "../../../componentLibrary";
 import {
   LoadState,
   SaveState,
@@ -49,7 +48,7 @@ const LibraryModule = () => {
   const stop = isOpen ? Size.ModuleOpen : Size.ModuleClosed;
 
   return (
-    <AnimatedMenu start={start} stop={stop} run={animate}>
+    <AnimatedModule start={start} stop={stop} run={animate}>
       <LibraryWrapper visible={isOpen}>
         <HeaderWrapper>
           <img
@@ -74,7 +73,7 @@ const LibraryModule = () => {
       <LegendWrapper visible={isOpen}>
         <LegendModule visible={isOpen} />
       </LegendWrapper>
-    </AnimatedMenu>
+    </AnimatedModule>
   );
 };
 

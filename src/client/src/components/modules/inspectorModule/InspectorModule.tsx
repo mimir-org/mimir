@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import AnimatedInspectorMenu from "./styled/animated/AnimatedInspectorMenu";
 import { useState } from "react";
 import { EyeIcon, ToggleIconDown, ToggleIconUp } from "../../../assets";
 import { IconWrapper, ToggleButtonWrapper } from "./styled";
@@ -8,7 +7,7 @@ import textResources from "../../../textResources";
 import { InspectorTabsHeader } from "./styled";
 import { InspectorTitle } from "./styled";
 import InspectorTabs from "./InspectorTabs";
-import { Size } from "../../../componentLibrary";
+import { AnimatedModule, Size } from "../../../componentLibrary";
 import { MODULE_TYPE } from "../../../models/project";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import {
@@ -37,7 +36,7 @@ const InspectorModule = () => {
   const stop = isOpen ? Size.ModuleOpen : Size.ModuleClosed;
 
   return (
-    <AnimatedInspectorMenu start={start} stop={stop} run={animate}>
+    <AnimatedModule start={start} stop={stop} run={animate} type={key}>
       <InspectorTabsHeader>
         {hasProject && <InspectorTabs />}
         <ToggleButtonWrapper>
@@ -52,7 +51,7 @@ const InspectorModule = () => {
           <img src={EyeIcon} alt="inspector-icon" />
         </IconWrapper>
       </InspectorTabsHeader>
-    </AnimatedInspectorMenu>
+    </AnimatedModule>
   );
 };
 

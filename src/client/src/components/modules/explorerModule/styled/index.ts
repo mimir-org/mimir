@@ -1,6 +1,5 @@
 export { default as IconWrapper } from "./IconWrapper";
 export { default as HeaderWrapper } from "./HeaderWrapper";
-export { default as ExplorerContainer } from "./ExplorerContainer";
 export { default as ContentWrapper } from "./ContentWrapper";
 export { default as ProjectHeader } from "./ProjectHeader";
 export { default as AspectWrapper } from "./AspectWrapper";

@@ -5,9 +5,8 @@ import { ExplorerIcon, ToggleIconLeft, ToggleIconRight } from "../../../assets";
 import ProjectComponent from "./projectComponent/ProjectComponent";
 import { SwitchViewComponent } from "./switchviewComponent/SwitchViewComponent";
 import textResources from "../../../textResources";
-import AnimatedMenu from "./styled/animated/AnimatedMenu";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
-import { Size } from "../../../componentLibrary";
+import { AnimatedModule, Size } from "../../../componentLibrary";
 import { MODULE_TYPE } from "../../../models/project";
 import {
   LoadState,
@@ -43,7 +42,7 @@ export const ExplorerModule = () => {
   );
 
   return (
-    <AnimatedMenu start={start} stop={stop} run={animate}>
+    <AnimatedModule start={start} stop={stop} run={animate}>
       <HeaderWrapper>
         <IconWrapper>
           <ExplorerTitle>{textResources.Explorer_view}</ExplorerTitle>
@@ -67,7 +66,7 @@ export const ExplorerModule = () => {
       <ExplorerFooterWrapper visible={isOpen}>
         <SwitchViewComponent />
       </ExplorerFooterWrapper>
-    </AnimatedMenu>
+    </AnimatedModule>
   );
 };
 
