@@ -7,6 +7,7 @@ import textResources from "../../../textResources";
 import { ProjectState } from "../../../redux/store/project/types";
 import { RootState } from "../../../redux/store";
 import { LoadState } from "../../../redux/store/localStorage/localStorage";
+import { VIEW_TYPE } from "../../../models/project";
 import { GetLegendData, Legend } from "../../flow/helpers";
 import {
   LegendHeader,
@@ -25,10 +26,10 @@ const LegendModule = ({ visible }: Props) => {
     (state) => state.projectState
   ) as ProjectState;
 
-  const blockKey = "blockview";
-  const treeKey = "treeview";
-  const [isBlockView] = useState(LoadState(blockKey));
-  const [isTreeview] = useState(LoadState(treeKey));
+  const blockView = VIEW_TYPE.BLOCKVIEW;
+  const treeView = VIEW_TYPE.TREEVIEW;
+  const [isBlockView] = useState(LoadState(blockView));
+  const [isTreeview] = useState(LoadState(treeView));
 
   let legends = null;
 

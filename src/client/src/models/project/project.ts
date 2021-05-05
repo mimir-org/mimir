@@ -55,8 +55,8 @@ export const MODULE_TYPE = {
 export type ViewType = keyof typeof VIEW_TYPE;
 
 export const VIEW_TYPE = {
-  BLOCKVIEW: "Blockview",
-  TREEVIEW: "Treeview",
+  BLOCKVIEW: "blockview",
+  TREEVIEW: "treeview",
 };
 
 export type IconType = keyof typeof ICON_TYPE;
