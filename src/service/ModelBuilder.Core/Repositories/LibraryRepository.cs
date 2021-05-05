@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using Mb.Core.Repositories.Contracts;
 using Mb.Models;
 using Mb.Models.Enums;
 using AttributeTab = Mb.Models.Enums.AttributeTab;
@@ -7,8 +9,18 @@ namespace Mb.Core.Repositories
 {
     public class LibraryRepository : ILibraryRepository
     {
+        private readonly ILibraryTypeComponentRepository _libraryTypeComponentRepository;
+
+        public LibraryRepository(ILibraryTypeComponentRepository libraryTypeComponentRepository)
+        {
+            _libraryTypeComponentRepository = libraryTypeComponentRepository;
+        }
+
         public IEnumerable<LibNode> GetAll(string searchString)
         {
+            //var data = _libraryTypeComponentRepository.GetAll();
+           
+
             // TODO: Fetch data from external lib service
             return GenerateTestNodes();
         }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Mb.Models;
 
 namespace Mb.Core.Services
@@ -9,5 +10,8 @@ namespace Mb.Core.Services
         Dictionary<int, string> GetObjectTypes();
         IEnumerable<Rds> GetRds();
         IEnumerable<AttributeType> GetAttributeTypes();
+        
+        Task LoadDataFromFiles();
+
     }
 }

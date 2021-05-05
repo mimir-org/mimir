@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Mb.Core.Extensions;
 using Mb.Core.Repositories;
+using Mb.Core.Repositories.Contracts;
 using Mb.Models;
 using Mb.Models.Enums;
 
@@ -10,16 +12,23 @@ namespace Mb.Core.Services
 {
     public class TypeEditorService : ITypeEditorService
     {
-        public const string RdsFileName = "RDS";
-        public const string AttributeFileName = "Attribute";
+        public const string RdsFileName = "rds";
+        public const string AttributeFileName = "attribute";
+        public const string LibraryFileName = "library";
 
         private readonly IMapper _mapper;
         private readonly IFileRepository _fileRepository;
+        private readonly IRdsRepository _rdsRepository;
+        private readonly IAttributeTypeRepository _attributeTypeRepository;
+        private readonly ILibraryTypeComponentRepository _libraryTypeComponentRepository;
 
-        public TypeEditorService(IMapper mapper, IFileRepository fileRepository)
+        public TypeEditorService(IMapper mapper, IFileRepository fileRepository, IRdsRepository rdsRepository, IAttributeTypeRepository attributeTypeRepository, ILibraryTypeComponentRepository libraryTypeComponentRepository)
         {
             _mapper = mapper;
             _fileRepository = fileRepository;
+            _rdsRepository = rdsRepository;
+            _attributeTypeRepository = attributeTypeRepository;
+            _libraryTypeComponentRepository = libraryTypeComponentRepository;
         }
 
         public Dictionary<int, string> GetAspects()
@@ -40,6 +49,75 @@ namespace Mb.Core.Services
         public IEnumerable<AttributeType> GetAttributeTypes()
         {
             return _fileRepository.ReadFile<AttributeType>(AttributeFileName);
+        }
+
+        public async Task LoadDataFromFiles()
+        {
+            var fileList = _fileRepository.ReadJsonFileList().ToList();
+            
+            if (!fileList.Any())
+                return;
+
+            var libraryFiles = fileList.Where(x => x.ToLower().Contains(LibraryFileName)).ToList();
+            var rdsFiles = fileList.Where(x => x.ToLower().Contains(RdsFileName)).ToList();
+            var attributeFiles = fileList.Where(x => x.ToLower().Contains(AttributeFileName)).ToList();
+
+            var libraries = _fileRepository.ReadAllFiles<LibraryTypeComponent>(libraryFiles).ToList();
+            var rds = _fileRepository.ReadAllFiles<Rds>(rdsFiles).ToList();
+            var attributes = _fileRepository.ReadAllFiles<AttributeType>(attributeFiles).ToList();
+
+            await CreateRdsAsync(rds);
+            await CreateAttributeTypesAsync(attributes);
+            await CreateLibraryTypeComponentsAsync(libraries);
+
+
+
+        }
+
+        private async Task CreateRdsAsync(IEnumerable<Rds> rds)
+        {
+            var existingRds = _rdsRepository.GetAll().ToList();
+            var notExistRds = rds.Where(x => existingRds.All(y => y.Code == x.Code && y.Category == x.Category)).ToList();
+            if(!notExistRds.Any())
+                return;
+
+            foreach (var item in notExistRds)
+            {
+                await _rdsRepository.CreateAsync(item);
+            }
+
+            await _rdsRepository.SaveAsync();
+        }
+
+        private async Task CreateAttributeTypesAsync(IEnumerable<AttributeType> attributeTypes)
+        {
+            var existingTypes = _attributeTypeRepository.GetAll().ToList();
+            var notExistingTypes = attributeTypes.Where(x => !existingTypes.Any(x.Equals)).ToList();
+            if (!notExistingTypes.Any())
+                return;
+
+            foreach (var item in notExistingTypes)
+            {
+                await _attributeTypeRepository.CreateAsync(item);
+            }
+
+            await _attributeTypeRepository.SaveAsync();
+        }
+
+        private async Task CreateLibraryTypeComponentsAsync(IEnumerable<LibraryTypeComponent> libraryTypeComponents)
+        {
+            var existingTypes = _libraryTypeComponentRepository.GetAll().ToList();
+            var notExistingTypes = libraryTypeComponents.Where(x => !existingTypes.Any(x.Equals)).ToList();
+            if (!notExistingTypes.Any())
+                return;
+
+            foreach (var item in notExistingTypes)
+            {
+                item.CreateJsonData();
+                await _libraryTypeComponentRepository.CreateAsync(item);
+            }
+
+            await _libraryTypeComponentRepository.SaveAsync();
         }
     }
 }
