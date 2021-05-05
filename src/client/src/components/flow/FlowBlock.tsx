@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ProjectOptions } from "../project";
 import { ProjectState } from "../../redux/store/project/types";
-import { RootState } from "./../../redux/store/index";
+import store, { RootState } from "./../../redux/store/index";
 import ReactFlow, { ReactFlowProvider, Elements } from "react-flow-renderer";
 import { changeActiveNode, get } from "../../redux/store/project/actions";
 import {
@@ -13,6 +13,7 @@ import {
   CreateProjectElementBlockNodes,
   GetBlockNodeTypes,
   GetBlockEdgeTypes,
+  GetModules,
 } from "./helpers";
 import {
   useOnConnect,
@@ -95,6 +96,7 @@ const FlowBlock = () => {
 
   // Force rerender
   useEffect(() => {
+    console.log("render");
     OnLoad(reactFlowInstance);
   }, [OnLoad, reactFlowInstance]);
 

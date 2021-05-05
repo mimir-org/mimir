@@ -8,6 +8,7 @@ import textResources from "../../../textResources";
 import { InspectorTabsHeader } from "./styled";
 import { InspectorTitle } from "./styled";
 import InspectorTabs from "./InspectorTabs";
+import { Size } from "../../../componentLibrary";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import {
   LoadState,
@@ -31,11 +32,11 @@ const InspectorModule = () => {
     dispatch(changeModuleVisibility(key, !isOpen));
   };
 
-  const startHeight = isOpen ? "38" : "290";
-  const stopHeight = isOpen ? "290" : "38";
+  const start = isOpen ? Size.ModuleClosed : Size.ModuleOpen;
+  const stop = isOpen ? Size.ModuleOpen : Size.ModuleClosed;
 
   return (
-    <AnimatedInspectorMenu start={startHeight} stop={stopHeight} run={animate}>
+    <AnimatedInspectorMenu start={start} stop={stop} run={animate}>
       <InspectorTabsHeader>
         {hasProject && <InspectorTabs />}
         <ToggleButtonWrapper>
@@ -45,7 +46,6 @@ const InspectorModule = () => {
             <img src={ToggleIconUp} alt="toggle-icon" onClick={handleClick} />
           )}
         </ToggleButtonWrapper>
-
         <IconWrapper>
           <InspectorTitle>{textResources.Inspector_Heading}</InspectorTitle>
           <img src={EyeIcon} alt="inspector-icon" />

@@ -7,6 +7,7 @@ import { SwitchViewComponent } from "./switchviewComponent/SwitchViewComponent";
 import textResources from "../../../textResources";
 import AnimatedMenu from "./styled/animated/AnimatedMenu";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
+import { Size } from "../../../componentLibrary";
 import {
   LoadState,
   SaveState,
@@ -33,15 +34,15 @@ export const ExplorerModule = () => {
     dispatch(changeModuleVisibility(key, !isOpen));
   };
 
-  const startHeight = isOpen ? "35" : "331";
-  const stopHeight = isOpen ? "331" : "35";
+  const start = isOpen ? Size.ModuleClosed : Size.ModuleOpen;
+  const stop = isOpen ? Size.ModuleOpen : Size.ModuleClosed;
 
   const hasProject = useSelector<RootState>(
     (state) => state.projectState.project !== null
   );
 
   return (
-    <AnimatedMenu start={startHeight} stop={stopHeight} run={animate}>
+    <AnimatedMenu start={start} stop={stop} run={animate}>
       <HeaderWrapper>
         <IconWrapper>
           <ExplorerTitle>{textResources.Explorer_view}</ExplorerTitle>

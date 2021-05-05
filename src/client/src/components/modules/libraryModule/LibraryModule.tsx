@@ -22,6 +22,7 @@ import {
   CollapsedIcon,
   LibraryWrapper,
 } from "./styled";
+import { Size } from "../../../componentLibrary";
 
 const LibraryModule = () => {
   const key = "library";
@@ -43,11 +44,11 @@ const LibraryModule = () => {
     dispatch(changeModuleVisibility(key, !isOpen));
   };
 
-  const startHeight = isOpen ? "35" : "331";
-  const stopHeight = isOpen ? "331" : "35";
+  const start = isOpen ? Size.ModuleClosed : Size.ModuleOpen;
+  const stop = isOpen ? Size.ModuleOpen : Size.ModuleClosed;
 
   return (
-    <AnimatedMenu start={startHeight} stop={stopHeight} run={animate}>
+    <AnimatedMenu start={start} stop={stop} run={animate}>
       <LibraryWrapper visible={isOpen}>
         <HeaderWrapper>
           <img
@@ -55,6 +56,7 @@ const LibraryModule = () => {
             alt="toggle-icon"
             style={{ cursor: "pointer" }}
             onClick={handleClick}
+            id="LibraryModule"
           />
           <Header>
             <img src={LibraryIcon} alt="library-icon" />
