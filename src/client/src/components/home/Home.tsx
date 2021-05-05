@@ -27,22 +27,13 @@ const Home = () => {
       <ExplorerModule />
       <div className="middle_content">
         <div className="workspace">
-          <>
-            {params.type === "treeview" && (
-              <div className="treeview_component">
-                <div className="treestructur_container">
-                  <FlowTree />
-                </div>
+          <div className="treeview_component">
+            <div className="treestructur_container">
+              <div className="dndflow">
+                {params.type === "treeview" ? <FlowTree /> : <FlowBlock />}
               </div>
-            )}
-            {params.type === "blockview" && (
-              <div className="treeview_component">
-                <div className="treestructur_container">
-                  <FlowBlock />
-                </div>
-              </div>
-            )}
-          </>
+            </div>
+          </div>
         </div>
         <InspectorModule />
       </div>
@@ -52,5 +43,6 @@ const Home = () => {
     </div>
   );
 };
+// TODO: nuke the divs
 
 export default Home;

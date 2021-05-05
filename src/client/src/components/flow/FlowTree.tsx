@@ -5,39 +5,25 @@ import { MiniMap } from "./";
 import { ProjectOptions } from "../project";
 import { ProjectState } from "../../redux/store/project/types";
 import { RootState } from "./../../redux/store/index";
-import { NodeType, Node, LibNode, Edge, EDGE_TYPE } from "../../models/project";
-
+import { useOnConnect, useOnDrop, useOnElementsRemove } from "./hooks";
 import {
   GetProject,
   HasProject,
 } from "../../redux/store/localStorage/localStorage";
-
-import ReactFlow, {
-  ReactFlowProvider,
-  addEdge,
-  removeElements,
-  Controls,
-  ArrowHeadType,
-  Elements,
-} from "react-flow-renderer";
-
 import {
-  addNode,
-  removeNode,
-  createEdge,
-  removeEdge,
   updatePosition,
   changeActiveNode,
 } from "../../redux/store/project/actions";
-
 import {
-  CreateId,
-  CreateElementNode,
   CreateProjectElementNodes,
   GetTreeNodeTypes,
   GetTreeEdgeTypes,
 } from "./helpers";
-import { useOnDrop, useOnElementsRemove } from "./hooks";
+import ReactFlow, {
+  ReactFlowProvider,
+  Controls,
+  Elements,
+} from "react-flow-renderer";
 
 const FlowTree = () => {
   const dispatch = useDispatch();
@@ -49,61 +35,11 @@ const FlowTree = () => {
     (state) => state.projectState
   ) as ProjectState;
 
-  const onConnect = (params) => {
-    const createdId = CreateId();
-    const sourceNode = projectState.project.nodes.find(
-      (x) => x.id === params.source
-    ) as Node;
-    const targetNode = projectState.project.nodes.find(
-      (x) => x.id === params.target
-    ) as Node;
-    const existingEdge = projectState.project.edges.find(
-      (x) =>
-        x.fromConnector === params.sourceHandle &&
-        x.toConnector === params.targetHandle &&
-        x.fromNode === sourceNode.id &&
-        x.toNode === targetNode.id &&
-        x.isHidden === targetNode.isHidden
-    );
-
-    if (!existingEdge) {
-      const edge: Edge = {
-        id: createdId,
-        fromConnector: params.sourceHandle,
-        toConnector: params.targetHandle,
-        fromNode: sourceNode.id,
-        toNode: targetNode.id,
-        isHidden: sourceNode.isHidden,
-        parentType: sourceNode.type,
-        targetType: targetNode.type,
-      };
-
-      dispatch(createEdge(edge));
-    }
-
-    return setElements((els) => {
-      return addEdge(
-        {
-          ...params,
-          id: createdId,
-          type: EDGE_TYPE.DEFAULT,
-          arrowHeadType: ArrowHeadType.ArrowClosed,
-          label: "",
-          data: {
-            source: sourceNode,
-            target: targetNode,
-          },
-        },
-        els
-      );
-    });
-  };
-
   const OnElementsRemove = (elementsToRemove) => {
     return useOnElementsRemove(elementsToRemove, setElements, dispatch);
   };
 
-  const onLoad = useCallback(
+  const OnLoad = useCallback(
     (_reactFlowInstance) => {
       setElements(CreateProjectElementNodes(projectState.project));
       return setReactFlowInstance(_reactFlowInstance);
@@ -111,12 +47,16 @@ const FlowTree = () => {
     [projectState.project]
   );
 
-  const onDragOver = (event) => {
+  const OnConnect = (params) => {
+    return useOnConnect(params, projectState, setElements, dispatch);
+  };
+
+  const OnDragOver = (event) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = "move";
   };
 
-  const onNodeDragStop = (_event, node) => {
+  const OnNodeDragStop = (_event, node) => {
     dispatch(updatePosition(node.id, node.position.x, node.position.y));
   };
 
@@ -130,14 +70,14 @@ const FlowTree = () => {
     );
   };
 
-  const onElementClick = (event, element) => {
+  const OnElementClick = (event, element) => {
     dispatch(changeActiveNode(element.id));
   };
 
   // Force rerender
   useEffect(() => {
-    onLoad(reactFlowInstance);
-  }, [onLoad, reactFlowInstance]);
+    OnLoad(reactFlowInstance);
+  }, [OnLoad, reactFlowInstance]);
 
   // Handling of project loading
   useEffect(() => {
@@ -148,19 +88,19 @@ const FlowTree = () => {
   }, [dispatch, projectState.project]);
 
   return (
-    <div className="dndflow">
+    <>
       {projectState.project && (
         <ReactFlowProvider>
           <div className="reactflow-wrapper" ref={reactFlowWrapper}>
             <ReactFlow
               elements={elements}
-              onConnect={onConnect}
+              onConnect={OnConnect}
               onElementsRemove={OnElementsRemove}
-              onLoad={onLoad}
+              onLoad={OnLoad}
               onDrop={OnDrop}
-              onDragOver={onDragOver}
-              onNodeDragStop={onNodeDragStop}
-              onElementClick={onElementClick}
+              onDragOver={OnDragOver}
+              onNodeDragStop={OnNodeDragStop}
+              onElementClick={OnElementClick}
               nodeTypes={GetTreeNodeTypes}
               edgeTypes={GetTreeEdgeTypes}
             >
@@ -175,7 +115,7 @@ const FlowTree = () => {
           <ProjectOptions />
         </div>
       )}
-    </div>
+    </>
   );
 };
 

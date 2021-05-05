@@ -120,7 +120,7 @@ const FlowBlock = () => {
   }, [dispatch, projectState.project]);
 
   return (
-    <div className="dndflow">
+    <>
       {projectState.project && (
         <ReactFlowProvider>
           <div className="reactflow-wrapper" ref={reactFlowWrapper}>
@@ -137,7 +137,7 @@ const FlowBlock = () => {
               onConnectEnd={OnConnectStop}
               onConnectStart={OnConnectStart}
             >
-              <Controls />
+              {/* <Controls /> */}
               {/* <MiniMap /> */}
             </ReactFlow>
           </div>
@@ -148,7 +148,7 @@ const FlowBlock = () => {
           <ProjectOptions />
         </div>
       )}
-    </div>
+    </>
   );
 };
 
