@@ -15,4 +15,8 @@ export { default as GetNodes } from "./GetNodes";
 export { default as GetEdges } from "./GetEdges";
 export { default as GetRelationshipColor } from "./GetRelationshipColor";
 export { default as GetLegendData } from "./GetLegendData";
+export { default as GetBlockNodeTypes } from "./GetBlockNodeTypes";
+export { default as GetBlockEdgeTypes } from "./GetBlockEdgeTypes";
+export { default as GetTreeNodeTypes } from "./GetTreeNodeTypes";
+export { default as GetTreeEdgeTypes } from "./GetTreeEdgeTypes";
 export * from "./types";

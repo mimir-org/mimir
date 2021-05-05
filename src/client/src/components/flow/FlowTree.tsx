@@ -1,6 +1,16 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { get } from "../../redux/store/project/actions";
+import { MiniMap } from "./";
+import { ProjectOptions } from "../project";
+import { ProjectState } from "../../redux/store/project/types";
+import { RootState } from "./../../redux/store/index";
+import { NodeType, Node, LibNode, Edge, EDGE_TYPE } from "../../models/project";
+
+import {
+  GetProject,
+  HasProject,
+} from "../../redux/store/localStorage/localStorage";
 
 import ReactFlow, {
   ReactFlowProvider,
@@ -19,36 +29,14 @@ import {
   updatePosition,
   changeActiveNode,
 } from "../../redux/store/project/actions";
-import { ProjectState } from "../../redux/store/project/types";
-import { RootState } from "./../../redux/store/index";
-import { NodeType, Node, LibNode, Edge, EDGE_TYPE } from "../../models/project";
 
-import { Aspect, Function, Product, Location } from "./nodes";
-import { DefaultEdgeType } from "./edges";
 import {
   CreateId,
   CreateElementNode,
   CreateProjectElementNodes,
+  GetTreeNodeTypes,
+  GetTreeEdgeTypes,
 } from "./helpers";
-import { MiniMap } from "./";
-import { ProjectOptions } from "../project";
-import {
-  GetProject,
-  HasProject,
-} from "../../redux/store/localStorage/localStorage";
-
-const nodeTypes = {
-  AspectFunction: Aspect,
-  AspectLocation: Aspect,
-  AspectProduct: Aspect,
-  Function: Function,
-  Product: Product,
-  Location: Location,
-};
-
-const edgeTypes = {
-  DefaultEdgeType: DefaultEdgeType,
-};
 
 const FlowTree = () => {
   const dispatch = useDispatch();
@@ -207,8 +195,8 @@ const FlowTree = () => {
               onDragOver={onDragOver}
               onNodeDragStop={onNodeDragStop}
               onElementClick={onElementClick}
-              nodeTypes={nodeTypes}
-              edgeTypes={edgeTypes}
+              nodeTypes={GetTreeNodeTypes}
+              edgeTypes={GetTreeEdgeTypes}
             >
               <Controls />
               <MiniMap />

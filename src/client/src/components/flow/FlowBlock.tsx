@@ -1,5 +1,9 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { MiniMap } from "./";
+import { ProjectOptions } from "../project";
+import { ProjectState } from "../../redux/store/project/types";
+import { RootState } from "./../../redux/store/index";
 
 import ReactFlow, {
   ReactFlowProvider,
@@ -9,7 +13,6 @@ import ReactFlow, {
   ArrowHeadType,
   Elements,
 } from "react-flow-renderer";
-
 import {
   addNode,
   removeNode,
@@ -19,8 +22,6 @@ import {
   changeActiveNode,
   get,
 } from "../../redux/store/project/actions";
-import { ProjectState } from "../../redux/store/project/types";
-import { RootState } from "./../../redux/store/index";
 import {
   NodeType,
   Node,
@@ -30,18 +31,6 @@ import {
   EdgeEvent,
   NODE_TYPE,
 } from "../../models/project";
-
-import {
-  Aspect,
-  Function,
-  Product,
-  Location,
-  FunctionBlock,
-  OffPage,
-} from "./nodes";
-import { DefaultEdgeType, BlockEdgeType } from "./edges";
-import { MiniMap } from "./";
-import { ProjectOptions } from "../project";
 import {
   GetProject,
   HasProject,
@@ -56,23 +45,11 @@ import {
   CreateElementNode,
   CreateProjectElementBlockNodes,
   OffPageNodeCreator,
+  GetBlockNodeTypes,
+  GetBlockEdgeTypes,
 } from "./helpers";
 
-const nodeTypes = {
-  AspectFunction: Aspect,
-  AspectLocation: Aspect,
-  AspectProduct: Aspect,
-  Function: Function,
-  Product: Product,
-  Location: Location,
-  Functionblock: FunctionBlock,
-  Offpage: OffPage,
-};
-
-const edgeTypes = {
-  DefaultEdgeType: DefaultEdgeType,
-  BlockEdgeType: BlockEdgeType,
-};
+import { useOnNodeDragStop } from "./hooks";
 
 const FlowBlock = () => {
   const dispatch = useDispatch();
@@ -268,12 +245,11 @@ const FlowBlock = () => {
     dispatch(changeActiveNode(element.id));
   };
 
-  const onReposition = () => {
-    const nodes = projectState.project.nodes;
+  const onUpdatePosition = () => {
     const [width] = GetReactFlowBoundingRectData();
     const x = width - widthLimit;
 
-    nodes.forEach((node) => {
+    projectState.project.nodes.forEach((node) => {
       if (node.type === NODE_TYPE.OFF_PAGE) {
         dispatch(updatePosition(node.id, x, node.positionY));
       }
@@ -287,7 +263,7 @@ const FlowBlock = () => {
 
   window.onresize = () => {
     onLoad(reactFlowInstance);
-    onReposition();
+    onUpdatePosition();
   };
 
   // Handling of project loading
@@ -312,8 +288,8 @@ const FlowBlock = () => {
               //   onDragOver={onDragOver}
               onNodeDragStop={onNodeDragStop}
               onElementClick={onElementClick}
-              nodeTypes={nodeTypes}
-              edgeTypes={edgeTypes}
+              nodeTypes={GetBlockNodeTypes}
+              edgeTypes={GetBlockEdgeTypes}
               onConnectEnd={onConnectStop}
               onConnectStart={onConnectStart}
             >
