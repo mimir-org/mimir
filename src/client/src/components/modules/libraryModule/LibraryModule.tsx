@@ -43,7 +43,7 @@ const LibraryModule = () => {
   return (
     <AnimatedModule start={start} stop={stop} run={animate}>
       <LibraryWrapper visible={isOpen}>
-        <ModuleHeader right>
+        <ModuleHeader right visible={isOpen}>
           <img src={LibraryIcon} alt="library-icon" />
           <img
             className="icon"

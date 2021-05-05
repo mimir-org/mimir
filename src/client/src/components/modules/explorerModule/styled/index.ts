@@ -1,4 +1,3 @@
-export { default as ContentWrapper } from "./ContentWrapper";
 export { default as ProjectHeader } from "./ProjectHeader";
 export { default as AspectWrapper } from "./AspectWrapper";
 export { default as AspectChildContainer } from "./AspectChildContainer";
