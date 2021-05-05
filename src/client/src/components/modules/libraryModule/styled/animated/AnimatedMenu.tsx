@@ -10,10 +10,10 @@ interface Props {
 const animation = ({ start, stop, run }: Props) => keyframes`
 ${!run ? (start = stop) : null}
   from {
-    width: ${start}px;
+    width: ${start};
   },
   to {
-    width: ${stop}px;
+    width: ${stop};
   }  
 `;
 

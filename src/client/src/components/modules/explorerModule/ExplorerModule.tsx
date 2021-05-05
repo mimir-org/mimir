@@ -36,6 +36,7 @@ export const ExplorerModule = () => {
 
   const start = isOpen ? Size.ModuleClosed : Size.ModuleOpen;
   const stop = isOpen ? Size.ModuleOpen : Size.ModuleClosed;
+  console.log(start, stop);
 
   const hasProject = useSelector<RootState>(
     (state) => state.projectState.project !== null
