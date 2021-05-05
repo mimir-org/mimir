@@ -10,19 +10,12 @@ import { searchLibrary } from "../../../redux/store/library/actions";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import { LibraryIcon, ToggleIconLeft, ToggleIconRight } from "../../../assets";
 import { MODULE_TYPE } from "../../../models/project";
-import { AnimatedModule, Size } from "../../../componentLibrary";
+import { AnimatedModule, ModuleHeader, Size } from "../../../componentLibrary";
+import { SidebarWrapper, LibraryWrapper } from "./styled";
 import {
   LoadState,
   SaveState,
 } from "../../../redux/store/localStorage/localStorage";
-
-import {
-  Header,
-  SidebarWrapper,
-  HeaderWrapper,
-  CollapsedIcon,
-  LibraryWrapper,
-} from "./styled";
 
 const LibraryModule = () => {
   const key = MODULE_TYPE.LIBRARY;
@@ -50,22 +43,16 @@ const LibraryModule = () => {
   return (
     <AnimatedModule start={start} stop={stop} run={animate}>
       <LibraryWrapper visible={isOpen}>
-        <HeaderWrapper>
-          <img
-            src={isOpen ? ToggleIconRight : ToggleIconLeft}
-            alt="toggle-icon"
-            style={{ cursor: "pointer" }}
-            onClick={handleClick}
-            id="LibraryModule"
-          />
-          <Header>
-            <img src={LibraryIcon} alt="library-icon" />
-            {textResources.Library_Heading}
-          </Header>
-        </HeaderWrapper>
-        <CollapsedIcon visible={isOpen}>
+        <ModuleHeader right>
           <img src={LibraryIcon} alt="library-icon" />
-        </CollapsedIcon>
+          <img
+            className="icon"
+            src={isOpen ? ToggleIconRight : ToggleIconLeft}
+            alt="toggle"
+            onClick={handleClick}
+          />
+          <p className="text">{textResources.Library_Heading}</p>
+        </ModuleHeader>
         <SidebarWrapper visible={isOpen}>
           <LibrarySidebar nodes={state.nodes} />
         </SidebarWrapper>

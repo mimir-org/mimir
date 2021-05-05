@@ -1,11 +1,8 @@
-export { default as IconWrapper } from "./IconWrapper";
-export { default as HeaderWrapper } from "./HeaderWrapper";
 export { default as ContentWrapper } from "./ContentWrapper";
 export { default as ProjectHeader } from "./ProjectHeader";
 export { default as AspectWrapper } from "./AspectWrapper";
 export { default as AspectChildContainer } from "./AspectChildContainer";
 export { default as AspectChildWrapper } from "./AspectChildWrapper";
-export { default as ExplorerTitle } from "./ExplorerTitle";
 export { default as CollapsedIcon } from "./CollapsedIcon";
 export { default as ExplorerFooterWrapper } from "./ExplorerFooterWrapper";
 export { default as SwitchViewWrapper } from "./SwitchViewWrapper";
