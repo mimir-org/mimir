@@ -1,11 +1,15 @@
-import { useRef } from "react";
 import { LibNode, Node, NodeType } from "../../../models/project";
 import { addNode } from "../../../redux/store/project/actions";
 import { CreateId, CreateElementNode } from "./../helpers";
 
-const useOnDrop = (event, dispatch, setElements, reactFlowInstance) => {
+const useOnDrop = (
+  event,
+  dispatch,
+  setElements,
+  reactFlowInstance,
+  reactFlowWrapper
+) => {
   event.preventDefault();
-  const reactFlowWrapper = useRef(null);
   const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
   const data = JSON.parse(
     event.dataTransfer.getData("application/reactflow")

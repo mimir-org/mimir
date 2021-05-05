@@ -48,7 +48,7 @@ const FlowBlock = () => {
     nodeId = node ? node.id : "";
   }
 
-  const onLoad = useCallback(
+  const OnLoad = useCallback(
     (_reactFlowInstance) => {
       setElements(CreateProjectElementBlockNodes(projectState.project, nodeId));
       return setReactFlowInstance(_reactFlowInstance);
@@ -84,10 +84,16 @@ const FlowBlock = () => {
   };
 
   const OnDrop = (_event) => {
-    return useOnDrop(_event, dispatch, setElements, reactFlowInstance);
+    return useOnDrop(
+      _event,
+      dispatch,
+      setElements,
+      reactFlowInstance,
+      reactFlowWrapper
+    );
   };
 
-  const onElementClick = (event, element) => {
+  const OnElementClick = (event, element) => {
     dispatch(changeActiveNode(element.id));
   };
 
@@ -97,11 +103,11 @@ const FlowBlock = () => {
 
   // Force rerender
   useEffect(() => {
-    onLoad(reactFlowInstance);
-  }, [onLoad, reactFlowInstance]);
+    OnLoad(reactFlowInstance);
+  }, [OnLoad, reactFlowInstance]);
 
   window.onresize = () => {
-    onLoad(reactFlowInstance);
+    OnLoad(reactFlowInstance);
     OnUpdatePosition();
   };
 
@@ -122,10 +128,10 @@ const FlowBlock = () => {
               elements={elements}
               onConnect={OnConnect}
               onElementsRemove={OnElementsRemove}
-              onLoad={onLoad}
+              onLoad={OnLoad}
               onDrop={OnDrop}
               onNodeDragStop={OnNodeDragStop}
-              onElementClick={onElementClick}
+              onElementClick={OnElementClick}
               nodeTypes={GetBlockNodeTypes}
               edgeTypes={GetBlockEdgeTypes}
               onConnectEnd={OnConnectStop}

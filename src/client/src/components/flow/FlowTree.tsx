@@ -37,6 +37,7 @@ import {
   GetTreeNodeTypes,
   GetTreeEdgeTypes,
 } from "./helpers";
+import { useOnDrop, useOnElementsRemove } from "./hooks";
 
 const FlowTree = () => {
   const dispatch = useDispatch();
@@ -98,16 +99,8 @@ const FlowTree = () => {
     });
   };
 
-  const onElementsRemove = (elementsToRemove) => {
-    elementsToRemove.forEach((element) => {
-      if (element.type === EDGE_TYPE.DEFAULT) {
-        dispatch(removeEdge(element.id));
-      } else {
-        dispatch(removeNode(element.id));
-      }
-    });
-
-    return setElements((els) => removeElements(elementsToRemove, els));
+  const OnElementsRemove = (elementsToRemove) => {
+    return useOnElementsRemove(elementsToRemove, setElements, dispatch);
   };
 
   const onLoad = useCallback(
@@ -127,41 +120,14 @@ const FlowTree = () => {
     dispatch(updatePosition(node.id, node.position.x, node.position.y));
   };
 
-  const onDrop = (event) => {
-    event.preventDefault();
-    const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
-    const data = JSON.parse(
-      event.dataTransfer.getData("application/reactflow")
-    ) as LibNode;
-
-    const position = reactFlowInstance.project({
-      x: event.clientX - reactFlowBounds.left,
-      y: event.clientY - reactFlowBounds.top,
-    });
-
-    const node = {
-      id: CreateId(),
-      name: data.name,
-      label: data.label ?? data.name,
-      type: data.type as NodeType,
-      positionX: position.x,
-      positionY: position.y,
-      connectors: data.connectors,
-      attributes: data.attributes,
-      icon: data.icon,
-    } as Node;
-
-    node.connectors?.forEach((c) => {
-      c.id = CreateId();
-      c.nodeId = node.id;
-    });
-
-    node.attributes?.forEach((a) => {
-      a.nodeId = node.id;
-    });
-
-    dispatch(addNode(node));
-    setElements((es) => es.concat(CreateElementNode(node)));
+  const OnDrop = (_event) => {
+    return useOnDrop(
+      _event,
+      dispatch,
+      setElements,
+      reactFlowInstance,
+      reactFlowWrapper
+    );
   };
 
   const onElementClick = (event, element) => {
@@ -189,9 +155,9 @@ const FlowTree = () => {
             <ReactFlow
               elements={elements}
               onConnect={onConnect}
-              onElementsRemove={onElementsRemove}
+              onElementsRemove={OnElementsRemove}
               onLoad={onLoad}
-              onDrop={onDrop}
+              onDrop={OnDrop}
               onDragOver={onDragOver}
               onNodeDragStop={onNodeDragStop}
               onElementClick={onElementClick}
