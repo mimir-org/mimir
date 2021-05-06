@@ -6,6 +6,7 @@ import { ProjectOptions } from "../project";
 import { ProjectState } from "../../redux/store/project/types";
 import { RootState } from "./../../redux/store/index";
 import { useOnConnect, useOnDrop, useOnElementsRemove } from "./hooks";
+import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
 import {
   GetProject,
   HasProject,
@@ -21,8 +22,8 @@ import {
 } from "./helpers";
 import ReactFlow, {
   ReactFlowProvider,
-  Controls,
   Elements,
+  Controls,
 } from "react-flow-renderer";
 
 const FlowTree = () => {
@@ -90,25 +91,28 @@ const FlowTree = () => {
   return (
     <>
       {projectState.project && (
-        <ReactFlowProvider>
-          <div className="reactflow-wrapper" ref={reactFlowWrapper}>
-            <ReactFlow
-              elements={elements}
-              onConnect={OnConnect}
-              onElementsRemove={OnElementsRemove}
-              onLoad={OnLoad}
-              onDrop={OnDrop}
-              onDragOver={OnDragOver}
-              onNodeDragStop={OnNodeDragStop}
-              onElementClick={OnElementClick}
-              nodeTypes={GetTreeNodeTypes}
-              edgeTypes={GetTreeEdgeTypes}
-            >
-              <Controls />
-              <MiniMap />
-            </ReactFlow>
-          </div>
-        </ReactFlowProvider>
+        <>
+          <FullscreenBox />
+          <ReactFlowProvider>
+            <div className="reactflow-wrapper" ref={reactFlowWrapper}>
+              <ReactFlow
+                elements={elements}
+                onConnect={OnConnect}
+                onElementsRemove={OnElementsRemove}
+                onLoad={OnLoad}
+                onDrop={OnDrop}
+                onDragOver={OnDragOver}
+                onNodeDragStop={OnNodeDragStop}
+                onElementClick={OnElementClick}
+                nodeTypes={GetTreeNodeTypes}
+                edgeTypes={GetTreeEdgeTypes}
+              >
+                <Controls />
+                <MiniMap />
+              </ReactFlow>
+            </div>
+          </ReactFlowProvider>
+        </>
       )}
       {!projectState.project && !HasProject() && (
         <div>
