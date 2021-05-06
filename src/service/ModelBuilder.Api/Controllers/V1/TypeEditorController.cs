@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Mb.Core.Services;
 using Mb.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -38,7 +39,6 @@ namespace Mb.Api.Controllers.V1
         [HttpGet("aspects")]
         [ProducesResponseType(typeof(Dictionary<int, string>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult GetAspects()
         {
             try
@@ -60,7 +60,6 @@ namespace Mb.Api.Controllers.V1
         [HttpGet("types")]
         [ProducesResponseType(typeof(Dictionary<int, string>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult GetObjectTypes()
         {
             try
@@ -82,8 +81,6 @@ namespace Mb.Api.Controllers.V1
         [HttpGet("rds")]
         [ProducesResponseType(typeof(ICollection<Rds>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult GetRdsCodes()
         {
             try
@@ -103,15 +100,60 @@ namespace Mb.Api.Controllers.V1
         /// </summary>
         /// <returns></returns>
         [HttpGet("attributes")]
-        [ProducesResponseType(typeof(ICollection<Rds>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ICollection<AttributeType>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult GetAttributeTypes()
         {
             try
             {
                 var data = _typeEditorService.GetAttributeTypes().ToList();
+                return Ok(data);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
+        /// Get all terminal types
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("terminals")]
+        [ProducesResponseType(typeof(ICollection<Terminal>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public IActionResult GetTerminalTypes()
+        {
+            try
+            {
+                var data = _typeEditorService.GetTerminals().ToList();
+                return Ok(data);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
+        /// Create a library type
+        /// </summary>
+        /// <param name="libraryTypeComponent"></param>
+        /// <returns></returns>
+        [HttpPost("")]
+        [ProducesResponseType(typeof(ICollection<Rds>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CreateType([FromBody] LibraryTypeComponent libraryTypeComponent)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                var data = await _typeEditorService.CreateLibraryComponent(libraryTypeComponent);
                 return Ok(data);
             }
             catch (Exception e)

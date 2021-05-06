@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Mb.Core.Repositories.Contracts;
 using Newtonsoft.Json;
 
 namespace Mb.Core.Repositories

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-namespace Mb.Core.Repositories
+namespace Mb.Core.Repositories.Contracts
 {
     public interface IGenericRepository<TContext, TEntity> where TContext : DbContext where TEntity : class
     {

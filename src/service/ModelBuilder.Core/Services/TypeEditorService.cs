@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Mb.Core.Extensions;
-using Mb.Core.Repositories;
 using Mb.Core.Repositories.Contracts;
 using Mb.Models;
 using Mb.Models.Enums;
@@ -21,14 +20,16 @@ namespace Mb.Core.Services
         private readonly IRdsRepository _rdsRepository;
         private readonly IAttributeTypeRepository _attributeTypeRepository;
         private readonly ILibraryTypeComponentRepository _libraryTypeComponentRepository;
+        private readonly IGenerateIdRepository _generateIdRepository;
 
-        public TypeEditorService(IMapper mapper, IFileRepository fileRepository, IRdsRepository rdsRepository, IAttributeTypeRepository attributeTypeRepository, ILibraryTypeComponentRepository libraryTypeComponentRepository)
+        public TypeEditorService(IMapper mapper, IFileRepository fileRepository, IRdsRepository rdsRepository, IAttributeTypeRepository attributeTypeRepository, ILibraryTypeComponentRepository libraryTypeComponentRepository, IGenerateIdRepository generateIdRepository)
         {
             _mapper = mapper;
             _fileRepository = fileRepository;
             _rdsRepository = rdsRepository;
             _attributeTypeRepository = attributeTypeRepository;
             _libraryTypeComponentRepository = libraryTypeComponentRepository;
+            _generateIdRepository = generateIdRepository;
         }
 
         public Dictionary<int, string> GetAspects()
@@ -51,6 +52,34 @@ namespace Mb.Core.Services
             return _fileRepository.ReadFile<AttributeType>(AttributeFileName);
         }
 
+        public IEnumerable<Terminal> GetTerminals()
+        {
+            var terminals = EnumExtensions.GetEnumList<TerminalType>().Where(x => x != TerminalType.NotSet).ToList();
+            foreach (var terminalType in terminals)
+            {
+                yield return new Terminal
+                {
+                    TerminalType = terminalType,
+                    ConnectorType = ConnectorType.Input
+                };
+
+                yield return new Terminal
+                {
+                    TerminalType = terminalType,
+                    ConnectorType = ConnectorType.Output
+                };
+            }
+        }
+
+        public async Task<LibraryTypeComponent> CreateLibraryComponent(LibraryTypeComponent libraryTypeComponent)
+        {
+            libraryTypeComponent.CreateJsonData();
+            libraryTypeComponent.Id = _generateIdRepository.CreateUniqueId(libraryTypeComponent.Version, "t");
+            await _libraryTypeComponentRepository.CreateAsync(libraryTypeComponent);
+            await _libraryTypeComponentRepository.SaveAsync();
+            return libraryTypeComponent;
+        }
+
         public async Task LoadDataFromFiles()
         {
             var fileList = _fileRepository.ReadJsonFileList().ToList();
@@ -69,9 +98,6 @@ namespace Mb.Core.Services
             await CreateRdsAsync(rds);
             await CreateAttributeTypesAsync(attributes);
             await CreateLibraryTypeComponentsAsync(libraries);
-
-
-
         }
 
         private async Task CreateRdsAsync(IEnumerable<Rds> rds)

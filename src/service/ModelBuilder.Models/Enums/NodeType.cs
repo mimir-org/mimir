@@ -7,6 +7,7 @@
         AspectProduct = 2,
         Function = 3,
         Product = 4,
-        Location = 5
+        Location = 5,
+        NotSet = 6
     }
 }

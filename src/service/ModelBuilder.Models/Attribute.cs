@@ -1,4 +1,5 @@
-﻿using Mb.Models.Enums;
+﻿using System.Collections.Generic;
+using Mb.Models.Enums;
 
 namespace Mb.Models
 {
@@ -6,9 +7,13 @@ namespace Mb.Models
     {
         public string Key { get; set; }
         public string Value { get; set; }
-        public string Unit { get; set; }
-        public AttributeTab Type { get; set; }
-        public AttributeInputType InputType { get; set; }
+        public Unit Unit { get; set; }
+        public AttributeQualifier Qualifier { get; set; }
+        public AttributeSource Source { get; set; }
+        public AttributeCondition Condition { get; set; }
+        public AttributeFormat Format { get; set; }
+        public ICollection<Unit> Units { get; set; }
+
 
         public virtual string NodeId { get; set; }
         public virtual Node Node { get; set; }

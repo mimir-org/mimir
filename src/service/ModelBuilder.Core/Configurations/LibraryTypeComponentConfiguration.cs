@@ -23,6 +23,7 @@ namespace Mb.Core.Configurations
             builder.Property(p => p.TerminalJson).HasColumnName("TerminalJson");
             builder.Property(p => p.AttributeJson).HasColumnName("AttributeJson");
             builder.Property(p => p.RdsCategory).HasColumnName("RdsCategory").IsRequired().HasConversion<string>();
+            builder.Property(p => p.Version).HasColumnName("Version").IsRequired();
 
             builder.Ignore(p => p.Terminals);
             builder.Ignore(p => p.Attributes);

@@ -1,28 +1,65 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 using Mb.Core.Repositories.Contracts;
 using Mb.Models;
 using Mb.Models.Enums;
-using AttributeTab = Mb.Models.Enums.AttributeTab;
 
 namespace Mb.Core.Repositories
 {
     public class LibraryRepository : ILibraryRepository
     {
         private readonly ILibraryTypeComponentRepository _libraryTypeComponentRepository;
+        private readonly IMapper _mapper;
+        private readonly IGenerateIdRepository _generateIdRepository;
 
-        public LibraryRepository(ILibraryTypeComponentRepository libraryTypeComponentRepository)
+        public LibraryRepository(ILibraryTypeComponentRepository libraryTypeComponentRepository, IMapper mapper, IGenerateIdRepository generateIdRepository)
         {
             _libraryTypeComponentRepository = libraryTypeComponentRepository;
+            _mapper = mapper;
+            _generateIdRepository = generateIdRepository;
         }
 
         public IEnumerable<LibNode> GetAll(string searchString)
         {
-            //var data = _libraryTypeComponentRepository.GetAll();
-           
+            List<LibraryTypeComponent> libraryTypeComponents;
 
-            // TODO: Fetch data from external lib service
-            return GenerateTestNodes();
+            var data = _libraryTypeComponentRepository.GetAll();
+            libraryTypeComponents = string.IsNullOrEmpty(searchString) ? 
+                _libraryTypeComponentRepository.GetAll().OrderBy(x => x.TypeName).Take(30).ToList() : 
+                _libraryTypeComponentRepository.GetAll().OrderBy(x => x.TypeName).Where(x => x.TypeName.ToLower().Contains(searchString.ToLower())).Take(30).ToList();
+
+            return ConvertToLibNode(libraryTypeComponents);
+        }
+
+        private IEnumerable<LibNode> ConvertToLibNode(IEnumerable<LibraryTypeComponent> types)
+        {
+            foreach (var libraryTypeComponent in types)
+            {
+                libraryTypeComponent.CreateFromJsonData();
+                var mappedNode = _mapper.Map<LibNode>(libraryTypeComponent);
+                mappedNode.Connectors.Add(CreateRelationConnector(RelationType.PartOf, ConnectorType.Input, libraryTypeComponent.Version));
+                mappedNode.Connectors.Add(CreateRelationConnector(RelationType.PartOf, ConnectorType.Output, libraryTypeComponent.Version));
+                mappedNode.Connectors.Add(CreateRelationConnector(RelationType.Relation, ConnectorType.Input, libraryTypeComponent.Version));
+                mappedNode.Connectors.Add(CreateRelationConnector(RelationType.Relation, ConnectorType.Output, libraryTypeComponent.Version));
+
+                yield return mappedNode;
+            }
+        }
+
+        private Connector CreateRelationConnector(RelationType relationType, ConnectorType connectorType, string version)
+        {
+            return new Connector
+            {
+                Id = _generateIdRepository.CreateUniqueId(version, "c"),
+                Name = "WellFluid",
+                Type = connectorType,
+                TerminalCategory = TerminalCategory.NotSet,
+                RelationType = relationType,
+                TerminalType = TerminalType.NotSet,
+                NodeId = null,
+                Node = null
+            };
         }
 
         private static IEnumerable<LibNode> GenerateTestNodes()
@@ -104,29 +141,8 @@ namespace Mb.Core.Repositories
                     new Attribute
                     {
                         NodeId = "",
-                        Type = AttributeTab.AdminInfo,
                         Key = "ID",
-                        Value = "=KC2",
-                        InputType = AttributeInputType.Text,
-                        Unit = null
-                    },
-                    new Attribute
-                    {
-                        NodeId = "",
-                        Type = AttributeTab.AdminInfo,
-                        Key = "Semantic ID",
-                        Value = "http://vg.no",
-                        InputType = AttributeInputType.Text,
-                        Unit = null
-                    },
-                    new Attribute
-                    {
-                        NodeId = "",
-                        Type = AttributeTab.TechInfo,
-                        Key = "Maximum gas processing capacity",
-                        Value = "2000000",
-                        InputType = AttributeInputType.Text,
-                        Unit = "Cubic"
+                        Value = "=KC2"
                     }
                 }
             };
@@ -190,84 +206,14 @@ namespace Mb.Core.Repositories
                     new Attribute
                     {
                         NodeId = "",
-                        Type = AttributeTab.AdminInfo,
                         Key = "ID",
-                        Value = "-KC1",
-                        InputType = AttributeInputType.Text,
-                        Unit = null
+                        Value = "-KC1"
                     },
                     new Attribute
                     {
                         NodeId = "",
-                        Type =AttributeTab.AdminInfo,
                         Key = "Semantic ID",
-                        Value = "http://vg.no",
-                        InputType = AttributeInputType.Text,
-                        Unit = null
-                    },
-                    new Attribute
-                    {
-                        NodeId = "",
-                        Type = AttributeTab.AdminInfo,
-                        Key = "Reference Designation",
-                        Value = "IEC 81346 identifier",
-                        InputType = AttributeInputType.Text,
-                        Unit = null
-                    },
-                    new Attribute
-                    {
-                        NodeId = "",
-                        Type = AttributeTab.AdminInfo,
-                        Key = "Service Description",
-                        Value = "Description of service",
-                        InputType = AttributeInputType.Text,
-                        Unit = null
-                    },
-                    new Attribute
-                    {
-                        NodeId = "",
-                        Type = AttributeTab.AdminInfo,
-                        Key = "Change Mode",
-                        Value = "The change state of the object",
-                        InputType = AttributeInputType.Text,
-                        Unit = null
-                    },
-                    new Attribute
-                    {
-                        NodeId = "",
-                        Type = AttributeTab.AdminInfo,
-                        Key = "Version",
-                        Value = "Version information",
-                        InputType = AttributeInputType.Text,
-                        Unit = null
-                    },
-                    new Attribute
-                    {
-                        NodeId = "",
-                        Type = AttributeTab.AdminInfo,
-                        Key = "Kind",
-                        Value = "Either template or instance",
-                        InputType = AttributeInputType.Dropdown,
-                        Unit = null
-                    },
-                    new Attribute
-                    {
-                        NodeId = "",
-                        Type = AttributeTab.AdminInfo,
-                        Key = "Status",
-                        Value = "Her kommer dropdown",
-                        InputType = AttributeInputType.Dropdown,
-                        Unit = null
-                    },
-
-                    new Attribute
-                    {
-                        NodeId = "",
-                        Type = AttributeTab.Relations,
-                        Key = "Project",
-                        Value = "NOAKA",
-                        InputType = AttributeInputType.Text,
-                        Unit = null
+                        Value = "http://vg.no"
                     }
                 }
             };
@@ -321,29 +267,8 @@ namespace Mb.Core.Repositories
                     new Attribute
                     {
                         NodeId = "",
-                        Type =AttributeTab.AdminInfo,
                         Key = "ID",
-                        Value = "=KC2",
-                        InputType = AttributeInputType.Text,
-                        Unit = null
-                    },
-                    new Attribute
-                    {
-                        NodeId = "",
-                        Type = AttributeTab.AdminInfo,
-                        Key = "Semantic ID",
-                        Value = "http://vg.no",
-                        InputType = AttributeInputType.Text,
-                        Unit = null
-                    },
-                    new Attribute
-                    {
-                        NodeId = "",
-                        Type = AttributeTab.TechInfo,
-                        Key = "Maximum gas processing capacity",
-                        Value = "2000000",
-                        InputType = AttributeInputType.Text,
-                        Unit = "Cubic"
+                        Value = "=KC2"
                     }
                 }
             };

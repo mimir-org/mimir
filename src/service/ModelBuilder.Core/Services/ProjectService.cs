@@ -6,6 +6,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Mb.Core.Exceptions;
 using Mb.Core.Repositories;
+using Mb.Core.Repositories.Contracts;
 using Mb.Models;
 using Mb.Models.Data;
 using Mb.Models.Enums;
@@ -191,10 +192,18 @@ namespace Mb.Core.Services
             p.Edges.Clear();
 
             foreach (var node in nodesToUpdate)
+            {
+                node.UpdatedBy = _contextAccessor.HttpContext?.User?.Claims?.FirstOrDefault(x => x.Type == "name")?.Value ?? string.Empty;
+                node.Updated = DateTime.Now;
                 _nodeRepository.Update(node);
+            }
 
             foreach (var node in nodesToCreate)
+            {
+                node.UpdatedBy = _contextAccessor.HttpContext?.User?.Claims?.FirstOrDefault(x => x.Type == "name")?.Value ?? string.Empty;
+                node.Updated = DateTime.Now;
                 await _nodeRepository.CreateAsync(node);
+            }
 
             foreach (var node in nodesToDelete)
                 await _nodeRepository.Delete(node.Id);

@@ -2,8 +2,11 @@
 {
     public enum IconType
     {
-        FunctionIcon = 0,
-        LocationIcon = 1,
-        ProductIcon = 2
+        NotSetIcon = 0,
+        FunctionIcon = 1,
+        LocationIcon = 2,
+        ProductIcon = 3,
+        TransportIcon = 4,
+        InterfaceIcon = 5
     }
 }
