@@ -20,11 +20,6 @@
   &.selected {
     border: 2px solid #1a192b;
   }
-
-  .aspect-icon {
-    width: 25px;
-    height: 25px;
-  }
 }
 
 .react-flow__controls {
@@ -85,39 +80,10 @@
   cursor: grab;
 }
 
-.dndflow .dndnode.function {
-  background-color: yellow;
-  border-color: #000000;
-}
-
-.dndflow .dndnode.location {
-  background-color: magenta;
-  border-color: #000000;
-}
-
-.dndflow .dndnode.product {
-  background-color: turquoise;
-  border-color: #000000;
-}
-
-.dndflow .dndnode.input {
-  border-color: #0041d0;
-}
-
-.dndflow .dndnode.output {
-  border-color: #ff0072;
-}
-
 /* Hovedscenen */
 .dndflow .reactflow-wrapper {
   flex-grow: 1;
   height: 100%;
-}
-
-@media screen and (min-width: 768px) {
-  .dndflow {
-    flex-direction: row;
-  }
 }
 
 .function-block {
@@ -143,4 +109,10 @@
   margin-bottom: 8px;
   padding: 0px 0px 0px 25px;
   font-size: 14px;
+}
+
+@media screen and (min-width: 768px) {
+  .dndflow {
+    flex-direction: row;
+  }
 }

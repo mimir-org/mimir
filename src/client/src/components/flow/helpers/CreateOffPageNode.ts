@@ -47,7 +47,7 @@ const CreateOffPageNode = (
     name: fromNodeConnector.name,
     label: fromNodeConnector.name,
     type: NODE_TYPE.OFF_PAGE as NodeType,
-    positionX: width - 120,
+    positionX: width - 25,
     positionY: data.y,
     connectors: [],
     attributes: [],
