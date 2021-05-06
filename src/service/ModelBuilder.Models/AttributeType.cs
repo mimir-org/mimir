@@ -14,11 +14,13 @@ namespace Mb.Models
         public ICollection<Unit> Units { get; set; }
         public Aspect Aspect { get; set; }
         public AttributeFormat Format { get; set; }
+        public bool IsInterface { get; set; }
 
         public override bool Equals(object obj)
         {
             if (obj == null || GetType() != obj.GetType())
                 return false;
+
 
             if (!(obj is AttributeType))
                 return false;

@@ -1,6 +1,6 @@
 ﻿[
   {
-   "Entity": "Flowrate, volumetric",
+    "Entity": "Flowrate, volumetric",
     "Qualifier": "Capacity",
     "Source": "Required",
     "Condition": "Minimum",
@@ -11,7 +11,8 @@
       "Bbld"
     ],
     "Aspect": "Function",
-    "Format": "UnsignedFloat"
+    "Format": "UnsignedFloat",
+    "IsInterface": false
   },
   {
     "Entity": "Flowrate, volumetric",
@@ -25,6 +26,7 @@
       "Bbld"
     ],
     "Aspect": "Product",
-    "Format": "UnsignedFloat"
+    "Format": "UnsignedFloat",
+    "IsInterface": false
   }
 ]

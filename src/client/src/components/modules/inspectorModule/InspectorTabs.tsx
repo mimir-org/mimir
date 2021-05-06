@@ -1,4 +1,3 @@
-import { GetAttributes } from "./helpers";
 import { TabComponent } from ".";
 import { Attribute, Project } from "../../../models/project";
 import { RootState } from "../../../redux/store";
@@ -19,9 +18,9 @@ const InspectorTabs = () => {
   let index = 0;
 
   if (node) {
-    adminData = GetAttributes(node, index++);
-    techData = GetAttributes(node, index++);
-    relationData = GetAttributes(node, index++);
+    adminData = [];
+    techData = node.attributes;
+    relationData = [];
   }
 
   return (

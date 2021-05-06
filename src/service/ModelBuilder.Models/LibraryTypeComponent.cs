@@ -18,7 +18,12 @@ namespace Mb.Models
         public RdsCategory RdsCategory { get; set; }
         public ICollection<Terminal> Terminals { get; set; }
         public ICollection<AttributeType> Attributes { get; set; }
+        public string Version { get; set; }
+
+        [JsonIgnore]
         public string TerminalJson { get; set; }
+
+        [JsonIgnore]
         public string AttributeJson { get; set; }
 
         public void CreateJsonData()

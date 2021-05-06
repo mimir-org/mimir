@@ -1,4 +1,5 @@
-﻿using Mb.Models;
+﻿using Mb.Core.Repositories.Contracts;
+using Mb.Models;
 
 namespace Mb.Core.Repositories
 {

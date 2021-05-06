@@ -56,7 +56,7 @@ namespace Mb.Api
             _swaggerConfiguration = swaggerConfiguration;
 
             services.AddMsSqlServerModule();
-            services.AddModelBuilderModule();
+            services.AddModelBuilderModule(Configuration);
         }
 
         public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment env)

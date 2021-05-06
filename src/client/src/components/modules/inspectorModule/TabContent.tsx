@@ -24,7 +24,7 @@ const TabContent = ({ attr }: Props) => {
                 <Input
                   value={attr[i].value}
                   onChange={() => null}
-                  inputType={attr[i].inputType}
+                  inputType=""
                 />
               </div>
             ))}

@@ -1,6 +1,6 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using AutoMapper;
+using Mb.Core.Configurations;
 using Mb.Core.Profiles;
 using Mb.Core.Repositories;
 using Mb.Core.Repositories.Contracts;
@@ -8,6 +8,7 @@ using Mb.Core.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
@@ -16,10 +17,10 @@ namespace Mb.Core.Extensions
 {
     public static class ModelBuilderModuleExtensions
     {
-        public static IServiceCollection AddModelBuilderModule(this IServiceCollection services)
+        public static IServiceCollection AddModelBuilderModule(this IServiceCollection services, IConfiguration configuration)
         {
             // Auto-mapper
-            var configuration = new MapperConfiguration(cfg =>
+            var autoMapperConfiguration = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile<AttributeProfile>();
                 cfg.AddProfile<ConnectorProfile>();
@@ -28,9 +29,16 @@ namespace Mb.Core.Extensions
                 cfg.AddProfile<ProjectProfile>();
             });
 
+            // ModelBuilder Configuration configurations
+            var modelBuilderSection = configuration.GetSection(nameof(ModelBuilderConfiguration));
+            var modelBuilderConfiguration = new ModelBuilderConfiguration();
+            modelBuilderSection.Bind(modelBuilderConfiguration);
+            services.Configure<ModelBuilderConfiguration>(modelBuilderSection.Bind);
+
             // Dependency injection
-            services.AddSingleton(s => configuration.CreateMapper());
+            services.AddSingleton(s => autoMapperConfiguration.CreateMapper());
             services.AddSingleton<IFileRepository, JsonFileRepository>();
+            services.AddSingleton<IGenerateIdRepository, GenerateIdRepository>();
 
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<INodeRepository, NodeRepository>();

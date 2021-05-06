@@ -1,12 +1,13 @@
 [
   {
-    "Id": "3AA17ED8-5C05-4A8F-A61B-A5BF9CBF022A",
+    "Id": "equinor.com/t/1.0/286BBE1A-C18B-4FD0-AF6A-93DA9B8D850B",
     "Aspect": "Function",
     "ObjectType": "ObjectBlock",
-    "TypeName": "Seperator",
+    "TypeName": "Separation System",
     "Status": "Complete",
     "Rds": "D",
     "RdsCategory": "FunctionalSystems",
+    "Version": "1.0",
     "Terminals": [
       {
         "TerminalType": "Fluid",
@@ -32,25 +33,3 @@
   }
 ]
 
-
-//public string Id { get; set; }
-//       public Aspect Aspect { get; set; }
-
-//       public ObjectType ObjectType { get; set; }
-//       public string TypeName { get; set; }
-//       public Status Status { get; set; }
-//       public string Rds { get; set; }
-//       public List<Terminal> Terminals { get; set; }
-//       public List<AttributeType> Attributes { get; set; }
-
-//public TerminalType TerminalType { get; set; }
-//      public ConnectorType ConnectorType { get; set; }
-
-  //public int Id { get; set; }
-  //      public string Entity { get; set; }
-  //      public AttributeQualifier Qualifier { get; set; }
-  //      public AttributeSource Source { get; set; }
-  //      public AttributeCondition Condition { get; set; }
-  //      public ICollection<Unit> Units { get; set; }
-  //      public Aspect Aspect { get; set; }
-  //      public AttributeFormat Format { get; set; }

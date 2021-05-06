@@ -78,5 +78,18 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Mb.Api.Controllers.V1.TypeEditorController.GetTerminalTypes">
+            <summary>
+            Get all terminal types
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Mb.Api.Controllers.V1.TypeEditorController.CreateType(Mb.Models.LibraryTypeComponent)">
+            <summary>
+            Create a library type
+            </summary>
+            <param name="libraryTypeComponent"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

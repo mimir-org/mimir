@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Mb.Models;
 
-namespace Mb.Core.Repositories
+namespace Mb.Core.Repositories.Contracts
 {
     public interface ILibraryRepository
     {

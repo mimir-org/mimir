@@ -1,12 +1,3 @@
-export type AttributeInputType = keyof typeof ATTRIBUTE_INPUT_TYPE;
-
-export const ATTRIBUTE_INPUT_TYPE = {
-    TEXT: "Text",
-    LONG_TEXT: "LongText",
-    DROPDOWN: "Dropdown",
-    DATE: "Date",
-};
-
 export type AttributeTab = keyof typeof ATTRIBUTE_TAB;
 
 export const ATTRIBUTE_TAB = {
@@ -44,9 +35,12 @@ export const NODE_TYPE = {
 export type IconType = keyof typeof ICON_TYPE;
 
 export const ICON_TYPE = {
+    NOTSET_ICON: "NotSetIcon",
     FUNCTION_ICON: "FunctionIcon",
     LOCATION_ICON: "LocationIcon",
     PRODUCT_ICON: "ProductIcon",
+    TRANSPORT_ICON: "TransportIcon",
+    INTERFACE_ICON: "InterfaceIcon",
 };
 
 export type ConnectorType = keyof typeof CONNECTOR_TYPE;
@@ -148,8 +142,11 @@ export interface Attribute {
     key: string;
     value: string;
     unit: string;
-    type: AttributeTab;
-    inputType: AttributeInputType;
+    qualifier: string,
+    source: string,
+    condition: string,
+    format: string,
+    units: string[],
     nodeId: string;
 }
 
@@ -172,7 +169,7 @@ export interface LibNode {
     id: string;
     name: string;
     label: string;
-    icon: string;
+    icon: IconType;
     type: NodeType;
     connectors: Connector[];
     category: string;
