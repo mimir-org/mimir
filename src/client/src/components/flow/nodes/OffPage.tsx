@@ -47,7 +47,7 @@ const OffPage: FC<NodeProps> = ({ data }) => {
             />
           );
         })}
-      <div>{data.label ?? data.name}</div>
+      <div className="text">{data.label ?? data.name}</div>
     </OffPageWrapper>
   );
 };
