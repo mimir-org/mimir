@@ -173,6 +173,8 @@ export interface Attribute {
 
 export interface Node {
   id: string;
+  semanticId: string;
+  tagNumber: string;
   name: string;
   icon: IconType;
   label: string;
@@ -184,6 +186,13 @@ export interface Node {
   isSelected?: boolean | false;
   attributes?: Attribute[] | null;
   isHidden: boolean | false;
+  positionBlockX: number;
+  positionBlockY: number;
+  length: number;
+  height: number;
+  width: number;
+  updatedBy: string;
+  updated: Date;
 }
 
 export interface LibNode {
