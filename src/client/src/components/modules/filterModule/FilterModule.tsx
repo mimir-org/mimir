@@ -2,6 +2,7 @@ import "./filter.scss";
 import textResources from "../../../textResources";
 import FilterContent from "./FilterContent";
 import { useState } from "react";
+import { MODULE_TYPE } from "../../../models/project";
 import { VisualFilterWrapper, IconWrapper, IconTextWrapper } from "./styled";
 import {
   LoadState,
@@ -13,7 +14,7 @@ import {
 } from "../../../assets/index";
 
 const FilterModule = () => {
-  const key = "filter";
+  const key = MODULE_TYPE.VISUAL_FILTER;
   const [showFilter, setShowFilter] = useState(LoadState(key));
 
   const handleClick = () => {

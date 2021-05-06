@@ -1,15 +1,9 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { MiniMap } from "./";
 import { ProjectOptions } from "../project";
 import { ProjectState } from "../../redux/store/project/types";
 import { RootState } from "./../../redux/store/index";
-
-import ReactFlow, {
-  ReactFlowProvider,
-  Controls,
-  Elements,
-} from "react-flow-renderer";
+import ReactFlow, { ReactFlowProvider, Elements } from "react-flow-renderer";
 import { changeActiveNode, get } from "../../redux/store/project/actions";
 import {
   GetProject,
@@ -20,7 +14,6 @@ import {
   GetBlockNodeTypes,
   GetBlockEdgeTypes,
 } from "./helpers";
-
 import {
   useOnConnect,
   useOnConnectStart,
@@ -36,7 +29,6 @@ const FlowBlock = () => {
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>();
-
   let nodeId: string;
 
   const projectState = useSelector<RootState>(
@@ -136,10 +128,7 @@ const FlowBlock = () => {
               edgeTypes={GetBlockEdgeTypes}
               onConnectEnd={OnConnectStop}
               onConnectStart={OnConnectStart}
-            >
-              {/* <Controls /> */}
-              {/* <MiniMap /> */}
-            </ReactFlow>
+            ></ReactFlow>
           </div>
         </ReactFlowProvider>
       )}

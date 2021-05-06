@@ -6,9 +6,12 @@ const Color = {
   DarkGrey: "#c4c4c4",
   DarkerGrey: "#898787",
   DeepCyan: "#007079",
-  AspectFunction: "#ffff00",
-  AspectProduct: "#40e0d0",
-  AspectLocation: "#ff00ff",
+  Function: "#ffff00",
+  Product: "#40e0d0",
+  Location: "#ff00ff",
+  FunctionTransparent: "rgba(254, 244, 69, 0.15)",
+  ProductTransparent: "rgba(0, 240, 255, 0.15)",
+  LocationTransparent: " rgba(250, 0, 255, 0.15)",
 };
 
 export default Color;

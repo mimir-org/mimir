@@ -1,4 +1,3 @@
-export { default as InspectorWrapper } from "./InspectorWrapper";
 export { default as IconWrapper } from "./IconWrapper";
 export { default as InspectorTitle } from "./InspectorTitle";
 export { default as InspectorTabsHeader } from "./InspectorTabsHeader";

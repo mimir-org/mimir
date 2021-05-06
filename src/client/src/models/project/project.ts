@@ -32,6 +32,24 @@ export const NODE_TYPE = {
     OFF_PAGE: "Offpage",
 };
 
+export type ModuleType = keyof typeof MODULE_TYPE;
+
+export const MODULE_TYPE = {
+    EXPLORER: "Explorer",
+    INSPECTOR: "Inspector",
+    LIBRARY: "Library",
+    VISUAL_FILTER: "VisualFilter",
+    ACCOUNT: "Account",
+    LEGEND: "Legend",
+};
+
+export type ViewType = keyof typeof VIEW_TYPE;
+
+export const VIEW_TYPE = {
+    BLOCKVIEW: "blockview",
+    TREEVIEW: "treeview",
+};
+
 export type IconType = keyof typeof ICON_TYPE;
 
 export const ICON_TYPE = {
@@ -152,6 +170,8 @@ export interface Attribute {
 
 export interface Node {
     id: string;
+    semanticId: string;
+    tagNumber: string;
     name: string;
     icon: IconType;
     label: string;
@@ -163,6 +183,13 @@ export interface Node {
     isSelected?: boolean | false;
     attributes?: Attribute[] | null;
     isHidden: boolean | false;
+    positionBlockX: number;
+    positionBlockY: number;
+    length: number;
+    height: number;
+    width: number;
+    updatedBy: string;
+    updated: Date;
 }
 
 export interface LibNode {

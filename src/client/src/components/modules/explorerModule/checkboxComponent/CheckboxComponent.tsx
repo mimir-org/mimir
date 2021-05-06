@@ -18,7 +18,7 @@ export const CheckboxComponent = ({ nodeId, inputLabel, type }: Props) => {
   const handleCheckboxChange = useChangeNodeVisibility(node, type);
 
   return (
-    <label className={"checkbox "}>
+    <label className={"checkbox"}>
       <input
         type="checkbox"
         checked={!isHidden}
