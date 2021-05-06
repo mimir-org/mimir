@@ -7,7 +7,7 @@ import { LibraryModule } from "../modules/libraryModule";
 import { AccountModule } from "../modules/accountModule";
 import { FilterModule } from "../modules/filterModule";
 import { getUser } from "../../redux/store/user/actions";
-import { FlowTree, FlowBlock } from "../flow";
+import { FlowTree, FlowBlock, FlowBlockLocation } from "../flow";
 
 interface RouteParams {
   type: string;
@@ -31,6 +31,7 @@ const Home = () => {
             <div className="treestructur_container">
               <div className="dndflow">
                 {params.type === "treeview" ? <FlowTree /> : <FlowBlock />}
+                {/* {params.type === "treeview" ? <FlowTree /> : <FlowBlockLocation />} */}
               </div>
             </div>
           </div>
