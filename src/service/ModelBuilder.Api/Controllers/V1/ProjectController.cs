@@ -19,7 +19,7 @@ namespace Mb.Api.Controllers.V1
     /// </summary>
     [Produces("application/json")]
     [Authorize]
-    //[ApiController]
+    [ApiController]
     [ApiVersion("0.1")]
     [Route("V{version:apiVersion}/[controller]")]
     [SwaggerTag("Project")]
