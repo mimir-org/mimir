@@ -1,6 +1,6 @@
 import { Aspect, Function, Product, Location } from "./../nodes";
 
-const GetBlockNodeTypes = {
+const GetTreeNodeTypes = {
   AspectFunction: Aspect,
   AspectLocation: Aspect,
   AspectProduct: Aspect,
@@ -9,4 +9,4 @@ const GetBlockNodeTypes = {
   Location: Location,
 };
 
-export default GetBlockNodeTypes;
+export default GetTreeNodeTypes;
