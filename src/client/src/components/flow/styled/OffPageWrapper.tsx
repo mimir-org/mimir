@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { BlockviewArrowSmallIcon } from "../../../assets/";
 
 const OffPageWrapper = styled.div`
   width: 25px;
@@ -6,6 +7,7 @@ const OffPageWrapper = styled.div`
   border-radius: 100% / 50%;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
+  /* background-image: ${BlockviewArrowSmallIcon}; */
 
   background: ${(props: { background: string; fontColor: string }) =>
     props.background};

@@ -128,6 +128,8 @@ const FlowBlock = () => {
               edgeTypes={GetBlockEdgeTypes}
               onConnectEnd={OnConnectStop}
               onConnectStart={OnConnectStart}
+              zoomOnScroll={false}
+              paneMoveable={false}
             ></ReactFlow>
           </div>
         </ReactFlowProvider>
