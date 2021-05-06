@@ -71,18 +71,6 @@
   background-color: #f8f8f8;
 }
 
-/* Sidebar */
-.dndflow aside {
-  border-right: 1px solid #eee;
-  padding: 15px 10px;
-  font-size: 12px;
-  background: #fcfcfc;
-}
-
-.dndflow aside .description {
-  margin-bottom: 10px;
-}
-
 .dndflow .dndnode {
   height: 25px;
   width: 150px;
@@ -130,16 +118,9 @@
   .dndflow {
     flex-direction: row;
   }
-
-  .dndflow aside {
-    width: 20%;
-    max-width: 250px;
-  }
 }
 
 .function-block {
-  //   width: 100%;
-  //   height: 100%;
   margin-top: 90px;
 
   &__content {
@@ -152,10 +133,14 @@
     -ms-border-radius: 4px;
     -o-border-radius: 4px;
   }
+  .icon {
+    position: absolute;
+  }
 }
 
 .function-block__header {
-  padding: 5px 0px;
-  margin: 0;
+  display: flex;
+  margin-bottom: 8px;
+  padding: 0px 0px 0px 25px;
   font-size: 14px;
 }
