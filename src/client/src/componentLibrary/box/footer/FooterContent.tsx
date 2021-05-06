@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { Color, FontSize, FontType } from "../../../../componentLibrary";
+import { Color, FontSize, FontType } from "../../../componentLibrary";
 
-const ViewOptionWrapper = styled.div`
+const FooterContent = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -19,4 +19,4 @@ const ViewOptionWrapper = styled.div`
   white-space: nowrap;
 `;
 
-export default ViewOptionWrapper;
+export default FooterContent;

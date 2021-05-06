@@ -1,5 +1,5 @@
-import { FunctionIcon, ProductIcon, LocationIcon } from "../../../../assets";
-import { NodeType, NODE_TYPE } from "../../../../models/project";
+import { FunctionIcon, ProductIcon, LocationIcon } from "../../assets";
+import { NodeType, NODE_TYPE } from "../../models/project";
 
 const GetAspectIcon = (node: NodeType): string => {
   if (node === NODE_TYPE.ASPECT_FUNCTION) return FunctionIcon;

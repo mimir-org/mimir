@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import { Color } from "../../";
 
-const SwitchViewWrapper = styled.div`
+const FooterBox = styled.div`
   display: flex;
   width: inherit;
   height: 100px;
@@ -8,6 +9,9 @@ const SwitchViewWrapper = styled.div`
   justify-content: space-evenly;
   align-items: center;
   overflow: hidden;
+  bottom: 0;
+  position: absolute;
+  border-top: 1px solid ${Color.Grey};
 `;
 
-export default SwitchViewWrapper;
+export default FooterBox;

@@ -1,5 +1,5 @@
-import { Node, Edge } from "../../../../models/project";
-import { IsAspectNode } from "../../../flow/helpers";
+import { Node, Edge } from "../../models/project";
+import { IsAspectNode } from "../../components/flow/helpers";
 
 const SetIndentLevel = (nodes: Node[], edges: Edge[], i: number) => {
   let indentCount = 0;

@@ -1,21 +1,21 @@
 import CombinedViewOffIcon from "../../../../assets/icons/combinedViewOffIcon.svg";
 import SplitViewIcon from "../../../../assets/icons/splitViewIcon.svg";
+import { FooterBox, FooterContent } from "../../../../componentLibrary";
 import textResources from "../../../../textResources";
-import { SwitchViewWrapper, ViewOptionWrapper } from "../styled";
 
 export const SwitchViewComponent = () => {
   return (
     <>
-      <SwitchViewWrapper>
-        <ViewOptionWrapper>
+      <FooterBox>
+        <FooterContent>
           <img src={CombinedViewOffIcon} alt="view-icon" />
           <p>{textResources.Combined_view}</p>
-        </ViewOptionWrapper>
-        <ViewOptionWrapper>
+        </FooterContent>
+        <FooterContent>
           <img src={SplitViewIcon} alt="view-icon" />
           <p>{textResources.Split_view}</p>
-        </ViewOptionWrapper>
-      </SwitchViewWrapper>
+        </FooterContent>
+      </FooterBox>
     </>
   );
 };

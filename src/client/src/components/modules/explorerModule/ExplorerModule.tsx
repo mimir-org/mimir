@@ -6,14 +6,13 @@ import ProjectComponent from "./projectComponent/ProjectComponent";
 import { SwitchViewComponent } from "./switchviewComponent/SwitchViewComponent";
 import textResources from "../../../textResources";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
+import { MODULE_TYPE } from "../../../models/project";
 import {
   AnimatedModule,
   ModuleHeader,
   ModuleBody,
   Size,
 } from "../../../componentLibrary";
-import { MODULE_TYPE } from "../../../models/project";
-import { ExplorerFooterWrapper } from "./styled";
 import {
   LoadState,
   SaveState,
@@ -53,9 +52,7 @@ export const ExplorerModule = () => {
       </ModuleHeader>
       <ModuleBody>
         {hasProject && <ProjectComponent visible={isOpen} />}
-        <ExplorerFooterWrapper visible={isOpen}>
-          <SwitchViewComponent />
-        </ExplorerFooterWrapper>
+        <SwitchViewComponent />
       </ModuleBody>
     </AnimatedModule>
   );

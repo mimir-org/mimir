@@ -1,5 +1,5 @@
-import { Color } from "../../../../componentLibrary";
-import { NodeType, NODE_TYPE } from "../../../../models/project";
+import { Color } from "../../componentLibrary";
+import { NodeType, NODE_TYPE } from "../../models/project";
 
 const GetAspectColor = (node: NodeType): string => {
   if (node === NODE_TYPE.ASPECT_FUNCTION) return Color.FunctionTransparent;

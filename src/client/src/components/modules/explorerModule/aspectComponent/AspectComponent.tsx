@@ -11,7 +11,7 @@ import {
   SetIndentLevel,
   GetType,
   GetDropdownIcon,
-} from "../helpers/";
+} from "../../../../assets/helpers";
 
 interface Props {
   nodeId: string;

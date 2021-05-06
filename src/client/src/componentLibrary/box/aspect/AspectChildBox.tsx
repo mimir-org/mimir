@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { CalculateIndentLevel } from "../helpers";
+import { CalculateIndentLevel } from "../../../assets/helpers";
 
 const AspectChildWrapper = styled.div`
   margin-bottom: 6px;

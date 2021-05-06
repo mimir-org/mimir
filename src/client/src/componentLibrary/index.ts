@@ -9,4 +9,7 @@ export { default as ModuleHeader } from "./box/modules/ModuleHeader";
 export { default as ModuleBody } from "./box/modules/ModuleBody";
 export { default as AnimatedModule } from "./animated/AnimatedModule";
 export { default as AspectBox } from "./box/aspect/AspectBox";
+export { default as AspectChildBox } from "./box/aspect/AspectChildBox";
+export { default as FooterBox } from "./box/footer/FooterBox";
+export { default as FooterContent } from "./box/footer/FooterContent";
 export { default as VerticalScrollbar } from "./scrollbars/VerticalScrollbar";

@@ -1,6 +1,6 @@
+import { AspectChildBox } from "../../../../componentLibrary";
 import { NodeType } from "../../../../models/project";
 import CheckboxComponent from "../checkboxComponent/CheckboxComponent";
-import { AspectChildWrapper } from "../styled";
 
 interface Props {
   nodeId: string;
@@ -11,9 +11,9 @@ interface Props {
 
 export const AspectChildComponent = ({ nodeId, name, type, indent }: Props) => {
   return (
-    <AspectChildWrapper indent={indent}>
+    <AspectChildBox indent={indent}>
       <CheckboxComponent nodeId={nodeId} inputLabel={name} type={type} />
-    </AspectChildWrapper>
+    </AspectChildBox>
   );
 };
 
