@@ -1,11 +1,13 @@
 import styled from "styled-components";
-import { CalculateIndentLevel } from "../../../assets/helpers";
+import { CalculateIndentLevel, GetAspectColor } from "../../../assets/helpers";
+import { NodeType } from "../../../models/project";
 
-const AspectChildWrapper = styled.div`
-  margin-bottom: 6px;
-  margin-top: 6px;
-  margin-left: ${(props: { indent: number }) =>
+const AspectChildBox = styled.div`
+  padding-bottom: 9px;
+  padding-left: ${(props: { indent: number }) =>
     CalculateIndentLevel(props.indent)}px;
+  background-color: ${(props: { type: NodeType }) =>
+    GetAspectColor(props.type)};
 `;
 
-export default AspectChildWrapper;
+export default AspectChildBox;

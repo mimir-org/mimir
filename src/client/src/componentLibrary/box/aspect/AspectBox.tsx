@@ -7,8 +7,7 @@ const AspectBox = styled.div`
   background-color: ${(props: { color: string }) => props.color};
 
   .checkbox_container {
-    padding-top: 6px;
-    padding-left: 10px;
+    padding-left: 13px;
     flex: 2;
   }
 `;

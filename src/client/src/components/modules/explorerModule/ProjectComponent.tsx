@@ -1,7 +1,6 @@
-import "./project.scss";
-import AspectComponent from "../aspectComponent/AspectComponent";
-import { IsAspectNode } from "../../../flow/helpers";
-import store from "../../../../redux/store";
+import AspectComponent from "./aspectComponent/AspectComponent";
+import { IsAspectNode } from "../../flow/helpers";
+import store from "../../../redux/store";
 
 export const ProjectComponent = ({ visible }) => {
   const project = store.getState().projectState.project;

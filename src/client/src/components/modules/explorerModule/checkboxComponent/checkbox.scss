@@ -1,30 +1,14 @@
 .checkbox {
   display: flex;
   position: relative;
-  padding: 0px 0px 0px 25px;
-  margin-bottom: 6px;
+  padding: 0px 0px 3px 25px;
   cursor: pointer;
   font-size: 14px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-
-  .checkbox_label {
-    padding-top: 1.5px;
-  }
-
-  .checkbox_label::first-letter {
-    text-transform: uppercase;
-  }
 }
 
 .checkbox input {
   position: absolute;
   opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
 }
 
 .checkmark {

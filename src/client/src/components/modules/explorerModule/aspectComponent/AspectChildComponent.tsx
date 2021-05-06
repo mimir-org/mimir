@@ -10,8 +10,9 @@ interface Props {
 }
 
 export const AspectChildComponent = ({ nodeId, name, type, indent }: Props) => {
+  console.log({ type });
   return (
-    <AspectChildBox indent={indent}>
+    <AspectChildBox indent={indent} type={type}>
       <CheckboxComponent nodeId={nodeId} inputLabel={name} type={type} />
     </AspectChildBox>
   );
