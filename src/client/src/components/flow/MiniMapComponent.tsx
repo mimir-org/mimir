@@ -1,30 +1,14 @@
-import { MiniMap, Node } from "react-flow-renderer";
-import { Color } from "../../componentLibrary";
-import { NODE_TYPE } from "../../models/project";
+import { MiniMap } from "react-flow-renderer";
+import { GetColor } from "../../assets/helpers";
 
 const MiniMapComponent = () => {
-  let color: string;
-
-  const GetColor = (node: Node): string => {
-    node.type === NODE_TYPE.FUNCTION || node.type === NODE_TYPE.ASPECT_FUNCTION
-      ? (color = Color.Function)
-      : node.type === NODE_TYPE.PRODUCT ||
-        node.type === NODE_TYPE.ASPECT_PRODUCT
-      ? (color = Color.Product)
-      : node.type === NODE_TYPE.LOCATION ||
-        node.type === NODE_TYPE.ASPECT_LOCATION
-      ? (color = Color.Location)
-      : (color = null);
-    return color;
-  };
-
   return (
     <MiniMap
-      nodeStrokeColor={(node: Node): string => {
-        return GetColor(node);
+      nodeStrokeColor={(node: any) => {
+        return GetColor(node.type);
       }}
-      nodeColor={(node: Node): string => {
-        return GetColor(node);
+      nodeColor={(node: any) => {
+        return GetColor(node.type);
       }}
     />
   );
