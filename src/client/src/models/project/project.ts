@@ -41,6 +41,24 @@ export const NODE_TYPE = {
   OFF_PAGE: "Offpage",
 };
 
+export type ModuleType = keyof typeof MODULE_TYPE;
+
+export const MODULE_TYPE = {
+  EXPLORER: "Explorer",
+  INSPECTOR: "Inspector",
+  LIBRARY: "Library",
+  VISUAL_FILTER: "VisualFilter",
+  ACCOUNT: "Account",
+  LEGEND: "Legend",
+};
+
+export type ViewType = keyof typeof VIEW_TYPE;
+
+export const VIEW_TYPE = {
+  BLOCKVIEW: "blockview",
+  TREEVIEW: "treeview",
+};
+
 export type IconType = keyof typeof ICON_TYPE;
 
 export const ICON_TYPE = {

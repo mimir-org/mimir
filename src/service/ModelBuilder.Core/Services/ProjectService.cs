@@ -88,8 +88,6 @@ namespace Mb.Core.Services
             return _mapper.Map<Project>(project);
         }
 
-
-
         public Project CreateInitProject(string name, string description)
         {
             var project = new Project

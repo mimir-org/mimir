@@ -11,6 +11,9 @@ namespace Mb.Core
         public virtual DbSet<Edge> Edges { get; set; }
         public virtual DbSet<Attribute> Attributes { get; set; }
         public virtual DbSet<Connector> Connectors { get; set; }
+        public virtual DbSet<Rds> Rds { get; set; }
+        public virtual DbSet<AttributeType> AttributeTypes { get; set; }
+        public virtual DbSet<LibraryTypeComponent> LibraryTypeComponents { get; set; }
 
         public ModelBuilderDbContext(DbContextOptions<ModelBuilderDbContext> options) : base(options)
         {
@@ -25,6 +28,9 @@ namespace Mb.Core
             modelBuilder.ApplyConfiguration(new EdgeConfiguration());
             modelBuilder.ApplyConfiguration(new AttributeConfiguration());
             modelBuilder.ApplyConfiguration(new ConnectorConfiguration());
+            modelBuilder.ApplyConfiguration(new RdsConfiguration());
+            modelBuilder.ApplyConfiguration(new AttributeTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new LibraryTypeComponentConfiguration());
 
         }
     }

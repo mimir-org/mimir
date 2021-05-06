@@ -1,32 +1,30 @@
 ﻿[
   {
-    "Id":  1, 
-    "Entity": "Flowrate, volumetric",
-    "Qualifier": 1,
-    "Source": 1,
-    "Condition": 1,
+   "Entity": "Flowrate, volumetric",
+    "Qualifier": "Capacity",
+    "Source": "Required",
+    "Condition": "Minimum",
     "Units": [
-      2,
-      3,
-      4,
-      5
+      "Sm3D",
+      "Sm3H",
+      "Scfhr",
+      "Bbld"
     ],
-    "Aspect": 1,
-    "Format": 1
+    "Aspect": "Function",
+    "Format": "UnsignedFloat"
   },
   {
-    "Id": 2,
     "Entity": "Flowrate, volumetric",
-    "Qualifier": 1,
-    "Source": 2,
-    "Condition": 2,
+    "Qualifier": "Capacity",
+    "Source": "Design",
+    "Condition": "Nominal",
     "Units": [
-      2,
-      3,
-      4,
-      5
+      "Sm3D",
+      "Sm3H",
+      "Scfhr",
+      "Bbld"
     ],
-    "Aspect": 2,
-    "Format": 1
+    "Aspect": "Product",
+    "Format": "UnsignedFloat"
   }
 ]

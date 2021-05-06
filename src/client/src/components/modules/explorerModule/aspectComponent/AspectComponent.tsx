@@ -1,18 +1,17 @@
-import "./aspect.scss";
 import { useState } from "react";
 import { expandedIcon, unexpandedIcon } from "../../../../assets";
 import { NodeType } from "../../../../models/project";
 import { IsAspectNode, GetNodes, GetEdges } from "../../../flow/helpers";
 import CheckboxComponent from "../checkboxComponent/CheckboxComponent";
-import { AspectChildComponent } from "../aspectChildComponent";
-import { AspectChildContainer } from "../styled";
+import { AspectChildComponent } from "./";
+import { AspectBox } from "../../../../componentLibrary";
 import {
   GetAspectIcon,
-  GetAspectHeader,
+  GetAspectColor,
   SetIndentLevel,
   GetType,
   GetDropdownIcon,
-} from "../helpers/";
+} from "../../../../assets/helpers";
 
 interface Props {
   nodeId: string;
@@ -27,7 +26,7 @@ export const AspectComponent = ({ nodeId, name, aspectType }: Props) => {
   };
 
   const aspectIcon = GetAspectIcon(aspectType);
-  const aspectHeader = GetAspectHeader(aspectType);
+  const color = GetAspectColor(aspectType);
   const expandIcon = expanded ? expandedIcon : unexpandedIcon;
   const childType = GetType(aspectType);
   const nodes = GetNodes();
@@ -35,9 +34,9 @@ export const AspectComponent = ({ nodeId, name, aspectType }: Props) => {
   const children = nodes.filter((node) => !IsAspectNode(node.type));
 
   return (
-    <div className="aspect_container">
-      <div className={"aspect_header " + aspectHeader}>
-        <img className="aspectIcon" src={aspectIcon} alt="aspect-icon"></img>
+    <>
+      <AspectBox color={color}>
+        <img src={aspectIcon} alt="aspect-icon"></img>
         <div className="checkbox_container">
           <CheckboxComponent
             nodeId={nodeId}
@@ -46,27 +45,25 @@ export const AspectComponent = ({ nodeId, name, aspectType }: Props) => {
           />
         </div>
         {GetDropdownIcon(expandIcon, handleExpandClick)}
-      </div>
+      </AspectBox>
 
-      <AspectChildContainer color={childType}>
-        {expanded &&
-          children.map((obj: object, i: number) => {
-            if (children[i].type === childType) {
-              const indent = SetIndentLevel(children, edges, i);
-              return (
-                <AspectChildComponent
-                  key={i}
-                  nodeId={obj["id"]}
-                  name={obj["name"]}
-                  type={childType}
-                  indent={indent}
-                />
-              );
-            }
-            return null;
-          })}
-      </AspectChildContainer>
-    </div>
+      {expanded &&
+        children.map((obj: object, i: number) => {
+          if (children[i].type === childType) {
+            const indent = SetIndentLevel(children, edges, i);
+            return (
+              <AspectChildComponent
+                key={i}
+                nodeId={obj["id"]}
+                name={obj["name"]}
+                type={childType}
+                indent={indent}
+              />
+            );
+          }
+          return null;
+        })}
+    </>
   );
 };
 

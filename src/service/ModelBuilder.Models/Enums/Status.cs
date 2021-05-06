@@ -1,8 +1,16 @@
-﻿namespace Mb.Models.Enums
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Mb.Models.Enums
 {
     public enum Status
     {
+        [Display(Name = "NotSet")]
         NotSet = 0,
-        Draft = 1
+
+        [Display(Name = "Draft")]
+        Draft = 1,
+
+        [Display(Name = "Complete")]
+        Complete = 2
     }
 }

@@ -1,13 +1,4 @@
 import textResources from "../../../textResources";
-import AnimatedMenu from "./styled/animated/AnimatedMenu";
-import { LibraryIcon, ToggleIconLeft, ToggleIconRight } from "../../../assets";
-import {
-  Header,
-  SidebarWrapper,
-  HeaderWrapper,
-  CollapsedIcon,
-  LibraryWrapper,
-} from "./styled";
 import { LegendWrapper } from "../legendModule/styled";
 import { LegendModule } from "../legendModule";
 import { LibrarySidebar } from "./index";
@@ -16,15 +7,20 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { LibraryState } from "../../../redux/store/library/types";
 import { searchLibrary } from "../../../redux/store/library/actions";
+import { changeModuleVisibility } from "../../../redux/store/modules/actions";
+import { LibraryIcon, ToggleIconLeft, ToggleIconRight } from "../../../assets";
+import { MODULE_TYPE } from "../../../models/project";
+import { AnimatedModule, ModuleHeader, Size } from "../../../componentLibrary";
+import { SidebarWrapper, LibraryWrapper } from "./styled";
 import {
   LoadState,
   SaveState,
 } from "../../../redux/store/localStorage/localStorage";
 
 const LibraryModule = () => {
-  const key = "library";
+  const key = MODULE_TYPE.LIBRARY;
   const dispatch = useDispatch();
-  const [isOpen, setIsOpen] = useState(LoadState(key));
+  const [isOpen, setIsOpen]: [boolean, any] = useState(LoadState(key));
   const [animate, setAnimate] = useState(false);
   const state = useSelector<RootState>(
     (state) => state.library
@@ -38,38 +34,25 @@ const LibraryModule = () => {
     SaveState(!isOpen, key);
     setIsOpen(!isOpen);
     setAnimate(true);
+    dispatch(changeModuleVisibility(key, !isOpen));
   };
 
-  const startHeight = isOpen ? "35" : "331";
-  const stopHeight = isOpen ? "331" : "35";
+  const start = isOpen ? Size.ModuleClosed : Size.ModuleOpen;
+  const stop = isOpen ? Size.ModuleOpen : Size.ModuleClosed;
 
   return (
-    <AnimatedMenu start={startHeight} stop={stopHeight} run={animate}>
+    <AnimatedModule start={start} stop={stop} run={animate}>
       <LibraryWrapper visible={isOpen}>
-        <HeaderWrapper>
-          {isOpen ? (
-            <img
-              src={ToggleIconRight}
-              alt="toggle-icon"
-              style={{ cursor: "pointer" }}
-              onClick={handleClick}
-            />
-          ) : (
-            <img
-              src={ToggleIconLeft}
-              alt="toggle-icon"
-              style={{ cursor: "pointer" }}
-              onClick={handleClick}
-            />
-          )}
-          <Header>
-            <img src={LibraryIcon} alt="library-icon" />
-            {textResources.Library_Heading}
-          </Header>
-        </HeaderWrapper>
-        <CollapsedIcon visible={isOpen}>
+        <ModuleHeader right visible={isOpen}>
           <img src={LibraryIcon} alt="library-icon" />
-        </CollapsedIcon>
+          <img
+            className="icon"
+            src={isOpen ? ToggleIconRight : ToggleIconLeft}
+            alt="toggle"
+            onClick={handleClick}
+          />
+          <p className="text">{textResources.Library_Heading}</p>
+        </ModuleHeader>
         <SidebarWrapper visible={isOpen}>
           <LibrarySidebar nodes={state.nodes} />
         </SidebarWrapper>
@@ -77,7 +60,7 @@ const LibraryModule = () => {
       <LegendWrapper visible={isOpen}>
         <LegendModule visible={isOpen} />
       </LegendWrapper>
-    </AnimatedMenu>
+    </AnimatedModule>
   );
 };
 
