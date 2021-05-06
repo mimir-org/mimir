@@ -1,6 +1,5 @@
 import "./project.scss";
 import AspectComponent from "../aspectComponent/AspectComponent";
-import { AspectWrapper } from "../styled";
 import { IsAspectNode } from "../../../flow/helpers";
 import store from "../../../../redux/store";
 
@@ -9,7 +8,7 @@ export const ProjectComponent = ({ visible }) => {
   const aspects = project ? project.nodes : [];
 
   return (
-    <AspectWrapper visible={visible}>
+    <>
       {aspects.map((obj: object, i: number) => {
         if (IsAspectNode(aspects[i].type)) {
           return (
@@ -23,7 +22,7 @@ export const ProjectComponent = ({ visible }) => {
         }
         return null;
       })}
-    </AspectWrapper>
+    </>
   );
 };
 

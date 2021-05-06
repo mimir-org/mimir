@@ -7,13 +7,13 @@ const MiniMapComponent = () => {
 
   const GetColor = (node: Node): string => {
     node.type === NODE_TYPE.FUNCTION || node.type === NODE_TYPE.ASPECT_FUNCTION
-      ? (color = Color.AspectFunction)
+      ? (color = Color.Function)
       : node.type === NODE_TYPE.PRODUCT ||
         node.type === NODE_TYPE.ASPECT_PRODUCT
-      ? (color = Color.AspectProduct)
+      ? (color = Color.Product)
       : node.type === NODE_TYPE.LOCATION ||
         node.type === NODE_TYPE.ASPECT_LOCATION
-      ? (color = Color.AspectLocation)
+      ? (color = Color.Location)
       : (color = null);
     return color;
   };

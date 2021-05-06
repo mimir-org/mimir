@@ -6,7 +6,12 @@ import ProjectComponent from "./projectComponent/ProjectComponent";
 import { SwitchViewComponent } from "./switchviewComponent/SwitchViewComponent";
 import textResources from "../../../textResources";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
-import { AnimatedModule, ModuleHeader, Size } from "../../../componentLibrary";
+import {
+  AnimatedModule,
+  ModuleHeader,
+  ModuleBody,
+  Size,
+} from "../../../componentLibrary";
 import { MODULE_TYPE } from "../../../models/project";
 import { ExplorerFooterWrapper } from "./styled";
 import {
@@ -46,10 +51,12 @@ export const ExplorerModule = () => {
         />
         <p className="text">{textResources.Explorer_view}</p>
       </ModuleHeader>
-      {hasProject && <ProjectComponent visible={isOpen} />}
-      <ExplorerFooterWrapper visible={isOpen}>
-        <SwitchViewComponent />
-      </ExplorerFooterWrapper>
+      <ModuleBody>
+        {hasProject && <ProjectComponent visible={isOpen} />}
+        <ExplorerFooterWrapper visible={isOpen}>
+          <SwitchViewComponent />
+        </ExplorerFooterWrapper>
+      </ModuleBody>
     </AnimatedModule>
   );
 };
