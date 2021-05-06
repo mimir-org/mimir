@@ -6,7 +6,7 @@ import { LocationBlockWrapper } from "../styled";
 const Location: FC<NodeProps> = ({ data }) => {
   return (
     <>
-      <LocationBlockWrapper width={100} height={80}>
+      <LocationBlockWrapper width={data.width} height={data.height}>
         {data.connectors &&
           data.connectors.map((connector) => {
             const [typeHandler, positionHandler] = GetHandleType(connector);
