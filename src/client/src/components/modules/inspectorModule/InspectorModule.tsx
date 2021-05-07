@@ -10,24 +10,23 @@ import InspectorTabs from "./InspectorTabs";
 import { AnimatedModule, Size } from "../../../componentLibrary";
 import { MODULE_TYPE } from "../../../models/project";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
-import {
-  LoadState,
-  SaveState,
-} from "../../../redux/store/localStorage/localStorage";
+import { SaveState } from "../../../redux/store/localStorage/localStorage";
 
 const InspectorModule = () => {
   const dispatch = useDispatch();
   const key = MODULE_TYPE.INSPECTOR;
-  const [isOpen, setIsOpen] = useState(LoadState(key));
   const [animate, setAnimate] = useState(false);
 
   const hasProject = useSelector<RootState>(
     (state) => state.projectState.project !== null
   );
 
+  const isOpen = useSelector<RootState>(
+    (state) => state.modules.type.find((x) => x.type === key).visible
+  ) as boolean;
+
   const handleClick = () => {
     SaveState(!isOpen, key);
-    setIsOpen(!isOpen);
     setAnimate(true);
     dispatch(changeModuleVisibility(key, !isOpen));
   };

@@ -26,13 +26,11 @@ const Home = () => {
     <div className="home_container">
       <ExplorerModule />
       <div className="middle_content">
-        <div className="workspace">
-          <div className="treeview_component">
-            <div className="treestructur_container">
-              <div className="dndflow">
-                {params.type === "treeview" ? <FlowTree /> : <FlowBlock />}
-                {/* {params.type === "treeview" ? <FlowTree /> : <FlowBlockLocation />} */}
-              </div>
+        <div className="treeview_component">
+          <div className="treestructur_container">
+            <div className="dndflow">
+              {params.type === "treeview" ? <FlowTree /> : <FlowBlock />}
+              {/* {params.type === "treeview" ? <FlowTree /> : <FlowBlockLocation />} */}
             </div>
           </div>
         </div>

@@ -6,7 +6,6 @@ import { ProjectOptions } from "../project";
 import { ProjectState } from "../../redux/store/project/types";
 import { RootState } from "./../../redux/store/index";
 import { useOnConnect, useOnDrop, useOnElementsRemove } from "./hooks";
-import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
 import {
   GetProject,
   HasProject,
@@ -25,6 +24,7 @@ import ReactFlow, {
   Elements,
   Controls,
 } from "react-flow-renderer";
+import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
 
 const FlowTree = () => {
   const dispatch = useDispatch();
@@ -91,28 +91,26 @@ const FlowTree = () => {
   return (
     <>
       {projectState.project && (
-        <>
-          <FullscreenBox />
-          <ReactFlowProvider>
-            <div className="reactflow-wrapper" ref={reactFlowWrapper}>
-              <ReactFlow
-                elements={elements}
-                onConnect={OnConnect}
-                onElementsRemove={OnElementsRemove}
-                onLoad={OnLoad}
-                onDrop={OnDrop}
-                onDragOver={OnDragOver}
-                onNodeDragStop={OnNodeDragStop}
-                onElementClick={OnElementClick}
-                nodeTypes={GetTreeNodeTypes}
-                edgeTypes={GetTreeEdgeTypes}
-              >
-                <Controls />
-                <MiniMap />
-              </ReactFlow>
-            </div>
-          </ReactFlowProvider>
-        </>
+        <ReactFlowProvider>
+          <div className="reactflow-wrapper" ref={reactFlowWrapper}>
+            <ReactFlow
+              elements={elements}
+              onConnect={OnConnect}
+              onElementsRemove={OnElementsRemove}
+              onLoad={OnLoad}
+              onDrop={OnDrop}
+              onDragOver={OnDragOver}
+              onNodeDragStop={OnNodeDragStop}
+              onElementClick={OnElementClick}
+              nodeTypes={GetTreeNodeTypes}
+              edgeTypes={GetTreeEdgeTypes}
+            >
+              <Controls />
+              <MiniMap />
+              <FullscreenBox />
+            </ReactFlow>
+          </div>
+        </ReactFlowProvider>
       )}
       {!projectState.project && !HasProject() && (
         <div>

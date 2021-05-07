@@ -21,6 +21,17 @@ export const SaveState = (state: boolean, key: string) => {
   }
 };
 
+export const CloseAllModules = () => {
+  try {
+    const serializedState = JSON.stringify(false);
+    localStorage.setItem(`show_Library`, serializedState);
+    localStorage.setItem(`show_Explorer`, serializedState);
+    localStorage.setItem(`show_Inspector`, serializedState);
+  } catch {
+    return undefined;
+  }
+};
+
 export const SaveEventData = (state: object, key: string) => {
   try {
     const serializedState = JSON.stringify(state);

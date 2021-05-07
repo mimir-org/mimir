@@ -12,19 +12,19 @@ import { LibraryIcon, ToggleIconLeft, ToggleIconRight } from "../../../assets";
 import { MODULE_TYPE } from "../../../models/project";
 import { AnimatedModule, ModuleHeader, Size } from "../../../componentLibrary";
 import { SidebarWrapper, LibraryWrapper } from "./styled";
-import {
-  LoadState,
-  SaveState,
-} from "../../../redux/store/localStorage/localStorage";
+import { SaveState } from "../../../redux/store/localStorage/localStorage";
 
 const LibraryModule = () => {
   const key = MODULE_TYPE.LIBRARY;
   const dispatch = useDispatch();
-  const [isOpen, setIsOpen]: [boolean, any] = useState(LoadState(key));
   const [animate, setAnimate] = useState(false);
   const state = useSelector<RootState>(
     (state) => state.library
   ) as LibraryState;
+
+  const isOpen = useSelector<RootState>(
+    (state) => state.modules.type.find((x) => x.type === key).visible
+  ) as boolean;
 
   useEffect(() => {
     dispatch(searchLibrary(""));
@@ -32,7 +32,6 @@ const LibraryModule = () => {
 
   const handleClick = () => {
     SaveState(!isOpen, key);
-    setIsOpen(!isOpen);
     setAnimate(true);
     dispatch(changeModuleVisibility(key, !isOpen));
   };
