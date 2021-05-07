@@ -4,6 +4,8 @@ export { default as FontSize } from "./font/FontSize";
 export { default as FontType } from "./font/FontType";
 export { default as FontWeight } from "./font/FontWeight";
 export { default as Size } from "./size/Size";
+export { default as HomeBox } from "./box/home/HomeBox";
+export { default as FlowBox } from "./box/flow/FlowBox";
 export { default as ModuleBox } from "./box/modules/ModuleBox";
 export { default as ModuleHeader } from "./box/modules/ModuleHeader";
 export { default as ModuleBody } from "./box/modules/ModuleBody";

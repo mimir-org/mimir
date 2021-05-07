@@ -6,6 +6,7 @@ import { ProjectOptions } from "../project";
 import { ProjectState } from "../../redux/store/project/types";
 import { RootState } from "./../../redux/store/index";
 import { useOnConnect, useOnDrop, useOnElementsRemove } from "./hooks";
+import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
 import {
   GetProject,
   HasProject,
@@ -21,8 +22,8 @@ import {
 } from "./helpers";
 import ReactFlow, {
   ReactFlowProvider,
-  Controls,
   Elements,
+  Controls,
 } from "react-flow-renderer";
 
 const FlowTree = () => {
@@ -106,6 +107,7 @@ const FlowTree = () => {
             >
               <Controls />
               <MiniMap />
+              <FullscreenBox />
             </ReactFlow>
           </div>
         </ReactFlowProvider>

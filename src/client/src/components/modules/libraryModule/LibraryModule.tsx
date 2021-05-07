@@ -2,7 +2,7 @@ import textResources from "../../../textResources";
 import { LegendWrapper } from "../legendModule/styled";
 import { LegendModule } from "../legendModule";
 import { LibrarySidebar } from "./index";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { LibraryState } from "../../../redux/store/library/types";
@@ -12,16 +12,11 @@ import { LibraryIcon, ToggleIconLeft, ToggleIconRight } from "../../../assets";
 import { MODULE_TYPE } from "../../../models/project";
 import { AnimatedModule, ModuleHeader, Size } from "../../../componentLibrary";
 import { SidebarWrapper, LibraryWrapper } from "./styled";
-import {
-  LoadState,
-  SaveState,
-} from "../../../redux/store/localStorage/localStorage";
+import { SaveState } from "../../../redux/store/localStorage/localStorage";
 
 const LibraryModule = () => {
   const key = MODULE_TYPE.LIBRARY;
   const dispatch = useDispatch();
-  const [isOpen, setIsOpen]: [boolean, any] = useState(LoadState(key));
-  const [animate, setAnimate] = useState(false);
   const state = useSelector<RootState>(
     (state) => state.library
   ) as LibraryState;
@@ -30,11 +25,17 @@ const LibraryModule = () => {
     dispatch(searchLibrary(""));
   }, [dispatch]);
 
+  const animate = useSelector<RootState>(
+    (state) => state.modules.types.find((x) => x.type === key).animate
+  ) as boolean;
+
+  const isOpen = useSelector<RootState>(
+    (state) => state.modules.types.find((x) => x.type === key).visible
+  ) as boolean;
+
   const handleClick = () => {
     SaveState(!isOpen, key);
-    setIsOpen(!isOpen);
-    setAnimate(true);
-    dispatch(changeModuleVisibility(key, !isOpen));
+    dispatch(changeModuleVisibility(key, !isOpen, true));
   };
 
   const start = isOpen ? Size.ModuleClosed : Size.ModuleOpen;

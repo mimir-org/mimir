@@ -1,30 +1,29 @@
-import { Edge, Node, NodeType } from "../../../models/project";
+import { Edge, Node } from "../../../models/project";
 
 export interface OffPageNodeCreator {
-    node: Node;
-    partOfEdge: Edge;
-    transportEdge: Edge;
-};
+  node: Node;
+  partOfEdge: Edge;
+  transportEdge: Edge;
+}
 
 export interface CreateOffPageData {
-    parentNodeId: string;
-    fromNodeId: string;
-    fromConnectorId: string;
-    x: number;
-    y: number;
-};
+  parentNodeId: string;
+  fromNodeId: string;
+  fromConnectorId: string;
+  x: number;
+  y: number;
+}
 
 export interface GetCenterParams {
-    sourceX: number;
-    sourceY: number;
-    targetX: number;
-    targetY: number;
+  sourceX: number;
+  sourceY: number;
+  targetX: number;
+  targetY: number;
 }
 export interface Legend {
-    key: string,
-    name: string,
-    color: string
+  key: string;
+  name: string;
+  color: string;
 
-    // TODO: En type striplet, pil etc.
+  // TODO: En type striplet, pil etc.
 }
-
