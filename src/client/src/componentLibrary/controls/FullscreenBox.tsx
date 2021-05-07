@@ -11,6 +11,7 @@ const FullscreenBox = () => {
   const isOpen = useSelector<RootState>((state) =>
     state.modules.type.find((x) => x.visible === true)
   ) as boolean;
+
   const handleOnClick = () => {
     dispatch(changeModuleVisibility(MODULE_TYPE.EXPLORER, !isOpen, true));
     dispatch(changeModuleVisibility(MODULE_TYPE.INSPECTOR, !isOpen, true));

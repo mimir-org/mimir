@@ -7,7 +7,7 @@ import { LibraryModule } from "../modules/libraryModule";
 import { AccountModule } from "../modules/accountModule";
 import { FilterModule } from "../modules/filterModule";
 import { getUser } from "../../redux/store/user/actions";
-import { FlowTree, FlowBlock, FlowBlockLocation } from "../flow";
+import { FlowModule } from "../flow";
 
 interface RouteParams {
   type: string;
@@ -28,10 +28,7 @@ const Home = () => {
       <div className="middle_content">
         <div className="treeview_component">
           <div className="treestructur_container">
-            <div className="dndflow">
-              {params.type === "treeview" ? <FlowTree /> : <FlowBlock />}
-              {/* {params.type === "treeview" ? <FlowTree /> : <FlowBlockLocation />} */}
-            </div>
+            <FlowModule route={params} />
           </div>
         </div>
         <InspectorModule />
@@ -42,6 +39,5 @@ const Home = () => {
     </div>
   );
 };
-// TODO: nuke the divs
 
 export default Home;
