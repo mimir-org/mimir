@@ -6,6 +6,7 @@ import { ProjectOptions } from "../project";
 import { ProjectState } from "../../redux/store/project/types";
 import { RootState } from "./../../redux/store/index";
 import { useOnConnect, useOnDrop, useOnElementsRemove } from "./hooks";
+import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
 import {
   GetProject,
   HasProject,
@@ -24,7 +25,6 @@ import ReactFlow, {
   Elements,
   Controls,
 } from "react-flow-renderer";
-import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
 
 const FlowTree = () => {
   const dispatch = useDispatch();

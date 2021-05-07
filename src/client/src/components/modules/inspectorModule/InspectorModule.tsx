@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { useState } from "react";
 import { EyeIcon, ToggleIconDown, ToggleIconUp } from "../../../assets";
 import { IconWrapper, ToggleButtonWrapper } from "./styled";
 import textResources from "../../../textResources";
@@ -15,11 +14,14 @@ import { SaveState } from "../../../redux/store/localStorage/localStorage";
 const InspectorModule = () => {
   const dispatch = useDispatch();
   const key = MODULE_TYPE.INSPECTOR;
-  const [animate, setAnimate] = useState(false);
 
   const hasProject = useSelector<RootState>(
     (state) => state.projectState.project !== null
   );
+
+  const animate = useSelector<RootState>(
+    (state) => state.modules.type.find((x) => x.type === key).animate
+  ) as boolean;
 
   const isOpen = useSelector<RootState>(
     (state) => state.modules.type.find((x) => x.type === key).visible
@@ -27,8 +29,7 @@ const InspectorModule = () => {
 
   const handleClick = () => {
     SaveState(!isOpen, key);
-    setAnimate(true);
-    dispatch(changeModuleVisibility(key, !isOpen));
+    dispatch(changeModuleVisibility(key, !isOpen, true));
   };
 
   const start = isOpen ? Size.ModuleClosed : Size.ModuleOpen;

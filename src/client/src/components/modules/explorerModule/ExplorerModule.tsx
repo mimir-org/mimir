@@ -1,6 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { useState } from "react";
 import { ExplorerIcon, ToggleIconLeft, ToggleIconRight } from "../../../assets";
 import { ProjectComponent, SwitchViewComponent } from "./";
 import textResources from "../../../textResources";
@@ -17,7 +16,10 @@ import {
 export const ExplorerModule = () => {
   const dispatch = useDispatch();
   const key = MODULE_TYPE.EXPLORER;
-  const [animate, setAnimate] = useState(false);
+
+  const animate = useSelector<RootState>(
+    (state) => state.modules.type.find((x) => x.type === key).animate
+  ) as boolean;
 
   const isOpen = useSelector<RootState>(
     (state) => state.modules.type.find((x) => x.type === key).visible
@@ -25,16 +27,15 @@ export const ExplorerModule = () => {
 
   const handleClick = () => {
     SaveState(!isOpen, key);
-    setAnimate(true);
-    dispatch(changeModuleVisibility(key, !isOpen));
+    dispatch(changeModuleVisibility(key, !isOpen, true));
   };
-
-  const start = isOpen ? Size.ModuleClosed : Size.ModuleOpen;
-  const stop = isOpen ? Size.ModuleOpen : Size.ModuleClosed;
 
   const hasProject = useSelector<RootState>(
     (state) => state.projectState.project !== null
   );
+
+  const start = isOpen ? Size.ModuleClosed : Size.ModuleOpen;
+  const stop = isOpen ? Size.ModuleOpen : Size.ModuleClosed;
 
   return (
     <AnimatedModule start={start} stop={stop} run={animate}>

@@ -8,9 +8,9 @@ import FullscreenButton from "./FullscreenButton";
 const FullscreenBox = () => {
   const dispatch = useDispatch();
   const handleOnClick = () => {
-    dispatch(changeModuleVisibility(MODULE_TYPE.EXPLORER, false));
-    dispatch(changeModuleVisibility(MODULE_TYPE.INSPECTOR, false));
-    dispatch(changeModuleVisibility(MODULE_TYPE.LIBRARY, false));
+    dispatch(changeModuleVisibility(MODULE_TYPE.EXPLORER, false, true));
+    dispatch(changeModuleVisibility(MODULE_TYPE.INSPECTOR, false, true));
+    dispatch(changeModuleVisibility(MODULE_TYPE.LIBRARY, false, true));
     CloseAllModules();
   };
 

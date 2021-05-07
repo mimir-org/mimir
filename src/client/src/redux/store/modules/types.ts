@@ -5,5 +5,6 @@ export interface ChangeModuleVisibilty {
   payload: {
     key: string;
     visible: boolean;
+    animate: boolean;
   };
 }
