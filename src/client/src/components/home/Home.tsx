@@ -8,6 +8,7 @@ import { AccountModule } from "../modules/accountModule";
 import { FilterModule } from "../modules/filterModule";
 import { getUser } from "../../redux/store/user/actions";
 import { FlowModule } from "../flow";
+import { FlowBox, HomeBox } from "../../componentLibrary";
 
 interface RouteParams {
   type: string;
@@ -23,20 +24,16 @@ const Home = () => {
   const params = useParams<RouteParams>();
 
   return (
-    <div className="home_container">
+    <HomeBox>
       <ExplorerModule />
-      <div className="middle_content">
-        <div className="treeview_component">
-          <div className="treestructur_container">
-            <FlowModule route={params} />
-          </div>
-        </div>
+      <FlowBox>
+        <FlowModule route={params} />
         <InspectorModule />
-      </div>
+      </FlowBox>
       <AccountModule />
       <FilterModule />
       <LibraryModule />
-    </div>
+    </HomeBox>
   );
 };
 
