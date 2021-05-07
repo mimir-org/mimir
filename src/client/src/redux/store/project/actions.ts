@@ -10,6 +10,7 @@ import {
   ADD_EDGE,
   REMOVE_EDGE,
   UPDATE_POSITION,
+  UPDATE_BLOCK_POSITION,
   CHANGE_NODE_VISIBILITY,
   CHANGE_ACTIVE_NODE,
   CHANGE_SELECTED_PROJECT,
@@ -82,6 +83,21 @@ export function updatePosition(
 ): ProjectActionTypes {
   return {
     type: UPDATE_POSITION,
+    payload: {
+      nodeId: nodeId,
+      x: x,
+      y: y,
+    },
+  };
+}
+
+export function updateBlockPosition(
+  nodeId: string,
+  x: number,
+  y: number
+): ProjectActionTypes {
+  return {
+    type: UPDATE_BLOCK_POSITION,
     payload: {
       nodeId: nodeId,
       x: x,

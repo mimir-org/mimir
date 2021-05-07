@@ -42,7 +42,7 @@ const CreateProjectElementBlockNodes = (
         currentConnector.relationType === RELATION_TYPE.PartOf
       ) {
         const toNode = project.nodes.find((x) => x.id === edge.toNode);
-        const elementToNode = CreateElementNode(toNode);
+        const elementToNode = CreateElementNode(toNode, true);
         if (elementNode) {
           initialElements.push(elementToNode);
           childrenNodes.push(toNode);

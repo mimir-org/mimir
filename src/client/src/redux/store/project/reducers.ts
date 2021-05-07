@@ -12,6 +12,7 @@ import {
   ProjectActionTypes,
   ProjectState,
   UPDATE_POSITION,
+  UPDATE_BLOCK_POSITION,
   CHANGE_NODE_VISIBILITY,
   SEARCH_PROJECT,
   SEARCH_PROJECT_SUCCESS_OR_ERROR,
@@ -164,6 +165,23 @@ export function projectReducer(
                   ...node,
                   positionX: action.payload.x,
                   positionY: action.payload.y,
+                }
+              : node
+          ),
+        },
+      };
+
+    case UPDATE_BLOCK_POSITION:
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          nodes: state.project.nodes.map((node) =>
+            node.id === action.payload.nodeId
+              ? {
+                  ...node,
+                  positionBlockX: action.payload.x,
+                  positionBlockY: action.payload.y,
                 }
               : node
           ),
