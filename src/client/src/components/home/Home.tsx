@@ -31,7 +31,11 @@ const Home = () => {
             <div className="treestructur_container">
               <div className="dndflow">
                 {params.type === "treeview" ? <FlowTree /> : <FlowBlock />}
-                {/* {params.type === "treeview" ? <FlowTree /> : <FlowBlockLocation />} */}
+                {/* {params.type === "treeview" ? (
+                  <FlowTree />
+                ) : (
+                  <FlowBlockLocation />
+                )} */}
               </div>
             </div>
           </div>

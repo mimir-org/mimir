@@ -1,12 +1,16 @@
 import { NODE_TYPE } from "../../../models/project";
 import { GetReactFlowBoundingRectData } from "../helpers";
-import { updatePosition } from "../../../redux/store/project/actions";
+import {
+  updatePosition,
+  updateBlockPosition,
+} from "../../../redux/store/project/actions";
 
-export const useOnNodeDragStop = (_event, node, dispatch) => {
+export const useOnNodeDragStop = (_event, node, dispatch, isBlock) => {
   const [width] = GetReactFlowBoundingRectData();
   const x = node.type === NODE_TYPE.OFF_PAGE ? width - 25 : node.position.x;
 
-  dispatch(updatePosition(node.id, x, node.position.y));
+  if (isBlock) dispatch(updateBlockPosition(node.id, x, node.position.y));
+  else dispatch(updatePosition(node.id, x, node.position.y));
 };
 
 export default useOnNodeDragStop;

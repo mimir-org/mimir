@@ -8,7 +8,7 @@ const CreateProjectElementNodes = (project: Project): Elements => {
   if (!project) return initialElements;
 
   project.nodes.forEach((node) => {
-    const elementNode = CreateElementNode(node);
+    const elementNode = CreateElementNode(node, false);
     if (elementNode) initialElements.push(elementNode);
   });
 

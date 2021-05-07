@@ -2,7 +2,7 @@ import { Node } from "../../../models/project";
 import { IsAspectNode } from "../helpers";
 import { FlowElement } from "react-flow-renderer";
 
-const CreateElementNode = (node: Node): FlowElement => {
+const CreateElementNode = (node: Node, isBlock: boolean): FlowElement => {
   let elementNode = null;
   if (!node) return elementNode;
 
@@ -11,7 +11,9 @@ const CreateElementNode = (node: Node): FlowElement => {
     : node.type;
 
   let position = {};
-  position = { x: node.positionX, y: node.positionY };
+  isBlock
+    ? (position = { x: node.positionBlockX, y: node.positionBlockY })
+    : (position = { x: node.positionX, y: node.positionY });
 
   elementNode = {
     id: node.id,

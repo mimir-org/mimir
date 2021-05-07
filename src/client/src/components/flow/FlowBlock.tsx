@@ -72,7 +72,7 @@ const FlowBlock = () => {
   };
 
   const OnNodeDragStop = (_event, node) => {
-    return useOnNodeDragStop(_event, node, dispatch);
+    return useOnNodeDragStop(_event, node, dispatch, true);
   };
 
   const OnDrop = (_event) => {
