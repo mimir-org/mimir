@@ -26,11 +26,11 @@ const LibraryModule = () => {
   }, [dispatch]);
 
   const animate = useSelector<RootState>(
-    (state) => state.modules.type.find((x) => x.type === key).animate
+    (state) => state.modules.types.find((x) => x.type === key).animate
   ) as boolean;
 
   const isOpen = useSelector<RootState>(
-    (state) => state.modules.type.find((x) => x.type === key).visible
+    (state) => state.modules.types.find((x) => x.type === key).visible
   ) as boolean;
 
   const handleClick = () => {

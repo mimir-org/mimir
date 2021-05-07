@@ -21,9 +21,9 @@ export const SaveState = (state: boolean, key: string) => {
   }
 };
 
-export const CloseAllModules = () => {
+export const SaveAllModules = (state: boolean) => {
   try {
-    const serializedState = JSON.stringify(false);
+    const serializedState = JSON.stringify(state);
     localStorage.setItem(`show_Library`, serializedState);
     localStorage.setItem(`show_Explorer`, serializedState);
     localStorage.setItem(`show_Inspector`, serializedState);
