@@ -3,13 +3,14 @@ import { Color, FontSize, FontType } from "../../";
 
 const MenuHeader = styled.div`
   position: absolute;
-  float: right;
   font-family: ${FontType.Standard};
   font-size: ${FontSize.SubHeader};
-  right: 2px;
+  right: ${(props) => (props.right ? "2px" : "inherit")};
+  left: ${(props) => (props.right ? "inherit" : "2px")};
   top: 2px;
   z-index: 1103;
-  width: 155px;
+  min-width: 155px;
+  width: auto;
   text-align: right;
   padding-right: 15px;
   padding-top: 11px;

@@ -8,9 +8,9 @@ import GetIcon from "./helpers/GetIcon";
 import Button from "./helpers/Button";
 import textResources from "../../../textResources";
 import { OpenProjectComponent } from "../../project/openProjectComponent";
-import { AccountBox } from "./styled";
+import { MenuBox, MenuHeader } from "../../../componentLibrary";
 
-const AccountModule = () => {
+const AccountMenu = () => {
   const dispatch = useDispatch();
   const [showAccountSettings, setshowAccountSettings] = useState(false);
   const [openProjectModule, setOpenProjectModule] = useState(false);
@@ -40,37 +40,31 @@ const AccountModule = () => {
 
   return (
     <>
-      <AccountBox>
-        <div
-          className={"account_clickable " + (isOpen && "is_opened")}
-          onClick={handleClick}
-        >
-          {isOpen ? <GetIcon icon="UserIconOpen" /> : <GetIcon icon="" />}
-          <p className={"project_name " + (isOpen && "project_name_opened")}>
-            {projectState.project && projectState.project.name}
-          </p>
+      <MenuHeader isOpen={isOpen}>
+        <div onClick={handleClick}>
+          {projectState.project && projectState.project.name}
         </div>
-        {isOpen && (
-          <div className="account_details">
-            <div className="save_container">
-              <GetIcon icon={"OpenIcon"} />
-              {textResources.Account_Open_Label}
-            </div>
-            <div className="save_container">
-              <GetIcon icon={"CreateIcon"} />
-              {textResources.Account_Create_Label}
-            </div>
-            <div className="save_container">
-              <GetIcon icon={"SaveIcon"} />
-              {textResources.Account_Save_Label}
-            </div>
-            <div className="user_container">
-              <p>{userState.user && userState.user.name}</p>
-              <Button icon="LogoutIcon" text={textResources.Account_Logout} />
-            </div>
+      </MenuHeader>
+      {isOpen && (
+        <MenuBox>
+          <div className="save_container">
+            <GetIcon icon={"OpenIcon"} />
+            {textResources.Account_Open_Label}
           </div>
-        )}
-      </AccountBox>
+          <div className="save_container">
+            <GetIcon icon={"CreateIcon"} />
+            {textResources.Account_Create_Label}
+          </div>
+          <div className="save_container">
+            <GetIcon icon={"SaveIcon"} />
+            {textResources.Account_Save_Label}
+          </div>
+          <div className="user_container">
+            <p>{userState.user && userState.user.name}</p>
+            <Button icon="LogoutIcon" text={textResources.Account_Logout} />
+          </div>
+        </MenuBox>
+      )}
       {openProjectModule && isOpen && (
         <div className="open_project" style={{ zIndex: 100 }}>
           <OpenProjectComponent />
@@ -80,4 +74,4 @@ const AccountModule = () => {
   );
 };
 
-export default AccountModule;
+export default AccountMenu;

@@ -4,8 +4,8 @@ import { useParams } from "react-router";
 import { ExplorerModule } from "../modules/explorerModule";
 import { InspectorModule } from "../modules/inspectorModule";
 import { LibraryModule } from "../modules/libraryModule";
-import { AccountModule } from "../modules/accountModule";
-import { FilterModule } from "../modules/filterModule";
+import { AccountMenu } from "../modules/accountMenu";
+import { FilterMenu } from "../modules/filterMenu";
 import { getUser } from "../../redux/store/user/actions";
 import { FlowModule } from "../flow";
 import { FlowBox, HomeBox } from "../../componentLibrary";
@@ -30,8 +30,8 @@ const Home = () => {
         <FlowModule route={params} />
         <InspectorModule />
       </FlowBox>
-      <AccountModule />
-      <FilterModule />
+      <AccountMenu />
+      <FilterMenu />
       <LibraryModule />
     </HomeBox>
   );

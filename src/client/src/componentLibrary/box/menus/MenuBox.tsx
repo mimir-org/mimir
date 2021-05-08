@@ -3,9 +3,11 @@ import { Color, FontType } from "../../";
 
 const MenuBox = styled.div`
   position: absolute;
-  right: 0px;
+  right: ${(props) => (props.right ? "0px" : "inherit")};
+  left: ${(props) => (props.right ? "inherit" : "0px")};
   background: ${Color.White};
   height: min-content;
+  min-width: 250px;
   border-style: solid;
   border-color: ${Color.DeepCyan};
   border-width: 0px 2px 2px 2px;

@@ -21,12 +21,12 @@ const FilterModule = () => {
 
   return (
     <>
-      <MenuHeader isOpen={isOpen}>
+      <MenuHeader isOpen={isOpen} right>
         <div onClick={handleClick}>{textResources.MainHeader_VisualFilter}</div>
         {GetIcon(isOpen, handleClick)}
       </MenuHeader>
       {isOpen && (
-        <MenuBox>
+        <MenuBox right>
           <FilterContent />
         </MenuBox>
       )}
