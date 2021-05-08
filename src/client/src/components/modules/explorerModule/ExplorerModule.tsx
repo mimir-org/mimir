@@ -49,7 +49,7 @@ export const ExplorerModule = () => {
         />
         <p className="text">{textResources.Explorer_view}</p>
       </ModuleHeader>
-      <ModuleBody>
+      <ModuleBody visible={isOpen}>
         {hasProject && <ProjectComponent visible={isOpen} />}
         <SwitchViewComponent />
       </ModuleBody>

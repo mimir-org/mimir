@@ -32,7 +32,7 @@ const ModuleHeader = styled.div`
   }
   .icon {
     cursor: pointer;
-    float: ${(props) => (props.left ? "right" : "left")};
+    float: ${(props: { left: string }) => (props.left ? "right" : "left")};
   }
   .icon_inspector {
     cursor: pointer;
