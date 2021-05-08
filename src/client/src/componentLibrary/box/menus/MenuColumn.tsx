@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import { Color } from "../../../../componentLibrary";
+import { Color } from "../../";
 
-const ContentColumn = styled.div`
+const MenuColumn = styled.div`
   padding-left: 2px;
   width: 169px;
   display: inline-block;
   color: ${Color.Black};
 `;
 
-export default ContentColumn;
+export default MenuColumn;

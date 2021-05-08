@@ -81,11 +81,10 @@ const textResources = {
   Library_SearchBox_Placeholder: "Search the Library",
 
   // AccountModule
-  Account_Save_Label: "Save project",
-  Account_Save_Button: "Save",
+  Account_Save_Label: "Save project to file",
   Account_Logout: "Log out",
-  Account_Load_Label: "Load project",
-  Account_Load_Button: "Load",
+  Account_Open_Label: "Open a project",
+  Account_Create_Label: "Create a project",
 
   // LegendModule
   Legend_Heading: "Legend",

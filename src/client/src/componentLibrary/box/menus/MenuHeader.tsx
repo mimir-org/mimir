@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { Color, FontSize, FontType } from "../../../../componentLibrary";
+import { Color, FontSize, FontType } from "../../";
 
-const IconTextWrapper = styled.div`
+const MenuHeader = styled.div`
   position: absolute;
   float: right;
   font-family: ${FontType.Standard};
@@ -13,6 +13,7 @@ const IconTextWrapper = styled.div`
   text-align: right;
   padding-right: 15px;
   padding-top: 11px;
+  cursor: pointer;
 
   font-weight: ${(props: { isOpen: boolean }) =>
     props.isOpen ? "bold" : "normal"};
@@ -23,6 +24,13 @@ const IconTextWrapper = styled.div`
     props.isOpen ? `${Color.DeepCyan}` : `${Color.White}`};
   background-color: ${(props: { isOpen: boolean }) =>
     props.isOpen ? `${Color.White}` : `${Color.DeepCyan}`};
+
+  .icon {
+    position: absolute;
+    top: 8px;
+    right: 108px;
+    z-index: 1103;
+  }
 `;
 
-export default IconTextWrapper;
+export default MenuHeader;

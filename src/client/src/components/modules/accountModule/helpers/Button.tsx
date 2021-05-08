@@ -3,7 +3,7 @@ import GetIcon from "./GetIcon";
 
 interface Props {
   icon: String;
-  text: String;
+  text?: String;
   onClick?: any;
 }
 

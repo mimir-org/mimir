@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { Color, FontType } from "../../../../componentLibrary";
+import { Color, FontType } from "../../";
 
-const VisualFilterWrapper = styled.div`
+const MenuBox = styled.div`
   position: absolute;
   right: 0px;
   background: ${Color.White};
@@ -15,4 +15,4 @@ const VisualFilterWrapper = styled.div`
   box-shadow: -1px 4px 5px rgba(0, 0, 0, 0.15);
 `;
 
-export default VisualFilterWrapper;
+export default MenuBox;

@@ -34,3 +34,4 @@ export { default as UserIconClosed } from "./icons/userIconClosed.svg";
 export { default as VisualFilterIconClosed } from "./icons/visualFilterIconClosed.svg";
 export { default as VisualFilterIconOpen } from "./icons/VisualFilterIconOpen.svg";
 export { default as WhiteRightArrowIcon } from "./icons/whiteRightArrowIcon.svg";
+export { default as CreateProjectIcon } from "./icons/createProjectIcon.svg";

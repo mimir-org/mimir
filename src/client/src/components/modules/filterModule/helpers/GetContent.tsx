@@ -1,19 +1,21 @@
+import { MenuColumn, MenuSubHeader } from "../../../../componentLibrary";
 import { VisualFilterResources } from "../../../../textResources";
 import { CreateId } from "../../../flow/helpers";
-import { ContentColumn, Header } from "../styled";
 
 const GetContent = (items: number, section: number) => {
   let text = VisualFilterResources.slice(section + items * 2);
 
-  // TODO: fix this when content for filter is known
+  // TODO: fix this mess when content for filter is known
 
   return (
     <div key={CreateId()}>
-      <ContentColumn>
+      <MenuColumn>
         {[...Array(items)].map((i, index: number) => {
           return (
             <div key={CreateId()}>
-              {index === 0 && <Header>{VisualFilterResources[section]}</Header>}
+              {index === 0 && (
+                <MenuSubHeader>{VisualFilterResources[section]}</MenuSubHeader>
+              )}
               <label className={"checkbox"} key={CreateId()}>
                 <input
                   type="checkbox"
@@ -27,8 +29,8 @@ const GetContent = (items: number, section: number) => {
             </div>
           );
         })}
-      </ContentColumn>
-      <ContentColumn>
+      </MenuColumn>
+      <MenuColumn>
         {[...Array(items)].map((i, index: number) => {
           return (
             <label className={"checkbox"} key={CreateId()}>
@@ -45,7 +47,7 @@ const GetContent = (items: number, section: number) => {
             </label>
           );
         })}
-      </ContentColumn>
+      </MenuColumn>
     </div>
   );
 };

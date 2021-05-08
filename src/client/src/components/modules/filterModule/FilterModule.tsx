@@ -1,17 +1,13 @@
-import "./filter.scss";
 import textResources from "../../../textResources";
 import FilterContent from "./FilterContent";
 import { useState } from "react";
 import { MODULE_TYPE } from "../../../models/project";
-import { VisualFilterWrapper, IconWrapper, IconTextWrapper } from "./styled";
+import GetIcon from "./helpers/GetIcon";
+import { MenuBox, MenuHeader } from "../../../componentLibrary";
 import {
   LoadState,
   SaveState,
 } from "../../../redux/store/localStorage/localStorage";
-import {
-  VisualFilterIconClosed,
-  VisualFilterIconOpen,
-} from "../../../assets/index";
 
 const FilterModule = () => {
   const key = MODULE_TYPE.VISUAL_FILTER;
@@ -25,22 +21,14 @@ const FilterModule = () => {
 
   return (
     <>
-      <IconTextWrapper isOpen={isOpen}>
-        <div onClick={handleClick} style={{ cursor: "pointer" }}>
-          {textResources.MainHeader_VisualFilter}
-        </div>
-      </IconTextWrapper>
-      <IconWrapper>
-        {isOpen ? (
-          <img src={VisualFilterIconOpen} alt={key} onClick={handleClick} />
-        ) : (
-          <img src={VisualFilterIconClosed} alt={key} onClick={handleClick} />
-        )}
-      </IconWrapper>
+      <MenuHeader isOpen={isOpen}>
+        <div onClick={handleClick}>{textResources.MainHeader_VisualFilter}</div>
+        {GetIcon(isOpen, handleClick)}
+      </MenuHeader>
       {isOpen && (
-        <VisualFilterWrapper>
+        <MenuBox>
           <FilterContent />
-        </VisualFilterWrapper>
+        </MenuBox>
       )}
     </>
   );

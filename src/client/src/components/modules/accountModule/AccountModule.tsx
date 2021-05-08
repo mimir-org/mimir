@@ -8,6 +8,7 @@ import GetIcon from "./helpers/GetIcon";
 import Button from "./helpers/Button";
 import textResources from "../../../textResources";
 import { OpenProjectComponent } from "../../project/openProjectComponent";
+import { AccountBox } from "./styled";
 
 const AccountModule = () => {
   const dispatch = useDispatch();
@@ -39,7 +40,7 @@ const AccountModule = () => {
 
   return (
     <>
-      <div className="account_container">
+      <AccountBox>
         <div
           className={"account_clickable " + (isOpen && "is_opened")}
           onClick={handleClick}
@@ -52,20 +53,16 @@ const AccountModule = () => {
         {isOpen && (
           <div className="account_details">
             <div className="save_container">
-              <p>{textResources.Account_Save_Label}</p>
-              <Button
-                icon="SaveIcon"
-                text={textResources.Account_Save_Button}
-                onClick={handleSaveClick}
-              />
+              <GetIcon icon={"OpenIcon"} />
+              {textResources.Account_Open_Label}
             </div>
             <div className="save_container">
-              <p>{textResources.Account_Load_Label}</p>
-              <Button
-                icon="OpenIcon"
-                text={textResources.Account_Load_Button}
-                onClick={handleLoadClick}
-              />
+              <GetIcon icon={"CreateIcon"} />
+              {textResources.Account_Create_Label}
+            </div>
+            <div className="save_container">
+              <GetIcon icon={"SaveIcon"} />
+              {textResources.Account_Save_Label}
             </div>
             <div className="user_container">
               <p>{userState.user && userState.user.name}</p>
@@ -73,7 +70,7 @@ const AccountModule = () => {
             </div>
           </div>
         )}
-      </div>
+      </AccountBox>
       {openProjectModule && isOpen && (
         <div className="open_project" style={{ zIndex: 100 }}>
           <OpenProjectComponent />
