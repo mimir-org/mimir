@@ -4,8 +4,10 @@ const TitleWrapper = styled.div`
   position: relative;
   font-family: roboto;
   font-size: 18px;
-  bottom: 9px;
-  left: 47%;
+  left: 38%;
+  width: 175px;
+  top: 14px;
+  color: #fff;
 `;
 
 export default TitleWrapper;

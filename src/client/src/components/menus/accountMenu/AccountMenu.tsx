@@ -8,7 +8,7 @@ import { OpenProjectComponent } from "../../project/openProjectComponent";
 import { GetMenuElement } from "./helpers";
 import { TextResources } from "../../../assets/textResources";
 import { MenuButton } from "../../../componentLibrary/buttons/";
-import { UserIconOpen, LogoutIcon } from "../../../assets/icons";
+import { LogoutIcon } from "../../../assets/icons";
 import { GetMenuBoxIcon } from "../../../assets/helpers";
 import { MENU_TYPE } from "../../../models/project";
 import {

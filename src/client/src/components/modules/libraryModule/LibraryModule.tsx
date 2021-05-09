@@ -8,15 +8,15 @@ import { RootState } from "../../../redux/store";
 import { LibraryState } from "../../../redux/store/library/types";
 import { searchLibrary } from "../../../redux/store/library/actions";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
+import { MODULE_TYPE } from "../../../models/project";
+import { AnimatedModule, ModuleHeader, Size } from "../../../componentLibrary";
+import { SidebarWrapper, LibraryWrapper } from "./styled";
+import { SaveState } from "../../../redux/store/localStorage/localStorage";
 import {
   LibraryIcon,
   ToggleIconLeft,
   ToggleIconRight,
 } from "../../../assets/icons";
-import { MODULE_TYPE } from "../../../models/project";
-import { AnimatedModule, ModuleHeader, Size } from "../../../componentLibrary";
-import { SidebarWrapper, LibraryWrapper } from "./styled";
-import { SaveState } from "../../../redux/store/localStorage/localStorage";
 
 const LibraryModule = () => {
   const key = MODULE_TYPE.LIBRARY;

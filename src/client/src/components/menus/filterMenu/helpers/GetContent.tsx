@@ -1,10 +1,7 @@
 import { MenuColumn, MenuSubHeader } from "../../../../componentLibrary";
-import { TextResources } from "../../../../assets/textResources";
 import { CreateId } from "../../../flow/helpers";
 
 const GetContent = (items: number, section: number) => {
-  //   let text = TextResources.slice(section + items * 2);
-
   // TODO: fix this mess when content for filter is known
 
   return (
@@ -13,9 +10,7 @@ const GetContent = (items: number, section: number) => {
         {[...Array(items)].map((i, index: number) => {
           return (
             <div key={CreateId()}>
-              {index === 0 && (
-                <MenuSubHeader>{TextResources[section]}</MenuSubHeader>
-              )}
+              {index === 0 && <MenuSubHeader>Test</MenuSubHeader>}
               <label className={"checkbox"} key={CreateId()}>
                 <input
                   type="checkbox"
@@ -25,7 +20,7 @@ const GetContent = (items: number, section: number) => {
                 />
                 <span className="checkmark" key={CreateId()}></span>
                 <label className="checkbox_label"></label>
-                {/*{text[index]*/}
+                Test
               </label>
             </div>
           );
@@ -43,7 +38,7 @@ const GetContent = (items: number, section: number) => {
               />
               <span className="checkmark" key={CreateId()}></span>
               <label className="checkbox_label" key={CreateId()}>
-                {/*{text[index+2]*/}
+                Test
               </label>
             </label>
           );
