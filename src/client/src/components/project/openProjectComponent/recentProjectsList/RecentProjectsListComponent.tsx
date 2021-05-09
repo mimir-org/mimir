@@ -27,7 +27,7 @@ export const RecentProjectsListComponent = () => {
               projectId={project.id}
               projectName={project.name}
               projectOwner={project.projectOwner}
-              lastEdited={project.lastEdited}
+              updated={project.updated}
             />
           );
         })}

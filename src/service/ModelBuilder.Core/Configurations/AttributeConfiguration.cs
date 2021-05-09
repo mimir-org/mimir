@@ -1,5 +1,6 @@
 ﻿using Mb.Core.Configurations.Converters;
 using Mb.Models;
+using Mb.Models.Data;
 using Mb.Models.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

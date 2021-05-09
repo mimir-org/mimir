@@ -8,14 +8,14 @@ interface Props {
   projectId: string;
   projectName: string;
   projectOwner: string;
-  lastEdited: Date;
+  updated: Date;
 }
 
 export const ProjectDataComponent = ({
   projectId,
   projectName,
   projectOwner,
-  lastEdited,
+  updated,
 }: Props) => {
   const dispatch = useDispatch();
   const projects = useSelector<RootState>(
@@ -37,7 +37,7 @@ export const ProjectDataComponent = ({
       <p className="project_name">{projectName}</p>
       <p className="project_owner">{projectOwner}</p>
       <p className="last_edited">
-        <Moment format="DD/MM/YY h:mm A">{lastEdited}</Moment>
+        <Moment format="DD/MM/YY h:mm A">{updated}</Moment>
       </p>
     </div>
   );

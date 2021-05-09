@@ -20,18 +20,18 @@
             Project services
             </summary>
         </member>
-        <member name="M:Mb.Api.Controllers.V1.ProjectController.#ctor(Mb.Core.Services.IProjectService,Microsoft.Extensions.Logging.ILogger{Mb.Api.Controllers.V1.ProjectController})">
+        <member name="M:Mb.Api.Controllers.V1.ProjectController.#ctor(Mb.Core.Services.Contracts.IProjectService,Microsoft.Extensions.Logging.ILogger{Mb.Api.Controllers.V1.ProjectController})">
             <summary>
             Project Controller Constructor
             </summary>
         </member>
-        <member name="M:Mb.Api.Controllers.V1.ProjectController.CreateNewProject(Mb.Models.Data.CreateProject)">
+        <member name="M:Mb.Api.Controllers.V1.ProjectController.CreateNewProject(Mb.Models.Application.CreateProject)">
             <summary>
             Create a new empty project
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Mb.Api.Controllers.V1.ProjectController.Get(System.String)">
+        <member name="M:Mb.Api.Controllers.V1.ProjectController.GetBySearch(System.String)">
             <summary>
             List last 10 available projects by search on project name
             </summary>
@@ -43,9 +43,21 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Mb.Api.Controllers.V1.ProjectController.SaveProject(Mb.Models.Project)">
+        <member name="M:Mb.Api.Controllers.V1.ProjectController.SaveProject(Mb.Models.Data.Project)">
             <summary>
-            Save a project
+            Import a new project
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Mb.Api.Controllers.V1.ProjectController.UpdateProject(Mb.Models.Data.Project)">
+            <summary>
+            Import a new project
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Mb.Api.Controllers.V1.ProjectController.DeleteProject(System.String)">
+            <summary>
+            Delete a project
             </summary>
             <returns></returns>
         </member>
@@ -84,7 +96,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Mb.Api.Controllers.V1.TypeEditorController.CreateType(Mb.Models.LibraryTypeComponent)">
+        <member name="M:Mb.Api.Controllers.V1.TypeEditorController.CreateType(Mb.Models.Data.LibraryTypeComponent)">
             <summary>
             Create a library type
             </summary>

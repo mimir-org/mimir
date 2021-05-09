@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Mb.Models;
+using Mb.Models.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -32,6 +33,7 @@ namespace Mb.Core.Configurations
             
             builder.Property(p => p.UpdatedBy).HasColumnName("UpdatedBy").IsRequired();
             builder.Property(p => p.Updated).HasColumnName("Updated").IsRequired();
+            builder.Property(p => p.Version).HasColumnName("Version").IsRequired();
 
             builder.HasMany(x => x.Projects).WithMany(y => y.Nodes).UsingEntity(join => join.ToTable("ProjectNode"));
 
