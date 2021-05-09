@@ -8,7 +8,7 @@ import { AccountMenu } from "../menus/accountMenu";
 import { FilterMenu } from "../menus/filterMenu";
 import { getUser } from "../../redux/store/user/actions";
 import { FlowModule } from "../flow";
-import { FlowBox, HomeBox } from "../../componentLibrary";
+import { FlowBox, HomeBox } from "../../componentLibrary/box";
 
 interface RouteParams {
   type: string;

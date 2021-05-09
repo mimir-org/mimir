@@ -1,21 +1,17 @@
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../redux/store";
-import {
-  ExplorerIcon,
-  ToggleIconLeft,
-  ToggleIconRight,
-} from "../../../assets/icons";
 import { ProjectComponent, SwitchViewComponent } from "./";
 import { TextResources } from "../../../assets/textResources";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import { MODULE_TYPE } from "../../../models/project";
 import { SaveState } from "../../../redux/store/localStorage/localStorage";
+import { ModuleHeader, ModuleBody } from "../../../componentLibrary/box";
+import { AnimatedModule, Size } from "../../../componentLibrary";
 import {
-  AnimatedModule,
-  ModuleHeader,
-  ModuleBody,
-  Size,
-} from "../../../componentLibrary";
+  ExplorerIcon,
+  ToggleIconLeft,
+  ToggleIconRight,
+} from "../../../assets/icons";
 
 export const ExplorerModule = () => {
   const dispatch = useDispatch();

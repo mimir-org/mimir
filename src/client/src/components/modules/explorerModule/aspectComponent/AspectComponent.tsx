@@ -4,7 +4,7 @@ import { NodeType } from "../../../../models/project";
 import { IsAspectNode, GetNodes, GetEdges } from "../../../flow/helpers";
 import CheckboxComponent from "../checkboxComponent/CheckboxComponent";
 import { AspectChildComponent } from "./";
-import { AspectBox } from "../../../../componentLibrary";
+import { AspectBox } from "../../../../componentLibrary/box";
 import {
   GetAspectIcon,
   GetAspectColor,

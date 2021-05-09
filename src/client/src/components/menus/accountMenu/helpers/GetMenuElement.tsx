@@ -1,6 +1,6 @@
 import { LogoutIcon } from "../../../../assets/icons";
 import { TextResources } from "../../../../assets/textResources";
-import { MenuElement, MenuLogoutBox } from "../../../../componentLibrary";
+import { MenuElement, MenuLogoutBox } from "../../../../componentLibrary/box";
 import { MenuButton } from "../../../../componentLibrary/buttons";
 import { UserState } from "../../../../redux/store/user/types";
 import { GetText, GetIcon } from "./";

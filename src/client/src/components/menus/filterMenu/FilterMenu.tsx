@@ -3,7 +3,7 @@ import FilterContent from "./FilterContent";
 import { useState } from "react";
 import { MENU_TYPE } from "../../../models/project";
 import { GetMenuIcon } from "../../../assets/helpers/";
-import { MenuBox, MenuTopHeader } from "../../../componentLibrary";
+import { MenuBox, MenuTopHeader } from "../../../componentLibrary/box";
 import {
   LoadState,
   SaveState,

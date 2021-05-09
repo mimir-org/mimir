@@ -1,4 +1,4 @@
-import { MenuColumn, MenuSubHeader } from "../../../../componentLibrary";
+import { MenuColumn, MenuSubHeader } from "../../../../componentLibrary/box";
 import { CreateId } from "../../../flow/helpers";
 
 const GetContent = (items: number, section: number) => {

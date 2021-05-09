@@ -1,5 +1,5 @@
 import { SplitViewIcon, CombinedViewOffIcon } from "../../../assets/icons";
-import { FooterBox, FooterContent } from "../../../componentLibrary";
+import { FooterBox, FooterContent } from "../../../componentLibrary/box";
 import { TextResources } from "../../../assets/textResources";
 
 export const SwitchViewComponent = () => {

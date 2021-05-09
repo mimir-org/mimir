@@ -1,5 +1,4 @@
 import { TextResources } from "../../../assets/textResources";
-import { LegendWrapper } from "../legendModule/styled";
 import { LegendModule } from "../legendModule";
 import { LibaryComponent } from "./index";
 import { useEffect } from "react";
@@ -9,13 +8,9 @@ import { LibraryState } from "../../../redux/store/library/types";
 import { searchLibrary } from "../../../redux/store/library/actions";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import { MODULE_TYPE } from "../../../models/project";
-import {
-  AnimatedModule,
-  ModuleBody,
-  ModuleHeader,
-  Size,
-} from "../../../componentLibrary";
+import { ModuleBody, ModuleHeader } from "../../../componentLibrary/box";
 import { SaveState } from "../../../redux/store/localStorage/localStorage";
+import { AnimatedModule, Size } from "../../../componentLibrary";
 import {
   LibraryIcon,
   ToggleIconLeft,

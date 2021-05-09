@@ -8,7 +8,7 @@ import { OpenProjectComponent } from "../../project/openProjectComponent";
 import { GetMenuElement } from "./helpers";
 import { GetMenuIcon } from "../../../assets/helpers";
 import { MENU_TYPE } from "../../../models/project";
-import { MenuBox, MenuTopHeader } from "../../../componentLibrary";
+import { MenuBox, MenuTopHeader } from "../../../componentLibrary/box";
 
 const AccountMenu = () => {
   const dispatch = useDispatch();

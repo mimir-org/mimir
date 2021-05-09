@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { LegendIcon } from "../../../assets/icons";
-import { LegendBody, LegendContent } from "../../../componentLibrary";
+import { LegendBody, LegendContent } from "../../../componentLibrary/box";
 import { TextResources } from "../../../assets/textResources";
 import { ProjectState } from "../../../redux/store/project/types";
 import { RootState } from "../../../redux/store";
