@@ -9,7 +9,7 @@ import {
   GetAspectIcon,
   GetAspectColor,
   SetIndentLevel,
-  GetType,
+  GetAspectType,
   GetDropdownIcon,
 } from "../../../../assets/helpers";
 
@@ -28,7 +28,7 @@ export const AspectComponent = ({ nodeId, name, aspectType }: Props) => {
   const aspectIcon = GetAspectIcon(aspectType);
   const color = GetAspectColor(aspectType);
   const expandIcon = expanded ? expandedIcon : unexpandedIcon;
-  const childType = GetType(aspectType);
+  const childType = GetAspectType(aspectType);
   const nodes = GetNodes();
   const edges = GetEdges();
   const children = nodes.filter((node) => !IsAspectNode(node.type));

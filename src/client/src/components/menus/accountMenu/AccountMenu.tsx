@@ -6,7 +6,7 @@ import { ProjectState } from "../../../redux/store/project/types";
 import { create, save } from "../../../redux/store/project/actions";
 import { OpenProjectComponent } from "../../project/openProjectComponent";
 import { GetMenuElement } from "./helpers";
-import { GetMenuBoxIcon } from "../../../assets/helpers";
+import { GetMenuIcon } from "../../../assets/helpers";
 import { MENU_TYPE } from "../../../models/project";
 import { MenuBox, MenuTopHeader } from "../../../componentLibrary";
 
@@ -14,7 +14,7 @@ const AccountMenu = () => {
   const dispatch = useDispatch();
   const [showAccountSettings, setshowAccountSettings] = useState(false);
   const [openProjectModule, setOpenProjectModule] = useState(false);
-  const key = MENU_TYPE.ACCOUNT;
+  const type = MENU_TYPE.ACCOUNT;
 
   const projectState = useSelector<RootState>(
     (state) => state.projectState
@@ -49,7 +49,12 @@ const AccountMenu = () => {
         <div onClick={handleClick}>
           {projectState.project && projectState.project.name}
         </div>
-        {GetMenuBoxIcon(isOpen, key, handleClick)}
+        <img
+          src={GetMenuIcon(isOpen, type)}
+          alt="icon"
+          className="icon"
+          onClick={handleClick}
+        />
       </MenuTopHeader>
       {isOpen && (
         <MenuBox>

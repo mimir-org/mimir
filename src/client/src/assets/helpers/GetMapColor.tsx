@@ -1,14 +1,14 @@
 import { Color } from "../../componentLibrary";
 import { NodeType, NODE_TYPE } from "../../models/project";
 
-const GetAspectColor = (node: NodeType): string => {
+const GetMapColor = (node: NodeType): string => {
   if (node === NODE_TYPE.FUNCTION || node === NODE_TYPE.ASPECT_FUNCTION)
-    return Color.FunctionTransparent;
+    return Color.Function;
   if (node === NODE_TYPE.PRODUCT || node === NODE_TYPE.ASPECT_PRODUCT)
-    return Color.ProductTransparent;
+    return Color.Product;
   if (node === NODE_TYPE.LOCATION || node === NODE_TYPE.ASPECT_LOCATION)
-    return Color.LocationTransparent;
+    return Color.Location;
   return null;
 };
 
-export default GetAspectColor;
+export default GetMapColor;

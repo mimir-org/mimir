@@ -1,6 +1,6 @@
 import { NodeType, NODE_TYPE } from "../../models/project";
 
-const GetType = (aspectType: NodeType): NodeType => {
+const GetAspectType = (aspectType: NodeType): NodeType => {
   if (aspectType === NODE_TYPE.ASPECT_FUNCTION)
     return NODE_TYPE.FUNCTION as NodeType;
   if (aspectType === NODE_TYPE.ASPECT_PRODUCT)
@@ -10,4 +10,4 @@ const GetType = (aspectType: NodeType): NodeType => {
   return null;
 };
 
-export default GetType;
+export default GetAspectType;

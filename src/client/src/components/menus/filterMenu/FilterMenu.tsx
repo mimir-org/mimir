@@ -2,7 +2,7 @@ import { TextResources } from "../../../assets/textResources";
 import FilterContent from "./FilterContent";
 import { useState } from "react";
 import { MENU_TYPE } from "../../../models/project";
-import { GetMenuBoxIcon } from "../../../assets/helpers/";
+import { GetMenuIcon } from "../../../assets/helpers/";
 import { MenuBox, MenuTopHeader } from "../../../componentLibrary";
 import {
   LoadState,
@@ -10,20 +10,25 @@ import {
 } from "../../../redux/store/localStorage/localStorage";
 
 const FilterModule = () => {
-  const key = MENU_TYPE.VISUAL_FILTER;
-  const [showFilter, setShowFilter] = useState(LoadState(key));
+  const type = MENU_TYPE.VISUAL_FILTER;
+  const [showFilter, setShowFilter] = useState(LoadState(type));
+  const isOpen = LoadState(type);
 
   const handleClick = () => {
     setShowFilter(!showFilter);
-    SaveState(!showFilter, key);
+    SaveState(!showFilter, type);
   };
-  const isOpen = LoadState(key);
 
   return (
     <>
       <MenuTopHeader isOpen={isOpen} right>
         <div onClick={handleClick}>{TextResources.MainHeader_VisualFilter}</div>
-        {GetMenuBoxIcon(isOpen, key, handleClick)}
+        <img
+          src={GetMenuIcon(isOpen, type)}
+          alt="icon"
+          className="icon"
+          onClick={handleClick}
+        />
       </MenuTopHeader>
       {isOpen && (
         <MenuBox right>
