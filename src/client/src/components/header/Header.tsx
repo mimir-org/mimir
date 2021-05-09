@@ -8,15 +8,18 @@ import { save } from "../../redux/store/project/actions";
 import { RootState } from "../../redux/store";
 import { ProjectState } from "../../redux/store/project/types";
 import { VIEW_TYPE } from "../../models/project";
-import HeaderBox from "../../componentLibrary/box/header/HeaderBox";
-import IconBox from "../../componentLibrary/box/header/IconBox";
+import {
+  HeaderBox,
+  IconBox,
+  TitleBox,
+  ViewBox,
+} from "../../componentLibrary/box/header/";
 import {
   TreeviewOff,
   TreeviewOn,
   BlockviewOn,
   BlockviewOff,
 } from "../../assets/icons";
-import { TreeviewWrapper, TitleWrapper } from "./styled";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -47,25 +50,25 @@ const Header = () => {
 
   return (
     <HeaderBox>
-      <TitleWrapper>{TextResources.MainHeader_App_Name}</TitleWrapper>
+      <TitleBox>{TextResources.MainHeader_App_Name}</TitleBox>
       <IconBox>
-        <TreeviewWrapper selected={!showBlockView}>
+        <ViewBox selected={!showBlockView}>
           <img
             src={showBlockView ? TreeviewOff : TreeviewOn}
             alt={VIEW_TYPE.TREEVIEW}
             onClick={handleClick}
             className="view_icon"
           />
-        </TreeviewWrapper>
+        </ViewBox>
         <div className="line"></div>
-        <TreeviewWrapper selected={showBlockView}>
+        <ViewBox selected={showBlockView}>
           <img
             src={showBlockView ? BlockviewOn : BlockviewOff}
             alt={VIEW_TYPE.BLOCKVIEW}
             onClick={handleClick}
             className="view_icon"
           />
-        </TreeviewWrapper>
+        </ViewBox>
       </IconBox>
     </HeaderBox>
   );

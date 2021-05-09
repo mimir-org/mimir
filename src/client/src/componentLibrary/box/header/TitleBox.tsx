@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const TitleWrapper = styled.div`
+const TitleBox = styled.div`
   position: relative;
   font-family: roboto;
   font-size: 18px;
@@ -10,4 +10,4 @@ const TitleWrapper = styled.div`
   color: #fff;
 `;
 
-export default TitleWrapper;
+export default TitleBox;

@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { Color } from "../../../componentLibrary";
+import { Color } from "../../";
 
-const TreeviewWrapper = styled.div`
+const ViewBox = styled.div`
   cursor: pointer;
   position: absolute;
   margin-left: 20px;
@@ -10,4 +10,4 @@ const TreeviewWrapper = styled.div`
   border-radius: 2px;
 `;
 
-export default TreeviewWrapper;
+export default ViewBox;
