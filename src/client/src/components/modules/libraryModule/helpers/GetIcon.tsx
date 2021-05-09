@@ -3,7 +3,7 @@ import {
   FunctionIcon,
   LocationIcon,
   SearchIcon,
-} from "../../../../assets";
+} from "../../../../assets/icons";
 
 const GetIcon = (icon: string, size: string) => {
   switch (icon) {

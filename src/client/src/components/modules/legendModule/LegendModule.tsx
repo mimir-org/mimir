@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { LegendIcon } from "../../../assets";
+import { LegendIcon } from "../../../assets/icons";
 import { VerticalScrollbar } from "../../../componentLibrary";
 import { SidebarWrapper } from "../libraryModule/styled";
-import textResources from "../../../textResources";
+import { TextResources } from "../../../assets/textResources";
 import { ProjectState } from "../../../redux/store/project/types";
 import { RootState } from "../../../redux/store";
 import { LoadState } from "../../../redux/store/localStorage/localStorage";
@@ -52,7 +52,7 @@ const LegendModule = ({ visible }: Props) => {
           <LegendIconWrapper>
             <img src={LegendIcon} alt="legend-icon" />
           </LegendIconWrapper>
-          {textResources.Legend_Heading}
+          {TextResources.Legend_Heading}
         </LegendHeader>
         <SidebarWrapper visible={visible}>
           {legends &&

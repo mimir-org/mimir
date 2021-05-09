@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { expandedIcon, unexpandedIcon } from "../../../../assets";
+import { expandedIcon, unexpandedIcon } from "../../../../assets/icons";
 import { NodeType } from "../../../../models/project";
 import { IsAspectNode, GetNodes, GetEdges } from "../../../flow/helpers";
 import CheckboxComponent from "../checkboxComponent/CheckboxComponent";

@@ -1,7 +1,7 @@
 import {
   VisualFilterIconClosed,
   VisualFilterIconOpen,
-} from "../../../../assets/index";
+} from "../../../../assets/icons";
 
 const GetIcon = (isOpen: boolean, handleClick: () => void) => {
   const icon = isOpen ? VisualFilterIconOpen : VisualFilterIconClosed;

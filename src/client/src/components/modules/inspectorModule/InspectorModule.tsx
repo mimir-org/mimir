@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { EyeIcon, ToggleIconDown, ToggleIconUp } from "../../../assets";
+import { EyeIcon, ToggleIconDown, ToggleIconUp } from "../../../assets/icons";
 import { IconWrapper, ToggleButtonWrapper } from "./styled";
-import textResources from "../../../textResources";
+import { TextResources } from "../../../assets/textResources";
 import { InspectorTabsHeader } from "./styled";
 import { InspectorTitle } from "./styled";
 import InspectorTabs from "./InspectorTabs";
@@ -47,7 +47,7 @@ const InspectorModule = () => {
           )}
         </ToggleButtonWrapper>
         <IconWrapper>
-          <InspectorTitle>{textResources.Inspector_Heading}</InspectorTitle>
+          <InspectorTitle>{TextResources.Inspector_Heading}</InspectorTitle>
           <img src={EyeIcon} alt="inspector-icon" />
         </IconWrapper>
       </InspectorTabsHeader>

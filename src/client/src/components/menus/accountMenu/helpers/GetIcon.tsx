@@ -4,7 +4,7 @@ import {
   LogoutIcon,
   CreateProjectIcon,
   OpenProjectIconSmall,
-} from "../../../../assets";
+} from "../../../../assets/icons";
 import "./getimg.scss";
 
 const GetIcon = ({ icon }) => {

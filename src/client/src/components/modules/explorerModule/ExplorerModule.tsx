@@ -1,8 +1,12 @@
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { ExplorerIcon, ToggleIconLeft, ToggleIconRight } from "../../../assets";
+import {
+  ExplorerIcon,
+  ToggleIconLeft,
+  ToggleIconRight,
+} from "../../../assets/icons";
 import { ProjectComponent, SwitchViewComponent } from "./";
-import textResources from "../../../textResources";
+import { TextResources } from "../../../assets/textResources";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import { MODULE_TYPE } from "../../../models/project";
 import { SaveState } from "../../../redux/store/localStorage/localStorage";
@@ -47,7 +51,7 @@ export const ExplorerModule = () => {
           alt="toggle"
           onClick={handleClick}
         />
-        <p className="text">{textResources.Explorer_view}</p>
+        <p className="text">{TextResources.Explorer_view}</p>
       </ModuleHeader>
       <ModuleBody visible={isOpen}>
         {hasProject && <ProjectComponent visible={isOpen} />}

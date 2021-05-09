@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { create } from "../../redux/store/project/actions";
 import { GetIcon } from "./helpers";
-import textResources from "../../textResources";
+import { TextResources } from "../../assets/textResources";
 import { OpenProjectComponent } from "./openProjectComponent";
 
 export const ProjectOptions = () => {
@@ -19,7 +19,7 @@ export const ProjectOptions = () => {
       ) : (
         <div className="options_component_container">
           <div className="options_content">
-            <p className="options_header">{textResources.Project_heading}</p>
+            <p className="options_header">{TextResources.Project_heading}</p>
             <div
               className="option_container"
               onMouseOver={() => {
@@ -31,7 +31,7 @@ export const ProjectOptions = () => {
               onClick={() => dispatch(create("unnamed", "unnamed"))}
             >
               <GetIcon icon="NewProjectIcon" />
-              <p className="option_text">{textResources.Project_new_project}</p>
+              <p className="option_text">{TextResources.Project_new_project}</p>
               {newImgHover ? (
                 <GetIcon icon="WhiteRightArrowIcon" />
               ) : (
@@ -50,7 +50,7 @@ export const ProjectOptions = () => {
             >
               <GetIcon icon="OpenProjectIcon" />
               <p className="option_text">
-                {textResources.Project_open_project}
+                {TextResources.Project_open_project}
               </p>
               {openImgHover ? (
                 <GetIcon icon="WhiteRightArrowIcon" />

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { AppBar, Toolbar, Typography } from "@material-ui/core";
-import textResources from "../../textResources";
+import { TextResources } from "../../assets/textResources";
 import SaveViewState from "./helpers/SaveViewState";
 import { LoadState } from "../../redux/store/localStorage/localStorage";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,7 +14,7 @@ import {
   TreeviewOn,
   BlockviewOff,
   BlockviewOn,
-} from "../../assets/index";
+} from "../../assets/icons";
 import {
   BlockviewWrapper,
   TreeviewWrapper,
@@ -53,7 +53,7 @@ const Header = () => {
     <AppBar className="appbar">
       <Toolbar>
         <TitleWrapper>
-          <Typography>{textResources.MainHeader_App_Name} </Typography>
+          <Typography>{TextResources.MainHeader_App_Name} </Typography>
         </TitleWrapper>
         <IconsWrapper>
           <TreeviewWrapper selected={!showBlockView}>

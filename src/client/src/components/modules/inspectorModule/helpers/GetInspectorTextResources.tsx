@@ -1,19 +1,19 @@
-import textResources from "../../../../textResources";
+import { TextResources } from "../../../../assets/textResources";
 
 const GetInspectorTextResource = (index: number) => {
   return index === 0
-    ? textResources.Inspector_AdminInfo
+    ? TextResources.Inspector_AdminInfo
     : index === 1
-    ? textResources.Inspector_TechInfo
+    ? TextResources.Inspector_TechInfo
     : index === 2
-    ? textResources.Inspector_Relations
+    ? TextResources.Inspector_Relations
     : index === 3
-    ? textResources.Inspector_Inhereted
+    ? TextResources.Inspector_Inhereted
     : index === 4
-    ? textResources.Inspector_Comments
+    ? TextResources.Inspector_Comments
     : index === 5
-    ? textResources.Inspector_Changelog
-    : textResources.Inspector_Object;
+    ? TextResources.Inspector_Changelog
+    : TextResources.Inspector_Object;
 };
 
 export default GetInspectorTextResource;

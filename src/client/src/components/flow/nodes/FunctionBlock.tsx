@@ -1,6 +1,6 @@
 import { memo, FC } from "react";
 import { NodeProps } from "react-flow-renderer";
-import { BlockviewArrowIcon } from "../../../assets";
+import { BlockviewArrowIcon } from "../../../assets/icons";
 
 const FunctionBlock: FC<NodeProps> = ({ data }) => {
   return (

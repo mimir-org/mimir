@@ -1,15 +1,15 @@
-import textResources from "../../../../textResources";
+import { TextResources } from "../../../../assets/textResources";
 
 const GetText = (type: string) => {
   let text =
     type === "Open"
-      ? textResources.Account_Open_Label
+      ? TextResources.Account_Open_Label
       : type === "Create"
-      ? textResources.Account_Create_Label
+      ? TextResources.Account_Create_Label
       : type === "Save"
-      ? textResources.Account_Save_Label
+      ? TextResources.Account_Save_Label
       : type === "Logout"
-      ? textResources.Account_Logout
+      ? TextResources.Account_Logout
       : null;
 
   return text;

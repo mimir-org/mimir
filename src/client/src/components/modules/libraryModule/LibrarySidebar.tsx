@@ -1,4 +1,4 @@
-import textResources from "../../../textResources";
+import { TextResources } from "../../../assets/textResources";
 import { LibNode } from "../../../models/project";
 import GetIcon from "./helpers/GetIcon";
 import {
@@ -22,7 +22,7 @@ const LibrarySidebar = ({ nodes }: Props) => {
   return (
     <>
       <SearchIconWrapper>{GetIcon("", "24")}</SearchIconWrapper>
-      <SearchBox placeholder={textResources.Library_SearchBox_Placeholder} />
+      <SearchBox placeholder={TextResources.Library_SearchBox_Placeholder} />
       {nodes &&
         nodes.map((node) => {
           return (
