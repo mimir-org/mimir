@@ -1,4 +1,4 @@
-import { MODULE_TYPE } from "../../models/project";
+import { MENU_TYPE } from "../../models/project";
 import {
   VisualFilterIconClosed,
   VisualFilterIconOpen,
@@ -11,7 +11,7 @@ const GetMenuBoxIcon = (
   key: string,
   handleClick: () => void
 ) => {
-  const account = key === MODULE_TYPE.ACCOUNT;
+  const account = key === MENU_TYPE.ACCOUNT;
 
   const icon = isOpen ? VisualFilterIconOpen : VisualFilterIconClosed;
   const iconAccount = isOpen ? UserIconOpen : UserIconClosed;

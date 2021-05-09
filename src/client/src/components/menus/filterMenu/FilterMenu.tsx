@@ -1,7 +1,7 @@
 import { TextResources } from "../../../assets/textResources";
 import FilterContent from "./FilterContent";
 import { useState } from "react";
-import { MODULE_TYPE } from "../../../models/project";
+import { MENU_TYPE } from "../../../models/project";
 import { GetMenuBoxIcon } from "../../../assets/helpers/";
 import { MenuBox, MenuTopHeader } from "../../../componentLibrary";
 import {
@@ -10,7 +10,7 @@ import {
 } from "../../../redux/store/localStorage/localStorage";
 
 const FilterModule = () => {
-  const key = MODULE_TYPE.VISUAL_FILTER;
+  const key = MENU_TYPE.VISUAL_FILTER;
   const [showFilter, setShowFilter] = useState(LoadState(key));
 
   const handleClick = () => {

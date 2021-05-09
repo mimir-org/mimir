@@ -9,20 +9,20 @@ import { GetMenuElement } from "./helpers";
 import { TextResources } from "../../../assets/textResources";
 import { MenuButton } from "../../../componentLibrary/buttons/";
 import { UserIconOpen, LogoutIcon } from "../../../assets/icons";
+import { GetMenuBoxIcon } from "../../../assets/helpers";
+import { MENU_TYPE } from "../../../models/project";
 import {
   MenuBox,
   MenuTopHeader,
   MenuLogoutBox,
 } from "../../../componentLibrary";
-import { GetMenuBoxIcon } from "../../../assets/helpers";
-import { MODULE_TYPE } from "../../../models/project";
 
 const AccountMenu = () => {
   const dispatch = useDispatch();
   const [showAccountSettings, setshowAccountSettings] = useState(false);
   const [openProjectModule, setOpenProjectModule] = useState(false);
   const [createProjectModule, setCreateProjectModule] = useState(false);
-  const key = MODULE_TYPE.ACCOUNT;
+  const key = MENU_TYPE.ACCOUNT;
 
   const projectState = useSelector<RootState>(
     (state) => state.projectState
