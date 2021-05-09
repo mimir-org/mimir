@@ -61,7 +61,7 @@ const Header = () => {
           />
         </ViewBox>
         <div className="line"></div>
-        <ViewBox selected={showBlockView}>
+        <ViewBox selected={showBlockView} right>
           <img
             src={showBlockView ? BlockviewOn : BlockviewOff}
             alt={VIEW_TYPE.BLOCKVIEW}
