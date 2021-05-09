@@ -1,7 +1,7 @@
 export { default as BlockviewOff } from "./icons/blockviewOff.svg";
 export { default as BlockviewOn } from "./icons/blockviewOn.svg";
-export { default as BlockviewArrowIcon } from "./icons/blockViewArrow.svg";
-export { default as BlockviewArrowSmallIcon } from "./icons/blockViewArrowSmall.svg";
+export { default as BlockviewArrowIcon } from "./icons/blockview2.svg";
+export { default as BlockviewArrowSmallIcon } from "./icons/blockviewArrowSmall.svg";
 export { default as CombinedViewOffIcon } from "./icons/combinedViewOffIcon.svg";
 export { default as CombinedViewOnIcon } from "./icons/combinedViewOnIcon.svg";
 export { default as expandedIcon } from "./icons/expandedIcon.svg";
