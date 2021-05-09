@@ -9,6 +9,7 @@ export { default as MenuColumn } from "./box/menus/MenuColumn";
 export { default as MenuTopHeader } from "./box/menus/MenuTopHeader";
 export { default as MenuElement } from "./box/menus/MenuElement";
 export { default as MenuSubHeader } from "./box/menus/MenuSubHeader";
+export { default as MenuLogoutBox } from "./box/menus/MenuLogoutBox";
 export { default as HomeBox } from "./box/home/HomeBox";
 export { default as FlowBox } from "./box/flow/FlowBox";
 export { default as ModuleBox } from "./box/modules/ModuleBox";

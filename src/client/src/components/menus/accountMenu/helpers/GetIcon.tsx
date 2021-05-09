@@ -5,7 +5,6 @@ import {
   CreateProjectIcon,
   OpenProjectIconSmall,
 } from "../../../../assets/icons";
-import "./getimg.scss";
 
 const GetIcon = (type: string) => {
   switch (type) {

@@ -1,21 +1,16 @@
 import styled from "styled-components";
-import { Color, FontSize, FontType } from "../../";
+import { Color, FontType } from "../../";
 
 const MenuTopHeader = styled.div`
   position: absolute;
   font-family: ${FontType.Standard};
-  font-size: ${FontSize.SubHeader};
-  right: ${(props) => (props.right ? "2px" : "inherit")};
-  left: ${(props) => (props.right ? "inherit" : "2px")};
+  right: ${(props: { right: string }) => (props.right ? "2px" : "inherit")};
+  left: ${(props: { right: string }) => (props.right ? "inherit" : "2px")};
   top: 2px;
   z-index: 1103;
-  min-width: 155px;
   width: auto;
-  text-align: right;
-  padding-right: 15px;
-  padding-top: 11px;
+  padding: 11px 15px 0px 40px;
   cursor: pointer;
-  margin-bottom: 5px;
 
   font-weight: ${(props: { isOpen: boolean }) =>
     props.isOpen ? "bold" : "normal"};
@@ -30,7 +25,7 @@ const MenuTopHeader = styled.div`
   .icon {
     position: absolute;
     top: 8px;
-    right: 108px;
+    left: 12px;
     z-index: 1103;
   }
 `;

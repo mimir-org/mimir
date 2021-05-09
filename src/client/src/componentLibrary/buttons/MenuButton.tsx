@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Color, FontSize, FontType } from "..";
 
 const MenuButton = styled.button`
-  width: 76px;
+  width: 90px;
   height: 34px;
   display: flex;
   flex-direction: row;
@@ -13,9 +13,9 @@ const MenuButton = styled.button`
   padding: 0px 6px;
   cursor: pointer;
   font-family: ${FontType.Standard};
-  font-weight: normal;
   font-size: ${FontSize.Standard};
   color: ${Color.Black};
+  margin: 10px 0px;
 
   &:hover {
     border: 2px solid ${Color.DeepCyan};

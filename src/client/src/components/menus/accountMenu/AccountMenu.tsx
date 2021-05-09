@@ -5,17 +5,24 @@ import { UserState } from "../../../redux/store/user/types";
 import { ProjectState } from "../../../redux/store/project/types";
 import { save } from "../../../redux/store/project/actions";
 import { OpenProjectComponent } from "../../project/openProjectComponent";
-import { MenuBox, MenuElement, MenuTopHeader } from "../../../componentLibrary";
 import { GetMenuElement } from "./helpers";
 import { TextResources } from "../../../assets/textResources";
 import { MenuButton } from "../../../componentLibrary/buttons/";
 import { UserIconOpen, LogoutIcon } from "../../../assets/icons";
+import {
+  MenuBox,
+  MenuTopHeader,
+  MenuLogoutBox,
+} from "../../../componentLibrary";
+import { GetMenuBoxIcon } from "../../../assets/helpers";
+import { MODULE_TYPE } from "../../../models/project";
 
 const AccountMenu = () => {
   const dispatch = useDispatch();
   const [showAccountSettings, setshowAccountSettings] = useState(false);
   const [openProjectModule, setOpenProjectModule] = useState(false);
   const [createProjectModule, setCreateProjectModule] = useState(false);
+  const key = MODULE_TYPE.ACCOUNT;
 
   const projectState = useSelector<RootState>(
     (state) => state.projectState
@@ -25,7 +32,7 @@ const AccountMenu = () => {
     (state) => state.userState
   ) as UserState;
 
-  const handleClick = (e) => {
+  const handleClick = () => {
     setshowAccountSettings(!showAccountSettings);
   };
 
@@ -50,17 +57,20 @@ const AccountMenu = () => {
         <div onClick={handleClick}>
           {projectState.project && projectState.project.name}
         </div>
+        {GetMenuBoxIcon(isOpen, key, handleClick)}
       </MenuTopHeader>
       {isOpen && (
         <MenuBox>
           {GetMenuElement("Open", handleOpenClick)}
           {GetMenuElement("Create", handleCreateClick)}
           {GetMenuElement("Save", handleSaveClick)}
-          {userState.user && userState.user.name}
-          <MenuButton>
-            <img src={LogoutIcon} alt="logout" />
-            {TextResources.Account_Logout}
-          </MenuButton>
+          <MenuLogoutBox>
+            {userState.user && userState.user.name}
+            <MenuButton>
+              <img src={LogoutIcon} alt="logout" />
+              {TextResources.Account_Logout}
+            </MenuButton>
+          </MenuLogoutBox>
         </MenuBox>
       )}
       {openProjectModule && isOpen && (

@@ -2,7 +2,7 @@ import { TextResources } from "../../../assets/textResources";
 import FilterContent from "./FilterContent";
 import { useState } from "react";
 import { MODULE_TYPE } from "../../../models/project";
-import GetIcon from "./helpers/GetIcon";
+import { GetMenuBoxIcon } from "../../../assets/helpers/";
 import { MenuBox, MenuTopHeader } from "../../../componentLibrary";
 import {
   LoadState,
@@ -23,7 +23,7 @@ const FilterModule = () => {
     <>
       <MenuTopHeader isOpen={isOpen} right>
         <div onClick={handleClick}>{TextResources.MainHeader_VisualFilter}</div>
-        {GetIcon(isOpen, handleClick)}
+        {GetMenuBoxIcon(isOpen, key, handleClick)}
       </MenuTopHeader>
       {isOpen && (
         <MenuBox right>
