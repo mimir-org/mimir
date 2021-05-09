@@ -1,9 +1,9 @@
 ﻿using System;
 using AutoMapper;
 using Mb.Core.Extensions;
-using Mb.Models;
+using Mb.Models.Data;
 using Mb.Models.Enums;
-using Attribute = Mb.Models.Attribute;
+using Attribute = Mb.Models.Data.Attribute;
 
 namespace Mb.Core.Profiles
 {

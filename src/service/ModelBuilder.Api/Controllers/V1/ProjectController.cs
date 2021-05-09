@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Mb.Core.Exceptions;
-using Mb.Core.Services;
+using Mb.Core.Services.Contracts;
 using Mb.Models;
+using Mb.Models.Application;
 using Mb.Models.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -54,8 +55,8 @@ namespace Mb.Api.Controllers.V1
 
             try
             {
-                var data = await _projectService.CreateNewProject(project);
-                return CreatedAtAction(nameof(GetById), new { id = data.Id }, data);
+                var createdProject = await _projectService.CreateProject(project);
+                return CreatedAtAction(nameof(GetById), new { id = createdProject.Id }, createdProject);
             }
             catch (Exception e)
             {
@@ -73,11 +74,11 @@ namespace Mb.Api.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public IActionResult Get(string name)
+        public IActionResult GetBySearch(string name)
         {
             try
             {
-                var data = _projectService.GetProjectList(name).ToList();
+                var data = _projectService.GetProjectList(name, 0, 20).ToList();
                 return Ok(data);
             }
             catch (Exception e)
@@ -120,10 +121,10 @@ namespace Mb.Api.Controllers.V1
         }
 
         /// <summary>
-        /// Save a project
+        /// Import a new project
         /// </summary>
         /// <returns></returns>
-        [HttpPost("save")]
+        [HttpPost("import")]
         [ProducesResponseType(typeof(Project), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Project), StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -143,6 +144,61 @@ namespace Mb.Api.Controllers.V1
             catch (ModelBuilderDuplicateException e)
             {
                 return Conflict(e.Message);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
+        /// Import a new project
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("update")]
+        [ProducesResponseType(typeof(Project), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Project), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UpdateProject([FromBody] Project project)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                var data = await _projectService.UpdateProject(project);
+                return Ok(data);
+            }
+            catch (ModelBuilderDuplicateException e)
+            {
+                return Conflict(e.Message);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
+        /// Delete a project
+        /// </summary>
+        /// <returns></returns>
+        [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(Project), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeleteProject(string id)
+        {
+            try
+            {
+                await _projectService.DeleteProject(id);
+                return Ok();
             }
             catch (Exception e)
             {

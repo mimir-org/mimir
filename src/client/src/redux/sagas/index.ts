@@ -10,7 +10,7 @@ import {
 
 import { searchLibrary } from "./library/saga";
 import { getUser } from "./user/saga";
-import { getProject, createProject, searchProject, saveProject } from "./project/saga";
+import { getProject, createProject, searchProject, updateProject } from "./project/saga";
 
 export function* sagas() {
     yield all([
@@ -19,6 +19,6 @@ export function* sagas() {
         takeEvery(CREATING_PROJECT, createProject),
         takeEvery(FETCHING_PROJECT, getProject),
         takeEvery(SEARCH_PROJECT, searchProject),
-        takeEvery(SAVE_PROJECT, saveProject),
+        takeEvery(SAVE_PROJECT, updateProject),
     ]);
 }

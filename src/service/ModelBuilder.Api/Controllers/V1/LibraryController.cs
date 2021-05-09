@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Mb.Core.Services;
-using Mb.Models;
+using Mb.Core.Services.Contracts;
+using Mb.Models.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,11 +24,13 @@ namespace Mb.Api.Controllers.V1
     {
         private readonly IProjectService _projectService;
         private readonly ILogger<ProjectController> _logger;
+        private readonly ILibraryService _libraryService;
 
-        public LibraryController(IProjectService projectService, ILogger<ProjectController> logger)
+        public LibraryController(IProjectService projectService, ILogger<ProjectController> logger, ILibraryService libraryService)
         {
             _projectService = projectService;
             _logger = logger;
+            _libraryService = libraryService;
         }
 
         /// <summary>
@@ -44,7 +46,7 @@ namespace Mb.Api.Controllers.V1
         {
             try
             {
-                var data = _projectService.GetLibNodes(string.Empty).ToList();
+                var data = _libraryService.GetLibNodes(string.Empty).ToList();
                 return Ok(data);
             }
             catch (Exception e)

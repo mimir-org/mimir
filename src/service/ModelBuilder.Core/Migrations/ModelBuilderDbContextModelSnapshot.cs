@@ -19,7 +19,7 @@ namespace Mb.Core.Migrations
                 .HasAnnotation("ProductVersion", "5.0.5")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Mb.Models.Attribute", b =>
+            modelBuilder.Entity("Mb.Models.Data.Attribute", b =>
                 {
                     b.Property<string>("Key")
                         .HasColumnType("nvarchar(450)")
@@ -69,7 +69,7 @@ namespace Mb.Core.Migrations
                     b.ToTable("Attribute");
                 });
 
-            modelBuilder.Entity("Mb.Models.AttributeType", b =>
+            modelBuilder.Entity("Mb.Models.Data.AttributeType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -119,7 +119,7 @@ namespace Mb.Core.Migrations
                     b.ToTable("AttributeType");
                 });
 
-            modelBuilder.Entity("Mb.Models.Connector", b =>
+            modelBuilder.Entity("Mb.Models.Data.Connector", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)")
@@ -162,7 +162,7 @@ namespace Mb.Core.Migrations
                     b.ToTable("Connector");
                 });
 
-            modelBuilder.Entity("Mb.Models.Edge", b =>
+            modelBuilder.Entity("Mb.Models.Data.Edge", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)")
@@ -203,7 +203,7 @@ namespace Mb.Core.Migrations
                     b.ToTable("Edge");
                 });
 
-            modelBuilder.Entity("Mb.Models.LibraryTypeComponent", b =>
+            modelBuilder.Entity("Mb.Models.Data.LibraryTypeComponent", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)")
@@ -257,7 +257,7 @@ namespace Mb.Core.Migrations
                     b.ToTable("LibraryTypeComponent");
                 });
 
-            modelBuilder.Entity("Mb.Models.Node", b =>
+            modelBuilder.Entity("Mb.Models.Data.Node", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)")
@@ -331,6 +331,11 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("UpdatedBy");
 
+                    b.Property<string>("Version")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Version");
+
                     b.Property<int>("Width")
                         .HasColumnType("int")
                         .HasColumnName("Width");
@@ -340,7 +345,7 @@ namespace Mb.Core.Migrations
                     b.ToTable("Node");
                 });
 
-            modelBuilder.Entity("Mb.Models.Project", b =>
+            modelBuilder.Entity("Mb.Models.Data.Project", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)")
@@ -350,25 +355,40 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Description");
 
-                    b.Property<DateTime?>("LastEdited")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("LastEdited");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Name");
 
+                    b.Property<string>("ParentId")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ParentId");
+
                     b.Property<string>("ProjectOwner")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ProjectOwner");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("Updated");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("UpdatedBy");
+
+                    b.Property<string>("Version")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Version");
 
                     b.HasKey("Id");
 
                     b.ToTable("Project");
                 });
 
-            modelBuilder.Entity("Mb.Models.Rds", b =>
+            modelBuilder.Entity("Mb.Models.Data.Rds", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -441,9 +461,9 @@ namespace Mb.Core.Migrations
                     b.ToTable("ProjectNode");
                 });
 
-            modelBuilder.Entity("Mb.Models.Attribute", b =>
+            modelBuilder.Entity("Mb.Models.Data.Attribute", b =>
                 {
-                    b.HasOne("Mb.Models.Node", "Node")
+                    b.HasOne("Mb.Models.Data.Node", "Node")
                         .WithMany("Attributes")
                         .HasForeignKey("NodeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -452,9 +472,9 @@ namespace Mb.Core.Migrations
                     b.Navigation("Node");
                 });
 
-            modelBuilder.Entity("Mb.Models.Connector", b =>
+            modelBuilder.Entity("Mb.Models.Data.Connector", b =>
                 {
-                    b.HasOne("Mb.Models.Node", "Node")
+                    b.HasOne("Mb.Models.Data.Node", "Node")
                         .WithMany("Connectors")
                         .HasForeignKey("NodeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -465,13 +485,13 @@ namespace Mb.Core.Migrations
 
             modelBuilder.Entity("ProjectEdge", b =>
                 {
-                    b.HasOne("Mb.Models.Edge", null)
+                    b.HasOne("Mb.Models.Data.Edge", null)
                         .WithMany()
                         .HasForeignKey("EdgeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Mb.Models.Project", null)
+                    b.HasOne("Mb.Models.Data.Project", null)
                         .WithMany()
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -480,20 +500,20 @@ namespace Mb.Core.Migrations
 
             modelBuilder.Entity("ProjectNode", b =>
                 {
-                    b.HasOne("Mb.Models.Node", null)
+                    b.HasOne("Mb.Models.Data.Node", null)
                         .WithMany()
                         .HasForeignKey("NodeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Mb.Models.Project", null)
+                    b.HasOne("Mb.Models.Data.Project", null)
                         .WithMany()
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Mb.Models.Node", b =>
+            modelBuilder.Entity("Mb.Models.Data.Node", b =>
                 {
                     b.Navigation("Attributes");
 

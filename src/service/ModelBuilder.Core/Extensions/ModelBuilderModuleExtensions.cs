@@ -5,6 +5,7 @@ using Mb.Core.Profiles;
 using Mb.Core.Repositories;
 using Mb.Core.Repositories.Contracts;
 using Mb.Core.Services;
+using Mb.Core.Services.Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
@@ -38,7 +39,7 @@ namespace Mb.Core.Extensions
             // Dependency injection
             services.AddSingleton(s => autoMapperConfiguration.CreateMapper());
             services.AddSingleton<IFileRepository, JsonFileRepository>();
-            services.AddSingleton<IGenerateIdRepository, GenerateIdRepository>();
+            services.AddSingleton<ICommonRepository, CommonRepository>();
 
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<INodeRepository, NodeRepository>();
@@ -47,9 +48,12 @@ namespace Mb.Core.Extensions
             services.AddScoped<IRdsRepository, RdsRepository>();
             services.AddScoped<IAttributeTypeRepository, AttributeTypeRepository>();
             services.AddScoped<ILibraryTypeComponentRepository, LibraryTypeComponentRepository>();
+            services.AddScoped<IConnectorRepository, ConnectorRepository>();
+            services.AddScoped<IAttributeRepository, AttributeRepository>();
 
             services.AddScoped<ITypeEditorService, TypeEditorService>();
             services.AddScoped<IProjectService, ProjectService>();
+            services.AddScoped<ILibraryService, LibraryService>();
 
             services.AddHttpContextAccessor();
             services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();

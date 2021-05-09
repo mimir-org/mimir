@@ -30,6 +30,7 @@ const useOnDrop = (
     connectors: data.connectors,
     attributes: data.attributes,
     icon: data.icon,
+    version: "1.0",
   } as Node;
 
   node.connectors?.forEach((c) => {

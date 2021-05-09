@@ -4,7 +4,9 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Mb.Core.Extensions;
 using Mb.Core.Repositories.Contracts;
+using Mb.Core.Services.Contracts;
 using Mb.Models;
+using Mb.Models.Data;
 using Mb.Models.Enums;
 
 namespace Mb.Core.Services
@@ -20,9 +22,9 @@ namespace Mb.Core.Services
         private readonly IRdsRepository _rdsRepository;
         private readonly IAttributeTypeRepository _attributeTypeRepository;
         private readonly ILibraryTypeComponentRepository _libraryTypeComponentRepository;
-        private readonly IGenerateIdRepository _generateIdRepository;
+        private readonly ICommonRepository _generateIdRepository;
 
-        public TypeEditorService(IMapper mapper, IFileRepository fileRepository, IRdsRepository rdsRepository, IAttributeTypeRepository attributeTypeRepository, ILibraryTypeComponentRepository libraryTypeComponentRepository, IGenerateIdRepository generateIdRepository)
+        public TypeEditorService(IMapper mapper, IFileRepository fileRepository, IRdsRepository rdsRepository, IAttributeTypeRepository attributeTypeRepository, ILibraryTypeComponentRepository libraryTypeComponentRepository, ICommonRepository generateIdRepository)
         {
             _mapper = mapper;
             _fileRepository = fileRepository;
@@ -74,7 +76,7 @@ namespace Mb.Core.Services
         public async Task<LibraryTypeComponent> CreateLibraryComponent(LibraryTypeComponent libraryTypeComponent)
         {
             libraryTypeComponent.CreateJsonData();
-            libraryTypeComponent.Id = _generateIdRepository.CreateUniqueId(libraryTypeComponent.Version, "t");
+            libraryTypeComponent.Id = _generateIdRepository.CreateUniqueId();
             await _libraryTypeComponentRepository.CreateAsync(libraryTypeComponent);
             await _libraryTypeComponentRepository.SaveAsync();
             return libraryTypeComponent;

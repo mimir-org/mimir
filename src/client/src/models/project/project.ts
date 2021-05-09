@@ -121,8 +121,13 @@ export const RELATION_TYPE = {
 
 export interface Project {
     id: string;
+    parentId: string;
+    version: string;
     name: string;
     description: string;
+    projectOwner: string;
+    updatedBy: string;
+    updated: Date;
     nodes: Node[];
     edges: Edge[];
 }
@@ -131,7 +136,8 @@ export interface ProjectSimple {
     name: string;
     description: string;
     projectOwner: string;
-    lastEdited: Date;
+    updated: Date;
+    updatedBy: string;
     selected: boolean;
 }
 
@@ -190,6 +196,7 @@ export interface Node {
     width: number;
     updatedBy: string;
     updated: Date;
+    version: string;
 }
 
 export interface LibNode {

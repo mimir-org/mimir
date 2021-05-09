@@ -27,4 +27,8 @@
     <ProjectReference Include="..\ModelBuilder.Models\ModelBuilder.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>
