@@ -4,7 +4,7 @@ import { Color } from "../../../componentLibrary";
 const HeaderBox = styled.div`
   display: flex;
   height: 50px;
-  background-color: #007079 !important;
+  background-color: ${Color.DeepCyan} !important;
   position: relative !important;
   box-shadow: none !important;
 
@@ -16,7 +16,7 @@ const HeaderBox = styled.div`
     width: 1px;
     height: 28px;
     position: absolute;
-    border-color: #ffffff;
+    border-color: ${Color.White};
     border-style: solid;
     border-width: 0px 1px 0px 0px;
     top: 0px;
