@@ -1,13 +1,12 @@
 import { TextResources } from "../../../assets/textResources";
 import { LibNode } from "../../../models/project";
 import GetIcon from "./helpers/GetIcon";
+import { SearchIcon } from "../../../assets/icons";
 import {
-  TextWrapper,
-  IconWrapper,
-  ContentWrapper,
-  SearchBox,
-  SearchIconWrapper,
-} from "./styled";
+  LibraryBody,
+  LibraryElement,
+  SearchInput,
+} from "../../../componentLibrary";
 
 interface Props {
   nodes: LibNode[];
@@ -20,24 +19,24 @@ const LibrarySidebar = ({ nodes }: Props) => {
   };
 
   return (
-    <>
-      <SearchIconWrapper>{GetIcon("", "24")}</SearchIconWrapper>
-      <SearchBox placeholder={TextResources.Library_SearchBox_Placeholder} />
+    <LibraryBody>
+      <img src={SearchIcon} alt="search" className="search-icon" />
+      <SearchInput placeholder={TextResources.Library_SearchBox_Placeholder} />
       {nodes &&
         nodes.map((node) => {
           return (
-            <ContentWrapper
+            <LibraryElement
               className="dndnode location"
               onDragStart={(event) => onDragStart(event, JSON.stringify(node))}
               key={node.id}
               draggable
             >
-              <TextWrapper>{node.name}</TextWrapper>
-              <IconWrapper>{GetIcon(node.icon, "30")}</IconWrapper>
-            </ContentWrapper>
+              {node.name}
+              <div className="icon">{GetIcon(node.icon, "30")}</div>
+            </LibraryElement>
           );
         })}
-    </>
+    </LibraryBody>
   );
 };
 

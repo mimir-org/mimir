@@ -1,7 +1,7 @@
 import { TextResources } from "../../../assets/textResources";
 import { LegendWrapper } from "../legendModule/styled";
 import { LegendModule } from "../legendModule";
-import { LibrarySidebar } from "./index";
+import { LibaryComponent } from "./index";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../redux/store";
@@ -9,8 +9,12 @@ import { LibraryState } from "../../../redux/store/library/types";
 import { searchLibrary } from "../../../redux/store/library/actions";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import { MODULE_TYPE } from "../../../models/project";
-import { AnimatedModule, ModuleHeader, Size } from "../../../componentLibrary";
-import { SidebarWrapper, LibraryWrapper } from "./styled";
+import {
+  AnimatedModule,
+  ModuleBody,
+  ModuleHeader,
+  Size,
+} from "../../../componentLibrary";
 import { SaveState } from "../../../redux/store/localStorage/localStorage";
 import {
   LibraryIcon,
@@ -47,24 +51,21 @@ const LibraryModule = () => {
 
   return (
     <AnimatedModule start={start} stop={stop} run={animate}>
-      <LibraryWrapper visible={isOpen}>
-        <ModuleHeader right visible={isOpen}>
-          <img src={LibraryIcon} alt="library-icon" />
-          <img
-            className="icon"
-            src={isOpen ? ToggleIconRight : ToggleIconLeft}
-            alt="toggle"
-            onClick={handleClick}
-          />
-          <p className="text">{TextResources.Library_Heading}</p>
-        </ModuleHeader>
-        <SidebarWrapper visible={isOpen}>
-          <LibrarySidebar nodes={state.nodes} />
-        </SidebarWrapper>
-      </LibraryWrapper>
-      <LegendWrapper visible={isOpen}>
-        <LegendModule visible={isOpen} />
-      </LegendWrapper>
+      <ModuleHeader right visible={isOpen}>
+        <img src={LibraryIcon} alt="library-icon" />
+        <img
+          className="icon"
+          src={isOpen ? ToggleIconRight : ToggleIconLeft}
+          alt="toggle"
+          onClick={handleClick}
+        />
+        <p className="text">{TextResources.Library_Heading}</p>
+      </ModuleHeader>
+      <ModuleBody visible={isOpen}>
+        <LibaryComponent nodes={state.nodes} />
+      </ModuleBody>
+
+      <LegendModule />
     </AnimatedModule>
   );
 };

@@ -2,7 +2,6 @@ import {
   ProductIcon,
   FunctionIcon,
   LocationIcon,
-  SearchIcon,
 } from "../../../../assets/icons";
 
 const GetIcon = (icon: string, size: string) => {
@@ -35,14 +34,7 @@ const GetIcon = (icon: string, size: string) => {
         />
       );
     default:
-      return (
-        <img
-          src={SearchIcon}
-          width={size + "px"}
-          height={size + "px"}
-          alt="search-icon"
-        />
-      );
+      return null;
   }
 };
 

@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { LegendIcon } from "../../../assets/icons";
-import { VerticalScrollbar } from "../../../componentLibrary";
-import { SidebarWrapper } from "../libraryModule/styled";
+import { LegendBody, LegendContent } from "../../../componentLibrary";
 import { TextResources } from "../../../assets/textResources";
 import { ProjectState } from "../../../redux/store/project/types";
 import { RootState } from "../../../redux/store";
@@ -12,16 +11,11 @@ import { GetLegendData, Legend } from "../../flow/helpers";
 import {
   LegendHeader,
   LegendIconWrapper,
-  LegendContent,
   TransportWrapper,
   TransportColor,
 } from "./styled";
 
-interface Props {
-  visible: boolean;
-}
-
-const LegendModule = ({ visible }: Props) => {
+const LegendModule = () => {
   const projectState = useSelector<RootState>(
     (state) => state.projectState
   ) as ProjectState;
@@ -46,29 +40,27 @@ const LegendModule = ({ visible }: Props) => {
   }
 
   return (
-    <>
-      <VerticalScrollbar visible={visible}>
-        <LegendHeader visible={visible}>
-          <LegendIconWrapper>
-            <img src={LegendIcon} alt="legend-icon" />
-          </LegendIconWrapper>
-          {TextResources.Legend_Heading}
-        </LegendHeader>
-        <SidebarWrapper visible={visible}>
-          {legends &&
-            legends.map((legend) => {
-              return (
-                <LegendContent key={legend.key}>
-                  <TransportWrapper>
-                    <p>{legend.name}</p>
-                    <TransportColor color={legend.color}></TransportColor>
-                  </TransportWrapper>
-                </LegendContent>
-              );
-            })}
-        </SidebarWrapper>
-      </VerticalScrollbar>
-    </>
+    <LegendBody>
+      <LegendHeader>
+        <LegendIconWrapper>
+          <img src={LegendIcon} alt="legend" />
+        </LegendIconWrapper>
+        {TextResources.Legend_Heading}
+      </LegendHeader>
+      <>
+        {legends &&
+          legends.map((legend) => {
+            return (
+              <LegendContent key={legend.key}>
+                <TransportWrapper>
+                  <p>{legend.name}</p>
+                  <TransportColor color={legend.color}></TransportColor>
+                </TransportWrapper>
+              </LegendContent>
+            );
+          })}
+      </>
+    </LegendBody>
   );
 };
 export default LegendModule;

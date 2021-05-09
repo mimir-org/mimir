@@ -21,3 +21,8 @@ export { default as AspectChildBox } from "./box/aspect/AspectChildBox";
 export { default as FooterBox } from "./box/footer/FooterBox";
 export { default as FooterContent } from "./box/footer/FooterContent";
 export { default as VerticalScrollbar } from "./scrollbars/VerticalScrollbar";
+export { default as LibraryElement } from "./box/library/LibraryElement";
+export { default as SearchInput } from "./input/SearchInput";
+export { default as LibraryBody } from "./box/library/LibraryBody";
+export { default as LegendBody } from "./box/library/LegendBody";
+export { default as LegendContent } from "./box/library/LegendContent";

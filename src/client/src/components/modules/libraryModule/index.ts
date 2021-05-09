@@ -1,2 +1,2 @@
 export { default as LibraryModule } from "./LibraryModule";
-export { default as LibrarySidebar } from "./LibrarySidebar";
+export { default as LibaryComponent } from "./LibraryComponent";

@@ -4,7 +4,7 @@ import {
   FilterIconOpen,
   UserIconOpen,
   UserIconClosed,
-} from "../../assets/icons";
+} from "../icons";
 
 const GetMenuBoxIcon = (isOpen: boolean, type: string) => {
   const account = type === MENU_TYPE.ACCOUNT;
