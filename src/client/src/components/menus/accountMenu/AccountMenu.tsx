@@ -5,8 +5,11 @@ import { UserState } from "../../../redux/store/user/types";
 import { ProjectState } from "../../../redux/store/project/types";
 import { save } from "../../../redux/store/project/actions";
 import { OpenProjectComponent } from "../../project/openProjectComponent";
-import { MenuBox, MenuHeader } from "../../../componentLibrary";
+import { MenuBox, MenuElement, MenuTopHeader } from "../../../componentLibrary";
 import { GetMenuElement } from "./helpers";
+import { TextResources } from "../../../assets/textResources";
+import { MenuButton } from "../../../componentLibrary/buttons/";
+import { UserIconOpen, LogoutIcon } from "../../../assets/icons";
 
 const AccountMenu = () => {
   const dispatch = useDispatch();
@@ -43,17 +46,21 @@ const AccountMenu = () => {
 
   return (
     <>
-      <MenuHeader isOpen={isOpen}>
+      <MenuTopHeader isOpen={isOpen}>
         <div onClick={handleClick}>
           {projectState.project && projectState.project.name}
         </div>
-      </MenuHeader>
+      </MenuTopHeader>
       {isOpen && (
         <MenuBox>
           {GetMenuElement("Open", handleOpenClick)}
           {GetMenuElement("Create", handleCreateClick)}
           {GetMenuElement("Save", handleSaveClick)}
-          {GetMenuElement("Logout", handleSaveClick)}
+          {userState.user && userState.user.name}
+          <MenuButton>
+            <img src={LogoutIcon} alt="logout" />
+            {TextResources.Account_Logout}
+          </MenuButton>
         </MenuBox>
       )}
       {openProjectModule && isOpen && (

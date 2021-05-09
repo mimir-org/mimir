@@ -3,7 +3,7 @@ import FilterContent from "./FilterContent";
 import { useState } from "react";
 import { MODULE_TYPE } from "../../../models/project";
 import GetIcon from "./helpers/GetIcon";
-import { MenuBox, MenuHeader } from "../../../componentLibrary";
+import { MenuBox, MenuTopHeader } from "../../../componentLibrary";
 import {
   LoadState,
   SaveState,
@@ -21,10 +21,10 @@ const FilterModule = () => {
 
   return (
     <>
-      <MenuHeader isOpen={isOpen} right>
+      <MenuTopHeader isOpen={isOpen} right>
         <div onClick={handleClick}>{TextResources.MainHeader_VisualFilter}</div>
         {GetIcon(isOpen, handleClick)}
-      </MenuHeader>
+      </MenuTopHeader>
       {isOpen && (
         <MenuBox right>
           <FilterContent />

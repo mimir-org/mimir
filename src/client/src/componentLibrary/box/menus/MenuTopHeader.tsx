@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Color, FontSize, FontType } from "../../";
 
-const MenuHeader = styled.div`
+const MenuTopHeader = styled.div`
   position: absolute;
   font-family: ${FontType.Standard};
   font-size: ${FontSize.SubHeader};
@@ -35,4 +35,4 @@ const MenuHeader = styled.div`
   }
 `;
 
-export default MenuHeader;
+export default MenuTopHeader;
