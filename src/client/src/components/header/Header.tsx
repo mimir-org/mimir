@@ -12,8 +12,8 @@ import { VIEW_TYPE } from "../../models/project";
 import {
   TreeviewOff,
   TreeviewOn,
-  BlockviewOff,
   BlockviewOn,
+  BlockviewOff,
 } from "../../assets/icons";
 import {
   BlockviewWrapper,
