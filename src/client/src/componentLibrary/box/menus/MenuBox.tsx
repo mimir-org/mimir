@@ -12,7 +12,6 @@ const MenuBox = styled.div`
   border-color: ${Color.DeepCyan};
   border-width: 0px 2px 2px 2px;
   font-family: ${FontType.Standard};
-  padding: 10px;
   z-index: 1102;
   box-shadow: -1px 4px 5px rgba(0, 0, 0, 0.15);
 `;

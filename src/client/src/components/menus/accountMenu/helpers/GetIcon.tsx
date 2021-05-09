@@ -1,5 +1,4 @@
 import {
-  UserIconClosed,
   UserIconOpen,
   SaveIcon,
   LogoutIcon,
@@ -8,30 +7,24 @@ import {
 } from "../../../../assets";
 import "./getimg.scss";
 
-interface Props {
-  icon: String;
-}
-
-const GetIcon = ({ icon }: Props) => {
+const GetIcon = ({ icon }) => {
   switch (icon) {
     case "UserIconOpen":
       return <img src={UserIconOpen} alt="user_open" className="user_icon" />;
-    case "SaveIcon":
+    case "Save":
       return <img src={SaveIcon} alt="save_icon" className="save_icon" />;
-    case "OpenIcon":
+    case "Open":
       return (
         <img src={OpenProjectIconSmall} alt="open_icon" className="save_icon" />
       );
-    case "CreateIcon":
+    case "Create":
       return (
         <img src={CreateProjectIcon} alt="open_icon" className="save_icon" />
       );
-    case "LogoutIcon":
+    case "Logout":
       return <img src={LogoutIcon} alt="logout_icon" className="logout_icon" />;
     default:
-      return (
-        <img src={UserIconClosed} alt="user_closed" className="user_icon" />
-      );
+      return null;
   }
 };
 

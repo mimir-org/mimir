@@ -12,6 +12,7 @@ const Color = {
   FunctionTransparent: "rgba(254, 244, 69, 0.15)",
   ProductTransparent: "rgba(0, 240, 255, 0.15)",
   LocationTransparent: " rgba(250, 0, 255, 0.15)",
+  DeepCyanTransparent: " rgba(0, 112, 121, 0.15)",
 };
 
 export default Color;

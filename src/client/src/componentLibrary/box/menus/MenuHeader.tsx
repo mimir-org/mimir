@@ -15,12 +15,13 @@ const MenuHeader = styled.div`
   padding-right: 15px;
   padding-top: 11px;
   cursor: pointer;
+  margin-bottom: 5px;
 
   font-weight: ${(props: { isOpen: boolean }) =>
     props.isOpen ? "bold" : "normal"};
   text-decoration: ${(props: { isOpen: boolean }) =>
     props.isOpen ? "underline" : "none"};
-  height: ${(props: { isOpen: boolean }) => (props.isOpen ? "45" : "32")}px;
+  height: ${(props: { isOpen: boolean }) => (props.isOpen ? "35" : "32")}px;
   color: ${(props: { isOpen: boolean }) =>
     props.isOpen ? `${Color.DeepCyan}` : `${Color.White}`};
   background-color: ${(props: { isOpen: boolean }) =>

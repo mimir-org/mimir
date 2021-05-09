@@ -4,16 +4,15 @@ import { RootState } from "../../../redux/store/index";
 import { UserState } from "../../../redux/store/user/types";
 import { ProjectState } from "../../../redux/store/project/types";
 import { save } from "../../../redux/store/project/actions";
-import GetIcon from "./helpers/GetIcon";
-import Button from "./helpers/Button";
-import textResources from "../../../textResources";
 import { OpenProjectComponent } from "../../project/openProjectComponent";
 import { MenuBox, MenuHeader } from "../../../componentLibrary";
+import { GetMenuElement } from "./helpers";
 
 const AccountMenu = () => {
   const dispatch = useDispatch();
   const [showAccountSettings, setshowAccountSettings] = useState(false);
   const [openProjectModule, setOpenProjectModule] = useState(false);
+  const [createProjectModule, setCreateProjectModule] = useState(false);
 
   const projectState = useSelector<RootState>(
     (state) => state.projectState
@@ -27,11 +26,15 @@ const AccountMenu = () => {
     setshowAccountSettings(!showAccountSettings);
   };
 
-  const handleLoadClick = () => {
+  const handleOpenClick = () => {
     setOpenProjectModule(!openProjectModule);
   };
 
-  const handleSaveClick = (e) => {
+  const handleCreateClick = () => {
+    setCreateProjectModule(!createProjectModule);
+  };
+
+  const handleSaveClick = () => {
     if (projectState.project) dispatch(save(projectState.project));
     alert("Project saved");
   };
@@ -47,26 +50,14 @@ const AccountMenu = () => {
       </MenuHeader>
       {isOpen && (
         <MenuBox>
-          <div className="save_container">
-            <GetIcon icon={"OpenIcon"} />
-            {textResources.Account_Open_Label}
-          </div>
-          <div className="save_container">
-            <GetIcon icon={"CreateIcon"} />
-            {textResources.Account_Create_Label}
-          </div>
-          <div className="save_container">
-            <GetIcon icon={"SaveIcon"} />
-            {textResources.Account_Save_Label}
-          </div>
-          <div className="user_container">
-            <p>{userState.user && userState.user.name}</p>
-            <Button icon="LogoutIcon" text={textResources.Account_Logout} />
-          </div>
+          {GetMenuElement("Open", handleOpenClick)}
+          {GetMenuElement("Create", handleCreateClick)}
+          {GetMenuElement("Save", handleSaveClick)}
+          {GetMenuElement("Logout", handleSaveClick)}
         </MenuBox>
       )}
       {openProjectModule && isOpen && (
-        <div className="open_project" style={{ zIndex: 100 }}>
+        <div style={{ zIndex: 100 }}>
           <OpenProjectComponent />
         </div>
       )}

@@ -7,6 +7,7 @@ export { default as Size } from "./size/Size";
 export { default as MenuBox } from "./box/menus/MenuBox";
 export { default as MenuColumn } from "./box/menus/MenuColumn";
 export { default as MenuHeader } from "./box/menus/MenuHeader";
+export { default as MenuElement } from "./box/menus/MenuElement";
 export { default as MenuSubHeader } from "./box/menus/MenuSubHeader";
 export { default as HomeBox } from "./box/home/HomeBox";
 export { default as FlowBox } from "./box/flow/FlowBox";
