@@ -19,6 +19,8 @@
     "@types/react-redux": "^7.1.16",
     "@types/react-router": "^5.1.11",
     "closest": "0.0.1",
+    "d3": "^6.7.0",
+    "d3-zoom": "^2.0.0",
     "dagre": "^0.8.5",
     "lodash": "^4.17.20",
     "mathjs": "^9.2.0",

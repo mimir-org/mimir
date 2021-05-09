@@ -16,6 +16,7 @@ export const REMOVE_NODE = "REMOVE_NODE";
 export const ADD_EDGE = "ADD_EDGE";
 export const REMOVE_EDGE = "REMOVE_EDGE";
 export const UPDATE_POSITION = "UPDATE_POSITION";
+export const UPDATE_BLOCK_POSITION = "UPDATE_BLOCK_POSITION";
 export const CHANGE_NODE_VISIBILITY = "CHANGE_NODE_VISIBILITY";
 export const CHANGE_ACTIVE_NODE = "CHANGE_ACTIVE_NODE";
 export const CHANGE_SELECTED_PROJECT = "CHANGE_SELECTED_PROJECT";
@@ -89,6 +90,14 @@ interface UpdatePositionAction {
     y: number;
   };
 }
+interface UpdateBlockPositionAction {
+  type: typeof UPDATE_BLOCK_POSITION;
+  payload: {
+    nodeId: string;
+    x: number;
+    y: number;
+  };
+}
 
 interface ChangeNodeVisibility {
   type: typeof CHANGE_NODE_VISIBILITY;
@@ -139,4 +148,5 @@ export type ProjectActionTypes =
   | ChangeActiveNode
   | SaveProjectAction
   | SaveProjectActionFinished
-  | ChangeSelectedProject;
+  | ChangeSelectedProject
+  | UpdateBlockPositionAction;

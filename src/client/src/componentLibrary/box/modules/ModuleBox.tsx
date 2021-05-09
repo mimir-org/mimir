@@ -14,7 +14,6 @@ const ModuleBox = styled.div`
     props.type !== MODULE_TYPE.INSPECTOR ? "inherit" : props.stop};
   overflow: hidden;
   font-family: ${FontType.Standard};
-  position: relative;
 `;
 
 export default ModuleBox;

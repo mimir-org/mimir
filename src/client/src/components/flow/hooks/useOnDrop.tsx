@@ -1,6 +1,7 @@
 import { LibNode, Node, NodeType } from "../../../models/project";
 import { addNode } from "../../../redux/store/project/actions";
 import { CreateId, CreateElementNode } from "./../helpers";
+import { LoadState } from "../../../redux/store/localStorage/localStorage";
 
 const useOnDrop = (
   event,
@@ -9,6 +10,9 @@ const useOnDrop = (
   reactFlowInstance,
   reactFlowWrapper
 ) => {
+  debugger;
+  const showTreeView = LoadState("treeview");
+  const showBlockView = LoadState("blockview");
   event.preventDefault();
   const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
   const data = JSON.parse(
@@ -27,6 +31,8 @@ const useOnDrop = (
     type: data.type as NodeType,
     positionX: position.x,
     positionY: position.y,
+    positionBlockX: position.x,
+    positionBlockY: position.y,
     connectors: data.connectors,
     attributes: data.attributes,
     icon: data.icon,
@@ -43,7 +49,7 @@ const useOnDrop = (
   });
 
   dispatch(addNode(node));
-  setElements((es) => es.concat(CreateElementNode(node)));
+  setElements((es) => es.concat(CreateElementNode(node, showBlockView)));
 };
 
 export default useOnDrop;
