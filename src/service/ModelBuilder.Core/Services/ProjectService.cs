@@ -80,6 +80,7 @@ namespace Mb.Core.Services
                 .Include("Nodes.Attributes")
                 .Include("Nodes.Connectors")
                 .AsSplitQuery()
+                .OrderByDescending(x => x.Name)
                 .FirstOrDefaultAsync();
 
             if (!ignoreNotFound && project == null)
