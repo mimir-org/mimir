@@ -8,7 +8,7 @@ namespace Mb.Core.Services.Contracts
     public interface IProjectService
     {
         IEnumerable<ProjectSimple> GetProjectList(string name, int from, int number);
-        Task<Project> GetProject(string id);
+        Task<Project> GetProject(string id, bool ignoreNotFound = false);
         Task<Project> CreateProject(CreateProject createProject);
         Task<Project> CreateProject(Project project);
         Task<Project> UpdateProject(Project project);

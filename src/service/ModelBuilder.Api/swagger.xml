@@ -33,7 +33,7 @@
         </member>
         <member name="M:Mb.Api.Controllers.V1.ProjectController.GetBySearch(System.String)">
             <summary>
-            List last 10 available projects by search on project name
+            List last 20 available projects by search on project the name
             </summary>
             <returns></returns>
         </member>
@@ -43,7 +43,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Mb.Api.Controllers.V1.ProjectController.SaveProject(Mb.Models.Data.Project)">
+        <member name="M:Mb.Api.Controllers.V1.ProjectController.ImportProject(Mb.Models.Data.Project)">
             <summary>
             Import a new project
             </summary>

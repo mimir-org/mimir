@@ -69,8 +69,9 @@ namespace Mb.Core.Services
         /// The method wil throw a ModelBuilderNotFoundException if not exist
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="ignoreNotFound"></param>
         /// <returns></returns>
-        public async Task<Project> GetProject(string id)
+        public async Task<Project> GetProject(string id, bool ignoreNotFound = false)
         {
             var project = await _projectRepository
                 .FindBy(x => x.Id == id)
@@ -79,10 +80,11 @@ namespace Mb.Core.Services
                 .Include("Nodes.Attributes")
                 .Include("Nodes.Connectors")
                 .AsSplitQuery()
+                .OrderByDescending(x => x.Name)
                 .FirstOrDefaultAsync();
 
-            if (project == null)
-                throw new ModelBuilderNotFoundException();
+            if (!ignoreNotFound && project == null)
+                throw new ModelBuilderNotFoundException($"Could not fin project with id: {id}");
 
             return project;
         }
@@ -108,20 +110,20 @@ namespace Mb.Core.Services
         /// <returns></returns>
         public async Task<Project> CreateProject(Project project)
         {
-            var existingProject = await GetProject(project.Id);
+            var existingProject = await GetProject(project.Id, true);
 
             if (existingProject != null)
-                throw new ModelBuilderDuplicateException();
+                throw new ModelBuilderDuplicateException($"Project already exist - id: {project.Id}");
 
-            if(_edgeRepository.GetAll().Any(x => project.Edges.Any(y => y.Id == x.Id)))
-                throw new ModelBuilderDuplicateException();
+            if(_edgeRepository.GetAll().AsEnumerable().Any(x => project.Edges.Any(y => y.Id == x.Id)))
+                throw new ModelBuilderDuplicateException("One or more edges already exist");
 
-            if (_nodeRepository.GetAll().Any(x => project.Nodes.Any(y => y.Id == x.Id)))
-                throw new ModelBuilderDuplicateException();
+            if (_nodeRepository.GetAll().AsEnumerable().Any(x => project.Nodes.Any(y => y.Id == x.Id)))
+                throw new ModelBuilderDuplicateException("One or more nodes already exist");
 
-            var allConnectors = project.Nodes.SelectMany(x => x.Connectors).ToList();
+            var allConnectors = project.Nodes.AsEnumerable().SelectMany(x => x.Connectors).ToList();
             if(_connectorRepository.GetAll().Any(x => allConnectors.Any(y => y.Id == x.Id)))
-                throw new ModelBuilderDuplicateException();
+                throw new ModelBuilderDuplicateException("One or more connectors already exist");
 
             await _projectRepository.CreateAsync(project);
             await _projectRepository.SaveAsync();
@@ -136,9 +138,6 @@ namespace Mb.Core.Services
         public async Task<Project> UpdateProject(Project project)
         {
             var existingProject = await GetProject(project.Id);
-            if(existingProject == null)
-                throw new ModelBuilderNotFoundException();
-
             return await UpdateProject(existingProject, project);
         }
 
@@ -150,10 +149,7 @@ namespace Mb.Core.Services
         public async Task DeleteProject(string projectId)
         {
             var existingProject = await GetProject(projectId);
-
-            if (existingProject == null)
-                throw new ModelBuilderNotFoundException();
-
+            
             var nodesToDelete = existingProject.Nodes.Select(x => x.Id).ToList();
             var edgesToDelete = existingProject.Edges.Select(x => x.Id).ToList();
 

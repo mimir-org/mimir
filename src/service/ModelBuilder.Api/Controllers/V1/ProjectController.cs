@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Mb.Core.Exceptions;
 using Mb.Core.Services.Contracts;
-using Mb.Models;
 using Mb.Models.Application;
 using Mb.Models.Data;
 using Microsoft.AspNetCore.Authorization;
@@ -66,7 +65,7 @@ namespace Mb.Api.Controllers.V1
         }
 
         /// <summary>
-        /// List last 10 available projects by search on project name
+        /// List last 20 available projects by search on project the name
         /// </summary>
         /// <returns></returns>
         [HttpGet("search")]
@@ -131,7 +130,7 @@ namespace Mb.Api.Controllers.V1
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> SaveProject([FromBody] Project project)
+        public async Task<IActionResult> ImportProject([FromBody] Project project)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -177,6 +176,10 @@ namespace Mb.Api.Controllers.V1
             {
                 return Conflict(e.Message);
             }
+            catch (ModelBuilderNotFoundException e)
+            {
+                return NotFound(e.Message);
+            }
             catch (Exception e)
             {
                 _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
@@ -199,6 +202,10 @@ namespace Mb.Api.Controllers.V1
             {
                 await _projectService.DeleteProject(id);
                 return Ok();
+            }
+            catch (ModelBuilderNotFoundException e)
+            {
+                return NotFound(e.Message);
             }
             catch (Exception e)
             {
