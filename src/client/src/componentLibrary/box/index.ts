@@ -17,3 +17,5 @@ export { default as LibraryBody } from "./library/LibraryBody";
 export { default as LegendBody } from "./library/LegendBody";
 export { default as LegendContent } from "./library/LegendContent";
 export { default as LibraryElement } from "./library/LibraryElement";
+export { default as TypeEditorBox } from "./typeEditor/TypeEditorBox";
+export { default as TypeEditorBoxContent } from "./typeEditor/TypeEditorBoxContent";

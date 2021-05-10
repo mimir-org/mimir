@@ -80,6 +80,10 @@ const textResources = {
   Library_Location: "Location",
   Library_SearchBox_Placeholder: "Search the Library",
 
+  // TypeEditorModule
+  TypeEditor_New_Type: "New Type",
+  TypeEditor_Edit_Type: "Edit Type",
+
   // AccountModule
   Account_Save_Label: "Save project to file",
   Account_Logout: "Log out",
