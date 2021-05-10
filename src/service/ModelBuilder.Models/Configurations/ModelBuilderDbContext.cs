@@ -1,9 +1,7 @@
-﻿using Mb.Core.Configurations;
-using Mb.Models;
-using Mb.Models.Data;
+﻿using Mb.Models.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Mb.Core
+namespace Mb.Models.Configurations
 {
     public class ModelBuilderDbContext : DbContext
     {

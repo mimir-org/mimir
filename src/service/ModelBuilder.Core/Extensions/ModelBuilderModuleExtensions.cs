@@ -1,11 +1,11 @@
 ﻿using System.Threading;
 using AutoMapper;
-using Mb.Core.Configurations;
 using Mb.Core.Profiles;
 using Mb.Core.Repositories;
 using Mb.Core.Repositories.Contracts;
 using Mb.Core.Services;
 using Mb.Core.Services.Contracts;
+using Mb.Models.Configurations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;

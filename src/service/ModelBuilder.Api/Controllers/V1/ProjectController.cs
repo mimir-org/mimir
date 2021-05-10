@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Mb.Core.Exceptions;
+using Mb.Core.Extensions;
 using Mb.Core.Services.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Data;
@@ -206,6 +208,63 @@ namespace Mb.Api.Controllers.V1
             catch (ModelBuilderNotFoundException e)
             {
                 return NotFound(e.Message);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
+        /// Download a project to file
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("download/{id}")]
+        [ProducesResponseType(typeof(FileContentResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DownloadProject(string id)
+        {
+            try
+            {
+                var data = await _projectService.CreateFile(id);
+                return File(data, "application/json", $"project_{id}.json");
+            }
+            catch (ModelBuilderNotFoundException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
+        /// Upload a project from file
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("upload")]
+        [ProducesResponseType(typeof(Project), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> UploadProject(IFormFile file, CancellationToken cancellationToken)
+        {
+            try
+            {
+                if (!file.ValidateJsonFileExtension())
+                    return BadRequest("Invalid file extension. The file must be a json file");
+
+                var createdProject = await _projectService.CreateFromFile(file, cancellationToken);
+                return CreatedAtAction(nameof(GetById), new { id = createdProject.Id }, createdProject);
+            }
+            catch (ModelBuilderDuplicateException e)
+            {
+                return Conflict(e.Message);
             }
             catch (Exception e)
             {

@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Mb.Models.Application;
 using Mb.Models.Data;
+using Microsoft.AspNetCore.Http;
 
 namespace Mb.Core.Services.Contracts
 {
@@ -13,5 +15,7 @@ namespace Mb.Core.Services.Contracts
         Task<Project> CreateProject(Project project);
         Task<Project> UpdateProject(Project project);
         Task DeleteProject(string projectId);
+        Task<byte[]> CreateFile(string projectId);
+        Task<Project> CreateFromFile(IFormFile file, CancellationToken cancellationToken);
     }
 }

@@ -61,6 +61,18 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Mb.Api.Controllers.V1.ProjectController.DownloadProject(System.String)">
+            <summary>
+            Download a project to file
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Mb.Api.Controllers.V1.ProjectController.UploadProject(Microsoft.AspNetCore.Http.IFormFile,System.Threading.CancellationToken)">
+            <summary>
+            Upload a project from file
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Mb.Api.Controllers.V1.TypeEditorController">
             <summary>
             Type editor services
@@ -101,6 +113,18 @@
             Create a library type
             </summary>
             <param name="libraryTypeComponent"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Mb.Api.Controllers.V1.TypeEditorController.ExportTypes">
+            <summary>
+            Export to file
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Mb.Api.Controllers.V1.TypeEditorController.ImportTypes(Microsoft.AspNetCore.Http.IFormFile,System.Threading.CancellationToken)">
+            <summary>
+            Import from file
+            </summary>
             <returns></returns>
         </member>
     </members>

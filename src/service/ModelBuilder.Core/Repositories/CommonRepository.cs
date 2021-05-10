@@ -1,6 +1,6 @@
 ﻿using System;
-using Mb.Core.Configurations;
 using Mb.Core.Repositories.Contracts;
+using Mb.Models.Configurations;
 using Microsoft.Extensions.Options;
 
 namespace Mb.Core.Repositories

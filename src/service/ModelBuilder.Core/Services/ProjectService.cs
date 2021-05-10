@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Mb.Core.Exceptions;
+using Mb.Core.Extensions;
 using Mb.Core.Repositories.Contracts;
 using Mb.Core.Services.Contracts;
 using Mb.Models.Application;
@@ -84,7 +87,7 @@ namespace Mb.Core.Services
                 .FirstOrDefaultAsync();
 
             if (!ignoreNotFound && project == null)
-                throw new ModelBuilderNotFoundException($"Could not fin project with id: {id}");
+                throw new ModelBuilderNotFoundException($"Could not find project with id: {id}");
 
             return project;
         }
@@ -122,7 +125,7 @@ namespace Mb.Core.Services
                 throw new ModelBuilderDuplicateException("One or more nodes already exist");
 
             var allConnectors = project.Nodes.AsEnumerable().SelectMany(x => x.Connectors).ToList();
-            if(_connectorRepository.GetAll().Any(x => allConnectors.Any(y => y.Id == x.Id)))
+            if(_connectorRepository.GetAll().AsEnumerable().Any(x => allConnectors.Any(y => y.Id == x.Id)))
                 throw new ModelBuilderDuplicateException("One or more connectors already exist");
 
             await _projectRepository.CreateAsync(project);
@@ -168,6 +171,31 @@ namespace Mb.Core.Services
             await _nodeRepository.SaveAsync();
             await _edgeRepository.SaveAsync();
 
+        }
+
+        /// <summary>
+        /// Create a json byte array based on project id
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns></returns>
+        public async Task<byte[]> CreateFile(string projectId)
+        {
+            var project = await GetProject(projectId);
+            return project.Serialize();
+        }
+
+        /// <summary>
+        /// Create a project from file
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task<Project> CreateFromFile(IFormFile file, CancellationToken cancellationToken)
+        {
+            await using var stream = new MemoryStream();
+            await file.CopyToAsync(stream, cancellationToken);
+            var project = stream.ToArray().Deserialize<Project>();
+            return await CreateProject(project);
         }
 
         #region Private methods

@@ -1,32 +1,32 @@
 ﻿using System;
 using System.IO;
 using Mb.Models.Configurations;
-using Mb.Modules.MsSql.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using MicrosoftSqlServerModule.Models;
 
-namespace Mb.Modules.MsSql.Extensions
+namespace MicrosoftSqlServerModule
 {
-    public static class MsSqlModule
+    public static class MicrosoftSqlServerModule
     {
-        public static IServiceCollection AddMsSqlServerModule(this IServiceCollection services)
+        public static IServiceCollection AddMicrosoftSqlServerModule(this IServiceCollection services)
         {
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory());
-            
+
             builder.AddJsonFile("appsettings.json");
             builder.AddJsonFile($"appsettings.{environment}.json", true);
             builder.AddJsonFile("appsettings.local.json", true);
             builder.AddEnvironmentVariables();
-            
+
             var config = builder.Build();
 
             var dbConfig = new DatabaseConfiguration();
             var databaseConfigSection = config.GetSection("DatabaseConfiguration");
             databaseConfigSection.Bind(dbConfig);
-            
+
             var dataSource = Environment.GetEnvironmentVariable("DatabaseConfiguration_DataSource");
             var port = Environment.GetEnvironmentVariable("DatabaseConfiguration_Port");
             var initialCatalog = Environment.GetEnvironmentVariable("DatabaseConfiguration_InitialCatalog");

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
-using Mb.Core.Services;
+using Mb.Core.Exceptions;
+using Mb.Core.Extensions;
 using Mb.Core.Services.Contracts;
-using Mb.Models;
 using Mb.Models.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -157,6 +158,59 @@ namespace Mb.Api.Controllers.V1
             {
                 var data = await _typeEditorService.CreateLibraryComponent(libraryTypeComponent);
                 return Ok(data);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
+        /// Export to file
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("export")]
+        [ProducesResponseType(typeof(FileContentResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult ExportTypes()
+        {
+            try
+            {
+                var data = _typeEditorService.CreateFile();
+                return File(data, "application/json", "types.json");
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
+        /// Import from file
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("import")]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> ImportTypes(IFormFile file, CancellationToken cancellationToken)
+        {
+            try
+            {
+                if (!file.ValidateJsonFileExtension())
+                    return BadRequest("Invalid file extension. The file must be a json file");
+
+                await _typeEditorService.LoadDataFromFile(file, cancellationToken);
+                return Ok(true);
+            }
+            catch (ModelBuilderDuplicateException e)
+            {
+                return Conflict(e.Message);
             }
             catch (Exception e)
             {
