@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const CustomBox = styled.div`
+const HeaderBox = styled.div`
   margin-bottom: 40px;
   display: inline-flex;
   align-items: center;
@@ -11,4 +11,4 @@ const CustomBox = styled.div`
   }
 `;
 
-export default CustomBox;
+export default HeaderBox;

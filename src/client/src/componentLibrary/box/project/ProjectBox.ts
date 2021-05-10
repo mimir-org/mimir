@@ -2,9 +2,9 @@ import styled from "styled-components";
 import { Color, FontSize, FontType } from "./../../../componentLibrary";
 
 const ProjectBox = styled.div`
-  width: auto;
+  width: ${(props) => (props.small ? "308px" : "auto")};
   max-width: 502px;
-  height: auto;
+  height: ${(props) => (props.small ? "281px" : "auto")};
   max-height: 463px;
   margin: auto;
   border: 2px solid ${Color.DeepCyan};

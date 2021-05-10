@@ -1,1 +1,1 @@
-export { default as ProjectOptions } from "./ProjectOptions";
+export { default as ProjectMainMenu } from "./ProjectMainMenu";

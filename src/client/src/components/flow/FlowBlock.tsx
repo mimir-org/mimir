@@ -1,9 +1,10 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ProjectOptions } from "../project";
+import { ProjectMainMenu } from "../project";
 import { ProjectState } from "../../redux/store/project/types";
 import { RootState } from "./../../redux/store/index";
 import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
+import { OpenProjectMenu } from "../project/openProject";
 import ReactFlow, {
   ReactFlowProvider,
   Elements,
@@ -144,7 +145,8 @@ const FlowBlock = () => {
       )}
       {!projectState.project && !HasProject() && (
         <div>
-          <ProjectOptions />
+          <ProjectMainMenu />
+          <OpenProjectMenu />
         </div>
       )}
     </>

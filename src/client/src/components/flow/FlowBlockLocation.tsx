@@ -1,10 +1,12 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ProjectOptions } from "../project";
+import { ProjectMainMenu } from "../project";
 import { ProjectState } from "../../redux/store/project/types";
 import { RootState } from "../../redux/store/index";
 import ReactFlow, { ReactFlowProvider, Elements } from "react-flow-renderer";
 import { changeActiveNode, get } from "../../redux/store/project/actions";
+import { NODE_TYPE } from "../../models/project";
+import { OpenProjectMenu } from "../project/openProject";
 import {
   GetProject,
   HasProject,
@@ -23,7 +25,6 @@ import {
   useOnNodeDragStop,
   useOnUpdatePosition,
 } from "./hooks";
-import { NODE_TYPE } from "../../models/project";
 
 const FlowBlockLocation = () => {
   const dispatch = useDispatch();
@@ -139,7 +140,8 @@ const FlowBlockLocation = () => {
       )}
       {!projectState.project && !HasProject() && (
         <div>
-          <ProjectOptions />
+          <ProjectMainMenu />
+          <OpenProjectMenu />
         </div>
       )}
     </>

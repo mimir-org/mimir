@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/index";
 import { ProjectSimple } from "../../../models/project";
-import ProjectData from "./ProjectData";
+import { ProjectData } from "./";
 import { TextResources } from "../../../assets/textResources";
 import "./projectlist.scss";
 

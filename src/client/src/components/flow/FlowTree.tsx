@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { get } from "../../redux/store/project/actions";
 import { MiniMap } from "./";
-import { ProjectOptions } from "../project";
+import { ProjectMainMenu } from "../project";
 import { ProjectState } from "../../redux/store/project/types";
 import { RootState } from "./../../redux/store/index";
 import { useOnConnect, useOnDrop, useOnElementsRemove } from "./hooks";
@@ -25,6 +25,7 @@ import ReactFlow, {
   Elements,
   Controls,
 } from "react-flow-renderer";
+import { OpenProjectMenu } from "../project/openProject/OpenProjectMenu";
 
 const FlowTree = () => {
   const dispatch = useDispatch();
@@ -114,7 +115,8 @@ const FlowTree = () => {
       )}
       {!projectState.project && !HasProject() && (
         <div>
-          <ProjectOptions />
+          <ProjectMainMenu />
+          <OpenProjectMenu />
         </div>
       )}
     </>

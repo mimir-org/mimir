@@ -1,11 +1,10 @@
-import { LoadState } from "../localStorage/localStorage";
 import { CHANGE_PROJECT_MENU } from "./types";
 
 const initialState = {
   menu: [
     {
       type: "optionsMenu",
-      visible: false,
+      visible: true,
     },
     {
       type: "openProjectMenu",

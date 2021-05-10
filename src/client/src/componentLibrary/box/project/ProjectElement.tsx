@@ -7,9 +7,8 @@ const ProjectElement = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 14px 0px 30px 0px;
-  z-index: 1200;
   cursor: pointer;
-  /* padding-right: 40px; */
+  padding-right: 50px;
   border-radius: 5px;
 
   .icon {

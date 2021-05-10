@@ -10,7 +10,7 @@ import {
   ProjectElement,
 } from "../../componentLibrary/box/project";
 
-export const ProjectOptions = () => {
+export const ProjectMainMenu = () => {
   const dispatch = useDispatch();
 
   const hasProject = useSelector<RootState>(
@@ -33,7 +33,7 @@ export const ProjectOptions = () => {
 
   return (
     !hasProject && (
-      <ProjectBox visible={!isOpen}>
+      <ProjectBox visible={isOpen} small>
         <ProjectBody>
           <p>{TextResources.Project_heading}</p>
           <ProjectElement onClick={handleClick}>
@@ -50,4 +50,4 @@ export const ProjectOptions = () => {
   );
 };
 
-export default ProjectOptions;
+export default ProjectMainMenu;
