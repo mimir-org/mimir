@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { LegendIcon } from "../../../assets/icons";
-import { LegendBody, LegendContent } from "../../../componentLibrary/box";
 import { TextResources } from "../../../assets/textResources";
 import { ProjectState } from "../../../redux/store/project/types";
 import { RootState } from "../../../redux/store";
@@ -9,11 +8,13 @@ import { LoadState } from "../../../redux/store/localStorage/localStorage";
 import { VIEW_TYPE } from "../../../models/project";
 import { GetLegendData, Legend } from "../../flow/helpers";
 import {
+  LegendBody,
+  LegendContent,
   LegendHeader,
   LegendIconWrapper,
-  TransportWrapper,
   TransportColor,
-} from "./styled";
+  TransportWrapper,
+} from "../../../componentLibrary/box";
 
 const LegendModule = () => {
   const projectState = useSelector<RootState>(
