@@ -5,8 +5,12 @@ import { TextResources } from "../../../assets/textResources";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import { MODULE_TYPE } from "../../../models/project";
 import { SaveState } from "../../../redux/store/localStorage/localStorage";
-import { ModuleHeader, ModuleBody } from "../../../componentLibrary/box";
 import { AnimatedModule, Size } from "../../../componentLibrary";
+import {
+  ModuleHeader,
+  ModuleBody,
+} from "../../../componentLibrary/box/modules";
+
 import {
   ExplorerIcon,
   ToggleIconLeft,
@@ -49,7 +53,7 @@ export const ExplorerModule = () => {
         />
         <p className="text">{TextResources.Explorer_view}</p>
       </ModuleHeader>
-      <ModuleBody visible={isOpen} right>
+      <ModuleBody visible={isOpen} explorer>
         {hasProject && <ProjectComponent visible={isOpen} />}
         <SwitchViewComponent />
       </ModuleBody>

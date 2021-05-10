@@ -1,4 +1,4 @@
-import { AspectChildBox } from "../../../../componentLibrary/box";
+import { AspectChildBox } from "../../../../componentLibrary/box/aspect";
 import { NodeType } from "../../../../models/project";
 import CheckboxComponent from "../checkboxComponent/CheckboxComponent";
 

@@ -8,12 +8,13 @@ import { LoadState } from "../../../redux/store/localStorage/localStorage";
 import { VIEW_TYPE } from "../../../models/project";
 import { GetLegendData, Legend } from "../../flow/helpers";
 import {
-  LegendBody,
-  LegendContent,
+  ModuleBody,
   ModuleHeader,
-  TransportColor,
-  TransportWrapper,
-} from "../../../componentLibrary/box";
+} from "../../../componentLibrary/box/modules";
+import {
+  LegendElement,
+  LegendColor,
+} from "../../../componentLibrary/box/library";
 
 const LegendModule = () => {
   const projectState = useSelector<RootState>(
@@ -40,7 +41,7 @@ const LegendModule = () => {
   }
 
   return (
-    <LegendBody>
+    <ModuleBody visible={true} legend>
       <ModuleHeader legend>
         <img src={LegendIcon} alt="legend" className="icon" />
         {TextResources.Legend_Heading}
@@ -48,15 +49,13 @@ const LegendModule = () => {
       {legends &&
         legends.map((legend) => {
           return (
-            <LegendContent key={legend.key}>
-              <TransportWrapper>
-                <p>{legend.name}</p>
-                <TransportColor color={legend.color}></TransportColor>
-              </TransportWrapper>
-            </LegendContent>
+            <LegendElement key={legend.key}>
+              <p>{legend.name}</p>
+              <LegendColor color={legend.color}></LegendColor>
+            </LegendElement>
           );
         })}
-    </LegendBody>
+    </ModuleBody>
   );
 };
 export default LegendModule;

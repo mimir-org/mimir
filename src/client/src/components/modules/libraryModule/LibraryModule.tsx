@@ -8,9 +8,12 @@ import { LibraryState } from "../../../redux/store/library/types";
 import { searchLibrary } from "../../../redux/store/library/actions";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import { MODULE_TYPE } from "../../../models/project";
-import { ModuleBody, ModuleHeader } from "../../../componentLibrary/box";
 import { SaveState } from "../../../redux/store/localStorage/localStorage";
 import { AnimatedModule, Size } from "../../../componentLibrary";
+import {
+  ModuleBody,
+  ModuleHeader,
+} from "../../../componentLibrary/box/modules";
 import {
   LibraryIcon,
   ToggleIconLeft,
@@ -56,10 +59,10 @@ const LibraryModule = () => {
         />
         <p className="text">{TextResources.Library_Heading}</p>
       </ModuleHeader>
-      <ModuleBody visible={isOpen} left>
+      <ModuleBody visible={isOpen} library>
         <LibaryComponent nodes={state.nodes} />
-        <LegendModule />
       </ModuleBody>
+      <LegendModule />
     </AnimatedModule>
   );
 };

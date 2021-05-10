@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import { ModuleBox } from "../box";
+import { ModuleBox } from "../box/modules";
 import { MODULE_TYPE } from "../../models/project";
 
 interface Props {
