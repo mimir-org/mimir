@@ -40,6 +40,7 @@ namespace Mb.Core.Extensions
             services.AddSingleton(s => autoMapperConfiguration.CreateMapper());
             services.AddSingleton<IFileRepository, JsonFileRepository>();
             services.AddSingleton<ICommonRepository, CommonRepository>();
+            services.AddSingleton<IModuleService, ModuleService>();
 
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<INodeRepository, NodeRepository>();
@@ -66,6 +67,7 @@ namespace Mb.Core.Extensions
             using var serviceScope = app.ApplicationServices.CreateScope();
             var context = serviceScope.ServiceProvider.GetRequiredService<ModelBuilderDbContext>();
             var typeEditorService = serviceScope.ServiceProvider.GetRequiredService<ITypeEditorService>();
+            var moduleService = serviceScope.ServiceProvider.GetRequiredService<IModuleService>();
             var logger = serviceScope.ServiceProvider.GetRequiredService<ILogger<TypeEditorService>>();
 
             context.Database.Migrate();
@@ -77,6 +79,15 @@ namespace Mb.Core.Extensions
                 logger.LogInformation("Starting initialize db");
                 Thread.Sleep(2000);
             }
+
+            var moduleReaderAwaiter = moduleService.InitialModules().ConfigureAwait(true).GetAwaiter();
+
+            while (!moduleReaderAwaiter.IsCompleted)
+            {
+                logger.LogInformation("Reading modules");
+                Thread.Sleep(2000);
+            }
+
             return app;
         }
     }

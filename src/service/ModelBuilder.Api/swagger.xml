@@ -20,56 +20,76 @@
             Project services
             </summary>
         </member>
-        <member name="M:Mb.Api.Controllers.V1.ProjectController.#ctor(Mb.Core.Services.Contracts.IProjectService,Microsoft.Extensions.Logging.ILogger{Mb.Api.Controllers.V1.ProjectController})">
+        <member name="M:Mb.Api.Controllers.V1.ProjectController.#ctor(Mb.Core.Services.Contracts.IProjectService,Microsoft.Extensions.Logging.ILogger{Mb.Api.Controllers.V1.ProjectController},Mb.Core.Services.Contracts.IModuleService)">
             <summary>
             Project Controller Constructor
             </summary>
+            <param name="projectService"></param>
+            <param name="logger"></param>
+            <param name="moduleService"></param>
         </member>
         <member name="M:Mb.Api.Controllers.V1.ProjectController.CreateNewProject(Mb.Models.Application.CreateProject)">
             <summary>
             Create a new empty project
             </summary>
+            <param name="project"></param>
             <returns></returns>
         </member>
         <member name="M:Mb.Api.Controllers.V1.ProjectController.GetBySearch(System.String)">
             <summary>
             List last 20 available projects by search on project the name
             </summary>
+            <param name="name"></param>
             <returns></returns>
         </member>
         <member name="M:Mb.Api.Controllers.V1.ProjectController.GetById(System.String)">
             <summary>
-            Get project by given id
+            Get project by id
             </summary>
+            <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:Mb.Api.Controllers.V1.ProjectController.ImportProject(Mb.Models.Data.Project)">
             <summary>
             Import a new project
             </summary>
+            <param name="project"></param>
             <returns></returns>
         </member>
         <member name="M:Mb.Api.Controllers.V1.ProjectController.UpdateProject(Mb.Models.Data.Project)">
             <summary>
             Import a new project
             </summary>
+            <param name="project"></param>
             <returns></returns>
         </member>
         <member name="M:Mb.Api.Controllers.V1.ProjectController.DeleteProject(System.String)">
             <summary>
             Delete a project
             </summary>
+            <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:Mb.Api.Controllers.V1.ProjectController.DownloadProject(System.String)">
+        <member name="M:Mb.Api.Controllers.V1.ProjectController.DownloadProject(System.String,System.String)">
             <summary>
             Download a project to file
             </summary>
+            <param name="id"></param>
+            <param name="parser"></param>
             <returns></returns>
         </member>
-        <member name="M:Mb.Api.Controllers.V1.ProjectController.UploadProject(Microsoft.AspNetCore.Http.IFormFile,System.Threading.CancellationToken)">
+        <member name="M:Mb.Api.Controllers.V1.ProjectController.UploadProject(System.String,Microsoft.AspNetCore.Http.IFormFile,System.Threading.CancellationToken)">
             <summary>
             Upload a project from file
+            </summary>
+            <param name="file"></param>
+            <param name="cancellationToken"></param>
+            <param name="parser"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Mb.Api.Controllers.V1.ProjectController.GetParsers">
+            <summary>
+            Get all registered parsers
             </summary>
             <returns></returns>
         </member>

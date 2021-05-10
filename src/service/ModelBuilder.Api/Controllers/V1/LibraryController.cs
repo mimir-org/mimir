@@ -22,13 +22,11 @@ namespace Mb.Api.Controllers.V1
     [SwaggerTag("Library")]
     public class LibraryController : ControllerBase
     {
-        private readonly IProjectService _projectService;
         private readonly ILogger<ProjectController> _logger;
         private readonly ILibraryService _libraryService;
 
-        public LibraryController(IProjectService projectService, ILogger<ProjectController> logger, ILibraryService libraryService)
+        public LibraryController(ILogger<ProjectController> logger, ILibraryService libraryService)
         {
-            _projectService = projectService;
             _logger = logger;
             _libraryService = libraryService;
         }

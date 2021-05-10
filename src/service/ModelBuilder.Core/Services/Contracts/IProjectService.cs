@@ -15,7 +15,7 @@ namespace Mb.Core.Services.Contracts
         Task<Project> CreateProject(Project project);
         Task<Project> UpdateProject(Project project);
         Task DeleteProject(string projectId);
-        Task<byte[]> CreateFile(string projectId);
-        Task<Project> CreateFromFile(IFormFile file, CancellationToken cancellationToken);
+        Task<byte[]> CreateFile(string projectId, string parser);
+        Task<Project> CreateFromFile(IFormFile file, CancellationToken cancellationToken, string parser);
     }
 }
