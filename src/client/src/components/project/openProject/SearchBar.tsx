@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { search } from "../../../../redux/store/project/actions";
-import { GetIcon } from "../../helpers";
+import { search } from "../../../redux/store/project/actions";
+import { GetIcon } from "../helpers";
+import "./searchbar.scss";
 
-export let SearchBarComponent = () => {
+export let SearchBar = () => {
   const dispatch = useDispatch();
 
   const [searchbarInput, setsearchbarInput] = useState("");
@@ -28,4 +29,4 @@ export let SearchBarComponent = () => {
   );
 };
 
-export default SearchBarComponent;
+export default SearchBar;

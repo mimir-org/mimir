@@ -4,7 +4,7 @@ import { RootState } from "../../../redux/store/index";
 import { UserState } from "../../../redux/store/user/types";
 import { ProjectState } from "../../../redux/store/project/types";
 import { create, save } from "../../../redux/store/project/actions";
-import { OpenProjectComponent } from "../../project/openProjectComponent";
+import { OpenProjectComponent } from "../../project/openProject";
 import { GetMenuElement } from "./helpers";
 import { GetMenuIcon } from "../../../assets/helpers";
 import { MENU_TYPE } from "../../../models/project";
@@ -66,7 +66,7 @@ const AccountMenu = () => {
       )}
       {openProjectModule && isOpen && (
         <div style={{ zIndex: 100 }}>
-          <OpenProjectComponent visible={isOpen} />
+          <OpenProjectComponent />
         </div>
       )}
     </>
