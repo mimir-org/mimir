@@ -56,11 +56,10 @@ const LibraryModule = () => {
         />
         <p className="text">{TextResources.Library_Heading}</p>
       </ModuleHeader>
-      <ModuleBody visible={isOpen}>
+      <ModuleBody visible={isOpen} left>
         <LibaryComponent nodes={state.nodes} />
+        <LegendModule />
       </ModuleBody>
-
-      <LegendModule />
     </AnimatedModule>
   );
 };

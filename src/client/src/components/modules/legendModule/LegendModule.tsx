@@ -47,19 +47,17 @@ const LegendModule = () => {
         </LegendIconWrapper>
         {TextResources.Legend_Heading}
       </LegendHeader>
-      <>
-        {legends &&
-          legends.map((legend) => {
-            return (
-              <LegendContent key={legend.key}>
-                <TransportWrapper>
-                  <p>{legend.name}</p>
-                  <TransportColor color={legend.color}></TransportColor>
-                </TransportWrapper>
-              </LegendContent>
-            );
-          })}
-      </>
+      {legends &&
+        legends.map((legend) => {
+          return (
+            <LegendContent key={legend.key}>
+              <TransportWrapper>
+                <p>{legend.name}</p>
+                <TransportColor color={legend.color}></TransportColor>
+              </TransportWrapper>
+            </LegendContent>
+          );
+        })}
     </LegendBody>
   );
 };

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const ModuleBody = styled.div`
-  float: right;
+  float: ${(props) => (props.right ? "right" : "left")};
   width: 331px;
   opacity: ${(props: { visible: boolean }) => (props.visible ? 1 : 0)};
   transition: opacity 0.2s ease-in-out;

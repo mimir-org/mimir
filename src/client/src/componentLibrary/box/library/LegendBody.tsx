@@ -7,6 +7,7 @@ const LegendBody = styled.div`
   bottom: 0;
   position: absolute;
   border-top: 1px solid ${Color.Grey};
+  overflow: hidden;
 `;
 
 export default LegendBody;
