@@ -1,7 +1,9 @@
-﻿using Mb.Models.Enums;
+﻿using System;
+using Mb.Models.Enums;
 
 namespace Mb.Models.Data
 {
+    [Serializable]
     public class Connector
     {
         public string Id { get; set; }

@@ -1,6 +1,6 @@
 ﻿// ReSharper disable StringLiteralTypo
 
-namespace Mb.Modules.AzureActiveDirectory.Models
+namespace AzureActiveDirectoryModule.Models
 {
     public class AzureActiveDirectoryConfiguration
     {

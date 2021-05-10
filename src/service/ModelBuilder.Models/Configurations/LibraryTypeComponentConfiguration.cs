@@ -1,9 +1,8 @@
-﻿using Mb.Models;
-using Mb.Models.Data;
+﻿using Mb.Models.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Mb.Core.Configurations
+namespace Mb.Models.Configurations
 {
     public class LibraryTypeComponentConfiguration : IEntityTypeConfiguration<LibraryTypeComponent>
 

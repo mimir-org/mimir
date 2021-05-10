@@ -1,4 +1,4 @@
-﻿namespace Mb.Core.Configurations
+﻿namespace Mb.Models.Configurations
 {
     public class ModelBuilderConfiguration
     {

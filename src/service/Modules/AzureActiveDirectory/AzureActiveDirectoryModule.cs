@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using Mb.Modules.AzureActiveDirectory.Models;
+using AzureActiveDirectoryModule.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
@@ -10,11 +10,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
 
-namespace Mb.Modules.AzureActiveDirectory.Extensions
+namespace AzureActiveDirectoryModule
 {
     public static class AzureActiveDirectoryModule
     {
-        public static (SwaggerConfiguration swaggerConfiguration, AzureActiveDirectoryConfiguration activeDirectoryConfiguration) AddActiveDirectoryAuthentication(this IServiceCollection services, IConfiguration configuration)
+        public static (SwaggerConfiguration swaggerConfiguration, AzureActiveDirectoryConfiguration activeDirectoryConfiguration) AddAzureActiveDirectoryModule(this IServiceCollection services, IConfiguration configuration)
         {
             // Active directory configurations
             var activeDirectorySection = configuration.GetSection(nameof(AzureActiveDirectoryConfiguration));
@@ -57,7 +57,7 @@ namespace Mb.Modules.AzureActiveDirectory.Extensions
 
                 foreach (var description in service.ApiVersionDescriptions)
                 {
-                    c.SwaggerDoc(description.GroupName, new OpenApiInfo { Title = swaggerConfiguration.Title, Version = description.ApiVersion.ToString(), Description = swaggerConfiguration.Description, Contact = new OpenApiContact{ Name = swaggerConfiguration.Contact?.Name, Email = swaggerConfiguration.Contact?.Email } });
+                    c.SwaggerDoc(description.GroupName, new OpenApiInfo { Title = swaggerConfiguration.Title, Version = description.ApiVersion.ToString(), Description = swaggerConfiguration.Description, Contact = new OpenApiContact { Name = swaggerConfiguration.Contact?.Name, Email = swaggerConfiguration.Contact?.Email } });
                 }
 
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, "swagger.xml");
@@ -92,7 +92,7 @@ namespace Mb.Modules.AzureActiveDirectory.Extensions
             return (swaggerConfiguration, activeDirectoryConfiguration);
         }
 
-        public static IApplicationBuilder UseActiveDirectoryAuthentication(this IApplicationBuilder app, AzureActiveDirectoryConfiguration azureConfig, SwaggerConfiguration swaggerConfig)
+        public static IApplicationBuilder UseAzureActiveDirectoryModule(this IApplicationBuilder app, AzureActiveDirectoryConfiguration azureConfig, SwaggerConfiguration swaggerConfig)
         {
             app.UseSwagger(c =>
             {
@@ -101,7 +101,7 @@ namespace Mb.Modules.AzureActiveDirectory.Extensions
 
             using var serviceScope = app.ApplicationServices.CreateScope();
             var service = serviceScope.ServiceProvider.GetRequiredService<IApiVersionDescriptionProvider>();
-            
+
             app.UseSwaggerUI(c =>
             {
                 foreach (var description in service.ApiVersionDescriptions)

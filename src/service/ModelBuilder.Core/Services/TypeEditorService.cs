@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
 using Mb.Core.Extensions;
 using Mb.Core.Repositories.Contracts;
 using Mb.Core.Services.Contracts;
-using Mb.Models;
 using Mb.Models.Data;
 using Mb.Models.Enums;
+using Microsoft.AspNetCore.Http;
 
 namespace Mb.Core.Services
 {
@@ -17,16 +18,14 @@ namespace Mb.Core.Services
         public const string AttributeFileName = "attribute";
         public const string LibraryFileName = "library";
 
-        private readonly IMapper _mapper;
         private readonly IFileRepository _fileRepository;
         private readonly IRdsRepository _rdsRepository;
         private readonly IAttributeTypeRepository _attributeTypeRepository;
         private readonly ILibraryTypeComponentRepository _libraryTypeComponentRepository;
         private readonly ICommonRepository _generateIdRepository;
 
-        public TypeEditorService(IMapper mapper, IFileRepository fileRepository, IRdsRepository rdsRepository, IAttributeTypeRepository attributeTypeRepository, ILibraryTypeComponentRepository libraryTypeComponentRepository, ICommonRepository generateIdRepository)
+        public TypeEditorService(IFileRepository fileRepository, IRdsRepository rdsRepository, IAttributeTypeRepository attributeTypeRepository, ILibraryTypeComponentRepository libraryTypeComponentRepository, ICommonRepository generateIdRepository)
         {
-            _mapper = mapper;
             _fileRepository = fileRepository;
             _rdsRepository = rdsRepository;
             _attributeTypeRepository = attributeTypeRepository;
@@ -34,26 +33,48 @@ namespace Mb.Core.Services
             _generateIdRepository = generateIdRepository;
         }
 
+        #region Public methods
+
+        /// <summary>
+        /// Get all aspects
+        /// </summary>
+        /// <returns></returns>
         public Dictionary<int, string> GetAspects()
         {
             return EnumExtensions.ToDictionary<Aspect>();
         }
 
+        /// <summary>
+        /// Get all object types
+        /// </summary>
+        /// <returns></returns>
         public Dictionary<int, string> GetObjectTypes()
         {
             return EnumExtensions.ToDictionary<ObjectType>();
         }
 
+        /// <summary>
+        /// Get all RDS
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<Rds> GetRds()
         {
             return _fileRepository.ReadFile<Rds>(RdsFileName);
         }
 
+        /// <summary>
+        /// Get all attribute files
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<AttributeType> GetAttributeTypes()
         {
             return _fileRepository.ReadFile<AttributeType>(AttributeFileName);
         }
 
+        /// <summary>
+        /// Get all terminals
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<Terminal> GetTerminals()
         {
             var terminals = EnumExtensions.GetEnumList<TerminalType>().Where(x => x != TerminalType.NotSet).ToList();
@@ -73,6 +94,12 @@ namespace Mb.Core.Services
             }
         }
 
+
+        /// <summary>
+        /// Create a library component
+        /// </summary>
+        /// <param name="libraryTypeComponent"></param>
+        /// <returns></returns>
         public async Task<LibraryTypeComponent> CreateLibraryComponent(LibraryTypeComponent libraryTypeComponent)
         {
             libraryTypeComponent.CreateJsonData();
@@ -82,6 +109,46 @@ namespace Mb.Core.Services
             return libraryTypeComponent;
         }
 
+        /// <summary>
+        /// Get all library type components
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<LibraryTypeComponent> GetAllTypes()
+        {
+            var types = _libraryTypeComponentRepository.GetAll().ToList();
+            foreach (var component in types)
+            {
+                component.CreateFromJsonData();
+                yield return component;
+            }
+        }
+
+        /// <summary>
+        /// Create a json byte array of all types
+        /// </summary>
+        /// <returns></returns>
+        public byte[] CreateFile()
+        {
+            var types = GetAllTypes().ToList();
+            return types.Serialize();
+        }
+
+        /// <summary>
+        /// Load types from file
+        /// </summary>
+        /// <returns></returns>
+        public async Task LoadDataFromFile(IFormFile file, CancellationToken cancellationToken)
+        {
+            await using var stream = new MemoryStream();
+            await file.CopyToAsync(stream, cancellationToken);
+            var types = stream.ToArray().Deserialize<List<LibraryTypeComponent>>();
+            await CreateLibraryTypeComponentsAsync(types);
+        }
+
+        /// <summary>
+        /// Load all initial data from files
+        /// </summary>
+        /// <returns></returns>
         public async Task LoadDataFromFiles()
         {
             var fileList = _fileRepository.ReadJsonFileList().ToList();
@@ -101,6 +168,10 @@ namespace Mb.Core.Services
             await CreateAttributeTypesAsync(attributes);
             await CreateLibraryTypeComponentsAsync(libraries);
         }
+
+        #endregion
+
+        #region Private methods
 
         private async Task CreateRdsAsync(IEnumerable<Rds> rds)
         {
@@ -147,5 +218,7 @@ namespace Mb.Core.Services
 
             await _libraryTypeComponentRepository.SaveAsync();
         }
+
+        #endregion
     }
 }

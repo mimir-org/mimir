@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace Mb.Models.Data
 {
+    [Serializable]
     public class Project
     {
         public string Id { get; set; }

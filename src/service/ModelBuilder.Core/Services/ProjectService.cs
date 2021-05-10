@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Mb.Core.Exceptions;
+using Mb.Core.Extensions;
 using Mb.Core.Repositories.Contracts;
 using Mb.Core.Services.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Enums;
+using Mb.Models.Modules;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,8 +28,9 @@ namespace Mb.Core.Services
         private readonly IEdgeRepository _edgeRepository;
         private readonly ICommonRepository _commonRepository;
         private readonly IConnectorRepository _connectorRepository;
+        private readonly IModuleService _moduleService;
         
-        public ProjectService(IProjectRepository projectRepository, IMapper mapper, IHttpContextAccessor contextAccessor, INodeRepository nodeRepository, IEdgeRepository edgeRepository, ICommonRepository commonRepository, IConnectorRepository connectorRepository)
+        public ProjectService(IProjectRepository projectRepository, IMapper mapper, IHttpContextAccessor contextAccessor, INodeRepository nodeRepository, IEdgeRepository edgeRepository, ICommonRepository commonRepository, IConnectorRepository connectorRepository, IModuleService moduleService)
         {
             _projectRepository = projectRepository;
             _mapper = mapper;
@@ -34,6 +39,7 @@ namespace Mb.Core.Services
             _edgeRepository = edgeRepository;
             _commonRepository = commonRepository;
             _connectorRepository = connectorRepository;
+            _moduleService = moduleService;
         }
 
         /// <summary>
@@ -84,7 +90,7 @@ namespace Mb.Core.Services
                 .FirstOrDefaultAsync();
 
             if (!ignoreNotFound && project == null)
-                throw new ModelBuilderNotFoundException($"Could not fin project with id: {id}");
+                throw new ModelBuilderNotFoundException($"Could not find project with id: {id}");
 
             return project;
         }
@@ -122,7 +128,7 @@ namespace Mb.Core.Services
                 throw new ModelBuilderDuplicateException("One or more nodes already exist");
 
             var allConnectors = project.Nodes.AsEnumerable().SelectMany(x => x.Connectors).ToList();
-            if(_connectorRepository.GetAll().Any(x => allConnectors.Any(y => y.Id == x.Id)))
+            if(_connectorRepository.GetAll().AsEnumerable().Any(x => allConnectors.Any(y => y.Id == x.Id)))
                 throw new ModelBuilderDuplicateException("One or more connectors already exist");
 
             await _projectRepository.CreateAsync(project);
@@ -168,6 +174,43 @@ namespace Mb.Core.Services
             await _nodeRepository.SaveAsync();
             await _edgeRepository.SaveAsync();
 
+        }
+
+        /// <summary>
+        /// Create a json byte array based on project id
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <param name="parser"></param>
+        /// <returns></returns>
+        public async Task<byte[]> CreateFile(string projectId, string parser)
+        {
+            var project = await GetProject(projectId);
+            
+            if (!_moduleService.ParserModules.ContainsKey(parser))
+                parser = "Default";
+
+            var par = _moduleService.Resolve<IModelBuilderParser>(parser);
+            return await par.SerializeProject(project);
+        }
+
+        /// <summary>
+        /// Create a project from file
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="cancellationToken"></param>
+        /// <param name="parser"></param>
+        /// <returns></returns>
+        public async Task<Project> CreateFromFile(IFormFile file, CancellationToken cancellationToken, string parser)
+        {
+            await using var stream = new MemoryStream();
+            await file.CopyToAsync(stream, cancellationToken);
+
+            if (!_moduleService.ParserModules.ContainsKey(parser))
+                parser = "Default";
+
+            var par = _moduleService.Resolve<IModelBuilderParser>(parser);
+            var project = await par.DeserializeProject(stream.ToArray());
+            return await CreateProject(project);
         }
 
         #region Private methods

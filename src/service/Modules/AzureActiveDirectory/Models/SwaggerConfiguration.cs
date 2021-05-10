@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Mb.Modules.AzureActiveDirectory.Models
+namespace AzureActiveDirectoryModule.Models
 {
     public class SwaggerConfiguration
     {
