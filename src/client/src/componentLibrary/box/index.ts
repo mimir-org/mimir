@@ -18,6 +18,5 @@ export { default as LegendBody } from "./library/LegendBody";
 export { default as LegendContent } from "./library/LegendContent";
 export { default as LibraryElement } from "./library/LibraryElement";
 export { default as LegendHeader } from "./library/LegendHeader";
-export { default as LegendIconWrapper } from "./library/LegendIconWrapper";
 export { default as TransportWrapper } from "./library/TransportWrapper";
 export { default as TransportColor } from "./library/TransportColor";

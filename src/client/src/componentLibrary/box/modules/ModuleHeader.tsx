@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { FontType, FontSize } from "../../../componentLibrary";
-import { MODULE_TYPE } from "../../../models/project";
 
 const ModuleHeader = styled.div`
   font-family: ${FontType.Standard};
@@ -8,16 +7,15 @@ const ModuleHeader = styled.div`
   text-align: center;
   padding-top: 5px;
   height: 25px;
-  margin-left: ${(props) => (props.left ? 0 : 7)}px;
-  margin-right: ${(props) => (props.right ? 0 : 7)}px;
-  margin-top: ${(props: { type: string }) =>
-    props.type === MODULE_TYPE.INSPECTOR ? "0px" : "22px"};
-  margin-bottom: ${(props: { type: string }) =>
-    props.type === MODULE_TYPE.INSPECTOR ? "0px" : "12px"};
-  width: ${(props: { type: string }) =>
-    props.type === MODULE_TYPE.INSPECTOR ? "154px" : "initial"};
-  float: ${(props: { type: string }) =>
-    props.type === MODULE_TYPE.INSPECTOR ? "right" : "none"};
+  position: relative;
+  margin-left: ${(props) => (props.explorer ? 0 : 7)}px;
+  margin-right: ${(props) => (props.library ? 0 : 7)}px;
+  margin-top: ${(props) => (props.inspector ? "0px" : "22px")};
+  margin-bottom: ${(props) => (props.inspector ? "0px" : "12px")};
+  width: ${(props) => (props.inspector ? "154px" : "initial")};
+  float: ${(props) => (props.inspector ? "right" : "none")};
+  width: ${(props) => (props.legend ? "100px" : "initial")};
+  left: ${(props) => (props.legend ? "110px" : "initial")};
 
   .text {
     position: relative;
@@ -31,8 +29,8 @@ const ModuleHeader = styled.div`
     margin-left: 5px;
   }
   .icon {
-    cursor: pointer;
-    float: ${(props: { left: string }) => (props.left ? "right" : "left")};
+    cursor: ${(props) => (props.legend ? "initial" : "pointer")};
+    float: ${(props) => (props.explorer ? "right" : "left")};
   }
   .icon_inspector {
     cursor: pointer;

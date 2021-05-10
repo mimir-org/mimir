@@ -10,8 +10,7 @@ import { GetLegendData, Legend } from "../../flow/helpers";
 import {
   LegendBody,
   LegendContent,
-  LegendHeader,
-  LegendIconWrapper,
+  ModuleHeader,
   TransportColor,
   TransportWrapper,
 } from "../../../componentLibrary/box";
@@ -42,12 +41,10 @@ const LegendModule = () => {
 
   return (
     <LegendBody>
-      <LegendHeader>
-        <LegendIconWrapper>
-          <img src={LegendIcon} alt="legend" />
-        </LegendIconWrapper>
+      <ModuleHeader legend>
+        <img src={LegendIcon} alt="legend" className="icon" />
         {TextResources.Legend_Heading}
-      </LegendHeader>
+      </ModuleHeader>
       {legends &&
         legends.map((legend) => {
           return (
