@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { ProjectComponent, SwitchViewComponent } from "./";
+import { Project, SwitchViewComponent } from "./";
 import { TextResources } from "../../../assets/textResources";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import { MODULE_TYPE } from "../../../models/project";
@@ -39,7 +39,7 @@ export const ExplorerModule = () => {
   return (
     <AnimatedModule start={start} stop={stop} run={animate}>
       <ModuleHeader explorer visible={isOpen}>
-        <img src={ExplorerIcon} alt="explorerIcon" />
+        <img src={ExplorerIcon} alt="icon" />
         <img
           className="icon"
           src={isOpen ? ToggleLeft : ToggleRight}
@@ -49,7 +49,7 @@ export const ExplorerModule = () => {
         <p className="text">{TextResources.Explorer_view}</p>
       </ModuleHeader>
       <ModuleBody visible={isOpen} explorer>
-        {hasProject && <ProjectComponent visible={isOpen} />}
+        {hasProject && <Project />}
         <SwitchViewComponent />
       </ModuleBody>
     </AnimatedModule>

@@ -9,7 +9,7 @@ import { FilterMenu } from "../menus/filterMenu";
 import { getUser } from "../../redux/store/user/actions";
 import { FlowModule } from "../flow";
 import { FlowBox } from "../../componentLibrary/box/flow";
-import HomeBox from "../../componentLibrary/box/home/HomeBox";
+import { HomeBox } from "../../componentLibrary/box/home";
 
 interface RouteParams {
   type: string;

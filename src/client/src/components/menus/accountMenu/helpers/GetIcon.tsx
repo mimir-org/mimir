@@ -7,11 +7,11 @@ import {
 const GetIcon = (type: string) => {
   switch (type) {
     case "Save":
-      return <img src={SaveIcon} alt="save-icon" />;
+      return <img src={SaveIcon} alt="save" />;
     case "Open":
-      return <img src={OpenProjectIconSmall} alt="open-icon" />;
+      return <img src={OpenProjectIconSmall} alt="open" />;
     case "Create":
-      return <img src={CreateProjectIcon} alt="open-icon" />;
+      return <img src={CreateProjectIcon} alt="create" />;
     default:
       return null;
   }

@@ -3,7 +3,7 @@ import { ExpandedIcon, ClosedIcon } from "../../../../assets/icons";
 import { NodeType } from "../../../../models/project";
 import { IsAspectNode, GetNodes, GetEdges } from "../../../flow/helpers";
 import CheckboxComponent from "../checkboxComponent/CheckboxComponent";
-import { AspectChildComponent } from "./";
+import { AspectElement } from ".";
 import { AspectBox } from "../../../../componentLibrary/box/aspect";
 import {
   GetAspectIcon,
@@ -19,7 +19,7 @@ interface Props {
   aspectType: NodeType;
 }
 
-export const AspectComponent = ({ nodeId, name, aspectType }: Props) => {
+export const Aspect = ({ nodeId, name, aspectType }: Props) => {
   const [expanded, setExpanded] = useState(true);
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -52,7 +52,7 @@ export const AspectComponent = ({ nodeId, name, aspectType }: Props) => {
           if (children[i].type === childType) {
             const indent = SetIndentLevel(children, edges, i);
             return (
-              <AspectChildComponent
+              <AspectElement
                 key={i}
                 nodeId={obj["id"]}
                 name={obj["name"]}
@@ -67,4 +67,4 @@ export const AspectComponent = ({ nodeId, name, aspectType }: Props) => {
   );
 };
 
-export default AspectComponent;
+export default Aspect;

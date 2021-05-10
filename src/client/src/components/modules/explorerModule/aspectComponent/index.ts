@@ -1,2 +1,2 @@
-export { default as AspectComponent } from "./AspectComponent";
-export { default as AspectChildComponent } from "./AspectChildComponent";
+export { default as Aspect } from "./Aspect";
+export { default as AspectElement } from "./AspectElement";

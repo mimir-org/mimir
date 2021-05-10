@@ -1,8 +1,8 @@
-import AspectComponent from "./aspectComponent/AspectComponent";
+import { Aspect } from "./aspectComponent/Aspect";
 import { IsAspectNode } from "../../flow/helpers";
 import store from "../../../redux/store";
 
-export const ProjectComponent = ({ visible }) => {
+export const Project = () => {
   const project = store.getState().projectState.project;
   const aspects = project ? project.nodes : [];
 
@@ -11,7 +11,7 @@ export const ProjectComponent = ({ visible }) => {
       {aspects.map((obj: object, i: number) => {
         if (IsAspectNode(aspects[i].type)) {
           return (
-            <AspectComponent
+            <Aspect
               key={i}
               nodeId={obj["id"]}
               name={obj["name"]}
@@ -25,4 +25,4 @@ export const ProjectComponent = ({ visible }) => {
   );
 };
 
-export default ProjectComponent;
+export default Project;

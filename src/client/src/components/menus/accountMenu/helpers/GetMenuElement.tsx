@@ -3,31 +3,28 @@ import { TextResources } from "../../../../assets/textResources";
 import { MenuButton } from "../../../../componentLibrary/buttons";
 import { UserState } from "../../../../redux/store/user/types";
 import { GetText, GetIcon } from "./";
-import {
-  MenuElement,
-  MenuLogoutBox,
-} from "../../../../componentLibrary/box/menus";
+import { MenuElement } from "../../../../componentLibrary/box/menus";
 
 interface Props {
   type: string;
   onClick?: () => void;
-  user?: UserState;
+  userState?: UserState;
 }
 
-const GetMenuElement = ({ type, onClick, user: userState }: Props) => {
+const GetMenuElement = ({ type, onClick, userState }: Props) => {
   return type !== "Logout" ? (
     <MenuElement onClick={onClick}>
       {GetIcon(type)}
       <p className="text">{GetText(type)}</p>
     </MenuElement>
   ) : (
-    <MenuLogoutBox>
+    <MenuElement logOut>
       {userState.user && userState.user.name}
       <MenuButton>
         <img src={LogoutIcon} alt="logout" />
         {TextResources.Account_Logout}
       </MenuButton>
-    </MenuLogoutBox>
+    </MenuElement>
   );
 };
 

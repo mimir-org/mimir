@@ -61,7 +61,7 @@ const AccountMenu = () => {
           <GetMenuElement type="Open" onClick={handleOpenClick} />
           <GetMenuElement type="Create" onClick={handleCreateClick} />
           <GetMenuElement type="Save" onClick={handleSaveClick} />
-          <GetMenuElement type="Logout" user={userState} />
+          <GetMenuElement type="Logout" userState={userState} />
         </MenuBox>
       )}
       {openProjectModule && isOpen && (
