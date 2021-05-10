@@ -1,4 +1,4 @@
-import { FunctionIcon, ProductIcon, LocationIcon } from "../../assets";
+import { FunctionIcon, ProductIcon, LocationIcon } from "../../assets/icons";
 import { NodeType, NODE_TYPE } from "../../models/project";
 
 const GetAspectIcon = (node: NodeType): string => {

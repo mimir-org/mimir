@@ -2,8 +2,7 @@ import {
   ProductIcon,
   FunctionIcon,
   LocationIcon,
-  SearchIcon,
-} from "../../../../assets";
+} from "../../../../assets/icons";
 
 const GetIcon = (icon: string, size: string) => {
   switch (icon) {
@@ -35,14 +34,7 @@ const GetIcon = (icon: string, size: string) => {
         />
       );
     default:
-      return (
-        <img
-          src={SearchIcon}
-          width={size + "px"}
-          height={size + "px"}
-          alt="search-icon"
-        />
-      );
+      return null;
   }
 };
 

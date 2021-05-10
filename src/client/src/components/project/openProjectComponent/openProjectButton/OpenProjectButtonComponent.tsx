@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { get } from "../../../../redux/store/project/actions";
 import { GetIcon } from "../../helpers";
-import textResources from "../../../../textResources";
+import { TextResources } from "../../../../assets/textResources";
 import { RootState } from "../../../../redux/store";
 import { ProjectSimple } from "../../../../models/project";
 import { SetProject } from "../../../../redux/store/localStorage/localStorage";
@@ -40,7 +40,7 @@ export const OpenProjectButtonComponent = ({ projectId }) => {
           onClick={handleClick}
         >
           <p className="open_project_button_text">
-            {textResources.Project_recent_open}
+            {TextResources.Project_recent_open}
           </p>
           {buttonHover ? (
             <GetIcon icon="WhiteRightArrowIcon" />

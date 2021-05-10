@@ -5,7 +5,7 @@ import {
   WhiteRightArrowIcon,
   LeftArrowIcon,
   SearchIcon,
-} from "../../../assets";
+} from "../../../assets/icons";
 import "./getIcon.scss";
 
 interface Props {

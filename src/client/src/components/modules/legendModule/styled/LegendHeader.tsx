@@ -1,16 +1,15 @@
 import styled from "styled-components";
 
 const LegendHeader = styled.div`
-  flex-direction: row;
-  justify-content: center;
   font-family: roboto;
   color: #000;
   font-size: 18px;
   display: inline-flex;
   align-items: center;
-  margin: 18px 0px 0px 138px;
-  visibility: ${(props: { visible: boolean }) =>
-    props.visible ? "initial" : "hidden"};
+  left: 120px;
+  top: 20px;
+  margin-bottom: 40px;
+  position: relative;
 `;
 
 export default LegendHeader;
