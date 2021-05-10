@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
-import { RootState } from "./../../../../redux/store/index";
+import { RootState } from "../../../../redux/store/index";
 import { ProjectSimple } from "../../../../models/project";
 import { ProjectData } from "./projectData";
 import { TextResources } from "../../../../assets/textResources";
 
-export const RecentProjectsListComponent = () => {
+export const ProjectList = () => {
   const projectList = useSelector<RootState>(
     (state) => state.projectState.projectList
   ) as ProjectSimple[];
@@ -35,4 +35,4 @@ export const RecentProjectsListComponent = () => {
   );
 };
 
-export default RecentProjectsListComponent;
+export default ProjectList;

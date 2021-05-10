@@ -1,6 +1,4 @@
 import {
-  NewProjectIcon,
-  OpenProjectIcon,
   WhiteArrowIcon,
   LeftArrowIcon,
   SearchIcon,
@@ -14,22 +12,6 @@ interface Props {
 
 const GetIcon = ({ icon, onClick }: Props) => {
   switch (icon) {
-    case "NewProjectIcon":
-      return (
-        <img
-          src={NewProjectIcon}
-          alt="new-project-icon"
-          className="option_icon"
-        />
-      );
-    case "OpenProjectIcon":
-      return (
-        <img
-          src={OpenProjectIcon}
-          alt="open-project-icon"
-          className="option_icon"
-        />
-      );
     case "WhiteRightArrowIcon":
       return (
         <img

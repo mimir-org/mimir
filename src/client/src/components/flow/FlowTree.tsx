@@ -112,6 +112,7 @@ const FlowTree = () => {
           </div>
         </ReactFlowProvider>
       )}
+      <ProjectOptions />
       {!projectState.project && !HasProject() && (
         <div>
           <ProjectOptions />

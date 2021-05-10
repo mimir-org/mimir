@@ -66,7 +66,7 @@ const AccountMenu = () => {
       )}
       {openProjectModule && isOpen && (
         <div style={{ zIndex: 100 }}>
-          <OpenProjectComponent />
+          <OpenProjectComponent visible={isOpen} />
         </div>
       )}
     </>

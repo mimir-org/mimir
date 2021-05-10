@@ -1,67 +1,50 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { create } from "../../redux/store/project/actions";
-import { GetIcon } from "./helpers";
 import { TextResources } from "../../assets/textResources";
 import { OpenProjectComponent } from "./openProjectComponent";
+import { NewProjectIcon, OpenProjectIcon } from "../../assets/icons";
+import {
+  ProjectBody,
+  ProjectBox,
+  ProjectElement,
+} from "../../componentLibrary/box/project";
 
 export const ProjectOptions = () => {
   const dispatch = useDispatch();
 
-  const [newImgHover, setNewImgHover] = useState(false);
-  const [openImgHover, setOpenImgHover] = useState(false);
-  const [openProjectComponent, setOpenProjectComponent] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleClick = () => {
+    dispatch(create("unnamed", "unnamed"));
+  };
+
+  const handleOpenClick = () => {
+    setIsOpen(!isOpen);
+  };
 
   return (
-    <div className="project_options_wrapper">
-      {openProjectComponent ? (
-        <OpenProjectComponent />
+    <>
+      {!isOpen ? (
+        <ProjectBox>
+          <ProjectBody>
+            <p>{TextResources.Project_heading}</p>
+            <ProjectElement onClick={handleClick}>
+              <img src={NewProjectIcon} alt="icon" className="icon" />
+              <p>{TextResources.Project_new_project}</p>
+            </ProjectElement>
+            <ProjectElement onClick={handleOpenClick}>
+              <img src={OpenProjectIcon} alt="icon" className="icon" />
+              <p>{TextResources.Project_open_project}</p>
+            </ProjectElement>
+          </ProjectBody>
+        </ProjectBox>
       ) : (
-        <div className="options_component_container">
-          <div className="options_content">
-            <p className="options_header">{TextResources.Project_heading}</p>
-            <div
-              className="option_container"
-              onMouseOver={() => {
-                setNewImgHover(true);
-              }}
-              onMouseOut={() => {
-                setNewImgHover(false);
-              }}
-              onClick={() => dispatch(create("unnamed", "unnamed"))}
-            >
-              <GetIcon icon="NewProjectIcon" />
-              <p className="option_text">{TextResources.Project_new_project}</p>
-              {newImgHover ? (
-                <GetIcon icon="WhiteRightArrowIcon" />
-              ) : (
-                <GetIcon icon="" />
-              )}
-            </div>
-            <div
-              className="option_container"
-              onMouseOver={() => {
-                setOpenImgHover(true);
-              }}
-              onMouseOut={() => {
-                setOpenImgHover(false);
-              }}
-              onClick={() => setOpenProjectComponent(true)}
-            >
-              <GetIcon icon="OpenProjectIcon" />
-              <p className="option_text">
-                {TextResources.Project_open_project}
-              </p>
-              {openImgHover ? (
-                <GetIcon icon="WhiteRightArrowIcon" />
-              ) : (
-                <GetIcon icon="" />
-              )}
-            </div>
-          </div>
+        <div style={{ zIndex: 100 }}>
+          <OpenProjectComponent visible={true} />
         </div>
       )}
-    </div>
+    </>
   );
 };
 

@@ -33,7 +33,7 @@ export const OpenProjectButtonComponent = ({ projectId }) => {
   return (
     isVisible && (
       <div className="open_project_button_wrapper">
-        <div
+        {/* <div
           className="open_project_button"
           onMouseOver={handleMouseOver}
           onMouseOut={handleMouseOut}
@@ -47,7 +47,7 @@ export const OpenProjectButtonComponent = ({ projectId }) => {
           ) : (
             <GetIcon icon="" />
           )}
-        </div>
+        </div> */}
       </div>
     )
   );
