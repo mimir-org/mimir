@@ -6,16 +6,11 @@ import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import { MODULE_TYPE } from "../../../models/project";
 import { SaveState } from "../../../redux/store/localStorage/localStorage";
 import { AnimatedModule, Size } from "../../../componentLibrary";
+import { ExplorerIcon, ToggleLeft, ToggleRight } from "../../../assets/icons";
 import {
   ModuleHeader,
   ModuleBody,
 } from "../../../componentLibrary/box/modules";
-
-import {
-  ExplorerIcon,
-  ToggleIconLeft,
-  ToggleIconRight,
-} from "../../../assets/icons";
 
 export const ExplorerModule = () => {
   const dispatch = useDispatch();
@@ -47,7 +42,7 @@ export const ExplorerModule = () => {
         <img src={ExplorerIcon} alt="explorerIcon" />
         <img
           className="icon"
-          src={isOpen ? ToggleIconLeft : ToggleIconRight}
+          src={isOpen ? ToggleLeft : ToggleRight}
           alt="toggle"
           onClick={handleClick}
         />

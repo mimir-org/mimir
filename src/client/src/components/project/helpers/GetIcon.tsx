@@ -1,8 +1,7 @@
 import {
   NewProjectIcon,
   OpenProjectIcon,
-  RightArrowIcon,
-  WhiteRightArrowIcon,
+  WhiteArrowIcon,
   LeftArrowIcon,
   SearchIcon,
 } from "../../../assets/icons";
@@ -10,10 +9,10 @@ import "./getIcon.scss";
 
 interface Props {
   icon: String;
-  imgOnClick?: Function;
+  onClick?: Function;
 }
 
-const GetIcon = ({ icon, imgOnClick }: Props) => {
+const GetIcon = ({ icon, onClick }: Props) => {
   switch (icon) {
     case "NewProjectIcon":
       return (
@@ -34,7 +33,7 @@ const GetIcon = ({ icon, imgOnClick }: Props) => {
     case "WhiteRightArrowIcon":
       return (
         <img
-          src={WhiteRightArrowIcon}
+          src={WhiteArrowIcon}
           alt="white-arrow-icon"
           className="arrow_icon"
         />
@@ -45,15 +44,13 @@ const GetIcon = ({ icon, imgOnClick }: Props) => {
           src={LeftArrowIcon}
           alt="back-icon"
           className="back_icon"
-          onClick={() => imgOnClick()}
+          onClick={() => onClick()}
         />
       );
     case "SearchIcon":
       return <img src={SearchIcon} alt="search-icon" className="search_icon" />;
     default:
-      return (
-        <img src={RightArrowIcon} alt="arrow-icon" className="arrow_icon" />
-      );
+      return null;
   }
 };
 

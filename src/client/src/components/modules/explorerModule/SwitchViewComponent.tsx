@@ -1,4 +1,4 @@
-import { SplitViewIcon, CombinedViewOffIcon } from "../../../assets/icons";
+import { SplitViewIcon, ViewOffIcon } from "../../../assets/icons";
 import { FooterBox, FooterContent } from "../../../componentLibrary/box/footer";
 import { TextResources } from "../../../assets/textResources";
 
@@ -7,7 +7,7 @@ export const SwitchViewComponent = () => {
     <>
       <FooterBox>
         <FooterContent>
-          <img src={CombinedViewOffIcon} alt="view-icon" />
+          <img src={ViewOffIcon} alt="view-icon" />
           <p>{TextResources.Combined_view}</p>
         </FooterContent>
         <FooterContent>

@@ -16,7 +16,7 @@ import {
   LegendColor,
 } from "../../../componentLibrary/box/library";
 
-const LegendModule = () => {
+const LegendModule = ({ visible }) => {
   const projectState = useSelector<RootState>(
     (state) => state.projectState
   ) as ProjectState;
@@ -25,7 +25,6 @@ const LegendModule = () => {
   const treeView = VIEW_TYPE.TREEVIEW;
   const [isBlockView] = useState(LoadState(blockView));
   const [isTreeview] = useState(LoadState(treeView));
-
   let legends = null;
 
   if (isBlockView) {
@@ -41,7 +40,7 @@ const LegendModule = () => {
   }
 
   return (
-    <ModuleBody visible={true} legend>
+    <ModuleBody visible={visible} legend>
       <ModuleHeader legend>
         <img src={LegendIcon} alt="legend" className="icon" />
         {TextResources.Legend_Heading}

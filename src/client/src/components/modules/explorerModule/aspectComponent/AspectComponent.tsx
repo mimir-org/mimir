@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { expandedIcon, unexpandedIcon } from "../../../../assets/icons";
+import { ExpandedIcon, ClosedIcon } from "../../../../assets/icons";
 import { NodeType } from "../../../../models/project";
 import { IsAspectNode, GetNodes, GetEdges } from "../../../flow/helpers";
 import CheckboxComponent from "../checkboxComponent/CheckboxComponent";
@@ -27,7 +27,7 @@ export const AspectComponent = ({ nodeId, name, aspectType }: Props) => {
 
   const aspectIcon = GetAspectIcon(aspectType);
   const color = GetAspectColor(aspectType);
-  const expandIcon = expanded ? expandedIcon : unexpandedIcon;
+  const expandIcon = expanded ? ExpandedIcon : ClosedIcon;
   const childType = GetAspectType(aspectType);
   const nodes = GetNodes();
   const edges = GetEdges();

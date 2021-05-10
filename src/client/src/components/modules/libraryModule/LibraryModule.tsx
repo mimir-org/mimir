@@ -10,15 +10,11 @@ import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import { MODULE_TYPE } from "../../../models/project";
 import { SaveState } from "../../../redux/store/localStorage/localStorage";
 import { AnimatedModule, Size } from "../../../componentLibrary";
+import { LibraryIcon, ToggleLeft, ToggleRight } from "../../../assets/icons";
 import {
   ModuleBody,
   ModuleHeader,
 } from "../../../componentLibrary/box/modules";
-import {
-  LibraryIcon,
-  ToggleIconLeft,
-  ToggleIconRight,
-} from "../../../assets/icons";
 
 const LibraryModule = () => {
   const key = MODULE_TYPE.LIBRARY;
@@ -53,7 +49,7 @@ const LibraryModule = () => {
         <img src={LibraryIcon} alt="library-icon" />
         <img
           className="icon"
-          src={isOpen ? ToggleIconRight : ToggleIconLeft}
+          src={isOpen ? ToggleRight : ToggleLeft}
           alt="toggle"
           onClick={handleClick}
         />
@@ -62,7 +58,7 @@ const LibraryModule = () => {
       <ModuleBody visible={isOpen} library>
         <LibaryComponent nodes={state.nodes} />
       </ModuleBody>
-      <LegendModule />
+      <LegendModule visible={isOpen} />
     </AnimatedModule>
   );
 };

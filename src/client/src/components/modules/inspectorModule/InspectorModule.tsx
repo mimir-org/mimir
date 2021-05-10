@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { EyeIcon, ToggleIconDown, ToggleIconUp } from "../../../assets/icons";
+import { EyeIcon, ToggleDown, ToggleUp } from "../../../assets/icons";
 import { IconWrapper, ToggleButtonWrapper } from "./styled";
 import { TextResources } from "../../../assets/textResources";
 import { InspectorTabsHeader } from "./styled";
@@ -41,9 +41,9 @@ const InspectorModule = () => {
         {hasProject && <InspectorTabs />}
         <ToggleButtonWrapper>
           {isOpen ? (
-            <img src={ToggleIconDown} alt="toggle-icon" onClick={handleClick} />
+            <img src={ToggleDown} alt="toggle-icon" onClick={handleClick} />
           ) : (
-            <img src={ToggleIconUp} alt="toggle-icon" onClick={handleClick} />
+            <img src={ToggleUp} alt="toggle-icon" onClick={handleClick} />
           )}
         </ToggleButtonWrapper>
         <IconWrapper>
