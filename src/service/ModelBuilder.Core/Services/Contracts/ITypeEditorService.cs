@@ -9,6 +9,7 @@ namespace Mb.Core.Services.Contracts
 {
     public interface ITypeEditorService
     {
+        Task<LibraryTypeComponent> GetTypeById(string id, bool ignoreNotFound = false);
         Dictionary<int, string> GetAspects();
         Dictionary<int, string> GetObjectTypes();
         IEnumerable<Rds> GetRds(Aspect aspect);
@@ -19,6 +20,6 @@ namespace Mb.Core.Services.Contracts
         byte[] CreateFile();
         Task LoadDataFromFile(IFormFile file, CancellationToken cancellationToken);
         Task LoadDataFromFiles();
-
+        Task DeleteType(string id);
     }
 }

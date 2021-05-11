@@ -221,5 +221,36 @@ namespace Mb.Api.Controllers.V1
                 return StatusCode(500, "Internal Server Error");
             }
         }
+
+        /// <summary>
+        /// Delete a type
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> DeleteType(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                return BadRequest("The id could not be null or empty");
+
+            try
+            {
+                await _typeEditorService.DeleteType(id);
+                return Ok(true);
+            }
+            catch (ModelBuilderNotFoundException e)
+            {
+                return NotFound(e);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
     }
 }

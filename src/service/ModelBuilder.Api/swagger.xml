@@ -149,5 +149,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Mb.Api.Controllers.V1.TypeEditorController.DeleteType(System.String)">
+            <summary>
+            Delete a type
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

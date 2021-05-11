@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Mb.Core.Exceptions;
 using Mb.Core.Extensions;
 using Mb.Core.Repositories.Contracts;
 using Mb.Core.Services.Contracts;
@@ -36,6 +37,20 @@ namespace Mb.Core.Services
         #region Public methods
 
         /// <summary>
+        /// Get type by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="ignoreNotFound"></param>
+        /// <returns></returns>
+        public async Task<LibraryTypeComponent> GetTypeById(string id, bool ignoreNotFound = false)
+        {
+            var libraryTypeComponent = await _libraryTypeComponentRepository.GetAsync(id);
+            if (!ignoreNotFound && libraryTypeComponent == null)
+                throw new ModelBuilderNotFoundException($"The type with id: {id} could not be found.");
+            return libraryTypeComponent;
+        }
+
+        /// <summary>
         /// Get all aspects
         /// </summary>
         /// <returns></returns>
@@ -54,8 +69,9 @@ namespace Mb.Core.Services
         }
 
         /// <summary>
-        /// Get all RDS
+        /// Get all RDS by aspect
         /// </summary>
+        /// <param name="aspect"></param>
         /// <returns></returns>
         public IEnumerable<Rds> GetRds(Aspect aspect)
         {
@@ -73,8 +89,9 @@ namespace Mb.Core.Services
         }
 
         /// <summary>
-        /// Get all attribute files
+        /// Get all attribute files by aspect
         /// </summary>
+        /// <param name="aspect"></param>
         /// <returns></returns>
         public IEnumerable<AttributeType> GetAttributeTypes(Aspect aspect)
         {
@@ -152,8 +169,10 @@ namespace Mb.Core.Services
         }
 
         /// <summary>
-        /// Load types from file
+        ///  Load types from file
         /// </summary>
+        /// <param name="file"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public async Task LoadDataFromFile(IFormFile file, CancellationToken cancellationToken)
         {
@@ -185,6 +204,21 @@ namespace Mb.Core.Services
             await CreateRdsAsync(rds);
             await CreateAttributeTypesAsync(attributes);
             await CreateLibraryTypeComponentsAsync(libraries);
+        }
+
+        /// <summary>
+        /// Delete a type
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task DeleteType(string id)
+        {
+            var existingType = await GetTypeById(id);
+            if(existingType == null)
+                throw new ModelBuilderNotFoundException($"Could not delete type with id: {id}. The type was not found.");
+
+            await _libraryTypeComponentRepository.Delete(id);
+            await _libraryTypeComponentRepository.SaveAsync();
         }
 
         #endregion
