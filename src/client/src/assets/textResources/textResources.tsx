@@ -81,6 +81,7 @@ const textResources = {
   Library_SearchBox_Placeholder: "Search the Library",
 
   // TypeEditorModule
+  TypeEditor: "Type Editor",
   TypeEditor_New_Type: "New Type",
   TypeEditor_Edit_Type: "Edit Type",
 

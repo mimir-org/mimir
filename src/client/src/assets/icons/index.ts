@@ -2,6 +2,7 @@ export { default as BlockviewOff } from "./blockviewOff.svg";
 export { default as BlockviewOn } from "./blockviewOn.svg";
 export { default as BlockviewArrowIcon } from "./blockviewArrow.svg";
 export { default as BlockviewArrowSmallIcon } from "./blockViewArrowSmall.svg";
+export { default as CloseIcon } from "./closeIcon.svg";
 export { default as CombinedViewOffIcon } from "./combinedViewOffIcon.svg";
 export { default as CombinedViewOnIcon } from "./combinedViewOnIcon.svg";
 export { default as CreateProjectIcon } from "./createProjectIcon.svg";
