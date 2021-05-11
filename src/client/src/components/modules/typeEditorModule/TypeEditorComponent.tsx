@@ -6,15 +6,21 @@ import {
 } from "./styled";
 import { TextResources } from "../../../assets/textResources";
 import { CloseIcon } from "../../../assets/icons";
+import { useDispatch } from "react-redux";
+import { VIEW_TYPE } from "../../../models/project";
+import { changeFlowView } from "../../../redux/store/flow/actions";
 
 interface Props {
   mode: string;
 }
 
 export const TypeEditorComponent = ({ mode }: Props) => {
+  const dispatch = useDispatch();
   const [visible, setVisible] = useState(true);
   const handleClick = () => {
     // console.log("clicked on x");
+    dispatch(changeFlowView(VIEW_TYPE.BLOCKVIEW, true));
+    dispatch(changeFlowView(VIEW_TYPE.TREEVIEW, true));
     setVisible(!visible);
   };
   return (
