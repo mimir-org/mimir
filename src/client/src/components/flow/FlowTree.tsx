@@ -90,7 +90,7 @@ const FlowTree = () => {
   }, [dispatch, projectState.project]);
 
   const visible = useSelector<RootState>(
-    (state) => state.flow.view[0].visible
+    (state) => state.flow.view[1].visible
   ) as boolean;
 
   return (
