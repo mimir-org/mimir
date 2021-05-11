@@ -110,16 +110,18 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Mb.Api.Controllers.V1.TypeEditorController.GetRdsCodes">
+        <member name="M:Mb.Api.Controllers.V1.TypeEditorController.GetRdsCodes(Mb.Models.Enums.Aspect)">
             <summary>
-            Get all RDS codes
+            Get RDS codes for aspect
             </summary>
+            <param name="aspect"></param>
             <returns></returns>
         </member>
-        <member name="M:Mb.Api.Controllers.V1.TypeEditorController.GetAttributeTypes">
+        <member name="M:Mb.Api.Controllers.V1.TypeEditorController.GetAttributeTypes(Mb.Models.Enums.Aspect)">
             <summary>
-            Get all attribute types
+            Get attribute types for aspect
             </summary>
+            <param name="aspect"></param>
             <returns></returns>
         </member>
         <member name="M:Mb.Api.Controllers.V1.TypeEditorController.GetTerminalTypes">

@@ -7,6 +7,7 @@ using Mb.Core.Exceptions;
 using Mb.Core.Extensions;
 using Mb.Core.Services.Contracts;
 using Mb.Models.Data;
+using Mb.Models.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -78,17 +79,18 @@ namespace Mb.Api.Controllers.V1
         }
 
         /// <summary>
-        /// Get all RDS codes
+        /// Get RDS codes for aspect
         /// </summary>
+        /// <param name="aspect"></param>
         /// <returns></returns>
-        [HttpGet("rds")]
+        [HttpGet("rds/{aspect}")]
         [ProducesResponseType(typeof(ICollection<Rds>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public IActionResult GetRdsCodes()
+        public IActionResult GetRdsCodes(Aspect aspect)
         {
             try
             {
-                var data = _typeEditorService.GetRds().ToList();
+                var data = _typeEditorService.GetRds(aspect).ToList();
                 return Ok(data);
             }
             catch (Exception e)
@@ -99,17 +101,18 @@ namespace Mb.Api.Controllers.V1
         }
 
         /// <summary>
-        /// Get all attribute types
+        /// Get attribute types for aspect
         /// </summary>
+        /// <param name="aspect"></param>
         /// <returns></returns>
-        [HttpGet("attributes")]
+        [HttpGet("attributes/{aspect}")]
         [ProducesResponseType(typeof(ICollection<AttributeType>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public IActionResult GetAttributeTypes()
+        public IActionResult GetAttributeTypes(Aspect aspect)
         {
             try
             {
-                var data = _typeEditorService.GetAttributeTypes().ToList();
+                var data = _typeEditorService.GetAttributeTypes(aspect).ToList();
                 return Ok(data);
             }
             catch (Exception e)

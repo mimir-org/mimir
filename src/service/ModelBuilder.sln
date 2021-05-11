@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicrosoftSqlServerModule", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DefaultParserModule", "DefaultParserModule\DefaultParserModule.csproj", "{0DE32B64-04EA-4B34-AE10-7407114AB38D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AasParserModule", "Modules\AasParser\AasParserModule.csproj", "{56990402-9ECD-4528-8D4F-DA72614EC1BC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{0DE32B64-04EA-4B34-AE10-7407114AB38D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DE32B64-04EA-4B34-AE10-7407114AB38D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DE32B64-04EA-4B34-AE10-7407114AB38D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56990402-9ECD-4528-8D4F-DA72614EC1BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56990402-9ECD-4528-8D4F-DA72614EC1BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56990402-9ECD-4528-8D4F-DA72614EC1BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56990402-9ECD-4528-8D4F-DA72614EC1BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,6 +70,7 @@ Global
 		{B94CCCE8-C799-45ED-8C5D-40FE33364B82} = {C5359E03-91E7-405A-803A-11182980C4E9}
 		{9A1495B9-6CD5-46F4-9DCB-D314103A7F1B} = {C5359E03-91E7-405A-803A-11182980C4E9}
 		{0DE32B64-04EA-4B34-AE10-7407114AB38D} = {C5359E03-91E7-405A-803A-11182980C4E9}
+		{56990402-9ECD-4528-8D4F-DA72614EC1BC} = {C5359E03-91E7-405A-803A-11182980C4E9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61D7DEB6-5F0A-42C7-BDD9-B863F85B57F4}

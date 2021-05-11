@@ -57,18 +57,36 @@ namespace Mb.Core.Services
         /// Get all RDS
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Rds> GetRds()
+        public IEnumerable<Rds> GetRds(Aspect aspect)
         {
-            return _fileRepository.ReadFile<Rds>(RdsFileName);
+            switch (aspect)
+            {
+                case Aspect.Function:
+                    return _rdsRepository.FindBy(x => x.IsFunction).ToList();
+                case Aspect.Location:
+                    return _rdsRepository.FindBy(x => x.IsLocation).ToList();
+                case Aspect.Product:
+                    return _rdsRepository.FindBy(x => x.IsProduct).ToList();
+                default:
+                    return _rdsRepository.GetAll().ToList();
+            }
         }
 
         /// <summary>
         /// Get all attribute files
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<AttributeType> GetAttributeTypes()
+        public IEnumerable<AttributeType> GetAttributeTypes(Aspect aspect)
         {
-            return _fileRepository.ReadFile<AttributeType>(AttributeFileName);
+            switch (aspect)
+            {
+                case Aspect.Function:
+                case Aspect.Location:
+                case Aspect.Product:
+                    return _attributeTypeRepository.FindBy(x => x.Aspect == aspect).ToList();
+                default:
+                    return _attributeTypeRepository.GetAll().ToList();
+            }
         }
 
         /// <summary>
