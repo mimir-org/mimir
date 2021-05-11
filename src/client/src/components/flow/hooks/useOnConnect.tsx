@@ -16,15 +16,18 @@ const useOnConnect = (params, projectState, setElements, dispatch) => {
   ) as Node;
 
   let currentEdge = null;
+  let existingEdge;
 
-  const existingEdge = projectState.project.edges.find(
-    (x) =>
-      x.fromConnector === params.sourceHandle &&
-      x.toConnector === params.targetHandle &&
-      x.fromNode === sourceNode.id &&
-      x.toNode === targetNode.id &&
-      x.isHidden === targetNode.isHidden
-  );
+  if (projectState.project.edges) {
+    existingEdge = projectState.project.edges.find(
+      (x) =>
+        x.fromConnector === params.sourceHandle &&
+        x.toConnector === params.targetHandle &&
+        x.fromNode === sourceNode.id &&
+        x.toNode === targetNode.id &&
+        x.isHidden === targetNode.isHidden
+    );
+  }
 
   if (!existingEdge) {
     const edge: Edge = {

@@ -13,8 +13,13 @@ export const useChangeNodeVisibility = (node: Node, type: NodeType) => {
     (state) => state.projectState.project
   ) as Project;
 
-  const edges = project ? project.edges : [];
-  const isParent = edges.find((x) => x.fromNode === node.id) ? true : false;
+  let edges = [];
+  let isParent = false;
+
+  if (project && project.edges) {
+    edges = project.edges;
+    isParent = edges.find((x) => x.fromNode === node.id);
+  }
 
   return useCallback(() => {
     dispatch(changeNodeVisibility(node, isParent, type));
