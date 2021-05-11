@@ -5,7 +5,7 @@ const MenuElement = styled.div`
   padding: 20px 12px;
   margin-top: 5px;
   color: ${Color.DeepCyan};
-  cursor: pointer;
+  cursor: ${(props) => (props.logOut ? "initial" : "pointer")};
 
   .text {
     margin-left: 5px;
@@ -14,8 +14,9 @@ const MenuElement = styled.div`
   }
 
   &:hover {
-    text-decoration: underline;
-    background-color: ${Color.DeepCyanTransparent};
+    background-color: ${(props) =>
+      props.logOut ? "inherit" : `${Color.DeepCyanTransparent}`};
+    text-decoration: ${(props) => (props.logOut ? "none" : "underline")};
   }
 `;
 

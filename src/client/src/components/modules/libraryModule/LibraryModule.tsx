@@ -9,14 +9,13 @@ import { LibraryState } from "../../../redux/store/library/types";
 import { searchLibrary } from "../../../redux/store/library/actions";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import { MODULE_TYPE } from "../../../models/project";
-import { ModuleBody, ModuleHeader } from "../../../componentLibrary/box";
 import { SaveState } from "../../../redux/store/localStorage/localStorage";
 import { AnimatedModule, Size } from "../../../componentLibrary";
+import { LibraryIcon, ToggleLeft, ToggleRight } from "../../../assets/icons";
 import {
-  LibraryIcon,
-  ToggleIconLeft,
-  ToggleIconRight,
-} from "../../../assets/icons";
+  ModuleBody,
+  ModuleHeader,
+} from "../../../componentLibrary/box/modules";
 
 const LibraryModule = () => {
   const key = MODULE_TYPE.LIBRARY;
@@ -47,21 +46,21 @@ const LibraryModule = () => {
 
   return (
     <AnimatedModule start={start} stop={stop} run={animate}>
-      <ModuleHeader right visible={isOpen}>
+      <ModuleHeader library visible={isOpen}>
         <img src={LibraryIcon} alt="library-icon" />
         <img
           className="icon"
-          src={isOpen ? ToggleIconRight : ToggleIconLeft}
+          src={isOpen ? ToggleRight : ToggleLeft}
           alt="toggle"
           onClick={handleClick}
         />
         <p className="text">{TextResources.Library_Heading}</p>
       </ModuleHeader>
-      <ModuleBody visible={isOpen} left>
+      <ModuleBody visible={isOpen} library>
         <LibaryComponent nodes={state.nodes} />
         <TypeEditorModule />
-        <LegendModule />
       </ModuleBody>
+      <LegendModule visible={isOpen} />
     </AnimatedModule>
   );
 };

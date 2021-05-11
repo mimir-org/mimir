@@ -1,12 +1,12 @@
+using AzureActiveDirectoryModule;
+using AzureActiveDirectoryModule.Models;
 using Mb.Core.Extensions;
-using Mb.Modules.AzureActiveDirectory.Extensions;
-using Mb.Modules.AzureActiveDirectory.Models;
-using Mb.Modules.MsSql.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MicrosoftSqlServerModule;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
@@ -51,11 +51,11 @@ namespace Mb.Api
             services.AddRouting(o => o.LowercaseUrls = true);
 
             // Add Azure Active Directory Module and Swagger Module
-            var (swaggerConfiguration, activeDirectoryConfiguration) = services.AddActiveDirectoryAuthentication(Configuration);
+            var (swaggerConfiguration, activeDirectoryConfiguration) = services.AddAzureActiveDirectoryModule(Configuration);
             _activeDirectoryConfiguration = activeDirectoryConfiguration;
             _swaggerConfiguration = swaggerConfiguration;
 
-            services.AddMsSqlServerModule();
+            services.AddMicrosoftSqlServerModule();
             services.AddModelBuilderModule(Configuration);
         }
 
@@ -72,7 +72,7 @@ namespace Mb.Api
             app.UseRouting();
 
             // Use Azure Active Directory Module and Swagger Module
-            app.UseActiveDirectoryAuthentication(_activeDirectoryConfiguration, _swaggerConfiguration);
+            app.UseAzureActiveDirectoryModule(_activeDirectoryConfiguration, _swaggerConfiguration);
 
             app.UseEndpoints(endpoints =>
             {

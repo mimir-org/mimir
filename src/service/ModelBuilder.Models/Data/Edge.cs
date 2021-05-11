@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Mb.Models.Enums;
 
 namespace Mb.Models.Data
 {
+    [Serializable]
     public class Edge
     {
         public string Id { get; set; }

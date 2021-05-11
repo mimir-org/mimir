@@ -5,6 +5,7 @@ import { userReducer } from "./user/reducers";
 import { projectReducer } from "./project/reducers";
 import { inspectorReducer } from "./inspector/reducers";
 import { moduleReducer } from "./modules/reducers";
+import { projectMenuReducer } from "./projectMenu/reducers";
 import { sagas } from "../sagas";
 
 const sagaMiddleware = createSagaMiddleware();
@@ -20,6 +21,7 @@ const rootReducers = combineReducers({
   userState: userReducer,
   projectState: projectReducer,
   modules: moduleReducer,
+  projectMenu: projectMenuReducer,
 });
 
 const store = createStore(

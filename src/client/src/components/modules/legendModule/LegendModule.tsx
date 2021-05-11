@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { LegendIcon } from "../../../assets/icons";
-import { LegendBody, LegendContent } from "../../../componentLibrary/box";
 import { TextResources } from "../../../assets/textResources";
 import { ProjectState } from "../../../redux/store/project/types";
 import { RootState } from "../../../redux/store";
@@ -9,13 +8,15 @@ import { LoadState } from "../../../redux/store/localStorage/localStorage";
 import { VIEW_TYPE } from "../../../models/project";
 import { GetLegendData, Legend } from "../../flow/helpers";
 import {
-  LegendHeader,
-  LegendIconWrapper,
-  TransportWrapper,
-  TransportColor,
-} from "./styled";
+  ModuleBody,
+  ModuleHeader,
+} from "../../../componentLibrary/box/modules";
+import {
+  LegendElement,
+  LegendColor,
+} from "../../../componentLibrary/box/library";
 
-const LegendModule = () => {
+const LegendModule = ({ visible }) => {
   const projectState = useSelector<RootState>(
     (state) => state.projectState
   ) as ProjectState;
@@ -24,7 +25,6 @@ const LegendModule = () => {
   const treeView = VIEW_TYPE.TREEVIEW;
   const [isBlockView] = useState(LoadState(blockView));
   const [isTreeview] = useState(LoadState(treeView));
-
   let legends = null;
 
   if (isBlockView) {
@@ -40,25 +40,21 @@ const LegendModule = () => {
   }
 
   return (
-    <LegendBody>
-      <LegendHeader>
-        <LegendIconWrapper>
-          <img src={LegendIcon} alt="legend" />
-        </LegendIconWrapper>
+    <ModuleBody visible={visible} legend>
+      <ModuleHeader legend>
+        <img src={LegendIcon} alt="legend" className="icon" />
         {TextResources.Legend_Heading}
-      </LegendHeader>
+      </ModuleHeader>
       {legends &&
         legends.map((legend) => {
           return (
-            <LegendContent key={legend.key}>
-              <TransportWrapper>
-                <p>{legend.name}</p>
-                <TransportColor color={legend.color}></TransportColor>
-              </TransportWrapper>
-            </LegendContent>
+            <LegendElement key={legend.key}>
+              <p>{legend.name}</p>
+              <LegendColor color={legend.color}></LegendColor>
+            </LegendElement>
           );
         })}
-    </LegendBody>
+    </ModuleBody>
   );
 };
 export default LegendModule;

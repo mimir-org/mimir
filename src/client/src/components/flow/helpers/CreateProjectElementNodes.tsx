@@ -12,10 +12,15 @@ const CreateProjectElementNodes = (project: Project): Elements => {
     if (elementNode) initialElements.push(elementNode);
   });
 
-  project.edges.forEach((edge) => {
-    const elementEdge = CreateElementEdge(edge, EDGE_TYPE.DEFAULT as EdgeType);
-    if (elementEdge) initialElements.push(elementEdge);
-  });
+  if (project.edges) {
+    project.edges.forEach((edge) => {
+      const elementEdge = CreateElementEdge(
+        edge,
+        EDGE_TYPE.DEFAULT as EdgeType
+      );
+      if (elementEdge) initialElements.push(elementEdge);
+    });
+  }
 
   return initialElements;
 };

@@ -1,5 +1,8 @@
-import { MenuColumn, MenuSubHeader } from "../../../../componentLibrary/box";
 import { CreateId } from "../../../flow/helpers";
+import {
+  MenuColumn,
+  MenuSubHeader,
+} from "../../../../componentLibrary/box/menus";
 
 const GetContent = (items: number, section: number) => {
   // TODO: fix this mess when content for filter is known

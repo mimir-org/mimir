@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -10,6 +12,7 @@ using Mb.Core.Services.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Enums;
+using Mb.Models.Modules;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,8 +27,9 @@ namespace Mb.Core.Services
         private readonly IEdgeRepository _edgeRepository;
         private readonly ICommonRepository _commonRepository;
         private readonly IConnectorRepository _connectorRepository;
+        private readonly IModuleService _moduleService;
         
-        public ProjectService(IProjectRepository projectRepository, IMapper mapper, IHttpContextAccessor contextAccessor, INodeRepository nodeRepository, IEdgeRepository edgeRepository, ICommonRepository commonRepository, IConnectorRepository connectorRepository)
+        public ProjectService(IProjectRepository projectRepository, IMapper mapper, IHttpContextAccessor contextAccessor, INodeRepository nodeRepository, IEdgeRepository edgeRepository, ICommonRepository commonRepository, IConnectorRepository connectorRepository, IModuleService moduleService)
         {
             _projectRepository = projectRepository;
             _mapper = mapper;
@@ -34,6 +38,7 @@ namespace Mb.Core.Services
             _edgeRepository = edgeRepository;
             _commonRepository = commonRepository;
             _connectorRepository = connectorRepository;
+            _moduleService = moduleService;
         }
 
         /// <summary>
@@ -69,8 +74,9 @@ namespace Mb.Core.Services
         /// The method wil throw a ModelBuilderNotFoundException if not exist
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="ignoreNotFound"></param>
         /// <returns></returns>
-        public async Task<Project> GetProject(string id)
+        public async Task<Project> GetProject(string id, bool ignoreNotFound = false)
         {
             var project = await _projectRepository
                 .FindBy(x => x.Id == id)
@@ -79,10 +85,11 @@ namespace Mb.Core.Services
                 .Include("Nodes.Attributes")
                 .Include("Nodes.Connectors")
                 .AsSplitQuery()
+                .OrderByDescending(x => x.Name)
                 .FirstOrDefaultAsync();
 
-            if (project == null)
-                throw new ModelBuilderNotFoundException();
+            if (!ignoreNotFound && project == null)
+                throw new ModelBuilderNotFoundException($"Could not find project with id: {id}");
 
             return project;
         }
@@ -108,20 +115,20 @@ namespace Mb.Core.Services
         /// <returns></returns>
         public async Task<Project> CreateProject(Project project)
         {
-            var existingProject = await GetProject(project.Id);
+            var existingProject = await GetProject(project.Id, true);
 
             if (existingProject != null)
-                throw new ModelBuilderDuplicateException();
+                throw new ModelBuilderDuplicateException($"Project already exist - id: {project.Id}");
 
-            if(_edgeRepository.GetAll().Any(x => project.Edges.Any(y => y.Id == x.Id)))
-                throw new ModelBuilderDuplicateException();
+            if(_edgeRepository.GetAll().AsEnumerable().Any(x => project.Edges.Any(y => y.Id == x.Id)))
+                throw new ModelBuilderDuplicateException("One or more edges already exist");
 
-            if (_nodeRepository.GetAll().Any(x => project.Nodes.Any(y => y.Id == x.Id)))
-                throw new ModelBuilderDuplicateException();
+            if (_nodeRepository.GetAll().AsEnumerable().Any(x => project.Nodes.Any(y => y.Id == x.Id)))
+                throw new ModelBuilderDuplicateException("One or more nodes already exist");
 
-            var allConnectors = project.Nodes.SelectMany(x => x.Connectors).ToList();
-            if(_connectorRepository.GetAll().Any(x => allConnectors.Any(y => y.Id == x.Id)))
-                throw new ModelBuilderDuplicateException();
+            var allConnectors = project.Nodes.AsEnumerable().SelectMany(x => x.Connectors).ToList();
+            if(_connectorRepository.GetAll().AsEnumerable().Any(x => allConnectors.Any(y => y.Id == x.Id)))
+                throw new ModelBuilderDuplicateException("One or more connectors already exist");
 
             await _projectRepository.CreateAsync(project);
             await _projectRepository.SaveAsync();
@@ -136,9 +143,6 @@ namespace Mb.Core.Services
         public async Task<Project> UpdateProject(Project project)
         {
             var existingProject = await GetProject(project.Id);
-            if(existingProject == null)
-                throw new ModelBuilderNotFoundException();
-
             return await UpdateProject(existingProject, project);
         }
 
@@ -150,10 +154,7 @@ namespace Mb.Core.Services
         public async Task DeleteProject(string projectId)
         {
             var existingProject = await GetProject(projectId);
-
-            if (existingProject == null)
-                throw new ModelBuilderNotFoundException();
-
+            
             var nodesToDelete = existingProject.Nodes.Select(x => x.Id).ToList();
             var edgesToDelete = existingProject.Edges.Select(x => x.Id).ToList();
 
@@ -172,6 +173,43 @@ namespace Mb.Core.Services
             await _nodeRepository.SaveAsync();
             await _edgeRepository.SaveAsync();
 
+        }
+
+        /// <summary>
+        /// Create a json byte array based on project id
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <param name="parser"></param>
+        /// <returns></returns>
+        public async Task<byte[]> CreateFile(string projectId, string parser)
+        {
+            var project = await GetProject(projectId);
+            
+            if (!_moduleService.ParserModules.ContainsKey(parser))
+                parser = "Default";
+
+            var par = _moduleService.Resolve<IModelBuilderParser>(parser);
+            return await par.SerializeProject(project);
+        }
+
+        /// <summary>
+        /// Create a project from file
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="cancellationToken"></param>
+        /// <param name="parser"></param>
+        /// <returns></returns>
+        public async Task<Project> CreateFromFile(IFormFile file, CancellationToken cancellationToken, string parser)
+        {
+            await using var stream = new MemoryStream();
+            await file.CopyToAsync(stream, cancellationToken);
+
+            if (!_moduleService.ParserModules.ContainsKey(parser))
+                parser = "Default";
+
+            var par = _moduleService.Resolve<IModelBuilderParser>(parser);
+            var project = await par.DeserializeProject(stream.ToArray());
+            return await CreateProject(project);
         }
 
         #region Private methods

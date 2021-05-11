@@ -41,10 +41,12 @@ namespace Mb.Core.Repositories
                     connector.Id = _generateIdRepository.CreateUniqueId();
                 }
 
-                mappedNode.Connectors.Add(CreateRelationConnector(RelationType.PartOf, ConnectorType.Input, "PartOfInput"));
-                mappedNode.Connectors.Add(CreateRelationConnector(RelationType.PartOf, ConnectorType.Output, "PartOfOutput"));
-                mappedNode.Connectors.Add(CreateRelationConnector(RelationType.Relation, ConnectorType.Input, "RelationInput"));
-                mappedNode.Connectors.Add(CreateRelationConnector(RelationType.Relation, ConnectorType.Output, "RelationOutput"));
+                mappedNode.Connectors.Add(CreateRelationConnector(RelationType.PartOf, ConnectorType.Input, "Part of Relationship"));
+                mappedNode.Connectors.Add(CreateRelationConnector(RelationType.PartOf, ConnectorType.Output, "Part of Relationship"));
+                mappedNode.Connectors.Add(CreateRelationConnector(RelationType.HasLocation, ConnectorType.Input, "Has Location"));
+                mappedNode.Connectors.Add(CreateRelationConnector(RelationType.HasLocation, ConnectorType.Output, "Has Location"));
+                mappedNode.Connectors.Add(CreateRelationConnector(RelationType.FulfilledBy, ConnectorType.Output, "Fulfilled By"));
+                mappedNode.Connectors.Add(CreateRelationConnector(RelationType.FulfilledBy, ConnectorType.Output, "Fulfilled By"));
 
                 yield return mappedNode;
             }

@@ -4,16 +4,16 @@ import { RootState } from "../../../redux/store/index";
 import { UserState } from "../../../redux/store/user/types";
 import { ProjectState } from "../../../redux/store/project/types";
 import { create, save } from "../../../redux/store/project/actions";
-import { OpenProjectComponent } from "../../project/openProjectComponent";
 import { GetMenuElement } from "./helpers";
 import { GetMenuIcon } from "../../../assets/helpers";
 import { MENU_TYPE } from "../../../models/project";
-import { MenuBox, MenuTopHeader } from "../../../componentLibrary/box";
+import { MenuBox, MenuTopHeader } from "../../../componentLibrary/box/menus";
+import { changeProjectMenu } from "../../../redux/store/projectMenu/actions";
+import { OpenProjectMenu } from "../../project/openProject";
 
 const AccountMenu = () => {
   const dispatch = useDispatch();
   const [showAccountSettings, setshowAccountSettings] = useState(false);
-  const [openProjectModule, setOpenProjectModule] = useState(false);
   const type = MENU_TYPE.ACCOUNT;
 
   const projectState = useSelector<RootState>(
@@ -29,7 +29,7 @@ const AccountMenu = () => {
   };
 
   const handleOpenClick = () => {
-    setOpenProjectModule(!openProjectModule);
+    dispatch(changeProjectMenu("openProjectMenu", true));
   };
 
   const handleCreateClick = () => {
@@ -61,14 +61,12 @@ const AccountMenu = () => {
           <GetMenuElement type="Open" onClick={handleOpenClick} />
           <GetMenuElement type="Create" onClick={handleCreateClick} />
           <GetMenuElement type="Save" onClick={handleSaveClick} />
-          <GetMenuElement type="Logout" user={userState} />
+          <GetMenuElement type="Logout" userState={userState} />
         </MenuBox>
       )}
-      {openProjectModule && isOpen && (
-        <div style={{ zIndex: 100 }}>
-          <OpenProjectComponent />
-        </div>
-      )}
+      <div style={{ zIndex: 100 }}>
+        <OpenProjectMenu />
+      </div>
     </>
   );
 };

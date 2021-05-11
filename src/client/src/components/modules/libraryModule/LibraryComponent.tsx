@@ -2,8 +2,11 @@ import { TextResources } from "../../../assets/textResources";
 import { LibNode } from "../../../models/project";
 import GetIcon from "./helpers/GetIcon";
 import { SearchIcon } from "../../../assets/icons";
-import { LibraryBody, LibraryElement } from "../../../componentLibrary/box";
 import { SearchInput } from "../../../componentLibrary";
+import {
+  LibraryBody,
+  LibraryElement,
+} from "../../../componentLibrary/box/library";
 
 interface Props {
   nodes: LibNode[];

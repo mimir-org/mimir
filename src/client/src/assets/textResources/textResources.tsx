@@ -13,7 +13,7 @@ const textResources = {
   // Project options
   Project_heading: "Projects",
   Project_new_project: "Create project",
-  Project_open_project: "Load project",
+  Project_open_project: "Open project",
   Project_recent_project: "Recent projects",
   Project_recent_name: "Project name",
   Project_recent_owner: "Project owner",

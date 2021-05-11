@@ -1,17 +1,16 @@
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { ProjectComponent, SwitchViewComponent } from "./";
+import { Project, SwitchViewComponent } from "./";
 import { TextResources } from "../../../assets/textResources";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import { MODULE_TYPE } from "../../../models/project";
 import { SaveState } from "../../../redux/store/localStorage/localStorage";
-import { ModuleHeader, ModuleBody } from "../../../componentLibrary/box";
 import { AnimatedModule, Size } from "../../../componentLibrary";
+import { ExplorerIcon, ToggleLeft, ToggleRight } from "../../../assets/icons";
 import {
-  ExplorerIcon,
-  ToggleIconLeft,
-  ToggleIconRight,
-} from "../../../assets/icons";
+  ModuleHeader,
+  ModuleBody,
+} from "../../../componentLibrary/box/modules";
 
 export const ExplorerModule = () => {
   const dispatch = useDispatch();
@@ -39,18 +38,18 @@ export const ExplorerModule = () => {
 
   return (
     <AnimatedModule start={start} stop={stop} run={animate}>
-      <ModuleHeader left visible={isOpen}>
-        <img src={ExplorerIcon} alt="explorerIcon" />
+      <ModuleHeader explorer visible={isOpen}>
+        <img src={ExplorerIcon} alt="icon" />
         <img
           className="icon"
-          src={isOpen ? ToggleIconLeft : ToggleIconRight}
+          src={isOpen ? ToggleLeft : ToggleRight}
           alt="toggle"
           onClick={handleClick}
         />
         <p className="text">{TextResources.Explorer_view}</p>
       </ModuleHeader>
-      <ModuleBody visible={isOpen} right>
-        {hasProject && <ProjectComponent visible={isOpen} />}
+      <ModuleBody visible={isOpen} explorer>
+        {hasProject && <Project />}
         <SwitchViewComponent />
       </ModuleBody>
     </AnimatedModule>

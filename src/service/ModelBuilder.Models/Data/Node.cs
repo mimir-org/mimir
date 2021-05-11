@@ -4,6 +4,7 @@ using Mb.Models.Enums;
 
 namespace Mb.Models.Data
 {
+    [Serializable]
     public class Node
     {
         public string Id { get; set; }
