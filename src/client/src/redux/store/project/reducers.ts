@@ -1,6 +1,6 @@
 import { IsAspectNode } from "../../../components/flow/helpers";
 import { Edge, Node, ProjectSimple } from "../../../models/project";
-import TraverseNodes from "./helpers/TraverseNodes";
+import { TraverseNodes, FindChildNodes } from "./helpers/";
 import {
   FETCHING_PROJECT,
   FETCHING_PROJECT_SUCCESS_OR_ERROR,
@@ -219,52 +219,37 @@ export function projectReducer(
       }
 
       if (isParent) {
-        let children: (Node | Edge)[] = [];
-        children.push(node);
+        let elements: (Node | Edge)[] = [];
         let parentNode = node;
+        let children: Node[] = [];
+        elements.push(node);
 
-        // Find all direct children
-        let firstEdges: Edge[] = [];
-        let firstChildrenId = [];
-        let childrenToRemove: Node[] = [];
+        FindChildNodes(edgeList, nodeList, parentNode, children);
 
-        for (let i = 0; i < edgeList.length; i++) {
-          if (edgeList[i].fromNode === node.id) {
-            firstEdges.push(edgeList[i]);
-            firstChildrenId.push(edgeList[i].toNode);
-          }
-        }
+        const getParent = () => {
+          return parentNode.id;
+        };
 
-        for (let i = 0; i < firstChildrenId.length; i++) {
-          childrenToRemove.push(
-            nodeList.find((x) => x.id === firstChildrenId[i])
-          );
-        }
-
-        for (let i = 0; i < childrenToRemove.length; i++) {
-          parentNode = childrenToRemove[i];
-          const toEdge = edgeList.find((x) => x.toNode === parentNode.id);
-          children.push(parentNode, toEdge);
-
-          // has children?
-          const fromEdge = edgeList.find((x) => x.fromNode === parentNode.id);
-
-          if (fromEdge) {
-            TraverseNodes(fromEdge, nodeList, edgeList, children);
-          }
-        }
+        children.forEach((_node, index) => {
+          parentNode = children[index];
+          const toEdge = edgeList.find((x) => x.toNode === getParent());
+          elements.push(parentNode, toEdge);
+          const nextEdge = edgeList.find((x) => x.fromNode === getParent());
+          if (nextEdge)
+            TraverseNodes(nextEdge, nodeList, edgeList, elements, type);
+        });
 
         return {
           ...state,
           project: {
             ...state.project,
             nodes: state.project.nodes.map((nodes, i) =>
-              children.includes(state.project.nodes[i])
+              elements.includes(state.project.nodes[i])
                 ? { ...nodes, isHidden: isHidden }
                 : nodes
             ),
             edges: edgeList.map((edges, i) =>
-              children.includes(edgeList[i]) || edgeList[i].toNode === node.id
+              elements.includes(edgeList[i]) || edgeList[i].toNode === node.id
                 ? { ...edges, isHidden: isHidden }
                 : edges
             ),
