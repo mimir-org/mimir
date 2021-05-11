@@ -1,5 +1,6 @@
 import { IsAspectNode } from "../../../components/flow/helpers";
 import { Edge, Node, ProjectSimple } from "../../../models/project";
+import TraverseNodes from "./helpers/TraverseNodes";
 import {
   FETCHING_PROJECT,
   FETCHING_PROJECT_SUCCESS_OR_ERROR,
@@ -218,7 +219,6 @@ export function projectReducer(
       }
 
       if (isParent) {
-        console.log("isParent: ", node);
         let children: (Node | Edge)[] = [];
         children.push(node);
         let parentNode = node;
@@ -226,36 +226,32 @@ export function projectReducer(
         // Find all direct children
         let firstEdges: Edge[] = [];
         let firstChildrenId = [];
+        let childrenToRemove: Node[] = [];
+
         for (let i = 0; i < edgeList.length; i++) {
           if (edgeList[i].fromNode === node.id) {
             firstEdges.push(edgeList[i]);
             firstChildrenId.push(edgeList[i].toNode);
           }
         }
-        let childrenToRemove: Node[] = [];
-        const nodeOne = nodeList.find((x) => x.id === firstChildrenId[0]);
-        childrenToRemove.push(nodeOne);
-        const nodeTwo = nodeList.find((x) => x.id === firstChildrenId[1]);
-        childrenToRemove.push(nodeTwo);
-        console.log({ childrenToRemove });
 
-        // const getChild = () => {
-        //   return childNode.id;
-        // };
-
-        while (parentNode !== undefined) {
-          const edge = edgeList.find((edge) => edge.fromNode === parentNode.id);
-          if (edge === undefined) break;
-
-          const nextChild = state.project.nodes.find(
-            (node) => node.id === edge.toNode
+        for (let i = 0; i < firstChildrenId.length; i++) {
+          childrenToRemove.push(
+            nodeList.find((x) => x.id === firstChildrenId[i])
           );
+        }
 
-          // Only change nodes of same type
-          if (nextChild.type === type) children.push(nextChild);
+        for (let i = 0; i < childrenToRemove.length; i++) {
+          parentNode = childrenToRemove[i];
+          const toEdge = edgeList.find((x) => x.toNode === parentNode.id);
+          children.push(parentNode, toEdge);
 
-          children.push(edge);
-          parentNode = nextChild;
+          // has children?
+          const fromEdge = edgeList.find((x) => x.fromNode === parentNode.id);
+
+          if (fromEdge) {
+            TraverseNodes(fromEdge, nodeList, edgeList, children);
+          }
         }
 
         return {
