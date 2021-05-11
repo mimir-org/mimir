@@ -9,7 +9,7 @@ const initialState = {
     },
     {
       type: VIEW_TYPE.TREEVIEW,
-      visible: false,
+      visible: true,
     },
   ],
 };
