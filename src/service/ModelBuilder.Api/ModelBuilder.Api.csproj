@@ -49,8 +49,4 @@
     <ProjectReference Include="..\Modules\MicrosoftSqlServerModule\MicrosoftSqlServerModule.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\V2\" />
-  </ItemGroup>
-
 </Project>

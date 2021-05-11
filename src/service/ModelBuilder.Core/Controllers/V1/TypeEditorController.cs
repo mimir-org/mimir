@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace Mb.Api.Controllers.V1
+namespace Mb.Core.Controllers.V1
 {
     /// <summary>
     /// Type editor services
