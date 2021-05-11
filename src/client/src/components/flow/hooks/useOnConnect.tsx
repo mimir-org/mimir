@@ -16,7 +16,7 @@ const useOnConnect = (params, projectState, setElements, dispatch) => {
   ) as Node;
 
   let currentEdge = null;
-  let existingEdge;
+  let existingEdge = null;
 
   if (projectState.project.edges) {
     existingEdge = projectState.project.edges.find(

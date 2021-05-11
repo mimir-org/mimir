@@ -218,16 +218,33 @@ export function projectReducer(
       }
 
       if (isParent) {
+        console.log("isParent: ", node);
         let children: (Node | Edge)[] = [];
         children.push(node);
-        let childNode = node;
+        let parentNode = node;
 
-        const getChild = () => {
-          return childNode.id;
-        };
+        // Find all direct children
+        let firstEdges: Edge[] = [];
+        let firstChildrenId = [];
+        for (let i = 0; i < edgeList.length; i++) {
+          if (edgeList[i].fromNode === node.id) {
+            firstEdges.push(edgeList[i]);
+            firstChildrenId.push(edgeList[i].toNode);
+          }
+        }
+        let childrenToRemove: Node[] = [];
+        const nodeOne = nodeList.find((x) => x.id === firstChildrenId[0]);
+        childrenToRemove.push(nodeOne);
+        const nodeTwo = nodeList.find((x) => x.id === firstChildrenId[1]);
+        childrenToRemove.push(nodeTwo);
+        console.log({ childrenToRemove });
 
-        while (childNode !== undefined) {
-          const edge = edgeList.find((edge) => edge.fromNode === getChild());
+        // const getChild = () => {
+        //   return childNode.id;
+        // };
+
+        while (parentNode !== undefined) {
+          const edge = edgeList.find((edge) => edge.fromNode === parentNode.id);
           if (edge === undefined) break;
 
           const nextChild = state.project.nodes.find(
@@ -235,11 +252,10 @@ export function projectReducer(
           );
 
           // Only change nodes of same type
-          if (nextChild.type === type) {
-            children.push(nextChild);
-          }
+          if (nextChild.type === type) children.push(nextChild);
+
           children.push(edge);
-          childNode = nextChild;
+          parentNode = nextChild;
         }
 
         return {
