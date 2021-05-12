@@ -89,9 +89,13 @@ const FlowTree = () => {
     }
   }, [dispatch, projectState.project]);
 
+  const visible = useSelector<RootState>(
+    (state) => state.flow.view[1].visible
+  ) as boolean;
+
   return (
     <>
-      {projectState.project && (
+      {projectState.project && visible && (
         <ReactFlowProvider>
           <div className="reactflow-wrapper" ref={reactFlowWrapper}>
             <ReactFlow

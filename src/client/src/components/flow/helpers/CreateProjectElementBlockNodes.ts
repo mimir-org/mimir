@@ -16,6 +16,7 @@ const CreateProjectElementBlockNodes = (
   project: Project,
   nodeId: string
 ): Elements => {
+  console.log("her");
   const initialElements: Elements = [];
   const childrenNodes = [];
   const [width, height] = GetReactFlowBoundingRectData();
@@ -50,7 +51,7 @@ const CreateProjectElementBlockNodes = (
       }
     }
   });
-
+  console.log({ initialElements });
   project.edges.forEach((edge) => {
     const fromNode = childrenNodes.find((x) => x.id === edge.fromNode);
     const toNode = childrenNodes.find((x) => x.id === edge.toNode);

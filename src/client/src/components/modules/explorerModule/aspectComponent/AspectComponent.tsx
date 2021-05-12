@@ -19,7 +19,7 @@ interface Props {
   aspectType: NodeType;
 }
 
-export const Aspect = ({ nodeId, name, aspectType }: Props) => {
+export const AspectComponent = ({ nodeId, name, aspectType }: Props) => {
   const [expanded, setExpanded] = useState(true);
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -67,4 +67,4 @@ export const Aspect = ({ nodeId, name, aspectType }: Props) => {
   );
 };
 
-export default Aspect;
+export default AspectComponent;

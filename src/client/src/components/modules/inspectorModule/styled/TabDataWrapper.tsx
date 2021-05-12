@@ -6,7 +6,7 @@ const TabDataWrapper = styled.div`
   position: absolute;
   overflow-y: auto;
   height: 280px;
-  width: inherit;
+  /* width: inherit; */
 
   ::-webkit-scrollbar {
     width: 14px;

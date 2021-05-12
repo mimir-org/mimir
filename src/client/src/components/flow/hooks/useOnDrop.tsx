@@ -10,8 +10,8 @@ const useOnDrop = (
   reactFlowInstance,
   reactFlowWrapper
 ) => {
-  debugger;
-  const showTreeView = LoadState("treeview");
+  //   debugger;
+  //   const showTreeView = LoadState("treeview");
   const showBlockView = LoadState("blockview");
   event.preventDefault();
   const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();

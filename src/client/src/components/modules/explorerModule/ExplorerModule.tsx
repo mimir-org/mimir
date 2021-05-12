@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { Project, SwitchViewComponent } from "./";
+import { ProjectComponent, SwitchViewComponent } from "./";
 import { TextResources } from "../../../assets/textResources";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import { MODULE_TYPE } from "../../../models/project";
@@ -49,7 +49,7 @@ export const ExplorerModule = () => {
         <p className="text">{TextResources.Explorer_view}</p>
       </ModuleHeader>
       <ModuleBody visible={isOpen} explorer>
-        {hasProject && <Project />}
+        {hasProject && <ProjectComponent />}
         <SwitchViewComponent />
       </ModuleBody>
     </AnimatedModule>
