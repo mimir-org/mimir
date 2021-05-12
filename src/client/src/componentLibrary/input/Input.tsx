@@ -6,7 +6,8 @@ const Input = styled.input`
   border-radius: 5px;
   margin-bottom: 10px;
   padding: 5px;
-  width: 90%;
+  width: ${(props: { width: number }) =>
+    props.width === 0 ? `90%` : props.width + `px`};
   height: 31px;
 `;
 
