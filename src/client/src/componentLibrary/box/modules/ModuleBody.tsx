@@ -8,7 +8,8 @@ const ModuleBody = styled.div`
   transition: opacity 0.2s ease-in-out;
   position: ${(props) => (props.legend ? "absolute" : "initial")};
   bottom: ${(props) => (props.legend ? "0" : "initial")};
-  height: ${(props) => (props.legend ? "600px" : "initial")};
+  height: ${(props) => (props.legend ? "auto" : "initial")};
+  min-height: 370px;
   border-top: ${(props) => (props.legend ? `1px solid ${Color.Grey}` : "0")};
 `;
 
