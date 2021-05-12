@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Color, FontSize, FontType } from "../../../../componentLibrary";
 
 const TypeEditorHeader = styled.div`
   display: flex;
@@ -6,11 +7,11 @@ const TypeEditorHeader = styled.div`
   justify-content: space-between;
 
   p {
-    margin: 0px 0px 0px 16px;
-    font-family: Roboto;
+    margin: 4px 0px 0px 16px;
+    font-family: ${FontType.Standard};
     font-weight: bold;
-    font-size: 18px;
-    color: #000000;
+    font-size: ${FontSize.Header};
+    color: ${Color.Black};
   }
 
   img {
