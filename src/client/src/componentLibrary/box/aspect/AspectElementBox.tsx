@@ -7,7 +7,7 @@ const AspectChildBox = styled.div`
   padding-left: ${(props: { indent: number }) =>
     UseIndentLevel(props.indent)}px;
   background-color: ${(props: { type: NodeType }) =>
-    GetAspectColor(props.type)};
+    GetAspectColor(props.type, true)};
 `;
 
 export default AspectChildBox;

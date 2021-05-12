@@ -1,2 +1,3 @@
 export { default as LibraryModule } from "./LibraryModule";
-export { default as LibaryComponent } from "./LibraryComponent";
+export { default as LibraryComponent } from "./LibraryComponent";
+export { default as LibraryCategoryComponent } from "./LibraryCategoryComponent";

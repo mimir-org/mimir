@@ -32,19 +32,20 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
-        /// Get all from library
+        /// Get all from library by search
         /// </summary>
+        /// <param name="name"></param>
         /// <returns></returns>
         [HttpGet("")]
         [ProducesResponseType(typeof(ICollection<LibNode>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult GetAll()
+        public IActionResult GetAll(string name)
         {
             try
             {
-                var data = _libraryService.GetLibNodes(string.Empty).ToList();
+                var data = _libraryService.GetLibNodes(name).ToList();
                 return Ok(data);
             }
             catch (Exception e)

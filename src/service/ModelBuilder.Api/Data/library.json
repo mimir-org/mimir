@@ -30,6 +30,50 @@
         "Format": "UnsignedFloat"
       }
     ]
+  },
+  {
+    "Id": "equinor.com_5970A9F8-DC84-4E2E-AF8F-9AC64B349B02",
+    "Aspect": "Product",
+    "ObjectType": "ObjectBlock",
+    "TypeName": "OEMTOOLS 24389",
+    "Status": "Complete",
+    "Rds": "BGA",
+    "RdsCategory": "Components",
+    "Version": "1.0",
+    "Terminals": [
+      {
+        "TerminalType": "Electric",
+        "ConnectorType": "Input"
+      },
+      {
+        "TerminalType": "Electric",
+        "ConnectorType": "Input"
+      },
+      {
+        "terminalType": "Fluid",
+        "connectorType": "Input"
+      },
+      {
+        "terminalType": "Oil",
+        "connectorType": "Output"
+      }
+    ],
+    "Attributes": [
+      {
+        "Entity": "Flowrate, volumetric",
+        "Qualifier": "Capacity",
+        "Source": "Required",
+        "Condition": "Minimum",
+        "Units": [
+          "Sm3D",
+          "Sm3H",
+          "Scfhr",
+          "Bbld"
+        ],
+        "Aspect": "Function",
+        "Format": "UnsignedFloat"
+      }
+    ]
   }
 ]
 

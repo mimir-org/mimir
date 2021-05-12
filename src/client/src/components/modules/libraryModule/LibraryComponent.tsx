@@ -1,43 +1,35 @@
 import { TextResources } from "../../../assets/textResources";
-import { LibNode } from "../../../models/project";
-import GetIcon from "./helpers/GetIcon";
+import { LibCategory } from "../../../models/project";
 import { SearchIcon } from "../../../assets/icons";
 import { SearchInput } from "../../../componentLibrary";
-import {
-  LibraryBody,
-  LibraryElement,
-} from "../../../componentLibrary/box/library";
-
+import { LibraryBody } from "../../../componentLibrary/box/library";
+import { LibraryCategoryComponent } from ".";
 interface Props {
-  nodes: LibNode[];
+  categories: LibCategory[];
+  search: Function;
 }
 
-const LibrarySidebar = ({ nodes }: Props) => {
-  const onDragStart = (event, node) => {
-    event.dataTransfer.setData("application/reactflow", node);
-    event.dataTransfer.effectAllowed = "move";
+const LibraryComponent = ({ categories, search }: Props) => {
+  const onChange = (e: { target: { value: any } }) => {
+    search(e.target.value);
   };
 
   return (
     <LibraryBody>
       <img src={SearchIcon} alt="search" className="search-icon" />
-      <SearchInput placeholder={TextResources.Library_SearchBox_Placeholder} />
-      {nodes &&
-        nodes.map((node) => {
+      <SearchInput
+        placeholder={TextResources.Library_SearchBox_Placeholder}
+        onChange={onChange}
+      />
+
+      {categories &&
+        categories.map((category) => {
           return (
-            <LibraryElement
-              className="dndnode location"
-              onDragStart={(event) => onDragStart(event, JSON.stringify(node))}
-              key={node.id}
-              draggable
-            >
-              {node.name}
-              <div className="icon">{GetIcon(node.icon, "30")}</div>
-            </LibraryElement>
+            <LibraryCategoryComponent key={category.name} category={category} />
           );
         })}
     </LibraryBody>
   );
 };
 
-export default LibrarySidebar;
+export default LibraryComponent;

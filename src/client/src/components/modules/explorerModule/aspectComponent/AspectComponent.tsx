@@ -26,7 +26,7 @@ export const AspectComponent = ({ nodeId, name, aspectType }: Props) => {
   };
 
   const aspectIcon = GetAspectIcon(aspectType);
-  const color = GetAspectColor(aspectType);
+  const color = GetAspectColor(aspectType, true);
   const expandIcon = expanded ? ExpandedIcon : ClosedIcon;
   const childType = GetAspectType(aspectType);
   const nodes = GetNodes();
