@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Mb.Core.Exceptions;
+using Mb.Core.Extensions;
 using Mb.Core.Repositories.Contracts;
 using Mb.Core.Services.Contracts;
 using Mb.Models.Application;
@@ -261,7 +263,7 @@ namespace Mb.Core.Services
                 PositionX = positionX,
                 PositionY = positionY,
                 Connectors = new List<Connector>(),
-                UpdatedBy = _contextAccessor.HttpContext?.User.Claims.FirstOrDefault(x => x.Type == "name")?.Value ?? string.Empty,
+                UpdatedBy = _contextAccessor.GetName(),
                 Updated = DateTime.Now.ToUniversalTime(),
                 Version = version
             };
@@ -297,7 +299,7 @@ namespace Mb.Core.Services
 
             foreach (var node in nodesToUpdate)
             {
-                node.UpdatedBy = _contextAccessor.HttpContext?.User.Claims.FirstOrDefault(x => x.Type == "name")?.Value ?? string.Empty;
+                node.UpdatedBy = _contextAccessor.GetName();
                 node.Updated = DateTime.Now.ToUniversalTime();
                 _nodeRepository.Update(node);
             }
@@ -327,7 +329,7 @@ namespace Mb.Core.Services
                 }
 
                 node.Id = nodeNewId;
-                node.UpdatedBy = _contextAccessor.HttpContext?.User.Claims.FirstOrDefault(x => x.Type == "name")?.Value ?? string.Empty;
+                node.UpdatedBy = _contextAccessor.GetName();
                 node.Updated = DateTime.Now.ToUniversalTime();
                 await _nodeRepository.CreateAsync(node);
             }
@@ -347,7 +349,7 @@ namespace Mb.Core.Services
             foreach (var edge in edgesToDelete)
                 await _edgeRepository.Delete(edge.Id);
 
-            project.UpdatedBy = _contextAccessor.HttpContext?.User.Claims.FirstOrDefault(x => x.Type == "name")?.Value;
+            project.UpdatedBy = _contextAccessor.GetName();
             project.Updated = DateTime.Now.ToUniversalTime();
             
 
@@ -367,9 +369,9 @@ namespace Mb.Core.Services
                 Version = createProject.Version,
                 Name = createProject.Name,
                 Description = createProject.Description,
-                ProjectOwner = _contextAccessor.HttpContext?.User.Claims.FirstOrDefault(x => x.Type == "name")?.Value,
+                ProjectOwner = _contextAccessor.GetName(),
                 Updated = DateTime.Now.ToUniversalTime(),
-                UpdatedBy = _contextAccessor.HttpContext?.User.Claims.FirstOrDefault(x => x.Type == "name")?.Value,
+                UpdatedBy = _contextAccessor.GetName(),
                 Nodes = new List<Node>
                 {
                     CreateInitAspectNode(NodeType.AspectFunction, createProject.Version),
