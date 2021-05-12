@@ -4,6 +4,7 @@ import {
   Product,
   Location,
   FunctionBlock,
+  BlockViewFunction,
   OffPage,
 } from "./../nodes";
 
@@ -15,6 +16,7 @@ const GetBlockNodeTypes = {
   Product: Product,
   Location: Location,
   Functionblock: FunctionBlock,
+  BlockViewFunction: BlockViewFunction,
   Offpage: OffPage,
 };
 

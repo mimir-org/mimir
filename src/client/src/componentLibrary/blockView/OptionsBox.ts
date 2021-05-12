@@ -11,6 +11,11 @@ const OptionsBox = styled.div`
   position: absolute;
   left: 102px;
   top: -2px;
+
+  .button {
+    position: absolute;
+    right: 3px;
+  }
 `;
 
 export default OptionsBox;

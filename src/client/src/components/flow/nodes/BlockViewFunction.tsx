@@ -1,8 +1,7 @@
 import { memo, FC, useState } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
 import { GetHandleType } from "../helpers";
-import { OptionsIcon, PlusIcon } from "../../../assets/icons";
-
+import { OptionsIcon } from "../../../assets/icons";
 import {
   NodeBox,
   OptionsBox,
@@ -10,7 +9,7 @@ import {
   OptionsMenu,
 } from "../../../componentLibrary/blockView";
 
-const Function: FC<NodeProps> = ({ data }) => {
+const BlockViewFunction: FC<NodeProps> = ({ data }) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleClick = () => {
@@ -23,14 +22,13 @@ const Function: FC<NodeProps> = ({ data }) => {
         <img src={OptionsIcon} alt="" />
       </OptionsMenu>
       <OptionsBox visible={menuOpen}>
-        {[...Array(6)].map(() => (
-          <OptionsElement>
-            Gas Export
-            <img src={PlusIcon} alt="" className="button" />
-          </OptionsElement>
-        ))}
+        <OptionsElement>Gas Export</OptionsElement>
+        <OptionsElement>Process</OptionsElement>
+        <OptionsElement>Well fluid</OptionsElement>
+        <OptionsElement>Utilities</OptionsElement>
+        <OptionsElement>Oil export</OptionsElement>
       </OptionsBox>
-      {/* {data.connectors &&
+      {data.connectors &&
         data.connectors.map((connector) => {
           const [typeHandler, positionHandler] = GetHandleType(connector);
           return (
@@ -41,10 +39,10 @@ const Function: FC<NodeProps> = ({ data }) => {
               key={connector.id}
             />
           );
-        })} */}
+        })}
       <div>{data.label ?? data.name}</div>
     </NodeBox>
   );
 };
 
-export default memo(Function);
+export default memo(BlockViewFunction);
