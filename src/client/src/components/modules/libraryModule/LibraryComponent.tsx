@@ -26,7 +26,6 @@ const LibrarySidebar = ({ nodes }: Props) => {
         nodes.map((node) => {
           return (
             <LibraryElement
-              className="dndnode location"
               onDragStart={(event) => onDragStart(event, JSON.stringify(node))}
               key={node.id}
               draggable
