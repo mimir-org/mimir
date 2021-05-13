@@ -5,5 +5,4 @@ export { default as FontType } from "./font/FontType";
 export { default as FontWeight } from "./font/FontWeight";
 export { default as Size } from "./size/Size";
 export { default as AnimatedModule } from "./animated/AnimatedModule";
-export { default as VerticalScrollbar } from "./scrollbars/VerticalScrollbar";
 export { default as SearchInput } from "./input/SearchInput";

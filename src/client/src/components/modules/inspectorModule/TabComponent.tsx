@@ -33,27 +33,23 @@ const TabComponent = ({ attributes, index, nodeLabel }: Props) => {
     dispatch(changeInspector(index, list));
   }, [dispatch, index, list]);
 
-  return (
+  return isOpen ? (
     <>
-      {isOpen ? (
-        <>
-          <TabHeader active={true} onClick={handleClick}>
-            {index === 0 && <NodeTitle>{nodeLabel}</NodeTitle>}
-            <TabTitle active={true}>{GetInspectorTextResource(index)}</TabTitle>
-          </TabHeader>
-          <TabDataWrapper>
-            <TabContainer>
-              <TabContent attr={attributes} />
-            </TabContainer>
-          </TabDataWrapper>
-        </>
-      ) : (
-        <TabHeader onClick={handleClick}>
-          {index === 0 && <NodeTitle>{nodeLabel}</NodeTitle>}
-          <TabTitle>{GetInspectorTextResource(index)}</TabTitle>
-        </TabHeader>
-      )}
+      <TabHeader active={true} onClick={handleClick}>
+        {index === 0 && <NodeTitle>{nodeLabel}</NodeTitle>}
+        <TabTitle active={true}>{GetInspectorTextResource(index)}</TabTitle>
+      </TabHeader>
+      <TabDataWrapper>
+        <TabContainer>
+          <TabContent attr={attributes} />
+        </TabContainer>
+      </TabDataWrapper>
     </>
+  ) : (
+    <TabHeader onClick={handleClick}>
+      {index === 0 && <NodeTitle>{nodeLabel}</NodeTitle>}
+      <TabTitle>{GetInspectorTextResource(index)}</TabTitle>
+    </TabHeader>
   );
 };
 

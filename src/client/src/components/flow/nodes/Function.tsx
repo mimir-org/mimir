@@ -1,60 +1,11 @@
-import { memo, FC, useState } from "react";
+import { memo, FC } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
-import { CreateId, GetConnectorIcon, GetHandleType } from "../helpers";
-import { OptionsIcon } from "../../../assets/icons/blockView";
-import {
-  NodeBox,
-  OptionsBox,
-  OptionsElement,
-  OptionsMenu,
-} from "../../../componentLibrary/blockView";
+import { GetHandleType } from "../helpers";
 
 const Function: FC<NodeProps> = ({ data }) => {
-  const [showButton, setShowButton] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  const handleClick = () => {
-    setMenuOpen(!menuOpen);
-  };
-
-  const handleOnHover = () => {
-    if (!menuOpen) {
-      setShowButton(!showButton);
-    }
-  };
-
-  const handleOnMouseOut = () => {
-    if (!menuOpen) {
-      setShowButton(false);
-    }
-  };
   return (
-    <NodeBox onMouseOver={handleOnHover} onMouseOut={handleOnMouseOut}>
-      <OptionsMenu visible={showButton} onClick={handleClick}>
-        <img src={OptionsIcon} alt="" />
-      </OptionsMenu>
-      <OptionsBox visible={menuOpen}>
-        {data.connectors.map((conn) => (
-          <OptionsElement key={conn.id}>
-            {conn.name}
-            <img
-              src={GetConnectorIcon(conn.terminalType)}
-              alt="icon"
-              className="button"
-            />
-          </OptionsElement>
-        ))}
-      </OptionsBox>
-      <div>{data.label ?? data.name}</div>
-    </NodeBox>
-  );
-};
-
-export default memo(Function);
-
-// eslint-disable-next-line no-lone-blocks
-{
-  /* {data.connectors &&
+    <>
+      {data.connectors &&
         data.connectors.map((connector) => {
           const [typeHandler, positionHandler] = GetHandleType(connector);
           return (
@@ -65,5 +16,10 @@ export default memo(Function);
               key={connector.id}
             />
           );
-        })} */
-}
+        })}
+      <div>{data.label ?? data.name}</div>
+    </>
+  );
+};
+
+export default memo(Function);

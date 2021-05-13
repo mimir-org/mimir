@@ -67,12 +67,6 @@
 .react-flow__node-function,
 .react-flow__node-Function {
   background: #ffff00;
-  z-index: 0;
-
-  &:hover {
-    // text-decoration: underline;
-    // cursor: pointer;
-  }
 }
 
 .react-flow__node-product,
@@ -83,6 +77,19 @@
 .react-flow__node-location,
 .react-flow__node-Location {
   background: magenta;
+}
+
+.react-flow__node-BlockViewFunction {
+  padding: 10px;
+  border-radius: 3px;
+  width: 70px;
+  height: 27px;
+  font-size: 11px;
+  color: #222;
+  text-align: center;
+  border-width: 1px;
+  border-style: solid;
+  background: #ffff00;
 }
 
 .react-flow__minimap {

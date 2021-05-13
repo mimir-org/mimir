@@ -9,7 +9,7 @@ const CreateElementBlockNode = (
   let elementNode = null;
   if (!node) return elementNode;
 
-  const type = "Functionblock";
+  const type = "FunctionBlock";
 
   const elem = document.getElementById("function-block-" + node.id);
   const calculatedWidth = (width * 70) / 100;

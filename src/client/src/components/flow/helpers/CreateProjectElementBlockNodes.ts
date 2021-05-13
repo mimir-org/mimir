@@ -23,6 +23,7 @@ const CreateProjectElementBlockNodes = (
   if (!project) return;
 
   const actualNode = project.nodes.find((node) => node.id === nodeId);
+  console.log({ actualNode });
   const elementNode = CreateElementBlockNode(actualNode, width, height);
 
   if (elementNode) {
@@ -77,6 +78,7 @@ const CreateProjectElementBlockNodes = (
     }
   });
 
+  console.log({ initialElements });
   return initialElements;
 };
 

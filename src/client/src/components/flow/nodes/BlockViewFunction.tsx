@@ -1,7 +1,7 @@
 import { memo, FC, useState } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
-import { GetHandleType } from "../helpers";
-import { OptionsIcon } from "../../../assets/icons/blockView/";
+import { CreateId, GetConnectorIcon, GetHandleType } from "../helpers";
+import { OptionsIcon } from "../../../assets/icons/blockView";
 import {
   NodeBox,
   OptionsBox,
@@ -10,25 +10,51 @@ import {
 } from "../../../componentLibrary/blockView";
 
 const BlockViewFunction: FC<NodeProps> = ({ data }) => {
+  const [showButton, setShowButton] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleClick = () => {
     setMenuOpen(!menuOpen);
   };
 
+  const handleOnHover = () => {
+    if (!menuOpen) {
+      setShowButton(!showButton);
+    }
+  };
+
+  const handleOnMouseOut = () => {
+    if (!menuOpen) {
+      setShowButton(false);
+    }
+  };
   return (
-    <NodeBox>
-      <OptionsMenu onClick={handleClick}>
+    <NodeBox onMouseOver={handleOnHover} onMouseOut={handleOnMouseOut}>
+      <OptionsMenu visible={showButton} onClick={handleClick}>
         <img src={OptionsIcon} alt="" />
       </OptionsMenu>
       <OptionsBox visible={menuOpen}>
-        <OptionsElement>Gas Export</OptionsElement>
-        <OptionsElement>Process</OptionsElement>
-        <OptionsElement>Well fluid</OptionsElement>
-        <OptionsElement>Utilities</OptionsElement>
-        <OptionsElement>Oil export</OptionsElement>
+        {data.connectors.map((conn) => (
+          <OptionsElement key={conn.id}>
+            {conn.name}
+            <img
+              src={GetConnectorIcon(conn.terminalType)}
+              alt="icon"
+              className="button"
+            />
+          </OptionsElement>
+        ))}
       </OptionsBox>
-      {data.connectors &&
+      <div>{data.label ?? data.name}</div>
+    </NodeBox>
+  );
+};
+
+export default memo(BlockViewFunction);
+
+// eslint-disable-next-line no-lone-blocks
+{
+  /* {data.connectors &&
         data.connectors.map((connector) => {
           const [typeHandler, positionHandler] = GetHandleType(connector);
           return (
@@ -39,10 +65,5 @@ const BlockViewFunction: FC<NodeProps> = ({ data }) => {
               key={connector.id}
             />
           );
-        })}
-      <div>{data.label ?? data.name}</div>
-    </NodeBox>
-  );
-};
-
-export default memo(BlockViewFunction);
+        })} */
+}
