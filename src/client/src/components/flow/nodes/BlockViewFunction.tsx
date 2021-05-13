@@ -1,6 +1,6 @@
 import { memo, FC, useState } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
-import { CreateId, GetConnectorIcon, GetHandleType } from "../helpers";
+import { GetConnectorIcon, GetBlockHandleType } from "../helpers";
 import { OptionsIcon } from "../../../assets/icons/blockView";
 import {
   NodeBox,
@@ -45,18 +45,9 @@ const BlockViewFunction: FC<NodeProps> = ({ data }) => {
           </OptionsElement>
         ))}
       </OptionsBox>
-      <div>{data.label ?? data.name}</div>
-    </NodeBox>
-  );
-};
-
-export default memo(BlockViewFunction);
-
-// eslint-disable-next-line no-lone-blocks
-{
-  /* {data.connectors &&
+      {/* {data.connectors &&
         data.connectors.map((connector) => {
-          const [typeHandler, positionHandler] = GetHandleType(connector);
+          const [typeHandler, positionHandler] = GetBlockHandleType(connector);
           return (
             <Handle
               type={typeHandler}
@@ -65,5 +56,10 @@ export default memo(BlockViewFunction);
               key={connector.id}
             />
           );
-        })} */
-}
+        })} */}
+      <div>{data.label ?? data.name}</div>
+    </NodeBox>
+  );
+};
+
+export default memo(BlockViewFunction);
