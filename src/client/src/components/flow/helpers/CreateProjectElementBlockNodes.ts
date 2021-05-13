@@ -77,7 +77,6 @@ const CreateProjectElementBlockNodes = (
     }
   });
 
-  console.log({ initialElements });
   return initialElements;
 };
 
