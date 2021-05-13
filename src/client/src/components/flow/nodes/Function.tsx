@@ -2,7 +2,6 @@ import { memo, FC, useState } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
 import { CreateId, GetConnectorIcon, GetHandleType } from "../helpers";
 import { OptionsIcon } from "../../../assets/icons/blockView";
-
 import {
   NodeBox,
   OptionsBox,
@@ -29,7 +28,6 @@ const Function: FC<NodeProps> = ({ data }) => {
       setShowButton(false);
     }
   };
-
   return (
     <NodeBox onMouseOver={handleOnHover} onMouseOut={handleOnMouseOut}>
       <OptionsMenu visible={showButton} onClick={handleClick}>
@@ -37,7 +35,7 @@ const Function: FC<NodeProps> = ({ data }) => {
       </OptionsMenu>
       <OptionsBox visible={menuOpen}>
         {data.connectors.map((conn) => (
-          <OptionsElement key={CreateId()}>
+          <OptionsElement key={conn.id}>
             {conn.name}
             <img
               src={GetConnectorIcon(conn.terminalType)}
