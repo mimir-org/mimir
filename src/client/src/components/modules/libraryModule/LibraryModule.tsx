@@ -1,14 +1,14 @@
 import { TextResources } from "../../../assets/textResources";
 import { TypeEditorModule } from "../typeEditorModule";
 import { LegendModule } from "../legendModule";
-import { LibaryComponent } from "./index";
+import { LibraryComponent } from "./index";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { LibraryState } from "../../../redux/store/library/types";
 import { searchLibrary } from "../../../redux/store/library/actions";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
-import { MODULE_TYPE } from "../../../models/project";
+import { MODULE_TYPE, LibCategory } from "../../../models/project";
 import { SaveState } from "../../../redux/store/localStorage/localStorage";
 import { AnimatedModule, Size } from "../../../componentLibrary";
 import { LibraryIcon, ToggleLeft, ToggleRight } from "../../../assets/icons";
@@ -28,6 +28,10 @@ const LibraryModule = () => {
     dispatch(searchLibrary(""));
   }, [dispatch]);
 
+  const search = (text: string) => {
+    dispatch(searchLibrary(text));
+  };
+
   const animate = useSelector<RootState>(
     (state) => state.modules.types.find((x) => x.type === key).animate
   ) as boolean;
@@ -44,6 +48,29 @@ const LibraryModule = () => {
   const start = isOpen ? Size.ModuleClosed : Size.ModuleOpen;
   const stop = isOpen ? Size.ModuleOpen : Size.ModuleClosed;
 
+  const libNodes = (): LibCategory[] => {
+    var allCategories = [];
+
+    const result = state.nodes.reduce(function (r, a) {
+      r[a.category] = r[a.category] || [];
+      r[a.category].push(a);
+      return r;
+    }, Object.create([]));
+
+    const objectArray = Object.entries(result);
+    objectArray.forEach(([key, value]) => {
+      var libCategory = {
+        name: key,
+        nodes: value,
+        visible: false,
+      } as LibCategory;
+
+      allCategories.push(libCategory);
+    });
+
+    return allCategories;
+  };
+
   return (
     <AnimatedModule start={start} stop={stop} run={animate}>
       <ModuleHeader library visible={isOpen}>
@@ -57,7 +84,7 @@ const LibraryModule = () => {
         <p className="text">{TextResources.Library_Heading}</p>
       </ModuleHeader>
       <ModuleBody visible={isOpen} library>
-        <LibaryComponent nodes={state.nodes} />
+        <LibraryComponent categories={libNodes()} search={search} />
         <TypeEditorModule />
       </ModuleBody>
       <LegendModule visible={isOpen} />

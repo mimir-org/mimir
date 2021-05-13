@@ -9,7 +9,7 @@ import { get } from "../../../models/webclient";
 
 export function* searchLibrary(action: LibraryActionTypes) {
     try {
-        const url = process.env.REACT_APP_API_BASE_URL + "library";
+        const url = process.env.REACT_APP_API_BASE_URL + "library?name=" + action.payload;
         const response = yield call(get, url);
 
         const payload = {
