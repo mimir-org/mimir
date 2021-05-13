@@ -17,7 +17,7 @@ const CreateElementNode = (node: Node, isBlock: boolean): FlowElement => {
 
   elementNode = {
     id: node.id,
-    type: type,
+    type: node.type,
     data: node,
     position: position,
     isHidden: node.isHidden,

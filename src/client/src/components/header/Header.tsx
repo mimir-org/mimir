@@ -14,12 +14,8 @@ import {
   TitleBox,
   ViewBox,
 } from "../../componentLibrary/box/header/";
-import {
-  TreeviewOff,
-  TreeviewOn,
-  BlockviewOn,
-  BlockviewOff,
-} from "../../assets/icons";
+import { TreeviewOff, TreeviewOn } from "../../assets/icons";
+import { ViewOffIcon, ViewOnIcon } from "../../assets/icons/blockView";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -63,7 +59,7 @@ const Header = () => {
         <div className="line"></div>
         <ViewBox selected={showBlockView} right>
           <img
-            src={showBlockView ? BlockviewOn : BlockviewOff}
+            src={showBlockView ? ViewOnIcon : ViewOffIcon}
             alt={VIEW_TYPE.BLOCKVIEW}
             onClick={handleClick}
             className="view_icon"

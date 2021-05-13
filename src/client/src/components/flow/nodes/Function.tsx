@@ -1,7 +1,7 @@
 import { memo, FC, useState } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
-import { CreateId, GetHandleType } from "../helpers";
-import { OptionsIcon, PlusIcon } from "../../../assets/icons";
+import { CreateId, GetConnectorIcon, GetHandleType } from "../helpers";
+import { OptionsIcon } from "../../../assets/icons/blockView";
 
 import {
   NodeBox,
@@ -36,10 +36,14 @@ const Function: FC<NodeProps> = ({ data }) => {
         <img src={OptionsIcon} alt="" />
       </OptionsMenu>
       <OptionsBox visible={menuOpen}>
-        {[...Array(6)].map(() => (
+        {data.connectors.map((conn) => (
           <OptionsElement key={CreateId()}>
-            2nd Process System
-            <img src={PlusIcon} alt="" className="button" />
+            {conn.name}
+            <img
+              src={GetConnectorIcon(conn.terminalType)}
+              alt="icon"
+              className="button"
+            />
           </OptionsElement>
         ))}
       </OptionsBox>

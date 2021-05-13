@@ -1,7 +1,7 @@
 import { memo, FC, useState } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
 import { GetHandleType } from "../helpers";
-import { OptionsIcon } from "../../../assets/icons";
+import { OptionsIcon } from "../../../assets/icons/blockView/";
 import {
   NodeBox,
   OptionsBox,
