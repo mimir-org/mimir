@@ -4,9 +4,11 @@ import { FlowElement } from "react-flow-renderer";
 const CreateElementBlockNode = (
   node: Node,
   width: number,
-  height: number
+  height: number,
+  splitView: boolean
 ): FlowElement => {
   let elementNode = null;
+
   if (!node) return elementNode;
 
   const type = "FunctionBlock";
@@ -19,7 +21,8 @@ const CreateElementBlockNode = (
   if (elem) {
     elem.style.width = calculatedWidth + "px";
     elem.style.height = calculatedHeight + "px";
-    elem.style.zIndex = "-10000";
+    // elem.style.zIndex = "-10000";
+    if (splitView) elem.style.width = calculatedWidth / 1.5 + "px";
   }
 
   const position = { x: calculatedX, y: 0 };

@@ -12,7 +12,7 @@ import {
 export const SwitchViewComponent = () => {
   const dispatch = useDispatch();
   const isVisible = LoadState("blockview");
-  const [isActive, SetIsActive] = useState(false);
+  const [isActive, SetIsActive] = useState(LoadState("splitview"));
 
   const handleClick = () => {
     SetIsActive(!isActive);

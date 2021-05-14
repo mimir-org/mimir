@@ -38,7 +38,9 @@ const FlowBlock = () => {
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>();
   let nodeId: string;
-  const splitView = useSelector<RootState>((state) => state.splitView.visible);
+  const splitView = useSelector<RootState>(
+    (state) => state.splitView.visible
+  ) as boolean;
 
   const projectState = useSelector<RootState>(
     (state) => state.projectState
@@ -51,10 +53,12 @@ const FlowBlock = () => {
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(CreateProjectElementBlockNodes(projectState.project, nodeId));
+      setElements(
+        CreateProjectElementBlockNodes(projectState.project, nodeId, splitView)
+      );
       return setReactFlowInstance(_reactFlowInstance);
     },
-    [nodeId, projectState.project]
+    [nodeId, projectState.project, splitView]
   );
 
   const OnElementsRemove = (elementsToRemove) => {

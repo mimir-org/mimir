@@ -14,7 +14,8 @@ import {
 
 const CreateProjectElementBlockNodes = (
   project: Project,
-  nodeId: string
+  nodeId: string,
+  splitView: boolean
 ): Elements => {
   const initialElements: Elements = [];
   const childrenNodes = [];
@@ -23,7 +24,12 @@ const CreateProjectElementBlockNodes = (
   if (!project) return;
 
   const actualNode = project.nodes.find((node) => node.id === nodeId);
-  const elementNode = CreateElementBlockNode(actualNode, width, height);
+  const elementNode = CreateElementBlockNode(
+    actualNode,
+    width,
+    height,
+    splitView
+  );
 
   if (elementNode) {
     initialElements.push(elementNode);
