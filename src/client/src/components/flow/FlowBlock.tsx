@@ -5,6 +5,7 @@ import { ProjectState } from "../../redux/store/project/types";
 import { RootState } from "./../../redux/store/index";
 import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
 import { OpenProjectMenu } from "../project/openProject";
+
 import ReactFlow, {
   ReactFlowProvider,
   Elements,
@@ -91,8 +92,8 @@ const FlowBlock = () => {
     );
   };
 
-  const OnElementClick = (event, element) => {
-    dispatch(changeActiveNode(element.id));
+  const OnElementClick = (_event, element) => {
+    // dispatch(changeActiveNode(element.id)); // TODO: FIX
   };
 
   const OnUpdatePosition = () => {

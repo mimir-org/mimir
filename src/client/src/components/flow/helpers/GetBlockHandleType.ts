@@ -5,7 +5,7 @@ import {
 } from "../../../models/project";
 import { Position, HandleType } from "react-flow-renderer";
 
-const GetHandleType = (connector: Connector): [HandleType, Position] => {
+const GetBlockHandleType = (connector: Connector): [HandleType, Position] => {
   if (
     connector.type === CONNECTOR_TYPE.OUTPUT &&
     (connector.relationType === RELATION_TYPE.HasLocation ||
@@ -47,4 +47,4 @@ const GetHandleType = (connector: Connector): [HandleType, Position] => {
   return ["source", Position.Bottom];
 };
 
-export default GetHandleType;
+export default GetBlockHandleType;

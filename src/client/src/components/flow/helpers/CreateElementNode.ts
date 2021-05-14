@@ -1,14 +1,15 @@
-import { Node } from "../../../models/project";
-import { IsAspectNode } from "../helpers";
+import { Node, NODE_TYPE } from "../../../models/project";
 import { FlowElement } from "react-flow-renderer";
 
 const CreateElementNode = (node: Node, isBlock: boolean): FlowElement => {
   let elementNode = null;
   if (!node) return elementNode;
 
-  let type = !IsAspectNode(node.type)
-    ? node.type.charAt(0).toUpperCase() + node.type.substring(1).toLowerCase()
-    : node.type;
+  let type;
+
+  if (node.type === NODE_TYPE.FUNCTION && isBlock) {
+    type = "BlockViewFunction";
+  }
 
   let position = {};
   isBlock
@@ -17,7 +18,7 @@ const CreateElementNode = (node: Node, isBlock: boolean): FlowElement => {
 
   elementNode = {
     id: node.id,
-    type: type,
+    type: type ? type : node.type,
     data: node,
     position: position,
     isHidden: node.isHidden,
