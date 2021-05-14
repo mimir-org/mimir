@@ -31,8 +31,8 @@
 }
 
 .react-flow__handle {
+  opacity: 1;
   position: absolute;
-  //   visibility: hidden;
   width: 6px;
   height: 6px;
   background: #555;
@@ -44,14 +44,20 @@
   -o-border-radius: 100%;
 }
 
-.react-flow__handle-left {
-  top: 50%;
-  left: -4px;
-  transform: translateY(-50%);
-  -webkit-transform: translateY(-50%);
-  -moz-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  -o-transform: translateY(-50%);
+.blockView-handle-right {
+  right: -18px;
+  width: 6px;
+  height: 6px;
+  top: 0%;
+}
+
+.blockView-handle-left {
+  left: -10px;
+  width: 18px;
+  height: 18px;
+  border: none;
+  background-color: transparent;
+  z-index: 100;
 }
 
 .react-flow__handle.connectable {

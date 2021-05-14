@@ -3,7 +3,7 @@ import { Edge } from "../../../models/project";
 import { RootState } from "../../../redux/store";
 import { ProjectState } from "../../../redux/store/project/types";
 
-const GetNodes = (): Edge[] => {
+const GetEdges = (): Edge[] => {
   const projectState = useSelector<RootState>(
     (state) => state.projectState
   ) as ProjectState;
@@ -11,4 +11,4 @@ const GetNodes = (): Edge[] => {
   return projectState.project.edges;
 };
 
-export default GetNodes;
+export default GetEdges;

@@ -53,6 +53,7 @@ export default function BlockEdgeType({
     const toConnector = data.target.connectors.find(
       (x) => x.id === data.edge.toConnector
     );
+
     return {
       fromConnector: fromConnector,
       toConnector: toConnector,

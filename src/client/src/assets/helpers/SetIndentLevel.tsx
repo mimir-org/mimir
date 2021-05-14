@@ -8,8 +8,8 @@ const SetIndentLevel = (nodes: Node[], edges: Edge[], i: number) => {
 
   let edge = edges.find((edge) => edge.toNode === nodeId);
   if (edge === undefined) return null;
-
   indentCount++;
+
   let id = edge.fromNode;
 
   const getParent = () => {

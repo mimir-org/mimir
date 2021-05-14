@@ -1,50 +1,38 @@
+import { HandleType, Position } from "react-flow-renderer";
 import {
   Connector,
   CONNECTOR_TYPE,
   RELATION_TYPE,
 } from "../../../models/project";
-import { Position, HandleType } from "react-flow-renderer";
 
-const GetBlockHandleType = (connector: Connector): [HandleType, Position] => {
+const GetBlockHandleType = (
+  connector: Connector
+): [HandleType, Position, string] => {
   if (
     connector.type === CONNECTOR_TYPE.OUTPUT &&
     (connector.relationType === RELATION_TYPE.HasLocation ||
       connector.relationType === RELATION_TYPE.FulfilledBy)
   )
-    return ["source", Position.Right];
+    return ["source", Position.Right, "blockView-handle-right"];
 
   if (
     connector.type === CONNECTOR_TYPE.OUTPUT &&
     connector.relationType === RELATION_TYPE.Transport
   )
-    return ["source", Position.Right];
+    return ["source", Position.Right, "blockView-handle-right"];
 
   if (
     connector.type === CONNECTOR_TYPE.INPUT &&
     (connector.relationType === RELATION_TYPE.HasLocation ||
       connector.relationType === RELATION_TYPE.FulfilledBy)
   )
-    return ["target", Position.Left];
+    return ["target", Position.Left, "blockView-handle-left"];
 
   if (
     connector.type === CONNECTOR_TYPE.INPUT &&
     connector.relationType === RELATION_TYPE.Transport
   )
-    return ["target", Position.Left];
-
-  if (
-    connector.type === CONNECTOR_TYPE.INPUT &&
-    connector.relationType === RELATION_TYPE.PartOf
-  )
-    return ["target", Position.Top];
-
-  if (
-    connector.type === CONNECTOR_TYPE.OUTPUT &&
-    connector.relationType === RELATION_TYPE.PartOf
-  )
-    return ["source", Position.Bottom];
-
-  return ["source", Position.Bottom];
+    return ["target", Position.Left, "blockView-handle-left"];
 };
 
 export default GetBlockHandleType;
