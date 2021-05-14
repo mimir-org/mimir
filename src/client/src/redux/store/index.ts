@@ -7,6 +7,7 @@ import { inspectorReducer } from "./inspector/reducers";
 import { moduleReducer } from "./modules/reducers";
 import { projectMenuReducer } from "./projectMenu/reducers";
 import { flowReducer } from "./flow/reducers";
+import { splitViewReducer } from "./splitView/reducers";
 import { sagas } from "../sagas";
 
 const sagaMiddleware = createSagaMiddleware();
@@ -24,6 +25,7 @@ const rootReducers = combineReducers({
   modules: moduleReducer,
   projectMenu: projectMenuReducer,
   flow: flowReducer,
+  splitView: splitViewReducer,
 });
 
 const store = createStore(

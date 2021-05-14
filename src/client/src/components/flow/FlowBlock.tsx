@@ -15,6 +15,7 @@ import { changeActiveNode, get } from "../../redux/store/project/actions";
 import {
   GetProject,
   HasProject,
+  LoadState,
 } from "../../redux/store/localStorage/localStorage";
 import {
   CreateProjectElementBlockNodes,
@@ -37,6 +38,7 @@ const FlowBlock = () => {
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>();
   let nodeId: string;
+  const splitView = useSelector<RootState>((state) => state.splitView.visible);
 
   const projectState = useSelector<RootState>(
     (state) => state.projectState
