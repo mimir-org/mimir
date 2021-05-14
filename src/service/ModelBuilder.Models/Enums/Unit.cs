@@ -119,6 +119,15 @@ namespace Mb.Models.Enums
         Min = 36,
 
         [Display(Name = "mm")]
-        Mm = 37
+        Mm = 37,
+
+        [Display(Name = "inch")]
+        Inch = 38,
+
+        [Display(Name = "mm2")]
+        Mm2 = 39,
+
+        [Display(Name = "sq.inch")]
+        SqInch = 40
     }
 }
