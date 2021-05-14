@@ -23,3 +23,17 @@ Examples of how to create types in file
             "IsInterface": [true|false]
           }
         ]
+   
+## RDS file
+        [
+          {
+            "Code": "[RDS Code]",
+            "Name": "[RDS Name]",
+            "IsFunction": [true|false],
+            "IsProduct": [true|false],
+            "IsLocation": [true|false],
+            "Category": "[NotSet|FunctionalSystems|TechnicalSystems|Components|Transports|Interfaces|Spaces|ConstructionEntities]"
+          }
+        ]
+  
+  
