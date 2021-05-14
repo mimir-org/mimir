@@ -60,7 +60,7 @@ Examples of how to create types in file
                 "Source": "[NotSet|Required|Design|Calculated|Measured|RequiredLow|RequiredHigh|DesignLow|DesignHigh]",
                 "Condition": "[NotSet|Minimum|Nominal|Maximum|Actual]",
                 "Units": [
-                "       [Notset|None|Sm3D|Sm3H|Scfhr|Bbld|Barg|Bara|Psi|Psig|Pascal|Degc|Degf|Kelvin|Percent|Kgm3|Micron|Ppm|Ppb|Composite|Percent2X100|Percent3X50|Percent2X50|Specific|Fc|Fo|Fr|OneToN|NoDeadPockets|NotApplicable|MeterPerSecond|FeetPerSecond|LitersPerMSm3|PercentWeight|S|Ms|Min|Mm|Inch|Mm2|SqInch]",
+                  "[Notset|None|Sm3D|Sm3H|Scfhr|Bbld|Barg|Bara|Psi|Psig|Pascal|Degc|Degf|Kelvin|Percent|Kgm3|Micron|Ppm|Ppb|Composite|Percent2X100|Percent3X50|Percent2X50|Specific|Fc|Fo|Fr|OneToN|NoDeadPockets|NotApplicable|MeterPerSecond|FeetPerSecond|LitersPerMSm3|PercentWeight|S|Ms|Min|Mm|Inch|Mm2|SqInch]"
                 ],
                 "Aspect": "[NotSet|Function|Product|Location]",
                 "Format": "[NotSet|UnsignedFloat|Float|UnsignedInteger|Table|Selection|TextDocReference|Boolean]",
