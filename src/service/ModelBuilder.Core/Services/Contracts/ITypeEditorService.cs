@@ -21,5 +21,6 @@ namespace Mb.Core.Services.Contracts
         Task LoadDataFromFile(IFormFile file, CancellationToken cancellationToken);
         Task LoadDataFromFiles();
         Task DeleteType(string id);
+        Task<AttributeType> CreateAttributeType(AttributeType attributeType);
     }
 }

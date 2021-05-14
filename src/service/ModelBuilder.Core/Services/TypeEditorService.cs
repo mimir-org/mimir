@@ -221,6 +221,19 @@ namespace Mb.Core.Services
             await _libraryTypeComponentRepository.SaveAsync();
         }
 
+        /// <summary>
+        /// Create an attribute type
+        /// </summary>
+        /// <param name="attributeType"></param>
+        /// <returns></returns>
+        public async Task<AttributeType> CreateAttributeType(AttributeType attributeType)
+        {
+            attributeType.Id = 0;
+            await _attributeTypeRepository.CreateAsync(attributeType);
+            await _attributeTypeRepository.SaveAsync();
+            return attributeType;
+        }
+
         #endregion
 
         #region Private methods

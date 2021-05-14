@@ -258,7 +258,7 @@ namespace Mb.Core.Controllers.V1
         /// </summary>
         /// <param name="attributeType"></param>
         /// <returns></returns>
-        [HttpPost("type")]
+        [HttpPost("attribute")]
         [ProducesResponseType(typeof(AttributeType), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -270,7 +270,8 @@ namespace Mb.Core.Controllers.V1
 
             try
             {
-                return Ok(attributeType);
+                var createdAttribute = await _typeEditorService.CreateAttributeType(attributeType);
+                return Ok(createdAttribute);
             }
             catch (Exception e)
             {
