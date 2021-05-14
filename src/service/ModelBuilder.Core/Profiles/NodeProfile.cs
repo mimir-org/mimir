@@ -4,6 +4,7 @@ using Mb.Core.Extensions;
 using Mb.Models.Data;
 using Mb.Models.Enums;
 using Attribute = Mb.Models.Data.Attribute;
+using EnumExtensions = Microsoft.OpenApi.Extensions.EnumExtensions;
 
 namespace Mb.Core.Profiles
 {
@@ -18,7 +19,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Icon, opt => opt.MapFrom(src => MapIconType(src.ObjectType, src.Aspect)))
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => MapNodeType(src.Aspect)))
                 .ForMember(dest => dest.Connectors, opt => opt.MapFrom(src => src.Terminals))
-                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.RdsCategory.ToString()))
+                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.RdsCategory.GetDisplayName()))
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes));
 
             CreateMap<Terminal, Connector>()
