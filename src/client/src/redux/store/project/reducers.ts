@@ -21,6 +21,7 @@ import {
   SAVE_PROJECT,
   SAVE_PROJECT_SUCCESS_OR_ERROR,
   CHANGE_SELECTED_PROJECT,
+  CHANGE_ALL_NODES,
 } from "./types";
 
 const initialState: ProjectState = {
@@ -301,6 +302,21 @@ export function projectReducer(
             ? { ...x, selected: true }
             : { ...x, selected: false }
         ),
+      };
+
+    case CHANGE_ALL_NODES:
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          nodes: state.project.nodes.map(
+            (x) =>
+              state && {
+                ...x,
+                isHidden: true,
+              }
+          ),
+        },
       };
 
     default:

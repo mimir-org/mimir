@@ -8,14 +8,14 @@ import { save } from "../../redux/store/project/actions";
 import { RootState } from "../../redux/store";
 import { ProjectState } from "../../redux/store/project/types";
 import { VIEW_TYPE } from "../../models/project";
+import { TreeviewOff, TreeviewOn } from "../../assets/icons";
+import { ViewOffIcon, ViewOnIcon } from "../../assets/icons/blockView";
 import {
   HeaderBox,
   IconBox,
   TitleBox,
   ViewBox,
 } from "../../componentLibrary/box/header/";
-import { TreeviewOff, TreeviewOn } from "../../assets/icons";
-import { ViewOffIcon, ViewOnIcon } from "../../assets/icons/blockView";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -29,19 +29,13 @@ const Header = () => {
   const [showBlockView, setShowBlockView] = useState(LoadState(key));
 
   const handleClick = (e) => {
+    dispatch(save(projectState.project));
     const view = e.target.alt;
     SaveViewState(view);
-
-    if (view === key) {
-      dispatch(save(projectState.project));
-      setShowBlockView(LoadState(key));
-      setTimeout(() => {
-        push(`/home/${view}`);
-      }, 900); // TODO fix
-      return;
-    }
     setShowBlockView(LoadState(key));
-    push(`/home/${view}`);
+    setTimeout(() => {
+      push(`/home/${view}`);
+    }, 400);
   };
 
   return (

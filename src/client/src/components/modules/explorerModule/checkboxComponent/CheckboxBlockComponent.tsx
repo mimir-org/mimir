@@ -1,21 +1,23 @@
-import { NodeType } from "../../../../models/project";
-import useChangeNodeVisibility from "../hooks/useChangeNodeVisibility";
 import { GetNodes } from "../../../flow/helpers";
+import { useDispatch } from "react-redux";
+import { changeActiveNode } from "../../../../redux/store/project/actions";
 import "./checkbox.scss";
 
 interface Props {
   nodeId: string;
   inputLabel: string;
-  type: NodeType;
 }
 
-export const CheckboxComponent = ({ nodeId, inputLabel, type }: Props) => {
-  // Check if node is hidden
+export const CheckboxComponent = ({ nodeId, inputLabel }: Props) => {
+  const dispatch = useDispatch();
   const nodes = GetNodes();
   const node = nodes.find((x) => x.id === nodeId);
-  let isHidden = !node ? false : node.isHidden;
+  const selectedNode = nodes.find((x) => x.isSelected);
+  let isHidden = node !== selectedNode;
 
-  const handleChange = useChangeNodeVisibility(node, type);
+  const handleChange = () => {
+    dispatch(changeActiveNode(node.id));
+  };
 
   return (
     <label className={"checkbox"}>

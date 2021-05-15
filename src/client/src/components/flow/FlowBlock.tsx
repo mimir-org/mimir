@@ -11,7 +11,11 @@ import ReactFlow, {
   Elements,
   Controls,
 } from "react-flow-renderer";
-import { changeActiveNode, get } from "../../redux/store/project/actions";
+import {
+  changeActiveNode,
+  changeAllNodes,
+  get,
+} from "../../redux/store/project/actions";
 import {
   GetProject,
   HasProject,
@@ -38,6 +42,7 @@ const FlowBlock = () => {
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>();
   let nodeId: string;
+
   const splitView = useSelector<RootState>(
     (state) => state.splitView.visible
   ) as boolean;
