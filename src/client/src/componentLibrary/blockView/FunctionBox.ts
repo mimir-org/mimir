@@ -13,8 +13,8 @@ const FunctionBox = styled.div`
   .content {
     border: 2px solid black;
     border-radius: 4px;
-    width: inherit;
-    height: 100%;
+    width: ${(props) => props.width}px;
+    height: ${(props) => props.height}px;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     -ms-border-radius: 4px;

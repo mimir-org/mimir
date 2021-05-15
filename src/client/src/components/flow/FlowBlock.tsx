@@ -34,10 +34,6 @@ const FlowBlock = () => {
   const [elements, setElements] = useState<Elements>();
   let nodeId: string;
 
-  const splitView = useSelector<RootState>(
-    (state) => state.splitView.visible
-  ) as boolean;
-
   const projectState = useSelector<RootState>(
     (state) => state.projectState
   ) as ProjectState;
@@ -49,12 +45,10 @@ const FlowBlock = () => {
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(
-        CreateProjectElementBlockNodes(projectState.project, nodeId, splitView)
-      );
+      setElements(CreateProjectElementBlockNodes(projectState.project, nodeId));
       return setReactFlowInstance(_reactFlowInstance);
     },
-    [nodeId, projectState.project, splitView]
+    [nodeId, projectState.project]
   );
 
   const OnElementsRemove = (elementsToRemove) => {
@@ -131,14 +125,14 @@ const FlowBlock = () => {
           <div className="reactflow-wrapper" ref={reactFlowWrapper}>
             <ReactFlow
               elements={elements}
+              nodeTypes={GetBlockNodeTypes}
+              edgeTypes={GetBlockEdgeTypes}
               onConnect={OnConnect}
               onElementsRemove={OnElementsRemove}
               onLoad={OnLoad}
               onDrop={OnDrop}
               onNodeDragStop={OnNodeDragStop}
               onElementClick={OnElementClick}
-              nodeTypes={GetBlockNodeTypes}
-              edgeTypes={GetBlockEdgeTypes}
               onConnectEnd={OnConnectStop}
               onConnectStart={OnConnectStart}
               zoomOnScroll={false}

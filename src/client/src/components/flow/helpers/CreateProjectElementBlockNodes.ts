@@ -14,22 +14,15 @@ import {
 
 const CreateProjectElementBlockNodes = (
   project: Project,
-  nodeId: string,
-  splitView: boolean
+  nodeId: string
 ): Elements => {
   const initialElements: Elements = [];
   const childrenNodes = [];
-  const [width, height] = GetReactFlowBoundingRectData();
-
+  const [width] = GetReactFlowBoundingRectData();
   if (!project) return;
 
   const actualNode = project.nodes.find((node) => node.id === nodeId);
-  const elementNode = CreateElementBlockNode(
-    actualNode,
-    width,
-    height,
-    splitView
-  );
+  const elementNode = CreateElementBlockNode(actualNode, width);
 
   if (elementNode) {
     initialElements.push(elementNode);
