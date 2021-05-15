@@ -4,11 +4,8 @@ import { NodeType } from "../../../../models/project";
 import { IsAspectNode, GetNodes, GetEdges } from "../../../flow/helpers";
 import { AspectElement } from ".";
 import { AspectBox } from "../../../../componentLibrary/box/aspect";
-import { LoadState } from "../../../../redux/store/localStorage/localStorage";
-import {
-  CheckboxComponent,
-  CheckboxBlockComponent,
-} from "../checkboxComponent";
+import { LoadState } from "../../../../redux/store/localStorage/";
+import { Checkbox, CheckboxBlock } from "../checkboxComponent";
 import {
   GetAspectIcon,
   GetAspectColor,
@@ -44,13 +41,9 @@ export const AspectComponent = ({ nodeId, name, aspectType }: Props) => {
         <img src={aspectIcon} alt="aspect-icon"></img>
         <div className="checkbox_container">
           {!isBlockView ? (
-            <CheckboxComponent
-              nodeId={nodeId}
-              inputLabel={name}
-              type={childType}
-            />
+            <Checkbox nodeId={nodeId} inputLabel={name} type={childType} />
           ) : (
-            <CheckboxBlockComponent nodeId={nodeId} inputLabel={name} />
+            <CheckboxBlock nodeId={nodeId} inputLabel={name} />
           )}
         </div>
         {GetDropdownIcon(expandIcon, handleExpandClick)}

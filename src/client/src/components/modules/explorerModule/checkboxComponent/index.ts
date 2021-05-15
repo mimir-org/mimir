@@ -1,2 +1,2 @@
-export { default as CheckboxComponent } from "./CheckboxComponent";
-export { default as CheckboxBlockComponent } from "./CheckboxBlockComponent";
+export { default as Checkbox } from "./Checkbox";
+export { default as CheckboxBlock } from "./CheckboxBlock";

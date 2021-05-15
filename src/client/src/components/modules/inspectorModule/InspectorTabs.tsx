@@ -15,7 +15,6 @@ const InspectorTabs = () => {
   let adminData: Attribute[] = [];
   let techData: Attribute[] = [];
   let relationData: Attribute[] = [];
-  let index = 0;
 
   if (node) {
     adminData = [];

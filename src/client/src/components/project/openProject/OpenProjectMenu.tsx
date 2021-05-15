@@ -5,7 +5,7 @@ import { ProjectSimple } from "../../../models/project";
 import { LeftArrowIcon, RightArrowIcon } from "../../../assets/icons";
 import { MenuButton } from "../../../componentLibrary/buttons";
 import { TextResources } from "../../../assets/textResources";
-import { SetProject } from "../../../redux/store/localStorage/localStorage";
+import { SetProject } from "../../../redux/store/localStorage";
 import { get } from "../../../redux/store/project/actions";
 import { changeProjectMenu } from "../../../redux/store/projectMenu/actions";
 import {

@@ -4,7 +4,7 @@ import { LegendIcon } from "../../../assets/icons";
 import { TextResources } from "../../../assets/textResources";
 import { ProjectState } from "../../../redux/store/project/types";
 import { RootState } from "../../../redux/store";
-import { LoadState } from "../../../redux/store/localStorage/localStorage";
+import { LoadState } from "../../../redux/store/localStorage";
 import { VIEW_TYPE } from "../../../models/project";
 import { GetLegendData, Legend } from "../../flow/helpers";
 import {

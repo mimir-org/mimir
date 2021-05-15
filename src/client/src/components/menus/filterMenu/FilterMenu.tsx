@@ -4,10 +4,7 @@ import { useState } from "react";
 import { MENU_TYPE } from "../../../models/project";
 import { GetMenuIcon } from "../../../assets/helpers/";
 import { MenuBox, MenuTopHeader } from "../../../componentLibrary/box/menus";
-import {
-  LoadState,
-  SaveState,
-} from "../../../redux/store/localStorage/localStorage";
+import { LoadState, SaveState } from "../../../redux/store/localStorage";
 
 const FilterModule = () => {
   const type = MENU_TYPE.VISUAL_FILTER;

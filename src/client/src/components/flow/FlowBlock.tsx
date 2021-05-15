@@ -5,22 +5,13 @@ import { ProjectState } from "../../redux/store/project/types";
 import { RootState } from "./../../redux/store/index";
 import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
 import { OpenProjectMenu } from "../project/openProject";
-
+import { get } from "../../redux/store/project/actions";
+import { GetProject, HasProject } from "../../redux/store/localStorage";
 import ReactFlow, {
   ReactFlowProvider,
   Elements,
   Controls,
 } from "react-flow-renderer";
-import {
-  changeActiveNode,
-  changeAllNodes,
-  get,
-} from "../../redux/store/project/actions";
-import {
-  GetProject,
-  HasProject,
-  LoadState,
-} from "../../redux/store/localStorage/localStorage";
 import {
   CreateProjectElementBlockNodes,
   GetBlockNodeTypes,

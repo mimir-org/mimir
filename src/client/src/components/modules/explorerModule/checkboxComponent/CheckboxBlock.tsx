@@ -8,7 +8,7 @@ interface Props {
   inputLabel: string;
 }
 
-export const CheckboxComponent = ({ nodeId, inputLabel }: Props) => {
+export const CheckboxBlock = ({ nodeId, inputLabel }: Props) => {
   const dispatch = useDispatch();
   const nodes = GetNodes();
   const node = nodes.find((x) => x.id === nodeId);
@@ -28,4 +28,4 @@ export const CheckboxComponent = ({ nodeId, inputLabel }: Props) => {
   );
 };
 
-export default CheckboxComponent;
+export default CheckboxBlock;

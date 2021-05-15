@@ -9,7 +9,7 @@ interface Props {
   type: NodeType;
 }
 
-export const CheckboxComponent = ({ nodeId, inputLabel, type }: Props) => {
+export const Checkbox = ({ nodeId, inputLabel, type }: Props) => {
   // Check if node is hidden
   const nodes = GetNodes();
   const node = nodes.find((x) => x.id === nodeId);
@@ -26,4 +26,4 @@ export const CheckboxComponent = ({ nodeId, inputLabel, type }: Props) => {
   );
 };
 
-export default CheckboxComponent;
+export default Checkbox;

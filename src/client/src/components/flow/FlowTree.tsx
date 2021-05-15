@@ -7,10 +7,8 @@ import { ProjectState } from "../../redux/store/project/types";
 import { RootState } from "./../../redux/store/index";
 import { useOnConnect, useOnDrop, useOnElementsRemove } from "./hooks";
 import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
-import {
-  GetProject,
-  HasProject,
-} from "../../redux/store/localStorage/localStorage";
+import { GetProject, HasProject } from "../../redux/store/localStorage";
+import { OpenProjectMenu } from "../project/openProject/OpenProjectMenu";
 import {
   updatePosition,
   changeActiveNode,
@@ -25,7 +23,6 @@ import ReactFlow, {
   Elements,
   Controls,
 } from "react-flow-renderer";
-import { OpenProjectMenu } from "../project/openProject/OpenProjectMenu";
 
 const FlowTree = () => {
   const dispatch = useDispatch();

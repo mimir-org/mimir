@@ -1,13 +1,10 @@
 import { FooterBox, FooterContent } from "../../../componentLibrary/box/footer";
 import { TextResources } from "../../../assets/textResources";
 import { useState } from "react";
-import "./checkboxfooter.scss";
 import { useDispatch } from "react-redux";
 import { changeSplitView } from "../../../redux/store/splitView/actions";
-import {
-  LoadState,
-  SaveState,
-} from "../../../redux/store/localStorage/localStorage";
+import { LoadState, SaveState } from "../../../redux/store/localStorage";
+import "./checkboxfooter.scss";
 
 export const SwitchViewComponent = () => {
   const dispatch = useDispatch();

@@ -1,10 +1,7 @@
 import { AspectElementBox } from "../../../../componentLibrary/box/aspect";
 import { NodeType } from "../../../../models/project";
 import { LoadState } from "../../../../redux/store/localStorage/localStorage";
-import {
-  CheckboxComponent,
-  CheckboxBlockComponent,
-} from "../checkboxComponent";
+import { Checkbox, CheckboxBlock } from "../checkboxComponent";
 
 interface Props {
   nodeId: string;
@@ -19,9 +16,9 @@ export const AspectChildComponent = ({ nodeId, name, type, indent }: Props) => {
   return (
     <AspectElementBox indent={indent} type={type}>
       {!isBlockView ? (
-        <CheckboxComponent nodeId={nodeId} inputLabel={name} type={type} />
+        <Checkbox nodeId={nodeId} inputLabel={name} type={type} />
       ) : (
-        <CheckboxBlockComponent nodeId={nodeId} inputLabel={name} />
+        <CheckboxBlock nodeId={nodeId} inputLabel={name} />
       )}
     </AspectElementBox>
   );

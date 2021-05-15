@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { TextResources } from "../../assets/textResources";
 import SaveViewState from "./helpers/SaveViewState";
-import { LoadState } from "../../redux/store/localStorage/localStorage";
+import { LoadState } from "../../redux/store/localStorage";
 import { useDispatch, useSelector } from "react-redux";
 import { save } from "../../redux/store/project/actions";
 import { RootState } from "../../redux/store";
