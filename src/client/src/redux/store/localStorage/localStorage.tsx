@@ -1,3 +1,5 @@
+import { ViewType } from "../../../models/project";
+
 export const LoadState = (key: string) => {
   try {
     const serializedState = localStorage.getItem(`show_${key}`);
@@ -16,6 +18,28 @@ export const SaveState = (state: boolean, key: string) => {
   try {
     const serializedState = JSON.stringify(state);
     localStorage.setItem(`show_${key}`, serializedState);
+  } catch {
+    return undefined;
+  }
+};
+
+export const CheckView = (view: string) => {
+  try {
+    const serializedState = localStorage.getItem(`ViewType`);
+
+    if (serializedState === null || serializedState === undefined) {
+      return null;
+    }
+    return JSON.parse(serializedState) === view;
+  } catch (err) {
+    return undefined;
+  }
+};
+
+export const SaveView = (view: ViewType) => {
+  try {
+    const serializedState = JSON.stringify(view);
+    localStorage.setItem(`ViewType`, serializedState);
   } catch {
     return undefined;
   }

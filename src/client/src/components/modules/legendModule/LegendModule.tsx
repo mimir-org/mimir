@@ -1,10 +1,9 @@
-import { useState } from "react";
 import { useSelector } from "react-redux";
 import { LegendIcon } from "../../../assets/icons";
 import { TextResources } from "../../../assets/textResources";
 import { ProjectState } from "../../../redux/store/project/types";
 import { RootState } from "../../../redux/store";
-import { LoadState } from "../../../redux/store/localStorage";
+import { CheckView } from "../../../redux/store/localStorage";
 import { VIEW_TYPE } from "../../../models/project";
 import { GetLegendData, Legend } from "../../flow/helpers";
 import {
@@ -21,10 +20,7 @@ const LegendModule = ({ visible }) => {
     (state) => state.projectState
   ) as ProjectState;
 
-  const blockView = VIEW_TYPE.BLOCKVIEW;
-  const treeView = VIEW_TYPE.TREEVIEW;
-  const [isBlockView] = useState(LoadState(blockView));
-  const [isTreeview] = useState(LoadState(treeView));
+  const isBlockView = CheckView(VIEW_TYPE.BLOCKVIEW);
   let legends = null;
 
   if (isBlockView) {
@@ -35,7 +31,7 @@ const LegendModule = ({ visible }) => {
     ) as Legend[];
   }
 
-  if (isTreeview) {
+  if (!isBlockView) {
     legends = GetLegendData(projectState.project, false, null) as Legend[];
   }
 

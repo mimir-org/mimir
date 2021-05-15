@@ -1,7 +1,7 @@
 import { LibNode, Node, NodeType, VIEW_TYPE } from "../../../models/project";
 import { addNode } from "../../../redux/store/project/actions";
 import { CreateId, CreateElementNode } from "./../helpers";
-import { LoadState } from "../../../redux/store/localStorage/localStorage";
+import { CheckView } from "../../../redux/store/localStorage/localStorage";
 
 const useOnDrop = (
   event,
@@ -10,9 +10,7 @@ const useOnDrop = (
   reactFlowInstance,
   reactFlowWrapper
 ) => {
-  //   debugger;
-  // const showTreeView = LoadState(VIEW_TYPE.TREEVIEW);
-  const showBlockView = LoadState(VIEW_TYPE.BLOCKVIEW);
+  const showBlockView = CheckView(VIEW_TYPE.BLOCKVIEW);
   event.preventDefault();
   const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
   const data = JSON.parse(

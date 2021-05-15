@@ -1,8 +1,6 @@
-import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { TextResources } from "../../assets/textResources";
-import SaveViewState from "./helpers/SaveViewState";
-import { LoadState } from "../../redux/store/localStorage";
+import { CheckView, SaveView } from "../../redux/store/localStorage";
 import { useDispatch, useSelector } from "react-redux";
 import { save } from "../../redux/store/project/actions";
 import { RootState } from "../../redux/store";
@@ -25,14 +23,12 @@ const Header = () => {
     (state) => state.projectState
   ) as ProjectState;
 
-  const key = VIEW_TYPE.BLOCKVIEW;
-  const [showBlockView, setShowBlockView] = useState(LoadState(key));
+  const isBlockView = CheckView(VIEW_TYPE.BLOCKVIEW);
 
   const handleClick = (e) => {
     dispatch(save(projectState.project));
     const view = e.target.alt;
-    SaveViewState(view);
-    setShowBlockView(LoadState(key));
+    SaveView(view);
     setTimeout(() => {
       push(`/home/${view}`);
     }, 400);
@@ -42,18 +38,18 @@ const Header = () => {
     <HeaderBox>
       <TitleBox>{TextResources.MainHeader_App_Name}</TitleBox>
       <IconBox>
-        <ViewBox selected={!showBlockView}>
+        <ViewBox selected={!isBlockView}>
           <img
-            src={showBlockView ? TreeviewOff : TreeviewOn}
+            src={isBlockView ? TreeviewOff : TreeviewOn}
             alt={VIEW_TYPE.TREEVIEW}
             onClick={handleClick}
             className="view_icon"
           />
         </ViewBox>
         <div className="line"></div>
-        <ViewBox selected={showBlockView} right>
+        <ViewBox selected={isBlockView} right>
           <img
-            src={showBlockView ? ViewOnIcon : ViewOffIcon}
+            src={isBlockView ? ViewOnIcon : ViewOffIcon}
             alt={VIEW_TYPE.BLOCKVIEW}
             onClick={handleClick}
             className="view_icon"

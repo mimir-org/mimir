@@ -7,9 +7,8 @@ import { FunctionBox, MessageBox } from "../../../componentLibrary/blockView";
 import { RootState } from "../../../redux/store";
 import { GetReactFlowBoundingRectData } from "../helpers";
 
-const FunctionBlock: FC<NodeProps> = ({ data }, { position }) => {
+const FunctionBlock: FC<NodeProps> = ({ data }) => {
   const splitView = useSelector<RootState>((state) => state.splitView.visible);
-
   const [width, height] = GetReactFlowBoundingRectData();
   let calculatedWidth = (width * 70) / 100;
   const calculatedHeight = (height * 80) / 100;

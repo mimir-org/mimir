@@ -4,7 +4,7 @@ import { NodeType, VIEW_TYPE } from "../../../../models/project";
 import { IsAspectNode, GetNodes, GetEdges } from "../../../flow/helpers";
 import { AspectElement } from ".";
 import { AspectBox } from "../../../../componentLibrary/box/aspect";
-import { LoadState } from "../../../../redux/store/localStorage/";
+import { CheckView } from "../../../../redux/store/localStorage/";
 import { Checkbox, CheckboxBlock } from "../checkboxComponent";
 import {
   GetAspectIcon,
@@ -29,7 +29,7 @@ export const AspectComponent = ({ nodeId, name, aspectType }: Props) => {
   const nodes = GetNodes();
   const edges = GetEdges();
   const children = nodes.filter((node) => !IsAspectNode(node.type));
-  const isBlockView = LoadState(VIEW_TYPE.BLOCKVIEW);
+  const isBlockView = CheckView(VIEW_TYPE.BLOCKVIEW);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);

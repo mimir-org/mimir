@@ -4,6 +4,7 @@ import { SearchIcon } from "../../../assets/icons";
 import { SearchInput } from "../../../componentLibrary";
 import { LibraryBody } from "../../../componentLibrary/box/library";
 import { LibraryCategoryComponent } from ".";
+
 interface Props {
   categories: LibCategory[];
   search: Function;

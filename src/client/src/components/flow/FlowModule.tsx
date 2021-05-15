@@ -1,10 +1,10 @@
 import { FlowTree, FlowBlock } from ".";
 import { VIEW_TYPE } from "../../models/project";
-import SaveViewState from "../header/helpers/SaveViewState";
+import { SaveView } from "../../redux/store/localStorage";
 
 const FlowModule = ({ route }) => {
-  if (route.type === undefined) route.type = VIEW_TYPE.TREEVIEW;
-  SaveViewState(route.type);
+  if (!route.type) route.type = VIEW_TYPE.TREEVIEW;
+  SaveView(route.type);
 
   return (
     <div className="dndflow">
