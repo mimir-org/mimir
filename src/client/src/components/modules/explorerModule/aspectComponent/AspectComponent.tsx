@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ExpandedIcon, ClosedIcon } from "../../../../assets/icons";
-import { NodeType } from "../../../../models/project";
+import { NodeType, VIEW_TYPE } from "../../../../models/project";
 import { IsAspectNode, GetNodes, GetEdges } from "../../../flow/helpers";
 import { AspectElement } from ".";
 import { AspectBox } from "../../../../componentLibrary/box/aspect";
@@ -29,7 +29,7 @@ export const AspectComponent = ({ nodeId, name, aspectType }: Props) => {
   const nodes = GetNodes();
   const edges = GetEdges();
   const children = nodes.filter((node) => !IsAspectNode(node.type));
-  const isBlockView = LoadState("blockview");
+  const isBlockView = LoadState(VIEW_TYPE.BLOCKVIEW);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);

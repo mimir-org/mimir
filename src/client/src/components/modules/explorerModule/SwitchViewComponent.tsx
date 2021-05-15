@@ -4,11 +4,12 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { changeSplitView } from "../../../redux/store/splitView/actions";
 import { LoadState, SaveState } from "../../../redux/store/localStorage";
+import { VIEW_TYPE } from "../../../models/project";
 import "./checkboxfooter.scss";
 
 export const SwitchViewComponent = () => {
   const dispatch = useDispatch();
-  const isVisible = LoadState("blockview");
+  const isVisible = LoadState(VIEW_TYPE.BLOCKVIEW);
   const [isActive, SetIsActive] = useState(LoadState("splitview"));
 
   const handleClick = () => {
