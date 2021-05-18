@@ -1,10 +1,9 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ProjectMainMenu } from "../project";
-import { ProjectState } from "../../redux/store/project/types";
 import { RootState } from "./../../redux/store/index";
 import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
-import { VIEW_TYPE } from "../../models/project";
+import { Project, VIEW_TYPE } from "../../models/project";
 import { OpenProjectMenu } from "../project/openProject";
 import { get } from "../../redux/store/project/actions";
 import {
@@ -39,23 +38,23 @@ const FlowBlock = () => {
   const [elements, setElements] = useState<Elements>();
   let nodeId: string;
 
-  const projectState = useSelector<RootState>(
-    (state) => state.projectState
-  ) as ProjectState;
+  const project = useSelector<RootState>(
+    (state) => state.projectState.project
+  ) as Project;
 
-  SetProject(projectState.project);
+  SetProject(project);
 
-  if (projectState.project) {
-    const node = projectState.project.nodes.find((node) => node.isSelected);
+  if (project) {
+    const node = project.nodes.find((node) => node.isSelected);
     nodeId = node ? node.id : "";
   }
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(CreateProjectElementBlockNodes(projectState.project, nodeId));
+      setElements(CreateProjectElementBlockNodes(project, nodeId));
       return setReactFlowInstance(_reactFlowInstance);
     },
-    [nodeId, projectState.project]
+    [nodeId, project]
   );
 
   const OnElementsRemove = (elementsToRemove) => {
@@ -63,7 +62,7 @@ const FlowBlock = () => {
   };
 
   const OnConnect = (params) => {
-    return useOnConnect(params, projectState, setElements, dispatch);
+    return useOnConnect(params, project, setElements, dispatch);
   };
 
   const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
@@ -73,7 +72,7 @@ const FlowBlock = () => {
   const OnConnectStop = (e) => {
     return useOnConnectStop(
       e,
-      projectState,
+      project,
       reactFlowInstance,
       nodeId,
       reactFlowWrapper,
@@ -100,7 +99,7 @@ const FlowBlock = () => {
   };
 
   const OnUpdatePosition = () => {
-    return useOnUpdatePosition(projectState, dispatch);
+    return useOnUpdatePosition(project, dispatch);
   };
 
   // Force rerender
@@ -115,11 +114,11 @@ const FlowBlock = () => {
 
   // Handling of project loading
   useEffect(() => {
-    if (projectState.project === null) {
+    if (project === null) {
       const projectId = GetProject();
       dispatch(get(projectId));
     }
-  }, [dispatch, projectState.project]);
+  }, [dispatch, project]);
 
   const visible = useSelector<RootState>(
     (state) => state.flow.view === VIEW_TYPE.BLOCKVIEW
@@ -127,7 +126,7 @@ const FlowBlock = () => {
 
   return (
     <>
-      {projectState.project && visible && (
+      {project && visible && (
         <ReactFlowProvider>
           <div className="reactflow-wrapper" ref={reactFlowWrapper}>
             <ReactFlow
@@ -151,7 +150,7 @@ const FlowBlock = () => {
           </div>
         </ReactFlowProvider>
       )}
-      {!projectState.project && !HasProject() && (
+      {!project && !HasProject() && (
         <div>
           <ProjectMainMenu />
           <OpenProjectMenu />
