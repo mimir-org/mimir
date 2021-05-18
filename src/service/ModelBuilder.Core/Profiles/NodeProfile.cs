@@ -20,7 +20,9 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => MapNodeType(src.Aspect)))
                 .ForMember(dest => dest.Connectors, opt => opt.MapFrom(src => src.Terminals))
                 .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.RdsCategory.GetDisplayName()))
-                .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes));
+                .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
+                .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
+                .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version));
 
             CreateMap<Terminal, Connector>()
                 .ForMember(dest => dest.NodeId, opt => opt.Ignore())

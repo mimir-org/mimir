@@ -13,5 +13,7 @@ namespace Mb.Models.Data
         public ICollection<Connector> Connectors { get; set; }
         public string Category { get; set; }
         public ICollection<Attribute> Attributes { get; set; }
+        public string Version { get; set; }
+        public string SemanticReference { get; set; }
     }
 }

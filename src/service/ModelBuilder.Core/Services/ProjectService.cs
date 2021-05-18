@@ -85,6 +85,7 @@ namespace Mb.Core.Services
                 .Include(x => x.Nodes)
                 .Include("Nodes.Attributes")
                 .Include("Nodes.Connectors")
+                .Include("Nodes.Connectors.Attributes")
                 .AsSplitQuery()
                 .OrderByDescending(x => x.Name)
                 .FirstOrDefaultAsync();
