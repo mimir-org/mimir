@@ -1,5 +1,3 @@
-import { ViewType } from "../../../models/project";
-
 export const LoadState = (key: string) => {
   try {
     const serializedState = localStorage.getItem(`show_${key}`);

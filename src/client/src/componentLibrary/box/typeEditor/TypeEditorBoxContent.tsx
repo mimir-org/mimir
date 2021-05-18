@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color, FontSize, FontType } from "../..";
+import { Color, FontSize } from "../..";
 
 const TypeEditorBoxContent = styled.div`
   display: flex;
@@ -14,7 +14,6 @@ const TypeEditorBoxContent = styled.div`
   border-radius: 2px;
   background-color: ${Color.White};
   cursor: pointer;
-  font-family: ${FontType.Standard};
   color: ${Color.Black};
   font-size: ${FontSize.Standard};
   white-space: nowrap;

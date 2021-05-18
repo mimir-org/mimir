@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color, FontSize, FontType } from "../../../componentLibrary";
+import { Color, FontSize } from "../../../componentLibrary";
 
 const FooterContent = styled.div`
   display: flex;
@@ -14,7 +14,6 @@ const FooterContent = styled.div`
   background-color: ${(props) =>
     props.active ? `${Color.DeepCyan}` : `${Color.White}`};
   cursor: pointer;
-  font-family: ${FontType.Standard};
   color: ${(props) => (props.active ? `${Color.White}` : `${Color.Black}`)};
   font-size: ${FontSize.Standard};
   text-decoration: ${(props) => (props.active ? "underline" : "none")};

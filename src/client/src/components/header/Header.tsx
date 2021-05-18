@@ -1,10 +1,7 @@
 import { useHistory } from "react-router-dom";
 import { TextResources } from "../../assets/textResources";
 import { CheckView, SetView } from "../../redux/store/localStorage";
-import { useDispatch, useSelector } from "react-redux";
-import { save } from "../../redux/store/project/actions";
-import { RootState } from "../../redux/store";
-import { ProjectState } from "../../redux/store/project/types";
+import { useDispatch } from "react-redux";
 import { VIEW_TYPE } from "../../models/project";
 import { TreeviewOff, TreeviewOn } from "../../assets/icons";
 import { ViewOffIcon, ViewOnIcon } from "../../assets/icons/blockView";
@@ -19,21 +16,13 @@ import {
 const Header = () => {
   const dispatch = useDispatch();
   const { push } = useHistory();
-
-  const projectState = useSelector<RootState>(
-    (state) => state.projectState
-  ) as ProjectState;
-
   const isBlockView = CheckView(VIEW_TYPE.BLOCKVIEW);
 
   const handleClick = (e) => {
-    dispatch(save(projectState.project));
     const view = e.target.alt;
     dispatch(changeFlowView(view));
     SetView(view);
-    setTimeout(() => {
-      push(`/home/${view}`);
-    }, 400);
+    push(`/home/${view}`);
   };
 
   return (

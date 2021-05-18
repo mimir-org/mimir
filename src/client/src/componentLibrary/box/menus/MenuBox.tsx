@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color, FontType } from "../../";
+import { Color } from "../../";
 
 const MenuBox = styled.div`
   position: absolute;
@@ -11,7 +11,6 @@ const MenuBox = styled.div`
   border-style: solid;
   border-color: ${Color.DeepCyan};
   border-width: 0px 2px 2px 2px;
-  font-family: ${FontType.Standard};
   z-index: 1102;
   box-shadow: -1px 4px 5px rgba(0, 0, 0, 0.15);
 `;

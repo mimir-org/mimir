@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color, FontSize, FontType } from "..";
+import { Color, FontSize } from "..";
 
 const DropdownMenuHeader = styled.div`
   display: flex;
@@ -11,7 +11,6 @@ const DropdownMenuHeader = styled.div`
   background: ${Color.White};
   border: 1px solid ${Color.DarkerGrey};
   border-radius: 5px;
-  font-family: ${FontType.Standard};
   font-size: ${FontSize.Standard};
   color: ${Color.Black};
 
