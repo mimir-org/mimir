@@ -9,7 +9,7 @@ import InspectorTabs from "./InspectorTabs";
 import { AnimatedModule, Size } from "../../../componentLibrary";
 import { MODULE_TYPE } from "../../../models/project";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
-import { SaveState } from "../../../redux/store/localStorage/localStorage";
+import { SaveState } from "../../../redux/store/localStorage";
 
 const InspectorModule = () => {
   const dispatch = useDispatch();

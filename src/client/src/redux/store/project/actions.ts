@@ -15,6 +15,7 @@ import {
   CHANGE_ACTIVE_NODE,
   CHANGE_SELECTED_PROJECT,
   ProjectActionTypes,
+  CHANGE_ALL_NODES,
 } from "./types";
 
 export function save(project: Project): ProjectActionTypes {
@@ -129,5 +130,12 @@ export function changeSelectedProject(projectId: string) {
   return {
     type: CHANGE_SELECTED_PROJECT,
     payload: { projectId },
+  };
+}
+
+export function changeAllNodes(visible: boolean) {
+  return {
+    type: CHANGE_ALL_NODES,
+    payload: visible,
   };
 }

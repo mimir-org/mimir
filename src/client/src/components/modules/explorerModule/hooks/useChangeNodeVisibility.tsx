@@ -6,9 +6,8 @@ import { useSelector } from "react-redux";
 import { Node, Project } from "../../../../models/project";
 import { RootState } from "../../../../redux/store";
 
-export const useChangeNodeVisibility = (node: Node, type: NodeType) => {
+export const UseChangeNodeVisibility = (node: Node, type: NodeType) => {
   const dispatch = useDispatch();
-
   const project = useSelector<RootState>(
     (state) => state.projectState.project
   ) as Project;
@@ -26,4 +25,4 @@ export const useChangeNodeVisibility = (node: Node, type: NodeType) => {
   }, [dispatch, node, isParent, type]);
 };
 
-export default useChangeNodeVisibility;
+export default UseChangeNodeVisibility;

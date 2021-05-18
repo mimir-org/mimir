@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { ExpandedIcon, ClosedIcon } from "../../../../assets/icons";
-import { NodeType } from "../../../../models/project";
+import { NodeType, VIEW_TYPE } from "../../../../models/project";
 import { IsAspectNode, GetNodes, GetEdges } from "../../../flow/helpers";
-import CheckboxComponent from "../checkboxComponent/CheckboxComponent";
 import { AspectElement } from ".";
 import { AspectBox } from "../../../../componentLibrary/box/aspect";
+import { CheckView } from "../../../../redux/store/localStorage/";
+import { Checkbox, CheckboxBlock } from "../checkboxComponent";
 import {
   GetAspectIcon,
   GetAspectColor,
@@ -18,35 +19,34 @@ interface Props {
   name: string;
   aspectType: NodeType;
 }
-
 export const AspectComponent = ({ nodeId, name, aspectType }: Props) => {
   const [expanded, setExpanded] = useState(true);
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
-
+  const expandIcon = expanded ? ExpandedIcon : ClosedIcon;
   const aspectIcon = GetAspectIcon(aspectType);
   const color = GetAspectColor(aspectType, true);
-  const expandIcon = expanded ? ExpandedIcon : ClosedIcon;
   const childType = GetAspectType(aspectType);
   const nodes = GetNodes();
   const edges = GetEdges();
   const children = nodes.filter((node) => !IsAspectNode(node.type));
+  const isBlockView = CheckView(VIEW_TYPE.BLOCKVIEW);
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
 
   return (
     <>
       <AspectBox color={color}>
         <img src={aspectIcon} alt="aspect-icon"></img>
         <div className="checkbox_container">
-          <CheckboxComponent
-            nodeId={nodeId}
-            inputLabel={name}
-            type={childType}
-          />
+          {isBlockView ? (
+            <CheckboxBlock nodeId={nodeId} inputLabel={name} />
+          ) : (
+            <Checkbox nodeId={nodeId} inputLabel={name} type={childType} />
+          )}
         </div>
         {GetDropdownIcon(expandIcon, handleExpandClick)}
       </AspectBox>
-
       {expanded &&
         children.map((obj: object, i: number) => {
           if (children[i].type === childType) {

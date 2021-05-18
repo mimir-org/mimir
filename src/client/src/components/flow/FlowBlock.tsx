@@ -4,18 +4,15 @@ import { ProjectMainMenu } from "../project";
 import { ProjectState } from "../../redux/store/project/types";
 import { RootState } from "./../../redux/store/index";
 import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
+import { VIEW_TYPE } from "../../models/project";
 import { OpenProjectMenu } from "../project/openProject";
-
+import { get } from "../../redux/store/project/actions";
+import { GetProject, HasProject } from "../../redux/store/localStorage";
 import ReactFlow, {
   ReactFlowProvider,
   Elements,
   Controls,
 } from "react-flow-renderer";
-import { changeActiveNode, get } from "../../redux/store/project/actions";
-import {
-  GetProject,
-  HasProject,
-} from "../../redux/store/localStorage/localStorage";
 import {
   CreateProjectElementBlockNodes,
   GetBlockNodeTypes,
@@ -119,7 +116,7 @@ const FlowBlock = () => {
   }, [dispatch, projectState.project]);
 
   const visible = useSelector<RootState>(
-    (state) => state.flow.view[0].visible
+    (state) => state.flow.view === VIEW_TYPE.BLOCKVIEW
   ) as boolean;
 
   return (
@@ -129,14 +126,14 @@ const FlowBlock = () => {
           <div className="reactflow-wrapper" ref={reactFlowWrapper}>
             <ReactFlow
               elements={elements}
+              nodeTypes={GetBlockNodeTypes}
+              edgeTypes={GetBlockEdgeTypes}
               onConnect={OnConnect}
               onElementsRemove={OnElementsRemove}
               onLoad={OnLoad}
               onDrop={OnDrop}
               onNodeDragStop={OnNodeDragStop}
               onElementClick={OnElementClick}
-              nodeTypes={GetBlockNodeTypes}
-              edgeTypes={GetBlockEdgeTypes}
               onConnectEnd={OnConnectStop}
               onConnectStart={OnConnectStart}
               zoomOnScroll={false}

@@ -18,12 +18,11 @@ const CreateProjectElementBlockNodes = (
 ): Elements => {
   const initialElements: Elements = [];
   const childrenNodes = [];
-  const [width, height] = GetReactFlowBoundingRectData();
-
+  const [width] = GetReactFlowBoundingRectData();
   if (!project) return;
 
   const actualNode = project.nodes.find((node) => node.id === nodeId);
-  const elementNode = CreateElementBlockNode(actualNode, width, height);
+  const elementNode = CreateElementBlockNode(actualNode, width);
 
   if (elementNode) {
     initialElements.push(elementNode);

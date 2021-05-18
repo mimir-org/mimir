@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { VIEW_TYPE } from "../../../models/project";
 import { changeFlowView } from "../../../redux/store/flow/actions";
 
@@ -14,18 +14,19 @@ import {
 import { Input } from "../../../componentLibrary";
 import { TextResources } from "../../../assets/textResources";
 import { CloseIcon } from "../../../assets/icons";
+import { SetView } from "../../../redux/store/localStorage";
 
 interface Props {
   mode: string;
 }
 
 export const TypeEditorComponent = ({ mode }: Props) => {
+  const { push } = useHistory();
   const dispatch = useDispatch();
-  const [visible, setVisible] = useState(true);
   const handleClick = () => {
-    dispatch(changeFlowView(VIEW_TYPE.BLOCKVIEW, true));
-    dispatch(changeFlowView(VIEW_TYPE.TREEVIEW, true));
-    setVisible(!visible);
+    dispatch(changeFlowView(VIEW_TYPE.TREEVIEW));
+    SetView(VIEW_TYPE.TREEVIEW);
+    push(`/home/${VIEW_TYPE.TREEVIEW}`);
   };
   const aspects = [
     {
@@ -42,48 +43,44 @@ export const TypeEditorComponent = ({ mode }: Props) => {
     },
   ];
   return (
-    <>
-      {visible ? (
-        <TypeEditorWrapper>
-          <TypeEditorContent>
-            <TypeEditorHeader>
-              <p>{TextResources.TypeEditor}</p>
-              <img src={CloseIcon} alt="close-window" onClick={handleClick} />
-            </TypeEditorHeader>
-            <TypeInfo>
-              <DropdownMenu
-                label="Aspect"
-                placeHolder="Choose Aspect"
-                listItems={aspects}
-              />
-              <DropdownMenu
-                label="Object Type"
-                placeHolder="Select Object Type"
-                listItems={aspects}
-              />
-              <TypeNameInput>
-                <p>Type name</p>
-                <Input
-                  width={300}
-                  onChange={() => null}
-                  inputType="text"
-                  placeholder="Write Type name"
-                />
-              </TypeNameInput>
-              <DropdownMenu
-                label="Status"
-                placeHolder="Draft"
-                listItems={aspects}
-              />
-            </TypeInfo>
-            {/* <ChooseProperties>
+    <TypeEditorWrapper>
+      <TypeEditorContent>
+        <TypeEditorHeader>
+          <p>{TextResources.TypeEditor}</p>
+          <img src={CloseIcon} alt="close-window" onClick={handleClick} />
+        </TypeEditorHeader>
+        <TypeInfo>
+          <DropdownMenu
+            label="Aspect"
+            placeHolder="Choose Aspect"
+            listItems={aspects}
+          />
+          <DropdownMenu
+            label="Object Type"
+            placeHolder="Select Object Type"
+            listItems={aspects}
+          />
+          <TypeNameInput>
+            <p>Type name</p>
+            <Input
+              width={300}
+              onChange={() => null}
+              inputType="text"
+              placeholder="Write Type name"
+            />
+          </TypeNameInput>
+          <DropdownMenu
+            label="Status"
+            placeHolder="Draft"
+            listItems={aspects}
+          />
+        </TypeInfo>
+        {/* <ChooseProperties>
           {mode === "new" ? <p>TE Component NEW</p> : <p>TE Component EDIT</p>}
           </ChooseProperties> */}
-            {/* <TypeEditorInspector></TypeEditorInspector> */}
-          </TypeEditorContent>
-        </TypeEditorWrapper>
-      ) : null}
-    </>
+        {/* <TypeEditorInspector></TypeEditorInspector> */}
+      </TypeEditorContent>
+    </TypeEditorWrapper>
   );
 };
 

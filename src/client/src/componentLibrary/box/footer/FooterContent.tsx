@@ -11,11 +11,13 @@ const FooterContent = styled.div`
   padding: 0px 10px;
   border: 1px solid ${Color.DeepCyan};
   border-radius: 2px;
-  background-color: ${Color.White};
+  background-color: ${(props) =>
+    props.active ? `${Color.DeepCyan}` : `${Color.White}`};
   cursor: pointer;
   font-family: ${FontType.Standard};
-  color: ${Color.Black};
+  color: ${(props) => (props.active ? `${Color.White}` : `${Color.Black}`)};
   font-size: ${FontSize.Standard};
+  text-decoration: ${(props) => (props.active ? "underline" : "none")};
   white-space: nowrap;
 `;
 

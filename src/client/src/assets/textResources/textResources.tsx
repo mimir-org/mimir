@@ -118,6 +118,10 @@ const textResources = {
   Filter_Explorer: "Explorer RDS",
   Filter_Show_Local: "Show local",
   Filter_Show_Path: "Show path",
+
+  // BlockView
+  BlockView_Select_Aspect:
+    "Please select an aspect object from the same aspect or 1 other aspect via the Explorer Module",
 };
 
 export const VisualFilterResources = [

@@ -20,6 +20,7 @@ export const UPDATE_BLOCK_POSITION = "UPDATE_BLOCK_POSITION";
 export const CHANGE_NODE_VISIBILITY = "CHANGE_NODE_VISIBILITY";
 export const CHANGE_ACTIVE_NODE = "CHANGE_ACTIVE_NODE";
 export const CHANGE_SELECTED_PROJECT = "CHANGE_SELECTED_PROJECT";
+export const CHANGE_ALL_NODES = "CHANGE_ALL_NODES";
 
 // State types
 export interface ProjectState {
@@ -132,6 +133,13 @@ interface ChangeSelectedProject {
   };
 }
 
+interface ChangeAllNodes {
+  type: typeof CHANGE_ALL_NODES;
+  payload: {
+    visible: boolean;
+  };
+}
+
 export type ProjectActionTypes =
   | FetchingProjectAction
   | SearchProjectAction
@@ -149,4 +157,5 @@ export type ProjectActionTypes =
   | SaveProjectAction
   | SaveProjectActionFinished
   | ChangeSelectedProject
-  | UpdateBlockPositionAction;
+  | UpdateBlockPositionAction
+  | ChangeAllNodes;

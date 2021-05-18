@@ -9,25 +9,21 @@ interface Props {
   type: NodeType;
 }
 
-export const CheckboxComponent = ({ nodeId, inputLabel, type }: Props) => {
+export const Checkbox = ({ nodeId, inputLabel, type }: Props) => {
   // Check if node is hidden
   const nodes = GetNodes();
   const node = nodes.find((x) => x.id === nodeId);
-  const isHidden = !node ? false : node.isHidden;
+  let isHidden = !node ? false : node.isHidden;
 
-  const handleCheckboxChange = useChangeNodeVisibility(node, type);
+  const handleChange = useChangeNodeVisibility(node, type);
 
   return (
     <label className={"checkbox"}>
-      <input
-        type="checkbox"
-        checked={!isHidden}
-        onChange={handleCheckboxChange}
-      />
+      <input type="checkbox" checked={!isHidden} onChange={handleChange} />
       <span className="checkmark"></span>
       <label className="checkbox_label">{inputLabel}</label>
     </label>
   );
 };
 
-export default CheckboxComponent;
+export default Checkbox;

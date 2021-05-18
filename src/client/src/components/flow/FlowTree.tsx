@@ -7,10 +7,9 @@ import { ProjectState } from "../../redux/store/project/types";
 import { RootState } from "./../../redux/store/index";
 import { useOnConnect, useOnDrop, useOnElementsRemove } from "./hooks";
 import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
-import {
-  GetProject,
-  HasProject,
-} from "../../redux/store/localStorage/localStorage";
+import { GetProject, HasProject } from "../../redux/store/localStorage";
+import { OpenProjectMenu } from "../project/openProject/OpenProjectMenu";
+import { VIEW_TYPE } from "../../models/project";
 import {
   updatePosition,
   changeActiveNode,
@@ -25,7 +24,6 @@ import ReactFlow, {
   Elements,
   Controls,
 } from "react-flow-renderer";
-import { OpenProjectMenu } from "../project/openProject/OpenProjectMenu";
 
 const FlowTree = () => {
   const dispatch = useDispatch();
@@ -90,7 +88,7 @@ const FlowTree = () => {
   }, [dispatch, projectState.project]);
 
   const visible = useSelector<RootState>(
-    (state) => state.flow.view[1].visible
+    (state) => state.flow.view === VIEW_TYPE.TREEVIEW
   ) as boolean;
 
   return (

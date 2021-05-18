@@ -9,7 +9,7 @@ import { LibraryState } from "../../../redux/store/library/types";
 import { searchLibrary } from "../../../redux/store/library/actions";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import { MODULE_TYPE, LibCategory } from "../../../models/project";
-import { SaveState } from "../../../redux/store/localStorage/localStorage";
+import { SaveState } from "../../../redux/store/localStorage";
 import { AnimatedModule, Size } from "../../../componentLibrary";
 import { LibraryIcon, ToggleLeft, ToggleRight } from "../../../assets/icons";
 import {

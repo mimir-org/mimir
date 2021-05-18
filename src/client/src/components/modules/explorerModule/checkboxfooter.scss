@@ -1,0 +1,49 @@
+.checkbox-footer {
+  display: flex;
+  position: relative;
+  padding: 0px 0px 7px 25px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.checkbox-footer input {
+  position: absolute;
+  opacity: 0;
+}
+
+.checkmark-footer {
+  position: absolute;
+  left: 5px;
+  top: -5px;
+  height: 15px;
+  width: 15px;
+  background-color: #fff;
+  border: 2px solid #007079;
+  border-radius: 3px;
+}
+
+.checkbox-footer input:checked ~ .checkmark-footer {
+  background-color: #fff;
+}
+
+.checkmark-footer:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.checkbox-footer input:checked ~ .checkmark-footer:after {
+  display: block;
+}
+
+.checkbox-footer .checkmark-footer:after {
+  left: 5px;
+  top: 0px;
+  width: 4px;
+  height: 10px;
+  border: solid #007079;
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
