@@ -12,24 +12,24 @@ import { sagas } from "../sagas";
 const sagaMiddleware = createSagaMiddleware();
 
 const composeEnhancer =
-  (process.env.NODE_ENV !== "production" &&
-    window["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__"]) ||
-  compose;
+    (process.env.NODE_ENV !== "production" &&
+        window["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__"]) ||
+    compose;
 
 const rootReducers = combineReducers({
-  library: libraryReducer,
-  inspector: inspectorReducer,
-  userState: userReducer,
-  projectState: projectReducer,
-  modules: moduleReducer,
-  projectMenu: projectMenuReducer,
-  flow: flowReducer,
+    library: libraryReducer,
+    inspector: inspectorReducer,
+    userState: userReducer,
+    projectState: projectReducer,
+    modules: moduleReducer,
+    projectMenu: projectMenuReducer,
+    flow: flowReducer,
 });
 
 const store = createStore(
-  rootReducers,
-  {},
-  composeEnhancer(applyMiddleware(sagaMiddleware))
+    rootReducers,
+    {},
+    composeEnhancer(applyMiddleware(sagaMiddleware))
 );
 
 sagaMiddleware.run(sagas);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Mb.Core.Services.Contracts;
 using Mb.Models.Data;
 using Microsoft.AspNetCore.Authorization;
@@ -45,6 +46,8 @@ namespace Mb.Core.Controllers.V1
         {
             try
             {
+
+                return StatusCode(500, "Internal Server Error");
                 var data = _libraryService.GetLibNodes(name).ToList();
                 return Ok(data);
             }

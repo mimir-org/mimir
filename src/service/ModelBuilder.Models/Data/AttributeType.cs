@@ -15,6 +15,7 @@ namespace Mb.Models.Data
         public Aspect Aspect { get; set; }
         public AttributeFormat Format { get; set; }
         public bool IsInterface { get; set; }
+        public bool IsTerminalType { get; set; }
 
         public override bool Equals(object obj)
         {
@@ -31,8 +32,9 @@ namespace Mb.Models.Data
                    Qualifier.Equals(b.Qualifier) &&
                    Source.Equals(b.Source) &&
                    Condition.Equals(b.Condition) &&
-                   Aspect.Equals(b.Aspect);
-
+                   Aspect.Equals(b.Aspect) &&
+                   IsInterface.Equals(b.IsInterface) &&
+                   IsTerminalType.Equals(b.IsTerminalType);
         }
 
         public override int GetHashCode()

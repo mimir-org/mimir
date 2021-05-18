@@ -149,7 +149,7 @@ namespace Mb.Core.Controllers.V1
         /// <param name="libraryTypeComponent"></param>
         /// <returns></returns>
         [HttpPost("")]
-        [ProducesResponseType(typeof(ICollection<Rds>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(LibraryTypeComponent), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateType([FromBody] LibraryTypeComponent libraryTypeComponent)
@@ -161,6 +161,10 @@ namespace Mb.Core.Controllers.V1
             {
                 var data = await _typeEditorService.CreateLibraryComponent(libraryTypeComponent);
                 return Ok(data);
+            }
+            catch (ModelBuilderDuplicateException e)
+            {
+                return BadRequest(e.Message);
             }
             catch (Exception e)
             {

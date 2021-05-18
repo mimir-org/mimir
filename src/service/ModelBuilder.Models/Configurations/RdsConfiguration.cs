@@ -14,6 +14,7 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.Code).HasColumnName("Code").IsRequired();
             builder.Property(p => p.Category).HasColumnName("Category").IsRequired().HasConversion<string>(); ;
             builder.Property(p => p.Name).HasColumnName("Name").IsRequired();
+            builder.Property(p => p.SemanticReference).HasColumnName("SemanticReference").IsRequired(false);
             builder.Property(p => p.IsFunction).HasColumnName("IsFunction").IsRequired();
             builder.Property(p => p.IsProduct).HasColumnName("IsProduct").IsRequired();
             builder.Property(p => p.IsLocation).HasColumnName("IsLocation").IsRequired();

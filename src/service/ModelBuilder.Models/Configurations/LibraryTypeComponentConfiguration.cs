@@ -20,10 +20,12 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.Status).HasColumnName("Status").IsRequired().HasConversion<string>();
             builder.Property(p => p.Rds).HasColumnName("Rds").IsRequired();
             builder.Property(p => p.RdsCategory).HasColumnName("RdsCategory").IsRequired().HasConversion<string>();
+            builder.Property(p => p.SemanticRdsReference).HasColumnName("SemanticRdsReference").IsRequired(false);
             builder.Property(p => p.TerminalJson).HasColumnName("TerminalJson");
             builder.Property(p => p.AttributeJson).HasColumnName("AttributeJson");
             builder.Property(p => p.RdsCategory).HasColumnName("RdsCategory").IsRequired().HasConversion<string>();
             builder.Property(p => p.Version).HasColumnName("Version").IsRequired();
+            builder.Property(p => p.SemanticReference).HasColumnName("SemanticReference").IsRequired(false);
 
             builder.Ignore(p => p.Terminals);
             builder.Ignore(p => p.Attributes);
