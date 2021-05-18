@@ -20,7 +20,8 @@ Examples of how to create types in file
             ],
             "Aspect": "[NotSet|Function|Product|Location]",
             "Format": "[NotSet|UnsignedFloat|Float|UnsignedInteger|Table|Selection|TextDocReference|Boolean]",
-            "IsInterface": [true|false]
+            "IsInterface": [true|false],
+	    "IsTerminalType": [true|false]
           }
         ]
    
@@ -33,6 +34,7 @@ Examples of how to create types in file
             "IsProduct": [true|false],
             "IsLocation": [true|false],
             "Category": "[NotSet|FunctionalSystems|TechnicalSystems|Components|Transports|Interfaces|Spaces|ConstructionEntities]"
+	    "SemanticReference": "[SemanticReference]"
           }
         ]
   
@@ -65,7 +67,8 @@ Examples of how to create types in file
 				],
 				"Aspect": "[NotSet|Function|Product|Location]",
 				"Format": "[NotSet|UnsignedFloat|Float|UnsignedInteger|Table|Selection|TextDocReference|Boolean]",
-				"IsInterface": [true|false]
+				"IsInterface": [true|false],
+				"IsTerminalType": [true|false]
 			  }
 			]
           }
@@ -81,7 +84,8 @@ Examples of how to create types in file
             ],
             "Aspect": "[NotSet|Function|Product|Location]",
             "Format": "[NotSet|UnsignedFloat|Float|UnsignedInteger|Table|Selection|TextDocReference|Boolean]",
-            "IsInterface": [true|false]
+            "IsInterface": [true|false],
+	    "IsTerminalType": [true|false]
           }
         ]
       }
