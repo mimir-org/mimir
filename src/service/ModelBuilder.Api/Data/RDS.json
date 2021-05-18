@@ -5,7 +5,8 @@
     "IsFunction": true,
     "IsProduct": false,
     "IsLocation": false,
-    "Category": "FunctionalSystems"
+    "Category": "FunctionalSystems",
+    "SemanticReference": null
   },
   {
     "Code": "B",
@@ -13,7 +14,8 @@
     "IsFunction": true,
     "IsProduct": false,
     "IsLocation": false,
-    "Category": "FunctionalSystems"
+    "Category": "FunctionalSystems",
+    "SemanticReference": null
   },
   {
     "Code": "C",
@@ -21,7 +23,8 @@
     "IsFunction": true,
     "IsProduct": false,
     "IsLocation": false,
-    "Category": "FunctionalSystems"
+    "Category": "FunctionalSystems",
+    "SemanticReference": null
   },
   {
     "Code": "D",
@@ -29,7 +32,8 @@
     "IsFunction": true,
     "IsProduct": false,
     "IsLocation": false,
-    "Category": "FunctionalSystems"
+    "Category": "FunctionalSystems",
+    "SemanticReference": null
   },
   {
     "Code": "E",
@@ -37,7 +41,8 @@
     "IsFunction": true,
     "IsProduct": false,
     "IsLocation": false,
-    "Category": "FunctionalSystems"
+    "Category": "FunctionalSystems",
+    "SemanticReference": null
   },
   {
     "Code": "F",
@@ -45,7 +50,8 @@
     "IsFunction": true,
     "IsProduct": false,
     "IsLocation": false,
-    "Category": "FunctionalSystems"
+    "Category": "FunctionalSystems",
+    "SemanticReference": null
   },
   {
     "Code": "G",
@@ -53,7 +59,8 @@
     "IsFunction": true,
     "IsProduct": false,
     "IsLocation": false,
-    "Category": "FunctionalSystems"
+    "Category": "FunctionalSystems",
+    "SemanticReference": null
   },
   {
     "Code": "H",
@@ -61,7 +68,8 @@
     "IsFunction": true,
     "IsProduct": false,
     "IsLocation": false,
-    "Category": "FunctionalSystems"
+    "Category": "FunctionalSystems",
+    "SemanticReference": null
   },
   {
     "Code": "J",
@@ -69,7 +77,8 @@
     "IsFunction": true,
     "IsProduct": false,
     "IsLocation": false,
-    "Category": "FunctionalSystems"
+    "Category": "FunctionalSystems",
+    "SemanticReference": null
   },
   {
     "Code": "HA",
@@ -77,7 +86,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "TechnicalSystems"
+    "Category": "TechnicalSystems",
+    "SemanticReference": null
   },
   {
     "Code": "HC",
@@ -85,7 +95,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "TechnicalSystems"
+    "Category": "TechnicalSystems",
+    "SemanticReference": null
   },
   {
     "Code": "HD",
@@ -93,7 +104,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "TechnicalSystems"
+    "Category": "TechnicalSystems",
+    "SemanticReference": null
   },
   {
     "Code": "HF",
@@ -101,7 +113,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "TechnicalSystems"
+    "Category": "TechnicalSystems",
+    "SemanticReference": null
   },
   {
     "Code": "HE",
@@ -109,7 +122,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "TechnicalSystems"
+    "Category": "TechnicalSystems",
+    "SemanticReference": null
   },
   {
     "Code": "JA",
@@ -117,7 +131,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "TechnicalSystems"
+    "Category": "TechnicalSystems",
+    "SemanticReference": null
   },
   {
     "Code": "JC",
@@ -125,7 +140,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "TechnicalSystems"
+    "Category": "TechnicalSystems",
+    "SemanticReference": null
   },
   {
     "Code": "JD",
@@ -133,7 +149,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "TechnicalSystems"
+    "Category": "TechnicalSystems",
+    "SemanticReference": null
   },
   {
     "Code": "JF",
@@ -141,7 +158,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "TechnicalSystems"
+    "Category": "TechnicalSystems",
+    "SemanticReference": null
   },
   {
     "Code": "JE",
@@ -149,7 +167,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "TechnicalSystems"
+    "Category": "TechnicalSystems",
+    "SemanticReference": null
   },
   {
     "Code": "KA",
@@ -157,7 +176,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "TechnicalSystems"
+    "Category": "TechnicalSystems",
+    "SemanticReference": null
   },
   {
     "Code": "KB",
@@ -165,7 +185,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "TechnicalSystems"
+    "Category": "TechnicalSystems",
+    "SemanticReference": null
   },
   {
     "Code": "KC",
@@ -173,7 +194,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "TechnicalSystems"
+    "Category": "TechnicalSystems",
+    "SemanticReference": null
   },
   {
     "Code": "KD",
@@ -181,7 +203,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "TechnicalSystems"
+    "Category": "TechnicalSystems",
+    "SemanticReference": null
   },
   {
     "Code": "KE",
@@ -189,7 +212,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "TechnicalSystems"
+    "Category": "TechnicalSystems",
+    "SemanticReference": null
   },
   {
     "Code": "KF",
@@ -197,7 +221,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "TechnicalSystems"
+    "Category": "TechnicalSystems",
+    "SemanticReference": null
   },
   {
     "Code": "KG",
@@ -205,7 +230,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "TechnicalSystems"
+    "Category": "TechnicalSystems",
+    "SemanticReference": null
   },
   {
     "Code": "KH",
@@ -213,7 +239,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "TechnicalSystems"
+    "Category": "TechnicalSystems",
+    "SemanticReference": null
   },
   {
     "Code": "QA",
@@ -221,7 +248,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "TechnicalSystems"
+    "Category": "TechnicalSystems",
+    "SemanticReference": null
   },
   {
     "Code": "QD",
@@ -229,7 +257,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "TechnicalSystems"
+    "Category": "TechnicalSystems",
+    "SemanticReference": null
   },
   {
     "Code": "QF",
@@ -237,7 +266,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "TechnicalSystems"
+    "Category": "TechnicalSystems",
+    "SemanticReference": null
   },
   {
     "Code": "SA",
@@ -245,7 +275,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "TechnicalSystems"
+    "Category": "TechnicalSystems",
+    "SemanticReference": null
   },
   {
     "Code": "SB",
@@ -253,7 +284,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "TechnicalSystems"
+    "Category": "TechnicalSystems",
+    "SemanticReference": null
   },
   {
     "Code": "SC",
@@ -261,7 +293,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "TechnicalSystems"
+    "Category": "TechnicalSystems",
+    "SemanticReference": null
   },
   {
     "Code": "SD",
@@ -269,7 +302,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "TechnicalSystems"
+    "Category": "TechnicalSystems",
+    "SemanticReference": null
   },
   {
     "Code": "SE",
@@ -277,7 +311,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "TechnicalSystems"
+    "Category": "TechnicalSystems",
+    "SemanticReference": null
   },
   {
     "Code": "BFA",
@@ -285,7 +320,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "BGA",
@@ -293,7 +329,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "BLA",
@@ -301,7 +338,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "BPA",
@@ -309,7 +347,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "BPC",
@@ -317,7 +356,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "BTA",
@@ -325,7 +365,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "CCA",
@@ -333,7 +374,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "CLA",
@@ -341,7 +383,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "CMA",
@@ -349,7 +392,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "EBA",
@@ -357,7 +401,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "EGC",
@@ -365,7 +410,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "EQB",
@@ -373,7 +419,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "FCA",
@@ -381,7 +428,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "FCB",
@@ -389,7 +437,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "FLA",
@@ -397,7 +446,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "FLB",
@@ -405,7 +455,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "FLD",
@@ -413,7 +464,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "FLE",
@@ -421,7 +473,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "GAA",
@@ -429,7 +482,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "GAB",
@@ -437,7 +491,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "GPA",
@@ -445,7 +500,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "GPB",
@@ -453,7 +509,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "GQA",
@@ -461,7 +518,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "HMA",
@@ -469,7 +527,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "HMB",
@@ -477,7 +536,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "HMC",
@@ -485,7 +545,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "HPA",
@@ -493,7 +554,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "HPB",
@@ -501,7 +563,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "HRA",
@@ -509,7 +572,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "HSA",
@@ -517,7 +581,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "HSB",
@@ -525,7 +590,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "HSC",
@@ -533,7 +599,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "HVB",
@@ -541,7 +608,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "HWA",
@@ -549,7 +617,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "HXA",
@@ -557,7 +626,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "MAA",
@@ -565,7 +635,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "MLE",
@@ -573,7 +644,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "MSB",
@@ -581,7 +653,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "QAB",
@@ -589,7 +662,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "QMA",
@@ -597,7 +671,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "QNA",
@@ -605,7 +680,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "RMA",
@@ -613,7 +689,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "RQA",
@@ -621,7 +698,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "RQC",
@@ -629,7 +707,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "TAA",
@@ -637,7 +716,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "TAB",
@@ -645,7 +725,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "TAC",
@@ -653,7 +734,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "TBA",
@@ -661,7 +743,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "TBB",
@@ -669,7 +752,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "TLA",
@@ -677,7 +761,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "TLB",
@@ -685,7 +770,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Components"
+    "Category": "Components",
+    "SemanticReference": null
   },
   {
     "Code": "WB",
@@ -693,7 +779,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Transports"
+    "Category": "Transports",
+    "SemanticReference": null
   },
   {
     "Code": "WD",
@@ -701,7 +788,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Transports"
+    "Category": "Transports",
+    "SemanticReference": null
   },
   {
     "Code": "WG",
@@ -709,7 +797,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Transports"
+    "Category": "Transports",
+    "SemanticReference": null
   },
   {
     "Code": "WM",
@@ -717,7 +806,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Transports"
+    "Category": "Transports",
+    "SemanticReference": null
   },
   {
     "Code": "WP",
@@ -725,7 +815,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Transports"
+    "Category": "Transports",
+    "SemanticReference": null
   },
   {
     "Code": "WQ",
@@ -733,7 +824,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Transports"
+    "Category": "Transports",
+    "SemanticReference": null
   },
   {
     "Code": "WV",
@@ -741,7 +833,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Transports"
+    "Category": "Transports",
+    "SemanticReference": null
   },
   {
     "Code": "WZ",
@@ -749,7 +842,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": true,
-    "Category": "Transports"
+    "Category": "Transports",
+    "SemanticReference": null
   },
   {
     "Code": "XB",
@@ -757,7 +851,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": false,
-    "Category": "Interfaces"
+    "Category": "Interfaces",
+    "SemanticReference": null
   },
   {
     "Code": "XD",
@@ -765,7 +860,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": false,
-    "Category": "Interfaces"
+    "Category": "Interfaces",
+    "SemanticReference": null
   },
   {
     "Code": "XG",
@@ -773,7 +869,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": false,
-    "Category": "Interfaces"
+    "Category": "Interfaces",
+    "SemanticReference": null
   },
   {
     "Code": "XK",
@@ -781,7 +878,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": false,
-    "Category": "Interfaces"
+    "Category": "Interfaces",
+    "SemanticReference": null
   },
   {
     "Code": "XM",
@@ -789,7 +887,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": false,
-    "Category": "Interfaces"
+    "Category": "Interfaces",
+    "SemanticReference": null
   },
   {
     "Code": "XN",
@@ -797,7 +896,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": false,
-    "Category": "Interfaces"
+    "Category": "Interfaces",
+    "SemanticReference": null
   },
   {
     "Code": "XV",
@@ -805,7 +905,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": false,
-    "Category": "Interfaces"
+    "Category": "Interfaces",
+    "SemanticReference": null
   },
   {
     "Code": "XZ",
@@ -813,7 +914,8 @@
     "IsFunction": true,
     "IsProduct": true,
     "IsLocation": false,
-    "Category": "Interfaces"
+    "Category": "Interfaces",
+    "SemanticReference": null
   },
   {
     "Code": "BAA",
@@ -821,7 +923,8 @@
     "IsFunction": false,
     "IsProduct": false,
     "IsLocation": true,
-    "Category": "Spaces"
+    "Category": "Spaces",
+    "SemanticReference": null
   },
   {
     "Code": "CAA",
@@ -829,7 +932,8 @@
     "IsFunction": false,
     "IsProduct": false,
     "IsLocation": true,
-    "Category": "Spaces"
+    "Category": "Spaces",
+    "SemanticReference": null
   },
   {
     "Code": "DAA",
@@ -837,7 +941,8 @@
     "IsFunction": false,
     "IsProduct": false,
     "IsLocation": true,
-    "Category": "Spaces"
+    "Category": "Spaces",
+    "SemanticReference": null
   },
   {
     "Code": "EAA",
@@ -845,7 +950,8 @@
     "IsFunction": false,
     "IsProduct": false,
     "IsLocation": true,
-    "Category": "Spaces"
+    "Category": "Spaces",
+    "SemanticReference": null
   },
   {
     "Code": "PAA",
@@ -853,7 +959,8 @@
     "IsFunction": false,
     "IsProduct": false,
     "IsLocation": true,
-    "Category": "Spaces"
+    "Category": "Spaces",
+    "SemanticReference": null
   },
   {
     "Code": "AAA",
@@ -861,7 +968,8 @@
     "IsFunction": false,
     "IsProduct": false,
     "IsLocation": true,
-    "Category": "ConstructionEntities"
+    "Category": "ConstructionEntities",
+    "SemanticReference": null
   },
   {
     "Code": "BBA",
@@ -869,7 +977,8 @@
     "IsFunction": false,
     "IsProduct": false,
     "IsLocation": true,
-    "Category": "ConstructionEntities"
+    "Category": "ConstructionEntities",
+    "SemanticReference": null
   },
   {
     "Code": "BBB",
@@ -877,7 +986,8 @@
     "IsFunction": false,
     "IsProduct": false,
     "IsLocation": true,
-    "Category": "ConstructionEntities"
+    "Category": "ConstructionEntities",
+    "SemanticReference": null
   },
   {
     "Code": "BBC",
@@ -885,7 +995,8 @@
     "IsFunction": false,
     "IsProduct": false,
     "IsLocation": true,
-    "Category": "ConstructionEntities"
+    "Category": "ConstructionEntities",
+    "SemanticReference": null
   },
   {
     "Code": "BBD",
@@ -893,7 +1004,8 @@
     "IsFunction": false,
     "IsProduct": false,
     "IsLocation": true,
-    "Category": "ConstructionEntities"
+    "Category": "ConstructionEntities",
+    "SemanticReference": null
   },
   {
     "Code": "BBE",
@@ -901,7 +1013,8 @@
     "IsFunction": false,
     "IsProduct": false,
     "IsLocation": true,
-    "Category": "ConstructionEntities"
+    "Category": "ConstructionEntities",
+    "SemanticReference": null
   },
   {
     "Code": "BBF",
@@ -909,7 +1022,8 @@
     "IsFunction": false,
     "IsProduct": false,
     "IsLocation": true,
-    "Category": "ConstructionEntities"
+    "Category": "ConstructionEntities",
+    "SemanticReference": null
   },
   {
     "Code": "BBG",
@@ -917,7 +1031,8 @@
     "IsFunction": false,
     "IsProduct": false,
     "IsLocation": true,
-    "Category": "ConstructionEntities"
+    "Category": "ConstructionEntities",
+    "SemanticReference": null
   },
   {
     "Code": "BBH",
@@ -925,7 +1040,8 @@
     "IsFunction": false,
     "IsProduct": false,
     "IsLocation": true,
-    "Category": "ConstructionEntities"
+    "Category": "ConstructionEntities",
+    "SemanticReference": null
   },
   {
     "Code": "BBJ",
@@ -933,7 +1049,8 @@
     "IsFunction": false,
     "IsProduct": false,
     "IsLocation": true,
-    "Category": "ConstructionEntities"
+    "Category": "ConstructionEntities",
+    "SemanticReference": null
   },
   {
     "Code": "A",
@@ -941,7 +1058,8 @@
     "IsFunction": false,
     "IsProduct": false,
     "IsLocation": true,
-    "Category": "ConstructionEntities"
+    "Category": "ConstructionEntities",
+    "SemanticReference": null
   },
   {
     "Code": "B",
@@ -949,7 +1067,8 @@
     "IsFunction": false,
     "IsProduct": false,
     "IsLocation": true,
-    "Category": "ConstructionEntities"
+    "Category": "ConstructionEntities",
+    "SemanticReference": null
   },
   {
     "Code": "C",
@@ -957,7 +1076,8 @@
     "IsFunction": false,
     "IsProduct": false,
     "IsLocation": true,
-    "Category": "ConstructionEntities"
+    "Category": "ConstructionEntities",
+    "SemanticReference": null
   },
   {
     "Code": "D",
@@ -965,7 +1085,8 @@
     "IsFunction": false,
     "IsProduct": false,
     "IsLocation": true,
-    "Category": "ConstructionEntities"
+    "Category": "ConstructionEntities",
+    "SemanticReference": null
   }
 ]
 

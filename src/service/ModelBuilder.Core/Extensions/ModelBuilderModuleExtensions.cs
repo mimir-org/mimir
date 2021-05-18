@@ -20,16 +20,6 @@ namespace Mb.Core.Extensions
     {
         public static IServiceCollection AddModelBuilderModule(this IServiceCollection services, IConfiguration configuration)
         {
-            // Auto-mapper
-            var autoMapperConfiguration = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile<AttributeProfile>();
-                cfg.AddProfile<ConnectorProfile>();
-                cfg.AddProfile<EdgeProfile>();
-                cfg.AddProfile<NodeProfile>();
-                cfg.AddProfile<ProjectProfile>();
-            });
-
             // ModelBuilder Configuration configurations
             var modelBuilderSection = configuration.GetSection(nameof(ModelBuilderConfiguration));
             var modelBuilderConfiguration = new ModelBuilderConfiguration();
@@ -37,7 +27,6 @@ namespace Mb.Core.Extensions
             services.Configure<ModelBuilderConfiguration>(modelBuilderSection.Bind);
 
             // Dependency injection
-            services.AddSingleton(s => autoMapperConfiguration.CreateMapper());
             services.AddSingleton<IFileRepository, JsonFileRepository>();
             services.AddSingleton<ICommonRepository, CommonRepository>();
             services.AddSingleton<IModuleService, ModuleService>();
@@ -58,6 +47,19 @@ namespace Mb.Core.Extensions
 
             services.AddHttpContextAccessor();
             services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
+
+            var provider = services.BuildServiceProvider();
+
+            // Auto-mapper
+            var autoMapperConfiguration = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<AttributeProfile>();
+                cfg.AddProfile<ConnectorProfile>();
+                cfg.AddProfile<EdgeProfile>();
+                cfg.AddProfile(new NodeProfile(provider.GetService<ICommonRepository>()));
+                cfg.AddProfile<ProjectProfile>();
+            });
+            services.AddSingleton(s => autoMapperConfiguration.CreateMapper());
 
             return services;
         }

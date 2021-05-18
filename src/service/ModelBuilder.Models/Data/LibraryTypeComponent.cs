@@ -16,9 +16,11 @@ namespace Mb.Models.Data
         public Status Status { get; set; }
         public string Rds { get; set; }
         public RdsCategory RdsCategory { get; set; }
+        public string SemanticRdsReference { get; set; }
         public ICollection<Terminal> Terminals { get; set; }
         public ICollection<AttributeType> Attributes { get; set; }
         public string Version { get; set; }
+        public string SemanticReference { get; set; }
 
         [JsonIgnore]
         public string TerminalJson { get; set; }

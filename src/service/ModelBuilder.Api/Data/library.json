@@ -7,11 +7,34 @@
     "Status": "Complete",
     "Rds": "D",
     "RdsCategory": "FunctionalSystems",
+    "SemanticRdsReference": null,
     "Version": "1.0",
+    "SemanticReference": null,
     "Terminals": [
       {
+        "Id": "equinor.com_B26D7BC8-6E8A-4BC7-B6C9-34D58E4C8CB7",
         "TerminalType": "Fluid",
-        "ConnectorType": "Input"
+        "ConnectorType": "Input",
+        "SemanticReference": null,
+        "Attributes": [
+          {
+            "entity": "Pressure, absolute",
+            "qualifier": "Operating",
+            "source": "Calculated",
+            "condition": "Maximum",
+            "units": [
+              "Barg",
+              "Bara",
+              "Psi",
+              "Psig",
+              "Pascal"
+            ],
+            "aspect": "NotSet",
+            "format": "UnsignedFloat",
+            "isInterface": false,
+            "IsTerminalType": true
+          }
+        ]
       }
     ],
     "Attributes": [
@@ -27,7 +50,9 @@
           "Bbld"
         ],
         "Aspect": "Function",
-        "Format": "UnsignedFloat"
+        "Format": "UnsignedFloat",
+        "IsInterface": false,
+        "IsTerminalType": false
       }
     ]
   },
@@ -39,23 +64,108 @@
     "Status": "Complete",
     "Rds": "BGA",
     "RdsCategory": "Components",
+    "SemanticRdsReference": null,
     "Version": "1.0",
+    "SemanticReference": null,
     "Terminals": [
       {
+        "Id": "equinor.com_1B47286D-4D2C-4716-800D-6D8080F40644",
         "TerminalType": "Electric",
-        "ConnectorType": "Input"
+        "ConnectorType": "Input",
+        "Attributes": [
+          {
+            "entity": "Pressure, absolute",
+            "qualifier": "Operating",
+            "source": "Calculated",
+            "condition": "Maximum",
+            "units": [
+              "Barg",
+              "Bara",
+              "Psi",
+              "Psig",
+              "Pascal"
+            ],
+            "aspect": "NotSet",
+            "format": "UnsignedFloat",
+            "isInterface": false,
+            "IsTerminalType": true
+          }
+        ]
       },
       {
+        "Id": "equinor.com_EDFFCDA7-414F-498A-94B3-3F96F8EEA77E",
         "TerminalType": "Electric",
-        "ConnectorType": "Input"
+        "ConnectorType": "Input",
+        "SemanticReference": null,
+        "Attributes": [
+          {
+            "entity": "Pressure, absolute",
+            "qualifier": "Operating",
+            "source": "Calculated",
+            "condition": "Maximum",
+            "units": [
+              "Barg",
+              "Bara",
+              "Psi",
+              "Psig",
+              "Pascal"
+            ],
+            "aspect": "NotSet",
+            "format": "UnsignedFloat",
+            "isInterface": false,
+            "IsTerminalType": true
+          }
+        ]
       },
       {
+        "Id": "equinor.com_5CD13952-04F7-43C4-9A47-84D62042D9C9",
         "terminalType": "Fluid",
-        "connectorType": "Input"
+        "connectorType": "Input",
+        "SemanticReference": null,
+        "Attributes": [
+          {
+            "entity": "Pressure, absolute",
+            "qualifier": "Operating",
+            "source": "Calculated",
+            "condition": "Maximum",
+            "units": [
+              "Barg",
+              "Bara",
+              "Psi",
+              "Psig",
+              "Pascal"
+            ],
+            "aspect": "NotSet",
+            "format": "UnsignedFloat",
+            "isInterface": false,
+            "IsTerminalType": true
+          }
+        ]
       },
       {
+        "Id": "equinor.com_DA30D55C-ACE0-4C36-BC97-2342A8430018",
         "terminalType": "Oil",
-        "connectorType": "Output"
+        "connectorType": "Output",
+        "SemanticReference": null,
+        "Attributes": [
+          {
+            "entity": "Pressure, absolute",
+            "qualifier": "Operating",
+            "source": "Calculated",
+            "condition": "Maximum",
+            "units": [
+              "Barg",
+              "Bara",
+              "Psi",
+              "Psig",
+              "Pascal"
+            ],
+            "aspect": "NotSet",
+            "format": "UnsignedFloat",
+            "isInterface": false,
+            "IsTerminalType": false
+          }
+        ]
       }
     ],
     "Attributes": [
@@ -71,9 +181,54 @@
           "Bbld"
         ],
         "Aspect": "Function",
-        "Format": "UnsignedFloat"
+        "Format": "UnsignedFloat",
+        "IsInterface": false,
+        "IsTerminalType": false
       }
     ]
+  },
+  {
+    "id": "equinor.com_52839A45-DAEB-42D3-AD9F-FBF7E18738B7",
+    "aspect": "Location",
+    "objectType": "ObjectBlock",
+    "typeName": "Room A",
+    "status": "Complete",
+    "rds": "A",
+    "rdsCategory": "ConstructionEntities",
+    "SemanticRdsReference": null,
+    "terminals": [],
+    "attributes": [],
+    "version": "1.0",
+    "SemanticReference": null
+  },
+
+  {
+    "id": "equinor.com_9DB8B121-AE69-4965-B1D5-2171D39171E5",
+    "aspect": "Location",
+    "objectType": "ObjectBlock",
+    "typeName": "Oil Pump System Location",
+    "status": "Complete",
+    "rds": "QNA",
+    "rdsCategory": "Components",
+    "SemanticRdsReference": null,
+    "terminals": [],
+    "attributes": [],
+    "version": "1.0",
+    "SemanticReference": null
+  },
+  {
+    "id": "equinor.com_03764B30-3C9B-4B52-940D-D376FF99ABB5",
+    "aspect": "Location",
+    "objectType": "ObjectBlock",
+    "typeName": "Oil Heater System Location",
+    "status": "Complete",
+    "rds": "QAB",
+    "rdsCategory": "Components",
+    "SemanticRdsReference": null,
+    "terminals": [],
+    "attributes": [],
+    "version": "1.0",
+    "SemanticReference": null
   }
 ]
 

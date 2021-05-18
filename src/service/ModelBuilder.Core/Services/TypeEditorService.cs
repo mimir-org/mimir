@@ -137,6 +137,13 @@ namespace Mb.Core.Services
         /// <returns></returns>
         public async Task<LibraryTypeComponent> CreateLibraryComponent(LibraryTypeComponent libraryTypeComponent)
         {
+            if (!string.IsNullOrEmpty(libraryTypeComponent.Id))
+            {
+                var existingType = await _libraryTypeComponentRepository.GetAsync(libraryTypeComponent.Id);
+                if (existingType != null)
+                    throw new ModelBuilderDuplicateException($"The type with id:{libraryTypeComponent.Id} already exist.");
+            }
+
             libraryTypeComponent.CreateJsonData();
             libraryTypeComponent.Id = _generateIdRepository.CreateUniqueId();
             await _libraryTypeComponentRepository.CreateAsync(libraryTypeComponent);

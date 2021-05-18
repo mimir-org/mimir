@@ -12,7 +12,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Flowrate, volumetric",
@@ -27,7 +28,8 @@
     ],
     "Aspect": "Product",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Flowrate, volumetric",
@@ -42,7 +44,8 @@
     ],
     "Aspect": "Product",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Flowrate, volumetric",
@@ -57,7 +60,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Flowrate, volumetric",
@@ -72,7 +76,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Flowrate, volumetric",
@@ -87,7 +92,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Flowrate, volumetric",
@@ -102,7 +108,8 @@
     ],
     "Aspect": "NotSet",
     "Format": "UnsignedFloat",
-    "IsInterface": true
+    "IsInterface": true,
+    "IsTerminalType": false
   },
   {
     "Entity": "Pressure, absolute",
@@ -118,7 +125,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Pressure, absolute",
@@ -134,7 +142,8 @@
     ],
     "Aspect": "Product",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Pressure, absolute",
@@ -150,7 +159,8 @@
     ],
     "Aspect": "Product",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Pressure, absolute",
@@ -166,7 +176,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Pressure, absolute",
@@ -182,7 +193,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Pressure, absolute",
@@ -198,7 +210,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Pressure, absolute",
@@ -214,7 +227,8 @@
     ],
     "Aspect": "NotSet",
     "Format": "UnsignedFloat",
-    "IsInterface": true
+    "IsInterface": true,
+    "IsTerminalType": false
   },
   {
     "Entity": "Pressure, delta",
@@ -230,7 +244,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Pressure, delta",
@@ -246,7 +261,8 @@
     ],
     "Aspect": "Product",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Pressure, delta",
@@ -262,7 +278,8 @@
     ],
     "Aspect": "Product",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Pressure, delta",
@@ -278,7 +295,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Pressure, delta",
@@ -294,7 +312,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Pressure, delta",
@@ -310,7 +329,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Pressure, delta",
@@ -326,7 +346,8 @@
     ],
     "Aspect": "NotSet",
     "Format": "UnsignedFloat",
-    "IsInterface": true
+    "IsInterface": true,
+    "IsTerminalType": false
   },
   {
     "Entity": "Temperature",
@@ -340,7 +361,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Temperature",
@@ -354,7 +376,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Temperature",
@@ -368,7 +391,8 @@
     ],
     "Aspect": "Product",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Temperature",
@@ -382,7 +406,8 @@
     ],
     "Aspect": "Product",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Temperature",
@@ -396,7 +421,8 @@
     ],
     "Aspect": "Product",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Temperature",
@@ -410,7 +436,8 @@
     ],
     "Aspect": "Product",
     "Format": "UnsignedFloat",
-    "IsInterface": true
+    "IsInterface": true,
+    "IsTerminalType": false
   },
   {
     "Entity": "Temperature",
@@ -424,7 +451,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedFloat",
-    "IsInterface": true
+    "IsInterface": true,
+    "IsTerminalType": false
   },
   {
     "Entity": "Temperature",
@@ -438,7 +466,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedFloat",
-    "IsInterface": true
+    "IsInterface": true,
+    "IsTerminalType": false
   },
   {
     "Entity": "Temperature",
@@ -452,7 +481,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedFloat",
-    "IsInterface": true
+    "IsInterface": true,
+    "IsTerminalType": false
   },
   {
     "Entity": "Temperature",
@@ -466,7 +496,8 @@
     ],
     "Aspect": "NotSet",
     "Format": "UnsignedFloat",
-    "IsInterface": true
+    "IsInterface": true,
+    "IsTerminalType": false
   },
   {
     "Entity": "Level",
@@ -479,7 +510,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedInteger",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Level",
@@ -492,7 +524,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedInteger",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Level",
@@ -505,7 +538,8 @@
     ],
     "Aspect": "Product",
     "Format": "UnsignedInteger",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Level",
@@ -518,7 +552,8 @@
     ],
     "Aspect": "Product",
     "Format": "UnsignedInteger",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Level",
@@ -531,7 +566,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedInteger",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Level",
@@ -544,7 +580,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedInteger",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Level",
@@ -557,7 +594,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedInteger",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Level",
@@ -570,7 +608,8 @@
     ],
     "Aspect": "NotSet",
     "Format": "UnsignedInteger",
-    "IsInterface": true
+    "IsInterface": true,
+    "IsTerminalType": false
   },
   {
     "Entity": "Density",
@@ -582,7 +621,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Density",
@@ -594,7 +634,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Density",
@@ -606,7 +647,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Density",
@@ -618,7 +660,8 @@
     ],
     "Aspect": "NotSet",
     "Format": "UnsignedFloat",
-    "IsInterface": true
+    "IsInterface": true,
+    "IsTerminalType": false
   },
   {
     "Entity": "Gas/Liquid Ratio, GLR",
@@ -630,7 +673,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedInteger",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Gas/Oil Ratio, GOR",
@@ -642,7 +686,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedInteger",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Gas Volume Fraction, GVF",
@@ -654,7 +699,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedInteger",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Water Cut, WC",
@@ -666,7 +712,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedInteger",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Gas HC Dew Point",
@@ -678,7 +725,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Turbidity, particle size",
@@ -690,7 +738,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedInteger",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Substance content",
@@ -703,7 +752,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedInteger",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Velocity",
@@ -716,7 +766,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Velocity",
@@ -729,7 +780,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Velocity",
@@ -742,7 +794,8 @@
     ],
     "Aspect": "Product",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Velocity",
@@ -755,7 +808,8 @@
     ],
     "Aspect": "Product",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Velocity",
@@ -768,7 +822,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Velocity",
@@ -781,7 +836,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Velocity",
@@ -794,7 +850,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Sand",
@@ -806,7 +863,8 @@
     ],
     "Aspect": "NotSet",
     "Format": "Table",
-    "IsInterface": true
+    "IsInterface": true,
+    "IsTerminalType": false
   },
   {
     "Entity": "Analysis, composition",
@@ -818,7 +876,8 @@
     ],
     "Aspect": "NotSet",
     "Format": "Table",
-    "IsInterface": true
+    "IsInterface": true,
+    "IsTerminalType": false
   },
   {
     "Entity": "Analysis, composition",
@@ -830,7 +889,8 @@
     ],
     "Aspect": "NotSet",
     "Format": "Table",
-    "IsInterface": true
+    "IsInterface": true,
+    "IsTerminalType": false
   },
   {
     "Entity": "Redundancy",
@@ -845,7 +905,8 @@
     ],
     "Aspect": "Function",
     "Format": "Selection",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Redundancy",
@@ -860,7 +921,8 @@
     ],
     "Aspect": "Product",
     "Format": "Selection",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Design Margin",
@@ -872,7 +934,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedInteger",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Design Margin",
@@ -884,7 +947,8 @@
     ],
     "Aspect": "Product",
     "Format": "UnsignedInteger",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Design Case",
@@ -896,7 +960,8 @@
     ],
     "Aspect": "Function",
     "Format": "TextDocReference",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Design Case",
@@ -908,7 +973,8 @@
     ],
     "Aspect": "Product",
     "Format": "TextDocReference",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Fail action",
@@ -923,7 +989,8 @@
     ],
     "Aspect": "Function",
     "Format": "Selection",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Fail action",
@@ -938,7 +1005,8 @@
     ],
     "Aspect": "Product",
     "Format": "Selection",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Slope, inclining",
@@ -951,7 +1019,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedInteger",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Slope, inclining",
@@ -964,7 +1033,8 @@
     ],
     "Aspect": "Product",
     "Format": "UnsignedInteger",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Slope, declining",
@@ -977,7 +1047,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedInteger",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Slope, declining",
@@ -990,7 +1061,8 @@
     ],
     "Aspect": "Product",
     "Format": "UnsignedInteger",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Dead pocket prevention",
@@ -1003,7 +1075,8 @@
     ],
     "Aspect": "Function",
     "Format": "Boolean",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Dead pocket prevention",
@@ -1016,7 +1089,8 @@
     ],
     "Aspect": "Product",
     "Format": "Boolean",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Gas separation efficiency",
@@ -1028,7 +1102,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedInteger",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Gas separation efficiency",
@@ -1040,7 +1115,8 @@
     ],
     "Aspect": "Product",
     "Format": "UnsignedInteger",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Water separation efficiency",
@@ -1052,7 +1128,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedInteger",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Water separation efficiency",
@@ -1064,7 +1141,8 @@
     ],
     "Aspect": "Product",
     "Format": "UnsignedInteger",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "K-value",
@@ -1077,7 +1155,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "K-value",
@@ -1090,7 +1169,8 @@
     ],
     "Aspect": "Product",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Gas Carry-under, volumetric",
@@ -1102,7 +1182,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedInteger",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Gas Carry-under, volumetric",
@@ -1114,7 +1195,8 @@
     ],
     "Aspect": "Product",
     "Format": "UnsignedInteger",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Liquid Carry-over, volumetric",
@@ -1126,7 +1208,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Liquid Carry-over, volumetric",
@@ -1138,7 +1221,8 @@
     ],
     "Aspect": "Product",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Liquid Mass Fraction",
@@ -1150,7 +1234,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Liquid Mass Fraction",
@@ -1162,7 +1247,8 @@
     ],
     "Aspect": "Product",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Response time",
@@ -1175,7 +1261,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Response time",
@@ -1188,7 +1275,8 @@
     ],
     "Aspect": "Product",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Duration",
@@ -1202,7 +1290,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedInteger",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Duration",
@@ -1216,7 +1305,8 @@
     ],
     "Aspect": "Product",
     "Format": "UnsignedInteger",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Duration",
@@ -1230,7 +1320,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedInteger",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Duration",
@@ -1244,7 +1335,8 @@
     ],
     "Aspect": "Product",
     "Format": "UnsignedInteger",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Crossection, Inner Diameter",
@@ -1257,7 +1349,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Crossection, Inner Diameter",
@@ -1270,7 +1363,8 @@
     ],
     "Aspect": "Product",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Crossection, Area",
@@ -1283,7 +1377,8 @@
     ],
     "Aspect": "Function",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
   },
   {
     "Entity": "Crossection, Area",
@@ -1296,6 +1391,24 @@
     ],
     "Aspect": "Product",
     "Format": "UnsignedFloat",
-    "IsInterface": false
+    "IsInterface": false,
+    "IsTerminalType": false
+  },
+  {
+    "entity": "Pressure, absolute",
+    "qualifier": "Operating",
+    "source": "Calculated",
+    "condition": "Maximum",
+    "units": [
+      "Barg",
+      "Bara",
+      "Psi",
+      "Psig",
+      "Pascal"
+    ],
+    "aspect": "NotSet",
+    "format": "UnsignedFloat",
+    "isInterface": false,
+    "IsTerminalType": true
   }
 ]

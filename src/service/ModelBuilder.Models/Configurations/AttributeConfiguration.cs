@@ -13,8 +13,9 @@ namespace Mb.Models.Configurations
             var unitConverter = new EnumCollectionJsonValueConverter<Unit>();
             var unitComparer = new CollectionValueComparer<Unit>();
 
-            builder.HasKey(x => new {x.Key, x.NodeId});
+            builder.HasKey(x => x.Id);
             builder.ToTable("Attribute");
+            builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
             builder.Property(p => p.Key).HasColumnName("Key").IsRequired();
             builder.Property(p => p.Value).HasColumnName("Value");
             builder.Property(p => p.Unit).HasColumnName("Unit").HasConversion<string>();
@@ -24,8 +25,10 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.Format).HasColumnName("Format").HasConversion<string>();
             builder.Property(p => p.Units).HasColumnName("Units").HasConversion(unitConverter).Metadata.SetValueComparer(unitComparer);
             
-            builder.Property(p => p.NodeId).HasColumnName("NodeId").IsRequired();
-            builder.HasOne(x => x.Node).WithMany(y => y.Attributes).HasForeignKey(x => x.NodeId).OnDelete(DeleteBehavior.Cascade);
+            builder.Property(p => p.NodeId).HasColumnName("NodeId").IsRequired(false);
+            builder.HasOne(x => x.Node).WithMany(y => y.Attributes).HasForeignKey(x => x.NodeId).OnDelete(DeleteBehavior.NoAction);
+            builder.Property(p => p.ConnectorId).HasColumnName("ConnectorId").IsRequired(false);
+            builder.HasOne(x => x.Connector).WithMany(y => y.Attributes).HasForeignKey(x => x.ConnectorId).OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
