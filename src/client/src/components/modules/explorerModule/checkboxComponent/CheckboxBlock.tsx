@@ -1,10 +1,10 @@
 import { GetNodes } from "../../../flow/helpers";
 import { useDispatch, useSelector } from "react-redux";
 import { changeActiveNode } from "../../../../redux/store/project/actions";
-import { Node } from "../../../../models/project";
+import { Node, NODE_TYPE } from "../../../../models/project";
 import { RootState } from "../../../../redux/store";
-import "./checkbox.scss";
 import { setSplitViewNode } from "../../../../redux/store/splitView/actions";
+import "./checkbox.scss";
 
 interface Props {
   nodeId: string;
@@ -16,6 +16,7 @@ export const CheckboxBlock = ({ nodeId, inputLabel }: Props) => {
   const nodes = GetNodes();
   const node = nodes.find((x) => x.id === nodeId);
   const selectedNode = nodes.find((x) => x.isSelected);
+  const isProduct = node.type === NODE_TYPE.PRODUCT;
 
   const splitView = useSelector<RootState>(
     (state) => state.splitView.visible
@@ -30,16 +31,19 @@ export const CheckboxBlock = ({ nodeId, inputLabel }: Props) => {
 
   const handleChange = () => {
     if (splitView) {
-      dispatch(setSplitViewNode(node));
+      if (splitViewNode) dispatch(setSplitViewNode(null));
+      else dispatch(setSplitViewNode(node));
     } else dispatch(changeActiveNode(node.id));
   };
 
   return (
-    <label className={"checkbox"}>
-      <input type="checkbox" checked={!isHidden} onChange={handleChange} />
-      <span className="checkmark"></span>
-      <label className="checkbox_label">{inputLabel}</label>
-    </label>
+    !isProduct && (
+      <label className={"checkbox"}>
+        <input type="checkbox" checked={!isHidden} onChange={handleChange} />
+        <span className="checkmark"></span>
+        <label className="checkbox_label">{inputLabel}</label>
+      </label>
+    )
   );
 };
 

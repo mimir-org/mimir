@@ -19,12 +19,11 @@ interface Props {
   name: string;
   aspectType: NodeType;
 }
-
 export const AspectComponent = ({ nodeId, name, aspectType }: Props) => {
   const [expanded, setExpanded] = useState(true);
+  const expandIcon = expanded ? ExpandedIcon : ClosedIcon;
   const aspectIcon = GetAspectIcon(aspectType);
   const color = GetAspectColor(aspectType, true);
-  const expandIcon = expanded ? ExpandedIcon : ClosedIcon;
   const childType = GetAspectType(aspectType);
   const nodes = GetNodes();
   const edges = GetEdges();
@@ -40,10 +39,10 @@ export const AspectComponent = ({ nodeId, name, aspectType }: Props) => {
       <AspectBox color={color}>
         <img src={aspectIcon} alt="aspect-icon"></img>
         <div className="checkbox_container">
-          {!isBlockView ? (
-            <Checkbox nodeId={nodeId} inputLabel={name} type={childType} />
-          ) : (
+          {isBlockView ? (
             <CheckboxBlock nodeId={nodeId} inputLabel={name} />
+          ) : (
+            <Checkbox nodeId={nodeId} inputLabel={name} type={childType} />
           )}
         </div>
         {GetDropdownIcon(expandIcon, handleExpandClick)}
