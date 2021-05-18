@@ -53,6 +53,7 @@ export type ViewType = keyof typeof VIEW_TYPE;
 export const VIEW_TYPE = {
   BLOCKVIEW: "blockview",
   TREEVIEW: "treeview",
+  TYPE_EDITOR: "type-editor",
 };
 
 export type IconType = keyof typeof ICON_TYPE;

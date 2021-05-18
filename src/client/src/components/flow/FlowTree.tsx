@@ -9,6 +9,7 @@ import { useOnConnect, useOnDrop, useOnElementsRemove } from "./hooks";
 import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
 import { GetProject, HasProject } from "../../redux/store/localStorage";
 import { OpenProjectMenu } from "../project/openProject/OpenProjectMenu";
+import { VIEW_TYPE } from "../../models/project";
 import {
   updatePosition,
   changeActiveNode,
@@ -87,7 +88,7 @@ const FlowTree = () => {
   }, [dispatch, projectState.project]);
 
   const visible = useSelector<RootState>(
-    (state) => state.flow.view[1].visible
+    (state) => state.flow.view === VIEW_TYPE.TREEVIEW
   ) as boolean;
 
   return (

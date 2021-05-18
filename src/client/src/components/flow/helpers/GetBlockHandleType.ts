@@ -8,14 +8,12 @@ import {
 const GetBlockHandleType = (
   connector: Connector
 ): [HandleType, Position, string] => {
-  console.log({ connector });
   if (
     connector.type === CONNECTOR_TYPE.OUTPUT &&
     (connector.relationType === RELATION_TYPE.HasLocation ||
       connector.relationType === RELATION_TYPE.FulfilledBy ||
       connector.relationType === RELATION_TYPE.PartOf)
   ) {
-    console.log("test1");
     return ["source", Position.Right, "blockView-handle-right"];
   }
 
@@ -32,7 +30,6 @@ const GetBlockHandleType = (
       connector.relationType === RELATION_TYPE.FulfilledBy ||
       connector.relationType === RELATION_TYPE.PartOf)
   ) {
-    console.log("test3");
     return ["target", Position.Left, "blockView-handle-left"];
   }
 

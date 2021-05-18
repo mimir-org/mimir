@@ -4,6 +4,7 @@ import { ProjectMainMenu } from "../project";
 import { ProjectState } from "../../redux/store/project/types";
 import { RootState } from "./../../redux/store/index";
 import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
+import { VIEW_TYPE } from "../../models/project";
 import { OpenProjectMenu } from "../project/openProject";
 import { get } from "../../redux/store/project/actions";
 import { GetProject, HasProject } from "../../redux/store/localStorage";
@@ -115,7 +116,7 @@ const FlowBlock = () => {
   }, [dispatch, projectState.project]);
 
   const visible = useSelector<RootState>(
-    (state) => state.flow.view[0].visible
+    (state) => state.flow.view === VIEW_TYPE.BLOCKVIEW
   ) as boolean;
 
   return (

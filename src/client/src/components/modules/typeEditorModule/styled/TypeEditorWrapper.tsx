@@ -9,6 +9,7 @@ const TypeEditorWrapper = styled.div`
   background: #ffffff;
   border: 2px solid #007079;
   border-radius: 5px;
+  z-index: 100;
 `;
 
 export default TypeEditorWrapper;

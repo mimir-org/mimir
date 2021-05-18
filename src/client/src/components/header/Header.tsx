@@ -1,6 +1,6 @@
 import { useHistory } from "react-router-dom";
 import { TextResources } from "../../assets/textResources";
-import { CheckView, SaveView } from "../../redux/store/localStorage";
+import { CheckView, SetView } from "../../redux/store/localStorage";
 import { useDispatch, useSelector } from "react-redux";
 import { save } from "../../redux/store/project/actions";
 import { RootState } from "../../redux/store";
@@ -8,6 +8,7 @@ import { ProjectState } from "../../redux/store/project/types";
 import { VIEW_TYPE } from "../../models/project";
 import { TreeviewOff, TreeviewOn } from "../../assets/icons";
 import { ViewOffIcon, ViewOnIcon } from "../../assets/icons/blockView";
+import { changeFlowView } from "../../redux/store/flow/actions";
 import {
   HeaderBox,
   IconBox,
@@ -28,7 +29,8 @@ const Header = () => {
   const handleClick = (e) => {
     dispatch(save(projectState.project));
     const view = e.target.alt;
-    SaveView(view);
+    dispatch(changeFlowView(view));
+    SetView(view);
     setTimeout(() => {
       push(`/home/${view}`);
     }, 400);

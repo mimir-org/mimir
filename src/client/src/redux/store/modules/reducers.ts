@@ -44,7 +44,7 @@ export function moduleReducer(state = initialState, action) {
       return {
         ...state,
         types: state.types.map(
-          (x, i) =>
+          (x) =>
             state && {
               ...x,
               visible: action.payload.visible,

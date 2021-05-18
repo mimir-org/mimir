@@ -7,7 +7,6 @@ const SortConnectorList = (connectors) => {
   const isLocationNode = useSelector<RootState>(
     (state) => state.splitView.node?.type === NODE_TYPE.LOCATION
   ) as boolean;
-  console.log({ isLocationNode });
 
   connectors.forEach((conn) => {
     if (!isLocationNode) {
