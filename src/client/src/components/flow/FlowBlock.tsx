@@ -7,7 +7,11 @@ import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
 import { VIEW_TYPE } from "../../models/project";
 import { OpenProjectMenu } from "../project/openProject";
 import { get } from "../../redux/store/project/actions";
-import { GetProject, HasProject } from "../../redux/store/localStorage";
+import {
+  GetProject,
+  HasProject,
+  SetProject,
+} from "../../redux/store/localStorage";
 import ReactFlow, {
   ReactFlowProvider,
   Elements,
@@ -38,6 +42,8 @@ const FlowBlock = () => {
   const projectState = useSelector<RootState>(
     (state) => state.projectState
   ) as ProjectState;
+
+  SetProject(projectState.project);
 
   if (projectState.project) {
     const node = projectState.project.nodes.find((node) => node.isSelected);

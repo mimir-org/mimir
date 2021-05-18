@@ -1,3 +1,5 @@
+import { Project } from "../../../models/project";
+
 export const LoadState = (key: string) => {
   try {
     const serializedState = localStorage.getItem(`show_${key}`);
@@ -92,7 +94,7 @@ export const LoadEventData = (key: string): object => {
 
 export const GetProject = (): string => {
   try {
-    const project = localStorage.getItem(`Project`);
+    const project = localStorage.getItem(`ProjectId`);
 
     if (project === null || project === undefined) {
       return null;
@@ -106,7 +108,15 @@ export const GetProject = (): string => {
 
 export const SetProjectId = (projectId: string): void => {
   try {
-    localStorage.setItem(`Project`, projectId);
+    localStorage.setItem(`ProjectId`, projectId);
+  } catch {
+    return undefined;
+  }
+};
+
+export const SetProject = (project: Project): void => {
+  try {
+    localStorage.setItem(`Project`, JSON.stringify(project));
   } catch {
     return undefined;
   }
@@ -114,7 +124,7 @@ export const SetProjectId = (projectId: string): void => {
 
 export const HasProject = (): boolean => {
   try {
-    const project = localStorage.getItem(`Project`);
+    const project = localStorage.getItem(`ProjectId`);
     return project !== null;
   } catch (err) {
     return undefined;

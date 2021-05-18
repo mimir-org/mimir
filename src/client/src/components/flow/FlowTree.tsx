@@ -7,7 +7,11 @@ import { ProjectState } from "../../redux/store/project/types";
 import { RootState } from "./../../redux/store/index";
 import { useOnConnect, useOnDrop, useOnElementsRemove } from "./hooks";
 import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
-import { GetProject, HasProject } from "../../redux/store/localStorage";
+import {
+  GetProject,
+  HasProject,
+  SetProject,
+} from "../../redux/store/localStorage";
 import { OpenProjectMenu } from "../project/openProject/OpenProjectMenu";
 import { VIEW_TYPE } from "../../models/project";
 import {
@@ -35,6 +39,8 @@ const FlowTree = () => {
     (state) => state.projectState
   ) as ProjectState;
   //   console.log({ projectState });
+
+  SetProject(projectState.project);
 
   const OnElementsRemove = (elementsToRemove) => {
     return useOnElementsRemove(elementsToRemove, setElements, dispatch);
