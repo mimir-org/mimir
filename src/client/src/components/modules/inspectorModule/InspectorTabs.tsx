@@ -1,5 +1,5 @@
-import { TabComponent } from ".";
-import { Attribute, Project } from "../../../models/project";
+import { TabComponent, TabAdminComponent } from ".";
+import { Attribute, Project, Node } from "../../../models/project";
 import { RootState } from "../../../redux/store";
 import { useSelector } from "react-redux";
 
@@ -9,22 +9,19 @@ const InspectorTabs = () => {
   ) as Project;
 
   const nodes = project ? project.nodes : [];
-  const node = nodes.find((node) => node.isSelected);
-  const nodeLabel = node ? node.label : "";
+  const node = nodes.find((node) => node.isSelected) as Node;
 
-  let adminData: Attribute[] = [];
   let techData: Attribute[] = [];
   let relationData: Attribute[] = [];
 
   if (node) {
-    adminData = [];
     techData = node.attributes;
     relationData = [];
   }
 
   return (
     <>
-      <TabComponent attributes={adminData} index={0} nodeLabel={nodeLabel} />
+      <TabAdminComponent node={node} index={0} />
       <TabComponent attributes={techData} index={1} />
       <TabComponent attributes={relationData} index={2} />
     </>

@@ -4,14 +4,16 @@ using Mb.Models.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Mb.Core.Migrations
 {
     [DbContext(typeof(ModelBuilderDbContext))]
-    partial class ModelBuilderDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210518164358_NodeMembers")]
+    partial class NodeMembers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -319,22 +321,10 @@ namespace Mb.Core.Migrations
                         .HasColumnType("int")
                         .HasColumnName("Length");
 
-                    b.Property<int>("MaxTemp")
-                        .HasColumnType("int")
-                        .HasColumnName("MaxTemp");
-
-                    b.Property<int>("MinTemp")
-                        .HasColumnType("int")
-                        .HasColumnName("MinTemp");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Name");
-
-                    b.Property<int>("NoiceRestriction")
-                        .HasColumnType("int")
-                        .HasColumnName("NoiceRestriction");
 
                     b.Property<decimal>("PositionBlockX")
                         .HasColumnType("decimal(18,4)")
@@ -351,18 +341,6 @@ namespace Mb.Core.Migrations
                     b.Property<decimal>("PositionY")
                         .HasColumnType("decimal(18,4)")
                         .HasColumnName("PositionY");
-
-                    b.Property<int>("RelativeToPlatformEast")
-                        .HasColumnType("int")
-                        .HasColumnName("RelativeToPlatformEast");
-
-                    b.Property<int>("RelativeToPlatformNorth")
-                        .HasColumnType("int")
-                        .HasColumnName("RelativeToPlatformNorth");
-
-                    b.Property<int>("RelativeToPlatformZeroPoint")
-                        .HasColumnType("int")
-                        .HasColumnName("RelativeToPlatformZeroPoint");
 
                     b.Property<string>("SemanticId")
                         .HasColumnType("nvarchar(max)")

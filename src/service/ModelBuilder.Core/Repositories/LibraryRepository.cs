@@ -63,7 +63,9 @@ namespace Mb.Core.Repositories
                 RelationType = relationType,
                 TerminalType = TerminalType.NotSet,
                 NodeId = null,
-                Node = null
+                Node = null,
+                Attributes = null,
+                SemanticReference = null
             };
         }
     }

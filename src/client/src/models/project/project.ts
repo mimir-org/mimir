@@ -1,3 +1,15 @@
+export type BuildStatus = keyof typeof BUILD_STATUS;
+
+export const BUILD_STATUS = {
+    NotSet: "NotSet",
+    Unused: "Unused",
+    Reserved: "Reserved",
+    Planned: "Planned",
+    AsBuilt: "AsBuilt",
+    Historic: "Historic",
+    OutOfService: "OutOfService",
+};
+
 export type AttributeTab = keyof typeof ATTRIBUTE_TAB;
 
 export const ATTRIBUTE_TAB = {
@@ -189,6 +201,7 @@ export interface Node {
     id: string;
     semanticId: string;
     tagNumber: string;
+    description: string;
     name: string;
     icon: IconType;
     label: string;
@@ -205,6 +218,13 @@ export interface Node {
     length: number;
     height: number;
     width: number;
+    relativeToPlatformEast: number;
+    relativeToPlatformNorth: number;
+    relativeToPlatformZeroPoint: number;
+    maxTemp: number;
+    minTemp: number;
+    noiceRestriction: number;
+    status: BuildStatus;
     updatedBy: string;
     updated: Date;
     version: string;
