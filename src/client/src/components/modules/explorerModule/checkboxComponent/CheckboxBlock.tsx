@@ -1,7 +1,10 @@
 import { GetNodes } from "../../../flow/helpers";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { changeActiveNode } from "../../../../redux/store/project/actions";
+import { Node } from "../../../../models/project";
+import { RootState } from "../../../../redux/store";
 import "./checkbox.scss";
+import { setSplitViewNode } from "../../../../redux/store/splitView/actions";
 
 interface Props {
   nodeId: string;
@@ -13,10 +16,22 @@ export const CheckboxBlock = ({ nodeId, inputLabel }: Props) => {
   const nodes = GetNodes();
   const node = nodes.find((x) => x.id === nodeId);
   const selectedNode = nodes.find((x) => x.isSelected);
-  let isHidden = node !== selectedNode;
+
+  const splitView = useSelector<RootState>(
+    (state) => state.splitView.visible
+  ) as boolean;
+  const splitViewNode = useSelector<RootState>(
+    (state) => state.splitView.node
+  ) as Node;
+
+  let isHidden = splitView
+    ? node !== selectedNode && node !== splitViewNode
+    : node !== selectedNode;
 
   const handleChange = () => {
-    dispatch(changeActiveNode(node.id));
+    if (splitView) {
+      dispatch(setSplitViewNode(node));
+    } else dispatch(changeActiveNode(node.id));
   };
 
   return (

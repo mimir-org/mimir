@@ -48,7 +48,6 @@ export const AspectComponent = ({ nodeId, name, aspectType }: Props) => {
         </div>
         {GetDropdownIcon(expandIcon, handleExpandClick)}
       </AspectBox>
-
       {expanded &&
         children.map((obj: object, i: number) => {
           if (children[i].type === childType) {

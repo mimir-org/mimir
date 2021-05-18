@@ -1,10 +1,11 @@
 import styled from "styled-components";
 
 const FunctionBox = styled.div`
+  display: inline-block;
   margin-top: 60px;
 
   .header {
-    display: flex;
+    display: initial;
     margin-bottom: 8px;
     padding: 0px 0px 0px 25px;
     font-size: 14px;
@@ -13,6 +14,7 @@ const FunctionBox = styled.div`
   .content {
     border: 2px solid black;
     border-radius: 4px;
+    margin-right: 15px;
     width: ${(props) => props.width}px;
     height: ${(props) => props.height}px;
     -webkit-border-radius: 4px;
