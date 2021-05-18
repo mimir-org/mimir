@@ -1,4 +1,4 @@
-import { Connector, ViewType } from "../../../models/project";
+import { Connector } from "../../../models/project";
 import { CHANGE_FLOW_VIEW, ADD_SELECTED_CONNECTOR } from "./types";
 
 export function changeFlowView(view: string) {
