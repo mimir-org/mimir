@@ -19,6 +19,7 @@ export { default as GetLegendData } from "./GetLegendData";
 export { default as GetConnectorIcon } from "./GetConnectorIcon";
 export { default as GetHandlePosition } from "./GetHandlePosition";
 export { default as SortConnectorList } from "./SortConnectorList";
+export { default as GetConnectorName } from "./GetConnectorName";
 export { default as GetBlockNodeTypes } from "./GetBlockNodeTypes";
 export { default as GetBlockEdgeTypes } from "./GetBlockEdgeTypes";
 export { default as GetTreeNodeTypes } from "./GetTreeNodeTypes";

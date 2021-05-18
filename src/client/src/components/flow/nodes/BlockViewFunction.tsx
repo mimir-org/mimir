@@ -1,12 +1,15 @@
 import { memo, FC, useState } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
+import { useDispatch, useSelector } from "react-redux";
 import { OptionsIcon } from "../../../assets/icons/blockView";
+import { addSelectedConnector } from "../../../redux/store/flow/actions";
 import {
   GetConnectorIcon,
   GetBlockHandleType,
   GetHandlePosition,
   GetHandleType,
   SortConnectorList,
+  GetConnectorName,
 } from "../helpers";
 import {
   NodeBox,
@@ -15,12 +18,17 @@ import {
   OptionsMenu,
   HandleBox,
 } from "../../../componentLibrary/blockView";
+import { RootState } from "../../../redux/store";
+import { Connector } from "../../../models/project";
 
 const BlockViewFunction: FC<NodeProps> = ({ data }) => {
+  const dispatch = useDispatch();
   const [showButton, setShowButton] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  var selectedConnectors = [];
+  const connectors = SortConnectorList(
+    useSelector<RootState>((state) => state.flow.connectors) as Connector[]
+  );
 
   const handleClick = () => {
     setMenuOpen(!menuOpen);
@@ -39,12 +47,10 @@ const BlockViewFunction: FC<NodeProps> = ({ data }) => {
   };
 
   const handleConnectorClick = (connector) => {
-    selectedConnectors.push(connector);
+    dispatch(addSelectedConnector(connector));
     setIsVisible(true);
     setMenuOpen(false);
   };
-
-  const connectors = SortConnectorList(data.connectors);
 
   return (
     <NodeBox onMouseOver={handleOnHover} onMouseOut={handleOnMouseOut}>
@@ -52,12 +58,12 @@ const BlockViewFunction: FC<NodeProps> = ({ data }) => {
         <img src={OptionsIcon} alt="" />
       </OptionsMenu>
       <OptionsBox visible={menuOpen}>
-        {connectors.map((conn) => (
+        {SortConnectorList(data.connectors).map((conn) => (
           <OptionsElement
             key={conn.id}
             onClick={() => handleConnectorClick(conn)}
           >
-            {conn.name}
+            {GetConnectorName(conn)}
             <img
               src={GetConnectorIcon(conn.terminalType)}
               alt="icon"
@@ -66,7 +72,9 @@ const BlockViewFunction: FC<NodeProps> = ({ data }) => {
           </OptionsElement>
         ))}
       </OptionsBox>
-      <div>{data.label ?? data.name}</div>
+      <div>{data.label ?? data.names}</div>
+
+      {/* Show connectors added to node */}
       {isVisible &&
         connectors.map((conn) => {
           const [type, pos, className] = GetBlockHandleType(conn);
@@ -87,6 +95,8 @@ const BlockViewFunction: FC<NodeProps> = ({ data }) => {
             </HandleBox>
           );
         })}
+
+      {/* Original connectors */}
       {data.connectors &&
         data.connectors.map((connector) => {
           const [typeHandler, positionHandler] = GetHandleType(connector);

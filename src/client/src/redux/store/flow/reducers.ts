@@ -1,4 +1,4 @@
-import { CHANGE_FLOW_VIEW } from "./types";
+import { CHANGE_FLOW_VIEW, ADD_SELECTED_CONNECTOR } from "./types";
 import { VIEW_TYPE } from "../../../models/project";
 
 const initialState = {
@@ -12,6 +12,7 @@ const initialState = {
       visible: true,
     },
   ],
+  connectors: [],
 };
 
 export function flowReducer(state = initialState, action) {
@@ -27,6 +28,11 @@ export function flowReducer(state = initialState, action) {
               }
             : { ...x }
         ),
+      };
+    case ADD_SELECTED_CONNECTOR:
+      return {
+        ...state,
+        connectors: [...state.connectors, action.payload.connector],
       };
     default:
       return state;
