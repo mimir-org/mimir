@@ -1,5 +1,6 @@
 import { IsAspectNode } from "../../../components/flow/helpers";
 import { Edge, Node, ProjectSimple } from "../../../models/project";
+import { GetProject } from "../localStorage";
 import { TraverseNodes, FindChildNodes } from "./helpers/";
 import {
   FETCHING_PROJECT,
@@ -27,7 +28,7 @@ import {
 const initialState: ProjectState = {
   fetching: false,
   creating: false,
-  project: null,
+  project: GetProject() ?? null,
   hasError: false,
   errorMsg: null,
   projectList: null,

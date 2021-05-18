@@ -106,6 +106,20 @@ export const GetProjectId = (): string => {
   }
 };
 
+export const GetProject = (): Project => {
+  try {
+    const project = localStorage.getItem(`Project`);
+
+    if (project === null || project === undefined) {
+      return null;
+    }
+
+    return JSON.parse(project);
+  } catch (err) {
+    return undefined;
+  }
+};
+
 export const SetProjectId = (projectId: string): void => {
   try {
     localStorage.setItem(`ProjectId`, projectId);
