@@ -50,6 +50,7 @@ Examples of how to create types in file
         "Version": "[x.y]",
         "Terminals": [
           {
+	  "Id": "[DOMAIN_GUID]"
             "TerminalType": "[NotSet|Electric|Thermal|Solar|Mechanical|Sound|Wind|HydroPower|Fluid|DryGranulated|SolidPieces|Bracket|Bolts|Flanges|Sensor|Water|Oil|ChemicalFluids|MultiphaseFluids|WetGas|Vapour|Gas|Sand|Powder|Bricks|Boxes|Pieces]",
             "ConnectorType": "[Input|Output]",
 			"SemanticReference": "[SemanticReference]",
