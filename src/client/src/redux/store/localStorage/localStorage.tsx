@@ -104,7 +104,7 @@ export const GetProject = (): string => {
   }
 };
 
-export const SetProject = (projectId: string): void => {
+export const SetProjectId = (projectId: string): void => {
   try {
     localStorage.setItem(`Project`, projectId);
   } catch {

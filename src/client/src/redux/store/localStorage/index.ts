@@ -7,5 +7,5 @@ export { SaveAllModules } from "./localStorage";
 export { SaveEventData } from "./localStorage";
 export { LoadEventData } from "./localStorage";
 export { GetProject } from "./localStorage";
-export { SetProject } from "./localStorage";
+export { SetProjectId } from "./localStorage";
 export { HasProject } from "./localStorage";

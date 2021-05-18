@@ -5,7 +5,7 @@ import { ProjectSimple } from "../../../models/project";
 import { LeftArrowIcon, RightArrowIcon } from "../../../assets/icons";
 import { MenuButton } from "../../../componentLibrary/buttons";
 import { TextResources } from "../../../assets/textResources";
-import { SetProject } from "../../../redux/store/localStorage";
+import { SetProjectId } from "../../../redux/store/localStorage";
 import { get } from "../../../redux/store/project/actions";
 import { changeProjectMenu } from "../../../redux/store/projectMenu/actions";
 import {
@@ -33,7 +33,7 @@ export const OpenProjectMenu = () => {
   };
 
   const handleOpenClick = () => {
-    SetProject(projectId);
+    SetProjectId(projectId);
     dispatch(get(projectId));
     dispatch(changeProjectMenu("openProjectMenu", false));
   };
