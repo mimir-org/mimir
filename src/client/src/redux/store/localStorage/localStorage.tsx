@@ -92,7 +92,7 @@ export const LoadEventData = (key: string): object => {
   }
 };
 
-export const GetProject = (): string => {
+export const GetProjectId = (): string => {
   try {
     const project = localStorage.getItem(`ProjectId`);
 

@@ -7,7 +7,7 @@ import { Project, VIEW_TYPE } from "../../models/project";
 import { OpenProjectMenu } from "../project/openProject";
 import { get } from "../../redux/store/project/actions";
 import {
-  GetProject,
+  GetProjectId,
   HasProject,
   SetProject,
 } from "../../redux/store/localStorage";
@@ -115,7 +115,7 @@ const FlowBlock = () => {
   // Handling of project loading
   useEffect(() => {
     if (project === null) {
-      const projectId = GetProject();
+      const projectId = GetProjectId();
       dispatch(get(projectId));
     }
   }, [dispatch, project]);

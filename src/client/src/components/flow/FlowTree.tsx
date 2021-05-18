@@ -7,7 +7,7 @@ import { RootState } from "./../../redux/store/index";
 import { useOnConnect, useOnDrop, useOnElementsRemove } from "./hooks";
 import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
 import {
-  GetProject,
+  GetProjectId,
   HasProject,
   SetProject,
 } from "../../redux/store/localStorage";
@@ -87,7 +87,7 @@ const FlowTree = () => {
   // Handling of project loading
   useEffect(() => {
     if (project === null) {
-      const projectId = GetProject();
+      const projectId = GetProjectId();
       if (projectId) dispatch(get(projectId));
     }
   }, [dispatch, project]);

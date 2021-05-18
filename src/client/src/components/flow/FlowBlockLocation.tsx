@@ -8,7 +8,7 @@ import { changeActiveNode, get } from "../../redux/store/project/actions";
 import { NODE_TYPE } from "../../models/project";
 import { OpenProjectMenu } from "../project/openProject";
 import {
-  GetProject,
+  GetProjectId,
   HasProject,
 } from "../../redux/store/localStorage/localStorage";
 import {
@@ -112,7 +112,7 @@ const FlowBlockLocation = () => {
   // Handling of project loading
   useEffect(() => {
     if (projectState.project === null) {
-      const projectId = GetProject();
+      const projectId = GetProjectId();
       dispatch(get(projectId));
     }
   }, [dispatch, projectState.project]);
