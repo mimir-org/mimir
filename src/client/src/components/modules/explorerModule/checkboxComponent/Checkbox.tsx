@@ -1,7 +1,6 @@
 import { NodeType } from "../../../../models/project";
 import useChangeNodeVisibility from "../hooks/useChangeNodeVisibility";
 import { GetNodes } from "../../../flow/helpers";
-import "./checkbox.scss";
 
 interface Props {
   nodeId: string;

@@ -34,6 +34,7 @@ const FlowTree = () => {
   const projectState = useSelector<RootState>(
     (state) => state.projectState
   ) as ProjectState;
+  //   console.log({ projectState });
 
   const OnElementsRemove = (elementsToRemove) => {
     return useOnElementsRemove(elementsToRemove, setElements, dispatch);

@@ -4,7 +4,6 @@ import { changeActiveNode } from "../../../../redux/store/project/actions";
 import { Node, NODE_TYPE } from "../../../../models/project";
 import { RootState } from "../../../../redux/store";
 import { setSplitViewNode } from "../../../../redux/store/splitView/actions";
-import "./checkbox.scss";
 
 interface Props {
   nodeId: string;

@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { ExpandedIcon, ClosedIcon } from "../../../../assets/icons";
 import { NodeType, VIEW_TYPE } from "../../../../models/project";
-import { IsAspectNode, GetNodes, GetEdges } from "../../../flow/helpers";
+import { IsAspectNode } from "../../../flow/helpers";
 import { AspectElement } from ".";
 import { AspectBox } from "../../../../componentLibrary/box/aspect";
 import { CheckView } from "../../../../redux/store/localStorage/";
 import { Checkbox, CheckboxBlock } from "../checkboxComponent";
+import store from "../../../../redux/store";
 import {
   GetAspectIcon,
   GetAspectColor,
@@ -25,8 +26,8 @@ export const AspectComponent = ({ nodeId, name, aspectType }: Props) => {
   const aspectIcon = GetAspectIcon(aspectType);
   const color = GetAspectColor(aspectType, true);
   const childType = GetAspectType(aspectType);
-  const nodes = GetNodes();
-  const edges = GetEdges();
+  const nodes = store.getState().projectState.project.nodes;
+  const edges = store.getState().projectState.project.edges;
   const children = nodes.filter((node) => !IsAspectNode(node.type));
   const isBlockView = CheckView(VIEW_TYPE.BLOCKVIEW);
 

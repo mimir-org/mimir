@@ -27,7 +27,6 @@ export const SwitchViewComponent = () => {
         <label className={"checkbox-footer"}>
           <input type="checkbox" checked={isActive} onChange={handleClick} />
           <span className="checkmark-footer"></span>
-          <label className="checkbox-footer_label"></label>
         </label>
         <p>{TextResources.Split_view}</p>
       </FooterContent>
