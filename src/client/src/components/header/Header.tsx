@@ -27,13 +27,12 @@ const Header = () => {
   const isBlockView = CheckView(VIEW_TYPE.BLOCKVIEW);
 
   const handleClick = (e) => {
-    dispatch(save(projectState.project));
+    // dispatch(save(projectState.project));
     const view = e.target.alt;
     dispatch(changeFlowView(view));
     SetView(view);
-    setTimeout(() => {
-      push(`/home/${view}`);
-    }, 400);
+    push(`/home/${view}`);
+    setTimeout(() => {}, 1000);
   };
 
   return (

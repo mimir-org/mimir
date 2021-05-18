@@ -1,9 +1,8 @@
 import styled from "styled-components";
-import { Color, FontType } from "../../";
+import { Color } from "../../";
 
 const MenuTopHeader = styled.div`
   position: absolute;
-  font-family: ${FontType.Standard};
   right: ${(props: { right: string }) => (props.right ? "2px" : "inherit")};
   left: ${(props: { right: string }) => (props.right ? "inherit" : "2px")};
   top: 2px;

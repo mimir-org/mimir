@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color, FontSize, FontType } from "..";
+import { Color, FontSize } from "..";
 
 const DropdownMenuListItem = styled.div`
   display: flex;
@@ -10,7 +10,6 @@ const DropdownMenuListItem = styled.div`
   border-style: solid;
   border-color: ${Color.Grey};
   border-radius: 0px;
-  font-family: ${FontType.Standard};
   font-size: ${FontSize.Standard};
   color: ${Color.Black};
   background-color: ${Color.White};

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { MODULE_TYPE } from "../../../models/project";
-import { Color, FontType } from "./../../../componentLibrary";
+import { Color } from "./../../../componentLibrary";
 
 const ModuleBox = styled.div`
   border-right: ${(props: { type: string }) =>
@@ -13,7 +13,6 @@ const ModuleBox = styled.div`
   height: ${(props: { stop: string; type: string }) =>
     props.type !== MODULE_TYPE.INSPECTOR ? "inherit" : props.stop};
   overflow: hidden;
-  font-family: ${FontType.Standard};
 `;
 
 export default ModuleBox;

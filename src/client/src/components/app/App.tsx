@@ -1,6 +1,7 @@
 import { Switch, Route } from "react-router";
 import { Header, Home, Login } from "..";
 import { Spinner, SpinnerWrapper } from "../../componentLibrary/animated";
+import { GlobalStyle } from "../../componentLibrary";
 import { AppBox } from "../../componentLibrary/box/app";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
@@ -34,6 +35,7 @@ const App = () => {
   return (
     <>
       <Header />
+      <GlobalStyle />
       <SpinnerWrapper loading={isFetching()}>
         <Spinner />
       </SpinnerWrapper>

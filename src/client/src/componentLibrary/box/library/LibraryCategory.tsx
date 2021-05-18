@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color, FontSize, FontType } from "../../";
+import { Color, FontSize } from "../../";
 
 const LibraryCategory = styled.div`
   width: 294px;
@@ -8,7 +8,6 @@ const LibraryCategory = styled.div`
   border-radius: 3px;
   background-color: ${Color.White};
   margin: 5px 0px 5px 0px;
-  font-family: ${FontType.Standard};
   display: inline-flex;
   align-items: center;
   font-size: ${FontSize.SubHeader};
