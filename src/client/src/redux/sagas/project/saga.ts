@@ -14,7 +14,7 @@ export function* getProject(action) {
   try {
     let project = GetProject();
 
-    if (!project) {
+    if (!project || action.payload) {
       const url =
         process.env.REACT_APP_API_BASE_URL + "project/" + action.payload;
       const response = yield call(get, url);
