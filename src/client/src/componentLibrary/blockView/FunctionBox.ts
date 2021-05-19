@@ -3,10 +3,11 @@ import styled from "styled-components";
 const FunctionBox = styled.div`
   display: inline-block;
   margin-top: ${(props) => (props.location ? "0px" : "60px")};
-  margin-left: ${(props) => (props.location ? "10px" : "-30px")};
+  margin-left: ${(props) => (props.location ? "0px" : "-130px")};
+  margin-right: 150px;
 
   .header {
-    top: ${(props) => (props.location ? "-35px" : "23px")};
+    top: ${(props) => (props.location ? "-37px" : "23px")};
     padding: 0px 0px 0px 22px;
     font-size: 14px;
     position: absolute;
@@ -26,7 +27,7 @@ const FunctionBox = styled.div`
 
   .icon {
     position: absolute;
-    top: ${(props) => (props.location ? "-22px" : "37px")};
+    top: ${(props) => (props.location ? "-23px" : "37px")};
   }
 `;
 

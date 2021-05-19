@@ -138,6 +138,8 @@ const FlowBlockLocation = () => {
               edgeTypes={GetBlockEdgeTypes}
               onConnectEnd={OnConnectStop}
               onConnectStart={OnConnectStart}
+              defaultZoom={1}
+              snapToGrid={true}
             ></ReactFlow>
             <Background
               size={0.5}

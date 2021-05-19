@@ -1,11 +1,14 @@
 import styled from "styled-components";
 
 const LocationBox = styled.div`
-  position: absolute;
-  top: 60px;
+  display: inline-block;
+  margin-top: 60px;
   width: ${(props) => props.width};
   height: ${(props) => props.height};
-  left: 546px;
+  max-width: 500px;
+  max-height: 585px;
+  margin-left: -135px;
+  position: absolute;
 `;
 
 export default LocationBox;
