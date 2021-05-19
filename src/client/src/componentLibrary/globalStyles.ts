@@ -3,10 +3,10 @@ import { Color, FontType } from "./";
 
 const GlobalStyle = createGlobalStyle`
   body {
-    font-family: ${FontType.Standard};
-  }
-
-  .checkbox {
+    font-family: ${FontType.Standard}
+  };
+  
+  .checkbox  {
     display: flex;
     position: relative;
     padding: 0px 0px 7px 25px;
@@ -19,7 +19,8 @@ const GlobalStyle = createGlobalStyle`
     opacity: 0;
   }
 
-  .checkmark {
+  .checkmark,
+  .checkmark-footer {
     position: absolute;
     left: 0;
     height: 15px;
@@ -29,21 +30,33 @@ const GlobalStyle = createGlobalStyle`
     border-radius: 3px;
   }
 
+  .checkmark-footer {
+    left: 5px;
+    top: -5px;
+  }
+
   .checkbox input:checked ~ .checkmark {
     background-color: ${Color.DeepCyan};
   }
 
-  .checkmark:after {
+  .checkbox input:checked ~ .checkmark-footer {
+    background-color: ${Color.White};
+  }
+
+  .checkmark:after,
+  .checkmark-footer:after {
     content: "";
     position: absolute;
     display: none;
   }
 
-  .checkbox input:checked ~ .checkmark:after {
+  .checkbox input:checked ~ .checkmark:after,
+  .checkbox input:checked ~ .checkmark-footer:after {
     display: block;
   }
-
-  .checkbox .checkmark:after {
+  
+  .checkbox .checkmark:after,
+  .checkmark-footer:after {
     left: 5px;
     top: 0px;
     width: 4px;
@@ -54,6 +67,15 @@ const GlobalStyle = createGlobalStyle`
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
   }
+
+  .checkbox .checkmark-footer:after {
+    border: solid ${Color.DeepCyan};
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+
 
   ::-webkit-scrollbar {
     width: 14px;
@@ -71,7 +93,6 @@ const GlobalStyle = createGlobalStyle`
     -webkit-box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05),
     inset 1px 1px 0px rgba(0, 0, 0, 0.05);
   }
-  
 `;
 
 export default GlobalStyle;

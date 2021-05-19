@@ -4,22 +4,18 @@ import { CreateId } from "../helpers";
 import { addEdge, ArrowHeadType } from "react-flow-renderer";
 import { createEdge } from "../../../redux/store/project/actions";
 
-const useOnConnect = (params, projectState, setElements, dispatch) => {
+const useOnConnect = (params, project, setElements, dispatch) => {
   SaveEventData(null, "edgeEvent");
 
   const createdId = CreateId();
-  const sourceNode = projectState.project.nodes.find(
-    (x) => x.id === params.source
-  ) as Node;
-  const targetNode = projectState.project.nodes.find(
-    (x) => x.id === params.target
-  ) as Node;
+  const sourceNode = project.nodes.find((x) => x.id === params.source) as Node;
+  const targetNode = project.nodes.find((x) => x.id === params.target) as Node;
 
   let currentEdge = null;
   let existingEdge = null;
 
-  if (projectState.project.edges) {
-    existingEdge = projectState.project.edges.find(
+  if (project.edges) {
+    existingEdge = project.edges.find(
       (x) =>
         x.fromConnector === params.sourceHandle &&
         x.toConnector === params.targetHandle &&

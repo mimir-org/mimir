@@ -9,7 +9,6 @@ import {
   CheckView,
   SaveState,
 } from "../../../redux/store/localStorage";
-import "./checkboxfooter.scss";
 
 export const SwitchViewComponent = () => {
   const dispatch = useDispatch();
@@ -24,7 +23,7 @@ export const SwitchViewComponent = () => {
   return (
     <FooterBox visible={isVisible}>
       <FooterContent onClick={handleClick} active={isActive}>
-        <label className={"checkbox-footer"}>
+        <label className={"checkbox"}>
           <input type="checkbox" checked={isActive} onChange={handleClick} />
           <span className="checkmark-footer"></span>
         </label>
