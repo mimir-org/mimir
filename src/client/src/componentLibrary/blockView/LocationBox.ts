@@ -5,7 +5,6 @@ const LocationBox = styled.div`
   width: ${(props) => props.width}px;
   height: ${(props) => props.height}px;
   top: 60px;
-  left: 466px;
   position: absolute;
 `;
 
