@@ -141,8 +141,8 @@ const FlowBlock = () => {
               onElementClick={OnElementClick}
               onConnectEnd={OnConnectStop}
               onConnectStart={OnConnectStart}
-              zoomOnScroll={false}
-              paneMoveable={false}
+              zoomOnScroll={true}
+              paneMoveable={true}
             >
               <FullscreenBox />
               <Controls />

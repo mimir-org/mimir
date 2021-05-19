@@ -4,7 +4,11 @@ import { useSelector } from "react-redux";
 import { FlowBlockLocation } from "..";
 import { ArrowIcon } from "../../../assets/icons/blockView";
 import { TextResources } from "../../../assets/textResources";
-import { FunctionBox, MessageBox } from "../../../componentLibrary/blockView";
+import {
+  FunctionBox,
+  LocationBox,
+  MessageBox,
+} from "../../../componentLibrary/blockView";
 import { Node, NODE_TYPE } from "../../../models/project";
 import { RootState } from "../../../redux/store";
 import { GetReactFlowBoundingRectData } from "../helpers";
@@ -39,15 +43,7 @@ const FunctionBlock: FC<NodeProps> = ({ data }) => {
           <p>{TextResources.BlockView_Select_Aspect}</p>
         </MessageBox>
       ) : isLocationNode ? (
-        <div
-          style={{
-            position: "absolute",
-            top: "60px",
-            width: `${calculatedWidth}`,
-            height: `${calculatedHeight}`,
-            left: "600px",
-          }}
-        >
+        <LocationBox width={calculatedWidth} height={calculatedHeight}>
           <FunctionBox
             location
             id={"function-block-" + splitViewNode.id}
@@ -61,7 +57,7 @@ const FunctionBlock: FC<NodeProps> = ({ data }) => {
             <div className="content"></div>
             <FlowBlockLocation />
           </FunctionBox>
-        </div>
+        </LocationBox>
       ) : (
         <FunctionBox
           id={"function-block-" + splitViewNode.id}
