@@ -1,10 +1,11 @@
 import { memo, FC } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useSelector } from "react-redux";
+import { FlowBlockLocation } from "..";
 import { ArrowIcon } from "../../../assets/icons/blockView";
 import { TextResources } from "../../../assets/textResources";
 import { FunctionBox, MessageBox } from "../../../componentLibrary/blockView";
-import { Node } from "../../../models/project";
+import { Node, NODE_TYPE } from "../../../models/project";
 import { RootState } from "../../../redux/store";
 import { GetReactFlowBoundingRectData } from "../helpers";
 
@@ -17,6 +18,9 @@ const FunctionBlock: FC<NodeProps> = ({ data }) => {
   let calculatedWidth = (width * 70) / 100;
   const calculatedHeight = (height * 80) / 120;
   if (splitView) calculatedWidth = calculatedWidth / 1.7;
+  const isLocationNode = splitViewNode
+    ? splitViewNode.type === NODE_TYPE.LOCATION
+    : false;
 
   return splitView ? (
     <>
@@ -34,6 +38,30 @@ const FunctionBlock: FC<NodeProps> = ({ data }) => {
         <MessageBox>
           <p>{TextResources.BlockView_Select_Aspect}</p>
         </MessageBox>
+      ) : isLocationNode ? (
+        <div
+          style={{
+            position: "absolute",
+            top: "60px",
+            width: `${calculatedWidth}`,
+            height: `${calculatedHeight}`,
+            left: "600px",
+          }}
+        >
+          <FunctionBox
+            location
+            id={"function-block-" + splitViewNode.id}
+            width={calculatedWidth}
+            height={calculatedHeight}
+          >
+            <img src={ArrowIcon} alt="arrow" className="icon"></img>
+            <h3 className="header">
+              {splitViewNode.label ?? splitViewNode.name}
+            </h3>
+            <div className="content"></div>
+            <FlowBlockLocation />
+          </FunctionBox>
+        </div>
       ) : (
         <FunctionBox
           id={"function-block-" + splitViewNode.id}

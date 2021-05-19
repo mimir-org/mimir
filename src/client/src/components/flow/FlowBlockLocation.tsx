@@ -1,11 +1,15 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ProjectMainMenu } from "../project";
-import { ProjectState } from "../../redux/store/project/types";
 import { RootState } from "../../redux/store/index";
-import ReactFlow, { ReactFlowProvider, Elements } from "react-flow-renderer";
+import { Color } from "../../componentLibrary";
+import ReactFlow, {
+  ReactFlowProvider,
+  Elements,
+  Background,
+} from "react-flow-renderer";
 import { changeActiveNode, get } from "../../redux/store/project/actions";
-import { NODE_TYPE } from "../../models/project";
+import { BackgroundVariant, NODE_TYPE, Project } from "../../models/project";
 import { OpenProjectMenu } from "../project/openProject";
 import {
   GetProjectId,
@@ -33,12 +37,12 @@ const FlowBlockLocation = () => {
   const [elements, setElements] = useState<Elements>();
   let nodeId: string;
 
-  const projectState = useSelector<RootState>(
-    (state) => state.projectState
-  ) as ProjectState;
+  const project = useSelector<RootState>(
+    (state) => state.projectState.project
+  ) as Project;
 
-  if (projectState.project) {
-    const node = projectState.project.nodes.find((node) => node.isSelected);
+  if (project) {
+    const node = project.nodes.find((node) => node.isSelected);
     if (node.type === NODE_TYPE.LOCATION) {
       nodeId = node ? node.id : "";
     } else {
@@ -48,10 +52,10 @@ const FlowBlockLocation = () => {
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(CreateProjectElementBlockNodes(projectState.project, nodeId));
+      setElements(CreateProjectElementBlockNodes(project, nodeId));
       return setReactFlowInstance(_reactFlowInstance);
     },
-    [nodeId, projectState.project]
+    [nodeId, project]
   );
 
   const OnElementsRemove = (elementsToRemove) => {
@@ -59,7 +63,7 @@ const FlowBlockLocation = () => {
   };
 
   const OnConnect = (params) => {
-    return useOnConnect(params, projectState, setElements, dispatch);
+    return useOnConnect(params, project, setElements, dispatch);
   };
 
   const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
@@ -69,7 +73,7 @@ const FlowBlockLocation = () => {
   const OnConnectStop = (e) => {
     return useOnConnectStop(
       e,
-      projectState,
+      project,
       reactFlowInstance,
       nodeId,
       reactFlowWrapper,
@@ -96,7 +100,7 @@ const FlowBlockLocation = () => {
   };
 
   const OnUpdatePosition = () => {
-    return useOnUpdatePosition(projectState, dispatch);
+    return useOnUpdatePosition(project, dispatch);
   };
 
   // Force rerender
@@ -111,15 +115,15 @@ const FlowBlockLocation = () => {
 
   // Handling of project loading
   useEffect(() => {
-    if (projectState.project === null) {
+    if (project === null) {
       const projectId = GetProjectId();
       dispatch(get(projectId));
     }
-  }, [dispatch, projectState.project]);
+  }, [dispatch, project]);
 
   return (
     <>
-      {projectState.project && (
+      {project && (
         <ReactFlowProvider>
           <div className="reactflow-wrapper" ref={reactFlowWrapper}>
             <ReactFlow
@@ -135,10 +139,15 @@ const FlowBlockLocation = () => {
               onConnectEnd={OnConnectStop}
               onConnectStart={OnConnectStart}
             ></ReactFlow>
+            <Background
+              size={0.5}
+              color={Color.Grey}
+              variant={BackgroundVariant.Lines}
+            />
           </div>
         </ReactFlowProvider>
       )}
-      {!projectState.project && !HasProject() && (
+      {!project && !HasProject() && (
         <div>
           <ProjectMainMenu />
           <OpenProjectMenu />
