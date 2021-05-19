@@ -9,6 +9,8 @@ const Input = styled.input`
   width: ${(props: { width: number }) =>
     props.width === 0 ? `90%` : props.width + `px`};
   height: 31px;
+  background-color: ${(props: { readOnly: boolean }) =>
+    props.readOnly ? "#f2f2f2" : "#fff"};
 `;
 
 export default Input;
