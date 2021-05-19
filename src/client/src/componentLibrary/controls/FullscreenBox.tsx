@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { FullScreenIcon } from "../../assets/icons/controls";
+import { ExpandIcon, CloseIcon } from "../../assets/icons/controls";
 import { RootState } from "../../redux/store";
 import { SaveAllModules } from "../../redux/store/localStorage/localStorage";
 import { changeAllModulesVisibility } from "../../redux/store/modules/actions";
@@ -17,8 +17,12 @@ const FullscreenBox = () => {
   };
 
   return (
-    <FullscreenButton>
-      <img src={FullScreenIcon} alt="fullscreen" onClick={handleOnClick} />
+    <FullscreenButton isOpen={isOpen}>
+      {isOpen ? (
+        <img src={ExpandIcon} alt="fullscreen" onClick={handleOnClick} />
+      ) : (
+        <img src={CloseIcon} alt="fullscreen" onClick={handleOnClick} />
+      )}
     </FullscreenButton>
   );
 };
