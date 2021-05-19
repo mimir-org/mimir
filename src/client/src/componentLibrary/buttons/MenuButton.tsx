@@ -22,6 +22,10 @@ const MenuButton = styled.button`
     margin-right: 7px;
   }
 
+  .text {
+    margin: auto;
+  }
+
   &:hover {
     border: 2px solid ${Color.DeepCyan};
   }

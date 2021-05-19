@@ -90,6 +90,10 @@ const textResources = {
   Account_Logout: "Log out",
   Account_Open_Label: "Open a project",
   Account_Create_Label: "Create a project",
+  Account_Confirm_Save: " Save this project before opening/starting another?",
+  Account_Save_Button: "Yes",
+  Account_NoSave_Button: "No",
+  Account_Cancel_Button: "Cancel",
 
   // LegendModule
   Legend_Heading: "Legend",

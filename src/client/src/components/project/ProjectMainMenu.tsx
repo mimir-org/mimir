@@ -22,7 +22,7 @@ export const ProjectMainMenu = () => {
       state.projectMenu.menu.find((x) => x.type === "optionsMenu").visible
   ) as boolean;
 
-  const handleClick = () => {
+  const handleCreateClick = () => {
     dispatch(create("unnamed", "unnamed"));
   };
 
@@ -36,7 +36,7 @@ export const ProjectMainMenu = () => {
       <ProjectBox visible={isOpen} small>
         <ProjectBody>
           <p>{TextResources.Project_heading}</p>
-          <ProjectElement onClick={handleClick}>
+          <ProjectElement onClick={handleCreateClick}>
             <img src={NewProjectIcon} alt="icon" className="icon" />
             <p>{TextResources.Project_new_project}</p>
           </ProjectElement>
