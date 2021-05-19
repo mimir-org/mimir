@@ -4,24 +4,27 @@ import { useSelector } from "react-redux";
 import { FlowBlockLocation } from "..";
 import { ArrowIcon } from "../../../assets/icons/blockView";
 import { TextResources } from "../../../assets/textResources";
+import { Node, NODE_TYPE } from "../../../models/project";
+import { RootState } from "../../../redux/store";
+import { GetReactFlowBoundingRectData } from "../helpers";
 import {
   FunctionBox,
   LocationBox,
   MessageBox,
 } from "../../../componentLibrary/blockView";
-import { Node, NODE_TYPE } from "../../../models/project";
-import { RootState } from "../../../redux/store";
-import { GetReactFlowBoundingRectData } from "../helpers";
 
 const FunctionBlock: FC<NodeProps> = ({ data }) => {
   const splitView = useSelector<RootState>((state) => state.splitView.visible);
   const splitViewNode = useSelector<RootState>(
     (state) => state.splitView.node
   ) as Node;
+
   const [width, height] = GetReactFlowBoundingRectData();
   let calculatedWidth = (width * 70) / 100;
   const calculatedHeight = (height * 80) / 120;
+
   if (splitView) calculatedWidth = calculatedWidth / 1.7;
+
   const isLocationNode = splitViewNode
     ? splitViewNode.type === NODE_TYPE.LOCATION
     : false;
@@ -43,9 +46,12 @@ const FunctionBlock: FC<NodeProps> = ({ data }) => {
           <p>{TextResources.BlockView_Select_Aspect}</p>
         </MessageBox>
       ) : isLocationNode ? (
-        <LocationBox width={calculatedWidth} height={calculatedHeight}>
+        <>
+          <LocationBox width={calculatedWidth} height={calculatedHeight}>
+            <FlowBlockLocation />
+          </LocationBox>
+
           <FunctionBox
-            location
             id={"function-block-" + splitViewNode.id}
             width={calculatedWidth}
             height={calculatedHeight}
@@ -55,9 +61,8 @@ const FunctionBlock: FC<NodeProps> = ({ data }) => {
               {splitViewNode.label ?? splitViewNode.name}
             </h3>
             <div className="content"></div>
-            <FlowBlockLocation />
           </FunctionBox>
-        </LocationBox>
+        </>
       ) : (
         <FunctionBox
           id={"function-block-" + splitViewNode.id}
