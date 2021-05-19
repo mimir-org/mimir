@@ -57,8 +57,8 @@ export async function get<T>(
     args: RequestInit = { method: "get" }
 ): Promise<HttpResponse<T>> {
     const req = { ...RequestInitDefault, ...args };
-    var idTokenResponse = await authProvider.getIdToken();
-    req.headers["Authorization"] = "Bearer " + idTokenResponse.idToken.rawIdToken;
+    var idTokenResponse = await authProvider.getAccessToken();
+    req.headers["Authorization"] = "Bearer " + idTokenResponse.accessToken;
     return await http<T>(new Request(path, req));
 }
 
@@ -68,8 +68,8 @@ export async function post<T>(
     args: RequestInit = { method: "post", body: JSON.stringify(body) }
 ): Promise<HttpResponse<T>> {
     const req = { ...RequestInitDefault, ...args };
-    var idTokenResponse = await authProvider.getIdToken();
-    req.headers["Authorization"] = "Bearer " + idTokenResponse.idToken.rawIdToken;
+    var idTokenResponse = await authProvider.getAccessToken();
+    req.headers["Authorization"] = "Bearer " + idTokenResponse.accessToken;
     return await http<T>(new Request(path, req));
 }
 
@@ -79,7 +79,7 @@ export async function put<T>(
     args: RequestInit = { method: "put", body: JSON.stringify(body) }
 ): Promise<HttpResponse<T>> {
     const req = { ...RequestInitDefault, ...args };
-    var idTokenResponse = await authProvider.getIdToken();
-    req.headers["Authorization"] = "Bearer " + idTokenResponse.idToken.rawIdToken;
+    var idTokenResponse = await authProvider.getAccessToken();
+    req.headers["Authorization"] = "Bearer " + idTokenResponse.accessToken;
     return await http<T>(new Request(path, req));
 }
