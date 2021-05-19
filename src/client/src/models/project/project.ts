@@ -224,6 +224,7 @@ export interface Node {
     maxTemp: number;
     minTemp: number;
     noiceRestriction: number;
+    area: number;
     status: BuildStatus;
     updatedBy: string;
     updated: Date;

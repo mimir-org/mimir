@@ -5,6 +5,7 @@ import { RootState } from "../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { changeInspector } from "../../../redux/store/inspector/actions";
 import { Attribute, Node } from "../../../models/project";
+import { changeNodeValue } from "../../../redux/store/project/actions";
 import {
   TabHeader,
   TabDataWrapper,
@@ -22,6 +23,11 @@ interface Props {
 
 const TabAdminComponent = ({ node, index }: Props) => {
   const dispatch = useDispatch();
+
+  const handleOnChange = (e, key: string) => {
+    dispatch(changeNodeValue(node.id, key, e.target.value));
+  };
+
   const list = useSelector<RootState>(
     (state) => state.inspector.tabs
   ) as string[];
@@ -46,6 +52,7 @@ const TabAdminComponent = ({ node, index }: Props) => {
             <div>
               <div>Id</div>
               <Input
+                readOnly={true}
                 value={node.updatedBy}
                 onChange={() => null}
                 inputType=""
@@ -55,7 +62,7 @@ const TabAdminComponent = ({ node, index }: Props) => {
               <div>Updated by</div>
               <Input
                 value={node.updatedBy}
-                onChange={() => null}
+                onChange={(e) => handleOnChange(e, "updatedBy")}
                 inputType=""
               />
             </div>
