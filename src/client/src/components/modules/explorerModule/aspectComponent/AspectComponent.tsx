@@ -56,7 +56,7 @@ export const AspectComponent = ({ nodeId, name, aspectType }: Props) => {
               <AspectElement
                 key={i}
                 nodeId={obj["id"]}
-                name={obj["name"]}
+                name={obj["label"] ?? obj["name"]}
                 type={childType}
                 indent={indent}
               />

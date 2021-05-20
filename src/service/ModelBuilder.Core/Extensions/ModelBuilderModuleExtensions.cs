@@ -40,10 +40,12 @@ namespace Mb.Core.Extensions
             services.AddScoped<ILibraryTypeComponentRepository, LibraryTypeComponentRepository>();
             services.AddScoped<IConnectorRepository, ConnectorRepository>();
             services.AddScoped<IAttributeRepository, AttributeRepository>();
+            services.AddScoped<IContractorRepository, ContractorRepository>();
 
             services.AddScoped<ITypeEditorService, TypeEditorService>();
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<ILibraryService, LibraryService>();
+            services.AddScoped<ICommonService, CommonService>();
 
             services.AddHttpContextAccessor();
             services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();

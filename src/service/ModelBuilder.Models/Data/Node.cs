@@ -9,6 +9,7 @@ namespace Mb.Models.Data
     {
         public string Id { get; set; }
         public string Rds { get; set; }
+        public string Contractor { get; set; }
         public string SemanticId { get; set; }
         public string TagNumber { get; set; }
         public string Description { get; set; }

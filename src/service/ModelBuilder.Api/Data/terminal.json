@@ -1,0 +1,43 @@
+[
+  {
+    "Id": "equinor.com_19CF170F-6340-4616-8045-E0DB34673EA3",
+    "TerminalType": "Gas", // Gas, Oil, Water
+    "ConnectorType": "Input", // Input, Output
+    "SemanticReference": "",
+    "Attributes": [
+      {
+        "Entity": "Flowrate, volumetric",
+        "Qualifier": "Capacity",
+        "Source": "Required",
+        "Condition": "Nominal",
+        "Units": [
+          "Sm3D",
+          "Sm3H",
+          "Scfhr",
+          "Bbld"
+        ],
+        "Aspect": "NotSet",
+        "Format": "UnsignedFloat",
+        "IsInterface": false,
+        "IsTerminalType": true
+      },
+      {
+        "Entity": "Pressure, absolute",
+        "Qualifier": "Rating",
+        "Source": "Required",
+        "Condition": "Minimum",
+        "Units": [
+          "Barg",
+          "Bara",
+          "Psi",
+          "Psig",
+          "Pascal"
+        ],
+        "Aspect": "NotSet",
+        "Format": "UnsignedFloat",
+        "IsInterface": false,
+        "IsTerminalType": true
+      }
+    ]
+  }
+]

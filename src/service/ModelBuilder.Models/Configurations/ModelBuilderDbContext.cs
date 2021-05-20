@@ -13,6 +13,7 @@ namespace Mb.Models.Configurations
         public virtual DbSet<Rds> Rds { get; set; }
         public virtual DbSet<AttributeType> AttributeTypes { get; set; }
         public virtual DbSet<LibraryTypeComponent> LibraryTypeComponents { get; set; }
+        public virtual DbSet<Contractor> Contractors { get; set; }
 
         public ModelBuilderDbContext(DbContextOptions<ModelBuilderDbContext> options) : base(options)
         {
@@ -30,7 +31,7 @@ namespace Mb.Models.Configurations
             modelBuilder.ApplyConfiguration(new RdsConfiguration());
             modelBuilder.ApplyConfiguration(new AttributeTypeConfiguration());
             modelBuilder.ApplyConfiguration(new LibraryTypeComponentConfiguration());
-
+            modelBuilder.ApplyConfiguration(new ContractorConfiguration());
         }
     }
 }

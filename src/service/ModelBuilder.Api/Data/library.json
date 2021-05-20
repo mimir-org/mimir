@@ -35,6 +35,56 @@
             "IsTerminalType": true
           }
         ]
+      },
+      {
+        "Id": "equinor.com_0570DFF0-AE8A-4474-96B7-A8FA11695D38",
+        "TerminalType": "Oil",
+        "ConnectorType": "Output",
+        "SemanticReference": null,
+        "Attributes": [
+          {
+            "entity": "Pressure, absolute",
+            "qualifier": "Operating",
+            "source": "Calculated",
+            "condition": "Maximum",
+            "units": [
+              "Barg",
+              "Bara",
+              "Psi",
+              "Psig",
+              "Pascal"
+            ],
+            "aspect": "NotSet",
+            "format": "UnsignedFloat",
+            "isInterface": false,
+            "IsTerminalType": true
+          }
+        ]
+      },
+      {
+        "Id": "equinor.com_1232B433-2E1A-491D-9D52-0209A13DC518",
+        "TerminalType": "Gas",
+        "ConnectorType": "Output",
+        "SemanticReference": null,
+        "Attributes": [
+          {
+            "entity": "Pressure, absolute",
+            "qualifier": "Operating",
+            "source": "Calculated",
+            "condition": "Maximum",
+            "units": [
+              "Barg",
+              "Bara",
+              "Psi",
+              "Psig",
+              "Pascal"
+            ],
+            "aspect": "NotSet",
+            "format": "UnsignedFloat",
+            "isInterface": false,
+            "IsTerminalType": true
+          }
+        ]
       }
     ],
     "Attributes": [

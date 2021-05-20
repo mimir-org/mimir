@@ -200,6 +200,7 @@ export interface Attribute {
 export interface Node {
     id: string;
     rds: string;
+    contractor: string;
     semanticId: string;
     tagNumber: string;
     description: string;
