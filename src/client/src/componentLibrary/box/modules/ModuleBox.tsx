@@ -13,6 +13,7 @@ const ModuleBox = styled.div`
   height: ${(props: { stop: string; type: string }) =>
     props.type !== MODULE_TYPE.INSPECTOR ? "inherit" : props.stop};
   overflow: hidden;
+  /* z-index: 100; */
 `;
 
 export default ModuleBox;

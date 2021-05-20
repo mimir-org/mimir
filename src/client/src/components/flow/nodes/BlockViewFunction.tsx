@@ -55,7 +55,7 @@ const BlockViewFunction: FC<NodeProps> = ({ data }) => {
   return (
     <NodeBox onMouseOver={handleOnHover} onMouseOut={handleOnMouseOut}>
       <OptionsMenu visible={showButton} onClick={handleClick}>
-        <img src={OptionsIcon} alt="" />
+        <img src={OptionsIcon} alt="options" />
       </OptionsMenu>
       <OptionsBox visible={menuOpen}>
         {SortConnectorList(data.connectors).map((conn) => (
@@ -78,22 +78,24 @@ const BlockViewFunction: FC<NodeProps> = ({ data }) => {
       {isVisible &&
         connectors.map((conn) => {
           const [type, pos, className] = GetBlockHandleType(conn);
-          return (
-            <HandleBox position={GetHandlePosition(pos)} key={conn.id}>
-              <Handle
-                type={type}
-                position={pos}
-                id={conn.id}
-                key={conn.id}
-                className={className}
-              />
-              <img
-                src={GetConnectorIcon(conn.terminalType)}
-                alt="icon"
-                className="connector"
-              />
-            </HandleBox>
-          );
+          if (data.id === conn.nodeId) {
+            return (
+              <HandleBox position={GetHandlePosition(pos)} key={conn.id}>
+                <Handle
+                  type={type}
+                  position={pos}
+                  id={conn.id}
+                  key={conn.id}
+                  className={className}
+                />
+                <img
+                  src={GetConnectorIcon(conn.terminalType)}
+                  alt="icon"
+                  className="connector"
+                />
+              </HandleBox>
+            );
+          } else return null;
         })}
 
       {/* Original connectors */}
