@@ -1,4 +1,4 @@
-import { memo, FC, useState } from "react";
+import { memo, FC, useState, useEffect, useCallback, useMemo } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
 import { useDispatch, useSelector } from "react-redux";
 import { OptionsIcon } from "../../../assets/icons/blockView";
@@ -20,15 +20,16 @@ import {
   OptionsMenu,
   HandleBox,
 } from "../../../componentLibrary/blockView";
+import {
+  GetConnectors,
+  SetConnectors,
+} from "../../../redux/store/localStorage";
 
 const BlockViewFunction: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
   const [showButton, setShowButton] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-  const connectors = SortConnectorList(
-    useSelector<RootState>((state) => state.flow.connectors) as Connector[]
-  );
+  const [isVisible, setIsVisible] = useState(true);
 
   const handleClick = () => {
     setMenuOpen(!menuOpen);
@@ -48,9 +49,15 @@ const BlockViewFunction: FC<NodeProps> = ({ data }) => {
 
   const handleConnectorClick = (connector) => {
     dispatch(addSelectedConnector(connector));
+    connectors.push(connector);
     setIsVisible(true);
     setMenuOpen(false);
+    SetConnectors(connectors);
   };
+  //   const connectors = SortConnectorList(
+  //     useSelector<RootState>((state) => state.flow.connectors) as Connector[]
+  //   );
+  const connectors = GetConnectors();
 
   return (
     <NodeBox onMouseOver={handleOnHover} onMouseOut={handleOnMouseOut}>
