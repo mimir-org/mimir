@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store/index";
 import { Color } from "../../componentLibrary";
 import CreateLocationNodes from "./helpers/locationNode/CreateLocationNodes";
-import { BackgroundVariant, Project } from "../../models/project";
+import { BackgroundVariant, Node, Project } from "../../models/project";
 import { GetBlockNodeTypes, GetBlockEdgeTypes } from "./helpers";
 import ReactFlow, {
   ReactFlowProvider,
@@ -20,12 +20,16 @@ const FlowBlockLocation = () => {
     (state) => state.projectState.project
   ) as Project;
 
+  const splitViewNode = useSelector<RootState>(
+    (state) => state.splitView.node
+  ) as Node;
+
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(CreateLocationNodes(project));
+      setElements(CreateLocationNodes(project, splitViewNode));
       return setReactFlowInstance(_reactFlowInstance);
     },
-    [project]
+    [project, splitViewNode]
   );
 
   return (
