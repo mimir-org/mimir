@@ -22,6 +22,8 @@ export const CHANGE_ACTIVE_NODE = "CHANGE_ACTIVE_NODE";
 export const CHANGE_SELECTED_PROJECT = "CHANGE_SELECTED_PROJECT";
 export const CHANGE_ALL_NODES = "CHANGE_ALL_NODES";
 export const CHANGE_NODE_PROP_VALUE = "CHANGE_NODE_PROP_VALUE";
+export const CHANGE_ATTRIBUTE_VALUE = "CHANGE_ATTRIBUTE_VALUE";
+export const CHANGE_CONNECTOR_ATTRIBUTE_VALUE = "CHANGE_CONNECTOR_ATTRIBUTE_VALUE";
 
 // State types
 export interface ProjectState {
@@ -149,6 +151,26 @@ interface ChangeNodePropValue {
         propValue: any
     }
 }
+interface ChangeAttributeValue {
+    type: typeof CHANGE_ATTRIBUTE_VALUE,
+    payload: {
+        id: string,
+        value: string,
+        unit: string,
+        nodeId: string
+    }
+}
+
+interface ChangeAttributeConnectorValue {
+    type: typeof CHANGE_CONNECTOR_ATTRIBUTE_VALUE,
+    payload: {
+        id: string,
+        value: string,
+        unit: string,
+        nodeId: string,
+        connectorId: string;
+    }
+}
 
 export type ProjectActionTypes =
     | FetchingProjectAction
@@ -169,4 +191,6 @@ export type ProjectActionTypes =
     | ChangeSelectedProject
     | UpdateBlockPositionAction
     | ChangeAllNodes
-    | ChangeNodePropValue;
+    | ChangeNodePropValue
+    | ChangeAttributeValue
+    | ChangeAttributeConnectorValue;

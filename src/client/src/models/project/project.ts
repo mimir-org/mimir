@@ -185,6 +185,9 @@ export interface Edge {
 }
 
 export interface Attribute {
+    id: string;
+    nodeId: string;
+    connectorId: string;
     key: string;
     value: string;
     unit: string;
@@ -193,8 +196,6 @@ export interface Attribute {
     condition: string;
     format: string;
     units: string[];
-    nodeId: string;
-    connectorId: string;
 }
 
 export interface Node {

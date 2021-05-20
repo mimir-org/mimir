@@ -321,6 +321,19 @@ namespace Mb.Core.Services
             {
                 node.UpdatedBy = _contextAccessor.GetName();
                 node.Updated = DateTime.Now.ToUniversalTime();
+                foreach (var nodeAttribute in node.Attributes)
+                {
+                    _attributeRepository.Update(nodeAttribute);
+                }
+
+                foreach (var connector in node.Connectors)
+                {
+                    foreach (var attribute in connector.Attributes)
+                    {
+                        _attributeRepository.Update(attribute);
+                    }
+                }
+
                 _nodeRepository.Update(node);
             }
 
