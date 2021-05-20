@@ -3,7 +3,7 @@ import { changeNodeValue } from "../../../redux/store/project/actions";
 import { Contractor } from "../../../redux/store/common/types";
 import { TabColumn } from "./styled";
 import { Input, Select, Textarea } from "../../../componentLibrary";
-import { Node, Project } from "../../../models/project";
+import { Node, NODE_TYPE, Project } from "../../../models/project";
 import { GetRdsId, GetReferenceDesignation } from "../../../assets/helpers";
 import moment from "moment/moment.js";
 import { BUILD_STATUS } from "../../../models/project";
@@ -70,6 +70,16 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
             inputType=""
           />
         </div>
+        {node.type === NODE_TYPE.LOCATION && (
+          <div>
+            <div>Length (m)</div>
+            <Input
+              value={node.length}
+              onChange={(e: any) => handleOnChange(e, "length")}
+              inputType=""
+            />{" "}
+          </div>
+        )}
       </TabColumn>
       <TabColumn>
         <div>
@@ -89,6 +99,16 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
             inputType=""
           />
         </div>
+        {node.type === NODE_TYPE.LOCATION && (
+          <div>
+            <div>Width (m)</div>
+            <Input
+              value={node.width}
+              onChange={(e: any) => handleOnChange(e, "width")}
+              inputType=""
+            />{" "}
+          </div>
+        )}
       </TabColumn>
       <TabColumn>
         <div>
@@ -113,6 +133,16 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
             inputType=""
           />
         </div>
+        {node.type === NODE_TYPE.LOCATION && (
+          <div>
+            <div>Height (m)</div>
+            <Input
+              value={node.height}
+              onChange={(e: any) => handleOnChange(e, "height")}
+              inputType=""
+            />{" "}
+          </div>
+        )}
       </TabColumn>
       <TabColumn>
         <div>
