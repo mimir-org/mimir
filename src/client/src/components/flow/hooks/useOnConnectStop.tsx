@@ -3,7 +3,7 @@ import { createEdge, addNode } from "../../../redux/store/project/actions";
 import {
   LoadEventData,
   SaveEventData,
-} from "../../../redux/store/localStorage/localStorage";
+} from "../../../redux/store/localStorage";
 import {
   CreateOffPageData,
   CreateOffPageNode,

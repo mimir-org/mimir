@@ -24,14 +24,6 @@
   }
 }
 
-// .react-flow__nodes {
-//   background-color: #e5e5;
-//   padding-left: 0px;
-//   margin-left: 0px;
-//   left: 0px;
-//   position: absolute;
-// }
-
 .react-flow__controls {
   position: absolute;
   z-index: 5;
@@ -54,10 +46,10 @@
 }
 
 .blockView-handle-right {
-  right: -5px;
+  right: -7px;
   width: 18px;
   height: 18px;
-  top: 0%;
+  top: 0px;
   border: none;
   background-color: transparent;
   z-index: 100;

@@ -10,19 +10,11 @@ const SortConnectorList = (connectors) => {
 
   connectors.forEach((conn) => {
     if (!isLocationNode) {
-      if (conn.relationType === RELATION_TYPE.Transport) {
-        list.push(conn);
-      }
+      if (conn.relationType === RELATION_TYPE.Transport) list.push(conn);
     } else {
-      if (
-        conn.relationType === RELATION_TYPE.HasLocation ||
-        conn.relationType === RELATION_TYPE.PartOf
-      ) {
-        list.push(conn);
-      }
+      if (conn.relationType === RELATION_TYPE.HasLocation) list.push(conn);
     }
   });
-
   return list;
 };
 
