@@ -250,3 +250,8 @@ export interface EdgeEvent {
     handleType: string;
     sourceId: string;
 }
+
+export enum BackgroundVariant {
+    Lines = "lines",
+    Dots = "dots",
+}

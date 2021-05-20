@@ -1,7 +1,6 @@
 import { call, put } from "redux-saga/effects";
 import { Project } from "../../../models/project";
 import { get, post } from "../../../models/webclient";
-import { GetProject } from "../../store/localStorage";
 import {
   FETCHING_PROJECT_SUCCESS_OR_ERROR,
   CREATING_PROJECT_SUCCESS_OR_ERROR,
@@ -12,14 +11,10 @@ import {
 
 export function* getProject(action) {
   try {
-    let project = GetProject();
-
-    if (!project || action.payload) {
-      const url =
-        process.env.REACT_APP_API_BASE_URL + "project/" + action.payload;
-      const response = yield call(get, url);
-      project = response.data as Project;
-    }
+    const url =
+      process.env.REACT_APP_API_BASE_URL + "project/" + action.payload;
+    const response = yield call(get, url);
+    const project = response.data as Project;
 
     const payload = {
       project: project,

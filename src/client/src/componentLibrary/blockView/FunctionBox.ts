@@ -1,14 +1,18 @@
 import styled from "styled-components";
 
 const FunctionBox = styled.div`
-  display: inline-block;
+  display: inline-flex;
   margin-top: 60px;
 
+  &:first-child {
+    margin-left: -80px;
+  }
+
   .header {
-    display: initial;
-    margin-bottom: 8px;
-    padding: 0px 0px 0px 25px;
+    top: 23px;
+    padding: 0px 0px 0px 22px;
     font-size: 14px;
+    position: absolute;
   }
 
   .content {
@@ -25,6 +29,7 @@ const FunctionBox = styled.div`
 
   .icon {
     position: absolute;
+    top: 37px;
   }
 `;
 

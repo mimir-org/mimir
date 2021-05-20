@@ -90,6 +90,10 @@ const textResources = {
   Account_Logout: "Log out",
   Account_Open_Label: "Open a project",
   Account_Create_Label: "Create a project",
+  Account_Confirm_Save: " Save this project before opening/starting another?",
+  Account_Save_Button: "Yes",
+  Account_NoSave_Button: "No",
+  Account_Cancel_Button: "Cancel",
 
   // LegendModule
   Legend_Heading: "Legend",
@@ -121,7 +125,7 @@ const textResources = {
 
   // BlockView
   BlockView_Select_Aspect:
-    "Please select an aspect object from the same aspect or 1 other aspect via the Explorer Module",
+    "Please select an aspect object from the same aspect OR a different aspect via the Explorer Module",
 };
 
 export const VisualFilterResources = [

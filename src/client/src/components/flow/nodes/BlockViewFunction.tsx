@@ -3,6 +3,8 @@ import { NodeProps, Handle } from "react-flow-renderer";
 import { useDispatch, useSelector } from "react-redux";
 import { OptionsIcon } from "../../../assets/icons/blockView";
 import { addSelectedConnector } from "../../../redux/store/flow/actions";
+import { RootState } from "../../../redux/store";
+import { Connector } from "../../../models/project";
 import {
   GetConnectorIcon,
   GetBlockHandleType,
@@ -18,8 +20,6 @@ import {
   OptionsMenu,
   HandleBox,
 } from "../../../componentLibrary/blockView";
-import { RootState } from "../../../redux/store";
-import { Connector } from "../../../models/project";
 
 const BlockViewFunction: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();

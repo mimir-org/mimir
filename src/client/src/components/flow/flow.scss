@@ -46,10 +46,13 @@
 }
 
 .blockView-handle-right {
-  right: -18px;
-  width: 6px;
-  height: 6px;
-  top: 0%;
+  right: -7px;
+  width: 18px;
+  height: 18px;
+  top: 0px;
+  border: none;
+  background-color: transparent;
+  z-index: 100;
 }
 
 .blockView-handle-left {

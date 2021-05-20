@@ -18,16 +18,16 @@ export const ProjectMainMenu = () => {
   ) as boolean;
 
   const isOpen = useSelector<RootState>(
-    (state) =>
-      state.projectMenu.menu.find((x) => x.type === "optionsMenu").visible
+    (state) => state.projectMenu.menu.find((x) => x.type === "mainMenu").visible
   ) as boolean;
 
-  const handleClick = () => {
+  const handleCreateClick = () => {
     dispatch(create("unnamed", "unnamed"));
+    dispatch(changeProjectMenu("mainMenu", false));
   };
 
   const handleOpenClick = () => {
-    dispatch(changeProjectMenu("optionsMenu", false));
+    dispatch(changeProjectMenu("mainMenu", false));
     dispatch(changeProjectMenu("openProjectMenu", true));
   };
 
@@ -36,7 +36,7 @@ export const ProjectMainMenu = () => {
       <ProjectBox visible={isOpen} small>
         <ProjectBody>
           <p>{TextResources.Project_heading}</p>
-          <ProjectElement onClick={handleClick}>
+          <ProjectElement onClick={handleCreateClick}>
             <img src={NewProjectIcon} alt="icon" className="icon" />
             <p>{TextResources.Project_new_project}</p>
           </ProjectElement>
