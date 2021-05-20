@@ -22,8 +22,12 @@ const useOnDrop = (
     y: event.clientY - reactFlowBounds.top,
   });
 
+  console.log(data.attributes);
+
   const node = {
     id: CreateId(),
+    rds: data.rds,
+    semanticId: data.semanticReference,
     name: data.name,
     label: data.label ?? data.name,
     type: data.type as NodeType,

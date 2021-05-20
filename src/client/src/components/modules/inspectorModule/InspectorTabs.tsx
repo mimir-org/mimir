@@ -21,7 +21,7 @@ const InspectorTabs = () => {
 
   return (
     <>
-      <TabAdminComponent node={node} index={0} />
+      <TabAdminComponent node={node} project={project} index={0} />
       <TabComponent attributes={techData} index={1} />
       <TabComponent attributes={relationData} index={2} />
     </>

@@ -6,6 +6,7 @@ namespace Mb.Models.Data
     public class LibNode
     {
         public string Id { get; set; }
+        public string Rds { get; set; }
         public string Name { get; set; }
         public string Label { get; set; }
         public IconType Icon { get; set; }

@@ -14,6 +14,7 @@ namespace Mb.Core.Profiles
         {
             CreateMap<LibraryTypeComponent, LibNode>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Rds, opt => opt.MapFrom(src => src.Rds))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.TypeName))
                 .ForMember(dest => dest.Label, opt => opt.MapFrom(src => src.TypeName))
                 .ForMember(dest => dest.Icon, opt => opt.MapFrom(src => MapIconType(src.ObjectType, src.Aspect)))

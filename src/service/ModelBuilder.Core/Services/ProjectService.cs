@@ -16,6 +16,7 @@ using Mb.Models.Enums;
 using Mb.Models.Modules;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Attribute = Mb.Models.Data.Attribute;
 
 namespace Mb.Core.Services
 {
@@ -29,8 +30,9 @@ namespace Mb.Core.Services
         private readonly ICommonRepository _commonRepository;
         private readonly IConnectorRepository _connectorRepository;
         private readonly IModuleService _moduleService;
-        
-        public ProjectService(IProjectRepository projectRepository, IMapper mapper, IHttpContextAccessor contextAccessor, INodeRepository nodeRepository, IEdgeRepository edgeRepository, ICommonRepository commonRepository, IConnectorRepository connectorRepository, IModuleService moduleService)
+        private readonly IAttributeRepository _attributeRepository;
+
+        public ProjectService(IProjectRepository projectRepository, IMapper mapper, IHttpContextAccessor contextAccessor, INodeRepository nodeRepository, IEdgeRepository edgeRepository, ICommonRepository commonRepository, IConnectorRepository connectorRepository, IModuleService moduleService, IAttributeRepository attributeRepository)
         {
             _projectRepository = projectRepository;
             _mapper = mapper;
@@ -40,6 +42,7 @@ namespace Mb.Core.Services
             _commonRepository = commonRepository;
             _connectorRepository = connectorRepository;
             _moduleService = moduleService;
+            _attributeRepository = attributeRepository;
         }
 
         /// <summary>
@@ -59,7 +62,7 @@ namespace Mb.Core.Services
                     .Take(number)
                     .ProjectTo<ProjectSimple>(_mapper.ConfigurationProvider)
                     .ToList();
-            
+
             return _projectRepository.GetAll()
                 .Where(x => x.Name.ToLower().StartsWith(name.ToLower()))
                 .OrderByDescending(x => x.Updated)
@@ -89,6 +92,8 @@ namespace Mb.Core.Services
                 .AsSplitQuery()
                 .OrderByDescending(x => x.Name)
                 .FirstOrDefaultAsync();
+
+            project.Nodes = project.Nodes.OrderBy(x => x.Order).ToList();
 
             if (!ignoreNotFound && project == null)
                 throw new ModelBuilderNotFoundException($"Could not find project with id: {id}");
@@ -122,14 +127,14 @@ namespace Mb.Core.Services
             if (existingProject != null)
                 throw new ModelBuilderDuplicateException($"Project already exist - id: {project.Id}");
 
-            if(_edgeRepository.GetAll().AsEnumerable().Any(x => project.Edges.Any(y => y.Id == x.Id)))
+            if (_edgeRepository.GetAll().AsEnumerable().Any(x => project.Edges.Any(y => y.Id == x.Id)))
                 throw new ModelBuilderDuplicateException("One or more edges already exist");
 
             if (_nodeRepository.GetAll().AsEnumerable().Any(x => project.Nodes.Any(y => y.Id == x.Id)))
                 throw new ModelBuilderDuplicateException("One or more nodes already exist");
 
             var allConnectors = project.Nodes.AsEnumerable().SelectMany(x => x.Connectors).ToList();
-            if(_connectorRepository.GetAll().AsEnumerable().Any(x => allConnectors.Any(y => y.Id == x.Id)))
+            if (_connectorRepository.GetAll().AsEnumerable().Any(x => allConnectors.Any(y => y.Id == x.Id)))
                 throw new ModelBuilderDuplicateException("One or more connectors already exist");
 
             await _projectRepository.CreateAsync(project);
@@ -156,7 +161,7 @@ namespace Mb.Core.Services
         public async Task DeleteProject(string projectId)
         {
             var existingProject = await GetProject(projectId);
-            
+
             var nodesToDelete = existingProject.Nodes.Select(x => x.Id).ToList();
             var edgesToDelete = existingProject.Edges.Select(x => x.Id).ToList();
 
@@ -186,7 +191,7 @@ namespace Mb.Core.Services
         public async Task<byte[]> CreateFile(string projectId, string parser)
         {
             var project = await GetProject(projectId);
-            
+
             if (!_moduleService.ParserModules.ContainsKey(parser))
                 parser = "Default";
 
@@ -285,6 +290,8 @@ namespace Mb.Core.Services
 
         private async Task<Project> UpdateProject(Project existingProject, Project project)
         {
+            ResolveLevelAndOrder(project);
+
             // Nodes
             var nodesToUpdate = project.Nodes.Where(x => existingProject.Nodes.Any(y => y.Id == x.Id)).Select(y => { y.Projects = new List<Project> { project }; return y; }).ToList();
             var nodesToCreate = project.Nodes.Where(x => existingProject.Nodes.All(y => y.Id != x.Id)).Select(y => { y.Projects = new List<Project> { project }; return y; }).ToList();
@@ -297,6 +304,19 @@ namespace Mb.Core.Services
             var edgesToDelete = existingProject.Edges.Where(x => project.Edges.All(y => y.Id != x.Id)).ToList();
             project.Edges.Clear();
 
+            // Attributes
+            var attributesToDelete = new List<Attribute>();
+            foreach (var node in nodesToDelete)
+            {
+                attributesToDelete.AddRange(node.Attributes);
+                node.Attributes.Clear();
+                foreach (var nodeConnector in node.Connectors)
+                {
+                    attributesToDelete.AddRange(nodeConnector.Attributes);
+                    nodeConnector.Attributes.Clear();
+                }
+            }
+
             foreach (var node in nodesToUpdate)
             {
                 node.UpdatedBy = _contextAccessor.GetName();
@@ -307,10 +327,26 @@ namespace Mb.Core.Services
             foreach (var node in nodesToCreate)
             {
                 var nodeNewId = _commonRepository.CreateUniqueId();
-                
+
+                if (node.Attributes != null)
+                {
+                    foreach (var nodeAttribute in node.Attributes)
+                    {
+                        nodeAttribute.Id = _commonRepository.CreateUniqueId();
+                    }
+                }
+
                 foreach (var connector in node.Connectors)
                 {
                     var connectorNewId = _commonRepository.CreateUniqueId();
+
+                    if (connector.Attributes != null)
+                    {
+                        foreach (var connectorAttribute in connector.Attributes)
+                        {
+                            connectorAttribute.Id = _commonRepository.CreateUniqueId();
+                        }
+                    }
 
                     foreach (var edge in edgesToCreate)
                     {
@@ -334,6 +370,11 @@ namespace Mb.Core.Services
                 await _nodeRepository.CreateAsync(node);
             }
 
+            foreach (var attribute in attributesToDelete)
+            {
+                await _attributeRepository.Delete(attribute.Id);
+            }
+
             foreach (var node in nodesToDelete)
                 await _nodeRepository.Delete(node.Id);
 
@@ -351,14 +392,41 @@ namespace Mb.Core.Services
 
             project.UpdatedBy = _contextAccessor.GetName();
             project.Updated = DateTime.Now.ToUniversalTime();
-            
+
 
             _projectRepository.Update(project);
+            await _attributeRepository.SaveAsync();
             await _nodeRepository.SaveAsync();
             await _edgeRepository.SaveAsync();
             await _projectRepository.SaveAsync();
 
             return await GetProject(project.Id);
+        }
+
+        private void ResolveLevelAndOrder(Project project)
+        {
+            if (project?.Nodes == null || project.Edges == null)
+                return;
+
+            var rootNodes = project.Nodes.Where(x => x.Type == NodeType.AspectFunction || x.Type == NodeType.AspectLocation || x.Type == NodeType.AspectProduct).ToList();
+            _ = rootNodes.Aggregate(0, (current, node) => ResolveNodeLevelAndOrder(node, project, 0, current) + 1);
+        }
+
+        private int ResolveNodeLevelAndOrder(Node node, Project project, int level, int order)
+        {
+            if (node == null)
+                return order;
+
+            node.Level = level;
+            node.Order = order;
+            var connector = node.Connectors.FirstOrDefault(x => x.Type == ConnectorType.Output && x.RelationType == RelationType.PartOf);
+
+            if (connector == null)
+                return order;
+
+            var edges = project.Edges.Where(x => x.FromConnector == connector.Id).ToList();
+            var children = project.Nodes.Where(x => edges.Any(y => y.ToNode == x.Id)).ToList();
+            return children.Aggregate(order, (current, child) => ResolveNodeLevelAndOrder(child, project, level + 1, current + 1));
         }
 
         private Project CreateInitProject(CreateProject createProject)

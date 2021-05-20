@@ -1,32 +1,26 @@
 import GetInspectorTextResource from "./helpers/GetInspectorTextResources";
-import { TabContent } from "./";
+import { TabAdminContent } from "./";
 import { useCallback } from "react";
 import { RootState } from "../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { changeInspector } from "../../../redux/store/inspector/actions";
-import { Attribute, Node } from "../../../models/project";
-import { changeNodeValue } from "../../../redux/store/project/actions";
+import { Node, Project } from "../../../models/project";
 import {
   TabHeader,
   TabDataWrapper,
   TabContainer,
   NodeTitle,
   TabTitle,
-  TabColumn,
 } from "./styled";
-import { Input } from "../../../componentLibrary";
 
 interface Props {
   node: Node;
+  project: Project;
   index: number;
 }
 
-const TabAdminComponent = ({ node, index }: Props) => {
+const TabAdminComponent = ({ node, project, index }: Props) => {
   const dispatch = useDispatch();
-
-  const handleOnChange = (e, key: string) => {
-    dispatch(changeNodeValue(node.id, key, e.target.value));
-  };
 
   const list = useSelector<RootState>(
     (state) => state.inspector.tabs
@@ -47,35 +41,11 @@ const TabAdminComponent = ({ node, index }: Props) => {
         <TabTitle active={true}>{GetInspectorTextResource(index)}</TabTitle>
       </TabHeader>
       <TabDataWrapper>
-        <TabContainer>
-          <TabColumn>
-            <div>
-              <div>Id</div>
-              <Input
-                readOnly={true}
-                value={node.updatedBy}
-                onChange={() => null}
-                inputType=""
-              />
-            </div>
-            <div>
-              <div>Updated by</div>
-              <Input
-                value={node.updatedBy}
-                onChange={(e) => handleOnChange(e, "updatedBy")}
-                inputType=""
-              />
-            </div>
-            <div>
-              <div>Updated by</div>
-              <Input
-                value={node.updatedBy}
-                onChange={() => null}
-                inputType=""
-              />
-            </div>
-          </TabColumn>
-        </TabContainer>
+        {node && project && (
+          <TabContainer>
+            <TabAdminContent node={node} project={project} />
+          </TabContainer>
+        )}
       </TabDataWrapper>
     </>
   ) : (

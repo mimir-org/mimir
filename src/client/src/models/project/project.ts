@@ -199,6 +199,7 @@ export interface Attribute {
 
 export interface Node {
     id: string;
+    rds: string;
     semanticId: string;
     tagNumber: string;
     description: string;
@@ -216,14 +217,8 @@ export interface Node {
     positionBlockX: number;
     positionBlockY: number;
     length: number;
-    height: number;
     width: number;
-    relativeToPlatformEast: number;
-    relativeToPlatformNorth: number;
-    relativeToPlatformZeroPoint: number;
-    maxTemp: number;
-    minTemp: number;
-    noiceRestriction: number;
+    height: number;
     area: number;
     status: BuildStatus;
     updatedBy: string;
@@ -233,6 +228,7 @@ export interface Node {
 
 export interface LibNode {
     id: string;
+    rds: string;
     name: string;
     label: string;
     icon: IconType;
@@ -240,8 +236,8 @@ export interface LibNode {
     connectors: Connector[];
     category: string;
     attributes?: Attribute[] | null;
-    semanticReference: string;
     version: string;
+    semanticReference: string;
 }
 
 export interface LibCategory {
