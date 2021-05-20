@@ -4,6 +4,7 @@ import { useCallback } from "react";
 import { RootState } from "../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { changeInspector } from "../../../redux/store/inspector/actions";
+import { Contractor } from "../../../redux/store/common/types";
 import { Node, Project } from "../../../models/project";
 import {
   TabHeader,
@@ -30,6 +31,10 @@ const TabAdminComponent = ({ node, project, index }: Props) => {
     (state) => state.inspector.tabs[index].visible
   ) as boolean;
 
+  const contractors = useSelector<RootState>(
+    (state) => state.commonState.contractors
+  ) as Contractor[];
+
   const handleClick = useCallback(() => {
     dispatch(changeInspector(index, list));
   }, [dispatch, index, list]);
@@ -43,7 +48,11 @@ const TabAdminComponent = ({ node, project, index }: Props) => {
       <TabDataWrapper>
         {node && project && (
           <TabContainer>
-            <TabAdminContent node={node} project={project} />
+            <TabAdminContent
+              node={node}
+              project={project}
+              contractors={contractors}
+            />
           </TabContainer>
         )}
       </TabDataWrapper>

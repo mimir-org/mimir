@@ -6,6 +6,7 @@ import { projectReducer } from "./project/reducers";
 import { inspectorReducer } from "./inspector/reducers";
 import { moduleReducer } from "./modules/reducers";
 import { projectMenuReducer } from "./projectMenu/reducers";
+import { commonReducer } from "./common/reducers";
 import { flowReducer } from "./flow/reducers";
 import { splitViewReducer } from "./splitView/reducers";
 import { sagas } from "../sagas";
@@ -26,6 +27,7 @@ const rootReducers = combineReducers({
     projectMenu: projectMenuReducer,
     flow: flowReducer,
     splitView: splitViewReducer,
+    commonState: commonReducer
 });
 
 const store = createStore(

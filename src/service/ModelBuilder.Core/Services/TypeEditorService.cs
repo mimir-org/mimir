@@ -18,20 +18,23 @@ namespace Mb.Core.Services
         public const string RdsFileName = "rds";
         public const string AttributeFileName = "attribute";
         public const string LibraryFileName = "library";
+        public const string ContractorFileName = "contractor";
 
         private readonly IFileRepository _fileRepository;
         private readonly IRdsRepository _rdsRepository;
         private readonly IAttributeTypeRepository _attributeTypeRepository;
         private readonly ILibraryTypeComponentRepository _libraryTypeComponentRepository;
         private readonly ICommonRepository _generateIdRepository;
+        private readonly IContractorRepository _contractorRepository;
 
-        public TypeEditorService(IFileRepository fileRepository, IRdsRepository rdsRepository, IAttributeTypeRepository attributeTypeRepository, ILibraryTypeComponentRepository libraryTypeComponentRepository, ICommonRepository generateIdRepository)
+        public TypeEditorService(IFileRepository fileRepository, IRdsRepository rdsRepository, IAttributeTypeRepository attributeTypeRepository, ILibraryTypeComponentRepository libraryTypeComponentRepository, ICommonRepository generateIdRepository, IContractorRepository contractorRepository)
         {
             _fileRepository = fileRepository;
             _rdsRepository = rdsRepository;
             _attributeTypeRepository = attributeTypeRepository;
             _libraryTypeComponentRepository = libraryTypeComponentRepository;
             _generateIdRepository = generateIdRepository;
+            _contractorRepository = contractorRepository;
         }
 
         #region Public methods
@@ -203,14 +206,17 @@ namespace Mb.Core.Services
             var libraryFiles = fileList.Where(x => x.ToLower().Contains(LibraryFileName)).ToList();
             var rdsFiles = fileList.Where(x => x.ToLower().Contains(RdsFileName)).ToList();
             var attributeFiles = fileList.Where(x => x.ToLower().Contains(AttributeFileName)).ToList();
+            var contractorFiles = fileList.Where(x => x.ToLower().Contains(ContractorFileName)).ToList();
 
             var libraries = _fileRepository.ReadAllFiles<LibraryTypeComponent>(libraryFiles).ToList();
             var rds = _fileRepository.ReadAllFiles<Rds>(rdsFiles).ToList();
             var attributes = _fileRepository.ReadAllFiles<AttributeType>(attributeFiles).ToList();
+            var contractors = _fileRepository.ReadAllFiles<Contractor>(contractorFiles).ToList();
 
             await CreateRdsAsync(rds);
             await CreateAttributeTypesAsync(attributes);
             await CreateLibraryTypeComponentsAsync(libraries);
+            await CreateContractorsAsync(contractors);
         }
 
         /// <summary>
@@ -289,6 +295,21 @@ namespace Mb.Core.Services
             }
 
             await _libraryTypeComponentRepository.SaveAsync();
+        }
+
+        private async Task CreateContractorsAsync(IEnumerable<Contractor> contractors)
+        {
+            var existingTypes = _contractorRepository.GetAll().ToList();
+            var notExistingTypes = contractors.Where(x => !existingTypes.Any(x.Equals)).ToList();
+            if (!notExistingTypes.Any())
+                return;
+
+            foreach (var item in notExistingTypes)
+            {
+                await _contractorRepository.CreateAsync(item);
+            }
+
+            await _contractorRepository.SaveAsync();
         }
 
         #endregion

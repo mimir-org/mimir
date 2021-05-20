@@ -7,10 +7,12 @@ import {
     SEARCH_PROJECT,
     SAVE_PROJECT,
 } from "./../store/project/types";
+import { FETCHING_CONTRACTORS } from "../store/common/types";
 
 import { searchLibrary } from "./library/saga";
 import { getUser } from "./user/saga";
 import { getProject, createProject, searchProject, updateProject } from "./project/saga";
+import { getContractors } from "./common/saga";
 
 export function* sagas() {
     yield all([
@@ -20,5 +22,6 @@ export function* sagas() {
         takeEvery(FETCHING_PROJECT, getProject),
         takeEvery(SEARCH_PROJECT, searchProject),
         takeEvery(SAVE_PROJECT, updateProject),
+        takeEvery(FETCHING_CONTRACTORS, getContractors),
     ]);
 }

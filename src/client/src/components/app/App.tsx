@@ -8,6 +8,7 @@ import { RootState } from "../../redux/store";
 import { ProjectState } from "../../redux/store/project/types";
 import { LibraryState } from "../../redux/store/library/types";
 import { UserState } from "../../redux/store/user/types";
+import { CommonState } from "../../redux/store/common/types";
 
 const App = () => {
   const projectState = useSelector<RootState>(
@@ -22,12 +23,17 @@ const App = () => {
     (state) => state.library
   ) as UserState;
 
-  const isFetching = () => {
-    // console.log("ProjectState: ", projectState.errorMsg);
-    // console.log("LibraryState: ", libraryState.errorMsg);
-    // console.log("UserState: ", userState.errorMsg);
+  const commonState = useSelector<RootState>(
+    (state) => state.commonState
+  ) as CommonState;
 
-    if (projectState.fetching || libraryState.fetching || userState.fetching)
+  const isFetching = () => {
+    if (
+      projectState.fetching ||
+      libraryState.fetching ||
+      userState.fetching ||
+      commonState.fetching
+    )
       return "loading";
     return "";
   };
