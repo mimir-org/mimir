@@ -18,7 +18,7 @@ export const ProjectComponent = () => {
                 <AspectComponent
                   key={i}
                   nodeId={obj["id"]}
-                  name={obj["name"]}
+                  label={obj["label"]}
                   aspectType={obj["type"]}
                 />
               );
@@ -34,7 +34,7 @@ export const ProjectComponent = () => {
                 <AspectComponent
                   key={i}
                   nodeId={obj["id"]}
-                  name={obj["name"]}
+                  label={obj["label"]}
                   aspectType={obj["type"]}
                 />
               );

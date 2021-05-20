@@ -17,10 +17,10 @@ import {
 
 interface Props {
   nodeId: string;
-  name: string;
+  label: string;
   aspectType: NodeType;
 }
-export const AspectComponent = ({ nodeId, name, aspectType }: Props) => {
+export const AspectComponent = ({ nodeId, label, aspectType }: Props) => {
   const [expanded, setExpanded] = useState(true);
   const expandIcon = expanded ? ExpandedIcon : ClosedIcon;
   const aspectIcon = GetAspectIcon(aspectType);
@@ -41,9 +41,9 @@ export const AspectComponent = ({ nodeId, name, aspectType }: Props) => {
         <img src={aspectIcon} alt="aspect-icon"></img>
         <div className="checkbox_container">
           {isBlockView ? (
-            <CheckboxBlock nodeId={nodeId} inputLabel={name} />
+            <CheckboxBlock nodeId={nodeId} inputLabel={label} />
           ) : (
-            <Checkbox nodeId={nodeId} inputLabel={name} type={childType} />
+            <Checkbox nodeId={nodeId} inputLabel={label} type={childType} />
           )}
         </div>
         {GetDropdownIcon(expandIcon, handleExpandClick)}
@@ -56,7 +56,7 @@ export const AspectComponent = ({ nodeId, name, aspectType }: Props) => {
               <AspectElement
                 key={i}
                 nodeId={obj["id"]}
-                name={obj["name"]}
+                name={obj["label"]}
                 type={childType}
                 indent={indent}
               />
