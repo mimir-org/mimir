@@ -7,7 +7,7 @@ const InspectorTabsHeader = styled.div`
   height: 35px;
   border-top: 1px solid ${Color.Grey};
   border-bottom: 1px solid ${Color.Grey};
-  width: 100%;
+  width: auto;
 `;
 
 export default InspectorTabsHeader;

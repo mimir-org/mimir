@@ -5,21 +5,26 @@ import { Checkbox, CheckboxBlock } from "../checkboxComponent";
 
 interface Props {
   nodeId: string;
-  name: string;
+  label: string;
   type: NodeType;
   indent: number;
 }
 
-export const AspectChildComponent = ({ nodeId, name, type, indent }: Props) => {
+export const AspectChildComponent = ({
+  nodeId,
+  label,
+  type,
+  indent,
+}: Props) => {
   const isBlockView = CheckView(VIEW_TYPE.BLOCKVIEW);
   const isProduct = type === NODE_TYPE.PRODUCT;
 
   return (
     <AspectElementBox indent={indent} type={type}>
       {!isBlockView ? (
-        <Checkbox nodeId={nodeId} inputLabel={name} type={type} />
+        <Checkbox nodeId={nodeId} inputLabel={label} type={type} />
       ) : (
-        !isProduct && <CheckboxBlock nodeId={nodeId} inputLabel={name} />
+        !isProduct && <CheckboxBlock nodeId={nodeId} inputLabel={label} />
       )}
     </AspectElementBox>
   );
