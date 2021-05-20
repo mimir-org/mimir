@@ -10,7 +10,7 @@ import { GetReactFlowBoundingRectData } from "../helpers";
 import {
   FunctionBox,
   LocationBox,
-  MessageBox,
+  BlockMessageBox,
 } from "../../../componentLibrary/blockView";
 
 const FunctionBlock: FC<NodeProps> = ({ data }) => {
@@ -42,9 +42,9 @@ const FunctionBlock: FC<NodeProps> = ({ data }) => {
       </FunctionBox>
 
       {!splitViewNode ? (
-        <MessageBox>
+        <BlockMessageBox>
           <p>{TextResources.BlockView_Select_Aspect}</p>
-        </MessageBox>
+        </BlockMessageBox>
       ) : isLocationNode ? (
         <>
           <LocationBox width={calculatedWidth} height={calculatedHeight}>

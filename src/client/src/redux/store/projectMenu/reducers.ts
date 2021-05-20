@@ -3,8 +3,12 @@ import { CHANGE_PROJECT_MENU } from "./types";
 const initialState = {
   menu: [
     {
-      type: "optionsMenu",
-      visible: true,
+      type: "mainMenu",
+      visible: false,
+    },
+    {
+      type: "accountMenu",
+      visible: false,
     },
     {
       type: "openProjectMenu",

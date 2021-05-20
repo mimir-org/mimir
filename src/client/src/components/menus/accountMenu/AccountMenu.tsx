@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../redux/store/index";
 import { UserState } from "../../../redux/store/user/types";
@@ -13,8 +12,11 @@ import { OpenProjectMenu } from "../../project/openProject";
 
 const AccountMenu = () => {
   const dispatch = useDispatch();
-  const [showAccountSettings, setshowAccountSettings] = useState(false);
   const type = MENU_TYPE.ACCOUNT;
+
+  const isOpen = useSelector<RootState>(
+    (state) => state.projectMenu.menu[1].visible
+  ) as boolean;
 
   const projectState = useSelector<RootState>(
     (state) => state.projectState
@@ -24,8 +26,8 @@ const AccountMenu = () => {
     (state) => state.userState
   ) as UserState;
 
-  const handleClick = () => {
-    setshowAccountSettings(!showAccountSettings);
+  const handleAccountClick = () => {
+    dispatch(changeProjectMenu("accountMenu", !isOpen));
   };
 
   const handleOpenClick = () => {
@@ -35,25 +37,26 @@ const AccountMenu = () => {
   const handleCreateClick = () => {
     alert("Project created");
     dispatch(create("unnamed", "unnamed"));
+    dispatch(changeProjectMenu("accountMenu", false));
   };
 
   const handleSaveClick = () => {
     if (projectState.project) dispatch(save(projectState.project));
+    dispatch(changeProjectMenu("accountMenu", false));
     alert("Project saved");
   };
-  const isOpen = showAccountSettings;
 
   return (
     <>
       <MenuTopHeader isOpen={isOpen}>
-        <div onClick={handleClick}>
+        <div onClick={handleAccountClick}>
           {projectState.project && projectState.project.name}
         </div>
         <img
           src={GetMenuIcon(isOpen, type)}
           alt="icon"
           className="icon"
-          onClick={handleClick}
+          onClick={handleAccountClick}
         />
       </MenuTopHeader>
       {isOpen && (
