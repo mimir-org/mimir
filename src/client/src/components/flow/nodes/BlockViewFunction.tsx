@@ -6,6 +6,10 @@ import { addSelectedConnector } from "../../../redux/store/flow/actions";
 import { RootState } from "../../../redux/store";
 import { Connector } from "../../../models/project";
 import {
+  GetConnectors,
+  SetConnectors,
+} from "../../../redux/store/localStorage";
+import {
   GetConnectorIcon,
   GetBlockHandleType,
   GetHandlePosition,
@@ -20,10 +24,6 @@ import {
   OptionsMenu,
   HandleBox,
 } from "../../../componentLibrary/blockView";
-import {
-  GetConnectors,
-  SetConnectors,
-} from "../../../redux/store/localStorage";
 
 const BlockViewFunction: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();

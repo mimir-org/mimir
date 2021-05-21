@@ -16,7 +16,7 @@ const InspectorModule = () => {
   const key = MODULE_TYPE.INSPECTOR;
 
   const hasProject = useSelector<RootState>(
-    (state) => state.projectState.project !== null
+    (state) => state.projectState.project
   );
 
   const animate = useSelector<RootState>(

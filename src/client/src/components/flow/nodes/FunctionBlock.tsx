@@ -5,6 +5,7 @@ import { ArrowIcon } from "../../../assets/icons/blockView";
 import { TextResources } from "../../../assets/textResources";
 import { Node, NODE_TYPE } from "../../../models/project";
 import { RootState } from "../../../redux/store";
+import { GetReactFlowBoundingRectData } from "../helpers";
 import {
   FunctionBox,
   BlockMessageBox,
@@ -16,11 +17,20 @@ const FunctionBlock: FC<NodeProps> = ({ data }) => {
     (state) => state.splitView.node
   ) as Node;
 
-  const isLocation = splitViewNode?.type === NODE_TYPE.LOCATION;
+  const [width, height] = GetReactFlowBoundingRectData();
+  let calculatedWidth = (width * 70) / 100;
+  const calculatedHeight = (height * 80) / 120;
+
+  if (splitView) calculatedWidth = calculatedWidth / 1.7;
+  const isLocationNode = splitViewNode?.type === NODE_TYPE.LOCATION;
 
   return splitView ? (
     <>
-      <FunctionBox id={"function-block-" + data.id}>
+      <FunctionBox
+        id={"function-block-" + data.id}
+        width={calculatedWidth}
+        height={calculatedHeight}
+      >
         <img src={ArrowIcon} alt="arrow" className="icon"></img>
         <h3 className="header">{data.label ?? data.name}</h3>
         <div className="content"></div>
@@ -30,10 +40,26 @@ const FunctionBlock: FC<NodeProps> = ({ data }) => {
         <BlockMessageBox>
           <p>{TextResources.BlockView_Select_Aspect}</p>
         </BlockMessageBox>
+      ) : isLocationNode ? (
+        <>
+          <FunctionBox
+            location
+            id={"function-block-" + splitViewNode.id}
+            width={calculatedWidth}
+            height={calculatedHeight}
+          >
+            <img src={ArrowIcon} alt="arrow" className="icon"></img>
+            <h3 className="header">
+              {splitViewNode.label ?? splitViewNode.name}
+            </h3>
+            <div className="content"></div>
+          </FunctionBox>
+        </>
       ) : (
         <FunctionBox
-          location={isLocation}
           id={"function-block-" + splitViewNode.id}
+          width={calculatedWidth}
+          height={calculatedHeight}
         >
           <img src={ArrowIcon} alt="arrow" className="icon"></img>
           <h3 className="header">
@@ -44,7 +70,11 @@ const FunctionBlock: FC<NodeProps> = ({ data }) => {
       )}
     </>
   ) : (
-    <FunctionBox id={"function-block-" + data.id}>
+    <FunctionBox
+      id={"function-block-" + data.id}
+      width={calculatedWidth}
+      height={calculatedHeight}
+    >
       <img src={ArrowIcon} alt="arrow" className="icon"></img>
       <h3 className="header">{data.label ?? data.name}</h3>
       <div className="content"></div>

@@ -23,12 +23,11 @@ const LibraryComponent = ({ categories, search }: Props) => {
         onChange={onChange}
       />
 
-      {categories &&
-        categories.map((category) => {
-          return (
-            <LibraryCategoryComponent key={category.name} category={category} />
-          );
-        })}
+      {categories?.map((category) => {
+        return (
+          <LibraryCategoryComponent key={category.name} category={category} />
+        );
+      })}
     </LibraryBody>
   );
 };

@@ -29,8 +29,8 @@ export const OpenProjectMenu = () => {
     (state) => state.projectState.project
   ) as Project;
 
-  const project = projects ? projects.find((x) => x.selected) : undefined;
-  const projectId = project ? project.id : undefined;
+  const project = projects?.find((x) => x.selected);
+  const projectId = project?.id;
 
   const isOpen = useSelector<RootState>(
     (state) =>
