@@ -1,7 +1,6 @@
 import { memo, FC } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useSelector } from "react-redux";
-import { FlowBlockLocation } from "..";
 import { ArrowIcon } from "../../../assets/icons/blockView";
 import { TextResources } from "../../../assets/textResources";
 import { Node, NODE_TYPE } from "../../../models/project";
@@ -9,7 +8,6 @@ import { RootState } from "../../../redux/store";
 import { GetReactFlowBoundingRectData } from "../helpers";
 import {
   FunctionBox,
-  LocationBox,
   BlockMessageBox,
 } from "../../../componentLibrary/blockView";
 
@@ -25,9 +23,7 @@ const FunctionBlock: FC<NodeProps> = ({ data }) => {
 
   if (splitView) calculatedWidth = calculatedWidth / 1.7;
 
-  const isLocationNode = splitViewNode
-    ? splitViewNode.type === NODE_TYPE.LOCATION
-    : false;
+  const isLocationNode = splitViewNode?.type === NODE_TYPE.LOCATION;
 
   return splitView ? (
     <>
@@ -47,10 +43,6 @@ const FunctionBlock: FC<NodeProps> = ({ data }) => {
         </BlockMessageBox>
       ) : isLocationNode ? (
         <>
-          {/* <LocationBox width={calculatedWidth} height={calculatedHeight}> */}
-          {/* <FlowBlockLocation /> */}
-          {/* </LocationBox> */}
-
           <FunctionBox
             location
             id={"function-block-" + splitViewNode.id}

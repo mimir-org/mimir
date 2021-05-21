@@ -1,8 +1,8 @@
 import { Project, EdgeType, EDGE_TYPE } from "../../../models/project";
-import { CreateElementNode, CreateElementEdge } from "../helpers";
+import { CreateElementNode, CreateElementEdge } from ".";
 import { Elements } from "react-flow-renderer";
 
-const CreateProjectElementNodes = (project: Project): Elements => {
+const CreateElementNodes = (project: Project): Elements => {
   const initialElements: Elements = [];
 
   if (!project) return initialElements;
@@ -25,4 +25,4 @@ const CreateProjectElementNodes = (project: Project): Elements => {
   return initialElements;
 };
 
-export default CreateProjectElementNodes;
+export default CreateElementNodes;

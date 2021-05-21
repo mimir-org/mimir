@@ -84,7 +84,7 @@ const BlockViewFunction: FC<NodeProps> = ({ data }) => {
       {/* Show connectors added to node */}
       {isVisible &&
         connectors.map((conn) => {
-          const [type, pos, className] = GetBlockHandleType(conn, data.type);
+          const [type, pos, className] = GetBlockHandleType(conn);
           if (data.id === conn.nodeId) {
             return (
               <HandleBox position={GetHandlePosition(pos)} key={conn.id}>

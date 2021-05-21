@@ -6,6 +6,10 @@ import { addSelectedConnector } from "../../../redux/store/flow/actions";
 import { RootState } from "../../../redux/store";
 import { Connector } from "../../../models/project";
 import {
+  GetConnectors,
+  SetConnectors,
+} from "../../../redux/store/localStorage";
+import {
   GetConnectorIcon,
   GetBlockHandleType,
   GetHandlePosition,
@@ -20,11 +24,6 @@ import {
   OptionsMenu,
   HandleBox,
 } from "../../../componentLibrary/blockView";
-import {
-  GetConnectors,
-  SetConnectors,
-} from "../../../redux/store/localStorage";
-
 const BlockViewLocation: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
   const [showButton, setShowButton] = useState(false);
@@ -84,7 +83,7 @@ const BlockViewLocation: FC<NodeProps> = ({ data }) => {
       {/* Show connectors added to node */}
       {isVisible &&
         connectors.map((conn) => {
-          const [type, pos, className] = GetBlockHandleType(conn, data.type);
+          const [type, pos, className] = GetBlockHandleType(conn);
           if (data.id === conn.nodeId) {
             return (
               <HandleBox position={GetHandlePosition(pos)} key={conn.id}>

@@ -1,27 +1,26 @@
+import { Elements } from "react-flow-renderer";
+import CreateLocationNode from "./locationNode/CreateLocationNode";
+import CreateLocationNodes from "./locationNode/CreateLocationNodes";
 import {
   Project,
   EDGE_TYPE,
   RELATION_TYPE,
   EdgeType,
-  NODE_TYPE,
   Node,
   Edge,
 } from "../../../models/project";
-import { Elements } from "react-flow-renderer";
 import {
   CreateElementEdge,
   CreateElementBlockNode,
   CreateElementNode,
   GetReactFlowBoundingRectData,
 } from ".";
-import CreateLocationNodes from "./locationNode/CreateLocationNodes";
-import CreateLocationNode from "./locationNode/CreateLocationNode";
-import store from "../../../redux/store";
 
-const CreateProjectElementBlockNodes = (
+const CreateElementBlockNodes = (
   project: Project,
   nodeId: string,
-  splitViewNode: Node
+  splitViewNode: Node,
+  splitView: boolean
 ): Elements => {
   const initialElements: Elements = [];
   const childrenNodes = [];
@@ -31,7 +30,7 @@ const CreateProjectElementBlockNodes = (
   const actualNode = project.nodes.find((node) => node.id === nodeId);
   const elementNode = CreateElementBlockNode(actualNode, width);
 
-  if (splitViewNode) {
+  if (splitViewNode && splitView) {
     initialElements.push(CreateLocationNode(splitViewNode));
 
     const edges = project.edges;
@@ -107,4 +106,4 @@ const CreateProjectElementBlockNodes = (
   return initialElements;
 };
 
-export default CreateProjectElementBlockNodes;
+export default CreateElementBlockNodes;

@@ -6,8 +6,7 @@ import {
 } from "../../../models/project";
 
 const GetBlockHandleType = (
-  connector: Connector,
-  type
+  connector: Connector
 ): [HandleType, Position, string] => {
   if (
     connector.type === CONNECTOR_TYPE.OUTPUT &&

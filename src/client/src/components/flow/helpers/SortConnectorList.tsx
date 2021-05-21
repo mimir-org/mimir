@@ -1,6 +1,10 @@
 import { useSelector } from "react-redux";
-import { NODE_TYPE, RELATION_TYPE } from "../../../models/project";
 import { RootState } from "../../../redux/store";
+import {
+  CONNECTOR_TYPE,
+  NODE_TYPE,
+  RELATION_TYPE,
+} from "../../../models/project";
 
 const SortConnectorList = (connectors) => {
   const list = [];
@@ -12,7 +16,11 @@ const SortConnectorList = (connectors) => {
     if (!isLocationNode) {
       if (conn.relationType === RELATION_TYPE.Transport) list.push(conn);
     } else {
-      if (conn.relationType === RELATION_TYPE.HasLocation) list.push(conn);
+      if (
+        conn.relationType === RELATION_TYPE.HasLocation &&
+        conn.type === CONNECTOR_TYPE.INPUT
+      )
+        list.push(conn);
     }
   });
   return list;

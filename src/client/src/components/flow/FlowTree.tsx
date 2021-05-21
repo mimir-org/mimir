@@ -6,11 +6,6 @@ import { ProjectMainMenu } from "../project";
 import { RootState } from "./../../redux/store/index";
 import { useOnConnect, useOnDrop, useOnElementsRemove } from "./hooks";
 import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
-import {
-  GetProjectId,
-  HasProject,
-  SetProject,
-} from "../../redux/store/localStorage";
 import { OpenProjectMenu } from "../project/openProject/OpenProjectMenu";
 import { Project, VIEW_TYPE } from "../../models/project";
 import {
@@ -18,7 +13,12 @@ import {
   changeActiveNode,
 } from "../../redux/store/project/actions";
 import {
-  CreateProjectElementNodes,
+  GetProjectId,
+  HasProject,
+  SetProject,
+} from "../../redux/store/localStorage";
+import {
+  CreateElementNodes,
   GetTreeNodeTypes,
   GetTreeEdgeTypes,
 } from "./helpers";
@@ -46,7 +46,7 @@ const FlowTree = () => {
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(CreateProjectElementNodes(project));
+      setElements(CreateElementNodes(project));
       return setReactFlowInstance(_reactFlowInstance);
     },
     [project]
@@ -84,21 +84,20 @@ const FlowTree = () => {
     OnLoad(reactFlowInstance);
   }, [OnLoad, reactFlowInstance]);
 
-  // Handling of project loading
   useEffect(() => {
-    if (project === null) {
+    if (!project) {
       const projectId = GetProjectId();
       if (projectId) dispatch(get(projectId));
     }
   }, [dispatch, project]);
 
-  const visible = useSelector<RootState>(
+  const isTreeView = useSelector<RootState>(
     (state) => state.flow.view === VIEW_TYPE.TREEVIEW
   ) as boolean;
 
   return (
     <>
-      {project && visible && (
+      {isTreeView && (
         <ReactFlowProvider>
           <div className="reactflow-wrapper" ref={reactFlowWrapper}>
             <ReactFlow
