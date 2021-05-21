@@ -1,8 +1,8 @@
 import { ArrowIcon } from "../../../assets/icons/blockView";
 import { FunctionBox } from "../../../componentLibrary/blockView";
 
-const Block = ({ data, splitView, location }) => {
-  if (splitView) data = splitView;
+const Block = ({ data, split, location }) => {
+  if (split) data = split;
 
   return (
     <FunctionBox id={"function-block-" + data.id} location={location}>

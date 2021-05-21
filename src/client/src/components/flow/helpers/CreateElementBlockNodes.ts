@@ -65,13 +65,12 @@ const CreateElementBlockNodes = (
 
   // Draw new edges created in block view
   project.edges.forEach((edge) => {
-    console.log({ edge });
     if (
       edge.parentType !== NODE_TYPE.PRODUCT &&
       edge.targetType !== NODE_TYPE.PRODUCT
     ) {
       const elementEdge = CreateElementEdge(edge, EDGE_TYPE.BLOCK as EdgeType);
-      //   if (elementEdge) initialElements.push(elementEdge);
+      if (elementEdge) initialElements.push(elementEdge);
     }
   });
 

@@ -16,19 +16,16 @@ const FunctionBlock: FC<NodeProps> = ({ data }) => {
   const isLocationNode = splitViewNode?.type === NODE_TYPE.LOCATION;
 
   return !splitView ? (
-    <Block data={data} splitView={null} location={false} />
+    <Block data={data} split={null} location={false} />
   ) : (
     <>
-      <Block data={data} splitView={null} location={false} />
-      {!splitViewNode ? (
+      <Block data={data} split={null} location={false} />
+      {!splitViewNode && (
         <BlockMessageBox>
           <p>{TextResources.BlockView_Select_Aspect}</p>
         </BlockMessageBox>
-      ) : isLocationNode ? (
-        <Block data={data} splitView={splitViewNode} location={true} />
-      ) : (
-        <Block data={data} splitView={splitViewNode} location={false} />
       )}
+      <Block data={data} split={splitViewNode} location={isLocationNode} />
     </>
   );
 };
