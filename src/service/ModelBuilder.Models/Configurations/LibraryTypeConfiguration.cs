@@ -12,7 +12,7 @@ namespace Mb.Models.Configurations
 
 
             builder.HasKey(x => x.Id);
-            builder.ToTable("LibraryTypeComponent");
+            builder.ToTable("LibraryType");
             builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
             builder.Property(p => p.Aspect).HasColumnName("Aspect").IsRequired().HasConversion<string>();
             builder.Property(p => p.ObjectType).HasColumnName("ObjectType").IsRequired().HasConversion<string>();

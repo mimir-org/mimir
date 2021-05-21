@@ -12,7 +12,7 @@ namespace Mb.Models.Configurations
         public virtual DbSet<Connector> Connectors { get; set; }
         public virtual DbSet<Rds> Rds { get; set; }
         public virtual DbSet<AttributeType> AttributeTypes { get; set; }
-        public virtual DbSet<LibraryType> LibraryTypeComponents { get; set; }
+        public virtual DbSet<LibraryType> LibraryTypes { get; set; }
         public virtual DbSet<Contractor> Contractors { get; set; }
         public virtual DbSet<TerminalType> TerminalTypes { get; set; }
 
