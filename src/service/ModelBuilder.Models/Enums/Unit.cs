@@ -8,7 +8,7 @@ namespace Mb.Models.Enums
     public enum Unit
     {
         [Display(Name = "NotSet")]
-        Notset = 0,
+        NotSet = 0,
 
         [Display(Name = "None")]
         None = 1,

@@ -3,16 +3,19 @@ import styled from "styled-components";
 const Select = styled.select`
   border: 1px solid #898787;
   border-radius: 5px;
-  width: 100%;
+  width: ${(props: { width: number }) =>
+    props.width === 0 ? `90%` : props.width + `px`};
   height: 31px;
-  margin-bottom: 10px;
   padding: 5px;
   display: inline-block;
   font: inherit;
   font-size: 14px;
   padding-right: 40px;
 
-  margin: 0;
+  margin: 0 0 10px 0;
+  margin-left: ${(props: { marginLeft: number }) =>
+    props.marginLeft === 0 ? `0` : props.marginLeft + `px`};
+
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -25,8 +28,6 @@ const Select = styled.select`
     calc(100% - 6px) calc(1em + -3px), 100% 0;
   background-size: 8px 8px, 8px 8px, 2.5em 2.5em;
   background-repeat: no-repeat;
-
-  margin-bottom: 10px;
 
   option {
     display: flex;

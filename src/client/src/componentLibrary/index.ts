@@ -9,3 +9,4 @@ export { default as Size } from "./size/Size";
 export { default as AnimatedModule } from "./animated/AnimatedModule";
 export { default as SearchInput } from "./input/SearchInput";
 export { default as GlobalStyle } from "./globalStyles";
+export { default as InputWrapper } from "./input/InputWrapper";
