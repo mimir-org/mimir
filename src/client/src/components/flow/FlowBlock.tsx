@@ -23,7 +23,7 @@ import ReactFlow, {
   Background,
 } from "react-flow-renderer";
 import {
-  CreateElementBlockNodes,
+  CreateBlockElements,
   GetBlockNodeTypes,
   GetBlockEdgeTypes,
 } from "./helpers";
@@ -61,7 +61,7 @@ const FlowBlock = () => {
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
       setElements(
-        CreateElementBlockNodes(project, node.id, splitViewNode, splitView)
+        CreateBlockElements(project, node.id, splitViewNode, splitView)
       );
       return setReactFlowInstance(_reactFlowInstance);
     },

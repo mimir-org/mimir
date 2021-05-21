@@ -1,7 +1,7 @@
 import { Node } from "../../../models/project";
 import { FlowElement } from "react-flow-renderer";
 
-const CreateElementBlockNode = (node: Node, width: number): FlowElement => {
+const CreateBlockNode = (node: Node, width: number): FlowElement => {
   let elementNode = null;
   if (!node) return elementNode;
 
@@ -25,4 +25,4 @@ const CreateElementBlockNode = (node: Node, width: number): FlowElement => {
   return elementNode;
 };
 
-export default CreateElementBlockNode;
+export default CreateBlockNode;

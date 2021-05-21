@@ -17,11 +17,7 @@ import {
   HasProject,
   SetProject,
 } from "../../redux/store/localStorage";
-import {
-  CreateElementNodes,
-  GetTreeNodeTypes,
-  GetTreeEdgeTypes,
-} from "./helpers";
+import { CreateElements, GetTreeNodeTypes, GetTreeEdgeTypes } from "./helpers";
 import ReactFlow, {
   ReactFlowProvider,
   Elements,
@@ -46,7 +42,7 @@ const FlowTree = () => {
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(CreateElementNodes(project));
+      setElements(CreateElements(project));
       return setReactFlowInstance(_reactFlowInstance);
     },
     [project]

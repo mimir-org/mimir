@@ -2,7 +2,7 @@ import { Project, EdgeType, EDGE_TYPE } from "../../../models/project";
 import { CreateElementNode, CreateElementEdge } from ".";
 import { Elements } from "react-flow-renderer";
 
-const CreateElementNodes = (project: Project): Elements => {
+const CreateElements = (project: Project): Elements => {
   const initialElements: Elements = [];
 
   if (!project) return initialElements;
@@ -21,8 +21,7 @@ const CreateElementNodes = (project: Project): Elements => {
       if (elementEdge) initialElements.push(elementEdge);
     });
   }
-
   return initialElements;
 };
 
-export default CreateElementNodes;
+export default CreateElements;

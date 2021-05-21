@@ -11,12 +11,12 @@ import {
 } from "../../../models/project";
 import {
   CreateElementEdge,
-  CreateElementBlockNode,
+  CreateBlockNode,
   CreateElementNode,
   GetReactFlowBoundingRectData,
 } from ".";
 
-const CreateElementBlockNodes = (
+const CreateBlockElements = (
   project: Project,
   nodeId: string,
   splitViewNode: Node,
@@ -28,20 +28,19 @@ const CreateElementBlockNodes = (
   if (!project) return;
 
   const actualNode = project.nodes.find((node) => node.id === nodeId);
-  const elementNode = CreateElementBlockNode(actualNode, width);
+  const elementNode = CreateBlockNode(actualNode, width);
   if (elementNode) initialElements.push(elementNode);
 
-  // Edge from function to location in splitview
   if (splitViewNode && splitView) {
     initialElements.push(CreateLocationNode(splitViewNode));
-    const edges = project.edges;
-    const toNodeId = splitViewNode.id;
-    const edge = edges.find((x) => x.toNode === toNodeId) as Edge;
+    // const edges = project.edges;
+    // const toNodeId = splitViewNode.id;
+    // const edge = edges.find((x) => x.toNode === toNodeId) as Edge;
 
-    if (edge) {
-      const elementEdge = CreateElementEdge(edge, EDGE_TYPE.BLOCK as EdgeType);
-      initialElements.push(elementEdge);
-    }
+    // if (edge) {
+    //   const elementEdge = CreateElementEdge(edge, EDGE_TYPE.BLOCK as EdgeType);
+    //     initialElements.push(elementEdge);
+    // }
   }
 
   // Draw nodes
@@ -63,11 +62,12 @@ const CreateElementBlockNodes = (
     }
   });
 
-  // Draw new edges created in block view
+  // Draw edges
   project.edges.forEach((edge) => {
     if (
       edge.parentType !== NODE_TYPE.PRODUCT &&
-      edge.targetType !== NODE_TYPE.PRODUCT
+      edge.targetType !== NODE_TYPE.PRODUCT &&
+      edge.parentType !== NODE_TYPE.ASPECT_LOCATION
     ) {
       const elementEdge = CreateElementEdge(edge, EDGE_TYPE.BLOCK as EdgeType);
       if (elementEdge) initialElements.push(elementEdge);
@@ -77,4 +77,4 @@ const CreateElementBlockNodes = (
   return initialElements;
 };
 
-export default CreateElementBlockNodes;
+export default CreateBlockElements;
