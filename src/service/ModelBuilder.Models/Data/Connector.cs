@@ -11,7 +11,7 @@ namespace Mb.Models.Data
         public string Name { get; set; }
         public ConnectorType Type { get; set; }
         public TerminalCategory TerminalCategory { get; set; }
-        public TerminalType TerminalType { get; set; }
+        public Terminal Terminal { get; set; }
         public RelationType RelationType { get; set; }
         public string SemanticReference { get; set; }
         public virtual ICollection<Attribute> Attributes { get; set; }

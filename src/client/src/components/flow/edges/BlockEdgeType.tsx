@@ -52,7 +52,7 @@ export default function BlockEdgeType({
   const getStyle = () => {
     var connector = getConnectors().toConnector;
     return {
-      stroke: GetTransportTypeColor(connector.terminalType),
+      stroke: GetTransportTypeColor(connector.terminal),
     };
   };
 

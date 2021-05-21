@@ -4,15 +4,15 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Mb.Models.Configurations
 {
-    public class LibraryTypeComponentConfiguration : IEntityTypeConfiguration<LibraryTypeComponent>
+    public class LibraryTypeConfiguration : IEntityTypeConfiguration<LibraryType>
 
     {
-        public void Configure(EntityTypeBuilder<LibraryTypeComponent> builder)
+        public void Configure(EntityTypeBuilder<LibraryType> builder)
         {
 
 
             builder.HasKey(x => x.Id);
-            builder.ToTable("LibraryTypeComponent");
+            builder.ToTable("LibraryType");
             builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
             builder.Property(p => p.Aspect).HasColumnName("Aspect").IsRequired().HasConversion<string>();
             builder.Property(p => p.ObjectType).HasColumnName("ObjectType").IsRequired().HasConversion<string>();

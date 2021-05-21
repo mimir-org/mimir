@@ -1,36 +1,36 @@
-import { TerminalType, TERMINAL_TYPE } from "../../../models/project";
+import { Terminal, TERMINAL } from "../../../models/project";
 
-const GetTransportTypeColor = (terminalType: TerminalType): string => {
-    switch (terminalType) {
-        case TERMINAL_TYPE.NotSet:
-        case TERMINAL_TYPE.Electric:
-        case TERMINAL_TYPE.Thermal:
-        case TERMINAL_TYPE.Solar:
-        case TERMINAL_TYPE.Mechanical:
-        case TERMINAL_TYPE.Sound:
-        case TERMINAL_TYPE.Wind:
-        case TERMINAL_TYPE.HydroPower:
-        case TERMINAL_TYPE.Fluid:
-        case TERMINAL_TYPE.DryGranulated:
-        case TERMINAL_TYPE.SolidPieces:
-        case TERMINAL_TYPE.Bracket:
-        case TERMINAL_TYPE.Bolts:
-        case TERMINAL_TYPE.Flanges:
-        case TERMINAL_TYPE.Sensor:
-        case TERMINAL_TYPE.Water:
-        case TERMINAL_TYPE.ChemicalFluids:
-        case TERMINAL_TYPE.MultiphaseFluids:
-        case TERMINAL_TYPE.WetGas:
-        case TERMINAL_TYPE.Vapour:
-        case TERMINAL_TYPE.Sand:
-        case TERMINAL_TYPE.Powder:
-        case TERMINAL_TYPE.Bricks:
-        case TERMINAL_TYPE.Boxes:
-        case TERMINAL_TYPE.Pieces:
+const GetTransportTypeColor = (terminal: Terminal): string => {
+    switch (terminal) {
+        case TERMINAL.NotSet:
+        case TERMINAL.Electric:
+        case TERMINAL.Thermal:
+        case TERMINAL.Solar:
+        case TERMINAL.Mechanical:
+        case TERMINAL.Sound:
+        case TERMINAL.Wind:
+        case TERMINAL.HydroPower:
+        case TERMINAL.Fluid:
+        case TERMINAL.DryGranulated:
+        case TERMINAL.SolidPieces:
+        case TERMINAL.Bracket:
+        case TERMINAL.Bolts:
+        case TERMINAL.Flanges:
+        case TERMINAL.Sensor:
+        case TERMINAL.Water:
+        case TERMINAL.ChemicalFluids:
+        case TERMINAL.MultiphaseFluids:
+        case TERMINAL.WetGas:
+        case TERMINAL.Vapour:
+        case TERMINAL.Sand:
+        case TERMINAL.Powder:
+        case TERMINAL.Bricks:
+        case TERMINAL.Boxes:
+        case TERMINAL.Pieces:
             return "#b1b1b7";
-        case TERMINAL_TYPE.Oil:
+        case TERMINAL.Oil:
             return "#C05046";
-        case TERMINAL_TYPE.Gas:
+        case TERMINAL.Gas:
             return "#F59D56";
         default:
             return "#b1b1b7";
