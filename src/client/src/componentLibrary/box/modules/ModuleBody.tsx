@@ -8,10 +8,11 @@ const ModuleBody = styled.div`
   transition: opacity 0.2s ease-in-out;
   position: ${(props) => (props.legend ? "absolute" : "initial")};
   bottom: ${(props) => (props.legend ? "0" : "initial")};
-  height: ${(props) => (props.legend ? "30%" : "initial")};
+  height: ${(props) => (props.legend ? "inherit" : "initial")};
   border-top: ${(props) => (props.legend ? `1px solid ${Color.Grey}` : "0")};
   margin-bottom: ${(props) => (props.legend ? "20px" : "0")};
   overflow-y: ${(props) => (props.legend ? "auto" : "none")};
+  max-height: ${(props) => (props.legend ? "35%" : "none")}; // TODO fix
   position: ${(props) => (props.legend ? "absolute" : "initial")};
 `;
 

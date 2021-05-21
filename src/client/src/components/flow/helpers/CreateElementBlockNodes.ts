@@ -28,7 +28,9 @@ const CreateElementBlockNodes = (
 
   const actualNode = project.nodes.find((node) => node.id === nodeId);
   const elementNode = CreateElementBlockNode(actualNode, width);
+  if (elementNode) initialElements.push(elementNode);
 
+  // Edge from function to location
   if (splitViewNode && splitView) {
     initialElements.push(CreateLocationNode(splitViewNode));
     const edges = project.edges;
@@ -39,10 +41,6 @@ const CreateElementBlockNodes = (
       const elementEdge = CreateElementEdge(edge, EDGE_TYPE.BLOCK as EdgeType);
       initialElements.push(elementEdge);
     }
-  }
-
-  if (elementNode) {
-    initialElements.push(elementNode);
   }
 
   project.edges.forEach((edge) => {
@@ -63,6 +61,7 @@ const CreateElementBlockNodes = (
       }
     }
   });
+
   project.edges.forEach((edge) => {
     const elementEdge = CreateElementEdge(edge, EDGE_TYPE.BLOCK as EdgeType);
     if (elementEdge) initialElements.push(elementEdge);

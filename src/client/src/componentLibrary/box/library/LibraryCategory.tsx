@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { Color, FontSize } from "../../";
 
 const LibraryCategory = styled.div`
-  width: 294px;
-  height: 41px;
+  width: 284px;
+  height: 35px;
   border: 2px solid ${Color.Black};
   border-radius: 3px;
   background-color: ${Color.White};

@@ -70,6 +70,7 @@ export function projectReducer(
         errorMsg: null,
         projectList: null,
       };
+
     case SEARCH_PROJECT_SUCCESS_OR_ERROR:
       return {
         ...state,
@@ -79,6 +80,7 @@ export function projectReducer(
         errorMsg: action.payload.errorMsg,
         projectList: action.payload.projectList,
       };
+
     case FETCHING_PROJECT:
       return {
         ...state,
@@ -178,6 +180,7 @@ export function projectReducer(
       };
 
     case UPDATE_BLOCK_POSITION:
+      console.log({ action });
       return {
         ...state,
         project: {

@@ -24,9 +24,9 @@ export const CheckboxBlock = ({ nodeId, inputLabel }: Props) => {
     (state) => state.splitView.node
   ) as Node;
 
-  const isHidden = splitView
-    ? node !== selectedNode && node !== splitViewNode
-    : node !== selectedNode;
+  const isChecked = splitView
+    ? node === selectedNode || node === splitViewNode
+    : node === selectedNode;
 
   const handleChange = () => {
     splitView
@@ -39,7 +39,7 @@ export const CheckboxBlock = ({ nodeId, inputLabel }: Props) => {
   return (
     !isProduct && (
       <label className={"checkbox"}>
-        <input type="checkbox" checked={!isHidden} onChange={handleChange} />
+        <input type="checkbox" checked={isChecked} onChange={handleChange} />
         <span className="checkmark"></span>
         <label className="checkbox_label">{inputLabel}</label>
       </label>

@@ -86,8 +86,8 @@ const LibraryModule = () => {
       <ModuleBody visible={isOpen} library>
         <LibraryComponent categories={libNodes()} search={search} />
         <TypeEditorModule />
+        <LegendModule visible={isOpen} />
       </ModuleBody>
-      <LegendModule visible={isOpen} />
     </AnimatedModule>
   );
 };
