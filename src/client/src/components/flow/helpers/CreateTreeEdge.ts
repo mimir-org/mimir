@@ -2,10 +2,7 @@ import { Edge, EdgeType } from "../../../models/project";
 import { FlowElement, ArrowHeadType } from "react-flow-renderer";
 import store from "../../../redux/store";
 
-export const CreateElementEdge = (
-  edge: Edge,
-  edgeType: EdgeType
-): FlowElement => {
+export const CreateTreeEdge = (edge: Edge, edgeType: EdgeType): FlowElement => {
   const nodes = store.getState().projectState.project.nodes;
 
   const fromNode = nodes.find((x) => x.id === edge.fromNode);
@@ -32,4 +29,4 @@ export const CreateElementEdge = (
   return elem;
 };
 
-export default CreateElementEdge;
+export default CreateTreeEdge;

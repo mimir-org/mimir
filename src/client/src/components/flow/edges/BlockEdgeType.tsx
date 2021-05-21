@@ -71,19 +71,16 @@ export default function BlockEdgeType({
   };
 
   const edgeText = (source: Node, target: Node) => {
+    if (!source || !target || IsAspectNode(source.type)) return null;
     let text = null;
 
-    if (!source || !target) return null;
-
-    if (IsAspectNode(source.type)) {
-      return null;
-    } else if (source.type === target.type) {
-      text = "partof";
-    } else if (target.type === NODE_TYPE.PRODUCT) {
-      text = "fulfilledBy";
-    } else if (target.type === NODE_TYPE.LOCATION) {
-      text = "locatedAt";
-    }
+    source.type === target.type
+      ? (text = "partof")
+      : target.type === NODE_TYPE.PRODUCT
+      ? (text = "fulfilledBy")
+      : target.type === NODE_TYPE.LOCATION
+      ? (text = "locatedAt")
+      : (text = null);
 
     return text ? (
       <EdgeText

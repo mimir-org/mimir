@@ -61,7 +61,7 @@ const FlowBlock = () => {
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
       setElements(
-        CreateBlockElements(project, node.id, splitViewNode, splitView)
+        CreateBlockElements(project, node?.id, splitViewNode, splitView)
       );
       return setReactFlowInstance(_reactFlowInstance);
     },

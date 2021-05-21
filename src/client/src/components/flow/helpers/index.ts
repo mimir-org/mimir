@@ -1,11 +1,13 @@
 export { default as GetFlowAspectIcon } from "./GetFlowAspectIcon";
 export { default as CreateOffPageNode } from "./CreateOffPageNode";
 export { default as GetTransportTypeColor } from "./GetTransportTypeColor";
-export { default as GetReactFlowBoundingRectData } from "./GetReactFlowBoundingRectData";
-export { default as CreateElementEdge } from "./CreateElementEdge";
+export { default as GetFlowRectData } from "./GetFlowRectData";
+export { default as CreateTreeEdge } from "./CreateTreeEdge";
 export { default as CreateId } from "./CreateId";
 export { default as CreateBlockNode } from "./CreateBlockNode";
+export { default as CreateBlockEdge } from "./CreateBlockEdge";
 export { default as CreateElementNode } from "./CreateElementNode";
+export { default as CreateLocationNode } from "./CreateLocationNode";
 export { default as IsAspectNode } from "./IsAspectNode";
 export { default as CreateElements } from "./CreateElements";
 export { default as CreateBlockElements } from "./CreateBlockElements";

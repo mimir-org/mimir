@@ -1,10 +1,6 @@
 import { CreateId } from "../helpers";
 import { ProjectState } from "../../../redux/store/project/types";
-import {
-  GetReactFlowBoundingRectData,
-  CreateOffPageData,
-  OffPageNodeCreator,
-} from ".";
+import { GetFlowRectData, CreateOffPageData, OffPageNodeCreator } from ".";
 import {
   Node,
   Edge,
@@ -40,7 +36,7 @@ const CreateOffPageNode = (
   const fromNodeConnector = fromNode.connectors.find(
     (x) => x.id === data.fromConnectorId
   );
-  const [width] = GetReactFlowBoundingRectData();
+  const [width] = GetFlowRectData();
 
   const node = {
     id: CreateId(),

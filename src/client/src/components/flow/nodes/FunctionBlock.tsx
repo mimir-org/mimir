@@ -20,12 +20,13 @@ const FunctionBlock: FC<NodeProps> = ({ data }) => {
   ) : (
     <>
       <Block data={data} split={null} location={false} />
-      {!splitViewNode && (
+      {!splitViewNode ? (
         <BlockMessageBox>
           <p>{TextResources.BlockView_Select_Aspect}</p>
         </BlockMessageBox>
+      ) : (
+        <Block data={data} split={splitViewNode} location={isLocationNode} />
       )}
-      <Block data={data} split={splitViewNode} location={isLocationNode} />
     </>
   );
 };

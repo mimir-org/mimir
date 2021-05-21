@@ -20,11 +20,11 @@ const FullscreenBox = () => {
 
   return (
     <FullscreenButton isOpen={isOpen} isBlockView={isBlockView}>
-      {isOpen ? (
-        <img src={ExpandIcon} alt="fullscreen" onClick={handleOnClick} />
-      ) : (
-        <img src={CloseIcon} alt="fullscreen" onClick={handleOnClick} />
-      )}
+      <img
+        src={isOpen ? ExpandIcon : CloseIcon}
+        alt="fullscreen"
+        onClick={handleOnClick}
+      />
     </FullscreenButton>
   );
 };

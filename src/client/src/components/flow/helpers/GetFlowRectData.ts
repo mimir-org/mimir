@@ -1,4 +1,4 @@
-const GetReactFlowBoundingRectData = (): [number, number] => {
+const GetFlowRectData = (): [number, number] => {
   var elem = document.getElementsByClassName("react-flow")[0];
 
   if (elem) {
@@ -9,4 +9,4 @@ const GetReactFlowBoundingRectData = (): [number, number] => {
   }
 };
 
-export default GetReactFlowBoundingRectData;
+export default GetFlowRectData;

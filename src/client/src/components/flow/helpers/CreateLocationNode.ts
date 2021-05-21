@@ -1,4 +1,4 @@
-import { Node } from "../../../../models/project";
+import { Node } from "../../../models/project";
 import { FlowElement } from "react-flow-renderer";
 
 const CreateLocationNode = (node: Node): FlowElement => {
