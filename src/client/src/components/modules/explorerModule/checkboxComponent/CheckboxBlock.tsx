@@ -24,15 +24,16 @@ export const CheckboxBlock = ({ nodeId, inputLabel }: Props) => {
     (state) => state.splitView.node
   ) as Node;
 
-  let isHidden = splitView
+  const isHidden = splitView
     ? node !== selectedNode && node !== splitViewNode
     : node !== selectedNode;
 
   const handleChange = () => {
-    if (splitView) {
-      if (splitViewNode) dispatch(setSplitViewNode(null));
-      else dispatch(setSplitViewNode(node));
-    } else dispatch(changeActiveNode(node.id));
+    splitView
+      ? splitViewNode
+        ? dispatch(setSplitViewNode(null))
+        : dispatch(setSplitViewNode(node))
+      : dispatch(changeActiveNode(node.id));
   };
 
   return (
