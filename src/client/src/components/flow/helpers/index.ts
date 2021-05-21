@@ -12,6 +12,7 @@ export { default as CreateProjectElementBlockNodes } from "./CreateProjectElemen
 export { default as GetCenter } from "./GetCenter";
 export { default as GetHandleType } from "./GetHandleType";
 export { default as GetBlockHandleType } from "./GetBlockHandleType";
+export { default as GetBlockLocationHandleType } from "./GetBlockLocationHandleType";
 export { default as GetNodes } from "./GetNodes";
 export { default as GetEdges } from "./GetEdges";
 export { default as GetRelationshipColor } from "./GetRelationshipColor";

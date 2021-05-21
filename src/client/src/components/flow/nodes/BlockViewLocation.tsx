@@ -84,7 +84,7 @@ const BlockViewLocation: FC<NodeProps> = ({ data }) => {
       {/* Show connectors added to node */}
       {isVisible &&
         connectors.map((conn) => {
-          const [type, pos, className] = GetBlockHandleType(conn);
+          const [type, pos, className] = GetBlockHandleType(conn, data.type);
           if (data.id === conn.nodeId) {
             return (
               <HandleBox position={GetHandlePosition(pos)} key={conn.id}>
@@ -96,7 +96,7 @@ const BlockViewLocation: FC<NodeProps> = ({ data }) => {
                   className={className}
                 />
                 <img
-                  src={GetConnectorIcon(conn.terminalType)}
+                  src={GetConnectorIcon(conn.terminalCategory)}
                   alt="icon"
                   className="connector"
                 />

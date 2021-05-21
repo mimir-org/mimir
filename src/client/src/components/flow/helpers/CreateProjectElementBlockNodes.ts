@@ -30,14 +30,22 @@ const CreateProjectElementBlockNodes = (
 
   const actualNode = project.nodes.find((node) => node.id === nodeId);
   const elementNode = CreateElementBlockNode(actualNode, width);
+
   if (splitViewNode) {
     initialElements.push(CreateLocationNode(splitViewNode));
-    const edges = store.getState().projectState.project.edges;
-    const edge = edges.find(
-      (x) => x.id === "747e4985-6b21-f847-dc26-ef868de93075"
-    ) as Edge;
-    const elementEdge = CreateElementEdge(edge, EDGE_TYPE.BLOCK as EdgeType);
-    initialElements.push(elementEdge);
+
+    const edges = project.edges;
+
+    const toNodeId = splitViewNode.id;
+
+    const edge = edges.find((x) => x.toNode === toNodeId) as Edge;
+    // const edge = edges.find(
+    //   (x) => x.id === "c0cc10bb-3510-09de-e8ec-883a112ba599"
+    // ) as Edge;
+    if (edge) {
+      const elementEdge = CreateElementEdge(edge, EDGE_TYPE.BLOCK as EdgeType);
+      initialElements.push(elementEdge);
+    }
   }
 
   if (elementNode) {
@@ -69,29 +77,31 @@ const CreateProjectElementBlockNodes = (
     const fromNode = childrenNodes.find((x) => x.id === edge.fromNode);
     const toNode = childrenNodes.find((x) => x.id === edge.toNode);
 
-    if (fromNode && toNode) {
-      const fromConnector = fromNode.connectors.find(
-        (x) => x.id === edge.fromConnector
-      );
-      const toConnector = toNode.connectors.find(
-        (x) => x.id === edge.toConnector
-      );
+    // if (fromNode && toNode) {
+    //   const fromConnector = fromNode.connectors.find(
+    //     (x) => x.id === edge.fromConnector
+    //   );
+    //   const toConnector = toNode.connectors.find(
+    //     (x) => x.id === edge.toConnector
+    //   );
 
-      //   if (
-      //     fromConnector &&
-      //     fromConnector.relationType === RELATION_TYPE.Transport &&
-      //     toConnector &&
-      //     toConnector.relationType === RELATION_TYPE.Transport
-      //   ) {
-      //     const elementEdge = CreateElementEdge(
-      //       edge,
-      //       EDGE_TYPE.BLOCK as EdgeType
-      //     );
-      //     if (elementEdge) initialElements.push(elementEdge);
-      //   }
-      const elementEdge = CreateElementEdge(edge, EDGE_TYPE.BLOCK as EdgeType);
-      if (elementEdge) initialElements.push(elementEdge);
-    }
+    //   if (
+    //     fromConnector &&
+    //     fromConnector.relationType === RELATION_TYPE.Transport &&
+    //     toConnector &&
+    //     toConnector.relationType === RELATION_TYPE.Transport
+    //   ) {
+    //     const elementEdge = CreateElementEdge(
+    //       edge,
+    //       EDGE_TYPE.BLOCK as EdgeType
+    //     );
+    //     if (elementEdge) initialElements.push(elementEdge);
+    //   }
+    //   const elementEdge = CreateElementEdge(edge, EDGE_TYPE.BLOCK as EdgeType);
+    //   if (elementEdge) initialElements.push(elementEdge);
+    // }
+    const elementEdge = CreateElementEdge(edge, EDGE_TYPE.BLOCK as EdgeType);
+    if (elementEdge) initialElements.push(elementEdge);
   });
 
   return initialElements;

@@ -5,9 +5,8 @@ import {
   RELATION_TYPE,
 } from "../../../models/project";
 
-const GetBlockHandleType = (
-  connector: Connector,
-  type
+const GetBlockLocationHandleType = (
+  connector: Connector
 ): [HandleType, Position, string] => {
   if (
     connector.type === CONNECTOR_TYPE.OUTPUT &&
@@ -42,4 +41,4 @@ const GetBlockHandleType = (
   }
 };
 
-export default GetBlockHandleType;
+export default GetBlockLocationHandleType;
