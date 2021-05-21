@@ -87,6 +87,7 @@
 .react-flow__node-location,
 .react-flow__node-Location {
   background: magenta;
+  z-index: 1200 !important;
 }
 
 .react-flow__node-BlockViewFunction {
@@ -102,12 +103,34 @@
   background: #ffff00;
 }
 
+.react-flow__node-BlockViewLocation {
+  padding: 10px;
+  border-radius: 3px;
+  width: 70px;
+  height: 27px;
+  font-size: 11px;
+  color: #222;
+  text-align: center;
+  border-width: 1px;
+  border-style: solid;
+  background: magenta;
+  z-index: 1200 !important;
+}
+
 .react-flow__minimap {
   background-color: #f8f8f8;
   box-shadow: 0px -3px 5px rgba(0, 0, 0, 0.15);
   margin-bottom: 10px;
   max-height: 78px;
   max-width: 161px;
+}
+
+.react-flow__background {
+  width: 550px !important;
+  height: 600px !important;
+  top: 85px;
+  left: 660px;
+  position: absolute;
 }
 
 /* Tegnebrettet */
@@ -136,6 +159,18 @@
 .dndflow .reactflow-wrapper {
   flex-grow: 1;
   height: 100%;
+}
+
+.react_flow__node {
+  opacity: 1 !important;
+}
+
+.react-flow__node-FunctionBlock {
+  opacity: 1 !important;
+}
+
+.react_flow__node .react-flow__node-FunctionBlock {
+  opacity: 1 !important;
 }
 
 @media screen and (min-width: 768px) {

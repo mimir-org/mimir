@@ -47,11 +47,12 @@ const FunctionBlock: FC<NodeProps> = ({ data }) => {
         </BlockMessageBox>
       ) : isLocationNode ? (
         <>
-          <LocationBox width={calculatedWidth} height={calculatedHeight}>
-            <FlowBlockLocation />
-          </LocationBox>
+          {/* <LocationBox width={calculatedWidth} height={calculatedHeight}> */}
+          {/* <FlowBlockLocation /> */}
+          {/* </LocationBox> */}
 
           <FunctionBox
+            location
             id={"function-block-" + splitViewNode.id}
             width={calculatedWidth}
             height={calculatedHeight}

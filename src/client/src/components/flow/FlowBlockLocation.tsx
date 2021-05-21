@@ -31,6 +31,9 @@ const FlowBlockLocation = () => {
     },
     [project, splitViewNode]
   );
+  const OnConnect = (params) => {
+    console.log({ params });
+  };
 
   return (
     project && (
@@ -39,11 +42,12 @@ const FlowBlockLocation = () => {
           <ReactFlow
             elements={elements}
             onLoad={OnLoad}
+            onConnect={OnConnect}
             nodeTypes={GetBlockNodeTypes}
             edgeTypes={GetBlockEdgeTypes}
             defaultZoom={1}
             snapToGrid={true}
-            zoomOnScroll={false}
+            zoomOnScroll={true}
             paneMoveable={false}
           ></ReactFlow>
           <Background

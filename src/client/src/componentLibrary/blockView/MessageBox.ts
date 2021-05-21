@@ -4,7 +4,7 @@ import { Color, FontSize } from "..";
 const BlockMessageBox = styled.div`
   width: 200px;
   position: absolute;
-  right: -300px;
+  left: 550px;
   top: 270px;
   border: 2px solid ${Color.DeepCyan};
   font-size: ${FontSize.Standard};

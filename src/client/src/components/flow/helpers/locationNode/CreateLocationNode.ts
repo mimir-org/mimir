@@ -2,13 +2,15 @@ import { Node } from "../../../../models/project";
 import { FlowElement } from "react-flow-renderer";
 
 const CreateLocationNode = (node: Node): FlowElement => {
-  let elementNode = null;
-  if (!node) return elementNode;
-  let position = { x: 50, y: node.positionY };
+  let locationNode = null;
+  if (!node) return locationNode;
+  let position = { x: 850, y: node.positionY };
 
-  elementNode = {
+  const type = "BlockViewLocation";
+
+  locationNode = {
     id: node.id,
-    type: node.type,
+    type: type,
     data: node,
     position: position,
     isHidden: node.isHidden,
@@ -18,7 +20,7 @@ const CreateLocationNode = (node: Node): FlowElement => {
     connectable: true,
   };
 
-  return elementNode;
+  return locationNode;
 };
 
 export default CreateLocationNode;

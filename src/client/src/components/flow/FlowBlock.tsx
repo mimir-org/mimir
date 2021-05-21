@@ -3,9 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { ProjectMainMenu } from "../project";
 import { RootState } from "./../../redux/store/index";
 import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
-import { Project, VIEW_TYPE } from "../../models/project";
+import {
+  Project,
+  VIEW_TYPE,
+  BackgroundVariant,
+  Node,
+} from "../../models/project";
 import { OpenProjectMenu } from "../project/openProject";
-import { get } from "../../redux/store/project/actions";
+import { changeActiveNode, get } from "../../redux/store/project/actions";
+import { Color } from "../../componentLibrary";
 import {
   GetProjectId,
   HasProject,
@@ -15,6 +21,7 @@ import ReactFlow, {
   ReactFlowProvider,
   Elements,
   Controls,
+  Background,
 } from "react-flow-renderer";
 import {
   CreateProjectElementBlockNodes,
@@ -49,12 +56,18 @@ const FlowBlock = () => {
     nodeId = node ? node.id : "";
   }
 
+  const splitViewNode = useSelector<RootState>(
+    (state) => state.splitView.node
+  ) as Node;
+
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(CreateProjectElementBlockNodes(project, nodeId));
+      setElements(
+        CreateProjectElementBlockNodes(project, nodeId, splitViewNode)
+      );
       return setReactFlowInstance(_reactFlowInstance);
     },
-    [nodeId, project]
+    [nodeId, project, splitViewNode]
   );
 
   const OnElementsRemove = (elementsToRemove) => {
@@ -124,6 +137,11 @@ const FlowBlock = () => {
     (state) => state.flow.view === VIEW_TYPE.BLOCKVIEW
   ) as boolean;
 
+  const splitView = useSelector<RootState>((state) => state.splitView.visible);
+  const hasSplitViewNode = useSelector<RootState>(
+    (state) => state.splitView.node
+  ) as boolean;
+
   return (
     <>
       {project && visible && (
@@ -141,11 +159,17 @@ const FlowBlock = () => {
               onElementClick={OnElementClick}
               onConnectEnd={OnConnectStop}
               onConnectStart={OnConnectStart}
-              zoomOnScroll={true}
-              paneMoveable={true}
+              zoomOnScroll={false}
+              paneMoveable={false}
             >
               <FullscreenBox />
-              <Controls />
+              {splitView && hasSplitViewNode && (
+                <Background
+                  size={0.5}
+                  color={Color.Grey}
+                  variant={BackgroundVariant.Lines}
+                />
+              )}
             </ReactFlow>
           </div>
         </ReactFlowProvider>

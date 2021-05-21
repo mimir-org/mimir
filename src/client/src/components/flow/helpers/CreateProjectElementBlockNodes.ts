@@ -3,6 +3,9 @@ import {
   EDGE_TYPE,
   RELATION_TYPE,
   EdgeType,
+  NODE_TYPE,
+  Node,
+  Edge,
 } from "../../../models/project";
 import { Elements } from "react-flow-renderer";
 import {
@@ -11,10 +14,14 @@ import {
   CreateElementNode,
   GetReactFlowBoundingRectData,
 } from ".";
+import CreateLocationNodes from "./locationNode/CreateLocationNodes";
+import CreateLocationNode from "./locationNode/CreateLocationNode";
+import store from "../../../redux/store";
 
 const CreateProjectElementBlockNodes = (
   project: Project,
-  nodeId: string
+  nodeId: string,
+  splitViewNode: Node
 ): Elements => {
   const initialElements: Elements = [];
   const childrenNodes = [];
@@ -23,6 +30,15 @@ const CreateProjectElementBlockNodes = (
 
   const actualNode = project.nodes.find((node) => node.id === nodeId);
   const elementNode = CreateElementBlockNode(actualNode, width);
+  if (splitViewNode) {
+    initialElements.push(CreateLocationNode(splitViewNode));
+    const edges = store.getState().projectState.project.edges;
+    const edge = edges.find(
+      (x) => x.id === "747e4985-6b21-f847-dc26-ef868de93075"
+    ) as Edge;
+    const elementEdge = CreateElementEdge(edge, EDGE_TYPE.BLOCK as EdgeType);
+    initialElements.push(elementEdge);
+  }
 
   if (elementNode) {
     initialElements.push(elementNode);
@@ -61,18 +77,20 @@ const CreateProjectElementBlockNodes = (
         (x) => x.id === edge.toConnector
       );
 
-      if (
-        fromConnector &&
-        fromConnector.relationType === RELATION_TYPE.Transport &&
-        toConnector &&
-        toConnector.relationType === RELATION_TYPE.Transport
-      ) {
-        const elementEdge = CreateElementEdge(
-          edge,
-          EDGE_TYPE.BLOCK as EdgeType
-        );
-        if (elementEdge) initialElements.push(elementEdge);
-      }
+      //   if (
+      //     fromConnector &&
+      //     fromConnector.relationType === RELATION_TYPE.Transport &&
+      //     toConnector &&
+      //     toConnector.relationType === RELATION_TYPE.Transport
+      //   ) {
+      //     const elementEdge = CreateElementEdge(
+      //       edge,
+      //       EDGE_TYPE.BLOCK as EdgeType
+      //     );
+      //     if (elementEdge) initialElements.push(elementEdge);
+      //   }
+      const elementEdge = CreateElementEdge(edge, EDGE_TYPE.BLOCK as EdgeType);
+      if (elementEdge) initialElements.push(elementEdge);
     }
   });
 
