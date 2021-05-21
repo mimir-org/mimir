@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Mb.Core.Migrations
 {
-    public partial class Init : Migration
+    public partial class Start : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -38,7 +38,7 @@ namespace Mb.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "LibraryTypeComponent",
+                name: "LibraryType",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -56,7 +56,7 @@ namespace Mb.Core.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LibraryTypeComponent", x => x.Id);
+                    table.PrimaryKey("PK_LibraryType", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -327,7 +327,7 @@ namespace Mb.Core.Migrations
                 name: "Contractor");
 
             migrationBuilder.DropTable(
-                name: "LibraryTypeComponent");
+                name: "LibraryType");
 
             migrationBuilder.DropTable(
                 name: "ProjectEdge");

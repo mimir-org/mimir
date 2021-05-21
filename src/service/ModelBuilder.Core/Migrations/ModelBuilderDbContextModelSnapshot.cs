@@ -307,7 +307,7 @@ namespace Mb.Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LibraryTypeComponent");
+                    b.ToTable("LibraryType");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Node", b =>

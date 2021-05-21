@@ -146,20 +146,20 @@ namespace Mb.Core.Controllers.V1
         /// <summary>
         /// Create a library type
         /// </summary>
-        /// <param name="libraryTypeComponent"></param>
+        /// <param name="libraryType"></param>
         /// <returns></returns>
         [HttpPost("")]
         [ProducesResponseType(typeof(LibraryType), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateType([FromBody] LibraryType libraryTypeComponent)
+        public async Task<IActionResult> CreateType([FromBody] LibraryType libraryType)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                var data = await _typeEditorService.CreateLibraryComponent(libraryTypeComponent);
+                var data = await _typeEditorService.CreateLibraryComponent(libraryType);
                 return Ok(data);
             }
             catch (ModelBuilderDuplicateException e)

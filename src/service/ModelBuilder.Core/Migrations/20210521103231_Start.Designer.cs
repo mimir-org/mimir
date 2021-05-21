@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mb.Core.Migrations
 {
     [DbContext(typeof(ModelBuilderDbContext))]
-    [Migration("20210521092241_Init")]
-    partial class Init
+    [Migration("20210521103231_Start")]
+    partial class Start
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -309,7 +309,7 @@ namespace Mb.Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LibraryTypeComponent");
+                    b.ToTable("LibraryType");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Node", b =>
