@@ -12,7 +12,7 @@ import {
   GetBlockHandleType,
   GetHandlePosition,
   GetHandleType,
-  SortConnectorList,
+  SortConnectors,
   GetConnectorName,
 } from "../helpers";
 import {
@@ -61,14 +61,14 @@ const BlockViewFunction: FC<NodeProps> = ({ data }) => {
         <img src={OptionsIcon} alt="options" />
       </OptionsMenu>
       <OptionsBox visible={menuOpen}>
-        {SortConnectorList(data.connectors).map((conn) => (
+        {SortConnectors(data.connectors).map((conn) => (
           <OptionsElement
             key={conn.id}
             onClick={() => handleConnectorClick(conn)}
           >
             {GetConnectorName(conn)}
             <img
-              src={GetConnectorIcon(conn.terminal)}
+              src={GetConnectorIcon(conn.terminalType)}
               alt="icon"
               className="button"
             />

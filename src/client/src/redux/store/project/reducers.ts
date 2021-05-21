@@ -180,7 +180,6 @@ export function projectReducer(
       };
 
     case UPDATE_BLOCK_POSITION:
-      console.log({ action });
       return {
         ...state,
         project: {
