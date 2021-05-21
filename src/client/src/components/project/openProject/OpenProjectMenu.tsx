@@ -1,12 +1,12 @@
 import { SearchBar, ProjectList } from ".";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { Project, ProjectSimple } from "../../../models/project";
+import { ProjectSimple } from "../../../models/project";
 import { LeftArrowIcon, RightArrowIcon } from "../../../assets/icons";
 import { MenuButton } from "../../../componentLibrary/buttons";
 import { TextResources } from "../../../assets/textResources";
 import { SetProjectId } from "../../../redux/store/localStorage";
-import { get, save } from "../../../redux/store/project/actions";
+import { get } from "../../../redux/store/project/actions";
 import { changeProjectMenu } from "../../../redux/store/projectMenu/actions";
 import { useState } from "react";
 import { MessageComponent } from "../../message";
@@ -25,9 +25,9 @@ export const OpenProjectMenu = () => {
     (state) => state.projectState.projectList
   ) as ProjectSimple[];
 
-  const currentProject = useSelector<RootState>(
-    (state) => state.projectState.project
-  ) as Project;
+  //   const currentProject = useSelector<RootState>(
+  //     (state) => state.projectState.project
+  //   ) as Project;
 
   const project = projects?.find((x) => x.selected);
   const projectId = project?.id;

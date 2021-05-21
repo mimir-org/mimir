@@ -1,10 +1,8 @@
-import { memo, FC, useState, useEffect, useCallback, useMemo } from "react";
+import { memo, FC, useState } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { OptionsIcon } from "../../../assets/icons/blockView";
 import { addSelectedConnector } from "../../../redux/store/flow/actions";
-import { RootState } from "../../../redux/store";
-import { Connector } from "../../../models/project";
 import {
   GetConnectors,
   SetConnectors,
@@ -54,9 +52,7 @@ const BlockViewFunction: FC<NodeProps> = ({ data }) => {
     setMenuOpen(false);
     SetConnectors(connectors);
   };
-  //   const connectors = SortConnectorList(
-  //     useSelector<RootState>((state) => state.flow.connectors) as Connector[]
-  //   );
+
   const connectors = GetConnectors();
 
   return (

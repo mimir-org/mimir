@@ -1,15 +1,11 @@
 import { memo, FC } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useSelector } from "react-redux";
-import { ArrowIcon } from "../../../assets/icons/blockView";
 import { TextResources } from "../../../assets/textResources";
 import { Node, NODE_TYPE } from "../../../models/project";
 import { RootState } from "../../../redux/store";
-import { GetReactFlowBoundingRectData } from "../helpers";
-import {
-  FunctionBox,
-  BlockMessageBox,
-} from "../../../componentLibrary/blockView";
+import { Block } from ".";
+import { BlockMessageBox } from "../../../componentLibrary/blockView";
 
 const FunctionBlock: FC<NodeProps> = ({ data }) => {
   const splitView = useSelector<RootState>((state) => state.splitView.visible);
@@ -17,68 +13,23 @@ const FunctionBlock: FC<NodeProps> = ({ data }) => {
     (state) => state.splitView.node
   ) as Node;
 
-  const [width, height] = GetReactFlowBoundingRectData();
-  let calculatedWidth = (width * 70) / 100;
-  const calculatedHeight = (height * 80) / 120;
-
-  if (splitView) calculatedWidth = calculatedWidth / 1.7;
   const isLocationNode = splitViewNode?.type === NODE_TYPE.LOCATION;
 
-  return splitView ? (
+  return !splitView ? (
+    <Block data={data} splitView={null} location={false} />
+  ) : (
     <>
-      <FunctionBox
-        id={"function-block-" + data.id}
-        width={calculatedWidth}
-        height={calculatedHeight}
-      >
-        <img src={ArrowIcon} alt="arrow" className="icon"></img>
-        <h3 className="header">{data.label ?? data.name}</h3>
-        <div className="content"></div>
-      </FunctionBox>
-
+      <Block data={data} splitView={null} location={false} />
       {!splitViewNode ? (
         <BlockMessageBox>
           <p>{TextResources.BlockView_Select_Aspect}</p>
         </BlockMessageBox>
       ) : isLocationNode ? (
-        <>
-          <FunctionBox
-            location
-            id={"function-block-" + splitViewNode.id}
-            width={calculatedWidth}
-            height={calculatedHeight}
-          >
-            <img src={ArrowIcon} alt="arrow" className="icon"></img>
-            <h3 className="header">
-              {splitViewNode.label ?? splitViewNode.name}
-            </h3>
-            <div className="content"></div>
-          </FunctionBox>
-        </>
+        <Block data={data} splitView={splitViewNode} location={true} />
       ) : (
-        <FunctionBox
-          id={"function-block-" + splitViewNode.id}
-          width={calculatedWidth}
-          height={calculatedHeight}
-        >
-          <img src={ArrowIcon} alt="arrow" className="icon"></img>
-          <h3 className="header">
-            {splitViewNode.label ?? splitViewNode.name}
-          </h3>
-          <div className="content"></div>
-        </FunctionBox>
+        <Block data={data} splitView={splitViewNode} location={false} />
       )}
     </>
-  ) : (
-    <FunctionBox
-      id={"function-block-" + data.id}
-      width={calculatedWidth}
-      height={calculatedHeight}
-    >
-      <img src={ArrowIcon} alt="arrow" className="icon"></img>
-      <h3 className="header">{data.label ?? data.name}</h3>
-      <div className="content"></div>
-    </FunctionBox>
   );
 };
 

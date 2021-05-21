@@ -7,6 +7,7 @@ import {
   EdgeType,
   Node,
   Edge,
+  NODE_TYPE,
 } from "../../../models/project";
 import {
   CreateElementEdge,
@@ -30,7 +31,7 @@ const CreateElementBlockNodes = (
   const elementNode = CreateElementBlockNode(actualNode, width);
   if (elementNode) initialElements.push(elementNode);
 
-  // Edge from function to location
+  // Edge from function to location in splitview
   if (splitViewNode && splitView) {
     initialElements.push(CreateLocationNode(splitViewNode));
     const edges = project.edges;
@@ -43,10 +44,10 @@ const CreateElementBlockNodes = (
     }
   }
 
+  // Draw nodes
   project.edges.forEach((edge) => {
     if (edge.fromNode === nodeId) {
       const fromNode = project.nodes.find((x) => x.id === edge.fromNode);
-
       const currentConnector = fromNode.connectors.find(
         (x) => x.id === edge.fromConnector
       );
@@ -62,9 +63,16 @@ const CreateElementBlockNodes = (
     }
   });
 
+  // Draw new edges created in block view
   project.edges.forEach((edge) => {
-    const elementEdge = CreateElementEdge(edge, EDGE_TYPE.BLOCK as EdgeType);
-    if (elementEdge) initialElements.push(elementEdge);
+    console.log({ edge });
+    if (
+      edge.parentType !== NODE_TYPE.PRODUCT &&
+      edge.targetType !== NODE_TYPE.PRODUCT
+    ) {
+      const elementEdge = CreateElementEdge(edge, EDGE_TYPE.BLOCK as EdgeType);
+      //   if (elementEdge) initialElements.push(elementEdge);
+    }
   });
 
   return initialElements;

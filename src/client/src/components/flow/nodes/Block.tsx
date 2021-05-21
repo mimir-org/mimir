@@ -2,7 +2,6 @@ import { ArrowIcon } from "../../../assets/icons/blockView";
 import { FunctionBox } from "../../../componentLibrary/blockView";
 
 const Block = ({ data, splitView, location }) => {
-  console.log({ location });
   if (splitView) data = splitView;
 
   return (

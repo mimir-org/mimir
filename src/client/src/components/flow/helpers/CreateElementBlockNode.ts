@@ -6,8 +6,8 @@ const CreateElementBlockNode = (node: Node, width: number): FlowElement => {
   if (!node) return elementNode;
 
   const type = "FunctionBlock";
-  const calculatedWidth = (width * 70) / 100;
-  const calculatedX = (width - calculatedWidth) / 2;
+  //   const calculatedWidth = (width * 70) / 100;
+  //   const calculatedX = (width - calculatedWidth) / 2;
   //   const position = { x: calculatedX, y: 0 };
   const position = { x: 220, y: 0 };
 

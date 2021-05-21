@@ -4,7 +4,7 @@ import { ProjectMainMenu } from "../project";
 import { RootState } from "./../../redux/store/index";
 import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
 import { OpenProjectMenu } from "../project/openProject";
-import { changeActiveNode, get } from "../../redux/store/project/actions";
+import { get } from "../../redux/store/project/actions";
 import { Color } from "../../componentLibrary";
 import {
   Project,
