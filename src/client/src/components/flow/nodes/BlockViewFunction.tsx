@@ -106,19 +106,18 @@ const BlockViewFunction: FC<NodeProps> = ({ data }) => {
         })}
 
       {/* Original connectors */}
-      {data.connectors &&
-        data.connectors.map((connector) => {
-          const [typeHandler, positionHandler] = GetHandleType(connector);
-          return (
-            <Handle
-              type={typeHandler}
-              position={positionHandler}
-              id={connector.id}
-              key={connector.id}
-              style={{ visibility: "hidden" }}
-            />
-          );
-        })}
+      {data.connectors?.map((connector) => {
+        const [typeHandler, positionHandler] = GetHandleType(connector);
+        return (
+          <Handle
+            type={typeHandler}
+            position={positionHandler}
+            id={connector.id}
+            key={connector.id}
+            style={{ visibility: "hidden" }}
+          />
+        );
+      })}
     </NodeBox>
   );
 };

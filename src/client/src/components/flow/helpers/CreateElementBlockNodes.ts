@@ -1,6 +1,5 @@
 import { Elements } from "react-flow-renderer";
 import CreateLocationNode from "./locationNode/CreateLocationNode";
-import CreateLocationNodes from "./locationNode/CreateLocationNodes";
 import {
   Project,
   EDGE_TYPE,
@@ -32,15 +31,10 @@ const CreateElementBlockNodes = (
 
   if (splitViewNode && splitView) {
     initialElements.push(CreateLocationNode(splitViewNode));
-
     const edges = project.edges;
-
     const toNodeId = splitViewNode.id;
-
     const edge = edges.find((x) => x.toNode === toNodeId) as Edge;
-    // const edge = edges.find(
-    //   (x) => x.id === "c0cc10bb-3510-09de-e8ec-883a112ba599"
-    // ) as Edge;
+
     if (edge) {
       const elementEdge = CreateElementEdge(edge, EDGE_TYPE.BLOCK as EdgeType);
       initialElements.push(elementEdge);
@@ -59,10 +53,7 @@ const CreateElementBlockNodes = (
         (x) => x.id === edge.fromConnector
       );
 
-      if (
-        currentConnector &&
-        currentConnector.relationType === RELATION_TYPE.PartOf
-      ) {
+      if (currentConnector?.relationType === RELATION_TYPE.PartOf) {
         const toNode = project.nodes.find((x) => x.id === edge.toNode);
         const elementToNode = CreateElementNode(toNode, true);
         if (elementNode) {
@@ -73,32 +64,6 @@ const CreateElementBlockNodes = (
     }
   });
   project.edges.forEach((edge) => {
-    const fromNode = childrenNodes.find((x) => x.id === edge.fromNode);
-    const toNode = childrenNodes.find((x) => x.id === edge.toNode);
-
-    // if (fromNode && toNode) {
-    //   const fromConnector = fromNode.connectors.find(
-    //     (x) => x.id === edge.fromConnector
-    //   );
-    //   const toConnector = toNode.connectors.find(
-    //     (x) => x.id === edge.toConnector
-    //   );
-
-    //   if (
-    //     fromConnector &&
-    //     fromConnector.relationType === RELATION_TYPE.Transport &&
-    //     toConnector &&
-    //     toConnector.relationType === RELATION_TYPE.Transport
-    //   ) {
-    //     const elementEdge = CreateElementEdge(
-    //       edge,
-    //       EDGE_TYPE.BLOCK as EdgeType
-    //     );
-    //     if (elementEdge) initialElements.push(elementEdge);
-    //   }
-    //   const elementEdge = CreateElementEdge(edge, EDGE_TYPE.BLOCK as EdgeType);
-    //   if (elementEdge) initialElements.push(elementEdge);
-    // }
     const elementEdge = CreateElementEdge(edge, EDGE_TYPE.BLOCK as EdgeType);
     if (elementEdge) initialElements.push(elementEdge);
   });

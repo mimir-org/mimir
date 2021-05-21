@@ -22,8 +22,6 @@ const useOnDrop = (
     y: event.clientY - reactFlowBounds.top,
   });
 
-  console.log(data.attributes);
-
   const node = {
     id: CreateId(),
     rds: data.rds,

@@ -13,15 +13,15 @@ const SortConnectorList = (connectors) => {
   ) as boolean;
 
   connectors.forEach((conn) => {
-    if (!isLocationNode) {
-      if (conn.relationType === RELATION_TYPE.Transport) list.push(conn);
-    } else {
-      if (
-        conn.relationType === RELATION_TYPE.HasLocation &&
-        conn.type === CONNECTOR_TYPE.INPUT
-      )
-        list.push(conn);
-    }
+    if (conn.relationType === RELATION_TYPE.Transport && !isLocationNode)
+      list.push(conn);
+
+    if (
+      conn.relationType === RELATION_TYPE.HasLocation &&
+      conn.type === CONNECTOR_TYPE.INPUT &&
+      isLocationNode
+    )
+      list.push(conn);
   });
   return list;
 };

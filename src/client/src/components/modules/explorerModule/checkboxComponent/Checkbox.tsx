@@ -7,12 +7,11 @@ interface Props {
   inputLabel: string;
   type: NodeType;
 }
-
 export const Checkbox = ({ nodeId, inputLabel, type }: Props) => {
   // Check if node is hidden
   const nodes = GetNodes();
   const node = nodes.find((x) => x.id === nodeId);
-  let isHidden = !node ? false : node.isHidden;
+  let isHidden = node?.isHidden ?? false;
 
   const handleChange = useChangeNodeVisibility(node, type);
 
