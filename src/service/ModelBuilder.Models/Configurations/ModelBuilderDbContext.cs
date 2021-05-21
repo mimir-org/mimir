@@ -12,8 +12,9 @@ namespace Mb.Models.Configurations
         public virtual DbSet<Connector> Connectors { get; set; }
         public virtual DbSet<Rds> Rds { get; set; }
         public virtual DbSet<AttributeType> AttributeTypes { get; set; }
-        public virtual DbSet<LibraryTypeComponent> LibraryTypeComponents { get; set; }
+        public virtual DbSet<LibraryType> LibraryTypeComponents { get; set; }
         public virtual DbSet<Contractor> Contractors { get; set; }
+        public virtual DbSet<TerminalType> TerminalTypes { get; set; }
 
         public ModelBuilderDbContext(DbContextOptions<ModelBuilderDbContext> options) : base(options)
         {
@@ -30,8 +31,9 @@ namespace Mb.Models.Configurations
             modelBuilder.ApplyConfiguration(new ConnectorConfiguration());
             modelBuilder.ApplyConfiguration(new RdsConfiguration());
             modelBuilder.ApplyConfiguration(new AttributeTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new LibraryTypeComponentConfiguration());
+            modelBuilder.ApplyConfiguration(new LibraryTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ContractorConfiguration());
+            modelBuilder.ApplyConfiguration(new TerminalTypeConfiguration());
         }
     }
 }

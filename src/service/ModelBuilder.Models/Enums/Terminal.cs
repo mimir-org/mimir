@@ -2,7 +2,7 @@
 
 namespace Mb.Models.Enums
 {
-    public enum TerminalType
+    public enum Terminal
     {
         [Display(Name = "NotSet")]
         NotSet = 0,

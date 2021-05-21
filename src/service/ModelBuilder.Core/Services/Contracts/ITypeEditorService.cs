@@ -9,14 +9,14 @@ namespace Mb.Core.Services.Contracts
 {
     public interface ITypeEditorService
     {
-        Task<LibraryTypeComponent> GetTypeById(string id, bool ignoreNotFound = false);
+        Task<LibraryType> GetTypeById(string id, bool ignoreNotFound = false);
         Dictionary<int, string> GetAspects();
         Dictionary<int, string> GetObjectTypes();
         IEnumerable<Rds> GetRds(Aspect aspect);
         IEnumerable<AttributeType> GetAttributeTypes(Aspect aspect);
-        IEnumerable<Terminal> GetTerminals();
-        Task<LibraryTypeComponent> CreateLibraryComponent(LibraryTypeComponent libraryTypeComponent);
-        IEnumerable<LibraryTypeComponent> GetAllTypes();
+        IEnumerable<TerminalType> GetTerminals();
+        Task<LibraryType> CreateLibraryComponent(LibraryType libraryTypeComponent);
+        IEnumerable<LibraryType> GetAllTypes();
         byte[] CreateFile();
         Task LoadDataFromFile(IFormFile file, CancellationToken cancellationToken);
         Task LoadDataFromFiles();

@@ -4,10 +4,10 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Mb.Models.Configurations
 {
-    public class LibraryTypeComponentConfiguration : IEntityTypeConfiguration<LibraryTypeComponent>
+    public class LibraryTypeConfiguration : IEntityTypeConfiguration<LibraryType>
 
     {
-        public void Configure(EntityTypeBuilder<LibraryTypeComponent> builder)
+        public void Configure(EntityTypeBuilder<LibraryType> builder)
         {
 
 

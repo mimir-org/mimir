@@ -12,7 +12,7 @@ namespace Mb.Core.Profiles
     {
         public NodeProfile(ICommonRepository commonRepository)
         {
-            CreateMap<LibraryTypeComponent, LibNode>()
+            CreateMap<LibraryType, LibNode>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Rds, opt => opt.MapFrom(src => src.Rds))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.TypeName))
@@ -25,14 +25,14 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
                 .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version));
 
-            CreateMap<Terminal, Connector>()
+            CreateMap<TerminalType, Connector>()
                 .ForMember(dest => dest.NodeId, opt => opt.Ignore())
                 .ForMember(dest => dest.Node, opt => opt.Ignore())
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.TerminalType.GetDisplayName()))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Terminal.GetDisplayName()))
                 .ForMember(dest => dest.RelationType, opt => opt.MapFrom(src => RelationType.Transport))
                 .ForMember(dest => dest.TerminalCategory, opt => opt.MapFrom(src => TerminalCategory.NotSet))
-                .ForMember(dest => dest.TerminalType, opt => opt.MapFrom(src => src.TerminalType))
+                .ForMember(dest => dest.Terminal, opt => opt.MapFrom(src => src.Terminal))
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.ConnectorType))
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes));

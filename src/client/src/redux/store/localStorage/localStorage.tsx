@@ -114,7 +114,10 @@ export const GetProject = (): Project => {
       return null;
     }
 
-    return JSON.parse(project);
+    const currentProject = JSON.parse(project) as Project;
+    if (!currentProject.edges) currentProject.edges = [];
+    if (!currentProject.nodes) currentProject.nodes = [];
+    return currentProject;
   } catch (err) {
     return undefined;
   }

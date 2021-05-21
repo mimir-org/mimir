@@ -6,37 +6,26 @@ using Newtonsoft.Json;
 
 namespace Mb.Models.Data
 {
-    public class LibraryTypeComponent
+    public class TerminalType
     {
-        public string Id { get; set; }
-        public Aspect Aspect { get; set; }
-
-        public ObjectType ObjectType { get; set; }
-        public string TypeName { get; set; }
-        public Status Status { get; set; }
-        public string Rds { get; set; }
-        public RdsCategory RdsCategory { get; set; }
-        public string SemanticRdsReference { get; set; }
-        public ICollection<Terminal> Terminals { get; set; }
-        public ICollection<AttributeType> Attributes { get; set; }
-        public string Version { get; set; }
+        public string Id { get; set; } 
+        public Terminal Terminal { get; set; }
+        public ConnectorType ConnectorType { get; set; }
         public string SemanticReference { get; set; }
-
-        [JsonIgnore]
-        public string TerminalJson { get; set; }
+        public string Color { get; set; }
 
         [JsonIgnore]
         public string AttributeJson { get; set; }
 
+        public ICollection<AttributeType> Attributes { get; set; }
+
         public void CreateJsonData()
         {
-            TerminalJson = Terminals != null && Terminals.Any() ? JsonConvert.SerializeObject(Terminals) : null;
             AttributeJson = Attributes != null && Attributes.Any() ? JsonConvert.SerializeObject(Attributes) : null;
         }
 
         public void CreateFromJsonData()
         {
-            Terminals = string.IsNullOrEmpty(TerminalJson) ? null : JsonConvert.DeserializeObject<ICollection<Terminal>>(TerminalJson);
             Attributes = string.IsNullOrEmpty(AttributeJson) ? null : JsonConvert.DeserializeObject<ICollection<AttributeType>>(AttributeJson);
         }
 
@@ -45,10 +34,10 @@ namespace Mb.Models.Data
             if (obj == null || GetType() != obj.GetType())
                 return false;
 
-            if (!(obj is LibraryTypeComponent))
+            if (!(obj is LibraryType))
                 return false;
 
-            var b = (LibraryTypeComponent)obj;
+            var b = (LibraryType)obj;
 
             return Id.Equals(b.Id);
 

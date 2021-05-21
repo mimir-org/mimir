@@ -127,7 +127,7 @@ namespace Mb.Core.Controllers.V1
         /// </summary>
         /// <returns></returns>
         [HttpGet("terminals")]
-        [ProducesResponseType(typeof(ICollection<Terminal>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ICollection<TerminalType>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult GetTerminalTypes()
         {
@@ -149,10 +149,10 @@ namespace Mb.Core.Controllers.V1
         /// <param name="libraryTypeComponent"></param>
         /// <returns></returns>
         [HttpPost("")]
-        [ProducesResponseType(typeof(LibraryTypeComponent), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(LibraryType), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateType([FromBody] LibraryTypeComponent libraryTypeComponent)
+        public async Task<IActionResult> CreateType([FromBody] LibraryType libraryTypeComponent)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

@@ -126,11 +126,16 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Source");
 
+                    b.Property<string>("TerminalTypeId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Units")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Units");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("TerminalTypeId");
 
                     b.ToTable("AttributeType");
                 });
@@ -159,15 +164,15 @@ namespace Mb.Core.Migrations
                     b.Property<string>("SemanticReference")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Terminal")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Terminal");
+
                     b.Property<string>("TerminalCategory")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("TerminalCategory");
-
-                    b.Property<string>("TerminalType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("TerminalType");
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -243,7 +248,7 @@ namespace Mb.Core.Migrations
                     b.ToTable("Edge");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.LibraryTypeComponent", b =>
+            modelBuilder.Entity("Mb.Models.Data.LibraryType", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)")
@@ -509,6 +514,39 @@ namespace Mb.Core.Migrations
                     b.ToTable("Rds");
                 });
 
+            modelBuilder.Entity("Mb.Models.Data.TerminalType", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("Id");
+
+                    b.Property<string>("AttributeJson")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("AttributeJson");
+
+                    b.Property<string>("Color")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Color");
+
+                    b.Property<string>("ConnectorType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ConnectorType");
+
+                    b.Property<string>("SemanticReference")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("SemanticReference");
+
+                    b.Property<string>("Terminal")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Terminal");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TerminalType");
+                });
+
             modelBuilder.Entity("ProjectEdge", b =>
                 {
                     b.Property<string>("EdgeId")
@@ -554,6 +592,13 @@ namespace Mb.Core.Migrations
                     b.Navigation("Connector");
 
                     b.Navigation("Node");
+                });
+
+            modelBuilder.Entity("Mb.Models.Data.AttributeType", b =>
+                {
+                    b.HasOne("Mb.Models.Data.TerminalType", null)
+                        .WithMany("Attributes")
+                        .HasForeignKey("TerminalTypeId");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Connector", b =>
@@ -607,6 +652,11 @@ namespace Mb.Core.Migrations
                     b.Navigation("Attributes");
 
                     b.Navigation("Connectors");
+                });
+
+            modelBuilder.Entity("Mb.Models.Data.TerminalType", b =>
+                {
+                    b.Navigation("Attributes");
                 });
 #pragma warning restore 612, 618
         }

@@ -270,7 +270,8 @@ namespace Mb.Core.Services
                 Connectors = new List<Connector>(),
                 UpdatedBy = _contextAccessor.GetName(),
                 Updated = DateTime.Now.ToUniversalTime(),
-                Version = version
+                Version = version,
+                Rds = string.Empty
             };
 
             var connector = new Connector
@@ -280,7 +281,7 @@ namespace Mb.Core.Services
                 Type = ConnectorType.Output,
                 NodeId = node.Id,
                 RelationType = RelationType.PartOf,
-                TerminalType = TerminalType.NotSet,
+                Terminal = Terminal.NotSet,
                 TerminalCategory = TerminalCategory.NotSet
             };
 
@@ -321,16 +322,22 @@ namespace Mb.Core.Services
             {
                 node.UpdatedBy = _contextAccessor.GetName();
                 node.Updated = DateTime.Now.ToUniversalTime();
-                foreach (var nodeAttribute in node.Attributes)
+                if (node.Attributes != null)
                 {
-                    _attributeRepository.Update(nodeAttribute);
+                    foreach (var nodeAttribute in node.Attributes)
+                    {
+                        _attributeRepository.Update(nodeAttribute);
+                    }
                 }
 
-                foreach (var connector in node.Connectors)
+                if (node.Connectors != null)
                 {
-                    foreach (var attribute in connector.Attributes)
+                    foreach (var connector in node.Connectors.Where(x => x.Attributes != null))
                     {
-                        _attributeRepository.Update(attribute);
+                        foreach (var attribute in connector.Attributes)
+                        {
+                            _attributeRepository.Update(attribute);
+                        }
                     }
                 }
 

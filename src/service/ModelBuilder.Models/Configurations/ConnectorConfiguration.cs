@@ -15,7 +15,7 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.Type).HasColumnName("Type").IsRequired().HasConversion<string>();
             builder.Property(p => p.NodeId).HasColumnName("NodeId").IsRequired();
             
-            builder.Property(p => p.TerminalType).HasColumnName("TerminalType").IsRequired().HasConversion<string>();
+            builder.Property(p => p.Terminal).HasColumnName("Terminal").IsRequired().HasConversion<string>();
             builder.Property(p => p.TerminalCategory).HasColumnName("TerminalCategory").IsRequired().HasConversion<string>();
             builder.Property(p => p.RelationType).HasColumnName("RelationType").IsRequired().HasConversion<string>();
 

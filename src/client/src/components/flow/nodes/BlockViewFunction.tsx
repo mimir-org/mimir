@@ -65,7 +65,7 @@ const BlockViewFunction: FC<NodeProps> = ({ data }) => {
           >
             {GetConnectorName(conn)}
             <img
-              src={GetConnectorIcon(conn.terminalType)}
+              src={GetConnectorIcon(conn.terminal)}
               alt="icon"
               className="button"
             />
@@ -89,7 +89,7 @@ const BlockViewFunction: FC<NodeProps> = ({ data }) => {
                   className={className}
                 />
                 <img
-                  src={GetConnectorIcon(conn.terminalType)}
+                  src={GetConnectorIcon(conn.terminal)}
                   alt="icon"
                   className="connector"
                 />

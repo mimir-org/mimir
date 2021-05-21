@@ -2,7 +2,7 @@ import { memo, FC } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
 import {
   RELATION_TYPE,
-  TerminalType,
+  Terminal,
   CONNECTOR_TYPE,
 } from "../../../models/project";
 import { OffPageWrapper } from "../styled";
@@ -14,12 +14,12 @@ const OffPage: FC<NodeProps> = ({ data }) => {
   );
 
   const background = (): string => {
-    const terminalType = data.connectors.find(
+    const terminal = data.connectors.find(
       (x) =>
         x.relationType === RELATION_TYPE.Transport &&
         x.type === CONNECTOR_TYPE.INPUT
-    )?.terminalType as TerminalType;
-    return GetTransportTypeColor(terminalType);
+    )?.terminal as Terminal;
+    return GetTransportTypeColor(terminal);
   };
 
   const fontColor = (): string => {

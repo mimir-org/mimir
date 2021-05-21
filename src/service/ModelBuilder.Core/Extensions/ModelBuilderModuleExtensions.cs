@@ -37,10 +37,11 @@ namespace Mb.Core.Extensions
             services.AddScoped<ILibraryRepository, LibraryRepository>();
             services.AddScoped<IRdsRepository, RdsRepository>();
             services.AddScoped<IAttributeTypeRepository, AttributeTypeRepository>();
-            services.AddScoped<ILibraryTypeComponentRepository, LibraryTypeComponentRepository>();
+            services.AddScoped<ILibraryTypeRepository, LibraryTypeRepository>();
             services.AddScoped<IConnectorRepository, ConnectorRepository>();
             services.AddScoped<IAttributeRepository, AttributeRepository>();
             services.AddScoped<IContractorRepository, ContractorRepository>();
+            services.AddScoped<ITerminalTypeRepository, TerminalTypeRepository>();
 
             services.AddScoped<ITypeEditorService, TypeEditorService>();
             services.AddScoped<IProjectService, ProjectService>();

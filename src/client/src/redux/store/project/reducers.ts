@@ -141,6 +141,7 @@ export function projectReducer(
             };
 
         case ADD_EDGE:
+            console.log(state.project.edges);
             return {
                 ...state,
                 project: {

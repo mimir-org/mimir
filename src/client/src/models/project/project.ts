@@ -86,9 +86,9 @@ export const CONNECTOR_TYPE = {
     OUTPUT: "Output",
 };
 
-export type TerminalType = keyof typeof TERMINAL_TYPE;
+export type Terminal = keyof typeof TERMINAL;
 
-export const TERMINAL_TYPE = {
+export const TERMINAL = {
     NotSet: "NotSet",
     Electric: "Electric",
     Thermal: "Thermal",
@@ -166,7 +166,7 @@ export interface Connector {
     name: string;
     type: ConnectorType;
     terminalCategory: TerminalCategory;
-    terminalType: TerminalType;
+    terminal: Terminal;
     relationType: RelationType;
     semanticReference: string;
     nodeId: string;
