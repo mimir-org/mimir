@@ -4,7 +4,7 @@ const FunctionBox = styled.div`
   position: absolute;
   top: 40px;
   left: ${(props) => (props.location ? "440" : "-150")}px;
-  width: 550px;
+  width: ${(props) => (props.splitView ? "550" : "950")}px;
   height: 600px;
   opacity: 1 !important;
 

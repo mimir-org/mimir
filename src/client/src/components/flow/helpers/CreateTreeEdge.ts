@@ -4,11 +4,10 @@ import store from "../../../redux/store";
 
 export const CreateTreeEdge = (edge: Edge, edgeType: EdgeType): FlowElement => {
   const nodes = store.getState().projectState.project.nodes;
-
   const fromNode = nodes.find((x) => x.id === edge.fromNode);
   const toNode = nodes.find((x) => x.id === edge.toNode);
 
-  let elem = {
+  let element = {
     id: edge.id,
     type: edgeType,
     source: edge.fromNode,
@@ -26,7 +25,7 @@ export const CreateTreeEdge = (edge: Edge, edgeType: EdgeType): FlowElement => {
     parentType: fromNode.type,
     targetType: toNode.type,
   };
-  return elem;
+  return element;
 };
 
 export default CreateTreeEdge;
