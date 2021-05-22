@@ -1,7 +1,7 @@
 import store from "../../../redux/store";
 import { IsBlockViewEdge } from ".";
 import { FlowElement, ArrowHeadType } from "react-flow-renderer";
-import { Edge, EdgeType, NODE_TYPE } from "../../../models/project";
+import { Edge, EdgeType } from "../../../models/project";
 
 export const CreateBlockEdge = (
   edge: Edge,
@@ -9,15 +9,6 @@ export const CreateBlockEdge = (
 ): FlowElement => {
   const project = store.getState().projectState.project;
   const nodes = project?.nodes;
-
-  //   let sortedNodes = nodes?.filter(
-  //     (x) =>
-  //       x.type !== NODE_TYPE.PRODUCT &&
-  //       x.type !== NODE_TYPE.ASPECT_PRODUCT &&
-  //       x.type !== NODE_TYPE.ASPECT_LOCATION &&
-  //       x.type !== NODE_TYPE.ASPECT_FUNCTION &&
-  //       x.type !== NODE_TYPE.FUNCTION
-  //   );
 
   const fromNode = nodes.find((x) => x.id === edge.fromNode);
   const toNode = nodes.find((x) => x.id === edge.toNode);
