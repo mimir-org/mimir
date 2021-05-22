@@ -6,7 +6,7 @@ import {
   BlockViewFunction,
   BlockViewLocation,
   OffPage,
-} from "./../nodes";
+} from "./../../nodes";
 
 const GetBlockNodeTypes = {
   AspectFunction: Aspect,

@@ -1,7 +1,7 @@
-import store from "../../../redux/store";
-import { IsBlockViewEdge } from ".";
 import { FlowElement, ArrowHeadType } from "react-flow-renderer";
-import { Edge, EdgeType } from "../../../models/project";
+import { IsBlockViewEdge } from "..";
+import { Edge, EdgeType } from "../../../../models/project";
+import store from "../../../../redux/store";
 
 export const CreateBlockEdge = (
   edge: Edge,

@@ -11,6 +11,7 @@ import {
   VIEW_TYPE,
   BackgroundVariant,
   Node,
+  NODE_TYPE,
 } from "../../models/project";
 import {
   GetProjectId,
@@ -26,7 +27,7 @@ import {
   CreateBlockElements,
   GetBlockNodeTypes,
   GetBlockEdgeTypes,
-} from "./helpers";
+} from "./helpers/block";
 import {
   useOnConnect,
   useOnConnectStart,
@@ -57,6 +58,8 @@ const FlowBlock = () => {
   const splitViewNode = useSelector<RootState>(
     (state) => state.splitView.node
   ) as Node;
+
+  const isLocationNode = splitViewNode?.type === NODE_TYPE.LOCATION;
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
@@ -155,7 +158,7 @@ const FlowBlock = () => {
               paneMoveable={false}
             >
               <FullscreenBox />
-              {splitView && splitViewNode && (
+              {splitView && isLocationNode && (
                 <Background
                   size={0.5}
                   color={Color.Grey}

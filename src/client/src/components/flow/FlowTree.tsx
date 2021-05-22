@@ -9,6 +9,11 @@ import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
 import { OpenProjectMenu } from "../project/openProject/OpenProjectMenu";
 import { Project, VIEW_TYPE } from "../../models/project";
 import {
+  GetTreeNodeTypes,
+  GetTreeEdgeTypes,
+  CreateTreeElements,
+} from "./helpers/tree";
+import {
   updatePosition,
   changeActiveNode,
 } from "../../redux/store/project/actions";
@@ -17,7 +22,6 @@ import {
   HasProject,
   SetProject,
 } from "../../redux/store/localStorage";
-import { CreateElements, GetTreeNodeTypes, GetTreeEdgeTypes } from "./helpers";
 import ReactFlow, {
   ReactFlowProvider,
   Elements,
@@ -42,7 +46,7 @@ const FlowTree = () => {
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(CreateElements(project));
+      setElements(CreateTreeElements(project));
       return setReactFlowInstance(_reactFlowInstance);
     },
     [project]

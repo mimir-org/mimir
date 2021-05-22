@@ -1,18 +1,13 @@
 import { Elements } from "react-flow-renderer";
-import { CreateLocationNode } from "./";
+import { CreateBlockNode, CreateBlockEdge, CreateParentBlockNode } from ".";
+import { CreateElementNode, GetFlowRectData } from "..";
 import {
   Project,
   EDGE_TYPE,
   RELATION_TYPE,
   EdgeType,
   Node,
-} from "../../../models/project";
-import {
-  CreateBlockEdge,
-  CreateBlockNode,
-  CreateElementNode,
-  GetFlowRectData,
-} from ".";
+} from "../../../../models/project";
 
 const CreateBlockElements = (
   project: Project,
@@ -26,11 +21,11 @@ const CreateBlockElements = (
   if (!project) return;
 
   const actualNode = project.nodes.find((node) => node.id === nodeId);
-  const elementNode = CreateBlockNode(actualNode, width);
+  const elementNode = CreateParentBlockNode(actualNode, width);
   if (elementNode) initialElements.push(elementNode);
 
   if (splitViewNode && splitView) {
-    initialElements.push(CreateLocationNode(splitViewNode));
+    initialElements.push(CreateBlockNode(splitViewNode));
   }
 
   // Draw nodes

@@ -3,7 +3,7 @@ import {
   Connector,
   CONNECTOR_TYPE,
   RELATION_TYPE,
-} from "../../../models/project";
+} from "../../../../models/project";
 
 const GetBlockHandleType = (
   connector: Connector

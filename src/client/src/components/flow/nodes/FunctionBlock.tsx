@@ -2,7 +2,7 @@ import { memo, FC } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useSelector } from "react-redux";
 import { TextResources } from "../../../assets/textResources";
-import { Node, NODE_TYPE } from "../../../models/project";
+import { Node } from "../../../models/project";
 import { RootState } from "../../../redux/store";
 import { Block } from ".";
 import { BlockMessageBox } from "../../../componentLibrary/blockView";
@@ -12,8 +12,6 @@ const FunctionBlock: FC<NodeProps> = ({ data }) => {
   const splitViewNode = useSelector<RootState>(
     (state) => state.splitView.node
   ) as Node;
-
-  const isLocationNode = splitViewNode?.type === NODE_TYPE.LOCATION;
 
   return !splitView ? (
     <Block data={data} location={false} splitView={splitView} />
@@ -27,7 +25,7 @@ const FunctionBlock: FC<NodeProps> = ({ data }) => {
       ) : (
         <Block
           data={splitViewNode}
-          location={isLocationNode}
+          location={splitViewNode}
           splitView={splitView}
         />
       )}

@@ -3,13 +3,13 @@ import { NodeProps, Handle } from "react-flow-renderer";
 import { useDispatch } from "react-redux";
 import { OptionsIcon } from "../../../assets/icons/blockView";
 import { addSelectedConnector } from "../../../redux/store/flow/actions";
+import { GetBlockHandleType } from "../helpers/block";
 import {
   GetConnectors,
   SetConnectors,
 } from "../../../redux/store/localStorage";
 import {
   GetConnectorIcon,
-  GetBlockHandleType,
   GetHandlePosition,
   GetHandleType,
   SortConnectors,
