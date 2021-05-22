@@ -36,10 +36,10 @@ export default function BlockEdgeType({
   });
 
   const getConnectors = () => {
-    const fromConnector = data.source.connectors.find(
+    const fromConnector = data.source?.connectors.find(
       (x) => x.id === data.edge.fromConnector
     );
-    const toConnector = data.target.connectors.find(
+    const toConnector = data.target?.connectors.find(
       (x) => x.id === data.edge.toConnector
     );
 
@@ -52,7 +52,7 @@ export default function BlockEdgeType({
   const getStyle = () => {
     var connector = getConnectors().toConnector;
     return {
-      stroke: GetTransportTypeColor(connector.terminal),
+      stroke: GetTransportTypeColor(connector?.terminal),
     };
   };
 

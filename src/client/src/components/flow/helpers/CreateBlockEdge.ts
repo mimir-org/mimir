@@ -1,42 +1,49 @@
-import { Edge, EdgeType, NODE_TYPE } from "../../../models/project";
-import { FlowElement, ArrowHeadType } from "react-flow-renderer";
 import store from "../../../redux/store";
+import { IsBlockViewEdge } from ".";
+import { FlowElement, ArrowHeadType } from "react-flow-renderer";
+import { Edge, EdgeType, NODE_TYPE } from "../../../models/project";
 
 export const CreateBlockEdge = (
   edge: Edge,
   edgeType: EdgeType
 ): FlowElement => {
-  const nodes = store.getState().projectState.project.nodes;
-  const sortedNodes = nodes?.filter(
-    (x) =>
-      x.type !== NODE_TYPE.PRODUCT &&
-      x.type !== NODE_TYPE.ASPECT_PRODUCT &&
-      x.type !== NODE_TYPE.ASPECT_LOCATION &&
-      x.type !== NODE_TYPE.ASPECT_FUNCTION
-  );
+  const project = store.getState().projectState.project;
+  const nodes = project?.nodes;
 
-  const fromNode = sortedNodes.find((x) => x.id === edge.fromNode);
-  const toNode = sortedNodes.find((x) => x.id === edge.toNode);
+  //   let sortedNodes = nodes?.filter(
+  //     (x) =>
+  //       x.type !== NODE_TYPE.PRODUCT &&
+  //       x.type !== NODE_TYPE.ASPECT_PRODUCT &&
+  //       x.type !== NODE_TYPE.ASPECT_LOCATION &&
+  //       x.type !== NODE_TYPE.ASPECT_FUNCTION &&
+  //       x.type !== NODE_TYPE.FUNCTION
+  //   );
 
-  let elem = {
-    id: edge.id,
-    type: edgeType,
-    source: edge.fromNode,
-    target: edge.toNode,
-    sourceHandle: edge.fromConnector,
-    targetHandle: edge.toConnector,
-    arrowHeadType: ArrowHeadType.ArrowClosed,
-    label: "",
-    data: {
-      source: fromNode,
-      target: toNode,
-      edge: edge,
-    },
-    isHidden: edge.isHidden,
-    parentType: fromNode?.type,
-    targetType: toNode?.type,
-  };
-  return elem;
+  const fromNode = nodes.find((x) => x.id === edge.fromNode);
+  const toNode = nodes.find((x) => x.id === edge.toNode);
+  let element = null;
+
+  if (IsBlockViewEdge(edge) && (fromNode || toNode)) {
+    element = {
+      id: edge.id,
+      type: edgeType,
+      source: edge.fromNode,
+      target: edge.toNode,
+      sourceHandle: edge.fromConnector,
+      targetHandle: edge.toConnector,
+      arrowHeadType: ArrowHeadType.ArrowClosed,
+      label: "",
+      data: {
+        source: fromNode,
+        target: toNode,
+        edge: edge,
+      },
+      isHidden: edge.isHidden,
+      parentType: fromNode?.type,
+      targetType: toNode?.type,
+    };
+  }
+  return element;
 };
 
 export default CreateBlockEdge;
