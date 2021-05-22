@@ -7,7 +7,9 @@ const CreateElementNode = (node: Node, isBlock: boolean): FlowElement => {
   let type: string;
   let position = {};
 
-  if (node.type === NODE_TYPE.FUNCTION && isBlock) type = "BlockViewFunction";
+  if (node.type === NODE_TYPE.FUNCTION && isBlock) {
+    type = "BlockViewFunction";
+  }
 
   // Force nodes to Block
   if (node.positionBlockY > 400) node.positionBlockY /= 1.7;

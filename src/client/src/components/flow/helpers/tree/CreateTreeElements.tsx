@@ -1,5 +1,5 @@
 import { Elements } from "react-flow-renderer";
-import { CreateTreeEdge } from ".";
+import { CreateTreeEdge } from "./";
 import { CreateElementNode } from "..";
 import { EdgeType, EDGE_TYPE, Project } from "../../../../models/project";
 

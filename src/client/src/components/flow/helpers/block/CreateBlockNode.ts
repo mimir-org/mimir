@@ -1,4 +1,4 @@
-import { Node, NODE_TYPE } from "../../../../models/project";
+import { Node } from "../../../../models/project";
 import { FlowElement } from "react-flow-renderer";
 
 const CreateBlockNode = (node: Node): FlowElement => {
@@ -6,10 +6,7 @@ const CreateBlockNode = (node: Node): FlowElement => {
   if (!node) return locationNode;
   let position = { x: 850, y: node.positionY };
 
-  const type =
-    node.type === NODE_TYPE.LOCATION
-      ? "BlockViewLocation"
-      : "BlockViewFunction";
+  const type = "BlockViewLocation";
 
   locationNode = {
     id: node.id,

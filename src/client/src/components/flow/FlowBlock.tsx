@@ -6,6 +6,8 @@ import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
 import { OpenProjectMenu } from "../project/openProject";
 import { get } from "../../redux/store/project/actions";
 import { Color } from "../../componentLibrary";
+import { GetBlockNodeTypes } from "./helpers";
+import { CreateBlockElements, GetBlockEdgeTypes } from "./helpers/block";
 import {
   Project,
   VIEW_TYPE,
@@ -23,11 +25,6 @@ import ReactFlow, {
   Elements,
   Background,
 } from "react-flow-renderer";
-import {
-  CreateBlockElements,
-  GetBlockNodeTypes,
-  GetBlockEdgeTypes,
-} from "./helpers/block";
 import {
   useOnConnect,
   useOnConnectStart,
@@ -58,6 +55,10 @@ const FlowBlock = () => {
   const splitViewNode = useSelector<RootState>(
     (state) => state.splitView.node
   ) as Node;
+
+  const isBlockView = useSelector<RootState>(
+    (state) => state.flow.view === VIEW_TYPE.BLOCKVIEW
+  ) as boolean;
 
   const isLocationNode = splitViewNode?.type === NODE_TYPE.LOCATION;
 
@@ -132,10 +133,6 @@ const FlowBlock = () => {
       dispatch(get(projectId));
     }
   }, [dispatch, project]);
-
-  const isBlockView = useSelector<RootState>(
-    (state) => state.flow.view === VIEW_TYPE.BLOCKVIEW
-  ) as boolean;
 
   return (
     <>

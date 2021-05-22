@@ -1,6 +1,6 @@
 import { Elements } from "react-flow-renderer";
-import { CreateBlockNode, CreateBlockEdge, CreateParentBlockNode } from ".";
-import { CreateElementNode, GetFlowRectData } from "..";
+import { CreateBlockEdge, CreateBlockNode, CreateParentBlockNode } from ".";
+import { CreateElementNode, GetFlowRectData } from "../";
 import {
   Project,
   EDGE_TYPE,
