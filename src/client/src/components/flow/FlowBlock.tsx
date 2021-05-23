@@ -116,7 +116,8 @@ const FlowBlock = () => {
       dispatch,
       setElements,
       reactFlowInstance,
-      reactFlowWrapper
+      reactFlowWrapper,
+      splitView
     );
   };
 

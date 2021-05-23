@@ -4,15 +4,14 @@ import { CreateId } from "./../helpers";
 import { CheckView } from "../../../redux/store/localStorage/localStorage";
 import { CreateBlockNode } from "../helpers/block";
 import { CreateTreeNode } from "../helpers/tree";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/store";
 
 const useOnDrop = (
   event,
   dispatch,
   setElements,
   reactFlowInstance,
-  reactFlowWrapper
+  reactFlowWrapper,
+  splitView?: boolean
 ) => {
   const showBlockView = CheckView(VIEW_TYPE.BLOCKVIEW);
   event.preventDefault();
@@ -20,10 +19,6 @@ const useOnDrop = (
   const data = JSON.parse(
     event.dataTransfer.getData("application/reactflow")
   ) as LibNode;
-
-  const splitView = useSelector<RootState>(
-    (state) => state.splitView.visible
-  ) as boolean;
 
   const position = reactFlowInstance.project({
     x: event.clientX - reactFlowBounds.left,
