@@ -1,4 +1,4 @@
-import { memo, FC, useState } from "react";
+import { memo, FC } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
 import { GetFlowAspectIcon } from "../helpers";
 import { GetHandleType } from "../helpers";

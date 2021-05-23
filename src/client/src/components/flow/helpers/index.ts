@@ -15,7 +15,6 @@ export { default as GetHandlePosition } from "./GetHandlePosition";
 export { default as SortConnectors } from "./SortConnectors";
 export { default as SortLocationConnectors } from "./SortLocationConnectors";
 export { default as GetConnectorName } from "./GetConnectorName";
-export { default as IsBlockViewEdge } from "./IsBlockViewEdge";
 export { default as GetBlockNodeTypes } from "./block/GetBlockNodeTypes";
 
 export * from "./types";

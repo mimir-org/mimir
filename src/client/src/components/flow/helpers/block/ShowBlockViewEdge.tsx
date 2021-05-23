@@ -1,13 +1,19 @@
-import store from "../../../redux/store";
+import store from "../../../../redux/store";
 import {
   NODE_TYPE,
   Edge,
   Connector,
   RELATION_TYPE,
-} from "../../../models/project";
+  Project,
+  Node,
+} from "../../../../models/project";
 
-const IsBlockViewEdge = (edge: Edge): boolean => {
-  const project = store.getState().projectState.project;
+const ShowBlockViewEdge = (edge: Edge): boolean => {
+  const project = store.getState().projectState.project as Project;
+  const splitView = store.getState().splitView;
+  const isSplitView = splitView.visible as boolean;
+  const splitViewNode = splitView.node as Node;
+
   const toNode = project.nodes.find((x) => x.id === edge.toNode);
   const fromNode = project.nodes.find((x) => x.id === edge.fromNode);
   const fromConnector = edge.fromConnector;
@@ -24,8 +30,10 @@ const IsBlockViewEdge = (edge: Edge): boolean => {
   return (
     toNode.type === NODE_TYPE.LOCATION &&
     nodeToConnector?.relationType === RELATION_TYPE.HasLocation &&
-    nodeFromConnector?.relationType === RELATION_TYPE.HasLocation
+    nodeFromConnector?.relationType === RELATION_TYPE.HasLocation &&
+    isSplitView &&
+    splitViewNode?.type === NODE_TYPE.LOCATION
   );
 };
 
-export default IsBlockViewEdge;
+export default ShowBlockViewEdge;
