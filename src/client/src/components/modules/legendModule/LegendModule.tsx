@@ -4,7 +4,7 @@ import { TextResources } from "../../../assets/textResources";
 import { ProjectState } from "../../../redux/store/project/types";
 import { RootState } from "../../../redux/store";
 import { CheckView } from "../../../redux/store/localStorage";
-import { VIEW_TYPE } from "../../../models/project";
+import { Node, VIEW_TYPE } from "../../../models/project";
 import { GetLegendData, Legend } from "../../flow/helpers";
 import {
   ModuleBody,
@@ -21,18 +21,18 @@ const LegendModule = ({ visible }) => {
   ) as ProjectState;
 
   const isBlockView = CheckView(VIEW_TYPE.BLOCKVIEW);
-  let legends = null;
+  let legends = GetLegendData(projectState.project, false, null) as Legend[];
+
+  let selectedNode = projectState.project.nodes.find(
+    (x) => x.isSelected
+  ) as Node;
 
   if (isBlockView) {
     legends = GetLegendData(
       projectState.project,
       true,
-      "e1dbb139-f033-d15a-6fb0-e4fce18c46fc" // TODO FIX
+      selectedNode?.id
     ) as Legend[];
-  }
-
-  if (!isBlockView) {
-    legends = GetLegendData(projectState.project, false, null) as Legend[];
   }
 
   return (
