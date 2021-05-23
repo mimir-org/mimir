@@ -1,12 +1,13 @@
 import { memo, FC } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
+import { OffPageWrapper } from "../styled";
+import { GetTransportTypeColor, GetHandleType } from "../helpers";
+import { Color } from "../../../componentLibrary";
 import {
   RELATION_TYPE,
   Terminal,
   CONNECTOR_TYPE,
 } from "../../../models/project";
-import { OffPageWrapper } from "../styled";
-import { GetTransportTypeColor, GetHandleType } from "../helpers";
 
 const OffPage: FC<NodeProps> = ({ data }) => {
   const transportConnectors = data.connectors?.filter(
@@ -29,7 +30,7 @@ const OffPage: FC<NodeProps> = ({ data }) => {
     var g = parseInt(hexcolor.substr(2, 2), 16);
     var b = parseInt(hexcolor.substr(4, 2), 16);
     var yiq = (r * 299 + g * 587 + b * 114) / 1000;
-    return yiq >= 128 ? "#000000" : "#ffffff";
+    return yiq >= 128 ? `${Color.Black}` : `${Color.White}`;
   };
 
   return (

@@ -1,5 +1,4 @@
 export type BuildStatus = keyof typeof BUILD_STATUS;
-
 export const BUILD_STATUS = {
     NotSet: "NotSet",
     Unused: "Unused",
@@ -11,7 +10,6 @@ export const BUILD_STATUS = {
 };
 
 export type AttributeTab = keyof typeof ATTRIBUTE_TAB;
-
 export const ATTRIBUTE_TAB = {
     ADMIN_INFO: "AdminInfo",
     TECH_INFO: "TechInfo",
@@ -19,7 +17,6 @@ export const ATTRIBUTE_TAB = {
 };
 
 export type EdgeType = keyof typeof EDGE_TYPE;
-
 export const EDGE_TYPE = {
     DEFAULT: "DefaultEdgeType",
     BLOCK: "BlockEdgeType",
@@ -27,14 +24,12 @@ export const EDGE_TYPE = {
 };
 
 export type LineEdgeType = keyof typeof LINE_EDGE_TYPE;
-
 export const LINE_EDGE_TYPE = {
     STEP: "SmoothStepPath",
     BEZIER: "BezierPath",
 };
 
 export type NodeType = keyof typeof NODE_TYPE;
-
 export const NODE_TYPE = {
     ASPECT_FUNCTION: "AspectFunction",
     ASPECT_PRODUCT: "AspectProduct",
@@ -46,7 +41,6 @@ export const NODE_TYPE = {
 };
 
 export type ModuleType = keyof typeof MODULE_TYPE;
-
 export const MODULE_TYPE = {
     EXPLORER: "Explorer",
     INSPECTOR: "Inspector",
@@ -55,14 +49,19 @@ export const MODULE_TYPE = {
 };
 
 export type MenuType = keyof typeof MENU_TYPE;
-
 export const MENU_TYPE = {
     VISUAL_FILTER: "VisualFilter",
     ACCOUNT: "Account",
 };
 
-export type ViewType = keyof typeof VIEW_TYPE;
+export type ProjectMenuType = keyof typeof PROJECT_MENU_TYPE;
+export const PROJECT_MENU_TYPE = {
+    ACCOUNT_MENU: "AccountMenu",
+    OPEN_PROJECT_MENU: "OpenProjectMenu",
+    MAIN_MENU: "MainMenu",
+};
 
+export type ViewType = keyof typeof VIEW_TYPE;
 export const VIEW_TYPE = {
     BLOCKVIEW: "blockview",
     TREEVIEW: "treeview",
@@ -70,7 +69,6 @@ export const VIEW_TYPE = {
 };
 
 export type IconType = keyof typeof ICON_TYPE;
-
 export const ICON_TYPE = {
     NOTSET_ICON: "NotSetIcon",
     FUNCTION_ICON: "FunctionIcon",
@@ -81,14 +79,12 @@ export const ICON_TYPE = {
 };
 
 export type ConnectorType = keyof typeof CONNECTOR_TYPE;
-
 export const CONNECTOR_TYPE = {
     INPUT: "Input",
     OUTPUT: "Output",
 };
 
 export type Terminal = keyof typeof TERMINAL;
-
 export const TERMINAL = {
     NotSet: "NotSet",
     Electric: "Electric",
@@ -120,7 +116,6 @@ export const TERMINAL = {
 };
 
 export type TerminalCategory = keyof typeof TERMINAL_CATEGORY;
-
 export const TERMINAL_CATEGORY = {
     NotSet: "NotSet",
     Forces: "Forces",
@@ -130,7 +125,6 @@ export const TERMINAL_CATEGORY = {
 };
 
 export type RelationType = keyof typeof RELATION_TYPE;
-
 export const RELATION_TYPE = {
     NotSet: "NotSet",
     HasLocation: "HasLocation",

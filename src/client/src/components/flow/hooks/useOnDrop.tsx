@@ -1,7 +1,9 @@
 import { LibNode, Node, NodeType, VIEW_TYPE } from "../../../models/project";
 import { addNode } from "../../../redux/store/project/actions";
-import { CreateId, CreateElementNode } from "./../helpers";
+import { CreateId } from "./../helpers";
 import { CheckView } from "../../../redux/store/localStorage/localStorage";
+import { CreateBlockNode } from "../helpers/block";
+import { CreateTreeNode } from "../helpers/tree";
 
 const useOnDrop = (
   event,
@@ -21,8 +23,6 @@ const useOnDrop = (
     x: event.clientX - reactFlowBounds.left,
     y: event.clientY - reactFlowBounds.top,
   });
-
-  console.log(data.attributes);
 
   const node = {
     id: CreateId(),
@@ -51,7 +51,9 @@ const useOnDrop = (
   });
 
   dispatch(addNode(node));
-  setElements((es) => es.concat(CreateElementNode(node, showBlockView)));
+  showBlockView
+    ? setElements((es) => es.concat(CreateBlockNode(node)))
+    : setElements((es) => es.concat(CreateTreeNode(node)));
 };
 
 export default useOnDrop;

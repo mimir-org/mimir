@@ -12,7 +12,7 @@ import {
   GetConnectorIcon,
   GetHandlePosition,
   GetHandleType,
-  SortConnectors,
+  SortLocationConnectors,
   GetConnectorName,
 } from "../helpers";
 import {
@@ -23,7 +23,7 @@ import {
   HandleBox,
 } from "../../../componentLibrary/blockView";
 
-const BlockViewFunction: FC<NodeProps> = ({ data }) => {
+const BlockViewLocation: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
   const [showButton, setShowButton] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -61,7 +61,7 @@ const BlockViewFunction: FC<NodeProps> = ({ data }) => {
         <img src={OptionsIcon} alt="options" />
       </OptionsMenu>
       <OptionsBox visible={menuOpen}>
-        {SortConnectors(data.connectors).map((conn) => (
+        {SortLocationConnectors(data.connectors).map((conn) => (
           <OptionsElement
             key={conn.id}
             onClick={() => handleConnectorClick(conn)}
@@ -92,7 +92,7 @@ const BlockViewFunction: FC<NodeProps> = ({ data }) => {
                   className={className}
                 />
                 <img
-                  src={GetConnectorIcon(conn.terminal)}
+                  src={GetConnectorIcon(conn.terminalCategory)}
                   alt="icon"
                   className="connector"
                 />
@@ -118,4 +118,4 @@ const BlockViewFunction: FC<NodeProps> = ({ data }) => {
   );
 };
 
-export default memo(BlockViewFunction);
+export default memo(BlockViewLocation);

@@ -1,14 +1,13 @@
-import { Node } from "../../../models/project";
 import { FlowElement } from "react-flow-renderer";
+import { Node } from "../../../../models/project";
 
-const CreateElementBlockNode = (node: Node, width: number): FlowElement => {
+const CreateParentBlockNode = (node: Node, width: number): FlowElement => {
   let elementNode = null;
   if (!node) return elementNode;
 
+  // Big block node that contains child nodes
   const type = "FunctionBlock";
-  const calculatedWidth = (width * 70) / 100;
-  const calculatedX = (width - calculatedWidth) / 2;
-  const position = { x: calculatedX, y: 0 };
+  const position = { x: 220, y: 0 };
 
   elementNode = {
     id: node.id,
@@ -24,4 +23,4 @@ const CreateElementBlockNode = (node: Node, width: number): FlowElement => {
   return elementNode;
 };
 
-export default CreateElementBlockNode;
+export default CreateParentBlockNode;

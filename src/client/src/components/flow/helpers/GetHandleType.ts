@@ -1,9 +1,9 @@
+import { Position, HandleType } from "react-flow-renderer";
 import {
   Connector,
   CONNECTOR_TYPE,
   RELATION_TYPE,
 } from "../../../models/project";
-import { Position, HandleType } from "react-flow-renderer";
 
 const GetHandleType = (connector: Connector): [HandleType, Position] => {
   if (

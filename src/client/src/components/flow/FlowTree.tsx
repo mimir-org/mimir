@@ -6,22 +6,22 @@ import { ProjectMainMenu } from "../project";
 import { RootState } from "./../../redux/store/index";
 import { useOnConnect, useOnDrop, useOnElementsRemove } from "./hooks";
 import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
-import {
-  GetProjectId,
-  HasProject,
-  SetProject,
-} from "../../redux/store/localStorage";
 import { OpenProjectMenu } from "../project/openProject/OpenProjectMenu";
 import { EdgeType, EDGE_TYPE, Project, VIEW_TYPE } from "../../models/project";
+import {
+  GetTreeNodeTypes,
+  GetTreeEdgeTypes,
+  CreateTreeElements,
+} from "./helpers/tree";
 import {
   updatePosition,
   changeActiveNode,
 } from "../../redux/store/project/actions";
 import {
-  CreateProjectElementNodes,
-  GetTreeNodeTypes,
-  GetTreeEdgeTypes,
-} from "./helpers";
+  GetProjectId,
+  HasProject,
+  SetProject,
+} from "../../redux/store/localStorage";
 import ReactFlow, {
   ReactFlowProvider,
   Elements,
@@ -46,9 +46,7 @@ const FlowTree = () => {
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(
-        CreateProjectElementNodes(project, EDGE_TYPE.PART as EdgeType)
-      );
+      setElements(CreateTreeElements(project, EDGE_TYPE.PART as EdgeType));
       return setReactFlowInstance(_reactFlowInstance);
     },
     [project]
@@ -83,7 +81,7 @@ const FlowTree = () => {
     );
   };
 
-  const OnElementClick = (event, element) => {
+  const OnElementClick = (_event, element) => {
     dispatch(changeActiveNode(element.id));
   };
 
@@ -92,21 +90,20 @@ const FlowTree = () => {
     OnLoad(reactFlowInstance);
   }, [OnLoad, reactFlowInstance]);
 
-  // Handling of project loading
   useEffect(() => {
-    if (project === null) {
+    if (!project) {
       const projectId = GetProjectId();
       if (projectId) dispatch(get(projectId));
     }
   }, [dispatch, project]);
 
-  const visible = useSelector<RootState>(
+  const isTreeView = useSelector<RootState>(
     (state) => state.flow.view === VIEW_TYPE.TREEVIEW
   ) as boolean;
 
   return (
     <>
-      {project && visible && (
+      {isTreeView && (
         <ReactFlowProvider>
           <div className="reactflow-wrapper" ref={reactFlowWrapper}>
             <ReactFlow

@@ -9,11 +9,11 @@ const ModuleBox = styled.div`
     props.type === MODULE_TYPE.INSPECTOR ? "0px" : `1px solid ${Color.Grey}`};
   background: ${Color.LightGrey};
   width: ${(props: { stop: string; type: string }) =>
-    props.type === MODULE_TYPE.INSPECTOR ? "100%" : props.stop};
+    props.type === MODULE_TYPE.INSPECTOR ? "initial" : props.stop};
   height: ${(props: { stop: string; type: string }) =>
     props.type !== MODULE_TYPE.INSPECTOR ? "inherit" : props.stop};
   overflow: hidden;
-  /* z-index: 100; */
+  z-index: 1;
 `;
 
 export default ModuleBox;

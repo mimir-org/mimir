@@ -4,14 +4,16 @@ import {
   Location,
   FunctionBlock,
   BlockViewFunction,
+  BlockViewLocation,
   OffPage,
-} from "./../nodes";
+} from "../../nodes";
 
 const GetBlockNodeTypes = {
   AspectFunction: Aspect,
   AspectLocation: Aspect,
   AspectProduct: Aspect,
   BlockViewFunction: BlockViewFunction,
+  BlockViewLocation: BlockViewLocation,
   Product: Product,
   Location: Location,
   FunctionBlock: FunctionBlock,

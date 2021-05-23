@@ -11,3 +11,5 @@ export { GetProject } from "./localStorage";
 export { SetProjectId } from "./localStorage";
 export { SetProject } from "./localStorage";
 export { HasProject } from "./localStorage";
+export { SetConnectors } from "./localStorage";
+export { GetConnectors } from "./localStorage";

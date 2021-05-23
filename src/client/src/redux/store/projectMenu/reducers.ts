@@ -1,17 +1,18 @@
+import { PROJECT_MENU_TYPE } from "../../../models/project";
 import { CHANGE_PROJECT_MENU } from "./types";
 
 const initialState = {
   menu: [
     {
-      type: "mainMenu",
+      type: PROJECT_MENU_TYPE.MAIN_MENU,
       visible: false,
     },
     {
-      type: "accountMenu",
+      type: PROJECT_MENU_TYPE.ACCOUNT_MENU,
       visible: false,
     },
     {
-      type: "openProjectMenu",
+      type: PROJECT_MENU_TYPE.OPEN_PROJECT_MENU,
       visible: false,
     },
   ],

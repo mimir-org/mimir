@@ -27,7 +27,7 @@ const LegendModule = ({ visible }) => {
     legends = GetLegendData(
       projectState.project,
       true,
-      "e1dbb139-f033-d15a-6fb0-e4fce18c46fc"
+      "e1dbb139-f033-d15a-6fb0-e4fce18c46fc" // TODO FIX
     ) as Legend[];
   }
 
@@ -41,15 +41,14 @@ const LegendModule = ({ visible }) => {
         <img src={LegendIcon} alt="legend" className="icon" />
         {TextResources.Legend_Heading}
       </ModuleHeader>
-      {legends &&
-        legends.map((legend) => {
-          return (
-            <LegendElement key={legend.key}>
-              <p>{legend.name}</p>
-              <LegendColor color={legend.color}></LegendColor>
-            </LegendElement>
-          );
-        })}
+      {legends?.map((legend) => {
+        return (
+          <LegendElement key={legend.key}>
+            <p>{legend.name}</p>
+            <LegendColor color={legend.color}></LegendColor>
+          </LegendElement>
+        );
+      })}
     </ModuleBody>
   );
 };

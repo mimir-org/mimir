@@ -3,9 +3,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { ProjectMainMenu } from "../project";
 import { RootState } from "./../../redux/store/index";
 import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
-import { EDGE_TYPE, Project, VIEW_TYPE, EdgeType } from "../../models/project";
+import { EDGE_TYPE, EdgeType } from "../../models/project";
 import { OpenProjectMenu } from "../project/openProject";
 import { get } from "../../redux/store/project/actions";
+import { Color } from "../../componentLibrary";
+import { GetBlockNodeTypes } from "./helpers";
+import { CreateBlockElements, GetBlockEdgeTypes } from "./helpers/block";
+import {
+  Project,
+  VIEW_TYPE,
+  BackgroundVariant,
+  Node,
+  NODE_TYPE,
+} from "../../models/project";
 import {
   GetProjectId,
   HasProject,
@@ -14,13 +24,8 @@ import {
 import ReactFlow, {
   ReactFlowProvider,
   Elements,
-  Controls,
+  Background,
 } from "react-flow-renderer";
-import {
-  CreateProjectElementBlockNodes,
-  GetBlockNodeTypes,
-  GetBlockEdgeTypes,
-} from "./helpers";
 import {
   useOnConnect,
   useOnConnectStart,
@@ -36,25 +41,36 @@ const FlowBlock = () => {
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>();
-  let nodeId: string;
 
   const project = useSelector<RootState>(
     (state) => state.projectState.project
   ) as Project;
 
   SetProject(project);
+  const node = project?.nodes.find((node) => node.isSelected);
 
-  if (project) {
-    const node = project.nodes.find((node) => node.isSelected);
-    nodeId = node ? node.id : "";
-  }
+  const splitView = useSelector<RootState>(
+    (state) => state.splitView.visible
+  ) as boolean;
+
+  const splitViewNode = useSelector<RootState>(
+    (state) => state.splitView.node
+  ) as Node;
+
+  const isBlockView = useSelector<RootState>(
+    (state) => state.flow.view === VIEW_TYPE.BLOCKVIEW
+  ) as boolean;
+
+  const isLocationNode = splitViewNode?.type === NODE_TYPE.LOCATION;
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(CreateProjectElementBlockNodes(project, nodeId));
+      setElements(
+        CreateBlockElements(project, node?.id, splitViewNode, splitView)
+      );
       return setReactFlowInstance(_reactFlowInstance);
     },
-    [nodeId, project]
+    [node, project, splitViewNode, splitView]
   );
 
   const OnElementsRemove = (elementsToRemove) => {
@@ -80,7 +96,7 @@ const FlowBlock = () => {
       e,
       project,
       reactFlowInstance,
-      nodeId,
+      node.id,
       reactFlowWrapper,
       dispatch
     );
@@ -118,21 +134,16 @@ const FlowBlock = () => {
     OnUpdatePosition();
   };
 
-  // Handling of project loading
   useEffect(() => {
-    if (project === null) {
+    if (!project) {
       const projectId = GetProjectId();
       dispatch(get(projectId));
     }
   }, [dispatch, project]);
 
-  const visible = useSelector<RootState>(
-    (state) => state.flow.view === VIEW_TYPE.BLOCKVIEW
-  ) as boolean;
-
   return (
     <>
-      {project && visible && (
+      {isBlockView && (
         <ReactFlowProvider>
           <div className="reactflow-wrapper" ref={reactFlowWrapper}>
             <ReactFlow
@@ -147,11 +158,17 @@ const FlowBlock = () => {
               onElementClick={OnElementClick}
               onConnectEnd={OnConnectStop}
               onConnectStart={OnConnectStart}
-              zoomOnScroll={true}
-              paneMoveable={true}
+              zoomOnScroll={false}
+              paneMoveable={false}
             >
               <FullscreenBox />
-              <Controls />
+              {splitView && isLocationNode && (
+                <Background
+                  size={0.5}
+                  color={Color.Grey}
+                  variant={BackgroundVariant.Lines}
+                />
+              )}
             </ReactFlow>
           </div>
         </ReactFlowProvider>

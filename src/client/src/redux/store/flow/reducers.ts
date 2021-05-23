@@ -1,10 +1,10 @@
 import { CHANGE_FLOW_VIEW, ADD_SELECTED_CONNECTOR } from "./types";
 import { VIEW_TYPE } from "../../../models/project";
-import { GetView } from "../localStorage/localStorage";
+import { GetConnectors, GetView } from "../localStorage/localStorage";
 
 const initialState = {
   view: GetView() ?? VIEW_TYPE.TREEVIEW,
-  connectors: [],
+  connectors: GetConnectors() ?? [],
 };
 
 export function flowReducer(state = initialState, action) {

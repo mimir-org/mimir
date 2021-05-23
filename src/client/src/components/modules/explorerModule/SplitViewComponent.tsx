@@ -2,15 +2,18 @@ import { FooterBox, FooterContent } from "../../../componentLibrary/box/footer";
 import { TextResources } from "../../../assets/textResources";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { changeSplitView } from "../../../redux/store/splitView/actions";
 import { VIEW_TYPE } from "../../../models/project";
+import {
+  changeSplitView,
+  setSplitViewNode,
+} from "../../../redux/store/splitView/actions";
 import {
   LoadState,
   CheckView,
   SaveState,
 } from "../../../redux/store/localStorage";
 
-export const SwitchViewComponent = () => {
+export const SplitViewComponent = () => {
   const dispatch = useDispatch();
   const isVisible = CheckView(VIEW_TYPE.BLOCKVIEW);
   const [isActive, SetIsActive] = useState(LoadState("splitview"));
@@ -19,6 +22,7 @@ export const SwitchViewComponent = () => {
     SetIsActive(!isActive);
     SaveState(!isActive, "splitview");
     dispatch(changeSplitView(!isActive));
+    dispatch(setSplitViewNode(null));
   };
   return (
     <FooterBox visible={isVisible}>
@@ -33,4 +37,4 @@ export const SwitchViewComponent = () => {
   );
 };
 
-export default SwitchViewComponent;
+export default SplitViewComponent;

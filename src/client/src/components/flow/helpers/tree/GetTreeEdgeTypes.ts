@@ -1,4 +1,4 @@
-import { DefaultEdgeType, PartEdgeType } from "./../edges";
+import { DefaultEdgeType, PartEdgeType } from "../../edges";
 
 const GetBlockEdgeTypes = {
     DefaultEdgeType: DefaultEdgeType,

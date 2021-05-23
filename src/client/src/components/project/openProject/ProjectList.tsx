@@ -20,18 +20,17 @@ export const ProjectList = () => {
         <p className="project_owner">{TextResources.Project_recent_owner}</p>
         <p className="last_edited">{TextResources.Project_recent_edited}</p>
       </div>
-      {projectList &&
-        projectList.map((project) => {
-          return (
-            <ProjectData
-              key={project.id}
-              projectId={project.id}
-              projectName={project.name}
-              projectOwner={project.projectOwner}
-              updated={project.updated}
-            />
-          );
-        })}
+      {projectList?.map((project) => {
+        return (
+          <ProjectData
+            key={project.id}
+            projectId={project.id}
+            projectName={project.name}
+            projectOwner={project.projectOwner}
+            updated={project.updated}
+          />
+        );
+      })}
     </div>
   );
 };

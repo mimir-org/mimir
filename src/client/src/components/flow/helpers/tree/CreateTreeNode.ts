@@ -1,12 +1,13 @@
 import { Node } from "../../../../models/project";
 import { FlowElement } from "react-flow-renderer";
 
-const CreateLocationNode = (node: Node): FlowElement => {
-  let elementNode = null;
-  if (!node) return elementNode;
-  let position = { x: 50, y: node.positionY };
+const CreateTreeNode = (node: Node): FlowElement => {
+  let treeNode = null;
+  if (!node) return treeNode;
 
-  elementNode = {
+  const position = { x: node.positionX, y: node.positionY };
+
+  treeNode = {
     id: node.id,
     type: node.type,
     data: node,
@@ -18,7 +19,7 @@ const CreateLocationNode = (node: Node): FlowElement => {
     connectable: true,
   };
 
-  return elementNode;
+  return treeNode;
 };
 
-export default CreateLocationNode;
+export default CreateTreeNode;

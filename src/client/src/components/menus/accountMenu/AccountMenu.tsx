@@ -5,7 +5,7 @@ import { ProjectState } from "../../../redux/store/project/types";
 import { create, save } from "../../../redux/store/project/actions";
 import { GetMenuElement } from "./helpers";
 import { GetMenuIcon } from "../../../assets/helpers";
-import { MENU_TYPE } from "../../../models/project";
+import { MENU_TYPE, PROJECT_MENU_TYPE } from "../../../models/project";
 import { MenuBox, MenuTopHeader } from "../../../componentLibrary/box/menus";
 import { changeProjectMenu } from "../../../redux/store/projectMenu/actions";
 import { OpenProjectMenu } from "../../project/openProject";
@@ -27,22 +27,22 @@ const AccountMenu = () => {
   ) as UserState;
 
   const handleAccountClick = () => {
-    dispatch(changeProjectMenu("accountMenu", !isOpen));
+    dispatch(changeProjectMenu(PROJECT_MENU_TYPE.ACCOUNT_MENU, !isOpen));
   };
 
   const handleOpenClick = () => {
-    dispatch(changeProjectMenu("openProjectMenu", true));
+    dispatch(changeProjectMenu(PROJECT_MENU_TYPE.OPEN_PROJECT_MENU, true));
   };
 
   const handleCreateClick = () => {
     alert("Project created");
     dispatch(create("unnamed", "unnamed"));
-    dispatch(changeProjectMenu("accountMenu", false));
+    dispatch(changeProjectMenu(PROJECT_MENU_TYPE.ACCOUNT_MENU, false));
   };
 
   const handleSaveClick = () => {
     if (projectState.project) dispatch(save(projectState.project));
-    dispatch(changeProjectMenu("accountMenu", false));
+    dispatch(changeProjectMenu(PROJECT_MENU_TYPE.ACCOUNT_MENU, false));
     alert("Project saved");
   };
 

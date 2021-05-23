@@ -5,18 +5,17 @@ import { GetHandleType } from "../helpers";
 const Function: FC<NodeProps> = ({ data }) => {
   return (
     <>
-      {data.connectors &&
-        data.connectors.map((connector) => {
-          const [typeHandler, positionHandler] = GetHandleType(connector);
-          return (
-            <Handle
-              type={typeHandler}
-              position={positionHandler}
-              id={connector.id}
-              key={connector.id}
-            />
-          );
-        })}
+      {data.connectors?.map((connector) => {
+        const [typeHandler, positionHandler] = GetHandleType(connector);
+        return (
+          <Handle
+            type={typeHandler}
+            position={positionHandler}
+            id={connector.id}
+            key={connector.id}
+          />
+        );
+      })}
       <div>{data.label ?? data.name}</div>
     </>
   );

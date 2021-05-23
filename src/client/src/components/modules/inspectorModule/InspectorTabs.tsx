@@ -8,7 +8,7 @@ const InspectorTabs = () => {
     (state) => state.projectState.project
   ) as Project;
 
-  const nodes = project ? project.nodes : [];
+  const nodes = project?.nodes ?? [];
   const node = nodes.find((node) => node.isSelected) as Node;
 
   return (

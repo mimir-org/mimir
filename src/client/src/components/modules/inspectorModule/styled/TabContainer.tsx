@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const TabContainer = styled.div`
-  display: flex;
+  display: inline-flex;
   align-items: flex-start;
 `;
 

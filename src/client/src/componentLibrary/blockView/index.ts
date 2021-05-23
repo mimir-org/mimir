@@ -6,4 +6,3 @@ export { default as OptionsMenu } from "./OptionsMenu";
 export { default as HandleBox } from "./HandleBox";
 export { default as BlockMessageBox } from "./MessageBox";
 export { default as FunctionBox } from "./FunctionBox";
-export { default as LocationBox } from "./LocationBox";

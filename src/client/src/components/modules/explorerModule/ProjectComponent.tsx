@@ -6,7 +6,7 @@ import { CheckView } from "../../../redux/store/localStorage";
 
 export const ProjectComponent = () => {
   const project = store.getState().projectState.project;
-  const aspects = project ? project.nodes : [];
+  const aspects = project?.nodes ?? [];
   const isBlockView = CheckView(VIEW_TYPE.BLOCKVIEW);
 
   return (

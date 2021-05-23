@@ -16,20 +16,16 @@ const useOnConnect = (
   const createdId = CreateId();
   const sourceNode = project.nodes.find((x) => x.id === params.source) as Node;
   const targetNode = project.nodes.find((x) => x.id === params.target) as Node;
-
   let currentEdge = null;
-  let existingEdge = null;
 
-  if (project.edges) {
-    existingEdge = project.edges.find(
-      (x) =>
-        x.fromConnector === params.sourceHandle &&
-        x.toConnector === params.targetHandle &&
-        x.fromNode === sourceNode.id &&
-        x.toNode === targetNode.id &&
-        x.isHidden === targetNode.isHidden
-    );
-  }
+  const existingEdge = project.edges?.find(
+    (x) =>
+      x.fromConnector === params.sourceHandle &&
+      x.toConnector === params.targetHandle &&
+      x.fromNode === sourceNode.id &&
+      x.toNode === targetNode.id &&
+      x.isHidden === targetNode.isHidden
+  );
 
   if (!existingEdge) {
     const edge: Edge = {

@@ -1,12 +1,12 @@
 import { SearchBar, ProjectList } from ".";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { Project, ProjectSimple } from "../../../models/project";
+import { ProjectSimple, PROJECT_MENU_TYPE } from "../../../models/project";
 import { LeftArrowIcon, RightArrowIcon } from "../../../assets/icons";
 import { MenuButton } from "../../../componentLibrary/buttons";
 import { TextResources } from "../../../assets/textResources";
 import { SetProjectId } from "../../../redux/store/localStorage";
-import { get, save } from "../../../redux/store/project/actions";
+import { get } from "../../../redux/store/project/actions";
 import { changeProjectMenu } from "../../../redux/store/projectMenu/actions";
 import { useState } from "react";
 import { MessageComponent } from "../../message";
@@ -25,25 +25,27 @@ export const OpenProjectMenu = () => {
     (state) => state.projectState.projectList
   ) as ProjectSimple[];
 
-  const currentProject = useSelector<RootState>(
-    (state) => state.projectState.project
-  ) as Project;
+  //   const currentProject = useSelector<RootState>(
+  //     (state) => state.projectState.project
+  //   ) as Project;
 
-  const project = projects ? projects.find((x) => x.selected) : undefined;
-  const projectId = project ? project.id : undefined;
+  const project = projects?.find((x) => x.selected);
+  const projectId = project?.id;
 
   const isOpen = useSelector<RootState>(
     (state) =>
-      state.projectMenu.menu.find((x) => x.type === "openProjectMenu").visible
+      state.projectMenu.menu.find(
+        (x) => x.type === PROJECT_MENU_TYPE.OPEN_PROJECT_MENU
+      ).visible
   ) as boolean;
 
   const handleReturnClick = () => {
-    dispatch(changeProjectMenu("openProjectMenu", false));
+    dispatch(changeProjectMenu(PROJECT_MENU_TYPE.OPEN_PROJECT_MENU, false));
   };
 
   const handleOpenClick = () => {
     setConfirm(true);
-    dispatch(changeProjectMenu("openProjectMenu", false));
+    dispatch(changeProjectMenu(PROJECT_MENU_TYPE.OPEN_PROJECT_MENU, false));
   };
 
   const handleSaveClick = () => {
