@@ -1,8 +1,8 @@
 import { memo, FC, useState } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
-import { RELATION_TYPE } from "../../../models/project";
 import { GetHandleType } from "../helpers";
 import { HandlerWrapper } from "../styled";
+import { RELATION_TYPE } from "../../../models/project";
 
 const FunctionTreeview: FC<NodeProps> = ({ data }) => {
   const [isHover, setIsHover] = useState(false);
@@ -22,7 +22,7 @@ const FunctionTreeview: FC<NodeProps> = ({ data }) => {
           return (
             <HandlerWrapper
               onMouseEnter={() => setIsHover(true)}
-              onMouseLeave={(e) => setIsHover(false)}
+              onMouseLeave={() => setIsHover(false)}
               key={connector.id}
               display={connectorIsVisible(connector)}
               position={positionHandler}

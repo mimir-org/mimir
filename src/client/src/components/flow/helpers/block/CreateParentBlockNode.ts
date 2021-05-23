@@ -5,7 +5,6 @@ const CreateParentBlockNode = (node: Node, width: number): FlowElement => {
   let elementNode = null;
   if (!node) return elementNode;
 
-  // Big block node that contains child nodes
   const type = "FunctionBlock";
   const position = { x: 220, y: 0 };
 

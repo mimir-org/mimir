@@ -1,7 +1,8 @@
 import { Node, NODE_TYPE } from "../../../../models/project";
 import { FlowElement } from "react-flow-renderer";
+import { SetBlockNodePosition } from ".";
 
-const CreateBlockNode = (node: Node): FlowElement => {
+const CreateBlockNode = (node: Node, splitView: boolean): FlowElement => {
   let blockNode = null;
   if (!node) return blockNode;
 
@@ -10,9 +11,8 @@ const CreateBlockNode = (node: Node): FlowElement => {
       ? "BlockViewLocation"
       : "BlockViewFunction";
 
-  // Force nodes to fit Block
-  if (node.positionBlockY > 400) node.positionBlockY /= 1.7;
-  const position = { x: node.positionBlockX, y: node.positionBlockY };
+  // Force node to fit Block
+  const position = SetBlockNodePosition(node, splitView);
 
   blockNode = {
     id: node.id,

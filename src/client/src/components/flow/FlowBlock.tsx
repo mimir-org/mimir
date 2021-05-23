@@ -8,6 +8,7 @@ import { OpenProjectMenu } from "../project/openProject";
 import { get } from "../../redux/store/project/actions";
 import { Color } from "../../componentLibrary";
 import { GetBlockNodeTypes } from "./helpers";
+import { BackgroundBox } from "../../componentLibrary/blockView";
 import { CreateBlockElements, GetBlockEdgeTypes } from "./helpers/block";
 import {
   Project,
@@ -15,6 +16,7 @@ import {
   BackgroundVariant,
   Node,
   NODE_TYPE,
+  SPLITVIEW_POSITION,
 } from "../../models/project";
 import {
   GetProjectId,
@@ -61,7 +63,9 @@ const FlowBlock = () => {
     (state) => state.flow.view === VIEW_TYPE.BLOCKVIEW
   ) as boolean;
 
-  const isLocationNode = splitViewNode?.type === NODE_TYPE.LOCATION;
+  const isLocationNode =
+    splitViewNode?.type === NODE_TYPE.LOCATION ||
+    node?.type === NODE_TYPE.LOCATION;
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
@@ -83,7 +87,7 @@ const FlowBlock = () => {
       project,
       setElements,
       dispatch,
-      EDGE_TYPE.DEFAULT as EdgeType
+      EDGE_TYPE.BLOCK as EdgeType
     );
   };
 
@@ -141,6 +145,15 @@ const FlowBlock = () => {
     }
   }, [dispatch, project]);
 
+  const splitViewPosition = () => {
+    if (
+      splitViewNode?.type === NODE_TYPE.LOCATION &&
+      node?.type === NODE_TYPE.FUNCTION
+    ) {
+      return SPLITVIEW_POSITION.RIGHT;
+    }
+  };
+
   return (
     <>
       {isBlockView && (
@@ -162,13 +175,17 @@ const FlowBlock = () => {
               paneMoveable={false}
             >
               <FullscreenBox />
-              {splitView && isLocationNode && (
+              <BackgroundBox
+                visible={isLocationNode}
+                isSplitView={splitView}
+                right={splitViewPosition()}
+              >
                 <Background
                   size={0.5}
                   color={Color.Grey}
                   variant={BackgroundVariant.Lines}
                 />
-              )}
+              </BackgroundBox>
             </ReactFlow>
           </div>
         </ReactFlowProvider>
