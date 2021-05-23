@@ -29,7 +29,7 @@ const CreateBlockElements = (
     if (edge.fromNode === nodeId) {
       const toNode = project.nodes.find((x) => x.id === edge.toNode);
       if (selectedNode.type === toNode.type)
-        initialElements.push(CreateBlockNode(toNode));
+        initialElements.push(CreateBlockNode(toNode, splitView));
     }
   });
 

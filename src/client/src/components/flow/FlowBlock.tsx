@@ -65,7 +65,7 @@ const FlowBlock = () => {
 
   const isLocationNode =
     splitViewNode?.type === NODE_TYPE.LOCATION ||
-    node.type === NODE_TYPE.LOCATION;
+    node?.type === NODE_TYPE.LOCATION;
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
@@ -87,7 +87,7 @@ const FlowBlock = () => {
       project,
       setElements,
       dispatch,
-      EDGE_TYPE.DEFAULT as EdgeType
+      EDGE_TYPE.BLOCK as EdgeType
     );
   };
 

@@ -1,12 +1,11 @@
 import { memo, FC } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
-import { RELATION_TYPE } from "../../../models/project";
 import { GetHandleType } from "../helpers";
 import { HandlerWrapper } from "../styled";
 
 const FunctionTreeview: FC<NodeProps> = ({ data }) => {
   const handleHover = (e) => {
-    console.log("HOVER");
+    // console.log("HOVER");
   };
 
   return (
