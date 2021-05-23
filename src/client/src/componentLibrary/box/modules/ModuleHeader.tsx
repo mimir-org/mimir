@@ -19,16 +19,33 @@ const ModuleHeader = styled.div`
 
   .text {
     position: relative;
-    bottom: 18px;
+    opacity: ${(props) => (props.visible ? "1" : "0")};
     right: ${(props) => (props.library ? "140px" : "unset")};
     left: ${(props) => (props.explorer ? "140px" : "unset")};
     float: ${(props) => (props.library ? "right" : "left")};
+    bottom: 18px;
+    transition: opacity 0.2s ease;
   }
 
   .text_inspector {
     display: inline;
     vertical-align: top;
     margin-left: 5px;
+  }
+
+  .icon {
+    position: ${(props) => (props.visible ? "unset" : "absolute")};
+    cursor: ${(props) => (props.legend ? "initial" : "pointer")};
+    float: ${(props) => (props.explorer ? "right" : "left")};
+    right: ${(props) => (props.explorer ? "3px" : "unset")};
+    left: ${(props) => (props.library ? "5px" : "unset")};
+  }
+
+  .icon_inspector {
+    cursor: pointer;
+    float: right;
+    bottom: 25px;
+    margin-top: 6px;
   }
 
   .module-icon {
@@ -46,21 +63,6 @@ const ModuleHeader = styled.div`
         ? "0px"
         : "unset"};
     top: ${(props) => (props.visible || props.legend ? "unset" : "42px")};
-  }
-
-  .icon {
-    position: ${(props) => (props.visible ? "unset" : "absolute")};
-    cursor: ${(props) => (props.legend ? "initial" : "pointer")};
-    float: ${(props) => (props.explorer ? "right" : "left")};
-    right: ${(props) => (props.explorer ? "3px" : "unset")};
-    left: ${(props) => (props.library ? "5px" : "unset")};
-  }
-
-  .icon_inspector {
-    cursor: pointer;
-    float: right;
-    bottom: 25px;
-    margin-top: 6px;
   }
 `;
 
