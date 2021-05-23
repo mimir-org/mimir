@@ -1,12 +1,12 @@
-import { Aspect, Product, Location, FunctionTreeview } from "../../nodes";
+import { Aspect, TreeviewNode } from "../../nodes";
 
 const GetTreeNodeTypes = {
     AspectFunction: Aspect,
     AspectLocation: Aspect,
     AspectProduct: Aspect,
-    Function: FunctionTreeview,
-    Product: Product,
-    Location: Location,
+    Function: TreeviewNode,
+    Product: TreeviewNode,
+    Location: TreeviewNode,
 };
 
 export default GetTreeNodeTypes;

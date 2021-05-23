@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { FontSize } from "../../../componentLibrary";
 import { PlusIcon } from "../../../assets/icons/blockView";
 
 const HandlerWrapper = styled.div`
