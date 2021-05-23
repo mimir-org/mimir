@@ -4,6 +4,7 @@ import { TextResources } from "../../assets/textResources";
 import { RootState } from "../../redux/store";
 import { NewProjectIcon, OpenProjectIcon } from "../../assets/icons";
 import { changeProjectMenu } from "../../redux/store/projectMenu/actions";
+import { PROJECT_MENU_TYPE } from "../../models/project";
 import {
   ProjectBody,
   ProjectBox,
@@ -18,17 +19,19 @@ export const ProjectMainMenu = () => {
   ) as boolean;
 
   const isOpen = useSelector<RootState>(
-    (state) => state.projectMenu.menu.find((x) => x.type === "mainMenu").visible
+    (state) =>
+      state.projectMenu.menu.find((x) => x.type === PROJECT_MENU_TYPE.MAIN_MENU)
+        .visible
   ) as boolean;
 
   const handleCreateClick = () => {
     dispatch(create("unnamed", "unnamed"));
-    dispatch(changeProjectMenu("mainMenu", false));
+    dispatch(changeProjectMenu(PROJECT_MENU_TYPE.MAIN_MENU, false));
   };
 
   const handleOpenClick = () => {
     dispatch(changeProjectMenu("mainMenu", false));
-    dispatch(changeProjectMenu("openProjectMenu", true));
+    dispatch(changeProjectMenu(PROJECT_MENU_TYPE.OPEN_PROJECT_MENU, true));
   };
 
   return (

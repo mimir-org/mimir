@@ -1,7 +1,7 @@
 import { SearchBar, ProjectList } from ".";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { ProjectSimple } from "../../../models/project";
+import { ProjectSimple, PROJECT_MENU_TYPE } from "../../../models/project";
 import { LeftArrowIcon, RightArrowIcon } from "../../../assets/icons";
 import { MenuButton } from "../../../componentLibrary/buttons";
 import { TextResources } from "../../../assets/textResources";
@@ -34,16 +34,18 @@ export const OpenProjectMenu = () => {
 
   const isOpen = useSelector<RootState>(
     (state) =>
-      state.projectMenu.menu.find((x) => x.type === "openProjectMenu").visible
+      state.projectMenu.menu.find(
+        (x) => x.type === PROJECT_MENU_TYPE.OPEN_PROJECT_MENU
+      ).visible
   ) as boolean;
 
   const handleReturnClick = () => {
-    dispatch(changeProjectMenu("openProjectMenu", false));
+    dispatch(changeProjectMenu(PROJECT_MENU_TYPE.OPEN_PROJECT_MENU, false));
   };
 
   const handleOpenClick = () => {
     setConfirm(true);
-    dispatch(changeProjectMenu("openProjectMenu", false));
+    dispatch(changeProjectMenu(PROJECT_MENU_TYPE.OPEN_PROJECT_MENU, false));
   };
 
   const handleSaveClick = () => {
