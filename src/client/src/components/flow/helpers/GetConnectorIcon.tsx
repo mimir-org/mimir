@@ -5,6 +5,7 @@ import {
   ConnectorIcon,
   ConnectorOilIcon,
   ConnectorWaterIcon,
+  ConnectorSandIcon,
 } from "../../../assets/icons/blockView";
 
 const GetConnectorIcon = (type: string) => {
@@ -30,7 +31,7 @@ const GetConnectorIcon = (type: string) => {
       : type === TERMINAL.Powder
       ? ConnectorIcon
       : type === TERMINAL.Sand
-      ? ConnectorIcon
+      ? ConnectorSandIcon
       : type === TERMINAL.Sensor
       ? ConnectorIcon
       : type === TERMINAL.Solar

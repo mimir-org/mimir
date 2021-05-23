@@ -20,18 +20,42 @@ const ModuleHeader = styled.div`
   .text {
     position: relative;
     bottom: 18px;
-    right: 107px;
-    float: right;
+    right: ${(props) => (props.library ? "140px" : "unset")};
+    left: ${(props) => (props.explorer ? "140px" : "unset")};
+    float: ${(props) => (props.library ? "right" : "left")};
   }
+
   .text_inspector {
     display: inline;
     vertical-align: top;
     margin-left: 5px;
   }
+
+  .module-icon {
+    position: absolute;
+    right: ${(props) =>
+      props.explorer && props.visible
+        ? "190px"
+        : props.explorer
+        ? "2px"
+        : "85px"};
+    left: ${(props) =>
+      props.library && props.visible
+        ? "100px"
+        : props.library
+        ? "0px"
+        : "unset"};
+    top: ${(props) => (props.visible || props.legend ? "unset" : "42px")};
+  }
+
   .icon {
+    position: ${(props) => (props.visible ? "unset" : "absolute")};
     cursor: ${(props) => (props.legend ? "initial" : "pointer")};
     float: ${(props) => (props.explorer ? "right" : "left")};
+    right: ${(props) => (props.explorer ? "3px" : "unset")};
+    left: ${(props) => (props.library ? "5px" : "unset")};
   }
+
   .icon_inspector {
     cursor: pointer;
     float: right;

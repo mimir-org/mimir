@@ -38,7 +38,7 @@ const LegendModule = ({ visible }) => {
   return (
     <ModuleBody visible={visible} legend>
       <ModuleHeader legend>
-        <img src={LegendIcon} alt="legend" className="icon" />
+        <img src={LegendIcon} alt="legend" className="module-icon" />
         {TextResources.Legend_Heading}
       </ModuleHeader>
       {legends?.map((legend) => {
