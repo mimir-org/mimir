@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { FontSize } from "../../../componentLibrary";
 import { ConnectorIcon } from "../../../assets/icons/blockView";
 
 const HandlerWrapper = styled.div`
@@ -13,7 +12,11 @@ const HandlerWrapper = styled.div`
     border-radius: 0;
     bottom: -10px;
     top: ${(props: { position: string }) =>
-      props.position === "top" ? `-10px` : `auto`};
+      props.position === "top"
+        ? `-10px`
+        : props.position === "bottom"
+        ? `auto`
+        : ``};
   }
 `;
 
