@@ -8,6 +8,27 @@ namespace Mb.Core.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "AttributeType",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Entity = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Qualifier = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Source = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Condition = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Units = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Aspect = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Format = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsInterface = table.Column<bool>(type: "bit", nullable: false),
+                    IsTerminalType = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AttributeType", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Contractor",
                 columns: table => new
                 {
@@ -220,34 +241,6 @@ namespace Mb.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AttributeType",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Entity = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Qualifier = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Source = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Condition = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Units = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Aspect = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Format = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsInterface = table.Column<bool>(type: "bit", nullable: false),
-                    IsTerminalType = table.Column<bool>(type: "bit", nullable: false),
-                    TerminalTypeId = table.Column<string>(type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AttributeType", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AttributeType_TerminalType_TerminalTypeId",
-                        column: x => x.TerminalTypeId,
-                        principalTable: "TerminalType",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Attribute",
                 columns: table => new
                 {
@@ -287,11 +280,6 @@ namespace Mb.Core.Migrations
                 name: "IX_Attribute_NodeId",
                 table: "Attribute",
                 column: "NodeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AttributeType_TerminalTypeId",
-                table: "AttributeType",
-                column: "TerminalTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Connector_NodeId",
@@ -339,10 +327,10 @@ namespace Mb.Core.Migrations
                 name: "Rds");
 
             migrationBuilder.DropTable(
-                name: "Connector");
+                name: "TerminalType");
 
             migrationBuilder.DropTable(
-                name: "TerminalType");
+                name: "Connector");
 
             migrationBuilder.DropTable(
                 name: "Edge");

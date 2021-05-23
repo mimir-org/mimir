@@ -23,6 +23,7 @@ export type EdgeType = keyof typeof EDGE_TYPE;
 export const EDGE_TYPE = {
     DEFAULT: "DefaultEdgeType",
     BLOCK: "BlockEdgeType",
+    PART: "PartEdgeType",
 };
 
 export type LineEdgeType = keyof typeof LINE_EDGE_TYPE;
@@ -171,6 +172,8 @@ export interface Connector {
     semanticReference: string;
     nodeId: string;
     attributes?: Attribute[] | null;
+    mediaColor: string | null;
+    transportColor: string | null;
 }
 
 export interface Edge {

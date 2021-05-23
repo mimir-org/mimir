@@ -83,6 +83,30 @@ namespace Mb.Models.Enums
         Boxes = 25,
 
         [Display(Name = "Pieces")]
-        Pieces = 26
+        Pieces = 26,
+
+        [Display(Name = "Condensate")]
+        Condensate = 27,
+
+        [Display(Name = "Hot seawater")]
+        HotSeawater = 28,
+
+        [Display(Name = "Oily water")]
+        OilyWater = 29,
+
+        [Display(Name = "Produced water")]
+        ProducedWater = 30,
+
+        [Display(Name = "Seawater")]
+        Seawater = 31,
+
+        [Display(Name = "Cooling medium")]
+        CoolingMedium = 32,
+
+        [Display(Name = "Glycol MEG TEG")]
+        GlycolMegTeg = 33,
+
+        [Display(Name = "Methanol")]
+        Methanol = 34
     }
 }

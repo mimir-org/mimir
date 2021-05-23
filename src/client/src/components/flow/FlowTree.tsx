@@ -12,7 +12,7 @@ import {
   SetProject,
 } from "../../redux/store/localStorage";
 import { OpenProjectMenu } from "../project/openProject/OpenProjectMenu";
-import { Project, VIEW_TYPE } from "../../models/project";
+import { EdgeType, EDGE_TYPE, Project, VIEW_TYPE } from "../../models/project";
 import {
   updatePosition,
   changeActiveNode,
@@ -46,14 +46,22 @@ const FlowTree = () => {
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(CreateProjectElementNodes(project));
+      setElements(
+        CreateProjectElementNodes(project, EDGE_TYPE.PART as EdgeType)
+      );
       return setReactFlowInstance(_reactFlowInstance);
     },
     [project]
   );
 
   const OnConnect = (params) => {
-    return useOnConnect(params, project, setElements, dispatch);
+    return useOnConnect(
+      params,
+      project,
+      setElements,
+      dispatch,
+      EDGE_TYPE.PART as EdgeType
+    );
   };
 
   const OnDragOver = (event) => {

@@ -1,8 +1,11 @@
-import { Project, EdgeType, EDGE_TYPE } from "../../../models/project";
+import { Project, EdgeType } from "../../../models/project";
 import { CreateElementNode, CreateElementEdge } from "../helpers";
 import { Elements } from "react-flow-renderer";
 
-const CreateProjectElementNodes = (project: Project): Elements => {
+const CreateProjectElementNodes = (
+  project: Project,
+  edgeType: EdgeType
+): Elements => {
   const initialElements: Elements = [];
 
   if (!project) return initialElements;
@@ -14,10 +17,7 @@ const CreateProjectElementNodes = (project: Project): Elements => {
 
   if (project.edges) {
     project.edges.forEach((edge) => {
-      const elementEdge = CreateElementEdge(
-        edge,
-        EDGE_TYPE.DEFAULT as EdgeType
-      );
+      const elementEdge = CreateElementEdge(edge, edgeType);
       if (elementEdge) initialElements.push(elementEdge);
     });
   }

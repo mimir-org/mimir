@@ -64,6 +64,8 @@ const CreateOffPageNode = (
         nodeId: node.id,
         attributes: [],
         semanticReference: "",
+        mediaColor: "",
+        transportColor: ""
     };
 
     const partOfConnector = {
@@ -76,6 +78,8 @@ const CreateOffPageNode = (
         nodeId: node.id,
         attributes: [],
         semanticReference: "",
+        mediaColor: "",
+        transportColor: ""
     };
 
     node.connectors.push(targetConnector);

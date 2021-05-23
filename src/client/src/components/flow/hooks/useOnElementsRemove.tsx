@@ -4,7 +4,10 @@ import { removeEdge, removeNode } from "../../../redux/store/project/actions";
 
 const onElementsRemove = (elementsToRemove, setElements, dispatch) => {
   elementsToRemove.forEach((element) => {
-    if (element.type === EDGE_TYPE.DEFAULT) {
+    const edgeTypes = Object.values(EDGE_TYPE);
+    const isEdge = edgeTypes.some((x) => x === element.type.toString());
+
+    if (isEdge) {
       dispatch(removeEdge(element.id));
     } else {
       dispatch(removeNode(element.id));
