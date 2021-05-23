@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mb.Core.Migrations
 {
     [DbContext(typeof(ModelBuilderDbContext))]
-    [Migration("20210521103231_Start")]
-    partial class Start
+    [Migration("20210522100655_RemovedColorAttribute")]
+    partial class RemovedColorAttribute
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -128,16 +128,11 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Source");
 
-                    b.Property<string>("TerminalTypeId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Units")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Units");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TerminalTypeId");
 
                     b.ToTable("AttributeType");
                 });
@@ -526,10 +521,6 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("AttributeJson");
 
-                    b.Property<string>("Color")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Color");
-
                     b.Property<string>("ConnectorType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -596,13 +587,6 @@ namespace Mb.Core.Migrations
                     b.Navigation("Node");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.AttributeType", b =>
-                {
-                    b.HasOne("Mb.Models.Data.TerminalType", null)
-                        .WithMany("Attributes")
-                        .HasForeignKey("TerminalTypeId");
-                });
-
             modelBuilder.Entity("Mb.Models.Data.Connector", b =>
                 {
                     b.HasOne("Mb.Models.Data.Node", "Node")
@@ -654,11 +638,6 @@ namespace Mb.Core.Migrations
                     b.Navigation("Attributes");
 
                     b.Navigation("Connectors");
-                });
-
-            modelBuilder.Entity("Mb.Models.Data.TerminalType", b =>
-                {
-                    b.Navigation("Attributes");
                 });
 #pragma warning restore 612, 618
         }

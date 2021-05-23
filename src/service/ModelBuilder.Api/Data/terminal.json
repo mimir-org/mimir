@@ -4,7 +4,6 @@
     "Terminal": "Gas",
     "ConnectorType": "Input",
     "SemanticReference": "",
-    "Color": "",
     "Attributes": [
       {
         "Entity": "Flowrate, volumetric",
@@ -46,7 +45,6 @@
     "Terminal": "Gas",
     "ConnectorType": "Output",
     "SemanticReference": "",
-    "Color": "",
     "Attributes": [
       {
         "Entity": "Flowrate, volumetric",
@@ -88,7 +86,6 @@
     "Terminal": "Oil",
     "ConnectorType": "Input",
     "SemanticReference": "",
-    "Color": "",
     "Attributes": [
       {
         "Entity": "Flowrate, volumetric",
@@ -130,7 +127,6 @@
     "Terminal": "Oil",
     "ConnectorType": "Output",
     "SemanticReference": "",
-    "Color": "",
     "Attributes": [
       {
         "Entity": "Flowrate, volumetric",
@@ -172,7 +168,6 @@
     "Terminal": "Water",
     "ConnectorType": "Input",
     "SemanticReference": "",
-    "Color": "",
     "Attributes": [
       {
         "Entity": "Flowrate, volumetric",
@@ -214,7 +209,6 @@
     "Terminal": "Water",
     "ConnectorType": "Output",
     "SemanticReference": "",
-    "Color": "",
     "Attributes": [
       {
         "Entity": "Flowrate, volumetric",

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ProjectMainMenu } from "../project";
 import { RootState } from "./../../redux/store/index";
 import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
+import { EDGE_TYPE, EdgeType } from "../../models/project";
 import { OpenProjectMenu } from "../project/openProject";
 import { get } from "../../redux/store/project/actions";
 import { Color } from "../../componentLibrary";
@@ -81,7 +82,13 @@ const FlowBlock = () => {
   };
 
   const OnConnect = (params) => {
-    return useOnConnect(params, project, setElements, dispatch);
+    return useOnConnect(
+      params,
+      project,
+      setElements,
+      dispatch,
+      EDGE_TYPE.DEFAULT as EdgeType
+    );
   };
 
   const OnConnectStart = (e, { nodeId, handleType, handleId }) => {

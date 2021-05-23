@@ -12,76 +12,253 @@
     "SemanticReference": null,
     "Terminals": [
       {
-        "Id": "equinor.com_B26D7BC8-6E8A-4BC7-B6C9-34D58E4C8CB7",
-        "TerminalType": "Fluid",
+        "Id": "equinor.com_19CF170F-6340-4616-8045-E0DB34673EA3",
+        "Terminal": "Gas",
         "ConnectorType": "Input",
-        "SemanticReference": null,
+        "SemanticReference": "",
+        "Color": "#FF9900",
         "Attributes": [
           {
-            "entity": "Pressure, absolute",
-            "qualifier": "Operating",
-            "source": "Calculated",
-            "condition": "Maximum",
-            "units": [
+            "Entity": "Flowrate, volumetric",
+            "Qualifier": "Capacity",
+            "Source": "Required",
+            "Condition": "Nominal",
+            "Units": [
+              "Sm3D",
+              "Sm3H",
+              "Scfhr",
+              "Bbld"
+            ],
+            "Aspect": "NotSet",
+            "Format": "UnsignedFloat",
+            "IsInterface": false,
+            "IsTerminalType": true
+          },
+          {
+            "Entity": "Pressure, absolute",
+            "Qualifier": "Rating",
+            "Source": "Required",
+            "Condition": "Minimum",
+            "Units": [
               "Barg",
               "Bara",
               "Psi",
               "Psig",
               "Pascal"
             ],
-            "aspect": "NotSet",
-            "format": "UnsignedFloat",
-            "isInterface": false,
+            "Aspect": "NotSet",
+            "Format": "UnsignedFloat",
+            "IsInterface": false,
             "IsTerminalType": true
           }
         ]
       },
       {
-        "Id": "equinor.com_0570DFF0-AE8A-4474-96B7-A8FA11695D38",
-        "TerminalType": "Oil",
+        "Id": "equinor.com_2948D9E8-0C37-4362-AC17-7544C90EA662",
+        "Terminal": "Gas",
         "ConnectorType": "Output",
-        "SemanticReference": null,
+        "SemanticReference": "",
+        "Color": "#FF9900",
         "Attributes": [
           {
-            "entity": "Pressure, absolute",
-            "qualifier": "Operating",
-            "source": "Calculated",
-            "condition": "Maximum",
-            "units": [
+            "Entity": "Flowrate, volumetric",
+            "Qualifier": "Capacity",
+            "Source": "Required",
+            "Condition": "Nominal",
+            "Units": [
+              "Sm3D",
+              "Sm3H",
+              "Scfhr",
+              "Bbld"
+            ],
+            "Aspect": "NotSet",
+            "Format": "UnsignedFloat",
+            "IsInterface": false,
+            "IsTerminalType": true
+          },
+          {
+            "Entity": "Pressure, absolute",
+            "Qualifier": "Rating",
+            "Source": "Required",
+            "Condition": "Minimum",
+            "Units": [
               "Barg",
               "Bara",
               "Psi",
               "Psig",
               "Pascal"
             ],
-            "aspect": "NotSet",
-            "format": "UnsignedFloat",
-            "isInterface": false,
+            "Aspect": "NotSet",
+            "Format": "UnsignedFloat",
+            "IsInterface": false,
             "IsTerminalType": true
           }
         ]
       },
       {
-        "Id": "equinor.com_1232B433-2E1A-491D-9D52-0209A13DC518",
-        "TerminalType": "Gas",
-        "ConnectorType": "Output",
-        "SemanticReference": null,
+        "Id": "equinor.com_7A51FFB1-C2B8-4A6B-BB4B-E5C19B22354F",
+        "Terminal": "Oil",
+        "ConnectorType": "Input",
+        "SemanticReference": "",
+        "Color": "#663300",
         "Attributes": [
           {
-            "entity": "Pressure, absolute",
-            "qualifier": "Operating",
-            "source": "Calculated",
-            "condition": "Maximum",
-            "units": [
+            "Entity": "Flowrate, volumetric",
+            "Qualifier": "Capacity",
+            "Source": "Required",
+            "Condition": "Nominal",
+            "Units": [
+              "Sm3D",
+              "Sm3H",
+              "Scfhr",
+              "Bbld"
+            ],
+            "Aspect": "NotSet",
+            "Format": "UnsignedFloat",
+            "IsInterface": false,
+            "IsTerminalType": true
+          },
+          {
+            "Entity": "Pressure, absolute",
+            "Qualifier": "Rating",
+            "Source": "Required",
+            "Condition": "Minimum",
+            "Units": [
               "Barg",
               "Bara",
               "Psi",
               "Psig",
               "Pascal"
             ],
-            "aspect": "NotSet",
-            "format": "UnsignedFloat",
-            "isInterface": false,
+            "Aspect": "NotSet",
+            "Format": "UnsignedFloat",
+            "IsInterface": false,
+            "IsTerminalType": true
+          }
+        ]
+      },
+      {
+        "Id": "equinor.com_A64E8599-BDE9-4486-A4DB-C90F124CEA52",
+        "Terminal": "Oil",
+        "ConnectorType": "Output",
+        "SemanticReference": "",
+        "Color": "#663300",
+        "Attributes": [
+          {
+            "Entity": "Flowrate, volumetric",
+            "Qualifier": "Capacity",
+            "Source": "Required",
+            "Condition": "Nominal",
+            "Units": [
+              "Sm3D",
+              "Sm3H",
+              "Scfhr",
+              "Bbld"
+            ],
+            "Aspect": "NotSet",
+            "Format": "UnsignedFloat",
+            "IsInterface": false,
+            "IsTerminalType": true
+          },
+          {
+            "Entity": "Pressure, absolute",
+            "Qualifier": "Rating",
+            "Source": "Required",
+            "Condition": "Minimum",
+            "Units": [
+              "Barg",
+              "Bara",
+              "Psi",
+              "Psig",
+              "Pascal"
+            ],
+            "Aspect": "NotSet",
+            "Format": "UnsignedFloat",
+            "IsInterface": false,
+            "IsTerminalType": true
+          }
+        ]
+      },
+      {
+        "Id": "equinor.com_9704059D-A7F5-48E8-B963-1B528AB66BA6",
+        "Terminal": "Water",
+        "ConnectorType": "Input",
+        "SemanticReference": "",
+        "Color": "#33CCCC",
+        "Attributes": [
+          {
+            "Entity": "Flowrate, volumetric",
+            "Qualifier": "Capacity",
+            "Source": "Required",
+            "Condition": "Nominal",
+            "Units": [
+              "Sm3D",
+              "Sm3H",
+              "Scfhr",
+              "Bbld"
+            ],
+            "Aspect": "NotSet",
+            "Format": "UnsignedFloat",
+            "IsInterface": false,
+            "IsTerminalType": true
+          },
+          {
+            "Entity": "Pressure, absolute",
+            "Qualifier": "Rating",
+            "Source": "Required",
+            "Condition": "Minimum",
+            "Units": [
+              "Barg",
+              "Bara",
+              "Psi",
+              "Psig",
+              "Pascal"
+            ],
+            "Aspect": "NotSet",
+            "Format": "UnsignedFloat",
+            "IsInterface": false,
+            "IsTerminalType": true
+          }
+        ]
+      },
+      {
+        "Id": "equinor.com_061AA7B2-E42B-4DD3-9019-992CFEE1E279",
+        "Terminal": "Water",
+        "ConnectorType": "Output",
+        "SemanticReference": "",
+        "Color": "#33CCCC",
+        "Attributes": [
+          {
+            "Entity": "Flowrate, volumetric",
+            "Qualifier": "Capacity",
+            "Source": "Required",
+            "Condition": "Nominal",
+            "Units": [
+              "Sm3D",
+              "Sm3H",
+              "Scfhr",
+              "Bbld"
+            ],
+            "Aspect": "NotSet",
+            "Format": "UnsignedFloat",
+            "IsInterface": false,
+            "IsTerminalType": true
+          },
+          {
+            "Entity": "Pressure, absolute",
+            "Qualifier": "Rating",
+            "Source": "Required",
+            "Condition": "Minimum",
+            "Units": [
+              "Barg",
+              "Bara",
+              "Psi",
+              "Psig",
+              "Pascal"
+            ],
+            "Aspect": "NotSet",
+            "Format": "UnsignedFloat",
+            "IsInterface": false,
             "IsTerminalType": true
           }
         ]
@@ -119,101 +296,254 @@
     "SemanticReference": null,
     "Terminals": [
       {
-        "Id": "equinor.com_1B47286D-4D2C-4716-800D-6D8080F40644",
-        "TerminalType": "Electric",
+        "Id": "equinor.com_19CF170F-6340-4616-8045-E0DB34673EA3",
+        "Terminal": "Gas",
         "ConnectorType": "Input",
+        "SemanticReference": "",
+        "Color": "#FF9900",
         "Attributes": [
           {
-            "entity": "Pressure, absolute",
-            "qualifier": "Operating",
-            "source": "Calculated",
-            "condition": "Maximum",
-            "units": [
+            "Entity": "Flowrate, volumetric",
+            "Qualifier": "Capacity",
+            "Source": "Required",
+            "Condition": "Nominal",
+            "Units": [
+              "Sm3D",
+              "Sm3H",
+              "Scfhr",
+              "Bbld"
+            ],
+            "Aspect": "NotSet",
+            "Format": "UnsignedFloat",
+            "IsInterface": false,
+            "IsTerminalType": true
+          },
+          {
+            "Entity": "Pressure, absolute",
+            "Qualifier": "Rating",
+            "Source": "Required",
+            "Condition": "Minimum",
+            "Units": [
               "Barg",
               "Bara",
               "Psi",
               "Psig",
               "Pascal"
             ],
-            "aspect": "NotSet",
-            "format": "UnsignedFloat",
-            "isInterface": false,
+            "Aspect": "NotSet",
+            "Format": "UnsignedFloat",
+            "IsInterface": false,
             "IsTerminalType": true
           }
         ]
       },
       {
-        "Id": "equinor.com_EDFFCDA7-414F-498A-94B3-3F96F8EEA77E",
-        "TerminalType": "Electric",
+        "Id": "equinor.com_2948D9E8-0C37-4362-AC17-7544C90EA662",
+        "Terminal": "Gas",
+        "ConnectorType": "Output",
+        "SemanticReference": "",
+        "Color": "#FF9900",
+        "Attributes": [
+          {
+            "Entity": "Flowrate, volumetric",
+            "Qualifier": "Capacity",
+            "Source": "Required",
+            "Condition": "Nominal",
+            "Units": [
+              "Sm3D",
+              "Sm3H",
+              "Scfhr",
+              "Bbld"
+            ],
+            "Aspect": "NotSet",
+            "Format": "UnsignedFloat",
+            "IsInterface": false,
+            "IsTerminalType": true
+          },
+          {
+            "Entity": "Pressure, absolute",
+            "Qualifier": "Rating",
+            "Source": "Required",
+            "Condition": "Minimum",
+            "Units": [
+              "Barg",
+              "Bara",
+              "Psi",
+              "Psig",
+              "Pascal"
+            ],
+            "Aspect": "NotSet",
+            "Format": "UnsignedFloat",
+            "IsInterface": false,
+            "IsTerminalType": true
+          }
+        ]
+      },
+      {
+        "Id": "equinor.com_7A51FFB1-C2B8-4A6B-BB4B-E5C19B22354F",
+        "Terminal": "Oil",
         "ConnectorType": "Input",
-        "SemanticReference": null,
+        "SemanticReference": "",
+        "Color": "#663300",
         "Attributes": [
           {
-            "entity": "Pressure, absolute",
-            "qualifier": "Operating",
-            "source": "Calculated",
-            "condition": "Maximum",
-            "units": [
+            "Entity": "Flowrate, volumetric",
+            "Qualifier": "Capacity",
+            "Source": "Required",
+            "Condition": "Nominal",
+            "Units": [
+              "Sm3D",
+              "Sm3H",
+              "Scfhr",
+              "Bbld"
+            ],
+            "Aspect": "NotSet",
+            "Format": "UnsignedFloat",
+            "IsInterface": false,
+            "IsTerminalType": true
+          },
+          {
+            "Entity": "Pressure, absolute",
+            "Qualifier": "Rating",
+            "Source": "Required",
+            "Condition": "Minimum",
+            "Units": [
               "Barg",
               "Bara",
               "Psi",
               "Psig",
               "Pascal"
             ],
-            "aspect": "NotSet",
-            "format": "UnsignedFloat",
-            "isInterface": false,
+            "Aspect": "NotSet",
+            "Format": "UnsignedFloat",
+            "IsInterface": false,
             "IsTerminalType": true
           }
         ]
       },
       {
-        "Id": "equinor.com_5CD13952-04F7-43C4-9A47-84D62042D9C9",
-        "terminalType": "Fluid",
-        "connectorType": "Input",
-        "SemanticReference": null,
+        "Id": "equinor.com_A64E8599-BDE9-4486-A4DB-C90F124CEA52",
+        "Terminal": "Oil",
+        "ConnectorType": "Output",
+        "SemanticReference": "",
+        "Color": "#663300",
         "Attributes": [
           {
-            "entity": "Pressure, absolute",
-            "qualifier": "Operating",
-            "source": "Calculated",
-            "condition": "Maximum",
-            "units": [
+            "Entity": "Flowrate, volumetric",
+            "Qualifier": "Capacity",
+            "Source": "Required",
+            "Condition": "Nominal",
+            "Units": [
+              "Sm3D",
+              "Sm3H",
+              "Scfhr",
+              "Bbld"
+            ],
+            "Aspect": "NotSet",
+            "Format": "UnsignedFloat",
+            "IsInterface": false,
+            "IsTerminalType": true
+          },
+          {
+            "Entity": "Pressure, absolute",
+            "Qualifier": "Rating",
+            "Source": "Required",
+            "Condition": "Minimum",
+            "Units": [
               "Barg",
               "Bara",
               "Psi",
               "Psig",
               "Pascal"
             ],
-            "aspect": "NotSet",
-            "format": "UnsignedFloat",
-            "isInterface": false,
+            "Aspect": "NotSet",
+            "Format": "UnsignedFloat",
+            "IsInterface": false,
             "IsTerminalType": true
           }
         ]
       },
       {
-        "Id": "equinor.com_DA30D55C-ACE0-4C36-BC97-2342A8430018",
-        "terminalType": "Oil",
-        "connectorType": "Output",
-        "SemanticReference": null,
+        "Id": "equinor.com_9704059D-A7F5-48E8-B963-1B528AB66BA6",
+        "Terminal": "Water",
+        "ConnectorType": "Input",
+        "SemanticReference": "",
+        "Color": "#33CCCC",
         "Attributes": [
           {
-            "entity": "Pressure, absolute",
-            "qualifier": "Operating",
-            "source": "Calculated",
-            "condition": "Maximum",
-            "units": [
+            "Entity": "Flowrate, volumetric",
+            "Qualifier": "Capacity",
+            "Source": "Required",
+            "Condition": "Nominal",
+            "Units": [
+              "Sm3D",
+              "Sm3H",
+              "Scfhr",
+              "Bbld"
+            ],
+            "Aspect": "NotSet",
+            "Format": "UnsignedFloat",
+            "IsInterface": false,
+            "IsTerminalType": true
+          },
+          {
+            "Entity": "Pressure, absolute",
+            "Qualifier": "Rating",
+            "Source": "Required",
+            "Condition": "Minimum",
+            "Units": [
               "Barg",
               "Bara",
               "Psi",
               "Psig",
               "Pascal"
             ],
-            "aspect": "NotSet",
-            "format": "UnsignedFloat",
-            "isInterface": false,
-            "IsTerminalType": false
+            "Aspect": "NotSet",
+            "Format": "UnsignedFloat",
+            "IsInterface": false,
+            "IsTerminalType": true
+          }
+        ]
+      },
+      {
+        "Id": "equinor.com_061AA7B2-E42B-4DD3-9019-992CFEE1E279",
+        "Terminal": "Water",
+        "ConnectorType": "Output",
+        "SemanticReference": "",
+        "Color": "#33CCCC",
+        "Attributes": [
+          {
+            "Entity": "Flowrate, volumetric",
+            "Qualifier": "Capacity",
+            "Source": "Required",
+            "Condition": "Nominal",
+            "Units": [
+              "Sm3D",
+              "Sm3H",
+              "Scfhr",
+              "Bbld"
+            ],
+            "Aspect": "NotSet",
+            "Format": "UnsignedFloat",
+            "IsInterface": false,
+            "IsTerminalType": true
+          },
+          {
+            "Entity": "Pressure, absolute",
+            "Qualifier": "Rating",
+            "Source": "Required",
+            "Condition": "Minimum",
+            "Units": [
+              "Barg",
+              "Bara",
+              "Psi",
+              "Psig",
+              "Pascal"
+            ],
+            "Aspect": "NotSet",
+            "Format": "UnsignedFloat",
+            "IsInterface": false,
+            "IsTerminalType": true
           }
         ]
       }

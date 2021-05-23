@@ -31,7 +31,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Terminal.GetDisplayName()))
                 .ForMember(dest => dest.RelationType, opt => opt.MapFrom(src => RelationType.Transport))
-                .ForMember(dest => dest.TerminalCategory, opt => opt.MapFrom(src => TerminalCategory.NotSet))
+                .ForMember(dest => dest.TerminalCategory, opt => opt.MapFrom(src => commonRepository.GetCategory(src.Terminal)))
                 .ForMember(dest => dest.Terminal, opt => opt.MapFrom(src => src.Terminal))
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.ConnectorType))
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))

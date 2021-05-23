@@ -18,6 +18,8 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.Terminal).HasColumnName("Terminal").IsRequired().HasConversion<string>();
             builder.Property(p => p.TerminalCategory).HasColumnName("TerminalCategory").IsRequired().HasConversion<string>();
             builder.Property(p => p.RelationType).HasColumnName("RelationType").IsRequired().HasConversion<string>();
+            builder.Ignore(p => p.MediaColor);
+            builder.Ignore(p => p.TransportColor);
 
             builder.HasOne(x => x.Node).WithMany(y => y.Connectors).HasForeignKey(x => x.NodeId).OnDelete(DeleteBehavior.Cascade);
         }

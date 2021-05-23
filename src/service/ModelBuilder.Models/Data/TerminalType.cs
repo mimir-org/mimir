@@ -12,8 +12,7 @@ namespace Mb.Models.Data
         public Terminal Terminal { get; set; }
         public ConnectorType ConnectorType { get; set; }
         public string SemanticReference { get; set; }
-        public string Color { get; set; }
-
+        
         [JsonIgnore]
         public string AttributeJson { get; set; }
 

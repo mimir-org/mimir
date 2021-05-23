@@ -16,6 +16,9 @@ namespace Mb.Models.Data
         public string SemanticReference { get; set; }
         public virtual ICollection<Attribute> Attributes { get; set; }
 
+        public string MediaColor { get; set; }
+        public string TransportColor { get; set; }
+
         public virtual string NodeId { get; set; }
         public virtual Node Node { get; set; }
     }
