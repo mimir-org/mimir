@@ -1,18 +1,12 @@
 import { Elements } from "react-flow-renderer";
 import { GetFlowRectData } from "../";
+import { Project, EDGE_TYPE, EdgeType, Node } from "../../../../models/project";
 import {
   CreateBlockEdge,
   CreateSplitViewNode,
   CreateParentBlockNode,
   CreateBlockNode,
 } from ".";
-import {
-  Project,
-  EDGE_TYPE,
-  RELATION_TYPE,
-  EdgeType,
-  Node,
-} from "../../../../models/project";
 
 const CreateBlockElements = (
   project: Project,
@@ -20,42 +14,40 @@ const CreateBlockElements = (
   splitViewNode: Node,
   splitView: boolean
 ): Elements => {
-  const initialElements: Elements = [];
-  const childrenNodes = [];
-  const [width] = GetFlowRectData();
   if (!project) return;
+  const initialElements: Elements = [];
+  const [width] = GetFlowRectData();
 
-  const actualNode = project.nodes.find((node) => node.id === nodeId);
-  const elementNode = CreateParentBlockNode(actualNode, width);
-  if (elementNode) initialElements.push(elementNode);
+  const selectedNode = project.nodes.find((node) => node.id === nodeId);
 
-  if (splitViewNode && splitView) {
-    initialElements.push(CreateSplitViewNode(splitViewNode));
-  }
+  // Draw block
+  const parentBlock = CreateParentBlockNode(selectedNode, width);
+  if (parentBlock) initialElements.push(parentBlock);
 
-  // Draw nodes
+  // Draw nodes for the left block
   project.edges.forEach((edge) => {
     if (edge.fromNode === nodeId) {
-      const fromNode = project.nodes.find((x) => x.id === edge.fromNode);
-      const currentConnector = fromNode.connectors.find(
-        (x) => x.id === edge.fromConnector
-      );
-
-      if (currentConnector?.relationType === RELATION_TYPE.PartOf) {
-        const toNode = project.nodes.find((x) => x.id === edge.toNode);
-        const elementToNode = CreateBlockNode(toNode);
-        if (elementNode) {
-          initialElements.push(elementToNode);
-          childrenNodes.push(toNode);
-        }
-      }
+      const toNode = project.nodes.find((x) => x.id === edge.toNode);
+      if (selectedNode.type === toNode.type)
+        initialElements.push(CreateBlockNode(toNode));
     }
   });
 
+  // Draw splitview nodes
+  if (splitViewNode && splitView) {
+    project.edges.forEach((edge) => {
+      if (edge.fromNode === splitViewNode.id) {
+        const toNode = project.nodes.find((x) => x.id === edge.toNode);
+        if (splitViewNode.type === toNode.type)
+          initialElements.push(CreateSplitViewNode(toNode));
+      }
+    });
+  }
+
   // Draw edges
   project.edges.forEach((edge) => {
-    const elementEdge = CreateBlockEdge(edge, EDGE_TYPE.BLOCK as EdgeType);
-    if (elementEdge) initialElements.push(elementEdge);
+    const blockEdge = CreateBlockEdge(edge, EDGE_TYPE.BLOCK as EdgeType);
+    if (blockEdge) initialElements.push(blockEdge);
   });
 
   return initialElements;

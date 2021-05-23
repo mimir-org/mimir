@@ -2,16 +2,19 @@ import { Node, NODE_TYPE } from "../../../../models/project";
 import { FlowElement } from "react-flow-renderer";
 
 const CreateSplitViewNode = (node: Node): FlowElement => {
-  let blockNode = null;
-  if (!node) return blockNode;
-  let position = { x: 850, y: node.positionY };
+  let splitViewBlock = null;
+  if (!node) return splitViewBlock;
 
   const type =
     node.type === NODE_TYPE.LOCATION
       ? "BlockViewLocation"
       : "BlockViewFunction";
 
-  blockNode = {
+  // Force nodes to fit Block
+  if (node.positionBlockY > 400) node.positionBlockY /= 2;
+  const position = { x: 850, y: node.positionBlockY };
+
+  splitViewBlock = {
     id: node.id,
     type: type,
     data: node,
@@ -23,7 +26,7 @@ const CreateSplitViewNode = (node: Node): FlowElement => {
     connectable: true,
   };
 
-  return blockNode;
+  return splitViewBlock;
 };
 
 export default CreateSplitViewNode;

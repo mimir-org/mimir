@@ -4,14 +4,11 @@ import { FlowElement } from "react-flow-renderer";
 const CreateBlockNode = (node: Node): FlowElement => {
   let blockNode = null;
   if (!node) return blockNode;
-  let type: string;
 
-  if (node.type === NODE_TYPE.FUNCTION) {
-    type = "BlockViewFunction";
-  }
-  if (node.type === NODE_TYPE.LOCATION) {
-    type = "BlockViewLocation";
-  }
+  const type =
+    node.type === NODE_TYPE.LOCATION
+      ? "BlockViewLocation"
+      : "BlockViewFunction";
 
   // Force nodes to fit Block
   if (node.positionBlockY > 400) node.positionBlockY /= 1.7;
@@ -19,7 +16,7 @@ const CreateBlockNode = (node: Node): FlowElement => {
 
   blockNode = {
     id: node.id,
-    type: type ?? node.type,
+    type: type,
     data: node,
     position: position,
     isHidden: node.isHidden,
