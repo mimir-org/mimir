@@ -153,16 +153,12 @@
   height: 100%;
 }
 
-.react_flow__node {
+.react-flow__node {
   opacity: 1 !important;
 }
 
-.react-flow__node-FunctionBlock {
-  opacity: 1 !important;
-}
-
-.react_flow__node .react-flow__node-FunctionBlock {
-  opacity: 1 !important;
+.react-flow__edge {
+  cursor: grab;
 }
 
 @media screen and (min-width: 768px) {
