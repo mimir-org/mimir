@@ -67,6 +67,12 @@ export const VIEW_TYPE = {
   TYPE_EDITOR: "type-editor",
 };
 
+export type SplitViewPosition = keyof typeof SPLITVIEW_POSITION;
+export const SPLITVIEW_POSITION = {
+  RIGHT: "right",
+  LEFT: "left",
+};
+
 export type IconType = keyof typeof ICON_TYPE;
 export const ICON_TYPE = {
   NOTSET_ICON: "NotSetIcon",
