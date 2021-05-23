@@ -1,16 +1,25 @@
-import { Node } from "../../../../models/project";
+import { Node, NODE_TYPE } from "../../../../models/project";
 import { FlowElement } from "react-flow-renderer";
 
 const CreateBlockNode = (node: Node): FlowElement => {
-  let locationNode = null;
-  if (!node) return locationNode;
-  let position = { x: 850, y: node.positionY };
+  let blockNode = null;
+  if (!node) return blockNode;
+  let type: string;
 
-  const type = "BlockViewLocation";
+  if (node.type === NODE_TYPE.FUNCTION) {
+    type = "BlockViewFunction";
+  }
+  if (node.type === NODE_TYPE.LOCATION) {
+    type = "BlockViewLocation";
+  }
 
-  locationNode = {
+  // Force nodes to fit Block
+  if (node.positionBlockY > 400) node.positionBlockY /= 1.7;
+  const position = { x: node.positionBlockX, y: node.positionBlockY };
+
+  blockNode = {
     id: node.id,
-    type: type,
+    type: type ?? node.type,
     data: node,
     position: position,
     isHidden: node.isHidden,
@@ -20,7 +29,7 @@ const CreateBlockNode = (node: Node): FlowElement => {
     connectable: true,
   };
 
-  return locationNode;
+  return blockNode;
 };
 
 export default CreateBlockNode;

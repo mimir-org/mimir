@@ -1,6 +1,11 @@
 import { Elements } from "react-flow-renderer";
-import { CreateBlockEdge, CreateBlockNode, CreateParentBlockNode } from ".";
-import { CreateElementNode, GetFlowRectData } from "../";
+import { GetFlowRectData } from "../";
+import {
+  CreateBlockEdge,
+  CreateSplitViewNode,
+  CreateParentBlockNode,
+  CreateBlockNode,
+} from ".";
 import {
   Project,
   EDGE_TYPE,
@@ -25,7 +30,7 @@ const CreateBlockElements = (
   if (elementNode) initialElements.push(elementNode);
 
   if (splitViewNode && splitView) {
-    initialElements.push(CreateBlockNode(splitViewNode));
+    initialElements.push(CreateSplitViewNode(splitViewNode));
   }
 
   // Draw nodes
@@ -38,7 +43,7 @@ const CreateBlockElements = (
 
       if (currentConnector?.relationType === RELATION_TYPE.PartOf) {
         const toNode = project.nodes.find((x) => x.id === edge.toNode);
-        const elementToNode = CreateElementNode(toNode, true);
+        const elementToNode = CreateBlockNode(toNode);
         if (elementNode) {
           initialElements.push(elementToNode);
           childrenNodes.push(toNode);

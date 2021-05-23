@@ -3,7 +3,6 @@ export { default as CreateOffPageNode } from "./CreateOffPageNode";
 export { default as GetTransportTypeColor } from "./GetTransportTypeColor";
 export { default as GetFlowRectData } from "./GetFlowRectData";
 export { default as CreateId } from "./CreateId";
-export { default as CreateElementNode } from "./CreateElementNode";
 export { default as IsAspectNode } from "./IsAspectNode";
 export { default as GetCenter } from "./GetCenter";
 export { default as GetHandleType } from "./GetHandleType";
