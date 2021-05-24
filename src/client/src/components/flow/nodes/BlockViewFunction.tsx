@@ -1,9 +1,11 @@
 import { memo, FC, useState } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { OptionsIcon } from "../../../assets/icons/blockView";
 import { addSelectedConnector } from "../../../redux/store/flow/actions";
-import { GetBlockHandleType } from "../helpers/block";
+import { GetBlockHandleType, ValidConnector } from "../helpers/block";
+import { RootState } from "../../../redux/store";
+import { NODE_TYPE } from "../../../models/project";
 import {
   GetConnectors,
   SetConnectors,
@@ -27,6 +29,10 @@ const BlockViewFunction: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
   const [showButton, setShowButton] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const isLocation = useSelector<RootState>(
+    (state) => state.splitView.node?.type === NODE_TYPE.LOCATION
+  ) as boolean;
 
   const handleClick = () => {
     setMenuOpen(!menuOpen);
@@ -52,7 +58,6 @@ const BlockViewFunction: FC<NodeProps> = ({ data }) => {
   };
 
   const connectors = GetConnectors();
-  const sortedConns = [];
 
   return (
     <NodeBox onMouseOver={handleOnHover} onMouseOut={handleOnMouseOut}>
@@ -74,12 +79,11 @@ const BlockViewFunction: FC<NodeProps> = ({ data }) => {
           </OptionsElement>
         ))}
       </OptionsBox>
-      <div>{data.label ?? data.names}</div>
 
+      <div>{data.label ?? data.names}</div>
       {connectors?.map((conn) => {
         const [type, pos, className] = GetBlockHandleType(conn);
-        if (data.id === conn.nodeId) {
-          sortedConns.push(conn);
+        if (data.id === conn.nodeId && ValidConnector(conn, isLocation)) {
           return (
             <HandleBox
               id={"handle-" + conn.id}
@@ -103,7 +107,7 @@ const BlockViewFunction: FC<NodeProps> = ({ data }) => {
         }
         return null;
       })}
-      {/* Original connectors */}
+      {/* TODO: Remove */}
       {data.connectors?.map((connector) => {
         const [typeHandler, positionHandler] = GetHandleType(connector);
         return (
