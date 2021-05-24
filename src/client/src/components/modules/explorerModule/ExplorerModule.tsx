@@ -39,7 +39,7 @@ export const ExplorerModule = () => {
   return (
     <AnimatedModule start={start} stop={stop} run={animate}>
       <ModuleHeader explorer visible={isOpen}>
-        <img src={ExplorerIcon} alt="icon" />
+        <img src={ExplorerIcon} alt="icon" className="module-icon" />
         <img
           className="icon"
           src={isOpen ? ToggleLeft : ToggleRight}

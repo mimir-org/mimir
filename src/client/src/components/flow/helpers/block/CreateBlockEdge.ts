@@ -1,5 +1,5 @@
 import { FlowElement, ArrowHeadType } from "react-flow-renderer";
-import { IsBlockViewEdge } from "..";
+import { ShowBlockViewEdge } from ".";
 import { Edge, EdgeType } from "../../../../models/project";
 import store from "../../../../redux/store";
 
@@ -14,7 +14,7 @@ export const CreateBlockEdge = (
   const toNode = nodes.find((x) => x.id === edge.toNode);
   let element = null;
 
-  if (IsBlockViewEdge(edge) && (fromNode || toNode)) {
+  if (ShowBlockViewEdge(edge) && (fromNode || toNode)) {
     element = {
       id: edge.id,
       type: edgeType,

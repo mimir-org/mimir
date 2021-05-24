@@ -16,7 +16,7 @@ const OptionsBox = styled.div`
 
   .button {
     position: absolute;
-    right: 13px;
+    right: 3px;
   }
 `;
 

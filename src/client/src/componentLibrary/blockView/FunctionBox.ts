@@ -1,11 +1,13 @@
 import styled from "styled-components";
+import { Size } from "..";
 
 const FunctionBox = styled.div`
   position: absolute;
   top: 40px;
+  height: ${Size.BlockView_Height}px;
+  width: ${(props) =>
+    props.splitView ? `${Size.SplitView_Width}` : `${Size.BlockView_Width}`}px;
   left: ${(props) => (props.location ? "440" : "-150")}px;
-  width: ${(props) => (props.splitView ? "550" : "950")}px;
-  height: 600px;
   opacity: 1 !important;
 
   .header {

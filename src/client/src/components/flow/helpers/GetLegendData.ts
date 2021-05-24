@@ -50,10 +50,7 @@ const GetBlockViewNodes = (project: Project, nodeId: string): Node[] => {
       const currentConnector = fromNode.connectors.find(
         (x) => x.id === edge.fromConnector
       );
-      if (
-        currentConnector &&
-        currentConnector.relationType === RELATION_TYPE.PartOf
-      ) {
+      if (currentConnector?.relationType === RELATION_TYPE.PartOf) {
         const toNode = project.nodes.find((x) => x.id === edge.toNode);
         if (!toNode.isHidden) nodes.push(toNode);
       }

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { PlusIcon } from "../../../assets/icons/blockView";
+import { ConnectorIcon } from "../../../assets/icons/blockView";
 
 const HandlerWrapper = styled.div`
   .function-treeview-handler {
@@ -8,7 +8,7 @@ const HandlerWrapper = styled.div`
     width: 14px;
     height: 15px;
     background: none;
-    background-image: url(${PlusIcon});
+    background-image: url(${ConnectorIcon});
     border-radius: 0;
     bottom: -10px;
     top: ${(props: { position: string }) =>

@@ -1,8 +1,9 @@
+import { Size } from "../../../../componentLibrary";
 import { Node } from "../../../../models/project";
 
 const SetSplitViewNodePosition = (node: Node) => {
-  const yMax = 600;
-  const yMin = 100;
+  const yMax = Size.SplitView_Height;
+  const yMin = Size.SplitView_Height - 500;
   const xMax = 1100;
   const xMin = 700;
 

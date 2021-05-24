@@ -74,7 +74,7 @@ const LibraryModule = () => {
   return (
     <AnimatedModule start={start} stop={stop} run={animate}>
       <ModuleHeader library visible={isOpen}>
-        <img src={LibraryIcon} alt="library-icon" />
+        <img src={LibraryIcon} alt="library-icon" className="module-icon" />
         <img
           className="icon"
           src={isOpen ? ToggleRight : ToggleLeft}
