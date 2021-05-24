@@ -8,7 +8,7 @@ const CreateTreeElements = (project: Project): Elements => {
 
   if (!project) return initialElements;
 
-  project.nodes.forEach((node) => {
+  project.nodes?.forEach((node) => {
     let treeNode = null;
     if (node.type !== NODE_TYPE.OFF_PAGE) treeNode = CreateTreeNode(node);
     if (treeNode) initialElements.push(treeNode);
