@@ -15,7 +15,7 @@ import {
 
 import { IsAspectNode, GetCenter } from "../helpers";
 
-export default function PartEdgeType({
+export default function TransportEdgeType({
   id,
   sourceX,
   sourceY,

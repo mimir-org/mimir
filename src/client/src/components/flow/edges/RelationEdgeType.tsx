@@ -15,7 +15,9 @@ import {
 
 import { IsAspectNode, GetCenter } from "../helpers";
 
-export default function PartEdgeType({
+import "./RelationEdge.scss";
+
+export default function RelationEdgeType({
   id,
   sourceX,
   sourceY,
@@ -61,7 +63,7 @@ export default function PartEdgeType({
   };
 
   const pathType = (source: Node, target: Node) => {
-    return edgePathSmoothStep;
+    return edgePathBezier;
     // const pathType = IsAspectNode(source.type)
     //   ? (LINE_EDGE_TYPE.STEP as LineEdgeType)
     //   : source.type !== target.type
@@ -86,7 +88,7 @@ export default function PartEdgeType({
     // } else if (target.type === NODE_TYPE.PRODUCT) {
     //   text = "fulfilledBy";
     // } else if (target.type === NODE_TYPE.LOCATION) {
-    //   text = "locatedAt";
+    //   text = "HasLocation";
     // }
 
     // return text ? (
@@ -108,7 +110,14 @@ export default function PartEdgeType({
       <path
         id={id}
         style={getStyle()}
-        className="react-flow__edge-path"
+        className="react-flow__edge-path has-location"
+        d={pathType(data.source, data.target)}
+        markerEnd={markerEnd}
+      />
+      <path
+        id={id}
+        style={getStyle()}
+        className="react-flow__edge-path has-location--dashed"
         d={pathType(data.source, data.target)}
         markerEnd={markerEnd}
       />

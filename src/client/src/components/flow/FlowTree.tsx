@@ -7,7 +7,8 @@ import { RootState } from "./../../redux/store/index";
 import { useOnConnect, useOnDrop, useOnElementsRemove } from "./hooks";
 import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
 import { OpenProjectMenu } from "../project/openProject/OpenProjectMenu";
-import { EdgeType, EDGE_TYPE, Project, VIEW_TYPE } from "../../models/project";
+import { Project, VIEW_TYPE } from "../../models/project";
+import { GetTreeEdgeType } from "./helpers/tree";
 import {
   GetTreeNodeTypes,
   GetTreeEdgeTypes,
@@ -46,20 +47,22 @@ const FlowTree = () => {
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(CreateTreeElements(project, EDGE_TYPE.PART as EdgeType));
+      setElements(CreateTreeElements(project));
       return setReactFlowInstance(_reactFlowInstance);
     },
     [project]
   );
 
   const OnConnect = (params) => {
-    return useOnConnect(
-      params,
-      project,
-      setElements,
-      dispatch,
-      EDGE_TYPE.PART as EdgeType
+    console.log(params);
+
+    const fromNode = project.nodes.find((x) => x.id === params.source);
+    const fromConnector = fromNode.connectors.find(
+      (x) => x.id === params.sourceHandle
     );
+
+    const edgeType = GetTreeEdgeType(fromConnector);
+    return useOnConnect(params, project, setElements, dispatch, edgeType);
   };
 
   const OnDragOver = (event) => {
