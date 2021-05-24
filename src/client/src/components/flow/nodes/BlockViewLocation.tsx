@@ -3,7 +3,7 @@ import { NodeProps, Handle } from "react-flow-renderer";
 import { useDispatch, useSelector } from "react-redux";
 import { OptionsIcon } from "../../../assets/icons/blockView";
 import { addSelectedConnector } from "../../../redux/store/flow/actions";
-import { GetBlockHandleType, ValidConnector } from "../helpers/block";
+import { GetBlockHandleType, ValidateConnector } from "../helpers/block";
 import { NODE_TYPE } from "../../../models/project";
 import { RootState } from "../../../redux/store";
 import {
@@ -83,7 +83,7 @@ const BlockViewLocation: FC<NodeProps> = ({ data }) => {
       <div>{data.label ?? data.names}</div>
       {connectors.map((conn) => {
         const [type, pos, className] = GetBlockHandleType(conn);
-        if (data.id === conn.nodeId && ValidConnector(conn, isLocation)) {
+        if (data.id === conn.nodeId && ValidateConnector(conn, isLocation)) {
           return (
             <HandleBox
               id={"handle-" + conn.id}

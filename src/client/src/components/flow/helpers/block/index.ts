@@ -7,5 +7,5 @@ export { default as GetBlockHandleType } from "./GetBlockHandleType";
 export { default as SetSplitViewNodePosition } from "./SetSplitViewNodePosition";
 export { default as SetBlockNodePosition } from "./SetBlockNodePosition";
 export { default as ShowBlockViewEdge } from "./ShowBlockViewEdge";
-export { default as ValidConnector } from "./ValidConnector";
+export { default as ValidateConnector } from "./ValidateConnector";
 export { default as GetBlockEdgeTypes } from "./GetBlockEdgeTypes";

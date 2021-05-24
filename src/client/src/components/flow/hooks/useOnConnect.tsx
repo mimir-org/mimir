@@ -1,7 +1,7 @@
 import { Edge, EdgeType, EDGE_TYPE, Node } from "../../../models/project";
 import { SaveEventData } from "../../../redux/store/localStorage/localStorage";
 import { CreateId } from "../helpers";
-import { addEdge, ArrowHeadType } from "react-flow-renderer";
+import { addEdge } from "react-flow-renderer";
 import { createEdge } from "../../../redux/store/project/actions";
 
 const useOnConnect = (
