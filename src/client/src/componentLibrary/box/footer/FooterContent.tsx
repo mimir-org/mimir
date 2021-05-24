@@ -16,7 +16,7 @@ const FooterContent = styled.div`
   cursor: pointer;
   color: ${(props) => (props.active ? `${Color.White}` : `${Color.Black}`)};
   font-size: ${FontSize.Standard};
-  text-decoration: ${(props) => (props.active ? "underline" : "none")};
+  text-decoration: ${(props) => props.active && "underline"};
   white-space: nowrap;
 `;
 

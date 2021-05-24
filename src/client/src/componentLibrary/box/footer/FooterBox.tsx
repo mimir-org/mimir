@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Color } from "../../";
 
 const FooterBox = styled.div`
-  visibility: ${(props) => (props.visible ? "initial" : "hidden")};
+  visibility: ${(props) => !props.visible && "hidden"};
   display: flex;
   width: inherit;
   height: 100px;

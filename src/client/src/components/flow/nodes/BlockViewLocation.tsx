@@ -54,6 +54,7 @@ const BlockViewLocation: FC<NodeProps> = ({ data }) => {
   const connectors = GetConnectors();
   const sortedConns = [];
 
+  // TODO: fix this hack
   useEffect(() => {
     setShowButton(false);
   }, []);

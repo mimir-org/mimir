@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Size } from "..";
 
 const BackgroundBox = styled.div`
-  visibility: ${(props) => (props.visible ? "initial" : "hidden")};
+  visibility: ${(props) => !props.visible && "hidden"};
   height: ${Size.BlockView_Height}px !important;
   width: ${(props) =>
     props.isSplitView

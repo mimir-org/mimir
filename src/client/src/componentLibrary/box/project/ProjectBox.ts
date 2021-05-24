@@ -19,7 +19,7 @@ const ProjectBox = styled.div`
   left: 25%;
   right: 25%;
   padding: 20px;
-  visibility: ${(props) => (props.visible ? "initial" : "hidden")};
+  visibility: ${(props) => !props.visible && "hidden"};
 `;
 
 export default ProjectBox;

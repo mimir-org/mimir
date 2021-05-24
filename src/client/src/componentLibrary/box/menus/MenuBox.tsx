@@ -3,8 +3,8 @@ import { Color } from "../../";
 
 const MenuBox = styled.div`
   position: absolute;
-  right: ${(props: { right: string }) => (props.right ? "0px" : "inherit")};
-  left: ${(props: { right: string }) => (props.right ? "inherit" : "0px")};
+  right: ${(props: { right: string }) => props.right && "0px"};
+  left: ${(props: { right: string }) => !props.right && "0px"};
   background: ${Color.White};
   height: min-content;
   min-width: 250px;

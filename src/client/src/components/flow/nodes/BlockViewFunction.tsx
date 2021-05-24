@@ -1,4 +1,4 @@
-import { memo, FC, useState, useEffect, useMemo } from "react";
+import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
 import { useDispatch } from "react-redux";
 import { OptionsIcon } from "../../../assets/icons/blockView";
@@ -11,7 +11,6 @@ import {
 import {
   GetConnectorIcon,
   GetHandlePosition,
-  GetHandleType,
   SortConnectors,
   GetConnectorName,
 } from "../helpers";
@@ -25,7 +24,7 @@ import {
 
 const BlockViewFunction: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
-  const [showButton, setShowButton] = useState(true);
+  const [showButton, setShowButton] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleClick = () => {
@@ -54,9 +53,10 @@ const BlockViewFunction: FC<NodeProps> = ({ data }) => {
   const connectors = GetConnectors();
   const sortedConns = [];
 
-  useEffect(() => {
-    setShowButton(false);
-  }, []);
+  // TODO: fix this hack
+  //   useEffect(() => {
+  //     setShowButton(false);
+  //   }, []);
 
   return (
     <NodeBox onMouseOver={handleOnHover} onMouseOut={handleOnMouseOut}>
@@ -79,8 +79,8 @@ const BlockViewFunction: FC<NodeProps> = ({ data }) => {
         ))}
       </OptionsBox>
       <div>{data.label ?? data.names}</div>
-      {/* Show connectors added to node */}
-      {connectors.map((conn) => {
+
+      {connectors?.map((conn) => {
         const [type, pos, className] = GetBlockHandleType(conn);
         if (data.id === conn.nodeId) {
           sortedConns.push(conn);
@@ -107,20 +107,6 @@ const BlockViewFunction: FC<NodeProps> = ({ data }) => {
           );
         }
         return null;
-      })}
-
-      {/* Original connectors */}
-      {data.connectors?.map((connector) => {
-        const [typeHandler, positionHandler] = GetHandleType(connector);
-        return (
-          <Handle
-            type={typeHandler}
-            position={positionHandler}
-            id={connector.id}
-            key={connector.id}
-            style={{ visibility: "hidden" }}
-          />
-        );
       })}
     </NodeBox>
   );

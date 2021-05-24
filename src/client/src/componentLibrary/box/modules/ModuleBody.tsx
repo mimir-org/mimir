@@ -6,14 +6,14 @@ const ModuleBody = styled.div`
   width: 331px;
   opacity: ${(props: { visible: boolean }) => (props.visible ? 1 : 0)};
   transition: opacity 0.2s ease-in-out;
-  position: ${(props) => (props.legend ? "absolute" : "initial")};
-  bottom: ${(props) => (props.legend ? "0" : "initial")};
-  height: ${(props) => (props.legend ? "inherit" : "initial")};
-  border-top: ${(props) => (props.legend ? `1px solid ${Color.Grey}` : "0")};
-  margin-bottom: ${(props) => (props.legend ? "20px" : "0")};
-  overflow-y: ${(props) => (props.legend ? "auto" : "none")};
-  max-height: ${(props) => (props.legend ? "35%" : "none")}; // TODO fix
-  position: ${(props) => (props.legend ? "absolute" : "initial")};
+  position: ${(props) => props.legend && "absolute"};
+  bottom: ${(props) => props.legend && "0"};
+  height: ${(props) => props.legend && "inherit"};
+  border-top: ${(props) => props.legend && `1px solid ${Color.Grey}`};
+  margin-bottom: ${(props) => props.legend && "20px"};
+  overflow-y: ${(props) => props.legend && "auto"};
+  max-height: ${(props) => props.legend && "35%"};
+  position: ${(props) => props.legend && "absolute"};
 `;
 
 export default ModuleBody;

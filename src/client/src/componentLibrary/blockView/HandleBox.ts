@@ -3,9 +3,8 @@ import { Position } from "react-flow-renderer";
 
 const HandleBox = styled.div`
   top: ${(props) => props.index}%;
-  right: ${(props) =>
-    props.position === Position.Right ? "-10px" : "initial"};
-  left: ${(props) => (props.position === Position.Left ? "-6px" : "initial")};
+  right: ${(props) => props.position === Position.Right && "-10px"};
+  left: ${(props) => props.position === Position.Left && "-6px"};
   position: absolute;
 
   .connector {
