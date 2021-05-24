@@ -4,7 +4,8 @@ export const LoadState = (key: string) => {
   try {
     const serializedState = localStorage.getItem(`show_${key}`);
 
-    if (serializedState === null || serializedState === undefined) {
+    if (!serializedState) {
+      if (key === "VisualFilter") return JSON.parse("false");
       return JSON.parse("true");
     }
 

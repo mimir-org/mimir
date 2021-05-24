@@ -4,7 +4,7 @@ import {
   MenuSubHeader,
 } from "../../../../componentLibrary/box/menus";
 
-const GetContent = (items: number, section: number) => {
+const GetContent = (items: number) => {
   // TODO: fix this mess when content for filter is known
 
   return (

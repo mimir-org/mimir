@@ -9,7 +9,6 @@ import { LoadState, SaveState } from "../../../redux/store/localStorage";
 const FilterModule = () => {
   const type = MENU_TYPE.VISUAL_FILTER;
   const [showFilter, setShowFilter] = useState(LoadState(type));
-  const isOpen = LoadState(type);
 
   const handleClick = () => {
     setShowFilter(!showFilter);
@@ -18,16 +17,16 @@ const FilterModule = () => {
 
   return (
     <>
-      <MenuTopHeader isOpen={isOpen} right>
+      <MenuTopHeader isOpen={showFilter} right>
         <div onClick={handleClick}>{TextResources.MainHeader_VisualFilter}</div>
         <img
-          src={GetMenuIcon(isOpen, type)}
+          src={GetMenuIcon(showFilter, type)}
           alt="icon"
           className="icon"
           onClick={handleClick}
         />
       </MenuTopHeader>
-      {isOpen && (
+      {showFilter && (
         <MenuBox right>
           <FilterContent />
         </MenuBox>

@@ -3,10 +3,10 @@ import {
   NODE_TYPE,
   Edge,
   Connector,
-  RELATION_TYPE,
   Project,
   Node,
 } from "../../../../models/project";
+import { ValidateEdge } from ".";
 
 const ShowBlockViewEdge = (edge: Edge): boolean => {
   if (edge.targetType === NODE_TYPE.OFF_PAGE) return;
@@ -30,15 +30,14 @@ const ShowBlockViewEdge = (edge: Edge): boolean => {
     (x) => x.id === toConnector
   ) as Connector;
 
-  const checkLocation =
-    toNode.type === NODE_TYPE.LOCATION &&
-    nodeToConnector?.relationType === RELATION_TYPE.HasLocation &&
-    nodeFromConnector?.relationType === RELATION_TYPE.HasLocation &&
-    isSplitView;
-
-  const checkFunction = fromNode?.type === NODE_TYPE.FUNCTION && !isSplitView;
-
-  return checkLocation || checkFunction;
+  return ValidateEdge(
+    fromNode,
+    toNode,
+    splitViewNode,
+    nodeFromConnector,
+    nodeToConnector,
+    isSplitView
+  );
 };
 
 export default ShowBlockViewEdge;
