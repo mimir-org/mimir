@@ -1,9 +1,9 @@
-import { memo, FC, useState, useEffect } from "react";
+import { memo, FC, useState } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
 import { useDispatch } from "react-redux";
 import { OptionsIcon } from "../../../assets/icons/blockView";
 import { addSelectedConnector } from "../../../redux/store/flow/actions";
-import { GetBlockHandleType, SetConnectorPosition } from "../helpers/block";
+import { GetBlockHandleType } from "../helpers/block";
 import {
   GetConnectors,
   SetConnectors,
@@ -54,11 +54,6 @@ const BlockViewLocation: FC<NodeProps> = ({ data }) => {
   const connectors = GetConnectors();
   const sortedConns = [];
 
-  // TODO: fix this hack
-  useEffect(() => {
-    setShowButton(false);
-  }, []);
-
   return (
     <NodeBox onMouseOver={handleOnHover} onMouseOut={handleOnMouseOut}>
       <OptionsMenu visible={showButton} onClick={handleClick}>
@@ -81,7 +76,6 @@ const BlockViewLocation: FC<NodeProps> = ({ data }) => {
       </OptionsBox>
       <div>{data.label ?? data.names}</div>
 
-      {/* Show connectors added to node */}
       {connectors.map((conn) => {
         const [type, pos, className] = GetBlockHandleType(conn);
         if (data.id === conn.nodeId) {
@@ -89,7 +83,6 @@ const BlockViewLocation: FC<NodeProps> = ({ data }) => {
           return (
             <HandleBox
               id={"handle-" + conn.id}
-              index={SetConnectorPosition(sortedConns)}
               position={GetHandlePosition(pos)}
               key={conn.id}
             >

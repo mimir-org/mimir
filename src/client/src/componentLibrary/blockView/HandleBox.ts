@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Position } from "react-flow-renderer";
 
 const HandleBox = styled.div`
-  top: ${(props) => props.index}%;
+  top: 50%;
   right: ${(props) => props.position === Position.Right && "-10px"};
   left: ${(props) => props.position === Position.Left && "-6px"};
   position: absolute;
