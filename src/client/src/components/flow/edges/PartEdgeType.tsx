@@ -14,6 +14,7 @@ import {
 } from "../../../models/project";
 
 import { IsAspectNode, GetCenter } from "../helpers";
+import "./PartEdge.scss";
 
 export default function PartEdgeType({
   id,

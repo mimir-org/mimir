@@ -1,5 +1,5 @@
 import { Edge, EdgeType, EDGE_TYPE } from "../../../../models/project";
-import { FlowElement, ArrowHeadType } from "react-flow-renderer";
+import { FlowElement } from "react-flow-renderer";
 import store from "../../../../redux/store";
 
 export const CreateTreeEdge = (edge: Edge, edgeType: EdgeType): FlowElement => {
@@ -15,7 +15,7 @@ export const CreateTreeEdge = (edge: Edge, edgeType: EdgeType): FlowElement => {
             target: edge.toNode,
             sourceHandle: edge.fromConnector,
             targetHandle: edge.toConnector,
-            arrowHeadType: edgeType === EDGE_TYPE.RELATION ? ArrowHeadType.ArrowClosed : null,
+            arrowHeadType: null,
             animated: edgeType === EDGE_TYPE.TRANSPORT,
             label: "",
             data: {

@@ -49,6 +49,7 @@
   right: -7px;
   width: 18px;
   height: 18px;
+  top: 0px;
   border: none;
   background-color: transparent;
   z-index: 100;
@@ -80,7 +81,7 @@
 
 .react-flow__node-product,
 .react-flow__node-Product {
-  background: turquoise;
+  background: #00f0ff;
 }
 
 .react-flow__node-location,

@@ -1,0 +1,7 @@
+.react-flow__edge-PartEdgeType {
+    &.selected {
+        .react-flow__edge-path {
+            stroke: black !important;
+        }
+    }
+}
