@@ -35,6 +35,13 @@ const ValidateEdge = (
     ) {
       return true;
     }
+    if (
+      !splitViewNode &&
+      fromNode.type === NODE_TYPE.FUNCTION &&
+      toNode.type === NODE_TYPE.FUNCTION
+    ) {
+      return true;
+    }
   }
 
   if (!splitView) {
