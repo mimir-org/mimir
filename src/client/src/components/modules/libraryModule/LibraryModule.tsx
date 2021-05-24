@@ -116,7 +116,7 @@ const LibraryModule = () => {
           <LibraryComponent categories={libNodes()} search={search} />
           <TypeEditorModule />
         </ModuleBody>
-        <AnimatedModule
+        {/* <AnimatedModule
           start={startLegend}
           stop={stopLegend}
           run={animateLegend}
@@ -136,7 +136,7 @@ const LibraryModule = () => {
             </LegendIcons>
           </ModuleHeader>
           <LegendModule visible={true} />
-        </AnimatedModule>
+        </AnimatedModule> */}
       </AnimatedModule>
     </>
   );

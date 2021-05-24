@@ -25,23 +25,23 @@ const CreateOffPageNode = (
   const parentNode = projectState.project?.nodes.find(
     (x) => x.id === data.parentNodeId
   );
-  const parentPartOfConnector = parentNode.connectors.find(
+  const parentPartOfConnector = parentNode?.connectors.find(
     (x) =>
       x.relationType === RELATION_TYPE.PartOf &&
       x.type === CONNECTOR_TYPE.OUTPUT
   );
-  const fromNode = projectState.project.nodes.find(
+  const fromNode = projectState.project?.nodes.find(
     (x) => x.id === data.fromNodeId
   );
-  const fromNodeConnector = fromNode.connectors.find(
+  const fromNodeConnector = fromNode?.connectors.find(
     (x) => x.id === data.fromConnectorId
   );
   const [width] = GetFlowRectData();
 
   const node = {
     id: CreateId(),
-    name: fromNodeConnector.name,
-    label: fromNodeConnector.name,
+    name: fromNodeConnector?.name,
+    label: fromNodeConnector?.name,
     type: NODE_TYPE.OFF_PAGE as NodeType,
     positionX: width - 25,
     positionY: data.y,
@@ -54,9 +54,9 @@ const CreateOffPageNode = (
     id: CreateId(),
     name: "TransportConnector",
     type: CONNECTOR_TYPE.INPUT as ConnectorType,
-    terminalCategory: fromNodeConnector.terminalCategory,
-    terminal: fromNodeConnector.terminal as Terminal,
-    relationType: fromNodeConnector.relationType,
+    terminalCategory: fromNodeConnector?.terminalCategory,
+    terminal: fromNodeConnector?.terminal as Terminal,
+    relationType: fromNodeConnector?.relationType,
     nodeId: node.id,
     attributes: [],
     semanticReference: "",
@@ -83,24 +83,24 @@ const CreateOffPageNode = (
 
   const partofEdge = {
     id: CreateId(),
-    fromConnector: parentPartOfConnector.id,
-    toConnector: partOfConnector.id,
-    fromNode: parentNode.id,
+    fromConnector: parentPartOfConnector?.id,
+    toConnector: partOfConnector?.id,
+    fromNode: parentNode?.id,
     toNode: node.id,
     isHidden: false,
-    parentType: parentNode.type,
-    targetType: node.type,
+    parentType: parentNode?.type,
+    targetType: node?.type,
   } as Edge;
 
   const transportEdge = {
     id: CreateId(),
     fromConnector: data.fromConnectorId,
-    toConnector: targetConnector.id,
+    toConnector: targetConnector?.id,
     fromNode: data.fromNodeId,
     toNode: node.id,
     isHidden: false,
-    parentType: fromNode.type,
-    targetType: node.type,
+    parentType: fromNode?.type,
+    targetType: node?.type,
   } as Edge;
 
   return {

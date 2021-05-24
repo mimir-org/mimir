@@ -28,11 +28,11 @@ const ShowBlockViewEdge = (edge: Edge): boolean => {
   ) as Connector;
 
   return (
-    toNode.type === NODE_TYPE.LOCATION &&
-    nodeToConnector?.relationType === RELATION_TYPE.HasLocation &&
-    nodeFromConnector?.relationType === RELATION_TYPE.HasLocation &&
-    isSplitView &&
-    splitViewNode?.type === NODE_TYPE.LOCATION
+    toNode.type === NODE_TYPE.LOCATION
+    // nodeToConnector?.relationType === RELATION_TYPE.HasLocation &&
+    // nodeFromConnector?.relationType === RELATION_TYPE.HasLocation &&
+    // isSplitView &&
+    // splitViewNode?.type === NODE_TYPE.LOCATION
   );
 };
 

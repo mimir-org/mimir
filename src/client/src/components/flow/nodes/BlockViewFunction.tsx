@@ -13,6 +13,7 @@ import {
   GetHandlePosition,
   SortConnectors,
   GetConnectorName,
+  GetHandleType,
 } from "../helpers";
 import {
   NodeBox,
@@ -101,6 +102,19 @@ const BlockViewFunction: FC<NodeProps> = ({ data }) => {
           );
         }
         return null;
+      })}
+      {/* Original connectors */}
+      {data.connectors?.map((connector) => {
+        const [typeHandler, positionHandler] = GetHandleType(connector);
+        return (
+          <Handle
+            type={typeHandler}
+            position={positionHandler}
+            id={connector.id}
+            key={connector.id}
+            style={{ visibility: "hidden" }}
+          />
+        );
       })}
     </NodeBox>
   );
