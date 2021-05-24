@@ -18,7 +18,7 @@ const LegendModule = ({ visible }) => {
   const isBlockView = CheckView(VIEW_TYPE.BLOCKVIEW);
   let legends = GetLegendData(projectState.project, false, null) as Legend[];
 
-  let selectedNode = projectState.project.nodes.find(
+  let selectedNode = projectState.project?.nodes?.find(
     (x) => x.isSelected
   ) as Node;
 
