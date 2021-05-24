@@ -15,7 +15,7 @@ const CreateTreeElements = (project: Project): Elements => {
 
   project.edges?.forEach((edge) => {
     const fromNode = project.nodes.find((x) => x.id === edge.fromNode);
-    const fromConnector = fromNode.connectors.find(
+    const fromConnector = fromNode?.connectors.find(
       (x) => x.id === edge.fromConnector
     );
 

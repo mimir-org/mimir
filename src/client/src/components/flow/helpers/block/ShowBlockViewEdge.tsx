@@ -19,7 +19,7 @@ const ShowBlockViewEdge = (edge: Edge): boolean => {
   const fromConnector = edge.fromConnector;
   const toConnector = edge.toConnector;
 
-  const nodeFromConnector = fromNode.connectors.find(
+  const nodeFromConnector = fromNode?.connectors.find(
     (x) => x.id === fromConnector
   ) as Connector;
 
