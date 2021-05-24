@@ -12,10 +12,18 @@ interface Props {
 const Animation = ({ start, stop, run, type }: Props) => keyframes`
 ${!run ? (start = stop) : null}
   from {
-    ${type === MODULE_TYPE.INSPECTOR ? "height" : "width"}: ${start};
+    ${
+      type === MODULE_TYPE.INSPECTOR || type === MODULE_TYPE.LEGEND
+        ? "height"
+        : "width"
+    }: ${start};
   }
   to {
-    ${type === MODULE_TYPE.INSPECTOR ? "height" : "width"}: ${stop};
+    ${
+      type === MODULE_TYPE.INSPECTOR || type === MODULE_TYPE.LEGEND
+        ? "height"
+        : "width"
+    }: ${stop};
   }  
 `;
 

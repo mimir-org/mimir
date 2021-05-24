@@ -1,21 +1,20 @@
 import styled from "styled-components";
-import { FontType, FontSize } from "../../../componentLibrary";
+import { FontType, FontSize, Color } from "../../../componentLibrary";
 
 const ModuleHeader = styled.div`
   font-family: ${FontType.Standard};
   font-size: ${FontSize.Header};
   text-align: center;
   padding-top: 5px;
-  height: 25px;
+  height: ${(props) => (props.legend ? "60px" : "25px")};
   position: relative;
-  margin-left: ${(props) => props.library && 7}px;
-  margin-right: ${(props) => props.explorer && 7}px;
-  margin-top: ${(props) => !props.inspector && "22px"};
+  margin-left: ${(props) => props.library && "7px"};
+  margin-right: ${(props) => props.explorer && "7px"};
+  margin-top: ${(props) => !props.inspector && !props.legend && "22px"};
   margin-bottom: ${(props) => props.inspector && "12px"};
   width: ${(props) => (props.inspector ? "154px" : "initial")};
   float: ${(props) => props.inspector && "right"};
-  width: ${(props) => props.legend && "100px"};
-  left: ${(props) => props.legend && "110px"};
+  border-top: ${(props) => props.legend && `1px solid ${Color.Grey}`};
 
   .text {
     position: relative;

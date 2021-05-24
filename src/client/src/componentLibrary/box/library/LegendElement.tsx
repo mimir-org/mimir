@@ -6,13 +6,13 @@ const LegendElement = styled.div`
   flex-direction: row;
   margin: 0px 15px;
   background: ${Color.White};
-  padding: 6px 10px;
+  padding: 0px 10px;
   color: ${Color.Black};
   font-size: ${FontSize.Medium};
   width: auto;
 
-  :nth-child(2) {
-    margin-top: 20px;
+  :first-child {
+    padding-top: 10px;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
   }

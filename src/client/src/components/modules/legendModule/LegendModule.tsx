@@ -1,15 +1,10 @@
 import { useSelector } from "react-redux";
-import { LegendIcon } from "../../../assets/icons";
-import { TextResources } from "../../../assets/textResources";
 import { ProjectState } from "../../../redux/store/project/types";
 import { RootState } from "../../../redux/store";
 import { CheckView } from "../../../redux/store/localStorage";
 import { Node, VIEW_TYPE } from "../../../models/project";
 import { GetLegendData, Legend } from "../../flow/helpers";
-import {
-  ModuleBody,
-  ModuleHeader,
-} from "../../../componentLibrary/box/modules";
+import { ModuleBody } from "../../../componentLibrary/box/modules";
 import {
   LegendElement,
   LegendColor,
@@ -37,10 +32,6 @@ const LegendModule = ({ visible }) => {
 
   return (
     <ModuleBody visible={visible} legend>
-      <ModuleHeader legend>
-        <img src={LegendIcon} alt="legend" className="module-icon" />
-        {TextResources.Legend_Heading}
-      </ModuleHeader>
       {legends?.map((legend) => {
         return (
           <LegendElement key={legend.key}>

@@ -22,6 +22,11 @@ const initialState = {
       visible: LoadState(MODULE_TYPE.EXPLORER),
       animate: false,
     },
+    {
+      type: MODULE_TYPE.LEGEND,
+      visible: LoadState(MODULE_TYPE.LEGEND),
+      animate: false,
+    },
   ],
 };
 

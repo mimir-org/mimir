@@ -6,14 +6,23 @@ const ModuleBox = styled.div`
   border-right: ${(props: { type: string }) =>
     props.type !== MODULE_TYPE.INSPECTOR && `1px solid ${Color.Grey}`};
   border-left: ${(props: { type: string }) =>
-    props.type !== MODULE_TYPE.INSPECTOR && `1px solid ${Color.Grey}`};
+    props.type !== MODULE_TYPE.INSPECTOR &&
+    props.type !== MODULE_TYPE.LEGEND &&
+    `1px solid ${Color.Grey}`};
   background: ${Color.LightGrey};
   width: ${(props: { stop: string; type: string }) =>
-    props.type !== MODULE_TYPE.INSPECTOR && props.stop};
+    props.type !== MODULE_TYPE.INSPECTOR &&
+    props.type !== MODULE_TYPE.LEGEND &&
+    props.stop};
   height: ${(props: { stop: string; type: string }) =>
-    props.type === MODULE_TYPE.INSPECTOR && props.stop};
+    (props.type === MODULE_TYPE.INSPECTOR ||
+      props.type === MODULE_TYPE.LEGEND) &&
+    props.stop};
   overflow: hidden;
-  z-index: 1;
+  z-index: ${(props) =>
+    props.type === MODULE_TYPE.LEGEND ? "1900" : "1"} !important;
+  position: ${(props) => props.type === MODULE_TYPE.LEGEND && "absolute"};
+  bottom: ${(props) => props.type === MODULE_TYPE.LEGEND && "0"};
 `;
 
 export default ModuleBox;

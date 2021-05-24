@@ -11,14 +11,22 @@ import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import { MODULE_TYPE, LibCategory } from "../../../models/project";
 import { SaveState } from "../../../redux/store/localStorage";
 import { AnimatedModule, Size } from "../../../componentLibrary";
-import { LibraryIcon, ToggleLeft, ToggleRight } from "../../../assets/icons";
 import {
   ModuleBody,
   ModuleHeader,
 } from "../../../componentLibrary/box/modules";
+import {
+  LegendIcon,
+  LibraryIcon,
+  ToggleDown,
+  ToggleLeft,
+  ToggleRight,
+  ToggleUp,
+} from "../../../assets/icons";
 
 const LibraryModule = () => {
-  const key = MODULE_TYPE.LIBRARY;
+  const libraryKey = MODULE_TYPE.LIBRARY;
+  const legendKey = MODULE_TYPE.LEGEND;
   const dispatch = useDispatch();
   const state = useSelector<RootState>(
     (state) => state.library
@@ -32,21 +40,36 @@ const LibraryModule = () => {
     dispatch(searchLibrary(text));
   };
 
+  const legendOpen = useSelector<RootState>(
+    (state) => state.modules.types.find((x) => x.type === legendKey).visible
+  ) as boolean;
+
   const animate = useSelector<RootState>(
-    (state) => state.modules.types.find((x) => x.type === key).animate
+    (state) => state.modules.types.find((x) => x.type === libraryKey).animate
+  ) as boolean;
+
+  const animateLegend = useSelector<RootState>(
+    (state) => state.modules.types.find((x) => x.type === legendKey).animate
   ) as boolean;
 
   const isOpen = useSelector<RootState>(
-    (state) => state.modules.types.find((x) => x.type === key).visible
+    (state) => state.modules.types.find((x) => x.type === libraryKey).visible
   ) as boolean;
 
   const handleClick = () => {
-    SaveState(!isOpen, key);
-    dispatch(changeModuleVisibility(key, !isOpen, true));
+    SaveState(!isOpen, libraryKey);
+    dispatch(changeModuleVisibility(libraryKey, !isOpen, true));
+  };
+
+  const handleLegendClick = () => {
+    SaveState(!legendOpen, legendKey);
+    dispatch(changeModuleVisibility(legendKey, !legendOpen, true));
   };
 
   const start = isOpen ? Size.ModuleClosed : Size.ModuleOpen;
   const stop = isOpen ? Size.ModuleOpen : Size.ModuleClosed;
+  const startLegend = legendOpen ? Size.ModuleClosed : Size.ModuleOpen;
+  const stopLegend = legendOpen ? Size.ModuleOpen : Size.ModuleClosed;
 
   const libNodes = (): LibCategory[] => {
     var allCategories = [];
@@ -67,34 +90,62 @@ const LibraryModule = () => {
 
       allCategories.push(libCategory);
     });
-
     return allCategories;
   };
 
   return (
-    <AnimatedModule start={start} stop={stop} run={animate}>
-      <ModuleHeader library visible={isOpen}>
-        <img src={LibraryIcon} alt="library-icon" className="module-icon" />
-        <img
-          className="icon"
-          src={isOpen ? ToggleRight : ToggleLeft}
-          alt="toggle"
-          onClick={handleClick}
-        />
-        <p className="text">{TextResources.Library_Heading}</p>
-      </ModuleHeader>
-      <ModuleBody visible={isOpen} library>
-        <LibraryComponent categories={libNodes()} search={search} />
+    <>
+      <AnimatedModule start={start} stop={stop} run={animate}>
+        <ModuleHeader library visible={isOpen}>
+          <img src={LibraryIcon} alt="library-icon" className="module-icon" />
+          <img
+            className="icon"
+            src={isOpen ? ToggleRight : ToggleLeft}
+            alt="toggle"
+            onClick={handleClick}
+          />
+          <p className="text">{TextResources.Library_Heading}</p>
+        </ModuleHeader>
+        <ModuleBody visible={isOpen} library>
+          <LibraryComponent categories={libNodes()} search={search} />
+        </ModuleBody>
         <AnimatedModule
-          start={start}
-          stop={stop}
-          run={animate}
+          start={startLegend}
+          stop={stopLegend}
+          run={animateLegend}
           type={MODULE_TYPE.LEGEND}
         >
-          <LegendModule visible={isOpen} />
+          <ModuleHeader legend>
+            <div
+              style={{
+                display: "inline",
+                float: "right",
+                cursor: "pointer",
+                marginRight: "17px",
+                paddingTop: "6px",
+              }}
+            >
+              {legendOpen ? (
+                <img src={ToggleDown} alt="" onClick={handleLegendClick} />
+              ) : (
+                <img src={ToggleUp} alt="s" onClick={handleLegendClick} />
+              )}
+            </div>
+            <div
+              style={{
+                paddingTop: "6px",
+                display: "inline-flex",
+                alignItems: "flex-end",
+              }}
+            >
+              <img src={LegendIcon} alt="inspector-icon" />
+              {TextResources.Legend_Heading}
+            </div>
+          </ModuleHeader>
+          <LegendModule visible={true} />
         </AnimatedModule>
-      </ModuleBody>
-    </AnimatedModule>
+      </AnimatedModule>
+    </>
   );
 };
 
