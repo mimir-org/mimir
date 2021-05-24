@@ -1,0 +1,11 @@
+.has-location {
+    stroke-dasharray: 6.5 !important;
+    stroke: #FA00FF !important;
+    fill: none !important;
+
+    &--dashed {
+        stroke: #FEF445 !important;
+        opacity: 0.5 !important;
+        fill: none !important;
+    }
+}
