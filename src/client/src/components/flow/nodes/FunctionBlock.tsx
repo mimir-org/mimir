@@ -9,7 +9,6 @@ import { BlockMessageBox } from "../../../componentLibrary/blockView";
 
 const FunctionBlock: FC<NodeProps> = ({ data }) => {
   const splitView = useSelector<RootState>((state) => state.splitView.visible);
-
   const splitViewNode = useSelector<RootState>(
     (state) => state.splitView.node
   ) as Node;

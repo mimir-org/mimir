@@ -1,8 +1,8 @@
 import { FooterBox, FooterContent } from "../../../componentLibrary/box/footer";
 import { TextResources } from "../../../assets/textResources";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { VIEW_TYPE } from "../../../models/project";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Node, VIEW_TYPE } from "../../../models/project";
 import {
   changeSplitView,
   setSplitViewNode,
@@ -12,11 +12,22 @@ import {
   CheckView,
   SaveState,
 } from "../../../redux/store/localStorage";
+import { RootState } from "../../../redux/store";
 
 export const SplitViewComponent = () => {
   const dispatch = useDispatch();
   const isVisible = CheckView(VIEW_TYPE.BLOCKVIEW);
   const [isActive, SetIsActive] = useState(LoadState("splitview"));
+  const selectedNode = useSelector<RootState>((state) =>
+    state.projectState.project.nodes.find((x) => x.isSelected)
+  ) as Node;
+
+  useEffect(() => {
+    if (!selectedNode) {
+      SetIsActive(false);
+      SaveState(false, "splitview");
+    }
+  }, [selectedNode]);
 
   const handleClick = () => {
     SetIsActive(!isActive);

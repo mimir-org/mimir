@@ -1,9 +1,9 @@
-import { memo, FC, useState } from "react";
+import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
 import { useDispatch } from "react-redux";
 import { OptionsIcon } from "../../../assets/icons/blockView";
 import { addSelectedConnector } from "../../../redux/store/flow/actions";
-import { GetBlockHandleType } from "../helpers/block";
+import { GetBlockHandleType, SetConnectorPosition } from "../helpers/block";
 import {
   GetConnectors,
   SetConnectors,
@@ -25,9 +25,8 @@ import {
 
 const BlockViewLocation: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
-  const [showButton, setShowButton] = useState(false);
+  const [showButton, setShowButton] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
 
   const handleClick = () => {
     setMenuOpen(!menuOpen);
@@ -48,12 +47,16 @@ const BlockViewLocation: FC<NodeProps> = ({ data }) => {
   const handleConnectorClick = (connector) => {
     dispatch(addSelectedConnector(connector));
     connectors.push(connector);
-    setIsVisible(true);
     setMenuOpen(false);
     SetConnectors(connectors);
   };
 
   const connectors = GetConnectors();
+  const sortedConns = [];
+
+  useEffect(() => {
+    setShowButton(false);
+  }, []);
 
   return (
     <NodeBox onMouseOver={handleOnHover} onMouseOut={handleOnMouseOut}>
@@ -78,28 +81,34 @@ const BlockViewLocation: FC<NodeProps> = ({ data }) => {
       <div>{data.label ?? data.names}</div>
 
       {/* Show connectors added to node */}
-      {isVisible &&
-        connectors.map((conn) => {
-          const [type, pos, className] = GetBlockHandleType(conn);
-          if (data.id === conn.nodeId) {
-            return (
-              <HandleBox position={GetHandlePosition(pos)} key={conn.id}>
-                <Handle
-                  type={type}
-                  position={pos}
-                  id={conn.id}
-                  key={conn.id}
-                  className={className}
-                />
-                <img
-                  src={GetConnectorIcon(conn.terminal)}
-                  alt="icon"
-                  className="connector"
-                />
-              </HandleBox>
-            );
-          } else return null;
-        })}
+      {connectors.map((conn) => {
+        const [type, pos, className] = GetBlockHandleType(conn);
+        if (data.id === conn.nodeId) {
+          sortedConns.push(conn);
+          return (
+            <HandleBox
+              id={"handle-" + conn.id}
+              index={SetConnectorPosition(sortedConns)}
+              position={GetHandlePosition(pos)}
+              key={conn.id}
+            >
+              <Handle
+                type={type}
+                position={pos}
+                id={conn.id}
+                key={conn.id}
+                className={className}
+              />
+              <img
+                src={GetConnectorIcon(conn.terminal)}
+                alt="icon"
+                className="connector"
+              />
+            </HandleBox>
+          );
+        }
+        return null;
+      })}
 
       {/* Original connectors */}
       {data.connectors?.map((connector) => {
