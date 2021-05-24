@@ -54,8 +54,6 @@ const FlowTree = () => {
   );
 
   const OnConnect = (params) => {
-    console.log(params);
-
     const fromNode = project.nodes.find((x) => x.id === params.source);
     const fromConnector = fromNode.connectors.find(
       (x) => x.id === params.sourceHandle
@@ -120,6 +118,8 @@ const FlowTree = () => {
               onElementClick={OnElementClick}
               nodeTypes={GetTreeNodeTypes}
               edgeTypes={GetTreeEdgeTypes}
+              snapToGrid={true}
+              snapGrid={[5, 5]}
             >
               <Controls />
               <MiniMap />

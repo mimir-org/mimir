@@ -50,8 +50,7 @@ const useOnConnect = (
         ...params,
         id: createdId,
         type: edgeType,
-        arrowHeadType:
-          edgeType === EDGE_TYPE.RELATION ? ArrowHeadType.ArrowClosed : null,
+        arrowHeadType: null,
         label: "",
         animated: edgeType === EDGE_TYPE.TRANSPORT,
         data: {

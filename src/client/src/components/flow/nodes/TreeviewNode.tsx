@@ -13,8 +13,17 @@ const TreeviewNode: FC<NodeProps> = ({ data }) => {
     return "false";
   };
 
+  const mouseNodeLeave = () => {
+    setTimeout(() => {
+      setIsHover(false);
+    }, 5 * 1000);
+  };
+
   return (
-    <div onMouseEnter={() => setIsHover(true)}>
+    <div
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => mouseNodeLeave()}
+    >
       {data.connectors &&
         data.connectors.map((connector) => {
           const [typeHandler, positionHandler] = GetHandleType(connector);

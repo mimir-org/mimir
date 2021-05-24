@@ -11,6 +11,8 @@ import {
   LineEdgeType,
   Node,
   NODE_TYPE,
+  Connector,
+  RELATION_TYPE,
 } from "../../../models/project";
 
 import { IsAspectNode, GetCenter } from "../helpers";
@@ -42,24 +44,47 @@ export default function RelationEdgeType({
     targetPosition,
   });
 
-  const edgePathSmoothStep = getSmoothStepPath({
-    sourceX,
-    sourceY,
-    sourcePosition,
-    targetX,
-    targetY,
-    targetPosition,
-  });
-
   const getStyle = () => {
     const fromConnector = data.source.connectors.find(
-      (x) => x.id === data.edge.fromConnector
+      (x: { id: any }) => x.id === data.edge.fromConnector
     );
 
     return {
       stroke: fromConnector?.mediaColor,
       strokeWidth: 3,
     };
+  };
+
+  const getClassName = (source: Node, target: Node): string => {
+    let defaultClassName = "react-flow__edge-path ";
+
+    const fromConnector = data.source.connectors.find(
+      (x: { id: any }) => x.id === data.edge.fromConnector
+    ) as Connector;
+
+    switch (fromConnector.relationType) {
+      case RELATION_TYPE.HasLocation:
+        defaultClassName += "has-location";
+        break;
+      case RELATION_TYPE.FulfilledBy:
+        defaultClassName += "fulfilled-by";
+        break;
+      default:
+        defaultClassName += "";
+    }
+
+    switch (source.type) {
+      case NODE_TYPE.PRODUCT:
+        defaultClassName += "-product";
+        break;
+      case NODE_TYPE.FUNCTION:
+        defaultClassName += "-function";
+        break;
+      default:
+        defaultClassName += "";
+    }
+
+    return defaultClassName;
   };
 
   const pathType = (source: Node, target: Node) => {
@@ -74,6 +99,8 @@ export default function RelationEdgeType({
     //   ? edgePathBezier
     //   : edgePathSmoothStep;
   };
+
+  const pathClick = () => {};
 
   const edgeText = (source: Node, target: Node) => {
     return null;
@@ -105,19 +132,34 @@ export default function RelationEdgeType({
     // ) : null;
   };
 
+  //   document.addEventListener(
+  //     "click",
+  //     function (event) {
+  //       var target = event.target as HTMLInputElement;
+
+  //       // console.log(event.currentTarget.value, id, event);
+  //       if (target.id === id) {
+  //         console.log(event.target);
+  //       }
+
+  //       //   console.log(event.target);
+  //     },
+  //     false
+  //   );
+
   return (
     <>
       <path
         id={id}
         style={getStyle()}
-        className="react-flow__edge-path has-location"
+        className={getClassName(data.source, data.target) + ""}
         d={pathType(data.source, data.target)}
         markerEnd={markerEnd}
       />
       <path
         id={id}
         style={getStyle()}
-        className="react-flow__edge-path has-location--dashed"
+        className={getClassName(data.source, data.target) + "--dashed"}
         d={pathType(data.source, data.target)}
         markerEnd={markerEnd}
       />
