@@ -2,8 +2,11 @@ import { TextResources } from "../../../assets/textResources";
 import { LibCategory } from "../../../models/project";
 import { SearchIcon } from "../../../assets/icons";
 import { SearchInput } from "../../../componentLibrary";
-import { LibraryBody } from "../../../componentLibrary/box/library";
 import { LibraryCategoryComponent } from ".";
+import {
+  LibraryBody,
+  SearchIconBox,
+} from "../../../componentLibrary/box/library";
 
 interface Props {
   categories: LibCategory[];
@@ -16,19 +19,22 @@ const LibraryComponent = ({ categories, search }: Props) => {
   };
 
   return (
-    <LibraryBody>
-      <img src={SearchIcon} alt="search" className="search-icon" />
+    <>
+      <SearchIconBox>
+        <img src={SearchIcon} alt="search" className="search-icon" />
+      </SearchIconBox>
       <SearchInput
         placeholder={TextResources.Library_SearchBox_Placeholder}
         onChange={onChange}
       />
-
-      {categories?.map((category) => {
-        return (
-          <LibraryCategoryComponent key={category.name} category={category} />
-        );
-      })}
-    </LibraryBody>
+      <LibraryBody>
+        {categories?.map((category) => {
+          return (
+            <LibraryCategoryComponent key={category.name} category={category} />
+          );
+        })}
+      </LibraryBody>
+    </>
   );
 };
 

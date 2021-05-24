@@ -123,14 +123,14 @@ const LibraryModule = () => {
           type={MODULE_TYPE.LEGEND}
         >
           <ModuleHeader legend>
-            <LegendHeader>
+            <LegendHeader open={legendOpen}>
               {legendOpen ? (
                 <img src={ToggleDown} alt="" onClick={handleLegendClick} />
               ) : (
-                <img src={ToggleUp} alt="s" onClick={handleLegendClick} />
+                <img src={ToggleUp} alt="" onClick={handleLegendClick} />
               )}
             </LegendHeader>
-            <LegendIcons>
+            <LegendIcons open={legendOpen}>
               <img src={LegendIcon} alt="inspector-icon" />
               {TextResources.Legend_Heading}
             </LegendIcons>

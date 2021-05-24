@@ -5,7 +5,7 @@ const LegendHeader = styled.div`
   float: right;
   cursor: pointer;
   margin-right: 17px;
-  padding-top: 6px;
+  padding-top: ${(props) => props.open && "6px"};
 `;
 
 export default LegendHeader;

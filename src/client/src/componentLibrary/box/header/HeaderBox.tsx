@@ -2,9 +2,8 @@ import styled from "styled-components";
 import { Color } from "../../../componentLibrary";
 
 const HeaderBox = styled.div`
-  height: 50px;
+  min-height: 50px;
   background-color: ${Color.DeepCyan};
-  position: relative;
   color: ${Color.White};
 
   .view_icon {

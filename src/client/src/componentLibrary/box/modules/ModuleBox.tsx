@@ -15,13 +15,11 @@ const ModuleBox = styled.div`
     props.type !== MODULE_TYPE.LEGEND &&
     props.stop};
   height: ${(props: { stop: string; type: string }) =>
-    (props.type === MODULE_TYPE.INSPECTOR ||
-      props.type === MODULE_TYPE.LEGEND) &&
-    props.stop};
+    props.type === MODULE_TYPE.INSPECTOR || props.type === MODULE_TYPE.LEGEND
+      ? props.stop
+      : "auto"};
   overflow: hidden;
-  z-index: ${(props) =>
-    props.type === MODULE_TYPE.LEGEND ? "1900" : "1"} !important;
-  position: ${(props) => props.type === MODULE_TYPE.LEGEND && "absolute"};
+  position: ${(props) => props.type === MODULE_TYPE.LEGEND && "fixed"};
   bottom: ${(props) => props.type === MODULE_TYPE.LEGEND && "0"};
 `;
 
