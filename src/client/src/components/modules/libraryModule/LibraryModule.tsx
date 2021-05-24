@@ -23,6 +23,10 @@ import {
   ToggleRight,
   ToggleUp,
 } from "../../../assets/icons";
+import {
+  LegendHeader,
+  LegendIcons,
+} from "../../../componentLibrary/box/library";
 
 const LibraryModule = () => {
   const libraryKey = MODULE_TYPE.LIBRARY;
@@ -59,6 +63,8 @@ const LibraryModule = () => {
   const handleClick = () => {
     SaveState(!isOpen, libraryKey);
     dispatch(changeModuleVisibility(libraryKey, !isOpen, true));
+    SaveState(!isOpen, legendKey);
+    dispatch(changeModuleVisibility(legendKey, !isOpen, true));
   };
 
   const handleLegendClick = () => {
@@ -108,6 +114,7 @@ const LibraryModule = () => {
         </ModuleHeader>
         <ModuleBody visible={isOpen} library>
           <LibraryComponent categories={libNodes()} search={search} />
+          <TypeEditorModule />
         </ModuleBody>
         <AnimatedModule
           start={startLegend}
@@ -116,31 +123,17 @@ const LibraryModule = () => {
           type={MODULE_TYPE.LEGEND}
         >
           <ModuleHeader legend>
-            <div
-              style={{
-                display: "inline",
-                float: "right",
-                cursor: "pointer",
-                marginRight: "17px",
-                paddingTop: "6px",
-              }}
-            >
+            <LegendHeader>
               {legendOpen ? (
                 <img src={ToggleDown} alt="" onClick={handleLegendClick} />
               ) : (
                 <img src={ToggleUp} alt="s" onClick={handleLegendClick} />
               )}
-            </div>
-            <div
-              style={{
-                paddingTop: "6px",
-                display: "inline-flex",
-                alignItems: "flex-end",
-              }}
-            >
+            </LegendHeader>
+            <LegendIcons>
               <img src={LegendIcon} alt="inspector-icon" />
               {TextResources.Legend_Heading}
-            </div>
+            </LegendIcons>
           </ModuleHeader>
           <LegendModule visible={true} />
         </AnimatedModule>

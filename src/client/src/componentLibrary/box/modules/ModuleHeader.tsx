@@ -6,7 +6,7 @@ const ModuleHeader = styled.div`
   font-size: ${FontSize.Header};
   text-align: center;
   padding-top: 5px;
-  height: ${(props) => (props.legend ? "60px" : "25px")};
+  height: ${(props) => (props.legend ? "47px" : "25px")};
   position: relative;
   margin-left: ${(props) => props.library && "7px"};
   margin-right: ${(props) => props.explorer && "7px"};
