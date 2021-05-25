@@ -1,9 +1,22 @@
-import { LibNode, Node, NodeType, VIEW_TYPE } from "../../../models/project";
-import { addNode } from "../../../redux/store/project/actions";
+import {
+  CONNECTOR_TYPE,
+  LibNode,
+  Node,
+  NodeType,
+  RELATION_TYPE,
+  VIEW_TYPE,
+  Edge,
+} from "../../../models/project";
+import { addNode, createEdge } from "../../../redux/store/project/actions";
 import { CreateId } from "./../helpers";
 import { CheckView } from "../../../redux/store/localStorage/localStorage";
 import { CreateBlockNode } from "../helpers/block";
-import { CreateTreeNode } from "../helpers/tree";
+import {
+  CreateTreeNode,
+  GetTreeEdgeType,
+  CreateTreeEdge,
+  ValidatePartofConnection,
+} from "../helpers/tree";
 
 const useOnDrop = (
   event,
@@ -11,7 +24,8 @@ const useOnDrop = (
   setElements,
   reactFlowInstance,
   reactFlowWrapper,
-  splitView?: boolean
+  splitView?: boolean,
+  selectedNode?: Node
 ) => {
   const showBlockView = CheckView(VIEW_TYPE.BLOCKVIEW);
   event.preventDefault();
@@ -52,9 +66,40 @@ const useOnDrop = (
   });
 
   dispatch(addNode(node));
+
   showBlockView
     ? setElements((es) => es.concat(CreateBlockNode(node, splitView)))
     : setElements((es) => es.concat(CreateTreeNode(node)));
+
+  if (selectedNode) {
+    if (!ValidatePartofConnection(selectedNode, node)) return;
+
+    const fromConnector = selectedNode.connectors?.find(
+      (x) =>
+        x.relationType === RELATION_TYPE.PartOf &&
+        x.type === CONNECTOR_TYPE.OUTPUT
+    );
+    const toConnector = node.connectors?.find(
+      (x) =>
+        x.relationType === RELATION_TYPE.PartOf &&
+        x.type === CONNECTOR_TYPE.INPUT
+    );
+
+    const partofEdge = {
+      id: CreateId(),
+      fromConnector: fromConnector.id,
+      toConnector: toConnector.id,
+      fromNode: selectedNode.id,
+      toNode: node.id,
+      isHidden: false,
+      parentType: selectedNode.type,
+      targetType: node.type,
+    } as Edge;
+
+    dispatch(createEdge(partofEdge));
+    const edgeType = GetTreeEdgeType(fromConnector);
+    setElements((es) => es.concat(CreateTreeEdge(partofEdge, edgeType)));
+  }
 };
 
 export default useOnDrop;

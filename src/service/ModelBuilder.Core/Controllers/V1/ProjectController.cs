@@ -73,7 +73,7 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
-        /// List last 20 available projects by search on project the name
+        /// List last 10 available projects by search on project the name
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
@@ -86,7 +86,7 @@ namespace Mb.Core.Controllers.V1
         {
             try
             {
-                var data = _projectService.GetProjectList(name, 0, 20).ToList();
+                var data = _projectService.GetProjectList(name, 0, 10).ToList();
                 return Ok(data);
             }
             catch (Exception e)
