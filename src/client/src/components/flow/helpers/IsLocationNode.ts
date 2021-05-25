@@ -1,6 +1,6 @@
-import { NODE_TYPE, Node } from "../../../models/project";
+import { NODE_TYPE, Node, LibNode } from "../../../models/project";
 
-const IsLocationNode = (node: Node) => {
+const IsLocationNode = (node: Node | LibNode) => {
   return (
     node?.type === NODE_TYPE.LOCATION ||
     node?.type === NODE_TYPE.ASPECT_LOCATION

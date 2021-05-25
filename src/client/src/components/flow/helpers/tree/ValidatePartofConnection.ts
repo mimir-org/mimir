@@ -1,3 +1,4 @@
+import { IsFunctionNode, IsLocationNode, IsProductNode } from "..";
 import { Node, NODE_TYPE } from "../../../../models/project";
 
 export const ValidatePartofConnection = (
@@ -9,22 +10,13 @@ export const ValidatePartofConnection = (
   switch (fromNode.type) {
     case NODE_TYPE.FUNCTION:
     case NODE_TYPE.ASPECT_FUNCTION:
-      return (
-        toNode.type === NODE_TYPE.ASPECT_FUNCTION ||
-        toNode.type === NODE_TYPE.FUNCTION
-      );
+      return IsFunctionNode(toNode);
     case NODE_TYPE.PRODUCT:
     case NODE_TYPE.ASPECT_PRODUCT:
-      return (
-        toNode.type === NODE_TYPE.ASPECT_PRODUCT ||
-        toNode.type === NODE_TYPE.PRODUCT
-      );
+      return IsProductNode(toNode);
     case NODE_TYPE.LOCATION:
     case NODE_TYPE.ASPECT_LOCATION:
-      return (
-        toNode.type === NODE_TYPE.ASPECT_LOCATION ||
-        toNode.type === NODE_TYPE.LOCATION
-      );
+      return IsLocationNode(toNode);
     default:
       return false;
   }

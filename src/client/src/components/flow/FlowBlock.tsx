@@ -7,7 +7,7 @@ import { EDGE_TYPE, EdgeType } from "../../models/project";
 import { OpenProjectMenu } from "../project/openProject";
 import { changeActiveNode, get } from "../../redux/store/project/actions";
 import { Color } from "../../componentLibrary";
-import { GetBlockNodeTypes, IsLocationNode } from "./helpers";
+import { GetBlockNodeTypes, IsFunctionNode, IsLocationNode } from "./helpers";
 import { BackgroundBox } from "../../componentLibrary/blockView";
 import { CreateBlockElements, GetBlockEdgeTypes } from "./helpers/block";
 import {
@@ -15,7 +15,6 @@ import {
   VIEW_TYPE,
   BackgroundVariant,
   Node,
-  NODE_TYPE,
   SPLITVIEW_POSITION,
 } from "../../models/project";
 import {
@@ -150,11 +149,7 @@ const FlowBlock = () => {
   }, [dispatch, project]);
 
   const splitViewPosition = () => {
-    if (
-      IsLocationNode(splitViewNode) &&
-      (node?.type === NODE_TYPE.FUNCTION ||
-        node?.type === NODE_TYPE.ASPECT_FUNCTION)
-    ) {
+    if (IsLocationNode(splitViewNode) && IsFunctionNode(node)) {
       return SPLITVIEW_POSITION.RIGHT;
     }
   };
