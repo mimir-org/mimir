@@ -1,4 +1,10 @@
-import { Project, Node, Edge, NodeType } from "../../../models/project";
+import {
+  Project,
+  Node,
+  Edge,
+  NodeType,
+  RelationType,
+} from "../../../models/project";
 
 export const SAVE_PROJECT = "SAVE_PROJECT";
 export const SAVE_PROJECT_SUCCESS_OR_ERROR = "SAVE_PROJECT_SUCCESS_OR_ERROR";
@@ -18,6 +24,7 @@ export const REMOVE_EDGE = "REMOVE_EDGE";
 export const UPDATE_POSITION = "UPDATE_POSITION";
 export const UPDATE_BLOCK_POSITION = "UPDATE_BLOCK_POSITION";
 export const CHANGE_NODE_VISIBILITY = "CHANGE_NODE_VISIBILITY";
+export const CHANGE_EDGE_VISIBILITY = "CHANGE_EDGE_VISIBILITY";
 export const CHANGE_ACTIVE_NODE = "CHANGE_ACTIVE_NODE";
 export const CHANGE_SELECTED_PROJECT = "CHANGE_SELECTED_PROJECT";
 export const CHANGE_ALL_NODES = "CHANGE_ALL_NODES";
@@ -113,6 +120,14 @@ interface ChangeNodeVisibility {
   };
 }
 
+interface ChangeEdgeVisibility {
+  type: typeof CHANGE_EDGE_VISIBILITY;
+  payload: {
+    edge: Edge;
+    isHidden: boolean;
+  };
+}
+
 interface ChangeActiveNode {
   type: typeof CHANGE_ACTIVE_NODE;
   payload: {
@@ -186,6 +201,7 @@ export type ProjectActionTypes =
   | RemoveEdgeAction
   | UpdatePositionAction
   | ChangeNodeVisibility
+  | ChangeEdgeVisibility
   | ChangeActiveNode
   | SaveProjectAction
   | SaveProjectActionFinished

@@ -1,4 +1,4 @@
-import { Project } from "../../../models/project";
+import { Project, RelationType } from "../../../models/project";
 import { Node, Edge, NodeType } from "../../../models/project";
 import {
   SAVE_PROJECT,
@@ -19,6 +19,7 @@ import {
   CHANGE_NODE_PROP_VALUE,
   CHANGE_ATTRIBUTE_VALUE,
   CHANGE_CONNECTOR_ATTRIBUTE_VALUE,
+  CHANGE_EDGE_VISIBILITY,
 } from "./types";
 
 export function save(project: Project): ProjectActionTypes {
@@ -119,6 +120,13 @@ export function changeNodeVisibility(
   return {
     type: CHANGE_NODE_VISIBILITY,
     payload: { node, isParent, type },
+  };
+}
+
+export function changeEdgeVisibility(edge: Edge, isHidden: boolean) {
+  return {
+    type: CHANGE_EDGE_VISIBILITY,
+    payload: { edge, isHidden },
   };
 }
 

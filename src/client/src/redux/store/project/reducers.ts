@@ -26,6 +26,7 @@ import {
   CHANGE_NODE_PROP_VALUE,
   CHANGE_ATTRIBUTE_VALUE,
   CHANGE_CONNECTOR_ATTRIBUTE_VALUE,
+  CHANGE_EDGE_VISIBILITY,
 } from "./types";
 
 const initialState: ProjectState = {
@@ -192,6 +193,22 @@ export function projectReducer(
                   positionBlockY: action.payload.y,
                 }
               : node
+          ),
+        },
+      };
+
+    case CHANGE_EDGE_VISIBILITY:
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          edges: state.project.edges.map((edge, i) =>
+            state.project.edges[i].id === action.payload.edge.id
+              ? {
+                  ...edge,
+                  isHidden: action.payload.isHidden,
+                }
+              : edge
           ),
         },
       };
