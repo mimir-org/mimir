@@ -38,14 +38,11 @@
   height: 6px;
   background: #555;
   border-radius: 100%;
-}
-
-.react-flow__handle-right {
-  right: -8px;
+  border: 0px solid #fff !important;
 }
 
 .blockView-handle-right {
-  right: -8px;
+  right: -8px !important;
   width: 18px !important;
   height: 18px !important;
   top: 0px;
@@ -55,7 +52,7 @@
 }
 
 .blockView-handle-left {
-  left: -10px;
+  left: -10px !important;
   width: 18px !important;
   height: 18px !important;
   border: none;
