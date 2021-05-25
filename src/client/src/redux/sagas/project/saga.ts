@@ -29,6 +29,7 @@ export function* getProject(action) {
       fetching: false,
       creating: false,
     };
+
     DeleteProject();
     SetProject(project);
     SetProjectId(project.id);
@@ -139,9 +140,11 @@ export function* updateProject(action) {
       fetching: false,
       creating: false,
     };
+
     DeleteProject();
     SetProject(project);
     SetProjectId(project.id);
+
     yield put({
       type: SAVE_PROJECT_SUCCESS_OR_ERROR,
       payload: payload as ProjectState,

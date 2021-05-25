@@ -10,15 +10,19 @@ import { OpenProjectMenu } from "../project/openProject/OpenProjectMenu";
 import { Project, VIEW_TYPE } from "../../models/project";
 import { GetTreeEdgeType } from "./helpers/tree";
 import {
+  updatePosition,
+  changeActiveNode,
+} from "../../redux/store/project/actions";
+import {
   GetTreeNodeTypes,
   GetTreeEdgeTypes,
   CreateTreeElements,
 } from "./helpers/tree";
 import {
-  updatePosition,
-  changeActiveNode,
-} from "../../redux/store/project/actions";
-import { GetProjectId, HasProject } from "../../redux/store/localStorage";
+  GetProjectId,
+  HasProject,
+  SetProject,
+} from "../../redux/store/localStorage";
 import ReactFlow, {
   ReactFlowProvider,
   Elements,
@@ -34,6 +38,8 @@ const FlowTree = () => {
   const project = useSelector<RootState>(
     (state) => state.projectState.project
   ) as Project;
+
+  SetProject(project);
 
   const OnElementsRemove = (elementsToRemove) => {
     return useOnElementsRemove(elementsToRemove, setElements, dispatch);
