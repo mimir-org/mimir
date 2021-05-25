@@ -74,6 +74,7 @@ const FlowTree = () => {
 
   const OnDrop = (_event) => {
     const selectedNode = project?.nodes?.find((x) => x.isSelected);
+    console.log(_event);
 
     return useOnDrop(
       _event,

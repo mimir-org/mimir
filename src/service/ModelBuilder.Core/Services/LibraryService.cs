@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using Mb.Core.Repositories.Contracts;
 using Mb.Core.Services.Contracts;
 using Mb.Models.Data;
+using Mb.Models.Enums;
 
 namespace Mb.Core.Services
 {
@@ -10,11 +12,13 @@ namespace Mb.Core.Services
     {
         private readonly IMapper _mapper;
         private readonly ILibraryRepository _libraryRepository;
+        private readonly ICommonRepository _commonRepository;
 
-        public LibraryService(ILibraryRepository libraryRepository, IMapper mapper)
+        public LibraryService(ILibraryRepository libraryRepository, IMapper mapper, ICommonRepository commonRepository)
         {
             _libraryRepository = libraryRepository;
             _mapper = mapper;
+            _commonRepository = commonRepository;
         }
 
         /// <summary>
@@ -24,7 +28,22 @@ namespace Mb.Core.Services
         /// <returns></returns>
         public IEnumerable<LibNode> GetLibNodes(string searchString)
         {
-            return _mapper.Map<IEnumerable<LibNode>>(_libraryRepository.GetAll(searchString));
+            var data = _mapper.Map<IEnumerable<LibNode>>(_libraryRepository.GetAll(searchString)).ToList();
+            foreach (var node in data)
+            {
+                if (node.Connectors != null)
+                {
+                    foreach (var connector in node.Connectors)
+                    {
+                        connector.MediaColor = _commonRepository.GetTerminalColor(connector.Terminal,
+                            connector.TerminalCategory, connector.RelationType, node.Type)?.Color;
+                        connector.TransportColor = _commonRepository.GetTerminalColor(Terminal.NotSet,
+                            connector.TerminalCategory, connector.RelationType, node.Type)?.Color;
+                    }
+                }
+
+                yield return node;
+            }
         }
     }
 }
