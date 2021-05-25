@@ -1,16 +1,17 @@
-import { Node, NODE_TYPE } from "../../models/project";
+import { Node } from "../../models/project";
+import {
+  IsFunctionNode,
+  IsLocationNode,
+  IsProductNode,
+} from "../../components/flow/helpers";
 
 const GetRdsId = (node: Node): string => {
-    if (!node || !node.rds)
-        return "";
-    if (node.type === NODE_TYPE.FUNCTION)
-        return "=" + node.rds;
-    if (node.type === NODE_TYPE.PRODUCT)
-        return "-" + node.rds;
-    if (node.type === NODE_TYPE.LOCATION)
-        return "++" + node.rds;
+  if (!node || !node.rds) return "";
+  if (IsFunctionNode(node)) return "=" + node.rds;
+  if (IsProductNode(node)) return "-" + node.rds;
+  if (IsLocationNode(node)) return "++" + node.rds;
 
-    return "";
+  return "";
 };
 
 export default GetRdsId;
