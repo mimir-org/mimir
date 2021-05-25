@@ -50,9 +50,13 @@ export default function BlockEdgeType({
   };
 
   const getStyle = () => {
-    var connector = getConnectors().toConnector;
+    const fromConnector = data.source.connectors.find(
+      (x) => x.id === data.edge.fromConnector
+    );
+
     return {
-      stroke: GetTransportTypeColor(connector?.terminal),
+      stroke: fromConnector?.mediaColor,
+      strokeWidth: 3,
     };
   };
 
@@ -71,29 +75,30 @@ export default function BlockEdgeType({
   };
 
   const edgeText = (source: Node, target: Node) => {
-    if (!source || !target || IsAspectNode(source.type)) return null;
-    let text = null;
+    return null;
+    // if (!source || !target || IsAspectNode(source.type)) return null;
+    // let text = null;
 
-    source.type === target.type
-      ? (text = "partof")
-      : target.type === NODE_TYPE.PRODUCT
-      ? (text = "fulfilledBy")
-      : target.type === NODE_TYPE.LOCATION
-      ? (text = "locatedAt")
-      : (text = null);
+    // source.type === target.type
+    //   ? (text = "partof")
+    //   : target.type === NODE_TYPE.PRODUCT
+    //   ? (text = "fulfilledBy")
+    //   : target.type === NODE_TYPE.LOCATION
+    //   ? (text = "locatedAt")
+    //   : (text = null);
 
-    return text ? (
-      <EdgeText
-        x={centerX}
-        y={centerY}
-        label={text}
-        //   labelStyle={labelStyle}
-        //   labelShowBg={labelShowBg}
-        //   labelBgStyle={labelBgStyle}
-        //   labelBgPadding={labelBgPadding}
-        //   labelBgBorderRadius={labelBgBorderRadius}
-      />
-    ) : null;
+    // return text ? (
+    //   <EdgeText
+    //     x={centerX}
+    //     y={centerY}
+    //     label={text}
+    //     //   labelStyle={labelStyle}
+    //     //   labelShowBg={labelShowBg}
+    //     //   labelBgStyle={labelBgStyle}
+    //     //   labelBgPadding={labelBgPadding}
+    //     //   labelBgBorderRadius={labelBgBorderRadius}
+    //   />
+    // ) : null;
   };
 
   return (
