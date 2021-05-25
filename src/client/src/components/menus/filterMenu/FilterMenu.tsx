@@ -28,8 +28,8 @@ const FilterModule = () => {
       </MenuTopHeader>
       {showFilter && (
         <MenuBox right>
-          <FilterContent type={RELATION_TYPE.Transport} />
-          <FilterContent type={RELATION_TYPE.HasLocation} />
+          <FilterContent type={RELATION_TYPE.Transport} index={0} />
+          <FilterContent type={RELATION_TYPE.HasLocation} index={1} />
         </MenuBox>
       )}
     </>

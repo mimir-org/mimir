@@ -6,7 +6,9 @@ const MenuBox = styled.div`
   right: ${(props: { right: string }) => props.right && "0px"};
   left: ${(props: { right: string }) => !props.right && "0px"};
   background: ${Color.White};
+  padding-bottom: ${(props) => props.right && "6px"};
   height: min-content;
+  width: auto;
   min-width: 250px;
   border-style: solid;
   border-color: ${Color.DeepCyan};
