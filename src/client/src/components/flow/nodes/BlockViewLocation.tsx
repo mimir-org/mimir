@@ -31,7 +31,9 @@ const BlockViewLocation: FC<NodeProps> = ({ data }) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const isLocation = useSelector<RootState>(
-    (state) => state.splitView.node?.type === NODE_TYPE.LOCATION
+    (state) =>
+      state.splitView.node?.type === NODE_TYPE.LOCATION ||
+      state.splitView.node?.type === NODE_TYPE.ASPECT_LOCATION
   ) as boolean;
 
   const handleClick = () => {

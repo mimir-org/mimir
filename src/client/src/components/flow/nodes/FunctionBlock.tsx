@@ -15,7 +15,8 @@ const FunctionBlock: FC<NodeProps> = ({ data }) => {
 
   const notValid =
     splitViewNode?.type === NODE_TYPE.LOCATION &&
-    data?.type === NODE_TYPE.LOCATION;
+    (data?.type === NODE_TYPE.LOCATION ||
+      data?.type === NODE_TYPE.ASPECT_LOCATION);
 
   return !splitView ? (
     <Block data={data} location={false} splitView={splitView} />

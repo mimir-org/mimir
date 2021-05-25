@@ -63,8 +63,9 @@ const FlowBlock = () => {
     (state) => state.flow.view === VIEW_TYPE.BLOCKVIEW
   ) as boolean;
 
-  const isLocationNode =
+  const showBackground =
     splitViewNode?.type === NODE_TYPE.LOCATION ||
+    splitViewNode?.type === NODE_TYPE.ASPECT_LOCATION ||
     node?.type === NODE_TYPE.LOCATION ||
     node?.type === NODE_TYPE.ASPECT_LOCATION;
 
@@ -154,8 +155,10 @@ const FlowBlock = () => {
 
   const splitViewPosition = () => {
     if (
-      splitViewNode?.type === NODE_TYPE.LOCATION &&
-      node?.type === NODE_TYPE.FUNCTION
+      (splitViewNode?.type === NODE_TYPE.LOCATION ||
+        splitViewNode?.type === NODE_TYPE.ASPECT_LOCATION) &&
+      (node?.type === NODE_TYPE.FUNCTION ||
+        node?.type === NODE_TYPE.ASPECT_FUNCTION)
     ) {
       return SPLITVIEW_POSITION.RIGHT;
     }
@@ -184,7 +187,7 @@ const FlowBlock = () => {
             >
               <FullscreenBox />
               <BackgroundBox
-                visible={isLocationNode}
+                visible={showBackground}
                 isSplitView={splitView}
                 right={splitViewPosition()}
               >
