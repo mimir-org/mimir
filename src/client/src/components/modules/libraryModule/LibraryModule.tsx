@@ -87,6 +87,7 @@ const LibraryModule = () => {
   const isSplitView = useSelector<RootState>(
     (state) => state.splitView.visible
   ) as boolean;
+
   const selectedNode = useSelector<RootState>((state) =>
     state.projectState.project?.nodes.find((x) => x.isSelected)
   ) as Node;
