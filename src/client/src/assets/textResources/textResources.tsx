@@ -102,10 +102,10 @@ const textResources = {
   Legend_Heading: "Legend",
 
   // FilterModule
-  Filter_Types: "Transport/Interfaces/Terminals:",
-  Filter_Sub_Types: "Sub-Types:",
-  Filter_Other: "Other:",
-  Filter_Designations: "Designations:",
+  Filter_Types: "Transport/Interfaces/Terminals",
+  Filter_Sub_Types: "Sub-Types",
+  Filter_Other: "Other",
+  Filter_Designations: "Designations",
   Filter_Forces: "Forces",
   Filter_Information: "Information",
   Filter_Energy: "Energy [power]",

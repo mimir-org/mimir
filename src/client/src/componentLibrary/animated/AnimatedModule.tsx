@@ -16,14 +16,14 @@ ${!run ? (start = stop) : null}
       type === MODULE_TYPE.INSPECTOR || type === MODULE_TYPE.LEGEND
         ? "height"
         : "width"
-    }: ${start};
+    }: ${start}px;
   }
   to {
     ${
       type === MODULE_TYPE.INSPECTOR || type === MODULE_TYPE.LEGEND
         ? "height"
         : "width"
-    }: ${stop};
+    }: ${stop}px;
   }  
 `;
 

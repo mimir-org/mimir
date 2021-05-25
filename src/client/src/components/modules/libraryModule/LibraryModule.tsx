@@ -74,8 +74,8 @@ const LibraryModule = () => {
 
   const start = isOpen ? Size.ModuleClosed : Size.ModuleOpen;
   const stop = isOpen ? Size.ModuleOpen : Size.ModuleClosed;
-  const startLegend = legendOpen ? Size.ModuleClosed : Size.ModuleOpen;
-  const stopLegend = legendOpen ? Size.ModuleOpen : Size.ModuleClosed;
+  const startLegend = legendOpen ? Size.ModuleClosed - 1 : Size.ModuleOpen;
+  const stopLegend = legendOpen ? Size.ModuleOpen : Size.ModuleClosed - 1;
 
   const libNodes = (): LibCategory[] => {
     var allCategories = [];
