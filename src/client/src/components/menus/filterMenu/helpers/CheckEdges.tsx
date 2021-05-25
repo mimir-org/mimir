@@ -14,7 +14,7 @@ const CheckEdges = (nodes: Node[], edges: Edge[], type: string): Edge => {
   for (let i = 0; i < edges.length; i++) {
     if (
       connectors.find((x) => x.id === edges[i].fromConnector) ||
-      connectors.find((x) => x.id === edges[i].fromConnector)
+      connectors.find((x) => x.id === edges[i].toConnector)
     )
       return edges[i];
   }
