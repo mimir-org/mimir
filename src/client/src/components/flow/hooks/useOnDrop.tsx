@@ -1,12 +1,3 @@
-import {
-  CONNECTOR_TYPE,
-  LibNode,
-  Node,
-  NodeType,
-  RELATION_TYPE,
-  VIEW_TYPE,
-  Edge,
-} from "../../../models/project";
 import { addNode, createEdge } from "../../../redux/store/project/actions";
 import { CreateId } from "./../helpers";
 import { CheckView } from "../../../redux/store/localStorage/localStorage";
@@ -17,6 +8,15 @@ import {
   CreateTreeEdge,
   ValidatePartofConnection,
 } from "../helpers/tree";
+import {
+  CONNECTOR_TYPE,
+  LibNode,
+  Node,
+  NodeType,
+  RELATION_TYPE,
+  VIEW_TYPE,
+  Edge,
+} from "../../../models/project";
 
 const useOnDrop = (
   event,

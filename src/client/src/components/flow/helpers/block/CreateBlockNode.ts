@@ -7,7 +7,7 @@ const CreateBlockNode = (node: Node, splitView: boolean): FlowElement => {
   if (!node) return blockNode;
 
   const type =
-    node.type === NODE_TYPE.LOCATION
+    node.type === NODE_TYPE.LOCATION || node.type === NODE_TYPE.ASPECT_LOCATION
       ? "BlockViewLocation"
       : "BlockViewFunction";
 

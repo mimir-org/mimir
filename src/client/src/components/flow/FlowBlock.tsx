@@ -65,7 +65,8 @@ const FlowBlock = () => {
 
   const isLocationNode =
     splitViewNode?.type === NODE_TYPE.LOCATION ||
-    node?.type === NODE_TYPE.LOCATION;
+    node?.type === NODE_TYPE.LOCATION ||
+    node?.type === NODE_TYPE.ASPECT_LOCATION;
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
