@@ -17,13 +17,16 @@ import {
 
 export const SplitViewComponent = () => {
   const dispatch = useDispatch();
-  const isVisible = CheckView(VIEW_TYPE.BLOCKVIEW);
+  const [isVisible, setIsVisible] = useState(CheckView(VIEW_TYPE.BLOCKVIEW));
   const [isActive, SetIsActive] = useState(LoadState("splitview"));
   const selectedNode = useSelector<RootState>((state) =>
     state.projectState.project?.nodes?.find((x) => x.isSelected)
   ) as Node;
 
   useEffect(() => {
+    if (IsLocationNode(selectedNode)) setIsVisible(false);
+    else setIsVisible(true);
+
     if (!selectedNode) {
       SetIsActive(false);
       SaveState(false, "splitview");
