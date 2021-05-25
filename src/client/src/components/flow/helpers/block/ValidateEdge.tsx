@@ -9,8 +9,8 @@ const ValidateEdge = (
   fromNode: Node,
   toNode: Node,
   splitViewNode: Node,
-  nodeFromConnector: Connector,
-  nodeToConnector: Connector,
+  fromConnector: Connector,
+  toConnector: Connector,
   splitView: boolean
 ): boolean => {
   // TODO: Refactor..
@@ -29,8 +29,8 @@ const ValidateEdge = (
     if (
       fromNode.type === NODE_TYPE.FUNCTION &&
       toNode.type === NODE_TYPE.LOCATION &&
-      nodeFromConnector.relationType === RELATION_TYPE.HasLocation &&
-      nodeToConnector.relationType === RELATION_TYPE.HasLocation &&
+      fromConnector.relationType === RELATION_TYPE.HasLocation &&
+      toConnector.relationType === RELATION_TYPE.HasLocation &&
       splitViewNode?.type === NODE_TYPE.LOCATION
     ) {
       return true;

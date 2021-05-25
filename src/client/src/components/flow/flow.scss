@@ -37,29 +37,30 @@
   width: 6px;
   height: 6px;
   background: #555;
-  border: 1px solid #f2f2f2;
   border-radius: 100%;
-  -webkit-border-radius: 100%;
-  -moz-border-radius: 100%;
-  -ms-border-radius: 100%;
-  -o-border-radius: 100%;
+}
+
+.react-flow__handle-right {
+  right: -8px;
 }
 
 .blockView-handle-right {
-  right: -7px;
-  width: 18px;
-  height: 18px;
+  right: -8px;
+  width: 18px !important;
+  height: 18px !important;
   top: 0px;
   border: none;
   background-color: transparent !important;
+  z-index: 100 !important;
 }
 
 .blockView-handle-left {
   left: -10px;
-  width: 18px;
-  height: 18px;
+  width: 18px !important;
+  height: 18px !important;
   border: none;
   background-color: transparent !important;
+  z-index: 100 !important;
 }
 
 .react-flow__handle.connectable {
