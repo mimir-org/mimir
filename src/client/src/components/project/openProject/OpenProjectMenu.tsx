@@ -2,7 +2,7 @@ import { SearchBar, ProjectList } from ".";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { ProjectSimple, PROJECT_MENU_TYPE } from "../../../models/project";
-import { LeftArrowIcon, RightArrowIcon } from "../../../assets/icons";
+import { CloseIcon, RightArrowIcon } from "../../../assets/icons";
 import { MenuButton } from "../../../componentLibrary/buttons";
 import { TextResources } from "../../../assets/textResources";
 import { SetProjectId } from "../../../redux/store/localStorage";
@@ -24,10 +24,6 @@ export const OpenProjectMenu = () => {
   const projects = useSelector<RootState>(
     (state) => state.projectState.projectList
   ) as ProjectSimple[];
-
-  //   const currentProject = useSelector<RootState>(
-  //     (state) => state.projectState.project
-  //   ) as Project;
 
   const project = projects?.find((x) => x.selected);
   const projectId = project?.id;
@@ -70,7 +66,7 @@ export const OpenProjectMenu = () => {
         <ProjectBody>
           <HeaderBox>
             <img
-              src={LeftArrowIcon}
+              src={CloseIcon}
               alt="icon"
               onClick={handleReturnClick}
               className="icon"

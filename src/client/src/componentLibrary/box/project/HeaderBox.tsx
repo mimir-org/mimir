@@ -6,7 +6,11 @@ const HeaderBox = styled.div`
   align-items: center;
 
   .icon {
-    padding-right: 5px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    width: 18px;
+    height: 18px;
     cursor: pointer;
   }
 `;

@@ -1,4 +1,5 @@
 export { default as Input } from "./input/Input";
+export { default as Label } from "./input/Label";
 export { default as Select } from "./input/Select";
 export { default as Textarea } from "./input/Textarea";
 export { default as Color } from "./colors/Color";

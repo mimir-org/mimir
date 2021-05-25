@@ -61,6 +61,7 @@ export const PROJECT_MENU_TYPE = {
     ACCOUNT_MENU: "AccountMenu",
     OPEN_PROJECT_MENU: "OpenProjectMenu",
     MAIN_MENU: "MainMenu",
+    CREATE_PROJECT_MENU: "CreateProjectMenu",
 };
 
 export type ViewType = keyof typeof VIEW_TYPE;

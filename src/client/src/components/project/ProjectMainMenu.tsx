@@ -32,6 +32,7 @@ export const ProjectMainMenu = () => {
   const handleOpenClick = () => {
     dispatch(changeProjectMenu("mainMenu", false));
     dispatch(changeProjectMenu(PROJECT_MENU_TYPE.OPEN_PROJECT_MENU, true));
+    dispatch(changeProjectMenu(PROJECT_MENU_TYPE.MAIN_MENU, false));
   };
 
   return (

@@ -3,8 +3,10 @@ import { Color, FontSize } from "./../../../componentLibrary";
 
 const ProjectBox = styled.div`
   width: ${(props) => (props.small ? "308px" : "auto")};
+  width: ${(props) => props.small ? "308px" : (props.width ? `${props.width}px` : "auto")};
   max-width: 502px;
   height: ${(props) => (props.small ? "281px" : "auto")};
+  height: ${(props) => props.small ? "281px" : (props.height ? `${props.height}px` : "auto")};
   max-height: 463px;
   margin: auto;
   border: 2px solid ${Color.DeepCyan};
