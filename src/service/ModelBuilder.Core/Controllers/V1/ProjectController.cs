@@ -63,7 +63,7 @@ namespace Mb.Core.Controllers.V1
             try
             {
                 var createdProject = await _projectService.CreateProject(project);
-                return CreatedAtAction(nameof(GetById), new { id = createdProject.Id }, createdProject);
+                return StatusCode(204, createdProject);
             }
             catch (Exception e)
             {

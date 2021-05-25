@@ -86,7 +86,8 @@ const textResources = {
   TypeEditor_Edit_Type: "Edit Type",
 
   // AccountModule
-  Account_Save_Label: "Save project to file",
+  Account_Save_Label: "Save project to database",
+  Account_Save_Label_File: "Save project to file",
   Account_Logout: "Log out",
   Account_Open_Label: "Open a project",
   Account_Create_Label: "Create a new project",
