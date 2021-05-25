@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Mb.Core.Exceptions;
 using Mb.Core.Extensions;
+using Mb.Core.Repositories.Contracts;
 using Mb.Core.Services.Contracts;
 using Mb.Models.Data;
 using Mb.Models.Enums;
@@ -29,11 +30,38 @@ namespace Mb.Core.Controllers.V1
     {
         private readonly ILogger<ProjectController> _logger;
         private readonly ITypeEditorService _typeEditorService;
+        private readonly ILibraryTypeRepository _libraryTypeRepository;
         
-        public TypeEditorController(ILogger<ProjectController> logger, ITypeEditorService typeEditorService)
+        public TypeEditorController(ILogger<ProjectController> logger, ITypeEditorService typeEditorService, ILibraryTypeRepository libraryTypeRepository)
         {
             _logger = logger;
             _typeEditorService = typeEditorService;
+            _libraryTypeRepository = libraryTypeRepository;
+        }
+
+        /// <summary>
+        /// Get all types, should be deleted
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("magnus")]
+        [ProducesResponseType(typeof(List<LibraryType>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public IActionResult GetAllTypes()
+        {
+            try
+            {
+                var allTypes = _libraryTypeRepository.GetAll().ToList();
+                foreach (var t in allTypes)
+                {
+                    t.CreateFromJsonData();
+                }
+                return Ok(allTypes);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
         }
 
         /// <summary>

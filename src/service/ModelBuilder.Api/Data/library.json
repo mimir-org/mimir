@@ -16,7 +16,6 @@
         "Terminal": "Gas",
         "ConnectorType": "Input",
         "SemanticReference": "",
-        "Color": "#FF9900",
         "Attributes": [
           {
             "Entity": "Flowrate, volumetric",
@@ -58,7 +57,6 @@
         "Terminal": "Gas",
         "ConnectorType": "Output",
         "SemanticReference": "",
-        "Color": "#FF9900",
         "Attributes": [
           {
             "Entity": "Flowrate, volumetric",
@@ -100,7 +98,6 @@
         "Terminal": "Oil",
         "ConnectorType": "Input",
         "SemanticReference": "",
-        "Color": "#663300",
         "Attributes": [
           {
             "Entity": "Flowrate, volumetric",
@@ -142,7 +139,6 @@
         "Terminal": "Oil",
         "ConnectorType": "Output",
         "SemanticReference": "",
-        "Color": "#663300",
         "Attributes": [
           {
             "Entity": "Flowrate, volumetric",
@@ -184,7 +180,6 @@
         "Terminal": "Water",
         "ConnectorType": "Input",
         "SemanticReference": "",
-        "Color": "#33CCCC",
         "Attributes": [
           {
             "Entity": "Flowrate, volumetric",
@@ -226,7 +221,6 @@
         "Terminal": "Water",
         "ConnectorType": "Output",
         "SemanticReference": "",
-        "Color": "#33CCCC",
         "Attributes": [
           {
             "Entity": "Flowrate, volumetric",
@@ -300,7 +294,6 @@
         "Terminal": "Gas",
         "ConnectorType": "Input",
         "SemanticReference": "",
-        "Color": "#FF9900",
         "Attributes": [
           {
             "Entity": "Flowrate, volumetric",
@@ -342,7 +335,6 @@
         "Terminal": "Gas",
         "ConnectorType": "Output",
         "SemanticReference": "",
-        "Color": "#FF9900",
         "Attributes": [
           {
             "Entity": "Flowrate, volumetric",
@@ -384,7 +376,6 @@
         "Terminal": "Oil",
         "ConnectorType": "Input",
         "SemanticReference": "",
-        "Color": "#663300",
         "Attributes": [
           {
             "Entity": "Flowrate, volumetric",
@@ -426,7 +417,6 @@
         "Terminal": "Oil",
         "ConnectorType": "Output",
         "SemanticReference": "",
-        "Color": "#663300",
         "Attributes": [
           {
             "Entity": "Flowrate, volumetric",
@@ -468,7 +458,6 @@
         "Terminal": "Water",
         "ConnectorType": "Input",
         "SemanticReference": "",
-        "Color": "#33CCCC",
         "Attributes": [
           {
             "Entity": "Flowrate, volumetric",
@@ -510,7 +499,6 @@
         "Terminal": "Water",
         "ConnectorType": "Output",
         "SemanticReference": "",
-        "Color": "#33CCCC",
         "Attributes": [
           {
             "Entity": "Flowrate, volumetric",
@@ -581,7 +569,6 @@
     "version": "1.0",
     "SemanticReference": null
   },
-
   {
     "id": "equinor.com_9DB8B121-AE69-4965-B1D5-2171D39171E5",
     "aspect": "Location",

@@ -11,7 +11,8 @@ const useOnDrop = (
   setElements,
   reactFlowInstance,
   reactFlowWrapper,
-  splitView?: boolean
+  splitView?: boolean,
+  selectedNode?: Node
 ) => {
   const showBlockView = CheckView(VIEW_TYPE.BLOCKVIEW);
   event.preventDefault();
@@ -52,9 +53,13 @@ const useOnDrop = (
   });
 
   dispatch(addNode(node));
+
   showBlockView
     ? setElements((es) => es.concat(CreateBlockNode(node, splitView)))
     : setElements((es) => es.concat(CreateTreeNode(node)));
+
+  if (selectedNode) {
+  }
 };
 
 export default useOnDrop;
