@@ -5,7 +5,7 @@ import { RootState } from "./../../redux/store/index";
 import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
 import { EDGE_TYPE, EdgeType } from "../../models/project";
 import { OpenProjectMenu } from "../project/openProject";
-import { get } from "../../redux/store/project/actions";
+import { changeActiveNode, get } from "../../redux/store/project/actions";
 import { Color } from "../../componentLibrary";
 import { GetBlockNodeTypes } from "./helpers";
 import { BackgroundBox } from "../../componentLibrary/blockView";
@@ -106,6 +106,11 @@ const FlowBlock = () => {
     );
   };
 
+  const OnDragOver = (event) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "move";
+  };
+
   const OnNodeDragStop = (_event, node) => {
     return useOnNodeDragStop(_event, node, dispatch, true);
   };
@@ -168,6 +173,7 @@ const FlowBlock = () => {
               onElementsRemove={OnElementsRemove}
               onLoad={OnLoad}
               onDrop={OnDrop}
+              onDragOver={OnDragOver}
               onNodeDragStop={OnNodeDragStop}
               onElementClick={OnElementClick}
               onConnectEnd={OnConnectStop}

@@ -21,6 +21,7 @@ const ModuleBox = styled.div`
   overflow: hidden;
   position: ${(props) => props.type === MODULE_TYPE.LEGEND && "fixed"};
   bottom: ${(props) => props.type === MODULE_TYPE.LEGEND && "0"};
+  z-index: 1;
 `;
 
 export default ModuleBox;
