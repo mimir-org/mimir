@@ -42,9 +42,8 @@ const AccountMenu = () => {
   };
 
   const handleSaveClick = () => {
-    if (projectState.project) dispatch(save(projectState.project));
     dispatch(changeProjectMenu(PROJECT_MENU_TYPE.ACCOUNT_MENU, false));
-    alert("Project saved");
+    if (projectState.project) dispatch(save(projectState.project));
   };
 
   return (

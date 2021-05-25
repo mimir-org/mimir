@@ -297,7 +297,9 @@ namespace Mb.Core.Services
                 NodeId = node.Id,
                 RelationType = RelationType.PartOf,
                 Terminal = Terminal.NotSet,
-                TerminalCategory = TerminalCategory.NotSet
+                TerminalCategory = TerminalCategory.NotSet,
+                MediaColor = _commonRepository.GetTerminalColor(Terminal.NotSet, TerminalCategory.NotSet, RelationType.PartOf, nodeType).Color,
+                TransportColor = _commonRepository.GetTerminalColor(Terminal.NotSet, TerminalCategory.NotSet, RelationType.PartOf, nodeType).Color
             };
 
             node.Connectors.Add(connector);
