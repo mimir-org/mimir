@@ -4,6 +4,7 @@ export { default as GetTransportTypeColor } from "./GetTransportTypeColor";
 export { default as GetFlowRectData } from "./GetFlowRectData";
 export { default as CreateId } from "./CreateId";
 export { default as IsAspectNode } from "./IsAspectNode";
+export { default as IsLocationNode } from "./IsLocationNode";
 export { default as IsAspectSameType } from "./IsAspectSameType";
 export { default as GetCenter } from "./GetCenter";
 export { default as GetHandleType } from "./GetHandleType";

@@ -3,6 +3,8 @@ import { TextResources } from "../../../assets/textResources";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Node, VIEW_TYPE } from "../../../models/project";
+import { RootState } from "../../../redux/store";
+import { IsLocationNode } from "../../flow/helpers";
 import {
   changeSplitView,
   setSplitViewNode,
@@ -12,7 +14,6 @@ import {
   CheckView,
   SaveState,
 } from "../../../redux/store/localStorage";
-import { RootState } from "../../../redux/store";
 
 export const SplitViewComponent = () => {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ export const SplitViewComponent = () => {
   }, [selectedNode]);
 
   const handleClick = () => {
+    if (IsLocationNode(selectedNode)) return;
     SetIsActive(!isActive);
     SaveState(!isActive, "splitview");
     dispatch(changeSplitView(!isActive));

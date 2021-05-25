@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { OptionsIcon } from "../../../assets/icons/blockView";
 import { addSelectedConnector } from "../../../redux/store/flow/actions";
 import { GetBlockHandleType, ValidateConnector } from "../helpers/block";
-import { NODE_TYPE } from "../../../models/project";
 import { RootState } from "../../../redux/store";
 import {
   GetConnectors,
@@ -16,6 +15,7 @@ import {
   SortLocationConnectors,
   GetConnectorName,
   GetHandleType,
+  IsLocationNode,
 } from "../helpers";
 import {
   NodeBox,
@@ -30,10 +30,8 @@ const BlockViewLocation: FC<NodeProps> = ({ data }) => {
   const [showButton, setShowButton] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const isLocation = useSelector<RootState>(
-    (state) =>
-      state.splitView.node?.type === NODE_TYPE.LOCATION ||
-      state.splitView.node?.type === NODE_TYPE.ASPECT_LOCATION
+  const isLocation = useSelector<RootState>((state) =>
+    IsLocationNode(state.splitView.node)
   ) as boolean;
 
   const handleClick = () => {

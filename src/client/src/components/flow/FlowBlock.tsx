@@ -7,7 +7,7 @@ import { EDGE_TYPE, EdgeType } from "../../models/project";
 import { OpenProjectMenu } from "../project/openProject";
 import { changeActiveNode, get } from "../../redux/store/project/actions";
 import { Color } from "../../componentLibrary";
-import { GetBlockNodeTypes } from "./helpers";
+import { GetBlockNodeTypes, IsLocationNode } from "./helpers";
 import { BackgroundBox } from "../../componentLibrary/blockView";
 import { CreateBlockElements, GetBlockEdgeTypes } from "./helpers/block";
 import {
@@ -63,11 +63,7 @@ const FlowBlock = () => {
     (state) => state.flow.view === VIEW_TYPE.BLOCKVIEW
   ) as boolean;
 
-  const showBackground =
-    splitViewNode?.type === NODE_TYPE.LOCATION ||
-    splitViewNode?.type === NODE_TYPE.ASPECT_LOCATION ||
-    node?.type === NODE_TYPE.LOCATION ||
-    node?.type === NODE_TYPE.ASPECT_LOCATION;
+  const showBackground = IsLocationNode(splitViewNode) || IsLocationNode(node);
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
@@ -155,8 +151,7 @@ const FlowBlock = () => {
 
   const splitViewPosition = () => {
     if (
-      (splitViewNode?.type === NODE_TYPE.LOCATION ||
-        splitViewNode?.type === NODE_TYPE.ASPECT_LOCATION) &&
+      IsLocationNode(splitViewNode) &&
       (node?.type === NODE_TYPE.FUNCTION ||
         node?.type === NODE_TYPE.ASPECT_FUNCTION)
     ) {
