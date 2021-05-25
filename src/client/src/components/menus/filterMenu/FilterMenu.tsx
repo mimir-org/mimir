@@ -1,10 +1,10 @@
 import { TextResources } from "../../../assets/textResources";
 import { useState } from "react";
-import { MENU_TYPE } from "../../../models/project";
+import { MENU_TYPE, RELATION_TYPE } from "../../../models/project";
 import { GetMenuIcon } from "../../../assets/helpers/";
 import { MenuBox, MenuTopHeader } from "../../../componentLibrary/box/menus";
 import { LoadState, SaveState } from "../../../redux/store/localStorage";
-import GetContent from "./FilterContent";
+import { FilterContent } from ".";
 
 const FilterModule = () => {
   const type = MENU_TYPE.VISUAL_FILTER;
@@ -28,7 +28,8 @@ const FilterModule = () => {
       </MenuTopHeader>
       {showFilter && (
         <MenuBox right>
-          <GetContent />
+          <FilterContent type={RELATION_TYPE.Transport} />
+          <FilterContent type={RELATION_TYPE.HasLocation} />
         </MenuBox>
       )}
     </>
