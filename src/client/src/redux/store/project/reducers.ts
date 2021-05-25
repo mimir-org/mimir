@@ -32,7 +32,7 @@ import {
 const initialState: ProjectState = {
   fetching: false,
   creating: false,
-  project: GetProject() ?? null,
+  project: null,
   hasError: false,
   errorMsg: null,
   projectList: null,

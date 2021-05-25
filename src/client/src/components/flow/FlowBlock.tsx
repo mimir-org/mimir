@@ -18,11 +18,7 @@ import {
   NODE_TYPE,
   SPLITVIEW_POSITION,
 } from "../../models/project";
-import {
-  GetProjectId,
-  HasProject,
-  SetProject,
-} from "../../redux/store/localStorage";
+import { GetProjectId, HasProject } from "../../redux/store/localStorage";
 import ReactFlow, {
   ReactFlowProvider,
   Elements,
@@ -48,7 +44,6 @@ const FlowBlock = () => {
     (state) => state.projectState.project
   ) as Project;
 
-  SetProject(project);
   const node = project?.nodes.find((node) => node.isSelected);
 
   const splitView = useSelector<RootState>(

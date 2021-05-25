@@ -18,11 +18,7 @@ import {
   updatePosition,
   changeActiveNode,
 } from "../../redux/store/project/actions";
-import {
-  GetProjectId,
-  HasProject,
-  SetProject,
-} from "../../redux/store/localStorage";
+import { GetProjectId, HasProject } from "../../redux/store/localStorage";
 import ReactFlow, {
   ReactFlowProvider,
   Elements,
@@ -38,8 +34,6 @@ const FlowTree = () => {
   const project = useSelector<RootState>(
     (state) => state.projectState.project
   ) as Project;
-
-  SetProject(project);
 
   const OnElementsRemove = (elementsToRemove) => {
     return useOnElementsRemove(elementsToRemove, setElements, dispatch);

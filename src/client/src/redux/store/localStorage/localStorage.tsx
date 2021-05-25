@@ -140,6 +140,15 @@ export const SetProject = (project: Project): void => {
   }
 };
 
+export const DeleteProject = (): void => {
+  try {
+    localStorage.removeItem("Project");
+    localStorage.removeItem("ProjectId");
+  } catch {
+    return undefined;
+  }
+};
+
 export const HasProject = (): boolean => {
   try {
     const project = localStorage.getItem(`ProjectId`);
