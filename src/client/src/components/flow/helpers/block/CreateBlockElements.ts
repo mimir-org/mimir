@@ -1,18 +1,12 @@
 import { Elements } from "react-flow-renderer";
-import {
-  Project,
-  EDGE_TYPE,
-  EdgeType,
-  Node,
-  NODE_TYPE,
-} from "../../../../models/project";
+import { IsAspectSameType } from "..";
+import { Project, EDGE_TYPE, EdgeType, Node } from "../../../../models/project";
 import {
   CreateBlockEdge,
   CreateSplitViewNode,
   CreateParentBlockNode,
   CreateBlockNode,
 } from ".";
-import { IsAspectNode } from "..";
 
 const CreateBlockElements = (
   project: Project,
@@ -32,15 +26,11 @@ const CreateBlockElements = (
   project.edges.forEach((edge) => {
     if (edge.fromNode === nodeId) {
       const toNode = project.nodes.find((x) => x.id === edge.toNode);
-      if (selectedNode.type === toNode.type) {
-        initialElements.push(CreateBlockNode(toNode, splitView));
-      }
       if (
-        IsAspectNode(selectedNode.type) &&
-        selectedNode.type !== NODE_TYPE.ASPECT_PRODUCT
-      ) {
+        selectedNode.type === toNode.type ||
+        IsAspectSameType(selectedNode, toNode)
+      )
         initialElements.push(CreateBlockNode(toNode, splitView));
-      }
     }
   });
 
