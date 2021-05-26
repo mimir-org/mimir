@@ -6,7 +6,7 @@ import {
   CreateTreeNode,
   GetTreeEdgeType,
   CreateTreeEdge,
-  ValidatePartofConnection,
+  ValidateSameNodeType,
 } from "../helpers/tree";
 import {
   CONNECTOR_TYPE,
@@ -72,7 +72,7 @@ const useOnDrop = (
     : setElements((es) => es.concat(CreateTreeNode(node)));
 
   if (selectedNode) {
-    if (!ValidatePartofConnection(selectedNode, node)) return;
+    if (!ValidateSameNodeType(selectedNode, node)) return;
 
     const fromConnector = selectedNode.connectors?.find(
       (x) =>

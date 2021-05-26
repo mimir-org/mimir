@@ -63,7 +63,7 @@ namespace Mb.Core.Controllers.V1
             try
             {
                 var createdProject = await _projectService.CreateProject(project);
-                return StatusCode(204, createdProject);
+                return StatusCode(201, createdProject);
             }
             catch (Exception e)
             {

@@ -113,13 +113,16 @@ const FlowBlock = () => {
   };
 
   const OnDrop = (_event) => {
+    const selectedNode = project?.nodes?.find((x) => x.isSelected);
+
     return useOnDrop(
       _event,
       dispatch,
       setElements,
       reactFlowInstance,
       reactFlowWrapper,
-      splitView
+      splitView,
+      selectedNode
     );
   };
 
