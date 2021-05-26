@@ -39,7 +39,10 @@ const CreateBlockElements = (
     project.edges.forEach((edge) => {
       if (edge.fromNode === splitViewNode.id) {
         const toNode = project.nodes.find((x) => x.id === edge.toNode);
-        if (splitViewNode.type === toNode.type)
+        if (
+          splitViewNode.type === toNode.type ||
+          IsAspectSameType(splitViewNode, toNode)
+        )
           initialElements.push(CreateSplitViewNode(toNode));
       }
     });
