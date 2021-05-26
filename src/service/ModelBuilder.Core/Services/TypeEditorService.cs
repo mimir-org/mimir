@@ -149,7 +149,7 @@ namespace Mb.Core.Services
         }
 
         /// <summary>
-        /// Get all library type components
+        /// Get all library types
         /// </summary>
         /// <returns></returns>
         public IEnumerable<LibraryType> GetAllTypes()
