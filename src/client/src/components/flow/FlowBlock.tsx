@@ -51,7 +51,7 @@ const FlowBlock = () => {
   ) as Project;
 
   SetProject(project);
-  const node = project?.nodes.find((node) => node.isSelected);
+  const node = project?.nodes?.find((node) => node.isSelected);
 
   const splitView = useSelector<RootState>(
     (state) => state.splitView.visible

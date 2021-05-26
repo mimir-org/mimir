@@ -84,7 +84,7 @@ const LibraryModule = () => {
   ) as boolean;
 
   const selectedNode = useSelector<RootState>((state) =>
-    state.projectState.project?.nodes.find((x) => x.isSelected)
+    state.projectState.project?.nodes?.find((x) => x.isSelected)
   ) as Node;
 
   const libNodes = (): LibCategory[] => {
