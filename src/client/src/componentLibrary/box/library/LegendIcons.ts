@@ -5,7 +5,17 @@ const LegendIcons = styled.div`
   align-items: flex-end;
   padding-top: ${(props) => props.open && "6px"};
   position: ${(props) => !props.open && "relative"};
-  top: ${(props) => !props.open && "-10px"};
+
+  .text {
+    left: 3px;
+    opacity: 1 !important;
+    bottom: ${(props) => !props.open && "26px"};
+  }
+  .icon {
+    position: relative;
+    left: -3px;
+    bottom: ${(props) => (props.open ? "35px" : "43px")};
+  }
 `;
 
 export default LegendIcons;
