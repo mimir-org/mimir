@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { ExpandedIcon, ClosedIcon } from "../../../../assets/icons";
-import { NodeType, VIEW_TYPE } from "../../../../models/project";
+import { NodeType } from "../../../../models/project";
 import { IsAspectNode } from "../../../flow/helpers";
 import { AspectElement } from ".";
 import { AspectBox } from "../../../../componentLibrary/box/aspect";
-import { CheckView } from "../../../../redux/store/localStorage/";
 import { Checkbox, CheckboxBlock } from "../checkboxComponent";
 import store from "../../../../redux/store";
+import { IsBlockView } from "../../../flow/helpers/block";
 import {
   GetAspectIcon,
   GetAspectColor,
@@ -29,7 +29,6 @@ export const AspectComponent = ({ nodeId, label, aspectType }: Props) => {
   const nodes = store.getState().projectState.project.nodes;
   const edges = store.getState().projectState.project.edges;
   const children = nodes.filter((node) => !IsAspectNode(node.type));
-  const isBlockView = CheckView(VIEW_TYPE.BLOCKVIEW);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -40,7 +39,7 @@ export const AspectComponent = ({ nodeId, label, aspectType }: Props) => {
       <AspectBox color={color}>
         <img src={aspectIcon} alt="aspect-icon"></img>
         <div className="checkbox_container">
-          {isBlockView ? (
+          {IsBlockView() ? (
             <CheckboxBlock nodeId={nodeId} inputLabel={label} />
           ) : (
             <Checkbox nodeId={nodeId} inputLabel={label} type={childType} />

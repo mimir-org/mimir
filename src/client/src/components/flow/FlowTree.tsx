@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { get } from "../../redux/store/project/actions";
-import { MiniMap } from "./";
 import { ProjectMainMenu } from "../project";
 import { RootState } from "./../../redux/store/index";
 import { useOnConnect, useOnDrop, useOnElementsRemove } from "./hooks";
@@ -87,7 +86,16 @@ const FlowTree = () => {
   };
 
   const OnElementClick = (_event, element) => {
-    dispatch(changeActiveNode(element.id));
+    dispatch(changeActiveNode(element.id, true));
+  };
+
+  const OnClick = (e) => {
+    if (e.target.classList.contains("react-flow__pane")) {
+      const selectedNode = project?.nodes?.find((x) => x.isSelected);
+      if (selectedNode) {
+        dispatch(changeActiveNode(selectedNode.id, false));
+      }
+    }
   };
 
   // Force rerender
@@ -124,9 +132,9 @@ const FlowTree = () => {
               edgeTypes={GetTreeEdgeTypes}
               snapToGrid={true}
               snapGrid={[5, 5]}
+              onClick={(e) => OnClick(e)}
             >
               <Controls />
-              <MiniMap />
               <FullscreenBox />
             </ReactFlow>
           </div>

@@ -220,6 +220,7 @@ export interface Node {
   connectors: Connector[];
   isLocked?: boolean | false;
   isSelected?: boolean | false;
+  isBlockSelected?: boolean | false;
   attributes?: Attribute[] | null;
   isHidden: boolean | false;
   positionBlockX: number;

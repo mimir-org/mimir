@@ -5,14 +5,17 @@ import { RootState } from "./../../redux/store/index";
 import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
 import { EDGE_TYPE, EdgeType } from "../../models/project";
 import { OpenProjectMenu } from "../project/openProject";
-import { changeActiveNode, get } from "../../redux/store/project/actions";
+import { changeActiveBlockNode, get } from "../../redux/store/project/actions";
 import { Color } from "../../componentLibrary";
 import { GetBlockNodeTypes, IsFunctionNode, IsLocationNode } from "./helpers";
 import { BackgroundBox } from "../../componentLibrary/blockView";
-import { CreateBlockElements, GetBlockEdgeTypes } from "./helpers/block";
+import {
+  CreateBlockElements,
+  GetBlockEdgeTypes,
+  IsBlockView,
+} from "./helpers/block";
 import {
   Project,
-  VIEW_TYPE,
   BackgroundVariant,
   Node,
   SPLITVIEW_POSITION,
@@ -57,10 +60,6 @@ const FlowBlock = () => {
   const splitViewNode = useSelector<RootState>(
     (state) => state.splitView.node
   ) as Node;
-
-  const isBlockView = useSelector<RootState>(
-    (state) => state.flow.view === VIEW_TYPE.BLOCKVIEW
-  ) as boolean;
 
   const showBackground = IsLocationNode(splitViewNode) || IsLocationNode(node);
 
@@ -127,7 +126,7 @@ const FlowBlock = () => {
   };
 
   const OnElementClick = (_event, element) => {
-    // dispatch(changeActiveNode(element.id)); // TODO: FIX
+    dispatch(changeActiveBlockNode(element.id));
   };
 
   const OnUpdatePosition = () => {
@@ -159,7 +158,7 @@ const FlowBlock = () => {
 
   return (
     <>
-      {isBlockView && (
+      {IsBlockView() && (
         <ReactFlowProvider>
           <div className="reactflow-wrapper" ref={reactFlowWrapper}>
             <ReactFlow

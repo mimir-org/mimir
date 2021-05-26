@@ -1,4 +1,4 @@
-import { memo, FC, useState } from "react";
+import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
 import { GetHandleType } from "../helpers";
 import { HandlerWrapper } from "../styled";
@@ -6,6 +6,7 @@ import { RELATION_TYPE } from "../../../models/project";
 
 const TreeviewNode: FC<NodeProps> = ({ data }) => {
   const [isHover, setIsHover] = useState(false);
+  const [timer, setTimer] = useState(false);
 
   const connectorIsVisible = (connector) => {
     if (connector.relationType === RELATION_TYPE.PartOf && isHover)
@@ -13,10 +14,20 @@ const TreeviewNode: FC<NodeProps> = ({ data }) => {
     return "false";
   };
 
+  useEffect(() => {
+    if (timer) {
+      const timer = window.setInterval(() => {
+        setTimer(false);
+        setIsHover(false);
+      }, 5000);
+      return () => {
+        window.clearInterval(timer);
+      };
+    }
+  }, [timer]);
+
   const mouseNodeLeave = () => {
-    setTimeout(() => {
-      setIsHover(false);
-    }, 5 * 1000);
+    setTimer(true);
   };
 
   return (
