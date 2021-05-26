@@ -30,8 +30,8 @@ namespace Mb.Models.Data
 
         public void CreateJsonData()
         {
-            TerminalJson = Terminals != null && Terminals.Any() ? JsonConvert.SerializeObject(Terminals) : null;
-            AttributeJson = Attributes != null && Attributes.Any() ? JsonConvert.SerializeObject(Attributes) : null;
+            TerminalJson = Terminals != null && Terminals.Any(x => x != null) ? JsonConvert.SerializeObject(Terminals) : null;
+            AttributeJson = Attributes != null && Attributes.Any(x => x != null) ? JsonConvert.SerializeObject(Attributes) : null;
         }
 
         public void CreateFromJsonData()

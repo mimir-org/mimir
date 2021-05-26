@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Mb.Core.Exceptions;
 using Mb.Core.Extensions;
-using Mb.Core.Repositories.Contracts;
 using Mb.Core.Services.Contracts;
 using Mb.Models.Data;
 using Mb.Models.Enums;
@@ -30,31 +29,25 @@ namespace Mb.Core.Controllers.V1
     {
         private readonly ILogger<ProjectController> _logger;
         private readonly ITypeEditorService _typeEditorService;
-        private readonly ILibraryTypeRepository _libraryTypeRepository;
-        
-        public TypeEditorController(ILogger<ProjectController> logger, ITypeEditorService typeEditorService, ILibraryTypeRepository libraryTypeRepository)
+
+        public TypeEditorController(ILogger<ProjectController> logger, ITypeEditorService typeEditorService)
         {
             _logger = logger;
             _typeEditorService = typeEditorService;
-            _libraryTypeRepository = libraryTypeRepository;
         }
 
         /// <summary>
-        /// Get all types, should be deleted
+        /// Get all library types
         /// </summary>
         /// <returns></returns>
-        [HttpGet("magnus")]
-        [ProducesResponseType(typeof(List<LibraryType>), StatusCodes.Status200OK)]
+        [HttpGet("types")]
+        [ProducesResponseType(typeof(ICollection<LibraryType>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult GetAllTypes()
         {
             try
             {
-                var allTypes = _libraryTypeRepository.GetAll().ToList();
-                foreach (var t in allTypes)
-                {
-                    t.CreateFromJsonData();
-                }
+                var allTypes = _typeEditorService.GetAllTypes().ToList();
                 return Ok(allTypes);
             }
             catch (Exception e)
@@ -89,7 +82,7 @@ namespace Mb.Core.Controllers.V1
         /// Get all object types
         /// </summary>
         /// <returns></returns>
-        [HttpGet("types")]
+        [HttpGet("objects")]
         [ProducesResponseType(typeof(Dictionary<int, string>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult GetObjectTypes()
