@@ -17,7 +17,6 @@ import {
 const Header = () => {
   const dispatch = useDispatch();
   const { push } = useHistory();
-  const isBlockView = IsBlockView();
 
   const handleClick = (e) => {
     const view = e.target.alt;
@@ -30,18 +29,18 @@ const Header = () => {
     <HeaderBox>
       <TitleBox>{TextResources.MainHeader_App_Name}</TitleBox>
       <IconBox>
-        <ViewBox selected={!isBlockView}>
+        <ViewBox selected={!IsBlockView()}>
           <img
-            src={isBlockView ? TreeviewOff : TreeviewOn}
+            src={IsBlockView() ? TreeviewOff : TreeviewOn}
             alt={VIEW_TYPE.TREEVIEW}
             onClick={handleClick}
             className="view_icon"
           />
         </ViewBox>
         <div className="line"></div>
-        <ViewBox selected={isBlockView} right>
+        <ViewBox selected={IsBlockView()} right>
           <img
-            src={isBlockView ? ViewOnIcon : ViewOffIcon}
+            src={IsBlockView() ? ViewOnIcon : ViewOffIcon}
             alt={VIEW_TYPE.BLOCKVIEW}
             onClick={handleClick}
             className="view_icon"

@@ -52,7 +52,7 @@ const GetBlockViewNodes = (project: Project, nodeId: string): Node[] => {
       );
       if (currentConnector?.relationType === RELATION_TYPE.PartOf) {
         const toNode = project.nodes?.find((x) => x.id === edge.toNode);
-        if (!toNode.isHidden) nodes.push(toNode);
+        if (!toNode?.isHidden) nodes.push(toNode);
       }
     }
   });
@@ -61,7 +61,7 @@ const GetBlockViewNodes = (project: Project, nodeId: string): Node[] => {
 };
 
 const GetTreeviewNodes = (project: Project): Node[] => {
-  return project.nodes?.filter((x) => !x.isHidden);
+  return project.nodes?.filter((x) => !x?.isHidden);
 };
 
 const GetLegendData = (
