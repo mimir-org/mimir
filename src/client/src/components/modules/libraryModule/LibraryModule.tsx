@@ -144,8 +144,8 @@ const LibraryModule = () => {
               )}
             </LegendHeader>
             <LegendIcons open={legendOpen}>
-              <img src={LegendIcon} alt="inspector-icon" />
-              {TextResources.Legend_Heading}
+              <img src={LegendIcon} alt="legend" className="icon" />
+              <p className="text">{TextResources.Legend_Heading}</p>
             </LegendIcons>
           </ModuleHeader>
           <LegendModule visible={true} />
