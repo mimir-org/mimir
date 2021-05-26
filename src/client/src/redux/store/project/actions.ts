@@ -1,4 +1,4 @@
-import { Project, RelationType } from "../../../models/project";
+import { Project } from "../../../models/project";
 import { Node, Edge, NodeType } from "../../../models/project";
 import {
   SAVE_PROJECT,
@@ -20,6 +20,7 @@ import {
   CHANGE_ATTRIBUTE_VALUE,
   CHANGE_CONNECTOR_ATTRIBUTE_VALUE,
   CHANGE_EDGE_VISIBILITY,
+  CHANGE_ACTIVE_BLOCKNODE,
 } from "./types";
 
 export function save(project: Project): ProjectActionTypes {
@@ -133,6 +134,13 @@ export function changeEdgeVisibility(edge: Edge, isHidden: boolean) {
 export function changeActiveNode(nodeId: string) {
   return {
     type: CHANGE_ACTIVE_NODE,
+    payload: { nodeId },
+  };
+}
+
+export function changeActiveBlockNode(nodeId: string) {
+  return {
+    type: CHANGE_ACTIVE_BLOCKNODE,
     payload: { nodeId },
   };
 }

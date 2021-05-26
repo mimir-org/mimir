@@ -5,7 +5,7 @@ import { RootState } from "./../../redux/store/index";
 import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
 import { EDGE_TYPE, EdgeType } from "../../models/project";
 import { OpenProjectMenu } from "../project/openProject";
-import { changeActiveNode, get } from "../../redux/store/project/actions";
+import { changeActiveBlockNode, get } from "../../redux/store/project/actions";
 import { Color } from "../../componentLibrary";
 import { GetBlockNodeTypes, IsFunctionNode, IsLocationNode } from "./helpers";
 import { BackgroundBox } from "../../componentLibrary/blockView";
@@ -127,7 +127,7 @@ const FlowBlock = () => {
   };
 
   const OnElementClick = (_event, element) => {
-    // dispatch(changeActiveNode(element.id)); // TODO: FIX
+    dispatch(changeActiveBlockNode(element.id));
   };
 
   const OnUpdatePosition = () => {

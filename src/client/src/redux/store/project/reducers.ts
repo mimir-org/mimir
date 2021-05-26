@@ -27,6 +27,7 @@ import {
   CHANGE_ATTRIBUTE_VALUE,
   CHANGE_CONNECTOR_ATTRIBUTE_VALUE,
   CHANGE_EDGE_VISIBILITY,
+  CHANGE_ACTIVE_BLOCKNODE,
 } from "./types";
 
 const initialState: ProjectState = {
@@ -308,6 +309,21 @@ export function projectReducer(
             state.project.nodes[i].id === id
               ? { ...x, isSelected: true }
               : { ...x, isSelected: false }
+          ),
+          edges: state.project.edges,
+        },
+      };
+
+    case CHANGE_ACTIVE_BLOCKNODE:
+      const blockId = action.payload.nodeId;
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          nodes: state.project.nodes.map((x, i) =>
+            state.project.nodes[i].id === blockId
+              ? { ...x, isBlockSelected: true }
+              : { ...x, isBlockSelected: false }
           ),
           edges: state.project.edges,
         },
