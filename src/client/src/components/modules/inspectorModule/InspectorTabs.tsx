@@ -2,6 +2,7 @@ import { TabComponent, TabAdminComponent } from ".";
 import { Project, Node } from "../../../models/project";
 import { RootState } from "../../../redux/store";
 import { useSelector } from "react-redux";
+import { IsBlockView } from "../../flow/helpers/block";
 
 const InspectorTabs = () => {
   const project = useSelector<RootState>(
@@ -9,7 +10,11 @@ const InspectorTabs = () => {
   ) as Project;
 
   const nodes = project?.nodes ?? [];
-  const node = nodes.find((node) => node.isSelected) as Node;
+  let node: Node;
+
+  if (IsBlockView()) {
+    node = nodes.find((node) => node.isBlockSelected);
+  } else node = nodes.find((node) => node.isSelected);
 
   return (
     <>

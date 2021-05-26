@@ -8,9 +8,10 @@ import { RootState } from "../../../redux/store";
 import { LibraryState } from "../../../redux/store/library/types";
 import { searchLibrary } from "../../../redux/store/library/actions";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
-import { GetView, SaveState } from "../../../redux/store/localStorage";
+import { SaveState } from "../../../redux/store/localStorage";
 import { AnimatedModule, Size } from "../../../componentLibrary";
 import { ValidateLibComponent } from "./helpers";
+import { IsBlockView } from "../../flow/helpers/block";
 import {
   ModuleBody,
   ModuleHeader,
@@ -19,12 +20,7 @@ import {
   LegendHeader,
   LegendIcons,
 } from "../../../componentLibrary/box/library";
-import {
-  MODULE_TYPE,
-  LibCategory,
-  VIEW_TYPE,
-  Node,
-} from "../../../models/project";
+import { MODULE_TYPE, LibCategory, Node } from "../../../models/project";
 import {
   LegendIcon,
   LibraryIcon,
@@ -83,7 +79,7 @@ const LibraryModule = () => {
   const startLegend = legendOpen ? Size.ModuleClosed - 1 : Size.ModuleOpen;
   const stopLegend = legendOpen ? Size.ModuleOpen : Size.ModuleClosed - 1;
 
-  const isBlockView = GetView() === VIEW_TYPE.BLOCKVIEW;
+  const isBlockView = IsBlockView();
   const isSplitView = useSelector<RootState>(
     (state) => state.splitView.visible
   ) as boolean;

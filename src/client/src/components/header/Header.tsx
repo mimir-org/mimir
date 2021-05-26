@@ -1,11 +1,12 @@
 import { useHistory } from "react-router-dom";
 import { TextResources } from "../../assets/textResources";
-import { CheckView, SetView } from "../../redux/store/localStorage";
+import { SetView } from "../../redux/store/localStorage";
 import { useDispatch } from "react-redux";
 import { VIEW_TYPE } from "../../models/project";
 import { TreeviewOff, TreeviewOn } from "../../assets/icons";
 import { ViewOffIcon, ViewOnIcon } from "../../assets/icons/blockView";
 import { changeFlowView } from "../../redux/store/flow/actions";
+import { IsBlockView } from "../flow/helpers/block";
 import {
   HeaderBox,
   IconBox,
@@ -16,7 +17,7 @@ import {
 const Header = () => {
   const dispatch = useDispatch();
   const { push } = useHistory();
-  const isBlockView = CheckView(VIEW_TYPE.BLOCKVIEW);
+  const isBlockView = IsBlockView();
 
   const handleClick = (e) => {
     const view = e.target.alt;
