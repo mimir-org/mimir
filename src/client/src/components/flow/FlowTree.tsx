@@ -8,6 +8,7 @@ import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
 import { OpenProjectMenu } from "../project/openProject/OpenProjectMenu";
 import { Project, VIEW_TYPE } from "../../models/project";
 import { GetTreeEdgeType } from "./helpers/tree";
+import ReactFlow, { ReactFlowProvider, Elements } from "react-flow-renderer";
 import {
   updatePosition,
   changeActiveNode,
@@ -22,11 +23,6 @@ import {
   HasProject,
   SetProject,
 } from "../../redux/store/localStorage";
-import ReactFlow, {
-  ReactFlowProvider,
-  Elements,
-  Controls,
-} from "react-flow-renderer";
 
 const FlowTree = () => {
   const dispatch = useDispatch();
@@ -134,7 +130,6 @@ const FlowTree = () => {
               snapGrid={[5, 5]}
               onClick={(e) => OnClick(e)}
             >
-              <Controls />
               <FullscreenBox />
             </ReactFlow>
           </div>
