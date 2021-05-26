@@ -233,6 +233,7 @@ export interface Node {
   updatedBy: string;
   updated: Date;
   version: string;
+  level: number;
 }
 
 export interface LibNode {

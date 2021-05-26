@@ -13,8 +13,8 @@ export const UseChangeNodeVisibility = (node: Node, type: NodeType) => {
   ) as Project;
 
   let isParent = false;
-
   let edge = project?.edges?.find((x) => x.fromNode === node.id) as Edge;
+
   let connectorType = node.connectors.find(
     (x) => x.id === edge?.fromConnector
   )?.relationType;

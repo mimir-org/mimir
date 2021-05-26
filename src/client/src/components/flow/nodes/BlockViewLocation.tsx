@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { OptionsIcon } from "../../../assets/icons/blockView";
 import { addSelectedConnector } from "../../../redux/store/flow/actions";
 import { GetBlockHandleType, ValidateConnector } from "../helpers/block";
-import { RootState } from "../../../redux/store";
+import store, { RootState } from "../../../redux/store";
+import { Node } from "../../../models/project";
 import {
   GetConnectors,
   SetConnectors,
@@ -30,9 +31,17 @@ const BlockViewLocation: FC<NodeProps> = ({ data }) => {
   const [showButton, setShowButton] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const isLocation = useSelector<RootState>((state) =>
-    IsLocationNode(state.splitView.node)
-  ) as boolean;
+  const selectedNode = useSelector<RootState>((state) =>
+    state.projectState.project?.nodes?.find((x) => x.isBlockSelected)
+  ) as Node;
+
+  const splitView = store.getState().splitView;
+  const isSplitView = splitView.visible as boolean;
+  const splitViewNode = splitView.node as Node;
+
+  const isLocation = isSplitView
+    ? IsLocationNode(splitViewNode)
+    : IsLocationNode(selectedNode);
 
   const handleClick = () => {
     setMenuOpen(!menuOpen);
@@ -99,7 +108,7 @@ const BlockViewLocation: FC<NodeProps> = ({ data }) => {
         </OptionsBox>
       </OptionsMenu>
 
-      <div style={{ paddingTop: "10px" }}>{data.label ?? data.names}</div>
+      <div style={{ paddingTop: "15px" }}>{data.label ?? data.names}</div>
       {connectors.map((conn) => {
         const [type, pos, className] = GetBlockHandleType(conn);
         if (data.id === conn.nodeId && ValidateConnector(conn, isLocation)) {
