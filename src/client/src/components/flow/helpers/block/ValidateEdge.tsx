@@ -42,6 +42,12 @@ const ValidateEdge = (
     ) {
       return true;
     }
+    if (
+      fromNode.type === NODE_TYPE.FUNCTION &&
+      toNode.type === NODE_TYPE.LOCATION
+    ) {
+      return true;
+    }
   }
 
   if (!splitView) {
