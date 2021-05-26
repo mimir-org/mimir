@@ -1,4 +1,4 @@
-import { memo, FC, useState } from "react";
+import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
 import { GetFlowAspectIcon } from "../helpers";
 import { GetHandleType } from "../helpers";
@@ -6,16 +6,27 @@ import { HandlerWrapper } from "../styled";
 
 const Aspect: FC<NodeProps> = ({ data }) => {
   const [isHover, setIsHover] = useState(false);
+  const [timer, setTimer] = useState(false);
 
   const connectorIsVisible = () => {
     if (isHover) return "true";
     return "false";
   };
 
+  useEffect(() => {
+    if (timer) {
+      const timer = window.setInterval(() => {
+        setTimer(false);
+        setIsHover(false);
+      }, 5000);
+      return () => {
+        window.clearInterval(timer);
+      };
+    }
+  }, [timer]);
+
   const mouseNodeLeave = () => {
-    setTimeout(() => {
-      setIsHover(false);
-    }, 5 * 1000);
+    setTimer(true);
   };
 
   return (
