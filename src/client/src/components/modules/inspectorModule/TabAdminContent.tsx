@@ -3,10 +3,11 @@ import { changeNodeValue } from "../../../redux/store/project/actions";
 import { Contractor } from "../../../redux/store/common/types";
 import { TabColumn } from "./styled";
 import { Input, Select, Textarea } from "../../../componentLibrary";
-import { Node, NODE_TYPE, Project } from "../../../models/project";
+import { Node, Project } from "../../../models/project";
 import { GetRdsId, GetReferenceDesignation } from "../../../assets/helpers";
 import moment from "moment/moment.js";
 import { BUILD_STATUS } from "../../../models/project";
+import { IsLocationNode } from "../../flow/helpers";
 
 interface Props {
   node: Node;
@@ -70,7 +71,7 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
             inputType=""
           />
         </div>
-        {node.type === NODE_TYPE.LOCATION && (
+        {IsLocationNode(node) && (
           <div>
             <div>Length (m)</div>
             <Input
@@ -99,7 +100,7 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
             inputType=""
           />
         </div>
-        {node.type === NODE_TYPE.LOCATION && (
+        {IsLocationNode(node) && (
           <div>
             <div>Width (m)</div>
             <Input
@@ -133,7 +134,7 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
             inputType=""
           />
         </div>
-        {node.type === NODE_TYPE.LOCATION && (
+        {IsLocationNode(node) && (
           <div>
             <div>Height (m)</div>
             <Input

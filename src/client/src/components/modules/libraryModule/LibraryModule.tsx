@@ -8,13 +8,23 @@ import { RootState } from "../../../redux/store";
 import { LibraryState } from "../../../redux/store/library/types";
 import { searchLibrary } from "../../../redux/store/library/actions";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
-import { MODULE_TYPE, LibCategory } from "../../../models/project";
-import { SaveState } from "../../../redux/store/localStorage";
+import { GetView, SaveState } from "../../../redux/store/localStorage";
 import { AnimatedModule, Size } from "../../../componentLibrary";
+import { ValidateLibComponent } from "./helpers";
 import {
   ModuleBody,
   ModuleHeader,
 } from "../../../componentLibrary/box/modules";
+import {
+  LegendHeader,
+  LegendIcons,
+} from "../../../componentLibrary/box/library";
+import {
+  MODULE_TYPE,
+  LibCategory,
+  VIEW_TYPE,
+  Node,
+} from "../../../models/project";
 import {
   LegendIcon,
   LibraryIcon,
@@ -23,10 +33,6 @@ import {
   ToggleRight,
   ToggleUp,
 } from "../../../assets/icons";
-import {
-  LegendHeader,
-  LegendIcons,
-} from "../../../componentLibrary/box/library";
 
 const LibraryModule = () => {
   const libraryKey = MODULE_TYPE.LIBRARY;
@@ -77,12 +83,24 @@ const LibraryModule = () => {
   const startLegend = legendOpen ? Size.ModuleClosed - 1 : Size.ModuleOpen;
   const stopLegend = legendOpen ? Size.ModuleOpen : Size.ModuleClosed - 1;
 
+  const isBlockView = GetView() === VIEW_TYPE.BLOCKVIEW;
+  const isSplitView = useSelector<RootState>(
+    (state) => state.splitView.visible
+  ) as boolean;
+
+  const selectedNode = useSelector<RootState>((state) =>
+    state.projectState.project?.nodes.find((x) => x.isSelected)
+  ) as Node;
+
   const libNodes = (): LibCategory[] => {
     var allCategories = [];
 
-    const result = state.nodes.reduce(function (r, a) {
+    const result = state.nodes.reduce((r, a) => {
       r[a.category] = r[a.category] || [];
-      r[a.category].push(a);
+
+      ValidateLibComponent(a, selectedNode, isBlockView, isSplitView) &&
+        r[a.category].push(a);
+
       return r;
     }, Object.create([]));
 
@@ -94,7 +112,7 @@ const LibraryModule = () => {
         visible: false,
       } as LibCategory;
 
-      allCategories.push(libCategory);
+      libCategory.nodes.length > 0 && allCategories.push(libCategory);
     });
     return allCategories;
   };

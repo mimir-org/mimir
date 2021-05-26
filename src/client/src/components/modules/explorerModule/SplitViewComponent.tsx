@@ -3,6 +3,8 @@ import { TextResources } from "../../../assets/textResources";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Node, VIEW_TYPE } from "../../../models/project";
+import { RootState } from "../../../redux/store";
+import { IsLocationNode } from "../../flow/helpers";
 import {
   changeSplitView,
   setSplitViewNode,
@@ -12,17 +14,19 @@ import {
   CheckView,
   SaveState,
 } from "../../../redux/store/localStorage";
-import { RootState } from "../../../redux/store";
 
 export const SplitViewComponent = () => {
   const dispatch = useDispatch();
-  const isVisible = CheckView(VIEW_TYPE.BLOCKVIEW);
+  const [isVisible, setIsVisible] = useState(CheckView(VIEW_TYPE.BLOCKVIEW));
   const [isActive, SetIsActive] = useState(LoadState("splitview"));
   const selectedNode = useSelector<RootState>((state) =>
     state.projectState.project?.nodes?.find((x) => x.isSelected)
   ) as Node;
 
   useEffect(() => {
+    if (IsLocationNode(selectedNode)) setIsVisible(false);
+    else setIsVisible(true);
+
     if (!selectedNode) {
       SetIsActive(false);
       SaveState(false, "splitview");
@@ -30,6 +34,7 @@ export const SplitViewComponent = () => {
   }, [selectedNode]);
 
   const handleClick = () => {
+    if (IsLocationNode(selectedNode)) return;
     SetIsActive(!isActive);
     SaveState(!isActive, "splitview");
     dispatch(changeSplitView(!isActive));

@@ -8,6 +8,7 @@ export { SaveEventData } from "./localStorage";
 export { LoadEventData } from "./localStorage";
 export { GetProjectId } from "./localStorage";
 export { GetProject } from "./localStorage";
+export { DeleteProject } from "./localStorage";
 export { SetProjectId } from "./localStorage";
 export { SetProject } from "./localStorage";
 export { HasProject } from "./localStorage";

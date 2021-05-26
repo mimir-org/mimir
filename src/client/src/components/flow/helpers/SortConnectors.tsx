@@ -1,11 +1,12 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { NODE_TYPE, RELATION_TYPE } from "../../../models/project";
+import { RELATION_TYPE } from "../../../models/project";
+import { IsLocationNode } from ".";
 
 const SortConnectors = (connectors) => {
   const list = [];
-  const isLocationNode = useSelector<RootState>(
-    (state) => state.splitView.node?.type === NODE_TYPE.LOCATION
+  const isLocationNode = useSelector<RootState>((state) =>
+    IsLocationNode(state.splitView.node)
   ) as boolean;
 
   connectors.forEach((conn) => {

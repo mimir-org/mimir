@@ -1,7 +1,7 @@
 import { FlowElement } from "react-flow-renderer";
 import { Node } from "../../../../models/project";
 
-const CreateParentBlockNode = (node: Node, width: number): FlowElement => {
+const CreateParentBlockNode = (node: Node): FlowElement => {
   let elementNode = null;
   if (!node) return elementNode;
 

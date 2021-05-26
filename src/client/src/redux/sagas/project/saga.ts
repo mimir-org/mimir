@@ -2,6 +2,12 @@ import { call, put } from "redux-saga/effects";
 import { Project } from "../../../models/project";
 import { get, post } from "../../../models/webclient";
 import {
+    SetProject,
+    DeleteProject,
+    SetProjectId,
+} from "../../store/localStorage";
+
+import {
     FETCHING_PROJECT_SUCCESS_OR_ERROR,
     CREATING_PROJECT_SUCCESS_OR_ERROR,
     SEARCH_PROJECT_SUCCESS_OR_ERROR,
@@ -11,10 +17,12 @@ import {
 
 export function* getProject(action) {
     try {
-        const url =
-            process.env.REACT_APP_API_BASE_URL + "project/" + action.payload;
+        DeleteProject();
+        const url = process.env.REACT_APP_API_BASE_URL + "project/" + action.payload;
         const response = yield call(get, url);
         const project = response.data as Project;
+        SetProject(project);
+        SetProjectId(project.id);
 
         const payload = {
             project: project,
@@ -82,9 +90,15 @@ export function* searchProject(action) {
 
 export function* createProject(action) {
     try {
+
+        DeleteProject();
         const url = process.env.REACT_APP_API_BASE_URL + "project";
         const response = yield call(post, url, action.payload);
         const project = response.data as Project;
+        project.edges = [];
+        SetProject(project);
+        SetProjectId(project.id);
+
 
         const payload = {
             project: project,
@@ -116,9 +130,12 @@ export function* createProject(action) {
 
 export function* updateProject(action) {
     try {
+        DeleteProject();
         const url = process.env.REACT_APP_API_BASE_URL + "project/update";
         const response = yield call(post, url, action.payload);
         const project = response.data as Project;
+        SetProject(project);
+        SetProjectId(project.id);
 
         const payload = {
             project: project,

@@ -10,14 +10,14 @@ import { OpenProjectMenu } from "../project/openProject/OpenProjectMenu";
 import { Project, VIEW_TYPE } from "../../models/project";
 import { GetTreeEdgeType } from "./helpers/tree";
 import {
+  updatePosition,
+  changeActiveNode,
+} from "../../redux/store/project/actions";
+import {
   GetTreeNodeTypes,
   GetTreeEdgeTypes,
   CreateTreeElements,
 } from "./helpers/tree";
-import {
-  updatePosition,
-  changeActiveNode,
-} from "../../redux/store/project/actions";
 import {
   GetProjectId,
   HasProject,
@@ -74,7 +74,6 @@ const FlowTree = () => {
 
   const OnDrop = (_event) => {
     const selectedNode = project?.nodes?.find((x) => x.isSelected);
-    console.log(_event);
 
     return useOnDrop(
       _event,

@@ -5,15 +5,15 @@ import { CloseIcon, RightArrowIcon } from "../../../assets/icons";
 import { TextResources } from "../../../assets/textResources";
 import { changeProjectMenu } from "../../../redux/store/projectMenu/actions";
 import { useState } from "react";
+import { Input, Label } from "../../../componentLibrary";
+import { MenuButton } from "../../../componentLibrary/buttons";
+import { create } from "../../../redux/store/project/actions";
 import {
   ProjectBody,
   ProjectBox,
   HeaderBox,
   ButtonBox,
 } from "../../../componentLibrary/box/project";
-import { Input, Label } from "../../../componentLibrary";
-import { MenuButton } from "../../../componentLibrary/buttons";
-import { create } from "../../../redux/store/project/actions";
 
 export const CreateProjectMenu = () => {
   const dispatch = useDispatch();
@@ -30,7 +30,7 @@ export const CreateProjectMenu = () => {
     dispatch(changeProjectMenu(PROJECT_MENU_TYPE.CREATE_PROJECT_MENU, false));
   };
 
-  const handlerProjectCreateClick = () => {
+  const handleProjectCreateClick = () => {
     dispatch(create(projectName, projectName));
     dispatch(changeProjectMenu(PROJECT_MENU_TYPE.CREATE_PROJECT_MENU, false));
   };
@@ -42,7 +42,7 @@ export const CreateProjectMenu = () => {
           <HeaderBox>
             <img
               src={CloseIcon}
-              alt="Close open project"
+              alt="Close project"
               onClick={handleReturnClick}
               className="icon"
             />
@@ -62,7 +62,7 @@ export const CreateProjectMenu = () => {
           </ButtonBox>
           {projectName && (
             <ButtonBox>
-              <MenuButton onClick={() => handlerProjectCreateClick()} wide>
+              <MenuButton onClick={() => handleProjectCreateClick()} wide>
                 <p>{TextResources.Account_Create_Button_Label}</p>
                 <img src={RightArrowIcon} alt="Open project" className="icon" />
               </MenuButton>

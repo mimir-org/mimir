@@ -1,3 +1,13 @@
+import { addNode, createEdge } from "../../../redux/store/project/actions";
+import { CreateId } from "./../helpers";
+import { CheckView } from "../../../redux/store/localStorage/localStorage";
+import { CreateBlockNode } from "../helpers/block";
+import {
+  CreateTreeNode,
+  GetTreeEdgeType,
+  CreateTreeEdge,
+  ValidateSameNodeType,
+} from "../helpers/tree";
 import {
   CONNECTOR_TYPE,
   LibNode,
@@ -7,16 +17,6 @@ import {
   VIEW_TYPE,
   Edge,
 } from "../../../models/project";
-import { addNode, createEdge } from "../../../redux/store/project/actions";
-import { CreateId } from "./../helpers";
-import { CheckView } from "../../../redux/store/localStorage/localStorage";
-import { CreateBlockNode } from "../helpers/block";
-import {
-  CreateTreeNode,
-  GetTreeEdgeType,
-  CreateTreeEdge,
-  ValidatePartofConnection,
-} from "../helpers/tree";
 
 const useOnDrop = (
   event,
@@ -72,7 +72,7 @@ const useOnDrop = (
     : setElements((es) => es.concat(CreateTreeNode(node)));
 
   if (selectedNode) {
-    if (!ValidatePartofConnection(selectedNode, node)) return;
+    if (!ValidateSameNodeType(selectedNode, node)) return;
 
     const fromConnector = selectedNode.connectors?.find(
       (x) =>

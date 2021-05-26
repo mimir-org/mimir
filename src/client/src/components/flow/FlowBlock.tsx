@@ -5,9 +5,9 @@ import { RootState } from "./../../redux/store/index";
 import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
 import { EDGE_TYPE, EdgeType } from "../../models/project";
 import { OpenProjectMenu } from "../project/openProject";
-import { get } from "../../redux/store/project/actions";
+import { changeActiveNode, get } from "../../redux/store/project/actions";
 import { Color } from "../../componentLibrary";
-import { GetBlockNodeTypes } from "./helpers";
+import { GetBlockNodeTypes, IsFunctionNode, IsLocationNode } from "./helpers";
 import { BackgroundBox } from "../../componentLibrary/blockView";
 import { CreateBlockElements, GetBlockEdgeTypes } from "./helpers/block";
 import {
@@ -15,7 +15,6 @@ import {
   VIEW_TYPE,
   BackgroundVariant,
   Node,
-  NODE_TYPE,
   SPLITVIEW_POSITION,
 } from "../../models/project";
 import {
@@ -63,9 +62,7 @@ const FlowBlock = () => {
     (state) => state.flow.view === VIEW_TYPE.BLOCKVIEW
   ) as boolean;
 
-  const isLocationNode =
-    splitViewNode?.type === NODE_TYPE.LOCATION ||
-    node?.type === NODE_TYPE.LOCATION;
+  const showBackground = IsLocationNode(splitViewNode) || IsLocationNode(node);
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
@@ -106,18 +103,26 @@ const FlowBlock = () => {
     );
   };
 
+  const OnDragOver = (event) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "move";
+  };
+
   const OnNodeDragStop = (_event, node) => {
     return useOnNodeDragStop(_event, node, dispatch, true);
   };
 
   const OnDrop = (_event) => {
+    const selectedNode = project?.nodes?.find((x) => x.isSelected);
+
     return useOnDrop(
       _event,
       dispatch,
       setElements,
       reactFlowInstance,
       reactFlowWrapper,
-      splitView
+      splitView,
+      selectedNode
     );
   };
 
@@ -147,10 +152,7 @@ const FlowBlock = () => {
   }, [dispatch, project]);
 
   const splitViewPosition = () => {
-    if (
-      splitViewNode?.type === NODE_TYPE.LOCATION &&
-      node?.type === NODE_TYPE.FUNCTION
-    ) {
+    if (IsLocationNode(splitViewNode) && IsFunctionNode(node)) {
       return SPLITVIEW_POSITION.RIGHT;
     }
   };
@@ -168,6 +170,7 @@ const FlowBlock = () => {
               onElementsRemove={OnElementsRemove}
               onLoad={OnLoad}
               onDrop={OnDrop}
+              onDragOver={OnDragOver}
               onNodeDragStop={OnNodeDragStop}
               onElementClick={OnElementClick}
               onConnectEnd={OnConnectStop}
@@ -177,7 +180,7 @@ const FlowBlock = () => {
             >
               <FullscreenBox />
               <BackgroundBox
-                visible={isLocationNode}
+                visible={showBackground}
                 isSplitView={splitView}
                 right={splitViewPosition()}
               >
