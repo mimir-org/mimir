@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { get } from "../../redux/store/project/actions";
-import { MiniMap } from "./";
 import { ProjectMainMenu } from "../project";
 import { RootState } from "./../../redux/store/index";
 import { useOnConnect, useOnDrop, useOnElementsRemove } from "./hooks";
@@ -126,7 +125,6 @@ const FlowTree = () => {
               snapGrid={[5, 5]}
             >
               <Controls />
-              <MiniMap />
               <FullscreenBox />
             </ReactFlow>
           </div>
