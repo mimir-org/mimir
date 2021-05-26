@@ -60,11 +60,11 @@ const BlockViewFunction: FC<NodeProps> = ({ data }) => {
   const connectors = GetConnectors();
 
   return (
-    <NodeBox onMouseOver={handleOnHover} onMouseOut={handleOnMouseOut}>
+    <NodeBox onMouseOver={handleOnHover} onMouseOut={handleOnMouseOut} function>
       <OptionsMenu visible={showButton} onClick={handleClick}>
         <img src={OptionsIcon} alt="options" />
       </OptionsMenu>
-      <OptionsBox visible={menuOpen}>
+      <OptionsBox visible={menuOpen} function>
         {SortConnectors(data.connectors).map((conn) => (
           <OptionsElement
             key={conn.id}

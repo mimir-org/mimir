@@ -80,16 +80,6 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
             inputType=""
           />
         </div>
-        {IsLocationNode(node) && (
-          <div>
-            <div>Length (m)</div>
-            <Input
-              value={node.length}
-              onChange={(e: any) => handleOnChange(e, "length")}
-              inputType=""
-            />{" "}
-          </div>
-        )}
       </TabColumn>
       <TabColumn>
         <div>
@@ -178,12 +168,22 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
             inputType=""
           />
         </div>
+        {IsLocationNode(node) && (
+          <div>
+            <div>Length (m)</div>
+            <Input
+              value={node.length}
+              onChange={(e: any) => handleOnChange(e, "length")}
+              inputType=""
+            />
+          </div>
+        )}
       </TabColumn>
       <TabColumn>
         <div>
           <div>Description</div>
           <Textarea
-            width="400"
+            width="300"
             height="90"
             value={node.description ?? ""}
             onChange={(e: any) => handleOnChange(e, "description")}
