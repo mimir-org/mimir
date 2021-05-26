@@ -8,7 +8,7 @@ const Color = {
   DeepCyan: "#007079",
   LightCyan: "#CFDADB",
   Function: "#ffff00",
-  Product: "#40e0d0",
+  Product: "#00F0FF",
   Location: "#ff00ff",
   FunctionTransparent: "rgba(254, 244, 69, 0.15)",
   ProductTransparent: "rgba(0, 240, 255, 0.15)",
