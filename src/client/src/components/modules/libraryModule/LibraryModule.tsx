@@ -1,5 +1,4 @@
 import { TextResources } from "../../../assets/textResources";
-import { TypeEditorModule } from "../typeEditorModule";
 import { LegendModule } from "../legendModule";
 import { LibraryComponent } from "./index";
 import { useEffect } from "react";
@@ -128,7 +127,7 @@ const LibraryModule = () => {
         </ModuleHeader>
         <ModuleBody visible={isOpen} library>
           <LibraryComponent categories={libNodes()} search={search} />
-          <TypeEditorModule />
+          {/* <TypeEditorModule /> */}
         </ModuleBody>
         <AnimatedModule
           start={startLegend}
