@@ -65,6 +65,7 @@ namespace Mb.Core.Extensions
             services.AddSingleton(s => autoMapperConfiguration.CreateMapper());
 
             return services;
+
         }
 
         public static IApplicationBuilder UseModelBuilderModule(this IApplicationBuilder app)
