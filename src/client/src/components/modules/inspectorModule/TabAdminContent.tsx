@@ -71,6 +71,15 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
             inputType=""
           />
         </div>
+        <div>
+          <div>Updated Date</div>
+          <Input
+            readOnly={true}
+            value={moment(node.updated).format("DD/MM/YYYY")}
+            onChange={() => null}
+            inputType=""
+          />
+        </div>
         {IsLocationNode(node) && (
           <div>
             <div>Length (m)</div>
@@ -92,10 +101,10 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
           />
         </div>
         <div>
-          <div>Updated Date</div>
+          <div>Type name</div>
           <Input
             readOnly={true}
-            value={moment(node.updated).format("DD/MM/YYYY")}
+            value={node.name}
             onChange={() => null}
             inputType=""
           />
