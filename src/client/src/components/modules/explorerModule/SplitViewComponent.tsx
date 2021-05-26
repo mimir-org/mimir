@@ -5,12 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { Node } from "../../../models/project";
 import { RootState } from "../../../redux/store";
 import { IsLocationNode } from "../../flow/helpers";
+import { LoadState, SaveState } from "../../../redux/store/localStorage";
+import { IsBlockView } from "../../flow/helpers/block";
 import {
   changeSplitView,
   setSplitViewNode,
 } from "../../../redux/store/splitView/actions";
-import { LoadState, SaveState } from "../../../redux/store/localStorage";
-import { IsBlockView } from "../../flow/helpers/block";
 
 export const SplitViewComponent = () => {
   const dispatch = useDispatch();
@@ -19,8 +19,6 @@ export const SplitViewComponent = () => {
   const selectedNode = useSelector<RootState>((state) =>
     state.projectState.project?.nodes?.find((x) => x.isSelected)
   ) as Node;
-
-  console.log(IsBlockView());
 
   useEffect(() => {
     if (IsLocationNode(selectedNode)) setIsVisible(false);
