@@ -32,8 +32,8 @@ const InspectorModule = () => {
     dispatch(changeModuleVisibility(key, !isOpen, true));
   };
 
-  const start = isOpen ? Size.ModuleClosed : Size.ModuleOpen;
-  const stop = isOpen ? Size.ModuleOpen : Size.ModuleClosed;
+  const start = isOpen ? Size.InspectorModuleClosed : Size.InspectorModuleOpen;
+  const stop = isOpen ? Size.InspectorModuleOpen : Size.InspectorModuleClosed;
 
   return (
     <AnimatedModule start={start} stop={stop} run={animate} type={key}>
