@@ -1,6 +1,6 @@
 export const CHANGE_INSPECTOR_COMPONENT = "CHANGE_INSPECTOR_COMPONENT";
 
-export interface ChangeInspectorComponentAction {
+export interface ChangeInspectorTab {
   type: typeof CHANGE_INSPECTOR_COMPONENT;
-  payload: string;
+  payload: { index: number; type: string };
 }

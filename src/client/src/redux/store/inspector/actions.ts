@@ -1,15 +1,8 @@
-import { INSPECTOR_ELEMENT_CHANGED_COMPLETED } from "../inspector/reducers";
+import { CHANGE_INSPECTOR_COMPONENT } from "./types";
 
-export function changeInspector(index: number, tabs) {
-  if (tabs.length > 1) {
-    tabs.forEach((element: { visible: boolean }) => {
-      element.visible = false;
-    });
-    tabs[index].visible = true;
-  }
-
+export function changeInspectorTab(index: number, type: string) {
   return {
-    type: INSPECTOR_ELEMENT_CHANGED_COMPLETED,
-    payload: tabs,
+    type: CHANGE_INSPECTOR_COMPONENT,
+    payload: { index, type },
   };
 }
