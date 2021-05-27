@@ -17,11 +17,11 @@ const ModuleBox = styled.div`
   height: ${(props: { stop: string; type: string }) =>
     props.type === MODULE_TYPE.INSPECTOR || props.type === MODULE_TYPE.LEGEND
       ? `${props.stop}px`
-      : "auto"};
-  overflow: hidden;
+      : "100%"};
   position: ${(props) => props.type === MODULE_TYPE.LEGEND && "fixed"};
   bottom: ${(props) => props.type === MODULE_TYPE.LEGEND && "0"};
   z-index: 1;
+  overflow: hidden;
 `;
 
 export default ModuleBox;
