@@ -1,0 +1,44 @@
+.roundcheckbox {
+  display: flex;
+  position: relative;
+  background-color: transparent;
+  padding: 5px 10px 10px 10px;
+  margin: 0px 5px;
+  cursor: pointer;
+}
+
+.roundcheckbox input {
+  position: absolute;
+  display: none;
+}
+
+.checked {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 11px;
+  width: 11px;
+  background-color: transparent;
+  border: 2px solid #007079;
+  border-radius: 1000px;
+}
+
+.checked:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.roundcheckbox input:checked ~ .checked:after {
+  display: block;
+}
+
+.roundcheckbox .checked:after {
+  left: 1px;
+  top: 1px;
+  width: 4px;
+  height: 4px;
+  background-color: #007079;
+  border: solid transparent;
+  border-radius: 100px;
+}

@@ -1,3 +1,5 @@
+export { default as AddIcon } from "./addIcon.svg";
+export { default as CheckmarkIcon } from "./checkmarkIcon.svg";
 export { default as CloseIcon } from "./closeIcon.svg";
 export { default as CombinedViewOffIcon } from "./combinedViewOffIcon.svg";
 export { default as CombinedViewOnIcon } from "./combinedViewOnIcon.svg";
@@ -11,6 +13,7 @@ export { default as EyeIcon } from "./inspectorIcon.svg";
 export { default as FilterIconClosed } from "./visualFilterIconClosed.svg";
 export { default as FilterIconOpen } from "./VisualFilterIconOpen.svg";
 export { default as FunctionIcon } from "./functionIcon.svg";
+export { default as HelpIcon } from "./helpIcon.svg";
 export { default as LeftArrowIcon } from "./leftArrowIcon.svg";
 export { default as LegendIcon } from "./legendIcon.svg";
 export { default as LibraryIcon } from "./libraryIcon.svg";
