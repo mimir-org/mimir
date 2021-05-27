@@ -7,6 +7,7 @@ import { MODULE_TYPE } from "../../../models/project";
 import { SaveState } from "../../../redux/store/localStorage";
 import { AnimatedModule, Size } from "../../../componentLibrary";
 import { ExplorerIcon, ToggleLeft, ToggleRight } from "../../../assets/icons";
+import { IsBlockView } from "../../flow/helpers/block";
 import {
   ModuleHeader,
   ModuleBody,
@@ -48,7 +49,7 @@ export const ExplorerModule = () => {
         />
         <p className="text">{TextResources.Explorer_view}</p>
       </ModuleHeader>
-      <ModuleBody visible={isOpen} explorer>
+      <ModuleBody visible={isOpen} explorer isBlockView={IsBlockView()}>
         {hasProject && <ProjectComponent />}
         <SplitViewComponent />
       </ModuleBody>
