@@ -15,6 +15,7 @@ const ShowBlockViewEdge = (edge: Edge): boolean => {
   const splitView = store.getState().splitView;
   const isSplitView = splitView.visible as boolean;
   const splitViewNode = splitView.node as Node;
+  const selectedNode = project.nodes.find((x) => x.isSelected) as Node;
 
   const toNode = project.nodes.find((x) => x.id === edge.toNode);
   const fromNode = project.nodes.find((x) => x.id === edge.fromNode);
@@ -26,11 +27,12 @@ const ShowBlockViewEdge = (edge: Edge): boolean => {
     (x) => x.id === fromConnectorId
   ) as Connector;
 
-  const toConnector = toNode.connectors.find(
+  const toConnector = toNode?.connectors.find(
     (x) => x.id === toConnectorId
   ) as Connector;
 
   return ValidateEdge(
+    selectedNode,
     fromNode,
     toNode,
     splitViewNode,
@@ -41,3 +43,7 @@ const ShowBlockViewEdge = (edge: Edge): boolean => {
 };
 
 export default ShowBlockViewEdge;
+
+// d68e65d6-307a-c08d-f76b-6823d792b821¨
+
+// 30206574-b907-a2ee-2dba-b349e37406ef

@@ -33,12 +33,12 @@ const CreateBlockElements = (
     if (edge.fromNode === nodeId) {
       const toNode = project.nodes.find((x) => x.id === edge.toNode);
 
-      let connectorType = toNode.connectors.find(
+      let connectorType = toNode?.connectors.find(
         (x) => x.id === edge?.toConnector
       )?.relationType;
 
       if (
-        (selectedNode.type === toNode.type ||
+        (selectedNode?.type === toNode?.type ||
           IsAspectSameType(selectedNode, toNode)) &&
         connectorType !== RELATION_TYPE.Transport
       )
@@ -52,12 +52,12 @@ const CreateBlockElements = (
       if (edge.fromNode === splitViewNode.id) {
         const toNode = project.nodes.find((x) => x.id === edge.toNode);
 
-        let connectorType = toNode.connectors.find(
+        let connectorType = toNode?.connectors.find(
           (x) => x.id === edge?.toConnector
         )?.relationType;
 
         if (
-          (splitViewNode.type === toNode.type ||
+          (splitViewNode?.type === toNode?.type ||
             IsAspectSameType(splitViewNode, toNode)) &&
           connectorType !== RELATION_TYPE.Transport
         )

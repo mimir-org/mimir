@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 const NodeBox = styled.div`
   z-index: 1200;
-  width: ${(props) => props.width ?? "90"}px;
-  height: ${(props) => props.height ?? "37"}px;
+  width: ${(props) => props.width ?? "100"}px;
+  height: ${(props) => props.height ?? "57"}px;
   text-align: center;
   position: ${(props) => props.function && "absolute"};
   top: ${(props) => props.function && "0px"};

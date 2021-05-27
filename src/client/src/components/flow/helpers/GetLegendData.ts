@@ -8,8 +8,10 @@ import {
 } from "../../../models/project";
 
 const GetBlockViewLegend = (node: Node): Legend[] => {
-  const legends = node.connectors
-    .filter((x) => x.relationType === (RELATION_TYPE.Transport as RelationType))
+  const legends = node?.connectors
+    ?.filter(
+      (x) => x.relationType === (RELATION_TYPE.Transport as RelationType)
+    )
     .map((y) => {
       return {
         key: y.id,
@@ -22,8 +24,8 @@ const GetBlockViewLegend = (node: Node): Legend[] => {
 };
 
 const GetTreeViewLegend = (node: Node): Legend[] => {
-  const legends = node.connectors
-    .filter(
+  const legends = node?.connectors
+    ?.filter(
       (x) =>
         x.relationType === (RELATION_TYPE.PartOf as RelationType) ||
         x.relationType === (RELATION_TYPE.HasLocation as RelationType) ||
@@ -43,7 +45,7 @@ const GetTreeViewLegend = (node: Node): Legend[] => {
 
 const GetBlockViewNodes = (project: Project, nodeId: string): Node[] => {
   const nodes = [] as Node[];
-  const fromNode = project.nodes?.find((x) => x.id === nodeId);
+  const fromNode = project?.nodes?.find((x) => x.id === nodeId);
 
   project.edges.forEach((edge) => {
     if (edge.fromNode === nodeId) {
@@ -61,7 +63,7 @@ const GetBlockViewNodes = (project: Project, nodeId: string): Node[] => {
 };
 
 const GetTreeviewNodes = (project: Project): Node[] => {
-  return project.nodes?.filter((x) => !x?.isHidden);
+  return project?.nodes?.filter((x) => !x?.isHidden);
 };
 
 const GetLegendData = (

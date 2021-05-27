@@ -6,6 +6,7 @@ import {
 } from "../../../../models/project";
 
 const ValidateEdge = (
+  selectedNode: Node,
   fromNode: Node,
   toNode: Node,
   splitViewNode: Node,
@@ -14,6 +15,9 @@ const ValidateEdge = (
   splitView: boolean
 ): boolean => {
   // TODO: Refactor..
+  if (!fromNode || !toNode) {
+    return false;
+  }
   if (
     fromNode.type === NODE_TYPE.PRODUCT ||
     toNode.type === NODE_TYPE.PRODUCT ||
@@ -25,7 +29,59 @@ const ValidateEdge = (
   ) {
     return false;
   }
-  if (splitView) {
+
+  if (!splitView) {
+    if (
+      selectedNode.type === NODE_TYPE.LOCATION ||
+      selectedNode.type === NODE_TYPE.ASPECT_LOCATION
+    ) {
+      if (
+        fromNode.type === NODE_TYPE.FUNCTION ||
+        toNode.type === NODE_TYPE.FUNCTION ||
+        fromConnector.type === RELATION_TYPE.Transport ||
+        toConnector.type === RELATION_TYPE.Transport
+      ) {
+        return false;
+      }
+    }
+    if (
+      selectedNode.type === NODE_TYPE.FUNCTION ||
+      selectedNode.type === NODE_TYPE.ASPECT_FUNCTION
+    ) {
+      if (
+        fromNode.type === NODE_TYPE.LOCATION ||
+        toNode.type === NODE_TYPE.LOCATION ||
+        fromConnector.type === RELATION_TYPE.HasLocation ||
+        toConnector.type === RELATION_TYPE.HasLocation
+      ) {
+        return false;
+      }
+      if (
+        fromNode.type === NODE_TYPE.LOCATION &&
+        toNode.type === NODE_TYPE.LOCATION
+      ) {
+        return false;
+      }
+      if (
+        fromNode.type === NODE_TYPE.FUNCTION &&
+        toNode.type !== NODE_TYPE.LOCATION
+      ) {
+        return true;
+      }
+      if (
+        fromNode.type === NODE_TYPE.FUNCTION &&
+        toNode.type === NODE_TYPE.LOCATION
+      ) {
+        return false;
+      }
+      if (
+        fromNode.type === NODE_TYPE.FUNCTION &&
+        splitViewNode.type === NODE_TYPE.LOCATION
+      ) {
+        return false;
+      }
+    }
+
     if (
       fromNode.type === NODE_TYPE.FUNCTION &&
       toNode.type === NODE_TYPE.LOCATION &&
@@ -49,34 +105,6 @@ const ValidateEdge = (
       return true;
     }
   }
-
-  if (!splitView) {
-    if (
-      fromNode.type === NODE_TYPE.LOCATION &&
-      toNode.type === NODE_TYPE.LOCATION
-    ) {
-      return false;
-    }
-    if (
-      fromNode?.type === NODE_TYPE.FUNCTION &&
-      toNode?.type !== NODE_TYPE.LOCATION
-    ) {
-      return true;
-    }
-    if (
-      fromNode?.type === NODE_TYPE.FUNCTION &&
-      toNode.type === NODE_TYPE.LOCATION
-    ) {
-      return false;
-    }
-    if (
-      fromNode.type === NODE_TYPE.FUNCTION &&
-      splitViewNode.type === NODE_TYPE.LOCATION
-    ) {
-      return false;
-    }
-  }
-  return false;
 };
 
 export default ValidateEdge;
