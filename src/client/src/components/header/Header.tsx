@@ -20,7 +20,7 @@ const Header = () => {
   const { push } = useHistory();
 
   const project = store.getState().projectState.project;
-  const selectedNode = project.nodes.find((x) => x.isSelected);
+  const selectedNode = project?.nodes?.find((x) => x.isSelected);
 
   const handleClick = (e) => {
     if (e.target.alt === VIEW_TYPE.BLOCKVIEW && !selectedNode) return;
