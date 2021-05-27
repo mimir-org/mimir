@@ -1,3 +1,4 @@
+import { authProvider } from "../../../../providers/authProvider";
 import { LogoutIcon } from "../../../../assets/icons";
 import { TextResources } from "../../../../assets/textResources";
 import { MenuButton } from "../../../../componentLibrary/buttons";
@@ -12,6 +13,10 @@ interface Props {
 }
 
 const GetMenuElement = ({ type, onClick, userState }: Props) => {
+  const logoutClick = () => {
+    authProvider.logout();
+  };
+
   return type !== "Logout" ? (
     <MenuElement onClick={onClick}>
       {GetIcon(type)}
@@ -20,7 +25,7 @@ const GetMenuElement = ({ type, onClick, userState }: Props) => {
   ) : (
     <MenuElement logOut>
       {userState.user && userState.user.name}
-      <MenuButton>
+      <MenuButton onClick={logoutClick}>
         <img src={LogoutIcon} alt="logout" />
         {TextResources.Account_Logout}
       </MenuButton>

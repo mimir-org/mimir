@@ -18,20 +18,26 @@ namespace Mb.Core.Services
         public const string RdsFileName = "rds";
         public const string AttributeFileName = "attribute";
         public const string LibraryFileName = "library";
+        public const string ContractorFileName = "contractor";
+        public const string TerminalFileName = "terminal";
 
         private readonly IFileRepository _fileRepository;
         private readonly IRdsRepository _rdsRepository;
         private readonly IAttributeTypeRepository _attributeTypeRepository;
-        private readonly ILibraryTypeComponentRepository _libraryTypeComponentRepository;
+        private readonly ILibraryTypeRepository _libraryTypeComponentRepository;
         private readonly ICommonRepository _generateIdRepository;
+        private readonly IContractorRepository _contractorRepository;
+        private readonly ITerminalTypeRepository _terminalTypeRepository;
 
-        public TypeEditorService(IFileRepository fileRepository, IRdsRepository rdsRepository, IAttributeTypeRepository attributeTypeRepository, ILibraryTypeComponentRepository libraryTypeComponentRepository, ICommonRepository generateIdRepository)
+        public TypeEditorService(IFileRepository fileRepository, IRdsRepository rdsRepository, IAttributeTypeRepository attributeTypeRepository, ILibraryTypeRepository libraryTypeComponentRepository, ICommonRepository generateIdRepository, IContractorRepository contractorRepository, ITerminalTypeRepository terminalTypeRepository)
         {
             _fileRepository = fileRepository;
             _rdsRepository = rdsRepository;
             _attributeTypeRepository = attributeTypeRepository;
             _libraryTypeComponentRepository = libraryTypeComponentRepository;
             _generateIdRepository = generateIdRepository;
+            _contractorRepository = contractorRepository;
+            _terminalTypeRepository = terminalTypeRepository;
         }
 
         #region Public methods
@@ -42,7 +48,7 @@ namespace Mb.Core.Services
         /// <param name="id"></param>
         /// <param name="ignoreNotFound"></param>
         /// <returns></returns>
-        public async Task<LibraryTypeComponent> GetTypeById(string id, bool ignoreNotFound = false)
+        public async Task<LibraryType> GetTypeById(string id, bool ignoreNotFound = false)
         {
             var libraryTypeComponent = await _libraryTypeComponentRepository.GetAsync(id);
             if (!ignoreNotFound && libraryTypeComponent == null)
@@ -110,22 +116,13 @@ namespace Mb.Core.Services
         /// Get all terminals
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Terminal> GetTerminals()
+        public IEnumerable<TerminalType> GetTerminals()
         {
-            var terminals = EnumExtensions.GetEnumList<TerminalType>().Where(x => x != TerminalType.NotSet).ToList();
-            foreach (var terminalType in terminals)
+            var allTerminals = _terminalTypeRepository.GetAll().ToList();
+            foreach (var terminal in allTerminals)
             {
-                yield return new Terminal
-                {
-                    TerminalType = terminalType,
-                    ConnectorType = ConnectorType.Input
-                };
-
-                yield return new Terminal
-                {
-                    TerminalType = terminalType,
-                    ConnectorType = ConnectorType.Output
-                };
+                terminal.CreateFromJsonData();
+                yield return terminal;
             }
         }
 
@@ -135,8 +132,15 @@ namespace Mb.Core.Services
         /// </summary>
         /// <param name="libraryTypeComponent"></param>
         /// <returns></returns>
-        public async Task<LibraryTypeComponent> CreateLibraryComponent(LibraryTypeComponent libraryTypeComponent)
+        public async Task<LibraryType> CreateLibraryComponent(LibraryType libraryTypeComponent)
         {
+            if (!string.IsNullOrEmpty(libraryTypeComponent.Id))
+            {
+                var existingType = await _libraryTypeComponentRepository.GetAsync(libraryTypeComponent.Id);
+                if (existingType != null)
+                    throw new ModelBuilderDuplicateException($"The type with id:{libraryTypeComponent.Id} already exist.");
+            }
+
             libraryTypeComponent.CreateJsonData();
             libraryTypeComponent.Id = _generateIdRepository.CreateUniqueId();
             await _libraryTypeComponentRepository.CreateAsync(libraryTypeComponent);
@@ -145,10 +149,10 @@ namespace Mb.Core.Services
         }
 
         /// <summary>
-        /// Get all library type components
+        /// Get all library types
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<LibraryTypeComponent> GetAllTypes()
+        public IEnumerable<LibraryType> GetAllTypes()
         {
             var types = _libraryTypeComponentRepository.GetAll().ToList();
             foreach (var component in types)
@@ -178,7 +182,7 @@ namespace Mb.Core.Services
         {
             await using var stream = new MemoryStream();
             await file.CopyToAsync(stream, cancellationToken);
-            var types = stream.ToArray().Deserialize<List<LibraryTypeComponent>>();
+            var types = stream.ToArray().Deserialize<List<LibraryType>>();
             await CreateLibraryTypeComponentsAsync(types);
         }
 
@@ -196,14 +200,20 @@ namespace Mb.Core.Services
             var libraryFiles = fileList.Where(x => x.ToLower().Contains(LibraryFileName)).ToList();
             var rdsFiles = fileList.Where(x => x.ToLower().Contains(RdsFileName)).ToList();
             var attributeFiles = fileList.Where(x => x.ToLower().Contains(AttributeFileName)).ToList();
+            var contractorFiles = fileList.Where(x => x.ToLower().Contains(ContractorFileName)).ToList();
+            var terminalFiles = fileList.Where(x => x.ToLower().Contains(TerminalFileName)).ToList();
 
-            var libraries = _fileRepository.ReadAllFiles<LibraryTypeComponent>(libraryFiles).ToList();
+            var libraries = _fileRepository.ReadAllFiles<LibraryType>(libraryFiles).ToList();
             var rds = _fileRepository.ReadAllFiles<Rds>(rdsFiles).ToList();
             var attributes = _fileRepository.ReadAllFiles<AttributeType>(attributeFiles).ToList();
+            var contractors = _fileRepository.ReadAllFiles<Contractor>(contractorFiles).ToList();
+            var terminals = _fileRepository.ReadAllFiles<TerminalType>(terminalFiles).ToList();
 
             await CreateRdsAsync(rds);
             await CreateAttributeTypesAsync(attributes);
+            await CreateTerminalTypesAsync(terminals);
             await CreateLibraryTypeComponentsAsync(libraries);
+            await CreateContractorsAsync(contractors);
         }
 
         /// <summary>
@@ -268,10 +278,26 @@ namespace Mb.Core.Services
             await _attributeTypeRepository.SaveAsync();
         }
 
-        private async Task CreateLibraryTypeComponentsAsync(IEnumerable<LibraryTypeComponent> libraryTypeComponents)
+        private async Task CreateTerminalTypesAsync(IEnumerable<TerminalType> terminals)
+        {
+            var existingTypes = _terminalTypeRepository.GetAll().ToList();
+            var notExistingTypes = terminals.Where(x => existingTypes.All(y => y.Id != x.Id)).ToList();
+            if (!notExistingTypes.Any())
+                return;
+
+            foreach (var item in notExistingTypes)
+            {
+                item.CreateJsonData();
+                await _terminalTypeRepository.CreateAsync(item);
+            }
+
+            await _terminalTypeRepository.SaveAsync();
+        }
+
+        private async Task CreateLibraryTypeComponentsAsync(IEnumerable<LibraryType> libraryTypes)
         {
             var existingTypes = _libraryTypeComponentRepository.GetAll().ToList();
-            var notExistingTypes = libraryTypeComponents.Where(x => !existingTypes.Any(x.Equals)).ToList();
+            var notExistingTypes = libraryTypes.Where(x => existingTypes.All(y => y.Id != x.Id)).ToList();
             if (!notExistingTypes.Any())
                 return;
 
@@ -282,6 +308,21 @@ namespace Mb.Core.Services
             }
 
             await _libraryTypeComponentRepository.SaveAsync();
+        }
+
+        private async Task CreateContractorsAsync(IEnumerable<Contractor> contractors)
+        {
+            var existingTypes = _contractorRepository.GetAll().ToList();
+            var notExistingTypes = contractors.Where(x => existingTypes.All(y => y.Id != x.Id)).ToList();
+            if (!notExistingTypes.Any())
+                return;
+
+            foreach (var item in notExistingTypes)
+            {
+                await _contractorRepository.CreateAsync(item);
+            }
+
+            await _contractorRepository.SaveAsync();
         }
 
         #endregion

@@ -1,26 +1,39 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ProjectMainMenu } from "../project";
-import { ProjectState } from "../../redux/store/project/types";
 import { RootState } from "./../../redux/store/index";
 import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
+import { EDGE_TYPE, EdgeType } from "../../models/project";
 import { OpenProjectMenu } from "../project/openProject";
-
+import {
+  changeActiveBlockNode,
+  changeActiveNode,
+  get,
+} from "../../redux/store/project/actions";
+import { Color } from "../../componentLibrary";
+import { GetBlockNodeTypes, IsFunctionNode, IsLocationNode } from "./helpers";
+import { BackgroundBox } from "../../componentLibrary/blockView";
+import {
+  CreateBlockElements,
+  GetBlockEdgeTypes,
+  IsBlockView,
+} from "./helpers/block";
+import {
+  Project,
+  BackgroundVariant,
+  Node,
+  SPLITVIEW_POSITION,
+} from "../../models/project";
+import {
+  GetProjectId,
+  HasProject,
+  SetProject,
+} from "../../redux/store/localStorage";
 import ReactFlow, {
   ReactFlowProvider,
   Elements,
-  Controls,
+  Background,
 } from "react-flow-renderer";
-import { changeActiveNode, get } from "../../redux/store/project/actions";
-import {
-  GetProject,
-  HasProject,
-} from "../../redux/store/localStorage/localStorage";
-import {
-  CreateProjectElementBlockNodes,
-  GetBlockNodeTypes,
-  GetBlockEdgeTypes,
-} from "./helpers";
 import {
   useOnConnect,
   useOnConnectStart,
@@ -30,29 +43,39 @@ import {
   useOnNodeDragStop,
   useOnUpdatePosition,
 } from "./hooks";
+import { setSplitViewNode } from "../../redux/store/splitView/actions";
 
 const FlowBlock = () => {
   const dispatch = useDispatch();
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>();
-  let nodeId: string;
 
-  const projectState = useSelector<RootState>(
-    (state) => state.projectState
-  ) as ProjectState;
+  const project = useSelector<RootState>(
+    (state) => state.projectState.project
+  ) as Project;
 
-  if (projectState.project) {
-    const node = projectState.project.nodes.find((node) => node.isSelected);
-    nodeId = node ? node.id : "";
-  }
+  SetProject(project);
+  const node = project?.nodes?.find((node) => node.isSelected);
+
+  const splitView = useSelector<RootState>(
+    (state) => state.splitView.visible
+  ) as boolean;
+
+  const splitViewNode = useSelector<RootState>(
+    (state) => state.splitView.node
+  ) as Node;
+
+  const showBackground = IsLocationNode(splitViewNode) || IsLocationNode(node);
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(CreateProjectElementBlockNodes(projectState.project, nodeId));
+      setElements(
+        CreateBlockElements(project, node?.id, splitViewNode, splitView)
+      );
       return setReactFlowInstance(_reactFlowInstance);
     },
-    [nodeId, projectState.project]
+    [node, project, splitViewNode, splitView]
   );
 
   const OnElementsRemove = (elementsToRemove) => {
@@ -60,7 +83,13 @@ const FlowBlock = () => {
   };
 
   const OnConnect = (params) => {
-    return useOnConnect(params, projectState, setElements, dispatch);
+    return useOnConnect(
+      params,
+      project,
+      setElements,
+      dispatch,
+      EDGE_TYPE.BLOCK as EdgeType
+    );
   };
 
   const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
@@ -70,12 +99,17 @@ const FlowBlock = () => {
   const OnConnectStop = (e) => {
     return useOnConnectStop(
       e,
-      projectState,
+      project,
       reactFlowInstance,
-      nodeId,
+      node.id,
       reactFlowWrapper,
       dispatch
     );
+  };
+
+  const OnDragOver = (event) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "move";
   };
 
   const OnNodeDragStop = (_event, node) => {
@@ -83,21 +117,27 @@ const FlowBlock = () => {
   };
 
   const OnDrop = (_event) => {
+    const selectedNode = project?.nodes?.find((x) => x.isSelected);
+
     return useOnDrop(
       _event,
       dispatch,
       setElements,
       reactFlowInstance,
-      reactFlowWrapper
+      reactFlowWrapper,
+      splitView,
+      selectedNode
     );
   };
 
   const OnElementClick = (_event, element) => {
-    // dispatch(changeActiveNode(element.id)); // TODO: FIX
+    dispatch(changeActiveBlockNode(element.id));
+    // dispatch(setSplitViewNode(element));
+    // dispatch(changeActiveNode(element.id, false));
   };
 
   const OnUpdatePosition = () => {
-    return useOnUpdatePosition(projectState, dispatch);
+    return useOnUpdatePosition(project, dispatch);
   };
 
   // Force rerender
@@ -110,45 +150,57 @@ const FlowBlock = () => {
     OnUpdatePosition();
   };
 
-  // Handling of project loading
   useEffect(() => {
-    if (projectState.project === null) {
-      const projectId = GetProject();
+    if (!project) {
+      const projectId = GetProjectId();
       dispatch(get(projectId));
     }
-  }, [dispatch, projectState.project]);
+  }, [dispatch, project]);
 
-  const visible = useSelector<RootState>(
-    (state) => state.flow.view[0].visible
-  ) as boolean;
+  const splitViewPosition = () => {
+    if (IsLocationNode(splitViewNode) && IsFunctionNode(node)) {
+      return SPLITVIEW_POSITION.RIGHT;
+    }
+  };
 
   return (
     <>
-      {projectState.project && visible && (
+      {IsBlockView() && (
         <ReactFlowProvider>
           <div className="reactflow-wrapper" ref={reactFlowWrapper}>
             <ReactFlow
               elements={elements}
+              nodeTypes={GetBlockNodeTypes}
+              edgeTypes={GetBlockEdgeTypes}
               onConnect={OnConnect}
               onElementsRemove={OnElementsRemove}
               onLoad={OnLoad}
               onDrop={OnDrop}
+              onDragOver={OnDragOver}
               onNodeDragStop={OnNodeDragStop}
               onElementClick={OnElementClick}
-              nodeTypes={GetBlockNodeTypes}
-              edgeTypes={GetBlockEdgeTypes}
               onConnectEnd={OnConnectStop}
               onConnectStart={OnConnectStart}
               zoomOnScroll={false}
               paneMoveable={false}
             >
               <FullscreenBox />
-              <Controls />
+              <BackgroundBox
+                visible={showBackground}
+                isSplitView={splitView}
+                right={splitViewPosition()}
+              >
+                <Background
+                  size={0.5}
+                  color={Color.Grey}
+                  variant={BackgroundVariant.Lines}
+                />
+              </BackgroundBox>
             </ReactFlow>
           </div>
         </ReactFlowProvider>
       )}
-      {!projectState.project && !HasProject() && (
+      {!project && !HasProject() && (
         <div>
           <ProjectMainMenu />
           <OpenProjectMenu />

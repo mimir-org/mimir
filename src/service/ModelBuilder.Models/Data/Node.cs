@@ -8,8 +8,11 @@ namespace Mb.Models.Data
     public class Node
     {
         public string Id { get; set; }
+        public string Rds { get; set; }
+        public string Contractor { get; set; }
         public string SemanticId { get; set; }
         public string TagNumber { get; set; }
+        public string Description { get; set; }
         public string Name { get; set; }
         public IconType Icon { get; set; }
         public string Label { get; set; }
@@ -22,10 +25,16 @@ namespace Mb.Models.Data
 
         public decimal PositionBlockX { get; set; }
         public decimal PositionBlockY { get; set; }
+
+        // Only for location aspect
         public int Length { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
+        public int Area => Length * Width;
+        public int Level { get; set; }
+        public int Order { get; set; }
 
+        public BuildStatus Status { get; set; }
         public string UpdatedBy { get; set; }
         public DateTime Updated { get; set; }
         public string Version { get; set; }
@@ -33,7 +42,5 @@ namespace Mb.Models.Data
 
         public virtual ICollection<Attribute> Attributes { get; set; }
         public virtual ICollection<Project> Projects { get; set; }
-
-        
     }
 }

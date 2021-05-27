@@ -98,19 +98,27 @@ const textResources = {
   TypeEditor_Button_Edit: "Save Type Edit",
 
   // AccountModule
-  Account_Save_Label: "Save project to file",
+  Account_Save_Label: "Save project to database",
+  Account_Save_Label_File: "Save project to file",
   Account_Logout: "Log out",
   Account_Open_Label: "Open a project",
-  Account_Create_Label: "Create a project",
+  Account_Create_Label: "Create a new project",
+  Account_Create_Button_Label: "Create project",
+  Account_Name_Project_Label: "Name project",
+  Account_Name_Project_Placeholder: "New project name...",
+  Account_Confirm_Save: " Save this project before opening/starting another?",
+  Account_Save_Button: "Yes",
+  Account_NoSave_Button: "No",
+  Account_Cancel_Button: "Cancel",
 
   // LegendModule
   Legend_Heading: "Legend",
 
   // FilterModule
-  Filter_Types: "Transport/Interfaces/Terminals:",
-  Filter_Sub_Types: "Sub-Types:",
-  Filter_Other: "Other:",
-  Filter_Designations: "Designations:",
+  Filter_Types: "Transport/Interfaces/Terminals",
+  Filter_Sub_Types: "Sub-Types",
+  Filter_Other: "Other",
+  Filter_Designations: "Designations",
   Filter_Forces: "Forces",
   Filter_Information: "Information",
   Filter_Energy: "Energy [power]",
@@ -130,6 +138,12 @@ const textResources = {
   Filter_Explorer: "Explorer RDS",
   Filter_Show_Local: "Show local",
   Filter_Show_Path: "Show path",
+
+  // BlockView
+  BlockView_Select_Message:
+    "Please select an aspect object from the same aspect OR a different aspect via the Explorer Module",
+  BlockView_Location_Message:
+    "In Split View you can only select one node of type Location",
 };
 
 export const VisualFilterResources = [

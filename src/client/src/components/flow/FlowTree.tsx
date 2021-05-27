@@ -1,31 +1,28 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { get } from "../../redux/store/project/actions";
-import { MiniMap } from "./";
 import { ProjectMainMenu } from "../project";
-import { ProjectState } from "../../redux/store/project/types";
 import { RootState } from "./../../redux/store/index";
 import { useOnConnect, useOnDrop, useOnElementsRemove } from "./hooks";
 import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
-import {
-  GetProject,
-  HasProject,
-} from "../../redux/store/localStorage/localStorage";
+import { OpenProjectMenu } from "../project/openProject/OpenProjectMenu";
+import { Project, VIEW_TYPE } from "../../models/project";
+import { GetTreeEdgeType } from "./helpers/tree";
+import ReactFlow, { ReactFlowProvider, Elements } from "react-flow-renderer";
 import {
   updatePosition,
   changeActiveNode,
 } from "../../redux/store/project/actions";
 import {
-  CreateProjectElementNodes,
   GetTreeNodeTypes,
   GetTreeEdgeTypes,
-} from "./helpers";
-import ReactFlow, {
-  ReactFlowProvider,
-  Elements,
-  Controls,
-} from "react-flow-renderer";
-import { OpenProjectMenu } from "../project/openProject/OpenProjectMenu";
+  CreateTreeElements,
+} from "./helpers/tree";
+import {
+  GetProjectId,
+  HasProject,
+  SetProject,
+} from "../../redux/store/localStorage";
 
 const FlowTree = () => {
   const dispatch = useDispatch();
@@ -33,9 +30,11 @@ const FlowTree = () => {
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>();
 
-  const projectState = useSelector<RootState>(
-    (state) => state.projectState
-  ) as ProjectState;
+  const project = useSelector<RootState>(
+    (state) => state.projectState.project
+  ) as Project;
+
+  SetProject(project);
 
   const OnElementsRemove = (elementsToRemove) => {
     return useOnElementsRemove(elementsToRemove, setElements, dispatch);
@@ -43,14 +42,20 @@ const FlowTree = () => {
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(CreateProjectElementNodes(projectState.project));
+      setElements(CreateTreeElements(project));
       return setReactFlowInstance(_reactFlowInstance);
     },
-    [projectState.project]
+    [project]
   );
 
   const OnConnect = (params) => {
-    return useOnConnect(params, projectState, setElements, dispatch);
+    const fromNode = project.nodes.find((x) => x.id === params.source);
+    const fromConnector = fromNode.connectors.find(
+      (x) => x.id === params.sourceHandle
+    );
+
+    const edgeType = GetTreeEdgeType(fromConnector);
+    return useOnConnect(params, project, setElements, dispatch, edgeType);
   };
 
   const OnDragOver = (event) => {
@@ -63,17 +68,30 @@ const FlowTree = () => {
   };
 
   const OnDrop = (_event) => {
+    const selectedNode = project?.nodes?.find((x) => x.isSelected);
+
     return useOnDrop(
       _event,
       dispatch,
       setElements,
       reactFlowInstance,
-      reactFlowWrapper
+      reactFlowWrapper,
+      false,
+      selectedNode
     );
   };
 
-  const OnElementClick = (event, element) => {
-    dispatch(changeActiveNode(element.id));
+  const OnElementClick = (_event, element) => {
+    dispatch(changeActiveNode(element.id, true));
+  };
+
+  const OnClick = (e) => {
+    if (e.target.classList.contains("react-flow__pane")) {
+      const selectedNode = project?.nodes?.find((x) => x.isSelected);
+      if (selectedNode) {
+        dispatch(changeActiveNode(selectedNode.id, false));
+      }
+    }
   };
 
   // Force rerender
@@ -81,21 +99,20 @@ const FlowTree = () => {
     OnLoad(reactFlowInstance);
   }, [OnLoad, reactFlowInstance]);
 
-  // Handling of project loading
   useEffect(() => {
-    if (projectState.project === null) {
-      const projectId = GetProject();
+    if (!project) {
+      const projectId = GetProjectId();
       if (projectId) dispatch(get(projectId));
     }
-  }, [dispatch, projectState.project]);
+  }, [dispatch, project]);
 
-  const visible = useSelector<RootState>(
-    (state) => state.flow.view[1].visible
+  const isTreeView = useSelector<RootState>(
+    (state) => state.flow.view === VIEW_TYPE.TREEVIEW
   ) as boolean;
 
   return (
     <>
-      {projectState.project && visible && (
+      {isTreeView && (
         <ReactFlowProvider>
           <div className="reactflow-wrapper" ref={reactFlowWrapper}>
             <ReactFlow
@@ -109,15 +126,16 @@ const FlowTree = () => {
               onElementClick={OnElementClick}
               nodeTypes={GetTreeNodeTypes}
               edgeTypes={GetTreeEdgeTypes}
+              snapToGrid={true}
+              snapGrid={[5, 5]}
+              onClick={(e) => OnClick(e)}
             >
-              <Controls />
-              <MiniMap />
               <FullscreenBox />
             </ReactFlow>
           </div>
         </ReactFlowProvider>
       )}
-      {!projectState.project && !HasProject() && (
+      {!project && !HasProject() && (
         <div>
           <ProjectMainMenu />
           <OpenProjectMenu />

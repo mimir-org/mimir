@@ -1,16 +1,5 @@
-import {
-  getBezierPath,
-  getMarkerEnd,
-  getSmoothStepPath,
-  EdgeText,
-} from "react-flow-renderer";
-import {
-  LINE_EDGE_TYPE,
-  LineEdgeType,
-  Node,
-  NODE_TYPE,
-} from "../../../models/project";
-
+import { getMarkerEnd, getSmoothStepPath, EdgeText } from "react-flow-renderer";
+import { Node, NODE_TYPE } from "../../../models/project";
 import { GetTransportTypeColor, IsAspectNode, GetCenter } from "../helpers";
 
 export default function BlockEdgeType({
@@ -28,14 +17,14 @@ export default function BlockEdgeType({
   const markerEnd = getMarkerEnd(arrowHeadType, markerEndId);
   const [centerX, centerY] = GetCenter({ sourceX, sourceY, targetX, targetY });
 
-  const edgePathBezier = getBezierPath({
-    sourceX,
-    sourceY,
-    sourcePosition,
-    targetX,
-    targetY,
-    targetPosition,
-  });
+  //   const edgePathBezier = getBezierPath({
+  //     sourceX,
+  //     sourceY,
+  //     sourcePosition,
+  //     targetX,
+  //     targetY,
+  //     targetPosition,
+  //   });
 
   const edgePathSmoothStep = getSmoothStepPath({
     sourceX,
@@ -47,12 +36,13 @@ export default function BlockEdgeType({
   });
 
   const getConnectors = () => {
-    const fromConnector = data.source.connectors.find(
+    const fromConnector = data.source?.connectors.find(
       (x) => x.id === data.edge.fromConnector
     );
-    const toConnector = data.target.connectors.find(
+    const toConnector = data.target?.connectors.find(
       (x) => x.id === data.edge.toConnector
     );
+
     return {
       fromConnector: fromConnector,
       toConnector: toConnector,
@@ -60,9 +50,13 @@ export default function BlockEdgeType({
   };
 
   const getStyle = () => {
-    var connector = getConnectors().toConnector;
+    const fromConnector = data.source.connectors.find(
+      (x) => x.id === data.edge.fromConnector
+    );
+
     return {
-      stroke: GetTransportTypeColor(connector.terminalType),
+      stroke: fromConnector?.mediaColor,
+      strokeWidth: 3,
     };
   };
 
@@ -81,32 +75,30 @@ export default function BlockEdgeType({
   };
 
   const edgeText = (source: Node, target: Node) => {
-    let text = null;
+    return null;
+    // if (!source || !target || IsAspectNode(source.type)) return null;
+    // let text = null;
 
-    if (!source || !target) return null;
+    // source.type === target.type
+    //   ? (text = "partof")
+    //   : target.type === NODE_TYPE.PRODUCT
+    //   ? (text = "fulfilledBy")
+    //   : target.type === NODE_TYPE.LOCATION
+    //   ? (text = "locatedAt")
+    //   : (text = null);
 
-    if (IsAspectNode(source.type)) {
-      return null;
-    } else if (source.type === target.type) {
-      text = "partof";
-    } else if (target.type === NODE_TYPE.PRODUCT) {
-      text = "fulfilledBy";
-    } else if (target.type === NODE_TYPE.LOCATION) {
-      text = "locatedAt";
-    }
-
-    return text ? (
-      <EdgeText
-        x={centerX}
-        y={centerY}
-        label={text}
-        //   labelStyle={labelStyle}
-        //   labelShowBg={labelShowBg}
-        //   labelBgStyle={labelBgStyle}
-        //   labelBgPadding={labelBgPadding}
-        //   labelBgBorderRadius={labelBgBorderRadius}
-      />
-    ) : null;
+    // return text ? (
+    //   <EdgeText
+    //     x={centerX}
+    //     y={centerY}
+    //     label={text}
+    //     //   labelStyle={labelStyle}
+    //     //   labelShowBg={labelShowBg}
+    //     //   labelBgStyle={labelBgStyle}
+    //     //   labelBgPadding={labelBgPadding}
+    //     //   labelBgBorderRadius={labelBgBorderRadius}
+    //   />
+    // ) : null;
   };
 
   return (

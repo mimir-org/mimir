@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { VIEW_TYPE } from "../../../models/project";
 import { changeFlowView } from "../../../redux/store/flow/actions";
 
@@ -21,18 +21,19 @@ import {
 import { Input } from "../../../componentLibrary";
 import { TextResources } from "../../../assets/textResources";
 import { CloseIcon } from "../../../assets/icons";
+import { SetView } from "../../../redux/store/localStorage";
 
 interface Props {
   mode: string;
 }
 
 export const TypeEditorComponent = ({ mode }: Props) => {
+  const { push } = useHistory();
   const dispatch = useDispatch();
-  const [visible, setVisible] = useState(true);
   const handleClick = () => {
-    dispatch(changeFlowView(VIEW_TYPE.BLOCKVIEW, true));
-    dispatch(changeFlowView(VIEW_TYPE.TREEVIEW, true));
-    setVisible(!visible);
+    dispatch(changeFlowView(VIEW_TYPE.TREEVIEW));
+    SetView(VIEW_TYPE.TREEVIEW);
+    push(`/home/${VIEW_TYPE.TREEVIEW}`);
   };
   const aspects = [
     {

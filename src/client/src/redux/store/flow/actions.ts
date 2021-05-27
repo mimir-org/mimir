@@ -1,11 +1,20 @@
-import { CHANGE_FLOW_VIEW } from "./types";
+import { Connector } from "../../../models/project";
+import { CHANGE_FLOW_VIEW, ADD_SELECTED_CONNECTOR } from "./types";
 
-export function changeFlowView(key: string, visible: boolean) {
+export function changeFlowView(view: string) {
   return {
     type: CHANGE_FLOW_VIEW,
     payload: {
-      key,
-      visible,
+      view,
+    },
+  };
+}
+
+export function addSelectedConnector(connector: Connector) {
+  return {
+    type: ADD_SELECTED_CONNECTOR,
+    payload: {
+      connector,
     },
   };
 }

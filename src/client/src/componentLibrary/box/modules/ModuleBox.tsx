@@ -1,19 +1,27 @@
 import styled from "styled-components";
 import { MODULE_TYPE } from "../../../models/project";
-import { Color, FontType } from "./../../../componentLibrary";
+import { Color } from "./../../../componentLibrary";
 
 const ModuleBox = styled.div`
   border-right: ${(props: { type: string }) =>
-    props.type === MODULE_TYPE.INSPECTOR ? "0px" : `1px solid ${Color.Grey}`};
+    props.type !== MODULE_TYPE.INSPECTOR && `1px solid ${Color.Grey}`};
   border-left: ${(props: { type: string }) =>
-    props.type === MODULE_TYPE.INSPECTOR ? "0px" : `1px solid ${Color.Grey}`};
+    props.type !== MODULE_TYPE.INSPECTOR &&
+    props.type !== MODULE_TYPE.LEGEND &&
+    `1px solid ${Color.Grey}`};
   background: ${Color.LightGrey};
   width: ${(props: { stop: string; type: string }) =>
-    props.type === MODULE_TYPE.INSPECTOR ? "100%" : props.stop};
+    props.type !== MODULE_TYPE.INSPECTOR &&
+    props.type !== MODULE_TYPE.LEGEND &&
+    `${props.stop}px`};
   height: ${(props: { stop: string; type: string }) =>
-    props.type !== MODULE_TYPE.INSPECTOR ? "inherit" : props.stop};
+    props.type === MODULE_TYPE.INSPECTOR || props.type === MODULE_TYPE.LEGEND
+      ? `${props.stop}px`
+      : "100%"};
+  position: ${(props) => props.type === MODULE_TYPE.LEGEND && "fixed"};
+  bottom: ${(props) => props.type === MODULE_TYPE.LEGEND && "0"};
+  z-index: 1;
   overflow: hidden;
-  font-family: ${FontType.Standard};
 `;
 
 export default ModuleBox;

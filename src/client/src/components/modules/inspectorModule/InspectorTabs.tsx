@@ -1,33 +1,30 @@
-import { TabComponent } from ".";
-import { Attribute, Project } from "../../../models/project";
+import { TabComponent, TabAdminComponent } from ".";
+import { Project, Node } from "../../../models/project";
 import { RootState } from "../../../redux/store";
 import { useSelector } from "react-redux";
+import { IsBlockView } from "../../flow/helpers/block";
 
 const InspectorTabs = () => {
   const project = useSelector<RootState>(
     (state) => state.projectState.project
   ) as Project;
 
-  const nodes = project ? project.nodes : [];
-  const node = nodes.find((node) => node.isSelected);
-  const nodeLabel = node ? node.label : "";
+  const nodes = project?.nodes ?? [];
+  let node: Node;
 
-  let adminData: Attribute[] = [];
-  let techData: Attribute[] = [];
-  let relationData: Attribute[] = [];
-  let index = 0;
-
-  if (node) {
-    adminData = [];
-    techData = node.attributes;
-    relationData = [];
-  }
+  if (IsBlockView()) {
+    node = nodes.find((node) => node.isBlockSelected);
+  } else node = nodes.find((node) => node.isSelected);
 
   return (
     <>
-      <TabComponent attributes={adminData} index={0} nodeLabel={nodeLabel} />
-      <TabComponent attributes={techData} index={1} />
-      <TabComponent attributes={relationData} index={2} />
+      {node && (
+        <>
+          <TabAdminComponent node={node} project={project} index={0} />
+          <TabComponent node={node} index={1} />
+          <TabComponent node={node} index={2} />
+        </>
+      )}
     </>
   );
 };

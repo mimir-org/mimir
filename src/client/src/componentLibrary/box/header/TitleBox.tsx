@@ -1,9 +1,8 @@
 import styled from "styled-components";
-import { Color, FontSize, FontType } from "../../";
+import { Color, FontSize } from "../../";
 
 const TitleBox = styled.div`
   position: relative;
-  font-family: ${FontType.Standard};
   font-size: ${FontSize.Header};
   left: 38%;
   width: 175px;

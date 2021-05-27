@@ -24,6 +24,8 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.Aspect).HasColumnName("Aspect").IsRequired().HasConversion<string>();
             builder.Property(p => p.Format).HasColumnName("Format").IsRequired().HasConversion<string>();
             builder.Property(p => p.Units).HasColumnName("Units").HasConversion(unitConverter).Metadata.SetValueComparer(unitComparer);
+            builder.Property(p => p.IsInterface).HasColumnName("IsInterface").IsRequired();
+            builder.Property(p => p.IsTerminalType).HasColumnName("IsTerminalType").IsRequired();
         }
     }
 }

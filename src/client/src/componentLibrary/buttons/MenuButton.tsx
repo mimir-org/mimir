@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color, FontSize, FontType } from "..";
+import { Color, FontSize } from "..";
 
 const MenuButton = styled.button`
   width: ${(props) => (props.wide ? "130px" : "94px")};
@@ -12,7 +12,6 @@ const MenuButton = styled.button`
   border-radius: 2px;
   padding-left: 10px;
   cursor: pointer;
-  font-family: ${FontType.Standard};
   font-size: ${FontSize.Standard};
   color: ${Color.Black};
   margin: 10px 0px;
@@ -21,6 +20,10 @@ const MenuButton = styled.button`
     position: absolute;
     right: 0px;
     margin-right: 7px;
+  }
+
+  .text {
+    margin: auto;
   }
 
   &:hover {

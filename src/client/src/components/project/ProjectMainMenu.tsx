@@ -4,6 +4,7 @@ import { TextResources } from "../../assets/textResources";
 import { RootState } from "../../redux/store";
 import { NewProjectIcon, OpenProjectIcon } from "../../assets/icons";
 import { changeProjectMenu } from "../../redux/store/projectMenu/actions";
+import { PROJECT_MENU_TYPE } from "../../models/project";
 import {
   ProjectBody,
   ProjectBox,
@@ -19,16 +20,19 @@ export const ProjectMainMenu = () => {
 
   const isOpen = useSelector<RootState>(
     (state) =>
-      state.projectMenu.menu.find((x) => x.type === "optionsMenu").visible
+      state.projectMenu.menu.find((x) => x.type === PROJECT_MENU_TYPE.MAIN_MENU)
+        .visible
   ) as boolean;
 
-  const handleClick = () => {
+  const handleCreateClick = () => {
     dispatch(create("unnamed", "unnamed"));
+    dispatch(changeProjectMenu(PROJECT_MENU_TYPE.MAIN_MENU, false));
   };
 
   const handleOpenClick = () => {
-    dispatch(changeProjectMenu("optionsMenu", false));
-    dispatch(changeProjectMenu("openProjectMenu", true));
+    dispatch(changeProjectMenu("mainMenu", false));
+    dispatch(changeProjectMenu(PROJECT_MENU_TYPE.OPEN_PROJECT_MENU, true));
+    dispatch(changeProjectMenu(PROJECT_MENU_TYPE.MAIN_MENU, false));
   };
 
   return (
@@ -36,7 +40,7 @@ export const ProjectMainMenu = () => {
       <ProjectBox visible={isOpen} small>
         <ProjectBody>
           <p>{TextResources.Project_heading}</p>
-          <ProjectElement onClick={handleClick}>
+          <ProjectElement onClick={handleCreateClick}>
             <img src={NewProjectIcon} alt="icon" className="icon" />
             <p>{TextResources.Project_new_project}</p>
           </ProjectElement>

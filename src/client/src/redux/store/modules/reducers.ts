@@ -22,6 +22,11 @@ const initialState = {
       visible: LoadState(MODULE_TYPE.EXPLORER),
       animate: false,
     },
+    {
+      type: MODULE_TYPE.LEGEND,
+      visible: LoadState(MODULE_TYPE.LEGEND),
+      animate: false,
+    },
   ],
 };
 
@@ -44,7 +49,7 @@ export function moduleReducer(state = initialState, action) {
       return {
         ...state,
         types: state.types.map(
-          (x, i) =>
+          (x) =>
             state && {
               ...x,
               visible: action.payload.visible,

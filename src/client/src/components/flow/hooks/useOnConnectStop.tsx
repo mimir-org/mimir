@@ -3,7 +3,7 @@ import { createEdge, addNode } from "../../../redux/store/project/actions";
 import {
   LoadEventData,
   SaveEventData,
-} from "../../../redux/store/localStorage/localStorage";
+} from "../../../redux/store/localStorage";
 import {
   CreateOffPageData,
   CreateOffPageNode,
@@ -22,11 +22,11 @@ const useOnConnectStop = (
   const edgeEvent = LoadEventData("edgeEvent") as EdgeEvent;
 
   if (edgeEvent) {
-    const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
+    const reactFlowBounds = reactFlowWrapper?.current?.getBoundingClientRect();
 
     const position = reactFlowInstance.project({
-      x: e.clientX - reactFlowBounds.left,
-      y: e.clientY - reactFlowBounds.top,
+      x: e.clientX - reactFlowBounds?.left,
+      y: e.clientY - reactFlowBounds?.top,
     });
 
     const createOffPageData = {

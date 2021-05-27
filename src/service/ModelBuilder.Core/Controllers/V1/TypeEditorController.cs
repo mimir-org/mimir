@@ -29,11 +29,32 @@ namespace Mb.Core.Controllers.V1
     {
         private readonly ILogger<ProjectController> _logger;
         private readonly ITypeEditorService _typeEditorService;
-        
+
         public TypeEditorController(ILogger<ProjectController> logger, ITypeEditorService typeEditorService)
         {
             _logger = logger;
             _typeEditorService = typeEditorService;
+        }
+
+        /// <summary>
+        /// Get all library types
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("types")]
+        [ProducesResponseType(typeof(ICollection<LibraryType>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public IActionResult GetAllTypes()
+        {
+            try
+            {
+                var allTypes = _typeEditorService.GetAllTypes().ToList();
+                return Ok(allTypes);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
         }
 
         /// <summary>
@@ -61,7 +82,7 @@ namespace Mb.Core.Controllers.V1
         /// Get all object types
         /// </summary>
         /// <returns></returns>
-        [HttpGet("types")]
+        [HttpGet("objects")]
         [ProducesResponseType(typeof(Dictionary<int, string>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult GetObjectTypes()
@@ -127,7 +148,7 @@ namespace Mb.Core.Controllers.V1
         /// </summary>
         /// <returns></returns>
         [HttpGet("terminals")]
-        [ProducesResponseType(typeof(ICollection<Terminal>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ICollection<TerminalType>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult GetTerminalTypes()
         {
@@ -146,21 +167,25 @@ namespace Mb.Core.Controllers.V1
         /// <summary>
         /// Create a library type
         /// </summary>
-        /// <param name="libraryTypeComponent"></param>
+        /// <param name="libraryType"></param>
         /// <returns></returns>
         [HttpPost("")]
-        [ProducesResponseType(typeof(ICollection<Rds>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(LibraryType), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateType([FromBody] LibraryTypeComponent libraryTypeComponent)
+        public async Task<IActionResult> CreateType([FromBody] LibraryType libraryType)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                var data = await _typeEditorService.CreateLibraryComponent(libraryTypeComponent);
+                var data = await _typeEditorService.CreateLibraryComponent(libraryType);
                 return Ok(data);
+            }
+            catch (ModelBuilderDuplicateException e)
+            {
+                return BadRequest(e.Message);
             }
             catch (Exception e)
             {

@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { ExpandedIcon, ClosedIcon } from "../../../../assets/icons";
 import { NodeType } from "../../../../models/project";
-import { IsAspectNode, GetNodes, GetEdges } from "../../../flow/helpers";
-import CheckboxComponent from "../checkboxComponent/CheckboxComponent";
+import { IsAspectNode } from "../../../flow/helpers";
 import { AspectElement } from ".";
 import { AspectBox } from "../../../../componentLibrary/box/aspect";
+import { Checkbox, CheckboxBlock } from "../checkboxComponent";
+import store from "../../../../redux/store";
+import { IsBlockView } from "../../../flow/helpers/block";
 import {
   GetAspectIcon,
   GetAspectColor,
@@ -15,38 +17,36 @@ import {
 
 interface Props {
   nodeId: string;
-  name: string;
+  label: string;
   aspectType: NodeType;
 }
-
-export const AspectComponent = ({ nodeId, name, aspectType }: Props) => {
+export const AspectComponent = ({ nodeId, label, aspectType }: Props) => {
   const [expanded, setExpanded] = useState(true);
+  const expandIcon = expanded ? ExpandedIcon : ClosedIcon;
+  const aspectIcon = GetAspectIcon(aspectType);
+  const color = GetAspectColor(aspectType, true);
+  const childType = GetAspectType(aspectType);
+  const nodes = store.getState().projectState.project.nodes;
+  const edges = store.getState().projectState.project.edges;
+  const children = nodes.filter((node) => !IsAspectNode(node));
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
-  const aspectIcon = GetAspectIcon(aspectType);
-  const color = GetAspectColor(aspectType, true);
-  const expandIcon = expanded ? ExpandedIcon : ClosedIcon;
-  const childType = GetAspectType(aspectType);
-  const nodes = GetNodes();
-  const edges = GetEdges();
-  const children = nodes.filter((node) => !IsAspectNode(node.type));
 
   return (
     <>
       <AspectBox color={color}>
         <img src={aspectIcon} alt="aspect-icon"></img>
         <div className="checkbox_container">
-          <CheckboxComponent
-            nodeId={nodeId}
-            inputLabel={name}
-            type={childType}
-          />
+          {IsBlockView() ? (
+            <CheckboxBlock nodeId={nodeId} inputLabel={label} />
+          ) : (
+            <Checkbox nodeId={nodeId} inputLabel={label} type={childType} />
+          )}
         </div>
         {GetDropdownIcon(expandIcon, handleExpandClick)}
       </AspectBox>
-
       {expanded &&
         children.map((obj: object, i: number) => {
           if (children[i].type === childType) {
@@ -55,7 +55,7 @@ export const AspectComponent = ({ nodeId, name, aspectType }: Props) => {
               <AspectElement
                 key={i}
                 nodeId={obj["id"]}
-                name={obj["name"]}
+                label={obj["label"] ?? obj["name"]}
                 type={childType}
                 indent={indent}
               />

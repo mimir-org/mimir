@@ -15,6 +15,12 @@ import {
   CHANGE_ACTIVE_NODE,
   CHANGE_SELECTED_PROJECT,
   ProjectActionTypes,
+  CHANGE_ALL_NODES,
+  CHANGE_NODE_PROP_VALUE,
+  CHANGE_ATTRIBUTE_VALUE,
+  CHANGE_CONNECTOR_ATTRIBUTE_VALUE,
+  CHANGE_EDGE_VISIBILITY,
+  CHANGE_ACTIVE_BLOCKNODE,
 } from "./types";
 
 export function save(project: Project): ProjectActionTypes {
@@ -118,9 +124,23 @@ export function changeNodeVisibility(
   };
 }
 
-export function changeActiveNode(nodeId: string) {
+export function changeEdgeVisibility(edge: Edge, isHidden: boolean) {
+  return {
+    type: CHANGE_EDGE_VISIBILITY,
+    payload: { edge, isHidden },
+  };
+}
+
+export function changeActiveNode(nodeId: string, isActive: boolean) {
   return {
     type: CHANGE_ACTIVE_NODE,
+    payload: { nodeId, isActive },
+  };
+}
+
+export function changeActiveBlockNode(nodeId: string) {
+  return {
+    type: CHANGE_ACTIVE_BLOCKNODE,
     payload: { nodeId },
   };
 }
@@ -129,5 +149,63 @@ export function changeSelectedProject(projectId: string) {
   return {
     type: CHANGE_SELECTED_PROJECT,
     payload: { projectId },
+  };
+}
+
+export function changeAllNodes(visible: boolean) {
+  return {
+    type: CHANGE_ALL_NODES,
+    payload: visible,
+  };
+}
+
+export function changeNodeValue(
+  nodeId: string,
+  propName: string,
+  propValue: any
+) {
+  return {
+    type: CHANGE_NODE_PROP_VALUE,
+    payload: {
+      nodeId,
+      propName,
+      propValue,
+    },
+  };
+}
+
+export function changeAttributeValue(
+  id: string,
+  value: string,
+  unit: string,
+  nodeId: string
+) {
+  return {
+    type: CHANGE_ATTRIBUTE_VALUE,
+    payload: {
+      id,
+      value,
+      unit,
+      nodeId,
+    },
+  };
+}
+
+export function changeConnectorAttributeValue(
+  id: string,
+  value: string,
+  unit: string,
+  nodeId: string,
+  connectorId: string
+) {
+  return {
+    type: CHANGE_CONNECTOR_ATTRIBUTE_VALUE,
+    payload: {
+      id,
+      value,
+      unit,
+      nodeId,
+      connectorId,
+    },
   };
 }

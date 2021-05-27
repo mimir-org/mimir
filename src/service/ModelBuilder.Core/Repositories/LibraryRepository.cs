@@ -9,11 +9,11 @@ namespace Mb.Core.Repositories
 {
     public class LibraryRepository : ILibraryRepository
     {
-        private readonly ILibraryTypeComponentRepository _libraryTypeComponentRepository;
+        private readonly ILibraryTypeRepository _libraryTypeComponentRepository;
         private readonly IMapper _mapper;
         private readonly ICommonRepository _generateIdRepository;
 
-        public LibraryRepository(ILibraryTypeComponentRepository libraryTypeComponentRepository, IMapper mapper, ICommonRepository generateIdRepository)
+        public LibraryRepository(ILibraryTypeRepository libraryTypeComponentRepository, IMapper mapper, ICommonRepository generateIdRepository)
         {
             _libraryTypeComponentRepository = libraryTypeComponentRepository;
             _mapper = mapper;
@@ -29,7 +29,7 @@ namespace Mb.Core.Repositories
             return ConvertToLibNode(libraryTypeComponents);
         }
 
-        private IEnumerable<LibNode> ConvertToLibNode(IEnumerable<LibraryTypeComponent> types)
+        private IEnumerable<LibNode> ConvertToLibNode(IEnumerable<LibraryType> types)
         {
             foreach (var libraryTypeComponent in types)
             {
@@ -61,9 +61,11 @@ namespace Mb.Core.Repositories
                 Type = connectorType,
                 TerminalCategory = TerminalCategory.NotSet,
                 RelationType = relationType,
-                TerminalType = TerminalType.NotSet,
+                Terminal = Terminal.NotSet,
                 NodeId = null,
-                Node = null
+                Node = null,
+                Attributes = null,
+                SemanticReference = null
             };
         }
     }

@@ -6,3 +6,5 @@ export { default as GetDropdownIcon } from "./GetDropdownIcon";
 export { default as SetIndentLevel } from "./SetIndentLevel";
 export { default as GetMenuIcon } from "./GetMenuIcon";
 export { default as GetMapColor } from "./GetMapColor";
+export { default as GetRdsId } from "./GetRdsId";
+export { default as GetReferenceDesignation } from "./GetReferenceDesignation";

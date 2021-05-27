@@ -7,6 +7,8 @@ import { LibraryModule } from "../modules/libraryModule";
 import { AccountMenu } from "../menus/accountMenu";
 import { FilterMenu } from "../menus/filterMenu";
 import { getUser } from "../../redux/store/user/actions";
+import { getContractors } from "../../redux/store/common/actions";
+import { search } from "../../redux/store/project/actions";
 import { FlowModule } from "../flow";
 import { FlowBox } from "../../componentLibrary/box/flow";
 import { HomeBox } from "../../componentLibrary/box/home";
@@ -20,6 +22,8 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(getUser());
+    dispatch(getContractors());
+    dispatch(search(""));
   }, [dispatch]);
 
   const params = useParams<RouteParams>();

@@ -1,12 +1,11 @@
 import styled from "styled-components";
 
 const TransportColor = styled.div`
-  margin: 20px 0px 0px 45px;
+  display: flex;
+  margin: 20px 5px 0px 0px;
   width: 90px;
-  position: absolute;
-  right: 30px;
   height: 2px;
-  background-color: ${(props: { color: String }) => props.color};
+  background-color: ${(props: { color: string }) => props.color};
 `;
 
 export default TransportColor;

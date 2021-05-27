@@ -20,16 +20,6 @@ namespace Mb.Core.Extensions
     {
         public static IServiceCollection AddModelBuilderModule(this IServiceCollection services, IConfiguration configuration)
         {
-            // Auto-mapper
-            var autoMapperConfiguration = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile<AttributeProfile>();
-                cfg.AddProfile<ConnectorProfile>();
-                cfg.AddProfile<EdgeProfile>();
-                cfg.AddProfile<NodeProfile>();
-                cfg.AddProfile<ProjectProfile>();
-            });
-
             // ModelBuilder Configuration configurations
             var modelBuilderSection = configuration.GetSection(nameof(ModelBuilderConfiguration));
             var modelBuilderConfiguration = new ModelBuilderConfiguration();
@@ -37,7 +27,6 @@ namespace Mb.Core.Extensions
             services.Configure<ModelBuilderConfiguration>(modelBuilderSection.Bind);
 
             // Dependency injection
-            services.AddSingleton(s => autoMapperConfiguration.CreateMapper());
             services.AddSingleton<IFileRepository, JsonFileRepository>();
             services.AddSingleton<ICommonRepository, CommonRepository>();
             services.AddSingleton<IModuleService, ModuleService>();
@@ -48,18 +37,35 @@ namespace Mb.Core.Extensions
             services.AddScoped<ILibraryRepository, LibraryRepository>();
             services.AddScoped<IRdsRepository, RdsRepository>();
             services.AddScoped<IAttributeTypeRepository, AttributeTypeRepository>();
-            services.AddScoped<ILibraryTypeComponentRepository, LibraryTypeComponentRepository>();
+            services.AddScoped<ILibraryTypeRepository, LibraryTypeRepository>();
             services.AddScoped<IConnectorRepository, ConnectorRepository>();
             services.AddScoped<IAttributeRepository, AttributeRepository>();
+            services.AddScoped<IContractorRepository, ContractorRepository>();
+            services.AddScoped<ITerminalTypeRepository, TerminalTypeRepository>();
 
             services.AddScoped<ITypeEditorService, TypeEditorService>();
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<ILibraryService, LibraryService>();
+            services.AddScoped<ICommonService, CommonService>();
 
             services.AddHttpContextAccessor();
             services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
+            var provider = services.BuildServiceProvider();
+
+            // Auto-mapper
+            var autoMapperConfiguration = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<AttributeProfile>();
+                cfg.AddProfile<ConnectorProfile>();
+                cfg.AddProfile<EdgeProfile>();
+                cfg.AddProfile(new NodeProfile(provider.GetService<ICommonRepository>()));
+                cfg.AddProfile<ProjectProfile>();
+            });
+            services.AddSingleton(s => autoMapperConfiguration.CreateMapper());
+
             return services;
+
         }
 
         public static IApplicationBuilder UseModelBuilderModule(this IApplicationBuilder app)

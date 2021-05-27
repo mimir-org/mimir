@@ -1,5 +1,15 @@
-export type AttributeTab = keyof typeof ATTRIBUTE_TAB;
+export type BuildStatus = keyof typeof BUILD_STATUS;
+export const BUILD_STATUS = {
+  NotSet: "NotSet",
+  Unused: "Unused",
+  Reserved: "Reserved",
+  Planned: "Planned",
+  AsBuilt: "AsBuilt",
+  Historic: "Historic",
+  OutOfService: "OutOfService",
+};
 
+export type AttributeTab = keyof typeof ATTRIBUTE_TAB;
 export const ATTRIBUTE_TAB = {
   ADMIN_INFO: "AdminInfo",
   TECH_INFO: "TechInfo",
@@ -7,21 +17,21 @@ export const ATTRIBUTE_TAB = {
 };
 
 export type EdgeType = keyof typeof EDGE_TYPE;
-
 export const EDGE_TYPE = {
   DEFAULT: "DefaultEdgeType",
   BLOCK: "BlockEdgeType",
+  PART: "PartEdgeType",
+  RELATION: "RelationEdgeType",
+  TRANSPORT: "TransportEdgeType",
 };
 
 export type LineEdgeType = keyof typeof LINE_EDGE_TYPE;
-
 export const LINE_EDGE_TYPE = {
   STEP: "SmoothStepPath",
   BEZIER: "BezierPath",
 };
 
 export type NodeType = keyof typeof NODE_TYPE;
-
 export const NODE_TYPE = {
   ASPECT_FUNCTION: "AspectFunction",
   ASPECT_PRODUCT: "AspectProduct",
@@ -33,7 +43,6 @@ export const NODE_TYPE = {
 };
 
 export type ModuleType = keyof typeof MODULE_TYPE;
-
 export const MODULE_TYPE = {
   EXPLORER: "Explorer",
   INSPECTOR: "Inspector",
@@ -42,21 +51,33 @@ export const MODULE_TYPE = {
 };
 
 export type MenuType = keyof typeof MENU_TYPE;
-
 export const MENU_TYPE = {
   VISUAL_FILTER: "VisualFilter",
   ACCOUNT: "Account",
 };
 
-export type ViewType = keyof typeof VIEW_TYPE;
+export type ProjectMenuType = keyof typeof PROJECT_MENU_TYPE;
+export const PROJECT_MENU_TYPE = {
+  ACCOUNT_MENU: "AccountMenu",
+  OPEN_PROJECT_MENU: "OpenProjectMenu",
+  MAIN_MENU: "MainMenu",
+  CREATE_PROJECT_MENU: "CreateProjectMenu",
+};
 
+export type ViewType = keyof typeof VIEW_TYPE;
 export const VIEW_TYPE = {
   BLOCKVIEW: "blockview",
   TREEVIEW: "treeview",
+  TYPE_EDITOR: "type-editor",
+};
+
+export type SplitViewPosition = keyof typeof SPLITVIEW_POSITION;
+export const SPLITVIEW_POSITION = {
+  RIGHT: "right",
+  LEFT: "left",
 };
 
 export type IconType = keyof typeof ICON_TYPE;
-
 export const ICON_TYPE = {
   NOTSET_ICON: "NotSetIcon",
   FUNCTION_ICON: "FunctionIcon",
@@ -67,15 +88,13 @@ export const ICON_TYPE = {
 };
 
 export type ConnectorType = keyof typeof CONNECTOR_TYPE;
-
 export const CONNECTOR_TYPE = {
   INPUT: "Input",
   OUTPUT: "Output",
 };
 
-export type TerminalType = keyof typeof TERMINAL_TYPE;
-
-export const TERMINAL_TYPE = {
+export type Terminal = keyof typeof TERMINAL;
+export const TERMINAL = {
   NotSet: "NotSet",
   Electric: "Electric",
   Thermal: "Thermal",
@@ -106,7 +125,6 @@ export const TERMINAL_TYPE = {
 };
 
 export type TerminalCategory = keyof typeof TERMINAL_CATEGORY;
-
 export const TERMINAL_CATEGORY = {
   NotSet: "NotSet",
   Forces: "Forces",
@@ -116,7 +134,6 @@ export const TERMINAL_CATEGORY = {
 };
 
 export type RelationType = keyof typeof RELATION_TYPE;
-
 export const RELATION_TYPE = {
   NotSet: "NotSet",
   HasLocation: "HasLocation",
@@ -136,6 +153,7 @@ export interface Project {
   updated: Date;
   nodes: Node[];
   edges: Edge[];
+  isSubProject: boolean;
 }
 export interface ProjectSimple {
   id: string;
@@ -152,9 +170,13 @@ export interface Connector {
   name: string;
   type: ConnectorType;
   terminalCategory: TerminalCategory;
-  terminalType: TerminalType;
+  terminal: Terminal;
   relationType: RelationType;
+  semanticReference: string;
   nodeId: string;
+  attributes?: Attribute[] | null;
+  mediaColor: string | null;
+  transportColor: string | null;
 }
 
 export interface Edge {
@@ -169,6 +191,9 @@ export interface Edge {
 }
 
 export interface Attribute {
+  id: string;
+  nodeId: string;
+  connectorId: string;
   key: string;
   value: string;
   unit: string;
@@ -177,13 +202,15 @@ export interface Attribute {
   condition: string;
   format: string;
   units: string[];
-  nodeId: string;
 }
 
 export interface Node {
   id: string;
+  rds: string;
+  contractor: string;
   semanticId: string;
   tagNumber: string;
+  description: string;
   name: string;
   icon: IconType;
   label: string;
@@ -193,20 +220,25 @@ export interface Node {
   connectors: Connector[];
   isLocked?: boolean | false;
   isSelected?: boolean | false;
+  isBlockSelected?: boolean | false;
   attributes?: Attribute[] | null;
   isHidden: boolean | false;
   positionBlockX: number;
   positionBlockY: number;
   length: number;
-  height: number;
   width: number;
+  height: number;
+  area: number;
+  status: BuildStatus;
   updatedBy: string;
   updated: Date;
   version: string;
+  level: number;
 }
 
 export interface LibNode {
   id: string;
+  rds: string;
   name: string;
   label: string;
   icon: IconType;
@@ -214,6 +246,8 @@ export interface LibNode {
   connectors: Connector[];
   category: string;
   attributes?: Attribute[] | null;
+  version: string;
+  semanticReference: string;
 }
 
 export interface LibCategory {
@@ -225,4 +259,9 @@ export interface EdgeEvent {
   nodeId: string;
   handleType: string;
   sourceId: string;
+}
+
+export enum BackgroundVariant {
+  Lines = "lines",
+  Dots = "dots",
 }

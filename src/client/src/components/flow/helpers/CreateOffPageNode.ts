@@ -1,3 +1,6 @@
+import { CreateId } from "../helpers";
+import { ProjectState } from "../../../redux/store/project/types";
+import { GetFlowRectData, CreateOffPageData, OffPageNodeCreator } from ".";
 import {
   Node,
   Edge,
@@ -9,43 +12,36 @@ import {
   ConnectorType,
   TERMINAL_CATEGORY,
   TerminalCategory,
-  TERMINAL_TYPE,
-  TerminalType,
+  TERMINAL,
+  Terminal,
   RELATION_TYPE,
   RelationType,
 } from "../../../models/project";
-import { CreateId } from "../helpers";
-import { ProjectState } from "../../../redux/store/project/types";
-import {
-  GetReactFlowBoundingRectData,
-  CreateOffPageData,
-  OffPageNodeCreator,
-} from ".";
 
 const CreateOffPageNode = (
   projectState: ProjectState,
   data: CreateOffPageData
 ): OffPageNodeCreator => {
-  const parentNode = projectState.project.nodes.find(
+  const parentNode = projectState.project?.nodes.find(
     (x) => x.id === data.parentNodeId
   );
-  const parentPartOfConnector = parentNode.connectors.find(
+  const parentPartOfConnector = parentNode?.connectors.find(
     (x) =>
       x.relationType === RELATION_TYPE.PartOf &&
       x.type === CONNECTOR_TYPE.OUTPUT
   );
-  const fromNode = projectState.project.nodes.find(
+  const fromNode = projectState.project?.nodes.find(
     (x) => x.id === data.fromNodeId
   );
-  const fromNodeConnector = fromNode.connectors.find(
+  const fromNodeConnector = fromNode?.connectors.find(
     (x) => x.id === data.fromConnectorId
   );
-  const [width] = GetReactFlowBoundingRectData();
+  const [width] = GetFlowRectData();
 
   const node = {
     id: CreateId(),
-    name: fromNodeConnector.name,
-    label: fromNodeConnector.name,
+    name: fromNodeConnector?.name,
+    label: fromNodeConnector?.name,
     type: NODE_TYPE.OFF_PAGE as NodeType,
     positionX: width - 25,
     positionY: data.y,
@@ -58,10 +54,14 @@ const CreateOffPageNode = (
     id: CreateId(),
     name: "TransportConnector",
     type: CONNECTOR_TYPE.INPUT as ConnectorType,
-    terminalCategory: fromNodeConnector.terminalCategory,
-    terminalType: fromNodeConnector.terminalType,
-    relationType: fromNodeConnector.relationType,
+    terminalCategory: fromNodeConnector?.terminalCategory,
+    terminal: fromNodeConnector?.terminal as Terminal,
+    relationType: fromNodeConnector?.relationType,
     nodeId: node.id,
+    attributes: [],
+    semanticReference: "",
+    mediaColor: "",
+    transportColor: "",
   };
 
   const partOfConnector = {
@@ -69,9 +69,13 @@ const CreateOffPageNode = (
     name: "PartOfConnector",
     type: CONNECTOR_TYPE.INPUT as ConnectorType,
     terminalCategory: TERMINAL_CATEGORY.NotSet as TerminalCategory,
-    terminalType: TERMINAL_TYPE.NotSet as TerminalType,
+    terminal: TERMINAL.NotSet as Terminal,
     relationType: RELATION_TYPE.PartOf as RelationType,
     nodeId: node.id,
+    attributes: [],
+    semanticReference: "",
+    mediaColor: "",
+    transportColor: "",
   };
 
   node.connectors.push(targetConnector);
@@ -79,24 +83,24 @@ const CreateOffPageNode = (
 
   const partofEdge = {
     id: CreateId(),
-    fromConnector: parentPartOfConnector.id,
-    toConnector: partOfConnector.id,
-    fromNode: parentNode.id,
+    fromConnector: parentPartOfConnector?.id,
+    toConnector: partOfConnector?.id,
+    fromNode: parentNode?.id,
     toNode: node.id,
     isHidden: false,
-    parentType: parentNode.type,
-    targetType: node.type,
+    parentType: parentNode?.type,
+    targetType: node?.type,
   } as Edge;
 
   const transportEdge = {
     id: CreateId(),
     fromConnector: data.fromConnectorId,
-    toConnector: targetConnector.id,
+    toConnector: targetConnector?.id,
     fromNode: data.fromNodeId,
     toNode: node.id,
     isHidden: false,
-    parentType: fromNode.type,
-    targetType: node.type,
+    parentType: fromNode?.type,
+    targetType: node?.type,
   } as Edge;
 
   return {

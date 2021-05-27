@@ -1,12 +1,13 @@
 import { memo, FC } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
-import {
-  RELATION_TYPE,
-  TerminalType,
-  CONNECTOR_TYPE,
-} from "../../../models/project";
 import { OffPageWrapper } from "../styled";
 import { GetTransportTypeColor, GetHandleType } from "../helpers";
+import { Color } from "../../../componentLibrary";
+import {
+  RELATION_TYPE,
+  Terminal,
+  CONNECTOR_TYPE,
+} from "../../../models/project";
 
 const OffPage: FC<NodeProps> = ({ data }) => {
   const transportConnectors = data.connectors?.filter(
@@ -14,12 +15,12 @@ const OffPage: FC<NodeProps> = ({ data }) => {
   );
 
   const background = (): string => {
-    const terminalType = data.connectors.find(
+    const terminal = data.connectors.find(
       (x) =>
         x.relationType === RELATION_TYPE.Transport &&
         x.type === CONNECTOR_TYPE.INPUT
-    )?.terminalType as TerminalType;
-    return GetTransportTypeColor(terminalType);
+    )?.terminal as Terminal;
+    return GetTransportTypeColor(terminal);
   };
 
   const fontColor = (): string => {
@@ -29,7 +30,7 @@ const OffPage: FC<NodeProps> = ({ data }) => {
     var g = parseInt(hexcolor.substr(2, 2), 16);
     var b = parseInt(hexcolor.substr(4, 2), 16);
     var yiq = (r * 299 + g * 587 + b * 114) / 1000;
-    return yiq >= 128 ? "#000000" : "#ffffff";
+    return yiq >= 128 ? `${Color.Black}` : `${Color.White}`;
   };
 
   return (

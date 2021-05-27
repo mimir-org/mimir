@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color, FontSize, FontType } from "../../../../componentLibrary";
+import { Color, FontSize } from "../../../../componentLibrary";
 
 const TypeEditorHeader = styled.div`
   display: flex;
@@ -8,7 +8,6 @@ const TypeEditorHeader = styled.div`
 
   p {
     margin: 4px 0px 0px 16px;
-    font-family: ${FontType.Standard};
     font-weight: bold;
     font-size: ${FontSize.Header};
     color: ${Color.Black};

@@ -1,16 +1,10 @@
-import { useState } from "react";
 import { useSelector } from "react-redux";
-import { LegendIcon } from "../../../assets/icons";
-import { TextResources } from "../../../assets/textResources";
 import { ProjectState } from "../../../redux/store/project/types";
 import { RootState } from "../../../redux/store";
-import { LoadState } from "../../../redux/store/localStorage/localStorage";
-import { VIEW_TYPE } from "../../../models/project";
+import { Node } from "../../../models/project";
 import { GetLegendData, Legend } from "../../flow/helpers";
-import {
-  ModuleBody,
-  ModuleHeader,
-} from "../../../componentLibrary/box/modules";
+import { ModuleBody } from "../../../componentLibrary/box/modules";
+import { IsBlockView } from "../../flow/helpers/block";
 import {
   LegendElement,
   LegendColor,
@@ -21,39 +15,30 @@ const LegendModule = ({ visible }) => {
     (state) => state.projectState
   ) as ProjectState;
 
-  const blockView = VIEW_TYPE.BLOCKVIEW;
-  const treeView = VIEW_TYPE.TREEVIEW;
-  const [isBlockView] = useState(LoadState(blockView));
-  const [isTreeview] = useState(LoadState(treeView));
-  let legends = null;
+  let legends = GetLegendData(projectState.project, false, null) as Legend[];
 
-  if (isBlockView) {
+  let selectedNode = projectState.project?.nodes?.find(
+    (x) => x.isSelected
+  ) as Node;
+
+  if (IsBlockView()) {
     legends = GetLegendData(
       projectState.project,
       true,
-      "e1dbb139-f033-d15a-6fb0-e4fce18c46fc"
+      selectedNode?.id
     ) as Legend[];
-  }
-
-  if (isTreeview) {
-    legends = GetLegendData(projectState.project, false, null) as Legend[];
   }
 
   return (
     <ModuleBody visible={visible} legend>
-      <ModuleHeader legend>
-        <img src={LegendIcon} alt="legend" className="icon" />
-        {TextResources.Legend_Heading}
-      </ModuleHeader>
-      {legends &&
-        legends.map((legend) => {
-          return (
-            <LegendElement key={legend.key}>
-              <p>{legend.name}</p>
-              <LegendColor color={legend.color}></LegendColor>
-            </LegendElement>
-          );
-        })}
+      {legends?.map((legend) => {
+        return (
+          <LegendElement key={legend.key}>
+            <p>{legend.name}</p>
+            <LegendColor color={legend.color}></LegendColor>
+          </LegendElement>
+        );
+      })}
     </ModuleBody>
   );
 };

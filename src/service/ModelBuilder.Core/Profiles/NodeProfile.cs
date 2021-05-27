@@ -1,38 +1,44 @@
 ﻿using System;
 using AutoMapper;
 using Mb.Core.Extensions;
+using Mb.Core.Repositories.Contracts;
 using Mb.Models.Data;
 using Mb.Models.Enums;
 using Attribute = Mb.Models.Data.Attribute;
-using EnumExtensions = Microsoft.OpenApi.Extensions.EnumExtensions;
 
 namespace Mb.Core.Profiles
 {
     public class NodeProfile : Profile
     {
-        public NodeProfile()
+        public NodeProfile(ICommonRepository commonRepository)
         {
-            CreateMap<LibraryTypeComponent, LibNode>()
+            CreateMap<LibraryType, LibNode>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Rds, opt => opt.MapFrom(src => src.Rds))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.TypeName))
                 .ForMember(dest => dest.Label, opt => opt.MapFrom(src => src.TypeName))
                 .ForMember(dest => dest.Icon, opt => opt.MapFrom(src => MapIconType(src.ObjectType, src.Aspect)))
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => MapNodeType(src.Aspect)))
                 .ForMember(dest => dest.Connectors, opt => opt.MapFrom(src => src.Terminals))
                 .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.RdsCategory.GetDisplayName()))
-                .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes));
+                .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
+                .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
+                .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version));
 
-            CreateMap<Terminal, Connector>()
+            CreateMap<TerminalType, Connector>()
                 .ForMember(dest => dest.NodeId, opt => opt.Ignore())
                 .ForMember(dest => dest.Node, opt => opt.Ignore())
-                .ForMember(dest => dest.Id, opt => opt.UseDestinationValue())
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.TerminalType.GetDisplayName()))
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Terminal.GetDisplayName()))
                 .ForMember(dest => dest.RelationType, opt => opt.MapFrom(src => RelationType.Transport))
-                .ForMember(dest => dest.TerminalCategory, opt => opt.MapFrom(src => TerminalCategory.NotSet))
-                .ForMember(dest => dest.TerminalType, opt => opt.MapFrom(src => src.TerminalType))
-                .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.ConnectorType));
+                .ForMember(dest => dest.TerminalCategory, opt => opt.MapFrom(src => commonRepository.GetCategory(src.Terminal)))
+                .ForMember(dest => dest.Terminal, opt => opt.MapFrom(src => src.Terminal))
+                .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.ConnectorType))
+                .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
+                .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes));
 
             CreateMap<AttributeType, Attribute>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateUniqueId()))
                 .ForMember(dest => dest.Key, opt => opt.MapFrom(src => src.Entity))
                 .ForMember(dest => dest.Value, opt => opt.UseDestinationValue())
                 .ForMember(dest => dest.Qualifier, opt => opt.MapFrom(src => src.Qualifier))

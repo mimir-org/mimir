@@ -6,30 +6,34 @@ import { projectReducer } from "./project/reducers";
 import { inspectorReducer } from "./inspector/reducers";
 import { moduleReducer } from "./modules/reducers";
 import { projectMenuReducer } from "./projectMenu/reducers";
+import { commonReducer } from "./common/reducers";
 import { flowReducer } from "./flow/reducers";
+import { splitViewReducer } from "./splitView/reducers";
 import { sagas } from "../sagas";
 
 const sagaMiddleware = createSagaMiddleware();
 
 const composeEnhancer =
-  (process.env.NODE_ENV !== "production" &&
-    window["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__"]) ||
-  compose;
+    (process.env.NODE_ENV !== "production" &&
+        window["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__"]) ||
+    compose;
 
 const rootReducers = combineReducers({
-  library: libraryReducer,
-  inspector: inspectorReducer,
-  userState: userReducer,
-  projectState: projectReducer,
-  modules: moduleReducer,
-  projectMenu: projectMenuReducer,
-  flow: flowReducer,
+    library: libraryReducer,
+    inspector: inspectorReducer,
+    userState: userReducer,
+    projectState: projectReducer,
+    modules: moduleReducer,
+    projectMenu: projectMenuReducer,
+    flow: flowReducer,
+    splitView: splitViewReducer,
+    commonState: commonReducer
 });
 
 const store = createStore(
-  rootReducers,
-  {},
-  composeEnhancer(applyMiddleware(sagaMiddleware))
+    rootReducers,
+    {},
+    composeEnhancer(applyMiddleware(sagaMiddleware))
 );
 
 sagaMiddleware.run(sagas);

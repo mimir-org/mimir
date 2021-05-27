@@ -3,7 +3,7 @@ import { Color, FontSize } from "..";
 
 const OptionsElement = styled.div`
   border-bottom: 1px solid ${Color.DarkGrey};
-  padding: 5px 5px 5px 5px;
+  padding: 5px 34px 5px 5px;
   text-align: left;
   font-size: ${FontSize.Small};
   color: ${Color.Black};

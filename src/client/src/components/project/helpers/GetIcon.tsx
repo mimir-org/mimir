@@ -1,9 +1,9 @@
+import "./getIcon.scss";
 import {
   WhiteArrowIcon,
   LeftArrowIcon,
   SearchIcon,
 } from "../../../assets/icons";
-import "./getIcon.scss";
 
 interface Props {
   icon: String;

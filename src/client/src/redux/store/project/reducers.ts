@@ -1,5 +1,6 @@
 import { IsAspectNode } from "../../../components/flow/helpers";
 import { Edge, Node, ProjectSimple } from "../../../models/project";
+import { GetProject } from "../localStorage";
 import { TraverseNodes, FindChildNodes } from "./helpers/";
 import {
   FETCHING_PROJECT,
@@ -21,12 +22,18 @@ import {
   SAVE_PROJECT,
   SAVE_PROJECT_SUCCESS_OR_ERROR,
   CHANGE_SELECTED_PROJECT,
+  CHANGE_ALL_NODES,
+  CHANGE_NODE_PROP_VALUE,
+  CHANGE_ATTRIBUTE_VALUE,
+  CHANGE_CONNECTOR_ATTRIBUTE_VALUE,
+  CHANGE_EDGE_VISIBILITY,
+  CHANGE_ACTIVE_BLOCKNODE,
 } from "./types";
 
 const initialState: ProjectState = {
   fetching: false,
   creating: false,
-  project: null,
+  project: GetProject() ?? null, // TODO: fix
   hasError: false,
   errorMsg: null,
   projectList: null,
@@ -65,6 +72,7 @@ export function projectReducer(
         errorMsg: null,
         projectList: null,
       };
+
     case SEARCH_PROJECT_SUCCESS_OR_ERROR:
       return {
         ...state,
@@ -74,6 +82,7 @@ export function projectReducer(
         errorMsg: action.payload.errorMsg,
         projectList: action.payload.projectList,
       };
+
     case FETCHING_PROJECT:
       return {
         ...state,
@@ -189,6 +198,22 @@ export function projectReducer(
         },
       };
 
+    case CHANGE_EDGE_VISIBILITY:
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          edges: state.project.edges.map((edge, i) =>
+            state.project.edges[i].id === action.payload.edge.id
+              ? {
+                  ...edge,
+                  isHidden: action.payload.isHidden,
+                }
+              : edge
+          ),
+        },
+      };
+
     case CHANGE_NODE_VISIBILITY:
       const node = action.payload.node;
       const nodeList = state.project.nodes;
@@ -197,7 +222,7 @@ export function projectReducer(
       const type = action.payload.type;
       const isHidden = !node.isHidden;
 
-      if (IsAspectNode(node.type)) {
+      if (IsAspectNode(node)) {
         return {
           ...state,
           project: {
@@ -282,8 +307,23 @@ export function projectReducer(
           ...state.project,
           nodes: state.project.nodes.map((x, i) =>
             state.project.nodes[i].id === id
-              ? { ...x, isSelected: true }
+              ? { ...x, isSelected: action.payload.isActive }
               : { ...x, isSelected: false }
+          ),
+          edges: state.project.edges,
+        },
+      };
+
+    case CHANGE_ACTIVE_BLOCKNODE:
+      const blockId = action.payload.nodeId;
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          nodes: state.project.nodes.map((x, i) =>
+            state.project.nodes[i].id === blockId
+              ? { ...x, isBlockSelected: true }
+              : { ...x, isBlockSelected: false }
           ),
           edges: state.project.edges,
         },
@@ -301,6 +341,92 @@ export function projectReducer(
             ? { ...x, selected: true }
             : { ...x, selected: false }
         ),
+      };
+
+    case CHANGE_ALL_NODES:
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          nodes: state.project.nodes.map(
+            (x) =>
+              state && {
+                ...x,
+                isHidden: true,
+              }
+          ),
+        },
+      };
+
+    case CHANGE_NODE_PROP_VALUE:
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          nodes: state.project.nodes.map((node) =>
+            node.id === action.payload.nodeId
+              ? {
+                  ...node,
+                  [action.payload.propName]: action.payload.propValue,
+                }
+              : node
+          ),
+        },
+      };
+
+    case CHANGE_ATTRIBUTE_VALUE:
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          nodes: state.project.nodes.map((node) =>
+            node.id === action.payload.nodeId
+              ? {
+                  ...node,
+                  attributes: node.attributes.map((attribute) =>
+                    attribute.id === action.payload.id
+                      ? {
+                          ...attribute,
+                          value: action.payload.value,
+                          unit: action.payload.unit,
+                        }
+                      : attribute
+                  ),
+                }
+              : node
+          ),
+        },
+      };
+
+    case CHANGE_CONNECTOR_ATTRIBUTE_VALUE:
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          nodes: state.project.nodes.map((node) =>
+            node.id === action.payload.nodeId
+              ? {
+                  ...node,
+                  connectors: node.connectors.map((connector) =>
+                    connector.id === action.payload.connectorId
+                      ? {
+                          ...connector,
+                          attributes: connector.attributes.map((attribute) =>
+                            attribute.id === action.payload.id
+                              ? {
+                                  ...attribute,
+                                  value: action.payload.value,
+                                  unit: action.payload.unit,
+                                }
+                              : attribute
+                          ),
+                        }
+                      : connector
+                  ),
+                }
+              : node
+          ),
+        },
       };
 
     default:

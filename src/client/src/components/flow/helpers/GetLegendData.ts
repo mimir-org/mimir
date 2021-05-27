@@ -1,20 +1,22 @@
+import { GetTransportTypeColor, Legend } from ".";
+import GetRelationshipColor from "./GetRelationshipColor";
 import {
   Node,
   RELATION_TYPE,
   RelationType,
   Project,
 } from "../../../models/project";
-import { GetTransportTypeColor, Legend } from ".";
-import GetRelationshipColor from "./GetRelationshipColor";
 
 const GetBlockViewLegend = (node: Node): Legend[] => {
-  const legends = node.connectors
-    .filter((x) => x.relationType === (RELATION_TYPE.Transport as RelationType))
+  const legends = node?.connectors
+    ?.filter(
+      (x) => x.relationType === (RELATION_TYPE.Transport as RelationType)
+    )
     .map((y) => {
       return {
         key: y.id,
         name: y.name,
-        color: GetTransportTypeColor(y.terminalType),
+        color: GetTransportTypeColor(y.terminal),
       };
     });
 
@@ -22,8 +24,8 @@ const GetBlockViewLegend = (node: Node): Legend[] => {
 };
 
 const GetTreeViewLegend = (node: Node): Legend[] => {
-  const legends = node.connectors
-    .filter(
+  const legends = node?.connectors
+    ?.filter(
       (x) =>
         x.relationType === (RELATION_TYPE.PartOf as RelationType) ||
         x.relationType === (RELATION_TYPE.HasLocation as RelationType) ||
@@ -43,19 +45,16 @@ const GetTreeViewLegend = (node: Node): Legend[] => {
 
 const GetBlockViewNodes = (project: Project, nodeId: string): Node[] => {
   const nodes = [] as Node[];
-  const fromNode = project.nodes.find((x) => x.id === nodeId);
+  const fromNode = project?.nodes?.find((x) => x.id === nodeId);
 
   project.edges.forEach((edge) => {
     if (edge.fromNode === nodeId) {
       const currentConnector = fromNode.connectors.find(
         (x) => x.id === edge.fromConnector
       );
-      if (
-        currentConnector &&
-        currentConnector.relationType === RELATION_TYPE.PartOf
-      ) {
-        const toNode = project.nodes.find((x) => x.id === edge.toNode);
-        if (!toNode.isHidden) nodes.push(toNode);
+      if (currentConnector?.relationType === RELATION_TYPE.PartOf) {
+        const toNode = project.nodes?.find((x) => x.id === edge.toNode);
+        if (!toNode?.isHidden) nodes.push(toNode);
       }
     }
   });
@@ -64,7 +63,7 @@ const GetBlockViewNodes = (project: Project, nodeId: string): Node[] => {
 };
 
 const GetTreeviewNodes = (project: Project): Node[] => {
-  return project.nodes.filter((x) => !x.isHidden);
+  return project?.nodes?.filter((x) => !x?.isHidden);
 };
 
 const GetLegendData = (
@@ -78,7 +77,7 @@ const GetLegendData = (
 
   if (isBlockView) {
     const nodes = GetBlockViewNodes(project, nodeId);
-    nodes.forEach((node) => {
+    nodes?.forEach((node) => {
       legends.push.apply(legends, GetBlockViewLegend(node));
     });
     return legends.filter(
@@ -87,7 +86,7 @@ const GetLegendData = (
     );
   } else {
     const nodes = GetTreeviewNodes(project);
-    nodes.forEach((node) => {
+    nodes?.forEach((node) => {
       legends.push.apply(legends, GetTreeViewLegend(node));
     });
     return legends.filter(

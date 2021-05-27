@@ -1,4 +1,4 @@
-import { Node, Edge } from "../../models/project";
+import { Node, Edge, RELATION_TYPE } from "../../models/project";
 
 const SetIndentLevel = (nodes: Node[], edges: Edge[], i: number) => {
   if (!edges) return null;
@@ -7,9 +7,14 @@ const SetIndentLevel = (nodes: Node[], edges: Edge[], i: number) => {
   const nodeId = node.id;
 
   let edge = edges.find((edge) => edge.toNode === nodeId);
-  if (edge === undefined) return null;
+  if (!edge) return null;
 
-  indentCount++;
+  let connectorType = node?.connectors?.find(
+    (x) => x.id === edge?.toConnector
+  )?.relationType;
+
+  if (connectorType === RELATION_TYPE.PartOf) indentCount++;
+
   let id = edge.fromNode;
 
   const getParent = () => {
@@ -18,8 +23,10 @@ const SetIndentLevel = (nodes: Node[], edges: Edge[], i: number) => {
 
   while (edge) {
     edge = edges.find((edge) => edge.toNode === getParent());
-    if (edge === undefined) break;
-    if (edge.targetType === node.type) indentCount++;
+    if (!edge) break;
+    if (edge.targetType === node.type) {
+      indentCount++;
+    }
     id = edge.fromNode;
   }
   return indentCount;

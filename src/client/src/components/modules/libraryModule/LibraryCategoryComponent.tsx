@@ -30,8 +30,7 @@ const LibraryCategoryComponent = ({ category }: Props) => {
         {GetDropdownIcon(expandIcon, null)}
       </LibraryCategory>
       {expanded &&
-        category &&
-        category.nodes.map((node) => {
+        category?.nodes.map((node) => {
           return (
             <LibraryElement
               onDragStart={(event) => onDragStart(event, JSON.stringify(node))}

@@ -1,12 +1,11 @@
 import styled from "styled-components";
-import { Color, FontType, FontWeight } from "../../../../componentLibrary";
+import { Color, FontWeight } from "../../../../componentLibrary";
 
 const TabHeader = styled.div`
   display: inline-block;
   box-sizing: border-box;
   border-top-right-radius: 8px;
   border-top-left-radius: 6px;
-  font-family: ${FontType.Standard};
   color: ${Color.Black};
   border-right: 1px solid ${Color.Grey};
   border-left: 1px solid ${Color.Grey};

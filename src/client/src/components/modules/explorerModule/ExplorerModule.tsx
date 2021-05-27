@@ -1,12 +1,13 @@
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { ProjectComponent, SwitchViewComponent } from "./";
+import { ProjectComponent, SplitViewComponent } from "./";
 import { TextResources } from "../../../assets/textResources";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import { MODULE_TYPE } from "../../../models/project";
-import { SaveState } from "../../../redux/store/localStorage/localStorage";
+import { SaveState } from "../../../redux/store/localStorage";
 import { AnimatedModule, Size } from "../../../componentLibrary";
 import { ExplorerIcon, ToggleLeft, ToggleRight } from "../../../assets/icons";
+import { IsBlockView } from "../../flow/helpers/block";
 import {
   ModuleHeader,
   ModuleBody,
@@ -39,7 +40,7 @@ export const ExplorerModule = () => {
   return (
     <AnimatedModule start={start} stop={stop} run={animate}>
       <ModuleHeader explorer visible={isOpen}>
-        <img src={ExplorerIcon} alt="icon" />
+        <img src={ExplorerIcon} alt="icon" className="module-icon" />
         <img
           className="icon"
           src={isOpen ? ToggleLeft : ToggleRight}
@@ -48,9 +49,9 @@ export const ExplorerModule = () => {
         />
         <p className="text">{TextResources.Explorer_view}</p>
       </ModuleHeader>
-      <ModuleBody visible={isOpen} explorer>
+      <ModuleBody visible={isOpen} explorer isBlockView={IsBlockView()}>
         {hasProject && <ProjectComponent />}
-        <SwitchViewComponent />
+        <SplitViewComponent />
       </ModuleBody>
     </AnimatedModule>
   );
