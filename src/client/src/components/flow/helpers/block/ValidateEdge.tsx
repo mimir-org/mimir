@@ -31,7 +31,7 @@ const ValidateEdge = (
       }
     }
     // When Function
-    if (IsFunctionNode(selectedNode)) {
+    if (IsFunctionNode(selectedNode) || !IsAspectNode(selectedNode)) {
       if (
         IsLocationNode(fromNode) ||
         IsLocationNode(toNode) ||
@@ -39,11 +39,21 @@ const ValidateEdge = (
         IsLocationTerminal(toConnector)
       )
         return false;
-      else {
-        if (IsAspectNode(selectedNode)) {
-          return true;
-        }
-      }
+      else return true;
+    }
+  }
+  if (splitView) {
+    if (!splitViewNode) {
+      if (IsFunctionNode(fromNode) && IsFunctionNode(toNode)) return true;
+    }
+    if (IsTransportTerminal(fromConnector)) return false;
+    if (
+      IsFunctionNode(fromNode) &&
+      IsLocationNode(toNode) &&
+      IsLocationNode(splitViewNode) &&
+      toNode !== selectedNode
+    ) {
+      return true;
     }
   }
   return false;

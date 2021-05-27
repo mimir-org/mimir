@@ -9,6 +9,7 @@ export { default as IsFunctionNode } from "./IsFunctionNode";
 export { default as IsProductNode } from "./IsProductNode";
 export { default as IsTransportTerminal } from "./IsTransportTerminal";
 export { default as IsLocationTerminal } from "./IsLocationTerminal";
+export { default as IsPartOfTerminal } from "./IsPartOfTerminal";
 export { default as IsAspectSameType } from "./IsAspectSameType";
 export { default as GetCenter } from "./GetCenter";
 export { default as GetHandleType } from "./GetHandleType";
