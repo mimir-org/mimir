@@ -3,13 +3,20 @@ import { useDispatch } from "react-redux";
 import { VIEW_TYPE } from "../../../models/project";
 import { changeFlowView } from "../../../redux/store/flow/actions";
 
-import { DropdownMenu } from ".";
+import {
+  DropdownMenu,
+  RDSList,
+  TerminalsList,
+  AttributesList,
+  TypePreview,
+} from ".";
 import {
   TypeEditorWrapper,
   TypeEditorContent,
   TypeEditorHeader,
   TypeInfo,
   TypeNameInput,
+  ChooseProperties,
 } from "./styled";
 import { Input } from "../../../componentLibrary";
 import { TextResources } from "../../../assets/textResources";
@@ -52,17 +59,17 @@ export const TypeEditorComponent = ({ mode }: Props) => {
             </TypeEditorHeader>
             <TypeInfo>
               <DropdownMenu
-                label="Aspect"
+                label={TextResources.TypeEditor_Aspect}
                 placeHolder="Choose Aspect"
                 listItems={aspects}
               />
               <DropdownMenu
-                label="Object Type"
+                label={TextResources.TypeEditor_Object_Type}
                 placeHolder="Select Object Type"
                 listItems={aspects}
               />
               <TypeNameInput>
-                <p>Type name</p>
+                <p>{TextResources.TypeEditor_Type_Name}</p>
                 <Input
                   width={300}
                   onChange={() => null}
@@ -71,14 +78,17 @@ export const TypeEditorComponent = ({ mode }: Props) => {
                 />
               </TypeNameInput>
               <DropdownMenu
-                label="Status"
+                label={TextResources.TypeEditor_Status}
                 placeHolder="Draft"
                 listItems={aspects}
               />
             </TypeInfo>
-            {/* <ChooseProperties>
-          {mode === "new" ? <p>TE Component NEW</p> : <p>TE Component EDIT</p>}
-          </ChooseProperties> */}
+            <ChooseProperties>
+              <RDSList />
+              <TerminalsList />
+              <AttributesList />
+              <TypePreview mode={mode} />
+            </ChooseProperties>
             {/* <TypeEditorInspector></TypeEditorInspector> */}
           </TypeEditorContent>
         </TypeEditorWrapper>

@@ -3,7 +3,7 @@ import { Color, FontSize, FontType } from "..";
 
 const DropdownMenuListItem = styled.div`
   display: flex;
-  width: 184px;
+  width: 185px;
   height: 31px;
   align-items: center;
   border-width: 1px 0px 0px 0px;
@@ -15,6 +15,7 @@ const DropdownMenuListItem = styled.div`
   color: ${Color.Black};
   background-color: ${Color.White};
   cursor: pointer;
+  z-index: 1;
 
   p {
     padding: 5px;

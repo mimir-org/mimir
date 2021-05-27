@@ -84,6 +84,18 @@ const textResources = {
   TypeEditor: "Type Editor",
   TypeEditor_New_Type: "New Type",
   TypeEditor_Edit_Type: "Edit Type",
+  TypeEditor_Aspect: "Aspect",
+  TypeEditor_Object_Type: "Object Type",
+  TypeEditor_Type_Name: "Type name",
+  TypeEditor_Status: "Status",
+  TypeEditor_Properties_Choose: "Choose",
+  TypeEditor_Properties_RDS: "RDS",
+  TypeEditor_Properties_Terminals: "Terminals",
+  TypeEditor_Properties_Block_Attributes: "Object Block Attributes",
+  TypeEditor_New_Type_Preview: "Type Preview Info",
+  TypeEditor_Preview_Info: "Click on preview objects to see inspector info",
+  TypeEditor_Button_Add: "Add to Library",
+  TypeEditor_Button_Edit: "Save Type Edit",
 
   // AccountModule
   Account_Save_Label: "Save project to file",

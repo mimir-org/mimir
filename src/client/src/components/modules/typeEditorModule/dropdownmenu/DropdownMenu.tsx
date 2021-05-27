@@ -7,6 +7,7 @@ import {
   DropdownMenuList,
   DropdownMenuListItem,
 } from "../../../../componentLibrary/dropdown";
+import "./dropdownmenu.scss";
 
 interface Props {
   label: string;
@@ -45,7 +46,11 @@ export const DropDownMenu = ({ label, placeHolder, listItems }: Props) => {
         {isListOpen && (
           <DropdownMenuList>
             {listItems.map((item) => (
-              <div key={item.id} onClick={() => handleChange(item.name)}>
+              <div
+                className="listitem"
+                key={item.id}
+                onClick={() => handleChange(item.name)}
+              >
                 <DropdownMenuListItem>
                   <p>{item.name}</p>
                 </DropdownMenuListItem>

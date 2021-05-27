@@ -8,6 +8,7 @@ const DropdownMenuWrapper = styled.div`
   font-family: ${FontType.Standard};
   font-size: ${FontSize.Standard};
   color: ${Color.Black};
+  position: relative;
 `;
 
 export default DropdownMenuWrapper;
