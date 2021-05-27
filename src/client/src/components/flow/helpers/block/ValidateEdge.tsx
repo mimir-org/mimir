@@ -5,10 +5,12 @@ import {
   IsTransportTerminal,
   IsLocationTerminal,
   IsAspectNode,
+  IsPartOfTerminal,
 } from "..";
 
 const ValidateEdge = (
   selectedNode: Node,
+  selectedBlockNode: Node,
   fromNode: Node,
   toNode: Node,
   splitViewNode: Node,
@@ -17,6 +19,8 @@ const ValidateEdge = (
   splitView: boolean
 ): boolean => {
   if (!fromNode || !toNode) return false;
+  if (IsPartOfTerminal(fromConnector) || IsPartOfTerminal(toConnector))
+    return false;
 
   if (!splitView) {
     // When Location
@@ -31,22 +35,34 @@ const ValidateEdge = (
       }
     }
     // When Function
-    if (IsFunctionNode(selectedNode) || !IsAspectNode(selectedNode.type)) {
+    if (IsFunctionNode(selectedNode)) {
       if (
         IsLocationNode(fromNode) ||
         IsLocationNode(toNode) ||
         IsLocationTerminal(fromConnector) ||
-        IsLocationTerminal(toConnector)
+        IsLocationTerminal(toConnector) ||
+        IsAspectNode(selectedNode.type) ||
+        IsAspectNode(fromNode.type) ||
+        toNode === selectedNode ||
+        fromNode === selectedNode
       )
         return false;
       else return true;
     }
   }
+
   if (splitView) {
     if (!splitViewNode) {
       if (IsFunctionNode(fromNode) && IsFunctionNode(toNode)) return true;
     }
-    if (IsTransportTerminal(fromConnector)) return false;
+    if (
+      toNode === selectedBlockNode ||
+      fromNode === selectedBlockNode ||
+      toNode === selectedNode ||
+      fromNode === selectedNode
+    ) {
+      return false;
+    }
     if (
       IsFunctionNode(fromNode) &&
       IsLocationNode(toNode) &&
