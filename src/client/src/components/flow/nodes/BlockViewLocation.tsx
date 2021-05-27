@@ -1,10 +1,11 @@
-import { memo, FC, useState } from "react";
+import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
 import { useDispatch, useSelector } from "react-redux";
 import { OptionsIcon } from "../../../assets/icons/blockView";
 import { addSelectedConnector } from "../../../redux/store/flow/actions";
 import { GetBlockHandleType, ValidateConnector } from "../helpers/block";
-import { RootState } from "../../../redux/store";
+import store, { RootState } from "../../../redux/store";
+import { Node } from "../../../models/project";
 import {
   GetConnectors,
   SetConnectors,
@@ -30,9 +31,17 @@ const BlockViewLocation: FC<NodeProps> = ({ data }) => {
   const [showButton, setShowButton] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const isLocation = useSelector<RootState>((state) =>
-    IsLocationNode(state.splitView.node)
-  ) as boolean;
+  const selectedNode = useSelector<RootState>((state) =>
+    state.projectState.project?.nodes?.find((x) => x.isBlockSelected)
+  ) as Node;
+
+  const splitView = store.getState().splitView;
+  const isSplitView = splitView.visible as boolean;
+  const splitViewNode = splitView.node as Node;
+
+  const isLocation = isSplitView
+    ? IsLocationNode(splitViewNode)
+    : IsLocationNode(selectedNode);
 
   const handleClick = () => {
     setMenuOpen(!menuOpen);
@@ -57,30 +66,49 @@ const BlockViewLocation: FC<NodeProps> = ({ data }) => {
     SetConnectors(connectors);
   };
 
+  const id = data.id;
+
+  useEffect(() => {
+    const locationNode = document.querySelector(
+      `[data-id="${id}"]`
+    ) as HTMLElement;
+
+    if (locationNode) {
+      locationNode.style.width = `${data.width}px`;
+      locationNode.style.height = `${data.height}px`;
+    }
+  }, [data, id]);
+
   const connectors = GetConnectors();
 
   return (
-    <NodeBox onMouseOver={handleOnHover} onMouseOut={handleOnMouseOut}>
+    <NodeBox
+      onMouseOver={handleOnHover}
+      onMouseOut={handleOnMouseOut}
+      width={data.width}
+      height={data.height}
+    >
       <OptionsMenu visible={showButton} onClick={handleClick}>
         <img src={OptionsIcon} alt="options" />
-      </OptionsMenu>
-      <OptionsBox visible={menuOpen}>
-        {SortLocationConnectors(data.connectors).map((conn) => (
-          <OptionsElement
-            key={conn.id}
-            onClick={() => handleConnectorClick(conn)}
-          >
-            {GetConnectorName(conn)}
-            <img
-              src={GetConnectorIcon(conn.terminal)}
-              alt="icon"
-              className="button"
-            />
-          </OptionsElement>
-        ))}
-      </OptionsBox>
 
-      <div>{data.label ?? data.names}</div>
+        <OptionsBox visible={menuOpen}>
+          {SortLocationConnectors(data.connectors).map((conn) => (
+            <OptionsElement
+              key={conn.id}
+              onClick={() => handleConnectorClick(conn)}
+            >
+              {GetConnectorName(conn)}
+              <img
+                src={GetConnectorIcon(conn.terminal)}
+                alt="icon"
+                className="button"
+              />
+            </OptionsElement>
+          ))}
+        </OptionsBox>
+      </OptionsMenu>
+
+      <div style={{ paddingTop: "15px" }}>{data.label ?? data.names}</div>
       {connectors.map((conn) => {
         const [type, pos, className] = GetBlockHandleType(conn);
         if (data.id === conn.nodeId && ValidateConnector(conn, isLocation)) {

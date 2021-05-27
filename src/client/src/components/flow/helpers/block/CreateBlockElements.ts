@@ -1,6 +1,12 @@
 import { Elements } from "react-flow-renderer";
 import { IsAspectSameType } from "..";
-import { Project, EDGE_TYPE, EdgeType, Node } from "../../../../models/project";
+import {
+  Project,
+  EDGE_TYPE,
+  EdgeType,
+  Node,
+  RELATION_TYPE,
+} from "../../../../models/project";
 import {
   CreateBlockEdge,
   CreateSplitViewNode,
@@ -26,9 +32,15 @@ const CreateBlockElements = (
   project.edges.forEach((edge) => {
     if (edge.fromNode === nodeId) {
       const toNode = project.nodes.find((x) => x.id === edge.toNode);
+
+      let connectorType = toNode.connectors.find(
+        (x) => x.id === edge?.toConnector
+      )?.relationType;
+
       if (
-        selectedNode.type === toNode.type ||
-        IsAspectSameType(selectedNode, toNode)
+        (selectedNode.type === toNode.type ||
+          IsAspectSameType(selectedNode, toNode)) &&
+        connectorType !== RELATION_TYPE.Transport
       )
         initialElements.push(CreateBlockNode(toNode, splitView));
     }
@@ -39,7 +51,16 @@ const CreateBlockElements = (
     project.edges.forEach((edge) => {
       if (edge.fromNode === splitViewNode.id) {
         const toNode = project.nodes.find((x) => x.id === edge.toNode);
-        if (splitViewNode.type === toNode.type)
+
+        let connectorType = toNode.connectors.find(
+          (x) => x.id === edge?.toConnector
+        )?.relationType;
+
+        if (
+          (splitViewNode.type === toNode.type ||
+            IsAspectSameType(splitViewNode, toNode)) &&
+          connectorType !== RELATION_TYPE.Transport
+        )
           initialElements.push(CreateSplitViewNode(toNode));
       }
     });
