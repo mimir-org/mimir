@@ -43,7 +43,3 @@ const ShowBlockViewEdge = (edge: Edge): boolean => {
 };
 
 export default ShowBlockViewEdge;
-
-// d68e65d6-307a-c08d-f76b-6823d792b821¨
-
-// 30206574-b907-a2ee-2dba-b349e37406ef

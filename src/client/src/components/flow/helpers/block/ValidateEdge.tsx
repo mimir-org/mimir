@@ -1,9 +1,10 @@
+import { Node, Connector } from "../../../../models/project";
 import {
-  Node,
-  Connector,
-  NODE_TYPE,
-  RELATION_TYPE,
-} from "../../../../models/project";
+  IsFunctionNode,
+  IsLocationNode,
+  IsTransportTerminal,
+  IsLocationTerminal,
+} from "..";
 
 const ValidateEdge = (
   selectedNode: Node,
@@ -14,97 +15,33 @@ const ValidateEdge = (
   toConnector: Connector,
   splitView: boolean
 ): boolean => {
-  // TODO: Refactor..
-  if (!fromNode || !toNode) {
-    return false;
-  }
-  if (
-    fromNode.type === NODE_TYPE.PRODUCT ||
-    toNode.type === NODE_TYPE.PRODUCT ||
-    fromNode.type === NODE_TYPE.ASPECT_LOCATION ||
-    fromNode.type === NODE_TYPE.ASPECT_FUNCTION ||
-    fromNode.type === NODE_TYPE.ASPECT_PRODUCT ||
-    fromNode.type === NODE_TYPE.OFF_PAGE ||
-    toNode.type === NODE_TYPE.OFF_PAGE
-  ) {
-    return false;
-  }
+  if (!fromNode || !toNode) return false;
 
   if (!splitView) {
-    if (
-      selectedNode.type === NODE_TYPE.LOCATION ||
-      selectedNode.type === NODE_TYPE.ASPECT_LOCATION
-    ) {
+    // When Location
+    if (IsLocationNode(selectedNode)) {
       if (
-        fromNode.type === NODE_TYPE.FUNCTION ||
-        toNode.type === NODE_TYPE.FUNCTION ||
-        fromConnector.type === RELATION_TYPE.Transport ||
-        toConnector.type === RELATION_TYPE.Transport
+        IsFunctionNode(fromNode) ||
+        IsFunctionNode(toNode) ||
+        IsTransportTerminal(fromConnector) ||
+        IsTransportTerminal(toConnector)
       ) {
         return false;
       }
     }
-    if (
-      selectedNode.type === NODE_TYPE.FUNCTION ||
-      selectedNode.type === NODE_TYPE.ASPECT_FUNCTION
-    ) {
+    // When Function
+    if (IsFunctionNode(selectedNode)) {
       if (
-        fromNode.type === NODE_TYPE.LOCATION ||
-        toNode.type === NODE_TYPE.LOCATION ||
-        fromConnector.type === RELATION_TYPE.HasLocation ||
-        toConnector.type === RELATION_TYPE.HasLocation
-      ) {
+        IsLocationNode(fromNode) ||
+        IsLocationNode(toNode) ||
+        IsLocationTerminal(fromConnector) ||
+        IsLocationTerminal(toConnector)
+      )
         return false;
-      }
-      if (
-        fromNode.type === NODE_TYPE.LOCATION &&
-        toNode.type === NODE_TYPE.LOCATION
-      ) {
-        return false;
-      }
-      if (
-        fromNode.type === NODE_TYPE.FUNCTION &&
-        toNode.type !== NODE_TYPE.LOCATION
-      ) {
-        return true;
-      }
-      if (
-        fromNode.type === NODE_TYPE.FUNCTION &&
-        toNode.type === NODE_TYPE.LOCATION
-      ) {
-        return false;
-      }
-      if (
-        fromNode.type === NODE_TYPE.FUNCTION &&
-        splitViewNode.type === NODE_TYPE.LOCATION
-      ) {
-        return false;
-      }
-    }
-
-    if (
-      fromNode.type === NODE_TYPE.FUNCTION &&
-      toNode.type === NODE_TYPE.LOCATION &&
-      fromConnector.relationType === RELATION_TYPE.HasLocation &&
-      toConnector.relationType === RELATION_TYPE.HasLocation &&
-      splitViewNode?.type === NODE_TYPE.LOCATION
-    ) {
-      return true;
-    }
-    if (
-      !splitViewNode &&
-      fromNode.type === NODE_TYPE.FUNCTION &&
-      toNode.type === NODE_TYPE.FUNCTION
-    ) {
-      return true;
-    }
-    if (
-      fromNode.type === NODE_TYPE.FUNCTION &&
-      toNode.type === NODE_TYPE.LOCATION
-    ) {
-      return true;
+      else return true;
     }
   }
+  return false;
 };
 
 export default ValidateEdge;
