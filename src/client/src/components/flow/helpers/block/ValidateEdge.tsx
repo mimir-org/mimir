@@ -4,6 +4,7 @@ import {
   IsLocationNode,
   IsTransportTerminal,
   IsLocationTerminal,
+  IsAspectNode,
 } from "..";
 
 const ValidateEdge = (
@@ -38,7 +39,11 @@ const ValidateEdge = (
         IsLocationTerminal(toConnector)
       )
         return false;
-      else return true;
+      else {
+        if (IsAspectNode(selectedNode)) {
+          return true;
+        }
+      }
     }
   }
   return false;

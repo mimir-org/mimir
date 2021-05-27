@@ -28,7 +28,7 @@ export const AspectComponent = ({ nodeId, label, aspectType }: Props) => {
   const childType = GetAspectType(aspectType);
   const nodes = store.getState().projectState.project.nodes;
   const edges = store.getState().projectState.project.edges;
-  const children = nodes.filter((node) => !IsAspectNode(node.type));
+  const children = nodes.filter((node) => !IsAspectNode(node));
 
   const handleExpandClick = () => {
     setExpanded(!expanded);

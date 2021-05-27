@@ -12,7 +12,7 @@ export const ProjectComponent = () => {
     <>
       {!IsBlockView()
         ? aspects.map((obj: object, i: number) => {
-            if (IsAspectNode(aspects[i].type)) {
+            if (IsAspectNode(aspects[i])) {
               return (
                 <AspectComponent
                   key={i}
@@ -26,7 +26,7 @@ export const ProjectComponent = () => {
           })
         : aspects.map((obj: object, i: number) => {
             if (
-              IsAspectNode(aspects[i].type) &&
+              IsAspectNode(aspects[i]) &&
               aspects[i].type !== NODE_TYPE.ASPECT_PRODUCT
             ) {
               return (

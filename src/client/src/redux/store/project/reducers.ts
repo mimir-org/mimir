@@ -222,7 +222,7 @@ export function projectReducer(
       const type = action.payload.type;
       const isHidden = !node.isHidden;
 
-      if (IsAspectNode(node.type)) {
+      if (IsAspectNode(node)) {
         return {
           ...state,
           project: {
