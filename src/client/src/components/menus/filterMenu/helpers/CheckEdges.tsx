@@ -1,7 +1,8 @@
 import { Node, Edge } from "../../../../models/project";
 
-const CheckEdges = (nodes: Node[], edges: Edge[], type: string): Edge => {
+const CheckEdges = (nodes: Node[], edges: Edge[], type: string): Edge[] => {
   const connectors = [];
+  const edgesToRemove: Edge[] = [];
 
   for (let i = 0; i < nodes.length; i++) {
     for (let j = 0; j < nodes[i].connectors.length; j++) {
@@ -15,9 +16,11 @@ const CheckEdges = (nodes: Node[], edges: Edge[], type: string): Edge => {
     if (
       connectors.find((x) => x.id === edges[i].fromConnector) ||
       connectors.find((x) => x.id === edges[i].toConnector)
-    )
-      return edges[i];
+    ) {
+      edgesToRemove.push(edges[i]);
+    }
   }
+  return edgesToRemove;
 };
 
 export default CheckEdges;

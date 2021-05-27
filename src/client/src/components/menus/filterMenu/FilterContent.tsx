@@ -11,14 +11,18 @@ const FilterContent = ({ type, index }) => {
   const nodes = store.getState().projectState.project?.nodes;
   const edges = store.getState().projectState.project?.edges;
 
-  let edge = CheckEdges(nodes, edges, type);
-  let isChecked = edges.find((x) => x.id === edge?.id)?.isHidden;
+  let edgesRemove = CheckEdges(nodes, edges, type);
+  let isChecked = edges.find((x) => x.id === edgesRemove[0]?.id)?.isHidden;
   const [checked, setChecked] = useState(!isChecked);
 
   const handleChange = () => {
-    if (edge) {
+    if (edges) {
       setChecked(!checked);
-      dispatch(changeEdgeVisibility(edge, !edge.isHidden));
+      edgesRemove.forEach((_edge, index) => {
+        dispatch(
+          changeEdgeVisibility(edgesRemove[index], !edgesRemove[index].isHidden)
+        );
+      });
     }
   };
 
