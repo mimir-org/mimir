@@ -50,51 +50,47 @@ export const TypeEditorComponent = ({ mode }: Props) => {
     },
   ];
   return (
-    <>
-      {visible ? (
-        <TypeEditorWrapper>
-          <TypeEditorContent>
-            <TypeEditorHeader>
-              <p>{TextResources.TypeEditor}</p>
-              <img src={CloseIcon} alt="close-window" onClick={handleClick} />
-            </TypeEditorHeader>
-            <TypeInfo>
-              <DropdownMenu
-                label={TextResources.TypeEditor_Aspect}
-                placeHolder="Choose Aspect"
-                listItems={aspects}
-              />
-              <DropdownMenu
-                label={TextResources.TypeEditor_Object_Type}
-                placeHolder="Select Object Type"
-                listItems={aspects}
-              />
-              <TypeNameInput>
-                <p>{TextResources.TypeEditor_Type_Name}</p>
-                <Input
-                  width={300}
-                  onChange={() => null}
-                  inputType="text"
-                  placeholder="Write Type name"
-                />
-              </TypeNameInput>
-              <DropdownMenu
-                label={TextResources.TypeEditor_Status}
-                placeHolder="Draft"
-                listItems={aspects}
-              />
-            </TypeInfo>
-            <ChooseProperties>
-              <RDSList />
-              <TerminalsList />
-              <AttributesList />
-              <TypePreview mode={mode} />
-            </ChooseProperties>
-            {/* <TypeEditorInspector></TypeEditorInspector> */}
-          </TypeEditorContent>
-        </TypeEditorWrapper>
-      ) : null}
-    </>
+    <TypeEditorWrapper>
+      <TypeEditorContent>
+        <TypeEditorHeader>
+          <p>{TextResources.TypeEditor}</p>
+          <img src={CloseIcon} alt="close-window" onClick={handleClick} />
+        </TypeEditorHeader>
+        <TypeInfo>
+          <DropdownMenu
+            label={TextResources.TypeEditor_Aspect}
+            placeHolder="Choose Aspect"
+            listItems={aspects}
+          />
+          <DropdownMenu
+            label={TextResources.TypeEditor_Object_Type}
+            placeHolder="Select Object Type"
+            listItems={aspects}
+          />
+          <TypeNameInput>
+            <p>{TextResources.TypeEditor_Type_Name}</p>
+            <Input
+              width={300}
+              onChange={() => null}
+              inputType="text"
+              placeholder="Write Type name"
+            />
+          </TypeNameInput>
+          <DropdownMenu
+            label={TextResources.TypeEditor_Status}
+            placeHolder="Draft"
+            listItems={aspects}
+          />
+        </TypeInfo>
+        <ChooseProperties>
+          <RDSList />
+          <TerminalsList />
+          <AttributesList />
+          <TypePreview mode={mode} />
+        </ChooseProperties>
+        {/* <TypeEditorInspector></TypeEditorInspector> */}
+      </TypeEditorContent>
+    </TypeEditorWrapper>
   );
 };
 
