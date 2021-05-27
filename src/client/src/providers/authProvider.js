@@ -9,8 +9,8 @@ const regularMsalConfig = {
     auth: {
         clientId: process.env.REACT_APP_APP_ID,
         authority: 'https://login.microsoftonline.com/' + process.env.REACT_APP_TENANT_ID,
-        redirectUri: process.env.REACT_APP_REDIRECT_URI,
-        postLogoutRedirectUri: process.env.REACT_APP_REDIRECT_LOGOUT_URI
+        redirectUri: window.location.origin,
+        postLogoutRedirectUri: window.location.origin
     },
     cache: {
         cacheLocation: 'localStorage',
@@ -24,7 +24,8 @@ const authenticationParameters = {
 
 const commonMsalOptions = {
     loginType: LoginType.Redirect,
-    tokenRefreshUri: window.location.origin + '/'
+    tokenRefreshUri: window.location.origin + '/auth.html',
+
 }
 
 export const authProvider = new MsalAuthProvider(regularMsalConfig, authenticationParameters, commonMsalOptions)
