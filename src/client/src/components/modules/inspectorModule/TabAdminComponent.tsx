@@ -32,8 +32,8 @@ const TabAdminComponent = ({ node, project, index }: Props) => {
   ) as Contractor[];
 
   const handleClick = useCallback(() => {
-    dispatch(changeInspectorTab(index, ATTRIBUTE_TAB.ADMIN_INFO));
-  }, [dispatch, index]);
+    dispatch(changeInspectorTab(ATTRIBUTE_TAB.ADMIN_INFO));
+  }, [dispatch]);
 
   return isOpen ? (
     <>

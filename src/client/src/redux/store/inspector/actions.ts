@@ -1,8 +1,8 @@
 import { CHANGE_INSPECTOR_COMPONENT } from "./types";
 
-export function changeInspectorTab(index: number, type: string) {
+export function changeInspectorTab(type: string) {
   return {
     type: CHANGE_INSPECTOR_COMPONENT,
-    payload: { index, type },
+    payload: { type },
   };
 }

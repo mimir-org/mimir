@@ -1,5 +1,5 @@
 import store from "../../../../redux/store";
-import { ValidateEdge } from ".";
+import { ValidateBlockEdge } from ".";
 import {
   NODE_TYPE,
   Edge,
@@ -34,7 +34,7 @@ const ShowBlockViewEdge = (edge: Edge): boolean => {
     (x) => x.id === toConnectorId
   ) as Connector;
 
-  return ValidateEdge(
+  return ValidateBlockEdge(
     selectedNode,
     selectedBlockNode,
     fromNode,

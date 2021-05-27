@@ -13,15 +13,17 @@ interface Props {
 export const CheckboxBlock = ({ nodeId, inputLabel }: Props) => {
   const dispatch = useDispatch();
   const nodes = GetNodes();
-  const node = nodes.find((x) => x.id === nodeId);
-  const selectedNode = nodes.find((x) => x.isSelected);
 
   const splitView = useSelector<RootState>(
     (state) => state.splitView.visible
   ) as boolean;
+
   const splitViewNode = useSelector<RootState>(
     (state) => state.splitView.node
   ) as Node;
+
+  let node = nodes.find((x) => x.id === nodeId);
+  const selectedNode = nodes.find((x) => x.isSelected);
 
   const isChecked = splitView
     ? node === selectedNode || node === splitViewNode
@@ -30,18 +32,18 @@ export const CheckboxBlock = ({ nodeId, inputLabel }: Props) => {
   // TODO: Rewrite this
   const handleChange = () => {
     if (splitView) {
-      if (node.type === NODE_TYPE.ASPECT_FUNCTION) {
+      if (node?.type === NODE_TYPE.ASPECT_FUNCTION) {
         return;
       }
       if (node === selectedNode) {
         return;
       }
-      if (IsFunctionNode(node) && node.level < selectedNode.level) {
+      if (IsFunctionNode(node) && node?.level < selectedNode.level) {
         return;
       }
       dispatch(setSplitViewNode(node));
     } else {
-      dispatch(changeActiveNode(node.id, true));
+      dispatch(changeActiveNode(node?.id, true));
     }
   };
 

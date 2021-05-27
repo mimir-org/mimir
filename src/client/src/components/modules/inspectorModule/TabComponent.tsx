@@ -26,8 +26,8 @@ const TabComponent = ({ node, index }: Props) => {
   ) as boolean;
 
   const handleClick = useCallback(() => {
-    dispatch(changeInspectorTab(index, ATTRIBUTE_TAB.TECH_INFO));
-  }, [dispatch, index]);
+    dispatch(changeInspectorTab(ATTRIBUTE_TAB.TECH_INFO));
+  }, [dispatch]);
 
   return isOpen ? (
     <>

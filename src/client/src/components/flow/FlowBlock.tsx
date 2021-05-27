@@ -40,6 +40,7 @@ import {
   useOnNodeDragStop,
   useOnUpdatePosition,
 } from "./hooks";
+import { setSplitViewNode } from "../../redux/store/splitView/actions";
 
 const FlowBlock = () => {
   const dispatch = useDispatch();
@@ -128,7 +129,7 @@ const FlowBlock = () => {
 
   const OnElementClick = (_event, element) => {
     dispatch(changeActiveBlockNode(element.id));
-    dispatch(changeInspectorTab(0, ATTRIBUTE_TAB.ADMIN_INFO));
+    dispatch(changeInspectorTab(ATTRIBUTE_TAB.ADMIN_INFO));
   };
 
   const OnUpdatePosition = () => {

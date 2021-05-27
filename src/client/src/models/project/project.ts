@@ -234,6 +234,7 @@ export interface Node {
   updated: Date;
   version: string;
   level: number;
+  order: number;
 }
 
 export interface LibNode {
