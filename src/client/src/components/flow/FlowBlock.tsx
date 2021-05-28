@@ -40,7 +40,6 @@ import {
   useOnNodeDragStop,
   useOnUpdatePosition,
 } from "./hooks";
-import { setSplitViewNode } from "../../redux/store/splitView/actions";
 
 const FlowBlock = () => {
   const dispatch = useDispatch();

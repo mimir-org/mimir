@@ -8,7 +8,7 @@ const Size = {
   ModuleOpen: 331,
   InspectorModuleOpen: 380,
   ModuleClosed: 35,
-  InspectorModuleClosed: 37,
+  InspectorModuleClosed: 90,
 };
 
 export default Size;
