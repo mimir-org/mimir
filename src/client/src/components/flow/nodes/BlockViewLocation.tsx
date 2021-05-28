@@ -6,7 +6,6 @@ import { addSelectedConnector } from "../../../redux/store/flow/actions";
 import { GetBlockHandleType, ValidateConnector } from "../helpers/block";
 import store, { RootState } from "../../../redux/store";
 import { Node } from "../../../models/project";
-import { Size } from "../../../componentLibrary";
 import {
   GetConnectors,
   SetConnectors,
