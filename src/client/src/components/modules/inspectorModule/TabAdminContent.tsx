@@ -18,11 +18,11 @@ interface Props {
 
 const TabAdminContent = ({ node, project, contractors }: Props) => {
   const dispatch = useDispatch();
+  const isBlockView = GetView() === VIEW_TYPE.BLOCKVIEW;
 
   const handleOnChange = (e: any, key: string) => {
     dispatch(changeNodeValue(node.id, key, e.target.value));
   };
-  const isBlockView = GetView() === VIEW_TYPE.BLOCKVIEW;
 
   return (
     <>

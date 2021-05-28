@@ -6,6 +6,7 @@ import { addSelectedConnector } from "../../../redux/store/flow/actions";
 import { GetBlockHandleType, ValidateConnector } from "../helpers/block";
 import store, { RootState } from "../../../redux/store";
 import { Node } from "../../../models/project";
+import { Size } from "../../../componentLibrary";
 import {
   GetConnectors,
   SetConnectors,
@@ -73,15 +74,11 @@ const BlockViewLocation: FC<NodeProps> = ({ data }) => {
       `[data-id="${id}"]`
     ) as HTMLElement;
 
-    console.log({ locationNode, data });
-
     if (locationNode) {
-      if (data.width && data.width !== null)
-        locationNode.style.width = `${data.width}px`;
-      else locationNode.style.width = `100px`;
-      if (data.height && data.height !== 0)
-        locationNode.style.height = `${data.height}px`;
-      else locationNode.style.height = `47px`;
+      if (data.width) locationNode.style.width = `${data.width}px`;
+      else locationNode.style.width = `${Size.Node_Width}px`;
+      if (data.height) locationNode.style.height = `${data.height}px`;
+      else locationNode.style.height = `${Size.Node_Height}px`;
     }
   }, [data, id]);
 
