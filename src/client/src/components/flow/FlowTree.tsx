@@ -10,7 +10,6 @@ import { ATTRIBUTE_TAB, Project, VIEW_TYPE } from "../../models/project";
 import { GetTreeEdgeType } from "./helpers/tree";
 import ReactFlow, { ReactFlowProvider, Elements } from "react-flow-renderer";
 import { changeInspectorTab } from "../../redux/store/inspector/actions";
-import ReactFlow, { ReactFlowProvider, Elements } from "react-flow-renderer";
 import {
   updatePosition,
   changeActiveNode,
