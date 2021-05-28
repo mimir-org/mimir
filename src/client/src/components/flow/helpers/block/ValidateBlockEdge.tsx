@@ -20,7 +20,7 @@ const ValidateBlockEdge = (
       if (IsLocationNode(fromNode) || IsLocationNode(toNode)) return false;
       if (selectedNode === toNode || selectedNode === fromNode) return false;
       if (fromNode.level - selectedNode.level !== 1) return false;
-      if (fromNode.order - selectedNode.order !== 1) return false;
+      //   if (fromNode.order - selectedNode.order !== 1) return false;
       return true;
     }
   }
