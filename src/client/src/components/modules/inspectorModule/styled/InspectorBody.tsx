@@ -8,6 +8,7 @@ const InspectorTabsHeader = styled.div`
   border-top: 1px solid ${Color.Grey};
   border-bottom: 1px solid ${Color.Grey};
   width: auto;
+  min-width: 650px;
 `;
 
 export default InspectorTabsHeader;

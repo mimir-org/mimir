@@ -3,12 +3,12 @@ import { LibCategory } from "../../../models/project";
 import { SearchIcon } from "../../../assets/icons";
 import { SearchInput } from "../../../componentLibrary";
 import { LibraryCategoryComponent } from ".";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
 import {
   LibraryBody,
   SearchIconBox,
 } from "../../../componentLibrary/box/library";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/store";
 
 interface Props {
   categories: LibCategory[];
@@ -27,7 +27,7 @@ const LibraryComponent = ({ categories, search }: Props) => {
   return (
     <>
       <SearchIconBox>
-        <img src={SearchIcon} alt="search" className="search-icon" />
+        <img src={SearchIcon} alt="search" />
       </SearchIconBox>
       <SearchInput
         placeholder={TextResources.Library_SearchBox_Placeholder}

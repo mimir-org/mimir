@@ -1,10 +1,12 @@
 export { default as IconWrapper } from "./IconWrapper";
 export { default as InspectorTitle } from "./InspectorTitle";
-export { default as InspectorTabsHeader } from "./InspectorTabsHeader";
+export { default as InspectorBody } from "./InspectorBody";
 export { default as TabHeader } from "./TabHeader";
-export { default as TabDataWrapper } from "./TabDataWrapper";
+export { default as TabBody } from "./TabBody";
 export { default as TabColumn } from "./TabColumn";
 export { default as TabContainer } from "./TabContainer";
 export { default as NodeTitle } from "./NodeTitle";
 export { default as TabTitle } from "./TabTitle";
-export { default as ToggleButtonWrapper } from "./ToggleButtonWrapper";
+export { default as ButtonBox } from "./ButtonBox";
+export { default as InspectorBox } from "./InspectorBox";
+export { default as AnimatedInspector } from "./AnimatedInspector";

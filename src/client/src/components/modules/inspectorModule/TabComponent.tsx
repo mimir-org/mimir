@@ -7,7 +7,7 @@ import { changeInspectorTab } from "../../../redux/store/inspector/actions";
 import { ATTRIBUTE_TAB, Node } from "../../../models/project";
 import {
   TabHeader,
-  TabDataWrapper,
+  TabBody,
   TabContainer,
   NodeTitle,
   TabTitle,
@@ -35,11 +35,11 @@ const TabComponent = ({ node, index }: Props) => {
         {index === 0 && <NodeTitle>{node.label ?? node.name}</NodeTitle>}
         <TabTitle active={true}>{GetInspectorTextResource(index)}</TabTitle>
       </TabHeader>
-      <TabDataWrapper>
+      <TabBody>
         <TabContainer>
           <TabContent node={node} />
         </TabContainer>
-      </TabDataWrapper>
+      </TabBody>
     </>
   ) : (
     <TabHeader onClick={handleClick}>

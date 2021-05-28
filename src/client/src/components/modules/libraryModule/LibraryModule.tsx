@@ -114,7 +114,12 @@ const LibraryModule = () => {
 
   return (
     <>
-      <AnimatedModule start={start} stop={stop} run={animate}>
+      <AnimatedModule
+        start={start}
+        stop={stop}
+        run={animate}
+        type={MODULE_TYPE.LIBRARY}
+      >
         <ModuleHeader library visible={isOpen}>
           <img src={LibraryIcon} alt="library-icon" className="module-icon" />
           <img

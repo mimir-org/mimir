@@ -33,8 +33,8 @@ const Home = () => {
       <ExplorerModule />
       <FlowBox>
         <FlowModule route={params} />
-        <InspectorModule />
       </FlowBox>
+      <InspectorModule />
       <AccountMenu />
       <FilterMenu />
       <LibraryModule />

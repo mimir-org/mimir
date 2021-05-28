@@ -6,7 +6,7 @@ const CreateParentBlockNode = (node: Node): FlowElement => {
   if (!node) return elementNode;
 
   const type = "FunctionBlock";
-  const position = { x: 220, y: 0 };
+  const position = { x: 520, y: 0 };
 
   elementNode = {
     id: node.id,

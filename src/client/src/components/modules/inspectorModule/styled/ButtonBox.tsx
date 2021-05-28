@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { FontWeight } from "../../../../componentLibrary";
 
-const ToggleButtonWrapper = styled.div`
+const ButtonBox = styled.div`
   display: inline;
   margin-top: 8px;
   margin-right: 10px;
@@ -13,4 +13,4 @@ const ToggleButtonWrapper = styled.div`
   }
 `;
 
-export default ToggleButtonWrapper;
+export default ButtonBox;
