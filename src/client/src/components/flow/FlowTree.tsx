@@ -6,9 +6,10 @@ import { RootState } from "./../../redux/store/index";
 import { useOnConnect, useOnDrop, useOnElementsRemove } from "./hooks";
 import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
 import { OpenProjectMenu } from "../project/openProject/OpenProjectMenu";
-import { Project, VIEW_TYPE } from "../../models/project";
+import { ATTRIBUTE_TAB, Project, VIEW_TYPE } from "../../models/project";
 import { GetTreeEdgeType } from "./helpers/tree";
 import ReactFlow, { ReactFlowProvider, Elements } from "react-flow-renderer";
+import { changeInspectorTab } from "../../redux/store/inspector/actions";
 import {
   updatePosition,
   changeActiveNode,
@@ -83,6 +84,7 @@ const FlowTree = () => {
 
   const OnElementClick = (_event, element) => {
     dispatch(changeActiveNode(element.id, true));
+    dispatch(changeInspectorTab(ATTRIBUTE_TAB.ADMIN_INFO));
   };
 
   const OnClick = (e) => {

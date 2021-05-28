@@ -89,7 +89,7 @@ const BlockViewFunction: FC<NodeProps> = ({ data }) => {
         ))}
       </OptionsBox>
 
-      <div style={{ paddingTop: "7px" }}>{data.label ?? data.names}</div>
+      <div style={{ paddingTop: "4px" }}>{data.label ?? data.names}</div>
       {connectors?.map((conn) => {
         const [type, pos, className] = GetBlockHandleType(conn);
         if (data.id === conn.nodeId && ValidateConnector(conn, isLocation)) {

@@ -1,7 +1,8 @@
-import { Attribute, Node, RELATION_TYPE } from "../../../models/project";
+import { Attribute, Node } from "../../../models/project";
 import { TabColumn } from "./styled";
 import { Input, Select, InputWrapper } from "../../../componentLibrary";
 import { useDispatch } from "react-redux";
+import { IsTransportTerminal } from "../../flow/helpers";
 import {
   changeAttributeValue,
   changeConnectorAttributeValue,
@@ -26,8 +27,8 @@ const TabContent = ({ node }: Props) => {
   if (node) {
     const tempAttributes: ConnectorAttribute[] = [];
 
-    node.connectors.forEach((connector) => {
-      if (connector.relationType === RELATION_TYPE.Transport) {
+    node.connectors?.forEach((connector) => {
+      if (IsTransportTerminal(connector)) {
         const data = {
           id: connector.id,
           name: connector.name + " " + connector.type,
@@ -62,96 +63,94 @@ const TabContent = ({ node }: Props) => {
 
   return (
     <>
-      {nodeAttributes &&
-        nodeAttributes.map((attr) => (
-          <TabColumn key={attr.id} fontSize="10">
-            <div>
-              <div>{attr.key}</div>
-              <InputWrapper>
-                <Input
-                  width="50"
-                  value={attr.value ?? ""}
-                  onChange={(e: any) =>
-                    handleOnNodeAttributeChange(
-                      attr.id,
-                      e.target.value,
-                      attr.unit
-                    )
-                  }
-                  inputType=""
-                />
-                <Select
-                  marginLeft="4"
-                  width="120"
-                  value={attr.unit}
-                  onChange={(e: any) =>
-                    handleOnNodeAttributeChange(
-                      attr.id,
-                      attr.value,
-                      e.target.value
-                    )
-                  }
-                >
-                  <option value={"NotSet"}>NotSet</option>
-                  {attr.units.map((unit) => (
-                    <option key={unit} value={unit}>
-                      {unit}
-                    </option>
-                  ))}
-                </Select>
-              </InputWrapper>
-            </div>
-          </TabColumn>
-        ))}
+      {nodeAttributes?.map((attr) => (
+        <TabColumn key={attr.id} fontSize="10">
+          <div>
+            <div>{attr.key}</div>
+            <InputWrapper>
+              <Input
+                width="50"
+                value={attr.value ?? ""}
+                onChange={(e: any) =>
+                  handleOnNodeAttributeChange(
+                    attr.id,
+                    e.target.value,
+                    attr.unit
+                  )
+                }
+                inputType=""
+              />
+              <Select
+                marginLeft="4"
+                width="120"
+                value={attr.unit}
+                onChange={(e: any) =>
+                  handleOnNodeAttributeChange(
+                    attr.id,
+                    attr.value,
+                    e.target.value
+                  )
+                }
+              >
+                <option value={"NotSet"}>NotSet</option>
+                {attr.units.map((unit) => (
+                  <option key={unit} value={unit}>
+                    {unit}
+                  </option>
+                ))}
+              </Select>
+            </InputWrapper>
+          </div>
+        </TabColumn>
+      ))}
 
-      {connectorAttributes &&
-        connectorAttributes.map((connector: ConnectorAttribute) => (
-          <TabColumn key={connector.id} fontSize="10">
-            {connector &&
-              connector.attributes.map((attr: Attribute) => (
-                <div key={attr.id}>
-                  <div>
-                    {attr.key} {connector.name}
-                  </div>
-                  <InputWrapper>
-                    <Input
-                      width="50"
-                      value={attr.value ?? ""}
-                      onChange={(e: any) =>
-                        handleOnConnectorAttributeChange(
-                          attr.id,
-                          e.target.value,
-                          attr.unit,
-                          attr.connectorId
-                        )
-                      }
-                      inputType=""
-                    />
-                    <Select
-                      marginLeft="4"
-                      width="120"
-                      value={attr.unit}
-                      onChange={(e: any) =>
-                        handleOnConnectorAttributeChange(
-                          attr.id,
-                          attr.value,
-                          e.target.value,
-                          attr.connectorId
-                        )
-                      }
-                    >
-                      <option value={"NotSet"}>NotSet</option>
-                      {attr.units.map((unit) => (
-                        <option key={unit} value={unit}>
-                          {unit}
-                        </option>
-                      ))}
-                    </Select>
-                  </InputWrapper>
+      {connectorAttributes?.map((connector: ConnectorAttribute) => (
+        <TabColumn key={connector.id} fontSize="10">
+          {connector &&
+            connector.attributes.map((attr: Attribute) => (
+              <div key={attr.id}>
+                <div>
+                  {attr.key} {connector.name}
                 </div>
-              ))}
-          </TabColumn>
-        ))}
+                <InputWrapper>
+                  <Input
+                    width="50"
+                    value={attr.value ?? ""}
+                    onChange={(e: any) =>
+                      handleOnConnectorAttributeChange(
+                        attr.id,
+                        e.target.value,
+                        attr.unit,
+                        attr.connectorId
+                      )
+                    }
+                    inputType=""
+                  />
+                  <Select
+                    marginLeft="4"
+                    width="120"
+                    value={attr.unit}
+                    onChange={(e: any) =>
+                      handleOnConnectorAttributeChange(
+                        attr.id,
+                        attr.value,
+                        e.target.value,
+                        attr.connectorId
+                      )
+                    }
+                  >
+                    <option value={"NotSet"}>NotSet</option>
+                    {attr.units.map((unit) => (
+                      <option key={unit} value={unit}>
+                        {unit}
+                      </option>
+                    ))}
+                  </Select>
+                </InputWrapper>
+              </div>
+            ))}
+        </TabColumn>
+      ))}
     </>
   );
 };

@@ -37,6 +37,7 @@ export const SplitViewComponent = () => {
     dispatch(changeSplitView(!isActive));
     dispatch(setSplitViewNode(null));
   };
+
   return (
     <FooterBox visible={isVisible}>
       <FooterContent onClick={handleClick} active={isActive}>

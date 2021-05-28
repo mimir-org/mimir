@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ProjectMainMenu } from "../project";
 import { RootState } from "./../../redux/store/index";
 import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
-import { EDGE_TYPE, EdgeType } from "../../models/project";
+import { EDGE_TYPE, EdgeType, ATTRIBUTE_TAB } from "../../models/project";
 import { OpenProjectMenu } from "../project/openProject";
 import {
   changeActiveBlockNode,
@@ -13,6 +13,7 @@ import {
 import { Color } from "../../componentLibrary";
 import { GetBlockNodeTypes, IsFunctionNode, IsLocationNode } from "./helpers";
 import { BackgroundBox } from "../../componentLibrary/blockView";
+import { changeInspectorTab } from "../../redux/store/inspector/actions";
 import {
   CreateBlockElements,
   GetBlockEdgeTypes,
@@ -132,8 +133,8 @@ const FlowBlock = () => {
 
   const OnElementClick = (_event, element) => {
     dispatch(changeActiveBlockNode(element.id));
-    // dispatch(setSplitViewNode(element));
     // dispatch(changeActiveNode(element.id, false));
+    dispatch(changeInspectorTab(ATTRIBUTE_TAB.ADMIN_INFO));
   };
 
   const OnUpdatePosition = () => {

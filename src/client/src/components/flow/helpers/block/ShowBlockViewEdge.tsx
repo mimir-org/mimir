@@ -1,5 +1,5 @@
 import store from "../../../../redux/store";
-import { ValidateEdge } from ".";
+import { ValidateBlockEdge } from ".";
 import {
   NODE_TYPE,
   Edge,
@@ -16,6 +16,9 @@ const ShowBlockViewEdge = (edge: Edge): boolean => {
   const isSplitView = splitView.visible as boolean;
   const splitViewNode = splitView.node as Node;
   const selectedNode = project.nodes.find((x) => x.isSelected) as Node;
+  const selectedBlockNode = project.nodes.find(
+    (x) => x.isBlockSelected
+  ) as Node;
 
   const toNode = project.nodes.find((x) => x.id === edge.toNode);
   const fromNode = project.nodes.find((x) => x.id === edge.fromNode);
@@ -31,8 +34,9 @@ const ShowBlockViewEdge = (edge: Edge): boolean => {
     (x) => x.id === toConnectorId
   ) as Connector;
 
-  return ValidateEdge(
+  return ValidateBlockEdge(
     selectedNode,
+    selectedBlockNode,
     fromNode,
     toNode,
     splitViewNode,

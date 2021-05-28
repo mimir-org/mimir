@@ -31,9 +31,9 @@ const CreateBlockElements = (
   // Draw nodes for the left block
   project.edges.forEach((edge) => {
     if (edge.fromNode === nodeId) {
-      const toNode = project.nodes.find((x) => x.id === edge.toNode);
+      const toNode = project.nodes?.find((x) => x.id === edge.toNode);
 
-      let connectorType = toNode?.connectors.find(
+      let connectorType = toNode?.connectors?.find(
         (x) => x.id === edge?.toConnector
       )?.relationType;
 
@@ -50,9 +50,9 @@ const CreateBlockElements = (
   if (splitViewNode && splitView) {
     project.edges.forEach((edge) => {
       if (edge.fromNode === splitViewNode.id) {
-        const toNode = project.nodes.find((x) => x.id === edge.toNode);
+        const toNode = project.nodes?.find((x) => x.id === edge.toNode);
 
-        let connectorType = toNode?.connectors.find(
+        let connectorType = toNode?.connectors?.find(
           (x) => x.id === edge?.toConnector
         )?.relationType;
 

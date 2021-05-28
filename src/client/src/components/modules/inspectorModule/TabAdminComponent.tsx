@@ -3,9 +3,9 @@ import { TabAdminContent } from "./";
 import { useCallback } from "react";
 import { RootState } from "../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
-import { changeInspector } from "../../../redux/store/inspector/actions";
 import { Contractor } from "../../../redux/store/common/types";
-import { Node, Project } from "../../../models/project";
+import { ATTRIBUTE_TAB, Node, Project } from "../../../models/project";
+import { changeInspectorTab } from "../../../redux/store/inspector/actions";
 import {
   TabHeader,
   TabDataWrapper,
@@ -23,10 +23,6 @@ interface Props {
 const TabAdminComponent = ({ node, project, index }: Props) => {
   const dispatch = useDispatch();
 
-  const list = useSelector<RootState>(
-    (state) => state.inspector.tabs
-  ) as string[];
-
   const isOpen = useSelector<RootState>(
     (state) => state.inspector.tabs[index].visible
   ) as boolean;
@@ -36,8 +32,8 @@ const TabAdminComponent = ({ node, project, index }: Props) => {
   ) as Contractor[];
 
   const handleClick = useCallback(() => {
-    dispatch(changeInspector(index, list));
-  }, [dispatch, index, list]);
+    dispatch(changeInspectorTab(ATTRIBUTE_TAB.ADMIN_INFO));
+  }, [dispatch]);
 
   return isOpen ? (
     <>

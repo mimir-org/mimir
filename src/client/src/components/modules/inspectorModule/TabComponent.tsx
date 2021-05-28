@@ -3,8 +3,8 @@ import { TabContent } from "./";
 import { useCallback } from "react";
 import { RootState } from "../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
-import { changeInspector } from "../../../redux/store/inspector/actions";
-import { Node } from "../../../models/project";
+import { changeInspectorTab } from "../../../redux/store/inspector/actions";
+import { ATTRIBUTE_TAB, Node } from "../../../models/project";
 import {
   TabHeader,
   TabDataWrapper,
@@ -20,17 +20,14 @@ interface Props {
 
 const TabComponent = ({ node, index }: Props) => {
   const dispatch = useDispatch();
-  const list = useSelector<RootState>(
-    (state) => state.inspector.tabs
-  ) as string[];
 
   const isOpen = useSelector<RootState>(
     (state) => state.inspector.tabs[index].visible
   ) as boolean;
 
   const handleClick = useCallback(() => {
-    dispatch(changeInspector(index, list));
-  }, [dispatch, index, list]);
+    dispatch(changeInspectorTab(ATTRIBUTE_TAB.TECH_INFO));
+  }, [dispatch]);
 
   return isOpen ? (
     <>

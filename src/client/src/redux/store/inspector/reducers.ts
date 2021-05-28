@@ -1,8 +1,5 @@
 import { ATTRIBUTE_TAB } from "../../../models/project";
-
-export const INSPECTOR_CHANGED = "Insceptor changed";
-export const INSPECTOR_ELEMENT_CHANGED_COMPLETED =
-  "INSPECTOR_ELEMENT_CHANGED_COMPLETED";
+import { CHANGE_INSPECTOR_COMPONENT } from "./types";
 
 const initialState = {
   tabs: [
@@ -23,19 +20,21 @@ const initialState = {
 
 export const inspectorReducer = (state = initialState, action) => {
   switch (action.type) {
-    case INSPECTOR_ELEMENT_CHANGED_COMPLETED:
+    case CHANGE_INSPECTOR_COMPONENT:
       return {
         ...state,
-        type: action.type,
-        tabs: action.payload,
+        tabs: state.tabs.map((x, i) =>
+          state.tabs[i].type === action.payload.type
+            ? {
+                ...x,
+                visible: true,
+              }
+            : { ...x, visible: false }
+        ),
       };
     default:
       return state;
   }
 };
-
-export const changeInspector = () => ({
-  type: INSPECTOR_CHANGED,
-});
 
 export default inspectorReducer;

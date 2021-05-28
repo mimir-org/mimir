@@ -79,7 +79,7 @@ const BlockViewLocation: FC<NodeProps> = ({ data }) => {
       else locationNode.style.width = `100px`;
       if (data.height && data.height !== 0)
         locationNode.style.height = `${data.height}px`;
-      else locationNode.style.height = `57px`;
+      else locationNode.style.height = `47px`;
     }
   }, [data, id]);
 
@@ -111,8 +111,23 @@ const BlockViewLocation: FC<NodeProps> = ({ data }) => {
           ))}
         </OptionsBox>
       </OptionsMenu>
+      <OptionsBox visible={menuOpen}>
+        {SortLocationConnectors(data.connectors).map((conn) => (
+          <OptionsElement
+            key={conn.id}
+            onClick={() => handleConnectorClick(conn)}
+          >
+            {GetConnectorName(conn)}
+            <img
+              src={GetConnectorIcon(conn.terminal)}
+              alt="icon"
+              className="button"
+            />
+          </OptionsElement>
+        ))}
+      </OptionsBox>
 
-      <div style={{ paddingTop: "15px" }}>{data.label ?? data.names}</div>
+      <div style={{ paddingTop: "4px" }}>{data.label ?? data.names}</div>
       {connectors.map((conn) => {
         const [type, pos, className] = GetBlockHandleType(conn);
         if (data.id === conn.nodeId && ValidateConnector(conn, isLocation)) {

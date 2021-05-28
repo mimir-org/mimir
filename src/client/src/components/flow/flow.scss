@@ -90,19 +90,24 @@
   padding-top: 10px;
   border-radius: 3px;
   width: 100px;
-  height: 57px;
+  height: 47px;
   font-size: 11px;
   color: #222;
   text-align: center;
   border-width: 1px;
   border-style: solid;
   background: #ffff00;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
 }
 
 .react-flow__node-BlockViewLocation {
+  padding-top: 10px;
   border-radius: 3px;
   width: 100px;
-  height: 57px;
+  height: 47px;
   font-size: 11px;
   color: #222;
   text-align: center !important;
@@ -110,6 +115,10 @@
   border-style: solid;
   background: magenta;
   z-index: 1200 !important;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
 }
 
 .react-flow__minimap {
