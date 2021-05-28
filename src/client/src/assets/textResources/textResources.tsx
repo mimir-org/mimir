@@ -6,7 +6,7 @@ const textResources = {
   Login_label_email: "SSO e-mail",
 
   // Top-menu
-  MainHeader_App_Name: "Model Builder",
+  MainHeader_App_Name: "Model Builder - Prototype",
   MainHeader_Login_Heading: "Login",
   MainHeader_VisualFilter: "Visual Filter",
 
@@ -30,7 +30,7 @@ const textResources = {
   Inspector_AdminInfo: "Admin info",
   Inspector_Object: "Object",
   Inspector_TechInfo: "Tech info",
-  Inspector_Relations: "Relations",
+  Inspector_Relations: "Terminals",
   Inspector_Inhereted: "Inhereted Requirements",
   Inspector_Comments: "Comments",
   Inspector_Changelog: "Changelog",
