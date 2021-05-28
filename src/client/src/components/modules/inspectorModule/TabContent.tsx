@@ -104,7 +104,7 @@ const TabContent = ({ node }: Props) => {
         </TabColumn>
       ))}
 
-      {connectorAttributes?.map((connector: ConnectorAttribute) => (
+      {/* {connectorAttributes?.map((connector: ConnectorAttribute) => (
         <TabColumn key={connector.id} fontSize="10">
           {connector &&
             connector.attributes.map((attr: Attribute) => (
@@ -150,7 +150,7 @@ const TabContent = ({ node }: Props) => {
               </div>
             ))}
         </TabColumn>
-      ))}
+      ))} */}
     </>
   );
 };
