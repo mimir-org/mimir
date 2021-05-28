@@ -21,6 +21,7 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
   const handleOnChange = (e: any, key: string) => {
     dispatch(changeNodeValue(node.id, key, e.target.value));
   };
+  console.log({ node });
 
   return (
     <>
@@ -103,10 +104,10 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
           <div>
             <div>Width (m)</div>
             <Input
-              value={node.width}
+              value={node.width ?? ""}
               onChange={(e: any) => handleOnChange(e, "width")}
               inputType=""
-            />{" "}
+            />
           </div>
         )}
       </TabColumn>
@@ -137,10 +138,10 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
           <div>
             <div>Height (m)</div>
             <Input
-              value={node.height}
+              value={node.height ?? ""}
               onChange={(e: any) => handleOnChange(e, "height")}
               inputType=""
-            />{" "}
+            />
           </div>
         )}
       </TabColumn>
@@ -172,7 +173,7 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
           <div>
             <div>Length (m)</div>
             <Input
-              value={node.length}
+              value={node.length ?? ""}
               onChange={(e: any) => handleOnChange(e, "length")}
               inputType=""
             />

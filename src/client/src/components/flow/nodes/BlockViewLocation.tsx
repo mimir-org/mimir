@@ -73,8 +73,10 @@ const BlockViewLocation: FC<NodeProps> = ({ data }) => {
       `[data-id="${id}"]`
     ) as HTMLElement;
 
+    console.log({ locationNode, data });
+
     if (locationNode) {
-      if (data.width && data.width !== 0)
+      if (data.width && data.width !== null)
         locationNode.style.width = `${data.width}px`;
       else locationNode.style.width = `100px`;
       if (data.height && data.height !== 0)
