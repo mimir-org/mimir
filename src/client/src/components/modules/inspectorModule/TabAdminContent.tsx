@@ -3,11 +3,12 @@ import { changeNodeValue } from "../../../redux/store/project/actions";
 import { Contractor } from "../../../redux/store/common/types";
 import { TabColumn } from "./styled";
 import { Input, Select, Textarea } from "../../../componentLibrary";
-import { Node, Project } from "../../../models/project";
+import { Node, Project, VIEW_TYPE } from "../../../models/project";
 import { GetRdsId, GetReferenceDesignation } from "../../../assets/helpers";
 import moment from "moment/moment.js";
 import { BUILD_STATUS } from "../../../models/project";
 import { IsLocationNode } from "../../flow/helpers";
+import { GetView } from "../../../redux/store/localStorage";
 
 interface Props {
   node: Node;
@@ -17,6 +18,7 @@ interface Props {
 
 const TabAdminContent = ({ node, project, contractors }: Props) => {
   const dispatch = useDispatch();
+  const isBlockView = GetView() === VIEW_TYPE.BLOCKVIEW;
 
   const handleOnChange = (e: any, key: string) => {
     dispatch(changeNodeValue(node.id, key, e.target.value));
@@ -99,7 +101,7 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
             inputType=""
           />
         </div>
-        {IsLocationNode(node) && (
+        {IsLocationNode(node) && isBlockView && (
           <div>
             <div>Width (m)</div>
             <Input
@@ -133,7 +135,7 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
             inputType=""
           />
         </div>
-        {IsLocationNode(node) && (
+        {IsLocationNode(node) && isBlockView && (
           <div>
             <div>Height (m)</div>
             <Input
@@ -168,7 +170,7 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
             inputType=""
           />
         </div>
-        {IsLocationNode(node) && (
+        {IsLocationNode(node) && isBlockView && (
           <div>
             <div>Length (m)</div>
             <Input
