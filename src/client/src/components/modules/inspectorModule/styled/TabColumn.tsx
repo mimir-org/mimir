@@ -7,10 +7,9 @@ const TabColumn = styled.div`
   font-size: 14px;
   font-size: ${(props: { fontSize: string }) =>
     props.fontSize + "px" ?? "14px"};
-
   min-width: 190px;
-  display: inline;
-  background-color: blanchedalmond;
+  display: flex;
+  flex-direction: column;
   border: 1px solid #000;
 `;
 

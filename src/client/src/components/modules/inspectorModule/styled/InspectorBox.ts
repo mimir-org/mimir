@@ -14,7 +14,7 @@ const InspectorBox = styled.div`
   left: ${(props) => (props.isExplorerOpen ? "333px" : "37px")};
   transition: left 0.3s ease-in-out, right 0.3s ease-in-out;
   overflow-x: auto;
-  overflow-y: hidden;
+  overflow-y: auto;
 `;
 
 export default InspectorBox;

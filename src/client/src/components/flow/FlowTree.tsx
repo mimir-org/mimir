@@ -84,7 +84,7 @@ const FlowTree = () => {
 
   const OnElementClick = (_event, element) => {
     dispatch(changeActiveNode(element.id, true));
-    dispatch(changeInspectorTab(ATTRIBUTE_TAB.ADMIN_INFO));
+    dispatch(changeInspectorTab(ATTRIBUTE_TAB.TECH_INFO));
   };
 
   const OnClick = (e) => {

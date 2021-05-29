@@ -4,6 +4,7 @@ export { default as InspectorBody } from "./InspectorBody";
 export { default as TabHeader } from "./TabHeader";
 export { default as TabBody } from "./TabBody";
 export { default as TabColumn } from "./TabColumn";
+export { default as TabRow } from "./TabRow";
 export { default as TabContainer } from "./TabContainer";
 export { default as NodeTitle } from "./NodeTitle";
 export { default as TabTitle } from "./TabTitle";

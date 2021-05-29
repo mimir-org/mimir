@@ -3,8 +3,9 @@ import styled from "styled-components";
 const Select = styled.select`
   border: 1px solid #898787;
   border-radius: 5px;
-  width: ${(props: { width: number }) =>
-    props.width === 0 ? `90%` : props.width + `px`};
+  /* width: ${(props: { width: number }) =>
+    props.width === 0 ? `90%` : props.width + `px`}; */
+  width: auto;
   height: 31px;
   padding: 5px;
   display: inline-block;

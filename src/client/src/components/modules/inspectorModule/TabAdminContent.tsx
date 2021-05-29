@@ -108,7 +108,7 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
               value={node.width}
               onChange={(e: any) => handleOnChange(e, "width")}
               inputType=""
-            />{" "}
+            />
           </div>
         )}
       </TabColumn>
@@ -119,12 +119,11 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
             value={node.status ?? BUILD_STATUS.NotSet}
             onChange={(e: any) => handleOnChange(e, "status")}
           >
-            {Object.values(BUILD_STATUS) &&
-              Object.values(BUILD_STATUS).map((x) => (
-                <option key={x} value={x}>
-                  {x}
-                </option>
-              ))}
+            {Object.values(BUILD_STATUS)?.map((x) => (
+              <option key={x} value={x}>
+                {x}
+              </option>
+            ))}
           </Select>
         </div>
         <div>
@@ -142,7 +141,7 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
               value={node.height}
               onChange={(e: any) => handleOnChange(e, "height")}
               inputType=""
-            />{" "}
+            />
           </div>
         )}
       </TabColumn>
@@ -154,12 +153,11 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
             onChange={(e: any) => handleOnChange(e, "contractor")}
           >
             <option value="NotSet">NotSet</option>
-            {contractors &&
-              contractors.map((contractor) => (
-                <option key={contractor.id} value={contractor.name}>
-                  {contractor.name}
-                </option>
-              ))}
+            {contractors?.map((contractor) => (
+              <option key={contractor.id} value={contractor.name}>
+                {contractor.name}
+              </option>
+            ))}
           </Select>
         </div>
         <div>
