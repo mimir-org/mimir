@@ -5,7 +5,6 @@ export { default as MenuElement } from "./menus/MenuElement";
 export { default as MenuSubHeader } from "./menus/MenuSubHeader";
 // export { default as MenuLogoutBox } from "./menus/MenuLogoutBox";
 export { default as HomeBox } from "./home/HomeBox";
-export { default as FlowBox } from "./flow/FlowBox";
 export { default as ModuleBox } from "./modules/ModuleBox";
 export { default as ModuleHeader } from "./modules/ModuleHeader";
 export { default as ModuleBody } from "./modules/ModuleBody";

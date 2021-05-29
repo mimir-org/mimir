@@ -116,25 +116,24 @@ const FlowTree = () => {
     <>
       {isTreeView && (
         <ReactFlowProvider>
-          <div className="reactflow-wrapper" ref={reactFlowWrapper}>
-            <ReactFlow
-              elements={elements}
-              onConnect={OnConnect}
-              onElementsRemove={OnElementsRemove}
-              onLoad={OnLoad}
-              onDrop={OnDrop}
-              onDragOver={OnDragOver}
-              onNodeDragStop={OnNodeDragStop}
-              onElementClick={OnElementClick}
-              nodeTypes={GetTreeNodeTypes}
-              edgeTypes={GetTreeEdgeTypes}
-              snapToGrid={true}
-              snapGrid={[5, 5]}
-              onClick={(e) => OnClick(e)}
-            >
-              <FullscreenBox />
-            </ReactFlow>
-          </div>
+          <div className="reactflow-wrapper" ref={reactFlowWrapper}></div>
+          <ReactFlow
+            elements={elements}
+            onConnect={OnConnect}
+            onElementsRemove={OnElementsRemove}
+            onLoad={OnLoad}
+            onDrop={OnDrop}
+            onDragOver={OnDragOver}
+            onNodeDragStop={OnNodeDragStop}
+            onElementClick={OnElementClick}
+            nodeTypes={GetTreeNodeTypes}
+            edgeTypes={GetTreeEdgeTypes}
+            snapToGrid={true}
+            snapGrid={[5, 5]}
+            onClick={(e) => OnClick(e)}
+          >
+            <FullscreenBox />
+          </ReactFlow>
         </ReactFlowProvider>
       )}
       {!project && !HasProject() && (

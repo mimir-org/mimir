@@ -7,7 +7,7 @@ const Input = styled.input`
   margin-bottom: 10px;
   padding: 5px;
   height: 31px;
-  width: 100%;
+  width: ${(props) => props.width + "px" ?? "100%"};
   background-color: ${(props: { readOnly: boolean }) =>
     props.readOnly ? "#f2f2f2" : "#fff"};
 `;

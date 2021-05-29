@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const InputWrapper = styled.div`
+const InputBox = styled.div`
   float: left;
   &:before,
   &:after {
@@ -12,4 +12,4 @@ const InputWrapper = styled.div`
   }
 `;
 
-export default InputWrapper;
+export default InputBox;

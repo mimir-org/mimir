@@ -6,13 +6,15 @@ const InspectorBox = styled.div`
   color: ${Color.Black};
   height: ${(props: { stop: string }) => `${props.stop}px`};
   width: auto;
-  min-width: 660px;
+  min-width: 1100px;
   z-index: 3;
   position: absolute;
   bottom: 0;
   right: ${(props) => (props.isLibraryOpen ? "333px" : "37px")};
   left: ${(props) => (props.isExplorerOpen ? "333px" : "37px")};
   transition: left 0.3s ease-in-out, right 0.3s ease-in-out;
+  overflow-x: auto;
+  overflow-y: hidden;
 `;
 
 export default InspectorBox;
