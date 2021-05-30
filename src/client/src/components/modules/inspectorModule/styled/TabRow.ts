@@ -6,9 +6,8 @@ const TabRow = styled.div`
   flex-direction: row;
   position: absolute;
 
-  &:last-child {
-    top: 110px;
-    background-color: #e5e5;
+  &:nth-child(2) {
+    top: 55px; // TODO: fix
   }
 `;
 

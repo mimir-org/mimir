@@ -5,13 +5,7 @@ import { RootState } from "../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { changeInspectorTab } from "../../../redux/store/inspector/actions";
 import { ATTRIBUTE_TAB, Node } from "../../../models/project";
-import {
-  TabHeader,
-  TabBody,
-  TabContainer,
-  NodeTitle,
-  TabTitle,
-} from "./styled";
+import { TabHeader, TabBody, NodeTitle, TabTitle } from "./styled";
 
 interface Props {
   node: Node;
@@ -35,10 +29,9 @@ const TabComponent = ({ node, index }: Props) => {
         {index === 0 && <NodeTitle>{node.label ?? node.name}</NodeTitle>}
         <TabTitle active={true}>{GetInspectorTextResource(index)}</TabTitle>
       </TabHeader>
+
       <TabBody>
-        <TabContainer>
-          <TabContent node={node} />
-        </TabContainer>
+        <TabContent node={node} />
       </TabBody>
     </>
   ) : (

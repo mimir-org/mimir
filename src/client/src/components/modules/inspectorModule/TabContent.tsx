@@ -59,37 +59,36 @@ const TabContent = ({ node }: Props) => {
   };
   const rows = CalculateRows(nodeAttributes.length);
   let count = rows;
-  console.log(connectorAttributes.length);
+  if (count === 2 && nodeAttributes.length < 11) count = 1;
 
   return (
     <>
       <TabRow>
         <SetColumn
-          list={nodeAttributes.slice(0, rows)}
+          list={nodeAttributes.slice(0, count)}
           handleChange={handleOnNodeChange}
         ></SetColumn>
         <SetColumn
-          list={nodeAttributes.slice(rows, rows + count)}
+          list={nodeAttributes.slice(count, rows + count)}
           handleChange={handleOnNodeChange}
         ></SetColumn>
         <SetColumn
-          list={nodeAttributes.slice(rows + count, rows + (count += 4))}
+          list={nodeAttributes.slice(rows + count, rows + (count += rows))}
           handleChange={handleOnNodeChange}
         ></SetColumn>
         <SetColumn
-          list={nodeAttributes.slice(rows + count, rows + (count += 4))}
+          list={nodeAttributes.slice(rows + count, rows + (count += rows))}
           handleChange={handleOnNodeChange}
         ></SetColumn>
         <SetColumn
-          list={nodeAttributes.slice(rows + count, rows + (count += 4))}
+          list={nodeAttributes.slice(rows + count, rows + (count += rows))}
           handleChange={handleOnNodeChange}
         ></SetColumn>
         <SetColumn
-          list={nodeAttributes.slice(rows + count, rows + (count += 4))}
+          list={nodeAttributes.slice(rows + count, rows + (count += rows))}
           handleChange={handleOnNodeChange}
         ></SetColumn>
       </TabRow>
-
       <TabRow>
         {connectorAttributes?.map((connector: ConnectorAttribute) => (
           <TabColumn key={connector.id} fontSize="10">

@@ -6,13 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Contractor } from "../../../redux/store/common/types";
 import { ATTRIBUTE_TAB, Node, Project } from "../../../models/project";
 import { changeInspectorTab } from "../../../redux/store/inspector/actions";
-import {
-  TabHeader,
-  TabBody,
-  TabContainer,
-  NodeTitle,
-  TabTitle,
-} from "./styled";
+import { TabHeader, TabBody, NodeTitle, TabTitle } from "./styled";
 
 interface Props {
   node: Node;

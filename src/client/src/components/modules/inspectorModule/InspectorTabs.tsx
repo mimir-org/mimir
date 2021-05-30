@@ -22,11 +22,6 @@ const InspectorTabs = () => {
         <>
           <TabAdminComponent node={node} project={project} index={0} />
           <TabComponent node={node} index={1} />
-          <TabComponent node={node} index={2} />
-          <TabComponent node={node} index={2} />
-          <TabComponent node={node} index={2} />
-          <TabComponent node={node} index={2} />
-          <TabComponent node={node} index={2} />
         </>
       )}
     </>
