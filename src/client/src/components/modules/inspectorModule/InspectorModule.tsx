@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import store, { RootState } from "../../../redux/store";
+import { RootState } from "../../../redux/store";
 import { EyeIcon, ToggleDown, ToggleUp } from "../../../assets/icons";
 import { AnimatedInspector, IconWrapper, ButtonBox } from "./styled";
 import { TextResources } from "../../../assets/textResources";
@@ -22,7 +22,7 @@ const InspectorModule = () => {
     (state) => state.modules.types.find((x) => x.type === key).animate
   ) as boolean;
 
-  const isOpen = useSelector<RootState>(
+  const isInspectorOpen = useSelector<RootState>(
     (state) => state.modules.types.find((x) => x.type === key).visible
   ) as boolean;
 
@@ -37,12 +37,12 @@ const InspectorModule = () => {
   ) as boolean;
 
   const handleClick = () => {
-    SaveState(!isOpen, key);
-    dispatch(changeModuleVisibility(key, !isOpen, true));
+    SaveState(!isInspectorOpen, key);
+    dispatch(changeModuleVisibility(key, !isInspectorOpen, true));
   };
 
-  const start = isOpen ? 257 : 37;
-  const stop = isOpen ? 37 : 257;
+  const start = isInspectorOpen ? 37 : 257;
+  const stop = isInspectorOpen ? 257 : 37;
 
   return (
     <AnimatedInspector
@@ -56,7 +56,7 @@ const InspectorModule = () => {
       <InspectorBody>
         {hasProject && <InspectorTabs />}
         <ButtonBox>
-          {isOpen ? (
+          {isInspectorOpen ? (
             <img src={ToggleDown} alt="toggle-icon" onClick={handleClick} />
           ) : (
             <img src={ToggleUp} alt="toggle-icon" onClick={handleClick} />

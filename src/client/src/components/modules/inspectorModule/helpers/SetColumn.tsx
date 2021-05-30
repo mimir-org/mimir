@@ -23,8 +23,6 @@ const SetColumn = ({ list, handleChange }: Props) => {
               inputType="tech"
             />
             <Select
-              width="200"
-              marginLeft="4"
               value={attr.unit}
               onChange={(e: any) =>
                 handleChange(attr.id, attr.value, e.target.value)

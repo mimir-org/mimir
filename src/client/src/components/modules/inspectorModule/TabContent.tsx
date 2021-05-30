@@ -2,7 +2,7 @@ import { Attribute, Node } from "../../../models/project";
 import { TabColumn, TabRow } from "./styled";
 import { Input, Select, InputBox } from "../../../componentLibrary";
 import { useDispatch } from "react-redux";
-import { CreateId, IsTransportTerminal } from "../../flow/helpers";
+import { IsTransportTerminal } from "../../flow/helpers";
 import { CalculateRows, SetColumn } from "./helpers";
 import {
   changeAttributeValue,
