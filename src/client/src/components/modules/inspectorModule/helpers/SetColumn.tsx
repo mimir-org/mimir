@@ -1,6 +1,7 @@
 import { Input, InputBox, Select } from "../../../../componentLibrary";
 import { Attribute } from "../../../../models/project";
-import { TabColumn } from "../styled";
+import { CreateId } from "../../../flow/helpers";
+import { TabColumn } from "../../../../componentLibrary/box/inspector";
 
 interface Props {
   list: Attribute[];
@@ -10,9 +11,9 @@ interface Props {
 
 const SetColumn = ({ list, handleChange }: Props) => {
   return (
-    <TabColumn>
+    <TabColumn id={CreateId()}>
       {list?.map((attr) => (
-        <div>
+        <div key={attr.id}>
           <div>{attr.key}</div>
           <InputBox>
             <Input

@@ -30,7 +30,11 @@ const FullscreenBox = () => {
 
   return (
     <FullscreenButton isExplorer={isExplorer} isInspector={isInspector}>
-      <img src={ExpandIcon} alt="fullscreen" onClick={handleOnClick} />
+      <img
+        src={isOpen ? ExpandIcon : CloseIcon}
+        alt="fullscreen"
+        onClick={handleOnClick}
+      />
     </FullscreenButton>
   );
 };

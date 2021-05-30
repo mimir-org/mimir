@@ -1,5 +1,5 @@
 import { Attribute, Node } from "../../../models/project";
-import { TabColumn, TabRow } from "./styled";
+import { TabColumn, TabRow } from "../../../componentLibrary/box/inspector";
 import { Input, Select, InputBox } from "../../../componentLibrary";
 import { useDispatch } from "react-redux";
 import { IsTransportTerminal } from "../../flow/helpers";
@@ -111,8 +111,6 @@ const TabContent = ({ node }: Props) => {
                     inputType="tech"
                   />
                   <Select
-                    width="200"
-                    marginLeft="4"
                     value={attr.unit}
                     onChange={(e: any) =>
                       handleOnConnectorChange(

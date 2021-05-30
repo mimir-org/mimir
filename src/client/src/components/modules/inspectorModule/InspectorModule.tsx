@@ -1,14 +1,18 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { EyeIcon, ToggleDown, ToggleUp } from "../../../assets/icons";
-import { AnimatedInspector, IconWrapper, ButtonBox } from "./styled";
 import { TextResources } from "../../../assets/textResources";
-import { InspectorBody } from "./styled";
-import { InspectorTitle } from "./styled";
 import InspectorTabs from "./InspectorTabs";
 import { MODULE_TYPE } from "../../../models/project";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import { SaveState } from "../../../redux/store/localStorage";
+import {
+  InspectorTitle,
+  InspectorBody,
+  AnimatedInspector,
+  IconWrapper,
+  ButtonBox,
+} from "../../../componentLibrary/box/inspector";
 
 const InspectorModule = () => {
   const dispatch = useDispatch();

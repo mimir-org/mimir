@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../../componentLibrary";
+import { Color } from "../..";
 
 const InspectorBody = styled.div`
   background-color: ${Color.LightGrey};

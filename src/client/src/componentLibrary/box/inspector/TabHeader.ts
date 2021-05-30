@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color, FontWeight } from "../../../../componentLibrary";
+import { Color, FontWeight } from "../..";
 
 const TabHeader = styled.div`
   display: inline-block;

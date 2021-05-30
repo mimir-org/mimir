@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FontWeight } from "../../../../componentLibrary";
+import { FontWeight } from "../..";
 
 const TabTitle = styled.p`
   font-weight: ${(props: { active: boolean }) =>

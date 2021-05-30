@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { changeNodeValue } from "../../../redux/store/project/actions";
 import { Contractor } from "../../../redux/store/common/types";
-import { TabColumn } from "./styled";
+import { TabColumn } from "../../../componentLibrary/box/inspector";
 import { Input, Select, Textarea } from "../../../componentLibrary";
 import { Node, Project, VIEW_TYPE } from "../../../models/project";
 import { GetRdsId, GetReferenceDesignation } from "../../../assets/helpers";

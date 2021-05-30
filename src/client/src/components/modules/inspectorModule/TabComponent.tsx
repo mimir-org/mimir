@@ -5,7 +5,12 @@ import { RootState } from "../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { changeInspectorTab } from "../../../redux/store/inspector/actions";
 import { ATTRIBUTE_TAB, Node } from "../../../models/project";
-import { TabHeader, TabBody, NodeTitle, TabTitle } from "./styled";
+import {
+  TabHeader,
+  TabBody,
+  NodeTitle,
+  TabTitle,
+} from "../../../componentLibrary/box/inspector";
 
 interface Props {
   node: Node;
