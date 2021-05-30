@@ -6,10 +6,9 @@ import { TabColumn } from "../../../../componentLibrary/box/inspector";
 interface Props {
   list: Attribute[];
   handleChange: any;
-  index?: number;
 }
 
-const SetColumn = ({ list, handleChange }: Props) => {
+const SetNodeColumn = ({ list, handleChange }: Props) => {
   return (
     <TabColumn id={CreateId()}>
       {list?.map((attr) => (
@@ -43,4 +42,4 @@ const SetColumn = ({ list, handleChange }: Props) => {
   );
 };
 
-export default SetColumn;
+export default SetNodeColumn;

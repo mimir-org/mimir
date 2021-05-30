@@ -1,9 +1,8 @@
 import { Attribute, Node } from "../../../models/project";
-import { TabColumn, TabRow } from "../../../componentLibrary/box/inspector";
-import { Input, Select, InputBox } from "../../../componentLibrary";
+import { TabRow } from "../../../componentLibrary/box/inspector";
 import { useDispatch } from "react-redux";
 import { IsTransportTerminal } from "../../flow/helpers";
-import { CalculateRows, SetColumn } from "./helpers";
+import { CalculateRows, SetConnectorColumn, SetNodeColumn } from "./helpers";
 import {
   changeAttributeValue,
   changeConnectorAttributeValue,
@@ -64,75 +63,36 @@ const TabContent = ({ node }: Props) => {
   return (
     <>
       <TabRow>
-        <SetColumn
+        <SetNodeColumn
           list={nodeAttributes.slice(0, count)}
           handleChange={handleOnNodeChange}
-        ></SetColumn>
-        <SetColumn
+        ></SetNodeColumn>
+        <SetNodeColumn
           list={nodeAttributes.slice(count, rows + count)}
           handleChange={handleOnNodeChange}
-        ></SetColumn>
-        <SetColumn
+        ></SetNodeColumn>
+        <SetNodeColumn
           list={nodeAttributes.slice(rows + count, rows + (count += rows))}
           handleChange={handleOnNodeChange}
-        ></SetColumn>
-        <SetColumn
+        ></SetNodeColumn>
+        <SetNodeColumn
           list={nodeAttributes.slice(rows + count, rows + (count += rows))}
           handleChange={handleOnNodeChange}
-        ></SetColumn>
-        <SetColumn
+        ></SetNodeColumn>
+        <SetNodeColumn
           list={nodeAttributes.slice(rows + count, rows + (count += rows))}
           handleChange={handleOnNodeChange}
-        ></SetColumn>
-        <SetColumn
+        ></SetNodeColumn>
+        <SetNodeColumn
           list={nodeAttributes.slice(rows + count, rows + (count += rows))}
           handleChange={handleOnNodeChange}
-        ></SetColumn>
+        ></SetNodeColumn>
       </TabRow>
       <TabRow>
-        {connectorAttributes?.map((connector: ConnectorAttribute) => (
-          <TabColumn key={connector.id} fontSize="10">
-            {connector?.attributes.map((attr: Attribute) => (
-              <div key={attr.id}>
-                <div>
-                  {attr.key} {connector.name}
-                </div>
-                <InputBox>
-                  <Input
-                    value={attr.value ?? ""}
-                    onChange={(e: any) =>
-                      handleOnConnectorChange(
-                        attr.id,
-                        e.target.value,
-                        attr.unit,
-                        attr.connectorId
-                      )
-                    }
-                    inputType="tech"
-                  />
-                  <Select
-                    value={attr.unit}
-                    onChange={(e: any) =>
-                      handleOnConnectorChange(
-                        attr.id,
-                        attr.value,
-                        e.target.value,
-                        attr.connectorId
-                      )
-                    }
-                  >
-                    <option value={"NotSet"}>NotSet</option>
-                    {attr.units.map((unit) => (
-                      <option key={unit} value={unit}>
-                        {unit}
-                      </option>
-                    ))}
-                  </Select>
-                </InputBox>
-              </div>
-            ))}
-          </TabColumn>
-        ))}
+        <SetConnectorColumn
+          list={connectorAttributes}
+          handleChange={handleOnConnectorChange}
+        ></SetConnectorColumn>
       </TabRow>
     </>
   );
