@@ -4,11 +4,7 @@ const TabRow = styled.div`
   width: 100% !important;
   display: flex;
   flex-direction: row;
-  position: absolute;
-
-  &:nth-child(2) {
-    top: 55px; // TODO: fix
-  }
+  position: relative;
 `;
 
 export default TabRow;
