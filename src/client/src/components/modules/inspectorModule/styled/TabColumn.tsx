@@ -10,7 +10,6 @@ const TabColumn = styled.div`
   min-width: 190px;
   display: flex;
   flex-direction: column;
-  border: 1px solid #000;
 `;
 
 export default TabColumn;

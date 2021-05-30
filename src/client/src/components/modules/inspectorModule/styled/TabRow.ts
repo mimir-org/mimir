@@ -4,7 +4,6 @@ const TabRow = styled.div`
   width: 100% !important;
   display: flex;
   flex-direction: row;
-  background-color: lightblue;
   position: absolute;
 
   &:last-child {

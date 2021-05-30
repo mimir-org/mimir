@@ -16,16 +16,15 @@ const SetColumn = ({ list, handleChange }: Props) => {
           <div>{attr.key}</div>
           <InputBox>
             <Input
-              width="50"
               value={attr.value ?? ""}
               onChange={(e: any) =>
                 handleChange(attr.id, e.target.value, attr.unit)
               }
-              inputType=""
+              inputType="tech"
             />
             <Select
+              width="200"
               marginLeft="4"
-              width="120"
               value={attr.unit}
               onChange={(e: any) =>
                 handleChange(attr.id, attr.value, e.target.value)

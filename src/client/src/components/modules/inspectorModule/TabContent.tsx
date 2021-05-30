@@ -109,9 +109,10 @@ const TabContent = ({ node }: Props) => {
                         attr.connectorId
                       )
                     }
-                    inputType=""
+                    inputType="tech"
                   />
                   <Select
+                    width="200"
                     marginLeft="4"
                     value={attr.unit}
                     onChange={(e: any) =>

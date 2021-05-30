@@ -149,10 +149,10 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
         <div>
           <div>Contractor</div>
           <Select
-            value={node.contractor ?? "NotSet"}
+            value={node.contractor ?? BUILD_STATUS.NotSet}
             onChange={(e: any) => handleOnChange(e, "contractor")}
           >
-            <option value="NotSet">NotSet</option>
+            <option value={BUILD_STATUS.NotSet}>{BUILD_STATUS.NotSet}</option>
             {contractors?.map((contractor) => (
               <option key={contractor.id} value={contractor.name}>
                 {contractor.name}
