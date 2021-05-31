@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ToggleDown } from "../../assets/icons";
+import { SelectDownIcon } from "../../assets/icons";
 
 const Select = styled.select`
   border: 1px solid #898787;
@@ -12,18 +12,18 @@ const Select = styled.select`
   cursor: pointer;
   -webkit-appearance: none;
   -moz-appearance: none;
-  background-image: url(${ToggleDown});
-  background-size: 12px 12px;
-  background-position-x: 95%;
-  background-position-y: 8px;
+  background-image: url(${SelectDownIcon});
+  background-size: 18px 18px;
+  background-position-x: 97%;
+  background-position-y: 5px;
   background-repeat: no-repeat;
 
-  /* option {
+  option {
     display: flex;
     white-space: pre;
-    min-height: 20px;
-    padding: 0px 2px 1px;
-  } */
+    min-height: 10px;
+    padding: 0px 2px 1px 0px;
+  }
 `;
 
 export default Select;

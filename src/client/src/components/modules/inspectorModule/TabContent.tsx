@@ -58,7 +58,6 @@ const TabContent = ({ node }: Props) => {
   };
   const rows = CalculateRows(nodeAttributes.length);
   let count = rows;
-  if (count === 2 && nodeAttributes.length < 11) count = 1;
 
   return (
     <>
@@ -84,7 +83,7 @@ const TabContent = ({ node }: Props) => {
           handleChange={handleOnNodeChange}
         ></SetNodeColumn>
         <SetNodeColumn
-          list={nodeAttributes.slice(rows + count, rows + (count += rows))}
+          list={nodeAttributes.slice(rows + count, nodeAttributes.length)}
           handleChange={handleOnNodeChange}
         ></SetNodeColumn>
       </TabRow>
