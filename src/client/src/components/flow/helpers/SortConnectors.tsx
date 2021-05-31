@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { RELATION_TYPE } from "../../../models/project";
-import { IsLocationNode } from ".";
+import { IsLocationNode, IsLocationTerminal, IsTransportTerminal } from ".";
+import { CONNECTOR_TYPE } from "../../../models/project";
 
 const SortConnectors = (connectors) => {
   const list = [];
@@ -10,12 +10,10 @@ const SortConnectors = (connectors) => {
   ) as boolean;
 
   connectors.forEach((conn) => {
-    conn.relationType === RELATION_TYPE.Transport &&
-      !isLocationNode &&
-      list.push(conn);
-
-    conn.relationType === RELATION_TYPE.HasLocation &&
+    IsTransportTerminal(conn) && !isLocationNode && list.push(conn);
+    IsLocationTerminal(conn) &&
       isLocationNode &&
+      conn.type === CONNECTOR_TYPE.OUTPUT &&
       list.push(conn);
   });
   return list;
