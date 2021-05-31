@@ -12,7 +12,7 @@ const initialState = {
       visible: false,
     },
     {
-      type: ATTRIBUTE_TAB.RELATIONS,
+      type: ATTRIBUTE_TAB.TERMINALS,
       visible: false,
     },
   ],
@@ -23,8 +23,8 @@ export const inspectorReducer = (state = initialState, action) => {
     case CHANGE_INSPECTOR_COMPONENT:
       return {
         ...state,
-        tabs: state.tabs.map((x, i) =>
-          state.tabs[i].type === action.payload.type
+        tabs: state.tabs.map((x, index) =>
+          index === action.payload.index
             ? {
                 ...x,
                 visible: true,

@@ -10,6 +10,7 @@ import {
 
 interface Props {
   node: Node;
+  index?: number;
 }
 
 interface ConnectorAttribute {
@@ -18,7 +19,7 @@ interface ConnectorAttribute {
   attributes: Attribute[];
 }
 
-const TabContent = ({ node }: Props) => {
+const TabContent = ({ node, index }: Props) => {
   const dispatch = useDispatch();
 
   let connectorAttributes: ConnectorAttribute[] = [];
@@ -61,38 +62,42 @@ const TabContent = ({ node }: Props) => {
 
   return (
     <>
-      <TabRow>
-        <SetNodeColumn
-          list={nodeAttributes.slice(0, count)}
-          handleChange={handleOnNodeChange}
-        ></SetNodeColumn>
-        <SetNodeColumn
-          list={nodeAttributes.slice(count, rows + count)}
-          handleChange={handleOnNodeChange}
-        ></SetNodeColumn>
-        <SetNodeColumn
-          list={nodeAttributes.slice(rows + count, rows + (count += rows))}
-          handleChange={handleOnNodeChange}
-        ></SetNodeColumn>
-        <SetNodeColumn
-          list={nodeAttributes.slice(rows + count, rows + (count += rows))}
-          handleChange={handleOnNodeChange}
-        ></SetNodeColumn>
-        <SetNodeColumn
-          list={nodeAttributes.slice(rows + count, rows + (count += rows))}
-          handleChange={handleOnNodeChange}
-        ></SetNodeColumn>
-        <SetNodeColumn
-          list={nodeAttributes.slice(rows + count, nodeAttributes.length)}
-          handleChange={handleOnNodeChange}
-        ></SetNodeColumn>
-      </TabRow>
-      <TabRow>
-        <SetConnectorColumn
-          list={connectorAttributes}
-          handleChange={handleOnConnectorChange}
-        ></SetConnectorColumn>
-      </TabRow>
+      {index === 1 && (
+        <TabRow>
+          <SetNodeColumn
+            list={nodeAttributes.slice(0, count)}
+            handleChange={handleOnNodeChange}
+          ></SetNodeColumn>
+          <SetNodeColumn
+            list={nodeAttributes.slice(count, rows + count)}
+            handleChange={handleOnNodeChange}
+          ></SetNodeColumn>
+          <SetNodeColumn
+            list={nodeAttributes.slice(rows + count, rows + (count += rows))}
+            handleChange={handleOnNodeChange}
+          ></SetNodeColumn>
+          <SetNodeColumn
+            list={nodeAttributes.slice(rows + count, rows + (count += rows))}
+            handleChange={handleOnNodeChange}
+          ></SetNodeColumn>
+          <SetNodeColumn
+            list={nodeAttributes.slice(rows + count, rows + (count += rows))}
+            handleChange={handleOnNodeChange}
+          ></SetNodeColumn>
+          <SetNodeColumn
+            list={nodeAttributes.slice(rows + count, nodeAttributes.length)}
+            handleChange={handleOnNodeChange}
+          ></SetNodeColumn>
+        </TabRow>
+      )}
+      {index === 2 && (
+        <TabRow>
+          <SetConnectorColumn
+            list={connectorAttributes}
+            handleChange={handleOnConnectorChange}
+          ></SetConnectorColumn>
+        </TabRow>
+      )}
     </>
   );
 };

@@ -4,7 +4,7 @@ import { useCallback } from "react";
 import { RootState } from "../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { changeInspectorTab } from "../../../redux/store/inspector/actions";
-import { ATTRIBUTE_TAB, Node } from "../../../models/project";
+import { Node } from "../../../models/project";
 import {
   TabHeader,
   TabBody,
@@ -19,14 +19,13 @@ interface Props {
 
 const TabComponent = ({ node, index }: Props) => {
   const dispatch = useDispatch();
-
   const isOpen = useSelector<RootState>(
     (state) => state.inspector.tabs[index].visible
   ) as boolean;
 
   const handleClick = useCallback(() => {
-    dispatch(changeInspectorTab(ATTRIBUTE_TAB.TECH_INFO));
-  }, [dispatch]);
+    dispatch(changeInspectorTab(index));
+  }, [dispatch, index]);
 
   return isOpen ? (
     <>
@@ -36,7 +35,7 @@ const TabComponent = ({ node, index }: Props) => {
       </TabHeader>
 
       <TabBody>
-        <TabContent node={node} />
+        <TabContent node={node} index={index} />
       </TabBody>
     </>
   ) : (

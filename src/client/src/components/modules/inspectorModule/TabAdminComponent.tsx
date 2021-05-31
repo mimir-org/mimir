@@ -4,7 +4,7 @@ import { useCallback } from "react";
 import { RootState } from "../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { Contractor } from "../../../redux/store/common/types";
-import { ATTRIBUTE_TAB, Node, Project } from "../../../models/project";
+import { Node, Project } from "../../../models/project";
 import { changeInspectorTab } from "../../../redux/store/inspector/actions";
 import {
   TabHeader,
@@ -31,8 +31,8 @@ const TabAdminComponent = ({ node, project, index }: Props) => {
   ) as Contractor[];
 
   const handleClick = useCallback(() => {
-    dispatch(changeInspectorTab(ATTRIBUTE_TAB.ADMIN_INFO));
-  }, [dispatch]);
+    dispatch(changeInspectorTab(index));
+  }, [dispatch, index]);
 
   return isOpen ? (
     <>
