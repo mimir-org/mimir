@@ -75,7 +75,7 @@ const BlockViewLocation: FC<NodeProps> = ({ data }) => {
 
     if (locationNode) {
       locationNode.style.width = `${data.width}px`;
-      locationNode.style.height = `${data.height}px`;
+      locationNode.style.height = `${data.length}px`;
     }
   }, [data, id]);
 
@@ -86,7 +86,7 @@ const BlockViewLocation: FC<NodeProps> = ({ data }) => {
       onMouseOver={handleOnHover}
       onMouseOut={handleOnMouseOut}
       width={data.width}
-      height={data.height}
+      height={data.length}
     >
       <OptionsMenu visible={showButton} onClick={handleClick}>
         <img src={OptionsIcon} alt="options" />

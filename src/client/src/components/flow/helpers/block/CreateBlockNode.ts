@@ -13,8 +13,11 @@ const CreateBlockNode = (node: Node, splitView: boolean): FlowElement => {
   // Force node to fit Block
   const position = SetBlockNodePosition(node, splitView);
 
-  if (!node.width) node.width = Size.Node_Width;
-  if (!node.height) node.height = Size.Node_Height;
+  if (IsLocationNode(node)) {
+    if (!node.width) node.width = Size.Node_Width;
+    if (!node.length) node.length = Size.Node_Height;
+    node.height = 0; // Z-axis
+  }
 
   blockNode = {
     id: node.id,

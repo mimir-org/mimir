@@ -136,10 +136,10 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
         </div>
         {IsLocationNode(node) && isBlockView && (
           <div>
-            <div>Height (m)</div>
+            <div>Length (m)</div>
             <Input
-              value={node.height}
-              onChange={(e: any) => handleOnChange(e, "height")}
+              value={node.length}
+              onChange={(e: any) => handleOnChange(e, "length")}
               inputType=""
             />
           </div>
@@ -170,11 +170,12 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
         </div>
         {IsLocationNode(node) && isBlockView && (
           <div>
-            <div>Length (m)</div>
+            <div>Height (m)</div>
             <Input
-              value={node.length}
-              onChange={(e: any) => handleOnChange(e, "length")}
+              value={node.height}
+              onChange={(e: any) => handleOnChange(e, "height")}
               inputType=""
+              readOnly={true}
             />
           </div>
         )}
