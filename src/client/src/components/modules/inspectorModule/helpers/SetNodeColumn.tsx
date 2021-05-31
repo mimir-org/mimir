@@ -30,7 +30,7 @@ const SetNodeColumn = ({ list, handleChange }: Props) => {
             >
               <option value={"NotSet"}>NotSet</option>
               {attr.units.map((unit) => (
-                <option key={unit} value={unit} className="select">
+                <option key={unit} value={unit}>
                   {unit}
                 </option>
               ))}

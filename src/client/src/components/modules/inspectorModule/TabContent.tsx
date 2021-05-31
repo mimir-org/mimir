@@ -90,6 +90,7 @@ const TabContent = ({ node, index }: Props) => {
           ></SetNodeColumn>
         </TabRow>
       )}
+
       {index === 2 && (
         <TabRow>
           <SetConnectorColumn
