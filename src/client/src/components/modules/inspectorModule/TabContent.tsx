@@ -62,6 +62,7 @@ const TabContent = ({ node, index }: Props) => {
 
   return (
     <>
+      {/* TODO: Refactor, rewrite sorting function?*/}
       {index === 1 && (
         <TabRow>
           <SetNodeColumn
@@ -90,7 +91,7 @@ const TabContent = ({ node, index }: Props) => {
           ></SetNodeColumn>
         </TabRow>
       )}
-
+      {/* TODO: Return max 6 columns, handle all rows*/}
       {index === 2 && (
         <TabRow>
           <SetConnectorColumn
