@@ -55,11 +55,11 @@ namespace Mb.Models.Enums
         [Display(Name = "Oil")]
         Oil = 16,
 
-        [Display(Name = "ChemicalFluids")]
-        ChemicalFluids = 17,
+        [Display(Name = "Chemical")]
+        Chemical = 17,
 
-        [Display(Name = "MultiphaseFluids")]
-        MultiphaseFluids = 18,
+        [Display(Name = "Multiphase")]
+        Multiphase = 18,
 
         [Display(Name = "WetGas")]
         WetGas = 19,

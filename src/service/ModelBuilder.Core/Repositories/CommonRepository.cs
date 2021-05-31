@@ -202,9 +202,15 @@ namespace Mb.Core.Repositories
             });
             _terminalData.Add(new TerminalColor
             {
-                Terminal = Terminal.ChemicalFluids,
+                Terminal = Terminal.Chemical,
                 Category = TerminalCategory.MaterialFluid,
                 Color = "#FF99CC"
+            });
+            _terminalData.Add(new TerminalColor
+            {
+                Terminal = Terminal.Multiphase,
+                Category = TerminalCategory.MaterialFluid,
+                Color = "#663300"
             });
 
             // Media (Material Granulate)
