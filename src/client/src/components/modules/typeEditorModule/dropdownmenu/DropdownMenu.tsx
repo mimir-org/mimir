@@ -44,14 +44,15 @@ export const DropDownMenu = ({ label, placeHolder, listItems }: Props) => {
         </div>
         {isListOpen && (
           <DropdownMenuList>
-            {listItems.map((item) => (
+            {listItems.map(([key, value]) => (
               <div
                 className="listitem"
-                key={item.id}
-                onClick={() => handleChange(item.name)}
+                key={key}
+                onClick={() => handleChange(value)}
               >
+                {console.log(key, value)}
                 <DropdownMenuListItem>
-                  <p>{item.name}</p>
+                  <p>{value}</p>
                 </DropdownMenuListItem>
               </div>
             ))}

@@ -1,6 +1,9 @@
-import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
 import { useHistory } from "react-router-dom";
-import { VIEW_TYPE } from "../../../models/project";
+import { MODULE_TYPE, NodeType } from "../../../models/project";
+import { getInitialData } from "../../../redux/store/typeEditor/actions";
 import { changeFlowView } from "../../../redux/store/flow/actions";
 
 import {
@@ -22,6 +25,7 @@ import { Input } from "../../../componentLibrary";
 import { TextResources } from "../../../assets/textResources";
 import { CloseIcon } from "../../../assets/icons";
 import { SetView } from "../../../redux/store/localStorage";
+import { TypeEditorState } from "../../../redux/store/typeEditor/types";
 
 interface Props {
   mode: string;
@@ -30,71 +34,62 @@ interface Props {
 export const TypeEditorComponent = ({ mode }: Props) => {
   const { push } = useHistory();
   const dispatch = useDispatch();
+  const state = useSelector<RootState>(
+    (state) => state.typeEditor
+  ) as TypeEditorState;
   const handleClick = () => {
-    dispatch(changeFlowView(VIEW_TYPE.TREEVIEW));
-    SetView(VIEW_TYPE.TREEVIEW);
-    push(`/home/${VIEW_TYPE.TREEVIEW}`);
+    dispatch(changeFlowView(MODULE_TYPE.TYPEEDITOR));
+    SetView(MODULE_TYPE.TYPEEDITOR);
+    push(`/home/${MODULE_TYPE.TYPEEDITOR}`);
   };
-  const aspects = [
-    {
-      id: 0,
-      name: "Function",
-    },
-    {
-      id: 1,
-      name: "Product",
-    },
-    {
-      id: 2,
-      name: "Location",
-    },
-  ];
+
+  useEffect(() => {
+    dispatch(getInitialData());
+  }, [dispatch]);
+
   return (
-    <>
-      {visible ? (
-        <TypeEditorWrapper>
-          <TypeEditorContent>
-            <TypeEditorHeader>
-              <p>{TextResources.TypeEditor}</p>
-              <img src={CloseIcon} alt="close-window" onClick={handleClick} />
-            </TypeEditorHeader>
-            <TypeInfo>
-              <DropdownMenu
-                label={TextResources.TypeEditor_Aspect}
-                placeHolder="Choose Aspect"
-                listItems={aspects}
-              />
-              <DropdownMenu
-                label={TextResources.TypeEditor_Object_Type}
-                placeHolder="Select Object Type"
-                listItems={aspects}
-              />
-              <TypeNameInput>
-                <p>{TextResources.TypeEditor_Type_Name}</p>
-                <Input
-                  width={300}
-                  onChange={() => null}
-                  inputType="text"
-                  placeholder="Write Type name"
-                />
-              </TypeNameInput>
-              <DropdownMenu
-                label={TextResources.TypeEditor_Status}
-                placeHolder="Draft"
-                listItems={aspects}
-              />
-            </TypeInfo>
-            <ChooseProperties>
-              <RDSList />
-              <TerminalsList />
-              <AttributesList />
-              <TypePreview mode={mode} />
-            </ChooseProperties>
-            {/* <TypeEditorInspector></TypeEditorInspector> */}
-          </TypeEditorContent>
-        </TypeEditorWrapper>
-      ) : null}
-    </>
+    <TypeEditorWrapper>
+      <TypeEditorContent>
+        <TypeEditorHeader>
+          <p>{TextResources.TypeEditor}</p>
+          <img src={CloseIcon} alt="close-window" onClick={handleClick} />
+        </TypeEditorHeader>
+        <TypeInfo>
+          {console.log(Object.entries(state.aspects))}
+          <DropdownMenu
+            label={TextResources.TypeEditor_Aspect}
+            placeHolder="Choose Aspect"
+            listItems={Object.entries(state.aspects)}
+          />
+          <DropdownMenu
+            label={TextResources.TypeEditor_Object_Type}
+            placeHolder="Select Object Type"
+            listItems={Object.entries(state.objectTypes)}
+          />
+          <TypeNameInput>
+            <p>{TextResources.TypeEditor_Type_Name}</p>
+            <Input
+              width={300}
+              onChange={() => null}
+              inputType="text"
+              placeholder="Write Type name"
+            />
+          </TypeNameInput>
+          <DropdownMenu
+            label={TextResources.TypeEditor_Status}
+            placeHolder="Draft"
+            listItems={Object.entries(state.statuses)}
+          />
+        </TypeInfo>
+        <ChooseProperties>
+          <RDSList />
+          <TerminalsList />
+          <AttributesList />
+          <TypePreview mode={mode} />
+        </ChooseProperties>
+        {/* <TypeEditorInspector></TypeEditorInspector> */}
+      </TypeEditorContent>
+    </TypeEditorWrapper>
   );
 };
 
