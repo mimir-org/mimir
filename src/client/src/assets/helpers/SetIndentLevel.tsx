@@ -1,33 +1,28 @@
-import { Node, Edge } from "../../models/project";
+import { CONNECTOR_TYPE, Node, Edge } from "../../models/project";
+import store from "../../redux/store";
 import { IsPartOfTerminal } from "../../components/flow/helpers";
 
-const SetIndentLevel = (nodes: Node[], edges: Edge[], i: number): number => {
-  if (!edges) return null;
-  let indentCount = 0;
-  const node = nodes[i];
-  const nodeId = node.id;
+const SetIndentLevel = (node: Node, count: number): number => {
+  const connector = node.connectors?.find(
+    (x) => IsPartOfTerminal(x) && x.type === CONNECTOR_TYPE.INPUT
+  );
 
-  let edge = edges.find((edge) => edge.toNode === nodeId);
-  if (!edge) return null;
+  if (connector === null) return count;
 
-  let connector = node?.connectors?.find((x) => x.id === edge?.toConnector);
+  const edge = store
+    .getState()
+    .projectState.project.edges.find((x) => x.toNode === node.id) as Edge;
 
-  if (IsPartOfTerminal(connector)) indentCount++;
+  if (!edge) return count;
+  else count++;
 
-  let id = edge.fromNode;
+  const nextNode = store
+    .getState()
+    .projectState.project.nodes.find((x) => x.id === edge.fromNode);
 
-  const getParent = () => {
-    return id;
-  };
+  if (!nextNode) return count;
 
-  while (edge) {
-    edge = edges.find((edge) => edge.toNode === getParent());
-    if (!edge) break;
-    if (edge.targetType === node.type) indentCount++;
-
-    id = edge.fromNode;
-  }
-  return indentCount;
+  return SetIndentLevel(nextNode, count);
 };
 
 export default SetIndentLevel;
