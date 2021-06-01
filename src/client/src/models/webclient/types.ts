@@ -1,6 +1,20 @@
 import { authProvider } from "../../providers/authProvider";
 
-interface HttpResponse<T> extends Response {
+export interface ApiError {
+    key: string,
+    errorMessage: string,
+    errorData: BadRequestData
+}
+export interface BadRequestData {
+    title: string,
+    items: BadRequestDataItem[]
+}
+export interface BadRequestDataItem {
+    key: string,
+    value: string
+}
+
+export interface HttpResponse<T> extends Response {
     data?: T;
 }
 
@@ -41,9 +55,17 @@ export async function http<T>(request: RequestInfo): Promise<HttpResponse<T>> {
                 response.data = await response.json();
                 return response;
             } else {
-                throw new Error(response.statusText);
+                if (response.status === 404) {
+                    throw new Error("Ther server is unavailable");
+                }
+                response.data = await response.json();
+                throw new Error(response.data.toString());
             }
         } else {
+            if (response.status === 204) {
+                throw new Error(response.statusText);
+            }
+
             response.data = await response.json();
             return response;
         }

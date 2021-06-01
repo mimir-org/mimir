@@ -12,6 +12,7 @@ export function* searchLibrary(action: LibraryActionTypes) {
         const url = process.env.REACT_APP_API_BASE_URL + "library?name=" + action.payload;
         const response = yield call(get, url);
 
+        // This is a bad request
         if (response.status === 400) {
             const payload = {
                 nodes: [],

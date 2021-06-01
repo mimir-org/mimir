@@ -1,4 +1,5 @@
 import { Project, Node, Edge, NodeType } from "../../../models/project";
+import { ApiError } from "../../../models/webclient";
 
 export const SAVE_PROJECT = "SAVE_PROJECT";
 export const SAVE_PROJECT_SUCCESS_OR_ERROR = "SAVE_PROJECT_SUCCESS_OR_ERROR";
@@ -27,15 +28,15 @@ export const CHANGE_NODE_PROP_VALUE = "CHANGE_NODE_PROP_VALUE";
 export const CHANGE_ATTRIBUTE_VALUE = "CHANGE_ATTRIBUTE_VALUE";
 export const CHANGE_CONNECTOR_ATTRIBUTE_VALUE =
     "CHANGE_CONNECTOR_ATTRIBUTE_VALUE";
+export const DELETE_PROJECT_ERROR = "DELETE_PROJECT_ERROR";
 
 // State types
 export interface ProjectState {
     fetching: boolean;
     creating: boolean;
     project: Project | null;
-    hasError: boolean;
-    errorMsg: string | null;
     projectList: [] | null;
+    apiError: ApiError[];
 }
 
 // Action types
@@ -51,12 +52,18 @@ interface SearchProjectAction {
 
 interface SearchProjectActionFinished {
     type: typeof SEARCH_PROJECT_SUCCESS_OR_ERROR;
-    payload: ProjectState;
+    payload: {
+        projectList: [],
+        apiError: ApiError
+    };
 }
 
 interface FetchingProjectActionFinished {
     type: typeof FETCHING_PROJECT_SUCCESS_OR_ERROR;
-    payload: ProjectState;
+    payload: {
+        project: Project,
+        apiError: ApiError
+    };
 }
 
 interface CreatingProjectAction {
@@ -66,7 +73,10 @@ interface CreatingProjectAction {
 
 interface CreatingProjectActionFinished {
     type: typeof CREATING_PROJECT_SUCCESS_OR_ERROR;
-    payload: ProjectState;
+    payload: {
+        project: Project,
+        apiError: ApiError
+    };
 }
 
 interface AddNodeAction {
@@ -145,7 +155,10 @@ interface SaveProjectAction {
 
 interface SaveProjectActionFinished {
     type: typeof SAVE_PROJECT_SUCCESS_OR_ERROR;
-    payload: ProjectState;
+    payload: {
+        project: Project,
+        apiError: ApiError
+    };
 }
 
 interface ChangeSelectedProject {
@@ -191,6 +204,13 @@ interface ChangeAttributeConnectorValue {
     };
 }
 
+interface DeleteProjectErrorAction {
+    type: typeof DELETE_PROJECT_ERROR,
+    payload: {
+        key: string
+    }
+}
+
 export type ProjectActionTypes =
     | FetchingProjectAction
     | SearchProjectAction
@@ -214,4 +234,5 @@ export type ProjectActionTypes =
     | ChangeAllNodes
     | ChangeNodePropValue
     | ChangeAttributeValue
-    | ChangeAttributeConnectorValue;
+    | ChangeAttributeConnectorValue
+    | DeleteProjectErrorAction;
