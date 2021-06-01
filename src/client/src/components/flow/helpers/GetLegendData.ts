@@ -47,7 +47,7 @@ const GetBlockViewNodes = (project: Project, nodeId: string): Node[] => {
   const nodes = [] as Node[];
   const fromNode = project?.nodes?.find((x) => x.id === nodeId);
 
-  project.edges.forEach((edge) => {
+  project?.edges?.forEach((edge) => {
     if (edge.fromNode === nodeId) {
       const currentConnector = fromNode.connectors.find(
         (x) => x.id === edge.fromConnector

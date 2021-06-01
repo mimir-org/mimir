@@ -244,5 +244,87 @@
         "IsTerminalType": true
       }
     ]
+  },
+  {
+    "Id": "equinor.com_D242EDBF-A784-4255-A1C8-1E1A4325648A",
+    "Terminal": "Multiphase",
+    "ConnectorType": "Output",
+    "SemanticReference": "",
+    "Attributes": [
+      {
+        "Entity": "Flowrate, volumetric",
+        "Qualifier": "Capacity",
+        "Source": "Required",
+        "Condition": "Nominal",
+        "Units": [
+          "Sm3D",
+          "Sm3H",
+          "Scfhr",
+          "Bbld"
+        ],
+        "Aspect": "NotSet",
+        "Format": "UnsignedFloat",
+        "IsInterface": false,
+        "IsTerminalType": true
+      },
+      {
+        "Entity": "Pressure, absolute",
+        "Qualifier": "Rating",
+        "Source": "Required",
+        "Condition": "Minimum",
+        "Units": [
+          "Barg",
+          "Bara",
+          "Psi",
+          "Psig",
+          "Pascal"
+        ],
+        "Aspect": "NotSet",
+        "Format": "UnsignedFloat",
+        "IsInterface": false,
+        "IsTerminalType": true
+      }
+    ]
+  },
+  {
+    "Id": "equinor.com_D3EB46EF-0BC4-4C18-90EA-1482209A9294",
+    "Terminal": "Multiphase",
+    "ConnectorType": "Input",
+    "SemanticReference": "",
+    "Attributes": [
+      {
+        "Entity": "Flowrate, volumetric",
+        "Qualifier": "Capacity",
+        "Source": "Required",
+        "Condition": "Nominal",
+        "Units": [
+          "Sm3D",
+          "Sm3H",
+          "Scfhr",
+          "Bbld"
+        ],
+        "Aspect": "NotSet",
+        "Format": "UnsignedFloat",
+        "IsInterface": false,
+        "IsTerminalType": true
+      },
+      {
+        "Entity": "Pressure, absolute",
+        "Qualifier": "Rating",
+        "Source": "Required",
+        "Condition": "Minimum",
+        "Units": [
+          "Barg",
+          "Bara",
+          "Psi",
+          "Psig",
+          "Pascal"
+        ],
+        "Aspect": "NotSet",
+        "Format": "UnsignedFloat",
+        "IsInterface": false,
+        "IsTerminalType": true
+      }
+    ]
   }
 ]

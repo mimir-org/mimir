@@ -57,6 +57,15 @@ namespace Mb.Core.Services
         }
 
         /// <summary>
+        /// Get all type editor statuses
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<int, string> GetStatuses()
+        {
+            return EnumExtensions.ToDictionary<Status>();
+        }
+
+        /// <summary>
         /// Get all aspects
         /// </summary>
         /// <returns></returns>

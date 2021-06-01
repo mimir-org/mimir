@@ -61,6 +61,27 @@ namespace Mb.Core.Controllers.V1
         /// Get all aspects
         /// </summary>
         /// <returns></returns>
+        [HttpGet("statuses")]
+        [ProducesResponseType(typeof(Dictionary<int, string>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public IActionResult GetStatuses()
+        {
+            try
+            {
+                var data = _typeEditorService.GetStatuses();
+                return Ok(data);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
+        /// Get all aspects
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("aspects")]
         [ProducesResponseType(typeof(Dictionary<int, string>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

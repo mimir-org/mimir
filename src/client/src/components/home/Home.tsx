@@ -10,7 +10,6 @@ import { getUser } from "../../redux/store/user/actions";
 import { getContractors } from "../../redux/store/common/actions";
 import { search } from "../../redux/store/project/actions";
 import { FlowModule } from "../flow";
-import { FlowBox } from "../../componentLibrary/box/flow";
 import { HomeBox } from "../../componentLibrary/box/home";
 
 interface RouteParams {
@@ -31,10 +30,8 @@ const Home = () => {
   return (
     <HomeBox>
       <ExplorerModule />
-      <FlowBox>
-        <FlowModule route={params} />
-        <InspectorModule />
-      </FlowBox>
+      <FlowModule route={params} />
+      <InspectorModule />
       <AccountMenu />
       <FilterMenu />
       <LibraryModule />

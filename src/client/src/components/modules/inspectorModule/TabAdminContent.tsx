@@ -1,13 +1,14 @@
 import { useDispatch } from "react-redux";
 import { changeNodeValue } from "../../../redux/store/project/actions";
 import { Contractor } from "../../../redux/store/common/types";
-import { TabColumn } from "./styled";
+import { TabColumn } from "../../../componentLibrary/box/inspector";
 import { Input, Select, Textarea } from "../../../componentLibrary";
-import { Node, Project } from "../../../models/project";
+import { Node, Project, VIEW_TYPE } from "../../../models/project";
 import { GetRdsId, GetReferenceDesignation } from "../../../assets/helpers";
 import moment from "moment/moment.js";
 import { BUILD_STATUS } from "../../../models/project";
 import { IsLocationNode } from "../../flow/helpers";
+import { GetView } from "../../../redux/store/localStorage";
 
 interface Props {
   node: Node;
@@ -17,6 +18,7 @@ interface Props {
 
 const TabAdminContent = ({ node, project, contractors }: Props) => {
   const dispatch = useDispatch();
+  const isBlockView = GetView() === VIEW_TYPE.BLOCKVIEW;
 
   const handleOnChange = (e: any, key: string) => {
     dispatch(changeNodeValue(node.id, key, e.target.value));
@@ -99,14 +101,14 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
             inputType=""
           />
         </div>
-        {IsLocationNode(node) && (
+        {IsLocationNode(node) && isBlockView && (
           <div>
             <div>Width (m)</div>
             <Input
               value={node.width}
               onChange={(e: any) => handleOnChange(e, "width")}
               inputType=""
-            />{" "}
+            />
           </div>
         )}
       </TabColumn>
@@ -117,12 +119,11 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
             value={node.status ?? BUILD_STATUS.NotSet}
             onChange={(e: any) => handleOnChange(e, "status")}
           >
-            {Object.values(BUILD_STATUS) &&
-              Object.values(BUILD_STATUS).map((x) => (
-                <option key={x} value={x}>
-                  {x}
-                </option>
-              ))}
+            {Object.values(BUILD_STATUS)?.map((x) => (
+              <option key={x} value={x}>
+                {x}
+              </option>
+            ))}
           </Select>
         </div>
         <div>
@@ -133,14 +134,14 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
             inputType=""
           />
         </div>
-        {IsLocationNode(node) && (
+        {IsLocationNode(node) && isBlockView && (
           <div>
-            <div>Height (m)</div>
+            <div>Length (m)</div>
             <Input
-              value={node.height}
-              onChange={(e: any) => handleOnChange(e, "height")}
+              value={node.length}
+              onChange={(e: any) => handleOnChange(e, "length")}
               inputType=""
-            />{" "}
+            />
           </div>
         )}
       </TabColumn>
@@ -148,16 +149,15 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
         <div>
           <div>Contractor</div>
           <Select
-            value={node.contractor ?? "NotSet"}
+            value={node.contractor ?? BUILD_STATUS.NotSet}
             onChange={(e: any) => handleOnChange(e, "contractor")}
           >
-            <option value="NotSet">NotSet</option>
-            {contractors &&
-              contractors.map((contractor) => (
-                <option key={contractor.id} value={contractor.name}>
-                  {contractor.name}
-                </option>
-              ))}
+            <option value={BUILD_STATUS.NotSet}>{BUILD_STATUS.NotSet}</option>
+            {contractors?.map((contractor) => (
+              <option key={contractor.id} value={contractor.name}>
+                {contractor.name}
+              </option>
+            ))}
           </Select>
         </div>
         <div>
@@ -168,13 +168,14 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
             inputType=""
           />
         </div>
-        {IsLocationNode(node) && (
+        {IsLocationNode(node) && isBlockView && (
           <div>
-            <div>Length (m)</div>
+            <div>Height (m)</div>
             <Input
-              value={node.length}
-              onChange={(e: any) => handleOnChange(e, "length")}
+              value={node.height}
+              onChange={(e: any) => handleOnChange(e, "height")}
               inputType=""
+              readOnly={true}
             />
           </div>
         )}

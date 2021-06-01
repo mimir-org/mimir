@@ -1,10 +1,9 @@
-import { GetNodes } from "../../../flow/helpers";
+import { GetNodes, IsFunctionNode } from "../../../flow/helpers";
 import { useDispatch, useSelector } from "react-redux";
 import { changeActiveNode } from "../../../../redux/store/project/actions";
-import { Node, NODE_TYPE } from "../../../../models/project";
+import { Node } from "../../../../models/project";
 import { RootState } from "../../../../redux/store";
 import { setSplitViewNode } from "../../../../redux/store/splitView/actions";
-import { IsBlockChecked } from "../../../flow/helpers/block";
 
 interface Props {
   nodeId: string;
@@ -14,9 +13,6 @@ interface Props {
 export const CheckboxBlock = ({ nodeId, inputLabel }: Props) => {
   const dispatch = useDispatch();
   const nodes = GetNodes();
-  const node = nodes.find((x) => x.id === nodeId);
-  const selectedNode = nodes.find((x) => x.isSelected);
-  const selectedBlockNode = nodes.find((x) => x.isBlockSelected);
 
   const splitView = useSelector<RootState>(
     (state) => state.splitView.visible
@@ -26,30 +22,20 @@ export const CheckboxBlock = ({ nodeId, inputLabel }: Props) => {
     (state) => state.splitView.node
   ) as Node;
 
-  const isChecked = IsBlockChecked(
-    splitView,
-    node,
-    selectedNode,
-    splitViewNode,
-    selectedBlockNode
-  );
+  let node = nodes.find((x) => x.id === nodeId);
+  const selectedNode = nodes.find((x) => x.isSelected);
+
+  const isChecked = splitView
+    ? node === selectedNode || node === splitViewNode
+    : node === selectedNode;
 
   // TODO: Rewrite this
   const handleChange = () => {
     if (splitView) {
-      if (node.type === NODE_TYPE.ASPECT_FUNCTION) {
-        return;
-      }
-      if (node === selectedNode) {
-        return;
-      }
-      if (node.type === NODE_TYPE.FUNCTION && node.level < selectedNode.level) {
-        return;
-      }
-      dispatch(setSplitViewNode(node));
-    } else {
-      dispatch(changeActiveNode(node.id, true));
-    }
+      IsFunctionNode(node)
+        ? dispatch(changeActiveNode(node?.id, true))
+        : dispatch(setSplitViewNode(node));
+    } else dispatch(changeActiveNode(node?.id, true));
   };
 
   return (

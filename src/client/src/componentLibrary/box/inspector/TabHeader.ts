@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color, FontWeight } from "../../../../componentLibrary";
+import { Color } from "../..";
 
 const TabHeader = styled.div`
   display: inline-block;
@@ -11,16 +11,12 @@ const TabHeader = styled.div`
   border-left: 1px solid ${Color.Grey};
   border-top: 0px solid ${Color.Grey};
 
-  height: ${(props: { active: string }) => (props.active ? "36px" : "32px")};
+  height: ${(props: { active: string }) => (props.active ? "39px" : "32px")};
   margin-top: ${(props: { active: string }) => (props.active ? "0px" : "4px")};
   background-color: ${(props: { active: string }) =>
     props.active ? `${Color.LightGrey}` : `${Color.DarkGrey}`};
   padding: ${(props: { active: string }) =>
     props.active ? "12px 20px 0px 20px;" : "8px 20px 0px 20px"};
-  text-decoration: ${(props: { active: string }) =>
-    props.active ? "underline" : "none"};
-  font-weight: ${(props: { active: string }) =>
-    props.active ? `${FontWeight.Bold}` : `${FontWeight.Normal}`};
 
   :hover {
     cursor: pointer;

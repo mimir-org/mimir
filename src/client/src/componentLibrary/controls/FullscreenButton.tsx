@@ -1,13 +1,12 @@
 import styled from "styled-components";
 
-const FullscreenIcon = styled.div`
+const FullscreenButton = styled.div`
   position: absolute;
   cursor: pointer;
-  bottom: 20px !important;
-  left: 27px !important;
-  /* bottom: ${(props) => (props.isBlockView ? "20px" : "130px")}!important;
-  left: ${(props) => (props.isOpen ? "27px" : "22px")}!important; */
-  z-index: 1200;
+  bottom: ${(props) => (props.isInspector ? "270px" : "50px")} !important;
+  left: ${(props) => (props.isExplorer ? "350px" : "55px")} !important;
+  transition: left 0.3s ease-in-out, bottom 0.3s ease-in-out;
+  z-index: 4;
 `;
 
-export default FullscreenIcon;
+export default FullscreenButton;

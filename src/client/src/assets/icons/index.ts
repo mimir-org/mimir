@@ -46,3 +46,4 @@ export { default as ClosedFilterIcon } from "./visualFilterIconClosed.svg";
 export { default as OpenFilterIcon } from "./VisualFilterIconOpen.svg";
 export { default as WhiteArrowIcon } from "./whiteRightArrowIcon.svg";
 export { default as CreateProjectIcon } from "./createProjectIcon.svg";
+export { default as SelectDownIcon } from "./selectDownIcon.svg";

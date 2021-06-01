@@ -1,7 +1,8 @@
-import { Attribute, Node, RELATION_TYPE } from "../../../models/project";
-import { TabColumn } from "./styled";
-import { Input, Select, InputWrapper } from "../../../componentLibrary";
+import { Attribute, Node } from "../../../models/project";
+import { TabRow } from "../../../componentLibrary/box/inspector";
 import { useDispatch } from "react-redux";
+import { IsTransportTerminal } from "../../flow/helpers";
+import { CalculateRows, SetConnectorColumn, SetNodeColumn } from "./helpers";
 import {
   changeAttributeValue,
   changeConnectorAttributeValue,
@@ -9,6 +10,7 @@ import {
 
 interface Props {
   node: Node;
+  index?: number;
 }
 
 interface ConnectorAttribute {
@@ -17,7 +19,7 @@ interface ConnectorAttribute {
   attributes: Attribute[];
 }
 
-const TabContent = ({ node }: Props) => {
+const TabContent = ({ node, index }: Props) => {
   const dispatch = useDispatch();
 
   let connectorAttributes: ConnectorAttribute[] = [];
@@ -26,8 +28,8 @@ const TabContent = ({ node }: Props) => {
   if (node) {
     const tempAttributes: ConnectorAttribute[] = [];
 
-    node.connectors.forEach((connector) => {
-      if (connector.relationType === RELATION_TYPE.Transport) {
+    node.connectors?.forEach((connector) => {
+      if (IsTransportTerminal(connector)) {
         const data = {
           id: connector.id,
           name: connector.name + " " + connector.type,
@@ -41,15 +43,11 @@ const TabContent = ({ node }: Props) => {
     nodeAttributes = node.attributes;
   }
 
-  const handleOnNodeAttributeChange = (
-    id: string,
-    value: string,
-    unit: string
-  ) => {
+  const handleOnNodeChange = (id: string, value: string, unit: string) => {
     dispatch(changeAttributeValue(id, value, unit, node.id));
   };
 
-  const handleOnConnectorAttributeChange = (
+  const handleOnConnectorChange = (
     id: string,
     value: string,
     unit: string,
@@ -59,99 +57,48 @@ const TabContent = ({ node }: Props) => {
       changeConnectorAttributeValue(id, value, unit, node.id, connectorId)
     );
   };
+  const rows = CalculateRows(nodeAttributes.length);
+  let count = rows;
 
   return (
     <>
-      {nodeAttributes &&
-        nodeAttributes.map((attr) => (
-          <TabColumn key={attr.id} fontSize="10">
-            <div>
-              <div>{attr.key}</div>
-              <InputWrapper>
-                <Input
-                  width="50"
-                  value={attr.value ?? ""}
-                  onChange={(e: any) =>
-                    handleOnNodeAttributeChange(
-                      attr.id,
-                      e.target.value,
-                      attr.unit
-                    )
-                  }
-                  inputType=""
-                />
-                <Select
-                  marginLeft="4"
-                  width="120"
-                  value={attr.unit}
-                  onChange={(e: any) =>
-                    handleOnNodeAttributeChange(
-                      attr.id,
-                      attr.value,
-                      e.target.value
-                    )
-                  }
-                >
-                  <option value={"NotSet"}>NotSet</option>
-                  {attr.units.map((unit) => (
-                    <option key={unit} value={unit}>
-                      {unit}
-                    </option>
-                  ))}
-                </Select>
-              </InputWrapper>
-            </div>
-          </TabColumn>
-        ))}
+      {index === 1 && (
+        <TabRow>
+          <SetNodeColumn
+            list={nodeAttributes.slice(0, count)}
+            handleChange={handleOnNodeChange}
+          ></SetNodeColumn>
+          <SetNodeColumn
+            list={nodeAttributes.slice(count, rows + count)}
+            handleChange={handleOnNodeChange}
+          ></SetNodeColumn>
+          <SetNodeColumn
+            list={nodeAttributes.slice(rows + count, rows + (count += rows))}
+            handleChange={handleOnNodeChange}
+          ></SetNodeColumn>
+          <SetNodeColumn
+            list={nodeAttributes.slice(rows + count, rows + (count += rows))}
+            handleChange={handleOnNodeChange}
+          ></SetNodeColumn>
+          <SetNodeColumn
+            list={nodeAttributes.slice(rows + count, rows + (count += rows))}
+            handleChange={handleOnNodeChange}
+          ></SetNodeColumn>
+          <SetNodeColumn
+            list={nodeAttributes.slice(rows + count, nodeAttributes.length)}
+            handleChange={handleOnNodeChange}
+          ></SetNodeColumn>
+        </TabRow>
+      )}
 
-      {connectorAttributes &&
-        connectorAttributes.map((connector: ConnectorAttribute) => (
-          <TabColumn key={connector.id} fontSize="10">
-            {connector &&
-              connector.attributes.map((attr: Attribute) => (
-                <div key={attr.id}>
-                  <div>
-                    {attr.key} {connector.name}
-                  </div>
-                  <InputWrapper>
-                    <Input
-                      width="50"
-                      value={attr.value ?? ""}
-                      onChange={(e: any) =>
-                        handleOnConnectorAttributeChange(
-                          attr.id,
-                          e.target.value,
-                          attr.unit,
-                          attr.connectorId
-                        )
-                      }
-                      inputType=""
-                    />
-                    <Select
-                      marginLeft="4"
-                      width="120"
-                      value={attr.unit}
-                      onChange={(e: any) =>
-                        handleOnConnectorAttributeChange(
-                          attr.id,
-                          attr.value,
-                          e.target.value,
-                          attr.connectorId
-                        )
-                      }
-                    >
-                      <option value={"NotSet"}>NotSet</option>
-                      {attr.units.map((unit) => (
-                        <option key={unit} value={unit}>
-                          {unit}
-                        </option>
-                      ))}
-                    </Select>
-                  </InputWrapper>
-                </div>
-              ))}
-          </TabColumn>
-        ))}
+      {index === 2 && (
+        <TabRow>
+          <SetConnectorColumn
+            list={connectorAttributes}
+            handleChange={handleOnConnectorChange}
+          ></SetConnectorColumn>
+        </TabRow>
+      )}
     </>
   );
 };

@@ -9,8 +9,8 @@ const OptionsBox = styled.div`
   height: auto;
   width: max-content;
   position: absolute;
-  left: ${(props) => (props.function ? "91px" : "16px")};
-  top: ${(props) => (props.function ? "-1px" : "0px")};
+  left: ${(props) => (props.type === "function" ? "100px" : "15px")};
+  top: ${(props) => (props.type === "function" ? "-1px" : "0px")};
   z-index: 100;
 
   .button {

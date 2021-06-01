@@ -17,7 +17,7 @@ const FilterModule = () => {
 
   return (
     <>
-      <MenuTopHeader isOpen={showFilter} right>
+      <MenuTopHeader isOpen={showFilter} right type="FilterMenu">
         <div onClick={handleClick}>{TextResources.MainHeader_VisualFilter}</div>
         <img
           src={GetMenuIcon(showFilter, type)}

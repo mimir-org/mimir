@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FontWeight } from "../../../../componentLibrary";
+import { FontWeight } from "../..";
 
 const NodeTitle = styled.p`
   font-weight: ${FontWeight.Normal};

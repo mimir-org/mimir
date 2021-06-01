@@ -10,7 +10,7 @@ const FooterBox = styled.div`
   justify-content: space-evenly;
   align-items: center;
   overflow: hidden;
-  bottom: 0;
+  bottom: 50px;
   position: absolute;
   border-top: 1px solid ${Color.Grey};
 `;

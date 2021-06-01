@@ -1,15 +1,18 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { EyeIcon, ToggleDown, ToggleUp } from "../../../assets/icons";
-import { IconWrapper, ToggleButtonWrapper } from "./styled";
 import { TextResources } from "../../../assets/textResources";
-import { InspectorTabsHeader } from "./styled";
-import { InspectorTitle } from "./styled";
 import InspectorTabs from "./InspectorTabs";
-import { AnimatedModule, Size } from "../../../componentLibrary";
 import { MODULE_TYPE } from "../../../models/project";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import { SaveState } from "../../../redux/store/localStorage";
+import {
+  InspectorTitle,
+  InspectorBody,
+  AnimatedInspector,
+  IconWrapper,
+  ButtonBox,
+} from "../../../componentLibrary/box/inspector";
 
 const InspectorModule = () => {
   const dispatch = useDispatch();
@@ -23,35 +26,52 @@ const InspectorModule = () => {
     (state) => state.modules.types.find((x) => x.type === key).animate
   ) as boolean;
 
-  const isOpen = useSelector<RootState>(
+  const isInspectorOpen = useSelector<RootState>(
     (state) => state.modules.types.find((x) => x.type === key).visible
   ) as boolean;
 
+  const isLibraryOpen = useSelector<RootState>(
+    (state) =>
+      state.modules.types.find((x) => x.type === MODULE_TYPE.LIBRARY).visible
+  ) as boolean;
+
+  const isExplorerOpen = useSelector<RootState>(
+    (state) =>
+      state.modules.types.find((x) => x.type === MODULE_TYPE.EXPLORER).visible
+  ) as boolean;
+
   const handleClick = () => {
-    SaveState(!isOpen, key);
-    dispatch(changeModuleVisibility(key, !isOpen, true));
+    SaveState(!isInspectorOpen, key);
+    dispatch(changeModuleVisibility(key, !isInspectorOpen, true));
   };
 
-  const start = isOpen ? Size.ModuleClosed : Size.ModuleOpen;
-  const stop = isOpen ? Size.ModuleOpen : Size.ModuleClosed;
+  const start = isInspectorOpen ? 37 : 257;
+  const stop = isInspectorOpen ? 257 : 37;
 
   return (
-    <AnimatedModule start={start} stop={stop} run={animate} type={key}>
-      <InspectorTabsHeader>
+    <AnimatedInspector
+      type={key}
+      isLibraryOpen={isLibraryOpen}
+      isExplorerOpen={isExplorerOpen}
+      start={start}
+      stop={stop}
+      run={animate}
+    >
+      <InspectorBody>
         {hasProject && <InspectorTabs />}
-        <ToggleButtonWrapper>
-          {isOpen ? (
+        <ButtonBox>
+          {isInspectorOpen ? (
             <img src={ToggleDown} alt="toggle-icon" onClick={handleClick} />
           ) : (
             <img src={ToggleUp} alt="toggle-icon" onClick={handleClick} />
           )}
-        </ToggleButtonWrapper>
+        </ButtonBox>
         <IconWrapper>
           <InspectorTitle>{TextResources.Inspector_Heading}</InspectorTitle>
           <img src={EyeIcon} alt="inspector-icon" />
         </IconWrapper>
-      </InspectorTabsHeader>
-    </AnimatedModule>
+      </InspectorBody>
+    </AnimatedInspector>
   );
 };
 

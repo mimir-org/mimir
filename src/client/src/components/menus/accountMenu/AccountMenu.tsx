@@ -67,7 +67,7 @@ const AccountMenu = () => {
           <GetMenuElement type="Logout" userState={userState} />
         </MenuBox>
       )}
-      <div style={{ zIndex: 100 }}>
+      <div className="ProjectMenu" style={{ zIndex: 2 }}>
         <OpenProjectMenu />
         <CreateProjectMenu />
       </div>

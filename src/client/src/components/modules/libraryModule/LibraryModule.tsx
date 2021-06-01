@@ -76,8 +76,8 @@ const LibraryModule = () => {
 
   const start = isOpen ? Size.ModuleClosed : Size.ModuleOpen;
   const stop = isOpen ? Size.ModuleOpen : Size.ModuleClosed;
-  const startLegend = legendOpen ? Size.ModuleClosed - 1 : Size.ModuleOpen;
-  const stopLegend = legendOpen ? Size.ModuleOpen : Size.ModuleClosed - 1;
+  const startLegend = legendOpen ? Size.ModuleClosed + 1 : Size.ModuleOpen;
+  const stopLegend = legendOpen ? Size.ModuleOpen : Size.ModuleClosed + 1;
 
   const isBlockView = IsBlockView();
   const isSplitView = useSelector<RootState>(
@@ -115,7 +115,12 @@ const LibraryModule = () => {
 
   return (
     <>
-      <AnimatedModule start={start} stop={stop} run={animate}>
+      <AnimatedModule
+        start={start}
+        stop={stop}
+        run={animate}
+        type={MODULE_TYPE.LIBRARY}
+      >
         <ModuleHeader library visible={isOpen}>
           <img src={LibraryIcon} alt="library-icon" className="module-icon" />
           <img
@@ -129,6 +134,7 @@ const LibraryModule = () => {
         <ModuleBody visible={isOpen} library>
           {/* <LibraryComponent categories={libNodes()} search={search} /> */}
           <TypeEditorModule />
+          {/* <LibraryComponent categories={libNodes()} search={search} /> */}
         </ModuleBody>
         <AnimatedModule
           start={startLegend}

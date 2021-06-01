@@ -27,7 +27,6 @@ export const AspectComponent = ({ nodeId, label, aspectType }: Props) => {
   const color = GetAspectColor(aspectType, true);
   const childType = GetAspectType(aspectType);
   const nodes = store.getState().projectState.project.nodes;
-  const edges = store.getState().projectState.project.edges;
   const children = nodes.filter((node) => !IsAspectNode(node));
 
   const handleExpandClick = () => {
@@ -50,7 +49,7 @@ export const AspectComponent = ({ nodeId, label, aspectType }: Props) => {
       {expanded &&
         children.map((obj: object, i: number) => {
           if (children[i].type === childType) {
-            const indent = SetIndentLevel(children, edges, i);
+            const indent = children[i].level ?? SetIndentLevel(children[i], 0);
             return (
               <AspectElement
                 key={i}

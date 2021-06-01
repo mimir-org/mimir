@@ -13,6 +13,7 @@ import {
 import { Color } from "../../componentLibrary";
 import { GetBlockNodeTypes, IsFunctionNode, IsLocationNode } from "./helpers";
 import { BackgroundBox } from "../../componentLibrary/blockView";
+import { changeInspectorTab } from "../../redux/store/inspector/actions";
 import {
   CreateBlockElements,
   GetBlockEdgeTypes,
@@ -132,8 +133,7 @@ const FlowBlock = () => {
 
   const OnElementClick = (_event, element) => {
     dispatch(changeActiveBlockNode(element.id));
-    // dispatch(setSplitViewNode(element));
-    // dispatch(changeActiveNode(element.id, false));
+    dispatch(changeInspectorTab(0));
   };
 
   const OnUpdatePosition = () => {

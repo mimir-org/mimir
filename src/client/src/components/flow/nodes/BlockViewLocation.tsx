@@ -74,12 +74,8 @@ const BlockViewLocation: FC<NodeProps> = ({ data }) => {
     ) as HTMLElement;
 
     if (locationNode) {
-      if (data.width && data.width !== 0)
-        locationNode.style.width = `${data.width}px`;
-      else locationNode.style.width = `100px`;
-      if (data.height && data.height !== 0)
-        locationNode.style.height = `${data.height}px`;
-      else locationNode.style.height = `57px`;
+      locationNode.style.width = `${data.width}px`;
+      locationNode.style.height = `${data.length}px`;
     }
   }, [data, id]);
 
@@ -90,11 +86,10 @@ const BlockViewLocation: FC<NodeProps> = ({ data }) => {
       onMouseOver={handleOnHover}
       onMouseOut={handleOnMouseOut}
       width={data.width}
-      height={data.height}
+      height={data.length}
     >
       <OptionsMenu visible={showButton} onClick={handleClick}>
         <img src={OptionsIcon} alt="options" />
-
         <OptionsBox visible={menuOpen}>
           {SortLocationConnectors(data.connectors).map((conn) => (
             <OptionsElement
@@ -112,7 +107,7 @@ const BlockViewLocation: FC<NodeProps> = ({ data }) => {
         </OptionsBox>
       </OptionsMenu>
 
-      <div style={{ paddingTop: "15px" }}>{data.label ?? data.names}</div>
+      <div style={{ paddingTop: "4px" }}>{data.label ?? data.names}</div>
       {connectors.map((conn) => {
         const [type, pos, className] = GetBlockHandleType(conn);
         if (data.id === conn.nodeId && ValidateConnector(conn, isLocation)) {

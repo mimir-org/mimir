@@ -8,6 +8,7 @@ import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
 import { OpenProjectMenu } from "../project/openProject/OpenProjectMenu";
 import { Project, VIEW_TYPE } from "../../models/project";
 import { GetTreeEdgeType } from "./helpers/tree";
+import { changeInspectorTab } from "../../redux/store/inspector/actions";
 import ReactFlow, { ReactFlowProvider, Elements } from "react-flow-renderer";
 import {
   updatePosition,
@@ -83,6 +84,7 @@ const FlowTree = () => {
 
   const OnElementClick = (_event, element) => {
     dispatch(changeActiveNode(element.id, true));
+    dispatch(changeInspectorTab(0));
   };
 
   const OnClick = (e) => {
@@ -114,25 +116,24 @@ const FlowTree = () => {
     <>
       {isTreeView && (
         <ReactFlowProvider>
-          <div className="reactflow-wrapper" ref={reactFlowWrapper}>
-            <ReactFlow
-              elements={elements}
-              onConnect={OnConnect}
-              onElementsRemove={OnElementsRemove}
-              onLoad={OnLoad}
-              onDrop={OnDrop}
-              onDragOver={OnDragOver}
-              onNodeDragStop={OnNodeDragStop}
-              onElementClick={OnElementClick}
-              nodeTypes={GetTreeNodeTypes}
-              edgeTypes={GetTreeEdgeTypes}
-              snapToGrid={true}
-              snapGrid={[5, 5]}
-              onClick={(e) => OnClick(e)}
-            >
-              <FullscreenBox />
-            </ReactFlow>
-          </div>
+          <div className="reactflow-wrapper" ref={reactFlowWrapper}></div>
+          <ReactFlow
+            elements={elements}
+            onConnect={OnConnect}
+            onElementsRemove={OnElementsRemove}
+            onLoad={OnLoad}
+            onDrop={OnDrop}
+            onDragOver={OnDragOver}
+            onNodeDragStop={OnNodeDragStop}
+            onElementClick={OnElementClick}
+            nodeTypes={GetTreeNodeTypes}
+            edgeTypes={GetTreeEdgeTypes}
+            snapToGrid={true}
+            snapGrid={[5, 5]}
+            onClick={(e) => OnClick(e)}
+          >
+            <FullscreenBox />
+          </ReactFlow>
         </ReactFlowProvider>
       )}
       {!project && !HasProject() && (

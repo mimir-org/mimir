@@ -1,13 +1,14 @@
 import styled from "styled-components";
-import { Color } from "../../../../componentLibrary";
+import { Color } from "../..";
 
-const InspectorTabsHeader = styled.div`
+const InspectorBody = styled.div`
   background-color: ${Color.LightGrey};
   color: ${Color.Black};
-  height: 35px;
+  height: 34px;
   border-top: 1px solid ${Color.Grey};
   border-bottom: 1px solid ${Color.Grey};
-  width: auto;
+  width: 100%;
+  overflow: hidden;
 `;
 
-export default InspectorTabsHeader;
+export default InspectorBody;

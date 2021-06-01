@@ -6,10 +6,8 @@ const Textarea = styled.textarea`
   border-radius: 5px;
   margin-bottom: 10px;
   padding: 5px;
-  width: ${(props: { width: number }) =>
-    props.width === 0 ? `90%` : props.width + `px`};
-  height: ${(props: { height: number }) =>
-    props.height === 0 ? `90%` : props.height + `px`};
+  width: 100%;
+  height: 100px;
   background-color: ${(props: { readOnly: boolean }) =>
     props.readOnly ? "#f2f2f2" : "#fff"};
 `;
