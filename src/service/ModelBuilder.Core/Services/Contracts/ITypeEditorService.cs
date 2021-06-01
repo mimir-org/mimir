@@ -10,6 +10,7 @@ namespace Mb.Core.Services.Contracts
     public interface ITypeEditorService
     {
         Task<LibraryType> GetTypeById(string id, bool ignoreNotFound = false);
+        Dictionary<int, string> GetStatuses();
         Dictionary<int, string> GetAspects();
         Dictionary<int, string> GetObjectTypes();
         IEnumerable<Rds> GetRds(Aspect aspect);
