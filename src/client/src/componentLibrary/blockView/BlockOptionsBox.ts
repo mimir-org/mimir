@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Color } from "..";
 
-const OptionsBox = styled.div`
+const BlockOptionsBox = styled.div`
   visibility: ${(props: { visible: boolean }) => !props.visible && "hidden"};
   border: 1px solid ${Color.Black};
   background-color: ${Color.White};
@@ -9,8 +9,8 @@ const OptionsBox = styled.div`
   height: auto;
   width: max-content;
   position: absolute;
-  left: ${(props) => (props.type === "function" ? "100px" : "15px")};
-  top: ${(props) => (props.type === "function" ? "-1px" : "0px")};
+  right: 91px;
+  top: -1px;
   z-index: 100;
 
   .button {
@@ -19,4 +19,4 @@ const OptionsBox = styled.div`
   }
 `;
 
-export default OptionsBox;
+export default BlockOptionsBox;

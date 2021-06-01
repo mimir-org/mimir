@@ -90,7 +90,6 @@ const BlockViewLocation: FC<NodeProps> = ({ data }) => {
     >
       <OptionsMenu visible={showButton} onClick={handleClick}>
         <img src={OptionsIcon} alt="options" />
-
         <OptionsBox visible={menuOpen}>
           {SortLocationConnectors(data.connectors).map((conn) => (
             <OptionsElement
@@ -107,21 +106,6 @@ const BlockViewLocation: FC<NodeProps> = ({ data }) => {
           ))}
         </OptionsBox>
       </OptionsMenu>
-      <OptionsBox visible={menuOpen}>
-        {SortLocationConnectors(data.connectors).map((conn) => (
-          <OptionsElement
-            key={conn.id}
-            onClick={() => handleConnectorClick(conn)}
-          >
-            {GetConnectorName(conn)}
-            <img
-              src={GetConnectorIcon(conn.terminal)}
-              alt="icon"
-              className="button"
-            />
-          </OptionsElement>
-        ))}
-      </OptionsBox>
 
       <div style={{ paddingTop: "4px" }}>{data.label ?? data.names}</div>
       {connectors.map((conn) => {

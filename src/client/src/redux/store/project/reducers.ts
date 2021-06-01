@@ -1,7 +1,7 @@
 import { IsAspectNode } from "../../../components/flow/helpers";
 import { Edge, Node, ProjectSimple } from "../../../models/project";
 import { GetProject } from "../localStorage";
-import { TraverseNodes, FindChildNodes } from "./helpers/";
+import { TraverseTree } from "./helpers/";
 import {
   FETCHING_PROJECT,
   FETCHING_PROJECT_SUCCESS_OR_ERROR,
@@ -245,24 +245,9 @@ export function projectReducer(
 
       if (isParent) {
         let elements: (Node | Edge)[] = [];
-        let parentNode = node;
-        let children: Node[] = [];
         elements.push(node);
 
-        FindChildNodes(edgeList, nodeList, parentNode, children);
-
-        const getParent = () => {
-          return parentNode.id;
-        };
-
-        children.forEach((_node, index) => {
-          parentNode = children[index];
-          const toEdge = edgeList.find((x) => x.toNode === getParent());
-          elements.push(parentNode, toEdge);
-          const nextEdge = edgeList.find((x) => x.fromNode === getParent());
-          if (nextEdge)
-            TraverseNodes(nextEdge, nodeList, edgeList, elements, type);
-        });
+        TraverseTree(edgeList, nodeList, node, elements);
 
         return {
           ...state,
