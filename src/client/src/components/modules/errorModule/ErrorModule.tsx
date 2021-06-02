@@ -12,6 +12,8 @@ import { TextResources } from "../../../assets/textResources";
 import { BadRequestData } from "../../../models/webclient";
 import { deleteProjectError } from "../../../redux/store/project/actions";
 import { deleteCommonError } from "../../../redux/store/common/actions";
+import { deleteLibraryError } from "../../../redux/store/library/actions";
+import { deleteUserError } from "../../../redux/store/user/actions";
 
 interface ErrorMessage {
   key: string;
@@ -31,6 +33,8 @@ const ErrorModule = () => {
         if (error.key) {
           dispatch(deleteProjectError(error.key));
           dispatch(deleteCommonError(error.key));
+          dispatch(deleteLibraryError(error.key));
+          dispatch(deleteUserError(error.key));
         }
       });
     }
@@ -68,11 +72,15 @@ const ErrorModule = () => {
       });
     }
 
-    if (libraryState.hasError) {
-      errors.push({
-        module: "Library",
-        message: libraryState.errorMsg,
-        errorData: {} as BadRequestData,
+    if (libraryState.apiError) {
+      libraryState.apiError.forEach((error) => {
+        if (error)
+          errors.push({
+            module: "Library",
+            key: error.key,
+            message: error.errorMessage,
+            errorData: error.errorData,
+          });
       });
     }
 
@@ -88,11 +96,15 @@ const ErrorModule = () => {
       });
     }
 
-    if (userState.hasError) {
-      errors.push({
-        module: "User",
-        message: libraryState.errorMsg,
-        errorData: {} as BadRequestData,
+    if (userState.apiError) {
+      userState.apiError.forEach((error) => {
+        if (error)
+          errors.push({
+            module: "User",
+            key: error.key,
+            message: error.errorMessage,
+            errorData: error.errorData,
+          });
       });
     }
 
@@ -100,10 +112,9 @@ const ErrorModule = () => {
     setVisible(errors.length > 0);
   }, [
     commonState.apiError,
-    libraryState.errorMsg,
-    libraryState.hasError,
+    libraryState.apiError,
     projectState.apiError,
-    userState.hasError,
+    userState.apiError,
   ]);
 
   return (

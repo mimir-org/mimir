@@ -1,11 +1,8 @@
 import { put } from "redux-saga/effects";
-import {
-    FETCHING_USER_SUCCESS_OR_ERROR,
-    UserActionTypes,
-    UserState,
-} from "./../../store/user/types";
+import { FETCHING_USER_SUCCESS_OR_ERROR, UserActionTypes } from "./../../store/user/types";
 import { User } from "../../../models/user";
 import { authProvider } from "../../../providers/authProvider";
+import { ApiError } from "../../../models/webclient";
 
 export function* getUser(action: UserActionTypes) {
     try {
@@ -19,27 +16,31 @@ export function* getUser(action: UserActionTypes) {
         };
 
         const payload = {
-            fetching: false,
             user: user,
-            hasError: false,
-            errorMsg: null,
+            apiError: null
         };
 
         yield put({
             type: FETCHING_USER_SUCCESS_OR_ERROR,
-            payload: payload as UserState,
+            payload: payload,
         });
     } catch (error) {
+
+
+        const apiError = {
+            key: FETCHING_USER_SUCCESS_OR_ERROR,
+            errorMessage: error.message,
+            errorData: null
+        } as ApiError;
+
         const payload = {
-            fetching: false,
             user: null,
-            hasError: true,
-            errorMsg: error,
+            apiError: apiError
         };
 
         yield put({
             type: FETCHING_USER_SUCCESS_OR_ERROR,
-            payload: payload as UserState,
+            payload: payload,
         });
     }
 }

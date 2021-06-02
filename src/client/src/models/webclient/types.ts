@@ -70,7 +70,7 @@ export async function http<T>(request: RequestInfo): Promise<HttpResponse<T>> {
             return response;
         }
     } catch (e) {
-        throw new Error(e.message);
+        throw new Error("Ther server is unavailable");
     }
 }
 

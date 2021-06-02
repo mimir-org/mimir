@@ -2,10 +2,9 @@ import { call, put } from "redux-saga/effects";
 import {
     FETCHING_LIBRARY_SUCCESS_OR_ERROR,
     LibraryActionTypes,
-    LibraryState,
 } from "../../store/library/types";
 
-import { get } from "../../../models/webclient";
+import { get, ApiError, GetBadResponseData } from "../../../models/webclient";
 
 export function* searchLibrary(action: LibraryActionTypes) {
     try {
@@ -14,42 +13,50 @@ export function* searchLibrary(action: LibraryActionTypes) {
 
         // This is a bad request
         if (response.status === 400) {
+            const data = GetBadResponseData(response);
+
+            const apiError = {
+                key: FETCHING_LIBRARY_SUCCESS_OR_ERROR,
+                errorMessage: data.title,
+                errorData: data
+            } as ApiError;
+
             const payload = {
                 nodes: [],
-                hasError: true,
-                errorMsg: response.data,
-                fetching: false,
+                apiError: apiError
             };
 
             yield put({
                 type: FETCHING_LIBRARY_SUCCESS_OR_ERROR,
-                payload: payload as LibraryState,
+                payload: payload,
             });
             return;
         }
 
         const payload = {
             nodes: response.data,
-            hasError: false,
-            errorMsg: null,
-            fetching: false,
+            apiError: null
         };
 
         yield put({
             type: FETCHING_LIBRARY_SUCCESS_OR_ERROR,
-            payload: payload as LibraryState,
+            payload: payload,
         });
     } catch (error) {
+        const apiError = {
+            key: FETCHING_LIBRARY_SUCCESS_OR_ERROR,
+            errorMessage: error.message,
+            errorData: null
+        } as ApiError;
+
         const payload = {
             nodes: [],
-            hasError: true,
-            errorMsg: error.message,
-            fetching: false,
+            apiError: apiError
         };
 
         yield put({
             type: FETCHING_LIBRARY_SUCCESS_OR_ERROR,
-            payload: payload as LibraryState,
+            payload: payload,
         });
     }
 }
