@@ -25,17 +25,17 @@ namespace Mb.Core.Services
         private readonly IRdsRepository _rdsRepository;
         private readonly IAttributeTypeRepository _attributeTypeRepository;
         private readonly ILibraryTypeRepository _libraryTypeComponentRepository;
-        private readonly ICommonRepository _generateIdRepository;
+        private readonly ICommonRepository _commonRepository;
         private readonly IContractorRepository _contractorRepository;
         private readonly ITerminalTypeRepository _terminalTypeRepository;
 
-        public TypeEditorService(IFileRepository fileRepository, IRdsRepository rdsRepository, IAttributeTypeRepository attributeTypeRepository, ILibraryTypeRepository libraryTypeComponentRepository, ICommonRepository generateIdRepository, IContractorRepository contractorRepository, ITerminalTypeRepository terminalTypeRepository)
+        public TypeEditorService(IFileRepository fileRepository, IRdsRepository rdsRepository, IAttributeTypeRepository attributeTypeRepository, ILibraryTypeRepository libraryTypeComponentRepository, ICommonRepository commonRepository, IContractorRepository contractorRepository, ITerminalTypeRepository terminalTypeRepository)
         {
             _fileRepository = fileRepository;
             _rdsRepository = rdsRepository;
             _attributeTypeRepository = attributeTypeRepository;
             _libraryTypeComponentRepository = libraryTypeComponentRepository;
-            _generateIdRepository = generateIdRepository;
+            _commonRepository = commonRepository;
             _contractorRepository = contractorRepository;
             _terminalTypeRepository = terminalTypeRepository;
         }
@@ -81,6 +81,15 @@ namespace Mb.Core.Services
         public Dictionary<int, string> GetObjectTypes()
         {
             return EnumExtensions.ToDictionary<ObjectType>();
+        }
+
+        /// <summary>
+        /// Get all terminal ctaegories
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<int, string> GetTerminalCategories()
+        {
+            return EnumExtensions.ToDictionary<TerminalCategory>();
         }
 
         /// <summary>
@@ -151,7 +160,7 @@ namespace Mb.Core.Services
             }
 
             libraryTypeComponent.CreateJsonData();
-            libraryTypeComponent.Id = _generateIdRepository.CreateUniqueId();
+            libraryTypeComponent.Id = _commonRepository.CreateUniqueId();
             await _libraryTypeComponentRepository.CreateAsync(libraryTypeComponent);
             await _libraryTypeComponentRepository.SaveAsync();
             return libraryTypeComponent;
@@ -253,6 +262,21 @@ namespace Mb.Core.Services
             return attributeType;
         }
 
+        /// <summary>
+        /// Create a terminal type
+        /// </summary>
+        /// <param name="terminalType"></param>
+        /// <returns></returns>
+        public async Task<TerminalType> CreateTerminalType(TerminalType terminalType)
+        {
+            terminalType.Id = _commonRepository.CreateUniqueId();
+            terminalType.CreateJsonData();
+            await _terminalTypeRepository.CreateAsync(terminalType);
+            await _terminalTypeRepository.SaveAsync();
+            terminalType.CreateFromJsonData();
+            return terminalType;
+        }
+
         #endregion
 
         #region Private methods
@@ -297,6 +321,7 @@ namespace Mb.Core.Services
             foreach (var item in notExistingTypes)
             {
                 item.CreateJsonData();
+                item.TerminalCategory = _commonRepository.GetCategory(item.Terminal);
                 await _terminalTypeRepository.CreateAsync(item);
             }
 

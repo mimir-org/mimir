@@ -4,7 +4,7 @@ namespace Mb.Models.Enums
 {
     public enum TerminalCategory
     {
-        [Display(Name = "NotSet")]
+        [Display(Name = "Not Set")]
         NotSet = 0,
 
         [Display(Name = "Material Fluid")]
@@ -28,7 +28,7 @@ namespace Mb.Models.Enums
         [Display(Name = "Information")]
         Information = 7,
 
-        [Display(Name = "Information")]
+        [Display(Name = "Force")]
         Force = 8
     }
 }

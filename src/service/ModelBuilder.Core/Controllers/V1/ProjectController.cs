@@ -118,7 +118,7 @@ namespace Mb.Core.Controllers.V1
                 var data = await _projectService.GetProject(id);
                 return Ok(data);
             }
-            catch (ModelBuilderNotFoundException e)
+            catch (ModelBuilderNotFoundException)
             {
                 return NoContent();
             }
