@@ -69,7 +69,6 @@ namespace Mb.Models.Data
         [Required]
         public BuildStatus Status { get; set; }
 
-        [Required]
         public string UpdatedBy { get; set; }
 
         [Required]

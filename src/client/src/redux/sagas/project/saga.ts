@@ -11,8 +11,7 @@ import {
     FETCHING_PROJECT_SUCCESS_OR_ERROR,
     CREATING_PROJECT_SUCCESS_OR_ERROR,
     SEARCH_PROJECT_SUCCESS_OR_ERROR,
-    SAVE_PROJECT_SUCCESS_OR_ERROR,
-    ProjectState,
+    SAVE_PROJECT_SUCCESS_OR_ERROR
 } from "../../store/project/types";
 
 export function* getProject(action) {

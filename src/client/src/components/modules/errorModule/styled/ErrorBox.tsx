@@ -3,7 +3,7 @@ import { Color, FontSize } from "./../../../..//componentLibrary";
 
 const ErrorBox = styled.div`
   width: 400px;
-  height: 200px;
+  height: 70%;
   margin: auto;
   border: 2px solid ${Color.Red};
   background-color: ${Color.White};

@@ -11,6 +11,7 @@ import { CloseIcon } from "../../../assets/icons";
 import { TextResources } from "../../../assets/textResources";
 import { BadRequestData } from "../../../models/webclient";
 import { deleteProjectError } from "../../../redux/store/project/actions";
+import { deleteCommonError } from "../../../redux/store/common/actions";
 
 interface ErrorMessage {
   key: string;
@@ -27,8 +28,10 @@ const ErrorModule = () => {
   const closeHeader = () => {
     if (errors) {
       errors.forEach((error) => {
-        console.log(error.key);
-        if (error.key) dispatch(deleteProjectError(error.key));
+        if (error.key) {
+          dispatch(deleteProjectError(error.key));
+          dispatch(deleteCommonError(error.key));
+        }
       });
     }
     setVisible(false);
@@ -73,11 +76,15 @@ const ErrorModule = () => {
       });
     }
 
-    if (commonState.hasError) {
-      errors.push({
-        module: "Common",
-        message: libraryState.errorMsg,
-        errorData: {} as BadRequestData,
+    if (commonState.apiError) {
+      commonState.apiError.forEach((error) => {
+        if (error)
+          errors.push({
+            module: "Common",
+            key: error.key,
+            message: error.errorMessage,
+            errorData: error.errorData,
+          });
       });
     }
 
@@ -92,7 +99,7 @@ const ErrorModule = () => {
     setErrors(errors);
     setVisible(errors.length > 0);
   }, [
-    commonState.hasError,
+    commonState.apiError,
     libraryState.errorMsg,
     libraryState.hasError,
     projectState.apiError,
