@@ -1,7 +1,7 @@
 import { Attribute, Node } from "../../../models/project";
 import { TabRow } from "../../../componentLibrary/box/inspector";
 import { useDispatch } from "react-redux";
-import { IsTransportTerminal } from "../../flow/helpers";
+import { IsTransportTerminal, CreateId } from "../../flow/helpers";
 import { CalculateRows, SetConnectorColumn, SetNodeColumn } from "./helpers";
 import { Input, InputBox, Select, AttributeField } from "../../../componentLibrary";
 import {
@@ -60,7 +60,6 @@ const TabContent = ({ node, index }: Props) => {
   };
   const rows = CalculateRows(nodeAttributes.length);
   let count = rows;
-
   return (
     <>
       {/* TODO: Refactor, rewrite sorting function?
@@ -69,8 +68,7 @@ const TabContent = ({ node, index }: Props) => {
       {index === 1 && (
         <TabRow>
           {nodeAttributes?.map((attr) => (
-            <AttributeField>
-              <div key={attr.id}>
+            <AttributeField key={CreateId()}>
                 <div>{attr.key}</div>
                 <InputBox>
                   <Input
@@ -94,7 +92,6 @@ const TabContent = ({ node, index }: Props) => {
                     ))}
                   </Select>
                 </InputBox>
-              </div>
             </AttributeField>
           ))}
         </TabRow>
