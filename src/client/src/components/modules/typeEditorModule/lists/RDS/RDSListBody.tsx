@@ -2,24 +2,20 @@ import { ListElementsContainer } from "../../../../../componentLibrary";
 import { VerticalScrollbar } from "../../../../../componentLibrary";
 import { RDSListElement } from "../RDS/RDSListElement";
 
-interface Props {}
+interface Props {
+  listElements: any;
+}
 
-export const RDSListBody = ({}: Props) => {
+export const RDSListBody = ({ listElements }: Props) => {
   return (
     <VerticalScrollbar height={200}>
       <ListElementsContainer>
-        <RDSListElement />
-        <RDSListElement />
-        <RDSListElement />
-        <RDSListElement />
-        <RDSListElement />
-        <RDSListElement />
-        <RDSListElement />
-        <RDSListElement />
-        <RDSListElement />
-        <RDSListElement />
-        <RDSListElement />
-        <RDSListElement />
+        {listElements &&
+          listElements.map((element) => (
+            <>
+              <RDSListElement key={element[1].id} name={element[1].name} />
+            </>
+          ))}
       </ListElementsContainer>
     </VerticalScrollbar>
   );

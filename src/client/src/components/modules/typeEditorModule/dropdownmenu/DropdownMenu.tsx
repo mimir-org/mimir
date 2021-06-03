@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { expandedIcon, unexpandedIcon } from "../../../../assets/icons";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../../redux/store";
+import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
+import {
+  getRDS,
+  changeSelectedAspect,
+} from "../../../../redux/store/typeEditor/actions";
 import {
   DropdownMenuWrapper,
   DropdownMenuHeader,
@@ -7,7 +13,7 @@ import {
   DropdownMenuListItem,
 } from "../../../../componentLibrary/dropdown";
 import "./dropdownmenu.scss";
-
+import { expandedIcon, unexpandedIcon } from "../../../../assets/icons";
 interface Props {
   label: string;
   placeHolder: string;
@@ -15,8 +21,14 @@ interface Props {
 }
 
 export const DropDownMenu = ({ label, placeHolder, listItems }: Props) => {
+  const dispatch = useDispatch();
+
   const [isListOpen, setIsListOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState(placeHolder);
+
+  const state = useSelector<RootState>(
+    (state) => state.typeEditor
+  ) as TypeEditorState;
 
   const toggleList = () => {
     setIsListOpen(!isListOpen);
@@ -25,6 +37,10 @@ export const DropDownMenu = ({ label, placeHolder, listItems }: Props) => {
   const handleChange = (item) => {
     setSelectedValue(item);
     setIsListOpen(!isListOpen);
+    if (label === "Aspect") {
+      dispatch(changeSelectedAspect(item));
+      dispatch(getRDS(state.aspect));
+    }
   };
 
   return (
@@ -50,7 +66,6 @@ export const DropDownMenu = ({ label, placeHolder, listItems }: Props) => {
                 key={key}
                 onClick={() => handleChange(value)}
               >
-                {console.log(key, value)}
                 <DropdownMenuListItem>
                   <p>{value}</p>
                 </DropdownMenuListItem>

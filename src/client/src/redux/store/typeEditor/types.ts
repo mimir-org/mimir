@@ -1,8 +1,6 @@
 import {
   AttributeType,
   Dictionary,
-  LibraryType,
-  NodeType,
   Rds,
   TerminalType,
 } from "../../../models/project";
@@ -10,30 +8,11 @@ import {
 export const FETCHING_INITIAL_DATA = "FETCHING_INITIAL_DATA";
 export const FETCHING_INITIAL_SUCCESS_OR_ERROR =
   "FETCHING_INITIAL_SUCCESS_OR_ERROR";
-
-export const CREATING_TYPE = "CREATING_TYPE";
-export const CREATING_TYPE_SUCCESS_OR_ERROR = "CREATING_TYPE_SUCCESS_OR_ERROR";
-export const FETCHING_TYPE = "FETCHING_TYPE";
-export const FETCHING_TYPE_SUCCESS_OR_ERROR = "FETCHING_TYPE_SUCCESS_OR_ERROR";
-export const SAVE_TYPE = "SAVE_TYPE";
-export const SAVE_TYPE_SUCCESS_OR_ERROR = "SAVE_TYPE_SUCCESS_OR_ERROR";
-export const FETCHING_ASPECTS = "FETCHING_ASPECTS";
-export const FETCHING_ASPECTS_SUCCESS_OR_ERROR =
-  "FETCHING_ASPECTS_SUCCESS_OR_ERROR";
-export const FETCHING_OBJECTS = "FETCHING_OBJECTS";
-export const FETCHING_OBJECTS_SUCCESS_OR_ERROR =
-  "FETCHING_OBJECTS_SUCCESS_OR_ERROR";
-export const FETCHING_STATUS = "FETCHING_STATUS";
-export const FETCHING_STATUS_SUCCESS_OR_ERROR =
-  "FETCHING_STATUS_SUCCESS_OR_ERROR";
 export const FETCHING_RDS = "FETCHING_RDS";
 export const FETCHING_RDS_SUCCESS_OR_ERROR = "FETCHING_RDS_SUCCESS_OR_ERROR";
-export const FETCHING_TERMINALS = "FETCHING_TERMINALS";
-export const FETCHING_TERMINALS_SUCCESS_OR_ERROR =
-  "FETCHING_TERMINALS_SUCCESS_OR_ERROR";
-export const FETCHING_ATTRIBUTES = "FETCHING_ATTRIBUTES";
-export const FETCHING_ATTRIBUTES_SUCCESS_OR_ERROR =
-  "FETCHING_ATTRIBUTES_SUCCESS_OR_ERROR";
+export const CHANGE_ASPECT = "CHANGE_ASPECT";
+export const CREATING_TYPE = "CREATING_TYPE";
+export const CREATING_TYPE_SUCCESS_OR_ERROR = "CREATING_TYPE_SUCCESS_OR_ERROR";
 
 // State types
 export interface TypeEditorState {
@@ -44,6 +23,7 @@ export interface TypeEditorState {
   rdsList: Rds[];
   terminals: TerminalType[];
   attributes: AttributeType[];
+  aspect: string;
 }
 
 // Action types
@@ -61,66 +41,42 @@ interface FetchingInitialDataActionFinished {
   };
 }
 
+interface FetchingRDSAction {
+  type: typeof FETCHING_RDS;
+  payload: {
+    aspect: string;
+  };
+}
+
+interface FetchingRDSActionFinished {
+  type: typeof FETCHING_RDS_SUCCESS_OR_ERROR;
+  payload: {
+    Rds: Rds[];
+  };
+}
+
+export interface ChangeSelectedAspect {
+  type: typeof CHANGE_ASPECT;
+  payload: {
+    aspect: string;
+  };
+}
+
 interface CreatingTypeAction {
   type: typeof CREATING_TYPE;
   payload: object;
 }
 
-interface CreatingTypeActionActionFinished {
+interface CreatingTypeActionFinished {
   type: typeof CREATING_TYPE_SUCCESS_OR_ERROR;
-  payload: TypeEditorState;
-}
-
-interface FetchingTypeAction {
-  type: typeof FETCHING_TYPE;
-  payload: string;
-}
-
-interface FetchingTypeActionFinished {
-  type: typeof FETCHING_TYPE_SUCCESS_OR_ERROR;
-  payload: TypeEditorState;
-}
-
-interface SaveTypeAction {
-  type: typeof SAVE_TYPE;
-  payload: LibraryType;
-}
-
-interface SaveTypeActionFinished {
-  type: typeof SAVE_TYPE_SUCCESS_OR_ERROR;
-  payload: TypeEditorState;
-}
-
-interface FetchAspectsAction {
-  type: typeof FETCHING_ASPECTS;
-  payload: string;
-}
-
-interface FetchAspectsActionFinished {
-  type: typeof FETCHING_ASPECTS_SUCCESS_OR_ERROR;
-  payload: TypeEditorState;
-}
-
-interface FetchObjectsAction {
-  type: typeof FETCHING_OBJECTS;
-  payload: string;
-}
-
-interface FetchObjectsActionFinished {
-  type: typeof FETCHING_OBJECTS_SUCCESS_OR_ERROR;
   payload: TypeEditorState;
 }
 
 export type TypeEditorActionTypes =
   | FetchingInitialDataAction
   | FetchingInitialDataActionFinished
+  | FetchingRDSAction
+  | FetchingRDSActionFinished
+  | ChangeSelectedAspect
   | CreatingTypeAction
-  | CreatingTypeActionActionFinished
-  | FetchingTypeAction
-  | FetchingTypeActionFinished
-  | SaveTypeAction
-  | SaveTypeActionFinished
-  | FetchAspectsAction
-  | FetchAspectsActionFinished
-  | FetchObjectsAction
-  | FetchObjectsActionFinished;
+  | CreatingTypeActionFinished;

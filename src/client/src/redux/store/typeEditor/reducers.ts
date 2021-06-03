@@ -1,29 +1,12 @@
 import {
-  CREATING_TYPE,
-  CREATING_TYPE_SUCCESS_OR_ERROR,
-  FETCHING_TYPE,
-  FETCHING_TYPE_SUCCESS_OR_ERROR,
-  SAVE_TYPE,
-  SAVE_TYPE_SUCCESS_OR_ERROR,
-  FETCHING_ASPECTS,
-  FETCHING_ASPECTS_SUCCESS_OR_ERROR,
-  FETCHING_OBJECTS,
-  FETCHING_OBJECTS_SUCCESS_OR_ERROR,
-  FETCHING_STATUS,
-  FETCHING_STATUS_SUCCESS_OR_ERROR,
   FETCHING_RDS,
   FETCHING_RDS_SUCCESS_OR_ERROR,
-  FETCHING_TERMINALS,
-  FETCHING_TERMINALS_SUCCESS_OR_ERROR,
-  FETCHING_ATTRIBUTES,
-  FETCHING_ATTRIBUTES_SUCCESS_OR_ERROR,
   FETCHING_INITIAL_DATA,
   FETCHING_INITIAL_SUCCESS_OR_ERROR,
+  CHANGE_ASPECT,
   TypeEditorActionTypes,
   TypeEditorState,
 } from "./types";
-
-import { Dictionary } from "../../../models/project";
 
 const initialState: TypeEditorState = {
   fetching: false,
@@ -33,6 +16,7 @@ const initialState: TypeEditorState = {
   rdsList: [],
   terminals: [],
   attributes: [],
+  aspect: "NotSet",
 };
 
 export function typeEditorReducer(
@@ -46,7 +30,6 @@ export function typeEditorReducer(
         fetching: true,
       };
     case FETCHING_INITIAL_SUCCESS_OR_ERROR:
-      console.log(action.payload);
       return {
         ...state,
         fetching: false,
@@ -54,38 +37,22 @@ export function typeEditorReducer(
         statuses: action.payload.statuses,
         objectTypes: action.payload.objectTypes,
       };
-    case CREATING_TYPE:
+    case FETCHING_RDS:
+      return {
+        ...state,
+        fetching: true,
+      };
+    case FETCHING_RDS_SUCCESS_OR_ERROR:
       return {
         ...state,
         fetching: false,
+        rdsList: action.payload.Rds ? action.payload.Rds : [],
       };
-
-    case CREATING_TYPE_SUCCESS_OR_ERROR:
+    case CHANGE_ASPECT:
       return {
         ...state,
-        fetching: action.payload.fetching,
+        aspect: action.payload.aspect,
       };
-    case FETCHING_ASPECTS:
-      return {
-        ...state,
-        fetching: true,
-      };
-    case FETCHING_ASPECTS_SUCCESS_OR_ERROR:
-      return {
-        ...state,
-        fetching: action.payload.fetching,
-      };
-    case FETCHING_OBJECTS:
-      return {
-        ...state,
-        fetching: true,
-      };
-    case FETCHING_OBJECTS_SUCCESS_OR_ERROR:
-      return {
-        ...state,
-        fetching: action.payload.fetching,
-      };
-
     default:
       return state;
   }

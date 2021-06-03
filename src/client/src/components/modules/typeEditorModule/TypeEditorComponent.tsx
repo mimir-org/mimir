@@ -2,8 +2,11 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { useHistory } from "react-router-dom";
-import { MODULE_TYPE, NodeType } from "../../../models/project";
-import { getInitialData } from "../../../redux/store/typeEditor/actions";
+import { MODULE_TYPE } from "../../../models/project";
+import {
+  getInitialData,
+  getRDS,
+} from "../../../redux/store/typeEditor/actions";
 import { changeFlowView } from "../../../redux/store/flow/actions";
 
 import {
@@ -19,9 +22,9 @@ import {
   TypeEditorHeader,
   TypeInfo,
   TypeNameInput,
+  TextInput,
   ChooseProperties,
 } from "./styled";
-import { Input } from "../../../componentLibrary";
 import { TextResources } from "../../../assets/textResources";
 import { CloseIcon } from "../../../assets/icons";
 import { SetView } from "../../../redux/store/localStorage";
@@ -34,9 +37,11 @@ interface Props {
 export const TypeEditorComponent = ({ mode }: Props) => {
   const { push } = useHistory();
   const dispatch = useDispatch();
+
   const state = useSelector<RootState>(
     (state) => state.typeEditor
   ) as TypeEditorState;
+
   const handleClick = () => {
     dispatch(changeFlowView(MODULE_TYPE.TYPEEDITOR));
     SetView(MODULE_TYPE.TYPEEDITOR);
@@ -45,6 +50,7 @@ export const TypeEditorComponent = ({ mode }: Props) => {
 
   useEffect(() => {
     dispatch(getInitialData());
+    dispatch(getRDS(state.aspect));
   }, [dispatch]);
 
   return (
@@ -55,7 +61,6 @@ export const TypeEditorComponent = ({ mode }: Props) => {
           <img src={CloseIcon} alt="close-window" onClick={handleClick} />
         </TypeEditorHeader>
         <TypeInfo>
-          {console.log(Object.entries(state.aspects))}
           <DropdownMenu
             label={TextResources.TypeEditor_Aspect}
             placeHolder="Choose Aspect"
@@ -68,8 +73,7 @@ export const TypeEditorComponent = ({ mode }: Props) => {
           />
           <TypeNameInput>
             <p>{TextResources.TypeEditor_Type_Name}</p>
-            <Input
-              width={300}
+            <TextInput
               onChange={() => null}
               inputType="text"
               placeholder="Write Type name"
@@ -77,7 +81,7 @@ export const TypeEditorComponent = ({ mode }: Props) => {
           </TypeNameInput>
           <DropdownMenu
             label={TextResources.TypeEditor_Status}
-            placeHolder="Draft"
+            placeHolder="Choose Status"
             listItems={Object.entries(state.statuses)}
           />
         </TypeInfo>

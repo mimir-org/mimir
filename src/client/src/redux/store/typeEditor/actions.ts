@@ -1,12 +1,18 @@
 import {
   CREATING_TYPE,
   FETCHING_INITIAL_DATA,
+  FETCHING_RDS,
+  CHANGE_ASPECT,
   TypeEditorActionTypes,
 } from "./types";
-import { NodeType, Terminal, Attribute } from "../../../models/project";
+import {
+  NodeType,
+  Terminal,
+  Attribute,
+  Dictionary,
+} from "../../../models/project";
 
-// TO DO create type, save type, get aspects, get object types,
-// get status, get RDS, get terminals, get attributes
+// TO DO create type, save type, get terminals, get attributes
 
 export function create(
   id: string,
@@ -44,5 +50,23 @@ export function getInitialData(): TypeEditorActionTypes {
   return {
     type: FETCHING_INITIAL_DATA,
     payload: null,
+  };
+}
+
+export function getRDS(aspect: string): TypeEditorActionTypes {
+  return {
+    type: FETCHING_RDS,
+    payload: {
+      aspect,
+    },
+  };
+}
+
+export function changeSelectedAspect(aspect: Dictionary) {
+  return {
+    type: CHANGE_ASPECT,
+    payload: {
+      aspect,
+    },
   };
 }
