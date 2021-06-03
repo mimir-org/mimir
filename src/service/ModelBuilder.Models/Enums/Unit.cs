@@ -128,6 +128,18 @@ namespace Mb.Models.Enums
         Mm2 = 39,
 
         [Display(Name = "sq.inch")]
-        SqInch = 40
+        SqInch = 40,
+
+        [Display(Name = "m3/d")]
+        M3D = 41,
+
+        [Display(Name = "m3/h")]
+        M3H = 42,
+
+        [Display(Name = "CF/hr")]
+        Cfhr = 43,
+
+        [Display(Name = "m")]
+        M = 44
     }
 }
