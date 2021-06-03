@@ -100,6 +100,27 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
+        /// Get all units
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("units")]
+        [ProducesResponseType(typeof(Dictionary<int, string>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public IActionResult GetUnits()
+        {
+            try
+            {
+                var data = _typeEditorService.GetUnits();
+                return Ok(data);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
         /// Get object types
         /// </summary>
         /// <returns></returns>
