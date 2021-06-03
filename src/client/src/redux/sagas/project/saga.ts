@@ -1,11 +1,6 @@
 import { call, put } from "redux-saga/effects";
 import { Project } from "../../../models/project";
 import { get, post, GetBadResponseData, ApiError } from "../../../models/webclient";
-import {
-    SetProject,
-    DeleteProject,
-    SetProjectId,
-} from "../../store/localStorage";
 
 import {
     FETCHING_PROJECT_SUCCESS_OR_ERROR,
@@ -42,9 +37,6 @@ export function* getProject(action) {
         }
 
         const project = response.data as Project;
-        DeleteProject();
-        SetProject(project);
-        SetProjectId(project.id);
 
         const payload = {
             project: project,
@@ -163,9 +155,6 @@ export function* createProject(action) {
 
         const project = response.data as Project;
         project.edges = [];
-        DeleteProject();
-        SetProject(project);
-        SetProjectId(project.id);
 
         const payload = {
             project: project,
@@ -224,9 +213,6 @@ export function* updateProject(action) {
         }
 
         const project = response.data as Project;
-        DeleteProject();
-        SetProject(project);
-        SetProjectId(project.id);
 
         const payload = {
             project: project,

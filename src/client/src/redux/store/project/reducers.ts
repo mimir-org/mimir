@@ -1,6 +1,5 @@
 import { IsAspectNode } from "../../../components/flow/helpers";
 import { Edge, Node, ProjectSimple } from "../../../models/project";
-import { GetProject } from "../localStorage";
 import { TraverseTree } from "./helpers/";
 import {
     FETCHING_PROJECT,
@@ -34,7 +33,7 @@ import {
 const initialState: ProjectState = {
     fetching: false,
     creating: false,
-    project: GetProject() ?? null, // TODO: fix
+    project: null,
     projectList: null,
     apiError: []
 };
