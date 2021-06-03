@@ -7,6 +7,7 @@ import { TreeviewOff, TreeviewOn } from "../../assets/icons";
 import { ViewOffIcon, ViewOnIcon } from "../../assets/icons/blockView";
 import { changeFlowView } from "../../redux/store/flow/actions";
 import { IsBlockView } from "../flow/helpers/block";
+import { ValidateView } from "./helpers";
 import store from "../../redux/store";
 import {
   HeaderBox,
@@ -23,7 +24,7 @@ const Header = () => {
   const selectedNode = project?.nodes?.find((x) => x.isSelected);
 
   const handleClick = (e) => {
-    if (e.target.alt === VIEW_TYPE.BLOCKVIEW && !selectedNode) return;
+    if (!ValidateView(e.target.alt, selectedNode)) return;
     const view = e.target.alt;
     dispatch(changeFlowView(view));
     SetView(view);
