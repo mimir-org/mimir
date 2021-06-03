@@ -63,16 +63,15 @@ const TabContent = ({ node, index }: Props) => {
 
   return (
     <>
-      {/* TODO: Refactor, rewrite sorting function?*/}
+      {/* TODO: Refactor, rewrite sorting function?
+          NOIE: Currently not using SetNodeColumn.tsx and CalculateRows() anymore. Should it be removed?
+      */}
       {index === 1 && (
-        
         <TabRow>
-          
           {nodeAttributes?.map((attr) => (
             <AttributeField>
               <div key={attr.id}>
                 <div>{attr.key}</div>
-                
                 <InputBox>
                   <Input
                     value={attr.value ?? ""}
@@ -102,7 +101,7 @@ const TabContent = ({ node, index }: Props) => {
         
         
       )}
-      {/* TODO: Return max 6 columns, handle all rows*/}
+      {/* TODO: Return max 6 columns, handle all rows. Wait for Arjun's design first.*/}
       {index === 2 && (
         <TabRow>
           <SetConnectorColumn

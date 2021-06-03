@@ -9,8 +9,6 @@ const TabRow = styled.div`
 	align-items: center;
 	align-content: center;
   position: relative;
-  --background-color: red;
-  --border: solid 1px green;
 `;
 
 export default TabRow;
