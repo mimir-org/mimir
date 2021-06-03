@@ -84,6 +84,15 @@ namespace Mb.Core.Services
         }
 
         /// <summary>
+        /// Get all units
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<int, string> GetUnits()
+        {
+            return EnumExtensions.ToDictionary<Unit>();
+        }
+
+        /// <summary>
         /// Get all RDS by aspect
         /// </summary>
         /// <param name="aspect"></param>
