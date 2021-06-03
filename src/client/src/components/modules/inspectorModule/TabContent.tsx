@@ -3,6 +3,7 @@ import { TabRow } from "../../../componentLibrary/box/inspector";
 import { useDispatch } from "react-redux";
 import { IsTransportTerminal } from "../../flow/helpers";
 import { CalculateRows, SetConnectorColumn, SetNodeColumn } from "./helpers";
+import { Input, InputBox, Select, AttributeField } from "../../../componentLibrary";
 import {
   changeAttributeValue,
   changeConnectorAttributeValue,
@@ -40,7 +41,7 @@ const TabContent = ({ node, index }: Props) => {
     });
 
     connectorAttributes = tempAttributes;
-    nodeAttributes = node.attributes;
+    nodeAttributes = node.attributes.concat(node.attributes);
   }
 
   const handleOnNodeChange = (id: string, value: string, unit: string) => {
@@ -64,32 +65,42 @@ const TabContent = ({ node, index }: Props) => {
     <>
       {/* TODO: Refactor, rewrite sorting function?*/}
       {index === 1 && (
+        
         <TabRow>
-          <SetNodeColumn
-            list={nodeAttributes.slice(0, count)}
-            handleChange={handleOnNodeChange}
-          ></SetNodeColumn>
-          <SetNodeColumn
-            list={nodeAttributes.slice(count, rows + count)}
-            handleChange={handleOnNodeChange}
-          ></SetNodeColumn>
-          <SetNodeColumn
-            list={nodeAttributes.slice(rows + count, rows + (count += rows))}
-            handleChange={handleOnNodeChange}
-          ></SetNodeColumn>
-          <SetNodeColumn
-            list={nodeAttributes.slice(rows + count, rows + (count += rows))}
-            handleChange={handleOnNodeChange}
-          ></SetNodeColumn>
-          <SetNodeColumn
-            list={nodeAttributes.slice(rows + count, rows + (count += rows))}
-            handleChange={handleOnNodeChange}
-          ></SetNodeColumn>
-          <SetNodeColumn
-            list={nodeAttributes.slice(rows + count, nodeAttributes.length)}
-            handleChange={handleOnNodeChange}
-          ></SetNodeColumn>
+          
+          {nodeAttributes?.map((attr) => (
+            <AttributeField>
+              <div key={attr.id}>
+                <div>{attr.key}</div>
+                
+                <InputBox>
+                  <Input
+                    value={attr.value ?? ""}
+                    onChange={(e: any) =>
+                      handleOnNodeChange(attr.id, e.target.value, attr.unit)
+                    }
+                    inputType="tech"
+                  />
+                  <Select
+                    value={attr.unit}
+                    onChange={(e: any) =>
+                      handleOnNodeChange(attr.id, attr.value, e.target.value)
+                    }
+                  >
+                    <option value={"NotSet"}>NotSet</option>
+                    {attr.units.map((unit) => (
+                      <option key={unit} value={unit}>
+                        {unit}
+                      </option>
+                    ))}
+                  </Select>
+                </InputBox>
+              </div>
+            </AttributeField>
+          ))}
         </TabRow>
+        
+        
       )}
       {/* TODO: Return max 6 columns, handle all rows*/}
       {index === 2 && (
