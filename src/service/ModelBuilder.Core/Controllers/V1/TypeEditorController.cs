@@ -103,7 +103,7 @@ namespace Mb.Core.Controllers.V1
         /// Get all units
         /// </summary>
         /// <returns></returns>
-        [HttpGet("aspects")]
+        [HttpGet("units")]
         [ProducesResponseType(typeof(Dictionary<int, string>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult GetUnits()
