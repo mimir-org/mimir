@@ -10,6 +10,7 @@ import { MenuBox, MenuTopHeader } from "../../../componentLibrary/box/menus";
 import { changeProjectMenu } from "../../../redux/store/projectMenu/actions";
 import { OpenProjectMenu } from "../../project/openProject";
 import { CreateProjectMenu } from "../../project/createProject";
+import { saveAs } from "file-saver";
 
 const AccountMenu = () => {
   const dispatch = useDispatch();
@@ -46,6 +47,17 @@ const AccountMenu = () => {
     if (projectState.project) dispatch(save(projectState.project));
   };
 
+  const handleSaveFileClick = () => {
+    dispatch(changeProjectMenu(PROJECT_MENU_TYPE.ACCOUNT_MENU, false));
+    if (projectState.project) {
+      const FileSaver = require("file-saver");
+      const blob = new Blob([JSON.stringify(projectState.project, null, 2)], {
+        type: "application/json",
+      });
+      FileSaver.saveAs(blob, projectState.project.id + ".json");
+    }
+  };
+
   return (
     <>
       <MenuTopHeader isOpen={isOpen}>
@@ -64,6 +76,7 @@ const AccountMenu = () => {
           <GetMenuElement type="Open" onClick={handleOpenClick} />
           <GetMenuElement type="Create" onClick={handleCreateClick} />
           <GetMenuElement type="Save" onClick={handleSaveClick} />
+          <GetMenuElement type="SaveFile" onClick={handleSaveFileClick} />
           <GetMenuElement type="Logout" userState={userState} />
         </MenuBox>
       )}
