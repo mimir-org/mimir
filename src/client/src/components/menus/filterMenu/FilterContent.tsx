@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import store from "../../../redux/store";
+import red from "../../../redux/store";
 import { changeEdgeVisibility } from "../../../redux/store/project/actions";
 import { MenuColumn, MenuSubHeader } from "../../../componentLibrary/box/menus";
 import { useState } from "react";
@@ -8,8 +8,8 @@ import { TextResources } from "../../../assets/textResources";
 
 const FilterContent = ({ type, index }) => {
   const dispatch = useDispatch();
-  const nodes = store.getState().projectState.project?.nodes;
-  const edges = store.getState().projectState.project?.edges;
+  const nodes = red.store.getState().projectState.project?.nodes;
+  const edges = red.store.getState().projectState.project?.edges;
 
   let edgesRemove = CheckEdges(nodes, edges, type);
   let isChecked = edges.find((x) => x.id === edgesRemove[0]?.id)?.isHidden;

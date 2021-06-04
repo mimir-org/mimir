@@ -1,10 +1,9 @@
-import { CommonActionTypes, CommonState, FETCHING_CONTRACTORS, FETCHING_CONTRACTORS_SUCCESS_OR_ERROR } from "./types";
+import { CommonActionTypes, CommonState, FETCHING_CONTRACTORS, FETCHING_CONTRACTORS_SUCCESS_OR_ERROR, DELETE_COMMON_ERROR } from "./types";
 
 const initialState: CommonState = {
     fetching: false,
-    hasError: false,
-    errorMsg: null,
-    contractors: []
+    contractors: [],
+    apiError: []
 };
 
 export function commonReducer(
@@ -16,19 +15,23 @@ export function commonReducer(
             return {
                 ...state,
                 fetching: true,
-                hasError: false,
-                errorMsg: null,
-                contractors: []
+                contractors: [],
+                apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== FETCHING_CONTRACTORS) : state.apiError
             };
 
         case FETCHING_CONTRACTORS_SUCCESS_OR_ERROR:
             return {
                 ...state,
                 fetching: false,
-                hasError: action.payload.hasError,
-                errorMsg: action.payload.errorMsg,
-                contractors: action.payload.contractors
+                contractors: action.payload.contractors,
+                apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError
             };
+
+        case DELETE_COMMON_ERROR:
+            return {
+                ...state,
+                apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== action.payload.key) : state.apiError
+            }
         default:
             return state;
     }

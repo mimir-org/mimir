@@ -21,7 +21,7 @@ namespace Mb.Core.Controllers.V1
     /// </summary>
     [Produces("application/json")]
     [Authorize]
-    [ApiController]
+    //[ApiController]
     [ApiVersion("0.1")]
     [Route("V{version:apiVersion}/[controller]")]
     [SwaggerTag("Project")]
@@ -112,7 +112,7 @@ namespace Mb.Core.Controllers.V1
         {
             if (string.IsNullOrEmpty(id))
                 return BadRequest("The id can not be null or empty");
-
+            
             try
             {
                 var data = await _projectService.GetProject(id);

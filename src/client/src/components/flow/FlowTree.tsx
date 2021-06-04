@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { get } from "../../redux/store/project/actions";
 import { ProjectMainMenu } from "../project";
 import { RootState } from "./../../redux/store/index";
 import { useOnConnect, useOnDrop, useOnElementsRemove } from "./hooks";
@@ -19,11 +18,6 @@ import {
   GetTreeEdgeTypes,
   CreateTreeElements,
 } from "./helpers/tree";
-import {
-  GetProjectId,
-  HasProject,
-  SetProject,
-} from "../../redux/store/localStorage";
 
 const FlowTree = () => {
   const dispatch = useDispatch();
@@ -34,8 +28,6 @@ const FlowTree = () => {
   const project = useSelector<RootState>(
     (state) => state.projectState.project
   ) as Project;
-
-  SetProject(project);
 
   const OnElementsRemove = (elementsToRemove) => {
     return useOnElementsRemove(elementsToRemove, setElements, dispatch);
@@ -101,13 +93,6 @@ const FlowTree = () => {
     OnLoad(reactFlowInstance);
   }, [OnLoad, reactFlowInstance]);
 
-  useEffect(() => {
-    if (!project) {
-      const projectId = GetProjectId();
-      if (projectId) dispatch(get(projectId));
-    }
-  }, [dispatch, project]);
-
   const isTreeView = useSelector<RootState>(
     (state) => state.flow.view === VIEW_TYPE.TREEVIEW
   ) as boolean;
@@ -136,7 +121,7 @@ const FlowTree = () => {
           </ReactFlow>
         </ReactFlowProvider>
       )}
-      {!project && !HasProject() && (
+      {!project && (
         <div>
           <ProjectMainMenu />
           <OpenProjectMenu />

@@ -10,6 +10,8 @@ import { commonReducer } from "./common/reducers";
 import { flowReducer } from "./flow/reducers";
 import { splitViewReducer } from "./splitView/reducers";
 import { sagas } from "../sagas";
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage'
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -30,13 +32,27 @@ const rootReducers = combineReducers({
     commonState: commonReducer
 });
 
+const persistConfig = {
+    key: 'root',
+    storage,
+}
+
+const persistedReducer = persistReducer(persistConfig, rootReducers)
+
+
+
+
+
 const store = createStore(
-    rootReducers,
+    persistedReducer,
     {},
     composeEnhancer(applyMiddleware(sagaMiddleware))
 );
 
-sagaMiddleware.run(sagas);
+const persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof rootReducers>;
-export default store;
+// eslint-disable-next-line import/no-anonymous-default-export
+export default { store, persistor };
+
+sagaMiddleware.run(sagas);
