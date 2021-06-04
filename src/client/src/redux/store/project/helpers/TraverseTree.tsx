@@ -1,3 +1,4 @@
+import { IsPartOfTerminal } from "../../../../components/flow/helpers/";
 import { Edge, Node } from "../../../../models/project";
 
 const TraverseTree = (
@@ -11,7 +12,11 @@ const TraverseTree = (
   edgeList.forEach((edge) => {
     if (edge.fromNode === parentNode.id) {
       let node = nodeList.find((x) => x.id === edge.toNode);
-      if (node.type === parentNode.type) {
+      const connector = node?.connectors?.find(
+        (x) => x.id === edge?.toConnector
+      );
+
+      if (node.type === parentNode.type && IsPartOfTerminal(connector)) {
         children.push(node);
         elements.push(node);
       }
