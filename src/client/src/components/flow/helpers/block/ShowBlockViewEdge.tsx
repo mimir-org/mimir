@@ -1,4 +1,4 @@
-import store from "../../../../redux/store";
+import red from "../../../../redux/store";
 import { ValidateBlockEdge } from ".";
 import {
   NODE_TYPE,
@@ -11,8 +11,8 @@ import {
 const ShowBlockViewEdge = (edge: Edge): boolean => {
   if (edge.targetType === NODE_TYPE.OFF_PAGE) return;
 
-  const project = store.getState().projectState.project as Project;
-  const splitView = store.getState().splitView;
+  const project = red.store.getState().projectState.project as Project;
+  const splitView = red.store.getState().splitView;
   const isSplitView = splitView.visible as boolean;
   const splitViewNode = splitView.node as Node;
   const selectedNode = project.nodes.find((x) => x.isSelected) as Node;
