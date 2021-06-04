@@ -50,11 +50,10 @@ const AccountMenu = () => {
   const handleSaveFileClick = () => {
     dispatch(changeProjectMenu(PROJECT_MENU_TYPE.ACCOUNT_MENU, false));
     if (projectState.project) {
-      const FileSaver = require("file-saver");
       const blob = new Blob([JSON.stringify(projectState.project, null, 2)], {
         type: "application/json",
       });
-      FileSaver.saveAs(blob, projectState.project.id + ".json");
+      saveAs(blob, projectState.project.id + ".json");
     }
   };
 
