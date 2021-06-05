@@ -1,4 +1,4 @@
-import { TERMINAL } from "../../../models/project";
+import { TERMINAL } from "../../../../models/project";
 import {
   ConnectorFluidIcon,
   ConnectorGasIcon,
@@ -6,7 +6,7 @@ import {
   ConnectorOilIcon,
   ConnectorWaterIcon,
   ConnectorSandIcon,
-} from "../../../assets/icons/blockView";
+} from "../../../../assets/icons/blockView";
 
 const GetConnectorIcon = (type: string) => {
   let icon =

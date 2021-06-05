@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
-import { Edge } from "../../../models/project";
-import { RootState } from "../../../redux/store";
-import { ProjectState } from "../../../redux/store/project/types";
+import { Edge } from "../../../../models/project";
+import { RootState } from "../../../../redux/store";
+import { ProjectState } from "../../../../redux/store/project/types";
 
 const GetEdges = (): Edge[] => {
   const projectState = useSelector<RootState>(

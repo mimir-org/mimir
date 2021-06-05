@@ -10,7 +10,9 @@ export { default as IsProductNode } from "./IsProductNode";
 export { default as IsTransportTerminal } from "./IsTransportTerminal";
 export { default as IsLocationTerminal } from "./IsLocationTerminal";
 export { default as IsPartOfTerminal } from "./IsPartOfTerminal";
+export { default as IsFulfilledByTerminal } from "./IsFulfilledByTerminal";
 export { default as IsAspectSameType } from "./IsAspectSameType";
+export { default as IsSameType } from "./IsSameType";
 export { default as GetCenter } from "./GetCenter";
 export { default as GetHandleType } from "./GetHandleType";
 export { default as GetNodes } from "./GetNodes";
@@ -22,6 +24,5 @@ export { default as GetHandlePosition } from "./GetHandlePosition";
 export { default as SortConnectors } from "./SortConnectors";
 export { default as SortLocationConnectors } from "./SortLocationConnectors";
 export { default as GetConnectorName } from "./GetConnectorName";
-export { default as GetBlockNodeTypes } from "./block/GetBlockNodeTypes";
-
+export { default as GetBlockNodeTypes } from "../block/GetBlockNodeTypes";
 export * from "./types";

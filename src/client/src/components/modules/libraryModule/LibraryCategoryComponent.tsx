@@ -38,7 +38,7 @@ const LibraryCategoryComponent = ({ category }: Props) => {
               draggable
             >
               {node.name}
-              <LibraryElementIcon color={GetAspectColor(node.type, false)} />
+              <LibraryElementIcon color={GetAspectColor(node, false)} />
             </LibraryElement>
           );
         })}

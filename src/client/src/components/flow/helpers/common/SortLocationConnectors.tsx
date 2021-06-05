@@ -1,5 +1,5 @@
 import { IsLocationTerminal } from ".";
-import { CONNECTOR_TYPE } from "../../../models/project";
+import { CONNECTOR_TYPE } from "../../../../models/project";
 
 const SortLocationConnectors = (connectors) => {
   const availableConnectors = [];

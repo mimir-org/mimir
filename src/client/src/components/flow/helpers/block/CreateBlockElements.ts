@@ -1,5 +1,5 @@
 import { Elements } from "react-flow-renderer";
-import { IsAspectSameType } from "..";
+import { IsAspectSameType } from "../common";
 import {
   Project,
   EDGE_TYPE,

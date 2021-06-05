@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Node } from "../../../models/project";
 import { RootState } from "../../../redux/store";
-import { IsLocationNode } from "../../flow/helpers";
+import { IsLocationNode } from "../../flow/helpers/common";
 import { IsBlockView } from "../../flow/helpers/block";
 import {
   changeSplitView,

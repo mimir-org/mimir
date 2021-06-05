@@ -1,4 +1,4 @@
-import { Edge, Node } from "../../../models/project";
+import { Edge, Node } from "../../../../models/project";
 
 export interface OffPageNodeCreator {
   node: Node;

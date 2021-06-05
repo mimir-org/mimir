@@ -1,4 +1,8 @@
-import { ProductIcon, FunctionIcon, LocationIcon } from "../../../assets/icons";
+import {
+  ProductIcon,
+  FunctionIcon,
+  LocationIcon,
+} from "../../../../assets/icons";
 
 const GetFlowAspectIcon = (icon: string) => {
   let AspectIcon =

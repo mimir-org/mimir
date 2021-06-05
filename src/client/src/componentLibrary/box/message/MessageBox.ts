@@ -15,6 +15,7 @@ const MessageBox = styled.div`
   padding: 10px;
   line-height: 1.5;
   box-shadow: 0px 5px 6px rgba(0, 0, 0, 0.15);
+  z-index: 5;
 
   .message {
     text-align: center;

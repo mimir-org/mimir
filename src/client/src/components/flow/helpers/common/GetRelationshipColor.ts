@@ -3,7 +3,7 @@ import {
   RELATION_TYPE,
   NodeType,
   NODE_TYPE,
-} from "../../../models/project";
+} from "../../../../models/project";
 
 const GetRelationshipColor = (
   relationType: RelationType,

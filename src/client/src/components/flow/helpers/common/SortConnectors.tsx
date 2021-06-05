@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/store";
+import { RootState } from "../../../../redux/store";
 import { IsLocationNode, IsLocationTerminal, IsTransportTerminal } from ".";
-import { CONNECTOR_TYPE } from "../../../models/project";
+import { CONNECTOR_TYPE } from "../../../../models/project";
 
 const SortConnectors = (connectors) => {
   const list = [];

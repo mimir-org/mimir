@@ -1,7 +1,6 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
-import { GetFlowAspectIcon } from "../helpers";
-import { GetHandleType } from "../helpers";
+import { GetFlowAspectIcon, GetHandleType } from "../helpers/common";
 import { HandlerWrapper } from "../styled";
 
 const Aspect: FC<NodeProps> = ({ data }) => {

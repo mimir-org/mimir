@@ -1,5 +1,5 @@
 import { addNode, createEdge } from "../../../redux/store/project/actions";
-import { CreateId } from "./../helpers";
+import { CreateId, IsPartOfTerminal } from "./../helpers/common";
 import { CheckView } from "../../../redux/store/localStorage/localStorage";
 import { CreateBlockNode } from "../helpers/block";
 import {
@@ -13,7 +13,6 @@ import {
   LibNode,
   Node,
   NodeType,
-  RELATION_TYPE,
   VIEW_TYPE,
   Edge,
 } from "../../../models/project";
@@ -75,14 +74,10 @@ const useOnDrop = (
     if (!ValidateSameNodeType(selectedNode, node)) return;
 
     const fromConnector = selectedNode.connectors?.find(
-      (x) =>
-        x.relationType === RELATION_TYPE.PartOf &&
-        x.type === CONNECTOR_TYPE.OUTPUT
+      (x) => IsPartOfTerminal(x) && x.type === CONNECTOR_TYPE.OUTPUT
     );
     const toConnector = node.connectors?.find(
-      (x) =>
-        x.relationType === RELATION_TYPE.PartOf &&
-        x.type === CONNECTOR_TYPE.INPUT
+      (x) => IsPartOfTerminal(x) && x.type === CONNECTOR_TYPE.INPUT
     );
 
     const partofEdge = {

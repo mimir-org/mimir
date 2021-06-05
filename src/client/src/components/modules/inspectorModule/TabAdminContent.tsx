@@ -7,7 +7,7 @@ import { Node, Project, VIEW_TYPE } from "../../../models/project";
 import { GetRdsId, GetReferenceDesignation } from "../../../assets/helpers";
 import moment from "moment/moment.js";
 import { BUILD_STATUS } from "../../../models/project";
-import { IsLocationNode } from "../../flow/helpers";
+import { IsLocationNode } from "../../flow/helpers/common";
 import { GetView } from "../../../redux/store/localStorage";
 
 interface Props {

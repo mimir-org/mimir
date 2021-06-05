@@ -1,6 +1,6 @@
 import { memo, FC } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
-import { GetHandleType } from "../helpers";
+import { GetHandleType } from "../helpers/common";
 import { LocationBlockWrapper } from "../styled";
 
 const Location: FC<NodeProps> = ({ data }) => {

@@ -1,7 +1,3 @@
-.react-flow__node {
-  z-index: 1 !important;
-}
-
 .react-flow__node-AspectLocation,
 .react-flow__node-AspectFunction,
 .react-flow__node-AspectProduct,
@@ -20,12 +16,32 @@
   font-size: 11px;
   color: #222;
   text-align: center;
-  border-width: 1px;
-  border-style: solid;
+  border: 1px solid #222;
 
   &.selected {
     border: 2px solid #1a192b !important;
   }
+}
+
+.react-flow__node-AspectLocation,
+.react-flow__node-AspectFunction,
+.react-flow__node-AspectProduct {
+  border: none;
+}
+
+.react-flow__node-function,
+.react-flow__node-Function {
+  background: #fef445;
+}
+
+.react-flow__node-product,
+.react-flow__node-Product {
+  background: #00f0ff;
+}
+
+.react-flow__node-location,
+.react-flow__node-Location {
+  background: magenta;
 }
 
 .react-flow__controls {
@@ -68,61 +84,38 @@
   cursor: crosshair;
 }
 
-.react-flow__node-AspectLocation,
-.react-flow__node-AspectFunction,
-.react-flow__node-AspectProduct {
-  border: none;
-}
-
-.react-flow__node-function,
-.react-flow__node-Function {
-  background: #ffff00;
-}
-
-.react-flow__node-product,
-.react-flow__node-Product {
-  background: #00f0ff;
-}
-
-.react-flow__node-location,
-.react-flow__node-Location {
-  background: magenta;
-  z-index: 1200 !important;
-}
-
-.react-flow__node-BlockViewFunction {
-  padding-top: 10px;
-  border-radius: 3px;
+.react-flow__node-BlockFunctionNode {
+  border-radius: 5px;
   width: 100px;
-  height: 47px;
+  height: 57px;
   font-size: 11px;
   color: #222;
   text-align: center;
-  border-width: 1px;
-  border-style: solid;
-  background: #ffff00;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  -ms-border-radius: 3px;
-  -o-border-radius: 3px;
+  border: 1px solid #222;
+  background: #fef445;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
 }
 
-.react-flow__node-BlockViewLocation {
-  padding-top: 10px;
-  border-radius: 3px;
+.react-flow__node-BlockLocationNode {
+  border-radius: 5px;
   width: 100px;
-  height: 47px;
+  height: 57px;
   font-size: 11px;
   color: #222;
   text-align: center !important;
-  border-width: 1px;
-  border-style: solid;
+  border: 1px solid #222;
   background: magenta;
-  z-index: 1200 !important;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  -ms-border-radius: 3px;
-  -o-border-radius: 3px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+
+.react-flow__node-FunctionBlock {
+  z-index: 1 !important;
 }
 
 .react-flow__minimap {
@@ -133,12 +126,11 @@
   max-width: 161px;
 }
 
-/* Tegnebrettet */
+/* Hovedscenen */
 .dndflow {
-  flex-direction: column;
-  display: flex;
   height: 100%;
-  background-color: #f8f8f8;
+  z-index: 0 !important;
+  display: flex;
 }
 
 .dndflow .dndnode {
@@ -153,13 +145,10 @@
   justify-content: center;
   align-items: center;
   cursor: grab;
-}
-
-/* Hovedscenen */
-.dndflow {
-  width: 100%;
-  height: 100%;
-  z-index: 1;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
 }
 
 .dndflow .reactflow-wrapper {
@@ -171,12 +160,14 @@
   opacity: 1 !important;
 }
 
+.react-flow__nodes {
+  z-index: 3;
+}
+
 .react-flow__edge {
   cursor: grab;
 }
 
-@media screen and (min-width: 768px) {
-  .dndflow {
-    flex-direction: row;
-  }
+.react-flow__edges {
+  z-index: 2;
 }

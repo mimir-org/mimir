@@ -7,9 +7,13 @@ import { EDGE_TYPE, EdgeType } from "../../models/project";
 import { OpenProjectMenu } from "../project/openProject";
 import { changeActiveBlockNode } from "../../redux/store/project/actions";
 import { Color } from "../../componentLibrary";
-import { GetBlockNodeTypes, IsFunctionNode, IsLocationNode } from "./helpers";
 import { BackgroundBox } from "../../componentLibrary/blockView";
 import { changeInspectorTab } from "../../redux/store/inspector/actions";
+import {
+  GetBlockNodeTypes,
+  IsFunctionNode,
+  IsLocationNode,
+} from "./helpers/common";
 import {
   CreateBlockElements,
   GetBlockEdgeTypes,

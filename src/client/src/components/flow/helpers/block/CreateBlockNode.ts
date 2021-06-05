@@ -1,14 +1,14 @@
 import { Node } from "../../../../models/project";
 import { FlowElement } from "react-flow-renderer";
 import { SetBlockNodePosition } from ".";
-import { IsLocationNode } from "..";
+import { IsLocationNode } from "../common";
 import { Size } from "../../../../componentLibrary";
 
 const CreateBlockNode = (node: Node, splitView: boolean): FlowElement => {
   let blockNode = null;
   if (!node) return blockNode;
 
-  const type = IsLocationNode(node) ? "BlockViewLocation" : "BlockViewFunction";
+  const type = IsLocationNode(node) ? "BlockLocationNode" : "BlockFunctionNode";
 
   // Force node to fit Block
   const position = SetBlockNodePosition(node, splitView);

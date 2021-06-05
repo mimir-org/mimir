@@ -18,7 +18,6 @@ const FooterContent = styled.div`
   font-size: ${FontSize.Standard};
   text-decoration: ${(props) => props.active && "underline"};
   white-space: nowrap;
-  z-index: 1200;
 `;
 
 export default FooterContent;

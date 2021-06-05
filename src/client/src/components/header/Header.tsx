@@ -9,6 +9,10 @@ import { changeFlowView } from "../../redux/store/flow/actions";
 import { IsBlockView } from "../flow/helpers/block";
 import red from "../../redux/store";
 import {
+  changeSplitView,
+  setSplitViewNode,
+} from "../../redux/store/splitView/actions";
+import {
   HeaderBox,
   IconBox,
   TitleBox,
@@ -25,6 +29,8 @@ const Header = () => {
   const handleClick = (e) => {
     if (e.target.alt === VIEW_TYPE.BLOCKVIEW && !selectedNode) return;
     const view = e.target.alt;
+    dispatch(changeSplitView(false));
+    dispatch(setSplitViewNode(null));
     dispatch(changeFlowView(view));
     SetView(view);
     push(`/home/${view}`);

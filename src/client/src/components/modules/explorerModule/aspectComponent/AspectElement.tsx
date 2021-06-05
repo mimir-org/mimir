@@ -1,32 +1,25 @@
 import { AspectElementBox } from "../../../../componentLibrary/box/aspect";
-import { NodeType, NODE_TYPE } from "../../../../models/project";
+import { Node } from "../../../../models/project";
 import { IsBlockView } from "../../../flow/helpers/block";
+import { IsProductNode } from "../../../flow/helpers/common";
 import { Checkbox, CheckboxBlock } from "../checkboxComponent";
 
 interface Props {
-  nodeId: string;
+  node: Node;
   label: string;
-  type: NodeType;
   indent: number;
 }
 
-export const AspectChildComponent = ({
-  nodeId,
-  label,
-  type,
-  indent,
-}: Props) => {
-  const isProduct = type === NODE_TYPE.PRODUCT;
-
+export const AspectElement = ({ node, label, indent }: Props) => {
   return (
-    <AspectElementBox indent={indent} type={type}>
+    <AspectElementBox indent={indent} node={node}>
       {!IsBlockView() ? (
-        <Checkbox nodeId={nodeId} inputLabel={label} type={type} />
+        <Checkbox node={node} inputLabel={label} />
       ) : (
-        !isProduct && <CheckboxBlock nodeId={nodeId} inputLabel={label} />
+        !IsProductNode(node) && <CheckboxBlock node={node} inputLabel={label} />
       )}
     </AspectElementBox>
   );
 };
 
-export default AspectChildComponent;
+export default AspectElement;

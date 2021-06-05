@@ -1,5 +1,5 @@
 import { Node, LibNode } from "../../../../models/project";
-import { IsAspectSameType } from "../../../flow/helpers";
+import { IsAspectSameType } from "../../../flow/helpers/common";
 
 const ValidateLibComponent = (
   libNode: LibNode,

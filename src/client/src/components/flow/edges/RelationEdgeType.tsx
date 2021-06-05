@@ -1,3 +1,4 @@
+import { IsAspectNode, GetCenter } from "../helpers/common";
 import {
   getBezierPath,
   getMarkerEnd,
@@ -5,7 +6,6 @@ import {
   EdgeText,
   ArrowHeadType,
 } from "react-flow-renderer";
-
 import {
   LINE_EDGE_TYPE,
   LineEdgeType,
@@ -14,9 +14,6 @@ import {
   Connector,
   RELATION_TYPE,
 } from "../../../models/project";
-
-import { IsAspectNode, GetCenter } from "../helpers";
-
 import "./RelationEdge.scss";
 
 export default function RelationEdgeType({

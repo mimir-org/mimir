@@ -5,7 +5,7 @@ import {
   RELATION_TYPE,
   RelationType,
   Project,
-} from "../../../models/project";
+} from "../../../../models/project";
 
 const GetBlockViewLegend = (node: Node): Legend[] => {
   const legends = node?.connectors

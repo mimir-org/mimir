@@ -1,5 +1,5 @@
-import { CreateId } from "../helpers";
-import { ProjectState } from "../../../redux/store/project/types";
+import { CreateId, IsPartOfTerminal } from "../../helpers/common";
+import { ProjectState } from "../../../../redux/store/project/types";
 import { GetFlowRectData, CreateOffPageData, OffPageNodeCreator } from ".";
 import {
   Node,
@@ -16,7 +16,7 @@ import {
   Terminal,
   RELATION_TYPE,
   RelationType,
-} from "../../../models/project";
+} from "../../../../models/project";
 
 const CreateOffPageNode = (
   projectState: ProjectState,
@@ -26,9 +26,7 @@ const CreateOffPageNode = (
     (x) => x.id === data.parentNodeId
   );
   const parentPartOfConnector = parentNode?.connectors.find(
-    (x) =>
-      x.relationType === RELATION_TYPE.PartOf &&
-      x.type === CONNECTOR_TYPE.OUTPUT
+    (x) => IsPartOfTerminal(x) && x.type === CONNECTOR_TYPE.OUTPUT
   );
   const fromNode = projectState.project?.nodes.find(
     (x) => x.id === data.fromNodeId

@@ -17,7 +17,7 @@ import {
   GetConnectorName,
   GetHandleType,
   IsLocationNode,
-} from "../helpers";
+} from "../helpers/common";
 import {
   NodeBox,
   OptionsBox,
@@ -26,7 +26,7 @@ import {
   HandleBox,
 } from "../../../componentLibrary/blockView";
 
-const BlockViewLocation: FC<NodeProps> = ({ data }) => {
+const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
   const [showButton, setShowButton] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -152,4 +152,4 @@ const BlockViewLocation: FC<NodeProps> = ({ data }) => {
   );
 };
 
-export default memo(BlockViewLocation);
+export default memo(BlockLocationNode);

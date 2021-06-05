@@ -1,5 +1,5 @@
 import { Node, Connector } from "../../../../models/project";
-import { IsFunctionNode, IsLocationNode, IsPartOfTerminal } from "..";
+import { IsFunctionNode, IsLocationNode, IsPartOfTerminal } from "../common";
 
 const ValidateBlockEdge = (
   selectedNode: Node,

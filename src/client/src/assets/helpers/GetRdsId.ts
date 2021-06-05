@@ -3,7 +3,7 @@ import {
   IsFunctionNode,
   IsLocationNode,
   IsProductNode,
-} from "../../components/flow/helpers";
+} from "../../components/flow/helpers/common";
 
 const GetRdsId = (node: Node): string => {
   if (!node || !node.rds) return "";

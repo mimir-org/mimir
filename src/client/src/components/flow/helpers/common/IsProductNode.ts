@@ -1,4 +1,4 @@
-import { NODE_TYPE, Node, LibNode } from "../../../models/project";
+import { NODE_TYPE, Node, LibNode } from "../../../../models/project";
 
 const IsProductNode = (node: Node | LibNode) => {
   return (
