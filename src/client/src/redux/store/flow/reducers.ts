@@ -1,9 +1,9 @@
 import { CHANGE_FLOW_VIEW, ADD_SELECTED_CONNECTOR } from "./types";
 import { VIEW_TYPE } from "../../../models/project";
-import { GetConnectors, GetView } from "../localStorage/localStorage";
+import { GetConnectors } from "../localStorage/localStorage";
 
 const initialState = {
-  view: GetView() ?? VIEW_TYPE.TREEVIEW,
+  view: VIEW_TYPE.TREEVIEW,
   connectors: GetConnectors() ?? [],
 };
 

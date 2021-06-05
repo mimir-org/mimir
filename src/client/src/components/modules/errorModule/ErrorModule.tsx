@@ -136,8 +136,7 @@ const ErrorModule = () => {
                 <h3>{x.module}</h3>
                 <p>{x.message}</p>
                 {x.errorData &&
-                  x.errorData.items &&
-                  x.errorData.items.map((y) => {
+                  x.errorData.items?.map((y) => {
                     return (
                       <p key={y.key}>
                         {y.key}: {y.value}

@@ -11,7 +11,6 @@ import { TextResources } from "../../../assets/textResources";
 import { useDispatch } from "react-redux";
 import { VIEW_TYPE } from "../../../models/project";
 import { changeFlowView } from "../../../redux/store/flow/actions";
-import { SetView } from "../../../redux/store/localStorage";
 
 export const TypeEditorModule = () => {
   const dispatch = useDispatch();
@@ -20,7 +19,6 @@ export const TypeEditorModule = () => {
   const [mode, setMode] = useState("");
   const handleClick = (param) => {
     dispatch(changeFlowView(VIEW_TYPE.TYPE_EDITOR));
-    SetView(VIEW_TYPE.TYPE_EDITOR);
     push(`/home/${VIEW_TYPE.TYPE_EDITOR}`);
     setMode(param);
   };

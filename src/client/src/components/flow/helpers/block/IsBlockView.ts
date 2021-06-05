@@ -1,8 +1,9 @@
 import { VIEW_TYPE } from "../../../../models/project";
-import { GetView } from "../../../../redux/store/localStorage";
+import red from "../../../../redux/store";
 
 const IsBlockView = (): boolean => {
-  return GetView() === VIEW_TYPE.BLOCKVIEW;
+  const view = red.store.getState().flow.view;
+  return view === VIEW_TYPE.BLOCKVIEW;
 };
 
 export default IsBlockView;

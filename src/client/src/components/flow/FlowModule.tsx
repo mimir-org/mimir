@@ -1,11 +1,14 @@
+import { useDispatch } from "react-redux";
 import { FlowTree, FlowBlock } from ".";
 import { VIEW_TYPE } from "../../models/project";
-import { SetView } from "../../redux/store/localStorage";
+import { changeFlowView } from "../../redux/store/flow/actions";
 import TypeEditorComponent from "../modules/typeEditorModule/TypeEditorComponent";
 
 const FlowModule = ({ route }) => {
+  const dispatch = useDispatch();
+
   if (!route.type) route.type = VIEW_TYPE.TREEVIEW;
-  SetView(route.type);
+  dispatch(changeFlowView(route.type));
 
   return (
     <div className="dndflow">

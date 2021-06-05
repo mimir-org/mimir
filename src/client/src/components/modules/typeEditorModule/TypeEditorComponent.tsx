@@ -2,7 +2,6 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { VIEW_TYPE } from "../../../models/project";
 import { changeFlowView } from "../../../redux/store/flow/actions";
-
 import { DropdownMenu } from ".";
 import {
   TypeEditorWrapper,
@@ -14,7 +13,6 @@ import {
 import { Input } from "../../../componentLibrary";
 import { TextResources } from "../../../assets/textResources";
 import { CloseIcon } from "../../../assets/icons";
-import { SetView } from "../../../redux/store/localStorage";
 
 interface Props {
   mode: string;
@@ -25,7 +23,6 @@ export const TypeEditorComponent = ({ mode }: Props) => {
   const dispatch = useDispatch();
   const handleClick = () => {
     dispatch(changeFlowView(VIEW_TYPE.TREEVIEW));
-    SetView(VIEW_TYPE.TREEVIEW);
     push(`/home/${VIEW_TYPE.TREEVIEW}`);
   };
   const aspects = [

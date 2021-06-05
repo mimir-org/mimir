@@ -1,6 +1,5 @@
 import { useHistory } from "react-router-dom";
 import { TextResources } from "../../assets/textResources";
-import { SetView } from "../../redux/store/localStorage";
 import { useDispatch } from "react-redux";
 import { VIEW_TYPE } from "../../models/project";
 import { TreeviewOff, TreeviewOn } from "../../assets/icons";
@@ -32,7 +31,6 @@ const Header = () => {
     dispatch(changeSplitView(false));
     dispatch(setSplitViewNode(null));
     dispatch(changeFlowView(view));
-    SetView(view);
     push(`/home/${view}`);
   };
 

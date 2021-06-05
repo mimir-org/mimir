@@ -24,41 +24,6 @@ export const SaveState = (state: boolean, key: string) => {
   }
 };
 
-export const CheckView = (view: string) => {
-  try {
-    const serializedState = localStorage.getItem(`ViewType`);
-
-    if (serializedState === null || serializedState === undefined) {
-      return null;
-    }
-    return JSON.parse(serializedState) === view;
-  } catch (err) {
-    return undefined;
-  }
-};
-
-export const GetView = () => {
-  try {
-    const serializedState = localStorage.getItem(`ViewType`);
-
-    if (serializedState === null || serializedState === undefined) {
-      return null;
-    }
-    return JSON.parse(serializedState);
-  } catch (err) {
-    return undefined;
-  }
-};
-
-export const SetView = (view: string) => {
-  try {
-    const serializedState = JSON.stringify(view);
-    localStorage.setItem(`ViewType`, serializedState);
-  } catch {
-    return undefined;
-  }
-};
-
 export const SaveAllModules = (state: boolean) => {
   try {
     const serializedState = JSON.stringify(state);

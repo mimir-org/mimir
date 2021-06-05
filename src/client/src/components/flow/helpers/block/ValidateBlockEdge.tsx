@@ -3,7 +3,6 @@ import { IsFunctionNode, IsLocationNode, IsPartOfTerminal } from "../common";
 
 const ValidateBlockEdge = (
   selectedNode: Node,
-  selectedBlockNode: Node,
   fromNode: Node,
   toNode: Node,
   splitViewNode: Node,
@@ -15,27 +14,13 @@ const ValidateBlockEdge = (
   if (IsPartOfTerminal(fromConnector) || IsPartOfTerminal(toConnector))
     return false;
 
-  if (!splitView) {
-    if (IsFunctionNode(selectedNode)) {
-      if (IsLocationNode(fromNode) || IsLocationNode(toNode)) return false;
-      if (selectedNode === toNode || selectedNode === fromNode) return false;
-      //   if (fromNode.level - selectedNode.level !== 1) return false;
-      //   if (fromNode.order - selectedNode.order !== 1) return false;
-      return true;
-    }
-  }
-
-  if (splitView) {
-    if (!splitViewNode && IsFunctionNode(fromNode) && IsFunctionNode(toNode))
-      return true;
-
-    if (
-      IsFunctionNode(fromNode) &&
-      IsLocationNode(toNode) &&
-      IsLocationNode(splitViewNode)
-      //   toNode?.level - selectedBlockNode?.level === 1
-    )
-      return true;
+  if (IsFunctionNode(selectedNode)) {
+    if (IsLocationNode(fromNode)) return false;
+    if (IsLocationNode(toNode) && !splitView) return false;
+    if (selectedNode === toNode || selectedNode === fromNode) return false;
+    if (fromNode.level - selectedNode.level !== 1) return false;
+    if (toNode?.level - splitViewNode?.level !== 1) return false;
+    return true;
   }
   return false;
 };

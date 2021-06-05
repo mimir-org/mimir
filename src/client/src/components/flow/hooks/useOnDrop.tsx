@@ -1,7 +1,6 @@
 import { addNode, createEdge } from "../../../redux/store/project/actions";
 import { CreateId, IsPartOfTerminal } from "./../helpers/common";
-import { CheckView } from "../../../redux/store/localStorage/localStorage";
-import { CreateBlockNode } from "../helpers/block";
+import { CreateBlockNode, IsBlockView } from "../helpers/block";
 import {
   CreateTreeNode,
   GetTreeEdgeType,
@@ -13,7 +12,6 @@ import {
   LibNode,
   Node,
   NodeType,
-  VIEW_TYPE,
   Edge,
 } from "../../../models/project";
 
@@ -26,7 +24,7 @@ const useOnDrop = (
   splitView?: boolean,
   selectedNode?: Node
 ) => {
-  const showBlockView = CheckView(VIEW_TYPE.BLOCKVIEW);
+  const showBlockView = IsBlockView();
   event.preventDefault();
   const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
   const data = JSON.parse(
@@ -64,8 +62,6 @@ const useOnDrop = (
     a.nodeId = node.id;
   });
 
-  dispatch(addNode(node));
-
   showBlockView
     ? setElements((es) => es.concat(CreateBlockNode(node, splitView)))
     : setElements((es) => es.concat(CreateTreeNode(node)));
@@ -91,10 +87,13 @@ const useOnDrop = (
       targetType: node.type,
     } as Edge;
 
+    let parentNodeLevel = selectedNode.level;
+    node.level = ++parentNodeLevel;
     dispatch(createEdge(partofEdge));
     const edgeType = GetTreeEdgeType(fromConnector);
     setElements((es) => es.concat(CreateTreeEdge(partofEdge, edgeType)));
   }
+  dispatch(addNode(node));
 };
 
 export default useOnDrop;

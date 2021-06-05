@@ -12,7 +12,7 @@
   border-radius: 3px;
   width: 70px;
   height: auto;
-  min-height: 27px;
+  min-height: 32px;
   font-size: 11px;
   color: #222;
   text-align: center;
@@ -129,7 +129,6 @@
 /* Hovedscenen */
 .dndflow {
   height: 100%;
-  z-index: 0 !important;
   display: flex;
 }
 
