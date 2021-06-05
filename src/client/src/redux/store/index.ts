@@ -9,44 +9,42 @@ import { projectMenuReducer } from "./projectMenu/reducers";
 import { commonReducer } from "./common/reducers";
 import { flowReducer } from "./flow/reducers";
 import { splitViewReducer } from "./splitView/reducers";
+import { connectViewReducer } from "./connectView/reducers";
 import { sagas } from "../sagas";
-import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage'
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
 const sagaMiddleware = createSagaMiddleware();
 
 const composeEnhancer =
-    (process.env.NODE_ENV !== "production" &&
-        window["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__"]) ||
-    compose;
+  (process.env.NODE_ENV !== "production" &&
+    window["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__"]) ||
+  compose;
 
 const rootReducers = combineReducers({
-    library: libraryReducer,
-    inspector: inspectorReducer,
-    userState: userReducer,
-    projectState: projectReducer,
-    modules: moduleReducer,
-    projectMenu: projectMenuReducer,
-    flow: flowReducer,
-    splitView: splitViewReducer,
-    commonState: commonReducer
+  library: libraryReducer,
+  inspector: inspectorReducer,
+  userState: userReducer,
+  projectState: projectReducer,
+  modules: moduleReducer,
+  projectMenu: projectMenuReducer,
+  flow: flowReducer,
+  splitView: splitViewReducer,
+  connectView: connectViewReducer,
+  commonState: commonReducer,
 });
 
 const persistConfig = {
-    key: 'root',
-    storage,
-}
+  key: "root",
+  storage,
+};
 
-const persistedReducer = persistReducer(persistConfig, rootReducers)
-
-
-
-
+const persistedReducer = persistReducer(persistConfig, rootReducers);
 
 const store = createStore(
-    persistedReducer,
-    {},
-    composeEnhancer(applyMiddleware(sagaMiddleware))
+  persistedReducer,
+  {},
+  composeEnhancer(applyMiddleware(sagaMiddleware))
 );
 
 const persistor = persistStore(store);
