@@ -39,7 +39,7 @@ namespace Mb.Api
             {
                 options.AddPolicy("CorsPolicy", builder =>
                 {
-                    builder.WithOrigins("http://localhost:3000", "https://dev-spine-modelbuilder.azurewebsites.net")
+                    builder.WithOrigins("http://localhost:3000", "https://modelbuilder-dev-client.azurewebsites.net", "https://modelbuilder-test-client.azurewebsites.net")
                         .AllowAnyHeader()
                         .AllowAnyMethod()
                         .AllowCredentials()

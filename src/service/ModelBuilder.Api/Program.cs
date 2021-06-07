@@ -15,6 +15,17 @@ namespace Mb.Api
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((hostingContext, config) =>
+                {
+                    config.Sources.Clear();
+                    var env = hostingContext.HostingEnvironment;
+
+                    config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                        .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+
+                    config.AddJsonFile("appsettings.local.json", optional: true, reloadOnChange: true);
+                    config.AddEnvironmentVariables();
+                })
                 .ConfigureLogging(logging =>
                 {
                     logging.ClearProviders();
@@ -22,11 +33,7 @@ namespace Mb.Api
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>()
-                        .ConfigureAppConfiguration(configurationBuilder =>
-                        {
-                            configurationBuilder.AddJsonFile($"{Directory.GetCurrentDirectory()}/appsettings.local.json", true);
-                        });
+                    webBuilder.UseStartup<Startup>();
                 });
 
     }
