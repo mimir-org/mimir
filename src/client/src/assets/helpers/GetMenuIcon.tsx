@@ -4,7 +4,7 @@ import {
   OpenFilterIcon,
   OpenUserIcon,
   ClosedUserIcon,
-} from "../icons";
+} from "../icons/common";
 
 const GetMenuBoxIcon = (isOpen: boolean, type: string) => {
   const account = type === MENU_TYPE.ACCOUNT;

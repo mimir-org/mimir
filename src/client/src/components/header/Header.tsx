@@ -2,7 +2,7 @@ import { useHistory } from "react-router-dom";
 import { TextResources } from "../../assets/textResources";
 import { useDispatch } from "react-redux";
 import { VIEW_TYPE } from "../../models/project";
-import { TreeviewOff, TreeviewOn } from "../../assets/icons";
+import { TreeviewOff, TreeviewOn } from "../../assets/icons/common";
 import { ViewOffIcon, ViewOnIcon } from "../../assets/icons/blockView";
 import { changeFlowView } from "../../redux/store/flow/actions";
 import { IsBlockView } from "../flow/helpers/block";

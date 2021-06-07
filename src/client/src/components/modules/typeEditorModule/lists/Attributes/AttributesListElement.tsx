@@ -1,6 +1,6 @@
 import { Checkbox } from "../../inputs/Checkbox";
 import { ListElem } from "../../../../../componentLibrary";
-import { HelpIcon } from "../../../../../assets/icons";
+import { HelpIcon } from "../../../../../assets/icons/common";
 
 interface Props {}
 

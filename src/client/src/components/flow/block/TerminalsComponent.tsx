@@ -1,14 +1,14 @@
-import { Node, Connector, TERMINAL } from "../../../models/project";
+import { Node, Connector, NODE_TYPE } from "../../../models/project";
+import {
+  TerminalsBox,
+  TerminalsElement,
+} from "../../../componentLibrary/blockView";
 import {
   GetConnectorIcon,
   GetConnectorName,
   SortConnectors,
   SortLocationConnectors,
 } from "../helpers/common";
-import {
-  TerminalsBox,
-  TerminalsElement,
-} from "../../../componentLibrary/blockView";
 
 interface Props {
   isOpen: boolean;
@@ -21,7 +21,7 @@ interface Props {
 const TerminalsComponent = ({ isOpen, list, type, width, onClick }: Props) => {
   let sortedList = [];
 
-  if (type === "location") sortedList = SortLocationConnectors(list);
+  if (type === NODE_TYPE.LOCATION) sortedList = SortLocationConnectors(list);
   else sortedList = SortConnectors(list);
 
   return (

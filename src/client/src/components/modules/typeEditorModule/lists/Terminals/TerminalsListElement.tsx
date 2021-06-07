@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { TerminalListElement } from "../../styled";
 import { NumericInput } from "../../../../../componentLibrary";
-import { unexpandedIcon } from "../../../../../assets/icons";
+import { unexpandedIcon } from "../../../../../assets/icons/common";
 
 interface Props {
   name: String;

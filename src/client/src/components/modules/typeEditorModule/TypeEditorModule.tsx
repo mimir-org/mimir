@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { TypeEditorComponent } from "./TypeEditorComponent";
+import { NewTypeIcon, EditTypeIcon } from "../../../assets/icons/common";
+import { TextResources } from "../../../assets/textResources";
+import { useDispatch } from "react-redux";
+import { VIEW_TYPE } from "../../../models/project";
+import { changeFlowView } from "../../../redux/store/flow/actions";
 import {
   TypeEditorBox,
   TypeEditorBoxContent,
 } from "../../../componentLibrary/box";
 import "./typeeditor.scss";
-import { NewTypeIcon, EditTypeIcon } from "../../../assets/icons";
-import { TextResources } from "../../../assets/textResources";
-import { useDispatch } from "react-redux";
-import { VIEW_TYPE } from "../../../models/project";
-import { changeFlowView } from "../../../redux/store/flow/actions";
 
 export const TypeEditorModule = () => {
   const dispatch = useDispatch();

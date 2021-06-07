@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { TerminalsIcon } from "../../../assets/icons/blockView";
 import { addSelectedConnector } from "../../../redux/store/flow/actions";
 import red, { RootState } from "../../../redux/store";
-import { Node } from "../../../models/project";
+import { Node, NODE_TYPE } from "../../../models/project";
 import { IsLocationNode } from "../helpers/common";
 import { NodeBox, TerminalsMenu } from "../../../componentLibrary/blockView";
 import { HandleComponent, TerminalsComponent } from "../block";
@@ -84,7 +84,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
         data={data}
         list={connectors}
         isLocation={isLocation}
-        type="block"
+        type={NODE_TYPE.LOCATION}
       ></HandleComponent>
 
       <HandleComponent

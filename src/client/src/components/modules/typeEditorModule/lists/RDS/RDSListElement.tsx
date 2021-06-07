@@ -1,6 +1,6 @@
 import { RoundCheckbox } from "../../inputs/RoundCheckbox";
 import { ListElem } from "../../../../../componentLibrary";
-import { HelpIcon } from "../../../../../assets/icons";
+import { HelpIcon } from "../../../../../assets/icons/common";
 
 interface Props {
   name: string;

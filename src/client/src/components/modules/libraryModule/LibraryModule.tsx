@@ -21,7 +21,7 @@ import {
   ToggleLeft,
   ToggleRight,
   ToggleUp,
-} from "../../../assets/icons";
+} from "../../../assets/icons/common";
 
 const LibraryModule = () => {
   const libraryKey = MODULE_TYPE.LIBRARY;

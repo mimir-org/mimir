@@ -4,7 +4,7 @@ import { RootState } from "../../../redux/store";
 import { useHistory } from "react-router-dom";
 import { MODULE_TYPE } from "../../../models/project";
 import { TextResources } from "../../../assets/textResources";
-import { CloseIcon } from "../../../assets/icons";
+import { CloseIcon } from "../../../assets/icons/common";
 import { TypeEditorState } from "../../../redux/store/typeEditor/types";
 import { changeFlowView } from "../../../redux/store/flow/actions";
 import {

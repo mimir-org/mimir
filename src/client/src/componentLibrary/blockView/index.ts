@@ -2,7 +2,7 @@ export { default as TerminalsMenu } from "./TerminalsMenu";
 export { default as TerminalsBox } from "./TerminalsBox";
 export { default as TerminalsElement } from "./TerminalsElement";
 
-export { default as ConnectViewMenu } from "./ConnectViewMenu";
+export { default as ConnectMenu } from "./ConnectMenu";
 export { default as ConnectViewBox } from "./ConnectViewBox";
 export { default as ConnectViewElement } from "./ConnectViewElement";
 

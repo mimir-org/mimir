@@ -1,6 +1,6 @@
 import { TextResources } from "../../../assets/textResources";
 import { LibCategory } from "../../../models/project";
-import { SearchIcon } from "../../../assets/icons";
+import { SearchIcon } from "../../../assets/icons/common";
 import { SearchInput } from "../../../componentLibrary";
 import { LibraryCategoryComponent } from ".";
 import { useSelector } from "react-redux";

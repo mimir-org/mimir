@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
+import { expandedIcon, unexpandedIcon } from "../../../../assets/icons/common";
+import GetRightMargin from "../helper/GetRightMargin";
 import {
   getRDS,
   changeSelectedAspect,
@@ -13,8 +15,7 @@ import {
   DropdownMenuListItem,
 } from "../../../../componentLibrary/dropdown";
 import "./dropdownmenu.scss";
-import { expandedIcon, unexpandedIcon } from "../../../../assets/icons";
-import GetRightMargin from "../helper/GetRightMargin";
+
 interface Props {
   label: string;
   placeHolder: string;

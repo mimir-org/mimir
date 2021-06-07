@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { EyeIcon, ToggleDown, ToggleUp } from "../../../assets/icons";
+import { EyeIcon, ToggleDown, ToggleUp } from "../../../assets/icons/common";
 import { TextResources } from "../../../assets/textResources";
 import InspectorTabs from "./InspectorTabs";
 import { Size } from "../../../componentLibrary";

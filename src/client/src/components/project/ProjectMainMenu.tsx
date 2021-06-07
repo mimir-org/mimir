@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { create } from "../../redux/store/project/actions";
 import { TextResources } from "../../assets/textResources";
 import { RootState } from "../../redux/store";
-import { NewProjectIcon, OpenProjectIcon } from "../../assets/icons";
+import { NewProjectIcon, OpenProjectIcon } from "../../assets/icons/common";
 import { changeProjectMenu } from "../../redux/store/projectMenu/actions";
 import { PROJECT_MENU_TYPE } from "../../models/project";
 import {

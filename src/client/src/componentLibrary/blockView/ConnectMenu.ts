@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const ConnectViewMenu = styled.div`
+const ConnectMenu = styled.div`
   visibility: ${(props) => !props.visible && "hidden"};
   position: absolute;
   left: -1px;
@@ -8,4 +8,4 @@ const ConnectViewMenu = styled.div`
   cursor: pointer;
 `;
 
-export default ConnectViewMenu;
+export default ConnectMenu;

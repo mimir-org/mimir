@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { SelectDownIcon } from "../../assets/icons";
+import { SelectDownIcon } from "../../assets/icons/common";
 
 const Select = styled.select`
   border: 1px solid #898787;

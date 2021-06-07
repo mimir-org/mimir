@@ -2,7 +2,7 @@ import {
   ProductIcon,
   FunctionIcon,
   LocationIcon,
-} from "../../../../assets/icons";
+} from "../../../../assets/icons/common";
 
 const GetFlowAspectIcon = (icon: string) => {
   let AspectIcon =

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { PROJECT_MENU_TYPE } from "../../../models/project";
-import { CloseIcon, RightArrowIcon } from "../../../assets/icons";
+import { CloseIcon, RightArrowIcon } from "../../../assets/icons/common";
 import { TextResources } from "../../../assets/textResources";
 import { changeProjectMenu } from "../../../redux/store/projectMenu/actions";
 import { useState } from "react";

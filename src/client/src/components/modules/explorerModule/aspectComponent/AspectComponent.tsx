@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ExpandedIcon, ClosedIcon } from "../../../../assets/icons";
+import { ExpandedIcon, ClosedIcon } from "../../../../assets/icons/common";
 import { Node } from "../../../../models/project";
 import { IsAspectNode } from "../../../flow/helpers/common";
 import { AspectElement } from ".";

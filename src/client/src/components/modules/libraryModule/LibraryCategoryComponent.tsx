@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { LibCategory } from "../../../models/project";
 import { GetDropdownIcon, GetAspectColor } from "../../../assets/helpers";
-import { ExpandedIcon, ClosedIcon } from "../../../assets/icons";
+import { ExpandedIcon, ClosedIcon } from "../../../assets/icons/common";
 import {
   LibraryCategory,
   LibraryCategoryElement,

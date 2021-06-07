@@ -6,10 +6,7 @@ import { RootState } from "../../../redux/store";
 import { Node } from "../../../models/project";
 import { IsLocationNode, GetChildren } from "../helpers/common";
 import { Size } from "../../../componentLibrary";
-import {
-  TerminalsIcon,
-  ConnectViewIcon,
-} from "../../../assets/icons/blockView";
+import { TerminalsIcon, ConnectIcon } from "../../../assets/icons/blockView";
 import {
   TerminalsComponent,
   ConnectViewComponent,
@@ -27,7 +24,7 @@ import {
 import {
   NodeBox,
   TerminalsMenu,
-  ConnectViewMenu,
+  ConnectMenu,
 } from "../../../componentLibrary/blockView";
 
 const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
@@ -38,6 +35,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const [connectMenu, showConnectMenu] = useState(false);
   const connectors = GetConnectors();
   const children = GetChildren(data);
+  const hasChildren = children?.length > 0;
 
   const mainConnectNode = useSelector<RootState>(
     (state) => state.connectView.mainNode
@@ -53,11 +51,11 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
 
   const isConnectViewNode = data.id === mainConnectNode?.id;
 
-  const handleTerminalClick = () => {
+  const onTerminalClick = () => {
     showTerminalMenu(!terminalMenu);
   };
 
-  const handleConnectViewClick = () => {
+  const onConnClick = () => {
     showConnectMenu(!connectMenu);
   };
 
@@ -71,7 +69,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     showConnectButton(false);
   };
 
-  const handleConnectorClick = (connector) => {
+  const onConnectorClick = (connector) => {
     dispatch(addSelectedConnector(connector));
     connectors.push(connector);
     showTerminalMenu(false);
@@ -79,7 +77,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     SetConnectors(connectors);
   };
 
-  const handleOnChange = (node: Node) => {
+  const onChange = (node: Node) => {
     if (!isChecked(node)) {
       showConnectMenu(false);
       showConnectButton(false);
@@ -117,15 +115,12 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
       length={data.length}
       isSelectedConnection={isConnectViewNode}
     >
-      <TerminalsMenu visible={terminalButton} onClick={handleTerminalClick}>
+      <TerminalsMenu visible={terminalButton} onClick={onTerminalClick}>
         <img src={TerminalsIcon} alt="options" />
       </TerminalsMenu>
-      <ConnectViewMenu
-        visible={connectButton && children.length > 0}
-        onClick={handleConnectViewClick}
-      >
-        <img src={ConnectViewIcon} alt="options" />
-      </ConnectViewMenu>
+      <ConnectMenu visible={connectButton && hasChildren} onClick={onConnClick}>
+        <img src={ConnectIcon} alt="options" />
+      </ConnectMenu>
 
       <p className="node-name">{data.label ?? data.name}</p>
 
@@ -133,13 +128,13 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
         isOpen={terminalMenu}
         list={data.connectors}
         width={data.width}
-        onClick={handleConnectorClick}
+        onClick={onConnectorClick}
       ></TerminalsComponent>
 
       <ConnectViewComponent
         isOpen={connectMenu}
         list={children}
-        handleClick={handleOnChange}
+        handleClick={onChange}
         isChecked={isChecked}
         width={data.width}
       ></ConnectViewComponent>
