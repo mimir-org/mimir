@@ -3,6 +3,8 @@ import {
   FETCHING_RDS_SUCCESS_OR_ERROR,
   FETCHING_INITIAL_DATA,
   FETCHING_INITIAL_SUCCESS_OR_ERROR,
+  FETCHING_TERMINALS,
+  FETCHING_TERMINALS_SUCCESS_OR_ERROR,
   CHANGE_ASPECT,
   TypeEditorActionTypes,
   TypeEditorState,
@@ -47,6 +49,17 @@ export function typeEditorReducer(
         ...state,
         fetching: false,
         rdsList: action.payload.Rds ? action.payload.Rds : [],
+      };
+    case FETCHING_TERMINALS:
+      return {
+        ...state,
+        fetching: true,
+      };
+    case FETCHING_TERMINALS_SUCCESS_OR_ERROR:
+      return {
+        ...state,
+        fetching: false,
+        terminals: action.payload.terminals,
       };
     case CHANGE_ASPECT:
       return {

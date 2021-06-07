@@ -132,9 +132,8 @@ const LibraryModule = () => {
           <p className="text">{TextResources.Library_Heading}</p>
         </ModuleHeader>
         <ModuleBody visible={isOpen} library>
-          {/* <LibraryComponent categories={libNodes()} search={search} /> */}
-          <TypeEditorModule />
-          {/* <LibraryComponent categories={libNodes()} search={search} /> */}
+          <LibraryComponent categories={libNodes()} search={search} />
+          {/* <TypeEditorModule /> */}
         </ModuleBody>
         <AnimatedModule
           start={startLegend}

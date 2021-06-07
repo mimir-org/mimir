@@ -2,6 +2,7 @@ import {
   CREATING_TYPE,
   FETCHING_INITIAL_DATA,
   FETCHING_RDS,
+  FETCHING_TERMINALS,
   CHANGE_ASPECT,
   TypeEditorActionTypes,
 } from "./types";
@@ -12,7 +13,7 @@ import {
   Dictionary,
 } from "../../../models/project";
 
-// TO DO create type, save type, get terminals, get attributes
+// TO DO create type, save type, get attributes
 
 export function create(
   id: string,
@@ -59,6 +60,13 @@ export function getRDS(aspect: string): TypeEditorActionTypes {
     payload: {
       aspect,
     },
+  };
+}
+
+export function getTerminals(): TypeEditorActionTypes {
+  return {
+    type: FETCHING_TERMINALS,
+    payload: null,
   };
 }
 

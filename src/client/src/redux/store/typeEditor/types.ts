@@ -10,6 +10,9 @@ export const FETCHING_INITIAL_SUCCESS_OR_ERROR =
   "FETCHING_INITIAL_SUCCESS_OR_ERROR";
 export const FETCHING_RDS = "FETCHING_RDS";
 export const FETCHING_RDS_SUCCESS_OR_ERROR = "FETCHING_RDS_SUCCESS_OR_ERROR";
+export const FETCHING_TERMINALS = "FETCHING_TERMINALS";
+export const FETCHING_TERMINALS_SUCCESS_OR_ERROR =
+  "FETCHING_TERMINALS_SUCCESS_OR_ERROR";
 export const CHANGE_ASPECT = "CHANGE_ASPECT";
 export const CREATING_TYPE = "CREATING_TYPE";
 export const CREATING_TYPE_SUCCESS_OR_ERROR = "CREATING_TYPE_SUCCESS_OR_ERROR";
@@ -54,6 +57,17 @@ interface FetchingRDSActionFinished {
     Rds: Rds[];
   };
 }
+interface FetchingTerminalsAction {
+  type: typeof FETCHING_TERMINALS;
+  payload: null;
+}
+
+interface FetchingTerminalsActionFinished {
+  type: typeof FETCHING_TERMINALS_SUCCESS_OR_ERROR;
+  payload: {
+    terminals: TerminalType[];
+  };
+}
 
 export interface ChangeSelectedAspect {
   type: typeof CHANGE_ASPECT;
@@ -77,6 +91,8 @@ export type TypeEditorActionTypes =
   | FetchingInitialDataActionFinished
   | FetchingRDSAction
   | FetchingRDSActionFinished
+  | FetchingTerminalsAction
+  | FetchingTerminalsActionFinished
   | ChangeSelectedAspect
   | CreatingTypeAction
   | CreatingTypeActionFinished;

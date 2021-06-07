@@ -6,6 +6,7 @@ import { MODULE_TYPE } from "../../../models/project";
 import {
   getInitialData,
   getRDS,
+  getTerminals,
 } from "../../../redux/store/typeEditor/actions";
 import { changeFlowView } from "../../../redux/store/flow/actions";
 
@@ -51,6 +52,7 @@ export const TypeEditorComponent = ({ mode }: Props) => {
   useEffect(() => {
     dispatch(getInitialData());
     dispatch(getRDS(state.aspect));
+    dispatch(getTerminals());
   }, [dispatch]);
 
   return (

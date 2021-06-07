@@ -14,6 +14,7 @@ import {
 } from "../../../../componentLibrary/dropdown";
 import "./dropdownmenu.scss";
 import { expandedIcon, unexpandedIcon } from "../../../../assets/icons";
+import GetRightMargin from "../helper/GetRightMargin";
 interface Props {
   label: string;
   placeHolder: string;
@@ -45,7 +46,7 @@ export const DropDownMenu = ({ label, placeHolder, listItems }: Props) => {
 
   return (
     <>
-      <DropdownMenuWrapper>
+      <DropdownMenuWrapper right={GetRightMargin(label)}>
         <label htmlFor={label} />
         {label}
         <div onClick={toggleList}>

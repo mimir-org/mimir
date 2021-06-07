@@ -5,7 +5,7 @@ const DropdownMenuWrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-  margin-right: 15px;
+  margin-right: ${(props: { right: number }) => props.right + `px`};
   background-color: ${Color.White};
   font-size: ${FontSize.Standard};
   color: ${Color.Black};

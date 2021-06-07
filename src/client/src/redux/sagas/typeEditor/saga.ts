@@ -2,6 +2,7 @@ import { call, put } from "redux-saga/effects";
 import {
   FETCHING_INITIAL_SUCCESS_OR_ERROR,
   FETCHING_RDS_SUCCESS_OR_ERROR,
+  FETCHING_TERMINALS_SUCCESS_OR_ERROR,
   TypeEditorActionTypes,
 } from "../../store/typeEditor/types";
 
@@ -67,6 +68,33 @@ export function* getRDS(action) {
 
     yield put({
       type: FETCHING_RDS_SUCCESS_OR_ERROR,
+      payload: payload,
+    });
+  }
+}
+
+export function* getTerminals(action) {
+  try {
+    const terminalURL =
+      process.env.REACT_APP_API_BASE_URL + "typeeditor/terminals";
+
+    const terminalResponse = yield call(get, terminalURL);
+
+    const payload = {
+      terminals: terminalResponse.data,
+    };
+
+    yield put({
+      type: FETCHING_TERMINALS_SUCCESS_OR_ERROR,
+      payload: payload,
+    });
+  } catch (error) {
+    const payload = {
+      terminals: [],
+    };
+
+    yield put({
+      type: FETCHING_TERMINALS_SUCCESS_OR_ERROR,
       payload: payload,
     });
   }
