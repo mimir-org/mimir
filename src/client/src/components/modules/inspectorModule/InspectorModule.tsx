@@ -5,7 +5,6 @@ import { TextResources } from "../../../assets/textResources";
 import InspectorTabs from "./InspectorTabs";
 import { MODULE_TYPE } from "../../../models/project";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
-import { SaveState } from "../../../redux/store/localStorage";
 import {
   InspectorTitle,
   InspectorBody,
@@ -41,7 +40,6 @@ const InspectorModule = () => {
   ) as boolean;
 
   const handleClick = () => {
-    SaveState(!isInspectorOpen, key);
     dispatch(changeModuleVisibility(key, !isInspectorOpen, true));
   };
 

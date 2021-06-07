@@ -7,7 +7,6 @@ import { RootState } from "../../../redux/store";
 import { LibraryState } from "../../../redux/store/library/types";
 import { searchLibrary } from "../../../redux/store/library/actions";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
-import { SaveState } from "../../../redux/store/localStorage";
 import { AnimatedModule, Size } from "../../../componentLibrary";
 import { ValidateLibComponent } from "./helpers";
 import { IsBlockView } from "../../flow/helpers/block";
@@ -62,14 +61,11 @@ const LibraryModule = () => {
   ) as boolean;
 
   const handleClick = () => {
-    SaveState(!isOpen, libraryKey);
     dispatch(changeModuleVisibility(libraryKey, !isOpen, true));
-    SaveState(!isOpen, legendKey);
     dispatch(changeModuleVisibility(legendKey, !isOpen, true));
   };
 
   const handleLegendClick = () => {
-    SaveState(!legendOpen, legendKey);
     dispatch(changeModuleVisibility(legendKey, !legendOpen, true));
   };
 

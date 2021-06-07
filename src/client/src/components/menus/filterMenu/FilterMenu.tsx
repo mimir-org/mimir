@@ -3,16 +3,14 @@ import { useState } from "react";
 import { MENU_TYPE, RELATION_TYPE } from "../../../models/project";
 import { GetMenuIcon } from "../../../assets/helpers/";
 import { MenuBox, MenuTopHeader } from "../../../componentLibrary/box/menus";
-import { LoadState, SaveState } from "../../../redux/store/localStorage";
 import { FilterContent } from ".";
 
 const FilterModule = () => {
   const type = MENU_TYPE.VISUAL_FILTER;
-  const [showFilter, setShowFilter] = useState(LoadState(type));
+  const [showFilter, setShowFilter] = useState(false);
 
   const handleClick = () => {
     setShowFilter(!showFilter);
-    SaveState(!showFilter, type);
   };
 
   return (

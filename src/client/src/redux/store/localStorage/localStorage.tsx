@@ -1,40 +1,5 @@
 import { Connector } from "../../../models/project";
 
-export const LoadState = (key: string) => {
-  try {
-    const serializedState = localStorage.getItem(`show_${key}`);
-
-    if (!serializedState) {
-      if (key === "VisualFilter") return JSON.parse("false");
-      return JSON.parse("true");
-    }
-
-    return JSON.parse(serializedState);
-  } catch (err) {
-    return undefined;
-  }
-};
-
-export const SaveState = (state: boolean, key: string) => {
-  try {
-    const serializedState = JSON.stringify(state);
-    localStorage.setItem(`show_${key}`, serializedState);
-  } catch {
-    return undefined;
-  }
-};
-
-export const SaveAllModules = (state: boolean) => {
-  try {
-    const serializedState = JSON.stringify(state);
-    localStorage.setItem(`show_Library`, serializedState);
-    localStorage.setItem(`show_Explorer`, serializedState);
-    localStorage.setItem(`show_Inspector`, serializedState);
-  } catch {
-    return undefined;
-  }
-};
-
 export const SaveEventData = (state: object, key: string) => {
   try {
     const serializedState = JSON.stringify(state);
