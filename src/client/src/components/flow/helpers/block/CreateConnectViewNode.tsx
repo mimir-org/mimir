@@ -3,8 +3,8 @@ import { FlowElement } from "react-flow-renderer";
 import { Size } from "../../../../componentLibrary";
 
 const CreateConnectViewNode = (node: Node): FlowElement => {
-  let connectionViewBlock = null;
-  if (!node) return connectionViewBlock;
+  let connectViewBlock = null;
+  if (!node) return connectViewBlock;
 
   if (!node.width || node.width === 0 || node.width === Size.Node_Width)
     node.width = Size.ConnectionView_Width;
@@ -12,7 +12,7 @@ const CreateConnectViewNode = (node: Node): FlowElement => {
     node.length = Size.ConnectionView_Length;
   node.height = 0; // Z-axis
 
-  connectionViewBlock = {
+  connectViewBlock = {
     id: node.id,
     type: node.type,
     data: node,
@@ -24,7 +24,7 @@ const CreateConnectViewNode = (node: Node): FlowElement => {
     connectable: true,
   };
 
-  return connectionViewBlock;
+  return connectViewBlock;
 };
 
 export default CreateConnectViewNode;

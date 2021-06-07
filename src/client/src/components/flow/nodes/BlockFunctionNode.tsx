@@ -79,8 +79,8 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
 
   const onChange = (node: Node) => {
     if (!isChecked(node)) {
-      showConnectMenu(false);
-      showConnectButton(false);
+      data.width = Size.ConnectionView_Width;
+      data.length = Size.ConnectionView_Length;
       dispatch(addMainConnectNode(data));
       dispatch(addConnectNode(node));
     } else dispatch(removeConnectNode(node));

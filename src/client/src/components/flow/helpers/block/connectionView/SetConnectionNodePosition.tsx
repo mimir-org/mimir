@@ -3,7 +3,6 @@ import { Node } from "../../../../../models/project";
 import red from "../../../../../redux/store";
 
 const SetConnectionNodePosition = (node: Node, splitView: boolean) => {
-  console.log({ node });
   const connectionNode = red.store.getState().connectView.mainNode as Node;
   const actualNode = red.store
     .getState()
@@ -17,14 +16,13 @@ const SetConnectionNodePosition = (node: Node, splitView: boolean) => {
   const nodeWidth = actualNode?.width;
   const nodeHeight = actualNode?.length;
 
-  let xPos = actualNode?.positionBlockX;
-  let yPos = actualNode?.positionBlockY + nodeHeight / 2;
+  let xPos = actualNode ? actualNode.positionBlockX : 700;
+  let yPos = actualNode ? actualNode.positionBlockY + nodeHeight / 2 : 400;
 
   xPos = CalculateXPosition(node, xPos, nodeWidth, connectionNodes);
   yPos = CalculateYPosition(node, yPos, nodeWidth, connectionNodes);
 
   if (node !== actualNode) {
-    console.log(xPos, yPos);
     node.positionBlockX = xPos;
     node.positionBlockY = yPos;
   }
