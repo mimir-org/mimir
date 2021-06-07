@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ProjectMainMenu } from "../project";
-import { RootState } from "./../../redux/store/index";
+import { RootState } from "../../redux/store/index";
 import { useOnConnect, useOnDrop, useOnElementsRemove } from "./hooks";
 import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
 import { OpenProjectMenu } from "../project/openProject/OpenProjectMenu";

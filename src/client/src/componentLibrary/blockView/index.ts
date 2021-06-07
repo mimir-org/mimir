@@ -1,11 +1,13 @@
-export { default as OptionsBox } from "./OptionsBox";
-export { default as BlockOptionsBox } from "./BlockOptionsBox";
-export { default as OptionsElement } from "./OptionsElement";
-export { default as BlockOptionsElement } from "./BlockOptionsElement";
+export { default as TerminalsMenu } from "./TerminalsMenu";
+export { default as TerminalsBox } from "./TerminalsBox";
+export { default as TerminalsElement } from "./TerminalsElement";
+
+export { default as ConnectViewMenu } from "./ConnectViewMenu";
+export { default as ConnectViewBox } from "./ConnectViewBox";
+export { default as ConnectViewElement } from "./ConnectViewElement";
+
 export { default as OptionsButton } from "./OptionsButton";
 export { default as NodeBox } from "./NodeBox";
-export { default as OptionsMenu } from "./OptionsMenu";
-export { default as BlockOptionsMenu } from "./BlockOptionsMenu";
 export { default as HandleBox } from "./HandleBox";
 export { default as BlockMessageBox } from "./MessageBox";
 export { default as FunctionBox } from "./FunctionBox";

@@ -1,7 +1,7 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useDispatch, useSelector } from "react-redux";
-import { OptionsIcon } from "../../../assets/icons/blockView";
+import { TerminalsIcon } from "../../../assets/icons/blockView";
 import { addSelectedConnector } from "../../../redux/store/flow/actions";
 import red, { RootState } from "../../../redux/store";
 import { Node, TERMINAL } from "../../../models/project";
@@ -18,15 +18,15 @@ import {
 } from "../helpers/common";
 import {
   NodeBox,
-  OptionsBox,
-  OptionsElement,
-  OptionsMenu,
+  TerminalsBox,
+  TerminalsElement,
+  TerminalsMenu,
 } from "../../../componentLibrary/blockView";
 
 const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
-  const [showButton, setShowButton] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [terminalButton, showTerminalButton] = useState(false);
+  const [terminalMenu, showTerminalMenu] = useState(false);
   const connectors = GetConnectors();
   const splitView = red.store.getState().splitView;
   const isSplitView = splitView.visible as boolean;
@@ -40,21 +40,21 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
     : IsLocationNode(selectedNode);
 
   const handleClick = () => {
-    setMenuOpen(!menuOpen);
+    showTerminalMenu(!terminalMenu);
   };
 
   const handleOnHover = () => {
-    setShowButton(true);
+    showTerminalButton(true);
   };
 
   const handleOnMouseOut = () => {
-    setShowButton(false);
+    showTerminalButton(false);
   };
 
   const handleConnectorClick = (connector) => {
     dispatch(addSelectedConnector(connector));
     connectors.push(connector);
-    setMenuOpen(false);
+    showTerminalMenu(false);
     SetConnectors(connectors);
   };
 
@@ -76,13 +76,13 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
       width={data.width}
       length={data.length}
     >
-      <OptionsMenu visible={showButton} onClick={handleClick}>
-        <img src={OptionsIcon} alt="options" />
-      </OptionsMenu>
+      <TerminalsMenu visible={terminalButton} onClick={handleClick}>
+        <img src={TerminalsIcon} alt="options" />
+      </TerminalsMenu>
       <p className="node-name">{data.label ?? data.name}</p>
-      <OptionsBox visible={menuOpen} width={data.width} type={TERMINAL}>
+      <TerminalsBox visible={terminalMenu} width={data.width} type={TERMINAL}>
         {SortLocationConnectors(data.connectors).map((conn) => (
-          <OptionsElement
+          <TerminalsElement
             key={conn.id}
             onClick={() => handleConnectorClick(conn)}
           >
@@ -92,9 +92,9 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
               alt="icon"
               className="button"
             />
-          </OptionsElement>
+          </TerminalsElement>
         ))}
-      </OptionsBox>
+      </TerminalsBox>
 
       <HandleComponent
         data={data}

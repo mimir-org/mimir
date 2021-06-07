@@ -1,19 +1,19 @@
 import styled from "styled-components";
 import { Color, FontSize } from "..";
 
-const OptionsElement = styled.div`
+const BlockOptionsElement = styled.div`
   border-bottom: 1px solid ${Color.DarkGrey};
   padding: 5px 34px 5px 5px;
   font-size: ${FontSize.Small};
   color: ${Color.Black};
   height: 15px;
   width: auto;
-  min-width: 100px;
+  min-width: 140px;
   position: relative;
 
   .text {
     position: absolute;
-    left: 6px;
+    left: 30px;
     bottom: -3px;
   }
 
@@ -27,7 +27,7 @@ const OptionsElement = styled.div`
     cursor: pointer;
 
     :first-child {
-      border-top-right-radius: 4px;
+      border-top-left-radius: 4px;
     }
 
     :last-child {
@@ -37,4 +37,4 @@ const OptionsElement = styled.div`
   }
 `;
 
-export default OptionsElement;
+export default BlockOptionsElement;

@@ -1,13 +1,20 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useDispatch, useSelector } from "react-redux";
-import { OptionsIcon, BlockOptionsIcon } from "../../../assets/icons/blockView";
+import {
+  TerminalsIcon,
+  ConnectViewIcon,
+} from "../../../assets/icons/blockView";
 import { addSelectedConnector } from "../../../redux/store/flow/actions";
 import { RootState } from "../../../redux/store";
-import { OptionsComponent, HandleComponent } from "../block";
-import { Node, TERMINAL } from "../../../models/project";
+import { Node } from "../../../models/project";
 import { IsLocationNode, GetChildren } from "../helpers/common";
 import { Size } from "../../../componentLibrary";
+import {
+  TerminalsComponent,
+  ConnectViewComponent,
+  HandleComponent,
+} from "../block";
 import {
   GetConnectors,
   SetConnectors,
@@ -19,16 +26,16 @@ import {
 } from "../../../redux/store/connectView/actions";
 import {
   NodeBox,
-  OptionsMenu,
-  BlockOptionsMenu,
+  TerminalsMenu,
+  ConnectViewMenu,
 } from "../../../componentLibrary/blockView";
 
 const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
-  const [showButton, setShowButton] = useState(false);
-  const [showBlockMenuButton, setShowBlockMenuButton] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [blockMenuOpen, setBlockMenuOpen] = useState(false);
+  const [terminalButton, showTerminalButton] = useState(false);
+  const [connectButton, showConnectButton] = useState(false);
+  const [terminalMenu, showTerminalMenu] = useState(false);
+  const [connectMenu, showConnectMenu] = useState(false);
   const connectors = GetConnectors();
   const children = GetChildren(data);
 
@@ -47,35 +54,35 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const isConnectViewNode = data.id === mainConnectNode?.id;
 
   const handleClick = () => {
-    setMenuOpen(!menuOpen);
+    showTerminalMenu(!terminalMenu);
   };
 
   const handleBlockClick = () => {
-    setBlockMenuOpen(!blockMenuOpen);
+    showConnectMenu(!connectMenu);
   };
 
   const handleOnHover = () => {
-    setShowButton(true);
-    setShowBlockMenuButton(true);
+    showTerminalButton(true);
+    showConnectButton(true);
   };
 
   const handleOnMouseOut = () => {
-    setShowButton(false);
-    setShowBlockMenuButton(false);
+    showTerminalButton(false);
+    showConnectButton(false);
   };
 
   const handleConnectorClick = (connector) => {
     dispatch(addSelectedConnector(connector));
     connectors.push(connector);
-    setMenuOpen(false);
-    setBlockMenuOpen(false);
+    showTerminalMenu(false);
+    showConnectMenu(false);
     SetConnectors(connectors);
   };
 
   const handleOnChange = (node: Node) => {
     if (!isChecked(node)) {
-      setBlockMenuOpen(false);
-      setShowBlockMenuButton(false);
+      showConnectMenu(false);
+      showConnectButton(false);
       dispatch(addMainConnectNode(data));
       dispatch(addConnectNode(node));
     } else dispatch(removeConnectNode(node));
@@ -110,33 +117,32 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
       length={data.length}
       isSelectedConnection={isConnectViewNode}
     >
-      <OptionsMenu visible={showButton} onClick={handleClick}>
-        <img src={OptionsIcon} alt="options" />
-      </OptionsMenu>
-      <BlockOptionsMenu
-        visible={showBlockMenuButton && children.length > 0}
+      <TerminalsMenu visible={terminalButton} onClick={handleClick}>
+        <img src={TerminalsIcon} alt="options" />
+      </TerminalsMenu>
+      <ConnectViewMenu
+        visible={connectButton && children.length > 0}
         onClick={handleBlockClick}
       >
-        <img src={BlockOptionsIcon} alt="options" />
-      </BlockOptionsMenu>
+        <img src={ConnectViewIcon} alt="options" />
+      </ConnectViewMenu>
 
       <p className="node-name">{data.label ?? data.name}</p>
 
-      <OptionsComponent
-        isOpen={menuOpen}
+      <TerminalsComponent
+        isOpen={terminalMenu}
         list={data.connectors}
-        type={TERMINAL}
         width={data.width}
         handleClick={handleConnectorClick}
-      ></OptionsComponent>
+      ></TerminalsComponent>
 
-      <OptionsComponent
-        isOpen={blockMenuOpen}
+      <ConnectViewComponent
+        isOpen={connectMenu}
         list={children}
         handleClick={handleOnChange}
         isChecked={isChecked}
         width={data.width}
-      ></OptionsComponent>
+      ></ConnectViewComponent>
 
       <HandleComponent
         data={data}

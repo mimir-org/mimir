@@ -1,19 +1,19 @@
 import styled from "styled-components";
 import { Color, FontSize } from "..";
 
-const BlockOptionsElement = styled.div`
+const TerminalsElement = styled.div`
   border-bottom: 1px solid ${Color.DarkGrey};
   padding: 5px 34px 5px 5px;
   font-size: ${FontSize.Small};
   color: ${Color.Black};
   height: 15px;
   width: auto;
-  min-width: 140px;
+  min-width: 100px;
   position: relative;
 
   .text {
     position: absolute;
-    left: 30px;
+    left: 6px;
     bottom: -3px;
   }
 
@@ -37,4 +37,4 @@ const BlockOptionsElement = styled.div`
   }
 `;
 
-export default BlockOptionsElement;
+export default TerminalsElement;

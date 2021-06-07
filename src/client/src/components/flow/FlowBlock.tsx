@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ProjectMainMenu } from "../project";
-import { RootState } from "./../../redux/store/index";
+import { RootState } from "../../redux/store/index";
 import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
 import { EDGE_TYPE, EdgeType } from "../../models/project";
 import { OpenProjectMenu } from "../project/openProject";
