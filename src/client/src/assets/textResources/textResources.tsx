@@ -111,6 +111,9 @@ const textResources = {
   Account_NoSave_Button: "No",
   Account_Cancel_Button: "Cancel",
 
+  // ErrorModule
+  Error_Tile: "Oops, Something Went Wrong",
+
   // LegendModule
   Legend_Heading: "Legend",
 

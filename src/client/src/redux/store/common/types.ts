@@ -1,12 +1,14 @@
+import { ApiError } from "../../../models/webclient";
 export const FETCHING_CONTRACTORS = "FETCHING_CONTRACTORS";
 export const FETCHING_CONTRACTORS_SUCCESS_OR_ERROR = "FETCHING_CONTRACTORS_SUCCESS_OR_ERROR";
+export const DELETE_COMMON_ERROR = "DELETE_COMMON_ERROR";
+
 
 // State types
 export interface CommonState {
     fetching: boolean;
-    hasError: boolean;
-    errorMsg: string | null;
-    contractors: Contractor[] | null
+    contractors: Contractor[] | null;
+    apiError: ApiError[];
 }
 
 // Models
@@ -24,9 +26,20 @@ interface FetchingContractorsAction {
 
 interface FetchingContractorsSuccessOrErrorAction {
     type: typeof FETCHING_CONTRACTORS_SUCCESS_OR_ERROR;
-    payload: CommonState;
+    payload: {
+        contractors: Contractor[],
+        apiError: ApiError
+    }
 }
+interface DeleteCommonErrorAction {
+    type: typeof DELETE_COMMON_ERROR,
+    payload: {
+        key: string
+    }
+}
+
 
 export type CommonActionTypes =
     | FetchingContractorsAction
-    | FetchingContractorsSuccessOrErrorAction;
+    | FetchingContractorsSuccessOrErrorAction
+    | DeleteCommonErrorAction;

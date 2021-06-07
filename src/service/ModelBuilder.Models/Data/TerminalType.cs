@@ -10,6 +10,7 @@ namespace Mb.Models.Data
     {
         public string Id { get; set; } 
         public Terminal Terminal { get; set; }
+        public TerminalCategory TerminalCategory { get; set; }
         public ConnectorType ConnectorType { get; set; }
         public string SemanticReference { get; set; }
         

@@ -5,7 +5,7 @@ import { IsAspectNode } from "../../../flow/helpers";
 import { AspectElement } from ".";
 import { AspectBox } from "../../../../componentLibrary/box/aspect";
 import { Checkbox, CheckboxBlock } from "../checkboxComponent";
-import store from "../../../../redux/store";
+import red from "../../../../redux/store";
 import { IsBlockView } from "../../../flow/helpers/block";
 import {
   GetAspectIcon,
@@ -26,8 +26,8 @@ export const AspectComponent = ({ nodeId, label, aspectType }: Props) => {
   const aspectIcon = GetAspectIcon(aspectType);
   const color = GetAspectColor(aspectType, true);
   const childType = GetAspectType(aspectType);
-  const nodes = store.getState().projectState.project.nodes;
-  const children = nodes.filter((node) => !IsAspectNode(node));
+  const nodes = red.store.getState().projectState.project.nodes;
+  const children = nodes.filter((node) => !IsAspectNode(node.type));
 
   const handleExpandClick = () => {
     setExpanded(!expanded);

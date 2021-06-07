@@ -1,6 +1,5 @@
 import { IsAspectNode } from "../../../components/flow/helpers";
 import { Edge, Node, ProjectSimple } from "../../../models/project";
-import { GetProject } from "../localStorage";
 import { TraverseTree } from "./helpers/";
 import {
     FETCHING_PROJECT,
@@ -28,15 +27,15 @@ import {
     CHANGE_CONNECTOR_ATTRIBUTE_VALUE,
     CHANGE_EDGE_VISIBILITY,
     CHANGE_ACTIVE_BLOCKNODE,
+    DELETE_PROJECT_ERROR
 } from "./types";
 
 const initialState: ProjectState = {
     fetching: false,
     creating: false,
-    project: GetProject() ?? null, // TODO: fix
-    hasError: false,
-    errorMsg: null,
+    project: null,
     projectList: null,
+    apiError: []
 };
 
 export function projectReducer(
@@ -49,8 +48,7 @@ export function projectReducer(
                 ...state,
                 fetching: true,
                 creating: false,
-                hasError: false,
-                errorMsg: null,
+                apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== SAVE_PROJECT) : state.apiError
             };
 
         case SAVE_PROJECT_SUCCESS_OR_ERROR:
@@ -58,9 +56,8 @@ export function projectReducer(
                 ...state,
                 fetching: false,
                 creating: false,
-                hasError: action.payload.hasError,
-                errorMsg: action.payload.errorMsg,
                 project: action.payload.project,
+                apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError
             };
 
         case SEARCH_PROJECT:
@@ -68,9 +65,8 @@ export function projectReducer(
                 ...state,
                 fetching: true,
                 creating: false,
-                hasError: false,
-                errorMsg: null,
                 projectList: null,
+                apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== SEARCH_PROJECT) : state.apiError
             };
 
         case SEARCH_PROJECT_SUCCESS_OR_ERROR:
@@ -78,9 +74,8 @@ export function projectReducer(
                 ...state,
                 fetching: false,
                 creating: false,
-                hasError: action.payload.hasError,
-                errorMsg: action.payload.errorMsg,
-                projectList: action.payload.projectList,
+                projectList: action.payload.projectList ?? state.projectList,
+                apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError
             };
 
         case FETCHING_PROJECT:
@@ -88,19 +83,16 @@ export function projectReducer(
                 ...state,
                 fetching: true,
                 creating: false,
-                project: null,
-                hasError: false,
-                errorMsg: null,
+                apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== FETCHING_PROJECT) : state.apiError
             };
 
         case FETCHING_PROJECT_SUCCESS_OR_ERROR:
             return {
                 ...state,
-                fetching: action.payload.fetching,
-                creating: action.payload.creating,
-                project: action.payload.project,
-                hasError: action.payload.hasError,
-                errorMsg: action.payload.errorMsg,
+                fetching: false,
+                creating: false,
+                project: action.payload.project ?? state.project,
+                apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError
             };
 
         case CREATING_PROJECT:
@@ -108,20 +100,23 @@ export function projectReducer(
                 ...state,
                 fetching: false,
                 creating: true,
-                project: null,
-                hasError: false,
-                errorMsg: null,
+                apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== CREATING_PROJECT) : state.apiError
             };
 
         case CREATING_PROJECT_SUCCESS_OR_ERROR:
             return {
                 ...state,
-                fetching: action.payload.fetching,
-                creating: action.payload.creating,
-                project: action.payload.project,
-                hasError: action.payload.hasError,
-                errorMsg: action.payload.errorMsg,
+                fetching: false,
+                creating: false,
+                project: action.payload.project ?? state.project,
+                apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError
             };
+
+        case DELETE_PROJECT_ERROR:
+            return {
+                ...state,
+                apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== action.payload.key) : state.apiError
+            }
 
         case ADD_NODE:
             return {
@@ -222,7 +217,7 @@ export function projectReducer(
             const type = action.payload.type;
             const isHidden = !node.isHidden;
 
-            if (IsAspectNode(node)) {
+            if (IsAspectNode(node.type)) {
                 return {
                     ...state,
                     project: {

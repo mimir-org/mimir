@@ -5,11 +5,7 @@ import { RootState } from "./../../redux/store/index";
 import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
 import { EDGE_TYPE, EdgeType } from "../../models/project";
 import { OpenProjectMenu } from "../project/openProject";
-import {
-  changeActiveBlockNode,
-  changeActiveNode,
-  get,
-} from "../../redux/store/project/actions";
+import { changeActiveBlockNode } from "../../redux/store/project/actions";
 import { Color } from "../../componentLibrary";
 import { GetBlockNodeTypes, IsFunctionNode, IsLocationNode } from "./helpers";
 import { BackgroundBox } from "../../componentLibrary/blockView";
@@ -25,11 +21,7 @@ import {
   Node,
   SPLITVIEW_POSITION,
 } from "../../models/project";
-import {
-  GetProjectId,
-  HasProject,
-  SetProject,
-} from "../../redux/store/localStorage";
+
 import ReactFlow, {
   ReactFlowProvider,
   Elements,
@@ -56,7 +48,6 @@ const FlowBlock = () => {
     (state) => state.projectState.project
   ) as Project;
 
-  SetProject(project);
   const node = project?.nodes?.find((node) => node.isSelected);
 
   const splitView = useSelector<RootState>(
@@ -150,13 +141,6 @@ const FlowBlock = () => {
     OnUpdatePosition();
   };
 
-  useEffect(() => {
-    if (!project) {
-      const projectId = GetProjectId();
-      dispatch(get(projectId));
-    }
-  }, [dispatch, project]);
-
   const splitViewPosition = () => {
     if (IsLocationNode(splitViewNode) && IsFunctionNode(node)) {
       return SPLITVIEW_POSITION.RIGHT;
@@ -200,7 +184,7 @@ const FlowBlock = () => {
           </div>
         </ReactFlowProvider>
       )}
-      {!project && !HasProject() && (
+      {!project && (
         <div>
           <ProjectMainMenu />
           <OpenProjectMenu />

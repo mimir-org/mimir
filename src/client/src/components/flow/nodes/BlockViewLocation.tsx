@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { OptionsIcon } from "../../../assets/icons/blockView";
 import { addSelectedConnector } from "../../../redux/store/flow/actions";
 import { GetBlockHandleType, ValidateConnector } from "../helpers/block";
-import store, { RootState } from "../../../redux/store";
+import red, { RootState } from "../../../redux/store";
 import { Node } from "../../../models/project";
 import {
   GetConnectors,
@@ -35,7 +35,7 @@ const BlockViewLocation: FC<NodeProps> = ({ data }) => {
     state.projectState.project?.nodes?.find((x) => x.isBlockSelected)
   ) as Node;
 
-  const splitView = store.getState().splitView;
+  const splitView = red.store.getState().splitView;
   const isSplitView = splitView.visible as boolean;
   const splitViewNode = splitView.node as Node;
 

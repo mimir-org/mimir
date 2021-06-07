@@ -1,11 +1,11 @@
 import { AspectComponent } from "./aspectComponent/AspectComponent";
 import { IsAspectNode } from "../../flow/helpers";
-import store from "../../../redux/store";
+import red from "../../../redux/store";
 import { NODE_TYPE } from "../../../models/project";
 import { IsBlockView } from "../../flow/helpers/block";
 
 export const ProjectComponent = () => {
-  const project = store.getState().projectState.project;
+  const project = red.store.getState().projectState.project;
   const aspects = project?.nodes ?? [];
 
   return (

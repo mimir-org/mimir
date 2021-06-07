@@ -58,7 +58,7 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
-        /// Get all aspects
+        /// Get statuses
         /// </summary>
         /// <returns></returns>
         [HttpGet("statuses")]
@@ -79,7 +79,7 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
-        /// Get all aspects
+        /// Get aspects
         /// </summary>
         /// <returns></returns>
         [HttpGet("aspects")]
@@ -121,7 +121,7 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
-        /// Get all object types
+        /// Get object types
         /// </summary>
         /// <returns></returns>
         [HttpGet("objects")]
@@ -142,7 +142,7 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
-        /// Get RDS codes for aspect
+        /// Get RDS codes
         /// </summary>
         /// <param name="aspect"></param>
         /// <returns></returns>
@@ -164,7 +164,7 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
-        /// Get attribute types for aspect
+        /// Get attribute types
         /// </summary>
         /// <param name="aspect"></param>
         /// <returns></returns>
@@ -186,7 +186,28 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
-        /// Get all terminal types
+        /// Get terminal categories
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("terminalCategories")]
+        [ProducesResponseType(typeof(Dictionary<int, string>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public IActionResult GetTerminalCategories()
+        {
+            try
+            {
+                var data = _typeEditorService.GetTerminalCategories();
+                return Ok(data);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
+        /// Get terminal types
         /// </summary>
         /// <returns></returns>
         [HttpGet("terminals")]
@@ -198,6 +219,60 @@ namespace Mb.Core.Controllers.V1
             {
                 var data = _typeEditorService.GetTerminals().ToList();
                 return Ok(data);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
+        /// Create an attribute type
+        /// </summary>
+        /// <param name="attributeType"></param>
+        /// <returns></returns>
+        [HttpPost("attribute")]
+        [ProducesResponseType(typeof(AttributeType), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> CreateAttributeType([FromBody] AttributeType attributeType)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                var createdAttribute = await _typeEditorService.CreateAttributeType(attributeType);
+                return Ok(createdAttribute);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
+        /// Create a terminal type
+        /// </summary>
+        /// <param name="terminalType"></param>
+        /// <returns></returns>
+        [HttpPost("terminal")]
+        [ProducesResponseType(typeof(AttributeType), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> CreateTerminalType([FromBody] TerminalType terminalType)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                var createdTerminalType = await _typeEditorService.CreateTerminalType(terminalType);
+                return Ok(createdTerminalType);
             }
             catch (Exception e)
             {
@@ -228,6 +303,37 @@ namespace Mb.Core.Controllers.V1
             catch (ModelBuilderDuplicateException e)
             {
                 return BadRequest(e.Message);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
+        /// Delete a type
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> DeleteType(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                return BadRequest("The id could not be null or empty");
+
+            try
+            {
+                await _typeEditorService.DeleteType(id);
+                return Ok(true);
+            }
+            catch (ModelBuilderNotFoundException e)
+            {
+                return NotFound(e);
             }
             catch (Exception e)
             {
@@ -281,64 +387,6 @@ namespace Mb.Core.Controllers.V1
             catch (ModelBuilderDuplicateException e)
             {
                 return Conflict(e.Message);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
-        }
-
-        /// <summary>
-        /// Delete a type
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpDelete("{id}")]
-        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> DeleteType(string id)
-        {
-            if (string.IsNullOrEmpty(id))
-                return BadRequest("The id could not be null or empty");
-
-            try
-            {
-                await _typeEditorService.DeleteType(id);
-                return Ok(true);
-            }
-            catch (ModelBuilderNotFoundException e)
-            {
-                return NotFound(e);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
-        }
-
-        /// <summary>
-        /// Create aa attribute type
-        /// </summary>
-        /// <param name="attributeType"></param>
-        /// <returns></returns>
-        [HttpPost("attribute")]
-        [ProducesResponseType(typeof(AttributeType), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CreateAttributeType([FromBody] AttributeType attributeType)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            try
-            {
-                var createdAttribute = await _typeEditorService.CreateAttributeType(attributeType);
-                return Ok(createdAttribute);
             }
             catch (Exception e)
             {

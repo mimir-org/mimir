@@ -93,6 +93,9 @@ namespace Mb.Core.Services
                 .OrderByDescending(x => x.Name)
                 .FirstOrDefaultAsync();
 
+            if (!ignoreNotFound && project == null)
+                throw new ModelBuilderNotFoundException($"Could not find project with id: {id}");
+
             if (project.Nodes != null)
             {
                 project.Nodes = project.Nodes.OrderBy(x => x.Order).ToList();
@@ -110,8 +113,7 @@ namespace Mb.Core.Services
                 }
             }
 
-            if (!ignoreNotFound && project == null)
-                throw new ModelBuilderNotFoundException($"Could not find project with id: {id}");
+            
 
             return project;
         }
