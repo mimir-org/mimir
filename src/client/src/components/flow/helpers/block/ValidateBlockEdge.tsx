@@ -14,13 +14,24 @@ const ValidateBlockEdge = (
   if (IsPartOfTerminal(fromConnector) || IsPartOfTerminal(toConnector))
     return false;
 
-  if (IsFunctionNode(selectedNode)) {
-    if (IsLocationNode(fromNode)) return false;
-    if (IsLocationNode(toNode) && !splitView) return false;
-    if (selectedNode === toNode || selectedNode === fromNode) return false;
-    if (fromNode.level - selectedNode.level !== 1) return false;
-    if (toNode?.level - splitViewNode?.level !== 1) return false;
-    return true;
+  if (!splitView) {
+    if (IsFunctionNode(selectedNode)) {
+      if (IsLocationNode(fromNode) || IsLocationNode(toNode)) return false;
+      if (selectedNode === toNode || selectedNode === fromNode) return false;
+      if (fromNode.level - selectedNode.level !== 1) return false;
+      return true;
+    }
+  }
+
+  if (splitView) {
+    if (!splitViewNode && IsFunctionNode(fromNode) && IsFunctionNode(toNode))
+      return true;
+    if (
+      IsFunctionNode(fromNode) &&
+      IsLocationNode(toNode) &&
+      IsLocationNode(splitViewNode)
+    )
+      return true;
   }
   return false;
 };
