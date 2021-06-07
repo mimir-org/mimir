@@ -1,12 +1,11 @@
-import { IsLocationTerminal } from ".";
-import { CONNECTOR_TYPE } from "../../../../models/project";
+import { IsInputConnector, IsLocationTerminal } from ".";
 
 const SortLocationConnectors = (connectors) => {
   const availableConnectors = [];
 
   connectors.forEach((conn) => {
     IsLocationTerminal(conn) &&
-      conn.type === CONNECTOR_TYPE.INPUT &&
+      IsInputConnector(conn) &&
       availableConnectors.push(conn);
   });
   return availableConnectors;

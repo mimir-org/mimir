@@ -1,7 +1,11 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
-import { IsLocationNode, IsLocationTerminal, IsTransportTerminal } from ".";
-import { CONNECTOR_TYPE } from "../../../../models/project";
+import {
+  IsInputConnector,
+  IsLocationNode,
+  IsLocationTerminal,
+  IsTransportTerminal,
+} from ".";
 
 const SortConnectors = (connectors) => {
   const list = [];
@@ -13,7 +17,7 @@ const SortConnectors = (connectors) => {
     IsTransportTerminal(conn) && !isLocationNode && list.push(conn);
     IsLocationTerminal(conn) &&
       isLocationNode &&
-      conn.type === CONNECTOR_TYPE.OUTPUT &&
+      !IsInputConnector(conn) &&
       list.push(conn);
   });
   return list;

@@ -3,6 +3,7 @@ import {
   GetConnectorIcon,
   GetConnectorName,
   SortConnectors,
+  SortLocationConnectors,
 } from "../helpers/common";
 import {
   TerminalsBox,
@@ -12,21 +13,21 @@ import {
 interface Props {
   isOpen: boolean;
   list: (Node | Connector)[];
-  type?: typeof TERMINAL;
-  handleClick: any;
-  isChecked?: any;
+  type?: string;
   width?: number;
+  onClick: any;
 }
 
-const TerminalsComponent = ({ isOpen, list, width, handleClick }: Props) => {
+const TerminalsComponent = ({ isOpen, list, type, width, onClick }: Props) => {
+  let sortedList = [];
+
+  if (type === "location") sortedList = SortLocationConnectors(list);
+  else sortedList = SortConnectors(list);
+
   return (
-    <TerminalsBox visible={isOpen} type={TERMINAL} width={width}>
-      {SortConnectors(list).map((conn: Connector) => (
-        <TerminalsElement
-          type={TERMINAL}
-          key={conn.id}
-          onClick={() => handleClick(conn)}
-        >
+    <TerminalsBox visible={isOpen} type={type} width={width}>
+      {sortedList.map((conn: Connector) => (
+        <TerminalsElement key={conn.id} onClick={() => onClick(conn)}>
           <p className="text"> {GetConnectorName(conn)}</p>
 
           <img

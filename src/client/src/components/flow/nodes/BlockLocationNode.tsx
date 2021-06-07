@@ -4,24 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { TerminalsIcon } from "../../../assets/icons/blockView";
 import { addSelectedConnector } from "../../../redux/store/flow/actions";
 import red, { RootState } from "../../../redux/store";
-import { Node, TERMINAL } from "../../../models/project";
-import { HandleComponent } from "../block";
+import { Node } from "../../../models/project";
+import { IsLocationNode } from "../helpers/common";
+import { NodeBox, TerminalsMenu } from "../../../componentLibrary/blockView";
+import { HandleComponent, TerminalsComponent } from "../block";
 import {
   GetConnectors,
   SetConnectors,
 } from "../../../redux/store/localStorage";
-import {
-  GetConnectorIcon,
-  SortLocationConnectors,
-  GetConnectorName,
-  IsLocationNode,
-} from "../helpers/common";
-import {
-  NodeBox,
-  TerminalsBox,
-  TerminalsElement,
-  TerminalsMenu,
-} from "../../../componentLibrary/blockView";
 
 const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
@@ -68,6 +58,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
       locationNode.style.height = `${data.length}px`;
     }
   }, [data, data.id]);
+
   return (
     <NodeBox
       location
@@ -80,21 +71,14 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
         <img src={TerminalsIcon} alt="options" />
       </TerminalsMenu>
       <p className="node-name">{data.label ?? data.name}</p>
-      <TerminalsBox visible={terminalMenu} width={data.width} type={TERMINAL}>
-        {SortLocationConnectors(data.connectors).map((conn) => (
-          <TerminalsElement
-            key={conn.id}
-            onClick={() => handleConnectorClick(conn)}
-          >
-            {GetConnectorName(conn)}
-            <img
-              src={GetConnectorIcon(conn.terminal)}
-              alt="icon"
-              className="button"
-            />
-          </TerminalsElement>
-        ))}
-      </TerminalsBox>
+
+      <TerminalsComponent
+        isOpen={terminalMenu}
+        list={data.connectors}
+        type="location"
+        width={data.width}
+        onClick={handleConnectorClick}
+      ></TerminalsComponent>
 
       <HandleComponent
         data={data}

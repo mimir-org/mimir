@@ -1,15 +1,15 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  TerminalsIcon,
-  ConnectViewIcon,
-} from "../../../assets/icons/blockView";
 import { addSelectedConnector } from "../../../redux/store/flow/actions";
 import { RootState } from "../../../redux/store";
 import { Node } from "../../../models/project";
 import { IsLocationNode, GetChildren } from "../helpers/common";
 import { Size } from "../../../componentLibrary";
+import {
+  TerminalsIcon,
+  ConnectViewIcon,
+} from "../../../assets/icons/blockView";
 import {
   TerminalsComponent,
   ConnectViewComponent,
@@ -53,11 +53,11 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
 
   const isConnectViewNode = data.id === mainConnectNode?.id;
 
-  const handleClick = () => {
+  const handleTerminalClick = () => {
     showTerminalMenu(!terminalMenu);
   };
 
-  const handleBlockClick = () => {
+  const handleConnectViewClick = () => {
     showConnectMenu(!connectMenu);
   };
 
@@ -117,12 +117,12 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
       length={data.length}
       isSelectedConnection={isConnectViewNode}
     >
-      <TerminalsMenu visible={terminalButton} onClick={handleClick}>
+      <TerminalsMenu visible={terminalButton} onClick={handleTerminalClick}>
         <img src={TerminalsIcon} alt="options" />
       </TerminalsMenu>
       <ConnectViewMenu
         visible={connectButton && children.length > 0}
-        onClick={handleBlockClick}
+        onClick={handleConnectViewClick}
       >
         <img src={ConnectViewIcon} alt="options" />
       </ConnectViewMenu>
@@ -133,7 +133,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
         isOpen={terminalMenu}
         list={data.connectors}
         width={data.width}
-        handleClick={handleConnectorClick}
+        onClick={handleConnectorClick}
       ></TerminalsComponent>
 
       <ConnectViewComponent
