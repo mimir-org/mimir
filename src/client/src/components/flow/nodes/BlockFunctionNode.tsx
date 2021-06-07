@@ -7,6 +7,7 @@ import { RootState } from "../../../redux/store";
 import { OptionsComponent, HandleComponent } from "../block";
 import { Node, TERMINAL } from "../../../models/project";
 import { IsLocationNode, GetChildren } from "../helpers/common";
+import { Size } from "../../../componentLibrary";
 import {
   GetConnectors,
   SetConnectors,
@@ -21,8 +22,6 @@ import {
   OptionsMenu,
   BlockOptionsMenu,
 } from "../../../componentLibrary/blockView";
-import { Size } from "../../../componentLibrary";
-import { changeNodeValue } from "../../../redux/store/project/actions";
 
 const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
@@ -75,7 +74,8 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
 
   const handleOnChange = (node: Node) => {
     if (!isChecked(node)) {
-      dispatch(changeNodeValue(node.id, "width", 400));
+      setBlockMenuOpen(false);
+      setShowBlockMenuButton(false);
       dispatch(addMainConnectNode(data));
       dispatch(addConnectNode(node));
     } else dispatch(removeConnectNode(node));
