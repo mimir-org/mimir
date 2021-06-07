@@ -70,11 +70,11 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   }, [data, data.id]);
   return (
     <NodeBox
+      location
       onMouseOver={handleOnHover}
       onMouseOut={handleOnMouseOut}
       width={data.width}
       length={data.length}
-      location
     >
       <OptionsMenu visible={showButton} onClick={handleClick}>
         <img src={OptionsIcon} alt="options" />

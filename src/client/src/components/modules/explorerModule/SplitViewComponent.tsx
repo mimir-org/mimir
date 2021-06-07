@@ -6,10 +6,7 @@ import { Node } from "../../../models/project";
 import { RootState } from "../../../redux/store";
 import { IsLocationNode } from "../../flow/helpers/common";
 import { IsBlockView } from "../../flow/helpers/block";
-import {
-  changeSplitView,
-  setSplitViewNode,
-} from "../../../redux/store/splitView/actions";
+import { changeSplitView } from "../../../redux/store/splitView/actions";
 
 export const SplitViewComponent = () => {
   const dispatch = useDispatch();
@@ -32,7 +29,6 @@ export const SplitViewComponent = () => {
     if (IsLocationNode(selectedNode)) return;
     SetIsActive(!isActive);
     dispatch(changeSplitView(!isActive));
-    dispatch(setSplitViewNode(null));
   };
 
   return (

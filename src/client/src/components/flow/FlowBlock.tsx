@@ -25,7 +25,6 @@ import {
   Node,
   SPLITVIEW_POSITION,
 } from "../../models/project";
-
 import ReactFlow, {
   ReactFlowProvider,
   Elements,
@@ -40,6 +39,10 @@ import {
   useOnNodeDragStop,
   useOnUpdatePosition,
 } from "./hooks";
+import {
+  changeSplitView,
+  setSplitViewNode,
+} from "../../redux/store/splitView/actions";
 
 const FlowBlock = () => {
   const dispatch = useDispatch();
@@ -138,6 +141,12 @@ const FlowBlock = () => {
   useEffect(() => {
     OnLoad(reactFlowInstance);
   }, [OnLoad, reactFlowInstance]);
+
+  // Flush SplitView
+  useEffect(() => {
+    dispatch(changeSplitView(false));
+    dispatch(setSplitViewNode(null));
+  }, [dispatch]);
 
   window.onresize = () => {
     OnLoad(reactFlowInstance);
