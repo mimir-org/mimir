@@ -12,18 +12,29 @@ import {
   CreateSplitViewNode,
   CreateParentBlockNode,
   CreateBlockNode,
+  CreateConnectViewNode,
 } from ".";
 
 const CreateBlockElements = (
   project: Project,
   nodeId: string,
-  splitViewNode: Node,
+  mainConnectNode: Node,
+  connectNodes: Node[],
+  selectedBlockNodeId: string,
   splitView: boolean,
-  mainConnectNode: Node
+  splitViewNode: Node
 ): Elements => {
   if (!project) return;
   const initialElements: Elements = [];
   const selectedNode = project.nodes.find((node) => node.id === nodeId);
+
+  // Draw connection view
+  if (mainConnectNode && mainConnectNode.id === selectedBlockNodeId) {
+    CreateConnectViewNode(mainConnectNode);
+    connectNodes.forEach((node) => {
+      initialElements.push(CreateBlockNode(node, false, mainConnectNode));
+    });
+  }
 
   // Draw block
   const parentBlock = CreateParentBlockNode(selectedNode);
