@@ -103,6 +103,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
       if (functionNode) {
         functionNode.style.width = `${Size.ConnectionView_Width}px`;
         functionNode.style.height = `${Size.ConnectionView_Length}px`;
+        functionNode.style.zIndex = "1";
       }
     }
   }, [mainConnectNode, data]);

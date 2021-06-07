@@ -14,12 +14,12 @@ const CreateBlockNode = (
   if (!node) return blockNode;
 
   const type = IsLocationNode(node) ? "BlockLocationNode" : "BlockFunctionNode";
+  let position = SetBlockNodePosition(node, splitView);
 
   // Force node to fit Block
-  let position = null;
-  if (mainConnectNode && !IsLocationNode(node) && node !== mainConnectNode) {
-    position = SetConnectionNodePosition(node, splitView);
-  } else position = SetBlockNodePosition(node, splitView);
+  //   if (mainConnectNode && !IsLocationNode(node) && node !== mainConnectNode) {
+  //     position = SetConnectionNodePosition(node, splitView);
+  //   } else position = SetBlockNodePosition(node, splitView);
 
   if (IsFunctionNode(node)) {
     if (mainConnectNode && mainConnectNode.id === node.id) {
