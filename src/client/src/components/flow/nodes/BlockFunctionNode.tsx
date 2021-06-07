@@ -95,26 +95,22 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     return result;
   };
 
-  //   useEffect(() => {
-  //     if (mainConnectNode) {
-  //       const functionNode = document.querySelector(
-  //         `[data-id="${mainConnectNode.id}"]`
-  //       ) as HTMLElement;
+  useEffect(() => {
+    if (mainConnectNode) {
+      const functionNode = document.querySelector(
+        `[data-id="${mainConnectNode.id}"]`
+      ) as HTMLElement;
 
-  //       functionNode.style.width = `${Size.ConnectionView_Width}px`;
-  //       functionNode.style.height = `${Size.ConnectionView_Length}px`;
-  //       functionNode.style.zIndex = "1";
-  //     }
-  //   }, [mainConnectNode, data]);
+      functionNode.style.width = `${Size.ConnectionView_Width}px`;
+      functionNode.style.height = `${Size.ConnectionView_Length}px`;
+    }
+  }, [mainConnectNode, data]);
 
   return (
     <NodeBox
       onMouseOver={handleOnHover}
       onMouseOut={handleOnMouseOut}
-      width={data.width}
-      length={data.length}
       isSelectedConnection={isConnectViewNode}
-      function
     >
       <OptionsMenu visible={showButton} onClick={handleClick}>
         <img src={OptionsIcon} alt="options" />

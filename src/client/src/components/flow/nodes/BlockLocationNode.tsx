@@ -17,7 +17,7 @@ import {
   IsLocationNode,
 } from "../helpers/common";
 import {
-  NodeLocationBox,
+  NodeBox,
   OptionsBox,
   OptionsElement,
   OptionsMenu,
@@ -69,7 +69,13 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
     }
   }, [data, data.id]);
   return (
-    <NodeLocationBox onMouseOver={handleOnHover} onMouseOut={handleOnMouseOut}>
+    <NodeBox
+      onMouseOver={handleOnHover}
+      onMouseOut={handleOnMouseOut}
+      width={data.width}
+      length={data.length}
+      location
+    >
       <OptionsMenu visible={showButton} onClick={handleClick}>
         <img src={OptionsIcon} alt="options" />
       </OptionsMenu>
@@ -102,7 +108,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
         list={data.connectors}
         isLocation={isLocation}
       ></HandleComponent>
-    </NodeLocationBox>
+    </NodeBox>
   );
 };
 
