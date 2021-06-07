@@ -4,7 +4,7 @@ const TypeInfo = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 12px 20px;
+  margin: 30px 24px;
 `;
 
 export default TypeInfo;

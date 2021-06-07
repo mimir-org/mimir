@@ -58,7 +58,6 @@ export function projectReducer(
                 creating: false,
                 project: action.payload.project,
                 apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError
-
             };
 
         case SEARCH_PROJECT:

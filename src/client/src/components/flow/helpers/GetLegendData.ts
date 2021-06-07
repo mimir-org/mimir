@@ -63,7 +63,7 @@ const GetBlockViewNodes = (project: Project, nodeId: string): Node[] => {
 };
 
 const GetTreeviewNodes = (project: Project): Node[] => {
-  return project.nodes?.filter((x) => !x?.isHidden);
+  return project?.nodes?.filter((x) => !x?.isHidden);
 };
 
 const GetLegendData = (

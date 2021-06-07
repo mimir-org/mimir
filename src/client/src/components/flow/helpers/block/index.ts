@@ -10,4 +10,5 @@ export { default as ShowBlockViewEdge } from "./ShowBlockViewEdge";
 export { default as ValidateConnector } from "./ValidateConnector";
 export { default as ValidateBlockEdge } from "./ValidateBlockEdge";
 export { default as IsBlockView } from "./IsBlockView";
+export { default as IsBlockChecked } from "./IsBlockChecked";
 export { default as GetBlockEdgeTypes } from "./GetBlockEdgeTypes";

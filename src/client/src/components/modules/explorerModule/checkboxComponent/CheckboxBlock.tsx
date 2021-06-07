@@ -29,6 +29,7 @@ export const CheckboxBlock = ({ nodeId, inputLabel }: Props) => {
     ? node === selectedNode || node === splitViewNode
     : node === selectedNode;
 
+  // TODO: Rewrite this
   const handleChange = () => {
     if (splitView) {
       IsFunctionNode(node)
