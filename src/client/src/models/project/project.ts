@@ -48,6 +48,7 @@ export const MODULE_TYPE = {
   EXPLORER: "Explorer",
   INSPECTOR: "Inspector",
   LIBRARY: "Library",
+  TYPEEDITOR: "TypeEditor",
   LEGEND: "Legend",
 };
 
@@ -266,4 +267,51 @@ export interface EdgeEvent {
 export enum BackgroundVariant {
   Lines = "lines",
   Dots = "dots",
+}
+
+export interface Dictionary {
+  key: string;
+  value: string;
+}
+export interface Rds {
+  id: number;
+  category: Dictionary;
+  code: string;
+  name: string;
+  semanticReferance: string;
+  isFunction: boolean;
+  isProduct: boolean;
+  isLocation: boolean;
+}
+export interface TerminalType {
+  id: string;
+  terminal: Dictionary;
+  connectorType: Dictionary;
+  semanticReferance: string;
+}
+export interface AttributeType {
+  id: number;
+  entity: string;
+  qualifier: Dictionary;
+  source: Dictionary;
+  condition: Dictionary;
+  units: Dictionary[];
+  aspect: Dictionary;
+  format: Dictionary;
+  isInterface: boolean;
+  isTerminalType: boolean;
+}
+export interface LibraryType {
+  id: string;
+  aspect: string;
+  objectType: string;
+  typeName: string;
+  status: string;
+  rds: string;
+  rdsCategory: string;
+  semanticRdsReference: string;
+  terminals: TerminalType[];
+  attributes: AttributeType[];
+  version: string;
+  semanticReference: string;
 }

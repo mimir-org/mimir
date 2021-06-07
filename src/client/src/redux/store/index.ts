@@ -1,6 +1,7 @@
 import { combineReducers, createStore, compose, applyMiddleware } from "redux";
 import createSagaMiddleware from "redux-saga";
 import { libraryReducer } from "./library/reducers";
+import { typeEditorReducer } from "./typeEditor/reducers";
 import { userReducer } from "./user/reducers";
 import { projectReducer } from "./project/reducers";
 import { inspectorReducer } from "./inspector/reducers";
@@ -23,6 +24,7 @@ const composeEnhancer =
 
 const rootReducers = combineReducers({
   library: libraryReducer,
+  typeEditor: typeEditorReducer,
   inspector: inspectorReducer,
   userState: userReducer,
   projectState: projectReducer,

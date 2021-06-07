@@ -10,5 +10,4 @@ const ViewLinkBox = styled.div`
   border-radius: 2px;
   top: 1px;
 `;
-
 export default ViewLinkBox;

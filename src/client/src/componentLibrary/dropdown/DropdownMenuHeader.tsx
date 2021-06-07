@@ -6,7 +6,6 @@ const DropdownMenuHeader = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  width: 183px;
   height: 31px;
   background: ${Color.White};
   border: 1px solid ${Color.DarkerGrey};
