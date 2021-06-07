@@ -6,14 +6,7 @@ import { addSelectedConnector } from "../../../redux/store/flow/actions";
 import { RootState } from "../../../redux/store";
 import { OptionsComponent, HandleComponent } from "../block";
 import { Node, TERMINAL } from "../../../models/project";
-import { Size } from "../../../componentLibrary";
-import {
-  IsLocationNode,
-  GetChildren,
-  SortConnectors,
-  GetConnectorName,
-  GetConnectorIcon,
-} from "../helpers/common";
+import { IsLocationNode, GetChildren } from "../helpers/common";
 import {
   GetConnectors,
   SetConnectors,
@@ -27,9 +20,9 @@ import {
   NodeBox,
   OptionsMenu,
   BlockOptionsMenu,
-  OptionsBox,
-  OptionsElement,
 } from "../../../componentLibrary/blockView";
+import { Size } from "../../../componentLibrary";
+import { changeNodeValue } from "../../../redux/store/project/actions";
 
 const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
@@ -82,6 +75,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
 
   const handleOnChange = (node: Node) => {
     if (!isChecked(node)) {
+      dispatch(changeNodeValue(node.id, "width", 400));
       dispatch(addMainConnectNode(data));
       dispatch(addConnectNode(node));
     } else dispatch(removeConnectNode(node));
@@ -101,8 +95,10 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
         `[data-id="${mainConnectNode.id}"]`
       ) as HTMLElement;
 
-      functionNode.style.width = `${Size.ConnectionView_Width}px`;
-      functionNode.style.height = `${Size.ConnectionView_Length}px`;
+      if (functionNode) {
+        functionNode.style.width = `${Size.ConnectionView_Width}px`;
+        functionNode.style.height = `${Size.ConnectionView_Length}px`;
+      }
     }
   }, [mainConnectNode, data]);
 
@@ -110,6 +106,8 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     <NodeBox
       onMouseOver={handleOnHover}
       onMouseOut={handleOnMouseOut}
+      width={data.width}
+      length={data.length}
       isSelectedConnection={isConnectViewNode}
     >
       <OptionsMenu visible={showButton} onClick={handleClick}>
@@ -122,25 +120,9 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
         <img src={BlockOptionsIcon} alt="options" />
       </BlockOptionsMenu>
 
-      <OptionsBox visible={menuOpen} type="function">
-        {SortConnectors(data.connectors).map((conn) => (
-          <OptionsElement
-            key={conn.id}
-            onClick={() => handleConnectorClick(conn)}
-          >
-            {GetConnectorName(conn)}
-            <img
-              src={GetConnectorIcon(conn.terminal)}
-              alt="icon"
-              className="button"
-            />
-          </OptionsElement>
-        ))}
-      </OptionsBox>
-
       <p className="node-name">{data.label ?? data.name}</p>
 
-      {/* <OptionsComponent
+      <OptionsComponent
         isOpen={menuOpen}
         list={data.connectors}
         type={TERMINAL}
@@ -154,7 +136,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
         handleClick={handleOnChange}
         isChecked={isChecked}
         width={data.width}
-      ></OptionsComponent> */}
+      ></OptionsComponent>
 
       <HandleComponent
         data={data}

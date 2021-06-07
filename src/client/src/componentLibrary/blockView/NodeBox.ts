@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { Size } from "..";
 
 const NodeBox = styled.div`
-  width: ${(props) => (props.location ? props.width : Size.Node_Width)}px;
-  height: ${(props) => (props.location ? props.length : Size.Node_Height)}px;
+  width: ${(props) => props.width}px;
+  height: ${(props) => props.length}px;
+  position: relative;
 
   .node-name {
     display: inline-block;

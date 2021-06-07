@@ -10,6 +10,10 @@ import { Color } from "../../componentLibrary";
 import { BackgroundBox } from "../../componentLibrary/blockView";
 import { changeInspectorTab } from "../../redux/store/inspector/actions";
 import {
+  addMainConnectNode,
+  removeAllConnectNodes,
+} from "../../redux/store/connectView/actions";
+import {
   GetBlockNodeTypes,
   IsFunctionNode,
   IsLocationNode,
@@ -50,6 +54,12 @@ const FlowBlock = () => {
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>();
 
+  // Flush ConnectView
+  useEffect(() => {
+    dispatch(addMainConnectNode(null));
+    dispatch(removeAllConnectNodes());
+  }, [dispatch]);
+
   const project = useSelector<RootState>(
     (state) => state.projectState.project
   ) as Project;
@@ -64,16 +74,26 @@ const FlowBlock = () => {
     (state) => state.splitView.node
   ) as Node;
 
+  const mainConnectNode = useSelector<RootState>(
+    (state) => state.connectView.mainNode
+  ) as Node;
+
   const showBackground = IsLocationNode(splitViewNode) || IsLocationNode(node);
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
       setElements(
-        CreateBlockElements(project, node?.id, splitViewNode, splitView)
+        CreateBlockElements(
+          project,
+          node?.id,
+          splitViewNode,
+          splitView,
+          mainConnectNode
+        )
       );
       return setReactFlowInstance(_reactFlowInstance);
     },
-    [node, project, splitViewNode, splitView]
+    [node, project, splitViewNode, splitView, mainConnectNode]
   );
 
   const OnElementsRemove = (elementsToRemove) => {

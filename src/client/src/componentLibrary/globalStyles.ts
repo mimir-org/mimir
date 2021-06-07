@@ -13,12 +13,20 @@ const GlobalStyle = createGlobalStyle`
     cursor: pointer;
     font-size: 14px;
   }
-
+  .checkbox-block  {
+    position: absolute;
+    cursor: pointer;
+    left: 7px;
+  }
+  .checkbox-block input {
+    position: absolute;
+    opacity: 0;
+  }
   .checkbox input {
     position: absolute;
     opacity: 0;
   }
-
+ 
   .checkmark,
   .checkmark-footer {
     position: absolute;
@@ -29,28 +37,37 @@ const GlobalStyle = createGlobalStyle`
     border: 2px solid ${Color.DeepCyan};
     border-radius: 3px;
   }
-
+  .checkmark-block{
+    position: absolute;
+    left: 0px;
+    height: 10px;
+    width: 10px;
+    background-color: ${Color.White};
+    border: 2px solid ${Color.Black};
+    border-radius: 2px;
+  }
   .checkmark-footer {
     left: 5px;
     top: -5px;
   }
-
   .checkbox input:checked ~ .checkmark {
     background-color: ${Color.DeepCyan};
   }
-
   .checkbox input:checked ~ .checkmark-footer {
     background-color: ${Color.White};
   }
-
+  .checkbox-block input:checked ~ .checkmark-block {
+    background-color: ${Color.Black};
+  }
   .checkmark:after,
-  .checkmark-footer:after {
+  .checkmark-footer:after,
+  .checkmark-block:after {
     content: "";
     position: absolute;
     display: none;
   }
-
   .checkbox input:checked ~ .checkmark:after,
+  .checkbox-block input:checked ~ .checkmark-block:after,
   .checkbox input:checked ~ .checkmark-footer:after {
     display: block;
   }
@@ -67,7 +84,17 @@ const GlobalStyle = createGlobalStyle`
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
   }
-
+  .checkmark-block:after {
+    left: 3px;
+    top: -1px;
+    width: 3px;
+    height: 8px;
+    border: solid ${Color.White};
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
   .checkbox .checkmark-footer:after {
     border: solid ${Color.DeepCyan};
     border-width: 0 2px 2px 0;
@@ -75,8 +102,7 @@ const GlobalStyle = createGlobalStyle`
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
   }
-
-
+ 
   ::-webkit-scrollbar {
     width: 14px;
     height: 18px;

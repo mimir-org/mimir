@@ -6,6 +6,8 @@ import {
 } from "../helpers/common";
 import {
   BlockOptionsBox,
+  BlockOptionsElement,
+  OptionsBox,
   OptionsElement,
 } from "../../../componentLibrary/blockView";
 
@@ -27,7 +29,7 @@ const OptionsComponent = ({
   width,
 }: Props) => {
   return type === TERMINAL ? (
-    <BlockOptionsBox visible={isOpen} type={TERMINAL} width={width}>
+    <OptionsBox visible={isOpen} type={TERMINAL} width={width}>
       {SortConnectors(list).map((conn: Connector) => (
         <OptionsElement
           type={TERMINAL}
@@ -43,12 +45,12 @@ const OptionsComponent = ({
           />
         </OptionsElement>
       ))}
-    </BlockOptionsBox>
+    </OptionsBox>
   ) : (
     <BlockOptionsBox visible={isOpen} width={width}>
       {list.map((node: Node) => {
         return (
-          <OptionsElement key={node.id}>
+          <BlockOptionsElement key={node.id}>
             <p className="text">{node.name ?? node.label}</p>
             <label className={"checkbox-block"}>
               <input
@@ -58,7 +60,7 @@ const OptionsComponent = ({
               />
               <span className="checkmark-block"></span>
             </label>
-          </OptionsElement>
+          </BlockOptionsElement>
         );
       })}
     </BlockOptionsBox>

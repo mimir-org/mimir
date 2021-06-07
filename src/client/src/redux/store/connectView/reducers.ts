@@ -1,6 +1,7 @@
 import {
   ADD_CONNECT_NODE,
   ADD_MAIN_CONNECT_NODE,
+  REMOVE_ALL_CONNECT_NODES,
   REMOVE_CONNECT_NODE,
 } from "./types";
 
@@ -23,6 +24,13 @@ export function connectViewReducer(state = initialState, action) {
         ...state,
         connectNodes: state.connectNodes.filter((x) => x.id !== node.id),
       };
+
+    case REMOVE_ALL_CONNECT_NODES:
+      return {
+        ...state,
+        connectNodes: [],
+      };
+
     case ADD_MAIN_CONNECT_NODE:
       return {
         ...state,

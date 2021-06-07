@@ -1,10 +1,14 @@
 import { Node } from "../../../../models/project";
 import { FlowElement } from "react-flow-renderer";
 import { SetBlockNodePosition } from ".";
-import { IsLocationNode } from "../common";
+import { IsFunctionNode, IsLocationNode } from "../common";
 import { Size } from "../../../../componentLibrary";
 
-const CreateBlockNode = (node: Node, splitView: boolean): FlowElement => {
+const CreateBlockNode = (
+  node: Node,
+  splitView: boolean,
+  mainConnectNode: Node
+): FlowElement => {
   let blockNode = null;
   if (!node) return blockNode;
 
@@ -13,10 +17,14 @@ const CreateBlockNode = (node: Node, splitView: boolean): FlowElement => {
   // Force node to fit Block
   const position = SetBlockNodePosition(node, splitView);
 
-  if (IsLocationNode(node)) {
-    if (!node.width) node.width = Size.Node_Width;
-    if (!node.length) node.length = Size.Node_Height;
-    node.height = 0; // Z-axis
+  if (IsFunctionNode(node)) {
+    if (mainConnectNode && mainConnectNode.id === node.id) {
+      node.width = Size.ConnectionView_Width;
+      node.length = Size.ConnectionView_Length;
+    } else {
+      node.width = Size.Node_Width;
+      node.length = Size.Node_Length;
+    }
   }
 
   blockNode = {

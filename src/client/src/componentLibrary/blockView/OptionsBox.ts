@@ -9,14 +9,13 @@ const OptionsBox = styled.div`
   height: auto;
   width: max-content;
   position: absolute;
-  right: ${(props) => !props.type && "-132px"};
-  left: ${(props) => props.type && "100px"};
+  left: ${(props) => props.type && props.width}px;
+  right: ${(props) => !props.type && props.width}px;
   top: -1px;
-  z-index: 1;
 
   .button {
     position: absolute;
-    right: 3px;
+    right: 8px;
   }
 `;
 

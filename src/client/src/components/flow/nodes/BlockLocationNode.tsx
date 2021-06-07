@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { OptionsIcon } from "../../../assets/icons/blockView";
 import { addSelectedConnector } from "../../../redux/store/flow/actions";
 import red, { RootState } from "../../../redux/store";
-import { Node } from "../../../models/project";
+import { Node, TERMINAL } from "../../../models/project";
 import { HandleComponent } from "../block";
 import {
   GetConnectors,
@@ -80,7 +80,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
         <img src={OptionsIcon} alt="options" />
       </OptionsMenu>
       <p className="node-name">{data.label ?? data.name}</p>
-      <OptionsBox visible={menuOpen}>
+      <OptionsBox visible={menuOpen} width={data.width} type={TERMINAL}>
         {SortLocationConnectors(data.connectors).map((conn) => (
           <OptionsElement
             key={conn.id}

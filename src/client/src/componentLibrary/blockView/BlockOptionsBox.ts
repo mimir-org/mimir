@@ -5,13 +5,12 @@ const BlockOptionsBox = styled.div`
   visibility: ${(props: { visible: boolean }) => !props.visible && "hidden"};
   border: 1px solid ${Color.Black};
   background-color: ${Color.White};
-  border-radius: 0px 5px 5px 5px;
+  border-radius: 5px 0px 5px 5px;
   height: auto;
-  width: max-content;
   position: absolute;
-  right: 91px;
+  right: ${(props) => props.width}px;
   top: -1px;
-  z-index: 100;
+  z-index: 1;
 
   .button {
     position: absolute;

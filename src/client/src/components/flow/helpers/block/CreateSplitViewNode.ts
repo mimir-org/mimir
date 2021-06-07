@@ -15,7 +15,7 @@ const CreateSplitViewNode = (node: Node): FlowElement => {
 
   if (IsLocationNode(node)) {
     if (!node.width) node.width = Size.Node_Width;
-    if (!node.length) node.length = Size.Node_Height;
+    if (!node.length) node.length = Size.Node_Length;
     node.height = 0; // Z-axis
   }
 

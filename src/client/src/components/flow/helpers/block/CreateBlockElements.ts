@@ -18,7 +18,8 @@ const CreateBlockElements = (
   project: Project,
   nodeId: string,
   splitViewNode: Node,
-  splitView: boolean
+  splitView: boolean,
+  mainConnectNode: Node
 ): Elements => {
   if (!project) return;
   const initialElements: Elements = [];
@@ -42,7 +43,9 @@ const CreateBlockElements = (
           IsNodeSameType(selectedNode, toNode)) &&
         connectorType !== RELATION_TYPE.Transport
       )
-        initialElements.push(CreateBlockNode(toNode, splitView));
+        initialElements.push(
+          CreateBlockNode(toNode, splitView, mainConnectNode)
+        );
     }
   });
 
