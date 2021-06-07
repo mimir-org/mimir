@@ -6,7 +6,6 @@ const MenuTopHeader = styled.div`
   right: ${(props: { right: string }) => props.right && "2px"};
   left: ${(props: { right: string }) => !props.right && "2px"};
   top: 2px;
-  z-index: 1103;
   width: auto;
   padding: 11px 15px 0px 40px;
   cursor: pointer;

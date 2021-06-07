@@ -7,7 +7,7 @@ const InspectorBox = styled.div`
   height: ${(props: { stop: string }) => `${props.stop}px`};
   width: auto;
   min-width: 1100px;
-  z-index: 3;
+  z-index: 5;
   position: absolute;
   bottom: 0;
   right: ${(props) => (props.isLibraryOpen ? "333px" : "37px")};
