@@ -1,43 +1,39 @@
 import { memo, FC, useState, useEffect } from "react";
-import { NodeProps, Handle } from "react-flow-renderer";
+import { NodeProps } from "react-flow-renderer";
 import { useDispatch, useSelector } from "react-redux";
 import { OptionsIcon } from "../../../assets/icons/blockView";
 import { addSelectedConnector } from "../../../redux/store/flow/actions";
-import { GetBlockHandleType, ValidateConnector } from "../helpers/block";
 import red, { RootState } from "../../../redux/store";
 import { Node } from "../../../models/project";
+import { HandleComponent } from "../block";
 import {
   GetConnectors,
   SetConnectors,
 } from "../../../redux/store/localStorage";
 import {
   GetConnectorIcon,
-  GetHandlePosition,
   SortLocationConnectors,
   GetConnectorName,
-  GetHandleType,
   IsLocationNode,
 } from "../helpers/common";
 import {
-  NodeBox,
+  NodeLocationBox,
   OptionsBox,
   OptionsElement,
   OptionsMenu,
-  HandleBox,
 } from "../../../componentLibrary/blockView";
 
 const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
-  const [showButton, setShowButton] = useState(true);
+  const [showButton, setShowButton] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-
-  const selectedNode = useSelector<RootState>((state) =>
-    state.projectState.project?.nodes?.find((x) => x.isBlockSelected)
-  ) as Node;
-
+  const connectors = GetConnectors();
   const splitView = red.store.getState().splitView;
   const isSplitView = splitView.visible as boolean;
   const splitViewNode = splitView.node as Node;
+  const selectedNode = useSelector<RootState>((state) =>
+    state.projectState.project?.nodes?.find((x) => x.isBlockSelected)
+  ) as Node;
 
   const isLocation = isSplitView
     ? IsLocationNode(splitViewNode)
@@ -48,15 +44,11 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   };
 
   const handleOnHover = () => {
-    if (!menuOpen) {
-      setShowButton(!showButton);
-    }
+    setShowButton(true);
   };
 
   const handleOnMouseOut = () => {
-    if (!menuOpen) {
-      setShowButton(false);
-    }
+    setShowButton(false);
   };
 
   const handleConnectorClick = (connector) => {
@@ -66,89 +58,51 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
     SetConnectors(connectors);
   };
 
-  const id = data.id;
-
   useEffect(() => {
     const locationNode = document.querySelector(
-      `[data-id="${id}"]`
+      `[data-id="${data.id}"]`
     ) as HTMLElement;
 
     if (locationNode) {
       locationNode.style.width = `${data.width}px`;
       locationNode.style.height = `${data.length}px`;
     }
-  }, [data, id]);
-
-  const connectors = GetConnectors();
-
+  }, [data, data.id]);
   return (
-    <NodeBox
-      onMouseOver={handleOnHover}
-      onMouseOut={handleOnMouseOut}
-      width={data.width}
-      height={data.length}
-    >
+    <NodeLocationBox onMouseOver={handleOnHover} onMouseOut={handleOnMouseOut}>
       <OptionsMenu visible={showButton} onClick={handleClick}>
         <img src={OptionsIcon} alt="options" />
-        <OptionsBox visible={menuOpen}>
-          {SortLocationConnectors(data.connectors).map((conn) => (
-            <OptionsElement
-              key={conn.id}
-              onClick={() => handleConnectorClick(conn)}
-            >
-              {GetConnectorName(conn)}
-              <img
-                src={GetConnectorIcon(conn.terminal)}
-                alt="icon"
-                className="button"
-              />
-            </OptionsElement>
-          ))}
-        </OptionsBox>
       </OptionsMenu>
+      <p className="node-name">{data.label ?? data.name}</p>
+      <OptionsBox visible={menuOpen}>
+        {SortLocationConnectors(data.connectors).map((conn) => (
+          <OptionsElement
+            key={conn.id}
+            onClick={() => handleConnectorClick(conn)}
+          >
+            {GetConnectorName(conn)}
+            <img
+              src={GetConnectorIcon(conn.terminal)}
+              alt="icon"
+              className="button"
+            />
+          </OptionsElement>
+        ))}
+      </OptionsBox>
 
-      <div style={{ paddingTop: "4px" }}>{data.label ?? data.names}</div>
-      {connectors.map((conn) => {
-        const [type, pos, className] = GetBlockHandleType(conn);
-        if (data.id === conn.nodeId && ValidateConnector(conn, isLocation)) {
-          return (
-            <HandleBox
-              id={"handle-" + conn.id}
-              position={GetHandlePosition(pos)}
-              key={conn.id}
-            >
-              <Handle
-                type={type}
-                position={pos}
-                id={conn.id}
-                key={conn.id}
-                className={className}
-              />
-              <img
-                src={GetConnectorIcon(conn.terminal)}
-                alt="icon"
-                className="connector"
-              />
-            </HandleBox>
-          );
-        }
-        return null;
-      })}
+      <HandleComponent
+        data={data}
+        list={connectors}
+        isLocation={isLocation}
+        type="block"
+      ></HandleComponent>
 
-      {/* TODO: Remove */}
-      {data.connectors?.map((connector) => {
-        const [typeHandler, positionHandler] = GetHandleType(connector);
-        return (
-          <Handle
-            type={typeHandler}
-            position={positionHandler}
-            id={connector.id}
-            key={connector.id}
-            style={{ visibility: "hidden" }}
-          />
-        );
-      })}
-    </NodeBox>
+      <HandleComponent
+        data={data}
+        list={data.connectors}
+        isLocation={isLocation}
+      ></HandleComponent>
+    </NodeLocationBox>
   );
 };
 

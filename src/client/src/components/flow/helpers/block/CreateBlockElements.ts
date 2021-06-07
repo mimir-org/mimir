@@ -1,5 +1,5 @@
 import { Elements } from "react-flow-renderer";
-import { IsAspectSameType } from "../common";
+import { IsNodeSameType } from "../common";
 import {
   Project,
   EDGE_TYPE,
@@ -39,7 +39,7 @@ const CreateBlockElements = (
 
       if (
         (selectedNode?.type === toNode?.type ||
-          IsAspectSameType(selectedNode, toNode)) &&
+          IsNodeSameType(selectedNode, toNode)) &&
         connectorType !== RELATION_TYPE.Transport
       )
         initialElements.push(CreateBlockNode(toNode, splitView));
@@ -58,7 +58,7 @@ const CreateBlockElements = (
 
         if (
           (splitViewNode?.type === toNode?.type ||
-            IsAspectSameType(splitViewNode, toNode)) &&
+            IsNodeSameType(splitViewNode, toNode)) &&
           connectorType !== RELATION_TYPE.Transport
         )
           initialElements.push(CreateSplitViewNode(toNode));

@@ -1,19 +1,17 @@
 import { addNode, createEdge } from "../../../redux/store/project/actions";
-import { CreateId, IsPartOfTerminal } from "./../helpers/common";
+import { LibNode, Node, NodeType, Edge } from "../../../models/project";
 import { CreateBlockNode, IsBlockView } from "../helpers/block";
+import {
+  CreateId,
+  IsNodeSameType,
+  IsInputConnector,
+  IsPartOfTerminal,
+} from "./../helpers/common";
 import {
   CreateTreeNode,
   GetTreeEdgeType,
   CreateTreeEdge,
-  ValidateSameNodeType,
 } from "../helpers/tree";
-import {
-  CONNECTOR_TYPE,
-  LibNode,
-  Node,
-  NodeType,
-  Edge,
-} from "../../../models/project";
 
 const useOnDrop = (
   event,
@@ -67,13 +65,13 @@ const useOnDrop = (
     : setElements((es) => es.concat(CreateTreeNode(node)));
 
   if (selectedNode) {
-    if (!ValidateSameNodeType(selectedNode, node)) return;
+    if (!IsNodeSameType(selectedNode, node)) return;
 
     const fromConnector = selectedNode.connectors?.find(
-      (x) => IsPartOfTerminal(x) && x.type === CONNECTOR_TYPE.OUTPUT
+      (x) => IsPartOfTerminal(x) && !IsInputConnector(x)
     );
     const toConnector = node.connectors?.find(
-      (x) => IsPartOfTerminal(x) && x.type === CONNECTOR_TYPE.INPUT
+      (x) => IsPartOfTerminal(x) && IsInputConnector(x)
     );
 
     const partofEdge = {

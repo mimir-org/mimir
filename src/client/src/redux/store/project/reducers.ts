@@ -2,7 +2,7 @@ import { Edge, Node, ProjectSimple } from "../../../models/project";
 import { TraverseTree } from "./helpers/";
 import {
   IsAspectNode,
-  IsAspectSameType,
+  IsNodeSameType,
   IsSameType,
 } from "../../../components/flow/helpers/common";
 import {
@@ -244,7 +244,7 @@ export function projectReducer(
           project: {
             ...state.project,
             nodes: nodeList.map((nodes, i) =>
-              IsAspectSameType(node, nodeList[i])
+              IsNodeSameType(node, nodeList[i])
                 ? { ...nodes, isHidden: isHidden }
                 : nodes
             ),

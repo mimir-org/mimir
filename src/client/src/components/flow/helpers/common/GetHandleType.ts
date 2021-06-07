@@ -1,5 +1,6 @@
 import { Position, HandleType } from "react-flow-renderer";
-import { Connector, CONNECTOR_TYPE } from "../../../../models/project";
+import { Connector } from "../../../../models/project";
+import IsInputConnector from "./IsInputConnector";
 import {
   IsFulfilledByTerminal,
   IsLocationTerminal,
@@ -7,32 +8,29 @@ import {
   IsTransportTerminal,
 } from ".";
 
-const GetHandleType = (connector: Connector): [HandleType, Position] => {
+const GetHandleType = (conn: Connector): [HandleType, Position] => {
   if (
-    connector.type === CONNECTOR_TYPE.OUTPUT &&
-    (IsLocationTerminal(connector) || IsFulfilledByTerminal(connector))
+    !IsInputConnector(conn) &&
+    (IsLocationTerminal(conn) || IsFulfilledByTerminal(conn))
   )
     return ["source", Position.Right];
 
-  if (
-    connector.type === CONNECTOR_TYPE.OUTPUT &&
-    IsTransportTerminal(connector)
-  )
+  if (!IsInputConnector(conn) && IsTransportTerminal(conn))
     return ["source", Position.Right];
 
   if (
-    connector.type === CONNECTOR_TYPE.INPUT &&
-    (IsLocationTerminal(connector) || IsFulfilledByTerminal(connector))
+    IsInputConnector(conn) &&
+    (IsLocationTerminal(conn) || IsFulfilledByTerminal(conn))
   )
     return ["target", Position.Left];
 
-  if (connector.type === CONNECTOR_TYPE.INPUT && IsTransportTerminal(connector))
+  if (IsInputConnector(conn) && IsTransportTerminal(conn))
     return ["target", Position.Left];
 
-  if (connector.type === CONNECTOR_TYPE.INPUT && IsPartOfTerminal(connector))
+  if (IsInputConnector(conn) && IsPartOfTerminal(conn))
     return ["target", Position.Top];
 
-  if (connector.type === CONNECTOR_TYPE.OUTPUT && IsPartOfTerminal(connector))
+  if (!IsInputConnector(conn) && IsPartOfTerminal(conn))
     return ["source", Position.Bottom];
 
   return ["source", Position.Bottom];

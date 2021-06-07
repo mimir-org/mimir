@@ -7,11 +7,6 @@ const Aspect: FC<NodeProps> = ({ data }) => {
   const [isHover, setIsHover] = useState(false);
   const [timer, setTimer] = useState(false);
 
-  const connectorIsVisible = () => {
-    if (isHover) return "true";
-    return "false";
-  };
-
   useEffect(() => {
     if (timer) {
       const timer = window.setInterval(() => {
@@ -40,7 +35,7 @@ const Aspect: FC<NodeProps> = ({ data }) => {
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}
             key={connector.id}
-            display={connectorIsVisible()}
+            visible={isHover}
             position={positionHandler}
           >
             <Handle
@@ -53,8 +48,7 @@ const Aspect: FC<NodeProps> = ({ data }) => {
           </HandlerWrapper>
         );
       })}
-
-      {GetFlowAspectIcon(data.icon)}
+      <div style={{ paddingTop: "12px" }}>{GetFlowAspectIcon(data.icon)}</div>
       <div>{data.label ?? data.name}</div>
     </div>
   );

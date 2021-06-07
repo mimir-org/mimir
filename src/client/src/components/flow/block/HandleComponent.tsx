@@ -1,12 +1,12 @@
-import { Connector } from "../../models/project";
-import { HandleBox } from "../../componentLibrary/blockView";
-import { GetBlockHandleType, ValidateConnector } from "./helpers/block";
+import { Connector } from "../../../models/project";
+import { HandleBox } from "../../../componentLibrary/blockView";
+import { GetBlockHandleType, ValidateConnector } from "../helpers/block";
 import { Handle } from "react-flow-renderer";
 import {
   GetConnectorIcon,
   GetHandlePosition,
   GetHandleType,
-} from "./helpers/common";
+} from "../helpers/common";
 
 interface Props {
   data: any;

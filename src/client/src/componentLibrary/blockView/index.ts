@@ -3,6 +3,7 @@ export { default as BlockOptionsBox } from "./BlockOptionsBox";
 export { default as OptionsElement } from "./OptionsElement";
 export { default as OptionsButton } from "./OptionsButton";
 export { default as NodeBox } from "./NodeBox";
+export { default as NodeLocationBox } from "./NodeLocationBox";
 export { default as OptionsMenu } from "./OptionsMenu";
 export { default as BlockOptionsMenu } from "./BlockOptionsMenu";
 export { default as HandleBox } from "./HandleBox";

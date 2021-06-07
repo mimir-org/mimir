@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const OptionsBox = styled.div`
+const OptionsMenu = styled.div`
   visibility: ${(props) => !props.visible && "hidden"};
   position: absolute;
   right: -1px;
@@ -8,4 +8,4 @@ const OptionsBox = styled.div`
   cursor: pointer;
 `;
 
-export default OptionsBox;
+export default OptionsMenu;

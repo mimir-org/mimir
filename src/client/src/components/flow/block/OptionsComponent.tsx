@@ -1,13 +1,13 @@
-import { Node, Connector, TERMINAL } from "../../models/project";
+import { Node, Connector, TERMINAL } from "../../../models/project";
 import {
   GetConnectorIcon,
   GetConnectorName,
   SortConnectors,
-} from "./helpers/common";
+} from "../helpers/common";
 import {
   BlockOptionsBox,
   OptionsElement,
-} from "../../componentLibrary/blockView";
+} from "../../../componentLibrary/blockView";
 
 interface Props {
   isOpen: boolean;
