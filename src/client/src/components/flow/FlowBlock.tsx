@@ -40,8 +40,8 @@ import {
   useOnUpdatePosition,
 } from "./hooks";
 import {
-  changeSplitView,
-  setSplitViewNode,
+  setSplitView,
+  setSplitNode,
 } from "../../redux/store/splitView/actions";
 
 const FlowBlock = () => {
@@ -144,8 +144,8 @@ const FlowBlock = () => {
 
   // Flush SplitView
   useEffect(() => {
-    dispatch(changeSplitView(false));
-    dispatch(setSplitViewNode(null));
+    dispatch(setSplitView(false));
+    dispatch(setSplitNode(null));
   }, [dispatch]);
 
   window.onresize = () => {

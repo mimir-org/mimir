@@ -1,18 +1,18 @@
 import { Node } from "../../../models/project";
-import { CHANGE_SPLITVIEW, SET_SPLITVIEW_NODE } from "./types";
+import { SET_SPLITVIEW, SET_SPLIT_NODE } from "./types";
 
-export function changeSplitView(visible: boolean) {
+export function setSplitView(visible: boolean) {
   return {
-    type: CHANGE_SPLITVIEW,
+    type: SET_SPLITVIEW,
     payload: {
       visible,
     },
   };
 }
 
-export function setSplitViewNode(node: Node) {
+export function setSplitNode(node: Node) {
   return {
-    type: SET_SPLITVIEW_NODE,
+    type: SET_SPLIT_NODE,
     payload: {
       node,
     },

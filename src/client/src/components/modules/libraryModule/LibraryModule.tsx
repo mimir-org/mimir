@@ -10,14 +10,8 @@ import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import { AnimatedModule, Size } from "../../../componentLibrary";
 import { ValidateLibComponent } from "./helpers";
 import { IsBlockView } from "../../flow/helpers/block";
-import {
-  ModuleBody,
-  ModuleHeader,
-} from "../../../componentLibrary/box/modules";
-import {
-  LegendHeader,
-  LegendIcons,
-} from "../../../componentLibrary/box/library";
+import { ModuleBody, ModuleHead } from "../../../componentLibrary/box/modules";
+import { LegendHead, LegendIcons } from "../../../componentLibrary/box/library";
 import { MODULE_TYPE, LibCategory, Node } from "../../../models/project";
 import {
   LegendIcon,
@@ -116,7 +110,7 @@ const LibraryModule = () => {
         run={animate}
         type={MODULE_TYPE.LIBRARY}
       >
-        <ModuleHeader library visible={isOpen}>
+        <ModuleHead library visible={isOpen}>
           <img src={LibraryIcon} alt="library-icon" className="module-icon" />
           <img
             className="icon"
@@ -125,29 +119,30 @@ const LibraryModule = () => {
             onClick={handleClick}
           />
           <p className="text">{TextResources.Library_Heading}</p>
-        </ModuleHeader>
+        </ModuleHead>
         <ModuleBody visible={isOpen} library>
           <LibraryComponent categories={libNodes()} search={search} />
         </ModuleBody>
+
         <AnimatedModule
           start={startLegend}
           stop={stopLegend}
           run={animateLegend}
           type={MODULE_TYPE.LEGEND}
         >
-          <ModuleHeader legend>
-            <LegendHeader open={legendOpen}>
+          <ModuleHead legend>
+            <LegendHead open={legendOpen}>
               {legendOpen ? (
                 <img src={ToggleDown} alt="" onClick={handleLegendClick} />
               ) : (
                 <img src={ToggleUp} alt="" onClick={handleLegendClick} />
               )}
-            </LegendHeader>
+            </LegendHead>
             <LegendIcons open={legendOpen}>
               <img src={LegendIcon} alt="legend" className="icon" />
               <p className="text">{TextResources.Legend_Heading}</p>
             </LegendIcons>
-          </ModuleHeader>
+          </ModuleHead>
           <LegendModule visible={true} />
         </AnimatedModule>
       </AnimatedModule>

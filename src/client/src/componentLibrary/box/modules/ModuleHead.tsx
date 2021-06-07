@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FontType, FontSize, Color } from "../../../componentLibrary";
+import { FontType, FontSize, Color } from "../..";
 
 const ModuleHeader = styled.div`
   font-family: ${FontType.Standard};
@@ -61,7 +61,7 @@ const ModuleHeader = styled.div`
         : props.library
         ? "0px"
         : "unset"};
-    top: ${(props) => (props.visible || props.legend ? "unset" : "42px")};
+    top: ${(props) => !(props.visible || props.legend) && "42px"};
   }
 `;
 

@@ -18,6 +18,7 @@ const HeaderBox = styled.div`
     border-style: solid;
     border-width: 0px 1px 0px 0px;
     margin-left: 50px;
+    top: 1px;
   }
 `;
 

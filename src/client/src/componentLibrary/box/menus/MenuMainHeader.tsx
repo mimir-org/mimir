@@ -1,13 +1,12 @@
 import styled from "styled-components";
-import { Color } from "../../";
+import { Color } from "../..";
 
-const MenuTopHeader = styled.div`
+const MenuMainHeader = styled.div`
   position: absolute;
   right: ${(props: { right: string }) => props.right && "2px"};
   left: ${(props: { right: string }) => !props.right && "2px"};
-  top: 2px;
-  width: auto;
-  height: 36px;
+  top: 1px;
+  height: 37px;
   padding: 11px 15px 0px 40px;
   cursor: pointer;
 
@@ -19,11 +18,15 @@ const MenuTopHeader = styled.div`
   background-color: ${(props: { isOpen: boolean }) =>
     props.isOpen ? `${Color.White}` : `${Color.DeepCyan}`};
 
+  .text {
+    margin-top: 3px;
+  }
+
   .icon {
     position: absolute;
-    top: 8px;
+    top: 12px;
     left: 12px;
   }
 `;
 
-export default MenuTopHeader;
+export default MenuMainHeader;

@@ -1,16 +1,16 @@
 import { Node } from "../../../models/project";
-export const CHANGE_SPLITVIEW = "CHANGE_SPLITVIEW";
-export const SET_SPLITVIEW_NODE = "SET_SPLITVIEW_NODE";
+export const SET_SPLITVIEW = "SET_SPLITVIEW";
+export const SET_SPLIT_NODE = "SET_SPLIT_NODE";
 
-export interface ChangeSplitView {
-  type: typeof CHANGE_SPLITVIEW;
+export interface SetSplitView {
+  type: typeof SET_SPLITVIEW;
   payload: {
     visible: boolean;
   };
 }
 
-export interface SetSplitViewNode {
-  type: typeof SET_SPLITVIEW_NODE;
+export interface SetSplitNode {
+  type: typeof SET_SPLIT_NODE;
   payload: {
     node: Node;
   };

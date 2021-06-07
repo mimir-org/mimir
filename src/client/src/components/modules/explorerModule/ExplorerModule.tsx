@@ -7,10 +7,7 @@ import { MODULE_TYPE } from "../../../models/project";
 import { AnimatedModule, Size } from "../../../componentLibrary";
 import { ExplorerIcon, ToggleLeft, ToggleRight } from "../../../assets/icons";
 import { IsBlockView } from "../../flow/helpers/block";
-import {
-  ModuleHeader,
-  ModuleBody,
-} from "../../../componentLibrary/box/modules";
+import { ModuleHead, ModuleBody } from "../../../componentLibrary/box/modules";
 
 export const ExplorerModule = () => {
   const dispatch = useDispatch();
@@ -37,7 +34,7 @@ export const ExplorerModule = () => {
 
   return (
     <AnimatedModule type={key} start={start} stop={stop} run={animate}>
-      <ModuleHeader explorer visible={isOpen}>
+      <ModuleHead explorer visible={isOpen}>
         <img src={ExplorerIcon} alt="icon" className="module-icon" />
         <img
           className="icon"
@@ -46,7 +43,7 @@ export const ExplorerModule = () => {
           onClick={handleClick}
         />
         <p className="text">{TextResources.Explorer_view}</p>
-      </ModuleHeader>
+      </ModuleHead>
       <ModuleBody visible={isOpen} explorer isBlockView={IsBlockView()}>
         {hasProject && <ProjectComponent />}
         <SplitViewComponent />

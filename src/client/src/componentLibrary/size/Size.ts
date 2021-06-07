@@ -8,9 +8,8 @@ const Size = {
   BlockView_Width: 950,
   BlockView_Height: 600,
   ModuleOpen: 331,
-  InspectorModuleOpen: 380,
+  InspectorModuleOpen: 257,
   ModuleClosed: 35,
-  InspectorModuleClosed: 90,
 };
 
 export default Size;

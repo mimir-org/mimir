@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const LegendHeader = styled.div`
+const LegendHead = styled.div`
   display: inline;
   float: right;
   cursor: pointer;
@@ -9,4 +9,4 @@ const LegendHeader = styled.div`
   padding-top: ${(props) => !props.open && "6px"};
 `;
 
-export default LegendHeader;
+export default LegendHead;

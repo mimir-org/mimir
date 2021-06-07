@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FontSize, FontWeight } from "../";
+import { Color, FontSize, FontWeight } from "../";
 
 const SearchInput = styled.input`
   width: 287px;
@@ -12,7 +12,7 @@ const SearchInput = styled.input`
   position: relative;
 
   &:focus {
-    border: 1px solid #000;
+    border: 1px solid ${Color.Black};
   }
 `;
 

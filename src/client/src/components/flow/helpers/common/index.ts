@@ -11,6 +11,8 @@ export { default as IsTransportTerminal } from "./IsTransportTerminal";
 export { default as IsLocationTerminal } from "./IsLocationTerminal";
 export { default as IsPartOfTerminal } from "./IsPartOfTerminal";
 export { default as IsFulfilledByTerminal } from "./IsFulfilledByTerminal";
+export { default as IsExplorerModule } from "./IsExplorerModule";
+export { default as IsLibraryModule } from "./IsLibraryModule";
 export { default as IsInputConnector } from "./IsInputConnector";
 export { default as IsNodeSameType } from "./IsNodeSameType";
 export { default as IsSameType } from "./IsSameType";
