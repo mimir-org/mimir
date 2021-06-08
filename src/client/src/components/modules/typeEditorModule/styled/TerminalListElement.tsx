@@ -5,7 +5,7 @@ const TerminalListElement = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 433px;
+  width: inherit;
   height: 34px;
   background: #d9eaeb;
   font-family: ${FontType.Standard};

@@ -8,7 +8,7 @@ interface Props {}
 
 export const AttributesList = ({}: Props) => {
   return (
-    <ListWrapper width={204}>
+    <ListWrapper flex={1}>
       <ListHeader
         label={TextResources.TypeEditor_Properties_Block_Attributes}
         chooseVisible={true}
