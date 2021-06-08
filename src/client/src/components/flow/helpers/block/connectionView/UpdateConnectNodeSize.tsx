@@ -6,13 +6,25 @@ import red from "../../../../../redux/store";
 const UpdateConnectNodeSize = (nodeAmount: number) => {
   const mainConnectNode = red.store.getState().connectView.mainNode as Node;
   let twinNode = FindNodeById(mainConnectNode?.id);
+  const id = "BlockFunctionNode-" + mainConnectNode?.id;
+  const twinBox = document.getElementById(id);
 
   const yIncrease = 80;
-  const xIncrease = 120;
+
+  if (nodeAmount === 2) {
+    twinBox.style.minHeight = `${Size.ConnectView_Length}px`;
+    twinNode.style.minHeight = `${Size.ConnectView_Length}px`;
+  }
 
   if (nodeAmount === 3) {
-    mainConnectNode.length = Size.ConnectView_Length + yIncrease;
-    twinNode.style.minHeight = `${Size.ConnectView_Length + yIncrease}px`;
+    const existingLength = Number(twinBox.style.cssText.substring(12, 15));
+    if (existingLength === Size.ConnectView_Length) {
+      twinBox.style.minHeight = `${Size.ConnectView_Length + yIncrease}px`;
+      twinNode.style.minHeight = `${Size.ConnectView_Length + yIncrease}px`;
+    } else {
+      twinBox.style.minHeight = `${Size.ConnectView_Length}px`;
+      twinNode.style.minHeight = `${Size.ConnectView_Length}px`;
+    }
   }
 };
 

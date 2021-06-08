@@ -8,16 +8,11 @@ const SetConnectNodePosition = (node: Node) => {
   const actualNode = nodes.find((x) => x.id === mainConnectNode?.id);
   const connectNodes = red.store.getState().connectView.connectNodes as Node[];
 
-  const xPos = CalculateXPosition(
-    node,
-    actualNode?.positionBlockX,
-    connectNodes
-  );
-  const yPos = CalculateYPosition(
-    node,
-    actualNode?.positionBlockY,
-    connectNodes
-  );
+  let xPos = actualNode ? actualNode.positionBlockX : node.positionBlockX;
+  let yPos = actualNode ? actualNode.positionBlockY : node.positionBlockY;
+
+  xPos = CalculateXPosition(node, xPos, connectNodes);
+  yPos = CalculateYPosition(node, yPos, connectNodes);
 
   if (node !== actualNode) {
     node.positionBlockX = xPos;
