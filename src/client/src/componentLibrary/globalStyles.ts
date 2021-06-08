@@ -55,8 +55,8 @@ const GlobalStyle = createGlobalStyle`
   .checkmark-block {
     position: absolute;
     left: 0px;
-    height: 10px;
-    width: 10px;
+    height: 11px;
+    width: 11px;
     background-color: ${Color.White};
     border: 2px solid ${Color.Black};
     border-radius: 2px;

@@ -1,43 +1,85 @@
+import { UpdateConnectNodeSize } from ".";
 import { Size } from "../../../../../componentLibrary";
 import { Node } from "../../../../../models/project";
 
-const CalculateConnectionXPosition = (
+const CalculateXPosition = (
   node: Node,
   xPos: number,
-  nodeWidth: number,
-  connectionNodes: Node[]
+  connectNodes: Node[]
 ): number => {
-  //TODO: make dynamic
-  const margin = 10;
-  if (connectionNodes.length === 1) {
-    xPos += nodeWidth / 2 - Size.Node_Width / 2;
+  const margin = 7;
+
+  if (connectNodes.length === 1) {
+    return (xPos += Size.ConnectView_Width / 2 - Size.Node_Width / 2);
   }
 
-  if (connectionNodes.length === 2) {
-    if (node.id === connectionNodes[0].id) {
-      xPos += nodeWidth / 4 - Size.Node_Width / 2;
+  if (connectNodes.length === 2) {
+    if (node.id === connectNodes[0].id) {
+      return (xPos +=
+        Size.ConnectView_Width / 4 - Size.Node_Width / 2 + margin);
     }
 
-    if (node.id === connectionNodes[1].id) {
-      xPos += nodeWidth / 2 + nodeWidth / 4 - Size.Node_Width / 2;
+    if (node.id === connectNodes[1].id) {
+      return (xPos +=
+        Size.ConnectView_Width / 2 +
+        Size.ConnectView_Width / 4 -
+        Size.Node_Width / 2 -
+        margin);
     }
   }
 
-  if (connectionNodes.length === 3) {
-    if (node.id === connectionNodes[0].id) {
-      xPos += nodeWidth / 4 - Size.Node_Width / 2;
+  // NEED TO RESIZE HEIGHT
+  if (connectNodes.length === 3) {
+    UpdateConnectNodeSize(connectNodes.length);
+
+    if (node.id === connectNodes[0].id) {
+      return (xPos +=
+        Size.ConnectView_Width / 4 - Size.Node_Width / 2 + margin);
     }
 
-    if (node.id === connectionNodes[1].id) {
-      xPos += nodeWidth / 2 + nodeWidth / 4 - Size.Node_Width / 2;
+    if (node.id === connectNodes[1].id) {
+      return (xPos +=
+        Size.ConnectView_Width / 2 +
+        Size.ConnectView_Width / 4 -
+        Size.Node_Width / 2 -
+        margin);
     }
 
-    if (node.id === connectionNodes[2].id) {
-      xPos += nodeWidth / 4 - 150;
+    if (node.id === connectNodes[2].id) {
+      return (xPos +=
+        Size.ConnectView_Width / 4 - Size.Node_Width / 2 + margin);
+    }
+  }
+
+  if (connectNodes.length === 4) {
+    if (node.id === connectNodes[0].id) {
+      return (xPos +=
+        Size.ConnectView_Width / 4 - Size.Node_Width / 2 + margin);
+    }
+
+    if (node.id === connectNodes[1].id) {
+      return (xPos +=
+        Size.ConnectView_Width / 2 +
+        Size.ConnectView_Width / 4 -
+        Size.Node_Width / 2 -
+        margin);
+    }
+
+    if (node.id === connectNodes[2].id) {
+      return (xPos +=
+        Size.ConnectView_Width / 4 - Size.Node_Width / 2 + margin);
+    }
+
+    if (node.id === connectNodes[3].id) {
+      return (xPos +=
+        Size.ConnectView_Width / 2 +
+        Size.ConnectView_Width / 4 -
+        Size.Node_Width / 2 -
+        margin);
     }
   }
 
   return xPos;
 };
 
-export default CalculateConnectionXPosition;
+export default CalculateXPosition;

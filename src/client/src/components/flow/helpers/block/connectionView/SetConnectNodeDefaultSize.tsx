@@ -2,7 +2,7 @@ import { FindNodeById } from ".";
 import { Size } from "../../../../../componentLibrary";
 import { Node } from "../../../../../models/project";
 
-const ChangeConnectNodeSize = (
+const SetConnectNodeDefaultSize = (
   mainConnectNode: Node,
   connectNodes?: Node[]
 ) => {
@@ -26,4 +26,4 @@ const ChangeConnectNodeSize = (
   }
 };
 
-export default ChangeConnectNodeSize;
+export default SetConnectNodeDefaultSize;

@@ -6,7 +6,7 @@ import { Connector, Node } from "../../../models/project";
 import { GetChildren, SortConnectors } from "../helpers/common";
 import { Size } from "../../../componentLibrary";
 import { TerminalsIcon, ConnectIcon } from "../../../assets/icons/blockView";
-import { ChangeConnectNodeSize } from "../helpers/block/connectionView";
+import { SetConnectNodeDefaultSize } from "../helpers/block/connectionView";
 import {
   TerminalsComponent,
   ConnectViewComponent,
@@ -92,7 +92,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   }, [connectNodes.length, dispatch]);
 
   useEffect(() => {
-    ChangeConnectNodeSize(mainConnectNode, connectNodes);
+    SetConnectNodeDefaultSize(mainConnectNode, connectNodes);
   }, [mainConnectNode, data, connectNodes]);
 
   return (
