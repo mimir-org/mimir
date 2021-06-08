@@ -52,9 +52,8 @@
 .react-flow__handle {
   opacity: 1;
   position: absolute;
-  width: 6px;
-  height: 6px;
-  background: #555;
+  width: 18px;
+  height: 18px;
   border-radius: 100%;
   border: 0px solid #fff !important;
 }
@@ -65,16 +64,17 @@
   height: 18px !important;
   top: 0px;
   border: none;
-  background-color: transparent !important;
+  background-color: transparent;
   z-index: 100 !important;
 }
 
 .blockView-handle-left {
   left: -10px !important;
   width: 18px !important;
+  top: 0px;
   height: 18px !important;
   border: none;
-  background-color: transparent !important;
+  background-color: transparent;
   z-index: 100 !important;
 }
 

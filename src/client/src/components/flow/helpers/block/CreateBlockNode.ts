@@ -3,7 +3,7 @@ import { FlowElement } from "react-flow-renderer";
 import { SetBlockNodePosition } from ".";
 import { IsFunctionNode, IsLocationNode } from "../common";
 import { Size } from "../../../../componentLibrary";
-import { SetConnectionNodePosition } from "./connectionView";
+import { SetConnectNodePosition } from "./connectionView";
 
 const CreateBlockNode = (
   node: Node,
@@ -18,7 +18,7 @@ const CreateBlockNode = (
   // Force node to fit Block
   let position = SetBlockNodePosition(node, splitView);
   if (mainConnectNode && !IsLocationNode(node) && node !== mainConnectNode) {
-    position = SetConnectionNodePosition(node, splitView);
+    position = SetConnectNodePosition(node);
   }
 
   if (IsFunctionNode(node)) {

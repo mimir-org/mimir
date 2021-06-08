@@ -1,33 +1,15 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
-import { useDispatch, useSelector } from "react-redux";
 import { TerminalsIcon } from "../../../assets/icons/blockView";
-import { addSelectedConnector } from "../../../redux/store/flow/actions";
-import red, { RootState } from "../../../redux/store";
-import { Node, NODE_TYPE } from "../../../models/project";
-import { IsLocationNode } from "../helpers/common";
+import { Connector, NODE_TYPE } from "../../../models/project";
 import { NodeBox, TerminalsMenu } from "../../../componentLibrary/blockView";
 import { HandleComponent, TerminalsComponent } from "../block";
-import {
-  GetConnectors,
-  SetConnectors,
-} from "../../../redux/store/localStorage";
 
 const BlockLocationNode: FC<NodeProps> = ({ data }) => {
-  const dispatch = useDispatch();
   const [terminalButton, showTerminalButton] = useState(false);
   const [terminalMenu, showTerminalMenu] = useState(false);
-  const connectors = GetConnectors();
-  const splitView = red.store.getState().splitView;
-  const isSplitView = splitView.visible as boolean;
-  const splitViewNode = splitView.node as Node;
-  const selectedNode = useSelector<RootState>((state) =>
-    state.projectState.project?.nodes?.find((x) => x.isBlockSelected)
-  ) as Node;
-
-  const isLocation = isSplitView
-    ? IsLocationNode(splitViewNode)
-    : IsLocationNode(selectedNode);
+  const [drawConnectors, setDrawConnectors] = useState(false);
+  const [selectedConnector, setSelectedConnector] = useState(null);
 
   const handleClick = () => {
     showTerminalMenu(!terminalMenu);
@@ -41,11 +23,10 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
     showTerminalButton(false);
   };
 
-  const handleConnectorClick = (connector) => {
-    dispatch(addSelectedConnector(connector));
-    connectors.push(connector);
+  const handleConnectorClick = (connector: Connector) => {
+    setSelectedConnector(connector);
+    setDrawConnectors(true);
     showTerminalMenu(false);
-    SetConnectors(connectors);
   };
 
   useEffect(() => {
@@ -75,22 +56,24 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
       <TerminalsComponent
         isOpen={terminalMenu}
         list={data.connectors}
-        type="location"
+        type={NODE_TYPE.LOCATION}
         width={data.width}
         onClick={handleConnectorClick}
       ></TerminalsComponent>
 
       <HandleComponent
+        drawConns={drawConnectors}
         data={data}
-        list={connectors}
-        isLocation={isLocation}
-        type={NODE_TYPE.LOCATION}
+        list={data.connectors}
+        selectedConn={selectedConnector}
+        type={"block"}
       ></HandleComponent>
 
       <HandleComponent
+        drawConns={drawConnectors}
         data={data}
         list={data.connectors}
-        isLocation={isLocation}
+        selectedConn={selectedConnector}
       ></HandleComponent>
     </NodeBox>
   );

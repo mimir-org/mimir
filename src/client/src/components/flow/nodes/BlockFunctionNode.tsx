@@ -1,21 +1,17 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useDispatch, useSelector } from "react-redux";
-import { addSelectedConnector } from "../../../redux/store/flow/actions";
 import { RootState } from "../../../redux/store";
-import { Node } from "../../../models/project";
-import { IsLocationNode, GetChildren } from "../helpers/common";
+import { Connector, Node } from "../../../models/project";
+import { GetChildren, SortConnectors } from "../helpers/common";
 import { Size } from "../../../componentLibrary";
 import { TerminalsIcon, ConnectIcon } from "../../../assets/icons/blockView";
+import { ChangeConnectNodeSize } from "../helpers/block/connectionView";
 import {
   TerminalsComponent,
   ConnectViewComponent,
   HandleComponent,
 } from "../block";
-import {
-  GetConnectors,
-  SetConnectors,
-} from "../../../redux/store/localStorage";
 import {
   addConnectNode,
   addMainConnectNode,
@@ -33,21 +29,19 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const [connectButton, showConnectButton] = useState(false);
   const [terminalMenu, showTerminalMenu] = useState(false);
   const [connectMenu, showConnectMenu] = useState(false);
-  const connectors = GetConnectors();
   const children = GetChildren(data);
   const hasChildren = children?.length > 0;
+  const [drawConnectors, setDrawConnectors] = useState(false);
+  const [selectedConnector, setSelectedConnector] = useState(null);
+  const sortedConns = SortConnectors(data.connectors) as Connector[];
 
   const mainConnectNode = useSelector<RootState>(
     (state) => state.connectView.mainNode
   ) as Node;
 
-  const connectViewList = useSelector<RootState>(
+  const connectNodes = useSelector<RootState>(
     (state) => state.connectView.connectNodes
   ) as Node[];
-
-  const isLocationNode = useSelector<RootState>((state) =>
-    IsLocationNode(state.splitView.node)
-  ) as boolean;
 
   const isConnectViewNode = data.id === mainConnectNode?.id;
 
@@ -69,12 +63,11 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     showConnectButton(false);
   };
 
-  const onConnectorClick = (connector) => {
-    dispatch(addSelectedConnector(connector));
-    connectors.push(connector);
+  const onConnectorClick = (connector: Connector) => {
+    setSelectedConnector(connector);
+    setDrawConnectors(true);
     showTerminalMenu(false);
     showConnectMenu(false);
-    SetConnectors(connectors);
   };
 
   const onChange = (node: Node) => {
@@ -88,28 +81,23 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
 
   const isChecked = (node: Node): boolean => {
     let result = false;
-    connectViewList?.forEach((element) => {
+    connectNodes?.forEach((element) => {
       if (element.id === node.id) result = true;
     });
     return result;
   };
 
   useEffect(() => {
-    if (mainConnectNode) {
-      const functionNode = document.querySelector(
-        `[data-id="${mainConnectNode.id}"]`
-      ) as HTMLElement;
+    if (connectNodes.length < 1) dispatch(addMainConnectNode(null));
+  }, [connectNodes.length, dispatch]);
 
-      if (functionNode) {
-        functionNode.style.width = `${Size.ConnectionView_Width}px`;
-        functionNode.style.height = `${Size.ConnectionView_Length}px`;
-        functionNode.style.zIndex = "1";
-      }
-    }
-  }, [mainConnectNode, data]);
+  useEffect(() => {
+    ChangeConnectNodeSize(mainConnectNode, connectNodes);
+  }, [mainConnectNode, data, connectNodes]);
 
   return (
     <NodeBox
+      id={`BlockFunctionNode-` + data.id}
       onMouseOver={handleOnHover}
       onMouseOut={handleOnMouseOut}
       width={data.width}
@@ -127,7 +115,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
 
       <TerminalsComponent
         isOpen={terminalMenu}
-        list={data.connectors}
+        list={sortedConns}
         width={data.width}
         onClick={onConnectorClick}
       ></TerminalsComponent>
@@ -141,16 +129,18 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
       ></ConnectViewComponent>
 
       <HandleComponent
+        drawConns={drawConnectors}
         data={data}
-        list={connectors}
-        isLocation={isLocationNode}
+        list={data.connectors}
+        selectedConn={selectedConnector}
         type="block"
       ></HandleComponent>
 
       <HandleComponent
+        drawConns={drawConnectors}
         data={data}
         list={data.connectors}
-        isLocation={isLocationNode}
+        selectedConn={selectedConnector}
       ></HandleComponent>
     </NodeBox>
   );

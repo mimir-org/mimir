@@ -44,7 +44,6 @@ const CreateBlockElements = (
   project.edges.forEach((edge) => {
     if (edge.fromNode === nodeId) {
       const toNode = project.nodes?.find((x) => x.id === edge.toNode);
-
       let conn = toNode?.connectors?.find((x) => x.id === edge?.toConnector);
 
       if (

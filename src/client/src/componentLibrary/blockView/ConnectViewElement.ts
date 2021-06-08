@@ -8,7 +8,7 @@ const BlockOptionsElement = styled.div`
   color: ${Color.Black};
   height: 15px;
   width: auto;
-  min-width: 140px;
+  min-width: 120px;
   position: relative;
 
   .text {

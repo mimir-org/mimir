@@ -1,6 +1,6 @@
 import { Connector } from "../../../models/project";
 import { HandleBox } from "../../../componentLibrary/blockView";
-import { GetBlockHandleType, ValidateConnector } from "../helpers/block";
+import { GetBlockHandleType } from "../helpers/block";
 import { Handle } from "react-flow-renderer";
 import {
   GetConnectorIcon,
@@ -9,41 +9,49 @@ import {
 } from "../helpers/common";
 
 interface Props {
+  drawConns: boolean;
   data: any;
   list: Connector[];
-  isLocation: boolean;
+  selectedConn: Connector;
   type?: string;
 }
 
-const HandleComponent = ({ data, list, isLocation, type }: Props) => {
+const HandleComponent = ({
+  drawConns,
+  data,
+  list,
+  selectedConn,
+  type,
+}: Props) => {
   return type === "block" ? (
     <>
-      {list?.map((conn) => {
-        const [type, pos, className] = GetBlockHandleType(conn);
-        if (data.id === conn.nodeId && ValidateConnector(conn, isLocation)) {
-          return (
-            <HandleBox
-              id={"handle-" + conn.id}
-              position={GetHandlePosition(pos)}
-              key={conn.id}
-            >
-              <Handle
-                type={type}
-                position={pos}
-                id={conn.id}
+      {drawConns &&
+        list?.map((conn) => {
+          const [type, pos, className] = GetBlockHandleType(conn);
+          if (selectedConn?.id === conn.id) {
+            return (
+              <HandleBox
+                id={"handle-" + conn.id}
+                position={GetHandlePosition(pos)}
                 key={conn.id}
-                className={className}
-              />
-              <img
-                src={GetConnectorIcon(conn.terminal)}
-                alt="icon"
-                className="connector"
-              />
-            </HandleBox>
-          );
-        }
-        return null;
-      })}
+              >
+                <Handle
+                  type={type}
+                  position={pos}
+                  id={conn.id}
+                  key={conn.id}
+                  className={className}
+                />
+                <img
+                  src={GetConnectorIcon(conn.terminal)}
+                  alt="icon"
+                  className="connector"
+                />
+              </HandleBox>
+            );
+          }
+          return null;
+        })}
     </>
   ) : (
     <>
