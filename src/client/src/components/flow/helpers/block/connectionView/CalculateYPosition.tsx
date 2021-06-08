@@ -1,4 +1,3 @@
-import { Size } from "../../../../../componentLibrary";
 import { Node } from "../../../../../models/project";
 
 const CalculateConnectionYPosition = (

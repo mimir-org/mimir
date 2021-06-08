@@ -7,6 +7,7 @@ const CalculateConnectionXPosition = (
   nodeWidth: number,
   connectionNodes: Node[]
 ): number => {
+  //TODO: make dynamic
   const margin = 10;
   if (connectionNodes.length === 1) {
     xPos += nodeWidth / 2 - Size.Node_Width / 2;

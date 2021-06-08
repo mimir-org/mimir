@@ -7,9 +7,9 @@ const CreateConnectViewNode = (node: Node): FlowElement => {
   if (!node) return connectViewBlock;
 
   if (!node.width || node.width === 0 || node.width === Size.Node_Width)
-    node.width = Size.ConnectionView_Width;
+    node.width = Size.ConnectView_Width;
   if (!node.length || node.length === 0 || node.length === Size.Node_Length)
-    node.length = Size.ConnectionView_Length;
+    node.length = Size.ConnectView_Length;
   node.height = 0; // Z-axis
 
   connectViewBlock = {

@@ -23,8 +23,8 @@ const CreateBlockNode = (
 
   if (IsFunctionNode(node)) {
     if (mainConnectNode && mainConnectNode.id === node.id) {
-      node.width = Size.ConnectionView_Width;
-      node.length = Size.ConnectionView_Length;
+      node.width = Size.ConnectView_Width;
+      node.length = Size.ConnectView_Length;
     } else {
       node.width = Size.Node_Width;
       node.length = Size.Node_Length;

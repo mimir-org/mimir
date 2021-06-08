@@ -9,8 +9,8 @@ const ChangeConnectNodeSize = (
   let twinNode = FindNodeById(mainConnectNode?.id);
 
   if (connectNodes?.length > 0 && twinNode) {
-    twinNode.style.width = `${Size.ConnectionView_Width}px`;
-    twinNode.style.height = `${Size.ConnectionView_Length}px`;
+    twinNode.style.width = `${Size.ConnectView_Width}px`;
+    twinNode.style.height = `${Size.ConnectView_Length}px`;
     twinNode.style.zIndex = "1";
   } else {
     if (twinNode) {
@@ -18,10 +18,10 @@ const ChangeConnectNodeSize = (
       twinNode.style.height = `${Size.Node_Length}px`;
     }
     const id = "BlockFunctionNode-" + mainConnectNode?.id;
-    const nextShit = document.getElementById(id);
-    if (nextShit) {
-      nextShit.style.width = `${Size.Node_Width}px`;
-      nextShit.style.height = `${Size.Node_Length}px`;
+    const nextTwin = document.getElementById(id);
+    if (nextTwin) {
+      nextTwin.style.width = `${Size.Node_Width}px`;
+      nextTwin.style.height = `${Size.Node_Length}px`;
     }
   }
 };
