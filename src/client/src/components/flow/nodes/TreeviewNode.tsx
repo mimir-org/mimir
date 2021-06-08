@@ -1,11 +1,16 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
-import { GetHandleType } from "../helpers/common";
+import { Connector } from "../../../models/project";
+import { GetHandleType, IsPartOfTerminal } from "../helpers/common";
 import { HandlerWrapper } from "../styled";
 
 const TreeviewNode: FC<NodeProps> = ({ data }) => {
   const [isHover, setIsHover] = useState(false);
   const [timer, setTimer] = useState(false);
+
+  const connectorIsVisible = (conn: Connector) => {
+    return IsPartOfTerminal(conn) && isHover;
+  };
 
   useEffect(() => {
     if (timer) {
@@ -36,8 +41,8 @@ const TreeviewNode: FC<NodeProps> = ({ data }) => {
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}
             key={connector.id}
-            visible={isHover}
-            position={positionHandler}
+            visible={connectorIsVisible(connector)}
+            pos={positionHandler}
           >
             <Handle
               type={typeHandler}
