@@ -1,6 +1,7 @@
 import { Node } from "../../../../../models/project";
 import red from "../../../../../redux/store";
 import { CalculateXPosition, CalculateYPosition } from ".";
+import { Size } from "../../../../../componentLibrary";
 
 const SetConnectNodePosition = (node: Node) => {
   const mainConnectNode = red.store.getState().connectView.mainNode as Node;
@@ -17,6 +18,8 @@ const SetConnectNodePosition = (node: Node) => {
   if (node !== actualNode) {
     node.positionBlockX = xPos;
     node.positionBlockY = yPos;
+    if (connectNodes.length === 0)
+      node.positionBlockY = yPos - Size.Node_Length;
   }
 
   return { x: node.positionBlockX, y: node.positionBlockY };

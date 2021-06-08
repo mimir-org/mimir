@@ -33,9 +33,22 @@ const UpdateConnectNodeSize = (nodeAmount: number) => {
     }
   }
 
+  if (nodeAmount === 4) {
+    twinNode.style.minHeight = `${Size.ConnectView_Length + yIncrease}px`;
+    actualNode.style.minHeight = `${Size.ConnectView_Length + yIncrease}px`;
+  }
+
   if (nodeAmount === 5) {
-    twinNode.style.minHeight = `${Size.ConnectView_Length + yIncrease * 2}px`;
-    actualNode.style.minHeight = `${Size.ConnectView_Length + yIncrease * 2}px`;
+    const existingLength = Number(twinNode.style.cssText.substring(12, 15));
+    if (existingLength === Size.ConnectView_Length + yIncrease) {
+      twinNode.style.minHeight = `${Size.ConnectView_Length + yIncrease * 2}px`;
+      actualNode.style.minHeight = `${
+        Size.ConnectView_Length + yIncrease * 2
+      }px`;
+    } else {
+      twinNode.style.minHeight = `${Size.ConnectView_Length + yIncrease}px`;
+      actualNode.style.minHeight = `${Size.ConnectView_Length + yIncrease}px`;
+    }
   }
 };
 
