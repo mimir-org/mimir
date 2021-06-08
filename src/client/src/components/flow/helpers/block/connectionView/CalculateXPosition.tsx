@@ -8,8 +8,8 @@ const CalculateXPosition = (
   connectNodes: Node[]
 ): number => {
   const xMargin = 7;
-  if (connectNodes.length === 2 || connectNodes.length === 3)
-    UpdateConnectNodeSize(connectNodes.length);
+
+  UpdateConnectNodeSize(connectNodes.length);
 
   if (connectNodes.length === 1)
     return (xPos += Size.ConnectView_Width / 2 - Size.Node_Width / 2);
