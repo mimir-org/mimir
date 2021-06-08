@@ -11,7 +11,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const [drawConnectors, setDrawConnectors] = useState(false);
   const [selectedConnector, setSelectedConnector] = useState(null);
 
-  const handleClick = () => {
+  const handleTerminalClick = () => {
     showTerminalMenu(!terminalMenu);
   };
 
@@ -42,13 +42,14 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
 
   return (
     <NodeBox
+      id={`BlockLocationNode-` + data.id}
       location
       onMouseOver={handleOnHover}
       onMouseOut={handleOnMouseOut}
       width={data.width}
       length={data.length}
     >
-      <TerminalsMenu visible={terminalButton} onClick={handleClick}>
+      <TerminalsMenu visible={terminalButton} onClick={handleTerminalClick}>
         <img src={TerminalsIcon} alt="options" />
       </TerminalsMenu>
       <p className="node-name">{data.label ?? data.name}</p>

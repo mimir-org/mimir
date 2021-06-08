@@ -39,6 +39,10 @@ const LibraryModule = () => {
     dispatch(searchLibrary(text));
   };
 
+  const libraryOpen = useSelector<RootState>(
+    (state) => state.modules.types.find((x) => x.type === libraryKey).visible
+  ) as boolean;
+
   const legendOpen = useSelector<RootState>(
     (state) => state.modules.types.find((x) => x.type === legendKey).visible
   ) as boolean;
@@ -51,23 +55,19 @@ const LibraryModule = () => {
     (state) => state.modules.types.find((x) => x.type === legendKey).animate
   ) as boolean;
 
-  const isOpen = useSelector<RootState>(
-    (state) => state.modules.types.find((x) => x.type === libraryKey).visible
-  ) as boolean;
-
-  const handleClick = () => {
-    dispatch(changeModuleVisibility(libraryKey, !isOpen, true));
-    dispatch(changeModuleVisibility(legendKey, !isOpen, true));
+  const onLibraryClick = () => {
+    dispatch(changeModuleVisibility(libraryKey, !libraryOpen, true));
+    dispatch(changeModuleVisibility(legendKey, !libraryOpen, true));
   };
 
-  const handleLegendClick = () => {
+  const onLegendClick = () => {
     dispatch(changeModuleVisibility(legendKey, !legendOpen, true));
   };
 
-  const start = isOpen ? Size.ModuleClosed : Size.ModuleOpen;
-  const stop = isOpen ? Size.ModuleOpen : Size.ModuleClosed;
-  const startLegend = legendOpen ? Size.ModuleClosed + 1 : Size.ModuleOpen;
-  const stopLegend = legendOpen ? Size.ModuleOpen : Size.ModuleClosed + 1;
+  const start = libraryOpen ? Size.ModuleClosed : Size.ModuleOpen;
+  const stop = libraryOpen ? Size.ModuleOpen : Size.ModuleClosed;
+  const startLegend = legendOpen ? Size.ModuleClosed : Size.ModuleOpen;
+  const stopLegend = legendOpen ? Size.ModuleOpen : Size.ModuleClosed;
 
   const isBlockView = IsBlockView();
   const isSplitView = useSelector<RootState>(
@@ -111,17 +111,17 @@ const LibraryModule = () => {
         run={animate}
         type={MODULE_TYPE.LIBRARY}
       >
-        <ModuleHead library visible={isOpen}>
+        <ModuleHead library visible={libraryOpen}>
           <img src={LibraryIcon} alt="library-icon" className="module-icon" />
           <img
             className="icon"
-            src={isOpen ? ToggleRight : ToggleLeft}
+            src={libraryOpen ? ToggleRight : ToggleLeft}
             alt="toggle"
-            onClick={handleClick}
+            onClick={onLibraryClick}
           />
           <p className="text">{TextResources.Library_Heading}</p>
         </ModuleHead>
-        <ModuleBody visible={isOpen} library>
+        <ModuleBody visible={libraryOpen} library>
           <LibraryComponent categories={libNodes()} search={search} />
           {/* <TypeEditorModule /> */}
         </ModuleBody>
@@ -135,9 +135,9 @@ const LibraryModule = () => {
           <ModuleHead legend>
             <LegendHead open={legendOpen}>
               {legendOpen ? (
-                <img src={ToggleDown} alt="" onClick={handleLegendClick} />
+                <img src={ToggleDown} alt="" onClick={onLegendClick} />
               ) : (
-                <img src={ToggleUp} alt="" onClick={handleLegendClick} />
+                <img src={ToggleUp} alt="" onClick={onLegendClick} />
               )}
             </LegendHead>
             <LegendIcons open={legendOpen}>
