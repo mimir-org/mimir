@@ -1,6 +1,5 @@
-﻿[
+[
   {
-    "id": 1,
     "entity": "Pressure, absolute",
     "qualifier": "Operating",
     "source": "Calculated",
@@ -18,7 +17,6 @@
     "isTerminalType": true
   },
   {
-    "id": 2,
     "entity": "Temperature",
     "qualifier": "Operating",
     "source": "Calculated",
@@ -34,7 +32,6 @@
     "isTerminalType": false
   },
   {
-    "id": 3,
     "entity": "Temperature",
     "qualifier": "Operating",
     "source": "Calculated",
@@ -50,7 +47,6 @@
     "isTerminalType": false
   },
   {
-    "id": 4,
     "entity": "Temperature",
     "qualifier": "Operating",
     "source": "Calculated",
@@ -66,7 +62,6 @@
     "isTerminalType": false
   },
   {
-    "id": 5,
     "entity": "Temperature",
     "qualifier": "Operating",
     "source": "Calculated",
@@ -82,7 +77,6 @@
     "isTerminalType": false
   },
   {
-    "id": 6,
     "entity": "Level",
     "qualifier": "Rating",
     "source": "RequiredLow",
@@ -97,7 +91,6 @@
     "isTerminalType": false
   },
   {
-    "id": 7,
     "entity": "Level",
     "qualifier": "Rating",
     "source": "RequiredHigh",
@@ -112,7 +105,6 @@
     "isTerminalType": false
   },
   {
-    "id": 8,
     "entity": "Level",
     "qualifier": "Rating",
     "source": "DesignLow",
@@ -127,7 +119,6 @@
     "isTerminalType": false
   },
   {
-    "id": 9,
     "entity": "Level",
     "qualifier": "Rating",
     "source": "DesignHigh",
@@ -142,7 +133,6 @@
     "isTerminalType": false
   },
   {
-    "id": 10,
     "entity": "Level",
     "qualifier": "Operating",
     "source": "Calculated",
@@ -157,7 +147,6 @@
     "isTerminalType": false
   },
   {
-    "id": 11,
     "entity": "Temperature",
     "qualifier": "Rating",
     "source": "DesignHigh",
@@ -173,7 +162,6 @@
     "isTerminalType": false
   },
   {
-    "id": 12,
     "entity": "Level",
     "qualifier": "Operating",
     "source": "Calculated",
@@ -188,7 +176,6 @@
     "isTerminalType": false
   },
   {
-    "id": 13,
     "entity": "Level",
     "qualifier": "Operating",
     "source": "Measured",
@@ -203,7 +190,6 @@
     "isTerminalType": false
   },
   {
-    "id": 14,
     "entity": "Density",
     "qualifier": "Operating",
     "source": "Calculated",
@@ -217,7 +203,6 @@
     "isTerminalType": false
   },
   {
-    "id": 15,
     "entity": "Density",
     "qualifier": "Operating",
     "source": "Calculated",
@@ -231,7 +216,6 @@
     "isTerminalType": false
   },
   {
-    "id": 16,
     "entity": "Density",
     "qualifier": "Operating",
     "source": "Calculated",
@@ -245,7 +229,6 @@
     "isTerminalType": false
   },
   {
-    "id": 17,
     "entity": "Density",
     "qualifier": "Operating",
     "source": "Measured",
@@ -259,7 +242,6 @@
     "isTerminalType": false
   },
   {
-    "id": 18,
     "entity": "Gas/Liquid Ratio, GLR",
     "qualifier": "Operating",
     "source": "Calculated",
@@ -273,7 +255,6 @@
     "isTerminalType": false
   },
   {
-    "id": 19,
     "entity": "Gas/Oil Ratio, GOR",
     "qualifier": "Operating",
     "source": "Calculated",
@@ -287,7 +268,6 @@
     "isTerminalType": false
   },
   {
-    "id": 20,
     "entity": "Gas Volume Fraction, GVF",
     "qualifier": "Operating",
     "source": "Calculated",
@@ -301,7 +281,6 @@
     "isTerminalType": false
   },
   {
-    "id": 21,
     "entity": "Water Cut, WC",
     "qualifier": "Operating",
     "source": "Calculated",
@@ -315,7 +294,6 @@
     "isTerminalType": false
   },
   {
-    "id": 22,
     "entity": "Level",
     "qualifier": "Operating",
     "source": "Calculated",
@@ -330,7 +308,6 @@
     "isTerminalType": false
   },
   {
-    "id": 23,
     "entity": "Temperature",
     "qualifier": "Rating",
     "source": "DesignHigh",
@@ -346,7 +323,6 @@
     "isTerminalType": false
   },
   {
-    "id": 24,
     "entity": "Temperature",
     "qualifier": "Rating",
     "source": "DesignLow",
@@ -362,7 +338,6 @@
     "isTerminalType": false
   },
   {
-    "id": 25,
     "entity": "Temperature",
     "qualifier": "Rating",
     "source": "DesignLow",
@@ -378,7 +353,6 @@
     "isTerminalType": false
   },
   {
-    "id": 26,
     "entity": "Flowrate, volumetric",
     "qualifier": "Capacity",
     "source": "Design",
@@ -395,7 +369,6 @@
     "isTerminalType": false
   },
   {
-    "id": 27,
     "entity": "Flowrate, volumetric",
     "qualifier": "Operating",
     "source": "Calculated",
@@ -412,7 +385,6 @@
     "isTerminalType": false
   },
   {
-    "id": 28,
     "entity": "Flowrate, volumetric",
     "qualifier": "Operating",
     "source": "Calculated",
@@ -429,7 +401,6 @@
     "isTerminalType": false
   },
   {
-    "id": 29,
     "entity": "Flowrate, volumetric",
     "qualifier": "Operating",
     "source": "Calculated",
@@ -446,7 +417,6 @@
     "isTerminalType": false
   },
   {
-    "id": 30,
     "entity": "Flowrate, volumetric",
     "qualifier": "Operating",
     "source": "Measured",
@@ -463,7 +433,6 @@
     "isTerminalType": false
   },
   {
-    "id": 31,
     "entity": "Pressure, absolute",
     "qualifier": "Rating",
     "source": "Required",
@@ -481,7 +450,6 @@
     "isTerminalType": false
   },
   {
-    "id": 32,
     "entity": "Pressure, absolute",
     "qualifier": "Rating",
     "source": "Design",
@@ -499,7 +467,6 @@
     "isTerminalType": false
   },
   {
-    "id": 33,
     "entity": "Pressure, absolute",
     "qualifier": "Rating",
     "source": "Design",
@@ -517,7 +484,6 @@
     "isTerminalType": false
   },
   {
-    "id": 34,
     "entity": "Pressure, absolute",
     "qualifier": "Operating",
     "source": "Calculated",
@@ -535,7 +501,6 @@
     "isTerminalType": false
   },
   {
-    "id": 35,
     "entity": "Pressure, absolute",
     "qualifier": "Operating",
     "source": "Calculated",
@@ -553,7 +518,6 @@
     "isTerminalType": false
   },
   {
-    "id": 36,
     "entity": "Pressure, absolute",
     "qualifier": "Operating",
     "source": "Calculated",
@@ -571,7 +535,6 @@
     "isTerminalType": false
   },
   {
-    "id": 37,
     "entity": "Pressure, absolute",
     "qualifier": "Operating",
     "source": "Measured",
@@ -589,7 +552,6 @@
     "isTerminalType": false
   },
   {
-    "id": 38,
     "entity": "Pressure, delta",
     "qualifier": "Rating",
     "source": "Required",
@@ -607,7 +569,6 @@
     "isTerminalType": false
   },
   {
-    "id": 39,
     "entity": "Pressure, delta",
     "qualifier": "Rating",
     "source": "Design",
@@ -625,7 +586,6 @@
     "isTerminalType": false
   },
   {
-    "id": 40,
     "entity": "Pressure, delta",
     "qualifier": "Rating",
     "source": "Design",
@@ -643,7 +603,6 @@
     "isTerminalType": false
   },
   {
-    "id": 41,
     "entity": "Pressure, delta",
     "qualifier": "Operating",
     "source": "Calculated",
@@ -661,7 +620,6 @@
     "isTerminalType": false
   },
   {
-    "id": 42,
     "entity": "Pressure, delta",
     "qualifier": "Operating",
     "source": "Calculated",
@@ -679,7 +637,6 @@
     "isTerminalType": false
   },
   {
-    "id": 43,
     "entity": "Pressure, delta",
     "qualifier": "Operating",
     "source": "Calculated",
@@ -697,7 +654,6 @@
     "isTerminalType": false
   },
   {
-    "id": 44,
     "entity": "Pressure, delta",
     "qualifier": "Operating",
     "source": "Measured",
@@ -715,8 +671,7 @@
     "isTerminalType": false
   },
   {
-    "id": 45,
-    "entity": "Temperature",
+   "entity": "Temperature",
     "qualifier": "Rating",
     "source": "RequiredLow",
     "condition": "Minimum",
@@ -731,7 +686,6 @@
     "isTerminalType": false
   },
   {
-    "id": 46,
     "entity": "Temperature",
     "qualifier": "Rating",
     "source": "RequiredHigh",
@@ -747,7 +701,6 @@
     "isTerminalType": false
   },
   {
-    "id": 47,
     "entity": "Gas HC Dew Point",
     "qualifier": "Operating",
     "source": "Calculated",
@@ -761,7 +714,6 @@
     "isTerminalType": false
   },
   {
-    "id": 48,
     "entity": "Flowrate, volumetric",
     "qualifier": "Capacity",
     "source": "Design",
@@ -778,7 +730,6 @@
     "isTerminalType": false
   },
   {
-    "id": 49,
     "entity": "Turbidity, particle size",
     "qualifier": "Rating",
     "source": "Required",
@@ -792,7 +743,6 @@
     "isTerminalType": false
   },
   {
-    "id": 50,
     "entity": "Velocity",
     "qualifier": "Rating",
     "source": "Required",
@@ -807,7 +757,6 @@
     "isTerminalType": false
   },
   {
-    "id": 51,
     "entity": "Water separation efficiency",
     "qualifier": "Rating",
     "source": "Required",
@@ -821,8 +770,7 @@
     "isTerminalType": false
   },
   {
-    "id": 52,
-    "entity": "Water separation efficiency",
+   "entity": "Water separation efficiency",
     "qualifier": "Rating",
     "source": "Required",
     "condition": "Minimum",
@@ -835,7 +783,6 @@
     "isTerminalType": false
   },
   {
-    "id": 53,
     "entity": "K-value",
     "qualifier": "Rating",
     "source": "Required",
@@ -850,8 +797,7 @@
     "isTerminalType": false
   },
   {
-    "id": 54,
-    "entity": "K-value",
+   "entity": "K-value",
     "qualifier": "Rating",
     "source": "Required",
     "condition": "Minimum",
@@ -865,7 +811,6 @@
     "isTerminalType": false
   },
   {
-    "id": 55,
     "entity": "Gas Carry-under, volumetric",
     "qualifier": "Rating",
     "source": "Required",
@@ -879,7 +824,6 @@
     "isTerminalType": false
   },
   {
-    "id": 56,
     "entity": "Gas Carry-under, volumetric",
     "qualifier": "Rating",
     "source": "Required",
@@ -893,7 +837,6 @@
     "isTerminalType": false
   },
   {
-    "id": 57,
     "entity": "Liquid Carry-over, volumetric",
     "qualifier": "Rating",
     "source": "Required",
@@ -907,7 +850,6 @@
     "isTerminalType": false
   },
   {
-    "id": 58,
     "entity": "Liquid Carry-over, volumetric",
     "qualifier": "Rating",
     "source": "Required",
@@ -921,7 +863,6 @@
     "isTerminalType": false
   },
   {
-    "id": 59,
     "entity": "Liquid Mass Fraction",
     "qualifier": "Rating",
     "source": "Required",
@@ -935,7 +876,6 @@
     "isTerminalType": false
   },
   {
-    "id": 60,
     "entity": "Gas separation efficiency",
     "qualifier": "Rating",
     "source": "Required",
@@ -949,7 +889,6 @@
     "isTerminalType": false
   },
   {
-    "id": 61,
     "entity": "Liquid Mass Fraction",
     "qualifier": "Rating",
     "source": "Required",
@@ -963,7 +902,6 @@
     "isTerminalType": false
   },
   {
-    "id": 62,
     "entity": "Response time",
     "qualifier": "Rating",
     "source": "Required",
@@ -978,7 +916,6 @@
     "isTerminalType": false
   },
   {
-    "id": 63,
     "entity": "Duration",
     "qualifier": "Rating",
     "source": "Required",
@@ -994,7 +931,6 @@
     "isTerminalType": false
   },
   {
-    "id": 64,
     "entity": "Duration",
     "qualifier": "Rating",
     "source": "Required",
@@ -1010,7 +946,6 @@
     "isTerminalType": false
   },
   {
-    "id": 65,
     "entity": "Duration",
     "qualifier": "Rating",
     "source": "Required",
@@ -1026,7 +961,6 @@
     "isTerminalType": false
   },
   {
-    "id": 66,
     "entity": "Duration",
     "qualifier": "Rating",
     "source": "Required",
@@ -1042,7 +976,6 @@
     "isTerminalType": false
   },
   {
-    "id": 67,
     "entity": "Crossection, Inner Diameter",
     "qualifier": "Operating",
     "source": "Required",
@@ -1057,7 +990,6 @@
     "isTerminalType": false
   },
   {
-    "id": 68,
     "entity": "Crossection, Inner Diameter",
     "qualifier": "Operating",
     "source": "Required",
@@ -1072,7 +1004,6 @@
     "isTerminalType": false
   },
   {
-    "id": 69,
     "entity": "Crossection, Area",
     "qualifier": "Operating",
     "source": "Required",
@@ -1087,8 +1018,7 @@
     "isTerminalType": false
   },
   {
-    "id": 70,
-    "entity": "Crossection, Area",
+   "entity": "Crossection, Area",
     "qualifier": "Operating",
     "source": "Required",
     "condition": "Minimum",
@@ -1102,7 +1032,6 @@
     "isTerminalType": false
   },
   {
-    "id": 71,
     "entity": "Response time",
     "qualifier": "Rating",
     "source": "Required",
@@ -1117,7 +1046,6 @@
     "isTerminalType": false
   },
   {
-    "id": 72,
     "entity": "Gas separation efficiency",
     "qualifier": "Rating",
     "source": "Required",
@@ -1131,7 +1059,6 @@
     "isTerminalType": false
   },
   {
-    "id": 73,
     "entity": "Dead pocket prevention",
     "qualifier": "Rating",
     "source": "Required",
@@ -1146,7 +1073,6 @@
     "isTerminalType": false
   },
   {
-    "id": 74,
     "entity": "Dead pocket prevention",
     "qualifier": "Rating",
     "source": "Required",
@@ -1161,7 +1087,6 @@
     "isTerminalType": false
   },
   {
-    "id": 75,
     "entity": "Velocity",
     "qualifier": "Rating",
     "source": "Required",
@@ -1176,7 +1101,6 @@
     "isTerminalType": false
   },
   {
-    "id": 76,
     "entity": "Velocity",
     "qualifier": "Rating",
     "source": "Design",
@@ -1191,7 +1115,6 @@
     "isTerminalType": false
   },
   {
-    "id": 77,
     "entity": "Velocity",
     "qualifier": "Rating",
     "source": "Design",
@@ -1206,7 +1129,6 @@
     "isTerminalType": false
   },
   {
-    "id": 78,
     "entity": "Velocity",
     "qualifier": "Operating",
     "source": "Calculated",
@@ -1221,7 +1143,6 @@
     "isTerminalType": false
   },
   {
-    "id": 79,
     "entity": "Velocity",
     "qualifier": "Operating",
     "source": "Calculated",
@@ -1236,7 +1157,6 @@
     "isTerminalType": false
   },
   {
-    "id": 80,
     "entity": "Velocity",
     "qualifier": "Operating",
     "source": "Calculated",
@@ -1251,8 +1171,7 @@
     "isTerminalType": false
   },
   {
-    "id": 81,
-    "entity": "Sand",
+   "entity": "Sand",
     "qualifier": "Operating",
     "source": "Measured",
     "condition": "Actual",
@@ -1265,7 +1184,6 @@
     "isTerminalType": false
   },
   {
-    "id": 82,
     "entity": "Analysis, composition",
     "qualifier": "Operating",
     "source": "Calculated",
@@ -1279,7 +1197,6 @@
     "isTerminalType": false
   },
   {
-    "id": 83,
     "entity": "Analysis, composition",
     "qualifier": "Operating",
     "source": "Measured",
@@ -1293,7 +1210,6 @@
     "isTerminalType": false
   },
   {
-    "id": 84,
     "entity": "Redundancy",
     "qualifier": "Rating",
     "source": "Required",
@@ -1310,7 +1226,6 @@
     "isTerminalType": false
   },
   {
-    "id": 85,
     "entity": "Redundancy",
     "qualifier": "Rating",
     "source": "Required",
@@ -1327,7 +1242,6 @@
     "isTerminalType": false
   },
   {
-    "id": 86,
     "entity": "Design Margin",
     "qualifier": "Rating",
     "source": "Required",
@@ -1341,7 +1255,6 @@
     "isTerminalType": false
   },
   {
-    "id": 87,
     "entity": "Design Margin",
     "qualifier": "Rating",
     "source": "Required",
@@ -1355,7 +1268,6 @@
     "isTerminalType": false
   },
   {
-    "id": 88,
     "entity": "Design Case",
     "qualifier": "Operating",
     "source": "Required",
@@ -1369,7 +1281,6 @@
     "isTerminalType": false
   },
   {
-    "id": 89,
     "entity": "Design Case",
     "qualifier": "Operating",
     "source": "Required",
@@ -1383,7 +1294,6 @@
     "isTerminalType": false
   },
   {
-    "id": 90,
     "entity": "Fail action",
     "qualifier": "Rating",
     "source": "Required",
@@ -1400,7 +1310,6 @@
     "isTerminalType": false
   },
   {
-    "id": 91,
     "entity": "Fail action",
     "qualifier": "Rating",
     "source": "Required",
@@ -1417,7 +1326,6 @@
     "isTerminalType": false
   },
   {
-    "id": 92,
     "entity": "Slope, inclining",
     "qualifier": "Rating",
     "source": "Required",
@@ -1432,7 +1340,6 @@
     "isTerminalType": false
   },
   {
-    "id": 93,
     "entity": "Slope, inclining",
     "qualifier": "Rating",
     "source": "Required",
@@ -1447,7 +1354,6 @@
     "isTerminalType": false
   },
   {
-    "id": 94,
     "entity": "Slope, declining",
     "qualifier": "Rating",
     "source": "Required",
@@ -1462,7 +1368,6 @@
     "isTerminalType": false
   },
   {
-    "id": 95,
     "entity": "Slope, declining",
     "qualifier": "Rating",
     "source": "Required",
@@ -1477,7 +1382,6 @@
     "isTerminalType": false
   },
   {
-    "id": 96,
     "entity": "Substance content",
     "qualifier": "Rating",
     "source": "Required",
@@ -1492,7 +1396,6 @@
     "isTerminalType": false
   },
   {
-    "id": 97,
     "entity": "Flowrate, volumetric",
     "qualifier": "Capacity",
     "source": "Required",
@@ -1509,7 +1412,6 @@
     "isTerminalType": false
   },
   {
-    "id": 98,
     "entity": "Oil in water",
     "qualifier": "Operating",
     "source": "Calculated",
@@ -1524,7 +1426,6 @@
     "isTerminalType": false
   },
   {
-    "id": 99,
     "entity": "Oil in water",
     "qualifier": "Rating",
     "source": "Required",
@@ -1539,7 +1440,6 @@
     "isTerminalType": false
   },
   {
-    "id": 100,
     "entity": "Head, downstream",
     "qualifier": "Operating",
     "source": "Calculated",
@@ -1553,7 +1453,6 @@
     "isTerminalType": false
   },
   {
-    "id": 101,
     "entity": "Head, downstream",
     "qualifier": "Operating",
     "source": "Calculated",
