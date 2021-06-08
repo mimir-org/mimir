@@ -11,7 +11,8 @@ const ListWrapper = styled.div`
     props.flex === undefined ? `1` : props.flex};
   height: ${(props: { height: number }) =>
     props.height === undefined ? `250px` : props.height + `px`};
-  margin-right: 15px;
+  margin-right: ${(props: { right: number }) =>
+    props.right === undefined ? `15px` : props.right};
 `;
 
 export default ListWrapper;

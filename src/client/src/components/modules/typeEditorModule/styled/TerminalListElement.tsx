@@ -3,11 +3,10 @@ import { Color, FontSize, FontType } from "../../../../componentLibrary";
 
 const TerminalListElement = styled.div`
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column;
   width: inherit;
-  height: 34px;
   background: #d9eaeb;
+  padding: 2px 1px;
   font-family: ${FontType.Standard};
   font-size: ${FontSize.Standard};
   color: ${Color.Black};
@@ -21,13 +20,6 @@ const TerminalListElement = styled.div`
     color: ${Color.Black};
     font-family: ${FontType.Standard};
     font-size: ${FontSize.Standard};
-  }
-
-  img {
-    margin-left: auto;
-    padding-right: 8px;
-    width: 13px;
-    height: 13px;
   }
 `;
 

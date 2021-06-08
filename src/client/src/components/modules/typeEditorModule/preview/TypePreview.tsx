@@ -13,7 +13,7 @@ interface Props {
 export const TypePreview = ({ mode }: Props) => {
   return (
     <>
-      <ListWrapper flex={1.5}>
+      <ListWrapper flex={1.5} right={0}>
         <ListHeader
           label={TextResources.TypeEditor_New_Type_Preview}
           chooseVisible={false}

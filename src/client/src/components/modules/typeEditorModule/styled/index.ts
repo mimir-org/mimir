@@ -7,6 +7,8 @@ export { default as TypeNameInput } from "./TypeNameInput";
 export { default as ChooseProperties } from "./ChooseProperties";
 export { default as TerminalName } from "./TerminalName";
 export { default as TerminalListElement } from "./TerminalListElement";
+export { default as TerminalCategoryWrapper } from "./TerminalCategoryWrapper";
+export { default as AddTerminalWrapper } from "./AddTerminalWrapper";
 export { default as TerminalListContainer } from "./TerminalListContainer";
 export { default as PreviewArea } from "./PreviewArea";
 export { default as PreviewInstruction } from "./PreviewInstruction";
