@@ -19,6 +19,7 @@ namespace Mb.Models.Configurations
         public virtual DbSet<EnumBase> Enums { get; set; }
         public virtual DbSet<Unit> Units { get; set; }
         public virtual DbSet<AttributeCondition> AttributeConditions { get; set; }
+        public virtual DbSet<AttributeFormat> AttributeFormats { get; set; }
 
         public ModelBuilderDbContext(DbContextOptions<ModelBuilderDbContext> options) : base(options)
         {

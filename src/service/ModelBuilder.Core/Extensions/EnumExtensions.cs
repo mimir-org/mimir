@@ -3,11 +3,26 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
+using Mb.Models.Application;
+using Mb.Models.Data;
+using Mb.Models.Data.Enums.Mapping;
+using Attribute = System.Attribute;
 
 namespace Mb.Core.Extensions
 {
     public static class EnumExtensions
     {
+        /// <summary>
+        /// Create EnumBase from a CreateEnum object as correct type
+        /// </summary>
+        /// <returns></returns>
+        public static EnumBase CreateEnum(this CreateEnum createEnum)
+        {
+            var method = typeof(EnumMapper).GetMethod("CreateEnum");
+            var genericMethod = method?.MakeGenericMethod(createEnum.EnumType.GetEnumTypeFromEnum());
+            return (EnumBase)genericMethod?.Invoke(new EnumMapper(), new object[] { createEnum });
+        }
+
         /// <summary>
         /// Get type of enum as a list
         /// </summary>
