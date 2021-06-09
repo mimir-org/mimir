@@ -4,8 +4,7 @@ const IsBlockChecked = (
   isSplitView: boolean,
   node: Node,
   selectedNode: Node,
-  splitViewNode: Node,
-  selectedBlockNode: Node
+  splitViewNode: Node
 ): boolean => {
   if (isSplitView) {
     if (node === selectedNode) {

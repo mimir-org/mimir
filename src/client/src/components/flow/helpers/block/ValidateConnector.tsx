@@ -1,9 +1,10 @@
-import { Connector, RELATION_TYPE } from "../../../../models/project";
+import { Connector } from "../../../../models/project";
+import { IsLocationTerminal, IsTransportTerminal } from "../common";
 
 const ValidateConnector = (conn: Connector, isLocation: boolean): boolean => {
   return (
-    (isLocation && conn.relationType === RELATION_TYPE.HasLocation) ||
-    (!isLocation && conn.relationType === RELATION_TYPE.Transport)
+    (isLocation && IsLocationTerminal(conn)) ||
+    (!isLocation && IsTransportTerminal(conn))
   );
 };
 

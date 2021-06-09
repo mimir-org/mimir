@@ -145,6 +145,11 @@ const textResources = {
   // BlockView
   BlockView_Select_Message:
     "Please select an aspect object from the same aspect OR a different aspect via the Explorer Module",
+
+  // Relations
+  Relations_PartOf: "Part of Relationship",
+  Relations_HasLocation: "Has Location",
+  Relations_FulfilledBy: "Fulfilled By",
 };
 
 export const VisualFilterResources = [
