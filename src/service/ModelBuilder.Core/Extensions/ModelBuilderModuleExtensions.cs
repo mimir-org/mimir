@@ -42,6 +42,7 @@ namespace Mb.Core.Extensions
             services.AddScoped<IAttributeRepository, AttributeRepository>();
             services.AddScoped<IContractorRepository, ContractorRepository>();
             services.AddScoped<ITerminalTypeRepository, TerminalTypeRepository>();
+            services.AddScoped<IEnumBaseRepository, EnumBaseRepository>();
 
             services.AddScoped<ITypeEditorService, TypeEditorService>();
             services.AddScoped<IProjectService, ProjectService>();

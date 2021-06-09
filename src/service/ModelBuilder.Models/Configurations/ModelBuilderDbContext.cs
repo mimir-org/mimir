@@ -1,4 +1,5 @@
 ﻿using Mb.Models.Data;
+using Mb.Models.Data.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace Mb.Models.Configurations
@@ -15,6 +16,9 @@ namespace Mb.Models.Configurations
         public virtual DbSet<LibraryType> LibraryTypes { get; set; }
         public virtual DbSet<Contractor> Contractors { get; set; }
         public virtual DbSet<TerminalType> TerminalTypes { get; set; }
+        public virtual DbSet<EnumBase> Enums { get; set; }
+        public virtual DbSet<Unit> Units { get; set; }
+        public virtual DbSet<AttributeCondition> AttributeConditions { get; set; }
 
         public ModelBuilderDbContext(DbContextOptions<ModelBuilderDbContext> options) : base(options)
         {
@@ -34,6 +38,7 @@ namespace Mb.Models.Configurations
             modelBuilder.ApplyConfiguration(new LibraryTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ContractorConfiguration());
             modelBuilder.ApplyConfiguration(new TerminalTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new EnumBaseConfiguration());
         }
     }
 }

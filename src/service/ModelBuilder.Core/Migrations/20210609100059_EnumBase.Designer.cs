@@ -4,14 +4,16 @@ using Mb.Models.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Mb.Core.Migrations
 {
     [DbContext(typeof(ModelBuilderDbContext))]
-    partial class ModelBuilderDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210609100059_EnumBase")]
+    partial class EnumBase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -257,10 +259,6 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Description");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("SemanticReference")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("SemanticReference");
@@ -268,8 +266,6 @@ namespace Mb.Core.Migrations
                     b.HasKey("Name", "InternalType");
 
                     b.ToTable("Enum");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("EnumBase");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.LibraryType", b =>
@@ -599,20 +595,6 @@ namespace Mb.Core.Migrations
                     b.HasIndex("ProjectId");
 
                     b.ToTable("ProjectNode");
-                });
-
-            modelBuilder.Entity("Mb.Models.Data.Enums.AttributeCondition", b =>
-                {
-                    b.HasBaseType("Mb.Models.Data.EnumBase");
-
-                    b.HasDiscriminator().HasValue("AttributeCondition");
-                });
-
-            modelBuilder.Entity("Mb.Models.Data.Enums.Unit", b =>
-                {
-                    b.HasBaseType("Mb.Models.Data.EnumBase");
-
-                    b.HasDiscriminator().HasValue("Unit");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Attribute", b =>
