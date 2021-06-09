@@ -8,7 +8,9 @@ import {
   changeAttributeValue,
   changeConnectorAttributeValue,
 } from "../../../redux/store/project/actions";
-
+import {
+  InputWrapper,
+} from "./styled";
 interface Props {
   node: Node;
   index?: number;
@@ -41,7 +43,7 @@ const TabContent = ({ node, index }: Props) => {
     });
 
     connectorAttributes = tempAttributes;
-    nodeAttributes = node.attributes.concat(node.attributes);
+    nodeAttributes = node.attributes;
   }
 
   const handleOnNodeChange = (id: string, value: string, unit: string) => {
@@ -63,37 +65,47 @@ const TabContent = ({ node, index }: Props) => {
   return (
     <>
       {/* TODO: Refactor, rewrite sorting function?
-          NOIE: Currently not using SetNodeColumn.tsx and CalculateRows() anymore. Should it be removed?
+          NOIE: Currently not using SetNodeColumn.tsx or CalculateRows() anymore. Should it be removed?
       */}
       {index === 1 && (
         <TabRow>
-          {nodeAttributes?.map((attr) => (
+          {nodeAttributes?.map((attr) => {
+            let inputFieldWidth = (attr.value?.length ?? 1) * 3 + 10;
+            //inputFieldWidth = (inputFieldWidth <= 10) ? 10 : inputFieldWidth;
+            return (
             <AttributeField key={CreateId()}>
                 <div>{attr.key}</div>
-                <InputBox>
-                  <Input
-                    value={attr.value ?? ""}
-                    onChange={(e: any) =>
-                      handleOnNodeChange(attr.id, e.target.value, attr.unit)
-                    }
-                    inputType="tech"
-                  />
-                  <Select
-                    value={attr.unit}
-                    onChange={(e: any) =>
-                      handleOnNodeChange(attr.id, attr.value, e.target.value)
-                    }
-                  >
-                    <option value={"NotSet"}>NotSet</option>
-                    {attr.units.map((unit) => (
-                      <option key={unit} value={unit}>
-                        {unit}
-                      </option>
-                    ))}
-                  </Select>
-                </InputBox>
+                  <InputBox>
+                    <InputWrapper
+                      width={inputFieldWidth + '%'}
+                      rightMargin={"4px"}>
+                      <Input
+                      value={attr.value ?? ""}
+                      onChange={(e: any) =>
+                        handleOnNodeChange(attr.id, e.target.value, attr.unit)
+                      }
+                      inputType="tech"
+                      />
+                    </InputWrapper>
+                    <InputWrapper
+                      width={(100 - inputFieldWidth) + '%'}>
+                      <Select
+                        value={attr.unit}
+                        onChange={(e: any) =>
+                          handleOnNodeChange(attr.id, attr.value, e.target.value)
+                        }
+                        >
+                        <option value={"NotSet"}>NotSet</option>
+                        {attr.units.map((unit) => (
+                          <option key={unit} value={unit + "langt navn"}>
+                            {unit}
+                          </option>
+                        ))}
+                      </Select>
+                    </InputWrapper>
+                  </InputBox>
             </AttributeField>
-          ))}
+          )})}
         </TabRow>
         
         
