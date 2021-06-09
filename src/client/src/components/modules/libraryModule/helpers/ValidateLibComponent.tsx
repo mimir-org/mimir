@@ -1,5 +1,5 @@
 import { Node, LibNode } from "../../../../models/project";
-import { IsAspectSameType } from "../../../flow/helpers";
+import { IsNodeSameType } from "../../../flow/helpers/common";
 
 const ValidateLibComponent = (
   libNode: LibNode,
@@ -11,7 +11,7 @@ const ValidateLibComponent = (
   return (
     !isSplitView &&
     (selectedNode?.type === libNode.type ||
-      IsAspectSameType(selectedNode, libNode))
+      IsNodeSameType(selectedNode, libNode))
   );
 };
 

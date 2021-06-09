@@ -2,7 +2,7 @@ import {
   SaveIcon,
   CreateProjectIcon,
   OpenProjectIconSmall,
-} from "../../../../assets/icons";
+} from "../../../../assets/icons/common";
 
 const GetIcon = (type: string) => {
   switch (type) {

@@ -1,22 +1,17 @@
 import { addNode, createEdge } from "../../../redux/store/project/actions";
-import { CreateId } from "./../helpers";
-import { CheckView } from "../../../redux/store/localStorage/localStorage";
-import { CreateBlockNode } from "../helpers/block";
+import { LibNode, Node, NodeType, Edge } from "../../../models/project";
+import { CreateBlockNode, IsBlockView } from "../helpers/block";
+import {
+  CreateId,
+  IsNodeSameType,
+  IsInputConnector,
+  IsPartOfTerminal,
+} from "./../helpers/common";
 import {
   CreateTreeNode,
   GetTreeEdgeType,
   CreateTreeEdge,
-  ValidateSameNodeType,
 } from "../helpers/tree";
-import {
-  CONNECTOR_TYPE,
-  LibNode,
-  Node,
-  NodeType,
-  RELATION_TYPE,
-  VIEW_TYPE,
-  Edge,
-} from "../../../models/project";
 
 const useOnDrop = (
   event,
@@ -27,7 +22,7 @@ const useOnDrop = (
   splitView?: boolean,
   selectedNode?: Node
 ) => {
-  const showBlockView = CheckView(VIEW_TYPE.BLOCKVIEW);
+  const showBlockView = IsBlockView();
   event.preventDefault();
   const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
   const data = JSON.parse(
@@ -65,24 +60,18 @@ const useOnDrop = (
     a.nodeId = node.id;
   });
 
-  dispatch(addNode(node));
-
   showBlockView
-    ? setElements((es) => es.concat(CreateBlockNode(node, splitView)))
+    ? setElements((es) => es.concat(CreateBlockNode(node, splitView, null))) // TODO: fix
     : setElements((es) => es.concat(CreateTreeNode(node)));
 
   if (selectedNode) {
-    if (!ValidateSameNodeType(selectedNode, node)) return;
+    if (!IsNodeSameType(selectedNode, node)) return;
 
     const fromConnector = selectedNode.connectors?.find(
-      (x) =>
-        x.relationType === RELATION_TYPE.PartOf &&
-        x.type === CONNECTOR_TYPE.OUTPUT
+      (x) => IsPartOfTerminal(x) && !IsInputConnector(x)
     );
     const toConnector = node.connectors?.find(
-      (x) =>
-        x.relationType === RELATION_TYPE.PartOf &&
-        x.type === CONNECTOR_TYPE.INPUT
+      (x) => IsPartOfTerminal(x) && IsInputConnector(x)
     );
 
     const partofEdge = {
@@ -96,10 +85,13 @@ const useOnDrop = (
       targetType: node.type,
     } as Edge;
 
+    let parentNodeLevel = selectedNode.level;
+    node.level = ++parentNodeLevel;
     dispatch(createEdge(partofEdge));
     const edgeType = GetTreeEdgeType(fromConnector);
     setElements((es) => es.concat(CreateTreeEdge(partofEdge, edgeType)));
   }
+  dispatch(addNode(node));
 };
 
 export default useOnDrop;

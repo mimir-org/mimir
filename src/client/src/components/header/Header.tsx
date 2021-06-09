@@ -1,18 +1,21 @@
 import { useHistory } from "react-router-dom";
 import { TextResources } from "../../assets/textResources";
-import { SetView } from "../../redux/store/localStorage";
 import { useDispatch } from "react-redux";
 import { VIEW_TYPE } from "../../models/project";
-import { TreeviewOff, TreeviewOn } from "../../assets/icons";
+import { TreeviewOff, TreeviewOn } from "../../assets/icons/common";
 import { ViewOffIcon, ViewOnIcon } from "../../assets/icons/blockView";
 import { changeFlowView } from "../../redux/store/flow/actions";
 import { IsBlockView } from "../flow/helpers/block";
 import red from "../../redux/store";
 import {
+  setSplitView,
+  setSplitNode,
+} from "../../redux/store/splitView/actions";
+import {
   HeaderBox,
   IconBox,
-  TitleBox,
-  ViewBox,
+  ProjectTitleBox,
+  ViewLinkBox,
 } from "../../componentLibrary/box/header/";
 
 const Header = () => {
@@ -25,32 +28,33 @@ const Header = () => {
   const handleClick = (e) => {
     if (e.target.alt === VIEW_TYPE.BLOCKVIEW && !selectedNode) return;
     const view = e.target.alt;
+    dispatch(setSplitView(false));
+    dispatch(setSplitNode(null));
     dispatch(changeFlowView(view));
-    SetView(view);
     push(`/home/${view}`);
   };
 
   return (
     <HeaderBox>
-      <TitleBox>{TextResources.MainHeader_App_Name}</TitleBox>
+      <ProjectTitleBox>{TextResources.MainHeader_App_Name}</ProjectTitleBox>
       <IconBox>
-        <ViewBox selected={!IsBlockView()}>
+        <ViewLinkBox selected={!IsBlockView()}>
           <img
             src={IsBlockView() ? TreeviewOff : TreeviewOn}
             alt={VIEW_TYPE.TREEVIEW}
             onClick={handleClick}
             className="view_icon"
           />
-        </ViewBox>
+        </ViewLinkBox>
         <div className="line"></div>
-        <ViewBox selected={IsBlockView()} right>
+        <ViewLinkBox selected={IsBlockView()} right>
           <img
             src={IsBlockView() ? ViewOnIcon : ViewOffIcon}
             alt={VIEW_TYPE.BLOCKVIEW}
             onClick={handleClick}
             className="view_icon"
           />
-        </ViewBox>
+        </ViewLinkBox>
       </IconBox>
     </HeaderBox>
   );

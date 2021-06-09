@@ -1,6 +1,6 @@
 import { NODE_TYPE } from "../../../models/project";
 import { updatePosition } from "../../../redux/store/project/actions";
-import { GetFlowRectData } from "./../helpers";
+import { GetFlowRectData } from "./../helpers/common";
 
 const useOnUpdatePosition = (projectState, dispatch) => {
   const [width] = GetFlowRectData();

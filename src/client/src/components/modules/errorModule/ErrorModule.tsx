@@ -7,7 +7,7 @@ import { CommonState } from "../../../redux/store/common/types";
 import { RootState } from "../../../redux/store";
 import { ErrorBox, ErrorItem, ErrorHeaderBox } from ".";
 import { ProjectBody } from "../../../componentLibrary/box/project";
-import { CloseIcon } from "../../../assets/icons";
+import { CloseIcon } from "../../../assets/icons/common";
 import { TextResources } from "../../../assets/textResources";
 import { BadRequestData } from "../../../models/webclient";
 import { deleteProjectError } from "../../../redux/store/project/actions";
@@ -136,8 +136,7 @@ const ErrorModule = () => {
                 <h3>{x.module}</h3>
                 <p>{x.message}</p>
                 {x.errorData &&
-                  x.errorData.items &&
-                  x.errorData.items.map((y) => {
+                  x.errorData.items?.map((y) => {
                     return (
                       <p key={y.key}>
                         {y.key}: {y.value}

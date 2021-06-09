@@ -1,22 +1,34 @@
 import { Node } from "../../../../models/project";
 import { FlowElement } from "react-flow-renderer";
 import { SetBlockNodePosition } from ".";
-import { IsLocationNode } from "..";
+import { IsFunctionNode, IsLocationNode } from "../common";
 import { Size } from "../../../../componentLibrary";
+import { SetConnectNodePosition } from "./connectionView";
 
-const CreateBlockNode = (node: Node, splitView: boolean): FlowElement => {
+const CreateBlockNode = (
+  node: Node,
+  splitView: boolean,
+  mainConnectNode: Node
+): FlowElement => {
   let blockNode = null;
   if (!node) return blockNode;
 
-  const type = IsLocationNode(node) ? "BlockViewLocation" : "BlockViewFunction";
+  const type = IsLocationNode(node) ? "BlockLocationNode" : "BlockFunctionNode";
 
   // Force node to fit Block
-  const position = SetBlockNodePosition(node, splitView);
+  let position = SetBlockNodePosition(node, splitView);
+  if (mainConnectNode && !IsLocationNode(node) && node !== mainConnectNode) {
+    position = SetConnectNodePosition(node);
+  }
 
-  if (IsLocationNode(node)) {
-    if (!node.width) node.width = Size.Node_Width;
-    if (!node.length) node.length = Size.Node_Height;
-    node.height = 0; // Z-axis
+  if (IsFunctionNode(node)) {
+    if (mainConnectNode && mainConnectNode.id === node.id) {
+      node.width = Size.ConnectView_Width;
+      node.length = Size.ConnectView_Length;
+    } else {
+      node.width = Size.Node_Width;
+      node.length = Size.Node_Length;
+    }
   }
 
   blockNode = {

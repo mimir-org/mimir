@@ -1,15 +1,27 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ProjectMainMenu } from "../project";
-import { RootState } from "./../../redux/store/index";
+import { RootState } from "../../redux/store/index";
 import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
 import { EDGE_TYPE, EdgeType } from "../../models/project";
 import { OpenProjectMenu } from "../project/openProject";
 import { changeActiveBlockNode } from "../../redux/store/project/actions";
 import { Color } from "../../componentLibrary";
-import { GetBlockNodeTypes, IsFunctionNode, IsLocationNode } from "./helpers";
 import { BackgroundBox } from "../../componentLibrary/blockView";
 import { changeInspectorTab } from "../../redux/store/inspector/actions";
+import {
+  addMainConnectNode,
+  removeAllConnectNodes,
+} from "../../redux/store/connectView/actions";
+import {
+  setSplitView,
+  setSplitNode,
+} from "../../redux/store/splitView/actions";
+import {
+  GetBlockNodeTypes,
+  IsFunctionNode,
+  IsLocationNode,
+} from "./helpers/common";
 import {
   CreateBlockElements,
   GetBlockEdgeTypes,
@@ -21,7 +33,6 @@ import {
   Node,
   SPLITVIEW_POSITION,
 } from "../../models/project";
-
 import ReactFlow, {
   ReactFlowProvider,
   Elements,
@@ -43,6 +54,12 @@ const FlowBlock = () => {
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>();
 
+  // Flush ConnectView
+  useEffect(() => {
+    dispatch(addMainConnectNode(null));
+    dispatch(removeAllConnectNodes());
+  }, [dispatch]);
+
   const project = useSelector<RootState>(
     (state) => state.projectState.project
   ) as Project;
@@ -57,16 +74,45 @@ const FlowBlock = () => {
     (state) => state.splitView.node
   ) as Node;
 
+  const mainConnectNode = useSelector<RootState>(
+    (state) => state.connectView.mainNode
+  ) as Node;
+
+  const connectViewNodes = useSelector<RootState>(
+    (state) => state.connectView.connectNodes
+  ) as Node[];
+
+  const selectedBlockNodeId = useSelector<RootState>(
+    (state) =>
+      state.projectState.project?.nodes.find((x) => x.isBlockSelected)?.id
+  ) as string;
+
   const showBackground = IsLocationNode(splitViewNode) || IsLocationNode(node);
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
       setElements(
-        CreateBlockElements(project, node?.id, splitViewNode, splitView)
+        CreateBlockElements(
+          project,
+          node?.id,
+          mainConnectNode,
+          connectViewNodes,
+          selectedBlockNodeId,
+          splitView,
+          splitViewNode
+        )
       );
       return setReactFlowInstance(_reactFlowInstance);
     },
-    [node, project, splitViewNode, splitView]
+    [
+      connectViewNodes,
+      mainConnectNode,
+      node?.id,
+      project,
+      selectedBlockNodeId,
+      splitView,
+      splitViewNode,
+    ]
   );
 
   const OnElementsRemove = (elementsToRemove) => {
@@ -134,6 +180,12 @@ const FlowBlock = () => {
   useEffect(() => {
     OnLoad(reactFlowInstance);
   }, [OnLoad, reactFlowInstance]);
+
+  // Flush SplitView
+  useEffect(() => {
+    dispatch(setSplitView(false));
+    dispatch(setSplitNode(null));
+  }, [dispatch]);
 
   window.onresize = () => {
     OnLoad(reactFlowInstance);

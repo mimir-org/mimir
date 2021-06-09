@@ -1,3 +1,4 @@
+import { IsAspectNode, GetCenter } from "../helpers/common";
 import {
   getBezierPath,
   getMarkerEnd,
@@ -5,15 +6,12 @@ import {
   EdgeText,
   ArrowHeadType,
 } from "react-flow-renderer";
-
 import {
   LINE_EDGE_TYPE,
   LineEdgeType,
   Node,
   NODE_TYPE,
 } from "../../../models/project";
-
-import { IsAspectNode, GetCenter } from "../helpers";
 
 export default function TransportEdgeType({
   id,

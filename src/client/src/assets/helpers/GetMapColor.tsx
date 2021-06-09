@@ -1,13 +1,15 @@
 import { Color } from "../../componentLibrary";
-import { NodeType, NODE_TYPE } from "../../models/project";
+import { Node } from "../../models/project";
+import {
+  IsFunctionNode,
+  IsLocationNode,
+  IsProductNode,
+} from "../../components/flow/helpers/common";
 
-const GetMapColor = (node: NodeType): string => {
-  if (node === NODE_TYPE.FUNCTION || node === NODE_TYPE.ASPECT_FUNCTION)
-    return Color.Function;
-  if (node === NODE_TYPE.PRODUCT || node === NODE_TYPE.ASPECT_PRODUCT)
-    return Color.Product;
-  if (node === NODE_TYPE.LOCATION || node === NODE_TYPE.ASPECT_LOCATION)
-    return Color.Location;
+const GetMapColor = (node: Node): string => {
+  if (IsFunctionNode(node)) return Color.Function;
+  if (IsProductNode(node)) return Color.Product;
+  if (IsLocationNode(node)) return Color.Location;
   return null;
 };
 

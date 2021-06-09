@@ -1,14 +1,15 @@
 const Size = {
   Node_Width: 100,
-  Node_Height: 47,
+  Node_Length: 60,
+  ConnectView_Width: 280,
+  ConnectView_Length: 150,
   SplitView_Width: 550,
   SplitView_Height: 600,
   BlockView_Width: 950,
   BlockView_Height: 600,
   ModuleOpen: 331,
-  InspectorModuleOpen: 380,
+  InspectorModuleOpen: 257,
   ModuleClosed: 35,
-  InspectorModuleClosed: 90,
 };
 
 export default Size;

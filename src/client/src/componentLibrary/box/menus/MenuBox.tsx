@@ -13,7 +13,7 @@ const MenuBox = styled.div`
   border-style: solid;
   border-color: ${Color.DeepCyan};
   border-width: 0px 2px 2px 2px;
-  z-index: 3;
+  z-index: 6;
   box-shadow: -1px 4px 5px rgba(0, 0, 0, 0.15);
 `;
 

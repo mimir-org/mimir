@@ -1,16 +1,16 @@
-import { GetNodes, IsFunctionNode } from "../../../flow/helpers";
+import { GetNodes, IsFunctionNode } from "../../../flow/helpers/common";
 import { useDispatch, useSelector } from "react-redux";
 import { changeActiveNode } from "../../../../redux/store/project/actions";
 import { Node } from "../../../../models/project";
 import { RootState } from "../../../../redux/store";
-import { setSplitViewNode } from "../../../../redux/store/splitView/actions";
+import { setSplitNode } from "../../../../redux/store/splitView/actions";
 
 interface Props {
-  nodeId: string;
+  node: Node;
   inputLabel: string;
 }
 
-export const CheckboxBlock = ({ nodeId, inputLabel }: Props) => {
+export const CheckboxBlock = ({ node, inputLabel }: Props) => {
   const dispatch = useDispatch();
   const nodes = GetNodes();
 
@@ -22,18 +22,18 @@ export const CheckboxBlock = ({ nodeId, inputLabel }: Props) => {
     (state) => state.splitView.node
   ) as Node;
 
-  let node = nodes.find((x) => x.id === nodeId);
   const selectedNode = nodes.find((x) => x.isSelected);
 
   const isChecked = splitView
     ? node === selectedNode || node === splitViewNode
     : node === selectedNode;
 
+  // TODO: Rewrite this
   const handleChange = () => {
     if (splitView) {
       IsFunctionNode(node)
         ? dispatch(changeActiveNode(node?.id, true))
-        : dispatch(setSplitViewNode(node));
+        : dispatch(setSplitNode(node));
     } else dispatch(changeActiveNode(node?.id, true));
   };
 

@@ -1,19 +1,14 @@
-import { NodeType } from "../../../../models/project";
+import { Node } from "../../../../models/project";
 import useChangeNodeVisibility from "../hooks/useChangeNodeVisibility";
-import { GetNodes } from "../../../flow/helpers";
 
 interface Props {
-  nodeId: string;
+  node: Node;
   inputLabel: string;
-  type: NodeType;
 }
-export const Checkbox = ({ nodeId, inputLabel, type }: Props) => {
-  // Check if node is hidden
-  const nodes = GetNodes();
-  const node = nodes.find((x) => x.id === nodeId);
+export const Checkbox = ({ node, inputLabel }: Props) => {
   let isHidden = node?.isHidden ?? false;
 
-  const handleChange = useChangeNodeVisibility(node, type);
+  const handleChange = useChangeNodeVisibility(node);
 
   return (
     <label className={"checkbox"}>

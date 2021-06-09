@@ -1,20 +1,33 @@
-import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
 import { useHistory } from "react-router-dom";
-import { VIEW_TYPE } from "../../../models/project";
+import { MODULE_TYPE } from "../../../models/project";
+import { TextResources } from "../../../assets/textResources";
+import { CloseIcon } from "../../../assets/icons/common";
+import { TypeEditorState } from "../../../redux/store/typeEditor/types";
 import { changeFlowView } from "../../../redux/store/flow/actions";
-
-import { DropdownMenu } from ".";
+import {
+  getInitialData,
+  getRDS,
+  getTerminals,
+} from "../../../redux/store/typeEditor/actions";
+import {
+  DropdownMenu,
+  RDSList,
+  TerminalsList,
+  AttributesList,
+  TypePreview,
+} from ".";
 import {
   TypeEditorWrapper,
   TypeEditorContent,
   TypeEditorHeader,
   TypeInfo,
   TypeNameInput,
+  TextInput,
+  ChooseProperties,
 } from "./styled";
-import { Input } from "../../../componentLibrary";
-import { TextResources } from "../../../assets/textResources";
-import { CloseIcon } from "../../../assets/icons";
-import { SetView } from "../../../redux/store/localStorage";
 
 interface Props {
   mode: string;
@@ -23,25 +36,22 @@ interface Props {
 export const TypeEditorComponent = ({ mode }: Props) => {
   const { push } = useHistory();
   const dispatch = useDispatch();
+
+  const state = useSelector<RootState>(
+    (state) => state.typeEditor
+  ) as TypeEditorState;
+
   const handleClick = () => {
-    dispatch(changeFlowView(VIEW_TYPE.TREEVIEW));
-    SetView(VIEW_TYPE.TREEVIEW);
-    push(`/home/${VIEW_TYPE.TREEVIEW}`);
+    dispatch(changeFlowView(MODULE_TYPE.TYPEEDITOR));
+    push(`/home/${MODULE_TYPE.TYPEEDITOR}`);
   };
-  const aspects = [
-    {
-      id: 0,
-      name: "Function",
-    },
-    {
-      id: 1,
-      name: "Product",
-    },
-    {
-      id: 2,
-      name: "Location",
-    },
-  ];
+
+  useEffect(() => {
+    dispatch(getInitialData());
+    dispatch(getRDS(state.aspect));
+    dispatch(getTerminals());
+  }, [dispatch, state.aspect]);
+
   return (
     <TypeEditorWrapper>
       <TypeEditorContent>
@@ -51,33 +61,35 @@ export const TypeEditorComponent = ({ mode }: Props) => {
         </TypeEditorHeader>
         <TypeInfo>
           <DropdownMenu
-            label="Aspect"
+            label={TextResources.TypeEditor_Aspect}
             placeHolder="Choose Aspect"
-            listItems={aspects}
+            listItems={Object.entries(state.aspects)}
           />
           <DropdownMenu
-            label="Object Type"
+            label={TextResources.TypeEditor_Object_Type}
             placeHolder="Select Object Type"
-            listItems={aspects}
+            listItems={Object.entries(state.objectTypes)}
           />
           <TypeNameInput>
-            <p>Type name</p>
-            <Input
-              width={300}
+            <p>{TextResources.TypeEditor_Type_Name}</p>
+            <TextInput
               onChange={() => null}
               inputType="text"
               placeholder="Write Type name"
             />
           </TypeNameInput>
           <DropdownMenu
-            label="Status"
-            placeHolder="Draft"
-            listItems={aspects}
+            label={TextResources.TypeEditor_Status}
+            placeHolder="Choose Status"
+            listItems={Object.entries(state.statuses)}
           />
         </TypeInfo>
-        {/* <ChooseProperties>
-          {mode === "new" ? <p>TE Component NEW</p> : <p>TE Component EDIT</p>}
-          </ChooseProperties> */}
+        <ChooseProperties>
+          <RDSList />
+          <TerminalsList />
+          <AttributesList />
+          <TypePreview mode={mode} />
+        </ChooseProperties>
         {/* <TypeEditorInspector></TypeEditorInspector> */}
       </TypeEditorContent>
     </TypeEditorWrapper>

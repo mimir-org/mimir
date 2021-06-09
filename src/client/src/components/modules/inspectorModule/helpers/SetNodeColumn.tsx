@@ -1,6 +1,6 @@
 import { Input, InputBox, Select } from "../../../../componentLibrary";
 import { Attribute } from "../../../../models/project";
-import { CreateId } from "../../../flow/helpers";
+import { CreateId } from "../../../flow/helpers/common";
 import { TabColumn } from "../../../../componentLibrary/box/inspector";
 
 interface Props {

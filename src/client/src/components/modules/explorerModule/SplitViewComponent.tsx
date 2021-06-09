@@ -4,11 +4,11 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Node } from "../../../models/project";
 import { RootState } from "../../../redux/store";
-import { IsLocationNode } from "../../flow/helpers";
+import { IsLocationNode } from "../../flow/helpers/common";
 import { IsBlockView } from "../../flow/helpers/block";
 import {
-  changeSplitView,
-  setSplitViewNode,
+  setSplitNode,
+  setSplitView,
 } from "../../../redux/store/splitView/actions";
 
 export const SplitViewComponent = () => {
@@ -30,9 +30,9 @@ export const SplitViewComponent = () => {
 
   const handleClick = () => {
     if (IsLocationNode(selectedNode)) return;
+    if (isActive) dispatch(setSplitNode(null));
     SetIsActive(!isActive);
-    dispatch(changeSplitView(!isActive));
-    dispatch(setSplitViewNode(null));
+    dispatch(setSplitView(!isActive));
   };
 
   return (

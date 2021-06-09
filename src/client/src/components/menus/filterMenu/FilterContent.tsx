@@ -32,10 +32,9 @@ const FilterContent = ({ type, index }) => {
         <MenuSubHeader>{TextResources.Filter_Other}</MenuSubHeader>
       )}
 
-      <label className={"checkbox"}>
+      <label className={"checkbox-filter"}>
         <input type="checkbox" checked={checked} onChange={handleChange} />
-        <span className="checkmark"></span>
-        <label className="checkbox_label"></label>
+        <span className="checkmark-filter"></span>
         {type}
       </label>
     </MenuColumn>

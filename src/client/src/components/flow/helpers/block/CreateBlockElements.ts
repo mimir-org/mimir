@@ -1,5 +1,5 @@
 import { Elements } from "react-flow-renderer";
-import { IsAspectSameType } from "..";
+import { IsNodeSameType, IsTransportTerminal } from "../common";
 import {
   Project,
   EDGE_TYPE,
@@ -12,17 +12,29 @@ import {
   CreateSplitViewNode,
   CreateParentBlockNode,
   CreateBlockNode,
+  CreateConnectViewNode,
 } from ".";
 
 const CreateBlockElements = (
   project: Project,
   nodeId: string,
-  splitViewNode: Node,
-  splitView: boolean
+  mainConnectNode: Node,
+  connectNodes: Node[],
+  selectedBlockNodeId: string,
+  splitView: boolean,
+  splitViewNode: Node
 ): Elements => {
   if (!project) return;
   const initialElements: Elements = [];
   const selectedNode = project.nodes.find((node) => node.id === nodeId);
+
+  // Draw connection view
+  if (mainConnectNode && mainConnectNode.id === selectedBlockNodeId) {
+    CreateConnectViewNode(mainConnectNode);
+    connectNodes.forEach((node) => {
+      initialElements.push(CreateBlockNode(node, false, mainConnectNode));
+    });
+  }
 
   // Draw block
   const parentBlock = CreateParentBlockNode(selectedNode);
@@ -32,17 +44,16 @@ const CreateBlockElements = (
   project.edges.forEach((edge) => {
     if (edge.fromNode === nodeId) {
       const toNode = project.nodes?.find((x) => x.id === edge.toNode);
-
-      let connectorType = toNode?.connectors?.find(
-        (x) => x.id === edge?.toConnector
-      )?.relationType;
+      let conn = toNode?.connectors?.find((x) => x.id === edge?.toConnector);
 
       if (
         (selectedNode?.type === toNode?.type ||
-          IsAspectSameType(selectedNode, toNode)) &&
-        connectorType !== RELATION_TYPE.Transport
+          IsNodeSameType(selectedNode, toNode)) &&
+        !IsTransportTerminal(conn)
       )
-        initialElements.push(CreateBlockNode(toNode, splitView));
+        initialElements.push(
+          CreateBlockNode(toNode, splitView, mainConnectNode)
+        );
     }
   });
 
@@ -58,7 +69,7 @@ const CreateBlockElements = (
 
         if (
           (splitViewNode?.type === toNode?.type ||
-            IsAspectSameType(splitViewNode, toNode)) &&
+            IsNodeSameType(splitViewNode, toNode)) &&
           connectorType !== RELATION_TYPE.Transport
         )
           initialElements.push(CreateSplitViewNode(toNode));

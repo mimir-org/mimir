@@ -1,4 +1,4 @@
-import { IsPartOfTerminal } from "../../../../components/flow/helpers/";
+import { IsPartOfTerminal } from "../../../../components/flow/helpers/common";
 import { Edge, Node } from "../../../../models/project";
 
 const TraverseTree = (

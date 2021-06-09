@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { ExpandedIcon, ClosedIcon } from "../../../../assets/icons";
-import { NodeType } from "../../../../models/project";
-import { IsAspectNode } from "../../../flow/helpers";
+import { ExpandedIcon, ClosedIcon } from "../../../../assets/icons/common";
+import { Node } from "../../../../models/project";
+import { IsAspectNode } from "../../../flow/helpers/common";
 import { AspectElement } from ".";
 import { AspectBox } from "../../../../componentLibrary/box/aspect";
 import { Checkbox, CheckboxBlock } from "../checkboxComponent";
@@ -16,18 +16,17 @@ import {
 } from "../../../../assets/helpers";
 
 interface Props {
-  nodeId: string;
+  node: Node;
   label: string;
-  aspectType: NodeType;
 }
-export const AspectComponent = ({ nodeId, label, aspectType }: Props) => {
+export const AspectComponent = ({ node, label }: Props) => {
   const [expanded, setExpanded] = useState(true);
   const expandIcon = expanded ? ExpandedIcon : ClosedIcon;
-  const aspectIcon = GetAspectIcon(aspectType);
-  const color = GetAspectColor(aspectType, true);
-  const childType = GetAspectType(aspectType);
+  const aspectIcon = GetAspectIcon(node);
+  const color = GetAspectColor(node, true);
+  const childType = GetAspectType(node);
   const nodes = red.store.getState().projectState.project.nodes;
-  const children = nodes.filter((node) => !IsAspectNode(node.type));
+  const children = nodes.filter((node) => !IsAspectNode(node));
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -39,23 +38,22 @@ export const AspectComponent = ({ nodeId, label, aspectType }: Props) => {
         <img src={aspectIcon} alt="aspect-icon"></img>
         <div className="checkbox_container">
           {IsBlockView() ? (
-            <CheckboxBlock nodeId={nodeId} inputLabel={label} />
+            <CheckboxBlock node={node} inputLabel={label} />
           ) : (
-            <Checkbox nodeId={nodeId} inputLabel={label} type={childType} />
+            <Checkbox node={node} inputLabel={label} />
           )}
         </div>
         {GetDropdownIcon(expandIcon, handleExpandClick)}
       </AspectBox>
       {expanded &&
-        children.map((obj: object, i: number) => {
+        children.map((_, i: number) => {
           if (children[i].type === childType) {
             const indent = children[i].level ?? SetIndentLevel(children[i], 0);
             return (
               <AspectElement
                 key={i}
-                nodeId={obj["id"]}
-                label={obj["label"] ?? obj["name"]}
-                type={childType}
+                node={children[i]}
+                label={children[i].label ?? children[i].name}
                 indent={indent}
               />
             );

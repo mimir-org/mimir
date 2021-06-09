@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { ExpandIcon, CloseIcon } from "../../assets/icons/controls";
 import { MODULE_TYPE } from "../../models/project";
 import { RootState } from "../../redux/store";
-import { SaveAllModules } from "../../redux/store/localStorage";
 import { changeAllModulesVisibility } from "../../redux/store/modules/actions";
 import FullscreenButton from "./FullscreenButton";
 
@@ -25,7 +24,6 @@ const FullscreenBox = () => {
 
   const handleOnClick = () => {
     dispatch(changeAllModulesVisibility(!isOpen, true));
-    SaveAllModules(!isOpen);
   };
 
   return (

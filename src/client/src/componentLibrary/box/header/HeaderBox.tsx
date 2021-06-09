@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Color } from "../../../componentLibrary";
 
 const HeaderBox = styled.div`
-  min-height: 48px;
+  min-height: 49px;
   background-color: ${Color.DeepCyan};
   color: ${Color.White};
 
@@ -18,6 +18,7 @@ const HeaderBox = styled.div`
     border-style: solid;
     border-width: 0px 1px 0px 0px;
     margin-left: 50px;
+    top: 1px;
   }
 `;
 
