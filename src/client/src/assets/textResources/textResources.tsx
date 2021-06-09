@@ -145,8 +145,6 @@ const textResources = {
   // BlockView
   BlockView_Select_Message:
     "Please select an aspect object from the same aspect OR a different aspect via the Explorer Module",
-  BlockView_Location_Message:
-    "In Split View you can only select one node of type Location",
 };
 
 export const VisualFilterResources = [
