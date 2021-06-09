@@ -1,35 +1,23 @@
-import { Node, Edge, RELATION_TYPE } from "../../models/project";
+import { Node, Edge } from "../../models/project";
+import red from "../../redux/store";
 
-const SetIndentLevel = (nodes: Node[], edges: Edge[], i: number) => {
-  if (!edges) return null;
-  let indentCount = 0;
-  const node = nodes[i];
-  const nodeId = node.id;
+const SetIndentLevel = (node: Node, count: number): number => {
+  const edge = red.store
+    .getState()
+    .projectState.project.edges.find((x) => x.toNode === node.id) as Edge;
 
-  let edge = edges.find((edge) => edge.toNode === nodeId);
-  if (!edge) return null;
+  if (!edge) return count;
+  else count++;
 
-  let connectorType = node?.connectors?.find(
-    (x) => x.id === edge?.toConnector
-  )?.relationType;
+  const nextNode = red.store
+    .getState()
+    .projectState.project.nodes.find((x) => x.id === edge.fromNode);
 
-  if (connectorType === RELATION_TYPE.PartOf) indentCount++;
-
-  let id = edge.fromNode;
-
-  const getParent = () => {
-    return id;
-  };
-
-  while (edge) {
-    edge = edges.find((edge) => edge.toNode === getParent());
-    if (!edge) break;
-    if (edge.targetType === node.type) {
-      indentCount++;
-    }
-    id = edge.fromNode;
+  if (!nextNode) {
+    return count;
   }
-  return indentCount;
+
+  return SetIndentLevel(nextNode, count);
 };
 
 export default SetIndentLevel;

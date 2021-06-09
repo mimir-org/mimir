@@ -7,7 +7,7 @@ import { TreeviewOff, TreeviewOn } from "../../assets/icons";
 import { ViewOffIcon, ViewOnIcon } from "../../assets/icons/blockView";
 import { changeFlowView } from "../../redux/store/flow/actions";
 import { IsBlockView } from "../flow/helpers/block";
-import store from "../../redux/store";
+import red from "../../redux/store";
 import {
   HeaderBox,
   IconBox,
@@ -19,7 +19,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const { push } = useHistory();
 
-  const project = store.getState().projectState.project;
+  const project = red.store.getState().projectState.project;
   const selectedNode = project?.nodes?.find((x) => x.isSelected);
 
   const handleClick = (e) => {

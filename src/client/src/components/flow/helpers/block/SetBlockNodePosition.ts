@@ -5,8 +5,8 @@ const SetBlockNodePosition = (node: Node, splitView: boolean) => {
   const yMax = Size.BlockView_Height + 30;
   const yMin = Size.BlockView_Height - 500;
   const xMax = splitView
-    ? Size.SplitView_Width + 275
-    : Size.BlockView_Width + 275;
+    ? Size.SplitView_Width + 260
+    : Size.BlockView_Width + 260;
   const xMin = 380;
 
   if (node.positionBlockY < yMin) node.positionBlockY = yMin;

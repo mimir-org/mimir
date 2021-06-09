@@ -1,7 +1,7 @@
 import { GetNodes, IsFunctionNode } from "../../../flow/helpers";
 import { useDispatch, useSelector } from "react-redux";
 import { changeActiveNode } from "../../../../redux/store/project/actions";
-import { Node, NODE_TYPE } from "../../../../models/project";
+import { Node } from "../../../../models/project";
 import { RootState } from "../../../../redux/store";
 import { setSplitViewNode } from "../../../../redux/store/splitView/actions";
 
@@ -29,22 +29,12 @@ export const CheckboxBlock = ({ nodeId, inputLabel }: Props) => {
     ? node === selectedNode || node === splitViewNode
     : node === selectedNode;
 
-  // TODO: Rewrite this
   const handleChange = () => {
     if (splitView) {
-      if (node?.type === NODE_TYPE.ASPECT_FUNCTION) {
-        return;
-      }
-      if (node === selectedNode) {
-        return;
-      }
-      if (IsFunctionNode(node) && node?.level < selectedNode.level) {
-        return;
-      }
-      dispatch(setSplitViewNode(node));
-    } else {
-      dispatch(changeActiveNode(node?.id, true));
-    }
+      IsFunctionNode(node)
+        ? dispatch(changeActiveNode(node?.id, true))
+        : dispatch(setSplitViewNode(node));
+    } else dispatch(changeActiveNode(node?.id, true));
   };
 
   return (

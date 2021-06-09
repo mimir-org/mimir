@@ -1,4 +1,4 @@
-import { Connector, Project } from "../../../models/project";
+import { Connector } from "../../../models/project";
 
 export const LoadState = (key: string) => {
   try {
@@ -88,71 +88,6 @@ export const LoadEventData = (key: string): object => {
     }
 
     return JSON.parse(serializedState);
-  } catch (err) {
-    return undefined;
-  }
-};
-
-export const GetProjectId = (): string => {
-  try {
-    const project = localStorage.getItem(`ProjectId`);
-
-    if (project === null || project === undefined) {
-      return null;
-    }
-
-    return project;
-  } catch (err) {
-    return undefined;
-  }
-};
-
-export const GetProject = (): Project => {
-  try {
-    const project = localStorage.getItem(`Project`);
-
-    if (project === null || project === undefined) {
-      return null;
-    }
-
-    const currentProject = JSON.parse(project) as Project;
-    if (!currentProject.edges) currentProject.edges = [];
-    if (!currentProject.nodes) currentProject.nodes = [];
-    return currentProject;
-  } catch (err) {
-    return undefined;
-  }
-};
-
-export const SetProjectId = (projectId: string): void => {
-  try {
-    localStorage.setItem(`ProjectId`, projectId);
-  } catch {
-    return undefined;
-  }
-};
-
-export const SetProject = (project: Project): void => {
-  try {
-    localStorage.setItem(`Project`, JSON.stringify(project));
-  } catch {
-    return undefined;
-  }
-};
-
-export const DeleteProject = (): void => {
-  try {
-    localStorage.removeItem("Project");
-    localStorage.removeItem("ProjectId");
-  } catch {
-    return undefined;
-  }
-};
-
-export const HasProject = (): boolean => {
-  try {
-    const project = localStorage.getItem(`ProjectId`);
-    return project !== null;
   } catch (err) {
     return undefined;
   }

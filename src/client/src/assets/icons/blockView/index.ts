@@ -6,6 +6,7 @@ export { default as ConnectorWaterIcon } from "./connectorWaterIcon.svg";
 export { default as ConnectorSandIcon } from "./connectorSandIcon.svg";
 export { default as ConnectorTreeViewIcon } from "./connectorTreeViewIcon.svg";
 export { default as OptionsIcon } from "./optionsIcon.svg";
+export { default as BlockOptionsIcon } from "./blockOptionsIcon.svg";
 export { default as ArrowIcon } from "./arrowIcon.svg";
 export { default as ArrowSmallIcon } from "./arrowSmallIcon.svg";
 export { default as ViewOnIcon } from "./viewOnIcon.svg";

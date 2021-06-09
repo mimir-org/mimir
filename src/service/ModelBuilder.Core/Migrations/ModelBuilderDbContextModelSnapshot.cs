@@ -374,7 +374,6 @@ namespace Mb.Core.Migrations
                         .HasColumnName("PositionY");
 
                     b.Property<string>("Rds")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Rds");
 
@@ -532,6 +531,11 @@ namespace Mb.Core.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Terminal");
+
+                    b.Property<string>("TerminalCategory")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("TerminalCategory");
 
                     b.HasKey("Id");
 

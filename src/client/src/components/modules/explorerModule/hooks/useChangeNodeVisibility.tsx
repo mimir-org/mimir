@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { Edge, NodeType, RELATION_TYPE } from "../../../../models/project";
+import { Edge, NodeType } from "../../../../models/project";
 import { changeNodeVisibility } from "../../../../redux/store/project/actions";
 import { useSelector } from "react-redux";
 import { Node, Project } from "../../../../models/project";
@@ -13,13 +13,8 @@ export const UseChangeNodeVisibility = (node: Node, type: NodeType) => {
   ) as Project;
 
   let isParent = false;
-
-  let edge = project?.edges?.find((x) => x.fromNode === node.id) as Edge;
-  let connectorType = node?.connectors?.find(
-    (x) => x.id === edge?.fromConnector
-  )?.relationType;
-
-  if (edge && connectorType === RELATION_TYPE.PartOf) isParent = true;
+  let edge = project.edges?.find((x) => x.fromNode === node.id) as Edge;
+  if (edge) isParent = true;
 
   return useCallback(() => {
     dispatch(changeNodeVisibility(node, isParent, type));

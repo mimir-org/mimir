@@ -5,7 +5,7 @@ import { IsAspectNode } from "../../../flow/helpers";
 import { AspectElement } from ".";
 import { AspectBox } from "../../../../componentLibrary/box/aspect";
 import { Checkbox, CheckboxBlock } from "../checkboxComponent";
-import store from "../../../../redux/store";
+import red from "../../../../redux/store";
 import { IsBlockView } from "../../../flow/helpers/block";
 import {
   GetAspectIcon,
@@ -26,8 +26,7 @@ export const AspectComponent = ({ nodeId, label, aspectType }: Props) => {
   const aspectIcon = GetAspectIcon(aspectType);
   const color = GetAspectColor(aspectType, true);
   const childType = GetAspectType(aspectType);
-  const nodes = store.getState().projectState.project.nodes;
-  const edges = store.getState().projectState.project.edges;
+  const nodes = red.store.getState().projectState.project.nodes;
   const children = nodes.filter((node) => !IsAspectNode(node.type));
 
   const handleExpandClick = () => {
@@ -50,7 +49,7 @@ export const AspectComponent = ({ nodeId, label, aspectType }: Props) => {
       {expanded &&
         children.map((obj: object, i: number) => {
           if (children[i].type === childType) {
-            const indent = SetIndentLevel(children, edges, i);
+            const indent = children[i].level ?? SetIndentLevel(children[i], 0);
             return (
               <AspectElement
                 key={i}

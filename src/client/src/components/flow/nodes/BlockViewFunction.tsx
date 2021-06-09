@@ -64,7 +64,7 @@ const BlockViewFunction: FC<NodeProps> = ({ data }) => {
       <OptionsMenu visible={showButton} onClick={handleClick}>
         <img src={OptionsIcon} alt="options" />
       </OptionsMenu>
-      <OptionsBox visible={menuOpen}>
+      <OptionsBox visible={menuOpen} type="function">
         {SortConnectors(data.connectors).map((conn) => (
           <OptionsElement
             key={conn.id}

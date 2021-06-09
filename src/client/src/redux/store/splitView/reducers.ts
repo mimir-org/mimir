@@ -1,8 +1,7 @@
-import { LoadState } from "../localStorage/localStorage";
 import { CHANGE_SPLITVIEW, SET_SPLITVIEW_NODE } from "./types";
 
 const initialState = {
-  visible: LoadState("splitview"),
+  visible: false,
   node: null,
 };
 

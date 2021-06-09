@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { OptionsIcon } from "../../../assets/icons/blockView";
 import { addSelectedConnector } from "../../../redux/store/flow/actions";
 import { GetBlockHandleType, ValidateConnector } from "../helpers/block";
-import store, { RootState } from "../../../redux/store";
+import red, { RootState } from "../../../redux/store";
 import { Node } from "../../../models/project";
 import {
   GetConnectors,
@@ -35,7 +35,7 @@ const BlockViewLocation: FC<NodeProps> = ({ data }) => {
     state.projectState.project?.nodes?.find((x) => x.isBlockSelected)
   ) as Node;
 
-  const splitView = store.getState().splitView;
+  const splitView = red.store.getState().splitView;
   const isSplitView = splitView.visible as boolean;
   const splitViewNode = splitView.node as Node;
 
@@ -90,7 +90,6 @@ const BlockViewLocation: FC<NodeProps> = ({ data }) => {
     >
       <OptionsMenu visible={showButton} onClick={handleClick}>
         <img src={OptionsIcon} alt="options" />
-
         <OptionsBox visible={menuOpen}>
           {SortLocationConnectors(data.connectors).map((conn) => (
             <OptionsElement
@@ -107,21 +106,6 @@ const BlockViewLocation: FC<NodeProps> = ({ data }) => {
           ))}
         </OptionsBox>
       </OptionsMenu>
-      <OptionsBox visible={menuOpen}>
-        {SortLocationConnectors(data.connectors).map((conn) => (
-          <OptionsElement
-            key={conn.id}
-            onClick={() => handleConnectorClick(conn)}
-          >
-            {GetConnectorName(conn)}
-            <img
-              src={GetConnectorIcon(conn.terminal)}
-              alt="icon"
-              className="button"
-            />
-          </OptionsElement>
-        ))}
-      </OptionsBox>
 
       <div style={{ paddingTop: "4px" }}>{data.label ?? data.names}</div>
       {connectors.map((conn) => {
