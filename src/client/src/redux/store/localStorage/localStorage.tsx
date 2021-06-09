@@ -1,5 +1,3 @@
-import { Connector } from "../../../models/project";
-
 export const SaveEventData = (state: object, key: string) => {
   try {
     const serializedState = JSON.stringify(state);

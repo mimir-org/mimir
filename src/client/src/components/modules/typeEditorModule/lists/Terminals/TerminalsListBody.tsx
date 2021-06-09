@@ -19,7 +19,7 @@ export const TerminalsListBody = ({ listElements }: Props) => {
     <VerticalScrollbar height={200}>
       <TerminalListContainer>
         {listElements &&
-          listElements.map((element) => (
+          listElements?.map((element) => (
             <>
               <TerminalsListElement
                 key={element[1].id}

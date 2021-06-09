@@ -18,14 +18,7 @@ const CreateBlockNode = (
 
   // Force node to fit Block
   let position = SetBlockNodePosition(node, splitView);
-  if (
-    mainConnectNode &&
-    !IsLocationNode(node) &&
-    node !== mainConnectNode &&
-    connectNodes.includes(node)
-  ) {
-    position = SetConnectNodePosition(node);
-  }
+  if (connectNodes.includes(node)) position = SetConnectNodePosition(node);
 
   if (IsFunctionNode(node)) {
     if (mainConnectNode && mainConnectNode.id === node.id) {
