@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Mb.Core.Extensions;
 using Mb.Core.Services.Contracts;
 using Mb.Models.Data;
+using Mb.Models.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -44,6 +46,38 @@ namespace Mb.Core.Controllers.V1
             try
             {
                 var data = _commonService.GetAllContractors().ToList();
+                return Ok(data);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
+        /// Get converted from enum
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("convert")]
+        [ProducesResponseType(typeof(ICollection<Contractor>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult GetEnumConverter()
+        {
+            try
+            {
+                var x = EnumExtensions.ToDictionary<AttributeCondition>();
+                var data = new List<EnumBase>();
+
+                foreach (var pair in x)
+                {
+                    data.Add(
+                        new EnumBase
+                        {
+                            Name = pair.Value
+                        });
+                }
                 return Ok(data);
             }
             catch (Exception e)

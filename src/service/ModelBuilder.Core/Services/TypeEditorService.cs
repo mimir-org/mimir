@@ -10,6 +10,7 @@ using Mb.Core.Services.Contracts;
 using Mb.Models.Data;
 using Mb.Models.Enums;
 using Microsoft.AspNetCore.Http;
+using AttributeCondition = Mb.Models.Data.Enums.AttributeCondition;
 
 namespace Mb.Core.Services
 {
@@ -20,6 +21,8 @@ namespace Mb.Core.Services
         public const string LibraryFileName = "library";
         public const string ContractorFileName = "contractor";
         public const string TerminalFileName = "terminal";
+        public const string UnitFileName = "unit";
+        public const string ConditionFileName = "condition";
 
         private readonly IFileRepository _fileRepository;
         private readonly IRdsRepository _rdsRepository;
@@ -28,8 +31,9 @@ namespace Mb.Core.Services
         private readonly ICommonRepository _commonRepository;
         private readonly IContractorRepository _contractorRepository;
         private readonly ITerminalTypeRepository _terminalTypeRepository;
+        private readonly IEnumBaseRepository _enumBaseRepository;
 
-        public TypeEditorService(IFileRepository fileRepository, IRdsRepository rdsRepository, IAttributeTypeRepository attributeTypeRepository, ILibraryTypeRepository libraryTypeComponentRepository, ICommonRepository commonRepository, IContractorRepository contractorRepository, ITerminalTypeRepository terminalTypeRepository)
+        public TypeEditorService(IFileRepository fileRepository, IRdsRepository rdsRepository, IAttributeTypeRepository attributeTypeRepository, ILibraryTypeRepository libraryTypeComponentRepository, ICommonRepository commonRepository, IContractorRepository contractorRepository, ITerminalTypeRepository terminalTypeRepository, IEnumBaseRepository enumBaseRepository)
         {
             _fileRepository = fileRepository;
             _rdsRepository = rdsRepository;
@@ -38,6 +42,7 @@ namespace Mb.Core.Services
             _commonRepository = commonRepository;
             _contractorRepository = contractorRepository;
             _terminalTypeRepository = terminalTypeRepository;
+            _enumBaseRepository = enumBaseRepository;
         }
 
         #region Public methods
@@ -229,18 +234,24 @@ namespace Mb.Core.Services
             var attributeFiles = fileList.Where(x => x.ToLower().Contains(AttributeFileName)).ToList();
             var contractorFiles = fileList.Where(x => x.ToLower().Contains(ContractorFileName)).ToList();
             var terminalFiles = fileList.Where(x => x.ToLower().Contains(TerminalFileName)).ToList();
+            var unitFiles = fileList.Where(x => x.ToLower().Contains(UnitFileName)).ToList();
+            var conditionFiles = fileList.Where(x => x.ToLower().Contains(ConditionFileName)).ToList();
 
             var libraries = _fileRepository.ReadAllFiles<LibraryType>(libraryFiles).ToList();
             var rds = _fileRepository.ReadAllFiles<Rds>(rdsFiles).ToList();
             var attributes = _fileRepository.ReadAllFiles<AttributeType>(attributeFiles).ToList();
             var contractors = _fileRepository.ReadAllFiles<Contractor>(contractorFiles).ToList();
             var terminals = _fileRepository.ReadAllFiles<TerminalType>(terminalFiles).ToList();
+            var units = _fileRepository.ReadAllFiles<Mb.Models.Data.Enums.Unit>(unitFiles).ToList();
+            var conditions = _fileRepository.ReadAllFiles<AttributeCondition>(conditionFiles).ToList();
 
             await CreateRdsAsync(rds);
             await CreateAttributeTypesAsync(attributes);
             await CreateTerminalTypesAsync(terminals);
             await CreateLibraryTypeComponentsAsync(libraries);
             await CreateContractorsAsync(contractors);
+            await CreateUnitsAsync(units);
+            await CreateConditionsAsync(conditions);
         }
 
         /// <summary>
@@ -366,6 +377,36 @@ namespace Mb.Core.Services
             }
 
             await _contractorRepository.SaveAsync();
+        }
+
+        private async Task CreateConditionsAsync(List<AttributeCondition> conditions)
+        {
+            var exitingConditions = _enumBaseRepository.GetAll().OfType<AttributeCondition>().ToList();
+            var notExistingCondition = conditions.Where(x => exitingConditions.All(y => y.Name != x.Name && y.InternalType != x.InternalType)).ToList();
+            if (!notExistingCondition.Any())
+                return;
+
+            foreach (var condition in notExistingCondition)
+            {
+                await _enumBaseRepository.CreateAsync(condition);
+            }
+
+            await _enumBaseRepository.SaveAsync();
+        }
+
+        private async Task CreateUnitsAsync(List<Models.Data.Enums.Unit> units)
+        {
+            var exitingUnits = _enumBaseRepository.GetAll().OfType<Models.Data.Enums.Unit>().ToList();
+            var notExistingUnits = units.Where(x => exitingUnits.All(y => y.Name != x.Name && y.InternalType != x.InternalType)).ToList();
+            if (!notExistingUnits.Any())
+                return;
+
+            foreach (var unit in notExistingUnits)
+            {
+                await _enumBaseRepository.CreateAsync(unit);
+            }
+
+            await _enumBaseRepository.SaveAsync();
         }
 
         #endregion
