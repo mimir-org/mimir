@@ -3,53 +3,36 @@ import { Size } from "../../../../../componentLibrary";
 import { Node } from "../../../../../models/project";
 import red from "../../../../../redux/store";
 
-const UpdateConnectNodeSize = (nodeAmount: number) => {
+const UpdateConnectNodeSize = (nodeCount: number) => {
   const mainConnectNode = red.store.getState().connectView.mainNode as Node;
   const actualNode = FindNodeById(mainConnectNode?.id);
   const twinId = "BlockFunctionNode-" + mainConnectNode?.id;
   const twinNode = document.getElementById(twinId);
   const yIncrease = 80;
+  let newHeight = 0;
+  let prevHeight = 0;
 
-  if (nodeAmount === 1) {
-    if (twinNode !== null && twinNode !== undefined)
-      twinNode.style.minHeight = `${Size.Node_Length}px`;
-    if (actualNode !== null && actualNode !== undefined)
-      actualNode.style.minHeight = `${Size.Node_Length}px`;
+  if (nodeCount === 1) newHeight = Size.Node_Length;
+  if (nodeCount === 2) newHeight = Size.ConnectView_Length;
+  if (nodeCount === 4) newHeight = Size.ConnectView_Length + yIncrease;
+  if (nodeCount === 6) newHeight = Size.ConnectView_Length + yIncrease * 2;
+
+  if (twinNode) prevHeight = Number(twinNode.style.cssText.substring(12, 15));
+
+  if (nodeCount === 3) {
+    prevHeight === Size.ConnectView_Length
+      ? (newHeight = Size.ConnectView_Length + yIncrease)
+      : (newHeight = Size.ConnectView_Length);
   }
 
-  if (nodeAmount === 2) {
-    twinNode.style.minHeight = `${Size.ConnectView_Length}px`;
-    actualNode.style.minHeight = `${Size.ConnectView_Length}px`;
+  if (nodeCount === 5) {
+    prevHeight === Size.ConnectView_Length + yIncrease
+      ? (newHeight = Size.ConnectView_Length + yIncrease * 2)
+      : (newHeight = Size.ConnectView_Length + yIncrease);
   }
 
-  if (nodeAmount === 3) {
-    const existingLength = Number(twinNode.style.cssText.substring(12, 15));
-    if (existingLength === Size.ConnectView_Length) {
-      twinNode.style.minHeight = `${Size.ConnectView_Length + yIncrease}px`;
-      actualNode.style.minHeight = `${Size.ConnectView_Length + yIncrease}px`;
-    } else {
-      twinNode.style.minHeight = `${Size.ConnectView_Length}px`;
-      actualNode.style.minHeight = `${Size.ConnectView_Length}px`;
-    }
-  }
-
-  if (nodeAmount === 4) {
-    twinNode.style.minHeight = `${Size.ConnectView_Length + yIncrease}px`;
-    actualNode.style.minHeight = `${Size.ConnectView_Length + yIncrease}px`;
-  }
-
-  if (nodeAmount === 5) {
-    const existingLength = Number(twinNode.style.cssText.substring(12, 15));
-    if (existingLength === Size.ConnectView_Length + yIncrease) {
-      twinNode.style.minHeight = `${Size.ConnectView_Length + yIncrease * 2}px`;
-      actualNode.style.minHeight = `${
-        Size.ConnectView_Length + yIncrease * 2
-      }px`;
-    } else {
-      twinNode.style.minHeight = `${Size.ConnectView_Length + yIncrease}px`;
-      actualNode.style.minHeight = `${Size.ConnectView_Length + yIncrease}px`;
-    }
-  }
+  if (twinNode) twinNode.style.minHeight = `${newHeight}px`;
+  if (actualNode) actualNode.style.minHeight = `${newHeight}px`;
 };
 
 export default UpdateConnectNodeSize;

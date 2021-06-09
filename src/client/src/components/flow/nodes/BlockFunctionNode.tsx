@@ -76,7 +76,10 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
       data.length = Size.ConnectView_Length;
       dispatch(addMainConnectNode(data));
       dispatch(addConnectNode(node));
-    } else dispatch(removeConnectNode(node));
+    } else {
+      connectNodes.length === 1 && showConnectMenu(false);
+      dispatch(removeConnectNode(node));
+    }
   };
 
   const isChecked = (node: Node): boolean => {
