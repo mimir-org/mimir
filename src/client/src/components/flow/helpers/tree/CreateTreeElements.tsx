@@ -8,12 +8,14 @@ const CreateTreeElements = (project: Project): Elements => {
 
   if (!project) return initialElements;
 
+  // Create TreeNodes
   project.nodes?.forEach((node) => {
     let treeNode = null;
     if (node.type !== NODE_TYPE.OFF_PAGE) treeNode = CreateTreeNode(node);
     if (treeNode) initialElements.push(treeNode);
   });
 
+  // Create TreeEdges
   project.edges?.forEach((edge) => {
     if (edge.targetType === NODE_TYPE.OFF_PAGE) return;
     const fromNode = project.nodes.find((x) => x.id === edge.fromNode);

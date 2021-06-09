@@ -3,7 +3,7 @@ import { NodeProps } from "react-flow-renderer";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { Connector, Node } from "../../../models/project";
-import { GetChildren, SortConnectors } from "../helpers/common";
+import { GetConnectChildren, SortConnectors } from "../helpers/common";
 import { Size } from "../../../componentLibrary";
 import { TerminalsIcon, ConnectIcon } from "../../../assets/icons/blockView";
 import { SetConnectNodeDefaultSize } from "../helpers/block/connectionView";
@@ -29,8 +29,8 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const [connectButton, showConnectButton] = useState(false);
   const [terminalMenu, showTerminalMenu] = useState(false);
   const [connectMenu, showConnectMenu] = useState(false);
-  const children = GetChildren(data);
-  const hasChildren = children?.length > 0;
+  const connectChildren = GetConnectChildren(data);
+  const hasChildren = connectChildren?.length > 0;
   const [drawConnectors, setDrawConnectors] = useState(false);
   const [selectedConnector, setSelectedConnector] = useState(null);
   const sortedConns = SortConnectors(data.connectors) as Connector[];
@@ -125,7 +125,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
 
       <ConnectViewComponent
         isOpen={connectMenu}
-        list={children}
+        list={connectChildren}
         handleClick={onChange}
         isChecked={isChecked}
         width={data.width}
