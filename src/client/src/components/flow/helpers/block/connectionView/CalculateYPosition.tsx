@@ -7,7 +7,7 @@ const CalculateYPosition = (
   connectNodes: Node[]
 ): number => {
   const yMargin = 20;
-  const marginTop = Size.Node_Length;
+  const marginTop = Size.Node_Length - 10;
   yPos += marginTop;
 
   // TODO: fix scaling
@@ -18,8 +18,11 @@ const CalculateYPosition = (
     if (i >= 2 && i < 4 && node.id === elem.id) {
       return (yPos += Size.Node_Length + yMargin);
     }
-    if (i > 3 && node.id === elem.id) {
+    if (i > 3 && i <= 5 && node.id === elem.id) {
       return (yPos += Size.Node_Length + yMargin * 5);
+    }
+    if (i > 5 && node.id === elem.id) {
+      return (yPos += Size.Node_Length + yMargin * 9);
     }
   });
 
