@@ -1,12 +1,12 @@
 import { memo, FC } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
+import { LocationBlockBox } from "../../../componentLibrary/blockView";
 import { GetHandleType } from "../helpers/common";
-import { LocationBlockWrapper } from "../styled";
 
 const Location: FC<NodeProps> = ({ data }) => {
   return (
     <>
-      <LocationBlockWrapper width={data.width} height={data.height}>
+      <LocationBlockBox width={data.width} height={data.height}>
         {data.connectors?.map((connector) => {
           const [typeHandler, positionHandler] = GetHandleType(connector);
           return (
@@ -20,7 +20,7 @@ const Location: FC<NodeProps> = ({ data }) => {
         })}
 
         {data.label ?? data.name}
-      </LocationBlockWrapper>
+      </LocationBlockBox>
     </>
   );
 };

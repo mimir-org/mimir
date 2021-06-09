@@ -1,5 +1,5 @@
 import { Node } from "../../../../models/project";
-import useChangeNodeVisibility from "../hooks/useChangeNodeVisibility";
+import { ChangeNodeDisplay } from "../helpers/ChangeNodeDisplay";
 
 interface Props {
   node: Node;
@@ -8,7 +8,7 @@ interface Props {
 export const Checkbox = ({ node, inputLabel }: Props) => {
   let isHidden = node?.isHidden ?? false;
 
-  const handleChange = useChangeNodeVisibility(node);
+  const handleChange = ChangeNodeDisplay(node);
 
   return (
     <label className={"checkbox"}>
