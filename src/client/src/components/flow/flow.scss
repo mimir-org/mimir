@@ -58,6 +58,7 @@
   top: 0px;
   border: none;
   background-color: transparent;
+  z-index: 1 !important;
 }
 
 .blockView-handle-left {
@@ -67,6 +68,7 @@
   height: 18px !important;
   border: none;
   background-color: transparent;
+  z-index: 1 !important;
 }
 
 .react-flow__handle.connectable {

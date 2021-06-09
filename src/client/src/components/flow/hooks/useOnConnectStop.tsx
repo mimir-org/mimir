@@ -24,7 +24,7 @@ const useOnConnectStop = (
   if (edgeEvent) {
     const reactFlowBounds = reactFlowWrapper?.current?.getBoundingClientRect();
 
-    const position = reactFlowInstance.project({
+    const position = reactFlowInstance?.project({
       x: e.clientX - reactFlowBounds?.left,
       y: e.clientY - reactFlowBounds?.top,
     });
