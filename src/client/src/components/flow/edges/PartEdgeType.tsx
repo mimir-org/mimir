@@ -1,10 +1,5 @@
-import { GetCenter } from "../helpers/common";
 import { Node } from "../../../models/project";
-import {
-  getBezierPath,
-  getMarkerEnd,
-  getSmoothStepPath,
-} from "react-flow-renderer";
+import { getMarkerEnd, getSmoothStepPath } from "react-flow-renderer";
 import "./PartEdge.scss";
 
 export default function PartEdgeType({
@@ -21,16 +16,16 @@ export default function PartEdgeType({
   markerEndId,
 }) {
   const markerEnd = getMarkerEnd(arrowHeadType, markerEndId);
-  const [centerX, centerY] = GetCenter({ sourceX, sourceY, targetX, targetY });
+  //   const [centerX, centerY] = GetCenter({ sourceX, sourceY, targetX, targetY });
 
-  const edgePathBezier = getBezierPath({
-    sourceX,
-    sourceY,
-    sourcePosition,
-    targetX,
-    targetY,
-    targetPosition,
-  });
+  //   const edgePathBezier = getBezierPath({
+  //     sourceX,
+  //     sourceY,
+  //     sourcePosition,
+  //     targetX,
+  //     targetY,
+  //     targetPosition,
+  //   });
 
   const edgePathSmoothStep = getSmoothStepPath({
     sourceX,

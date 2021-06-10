@@ -1,7 +1,6 @@
 import { PreviewArea } from "../styled";
-interface Props {}
 
-export const PreviewBody = ({}: Props) => {
+export const PreviewBody = () => {
   return <PreviewArea></PreviewArea>;
 };
 

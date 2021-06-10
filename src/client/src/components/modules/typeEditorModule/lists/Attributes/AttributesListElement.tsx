@@ -2,9 +2,7 @@ import { Checkbox } from "../../inputs/Checkbox";
 import { ListElem } from "../../../../../componentLibrary";
 import { HelpIcon } from "../../../../../assets/icons/common";
 
-interface Props {}
-
-export const AttributesListElement = ({}: Props) => {
+export const AttributesListElement = () => {
   return (
     <ListElem>
       <Checkbox />

@@ -1,6 +1,6 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../../redux/store";
-import { TypeEditorState } from "../../../../../redux/store/typeEditor/types";
+// import { useSelector } from "react-redux";
+// import { RootState } from "../../../../../redux/store";
+// import { TypeEditorState } from "../../../../../redux/store/typeEditor/types";
 
 import { VerticalScrollbar } from "../../../../../componentLibrary";
 import { TerminalsListElement } from "./TerminalsListElement";
@@ -11,9 +11,9 @@ interface Props {
 }
 
 export const TerminalsListBody = ({ listElements }: Props) => {
-  const state = useSelector<RootState>(
-    (state) => state.typeEditor
-  ) as TypeEditorState;
+  //   const state = useSelector<RootState>(
+  //     (state) => state.typeEditor
+  //   ) as TypeEditorState;
 
   return (
     <VerticalScrollbar height={200}>
