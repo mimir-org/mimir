@@ -6,7 +6,7 @@ const CalculateYPosition = (
   yPos: number,
   connectNodes: Node[]
 ): number => {
-  const yMargin = 20;
+  const yMargin = 25;
   const marginTop = Size.Node_Length - 10;
   yPos += marginTop;
 
@@ -19,10 +19,10 @@ const CalculateYPosition = (
       return (yPos += Size.Node_Length + yMargin);
     }
     if (i > 3 && i <= 5 && node.id === elem.id) {
-      return (yPos += Size.Node_Length + yMargin * 5);
+      return (yPos += Size.Node_Length + yMargin * 4.5);
     }
     if (i > 5 && node.id === elem.id) {
-      return (yPos += Size.Node_Length + yMargin * 9);
+      return (yPos += Size.Node_Length + yMargin * 8);
     }
   });
 

@@ -17,14 +17,13 @@ const CalculateXPosition = (
   connectNodes.forEach((elem, i) => {
     if (i % 2 === 0 && node.id === elem.id) {
       return (xPos +=
-        Size.ConnectView_Width / 4 - Size.Node_Width / 2 + xMargin);
+        Size.ConnectView_Width / 4 - Size.Node_Width / 2 - xMargin);
     }
     if (i % 2 !== 0 && node.id === elem.id) {
       return (xPos +=
         Size.ConnectView_Width / 2 +
         Size.ConnectView_Width / 4 -
-        Size.Node_Width / 2 -
-        xMargin);
+        Size.Node_Width / 2);
     }
   });
 

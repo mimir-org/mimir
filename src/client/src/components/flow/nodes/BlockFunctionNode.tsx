@@ -2,11 +2,14 @@ import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { Connector, Node } from "../../../models/project";
+import { Connector, Edge, Node } from "../../../models/project";
 import { GetConnectChildren, SortConnectors } from "../helpers/common";
 import { Size } from "../../../componentLibrary";
 import { TerminalsIcon, ConnectIcon } from "../../../assets/icons/blockView";
-import { SetConnectNodeDefaultSize } from "../helpers/block/connectionView";
+import {
+  FindNodeById,
+  SetConnectNodeDefaultSize,
+} from "../helpers/block/connectionView";
 import {
   TerminalsComponent,
   ConnectViewComponent,
@@ -97,6 +100,25 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   useEffect(() => {
     SetConnectNodeDefaultSize(mainConnectNode, connectNodes);
   }, [mainConnectNode, data, connectNodes]);
+
+  useEffect(() => {
+    const twinNode = FindNodeById(mainConnectNode?.id);
+    const clicked = () => {
+      twinNode.style.zIndex = "1";
+    };
+    if (mainConnectNode) {
+      window.addEventListener("click", clicked);
+    } else window.removeEventListener("click", clicked);
+  });
+
+  useEffect(() => {
+    if (mainConnectNode) {
+      const allEdges = document.querySelector(
+        ".react-flow__edges"
+      ) as HTMLElement;
+      allEdges.style.zIndex = "3";
+    }
+  });
 
   return (
     <NodeBox

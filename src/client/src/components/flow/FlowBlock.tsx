@@ -168,8 +168,10 @@ const FlowBlock = () => {
   };
 
   const OnElementClick = (_event, element) => {
-    dispatch(changeActiveBlockNode(element.id));
-    dispatch(changeInspectorTab(0));
+    if (!mainConnectNode) {
+      dispatch(changeActiveBlockNode(element.id));
+      dispatch(changeInspectorTab(0));
+    }
   };
 
   const OnUpdatePosition = () => {
