@@ -104,7 +104,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   useEffect(() => {
     const twinNode = FindNodeById(mainConnectNode?.id);
     const clicked = () => {
-      twinNode.style.zIndex = "1";
+      if (twinNode) twinNode.style.zIndex = "1";
     };
     if (mainConnectNode) {
       window.addEventListener("click", clicked);
