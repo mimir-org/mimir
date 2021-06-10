@@ -3,6 +3,7 @@ import { NodeProps, Handle } from "react-flow-renderer";
 import { Connector } from "../../../models/project";
 import { GetHandleType, IsPartOfTerminal } from "../helpers/common";
 import { HandlerBox } from "../../../componentLibrary/blockView";
+import { TreeNodeNameBox } from "../../../componentLibrary/treeView";
 
 const TreeviewNode: FC<NodeProps> = ({ data }) => {
   const [isHover, setIsHover] = useState(false);
@@ -54,9 +55,7 @@ const TreeviewNode: FC<NodeProps> = ({ data }) => {
           </HandlerBox>
         );
       })}
-      <div style={{ display: "inline-block", padding: "12px" }}>
-        {data.label ?? data.name}
-      </div>
+      <TreeNodeNameBox>{data.label ?? data.name}</TreeNodeNameBox>
     </div>
   );
 };

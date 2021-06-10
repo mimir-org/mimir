@@ -118,7 +118,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
       ) as HTMLElement;
       allEdges.style.zIndex = "3";
     }
-  });
+  }, []);
 
   return (
     <NodeBox

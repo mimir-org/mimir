@@ -33,8 +33,8 @@ const useOnConnectStop = (
       parentNodeId: nodeId,
       fromNodeId: edgeEvent.nodeId,
       fromConnectorId: edgeEvent.sourceId,
-      x: position.x,
-      y: position.y,
+      x: position?.x,
+      y: position?.y,
     } as CreateOffPageData;
 
     const node = CreateOffPageNode(
