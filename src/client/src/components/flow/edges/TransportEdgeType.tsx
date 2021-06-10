@@ -1,17 +1,10 @@
-import { IsAspectNode, GetCenter } from "../helpers/common";
+import { GetCenter } from "../helpers/common";
+import { Node } from "../../../models/project";
 import {
   getBezierPath,
   getMarkerEnd,
   getSmoothStepPath,
-  EdgeText,
-  ArrowHeadType,
 } from "react-flow-renderer";
-import {
-  LINE_EDGE_TYPE,
-  LineEdgeType,
-  Node,
-  NODE_TYPE,
-} from "../../../models/project";
 
 export default function TransportEdgeType({
   id,

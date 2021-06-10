@@ -1,10 +1,6 @@
-import { getMarkerEnd, getSmoothStepPath, EdgeText } from "react-flow-renderer";
-import { Node, NODE_TYPE } from "../../../models/project";
-import {
-  GetTransportTypeColor,
-  IsAspectNode,
-  GetCenter,
-} from "../helpers/common";
+import { getMarkerEnd, getSmoothStepPath } from "react-flow-renderer";
+import { Node } from "../../../models/project";
+import { GetCenter } from "../helpers/common";
 
 export default function BlockEdgeType({
   id,
