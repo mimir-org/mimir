@@ -1,25 +1,18 @@
 import { GetRdsId } from ".";
+import { Node, Project } from "../../models/project";
 import {
-  Node,
-  Project,
-  RELATION_TYPE,
-  CONNECTOR_TYPE,
-  NODE_TYPE,
-} from "../../models/project";
+  IsAspectNode,
+  IsPartOfTerminal,
+  IsTransportTerminal,
+} from "../../components/flow/helpers/common";
 
 const findParentNode = (currentNode: Node, project: Project): Node => {
   if (!currentNode) return null;
 
-  if (
-    currentNode.type === NODE_TYPE.ASPECT_FUNCTION ||
-    currentNode.type === NODE_TYPE.ASPECT_LOCATION ||
-    currentNode.type === NODE_TYPE.ASPECT_PRODUCT
-  )
-    return null;
+  if (IsAspectNode(currentNode)) return null;
 
   const actualConnector = currentNode.connectors.find(
-    (x) =>
-      x.relationType === RELATION_TYPE.PartOf && x.type === CONNECTOR_TYPE.INPUT
+    (x) => IsPartOfTerminal(x) && IsTransportTerminal(x)
   );
   if (!actualConnector) return null;
 

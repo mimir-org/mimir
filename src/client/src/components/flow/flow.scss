@@ -1,10 +1,6 @@
 .react-flow__node-AspectLocation,
 .react-flow__node-AspectFunction,
 .react-flow__node-AspectProduct,
-.react-flow__node-location,
-.react-flow__node-function,
-.react-flow__node-product,
-.react-flow__node-Aspect,
 .react-flow__node-Function,
 .react-flow__node-Product,
 .react-flow__node-Location {
@@ -27,17 +23,14 @@
   border: none;
 }
 
-.react-flow__node-function,
 .react-flow__node-Function {
   background: #fef445;
 }
 
-.react-flow__node-product,
 .react-flow__node-Product {
   background: #00f0ff;
 }
 
-.react-flow__node-location,
 .react-flow__node-Location {
   background: magenta;
 }
@@ -56,7 +49,6 @@
   height: 18px;
   border-radius: 100%;
   border: 0px solid #fff !important;
-  //   background: transparent !important;
 }
 
 .blockView-handle-right {
@@ -66,7 +58,7 @@
   top: 0px;
   border: none;
   background-color: transparent;
-  z-index: 100 !important;
+  z-index: 1 !important;
 }
 
 .blockView-handle-left {
@@ -76,7 +68,7 @@
   height: 18px !important;
   border: none;
   background-color: transparent;
-  z-index: 100 !important;
+  z-index: 1 !important;
 }
 
 .react-flow__handle.connectable {
@@ -92,10 +84,6 @@
   text-align: center;
   border: 1px solid #222;
   background: #fef445;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -o-border-radius: 5px;
 }
 
 .react-flow__node-BlockLocationNode {
@@ -107,10 +95,6 @@
   text-align: center !important;
   border: 1px solid #222;
   background: magenta;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -o-border-radius: 5px;
 }
 
 .react-flow__node-FunctionBlock {
@@ -125,7 +109,6 @@
   max-width: 161px;
 }
 
-/* Hovedscenen */
 .dndflow {
   height: 100%;
   display: flex;
@@ -143,10 +126,6 @@
   justify-content: center;
   align-items: center;
   cursor: grab;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  -ms-border-radius: 2px;
-  -o-border-radius: 2px;
 }
 
 .dndflow .reactflow-wrapper {

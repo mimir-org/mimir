@@ -1,7 +1,7 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
+import { HandlerBox } from "../../../componentLibrary/blockView";
 import { GetFlowAspectIcon, GetHandleType } from "../helpers/common";
-import { HandlerWrapper } from "../styled";
 
 const Aspect: FC<NodeProps> = ({ data }) => {
   const [isHover, setIsHover] = useState(false);
@@ -31,7 +31,7 @@ const Aspect: FC<NodeProps> = ({ data }) => {
       {data.connectors?.map((connector) => {
         const [typeHandler, positionHandler] = GetHandleType(connector);
         return (
-          <HandlerWrapper
+          <HandlerBox
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}
             key={connector.id}
@@ -45,7 +45,7 @@ const Aspect: FC<NodeProps> = ({ data }) => {
               key={connector.id}
               className="function-treeview-handler"
             />
-          </HandlerWrapper>
+          </HandlerBox>
         );
       })}
       <div style={{ paddingTop: "12px" }}>{GetFlowAspectIcon(data.icon)}</div>

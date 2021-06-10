@@ -1,6 +1,10 @@
-import { CreateId, IsPartOfTerminal } from "../../helpers/common";
 import { ProjectState } from "../../../../redux/store/project/types";
 import { GetFlowRectData, CreateOffPageData, OffPageNodeCreator } from ".";
+import {
+  CreateId,
+  IsInputConnector,
+  IsPartOfTerminal,
+} from "../../helpers/common";
 import {
   Node,
   Edge,
@@ -26,7 +30,7 @@ const CreateOffPageNode = (
     (x) => x.id === data.parentNodeId
   );
   const parentPartOfConnector = parentNode?.connectors.find(
-    (x) => IsPartOfTerminal(x) && x.type === CONNECTOR_TYPE.OUTPUT
+    (x) => IsPartOfTerminal(x) && !IsInputConnector(x)
   );
   const fromNode = projectState.project?.nodes.find(
     (x) => x.id === data.fromNodeId

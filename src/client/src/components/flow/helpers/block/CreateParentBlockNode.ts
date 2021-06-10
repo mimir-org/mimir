@@ -1,4 +1,5 @@
 import { FlowElement } from "react-flow-renderer";
+import { Position } from "../../../../componentLibrary";
 import { Node } from "../../../../models/project";
 
 const CreateParentBlockNode = (node: Node): FlowElement => {
@@ -6,7 +7,7 @@ const CreateParentBlockNode = (node: Node): FlowElement => {
   if (!node) return elementNode;
 
   const type = "FunctionBlock";
-  const position = { x: 520, y: 0 };
+  const position = { x: Position.FunctionBlock_xPos, y: 0 };
 
   elementNode = {
     id: node.id,

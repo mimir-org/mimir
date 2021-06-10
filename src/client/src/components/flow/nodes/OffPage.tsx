@@ -1,12 +1,13 @@
 import { memo, FC } from "react";
 import { Color } from "../../../componentLibrary";
 import { NodeProps, Handle } from "react-flow-renderer";
-import { OffPageWrapper } from "../styled";
-import { Terminal, CONNECTOR_TYPE } from "../../../models/project";
+import { Terminal } from "../../../models/project";
+import { OffPageBox } from "../../../componentLibrary/blockView";
 import {
   GetTransportTypeColor,
   GetHandleType,
   IsTransportTerminal,
+  IsInputConnector,
 } from "../helpers/common";
 
 const OffPage: FC<NodeProps> = ({ data }) => {
@@ -16,7 +17,7 @@ const OffPage: FC<NodeProps> = ({ data }) => {
 
   const background = (): string => {
     const terminal = data.connectors.find(
-      (x) => IsTransportTerminal(x) && x.type === CONNECTOR_TYPE.INPUT
+      (x) => IsTransportTerminal(x) && IsInputConnector(x)
     )?.terminal as Terminal;
     return GetTransportTypeColor(terminal);
   };
@@ -32,7 +33,7 @@ const OffPage: FC<NodeProps> = ({ data }) => {
   };
 
   return (
-    <OffPageWrapper background={background} fontColor={fontColor}>
+    <OffPageBox background={background} fontColor={fontColor}>
       {transportConnectors?.map((connector) => {
         const [typeHandler, positionHandler] = GetHandleType(connector);
 
@@ -46,7 +47,7 @@ const OffPage: FC<NodeProps> = ({ data }) => {
         );
       })}
       <div className="text">{data.label ?? data.name}</div>
-    </OffPageWrapper>
+    </OffPageBox>
   );
 };
 

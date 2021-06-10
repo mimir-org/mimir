@@ -25,7 +25,7 @@ const ConnectViewComponent = ({
       {list.map((node: Node) => {
         return (
           <ConnectViewElement key={node.id}>
-            <p className="text">{node.name ?? node.label}</p>
+            <p className="text">{node.label ?? node.name}</p>
             <label className={"checkbox-block"}>
               <input
                 type="checkbox"
