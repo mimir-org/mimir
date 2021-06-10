@@ -9,7 +9,6 @@ export const CreateBlockEdge = (
 ): FlowElement => {
   const project = red.store.getState().projectState.project;
   const nodes = project?.nodes;
-
   const fromNode = nodes.find((x) => x.id === edge.fromNode);
   const toNode = nodes.find((x) => x.id === edge.toNode);
   let element = null;

@@ -29,14 +29,16 @@ const ValidateBlockEdge = (
   }
 
   if (splitView) {
-    if (!splitViewNode && IsFunctionNode(fromNode) && IsFunctionNode(toNode))
-      return true;
     if (
       IsFunctionNode(fromNode) &&
-      IsLocationNode(toNode) &&
-      IsLocationNode(splitViewNode)
-    )
+      IsFunctionNode(toNode) &&
+      !splitViewNode &&
+      fromNode.level - selectedNode.level === 1 &&
+      toNode.level - selectedNode.level === 1
+    ) {
       return true;
+    }
+    return false;
   }
   return false;
 };
