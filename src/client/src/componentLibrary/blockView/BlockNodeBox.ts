@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Size } from "..";
 
-const FunctionBox = styled.div`
+const BlockNodeBox = styled.div`
   position: absolute;
   opacity: 1 !important;
   top: 40px;
@@ -33,4 +33,4 @@ const FunctionBox = styled.div`
   }
 `;
 
-export default FunctionBox;
+export default BlockNodeBox;

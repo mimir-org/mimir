@@ -31,9 +31,8 @@ const useOnDrop = (
 
   let position;
 
-  if (!reactFlowInstance) {
-    position = { x: event.clientX, y: event.clientY };
-  } else
+  if (!reactFlowInstance) position = { x: event.clientX, y: event.clientY };
+  else
     position = reactFlowInstance?.project({
       x: event.clientX - reactFlowBounds.left,
       y: event.clientY - reactFlowBounds.top,
