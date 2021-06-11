@@ -61,7 +61,7 @@ const FlowBlock = () => {
   }, [dispatch]);
 
   const project = useSelector<RootState>(
-    (state) => state.projectState.project
+    (state) => state.projectState?.project
   ) as Project;
 
   const node = project?.nodes?.find((node) => node.isSelected);

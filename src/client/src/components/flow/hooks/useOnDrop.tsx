@@ -29,7 +29,7 @@ const useOnDrop = (
     event.dataTransfer.getData("application/reactflow")
   ) as LibNode;
 
-  const position = reactFlowInstance.project({
+  const position = reactFlowInstance?.project({
     x: event.clientX - reactFlowBounds.left,
     y: event.clientY - reactFlowBounds.top,
   });
@@ -41,10 +41,10 @@ const useOnDrop = (
     name: data.name,
     label: data.label ?? data.name,
     type: data.type as NodeType,
-    positionX: position.x,
-    positionY: position.y,
-    positionBlockX: position.x,
-    positionBlockY: position.y,
+    positionX: position?.x,
+    positionY: position?.y,
+    positionBlockX: position?.x,
+    positionBlockY: position?.y,
     connectors: data.connectors,
     attributes: data.attributes,
     icon: data.icon,

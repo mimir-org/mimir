@@ -1,6 +1,6 @@
 const SetDarkMode = () => {
-  const mainColor = "#696969";
-  const moduleColor = "#A0A0A0";
+  const mainColor = "#888888";
+  const moduleColor = "#A8A8A8";
   //   const menuColor = "#D8D8D8";
 
   const root = document.getElementById("root");

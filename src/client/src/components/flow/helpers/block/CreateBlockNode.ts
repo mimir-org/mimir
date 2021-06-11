@@ -30,6 +30,11 @@ const CreateBlockNode = (
     }
   }
 
+  if (IsLocationNode(node)) {
+    if (node.width === 0) node.width = Size.Node_Width;
+    if (node.length === 0) node.length = Size.Node_Length;
+  }
+
   blockNode = {
     id: node.id,
     type: type,
