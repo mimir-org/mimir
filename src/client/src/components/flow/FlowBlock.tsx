@@ -154,7 +154,7 @@ const FlowBlock = () => {
   };
 
   const OnDrop = (_event) => {
-    const selectedNode = project?.nodes?.find((x) => x.isSelected);
+    const selectedNode = project.nodes.find((x) => x.isSelected);
 
     return useOnDrop(
       _event,
