@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../../../../redux/store";
 import { TypeEditorState } from "../../../../../redux/store/typeEditor/types";
 import { VerticalScrollbar } from "../../../../../componentLibrary";
@@ -8,8 +8,6 @@ interface Props {
 }
 
 export const TerminalsListBody = ({ listElements }: Props) => {
-  const dispatch = useDispatch();
-
   const state = useSelector<RootState>(
     (state) => state.typeEditor
   ) as TypeEditorState;
@@ -19,11 +17,11 @@ export const TerminalsListBody = ({ listElements }: Props) => {
     if (state.aspect !== "NotSet") {
       tempList = listElements
         .filter((element) =>
-          element[1].attributes.some((a) => a.aspect == state.aspect)
+          element[1].attributes.some((a) => a.aspect === state.aspect)
         )
         .map((element) => {
           element[1].attributes = element[1].attributes.filter(
-            (a) => a.aspect == state.aspect
+            (a) => a.aspect === state.aspect
           );
           return element;
         });

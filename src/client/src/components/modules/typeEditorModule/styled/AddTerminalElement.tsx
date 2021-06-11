@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Color, FontSize, FontType } from "../../../../componentLibrary";
 
 const AddTerminalElement = styled.div`
   display: flex;

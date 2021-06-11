@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { SearchTerminalMediaType } from "./SearchTerminalMediaType";
 import { DirectionDropdown } from "./DirectionDropdown";
 import { AddTerminalElement } from "../../../styled";
@@ -10,10 +9,10 @@ interface Props {
 }
 
 export const AddTerminal = ({ terminals }: Props) => {
-  const [terminalQuantity, setTerminalQuantity] = useState(0);
+  //   const [terminalQuantity, setTerminalQuantity] = useState(0);
 
   const numberInput = (e) => {
-    setTerminalQuantity(e.target.value);
+    // setTerminalQuantity(e.target.value);
   };
   return (
     <AddTerminalElement>

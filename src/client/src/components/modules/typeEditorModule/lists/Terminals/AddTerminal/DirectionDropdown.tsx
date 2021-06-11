@@ -13,9 +13,9 @@ export const DirectionDropdown = () => {
     setIsListOpen(!isListOpen);
   };
 
-  const handleChange = () => {
-    // TODO: Se dropdownmenu
-  };
+  //   const handleChange = () => {
+  //     // TODO: Se dropdownmenu
+  //   };
 
   return (
     <div className="dropdown_container">
