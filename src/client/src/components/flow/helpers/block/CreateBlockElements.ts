@@ -1,12 +1,6 @@
 import { Elements } from "react-flow-renderer";
 import { IsNodeSameType, IsTransportTerminal } from "../common";
-import {
-  Project,
-  EDGE_TYPE,
-  EdgeType,
-  Node,
-  RELATION_TYPE,
-} from "../../../../models/project";
+import { Project, EDGE_TYPE, EdgeType, Node } from "../../../../models/project";
 import {
   CreateBlockEdge,
   CreateSplitViewNode,
@@ -63,14 +57,14 @@ const CreateBlockElements = (
       if (edge.fromNode === splitViewNode.id) {
         const toNode = project.nodes?.find((x) => x.id === edge.toNode);
 
-        let connectorType = toNode?.connectors?.find(
+        let connector = toNode?.connectors?.find(
           (x) => x.id === edge?.toConnector
-        )?.relationType;
+        );
 
         if (
           (splitViewNode?.type === toNode?.type ||
             IsNodeSameType(splitViewNode, toNode)) &&
-          connectorType !== RELATION_TYPE.Transport
+          !IsTransportTerminal(connector)
         )
           initialElements.push(CreateSplitViewNode(toNode));
       }

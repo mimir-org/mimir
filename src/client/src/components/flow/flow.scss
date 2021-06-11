@@ -85,7 +85,7 @@
 .react-flow__node-BlockFunctionNode {
   border-radius: 5px;
   width: 100px;
-  height: 60px;
+  height: 47px;
   font-size: 11px;
   color: #222;
   text-align: center;
@@ -97,10 +97,11 @@
   -o-border-radius: 5px;
 }
 
-.react-flow__node-BlockLocationNode {
-  border-radius: 5px;
+.react-flow__node-BlockViewLocation {
+  padding-top: 10px;
+  border-radius: 3px;
   width: 100px;
-  height: 60px;
+  height: 47px;
   font-size: 11px;
   color: #222;
   text-align: center !important;
