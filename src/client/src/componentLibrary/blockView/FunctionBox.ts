@@ -3,13 +3,17 @@ import { Size } from "..";
 
 const FunctionBox = styled.div`
   position: absolute;
+  opacity: 1 !important;
   top: 40px;
   height: ${Size.BlockView_Height}px;
+
   width: ${(props) =>
     props.splitView ? `${Size.SplitView_Width}` : `${Size.BlockView_Width}`}px;
+
   left: ${(props) =>
-    props.location ? "540" : "-150"}px; // TODO: remove magic numbers
-  opacity: 1 !important;
+    props.location
+      ? `${Size.SplitView_Width - Size.BlockView_BackgroundMargin * 2}`
+      : -`${Size.SplitView_MarginLeft}`}px;
 
   .header {
     padding: 0px 0px 0px 22px;

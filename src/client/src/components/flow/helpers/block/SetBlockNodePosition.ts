@@ -3,11 +3,11 @@ import { Node } from "../../../../models/project";
 
 const SetBlockNodePosition = (node: Node, splitView: boolean) => {
   const yMax = Size.BlockView_Height;
-  const yMin = Size.BlockView_Height - 480;
+  const yMin = Size.BlockView_MarginTop;
   const xMax = splitView
-    ? Size.SplitView_Width + 220
-    : Size.BlockView_Width + 220;
-  const xMin = 420; // TODO: remove magic numbers
+    ? Size.SplitView_Width + Size.BlockView_MarginRight
+    : Size.BlockView_Width + Size.BlockView_MarginRight;
+  const xMin = Size.BlockView_MarginLeft;
 
   if (node.positionBlockY < yMin) node.positionBlockY = yMin;
   if (node.positionBlockY > yMax) node.positionBlockY = yMax;

@@ -7,7 +7,7 @@ import "./directiondropdown.scss";
 
 export const DirectionDropdown = () => {
   const [isListOpen, setIsListOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState("Direction");
+  const [selectedValue] = useState("Direction");
 
   const toggleList = () => {
     setIsListOpen(!isListOpen);
