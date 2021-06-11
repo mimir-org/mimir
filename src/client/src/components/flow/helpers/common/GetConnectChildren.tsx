@@ -2,7 +2,7 @@ import { IsTransportTerminal } from ".";
 import { Edge, Node } from "../../../../models/project";
 import red from "../../../../redux/store";
 
-const GetChildren = (parentNode: Node): Node[] => {
+const GetConnectChildren = (parentNode: Node): Node[] => {
   const edges = red.store.getState().projectState.project.edges as Edge[];
   const nodes = red.store.getState().projectState.project.nodes as Node[];
   let elements: Node[] = [];
@@ -22,4 +22,4 @@ const GetChildren = (parentNode: Node): Node[] => {
   return elements;
 };
 
-export default GetChildren;
+export default GetConnectChildren;

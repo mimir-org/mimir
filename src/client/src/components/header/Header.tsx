@@ -7,6 +7,7 @@ import { ViewOffIcon, ViewOnIcon } from "../../assets/icons/blockView";
 import { changeFlowView } from "../../redux/store/flow/actions";
 import { IsBlockView } from "../flow/helpers/block";
 import red from "../../redux/store";
+import { SetDarkMode } from "../flow/helpers/common";
 import {
   setSplitView,
   setSplitNode,
@@ -36,7 +37,9 @@ const Header = () => {
 
   return (
     <HeaderBox>
-      <ProjectTitleBox>{TextResources.MainHeader_App_Name}</ProjectTitleBox>
+      <ProjectTitleBox onClick={() => SetDarkMode()}>
+        {TextResources.MainHeader_App_Name}
+      </ProjectTitleBox>
       <IconBox>
         <ViewLinkBox selected={!IsBlockView()}>
           <img

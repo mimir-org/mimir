@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { ConnectorTreeViewIcon } from "../../../assets/icons/blockView";
+import { ConnectorTreeViewIcon } from "../../assets/icons/blockView";
 
-const HandlerWrapper = styled.div`
+const HandlerBox = styled.div`
   .function-treeview-handler {
     visibility: ${(props: { visible: boolean }) => !props.visible && "hidden"};
     width: 14px;
@@ -15,4 +15,4 @@ const HandlerWrapper = styled.div`
   }
 `;
 
-export default HandlerWrapper;
+export default HandlerBox;

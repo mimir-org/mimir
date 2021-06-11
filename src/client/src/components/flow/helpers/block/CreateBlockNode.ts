@@ -4,6 +4,7 @@ import { SetBlockNodePosition } from ".";
 import { IsFunctionNode, IsLocationNode } from "../common";
 import { Size } from "../../../../componentLibrary";
 import { SetConnectNodePosition } from "./connectionView";
+import red from "../../../../redux/store";
 
 const CreateBlockNode = (
   node: Node,
@@ -12,14 +13,12 @@ const CreateBlockNode = (
 ): FlowElement => {
   let blockNode = null;
   if (!node) return blockNode;
-
+  const connectNodes = red.store.getState().connectView.connectNodes as Node[];
   const type = IsLocationNode(node) ? "BlockLocationNode" : "BlockFunctionNode";
 
   // Force node to fit Block
   let position = SetBlockNodePosition(node, splitView);
-  if (mainConnectNode && !IsLocationNode(node) && node !== mainConnectNode) {
-    position = SetConnectNodePosition(node);
-  }
+  if (connectNodes.includes(node)) position = SetConnectNodePosition(node);
 
   if (IsFunctionNode(node)) {
     if (mainConnectNode && mainConnectNode.id === node.id) {

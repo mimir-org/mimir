@@ -54,8 +54,9 @@ const InspectorModule = () => {
       start={start}
       stop={stop}
       run={animate}
+      id={key}
     >
-      <InspectorBody>
+      <InspectorBody id="InspectorBody">
         {hasProject && <InspectorTabs />}
         <ButtonBox>
           {isInspectorOpen ? (

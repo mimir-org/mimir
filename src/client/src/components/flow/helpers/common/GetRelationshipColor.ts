@@ -1,47 +1,42 @@
+import { TextResources } from "../../../../assets/textResources";
+import { Node, Connector } from "../../../../models/project";
 import {
-  RelationType,
-  RELATION_TYPE,
-  NodeType,
-  NODE_TYPE,
-} from "../../../../models/project";
+  IsFulfilledByTerminal,
+  IsFunctionNode,
+  IsLocationNode,
+  IsLocationTerminal,
+  IsPartOfTerminal,
+  IsProductNode,
+} from ".";
 
 const GetRelationshipColor = (
-  relationType: RelationType,
-  nodeType: NodeType
+  conn: Connector,
+  node: Node
 ): [name: string, color: string] => {
   let color = "";
   let name = "";
 
-  if (relationType === RELATION_TYPE.PartOf) {
-    name = "Part of Relationship";
+  if (IsPartOfTerminal(conn)) {
+    name = TextResources.Relations_PartOf;
   }
 
-  if (relationType === RELATION_TYPE.HasLocation) {
-    name = "Has Location";
+  if (IsLocationTerminal(conn)) {
+    name = TextResources.Relations_HasLocation;
   }
 
-  if (relationType === RELATION_TYPE.FulfilledBy) {
-    name = "Fulfilled By";
+  if (IsFulfilledByTerminal(conn)) {
+    name = TextResources.Relations_FulfilledBy;
   }
 
-  if (
-    nodeType === (NODE_TYPE.FUNCTION as NodeType) ||
-    nodeType === (NODE_TYPE.ASPECT_FUNCTION as NodeType)
-  ) {
+  if (IsFunctionNode(node)) {
     color = "#FEF445";
   }
 
-  if (
-    nodeType === (NODE_TYPE.LOCATION as NodeType) ||
-    nodeType === (NODE_TYPE.ASPECT_LOCATION as NodeType)
-  ) {
+  if (IsLocationNode(node)) {
     color = "#FA00FF";
   }
 
-  if (
-    nodeType === (NODE_TYPE.PRODUCT as NodeType) ||
-    nodeType === (NODE_TYPE.ASPECT_PRODUCT as NodeType)
-  ) {
+  if (IsProductNode(node)) {
     color = "#00F0FF";
   }
 

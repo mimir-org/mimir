@@ -6,6 +6,10 @@ export { default as ConnectMenu } from "./ConnectMenu";
 export { default as ConnectViewBox } from "./ConnectViewBox";
 export { default as ConnectViewElement } from "./ConnectViewElement";
 
+export { default as LocationBlockBox } from "./LocationBlockBox";
+export { default as OffPageBox } from "./OffPageBox";
+export { default as HandlerBox } from "./HandlerBox";
+
 export { default as OptionsButton } from "./OptionsButton";
 export { default as NodeBox } from "./NodeBox";
 export { default as HandleBox } from "./HandleBox";

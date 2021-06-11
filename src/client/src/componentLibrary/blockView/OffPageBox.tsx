@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { FontSize } from "../../../componentLibrary";
+import { FontSize } from "../";
 
-const OffPageWrapper = styled.div`
+const OffPageBox = styled.div`
   display: flex;
   width: 25px;
   height: 14px;
@@ -19,4 +19,4 @@ const OffPageWrapper = styled.div`
   }
 `;
 
-export default OffPageWrapper;
+export default OffPageBox;

@@ -1,12 +1,11 @@
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { Edge, NodeType } from "../../../../models/project";
 import { changeNodeVisibility } from "../../../../redux/store/project/actions";
 import { useSelector } from "react-redux";
-import { Node, Project } from "../../../../models/project";
+import { Node, Edge, Project } from "../../../../models/project";
 import { RootState } from "../../../../redux/store";
 
-export const UseChangeNodeVisibility = (node: Node, type: NodeType) => {
+export const ChangeNodeDisplay = (node: Node) => {
   const dispatch = useDispatch();
   const project = useSelector<RootState>(
     (state) => state.projectState.project
@@ -18,7 +17,7 @@ export const UseChangeNodeVisibility = (node: Node, type: NodeType) => {
 
   return useCallback(() => {
     dispatch(changeNodeVisibility(node, isParent));
-  }, [dispatch, node, isParent, type]);
+  }, [dispatch, node, isParent]);
 };
 
-export default UseChangeNodeVisibility;
+export default ChangeNodeDisplay;

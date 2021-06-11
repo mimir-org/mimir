@@ -35,7 +35,7 @@ export const AspectComponent = ({ node, label }: Props) => {
   return (
     <>
       <AspectBox color={color}>
-        <img src={aspectIcon} alt="aspect-icon"></img>
+        <img src={aspectIcon} alt="aspect-icon" className="icon"></img>
         <div className="checkbox_container">
           {IsBlockView() ? (
             <CheckboxBlock node={node} inputLabel={label} />

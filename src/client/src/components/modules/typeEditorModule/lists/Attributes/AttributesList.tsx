@@ -5,7 +5,6 @@ import { TypeEditorState } from "../../../../../redux/store/typeEditor/types";
 import { ListHeader } from "../ListHeader";
 import { AttributesListBody } from "./AttributesListBody";
 import { ListWrapper } from "../../../../../componentLibrary";
-
 import { TextResources } from "../../../../../assets/textResources";
 
 export const AttributesList = () => {

@@ -1,14 +1,5 @@
-import { IsAspectNode, GetCenter } from "../helpers/common";
+import { getBezierPath, getMarkerEnd } from "react-flow-renderer";
 import {
-  getBezierPath,
-  getMarkerEnd,
-  getSmoothStepPath,
-  EdgeText,
-  ArrowHeadType,
-} from "react-flow-renderer";
-import {
-  LINE_EDGE_TYPE,
-  LineEdgeType,
   Node,
   NODE_TYPE,
   Connector,
@@ -30,7 +21,7 @@ export default function RelationEdgeType({
   markerEndId,
 }) {
   const markerEnd = getMarkerEnd(arrowHeadType, markerEndId);
-  const [centerX, centerY] = GetCenter({ sourceX, sourceY, targetX, targetY });
+  //   const [centerX, centerY] = GetCenter({ sourceX, sourceY, targetX, targetY });
 
   const edgePathBezier = getBezierPath({
     sourceX,
@@ -97,7 +88,7 @@ export default function RelationEdgeType({
     //   : edgePathSmoothStep;
   };
 
-  const pathClick = () => {};
+  //   const pathClick = () => {};
 
   const edgeText = (source: Node, target: Node) => {
     return null;

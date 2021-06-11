@@ -1,8 +1,6 @@
 import "./checkbox.scss";
 
-interface Props {}
-
-export const Checkbox = ({}: Props) => {
+export const Checkbox = () => {
   const handleCheckboxChange = () => {};
   return (
     <>

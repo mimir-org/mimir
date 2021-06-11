@@ -1,11 +1,17 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
-import { GetHandleType } from "../helpers/common";
-import { HandlerWrapper } from "../styled";
+import { Connector } from "../../../models/project";
+import { GetHandleType, IsPartOfTerminal } from "../helpers/common";
+import { HandlerBox } from "../../../componentLibrary/blockView";
+import { TreeNodeNameBox } from "../../../componentLibrary/treeView";
 
 const TreeviewNode: FC<NodeProps> = ({ data }) => {
   const [isHover, setIsHover] = useState(false);
   const [timer, setTimer] = useState(false);
+
+  const connectorIsVisible = (conn: Connector) => {
+    return IsPartOfTerminal(conn) && isHover;
+  };
 
   useEffect(() => {
     if (timer) {
@@ -32,12 +38,12 @@ const TreeviewNode: FC<NodeProps> = ({ data }) => {
         const [typeHandler, positionHandler] = GetHandleType(connector);
 
         return (
-          <HandlerWrapper
+          <HandlerBox
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}
             key={connector.id}
-            visible={isHover}
-            position={positionHandler}
+            visible={connectorIsVisible(connector)}
+            pos={positionHandler}
           >
             <Handle
               type={typeHandler}
@@ -46,12 +52,10 @@ const TreeviewNode: FC<NodeProps> = ({ data }) => {
               key={connector.id}
               className="function-treeview-handler"
             />
-          </HandlerWrapper>
+          </HandlerBox>
         );
       })}
-      <div style={{ display: "inline-block", padding: "12px" }}>
-        {data.label ?? data.name}
-      </div>
+      <TreeNodeNameBox>{data.label ?? data.name}</TreeNodeNameBox>
     </div>
   );
 };

@@ -1,17 +1,17 @@
-import { GetTransportTypeColor, Legend } from ".";
 import GetRelationshipColor from "./GetRelationshipColor";
+import { Node, Project } from "../../../../models/project";
 import {
-  Node,
-  RELATION_TYPE,
-  RelationType,
-  Project,
-} from "../../../../models/project";
+  GetTransportTypeColor,
+  IsFulfilledByTerminal,
+  IsLocationTerminal,
+  IsPartOfTerminal,
+  IsTransportTerminal,
+  Legend,
+} from ".";
 
 const GetBlockViewLegend = (node: Node): Legend[] => {
   const legends = node?.connectors
-    ?.filter(
-      (x) => x.relationType === (RELATION_TYPE.Transport as RelationType)
-    )
+    ?.filter((x) => IsTransportTerminal(x))
     .map((y) => {
       return {
         key: y.id,
@@ -27,12 +27,10 @@ const GetTreeViewLegend = (node: Node): Legend[] => {
   const legends = node?.connectors
     ?.filter(
       (x) =>
-        x.relationType === (RELATION_TYPE.PartOf as RelationType) ||
-        x.relationType === (RELATION_TYPE.HasLocation as RelationType) ||
-        x.relationType === (RELATION_TYPE.FulfilledBy as RelationType)
+        IsPartOfTerminal(x) || IsLocationTerminal(x) || IsFulfilledByTerminal(x)
     )
     .map((y) => {
-      const [name, color] = GetRelationshipColor(y.relationType, node.type);
+      const [name, color] = GetRelationshipColor(y, node);
       return {
         key: y.id,
         name: name,
@@ -52,7 +50,7 @@ const GetBlockViewNodes = (project: Project, nodeId: string): Node[] => {
       const currentConnector = fromNode.connectors.find(
         (x) => x.id === edge.fromConnector
       );
-      if (currentConnector?.relationType === RELATION_TYPE.PartOf) {
+      if (IsPartOfTerminal(currentConnector)) {
         const toNode = project.nodes?.find((x) => x.id === edge.toNode);
         if (!toNode?.isHidden) nodes.push(toNode);
       }
