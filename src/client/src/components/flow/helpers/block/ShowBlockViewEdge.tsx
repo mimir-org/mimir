@@ -8,7 +8,7 @@ import {
   Node,
 } from "../../../../models/project";
 
-const ShowBlockViewEdge = (edge: Edge): boolean => {
+const ShowBlockViewEdge = (edge: Edge) => {
   if (edge.targetType === NODE_TYPE.OFF_PAGE) return;
 
   const project = red.store.getState().projectState.project as Project;

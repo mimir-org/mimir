@@ -1,6 +1,11 @@
-import { Node, Connector } from "../../../../models/project";
+import { Node, Connector, Edge } from "../../../../models/project";
 import red from "../../../../redux/store";
-import { IsFunctionNode, IsLocationNode, IsPartOfTerminal } from "../common";
+import {
+  IsChildOf,
+  IsFunctionNode,
+  IsLocationNode,
+  IsPartOfTerminal,
+} from "../common";
 
 const ValidateBlockEdge = (
   selectedNode: Node,
@@ -22,6 +27,7 @@ const ValidateBlockEdge = (
     if (IsFunctionNode(selectedNode)) {
       if (IsLocationNode(fromNode) || IsLocationNode(toNode)) return false;
       if (selectedNode === toNode || selectedNode === fromNode) return false;
+      if (!IsChildOf(fromNode, selectedNode)) return false;
       if (!hasConnectNode)
         if (fromNode.level - selectedNode.level !== 1) return false;
       return true;
@@ -33,12 +39,18 @@ const ValidateBlockEdge = (
       IsFunctionNode(fromNode) &&
       IsFunctionNode(toNode) &&
       !splitViewNode &&
-      fromNode.level - selectedNode.level === 1 &&
-      toNode.level - selectedNode.level === 1
+      IsChildOf(fromNode, selectedNode)
     ) {
       return true;
     }
-    return false;
+    if (
+      IsFunctionNode(fromNode) &&
+      IsLocationNode(toNode) &&
+      IsChildOf(fromNode, selectedNode) &&
+      IsChildOf(toNode, splitViewNode) &&
+      splitViewNode
+    )
+      return true;
   }
   return false;
 };
