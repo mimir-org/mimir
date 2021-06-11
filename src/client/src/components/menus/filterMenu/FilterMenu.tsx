@@ -15,7 +15,7 @@ const FilterModule = () => {
 
   return (
     <>
-      <MenuMainHeader isOpen={showFilter} right type="FilterMenu">
+      <MenuMainHeader isOpen={showFilter} right type={type} id="FilterHeader">
         <div className="text" onClick={handleClick}>
           {TextResources.MainHeader_VisualFilter}
         </div>
@@ -27,7 +27,7 @@ const FilterModule = () => {
         />
       </MenuMainHeader>
       {showFilter && (
-        <MenuBox right>
+        <MenuBox right id={type}>
           <FilterContent type={RELATION_TYPE.Transport} index={0} />
           <FilterContent type={RELATION_TYPE.HasLocation} index={1} />
         </MenuBox>

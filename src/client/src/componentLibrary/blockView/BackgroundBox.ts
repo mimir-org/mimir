@@ -9,7 +9,8 @@ const BackgroundBox = styled.div`
       ? `${Size.SplitView_Width}`
       : `${Size.BlockView_Width}`}px !important;
   top: 85px !important;
-  left: ${(props) => (props.right ? "960" : "370")}px !important;
+  left: ${(props) =>
+    props.right ? "1060" : "370"}px !important; // TODO: remove magic numbers
   position: absolute;
 `;
 

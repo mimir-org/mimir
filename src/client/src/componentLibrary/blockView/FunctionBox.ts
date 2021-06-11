@@ -7,7 +7,8 @@ const FunctionBox = styled.div`
   height: ${Size.BlockView_Height}px;
   width: ${(props) =>
     props.splitView ? `${Size.SplitView_Width}` : `${Size.BlockView_Width}`}px;
-  left: ${(props) => (props.location ? "440" : "-150")}px;
+  left: ${(props) =>
+    props.location ? "540" : "-150"}px; // TODO: remove magic numbers
   opacity: 1 !important;
 
   .header {

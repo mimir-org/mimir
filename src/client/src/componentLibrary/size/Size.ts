@@ -3,7 +3,7 @@ const Size = {
   Node_Length: 60,
   ConnectView_Width: 350,
   ConnectView_Length: 150,
-  SplitView_Width: 550,
+  SplitView_Width: 650,
   SplitView_Height: 600,
   BlockView_Width: 950,
   BlockView_Height: 600,
