@@ -5,11 +5,16 @@ const TerminalListElement = styled.div`
   display: flex;
   flex-direction: column;
   width: inherit;
-  background: #d9eaeb;
   padding: 2px 1px;
   font-family: ${FontType.Standard};
   font-size: ${FontSize.Standard};
   color: ${Color.Black};
+  :nth-child(odd) {
+    background-color: #d9eaeb;
+  }
+  :nth-child(even) {
+    background-color: ${Color.White};
+  }
   p {
     margin: 0px;
   }

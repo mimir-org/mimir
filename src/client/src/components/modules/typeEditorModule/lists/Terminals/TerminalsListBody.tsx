@@ -1,15 +1,15 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../../redux/store";
 import { TypeEditorState } from "../../../../../redux/store/typeEditor/types";
 import { VerticalScrollbar } from "../../../../../componentLibrary";
 import { TerminalsListElement } from "./TerminalsListElement";
-import { TerminalListContainer } from "../../styled";
-
 interface Props {
   listElements: any;
 }
 
 export const TerminalsListBody = ({ listElements }: Props) => {
+  const dispatch = useDispatch();
+
   const state = useSelector<RootState>(
     (state) => state.typeEditor
   ) as TypeEditorState;
@@ -30,14 +30,12 @@ export const TerminalsListBody = ({ listElements }: Props) => {
     }
     return tempList.map((element) => (
       <>
-        <TerminalsListElement key={element[1].id} terminal={element[1]} />
+        <TerminalsListElement key={element[1].id} terminals={element[1]} />
       </>
     ));
   };
   return (
-    <VerticalScrollbar height={200}>
-      <TerminalListContainer>{filteredTerminals()}</TerminalListContainer>
-    </VerticalScrollbar>
+    <VerticalScrollbar height={200}>{filteredTerminals()}</VerticalScrollbar>
   );
 };
 

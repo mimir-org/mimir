@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AddTerminal } from "../Terminals/AddTerminal";
+import { AddTerminal } from "./AddTerminal/AddTerminalComponent";
 import {
   TerminalListElement,
   TerminalCategoryWrapper,
@@ -12,10 +12,10 @@ import {
 } from "../../../../../assets/icons/common";
 
 interface Props {
-  terminal: any;
+  terminals: any;
 }
 
-export const TerminalsListElement = ({ terminal }: Props) => {
+export const TerminalsListElement = ({ terminals }: Props) => {
   const [quantity, setQuantity] = useState(0);
   const [expandCategory, setExpandCategory] = useState(false);
 
@@ -28,13 +28,11 @@ export const TerminalsListElement = ({ terminal }: Props) => {
   };
 
   const terminalInput = (quantity) => {
-    if (quantity !== 0) {
-      let temp = [];
-      for (let i = 0; i < quantity; i++) {
-        temp.push(<AddTerminal terminal={terminal.terminal} />);
-      }
-      return <>{temp}</>;
+    let temp = [];
+    for (let i = 0; i < quantity; i++) {
+      temp.push(<AddTerminal terminals={terminals} />);
     }
+    return <>{temp}</>;
   };
 
   return (
@@ -53,14 +51,14 @@ export const TerminalsListElement = ({ terminal }: Props) => {
               <span className="number"></span>
             </label>
           </NumericInput>
-          <p>{terminal.terminalCategory}</p>
-          {quantity !== 0 && (
+          <p>{terminals.terminalCategory}</p>
+          {quantity !== 0 ? (
             <img
               src={expandCategory ? expandedIcon : unexpandedIcon}
               alt="expand-icon"
               onClick={toggleExpand}
             />
-          )}
+          ) : null}
         </TerminalCategoryWrapper>
         {quantity !== 0 && expandCategory && (
           <AddTerminalWrapper>{terminalInput(quantity)}</AddTerminalWrapper>
