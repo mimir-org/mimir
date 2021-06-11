@@ -1,9 +1,9 @@
 import { Edge, EdgeType, EDGE_TYPE } from "../../../../models/project";
 import { FlowElement } from "react-flow-renderer";
-import store from "../../../../redux/store";
+import red from "../../../../redux/store";
 
 export const CreateTreeEdge = (edge: Edge, edgeType: EdgeType): FlowElement => {
-  const nodes = store.getState().projectState.project.nodes;
+  const nodes = red.store.getState().projectState.project.nodes;
   const fromNode = nodes.find((x) => x.id === edge.fromNode);
   const toNode = nodes.find((x) => x.id === edge.toNode);
   let element = null;

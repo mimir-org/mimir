@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FontSize, FontWeight } from "../";
+import { Color, FontSize, FontWeight } from "../";
 
 const SearchInput = styled.input`
   width: 287px;
@@ -10,6 +10,10 @@ const SearchInput = styled.input`
   margin: 0px 0px 10px 15px;
   border: 0;
   position: relative;
+
+  &:focus {
+    border: 1px solid ${Color.Black};
+  }
 `;
 
 export default SearchInput;

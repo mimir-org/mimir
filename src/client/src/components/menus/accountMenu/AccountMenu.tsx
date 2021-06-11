@@ -6,10 +6,11 @@ import { save } from "../../../redux/store/project/actions";
 import { GetMenuElement } from "./helpers";
 import { GetMenuIcon } from "../../../assets/helpers";
 import { MENU_TYPE, PROJECT_MENU_TYPE } from "../../../models/project";
-import { MenuBox, MenuTopHeader } from "../../../componentLibrary/box/menus";
+import { MenuBox, MenuMainHeader } from "../../../componentLibrary/box/menus";
 import { changeProjectMenu } from "../../../redux/store/projectMenu/actions";
 import { OpenProjectMenu } from "../../project/openProject";
 import { CreateProjectMenu } from "../../project/createProject";
+import { saveAs } from "file-saver";
 
 const AccountMenu = () => {
   const dispatch = useDispatch();
@@ -46,10 +47,20 @@ const AccountMenu = () => {
     if (projectState.project) dispatch(save(projectState.project));
   };
 
+  const handleSaveFileClick = () => {
+    dispatch(changeProjectMenu(PROJECT_MENU_TYPE.ACCOUNT_MENU, false));
+    if (projectState.project) {
+      const blob = new Blob([JSON.stringify(projectState.project, null, 2)], {
+        type: "application/json",
+      });
+      saveAs(blob, projectState.project.id + ".json");
+    }
+  };
+
   return (
     <>
-      <MenuTopHeader isOpen={isOpen}>
-        <div onClick={handleAccountClick}>
+      <MenuMainHeader isOpen={isOpen}>
+        <div className="text" onClick={handleAccountClick}>
           {projectState.project && projectState.project.name}
         </div>
         <img
@@ -58,16 +69,17 @@ const AccountMenu = () => {
           className="icon"
           onClick={handleAccountClick}
         />
-      </MenuTopHeader>
+      </MenuMainHeader>
       {isOpen && (
         <MenuBox>
           <GetMenuElement type="Open" onClick={handleOpenClick} />
           <GetMenuElement type="Create" onClick={handleCreateClick} />
           <GetMenuElement type="Save" onClick={handleSaveClick} />
+          <GetMenuElement type="SaveFile" onClick={handleSaveFileClick} />
           <GetMenuElement type="Logout" userState={userState} />
         </MenuBox>
       )}
-      <div style={{ zIndex: 100 }}>
+      <div className="ProjectMenu" style={{ zIndex: 2 }}>
         <OpenProjectMenu />
         <CreateProjectMenu />
       </div>

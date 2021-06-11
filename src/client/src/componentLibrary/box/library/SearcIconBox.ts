@@ -2,9 +2,9 @@ import styled from "styled-components";
 
 const SearchIconBox = styled.div`
   position: absolute;
-  z-index: 100;
+  z-index: 1;
   right: 25px;
-  top: 139px;
+  top: 90px;
 `;
 
 export default SearchIconBox;

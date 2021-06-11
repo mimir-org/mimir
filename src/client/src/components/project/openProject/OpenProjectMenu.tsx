@@ -2,10 +2,9 @@ import { SearchBar, ProjectList } from ".";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { ProjectSimple, PROJECT_MENU_TYPE } from "../../../models/project";
-import { CloseIcon, RightArrowIcon } from "../../../assets/icons";
+import { CloseIcon, RightArrowIcon } from "../../../assets/icons/common";
 import { MenuButton } from "../../../componentLibrary/buttons";
 import { TextResources } from "../../../assets/textResources";
-import { SetProjectId } from "../../../redux/store/localStorage";
 import { get } from "../../../redux/store/project/actions";
 import { changeProjectMenu } from "../../../redux/store/projectMenu/actions";
 import { useState } from "react";
@@ -45,7 +44,6 @@ export const OpenProjectMenu = () => {
   };
 
   const handleSaveClick = () => {
-    SetProjectId(projectId);
     dispatch(get(projectId));
     setConfirm(false);
     dispatch(get(projectId));
@@ -54,7 +52,6 @@ export const OpenProjectMenu = () => {
   };
 
   const handleNoSaveClick = () => {
-    SetProjectId(projectId);
     dispatch(get(projectId));
     setConfirm(false);
     dispatch(changeProjectMenu("accountMenu", false));

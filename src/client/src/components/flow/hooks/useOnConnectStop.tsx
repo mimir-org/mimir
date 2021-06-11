@@ -8,7 +8,7 @@ import {
   CreateOffPageData,
   CreateOffPageNode,
   OffPageNodeCreator,
-} from "../helpers";
+} from "../helpers/common";
 
 const useOnConnectStop = (
   e,
@@ -24,7 +24,7 @@ const useOnConnectStop = (
   if (edgeEvent) {
     const reactFlowBounds = reactFlowWrapper?.current?.getBoundingClientRect();
 
-    const position = reactFlowInstance.project({
+    const position = reactFlowInstance?.project({
       x: e.clientX - reactFlowBounds?.left,
       y: e.clientY - reactFlowBounds?.top,
     });
@@ -33,8 +33,8 @@ const useOnConnectStop = (
       parentNodeId: nodeId,
       fromNodeId: edgeEvent.nodeId,
       fromConnectorId: edgeEvent.sourceId,
-      x: position.x,
-      y: position.y,
+      x: position?.x,
+      y: position?.y,
     } as CreateOffPageData;
 
     const node = CreateOffPageNode(

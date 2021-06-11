@@ -1,13 +1,11 @@
 export { default as MenuBox } from "./menus/MenuBox";
 export { default as MenuColumn } from "./menus/MenuColumn";
-export { default as MenuTopHeader } from "./menus/MenuTopHeader";
+export { default as MenuMainHeader } from "./menus/MenuMainHeader";
 export { default as MenuElement } from "./menus/MenuElement";
 export { default as MenuSubHeader } from "./menus/MenuSubHeader";
 // export { default as MenuLogoutBox } from "./menus/MenuLogoutBox";
-export { default as HomeBox } from "./home/HomeBox";
-export { default as FlowBox } from "./flow/FlowBox";
 export { default as ModuleBox } from "./modules/ModuleBox";
-export { default as ModuleHeader } from "./modules/ModuleHeader";
+export { default as ModuleHeader } from "./modules/ModuleHead";
 export { default as ModuleBody } from "./modules/ModuleBody";
 export { default as AspectBox } from "./aspect/AspectBox";
 export { default as AspectElementBox } from "./aspect/AspectElementBox";

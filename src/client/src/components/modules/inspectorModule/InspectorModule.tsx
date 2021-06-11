@@ -1,15 +1,19 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { EyeIcon, ToggleDown, ToggleUp } from "../../../assets/icons";
-import { IconWrapper, ToggleButtonWrapper } from "./styled";
+import { EyeIcon, ToggleDown, ToggleUp } from "../../../assets/icons/common";
 import { TextResources } from "../../../assets/textResources";
-import { InspectorTabsHeader } from "./styled";
-import { InspectorTitle } from "./styled";
 import InspectorTabs from "./InspectorTabs";
-import { AnimatedModule, Size } from "../../../componentLibrary";
+import { Size } from "../../../componentLibrary";
 import { MODULE_TYPE } from "../../../models/project";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
-import { SaveState } from "../../../redux/store/localStorage";
+import { IsExplorerModule, IsLibraryModule } from "../../flow/helpers/common";
+import {
+  InspectorTitle,
+  InspectorBody,
+  AnimatedInspector,
+  IconWrapper,
+  ButtonBox,
+} from "../../../componentLibrary/box/inspector";
 
 const InspectorModule = () => {
   const dispatch = useDispatch();
@@ -23,35 +27,50 @@ const InspectorModule = () => {
     (state) => state.modules.types.find((x) => x.type === key).animate
   ) as boolean;
 
-  const isOpen = useSelector<RootState>(
+  const isInspectorOpen = useSelector<RootState>(
     (state) => state.modules.types.find((x) => x.type === key).visible
   ) as boolean;
 
+  const isLibraryOpen = useSelector<RootState>(
+    (state) => state.modules.types.find((x) => IsLibraryModule(x.type)).visible
+  ) as boolean;
+
+  const isExplorerOpen = useSelector<RootState>(
+    (state) => state.modules.types.find((x) => IsExplorerModule(x.type)).visible
+  ) as boolean;
+
   const handleClick = () => {
-    SaveState(!isOpen, key);
-    dispatch(changeModuleVisibility(key, !isOpen, true));
+    dispatch(changeModuleVisibility(key, !isInspectorOpen, true));
   };
 
-  const start = isOpen ? Size.InspectorModuleClosed : Size.InspectorModuleOpen;
-  const stop = isOpen ? Size.InspectorModuleOpen : Size.InspectorModuleClosed;
+  const start = isInspectorOpen ? Size.ModuleClosed : Size.InspectorModuleOpen;
+  const stop = isInspectorOpen ? Size.InspectorModuleOpen : Size.ModuleClosed;
 
   return (
-    <AnimatedModule start={start} stop={stop} run={animate} type={key}>
-      <InspectorTabsHeader>
+    <AnimatedInspector
+      type={key}
+      isLibraryOpen={isLibraryOpen}
+      isExplorerOpen={isExplorerOpen}
+      start={start}
+      stop={stop}
+      run={animate}
+      id={key}
+    >
+      <InspectorBody id="InspectorBody">
         {hasProject && <InspectorTabs />}
-        <ToggleButtonWrapper>
-          {isOpen ? (
+        <ButtonBox>
+          {isInspectorOpen ? (
             <img src={ToggleDown} alt="toggle-icon" onClick={handleClick} />
           ) : (
             <img src={ToggleUp} alt="toggle-icon" onClick={handleClick} />
           )}
-        </ToggleButtonWrapper>
+        </ButtonBox>
         <IconWrapper>
           <InspectorTitle>{TextResources.Inspector_Heading}</InspectorTitle>
           <img src={EyeIcon} alt="inspector-icon" />
         </IconWrapper>
-      </InspectorTabsHeader>
-    </AnimatedModule>
+      </InspectorBody>
+    </AnimatedInspector>
   );
 };
 

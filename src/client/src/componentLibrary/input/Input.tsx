@@ -6,9 +6,9 @@ const Input = styled.input`
   border-radius: 5px;
   margin-bottom: 10px;
   padding: 5px;
-  width: ${(props: { width: number }) =>
-    props.width === 0 ? `90%` : props.width + `px`};
   height: 31px;
+  width: ${(props) => (props.inputType === "tech" ? "40%" : "95%")};
+  margin-right: ${(props) => props.inputType === "tech" && "4px"};
   background-color: ${(props: { readOnly: boolean }) =>
     props.readOnly ? "#f2f2f2" : "#fff"};
 `;

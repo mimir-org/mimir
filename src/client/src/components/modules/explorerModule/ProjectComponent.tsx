@@ -1,40 +1,34 @@
 import { AspectComponent } from "./aspectComponent/AspectComponent";
-import { IsAspectNode } from "../../flow/helpers";
-import store from "../../../redux/store";
-import { NODE_TYPE } from "../../../models/project";
+import { IsAspectNode, IsProductNode } from "../../flow/helpers/common";
+import red from "../../../redux/store";
 import { IsBlockView } from "../../flow/helpers/block";
 
 export const ProjectComponent = () => {
-  const project = store.getState().projectState.project;
-  const aspects = project?.nodes ?? [];
+  const project = red.store.getState().projectState.project;
+  const nodes = project?.nodes ?? [];
 
   return (
     <>
       {!IsBlockView()
-        ? aspects.map((obj: object, i: number) => {
-            if (IsAspectNode(aspects[i])) {
+        ? nodes.map((_, i: number) => {
+            if (IsAspectNode(nodes[i])) {
               return (
                 <AspectComponent
                   key={i}
-                  nodeId={obj["id"]}
-                  label={obj["label"]}
-                  aspectType={obj["type"]}
+                  node={nodes[i]}
+                  label={nodes[i].label}
                 />
               );
             }
             return null;
           })
-        : aspects.map((obj: object, i: number) => {
-            if (
-              IsAspectNode(aspects[i]) &&
-              aspects[i].type !== NODE_TYPE.ASPECT_PRODUCT
-            ) {
+        : nodes.map((_, i: number) => {
+            if (IsAspectNode(nodes[i]) && !IsProductNode(nodes[i])) {
               return (
                 <AspectComponent
                   key={i}
-                  nodeId={obj["id"]}
-                  label={obj["label"]}
-                  aspectType={obj["type"]}
+                  node={nodes[i]}
+                  label={nodes[i].label}
                 />
               );
             }

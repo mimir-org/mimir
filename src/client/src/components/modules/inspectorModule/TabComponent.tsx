@@ -4,14 +4,13 @@ import { useCallback } from "react";
 import { RootState } from "../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { changeInspectorTab } from "../../../redux/store/inspector/actions";
-import { ATTRIBUTE_TAB, Node } from "../../../models/project";
+import { Node } from "../../../models/project";
 import {
   TabHeader,
-  TabDataWrapper,
-  TabContainer,
+  TabBody,
   NodeTitle,
   TabTitle,
-} from "./styled";
+} from "../../../componentLibrary/box/inspector";
 
 interface Props {
   node: Node;
@@ -20,14 +19,13 @@ interface Props {
 
 const TabComponent = ({ node, index }: Props) => {
   const dispatch = useDispatch();
-
   const isOpen = useSelector<RootState>(
     (state) => state.inspector.tabs[index].visible
   ) as boolean;
 
   const handleClick = useCallback(() => {
-    dispatch(changeInspectorTab(ATTRIBUTE_TAB.TECH_INFO));
-  }, [dispatch]);
+    dispatch(changeInspectorTab(index));
+  }, [dispatch, index]);
 
   return isOpen ? (
     <>
@@ -35,11 +33,10 @@ const TabComponent = ({ node, index }: Props) => {
         {index === 0 && <NodeTitle>{node.label ?? node.name}</NodeTitle>}
         <TabTitle active={true}>{GetInspectorTextResource(index)}</TabTitle>
       </TabHeader>
-      <TabDataWrapper>
-        <TabContainer>
-          <TabContent node={node} />
-        </TabContainer>
-      </TabDataWrapper>
+
+      <TabBody>
+        <TabContent node={node} index={index} />
+      </TabBody>
     </>
   ) : (
     <TabHeader onClick={handleClick}>

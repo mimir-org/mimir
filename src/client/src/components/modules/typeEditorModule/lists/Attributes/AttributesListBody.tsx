@@ -2,9 +2,7 @@ import { ListElementsContainer } from "../../../../../componentLibrary";
 import { VerticalScrollbar } from "../../../../../componentLibrary";
 import { AttributesListElement } from "../Attributes/AttributesListElement";
 
-interface Props {}
-
-export const AttributesListBody = ({}: Props) => {
+export const AttributesListBody = () => {
   return (
     <VerticalScrollbar height={200}>
       <ListElementsContainer>

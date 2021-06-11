@@ -1,12 +1,9 @@
 import { ListHeader } from "../ListHeader";
 import { AttributesListBody } from "./AttributesListBody";
 import { ListWrapper } from "../../../../../componentLibrary";
-
 import { TextResources } from "../../../../../assets/textResources";
 
-interface Props {}
-
-export const AttributesList = ({}: Props) => {
+export const AttributesList = () => {
   return (
     <ListWrapper width={204}>
       <ListHeader

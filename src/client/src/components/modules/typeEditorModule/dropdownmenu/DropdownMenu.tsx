@@ -1,5 +1,13 @@
 import { useState } from "react";
-import { expandedIcon, unexpandedIcon } from "../../../../assets/icons";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../../redux/store";
+import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
+import { expandedIcon, unexpandedIcon } from "../../../../assets/icons/common";
+import GetRightMargin from "../helper/GetRightMargin";
+import {
+  getRDS,
+  changeSelectedAspect,
+} from "../../../../redux/store/typeEditor/actions";
 import {
   DropdownMenuWrapper,
   DropdownMenuHeader,
@@ -15,8 +23,14 @@ interface Props {
 }
 
 export const DropDownMenu = ({ label, placeHolder, listItems }: Props) => {
+  const dispatch = useDispatch();
+
   const [isListOpen, setIsListOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState(placeHolder);
+
+  const state = useSelector<RootState>(
+    (state) => state.typeEditor
+  ) as TypeEditorState;
 
   const toggleList = () => {
     setIsListOpen(!isListOpen);
@@ -25,11 +39,15 @@ export const DropDownMenu = ({ label, placeHolder, listItems }: Props) => {
   const handleChange = (item) => {
     setSelectedValue(item);
     setIsListOpen(!isListOpen);
+    if (label === "Aspect") {
+      dispatch(changeSelectedAspect(item));
+      dispatch(getRDS(state.aspect));
+    }
   };
 
   return (
     <>
-      <DropdownMenuWrapper>
+      <DropdownMenuWrapper right={GetRightMargin(label)}>
         <label htmlFor={label} />
         {label}
         <div onClick={toggleList}>
@@ -44,14 +62,14 @@ export const DropDownMenu = ({ label, placeHolder, listItems }: Props) => {
         </div>
         {isListOpen && (
           <DropdownMenuList>
-            {listItems.map((item) => (
+            {listItems.map(([key, value]) => (
               <div
                 className="listitem"
-                key={item.id}
-                onClick={() => handleChange(item.name)}
+                key={key}
+                onClick={() => handleChange(value)}
               >
                 <DropdownMenuListItem>
-                  <p>{item.name}</p>
+                  <p>{value}</p>
                 </DropdownMenuListItem>
               </div>
             ))}

@@ -1,14 +1,16 @@
 import { RoundCheckbox } from "../../inputs/RoundCheckbox";
 import { ListElem } from "../../../../../componentLibrary";
-import { HelpIcon } from "../../../../../assets/icons";
+import { HelpIcon } from "../../../../../assets/icons/common";
 
-interface Props {}
+interface Props {
+  name: string;
+}
 
-export const RDSListElement = ({}: Props) => {
+export const RDSListElement = ({ name }: Props) => {
   return (
     <ListElem>
       <RoundCheckbox />
-      RDS String
+      <p>{name}</p>
       <img src={HelpIcon} alt="help" />
     </ListElem>
   );

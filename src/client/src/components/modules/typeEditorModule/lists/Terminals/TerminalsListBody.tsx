@@ -1,25 +1,31 @@
+// import { useSelector } from "react-redux";
+// import { RootState } from "../../../../../redux/store";
+// import { TypeEditorState } from "../../../../../redux/store/typeEditor/types";
+
 import { VerticalScrollbar } from "../../../../../componentLibrary";
 import { TerminalsListElement } from "./TerminalsListElement";
 import { TerminalListContainer } from "../../styled";
 
-interface Props {}
+interface Props {
+  listElements: any;
+}
 
-export const TerminalsListBody = ({}: Props) => {
+export const TerminalsListBody = ({ listElements }: Props) => {
+  //   const state = useSelector<RootState>(
+  //     (state) => state.typeEditor
+  //   ) as TypeEditorState;
+
   return (
     <VerticalScrollbar height={200}>
       <TerminalListContainer>
-        <TerminalsListElement name="Terminal name" />
-        <TerminalsListElement name="Terminal name" />
-        <TerminalsListElement name="Terminal name" />
-        <TerminalsListElement name="Terminal name" />
-        <TerminalsListElement name="Terminal name" />
-        <TerminalsListElement name="Terminal name" />
-        <TerminalsListElement name="Terminal name" />
-        <TerminalsListElement name="Terminal name" />
-        <TerminalsListElement name="Terminal name" />
-        <TerminalsListElement name="Terminal name" />
-        <TerminalsListElement name="Terminal name" />
-        <TerminalsListElement name="Terminal name" />
+        {listElements?.map((element) => (
+          <>
+            <TerminalsListElement
+              key={element[1].id}
+              name={element[1].terminalCategory}
+            />
+          </>
+        ))}
       </TerminalListContainer>
     </VerticalScrollbar>
   );

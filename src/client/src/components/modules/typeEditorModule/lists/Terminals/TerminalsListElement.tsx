@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { TerminalListElement } from "../../styled";
 import { NumericInput } from "../../../../../componentLibrary";
-import { unexpandedIcon } from "../../../../../assets/icons";
+import { unexpandedIcon } from "../../../../../assets/icons/common";
 
 interface Props {
   name: String;
 }
 
 export const TerminalsListElement = ({ name }: Props) => {
-  const [quantity, setQuantity] = useState(0);
+  const [, setQuantity] = useState(0);
 
   const numberInput = (e) => {
     if (e.length > 2) {

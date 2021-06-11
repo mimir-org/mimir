@@ -1,19 +1,18 @@
-import { LoadState } from "../localStorage/localStorage";
-import { CHANGE_SPLITVIEW, SET_SPLITVIEW_NODE } from "./types";
+import { SET_SPLITVIEW, SET_SPLIT_NODE } from "./types";
 
 const initialState = {
-  visible: LoadState("splitview"),
+  visible: false,
   node: null,
 };
 
 export function splitViewReducer(state = initialState, action) {
   switch (action.type) {
-    case CHANGE_SPLITVIEW:
+    case SET_SPLITVIEW:
       return {
         ...state,
         visible: action.payload.visible,
       };
-    case SET_SPLITVIEW_NODE:
+    case SET_SPLIT_NODE:
       return {
         ...state,
         node: action.payload.node,

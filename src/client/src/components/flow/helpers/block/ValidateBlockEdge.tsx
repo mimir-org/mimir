@@ -1,9 +1,14 @@
 import { Node, Connector } from "../../../../models/project";
-import { IsFunctionNode, IsLocationNode, IsPartOfTerminal } from "..";
+import red from "../../../../redux/store";
+import {
+  IsChildOf,
+  IsFunctionNode,
+  IsLocationNode,
+  IsPartOfTerminal,
+} from "../common";
 
 const ValidateBlockEdge = (
   selectedNode: Node,
-  selectedBlockNode: Node,
   fromNode: Node,
   toNode: Node,
   splitViewNode: Node,
@@ -11,6 +16,9 @@ const ValidateBlockEdge = (
   toConnector: Connector,
   splitView: boolean
 ): boolean => {
+  const connectNode = red.store.getState().connectView.mainNode as Node;
+  const hasConnectNode = connectNode !== null;
+
   if (!fromNode || !toNode) return false;
   if (IsPartOfTerminal(fromConnector) || IsPartOfTerminal(toConnector))
     return false;
@@ -19,21 +27,28 @@ const ValidateBlockEdge = (
     if (IsFunctionNode(selectedNode)) {
       if (IsLocationNode(fromNode) || IsLocationNode(toNode)) return false;
       if (selectedNode === toNode || selectedNode === fromNode) return false;
-      if (fromNode.level - selectedNode.level !== 1) return false;
-      //   if (fromNode.order - selectedNode.order !== 1) return false;
+      if (!IsChildOf(fromNode, selectedNode)) return false;
+      if (!hasConnectNode)
+        if (fromNode.level - selectedNode.level !== 1) return false;
       return true;
     }
   }
 
   if (splitView) {
-    if (!splitViewNode && IsFunctionNode(fromNode) && IsFunctionNode(toNode))
+    if (
+      IsFunctionNode(fromNode) &&
+      IsFunctionNode(toNode) &&
+      !splitViewNode &&
+      IsChildOf(fromNode, selectedNode)
+    ) {
       return true;
-
+    }
     if (
       IsFunctionNode(fromNode) &&
       IsLocationNode(toNode) &&
-      IsLocationNode(splitViewNode)
-      //   toNode?.level - selectedBlockNode?.level === 1
+      IsChildOf(fromNode, selectedNode) &&
+      IsChildOf(toNode, splitViewNode) &&
+      splitViewNode
     )
       return true;
   }

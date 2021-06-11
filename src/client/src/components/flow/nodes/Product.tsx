@@ -1,6 +1,6 @@
 import { memo, FC } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
-import { GetHandleType } from "../helpers";
+import { GetHandleType } from "../helpers/common";
 
 const Product: FC<NodeProps> = ({ data }) => {
   return (

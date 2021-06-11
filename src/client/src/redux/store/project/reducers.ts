@@ -1,7 +1,10 @@
-import { IsAspectNode } from "../../../components/flow/helpers";
 import { Edge, Node, ProjectSimple } from "../../../models/project";
-import { GetProject } from "../localStorage";
-import { TraverseNodes, FindChildNodes } from "./helpers/";
+import { TraverseTree } from "./helpers/";
+import {
+  IsAspectNode,
+  IsNodeSameType,
+  IsSameType,
+} from "../../../components/flow/helpers/common";
 import {
   FETCHING_PROJECT,
   FETCHING_PROJECT_SUCCESS_OR_ERROR,
@@ -28,15 +31,15 @@ import {
   CHANGE_CONNECTOR_ATTRIBUTE_VALUE,
   CHANGE_EDGE_VISIBILITY,
   CHANGE_ACTIVE_BLOCKNODE,
+  DELETE_PROJECT_ERROR,
 } from "./types";
 
 const initialState: ProjectState = {
   fetching: false,
   creating: false,
-  project: GetProject() ?? null, // TODO: fix
-  hasError: false,
-  errorMsg: null,
+  project: null,
   projectList: null,
+  apiError: [],
 };
 
 export function projectReducer(
@@ -49,8 +52,9 @@ export function projectReducer(
         ...state,
         fetching: true,
         creating: false,
-        hasError: false,
-        errorMsg: null,
+        apiError: state.apiError
+          ? state.apiError.filter((elem) => elem.key !== SAVE_PROJECT)
+          : state.apiError,
       };
 
     case SAVE_PROJECT_SUCCESS_OR_ERROR:
@@ -58,9 +62,10 @@ export function projectReducer(
         ...state,
         fetching: false,
         creating: false,
-        hasError: action.payload.hasError,
-        errorMsg: action.payload.errorMsg,
         project: action.payload.project,
+        apiError: action.payload.apiError
+          ? [...state.apiError, action.payload.apiError]
+          : state.apiError,
       };
 
     case SEARCH_PROJECT:
@@ -68,9 +73,10 @@ export function projectReducer(
         ...state,
         fetching: true,
         creating: false,
-        hasError: false,
-        errorMsg: null,
         projectList: null,
+        apiError: state.apiError
+          ? state.apiError.filter((elem) => elem.key !== SEARCH_PROJECT)
+          : state.apiError,
       };
 
     case SEARCH_PROJECT_SUCCESS_OR_ERROR:
@@ -78,9 +84,10 @@ export function projectReducer(
         ...state,
         fetching: false,
         creating: false,
-        hasError: action.payload.hasError,
-        errorMsg: action.payload.errorMsg,
-        projectList: action.payload.projectList,
+        projectList: action.payload.projectList ?? state.projectList,
+        apiError: action.payload.apiError
+          ? [...state.apiError, action.payload.apiError]
+          : state.apiError,
       };
 
     case FETCHING_PROJECT:
@@ -88,19 +95,20 @@ export function projectReducer(
         ...state,
         fetching: true,
         creating: false,
-        project: null,
-        hasError: false,
-        errorMsg: null,
+        apiError: state.apiError
+          ? state.apiError.filter((elem) => elem.key !== FETCHING_PROJECT)
+          : state.apiError,
       };
 
     case FETCHING_PROJECT_SUCCESS_OR_ERROR:
       return {
         ...state,
-        fetching: action.payload.fetching,
-        creating: action.payload.creating,
-        project: action.payload.project,
-        hasError: action.payload.hasError,
-        errorMsg: action.payload.errorMsg,
+        fetching: false,
+        creating: false,
+        project: action.payload.project ?? state.project,
+        apiError: action.payload.apiError
+          ? [...state.apiError, action.payload.apiError]
+          : state.apiError,
       };
 
     case CREATING_PROJECT:
@@ -108,19 +116,28 @@ export function projectReducer(
         ...state,
         fetching: false,
         creating: true,
-        project: null,
-        hasError: false,
-        errorMsg: null,
+        apiError: state.apiError
+          ? state.apiError.filter((elem) => elem.key !== CREATING_PROJECT)
+          : state.apiError,
       };
 
     case CREATING_PROJECT_SUCCESS_OR_ERROR:
       return {
         ...state,
-        fetching: action.payload.fetching,
-        creating: action.payload.creating,
-        project: action.payload.project,
-        hasError: action.payload.hasError,
-        errorMsg: action.payload.errorMsg,
+        fetching: false,
+        creating: false,
+        project: action.payload.project ?? state.project,
+        apiError: action.payload.apiError
+          ? [...state.apiError, action.payload.apiError]
+          : state.apiError,
+      };
+
+    case DELETE_PROJECT_ERROR:
+      return {
+        ...state,
+        apiError: state.apiError
+          ? state.apiError.filter((elem) => elem.key !== action.payload.key)
+          : state.apiError,
       };
 
     case ADD_NODE:
@@ -219,7 +236,6 @@ export function projectReducer(
       const nodeList = state.project.nodes;
       const edgeList = state.project.edges;
       const isParent = action.payload.isParent;
-      const type = action.payload.type;
       const isHidden = !node.isHidden;
 
       if (IsAspectNode(node)) {
@@ -228,13 +244,13 @@ export function projectReducer(
           project: {
             ...state.project,
             nodes: nodeList.map((nodes, i) =>
-              nodeList[i].type === type || nodeList[i].label === type
+              IsNodeSameType(node, nodeList[i])
                 ? { ...nodes, isHidden: isHidden }
                 : nodes
             ),
             edges: edgeList.map((edges, i) =>
-              edgeList[i].parentType === type ||
-              edgeList[i].targetType === type ||
+              IsSameType(node.type, edgeList[i].parentType) ||
+              IsSameType(node.type, edgeList[i].targetType) ||
               edgeList[i].fromNode === node.id
                 ? { ...edges, isHidden: isHidden }
                 : edges
@@ -245,24 +261,9 @@ export function projectReducer(
 
       if (isParent) {
         let elements: (Node | Edge)[] = [];
-        let parentNode = node;
-        let children: Node[] = [];
         elements.push(node);
 
-        FindChildNodes(edgeList, nodeList, parentNode, children);
-
-        const getParent = () => {
-          return parentNode.id;
-        };
-
-        children.forEach((_node, index) => {
-          parentNode = children[index];
-          const toEdge = edgeList.find((x) => x.toNode === getParent());
-          elements.push(parentNode, toEdge);
-          const nextEdge = edgeList.find((x) => x.fromNode === getParent());
-          if (nextEdge)
-            TraverseNodes(nextEdge, nodeList, edgeList, elements, type);
-        });
+        TraverseTree(edgeList, nodeList, node, elements);
 
         return {
           ...state,
@@ -298,7 +299,6 @@ export function projectReducer(
           ),
         },
       };
-
     case CHANGE_ACTIVE_NODE:
       const id = action.payload.nodeId;
       return {

@@ -1,247 +1,1807 @@
 [
   {
-    "Id": "equinor.com_19CF170F-6340-4616-8045-E0DB34673EA3",
-    "Terminal": "Gas",
-    "ConnectorType": "Input",
-    "SemanticReference": "",
-    "Attributes": [
+    "id": "equinor.com_061AA7B2-E42B-4DD3-9019-992CFEE1E279",
+    "terminal": "Water",
+    "terminalCategory": "NotSet",
+    "connectorType": "Output",
+    "semanticReference": "",
+    "attributes": [
       {
-        "Entity": "Flowrate, volumetric",
-        "Qualifier": "Capacity",
-        "Source": "Required",
-        "Condition": "Nominal",
-        "Units": [
-          "Sm3D",
-          "Sm3H",
+        "id": 0,
+        "entity": "Flowrate, volumetric",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
+          "M3D",
+          "M3H",
           "Scfhr",
           "Bbld"
         ],
-        "Aspect": "NotSet",
-        "Format": "UnsignedFloat",
-        "IsInterface": false,
-        "IsTerminalType": true
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
       },
       {
-        "Entity": "Pressure, absolute",
-        "Qualifier": "Rating",
-        "Source": "Required",
-        "Condition": "Minimum",
-        "Units": [
+        "id": 0,
+        "entity": "Flowrate, volumetric",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Minimum",
+        "units": [
+          "M3D",
+          "M3H",
+          "Scfhr",
+          "Bbld"
+        ],
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Flowrate, volumetric",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Maximum",
+        "units": [
+          "M3D",
+          "M3H",
+          "Scfhr",
+          "Bbld"
+        ],
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Pressure, absolute",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
           "Barg",
           "Bara",
           "Psi",
           "Psig",
           "Pascal"
         ],
-        "Aspect": "NotSet",
-        "Format": "UnsignedFloat",
-        "IsInterface": false,
-        "IsTerminalType": true
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Pressure, absolute",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Maximum",
+        "units": [
+          "Barg",
+          "Bara",
+          "Psi",
+          "Psig",
+          "Pascal"
+        ],
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Pressure, absolute",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Minimum",
+        "units": [
+          "Barg",
+          "Bara",
+          "Psi",
+          "Psig",
+          "Pascal"
+        ],
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Rating",
+        "source": "RequiredLow",
+        "condition": "Minimum",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Rating",
+        "source": "RequiredHigh",
+        "condition": "Minimum",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": true,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Minimum",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": true,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Maximum",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": true,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Oil in water",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
+          "Ppm",
+          "Ppb"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedInteger",
+        "isInterface": false,
+        "isTerminalType": false
       }
     ]
   },
   {
-    "Id": "equinor.com_2948D9E8-0C37-4362-AC17-7544C90EA662",
-    "Terminal": "Gas",
-    "ConnectorType": "Output",
-    "SemanticReference": "",
-    "Attributes": [
+    "id": "equinor.com_19CF170F-6340-4616-8045-E0DB34673EA3",
+    "terminal": "Gas",
+    "terminalCategory": "NotSet",
+    "connectorType": "Input",
+    "semanticReference": "",
+    "attributes": [
       {
-        "Entity": "Flowrate, volumetric",
-        "Qualifier": "Capacity",
-        "Source": "Required",
-        "Condition": "Nominal",
-        "Units": [
+        "id": 0,
+        "entity": "Flowrate, volumetric",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
           "Sm3D",
           "Sm3H",
           "Scfhr",
           "Bbld"
         ],
-        "Aspect": "NotSet",
-        "Format": "UnsignedFloat",
-        "IsInterface": false,
-        "IsTerminalType": true
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
       },
       {
-        "Entity": "Pressure, absolute",
-        "Qualifier": "Rating",
-        "Source": "Required",
-        "Condition": "Minimum",
-        "Units": [
+        "id": 0,
+        "entity": "Flowrate, volumetric",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Minimum",
+        "units": [
+          "Sm3D",
+          "Sm3H",
+          "Scfhr",
+          "Bbld"
+        ],
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Flowrate, volumetric",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Maximum",
+        "units": [
+          "Sm3D",
+          "Sm3H",
+          "Scfhr",
+          "Bbld"
+        ],
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Pressure, absolute",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
           "Barg",
           "Bara",
           "Psi",
           "Psig",
           "Pascal"
         ],
-        "Aspect": "NotSet",
-        "Format": "UnsignedFloat",
-        "IsInterface": false,
-        "IsTerminalType": true
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Pressure, absolute",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Maximum",
+        "units": [
+          "Barg",
+          "Bara",
+          "Psi",
+          "Psig",
+          "Pascal"
+        ],
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Pressure, absolute",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Minimum",
+        "units": [
+          "Barg",
+          "Bara",
+          "Psi",
+          "Psig",
+          "Pascal"
+        ],
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Rating",
+        "source": "RequiredLow",
+        "condition": "Minimum",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Rating",
+        "source": "RequiredHigh",
+        "condition": "Minimum",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": true,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Minimum",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": true,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Maximum",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": true,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Gas HC Dew Point",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
+          "Degc"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Liquid Carry-over, volumetric",
+        "qualifier": "Rating",
+        "source": "Required",
+        "condition": "Maximum",
+        "units": [
+          "LitersPerMSm3"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
       }
     ]
   },
   {
-    "Id": "equinor.com_7A51FFB1-C2B8-4A6B-BB4B-E5C19B22354F",
-    "Terminal": "Oil",
-    "ConnectorType": "Input",
-    "SemanticReference": "",
-    "Attributes": [
+    "id": "equinor.com_2948D9E8-0C37-4362-AC17-7544C90EA662",
+    "terminal": "Gas",
+    "terminalCategory": "NotSet",
+    "connectorType": "Output",
+    "semanticReference": "",
+    "attributes": [
       {
-        "Entity": "Flowrate, volumetric",
-        "Qualifier": "Capacity",
-        "Source": "Required",
-        "Condition": "Nominal",
-        "Units": [
+        "id": 0,
+        "entity": "Flowrate, volumetric",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
           "Sm3D",
           "Sm3H",
           "Scfhr",
           "Bbld"
         ],
-        "Aspect": "NotSet",
-        "Format": "UnsignedFloat",
-        "IsInterface": false,
-        "IsTerminalType": true
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
       },
       {
-        "Entity": "Pressure, absolute",
-        "Qualifier": "Rating",
-        "Source": "Required",
-        "Condition": "Minimum",
-        "Units": [
+        "id": 0,
+        "entity": "Flowrate, volumetric",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Minimum",
+        "units": [
+          "Sm3D",
+          "Sm3H",
+          "Scfhr",
+          "Bbld"
+        ],
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Flowrate, volumetric",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Maximum",
+        "units": [
+          "Sm3D",
+          "Sm3H",
+          "Scfhr",
+          "Bbld"
+        ],
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Pressure, absolute",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
           "Barg",
           "Bara",
           "Psi",
           "Psig",
           "Pascal"
         ],
-        "Aspect": "NotSet",
-        "Format": "UnsignedFloat",
-        "IsInterface": false,
-        "IsTerminalType": true
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Pressure, absolute",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Maximum",
+        "units": [
+          "Barg",
+          "Bara",
+          "Psi",
+          "Psig",
+          "Pascal"
+        ],
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Pressure, absolute",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Minimum",
+        "units": [
+          "Barg",
+          "Bara",
+          "Psi",
+          "Psig",
+          "Pascal"
+        ],
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Rating",
+        "source": "RequiredLow",
+        "condition": "Minimum",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Rating",
+        "source": "RequiredHigh",
+        "condition": "Minimum",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": true,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Minimum",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": true,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Maximum",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": true,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Gas HC Dew Point",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
+          "Degc"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Liquid Carry-over, volumetric",
+        "qualifier": "Rating",
+        "source": "Required",
+        "condition": "Maximum",
+        "units": [
+          "LitersPerMSm3"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
       }
     ]
   },
   {
-    "Id": "equinor.com_A64E8599-BDE9-4486-A4DB-C90F124CEA52",
-    "Terminal": "Oil",
-    "ConnectorType": "Output",
-    "SemanticReference": "",
-    "Attributes": [
+    "id": "equinor.com_7A51FFB1-C2B8-4A6B-BB4B-E5C19B22354F",
+    "terminal": "Oil",
+    "terminalCategory": "NotSet",
+    "connectorType": "Input",
+    "semanticReference": "",
+    "attributes": [
       {
-        "Entity": "Flowrate, volumetric",
-        "Qualifier": "Capacity",
-        "Source": "Required",
-        "Condition": "Nominal",
-        "Units": [
+        "id": 0,
+        "entity": "Flowrate, volumetric",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
           "Sm3D",
           "Sm3H",
           "Scfhr",
           "Bbld"
         ],
-        "Aspect": "NotSet",
-        "Format": "UnsignedFloat",
-        "IsInterface": false,
-        "IsTerminalType": true
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
       },
       {
-        "Entity": "Pressure, absolute",
-        "Qualifier": "Rating",
-        "Source": "Required",
-        "Condition": "Minimum",
-        "Units": [
+        "id": 0,
+        "entity": "Flowrate, volumetric",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Minimum",
+        "units": [
+          "Sm3D",
+          "Sm3H",
+          "Scfhr",
+          "Bbld"
+        ],
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Flowrate, volumetric",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Maximum",
+        "units": [
+          "Sm3D",
+          "Sm3H",
+          "Scfhr",
+          "Bbld"
+        ],
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Pressure, absolute",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
           "Barg",
           "Bara",
           "Psi",
           "Psig",
           "Pascal"
         ],
-        "Aspect": "NotSet",
-        "Format": "UnsignedFloat",
-        "IsInterface": false,
-        "IsTerminalType": true
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Pressure, absolute",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Maximum",
+        "units": [
+          "Barg",
+          "Bara",
+          "Psi",
+          "Psig",
+          "Pascal"
+        ],
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Pressure, absolute",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Minimum",
+        "units": [
+          "Barg",
+          "Bara",
+          "Psi",
+          "Psig",
+          "Pascal"
+        ],
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Rating",
+        "source": "RequiredLow",
+        "condition": "Minimum",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Rating",
+        "source": "RequiredHigh",
+        "condition": "Minimum",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": true,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Minimum",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": true,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Maximum",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": true,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Water Cut, WC",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
+          "Percent"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedInteger",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Gas Carry-under, volumetric",
+        "qualifier": "Rating",
+        "source": "Required",
+        "condition": "Maximum",
+        "units": [
+          "Percent"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedInteger",
+        "isInterface": false,
+        "isTerminalType": false
       }
     ]
   },
   {
-    "Id": "equinor.com_9704059D-A7F5-48E8-B963-1B528AB66BA6",
-    "Terminal": "Water",
-    "ConnectorType": "Input",
-    "SemanticReference": "",
-    "Attributes": [
+    "id": "equinor.com_9704059D-A7F5-48E8-B963-1B528AB66BA6",
+    "terminal": "Water",
+    "terminalCategory": "NotSet",
+    "connectorType": "Input",
+    "semanticReference": "",
+    "attributes": [
       {
-        "Entity": "Flowrate, volumetric",
-        "Qualifier": "Capacity",
-        "Source": "Required",
-        "Condition": "Nominal",
-        "Units": [
-          "Sm3D",
-          "Sm3H",
+        "id": 0,
+        "entity": "Flowrate, volumetric",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
+          "M3D",
+          "M3H",
           "Scfhr",
           "Bbld"
         ],
-        "Aspect": "NotSet",
-        "Format": "UnsignedFloat",
-        "IsInterface": false,
-        "IsTerminalType": true
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
       },
       {
-        "Entity": "Pressure, absolute",
-        "Qualifier": "Rating",
-        "Source": "Required",
-        "Condition": "Minimum",
-        "Units": [
+        "id": 0,
+        "entity": "Flowrate, volumetric",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Minimum",
+        "units": [
+          "M3D",
+          "M3H",
+          "Scfhr",
+          "Bbld"
+        ],
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Flowrate, volumetric",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Maximum",
+        "units": [
+          "M3D",
+          "M3H",
+          "Scfhr",
+          "Bbld"
+        ],
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Pressure, absolute",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
           "Barg",
           "Bara",
           "Psi",
           "Psig",
           "Pascal"
         ],
-        "Aspect": "NotSet",
-        "Format": "UnsignedFloat",
-        "IsInterface": false,
-        "IsTerminalType": true
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Pressure, absolute",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Maximum",
+        "units": [
+          "Barg",
+          "Bara",
+          "Psi",
+          "Psig",
+          "Pascal"
+        ],
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Pressure, absolute",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Minimum",
+        "units": [
+          "Barg",
+          "Bara",
+          "Psi",
+          "Psig",
+          "Pascal"
+        ],
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Rating",
+        "source": "RequiredLow",
+        "condition": "Minimum",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Rating",
+        "source": "RequiredHigh",
+        "condition": "Minimum",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": true,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Minimum",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": true,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Maximum",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": true,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Oil in water",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
+          "Ppm",
+          "Ppb"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedInteger",
+        "isInterface": false,
+        "isTerminalType": false
       }
     ]
   },
   {
-    "Id": "equinor.com_061AA7B2-E42B-4DD3-9019-992CFEE1E279",
-    "Terminal": "Water",
-    "ConnectorType": "Output",
-    "SemanticReference": "",
-    "Attributes": [
+    "id": "equinor.com_A64E8599-BDE9-4486-A4DB-C90F124CEA52",
+    "terminal": "Oil",
+    "terminalCategory": "NotSet",
+    "connectorType": "Output",
+    "semanticReference": "",
+    "attributes": [
       {
-        "Entity": "Flowrate, volumetric",
-        "Qualifier": "Capacity",
-        "Source": "Required",
-        "Condition": "Nominal",
-        "Units": [
+        "id": 0,
+        "entity": "Flowrate, volumetric",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
           "Sm3D",
           "Sm3H",
           "Scfhr",
           "Bbld"
         ],
-        "Aspect": "NotSet",
-        "Format": "UnsignedFloat",
-        "IsInterface": false,
-        "IsTerminalType": true
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
       },
       {
-        "Entity": "Pressure, absolute",
-        "Qualifier": "Rating",
-        "Source": "Required",
-        "Condition": "Minimum",
-        "Units": [
+        "id": 0,
+        "entity": "Flowrate, volumetric",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Minimum",
+        "units": [
+          "Sm3D",
+          "Sm3H",
+          "Scfhr",
+          "Bbld"
+        ],
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Flowrate, volumetric",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Maximum",
+        "units": [
+          "Sm3D",
+          "Sm3H",
+          "Scfhr",
+          "Bbld"
+        ],
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Pressure, absolute",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
           "Barg",
           "Bara",
           "Psi",
           "Psig",
           "Pascal"
         ],
-        "Aspect": "NotSet",
-        "Format": "UnsignedFloat",
-        "IsInterface": false,
-        "IsTerminalType": true
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Pressure, absolute",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Maximum",
+        "units": [
+          "Barg",
+          "Bara",
+          "Psi",
+          "Psig",
+          "Pascal"
+        ],
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Pressure, absolute",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Minimum",
+        "units": [
+          "Barg",
+          "Bara",
+          "Psi",
+          "Psig",
+          "Pascal"
+        ],
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Rating",
+        "source": "RequiredLow",
+        "condition": "Minimum",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Rating",
+        "source": "RequiredHigh",
+        "condition": "Minimum",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": true,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Minimum",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": true,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Maximum",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": true,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Water Cut, WC",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
+          "Percent"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedInteger",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Gas Carry-under, volumetric",
+        "qualifier": "Rating",
+        "source": "Required",
+        "condition": "Maximum",
+        "units": [
+          "Percent"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedInteger",
+        "isInterface": false,
+        "isTerminalType": false
+      }
+    ]
+  },
+  {
+    "id": "equinor.com_D242EDBF-A784-4255-A1C8-1E1A4325648A",
+    "terminal": "Multiphase",
+    "terminalCategory": "NotSet",
+    "connectorType": "Output",
+    "semanticReference": "",
+    "attributes": [
+      {
+        "id": 0,
+        "entity": "Flowrate, volumetric",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
+          "Sm3D",
+          "Sm3H",
+          "Scfhr",
+          "Bbld"
+        ],
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Flowrate, volumetric",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Minimum",
+        "units": [
+          "Sm3D",
+          "Sm3H",
+          "Scfhr",
+          "Bbld"
+        ],
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Flowrate, volumetric",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Maximum",
+        "units": [
+          "Sm3D",
+          "Sm3H",
+          "Scfhr",
+          "Bbld"
+        ],
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Pressure, absolute",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
+          "Barg",
+          "Bara",
+          "Psi",
+          "Psig",
+          "Pascal"
+        ],
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Pressure, absolute",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Maximum",
+        "units": [
+          "Barg",
+          "Bara",
+          "Psi",
+          "Psig",
+          "Pascal"
+        ],
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Pressure, absolute",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Minimum",
+        "units": [
+          "Barg",
+          "Bara",
+          "Psi",
+          "Psig",
+          "Pascal"
+        ],
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Rating",
+        "source": "RequiredLow",
+        "condition": "Minimum",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Rating",
+        "source": "RequiredHigh",
+        "condition": "Minimum",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": true,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Minimum",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": true,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Maximum",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": true,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Gas/Liquid Ratio, GLR",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
+          "Percent"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedInteger",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Gas/Oil Ratio, GOR",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
+          "Percent"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedInteger",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Gas Volume Fraction, GVF",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
+          "Percent"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedInteger",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Water Cut, WC",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
+          "Percent"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedInteger",
+        "isInterface": false,
+        "isTerminalType": false
+      }
+    ]
+  },
+  {
+    "id": "equinor.com_D3EB46EF-0BC4-4C18-90EA-1482209A9294",
+    "terminal": "Multiphase",
+    "terminalCategory": "NotSet",
+    "connectorType": "Input",
+    "semanticReference": "",
+    "attributes": [
+      {
+        "id": 0,
+        "entity": "Flowrate, volumetric",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
+          "Sm3D",
+          "Sm3H",
+          "Scfhr",
+          "Bbld"
+        ],
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Flowrate, volumetric",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Minimum",
+        "units": [
+          "Sm3D",
+          "Sm3H",
+          "Scfhr",
+          "Bbld"
+        ],
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Flowrate, volumetric",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Maximum",
+        "units": [
+          "Sm3D",
+          "Sm3H",
+          "Scfhr",
+          "Bbld"
+        ],
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Pressure, absolute",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
+          "Barg",
+          "Bara",
+          "Psi",
+          "Psig",
+          "Pascal"
+        ],
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Pressure, absolute",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Maximum",
+        "units": [
+          "Barg",
+          "Bara",
+          "Psi",
+          "Psig",
+          "Pascal"
+        ],
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Pressure, absolute",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Minimum",
+        "units": [
+          "Barg",
+          "Bara",
+          "Psi",
+          "Psig",
+          "Pascal"
+        ],
+        "aspect": "Product",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Rating",
+        "source": "RequiredLow",
+        "condition": "Minimum",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Rating",
+        "source": "RequiredHigh",
+        "condition": "Minimum",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": true,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Minimum",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": true,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Temperature",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Maximum",
+        "units": [
+          "Degc",
+          "Degf",
+          "Kelvin"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedFloat",
+        "isInterface": true,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Gas/Liquid Ratio, GLR",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
+          "Percent"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedInteger",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Gas/Oil Ratio, GOR",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
+          "Percent"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedInteger",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Gas Volume Fraction, GVF",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
+          "Percent"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedInteger",
+        "isInterface": false,
+        "isTerminalType": false
+      },
+      {
+        "id": 0,
+        "entity": "Water Cut, WC",
+        "qualifier": "Operating",
+        "source": "Calculated",
+        "condition": "Nominal",
+        "units": [
+          "Percent"
+        ],
+        "aspect": "Function",
+        "format": "UnsignedInteger",
+        "isInterface": false,
+        "isTerminalType": false
       }
     ]
   }

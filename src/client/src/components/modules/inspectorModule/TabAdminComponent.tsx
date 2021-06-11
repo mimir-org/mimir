@@ -4,15 +4,14 @@ import { useCallback } from "react";
 import { RootState } from "../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { Contractor } from "../../../redux/store/common/types";
-import { ATTRIBUTE_TAB, Node, Project } from "../../../models/project";
+import { Node, Project } from "../../../models/project";
 import { changeInspectorTab } from "../../../redux/store/inspector/actions";
 import {
   TabHeader,
-  TabDataWrapper,
-  TabContainer,
+  TabBody,
   NodeTitle,
   TabTitle,
-} from "./styled";
+} from "../../../componentLibrary/box/inspector";
 
 interface Props {
   node: Node;
@@ -32,8 +31,8 @@ const TabAdminComponent = ({ node, project, index }: Props) => {
   ) as Contractor[];
 
   const handleClick = useCallback(() => {
-    dispatch(changeInspectorTab(ATTRIBUTE_TAB.ADMIN_INFO));
-  }, [dispatch]);
+    dispatch(changeInspectorTab(index));
+  }, [dispatch, index]);
 
   return isOpen ? (
     <>
@@ -41,17 +40,17 @@ const TabAdminComponent = ({ node, project, index }: Props) => {
         {node && <NodeTitle>{node.label ?? node.name}</NodeTitle>}
         <TabTitle active={true}>{GetInspectorTextResource(index)}</TabTitle>
       </TabHeader>
-      <TabDataWrapper>
+      <TabBody>
         {node && project && (
-          <TabContainer>
+          <div className="container">
             <TabAdminContent
               node={node}
               project={project}
               contractors={contractors}
             />
-          </TabContainer>
+          </div>
         )}
-      </TabDataWrapper>
+      </TabBody>
     </>
   ) : (
     <TabHeader onClick={handleClick}>

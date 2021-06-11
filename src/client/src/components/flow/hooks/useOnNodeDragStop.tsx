@@ -1,5 +1,5 @@
 import { NODE_TYPE } from "../../../models/project";
-import { GetFlowRectData } from "../helpers";
+import { GetFlowRectData } from "../helpers/common";
 import {
   updatePosition,
   updateBlockPosition,

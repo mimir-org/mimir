@@ -1,8 +1,6 @@
 import "./roundcheckbox.scss";
 
-interface Props {}
-
-export const RoundCheckbox = ({}: Props) => {
+export const RoundCheckbox = () => {
   const handleCheckboxChange = () => {};
   return (
     <>

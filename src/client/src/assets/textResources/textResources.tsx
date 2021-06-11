@@ -111,6 +111,9 @@ const textResources = {
   Account_NoSave_Button: "No",
   Account_Cancel_Button: "Cancel",
 
+  // ErrorModule
+  Error_Tile: "Oops, Something Went Wrong",
+
   // LegendModule
   Legend_Heading: "Legend",
 
@@ -142,8 +145,11 @@ const textResources = {
   // BlockView
   BlockView_Select_Message:
     "Please select an aspect object from the same aspect OR a different aspect via the Explorer Module",
-  BlockView_Location_Message:
-    "In Split View you can only select one node of type Location",
+
+  // Relations
+  Relations_PartOf: "Part of Relationship",
+  Relations_HasLocation: "Has Location",
+  Relations_FulfilledBy: "Fulfilled By",
 };
 
 export const VisualFilterResources = [

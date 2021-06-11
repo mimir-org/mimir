@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { ProjectState } from "../../../redux/store/project/types";
 import { RootState } from "../../../redux/store";
 import { Node } from "../../../models/project";
-import { GetLegendData, Legend } from "../../flow/helpers";
+import { GetLegendData, Legend } from "../../flow/helpers/common";
 import { ModuleBody } from "../../../componentLibrary/box/modules";
 import { IsBlockView } from "../../flow/helpers/block";
 import {

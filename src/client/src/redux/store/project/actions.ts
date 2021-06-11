@@ -1,5 +1,5 @@
 import { Project } from "../../../models/project";
-import { Node, Edge, NodeType } from "../../../models/project";
+import { Node, Edge } from "../../../models/project";
 import {
   SAVE_PROJECT,
   FETCHING_PROJECT,
@@ -21,6 +21,7 @@ import {
   CHANGE_CONNECTOR_ATTRIBUTE_VALUE,
   CHANGE_EDGE_VISIBILITY,
   CHANGE_ACTIVE_BLOCKNODE,
+  DELETE_PROJECT_ERROR,
 } from "./types";
 
 export function save(project: Project): ProjectActionTypes {
@@ -113,14 +114,10 @@ export function updateBlockPosition(
   };
 }
 
-export function changeNodeVisibility(
-  node: Node,
-  isParent: boolean,
-  type: NodeType
-) {
+export function changeNodeVisibility(node: Node, isParent: boolean) {
   return {
     type: CHANGE_NODE_VISIBILITY,
-    payload: { node, isParent, type },
+    payload: { node, isParent },
   };
 }
 
@@ -206,6 +203,15 @@ export function changeConnectorAttributeValue(
       unit,
       nodeId,
       connectorId,
+    },
+  };
+}
+
+export function deleteProjectError(key: string) {
+  return {
+    type: DELETE_PROJECT_ERROR,
+    payload: {
+      key,
     },
   };
 }

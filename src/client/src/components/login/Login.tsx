@@ -1,4 +1,4 @@
-import { LoginIcon } from "../../assets/icons";
+import { LoginIcon } from "../../assets/icons/common";
 import { TextResources } from "../../assets/textResources";
 
 export const Login = () => {

@@ -1,12 +1,12 @@
-import "./getIcon.scss";
 import {
   WhiteArrowIcon,
   LeftArrowIcon,
   SearchIcon,
-} from "../../../assets/icons";
+} from "../../../assets/icons/common";
+import "./getIcon.scss";
 
 interface Props {
-  icon: String;
+  icon: string;
   onClick?: Function;
 }
 

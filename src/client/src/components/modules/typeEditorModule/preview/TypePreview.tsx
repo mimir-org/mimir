@@ -4,7 +4,7 @@ import { PreviewInstruction } from "../styled";
 import { ListWrapper } from "../../../../componentLibrary";
 import { AddEditButton } from "../../../../componentLibrary/buttons";
 import { TextResources } from "../../../../assets/textResources";
-import { AddIcon, CheckmarkIcon } from "../../../../assets/icons";
+import { AddIcon, CheckmarkIcon } from "../../../../assets/icons/common";
 
 interface Props {
   mode: string;

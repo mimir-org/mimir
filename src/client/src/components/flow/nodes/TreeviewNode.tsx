@@ -1,17 +1,16 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
-import { GetHandleType } from "../helpers";
-import { HandlerWrapper } from "../styled";
-import { RELATION_TYPE } from "../../../models/project";
+import { Connector } from "../../../models/project";
+import { GetHandleType, IsPartOfTerminal } from "../helpers/common";
+import { HandlerBox } from "../../../componentLibrary/blockView";
+import { TreeNodeNameBox } from "../../../componentLibrary/treeView";
 
 const TreeviewNode: FC<NodeProps> = ({ data }) => {
   const [isHover, setIsHover] = useState(false);
   const [timer, setTimer] = useState(false);
 
-  const connectorIsVisible = (connector) => {
-    if (connector.relationType === RELATION_TYPE.PartOf && isHover)
-      return "true";
-    return "false";
+  const connectorIsVisible = (conn: Connector) => {
+    return IsPartOfTerminal(conn) && isHover;
   };
 
   useEffect(() => {
@@ -35,29 +34,28 @@ const TreeviewNode: FC<NodeProps> = ({ data }) => {
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => mouseNodeLeave()}
     >
-      {data.connectors &&
-        data.connectors.map((connector) => {
-          const [typeHandler, positionHandler] = GetHandleType(connector);
+      {data.connectors?.map((connector) => {
+        const [typeHandler, positionHandler] = GetHandleType(connector);
 
-          return (
-            <HandlerWrapper
-              onMouseEnter={() => setIsHover(true)}
-              onMouseLeave={() => setIsHover(false)}
-              key={connector.id}
-              display={connectorIsVisible(connector)}
+        return (
+          <HandlerBox
+            onMouseEnter={() => setIsHover(true)}
+            onMouseLeave={() => setIsHover(false)}
+            key={connector.id}
+            visible={connectorIsVisible(connector)}
+            pos={positionHandler}
+          >
+            <Handle
+              type={typeHandler}
               position={positionHandler}
-            >
-              <Handle
-                type={typeHandler}
-                position={positionHandler}
-                id={connector.id}
-                key={connector.id}
-                className="function-treeview-handler"
-              />
-            </HandlerWrapper>
-          );
-        })}
-      <div>{data.label ?? data.name}</div>
+              id={connector.id}
+              key={connector.id}
+              className="function-treeview-handler"
+            />
+          </HandlerBox>
+        );
+      })}
+      <TreeNodeNameBox>{data.label ?? data.name}</TreeNodeNameBox>
     </div>
   );
 };

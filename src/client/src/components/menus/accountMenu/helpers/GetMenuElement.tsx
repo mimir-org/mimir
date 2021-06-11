@@ -1,5 +1,5 @@
 import { authProvider } from "../../../../providers/authProvider";
-import { LogoutIcon } from "../../../../assets/icons";
+import { LogoutIcon } from "../../../../assets/icons/common";
 import { TextResources } from "../../../../assets/textResources";
 import { MenuButton } from "../../../../componentLibrary/buttons";
 import { UserState } from "../../../../redux/store/user/types";

@@ -4,18 +4,17 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Node } from "../../../models/project";
 import { RootState } from "../../../redux/store";
-import { IsLocationNode } from "../../flow/helpers";
-import { LoadState, SaveState } from "../../../redux/store/localStorage";
+import { IsLocationNode } from "../../flow/helpers/common";
 import { IsBlockView } from "../../flow/helpers/block";
 import {
-  changeSplitView,
-  setSplitViewNode,
+  setSplitNode,
+  setSplitView,
 } from "../../../redux/store/splitView/actions";
 
 export const SplitViewComponent = () => {
   const dispatch = useDispatch();
   const [isVisible, setIsVisible] = useState(IsBlockView());
-  const [isActive, SetIsActive] = useState(LoadState("splitview"));
+  const [isActive, SetIsActive] = useState(false);
   const selectedNode = useSelector<RootState>((state) =>
     state.projectState.project?.nodes?.find((x) => x.isSelected)
   ) as Node;
@@ -26,16 +25,14 @@ export const SplitViewComponent = () => {
 
     if (!selectedNode) {
       SetIsActive(false);
-      SaveState(false, "splitview");
     }
   }, [selectedNode]);
 
   const handleClick = () => {
     if (IsLocationNode(selectedNode)) return;
+    if (isActive) dispatch(setSplitNode(null));
     SetIsActive(!isActive);
-    SaveState(!isActive, "splitview");
-    dispatch(changeSplitView(!isActive));
-    dispatch(setSplitViewNode(null));
+    dispatch(setSplitView(!isActive));
   };
 
   return (
