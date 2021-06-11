@@ -3,6 +3,7 @@ import {
   FETCHING_INITIAL_DATA,
   FETCHING_RDS,
   FETCHING_TERMINALS,
+  FETCHING_ATTRIBUTES,
   CHANGE_ASPECT,
   TypeEditorActionTypes,
 } from "./types";
@@ -56,7 +57,7 @@ export function getInitialData(): TypeEditorActionTypes {
 
 export function getRDS(aspect: string): TypeEditorActionTypes {
   return {
-    type: FETCHING_RDS,
+    type: FETCHING_ATTRIBUTES,
     payload: {
       aspect,
     },
@@ -67,6 +68,15 @@ export function getTerminals(): TypeEditorActionTypes {
   return {
     type: FETCHING_TERMINALS,
     payload: null,
+  };
+}
+
+export function getAttributes(aspect: string): TypeEditorActionTypes {
+  return {
+    type: FETCHING_RDS,
+    payload: {
+      aspect,
+    },
   };
 }
 

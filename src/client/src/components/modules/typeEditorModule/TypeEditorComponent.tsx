@@ -11,6 +11,7 @@ import {
   getInitialData,
   getRDS,
   getTerminals,
+  getAttributes,
 } from "../../../redux/store/typeEditor/actions";
 import {
   DropdownMenu,
@@ -50,6 +51,7 @@ export const TypeEditorComponent = ({ mode }: Props) => {
     dispatch(getInitialData());
     dispatch(getRDS(state.aspect));
     dispatch(getTerminals());
+    dispatch(getAttributes(state.aspect));
   }, [dispatch, state.aspect]);
 
   return (

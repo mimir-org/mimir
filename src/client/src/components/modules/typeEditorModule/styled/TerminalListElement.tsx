@@ -3,14 +3,18 @@ import { Color, FontSize, FontType } from "../../../../componentLibrary";
 
 const TerminalListElement = styled.div`
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 433px;
-  height: 34px;
-  background: #d9eaeb;
+  flex-direction: column;
+  width: inherit;
+  padding: 2px 1px;
   font-family: ${FontType.Standard};
   font-size: ${FontSize.Standard};
   color: ${Color.Black};
+  :nth-child(odd) {
+    background-color: #d9eaeb;
+  }
+  :nth-child(even) {
+    background-color: ${Color.White};
+  }
   p {
     margin: 0px;
   }
@@ -21,13 +25,6 @@ const TerminalListElement = styled.div`
     color: ${Color.Black};
     font-family: ${FontType.Standard};
     font-size: ${FontSize.Standard};
-  }
-
-  img {
-    margin-left: auto;
-    padding-right: 8px;
-    width: 13px;
-    height: 13px;
   }
 `;
 

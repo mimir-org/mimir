@@ -13,7 +13,7 @@ export const RDSList = () => {
   ) as TypeEditorState;
 
   return (
-    <ListWrapper width={185}>
+    <ListWrapper flex={0.5}>
       <ListHeader
         label={TextResources.TypeEditor_Properties_RDS}
         chooseVisible={true}
