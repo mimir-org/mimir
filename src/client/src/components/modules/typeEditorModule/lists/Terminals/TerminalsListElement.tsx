@@ -8,7 +8,7 @@ interface Props {
 }
 
 export const TerminalsListElement = ({ name }: Props) => {
-  const [quantity, setQuantity] = useState(0);
+  const [, setQuantity] = useState(0);
 
   const numberInput = (e) => {
     if (e.length > 2) {

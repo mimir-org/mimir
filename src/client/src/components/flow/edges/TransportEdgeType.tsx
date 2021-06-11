@@ -1,17 +1,5 @@
-import { IsAspectNode, GetCenter } from "../helpers/common";
-import {
-  getBezierPath,
-  getMarkerEnd,
-  getSmoothStepPath,
-  EdgeText,
-  ArrowHeadType,
-} from "react-flow-renderer";
-import {
-  LINE_EDGE_TYPE,
-  LineEdgeType,
-  Node,
-  NODE_TYPE,
-} from "../../../models/project";
+import { Node } from "../../../models/project";
+import { getMarkerEnd, getSmoothStepPath } from "react-flow-renderer";
 
 export default function TransportEdgeType({
   id,
@@ -27,16 +15,16 @@ export default function TransportEdgeType({
   markerEndId,
 }) {
   const markerEnd = getMarkerEnd(arrowHeadType, markerEndId);
-  const [centerX, centerY] = GetCenter({ sourceX, sourceY, targetX, targetY });
+  //   const [centerX, centerY] = GetCenter({ sourceX, sourceY, targetX, targetY });
 
-  const edgePathBezier = getBezierPath({
-    sourceX,
-    sourceY,
-    sourcePosition,
-    targetX,
-    targetY,
-    targetPosition,
-  });
+  //   const edgePathBezier = getBezierPath({
+  //     sourceX,
+  //     sourceY,
+  //     sourcePosition,
+  //     targetX,
+  //     targetY,
+  //     targetPosition,
+  //   });
 
   const edgePathSmoothStep = getSmoothStepPath({
     sourceX,

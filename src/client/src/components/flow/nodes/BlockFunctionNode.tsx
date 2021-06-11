@@ -2,7 +2,7 @@ import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { Connector, Edge, Node } from "../../../models/project";
+import { Connector, Node } from "../../../models/project";
 import { GetConnectChildren, SortConnectors } from "../helpers/common";
 import { Size } from "../../../componentLibrary";
 import { TerminalsIcon, ConnectIcon } from "../../../assets/icons/blockView";
@@ -118,7 +118,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
       ) as HTMLElement;
       allEdges.style.zIndex = "3";
     }
-  });
+  }, [mainConnectNode]);
 
   return (
     <NodeBox
