@@ -18,9 +18,9 @@ export const TypeEditorModule = () => {
 
   const [mode, setMode] = useState("");
   const handleClick = (param) => {
+    setMode(param);
     dispatch(changeFlowView(VIEW_TYPE.TYPE_EDITOR));
     push(`/home/${VIEW_TYPE.TYPE_EDITOR}`);
-    setMode(param);
   };
 
   return (

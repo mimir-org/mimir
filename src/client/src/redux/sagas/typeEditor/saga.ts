@@ -3,6 +3,7 @@ import {
   FETCHING_INITIAL_SUCCESS_OR_ERROR,
   FETCHING_RDS_SUCCESS_OR_ERROR,
   FETCHING_TERMINALS_SUCCESS_OR_ERROR,
+  FETCHING_ATTRIBUTES_SUCCESS_OR_ERROR,
   TypeEditorActionTypes,
 } from "../../store/typeEditor/types";
 
@@ -95,6 +96,35 @@ export function* getTerminals(action) {
 
     yield put({
       type: FETCHING_TERMINALS_SUCCESS_OR_ERROR,
+      payload: payload,
+    });
+  }
+}
+
+export function* getAttributes(action) {
+  try {
+    const attributesURL =
+      process.env.REACT_APP_API_BASE_URL +
+      "typeeditor/attributes/" +
+      action.payload.aspect;
+
+    const attributesResponse = yield call(get, attributesURL);
+
+    const payload = {
+      AttributeType: attributesResponse.data,
+    };
+
+    yield put({
+      type: FETCHING_ATTRIBUTES_SUCCESS_OR_ERROR,
+      payload: payload,
+    });
+  } catch (error) {
+    const payload = {
+      AttributeType: [],
+    };
+
+    yield put({
+      type: FETCHING_ATTRIBUTES_SUCCESS_OR_ERROR,
       payload: payload,
     });
   }

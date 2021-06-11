@@ -11,6 +11,7 @@ import {
   FETCHING_INITIAL_DATA,
   FETCHING_RDS,
   FETCHING_TERMINALS,
+  FETCHING_ATTRIBUTES,
 } from "../store/typeEditor/types";
 import { FETCHING_CONTRACTORS } from "../store/common/types";
 
@@ -23,7 +24,12 @@ import {
   updateProject,
 } from "./project/saga";
 import { getContractors } from "./common/saga";
-import { getInitialData, getRDS, getTerminals } from "./typeEditor/saga";
+import {
+  getInitialData,
+  getRDS,
+  getTerminals,
+  getAttributes,
+} from "./typeEditor/saga";
 
 export function* sagas() {
   yield all([
@@ -37,5 +43,6 @@ export function* sagas() {
     takeEvery(FETCHING_INITIAL_DATA, getInitialData),
     takeEvery(FETCHING_RDS, getRDS),
     takeEvery(FETCHING_TERMINALS, getTerminals),
+    takeEvery(FETCHING_ATTRIBUTES, getAttributes),
   ]);
 }

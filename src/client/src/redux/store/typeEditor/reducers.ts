@@ -5,6 +5,8 @@ import {
   FETCHING_INITIAL_SUCCESS_OR_ERROR,
   FETCHING_TERMINALS,
   FETCHING_TERMINALS_SUCCESS_OR_ERROR,
+  FETCHING_ATTRIBUTES,
+  FETCHING_ATTRIBUTES_SUCCESS_OR_ERROR,
   CHANGE_ASPECT,
   TypeEditorActionTypes,
   TypeEditorState,
@@ -60,6 +62,19 @@ export function typeEditorReducer(
         ...state,
         fetching: false,
         terminals: action.payload.terminals,
+      };
+    case FETCHING_ATTRIBUTES:
+      return {
+        ...state,
+        fetching: true,
+      };
+    case FETCHING_ATTRIBUTES_SUCCESS_OR_ERROR:
+      return {
+        ...state,
+        fetching: false,
+        attributes: action.payload.AttributeType
+          ? action.payload.AttributeType
+          : [],
       };
     case CHANGE_ASPECT:
       return {
