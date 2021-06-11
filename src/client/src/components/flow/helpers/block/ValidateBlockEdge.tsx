@@ -1,4 +1,4 @@
-import { Node, Connector, Edge } from "../../../../models/project";
+import { Node, Connector } from "../../../../models/project";
 import red from "../../../../redux/store";
 import {
   IsChildOf,
