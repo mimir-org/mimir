@@ -30,5 +30,5 @@ export { default as SortConnectors } from "./SortConnectors";
 export { default as SortLocationConnectors } from "./SortLocationConnectors";
 export { default as GetConnectorName } from "./GetConnectorName";
 export { default as GetBlockNodeTypes } from "../block/GetBlockNodeTypes";
-export { default as SetDarkMode } from "./SetDarkMode";
+export { default as SetDarkModeColor } from "./SetDarkModeColor";
 export * from "./types";

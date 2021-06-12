@@ -1,9 +1,7 @@
 export { default as Aspect } from "./Aspect";
-export { default as Function } from "./Function";
-export { default as Product } from "./Product";
 export { default as FunctionBlock } from "./FunctionBlock";
 export { default as OffPage } from "./OffPage";
 export { default as BlockFunctionNode } from "./BlockFunctionNode";
-export { default as TreeviewNode } from "./TreeviewNode";
 export { default as BlockLocationNode } from "./BlockLocationNode";
+export { default as TreeviewNode } from "./TreeviewNode";
 export { default as Block } from "./Block";

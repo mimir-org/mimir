@@ -10,6 +10,8 @@ import { GetTreeEdgeType } from "./helpers/tree";
 import { IsBlockView } from "./helpers/block";
 import { changeInspectorTab } from "../../redux/store/inspector/actions";
 import ReactFlow, { ReactFlowProvider, Elements } from "react-flow-renderer";
+import { SetDarkModeColor } from "./helpers/common";
+import red from "../../redux/store";
 import {
   updatePosition,
   changeActiveNode,
@@ -88,6 +90,11 @@ const FlowTree = () => {
       }
     }
   };
+
+  useEffect(() => {
+    const darkMode = red.store.getState().darkMode.active as boolean;
+    SetDarkModeColor(darkMode);
+  }, []);
 
   // Force rerender
   useEffect(() => {

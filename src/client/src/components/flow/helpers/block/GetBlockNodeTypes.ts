@@ -1,6 +1,5 @@
 import {
   Aspect,
-  Product,
   FunctionBlock,
   BlockFunctionNode,
   BlockLocationNode,
@@ -13,7 +12,6 @@ const GetBlockNodeTypes = {
   AspectProduct: Aspect,
   BlockFunctionNode: BlockFunctionNode,
   BlockLocationNode: BlockLocationNode,
-  Product: Product,
   FunctionBlock: FunctionBlock,
   Offpage: OffPage,
 };
