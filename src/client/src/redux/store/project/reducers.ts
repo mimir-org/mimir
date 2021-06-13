@@ -32,6 +32,7 @@ import {
   CHANGE_EDGE_VISIBILITY,
   CHANGE_ACTIVE_BLOCKNODE,
   DELETE_PROJECT_ERROR,
+  SET_ACTIVE_CONNECTOR,
 } from "./types";
 
 const initialState: ProjectState = {
@@ -422,6 +423,29 @@ export function projectReducer(
                           ),
                         }
                       : connector
+                  ),
+                }
+              : node
+          ),
+        },
+      };
+
+    case SET_ACTIVE_CONNECTOR:
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          nodes: state.project.nodes.map((node) =>
+            node.id === action.payload.node.id
+              ? {
+                  ...node,
+                  connectors: node.connectors.map((conn) =>
+                    conn.id === action.payload.connectorId
+                      ? {
+                          ...conn,
+                          visible: action.payload.visible,
+                        }
+                      : conn
                   ),
                 }
               : node

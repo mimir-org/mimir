@@ -1,7 +1,7 @@
-import { Connector } from "../../../models/project";
+import { Node } from "../../../models/project";
 import { HandleBox } from "../../../componentLibrary/blockView";
-import { GetBlockHandleType } from "../helpers/block";
-import { Handle } from "react-flow-renderer";
+import { GetBlockHandleType, StackTerminals } from "../helpers/block";
+import { Handle, Position } from "react-flow-renderer";
 import {
   GetConnectorIcon,
   GetHandlePosition,
@@ -9,31 +9,29 @@ import {
 } from "../helpers/common";
 
 interface Props {
-  drawConns: boolean;
-  data: any;
-  list: Connector[];
-  selectedConn: Connector;
+  visible: boolean;
+  data: Node;
   type?: string;
 }
 
-const HandleComponent = ({
-  drawConns,
-  data,
-  list,
-  selectedConn,
-  type,
-}: Props) => {
+const HandleComponent = ({ visible, data, type }: Props) => {
+  let inputCount = 0;
+  let outputCount = 0;
   return type === "block" ? (
     <>
-      {drawConns &&
-        list?.map((conn) => {
+      {visible &&
+        data.connectors?.map((conn) => {
           const [type, pos, className] = GetBlockHandleType(conn);
-          if (selectedConn?.id === conn.id) {
+          if (conn.visible) {
+            if (pos === Position.Right) outputCount++;
+            if (pos === Position.Left) inputCount++;
             return (
               <HandleBox
                 id={"handle-" + conn.id}
                 position={GetHandlePosition(pos)}
                 key={conn.id}
+                inputCount={StackTerminals(inputCount)}
+                outputCount={StackTerminals(outputCount)}
               >
                 <Handle
                   type={type}

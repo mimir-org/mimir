@@ -29,6 +29,7 @@ export const CHANGE_ATTRIBUTE_VALUE = "CHANGE_ATTRIBUTE_VALUE";
 export const CHANGE_CONNECTOR_ATTRIBUTE_VALUE =
   "CHANGE_CONNECTOR_ATTRIBUTE_VALUE";
 export const DELETE_PROJECT_ERROR = "DELETE_PROJECT_ERROR";
+export const SET_ACTIVE_CONNECTOR = "SET_ACTIVE_CONNECTOR";
 
 // State types
 export interface ProjectState {
@@ -210,6 +211,15 @@ interface DeleteProjectErrorAction {
   };
 }
 
+interface SetActiveConnector {
+  type: typeof SET_ACTIVE_CONNECTOR;
+  payload: {
+    node: Node;
+    connectorId: string;
+    visible: boolean;
+  };
+}
+
 export type ProjectActionTypes =
   | FetchingProjectAction
   | SearchProjectAction
@@ -234,4 +244,5 @@ export type ProjectActionTypes =
   | ChangeNodePropValue
   | ChangeAttributeValue
   | ChangeAttributeConnectorValue
-  | DeleteProjectErrorAction;
+  | DeleteProjectErrorAction
+  | SetActiveConnector;

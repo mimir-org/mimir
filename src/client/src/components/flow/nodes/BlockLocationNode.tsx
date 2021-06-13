@@ -4,12 +4,14 @@ import { TerminalsIcon } from "../../../assets/icons/blockView";
 import { Connector, NODE_TYPE } from "../../../models/project";
 import { NodeBox, TerminalsMenu } from "../../../componentLibrary/blockView";
 import { HandleComponent, TerminalsComponent } from "../block";
+import { setActiveConnector } from "../../../redux/store/project/actions";
+import { useDispatch } from "react-redux";
 
 const BlockLocationNode: FC<NodeProps> = ({ data }) => {
+  const dispatch = useDispatch();
   const [terminalButton, showTerminalButton] = useState(false);
   const [terminalMenu, showTerminalMenu] = useState(false);
-  const [drawConnectors, setDrawConnectors] = useState(false);
-  const [selectedConnector, setSelectedConnector] = useState(null);
+  const [visible, setVisible] = useState(false);
 
   const handleTerminalClick = () => {
     showTerminalMenu(!terminalMenu);
@@ -23,10 +25,11 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
     showTerminalButton(false);
   };
 
-  const handleConnectorClick = (connector: Connector) => {
-    setSelectedConnector(connector);
-    setDrawConnectors(true);
+  const onConnectorClick = (conn: Connector) => {
+    setVisible(true);
     showTerminalMenu(false);
+
+    dispatch(setActiveConnector(data, conn.id, true));
   };
 
   useEffect(() => {
@@ -59,23 +62,16 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
         list={data.connectors}
         type={NODE_TYPE.LOCATION}
         width={data.width}
-        onClick={handleConnectorClick}
+        onClick={onConnectorClick}
       ></TerminalsComponent>
 
       <HandleComponent
-        drawConns={drawConnectors}
+        visible={true}
         data={data}
-        list={data.connectors}
-        selectedConn={selectedConnector}
         type={"block"}
       ></HandleComponent>
 
-      <HandleComponent
-        drawConns={drawConnectors}
-        data={data}
-        list={data.connectors}
-        selectedConn={selectedConnector}
-      ></HandleComponent>
+      <HandleComponent visible={visible} data={data}></HandleComponent>
     </NodeBox>
   );
 };

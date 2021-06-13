@@ -6,6 +6,7 @@ import { Connector, Node } from "../../../models/project";
 import { GetConnectChildren, SortConnectors } from "../helpers/common";
 import { Size } from "../../../componentLibrary";
 import { TerminalsIcon, ConnectIcon } from "../../../assets/icons/blockView";
+import { setActiveConnector } from "../../../redux/store/project/actions";
 import {
   FindNodeById,
   SetConnectNodeDefaultSize,
@@ -34,8 +35,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const [connectMenu, showConnectMenu] = useState(false);
   const connectChildren = GetConnectChildren(data);
   const hasChildren = connectChildren?.length > 0;
-  const [drawConnectors, setDrawConnectors] = useState(false);
-  const [selectedConnector, setSelectedConnector] = useState(null);
+  const [visible, setVisible] = useState(false);
   const sortedConns = SortConnectors(data.connectors) as Connector[];
 
   const mainConnectNode = useSelector<RootState>(
@@ -66,18 +66,19 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     showConnectButton(false);
   };
 
-  const onConnectorClick = (connector: Connector) => {
-    setSelectedConnector(connector);
-    setDrawConnectors(true);
+  const onConnectorClick = (conn: Connector) => {
+    setVisible(true);
     showTerminalMenu(false);
     showConnectMenu(false);
+
+    dispatch(setActiveConnector(data, conn.id, true));
   };
 
   const onChange = (node: Node) => {
     if (!isChecked(node)) {
-      data.width = Size.ConnectView_Width;
-      data.length = Size.ConnectView_Length;
-      dispatch(addMainConnectNode(data));
+      node.width = Size.ConnectView_Width;
+      node.length = Size.ConnectView_Length;
+      dispatch(addMainConnectNode(node));
       dispatch(addConnectNode(node));
     } else {
       connectNodes.length === 1 && showConnectMenu(false);
@@ -154,19 +155,12 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
       ></ConnectViewComponent>
 
       <HandleComponent
-        drawConns={drawConnectors}
+        visible={true}
         data={data}
-        list={data.connectors}
-        selectedConn={selectedConnector}
         type="block"
       ></HandleComponent>
 
-      <HandleComponent
-        drawConns={drawConnectors}
-        data={data}
-        list={data.connectors}
-        selectedConn={selectedConnector}
-      ></HandleComponent>
+      <HandleComponent visible={visible} data={data}></HandleComponent>
     </NodeBox>
   );
 };

@@ -179,6 +179,7 @@ export interface Connector {
   attributes?: Attribute[] | null;
   mediaColor: string | null;
   transportColor: string | null;
+  visible: boolean | false;
 }
 
 export interface Edge {
