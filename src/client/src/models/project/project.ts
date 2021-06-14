@@ -180,6 +180,7 @@ export interface Connector {
   mediaColor: string | null;
   transportColor: string | null;
   visible: boolean | false;
+  order: number;
 }
 
 export interface Edge {

@@ -13,4 +13,5 @@ export { default as ValidateBlockEdge } from "./ValidateBlockEdge";
 export { default as IsBlockView } from "./IsBlockView";
 export { default as IsBlockChecked } from "./IsBlockChecked";
 export { default as StackTerminals } from "./StackTerminals";
+export { default as CalculateTerminalOrder } from "./CalculateTerminalOrder";
 export { default as GetBlockEdgeTypes } from "./GetBlockEdgeTypes";

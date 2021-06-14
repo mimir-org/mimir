@@ -217,6 +217,7 @@ interface SetActiveConnector {
     node: Node;
     connectorId: string;
     visible: boolean;
+    order: number;
   };
 }
 

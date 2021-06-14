@@ -1,10 +1,8 @@
 import { useDispatch } from "react-redux";
 import red from "../../../redux/store";
 import { changeEdgeVisibility } from "../../../redux/store/project/actions";
-import { MenuColumn, MenuSubHeader } from "../../../componentLibrary/box/menus";
 import { useState } from "react";
 import { CheckEdges } from "./helpers";
-import { TextResources } from "../../../assets/textResources";
 
 const FilterContent = ({ type, index }) => {
   const dispatch = useDispatch();
@@ -16,6 +14,7 @@ const FilterContent = ({ type, index }) => {
   const [checked, setChecked] = useState(!isChecked);
 
   const handleChange = () => {
+    // if type === typeOf RELATION_TYPE
     if (edges) {
       setChecked(!checked);
       edgesRemove.forEach((_edge, index) => {
@@ -24,20 +23,16 @@ const FilterContent = ({ type, index }) => {
         );
       });
     }
+    // if type === typeOf TERMINAL
+    // if type === typeOf TERMINAL_CATEGORY
   };
 
   return (
-    <MenuColumn>
-      {index === 0 && (
-        <MenuSubHeader>{TextResources.Filter_Other}</MenuSubHeader>
-      )}
-
-      <label className={"checkbox-filter"}>
-        <input type="checkbox" checked={checked} onChange={handleChange} />
-        <span className="checkmark-filter"></span>
-        {type}
-      </label>
-    </MenuColumn>
+    <label className={"checkbox-filter"}>
+      <input type="checkbox" checked={checked} onChange={handleChange} />
+      <span className="checkmark-filter"></span>
+      {type}
+    </label>
   );
 };
 

@@ -444,6 +444,7 @@ export function projectReducer(
                       ? {
                           ...conn,
                           visible: action.payload.visible,
+                          order: action.payload.order,
                         }
                       : conn
                   ),

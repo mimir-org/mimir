@@ -65,6 +65,7 @@ const CreateOffPageNode = (
     mediaColor: "",
     transportColor: "",
     visible: false,
+    order: 0,
   };
 
   const partOfConnector = {
@@ -80,6 +81,7 @@ const CreateOffPageNode = (
     mediaColor: "",
     transportColor: "",
     visible: false,
+    order: 0,
   };
 
   node.connectors.push(targetConnector);

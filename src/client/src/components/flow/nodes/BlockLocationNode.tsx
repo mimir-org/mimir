@@ -6,12 +6,12 @@ import { NodeBox, TerminalsMenu } from "../../../componentLibrary/blockView";
 import { HandleComponent, TerminalsComponent } from "../block";
 import { setActiveConnector } from "../../../redux/store/project/actions";
 import { useDispatch } from "react-redux";
+import { CalculateTerminalOrder } from "../helpers/block";
 
 const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
   const [terminalButton, showTerminalButton] = useState(false);
   const [terminalMenu, showTerminalMenu] = useState(false);
-  const [visible, setVisible] = useState(false);
 
   const handleTerminalClick = () => {
     showTerminalMenu(!terminalMenu);
@@ -26,10 +26,9 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   };
 
   const onConnectorClick = (conn: Connector) => {
-    setVisible(true);
     showTerminalMenu(false);
-
-    dispatch(setActiveConnector(data, conn.id, true));
+    const order = CalculateTerminalOrder(data, 0, conn.type);
+    dispatch(setActiveConnector(data, conn.id, true, order));
   };
 
   useEffect(() => {
@@ -65,13 +64,8 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
         onClick={onConnectorClick}
       ></TerminalsComponent>
 
-      <HandleComponent
-        visible={true}
-        data={data}
-        type={"block"}
-      ></HandleComponent>
-
-      <HandleComponent visible={visible} data={data}></HandleComponent>
+      <HandleComponent data={data} type={"block"}></HandleComponent>
+      <HandleComponent data={data}></HandleComponent>
     </NodeBox>
   );
 };

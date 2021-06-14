@@ -220,7 +220,8 @@ export function deleteProjectError(key: string) {
 export function setActiveConnector(
   node: Node,
   connectorId: string,
-  visible: boolean
+  visible: boolean,
+  order: number
 ) {
   return {
     type: SET_ACTIVE_CONNECTOR,
@@ -228,6 +229,7 @@ export function setActiveConnector(
       node,
       connectorId,
       visible,
+      order,
     },
   };
 }

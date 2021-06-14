@@ -63,13 +63,23 @@
   z-index: 1 !important;
 }
 
+.react-flow__handle {
+  opacity: 1;
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 100%;
+  border: none !important;
+  background-color: transparent !important;
+}
+
 .blockView-handle-right {
   width: 13px !important;
   height: 13px !important;
   top: 0px;
   right: -5px !important;
   border: none;
-  background-color: transparent;
+  background-color: transparent !important;
   z-index: 1 !important;
 }
 
@@ -123,16 +133,6 @@
 
 .react-flow__edges {
   z-index: 2;
-}
-
-.react-flow__handle {
-  opacity: 1;
-  position: absolute;
-  width: 14px;
-  height: 14px;
-  border-radius: 100%;
-  border: none !important;
-  background-color: transparent !important;
 }
 
 .react-flow__handle-right {
