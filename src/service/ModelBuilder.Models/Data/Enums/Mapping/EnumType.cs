@@ -6,9 +6,14 @@ namespace Mb.Models.Data.Enums.Mapping
 {
     public enum EnumType
     {
-        Unit =0,
-        AttributeCondition=1,
-        AttributeFormat=2
+        Unit = 0,
+        AttributeCondition = 1,
+        AttributeQualifier = 2,
+        AttributeSource = 3,
+        RdsCategory = 4,
+        TerminalCategory = 5,
+        AttributeFormat = 6,
+        BuildStatus = 7
     }
 
     public static class EnumTypeExtension {
@@ -29,7 +34,12 @@ namespace Mb.Models.Data.Enums.Mapping
         {
             EnumTypes.Add(0, typeof(Unit));
             EnumTypes.Add(1, typeof(AttributeCondition));
-            EnumTypes.Add(2, typeof(AttributeFormat));
+            EnumTypes.Add(2, typeof(AttributeQualifier));
+            EnumTypes.Add(3, typeof(AttributeSource));
+            EnumTypes.Add(4, typeof(RdsCategory));
+            EnumTypes.Add(5, typeof(TerminalCategory));
+            EnumTypes.Add(6, typeof(AttributeFormat));
+            EnumTypes.Add(7, typeof(BuildStatus));
         }
     }
 }

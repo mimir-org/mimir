@@ -7,7 +7,7 @@ namespace Mb.Models.Enums
         [Display(Name = "Not set")]
         NotSet = 0,
 
-        [Display(Name = "Object")]
+        [Display(Name = "Object Block")]
         ObjectBlock = 1,
 
         [Display(Name = "Transport")]

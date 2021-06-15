@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Not set",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "Functional Systems",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "Technical Systems",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "Components",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "Transports",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "Interfaces",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "Spaces",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "Construction Entities",
+    "description": null,
+    "semanticReference": null
+  }
+]

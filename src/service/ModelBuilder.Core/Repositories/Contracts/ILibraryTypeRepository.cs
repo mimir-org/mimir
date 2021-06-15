@@ -5,5 +5,6 @@ namespace Mb.Core.Repositories.Contracts
 {
     public interface ILibraryTypeRepository : IGenericRepository<ModelBuilderDbContext, LibraryType>
     {
+
     }
 }

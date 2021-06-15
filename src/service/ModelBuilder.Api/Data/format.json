@@ -1,0 +1,42 @@
+[
+  {
+    "name": "NotSet",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "Unsigned Float",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "Float",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "Unsigned Integer",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "Table",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "Selection",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "Text and doc reference",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "Boolean",
+    "description": null,
+    "semanticReference": null
+  }
+]

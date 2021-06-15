@@ -1,10 +1,9 @@
-﻿using System;
-using AutoMapper;
-using Mb.Core.Extensions;
+﻿using AutoMapper;
 using Mb.Core.Repositories.Contracts;
 using Mb.Models.Data;
 using Mb.Models.Enums;
 using Attribute = Mb.Models.Data.Attribute;
+using NodeType = Mb.Models.Enums.NodeType;
 
 namespace Mb.Core.Profiles
 {
@@ -14,28 +13,15 @@ namespace Mb.Core.Profiles
         {
             CreateMap<LibraryType, LibNode>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.Rds, opt => opt.MapFrom(src => src.Rds))
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.TypeName))
-                .ForMember(dest => dest.Label, opt => opt.MapFrom(src => src.TypeName))
-                .ForMember(dest => dest.Icon, opt => opt.MapFrom(src => MapIconType(src.ObjectType, src.Aspect)))
-                .ForMember(dest => dest.Type, opt => opt.MapFrom(src => MapNodeType(src.Aspect)))
-                .ForMember(dest => dest.Connectors, opt => opt.MapFrom(src => src.Terminals))
-                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.RdsCategory.GetDisplayName()))
-                .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
-                .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
-                .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version));
-
-            CreateMap<TerminalType, Connector>()
-                .ForMember(dest => dest.NodeId, opt => opt.Ignore())
-                .ForMember(dest => dest.Node, opt => opt.Ignore())
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Terminal.GetDisplayName()))
-                .ForMember(dest => dest.RelationType, opt => opt.MapFrom(src => RelationType.Transport))
-                .ForMember(dest => dest.TerminalCategory, opt => opt.MapFrom(src => src.TerminalCategory))
-                .ForMember(dest => dest.Terminal, opt => opt.MapFrom(src => src.Terminal))
-                .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.ConnectorType))
-                .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
-                .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes));
+                //.ForMember(dest => dest.Rds, opt => opt.MapFrom(src => src.Rds)) // TODO: Fix this
+                //.ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.TypeName)) // TODO: Fix this
+                //.ForMember(dest => dest.Label, opt => opt.MapFrom(src => src.TypeName)) // TODO: Fix this
+                //.ForMember(dest => dest.Type, opt => opt.MapFrom(src => MapNodeType(src.Aspect))) // TODO: Fix this
+                //.ForMember(dest => dest.Connectors, opt => opt.MapFrom(src => src.Terminals)) // TODO: Fix this
+                //.ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.RdsCategory.Name)) // TODO: Fix this
+                //.ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes)) // TODO: Fix this
+                .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference));
+            //.ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version)); // TODO: Fix this
 
             CreateMap<AttributeType, Attribute>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateUniqueId()))
@@ -59,24 +45,6 @@ namespace Mb.Core.Profiles
                 Aspect.Product => NodeType.Product,
                 Aspect.Location => NodeType.Location,
                 _ => NodeType.NotSet
-            };
-        }
-
-        public static IconType MapIconType(ObjectType objectType, Aspect aspect)
-        {
-            return objectType switch
-            {
-                ObjectType.NotSet => IconType.NotSetIcon,
-                ObjectType.ObjectBlock => aspect switch
-                {
-                    Aspect.Function => IconType.FunctionIcon,
-                    Aspect.Product => IconType.ProductIcon,
-                    Aspect.Location => IconType.LocationIcon,
-                    _ => IconType.NotSetIcon
-                },
-                ObjectType.Interface => IconType.InterfaceIcon,
-                ObjectType.Transport => IconType.TransportIcon,
-                _ => throw new ArgumentOutOfRangeException(nameof(objectType), objectType, null)
             };
         }
     }

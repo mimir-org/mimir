@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Mb.Core.Exceptions;
 using Mb.Core.Extensions;
 using Mb.Core.Services.Contracts;
+using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Enums;
 using Microsoft.AspNetCore.Authorization;
@@ -40,10 +41,10 @@ namespace Mb.Core.Controllers.V1
         /// Get all library types
         /// </summary>
         /// <returns></returns>
-        [HttpGet("types")]
+        [HttpGet("")]
         [ProducesResponseType(typeof(ICollection<LibraryType>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public IActionResult GetAllTypes()
+        public IActionResult GetAllLibraryTypes()
         {
             try
             {
@@ -90,27 +91,6 @@ namespace Mb.Core.Controllers.V1
             try
             {
                 var data = _typeEditorService.GetAspects();
-                return Ok(data);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
-        }
-
-        /// <summary>
-        /// Get all units
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("units")]
-        [ProducesResponseType(typeof(Dictionary<int, string>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public IActionResult GetUnits()
-        {
-            try
-            {
-                var data = _typeEditorService.GetUnits();
                 return Ok(data);
             }
             catch (Exception e)
@@ -186,27 +166,6 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
-        /// Get terminal categories
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("terminalCategories")]
-        [ProducesResponseType(typeof(Dictionary<int, string>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public IActionResult GetTerminalCategories()
-        {
-            try
-            {
-                var data = _typeEditorService.GetTerminalCategories();
-                return Ok(data);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
-        }
-
-        /// <summary>
         /// Get terminal types
         /// </summary>
         /// <returns></returns>
@@ -230,21 +189,24 @@ namespace Mb.Core.Controllers.V1
         /// <summary>
         /// Create an attribute type
         /// </summary>
-        /// <param name="attributeType"></param>
+        /// <param name="createAttributeType"></param>
         /// <returns></returns>
         [HttpPost("attribute")]
         [ProducesResponseType(typeof(AttributeType), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CreateAttributeType([FromBody] AttributeType attributeType)
+        public async Task<IActionResult> CreateAttributeType([FromBody] CreateAttributeType createAttributeType)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                var createdAttribute = await _typeEditorService.CreateAttributeType(attributeType);
+                var createdAttribute = await _typeEditorService.CreateAttributeType(createAttributeType);
+                if (createdAttribute == null)
+                    return BadRequest("The attribute already exist");
+
                 return Ok(createdAttribute);
             }
             catch (Exception e)
@@ -257,21 +219,24 @@ namespace Mb.Core.Controllers.V1
         /// <summary>
         /// Create a terminal type
         /// </summary>
-        /// <param name="terminalType"></param>
+        /// <param name="createTerminalType"></param>
         /// <returns></returns>
         [HttpPost("terminal")]
         [ProducesResponseType(typeof(AttributeType), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CreateTerminalType([FromBody] TerminalType terminalType)
+        public async Task<IActionResult> CreateTerminalType([FromBody] CreateTerminalType createTerminalType)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                var createdTerminalType = await _typeEditorService.CreateTerminalType(terminalType);
+                var createdTerminalType = await _typeEditorService.CreateTerminalType(createTerminalType);
+                if (createdTerminalType == null)
+                    return BadRequest("The terminal type already exist");
+
                 return Ok(createdTerminalType);
             }
             catch (Exception e)
@@ -290,14 +255,14 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(typeof(LibraryType), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateType([FromBody] LibraryType libraryType)
+        public async Task<IActionResult> CreateLibraryType([FromBody] CreateLibraryType libraryType)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                var data = await _typeEditorService.CreateLibraryComponent(libraryType);
+                var data = await _typeEditorService.CreateLibraryType(libraryType);
                 return Ok(data);
             }
             catch (ModelBuilderDuplicateException e)

@@ -33,13 +33,14 @@ namespace Mb.Core.Services
             {
                 if (node.Connectors != null)
                 {
-                    foreach (var connector in node.Connectors)
-                    {
-                        connector.MediaColor = _commonRepository.GetTerminalColor(connector.Terminal,
-                            connector.TerminalCategory, connector.RelationType, node.Type)?.Color;
-                        connector.TransportColor = _commonRepository.GetTerminalColor(Terminal.NotSet,
-                            connector.TerminalCategory, connector.RelationType, node.Type)?.Color;
-                    }
+                    // TODO: Fix this
+                    //foreach (var connector in node.Connectors)
+                    //{
+                    //    connector.MediaColor = _commonRepository.GetTerminalColor(connector.Terminal,
+                    //        connector.TerminalCategory, connector.RelationType, node.Type)?.Color;
+                    //    connector.TransportColor = _commonRepository.GetTerminalColor(Terminal.NotSet,
+                    //        connector.TerminalCategory, connector.RelationType, node.Type)?.Color;
+                    //}
                 }
 
                 yield return node;

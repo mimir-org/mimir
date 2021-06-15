@@ -1,45 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
 
 namespace Mb.Models.Data
 {
     public class AttributeType
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Entity { get; set; }
-        public AttributeQualifier Qualifier { get; set; }
-        public AttributeSource Source { get; set; }
-        public AttributeCondition Condition { get; set; }
-        public ICollection<Unit> Units { get; set; }
         public Aspect Aspect { get; set; }
+
+        public string QualifierId { get; set; }
+        public AttributeQualifier Qualifier { get; set; }
+
+        public string SourceId { get; set; }
+        public AttributeSource Source { get; set; }
+        
+        public string ConditionId { get; set; }
+        public AttributeCondition Condition { get; set; }
+        
+        public ICollection<Unit> Units { get; set; }
+        
+        public string FormatId { get; set; }
         public AttributeFormat Format { get; set; }
-        public bool IsInterface { get; set; }
-        public bool IsTerminalType { get; set; }
 
-        public override bool Equals(object obj)
-        {
-            if (obj == null || GetType() != obj.GetType())
-                return false;
-
-
-            if (!(obj is AttributeType))
-                return false;
-
-            var b = (AttributeType) obj;
-
-            return Entity.Equals(b.Entity) &&
-                   Qualifier.Equals(b.Qualifier) &&
-                   Source.Equals(b.Source) &&
-                   Condition.Equals(b.Condition) &&
-                   Aspect.Equals(b.Aspect) &&
-                   IsInterface.Equals(b.IsInterface) &&
-                   IsTerminalType.Equals(b.IsTerminalType);
-        }
-
-        public override int GetHashCode()
-        {
-            throw new NotImplementedException();
-        }
+        public virtual ICollection<TerminalType> TerminalTypes { get; set; }
+        public virtual ICollection<NodeType> NodeTypes { get; set; }
+        public virtual ICollection<TransportType> TransportTypes { get; set; }
     }
 }

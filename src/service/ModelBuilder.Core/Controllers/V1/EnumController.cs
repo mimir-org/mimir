@@ -8,6 +8,7 @@ using Mb.Core.Repositories.Contracts;
 using Mb.Core.Services.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Data;
+using Mb.Models.Data.Enums;
 using Mb.Models.Data.Enums.Mapping;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

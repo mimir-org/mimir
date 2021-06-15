@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Mb.Models.Enums;
+using Mb.Models.Data.Enums;
 
 namespace Mb.Models.Data
 {
@@ -24,13 +24,10 @@ namespace Mb.Models.Data
         [Required]
         public string Name { get; set; }
 
-        [Required]
-        public IconType Icon { get; set; }
-
         public string Label { get; set; }
 
         [Required]
-        public NodeType Type { get; set; }
+        public Models.Enums.NodeType Type { get; set; }
 
         [Required]
         public decimal PositionX { get; set; }
@@ -67,6 +64,7 @@ namespace Mb.Models.Data
         public int Order { get; set; }
 
         [Required]
+        public string StatusId { get; set; }
         public BuildStatus Status { get; set; }
 
         public string UpdatedBy { get; set; }

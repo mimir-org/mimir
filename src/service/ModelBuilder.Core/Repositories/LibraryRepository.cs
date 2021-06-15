@@ -23,8 +23,8 @@ namespace Mb.Core.Repositories
         public IEnumerable<LibNode> GetAll(string searchString)
         {
             var libraryTypeComponents = string.IsNullOrEmpty(searchString) ? 
-                _libraryTypeComponentRepository.GetAll().OrderBy(x => x.TypeName).Take(30).ToList() : 
-                _libraryTypeComponentRepository.GetAll().OrderBy(x => x.TypeName).Where(x => x.TypeName.ToLower().Contains(searchString.ToLower())).Take(30).ToList();
+                _libraryTypeComponentRepository.GetAll().OrderBy(x => x.Name).Take(30).ToList() : 
+                _libraryTypeComponentRepository.GetAll().OrderBy(x => x.Name).Where(x => x.Name.ToLower().Contains(searchString.ToLower())).Take(30).ToList();
 
             return ConvertToLibNode(libraryTypeComponents);
         }
@@ -33,7 +33,7 @@ namespace Mb.Core.Repositories
         {
             foreach (var libraryTypeComponent in types)
             {
-                libraryTypeComponent.CreateFromJsonData();
+                //libraryTypeComponent.CreateFromJsonData(); // TODO: Fix this
                 var mappedNode = _mapper.Map<LibNode>(libraryTypeComponent);
                 
                 foreach (var connector in mappedNode.Connectors)
@@ -54,17 +54,14 @@ namespace Mb.Core.Repositories
 
         private Connector CreateRelationConnector(RelationType relationType, ConnectorType connectorType, string name)
         {
-            return new Connector
+            return new Relation
             {
                 Id = _generateIdRepository.CreateUniqueId(),
                 Name = name,
                 Type = connectorType,
-                TerminalCategory = TerminalCategory.NotSet,
                 RelationType = relationType,
-                Terminal = Terminal.NotSet,
                 NodeId = null,
                 Node = null,
-                Attributes = null,
                 SemanticReference = null
             };
         }

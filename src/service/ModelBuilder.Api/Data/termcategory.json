@@ -1,0 +1,56 @@
+[
+  {
+    "name": "Not Set",
+    "description": null,
+    "semanticReference": null,
+    "color": "" 
+  },
+  {
+    "name": "Material Fluid",
+    "description": null,
+    "semanticReference": null,
+    "color": "#0066FF"
+  },
+  {
+    "name": "Material Granulate",
+    "description": null,
+    "semanticReference": null,
+    "color": "#CC9900"
+  },
+  {
+    "name": "Material Pieces",
+    "description": null,
+    "semanticReference": null,
+    "color": "#663300"
+  },
+  {
+    "name": "Energy Electrical",
+    "description": null,
+    "semanticReference": null,
+    "color": "#FF0000"
+  },
+  {
+    "name": "Energy Thermal",
+    "description": null,
+    "semanticReference": null,
+    "color": "#FF9900"
+  },
+  {
+    "name": "Energy Mechanical",
+    "description": null,
+    "semanticReference": null,
+    "color": "#CCCCCC"
+  },
+  {
+    "name": "Information",
+    "description": null,
+    "semanticReference": null,
+    "color": "#006600"
+  },
+  {
+    "name": "Force",
+    "description": null,
+    "semanticReference": null,
+    "color": "#000000"
+  }
+]

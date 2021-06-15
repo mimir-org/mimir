@@ -31,6 +31,7 @@ namespace Mb.Api
                 o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 o.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 o.SerializerSettings.Converters.Add(new StringEnumConverter());
+                //o.SerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
             });
 
 
