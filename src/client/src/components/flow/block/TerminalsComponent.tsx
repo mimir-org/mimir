@@ -19,17 +19,17 @@ interface Props {
 }
 
 const TerminalsComponent = ({ isOpen, list, type, width, onClick }: Props) => {
-  let sortedList = [];
+  let sortedList: Connector[] = [];
 
-  if (type === NODE_TYPE.LOCATION) sortedList = SortLocationConnectors(list);
-  else sortedList = SortConnectors(list);
+  type === NODE_TYPE.LOCATION
+    ? (sortedList = SortLocationConnectors(list))
+    : (sortedList = SortConnectors(list));
 
   return (
     <TerminalsBox visible={isOpen} type={type} width={width}>
-      {sortedList.map((conn: Connector) => (
+      {sortedList.map((conn) => (
         <TerminalsElement key={conn.id} onClick={() => onClick(conn)}>
           <p className="text"> {GetConnectorName(conn)}</p>
-
           <img
             src={GetConnectorIcon(conn.terminal)}
             alt="icon"

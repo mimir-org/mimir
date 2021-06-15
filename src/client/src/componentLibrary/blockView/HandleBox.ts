@@ -6,7 +6,7 @@ const HandleBox = styled.div`
     position: relative;
     background: url(${(props) => props.icon});
     visibility: ${(props) => (props.visible ? "visible" : "hidden")} !important;
-    top: -80px;
+    top: -95px;
     right: -${Size.Node_Width}px;
     margin-bottom: 3px;
   }
@@ -15,7 +15,7 @@ const HandleBox = styled.div`
     position: relative;
     background: url(${(props) => props.icon});
     visibility: ${(props) => (props.visible ? "visible" : "hidden")} !important;
-    top: -35px;
+    top: -45px;
     margin-bottom: 3px;
   }
 `;
