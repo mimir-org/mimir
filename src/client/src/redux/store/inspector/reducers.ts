@@ -12,6 +12,10 @@ const initialState = {
       visible: false,
     },
     {
+      type: ATTRIBUTE_TAB.RELATIONS,
+      visible: false,
+    },
+    {
       type: ATTRIBUTE_TAB.TERMINALS,
       visible: false,
     },

@@ -10,3 +10,6 @@ export { default as TabTitle } from "./TabTitle";
 export { default as ButtonBox } from "./ButtonBox";
 export { default as InspectorBox } from "./InspectorBox";
 export { default as AnimatedInspector } from "./AnimatedInspector";
+export { default as RelationColumns } from "./RelationColumns";
+export { default as AspectList } from "./AspectList";
+export { default as ButtonGoToAspect } from "./ButtonGoToAspect";

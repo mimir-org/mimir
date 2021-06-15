@@ -8,7 +8,7 @@ const Input = styled.input`
   margin-bottom: 10px;
   padding: 5px;
   height: 31px;
-  text-align: center;
+  text-align: left;
   margin-right: ${(props) => props.inputType === "tech" && "4px"};
   background-color: ${(props: { readOnly: boolean }) =>
     props.readOnly ? "#f2f2f2" : "#fff"};

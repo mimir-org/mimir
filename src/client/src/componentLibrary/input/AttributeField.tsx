@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const AttributeField = styled.div`
-  margin: 10px;
+  height: 30%;
   font-size: 12px;
   width: 300px;
 

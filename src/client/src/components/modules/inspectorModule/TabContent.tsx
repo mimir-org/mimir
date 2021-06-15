@@ -2,8 +2,9 @@ import { Attribute, Node } from "../../../models/project";
 import { TabRow } from "../../../componentLibrary/box/inspector";
 import { useDispatch } from "react-redux";
 import { IsTransportTerminal, CreateId } from "../../flow/helpers/common";
-import { CalculateRows, SetConnectorColumn, SetNodeColumn } from "./helpers";
+import { CalculateRows, SetConnectorColumn } from "./helpers";
 import { Input, InputBox, Select, AttributeField } from "../../../componentLibrary";
+import { RelationTabComponent } from ".";
 import {
   changeAttributeValue,
   changeConnectorAttributeValue,
@@ -11,6 +12,7 @@ import {
 import {
   InputWrapper,
 } from "./styled";
+import { changeSelectedAspect } from "../../../redux/store/typeEditor/actions";
 interface Props {
   node: Node;
   index?: number;
@@ -62,6 +64,11 @@ const TabContent = ({ node, index }: Props) => {
   };
   const rows = CalculateRows(nodeAttributes.length);
   let count = rows;
+
+  function goToAspect(aspect){
+    console.log(aspect)
+  }
+
   return (
     <>
       {/* TODO: Refactor, rewrite sorting function?
@@ -118,6 +125,12 @@ const TabContent = ({ node, index }: Props) => {
             handleChange={handleOnConnectorChange}
           ></SetConnectorColumn>
         </TabRow>
+      )}
+
+      {index === 3 && (
+        <RelationTabComponent
+        node={node}
+        />
       )}
     </>
   );

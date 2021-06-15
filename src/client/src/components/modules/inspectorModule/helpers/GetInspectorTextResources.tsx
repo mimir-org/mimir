@@ -6,9 +6,9 @@ const GetInspectorTextResource = (index: number) => {
     : index === 1
     ? TextResources.Inspector_TechInfo
     : index === 2
-    ? TextResources.Inspector_Relations
+    ? TextResources.Inspector_Terminals
     : index === 3
-    ? TextResources.Inspector_Inhereted
+    ? TextResources.Inspector_Relations
     : index === 4
     ? TextResources.Inspector_Comments
     : index === 5
