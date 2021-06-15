@@ -1,5 +1,6 @@
 import { TextResources } from "../../../assets/textResources";
 import { LegendModule } from "../legendModule";
+import { TypeEditorModule } from "../typeEditorModule";
 import { LibraryComponent } from "./index";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -122,7 +123,8 @@ const LibraryModule = () => {
           <p className="text">{TextResources.Library_Heading}</p>
         </ModuleHead>
         <ModuleBody visible={libraryOpen} library>
-          <LibraryComponent categories={libNodes()} search={search} />
+          {/* <LibraryComponent categories={libNodes()} search={search} /> */}
+          <TypeEditorModule />
         </ModuleBody>
 
         <AnimatedModule

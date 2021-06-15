@@ -3,14 +3,22 @@ import { ListElem } from "../../../../../componentLibrary";
 import { HelpIcon } from "../../../../../assets/icons/common";
 
 interface Props {
-  name: string;
+  source: string;
+  entity: string;
+  qualifier: string;
+  condition: string;
 }
 
-export const AttributesListElement = ({ name }: Props) => {
+export const AttributesListElement = ({
+  source,
+  entity,
+  qualifier,
+  condition,
+}: Props) => {
   return (
     <ListElem>
       <Checkbox />
-      {name}
+      {source}, {entity}, - {qualifier}, {condition}
       <img src={HelpIcon} alt="help" />
     </ListElem>
   );

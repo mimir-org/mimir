@@ -18,18 +18,20 @@ export const AttributesListBody = ({ listElements }: Props) => {
   return (
     <VerticalScrollbar height={200}>
       <ListElementsContainer>
-        {listElements &&
+        {/* {listElements &&
           listElements
             .filter((element) => element[1].aspect === state.aspect)
             .map((element) => (
               <>
-                {console.log(element)}
                 <AttributesListElement
-                  key={element[0]}
-                  name={element[1].entity}
+                  key={element[1].id}
+                  entity={element[1].entity}
+                  qualifier={element[1].qualifier}
+                  source={element[1].source}
+                  condition={element[1].condition}
                 />
               </>
-            ))}
+            ))} */}
       </ListElementsContainer>
     </VerticalScrollbar>
   );

@@ -1,3 +1,7 @@
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../redux/store";
+import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
+
 import { ListHeader } from "../lists/ListHeader";
 import { PreviewBody } from "../preview/PreviewBody";
 import { PreviewInstruction } from "../styled";
@@ -6,11 +10,10 @@ import { AddEditButton } from "../../../../componentLibrary/buttons";
 import { TextResources } from "../../../../assets/textResources";
 import { AddIcon, CheckmarkIcon } from "../../../../assets/icons/common";
 
-interface Props {
-  mode: string;
-}
-
-export const TypePreview = ({ mode }: Props) => {
+export const TypePreview = () => {
+  const state = useSelector<RootState>(
+    (state) => state.typeEditor
+  ) as TypeEditorState;
   return (
     <>
       <ListWrapper flex={1.5} right={0}>
@@ -24,12 +27,12 @@ export const TypePreview = ({ mode }: Props) => {
         </PreviewInstruction>
         <AddEditButton>
           <p>
-            {mode === "new"
+            {state.mode === "new"
               ? TextResources.TypeEditor_Button_Add
               : TextResources.TypeEditor_Button_Edit}
           </p>
           <img
-            src={mode === "new" ? AddIcon : CheckmarkIcon}
+            src={state.mode === "new" ? AddIcon : CheckmarkIcon}
             alt="icon"
             className="icon"
           />
