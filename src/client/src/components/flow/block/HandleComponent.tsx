@@ -1,4 +1,4 @@
-import { Node } from "../../../models/project";
+import { Connector, Node } from "../../../models/project";
 import { HandleBox } from "../../../componentLibrary/blockView";
 import { GetBlockHandleType } from "../helpers/block";
 import { Handle } from "react-flow-renderer";
@@ -6,7 +6,9 @@ import { Position } from "react-flow-renderer";
 import {
   GetConnectorIcon,
   GetHandlePosition,
+  IsLocationNode,
   SortConnectors,
+  SortLocationConnectors,
 } from "../helpers/common";
 
 interface Props {
@@ -14,7 +16,12 @@ interface Props {
 }
 
 const HandleComponent = ({ data }: Props) => {
-  const sortedTerminals = SortConnectors(data.connectors);
+  let sortedTerminals: Connector[] = [];
+
+  IsLocationNode(data)
+    ? (sortedTerminals = SortLocationConnectors(data.connectors))
+    : (sortedTerminals = SortConnectors(data.connectors));
+
   return (
     <>
       {sortedTerminals.map((conn) => {
@@ -24,7 +31,7 @@ const HandleComponent = ({ data }: Props) => {
             id={"handle-" + conn.id}
             position={GetHandlePosition(pos)}
             key={conn.id}
-            visible={conn.visible}
+            visible={true} // TODO: fix
             icon={GetConnectorIcon(conn.terminal)}
           >
             <Handle
