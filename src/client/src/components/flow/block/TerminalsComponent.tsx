@@ -1,10 +1,7 @@
 import { Node, Connector } from "../../../models/project";
 import { GetConnectorIcon, GetConnectorName } from "../helpers/common";
 import { FilterConnectors } from "../helpers/block";
-import {
-  TerminalsBox,
-  TerminalsElement,
-} from "../../../componentLibrary/blockView";
+import { TerminalsBox, TerminalsElement } from "../../../compLibrary/blockView";
 
 interface Props {
   isOpen: boolean;

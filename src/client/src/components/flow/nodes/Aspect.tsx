@@ -1,6 +1,6 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
-import { HandleBox } from "../../../componentLibrary/treeView";
+import { HandleBox } from "../../../compLibrary/treeView";
 import { GetFlowAspectIcon, GetHandleType } from "../helpers/common";
 
 const Aspect: FC<NodeProps> = ({ data }) => {

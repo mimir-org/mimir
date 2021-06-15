@@ -1,6 +1,6 @@
 import { Node } from "../../../../models/project";
 import { FlowElement } from "react-flow-renderer";
-import { Size } from "../../../../componentLibrary";
+import { Size } from "../../../../compLibrary";
 
 const CreateConnectViewNode = (node: Node): FlowElement => {
   let connectViewBlock = null;

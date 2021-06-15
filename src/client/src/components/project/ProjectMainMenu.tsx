@@ -9,7 +9,7 @@ import {
   ProjectBody,
   ProjectBox,
   ProjectElement,
-} from "../../componentLibrary/box/project";
+} from "../../compLibrary/box/project";
 
 export const ProjectMainMenu = () => {
   const dispatch = useDispatch();

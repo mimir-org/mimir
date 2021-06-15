@@ -7,7 +7,7 @@ import {
   LibraryCategoryElement,
   LibraryElement,
   LibraryElementIcon,
-} from "../../../componentLibrary/box/library";
+} from "../../../compLibrary/box/library";
 
 interface Props {
   category: LibCategory;

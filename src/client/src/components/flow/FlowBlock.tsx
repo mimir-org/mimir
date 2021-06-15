@@ -2,22 +2,19 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ProjectMainMenu } from "../project";
 import { RootState } from "../../redux/store/index";
-import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
+import { FullScreenBox } from "../../compLibrary/controls";
 import { EDGE_TYPE, EdgeType } from "../../models/project";
 import { OpenProjectMenu } from "../project/openProject";
 import { changeActiveBlockNode } from "../../redux/store/project/actions";
-import { Color } from "../../componentLibrary";
-import { BackgroundBox } from "../../componentLibrary/blockView";
+import { Color } from "../../compLibrary";
+import { BackgroundBox } from "../../compLibrary/blockView";
 import { changeInspectorTab } from "../../redux/store/inspector/actions";
+import { setSplitView, setNode } from "../../redux/store/splitView/actions";
 import red from "../../redux/store";
 import {
   addMainConnectNode,
-  removeAllConnectNodes,
+  removeConnectNodes,
 } from "../../redux/store/connectView/actions";
-import {
-  setSplitView,
-  setSplitNode,
-} from "../../redux/store/splitView/actions";
 import {
   GetBlockNodeTypes,
   IsFunctionNode,
@@ -57,7 +54,7 @@ const FlowBlock = () => {
   // Flush ConnectView
   useEffect(() => {
     dispatch(addMainConnectNode(null));
-    dispatch(removeAllConnectNodes());
+    dispatch(removeConnectNodes());
   }, [dispatch]);
 
   const project = useSelector<RootState>(
@@ -171,7 +168,7 @@ const FlowBlock = () => {
   // Flush SplitView
   useEffect(() => {
     dispatch(setSplitView(false));
-    dispatch(setSplitNode(null));
+    dispatch(setNode(null));
   }, [dispatch]);
 
   useEffect(() => {
@@ -209,7 +206,7 @@ const FlowBlock = () => {
               zoomOnScroll={false}
               paneMoveable={false}
             >
-              <FullscreenBox />
+              <FullScreenBox />
               <BackgroundBox
                 visible={showBackground}
                 isSplitView={splitView}

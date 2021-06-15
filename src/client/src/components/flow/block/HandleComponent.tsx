@@ -1,6 +1,6 @@
 import { Node } from "../../../models/project";
 import red from "../../../redux/store";
-import { HandleBox } from "../../../componentLibrary/blockView";
+import { HandleBox } from "../../../compLibrary/blockView";
 import { Handle } from "react-flow-renderer";
 import { GetConnectorIcon, GetHandlePosition } from "../helpers/common";
 import { FilterConnectors, GetBlockHandleType } from "../helpers/block";

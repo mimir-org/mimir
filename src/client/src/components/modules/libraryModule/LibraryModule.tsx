@@ -7,11 +7,11 @@ import { RootState } from "../../../redux/store";
 import { LibraryState } from "../../../redux/store/library/types";
 import { searchLibrary } from "../../../redux/store/library/actions";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
-import { AnimatedModule, Size } from "../../../componentLibrary";
+import { AnimatedModule, Size } from "../../../compLibrary";
 import { ValidateLibComponent } from "./helpers";
 import { IsBlockView } from "../../flow/helpers/block";
-import { ModuleBody, ModuleHead } from "../../../componentLibrary/box/modules";
-import { LegendHead, LegendIcons } from "../../../componentLibrary/box/library";
+import { ModuleBody, ModuleHead } from "../../../compLibrary/box/modules";
+import { LegendHead, LegendIcons } from "../../../compLibrary/box/library";
 import { MODULE_TYPE, LibCategory, Node } from "../../../models/project";
 import {
   LegendIcon,

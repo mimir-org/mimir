@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { ProjectSimple, PROJECT_MENU_TYPE } from "../../../models/project";
 import { CloseIcon, RightArrowIcon } from "../../../assets/icons/common";
-import { MenuButton } from "../../../componentLibrary/buttons";
+import { MenuButton } from "../../../compLibrary/buttons";
 import { TextResources } from "../../../assets/textResources";
 import { get } from "../../../redux/store/project/actions";
 import { changeProjectMenu } from "../../../redux/store/projectMenu/actions";
@@ -14,7 +14,7 @@ import {
   ProjectBox,
   HeaderBox,
   ButtonBox,
-} from "../../../componentLibrary/box/project";
+} from "../../../compLibrary/box/project";
 
 export const OpenProjectMenu = () => {
   const dispatch = useDispatch();

@@ -2,8 +2,7 @@ import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
 import { Connector } from "../../../models/project";
 import { GetHandleType, IsPartOfTerminal } from "../helpers/common";
-import { HandleBox } from "../../../componentLibrary/treeView";
-import { TreeNodeNameBox } from "../../../componentLibrary/treeView";
+import { HandleBox, TreeNodeNameBox } from "../../../compLibrary/treeView";
 
 const TreeviewNode: FC<NodeProps> = ({ data }) => {
   const [isHover, setIsHover] = useState(false);

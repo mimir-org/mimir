@@ -3,7 +3,7 @@ import { RootState } from "../../../redux/store";
 import { EyeIcon, ToggleDown, ToggleUp } from "../../../assets/icons/common";
 import { TextResources } from "../../../assets/textResources";
 import InspectorTabs from "./InspectorTabs";
-import { Size } from "../../../componentLibrary";
+import { Size } from "../../../compLibrary";
 import { MODULE_TYPE } from "../../../models/project";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import { IsExplorerModule, IsLibraryModule } from "../../flow/helpers/common";
@@ -13,7 +13,7 @@ import {
   AnimatedInspector,
   IconWrapper,
   ButtonBox,
-} from "../../../componentLibrary/box/inspector";
+} from "../../../compLibrary/box/inspector";
 
 const InspectorModule = () => {
   const dispatch = useDispatch();

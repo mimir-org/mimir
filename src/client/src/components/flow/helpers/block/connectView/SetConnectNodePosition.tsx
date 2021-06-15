@@ -1,7 +1,7 @@
 import { Node } from "../../../../../models/project";
 import red from "../../../../../redux/store";
 import { CalculateXPosition, CalculateYPosition } from ".";
-import { Size } from "../../../../../componentLibrary";
+import { Size } from "../../../../../compLibrary";
 
 const SetConnectNodePosition = (node: Node) => {
   const mainConnectNode = red.store.getState().connectView.mainNode as Node;

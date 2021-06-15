@@ -9,16 +9,13 @@ import { IsBlockView } from "../flow/helpers/block";
 import red from "../../redux/store";
 import { setDarkMode } from "../../redux/store/darkMode/actions";
 import { SetDarkModeColor } from "../flow/helpers/common";
-import {
-  setSplitView,
-  setSplitNode,
-} from "../../redux/store/splitView/actions";
+import { setSplitView, setNode } from "../../redux/store/splitView/actions";
 import {
   HeaderBox,
   IconBox,
   ProjectTitleBox,
   ViewLinkBox,
-} from "../../componentLibrary/box/header/";
+} from "../../compLibrary/box/header/";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -31,7 +28,7 @@ const Header = () => {
     if (e.target.alt === VIEW_TYPE.BLOCKVIEW && !selectedNode) return;
     const view = e.target.alt;
     dispatch(setSplitView(false));
-    dispatch(setSplitNode(null));
+    dispatch(setNode(null));
     dispatch(changeFlowView(view));
     push(`/home/${view}`);
   };

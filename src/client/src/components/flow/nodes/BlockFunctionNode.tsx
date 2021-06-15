@@ -3,17 +3,14 @@ import { NodeProps } from "react-flow-renderer";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { Connector, Node } from "../../../models/project";
-import { Size } from "../../../componentLibrary";
+import { Size } from "../../../compLibrary";
 import { TerminalsIcon, ConnectIcon } from "../../../assets/icons/blockView";
 import { setActiveConnector } from "../../../redux/store/project/actions";
 import { TerminalsComponent, ConnectViewComponent } from "../block";
 import { HandleComponent } from "../block";
 import { GetConnectChildren } from "../helpers/common";
 import { CalculateTerminalOrder, FilterConnectors } from "../helpers/block";
-import {
-  FindNodeById,
-  SetConnectNodeDefaultSize,
-} from "../helpers/block/connectionView";
+import { FindNodeById, SetConnectNodeSize } from "../helpers/block/connectView";
 import {
   addConnectNode,
   addMainConnectNode,
@@ -23,7 +20,7 @@ import {
   NodeBox,
   TerminalsMenu,
   ConnectMenu,
-} from "../../../componentLibrary/blockView";
+} from "../../../compLibrary/blockView";
 
 const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
@@ -48,11 +45,11 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
 
   const isConnectViewNode = data.id === mainConnectNode?.id;
 
-  const onTerminalClick = () => {
+  const onTerminalMenuClick = () => {
     showTerminalMenu(!terminalMenu);
   };
 
-  const onConnClick = () => {
+  const onConnectMenuClick = () => {
     showConnectMenu(!connectMenu);
   };
 
@@ -98,7 +95,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   }, [connectNodes.length, dispatch]);
 
   useEffect(() => {
-    SetConnectNodeDefaultSize(mainConnectNode, connectNodes);
+    SetConnectNodeSize(mainConnectNode, connectNodes);
   }, [mainConnectNode, data, connectNodes]);
 
   useEffect(() => {
@@ -131,12 +128,12 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
         length={data.length}
         isSelectedConnection={isConnectViewNode}
       >
-        <TerminalsMenu visible={terminalButton} onClick={onTerminalClick}>
+        <TerminalsMenu visible={terminalButton} onClick={onTerminalMenuClick}>
           <img src={TerminalsIcon} alt="options" />
         </TerminalsMenu>
         <ConnectMenu
           visible={connectButton && hasChildren}
-          onClick={onConnClick}
+          onClick={onConnectMenuClick}
         >
           <img src={ConnectIcon} alt="options" />
         </ConnectMenu>

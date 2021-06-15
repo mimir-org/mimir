@@ -3,9 +3,9 @@ import { ExpandIcon, CloseIcon } from "../../assets/icons/controls";
 import { MODULE_TYPE } from "../../models/project";
 import { RootState } from "../../redux/store";
 import { changeAllModulesVisibility } from "../../redux/store/modules/actions";
-import FullscreenButton from "./FullscreenButton";
+import { FullScreenButton } from "./";
 
-const FullscreenBox = () => {
+const FullScreenBox = () => {
   const dispatch = useDispatch();
 
   const isOpen = useSelector<RootState>((state) =>
@@ -27,14 +27,14 @@ const FullscreenBox = () => {
   };
 
   return (
-    <FullscreenButton isExplorer={isExplorer} isInspector={isInspector}>
+    <FullScreenButton isExplorer={isExplorer} isInspector={isInspector}>
       <img
         src={isOpen ? ExpandIcon : CloseIcon}
         alt="fullscreen"
         onClick={handleOnClick}
       />
-    </FullscreenButton>
+    </FullScreenButton>
   );
 };
 
-export default FullscreenBox;
+export default FullScreenBox;

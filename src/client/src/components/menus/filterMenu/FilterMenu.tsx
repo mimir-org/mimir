@@ -8,7 +8,7 @@ import {
   MenuColumn,
   MenuMainHeader,
   MenuSubHeader,
-} from "../../../componentLibrary/box/menus";
+} from "../../../compLibrary/box/menus";
 
 const FilterModule = () => {
   const type = MENU_TYPE.VISUAL_FILTER;

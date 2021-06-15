@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../componentLibrary";
+import { Color } from "../../../compLibrary";
 
 const HeaderBox = styled.div`
   min-height: 49px;

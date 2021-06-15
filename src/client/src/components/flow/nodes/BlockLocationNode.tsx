@@ -2,7 +2,7 @@ import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { TerminalsIcon } from "../../../assets/icons/blockView";
 import { Connector, NODE_TYPE } from "../../../models/project";
-import { NodeBox, TerminalsMenu } from "../../../componentLibrary/blockView";
+import { NodeBox, TerminalsMenu } from "../../../compLibrary/blockView";
 import { HandleComponent, TerminalsComponent } from "../block";
 import { setActiveConnector } from "../../../redux/store/project/actions";
 import { useDispatch } from "react-redux";

@@ -1,7 +1,7 @@
-import { Input, InputBox, Select } from "../../../../componentLibrary";
+import { Input, InputBox, Select } from "../../../../compLibrary";
 import { Attribute } from "../../../../models/project";
 import { CreateId } from "../../../flow/helpers/common";
-import { TabColumn } from "../../../../componentLibrary/box/inspector";
+import { TabColumn } from "../../../../compLibrary/box/inspector";
 
 interface Props {
   list: Attribute[];
