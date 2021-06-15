@@ -10,11 +10,11 @@ const GetConnectChildren = (parentNode: Node): Node[] => {
   edges.forEach((edge) => {
     if (edge.fromNode === parentNode.id) {
       const node = nodes.find((x) => x.id === edge.toNode);
-      const connector = node?.connectors?.find(
+      const connector = node?.connectors.find(
         (x) => x.id === edge?.toConnector
       );
 
-      if (node.type === parentNode.type && !IsTransportTerminal(connector)) {
+      if (node?.type === parentNode?.type && !IsTransportTerminal(connector)) {
         elements.push(node);
       }
     }

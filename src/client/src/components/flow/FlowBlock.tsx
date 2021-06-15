@@ -9,6 +9,7 @@ import { changeActiveBlockNode } from "../../redux/store/project/actions";
 import { Color } from "../../componentLibrary";
 import { BackgroundBox } from "../../componentLibrary/blockView";
 import { changeInspectorTab } from "../../redux/store/inspector/actions";
+import red from "../../redux/store";
 import {
   addMainConnectNode,
   removeAllConnectNodes,
@@ -21,6 +22,7 @@ import {
   GetBlockNodeTypes,
   IsFunctionNode,
   IsLocationNode,
+  SetDarkModeColor,
 } from "./helpers/common";
 import {
   CreateBlockElements,
@@ -61,7 +63,7 @@ const FlowBlock = () => {
   }, [dispatch]);
 
   const project = useSelector<RootState>(
-    (state) => state.projectState.project
+    (state) => state.projectState?.project
   ) as Project;
 
   const node = project?.nodes?.find((node) => node.isSelected);
@@ -154,7 +156,7 @@ const FlowBlock = () => {
   };
 
   const OnDrop = (_event) => {
-    const selectedNode = project?.nodes?.find((x) => x.isSelected);
+    const selectedNode = project.nodes.find((x) => x.isSelected);
 
     return useOnDrop(
       _event,
@@ -188,6 +190,11 @@ const FlowBlock = () => {
     dispatch(setSplitView(false));
     dispatch(setSplitNode(null));
   }, [dispatch]);
+
+  useEffect(() => {
+    const darkMode = red.store.getState().darkMode.active as boolean;
+    SetDarkModeColor(darkMode);
+  }, []);
 
   window.onresize = () => {
     OnLoad(reactFlowInstance);

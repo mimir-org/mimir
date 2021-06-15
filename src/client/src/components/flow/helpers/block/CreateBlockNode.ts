@@ -13,6 +13,7 @@ const CreateBlockNode = (
 ): FlowElement => {
   let blockNode = null;
   if (!node) return blockNode;
+
   const connectNodes = red.store.getState().connectView.connectNodes as Node[];
   const type = IsLocationNode(node) ? "BlockLocationNode" : "BlockFunctionNode";
 
@@ -28,6 +29,11 @@ const CreateBlockNode = (
       node.width = Size.Node_Width;
       node.length = Size.Node_Length;
     }
+  }
+
+  if (IsLocationNode(node)) {
+    if (node.width === 0) node.width = Size.Node_Width;
+    if (node.length === 0) node.length = Size.Node_Length;
   }
 
   blockNode = {

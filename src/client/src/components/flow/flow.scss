@@ -131,7 +131,8 @@
   width: 14px;
   height: 14px;
   border-radius: 100%;
-  border: none;
+  border: none !important;
+  background-color: transparent !important;
 }
 
 .react-flow__handle-right {

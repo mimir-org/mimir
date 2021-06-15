@@ -2,15 +2,22 @@ import styled from "styled-components";
 import { Size } from "..";
 
 const BackgroundBox = styled.div`
+  position: absolute;
+  top: 85px !important;
   visibility: ${(props) => !props.visible && "hidden"};
   height: ${Size.BlockView_Height}px !important;
+
   width: ${(props) =>
     props.isSplitView
       ? `${Size.SplitView_Width}`
       : `${Size.BlockView_Width}`}px !important;
-  top: 85px !important;
-  left: ${(props) => (props.right ? "960" : "370")}px !important;
-  position: absolute;
+
+  left: ${(props) =>
+    props.right
+      ? `${Size.BlockView_MarginLeft + Size.SplitView_Width}`
+      : `${
+          Size.BlockView_MarginLeft - Size.BlockView_BackgroundMargin
+        }`}px !important;
 `;
 
 export default BackgroundBox;

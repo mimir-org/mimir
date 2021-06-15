@@ -1,14 +1,19 @@
 import styled from "styled-components";
 import { Size } from "..";
 
-const FunctionBox = styled.div`
+const BlockNodeBox = styled.div`
   position: absolute;
+  opacity: 1 !important;
   top: 40px;
   height: ${Size.BlockView_Height}px;
+
   width: ${(props) =>
     props.splitView ? `${Size.SplitView_Width}` : `${Size.BlockView_Width}`}px;
-  left: ${(props) => (props.location ? "440" : "-150")}px;
-  opacity: 1 !important;
+
+  left: ${(props) =>
+    props.location
+      ? `${Size.SplitView_Width - Size.BlockView_BackgroundMargin * 2}`
+      : -`${Size.SplitView_MarginLeft}`}px;
 
   .header {
     padding: 0px 0px 0px 22px;
@@ -28,4 +33,4 @@ const FunctionBox = styled.div`
   }
 `;
 
-export default FunctionBox;
+export default BlockNodeBox;

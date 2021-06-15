@@ -1,6 +1,8 @@
-const SetDarkMode = () => {
-  const mainColor = "#696969";
-  const moduleColor = "#A0A0A0";
+import { Color } from "../../../../componentLibrary";
+
+const SetDarkModeColor = (active: boolean) => {
+  let mainColor: string;
+  let moduleColor: string;
 
   const root = document.getElementById("root");
   const explorer = document.getElementById("Explorer");
@@ -8,6 +10,15 @@ const SetDarkMode = () => {
   const legend = document.getElementById("Legend");
   const inspector = document.getElementById("Inspector");
   const inspectorBody = document.getElementById("InspectorBody");
+
+  if (active) {
+    mainColor = "#888888";
+    moduleColor = "#A8A8A8";
+  } else {
+    mainColor = Color.White;
+    moduleColor = Color.LightGrey;
+  }
+
   root.style.background = mainColor;
   explorer.style.background = moduleColor;
   library.style.background = moduleColor;
@@ -16,4 +27,4 @@ const SetDarkMode = () => {
   inspectorBody.style.background = moduleColor;
 };
 
-export default SetDarkMode;
+export default SetDarkModeColor;

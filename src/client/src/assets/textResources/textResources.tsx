@@ -91,7 +91,7 @@ const textResources = {
   TypeEditor_Status: "Status",
   TypeEditor_Properties_Choose: "Choose",
   TypeEditor_Properties_RDS: "RDS",
-  TypeEditor_Properties_Terminals: "Terminals",
+  TypeEditor_Properties_Terminals: "Terminal Types",
   TypeEditor_Properties_Block_Attributes: "Object Block Attributes",
   TypeEditor_New_Type_Preview: "Type Preview Info",
   TypeEditor_Preview_Info: "Click on preview objects to see inspector info",
