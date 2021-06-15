@@ -33,9 +33,7 @@ const FilterConnectors = (connectors, type) => {
       connectorList.push(conn);
   });
 
-  SortConnectors(connectorList);
-
-  return connectorList;
+  return SortConnectors(connectorList);
 };
 
 export default FilterConnectors;

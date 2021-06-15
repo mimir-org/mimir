@@ -21,7 +21,7 @@ const HandleComponent = ({ data }: Props) => {
             id={"handle-" + conn.id}
             position={GetHandlePosition(pos)}
             key={conn.id}
-            visible={true} // TODO: fix
+            visible={conn.visible}
             icon={GetConnectorIcon(conn.terminal)}
           >
             <Handle
