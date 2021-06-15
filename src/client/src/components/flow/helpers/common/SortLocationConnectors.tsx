@@ -1,14 +1,14 @@
 import { IsInputConnector, IsLocationTerminal } from ".";
 
 const SortLocationConnectors = (connectors) => {
-  const availableConnectors = [];
+  const connectorList = [];
 
   connectors.forEach((conn) => {
     IsLocationTerminal(conn) &&
       IsInputConnector(conn) &&
-      availableConnectors.push(conn);
+      connectorList.push(conn);
   });
-  return availableConnectors;
+  return connectorList;
 };
 
 export default SortLocationConnectors;
