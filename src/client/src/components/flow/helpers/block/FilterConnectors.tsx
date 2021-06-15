@@ -32,7 +32,6 @@ const FilterConnectors = (connectors, type) => {
       !IsInputConnector(conn) &&
       connectorList.push(conn);
   });
-
   return SortConnectors(connectorList);
 };
 
