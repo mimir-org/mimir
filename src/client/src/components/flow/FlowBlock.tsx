@@ -42,8 +42,6 @@ import ReactFlow, {
 } from "react-flow-renderer";
 import {
   useOnConnect,
-  useOnConnectStart,
-  useOnConnectStop,
   useOnDrop,
   useOnElementsRemove,
   useOnNodeDragStop,
@@ -131,21 +129,6 @@ const FlowBlock = () => {
     );
   };
 
-  const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
-    return useOnConnectStart(e, { nodeId, handleType, handleId });
-  };
-
-  const OnConnectStop = (e) => {
-    return useOnConnectStop(
-      e,
-      project,
-      reactFlowInstance,
-      node.id,
-      reactFlowWrapper,
-      dispatch
-    );
-  };
-
   const OnDragOver = (event) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = "move";
@@ -223,8 +206,6 @@ const FlowBlock = () => {
               onDragOver={OnDragOver}
               onNodeDragStop={OnNodeDragStop}
               onElementClick={OnElementClick}
-              onConnectEnd={OnConnectStop}
-              onConnectStart={OnConnectStart}
               zoomOnScroll={false}
               paneMoveable={false}
             >

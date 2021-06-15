@@ -8,20 +8,18 @@ import {
   IsTransportTerminal,
 } from "../common";
 
-const GetBlockHandleType = (
-  conn: Connector
-): [HandleType, Position, string] => {
+const GetBlockHandleType = (conn: Connector): [HandleType, Position] => {
   if (
     !IsInputConnector(conn) &&
     (IsLocationTerminal(conn) ||
       IsFulfilledByTerminal(conn) ||
       IsPartOfTerminal(conn))
   ) {
-    return ["source", Position.Right, "blockView-handle-right"];
+    return ["source", Position.Right];
   }
 
   if (!IsInputConnector(conn) && IsTransportTerminal(conn)) {
-    return ["source", Position.Right, "blockView-handle-right"];
+    return ["source", Position.Right];
   }
 
   if (
@@ -30,11 +28,11 @@ const GetBlockHandleType = (
       IsFulfilledByTerminal(conn) ||
       IsPartOfTerminal(conn))
   ) {
-    return ["target", Position.Left, "blockView-handle-left"];
+    return ["target", Position.Left];
   }
 
   if (IsInputConnector(conn) && IsTransportTerminal(conn)) {
-    return ["target", Position.Left, "blockView-handle-left"];
+    return ["target", Position.Left];
   }
 };
 

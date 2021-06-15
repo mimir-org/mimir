@@ -2,7 +2,7 @@ import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
 import { Connector } from "../../../models/project";
 import { GetHandleType, IsPartOfTerminal } from "../helpers/common";
-import { HandlerBox } from "../../../componentLibrary/blockView";
+import { HandleBox } from "../../../componentLibrary/treeView";
 import { TreeNodeNameBox } from "../../../componentLibrary/treeView";
 
 const TreeviewNode: FC<NodeProps> = ({ data }) => {
@@ -38,7 +38,7 @@ const TreeviewNode: FC<NodeProps> = ({ data }) => {
         const [typeHandler, positionHandler] = GetHandleType(connector);
 
         return (
-          <HandlerBox
+          <HandleBox
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}
             key={connector.id}
@@ -52,7 +52,7 @@ const TreeviewNode: FC<NodeProps> = ({ data }) => {
               key={connector.id}
               className="function-treeview-handler"
             />
-          </HandlerBox>
+          </HandleBox>
         );
       })}
       <TreeNodeNameBox>{data.label ?? data.name}</TreeNodeNameBox>

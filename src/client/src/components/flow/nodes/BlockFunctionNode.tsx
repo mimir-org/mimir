@@ -1,22 +1,29 @@
 import { memo, FC, useState, useEffect } from "react";
-import { NodeProps } from "react-flow-renderer";
+import { NodeProps, Position } from "react-flow-renderer";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { Connector, Node } from "../../../models/project";
-import { GetConnectChildren, SortConnectors } from "../helpers/common";
+import { Handle } from "react-flow-renderer";
+import { HandleBox } from "../../../componentLibrary/blockView";
 import { Size } from "../../../componentLibrary";
 import { TerminalsIcon, ConnectIcon } from "../../../assets/icons/blockView";
 import { setActiveConnector } from "../../../redux/store/project/actions";
-import { CalculateTerminalOrder } from "../helpers/block";
+import { TerminalsComponent, ConnectViewComponent } from "../block";
+import {
+  GetConnectChildren,
+  GetConnectorIcon,
+  GetHandlePosition,
+  SortConnectors,
+} from "../helpers/common";
+import {
+  CalculateTerminalOrder,
+  GetBlockHandleType,
+  StackTerminals,
+} from "../helpers/block";
 import {
   FindNodeById,
   SetConnectNodeDefaultSize,
 } from "../helpers/block/connectionView";
-import {
-  TerminalsComponent,
-  ConnectViewComponent,
-  HandleComponent,
-} from "../block";
 import {
   addConnectNode,
   addMainConnectNode,
@@ -103,6 +110,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
 
   useEffect(() => {
     const twinNode = FindNodeById(mainConnectNode?.id);
+    // TODO: Check this render
     const clicked = () => {
       if (twinNode) twinNode.style.zIndex = "1";
     };
@@ -121,41 +129,70 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   }, [mainConnectNode]);
 
   return (
-    <NodeBox
-      id={`BlockFunctionNode-` + data.id}
-      onMouseOver={handleOnHover}
-      onMouseOut={handleOnMouseOut}
-      width={data.width}
-      length={data.length}
-      isSelectedConnection={isConnectViewNode}
-    >
-      <TerminalsMenu visible={terminalButton} onClick={onTerminalClick}>
-        <img src={TerminalsIcon} alt="options" />
-      </TerminalsMenu>
-      <ConnectMenu visible={connectButton && hasChildren} onClick={onConnClick}>
-        <img src={ConnectIcon} alt="options" />
-      </ConnectMenu>
-
-      <p className="node-name">{data.label ?? data.name}</p>
-
-      <TerminalsComponent
-        isOpen={terminalMenu}
-        list={sortedConns}
+    <>
+      <NodeBox
+        id={`BlockFunctionNode-` + data.id}
+        onMouseOver={handleOnHover}
+        onMouseOut={handleOnMouseOut}
         width={data.width}
-        onClick={onConnectorClick}
-      ></TerminalsComponent>
+        length={data.length}
+        isSelectedConnection={isConnectViewNode}
+      >
+        <TerminalsMenu visible={terminalButton} onClick={onTerminalClick}>
+          <img src={TerminalsIcon} alt="options" />
+        </TerminalsMenu>
+        <ConnectMenu
+          visible={connectButton && hasChildren}
+          onClick={onConnClick}
+        >
+          <img src={ConnectIcon} alt="options" />
+        </ConnectMenu>
 
-      <ConnectViewComponent
-        isOpen={connectMenu}
-        list={connectChildren}
-        handleClick={onChange}
-        isChecked={isChecked}
-        width={data.width}
-      ></ConnectViewComponent>
+        <p className="node-name">{data.label ?? data.name}</p>
 
-      <HandleComponent data={data} type="block"></HandleComponent>
-      <HandleComponent data={data}></HandleComponent>
-    </NodeBox>
+        <TerminalsComponent
+          isOpen={terminalMenu}
+          list={sortedConns}
+          width={data.width}
+          onClick={onConnectorClick}
+        ></TerminalsComponent>
+
+        <ConnectViewComponent
+          isOpen={connectMenu}
+          list={connectChildren}
+          handleClick={onChange}
+          isChecked={isChecked}
+          width={data.width}
+        ></ConnectViewComponent>
+        <>
+          {data.connectors?.map((conn) => {
+            const [type, pos] = GetBlockHandleType(conn);
+            if (pos === Position.Right) {
+              return (
+                <HandleBox
+                  id={"handle-" + conn.id}
+                  position={GetHandlePosition(pos)}
+                  key={conn.id}
+                  order={StackTerminals(conn.order)}
+                  visible={true}
+                  icon={GetConnectorIcon(conn.terminal)}
+                >
+                  <Handle
+                    style={{ top: "-50px" }}
+                    type={type}
+                    position={pos}
+                    id={conn.id}
+                    key={conn.id}
+                    className="react-flow__handle-right"
+                  />
+                </HandleBox>
+              );
+            }
+            return null;
+          })}
+        </>
+      </NodeBox>
+    </>
   );
 };
 
