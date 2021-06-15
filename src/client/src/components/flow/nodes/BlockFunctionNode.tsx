@@ -1,25 +1,15 @@
 import { memo, FC, useState, useEffect } from "react";
-import { NodeProps, Position } from "react-flow-renderer";
+import { NodeProps } from "react-flow-renderer";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { Connector, Node } from "../../../models/project";
-import { Handle } from "react-flow-renderer";
-import { HandleBox } from "../../../componentLibrary/blockView";
 import { Size } from "../../../componentLibrary";
 import { TerminalsIcon, ConnectIcon } from "../../../assets/icons/blockView";
 import { setActiveConnector } from "../../../redux/store/project/actions";
 import { TerminalsComponent, ConnectViewComponent } from "../block";
-import {
-  GetConnectChildren,
-  GetConnectorIcon,
-  GetHandlePosition,
-  SortConnectors,
-} from "../helpers/common";
-import {
-  CalculateTerminalOrder,
-  GetBlockHandleType,
-  StackTerminals,
-} from "../helpers/block";
+import { HandleComponent } from "../block";
+import { GetConnectChildren, SortConnectors } from "../helpers/common";
+import { CalculateTerminalOrder } from "../helpers/block";
 import {
   FindNodeById,
   SetConnectNodeDefaultSize,
@@ -155,7 +145,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
           list={sortedConns}
           width={data.width}
           onClick={onConnectorClick}
-        ></TerminalsComponent>
+        />
 
         <ConnectViewComponent
           isOpen={connectMenu}
@@ -163,34 +153,9 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
           handleClick={onChange}
           isChecked={isChecked}
           width={data.width}
-        ></ConnectViewComponent>
-        <>
-          {data.connectors?.map((conn) => {
-            const [type, pos] = GetBlockHandleType(conn);
-            if (pos === Position.Right) {
-              return (
-                <HandleBox
-                  id={"handle-" + conn.id}
-                  position={GetHandlePosition(pos)}
-                  key={conn.id}
-                  order={StackTerminals(conn.order)}
-                  visible={true}
-                  icon={GetConnectorIcon(conn.terminal)}
-                >
-                  <Handle
-                    style={{ top: "-50px" }}
-                    type={type}
-                    position={pos}
-                    id={conn.id}
-                    key={conn.id}
-                    className="react-flow__handle-right"
-                  />
-                </HandleBox>
-              );
-            }
-            return null;
-          })}
-        </>
+        />
+
+        <HandleComponent data={data} />
       </NodeBox>
     </>
   );

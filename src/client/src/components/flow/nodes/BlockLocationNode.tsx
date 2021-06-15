@@ -62,10 +62,9 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
         type={NODE_TYPE.LOCATION}
         width={data.width}
         onClick={onConnectorClick}
-      ></TerminalsComponent>
+      />
 
-      <HandleComponent data={data} type={"block"}></HandleComponent>
-      <HandleComponent data={data}></HandleComponent>
+      <HandleComponent data={data} />
     </NodeBox>
   );
 };
