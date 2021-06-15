@@ -8,8 +8,8 @@ import { TerminalsIcon, ConnectIcon } from "../../../assets/icons/blockView";
 import { setActiveConnector } from "../../../redux/store/project/actions";
 import { TerminalsComponent, ConnectViewComponent } from "../block";
 import { HandleComponent } from "../block";
-import { GetConnectChildren, SortConnectors } from "../helpers/common";
-import { CalculateTerminalOrder } from "../helpers/block";
+import { GetConnectChildren } from "../helpers/common";
+import { CalculateTerminalOrder, FilterConnectors } from "../helpers/block";
 import {
   FindNodeById,
   SetConnectNodeDefaultSize,
@@ -33,7 +33,10 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const [connectMenu, showConnectMenu] = useState(false);
   const connectChildren = GetConnectChildren(data);
   const hasChildren = connectChildren?.length > 0;
-  const sortedConns = SortConnectors(data.connectors) as Connector[];
+  const sortedConns = FilterConnectors(
+    data.connectors,
+    data.type
+  ) as Connector[];
 
   const mainConnectNode = useSelector<RootState>(
     (state) => state.connectView.mainNode

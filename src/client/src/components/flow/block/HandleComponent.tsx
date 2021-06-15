@@ -1,26 +1,16 @@
-import { Connector, Node } from "../../../models/project";
+import { Node } from "../../../models/project";
 import { HandleBox } from "../../../componentLibrary/blockView";
-import { GetBlockHandleType } from "../helpers/block";
+import { FilterConnectors, GetBlockHandleType } from "../helpers/block";
 import { Handle } from "react-flow-renderer";
-import { Position } from "react-flow-renderer";
-import {
-  GetConnectorIcon,
-  GetHandlePosition,
-  IsLocationNode,
-  SortConnectors,
-  SortLocationConnectors,
-} from "../helpers/common";
+import { GetConnectorIcon, GetHandlePosition } from "../helpers/common";
 
 interface Props {
   data: Node;
 }
 
 const HandleComponent = ({ data }: Props) => {
-  let sortedTerminals: Connector[] = [];
-
-  IsLocationNode(data)
-    ? (sortedTerminals = SortLocationConnectors(data.connectors))
-    : (sortedTerminals = SortConnectors(data.connectors));
+  let sortedTerminals = FilterConnectors(data.connectors, data.type);
+  const className = "react-flow__handle-block";
 
   return (
     <>
@@ -39,11 +29,7 @@ const HandleComponent = ({ data }: Props) => {
               position={pos}
               id={conn.id}
               key={conn.id}
-              className={
-                pos === Position.Right
-                  ? "react-flow__handle-right"
-                  : "react-flow__handle-left"
-              }
+              className={className}
             />
           </HandleBox>
         );

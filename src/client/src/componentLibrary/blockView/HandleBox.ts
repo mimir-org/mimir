@@ -1,21 +1,15 @@
 import styled from "styled-components";
+import { Position } from "react-flow-renderer";
 import Size from "../size/Size";
 
 const HandleBox = styled.div`
-  .react-flow__handle-right {
+  .react-flow__handle-block {
     position: relative;
     background: url(${(props) => props.icon});
     visibility: ${(props) => (props.visible ? "visible" : "hidden")} !important;
-    top: -95px;
-    right: -${Size.Node_Width}px;
-    margin-bottom: 3px;
-  }
-
-  .react-flow__handle-left {
-    position: relative;
-    background: url(${(props) => props.icon});
-    visibility: ${(props) => (props.visible ? "visible" : "hidden")} !important;
-    top: -45px;
+    top: ${(props) => (props.position === Position.Right ? "-85" : "-35")}px;
+    right: ${(props) =>
+      props.position === Position.Right && -Size.Node_Width}px;
     margin-bottom: 3px;
   }
 `;
