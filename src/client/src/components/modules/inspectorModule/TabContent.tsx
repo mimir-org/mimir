@@ -12,7 +12,6 @@ import {
 import {
   InputWrapper,
 } from "./styled";
-import { changeSelectedAspect } from "../../../redux/store/typeEditor/actions";
 interface Props {
   node: Node;
   index?: number;
@@ -65,9 +64,7 @@ const TabContent = ({ node, index }: Props) => {
   const rows = CalculateRows(nodeAttributes.length);
   let count = rows;
 
-  function goToAspect(aspect){
-    console.log(aspect)
-  }
+  
 
   return (
     <>
