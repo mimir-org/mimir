@@ -4,7 +4,7 @@ using AutoMapper;
 using Mb.Core.Repositories.Contracts;
 using Mb.Core.Services.Contracts;
 using Mb.Models.Data;
-using Mb.Models.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace Mb.Core.Services
 {
@@ -13,12 +13,14 @@ namespace Mb.Core.Services
         private readonly IMapper _mapper;
         private readonly ILibraryRepository _libraryRepository;
         private readonly ICommonRepository _commonRepository;
+        private readonly ILibraryTypeRepository _libraryTypeRepository;
 
-        public LibraryService(ILibraryRepository libraryRepository, IMapper mapper, ICommonRepository commonRepository)
+        public LibraryService(ILibraryRepository libraryRepository, IMapper mapper, ICommonRepository commonRepository, ILibraryTypeRepository libraryTypeRepository)
         {
             _libraryRepository = libraryRepository;
             _mapper = mapper;
             _commonRepository = commonRepository;
+            _libraryTypeRepository = libraryTypeRepository;
         }
 
         /// <summary>
@@ -26,25 +28,19 @@ namespace Mb.Core.Services
         /// </summary>
         /// <param name="searchString"></param>
         /// <returns></returns>
-        public IEnumerable<LibNode> GetLibNodes(string searchString)
+        public IEnumerable<NodeType> GetLibNodes(string searchString)
         {
-            var data = _mapper.Map<IEnumerable<LibNode>>(_libraryRepository.GetAll(searchString)).ToList();
-            foreach (var node in data)
-            {
-                if (node.Connectors != null)
-                {
-                    // TODO: Fix this
-                    //foreach (var connector in node.Connectors)
-                    //{
-                    //    connector.MediaColor = _commonRepository.GetTerminalColor(connector.Terminal,
-                    //        connector.TerminalCategory, connector.RelationType, node.Type)?.Color;
-                    //    connector.TransportColor = _commonRepository.GetTerminalColor(Terminal.NotSet,
-                    //        connector.TerminalCategory, connector.RelationType, node.Type)?.Color;
-                    //}
-                }
+            var allNodeTypes = _libraryTypeRepository.GetAll()
+                .OfType<NodeType>()
+                .Cast<NodeType>()
+                .Include(x => x.AttributeTypes)
+                .Include(x => x.TerminalTypes)
+                .Include(x => x.Rds)
+                .ToList();
+            return allNodeTypes;
 
-                yield return node;
-            }
+            //var data = _mapper.Map<IEnumerable<LibNode>>(_libraryRepository.GetAll(searchString)).ToList();
+            
         }
     }
 }
