@@ -2,11 +2,11 @@ import { TextResources } from "../../../../assets/textResources";
 import { Node, Connector } from "../../../../models/project";
 import {
   IsFulfilledByTerminal,
-  IsFunctionNode,
-  IsLocationNode,
+  IsFunction,
+  IsLocation,
   IsLocationTerminal,
   IsPartOfTerminal,
-  IsProductNode,
+  IsProduct,
 } from ".";
 
 const GetRelationshipColor = (
@@ -28,15 +28,15 @@ const GetRelationshipColor = (
     name = TextResources.Relations_FulfilledBy;
   }
 
-  if (IsFunctionNode(node)) {
+  if (IsFunction(node)) {
     color = "#FEF445";
   }
 
-  if (IsLocationNode(node)) {
+  if (IsLocation(node)) {
     color = "#FA00FF";
   }
 
-  if (IsProductNode(node)) {
+  if (IsProduct(node)) {
     color = "#00F0FF";
   }
 

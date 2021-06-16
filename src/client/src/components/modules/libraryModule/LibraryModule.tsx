@@ -91,6 +91,7 @@ const LibraryModule = () => {
     }, Object.create([]));
 
     const objectArray = Object.entries(result);
+
     objectArray.forEach(([key, value]) => {
       var libCategory = {
         name: key,
@@ -126,7 +127,6 @@ const LibraryModule = () => {
           <LibraryComponent categories={libNodes()} search={search} />
           {/* <TypeEditorModule /> */}
         </ModuleBody>
-
         <AnimatedModule
           start={startLegend}
           stop={stopLegend}

@@ -1,7 +1,7 @@
 import { Node, LibraryNodeItem, Aspect } from "../../../../models/project";
 
-const IsProductNode = (node: Node | LibraryNodeItem) => {
+const IsProduct = (node: Node | LibraryNodeItem) => {
   return node?.aspect === Aspect.Product;
 };
 
-export default IsProductNode;
+export default IsProduct;

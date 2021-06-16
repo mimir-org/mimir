@@ -1,4 +1,4 @@
 export { default as HeaderBox } from "./HeaderBox";
-export { default as IconBox } from "./IconBox";
-export { default as ViewLinkBox } from "./ViewLinkBox";
-export { default as ProjectTitleBox } from "./ProjectTitleBox";
+export { default as OptionsBox } from "./OptionsBox";
+export { default as OptionsElement } from "./OptionsElement";
+export { default as TitleBox } from "./TitleBox";

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { LibCategory } from "../../../models/project";
-import { GetDropdownIcon, GetAspectColor } from "../../../assets/helpers";
+import { GetAspectColor } from "../../../assets/helpers";
 import { ExpandedIcon, ClosedIcon } from "../../../assets/icons/common";
 import {
   LibraryCategory,
@@ -27,7 +27,7 @@ const LibraryCategoryComponent = ({ category }: Props) => {
     <>
       <LibraryCategory onClick={() => setExpanded(!expanded)}>
         <LibraryCategoryElement>{category.name}</LibraryCategoryElement>
-        {GetDropdownIcon(expandIcon, null)}
+        <img className="expandIcon" src={expandIcon} alt="expand-icon"></img>
       </LibraryCategory>
       {expanded &&
         category?.nodes.map((node) => {

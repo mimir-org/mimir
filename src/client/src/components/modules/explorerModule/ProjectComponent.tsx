@@ -1,6 +1,6 @@
-import { AspectComponent } from "./aspectComponent/AspectComponent";
-import { IsAspectNode, IsProductNode } from "../../flow/helpers/common";
 import red from "../../../redux/store";
+import { AspectComponent } from "./aspectComponent/AspectComponent";
+import { IsAspectNode, IsProduct } from "../../flow/helpers/common";
 import { IsBlockView } from "../../flow/helpers/block";
 
 export const ProjectComponent = () => {
@@ -23,7 +23,7 @@ export const ProjectComponent = () => {
             return null;
           })
         : nodes.map((_, i: number) => {
-            if (IsAspectNode(nodes[i]) && !IsProductNode(nodes[i])) {
+            if (IsAspectNode(nodes[i]) && !IsProduct(nodes[i])) {
               return (
                 <AspectComponent
                   key={i}
