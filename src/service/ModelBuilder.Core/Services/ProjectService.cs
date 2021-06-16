@@ -285,7 +285,8 @@ namespace Mb.Core.Services
                 UpdatedBy = _contextAccessor.GetName(),
                 Updated = DateTime.Now.ToUniversalTime(),
                 Version = version,
-                Rds = string.Empty
+                Rds = string.Empty,
+                StatusId = "4590637F39B6BA6F39C74293BE9138DF"
             };
 
             var connector = new Relation
