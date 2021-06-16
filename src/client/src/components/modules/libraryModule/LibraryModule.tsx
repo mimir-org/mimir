@@ -78,15 +78,13 @@ const LibraryModule = () => {
     state.projectState.project?.nodes?.find((x) => x.isSelected)
   ) as Node;
 
-  const libNodes = (): LibCategory[] => {
+  const getLibNodes = (): LibCategory[] => {
     var allCategories = [];
 
     const result = state.nodes.reduce((r, a) => {
       r[a.category] = r[a.category] || [];
-
       ValidateLibComponent(a, selectedNode, isBlockView, isSplitView) &&
         r[a.category].push(a);
-
       return r;
     }, Object.create([]));
 
@@ -124,7 +122,7 @@ const LibraryModule = () => {
           <p className="text">{TextResources.Library_Heading}</p>
         </ModuleHead>
         <ModuleBody visible={libraryOpen} library>
-          <LibraryComponent categories={libNodes()} search={search} />
+          <LibraryComponent categories={getLibNodes()} search={search} />
           {/* <TypeEditorModule /> */}
         </ModuleBody>
         <AnimatedModule
