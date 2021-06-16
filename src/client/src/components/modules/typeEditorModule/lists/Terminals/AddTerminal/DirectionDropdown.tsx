@@ -32,8 +32,8 @@ export const DirectionDropdown = () => {
       </div>
       {isListOpen && (
         <div className="dropdown_list">
-          <div className="dropdown_listitem">input</div>
-          <div className="dropdown_listitem">output</div>
+          <div className="dropdown_listitem">Input</div>
+          <div className="dropdown_listitem">Output</div>
         </div>
       )}
     </div>

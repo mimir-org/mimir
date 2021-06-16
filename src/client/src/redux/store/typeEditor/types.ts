@@ -1,4 +1,5 @@
 import {
+  LibraryType,
   AttributeType,
   Dictionary,
   Rds,
@@ -17,19 +18,29 @@ export const FETCHING_ATTRIBUTES = "export const FETCHING_ATTRIBUTES";
 export const FETCHING_ATTRIBUTES_SUCCESS_OR_ERROR =
   "FETCHING_ATTRIBUTES_SUCCESS_OR_ERROR";
 export const CHANGE_ASPECT = "CHANGE_ASPECT";
+export const CHANGE_OBJECTTYPE = "CHANGE_OBJECTTYPE";
+export const CHANGE_TYPENAME = "CHANGE_TYPENAME";
+export const CHANGE_MODE = "CHANGE_MODE";
 export const CREATING_TYPE = "CREATING_TYPE";
+export const CHANGE_STATUS = "CHANGE_STATUS";
 export const CREATING_TYPE_SUCCESS_OR_ERROR = "CREATING_TYPE_SUCCESS_OR_ERROR";
 
 // State types
 export interface TypeEditorState {
   fetching: boolean;
-  objectTypes: object;
+  creating: boolean;
+  type: LibraryType | null;
   aspects: object;
+  objectTypes: object;
   statuses: object;
   rdsList: Rds[];
   terminals: TerminalType[];
   attributes: AttributeType[];
   aspect: string;
+  objectType: string;
+  typeName: string;
+  status: string;
+  mode: string;
 }
 
 // Action types
@@ -93,6 +104,33 @@ export interface ChangeSelectedAspect {
   };
 }
 
+export interface ChangeObjectType {
+  type: typeof CHANGE_OBJECTTYPE;
+  payload: {
+    objectType: string;
+  };
+}
+
+export interface ChangeTypeName {
+  type: typeof CHANGE_TYPENAME;
+  payload: {
+    typeName: string;
+  };
+}
+
+export interface ChangeStatus {
+  type: typeof CHANGE_STATUS;
+  payload: {
+    status: string;
+  };
+}
+
+export interface ChangeMode {
+  type: typeof CHANGE_MODE;
+  payload: {
+    mode: string;
+  };
+}
 interface CreatingTypeAction {
   type: typeof CREATING_TYPE;
   payload: object;
@@ -113,5 +151,9 @@ export type TypeEditorActionTypes =
   | FetchingAttributesAction
   | FetchingAttributesActionFinished
   | ChangeSelectedAspect
+  | ChangeObjectType
+  | ChangeTypeName
+  | ChangeStatus
+  | ChangeMode
   | CreatingTypeAction
   | CreatingTypeActionFinished;

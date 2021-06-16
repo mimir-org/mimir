@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { useHistory } from "react-router-dom";
@@ -7,6 +7,10 @@ import { TextResources } from "../../../assets/textResources";
 import { CloseIcon } from "../../../assets/icons/common";
 import { TypeEditorState } from "../../../redux/store/typeEditor/types";
 import { changeFlowView } from "../../../redux/store/flow/actions";
+import {
+  changeMode,
+  changeTypeName,
+} from "../../../redux/store/typeEditor/actions";
 import {
   getInitialData,
   getRDS,
@@ -30,28 +34,62 @@ import {
   ChooseProperties,
 } from "./styled";
 
-interface Props {
-  mode: string;
-}
-
-export const TypeEditorComponent = ({ mode }: Props) => {
+export const TypeEditorComponent = () => {
   const { push } = useHistory();
   const dispatch = useDispatch();
+
+  const [typenameInput, settypenameInput] = useState("");
 
   const state = useSelector<RootState>(
     (state) => state.typeEditor
   ) as TypeEditorState;
 
   const handleClick = () => {
+    dispatch(changeMode("NotSet"));
     dispatch(changeFlowView(MODULE_TYPE.TYPEEDITOR));
-    push(`/home/${MODULE_TYPE.TYPEEDITOR}`);
+    push(`/home/`);
+  };
+
+  const handleChange = (e) => {
+    settypenameInput(e.target.value);
+    dispatch(changeTypeName(e.target.value));
+  };
+
+  const filterAspects = () => {
+    let filteredAspects = Object.entries(state.aspects);
+    filteredAspects = filteredAspects.filter(
+      ([key, value]) => value === "Function" || value === "Location"
+    );
+    return filteredAspects;
+  };
+
+  const filterObjectTypes = () => {
+    let filteredTypes = Object.entries(state.objectTypes);
+    if (state.aspect === "NotSet") {
+      filteredTypes = [];
+    } else if (state.aspect === "Function") {
+      filteredTypes = filteredTypes.filter(
+        ([key, value]) =>
+          value === "Object" || value === "Transport" || value === "Interface"
+      );
+    }
+    return filteredTypes;
+  };
+
+  const filterStatuses = () => {
+    let filteredStatuses = Object.entries(state.statuses);
+    filteredStatuses = filteredStatuses.filter(
+      ([key, value]) =>
+        value === "Draft" || value === "Complete" || value === "Approved"
+    );
+    return filteredStatuses;
   };
 
   useEffect(() => {
     dispatch(getInitialData());
     dispatch(getRDS(state.aspect));
-    dispatch(getTerminals());
-    dispatch(getAttributes(state.aspect));
+    // dispatch(getTerminals());
+    // dispatch(getAttributes(state.aspect));
   }, [dispatch, state.aspect]);
 
   return (
@@ -65,32 +103,33 @@ export const TypeEditorComponent = ({ mode }: Props) => {
           <DropdownMenu
             label={TextResources.TypeEditor_Aspect}
             placeHolder="Choose Aspect"
-            listItems={Object.entries(state.aspects)}
+            listItems={filterAspects()}
           />
           <DropdownMenu
             label={TextResources.TypeEditor_Object_Type}
             placeHolder="Select Object Type"
-            listItems={Object.entries(state.objectTypes)}
+            listItems={filterObjectTypes()}
           />
           <TypeNameInput>
             <p>{TextResources.TypeEditor_Type_Name}</p>
             <TextInput
-              onChange={() => null}
               inputType="text"
+              value={typenameInput}
               placeholder="Write Type name"
+              onChange={handleChange}
             />
           </TypeNameInput>
           <DropdownMenu
             label={TextResources.TypeEditor_Status}
-            placeHolder="Choose Status"
-            listItems={Object.entries(state.statuses)}
+            placeHolder="Draft"
+            listItems={filterStatuses()}
           />
         </TypeInfo>
         <ChooseProperties>
           <RDSList />
           <TerminalsList />
           <AttributesList />
-          <TypePreview mode={mode} />
+          <TypePreview />
         </ChooseProperties>
         {/* <TypeEditorInspector></TypeEditorInspector> */}
       </TypeEditorContent>

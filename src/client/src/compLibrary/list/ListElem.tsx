@@ -5,7 +5,7 @@ const ListElem = styled.div`
   flex-direction: row;
   align-items: center;
   height: 30px;
-  padding: 1px 5px 1px 0px;
+  padding: 2px 5px 2px 0px;
 
   img {
     margin-left: auto;

@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
+import { TypeEditorState } from "../../../redux/store/typeEditor/types";
 import { useHistory } from "react-router-dom";
+import { changeMode } from "../../../redux/store/typeEditor/actions";
 import { TypeEditorComponent } from "./TypeEditorComponent";
 import { NewTypeIcon, EditTypeIcon } from "../../../assets/icons/common";
 import { TextResources } from "../../../assets/textResources";
-import { useDispatch } from "react-redux";
 import { VIEW_TYPE } from "../../../models/project";
 import { changeFlowView } from "../../../redux/store/flow/actions";
 import { TypeEditorBox, TypeEditorBoxContent } from "../../../compLibrary/box";
@@ -13,30 +15,36 @@ export const TypeEditorModule = () => {
   const dispatch = useDispatch();
   const { push } = useHistory();
 
-  const [mode, setMode] = useState("");
+  const state = useSelector<RootState>(
+    (state) => state.typeEditor
+  ) as TypeEditorState;
+
   const handleClick = (param) => {
-    setMode(param);
+    dispatch(changeMode(param));
     dispatch(changeFlowView(VIEW_TYPE.TYPE_EDITOR));
     push(`/home/${VIEW_TYPE.TYPE_EDITOR}`);
   };
 
   return (
     <>
-      <TypeEditorBox>
-        <TypeEditorBoxContent>
-          <div onClick={() => handleClick("new")} className="typeeditor_box">
-            <img src={NewTypeIcon} alt="new-type" />
-            <p>{TextResources.TypeEditor_New_Type}</p>
-          </div>
-        </TypeEditorBoxContent>
-        <TypeEditorBoxContent>
-          <div onClick={() => handleClick("edit")} className="typeeditor_box">
-            <img src={EditTypeIcon} alt="edit-type" />
-            <p>{TextResources.TypeEditor_Edit_Type}</p>
-          </div>
-        </TypeEditorBoxContent>
-      </TypeEditorBox>
-      {mode !== "" && <TypeEditorComponent mode={mode} />}
+      {state.mode === "NotSet" ? (
+        <TypeEditorBox>
+          <TypeEditorBoxContent>
+            <div onClick={() => handleClick("new")} className="typeeditor_box">
+              <img src={NewTypeIcon} alt="new-type" />
+              <p>{TextResources.TypeEditor_New_Type}</p>
+            </div>
+          </TypeEditorBoxContent>
+          <TypeEditorBoxContent>
+            <div onClick={() => handleClick("edit")} className="typeeditor_box">
+              <img src={EditTypeIcon} alt="edit-type" />
+              <p>{TextResources.TypeEditor_Edit_Type}</p>
+            </div>
+          </TypeEditorBoxContent>
+        </TypeEditorBox>
+      ) : state.mode === "new" || state.mode === "edit" ? (
+        <TypeEditorComponent />
+      ) : null}
     </>
   );
 };
