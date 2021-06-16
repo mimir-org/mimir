@@ -45,8 +45,8 @@ namespace Mb.Core.Controllers.V1
         {
             try
             {
-                var data = _libraryService.GetLibNodes(name).ToList();
-                return Ok(data);
+                //var data = _libraryService.GetLibNodes(name).ToList();
+                return Ok(new List<LibraryNodeItem>());
             }
             catch (Exception e)
             {
