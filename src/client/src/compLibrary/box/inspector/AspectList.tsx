@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { FontWeight } from "../..";
 
 const AspectList = styled.div`
   display: flex;

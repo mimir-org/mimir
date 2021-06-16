@@ -1,11 +1,8 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../../redux/store";
-import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
+import { useDispatch } from "react-redux";
 import { expandedIcon, unexpandedIcon } from "../../../../assets/icons/common";
 import GetRightMargin from "../helper/GetRightMargin";
 import {
-  getRDS,
   changeSelectedAspect,
   changeSelectedObjecttype,
   changeStatus,
@@ -30,9 +27,9 @@ export const DropDownMenu = ({ label, placeHolder, listItems }: Props) => {
   const [isListOpen, setIsListOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState(placeHolder);
 
-  const state = useSelector<RootState>(
-    (state) => state.typeEditor
-  ) as TypeEditorState;
+  //   const state = useSelector<RootState>(
+  //     (state) => state.typeEditor
+  //   ) as TypeEditorState;
 
   const toggleList = () => {
     setIsListOpen(!isListOpen);

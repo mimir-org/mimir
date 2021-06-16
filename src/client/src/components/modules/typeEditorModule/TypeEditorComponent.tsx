@@ -14,8 +14,6 @@ import {
 import {
   getInitialData,
   getRDS,
-  getTerminals,
-  getAttributes,
 } from "../../../redux/store/typeEditor/actions";
 import {
   DropdownMenu,
@@ -58,7 +56,7 @@ export const TypeEditorComponent = () => {
   const filterAspects = () => {
     let filteredAspects = Object.entries(state.aspects);
     filteredAspects = filteredAspects.filter(
-      ([key, value]) => value === "Function" || value === "Location"
+      ([, value]) => value === "Function" || value === "Location"
     );
     return filteredAspects;
   };
@@ -69,7 +67,7 @@ export const TypeEditorComponent = () => {
       filteredTypes = [];
     } else if (state.aspect === "Function") {
       filteredTypes = filteredTypes.filter(
-        ([key, value]) =>
+        ([, value]) =>
           value === "Object" || value === "Transport" || value === "Interface"
       );
     }
@@ -79,7 +77,7 @@ export const TypeEditorComponent = () => {
   const filterStatuses = () => {
     let filteredStatuses = Object.entries(state.statuses);
     filteredStatuses = filteredStatuses.filter(
-      ([key, value]) =>
+      ([, value]) =>
         value === "Draft" || value === "Complete" || value === "Approved"
     );
     return filteredStatuses;
