@@ -68,7 +68,9 @@ export const TypeEditorComponent = () => {
     } else if (state.aspect === "Function") {
       filteredTypes = filteredTypes.filter(
         ([, value]) =>
-          value === "Object" || value === "Transport" || value === "Interface"
+          value === "Object Block" ||
+          value === "Transport" ||
+          value === "Interface"
       );
     }
     return filteredTypes;
