@@ -1,7 +1,7 @@
 import { SearchTerminalMediaType } from "./SearchTerminalMediaType";
 import { DirectionDropdown } from "./DirectionDropdown";
 import { AddTerminalElement } from "../../../styled";
-import { NumericInput } from "../../../../../../componentLibrary";
+import { NumericInput } from "../../../../../../compLibrary";
 import { HelpIcon } from "../../../../../../assets/icons/common";
 
 interface Props {

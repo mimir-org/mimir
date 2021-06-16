@@ -23,13 +23,15 @@ const ValidateBlockEdge = (
   if (IsPartOfTerminal(fromConnector) || IsPartOfTerminal(toConnector))
     return false;
 
-  if (!splitView) {
+  if (hasConnectNode) {
+    return true; // TODO: fix guards
+  }
+
+  if (!splitView && !hasConnectNode) {
     if (IsFunctionNode(selectedNode)) {
       if (IsLocationNode(fromNode) || IsLocationNode(toNode)) return false;
       if (selectedNode === toNode || selectedNode === fromNode) return false;
       if (!IsChildOf(fromNode, selectedNode)) return false;
-      if (!hasConnectNode)
-        if (fromNode.level - selectedNode.level !== 1) return false;
       return true;
     }
   }
@@ -52,6 +54,7 @@ const ValidateBlockEdge = (
     )
       return true;
   }
+
   return false;
 };
 

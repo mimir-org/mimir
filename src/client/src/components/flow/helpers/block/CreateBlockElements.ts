@@ -57,14 +57,14 @@ const CreateBlockElements = (
       if (edge.fromNode === splitViewNode.id) {
         const toNode = project.nodes?.find((x) => x.id === edge.toNode);
 
-        let connector = toNode?.connectors?.find(
+        const conn = toNode?.connectors?.find(
           (x) => x.id === edge?.toConnector
         );
 
         if (
           (splitViewNode?.type === toNode?.type ||
             IsNodeSameType(splitViewNode, toNode)) &&
-          !IsTransportTerminal(connector)
+          !IsTransportTerminal(conn)
         )
           initialElements.push(CreateSplitViewNode(toNode));
       }

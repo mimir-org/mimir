@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color, FontSize, FontType } from "../../../../componentLibrary";
+import { Color, FontSize, FontType } from "../../../../compLibrary";
 
 const TypeNameInput = styled.div`
   display: flex;

@@ -3,12 +3,9 @@ import { ProjectState } from "../../../redux/store/project/types";
 import { RootState } from "../../../redux/store";
 import { Node } from "../../../models/project";
 import { GetLegendData, Legend } from "../../flow/helpers/common";
-import { ModuleBody } from "../../../componentLibrary/box/modules";
+import { ModuleBody } from "../../../compLibrary/box/modules";
 import { IsBlockView } from "../../flow/helpers/block";
-import {
-  LegendElement,
-  LegendColor,
-} from "../../../componentLibrary/box/library";
+import { LegendElement, LegendColor } from "../../../compLibrary/box/library";
 
 const LegendModule = ({ visible }) => {
   const projectState = useSelector<RootState>(

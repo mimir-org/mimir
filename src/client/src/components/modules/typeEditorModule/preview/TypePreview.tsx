@@ -5,8 +5,8 @@ import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
 import { ListHeader } from "../lists/ListHeader";
 import { PreviewBody } from "../preview/PreviewBody";
 import { PreviewInstruction } from "../styled";
-import { ListWrapper } from "../../../../componentLibrary";
-import { AddEditButton } from "../../../../componentLibrary/buttons";
+import { ListWrapper } from "../../../../compLibrary";
+import { AddEditButton } from "../../../../compLibrary/buttons";
 import { TextResources } from "../../../../assets/textResources";
 import { AddIcon, CheckmarkIcon } from "../../../../assets/icons/common";
 

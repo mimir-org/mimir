@@ -11,6 +11,7 @@ import { commonReducer } from "./common/reducers";
 import { flowReducer } from "./flow/reducers";
 import { splitViewReducer } from "./splitView/reducers";
 import { connectViewReducer } from "./connectView/reducers";
+import { darkModeReducer } from "./darkMode/reducers";
 import { sagas } from "../sagas";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
@@ -34,6 +35,7 @@ const rootReducers = combineReducers({
   splitView: splitViewReducer,
   connectView: connectViewReducer,
   commonState: commonReducer,
+  darkMode: darkModeReducer,
 });
 
 const persistConfig = {

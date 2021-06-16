@@ -1,4 +1,4 @@
-import { ListLabel } from "../../../../componentLibrary";
+import { ListLabel } from "../../../../compLibrary";
 import { TextResources } from "../../../../assets/textResources";
 
 interface Props {

@@ -1,5 +1,5 @@
 import { LibNode, Node } from "../../models/project";
-import { Color } from "../../componentLibrary";
+import { Color } from "../../compLibrary";
 import {
   IsFunctionNode,
   IsProductNode,

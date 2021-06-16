@@ -2,8 +2,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../../../redux/store";
 import { TypeEditorState } from "../../../../../redux/store/typeEditor/types";
 
-import { ListElementsContainer } from "../../../../../componentLibrary";
-import { VerticalScrollbar } from "../../../../../componentLibrary";
+import { ListElementsContainer } from "../../../../../compLibrary";
+import { VerticalScrollbar } from "../../../../../compLibrary";
 import { AttributesListElement } from "../Attributes/AttributesListElement";
 
 interface Props {

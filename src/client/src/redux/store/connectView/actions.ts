@@ -24,7 +24,7 @@ export function removeConnectNode(node: Node) {
   };
 }
 
-export function removeAllConnectNodes() {
+export function removeConnectNodes() {
   return {
     type: REMOVE_ALL_CONNECT_NODES,
   };

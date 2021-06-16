@@ -63,27 +63,17 @@
   z-index: 1 !important;
 }
 
-.blockView-handle-right {
-  width: 13px !important;
-  height: 13px !important;
-  top: 0px;
-  right: -5px !important;
-  border: none;
-  background-color: transparent;
-  z-index: 1 !important;
-}
-
-.blockView-handle-left {
-  width: 13px !important;
-  height: 13px !important;
-  top: 0px;
-  left: -10px !important;
-  border: none;
-  background-color: transparent;
-  z-index: 1 !important;
-}
-
 // COMMON
+.react-flow__handle {
+  opacity: 1;
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 0%;
+  border: none !important;
+  background-color: transparent !important;
+}
+
 .dndflow {
   height: 100%;
   display: flex;
@@ -123,19 +113,6 @@
 
 .react-flow__edges {
   z-index: 2;
-}
-
-.react-flow__handle {
-  opacity: 1;
-  position: absolute;
-  width: 14px;
-  height: 14px;
-  border-radius: 100%;
-  border: none;
-}
-
-.react-flow__handle-right {
-  right: -15px;
 }
 
 .react-flow__handle-left {

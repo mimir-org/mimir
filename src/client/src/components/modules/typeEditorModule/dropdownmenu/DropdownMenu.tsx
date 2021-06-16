@@ -15,7 +15,7 @@ import {
   DropdownMenuHeader,
   DropdownMenuList,
   DropdownMenuListItem,
-} from "../../../../componentLibrary/dropdown";
+} from "../../../../compLibrary/dropdown";
 import "./dropdownmenu.scss";
 
 interface Props {

@@ -1,4 +1,4 @@
-import { AspectElementBox } from "../../../../componentLibrary/box/aspect";
+import { AspectElementBox } from "../../../../compLibrary/box/aspect";
 import { Node } from "../../../../models/project";
 import { IsBlockView } from "../../../flow/helpers/block";
 import { IsProductNode } from "../../../flow/helpers/common";

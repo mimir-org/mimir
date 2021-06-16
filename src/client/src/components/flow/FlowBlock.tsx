@@ -2,25 +2,24 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ProjectMainMenu } from "../project";
 import { RootState } from "../../redux/store/index";
-import FullscreenBox from "../../componentLibrary/controls/FullscreenBox";
+import { FullScreenBox } from "../../compLibrary/controls";
 import { EDGE_TYPE, EdgeType } from "../../models/project";
 import { OpenProjectMenu } from "../project/openProject";
 import { changeActiveBlockNode } from "../../redux/store/project/actions";
-import { Color } from "../../componentLibrary";
-import { BackgroundBox } from "../../componentLibrary/blockView";
+import { Color } from "../../compLibrary";
+import { BackgroundBox } from "../../compLibrary/blockView";
 import { changeInspectorTab } from "../../redux/store/inspector/actions";
+import { setSplitView, setNode } from "../../redux/store/splitView/actions";
+import red from "../../redux/store";
 import {
   addMainConnectNode,
-  removeAllConnectNodes,
+  removeConnectNodes,
 } from "../../redux/store/connectView/actions";
-import {
-  setSplitView,
-  setSplitNode,
-} from "../../redux/store/splitView/actions";
 import {
   GetBlockNodeTypes,
   IsFunctionNode,
   IsLocationNode,
+  SetDarkModeColor,
 } from "./helpers/common";
 import {
   CreateBlockElements,
@@ -40,8 +39,6 @@ import ReactFlow, {
 } from "react-flow-renderer";
 import {
   useOnConnect,
-  useOnConnectStart,
-  useOnConnectStop,
   useOnDrop,
   useOnElementsRemove,
   useOnNodeDragStop,
@@ -57,11 +54,11 @@ const FlowBlock = () => {
   // Flush ConnectView
   useEffect(() => {
     dispatch(addMainConnectNode(null));
-    dispatch(removeAllConnectNodes());
+    dispatch(removeConnectNodes());
   }, [dispatch]);
 
   const project = useSelector<RootState>(
-    (state) => state.projectState.project
+    (state) => state.projectState?.project
   ) as Project;
 
   const node = project?.nodes?.find((node) => node.isSelected);
@@ -129,21 +126,6 @@ const FlowBlock = () => {
     );
   };
 
-  const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
-    return useOnConnectStart(e, { nodeId, handleType, handleId });
-  };
-
-  const OnConnectStop = (e) => {
-    return useOnConnectStop(
-      e,
-      project,
-      reactFlowInstance,
-      node.id,
-      reactFlowWrapper,
-      dispatch
-    );
-  };
-
   const OnDragOver = (event) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = "move";
@@ -154,7 +136,7 @@ const FlowBlock = () => {
   };
 
   const OnDrop = (_event) => {
-    const selectedNode = project?.nodes?.find((x) => x.isSelected);
+    const selectedNode = project.nodes.find((x) => x.isSelected);
 
     return useOnDrop(
       _event,
@@ -186,8 +168,13 @@ const FlowBlock = () => {
   // Flush SplitView
   useEffect(() => {
     dispatch(setSplitView(false));
-    dispatch(setSplitNode(null));
+    dispatch(setNode(null));
   }, [dispatch]);
+
+  useEffect(() => {
+    const darkMode = red.store.getState().darkMode.active as boolean;
+    SetDarkModeColor(darkMode);
+  }, []);
 
   window.onresize = () => {
     OnLoad(reactFlowInstance);
@@ -216,12 +203,10 @@ const FlowBlock = () => {
               onDragOver={OnDragOver}
               onNodeDragStop={OnNodeDragStop}
               onElementClick={OnElementClick}
-              onConnectEnd={OnConnectStop}
-              onConnectStart={OnConnectStart}
               zoomOnScroll={false}
               paneMoveable={false}
             >
-              <FullscreenBox />
+              <FullScreenBox />
               <BackgroundBox
                 visible={showBackground}
                 isSplitView={splitView}

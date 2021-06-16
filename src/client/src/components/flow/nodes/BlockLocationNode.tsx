@@ -2,14 +2,16 @@ import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { TerminalsIcon } from "../../../assets/icons/blockView";
 import { Connector, NODE_TYPE } from "../../../models/project";
-import { NodeBox, TerminalsMenu } from "../../../componentLibrary/blockView";
+import { NodeBox, TerminalsMenu } from "../../../compLibrary/blockView";
 import { HandleComponent, TerminalsComponent } from "../block";
+import { setActiveConnector } from "../../../redux/store/project/actions";
+import { useDispatch } from "react-redux";
+import { CalculateTerminalOrder } from "../helpers/block";
 
 const BlockLocationNode: FC<NodeProps> = ({ data }) => {
+  const dispatch = useDispatch();
   const [terminalButton, showTerminalButton] = useState(false);
   const [terminalMenu, showTerminalMenu] = useState(false);
-  const [drawConnectors, setDrawConnectors] = useState(false);
-  const [selectedConnector, setSelectedConnector] = useState(null);
 
   const handleTerminalClick = () => {
     showTerminalMenu(!terminalMenu);
@@ -23,10 +25,10 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
     showTerminalButton(false);
   };
 
-  const handleConnectorClick = (connector: Connector) => {
-    setSelectedConnector(connector);
-    setDrawConnectors(true);
+  const onConnectorClick = (conn: Connector) => {
     showTerminalMenu(false);
+    const order = CalculateTerminalOrder(data, 0, conn.type);
+    dispatch(setActiveConnector(data, conn.id, true, order));
   };
 
   useEffect(() => {
@@ -59,23 +61,10 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
         list={data.connectors}
         type={NODE_TYPE.LOCATION}
         width={data.width}
-        onClick={handleConnectorClick}
-      ></TerminalsComponent>
+        onClick={onConnectorClick}
+      />
 
-      <HandleComponent
-        drawConns={drawConnectors}
-        data={data}
-        list={data.connectors}
-        selectedConn={selectedConnector}
-        type={"block"}
-      ></HandleComponent>
-
-      <HandleComponent
-        drawConns={drawConnectors}
-        data={data}
-        list={data.connectors}
-        selectedConn={selectedConnector}
-      ></HandleComponent>
+      <HandleComponent data={data} />
     </NodeBox>
   );
 };

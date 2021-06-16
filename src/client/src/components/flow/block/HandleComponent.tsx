@@ -1,71 +1,41 @@
-import { Connector } from "../../../models/project";
-import { HandleBox } from "../../../componentLibrary/blockView";
-import { GetBlockHandleType } from "../helpers/block";
+import { Node } from "../../../models/project";
+import red from "../../../redux/store";
+import { HandleBox } from "../../../compLibrary/blockView";
 import { Handle } from "react-flow-renderer";
-import {
-  GetConnectorIcon,
-  GetHandlePosition,
-  GetHandleType,
-} from "../helpers/common";
+import { GetConnectorIcon, GetHandlePosition } from "../helpers/common";
+import { FilterConnectors, GetBlockHandleType } from "../helpers/block";
 
 interface Props {
-  drawConns: boolean;
-  data: any;
-  list: Connector[];
-  selectedConn: Connector;
-  type?: string;
+  data: Node;
 }
 
-const HandleComponent = ({
-  drawConns,
-  data,
-  list,
-  selectedConn,
-  type,
-}: Props) => {
-  return type === "block" ? (
+const HandleComponent = ({ data }: Props) => {
+  const locationNode = red.store.getState().splitView.node as Node;
+  const isSplitNode = locationNode !== null;
+  let sortedTerminals = FilterConnectors(data.connectors, data.type);
+  const className = "react-flow__handle-block";
+
+  return (
     <>
-      {drawConns &&
-        list?.map((conn) => {
-          const [type, pos, className] = GetBlockHandleType(conn);
-          if (selectedConn?.id === conn.id) {
-            return (
-              <HandleBox
-                id={"handle-" + conn.id}
-                position={GetHandlePosition(pos)}
-                key={conn.id}
-              >
-                <Handle
-                  type={type}
-                  position={pos}
-                  id={conn.id}
-                  key={conn.id}
-                  className={className}
-                />
-                <img
-                  src={GetConnectorIcon(conn.terminal)}
-                  alt="icon"
-                  className="connector"
-                />
-              </HandleBox>
-            );
-          }
-          return null;
-        })}
-    </>
-  ) : (
-    <>
-      {/* TODO: Remove */}
-      {data.connectors?.map((connector) => {
-        const [typeHandler, positionHandler] = GetHandleType(connector);
+      {sortedTerminals.map((conn) => {
+        const [type, pos] = GetBlockHandleType(conn);
         return (
-          <Handle
-            type={typeHandler}
-            position={positionHandler}
-            id={connector.id}
-            key={connector.id}
-            style={{ visibility: "hidden" }}
-          />
+          <HandleBox
+            id={"handle-" + conn.id}
+            position={GetHandlePosition(pos)}
+            key={conn.id}
+            visible={conn.visible}
+            icon={GetConnectorIcon(conn.terminal)}
+            splitNode={isSplitNode}
+          >
+            <Handle
+              type={type}
+              position={pos}
+              id={conn.id}
+              key={conn.id}
+              className={className}
+            />
+          </HandleBox>
         );
       })}
     </>

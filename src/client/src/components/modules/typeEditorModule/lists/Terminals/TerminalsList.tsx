@@ -4,7 +4,7 @@ import { TypeEditorState } from "../../../../../redux/store/typeEditor/types";
 
 import { ListHeader } from "../ListHeader";
 import { TerminalsListBody } from "./TerminalsListBody";
-import { ListWrapper } from "../../../../../componentLibrary";
+import { ListWrapper } from "../../../../../compLibrary";
 
 import { TextResources } from "../../../../../assets/textResources";
 

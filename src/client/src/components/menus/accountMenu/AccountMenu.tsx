@@ -6,7 +6,7 @@ import { save } from "../../../redux/store/project/actions";
 import { GetMenuElement } from "./helpers";
 import { GetMenuIcon } from "../../../assets/helpers";
 import { MENU_TYPE, PROJECT_MENU_TYPE } from "../../../models/project";
-import { MenuBox, MenuMainHeader } from "../../../componentLibrary/box/menus";
+import { MenuBox, MenuMainHeader } from "../../../compLibrary/box/menus";
 import { changeProjectMenu } from "../../../redux/store/projectMenu/actions";
 import { OpenProjectMenu } from "../../project/openProject";
 import { CreateProjectMenu } from "../../project/createProject";
@@ -71,7 +71,7 @@ const AccountMenu = () => {
         />
       </MenuMainHeader>
       {isOpen && (
-        <MenuBox>
+        <MenuBox id={type}>
           <GetMenuElement type="Open" onClick={handleOpenClick} />
           <GetMenuElement type="Create" onClick={handleCreateClick} />
           <GetMenuElement type="Save" onClick={handleSaveClick} />

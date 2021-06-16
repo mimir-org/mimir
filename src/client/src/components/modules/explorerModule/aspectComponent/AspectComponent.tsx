@@ -3,7 +3,7 @@ import { ExpandedIcon, ClosedIcon } from "../../../../assets/icons/common";
 import { Node } from "../../../../models/project";
 import { IsAspectNode } from "../../../flow/helpers/common";
 import { AspectElement } from ".";
-import { AspectBox } from "../../../../componentLibrary/box/aspect";
+import { AspectBox } from "../../../../compLibrary/box/aspect";
 import { Checkbox, CheckboxBlock } from "../checkboxComponent";
 import red from "../../../../redux/store";
 import { IsBlockView } from "../../../flow/helpers/block";

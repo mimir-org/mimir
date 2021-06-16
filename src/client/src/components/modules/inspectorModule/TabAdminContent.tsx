@@ -1,8 +1,8 @@
 import { useDispatch } from "react-redux";
 import { changeNodeValue } from "../../../redux/store/project/actions";
 import { Contractor } from "../../../redux/store/common/types";
-import { TabColumn } from "../../../componentLibrary/box/inspector";
-import { Input, Select, Textarea } from "../../../componentLibrary";
+import { TabColumn } from "../../../compLibrary/box/inspector";
+import { Input, Select, Textarea } from "../../../compLibrary";
 import { Node, Project } from "../../../models/project";
 import { GetRdsId, GetReferenceDesignation } from "../../../assets/helpers";
 import moment from "moment/moment.js";
