@@ -124,7 +124,7 @@ const LibraryModule = () => {
         </ModuleHead>
         <ModuleBody visible={libraryOpen} library>
           <LibraryComponent categories={libNodes()} search={search} />
-          <TypeEditorModule />
+          {/* <TypeEditorModule /> */}
         </ModuleBody>
 
         <AnimatedModule

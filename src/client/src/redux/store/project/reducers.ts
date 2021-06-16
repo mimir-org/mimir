@@ -244,10 +244,10 @@ export function projectReducer(
           ...state,
           project: {
             ...state.project,
-            nodes: nodeList.map((nodes, i) =>
-              IsNodeSameType(node, nodeList[i])
-                ? { ...nodes, isHidden: isHidden }
-                : nodes
+            nodes: nodeList.map((node) =>
+              action.payload.node.aspect === node.aspect
+                ? { ...node, isHidden: isHidden }
+                : node
             ),
             edges: edgeList.map((edges, i) =>
               IsSameType(node.type, edgeList[i].parentType) ||

@@ -1,11 +1,7 @@
-import { NODE_TYPE, Node, LibraryNodeItem } from "../../../../models/project";
+import { Node, LibraryNodeItem, Aspect } from "../../../../models/project";
 
-const IsFunctionNode = (node: Node | LibraryNodeItem): boolean => {
-    return (true
-        // node?.aspect === NODE_TYPE.FUNCTION ||
-        // node?.type === NODE_TYPE.ASPECT_FUNCTION 
-        // TODO: Fiks denne
-    );
+const IsFunctionNode = (node: Node | LibraryNodeItem) => {
+  return node?.aspect === Aspect.Function;
 };
 
 export default IsFunctionNode;
