@@ -28,19 +28,9 @@ namespace Mb.Core.Services
         /// </summary>
         /// <param name="searchString"></param>
         /// <returns></returns>
-        public IEnumerable<NodeType> GetLibNodes(string searchString)
+        public IEnumerable<LibraryNodeItem> GetLibNodes(string searchString)
         {
-            var allNodeTypes = _libraryTypeRepository.GetAll()
-                .OfType<NodeType>()
-                .Cast<NodeType>()
-                .Include(x => x.AttributeTypes)
-                .Include(x => x.TerminalTypes)
-                .Include(x => x.Rds)
-                .ToList();
-            return allNodeTypes;
-
-            //var data = _mapper.Map<IEnumerable<LibNode>>(_libraryRepository.GetAll(searchString)).ToList();
-            
+            return _libraryRepository.GetAll(searchString).ToList();
         }
     }
 }

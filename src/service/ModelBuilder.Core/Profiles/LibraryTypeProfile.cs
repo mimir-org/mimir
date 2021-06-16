@@ -39,6 +39,18 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
                 .ForMember(dest => dest.RdsId, opt => opt.MapFrom(src => src.RdsId))
                 .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.TerminalTypeId));
+
+            CreateMap<NodeType, LibraryNodeItem>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Rds, opt => opt.MapFrom(src => src.Rds.Code))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => src.Aspect))
+                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Rds.RdsCategory.Name)) // TODO: Fix this
+                //.ForMember(dest => dest.Connectors, opt => opt.MapFrom(src => src.Terminals)) // TODO: Fix this
+
+                //.ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes)) // TODO: Fix this
+                .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference));
+            //.ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version)); // TODO: Fix this
         }
 
         private static IEnumerable<NodeTypeTerminalType> CreateTerminalTypes(IReadOnlyCollection<TerminalTypeItem> terminalTypes, string nodeId)
