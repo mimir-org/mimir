@@ -8,7 +8,7 @@ import {
   Node,
 } from "../../../../models/project";
 
-const ShowBlockViewEdge = (edge: Edge): boolean => {
+const ShowBlockViewEdge = (edge: Edge) => {
   if (edge.targetType === NODE_TYPE.OFF_PAGE) return;
 
   const project = red.store.getState().projectState.project as Project;
@@ -16,13 +16,8 @@ const ShowBlockViewEdge = (edge: Edge): boolean => {
   const isSplitView = splitView.visible as boolean;
   const splitViewNode = splitView.node as Node;
   const selectedNode = project.nodes.find((x) => x.isSelected) as Node;
-  const selectedBlockNode = project.nodes.find(
-    (x) => x.isBlockSelected
-  ) as Node;
-
   const toNode = project.nodes.find((x) => x.id === edge.toNode);
   const fromNode = project.nodes.find((x) => x.id === edge.fromNode);
-
   const fromConnectorId = edge.fromConnector;
   const toConnectorId = edge.toConnector;
 
@@ -36,7 +31,6 @@ const ShowBlockViewEdge = (edge: Edge): boolean => {
 
   return ValidateBlockEdge(
     selectedNode,
-    selectedBlockNode,
     fromNode,
     toNode,
     splitViewNode,

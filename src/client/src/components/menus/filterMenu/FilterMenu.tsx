@@ -1,35 +1,47 @@
 import { TextResources } from "../../../assets/textResources";
 import { useState } from "react";
-import { MENU_TYPE, RELATION_TYPE } from "../../../models/project";
+import { MENU_TYPE, RELATION_TYPE, TERMINAL } from "../../../models/project";
 import { GetMenuIcon } from "../../../assets/helpers/";
-import { MenuBox, MenuTopHeader } from "../../../componentLibrary/box/menus";
-import { LoadState, SaveState } from "../../../redux/store/localStorage";
 import { FilterContent } from ".";
+import {
+  MenuBox,
+  MenuColumn,
+  MenuMainHeader,
+  MenuSubHeader,
+} from "../../../compLibrary/box/menus";
 
 const FilterModule = () => {
   const type = MENU_TYPE.VISUAL_FILTER;
-  const [showFilter, setShowFilter] = useState(LoadState(type));
+  const [showFilter, setShowFilter] = useState(false);
 
   const handleClick = () => {
     setShowFilter(!showFilter);
-    SaveState(!showFilter, type);
   };
 
   return (
     <>
-      <MenuTopHeader isOpen={showFilter} right type="FilterMenu">
-        <div onClick={handleClick}>{TextResources.MainHeader_VisualFilter}</div>
+      <MenuMainHeader isOpen={showFilter} right type={type} id="FilterHeader">
+        <div className="text" onClick={handleClick}>
+          {TextResources.MainHeader_VisualFilter}
+        </div>
         <img
           src={GetMenuIcon(showFilter, type)}
           alt="icon"
           className="icon"
           onClick={handleClick}
         />
-      </MenuTopHeader>
+      </MenuMainHeader>
       {showFilter && (
-        <MenuBox right>
-          <FilterContent type={RELATION_TYPE.Transport} index={0} />
-          <FilterContent type={RELATION_TYPE.HasLocation} index={1} />
+        <MenuBox right id={type}>
+          <MenuColumn>
+            <MenuSubHeader>{TextResources.Filter_Other}</MenuSubHeader>
+            <FilterContent type={RELATION_TYPE.Transport} index={0} />
+            <FilterContent type={RELATION_TYPE.HasLocation} index={1} />
+          </MenuColumn>
+          <MenuColumn>
+            <FilterContent type={TERMINAL.Gas} index={2} />
+            <FilterContent type={TERMINAL.Water} index={3} />
+          </MenuColumn>
         </MenuBox>
       )}
     </>

@@ -1,17 +1,11 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
-import { GetFlowAspectIcon } from "../helpers";
-import { GetHandleType } from "../helpers";
-import { HandlerWrapper } from "../styled";
+import { HandleBox } from "../../../compLibrary/treeView";
+import { GetFlowAspectIcon, GetHandleType } from "../helpers/common";
 
 const Aspect: FC<NodeProps> = ({ data }) => {
   const [isHover, setIsHover] = useState(false);
   const [timer, setTimer] = useState(false);
-
-  const connectorIsVisible = () => {
-    if (isHover) return "true";
-    return "false";
-  };
 
   useEffect(() => {
     if (timer) {
@@ -37,11 +31,11 @@ const Aspect: FC<NodeProps> = ({ data }) => {
       {data.connectors?.map((connector) => {
         const [typeHandler, positionHandler] = GetHandleType(connector);
         return (
-          <HandlerWrapper
+          <HandleBox
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}
             key={connector.id}
-            display={connectorIsVisible()}
+            visible={isHover}
             position={positionHandler}
           >
             <Handle
@@ -51,11 +45,11 @@ const Aspect: FC<NodeProps> = ({ data }) => {
               key={connector.id}
               className="function-treeview-handler"
             />
-          </HandlerWrapper>
+          </HandleBox>
         );
       })}
-
-      {GetFlowAspectIcon(data.icon)}
+      {/* TODO: Fix inline styling */}
+      <div style={{ paddingTop: "12px" }}>{GetFlowAspectIcon(data.icon)}</div>
       <div>{data.label ?? data.name}</div>
     </div>
   );

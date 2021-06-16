@@ -1,43 +1,38 @@
+import { Connector } from "../../../../models/project";
 import { HandleType, Position } from "react-flow-renderer";
 import {
-  Connector,
-  CONNECTOR_TYPE,
-  RELATION_TYPE,
-} from "../../../../models/project";
+  IsFulfilledByTerminal,
+  IsInputConnector,
+  IsLocationTerminal,
+  IsPartOfTerminal,
+  IsTransportTerminal,
+} from "../common";
 
-const GetBlockHandleType = (
-  connector: Connector
-): [HandleType, Position, string] => {
+const GetBlockHandleType = (conn: Connector): [HandleType, Position] => {
   if (
-    connector.type === CONNECTOR_TYPE.OUTPUT &&
-    (connector.relationType === RELATION_TYPE.HasLocation ||
-      connector.relationType === RELATION_TYPE.FulfilledBy ||
-      connector.relationType === RELATION_TYPE.PartOf)
+    !IsInputConnector(conn) &&
+    (IsLocationTerminal(conn) ||
+      IsFulfilledByTerminal(conn) ||
+      IsPartOfTerminal(conn))
   ) {
-    return ["source", Position.Right, "blockView-handle-right"];
+    return ["source", Position.Right];
+  }
+
+  if (!IsInputConnector(conn) && IsTransportTerminal(conn)) {
+    return ["source", Position.Right];
   }
 
   if (
-    connector.type === CONNECTOR_TYPE.OUTPUT &&
-    connector.relationType === RELATION_TYPE.Transport
+    IsInputConnector(conn) &&
+    (IsLocationTerminal(conn) ||
+      IsFulfilledByTerminal(conn) ||
+      IsPartOfTerminal(conn))
   ) {
-    return ["source", Position.Right, "blockView-handle-right"];
+    return ["target", Position.Left];
   }
 
-  if (
-    connector.type === CONNECTOR_TYPE.INPUT &&
-    (connector.relationType === RELATION_TYPE.HasLocation ||
-      connector.relationType === RELATION_TYPE.FulfilledBy ||
-      connector.relationType === RELATION_TYPE.PartOf)
-  ) {
-    return ["target", Position.Left, "blockView-handle-left"];
-  }
-
-  if (
-    connector.type === CONNECTOR_TYPE.INPUT &&
-    connector.relationType === RELATION_TYPE.Transport
-  ) {
-    return ["target", Position.Left, "blockView-handle-left"];
+  if (IsInputConnector(conn) && IsTransportTerminal(conn)) {
+    return ["target", Position.Left];
   }
 };
 

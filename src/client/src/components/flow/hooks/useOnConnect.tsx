@@ -1,6 +1,6 @@
 import { Edge, EdgeType, EDGE_TYPE, Node } from "../../../models/project";
 import { SaveEventData } from "../../../redux/store/localStorage/localStorage";
-import { CreateId } from "../helpers";
+import { CreateId } from "../helpers/common";
 import { addEdge } from "react-flow-renderer";
 import { createEdge } from "../../../redux/store/project/actions";
 

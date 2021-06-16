@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color, FontSize } from "./../../../..//componentLibrary";
+import { Color, FontSize } from "./../../../..//compLibrary";
 
 const ErrorBox = styled.div`
   width: 400px;

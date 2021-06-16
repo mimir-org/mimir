@@ -1,22 +1,10 @@
+import { getBezierPath, getMarkerEnd } from "react-flow-renderer";
 import {
-  getBezierPath,
-  getMarkerEnd,
-  getSmoothStepPath,
-  EdgeText,
-  ArrowHeadType,
-} from "react-flow-renderer";
-
-import {
-  LINE_EDGE_TYPE,
-  LineEdgeType,
   Node,
   NODE_TYPE,
   Connector,
   RELATION_TYPE,
 } from "../../../models/project";
-
-import { IsAspectNode, GetCenter } from "../helpers";
-
 import "./RelationEdge.scss";
 
 export default function RelationEdgeType({
@@ -33,7 +21,7 @@ export default function RelationEdgeType({
   markerEndId,
 }) {
   const markerEnd = getMarkerEnd(arrowHeadType, markerEndId);
-  const [centerX, centerY] = GetCenter({ sourceX, sourceY, targetX, targetY });
+  //   const [centerX, centerY] = GetCenter({ sourceX, sourceY, targetX, targetY });
 
   const edgePathBezier = getBezierPath({
     sourceX,
@@ -100,7 +88,7 @@ export default function RelationEdgeType({
     //   : edgePathSmoothStep;
   };
 
-  const pathClick = () => {};
+  //   const pathClick = () => {};
 
   const edgeText = (source: Node, target: Node) => {
     return null;

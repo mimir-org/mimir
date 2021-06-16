@@ -84,6 +84,18 @@ const textResources = {
   TypeEditor: "Type Editor",
   TypeEditor_New_Type: "New Type",
   TypeEditor_Edit_Type: "Edit Type",
+  TypeEditor_Aspect: "Aspect",
+  TypeEditor_Object_Type: "Object Type",
+  TypeEditor_Type_Name: "Type name",
+  TypeEditor_Status: "Status",
+  TypeEditor_Properties_Choose: "Choose",
+  TypeEditor_Properties_RDS: "RDS",
+  TypeEditor_Properties_Terminals: "Terminal Types",
+  TypeEditor_Properties_Block_Attributes: "Object Block Attributes",
+  TypeEditor_New_Type_Preview: "Type Preview Info",
+  TypeEditor_Preview_Info: "Click on preview objects to see inspector info",
+  TypeEditor_Button_Add: "Add to Library",
+  TypeEditor_Button_Edit: "Save Type Edit",
 
   // AccountModule
   Account_Save_Label: "Save project to database",
@@ -133,8 +145,11 @@ const textResources = {
   // BlockView
   BlockView_Select_Message:
     "Please select an aspect object from the same aspect OR a different aspect via the Explorer Module",
-  BlockView_Location_Message:
-    "In Split View you can only select one node of type Location",
+
+  // Relations
+  Relations_PartOf: "Part of Relationship",
+  Relations_HasLocation: "Has Location",
+  Relations_FulfilledBy: "Fulfilled By",
 };
 
 export const VisualFilterResources = [

@@ -10,7 +10,6 @@ import { getUser } from "../../redux/store/user/actions";
 import { getContractors } from "../../redux/store/common/actions";
 import { search } from "../../redux/store/project/actions";
 import { FlowModule } from "../flow";
-import { HomeBox } from "../../componentLibrary/box/home";
 import { ErrorModule } from "../modules/errorModule";
 
 interface RouteParams {
@@ -29,15 +28,15 @@ const Home = () => {
   const params = useParams<RouteParams>();
 
   return (
-    <HomeBox>
+    <>
       <ExplorerModule />
-      <FlowModule route={params} />
-      <InspectorModule />
       <AccountMenu />
       <FilterMenu />
+      <FlowModule route={params} />
+      <InspectorModule />
       <LibraryModule />
       <ErrorModule />
-    </HomeBox>
+    </>
   );
 };
 

@@ -5,10 +5,10 @@ const MiniMapComponent = () => {
   return (
     <MiniMap
       nodeStrokeColor={(node: any) => {
-        return GetMapColor(node.type);
+        return GetMapColor(node);
       }}
       nodeColor={(node: any) => {
-        return GetMapColor(node.type);
+        return GetMapColor(node);
       }}
     />
   );

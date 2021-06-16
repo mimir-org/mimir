@@ -1,19 +1,22 @@
 import styled from "styled-components";
-import { Color, FontSize } from "../../../../componentLibrary";
+import { Color, FontSize, FontType } from "../../../../compLibrary";
 
 const TypeNameInput = styled.div`
   display: flex;
   flex-direction: column;
-  font-size: ${FontSize.Standard};
+  flex: 2;
+  margin-right: 15px;
   color: ${Color.Black};
+  font-size: ${FontSize.Standard};
+  font-family: ${FontType.Standard};
   p {
     margin: 0px;
   }
 
-  Input::placeholder,
-  Input {
+  input::placeholder {
     color: ${Color.Black};
     font-size: ${FontSize.Standard};
+    font-family: ${FontType.Standard};
   }
 `;
 

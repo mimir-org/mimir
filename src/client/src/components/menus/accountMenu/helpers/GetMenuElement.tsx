@@ -1,10 +1,10 @@
 import { authProvider } from "../../../../providers/authProvider";
-import { LogoutIcon } from "../../../../assets/icons";
+import { LogoutIcon } from "../../../../assets/icons/common";
 import { TextResources } from "../../../../assets/textResources";
-import { MenuButton } from "../../../../componentLibrary/buttons";
+import { MenuButton } from "../../../../compLibrary/buttons";
 import { UserState } from "../../../../redux/store/user/types";
+import { MenuElement } from "../../../../compLibrary/box/menus";
 import { GetText, GetIcon } from "./";
-import { MenuElement } from "../../../../componentLibrary/box/menus";
 
 interface Props {
   type: string;

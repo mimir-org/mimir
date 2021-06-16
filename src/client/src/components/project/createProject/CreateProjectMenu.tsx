@@ -1,19 +1,19 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { PROJECT_MENU_TYPE } from "../../../models/project";
-import { CloseIcon, RightArrowIcon } from "../../../assets/icons";
+import { CloseIcon, RightArrowIcon } from "../../../assets/icons/common";
 import { TextResources } from "../../../assets/textResources";
 import { changeProjectMenu } from "../../../redux/store/projectMenu/actions";
 import { useState } from "react";
-import { Input, Label } from "../../../componentLibrary";
-import { MenuButton } from "../../../componentLibrary/buttons";
+import { Input, Label } from "../../../compLibrary";
+import { MenuButton } from "../../../compLibrary/buttons";
 import { create } from "../../../redux/store/project/actions";
 import {
   ProjectBody,
   ProjectBox,
   HeaderBox,
   ButtonBox,
-} from "../../../componentLibrary/box/project";
+} from "../../../compLibrary/box/project";
 
 export const CreateProjectMenu = () => {
   const dispatch = useDispatch();

@@ -1,24 +1,23 @@
 import { memo, FC } from "react";
+import { Color } from "../../../compLibrary";
 import { NodeProps, Handle } from "react-flow-renderer";
-import { OffPageWrapper } from "../styled";
-import { GetTransportTypeColor, GetHandleType } from "../helpers";
-import { Color } from "../../../componentLibrary";
+import { Terminal } from "../../../models/project";
+import { OffPageBox } from "../../../compLibrary/blockView";
 import {
-  RELATION_TYPE,
-  Terminal,
-  CONNECTOR_TYPE,
-} from "../../../models/project";
+  GetTransportTypeColor,
+  GetHandleType,
+  IsTransportTerminal,
+  IsInputConnector,
+} from "../helpers/common";
 
 const OffPage: FC<NodeProps> = ({ data }) => {
-  const transportConnectors = data.connectors?.filter(
-    (x) => x.relationType === RELATION_TYPE.Transport
+  const transportConnectors = data.connectors?.filter((x) =>
+    IsTransportTerminal(x)
   );
 
   const background = (): string => {
     const terminal = data.connectors.find(
-      (x) =>
-        x.relationType === RELATION_TYPE.Transport &&
-        x.type === CONNECTOR_TYPE.INPUT
+      (x) => IsTransportTerminal(x) && IsInputConnector(x)
     )?.terminal as Terminal;
     return GetTransportTypeColor(terminal);
   };
@@ -34,22 +33,21 @@ const OffPage: FC<NodeProps> = ({ data }) => {
   };
 
   return (
-    <OffPageWrapper background={background} fontColor={fontColor}>
-      {transportConnectors &&
-        transportConnectors.map((connector) => {
-          const [typeHandler, positionHandler] = GetHandleType(connector);
+    <OffPageBox background={background} fontColor={fontColor}>
+      {transportConnectors?.map((connector) => {
+        const [typeHandler, positionHandler] = GetHandleType(connector);
 
-          return (
-            <Handle
-              type={typeHandler}
-              position={positionHandler}
-              id={connector.id}
-              key={connector.id}
-            />
-          );
-        })}
+        return (
+          <Handle
+            type={typeHandler}
+            position={positionHandler}
+            id={connector.id}
+            key={connector.id}
+          />
+        );
+      })}
       <div className="text">{data.label ?? data.name}</div>
-    </OffPageWrapper>
+    </OffPageBox>
   );
 };
 

@@ -4,14 +4,14 @@ import { ProjectComponent, SplitViewComponent } from "./";
 import { TextResources } from "../../../assets/textResources";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import { MODULE_TYPE } from "../../../models/project";
-import { SaveState } from "../../../redux/store/localStorage";
-import { AnimatedModule, Size } from "../../../componentLibrary";
-import { ExplorerIcon, ToggleLeft, ToggleRight } from "../../../assets/icons";
+import { AnimatedModule, Size } from "../../../compLibrary";
 import { IsBlockView } from "../../flow/helpers/block";
+import { ModuleHead, ModuleBody } from "../../../compLibrary/box/modules";
 import {
-  ModuleHeader,
-  ModuleBody,
-} from "../../../componentLibrary/box/modules";
+  ExplorerIcon,
+  ToggleLeft,
+  ToggleRight,
+} from "../../../assets/icons/common";
 
 export const ExplorerModule = () => {
   const dispatch = useDispatch();
@@ -26,7 +26,6 @@ export const ExplorerModule = () => {
   ) as boolean;
 
   const handleClick = () => {
-    SaveState(!isOpen, key);
     dispatch(changeModuleVisibility(key, !isOpen, true));
   };
 
@@ -38,8 +37,8 @@ export const ExplorerModule = () => {
   const stop = isOpen ? Size.ModuleOpen : Size.ModuleClosed;
 
   return (
-    <AnimatedModule type={key} start={start} stop={stop} run={animate}>
-      <ModuleHeader explorer visible={isOpen}>
+    <AnimatedModule type={key} start={start} stop={stop} run={animate} id={key}>
+      <ModuleHead explorer visible={isOpen}>
         <img src={ExplorerIcon} alt="icon" className="module-icon" />
         <img
           className="icon"
@@ -48,7 +47,7 @@ export const ExplorerModule = () => {
           onClick={handleClick}
         />
         <p className="text">{TextResources.Explorer_view}</p>
-      </ModuleHeader>
+      </ModuleHead>
       <ModuleBody visible={isOpen} explorer isBlockView={IsBlockView()}>
         {hasProject && <ProjectComponent />}
         <SplitViewComponent />

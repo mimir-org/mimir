@@ -3,6 +3,7 @@ import { Node, Edge } from "../../../../models/project";
 const CheckEdges = (nodes: Node[], edges: Edge[], type: string): Edge[] => {
   const connectors = [];
   const edgesToRemove: Edge[] = [];
+  if (nodes === null || nodes === undefined) return edgesToRemove;
 
   for (let i = 0; i < nodes.length; i++) {
     for (let j = 0; j < nodes[i].connectors.length; j++) {

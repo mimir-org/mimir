@@ -1,5 +1,5 @@
-import { Input, InputBox, Select } from "../../../../componentLibrary";
-import { TabColumn } from "../../../../componentLibrary/box/inspector";
+import { Input, InputBox, Select } from "../../../../compLibrary";
+import { TabColumn } from "../../../../compLibrary/box/inspector";
 import { Attribute } from "../../../../models/project";
 
 interface ConnectorAttribute {
