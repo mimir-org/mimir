@@ -1,9 +1,9 @@
-import { NODE_TYPE, Node, LibNode } from "../../../../models/project";
+import { Node, LibraryNodeItem, Aspect } from "../../../../models/project";
 
-const IsProductNode = (node: Node | LibNode): boolean => {
-  return (
-    node?.type === NODE_TYPE.PRODUCT || node?.type === NODE_TYPE.ASPECT_PRODUCT
-  );
+const IsProductNode = (node: Node | LibraryNodeItem): boolean => {
+    return (
+        node?.aspect === Aspect.Product
+    );
 };
 
 export default IsProductNode;

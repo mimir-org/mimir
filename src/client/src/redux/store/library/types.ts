@@ -1,4 +1,4 @@
-import { LibNode } from "../../../models/project";
+import { LibraryNodeItem } from "../../../models/project";
 import { ApiError } from "../../../models/webclient";
 export const FETCHING_LIBRARY = "FETCHING_LIBRARY";
 export const FETCHING_LIBRARY_SUCCESS_OR_ERROR = "FETCHING_LIBRARY_SUCCESS_OR_ERROR";
@@ -7,7 +7,7 @@ export const DELETE_LIBRARY_ERROR = "DELETE_LIBRARY_ERROR";
 // State types
 export interface LibraryState {
     fetching: boolean;
-    nodes: LibNode[] | null;
+    nodes: LibraryNodeItem[] | null;
     apiError: ApiError[];
 }
 
@@ -20,7 +20,7 @@ interface FetchLibraryAction {
 interface FetchLibraryActionFinished {
     type: typeof FETCHING_LIBRARY_SUCCESS_OR_ERROR;
     payload: {
-        nodes: LibNode[],
+        nodes: LibraryNodeItem[],
         apiError: ApiError
     };
 }

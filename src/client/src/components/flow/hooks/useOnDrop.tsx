@@ -1,5 +1,11 @@
 import { addNode, createEdge } from "../../../redux/store/project/actions";
-import { LibNode, Node, NodeType, Edge } from "../../../models/project";
+import {
+  LibraryNodeItem,
+  Node,
+  NodeType,
+  Edge,
+  NODE_TYPE,
+} from "../../../models/project";
 import { CreateBlockNode, IsBlockView } from "../helpers/block";
 import {
   CreateId,
@@ -27,7 +33,7 @@ const useOnDrop = (
   const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
   const data = JSON.parse(
     event.dataTransfer.getData("application/reactflow")
-  ) as LibNode;
+  ) as LibraryNodeItem;
 
   let position;
 
@@ -43,16 +49,15 @@ const useOnDrop = (
     rds: data.rds,
     semanticId: data.semanticReference,
     name: data.name,
-    label: data.label ?? data.name,
-    type: data.type as NodeType,
+    label: data.name,
+    type: NODE_TYPE.FUNCTION as NodeType, // TODO: Denne må fikses
     positionX: position.x,
     positionY: position.y,
     positionBlockX: position.x,
     positionBlockY: position.y,
     connectors: data.connectors,
     attributes: data.attributes,
-    icon: data.icon,
-    version: "1.0",
+    aspect: data.aspect,
   } as Node;
 
   node.connectors?.forEach((c) => {

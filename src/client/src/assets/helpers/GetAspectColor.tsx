@@ -1,4 +1,4 @@
-import { LibNode, Node } from "../../models/project";
+import { LibraryNodeItem, Node } from "../../models/project";
 import { Color } from "../../compLibrary";
 import {
   IsFunctionNode,
@@ -7,7 +7,7 @@ import {
 } from "../../components/flow/helpers/common";
 
 const GetAspectColor = (
-  node: Node | LibNode,
+  node: Node | LibraryNodeItem,
   isTransparent: boolean
 ): string => {
   if (isTransparent) {

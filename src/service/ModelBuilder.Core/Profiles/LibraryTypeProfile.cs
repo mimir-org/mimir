@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Mb.Core.Extensions;
 using Mb.Core.Repositories.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Data;
+using Mb.Models.Enums;
+using NodeType = Mb.Models.Data.NodeType;
 
 namespace Mb.Core.Profiles
 {
@@ -45,12 +48,47 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Rds, opt => opt.MapFrom(src => src.Rds.Code))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => src.Aspect))
-                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Rds.RdsCategory.Name)) // TODO: Fix this
-                //.ForMember(dest => dest.Connectors, opt => opt.MapFrom(src => src.Terminals)) // TODO: Fix this
+                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Rds.RdsCategory.Name))
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+                .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
+                .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.AttributeTypes))
+                .ForMember(dest => dest.Connectors, opt => opt.MapFrom(src => CreateConnectors(src.TerminalTypes)));
+        }
 
-                //.ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes)) // TODO: Fix this
-                .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference));
-            //.ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version)); // TODO: Fix this
+        private static List<Connector> CreateConnectors(ICollection<NodeTypeTerminalType> terminalTypes)
+        {
+            var connectors = new List<Connector>();
+            connectors.Add(CreateRelationConnector(RelationType.PartOf, ConnectorType.Input, "Part of Relationship"));
+            connectors.Add(CreateRelationConnector(RelationType.PartOf, ConnectorType.Output, "Part of Relationship"));
+            connectors.Add(CreateRelationConnector(RelationType.HasLocation, ConnectorType.Input, "Has Location"));
+            connectors.Add(CreateRelationConnector(RelationType.HasLocation, ConnectorType.Output, "Has Location"));
+            connectors.Add(CreateRelationConnector(RelationType.FulfilledBy, ConnectorType.Output, "Fulfilled By"));
+            connectors.Add(CreateRelationConnector(RelationType.FulfilledBy, ConnectorType.Output, "Fulfilled By"));
+
+            if (terminalTypes != null)
+            {
+
+                foreach (var nodeTypeTerminalType in terminalTypes)
+                {
+
+                }
+            }
+
+            return connectors;
+        }
+
+        private static Connector CreateRelationConnector(RelationType relationType, ConnectorType connectorType, string name)
+        {
+            return new Relation
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = name,
+                Type = connectorType,
+                RelationType = relationType,
+                NodeId = null,
+                Node = null,
+                SemanticReference = null
+            };
         }
 
         private static IEnumerable<NodeTypeTerminalType> CreateTerminalTypes(IReadOnlyCollection<TerminalTypeItem> terminalTypes, string nodeId)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Mb.Models.Data.Enums;
+using Mb.Models.Enums;
 
 namespace Mb.Models.Data
 {
@@ -80,5 +81,20 @@ namespace Mb.Models.Data
         public virtual ICollection<Project> Projects { get; set; }
 
         public int Area => Length * Width;
+        public Aspect Aspect => ResolveAspect();
+
+        private Aspect ResolveAspect()
+        {
+            return Type switch
+            {
+                Models.Enums.NodeType.Function => Aspect.Function,
+                Models.Enums.NodeType.AspectFunction => Aspect.Function,
+                Models.Enums.NodeType.Product => Aspect.Product,
+                Models.Enums.NodeType.AspectProduct => Aspect.Product,
+                Models.Enums.NodeType.Location => Aspect.Location,
+                Models.Enums.NodeType.AspectLocation => Aspect.Location,
+                _ => Aspect.NotSet
+            };
+        }
     }
 }

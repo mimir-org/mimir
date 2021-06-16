@@ -4,6 +4,7 @@ using AutoMapper;
 using Mb.Core.Repositories.Contracts;
 using Mb.Models.Data;
 using Mb.Models.Enums;
+using Microsoft.EntityFrameworkCore;
 using NodeType = Mb.Models.Data.NodeType;
 
 namespace Mb.Core.Repositories
@@ -32,6 +33,10 @@ namespace Mb.Core.Repositories
                     .OrderBy(x => x.Name)
                     .Take(30)
                     .Cast<NodeType>()
+                    .Include(x => x.AttributeTypes)
+                    .Include(x => x.TerminalTypes)
+                    .Include(x => x.Rds)
+                    .ThenInclude(y => y.RdsCategory)
                     .ToList();
             }
             else
@@ -42,6 +47,10 @@ namespace Mb.Core.Repositories
                     .Where(x => x.Name.ToLower().Contains(searchString.ToLower()))
                     .Take(30)
                     .Cast<NodeType>()
+                    .Include(x => x.AttributeTypes)
+                    .Include(x => x.TerminalTypes)
+                    .Include(x => x.Rds)
+                    .ThenInclude(y => y.RdsCategory)
                     .ToList();
             }
 
@@ -52,20 +61,12 @@ namespace Mb.Core.Repositories
         {
             foreach (var libraryTypeComponent in types)
             {
-                //libraryTypeComponent.CreateFromJsonData(); // TODO: Fix this
                 var mappedNode = _mapper.Map<LibraryNodeItem>(libraryTypeComponent);
                 
                 foreach (var connector in mappedNode.Connectors)
                 {
                     connector.Id = _generateIdRepository.CreateUniqueId();
                 }
-
-                mappedNode.Connectors.Add(CreateRelationConnector(RelationType.PartOf, ConnectorType.Input, "Part of Relationship"));
-                mappedNode.Connectors.Add(CreateRelationConnector(RelationType.PartOf, ConnectorType.Output, "Part of Relationship"));
-                mappedNode.Connectors.Add(CreateRelationConnector(RelationType.HasLocation, ConnectorType.Input, "Has Location"));
-                mappedNode.Connectors.Add(CreateRelationConnector(RelationType.HasLocation, ConnectorType.Output, "Has Location"));
-                mappedNode.Connectors.Add(CreateRelationConnector(RelationType.FulfilledBy, ConnectorType.Output, "Fulfilled By"));
-                mappedNode.Connectors.Add(CreateRelationConnector(RelationType.FulfilledBy, ConnectorType.Output, "Fulfilled By"));
 
                 yield return mappedNode;
             }
