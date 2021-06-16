@@ -319,45 +319,58 @@ namespace Mb.Core.Services
             var edgesToDelete = existingProject.Edges.Where(x => project.Edges.All(y => y.Id != x.Id)).ToList();
             project.Edges.Clear();
 
+            //Templates
+            foreach (var templateEdgeToDelete in edgesToDelete.Where(x => x.IsTemplateEdge))
+            {
+                await _edgeRepository.Delete(templateEdgeToDelete.Id);
+                nodesToUpdate.RemoveAll(x=> x.MasterProjectId.Equals(templateEdgeToDelete.MasterProjectId));
+                nodesToDelete.RemoveAll(x=> x.MasterProjectId.Equals(templateEdgeToDelete.MasterProjectId));
+                edgesToUpdate.RemoveAll(x=> x.MasterProjectId.Equals(templateEdgeToDelete.MasterProjectId));
+                edgesToDelete.RemoveAll(x=> x.MasterProjectId.Equals(templateEdgeToDelete.MasterProjectId));
+            }
+
             // Attributes
-            var attributesToDelete = new List<Attribute>();
-            foreach (var node in nodesToDelete)
+            var attributesToDelete = GetAttributesToDelete(nodesToDelete, project);
+            
+            UpdateNodes(nodesToUpdate.Where(x => x.MasterProjectId.Equals(project.Id)).ToList());
+
+            await CreateNodes(nodesToCreate, edgesToCreate);
+
+            foreach (var attribute in attributesToDelete)
             {
-                attributesToDelete.AddRange(node.Attributes);
-                node.Attributes.Clear();
-                foreach (var nodeConnector in node.Connectors.OfType<Terminal>())
-                {
-                    attributesToDelete.AddRange(nodeConnector.Attributes);
-                    nodeConnector.Attributes.Clear();
-                }
+                await _attributeRepository.Delete(attribute.Id);
             }
 
-            foreach (var node in nodesToUpdate)
+            foreach (var node in nodesToDelete.Where(x => x.MasterProjectId.Equals(project.Id)))
+                await _nodeRepository.Delete(node.Id);
+
+            foreach (var edge in edgesToUpdate.Where(x => x.MasterProjectId.Equals(project.Id)))
+                _edgeRepository.Update(edge);
+
+            foreach (var edge in edgesToCreate)
             {
-                node.UpdatedBy = _contextAccessor.GetName();
-                node.Updated = DateTime.Now.ToUniversalTime();
-                if (node.Attributes != null)
-                {
-                    foreach (var nodeAttribute in node.Attributes)
-                    {
-                        _attributeRepository.Update(nodeAttribute);
-                    }
-                }
-
-                if (node.Connectors != null)
-                {
-                    foreach (var connector in node.Connectors.OfType<Terminal>().Where(x => x.Attributes != null))
-                    {
-                        foreach (var attribute in connector.Attributes)
-                        {
-                            _attributeRepository.Update(attribute);
-                        }
-                    }
-                }
-
-                _nodeRepository.Update(node);
+                edge.Id = _commonRepository.CreateUniqueId();
+                await _edgeRepository.CreateAsync(edge);
             }
 
+            foreach (var edge in edgesToDelete.Where(x => x.MasterProjectId.Equals(project.Id)))
+                await _edgeRepository.Delete(edge.Id);
+
+            project.UpdatedBy = _contextAccessor.GetName();
+            project.Updated = DateTime.Now.ToUniversalTime();
+
+
+            _projectRepository.Update(project);
+            await _attributeRepository.SaveAsync();
+            await _nodeRepository.SaveAsync();
+            await _edgeRepository.SaveAsync();
+            await _projectRepository.SaveAsync();
+
+            return await GetProject(project.Id);
+        }
+
+        private async Task CreateNodes(List<Node> nodesToCreate, List<Edge> edgesToCreate)
+        {
             foreach (var node in nodesToCreate)
             {
                 var nodeNewId = _commonRepository.CreateUniqueId();
@@ -403,38 +416,52 @@ namespace Mb.Core.Services
                 node.Updated = DateTime.Now.ToUniversalTime();
                 await _nodeRepository.CreateAsync(node);
             }
+        }
 
-            foreach (var attribute in attributesToDelete)
+        private void UpdateNodes(List<Node> nodesToUpdate)
+        {
+            foreach (var node in nodesToUpdate)
             {
-                await _attributeRepository.Delete(attribute.Id);
+                node.UpdatedBy = _contextAccessor.GetName();
+                node.Updated = DateTime.Now.ToUniversalTime();
+                if (node.Attributes != null)
+                {
+                    foreach (var nodeAttribute in node.Attributes)
+                    {
+                        _attributeRepository.Update(nodeAttribute);
+                    }
+                }
+
+                if (node.Connectors != null)
+                {
+                    foreach (var connector in node.Connectors.OfType<Terminal>().Where(x => x.Attributes != null))
+                    {
+                        foreach (var attribute in connector.Attributes)
+                        {
+                            _attributeRepository.Update(attribute);
+                        }
+                    }
+                }
+
+                _nodeRepository.Update(node);
+            }
+        }
+
+        private List<Attribute> GetAttributesToDelete(List<Node> nodesToDelete, Project project)
+        {
+            var attributesToDelete = new List<Attribute>();
+            foreach (var node in nodesToDelete.Where(x => x.MasterProjectId.Equals(project.Id)))
+            {
+                attributesToDelete.AddRange(node.Attributes);
+                node.Attributes.Clear();
+                foreach (var nodeConnector in node.Connectors.OfType<Terminal>())
+                {
+                    attributesToDelete.AddRange(nodeConnector.Attributes);
+                    nodeConnector.Attributes.Clear();
+                }
             }
 
-            foreach (var node in nodesToDelete)
-                await _nodeRepository.Delete(node.Id);
-
-            foreach (var edge in edgesToUpdate)
-                _edgeRepository.Update(edge);
-
-            foreach (var edge in edgesToCreate)
-            {
-                edge.Id = _commonRepository.CreateUniqueId();
-                await _edgeRepository.CreateAsync(edge);
-            }
-
-            foreach (var edge in edgesToDelete)
-                await _edgeRepository.Delete(edge.Id);
-
-            project.UpdatedBy = _contextAccessor.GetName();
-            project.Updated = DateTime.Now.ToUniversalTime();
-
-
-            _projectRepository.Update(project);
-            await _attributeRepository.SaveAsync();
-            await _nodeRepository.SaveAsync();
-            await _edgeRepository.SaveAsync();
-            await _projectRepository.SaveAsync();
-
-            return await GetProject(project.Id);
+            return attributesToDelete;
         }
 
         private void ResolveLevelAndOrder(Project project)

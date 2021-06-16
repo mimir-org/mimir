@@ -37,9 +37,11 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.UpdatedBy).HasColumnName("UpdatedBy").IsRequired();
             builder.Property(p => p.Updated).HasColumnName("Updated").IsRequired();
             builder.Property(p => p.Version).HasColumnName("Version").IsRequired();
-
+            builder.Property(p => p.MasterProjectId).HasColumnName("MasterProjectId").IsRequired();
+            
             builder.HasOne(x => x.Status).WithMany(y => y.Nodes).HasForeignKey(x => x.StatusId).OnDelete(DeleteBehavior.NoAction);
-
+            
+            builder.HasOne(x => x.MasterProject).WithMany().HasForeignKey(x => x.MasterProjectId).OnDelete(DeleteBehavior.NoAction);
             builder.HasMany(x => x.Projects).WithMany(y => y.Nodes).UsingEntity<Dictionary<string, object>>("ProjectNode",
                 x => x.HasOne<Project>().WithMany().HasForeignKey("ProjectId"),
                 x => x.HasOne<Node>().WithMany().HasForeignKey("NodeId"),

@@ -75,6 +75,8 @@ namespace Mb.Models.Data
         [RegularExpression(@"^(?=.*[1-9])\d+(\.[0-9]?)?$", ErrorMessage = "The version format must be at x.y")]
         public string Version { get; set; }
 
+        public string MasterProjectId { get; set; }
+        public virtual Project MasterProject { get; set; }
         public virtual ICollection<Connector> Connectors { get; set; }
         public virtual ICollection<Attribute> Attributes { get; set; }
         public virtual ICollection<Project> Projects { get; set; }
