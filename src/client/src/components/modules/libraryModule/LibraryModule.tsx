@@ -1,6 +1,6 @@
 import { TextResources } from "../../../assets/textResources";
 import { LegendModule } from "../legendModule";
-import { TypeEditorModule } from "../typeEditorModule";
+import { TypeEditorModule } from "../../modules/typeEditorModule";
 import { LibraryComponent } from "./index";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -54,6 +54,14 @@ const LibraryModule = () => {
     (state) => state.modules.types.find((x) => x.type === legendKey).animate
   ) as boolean;
 
+  const isSplitView = useSelector<RootState>(
+    (state) => state.splitView.visible
+  ) as boolean;
+
+  const selectedNode = useSelector<RootState>((state) =>
+    state.projectState.project?.nodes?.find((x) => x.isSelected)
+  ) as Node;
+
   const onLibraryClick = () => {
     dispatch(changeModuleVisibility(libraryKey, !libraryOpen, true));
     dispatch(changeModuleVisibility(legendKey, !libraryOpen, true));
@@ -67,14 +75,6 @@ const LibraryModule = () => {
   const stop = libraryOpen ? Size.ModuleOpen : Size.ModuleClosed;
   const startLegend = legendOpen ? Size.ModuleClosed : Size.ModuleOpen;
   const stopLegend = legendOpen ? Size.ModuleOpen : Size.ModuleClosed;
-
-  const isSplitView = useSelector<RootState>(
-    (state) => state.splitView.visible
-  ) as boolean;
-
-  const selectedNode = useSelector<RootState>((state) =>
-    state.projectState.project?.nodes?.find((x) => x.isSelected)
-  ) as Node;
 
   return (
     <>
@@ -100,8 +100,9 @@ const LibraryModule = () => {
             categories={GetLibCategories(selectedNode, isSplitView, state)}
             search={search}
           />
-          {/* <TypeEditorModule /> */}
+          <TypeEditorModule />
         </ModuleBody>
+
         <AnimatedModule
           start={startLegend}
           stop={stopLegend}

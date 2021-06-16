@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { TypeEditorState } from "../../../redux/store/typeEditor/types";
 import { useHistory } from "react-router-dom";
-import { changeMode } from "../../../redux/store/typeEditor/actions";
+// import { changeMode } from "../../../redux/store/typeEditor/actions";
 import { TypeEditorComponent } from "./TypeEditorComponent";
 import { NewTypeIcon, EditTypeIcon } from "../../../assets/icons/common";
 import { TextResources } from "../../../assets/textResources";
@@ -20,7 +20,7 @@ export const TypeEditorModule = () => {
   ) as TypeEditorState;
 
   const handleClick = (param) => {
-    dispatch(changeMode(param));
+    // dispatch(changeMode(param));
     dispatch(changeFlowView(VIEW_TYPE.TYPE_EDITOR));
     push(`/home/${VIEW_TYPE.TYPE_EDITOR}`);
   };

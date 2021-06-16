@@ -8,6 +8,7 @@ const TypeEditorBox = styled.div`
   justify-content: space-between;
   align-items: center;
   overflow: hidden;
+  margin-top: 100px;
 `;
 
 export default TypeEditorBox;
