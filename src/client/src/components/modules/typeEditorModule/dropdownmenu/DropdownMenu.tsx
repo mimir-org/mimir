@@ -7,6 +7,8 @@ import GetRightMargin from "../helper/GetRightMargin";
 import {
   getRDS,
   changeSelectedAspect,
+  changeSelectedObjecttype,
+  changeStatus,
 } from "../../../../redux/store/typeEditor/actions";
 import {
   DropdownMenuWrapper,
@@ -41,7 +43,10 @@ export const DropDownMenu = ({ label, placeHolder, listItems }: Props) => {
     setIsListOpen(!isListOpen);
     if (label === "Aspect") {
       dispatch(changeSelectedAspect(item));
-      dispatch(getRDS(state.aspect));
+    } else if (label === "Object Type") {
+      dispatch(changeSelectedObjecttype(item));
+    } else if (label === "Status") {
+      dispatch(changeStatus(item));
     }
   };
 

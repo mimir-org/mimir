@@ -23,8 +23,8 @@ export function* getInitialData(action: TypeEditorActionTypes) {
 
     const payload = {
       aspects: aspectResponse.data,
-      statuses: statusResponse.data,
       objectTypes: objectResponse.data,
+      statuses: statusResponse.data,
     };
 
     yield put({
@@ -34,8 +34,8 @@ export function* getInitialData(action: TypeEditorActionTypes) {
   } catch (error) {
     const payload = {
       aspects: [],
-      statuses: [],
       objectTypes: [],
+      statuses: [],
     };
 
     yield put({
