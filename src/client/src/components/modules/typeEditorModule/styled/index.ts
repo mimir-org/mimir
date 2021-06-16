@@ -13,3 +13,5 @@ export { default as AddTerminalWrapper } from "./AddTerminalWrapper";
 export { default as AddTerminalElement } from "./AddTerminalElement";
 export { default as PreviewArea } from "./PreviewArea";
 export { default as PreviewInstruction } from "./PreviewInstruction";
+export { default as ObjectTypeBlock } from "./ObjectTypeBlock";
+export { default as InfoWrapper } from "./InfoWrapper";
