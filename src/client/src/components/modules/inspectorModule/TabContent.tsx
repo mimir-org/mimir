@@ -3,7 +3,7 @@ import { TabRow } from "../../../compLibrary/box/inspector";
 import { useDispatch } from "react-redux";
 import { IsTransportTerminal, CreateId } from "../../flow/helpers/common";
 import { CalculateRows, SetConnectorColumn } from "./helpers";
-import { Input, InputBox, Select, AttributeField } from "../../../componentLibrary";
+import { Input, InputBox, Select, AttributeField } from "../../../compLibrary";
 import { RelationTabComponent } from ".";
 import {
   changeAttributeValue,
