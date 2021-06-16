@@ -1,6 +1,5 @@
 import { TextResources } from "../../../assets/textResources";
 import { LegendModule } from "../legendModule";
-import { TypeEditorModule } from "../../modules/typeEditorModule";
 import { LibraryComponent } from "./index";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -100,7 +99,6 @@ const LibraryModule = () => {
             categories={GetLibCategories(selectedNode, isSplitView, state)}
             search={search}
           />
-          <TypeEditorModule />
         </ModuleBody>
 
         <AnimatedModule
