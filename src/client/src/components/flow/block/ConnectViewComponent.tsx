@@ -2,7 +2,7 @@ import { Node, Connector, TERMINAL } from "../../../models/project";
 import {
   ConnectViewBox,
   ConnectViewElement,
-} from "../../../componentLibrary/blockView";
+} from "../../../compLibrary/blockView";
 
 interface Props {
   isOpen: boolean;

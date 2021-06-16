@@ -1,4 +1,4 @@
-import { Size } from "../../../../../componentLibrary";
+import { Size } from "../../../../../compLibrary";
 import { Node } from "../../../../../models/project";
 
 const CalculateYPosition = (

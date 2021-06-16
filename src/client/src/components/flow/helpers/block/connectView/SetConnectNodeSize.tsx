@@ -1,11 +1,8 @@
 import { FindNodeById } from ".";
-import { Size } from "../../../../../componentLibrary";
+import { Size } from "../../../../../compLibrary";
 import { Node } from "../../../../../models/project";
 
-const SetConnectNodeDefaultSize = (
-  mainConnectNode: Node,
-  connectNodes?: Node[]
-) => {
+const SetConnectNodeSize = (mainConnectNode: Node, connectNodes?: Node[]) => {
   let twinNode = FindNodeById(mainConnectNode?.id);
 
   // Resize MainConnectNode to large block
@@ -13,7 +10,6 @@ const SetConnectNodeDefaultSize = (
     twinNode.style.width = `${Size.ConnectView_Width}px`;
     twinNode.style.height = `${Size.ConnectView_Length}px`;
     twinNode.style.zIndex = "1";
-    // twinNode.style.background = "transparent";
   } else {
     // Reset MainConnectNode to normal
     if (twinNode) {
@@ -23,4 +19,4 @@ const SetConnectNodeDefaultSize = (
   }
 };
 
-export default SetConnectNodeDefaultSize;
+export default SetConnectNodeSize;

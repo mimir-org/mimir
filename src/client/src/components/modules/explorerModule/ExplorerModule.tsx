@@ -4,9 +4,9 @@ import { ProjectComponent, SplitViewComponent } from "./";
 import { TextResources } from "../../../assets/textResources";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import { MODULE_TYPE } from "../../../models/project";
-import { AnimatedModule, Size } from "../../../componentLibrary";
+import { AnimatedModule, Size } from "../../../compLibrary";
 import { IsBlockView } from "../../flow/helpers/block";
-import { ModuleHead, ModuleBody } from "../../../componentLibrary/box/modules";
+import { ModuleHead, ModuleBody } from "../../../compLibrary/box/modules";
 import {
   ExplorerIcon,
   ToggleLeft,

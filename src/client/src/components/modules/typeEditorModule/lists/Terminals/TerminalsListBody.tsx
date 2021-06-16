@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../../redux/store";
 import { TypeEditorState } from "../../../../../redux/store/typeEditor/types";
-import { VerticalScrollbar } from "../../../../../componentLibrary";
+import { VerticalScrollbar } from "../../../../../compLibrary";
 import { TerminalsListElement } from "./TerminalsListElement";
 interface Props {
   listElements: any;

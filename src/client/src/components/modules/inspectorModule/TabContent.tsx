@@ -1,5 +1,5 @@
 import { Attribute, Node } from "../../../models/project";
-import { TabRow } from "../../../componentLibrary/box/inspector";
+import { TabRow } from "../../../compLibrary/box/inspector";
 import { useDispatch } from "react-redux";
 import { IsTransportTerminal, CreateId } from "../../flow/helpers/common";
 import { CalculateRows, SetConnectorColumn } from "./helpers";

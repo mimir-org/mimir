@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const FullscreenButton = styled.div`
+const FullScreenButton = styled.div`
   position: absolute;
   cursor: pointer;
   bottom: ${(props) => (props.isInspector ? "270px" : "50px")} !important;
@@ -9,4 +9,4 @@ const FullscreenButton = styled.div`
   z-index: 4;
 `;
 
-export default FullscreenButton;
+export default FullScreenButton;

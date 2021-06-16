@@ -11,7 +11,7 @@ import {
   TabBody,
   NodeTitle,
   TabTitle,
-} from "../../../componentLibrary/box/inspector";
+} from "../../../compLibrary/box/inspector";
 
 interface Props {
   node: Node;

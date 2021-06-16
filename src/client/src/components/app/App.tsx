@@ -1,8 +1,8 @@
 import { Switch, Route } from "react-router";
 import { Header, Home, Login } from "..";
-import { Spinner, SpinnerWrapper } from "../../componentLibrary/animated";
-import { GlobalStyle } from "../../componentLibrary";
-import { AppBox } from "../../componentLibrary/box/app";
+import { Spinner, SpinnerWrapper } from "../../compLibrary/animated";
+import { GlobalStyle } from "../../compLibrary";
+import { AppBox } from "../../compLibrary/box/app";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { ProjectState } from "../../redux/store/project/types";

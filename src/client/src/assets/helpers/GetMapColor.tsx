@@ -1,4 +1,4 @@
-import { Color } from "../../componentLibrary";
+import { Color } from "../../compLibrary";
 import { Node } from "../../models/project";
 import {
   IsFunctionNode,

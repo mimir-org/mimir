@@ -1,7 +1,6 @@
 import { TextResources } from "../../assets/textResources";
-import { ButtonWrap } from "../../componentLibrary/buttons";
-import { MessageBox } from "../../componentLibrary/box/message";
-import { MenuButton } from "../../componentLibrary/buttons";
+import { ButtonWrap, MenuButton } from "../../compLibrary/buttons";
+import { MessageBox } from "../../compLibrary/box/message";
 
 interface Props {
   handleSave: () => void;

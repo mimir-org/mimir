@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { MODULE_TYPE } from "../../../models/project";
-import { Color } from "./../../../componentLibrary";
+import { Color } from "./../../../compLibrary";
 
 const ModuleBox = styled.div`
   border-right: 1px solid ${Color.Grey};

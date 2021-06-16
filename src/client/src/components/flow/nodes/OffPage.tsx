@@ -1,8 +1,8 @@
 import { memo, FC } from "react";
-import { Color } from "../../../componentLibrary";
+import { Color } from "../../../compLibrary";
 import { NodeProps, Handle } from "react-flow-renderer";
 import { Terminal } from "../../../models/project";
-import { OffPageBox } from "../../../componentLibrary/blockView";
+import { OffPageBox } from "../../../compLibrary/blockView";
 import {
   GetTransportTypeColor,
   GetHandleType,

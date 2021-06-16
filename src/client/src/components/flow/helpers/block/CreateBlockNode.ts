@@ -2,8 +2,8 @@ import { Node } from "../../../../models/project";
 import { FlowElement } from "react-flow-renderer";
 import { SetBlockNodePosition } from ".";
 import { IsFunctionNode, IsLocationNode } from "../common";
-import { Size } from "../../../../componentLibrary";
-import { SetConnectNodePosition } from "./connectionView";
+import { Size } from "../../../../compLibrary";
+import { SetConnectNodePosition } from "./connectView";
 import red from "../../../../redux/store";
 
 const CreateBlockNode = (

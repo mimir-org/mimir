@@ -1,6 +1,8 @@
-import { ListElementsContainer } from "../../../../../componentLibrary";
-import { VerticalScrollbar } from "../../../../../componentLibrary";
 import { RDSListElement } from "../RDS/RDSListElement";
+import {
+  ListElementsContainer,
+  VerticalScrollbar,
+} from "../../../../../compLibrary";
 
 interface Props {
   listElements: any;

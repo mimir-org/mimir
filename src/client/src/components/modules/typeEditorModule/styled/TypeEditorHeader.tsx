@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color, FontSize } from "../../../../componentLibrary";
+import { Color, FontSize } from "../../../../compLibrary";
 
 const TypeEditorHeader = styled.div`
   display: flex;

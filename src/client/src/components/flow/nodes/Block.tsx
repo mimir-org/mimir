@@ -1,5 +1,5 @@
 import { ArrowIcon } from "../../../assets/icons/blockView";
-import { BlockNodeBox } from "../../../componentLibrary/blockView";
+import { BlockNodeBox } from "../../../compLibrary/blockView";
 
 const Block = ({ data, location, splitView }) => {
   return (

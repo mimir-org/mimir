@@ -5,7 +5,7 @@ import {
   TerminalCategoryWrapper,
   AddTerminalWrapper,
 } from "../../styled";
-import { NumericInput } from "../../../../../componentLibrary";
+import { NumericInput } from "../../../../../compLibrary";
 import {
   expandedIcon,
   unexpandedIcon,

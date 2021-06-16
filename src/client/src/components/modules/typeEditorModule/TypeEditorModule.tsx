@@ -6,10 +6,7 @@ import { TextResources } from "../../../assets/textResources";
 import { useDispatch } from "react-redux";
 import { VIEW_TYPE } from "../../../models/project";
 import { changeFlowView } from "../../../redux/store/flow/actions";
-import {
-  TypeEditorBox,
-  TypeEditorBoxContent,
-} from "../../../componentLibrary/box";
+import { TypeEditorBox, TypeEditorBoxContent } from "../../../compLibrary/box";
 import "./typeeditor.scss";
 
 export const TypeEditorModule = () => {

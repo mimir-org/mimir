@@ -1,5 +1,5 @@
 import { UpdateConnectNodeSize } from ".";
-import { Size } from "../../../../../componentLibrary";
+import { Size } from "../../../../../compLibrary";
 import { Node } from "../../../../../models/project";
 
 const CalculateXPosition = (

@@ -22,6 +22,7 @@ import {
   CHANGE_EDGE_VISIBILITY,
   CHANGE_ACTIVE_BLOCKNODE,
   DELETE_PROJECT_ERROR,
+  SET_ACTIVE_CONNECTOR,
 } from "./types";
 
 export function save(project: Project): ProjectActionTypes {
@@ -212,6 +213,23 @@ export function deleteProjectError(key: string) {
     type: DELETE_PROJECT_ERROR,
     payload: {
       key,
+    },
+  };
+}
+
+export function setActiveConnector(
+  node: Node,
+  connectorId: string,
+  visible: boolean,
+  order: number
+) {
+  return {
+    type: SET_ACTIVE_CONNECTOR,
+    payload: {
+      node,
+      connectorId,
+      visible,
+      order,
     },
   };
 }

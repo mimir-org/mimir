@@ -3,18 +3,14 @@ import { NodeProps } from "react-flow-renderer";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { Connector, Node } from "../../../models/project";
-import { GetConnectChildren, SortConnectors } from "../helpers/common";
-import { Size } from "../../../componentLibrary";
+import { Size } from "../../../compLibrary";
 import { TerminalsIcon, ConnectIcon } from "../../../assets/icons/blockView";
-import {
-  FindNodeById,
-  SetConnectNodeDefaultSize,
-} from "../helpers/block/connectionView";
-import {
-  TerminalsComponent,
-  ConnectViewComponent,
-  HandleComponent,
-} from "../block";
+import { setActiveConnector } from "../../../redux/store/project/actions";
+import { TerminalsComponent, ConnectViewComponent } from "../block";
+import { HandleComponent } from "../block";
+import { GetConnectChildren } from "../helpers/common";
+import { CalculateTerminalOrder, FilterConnectors } from "../helpers/block";
+import { FindNodeById, SetConnectNodeSize } from "../helpers/block/connectView";
 import {
   addConnectNode,
   addMainConnectNode,
@@ -24,7 +20,7 @@ import {
   NodeBox,
   TerminalsMenu,
   ConnectMenu,
-} from "../../../componentLibrary/blockView";
+} from "../../../compLibrary/blockView";
 
 const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
@@ -34,9 +30,10 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const [connectMenu, showConnectMenu] = useState(false);
   const connectChildren = GetConnectChildren(data);
   const hasChildren = connectChildren?.length > 0;
-  const [drawConnectors, setDrawConnectors] = useState(false);
-  const [selectedConnector, setSelectedConnector] = useState(null);
-  const sortedConns = SortConnectors(data.connectors) as Connector[];
+  const sortedConns = FilterConnectors(
+    data.connectors,
+    data.type
+  ) as Connector[];
 
   const mainConnectNode = useSelector<RootState>(
     (state) => state.connectView.mainNode
@@ -48,11 +45,11 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
 
   const isConnectViewNode = data.id === mainConnectNode?.id;
 
-  const onTerminalClick = () => {
+  const onTerminalMenuClick = () => {
     showTerminalMenu(!terminalMenu);
   };
 
-  const onConnClick = () => {
+  const onConnectMenuClick = () => {
     showConnectMenu(!connectMenu);
   };
 
@@ -66,18 +63,18 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     showConnectButton(false);
   };
 
-  const onConnectorClick = (connector: Connector) => {
-    setSelectedConnector(connector);
-    setDrawConnectors(true);
+  const onConnectorClick = (conn: Connector) => {
     showTerminalMenu(false);
     showConnectMenu(false);
+    const order = CalculateTerminalOrder(data, 0, conn.type);
+    dispatch(setActiveConnector(data, conn.id, true, order));
   };
 
   const onChange = (node: Node) => {
     if (!isChecked(node)) {
-      data.width = Size.ConnectView_Width;
-      data.length = Size.ConnectView_Length;
-      dispatch(addMainConnectNode(data));
+      node.width = Size.ConnectView_Width;
+      node.length = Size.ConnectView_Length;
+      dispatch(addMainConnectNode(node));
       dispatch(addConnectNode(node));
     } else {
       connectNodes.length === 1 && showConnectMenu(false);
@@ -98,11 +95,12 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   }, [connectNodes.length, dispatch]);
 
   useEffect(() => {
-    SetConnectNodeDefaultSize(mainConnectNode, connectNodes);
+    SetConnectNodeSize(mainConnectNode, connectNodes);
   }, [mainConnectNode, data, connectNodes]);
 
   useEffect(() => {
     const twinNode = FindNodeById(mainConnectNode?.id);
+    // TODO: Check this render
     const clicked = () => {
       if (twinNode) twinNode.style.zIndex = "1";
     };
@@ -121,53 +119,45 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   }, [mainConnectNode]);
 
   return (
-    <NodeBox
-      id={`BlockFunctionNode-` + data.id}
-      onMouseOver={handleOnHover}
-      onMouseOut={handleOnMouseOut}
-      width={data.width}
-      length={data.length}
-      isSelectedConnection={isConnectViewNode}
-    >
-      <TerminalsMenu visible={terminalButton} onClick={onTerminalClick}>
-        <img src={TerminalsIcon} alt="options" />
-      </TerminalsMenu>
-      <ConnectMenu visible={connectButton && hasChildren} onClick={onConnClick}>
-        <img src={ConnectIcon} alt="options" />
-      </ConnectMenu>
-
-      <p className="node-name">{data.label ?? data.name}</p>
-
-      <TerminalsComponent
-        isOpen={terminalMenu}
-        list={sortedConns}
+    <>
+      <NodeBox
+        id={`BlockFunctionNode-` + data.id}
+        onMouseOver={handleOnHover}
+        onMouseOut={handleOnMouseOut}
         width={data.width}
-        onClick={onConnectorClick}
-      ></TerminalsComponent>
+        length={data.length}
+        isSelectedConnection={isConnectViewNode}
+      >
+        <TerminalsMenu visible={terminalButton} onClick={onTerminalMenuClick}>
+          <img src={TerminalsIcon} alt="options" />
+        </TerminalsMenu>
+        <ConnectMenu
+          visible={connectButton && hasChildren}
+          onClick={onConnectMenuClick}
+        >
+          <img src={ConnectIcon} alt="options" />
+        </ConnectMenu>
 
-      <ConnectViewComponent
-        isOpen={connectMenu}
-        list={connectChildren}
-        handleClick={onChange}
-        isChecked={isChecked}
-        width={data.width}
-      ></ConnectViewComponent>
+        <p className="node-name">{data.label ?? data.name}</p>
 
-      <HandleComponent
-        drawConns={drawConnectors}
-        data={data}
-        list={data.connectors}
-        selectedConn={selectedConnector}
-        type="block"
-      ></HandleComponent>
+        <TerminalsComponent
+          isOpen={terminalMenu}
+          list={sortedConns}
+          width={data.width}
+          onClick={onConnectorClick}
+        />
 
-      <HandleComponent
-        drawConns={drawConnectors}
-        data={data}
-        list={data.connectors}
-        selectedConn={selectedConnector}
-      ></HandleComponent>
-    </NodeBox>
+        <ConnectViewComponent
+          isOpen={connectMenu}
+          list={connectChildren}
+          handleClick={onChange}
+          isChecked={isChecked}
+          width={data.width}
+        />
+
+        <HandleComponent data={data} />
+      </NodeBox>
+    </>
   );
 };
 

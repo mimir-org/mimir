@@ -5,7 +5,7 @@ import { TextResources } from "../../../assets/textResources";
 import { Node } from "../../../models/project";
 import { RootState } from "../../../redux/store";
 import { Block } from ".";
-import { BlockMessageBox } from "../../../componentLibrary/blockView";
+import { BlockMessageBox } from "../../../compLibrary/blockView";
 
 const FunctionBlock: FC<NodeProps> = ({ data }) => {
   const splitView = useSelector<RootState>((state) => state.splitView.visible);

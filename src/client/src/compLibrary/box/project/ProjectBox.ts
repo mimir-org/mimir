@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color, FontSize } from "./../../../componentLibrary";
+import { Color, FontSize } from "./../../../compLibrary";
 
 const ProjectBox = styled.div`
   width: ${(props) => (props.small ? "308px" : "auto")};

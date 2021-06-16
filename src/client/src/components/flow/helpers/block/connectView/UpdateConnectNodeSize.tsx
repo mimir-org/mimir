@@ -1,5 +1,5 @@
 import { FindNodeById } from ".";
-import { Size } from "../../../../../componentLibrary";
+import { Size } from "../../../../../compLibrary";
 import { Node } from "../../../../../models/project";
 import red from "../../../../../redux/store";
 
