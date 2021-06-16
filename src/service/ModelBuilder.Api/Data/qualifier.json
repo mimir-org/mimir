@@ -1,0 +1,22 @@
+[
+  {
+    "name": "NotSet",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "Capacity",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "Operating",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "Rating",
+    "description": null,
+    "semanticReference": null
+  }
+]

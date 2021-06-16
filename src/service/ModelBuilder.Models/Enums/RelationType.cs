@@ -1,11 +1,19 @@
-﻿namespace Mb.Models.Enums
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Mb.Models.Enums
 {
     public enum RelationType
     {
+        [Display(Name = "Not Set")]
         NotSet = 0,
+
+        [Display(Name = "Has Location")]
         HasLocation = 1,
+
+        [Display(Name = "Part Of")]
         PartOf = 2,
-        Transport = 3,
-        FulfilledBy = 4
+
+        [Display(Name = "Fulfilled By")]
+        FulfilledBy = 3
     }
 }

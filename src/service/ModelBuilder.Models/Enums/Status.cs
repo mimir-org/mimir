@@ -4,7 +4,7 @@ namespace Mb.Models.Enums
 {
     public enum Status
     {
-        [Display(Name = "NotSet")]
+        [Display(Name = "Not Set")]
         NotSet = 0,
 
         [Display(Name = "Draft")]

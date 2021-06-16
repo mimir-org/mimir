@@ -1,0 +1,27 @@
+[
+  {
+    "name": "NotSet",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "Minimum",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "Nominal",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "Maximum",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "Actual",
+    "description": null,
+    "semanticReference": null
+  }
+]

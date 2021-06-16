@@ -19,7 +19,6 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.Description).HasColumnName("Description").IsRequired(false);
             builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
             builder.Property(p => p.Name).HasColumnName("Name").IsRequired();
-            builder.Property(p => p.Icon).HasColumnName("Icon").IsRequired().HasConversion<string>();
             builder.Property(p => p.Label).HasColumnName("Label").IsRequired(false);
             builder.Property(p => p.Type).HasColumnName("Type").IsRequired().HasConversion<string>();
             builder.Property(p => p.PositionX).HasColumnName("PositionX").HasColumnType("decimal(18,4)").IsRequired();
@@ -35,12 +34,11 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.Level).HasColumnName("Level").IsRequired();
             builder.Property(p => p.Order).HasColumnName("Order").IsRequired();
 
-            builder.Property(p => p.Status).HasColumnName("Status").IsRequired().HasConversion<string>();
             builder.Property(p => p.UpdatedBy).HasColumnName("UpdatedBy").IsRequired();
             builder.Property(p => p.Updated).HasColumnName("Updated").IsRequired();
             builder.Property(p => p.Version).HasColumnName("Version").IsRequired();
 
-            builder.HasMany(x => x.Projects).WithMany(y => y.Nodes).UsingEntity(join => join.ToTable("ProjectNode"));
+            builder.HasOne(x => x.Status).WithMany(y => y.Nodes).HasForeignKey(x => x.StatusId).OnDelete(DeleteBehavior.NoAction);
 
             builder.HasMany(x => x.Projects).WithMany(y => y.Nodes).UsingEntity<Dictionary<string, object>>("ProjectNode",
                 x => x.HasOne<Project>().WithMany().HasForeignKey("ProjectId"),

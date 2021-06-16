@@ -5,6 +5,6 @@ namespace Mb.Core.Services.Contracts
 {
     public interface ILibraryService
     {
-        IEnumerable<LibNode> GetLibNodes(string searchString);
+        IEnumerable<LibraryNodeItem> GetLibNodes(string searchString);
     }
 }

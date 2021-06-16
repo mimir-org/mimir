@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Enums;
 using Microsoft.AspNetCore.Http;
@@ -13,18 +14,21 @@ namespace Mb.Core.Services.Contracts
         Dictionary<int, string> GetStatuses();
         Dictionary<int, string> GetAspects();
         Dictionary<int, string> GetObjectTypes();
-        Dictionary<int, string> GetTerminalCategories();
-        Dictionary<int, string> GetUnits();
         IEnumerable<Rds> GetRds(Aspect aspect);
         IEnumerable<AttributeType> GetAttributeTypes(Aspect aspect);
         IEnumerable<TerminalType> GetTerminals();
-        Task<LibraryType> CreateLibraryComponent(LibraryType libraryTypeComponent);
+        Task<IEnumerable<LibraryType>> CreateLibraryTypes(List<CreateLibraryType> createLibraryTypes);
+        Task<LibraryType> CreateLibraryType(CreateLibraryType createLibraryType);
         IEnumerable<LibraryType> GetAllTypes();
         byte[] CreateFile();
         Task LoadDataFromFile(IFormFile file, CancellationToken cancellationToken);
         Task LoadDataFromFiles();
         Task DeleteType(string id);
-        Task<AttributeType> CreateAttributeType(AttributeType attributeType);
-        Task<TerminalType> CreateTerminalType(TerminalType terminalType);
+        Task<AttributeType> CreateAttributeType(CreateAttributeType createAttributeType);
+        Task<List<AttributeType>> CreateAttributeTypes(List<CreateAttributeType> attributeTypes);
+        Task<TerminalType> CreateTerminalType(CreateTerminalType createTerminalType);
+        Task<List<TerminalType>> CreateTerminalTypes(List<CreateTerminalType> createTerminalTypes);
+        Task<Rds> CreateRds(CreateRds createRds);
+        Task<List<Rds>> CreateRdsAsync(List<CreateRds> createRds);
     }
 }

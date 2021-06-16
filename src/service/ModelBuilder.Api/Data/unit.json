@@ -1,0 +1,227 @@
+[
+  {
+    "name": "NotSet",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "None",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "Sm3/d",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "Sm3/h",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "SCF/hr",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "bbl/d",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "barg",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "bara",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "psi",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "psig",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "Pascal",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "degC",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "degF",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "Kelvin",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "%",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "kg/m3",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "micron",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "ppm",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "ppb",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "composite",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "2x100%",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "3x50%",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "2x50%",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "<specific>",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "FC",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "FO",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "FR",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "1:n",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "No dead pockets",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "N/A",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "m/s",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "ft/sec",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "liter/MSm3",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "weight %",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "S",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "mS",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "min",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "mm",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "inch",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "mm2",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "sq.inch",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "m3/d",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "m3/h",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "CF/hr",
+    "description": null,
+    "semanticReference": null
+  },
+  {
+    "name": "m",
+    "description": null,
+    "semanticReference": null
+  }
+]

@@ -1,6 +1,6 @@
-﻿using Mb.Models.Configurations.Converters;
+﻿using System.Collections.Generic;
 using Mb.Models.Data;
-using Mb.Models.Enums;
+using Mb.Models.Data.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -11,21 +11,34 @@ namespace Mb.Models.Configurations
        
         public void Configure(EntityTypeBuilder<AttributeType> builder)
         {
-            var unitConverter = new EnumCollectionJsonValueConverter<Unit>();
-            var unitComparer = new CollectionValueComparer<Unit>();
-
             builder.HasKey(x => x.Id);
             builder.ToTable("AttributeType");
-            builder.Property(p => p.Id).HasColumnName("Id").IsRequired().ValueGeneratedOnAdd();
+            builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
             builder.Property(p => p.Entity).HasColumnName("Entity").IsRequired();
-            builder.Property(p => p.Qualifier).HasColumnName("Qualifier").IsRequired().HasConversion<string>();
-            builder.Property(p => p.Source).HasColumnName("Source").IsRequired().HasConversion<string>();
-            builder.Property(p => p.Condition).HasColumnName("Condition").IsRequired().HasConversion<string>();
             builder.Property(p => p.Aspect).HasColumnName("Aspect").IsRequired().HasConversion<string>();
-            builder.Property(p => p.Format).HasColumnName("Format").IsRequired().HasConversion<string>();
-            builder.Property(p => p.Units).HasColumnName("Units").HasConversion(unitConverter).Metadata.SetValueComparer(unitComparer);
-            builder.Property(p => p.IsInterface).HasColumnName("IsInterface").IsRequired();
-            builder.Property(p => p.IsTerminalType).HasColumnName("IsTerminalType").IsRequired();
+
+            builder.HasOne(x => x.Condition).WithMany(y => y.AttributeTypes).HasForeignKey(x => x.ConditionId).OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(x => x.Qualifier).WithMany(y => y.AttributeTypes).HasForeignKey(x => x.QualifierId).OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(x => x.Source).WithMany(y => y.AttributeTypes).HasForeignKey(x => x.SourceId).OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(x => x.Format).WithMany(y => y.AttributeTypes).HasForeignKey(x => x.FormatId).OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasMany(x => x.Units).WithMany(y => y.AttributeTypes).UsingEntity<Dictionary<string, object>>("AttributeTypeUnit",
+                x => x.HasOne<Unit>().WithMany().HasForeignKey("UnitId"),
+                x => x.HasOne<AttributeType>().WithMany().HasForeignKey("AttributeTypeId"),
+                x => x.ToTable("AttributeTypeUnit")
+            );
+
+            builder.HasMany(x => x.NodeTypes).WithMany(y => y.AttributeTypes).UsingEntity<Dictionary<string, object>>("NodeTypeAttributeType",
+                x => x.HasOne<NodeType>().WithMany().HasForeignKey("NodeTypeId"),
+                x => x.HasOne<AttributeType>().WithMany().HasForeignKey("AttributeTypeId"),
+                x => x.ToTable("NodeTypeAttributeType")
+            );
+
+            builder.HasMany(x => x.TransportTypes).WithMany(y => y.AttributeTypes).UsingEntity<Dictionary<string, object>>("TransportTypeAttributeType",
+                x => x.HasOne<TransportType>().WithMany().HasForeignKey("TransportTypeId"),
+                x => x.HasOne<AttributeType>().WithMany().HasForeignKey("AttributeTypeId"),
+                x => x.ToTable("TransportTypeAttributeType")
+            );
         }
     }
 }
