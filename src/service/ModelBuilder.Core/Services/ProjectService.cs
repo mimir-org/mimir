@@ -334,7 +334,7 @@ namespace Mb.Core.Services
             
             UpdateNodes(nodesToUpdate.Where(x => x.MasterProjectId.Equals(project.Id)).ToList());
 
-            await CreateNodes(nodesToCreate, edgesToCreate);
+            await CreateNodes(nodesToCreate, edgesToCreate, project);
 
             foreach (var attribute in attributesToDelete)
             {
@@ -350,6 +350,8 @@ namespace Mb.Core.Services
             foreach (var edge in edgesToCreate)
             {
                 edge.Id = _commonRepository.CreateUniqueId();
+                if (string.IsNullOrEmpty(edge.MasterProjectId))
+                    edge.MasterProjectId = project.Id;
                 await _edgeRepository.CreateAsync(edge);
             }
 
@@ -369,12 +371,13 @@ namespace Mb.Core.Services
             return await GetProject(project.Id);
         }
 
-        private async Task CreateNodes(List<Node> nodesToCreate, List<Edge> edgesToCreate)
+        private async Task CreateNodes(List<Node> nodesToCreate, List<Edge> edgesToCreate, Project project)
         {
             foreach (var node in nodesToCreate)
             {
                 var nodeNewId = _commonRepository.CreateUniqueId();
-
+                if (string.IsNullOrEmpty(node.MasterProjectId))
+                    node.MasterProjectId = project.Id;
                 if (node.Attributes != null)
                 {
                     foreach (var nodeAttribute in node.Attributes)
