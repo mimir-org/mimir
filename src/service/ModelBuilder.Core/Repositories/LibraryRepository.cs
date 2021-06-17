@@ -35,8 +35,12 @@ namespace Mb.Core.Repositories
                     .Cast<NodeType>()
                     .Include(x => x.AttributeTypes)
                     .Include(x => x.TerminalTypes)
+                    .Include("TerminalTypes.TerminalType")
+                    .Include("TerminalTypes.TerminalType.TerminalCategory")
+                    .Include("TerminalTypes.TerminalType.Attributes")
                     .Include(x => x.Rds)
                     .ThenInclude(y => y.RdsCategory)
+                    .AsSplitQuery()
                     .ToList();
             }
             else
@@ -49,8 +53,12 @@ namespace Mb.Core.Repositories
                     .Cast<NodeType>()
                     .Include(x => x.AttributeTypes)
                     .Include(x => x.TerminalTypes)
+                    .Include("TerminalTypes.TerminalType")
+                    .Include("TerminalTypes.TerminalType.TerminalCategory")
+                    .Include("TerminalTypes.TerminalType.Attributes")
                     .Include(x => x.Rds)
                     .ThenInclude(y => y.RdsCategory)
+                    .AsSplitQuery()
                     .ToList();
             }
 

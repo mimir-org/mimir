@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Mb.Models.Data.Enums;
+using Newtonsoft.Json;
 
 namespace Mb.Models.Data
 {
@@ -30,9 +31,12 @@ namespace Mb.Models.Data
         public virtual ICollection<Unit> Units { get; set; }
 
         public virtual string TerminalId { get; set; }
+        public virtual string NodeId { get; set; }
+
+        [JsonIgnore]
         public virtual Terminal Terminal { get; set; }
 
-        public virtual string NodeId { get; set; }
+        [JsonIgnore]
         public virtual Node Node { get; set; }
     }
 }

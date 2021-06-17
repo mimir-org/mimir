@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Mb.Models.Enums;
+using Newtonsoft.Json;
 
 namespace Mb.Models.Data
 {
@@ -15,7 +16,10 @@ namespace Mb.Models.Data
         public virtual string NodeId { get; set; }
         public virtual Node Node { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<Edge> FromEdges { get; set; }
+
+        [JsonIgnore]
         public virtual ICollection<Edge> ToEdges { get; set; }
     }
 }
