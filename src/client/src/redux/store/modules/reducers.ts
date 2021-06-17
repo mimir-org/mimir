@@ -34,8 +34,8 @@ export function moduleReducer(state = initialState, action) {
     case CHANGE_MODULE_VISIBILITY:
       return {
         ...state,
-        types: state.types.map((x, i) =>
-          state.types[i].type === action.payload.key
+        types: state.types.map((x) =>
+          x.type === action.payload.key
             ? {
                 ...x,
                 visible: action.payload.visible,
@@ -48,9 +48,9 @@ export function moduleReducer(state = initialState, action) {
       return {
         ...state,
         types: state.types.map(
-          (x) =>
+          (type) =>
             state && {
-              ...x,
+              ...type,
               visible: action.payload.visible,
               animate: action.payload.animate,
             }

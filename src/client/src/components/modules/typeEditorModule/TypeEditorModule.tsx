@@ -18,7 +18,7 @@ export const TypeEditorModule = () => {
     (state) => state.typeEditor
   ) as TypeEditorState;
 
-  const handleClick = (param) => {
+  const handleClick = (_param) => {
     // dispatch(changeMode(param));
     push(`/home/${VIEW_TYPE.TYPE_EDITOR}`);
   };
