@@ -3,6 +3,7 @@ import { useState } from "react";
 import { MENU_TYPE } from "../../../models/project";
 import { GetMenuIcon } from "../../../assets/helpers/";
 import { FilterContent } from ".";
+import { RelationType } from "../../../models";
 import {
   MenuBox,
   MenuColumn,
@@ -35,13 +36,13 @@ const FilterModule = () => {
         <MenuBox right id={type}>
           <MenuColumn>
             <MenuSubHeader>{TextResources.Filter_Other}</MenuSubHeader>
-            <FilterContent type={RELATION_TYPE.Transport} index={0} />
-            <FilterContent type={RELATION_TYPE.HasLocation} index={1} />
+            {/* <FilterContent type={RELATION_TYPE.Transport} index={0} /> */}
+            <FilterContent type={RelationType.HasLocation} index={1} />
           </MenuColumn>
-          <MenuColumn>
+          {/* <MenuColumn>
             <FilterContent type={TERMINAL.Gas} index={2} />
             <FilterContent type={TERMINAL.Water} index={3} />
-          </MenuColumn>
+          </MenuColumn> */}
         </MenuBox>
       )}
     </>

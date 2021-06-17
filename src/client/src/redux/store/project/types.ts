@@ -1,4 +1,4 @@
-import { Project, Node, Edge } from "../../../models/project";
+import { Project, Node, Edge } from "../../../models";
 import { ApiError } from "../../../models/webclient";
 
 export const SAVE_PROJECT = "SAVE_PROJECT";

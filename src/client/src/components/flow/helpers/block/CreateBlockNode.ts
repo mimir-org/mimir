@@ -1,5 +1,5 @@
 import red from "../../../../redux/store";
-import { Aspect, Node } from "../../../../models";
+import { Node } from "../../../../models";
 import { FlowElement } from "react-flow-renderer";
 import { SetBlockNodePosition } from ".";
 import { IsFunction, IsLocation } from "../common";

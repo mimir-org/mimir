@@ -1,6 +1,6 @@
 import { FindNodeById } from ".";
 import { Size } from "../../../../../compLibrary";
-import { Node } from "../../../../../models/project";
+import { Node } from "../../../../../models";
 import red from "../../../../../redux/store";
 
 const UpdateConnectNodeSize = (nodeCount: number) => {

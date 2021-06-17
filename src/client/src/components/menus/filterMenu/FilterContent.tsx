@@ -3,11 +3,12 @@ import red from "../../../redux/store";
 import { changeEdgeVisibility } from "../../../redux/store/project/actions";
 import { useState } from "react";
 import { CheckEdges } from "./helpers";
+import { Node, Edge } from "../../../models";
 
 const FilterContent = ({ type, index }) => {
   const dispatch = useDispatch();
-  const nodes = red.store.getState().projectState.project?.nodes;
-  const edges = red.store.getState().projectState.project?.edges;
+  const nodes = red.store.getState().projectState.project?.nodes as Node[];
+  const edges = red.store.getState().projectState.project?.edges as Edge[];
 
   let edgesRemove = CheckEdges(nodes, edges, type);
   let isChecked = edges.find((x) => x.id === edgesRemove[0]?.id)?.isHidden;

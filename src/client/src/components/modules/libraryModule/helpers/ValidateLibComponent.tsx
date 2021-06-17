@@ -1,4 +1,4 @@
-import { Node, LibraryNodeItem } from "../../../../models/project";
+import { Node, LibraryNodeItem } from "../../../../models";
 import { IsNodeSameType } from "../../../flow/helpers/common";
 
 const ValidateLibComponent = (

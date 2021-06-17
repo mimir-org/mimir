@@ -1,6 +1,10 @@
-import { Node, Edge } from "../../../../models/project";
+import { Node, Edge, RelationType } from "../../../../models";
 
-const CheckEdges = (nodes: Node[], edges: Edge[], type: string): Edge[] => {
+const CheckEdges = (
+  nodes: Node[],
+  edges: Edge[],
+  type: RelationType
+): Edge[] => {
   const connectors = [];
   const edgesToRemove: Edge[] = [];
   if (nodes === null || nodes === undefined) return edgesToRemove;

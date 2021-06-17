@@ -1,5 +1,6 @@
 import { ValidateLibComponent } from ".";
-import { LibCategory, Node } from "../../../../models/project";
+import { Node } from "../../../../models";
+import { LibCategory } from "../../../../models/project";
 import { LibraryState } from "../../../../redux/store/library/types";
 import { IsBlockView } from "../../../flow/helpers/block";
 

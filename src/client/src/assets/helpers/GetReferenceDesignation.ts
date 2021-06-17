@@ -17,11 +17,11 @@ const findParentNode = (currentNode: Node, project: Project): Node => {
   if (!actualConnector) return null;
 
   const actualEdge = project.edges.find(
-    (x) => x.toConnector === actualConnector.id
+    (x) => x.toConnector === actualConnector
   );
   if (!actualEdge) return null;
 
-  const nextNode = project.nodes.find((x) => x.id === actualEdge.fromNode);
+  const nextNode = project.nodes.find((node) => node === actualEdge.fromNode);
   return nextNode;
 };
 

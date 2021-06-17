@@ -36,7 +36,7 @@ export default function TransportEdgeType({
   });
 
   const getStyle = () => {
-    const fromConnector = data.source.connectors.find(
+    const fromConnector = data.source.connectors?.find(
       (x) => x.id === data.edge.fromConnector
     );
 

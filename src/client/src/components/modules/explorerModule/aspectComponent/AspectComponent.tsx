@@ -11,7 +11,6 @@ import {
   GetAspectIcon,
   GetAspectColor,
   SetIndentLevel,
-  GetAspectType,
 } from "../../../../assets/helpers";
 
 interface Props {
@@ -23,8 +22,7 @@ export const AspectComponent = ({ node, label }: Props) => {
   const expandIcon = expanded ? ExpandedIcon : ClosedIcon;
   const aspectIcon = GetAspectIcon(node);
   const color = GetAspectColor(node, true);
-  const childType = GetAspectType(node);
-  const nodes = red.store.getState().projectState.project.nodes;
+  const nodes = red.store.getState().projectState.project.nodes as Node[];
   const children = nodes.filter((node) => !IsAspectNode(node));
 
   const handleExpandClick = () => {
@@ -50,14 +48,14 @@ export const AspectComponent = ({ node, label }: Props) => {
         ></img>
       </AspectBox>
       {expanded &&
-        children.map((node) => {
-          if (node.type === childType) {
-            const indent = node.level ?? SetIndentLevel(node, 0);
+        children.map((elem) => {
+          if (elem.aspect === node.aspect) {
+            const indent = elem.level ?? SetIndentLevel(elem, 0);
             return (
               <AspectElement
-                key={node.id}
-                node={node}
-                label={node.label ?? node.name}
+                key={elem.id}
+                node={elem}
+                label={elem.label ?? elem.name}
                 indent={indent}
               />
             );

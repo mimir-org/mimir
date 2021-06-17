@@ -11,6 +11,11 @@ export const BUILD_STATUS = {
   Historic: "Historic",
   OutOfService: "OutOfService",
 };
+// TODO : remove
+export interface Dictionary {
+  key: string;
+  value: string;
+}
 
 export type AttributeTab = keyof typeof ATTRIBUTE_TAB;
 export const ATTRIBUTE_TAB = {

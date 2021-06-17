@@ -1,4 +1,4 @@
-import { Attribute, Node } from "../../../models/project";
+import { Attribute, Node } from "../../../models";
 import { TabRow } from "../../../compLibrary/box/inspector";
 import { useDispatch } from "react-redux";
 import { IsTransportTerminal, CreateId } from "../../flow/helpers/common";
@@ -83,8 +83,9 @@ const TabContent = ({ node, index }: Props) => {
                   >
                     <Input
                       value={attr.value ?? ""}
-                      onChange={(e: any) =>
-                        handleOnNodeChange(attr.id, e.target.value, attr.unit)
+                      onChange={
+                        (e: any) =>
+                          handleOnNodeChange(attr.id, e.target.value, "") //attr.unit)
                       }
                       inputType="tech"
                     />
@@ -98,9 +99,7 @@ const TabContent = ({ node, index }: Props) => {
                     >
                       <option value={"NotSet"}>NotSet</option>
                       {attr.units?.map((unit) => (
-                        <option key={unit} value={unit + "langt navn"}>
-                          {unit}
-                        </option>
+                        <option value={unit + "langt navn"}>{unit}</option>
                       ))}
                     </Select>
                   </InputWrapper>
