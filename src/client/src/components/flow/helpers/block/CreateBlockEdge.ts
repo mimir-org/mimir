@@ -1,6 +1,7 @@
 import { FlowElement } from "react-flow-renderer";
 import { ShowBlockViewEdge } from ".";
-import { Edge, EdgeType } from "../../../../models/project";
+import { Edge } from "../../../../models";
+import { EdgeType } from "../../../../models/project";
 import red from "../../../../redux/store";
 
 export const CreateBlockEdge = (

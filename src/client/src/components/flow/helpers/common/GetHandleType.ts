@@ -1,5 +1,5 @@
 import { Position, HandleType } from "react-flow-renderer";
-import { Connector } from "../../../../models/project";
+import { Connector } from "../../../../models";
 import IsInputConnector from "./IsInputConnector";
 import {
   IsFulfilledByTerminal,

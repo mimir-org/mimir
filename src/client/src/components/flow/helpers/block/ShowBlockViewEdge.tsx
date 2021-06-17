@@ -1,12 +1,7 @@
 import red from "../../../../redux/store";
 import { ValidateBlockEdge } from ".";
-import {
-  NODE_TYPE,
-  Edge,
-  Connector,
-  Project,
-  Node,
-} from "../../../../models/project";
+import { NODE_TYPE } from "../../../../models/project";
+import { Connector, Edge, Node, Project } from "../../../../models";
 
 const ShowBlockViewEdge = (edge: Edge) => {
   if (edge.targetType === NODE_TYPE.OFF_PAGE) return;

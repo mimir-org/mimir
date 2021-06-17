@@ -1,6 +1,6 @@
-import { Terminal, TERMINAL } from "../../../../models/project";
+import { TerminalType } from "../../../../models";
 
-const GetTransportTypeColor = (terminal: Terminal): string => {
+const GetTransportTypeColor = (terminal: TerminalType): string => {
   switch (terminal) {
     case TERMINAL.NotSet:
     case TERMINAL.Electric:

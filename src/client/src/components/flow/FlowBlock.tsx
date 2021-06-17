@@ -11,6 +11,7 @@ import { BackgroundBox } from "../../compLibrary/blockView";
 import { changeInspectorTab } from "../../redux/store/inspector/actions";
 import { setSplitView, setNode } from "../../redux/store/splitView/actions";
 import red from "../../redux/store";
+import { Project, Node } from "../../models";
 import {
   addMainConnectNode,
   removeConnectNodes,
@@ -26,12 +27,6 @@ import {
   GetBlockEdgeTypes,
   IsBlockView,
 } from "./helpers/block";
-import {
-  Project,
-  BackgroundVariant,
-  Node,
-  SPLITVIEW_POSITION,
-} from "../../models/project";
 import ReactFlow, {
   ReactFlowProvider,
   Elements,

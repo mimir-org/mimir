@@ -1,5 +1,5 @@
 import { IsPartOfTerminal } from ".";
-import { Node, Edge } from "../../../../models/project";
+import { Node, Edge } from "../../../../models";
 import red from "../../../../redux/store";
 
 const IsChildOf = (childNode: Node, parentNode: Node) => {

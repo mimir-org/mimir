@@ -1,4 +1,4 @@
-import { Node, LibraryNodeItem, Aspect } from "../../../../models/project";
+import { Aspect, LibraryNodeItem, Node } from "../../../../models";
 
 const IsLocation = (node: Node | LibraryNodeItem) => {
   return (

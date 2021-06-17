@@ -1,6 +1,6 @@
 import { TextResources } from "../../../assets/textResources";
 import { useState } from "react";
-import { MENU_TYPE, RELATION_TYPE, TERMINAL } from "../../../models/project";
+import { MENU_TYPE } from "../../../models/project";
 import { GetMenuIcon } from "../../../assets/helpers/";
 import { FilterContent } from ".";
 import {

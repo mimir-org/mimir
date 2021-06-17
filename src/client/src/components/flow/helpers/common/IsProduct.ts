@@ -1,4 +1,4 @@
-import { Node, LibraryNodeItem, Aspect } from "../../../../models/project";
+import { Node, LibraryNodeItem, Aspect } from "../../../../models";
 
 const IsProduct = (node: Node | LibraryNodeItem) => {
   return (

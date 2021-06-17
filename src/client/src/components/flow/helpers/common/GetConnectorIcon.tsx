@@ -1,4 +1,3 @@
-import { TERMINAL } from "../../../../models/project";
 import {
   ConnectorFluidIcon,
   ConnectorGasIcon,

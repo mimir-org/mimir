@@ -1,7 +1,8 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
-import { Connector, NODE_TYPE } from "../../../../models/project";
+import { NODE_TYPE } from "../../../../models/project";
 import { SortConnectors } from ".";
+import { Connector } from "../../../../models";
 import {
   IsInputConnector,
   IsLocation,

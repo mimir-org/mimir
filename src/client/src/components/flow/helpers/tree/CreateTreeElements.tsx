@@ -1,7 +1,8 @@
 import { Elements } from "react-flow-renderer";
 import { CreateTreeEdge, CreateTreeNode } from "./";
-import { NODE_TYPE, Project } from "../../../../models/project";
+import { NODE_TYPE } from "../../../../models/project";
 import { GetTreeEdgeType } from ".";
+import { Project } from "../../../../models";
 
 const CreateTreeElements = (project: Project): Elements => {
   const initialElements: Elements = [];
