@@ -1,5 +1,5 @@
 import GetRelationshipColor from "./GetRelationshipColor";
-import { Node, Project } from "../../../../models/project";
+import { Node, Project } from "../../../../models";
 import {
   GetTransportTypeColor,
   IsFulfilledByTerminal,

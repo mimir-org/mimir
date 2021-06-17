@@ -1,5 +1,5 @@
 import { IsFunction, IsLocation, IsProduct } from ".";
-import { Node, LibraryNodeItem } from "../../../../models/project";
+import { LibraryNodeItem, Node } from "../../../../models";
 
 const IsAspectSameType = (aspectNode: Node, node: Node | LibraryNodeItem) => {
   return (

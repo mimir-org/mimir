@@ -1,5 +1,6 @@
-import { Edge, EdgeType, EDGE_TYPE } from "../../../../models/project";
 import { FlowElement } from "react-flow-renderer";
+import { Edge } from "../../../../models";
+import { EdgeType } from "../../../../models/project";
 import red from "../../../../redux/store";
 
 export const CreateTreeEdge = (edge: Edge, edgeType: EdgeType): FlowElement => {

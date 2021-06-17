@@ -1,6 +1,7 @@
 import { Elements } from "react-flow-renderer";
 import { IsNodeSameType, IsTransportTerminal } from "../common";
-import { Project, EDGE_TYPE, EdgeType, Node } from "../../../../models/project";
+import { EDGE_TYPE, EdgeType } from "../../../../models/project";
+import { Node, Project } from "../../../../models";
 import {
   CreateBlockEdge,
   CreateSplitViewNode,

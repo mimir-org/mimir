@@ -1,4 +1,4 @@
-import { Node, Connector, TERMINAL } from "../../../models/project";
+import { Node, Connector } from "../../../models";
 import {
   ConnectViewBox,
   ConnectViewElement,

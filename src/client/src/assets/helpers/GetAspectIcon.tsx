@@ -1,4 +1,5 @@
-import { Node, NODE_TYPE } from "../../models/project";
+import { NODE_TYPE } from "../../models/project";
+import { Node } from "../../models";
 import {
   FunctionIcon,
   ProductIcon,

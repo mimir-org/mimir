@@ -1,4 +1,4 @@
-import { Connector, RELATION_TYPE } from "../../../../models/project";
+import { Connector } from "../../../../models";
 
 const IsPartOfTerminal = (conn: Connector): boolean => {
   return conn?.relationType === RELATION_TYPE.PartOf;

@@ -1,10 +1,10 @@
-import { Node } from "../../../../models/project";
+import red from "../../../../redux/store";
+import { Aspect, Node } from "../../../../models";
 import { FlowElement } from "react-flow-renderer";
 import { SetBlockNodePosition } from ".";
 import { IsFunction, IsLocation } from "../common";
 import { Size } from "../../../../compLibrary";
 import { SetConnectNodePosition } from "./connectView";
-import red from "../../../../redux/store";
 
 const CreateBlockNode = (
   node: Node,
@@ -15,7 +15,7 @@ const CreateBlockNode = (
   if (!node) return blockNode;
 
   const connectNodes = red.store.getState().connectView.connectNodes as Node[];
-  const type = IsLocation(node) ? "BlockLocationNode" : "BlockFunctionNode";
+  const aspect = IsLocation(node) ? "BlockLocationNode" : "BlockFunctionNode";
 
   // Force node to fit Block
   let position = SetBlockNodePosition(node, splitView);
@@ -38,7 +38,7 @@ const CreateBlockNode = (
 
   blockNode = {
     id: node.id,
-    type: type,
+    aspect: aspect,
     data: node,
     position: position,
     isHidden: node.isHidden,

@@ -1,10 +1,5 @@
 import { getBezierPath, getMarkerEnd } from "react-flow-renderer";
-import {
-  Node,
-  NODE_TYPE,
-  Connector,
-  RELATION_TYPE,
-} from "../../../models/project";
+import { Aspect, Connector, Node, RelationType } from "../../../models";
 import "./RelationEdge.scss";
 
 export default function RelationEdgeType({
@@ -51,21 +46,21 @@ export default function RelationEdgeType({
     ) as Connector;
 
     switch (fromConnector.relationType) {
-      case RELATION_TYPE.HasLocation:
+      case RelationType.HasLocation:
         defaultClassName += "has-location";
         break;
-      case RELATION_TYPE.FulfilledBy:
+      case RelationType.FulfilledBy:
         defaultClassName += "fulfilled-by";
         break;
       default:
         defaultClassName += "";
     }
 
-    switch (source.type) {
-      case NODE_TYPE.PRODUCT:
+    switch (source.aspect) {
+      case Aspect.Product:
         defaultClassName += "-product";
         break;
-      case NODE_TYPE.FUNCTION:
+      case Aspect.Function:
         defaultClassName += "-function";
         break;
       default:

@@ -1,5 +1,5 @@
 import { getMarkerEnd, getSmoothStepPath } from "react-flow-renderer";
-import { Node } from "../../../models/project";
+import { Node } from "../../../models";
 // import { GetCenter } from "../helpers/common";
 
 export default function BlockEdgeType({

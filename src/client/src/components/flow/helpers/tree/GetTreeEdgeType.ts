@@ -1,4 +1,5 @@
-import { EdgeType, Connector, EDGE_TYPE } from "../../../../models/project";
+import { Connector } from "../../../../models";
+import { EdgeType, EDGE_TYPE } from "../../../../models/project";
 import {
   IsFulfilledByTerminal,
   IsLocationTerminal,

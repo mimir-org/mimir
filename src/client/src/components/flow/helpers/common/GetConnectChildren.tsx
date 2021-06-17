@@ -1,5 +1,5 @@
 import { IsTransportTerminal } from ".";
-import { Edge, Node } from "../../../../models/project";
+import { Edge, Node } from "../../../../models";
 import red from "../../../../redux/store";
 
 const GetConnectChildren = (parentNode: Node): Node[] => {

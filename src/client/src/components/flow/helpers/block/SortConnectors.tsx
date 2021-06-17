@@ -1,4 +1,4 @@
-import { Connector } from "../../../../models/project";
+import { Connector } from "../../../../models";
 import { IsInputConnector } from "../common";
 
 const SortConnectors = (connectorList: Connector[]) => {

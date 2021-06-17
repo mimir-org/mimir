@@ -1,4 +1,4 @@
-import { Node, Edge } from "../../models/project";
+import { Node, Edge } from "../../models";
 import red from "../../redux/store";
 
 const SetIndentLevel = (node: Node, count: number): number => {
