@@ -9,31 +9,15 @@ export const ProjectComponent = () => {
 
   return (
     <>
-      {!IsBlockView()
-        ? nodes.map((_, i: number) => {
-            if (IsAspectNode(nodes[i])) {
-              return (
-                <AspectComponent
-                  key={i}
-                  node={nodes[i]}
-                  label={nodes[i].label}
-                />
-              );
-            }
-            return null;
-          })
-        : nodes.map((_, i: number) => {
-            if (IsAspectNode(nodes[i]) && !IsProduct(nodes[i])) {
-              return (
-                <AspectComponent
-                  key={i}
-                  node={nodes[i]}
-                  label={nodes[i].label}
-                />
-              );
-            }
-            return null;
-          })}
+      {nodes.map((node) => {
+        if (IsAspectNode(node)) {
+          if (IsBlockView() && IsProduct(node)) return null;
+          return (
+            <AspectComponent key={node.id} node={node} label={node.label} />
+          );
+        }
+        return null;
+      })}
     </>
   );
 };

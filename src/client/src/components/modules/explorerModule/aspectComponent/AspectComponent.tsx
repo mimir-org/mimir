@@ -50,14 +50,14 @@ export const AspectComponent = ({ node, label }: Props) => {
         ></img>
       </AspectBox>
       {expanded &&
-        children.map((_, i: number) => {
-          if (children[i].type === childType) {
-            const indent = children[i].level ?? SetIndentLevel(children[i], 0);
+        children.map((node) => {
+          if (node.type === childType) {
+            const indent = node.level ?? SetIndentLevel(node, 0);
             return (
               <AspectElement
-                key={i}
-                node={children[i]}
-                label={children[i].label ?? children[i].name}
+                key={node.id}
+                node={node}
+                label={node.label ?? node.name}
                 indent={indent}
               />
             );

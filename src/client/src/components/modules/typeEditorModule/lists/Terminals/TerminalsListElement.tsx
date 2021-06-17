@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { AddTerminal } from "./AddTerminal/AddTerminalComponent";
+import { NumericInput } from "../../../../../compLibrary";
 import {
   TerminalListElement,
   TerminalCategoryWrapper,
   AddTerminalWrapper,
 } from "../../styled";
-import { NumericInput } from "../../../../../compLibrary";
 import {
-  expandedIcon,
-  unexpandedIcon,
+  ExpandedIcon,
+  CollapsedIcon,
 } from "../../../../../assets/icons/common";
 
 interface Props {
@@ -54,7 +54,7 @@ export const TerminalsListElement = ({ terminals }: Props) => {
           <p>{terminals.terminalCategory}</p>
           {quantity !== 0 ? (
             <img
-              src={expandCategory ? expandedIcon : unexpandedIcon}
+              src={expandCategory ? ExpandedIcon : CollapsedIcon}
               alt="expand-icon"
               onClick={toggleExpand}
             />
