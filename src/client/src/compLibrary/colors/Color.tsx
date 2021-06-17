@@ -7,7 +7,7 @@ const Color = {
   DarkerGrey: "#898787",
   DeepCyan: "#007079",
   LightCyan: "#CFDADB",
-  Function: "#ffff00",
+  Function: "#fef445",
   Product: "#00F0FF",
   Location: "#ff00ff",
   LightBlue: "#bde6fd",

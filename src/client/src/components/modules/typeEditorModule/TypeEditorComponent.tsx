@@ -1,3 +1,4 @@
+import red from "../../../redux/store";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
@@ -7,6 +8,7 @@ import { TextResources } from "../../../assets/textResources";
 import { CloseIcon } from "../../../assets/icons/common";
 import { TypeEditorState } from "../../../redux/store/typeEditor/types";
 import { changeFlowView } from "../../../redux/store/flow/actions";
+import { SetDarkModeColor } from "../../flow/helpers/common";
 import {
   changeMode,
   changeTypeName,
@@ -31,6 +33,7 @@ import {
   TextInput,
   ChooseProperties,
 } from "./styled";
+import { changeAllModulesVisibility } from "../../../redux/store/modules/actions";
 
 export const TypeEditorComponent = () => {
   const { push } = useHistory();
@@ -45,7 +48,7 @@ export const TypeEditorComponent = () => {
   const handleClick = () => {
     dispatch(changeMode("NotSet"));
     dispatch(changeFlowView(MODULE_TYPE.TYPEEDITOR));
-    push(`/home/`);
+    push(`/home/treeview`);
   };
 
   const handleChange = (e) => {
@@ -68,7 +71,9 @@ export const TypeEditorComponent = () => {
     } else if (state.aspect === "Function") {
       filteredTypes = filteredTypes.filter(
         ([, value]) =>
-          value === "Object" || value === "Transport" || value === "Interface"
+          value === "Object Block" ||
+          value === "Transport" ||
+          value === "Interface"
       );
     }
     return filteredTypes;
@@ -89,6 +94,15 @@ export const TypeEditorComponent = () => {
     // dispatch(getTerminals());
     // dispatch(getAttributes(state.aspect));
   }, [dispatch, state.aspect]);
+
+  useEffect(() => {
+    const darkMode = red.store.getState().darkMode.active as boolean;
+    SetDarkModeColor(darkMode);
+  }, []);
+
+  useEffect(() => {
+    dispatch(changeAllModulesVisibility(false, true));
+  });
 
   return (
     <TypeEditorWrapper>

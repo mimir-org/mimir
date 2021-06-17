@@ -2,7 +2,6 @@ import { Edge, Node, ProjectSimple } from "../../../models/project";
 import { TraverseTree } from "./helpers/";
 import {
   IsAspectNode,
-  IsNodeSameType,
   IsSameType,
 } from "../../../components/flow/helpers/common";
 import {
@@ -221,8 +220,8 @@ export function projectReducer(
         ...state,
         project: {
           ...state.project,
-          edges: state.project.edges.map((edge, i) =>
-            state.project.edges[i].id === action.payload.edge.id
+          edges: state.project.edges.map((edge) =>
+            edge.id === action.payload.edge.id
               ? {
                   ...edge,
                   isHidden: action.payload.isHidden,
@@ -244,17 +243,17 @@ export function projectReducer(
           ...state,
           project: {
             ...state.project,
-            nodes: nodeList.map((nodes, i) =>
-              IsNodeSameType(node, nodeList[i])
-                ? { ...nodes, isHidden: isHidden }
-                : nodes
+            nodes: nodeList.map((node) =>
+              action.payload.node.aspect === node.aspect
+                ? { ...node, isHidden: isHidden }
+                : node
             ),
-            edges: edgeList.map((edges, i) =>
-              IsSameType(node.type, edgeList[i].parentType) ||
-              IsSameType(node.type, edgeList[i].targetType) ||
-              edgeList[i].fromNode === node.id
-                ? { ...edges, isHidden: isHidden }
-                : edges
+            edges: edgeList.map((edge) =>
+              IsSameType(node.type, edge.parentType) ||
+              IsSameType(node.type, edge.targetType) ||
+              edge.fromNode === node.id
+                ? { ...edge, isHidden: isHidden }
+                : edge
             ),
           },
         };
@@ -270,15 +269,13 @@ export function projectReducer(
           ...state,
           project: {
             ...state.project,
-            nodes: state.project.nodes.map((nodes, i) =>
-              elements.includes(state.project.nodes[i])
-                ? { ...nodes, isHidden: isHidden }
-                : nodes
+            nodes: state.project.nodes.map((node) =>
+              elements.includes(node) ? { ...node, isHidden: isHidden } : node
             ),
-            edges: edgeList.map((edges, i) =>
-              elements.includes(edgeList[i]) || edgeList[i].toNode === node.id
-                ? { ...edges, isHidden: isHidden }
-                : edges
+            edges: edgeList.map((edge) =>
+              elements.includes(edge) || edge.toNode === node.id
+                ? { ...edge, isHidden: isHidden }
+                : edge
             ),
           },
         };
@@ -288,15 +285,15 @@ export function projectReducer(
         ...state,
         project: {
           ...state.project,
-          nodes: state.project.nodes.map((nodes, i) =>
-            state.project.nodes[i].id === node.id
-              ? { ...nodes, isHidden: isHidden }
-              : nodes
+          nodes: state.project.nodes.map((node) =>
+            node.id === action.payload.node.id
+              ? { ...node, isHidden: isHidden }
+              : node
           ),
-          edges: edgeList.map((edges, i) =>
-            edgeList[i].fromNode === node.id || edgeList[i].toNode === node.id
-              ? { ...edges, isHidden: isHidden }
-              : edges
+          edges: edgeList.map((edge) =>
+            edge.fromNode === node.id || edge.toNode === node.id
+              ? { ...edge, isHidden: isHidden }
+              : edge
           ),
         },
       };
@@ -306,10 +303,10 @@ export function projectReducer(
         ...state,
         project: {
           ...state.project,
-          nodes: state.project.nodes.map((x, i) =>
-            state.project.nodes[i].id === id
-              ? { ...x, isSelected: action.payload.isActive }
-              : { ...x, isSelected: false }
+          nodes: state.project.nodes.map((node) =>
+            node.id === id
+              ? { ...node, isSelected: action.payload.isActive }
+              : { ...node, isSelected: false }
           ),
           edges: state.project.edges,
         },
@@ -321,10 +318,10 @@ export function projectReducer(
         ...state,
         project: {
           ...state.project,
-          nodes: state.project.nodes.map((x, i) =>
-            state.project.nodes[i].id === blockId
-              ? { ...x, isBlockSelected: true }
-              : { ...x, isBlockSelected: false }
+          nodes: state.project.nodes.map((node) =>
+            node.id === blockId
+              ? { ...node, isBlockSelected: true }
+              : { ...node, isBlockSelected: false }
           ),
           edges: state.project.edges,
         },
@@ -337,10 +334,10 @@ export function projectReducer(
       return {
         ...state,
         ...state.project,
-        projectList: projects.map((x, i) =>
-          projects[i].id === projectId
-            ? { ...x, selected: true }
-            : { ...x, selected: false }
+        projectList: projects.map((project) =>
+          project.id === projectId
+            ? { ...project, selected: true }
+            : { ...project, selected: false }
         ),
       };
 
@@ -350,9 +347,9 @@ export function projectReducer(
         project: {
           ...state.project,
           nodes: state.project.nodes.map(
-            (x) =>
+            (node) =>
               state && {
-                ...x,
+                ...node,
                 isHidden: true,
               }
           ),

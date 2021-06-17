@@ -97,7 +97,7 @@ const TabContent = ({ node, index }: Props) => {
                       }
                     >
                       <option value={"NotSet"}>NotSet</option>
-                      {attr.units.map((unit) => (
+                      {attr.units?.map((unit) => (
                         <option key={unit} value={unit + "langt navn"}>
                           {unit}
                         </option>

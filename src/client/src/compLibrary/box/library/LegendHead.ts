@@ -2,11 +2,10 @@ import styled from "styled-components";
 
 const LegendHead = styled.div`
   display: inline;
-  float: right;
+  float: left;
   cursor: pointer;
-  margin-right: 10px;
-  margin-top: -14px;
-  padding-top: ${(props) => !props.open && "6px"};
+  margin-left: 8px;
+  margin-top: ${(props) => (props.open ? "9px" : "-6px")};
 `;
 
 export default LegendHead;

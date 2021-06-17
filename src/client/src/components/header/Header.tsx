@@ -1,21 +1,26 @@
+import red, { RootState } from "../../redux/store";
 import { useHistory } from "react-router-dom";
 import { TextResources } from "../../assets/textResources";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { VIEW_TYPE } from "../../models/project";
-import { TreeviewOff, TreeviewOn } from "../../assets/icons/common";
-import { ViewOffIcon, ViewOnIcon } from "../../assets/icons/blockView";
 import { changeFlowView } from "../../redux/store/flow/actions";
-import { IsBlockView } from "../flow/helpers/block";
-import red from "../../redux/store";
 import { setDarkMode } from "../../redux/store/darkMode/actions";
 import { SetDarkModeColor } from "../flow/helpers/common";
 import { setSplitView, setNode } from "../../redux/store/splitView/actions";
+import { IsBlockView } from "../flow/helpers/block";
 import {
   HeaderBox,
-  IconBox,
-  ProjectTitleBox,
-  ViewLinkBox,
+  OptionsBox,
+  TitleBox,
+  OptionsElement,
 } from "../../compLibrary/box/header/";
+import {
+  DarkModeOffIcon,
+  DarkModeOnIcon,
+  TreeViewOffIcon,
+  TreeViewOnIcon,
+  UndoIcon,
+} from "../../assets/icons/common";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -23,8 +28,11 @@ const Header = () => {
 
   const project = red.store.getState().projectState.project;
   const selectedNode = project?.nodes?.find((x) => x.isSelected);
+  const darkMode = useSelector<RootState>(
+    (state) => state.darkMode.active
+  ) as boolean;
 
-  const handleClick = (e) => {
+  const handleViewClick = (e) => {
     if (e.target.alt === VIEW_TYPE.BLOCKVIEW && !selectedNode) return;
     const view = e.target.alt;
     dispatch(setSplitView(false));
@@ -34,35 +42,36 @@ const Header = () => {
   };
 
   const handleDarkMode = () => {
-    const darkMode = red.store.getState().darkMode.active as boolean;
     dispatch(setDarkMode(!darkMode));
     SetDarkModeColor(!darkMode);
   };
 
+  const handleUndo = () => {
+    return null;
+  };
+
   return (
     <HeaderBox>
-      <ProjectTitleBox onClick={handleDarkMode}>
-        {TextResources.MainHeader_App_Name}
-      </ProjectTitleBox>
-      <IconBox>
-        <ViewLinkBox selected={!IsBlockView()}>
+      <TitleBox>{TextResources.MainHeader_App_Name} </TitleBox>
+      <OptionsBox>
+        <OptionsElement>
           <img
-            src={IsBlockView() ? TreeviewOff : TreeviewOn}
-            alt={VIEW_TYPE.TREEVIEW}
-            onClick={handleClick}
-            className="view_icon"
+            src={darkMode ? DarkModeOnIcon : DarkModeOffIcon}
+            alt="dark-mode"
+            onClick={handleDarkMode}
           />
-        </ViewLinkBox>
-        <div className="line"></div>
-        <ViewLinkBox selected={IsBlockView()} right>
+        </OptionsElement>
+        <OptionsElement>
+          <img src={UndoIcon} alt="undo" onClick={handleUndo} />
+        </OptionsElement>
+        <OptionsElement>
           <img
-            src={IsBlockView() ? ViewOnIcon : ViewOffIcon}
-            alt={VIEW_TYPE.BLOCKVIEW}
-            onClick={handleClick}
-            className="view_icon"
+            src={IsBlockView() ? TreeViewOffIcon : TreeViewOnIcon}
+            alt={IsBlockView() ? VIEW_TYPE.TREEVIEW : VIEW_TYPE.BLOCKVIEW}
+            onClick={handleViewClick}
           />
-        </ViewLinkBox>
-      </IconBox>
+        </OptionsElement>
+      </OptionsBox>
     </HeaderBox>
   );
 };

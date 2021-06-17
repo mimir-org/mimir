@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Color, FontSize } from "../..";
 
-const ProjectTitleBox = styled.div`
+const TitleBox = styled.div`
   position: relative;
   font-size: ${FontSize.Header};
   left: 42%;
@@ -10,4 +10,4 @@ const ProjectTitleBox = styled.div`
   color: ${Color.White};
 `;
 
-export default ProjectTitleBox;
+export default TitleBox;

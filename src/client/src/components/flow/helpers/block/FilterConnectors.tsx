@@ -4,14 +4,14 @@ import { Connector, NODE_TYPE } from "../../../../models/project";
 import { SortConnectors } from ".";
 import {
   IsInputConnector,
-  IsLocationNode,
+  IsLocation,
   IsLocationTerminal,
   IsTransportTerminal,
 } from "../common";
 
 const FilterConnectors = (connectors, type) => {
   const isLocationNode = useSelector<RootState>((state) =>
-    IsLocationNode(state.splitView.node)
+    IsLocation(state.splitView.node)
   ) as boolean;
 
   const connectorList: Connector[] = [];

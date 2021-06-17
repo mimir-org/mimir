@@ -6,7 +6,7 @@ const TraverseTree = (
   nodeList: Node[],
   parentNode: Node,
   elements: (Node | Edge)[]
-): void => {
+) => {
   let children: Node[] = [];
 
   edgeList.forEach((edge) => {

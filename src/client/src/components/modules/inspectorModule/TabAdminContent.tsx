@@ -1,3 +1,4 @@
+import moment from "moment/moment.js";
 import { useDispatch } from "react-redux";
 import { changeNodeValue } from "../../../redux/store/project/actions";
 import { Contractor } from "../../../redux/store/common/types";
@@ -5,9 +6,8 @@ import { TabColumn } from "../../../compLibrary/box/inspector";
 import { Input, Select, Textarea } from "../../../compLibrary";
 import { Node, Project } from "../../../models/project";
 import { GetRdsId, GetReferenceDesignation } from "../../../assets/helpers";
-import moment from "moment/moment.js";
 import { BUILD_STATUS } from "../../../models/project";
-import { IsLocationNode } from "../../flow/helpers/common";
+import { IsLocation } from "../../flow/helpers/common";
 import { IsBlockView } from "../../flow/helpers/block";
 
 interface Props {
@@ -99,7 +99,7 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
             inputType=""
           />
         </div>
-        {IsLocationNode(node) && IsBlockView() && (
+        {IsLocation(node) && IsBlockView() && (
           <div>
             <div>Width (m)</div>
             <Input
@@ -132,7 +132,7 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
             inputType=""
           />
         </div>
-        {IsLocationNode(node) && IsBlockView() && (
+        {IsLocation(node) && IsBlockView() && (
           <div>
             <div>Length (m)</div>
             <Input
@@ -166,7 +166,7 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
             inputType=""
           />
         </div>
-        {IsLocationNode(node) && IsBlockView() && (
+        {IsLocation(node) && IsBlockView() && (
           <div>
             <div>Height (m)</div>
             <Input

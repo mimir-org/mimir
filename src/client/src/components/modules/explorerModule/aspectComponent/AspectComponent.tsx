@@ -1,3 +1,4 @@
+import red from "../../../../redux/store";
 import { useState } from "react";
 import { ExpandedIcon, ClosedIcon } from "../../../../assets/icons/common";
 import { Node } from "../../../../models/project";
@@ -5,14 +6,12 @@ import { IsAspectNode } from "../../../flow/helpers/common";
 import { AspectElement } from ".";
 import { AspectBox } from "../../../../compLibrary/box/aspect";
 import { Checkbox, CheckboxBlock } from "../checkboxComponent";
-import red from "../../../../redux/store";
 import { IsBlockView } from "../../../flow/helpers/block";
 import {
   GetAspectIcon,
   GetAspectColor,
   SetIndentLevel,
   GetAspectType,
-  GetDropdownIcon,
 } from "../../../../assets/helpers";
 
 interface Props {
@@ -43,17 +42,22 @@ export const AspectComponent = ({ node, label }: Props) => {
             <Checkbox node={node} inputLabel={label} />
           )}
         </div>
-        {GetDropdownIcon(expandIcon, handleExpandClick)}
+        <img
+          className="expandIcon"
+          src={expandIcon}
+          alt="expand-icon"
+          onClick={handleExpandClick}
+        ></img>
       </AspectBox>
       {expanded &&
-        children.map((_, i: number) => {
-          if (children[i].type === childType) {
-            const indent = children[i].level ?? SetIndentLevel(children[i], 0);
+        children.map((node) => {
+          if (node.type === childType) {
+            const indent = node.level ?? SetIndentLevel(node, 0);
             return (
               <AspectElement
-                key={i}
-                node={children[i]}
-                label={children[i].label ?? children[i].name}
+                key={node.id}
+                node={node}
+                label={node.label ?? node.name}
                 indent={indent}
               />
             );
