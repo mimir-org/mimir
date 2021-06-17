@@ -1,7 +1,8 @@
 import { Connector } from "../../../../models";
 
 const IsTransportTerminal = (conn: Connector): boolean => {
-  return true; //conn?.relationType === RELATION_TYPE.Transport; TODO:fix
+    Object.setPrototypeOf(conn, Connector.prototype);
+    return conn.isTerminal();
 };
 
 export default IsTransportTerminal;
