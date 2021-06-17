@@ -2,6 +2,7 @@ import GetInspectorTextResource from "./helpers/GetInspectorTextResources";
 import { TabContent } from "./";
 import { useCallback } from "react";
 import { RootState } from "../../../redux/store";
+import { TypeEditorState } from "../../../redux/store/typeEditor/types";
 import { useDispatch, useSelector } from "react-redux";
 import { changeInspectorTab } from "../../../redux/store/inspector/actions";
 import { Node } from "../../../models/project";
@@ -13,7 +14,7 @@ import {
 } from "../../../compLibrary/box/inspector";
 
 interface Props {
-  node: Node;
+  node?: Node;
   index: number;
 }
 
@@ -23,6 +24,10 @@ const TabComponent = ({ node, index }: Props) => {
     (state) => state.inspector.tabs[index]?.visible
   ) as boolean;
 
+  const typeEditorState = useSelector<RootState>(
+    (state) => state.typeEditor
+  ) as TypeEditorState;
+
   const handleClick = useCallback(() => {
     dispatch(changeInspectorTab(index));
   }, [dispatch, index]);
@@ -30,7 +35,15 @@ const TabComponent = ({ node, index }: Props) => {
   return isOpen ? (
     <>
       <TabHeader active={true} onClick={handleClick}>
-        {index === 0 && <NodeTitle>{node.label ?? node.name}</NodeTitle>}
+        {index === 0 && node && (
+          <NodeTitle>{node.label ?? node.name}</NodeTitle>
+        )}
+        {!node && index === 1 && (
+          <>
+            <span>{/* TODO: selected RDS */} </span>
+            <span>{typeEditorState.typeName} </span>
+          </>
+        )}
         <TabTitle active={true}>{GetInspectorTextResource(index)}</TabTitle>
       </TabHeader>
 
@@ -40,7 +53,13 @@ const TabComponent = ({ node, index }: Props) => {
     </>
   ) : (
     <TabHeader onClick={handleClick}>
-      {index === 0 && <NodeTitle>{node.label ?? node.name}</NodeTitle>}
+      {index === 0 && node && <NodeTitle>{node.label ?? node.name}</NodeTitle>}
+      {!node && index === 1 && (
+        <>
+          <span>{/* TODO: selected RDS */} </span>
+          <span>{typeEditorState.typeName} </span>
+        </>
+      )}
       <TabTitle>{GetInspectorTextResource(index)}</TabTitle>
     </TabHeader>
   );

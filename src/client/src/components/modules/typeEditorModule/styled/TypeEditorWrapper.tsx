@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
 const TypeEditorWrapper = styled.div`
-  width: 65.2%;
-  height: 68.9%;
   position: absolute;
-  right: 17.3%;
-  top: 5%;
+  top: 5.3%;
+  left: 2.3%;
+  width: 95.2%;
+  height: 90.5%;
   background: #ffffff;
   border: 2px solid #007079;
   border-radius: 5px;

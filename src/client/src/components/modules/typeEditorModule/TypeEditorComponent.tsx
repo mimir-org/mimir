@@ -23,6 +23,7 @@ import {
   TerminalsList,
   AttributesList,
   TypePreview,
+  TypeEditorInspector,
 } from ".";
 import {
   TypeEditorWrapper,
@@ -143,7 +144,7 @@ export const TypeEditorComponent = () => {
           <AttributesList />
           <TypePreview />
         </ChooseProperties>
-        {/* <TypeEditorInspector></TypeEditorInspector> */}
+        <TypeEditorInspector />
       </TypeEditorContent>
     </TypeEditorWrapper>
   );
