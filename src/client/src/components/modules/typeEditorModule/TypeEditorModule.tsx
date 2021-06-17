@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { TypeEditorState } from "../../../redux/store/typeEditor/types";
 import { useHistory } from "react-router-dom";
@@ -7,12 +7,11 @@ import { TypeEditorComponent } from "./TypeEditorComponent";
 import { NewTypeIcon, EditTypeIcon } from "../../../assets/icons/common";
 import { TextResources } from "../../../assets/textResources";
 import { VIEW_TYPE } from "../../../models/project";
-import { changeFlowView } from "../../../redux/store/flow/actions";
 import { TypeEditorBox, TypeEditorBoxContent } from "../../../compLibrary/box";
 import "./typeeditor.scss";
 
 export const TypeEditorModule = () => {
-  const dispatch = useDispatch();
+  //   const dispatch = useDispatch();
   const { push } = useHistory();
 
   const state = useSelector<RootState>(
@@ -21,7 +20,6 @@ export const TypeEditorModule = () => {
 
   const handleClick = (param) => {
     // dispatch(changeMode(param));
-    dispatch(changeFlowView(VIEW_TYPE.TYPE_EDITOR));
     push(`/home/${VIEW_TYPE.TYPE_EDITOR}`);
   };
 

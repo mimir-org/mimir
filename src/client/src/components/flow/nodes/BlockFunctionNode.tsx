@@ -54,7 +54,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   };
 
   const handleOnHover = () => {
-    showTerminalButton(true);
+    if (sortedConns.length > 0) showTerminalButton(true);
     showConnectButton(true);
   };
 
