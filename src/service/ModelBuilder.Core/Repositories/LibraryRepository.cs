@@ -65,7 +65,7 @@ namespace Mb.Core.Repositories
                 
                 foreach (var connector in mappedNode.Connectors)
                 {
-                    connector.Id = _generateIdRepository.CreateUniqueId();
+                    
                 }
 
                 yield return mappedNode;

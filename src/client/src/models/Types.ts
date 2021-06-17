@@ -1,4 +1,4 @@
-import { Aspect, Connector, Status } from ".";
+import { Aspect, Connector, Status, Attribute } from ".";
 
 export interface AttributeType {
     id: string;
@@ -31,7 +31,7 @@ export interface LibraryNodeItem {
     status: Status;
     aspect: Aspect;
     connectors: Connector[];
-    attributes?: AttributeType[] | null;
+    attributes?: Attribute[] | null;
     semanticReference: string;
 }
 
