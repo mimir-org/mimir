@@ -124,7 +124,12 @@ namespace Mb.Core.Services
         /// <returns></returns>
         public IEnumerable<AttributeType> GetAttributeTypes(Aspect aspect)
         {
-            var all = _attributeTypeRepository.GetAll().Include(x => x.Qualifier).ToList();
+            var all = _attributeTypeRepository.GetAll()
+                .Include(x => x.Qualifier)
+                .Include(x => x.Source)
+                .Include(x => x.Condition)
+                .Include(x => x.Format)
+                .ToList();
             return aspect == Aspect.NotSet ?
                 all :
                 all.Where(x => x.Aspect.HasFlag(aspect));
