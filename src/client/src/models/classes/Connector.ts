@@ -6,6 +6,7 @@ class Connector {
   type: ConnectorType;
   semanticReference: string;
   nodeId: string;
+  visible: boolean;
 
   // Terminal
   color: string;

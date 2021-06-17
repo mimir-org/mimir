@@ -1,38 +1,33 @@
-import { useDispatch } from "react-redux";
 import red from "../../../redux/store";
+import { useDispatch } from "react-redux";
 import { changeEdgeVisibility } from "../../../redux/store/project/actions";
 import { useState } from "react";
 import { CheckEdges } from "./helpers";
-import { Node, Edge } from "../../../models";
+import { Edge } from "../../../models";
 
 const FilterContent = ({ type, index }) => {
   const dispatch = useDispatch();
-  const nodes = red.store.getState().projectState.project?.nodes as Node[];
   const edges = red.store.getState().projectState.project?.edges as Edge[];
+  let selectedEdges = CheckEdges(edges, type);
 
-  let edgesRemove = CheckEdges(nodes, edges, type);
-  let isChecked = edges.find((x) => x.id === edgesRemove[0]?.id)?.isHidden;
+  let isChecked = edges.find((x) => x.id === selectedEdges[0]?.id)?.isHidden;
   const [checked, setChecked] = useState(!isChecked);
 
   const handleChange = () => {
-    // if type === typeOf RELATION_TYPE
     if (edges) {
       setChecked(!checked);
-      edgesRemove.forEach((_edge, index) => {
-        dispatch(
-          changeEdgeVisibility(edgesRemove[index], !edgesRemove[index].isHidden)
-        );
+      selectedEdges.forEach((edge) => {
+        dispatch(changeEdgeVisibility(edge, !edge.isHidden));
       });
     }
-    // if type === typeOf TERMINAL
-    // if type === typeOf TERMINAL_CATEGORY
   };
 
+  // TODO: Get name for type
   return (
     <label className={"checkbox-filter"}>
       <input type="checkbox" checked={checked} onChange={handleChange} />
       <span className="checkmark-filter"></span>
-      {type}
+      Part Of
     </label>
   );
 };
