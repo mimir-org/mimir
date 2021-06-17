@@ -8,7 +8,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MicrosoftSqlServerModule;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 
 namespace Mb.Api
@@ -30,7 +29,7 @@ namespace Mb.Api
             {
                 o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 o.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                o.SerializerSettings.Converters.Add(new StringEnumConverter());
+                //o.SerializerSettings.Converters.Add(new StringEnumConverter());
                 //o.SerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
             });
 
