@@ -275,7 +275,8 @@ namespace Mb.Core.Services
                 Updated = DateTime.Now.ToUniversalTime(),
                 Version = version,
                 Rds = string.Empty,
-                StatusId = "4590637F39B6BA6F39C74293BE9138DF"
+                StatusId = "4590637F39B6BA6F39C74293BE9138DF",
+                IsRoot = true
             };
 
             var connector = new Relation
