@@ -15,7 +15,7 @@ const CreateBlockNode = (
   if (!node) return blockNode;
 
   const connectNodes = red.store.getState().connectView.connectNodes as Node[];
-  const aspect = IsLocation(node) ? "BlockLocationNode" : "BlockFunctionNode";
+  const type = IsLocation(node) ? "BlockLocationNode" : "BlockFunctionNode";
 
   // Force node to fit Block
   let position = SetBlockNodePosition(node, splitView);
@@ -38,7 +38,7 @@ const CreateBlockNode = (
 
   blockNode = {
     id: node.id,
-    aspect: aspect,
+    type: type,
     data: node,
     position: position,
     isHidden: node.isHidden,

@@ -8,7 +8,7 @@ const CreateSplitViewNode = (node: Node): FlowElement => {
   let splitViewBlock = null;
   if (!node) return splitViewBlock;
 
-  const type = IsLocation(node) ? "BlockLocationNode" : "BlockFunctionNode"; // TODO: Fix type
+  const type = IsLocation(node) ? "BlockLocationNode" : "BlockFunctionNode";
 
   // Force node to fit Block
   const position = SetSplitViewNodePosition(node);

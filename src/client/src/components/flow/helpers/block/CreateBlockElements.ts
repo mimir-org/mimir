@@ -1,5 +1,5 @@
 import { Elements } from "react-flow-renderer";
-import { IsNodeSameType, IsTransportTerminal } from "../common";
+import { IsTransportTerminal } from "../common";
 import { EDGE_TYPE, EdgeType } from "../../../../models/project";
 import { Node, Project } from "../../../../models";
 import {
@@ -41,11 +41,7 @@ const CreateBlockElements = (
       const toNode = edge.toNode;
       let conn = edge.toConnector;
 
-      if (
-        (selectedNode?.aspect === toNode?.aspect ||
-          IsNodeSameType(selectedNode, toNode)) &&
-        !IsTransportTerminal(conn)
-      )
+      if (selectedNode?.aspect === toNode?.aspect && !IsTransportTerminal(conn))
         initialElements.push(
           CreateBlockNode(toNode, splitView, mainConnectNode)
         );
@@ -60,8 +56,7 @@ const CreateBlockElements = (
         const conn = edge.toConnector;
 
         if (
-          (splitViewNode?.aspect === toNode?.aspect ||
-            IsNodeSameType(splitViewNode, toNode)) &&
+          splitViewNode?.aspect === toNode?.aspect &&
           !IsTransportTerminal(conn)
         )
           initialElements.push(CreateSplitViewNode(toNode));

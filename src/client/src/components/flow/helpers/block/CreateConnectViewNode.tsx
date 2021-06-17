@@ -16,7 +16,6 @@ const CreateConnectViewNode = (node: Node): FlowElement => {
 
   connectViewBlock = {
     id: node.id,
-    aspect: node.aspect,
     data: node,
     position: { x: node.positionBlockX, y: node.positionBlockY },
     isHidden: node.isHidden,

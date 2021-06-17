@@ -3,7 +3,6 @@ import { CreateBlockNode, IsBlockView } from "../helpers/block";
 import { Edge, LibraryNodeItem, Node } from "../../../models";
 import {
   CreateId,
-  IsNodeSameType,
   IsInputConnector,
   IsPartOfTerminal,
 } from "./../helpers/common";
@@ -69,7 +68,7 @@ const useOnDrop = (
     : setElements((es) => es.concat(CreateTreeNode(node)));
 
   if (selectedNode) {
-    if (!IsNodeSameType(selectedNode, node)) return;
+    if (selectedNode.aspect !== node.aspect) return;
 
     const fromConnector = selectedNode.connectors?.find(
       (x) => IsPartOfTerminal(x) && !IsInputConnector(x)

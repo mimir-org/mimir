@@ -15,7 +15,6 @@ export { default as IsFulfilledByTerminal } from "./IsFulfilledByTerminal";
 export { default as IsExplorerModule } from "./IsExplorerModule";
 export { default as IsLibraryModule } from "./IsLibraryModule";
 export { default as IsInputConnector } from "./IsInputConnector";
-export { default as IsNodeSameType } from "./IsNodeSameType";
 export { default as GetCenter } from "./GetCenter";
 export { default as GetHandleType } from "./GetHandleType";
 export { default as GetNodes } from "./GetNodes";
