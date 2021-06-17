@@ -1,7 +1,6 @@
 import GetRelationshipColor from "./GetRelationshipColor";
 import { Node, Project } from "../../../../models";
 import {
-  GetTransportTypeColor,
   IsFulfilledByTerminal,
   IsLocationTerminal,
   IsPartOfTerminal,
@@ -16,7 +15,7 @@ const GetBlockViewLegend = (node: Node): Legend[] => {
       return {
         key: y.id,
         name: y.name,
-        color: GetTransportTypeColor(),
+        color: y.color,
       };
     });
 

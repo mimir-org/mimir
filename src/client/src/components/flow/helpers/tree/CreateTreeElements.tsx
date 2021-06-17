@@ -1,7 +1,7 @@
 import { Elements } from "react-flow-renderer";
 import { CreateTreeEdge } from "./";
 import { GetTreeEdgeType } from ".";
-import { Project, Node } from "../../../../models";
+import { Project, Node, Edge } from "../../../../models";
 
 const CreateTreeElements = (project: Project): Elements => {
   const initialElements: Elements = [];
@@ -16,7 +16,7 @@ const CreateTreeElements = (project: Project): Elements => {
   });
 
   // Create TreeEdges
-  project.edges?.forEach((edge) => {
+  project.edges?.forEach((edge: Edge) => {
     const edgeType = GetTreeEdgeType(edge.fromConnector);
     const treeEdge = CreateTreeEdge(edge, edgeType);
     if (treeEdge) initialElements.push(treeEdge);

@@ -85,7 +85,7 @@ const TabContent = ({ node, index }: Props) => {
                       value={attr.value ?? ""}
                       onChange={
                         (e: any) =>
-                          handleOnNodeChange(attr.id, e.target.value, "") //attr.unit)
+                          handleOnNodeChange(attr.id, e.target.value, "") //attr.unit) TODO: FIX
                       }
                       inputType="tech"
                     />

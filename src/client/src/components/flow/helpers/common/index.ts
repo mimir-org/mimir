@@ -1,6 +1,4 @@
 export { default as GetFlowAspectIcon } from "./GetFlowAspectIcon";
-export { default as CreateOffPageNode } from "./CreateOffPageNode";
-export { default as GetTransportTypeColor } from "./GetTransportTypeColor";
 export { default as GetFlowRectData } from "./GetFlowRectData";
 export { default as CreateId } from "./CreateId";
 export { default as IsChildOf } from "./IsChildOf";

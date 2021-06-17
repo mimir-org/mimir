@@ -48,7 +48,6 @@ export const NODE_TYPE = {
   FUNCTION: "Function",
   PRODUCT: "Product",
   LOCATION: "Location",
-  OFF_PAGE: "Offpage",
 };
 
 export type ModuleType = keyof typeof MODULE_TYPE;
