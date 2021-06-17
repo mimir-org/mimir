@@ -1,5 +1,5 @@
-import { RelationColumns, AspectList, ButtonGoToAspect } from "../../../componentLibrary/box/inspector";
-import { Input, InputBox, AttributeField } from "../../../componentLibrary";
+import { RelationColumns, AspectList, ButtonGoToAspect } from "../../../compLibrary/box/inspector";
+import { Input, InputBox, AttributeField } from "../../../compLibrary";
 import { InputWrapper } from "./styled";
 import { RightArrowIcon } from "../../../assets/icons/common";
 import { ConnectionList } from "./helpers";
