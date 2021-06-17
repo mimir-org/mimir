@@ -1,4 +1,4 @@
-import { Node, Connector } from "../../../models/project";
+import { Node, Connector } from "../../../models";
 import { GetConnectorIcon, GetConnectorName } from "../helpers/common";
 import { FilterConnectors } from "../helpers/block";
 import { TerminalsBox, TerminalsElement } from "../../../compLibrary/blockView";

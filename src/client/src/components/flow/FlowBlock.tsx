@@ -1,16 +1,15 @@
+import red from "../../redux/store";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ProjectMainMenu } from "../project";
 import { RootState } from "../../redux/store/index";
 import { FullScreenBox } from "../../compLibrary/controls";
-import { EDGE_TYPE, EdgeType } from "../../models/project";
 import { OpenProjectMenu } from "../project/openProject";
 import { changeActiveBlockNode } from "../../redux/store/project/actions";
 import { Color } from "../../compLibrary";
 import { BackgroundBox } from "../../compLibrary/blockView";
 import { changeInspectorTab } from "../../redux/store/inspector/actions";
 import { setSplitView, setNode } from "../../redux/store/splitView/actions";
-import red from "../../redux/store";
 import { Project, Node } from "../../models";
 import {
   addMainConnectNode,
@@ -32,6 +31,12 @@ import ReactFlow, {
   Elements,
   Background,
 } from "react-flow-renderer";
+import {
+  EDGE_TYPE,
+  EdgeType,
+  BackgroundVariant,
+  SPLITVIEW_POSITION,
+} from "../../models/project";
 import {
   useOnConnect,
   useOnDrop,

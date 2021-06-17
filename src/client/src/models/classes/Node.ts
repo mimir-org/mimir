@@ -33,7 +33,6 @@ class Node {
   width: number;
   height: number;
 
-  // Constructor
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor() {}
 }

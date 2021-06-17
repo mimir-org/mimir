@@ -1,4 +1,5 @@
-import { NodeType, NODE_TYPE, Node } from "../../models/project";
+import { Node } from "../../models";
+import { NodeType, NODE_TYPE } from "../../models/project";
 
 const GetAspectType = (node: Node): NodeType => {
   if (node.type === NODE_TYPE.ASPECT_FUNCTION)

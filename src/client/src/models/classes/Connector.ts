@@ -16,7 +16,6 @@ class Connector {
   // Relation
   relationType: RelationType;
 
-  // Constructor
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor() {}
 
