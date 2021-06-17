@@ -43,7 +43,6 @@ const GetTreeViewLegend = (node: Node): Legend[] => {
 
 const GetBlockViewNodes = (project: Project, nodeId: string): Node[] => {
   const nodes = [] as Node[];
-  const fromNode = project?.nodes?.find((x) => x.id === nodeId);
 
   project?.edges?.forEach((edge) => {
     if (edge.fromNodeId === nodeId) {

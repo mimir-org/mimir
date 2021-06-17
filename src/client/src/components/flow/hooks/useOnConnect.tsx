@@ -21,10 +21,10 @@ const useOnConnect = (
 
   const existingEdge = project.edges?.find(
     (x) =>
-      x.fromConnector === params.sourceHandle &&
-      x.toConnector === params.targetHandle &&
-      x.fromNode === sourceNode.id &&
-      x.toNode === targetNode.id &&
+      x.fromConnectorId === params.sourceHandle &&
+      x.toConnectorId === params.targetHandle &&
+      x.fromNodeId === sourceNode.id &&
+      x.toNodeId === targetNode.id &&
       x.isHidden === targetNode.isHidden
   );
 
