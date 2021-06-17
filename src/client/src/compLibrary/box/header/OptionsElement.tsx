@@ -6,15 +6,15 @@ const OptionsElement = styled.div`
   display: inline-block;
 
   &:first-child {
-    margin-left: 25px;
+    margin-left: 51px;
   }
 
   &:nth-child(2) {
-    margin-left: 85px;
+    margin-left: 119px;
   }
 
   &:last-child {
-    margin-left: 145px;
+    margin-left: 187px;
   }
 `;
 export default OptionsElement;
