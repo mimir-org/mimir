@@ -6,7 +6,7 @@ namespace Mb.Models.Enums
     [Flags]
     public enum Aspect
     {
-        [Display(Name = "NotSet")]
+        [Display(Name = "Not Set")]
         NotSet = 1,
 
         [Display(Name = "Function")]
