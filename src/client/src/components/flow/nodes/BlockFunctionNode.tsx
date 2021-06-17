@@ -70,7 +70,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     dispatch(setActiveConnector(data, conn.id, true, order));
   };
 
-  const onChange = (node: Node) => {
+  const onConnectViewClick = (node: Node) => {
     if (!isChecked(node)) {
       node.width = Size.ConnectView_Width;
       node.length = Size.ConnectView_Length;
@@ -150,7 +150,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
         <ConnectViewComponent
           isOpen={connectMenu}
           list={connectChildren}
-          handleClick={onChange}
+          handleClick={onConnectViewClick}
           isChecked={isChecked}
           width={data.width}
         />

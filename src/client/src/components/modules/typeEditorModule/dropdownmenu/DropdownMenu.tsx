@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { expandedIcon, unexpandedIcon } from "../../../../assets/icons/common";
+import { ExpandedIcon, CollapsedIcon } from "../../../../assets/icons/common";
 import GetRightMargin from "../helper/GetRightMargin";
 import {
   changeSelectedAspect,
@@ -56,7 +56,7 @@ export const DropDownMenu = ({ label, placeHolder, listItems }: Props) => {
           <DropdownMenuHeader>
             <p>{selectedValue}</p>
             <img
-              src={isListOpen ? expandedIcon : unexpandedIcon}
+              src={isListOpen ? ExpandedIcon : CollapsedIcon}
               alt="expand-icon"
               onClick={toggleList}
             />
