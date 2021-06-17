@@ -1,6 +1,6 @@
 import { Edge, RelationType } from "../../../../models";
 
-const CheckEdges = (edges: Edge[], type: RelationType): Edge[] => {
+const CheckEdges = (edges: Edge[], type: RelationType) => {
   const edgesToRemove: Edge[] = [];
 
   edges?.forEach((edge) => {

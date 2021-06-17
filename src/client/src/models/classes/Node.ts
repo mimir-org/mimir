@@ -1,6 +1,6 @@
 import { EnumBase, Attribute, Aspect } from "..";
 import Connector from "./Connector";
-import { FlowElement } from "react-flow-renderer";
+
 class Node {
   id: string;
   rds: string;
@@ -38,30 +38,6 @@ class Node {
 
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor() {}
-
-  GetNodeType(): string {
-    let typeName = this.isRoot ? "Aspect" : "";
-    typeName += Aspect[this.aspect];
-    return typeName;
-  }
-
-  CreateTreeNode(): FlowElement {
-    const position = { x: this.positionX, y: this.positionY };
-    const treeNode = {
-      id: this.id,
-      aspect: this.aspect,
-      data: this,
-      position: position,
-      isHidden: this.isHidden,
-      isSelected: this.isSelected,
-      draggable: true,
-      selectable: true,
-      connectable: true,
-      type: this.GetNodeType(),
-    } as FlowElement;
-
-    return treeNode;
-  }
 }
 
 export default Node;
