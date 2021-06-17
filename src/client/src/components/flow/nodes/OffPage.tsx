@@ -1,8 +1,8 @@
 import { memo, FC } from "react";
 import { Color } from "../../../compLibrary";
 import { NodeProps, Handle } from "react-flow-renderer";
-import { Terminal } from "../../../models/project";
 import { OffPageBox } from "../../../compLibrary/blockView";
+import { TerminalType } from "../../../models";
 import {
   GetTransportTypeColor,
   GetHandleType,
@@ -18,8 +18,8 @@ const OffPage: FC<NodeProps> = ({ data }) => {
   const background = (): string => {
     const terminal = data.connectors.find(
       (x) => IsTransportTerminal(x) && IsInputConnector(x)
-    )?.terminal as Terminal;
-    return GetTransportTypeColor(terminal);
+    )?.terminal as TerminalType;
+    return GetTransportTypeColor(); // TODO: fix
   };
 
   const fontColor = (): string => {

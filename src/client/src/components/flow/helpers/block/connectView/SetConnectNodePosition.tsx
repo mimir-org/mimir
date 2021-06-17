@@ -1,4 +1,4 @@
-import { Node } from "../../../../../models/project";
+import { Node } from "../../../../../models";
 import red from "../../../../../redux/store";
 import { CalculateXPosition, CalculateYPosition } from ".";
 import { Size } from "../../../../../compLibrary";

@@ -1,26 +1,17 @@
 import { ProjectState } from "../../../../redux/store/project/types";
 import { GetFlowRectData, CreateOffPageData, OffPageNodeCreator } from ".";
 import {
+  Connector,
+  ConnectorType,
+  Edge,
+  Node,
+  RelationType,
+} from "../../../../models";
+import {
   CreateId,
   IsInputConnector,
   IsPartOfTerminal,
 } from "../../helpers/common";
-import {
-  Node,
-  Edge,
-  NODE_TYPE,
-  NodeType,
-  ICON_TYPE,
-  IconType,
-  CONNECTOR_TYPE,
-  ConnectorType,
-  TERMINAL_CATEGORY,
-  TerminalCategory,
-  TERMINAL,
-  Terminal,
-  RELATION_TYPE,
-  RelationType,
-} from "../../../../models/project";
 
 const CreateOffPageNode = (
   projectState: ProjectState,
@@ -44,69 +35,54 @@ const CreateOffPageNode = (
     id: CreateId(),
     name: fromNodeConnector?.name,
     label: fromNodeConnector?.name,
-    type: NODE_TYPE.OFF_PAGE as NodeType,
     positionX: width - 25,
     positionY: data.y,
     connectors: [],
     attributes: [],
-    icon: ICON_TYPE.FUNCTION_ICON as IconType,
   } as Node;
 
   const targetConnector = {
     id: CreateId(),
     name: "TransportConnector",
-    type: CONNECTOR_TYPE.INPUT as ConnectorType,
-    terminalCategory: fromNodeConnector?.terminalCategory,
-    terminal: fromNodeConnector?.terminal as Terminal,
+    type: ConnectorType.Input,
+    // terminalCategory: fromNodeConnector?.terminalCategory,
+    // terminal: fromNodeConnector?.terminal as Terminal,
     relationType: fromNodeConnector?.relationType,
     nodeId: node.id,
     attributes: [],
     semanticReference: "",
-    mediaColor: "",
-    transportColor: "",
-    visible: false,
-    order: 0,
-  };
+  } as Connector;
 
   const partOfConnector = {
     id: CreateId(),
     name: "PartOfConnector",
-    type: CONNECTOR_TYPE.INPUT as ConnectorType,
-    terminalCategory: TERMINAL_CATEGORY.NotSet as TerminalCategory,
-    terminal: TERMINAL.NotSet as Terminal,
-    relationType: RELATION_TYPE.PartOf as RelationType,
+    type: ConnectorType.Input,
+
+    relationType: RelationType.PartOf,
     nodeId: node.id,
     attributes: [],
     semanticReference: "",
-    mediaColor: "",
-    transportColor: "",
-    visible: false,
-    order: 0,
-  };
+  } as Connector;
 
   node.connectors.push(targetConnector);
   node.connectors.push(partOfConnector);
 
   const partofEdge = {
     id: CreateId(),
-    fromConnector: parentPartOfConnector?.id,
-    toConnector: partOfConnector?.id,
-    fromNode: parentNode?.id,
-    toNode: node.id,
+    fromConnectorId: parentPartOfConnector?.id,
+    toConnectorId: partOfConnector?.id,
+    fromNodeId: parentNode?.id,
+    toNodeId: node.id,
     isHidden: false,
-    parentType: parentNode?.type,
-    targetType: node?.type,
   } as Edge;
 
   const transportEdge = {
     id: CreateId(),
-    fromConnector: data.fromConnectorId,
-    toConnector: targetConnector?.id,
-    fromNode: data.fromNodeId,
-    toNode: node.id,
+    fromConnectorId: data.fromConnectorId,
+    toConnectorId: targetConnector?.id,
+    fromNodeId: data.fromNodeId,
+    toNodeId: node.id,
     isHidden: false,
-    parentType: fromNode?.type,
-    targetType: node?.type,
   } as Edge;
 
   return {

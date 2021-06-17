@@ -24,8 +24,8 @@ const HandleComponent = ({ data }: Props) => {
             id={"handle-" + conn.id}
             position={GetHandlePosition(pos)}
             key={conn.id}
-            visible={conn.visible}
-            icon={GetConnectorIcon(conn.terminal)}
+            visible={true} // TODO: FIX
+            icon={GetConnectorIcon()} // TODO: FIX
             splitNode={isSplitNode}
           >
             <Handle

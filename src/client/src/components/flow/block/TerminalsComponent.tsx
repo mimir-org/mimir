@@ -20,7 +20,7 @@ const TerminalsComponent = ({ isOpen, list, type, width, onClick }: Props) => {
         <TerminalsElement key={conn.id} onClick={() => onClick(conn)}>
           <p className="text"> {GetConnectorName(conn)}</p>
           <img
-            src={GetConnectorIcon(conn.terminal)}
+            src={GetConnectorIcon()} // TODO: FIX
             alt="icon"
             className="button"
           />

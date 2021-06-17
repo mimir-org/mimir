@@ -1,6 +1,6 @@
 import { FindNodeById } from ".";
 import { Size } from "../../../../../compLibrary";
-import { Node } from "../../../../../models/project";
+import { Node } from "../../../../../models";
 
 const SetConnectNodeSize = (mainConnectNode: Node, connectNodes?: Node[]) => {
   let twinNode = FindNodeById(mainConnectNode?.id);

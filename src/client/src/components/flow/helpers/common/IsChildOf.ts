@@ -5,14 +5,10 @@ import red from "../../../../redux/store";
 const IsChildOf = (childNode: Node, parentNode: Node) => {
   const edges = red.store.getState().projectState.project.edges as Edge[];
   const edge = edges.find(
-    (x) => x.fromNode === parentNode?.id && x.toNode === childNode.id
+    (x) => x.fromNode === parentNode && x.toNode === childNode
   );
 
-  const connector = parentNode?.connectors.find(
-    (x) => x.id === edge?.fromConnector
-  );
-
-  return edge && IsPartOfTerminal(connector);
+  return edge && IsPartOfTerminal(edge.fromConnector);
 };
 
 export default IsChildOf;

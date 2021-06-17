@@ -1,4 +1,4 @@
-import { Node } from "../../../../models/project";
+import { Node } from "../../../../models";
 import { ChangeNodeDisplay } from "../helpers/ChangeNodeDisplay";
 
 interface Props {

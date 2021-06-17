@@ -1,7 +1,7 @@
 import red from "../../../../redux/store";
 import { useState } from "react";
 import { ExpandedIcon, ClosedIcon } from "../../../../assets/icons/common";
-import { Node } from "../../../../models/project";
+import { Node } from "../../../../models";
 import { IsAspectNode } from "../../../flow/helpers/common";
 import { AspectElement } from ".";
 import { AspectBox } from "../../../../compLibrary/box/aspect";

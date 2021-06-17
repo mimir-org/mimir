@@ -1,5 +1,5 @@
 import { AspectElementBox } from "../../../../compLibrary/box/aspect";
-import { Node } from "../../../../models/project";
+import { Node } from "../../../../models";
 import { IsBlockView } from "../../../flow/helpers/block";
 import { IsProduct } from "../../../flow/helpers/common";
 import { Checkbox, CheckboxBlock } from "../checkboxComponent";

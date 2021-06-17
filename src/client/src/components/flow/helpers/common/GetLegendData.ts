@@ -16,7 +16,7 @@ const GetBlockViewLegend = (node: Node): Legend[] => {
       return {
         key: y.id,
         name: y.name,
-        color: GetTransportTypeColor(y.terminal),
+        color: GetTransportTypeColor(),
       };
     });
 
@@ -46,12 +46,11 @@ const GetBlockViewNodes = (project: Project, nodeId: string): Node[] => {
   const fromNode = project?.nodes?.find((x) => x.id === nodeId);
 
   project?.edges?.forEach((edge) => {
-    if (edge.fromNode === nodeId) {
-      const currentConnector = fromNode.connectors.find(
-        (x) => x.id === edge.fromConnector
-      );
+    if (edge.fromNodeId === nodeId) {
+      const currentConnector = edge.fromConnector;
+
       if (IsPartOfTerminal(currentConnector)) {
-        const toNode = project.nodes?.find((x) => x.id === edge.toNode);
+        const toNode = project.nodes?.find((node) => node === edge.toNode);
         if (!toNode?.isHidden) nodes.push(toNode);
       }
     }

@@ -1,8 +1,9 @@
-import { Edge, EdgeType, EDGE_TYPE, Node } from "../../../models/project";
+import { EdgeType, EDGE_TYPE } from "../../../models/project";
 import { SaveEventData } from "../../../redux/store/localStorage/localStorage";
 import { CreateId } from "../helpers/common";
 import { addEdge } from "react-flow-renderer";
 import { createEdge } from "../../../redux/store/project/actions";
+import { Edge, Node } from "../../../models";
 
 const useOnConnect = (
   params,
@@ -28,16 +29,19 @@ const useOnConnect = (
   );
 
   if (!existingEdge) {
-    const edge: Edge = {
+    const edge = {
       id: createdId,
+      fromConnectorId: params.sourceHandle.id,
       fromConnector: params.sourceHandle,
+      toConnectorId: params.targetHandle.id,
       toConnector: params.targetHandle,
-      fromNode: sourceNode.id,
-      toNode: targetNode.id,
+      fromNodeId: sourceNode.id,
+      fromNode: sourceNode,
+      toNodeId: targetNode.id,
+      toNode: targetNode,
       isHidden: sourceNode.isHidden,
-      parentType: sourceNode.type,
-      targetType: targetNode.type,
-    };
+    } as Edge;
+
     currentEdge = edge;
     dispatch(createEdge(edge));
   } else {

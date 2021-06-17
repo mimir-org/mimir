@@ -1,4 +1,5 @@
 import { EnumBase, Attribute, Aspect } from "..";
+import Connector from "./Connector";
 
 class Node {
   id: string;
@@ -13,6 +14,7 @@ class Node {
   positionY: number;
   isLocked: boolean | false;
   isSelected: boolean | false;
+  isBlockSelected: boolean | false;
   isHidden: boolean | false;
   positionBlockX: number;
   positionBlockY: number;
@@ -24,6 +26,7 @@ class Node {
   updated: Date;
   version: string;
   attributes: Attribute[];
+  connectors: Connector[];
   area: number;
   aspect: Aspect;
   isRoot: boolean | false;

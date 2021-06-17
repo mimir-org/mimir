@@ -37,12 +37,12 @@ const CreateBlockElements = (
 
   // Draw nodes for the left block
   project.edges.forEach((edge) => {
-    if (edge.fromNode === nodeId) {
-      const toNode = project.nodes?.find((x) => x.id === edge.toNode);
-      let conn = toNode?.connectors?.find((x) => x.id === edge?.toConnector);
+    if (edge.fromNodeId === nodeId) {
+      const toNode = edge.toNode;
+      let conn = edge.toConnector;
 
       if (
-        (selectedNode?.type === toNode?.type ||
+        (selectedNode?.aspect === toNode?.aspect ||
           IsNodeSameType(selectedNode, toNode)) &&
         !IsTransportTerminal(conn)
       )
@@ -55,15 +55,12 @@ const CreateBlockElements = (
   // Draw splitview nodes
   if (splitViewNode && splitView) {
     project.edges.forEach((edge) => {
-      if (edge.fromNode === splitViewNode.id) {
-        const toNode = project.nodes?.find((x) => x.id === edge.toNode);
-
-        const conn = toNode?.connectors?.find(
-          (x) => x.id === edge?.toConnector
-        );
+      if (edge.fromNode === splitViewNode) {
+        const toNode = edge.toNode;
+        const conn = edge.toConnector;
 
         if (
-          (splitViewNode?.type === toNode?.type ||
+          (splitViewNode?.aspect === toNode?.aspect ||
             IsNodeSameType(splitViewNode, toNode)) &&
           !IsTransportTerminal(conn)
         )

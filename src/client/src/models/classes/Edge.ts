@@ -16,7 +16,6 @@ class Edge {
 
   isHidden: boolean | false;
 
-  // Constructor
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor() {}
 

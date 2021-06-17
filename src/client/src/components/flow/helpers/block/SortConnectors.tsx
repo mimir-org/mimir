@@ -9,18 +9,14 @@ const SortConnectors = (connectorList: Connector[]) => {
   });
 
   connectorList.sort((a: Connector, b: Connector) => {
-    if (IsInputConnector(a) && IsInputConnector(b) && a.terminal < b.terminal)
-      return -1;
-    if (IsInputConnector(a) && IsInputConnector(b) && a.terminal > b.terminal)
-      return 1;
+    if (IsInputConnector(a) && IsInputConnector(b)) return -1;
+    if (IsInputConnector(a) && IsInputConnector(b)) return 1;
     return 0;
   });
 
   connectorList.sort((a: Connector, b: Connector) => {
-    if (!IsInputConnector(a) && !IsInputConnector(b) && a.terminal < b.terminal)
-      return -1;
-    if (!IsInputConnector(a) && !IsInputConnector(b) && a.terminal > b.terminal)
-      return 1;
+    if (!IsInputConnector(a) && !IsInputConnector(b)) return -1;
+    if (!IsInputConnector(a) && !IsInputConnector(b)) return 1;
     return 0;
   });
   return connectorList;

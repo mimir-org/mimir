@@ -1,4 +1,4 @@
-import { Node } from "../../../models/project";
+import { Node } from "../../../models";
 import { getMarkerEnd, getSmoothStepPath } from "react-flow-renderer";
 
 export default function TransportEdgeType({

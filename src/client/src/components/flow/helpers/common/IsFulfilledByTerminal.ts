@@ -1,7 +1,7 @@
-import { Connector, RELATION_TYPE } from "../../../../models/project";
+import { Connector, RelationType } from "../../../../models";
 
 const IsFulfilledByTerminal = (conn: Connector): boolean => {
-  return conn?.relationType === RELATION_TYPE.FulfilledBy;
+  return conn?.relationType === RelationType.FulfilledBy;
 };
 
 export default IsFulfilledByTerminal;

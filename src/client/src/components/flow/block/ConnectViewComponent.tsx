@@ -7,7 +7,6 @@ import {
 interface Props {
   isOpen: boolean;
   list: (Node | Connector)[];
-  type?: typeof TERMINAL;
   handleClick: any;
   isChecked?: any;
   width?: number;

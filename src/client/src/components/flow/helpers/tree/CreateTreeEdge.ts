@@ -1,15 +1,11 @@
 import { FlowElement } from "react-flow-renderer";
 import { Edge } from "../../../../models";
-import { EdgeType } from "../../../../models/project";
-import red from "../../../../redux/store";
+import { EdgeType, EDGE_TYPE } from "../../../../models/project";
 
 export const CreateTreeEdge = (edge: Edge, edgeType: EdgeType): FlowElement => {
-  const nodes = red.store.getState().projectState.project.nodes;
-  const fromNode = nodes.find((x) => x.id === edge.fromNode);
-  const toNode = nodes.find((x) => x.id === edge.toNode);
   let element = null;
 
-  if (fromNode && toNode) {
+  if (edge.fromNode && edge.toNode) {
     element = {
       id: edge.id,
       type: edgeType,
@@ -21,13 +17,13 @@ export const CreateTreeEdge = (edge: Edge, edgeType: EdgeType): FlowElement => {
       animated: edgeType === EDGE_TYPE.TRANSPORT,
       label: "",
       data: {
-        source: fromNode,
-        target: toNode,
+        source: edge.fromNode,
+        target: edge.toNode,
         edge: edge,
       },
       isHidden: edge.isHidden,
-      parentType: fromNode.type,
-      targetType: toNode.type,
+      parentType: edge.fromNode.aspect,
+      targetType: edge.toNode.aspect,
     };
   }
   return element;

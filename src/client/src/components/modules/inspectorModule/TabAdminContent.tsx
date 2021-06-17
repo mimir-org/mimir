@@ -6,9 +6,9 @@ import { TabColumn } from "../../../compLibrary/box/inspector";
 import { Input, Select, Textarea } from "../../../compLibrary";
 import { Node, Project } from "../../../models";
 import { GetRdsId, GetReferenceDesignation } from "../../../assets/helpers";
-import { BUILD_STATUS } from "../../../models";
 import { IsLocation } from "../../flow/helpers/common";
 import { IsBlockView } from "../../flow/helpers/block";
+import { BUILD_STATUS } from "../../../models/project";
 
 interface Props {
   node: Node;
@@ -46,7 +46,7 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
         <div>
           <div>Semantic ID</div>
           <Input
-            value={node.semanticId ?? ""}
+            value={node.semanticReference ?? ""}
             onChange={(e: any) => handleOnChange(e, "semanticId")}
             inputType=""
           />
