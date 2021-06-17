@@ -8,7 +8,7 @@ import { TerminalsIcon, ConnectIcon } from "../../../assets/icons/blockView";
 import { setActiveConnector } from "../../../redux/store/project/actions";
 import { TerminalsComponent, ConnectViewComponent } from "../block";
 import { HandleComponent } from "../block";
-import { GetConnectChildren } from "../helpers/common";
+import { GetConnectChildren } from "../helpers/block/connectView";
 import { FilterConnectors } from "../helpers/block";
 import { FindNodeById, SetConnectNodeSize } from "../helpers/block/connectView";
 import {

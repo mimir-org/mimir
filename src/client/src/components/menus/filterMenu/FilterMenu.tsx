@@ -33,7 +33,7 @@ const FilterModule = () => {
         />
       </MenuMainHeader>
       {showFilter && (
-        <MenuBox right id={type}>
+        <MenuBox right>
           <MenuColumn>
             <MenuSubHeader>{TextResources.Filter_Other}</MenuSubHeader>
             <FilterContent type={RelationType.PartOf} index={0} />

@@ -37,30 +37,25 @@ const CreateBlockElements = (
 
   // Draw nodes for the left block
   project.edges.forEach((edge) => {
-    if (edge.fromNodeId === nodeId) {
-      const toNode = edge.toNode;
-      let conn = edge.toConnector;
-
-      if (selectedNode?.aspect === toNode?.aspect && !IsTransportTerminal(conn))
-        initialElements.push(
-          CreateBlockNode(toNode, splitView, mainConnectNode)
-        );
-    }
+    if (
+      edge.fromNodeId === nodeId &&
+      selectedNode?.aspect === edge.toNode?.aspect &&
+      !IsTransportTerminal(edge.toConnector)
+    )
+      initialElements.push(
+        CreateBlockNode(edge.toNode, splitView, mainConnectNode)
+      );
   });
 
   // Draw splitview nodes
   if (splitViewNode && splitView) {
     project.edges.forEach((edge) => {
-      if (edge.fromNode === splitViewNode) {
-        const toNode = edge.toNode;
-        const conn = edge.toConnector;
-
-        if (
-          splitViewNode?.aspect === toNode?.aspect &&
-          !IsTransportTerminal(conn)
-        )
-          initialElements.push(CreateSplitViewNode(toNode));
-      }
+      if (
+        edge.fromNode === splitViewNode &&
+        splitViewNode?.aspect === edge.toNode?.aspect &&
+        !IsTransportTerminal(edge.toConnector)
+      )
+        initialElements.push(CreateSplitViewNode(edge.toNode));
     });
   }
 
