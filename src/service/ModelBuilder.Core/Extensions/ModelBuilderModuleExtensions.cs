@@ -42,11 +42,14 @@ namespace Mb.Core.Extensions
             services.AddScoped<IAttributeRepository, AttributeRepository>();
             services.AddScoped<IContractorRepository, ContractorRepository>();
             services.AddScoped<ITerminalTypeRepository, TerminalTypeRepository>();
+            services.AddScoped<IEnumBaseRepository, EnumBaseRepository>();
+            services.AddScoped<INodeTypeTerminalType, NodeTypeTerminalType>();
 
             services.AddScoped<ITypeEditorService, TypeEditorService>();
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<ILibraryService, LibraryService>();
             services.AddScoped<ICommonService, CommonService>();
+            services.AddScoped<IEnumService, EnumService>();
 
             services.AddHttpContextAccessor();
             services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
@@ -61,6 +64,9 @@ namespace Mb.Core.Extensions
                 cfg.AddProfile<EdgeProfile>();
                 cfg.AddProfile(new NodeProfile(provider.GetService<ICommonRepository>()));
                 cfg.AddProfile<ProjectProfile>();
+                cfg.AddProfile<RdsProfile>();
+                cfg.AddProfile(new TerminalProfile(provider.GetService<ICommonRepository>()));
+                cfg.AddProfile(new LibraryTypeProfile(provider.GetService<ICommonRepository>()));
             });
             services.AddSingleton(s => autoMapperConfiguration.CreateMapper());
 

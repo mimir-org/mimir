@@ -17,6 +17,8 @@ using Mb.Models.Modules;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Attribute = Mb.Models.Data.Attribute;
+using NodeType = Mb.Models.Enums.NodeType;
+using Terminal = Mb.Models.Data.Terminal;
 
 namespace Mb.Core.Services
 {
@@ -100,17 +102,18 @@ namespace Mb.Core.Services
             {
                 project.Nodes = project.Nodes.OrderBy(x => x.Order).ToList();
 
-                foreach (var node in project.Nodes)
-                {
-                    if (node.Connectors == null) 
-                        continue;
+                // TODO: Fix this
+                //foreach (var node in project.Nodes)
+                //{
+                //    if (node.Connectors == null) 
+                //        continue;
                     
-                    foreach (var connector in node.Connectors)
-                    {
-                        connector.MediaColor = _commonRepository.GetTerminalColor(connector.Terminal, connector.TerminalCategory, connector.RelationType, node.Type)?.Color;
-                        connector.TransportColor = _commonRepository.GetTerminalColor(Terminal.NotSet, connector.TerminalCategory, connector.RelationType, node.Type)?.Color;
-                    }
-                }
+                //    foreach (var connector in node.Connectors)
+                //    {
+                //        connector.MediaColor = _commonRepository.GetTerminalColor(connector.Terminal, connector.TerminalCategory, connector.RelationType, node.Type)?.Color;
+                //        connector.TransportColor = _commonRepository.GetTerminalColor(Terminal.NotSet, connector.TerminalCategory, connector.RelationType, node.Type)?.Color;
+                //    }
+                //}
             }
 
             
@@ -245,32 +248,27 @@ namespace Mb.Core.Services
 
             string name;
             decimal positionX;
-            IconType icon;
 
             switch (nodeType)
             {
                 case NodeType.AspectFunction:
                     name = "Function";
                     positionX = 150.0m;
-                    icon = IconType.FunctionIcon;
                     break;
 
                 case NodeType.AspectProduct:
                     name = "Product";
                     positionX = 600.0m;
-                    icon = IconType.ProductIcon;
                     break;
 
                 case NodeType.AspectLocation:
                     name = "Location";
                     positionX = 1050.0m;
-                    icon = IconType.LocationIcon;
                     break;
 
                 default:
                     name = "";
                     positionX = 0.0m;
-                    icon = IconType.FunctionIcon;
                     break;
             }
 
@@ -280,7 +278,6 @@ namespace Mb.Core.Services
                 Id = _commonRepository.CreateUniqueId(),
                 Name = name,
                 Label = name,
-                Icon = icon,
                 Type = nodeType,
                 PositionX = positionX,
                 PositionY = positionY,
@@ -288,20 +285,19 @@ namespace Mb.Core.Services
                 UpdatedBy = _contextAccessor.GetName(),
                 Updated = DateTime.Now.ToUniversalTime(),
                 Version = version,
-                Rds = string.Empty
+                Rds = string.Empty,
+                StatusId = "4590637F39B6BA6F39C74293BE9138DF"
             };
 
-            var connector = new Connector
+            var connector = new Relation
             {
                 Id = _commonRepository.CreateUniqueId(),
                 Name = connectorName,
                 Type = ConnectorType.Output,
                 NodeId = node.Id,
                 RelationType = RelationType.PartOf,
-                Terminal = Terminal.NotSet,
-                TerminalCategory = TerminalCategory.NotSet,
-                MediaColor = _commonRepository.GetTerminalColor(Terminal.NotSet, TerminalCategory.NotSet, RelationType.PartOf, nodeType).Color,
-                TransportColor = _commonRepository.GetTerminalColor(Terminal.NotSet, TerminalCategory.NotSet, RelationType.PartOf, nodeType).Color
+                //MediaColor = _commonRepository.GetTerminalColor(Terminal.NotSet, new TerminalCategory(), RelationType.PartOf, nodeType).Color, // TODO: Fix this
+                //TransportColor = _commonRepository.GetTerminalColor(Terminal.NotSet, new TerminalCategory(), RelationType.PartOf, nodeType).Color // TODO: Fix this
             };
 
             node.Connectors.Add(connector);
@@ -330,7 +326,7 @@ namespace Mb.Core.Services
             {
                 attributesToDelete.AddRange(node.Attributes);
                 node.Attributes.Clear();
-                foreach (var nodeConnector in node.Connectors)
+                foreach (var nodeConnector in node.Connectors.OfType<Terminal>())
                 {
                     attributesToDelete.AddRange(nodeConnector.Attributes);
                     nodeConnector.Attributes.Clear();
@@ -351,7 +347,7 @@ namespace Mb.Core.Services
 
                 if (node.Connectors != null)
                 {
-                    foreach (var connector in node.Connectors.Where(x => x.Attributes != null))
+                    foreach (var connector in node.Connectors.OfType<Terminal>().Where(x => x.Attributes != null))
                     {
                         foreach (var attribute in connector.Attributes)
                         {
@@ -375,7 +371,7 @@ namespace Mb.Core.Services
                     }
                 }
 
-                foreach (var connector in node.Connectors)
+                foreach (var connector in node.Connectors.OfType<Terminal>())
                 {
                     var connectorNewId = _commonRepository.CreateUniqueId();
 
@@ -458,7 +454,7 @@ namespace Mb.Core.Services
 
             node.Level = level;
             node.Order = order;
-            var connector = node.Connectors.FirstOrDefault(x => x.Type == ConnectorType.Output && x.RelationType == RelationType.PartOf);
+            var connector = node.Connectors.OfType<Relation>().FirstOrDefault(x => x.Type == ConnectorType.Output && x.RelationType == RelationType.PartOf);
 
             if (connector == null)
                 return order;

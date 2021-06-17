@@ -6,6 +6,7 @@ import { LibraryCategoryComponent } from ".";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { LibraryBody, SearchIconBox } from "../../../compLibrary/box/library";
+import { TypeEditorModule } from "../../modules/typeEditorModule";
 
 interface Props {
   categories: LibCategory[];
@@ -36,6 +37,7 @@ const LibraryComponent = ({ categories, search }: Props) => {
             <LibraryCategoryComponent key={category.name} category={category} />
           );
         })}
+        <TypeEditorModule />
       </LibraryBody>
     </>
   );

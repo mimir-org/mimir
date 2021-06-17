@@ -1,4 +1,5 @@
-﻿using Mb.Models.Data;
+﻿using System.Collections.Generic;
+using Mb.Models.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -11,13 +12,16 @@ namespace Mb.Models.Configurations
             builder.HasKey(x => x.Id);
             builder.ToTable("TerminalType");
             builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
-            builder.Property(p => p.Terminal).HasColumnName("Terminal").HasConversion<string>();
-            builder.Property(p => p.TerminalCategory).HasColumnName("TerminalCategory").HasConversion<string>();
-            builder.Property(p => p.ConnectorType).HasColumnName("ConnectorType").HasConversion<string>();
+            builder.Property(p => p.Name).HasColumnName("Name").IsRequired();
             builder.Property(p => p.SemanticReference).HasColumnName("SemanticReference").IsRequired(false);
-            builder.Property(p => p.AttributeJson).HasColumnName("AttributeJson");
 
-            builder.Ignore(p => p.Attributes);
+            builder.HasOne(x => x.TerminalCategory).WithMany(y => y.TerminalTypes).HasForeignKey(x => x.TerminalCategoryId).OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(x => x.Attributes).WithMany(y => y.TerminalTypes).UsingEntity<Dictionary<string, object>>("TerminalTypeAttributeType",
+                x => x.HasOne<AttributeType>().WithMany().HasForeignKey("AttributeTypeId"),
+                x => x.HasOne<TerminalType>().WithMany().HasForeignKey("TerminalTypeId"),
+                x => x.ToTable("TerminalTypeAttributeType")
+            );
         }
     }
 }

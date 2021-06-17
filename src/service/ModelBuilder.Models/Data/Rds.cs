@@ -1,16 +1,21 @@
-﻿using Mb.Models.Enums;
+﻿using System.Collections.Generic;
+using Mb.Models.Data.Enums;
+using Mb.Models.Enums;
 
 namespace Mb.Models.Data
 {
     public class Rds
     {
-        public int Id { get; set; }
-        public RdsCategory Category { get; set; }
-        public string Code { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
+        public string Code { get; set; }
+
+        public string RdsCategoryId { get; set; }
+        public RdsCategory RdsCategory { get; set; }
+
         public string SemanticReference { get; set; }
-        public bool IsFunction { get; set; }
-        public bool IsProduct { get; set; }
-        public bool IsLocation { get; set; }
+        public Aspect Aspect { get; set; }
+
+        public ICollection<LibraryType> LibraryTypes { get; set; }
     }
 }

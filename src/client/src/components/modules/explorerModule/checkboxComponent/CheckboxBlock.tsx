@@ -1,4 +1,4 @@
-import { GetNodes, IsFunctionNode } from "../../../flow/helpers/common";
+import { GetNodes, IsFunction } from "../../../flow/helpers/common";
 import { useDispatch, useSelector } from "react-redux";
 import { changeActiveNode } from "../../../../redux/store/project/actions";
 import { Node } from "../../../../models/project";
@@ -30,7 +30,7 @@ export const CheckboxBlock = ({ node, inputLabel }: Props) => {
 
   const handleChange = () => {
     if (splitView) {
-      IsFunctionNode(node)
+      IsFunction(node)
         ? dispatch(changeActiveNode(node?.id, true))
         : dispatch(setNode(node));
     } else dispatch(changeActiveNode(node?.id, true));

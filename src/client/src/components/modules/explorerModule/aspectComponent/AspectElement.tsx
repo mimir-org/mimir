@@ -1,7 +1,7 @@
 import { AspectElementBox } from "../../../../compLibrary/box/aspect";
 import { Node } from "../../../../models/project";
 import { IsBlockView } from "../../../flow/helpers/block";
-import { IsProductNode } from "../../../flow/helpers/common";
+import { IsProduct } from "../../../flow/helpers/common";
 import { Checkbox, CheckboxBlock } from "../checkboxComponent";
 
 interface Props {
@@ -16,7 +16,7 @@ export const AspectElement = ({ node, label, indent }: Props) => {
       {!IsBlockView() ? (
         <Checkbox node={node} inputLabel={label} />
       ) : (
-        !IsProductNode(node) && <CheckboxBlock node={node} inputLabel={label} />
+        !IsProduct(node) && <CheckboxBlock node={node} inputLabel={label} />
       )}
     </AspectElementBox>
   );

@@ -4,6 +4,8 @@ using AutoMapper;
 using Mb.Core.Repositories.Contracts;
 using Mb.Models.Data;
 using Mb.Models.Enums;
+using Microsoft.EntityFrameworkCore;
+using NodeType = Mb.Models.Data.NodeType;
 
 namespace Mb.Core.Repositories
 {
@@ -20,33 +22,51 @@ namespace Mb.Core.Repositories
             _generateIdRepository = generateIdRepository;
         }
 
-        public IEnumerable<LibNode> GetAll(string searchString)
+        public IEnumerable<LibraryNodeItem> GetAll(string searchString)
         {
-            var libraryTypeComponents = string.IsNullOrEmpty(searchString) ? 
-                _libraryTypeComponentRepository.GetAll().OrderBy(x => x.TypeName).Take(30).ToList() : 
-                _libraryTypeComponentRepository.GetAll().OrderBy(x => x.TypeName).Where(x => x.TypeName.ToLower().Contains(searchString.ToLower())).Take(30).ToList();
+            var nodeTypes = new List<NodeType>();
 
-            return ConvertToLibNode(libraryTypeComponents);
+            if (string.IsNullOrEmpty(searchString))
+            {
+                nodeTypes =_libraryTypeComponentRepository.GetAll()
+                    .OfType<NodeType>()
+                    .OrderBy(x => x.Name)
+                    .Take(30)
+                    .Cast<NodeType>()
+                    .Include(x => x.AttributeTypes)
+                    .Include(x => x.TerminalTypes)
+                    .Include(x => x.Rds)
+                    .ThenInclude(y => y.RdsCategory)
+                    .ToList();
+            }
+            else
+            {
+                nodeTypes = _libraryTypeComponentRepository.GetAll()
+                    .OfType<NodeType>()
+                    .OrderBy(x => x.Name)
+                    .Where(x => x.Name.ToLower().Contains(searchString.ToLower()))
+                    .Take(30)
+                    .Cast<NodeType>()
+                    .Include(x => x.AttributeTypes)
+                    .Include(x => x.TerminalTypes)
+                    .Include(x => x.Rds)
+                    .ThenInclude(y => y.RdsCategory)
+                    .ToList();
+            }
+
+            return ConvertToLibNode(nodeTypes);
         }
 
-        private IEnumerable<LibNode> ConvertToLibNode(IEnumerable<LibraryType> types)
+        private IEnumerable<LibraryNodeItem> ConvertToLibNode(IEnumerable<NodeType> types)
         {
             foreach (var libraryTypeComponent in types)
             {
-                libraryTypeComponent.CreateFromJsonData();
-                var mappedNode = _mapper.Map<LibNode>(libraryTypeComponent);
+                var mappedNode = _mapper.Map<LibraryNodeItem>(libraryTypeComponent);
                 
                 foreach (var connector in mappedNode.Connectors)
                 {
                     connector.Id = _generateIdRepository.CreateUniqueId();
                 }
-
-                mappedNode.Connectors.Add(CreateRelationConnector(RelationType.PartOf, ConnectorType.Input, "Part of Relationship"));
-                mappedNode.Connectors.Add(CreateRelationConnector(RelationType.PartOf, ConnectorType.Output, "Part of Relationship"));
-                mappedNode.Connectors.Add(CreateRelationConnector(RelationType.HasLocation, ConnectorType.Input, "Has Location"));
-                mappedNode.Connectors.Add(CreateRelationConnector(RelationType.HasLocation, ConnectorType.Output, "Has Location"));
-                mappedNode.Connectors.Add(CreateRelationConnector(RelationType.FulfilledBy, ConnectorType.Output, "Fulfilled By"));
-                mappedNode.Connectors.Add(CreateRelationConnector(RelationType.FulfilledBy, ConnectorType.Output, "Fulfilled By"));
 
                 yield return mappedNode;
             }
@@ -54,17 +74,14 @@ namespace Mb.Core.Repositories
 
         private Connector CreateRelationConnector(RelationType relationType, ConnectorType connectorType, string name)
         {
-            return new Connector
+            return new Relation
             {
                 Id = _generateIdRepository.CreateUniqueId(),
                 Name = name,
                 Type = connectorType,
-                TerminalCategory = TerminalCategory.NotSet,
                 RelationType = relationType,
-                Terminal = Terminal.NotSet,
                 NodeId = null,
                 Node = null,
-                Attributes = null,
                 SemanticReference = null
             };
         }

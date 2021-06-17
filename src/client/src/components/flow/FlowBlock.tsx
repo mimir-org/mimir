@@ -17,8 +17,8 @@ import {
 } from "../../redux/store/connectView/actions";
 import {
   GetBlockNodeTypes,
-  IsFunctionNode,
-  IsLocationNode,
+  IsFunction,
+  IsLocation,
   SetDarkModeColor,
 } from "./helpers/common";
 import {
@@ -84,7 +84,7 @@ const FlowBlock = () => {
       state.projectState.project?.nodes.find((x) => x.isBlockSelected)?.id
   ) as string;
 
-  const showBackground = IsLocationNode(splitViewNode) || IsLocationNode(node);
+  const showBackground = IsLocation(splitViewNode) || IsLocation(node);
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
@@ -182,7 +182,7 @@ const FlowBlock = () => {
   };
 
   const splitViewPosition = () => {
-    if (IsLocationNode(splitViewNode) && IsFunctionNode(node)) {
+    if (IsLocation(splitViewNode) && IsFunction(node)) {
       return SPLITVIEW_POSITION.RIGHT;
     }
   };

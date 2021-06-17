@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Mb.Models.Enums;
 
 namespace Mb.Models.Data
 {
@@ -12,8 +11,8 @@ namespace Mb.Models.Data
         public string ToConnector { get; set; }
         public string FromNode { get; set; }
         public string ToNode { get; set; }
-        public NodeType ParentType { get; set; }
-        public NodeType TargetType { get; set; }
+        public Mb.Models.Enums.NodeType ParentType { get; set; }
+        public Mb.Models.Enums.NodeType TargetType { get; set; }
         public virtual ICollection<Project> Projects { get; set; }
     }
 }

@@ -49,7 +49,7 @@ const Aspect: FC<NodeProps> = ({ data }) => {
         );
       })}
       {/* TODO: Fix inline styling */}
-      <div style={{ paddingTop: "12px" }}>{GetFlowAspectIcon(data.icon)}</div>
+      <div style={{ paddingTop: "12px" }}>{GetFlowAspectIcon(data.aspect)}</div>
       <div>{data.label ?? data.name}</div>
     </div>
   );

@@ -1,4 +1,5 @@
 ﻿using Mb.Models.Data;
+using Mb.Models.Data.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace Mb.Models.Configurations
@@ -10,11 +11,26 @@ namespace Mb.Models.Configurations
         public virtual DbSet<Edge> Edges { get; set; }
         public virtual DbSet<Attribute> Attributes { get; set; }
         public virtual DbSet<Connector> Connectors { get; set; }
+        public virtual DbSet<Relation> Relations { get; set; }
+        public virtual DbSet<Terminal> Terminals { get; set; }
         public virtual DbSet<Rds> Rds { get; set; }
         public virtual DbSet<AttributeType> AttributeTypes { get; set; }
         public virtual DbSet<LibraryType> LibraryTypes { get; set; }
         public virtual DbSet<Contractor> Contractors { get; set; }
         public virtual DbSet<TerminalType> TerminalTypes { get; set; }
+        public virtual DbSet<EnumBase> Enums { get; set; }
+        public virtual DbSet<Unit> Units { get; set; }
+        public virtual DbSet<AttributeCondition> AttributeConditions { get; set; }
+        public virtual DbSet<AttributeFormat> AttributeFormats { get; set; }
+        public virtual DbSet<AttributeQualifier> AttributeQualifiers { get; set; }
+        public virtual DbSet<AttributeSource> AttributeSources { get; set; }
+        public virtual DbSet<BuildStatus> BuildStatuses { get; set; }
+        public virtual DbSet<RdsCategory> RdsCategories { get; set; }
+        public virtual DbSet<TerminalCategory> TerminalCategories { get; set; }
+        public virtual DbSet<NodeType> NodeTypes { get; set; }
+        public virtual DbSet<TransportType> TransportTypes { get; set; }
+        public virtual DbSet<InterfaceType> InterfaceTypes { get; set; }
+        public virtual DbSet<NodeTypeTerminalType> NodeTypeTerminalTypes { get; set; }
 
         public ModelBuilderDbContext(DbContextOptions<ModelBuilderDbContext> options) : base(options)
         {
@@ -34,6 +50,12 @@ namespace Mb.Models.Configurations
             modelBuilder.ApplyConfiguration(new LibraryTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ContractorConfiguration());
             modelBuilder.ApplyConfiguration(new TerminalTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new EnumBaseConfiguration());
+            modelBuilder.ApplyConfiguration(new RelationConfiguration());
+            modelBuilder.ApplyConfiguration(new TerminalConfiguration());
+            modelBuilder.ApplyConfiguration(new NodeTypeTerminalTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new InterfaceTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new TransportTypeConfiguration());
         }
     }
 }

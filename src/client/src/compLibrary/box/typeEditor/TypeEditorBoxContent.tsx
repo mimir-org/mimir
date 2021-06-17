@@ -6,9 +6,9 @@ const TypeEditorBoxContent = styled.div`
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
-  width: 115px;
-  height: 38px;
-  margin: 0px 12px 0px 15px;
+  width: 110px;
+  height: 32px;
+  margin: 0px 9px 0px 2px;
   padding: 0px 10px;
   border: 1px solid ${Color.DeepCyan};
   border-radius: 2px;

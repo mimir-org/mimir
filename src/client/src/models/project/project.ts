@@ -1,3 +1,10 @@
+export enum Aspect {
+  NotSet = 1,
+  Function = 2,
+  Product = 4,
+  Location = 8,
+}
+
 export type BuildStatus = keyof typeof BUILD_STATUS;
 export const BUILD_STATUS = {
   NotSet: "NotSet",
@@ -239,25 +246,23 @@ export interface Node {
   version: string;
   level: number;
   order: number;
+  aspect: Aspect;
 }
-
-export interface LibNode {
+export interface LibraryNodeItem {
   id: string;
   rds: string;
-  name: string;
-  label: string;
-  icon: IconType;
-  type: NodeType;
-  connectors: Connector[];
   category: string;
-  attributes?: Attribute[] | null;
-  version: string;
+  name: string;
+  status: string; // TODO: Dette er en enum
+  aspect: Aspect;
+  connectors: Connector[];
+  attributes?: Attribute[] | null; // TODO: Dette er egentlig AttributeTypes
   semanticReference: string;
 }
 
 export interface LibCategory {
   name: string;
-  nodes: LibNode[];
+  nodes: LibraryNodeItem[];
 }
 
 export interface EdgeEvent {

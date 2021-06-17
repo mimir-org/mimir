@@ -1,19 +1,21 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Mb.Models.Enums
 {
+    [Flags]
     public enum Aspect
     {
         [Display(Name = "NotSet")]
-        NotSet = 0,
+        NotSet = 1,
 
         [Display(Name = "Function")]
-        Function = 1,
+        Function = 2,
 
         [Display(Name = "Product")]
-        Product = 2,
+        Product = 4,
 
         [Display(Name = "Location")]
-        Location = 3
+        Location = 8
     }
 }

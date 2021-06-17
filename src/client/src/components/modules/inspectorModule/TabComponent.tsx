@@ -20,7 +20,7 @@ interface Props {
 const TabComponent = ({ node, index }: Props) => {
   const dispatch = useDispatch();
   const isOpen = useSelector<RootState>(
-    (state) => state.inspector.tabs[index].visible
+    (state) => state.inspector.tabs[index]?.visible
   ) as boolean;
 
   const handleClick = useCallback(() => {
