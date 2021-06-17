@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Mb.Models.Enums;
 
 namespace Mb.Models.Data
@@ -13,5 +14,8 @@ namespace Mb.Models.Data
 
         public virtual string NodeId { get; set; }
         public virtual Node Node { get; set; }
+
+        public virtual ICollection<Edge> FromEdges { get; set; }
+        public virtual ICollection<Edge> ToEdges { get; set; }
     }
 }

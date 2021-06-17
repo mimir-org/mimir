@@ -10,7 +10,7 @@ namespace Mb.Models.Enums
         [Display(Name = "Draft")]
         Draft = 1,
 
-        [Display(Name = "Complete")]
-        Complete = 2
+        [Display(Name = "Approved")]
+        Approved = 2
     }
 }
