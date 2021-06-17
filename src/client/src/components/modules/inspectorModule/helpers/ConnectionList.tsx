@@ -41,7 +41,7 @@ const ConnectionList = ({ nodes, title, onElementClick }) => {
     <span>{title}</span>
     <ObjectsContainer>
       {nodes.map((n, i) => {
-        return(<ListElement onClick={() => onElementClick(n.id)} index={i} key={n.id}>{n.name}</ListElement>)
+        return(<ListElement onClick={() => onElementClick(n.id)} index={i} key={n.id}>{n.label ?? n.name}</ListElement>)
       })}
     </ObjectsContainer>
     </Wrapper>
