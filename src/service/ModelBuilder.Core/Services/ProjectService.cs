@@ -87,6 +87,10 @@ namespace Mb.Core.Services
             var project = await _projectRepository
                 .FindBy(x => x.Id == id)
                 .Include(x => x.Edges)
+                .Include("Edges.FromNode")
+                .Include("Edges.ToNode")
+                .Include("Edges.FromConnector")
+                .Include("Edges.ToConnector")
                 .Include(x => x.Nodes)
                 .Include("Nodes.Attributes")
                 .Include("Nodes.Connectors")
@@ -107,7 +111,7 @@ namespace Mb.Core.Services
                 //{
                 //    if (node.Connectors == null) 
                 //        continue;
-                    
+
                 //    foreach (var connector in node.Connectors)
                 //    {
                 //        connector.MediaColor = _commonRepository.GetTerminalColor(connector.Terminal, connector.TerminalCategory, connector.RelationType, node.Type)?.Color;
@@ -116,7 +120,7 @@ namespace Mb.Core.Services
                 //}
             }
 
-            
+
 
             return project;
         }
@@ -385,15 +389,15 @@ namespace Mb.Core.Services
 
                     foreach (var edge in edgesToCreate)
                     {
-                        if (edge.FromNode == node.Id)
-                            edge.FromNode = nodeNewId;
-                        if (edge.ToNode == node.Id)
-                            edge.ToNode = nodeNewId;
+                        if (edge.FromNodeId == node.Id)
+                            edge.FromNodeId = nodeNewId;
+                        if (edge.ToNodeId == node.Id)
+                            edge.ToNodeId = nodeNewId;
 
-                        if (edge.FromConnector == connector.Id)
-                            edge.FromConnector = connectorNewId;
-                        if (edge.ToConnector == connector.Id)
-                            edge.ToConnector = connectorNewId;
+                        if (edge.FromConnectorId == connector.Id)
+                            edge.FromConnectorId = connectorNewId;
+                        if (edge.ToConnectorId == connector.Id)
+                            edge.ToConnectorId = connectorNewId;
                     }
 
                     connector.Id = connectorNewId;
@@ -459,8 +463,8 @@ namespace Mb.Core.Services
             if (connector == null)
                 return order;
 
-            var edges = project.Edges.Where(x => x.FromConnector == connector.Id).ToList();
-            var children = project.Nodes.Where(x => edges.Any(y => y.ToNode == x.Id)).ToList();
+            var edges = project.Edges.Where(x => x.FromConnectorId == connector.Id).ToList();
+            var children = project.Nodes.Where(x => edges.Any(y => y.ToNodeId == x.Id)).ToList();
             return children.Aggregate(order, (current, child) => ResolveNodeLevelAndOrder(child, project, level + 1, current + 1));
         }
 

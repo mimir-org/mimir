@@ -7,13 +7,13 @@ const LegendIcons = styled.div`
   position: ${(props) => !props.open && "relative"};
 
   .text {
-    left: 3px;
+    left: -28px;
     opacity: 1 !important;
     bottom: ${(props) => !props.open && "26px"};
   }
   .icon {
     position: relative;
-    left: -3px;
+    left: -33px;
     bottom: ${(props) => (props.open ? "35px" : "43px")};
   }
 `;

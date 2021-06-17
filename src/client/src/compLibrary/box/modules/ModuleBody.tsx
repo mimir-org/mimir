@@ -14,6 +14,7 @@ const ModuleBody = styled.div`
       : props.explorer && props.isBlockView
       ? "79%"
       : "89%"};
+
   @media screen and (max-height: 1100px) {
     max-height: ${(props) => props.explorer && props.isBlockView && "76%"};
   }

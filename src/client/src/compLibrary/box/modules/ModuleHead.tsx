@@ -36,8 +36,8 @@ const ModuleHeader = styled.div`
     position: ${(props) => !props.visible && "absolute"};
     cursor: ${(props) => !props.legend && "pointer"};
     float: ${(props) => (props.explorer ? "right" : "left")};
-    right: ${(props) => props.explorer && "3px"};
-    left: ${(props) => props.library && "5px"};
+    right: ${(props) => props.explorer && "0px"};
+    left: ${(props) => props.library && "0px"};
   }
 
   .icon_inspector {
