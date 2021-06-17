@@ -105,22 +105,7 @@ namespace Mb.Core.Services
             if (project.Nodes != null)
             {
                 project.Nodes = project.Nodes.OrderBy(x => x.Order).ToList();
-
-                // TODO: Fix this
-                //foreach (var node in project.Nodes)
-                //{
-                //    if (node.Connectors == null) 
-                //        continue;
-
-                //    foreach (var connector in node.Connectors)
-                //    {
-                //        connector.MediaColor = _commonRepository.GetTerminalColor(connector.Terminal, connector.TerminalCategory, connector.RelationType, node.Type)?.Color;
-                //        connector.TransportColor = _commonRepository.GetTerminalColor(Terminal.NotSet, connector.TerminalCategory, connector.RelationType, node.Type)?.Color;
-                //    }
-                //}
             }
-
-
 
             return project;
         }
