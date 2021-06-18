@@ -12,10 +12,10 @@ const Wrapper = styled.div`
 
 
 const AttributesContainer = ({ attributes }) => {
-
+  console.log(attributes)
   return (
     <Wrapper>
-        {attributes.map((a)=> <div>attribute</div>)}
+        {attributes.map((a)=> <div>{a.name}</div>)}
     </Wrapper>
   );
 };
