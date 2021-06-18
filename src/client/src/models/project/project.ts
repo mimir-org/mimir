@@ -40,16 +40,6 @@ export const LINE_EDGE_TYPE = {
   BEZIER: "BezierPath",
 };
 
-export type NodeType = keyof typeof NODE_TYPE;
-export const NODE_TYPE = {
-  ASPECT_FUNCTION: "AspectFunction",
-  ASPECT_PRODUCT: "AspectProduct",
-  ASPECT_LOCATION: "AspectLocation",
-  FUNCTION: "Function",
-  PRODUCT: "Product",
-  LOCATION: "Location",
-};
-
 export type ModuleType = keyof typeof MODULE_TYPE;
 export const MODULE_TYPE = {
   EXPLORER: "Explorer",

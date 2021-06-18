@@ -1,12 +1,11 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { TerminalsIcon } from "../../../assets/icons/blockView";
-import { NODE_TYPE } from "../../../models/project";
 import { NodeBox, TerminalsMenu } from "../../../compLibrary/blockView";
 import { HandleComponent, TerminalsComponent } from "../block";
 import { setActiveConnector } from "../../../redux/store/project/actions";
 import { useDispatch } from "react-redux";
-import { Connector } from "../../../models";
+import { Aspect, Connector } from "../../../models";
 
 const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
@@ -58,7 +57,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
       <TerminalsComponent
         isOpen={terminalMenu}
         list={data.connectors}
-        type={NODE_TYPE.LOCATION}
+        type={Aspect.Location}
         width={data.width}
         onClick={onConnectorClick}
       />
