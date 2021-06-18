@@ -1,8 +1,9 @@
 import { TextResources } from "../../../assets/textResources";
 import { useState } from "react";
-import { MENU_TYPE, RELATION_TYPE, TERMINAL } from "../../../models/project";
+import { MENU_TYPE } from "../../../models/project";
 import { GetMenuIcon } from "../../../assets/helpers/";
 import { FilterContent } from ".";
+import { RelationType } from "../../../models";
 import {
   MenuBox,
   MenuColumn,
@@ -32,15 +33,10 @@ const FilterModule = () => {
         />
       </MenuMainHeader>
       {showFilter && (
-        <MenuBox right id={type}>
+        <MenuBox right>
           <MenuColumn>
             <MenuSubHeader>{TextResources.Filter_Other}</MenuSubHeader>
-            <FilterContent type={RELATION_TYPE.Transport} index={0} />
-            <FilterContent type={RELATION_TYPE.HasLocation} index={1} />
-          </MenuColumn>
-          <MenuColumn>
-            <FilterContent type={TERMINAL.Gas} index={2} />
-            <FilterContent type={TERMINAL.Water} index={3} />
+            <FilterContent type={RelationType.PartOf} index={0} />
           </MenuColumn>
         </MenuBox>
       )}

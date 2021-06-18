@@ -1,5 +1,5 @@
 import { Input, InputBox, Select } from "../../../../compLibrary";
-import { Attribute } from "../../../../models/project";
+import { Attribute } from "../../../../models";
 import { CreateId } from "../../../flow/helpers/common";
 import { TabColumn } from "../../../../compLibrary/box/inspector";
 
@@ -30,9 +30,7 @@ const SetNodeColumn = ({ list, handleChange }: Props) => {
             >
               <option value={"NotSet"}>NotSet</option>
               {attr.units.map((unit) => (
-                <option key={unit} value={unit}>
-                  {unit}
-                </option>
+                <option>{unit}</option>
               ))}
             </Select>
           </InputBox>

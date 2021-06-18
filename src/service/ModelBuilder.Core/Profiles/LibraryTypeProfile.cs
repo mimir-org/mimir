@@ -52,10 +52,14 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.AttributeTypes))
-                .ForMember(dest => dest.Connectors, opt => opt.MapFrom(src => CreateConnectors(src.TerminalTypes)));
+                .AfterMap((src, dest, context) =>
+                {
+                    dest.Connectors = CreateConnectors(src.TerminalTypes, context);
+                });
+                //.ForMember(dest => dest.Connectors, opt => opt.MapFrom(src => CreateConnectors(src.TerminalTypes)));
         }
 
-        private static List<Connector> CreateConnectors(ICollection<NodeTypeTerminalType> terminalTypes)
+        private List<Connector> CreateConnectors(ICollection<NodeTypeTerminalType> terminalTypes, ResolutionContext context)
         {
             var connectors = new List<Connector>();
             connectors.Add(CreateRelationConnector(RelationType.PartOf, ConnectorType.Input, "Part of Relationship"));
@@ -65,12 +69,19 @@ namespace Mb.Core.Profiles
             connectors.Add(CreateRelationConnector(RelationType.FulfilledBy, ConnectorType.Output, "Fulfilled By"));
             connectors.Add(CreateRelationConnector(RelationType.FulfilledBy, ConnectorType.Output, "Fulfilled By"));
 
-            if (terminalTypes != null)
+            if (terminalTypes == null) 
+                return connectors;
+            
+            foreach (var nodeTypeTerminalType in terminalTypes)
             {
+                if(nodeTypeTerminalType.Number <= 0)
+                    continue;
 
-                foreach (var nodeTypeTerminalType in terminalTypes)
+                for (var i = 0; i < nodeTypeTerminalType.Number; i++)
                 {
-
+                    var terminal = context.Mapper.Map<Terminal>(nodeTypeTerminalType.TerminalType);
+                    terminal.Type = nodeTypeTerminalType.ConnectorType;
+                    connectors.Add(terminal);
                 }
             }
 

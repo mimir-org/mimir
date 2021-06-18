@@ -9,6 +9,7 @@ import { CloseIcon } from "../../../assets/icons/common";
 import { TypeEditorState } from "../../../redux/store/typeEditor/types";
 import { changeFlowView } from "../../../redux/store/flow/actions";
 import { SetDarkModeColor } from "../../flow/helpers/common";
+import { changeAllModulesVisibility } from "../../../redux/store/modules/actions";
 import {
   changeMode,
   changeTypeName,
@@ -23,6 +24,7 @@ import {
   TerminalsList,
   AttributesList,
   TypePreview,
+  TypeEditorInspector,
 } from ".";
 import {
   TypeEditorWrapper,
@@ -33,7 +35,6 @@ import {
   TextInput,
   ChooseProperties,
 } from "./styled";
-import { changeAllModulesVisibility } from "../../../redux/store/modules/actions";
 
 export const TypeEditorComponent = () => {
   const { push } = useHistory();
@@ -143,7 +144,7 @@ export const TypeEditorComponent = () => {
           <AttributesList />
           <TypePreview />
         </ChooseProperties>
-        {/* <TypeEditorInspector></TypeEditorInspector> */}
+        <TypeEditorInspector />
       </TypeEditorContent>
     </TypeEditorWrapper>
   );

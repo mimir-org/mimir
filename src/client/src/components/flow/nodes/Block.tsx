@@ -1,5 +1,5 @@
 import red from "../../../redux/store";
-import { Node } from "../../../models/project";
+import { Node } from "../../../models";
 import { ArrowIcon } from "../../../assets/icons/blockView";
 import { BlockNodeBox } from "../../../compLibrary/blockView";
 

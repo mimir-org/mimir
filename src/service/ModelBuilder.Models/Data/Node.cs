@@ -16,7 +16,7 @@ namespace Mb.Models.Data
 
         public string Contractor { get; set; }
 
-        public string SemanticId { get; set; }
+        public string SemanticReference { get; set; }
 
         public string TagNumber { get; set; }
 
@@ -80,8 +80,12 @@ namespace Mb.Models.Data
         public virtual ICollection<Attribute> Attributes { get; set; }
         public virtual ICollection<Project> Projects { get; set; }
 
+        public virtual ICollection<Edge> FromEdges { get; set; }
+        public virtual ICollection<Edge> ToEdges { get; set; }
+
         public int Area => Length * Width;
         public Aspect Aspect => ResolveAspect();
+        public bool IsRoot { get; set; }
 
         private Aspect ResolveAspect()
         {

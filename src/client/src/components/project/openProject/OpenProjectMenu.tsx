@@ -1,7 +1,7 @@
 import { SearchBar, ProjectList } from ".";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { ProjectSimple, PROJECT_MENU_TYPE } from "../../../models/project";
+import { PROJECT_MENU_TYPE } from "../../../models/project";
 import { CloseIcon, RightArrowIcon } from "../../../assets/icons/common";
 import { MenuButton } from "../../../compLibrary/buttons";
 import { TextResources } from "../../../assets/textResources";
@@ -9,6 +9,7 @@ import { get } from "../../../redux/store/project/actions";
 import { changeProjectMenu } from "../../../redux/store/projectMenu/actions";
 import { useState } from "react";
 import { MessageComponent } from "../../message";
+import { ProjectSimple } from "../../../models";
 import {
   ProjectBody,
   ProjectBox,

@@ -1,5 +1,5 @@
 import { Color } from "../../compLibrary";
-import { Node } from "../../models/project";
+import { Node } from "../../models";
 import {
   IsFunction,
   IsLocation,

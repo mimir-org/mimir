@@ -1,4 +1,4 @@
-import { Node } from "../../../models/project";
+import { Node } from "../../../models";
 import { getMarkerEnd, getSmoothStepPath } from "react-flow-renderer";
 
 export default function TransportEdgeType({
@@ -36,7 +36,7 @@ export default function TransportEdgeType({
   });
 
   const getStyle = () => {
-    const fromConnector = data.source.connectors.find(
+    const fromConnector = data.source.connectors?.find(
       (x) => x.id === data.edge.fromConnector
     );
 

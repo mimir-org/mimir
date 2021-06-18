@@ -1,6 +1,6 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
-import { Connector } from "../../../models/project";
+import { Connector } from "../../../models";
 import { GetHandleType, IsPartOfTerminal } from "../helpers/common";
 import { HandleBox, TreeNodeNameBox } from "../../../compLibrary/treeView";
 

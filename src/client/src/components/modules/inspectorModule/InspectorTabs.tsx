@@ -1,5 +1,5 @@
 import { TabComponent, TabAdminComponent } from ".";
-import { Project, Node } from "../../../models/project";
+import { Project, Node } from "../../../models";
 import { RootState } from "../../../redux/store";
 import { useSelector } from "react-redux";
 import { IsBlockView } from "../../flow/helpers/block";

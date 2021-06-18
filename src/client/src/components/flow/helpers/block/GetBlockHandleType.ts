@@ -1,4 +1,4 @@
-import { Connector } from "../../../../models/project";
+import { Connector } from "../../../../models";
 import { HandleType, Position } from "react-flow-renderer";
 import {
   IsFulfilledByTerminal,

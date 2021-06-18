@@ -1,19 +1,15 @@
 import { FlowElement } from "react-flow-renderer";
 import { ShowBlockViewEdge } from ".";
-import { Edge, EdgeType } from "../../../../models/project";
-import red from "../../../../redux/store";
+import { Edge } from "../../../../models";
+import { EdgeType } from "../../../../models/project";
 
 export const CreateBlockEdge = (
   edge: Edge,
   edgeType: EdgeType
 ): FlowElement => {
-  const project = red.store.getState().projectState.project;
-  const nodes = project?.nodes;
-  const fromNode = nodes.find((x) => x.id === edge.fromNode);
-  const toNode = nodes.find((x) => x.id === edge.toNode);
   let element = null;
 
-  if (ShowBlockViewEdge(edge) && (fromNode || toNode)) {
+  if (ShowBlockViewEdge(edge) && (edge.fromNode || edge.toNode)) {
     element = {
       id: edge.id,
       type: edgeType,
@@ -24,13 +20,11 @@ export const CreateBlockEdge = (
       arrowHeadType: null,
       label: "",
       data: {
-        source: fromNode,
-        target: toNode,
+        source: edge.fromNode,
+        target: edge.toNode,
         edge: edge,
       },
       isHidden: edge.isHidden,
-      parentType: fromNode?.type,
-      targetType: toNode?.type,
     };
   }
   return element;

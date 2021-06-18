@@ -7,7 +7,7 @@ const MenuMainHeader = styled.div`
   left: ${(props: { right: string }) => !props.right && "2px"};
   top: 1px;
   height: 37px;
-  padding: 11px 15px 0px 40px;
+  padding: 11px 15px 0px 31px;
   cursor: pointer;
 
   font-weight: ${(props: { isOpen: boolean }) => props.isOpen && "bold"};
@@ -20,12 +20,13 @@ const MenuMainHeader = styled.div`
 
   .text {
     margin-top: 3px;
+    margin-left: ${(props) => !props.right && "10px"};
   }
 
   .icon {
     position: absolute;
     top: 12px;
-    left: 12px;
+    left: ${(props) => (props.right ? "5px" : "12px")};
   }
 `;
 

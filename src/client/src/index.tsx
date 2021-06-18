@@ -1,12 +1,12 @@
+import red from "./redux/store/index";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import red from "./redux/store/index";
 import { App } from "./components";
-import "./index.scss";
 import { AzureAD } from "react-aad-msal";
 import { authProvider } from "./providers/authProvider";
 import { PersistGate } from "redux-persist/integration/react";
+import "./index.scss";
 
 const rootElement = document.getElementById("root");
 

@@ -1,8 +1,7 @@
-import { NodeType, Node, NODE_TYPE } from "../../../../models/project";
+import { Node } from "../../../../models";
 
-const IsAspectNode = (node: Node) =>
-  node.type === (NODE_TYPE.ASPECT_FUNCTION as NodeType) ||
-  node.type === (NODE_TYPE.ASPECT_PRODUCT as NodeType) ||
-  node.type === (NODE_TYPE.ASPECT_LOCATION as NodeType);
+const IsAspectNode = (node: Node) => {
+  return node.isRoot;
+};
 
 export default IsAspectNode;

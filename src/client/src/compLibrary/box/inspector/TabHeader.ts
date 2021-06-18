@@ -9,8 +9,8 @@ const TabHeader = styled.div`
   color: ${Color.Black};
   border-right: 1px solid ${Color.Grey};
   border-left: 1px solid ${Color.Grey};
-  border-top: 0px solid ${Color.Grey};
-  
+  border-top: 1px solid ${Color.Grey};
+
   height: ${(props: { active: string }) => (props.active ? "39px" : "32px")};
   margin-top: ${(props: { active: string }) => (props.active ? "0px" : "4px")};
   background-color: ${(props: { active: string }) =>

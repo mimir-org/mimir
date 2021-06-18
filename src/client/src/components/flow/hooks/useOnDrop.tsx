@@ -1,15 +1,8 @@
 import { addNode, createEdge } from "../../../redux/store/project/actions";
-import {
-  LibraryNodeItem,
-  Node,
-  NodeType,
-  Edge,
-  NODE_TYPE,
-} from "../../../models/project";
 import { CreateBlockNode, IsBlockView } from "../helpers/block";
+import { Edge, LibraryNodeItem, Node } from "../../../models";
 import {
   CreateId,
-  IsNodeSameType,
   IsInputConnector,
   IsPartOfTerminal,
 } from "./../helpers/common";
@@ -47,10 +40,9 @@ const useOnDrop = (
   const node = {
     id: CreateId(),
     rds: data.rds,
-    semanticId: data.semanticReference,
+    semanticReference: data.semanticReference,
     name: data.name,
     label: data.name,
-    type: NODE_TYPE.FUNCTION as NodeType, // TODO: Denne må fikses
     positionX: position.x,
     positionY: position.y,
     positionBlockX: position.x,
@@ -76,7 +68,7 @@ const useOnDrop = (
     : setElements((es) => es.concat(CreateTreeNode(node)));
 
   if (selectedNode) {
-    if (!IsNodeSameType(selectedNode, node)) return;
+    if (selectedNode.aspect !== node.aspect) return;
 
     const fromConnector = selectedNode.connectors?.find(
       (x) => IsPartOfTerminal(x) && !IsInputConnector(x)
@@ -87,18 +79,22 @@ const useOnDrop = (
 
     const partofEdge = {
       id: CreateId(),
-      fromConnector: fromConnector.id,
-      toConnector: toConnector.id,
-      fromNode: selectedNode.id,
-      toNode: node.id,
+      fromConnectorId: fromConnector.id,
+      fromConnector: fromConnector,
+      toConnectorId: toConnector.id,
+      toConnector: toConnector,
+      fromNodeId: selectedNode.id,
+      fromNode: selectedNode,
+      toNodeId: node.id,
+      toNode: node,
       isHidden: false,
-      parentType: selectedNode.type,
-      targetType: node.type,
     } as Edge;
 
     let parentNodeLevel = selectedNode.level;
     node.level = ++parentNodeLevel;
+
     dispatch(createEdge(partofEdge));
+
     const edgeType = GetTreeEdgeType(fromConnector);
     setElements((es) => es.concat(CreateTreeEdge(partofEdge, edgeType)));
   }

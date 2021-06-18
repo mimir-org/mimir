@@ -1,32 +1,29 @@
-import { Edge, EdgeType, EDGE_TYPE } from "../../../../models/project";
 import { FlowElement } from "react-flow-renderer";
-import red from "../../../../redux/store";
+import { Edge } from "../../../../models";
+import { EdgeType, EDGE_TYPE } from "../../../../models/project";
 
 export const CreateTreeEdge = (edge: Edge, edgeType: EdgeType): FlowElement => {
-  const nodes = red.store.getState().projectState.project.nodes;
-  const fromNode = nodes.find((x) => x.id === edge.fromNode);
-  const toNode = nodes.find((x) => x.id === edge.toNode);
   let element = null;
 
-  if (fromNode && toNode) {
+  if (edge.fromNode && edge.toNode) {
     element = {
       id: edge.id,
       type: edgeType,
-      source: edge.fromNode,
-      target: edge.toNode,
-      sourceHandle: edge.fromConnector,
-      targetHandle: edge.toConnector,
+      source: edge.fromNodeId,
+      target: edge.toNodeId,
+      sourceHandle: edge.fromConnectorId,
+      targetHandle: edge.toConnectorId,
       arrowHeadType: null,
       animated: edgeType === EDGE_TYPE.TRANSPORT,
       label: "",
       data: {
-        source: fromNode,
-        target: toNode,
+        source: edge.fromNode,
+        target: edge.toNode,
         edge: edge,
       },
       isHidden: edge.isHidden,
-      parentType: fromNode.type,
-      targetType: toNode.type,
+      parentType: edge.fromNode.aspect,
+      targetType: edge.toNode.aspect,
     };
   }
   return element;

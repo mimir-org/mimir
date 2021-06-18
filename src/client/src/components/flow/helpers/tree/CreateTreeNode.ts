@@ -1,5 +1,6 @@
-import { Node } from "../../../../models/project";
+import { Node } from "../../../../models";
 import { FlowElement } from "react-flow-renderer";
+import { GetNodeType } from "../common";
 
 const CreateTreeNode = (node: Node): FlowElement => {
   let treeNode = null;
@@ -9,7 +10,7 @@ const CreateTreeNode = (node: Node): FlowElement => {
 
   treeNode = {
     id: node.id,
-    type: node.type,
+    type: GetNodeType(node),
     data: node,
     position: position,
     isHidden: node.isHidden,

@@ -1,4 +1,4 @@
-import { Node } from "../../../models/project";
+import { Node } from "../../../models";
 export const ADD_CONNECT_NODE = "ADD_CONNECT_NODE";
 export const ADD_MAIN_CONNECT_NODE = "ADD_MAIN_CONNECT_NODE";
 export const REMOVE_CONNECT_NODE = "REMOVE_CONNECT_NODE";

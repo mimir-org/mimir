@@ -1,4 +1,4 @@
-import { Node, Connector } from "../../../../models/project";
+import { Node, Connector } from "../../../../models";
 import red from "../../../../redux/store";
 import { IsChildOf, IsFunction, IsLocation, IsPartOfTerminal } from "../common";
 

@@ -1,6 +1,6 @@
 import { FlowElement } from "react-flow-renderer";
 import { Position } from "../../../../compLibrary";
-import { Node } from "../../../../models/project";
+import { Node } from "../../../../models";
 
 const CreateParentBlockNode = (node: Node): FlowElement => {
   let elementNode = null;

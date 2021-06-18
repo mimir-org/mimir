@@ -1,9 +1,6 @@
-import { Edge, Node, ProjectSimple } from "../../../models/project";
+import { Edge, Node, ProjectSimple } from "../../../models";
 import { TraverseTree } from "./helpers/";
-import {
-  IsAspectNode,
-  IsSameType,
-} from "../../../components/flow/helpers/common";
+import { IsAspectNode } from "../../../components/flow/helpers/common";
 import {
   FETCHING_PROJECT,
   FETCHING_PROJECT_SUCCESS_OR_ERROR,
@@ -249,9 +246,9 @@ export function projectReducer(
                 : node
             ),
             edges: edgeList.map((edge) =>
-              IsSameType(node.type, edge.parentType) ||
-              IsSameType(node.type, edge.targetType) ||
-              edge.fromNode === node.id
+              node.aspect === edge.fromNode.aspect ||
+              node.aspect === edge.toNode.aspect ||
+              edge.fromNode === node
                 ? { ...edge, isHidden: isHidden }
                 : edge
             ),
@@ -273,7 +270,7 @@ export function projectReducer(
               elements.includes(node) ? { ...node, isHidden: isHidden } : node
             ),
             edges: edgeList.map((edge) =>
-              elements.includes(edge) || edge.toNode === node.id
+              elements.includes(edge) || edge.toNode === node
                 ? { ...edge, isHidden: isHidden }
                 : edge
             ),
@@ -291,7 +288,7 @@ export function projectReducer(
               : node
           ),
           edges: edgeList.map((edge) =>
-            edge.fromNode === node.id || edge.toNode === node.id
+            edge.fromNode === node || edge.toNode === node
               ? { ...edge, isHidden: isHidden }
               : edge
           ),

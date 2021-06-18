@@ -2,14 +2,14 @@ import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { Connector, Node } from "../../../models/project";
+import { Connector, Node } from "../../../models";
 import { Size } from "../../../compLibrary";
 import { TerminalsIcon, ConnectIcon } from "../../../assets/icons/blockView";
 import { setActiveConnector } from "../../../redux/store/project/actions";
 import { TerminalsComponent, ConnectViewComponent } from "../block";
 import { HandleComponent } from "../block";
-import { GetConnectChildren } from "../helpers/common";
-import { CalculateTerminalOrder, FilterConnectors } from "../helpers/block";
+import { GetConnectChildren } from "../helpers/block/connectView";
+import { FilterConnectors } from "../helpers/block";
 import { FindNodeById, SetConnectNodeSize } from "../helpers/block/connectView";
 import {
   addConnectNode,
@@ -66,8 +66,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const onConnectorClick = (conn: Connector) => {
     showTerminalMenu(false);
     showConnectMenu(false);
-    const order = CalculateTerminalOrder(data, 0, conn.type);
-    dispatch(setActiveConnector(data, conn.id, true, order));
+    dispatch(setActiveConnector(data, conn.id, true, 0));
   };
 
   const onConnectViewClick = (node: Node) => {
