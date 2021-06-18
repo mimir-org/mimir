@@ -91,7 +91,6 @@ const FlowBlock = () => {
         CreateBlockElements(
           project,
           node,
-          mainConnectNode,
           connectViewNodes,
           selectedBlockNodeId,
           splitView,
@@ -101,10 +100,9 @@ const FlowBlock = () => {
       return setReactFlowInstance(_reactFlowInstance);
     },
     [
-      connectViewNodes,
-      mainConnectNode,
-      node,
       project,
+      node,
+      connectViewNodes,
       selectedBlockNodeId,
       splitView,
       splitViewNode,

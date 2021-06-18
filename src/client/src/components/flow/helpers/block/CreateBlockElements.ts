@@ -14,7 +14,6 @@ import {
 const CreateBlockElements = (
   project: Project,
   selectedNode: Node,
-  mainConnectNode: Node,
   connectNodes: Node[],
   selectedBlockNodeId: string,
   splitView: boolean,
@@ -23,6 +22,7 @@ const CreateBlockElements = (
   if (!project) return;
   const initialElements: Elements = [];
   const nodes = red.store.getState().projectState.project.nodes as Node[];
+  const mainConnectNode = red.store.getState().connectView.mainNode as Node;
 
   // Draw parent block
   const parentBlock = CreateParentBlockNode(selectedNode);
