@@ -46,14 +46,14 @@ const TabContent = ({ node, index }: Props) => {
     nodeAttributes = node.attributes;
   }
 
-  const handleOnNodeChange = (id: string, value: string, unit: string) => {
+  const handleOnNodeChange = (id: string, value: string, unit: any) => {
     dispatch(changeAttributeValue(id, value, unit, node.id));
   };
 
   const handleOnConnectorChange = (
     id: string,
     value: string,
-    unit: string,
+    unit: any,
     connectorId: string
   ) => {
     dispatch(
@@ -85,7 +85,7 @@ const TabContent = ({ node, index }: Props) => {
                       value={attr.value ?? ""}
                       onChange={
                         (e: any) =>
-                          handleOnNodeChange(attr.id, e.target.value, "") //attr.unit) TODO: FIX
+                          handleOnNodeChange(attr.id, e.target.value, attr.unit)
                       }
                       inputType="tech"
                     />
