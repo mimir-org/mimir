@@ -1,17 +1,6 @@
 import { LibraryNodeItem } from "../";
 
 // TODO : remove
-export type BuildStatus = keyof typeof BUILD_STATUS;
-export const BUILD_STATUS = {
-  NotSet: "NotSet",
-  Unused: "Unused",
-  Reserved: "Reserved",
-  Planned: "Planned",
-  AsBuilt: "AsBuilt",
-  Historic: "Historic",
-  OutOfService: "OutOfService",
-};
-// TODO : remove
 export interface Dictionary {
   key: string;
   value: string;
