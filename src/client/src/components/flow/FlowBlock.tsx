@@ -5,13 +5,18 @@ import { ProjectMainMenu } from "../project";
 import { RootState } from "../../redux/store/index";
 import { FullScreenBox } from "../../compLibrary/controls";
 import { OpenProjectMenu } from "../project/openProject";
-import { changeActiveBlockNode } from "../../redux/store/project/actions";
 import { Color } from "../../compLibrary";
 import { BackgroundBox } from "../../compLibrary/blockView";
 import { changeInspectorTab } from "../../redux/store/inspector/actions";
 import { setSplitView, setNode } from "../../redux/store/splitView/actions";
 import { Project, Node } from "../../models";
-import { useOnConnect, useOnDrop, useOnElementsRemove } from "./hooks";
+import { changeActiveBlockNode } from "../../redux/store/project/actions";
+import {
+  useOnConnect,
+  useOnDrop,
+  useOnElementsRemove,
+  useOnNodeDragStop,
+} from "./hooks";
 import {
   addMainConnectNode,
   removeConnectNodes,
@@ -85,7 +90,7 @@ const FlowBlock = () => {
       setElements(
         CreateBlockElements(
           project,
-          node?.id,
+          node,
           mainConnectNode,
           connectViewNodes,
           selectedBlockNodeId,
@@ -98,7 +103,7 @@ const FlowBlock = () => {
     [
       connectViewNodes,
       mainConnectNode,
-      node?.id,
+      node,
       project,
       selectedBlockNodeId,
       splitView,
@@ -123,6 +128,10 @@ const FlowBlock = () => {
   const OnDragOver = (event) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = "move";
+  };
+
+  const OnNodeDragStop = (_event, node) => {
+    return useOnNodeDragStop(_event, node, dispatch);
   };
 
   const OnDrop = (_event) => {
@@ -182,6 +191,7 @@ const FlowBlock = () => {
               onLoad={OnLoad}
               onDrop={OnDrop}
               onDragOver={OnDragOver}
+              onNodeDragStop={OnNodeDragStop}
               onElementClick={OnElementClick}
               zoomOnScroll={false}
               paneMoveable={false}

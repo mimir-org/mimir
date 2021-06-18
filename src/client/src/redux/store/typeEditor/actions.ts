@@ -1,5 +1,5 @@
-import { Dictionary, NodeType } from "../../../models/project";
-import { Attribute, TerminalType } from "../../../models";
+import { Dictionary } from "../../../models/project";
+import { Aspect, Attribute, TerminalType } from "../../../models";
 import {
   CREATING_TYPE,
   CHANGE_MODE,
@@ -17,7 +17,7 @@ import {
 // TO DO create type, save type, get attributes
 
 export function create(
-  aspect: NodeType,
+  aspect: Aspect,
   objectType: string,
   typeName: string,
   status: string,

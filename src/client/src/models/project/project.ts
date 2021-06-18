@@ -1,17 +1,6 @@
 import { LibraryNodeItem } from "../";
 
 // TODO : remove
-export type BuildStatus = keyof typeof BUILD_STATUS;
-export const BUILD_STATUS = {
-  NotSet: "NotSet",
-  Unused: "Unused",
-  Reserved: "Reserved",
-  Planned: "Planned",
-  AsBuilt: "AsBuilt",
-  Historic: "Historic",
-  OutOfService: "OutOfService",
-};
-// TODO : remove
 export interface Dictionary {
   key: string;
   value: string;
@@ -38,16 +27,6 @@ export type LineEdgeType = keyof typeof LINE_EDGE_TYPE;
 export const LINE_EDGE_TYPE = {
   STEP: "SmoothStepPath",
   BEZIER: "BezierPath",
-};
-
-export type NodeType = keyof typeof NODE_TYPE;
-export const NODE_TYPE = {
-  ASPECT_FUNCTION: "AspectFunction",
-  ASPECT_PRODUCT: "AspectProduct",
-  ASPECT_LOCATION: "AspectLocation",
-  FUNCTION: "Function",
-  PRODUCT: "Product",
-  LOCATION: "Location",
 };
 
 export type ModuleType = keyof typeof MODULE_TYPE;
@@ -86,15 +65,6 @@ export const SPLITVIEW_POSITION = {
   LEFT: "left",
 };
 
-export type IconType = keyof typeof ICON_TYPE;
-export const ICON_TYPE = {
-  NOTSET_ICON: "NotSetIcon",
-  FUNCTION_ICON: "FunctionIcon",
-  LOCATION_ICON: "LocationIcon",
-  PRODUCT_ICON: "ProductIcon",
-  TRANSPORT_ICON: "TransportIcon",
-  INTERFACE_ICON: "InterfaceIcon",
-};
 export interface LibCategory {
   name: string;
   nodes: LibraryNodeItem[];

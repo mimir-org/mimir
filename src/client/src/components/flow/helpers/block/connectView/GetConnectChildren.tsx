@@ -4,6 +4,8 @@ import { Edge, Node } from "../../../../../models";
 
 const GetConnectChildren = (parentNode: Node): Node[] => {
   const edges = red.store.getState().projectState.project.edges as Edge[];
+  const nodes = red.store.getState().projectState.project.nodes as Node[];
+
   let elements: Node[] = [];
 
   edges.forEach((edge) => {
@@ -12,7 +14,8 @@ const GetConnectChildren = (parentNode: Node): Node[] => {
       edge.toNode?.aspect === parentNode?.aspect &&
       !IsTransportTerminal(edge.toConnector)
     ) {
-      elements.push(edge.toNode);
+      const toNode = nodes.find((node) => node.id === edge.toNodeId);
+      elements.push(toNode);
     }
   });
   return elements;
