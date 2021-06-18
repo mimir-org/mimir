@@ -17,6 +17,7 @@ namespace Mb.Core.Services.Contracts
         IEnumerable<Rds> GetRds(Aspect aspect);
         IEnumerable<AttributeType> GetAttributeTypes(Aspect aspect);
         IEnumerable<TerminalType> GetTerminals();
+        Dictionary<string, List<TerminalType>> GetTerminalsByCategory();
         Task<IEnumerable<LibraryType>> CreateLibraryTypes(List<CreateLibraryType> createLibraryTypes);
         Task<LibraryType> CreateLibraryType(CreateLibraryType createLibraryType);
         IEnumerable<LibraryType> GetAllTypes();
