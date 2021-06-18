@@ -1,6 +1,6 @@
 import { LibraryNodeItem } from "../";
 
-// TODO : remove
+// TODO : remove?
 export interface Dictionary {
   key: string;
   value: string;
