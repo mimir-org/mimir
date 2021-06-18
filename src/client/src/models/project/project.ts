@@ -76,15 +76,6 @@ export const SPLITVIEW_POSITION = {
   LEFT: "left",
 };
 
-export type IconType = keyof typeof ICON_TYPE;
-export const ICON_TYPE = {
-  NOTSET_ICON: "NotSetIcon",
-  FUNCTION_ICON: "FunctionIcon",
-  LOCATION_ICON: "LocationIcon",
-  PRODUCT_ICON: "ProductIcon",
-  TRANSPORT_ICON: "TransportIcon",
-  INTERFACE_ICON: "InterfaceIcon",
-};
 export interface LibCategory {
   name: string;
   nodes: LibraryNodeItem[];
