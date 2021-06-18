@@ -5,7 +5,7 @@ import { RootState } from "../../../redux/store";
 import { TypeEditorState } from "../../../redux/store/typeEditor/types";
 import { useDispatch, useSelector } from "react-redux";
 import { changeInspectorTab } from "../../../redux/store/inspector/actions";
-import { Node } from "../../../models/project";
+import { Node } from "../../../models";
 import {
   TabHeader,
   TabBody,

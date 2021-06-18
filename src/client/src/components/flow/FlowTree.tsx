@@ -1,3 +1,4 @@
+import red from "../../redux/store";
 import ReactFlow, { ReactFlowProvider, Elements } from "react-flow-renderer";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,12 +7,11 @@ import { RootState } from "../../redux/store/index";
 import { useOnConnect, useOnDrop, useOnElementsRemove } from "./hooks";
 import { FullScreenBox } from "../../compLibrary/controls";
 import { OpenProjectMenu } from "../project/openProject/OpenProjectMenu";
-import { Project } from "../../models/project";
+import { Project } from "../../models";
 import { GetTreeEdgeType } from "./helpers/tree";
 import { IsBlockView } from "./helpers/block";
 import { changeInspectorTab } from "../../redux/store/inspector/actions";
 import { SetDarkModeColor } from "./helpers/common";
-import red from "../../redux/store";
 import {
   updatePosition,
   changeActiveNode,

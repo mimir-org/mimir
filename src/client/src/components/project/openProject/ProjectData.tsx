@@ -2,7 +2,7 @@ import Moment from "react-moment";
 import { useDispatch, useSelector } from "react-redux";
 import { changeSelectedProject } from "../../../redux/store/project/actions";
 import { RootState } from "../../../redux/store";
-import { ProjectSimple } from "../../../models/project";
+import { ProjectSimple } from "../../../models";
 import "./projectdata.scss";
 
 interface Props {

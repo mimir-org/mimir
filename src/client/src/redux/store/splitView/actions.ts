@@ -1,4 +1,4 @@
-import { Node } from "../../../models/project";
+import { Node } from "../../../models";
 import { SET_SPLITVIEW, SET_SPLIT_NODE } from "./types";
 
 export function setSplitView(visible: boolean) {

@@ -11,7 +11,8 @@ import { AnimatedModule, Size } from "../../../compLibrary";
 import { GetLibCategories } from "./helpers";
 import { ModuleBody, ModuleHead } from "../../../compLibrary/box/modules";
 import { LegendHead, LegendIcons } from "../../../compLibrary/box/library";
-import { MODULE_TYPE, Node } from "../../../models/project";
+import { MODULE_TYPE } from "../../../models/project";
+import { Node } from "../../../models";
 import {
   LegendIcon,
   LibraryIcon,

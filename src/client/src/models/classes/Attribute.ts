@@ -1,28 +1,25 @@
 import { EnumBase } from "..";
 
 class Attribute {
-    id: string;
-    key: string;
-    value: string;
-    selectedUnitId: string;
-    unit: EnumBase;
-    qualifierId: string;
-    qualifier: EnumBase;
-    sourceId: string;
-    source: EnumBase;
-    conditionId: string;
-    condition: EnumBase;
-    formatId: string;
-    format: EnumBase;
-    units: EnumBase[];
-    terminalId: string;
-    nodeId: string;
+  id: string;
+  key: string;
+  value: string;
+  selectedUnitId: string;
+  unit: EnumBase;
+  qualifierId: string;
+  qualifier: EnumBase;
+  sourceId: string;
+  source: EnumBase;
+  conditionId: string;
+  condition: EnumBase;
+  formatId: string;
+  format: EnumBase;
+  units: EnumBase[];
+  terminalId: string;
+  nodeId: string;
 
-    // Constructor
-    // eslint-disable-next-line @typescript-eslint/no-useless-constructor
-    constructor() {
-
-    }
+  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
+  constructor() {}
 }
 
 export default Attribute;

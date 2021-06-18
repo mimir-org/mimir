@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Node } from "../../../../models/project";
+import { Node } from "../../../../models";
 import { RootState } from "../../../../redux/store";
 import { ProjectState } from "../../../../redux/store/project/types";
 

@@ -1,10 +1,6 @@
-import {
-  LibraryType,
-  AttributeType,
-  Dictionary,
-  Rds,
-  TerminalType,
-} from "../../../models/project";
+import { AttributeType, Rds, TerminalType } from "../../../models";
+import { Dictionary } from "../../../models/project";
+import { LibraryActionTypes } from "../library/types";
 
 export const FETCHING_INITIAL_DATA = "FETCHING_INITIAL_DATA";
 export const FETCHING_INITIAL_SUCCESS_OR_ERROR =
@@ -29,7 +25,7 @@ export const CREATING_TYPE_SUCCESS_OR_ERROR = "CREATING_TYPE_SUCCESS_OR_ERROR";
 export interface TypeEditorState {
   fetching: boolean;
   creating: boolean;
-  type: LibraryType | null;
+  type: LibraryActionTypes | null;
   aspects: object;
   objectTypes: object;
   statuses: object;

@@ -1,7 +1,7 @@
 import { GetNodes, IsFunction } from "../../../flow/helpers/common";
 import { useDispatch, useSelector } from "react-redux";
 import { changeActiveNode } from "../../../../redux/store/project/actions";
-import { Node } from "../../../../models/project";
+import { Node } from "../../../../models";
 import { RootState } from "../../../../redux/store";
 import { setNode } from "../../../../redux/store/splitView/actions";
 

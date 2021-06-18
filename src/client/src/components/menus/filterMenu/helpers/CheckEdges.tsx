@@ -1,26 +1,11 @@
-import { Node, Edge } from "../../../../models/project";
+import { Edge, RelationType } from "../../../../models";
 
-const CheckEdges = (nodes: Node[], edges: Edge[], type: string): Edge[] => {
-  const connectors = [];
+const CheckEdges = (edges: Edge[], type: RelationType) => {
   const edgesToRemove: Edge[] = [];
-  if (nodes === null || nodes === undefined) return edgesToRemove;
 
-  for (let i = 0; i < nodes.length; i++) {
-    for (let j = 0; j < nodes[i].connectors.length; j++) {
-      if (nodes[i].connectors[j].relationType === type) {
-        connectors.push(nodes[i].connectors[j]);
-      }
-    }
-  }
-
-  for (let i = 0; i < edges.length; i++) {
-    if (
-      connectors.find((x) => x.id === edges[i].fromConnector) ||
-      connectors.find((x) => x.id === edges[i].toConnector)
-    ) {
-      edgesToRemove.push(edges[i]);
-    }
-  }
+  edges?.forEach((edge) => {
+    if (edge.fromConnector.relationType === type) edgesToRemove.push(edge);
+  });
   return edgesToRemove;
 };
 

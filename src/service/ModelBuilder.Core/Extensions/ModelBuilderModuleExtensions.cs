@@ -59,7 +59,7 @@ namespace Mb.Core.Extensions
             // Auto-mapper
             var autoMapperConfiguration = new MapperConfiguration(cfg =>
             {
-                cfg.AddProfile<AttributeProfile>();
+                cfg.AddProfile(new AttributeProfile(provider.GetService<ICommonRepository>()));
                 cfg.AddProfile<ConnectorProfile>();
                 cfg.AddProfile<EdgeProfile>();
                 cfg.AddProfile(new NodeProfile(provider.GetService<ICommonRepository>()));

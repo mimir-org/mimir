@@ -3,7 +3,6 @@ using System.Linq;
 using AutoMapper;
 using Mb.Core.Repositories.Contracts;
 using Mb.Models.Data;
-using Mb.Models.Enums;
 using Microsoft.EntityFrameworkCore;
 using NodeType = Mb.Models.Data.NodeType;
 
@@ -13,30 +12,32 @@ namespace Mb.Core.Repositories
     {
         private readonly ILibraryTypeRepository _libraryTypeComponentRepository;
         private readonly IMapper _mapper;
-        private readonly ICommonRepository _generateIdRepository;
 
-        public LibraryRepository(ILibraryTypeRepository libraryTypeComponentRepository, IMapper mapper, ICommonRepository generateIdRepository)
+        public LibraryRepository(ILibraryTypeRepository libraryTypeComponentRepository, IMapper mapper)
         {
             _libraryTypeComponentRepository = libraryTypeComponentRepository;
             _mapper = mapper;
-            _generateIdRepository = generateIdRepository;
         }
 
         public IEnumerable<LibraryNodeItem> GetAll(string searchString)
         {
-            var nodeTypes = new List<NodeType>();
+            List<NodeType> nodeTypes;
 
             if (string.IsNullOrEmpty(searchString))
             {
-                nodeTypes =_libraryTypeComponentRepository.GetAll()
+                nodeTypes = _libraryTypeComponentRepository.GetAll()
                     .OfType<NodeType>()
                     .OrderBy(x => x.Name)
                     .Take(30)
                     .Cast<NodeType>()
                     .Include(x => x.AttributeTypes)
                     .Include(x => x.TerminalTypes)
+                    .Include("TerminalTypes.TerminalType")
+                    .Include("TerminalTypes.TerminalType.TerminalCategory")
+                    .Include("TerminalTypes.TerminalType.Attributes")
                     .Include(x => x.Rds)
                     .ThenInclude(y => y.RdsCategory)
+                    .AsSplitQuery()
                     .ToList();
             }
             else
@@ -49,41 +50,19 @@ namespace Mb.Core.Repositories
                     .Cast<NodeType>()
                     .Include(x => x.AttributeTypes)
                     .Include(x => x.TerminalTypes)
+                    .Include("TerminalTypes.TerminalType")
+                    .Include("TerminalTypes.TerminalType.TerminalCategory")
+                    .Include("TerminalTypes.TerminalType.Attributes")
                     .Include(x => x.Rds)
                     .ThenInclude(y => y.RdsCategory)
+                    .AsSplitQuery()
                     .ToList();
             }
 
-            return ConvertToLibNode(nodeTypes);
-        }
-
-        private IEnumerable<LibraryNodeItem> ConvertToLibNode(IEnumerable<NodeType> types)
-        {
-            foreach (var libraryTypeComponent in types)
+            foreach (var mappedNode in nodeTypes.Select(libraryTypeComponent => _mapper.Map<LibraryNodeItem>(libraryTypeComponent)))
             {
-                var mappedNode = _mapper.Map<LibraryNodeItem>(libraryTypeComponent);
-                
-                foreach (var connector in mappedNode.Connectors)
-                {
-                    connector.Id = _generateIdRepository.CreateUniqueId();
-                }
-
                 yield return mappedNode;
             }
-        }
-
-        private Connector CreateRelationConnector(RelationType relationType, ConnectorType connectorType, string name)
-        {
-            return new Relation
-            {
-                Id = _generateIdRepository.CreateUniqueId(),
-                Name = name,
-                Type = connectorType,
-                RelationType = relationType,
-                NodeId = null,
-                Node = null,
-                SemanticReference = null
-            };
         }
     }
 }

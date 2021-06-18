@@ -1,6 +1,7 @@
 import { Elements } from "react-flow-renderer";
-import { IsNodeSameType, IsTransportTerminal } from "../common";
-import { Project, EDGE_TYPE, EdgeType, Node } from "../../../../models/project";
+import { IsTransportTerminal } from "../common";
+import { EDGE_TYPE, EdgeType } from "../../../../models/project";
+import { Node, Project } from "../../../../models";
 import {
   CreateBlockEdge,
   CreateSplitViewNode,
@@ -36,38 +37,25 @@ const CreateBlockElements = (
 
   // Draw nodes for the left block
   project.edges.forEach((edge) => {
-    if (edge.fromNode === nodeId) {
-      const toNode = project.nodes?.find((x) => x.id === edge.toNode);
-      let conn = toNode?.connectors?.find((x) => x.id === edge?.toConnector);
-
-      if (
-        (selectedNode?.type === toNode?.type ||
-          IsNodeSameType(selectedNode, toNode)) &&
-        !IsTransportTerminal(conn)
-      )
-        initialElements.push(
-          CreateBlockNode(toNode, splitView, mainConnectNode)
-        );
-    }
+    if (
+      edge.fromNodeId === nodeId &&
+      selectedNode?.aspect === edge.toNode?.aspect &&
+      !IsTransportTerminal(edge.toConnector)
+    )
+      initialElements.push(
+        CreateBlockNode(edge.toNode, splitView, mainConnectNode)
+      );
   });
 
   // Draw splitview nodes
   if (splitViewNode && splitView) {
     project.edges.forEach((edge) => {
-      if (edge.fromNode === splitViewNode.id) {
-        const toNode = project.nodes?.find((x) => x.id === edge.toNode);
-
-        const conn = toNode?.connectors?.find(
-          (x) => x.id === edge?.toConnector
-        );
-
-        if (
-          (splitViewNode?.type === toNode?.type ||
-            IsNodeSameType(splitViewNode, toNode)) &&
-          !IsTransportTerminal(conn)
-        )
-          initialElements.push(CreateSplitViewNode(toNode));
-      }
+      if (
+        edge.fromNode === splitViewNode &&
+        splitViewNode?.aspect === edge.toNode?.aspect &&
+        !IsTransportTerminal(edge.toConnector)
+      )
+        initialElements.push(CreateSplitViewNode(edge.toNode));
     });
   }
 

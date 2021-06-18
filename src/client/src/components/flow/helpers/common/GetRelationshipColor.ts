@@ -1,5 +1,5 @@
 import { TextResources } from "../../../../assets/textResources";
-import { Node, Connector } from "../../../../models/project";
+import { Node, Connector } from "../../../../models";
 import {
   IsFulfilledByTerminal,
   IsFunction,

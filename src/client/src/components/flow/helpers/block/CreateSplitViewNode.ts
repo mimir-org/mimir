@@ -1,4 +1,4 @@
-import { Node } from "../../../../models/project";
+import { Node } from "../../../../models";
 import { FlowElement } from "react-flow-renderer";
 import { SetSplitViewNodePosition } from ".";
 import { IsLocation } from "../common";

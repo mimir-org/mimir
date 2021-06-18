@@ -1,7 +1,7 @@
-import { Connector, RELATION_TYPE } from "../../../../models/project";
+import { Connector } from "../../../../models";
 
 const IsTransportTerminal = (conn: Connector): boolean => {
-    return conn?.relationType === RELATION_TYPE.Transport;
+  return conn?.terminalCategoryId != null;
 };
 
 export default IsTransportTerminal;

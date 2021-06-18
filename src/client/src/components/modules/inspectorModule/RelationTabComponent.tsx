@@ -5,7 +5,7 @@ import { ConnectionList } from "./helpers";
 import { useSelector, useDispatch } from "react-redux";
 import { changeActiveNode } from "../../../redux/store/project/actions";
 import { RootState } from "../../../redux/store";
-import { Project, Edge } from "../../../models/project";
+import { Project, Edge } from "../../../models";
 import {
   RelationColumns,
   AspectList,
@@ -25,10 +25,10 @@ const RelationTabComponent = ({ node }) => {
   );
   const edgesToSelectedNode = edges.filter((e: Edge) => e.toNode === node.id);
   const inputNodes = nodes.filter((n) =>
-    edgesToSelectedNode.some((e) => e.fromNode === n.id)
+    edgesToSelectedNode.some((e) => e.fromNode === n)
   );
   const outputNodes = nodes.filter((n) =>
-    edgesFromSelectedNode.some((e) => e.toNode === n.id)
+    edgesFromSelectedNode.some((e) => e.toNode === n)
   );
 
   function changeSelectedNode(id) {

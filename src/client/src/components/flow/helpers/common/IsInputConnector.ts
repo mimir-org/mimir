@@ -1,7 +1,7 @@
-import { Connector, CONNECTOR_TYPE } from "../../../../models/project";
+import { Connector, ConnectorType } from "../../../../models";
 
-const IsInputConnector = (conn: Connector): boolean => {
-  return conn?.type === CONNECTOR_TYPE.INPUT;
+const IsInputConnector = (conn: Connector) => {
+    return conn?.type === ConnectorType.Input;
 };
 
 export default IsInputConnector;

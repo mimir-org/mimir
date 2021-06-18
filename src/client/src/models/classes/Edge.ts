@@ -1,41 +1,35 @@
 import { Aspect, Connector, Node } from "..";
 
 class Edge {
+  id: string;
+  fromConnectorId: string;
+  fromConnector: Connector;
 
-    id: string;
-    fromConnectorId: string;
-    fromConnector: Connector;
+  toConnectorId: string;
+  toConnector: Connector;
 
-    toConnectorId: string;
-    toConnector: Connector;
+  fromNodeId: string;
+  fromNode: Node;
 
-    fromNodeId: string;
-    fromNode: Node;
+  toNodeId: string;
+  toNode: Node;
 
-    toNodeId: string;
-    toNode: Node;
+  isHidden: boolean | false;
 
-    isHidden: boolean | false;
+  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
+  constructor() {}
 
-    // Constructor
-    // eslint-disable-next-line @typescript-eslint/no-useless-constructor
-    constructor() {
+  parentType() {
+    if (this.fromNode) return this.fromNode.aspect;
 
-    }
+    return Aspect.NotSet;
+  }
 
-    parentType() {
-        if (this.fromNode)
-            return this.fromNode.aspect;
+  targetType() {
+    if (this.toNode) return this.toNode.aspect;
 
-        return Aspect.NotSet;
-    }
-
-    targetType() {
-        if (this.toNode)
-            return this.toNode.aspect;
-
-        return Aspect.NotSet;
-    }
+    return Aspect.NotSet;
+  }
 }
 
 export default Edge;

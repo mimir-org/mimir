@@ -1,12 +1,12 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { TerminalsIcon } from "../../../assets/icons/blockView";
-import { Connector, NODE_TYPE } from "../../../models/project";
+import { NODE_TYPE } from "../../../models/project";
 import { NodeBox, TerminalsMenu } from "../../../compLibrary/blockView";
 import { HandleComponent, TerminalsComponent } from "../block";
 import { setActiveConnector } from "../../../redux/store/project/actions";
 import { useDispatch } from "react-redux";
-import { CalculateTerminalOrder } from "../helpers/block";
+import { Connector } from "../../../models";
 
 const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
@@ -27,8 +27,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
 
   const onConnectorClick = (conn: Connector) => {
     showTerminalMenu(false);
-    const order = CalculateTerminalOrder(data, 0, conn.type);
-    dispatch(setActiveConnector(data, conn.id, true, order));
+    dispatch(setActiveConnector(data, conn.id, true, 0));
   };
 
   useEffect(() => {

@@ -1,7 +1,7 @@
-import { Connector, RELATION_TYPE } from "../../../../models/project";
+import { Connector, RelationType } from "../../../../models";
 
-const IsLocationTerminal = (conn: Connector): boolean => {
-    return conn?.relationType === RELATION_TYPE.HasLocation;
+const IsLocationTerminal = (conn: Connector) => {
+    return conn?.relationType === RelationType.HasLocation;
 };
 
 export default IsLocationTerminal;

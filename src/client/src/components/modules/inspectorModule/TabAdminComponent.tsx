@@ -4,7 +4,7 @@ import { useCallback } from "react";
 import { RootState } from "../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { Contractor } from "../../../redux/store/common/types";
-import { Node, Project } from "../../../models/project";
+import { Node, Project } from "../../../models";
 import { changeInspectorTab } from "../../../redux/store/inspector/actions";
 import {
   TabHeader,

@@ -1,10 +1,10 @@
-import { Node } from "../../../../models/project";
+import red from "../../../../redux/store";
+import { Node } from "../../../../models";
 import { FlowElement } from "react-flow-renderer";
 import { SetBlockNodePosition } from ".";
 import { IsFunction, IsLocation } from "../common";
 import { Size } from "../../../../compLibrary";
 import { SetConnectNodePosition } from "./connectView";
-import red from "../../../../redux/store";
 
 const CreateBlockNode = (
   node: Node,

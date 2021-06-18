@@ -13,6 +13,7 @@ const Input = styled.input`
   background-color: ${(props: { readOnly: boolean }) =>
     props.readOnly ? "#f2f2f2" : "#fff"};
   font-size: 13px;
+
   @media (min-width: 3000px) {
     height: 40px;
     font-size: 16px;

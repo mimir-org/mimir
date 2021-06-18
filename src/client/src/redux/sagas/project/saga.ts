@@ -1,5 +1,5 @@
 import { call, put } from "redux-saga/effects";
-import { Project } from "../../../models/project";
+import { Project } from "../../../models";
 import {
   get,
   post,

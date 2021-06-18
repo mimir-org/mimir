@@ -1,4 +1,4 @@
-import { Node, NODE_TYPE } from "../../models/project";
+import { Aspect, Node } from "../../models";
 import {
   FunctionIcon,
   ProductIcon,
@@ -6,9 +6,9 @@ import {
 } from "../../assets/icons/common";
 
 const GetAspectIcon = (node: Node): string => {
-  if (node.type === NODE_TYPE.ASPECT_FUNCTION) return FunctionIcon;
-  if (node.type === NODE_TYPE.ASPECT_PRODUCT) return ProductIcon;
-  if (node.type === NODE_TYPE.ASPECT_LOCATION) return LocationIcon;
+  if (node.aspect === Aspect.Function) return FunctionIcon;
+  if (node.aspect === Aspect.Product) return ProductIcon;
+  if (node.aspect === Aspect.Location) return LocationIcon;
   return null;
 };
 

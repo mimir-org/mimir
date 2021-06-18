@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { changeNodeVisibility } from "../../../../redux/store/project/actions";
 import { useSelector } from "react-redux";
-import { Node, Edge, Project } from "../../../../models/project";
+import { Node, Edge, Project } from "../../../../models";
 import { RootState } from "../../../../redux/store";
 
 export const ChangeNodeDisplay = (node: Node) => {
@@ -12,7 +12,7 @@ export const ChangeNodeDisplay = (node: Node) => {
   ) as Project;
 
   let isParent = false;
-  let edge = project.edges?.find((x) => x.fromNode === node.id) as Edge;
+  let edge = project.edges?.find((x) => x.fromNode === node) as Edge;
   if (edge) isParent = true;
 
   return useCallback(() => {

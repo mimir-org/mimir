@@ -1,3 +1,5 @@
+import { Dictionary, NodeType } from "../../../models/project";
+import { Attribute, TerminalType } from "../../../models";
 import {
   CREATING_TYPE,
   CHANGE_MODE,
@@ -11,12 +13,6 @@ import {
   CHANGE_STATUS,
   TypeEditorActionTypes,
 } from "./types";
-import {
-  NodeType,
-  Terminal,
-  Attribute,
-  Dictionary,
-} from "../../../models/project";
 
 // TO DO create type, save type, get attributes
 
@@ -28,7 +24,7 @@ export function create(
   rds: string,
   rdsCategory: string,
   semanticRdsReference: string,
-  terminals: Terminal[],
+  terminals: TerminalType[],
   attributes: Attribute[],
   version: string,
   semanticReference: string

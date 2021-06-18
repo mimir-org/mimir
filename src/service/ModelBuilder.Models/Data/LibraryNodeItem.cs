@@ -12,7 +12,7 @@ namespace Mb.Models.Data
         public Status Status { get; set; }
         public Aspect Aspect { get; set; }
         public ICollection<Connector> Connectors { get; set; }
-        public ICollection<AttributeType> Attributes { get; set; }
+        public ICollection<Attribute> Attributes { get; set; }
         public string SemanticReference { get; set; }
     }
 }
