@@ -1,3 +1,4 @@
+import red from "../../../../redux/store";
 import { Elements } from "react-flow-renderer";
 import { IsTransportTerminal } from "../common";
 import { EDGE_TYPE, EdgeType } from "../../../../models/project";
@@ -12,7 +13,7 @@ import {
 
 const CreateBlockElements = (
   project: Project,
-  nodeId: string,
+  selectedNode: Node,
   mainConnectNode: Node,
   connectNodes: Node[],
   selectedBlockNodeId: string,
@@ -21,30 +22,22 @@ const CreateBlockElements = (
 ): Elements => {
   if (!project) return;
   const initialElements: Elements = [];
-  const selectedNode = project.nodes.find((node) => node.id === nodeId);
+  const nodes = red.store.getState().projectState.project.nodes as Node[];
 
-  // Draw connection view
-  if (mainConnectNode && mainConnectNode.id === selectedBlockNodeId) {
-    CreateConnectViewNode(mainConnectNode);
-    connectNodes.forEach((node) => {
-      initialElements.push(CreateBlockNode(node, false, mainConnectNode));
-    });
-  }
-
-  // Draw block
+  // Draw parent block
   const parentBlock = CreateParentBlockNode(selectedNode);
   if (parentBlock) initialElements.push(parentBlock);
 
-  // Draw nodes for the left block
+  // Draw child nodes
   project.edges.forEach((edge) => {
     if (
-      edge.fromNodeId === nodeId &&
+      edge.fromNodeId === selectedNode.id &&
       selectedNode?.aspect === edge.toNode?.aspect &&
       !IsTransportTerminal(edge.toConnector)
-    )
-      initialElements.push(
-        CreateBlockNode(edge.toNode, splitView, mainConnectNode)
-      );
+    ) {
+      const toNode = nodes.find((node) => node.id === edge.toNodeId);
+      initialElements.push(CreateBlockNode(toNode, splitView, mainConnectNode));
+    }
   });
 
   // Draw splitview nodes
@@ -56,6 +49,14 @@ const CreateBlockElements = (
         !IsTransportTerminal(edge.toConnector)
       )
         initialElements.push(CreateSplitViewNode(edge.toNode));
+    });
+  }
+
+  // Draw connection view
+  if (mainConnectNode && mainConnectNode.id === selectedBlockNodeId) {
+    CreateConnectViewNode(mainConnectNode);
+    connectNodes.forEach((node) => {
+      initialElements.push(CreateBlockNode(node, false, mainConnectNode));
     });
   }
 

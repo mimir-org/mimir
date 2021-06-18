@@ -85,7 +85,7 @@ const FlowBlock = () => {
       setElements(
         CreateBlockElements(
           project,
-          node?.id,
+          node,
           mainConnectNode,
           connectViewNodes,
           selectedBlockNodeId,
@@ -98,7 +98,7 @@ const FlowBlock = () => {
     [
       connectViewNodes,
       mainConnectNode,
-      node?.id,
+      node,
       project,
       selectedBlockNodeId,
       splitView,
