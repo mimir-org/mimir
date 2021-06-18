@@ -16,6 +16,7 @@ const SetConnectNodePosition = (node: Node) => {
   yPos = CalculateYPosition(node, yPos, connectNodes);
   if (connectNodes.length === 0) yPos -= Size.Node_Length;
 
+  console.log(xPos);
   if (node !== actualNode) {
     node.positionBlockX = xPos;
     node.positionBlockY = yPos;
