@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { IsTransportTerminal, CreateId } from "../../flow/helpers/common";
 import { CalculateRows, ConnectorAttributesList } from "./helpers";
 import { Input, InputBox, Select, AttributeField } from "../../../compLibrary";
-import { RelationTabComponent } from ".";
+import { RelationTabComponent, CommentsTabComponent } from ".";
 import { InputWrapper } from "./styled";
 import { TerminalsTabComponent } from "./"
 import {
@@ -124,6 +124,7 @@ const TabContent = ({ node, index }: Props) => {
       )}
 
       {index === 3 && <RelationTabComponent node={node} />}
+      {index === 4 && <CommentsTabComponent node={node} />}
     </>
   );
 };
