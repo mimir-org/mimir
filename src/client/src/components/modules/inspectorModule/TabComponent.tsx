@@ -41,7 +41,7 @@ const TabComponent = ({ node, index }: Props) => {
         {!node && index === 1 && (
           <>
             <span>{/* TODO: selected RDS */} </span>
-            <span>{typeEditorState.typeName} </span>
+            <span>{typeEditorState.createLibraryType.name} </span>
           </>
         )}
         <TabTitle active={true}>{GetInspectorTextResource(index)}</TabTitle>
@@ -57,7 +57,7 @@ const TabComponent = ({ node, index }: Props) => {
       {!node && index === 1 && (
         <>
           <span>{/* TODO: selected RDS */} </span>
-          <span>{typeEditorState.typeName} </span>
+          <span>{typeEditorState.createLibraryType.name} </span>
         </>
       )}
       <TabTitle>{GetInspectorTextResource(index)}</TabTitle>
