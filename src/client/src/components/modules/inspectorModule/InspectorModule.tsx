@@ -66,17 +66,17 @@ const InspectorModule = () => {
       <InspectorBody id="InspectorBody">
         {hasProject && <InspectorTabs />}
         <TabsBottomLine>
-        <ButtonBox>
-          {isInspectorOpen ? (
-            <img src={ToggleDown} alt="toggle-icon" onClick={handleClick} />
-          ) : (
-            <img src={ToggleUp} alt="toggle-icon" onClick={handleClick} />
-          )}
-        </ButtonBox>
-        <IconWrapper>
-          <InspectorTitle>{TextResources.Inspector_Heading}</InspectorTitle>
-          <img src={EyeIcon} alt="inspector-icon" />
-        </IconWrapper>
+          <ButtonBox>
+            {isInspectorOpen ? (
+              <img src={ToggleDown} alt="toggle-icon" onClick={handleClick} />
+            ) : (
+              <img src={ToggleUp} alt="toggle-icon" onClick={handleClick} />
+            )}
+          </ButtonBox>
+          <IconWrapper>
+            <InspectorTitle>{TextResources.Inspector_Heading}</InspectorTitle>
+            <img src={EyeIcon} alt="inspector-icon" />
+          </IconWrapper>
         </TabsBottomLine>
       </InspectorBody>
     </AnimatedInspector>
