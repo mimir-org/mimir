@@ -3,6 +3,7 @@ import { RootState } from "../../../../../redux/store";
 import { TypeEditorState } from "../../../../../redux/store/typeEditor/types";
 import { VerticalScrollbar } from "../../../../../compLibrary";
 import { TerminalsListElement } from "./TerminalsListElement";
+import { Aspect } from "../../../../../models";
 interface Props {
   listElements: any;
 }
@@ -14,14 +15,16 @@ export const TerminalsListBody = ({ listElements }: Props) => {
 
   const filteredTerminals = () => {
     let tempList = listElements;
-    if (state.aspect !== "NotSet") {
+    if (state.createLibraryType.aspect !== Aspect.NotSet) {
       tempList = listElements
         .filter((element) =>
-          element[1].attributes.some((a) => a.aspect === state.aspect)
+          element[1].attributes.some(
+            (a) => a.aspect === state.createLibraryType.aspect
+          )
         )
         .map((element) => {
           element[1].attributes = element[1].attributes.filter(
-            (a) => a.aspect === state.aspect
+            (a) => a.aspect === state.createLibraryType.aspect
           );
           return element;
         });

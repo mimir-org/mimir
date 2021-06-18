@@ -22,3 +22,10 @@ export enum Status {
   Draft = 1,
   Approved = 2,
 }
+
+export enum ObjectType {
+  NotSet = 0,
+  ObjectBlock = 1,
+  Transport = 2,
+  Interface = 3,
+}

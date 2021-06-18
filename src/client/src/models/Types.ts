@@ -1,4 +1,5 @@
-import { Aspect, Connector, Status, Attribute } from ".";
+import { Aspect, Connector, Status, Attribute, ObjectType } from ".";
+import { ConnectorType } from "./Enums";
 
 export interface AttributeType {
   id: string;
@@ -46,12 +47,12 @@ export interface ProjectSimple {
 }
 
 export interface Rds {
-  id: number;
+  id: string;
   name: string;
   code: string;
   rdsCategoryId: string;
-  category: EnumBase;
-  semanticReferance: string;
+  rdsCategory: EnumBase;
+  semanticReference: string;
   aspect: Aspect;
 }
 
@@ -61,5 +62,23 @@ export interface TerminalType {
   color: string;
   terminalCategoryId: string;
   terminalCategory: EnumBase;
-  semanticReferance: string;
+  semanticReference: string;
+}
+
+export interface TerminalTypeItem {
+  terminalTypeId: string;
+  number: number;
+  connectorType: ConnectorType;
+}
+
+export interface CreateLibraryType {
+  name: string;
+  status: Status;
+  aspect: Aspect;
+  objectType: ObjectType;
+  semanticReference: string;
+  rdsId: string;
+  terminalTypes: TerminalTypeItem[];
+  attributeTypes: string[];
+  terminalTypeId: string;
 }

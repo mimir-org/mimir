@@ -1,5 +1,5 @@
 import { Dictionary, NodeType } from "../../../models/project";
-import { Attribute, TerminalType } from "../../../models";
+import { Attribute, TerminalType, Aspect, ObjectType } from "../../../models";
 import {
   CREATING_TYPE,
   CHANGE_MODE,
@@ -54,9 +54,9 @@ export function getInitialData(): TypeEditorActionTypes {
   };
 }
 
-export function getRDS(aspect: string): TypeEditorActionTypes {
+export function getRDS(aspect: Aspect): TypeEditorActionTypes {
   return {
-    type: FETCHING_ATTRIBUTES,
+    type: FETCHING_RDS,
     payload: {
       aspect,
     },
@@ -70,9 +70,9 @@ export function getTerminals(): TypeEditorActionTypes {
   };
 }
 
-export function getAttributes(aspect: string): TypeEditorActionTypes {
+export function getAttributes(aspect: Aspect): TypeEditorActionTypes {
   return {
-    type: FETCHING_RDS,
+    type: FETCHING_ATTRIBUTES,
     payload: {
       aspect,
     },
@@ -97,7 +97,7 @@ export function changeSelectedAspect(aspect: Dictionary) {
   };
 }
 
-export function changeSelectedObjecttype(objectType: Dictionary) {
+export function changeSelectedObjecttype(objectType: ObjectType) {
   return {
     type: CHANGE_OBJECTTYPE,
     payload: {

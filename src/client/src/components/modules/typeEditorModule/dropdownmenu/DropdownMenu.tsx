@@ -68,7 +68,7 @@ export const DropDownMenu = ({ label, placeHolder, listItems }: Props) => {
               <div
                 className="listitem"
                 key={key}
-                onClick={() => handleChange(value)}
+                onClick={() => handleChange(key)}
               >
                 <DropdownMenuListItem>
                   <p>{value}</p>

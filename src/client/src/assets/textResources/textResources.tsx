@@ -87,6 +87,7 @@ const textResources = {
   TypeEditor_Edit_Type: "Edit Type",
   TypeEditor_Aspect: "Aspect",
   TypeEditor_Object_Type: "Object Type",
+  TypeEditor_Location_Type: "Location Type",
   TypeEditor_Type_Name: "Type name",
   TypeEditor_Status: "Status",
   TypeEditor_Properties_Choose: "Choose",

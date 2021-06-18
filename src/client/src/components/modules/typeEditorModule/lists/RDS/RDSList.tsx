@@ -5,6 +5,7 @@ import { ListHeader } from "../ListHeader";
 import { RDSListBody } from "./RDSListBody";
 import { ListWrapper } from "../../../../../compLibrary";
 import { TextResources } from "../../../../../assets/textResources";
+import { Aspect, ObjectType } from "../../../../../models";
 
 export const RDSList = () => {
   const state = useSelector<RootState>(
@@ -14,9 +15,9 @@ export const RDSList = () => {
   const RDSList = () => {
     let filteredRDS = Object.entries(state.rdsList);
     if (
-      state.aspect === "NotSet" ||
-      state.objectType === "NotSet" ||
-      state.typeName === ""
+      state.createLibraryType.aspect === Aspect.NotSet ||
+      state.createLibraryType.objectType === ObjectType.NotSet ||
+      state.createLibraryType.name === ""
     ) {
       filteredRDS = [];
     }
