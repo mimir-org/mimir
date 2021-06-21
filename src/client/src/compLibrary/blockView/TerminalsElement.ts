@@ -8,7 +8,7 @@ const TerminalsElement = styled.div`
   color: ${Color.Black};
   height: 15px;
   width: auto;
-  min-width: 100px;
+  min-width: 120px;
   position: relative;
 
   .text {
