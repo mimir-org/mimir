@@ -12,10 +12,11 @@ import {
 } from "../../../../../assets/icons/common";
 
 interface Props {
+  category: string;
   terminals: any;
 }
 
-export const TerminalsListElement = ({ terminals }: Props) => {
+export const TerminalsListElement = ({ category, terminals }: Props) => {
   const [quantity, setQuantity] = useState(0);
   const [expandCategory, setExpandCategory] = useState(false);
 
@@ -51,7 +52,7 @@ export const TerminalsListElement = ({ terminals }: Props) => {
               <span className="number"></span>
             </label>
           </NumericInput>
-          <p>{terminals.terminalCategory}</p>
+          <p>{category}</p>
           {quantity !== 0 ? (
             <img
               src={expandCategory ? ExpandedIcon : CollapsedIcon}

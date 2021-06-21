@@ -12,6 +12,7 @@ import {
   FETCHING_RDS,
   FETCHING_TERMINALS,
   FETCHING_ATTRIBUTES,
+  CHANGE_ASPECT,
 } from "../store/typeEditor/types";
 import { FETCHING_CONTRACTORS } from "../store/common/types";
 
@@ -41,8 +42,8 @@ export function* sagas() {
     takeEvery(SAVE_PROJECT, updateProject),
     takeEvery(FETCHING_CONTRACTORS, getContractors),
     takeEvery(FETCHING_INITIAL_DATA, getInitialData),
-    takeEvery(FETCHING_RDS, getRDS),
-    takeEvery(FETCHING_TERMINALS, getTerminals),
     takeEvery(FETCHING_ATTRIBUTES, getAttributes),
+    takeEvery(CHANGE_ASPECT, getRDS),
+    takeEvery(CHANGE_ASPECT, getTerminals),
   ]);
 }

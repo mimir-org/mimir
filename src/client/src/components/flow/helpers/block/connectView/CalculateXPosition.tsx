@@ -8,7 +8,6 @@ const CalculateXPosition = (
   connectNodes: Node[]
 ): number => {
   const xMargin = 7;
-
   UpdateConnectNodeSize(connectNodes.length);
 
   if (connectNodes.length === 1)

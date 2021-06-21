@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { useHistory } from "react-router-dom";
 import { MODULE_TYPE } from "../../../models/project";
-import { Aspect } from "../../../models/";
+import { Aspect, ObjectType } from "../../../models/";
 import { TextResources } from "../../../assets/textResources";
 import { CloseIcon } from "../../../assets/icons/common";
 import { TypeEditorState } from "../../../redux/store/typeEditor/types";
@@ -18,6 +18,7 @@ import {
 import {
   getInitialData,
   getRDS,
+  getTerminals,
 } from "../../../redux/store/typeEditor/actions";
 import {
   DropdownMenu,
@@ -67,22 +68,14 @@ export const TypeEditorComponent = () => {
   };
 
   const filterObjectTypes = () => {
-    let filteredTypes = Object.entries(state.objectTypes);
-    if (state.createLibraryType.aspect === Aspect.NotSet) {
-      filteredTypes = [];
-    } else if (state.createLibraryType.aspect === Aspect.Function) {
-      filteredTypes = filteredTypes.filter(
-        ([, value]) =>
-          value === "Object Block" ||
-          value === "Transport" ||
-          value === "Interface"
-      );
-    } else if (state.createLibraryType.aspect === Aspect.Location) {
-      filteredTypes = filteredTypes.filter(
-        ([, value]) => value === "Object Block"
-      );
-    }
-    return filteredTypes;
+    let filteredtypes = Object.entries(state.objectTypes);
+    state.createLibraryType.aspect === Aspect.NotSet
+      ? (filteredtypes = [])
+      : state.createLibraryType.aspect === Aspect.Function
+      ? (filteredtypes = filteredtypes.filter(
+          ([, value]) => value !== "Not set"
+        ))
+      : (filteredtypes = []);
   };
 
   const filterStatuses = () => {
@@ -98,11 +91,16 @@ export const TypeEditorComponent = () => {
     const darkMode = red.store.getState().darkMode.active as boolean;
     SetDarkModeColor(darkMode);
     dispatch(getInitialData());
-    dispatch(getRDS(state.createLibraryType.aspect));
+    // dispatch(getRDS(state.createLibraryType.aspect));
     dispatch(changeAllModulesVisibility(false, true));
     // dispatch(getTerminals());
     // dispatch(getAttributes(state.aspect));
-  }, [dispatch, state.createLibraryType.aspect]);
+  }, [
+    dispatch,
+    state.createLibraryType.aspect,
+    state.createLibraryType.objectType,
+    state.createLibraryType.status,
+  ]);
 
   return (
     <TypeEditorWrapper>
@@ -124,11 +122,11 @@ export const TypeEditorComponent = () => {
                 : TextResources.TypeEditor_Object_Type
             }
             placeHolder={
-              "Select" + (state.createLibraryType.aspect === Aspect.Location)
-                ? TextResources.TypeEditor_Location_Type
-                : TextResources.TypeEditor_Object_Type
+              state.createLibraryType.aspect === Aspect.Location
+                ? "Select " + TextResources.TypeEditor_Location_Type
+                : "Select " + TextResources.TypeEditor_Object_Type
             }
-            listItems={filterObjectTypes()}
+            listItems={Object.entries(state.objectTypes)}
           />
           <TypeNameInput>
             <p>{TextResources.TypeEditor_Type_Name}</p>

@@ -187,6 +187,27 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
+        /// Get terminal types by category
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("terminalsByCategory")]
+        [ProducesResponseType(typeof(Dictionary<string, TerminalType>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public IActionResult GetTerminalTypesByCategory()
+        {
+            try
+            {
+                var data = _typeEditorService.GetTerminalsByCategory().ToList();
+                return Ok(data);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
         /// Create an attribute type
         /// </summary>
         /// <param name="createAttributeType"></param>

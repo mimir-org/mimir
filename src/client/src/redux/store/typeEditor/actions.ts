@@ -1,5 +1,10 @@
-import { Dictionary, NodeType } from "../../../models/project";
-import { Attribute, TerminalType, Aspect, ObjectType } from "../../../models";
+import {
+  Attribute,
+  TerminalType,
+  Aspect,
+  ObjectType,
+  Status,
+} from "../../../models";
 import {
   CREATING_TYPE,
   CHANGE_MODE,
@@ -17,7 +22,7 @@ import {
 // TO DO create type, save type, get attributes
 
 export function create(
-  aspect: NodeType,
+  aspect: Aspect,
   objectType: string,
   typeName: string,
   status: string,
@@ -88,7 +93,7 @@ export function changeMode(mode: string) {
   };
 }
 
-export function changeSelectedAspect(aspect: Dictionary) {
+export function changeSelectedAspect(aspect: Aspect) {
   return {
     type: CHANGE_ASPECT,
     payload: {
@@ -115,7 +120,7 @@ export function changeTypeName(typeName: string) {
   };
 }
 
-export function changeStatus(status: string) {
+export function changeStatus(status: Status) {
   return {
     type: CHANGE_STATUS,
     payload: {

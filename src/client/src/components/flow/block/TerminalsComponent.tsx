@@ -1,4 +1,4 @@
-import { Node, Connector } from "../../../models";
+import { Node, Connector, Aspect } from "../../../models";
 import { GetConnectorIcon, GetConnectorName } from "../helpers/common";
 import { FilterConnectors } from "../helpers/block";
 import { TerminalsBox, TerminalsElement } from "../../../compLibrary/blockView";
@@ -6,7 +6,7 @@ import { TerminalsBox, TerminalsElement } from "../../../compLibrary/blockView";
 interface Props {
   isOpen: boolean;
   list: (Node | Connector)[];
-  type?: string;
+  type?: Aspect;
   width?: number;
   onClick: any;
 }

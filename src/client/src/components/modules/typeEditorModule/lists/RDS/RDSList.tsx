@@ -13,15 +13,17 @@ export const RDSList = () => {
   ) as TypeEditorState;
 
   const RDSList = () => {
-    let filteredRDS = Object.entries(state.rdsList);
-    if (
-      state.createLibraryType.aspect === Aspect.NotSet ||
-      state.createLibraryType.objectType === ObjectType.NotSet ||
-      state.createLibraryType.name === ""
-    ) {
-      filteredRDS = [];
+    if (state.rdsList) {
+      let filteredRDS = Object.entries(state.rdsList);
+      if (
+        state.createLibraryType.aspect === Aspect.NotSet ||
+        state.createLibraryType.objectType === ObjectType.NotSet ||
+        state.createLibraryType.name === ""
+      ) {
+        filteredRDS = [];
+      }
+      return filteredRDS;
     }
-    return filteredRDS;
   };
 
   return (
