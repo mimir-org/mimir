@@ -275,7 +275,8 @@ namespace Mb.Core.Services
                 Rds = string.Empty,
                 StatusId = "4590637F39B6BA6F39C74293BE9138DF",
                 IsRoot = true,
-                MasterProjectId = projectId
+                MasterProjectId = projectId,
+                Aspect = aspect
             };
 
             var connector = new Relation
