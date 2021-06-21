@@ -24,7 +24,6 @@ export const AddTerminal = ({ terminals }: Props) => {
       </NumericInput>
       <SearchTerminalMediaType terminals={terminals} />
       <img src={HelpIcon} alt="help" />
-      {console.log(terminals)}
       <DirectionDropdown />
     </AddTerminalElement>
   );

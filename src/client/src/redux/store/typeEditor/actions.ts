@@ -1,5 +1,11 @@
-import { Dictionary, NodeType } from "../../../models/project";
-import { Attribute, TerminalType, Aspect, ObjectType } from "../../../models";
+import { NodeType } from "../../../models/project";
+import {
+  Attribute,
+  TerminalType,
+  Aspect,
+  ObjectType,
+  Status,
+} from "../../../models";
 import {
   CREATING_TYPE,
   CHANGE_MODE,
@@ -88,7 +94,7 @@ export function changeMode(mode: string) {
   };
 }
 
-export function changeSelectedAspect(aspect: Dictionary) {
+export function changeSelectedAspect(aspect: Aspect) {
   return {
     type: CHANGE_ASPECT,
     payload: {
@@ -115,7 +121,7 @@ export function changeTypeName(typeName: string) {
   };
 }
 
-export function changeStatus(status: string) {
+export function changeStatus(status: Status) {
   return {
     type: CHANGE_STATUS,
     payload: {
