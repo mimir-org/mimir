@@ -10,3 +10,4 @@ export { default as TerminalsIcon } from "./terminalsIcon.svg";
 export { default as ConnectIcon } from "./connectIcon.svg";
 export { default as ArrowIcon } from "./arrowIcon.svg";
 export { default as ArrowSmallIcon } from "./arrowSmallIcon.svg";
+export { default as SVG } from "./ConnectorIcon.js";

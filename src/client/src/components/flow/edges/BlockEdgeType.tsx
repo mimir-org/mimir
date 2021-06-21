@@ -1,6 +1,9 @@
-import { getMarkerEnd, getSmoothStepPath } from "react-flow-renderer";
-import { Node } from "../../../models";
-// import { GetCenter } from "../helpers/common";
+import { Connector } from "../../../models";
+import {
+  ArrowHeadType,
+  getMarkerEnd,
+  getSmoothStepPath,
+} from "react-flow-renderer";
 
 export default function BlockEdgeType({
   id,
@@ -11,21 +14,9 @@ export default function BlockEdgeType({
   sourcePosition,
   targetPosition,
   data,
-  arrowHeadType,
   markerEndId,
 }) {
-  const markerEnd = getMarkerEnd(arrowHeadType, markerEndId);
-  //   const [centerX, centerY] = GetCenter({ sourceX, sourceY, targetX, targetY });
-
-  //   const edgePathBezier = getBezierPath({
-  //     sourceX,
-  //     sourceY,
-  //     sourcePosition,
-  //     targetX,
-  //     targetY,
-  //     targetPosition,
-  //   });
-
+  const markerEnd = getMarkerEnd(ArrowHeadType.ArrowClosed, markerEndId);
   const edgePathSmoothStep = getSmoothStepPath({
     sourceX,
     sourceY,
@@ -35,70 +26,15 @@ export default function BlockEdgeType({
     targetPosition,
   });
 
-  const getConnectors = () => {
-    const fromConnector = data.source?.connectors.find(
-      (x) => x.id === data.edge.fromConnector
-    );
-    const toConnector = data.target?.connectors.find(
-      (x) => x.id === data.edge.toConnector
-    );
-
-    return {
-      fromConnector: fromConnector,
-      toConnector: toConnector,
-    };
-  };
-
   const getStyle = () => {
     const fromConnector = data.source.connectors.find(
       (x) => x.id === data.edge.fromConnector
-    );
+    ) as Connector;
 
     return {
-      stroke: fromConnector?.mediaColor,
+      stroke: fromConnector?.color,
       strokeWidth: 3,
     };
-  };
-
-  const pathType = (source: Node, target: Node) => {
-    getConnectors();
-    return edgePathSmoothStep;
-    //   const pathType = isAspectNode(source.type)
-    //     ? (LINE_EDGE_TYPE.STEP as LineEdgeType)
-    //     : source.type !== target.type
-    //     ? (LINE_EDGE_TYPE.BEZIER as LineEdgeType)
-    //     : (LINE_EDGE_TYPE.STEP as LineEdgeType);
-
-    //   return pathType === LINE_EDGE_TYPE.BEZIER
-    //     ? edgePathBezier
-    //     : edgePathSmoothStep;
-  };
-
-  const edgeText = (source: Node, target: Node) => {
-    return null;
-    // if (!source || !target || IsAspectNode(source.type)) return null;
-    // let text = null;
-
-    // source.type === target.type
-    //   ? (text = "partof")
-    //   : target.type === NODE_TYPE.PRODUCT
-    //   ? (text = "fulfilledBy")
-    //   : target.type === NODE_TYPE.LOCATION
-    //   ? (text = "locatedAt")
-    //   : (text = null);
-
-    // return text ? (
-    //   <EdgeText
-    //     x={centerX}
-    //     y={centerY}
-    //     label={text}
-    //     //   labelStyle={labelStyle}
-    //     //   labelShowBg={labelShowBg}
-    //     //   labelBgStyle={labelBgStyle}
-    //     //   labelBgPadding={labelBgPadding}
-    //     //   labelBgBorderRadius={labelBgBorderRadius}
-    //   />
-    // ) : null;
   };
 
   return (
@@ -107,10 +43,9 @@ export default function BlockEdgeType({
         id={id}
         style={getStyle()}
         className="react-flow__edge-path"
-        d={pathType(data.source, data.target)}
+        d={edgePathSmoothStep}
         markerEnd={markerEnd}
       />
-      {edgeText(data.source, data.target)}
     </>
   );
 }
