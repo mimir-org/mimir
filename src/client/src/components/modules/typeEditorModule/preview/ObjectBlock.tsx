@@ -3,6 +3,7 @@ import { RootState } from "../../../../redux/store";
 import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
 import { Color } from "../../../../compLibrary";
 import { ObjectTypeBlock, InfoWrapper } from "../styled";
+import { Aspect } from "../../../../models";
 
 export const ObjectBlock = () => {
   const state = useSelector<RootState>(
@@ -11,11 +12,11 @@ export const ObjectBlock = () => {
 
   const blockColor = () => {
     let color = "";
-    if (state.aspect === "Function") {
+    if (state.createLibraryType.aspect === Aspect.Function) {
       color = Color.Function;
-    } else if (state.aspect === "Location") {
+    } else if (state.createLibraryType.aspect === Aspect.Location) {
       color = Color.Location;
-    } else if (state.aspect === "Product") {
+    } else if (state.createLibraryType.aspect === Aspect.Product) {
       color = Color.Product;
     }
     return color;
@@ -23,9 +24,9 @@ export const ObjectBlock = () => {
 
   const blockHeight = () => {
     let height = 0;
-    if (state.aspect === "Function") {
+    if (state.createLibraryType.aspect === Aspect.Function) {
       height = 70;
-    } else if (state.aspect === "Location") {
+    } else if (state.createLibraryType.aspect === Aspect.Location) {
       height = 45;
     }
     return height;
@@ -33,9 +34,9 @@ export const ObjectBlock = () => {
 
   const blockPaddingTop = () => {
     let top = 0;
-    if (state.aspect === "Function") {
+    if (state.createLibraryType.aspect === Aspect.Function) {
       top = 40;
-    } else if (state.aspect === "Location") {
+    } else if (state.createLibraryType.aspect === Aspect.Location) {
       top = 20;
     }
     return top;
@@ -45,7 +46,7 @@ export const ObjectBlock = () => {
     <ObjectTypeBlock blockColor={blockColor()} blockHeight={blockHeight()}>
       <InfoWrapper blockPaddingTop={blockPaddingTop()}>
         <p>{/* TODO: selected RDS */}</p>
-        <p>{state.typeName}</p>
+        <p>{state.createLibraryType.name}</p>
       </InfoWrapper>
     </ObjectTypeBlock>
   );

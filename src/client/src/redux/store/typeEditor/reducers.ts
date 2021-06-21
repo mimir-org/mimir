@@ -1,6 +1,5 @@
+import { CreateLibraryType, Status, Aspect, ObjectType } from "../../../models";
 import {
-  CREATING_TYPE,
-  CREATING_TYPE_SUCCESS_OR_ERROR,
   FETCHING_RDS,
   FETCHING_RDS_SUCCESS_OR_ERROR,
   FETCHING_INITIAL_DATA,
@@ -22,11 +21,17 @@ const initialState: TypeEditorState = {
   fetching: false,
   creating: false,
   mode: "NotSet",
-  type: null,
-  aspect: "NotSet",
-  objectType: "NotSet",
-  typeName: "",
-  status: "Draft",
+  createLibraryType: {
+    name: "",
+    status: Status.Draft,
+    aspect: Aspect.NotSet,
+    objectType: ObjectType.NotSet,
+    semanticReference: "",
+    rdsId: "",
+    terminalTypes: [],
+    attributeTypes: [],
+    terminalTypeId: "",
+  } as CreateLibraryType,
   objectTypes: {},
   aspects: {},
   statuses: {},
@@ -40,19 +45,6 @@ export function typeEditorReducer(
   action: TypeEditorActionTypes
 ): TypeEditorState {
   switch (action.type) {
-    case CREATING_TYPE:
-      return {
-        ...state,
-        fetching: false,
-        creating: true,
-      };
-    case CREATING_TYPE_SUCCESS_OR_ERROR:
-      return {
-        ...state,
-        fetching: false,
-        creating: false,
-        type: action.payload.type ?? state.type,
-      };
     case FETCHING_INITIAL_DATA:
       return {
         ...state,
@@ -109,22 +101,34 @@ export function typeEditorReducer(
     case CHANGE_ASPECT:
       return {
         ...state,
-        aspect: action.payload.aspect,
+        createLibraryType: {
+          ...state.createLibraryType,
+          aspect: action.payload.aspect,
+        },
       };
     case CHANGE_OBJECTTYPE:
       return {
         ...state,
-        objectType: action.payload.objectType,
+        createLibraryType: {
+          ...state.createLibraryType,
+          objectType: action.payload.objectType,
+        },
       };
     case CHANGE_TYPENAME:
       return {
         ...state,
-        typeName: action.payload.typeName,
+        createLibraryType: {
+          ...state.createLibraryType,
+          name: action.payload.typeName,
+        },
       };
     case CHANGE_STATUS:
       return {
         ...state,
-        status: action.payload.status,
+        createLibraryType: {
+          ...state.createLibraryType,
+          status: action.payload.status,
+        },
       };
 
     default:

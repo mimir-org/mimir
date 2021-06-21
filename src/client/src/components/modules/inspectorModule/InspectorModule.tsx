@@ -7,6 +7,8 @@ import { Size } from "../../../compLibrary";
 import { MODULE_TYPE } from "../../../models/project";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import { IsExplorerModule, IsLibraryModule } from "../../flow/helpers/common";
+import styled from "styled-components";
+import { Color } from "../../../compLibrary/";
 import {
   InspectorTitle,
   InspectorBody,
@@ -14,6 +16,11 @@ import {
   IconWrapper,
   ButtonBox,
 } from "../../../compLibrary/box/inspector";
+
+const TabsBottomLine = styled.div`
+  border-bottom: 1px solid ${Color.Grey};
+  flex-grow: 1;
+`
 
 const InspectorModule = () => {
   const dispatch = useDispatch();
@@ -58,17 +65,19 @@ const InspectorModule = () => {
     >
       <InspectorBody id="InspectorBody">
         {hasProject && <InspectorTabs />}
-        <ButtonBox>
-          {isInspectorOpen ? (
-            <img src={ToggleDown} alt="toggle-icon" onClick={handleClick} />
-          ) : (
-            <img src={ToggleUp} alt="toggle-icon" onClick={handleClick} />
-          )}
-        </ButtonBox>
-        <IconWrapper>
-          <InspectorTitle>{TextResources.Inspector_Heading}</InspectorTitle>
-          <img src={EyeIcon} alt="inspector-icon" />
-        </IconWrapper>
+        <TabsBottomLine>
+          <ButtonBox>
+            {isInspectorOpen ? (
+              <img src={ToggleDown} alt="toggle-icon" onClick={handleClick} />
+            ) : (
+              <img src={ToggleUp} alt="toggle-icon" onClick={handleClick} />
+            )}
+          </ButtonBox>
+          <IconWrapper>
+            <InspectorTitle>{TextResources.Inspector_Heading}</InspectorTitle>
+            <img src={EyeIcon} alt="inspector-icon" />
+          </IconWrapper>
+        </TabsBottomLine>
       </InspectorBody>
     </AnimatedInspector>
   );

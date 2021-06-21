@@ -4,6 +4,7 @@ import {
   CollapsedIcon,
 } from "../../../../../../assets/icons/common";
 import "./directiondropdown.scss";
+import { ConnectorType } from "../../../../../../models";
 
 export const DirectionDropdown = () => {
   const [isListOpen, setIsListOpen] = useState(false);
@@ -12,6 +13,8 @@ export const DirectionDropdown = () => {
   const toggleList = () => {
     setIsListOpen(!isListOpen);
   };
+
+  const StringIsNumber = (value) => isNaN(Number(value)) === false;
 
   //   const handleChange = () => {
   //     // TODO: Se dropdownmenu
@@ -32,8 +35,15 @@ export const DirectionDropdown = () => {
       </div>
       {isListOpen && (
         <div className="dropdown_list">
-          <div className="dropdown_listitem">Input</div>
-          <div className="dropdown_listitem">Output</div>
+          {Object.keys(ConnectorType)
+            .filter(StringIsNumber)
+            .map((item) => {
+              return (
+                <div className="dropdown_listitem">
+                  {ConnectorType[item]} {item}
+                </div>
+              );
+            })}
         </div>
       )}
     </div>

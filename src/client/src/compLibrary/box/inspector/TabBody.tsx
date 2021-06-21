@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const TabBody = styled.div`
+  top: 39px;
   position: absolute;
   width: 100%;
   height: 100%;

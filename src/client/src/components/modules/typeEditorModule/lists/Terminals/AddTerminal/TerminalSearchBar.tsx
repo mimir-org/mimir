@@ -17,6 +17,10 @@ export let TerminalSearchBar = ({ terminals }: Props) => {
     setsearchbarInput(e.target.value);
   };
 
+  const handleClick = (terminalId) => {
+    // console.log("Clicked terminal media id: ", terminalId);
+  };
+
   const toggleExpand = () => {
     setExpandList((expandList) => !expandList);
   };
@@ -40,7 +44,16 @@ export let TerminalSearchBar = ({ terminals }: Props) => {
       </div>
       {expandList && (
         <div className="terminalsearchbarlist">
-          <div className="terminallistitem">{terminals.terminal}</div>
+          {terminals.map((terminal) => {
+            return (
+              <div
+                className="terminallistitem"
+                onClick={() => handleClick(terminal.id)}
+              >
+                {terminal.name}
+              </div>
+            );
+          })}
         </div>
       )}
     </div>

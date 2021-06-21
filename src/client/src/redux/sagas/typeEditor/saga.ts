@@ -77,7 +77,7 @@ export function* getRDS(action) {
 export function* getTerminals(action) {
   try {
     const terminalURL =
-      process.env.REACT_APP_API_BASE_URL + "typeeditor/terminals";
+      process.env.REACT_APP_API_BASE_URL + "typeeditor/terminalsbycategory";
 
     const terminalResponse = yield call(get, terminalURL);
 
