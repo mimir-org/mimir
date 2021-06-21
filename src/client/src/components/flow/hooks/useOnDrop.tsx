@@ -18,6 +18,7 @@ const useOnDrop = (
   setElements,
   reactFlowInstance,
   reactFlowWrapper,
+  masterProjectId: string,
   splitView?: boolean,
   selectedNode?: Node
 ) => {
@@ -52,6 +53,7 @@ const useOnDrop = (
     aspect: data.aspect,
     statusId: data.statusId,
     version: data.version,
+    masterProjectId: masterProjectId,
   } as Node;
 
   node.connectors?.forEach((c) => {
@@ -90,6 +92,7 @@ const useOnDrop = (
       toNodeId: node.id,
       toNode: node,
       isHidden: false,
+      masterProjectId: masterProjectId,
     } as Edge;
 
     let parentNodeLevel = selectedNode.level;

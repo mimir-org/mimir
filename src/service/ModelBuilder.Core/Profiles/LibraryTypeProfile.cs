@@ -109,9 +109,10 @@ namespace Mb.Core.Profiles
 
             foreach (var item in terminalTypes)
             {
+                var key = $"{item.Key}-{nodeId}"; 
                 yield return new NodeTypeTerminalType
                 {
-                    Id = item.Key.CreateMd5(),
+                    Id = key.CreateMd5(),
                     NodeTypeId = nodeId,
                     TerminalTypeId = item.TerminalTypeId,
                     Number = item.Number,

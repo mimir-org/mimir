@@ -72,6 +72,7 @@ const FlowTree = () => {
       setElements,
       reactFlowInstance,
       reactFlowWrapper,
+      project.id,
       false,
       selectedNode
     );

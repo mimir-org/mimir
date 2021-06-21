@@ -141,6 +141,7 @@ const FlowBlock = () => {
       setElements,
       reactFlowInstance,
       reactFlowWrapper,
+      project.id,
       splitView,
       selectedNode
     );

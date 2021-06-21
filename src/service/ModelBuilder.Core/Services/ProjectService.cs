@@ -17,7 +17,6 @@ using Mb.Models.Modules;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Attribute = Mb.Models.Data.Attribute;
-using NodeType = Mb.Models.Enums.NodeType;
 using Terminal = Mb.Models.Data.Terminal;
 
 namespace Mb.Core.Services
@@ -230,7 +229,7 @@ namespace Mb.Core.Services
 
         #region Private methods
 
-        private Node CreateInitAspectNode(NodeType nodeType, string version)
+        private Node CreateInitAspectNode(Aspect aspect, string version, string projectId)
         {
             const decimal positionY = 5.0m;
             const string connectorName = "PartOf";
@@ -238,19 +237,19 @@ namespace Mb.Core.Services
             string name;
             decimal positionX;
 
-            switch (nodeType)
+            switch (aspect)
             {
-                case NodeType.AspectFunction:
+                case Aspect.Function:
                     name = "Function";
                     positionX = 150.0m;
                     break;
 
-                case NodeType.AspectProduct:
+                case Aspect.Product:
                     name = "Product";
                     positionX = 600.0m;
                     break;
 
-                case NodeType.AspectLocation:
+                case Aspect.Location:
                     name = "Location";
                     positionX = 1050.0m;
                     break;
@@ -267,7 +266,6 @@ namespace Mb.Core.Services
                 Id = _commonRepository.CreateUniqueId(),
                 Name = name,
                 Label = name,
-                Type = nodeType,
                 PositionX = positionX,
                 PositionY = positionY,
                 Connectors = new List<Connector>(),
@@ -276,7 +274,8 @@ namespace Mb.Core.Services
                 Version = version,
                 Rds = string.Empty,
                 StatusId = "4590637F39B6BA6F39C74293BE9138DF",
-                IsRoot = true
+                IsRoot = true,
+                MasterProjectId = projectId
             };
 
             var connector = new Relation
@@ -286,8 +285,6 @@ namespace Mb.Core.Services
                 Type = ConnectorType.Output,
                 NodeId = node.Id,
                 RelationType = RelationType.PartOf,
-                //MediaColor = _commonRepository.GetTerminalColor(Terminal.NotSet, new TerminalCategory(), RelationType.PartOf, nodeType).Color, // TODO: Fix this
-                //TransportColor = _commonRepository.GetTerminalColor(Terminal.NotSet, new TerminalCategory(), RelationType.PartOf, nodeType).Color // TODO: Fix this
             };
 
             node.Connectors.Add(connector);
@@ -343,11 +340,22 @@ namespace Mb.Core.Services
                 edge.Id = _commonRepository.CreateUniqueId();
                 if (string.IsNullOrEmpty(edge.MasterProjectId))
                     edge.MasterProjectId = project.Id;
+
+                edge.FromConnector = null;
+                edge.ToConnector = null;
+                edge.FromNode = null;
+                edge.ToNode = null;
                 await _edgeRepository.CreateAsync(edge);
             }
 
             foreach (var edge in edgesToDelete.Where(x => x.MasterProjectId.Equals(project.Id)))
+            {
+                edge.FromConnector = null;
+                edge.ToConnector = null;
+                edge.FromNode = null;
+                edge.ToNode = null;
                 await _edgeRepository.Delete(edge.Id);
+            }
 
             project.UpdatedBy = _contextAccessor.GetName();
             project.Updated = DateTime.Now.ToUniversalTime();
@@ -400,6 +408,9 @@ namespace Mb.Core.Services
                             edge.FromConnectorId = connectorNewId;
                         if (edge.ToConnectorId == connector.Id)
                             edge.ToConnectorId = connectorNewId;
+
+                        edge.FromConnector = null;
+                        edge.ToConnector = null;
                     }
 
                     connector.Id = connectorNewId;
@@ -463,7 +474,7 @@ namespace Mb.Core.Services
             if (project?.Nodes == null || project.Edges == null)
                 return;
 
-            var rootNodes = project.Nodes.Where(x => x.Type == NodeType.AspectFunction || x.Type == NodeType.AspectLocation || x.Type == NodeType.AspectProduct).ToList();
+            var rootNodes = project.Nodes.Where(x => x.IsRoot).ToList();
             _ = rootNodes.Aggregate(0, (current, node) => ResolveNodeLevelAndOrder(node, project, 0, current) + 1);
         }
 
@@ -486,9 +497,10 @@ namespace Mb.Core.Services
 
         private Project CreateInitProject(CreateProject createProject)
         {
+            var pid = _commonRepository.CreateUniqueId();
             var project = new Project
             {
-                Id = _commonRepository.CreateUniqueId(),
+                Id = pid,
                 Version = createProject.Version,
                 Name = createProject.Name,
                 Description = createProject.Description,
@@ -497,9 +509,9 @@ namespace Mb.Core.Services
                 UpdatedBy = _contextAccessor.GetName(),
                 Nodes = new List<Node>
                 {
-                    CreateInitAspectNode(NodeType.AspectFunction, createProject.Version),
-                    CreateInitAspectNode(NodeType.AspectProduct, createProject.Version),
-                    CreateInitAspectNode(NodeType.AspectLocation, createProject.Version)
+                    CreateInitAspectNode(Aspect.Function, createProject.Version, pid),
+                    CreateInitAspectNode(Aspect.Product, createProject.Version, pid),
+                    CreateInitAspectNode(Aspect.Location, createProject.Version, pid)
                 }
             };
 

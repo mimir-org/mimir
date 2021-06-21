@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Mb.Core.Migrations
 {
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,23 +18,6 @@ namespace Mb.Core.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Contractor", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Edge",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FromConnector = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ToConnector = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FromNode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ToNode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ParentType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TargetType = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Edge", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -110,45 +93,6 @@ namespace Mb.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Node",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Rds = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Contractor = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SemanticId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TagNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Label = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PositionX = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
-                    PositionY = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
-                    IsLocked = table.Column<bool>(type: "bit", nullable: false),
-                    IsSelected = table.Column<bool>(type: "bit", nullable: false),
-                    PositionBlockX = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
-                    PositionBlockY = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
-                    Length = table.Column<int>(type: "int", nullable: false),
-                    Width = table.Column<int>(type: "int", nullable: false),
-                    Height = table.Column<int>(type: "int", nullable: false),
-                    Level = table.Column<int>(type: "int", nullable: false),
-                    Order = table.Column<int>(type: "int", nullable: false),
-                    StatusId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Updated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Version = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Node", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Node_Enum_StatusId",
-                        column: x => x.StatusId,
-                        principalTable: "Enum",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Rds",
                 columns: table => new
                 {
@@ -191,31 +135,55 @@ namespace Mb.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProjectEdge",
+                name: "Node",
                 columns: table => new
                 {
-                    EdgeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProjectId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Rds = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Contractor = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SemanticReference = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TagNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Label = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PositionX = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
+                    PositionY = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
+                    IsLocked = table.Column<bool>(type: "bit", nullable: false),
+                    IsSelected = table.Column<bool>(type: "bit", nullable: false),
+                    IsBlockSelected = table.Column<bool>(type: "bit", nullable: false),
+                    IsHidden = table.Column<bool>(type: "bit", nullable: false),
+                    PositionBlockX = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
+                    PositionBlockY = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
+                    Level = table.Column<int>(type: "int", nullable: false),
+                    Order = table.Column<int>(type: "int", nullable: false),
+                    StatusId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Updated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Version = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Aspect = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsRoot = table.Column<bool>(type: "bit", nullable: false),
+                    MasterProjectId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Length = table.Column<int>(type: "int", nullable: false),
+                    Width = table.Column<int>(type: "int", nullable: false),
+                    Height = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProjectEdge", x => new { x.EdgeId, x.ProjectId });
+                    table.PrimaryKey("PK_Node", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProjectEdge_Edge_EdgeId",
-                        column: x => x.EdgeId,
-                        principalTable: "Edge",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Node_Enum_StatusId",
+                        column: x => x.StatusId,
+                        principalTable: "Enum",
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_ProjectEdge_Project_ProjectId",
-                        column: x => x.ProjectId,
+                        name: "FK_Node_Project_MasterProjectId",
+                        column: x => x.MasterProjectId,
                         principalTable: "Project",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "AttributeTypeUnit",
+                name: "AttributeType_Unit",
                 columns: table => new
                 {
                     AttributeTypeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -223,72 +191,17 @@ namespace Mb.Core.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AttributeTypeUnit", x => new { x.AttributeTypeId, x.UnitId });
+                    table.PrimaryKey("PK_AttributeType_Unit", x => new { x.AttributeTypeId, x.UnitId });
                     table.ForeignKey(
-                        name: "FK_AttributeTypeUnit_AttributeType_AttributeTypeId",
+                        name: "FK_AttributeType_Unit_AttributeType_AttributeTypeId",
                         column: x => x.AttributeTypeId,
                         principalTable: "AttributeType",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AttributeTypeUnit_Enum_UnitId",
+                        name: "FK_AttributeType_Unit_Enum_UnitId",
                         column: x => x.UnitId,
                         principalTable: "Enum",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Connector",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SemanticReference = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NodeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RelationType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Color = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TerminalCategoryId = table.Column<string>(type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Connector", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Connector_Enum_TerminalCategoryId",
-                        column: x => x.TerminalCategoryId,
-                        principalTable: "Enum",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Connector_Node_NodeId",
-                        column: x => x.NodeId,
-                        principalTable: "Node",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ProjectNode",
-                columns: table => new
-                {
-                    NodeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProjectId = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProjectNode", x => new { x.NodeId, x.ProjectId });
-                    table.ForeignKey(
-                        name: "FK_ProjectNode_Node_NodeId",
-                        column: x => x.NodeId,
-                        principalTable: "Node",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProjectNode_Project_ProjectId",
-                        column: x => x.ProjectId,
-                        principalTable: "Project",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -328,7 +241,7 @@ namespace Mb.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TerminalTypeAttributeType",
+                name: "TerminalType_AttributeType",
                 columns: table => new
                 {
                     AttributeTypeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -336,17 +249,146 @@ namespace Mb.Core.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TerminalTypeAttributeType", x => new { x.AttributeTypeId, x.TerminalTypeId });
+                    table.PrimaryKey("PK_TerminalType_AttributeType", x => new { x.AttributeTypeId, x.TerminalTypeId });
                     table.ForeignKey(
-                        name: "FK_TerminalTypeAttributeType_AttributeType_AttributeTypeId",
+                        name: "FK_TerminalType_AttributeType_AttributeType_AttributeTypeId",
                         column: x => x.AttributeTypeId,
                         principalTable: "AttributeType",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TerminalTypeAttributeType_TerminalType_TerminalTypeId",
+                        name: "FK_TerminalType_AttributeType_TerminalType_TerminalTypeId",
                         column: x => x.TerminalTypeId,
                         principalTable: "TerminalType",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Connector",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SemanticReference = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Visible = table.Column<string>(type: "nvarchar(1)", nullable: false),
+                    NodeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RelationType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Color = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Terminal_CategoryId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Connector", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Connector_Enum_Terminal_CategoryId",
+                        column: x => x.Terminal_CategoryId,
+                        principalTable: "Enum",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Connector_Node_NodeId",
+                        column: x => x.NodeId,
+                        principalTable: "Node",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Project_Node",
+                columns: table => new
+                {
+                    NodeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProjectId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Project_Node", x => new { x.NodeId, x.ProjectId });
+                    table.ForeignKey(
+                        name: "FK_Project_Node_Node_NodeId",
+                        column: x => x.NodeId,
+                        principalTable: "Node",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Project_Node_Project_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Project",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "NodeType_AttributeType",
+                columns: table => new
+                {
+                    AttributeTypeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    NodeTypeId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NodeType_AttributeType", x => new { x.AttributeTypeId, x.NodeTypeId });
+                    table.ForeignKey(
+                        name: "FK_NodeType_AttributeType_AttributeType_AttributeTypeId",
+                        column: x => x.AttributeTypeId,
+                        principalTable: "AttributeType",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_NodeType_AttributeType_LibraryType_NodeTypeId",
+                        column: x => x.NodeTypeId,
+                        principalTable: "LibraryType",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "NodeType_TerminalType",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Number = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
+                    ConnectorType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NodeTypeId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    TerminalTypeId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NodeType_TerminalType", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_NodeType_TerminalType_LibraryType_NodeTypeId",
+                        column: x => x.NodeTypeId,
+                        principalTable: "LibraryType",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_NodeType_TerminalType_TerminalType_TerminalTypeId",
+                        column: x => x.TerminalTypeId,
+                        principalTable: "TerminalType",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TransportType_AttributeType",
+                columns: table => new
+                {
+                    AttributeTypeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    TransportTypeId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TransportType_AttributeType", x => new { x.AttributeTypeId, x.TransportTypeId });
+                    table.ForeignKey(
+                        name: "FK_TransportType_AttributeType_AttributeType_AttributeTypeId",
+                        column: x => x.AttributeTypeId,
+                        principalTable: "AttributeType",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TransportType_AttributeType_LibraryType_TransportTypeId",
+                        column: x => x.TransportTypeId,
+                        principalTable: "LibraryType",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -402,80 +444,49 @@ namespace Mb.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "NodeTypeAttributeType",
-                columns: table => new
-                {
-                    AttributeTypeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    NodeTypeId = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_NodeTypeAttributeType", x => new { x.AttributeTypeId, x.NodeTypeId });
-                    table.ForeignKey(
-                        name: "FK_NodeTypeAttributeType_AttributeType_AttributeTypeId",
-                        column: x => x.AttributeTypeId,
-                        principalTable: "AttributeType",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_NodeTypeAttributeType_LibraryType_NodeTypeId",
-                        column: x => x.NodeTypeId,
-                        principalTable: "LibraryType",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "NodeTypeTerminalType",
+                name: "Edge",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Number = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
-                    ConnectorType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NodeTypeId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    TerminalTypeId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    FromConnectorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ToConnectorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FromNodeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ToNodeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    MasterProjectId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    IsTemplateEdge = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_NodeTypeTerminalType", x => x.Id);
+                    table.PrimaryKey("PK_Edge", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_NodeTypeTerminalType_LibraryType_NodeTypeId",
-                        column: x => x.NodeTypeId,
-                        principalTable: "LibraryType",
+                        name: "FK_Edge_Connector_FromConnectorId",
+                        column: x => x.FromConnectorId,
+                        principalTable: "Connector",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_NodeTypeTerminalType_TerminalType_TerminalTypeId",
-                        column: x => x.TerminalTypeId,
-                        principalTable: "TerminalType",
+                        name: "FK_Edge_Connector_ToConnectorId",
+                        column: x => x.ToConnectorId,
+                        principalTable: "Connector",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Edge_Node_FromNodeId",
+                        column: x => x.FromNodeId,
+                        principalTable: "Node",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Edge_Node_ToNodeId",
+                        column: x => x.ToNodeId,
+                        principalTable: "Node",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Edge_Project_MasterProjectId",
+                        column: x => x.MasterProjectId,
+                        principalTable: "Project",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "TransportTypeAttributeType",
-                columns: table => new
-                {
-                    AttributeTypeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    TransportTypeId = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TransportTypeAttributeType", x => new { x.AttributeTypeId, x.TransportTypeId });
-                    table.ForeignKey(
-                        name: "FK_TransportTypeAttributeType_AttributeType_AttributeTypeId",
-                        column: x => x.AttributeTypeId,
-                        principalTable: "AttributeType",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_TransportTypeAttributeType_LibraryType_TransportTypeId",
-                        column: x => x.TransportTypeId,
-                        principalTable: "LibraryType",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AttributeUnit",
+                name: "Attribute_Unit",
                 columns: table => new
                 {
                     AttributeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -483,17 +494,41 @@ namespace Mb.Core.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AttributeUnit", x => new { x.AttributeId, x.UnitId });
+                    table.PrimaryKey("PK_Attribute_Unit", x => new { x.AttributeId, x.UnitId });
                     table.ForeignKey(
-                        name: "FK_AttributeUnit_Attribute_AttributeId",
+                        name: "FK_Attribute_Unit_Attribute_AttributeId",
                         column: x => x.AttributeId,
                         principalTable: "Attribute",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AttributeUnit_Enum_UnitId",
+                        name: "FK_Attribute_Unit_Enum_UnitId",
                         column: x => x.UnitId,
                         principalTable: "Enum",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProjectEdge",
+                columns: table => new
+                {
+                    EdgeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProjectId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProjectEdge", x => new { x.EdgeId, x.ProjectId });
+                    table.ForeignKey(
+                        name: "FK_ProjectEdge_Edge_EdgeId",
+                        column: x => x.EdgeId,
+                        principalTable: "Edge",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProjectEdge_Project_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Project",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -529,6 +564,11 @@ namespace Mb.Core.Migrations
                 column: "TerminalId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Attribute_Unit_UnitId",
+                table: "Attribute_Unit",
+                column: "UnitId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AttributeType_ConditionId",
                 table: "AttributeType",
                 column: "ConditionId");
@@ -549,13 +589,8 @@ namespace Mb.Core.Migrations
                 column: "SourceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AttributeTypeUnit_UnitId",
-                table: "AttributeTypeUnit",
-                column: "UnitId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AttributeUnit_UnitId",
-                table: "AttributeUnit",
+                name: "IX_AttributeType_Unit_UnitId",
+                table: "AttributeType_Unit",
                 column: "UnitId");
 
             migrationBuilder.CreateIndex(
@@ -564,9 +599,34 @@ namespace Mb.Core.Migrations
                 column: "NodeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Connector_TerminalCategoryId",
+                name: "IX_Connector_Terminal_CategoryId",
                 table: "Connector",
-                column: "TerminalCategoryId");
+                column: "Terminal_CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Edge_FromConnectorId",
+                table: "Edge",
+                column: "FromConnectorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Edge_FromNodeId",
+                table: "Edge",
+                column: "FromNodeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Edge_MasterProjectId",
+                table: "Edge",
+                column: "MasterProjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Edge_ToConnectorId",
+                table: "Edge",
+                column: "ToConnectorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Edge_ToNodeId",
+                table: "Edge",
+                column: "ToNodeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LibraryType_InterfaceType_TerminalTypeId",
@@ -584,33 +644,38 @@ namespace Mb.Core.Migrations
                 column: "TransportType_TerminalTypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Node_MasterProjectId",
+                table: "Node",
+                column: "MasterProjectId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Node_StatusId",
                 table: "Node",
                 column: "StatusId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_NodeTypeAttributeType_NodeTypeId",
-                table: "NodeTypeAttributeType",
+                name: "IX_NodeType_AttributeType_NodeTypeId",
+                table: "NodeType_AttributeType",
                 column: "NodeTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_NodeTypeTerminalType_NodeTypeId",
-                table: "NodeTypeTerminalType",
+                name: "IX_NodeType_TerminalType_NodeTypeId",
+                table: "NodeType_TerminalType",
                 column: "NodeTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_NodeTypeTerminalType_TerminalTypeId",
-                table: "NodeTypeTerminalType",
+                name: "IX_NodeType_TerminalType_TerminalTypeId",
+                table: "NodeType_TerminalType",
                 column: "TerminalTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Project_Node_ProjectId",
+                table: "Project_Node",
+                column: "ProjectId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProjectEdge_ProjectId",
                 table: "ProjectEdge",
-                column: "ProjectId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProjectNode_ProjectId",
-                table: "ProjectNode",
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
@@ -624,53 +689,50 @@ namespace Mb.Core.Migrations
                 column: "TerminalCategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TerminalTypeAttributeType_TerminalTypeId",
-                table: "TerminalTypeAttributeType",
+                name: "IX_TerminalType_AttributeType_TerminalTypeId",
+                table: "TerminalType_AttributeType",
                 column: "TerminalTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TransportTypeAttributeType_TransportTypeId",
-                table: "TransportTypeAttributeType",
+                name: "IX_TransportType_AttributeType_TransportTypeId",
+                table: "TransportType_AttributeType",
                 column: "TransportTypeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AttributeTypeUnit");
+                name: "Attribute_Unit");
 
             migrationBuilder.DropTable(
-                name: "AttributeUnit");
+                name: "AttributeType_Unit");
 
             migrationBuilder.DropTable(
                 name: "Contractor");
 
             migrationBuilder.DropTable(
-                name: "NodeTypeAttributeType");
+                name: "NodeType_AttributeType");
 
             migrationBuilder.DropTable(
-                name: "NodeTypeTerminalType");
+                name: "NodeType_TerminalType");
+
+            migrationBuilder.DropTable(
+                name: "Project_Node");
 
             migrationBuilder.DropTable(
                 name: "ProjectEdge");
 
             migrationBuilder.DropTable(
-                name: "ProjectNode");
+                name: "TerminalType_AttributeType");
 
             migrationBuilder.DropTable(
-                name: "TerminalTypeAttributeType");
-
-            migrationBuilder.DropTable(
-                name: "TransportTypeAttributeType");
+                name: "TransportType_AttributeType");
 
             migrationBuilder.DropTable(
                 name: "Attribute");
 
             migrationBuilder.DropTable(
                 name: "Edge");
-
-            migrationBuilder.DropTable(
-                name: "Project");
 
             migrationBuilder.DropTable(
                 name: "AttributeType");
@@ -692,6 +754,9 @@ namespace Mb.Core.Migrations
 
             migrationBuilder.DropTable(
                 name: "Enum");
+
+            migrationBuilder.DropTable(
+                name: "Project");
         }
     }
 }

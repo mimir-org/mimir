@@ -44,6 +44,7 @@ const useOnConnect = (
       toNodeId: targetNode.id,
       toNode: targetNode,
       isHidden: sourceNode.isHidden,
+      masterProjectId: project.id,
     } as Edge;
 
     currentEdge = edge;

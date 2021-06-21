@@ -27,10 +27,10 @@ namespace Mb.Models.Configurations
             builder.HasOne(x => x.Source).WithMany(y => y.Attributes).HasForeignKey(x => x.SourceId).OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(x => x.Format).WithMany(y => y.Attributes).HasForeignKey(x => x.FormatId).OnDelete(DeleteBehavior.NoAction);
 
-            builder.HasMany(x => x.Units).WithMany(y => y.Attributes).UsingEntity<Dictionary<string, object>>("AttributeUnit",
+            builder.HasMany(x => x.Units).WithMany(y => y.Attributes).UsingEntity<Dictionary<string, object>>("Attribute_Unit",
                 x => x.HasOne<Unit>().WithMany().HasForeignKey("UnitId"),
                 x => x.HasOne<Attribute>().WithMany().HasForeignKey("AttributeId"),
-                x => x.ToTable("AttributeUnit")
+                x => x.ToTable("Attribute_Unit")
             );
         }
     }

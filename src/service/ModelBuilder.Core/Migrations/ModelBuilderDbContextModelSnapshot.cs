@@ -19,7 +19,7 @@ namespace Mb.Core.Migrations
                 .HasAnnotation("ProductVersion", "5.0.5")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("AttributeTypeUnit", b =>
+            modelBuilder.Entity("AttributeType_Unit", b =>
                 {
                     b.Property<string>("AttributeTypeId")
                         .HasColumnType("nvarchar(450)");
@@ -31,10 +31,10 @@ namespace Mb.Core.Migrations
 
                     b.HasIndex("UnitId");
 
-                    b.ToTable("AttributeTypeUnit");
+                    b.ToTable("AttributeType_Unit");
                 });
 
-            modelBuilder.Entity("AttributeUnit", b =>
+            modelBuilder.Entity("Attribute_Unit", b =>
                 {
                     b.Property<string>("AttributeId")
                         .HasColumnType("nvarchar(450)");
@@ -46,7 +46,7 @@ namespace Mb.Core.Migrations
 
                     b.HasIndex("UnitId");
 
-                    b.ToTable("AttributeUnit");
+                    b.ToTable("Attribute_Unit");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Attribute", b =>
@@ -175,6 +175,11 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Type");
 
+                    b.Property<string>("Visible")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(1)")
+                        .HasColumnName("Visible");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NodeId");
@@ -221,6 +226,15 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("FromNodeId");
 
+                    b.Property<bool>("IsTemplateEdge")
+                        .HasColumnType("bit")
+                        .HasColumnName("IsTemplateEdge");
+
+                    b.Property<string>("MasterProjectId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("MasterProjectId");
+
                     b.Property<string>("ToConnectorId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)")
@@ -236,6 +250,8 @@ namespace Mb.Core.Migrations
                     b.HasIndex("FromConnectorId");
 
                     b.HasIndex("FromNodeId");
+
+                    b.HasIndex("MasterProjectId");
 
                     b.HasIndex("ToConnectorId");
 
@@ -321,6 +337,11 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("Id");
 
+                    b.Property<string>("Aspect")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Aspect");
+
                     b.Property<string>("Contractor")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Contractor");
@@ -333,12 +354,21 @@ namespace Mb.Core.Migrations
                         .HasColumnType("int")
                         .HasColumnName("Height");
 
+                    b.Property<bool>("IsBlockSelected")
+                        .HasColumnType("bit")
+                        .HasColumnName("IsBlockSelected");
+
+                    b.Property<bool>("IsHidden")
+                        .HasColumnType("bit")
+                        .HasColumnName("IsHidden");
+
                     b.Property<bool>("IsLocked")
                         .HasColumnType("bit")
                         .HasColumnName("IsLocked");
 
                     b.Property<bool>("IsRoot")
-                        .HasColumnType("bit");
+                        .HasColumnType("bit")
+                        .HasColumnName("IsRoot");
 
                     b.Property<bool>("IsSelected")
                         .HasColumnType("bit")
@@ -355,6 +385,11 @@ namespace Mb.Core.Migrations
                     b.Property<int>("Level")
                         .HasColumnType("int")
                         .HasColumnName("Level");
+
+                    b.Property<string>("MasterProjectId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("MasterProjectId");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -391,16 +426,12 @@ namespace Mb.Core.Migrations
 
                     b.Property<string>("StatusId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("StatusId");
 
                     b.Property<string>("TagNumber")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("TagNumber");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Type");
 
                     b.Property<DateTime>("Updated")
                         .HasColumnType("datetime2")
@@ -421,6 +452,8 @@ namespace Mb.Core.Migrations
                         .HasColumnName("Width");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MasterProjectId");
 
                     b.HasIndex("StatusId");
 
@@ -456,7 +489,7 @@ namespace Mb.Core.Migrations
 
                     b.HasIndex("TerminalTypeId");
 
-                    b.ToTable("NodeTypeTerminalType");
+                    b.ToTable("NodeType_TerminalType");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Project", b =>
@@ -565,7 +598,7 @@ namespace Mb.Core.Migrations
                     b.ToTable("TerminalType");
                 });
 
-            modelBuilder.Entity("NodeTypeAttributeType", b =>
+            modelBuilder.Entity("NodeType_AttributeType", b =>
                 {
                     b.Property<string>("AttributeTypeId")
                         .HasColumnType("nvarchar(450)");
@@ -577,7 +610,7 @@ namespace Mb.Core.Migrations
 
                     b.HasIndex("NodeTypeId");
 
-                    b.ToTable("NodeTypeAttributeType");
+                    b.ToTable("NodeType_AttributeType");
                 });
 
             modelBuilder.Entity("ProjectEdge", b =>
@@ -595,7 +628,7 @@ namespace Mb.Core.Migrations
                     b.ToTable("ProjectEdge");
                 });
 
-            modelBuilder.Entity("ProjectNode", b =>
+            modelBuilder.Entity("Project_Node", b =>
                 {
                     b.Property<string>("NodeId")
                         .HasColumnType("nvarchar(450)");
@@ -607,10 +640,10 @@ namespace Mb.Core.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("ProjectNode");
+                    b.ToTable("Project_Node");
                 });
 
-            modelBuilder.Entity("TerminalTypeAttributeType", b =>
+            modelBuilder.Entity("TerminalType_AttributeType", b =>
                 {
                     b.Property<string>("AttributeTypeId")
                         .HasColumnType("nvarchar(450)");
@@ -622,10 +655,10 @@ namespace Mb.Core.Migrations
 
                     b.HasIndex("TerminalTypeId");
 
-                    b.ToTable("TerminalTypeAttributeType");
+                    b.ToTable("TerminalType_AttributeType");
                 });
 
-            modelBuilder.Entity("TransportTypeAttributeType", b =>
+            modelBuilder.Entity("TransportType_AttributeType", b =>
                 {
                     b.Property<string>("AttributeTypeId")
                         .HasColumnType("nvarchar(450)");
@@ -637,7 +670,7 @@ namespace Mb.Core.Migrations
 
                     b.HasIndex("TransportTypeId");
 
-                    b.ToTable("TransportTypeAttributeType");
+                    b.ToTable("TransportType_AttributeType");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Relation", b =>
@@ -662,7 +695,7 @@ namespace Mb.Core.Migrations
                     b.Property<string>("TerminalCategoryId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)")
-                        .HasColumnName("TerminalCategoryId");
+                        .HasColumnName("Terminal_CategoryId");
 
                     b.HasIndex("TerminalCategoryId");
 
@@ -764,7 +797,7 @@ namespace Mb.Core.Migrations
                     b.HasDiscriminator().HasValue("TransportType");
                 });
 
-            modelBuilder.Entity("AttributeTypeUnit", b =>
+            modelBuilder.Entity("AttributeType_Unit", b =>
                 {
                     b.HasOne("Mb.Models.Data.AttributeType", null)
                         .WithMany()
@@ -779,7 +812,7 @@ namespace Mb.Core.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("AttributeUnit", b =>
+            modelBuilder.Entity("Attribute_Unit", b =>
                 {
                     b.HasOne("Mb.Models.Data.Attribute", null)
                         .WithMany()
@@ -895,6 +928,12 @@ namespace Mb.Core.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("Mb.Models.Data.Project", "MasterProject")
+                        .WithMany()
+                        .HasForeignKey("MasterProjectId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("Mb.Models.Data.Connector", "ToConnector")
                         .WithMany("ToEdges")
                         .HasForeignKey("ToConnectorId")
@@ -910,6 +949,8 @@ namespace Mb.Core.Migrations
                     b.Navigation("FromConnector");
 
                     b.Navigation("FromNode");
+
+                    b.Navigation("MasterProject");
 
                     b.Navigation("ToConnector");
 
@@ -928,11 +969,19 @@ namespace Mb.Core.Migrations
 
             modelBuilder.Entity("Mb.Models.Data.Node", b =>
                 {
+                    b.HasOne("Mb.Models.Data.Project", "MasterProject")
+                        .WithMany()
+                        .HasForeignKey("MasterProjectId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("Mb.Models.Data.Enums.BuildStatus", "Status")
                         .WithMany("Nodes")
                         .HasForeignKey("StatusId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.Navigation("MasterProject");
 
                     b.Navigation("Status");
                 });
@@ -974,7 +1023,7 @@ namespace Mb.Core.Migrations
                     b.Navigation("TerminalCategory");
                 });
 
-            modelBuilder.Entity("NodeTypeAttributeType", b =>
+            modelBuilder.Entity("NodeType_AttributeType", b =>
                 {
                     b.HasOne("Mb.Models.Data.AttributeType", null)
                         .WithMany()
@@ -1004,7 +1053,7 @@ namespace Mb.Core.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ProjectNode", b =>
+            modelBuilder.Entity("Project_Node", b =>
                 {
                     b.HasOne("Mb.Models.Data.Node", null)
                         .WithMany()
@@ -1019,7 +1068,7 @@ namespace Mb.Core.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TerminalTypeAttributeType", b =>
+            modelBuilder.Entity("TerminalType_AttributeType", b =>
                 {
                     b.HasOne("Mb.Models.Data.AttributeType", null)
                         .WithMany()
@@ -1034,7 +1083,7 @@ namespace Mb.Core.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TransportTypeAttributeType", b =>
+            modelBuilder.Entity("TransportType_AttributeType", b =>
                 {
                     b.HasOne("Mb.Models.Data.AttributeType", null)
                         .WithMany()
