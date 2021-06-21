@@ -6,7 +6,7 @@ const InspectorBox = styled.div`
   color: ${Color.Black};
   height: ${(props: { stop: string }) => `${props.stop}px`};
   width: auto;
-  min-width: 1100px; //maybe use 650px instead
+  min-width: 650px;
   z-index: 5;
   position: absolute;
   bottom: 0;

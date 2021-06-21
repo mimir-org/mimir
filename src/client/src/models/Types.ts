@@ -34,6 +34,8 @@ export interface LibraryNodeItem {
   connectors: Connector[];
   attributes?: Attribute[] | null;
   semanticReference: string;
+  statusId: string;
+  version: string;
 }
 
 export interface ProjectSimple {
@@ -81,4 +83,9 @@ export interface CreateLibraryType {
   terminalTypes: TerminalTypeItem[];
   attributeTypes: string[];
   terminalTypeId: string;
+  id: number;
+  code: string;
+  rdsCategoryId: string;
+  category: EnumBase;
+  semanticReferance: string;
 }

@@ -147,6 +147,20 @@ namespace Mb.Core.Services
                 .ToList();
         }
 
+        /// <summary>
+        /// Get all terminals
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<string, List<TerminalType>> GetTerminalsByCategory()
+        {
+            return _terminalTypeRepository.GetAll()
+                .Include(x => x.TerminalCategory)
+                .Include(x => x.Attributes)
+                .AsEnumerable()
+                .GroupBy(x => x.TerminalCategory.Name)
+                .ToDictionary(g => g.Key, g => g.ToList());
+        }
+
 
         /// <summary>
         /// Create a library component

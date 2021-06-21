@@ -73,7 +73,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     if (!isChecked(node)) {
       node.width = Size.ConnectView_Width;
       node.length = Size.ConnectView_Length;
-      dispatch(addMainConnectNode(node));
+      dispatch(addMainConnectNode(data));
       dispatch(addConnectNode(node));
     } else {
       connectNodes.length === 1 && showConnectMenu(false);

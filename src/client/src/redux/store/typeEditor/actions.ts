@@ -1,4 +1,3 @@
-import { NodeType } from "../../../models/project";
 import {
   Attribute,
   TerminalType,
@@ -23,7 +22,7 @@ import {
 // TO DO create type, save type, get attributes
 
 export function create(
-  aspect: NodeType,
+  aspect: Aspect,
   objectType: string,
   typeName: string,
   status: string,

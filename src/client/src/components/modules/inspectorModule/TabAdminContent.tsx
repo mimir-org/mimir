@@ -8,7 +8,6 @@ import { Node, Project } from "../../../models";
 import { GetRdsId, GetReferenceDesignation } from "../../../assets/helpers";
 import { IsLocation } from "../../flow/helpers/common";
 import { IsBlockView } from "../../flow/helpers/block";
-import { BUILD_STATUS } from "../../../models/project";
 
 interface Props {
   node: Node;
@@ -114,14 +113,15 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
         <div>
           <div>Status</div>
           <Select
-            value={node.status ?? BUILD_STATUS.NotSet}
+            value={node.status ?? "NotSet"} // TODO: check this
             onChange={(e: any) => handleOnChange(e, "status")}
           >
-            {Object.values(BUILD_STATUS)?.map((x) => (
-              <option key={x} value={x}>
-                {x}
-              </option>
-            ))}
+            {node.status &&
+              Object.values(node.status)?.map((x) => (
+                <option key={x} value={x}>
+                  {x}
+                </option>
+              ))}
           </Select>
         </div>
         <div>
@@ -147,10 +147,10 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
         <div>
           <div>Contractor</div>
           <Select
-            value={node.contractor ?? BUILD_STATUS.NotSet}
+            value={node.contractor ?? "NotSet"} // TODO: check this
             onChange={(e: any) => handleOnChange(e, "contractor")}
           >
-            <option value={BUILD_STATUS.NotSet}>{BUILD_STATUS.NotSet}</option>
+            <option value={"NotSet"}>{"NotSet"}</option>
             {contractors?.map((contractor) => (
               <option key={contractor.id} value={contractor.name}>
                 {contractor.name}

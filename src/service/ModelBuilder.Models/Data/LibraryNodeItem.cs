@@ -14,5 +14,7 @@ namespace Mb.Models.Data
         public ICollection<Connector> Connectors { get; set; }
         public ICollection<Attribute> Attributes { get; set; }
         public string SemanticReference { get; set; }
+        public string StatusId { get; set; } = "4590637F39B6BA6F39C74293BE9138DF";
+        public string Version { get; set; } = "1.0";
     }
 }
