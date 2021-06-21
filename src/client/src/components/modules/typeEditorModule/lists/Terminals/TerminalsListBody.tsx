@@ -1,39 +1,22 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../../redux/store";
-import { TypeEditorState } from "../../../../../redux/store/typeEditor/types";
 import { VerticalScrollbar } from "../../../../../compLibrary";
 import { TerminalsListElement } from "./TerminalsListElement";
+
 interface Props {
   listElements: any;
 }
 
 export const TerminalsListBody = ({ listElements }: Props) => {
-  const state = useSelector<RootState>(
-    (state) => state.typeEditor
-  ) as TypeEditorState;
-
-  const filteredTerminals = () => {
-    let tempList = listElements;
-    if (state.aspect !== "NotSet") {
-      tempList = listElements
-        .filter((element) =>
-          element[1].attributes.some((a) => a.aspect === state.aspect)
-        )
-        .map((element) => {
-          element[1].attributes = element[1].attributes.filter(
-            (a) => a.aspect === state.aspect
-          );
-          return element;
-        });
-    }
-    return tempList.map((element) => (
-      <>
-        <TerminalsListElement key={element[1].id} terminals={element[1]} />
-      </>
-    ));
-  };
   return (
-    <VerticalScrollbar height={200}>{filteredTerminals()}</VerticalScrollbar>
+    <VerticalScrollbar height={200}>
+      {listElements.map((element) => (
+        <TerminalsListElement
+          key={element[1].key}
+          terminals={element[1].value}
+          category={element[1].key}
+        />
+      ))}
+      {console.log(listElements)}
+    </VerticalScrollbar>
   );
 };
 

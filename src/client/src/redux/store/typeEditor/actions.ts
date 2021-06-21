@@ -1,5 +1,10 @@
-import { Dictionary } from "../../../models/project";
-import { Aspect, Attribute, TerminalType } from "../../../models";
+import {
+  Attribute,
+  TerminalType,
+  Aspect,
+  ObjectType,
+  Status,
+} from "../../../models";
 import {
   CREATING_TYPE,
   CHANGE_MODE,
@@ -54,9 +59,9 @@ export function getInitialData(): TypeEditorActionTypes {
   };
 }
 
-export function getRDS(aspect: string): TypeEditorActionTypes {
+export function getRDS(aspect: Aspect): TypeEditorActionTypes {
   return {
-    type: FETCHING_ATTRIBUTES,
+    type: FETCHING_RDS,
     payload: {
       aspect,
     },
@@ -70,9 +75,9 @@ export function getTerminals(): TypeEditorActionTypes {
   };
 }
 
-export function getAttributes(aspect: string): TypeEditorActionTypes {
+export function getAttributes(aspect: Aspect): TypeEditorActionTypes {
   return {
-    type: FETCHING_RDS,
+    type: FETCHING_ATTRIBUTES,
     payload: {
       aspect,
     },
@@ -88,7 +93,7 @@ export function changeMode(mode: string) {
   };
 }
 
-export function changeSelectedAspect(aspect: Dictionary) {
+export function changeSelectedAspect(aspect: Aspect) {
   return {
     type: CHANGE_ASPECT,
     payload: {
@@ -97,7 +102,7 @@ export function changeSelectedAspect(aspect: Dictionary) {
   };
 }
 
-export function changeSelectedObjecttype(objectType: Dictionary) {
+export function changeSelectedObjecttype(objectType: ObjectType) {
   return {
     type: CHANGE_OBJECTTYPE,
     payload: {
@@ -115,7 +120,7 @@ export function changeTypeName(typeName: string) {
   };
 }
 
-export function changeStatus(status: string) {
+export function changeStatus(status: Status) {
   return {
     type: CHANGE_STATUS,
     payload: {

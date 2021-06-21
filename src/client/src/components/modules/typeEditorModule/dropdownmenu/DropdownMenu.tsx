@@ -14,6 +14,7 @@ import {
   DropdownMenuListItem,
 } from "../../../../compLibrary/dropdown";
 import "./dropdownmenu.scss";
+import { Aspect } from "../../../../models";
 
 interface Props {
   label: string;
@@ -35,15 +36,15 @@ export const DropDownMenu = ({ label, placeHolder, listItems }: Props) => {
     setIsListOpen(!isListOpen);
   };
 
-  const handleChange = (item) => {
-    setSelectedValue(item);
+  const handleChange = ([key, value]) => {
+    setSelectedValue(value);
     setIsListOpen(!isListOpen);
     if (label === "Aspect") {
-      dispatch(changeSelectedAspect(item));
+      dispatch(changeSelectedAspect(Number(key)));
     } else if (label === "Object Type") {
-      dispatch(changeSelectedObjecttype(item));
+      dispatch(changeSelectedObjecttype(Number(key)));
     } else if (label === "Status") {
-      dispatch(changeStatus(item));
+      dispatch(changeStatus(Number(key)));
     }
   };
 
@@ -68,7 +69,7 @@ export const DropDownMenu = ({ label, placeHolder, listItems }: Props) => {
               <div
                 className="listitem"
                 key={key}
-                onClick={() => handleChange(value)}
+                onClick={() => handleChange([key, value])}
               >
                 <DropdownMenuListItem>
                   <p>{value}</p>

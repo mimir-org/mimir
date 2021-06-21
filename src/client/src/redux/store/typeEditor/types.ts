@@ -1,6 +1,13 @@
-import { AttributeType, Rds, TerminalType } from "../../../models";
+import {
+  AttributeType,
+  CreateLibraryType,
+  Rds,
+  TerminalType,
+  Aspect,
+  ObjectType,
+  Status,
+} from "../../../models";
 import { Dictionary } from "../../../models/project";
-import { LibraryActionTypes } from "../library/types";
 
 export const FETCHING_INITIAL_DATA = "FETCHING_INITIAL_DATA";
 export const FETCHING_INITIAL_SUCCESS_OR_ERROR =
@@ -25,17 +32,13 @@ export const CREATING_TYPE_SUCCESS_OR_ERROR = "CREATING_TYPE_SUCCESS_OR_ERROR";
 export interface TypeEditorState {
   fetching: boolean;
   creating: boolean;
-  type: LibraryActionTypes | null;
+  createLibraryType: CreateLibraryType;
   aspects: object;
   objectTypes: object;
   statuses: object;
   rdsList: Rds[];
   terminals: TerminalType[];
   attributes: AttributeType[];
-  aspect: string;
-  objectType: string;
-  typeName: string;
-  status: string;
   mode: string;
 }
 
@@ -57,7 +60,7 @@ interface FetchingInitialDataActionFinished {
 interface FetchingRDSAction {
   type: typeof FETCHING_RDS;
   payload: {
-    aspect: string;
+    aspect: Aspect;
   };
 }
 
@@ -82,7 +85,7 @@ interface FetchingTerminalsActionFinished {
 interface FetchingAttributesAction {
   type: typeof FETCHING_ATTRIBUTES;
   payload: {
-    aspect: string;
+    aspect: Aspect;
   };
 }
 
@@ -96,14 +99,14 @@ interface FetchingAttributesActionFinished {
 export interface ChangeSelectedAspect {
   type: typeof CHANGE_ASPECT;
   payload: {
-    aspect: string;
+    aspect: Aspect;
   };
 }
 
 export interface ChangeObjectType {
   type: typeof CHANGE_OBJECTTYPE;
   payload: {
-    objectType: string;
+    objectType: ObjectType;
   };
 }
 
@@ -117,7 +120,7 @@ export interface ChangeTypeName {
 export interface ChangeStatus {
   type: typeof CHANGE_STATUS;
   payload: {
-    status: string;
+    status: Status;
   };
 }
 

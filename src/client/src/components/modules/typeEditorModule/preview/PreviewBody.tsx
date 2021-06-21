@@ -4,7 +4,7 @@ import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
 import { ObjectBlock } from "./ObjectBlock";
 import { PreviewArea, InfoWrapper } from "../styled";
 import { InterfaceIcon, TransportIcon } from "../../../../assets/icons/common";
-
+import { Aspect, ObjectType } from "../../../../models";
 export const PreviewBody = () => {
   const state = useSelector<RootState>(
     (state) => state.typeEditor
@@ -12,18 +12,21 @@ export const PreviewBody = () => {
 
   return (
     <PreviewArea>
-      {state.aspect !== "NotSet" && state.objectType === "Object Block" && (
-        <ObjectBlock />
-      )}
-      {state.objectType !== "Object Block" ? (
+      {state.createLibraryType.aspect === Aspect.NotSet &&
+        state.createLibraryType.objectType === ObjectType.ObjectBlock && (
+          <ObjectBlock />
+        )}
+      {state.createLibraryType.objectType !== ObjectType.ObjectBlock ? (
         <InfoWrapper>
           <p>{/* TODO: selected RDS */}</p>
-          <p>{state.typeName}</p>
+          <p>{state.createLibraryType.name}</p>
         </InfoWrapper>
       ) : null}
-      {state.aspect === "Function" && state.objectType === "Transport" ? (
+      {state.createLibraryType.aspect === Aspect.Function &&
+      state.createLibraryType.objectType === ObjectType.Transport ? (
         <img src={TransportIcon} className="object-icon" alt="transport-icon" />
-      ) : state.aspect === "Function" && state.objectType === "Interface" ? (
+      ) : state.createLibraryType.aspect === Aspect.Function &&
+        state.createLibraryType.objectType === ObjectType.Interface ? (
         <img src={InterfaceIcon} className="object-icon" alt="interface-icon" />
       ) : null}
     </PreviewArea>

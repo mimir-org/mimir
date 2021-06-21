@@ -2,10 +2,11 @@ import { Attribute, Node } from "../../../models";
 import { TabRow } from "../../../compLibrary/box/inspector";
 import { useDispatch } from "react-redux";
 import { IsTransportTerminal, CreateId } from "../../flow/helpers/common";
-import { SetConnectorColumn } from "./helpers";
+import { CalculateRows, ConnectorAttributesList } from "./helpers";
 import { Input, InputBox, Select, AttributeField } from "../../../compLibrary";
-import { RelationTabComponent } from ".";
+import { RelationTabComponent, CommentsTabComponent } from ".";
 import { InputWrapper } from "./styled";
+import { TerminalsTabComponent } from "./"
 import {
   changeAttributeValue,
   changeConnectorAttributeValue,
@@ -25,6 +26,7 @@ interface ConnectorAttribute {
 const TabContent = ({ node, index }: Props) => {
   const dispatch = useDispatch();
 
+  let activeConnectors = [];
   let connectorAttributes: ConnectorAttribute[] = [];
   let nodeAttributes: Attribute[] = [];
 
@@ -41,19 +43,19 @@ const TabContent = ({ node, index }: Props) => {
         tempAttributes.push(data);
       }
     });
-
+    activeConnectors = node.connectors?.filter(con => con.visible);
     connectorAttributes = tempAttributes;
     nodeAttributes = node.attributes;
   }
 
-  const handleOnNodeChange = (id: string, value: string, unit: string) => {
+  const handleOnNodeChange = (id: string, value: string, unit: any) => {
     dispatch(changeAttributeValue(id, value, unit, node.id));
   };
 
   const handleOnConnectorChange = (
     id: string,
     value: string,
-    unit: string,
+    unit: any,
     connectorId: string
   ) => {
     dispatch(
@@ -85,7 +87,7 @@ const TabContent = ({ node, index }: Props) => {
                       value={attr.value ?? ""}
                       onChange={
                         (e: any) =>
-                          handleOnNodeChange(attr.id, e.target.value, "") //attr.unit) TODO: FIX
+                          handleOnNodeChange(attr.id, e.target.value, attr.unit)
                       }
                       inputType="tech"
                     />
@@ -111,15 +113,18 @@ const TabContent = ({ node, index }: Props) => {
       )}
       {/* TODO: Return max 6 columns, handle all rows. Wait for Arjun's design first.*/}
       {index === 2 && (
-        <TabRow>
-          <SetConnectorColumn
-            list={connectorAttributes}
+        <>
+          <TerminalsTabComponent
+            connectorAttrs={connectorAttributes}
+            allConnectors={node?.connectors}
+            visibleConnectors={activeConnectors}
             handleChange={handleOnConnectorChange}
-          ></SetConnectorColumn>
-        </TabRow>
+          />
+        </>
       )}
 
       {index === 3 && <RelationTabComponent node={node} />}
+      {index === 4 && <CommentsTabComponent node={node} />}
     </>
   );
 };

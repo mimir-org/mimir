@@ -19,7 +19,9 @@ export const TerminalsList = () => {
         label={TextResources.TypeEditor_Properties_Terminals}
         chooseVisible={true}
       />
-      <TerminalsListBody listElements={Object.entries(state.terminals)} />
+      <TerminalsListBody
+        listElements={state.terminals && Object.entries(state.terminals)}
+      />
     </ListWrapper>
   );
 };
