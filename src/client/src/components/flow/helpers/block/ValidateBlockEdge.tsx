@@ -11,7 +11,9 @@ const ValidateBlockEdge = (
   toConnector: Connector,
   splitView: boolean
 ) => {
-  const connectNode = red.store.getState().connectView.mainNode as Node;
+  const connectNode = red.store
+    .getState()
+    .connectView.mainNodes.find((x) => x.id === selectedNode.id) as Node;
   const hasConnectNode = connectNode !== null;
 
   if (!fromNode || !toNode) return false;
