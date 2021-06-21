@@ -50,6 +50,8 @@ const useOnDrop = (
     connectors: data.connectors,
     attributes: data.attributes,
     aspect: data.aspect,
+    statusId: data.statusId,
+    version: data.version,
   } as Node;
 
   node.connectors?.forEach((c) => {
