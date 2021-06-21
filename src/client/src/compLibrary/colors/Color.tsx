@@ -17,6 +17,9 @@ const Color = {
   DeepCyanTransparent: " rgba(0, 112, 121, 0.15)",
   DarkRed: "rgb(139,0,0)",
   Red: "rgb(255,0,0)",
+  FunctionPart: "#FFC000",
+  ProductPart: "#00F0FF",
+  LocationPart: "#CC00D0",
 };
 
 export default Color;
