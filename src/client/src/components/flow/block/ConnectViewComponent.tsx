@@ -1,4 +1,4 @@
-import { Node, Connector, TERMINAL } from "../../../models/project";
+import { Node, Connector } from "../../../models";
 import {
   ConnectViewBox,
   ConnectViewElement,
@@ -7,7 +7,6 @@ import {
 interface Props {
   isOpen: boolean;
   list: (Node | Connector)[];
-  type?: typeof TERMINAL;
   handleClick: any;
   isChecked?: any;
   width?: number;

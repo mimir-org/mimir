@@ -1,24 +1,30 @@
+import red from "../../redux/store";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ProjectMainMenu } from "../project";
 import { RootState } from "../../redux/store/index";
 import { FullScreenBox } from "../../compLibrary/controls";
-import { EDGE_TYPE, EdgeType } from "../../models/project";
 import { OpenProjectMenu } from "../project/openProject";
-import { changeActiveBlockNode } from "../../redux/store/project/actions";
 import { Color } from "../../compLibrary";
 import { BackgroundBox } from "../../compLibrary/blockView";
 import { changeInspectorTab } from "../../redux/store/inspector/actions";
 import { setSplitView, setNode } from "../../redux/store/splitView/actions";
-import red from "../../redux/store";
+import { Project, Node } from "../../models";
+import { changeActiveBlockNode } from "../../redux/store/project/actions";
+import {
+  useOnConnect,
+  useOnDrop,
+  useOnElementsRemove,
+  useOnNodeDragStop,
+} from "./hooks";
 import {
   addMainConnectNode,
   removeConnectNodes,
 } from "../../redux/store/connectView/actions";
 import {
   GetBlockNodeTypes,
-  IsFunctionNode,
-  IsLocationNode,
+  IsFunction,
+  IsLocation,
   SetDarkModeColor,
 } from "./helpers/common";
 import {
@@ -26,24 +32,17 @@ import {
   GetBlockEdgeTypes,
   IsBlockView,
 } from "./helpers/block";
-import {
-  Project,
-  BackgroundVariant,
-  Node,
-  SPLITVIEW_POSITION,
-} from "../../models/project";
 import ReactFlow, {
   ReactFlowProvider,
   Elements,
   Background,
 } from "react-flow-renderer";
 import {
-  useOnConnect,
-  useOnDrop,
-  useOnElementsRemove,
-  useOnNodeDragStop,
-  useOnUpdatePosition,
-} from "./hooks";
+  EDGE_TYPE,
+  EdgeType,
+  BackgroundVariant,
+  SPLITVIEW_POSITION,
+} from "../../models/project";
 
 const FlowBlock = () => {
   const dispatch = useDispatch();
@@ -84,15 +83,14 @@ const FlowBlock = () => {
       state.projectState.project?.nodes.find((x) => x.isBlockSelected)?.id
   ) as string;
 
-  const showBackground = IsLocationNode(splitViewNode) || IsLocationNode(node);
+  const showBackground = IsLocation(splitViewNode) || IsLocation(node);
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
       setElements(
         CreateBlockElements(
           project,
-          node?.id,
-          mainConnectNode,
+          node,
           connectViewNodes,
           selectedBlockNodeId,
           splitView,
@@ -102,10 +100,9 @@ const FlowBlock = () => {
       return setReactFlowInstance(_reactFlowInstance);
     },
     [
-      connectViewNodes,
-      mainConnectNode,
-      node?.id,
       project,
+      node,
+      connectViewNodes,
       selectedBlockNodeId,
       splitView,
       splitViewNode,
@@ -132,7 +129,7 @@ const FlowBlock = () => {
   };
 
   const OnNodeDragStop = (_event, node) => {
-    return useOnNodeDragStop(_event, node, dispatch, true);
+    return useOnNodeDragStop(_event, node, dispatch);
   };
 
   const OnDrop = (_event) => {
@@ -156,10 +153,6 @@ const FlowBlock = () => {
     }
   };
 
-  const OnUpdatePosition = () => {
-    return useOnUpdatePosition(project, dispatch);
-  };
-
   // Force rerender
   useEffect(() => {
     OnLoad(reactFlowInstance);
@@ -176,13 +169,8 @@ const FlowBlock = () => {
     SetDarkModeColor(darkMode);
   }, []);
 
-  window.onresize = () => {
-    OnLoad(reactFlowInstance);
-    OnUpdatePosition();
-  };
-
   const splitViewPosition = () => {
-    if (IsLocationNode(splitViewNode) && IsFunctionNode(node)) {
+    if (IsLocation(splitViewNode) && IsFunction(node)) {
       return SPLITVIEW_POSITION.RIGHT;
     }
   };

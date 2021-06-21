@@ -1,31 +1,30 @@
+import { Dictionary } from "../../../models/project";
+import { Aspect, Attribute, TerminalType } from "../../../models";
 import {
   CREATING_TYPE,
+  CHANGE_MODE,
   FETCHING_INITIAL_DATA,
   FETCHING_RDS,
   FETCHING_TERMINALS,
   FETCHING_ATTRIBUTES,
   CHANGE_ASPECT,
+  CHANGE_OBJECTTYPE,
+  CHANGE_TYPENAME,
+  CHANGE_STATUS,
   TypeEditorActionTypes,
 } from "./types";
-import {
-  NodeType,
-  Terminal,
-  Attribute,
-  Dictionary,
-} from "../../../models/project";
 
 // TO DO create type, save type, get attributes
 
 export function create(
-  id: string,
-  aspect: NodeType,
+  aspect: Aspect,
   objectType: string,
   typeName: string,
   status: string,
   rds: string,
   rdsCategory: string,
   semanticRdsReference: string,
-  terminals: Terminal[],
+  terminals: TerminalType[],
   attributes: Attribute[],
   version: string,
   semanticReference: string
@@ -80,11 +79,47 @@ export function getAttributes(aspect: string): TypeEditorActionTypes {
   };
 }
 
+export function changeMode(mode: string) {
+  return {
+    type: CHANGE_MODE,
+    payload: {
+      mode,
+    },
+  };
+}
+
 export function changeSelectedAspect(aspect: Dictionary) {
   return {
     type: CHANGE_ASPECT,
     payload: {
       aspect,
+    },
+  };
+}
+
+export function changeSelectedObjecttype(objectType: Dictionary) {
+  return {
+    type: CHANGE_OBJECTTYPE,
+    payload: {
+      objectType,
+    },
+  };
+}
+
+export function changeTypeName(typeName: string) {
+  return {
+    type: CHANGE_TYPENAME,
+    payload: {
+      typeName,
+    },
+  };
+}
+
+export function changeStatus(status: string) {
+  return {
+    type: CHANGE_STATUS,
+    payload: {
+      status,
     },
   };
 }

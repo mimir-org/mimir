@@ -1,4 +1,4 @@
-import { Node } from "../../../models/project";
+import { Node } from "../../../models";
 export const SET_SPLITVIEW = "SET_SPLITVIEW";
 export const SET_SPLIT_NODE = "SET_SPLIT_NODE";
 

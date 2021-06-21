@@ -1,5 +1,5 @@
 import { Size } from "../../../../compLibrary";
-import { Node } from "../../../../models/project";
+import { Node } from "../../../../models";
 
 const SetSplitViewNodePosition = (node: Node) => {
   const yMax = Size.SplitView_Height;

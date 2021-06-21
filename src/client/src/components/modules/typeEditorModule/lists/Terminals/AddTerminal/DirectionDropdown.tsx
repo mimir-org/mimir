@@ -1,7 +1,7 @@
 import { useState } from "react";
 import {
-  expandedIcon,
-  unexpandedIcon,
+  ExpandedIcon,
+  CollapsedIcon,
 } from "../../../../../../assets/icons/common";
 import "./directiondropdown.scss";
 
@@ -24,7 +24,7 @@ export const DirectionDropdown = () => {
         <div className="dropdown_header">
           <p>{selectedValue}</p>
           <img
-            src={isListOpen ? expandedIcon : unexpandedIcon}
+            src={isListOpen ? ExpandedIcon : CollapsedIcon}
             alt="expand-icon"
             onClick={toggleList}
           />
@@ -32,8 +32,8 @@ export const DirectionDropdown = () => {
       </div>
       {isListOpen && (
         <div className="dropdown_list">
-          <div className="dropdown_listitem">input</div>
-          <div className="dropdown_listitem">output</div>
+          <div className="dropdown_listitem">Input</div>
+          <div className="dropdown_listitem">Output</div>
         </div>
       )}
     </div>

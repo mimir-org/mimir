@@ -1,9 +1,8 @@
 import { addNode, createEdge } from "../../../redux/store/project/actions";
-import { LibNode, Node, NodeType, Edge } from "../../../models/project";
 import { CreateBlockNode, IsBlockView } from "../helpers/block";
+import { Edge, LibraryNodeItem, Node } from "../../../models";
 import {
   CreateId,
-  IsNodeSameType,
   IsInputConnector,
   IsPartOfTerminal,
 } from "./../helpers/common";
@@ -27,7 +26,7 @@ const useOnDrop = (
   const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
   const data = JSON.parse(
     event.dataTransfer.getData("application/reactflow")
-  ) as LibNode;
+  ) as LibraryNodeItem;
 
   let position;
 
@@ -41,18 +40,18 @@ const useOnDrop = (
   const node = {
     id: CreateId(),
     rds: data.rds,
-    semanticId: data.semanticReference,
+    semanticReference: data.semanticReference,
     name: data.name,
-    label: data.label ?? data.name,
-    type: data.type as NodeType,
+    label: data.name,
     positionX: position.x,
     positionY: position.y,
     positionBlockX: position.x,
     positionBlockY: position.y,
     connectors: data.connectors,
     attributes: data.attributes,
-    icon: data.icon,
-    version: "1.0",
+    aspect: data.aspect,
+    statusId: data.statusId,
+    version: data.version,
   } as Node;
 
   node.connectors?.forEach((c) => {
@@ -71,7 +70,7 @@ const useOnDrop = (
     : setElements((es) => es.concat(CreateTreeNode(node)));
 
   if (selectedNode) {
-    if (!IsNodeSameType(selectedNode, node)) return;
+    if (selectedNode.aspect !== node.aspect) return;
 
     const fromConnector = selectedNode.connectors?.find(
       (x) => IsPartOfTerminal(x) && !IsInputConnector(x)
@@ -82,18 +81,22 @@ const useOnDrop = (
 
     const partofEdge = {
       id: CreateId(),
-      fromConnector: fromConnector.id,
-      toConnector: toConnector.id,
-      fromNode: selectedNode.id,
-      toNode: node.id,
+      fromConnectorId: fromConnector.id,
+      fromConnector: fromConnector,
+      toConnectorId: toConnector.id,
+      toConnector: toConnector,
+      fromNodeId: selectedNode.id,
+      fromNode: selectedNode,
+      toNodeId: node.id,
+      toNode: node,
       isHidden: false,
-      parentType: selectedNode.type,
-      targetType: node.type,
     } as Edge;
 
     let parentNodeLevel = selectedNode.level;
     node.level = ++parentNodeLevel;
+
     dispatch(createEdge(partofEdge));
+
     const edgeType = GetTreeEdgeType(fromConnector);
     setElements((es) => es.concat(CreateTreeEdge(partofEdge, edgeType)));
   }

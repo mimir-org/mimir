@@ -1,22 +1,22 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
-import { Connector, NODE_TYPE } from "../../../../models/project";
 import { SortConnectors } from ".";
+import { Aspect, Connector } from "../../../../models";
 import {
   IsInputConnector,
-  IsLocationNode,
+  IsLocation,
   IsLocationTerminal,
   IsTransportTerminal,
 } from "../common";
 
-const FilterConnectors = (connectors, type) => {
+const FilterConnectors = (connectors, aspect) => {
   const isLocationNode = useSelector<RootState>((state) =>
-    IsLocationNode(state.splitView.node)
+    IsLocation(state.splitView.node)
   ) as boolean;
 
   const connectorList: Connector[] = [];
 
-  if (type === NODE_TYPE.LOCATION) {
+  if (aspect === Aspect.Location) {
     connectors.forEach((conn) => {
       IsLocationTerminal(conn) &&
         IsInputConnector(conn) &&

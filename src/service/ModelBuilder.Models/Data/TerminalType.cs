@@ -3,7 +3,7 @@ using Mb.Models.Data.Enums;
 
 namespace Mb.Models.Data
 {
-    public partial class TerminalType
+    public class TerminalType
     {
         public string Id { get; set; }
         public string Name { get; set; }

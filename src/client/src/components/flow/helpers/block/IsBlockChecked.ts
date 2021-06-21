@@ -1,11 +1,11 @@
-import { Node } from "../../../../models/project";
+import { Node } from "../../../../models";
 
 const IsBlockChecked = (
   isSplitView: boolean,
   node: Node,
   selectedNode: Node,
   splitViewNode: Node
-): boolean => {
+) => {
   if (isSplitView) {
     if (node === selectedNode) {
       return true;

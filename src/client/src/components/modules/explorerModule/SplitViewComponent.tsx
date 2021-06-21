@@ -2,9 +2,9 @@ import { FooterBox, FooterContent } from "../../../compLibrary/box/footer";
 import { TextResources } from "../../../assets/textResources";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Node } from "../../../models/project";
+import { Node } from "../../../models";
 import { RootState } from "../../../redux/store";
-import { IsLocationNode } from "../../flow/helpers/common";
+import { IsLocation } from "../../flow/helpers/common";
 import { IsBlockView } from "../../flow/helpers/block";
 import { setSplitView, setNode } from "../../../redux/store/splitView/actions";
 
@@ -17,7 +17,7 @@ export const SplitViewComponent = () => {
   ) as Node;
 
   useEffect(() => {
-    if (IsLocationNode(selectedNode)) setIsVisible(false);
+    if (IsLocation(selectedNode)) setIsVisible(false);
     else IsBlockView() && setIsVisible(true);
 
     if (!selectedNode) {
@@ -26,7 +26,7 @@ export const SplitViewComponent = () => {
   }, [selectedNode]);
 
   const handleClick = () => {
-    if (IsLocationNode(selectedNode)) return;
+    if (IsLocation(selectedNode)) return;
     if (isActive) dispatch(setNode(null));
     SetIsActive(!isActive);
     dispatch(setSplitView(!isActive));

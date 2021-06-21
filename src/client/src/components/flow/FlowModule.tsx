@@ -17,7 +17,7 @@ const FlowModule = ({ route }) => {
       ) : route.type === VIEW_TYPE.BLOCKVIEW ? (
         <FlowBlock />
       ) : route.type === VIEW_TYPE.TYPE_EDITOR ? (
-        <TypeEditorComponent mode={null} />
+        <TypeEditorComponent />
       ) : null}
     </div>
   );

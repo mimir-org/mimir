@@ -1,6 +1,6 @@
 import { Input, InputBox, Select } from "../../../../compLibrary";
 import { TabColumn } from "../../../../compLibrary/box/inspector";
-import { Attribute } from "../../../../models/project";
+import { Attribute } from "../../../../models";
 
 interface ConnectorAttribute {
   id: string;
@@ -28,8 +28,8 @@ const SetConnectorColumn = ({ list, handleChange }: Props): any => {
                 handleChange(
                   attr.id,
                   e.target.value,
-                  attr.unit,
-                  attr.connectorId
+                  attr.unit
+                  //   attr.connectorId
                 )
               }
               inputType="tech"
@@ -40,16 +40,14 @@ const SetConnectorColumn = ({ list, handleChange }: Props): any => {
                 handleChange(
                   attr.id,
                   attr.value,
-                  e.target.value,
-                  attr.connectorId
+                  e.target.value
+                  //   attr.connectorId
                 )
               }
             >
               <option value={"NotSet"}>NotSet</option>
               {attr.units.map((unit) => (
-                <option key={unit} value={unit}>
-                  {unit}
-                </option>
+                <option>{unit}</option>
               ))}
             </Select>
           </InputBox>

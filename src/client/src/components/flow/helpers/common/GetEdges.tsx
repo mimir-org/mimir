@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Edge } from "../../../../models/project";
+import { Edge } from "../../../../models";
 import { RootState } from "../../../../redux/store";
 import { ProjectState } from "../../../../redux/store/project/types";
 

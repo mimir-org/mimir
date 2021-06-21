@@ -1,6 +1,8 @@
+import red from "../../../../redux/store";
 import { Elements } from "react-flow-renderer";
-import { IsNodeSameType, IsTransportTerminal } from "../common";
-import { Project, EDGE_TYPE, EdgeType, Node } from "../../../../models/project";
+import { IsTransportTerminal } from "../common";
+import { EDGE_TYPE, EdgeType } from "../../../../models/project";
+import { Node, Project } from "../../../../models";
 import {
   CreateBlockEdge,
   CreateSplitViewNode,
@@ -11,8 +13,7 @@ import {
 
 const CreateBlockElements = (
   project: Project,
-  nodeId: string,
-  mainConnectNode: Node,
+  selectedNode: Node,
   connectNodes: Node[],
   selectedBlockNodeId: string,
   splitView: boolean,
@@ -20,54 +21,42 @@ const CreateBlockElements = (
 ): Elements => {
   if (!project) return;
   const initialElements: Elements = [];
-  const selectedNode = project.nodes.find((node) => node.id === nodeId);
+  const nodes = red.store.getState().projectState.project.nodes as Node[];
+  const mainConnectNode = red.store.getState().connectView.mainNode as Node;
 
-  // Draw connection view
-  if (mainConnectNode && mainConnectNode.id === selectedBlockNodeId) {
-    CreateConnectViewNode(mainConnectNode);
-    connectNodes.forEach((node) => {
-      initialElements.push(CreateBlockNode(node, false, mainConnectNode));
-    });
-  }
-
-  // Draw block
+  // Draw parent block
   const parentBlock = CreateParentBlockNode(selectedNode);
   if (parentBlock) initialElements.push(parentBlock);
 
-  // Draw nodes for the left block
+  // Draw child nodes
   project.edges.forEach((edge) => {
-    if (edge.fromNode === nodeId) {
-      const toNode = project.nodes?.find((x) => x.id === edge.toNode);
-      let conn = toNode?.connectors?.find((x) => x.id === edge?.toConnector);
-
-      if (
-        (selectedNode?.type === toNode?.type ||
-          IsNodeSameType(selectedNode, toNode)) &&
-        !IsTransportTerminal(conn)
-      )
-        initialElements.push(
-          CreateBlockNode(toNode, splitView, mainConnectNode)
-        );
+    if (
+      edge.fromNodeId === selectedNode.id &&
+      selectedNode?.aspect === edge.toNode?.aspect &&
+      !IsTransportTerminal(edge.toConnector)
+    ) {
+      const toNode = nodes.find((node) => node.id === edge.toNodeId);
+      initialElements.push(CreateBlockNode(toNode, splitView, mainConnectNode));
     }
   });
 
   // Draw splitview nodes
   if (splitViewNode && splitView) {
     project.edges.forEach((edge) => {
-      if (edge.fromNode === splitViewNode.id) {
-        const toNode = project.nodes?.find((x) => x.id === edge.toNode);
+      if (
+        edge.fromNode === splitViewNode &&
+        splitViewNode?.aspect === edge.toNode?.aspect &&
+        !IsTransportTerminal(edge.toConnector)
+      )
+        initialElements.push(CreateSplitViewNode(edge.toNode));
+    });
+  }
 
-        const conn = toNode?.connectors?.find(
-          (x) => x.id === edge?.toConnector
-        );
-
-        if (
-          (splitViewNode?.type === toNode?.type ||
-            IsNodeSameType(splitViewNode, toNode)) &&
-          !IsTransportTerminal(conn)
-        )
-          initialElements.push(CreateSplitViewNode(toNode));
-      }
+  // Draw connection view
+  if (mainConnectNode && mainConnectNode.id === selectedBlockNodeId) {
+    CreateConnectViewNode(mainConnectNode);
+    connectNodes.forEach((node) => {
+      initialElements.push(CreateBlockNode(node, false, mainConnectNode));
     });
   }
 

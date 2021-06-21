@@ -1,4 +1,4 @@
-import { Node } from "../../../models/project";
+import { Node } from "../../../models";
 import {
   ADD_CONNECT_NODE,
   ADD_MAIN_CONNECT_NODE,

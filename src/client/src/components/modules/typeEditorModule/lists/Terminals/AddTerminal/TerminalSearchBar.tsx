@@ -1,7 +1,7 @@
 import { useState } from "react";
 import {
-  expandedIcon,
-  unexpandedIcon,
+  ExpandedIcon,
+  CollapsedIcon,
 } from "../../../../../../assets/icons/common";
 import "./terminalsearchbar.scss";
 
@@ -32,7 +32,7 @@ export let TerminalSearchBar = ({ terminals }: Props) => {
           onChange={handleChange}
         />
         <img
-          src={expandList ? expandedIcon : unexpandedIcon}
+          src={expandList ? ExpandedIcon : CollapsedIcon}
           alt="expand-icon"
           onClick={toggleExpand}
           className="icon"

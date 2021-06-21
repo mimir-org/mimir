@@ -5,6 +5,7 @@ const BlockNodeBox = styled.div`
   position: absolute;
   opacity: 1 !important;
   top: 40px;
+  cursor: ${(props) => (props.selected ? "default" : "pointer")};
   height: ${Size.BlockView_Height}px;
 
   width: ${(props) =>

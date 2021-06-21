@@ -1,4 +1,4 @@
-import { Node, Connector } from "../../../models/project";
+import { Node, Connector, Aspect } from "../../../models";
 import { GetConnectorIcon, GetConnectorName } from "../helpers/common";
 import { FilterConnectors } from "../helpers/block";
 import { TerminalsBox, TerminalsElement } from "../../../compLibrary/blockView";
@@ -6,7 +6,7 @@ import { TerminalsBox, TerminalsElement } from "../../../compLibrary/blockView";
 interface Props {
   isOpen: boolean;
   list: (Node | Connector)[];
-  type?: string;
+  type?: Aspect;
   width?: number;
   onClick: any;
 }
@@ -20,7 +20,7 @@ const TerminalsComponent = ({ isOpen, list, type, width, onClick }: Props) => {
         <TerminalsElement key={conn.id} onClick={() => onClick(conn)}>
           <p className="text"> {GetConnectorName(conn)}</p>
           <img
-            src={GetConnectorIcon(conn.terminal)}
+            src={GetConnectorIcon(conn)} // TODO: FIX
             alt="icon"
             className="button"
           />

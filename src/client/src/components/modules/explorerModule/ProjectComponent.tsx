@@ -1,39 +1,24 @@
-import { AspectComponent } from "./aspectComponent/AspectComponent";
-import { IsAspectNode, IsProductNode } from "../../flow/helpers/common";
 import red from "../../../redux/store";
+import { AspectComponent } from "./aspectComponent/AspectComponent";
+import { IsAspectNode, IsProduct } from "../../flow/helpers/common";
 import { IsBlockView } from "../../flow/helpers/block";
+import { Node } from "../../../models";
 
 export const ProjectComponent = () => {
   const project = red.store.getState().projectState.project;
-  const nodes = project?.nodes ?? [];
+  const nodes = (project?.nodes as Node[]) ?? [];
 
   return (
     <>
-      {!IsBlockView()
-        ? nodes.map((_, i: number) => {
-            if (IsAspectNode(nodes[i])) {
-              return (
-                <AspectComponent
-                  key={i}
-                  node={nodes[i]}
-                  label={nodes[i].label}
-                />
-              );
-            }
-            return null;
-          })
-        : nodes.map((_, i: number) => {
-            if (IsAspectNode(nodes[i]) && !IsProductNode(nodes[i])) {
-              return (
-                <AspectComponent
-                  key={i}
-                  node={nodes[i]}
-                  label={nodes[i].label}
-                />
-              );
-            }
-            return null;
-          })}
+      {nodes.map((node) => {
+        if (IsAspectNode(node)) {
+          if (IsBlockView() && IsProduct(node)) return null;
+          return (
+            <AspectComponent key={node.id} node={node} label={node.label} />
+          );
+        }
+        return null;
+      })}
     </>
   );
 };

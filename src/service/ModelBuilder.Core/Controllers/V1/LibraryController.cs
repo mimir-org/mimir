@@ -37,7 +37,7 @@ namespace Mb.Core.Controllers.V1
         /// <param name="name"></param>
         /// <returns></returns>
         [HttpGet("")]
-        [ProducesResponseType(typeof(ICollection<NodeType>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ICollection<LibraryNodeItem>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

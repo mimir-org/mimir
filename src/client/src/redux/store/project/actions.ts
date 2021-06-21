@@ -1,5 +1,4 @@
-import { Project } from "../../../models/project";
-import { Node, Edge } from "../../../models/project";
+import { Node, Edge, Project } from "../../../models";
 import {
   SAVE_PROJECT,
   FETCHING_PROJECT,

@@ -211,48 +211,35 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("Id");
 
-                    b.Property<string>("FromConnector")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("FromConnector");
-
-                    b.Property<string>("FromNode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("FromNode");
-
-                    b.Property<bool>("IsTemplateEdge")
-                        .HasColumnType("bit")
-                        .HasColumnName("IsTemplateEdge");
-
-                    b.Property<string>("MasterProjectId")
+                    b.Property<string>("FromConnectorId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)")
-                        .HasColumnName("MasterProjectId");
+                        .HasColumnName("FromConnectorId");
 
-                    b.Property<string>("ParentType")
+                    b.Property<string>("FromNodeId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ParentType");
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("FromNodeId");
 
-                    b.Property<string>("TargetType")
+                    b.Property<string>("ToConnectorId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("TargetType");
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("ToConnectorId");
 
-                    b.Property<string>("ToConnector")
+                    b.Property<string>("ToNodeId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ToConnector");
-
-                    b.Property<string>("ToNode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ToNode");
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("ToNodeId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MasterProjectId");
+                    b.HasIndex("FromConnectorId");
+
+                    b.HasIndex("FromNodeId");
+
+                    b.HasIndex("ToConnectorId");
+
+                    b.HasIndex("ToNodeId");
 
                     b.ToTable("Edge");
                 });
@@ -350,6 +337,9 @@ namespace Mb.Core.Migrations
                         .HasColumnType("bit")
                         .HasColumnName("IsLocked");
 
+                    b.Property<bool>("IsRoot")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsSelected")
                         .HasColumnType("bit")
                         .HasColumnName("IsSelected");
@@ -365,11 +355,6 @@ namespace Mb.Core.Migrations
                     b.Property<int>("Level")
                         .HasColumnType("int")
                         .HasColumnName("Level");
-
-                    b.Property<string>("MasterProjectId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("MasterProjectId");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -400,9 +385,9 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Rds");
 
-                    b.Property<string>("SemanticId")
+                    b.Property<string>("SemanticReference")
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("SemanticId");
+                        .HasColumnName("SemanticReference");
 
                     b.Property<string>("StatusId")
                         .IsRequired()
@@ -436,8 +421,6 @@ namespace Mb.Core.Migrations
                         .HasColumnName("Width");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MasterProjectId");
 
                     b.HasIndex("StatusId");
 
@@ -900,13 +883,37 @@ namespace Mb.Core.Migrations
 
             modelBuilder.Entity("Mb.Models.Data.Edge", b =>
                 {
-                    b.HasOne("Mb.Models.Data.Project", "MasterProject")
-                        .WithMany()
-                        .HasForeignKey("MasterProjectId")
+                    b.HasOne("Mb.Models.Data.Connector", "FromConnector")
+                        .WithMany("FromEdges")
+                        .HasForeignKey("FromConnectorId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("MasterProject");
+                    b.HasOne("Mb.Models.Data.Node", "FromNode")
+                        .WithMany("FromEdges")
+                        .HasForeignKey("FromNodeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Mb.Models.Data.Connector", "ToConnector")
+                        .WithMany("ToEdges")
+                        .HasForeignKey("ToConnectorId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Mb.Models.Data.Node", "ToNode")
+                        .WithMany("ToEdges")
+                        .HasForeignKey("ToNodeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("FromConnector");
+
+                    b.Navigation("FromNode");
+
+                    b.Navigation("ToConnector");
+
+                    b.Navigation("ToNode");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.LibraryType", b =>
@@ -921,19 +928,11 @@ namespace Mb.Core.Migrations
 
             modelBuilder.Entity("Mb.Models.Data.Node", b =>
                 {
-                    b.HasOne("Mb.Models.Data.Project", "MasterProject")
-                        .WithMany()
-                        .HasForeignKey("MasterProjectId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("Mb.Models.Data.Enums.BuildStatus", "Status")
                         .WithMany("Nodes")
                         .HasForeignKey("StatusId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
-
-                    b.Navigation("MasterProject");
 
                     b.Navigation("Status");
                 });
@@ -1081,11 +1080,22 @@ namespace Mb.Core.Migrations
                     b.Navigation("TerminalType");
                 });
 
+            modelBuilder.Entity("Mb.Models.Data.Connector", b =>
+                {
+                    b.Navigation("FromEdges");
+
+                    b.Navigation("ToEdges");
+                });
+
             modelBuilder.Entity("Mb.Models.Data.Node", b =>
                 {
                     b.Navigation("Attributes");
 
                     b.Navigation("Connectors");
+
+                    b.Navigation("FromEdges");
+
+                    b.Navigation("ToEdges");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Rds", b =>

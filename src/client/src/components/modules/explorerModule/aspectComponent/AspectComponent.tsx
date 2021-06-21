@@ -1,18 +1,16 @@
+import red from "../../../../redux/store";
 import { useState } from "react";
 import { ExpandedIcon, ClosedIcon } from "../../../../assets/icons/common";
-import { Node } from "../../../../models/project";
+import { Node } from "../../../../models";
 import { IsAspectNode } from "../../../flow/helpers/common";
 import { AspectElement } from ".";
 import { AspectBox } from "../../../../compLibrary/box/aspect";
 import { Checkbox, CheckboxBlock } from "../checkboxComponent";
-import red from "../../../../redux/store";
 import { IsBlockView } from "../../../flow/helpers/block";
 import {
   GetAspectIcon,
   GetAspectColor,
   SetIndentLevel,
-  GetAspectType,
-  GetDropdownIcon,
 } from "../../../../assets/helpers";
 
 interface Props {
@@ -24,8 +22,7 @@ export const AspectComponent = ({ node, label }: Props) => {
   const expandIcon = expanded ? ExpandedIcon : ClosedIcon;
   const aspectIcon = GetAspectIcon(node);
   const color = GetAspectColor(node, true);
-  const childType = GetAspectType(node);
-  const nodes = red.store.getState().projectState.project.nodes;
+  const nodes = red.store.getState().projectState.project.nodes as Node[];
   const children = nodes.filter((node) => !IsAspectNode(node));
 
   const handleExpandClick = () => {
@@ -43,17 +40,22 @@ export const AspectComponent = ({ node, label }: Props) => {
             <Checkbox node={node} inputLabel={label} />
           )}
         </div>
-        {GetDropdownIcon(expandIcon, handleExpandClick)}
+        <img
+          className="expandIcon"
+          src={expandIcon}
+          alt="expand-icon"
+          onClick={handleExpandClick}
+        ></img>
       </AspectBox>
       {expanded &&
-        children.map((_, i: number) => {
-          if (children[i].type === childType) {
-            const indent = children[i].level ?? SetIndentLevel(children[i], 0);
+        children.map((elem) => {
+          if (elem.aspect === node.aspect) {
+            const indent = elem.level ?? SetIndentLevel(elem, 0);
             return (
               <AspectElement
-                key={i}
-                node={children[i]}
-                label={children[i].label ?? children[i].name}
+                key={elem.id}
+                node={elem}
+                label={elem.label ?? elem.name}
                 indent={indent}
               />
             );

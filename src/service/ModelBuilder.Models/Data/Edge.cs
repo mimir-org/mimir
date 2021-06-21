@@ -8,16 +8,23 @@ namespace Mb.Models.Data
     public class Edge
     {
         public string Id { get; set; }
-        public string FromConnector { get; set; }
-        public string ToConnector { get; set; }
-        public string FromNode { get; set; }
-        public string ToNode { get; set; }
+        
+        public string FromConnectorId { get; set; }
+        public Connector FromConnector { get; set; }
+        
+        public string ToConnectorId { get; set; }
+        public Connector ToConnector { get; set; }
+        
+        public string FromNodeId { get; set; }
+        public Node FromNode { get; set; }
+        
+        public string ToNodeId { get; set; }
+        public Node ToNode { get; set; }
+
         [Required]
         public string MasterProjectId { get; set; }
         public virtual Project MasterProject { get; set; }
         public bool IsTemplateEdge { get; set; }
-        public Mb.Models.Enums.NodeType ParentType { get; set; }
-        public Mb.Models.Enums.NodeType TargetType { get; set; }
         public virtual ICollection<Project> Projects { get; set; }
     }
 }

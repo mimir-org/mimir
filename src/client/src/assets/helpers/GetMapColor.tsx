@@ -1,15 +1,15 @@
 import { Color } from "../../compLibrary";
-import { Node } from "../../models/project";
+import { Node } from "../../models";
 import {
-  IsFunctionNode,
-  IsLocationNode,
-  IsProductNode,
+  IsFunction,
+  IsLocation,
+  IsProduct,
 } from "../../components/flow/helpers/common";
 
 const GetMapColor = (node: Node): string => {
-  if (IsFunctionNode(node)) return Color.Function;
-  if (IsProductNode(node)) return Color.Product;
-  if (IsLocationNode(node)) return Color.Location;
+  if (IsFunction(node)) return Color.Function;
+  if (IsProduct(node)) return Color.Product;
+  if (IsLocation(node)) return Color.Location;
   return null;
 };
 

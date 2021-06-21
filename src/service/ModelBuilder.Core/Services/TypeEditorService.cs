@@ -124,7 +124,12 @@ namespace Mb.Core.Services
         /// <returns></returns>
         public IEnumerable<AttributeType> GetAttributeTypes(Aspect aspect)
         {
-            var all = _attributeTypeRepository.GetAll().Include(x => x.Qualifier).ToList();
+            var all = _attributeTypeRepository.GetAll()
+                .Include(x => x.Qualifier)
+                .Include(x => x.Source)
+                .Include(x => x.Condition)
+                .Include(x => x.Format)
+                .ToList();
             return aspect == Aspect.NotSet ?
                 all :
                 all.Where(x => x.Aspect.HasFlag(aspect));
@@ -140,6 +145,20 @@ namespace Mb.Core.Services
                 .Include(x => x.TerminalCategory)
                 .Include(x => x.Attributes)
                 .ToList();
+        }
+
+        /// <summary>
+        /// Get all terminals
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<string, List<TerminalType>> GetTerminalsByCategory()
+        {
+            return _terminalTypeRepository.GetAll()
+                .Include(x => x.TerminalCategory)
+                .Include(x => x.Attributes)
+                .AsEnumerable()
+                .GroupBy(x => x.TerminalCategory.Name)
+                .ToDictionary(g => g.Key, g => g.ToList());
         }
 
 
@@ -290,9 +309,6 @@ namespace Mb.Core.Services
 
                 //var libraryFiles = fileList.Where(x => x.ToLower().Contains(LibraryFileName)).ToList();
 
-
-                //var contractorFiles = fileList.Where(x => x.ToLower().Contains(ContractorFileName)).ToList();
-
                 var unitFiles = fileList.Where(x => x.ToLower().Contains(UnitFileName)).ToList();
                 var conditionFiles = fileList.Where(x => x.ToLower().Contains(ConditionFileName)).ToList();
                 var qualifierFiles = fileList.Where(x => x.ToLower().Contains(QualifierFileName)).ToList();
@@ -304,15 +320,12 @@ namespace Mb.Core.Services
 
 
 
-
+                var contractorFiles = fileList.Where(x => x.ToLower().Contains(ContractorFileName)).ToList();
                 var attributeFiles = fileList.Where(x => x.ToLower().Contains(AttributeFileName)).ToList();
                 var terminalFiles = fileList.Where(x => x.ToLower().Contains(TerminalFileName)).ToList();
                 var rdsFiles = fileList.Where(x => x.ToLower().Equals(RdsFileName)).ToList();
 
                 //var libraries = _fileRepository.ReadAllFiles<LibraryType>(libraryFiles).ToList();
-
-
-                //var contractors = _fileRepository.ReadAllFiles<Contractor>(contractorFiles).ToList();
 
                 var units = _fileRepository.ReadAllFiles<Unit>(unitFiles).ToList();
                 var conditions = _fileRepository.ReadAllFiles<AttributeCondition>(conditionFiles).ToList();
@@ -325,7 +338,7 @@ namespace Mb.Core.Services
 
 
 
-
+                var contractors = _fileRepository.ReadAllFiles<Contractor>(contractorFiles).ToList();
                 var attributes = _fileRepository.ReadAllFiles<CreateAttributeType>(attributeFiles).ToList();
                 var terminals = _fileRepository.ReadAllFiles<CreateTerminalType>(terminalFiles).ToList();
                 var rds = _fileRepository.ReadAllFiles<CreateRds>(rdsFiles).ToList();
@@ -334,7 +347,7 @@ namespace Mb.Core.Services
                 //await CreateAttributeTypesAsync(attributes);
                 //await CreateTerminalTypesAsync(terminals);
                 //await CreateLibraryTypeComponentsAsync(libraries);
-                //await CreateContractorsAsync(contractors);
+                
                 await CreateEnumBase<Unit>(units);
                 await CreateEnumBase<AttributeCondition>(conditions);
                 await CreateEnumBase<AttributeQualifier>(qualifiers);
@@ -344,7 +357,7 @@ namespace Mb.Core.Services
                 await CreateEnumBase<AttributeFormat>(attributeFormats);
                 await CreateEnumBase<BuildStatus>(buildStatuses);
 
-
+                await CreateContractorsAsync(contractors);
                 await CreateAttributeTypes(attributes);
                 await CreateTerminalTypes(terminals);
                 await CreateRdsAsync(rds);

@@ -1,18 +1,13 @@
-import { Node, LibNode } from "../../../../models/project";
-import { IsNodeSameType } from "../../../flow/helpers/common";
+import { Node, LibraryNodeItem } from "../../../../models";
 
 const ValidateLibComponent = (
-  libNode: LibNode,
+  libNode: LibraryNodeItem,
   selectedNode: Node,
   isBlockView: boolean,
   isSplitView: boolean
-): boolean => {
+) => {
   if (!isBlockView) return true;
-  return (
-    !isSplitView &&
-    (selectedNode?.type === libNode.type ||
-      IsNodeSameType(selectedNode, libNode))
-  );
+  return !isSplitView && selectedNode?.aspect === libNode.aspect;
 };
 
 export default ValidateLibComponent;

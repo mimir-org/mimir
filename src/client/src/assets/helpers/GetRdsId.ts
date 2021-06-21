@@ -1,15 +1,15 @@
-import { Node } from "../../models/project";
+import { Node } from "../../models";
 import {
-  IsFunctionNode,
-  IsLocationNode,
-  IsProductNode,
+  IsFunction,
+  IsLocation,
+  IsProduct,
 } from "../../components/flow/helpers/common";
 
 const GetRdsId = (node: Node): string => {
   if (!node || !node.rds) return "";
-  if (IsFunctionNode(node)) return "=" + node.rds;
-  if (IsProductNode(node)) return "-" + node.rds;
-  if (IsLocationNode(node)) return "++" + node.rds;
+  if (IsFunction(node)) return "=" + node.rds;
+  if (IsProduct(node)) return "-" + node.rds;
+  if (IsLocation(node)) return "++" + node.rds;
 
   return "";
 };

@@ -5,6 +5,6 @@ namespace Mb.Core.Repositories.Contracts
 {
     public interface ILibraryRepository
     {
-        IEnumerable<LibNode> GetAll(string searchString);
+        IEnumerable<LibraryNodeItem> GetAll(string searchString);
     }
 }

@@ -3,7 +3,6 @@ import {
   FunctionBlock,
   BlockFunctionNode,
   BlockLocationNode,
-  OffPage,
 } from "../../nodes";
 
 const GetBlockNodeTypes = {
@@ -13,7 +12,6 @@ const GetBlockNodeTypes = {
   BlockFunctionNode: BlockFunctionNode,
   BlockLocationNode: BlockLocationNode,
   FunctionBlock: FunctionBlock,
-  Offpage: OffPage,
 };
 
 export default GetBlockNodeTypes;

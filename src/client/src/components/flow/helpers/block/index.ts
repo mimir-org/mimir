@@ -12,7 +12,6 @@ export { default as ValidateConnector } from "./ValidateConnector";
 export { default as ValidateBlockEdge } from "./ValidateBlockEdge";
 export { default as IsBlockView } from "./IsBlockView";
 export { default as IsBlockChecked } from "./IsBlockChecked";
-export { default as CalculateTerminalOrder } from "./CalculateTerminalOrder";
 export { default as FilterConnectors } from "./FilterConnectors";
 export { default as SortConnectors } from "./SortConnectors";
 export { default as GetBlockEdgeTypes } from "./GetBlockEdgeTypes";

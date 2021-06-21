@@ -1,6 +1,6 @@
 import { UpdateConnectNodeSize } from ".";
 import { Size } from "../../../../../compLibrary";
-import { Node } from "../../../../../models/project";
+import { Node } from "../../../../../models";
 
 const CalculateXPosition = (
   node: Node,
@@ -8,7 +8,6 @@ const CalculateXPosition = (
   connectNodes: Node[]
 ): number => {
   const xMargin = 7;
-
   UpdateConnectNodeSize(connectNodes.length);
 
   if (connectNodes.length === 1)
