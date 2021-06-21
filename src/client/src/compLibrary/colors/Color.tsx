@@ -20,6 +20,10 @@ const Color = {
   FunctionPart: "#FFC000",
   ProductPart: "#00F0FF",
   LocationPart: "#CC00D0",
+  Terminal_Oil: "#663300",
+  Terminal_Water: "#0066FF",
+  Terminal_Gas: "#FFCC00",
+  Terminal_Multiphase: "#00CC66",
 };
 
 export default Color;
