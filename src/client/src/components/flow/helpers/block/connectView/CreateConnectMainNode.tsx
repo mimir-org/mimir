@@ -1,8 +1,8 @@
-import { Node } from "../../../../models";
+import { Node } from "../../../../../models";
 import { FlowElement } from "react-flow-renderer";
-import { Size } from "../../../../compLibrary";
+import { Size } from "../../../../../compLibrary";
 
-const CreateConnectViewNode = (node: Node): FlowElement => {
+const CreateConnectMainNode = (node: Node): FlowElement => {
   let connectViewBlock = null;
   if (!node) return connectViewBlock;
 
@@ -28,4 +28,4 @@ const CreateConnectViewNode = (node: Node): FlowElement => {
   return connectViewBlock;
 };
 
-export default CreateConnectViewNode;
+export default CreateConnectMainNode;

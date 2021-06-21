@@ -68,7 +68,7 @@ const useOnDrop = (
   node.level = 0;
 
   showBlockView
-    ? setElements((es) => es.concat(CreateBlockNode(node, splitView, null))) // TODO: fix
+    ? setElements((es) => es.concat(CreateBlockNode(node, null, splitView)))
     : setElements((es) => es.concat(CreateTreeNode(node)));
 
   if (selectedNode) {

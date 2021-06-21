@@ -18,8 +18,8 @@ import {
   useOnNodeDragStop,
 } from "./hooks";
 import {
-  addMainConnectNode,
   removeConnectNodes,
+  removeMainNodes,
 } from "../../redux/store/connectView/actions";
 import {
   GetBlockNodeTypes,
@@ -52,7 +52,7 @@ const FlowBlock = () => {
 
   // Flush ConnectView
   useEffect(() => {
-    dispatch(addMainConnectNode(null));
+    dispatch(removeMainNodes());
     dispatch(removeConnectNodes());
   }, [dispatch]);
 
@@ -70,9 +70,9 @@ const FlowBlock = () => {
     (state) => state.splitView.node
   ) as Node;
 
-  const mainConnectNode = useSelector<RootState>(
-    (state) => state.connectView.mainNode
-  ) as Node;
+  const mainConnectNodes = useSelector<RootState>(
+    (state) => state.connectView.mainNodes
+  ) as Node[];
 
   const connectViewNodes = useSelector<RootState>(
     (state) => state.connectView.connectNodes
@@ -148,7 +148,7 @@ const FlowBlock = () => {
   };
 
   const OnElementClick = (_event, element) => {
-    if (!mainConnectNode) {
+    if (mainConnectNodes.length === 0) {
       dispatch(changeActiveBlockNode(element.id));
       dispatch(changeInspectorTab(0));
     }
