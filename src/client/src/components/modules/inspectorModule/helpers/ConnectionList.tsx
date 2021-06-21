@@ -44,7 +44,7 @@ const ConnectionList = ({ nodes, title, onElementClick }) => {
               index={i}
               key={n.id}
             >
-              {n.name}
+              {n.label}
             </ListElement>
           );
         })}
