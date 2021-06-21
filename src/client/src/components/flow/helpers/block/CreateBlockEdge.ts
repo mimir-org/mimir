@@ -17,7 +17,7 @@ export const CreateBlockEdge = (
       target: edge.toNodeId,
       sourceHandle: edge.fromConnectorId,
       targetHandle: edge.toConnectorId,
-      animated: true,
+      animated: true, // TODO: fix
       label: "",
       data: {
         source: edge.fromNode,

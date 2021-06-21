@@ -23,12 +23,8 @@ const useOnConnect = (
     (x) =>
       x.fromConnectorId === params.sourceHandle.id &&
       x.toConnectorId === params.targetHandle.id &&
-      x.fromConnector === params.sourceHandle &&
-      x.toConnector === params.targetHandle &&
       x.fromNodeId === sourceNode.id &&
       x.toNodeId === targetNode.id &&
-      x.toNode === targetNode &&
-      x.fromNode === sourceNode &&
       x.isHidden === targetNode.isHidden
   );
 
