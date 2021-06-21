@@ -22,6 +22,7 @@ const CreateBlockElements = (
   if (!project) return;
   const initialElements: Elements = [];
   const nodes = red.store.getState().projectState.project.nodes as Node[];
+
   const mainConnectNodes = red.store.getState().connectView.mainNodes as Node[];
   const mainConnectNode = mainConnectNodes.find(
     (x) => x?.id === selectedBlockNodeId
@@ -35,8 +36,8 @@ const CreateBlockElements = (
   project.edges.forEach((edge) => {
     if (
       edge.fromNodeId === selectedNode.id &&
-      selectedNode?.aspect === edge.toNode?.aspect &&
-      !IsTransportTerminal(edge.toConnector)
+      selectedNode?.aspect === edge.toNode?.aspect
+      //  && !IsTransportTerminal(edge.toConnector) TODO FIX
     ) {
       const toNode = nodes.find((node) => node.id === edge.toNodeId);
       initialElements.push(CreateBlockNode(toNode, null, splitView));

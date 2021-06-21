@@ -5,6 +5,7 @@ import { Node } from "../../../../models";
 const CreateParentBlockNode = (node: Node): FlowElement => {
   let elementNode = null;
   if (!node) return elementNode;
+  console.log("FunctionBlock");
 
   const type = "FunctionBlock";
   const position = { x: Position.FunctionBlock_xPos, y: 0 };

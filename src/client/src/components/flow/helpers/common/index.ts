@@ -14,7 +14,6 @@ export { default as IsExplorerModule } from "./IsExplorerModule";
 export { default as IsLibraryModule } from "./IsLibraryModule";
 export { default as IsInputConnector } from "./IsInputConnector";
 export { default as GetCenter } from "./GetCenter";
-export { default as GetHandleType } from "./GetHandleType";
 export { default as GetNodes } from "./GetNodes";
 export { default as GetEdges } from "./GetEdges";
 export { default as GetRelationshipColor } from "./GetRelationshipColor";
@@ -25,5 +24,6 @@ export { default as GetConnectorName } from "./GetConnectorName";
 export { default as GetBlockNodeTypes } from "../block/GetBlockNodeTypes";
 export { default as SetDarkModeColor } from "./SetDarkModeColor";
 export { default as GetNodeType } from "./GetNodeType";
+export { default as GetHandleType } from "./GetHandleType";
 
 export * from "./types";

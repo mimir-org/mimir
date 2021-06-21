@@ -4,21 +4,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { useHistory } from "react-router-dom";
 import { MODULE_TYPE } from "../../../models/project";
-import { Aspect, ObjectType } from "../../../models/";
+import { Aspect } from "../../../models/";
 import { TextResources } from "../../../assets/textResources";
 import { CloseIcon } from "../../../assets/icons/common";
 import { TypeEditorState } from "../../../redux/store/typeEditor/types";
 import { changeFlowView } from "../../../redux/store/flow/actions";
 import { SetDarkModeColor } from "../../flow/helpers/common";
 import { changeAllModulesVisibility } from "../../../redux/store/modules/actions";
+import { getInitialData } from "../../../redux/store/typeEditor/actions";
 import {
   changeMode,
   changeTypeName,
-} from "../../../redux/store/typeEditor/actions";
-import {
-  getInitialData,
-  getRDS,
-  getTerminals,
 } from "../../../redux/store/typeEditor/actions";
 import {
   DropdownMenu,
@@ -67,16 +63,16 @@ export const TypeEditorComponent = () => {
     return filteredAspects;
   };
 
-  const filterObjectTypes = () => {
-    let filteredtypes = Object.entries(state.objectTypes);
-    state.createLibraryType.aspect === Aspect.NotSet
-      ? (filteredtypes = [])
-      : state.createLibraryType.aspect === Aspect.Function
-      ? (filteredtypes = filteredtypes.filter(
-          ([, value]) => value !== "Not set"
-        ))
-      : (filteredtypes = []);
-  };
+  //   const filterObjectTypes = () => {
+  //     let filteredtypes = Object.entries(state.objectTypes);
+  //     state.createLibraryType.aspect === Aspect.NotSet
+  //       ? (filteredtypes = [])
+  //       : state.createLibraryType.aspect === Aspect.Function
+  //       ? (filteredtypes = filteredtypes.filter(
+  //           ([, value]) => value !== "Not set"
+  //         ))
+  //       : (filteredtypes = []);
+  //   };
 
   const filterStatuses = () => {
     let filteredStatuses = Object.entries(state.statuses);

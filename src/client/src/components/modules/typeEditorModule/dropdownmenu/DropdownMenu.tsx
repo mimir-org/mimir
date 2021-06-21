@@ -14,7 +14,6 @@ import {
   DropdownMenuListItem,
 } from "../../../../compLibrary/dropdown";
 import "./dropdownmenu.scss";
-import { Aspect } from "../../../../models";
 
 interface Props {
   label: string;

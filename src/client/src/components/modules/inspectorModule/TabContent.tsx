@@ -2,11 +2,11 @@ import { Attribute, Node } from "../../../models";
 import { TabRow } from "../../../compLibrary/box/inspector";
 import { useDispatch } from "react-redux";
 import { IsTransportTerminal, CreateId } from "../../flow/helpers/common";
-import { CalculateRows, ConnectorAttributesList } from "./helpers";
+// import { CalculateRows, ConnectorAttributesList } from "./helpers";
 import { Input, InputBox, Select, AttributeField } from "../../../compLibrary";
 import { RelationTabComponent, CommentsTabComponent } from ".";
 import { InputWrapper } from "./styled";
-import { TerminalsTabComponent } from "./"
+import { TerminalsTabComponent } from "./";
 import {
   changeAttributeValue,
   changeConnectorAttributeValue,
@@ -43,7 +43,7 @@ const TabContent = ({ node, index }: Props) => {
         tempAttributes.push(data);
       }
     });
-    activeConnectors = node.connectors?.filter(con => con.visible);
+    activeConnectors = node.connectors?.filter((con) => con.visible);
     connectorAttributes = tempAttributes;
     nodeAttributes = node.attributes;
   }
@@ -85,9 +85,8 @@ const TabContent = ({ node, index }: Props) => {
                   >
                     <Input
                       value={attr.value ?? ""}
-                      onChange={
-                        (e: any) =>
-                          handleOnNodeChange(attr.id, e.target.value, attr.unit)
+                      onChange={(e: any) =>
+                        handleOnNodeChange(attr.id, e.target.value, attr.unit)
                       }
                       inputType="tech"
                     />
