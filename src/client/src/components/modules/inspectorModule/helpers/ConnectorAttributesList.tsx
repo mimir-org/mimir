@@ -13,7 +13,7 @@ interface Props {
   handleChange: any;
 }
 
-const SetConnectorColumn = ({ list, handleChange }: Props): any => {
+const ConnectorAttributesList = ({ list, handleChange }: Props): any => {
   return list?.map((connector: ConnectorAttribute) => (
     <TabColumn key={connector.id} fontSize="10">
       {connector?.attributes.map((attr: Attribute) => (
@@ -35,7 +35,7 @@ const SetConnectorColumn = ({ list, handleChange }: Props): any => {
               inputType="tech"
             />
             <Select
-              value={attr.unit}
+              value={attr.unit ?? ""}
               onChange={(e: any) =>
                 handleChange(
                   attr.id,
@@ -57,4 +57,4 @@ const SetConnectorColumn = ({ list, handleChange }: Props): any => {
   ));
 };
 
-export default SetConnectorColumn;
+export default ConnectorAttributesList;

@@ -24,6 +24,7 @@ const InspectorTabs = () => {
           <TabComponent node={node} index={1} />
           <TabComponent node={node} index={2} />
           <TabComponent node={node} index={3} />
+          {/* <TabComponent node={node} index={4} /> //NOTE: comments-tab is not for MVP-release. To be implemented later. */}
         </>
       )}
     </>
