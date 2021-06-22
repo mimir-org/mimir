@@ -32,10 +32,8 @@ export default function BlockEdgeType({
   });
 
   const getStyle = () => {
-    // console.log(data.source);
-    // console.log(data.edge);
     const fromConnector = data.source.connectors.find(
-      (x) => x.id === data.edge.fromConnector
+      (x) => x.id === data.edge.fromConnector.id
     ) as Connector;
 
     return {
@@ -45,14 +43,12 @@ export default function BlockEdgeType({
   };
 
   return (
-    <>
-      <path
-        id={id}
-        style={getStyle()}
-        className="react-flow__edge-path"
-        d={edgePathSmoothStep}
-        markerEnd={markerEnd}
-      />
-    </>
+    <path
+      id={id}
+      style={getStyle()}
+      className="react-flow__edge-path"
+      d={edgePathSmoothStep}
+      markerEnd={markerEnd}
+    />
   );
 }
