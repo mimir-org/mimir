@@ -18,12 +18,16 @@ interface ConnectorAttribute {
 
 //AttributesWrapper currently not in use, but will be
 const AttributesWrapper = styled.div`
-    //border: red solid 1px;
     display: flex;
     flex-direction: column;
     margin: 10px;
     height: 160px;
     width: 250px;
+`;
+const TerminalsWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    width: 550px;
 `;
 const ListWrapper = styled.div`
     display: flex;
@@ -65,16 +69,18 @@ const TerminalsTabComponent = ({ node }): any => {
   return (
     <>
     <ListWrapper>
-      <ActiveTerminalTypeList
-      terminals={node?.connectors}
-      title={textResources.Inspector_Relations_All_Terminal_Types}
-      onElementClick={()=>{}}
-      />
-      <ActiveTerminalTypeList
-      terminals={activeConnectors}
-      title={textResources.Inspector_Relations_Active_Terminal_Types}
-      onElementClick={()=>{}}
-      />
+      <TerminalsWrapper>
+        <ActiveTerminalTypeList
+        terminals={node?.connectors}
+        title={textResources.Inspector_Relations_All_Terminal_Types}
+        onElementClick={()=>{}}
+        />
+        <ActiveTerminalTypeList
+        terminals={activeConnectors}
+        title={textResources.Inspector_Relations_Active_Terminal_Types}
+        onElementClick={()=>{}}
+        />
+      </TerminalsWrapper>
       <AttributesContainer 
       attributes={connectorAttributes}
       title="Connector attributes"
