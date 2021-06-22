@@ -46,8 +46,6 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     (node) => node?.id === data.id
   ) as Node;
 
-  const isConnectView = mainConnectNodes.length !== 0;
-
   const connectNodes = useSelector<RootState>(
     (state) => state.connectView.connectNodes
   ) as Node[];
@@ -149,7 +147,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
           width={data.width}
         />
 
-        <HandleComponent data={data} isConnectView={isConnectView} />
+        <HandleComponent data={data} />
       </NodeBox>
     </>
   );

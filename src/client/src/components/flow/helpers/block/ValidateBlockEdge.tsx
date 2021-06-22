@@ -1,4 +1,4 @@
-import red from "../../../../redux/store";
+import { IsConnectView } from "./connectView";
 import { Node, Connector } from "../../../../models";
 import {
   IsAspectNode,
@@ -17,18 +17,15 @@ const ValidateBlockEdge = (
   toConnector: Connector,
   splitView: boolean
 ) => {
-  const connectNodes = red.store.getState().connectView.mainNodes;
-  const hasConnectNode = connectNodes.length > 0;
-
   if (!fromNode || !toNode) return false;
   if (IsPartOfTerminal(fromConnector) || IsPartOfTerminal(toConnector))
     return false;
 
-  if (hasConnectNode) {
+  if (IsConnectView()) {
     return true; // TODO: fix guards
   }
 
-  if (!splitView && !hasConnectNode) {
+  if (!splitView && !IsConnectView()) {
     if (IsFunction(selectedNode)) {
       if (IsAspectNode(selectedNode)) return false;
       if (IsLocation(fromNode) || IsLocation(toNode)) return false;

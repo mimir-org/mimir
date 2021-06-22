@@ -4,13 +4,13 @@ import { HandleBox } from "../../../compLibrary/blockView";
 import { Handle } from "react-flow-renderer";
 import { GetConnectorIcon, GetHandlePosition } from "../helpers/common";
 import { FilterConnectors, GetBlockHandleType } from "../helpers/block";
+import { IsConnectView } from "../helpers/block/connectView";
 
 interface Props {
   data: Node;
-  isConnectView?: boolean;
 }
 
-const HandleComponent = ({ data, isConnectView }: Props) => {
+const HandleComponent = ({ data }: Props) => {
   const locationNode = red.store.getState().splitView.node as Node;
   const isSplitNode = locationNode !== null;
   let sortedTerminals = FilterConnectors(data.connectors, data.aspect);
@@ -25,7 +25,7 @@ const HandleComponent = ({ data, isConnectView }: Props) => {
             id={"handle-" + conn.id}
             position={GetHandlePosition(pos)}
             key={conn.id}
-            visible={conn.visible && !isConnectView}
+            visible={conn.visible && !IsConnectView()}
             icon={GetConnectorIcon(conn)}
             splitNode={isSplitNode}
           >
