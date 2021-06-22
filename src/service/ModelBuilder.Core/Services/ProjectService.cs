@@ -32,8 +32,9 @@ namespace Mb.Core.Services
         private readonly IConnectorRepository _connectorRepository;
         private readonly IModuleService _moduleService;
         private readonly IAttributeRepository _attributeRepository;
+        private readonly INodeService _nodeService;
 
-        public ProjectService(IProjectRepository projectRepository, IMapper mapper, IHttpContextAccessor contextAccessor, INodeRepository nodeRepository, IEdgeRepository edgeRepository, ICommonRepository commonRepository, IConnectorRepository connectorRepository, IModuleService moduleService, IAttributeRepository attributeRepository)
+        public ProjectService(IProjectRepository projectRepository, IMapper mapper, IHttpContextAccessor contextAccessor, INodeRepository nodeRepository, IEdgeRepository edgeRepository, ICommonRepository commonRepository, IConnectorRepository connectorRepository, IModuleService moduleService, IAttributeRepository attributeRepository, INodeService nodeService)
         {
             _projectRepository = projectRepository;
             _mapper = mapper;
@@ -44,6 +45,7 @@ namespace Mb.Core.Services
             _connectorRepository = connectorRepository;
             _moduleService = moduleService;
             _attributeRepository = attributeRepository;
+            _nodeService = nodeService;
         }
 
         /// <summary>
@@ -153,12 +155,59 @@ namespace Mb.Core.Services
         /// <summary>
         /// Update a project, if the project does not exist, a ModelBuilderNotFoundException will be thrown.
         /// </summary>
+        /// <param name="id"></param>
         /// <param name="project"></param>
         /// <returns></returns>
-        public async Task<Project> UpdateProject(Project project)
+        public async Task<Project> UpdateProject(string id, ProjectAm project)
         {
-            var existingProject = await GetProject(project.Id);
-            return await UpdateProject(existingProject, project);
+            var originalProject = await _projectRepository
+                .FindBy(x => x.Id == id)
+                .Include(x => x.Edges)
+                .Include(x => x.Nodes)
+                .Include("Nodes.Attributes")
+                .Include("Nodes.Connectors")
+                .Include("Nodes.Connectors.Attributes")
+                .AsSplitQuery()
+                .FirstOrDefaultAsync();
+
+            if (originalProject == null)
+                throw new ModelBuilderNotFoundException($"The project with id:{id}, could not be found.");
+
+            // Nodes
+            var existingNodes = originalProject.Nodes.ToList();
+            var deleteNodes = existingNodes.Where(x => project.Nodes.All(y => y.Id != x.Id)).ToList();
+            await _nodeRepository.DeleteNodes(deleteNodes);
+
+            // Edges
+            var existingEdges = originalProject.Edges.ToList();
+            var deleteEdges = existingEdges.Where(x => project.Edges.All(y => y.Id != x.Id)).ToList();
+            await _edgeRepository.DeleteEdges(deleteEdges);
+
+            // Map new data
+            _mapper.Map(project, originalProject);
+
+            await _nodeRepository.UpdateInsert(existingNodes, originalProject);
+            await _edgeRepository.UpdateInsert(existingEdges, originalProject);
+            
+            //await _attributeRepository.SaveAsync();
+            //await _connectorRepository.SaveAsync();
+            //await _nodeRepository.SaveAsync();
+            //await _connectorRepository.SaveAsync();
+
+            _projectRepository.Update(originalProject);
+            await _projectRepository.SaveAsync();
+
+            //return p;
+            var updatedProject = await GetProject(id);
+            return updatedProject;
+            //return await UpdateProject(existingProject, project);
+        }
+
+        private async Task UpdateProjectData(Project destination, ProjectAm source)
+        {
+            _mapper.Map(source, destination);
+            _projectRepository.Update(destination);
+            await _projectRepository.SaveAsync();
         }
 
         /// <summary>

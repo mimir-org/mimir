@@ -14,8 +14,8 @@ namespace Mb.Models.Application
 
         public string Description { get; set; }
 
-        public IList<NodeAm> Nodes { get; set; }
+        public ICollection<NodeAm> Nodes { get; set; }
 
-        public IList<EdgeAm> Edges { get; set; }
+        public ICollection<EdgeAm> Edges { get; set; }
     }
 }

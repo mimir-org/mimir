@@ -7,6 +7,7 @@ using Mb.Core.Services;
 using Mb.Core.Services.Contracts;
 using Mb.Models.Configurations;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -50,6 +51,7 @@ namespace Mb.Core.Extensions
             services.AddScoped<ILibraryService, LibraryService>();
             services.AddScoped<ICommonService, CommonService>();
             services.AddScoped<IEnumService, EnumService>();
+            services.AddScoped<INodeService, NodeService>();
 
             services.AddHttpContextAccessor();
             services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
@@ -60,10 +62,10 @@ namespace Mb.Core.Extensions
             var autoMapperConfiguration = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new AttributeProfile(provider.GetService<ICommonRepository>()));
-                cfg.AddProfile<ConnectorProfile>();
-                cfg.AddProfile<EdgeProfile>();
-                cfg.AddProfile(new NodeProfile(provider.GetService<ICommonRepository>()));
-                cfg.AddProfile<ProjectProfile>();
+                cfg.AddProfile(new ConnectorProfile(provider.GetService<ICommonRepository>()));
+                cfg.AddProfile(new EdgeProfile(provider.GetService<ICommonRepository>()));
+                cfg.AddProfile(new NodeProfile(provider.GetService<IHttpContextAccessor>(), provider.GetService<ICommonRepository>()));
+                cfg.AddProfile(new ProjectProfile(provider.GetService<IHttpContextAccessor>(), provider.GetService<ICommonRepository>()));
                 cfg.AddProfile<RdsProfile>();
                 cfg.AddProfile(new TerminalProfile(provider.GetService<ICommonRepository>()));
                 cfg.AddProfile(new LibraryTypeProfile(provider.GetService<ICommonRepository>()));

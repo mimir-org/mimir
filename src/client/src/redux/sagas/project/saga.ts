@@ -1,244 +1,251 @@
 import { call, put } from "redux-saga/effects";
 import { Project } from "../../../models";
 import {
-  get,
-  post,
-  GetBadResponseData,
-  ApiError,
+    get,
+    post,
+    GetBadResponseData,
+    ApiError,
 } from "../../../models/webclient";
 
 import {
-  FETCHING_PROJECT_SUCCESS_OR_ERROR,
-  CREATING_PROJECT_SUCCESS_OR_ERROR,
-  SEARCH_PROJECT_SUCCESS_OR_ERROR,
-  SAVE_PROJECT_SUCCESS_OR_ERROR,
+    FETCHING_PROJECT_SUCCESS_OR_ERROR,
+    CREATING_PROJECT_SUCCESS_OR_ERROR,
+    SEARCH_PROJECT_SUCCESS_OR_ERROR,
+    SAVE_PROJECT_SUCCESS_OR_ERROR,
 } from "../../store/project/types";
 
+import { ConvertProject } from ".";
+
 export function* getProject(action) {
-  try {
-    const url =
-      process.env.REACT_APP_API_BASE_URL + "project/" + action.payload;
-    const response = yield call(get, url);
+    try {
+        const url =
+            process.env.REACT_APP_API_BASE_URL + "project/" + action.payload;
+        const response = yield call(get, url);
 
-    // This is a bad request
-    if (response.status === 400) {
-      const data = GetBadResponseData(response);
+        // This is a bad request
+        if (response.status === 400) {
+            const data = GetBadResponseData(response);
 
-      const apiError = {
-        key: FETCHING_PROJECT_SUCCESS_OR_ERROR,
-        errorMessage: data.title,
-        errorData: data,
-      } as ApiError;
+            const apiError = {
+                key: FETCHING_PROJECT_SUCCESS_OR_ERROR,
+                errorMessage: data.title,
+                errorData: data,
+            } as ApiError;
 
-      const payload = {
-        project: null,
-        apiError: apiError,
-      };
+            const payload = {
+                project: null,
+                apiError: apiError,
+            };
 
-      yield put({
-        type: FETCHING_PROJECT_SUCCESS_OR_ERROR,
-        payload: payload,
-      });
-      return;
+            yield put({
+                type: FETCHING_PROJECT_SUCCESS_OR_ERROR,
+                payload: payload,
+            });
+            return;
+        }
+
+        const project = response.data as Project;
+
+        const payload = {
+            project: project,
+            apiError: null,
+        };
+
+        yield put({
+            type: FETCHING_PROJECT_SUCCESS_OR_ERROR,
+            payload: payload,
+        });
+    } catch (error) {
+        const apiError = {
+            key: FETCHING_PROJECT_SUCCESS_OR_ERROR,
+            errorMessage: error.message,
+            errorData: null,
+        } as ApiError;
+
+        const payload = {
+            project: null,
+            apiError: apiError,
+        };
+
+        yield put({
+            type: FETCHING_PROJECT_SUCCESS_OR_ERROR,
+            payload: payload,
+        });
     }
-
-    const project = response.data as Project;
-
-    const payload = {
-      project: project,
-      apiError: null,
-    };
-
-    yield put({
-      type: FETCHING_PROJECT_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
-  } catch (error) {
-    const apiError = {
-      key: FETCHING_PROJECT_SUCCESS_OR_ERROR,
-      errorMessage: error.message,
-      errorData: null,
-    } as ApiError;
-
-    const payload = {
-      project: null,
-      apiError: apiError,
-    };
-
-    yield put({
-      type: FETCHING_PROJECT_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
-  }
 }
 
 export function* searchProject(action) {
-  try {
-    const url =
-      process.env.REACT_APP_API_BASE_URL +
-      "project/search?name=" +
-      action.payload;
-    const response = yield call(get, url);
+    try {
+        const url =
+            process.env.REACT_APP_API_BASE_URL +
+            "project/search?name=" +
+            action.payload;
+        const response = yield call(get, url);
 
-    // This is a bad request
-    if (response.status === 400) {
-      const data = GetBadResponseData(response);
+        // This is a bad request
+        if (response.status === 400) {
+            const data = GetBadResponseData(response);
 
-      const apiError = {
-        key: SEARCH_PROJECT_SUCCESS_OR_ERROR,
-        errorMessage: data.title,
-        errorData: data,
-      } as ApiError;
+            const apiError = {
+                key: SEARCH_PROJECT_SUCCESS_OR_ERROR,
+                errorMessage: data.title,
+                errorData: data,
+            } as ApiError;
 
-      const payload = {
-        projectList: null,
-        apiError: apiError,
-      };
+            const payload = {
+                projectList: null,
+                apiError: apiError,
+            };
 
-      yield put({
-        type: SEARCH_PROJECT_SUCCESS_OR_ERROR,
-        payload: payload,
-      });
-      return;
+            yield put({
+                type: SEARCH_PROJECT_SUCCESS_OR_ERROR,
+                payload: payload,
+            });
+            return;
+        }
+
+        const payload = {
+            projectList: response.data,
+            apiError: null,
+        };
+
+        yield put({
+            type: SEARCH_PROJECT_SUCCESS_OR_ERROR,
+            payload: payload,
+        });
+    } catch (error) {
+        const apiError = {
+            key: SEARCH_PROJECT_SUCCESS_OR_ERROR,
+            errorMessage: error.message,
+            errorData: null,
+        } as ApiError;
+
+        const payload = {
+            projectList: null,
+            apiError: apiError,
+        };
+        yield put({
+            type: SEARCH_PROJECT_SUCCESS_OR_ERROR,
+            payload: payload,
+        });
     }
-
-    const payload = {
-      projectList: response.data,
-      apiError: null,
-    };
-
-    yield put({
-      type: SEARCH_PROJECT_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
-  } catch (error) {
-    const apiError = {
-      key: SEARCH_PROJECT_SUCCESS_OR_ERROR,
-      errorMessage: error.message,
-      errorData: null,
-    } as ApiError;
-
-    const payload = {
-      projectList: null,
-      apiError: apiError,
-    };
-    yield put({
-      type: SEARCH_PROJECT_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
-  }
 }
 
 export function* createProject(action) {
-  try {
-    const url = process.env.REACT_APP_API_BASE_URL + "project";
-    const response = yield call(post, url, action.payload);
+    try {
+        const url = process.env.REACT_APP_API_BASE_URL + "project";
+        const response = yield call(post, url, action.payload);
 
-    // This is a bad request
-    if (response.status === 400) {
-      const data = GetBadResponseData(response);
+        // This is a bad request
+        if (response.status === 400) {
+            const data = GetBadResponseData(response);
 
-      const apiError = {
-        key: CREATING_PROJECT_SUCCESS_OR_ERROR,
-        errorMessage: data.title,
-        errorData: data,
-      } as ApiError;
+            const apiError = {
+                key: CREATING_PROJECT_SUCCESS_OR_ERROR,
+                errorMessage: data.title,
+                errorData: data,
+            } as ApiError;
 
-      const payload = {
-        project: null,
-        apiError: apiError,
-      };
+            const payload = {
+                project: null,
+                apiError: apiError,
+            };
 
-      yield put({
-        type: CREATING_PROJECT_SUCCESS_OR_ERROR,
-        payload: payload,
-      });
-      return;
+            yield put({
+                type: CREATING_PROJECT_SUCCESS_OR_ERROR,
+                payload: payload,
+            });
+            return;
+        }
+
+        const project = response.data as Project;
+        project.edges = [];
+
+        const payload = {
+            project: project,
+            apiError: null,
+        };
+
+        yield put({
+            type: CREATING_PROJECT_SUCCESS_OR_ERROR,
+            payload: payload,
+        });
+    } catch (error) {
+        const apiError = {
+            key: CREATING_PROJECT_SUCCESS_OR_ERROR,
+            errorMessage: error.message,
+            errorData: null,
+        } as ApiError;
+
+        const payload = {
+            project: null,
+            apiError: apiError,
+        };
+        yield put({
+            type: CREATING_PROJECT_SUCCESS_OR_ERROR,
+            payload: payload,
+        });
     }
-
-    const project = response.data as Project;
-    project.edges = [];
-
-    const payload = {
-      project: project,
-      apiError: null,
-    };
-
-    yield put({
-      type: CREATING_PROJECT_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
-  } catch (error) {
-    const apiError = {
-      key: CREATING_PROJECT_SUCCESS_OR_ERROR,
-      errorMessage: error.message,
-      errorData: null,
-    } as ApiError;
-
-    const payload = {
-      project: null,
-      apiError: apiError,
-    };
-    yield put({
-      type: CREATING_PROJECT_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
-  }
 }
 
 export function* updateProject(action) {
-  try {
-    const url = process.env.REACT_APP_API_BASE_URL + "project/update";
-    const response = yield call(post, url, action.payload);
+    try {
+        const projId = action.payload.id;
+        const proj = ConvertProject(action.payload);
 
-    // This is a bad request
-    if (response.status === 400) {
-      const data = GetBadResponseData(response);
+        console.log(proj);
 
-      const apiError = {
-        key: SAVE_PROJECT_SUCCESS_OR_ERROR,
-        errorMessage: data.title,
-        errorData: data,
-      } as ApiError;
+        const url = process.env.REACT_APP_API_BASE_URL + "project/update/" + projId;
+        const response = yield call(post, url, proj);
 
-      const payload = {
-        project: null,
-        apiError: apiError,
-      };
+        // This is a bad request
+        if (response.status === 400) {
+            const data = GetBadResponseData(response);
 
-      yield put({
-        type: SAVE_PROJECT_SUCCESS_OR_ERROR,
-        payload: payload,
-      });
-      return;
+            const apiError = {
+                key: SAVE_PROJECT_SUCCESS_OR_ERROR,
+                errorMessage: data.title,
+                errorData: data,
+            } as ApiError;
+
+            const payload = {
+                project: null,
+                apiError: apiError,
+            };
+
+            yield put({
+                type: SAVE_PROJECT_SUCCESS_OR_ERROR,
+                payload: payload,
+            });
+            return;
+        }
+
+        const project = response.data as Project;
+
+        const payload = {
+            project: project,
+            apiError: null,
+        };
+
+        yield put({
+            type: SAVE_PROJECT_SUCCESS_OR_ERROR,
+            payload: payload,
+        });
+    } catch (error) {
+        const apiError = {
+            key: SAVE_PROJECT_SUCCESS_OR_ERROR,
+            errorMessage: error.message,
+            errorData: null,
+        } as ApiError;
+
+        const payload = {
+            project: null,
+            apiError: apiError,
+        };
+
+        yield put({
+            type: SAVE_PROJECT_SUCCESS_OR_ERROR,
+            payload: payload,
+        });
     }
-
-    const project = response.data as Project;
-
-    const payload = {
-      project: project,
-      apiError: null,
-    };
-
-    yield put({
-      type: SAVE_PROJECT_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
-  } catch (error) {
-    const apiError = {
-      key: SAVE_PROJECT_SUCCESS_OR_ERROR,
-      errorMessage: error.message,
-      errorData: null,
-    } as ApiError;
-
-    const payload = {
-      project: null,
-      apiError: apiError,
-    };
-
-    yield put({
-      type: SAVE_PROJECT_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
-  }
 }
