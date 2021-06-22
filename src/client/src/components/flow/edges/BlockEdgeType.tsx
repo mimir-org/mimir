@@ -36,6 +36,9 @@ export default function BlockEdgeType({
       (x) => x.id === data.edge.fromConnector.id
     ) as Connector;
 
+    // const arrowStyle = document.body.style;
+    // arrowStyle.setProperty("--arrow-color", fromConnector?.color);
+
     return {
       stroke: fromConnector?.color,
       strokeWidth: 2,

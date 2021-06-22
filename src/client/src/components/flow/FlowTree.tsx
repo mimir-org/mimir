@@ -49,7 +49,6 @@ const FlowTree = () => {
     const fromConnector = fromNode.connectors.find(
       (x) => x.id === params.sourceHandle
     );
-
     const edgeType = GetTreeEdgeType(fromConnector);
     return useOnConnect(params, project, setElements, dispatch, edgeType);
   };

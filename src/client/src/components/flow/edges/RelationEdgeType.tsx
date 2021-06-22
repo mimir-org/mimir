@@ -32,7 +32,7 @@ export default function RelationEdgeType({
 
     return {
       stroke: fromConnector?.mediaColor,
-      strokeWidth: 3,
+      strokeWidth: 2,
     };
   };
 
@@ -40,7 +40,7 @@ export default function RelationEdgeType({
     let defaultClassName = "react-flow__edge-path ";
 
     const fromConnector = data.source.connectors.find(
-      (x: { id: any }) => x.id === data.edge.fromConnector
+      (x: { id: any }) => x.id === data.edge.fromConnector.id
     ) as Connector;
 
     switch (fromConnector.relationType) {

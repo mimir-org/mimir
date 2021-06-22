@@ -1,9 +1,5 @@
 import { GetAspectPartColor } from "../../../assets/helpers";
-import {
-  ArrowHeadType,
-  getMarkerEnd,
-  getSmoothStepPath,
-} from "react-flow-renderer";
+import { getSmoothStepPath } from "react-flow-renderer";
 import "./PartEdge.scss";
 
 export default function PartEdgeType({
@@ -15,10 +11,7 @@ export default function PartEdgeType({
   sourcePosition,
   targetPosition,
   data,
-  markerEndId,
 }) {
-  const markerEnd = getMarkerEnd(ArrowHeadType.ArrowClosed, markerEndId);
-
   const edgePathSmoothStep = getSmoothStepPath({
     sourceX,
     sourceY,
@@ -41,7 +34,7 @@ export default function PartEdgeType({
       style={getStyle()}
       className="react-flow__edge-path"
       d={edgePathSmoothStep}
-      markerEnd={markerEnd}
+      markerEnd={null}
     />
   );
 }

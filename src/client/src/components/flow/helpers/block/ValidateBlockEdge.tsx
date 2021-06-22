@@ -1,5 +1,5 @@
-import { Node, Connector } from "../../../../models";
 import red from "../../../../redux/store";
+import { Node, Connector } from "../../../../models";
 import { IsChildOf, IsFunction, IsLocation, IsPartOfTerminal } from "../common";
 
 const ValidateBlockEdge = (
