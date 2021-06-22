@@ -1,6 +1,6 @@
 const Size = {
-  Node_Width: 100,
-  Node_Length: 60,
+  Node_Width: 115,
+  Node_Length: 70,
 
   ConnectView_Width: 350,
   ConnectView_Length: 150,

@@ -24,7 +24,6 @@ import {
   addMainNode,
   removeConnectNode,
   removeMainNode,
-  removeMainNodes,
 } from "../../../redux/store/connectView/actions";
 
 const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
@@ -83,11 +82,10 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
       dispatch(addMainNode(data));
       dispatch(addConnectNode(node));
     } else {
-      data.width = Size.Node_Width;
-      data.length = Size.Node_Length;
-
-      connectNodes.length === 1 && showConnectMenu(false);
-      dispatch(removeMainNode(data));
+      if (connectNodes.length === 1) {
+        showConnectMenu(false);
+        dispatch(removeMainNode(data));
+      }
       dispatch(removeConnectNode(node));
     }
   };
@@ -99,10 +97,6 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     });
     return result;
   };
-
-  useEffect(() => {
-    if (connectNodes.length < 1) dispatch(removeMainNodes());
-  }, [connectNodes.length, dispatch]);
 
   useEffect(() => {
     SetMainConnectNodeSize(mainConnectNode?.id, data.id, connectNodes);
