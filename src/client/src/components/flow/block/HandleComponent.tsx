@@ -15,7 +15,6 @@ const HandleComponent = ({ data, isConnectView }: Props) => {
   const isSplitNode = locationNode !== null;
   let sortedTerminals = FilterConnectors(data.connectors, data.aspect);
   const className = "react-flow__handle-block";
-  console.log(isConnectView);
 
   return (
     <>

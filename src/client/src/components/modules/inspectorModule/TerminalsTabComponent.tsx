@@ -1,11 +1,9 @@
-import { AttributesList } from "../typeEditorModule";
 import { ActiveTerminalTypeList, AttributesContainer } from "./helpers";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import { Attribute } from "../../../models";
-import { ConnectorAttributesList } from "./helpers";
-import { IsTransportTerminal, CreateId } from "../../flow/helpers/common";
+import { IsTransportTerminal } from "../../flow/helpers/common";
 import styled from "styled-components";
-import { changeConnectorAttributeValue } from "../../../redux/store/project/actions";
+// import { changeConnectorAttributeValue } from "../../../redux/store/project/actions";
 import textResources from "../../../assets/textResources/textResources";
 interface ConnectorAttribute {
   id: string;
@@ -14,30 +12,32 @@ interface ConnectorAttribute {
 }
 
 //AttributesWrapper currently not in use, but will be
-const AttributesWrapper = styled.div`
-  //border: red solid 1px;
-  display: flex;
-  flex-direction: column;
-  margin: 10px;
-  height: 160px;
-  width: 250px;
-`;
+// const AttributesWrapper = styled.div`
+//   //border: red solid 1px;
+//   display: flex;
+//   flex-direction: column;
+//   margin: 10px;
+//   height: 160px;
+//   width: 250px;
+// `;
+
 const ListWrapper = styled.div`
   display: flex;
 `;
-const TerminalsTabComponent = ({ node }): any => {
-  const dispatch = useDispatch();
 
-  const handleOnConnectorChange = (
-    id: string,
-    value: string,
-    unit: any,
-    connectorId: string
-  ) => {
-    dispatch(
-      changeConnectorAttributeValue(id, value, unit, node.id, connectorId)
-    );
-  };
+const TerminalsTabComponent = ({ node }): any => {
+  //   const dispatch = useDispatch();
+
+  //   const handleOnConnectorChange = (
+  //     id: string,
+  //     value: string,
+  //     unit: any,
+  //     connectorId: string
+  //   ) => {
+  //     dispatch(
+  //       changeConnectorAttributeValue(id, value, unit, node.id, connectorId)
+  //     );
+  //   };
 
   let activeConnectors = [];
   let connectorAttributes: ConnectorAttribute[] = [];
