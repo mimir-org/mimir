@@ -26,14 +26,13 @@ const OuterButtonContainer = styled.div`
   align-items: center;
 `;
 
-const DeleteNodeButton = ({ handleClick }) => {
-  return (
-    <OuterButtonContainer>
-      <ButtonContainer onClick={() => handleClick()}>
-        {TextResources.Inspector_Delete_Node}
-        <img src={TrashIcon} alt="delete" />
-      </ButtonContainer>
-    </OuterButtonContainer>
-  );
-};
+const DeleteNodeButton = ({ handleClick }) => (
+  <OuterButtonContainer>
+    <ButtonContainer onClick={() => handleClick()}>
+      {TextResources.Inspector_Delete_Node}
+      <img src={TrashIcon} alt="delete" />
+    </ButtonContainer>
+  </OuterButtonContainer>
+);
+
 export default DeleteNodeButton;

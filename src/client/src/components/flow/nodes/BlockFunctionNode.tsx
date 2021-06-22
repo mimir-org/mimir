@@ -11,6 +11,7 @@ import { HandleComponent } from "../block";
 import { FilterConnectors } from "../helpers/block";
 import {
   GetConnectChildren,
+  IsMainConnectNode,
   SetMainConnectNodeSize,
 } from "../helpers/block/connectView";
 import {
@@ -78,7 +79,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     if (!isChecked(node)) {
       data.width = Size.ConnectView_Width;
       data.length = Size.ConnectView_Length;
-      dispatch(addMainNode(data));
+      if (!IsMainConnectNode(data.id)) dispatch(addMainNode(data));
       dispatch(addConnectNode(node));
     } else {
       if (connectNodes.length === 1) {

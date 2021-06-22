@@ -13,6 +13,10 @@ import { IsBlockView } from "./helpers/block";
 import { changeInspectorTab } from "../../redux/store/inspector/actions";
 import { SetDarkModeColor } from "./helpers/common";
 import {
+  removeConnectNodes,
+  removeMainNodes,
+} from "../../redux/store/connectView/actions";
+import {
   updatePosition,
   changeActiveNode,
 } from "../../redux/store/project/actions";
@@ -27,6 +31,12 @@ const FlowTree = () => {
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>();
+
+  // Flush ConnectView
+  useEffect(() => {
+    dispatch(removeMainNodes());
+    dispatch(removeConnectNodes());
+  }, [dispatch]);
 
   const project = useSelector<RootState>(
     (state) => state.projectState.project

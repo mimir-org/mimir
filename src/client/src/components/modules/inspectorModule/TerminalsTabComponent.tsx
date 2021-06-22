@@ -4,7 +4,8 @@ import { Attribute } from "../../../models";
 import { IsTransportTerminal } from "../../flow/helpers/common";
 import styled from "styled-components";
 // import { changeConnectorAttributeValue } from "../../../redux/store/project/actions";
-import textResources from "../../../assets/textResources/textResources";
+import { TextResources } from "../../../assets/textResources";
+
 interface ConnectorAttribute {
   id: string;
   name: string;
@@ -64,12 +65,12 @@ const TerminalsTabComponent = ({ node }): any => {
       <ListWrapper>
         <ActiveTerminalTypeList
           terminals={node?.connectors}
-          title={textResources.Inspector_Relations_All_Terminal_Types}
+          title={TextResources.Inspector_Relations_All_Terminal_Types}
           onElementClick={() => {}}
         />
         <ActiveTerminalTypeList
           terminals={activeConnectors}
-          title={textResources.Inspector_Relations_Active_Terminal_Types}
+          title={TextResources.Inspector_Relations_Active_Terminal_Types}
           onElementClick={() => {}}
         />
         <AttributesContainer

@@ -27,10 +27,10 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
   };
 
   const handleOnDelete = () => {
-    const fromEdge = project.edges.find((x) => x.fromNodeId === node.id);
-    const toEdge = project.edges.find((x) => x.toNodeId === node.id);
-    if (fromEdge) dispatch(removeEdge(fromEdge.id));
-    if (toEdge) dispatch(removeEdge(toEdge.id));
+    project.edges.forEach((edge) => {
+      if (edge.fromNodeId === node.id) dispatch(removeEdge(edge.id));
+      if (edge.toNodeId === node.id) dispatch(removeEdge(edge.id));
+    });
     dispatch(removeNode(node.id));
   };
 
