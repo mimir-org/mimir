@@ -12,6 +12,7 @@ namespace Mb.Models.Data
         public string Name { get; set; }
         public ConnectorType Type { get; set; }
         public string SemanticReference { get; set; }
+        public bool Visible { get; set; }
         public virtual string NodeId { get; set; }
 
         [JsonIgnore]

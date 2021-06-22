@@ -173,7 +173,7 @@ export function projectReducer(
         project: {
           ...state.project,
           edges: state.project.edges.filter(
-            (edge) => edge.id !== action.payload
+            (edge) => edge?.id !== action.payload
           ),
         },
       };

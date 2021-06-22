@@ -53,8 +53,10 @@ namespace MicrosoftSqlServerModule
             var connectionString = $@"Data Source={dbConfig.DataSource},{dbConfig.Port};Initial Catalog={dbConfig.InitialCatalog};Integrated Security=False;User ID={dbConfig.DbUser};Password='{dbConfig.Password}';MultipleActiveResultSets=True";
 
             services.AddDbContext<ModelBuilderDbContext>(options =>
-                options.UseSqlServer(connectionString, sqlOptions =>
-                    sqlOptions.MigrationsAssembly("ModelBuilder.Core")));
+            {
+                options.EnableSensitiveDataLogging();
+                options.UseSqlServer(connectionString, sqlOptions => sqlOptions.MigrationsAssembly("ModelBuilder.Core"));
+            });
 
             return services;
         }

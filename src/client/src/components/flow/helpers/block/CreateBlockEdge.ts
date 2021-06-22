@@ -13,11 +13,11 @@ export const CreateBlockEdge = (
     element = {
       id: edge.id,
       type: edgeType,
-      source: edge.fromNode,
-      target: edge.toNode,
-      sourceHandle: edge.fromConnector,
-      targetHandle: edge.toConnector,
-      arrowHeadType: null,
+      source: edge.fromNodeId,
+      target: edge.toNodeId,
+      sourceHandle: edge.fromConnectorId,
+      targetHandle: edge.toConnectorId,
+      animated: true, // TODO: fix
       label: "",
       data: {
         source: edge.fromNode,

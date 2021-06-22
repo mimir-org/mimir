@@ -22,22 +22,22 @@ namespace Mb.Models.Configurations
             builder.HasOne(x => x.Source).WithMany(y => y.AttributeTypes).HasForeignKey(x => x.SourceId).OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(x => x.Format).WithMany(y => y.AttributeTypes).HasForeignKey(x => x.FormatId).OnDelete(DeleteBehavior.NoAction);
 
-            builder.HasMany(x => x.Units).WithMany(y => y.AttributeTypes).UsingEntity<Dictionary<string, object>>("AttributeTypeUnit",
+            builder.HasMany(x => x.Units).WithMany(y => y.AttributeTypes).UsingEntity<Dictionary<string, object>>("AttributeType_Unit",
                 x => x.HasOne<Unit>().WithMany().HasForeignKey("UnitId"),
                 x => x.HasOne<AttributeType>().WithMany().HasForeignKey("AttributeTypeId"),
-                x => x.ToTable("AttributeTypeUnit")
+                x => x.ToTable("AttributeType_Unit")
             );
 
-            builder.HasMany(x => x.NodeTypes).WithMany(y => y.AttributeTypes).UsingEntity<Dictionary<string, object>>("NodeTypeAttributeType",
+            builder.HasMany(x => x.NodeTypes).WithMany(y => y.AttributeTypes).UsingEntity<Dictionary<string, object>>("NodeType_AttributeType",
                 x => x.HasOne<NodeType>().WithMany().HasForeignKey("NodeTypeId"),
                 x => x.HasOne<AttributeType>().WithMany().HasForeignKey("AttributeTypeId"),
-                x => x.ToTable("NodeTypeAttributeType")
+                x => x.ToTable("NodeType_AttributeType")
             );
 
-            builder.HasMany(x => x.TransportTypes).WithMany(y => y.AttributeTypes).UsingEntity<Dictionary<string, object>>("TransportTypeAttributeType",
+            builder.HasMany(x => x.TransportTypes).WithMany(y => y.AttributeTypes).UsingEntity<Dictionary<string, object>>("TransportType_AttributeType",
                 x => x.HasOne<TransportType>().WithMany().HasForeignKey("TransportTypeId"),
                 x => x.HasOne<AttributeType>().WithMany().HasForeignKey("AttributeTypeId"),
-                x => x.ToTable("TransportTypeAttributeType")
+                x => x.ToTable("TransportType_AttributeType")
             );
         }
     }

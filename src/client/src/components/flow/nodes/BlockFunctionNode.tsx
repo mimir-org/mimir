@@ -8,19 +8,24 @@ import { TerminalsIcon, ConnectIcon } from "../../../assets/icons/blockView";
 import { setActiveConnector } from "../../../redux/store/project/actions";
 import { TerminalsComponent, ConnectViewComponent } from "../block";
 import { HandleComponent } from "../block";
-import { GetConnectChildren } from "../helpers/block/connectView";
 import { FilterConnectors } from "../helpers/block";
-import { FindNodeById, SetConnectNodeSize } from "../helpers/block/connectView";
+import { FindNodeById } from "../helpers/block/connectView";
 import {
-  addConnectNode,
-  addMainConnectNode,
-  removeConnectNode,
-} from "../../../redux/store/connectView/actions";
+  GetConnectChildren,
+  SetMainConnectNodeSize,
+} from "../helpers/block/connectView";
 import {
   NodeBox,
   TerminalsMenu,
   ConnectMenu,
 } from "../../../compLibrary/blockView";
+import {
+  addConnectNode,
+  addMainNode,
+  removeConnectNode,
+  removeMainNode,
+  removeMainNodes,
+} from "../../../redux/store/connectView/actions";
 
 const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
@@ -35,15 +40,17 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     data.type
   ) as Connector[];
 
-  const mainConnectNode = useSelector<RootState>(
-    (state) => state.connectView.mainNode
+  const mainConnectNodes = useSelector<RootState>(
+    (state) => state.connectView?.mainNodes
+  ) as Node[];
+
+  const mainConnectNode = mainConnectNodes?.find(
+    (node) => node?.id === data.id
   ) as Node;
 
   const connectNodes = useSelector<RootState>(
     (state) => state.connectView.connectNodes
   ) as Node[];
-
-  const isConnectViewNode = data.id === mainConnectNode?.id;
 
   const onTerminalMenuClick = () => {
     showTerminalMenu(!terminalMenu);
@@ -71,12 +78,16 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
 
   const onConnectViewClick = (node: Node) => {
     if (!isChecked(node)) {
-      node.width = Size.ConnectView_Width;
-      node.length = Size.ConnectView_Length;
-      dispatch(addMainConnectNode(data));
+      data.width = Size.ConnectView_Width;
+      data.length = Size.ConnectView_Length;
+      dispatch(addMainNode(data));
       dispatch(addConnectNode(node));
     } else {
+      data.width = Size.Node_Width;
+      data.length = Size.Node_Length;
+
       connectNodes.length === 1 && showConnectMenu(false);
+      dispatch(removeMainNode(data));
       dispatch(removeConnectNode(node));
     }
   };
@@ -90,11 +101,11 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   };
 
   useEffect(() => {
-    if (connectNodes.length < 1) dispatch(addMainConnectNode(null));
+    if (connectNodes.length < 1) dispatch(removeMainNodes());
   }, [connectNodes.length, dispatch]);
 
   useEffect(() => {
-    SetConnectNodeSize(mainConnectNode, connectNodes);
+    SetMainConnectNodeSize(mainConnectNode?.id, data.id, connectNodes);
   }, [mainConnectNode, data, connectNodes]);
 
   useEffect(() => {
@@ -125,7 +136,6 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
         onMouseOut={handleOnMouseOut}
         width={data.width}
         length={data.length}
-        isSelectedConnection={isConnectViewNode}
       >
         <TerminalsMenu visible={terminalButton} onClick={onTerminalMenuClick}>
           <img src={TerminalsIcon} alt="options" />

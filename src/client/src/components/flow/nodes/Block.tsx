@@ -16,6 +16,7 @@ const Block = ({ data, location, splitView }) => {
     >
       <img src={ArrowIcon} alt="arrow" className="icon"></img>
       <h3 className="header">{data.label}</h3>
+      <div className="line" />
       <div className="content"></div>
     </BlockNodeBox>
   );

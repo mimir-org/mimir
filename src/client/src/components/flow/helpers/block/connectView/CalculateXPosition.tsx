@@ -1,14 +1,15 @@
-import { UpdateConnectNodeSize } from ".";
+import { ResizeMainConnectNode } from ".";
 import { Size } from "../../../../../compLibrary";
 import { Node } from "../../../../../models";
 
 const CalculateXPosition = (
   node: Node,
   xPos: number,
-  connectNodes: Node[]
+  connectNodes: Node[],
+  mainConnectNodeId: string
 ): number => {
   const xMargin = 7;
-  UpdateConnectNodeSize(connectNodes.length);
+  ResizeMainConnectNode(connectNodes.length, mainConnectNodeId); // TODO: Move?
 
   if (connectNodes.length === 1)
     return (xPos += Size.ConnectView_Width / 2 - Size.Node_Width / 2);

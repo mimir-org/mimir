@@ -1,14 +1,11 @@
-import { AttributesList } from "../typeEditorModule"
-import {ActiveTerminalTypeList, AttributesContainer} from "./helpers"
+import { AttributesList } from "../typeEditorModule";
+import { ActiveTerminalTypeList, AttributesContainer } from "./helpers";
 import { useDispatch } from "react-redux";
 import { Attribute } from "../../../models";
-import {ConnectorAttributesList} from "./helpers"
+import { ConnectorAttributesList } from "./helpers";
 import { IsTransportTerminal, CreateId } from "../../flow/helpers/common";
 import styled from "styled-components";
-import {
-  
-  changeConnectorAttributeValue,
-} from "../../../redux/store/project/actions";
+import { changeConnectorAttributeValue } from "../../../redux/store/project/actions";
 import textResources from "../../../assets/textResources/textResources";
 interface ConnectorAttribute {
   id: string;
@@ -30,11 +27,11 @@ const TerminalsWrapper = styled.div`
     width: 550px;
 `;
 const ListWrapper = styled.div`
-    display: flex;
-`
+  display: flex;
+`;
 const TerminalsTabComponent = ({ node }): any => {
   const dispatch = useDispatch();
-  
+
   const handleOnConnectorChange = (
     id: string,
     value: string,
@@ -62,7 +59,7 @@ const TerminalsTabComponent = ({ node }): any => {
         tempAttributes.push(data);
       }
     });
-    activeConnectors = node.connectors?.filter(con => con.visible);
+    activeConnectors = node.connectors?.filter((con) => con.visible);
     connectorAttributes = tempAttributes;
   }
 
@@ -83,7 +80,7 @@ const TerminalsTabComponent = ({ node }): any => {
       </TerminalsWrapper>
       <AttributesContainer 
       attributes={connectorAttributes}
-      title="Connector attributes"
+      title={textResources.Inspector_Relations_Connector_Attributes}
       />
       {
       //TODO show attributes and other fields from Arjun's design on Figma
@@ -92,10 +89,11 @@ const TerminalsTabComponent = ({ node }): any => {
         connectorAttrs={connectorAttributes}
         handleChange={handleOnConnectorChange}
         ></ConnectorAttributesList>
-      </AttributesWrapper> */}
-    </ListWrapper>
+      </AttributesWrapper> */
+        }
+      </ListWrapper>
     </>
-  )
+  );
 };
 
 export default TerminalsTabComponent;

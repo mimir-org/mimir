@@ -1,0 +1,10 @@
+:root {
+  --arrow-color: black;
+}
+
+#react-flow__arrowclosed {
+  :first-child {
+    fill: var(--arrow-color);
+    stroke: var(--arrow-color);
+  }
+}

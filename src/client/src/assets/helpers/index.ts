@@ -6,3 +6,4 @@ export { default as GetMenuIcon } from "./GetMenuIcon";
 export { default as GetMapColor } from "./GetMapColor";
 export { default as GetRdsId } from "./GetRdsId";
 export { default as GetReferenceDesignation } from "./GetReferenceDesignation";
+export { default as GetAspectPartColor } from "./GetAspectPartColor";
