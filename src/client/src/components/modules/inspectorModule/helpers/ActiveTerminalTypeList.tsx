@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 
 const Wrapper = styled.div`
-    //border: red solid 1px;
     display: flex;
     flex-direction: column;
     margin: 10px;
@@ -10,7 +9,6 @@ const Wrapper = styled.div`
     width: 250px;
 `;
 const ObjectsContainer = styled.div`
-  //border: red solid 1px;
   border: solid 2px #898787;
   border-radius: 3px;
   width: 100%;
@@ -20,7 +18,6 @@ const ObjectsContainer = styled.div`
   overflow: overlay;
 `;
 const ListElement = styled.div`
-//border: red solid 1px;
 background-color: ${(props) => (props.index % 2 === 0 ? "#D9EAEB" : "white")};
 --padding: 5px;
 height: 29px;

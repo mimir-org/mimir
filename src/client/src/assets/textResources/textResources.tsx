@@ -46,8 +46,15 @@ const textResources = {
   Inspector_Relations_Another_Field: "Another field",
   Inspector_Relations_Has_Location: "Has location",
   Inspector_Relations_Fulfilled_By: "Fulfilled by",
+  Inspector_Relations_Part_Location: "Part of Location",
   Inspector_Relations_Location: "Go to location",
   Inspector_Relations_Product: "Go to product",
+  Inspector_Relations_Function: "Go to function",
+  Inspector_Relations_Input_object_connetion: "Input object connection",
+  Inspector_Relations_Output_object_connetion: "Output object connection",
+
+  Inspector_Relations_Active_Terminal_Types: "Active Terminal Types",
+  Inspector_Relations_All_Terminal_Types: "All available Terminal Types",
 
   Inspector_Admin_Id: "ID",
   Inspector_Admin_Semantic_Id: "Semantic ID",
