@@ -7,3 +7,4 @@ export { default as TabAdminContent } from "./TabAdminContent";
 export { default as RelationTabComponent } from "./RelationTabComponent"
 export { default as TerminalsTabComponent } from "./TerminalsTabComponent"
 export { default as CommentsTabComponent } from "./CommentsTabComponent"
+export { default as TechInfoTabComponent } from "./TechInfoTabComponent"

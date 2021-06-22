@@ -87,9 +87,7 @@ export const TypeEditorComponent = () => {
     const darkMode = red.store.getState().darkMode.active as boolean;
     SetDarkModeColor(darkMode);
     dispatch(getInitialData());
-    // dispatch(getRDS(state.createLibraryType.aspect));
     dispatch(changeAllModulesVisibility(false, true));
-    // dispatch(getTerminals());
     // dispatch(getAttributes(state.aspect));
   }, [
     dispatch,

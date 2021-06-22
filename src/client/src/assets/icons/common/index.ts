@@ -62,3 +62,5 @@ export { default as TransportIcon } from "./transportIcon.svg";
 export { default as EyeIcon } from "./inspectorIcon.svg";
 export { default as HelpIcon } from "./helpIcon.svg";
 export { default as UndoIcon } from "./undoIcon.svg";
+
+export { default as TrashIcon } from "./TrashIcon.svg";

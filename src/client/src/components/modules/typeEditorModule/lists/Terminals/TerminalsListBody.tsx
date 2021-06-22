@@ -15,7 +15,6 @@ export const TerminalsListBody = ({ listElements }: Props) => {
           category={element[1].key}
         />
       ))}
-      {console.log(listElements)}
     </VerticalScrollbar>
   );
 };

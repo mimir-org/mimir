@@ -13,6 +13,9 @@ import {
   CHANGE_TYPENAME,
   CHANGE_MODE,
   CHANGE_STATUS,
+  CHANGE_RDS,
+  CHANGE_SEMANTICREFERENCE,
+  UPDATE_TERMINALTYPES,
   TypeEditorActionTypes,
   TypeEditorState,
 } from "./types";
@@ -26,7 +29,7 @@ const initialState: TypeEditorState = {
     status: Status.Draft,
     aspect: Aspect.NotSet,
     objectType: ObjectType.NotSet,
-    semanticReference: "",
+    semanticReference: null,
     rdsId: "",
     terminalTypes: [],
     attributeTypes: [],
@@ -130,7 +133,30 @@ export function typeEditorReducer(
           status: action.payload.status,
         },
       };
-
+    case CHANGE_RDS:
+      return {
+        ...state,
+        createLibraryType: {
+          ...state.createLibraryType,
+          rdsId: action.payload.rds,
+        },
+      };
+    case CHANGE_SEMANTICREFERENCE:
+      return {
+        ...state,
+        createLibraryType: {
+          ...state.createLibraryType,
+          semanticReference: action.payload.semanticReference,
+        },
+      };
+    case UPDATE_TERMINALTYPES:
+      return {
+        ...state,
+        createLibraryType: {
+          ...state.createLibraryType,
+          terminalTypes: action.payload.terminalTypes,
+        },
+      };
     default:
       return state;
   }

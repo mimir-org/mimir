@@ -1,6 +1,7 @@
 import {
   Attribute,
   TerminalType,
+  TerminalTypeItem,
   Aspect,
   ObjectType,
   Status,
@@ -16,6 +17,9 @@ import {
   CHANGE_OBJECTTYPE,
   CHANGE_TYPENAME,
   CHANGE_STATUS,
+  CHANGE_RDS,
+  CHANGE_SEMANTICREFERENCE,
+  UPDATE_TERMINALTYPES,
   TypeEditorActionTypes,
 } from "./types";
 
@@ -125,6 +129,33 @@ export function changeStatus(status: Status) {
     type: CHANGE_STATUS,
     payload: {
       status,
+    },
+  };
+}
+
+export function changeRDS(rds: string) {
+  return {
+    type: CHANGE_RDS,
+    payload: {
+      rds,
+    },
+  };
+}
+
+export function changeSemanticReference(semanticReference: string) {
+  return {
+    type: CHANGE_SEMANTICREFERENCE,
+    payload: {
+      semanticReference,
+    },
+  };
+}
+
+export function updateTerminalTypes(terminalTypes: TerminalTypeItem[]) {
+  return {
+    type: UPDATE_TERMINALTYPES,
+    payload: {
+      terminalTypes,
     },
   };
 }
