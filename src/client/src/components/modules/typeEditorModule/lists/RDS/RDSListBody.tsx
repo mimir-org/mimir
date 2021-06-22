@@ -14,9 +14,11 @@ export const RDSListBody = ({ listElements }: Props) => {
       <ListElementsContainer>
         {listElements &&
           listElements.map((element) => (
-            <>
-              <RDSListElement key={element[0].id} name={element[0].name} />
-            </>
+            <RDSListElement
+              key={element[1].id}
+              id={element[1].id}
+              name={element[1].name}
+            />
           ))}
       </ListElementsContainer>
     </VerticalScrollbar>

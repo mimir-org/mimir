@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   flex: 0.3;
-  max-height: 21px;
   font-size: 13px;
   color: black;
   position: relative;
@@ -10,6 +9,9 @@
   .dropdown_header {
     display: flex;
     flex-direction: row;
+    flex: 1;
+    min-width: 85px;
+    max-height: 20px;
     background-color: white;
     align-items: center;
     border: 1px solid #cbcbcb;

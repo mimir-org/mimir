@@ -14,7 +14,6 @@ import {
   DropdownMenuListItem,
 } from "../../../../compLibrary/dropdown";
 import "./dropdownmenu.scss";
-import { Aspect } from "../../../../models";
 
 interface Props {
   label: string;
@@ -27,10 +26,6 @@ export const DropDownMenu = ({ label, placeHolder, listItems }: Props) => {
 
   const [isListOpen, setIsListOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState(placeHolder);
-
-  //   const state = useSelector<RootState>(
-  //     (state) => state.typeEditor
-  //   ) as TypeEditorState;
 
   const toggleList = () => {
     setIsListOpen(!isListOpen);
