@@ -12,6 +12,7 @@ import {
   ButtonGoToAspect,
 } from "../../../compLibrary/box/inspector";
 import styled from "styled-components";
+import textResources from "../../../assets/textResources/textResources";
 
 const GoToAspectContainer = styled.div`
   height: 30%;
@@ -56,42 +57,42 @@ const RelationTabComponent = ({ node }) => {
     <RelationColumns>
       <AspectList>
         <GoToAspectContainer>
-          <div>Part of Location</div>
+          <div>{textResources.Inspector_Relations_Part_Location}</div>
           <InputBox>
             <InputWrapper width="45%">
               <Input value="Room 2" disabled={true} />
             </InputWrapper>
             <InputWrapper width="45%">
               <ButtonGoToAspect onClick={() => goToAspectNode("Location")}>
-                <span>Go to location</span>
+                <span>{textResources.Inspector_Relations_Location}</span>
                 <img src={RightArrowIcon} alt="right-arrow-icon" />
               </ButtonGoToAspect>
             </InputWrapper>
           </InputBox>
         </GoToAspectContainer>
         <GoToAspectContainer>
-          <div>Fulifilled by </div>
+          <div>{textResources.Inspector_Relations_Fulfilled_By}</div>
           <InputBox>
             <InputWrapper width="45%">
               <Input value="Product 1" disabled={true} />
             </InputWrapper>
             <InputWrapper width="45%">
               <ButtonGoToAspect onClick={() => goToAspectNode("Product")}>
-                <span>Go to product</span>
+                <span>{textResources.Inspector_Relations_Product}</span>
                 <img src={RightArrowIcon} alt="right-arrow-icon" />
               </ButtonGoToAspect>
             </InputWrapper>
           </InputBox>
         </GoToAspectContainer>
         <GoToAspectContainer>
-          <div>Has Function</div>
+          <div>{textResources.Inspector_Relations_Has_Function}</div>
           <InputBox>
             <InputWrapper width="45%">
               <Input value="Room 2" disabled={true} />
             </InputWrapper>
             <InputWrapper width="45%">
               <ButtonGoToAspect onClick={() => goToAspectNode("Function")}>
-                <span>Go to function</span>
+                <span>{textResources.Inspector_Relations_Function}</span>
                 <img src={RightArrowIcon} alt="right-awwow-icon" />
               </ButtonGoToAspect>
             </InputWrapper>
@@ -101,12 +102,12 @@ const RelationTabComponent = ({ node }) => {
       <ConnectionList
         nodes={inputNodes}
         onElementClick={changeSelectedNode}
-        title={"Input object connection"}
+        title={textResources.Inspector_Relations_Input_object_connetion}
       />
       <ConnectionList
         nodes={outputNodes}
         onElementClick={changeSelectedNode}
-        title={"Output object connection"}
+        title={textResources.Inspector_Relations_Output_object_connetion}
       />
     </RelationColumns>
   );

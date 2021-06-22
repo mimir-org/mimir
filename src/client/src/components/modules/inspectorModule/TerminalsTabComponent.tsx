@@ -1,16 +1,15 @@
 import { AttributesList } from "../typeEditorModule"
 import {ActiveTerminalTypeList, AttributesContainer} from "./helpers"
 import { useDispatch } from "react-redux";
-import { Input, InputBox, Select } from "../../../compLibrary";
-import { TabColumn } from "../../../compLibrary/box/inspector";
 import { Attribute } from "../../../models";
 import {ConnectorAttributesList} from "./helpers"
 import { IsTransportTerminal, CreateId } from "../../flow/helpers/common";
 import styled from "styled-components";
 import {
-  changeAttributeValue,
+  
   changeConnectorAttributeValue,
 } from "../../../redux/store/project/actions";
+import textResources from "../../../assets/textResources/textResources";
 interface ConnectorAttribute {
   id: string;
   name: string;
@@ -66,19 +65,19 @@ const TerminalsTabComponent = ({ node }): any => {
   return (
     <>
     <ListWrapper>
-
       <ActiveTerminalTypeList
       terminals={node?.connectors}
-      title="All available Terminal Types"
+      title={textResources.Inspector_Relations_All_Terminal_Types}
       onElementClick={()=>{}}
       />
       <ActiveTerminalTypeList
       terminals={activeConnectors}
-      title="Active Terminal Types"
+      title={textResources.Inspector_Relations_Active_Terminal_Types}
       onElementClick={()=>{}}
       />
       <AttributesContainer 
       attributes={connectorAttributes}
+      title="Connector attributes"
       />
       {
       //TODO show attributes and other fields from Arjun's design on Figma

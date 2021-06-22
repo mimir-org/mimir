@@ -61,14 +61,14 @@ const TechInfoTabComponent = ({ node }) => {
                   </InputWrapper>
                   <InputWrapper width={100 - inputFieldWidth + "%"}>
                     <Select
-                      value={attr.unit}
+                      value={attr.unit ?? ""}
                       onChange={(e: any) =>
                         handleOnNodeChange(attr.id, attr.value, e.target.value)
                       }
                     >
                       <option value={"NotSet"}>NotSet</option>
                       {attr.units?.map((unit) => (
-                        <option value={unit + "langt navn"}>{unit}</option>
+                        <option value={unit.id}>{unit.name}</option>
                       ))}
                     </Select>
                   </InputWrapper>
