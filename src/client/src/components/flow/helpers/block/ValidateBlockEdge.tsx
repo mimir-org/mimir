@@ -1,3 +1,4 @@
+import red from "../../../../redux/store";
 import { IsConnectView } from "./connectView";
 import { Node, Connector } from "../../../../models";
 import {
@@ -6,6 +7,7 @@ import {
   IsFunction,
   IsLocation,
   IsPartOfTerminal,
+  IsTransportTerminal,
 } from "../common";
 
 const ValidateBlockEdge = (
@@ -21,8 +23,18 @@ const ValidateBlockEdge = (
   if (IsPartOfTerminal(fromConnector) || IsPartOfTerminal(toConnector))
     return false;
 
+  const connectChildren = red.store.getState().connectView
+    ?.connectNodes as Node[];
+
   if (IsConnectView()) {
-    return true; // TODO: fix guards
+    if (
+      fromNode !== selectedNode &&
+      IsTransportTerminal(fromConnector) &&
+      connectChildren.some((node) => node.id === fromNode.id) &&
+      connectChildren.some((node) => node.id === toNode.id)
+    )
+      return true;
+    return false;
   }
 
   if (!splitView && !IsConnectView()) {
