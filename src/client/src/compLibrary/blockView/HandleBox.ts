@@ -11,7 +11,7 @@ const HandleBox = styled.div`
       props.position === Position.Right && !props.splitNode
         ? "-105"
         : props.position === Position.Left && !props.splitNode
-        ? "-45"
+        ? "-40"
         : props.splitNode && "-20"}px;
     right: ${(props) =>
       props.position === Position.Right && -Size.Node_Width}px;

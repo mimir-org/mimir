@@ -19,11 +19,6 @@ class Connector {
 
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor() {}
-
-  // Methods
-  isTerminal() {
-    return this.terminalCategoryId != null;
-  }
 }
 
 export default Connector;

@@ -1,7 +1,7 @@
 import { Connector } from "../../../../models";
 
 const IsTransportTerminal = (conn: Connector) => {
-  return conn?.terminalCategoryId != null; // TODO: Check this
+  return conn?.terminalCategoryId !== null;
 };
 
 export default IsTransportTerminal;

@@ -17,23 +17,30 @@ export default function BlockEdgeType({
   markerEndId,
 }) {
   const markerEnd = getMarkerEnd(ArrowHeadType.ArrowClosed, markerEndId);
+
+  // Force edge to fit the terminals
+  //   targetY += 40;
+  //   sourceY += 40;
+
   const edgePathSmoothStep = getSmoothStepPath({
     sourceX,
     sourceY,
-    sourcePosition,
     targetX,
     targetY,
+    sourcePosition,
     targetPosition,
   });
 
   const getStyle = () => {
+    // console.log(data.source);
+    // console.log(data.edge);
     const fromConnector = data.source.connectors.find(
       (x) => x.id === data.edge.fromConnector
     ) as Connector;
 
     return {
       stroke: fromConnector?.color,
-      strokeWidth: 3,
+      strokeWidth: 2,
     };
   };
 
