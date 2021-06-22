@@ -9,7 +9,6 @@ import { setActiveConnector } from "../../../redux/store/project/actions";
 import { TerminalsComponent, ConnectViewComponent } from "../block";
 import { HandleComponent } from "../block";
 import { FilterConnectors } from "../helpers/block";
-import { FindNodeById } from "../helpers/block/connectView";
 import {
   GetConnectChildren,
   SetMainConnectNodeSize,
@@ -104,17 +103,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     SetMainConnectNodeSize(mainConnectNode?.id, data.id, connectNodes);
   }, [mainConnectNode, data, connectNodes]);
 
-  useEffect(() => {
-    const twinNode = FindNodeById(mainConnectNode?.id);
-    // TODO: Check this render
-    const clicked = () => {
-      if (twinNode) twinNode.style.zIndex = "1";
-    };
-    if (mainConnectNode) {
-      window.addEventListener("click", clicked);
-    } else window.removeEventListener("click", clicked);
-  });
-
+  // Force edges' z-index in ConnectView
   useEffect(() => {
     if (mainConnectNode) {
       const allEdges = document.querySelector(
