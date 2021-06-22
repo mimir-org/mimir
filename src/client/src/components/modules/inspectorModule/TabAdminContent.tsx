@@ -8,6 +8,7 @@ import { Node, Project } from "../../../models";
 import { GetRdsId, GetReferenceDesignation } from "../../../assets/helpers";
 import { IsLocation } from "../../flow/helpers/common";
 import { IsBlockView } from "../../flow/helpers/block";
+import { DeleteNodeButton } from "./helpers/";
 
 interface Props {
   node: Node;
@@ -20,7 +21,10 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
   const handleOnChange = (e: any, key: string) => {
     dispatch(changeNodeValue(node.id, key, e.target.value));
   };
-
+  function deleteSelectedNode(){
+    // Helge Mikael
+    alert("Cant delete " + node?.label + ". Delete button not yet functional.");
+  }
   return (
     <>
       <TabColumn>
@@ -108,6 +112,25 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
             />
           </div>
         )}
+        <div>
+          <div>Tag Number</div>
+          <Input
+            value={node.tagNumber ?? ""}
+            onChange={(e: any) => handleOnChange(e, "tagNumber")}
+            inputType=""
+          />
+        </div>
+        {IsLocation(node) && IsBlockView() && (
+          <div>
+            <div>Height (m)</div>
+            <Input
+              value={node.height}
+              onChange={(e: any) => handleOnChange(e, "height")}
+              inputType=""
+              readOnly={true}
+            />
+          </div>
+        )}
       </TabColumn>
       <TabColumn>
         <div>
@@ -142,8 +165,6 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
             />
           </div>
         )}
-      </TabColumn>
-      <TabColumn>
         <div>
           <div>Contractor</div>
           <Select
@@ -158,25 +179,6 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
             ))}
           </Select>
         </div>
-        <div>
-          <div>Tag Number</div>
-          <Input
-            value={node.tagNumber ?? ""}
-            onChange={(e: any) => handleOnChange(e, "tagNumber")}
-            inputType=""
-          />
-        </div>
-        {IsLocation(node) && IsBlockView() && (
-          <div>
-            <div>Height (m)</div>
-            <Input
-              value={node.height}
-              onChange={(e: any) => handleOnChange(e, "height")}
-              inputType=""
-              readOnly={true}
-            />
-          </div>
-        )}
       </TabColumn>
       <TabColumn>
         <div>
@@ -186,8 +188,11 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
             height="90"
             value={node.description ?? ""}
             onChange={(e: any) => handleOnChange(e, "description")}
-          ></Textarea>
+            ></Textarea>
         </div>
+      </TabColumn>
+      <TabColumn>
+        <DeleteNodeButton handleClick={deleteSelectedNode}/>
       </TabColumn>
     </>
   );

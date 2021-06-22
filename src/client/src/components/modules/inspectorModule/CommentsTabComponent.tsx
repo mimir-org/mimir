@@ -9,7 +9,7 @@ const CommentsTabComponent = ( { node } ) => {
   return (
     <>
         <Wrapper>
-            
+            Not yet implemented.
         </Wrapper>
     </>
   );

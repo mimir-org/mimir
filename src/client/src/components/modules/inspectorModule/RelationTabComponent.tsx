@@ -1,4 +1,4 @@
-import { Input, InputBox, AttributeField } from "../../../compLibrary";
+import { Input, InputBox } from "../../../compLibrary";
 import { InputWrapper } from "./styled";
 import { RightArrowIcon } from "../../../assets/icons/common";
 import { ConnectionList } from "./helpers";
@@ -11,6 +11,13 @@ import {
   AspectList,
   ButtonGoToAspect,
 } from "../../../compLibrary/box/inspector";
+import styled from "styled-components";
+
+const GoToAspectContainer = styled.div`
+  height: 30%;
+  font-size: 12px;
+  width: 300px;
+`;
 
 const RelationTabComponent = ({ node }) => {
   const dispatch = useDispatch();
@@ -21,68 +28,75 @@ const RelationTabComponent = ({ node }) => {
   const edges = project?.edges ?? [];
 
   const edgesFromSelectedNode = edges.filter(
-    (e: Edge) => e.fromNode === node.id
+    (e: Edge) => e.fromNodeId === node.id
   );
-  const edgesToSelectedNode = edges.filter((e: Edge) => e.toNode === node.id);
+  const edgesToSelectedNode = edges.filter((e: Edge) => e.toNodeId === node.id);
   const inputNodes = nodes.filter((n) =>
-    edgesToSelectedNode.some((e) => e.fromNode === n)
+    edgesToSelectedNode.some((e) => e.fromNodeId === n.id)
   );
   const outputNodes = nodes.filter((n) =>
-    edgesFromSelectedNode.some((e) => e.toNode === n)
+    edgesFromSelectedNode.some((e) => e.toNodeId === n.id)
   );
 
   function changeSelectedNode(id) {
     dispatch(changeActiveNode(id, true));
   }
-  function goToAspect(aspect) {
+  function goToAspectNode(aspect) {
     console.log("Changing to aspect", aspect);
-    //dispatch(changeSelectedAspect(aspect));
+    alert("Cannot go to " + aspect + ": Not yet implemented.");
+    /*if (aspect === "Location") {
+      changeSelectedNode(node.location)
+    } else if (aspect === "Product") {
+      changeSelectedNode(node.product)
+    } else if (aspect === "Function") {
+      changeSelectedNode(node.function)
+    }*/
   }
   return (
     <RelationColumns>
       <AspectList>
-        <AttributeField>
+        <GoToAspectContainer>
           <div>Part of Location</div>
           <InputBox>
-            <InputWrapper width="50%">
+            <InputWrapper width="45%">
               <Input value="Room 2" disabled={true} />
             </InputWrapper>
-            <InputWrapper width="50%">
-              <ButtonGoToAspect>
+            <InputWrapper width="45%">
+              <ButtonGoToAspect onClick={() => goToAspectNode("Location")}>
                 <span>Go to location</span>
                 <img src={RightArrowIcon} alt="right-arrow-icon" />
               </ButtonGoToAspect>
             </InputWrapper>
           </InputBox>
-        </AttributeField>
-        <AttributeField>
+        </GoToAspectContainer>
+        <GoToAspectContainer>
           <div>Fulifilled by </div>
           <InputBox>
-            <InputWrapper width="50%">
+            <InputWrapper width="45%">
               <Input value="Product 1" disabled={true} />
             </InputWrapper>
-            <InputWrapper width="50%">
-              <ButtonGoToAspect>
+            <InputWrapper width="45%">
+              <ButtonGoToAspect onClick={() => goToAspectNode("Product")}>
                 <span>Go to product</span>
                 <img src={RightArrowIcon} alt="right-arrow-icon" />
               </ButtonGoToAspect>
             </InputWrapper>
           </InputBox>
-        </AttributeField>
-        <AttributeField>
+        </GoToAspectContainer>
+        <GoToAspectContainer>
           <div>Has Function</div>
           <InputBox>
-            <InputWrapper width="50%">
+            <InputWrapper width="45%">
               <Input value="Room 2" disabled={true} />
             </InputWrapper>
-            <InputWrapper width="50%">
-              <ButtonGoToAspect onClick={() => goToAspect("Function")}>
+            <InputWrapper width="45%">
+              <ButtonGoToAspect onClick={() => goToAspectNode("Function")}>
                 <span>Go to function</span>
                 <img src={RightArrowIcon} alt="right-awwow-icon" />
               </ButtonGoToAspect>
             </InputWrapper>
           </InputBox>
-        </AttributeField>
+        </GoToAspectContainer>
       </AspectList>
       <ConnectionList
         nodes={inputNodes}
