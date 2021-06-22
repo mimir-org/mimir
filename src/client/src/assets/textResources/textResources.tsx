@@ -55,6 +55,7 @@ const textResources = {
 
   Inspector_Relations_Active_Terminal_Types: "Active Terminal Types",
   Inspector_Relations_All_Terminal_Types: "All available Terminal Types",
+  Inspector_Relations_Connector_Attributes: "Connector attributes",
 
   Inspector_Admin_Id: "ID",
   Inspector_Admin_Semantic_Id: "Semantic ID",
