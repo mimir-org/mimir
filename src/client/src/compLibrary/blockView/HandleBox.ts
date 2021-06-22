@@ -14,7 +14,7 @@ const HandleBox = styled.div`
         ? "-35"
         : props.splitNode && "-20"}px;
     right: ${(props) =>
-      props.position === Position.Right && -Size.Node_Width}px;
+      props.position === Position.Right && -Size.Node_Width - 1}px;
     margin-bottom: 3px;
   }
 `;
