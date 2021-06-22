@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { useHistory } from "react-router-dom";
 import { MODULE_TYPE } from "../../../models/project";
-import { Aspect, ObjectType } from "../../../models/";
+import { Aspect } from "../../../models/";
 import { TextResources } from "../../../assets/textResources";
 import { CloseIcon } from "../../../assets/icons/common";
 import { TypeEditorState } from "../../../redux/store/typeEditor/types";
@@ -15,11 +15,7 @@ import {
   changeMode,
   changeTypeName,
 } from "../../../redux/store/typeEditor/actions";
-import {
-  getInitialData,
-  getRDS,
-  getTerminals,
-} from "../../../redux/store/typeEditor/actions";
+import { getInitialData } from "../../../redux/store/typeEditor/actions";
 import {
   DropdownMenu,
   RDSList,
@@ -91,9 +87,7 @@ export const TypeEditorComponent = () => {
     const darkMode = red.store.getState().darkMode.active as boolean;
     SetDarkModeColor(darkMode);
     dispatch(getInitialData());
-    // dispatch(getRDS(state.createLibraryType.aspect));
     dispatch(changeAllModulesVisibility(false, true));
-    // dispatch(getTerminals());
     // dispatch(getAttributes(state.aspect));
   }, [
     dispatch,

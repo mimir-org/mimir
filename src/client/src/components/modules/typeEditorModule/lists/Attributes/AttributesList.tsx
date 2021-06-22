@@ -13,7 +13,7 @@ export const AttributesList = () => {
   ) as TypeEditorState;
 
   return (
-    <ListWrapper flex={1}>
+    <ListWrapper flex={0.7}>
       <ListHeader
         label={TextResources.TypeEditor_Properties_Block_Attributes}
         chooseVisible={true}

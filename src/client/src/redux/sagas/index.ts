@@ -9,8 +9,6 @@ import {
 } from "./../store/project/types";
 import {
   FETCHING_INITIAL_DATA,
-  FETCHING_RDS,
-  FETCHING_TERMINALS,
   FETCHING_ATTRIBUTES,
   CHANGE_ASPECT,
 } from "../store/typeEditor/types";

@@ -10,7 +10,7 @@ const TerminalListElement = styled.div`
   font-size: ${FontSize.Standard};
   color: ${Color.Black};
   :nth-child(odd) {
-    background-color: #d9eaeb;
+    background-color: rgba(0, 112, 121, 0.15);
   }
   :nth-child(even) {
     background-color: ${Color.White};
