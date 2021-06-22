@@ -1,6 +1,12 @@
 import red from "../../../../redux/store";
 import { Node, Connector } from "../../../../models";
-import { IsChildOf, IsFunction, IsLocation, IsPartOfTerminal } from "../common";
+import {
+  IsAspectNode,
+  IsChildOf,
+  IsFunction,
+  IsLocation,
+  IsPartOfTerminal,
+} from "../common";
 
 const ValidateBlockEdge = (
   selectedNode: Node,
@@ -11,10 +17,8 @@ const ValidateBlockEdge = (
   toConnector: Connector,
   splitView: boolean
 ) => {
-  const connectNode = red.store
-    .getState()
-    .connectView.mainNodes.find((x) => x.id === selectedNode.id) as Node;
-  const hasConnectNode = connectNode !== null;
+  const connectNodes = red.store.getState().connectView.mainNodes;
+  const hasConnectNode = connectNodes.length > 0;
 
   if (!fromNode || !toNode) return false;
   if (IsPartOfTerminal(fromConnector) || IsPartOfTerminal(toConnector))
@@ -26,6 +30,7 @@ const ValidateBlockEdge = (
 
   if (!splitView && !hasConnectNode) {
     if (IsFunction(selectedNode)) {
+      if (IsAspectNode(selectedNode)) return false;
       if (IsLocation(fromNode) || IsLocation(toNode)) return false;
       if (selectedNode === toNode || selectedNode === fromNode) return false;
       if (!IsChildOf(fromNode, selectedNode)) return false;
@@ -51,7 +56,6 @@ const ValidateBlockEdge = (
     )
       return true;
   }
-
   return false;
 };
 
