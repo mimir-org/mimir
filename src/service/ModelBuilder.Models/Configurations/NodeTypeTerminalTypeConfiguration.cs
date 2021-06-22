@@ -9,7 +9,7 @@ namespace Mb.Models.Configurations
         public void Configure(EntityTypeBuilder<NodeTypeTerminalType> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.ToTable("NodeTypeTerminalType");
+            builder.ToTable("NodeType_TerminalType");
             builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
             builder.Property(p => p.Number).HasColumnName("Number").IsRequired().HasDefaultValue(1);
             builder.Property(p => p.ConnectorType).HasColumnName("ConnectorType").IsRequired().HasConversion<string>();

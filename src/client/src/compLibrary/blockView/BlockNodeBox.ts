@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Size } from "..";
+import Color from "../colors/Color";
 
 const BlockNodeBox = styled.div`
   position: absolute;
@@ -12,7 +13,7 @@ const BlockNodeBox = styled.div`
     props.splitView ? `${Size.SplitView_Width}` : `${Size.BlockView_Width}`}px;
 
   left: ${(props) =>
-    props.location
+    props.location && props.splitView
       ? `${Size.SplitView_Width - Size.BlockView_BackgroundMargin * 2}`
       : -`${Size.SplitView_MarginLeft}`}px;
 
@@ -31,6 +32,19 @@ const BlockNodeBox = styled.div`
   .icon {
     position: absolute;
     top: 14px;
+  }
+
+  .line {
+    position: absolute;
+    top: 37px;
+    width: ${(props) =>
+      props.splitView
+        ? `${Size.SplitView_Width - 3}`
+        : `${Size.BlockView_Width - 3}`}px;
+    height: 2px;
+    margin-left: 3px;
+    background-color: ${(props) =>
+      props.location ? Color.Location : Color.Function};
   }
 `;
 

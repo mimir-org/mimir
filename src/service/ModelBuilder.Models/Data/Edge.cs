@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Mb.Models.Data
 {
@@ -20,6 +21,10 @@ namespace Mb.Models.Data
         public string ToNodeId { get; set; }
         public Node ToNode { get; set; }
 
+        [Required]
+        public string MasterProjectId { get; set; }
+        public virtual Project MasterProject { get; set; }
+        public bool IsTemplateEdge { get; set; }
         public virtual ICollection<Project> Projects { get; set; }
     }
 }

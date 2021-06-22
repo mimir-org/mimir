@@ -17,10 +17,10 @@ namespace Mb.Models.Configurations
 
             builder.HasOne(x => x.TerminalCategory).WithMany(y => y.TerminalTypes).HasForeignKey(x => x.TerminalCategoryId).OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasMany(x => x.Attributes).WithMany(y => y.TerminalTypes).UsingEntity<Dictionary<string, object>>("TerminalTypeAttributeType",
+            builder.HasMany(x => x.Attributes).WithMany(y => y.TerminalTypes).UsingEntity<Dictionary<string, object>>("TerminalType_AttributeType",
                 x => x.HasOne<AttributeType>().WithMany().HasForeignKey("AttributeTypeId"),
                 x => x.HasOne<TerminalType>().WithMany().HasForeignKey("TerminalTypeId"),
-                x => x.ToTable("TerminalTypeAttributeType")
+                x => x.ToTable("TerminalType_AttributeType")
             );
         }
     }

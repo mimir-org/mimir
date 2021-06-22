@@ -18,8 +18,8 @@ import {
   useOnNodeDragStop,
 } from "./hooks";
 import {
-  addMainConnectNode,
   removeConnectNodes,
+  removeMainNodes,
 } from "../../redux/store/connectView/actions";
 import {
   GetBlockNodeTypes,
@@ -52,7 +52,7 @@ const FlowBlock = () => {
 
   // Flush ConnectView
   useEffect(() => {
-    dispatch(addMainConnectNode(null));
+    dispatch(removeMainNodes());
     dispatch(removeConnectNodes());
   }, [dispatch]);
 
@@ -70,9 +70,9 @@ const FlowBlock = () => {
     (state) => state.splitView.node
   ) as Node;
 
-  const mainConnectNode = useSelector<RootState>(
-    (state) => state.connectView.mainNode
-  ) as Node;
+  const mainConnectNodes = useSelector<RootState>(
+    (state) => state.connectView.mainNodes
+  ) as Node[];
 
   const connectViewNodes = useSelector<RootState>(
     (state) => state.connectView.connectNodes
@@ -110,6 +110,11 @@ const FlowBlock = () => {
   );
 
   const OnElementsRemove = (elementsToRemove) => {
+    const node = elementsToRemove[0];
+    const fromEdge = project.edges.find((x) => x.fromNodeId === node.id);
+    const toEdge = project.edges.find((x) => x.toNodeId === node.id);
+    if (fromEdge) elementsToRemove.push(fromEdge);
+    if (toEdge) elementsToRemove.push(toEdge);
     return useOnElementsRemove(elementsToRemove, setElements, dispatch);
   };
 
@@ -141,13 +146,14 @@ const FlowBlock = () => {
       setElements,
       reactFlowInstance,
       reactFlowWrapper,
+      project.id,
       splitView,
       selectedNode
     );
   };
 
   const OnElementClick = (_event, element) => {
-    if (!mainConnectNode) {
+    if (mainConnectNodes.length === 0) {
       dispatch(changeActiveBlockNode(element.id));
       dispatch(changeInspectorTab(0));
     }

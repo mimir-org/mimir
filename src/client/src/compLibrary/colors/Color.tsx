@@ -17,6 +17,13 @@ const Color = {
   DeepCyanTransparent: " rgba(0, 112, 121, 0.15)",
   DarkRed: "rgb(139,0,0)",
   Red: "rgb(255,0,0)",
+  FunctionPart: "#FFC000",
+  ProductPart: "#00F0FF",
+  LocationPart: "#CC00D0",
+  Terminal_Oil: "#663300",
+  Terminal_Water: "#0066FF",
+  Terminal_Gas: "#FFCC00",
+  Terminal_Multiphase: "#00CC66",
 };
 
 export default Color;

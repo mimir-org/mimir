@@ -1,10 +1,30 @@
 import { Node } from "../../../models";
 import {
-  ADD_CONNECT_NODE,
   ADD_MAIN_CONNECT_NODE,
-  REMOVE_ALL_CONNECT_NODES,
+  REMOVE_MAIN_CONNECT_NODE,
+  ADD_CONNECT_NODE,
   REMOVE_CONNECT_NODE,
+  REMOVE_ALL_CONNECT_NODES,
+  REMOVE_ALL_MAIN_NODES,
 } from "./types";
+
+export function addMainNode(node: Node) {
+  return {
+    type: ADD_MAIN_CONNECT_NODE,
+    payload: {
+      node,
+    },
+  };
+}
+
+export function removeMainNode(node: Node) {
+  return {
+    type: REMOVE_MAIN_CONNECT_NODE,
+    payload: {
+      node,
+    },
+  };
+}
 
 export function addConnectNode(node: Node) {
   return {
@@ -24,17 +44,14 @@ export function removeConnectNode(node: Node) {
   };
 }
 
-export function removeConnectNodes() {
+export function removeMainNodes() {
   return {
-    type: REMOVE_ALL_CONNECT_NODES,
+    type: REMOVE_ALL_MAIN_NODES,
   };
 }
 
-export function addMainConnectNode(mainNode: Node) {
+export function removeConnectNodes() {
   return {
-    type: ADD_MAIN_CONNECT_NODE,
-    payload: {
-      mainNode,
-    },
+    type: REMOVE_ALL_CONNECT_NODES,
   };
 }

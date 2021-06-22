@@ -8,7 +8,7 @@ namespace Mb.Models.Configurations
     {
         public void Configure(EntityTypeBuilder<Terminal> builder)
         {
-            builder.Property(p => p.TerminalCategoryId).HasColumnName("TerminalCategoryId").IsRequired();
+            builder.Property(p => p.TerminalCategoryId).HasColumnName("Terminal_CategoryId").IsRequired();
             builder.HasOne(x => x.TerminalCategory).WithMany(y => y.Terminals).HasForeignKey(x => x.TerminalCategoryId).OnDelete(DeleteBehavior.Cascade);
         }
     }

@@ -13,16 +13,11 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
             builder.Property(p => p.Name).HasColumnName("Name").IsRequired();
             builder.Property(p => p.Type).HasColumnName("Type").IsRequired().HasConversion<string>();
+            builder.Property(p => p.Visible).HasColumnName("Visible").IsRequired().HasConversion<string>();
             builder.Property(p => p.SemanticReference).HasColumnName("SemanticReference").IsRequired(false);
             builder.Property(p => p.NodeId).HasColumnName("NodeId").IsRequired();
 
             builder.HasOne(x => x.Node).WithMany(y => y.Connectors).HasForeignKey(x => x.NodeId).OnDelete(DeleteBehavior.Cascade);
-
-            //builder.Property(p => p.Terminal).HasColumnName("Terminal").IsRequired().HasConversion<string>();
-            //builder.Property(p => p.TerminalCategory).HasColumnName("TerminalCategory").IsRequired().HasConversion<string>();
-
-
-            
         }
     }
 }

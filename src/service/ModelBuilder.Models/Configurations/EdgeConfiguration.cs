@@ -22,6 +22,10 @@ namespace Mb.Models.Configurations
             builder.HasOne(x => x.FromConnector).WithMany(y => y.FromEdges).HasForeignKey(x => x.FromConnectorId).OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(x => x.ToConnector).WithMany(y => y.ToEdges).HasForeignKey(x => x.ToConnectorId).OnDelete(DeleteBehavior.NoAction);
 
+            builder.Property(p => p.MasterProjectId).HasColumnName("MasterProjectId").IsRequired();
+            builder.Property(p => p.IsTemplateEdge).HasColumnName("IsTemplateEdge").IsRequired();
+            builder.HasOne(x => x.MasterProject).WithMany().HasForeignKey(x => x.MasterProjectId).OnDelete(DeleteBehavior.NoAction);
+            
             builder.HasMany(x => x.Projects).WithMany(y => y.Edges).UsingEntity<Dictionary<string, object>>("ProjectEdge", 
                 x => x.HasOne<Project>().WithMany().HasForeignKey("ProjectId"),
                 x => x.HasOne<Edge>().WithMany().HasForeignKey("EdgeId"),
