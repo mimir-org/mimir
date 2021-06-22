@@ -1,6 +1,5 @@
 import moment from "moment/moment.js";
 import { useDispatch } from "react-redux";
-import { changeNodeValue } from "../../../redux/store/project/actions";
 import { Contractor } from "../../../redux/store/common/types";
 import { TabColumn } from "../../../compLibrary/box/inspector";
 import { Input, Select, Textarea } from "../../../compLibrary";
@@ -9,6 +8,11 @@ import { GetRdsId, GetReferenceDesignation } from "../../../assets/helpers";
 import { IsLocation } from "../../flow/helpers/common";
 import { IsBlockView } from "../../flow/helpers/block";
 import { DeleteNodeButton } from "./helpers/";
+import {
+  changeNodeValue,
+  removeEdge,
+  removeNode,
+} from "../../../redux/store/project/actions";
 
 interface Props {
   node: Node;
@@ -21,10 +25,15 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
   const handleOnChange = (e: any, key: string) => {
     dispatch(changeNodeValue(node.id, key, e.target.value));
   };
-  function deleteSelectedNode(){
-    // Helge Mikael
-    alert("Cant delete " + node?.label + ". Delete button not yet functional.");
-  }
+
+  const handleOnDelete = () => {
+    const fromEdge = project.edges.find((x) => x.fromNodeId === node.id);
+    const toEdge = project.edges.find((x) => x.toNodeId === node.id);
+    if (fromEdge) dispatch(removeEdge(fromEdge.id));
+    if (toEdge) dispatch(removeEdge(toEdge.id));
+    dispatch(removeNode(node.id));
+  };
+
   return (
     <>
       <TabColumn>
@@ -188,11 +197,11 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
             height="90"
             value={node.description ?? ""}
             onChange={(e: any) => handleOnChange(e, "description")}
-            ></Textarea>
+          ></Textarea>
         </div>
       </TabColumn>
       <TabColumn>
-        <DeleteNodeButton handleClick={deleteSelectedNode}/>
+        <DeleteNodeButton handleClick={handleOnDelete} />
       </TabColumn>
     </>
   );
