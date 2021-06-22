@@ -1,26 +1,27 @@
-import { AttributesList } from "../typeEditorModule";
 import { ActiveTerminalTypeList, AttributesContainer } from "./helpers";
-import { useDispatch } from "react-redux";
 import { Attribute } from "../../../models";
-import { ConnectorAttributesList } from "./helpers";
-import { IsTransportTerminal, CreateId } from "../../flow/helpers/common";
+import { IsTransportTerminal } from "../../flow/helpers/common";
 import styled from "styled-components";
-import { changeConnectorAttributeValue } from "../../../redux/store/project/actions";
 import textResources from "../../../assets/textResources/textResources";
+
+// Migth be used later: 
+// import { ConnectorAttributesList } from "./helpers";
+// import { changeConnectorAttributeValue } from "../../../redux/store/project/actions";
 interface ConnectorAttribute {
   id: string;
   name: string;
   attributes: Attribute[];
 }
 
-//AttributesWrapper currently not in use, but will be
+/*
+Might be used later:
 const AttributesWrapper = styled.div`
     display: flex;
     flex-direction: column;
     margin: 10px;
     height: 160px;
     width: 250px;
-`;
+`;*/
 const TerminalsWrapper = styled.div`
     display: flex;
     flex-direction: row;
@@ -30,8 +31,8 @@ const ListWrapper = styled.div`
   display: flex;
 `;
 const TerminalsTabComponent = ({ node }): any => {
-  const dispatch = useDispatch();
-
+  /*
+  Might be used later:
   const handleOnConnectorChange = (
     id: string,
     value: string,
@@ -42,6 +43,7 @@ const TerminalsTabComponent = ({ node }): any => {
       changeConnectorAttributeValue(id, value, unit, node.id, connectorId)
     );
   };
+  */
 
   let activeConnectors = [];
   let connectorAttributes: ConnectorAttribute[] = [];
@@ -75,7 +77,7 @@ const TerminalsTabComponent = ({ node }): any => {
         <ActiveTerminalTypeList
         terminals={activeConnectors}
         title={textResources.Inspector_Relations_Active_Terminal_Types}
-        onElementClick={()=>{}}
+        onElementClick={ () => {} }
         />
       </TerminalsWrapper>
       <AttributesContainer 
@@ -83,7 +85,7 @@ const TerminalsTabComponent = ({ node }): any => {
       title={textResources.Inspector_Relations_Connector_Attributes}
       />
       {
-      //TODO show attributes and other fields from Arjun's design on Figma
+      //Might be used later:
       /* <AttributesWrapper>
         <ConnectorAttributesList
         connectorAttrs={connectorAttributes}

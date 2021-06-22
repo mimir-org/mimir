@@ -28,7 +28,7 @@ const DeleteNodeButton = ({ handleClick }) => {
         <OuterButtonContainer>
             <ButtonContainer onClick={ () => handleClick() }>
                 Delete
-                <img src={TrashIcon}/>
+                <img alt="Trash icon to delete node" src={TrashIcon}/>
             </ButtonContainer>
         </OuterButtonContainer>
     );

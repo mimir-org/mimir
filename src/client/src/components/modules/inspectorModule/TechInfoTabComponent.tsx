@@ -1,4 +1,4 @@
-import { Attribute, Node } from "../../../models";
+import { Attribute } from "../../../models";
 import { TabRow } from "../../../compLibrary/box/inspector";
 import { IsTransportTerminal, CreateId } from "../../flow/helpers/common";
 import { Input, InputBox, Select, AttributeField } from "../../../compLibrary";
@@ -6,7 +6,6 @@ import { InputWrapper } from "./styled";
 import { useDispatch } from "react-redux";
 import {
     changeAttributeValue,
-    changeConnectorAttributeValue,
   } from "../../../redux/store/project/actions";
 
 interface ConnectorAttribute {
