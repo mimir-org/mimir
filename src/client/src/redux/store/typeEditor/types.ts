@@ -3,6 +3,7 @@ import {
   CreateLibraryType,
   Rds,
   TerminalType,
+  TerminalTypeItem,
   Aspect,
   ObjectType,
   Status,
@@ -26,6 +27,9 @@ export const CHANGE_TYPENAME = "CHANGE_TYPENAME";
 export const CHANGE_MODE = "CHANGE_MODE";
 export const CREATING_TYPE = "CREATING_TYPE";
 export const CHANGE_STATUS = "CHANGE_STATUS";
+export const CHANGE_RDS = "CHANGE_RDS";
+export const CHANGE_SEMANTICREFERENCE = "CHANGE_SEMANTICREFERENCE";
+export const UPDATE_TERMINALTYPES = "UPDATE_TERMINALTYPES";
 export const CREATING_TYPE_SUCCESS_OR_ERROR = "CREATING_TYPE_SUCCESS_OR_ERROR";
 
 // State types
@@ -124,6 +128,27 @@ export interface ChangeStatus {
   };
 }
 
+export interface ChangeRds {
+  type: typeof CHANGE_RDS;
+  payload: {
+    rds: string;
+  };
+}
+
+export interface ChangeSemanticReference {
+  type: typeof CHANGE_SEMANTICREFERENCE;
+  payload: {
+    semanticReference: string;
+  };
+}
+
+export interface UpdateTerminalTypes {
+  type: typeof UPDATE_TERMINALTYPES;
+  payload: {
+    terminalTypes: TerminalTypeItem[];
+  };
+}
+
 export interface ChangeMode {
   type: typeof CHANGE_MODE;
   payload: {
@@ -153,6 +178,9 @@ export type TypeEditorActionTypes =
   | ChangeObjectType
   | ChangeTypeName
   | ChangeStatus
+  | ChangeRds
+  | ChangeSemanticReference
+  | UpdateTerminalTypes
   | ChangeMode
   | CreatingTypeAction
   | CreatingTypeActionFinished;

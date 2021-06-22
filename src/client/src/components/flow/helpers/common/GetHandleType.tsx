@@ -14,14 +14,9 @@ const GetHandleType = (conn: Connector): [HandleType, Position] => {
 
   if (!IsInputConnector(conn) && IsPartOfTerminal(conn))
     return ["source", Position.Bottom];
+
   if (IsInputConnector(conn) && IsTransportTerminal(conn))
     return ["target", Position.Left];
-
-  if (
-    !IsInputConnector(conn) &&
-    (IsLocationTerminal(conn) || IsFulfilledByTerminal(conn))
-  )
-    return ["source", Position.Right];
 
   if (!IsInputConnector(conn) && IsTransportTerminal(conn))
     return ["source", Position.Right];
@@ -32,7 +27,11 @@ const GetHandleType = (conn: Connector): [HandleType, Position] => {
   )
     return ["target", Position.Left];
 
-  return ["source", Position.Bottom];
+  if (
+    !IsInputConnector(conn) &&
+    (IsLocationTerminal(conn) || IsFulfilledByTerminal(conn))
+  )
+    return ["source", Position.Right];
 };
 
 export default GetHandleType;

@@ -17,35 +17,41 @@ export default function BlockEdgeType({
   markerEndId,
 }) {
   const markerEnd = getMarkerEnd(ArrowHeadType.ArrowClosed, markerEndId);
+
+  // Force edge to fit the terminals
+  //   targetY += 40;
+  //   sourceY += 40;
+
   const edgePathSmoothStep = getSmoothStepPath({
     sourceX,
     sourceY,
-    sourcePosition,
     targetX,
     targetY,
+    sourcePosition,
     targetPosition,
   });
 
   const getStyle = () => {
     const fromConnector = data.source.connectors.find(
-      (x) => x.id === data.edge.fromConnector
+      (x) => x.id === data.edge.fromConnector.id
     ) as Connector;
+
+    // const arrowStyle = document.body.style;
+    // arrowStyle.setProperty("--arrow-color", fromConnector?.color);
 
     return {
       stroke: fromConnector?.color,
-      strokeWidth: 3,
+      strokeWidth: 2,
     };
   };
 
   return (
-    <>
-      <path
-        id={id}
-        style={getStyle()}
-        className="react-flow__edge-path"
-        d={edgePathSmoothStep}
-        markerEnd={markerEnd}
-      />
-    </>
+    <path
+      id={id}
+      style={getStyle()}
+      className="react-flow__edge-path"
+      d={edgePathSmoothStep}
+      markerEnd={markerEnd}
+    />
   );
 }

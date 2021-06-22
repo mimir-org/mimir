@@ -14,7 +14,7 @@ export const TerminalsList = () => {
   ) as TypeEditorState;
 
   return (
-    <ListWrapper flex={2}>
+    <ListWrapper flex={0.8}>
       <ListHeader
         label={TextResources.TypeEditor_Properties_Terminals}
         chooseVisible={true}

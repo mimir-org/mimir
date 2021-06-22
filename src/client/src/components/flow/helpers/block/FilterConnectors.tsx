@@ -3,9 +3,11 @@ import { RootState } from "../../../../redux/store";
 import { SortConnectors } from ".";
 import { Aspect, Connector } from "../../../../models";
 import {
+  IsFulfilledByTerminal,
   IsInputConnector,
   IsLocation,
   IsLocationTerminal,
+  IsPartOfTerminal,
   IsTransportTerminal,
 } from "../common";
 
@@ -26,7 +28,14 @@ const FilterConnectors = (connectors, aspect) => {
   }
 
   connectors.forEach((conn) => {
-    IsTransportTerminal(conn) && !isLocationNode && connectorList.push(conn);
+    IsTransportTerminal(conn) &&
+      !IsLocationTerminal(conn) &&
+      !IsPartOfTerminal(conn) &&
+      !IsFulfilledByTerminal(conn) &&
+      !isLocationNode &&
+      connectorList.push(conn);
+
+    // SplitView with Location
     IsLocationTerminal(conn) &&
       isLocationNode &&
       !IsInputConnector(conn) &&

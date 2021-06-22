@@ -1,4 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { updateTerminalTypes } from "../../../../../redux/store/typeEditor/actions";
+import { TypeEditorState } from "../../../../../redux/store/typeEditor/types";
+import { RootState } from "../../../../../redux/store";
 import { AddTerminal } from "./AddTerminal/AddTerminalComponent";
 import { NumericInput } from "../../../../../compLibrary";
 import {
@@ -17,8 +21,14 @@ interface Props {
 }
 
 export const TerminalsListElement = ({ category, terminals }: Props) => {
+  const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(0);
-  const [expandCategory, setExpandCategory] = useState(false);
+  const [clientTerminalList, setClientTerminalList] = useState([]);
+  const [expandCategory, setExpandCategory] = useState(true);
+
+  const state = useSelector<RootState>(
+    (state) => state.typeEditor
+  ) as TypeEditorState;
 
   const toggleExpand = () => {
     setExpandCategory((expandCategory) => !expandCategory);
@@ -28,10 +38,30 @@ export const TerminalsListElement = ({ category, terminals }: Props) => {
     setQuantity(e.target.value);
   };
 
+  const updateTerminalList = (i, terminal) => {
+    let temp = clientTerminalList;
+    temp[i] = terminal;
+    setClientTerminalList(temp);
+    dispatch(updateTerminalTypes(clientTerminalList));
+  };
+
+  useEffect(() => {
+    setClientTerminalList(state.createLibraryType.terminalTypes);
+  }, [state.createLibraryType.terminalTypes]);
+
   const terminalInput = (quantity) => {
     let temp = [];
     for (let i = 0; i < quantity; i++) {
-      temp.push(<AddTerminal terminals={terminals} />);
+      temp.push(
+        <AddTerminal
+          handleTerminalChange={(t) => {
+            updateTerminalList(i, t);
+          }}
+          key={i}
+          terminals={terminals}
+          quantity={quantity}
+        />
+      );
     }
     return <>{temp}</>;
   };

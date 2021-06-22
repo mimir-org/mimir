@@ -36,8 +36,8 @@ const CreateBlockElements = (
   project.edges.forEach((edge) => {
     if (
       edge.fromNodeId === selectedNode.id &&
-      selectedNode?.aspect === edge.toNode?.aspect
-      //  && !IsTransportTerminal(edge.toConnector) TODO FIX
+      selectedNode?.aspect === edge.toNode?.aspect &&
+      IsTransportTerminal(edge.toConnector)
     ) {
       const toNode = nodes.find((node) => node.id === edge.toNodeId);
       initialElements.push(CreateBlockNode(toNode, null, splitView));

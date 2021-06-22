@@ -17,7 +17,20 @@ const useOnConnect = (
   const createdId = CreateId();
   const sourceNode = project.nodes.find((x) => x.id === params.source) as Node;
   const targetNode = project.nodes.find((x) => x.id === params.target) as Node;
+  let fromConnector = null;
+  let toConnector = null;
   let currentEdge = null;
+
+  // TODO: refactor
+  for (let i = 0; i < project.nodes.length; i++) {
+    for (let j = 0; j < project.nodes[i].connectors.length; j++) {
+      if (project.nodes[i].connectors[j].id === params.sourceHandle)
+        fromConnector = project.nodes[i].connectors[j];
+
+      if (project.nodes[i].connectors[j].id === params.targetHandle)
+        toConnector = project.nodes[i].connectors[j];
+    }
+  }
 
   const existingEdge = project.edges?.find(
     (x) =>
@@ -31,10 +44,10 @@ const useOnConnect = (
   if (!existingEdge) {
     const edge = {
       id: createdId,
-      fromConnectorId: params.sourceHandle.id,
-      fromConnector: params.sourceHandle,
-      toConnectorId: params.targetHandle.id,
-      toConnector: params.targetHandle,
+      fromConnectorId: fromConnector.id,
+      fromConnector: fromConnector,
+      toConnectorId: toConnector.id,
+      toConnector: toConnector,
       fromNodeId: sourceNode.id,
       fromNode: sourceNode,
       toNodeId: targetNode.id,

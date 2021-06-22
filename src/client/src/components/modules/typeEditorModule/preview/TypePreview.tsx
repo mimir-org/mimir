@@ -16,7 +16,7 @@ export const TypePreview = () => {
   ) as TypeEditorState;
   return (
     <>
-      <ListWrapper flex={1.5} right={0}>
+      <ListWrapper flex={0.7} right={0}>
         <ListHeader
           label={TextResources.TypeEditor_New_Type_Preview}
           chooseVisible={false}
