@@ -19,7 +19,6 @@ const CreateBlockElements = (
   mainNode: Node,
   connectNodes: Node[]
 ): Elements => {
-  //   console.log({ mainNode });
   if (!project) return;
   const initialElements: Elements = [];
   const nodes = red.store.getState().projectState.project.nodes as Node[];
@@ -48,7 +47,8 @@ const CreateBlockElements = (
         splitViewNode?.aspect === edge.toNode?.aspect
         // !IsTransportTerminal(edge.toConnector)
       ) {
-        initialElements.push(CreateSplitViewNode(edge.toNode));
+        const toNode = nodes.find((node) => node.id === edge.toNodeId);
+        initialElements.push(CreateSplitViewNode(toNode));
       }
     });
   }
