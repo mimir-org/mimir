@@ -46,6 +46,10 @@
   text-align: center;
   border: 1px solid #222;
   background: #fef445;
+
+  &.selected {
+    border: 2px solid #1a192b !important;
+  }
 }
 
 .react-flow__node-BlockLocationNode {
