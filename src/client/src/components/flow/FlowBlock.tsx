@@ -23,6 +23,7 @@ import {
   removeMainNodes,
 } from "../../redux/store/connectView/actions";
 import {
+  FindSelectedNode,
   GetBlockNodeTypes,
   IsFunction,
   IsLocation,
@@ -135,7 +136,7 @@ const FlowBlock = () => {
   };
 
   const OnDrop = (_event) => {
-    const selectedNode = project.nodes.find((x) => x.isSelected);
+    const selectedNode = FindSelectedNode();
 
     return useOnDrop(
       _event,

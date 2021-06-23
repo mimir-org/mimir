@@ -24,6 +24,7 @@ const Color = {
   Terminal_Water: "#0066FF",
   Terminal_Gas: "#FFCC00",
   Terminal_Multiphase: "#00CC66",
+  TransportConnection: "#606060",
 };
 
 export default Color;

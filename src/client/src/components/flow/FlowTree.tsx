@@ -11,7 +11,7 @@ import { Project } from "../../models";
 import { GetTreeEdgeType } from "./helpers/tree";
 import { IsBlockView } from "./helpers/block";
 import { changeInspectorTab } from "../../redux/store/inspector/actions";
-import { SetDarkModeColor } from "./helpers/common";
+import { FindSelectedNode, SetDarkModeColor } from "./helpers/common";
 import {
   removeConnectNodes,
   removeMainNodes,
@@ -73,7 +73,7 @@ const FlowTree = () => {
   };
 
   const OnDrop = (_event) => {
-    const selectedNode = project?.nodes?.find((x) => x.isSelected);
+    const selectedNode = FindSelectedNode();
 
     return useOnDrop(
       _event,
@@ -94,7 +94,7 @@ const FlowTree = () => {
 
   const OnClick = (e) => {
     if (e.target.classList.contains("react-flow__pane")) {
-      const selectedNode = project?.nodes?.find((x) => x.isSelected);
+      const selectedNode = FindSelectedNode();
       if (selectedNode) {
         dispatch(changeActiveNode(selectedNode.id, false));
       }
