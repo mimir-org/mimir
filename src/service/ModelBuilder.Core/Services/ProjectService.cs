@@ -215,6 +215,8 @@ namespace Mb.Core.Services
             await _nodeRepository.UpdateInsert(existingNodes, originalProject);
             await _edgeRepository.UpdateInsert(existingEdges, originalProject);
 
+            ResolveLevelAndOrder(originalProject);
+
             _projectRepository.Update(originalProject);
             await _projectRepository.SaveAsync();
 
