@@ -61,6 +61,16 @@ const AccountMenu = () => {
     }
   };
 
+  const handleSaveLibraryFileClick = () => {
+    dispatch(changeProjectMenu(PROJECT_MENU_TYPE.ACCOUNT_MENU, false));
+    if (projectState.project) {
+      const blob = new Blob([JSON.stringify(projectState.project, null, 2)], {
+        type: "application/json",
+      });
+      saveAs(blob, projectState.project.id + ".json");
+    }
+  };
+
   const dummy = () => {};
 
   return (
@@ -81,7 +91,10 @@ const AccountMenu = () => {
           <GetMenuElement type="Open" onClick={handleOpenClick} />
           <GetMenuElement type="Create" onClick={handleCreateClick} />
           <GetMenuElement type="Save" onClick={handleSaveClick} />
-          <GetMenuElement type="SaveLibrary" onClick={dummy} />
+          <GetMenuElement
+            type="SaveLibrary"
+            onClick={handleSaveLibraryFileClick}
+          />
           <GetMenuElement type="SaveFile" onClick={handleSaveFileClick} />
           <HrLine />
           <GetMenuElement type="ImportProject" onClick={dummy} />

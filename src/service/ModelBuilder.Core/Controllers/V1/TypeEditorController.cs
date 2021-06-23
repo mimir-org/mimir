@@ -288,7 +288,8 @@ namespace Mb.Core.Controllers.V1
             }
             catch (ModelBuilderDuplicateException e)
             {
-                return BadRequest(e.Message);
+                ModelState.AddModelError("Duplicate", e.Message);
+                return BadRequest(ModelState);
             }
             catch (Exception e)
             {

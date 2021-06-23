@@ -4,6 +4,7 @@ import { ProjectState } from "../../../redux/store/project/types";
 import { LibraryState } from "../../../redux/store/library/types";
 import { UserState } from "../../../redux/store/user/types";
 import { CommonState } from "../../../redux/store/common/types";
+import { TypeEditorState } from "../../../redux/store/typeEditor/types";
 import { RootState } from "../../../redux/store";
 import { ErrorBox, ErrorItem, ErrorHeaderBox } from ".";
 import { ProjectBody } from "../../../compLibrary/box/project";
@@ -14,7 +15,7 @@ import { deleteProjectError } from "../../../redux/store/project/actions";
 import { deleteCommonError } from "../../../redux/store/common/actions";
 import { deleteLibraryError } from "../../../redux/store/library/actions";
 import { deleteUserError } from "../../../redux/store/user/actions";
-
+import { deleteTypeEditorError } from "../../../redux/store/typeEditor/actions";
 interface ErrorMessage {
   key: string;
   module: string;
@@ -35,6 +36,7 @@ const ErrorModule = () => {
           dispatch(deleteCommonError(error.key));
           dispatch(deleteLibraryError(error.key));
           dispatch(deleteUserError(error.key));
+          dispatch(deleteTypeEditorError(error.key));
         }
       });
     }
@@ -56,6 +58,10 @@ const ErrorModule = () => {
   const commonState = useSelector<RootState>(
     (state) => state.commonState
   ) as CommonState;
+
+  const typeEditorState = useSelector<RootState>(
+    (state) => state.typeEditor
+  ) as TypeEditorState;
 
   useEffect(() => {
     const errors = [];
@@ -108,6 +114,18 @@ const ErrorModule = () => {
       });
     }
 
+    if (typeEditorState.apiError) {
+      typeEditorState.apiError.forEach((error) => {
+        if (error)
+          errors.push({
+            module: "TypeEditor",
+            key: error.key,
+            message: error.errorMessage,
+            errorData: error.errorData,
+          });
+      });
+    }
+
     setErrors(errors);
     setVisible(errors.length > 0);
   }, [
@@ -115,6 +133,7 @@ const ErrorModule = () => {
     libraryState.apiError,
     projectState.apiError,
     userState.apiError,
+    typeEditorState.apiError,
   ]);
 
   return (

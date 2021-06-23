@@ -6,8 +6,10 @@ const GetBadResponseData = (response: HttpResponse<any>): BadRequestData => {
     if (response.status !== 400)
         return null;
 
+    const title = response?.data?.title ?? response?.statusText ?? "";
+
     var data = {
-        title: response.data.title,
+        title: title,
         items: []
     } as BadRequestData;
 

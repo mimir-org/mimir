@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
 
@@ -9,11 +9,19 @@ import { ListWrapper } from "../../../../compLibrary";
 import { AddEditButton } from "../../../../compLibrary/buttons";
 import { TextResources } from "../../../../assets/textResources";
 import { AddIcon, CheckmarkIcon } from "../../../../assets/icons/common";
+import { create } from "../../../../redux/store/typeEditor/actions";
 
 export const TypePreview = () => {
+  const dispatch = useDispatch();
+
   const state = useSelector<RootState>(
     (state) => state.typeEditor
   ) as TypeEditorState;
+
+  const saveClick = () => {
+    dispatch(create(state.createLibraryType));
+  };
+
   return (
     <>
       <ListWrapper flex={0.7} right={0}>
@@ -26,7 +34,7 @@ export const TypePreview = () => {
           {TextResources.TypeEditor_Preview_Info}
         </PreviewInstruction>
         <AddEditButton>
-          <p>
+          <p onClick={saveClick}>
             {state.mode === "new"
               ? TextResources.TypeEditor_Button_Add
               : TextResources.TypeEditor_Button_Edit}
