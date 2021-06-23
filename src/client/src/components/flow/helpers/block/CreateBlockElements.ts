@@ -14,19 +14,26 @@ import {
 const CreateBlockElements = (
   project: Project,
   selectedNode: Node,
-  connectNodes: Node[],
-  selectedBlockNodeId: string,
   splitView: boolean,
-  splitViewNode: Node
+  splitViewNode: Node,
+  mainNode: Node,
+  connectNodes: Node[]
 ): Elements => {
   if (!project) return;
   const initialElements: Elements = [];
   const nodes = red.store.getState().projectState.project.nodes as Node[];
 
-  const mainConnectNodes = red.store.getState().connectView.mainNodes as Node[];
-  const mainConnectNode = mainConnectNodes.find(
-    (x) => x?.id === selectedBlockNodeId
-  );
+  //   const mainConnectNodes = red.store.getState().connectView.mainNodes as Node[];
+  //   const mainNode = mainConnectNodes.find((x) => x?.id === selectedBlockNodeId);
+  //   const connectNodes = mainNode?.connectNodes as Node[];
+
+  // Draw connection view
+  if (connectNodes?.length > 0) {
+    CreateConnectMainNode(mainNode);
+    connectNodes?.forEach((node) => {
+      initialElements.push(CreateBlockNode(node, mainNode, false));
+    });
+  }
 
   // Draw parent block
   const parentBlock = CreateParentBlockNode(selectedNode);
@@ -53,14 +60,6 @@ const CreateBlockElements = (
         !IsTransportTerminal(edge.toConnector)
       )
         initialElements.push(CreateSplitViewNode(edge.toNode));
-    });
-  }
-
-  // Draw connection view
-  if (mainConnectNodes.length > 0) {
-    CreateConnectMainNode(mainConnectNode);
-    connectNodes.forEach((node) => {
-      initialElements.push(CreateBlockNode(node, mainConnectNode, false));
     });
   }
 

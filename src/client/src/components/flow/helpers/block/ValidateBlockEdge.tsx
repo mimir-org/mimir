@@ -23,19 +23,19 @@ const ValidateBlockEdge = (
   if (IsPartOfTerminal(fromConnector) || IsPartOfTerminal(toConnector))
     return false;
 
-  const connectChildren = red.store.getState().connectView
-    ?.connectNodes as Node[];
+  //   const connectChildren = red.store.getState().connectView
+  //     ?.connectNodes as Node[];
 
-  if (IsConnectView()) {
-    if (
-      fromNode !== selectedNode &&
-      IsTransportTerminal(fromConnector) &&
-      connectChildren.some((node) => node.id === fromNode.id) &&
-      connectChildren.some((node) => node.id === toNode.id)
-    )
-      return true;
-    return false;
-  }
+  //   if (IsConnectView()) {
+  //     if (
+  //       fromNode !== selectedNode &&
+  //       IsTransportTerminal(fromConnector) &&
+  //       connectChildren.some((node) => node.id === fromNode.id) &&
+  //       connectChildren.some((node) => node.id === toNode.id)
+  //     )
+  //       return true;
+  //     return false;
+  //   }
 
   if (!splitView && !IsConnectView()) {
     if (IsFunction(selectedNode)) {

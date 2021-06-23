@@ -23,7 +23,8 @@ export interface RemoveMainConnectNode {
 export interface AddConnectNode {
   type: typeof ADD_CONNECT_NODE;
   payload: {
-    node: Node;
+    mainNode: Node;
+    child: Node;
   };
 }
 

@@ -1,4 +1,4 @@
-import red from "../../../../redux/store";
+// import red from "../../../../redux/store";
 import { Node } from "../../../../models";
 import { FlowElement } from "react-flow-renderer";
 import { SetBlockNodePosition } from ".";
@@ -13,13 +13,13 @@ const CreateBlockNode = (
 ): FlowElement => {
   let blockNode = null;
   if (!node) return blockNode;
-  const connectNodes = red.store.getState().connectView.connectNodes as Node[];
+  const connectNodes = mainConnectNode?.connectNodes as Node[];
   const type = IsLocation(node) ? "BlockLocationNode" : "BlockFunctionNode";
 
   // Force node to fit Block
   let position = SetBlockNodePosition(node, splitView);
-  if (connectNodes.includes(node))
-    position = SetConnectNodePosition(node, mainConnectNode?.id);
+  //   if (connectNodes?.includes(node))
+  //     position = SetConnectNodePosition(node, mainConnectNode?.id);
 
   // Handle size in ConnectView
   if (IsFunction(node)) {

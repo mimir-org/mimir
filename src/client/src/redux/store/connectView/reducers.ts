@@ -10,7 +10,6 @@ import {
 
 const initialState = {
   mainNodes: [] as Node[],
-  connectNodes: [] as Node[],
 };
 
 export function connectViewReducer(state = initialState, action) {
@@ -29,17 +28,32 @@ export function connectViewReducer(state = initialState, action) {
         mainNodes: state.mainNodes.filter((x) => x?.id !== node.id),
       };
 
+    // work in progress
     case ADD_CONNECT_NODE:
+      const mainNode = action.payload.mainNode;
+      const child = action.payload.child;
       return {
         ...state,
-        connectNodes: [...state.connectNodes, node],
+        mainNodes: state.mainNodes.map(
+          (node) =>
+            node.id === mainNode.id && {
+              ...node,
+              connectNodes: [child],
+            }
+        ),
       };
 
-    case REMOVE_CONNECT_NODE:
-      return {
-        ...state,
-        connectNodes: state.connectNodes.filter((x) => x.id !== node.id),
-      };
+    // case ADD_CONNECT_NODE:
+    //   return {
+    //     ...state,
+    //     connectNodes: [...state.connectNodes, node],
+    //   };
+
+    // case REMOVE_CONNECT_NODE:
+    //   return {
+    //     ...state,
+    //     connectNodes: state.connectNodes.filter((x) => x.id !== node.id),
+    //   };
 
     case REMOVE_ALL_MAIN_NODES:
       return {
@@ -47,11 +61,11 @@ export function connectViewReducer(state = initialState, action) {
         mainNodes: [],
       };
 
-    case REMOVE_ALL_CONNECT_NODES:
-      return {
-        ...state,
-        connectNodes: [],
-      };
+    // case REMOVE_ALL_CONNECT_NODES:
+    //   return {
+    //     ...state,
+    //     connectNodes: [],
+    //   };
 
     default:
       return state;
