@@ -9,7 +9,7 @@ const MenuBox = styled.div`
   padding-bottom: ${(props) => props.right && "6px"};
   height: min-content;
   width: auto;
-  min-width: 250px;
+  min-width: 271px;
   border-style: solid;
   border-color: ${Color.DeepCyan};
   border-width: 0px 2px 2px 2px;
