@@ -30,6 +30,7 @@ export const CHANGE_STATUS = "CHANGE_STATUS";
 export const CHANGE_RDS = "CHANGE_RDS";
 export const CHANGE_SEMANTICREFERENCE = "CHANGE_SEMANTICREFERENCE";
 export const UPDATE_TERMINALTYPES = "UPDATE_TERMINALTYPES";
+export const UPDATE_ATTRIBUTETYPES = "UPDATE_ATTRIBUTETYPES";
 export const CREATING_TYPE_SUCCESS_OR_ERROR = "CREATING_TYPE_SUCCESS_OR_ERROR";
 
 // State types
@@ -149,6 +150,13 @@ export interface UpdateTerminalTypes {
   };
 }
 
+export interface UpdateAttributesTypes {
+  type: typeof UPDATE_ATTRIBUTETYPES;
+  payload: {
+    attributeTypes: string[];
+  };
+}
+
 export interface ChangeMode {
   type: typeof CHANGE_MODE;
   payload: {
@@ -181,6 +189,7 @@ export type TypeEditorActionTypes =
   | ChangeRds
   | ChangeSemanticReference
   | UpdateTerminalTypes
+  | UpdateAttributesTypes
   | ChangeMode
   | CreatingTypeAction
   | CreatingTypeActionFinished;

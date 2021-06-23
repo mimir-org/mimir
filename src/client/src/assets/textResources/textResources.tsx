@@ -55,6 +55,7 @@ const textResources = {
 
   Inspector_Relations_Active_Terminal_Types: "Active Terminal Types",
   Inspector_Relations_All_Terminal_Types: "All available Terminal Types",
+  Inspector_Relations_Connector_Attributes: "Connector attributes",
 
   Inspector_Admin_Id: "ID",
   Inspector_Admin_Semantic_Id: "Semantic ID",
@@ -80,6 +81,8 @@ const textResources = {
   Inspector_Inherited_Max_Water: "Maximum produced water capacity",
   Inspector_Inherited_Total_Liquid: "Total liquid capacity",
   Inspector_Inherited_Total_Injection: "Total injection water rate",
+
+  Inspector_Delete_Node: "Delete",
 
   // LibraryModule
   Library_Heading: "Library",

@@ -288,7 +288,7 @@ export function projectReducer(
               : node
           ),
           edges: edgeList.map((edge) =>
-            edge.fromNode === node || edge.toNode === node
+            edge.fromNodeId === node.id || edge.toNodeId === node.id
               ? { ...edge, isHidden: isHidden }
               : edge
           ),

@@ -1,8 +1,8 @@
-import "./roundcheckbox.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
 import { changeRDS } from "../../../../redux/store/typeEditor/actions";
+import "./roundcheckbox.scss";
 interface Props {
   id: string;
   label: string;

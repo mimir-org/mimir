@@ -45,6 +45,7 @@ const ValidateBlockEdge = (
       if (!IsChildOf(fromNode, selectedNode)) return false;
       return true;
     }
+    return false;
   }
 
   if (splitView) {

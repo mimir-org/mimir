@@ -16,7 +16,7 @@ const TabHeader = styled.div`
   background-color: ${(props: { active: string }) =>
     props.active ? `${Color.LightGrey}` : `${Color.DarkGrey}`};
   padding: ${(props: { active: string }) =>
-    props.active ? "12px 20px 0px 20px;" : "8px 20px 0px 20px"};
+    props.active ? "8px 20px 0px 20px;" : "5px 20px 0px 20px"};
 
   :hover {
     cursor: pointer;
