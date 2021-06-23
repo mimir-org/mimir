@@ -1,4 +1,3 @@
-import red from "..";
 import { Node } from "../../../models";
 import {
   ADD_MAIN_CONNECT_NODE,
@@ -29,20 +28,23 @@ export function connectViewReducer(state = initialState, action) {
         mainNodes: state.mainNodes.filter((x) => x?.id !== node.id),
       };
 
-    // work in progress
     case ADD_CONNECT_NODE:
-      const mainNode = action.payload.mainNode as Node;
+      const mainNodeId = action.payload.mainNode.id;
       const child = action.payload.child;
 
+      const mainNode = {
+        ...state.mainNodes.find((node) => node.id === mainNodeId),
+      } as Node;
+
+      mainNode.connectNodes = (mainNode.connectNodes ?? []).concat(child);
+      const filterMainNodes = state.mainNodes.filter(
+        (x) => x?.id !== mainNodeId
+      );
+
+      const allMainNodes = filterMainNodes.concat(mainNode);
+
       return {
-        ...state,
-        mainNodes: state.mainNodes.map(
-          (node) =>
-            node.id === mainNode.id && {
-              ...node,
-              connectNodes: [child],
-            }
-        ),
+        mainNodes: allMainNodes,
       };
 
     // case REMOVE_CONNECT_NODE:
