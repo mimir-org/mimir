@@ -17,7 +17,6 @@ interface Props {
 
 export const CheckboxBlock = ({ node, inputLabel }: Props) => {
   const dispatch = useDispatch();
-
   const splitView = useSelector<RootState>(
     (state) => state.splitView.visible
   ) as boolean;
