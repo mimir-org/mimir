@@ -9,7 +9,7 @@ export const CreateBlockEdge = (
 ): FlowElement => {
   let element = null;
 
-  if (ShowBlockViewEdge(edge)) {
+  if (ShowBlockViewEdge(edge) && (edge.fromNode || edge.toNode)) {
     element = {
       id: edge.id,
       type: edgeType,
@@ -31,5 +31,3 @@ export const CreateBlockEdge = (
 };
 
 export default CreateBlockEdge;
-
-// && (edge.fromNode || edge.toNode)
