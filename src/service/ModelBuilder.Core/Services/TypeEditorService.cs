@@ -265,7 +265,6 @@ namespace Mb.Core.Services
             var types = _libraryTypeComponentRepository.GetAll().ToList();
             foreach (var component in types)
             {
-                //component.CreateFromJsonData(); // TODO: Fix this
                 yield return component;
             }
         }

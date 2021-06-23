@@ -19,10 +19,10 @@ namespace Mb.Core.Repositories
             _attributeRepository = attributeRepository;
         }
 
-        public async Task UpdateInsert(IList<Node> original, Project project)
+        public Task UpdateInsert(ICollection<Node> original, Project project)
         {
             if (project?.Nodes == null || !project.Nodes.Any())
-                return;
+                return Task.CompletedTask;
 
             var updates = original != null
                 ? project.Nodes.Where(x => original.All(y => y.Id != x.Id)).ToList()
@@ -32,100 +32,30 @@ namespace Mb.Core.Repositories
             {
                 if (updates.Any(x => x.Id == node.Id))
                 {
+                    _attributeRepository.Attach(node.Attributes, EntityState.Added);
+                    _connectorRepository.AttachWithAttributes(node.Connectors, EntityState.Added);
                     Attach(node, EntityState.Added);
-
-                    //foreach (var attribute in node.Attributes)
-                    //{
-                    //    _attributeRepository.Attach(attribute, EntityState.Added);
-                    //}
-
-                    //await _attributeRepository.SaveAsync();
-
-                    //foreach (var attribute in node.Attributes)
-                    //{
-                    //    _attributeRepository.Detach(attribute);
-                    //}
-
-                    foreach (var connector in node.Connectors)
-                    {
-                        _connectorRepository.Attach(connector, EntityState.Added);
-                    }
-
-                    
                 }
                 else
                 {
+                    _attributeRepository.Attach(node.Attributes, EntityState.Modified);
+                    _connectorRepository.AttachWithAttributes(node.Connectors, EntityState.Modified);
                     Attach(node, EntityState.Modified);
-
-                    //foreach (var attribute in node.Attributes)
-                    //{
-                    //    _attributeRepository.Attach(attribute, EntityState.Modified);
-                    //}
-
-                    //await _attributeRepository.SaveAsync();
-
-                    //foreach (var attribute in node.Attributes)
-                    //{
-                    //    _attributeRepository.Detach(attribute);
-                    //}
-
-                    foreach (var connector in node.Connectors)
-                    {
-                        _connectorRepository.Attach(connector, EntityState.Modified);
-                    }
-
-                    
+                    Attach(node, EntityState.Modified);
                 }
             }
 
-            await SaveAsync();
-            await _connectorRepository.SaveAsync();
-
-            foreach (var node in project.Nodes)
-            {
-                Detach(node);
-                //foreach (var attribute in node.Attributes)
-                //{
-                //    _attributeRepository.Detach(attribute);
-                //}
-
-                foreach (var connector in node.Connectors)
-                {
-                    _connectorRepository.Detach(connector);
-                }
-            }
+            return Task.CompletedTask;
         }
 
-        public async Task DeleteNodes(IList<Node> delete)
+        public async Task DeleteNodes(ICollection<Node> delete)
         {
             foreach (var node in delete)
             {
-                foreach (var attribute in node.Attributes)
-                {
-                    _attributeRepository.Attach(attribute, EntityState.Deleted);
-                }
-
-                foreach (var connector in node.Connectors)
-                {
-                    _connectorRepository.Attach(connector, EntityState.Deleted);
-                }
-
+                _attributeRepository.Attach(node.Attributes, EntityState.Deleted);
+                _connectorRepository.AttachWithAttributes(node.Connectors, EntityState.Deleted);
+                
                 await Delete(node.Id);
-            }
-
-            await SaveAsync();
-
-            foreach (var node in delete)
-            {
-                foreach (var attribute in node.Attributes)
-                {
-                    _attributeRepository.Detach(attribute);
-                }
-
-                foreach (var connector in node.Connectors)
-                {
-                    _connectorRepository.Detach(connector);
-                }
             }
         }
     }

@@ -24,23 +24,23 @@ namespace Mb.Core.Repositories
             return _modelBuilderConfiguration.Domain;
         }
 
-        public string CreateOrUseId(string id)
+        public bool HasValidId(string id)
         {
             if (string.IsNullOrEmpty(id))
-                return CreateUniqueId();
+                return false;
 
             var isValid = Guid.TryParse(id, out _);
             if (isValid)
-                return CreateUniqueId();
+                return false;
 
             var checkId = id.Split('_', StringSplitOptions.RemoveEmptyEntries);
 
-            if (checkId.Length != 2)
-                return CreateUniqueId();
+            return checkId.Length == 2 && Guid.TryParse(checkId[1], out _);
+        }
 
-            return !Guid.TryParse(checkId[1], out _) ?
-                CreateUniqueId() :
-                id;
+        public string CreateOrUseId(string id)
+        {
+            return HasValidId(id) ? id : CreateUniqueId();
         }
     }
 }

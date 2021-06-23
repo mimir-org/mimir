@@ -103,7 +103,7 @@ namespace Mb.Core.Services
             if (!ignoreNotFound && project == null)
                 throw new ModelBuilderNotFoundException($"Could not find project with id: {id}");
 
-            if (project.Nodes != null)
+            if (project?.Nodes != null)
             {
                 project.Nodes = project.Nodes.OrderBy(x => x.Order).ToList();
             }
@@ -130,7 +130,7 @@ namespace Mb.Core.Services
         /// </summary>
         /// <param name="project"></param>
         /// <returns></returns>
-        public async Task<Project> CreateProject(Project project)
+        public async Task<Project> CreateProject(ProjectAm project)
         {
             var existingProject = await GetProject(project.Id, true);
 
@@ -147,9 +147,28 @@ namespace Mb.Core.Services
             if (_connectorRepository.GetAll().AsEnumerable().Any(x => allConnectors.Any(y => y.Id == x.Id)))
                 throw new ModelBuilderDuplicateException("One or more connectors already exist");
 
-            await _projectRepository.CreateAsync(project);
+            // Cast connectors
+            CastConnectors(project);
+
+            // Remap and create new id's
+            Remap(project);
+
+            // Create an empty project
+            var newProject = new Project
+            {
+                ProjectOwner = _contextAccessor.GetName(),
+                UpdatedBy = _contextAccessor.GetName(),
+                Updated = DateTime.Now.ToUniversalTime()
+            };
+
+            // Map data
+            _mapper.Map(project, newProject);
+
+            await _projectRepository.CreateAsync(newProject);
             await _projectRepository.SaveAsync();
-            return project;
+
+            var updatedProject = await GetProject(newProject.Id);
+            return updatedProject;
         }
 
         /// <summary>
@@ -168,46 +187,39 @@ namespace Mb.Core.Services
                 .Include("Nodes.Connectors")
                 .Include("Nodes.Connectors.Attributes")
                 .AsSplitQuery()
+                .OrderByDescending(x => x.Name)
                 .FirstOrDefaultAsync();
 
             if (originalProject == null)
                 throw new ModelBuilderNotFoundException($"The project with id:{id}, could not be found.");
 
-            // Nodes
-            var existingNodes = originalProject.Nodes.ToList();
-            var deleteNodes = existingNodes.Where(x => project.Nodes.All(y => y.Id != x.Id)).ToList();
-            await _nodeRepository.DeleteNodes(deleteNodes);
+            // Cast connectors
+            CastConnectors(project);
+
+            // Remap and create new id's
+            Remap(project);
 
             // Edges
             var existingEdges = originalProject.Edges.ToList();
             var deleteEdges = existingEdges.Where(x => project.Edges.All(y => y.Id != x.Id)).ToList();
             await _edgeRepository.DeleteEdges(deleteEdges);
 
+            // Nodes
+            var existingNodes = originalProject.Nodes.ToList();
+            var deleteNodes = existingNodes.Where(x => project.Nodes.All(y => y.Id != x.Id)).ToList();
+            await _nodeRepository.DeleteNodes(deleteNodes);
+
             // Map new data
             _mapper.Map(project, originalProject);
 
             await _nodeRepository.UpdateInsert(existingNodes, originalProject);
             await _edgeRepository.UpdateInsert(existingEdges, originalProject);
-            
-            //await _attributeRepository.SaveAsync();
-            //await _connectorRepository.SaveAsync();
-            //await _nodeRepository.SaveAsync();
-            //await _connectorRepository.SaveAsync();
 
             _projectRepository.Update(originalProject);
             await _projectRepository.SaveAsync();
 
-            //return p;
             var updatedProject = await GetProject(id);
             return updatedProject;
-            //return await UpdateProject(existingProject, project);
-        }
-
-        private async Task UpdateProjectData(Project destination, ProjectAm source)
-        {
-            _mapper.Map(source, destination);
-            _projectRepository.Update(destination);
-            await _projectRepository.SaveAsync();
         }
 
         /// <summary>
@@ -218,25 +230,23 @@ namespace Mb.Core.Services
         public async Task DeleteProject(string projectId)
         {
             var existingProject = await GetProject(projectId);
+            if (existingProject == null)
+                throw new ModelBuilderNotFoundException($"There is no project with id: {projectId}");
 
-            var nodesToDelete = existingProject.Nodes.Select(x => x.Id).ToList();
-            var edgesToDelete = existingProject.Edges.Select(x => x.Id).ToList();
+            var masterNodesCount = _nodeRepository.FindBy(x => x.MasterProjectId == projectId).Count();
+            var existingProjectNodesCount = existingProject.Nodes.Count;
 
-            foreach (var nodeId in nodesToDelete)
-            {
-                await _nodeRepository.Delete(nodeId);
-            }
+            if (masterNodesCount > existingProjectNodesCount)
+                throw new ModelBuilderInvalidOperationException("You can't delete a project that is master for other sub projects.");
 
-            foreach (var edgeId in edgesToDelete)
-            {
-                await _edgeRepository.Delete(edgeId);
-            }
 
+            var nodesToDelete = existingProject.Nodes.Where(x => x.MasterProjectId == projectId).ToList();
+            var edgesToDelete = existingProject.Edges.Where(x => x.MasterProjectId == projectId).ToList();
+
+            await _edgeRepository.DeleteEdges(edgesToDelete);
+            await _nodeRepository.DeleteNodes(nodesToDelete);
             await _projectRepository.Delete(projectId);
             await _projectRepository.SaveAsync();
-            await _nodeRepository.SaveAsync();
-            await _edgeRepository.SaveAsync();
-
         }
 
         /// <summary>
@@ -272,7 +282,7 @@ namespace Mb.Core.Services
                 parser = "Default";
 
             var par = _moduleService.Resolve<IModelBuilderParser>(parser);
-            var project = await par.DeserializeProject(stream.ToArray());
+            var project = await par.DeserializeProjectAm(stream.ToArray());
             return await CreateProject(project);
         }
 
@@ -566,6 +576,81 @@ namespace Mb.Core.Services
             };
 
             return project;
+        }
+
+        private void CastConnectors(ProjectAm project)
+        {
+            foreach (var node in project.Nodes)
+            {
+                var connectors = new List<ConnectorAm>();
+                foreach (var connector in node.Connectors)
+                {
+                    if (string.IsNullOrEmpty(connector.TerminalCategoryId) && connector.RelationType != RelationType.NotSet)
+                    {
+                        var relationAm = new RelationAm();
+                        _mapper.Map(connector, relationAm);
+                        connectors.Add(relationAm);
+                    }
+
+                    else
+                    {
+                        var terminalAm = new TerminalAm();
+                        _mapper.Map(connector, terminalAm);
+                        connectors.Add(terminalAm);
+                    }
+                }
+
+                node.Connectors = connectors;
+            }
+        }
+
+        private void Remap(ProjectAm project)
+        {
+            foreach (var node in project.Nodes.Where(x => !_commonRepository.HasValidId(x.Id)))
+            {
+                var newNodeId = _commonRepository.CreateUniqueId();
+                RemapConnectors(newNodeId, node, project);
+
+                foreach (var attribute in node.Attributes)
+                {
+                    if (attribute.NodeId == node.Id)
+                        attribute.NodeId = newNodeId;
+                }
+
+                node.Id = newNodeId;
+            }
+        }
+
+        private void RemapConnectors(string newNodeId, NodeAm node, ProjectAm project)
+        {
+            if (node?.Connectors == null || !node.Connectors.Any())
+                return;
+
+            foreach (var connector in node.Connectors)
+            {
+                var newConnectorId = _commonRepository.CreateUniqueId();
+
+                foreach (var edge in project.Edges)
+                {
+                    if (edge.FromConnectorId == connector.Id)
+                        edge.FromConnectorId = newConnectorId;
+                    if (edge.ToConnectorId == connector.Id)
+                        edge.ToConnectorId = newConnectorId;
+                    if (edge.FromNodeId == node.Id)
+                        edge.FromNodeId = newNodeId;
+                    if (edge.ToNodeId == node.Id)
+                        edge.ToNodeId = newNodeId;
+                }
+
+                foreach (var attribute in connector.Attributes)
+                {
+                    if (attribute.TerminalId == connector.Id)
+                        attribute.TerminalId = newConnectorId;
+                }
+
+                connector.Id = newConnectorId;
+                connector.NodeId = newNodeId;
+            }
         }
 
         #endregion

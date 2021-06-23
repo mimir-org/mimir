@@ -12,7 +12,7 @@ namespace Mb.Core.Services.Contracts
         IEnumerable<ProjectSimple> GetProjectList(string name, int from, int number);
         Task<Project> GetProject(string id, bool ignoreNotFound = false);
         Task<Project> CreateProject(CreateProject createProject);
-        Task<Project> CreateProject(Project project);
+        Task<Project> CreateProject(ProjectAm project);
         Task<Project> UpdateProject(string id, ProjectAm project);
         Task DeleteProject(string projectId);
         Task<byte[]> CreateFile(string projectId, string parser);

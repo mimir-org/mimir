@@ -14,10 +14,10 @@ namespace Mb.Core.Repositories
         {
         }
 
-        public async Task UpdateInsert(IList<Edge> original, Project project)
+        public Task UpdateInsert(ICollection<Edge> original, Project project)
         {
             if (project?.Edges == null || !project.Edges.Any())
-                return;
+                return Task.CompletedTask;
 
             var updates = original != null
                 ? project.Edges.Where(x => original.All(y => y.Id != x.Id)).ToList()
@@ -28,27 +28,17 @@ namespace Mb.Core.Repositories
                 Attach(edge, updates.Any(x => x.Id == edge.Id) ? EntityState.Added : EntityState.Modified);
             }
 
-            await SaveAsync();
-
-            foreach (var edge in project.Edges)
-            {
-                Detach(edge);
-            }
+            return Task.CompletedTask;
         }
 
-        public async Task DeleteEdges(IList<Edge> delete)
+        public async Task DeleteEdges(ICollection<Edge> delete)
         {
             foreach (var edge in delete)
             {
                 await Delete(edge.Id);
             }
 
-            await SaveAsync();
-
-            foreach (var edge in delete)
-            {
-                Detach(edge);
-            }
+            //await SaveAsync();
         }
     }
 }

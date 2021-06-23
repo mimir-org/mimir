@@ -37,7 +37,6 @@ export interface ConnectorAm {
     terminalCategoryId: string;
     attributes: AttributeAm[];
 }
-
 export interface NodeAm {
     id: string;
     name: string;
