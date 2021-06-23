@@ -38,7 +38,7 @@ const ActiveTerminalTypeList = ({ terminals, title, onElementClick }) => {
     <Wrapper>
       <span>{title}</span>
       <ObjectsContainer>
-        {terminals.map((n, i) => {
+        {terminals?.map((n, i) => {
           return (
             <ListElement
               onClick={() => onElementClick(n.id)}
