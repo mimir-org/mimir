@@ -11,7 +11,6 @@ import { changeInspectorTab } from "../../redux/store/inspector/actions";
 import { setSplitView, setNode } from "../../redux/store/splitView/actions";
 import { Project, Node } from "../../models";
 import { changeActiveBlockNode } from "../../redux/store/project/actions";
-import { IsConnectView } from "./helpers/block/connectView";
 import { removeMainNodes } from "../../redux/store/connectView/actions";
 import {
   useOnConnect,
@@ -76,6 +75,7 @@ const FlowBlock = () => {
   const mainConnectNodes = useSelector<RootState>(
     (state) => state.connectView.mainNodes
   ) as Node[];
+
   const mainNode = mainConnectNodes.find((x) => x?.id === selectedBlockNodeId);
   const connectNodes = mainNode?.connectNodes as Node[];
 
@@ -142,10 +142,8 @@ const FlowBlock = () => {
   };
 
   const OnElementClick = (_event, element) => {
-    if (!IsConnectView()) {
-      dispatch(changeActiveBlockNode(element.id));
-      dispatch(changeInspectorTab(0));
-    }
+    dispatch(changeActiveBlockNode(element.id));
+    dispatch(changeInspectorTab(0));
   };
 
   // Force rerender

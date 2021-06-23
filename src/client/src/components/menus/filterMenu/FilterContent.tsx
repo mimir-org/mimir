@@ -4,6 +4,8 @@ import { changeEdgeVisibility } from "../../../redux/store/project/actions";
 import { useState } from "react";
 import { CheckEdges } from "./helpers";
 import { Edge } from "../../../models";
+import { TextResources } from "../../../assets/textResources";
+import { MenuColumn, MenuSubHeader } from "../../../compLibrary/box/menus";
 
 const FilterContent = ({ type, index }) => {
   const dispatch = useDispatch();
@@ -24,11 +26,17 @@ const FilterContent = ({ type, index }) => {
 
   // TODO: Get name for type
   return (
-    <label className={"checkbox-filter"}>
-      <input type="checkbox" checked={checked} onChange={handleChange} />
-      <span className="checkmark-filter"></span>
-      Part Of
-    </label>
+    <MenuColumn>
+      {index === 0 && (
+        <MenuSubHeader>{TextResources.Filter_Other}</MenuSubHeader>
+      )}
+
+      <label className={"checkbox-filter"}>
+        <input type="checkbox" checked={checked} onChange={handleChange} />
+        <span className="checkmark-filter"></span>
+        Part Of
+      </label>
+    </MenuColumn>
   );
 };
 

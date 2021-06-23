@@ -26,9 +26,8 @@ const ValidateBlockEdge = (
     if (
       fromNode !== selectedNode &&
       IsTransportTerminal(fromConnector)
-      // connectChildren.some((node) => node.id === fromNode.id) &&
-      // connectChildren.some((node) => node.id === toNode.id)
-      // TODO: Handle all connectChildren
+      //   allConnectChildren?.some((node) => node.id === fromNode.id) &&
+      //   allConnectChildren?.some((node) => node.id === toNode.id)
     )
       return true;
     return false;

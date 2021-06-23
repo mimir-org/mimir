@@ -19,6 +19,7 @@ const CreateBlockElements = (
   mainNode: Node,
   connectNodes: Node[]
 ): Elements => {
+  //   console.log({ mainNode });
   if (!project) return;
   const initialElements: Elements = [];
   const nodes = red.store.getState().projectState.project.nodes as Node[];
