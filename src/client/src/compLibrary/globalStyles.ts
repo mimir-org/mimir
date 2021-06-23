@@ -2,6 +2,10 @@ import { createGlobalStyle } from "styled-components";
 import { Color, FontType } from "./";
 
 const GlobalStyle = createGlobalStyle`
+  :root {
+    --arrow-color: ${Color.TransportConnection};
+  }
+
   body {
     font-family: ${FontType.Standard}
   };

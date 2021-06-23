@@ -61,6 +61,10 @@
   text-align: center !important;
   border: 1px solid #222;
   background: magenta;
+
+  &.selected {
+    border: 2px solid #1a192b !important;
+  }
 }
 
 .react-flow__node-FunctionBlock {
