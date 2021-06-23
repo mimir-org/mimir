@@ -21,7 +21,7 @@ namespace Mb.Core.Controllers.V1
     /// </summary>
     [Produces("application/json")]
     [Authorize]
-    //[ApiController]
+    [ApiController]
     [ApiVersion("0.1")]
     [Route("V{version:apiVersion}/[controller]")]
     [SwaggerTag("Project")]
@@ -141,7 +141,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> ImportProject([FromBody] Project project)
+        public async Task<IActionResult> ImportProject([FromBody] ProjectAm project)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -165,23 +165,24 @@ namespace Mb.Core.Controllers.V1
         /// <summary>
         /// Import a new project
         /// </summary>
+        /// <param name="id"></param>
         /// <param name="project"></param>
         /// <returns></returns>
-        [HttpPost("update")]
+        [HttpPost("update/{id}")]
         [ProducesResponseType(typeof(Project), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Project), StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> UpdateProject([FromBody] Project project)
+        public async Task<IActionResult> UpdateProject(string id, [FromBody] ProjectAm project)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                var data = await _projectService.UpdateProject(project);
+                var data = await _projectService.UpdateProject(id, project);
                 return Ok(data);
             }
             catch (ModelBuilderDuplicateException e)
@@ -219,6 +220,10 @@ namespace Mb.Core.Controllers.V1
             catch (ModelBuilderNotFoundException e)
             {
                 return NotFound(e.Message);
+            }
+            catch (ModelBuilderInvalidOperationException e)
+            {
+                return StatusCode(500, e.Message);
             }
             catch (Exception e)
             {

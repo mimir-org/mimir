@@ -1,44 +1,50 @@
 import { ActiveTerminalTypeList, AttributesContainer } from "./helpers";
-// import { useDispatch } from "react-redux";
 import { Attribute } from "../../../models";
 import { IsTransportTerminal } from "../../flow/helpers/common";
 import styled from "styled-components";
-// import { changeConnectorAttributeValue } from "../../../redux/store/project/actions";
-import { TextResources } from "../../../assets/textResources";
+import TextResources from "../../../assets/textResources/textResources";
 
+// Migth be used later: 
+// import { ConnectorAttributesList } from "./helpers";
+// import { changeConnectorAttributeValue } from "../../../redux/store/project/actions";
 interface ConnectorAttribute {
   id: string;
   name: string;
   attributes: Attribute[];
 }
 
-//AttributesWrapper currently not in use, but will be
-// const AttributesWrapper = styled.div`
-//   //border: red solid 1px;
-//   display: flex;
-//   flex-direction: column;
-//   margin: 10px;
-//   height: 160px;
-//   width: 250px;
-// `;
-
+/*
+Might be used later:
+const AttributesWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    height: 160px;
+    width: 250px;
+`;*/
+const TerminalsWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 550px;
+`;
 const ListWrapper = styled.div`
   display: flex;
 `;
 
 const TerminalsTabComponent = ({ node }): any => {
-  //   const dispatch = useDispatch();
-
-  //   const handleOnConnectorChange = (
-  //     id: string,
-  //     value: string,
-  //     unit: any,
-  //     connectorId: string
-  //   ) => {
-  //     dispatch(
-  //       changeConnectorAttributeValue(id, value, unit, node.id, connectorId)
-  //     );
-  //   };
+  /*
+  Might be used later:
+  const handleOnConnectorChange = (
+    id: string,
+    value: string,
+    unit: any,
+    connectorId: string
+  ) => {
+    dispatch(
+      changeConnectorAttributeValue(id, value, unit, node.id, connectorId)
+    );
+  };
+  */
 
   let activeConnectors = [];
   let connectorAttributes: ConnectorAttribute[] = [];
@@ -63,19 +69,21 @@ const TerminalsTabComponent = ({ node }): any => {
   return (
     <>
       <ListWrapper>
-        <ActiveTerminalTypeList
-          terminals={node?.connectors}
-          title={TextResources.Inspector_Relations_All_Terminal_Types}
-          onElementClick={() => {}}
-        />
-        <ActiveTerminalTypeList
-          terminals={activeConnectors}
-          title={TextResources.Inspector_Relations_Active_Terminal_Types}
-          onElementClick={() => {}}
-        />
+        <TerminalsWrapper>
+          <ActiveTerminalTypeList
+            terminals={node?.connectors}
+            title={TextResources.Inspector_Relations_All_Terminal_Types}
+            onElementClick={() => {}}
+          />
+          <ActiveTerminalTypeList
+            terminals={activeConnectors}
+            title={TextResources.Inspector_Relations_Active_Terminal_Types}
+            onElementClick={() => {}}
+          />
+        </TerminalsWrapper>
         <AttributesContainer
           attributes={connectorAttributes}
-          title="Connector attributes"
+          title={TextResources.Inspector_Relations_Connector_Attributes}
         />
         {
           //TODO show attributes and other fields from Arjun's design on Figma

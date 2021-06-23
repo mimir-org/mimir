@@ -4,5 +4,7 @@
     {
         string CreateUniqueId();
         string GetDomain();
+        bool HasValidId(string id);
+        string CreateOrUseId(string id);
     }
 }

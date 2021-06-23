@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Mb.Models.Enums;
-using Newtonsoft.Json;
+﻿using Mb.Models.Enums;
 
 namespace Mb.Models.Data
 {

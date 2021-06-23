@@ -8,13 +8,14 @@ interface Props {
 export const TerminalsListBody = ({ listElements }: Props) => {
   return (
     <VerticalScrollbar height={200}>
-      {listElements.map((element) => (
-        <TerminalsListElement
-          key={element[1].key}
-          terminals={element[1].value}
-          category={element[1].key}
-        />
-      ))}
+      {listElements &&
+        listElements.map((element) => (
+          <TerminalsListElement
+            key={element[1].key}
+            terminals={element[1].value}
+            category={element[1].key}
+          />
+        ))}
     </VerticalScrollbar>
   );
 };

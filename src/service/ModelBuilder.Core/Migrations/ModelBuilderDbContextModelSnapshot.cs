@@ -507,10 +507,6 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Name");
 
-                    b.Property<string>("ParentId")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ParentId");
-
                     b.Property<string>("ProjectOwner")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")

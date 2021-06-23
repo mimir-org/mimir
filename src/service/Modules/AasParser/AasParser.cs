@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Modules;
 
@@ -18,6 +19,11 @@ namespace AasParserModule
         }
 
         public Task<Project> DeserializeProject(byte[] data)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ProjectAm> DeserializeProjectAm(byte[] data)
         {
             throw new NotImplementedException();
         }

@@ -87,5 +87,4 @@ export interface CreateLibraryType {
   code: string;
   rdsCategoryId: string;
   category: EnumBase;
-  semanticReferance: string;
 }

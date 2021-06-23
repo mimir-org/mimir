@@ -15,8 +15,8 @@ class Edge {
   toNode: Node;
 
   isHidden: boolean | false;
-  isSelected: boolean | false;
   masterProjectId: string;
+  isTemplateEdge: boolean;
 
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor() {}

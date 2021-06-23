@@ -10,8 +10,6 @@ namespace Mb.Models.Data
         [Required]
         public string Id { get; set; }
 
-        public string ParentId { get; set; }
-
         [Required]
         [RegularExpression(@"^(?=.*[1-9])\d+(\.[0-9]?)?$", ErrorMessage = "The version format must be at x.y")]
         public string Version { get; set; }
@@ -34,6 +32,6 @@ namespace Mb.Models.Data
         public virtual ICollection<Node> Nodes { get; set; }
         public virtual ICollection<Edge> Edges { get; set; }
 
-        public bool IsSubProject => !string.IsNullOrEmpty(ParentId);
+        
     }
 }

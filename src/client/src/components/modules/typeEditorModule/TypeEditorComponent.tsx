@@ -22,7 +22,6 @@ import {
   TerminalsList,
   AttributesList,
   TypePreview,
-  TypeEditorInspector,
 } from ".";
 import {
   TypeEditorWrapper,
@@ -88,7 +87,6 @@ export const TypeEditorComponent = () => {
     SetDarkModeColor(darkMode);
     dispatch(getInitialData());
     dispatch(changeAllModulesVisibility(false, true));
-    // dispatch(getAttributes(state.aspect));
   }, [
     dispatch,
     state.createLibraryType.aspect,
@@ -143,7 +141,7 @@ export const TypeEditorComponent = () => {
           <AttributesList />
           <TypePreview />
         </ChooseProperties>
-        <TypeEditorInspector />
+        {/* <TypeEditorInspector /> */}
       </TypeEditorContent>
     </TypeEditorWrapper>
   );
