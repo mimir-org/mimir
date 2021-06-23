@@ -1,6 +1,6 @@
 import red from "../../../../redux/store";
 import { Elements } from "react-flow-renderer";
-import { IsPartOfTerminal, IsTransportTerminal } from "../common";
+import { IsPartOfTerminal } from "../common";
 import { EDGE_TYPE, EdgeType } from "../../../../models/project";
 import { Node, Project } from "../../../../models";
 import { CreateConnectMainNode } from "./connectView";
@@ -14,19 +14,14 @@ import {
 const CreateBlockElements = (
   project: Project,
   selectedNode: Node,
-  connectNodes: Node[],
-  selectedBlockNodeId: string,
   splitView: boolean,
-  splitViewNode: Node
+  splitViewNode: Node,
+  mainNode: Node,
+  connectNodes: Node[]
 ): Elements => {
   if (!project) return;
   const initialElements: Elements = [];
   const nodes = red.store.getState().projectState.project.nodes as Node[];
-
-  const mainConnectNodes = red.store.getState().connectView.mainNodes as Node[];
-  const mainConnectNode = mainConnectNodes.find(
-    (x) => x?.id === selectedBlockNodeId
-  );
 
   // Draw parent block
   const parentBlock = CreateParentBlockNode(selectedNode);
@@ -52,16 +47,17 @@ const CreateBlockElements = (
         splitViewNode?.aspect === edge.toNode?.aspect
         // !IsTransportTerminal(edge.toConnector)
       ) {
-        initialElements.push(CreateSplitViewNode(edge.toNode));
+        const toNode = nodes.find((node) => node.id === edge.toNodeId);
+        initialElements.push(CreateSplitViewNode(toNode));
       }
     });
   }
 
   // Draw connection view
-  if (mainConnectNodes.length > 0) {
-    CreateConnectMainNode(mainConnectNode);
-    connectNodes.forEach((node) => {
-      initialElements.push(CreateBlockNode(node, mainConnectNode, false));
+  if (connectNodes?.length > 0) {
+    CreateConnectMainNode(mainNode);
+    connectNodes?.forEach((node) => {
+      initialElements.push(CreateBlockNode(node, mainNode, false));
     });
   }
 

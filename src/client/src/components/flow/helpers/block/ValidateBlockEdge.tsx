@@ -1,4 +1,3 @@
-import red from "../../../../redux/store";
 import { IsConnectView } from "./connectView";
 import { Node, Connector } from "../../../../models";
 import {
@@ -23,15 +22,12 @@ const ValidateBlockEdge = (
   if (IsPartOfTerminal(fromConnector) || IsPartOfTerminal(toConnector))
     return false;
 
-  const connectChildren = red.store.getState().connectView
-    ?.connectNodes as Node[];
-
   if (IsConnectView()) {
     if (
       fromNode !== selectedNode &&
-      IsTransportTerminal(fromConnector) &&
-      connectChildren.some((node) => node.id === fromNode.id) &&
-      connectChildren.some((node) => node.id === toNode.id)
+      IsTransportTerminal(fromConnector)
+      //   allConnectChildren?.some((node) => node.id === fromNode.id) &&
+      //   allConnectChildren?.some((node) => node.id === toNode.id)
     )
       return true;
     return false;

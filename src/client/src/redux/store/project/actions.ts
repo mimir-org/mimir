@@ -22,6 +22,7 @@ import {
   CHANGE_ACTIVE_BLOCKNODE,
   DELETE_PROJECT_ERROR,
   SET_ACTIVE_CONNECTOR,
+  CHANGE_ACTIVE_EDGE,
 } from "./types";
 
 export function save(project: Project): ProjectActionTypes {
@@ -139,6 +140,13 @@ export function changeActiveBlockNode(nodeId: string) {
   return {
     type: CHANGE_ACTIVE_BLOCKNODE,
     payload: { nodeId },
+  };
+}
+
+export function changeActiveEdge(edgeId: string, isActive: boolean) {
+  return {
+    type: CHANGE_ACTIVE_EDGE,
+    payload: { edgeId, isActive },
   };
 }
 

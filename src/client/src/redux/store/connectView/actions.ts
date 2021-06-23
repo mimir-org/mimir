@@ -26,20 +26,22 @@ export function removeMainNode(node: Node) {
   };
 }
 
-export function addConnectNode(node: Node) {
+export function addConnectNode(mainNode: Node, child: Node) {
   return {
     type: ADD_CONNECT_NODE,
     payload: {
-      node,
+      mainNode,
+      child,
     },
   };
 }
 
-export function removeConnectNode(node: Node) {
+export function removeConnectNode(mainNode: Node, child: Node) {
   return {
     type: REMOVE_CONNECT_NODE,
     payload: {
-      node,
+      mainNode,
+      child,
     },
   };
 }

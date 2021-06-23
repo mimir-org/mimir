@@ -22,6 +22,7 @@ export const CHANGE_NODE_VISIBILITY = "CHANGE_NODE_VISIBILITY";
 export const CHANGE_EDGE_VISIBILITY = "CHANGE_EDGE_VISIBILITY";
 export const CHANGE_ACTIVE_NODE = "CHANGE_ACTIVE_NODE";
 export const CHANGE_ACTIVE_BLOCKNODE = "CHANGE_ACTIVE_BLOCKNODE";
+export const CHANGE_ACTIVE_EDGE = "CHANGE_ACTIVE_EDGE";
 export const CHANGE_SELECTED_PROJECT = "CHANGE_SELECTED_PROJECT";
 export const CHANGE_ALL_NODES = "CHANGE_ALL_NODES";
 export const CHANGE_NODE_PROP_VALUE = "CHANGE_NODE_PROP_VALUE";
@@ -141,6 +142,14 @@ interface ChangeActiveNode {
   };
 }
 
+interface ChangeActiveEdge {
+  type: typeof CHANGE_ACTIVE_EDGE;
+  payload: {
+    edgeId: string;
+    isActive: boolean;
+  };
+}
+
 interface ChangeActiveBlockNode {
   type: typeof CHANGE_ACTIVE_BLOCKNODE;
   payload: {
@@ -236,6 +245,7 @@ export type ProjectActionTypes =
   | ChangeNodeVisibility
   | ChangeEdgeVisibility
   | ChangeActiveNode
+  | ChangeActiveEdge
   | ChangeActiveBlockNode
   | SaveProjectAction
   | SaveProjectActionFinished

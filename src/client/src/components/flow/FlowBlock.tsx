@@ -11,17 +11,13 @@ import { changeInspectorTab } from "../../redux/store/inspector/actions";
 import { setSplitView, setNode } from "../../redux/store/splitView/actions";
 import { Project, Node } from "../../models";
 import { changeActiveBlockNode } from "../../redux/store/project/actions";
-import { IsConnectView } from "./helpers/block/connectView";
+import { removeMainNodes } from "../../redux/store/connectView/actions";
 import {
   useOnConnect,
   useOnDrop,
   useOnElementsRemove,
   useOnNodeDragStop,
 } from "./hooks";
-import {
-  removeConnectNodes,
-  removeMainNodes,
-} from "../../redux/store/connectView/actions";
 import {
   FindSelectedNode,
   GetBlockNodeTypes,
@@ -55,7 +51,6 @@ const FlowBlock = () => {
   // Flush ConnectView
   useEffect(() => {
     dispatch(removeMainNodes());
-    dispatch(removeConnectNodes());
   }, [dispatch]);
 
   const project = useSelector<RootState>(
@@ -72,14 +67,17 @@ const FlowBlock = () => {
     (state) => state.splitView.node
   ) as Node;
 
-  const connectViewNodes = useSelector<RootState>(
-    (state) => state.connectView.connectNodes
-  ) as Node[];
-
   const selectedBlockNodeId = useSelector<RootState>(
     (state) =>
       state.projectState.project?.nodes.find((x) => x.isBlockSelected)?.id
   ) as string;
+
+  const mainConnectNodes = useSelector<RootState>(
+    (state) => state.connectView.mainNodes
+  ) as Node[];
+
+  const mainNode = mainConnectNodes.find((x) => x?.id === selectedBlockNodeId);
+  const connectNodes = mainNode?.connectNodes as Node[];
 
   const showBackground = IsLocation(splitViewNode) || IsLocation(node);
 
@@ -89,22 +87,15 @@ const FlowBlock = () => {
         CreateBlockElements(
           project,
           node,
-          connectViewNodes,
-          selectedBlockNodeId,
           splitView,
-          splitViewNode
+          splitViewNode,
+          mainNode,
+          connectNodes
         )
       );
       return setReactFlowInstance(_reactFlowInstance);
     },
-    [
-      project,
-      node,
-      connectViewNodes,
-      selectedBlockNodeId,
-      splitView,
-      splitViewNode,
-    ]
+    [project, node, splitView, splitViewNode, mainNode, connectNodes]
   );
 
   const OnElementsRemove = (elementsToRemove) => {
@@ -151,10 +142,8 @@ const FlowBlock = () => {
   };
 
   const OnElementClick = (_event, element) => {
-    if (!IsConnectView()) {
-      dispatch(changeActiveBlockNode(element.id));
-      dispatch(changeInspectorTab(0));
-    }
+    dispatch(changeActiveBlockNode(element.id));
+    dispatch(changeInspectorTab(0));
   };
 
   // Force rerender

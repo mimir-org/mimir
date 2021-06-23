@@ -43,13 +43,11 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     (state) => state.connectView?.mainNodes
   ) as Node[];
 
-  const mainConnectNode = mainConnectNodes?.find(
+  const mainConnectNode = mainConnectNodes.find(
     (node) => node?.id === data.id
   ) as Node;
 
-  const connectNodes = useSelector<RootState>(
-    (state) => state.connectView.connectNodes
-  ) as Node[];
+  const connectNodes = mainConnectNode?.connectNodes as Node[];
 
   const onTerminalMenuClick = () => {
     showTerminalMenu(!terminalMenu);
@@ -80,20 +78,20 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
       data.width = Size.ConnectView_Width;
       data.length = Size.ConnectView_Length;
       if (!IsMainConnectNode(data.id)) dispatch(addMainNode(data));
-      dispatch(addConnectNode(node));
+      dispatch(addConnectNode(data, node));
     } else {
       if (connectNodes.length === 1) {
         showConnectMenu(false);
         dispatch(removeMainNode(data));
       }
-      dispatch(removeConnectNode(node));
+      dispatch(removeConnectNode(data, node));
     }
   };
 
   const isChecked = (node: Node): boolean => {
     let result = false;
     connectNodes?.forEach((element) => {
-      if (element.id === node.id) result = true;
+      if (element?.id === node?.id) result = true;
     });
     return result;
   };
