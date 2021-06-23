@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../../redux/store";
 import { TypeEditorState } from "../../../../../redux/store/typeEditor/types";
+import { Aspect, ObjectType } from "../../../../../models";
 
 import { ListHeader } from "../ListHeader";
 import { AttributesListBody } from "./AttributesListBody";
@@ -12,13 +13,27 @@ export const AttributesList = () => {
     (state) => state.typeEditor
   ) as TypeEditorState;
 
+  const AttributesList = () => {
+    if (state.attributes) {
+      let filteredAttributes = Object.entries(state.attributes);
+      if (
+        state.createLibraryType.aspect === Aspect.NotSet ||
+        state.createLibraryType.objectType === ObjectType.NotSet ||
+        state.createLibraryType.name === ""
+      ) {
+        filteredAttributes = [];
+      }
+      return filteredAttributes;
+    }
+  };
+
   return (
     <ListWrapper flex={0.7}>
       <ListHeader
         label={TextResources.TypeEditor_Properties_Block_Attributes}
         chooseVisible={true}
       />
-      <AttributesListBody listElements={Object.entries(state.attributes)} />
+      <AttributesListBody listElements={AttributesList()} />
     </ListWrapper>
   );
 };

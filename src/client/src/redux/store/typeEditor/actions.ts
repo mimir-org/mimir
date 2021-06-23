@@ -1,5 +1,4 @@
 import {
-  Attribute,
   TerminalType,
   TerminalTypeItem,
   Aspect,
@@ -20,6 +19,7 @@ import {
   CHANGE_RDS,
   CHANGE_SEMANTICREFERENCE,
   UPDATE_TERMINALTYPES,
+  UPDATE_ATTRIBUTETYPES,
   TypeEditorActionTypes,
 } from "./types";
 
@@ -34,7 +34,7 @@ export function create(
   rdsCategory: string,
   semanticRdsReference: string,
   terminals: TerminalType[],
-  attributes: Attribute[],
+  attributes: string[],
   version: string,
   semanticReference: string
 ): TypeEditorActionTypes {
@@ -156,6 +156,15 @@ export function updateTerminalTypes(terminalTypes: TerminalTypeItem[]) {
     type: UPDATE_TERMINALTYPES,
     payload: {
       terminalTypes,
+    },
+  };
+}
+
+export function updateAttributesList(attributeTypes: string[]) {
+  return {
+    type: UPDATE_ATTRIBUTETYPES,
+    payload: {
+      attributeTypes,
     },
   };
 }

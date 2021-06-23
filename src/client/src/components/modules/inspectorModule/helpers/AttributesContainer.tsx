@@ -9,31 +9,29 @@ const Wrapper = styled.div`
 `;
 
 const ListContainer = styled.div`
-  //border: red solid 1px;
   border: solid 2px #898787;
   border-radius: 3px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   height: 150px;
-  width: 460px;
+  min-width: 460px;
   overflow-y: scroll;
 `;
 
 const ListElement = styled.div`
-  width: 200px;
+  width: 180px;
   margin: 10px;
   font-size: ${FontSize.Medium};
-  --border: solid black 1px;
   display: flex;
   flex-wrap: wrap;
+  border: solid 1px #898787;
+  border-radius: 1px;
 `;
-
 const InnerListElement = styled.div`
   width: 200px;
   padding: 5px;
   background-color: ${(props) => (props.index % 2 === 0 ? "#D9EAEB" : "white")};
-  --border: solid red 1px;
 `;
 
 const AttributesContainer = ({ attributes, title }) => {
