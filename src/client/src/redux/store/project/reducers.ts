@@ -29,6 +29,7 @@ import {
   CHANGE_ACTIVE_BLOCKNODE,
   DELETE_PROJECT_ERROR,
   SET_ACTIVE_CONNECTOR,
+  CHANGE_ACTIVE_EDGE,
 } from "./types";
 
 const initialState: ProjectState = {
@@ -306,6 +307,20 @@ export function projectReducer(
               : { ...node, isSelected: false }
           ),
           edges: state.project.edges,
+        },
+      };
+
+    case CHANGE_ACTIVE_EDGE:
+      const edgeId = action.payload.edgeId;
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          edges: state.project.edges.map((edge) =>
+            edge.id === edgeId
+              ? { ...edge, isSelected: action.payload.isActive }
+              : { ...edge, isSelected: false }
+          ),
         },
       };
 
