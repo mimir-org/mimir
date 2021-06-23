@@ -35,7 +35,7 @@ const CreateBlockElements = (
   // Draw child nodes
   project.edges.forEach((edge) => {
     if (
-      edge.fromNodeId === selectedNode.id &&
+      edge.fromNodeId === selectedNode?.id &&
       selectedNode?.aspect === edge.toNode?.aspect &&
       IsPartOfTerminal(edge.toConnector)
     ) {
@@ -48,11 +48,12 @@ const CreateBlockElements = (
   if (splitViewNode && splitView) {
     project.edges.forEach((edge) => {
       if (
-        edge.fromNode === splitViewNode &&
-        splitViewNode?.aspect === edge.toNode?.aspect &&
-        !IsTransportTerminal(edge.toConnector)
-      )
+        edge.fromNodeId === splitViewNode.id &&
+        splitViewNode?.aspect === edge.toNode?.aspect
+        // !IsTransportTerminal(edge.toConnector)
+      ) {
         initialElements.push(CreateSplitViewNode(edge.toNode));
+      }
     });
   }
 
