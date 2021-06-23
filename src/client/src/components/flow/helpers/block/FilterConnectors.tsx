@@ -19,7 +19,7 @@ const FilterConnectors = (connectors, aspect) => {
   const connectorList: Connector[] = [];
 
   if (aspect === Aspect.Location) {
-    connectors.forEach((conn) => {
+    connectors?.forEach((conn) => {
       IsLocationTerminal(conn) &&
         IsInputConnector(conn) &&
         connectorList.push(conn);
@@ -27,7 +27,7 @@ const FilterConnectors = (connectors, aspect) => {
     return connectorList;
   }
 
-  connectors.forEach((conn) => {
+  connectors?.forEach((conn) => {
     IsTransportTerminal(conn) &&
       !IsLocationTerminal(conn) &&
       !IsPartOfTerminal(conn) &&

@@ -34,6 +34,7 @@ const GetBlockHandleType = (conn: Connector): [HandleType, Position] => {
   if (IsInputConnector(conn) && IsTransportTerminal(conn)) {
     return ["target", Position.Left];
   }
+  return ["source", Position.Right];
 };
 
 export default GetBlockHandleType;
