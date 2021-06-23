@@ -23,18 +23,6 @@ const CreateBlockElements = (
   const initialElements: Elements = [];
   const nodes = red.store.getState().projectState.project.nodes as Node[];
 
-  //   const mainConnectNodes = red.store.getState().connectView.mainNodes as Node[];
-  //   const mainNode = mainConnectNodes.find((x) => x?.id === selectedBlockNodeId);
-  //   const connectNodes = mainNode?.connectNodes as Node[];
-
-  // Draw connection view
-  if (connectNodes?.length > 0) {
-    CreateConnectMainNode(mainNode);
-    connectNodes?.forEach((node) => {
-      initialElements.push(CreateBlockNode(node, mainNode, false));
-    });
-  }
-
   // Draw parent block
   const parentBlock = CreateParentBlockNode(selectedNode);
   if (parentBlock) initialElements.push(parentBlock);
@@ -42,7 +30,7 @@ const CreateBlockElements = (
   // Draw child nodes
   project.edges.forEach((edge) => {
     if (
-      edge.fromNodeId === selectedNode.id &&
+      edge.fromNodeId === selectedNode?.id &&
       selectedNode?.aspect === edge.toNode?.aspect &&
       IsPartOfTerminal(edge.toConnector)
     ) {
@@ -60,6 +48,14 @@ const CreateBlockElements = (
         !IsTransportTerminal(edge.toConnector)
       )
         initialElements.push(CreateSplitViewNode(edge.toNode));
+    });
+  }
+
+  // Draw connection view
+  if (connectNodes?.length > 0) {
+    CreateConnectMainNode(mainNode);
+    connectNodes?.forEach((node) => {
+      initialElements.push(CreateBlockNode(node, mainNode, false));
     });
   }
 

@@ -6,8 +6,8 @@ import { Size } from "../../../../../compLibrary";
 const SetConnectNodePosition = (node: Node, mainConnectNodeId: string) => {
   const nodes = red.store.getState().projectState.project.nodes;
   const mainConnectNode = nodes.find((x) => x.id === mainConnectNodeId);
-  let connectNodes = mainConnectNode?.connectNodes as Node[];
-  if (connectNodes === undefined) connectNodes = [];
+  let connectNodes = [];
+  connectNodes = mainConnectNode?.connectNodes as Node[];
 
   let xPos = mainConnectNode
     ? mainConnectNode.positionBlockX
@@ -18,7 +18,7 @@ const SetConnectNodePosition = (node: Node, mainConnectNodeId: string) => {
 
   xPos = CalculateXPosition(node, xPos, connectNodes, mainConnectNodeId);
   yPos = CalculateYPosition(node, yPos, connectNodes);
-  if (connectNodes.length === 0) yPos -= Size.Node_Length;
+  if (connectNodes?.length === 0) yPos -= Size.Node_Length;
 
   if (node !== mainConnectNode) {
     node.positionBlockX = xPos;
