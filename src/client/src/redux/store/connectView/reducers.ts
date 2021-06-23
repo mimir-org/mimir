@@ -41,10 +41,8 @@ export function connectViewReducer(state = initialState, action) {
         (x) => x?.id !== mainNodeId
       );
 
-      const allMainNodes = filterMainNodes.concat(mainNode);
-
       return {
-        mainNodes: allMainNodes,
+        mainNodes: filterMainNodes.concat(mainNode),
       };
 
     // case REMOVE_CONNECT_NODE:

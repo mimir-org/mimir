@@ -1,16 +1,8 @@
 import { FindNodeById } from ".";
 import { Size } from "../../../../../compLibrary";
 import { Node } from "../../../../../models";
-import red from "../../../../../redux/store";
 
-const UpdateConnectNodeSize = (
-  nodeCount: number,
-  mainConnectNodeId: string
-) => {
-  const mainConnectNode = red.store
-    .getState()
-    .connectView.mainNodes.find((x) => x.id === mainConnectNodeId) as Node;
-
+const UpdateConnectNodeSize = (nodeCount: number, mainConnectNode: Node) => {
   const actualNode = FindNodeById(mainConnectNode?.id);
   const twinId = "BlockFunctionNode-" + mainConnectNode?.id; // TODO: remove/refactor
   const twinNode = document.getElementById(twinId);

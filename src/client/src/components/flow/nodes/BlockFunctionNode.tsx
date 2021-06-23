@@ -84,8 +84,8 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
         showConnectMenu(false);
         // dispatch(removeMainNode(data));
       }
-      //   dispatch(removeConnectNode(node));
-      dispatch(removeMainNode(data));
+      dispatch(removeConnectNode(node));
+      //   dispatch(removeMainNode(data));
     }
   };
 
