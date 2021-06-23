@@ -1,23 +1,24 @@
+import red from "../../../../../redux/store";
 import { Node } from "../../../../../models";
 import { CalculateXPosition, CalculateYPosition } from ".";
 import { Size } from "../../../../../compLibrary";
 
-const SetConnectNodePosition = (node: Node, mainConnectNode: Node) => {
-  let connectNodes = [];
-  connectNodes = mainConnectNode?.connectNodes as Node[];
+const SetConnectNodePosition = (
+  node: Node,
+  mainConnectNodeId: string,
+  connectNodes: Node[]
+) => {
+  const nodes = red.store.getState().projectState.project.nodes as Node[];
+  const mainNode = nodes.find((x) => x.id === mainConnectNodeId);
 
-  let xPos = mainConnectNode
-    ? mainConnectNode.positionBlockX
-    : node.positionBlockX;
-  let yPos = mainConnectNode
-    ? mainConnectNode.positionBlockY
-    : node.positionBlockY;
+  let xPos = mainNode ? mainNode.positionBlockX : node.positionBlockX;
+  let yPos = mainNode ? mainNode.positionBlockY : node.positionBlockY;
 
-  xPos = CalculateXPosition(node, xPos, connectNodes, mainConnectNode);
+  xPos = CalculateXPosition(node, xPos, connectNodes, mainNode);
   yPos = CalculateYPosition(node, yPos, connectNodes);
   if (connectNodes?.length === 0) yPos -= Size.Node_Length;
 
-  if (node !== mainConnectNode) {
+  if (node !== mainNode) {
     node.positionBlockX = xPos;
     node.positionBlockY = yPos;
   }

@@ -1,11 +1,8 @@
 import { FindNodeById } from ".";
 import { Size } from "../../../../../compLibrary";
-import { Node } from "../../../../../models";
 
-const UpdateConnectNodeSize = (nodeCount: number, mainConnectNode: Node) => {
-  const actualNode = FindNodeById(mainConnectNode?.id);
-  const twinId = "BlockFunctionNode-" + mainConnectNode?.id; // TODO: remove/refactor
-  const twinNode = document.getElementById(twinId);
+const UpdateConnectNodeSize = (nodeCount: number, mainNodeId: string) => {
+  const mainNode = FindNodeById(mainNodeId);
   let newHeight = Size.Node_Length;
   let percent = 16;
   let count = 1;
@@ -18,8 +15,7 @@ const UpdateConnectNodeSize = (nodeCount: number, mainConnectNode: Node) => {
     count = Math.ceil(1 + nodeCount - (1 + nodeCount * percent) / 100);
   }
 
-  if (twinNode) twinNode.style.minHeight = `${newHeight * count}px`;
-  if (actualNode) actualNode.style.minHeight = `${newHeight * count}px`;
+  if (mainNode) mainNode.style.minHeight = `${newHeight * count}px`;
 };
 
 export default UpdateConnectNodeSize;

@@ -1,6 +1,6 @@
 import red from "../../../../redux/store";
 import { Elements } from "react-flow-renderer";
-import { IsPartOfTerminal, IsTransportTerminal } from "../common";
+import { IsPartOfTerminal } from "../common";
 import { EDGE_TYPE, EdgeType } from "../../../../models/project";
 import { Node, Project } from "../../../../models";
 import { CreateConnectMainNode } from "./connectView";

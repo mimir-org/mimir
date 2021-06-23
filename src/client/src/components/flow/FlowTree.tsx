@@ -12,10 +12,7 @@ import { GetTreeEdgeType } from "./helpers/tree";
 import { IsBlockView } from "./helpers/block";
 import { changeInspectorTab } from "../../redux/store/inspector/actions";
 import { FindSelectedNode, SetDarkModeColor } from "./helpers/common";
-import {
-  removeConnectNodes,
-  removeMainNodes,
-} from "../../redux/store/connectView/actions";
+import { removeMainNodes } from "../../redux/store/connectView/actions";
 import {
   updatePosition,
   changeActiveNode,
@@ -35,7 +32,6 @@ const FlowTree = () => {
   // Flush ConnectView
   useEffect(() => {
     dispatch(removeMainNodes());
-    dispatch(removeConnectNodes());
   }, [dispatch]);
 
   const project = useSelector<RootState>(

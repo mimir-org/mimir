@@ -12,16 +12,13 @@ import { setSplitView, setNode } from "../../redux/store/splitView/actions";
 import { Project, Node } from "../../models";
 import { changeActiveBlockNode } from "../../redux/store/project/actions";
 import { IsConnectView } from "./helpers/block/connectView";
+import { removeMainNodes } from "../../redux/store/connectView/actions";
 import {
   useOnConnect,
   useOnDrop,
   useOnElementsRemove,
   useOnNodeDragStop,
 } from "./hooks";
-import {
-  removeConnectNodes,
-  removeMainNodes,
-} from "../../redux/store/connectView/actions";
 import {
   FindSelectedNode,
   GetBlockNodeTypes,
@@ -55,7 +52,6 @@ const FlowBlock = () => {
   // Flush ConnectView
   useEffect(() => {
     dispatch(removeMainNodes());
-    //   dispatch(removeConnectNodes());
   }, [dispatch]);
 
   const project = useSelector<RootState>(

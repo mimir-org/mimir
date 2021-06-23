@@ -4,7 +4,6 @@ import {
   REMOVE_MAIN_CONNECT_NODE,
   ADD_CONNECT_NODE,
   REMOVE_CONNECT_NODE,
-  REMOVE_ALL_CONNECT_NODES,
   REMOVE_ALL_MAIN_NODES,
 } from "./types";
 
@@ -45,11 +44,24 @@ export function connectViewReducer(state = initialState, action) {
         mainNodes: filterMainNodes.concat(mainNode),
       };
 
-    // case REMOVE_CONNECT_NODE:
-    //   return {
-    //     ...state,
-    //     connectNodes: state.connectNodes.filter((x) => x.id !== node.id),
-    //   };
+    case REMOVE_CONNECT_NODE:
+      const mainConnectNodeId = action.payload.mainNode.id;
+      const connectChild = action.payload.child;
+
+      const mainConnectNode = {
+        ...state.mainNodes.find((node) => node.id === mainConnectNodeId),
+      } as Node;
+
+      mainConnectNode.connectNodes = mainConnectNode.connectNodes?.filter(
+        (node) => node.id !== connectChild.id
+      );
+      const filterMainConnectNodes = state.mainNodes.filter(
+        (x) => x?.id !== mainConnectNodeId
+      );
+
+      return {
+        mainNodes: filterMainConnectNodes.concat(mainConnectNode),
+      };
 
     case REMOVE_ALL_MAIN_NODES:
       return {
