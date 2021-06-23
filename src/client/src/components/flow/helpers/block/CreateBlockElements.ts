@@ -57,7 +57,8 @@ const CreateBlockElements = (
   if (connectNodes?.length > 0) {
     CreateConnectMainNode(mainNode);
     connectNodes?.forEach((node) => {
-      initialElements.push(CreateBlockNode(node, mainNode, false));
+      const connectNode = nodes.find((x) => x.id === node.id);
+      initialElements.push(CreateBlockNode(connectNode, mainNode, false));
     });
   }
 

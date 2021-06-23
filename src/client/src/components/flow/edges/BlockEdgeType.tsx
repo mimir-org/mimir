@@ -18,10 +18,6 @@ export default function BlockEdgeType({
 }) {
   const markerEnd = getMarkerEnd(ArrowHeadType.ArrowClosed, markerEndId);
 
-  // Force edge to fit the terminals
-  //   targetY += 40;
-  //   sourceY += 40;
-
   const edgePathSmoothStep = getSmoothStepPath({
     sourceX,
     sourceY,
@@ -32,13 +28,12 @@ export default function BlockEdgeType({
   });
 
   const getStyle = () => {
-    const fromConnector = data.source.connectors.find(
-      (x) => x.id === data.edge.fromConnector.id
+    const fromConnector = data.source.connectors?.find(
+      (x) => x.id === data.edge.fromConnectorId
     ) as Connector;
 
     // const arrowStyle = document.body.style;
     // arrowStyle.setProperty("--arrow-color", fromConnector?.color);
-
     return {
       stroke: fromConnector?.color,
       strokeWidth: 2,
