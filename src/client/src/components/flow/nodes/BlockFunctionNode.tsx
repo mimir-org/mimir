@@ -9,9 +9,9 @@ import { setActiveConnector } from "../../../redux/store/project/actions";
 import { TerminalsComponent, ConnectViewComponent } from "../block";
 import { HandleComponent } from "../block";
 import { FilterConnectors } from "../helpers/block";
-import { FindNodeById } from "../helpers/block/connectView";
 import {
   GetConnectChildren,
+  IsMainConnectNode,
   SetMainConnectNodeSize,
 } from "../helpers/block/connectView";
 import {
@@ -24,7 +24,6 @@ import {
   addMainNode,
   removeConnectNode,
   removeMainNode,
-  removeMainNodes,
 } from "../../../redux/store/connectView/actions";
 
 const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
@@ -80,14 +79,13 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     if (!isChecked(node)) {
       data.width = Size.ConnectView_Width;
       data.length = Size.ConnectView_Length;
-      dispatch(addMainNode(data));
+      if (!IsMainConnectNode(data.id)) dispatch(addMainNode(data));
       dispatch(addConnectNode(node));
     } else {
-      data.width = Size.Node_Width;
-      data.length = Size.Node_Length;
-
-      connectNodes.length === 1 && showConnectMenu(false);
-      dispatch(removeMainNode(data));
+      if (connectNodes.length === 1) {
+        showConnectMenu(false);
+        dispatch(removeMainNode(data));
+      }
       dispatch(removeConnectNode(node));
     }
   };
@@ -101,24 +99,10 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   };
 
   useEffect(() => {
-    if (connectNodes.length < 1) dispatch(removeMainNodes());
-  }, [connectNodes.length, dispatch]);
-
-  useEffect(() => {
     SetMainConnectNodeSize(mainConnectNode?.id, data.id, connectNodes);
   }, [mainConnectNode, data, connectNodes]);
 
-  useEffect(() => {
-    const twinNode = FindNodeById(mainConnectNode?.id);
-    // TODO: Check this render
-    const clicked = () => {
-      if (twinNode) twinNode.style.zIndex = "1";
-    };
-    if (mainConnectNode) {
-      window.addEventListener("click", clicked);
-    } else window.removeEventListener("click", clicked);
-  });
-
+  // Force edges' z-index in ConnectView
   useEffect(() => {
     if (mainConnectNode) {
       const allEdges = document.querySelector(

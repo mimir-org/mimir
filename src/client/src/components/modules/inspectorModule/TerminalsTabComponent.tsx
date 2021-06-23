@@ -2,7 +2,7 @@ import { ActiveTerminalTypeList, AttributesContainer } from "./helpers";
 import { Attribute } from "../../../models";
 import { IsTransportTerminal } from "../../flow/helpers/common";
 import styled from "styled-components";
-import textResources from "../../../assets/textResources/textResources";
+import TextResources from "../../../assets/textResources/textResources";
 
 // Migth be used later: 
 // import { ConnectorAttributesList } from "./helpers";
@@ -23,13 +23,14 @@ const AttributesWrapper = styled.div`
     width: 250px;
 `;*/
 const TerminalsWrapper = styled.div`
-    display: flex;
-    flex-direction: row;
-    width: 550px;
+  display: flex;
+  flex-direction: row;
+  width: 550px;
 `;
 const ListWrapper = styled.div`
   display: flex;
 `;
+
 const TerminalsTabComponent = ({ node }): any => {
   /*
   Might be used later:
@@ -67,26 +68,26 @@ const TerminalsTabComponent = ({ node }): any => {
 
   return (
     <>
-    <ListWrapper>
-      <TerminalsWrapper>
-        <ActiveTerminalTypeList
-        terminals={node?.connectors}
-        title={textResources.Inspector_Relations_All_Terminal_Types}
-        onElementClick={()=>{}}
+      <ListWrapper>
+        <TerminalsWrapper>
+          <ActiveTerminalTypeList
+            terminals={node?.connectors}
+            title={TextResources.Inspector_Relations_All_Terminal_Types}
+            onElementClick={() => {}}
+          />
+          <ActiveTerminalTypeList
+            terminals={activeConnectors}
+            title={TextResources.Inspector_Relations_Active_Terminal_Types}
+            onElementClick={() => {}}
+          />
+        </TerminalsWrapper>
+        <AttributesContainer
+          attributes={connectorAttributes}
+          title={TextResources.Inspector_Relations_Connector_Attributes}
         />
-        <ActiveTerminalTypeList
-        terminals={activeConnectors}
-        title={textResources.Inspector_Relations_Active_Terminal_Types}
-        onElementClick={ () => {} }
-        />
-      </TerminalsWrapper>
-      <AttributesContainer 
-      attributes={connectorAttributes}
-      title={textResources.Inspector_Relations_Connector_Attributes}
-      />
-      {
-      //Might be used later:
-      /* <AttributesWrapper>
+        {
+          //TODO show attributes and other fields from Arjun's design on Figma
+          /* <AttributesWrapper>
         <ConnectorAttributesList
         connectorAttrs={connectorAttributes}
         handleChange={handleOnConnectorChange}

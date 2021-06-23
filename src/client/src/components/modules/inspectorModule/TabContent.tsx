@@ -1,9 +1,9 @@
 import { Node } from "../../../models";
 import {
   RelationTabComponent,
-  //CommentsTabComponent,
   TerminalsTabComponent,
   TechInfoTabComponent,
+  //CommentsTabComponent,
 } from ".";
 
 interface Props {
