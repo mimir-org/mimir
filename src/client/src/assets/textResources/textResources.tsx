@@ -111,10 +111,13 @@ const textResources = {
 
   // AccountModule
   Account_Save_Label: "Save project to database",
-  Account_Save_Label_File: "Save project to file",
+  Account_Save_Label_File: "Export project file",
+  Account_Save_Label_Library_File: "Export project library",
+  Account_Import_Label_File: "Import project file",
+  Account_Import_Label_Library_File: "Import project library",
   Account_Logout: "Log out",
   Account_Open_Label: "Open a project",
-  Account_Create_Label: "Create a new project",
+  Account_Create_Label: "Create a project",
   Account_Create_Button_Label: "Create project",
   Account_Name_Project_Label: "Name project",
   Account_Name_Project_Placeholder: "New project name...",
