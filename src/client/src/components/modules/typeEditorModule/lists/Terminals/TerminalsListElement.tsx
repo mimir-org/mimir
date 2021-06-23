@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateTerminalTypes } from "../../../../../redux/store/typeEditor/actions";
 import { TypeEditorState } from "../../../../../redux/store/typeEditor/types";
 import { RootState } from "../../../../../redux/store";
-
 import { AddTerminal } from "./AddTerminal/AddTerminalComponent";
 import { NumericInput } from "../../../../../compLibrary";
 import {
@@ -15,6 +14,7 @@ import {
   ExpandedIcon,
   CollapsedIcon,
 } from "../../../../../assets/icons/common";
+
 interface Props {
   category: string;
   terminals: any;
@@ -47,7 +47,7 @@ export const TerminalsListElement = ({ category, terminals }: Props) => {
 
   useEffect(() => {
     setClientTerminalList(state.createLibraryType.terminalTypes);
-  }, []);
+  }, [state.createLibraryType.terminalTypes]);
 
   const terminalInput = (quantity) => {
     let temp = [];

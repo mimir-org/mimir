@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { TerminalTypeItem, ConnectorType } from "../../../../../../models";
-
 import { AddTerminalElement } from "../../../styled";
 import "./directiondropdown.scss";
 import "./terminalsearchbar.scss";

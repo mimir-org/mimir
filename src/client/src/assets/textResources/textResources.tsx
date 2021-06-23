@@ -82,6 +82,8 @@ const textResources = {
   Inspector_Inherited_Total_Liquid: "Total liquid capacity",
   Inspector_Inherited_Total_Injection: "Total injection water rate",
 
+  Inspector_Delete_Node: "Delete",
+
   // LibraryModule
   Library_Heading: "Library",
   Library_Function: "Function",

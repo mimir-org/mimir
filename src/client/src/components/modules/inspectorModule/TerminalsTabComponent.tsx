@@ -1,12 +1,11 @@
-import { AttributesList } from "../typeEditorModule";
 import { ActiveTerminalTypeList, AttributesContainer } from "./helpers";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import { Attribute } from "../../../models";
-import { ConnectorAttributesList } from "./helpers";
-import { IsTransportTerminal, CreateId } from "../../flow/helpers/common";
+import { IsTransportTerminal } from "../../flow/helpers/common";
 import styled from "styled-components";
-import { changeConnectorAttributeValue } from "../../../redux/store/project/actions";
-import textResources from "../../../assets/textResources/textResources";
+// import { changeConnectorAttributeValue } from "../../../redux/store/project/actions";
+import { TextResources } from "../../../assets/textResources";
+
 interface ConnectorAttribute {
   id: string;
   name: string;
@@ -15,33 +14,34 @@ interface ConnectorAttribute {
 
 //AttributesWrapper currently not in use, but will be
 const AttributesWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    margin: 10px;
-    height: 160px;
-    width: 250px;
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  height: 160px;
+  width: 250px;
 `;
 const TerminalsWrapper = styled.div`
-    display: flex;
-    flex-direction: row;
-    width: 550px;
+  display: flex;
+  flex-direction: row;
+  width: 550px;
 `;
 const ListWrapper = styled.div`
   display: flex;
 `;
-const TerminalsTabComponent = ({ node }): any => {
-  const dispatch = useDispatch();
 
-  const handleOnConnectorChange = (
-    id: string,
-    value: string,
-    unit: any,
-    connectorId: string
-  ) => {
-    dispatch(
-      changeConnectorAttributeValue(id, value, unit, node.id, connectorId)
-    );
-  };
+const TerminalsTabComponent = ({ node }): any => {
+  //   const dispatch = useDispatch();
+
+  //   const handleOnConnectorChange = (
+  //     id: string,
+  //     value: string,
+  //     unit: any,
+  //     connectorId: string
+  //   ) => {
+  //     dispatch(
+  //       changeConnectorAttributeValue(id, value, unit, node.id, connectorId)
+  //     );
+  //   };
 
   let activeConnectors = [];
   let connectorAttributes: ConnectorAttribute[] = [];
@@ -65,26 +65,26 @@ const TerminalsTabComponent = ({ node }): any => {
 
   return (
     <>
-    <ListWrapper>
-      <TerminalsWrapper>
-        <ActiveTerminalTypeList
-        terminals={node?.connectors}
-        title={textResources.Inspector_Relations_All_Terminal_Types}
-        onElementClick={()=>{}}
+      <ListWrapper>
+        <TerminalsWrapper>
+          <ActiveTerminalTypeList
+            terminals={node?.connectors}
+            title={TextResources.Inspector_Relations_All_Terminal_Types}
+            onElementClick={() => {}}
+          />
+          <ActiveTerminalTypeList
+            terminals={activeConnectors}
+            title={TextResources.Inspector_Relations_Active_Terminal_Types}
+            onElementClick={() => {}}
+          />
+        </TerminalsWrapper>
+        <AttributesContainer
+          attributes={connectorAttributes}
+          title={TextResources.Inspector_Relations_Connector_Attributes}
         />
-        <ActiveTerminalTypeList
-        terminals={activeConnectors}
-        title={textResources.Inspector_Relations_Active_Terminal_Types}
-        onElementClick={()=>{}}
-        />
-      </TerminalsWrapper>
-      <AttributesContainer 
-      attributes={connectorAttributes}
-      title={textResources.Inspector_Relations_Connector_Attributes}
-      />
-      {
-      //TODO show attributes and other fields from Arjun's design on Figma
-      /* <AttributesWrapper>
+        {
+          //TODO show attributes and other fields from Arjun's design on Figma
+          /* <AttributesWrapper>
         <ConnectorAttributesList
         connectorAttrs={connectorAttributes}
         handleChange={handleOnConnectorChange}

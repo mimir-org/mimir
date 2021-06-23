@@ -1,7 +1,6 @@
 import { Node } from "../../../models";
 import {
   RelationTabComponent,
-  CommentsTabComponent,
   TerminalsTabComponent,
   TechInfoTabComponent,
 } from ".";

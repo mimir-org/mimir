@@ -7,3 +7,4 @@ export { default as ResizeMainConnectNode } from "./ResizeMainConnectNode";
 export { default as GetConnectChildren } from "./GetConnectChildren";
 export { default as CreateConnectMainNode } from "./CreateConnectMainNode";
 export { default as IsMainConnectNode } from "./IsMainConnectNode";
+export { default as IsConnectView } from "./IsConnectView";
