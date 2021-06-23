@@ -3,6 +3,7 @@ import {
   RelationTabComponent,
   TerminalsTabComponent,
   TechInfoTabComponent,
+  //CommentsTabComponent,
 } from ".";
 
 interface Props {
