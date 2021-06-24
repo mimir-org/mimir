@@ -43,10 +43,31 @@ export function* createType(action) {
             return;
         }
 
+        const payload = {
+            apiError: null,
+        };
 
+        yield put({
+            type: CREATING_TYPE_SUCCESS_OR_ERROR,
+            payload: payload,
+        });
 
     } catch (error) {
 
+        const apiError = {
+            key: CREATING_TYPE_SUCCESS_OR_ERROR,
+            errorMessage: error.message,
+            errorData: null,
+        } as ApiError;
+
+        const payload = {
+            apiError: apiError,
+        };
+
+        yield put({
+            type: CREATING_TYPE_SUCCESS_OR_ERROR,
+            payload: payload,
+        });
     }
 }
 
