@@ -80,6 +80,7 @@ export interface CreateLibraryType {
   objectType: ObjectType;
   semanticReference: string;
   rdsId: string;
+  rdsName: string;
   terminalTypes: TerminalTypeItem[];
   attributeTypes: string[];
   terminalTypeId: string;

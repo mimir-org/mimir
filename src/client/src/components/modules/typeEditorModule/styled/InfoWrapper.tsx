@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { FontSize } from "../../../../compLibrary";
 
 const InfoWrapper = styled.div`
   display: flex;
@@ -7,8 +8,10 @@ const InfoWrapper = styled.div`
     props.blockPaddingTop + `px`};
 
   p {
+    padding: 0px 10px;
     text-align: center;
-    margin: 2px 0px;
+    margin: 10px 0px;
+    font-size: ${FontSize.Medium};
   }
 `;
 
