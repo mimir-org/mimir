@@ -51,7 +51,6 @@ const textResources = {
   Inspector_Relations_Function: "Go to function",
   Inspector_Relations_Input_object_connetion: "Input object connection",
   Inspector_Relations_Output_object_connetion: "Output object connection",
-
   Inspector_Relations_Active_Terminal_Types: "Active Terminal Types",
   Inspector_Relations_All_Terminal_Types: "All available Terminal Types",
   Inspector_Relations_Connector_Attributes: "Connector attributes",
@@ -86,6 +85,13 @@ const textResources = {
   Inspector_Inherited_Max_Water: "Maximum produced water capacity",
   Inspector_Inherited_Total_Liquid: "Total liquid capacity",
   Inspector_Inherited_Total_Injection: "Total injection water rate",
+
+  Inspector_EdgeAdmin_Id: "ID",
+  Inspector_EdgeAdmin_Relation: "Relation Type",
+  Inspector_EdgeAdmin_Template: "Template",
+  Inspector_EdgeAdmin_Source: "Source Node",
+  Inspector_EdgeAdmin_Target: "Target Node",
+  Inspector_EdgeAdmin_Project: "Master Project ID",
 
   Inspector_Delete_Node: "Delete",
 
