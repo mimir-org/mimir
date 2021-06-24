@@ -19,7 +19,7 @@ export const TypeEditorModule = ({selectedElement}) => {
   ) as TypeEditorState;
 
   const handleClick = (param) => {
-    if(selectedElement){
+    if((selectedElement && param === "edit") || param === "new"){
       dispatch(changeMode(param));
       push(`/home/${VIEW_TYPE.TYPE_EDITOR}`);
     }
