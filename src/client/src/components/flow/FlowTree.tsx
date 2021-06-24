@@ -92,6 +92,7 @@ const FlowTree = () => {
       dispatch(changeActiveEdge(edge.id, true));
       dispatch(changeActiveNode(null, false));
       dispatch(changeInspectorTab(0));
+      return;
     }
 
     if (e.target.classList.contains("react-flow__pane")) {
@@ -100,8 +101,10 @@ const FlowTree = () => {
         dispatch(changeActiveEdge(null, false));
         dispatch(changeActiveNode(selectedNode.id, false));
         dispatch(changeInspectorTab(0));
+        return;
       }
     }
+    dispatch(changeActiveEdge(null, false));
   };
 
   // Force rerender

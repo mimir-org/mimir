@@ -3,6 +3,7 @@ export { default as SetNodeColumn } from "./SetNodeColumn";
 export { default as ConnectorAttributesList } from "./ConnectorAttributesList";
 export { default as CalculateRows } from "./CalculateRows";
 export { default as ConnectionList } from "./ConnectionList";
-export { default as ActiveTerminalTypeList } from "./ActiveTerminalTypeList"
-export { default as AttributesContainer } from "./AttributesContainer"
-export { default as DeleteNodeButton } from "./DeleteNodeButton"
+export { default as ActiveTerminalTypeList } from "./ActiveTerminalTypeList";
+export { default as AttributesContainer } from "./AttributesContainer";
+export { default as DeleteNodeButton } from "./DeleteNodeButton";
+export { default as GetRelationName } from "./GetRelationName";
