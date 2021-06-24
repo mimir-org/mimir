@@ -105,7 +105,7 @@ const FlowTree = () => {
     dispatch(removeMainNodes());
     SetDarkModeColor(darkMode);
     OnLoad(reactFlowInstance);
-  }, [OnLoad, reactFlowInstance, dispatch]);
+  }, [OnLoad, reactFlowInstance, dispatch, darkMode]);
 
   return (
     <>

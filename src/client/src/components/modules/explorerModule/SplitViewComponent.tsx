@@ -1,10 +1,8 @@
 import { FooterBox, FooterContent } from "../../../compLibrary/box/footer";
 import { TextResources } from "../../../assets/textResources";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Node } from "../../../models";
-import { RootState } from "../../../redux/store";
-import { IsLocation } from "../../flow/helpers/common";
+import { useDispatch } from "react-redux";
+import { FindSelectedNode, IsLocation } from "../../flow/helpers/common";
 import { IsBlockView } from "../../flow/helpers/block";
 import { setSplitView, setNode } from "../../../redux/store/splitView/actions";
 
@@ -12,9 +10,7 @@ export const SplitViewComponent = () => {
   const dispatch = useDispatch();
   const [isVisible, setIsVisible] = useState(IsBlockView());
   const [isActive, SetIsActive] = useState(false);
-  const selectedNode = useSelector<RootState>((state) =>
-    state.projectState.project?.nodes?.find((x) => x.isSelected)
-  ) as Node;
+  const selectedNode = FindSelectedNode();
 
   useEffect(() => {
     if (IsLocation(selectedNode)) setIsVisible(false);
