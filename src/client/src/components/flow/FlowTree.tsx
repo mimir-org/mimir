@@ -28,11 +28,7 @@ const FlowTree = () => {
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>();
-
-  // Flush ConnectView
-  useEffect(() => {
-    dispatch(removeMainNodes());
-  }, [dispatch]);
+  const darkMode = red.store.getState().darkMode.active as boolean;
 
   const project = useSelector<RootState>(
     (state) => state.projectState.project
@@ -104,15 +100,12 @@ const FlowTree = () => {
     }
   };
 
-  useEffect(() => {
-    const darkMode = red.store.getState().darkMode.active as boolean;
-    SetDarkModeColor(darkMode);
-  }, []);
-
   // Force rerender
   useEffect(() => {
+    dispatch(removeMainNodes());
+    SetDarkModeColor(darkMode);
     OnLoad(reactFlowInstance);
-  }, [OnLoad, reactFlowInstance]);
+  }, [OnLoad, reactFlowInstance, dispatch]);
 
   return (
     <>
