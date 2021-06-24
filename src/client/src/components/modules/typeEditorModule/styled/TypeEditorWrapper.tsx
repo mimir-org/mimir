@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const TypeEditorWrapper = styled.div`
-  position: absolute;
+  position: fixed;//absolute;
   top: 5.3%;
   left: 2.3%;
   width: 95.2%;

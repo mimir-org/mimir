@@ -3,6 +3,7 @@ import { LibCategory } from "../../../models/project";
 import { SearchIcon } from "../../../assets/icons/common";
 import { SearchInput } from "../../../compLibrary";
 import { LibraryCategoryComponent } from ".";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { LibraryBody, SearchIconBox } from "../../../compLibrary/box/library";
@@ -22,6 +23,8 @@ const LibraryComponent = ({ categories, search }: Props) => {
     search(e.target.value);
   };
 
+  const[selectedElement, setSelectedElement] = useState("");
+
   return (
     <>
       <SearchIconBox>
@@ -34,10 +37,10 @@ const LibraryComponent = ({ categories, search }: Props) => {
       <LibraryBody legend={isLegendOpen}>
         {categories?.map((category) => {
           return (
-            <LibraryCategoryComponent key={category.name} category={category} />
+            <LibraryCategoryComponent selectedElement={selectedElement} setSelectedElement={setSelectedElement} key={category.name} category={category} />
           );
         })}
-        <TypeEditorModule />
+        <TypeEditorModule selectedElement={selectedElement}/>
       </LibraryBody>
     </>
   );

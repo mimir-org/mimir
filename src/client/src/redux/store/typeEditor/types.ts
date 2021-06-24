@@ -26,14 +26,17 @@ export const CHANGE_ASPECT = "CHANGE_ASPECT";
 export const CHANGE_OBJECTTYPE = "CHANGE_OBJECTTYPE";
 export const CHANGE_TYPENAME = "CHANGE_TYPENAME";
 export const CHANGE_MODE = "CHANGE_MODE";
+export const CHANGE_SELECTED_TYPE = "CHANGE_SELECTED_TYPE";
 export const CHANGE_RDS_NAME = "CHANGE_RDS_NAME";
 export const CREATING_TYPE = "CREATING_TYPE";
+export const UPDATING_TYPE = "UPDATING_TYPE";
 export const CHANGE_STATUS = "CHANGE_STATUS";
 export const CHANGE_RDS = "CHANGE_RDS";
 export const CHANGE_SEMANTICREFERENCE = "CHANGE_SEMANTICREFERENCE";
 export const UPDATE_TERMINALTYPES = "UPDATE_TERMINALTYPES";
 export const UPDATE_ATTRIBUTETYPES = "UPDATE_ATTRIBUTETYPES";
 export const CREATING_TYPE_SUCCESS_OR_ERROR = "CREATING_TYPE_SUCCESS_OR_ERROR";
+export const UPDATE_TYPE_SUCCESS_OR_ERROR = "UPDATE_TYPE_SUCCESS_OR_ERROR";
 export const DELETE_TYPE_EDITOR_ERROR = "DELETE_TYPE_EDITOR_ERROR";
 
 // State types
@@ -50,6 +53,7 @@ export interface TypeEditorState {
   mode: string;
   rdsName: string;
   apiError: ApiError[];
+  selectedType: string;
 }
 
 // Action types
@@ -181,6 +185,12 @@ interface CreatingTypeAction {
     libraryType: CreateLibraryType;
   };
 }
+interface UpdatingTypeAction {
+  type: typeof UPDATING_TYPE;
+  payload: {
+    libraryType: CreateLibraryType;
+  };
+}
 
 interface CreatingTypeActionFinished {
   type: typeof CREATING_TYPE_SUCCESS_OR_ERROR;
@@ -215,6 +225,7 @@ export type TypeEditorActionTypes =
   | UpdateTerminalTypes
   | UpdateAttributesTypes
   | ChangeMode
+  | UpdatingTypeAction
   | CreatingTypeAction
   | CreatingTypeActionFinished
   | DeleteTypeEditorErrorAction;
