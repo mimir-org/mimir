@@ -83,7 +83,7 @@ const LibraryModule = () => {
         stop={stop}
         run={animate}
         type={libraryKey}
-        id={libraryKey}
+        id="LibraryModule"
       >
         <ModuleHead library visible={libraryOpen}>
           <img src={LibraryIcon} alt="library-icon" className="module-icon" />
@@ -107,7 +107,7 @@ const LibraryModule = () => {
           stop={stopLegend}
           run={animateLegend}
           type={legendKey}
-          id={legendKey}
+          id="LegendModule"
         >
           <ModuleHead legend>
             <LegendHead open={legendOpen}>
