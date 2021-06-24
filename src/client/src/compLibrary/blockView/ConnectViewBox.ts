@@ -8,7 +8,7 @@ const ConnectViewBox = styled.div`
   border-radius: 5px 0px 5px 5px;
   height: auto;
   position: absolute;
-  right: ${(props) => props.width}px;
+  right: ${(props) => props.width + 1}px;
   top: -1px;
   z-index: 1;
 
