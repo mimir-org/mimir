@@ -1,7 +1,6 @@
 import { IsConnectView } from "./connectView";
 import { Node, Connector } from "../../../../models";
 import {
-  IsAspectNode,
   IsChildOf,
   IsFunction,
   IsLocation,

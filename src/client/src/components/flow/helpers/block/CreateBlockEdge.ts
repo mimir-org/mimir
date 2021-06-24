@@ -1,16 +1,15 @@
-import red from "../../../../redux/store";
 import { FlowElement } from "react-flow-renderer";
 import { ShowBlockViewEdge } from ".";
 import { Edge, Node } from "../../../../models";
 import { EdgeType } from "../../../../models/project";
 
 export const CreateBlockEdge = (
+  nodes: Node[],
   edge: Edge,
   edgeType: EdgeType
 ): FlowElement => {
   let element = null;
 
-  const nodes = red.store.getState().projectState.project.nodes as Node[];
   const fromNode = nodes.find((node) => node.id === edge.fromNodeId);
   const toNode = nodes.find((node) => node.id === edge.toNodeId);
 
