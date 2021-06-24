@@ -12,7 +12,7 @@ import { GetLibCategories } from "./helpers";
 import { ModuleBody, ModuleHead } from "../../../compLibrary/box/modules";
 import { LegendHead, LegendIcons } from "../../../compLibrary/box/library";
 import { MODULE_TYPE } from "../../../models/project";
-import { Node } from "../../../models";
+import { FindSelectedNode } from "../../flow/helpers/common";
 import {
   LegendIcon,
   LibraryIcon,
@@ -58,9 +58,7 @@ const LibraryModule = () => {
     (state) => state.splitView.visible
   ) as boolean;
 
-  const selectedNode = useSelector<RootState>((state) =>
-    state.projectState.project?.nodes?.find((x) => x.isSelected)
-  ) as Node;
+  const selectedNode = FindSelectedNode();
 
   const onLibraryClick = () => {
     dispatch(changeModuleVisibility(libraryKey, !libraryOpen, true));
