@@ -12,10 +12,10 @@ import { GetTreeEdgeType } from "./helpers/tree";
 import { IsBlockView } from "./helpers/block";
 import { changeInspectorTab } from "../../redux/store/inspector/actions";
 import { FindSelectedNode, SetDarkModeColor } from "./helpers/common";
-import { removeMainNodes } from "../../redux/store/connectView/actions";
 import {
   updatePosition,
   changeActiveNode,
+  changeActiveEdge,
 } from "../../redux/store/project/actions";
 import {
   GetTreeNodeTypes,
@@ -80,32 +80,35 @@ const FlowTree = () => {
   };
 
   const OnElementClick = (_event, element) => {
+    dispatch(changeActiveEdge(null, false));
     dispatch(changeActiveNode(element.id, true));
     dispatch(changeInspectorTab(0));
   };
 
   const OnClick = (e) => {
     // Handle select Edge
-    // if (e.target.classList.contains("react-flow__edge-path")) {
-    //   const edge = project.edges.find((x) => x.id === e.target.id);
-    //   dispatch(changeActiveEdge(edge.id, true));
-    //   dispatch(changeInspectorTab(0));
-    // }
+    if (e.target.classList.contains("react-flow__edge-path")) {
+      const edge = project.edges.find((x) => x.id === e.target.id);
+      dispatch(changeActiveEdge(edge.id, true));
+      dispatch(changeActiveNode(null, false));
+      dispatch(changeInspectorTab(0));
+    }
 
     if (e.target.classList.contains("react-flow__pane")) {
       const selectedNode = FindSelectedNode();
       if (selectedNode) {
+        dispatch(changeActiveEdge(null, false));
         dispatch(changeActiveNode(selectedNode.id, false));
+        dispatch(changeInspectorTab(0));
       }
     }
   };
 
   // Force rerender
   useEffect(() => {
-    dispatch(removeMainNodes());
     SetDarkModeColor(darkMode);
     OnLoad(reactFlowInstance);
-  }, [OnLoad, reactFlowInstance, dispatch, darkMode]);
+  }, [OnLoad, reactFlowInstance, darkMode]);
 
   return (
     <>
