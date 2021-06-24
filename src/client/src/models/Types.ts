@@ -96,6 +96,7 @@ export interface UpdateLibraryType {
   objectType: ObjectType;
   semanticReference: string;
   rdsId: string;
+  rdsName: string;
   terminalTypes: TerminalTypeItem[];
   attributeTypes: string[];
   terminalTypeId: string;
