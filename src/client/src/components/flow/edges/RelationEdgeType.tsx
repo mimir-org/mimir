@@ -29,7 +29,6 @@ export default function RelationEdgeType({
     const fromConnector = data.source.connectors?.find(
       (x: { id: any }) => x.id === data.edge.fromConnector.id
     );
-
     return {
       stroke: fromConnector?.mediaColor,
       strokeWidth: 2,

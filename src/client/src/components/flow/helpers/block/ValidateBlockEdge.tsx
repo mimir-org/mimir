@@ -1,7 +1,6 @@
 import { IsConnectView } from "./connectView";
 import { Node, Connector } from "../../../../models";
 import {
-  IsAspectNode,
   IsChildOf,
   IsFunction,
   IsLocation,
@@ -35,7 +34,6 @@ const ValidateBlockEdge = (
 
   if (!splitView && !IsConnectView()) {
     if (IsFunction(selectedNode)) {
-      if (IsAspectNode(selectedNode)) return false;
       if (IsLocation(fromNode) || IsLocation(toNode)) return false;
       if (selectedNode === toNode || selectedNode === fromNode) return false;
       if (!IsChildOf(fromNode, selectedNode)) return false;

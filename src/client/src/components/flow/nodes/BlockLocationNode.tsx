@@ -6,16 +6,11 @@ import { HandleComponent, TerminalsComponent } from "../block";
 import { setActiveConnector } from "../../../redux/store/project/actions";
 import { useDispatch } from "react-redux";
 import { Aspect, Connector } from "../../../models";
-import { Size } from "../../../compLibrary";
 
 const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
   const [terminalButton, showTerminalButton] = useState(false);
   const [terminalMenu, showTerminalMenu] = useState(false);
-
-  if (data.width === undefined || data.width === null) {
-    data.width = Size.Node_Width;
-  }
 
   const handleTerminalClick = () => {
     showTerminalMenu(!terminalMenu);

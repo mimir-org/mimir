@@ -24,7 +24,8 @@ const FilterContent = ({ type, index }) => {
     }
   };
 
-  // TODO: Get name for type
+  const name = index === 0 ? "Part of" : "Transport"; // TODO: Get name for type
+
   return (
     <MenuColumn>
       {index === 0 && (
@@ -34,7 +35,7 @@ const FilterContent = ({ type, index }) => {
       <label className={"checkbox-filter"}>
         <input type="checkbox" checked={checked} onChange={handleChange} />
         <span className="checkmark-filter"></span>
-        Part Of
+        {name}
       </label>
     </MenuColumn>
   );

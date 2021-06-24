@@ -37,7 +37,7 @@ const FilterModule = () => {
             <FilterContent type={RelationType.PartOf} index={0} />
           </MenuColumn>
           <MenuColumn>
-            <FilterContent type={RelationType.PartOf} index={1} />
+            <FilterContent type={null} index={1} />
           </MenuColumn>
         </MenuBox>
       )}

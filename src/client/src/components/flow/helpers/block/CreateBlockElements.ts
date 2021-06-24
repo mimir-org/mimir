@@ -1,4 +1,3 @@
-import red from "../../../../redux/store";
 import { Elements } from "react-flow-renderer";
 import { IsPartOfTerminal } from "../common";
 import { EDGE_TYPE, EdgeType } from "../../../../models/project";
@@ -21,14 +20,15 @@ const CreateBlockElements = (
 ): Elements => {
   if (!project) return;
   const initialElements: Elements = [];
-  const nodes = red.store.getState().projectState.project.nodes as Node[];
+  const nodes = project.nodes;
+  const edges = project.edges;
 
   // Draw parent block
   const parentBlock = CreateParentBlockNode(selectedNode);
   if (parentBlock) initialElements.push(parentBlock);
 
   // Draw child nodes
-  project.edges.forEach((edge) => {
+  edges.forEach((edge) => {
     if (
       edge.fromNodeId === selectedNode?.id &&
       selectedNode?.aspect === edge.toNode?.aspect &&
@@ -41,11 +41,10 @@ const CreateBlockElements = (
 
   // Draw splitview nodes
   if (splitViewNode && splitView) {
-    project.edges.forEach((edge) => {
+    edges.forEach((edge) => {
       if (
         edge.fromNodeId === splitViewNode.id &&
         splitViewNode?.aspect === edge.toNode?.aspect
-        // !IsTransportTerminal(edge.toConnector)
       ) {
         const toNode = nodes.find((node) => node.id === edge.toNodeId);
         initialElements.push(CreateSplitViewNode(toNode));
@@ -57,13 +56,14 @@ const CreateBlockElements = (
   if (connectNodes?.length > 0) {
     CreateConnectMainNode(mainNode);
     connectNodes?.forEach((node) => {
-      initialElements.push(CreateBlockNode(node, mainNode, false));
+      const connectNode = nodes.find((x) => x.id === node.id);
+      initialElements.push(CreateBlockNode(connectNode, mainNode, false));
     });
   }
 
   // Draw edges
-  project.edges.forEach((edge) => {
-    const blockEdge = CreateBlockEdge(edge, EDGE_TYPE.BLOCK as EdgeType);
+  edges.forEach((edge) => {
+    const blockEdge = CreateBlockEdge(nodes, edge, EDGE_TYPE.BLOCK as EdgeType);
     if (blockEdge) initialElements.push(blockEdge);
   });
 
