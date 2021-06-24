@@ -25,6 +25,7 @@ export const CHANGE_ASPECT = "CHANGE_ASPECT";
 export const CHANGE_OBJECTTYPE = "CHANGE_OBJECTTYPE";
 export const CHANGE_TYPENAME = "CHANGE_TYPENAME";
 export const CHANGE_MODE = "CHANGE_MODE";
+export const CHANGE_SELECTED_TYPE = "CHANGE_SELECTED_TYPE";
 export const CREATING_TYPE = "CREATING_TYPE";
 export const CHANGE_STATUS = "CHANGE_STATUS";
 export const CHANGE_RDS = "CHANGE_RDS";
@@ -37,6 +38,7 @@ export interface TypeEditorState {
   fetching: boolean;
   creating: boolean;
   createLibraryType: CreateLibraryType;
+  selectedType: string;
   aspects: object;
   objectTypes: object;
   statuses: object;
