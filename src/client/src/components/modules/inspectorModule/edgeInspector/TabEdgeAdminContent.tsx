@@ -53,13 +53,23 @@ const TabEdgeAdminContent = ({ edge, project }: Props) => {
       <TabColumn>
         <div>
           <div>Source Node</div>
-          <Input value={edge.fromConnectorId} onChange={null} inputType="" />
+          <Input
+            value={
+              (edge.fromNode.label ?? edge.fromNode.name) +
+              " - " +
+              edge.fromNodeId
+            }
+            onChange={() => null}
+            inputType=""
+          />
         </div>
         <div>
           <div>Target Node</div>
           <Input
             readOnly={true}
-            value={edge.toNodeId}
+            value={
+              (edge.toNode.label ?? edge.toNode.name) + " - " + edge.toNodeId
+            }
             onChange={() => null}
             inputType=""
           />
