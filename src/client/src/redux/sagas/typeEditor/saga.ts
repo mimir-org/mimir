@@ -24,7 +24,6 @@ export function* createType(action) {
         // This is a bad request
         if (response.status === 400) {
             const data = GetBadResponseData(response);
-            console.log(data, response);
 
             const apiError = {
                 key: CREATING_TYPE_SUCCESS_OR_ERROR,

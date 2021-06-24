@@ -70,7 +70,6 @@ export function typeEditorReducer(
                     : state.apiError,
             };
         case CREATING_TYPE_SUCCESS_OR_ERROR:
-            console.log(action.payload.apiError);
             return {
                 ...state,
                 fetching: false,
