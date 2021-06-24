@@ -1,8 +1,10 @@
 import { TabComponent, TabAdminComponent } from ".";
+import { TabEdgeAdminComponent } from "./edgeInspector";
 import { Project, Node } from "../../../models";
 import { RootState } from "../../../redux/store";
 import { useSelector } from "react-redux";
 import { IsBlockView } from "../../flow/helpers/block";
+import { FindSelectedNode } from "../../flow/helpers/common";
 
 const InspectorTabs = () => {
   const project = useSelector<RootState>(
@@ -10,11 +12,14 @@ const InspectorTabs = () => {
   ) as Project;
 
   const nodes = project?.nodes ?? [];
+  const edges = project?.edges ?? [];
+
   let node: Node;
+  let edge = edges.find((edge) => edge.isSelected);
 
   if (IsBlockView()) {
     node = nodes.find((node) => node.isBlockSelected);
-  } else node = nodes.find((node) => node.isSelected);
+  } else node = FindSelectedNode();
 
   return (
     <>
@@ -26,6 +31,9 @@ const InspectorTabs = () => {
           <TabComponent node={node} index={3} />
           {/* <TabComponent node={node} index={4} /> //NOTE: comments-tab is not for MVP-release. To be implemented later. */}
         </>
+      )}
+      {edge && (
+        <TabEdgeAdminComponent edge={edge} project={project} index={0} />
       )}
     </>
   );

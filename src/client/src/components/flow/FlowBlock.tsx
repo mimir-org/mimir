@@ -8,10 +8,8 @@ import { OpenProjectMenu } from "../project/openProject";
 import { Color } from "../../compLibrary";
 import { BackgroundBox } from "../../compLibrary/blockView";
 import { changeInspectorTab } from "../../redux/store/inspector/actions";
-import { setSplitView, setNode } from "../../redux/store/splitView/actions";
 import { Project, Node } from "../../models";
 import { changeActiveBlockNode } from "../../redux/store/project/actions";
-import { removeMainNodes } from "../../redux/store/connectView/actions";
 import {
   useOnConnect,
   useOnDrop,
@@ -47,17 +45,12 @@ const FlowBlock = () => {
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>();
-
-  // Flush ConnectView
-  useEffect(() => {
-    dispatch(removeMainNodes());
-  }, [dispatch]);
+  const darkMode = red.store.getState().darkMode.active as boolean;
+  const node = FindSelectedNode();
 
   const project = useSelector<RootState>(
     (state) => state.projectState?.project
   ) as Project;
-
-  const node = project?.nodes?.find((node) => node.isSelected);
 
   const splitView = useSelector<RootState>(
     (state) => state.splitView.visible
@@ -78,7 +71,6 @@ const FlowBlock = () => {
 
   const mainNode = mainConnectNodes.find((x) => x?.id === selectedBlockNodeId);
   const connectNodes = mainNode?.connectNodes as Node[];
-
   const showBackground = IsLocation(splitViewNode) || IsLocation(node);
 
   const OnLoad = useCallback(
@@ -148,19 +140,11 @@ const FlowBlock = () => {
 
   // Force rerender
   useEffect(() => {
-    OnLoad(reactFlowInstance);
-  }, [OnLoad, reactFlowInstance]);
-
-  // Flush SplitView
-  useEffect(() => {
-    dispatch(setSplitView(false));
-    dispatch(setNode(null));
-  }, [dispatch]);
-
-  useEffect(() => {
-    const darkMode = red.store.getState().darkMode.active as boolean;
+    // dispatch(setSplitView(false));
+    // dispatch(setNode(null));
     SetDarkModeColor(darkMode);
-  }, []);
+    OnLoad(reactFlowInstance);
+  }, [OnLoad, reactFlowInstance, dispatch, darkMode]);
 
   const splitViewPosition = () => {
     if (IsLocation(splitViewNode) && IsFunction(node)) {

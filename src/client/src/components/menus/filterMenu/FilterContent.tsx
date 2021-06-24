@@ -24,7 +24,16 @@ const FilterContent = ({ type, index }) => {
     }
   };
 
-  const name = index === 0 ? "Part of" : "Transport"; // TODO: Get name for type
+  const name =
+    index === 0
+      ? "Part of"
+      : index === 1
+      ? "Has Location"
+      : index === 2
+      ? "Transport"
+      : index === 3
+      ? "Nuke All"
+      : ""; // TODO: Get name for type
 
   return (
     <MenuColumn>

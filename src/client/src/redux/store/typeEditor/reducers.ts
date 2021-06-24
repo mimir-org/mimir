@@ -79,19 +79,6 @@ export function typeEditorReducer(
         apiError: action.payload.apiError
           ? [...state.apiError, action.payload.apiError]
           : state.apiError,
-        createLibraryType: action.payload.apiError
-          ? state.createLibraryType
-          : ({
-              name: "",
-              status: Status.Draft,
-              aspect: Aspect.NotSet,
-              objectType: ObjectType.NotSet,
-              semanticReference: null,
-              rdsId: "",
-              terminalTypes: [],
-              attributeTypes: [] as string[],
-              terminalTypeId: null,
-            } as CreateLibraryType),
       };
     case FETCHING_INITIAL_DATA:
       return {
