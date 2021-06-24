@@ -3,10 +3,12 @@ import {
     Aspect,
     ObjectType,
     Status,
-    CreateLibraryType
+    CreateLibraryType,
+    UpdateLibraryType,
 } from "../../../models";
 import {
     CREATING_TYPE,
+    UPDATING_TYPE,
     CHANGE_MODE,
     FETCHING_INITIAL_DATA,
     FETCHING_RDS,
@@ -34,7 +36,14 @@ export function create(libraryType: CreateLibraryType): TypeEditorActionTypes {
         },
     };
 }
-
+export function update(libraryType: UpdateLibraryType): TypeEditorActionTypes {
+    return {
+        type: UPDATING_TYPE,
+        payload: {
+            libraryType
+        },
+    };
+}
 export function getInitialData(): TypeEditorActionTypes {
     return {
         type: FETCHING_INITIAL_DATA,

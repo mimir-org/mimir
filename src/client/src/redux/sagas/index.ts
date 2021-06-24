@@ -10,7 +10,8 @@ import {
 import {
     FETCHING_INITIAL_DATA,
     CHANGE_ASPECT,
-    CREATING_TYPE
+    CREATING_TYPE,
+    UPDATING_TYPE,
 } from "../store/typeEditor/types";
 import { FETCHING_CONTRACTORS } from "../store/common/types";
 
@@ -28,7 +29,8 @@ import {
     getRDS,
     getTerminals,
     getAttributes,
-    createType
+    createType,
+    updateType,
 } from "./typeEditor/saga";
 
 export function* sagas() {
@@ -45,5 +47,6 @@ export function* sagas() {
         takeEvery(CHANGE_ASPECT, getTerminals),
         takeEvery(CHANGE_ASPECT, getAttributes),
         takeEvery(CREATING_TYPE, createType),
+        takeEvery(UPDATING_TYPE, updateType),
     ]);
 }
