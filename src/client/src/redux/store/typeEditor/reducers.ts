@@ -40,6 +40,7 @@ const initialState: TypeEditorState = {
         attributeTypes: [] as string[],
         terminalTypeId: null,
     } as CreateLibraryType,
+    selectedType: "",
     objectTypes: {},
     aspects: {},
     statuses: {},

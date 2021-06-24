@@ -4,7 +4,8 @@ import { Color, FontSize } from "../../";
 const LibraryElement = styled.div`
   width: 286px;
   height: 36px;
-  border: 1px solid ${Color.DarkerGrey};
+  border: ${props => props.active ?  "1px solid black" : "1px solid" + Color.DarkerGrey};
+  border-style: ${props => props.active ?  "dashed" : "default"};
   border-radius: 3px;
   background-color: ${Color.White};
   margin: 0px 0px 5px 0px;
@@ -14,6 +15,7 @@ const LibraryElement = styled.div`
   justify-content: space-between;
   font-size: ${FontSize.SubHeader};
   padding-left: 10px;
+  cursor: pointer;
 `;
 
 export default LibraryElement;
