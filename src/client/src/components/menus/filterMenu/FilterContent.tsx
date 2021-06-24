@@ -32,7 +32,7 @@ const FilterContent = ({ type, index }) => {
       : index === 2
       ? "Transport"
       : index === 3
-      ? "Test"
+      ? "Nuke All"
       : ""; // TODO: Get name for type
 
   return (

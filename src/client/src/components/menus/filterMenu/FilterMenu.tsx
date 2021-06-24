@@ -39,7 +39,7 @@ const FilterModule = () => {
           </MenuColumn>
           <MenuColumn>
             <FilterContent type={null} index={2} />
-            <FilterContent type={RelationType.HasLocation} index={3} />
+            <FilterContent type={"Nuke all"} index={3} />
           </MenuColumn>
         </MenuBox>
       )}
