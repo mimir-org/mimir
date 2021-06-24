@@ -28,9 +28,9 @@ const FilterContent = ({ type, index }) => {
     index === 0
       ? "Part of"
       : index === 1
-      ? "Transport"
-      : index === 2
       ? "Has Location"
+      : index === 2
+      ? "Transport"
       : index === 3
       ? "Test"
       : ""; // TODO: Get name for type
