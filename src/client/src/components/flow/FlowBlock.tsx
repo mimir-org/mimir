@@ -25,6 +25,7 @@ import {
 } from "./helpers/common";
 import {
   CreateBlockElements,
+  FindSelectedBlockNode,
   GetBlockEdgeTypes,
   IsBlockView,
 } from "./helpers/block";
@@ -60,15 +61,11 @@ const FlowBlock = () => {
     (state) => state.splitView.node
   ) as Node;
 
-  const selectedBlockNodeId = useSelector<RootState>(
-    (state) =>
-      state.projectState.project?.nodes.find((x) => x.isBlockSelected)?.id
-  ) as string;
-
   const mainConnectNodes = useSelector<RootState>(
     (state) => state.connectView.mainNodes
   ) as Node[];
 
+  const selectedBlockNodeId = FindSelectedBlockNode().id;
   const mainNode = mainConnectNodes.find((x) => x?.id === selectedBlockNodeId);
   const connectNodes = mainNode?.connectNodes as Node[];
   const showBackground = IsLocation(splitViewNode) || IsLocation(node);
