@@ -19,7 +19,11 @@ const TerminalsComponent = ({ isOpen, list, type, width, onClick }: Props) => {
       {sortedList.map((conn) => (
         <TerminalsElement key={conn.id} onClick={() => onClick(conn)}>
           <p className="text"> {GetConnectorName(conn)}</p>
-          <img src={GetConnectorIcon(conn)} alt="icon" className="button" />
+          <img
+            src={GetConnectorIcon(conn.color)}
+            alt="icon"
+            className="button"
+          />
         </TerminalsElement>
       ))}
     </TerminalsBox>
