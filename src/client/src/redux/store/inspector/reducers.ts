@@ -27,13 +27,13 @@ export const inspectorReducer = (state = initialState, action) => {
     case CHANGE_INSPECTOR_COMPONENT:
       return {
         ...state,
-        tabs: state.tabs.map((x, index) =>
+        tabs: state.tabs.map((tab, index) =>
           index === action.payload.index
             ? {
-                ...x,
+                ...tab,
                 visible: true,
               }
-            : { ...x, visible: false }
+            : { ...tab, visible: false }
         ),
       };
     default:

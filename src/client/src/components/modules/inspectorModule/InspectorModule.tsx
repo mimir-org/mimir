@@ -20,7 +20,7 @@ import {
 const TabsBottomLine = styled.div`
   border-bottom: 1px solid ${Color.Grey};
   flex-grow: 1;
-`
+`;
 
 const InspectorModule = () => {
   const dispatch = useDispatch();
@@ -61,7 +61,7 @@ const InspectorModule = () => {
       start={start}
       stop={stop}
       run={animate}
-      id={key}
+      id="InspectorModule"
     >
       <InspectorBody id="InspectorBody">
         {hasProject && <InspectorTabs />}

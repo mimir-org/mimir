@@ -41,7 +41,6 @@ const rootReducers = combineReducers({
 const persistConfig = {
   key: "root",
   storage,
-  blackList: ["connectView"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducers);

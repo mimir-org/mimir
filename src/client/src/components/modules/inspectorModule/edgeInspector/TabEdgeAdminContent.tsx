@@ -4,6 +4,7 @@ import { Input } from "../../../../compLibrary";
 import { Edge, Project } from "../../../../models";
 import { DeleteNodeButton, GetRelationName } from "./../helpers";
 import { removeEdge } from "../../../../redux/store/project/actions";
+import { TextResources } from "../../../../assets/textResources";
 
 interface Props {
   edge: Edge;
@@ -23,7 +24,7 @@ const TabEdgeAdminContent = ({ edge, project }: Props) => {
     <>
       <TabColumn>
         <div>
-          <div>Id</div>
+          <div>{TextResources.Inspector_EdgeAdmin_Id}</div>
           <Input
             readOnly={true}
             value={edge.id ?? ""}
@@ -32,7 +33,7 @@ const TabEdgeAdminContent = ({ edge, project }: Props) => {
           />
         </div>
         <div>
-          <div>Relation Type</div>
+          <div>{TextResources.Inspector_EdgeAdmin_Relation}</div>
           <Input
             readOnly={true}
             value={GetRelationName(edge.fromConnector?.relationType)}
@@ -41,7 +42,7 @@ const TabEdgeAdminContent = ({ edge, project }: Props) => {
           />
         </div>
         <div>
-          <div>Template</div>
+          <div>{TextResources.Inspector_EdgeAdmin_Template}</div>
           <Input
             readOnly={true}
             value={edge.isTemplateEdge}
@@ -52,7 +53,7 @@ const TabEdgeAdminContent = ({ edge, project }: Props) => {
       </TabColumn>
       <TabColumn>
         <div>
-          <div>Source Node</div>
+          <div>{TextResources.Inspector_EdgeAdmin_Source}</div>
           <Input
             value={
               (edge.fromNode.label ?? edge.fromNode.name) +
@@ -64,7 +65,7 @@ const TabEdgeAdminContent = ({ edge, project }: Props) => {
           />
         </div>
         <div>
-          <div>Target Node</div>
+          <div>{TextResources.Inspector_EdgeAdmin_Target}</div>
           <Input
             readOnly={true}
             value={
@@ -75,7 +76,7 @@ const TabEdgeAdminContent = ({ edge, project }: Props) => {
           />
         </div>
         <div>
-          <div>Master Project ID</div>
+          <div>{TextResources.Inspector_EdgeAdmin_Project}</div>
           <Input
             readOnly={true}
             value={edge.masterProjectId}

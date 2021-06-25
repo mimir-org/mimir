@@ -1,17 +1,17 @@
 import { authProvider } from "../../providers/authProvider";
 
 export interface ApiError {
-    key: string,
-    errorMessage: string,
-    errorData: BadRequestData
+    key: string;
+    errorMessage: string;
+    errorData: BadRequestData;
 }
 export interface BadRequestData {
-    title: string,
-    items: BadRequestDataItem[]
+    title: string;
+    items: BadRequestDataItem[];
 }
 export interface BadRequestDataItem {
-    key: string,
-    value: string
+    key: string;
+    value: string;
 }
 
 export const Token = () => {
@@ -74,7 +74,10 @@ export async function http<T>(request: RequestInfo): Promise<HttpResponse<T>> {
     try {
         response = await fetch(request);
         if (!response || !response.ok) {
-            if (((response.status >= 200 && response.status < 300) || response.status === 400)) {
+            if (
+                (response.status >= 200 && response.status < 300) ||
+                response.status === 400
+            ) {
                 response.data = await response.json();
                 return response;
             } else {
