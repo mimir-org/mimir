@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { Position } from "react-flow-renderer";
 import Size from "../size/Size";
-import { ConnectorIcon } from "../../assets/icons/blockView";
+import { ConnectorTreeViewIcon } from "../../assets/icons/blockView";
 
 const HandleBox = styled.div`
   .react-flow__handle-block {
     position: relative;
-    background: url(${ConnectorIcon});
+    background: url(${ConnectorTreeViewIcon});
     visibility: ${(props) => (props.visible ? "visible" : "hidden")} !important;
     top: ${(props) =>
       props.position === Position.Right && !props.splitNode
