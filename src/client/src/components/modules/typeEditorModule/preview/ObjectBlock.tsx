@@ -35,9 +35,9 @@ export const ObjectBlock = () => {
   const blockPaddingTop = () => {
     let top = 0;
     if (state.createLibraryType.aspect === Aspect.Function) {
-      top = 40;
+      top = 25;
     } else if (state.createLibraryType.aspect === Aspect.Location) {
-      top = 20;
+      top = 2;
     }
     return top;
   };
@@ -45,7 +45,7 @@ export const ObjectBlock = () => {
   return (
     <ObjectTypeBlock blockColor={blockColor()} blockHeight={blockHeight()}>
       <InfoWrapper blockPaddingTop={blockPaddingTop()}>
-        <p>{/* TODO: selected RDS */}</p>
+        <p>{state.rdsName}</p>
         <p>{state.createLibraryType.name}</p>
       </InfoWrapper>
     </ObjectTypeBlock>

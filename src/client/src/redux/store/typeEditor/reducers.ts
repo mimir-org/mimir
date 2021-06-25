@@ -15,7 +15,11 @@ import {
   CHANGE_MODE,
   CHANGE_STATUS,
   CHANGE_RDS,
+  CHANGE_RDS_NAME,
+  CHANGE_TERMINAL_CATEGORY,
+  CHANGE_TERMINAL_COLOR,
   CHANGE_SEMANTICREFERENCE,
+  CHANGE_TERMINAL_TYPE_ID,
   UPDATE_TERMINALTYPES,
   UPDATE_ATTRIBUTETYPES,
   CREATING_TYPE,
@@ -29,6 +33,9 @@ const initialState: TypeEditorState = {
   fetching: false,
   creating: false,
   mode: "NotSet",
+  rdsName: "",
+  terminalCategory: "",
+  terminalColor: "",
   createLibraryType: {
     name: "",
     status: Status.Draft,
@@ -40,6 +47,7 @@ const initialState: TypeEditorState = {
     attributeTypes: [] as string[],
     terminalTypeId: null,
   } as CreateLibraryType,
+  selectedType: "",
   objectTypes: {},
   aspects: {},
   statuses: {},
@@ -130,6 +138,21 @@ export function typeEditorReducer(
         ...state,
         mode: action.payload.mode,
       };
+    case CHANGE_RDS_NAME:
+      return {
+        ...state,
+        rdsName: action.payload.rdsName,
+      };
+    case CHANGE_TERMINAL_CATEGORY:
+      return {
+        ...state,
+        terminalCategory: action.payload.terminalCategory,
+      };
+    case CHANGE_TERMINAL_COLOR:
+      return {
+        ...state,
+        terminalColor: action.payload.terminalColor,
+      };
     case CHANGE_ASPECT:
       return {
         ...state,
@@ -168,6 +191,14 @@ export function typeEditorReducer(
         createLibraryType: {
           ...state.createLibraryType,
           rdsId: action.payload.rds,
+        },
+      };
+    case CHANGE_TERMINAL_TYPE_ID:
+      return {
+        ...state,
+        createLibraryType: {
+          ...state.createLibraryType,
+          terminalTypeId: action.payload.terminalTypeId,
         },
       };
     case CHANGE_SEMANTICREFERENCE:

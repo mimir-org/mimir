@@ -9,7 +9,11 @@ import { ListWrapper } from "../../../../../compLibrary";
 
 import { TextResources } from "../../../../../assets/textResources";
 
-export const TerminalsList = () => {
+interface Props {
+  aspect: Aspect;
+}
+
+export const TerminalsList = ({ aspect }: Props) => {
   const state = useSelector<RootState>(
     (state) => state.typeEditor
   ) as TypeEditorState;
@@ -18,7 +22,7 @@ export const TerminalsList = () => {
     if (state.terminals) {
       let filteredTerminals = Object.entries(state.terminals);
       if (
-        state.createLibraryType.aspect === Aspect.NotSet ||
+        aspect === Aspect.NotSet ||
         state.createLibraryType.objectType === ObjectType.NotSet ||
         state.createLibraryType.name === ""
       ) {
@@ -31,7 +35,11 @@ export const TerminalsList = () => {
   return (
     <ListWrapper flex={0.8}>
       <ListHeader
-        label={TextResources.TypeEditor_Properties_Terminals}
+        label={
+          aspect === Aspect.Function
+            ? TextResources.TypeEditor_Properties_Terminals
+            : TextResources.TypeEditor_Properties_Location_Attributes
+        }
         chooseVisible={true}
       />
       <TerminalsListBody listElements={TerminalsList()} />

@@ -6,6 +6,10 @@ const TerminalCategoryWrapper = styled.div`
   align-items: center;
   min-height: 30px;
 
+  .category {
+    padding-right: 10px;
+  }
+
   img {
     margin-left: auto;
     padding-right: 8px;

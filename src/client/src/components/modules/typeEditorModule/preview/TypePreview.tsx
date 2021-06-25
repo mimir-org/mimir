@@ -9,7 +9,7 @@ import { ListWrapper } from "../../../../compLibrary";
 import { AddEditButton } from "../../../../compLibrary/buttons";
 import { TextResources } from "../../../../assets/textResources";
 import { AddIcon, CheckmarkIcon } from "../../../../assets/icons/common";
-import { create } from "../../../../redux/store/typeEditor/actions";
+import { create, update } from "../../../../redux/store/typeEditor/actions";
 
 export const TypePreview = () => {
   const dispatch = useDispatch();
@@ -18,8 +18,13 @@ export const TypePreview = () => {
     (state) => state.typeEditor
   ) as TypeEditorState;
 
-  const saveClick = () => {
-    dispatch(create(state.createLibraryType));
+  const saveClick = (mode) => {
+    if(mode === "new"){
+      dispatch(create(state.createLibraryType));
+    } else if (mode === "edit"){
+      dispatch(update(state.createLibraryType));
+    }
+
   };
 
   return (
@@ -34,7 +39,7 @@ export const TypePreview = () => {
           {TextResources.TypeEditor_Preview_Info}
         </PreviewInstruction>
         <AddEditButton>
-          <p onClick={saveClick}>
+          <p onClick={()=>{saveClick(state.mode)}}>
             {state.mode === "new"
               ? TextResources.TypeEditor_Button_Add
               : TextResources.TypeEditor_Button_Edit}

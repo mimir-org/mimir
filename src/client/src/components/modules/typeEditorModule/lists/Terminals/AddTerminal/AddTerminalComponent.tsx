@@ -100,7 +100,6 @@ export const AddTerminal = ({
           <span className="number"></span>
         </label>
       </NumericInput>
-
       <div className="terminalSearchbarWrapper">
         <div className="terminalsearchbar_container">
           <div className="terminalsearchbar">
@@ -138,7 +137,6 @@ export const AddTerminal = ({
           )}
         </div>
       </div>
-
       <img src={HelpIcon} alt="help" />
       <div className="dropdown_container">
         <label htmlFor="direction" />

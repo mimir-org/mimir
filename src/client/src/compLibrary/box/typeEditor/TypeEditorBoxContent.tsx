@@ -12,8 +12,8 @@ const TypeEditorBoxContent = styled.div`
   padding: 0px 10px;
   border: 1px solid ${Color.DeepCyan};
   border-radius: 2px;
-  background-color: ${Color.White};
-  cursor: pointer;
+  background-color: ${props => props.active ? Color.White : Color.Grey};
+  cursor: ${props => props.active ? "pointer" : "not-allowed"}; ;
   color: ${Color.Black};
   font-size: ${FontSize.Standard};
   white-space: nowrap;
