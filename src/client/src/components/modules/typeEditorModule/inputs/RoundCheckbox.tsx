@@ -8,21 +8,32 @@ import {
 import "./roundcheckbox.scss";
 interface Props {
   id: string;
-  name: string;
+  name?: string;
+  label: string;
 }
 
-export const RoundCheckbox = ({ id, name }: Props) => {
+export const RoundCheckbox = ({ id, name, label }: Props) => {
   const dispatch = useDispatch();
 
   const state = useSelector<RootState>(
     (state) => state.typeEditor
   ) as TypeEditorState;
 
-  let isSelected = state.createLibraryType.rdsId === id ?? false;
+  let isSelected = () => {
+    if (label === "rds") {
+      return state.createLibraryType.rdsId === id;
+    } else if (label === "terminal") {
+      return state.terminalCategory === id;
+    }
+  };
 
   const handleCheckboxChange = () => {
-    dispatch(changeRDS(id));
-    dispatch(changeRDSName(name));
+    if (id !== "" && id) {
+      if (label === "rds") {
+        dispatch(changeRDS(id));
+        dispatch(changeRDSName(name));
+      }
+    }
   };
 
   return (
@@ -30,7 +41,7 @@ export const RoundCheckbox = ({ id, name }: Props) => {
       <label className={"roundcheckbox"}>
         <input
           type="checkbox"
-          checked={isSelected}
+          checked={isSelected()}
           id={id}
           onChange={handleCheckboxChange}
         />

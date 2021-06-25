@@ -20,9 +20,12 @@ import {
   CHANGE_STATUS,
   CHANGE_RDS,
   CHANGE_RDS_NAME,
+  CHANGE_TERMINAL_CATEGORY,
+  CHANGE_TERMINAL_COLOR,
   CHANGE_SEMANTICREFERENCE,
   UPDATE_TERMINALTYPES,
   UPDATE_ATTRIBUTETYPES,
+  CHANGE_TERMINAL_TYPE_ID,
   DELETE_TYPE_EDITOR_ERROR,
   TypeEditorActionTypes,
 } from "./types";
@@ -136,6 +139,33 @@ export function changeRDSName(rdsName: string) {
     type: CHANGE_RDS_NAME,
     payload: {
       rdsName,
+    },
+  };
+}
+
+export function changeTerminalCategory(terminalCategory: string) {
+  return {
+    type: CHANGE_TERMINAL_CATEGORY,
+    payload: {
+      terminalCategory,
+    },
+  };
+}
+
+export function changeTerminalColor(terminalColor: string) {
+  return {
+    type: CHANGE_TERMINAL_COLOR,
+    payload: {
+      terminalColor,
+    },
+  };
+}
+
+export function changeTerminalTypeId(terminalTypeId: string) {
+  return {
+    type: CHANGE_TERMINAL_TYPE_ID,
+    payload: {
+      terminalTypeId,
     },
   };
 }

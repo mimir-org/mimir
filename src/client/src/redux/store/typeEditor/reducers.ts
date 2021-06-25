@@ -16,7 +16,10 @@ import {
   CHANGE_STATUS,
   CHANGE_RDS,
   CHANGE_RDS_NAME,
+  CHANGE_TERMINAL_CATEGORY,
+  CHANGE_TERMINAL_COLOR,
   CHANGE_SEMANTICREFERENCE,
+  CHANGE_TERMINAL_TYPE_ID,
   UPDATE_TERMINALTYPES,
   UPDATE_ATTRIBUTETYPES,
   CREATING_TYPE,
@@ -31,6 +34,8 @@ const initialState: TypeEditorState = {
   creating: false,
   mode: "NotSet",
   rdsName: "",
+  terminalCategory: "",
+  terminalColor: "",
   createLibraryType: {
     name: "",
     status: Status.Draft,
@@ -138,6 +143,16 @@ export function typeEditorReducer(
         ...state,
         rdsName: action.payload.rdsName,
       };
+    case CHANGE_TERMINAL_CATEGORY:
+      return {
+        ...state,
+        terminalCategory: action.payload.terminalCategory,
+      };
+    case CHANGE_TERMINAL_COLOR:
+      return {
+        ...state,
+        terminalColor: action.payload.terminalColor,
+      };
     case CHANGE_ASPECT:
       return {
         ...state,
@@ -176,6 +191,14 @@ export function typeEditorReducer(
         createLibraryType: {
           ...state.createLibraryType,
           rdsId: action.payload.rds,
+        },
+      };
+    case CHANGE_TERMINAL_TYPE_ID:
+      return {
+        ...state,
+        createLibraryType: {
+          ...state.createLibraryType,
+          terminalTypeId: action.payload.terminalTypeId,
         },
       };
     case CHANGE_SEMANTICREFERENCE:

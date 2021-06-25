@@ -3,7 +3,8 @@ import { RootState } from "../../../../redux/store";
 import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
 import { ObjectBlock } from "./ObjectBlock";
 import { PreviewArea, InfoWrapper } from "../styled";
-import { TransportIcon, InterfaceIcon } from "../../../../assets/icons/common";
+import { ReactComponent as TransportIcon } from "../../../../assets/icons/common/transportIcon.svg";
+import { ReactComponent as InterfaceIcon } from "../../../../assets/icons/common/interfaceIcon.svg";
 import { Aspect, ObjectType } from "../../../../models";
 export const PreviewBody = () => {
   const state = useSelector<RootState>(
@@ -24,10 +25,10 @@ export const PreviewBody = () => {
       ) : null}
       {state.createLibraryType.aspect === Aspect.Function &&
       state.createLibraryType.objectType === ObjectType.Transport ? (
-        <img src={TransportIcon} className="object-icon" alt="transport-icon" />
+        <TransportIcon style={{ fill: state.terminalColor }}></TransportIcon>
       ) : state.createLibraryType.aspect === Aspect.Function &&
         state.createLibraryType.objectType === ObjectType.Interface ? (
-        <img src={InterfaceIcon} className="object-icon" alt="interface-icon" />
+        <InterfaceIcon style={{ fill: state.terminalColor }}></InterfaceIcon>
       ) : null}
     </PreviewArea>
   );

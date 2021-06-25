@@ -28,11 +28,14 @@ export const CHANGE_TYPENAME = "CHANGE_TYPENAME";
 export const CHANGE_MODE = "CHANGE_MODE";
 export const CHANGE_SELECTED_TYPE = "CHANGE_SELECTED_TYPE";
 export const CHANGE_RDS_NAME = "CHANGE_RDS_NAME";
+export const CHANGE_TERMINAL_CATEGORY = "CHANGE_TERMINAL_CATEGORY";
+export const CHANGE_TERMINAL_COLOR = "CHANGE_TERMINAL_COLOR";
 export const CREATING_TYPE = "CREATING_TYPE";
 export const UPDATING_TYPE = "UPDATING_TYPE";
 export const CHANGE_STATUS = "CHANGE_STATUS";
 export const CHANGE_RDS = "CHANGE_RDS";
 export const CHANGE_SEMANTICREFERENCE = "CHANGE_SEMANTICREFERENCE";
+export const CHANGE_TERMINAL_TYPE_ID = "CHANGE_TERMINAL_TYPE_ID";
 export const UPDATE_TERMINALTYPES = "UPDATE_TERMINALTYPES";
 export const UPDATE_ATTRIBUTETYPES = "UPDATE_ATTRIBUTETYPES";
 export const CREATING_TYPE_SUCCESS_OR_ERROR = "CREATING_TYPE_SUCCESS_OR_ERROR";
@@ -52,6 +55,8 @@ export interface TypeEditorState {
   attributes: AttributeType[];
   mode: string;
   rdsName: string;
+  terminalCategory: string;
+  terminalColor: string;
   apiError: ApiError[];
   selectedType: string;
 }
@@ -152,6 +157,27 @@ export interface ChangeRdsName {
   };
 }
 
+export interface ChangeTerminalCategory {
+  type: typeof CHANGE_TERMINAL_CATEGORY;
+  payload: {
+    terminalCategory: string;
+  };
+}
+
+export interface ChangeTerminalColor {
+  type: typeof CHANGE_TERMINAL_COLOR;
+  payload: {
+    terminalColor: string;
+  };
+}
+
+export interface ChangeTerminalTypeId {
+  type: typeof CHANGE_TERMINAL_TYPE_ID;
+  payload: {
+    terminalTypeId: string;
+  };
+}
+
 export interface ChangeSemanticReference {
   type: typeof CHANGE_SEMANTICREFERENCE;
   payload: {
@@ -221,6 +247,9 @@ export type TypeEditorActionTypes =
   | ChangeStatus
   | ChangeRds
   | ChangeRdsName
+  | ChangeTerminalCategory
+  | ChangeTerminalColor
+  | ChangeTerminalTypeId
   | ChangeSemanticReference
   | UpdateTerminalTypes
   | UpdateAttributesTypes

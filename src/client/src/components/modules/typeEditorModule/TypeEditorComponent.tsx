@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { useHistory } from "react-router-dom";
 import { MODULE_TYPE } from "../../../models/project";
-import { Aspect } from "../../../models/";
+import { Aspect, ObjectType } from "../../../models/";
 import { TextResources } from "../../../assets/textResources";
 import { CloseIcon } from "../../../assets/icons/common";
 import { TypeEditorState } from "../../../redux/store/typeEditor/types";
@@ -159,8 +159,11 @@ export const TypeEditorComponent = () => {
         </TypeInfo>
         <ChooseProperties>
           <RDSList />
-          <TerminalsList />
-          <AttributesList />
+          <TerminalsList aspect={state.createLibraryType.aspect} />
+          {state.createLibraryType.objectType ===
+          ObjectType.Interface ? null : (
+            <AttributesList />
+          )}
           <TypePreview />
         </ChooseProperties>
         {/* <TypeEditorInspector /> */}

@@ -12,6 +12,7 @@ export const TerminalsListBody = ({ listElements }: Props) => {
         listElements.map((element) => (
           <TerminalsListElement
             key={element[1].key}
+            id={element[1].key}
             terminals={element[1].value}
             category={element[1].key}
           />
