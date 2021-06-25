@@ -16,7 +16,8 @@ const HandleBox = styled.div`
     right: ${(props) =>
       props.position === Position.Right && !props.mainConnectNode
         ? -Size.Node_Width - 2
-        : -Size.ConnectView_Width - 1}px;
+        : -Size.ConnectView_Width - 2}px;
+    left: -16px;
 
     margin-bottom: 3px;
   }

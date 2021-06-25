@@ -9,7 +9,10 @@ import { Color } from "../../compLibrary";
 import { BackgroundBox } from "../../compLibrary/blockView";
 import { changeInspectorTab } from "../../redux/store/inspector/actions";
 import { Project, Node } from "../../models";
-import { changeActiveBlockNode } from "../../redux/store/project/actions";
+import {
+  changeActiveBlockNode,
+  changeActiveEdge,
+} from "../../redux/store/project/actions";
 import {
   useOnConnect,
   useOnDrop,
@@ -126,8 +129,31 @@ const FlowBlock = () => {
   };
 
   const OnElementClick = (_event, element) => {
+    dispatch(changeActiveEdge(null, false));
     dispatch(changeActiveBlockNode(element.id));
     dispatch(changeInspectorTab(0));
+  };
+
+  const OnClick = (e) => {
+    // Handle select Edge
+    if (e.target.classList.contains("react-flow__edge-path")) {
+      const edge = project.edges.find((x) => x.id === e.target.id);
+      dispatch(changeActiveEdge(edge.id, true));
+      dispatch(changeActiveBlockNode(null));
+      dispatch(changeInspectorTab(0));
+      return;
+    }
+
+    if (e.target.classList.contains("react-flow__pane")) {
+      const selectedNode = FindSelectedNode();
+      if (selectedNode) {
+        dispatch(changeActiveEdge(null, false));
+        dispatch(changeActiveBlockNode(selectedNode.id));
+        dispatch(changeInspectorTab(0));
+        return;
+      }
+    }
+    dispatch(changeActiveEdge(null, false));
   };
 
   // Force rerender
@@ -162,6 +188,7 @@ const FlowBlock = () => {
               onElementClick={OnElementClick}
               zoomOnScroll={false}
               paneMoveable={false}
+              onClick={(e) => OnClick(e)}
             >
               <FullScreenBox />
               <BackgroundBox
