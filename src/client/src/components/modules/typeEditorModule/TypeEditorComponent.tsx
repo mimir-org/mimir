@@ -93,13 +93,13 @@ export const TypeEditorComponent = () => {
     state.createLibraryType.objectType,
     state.createLibraryType.status,
   ]);
-  
+
   //The intention for the code below is to fill out values in the input fields when editing an existing type.
   // (its not done)
-  useEffect(()=>{
-    if(state.mode === "edit"){
+  useEffect(() => {
+    if (state.mode === "edit") {
       let typeToEdit = state.createLibraryType;
-      
+
       typeToEdit.name = ""; //string
       typeToEdit.status = null; //Status;
       typeToEdit.aspect = null; //Aspect;
@@ -115,7 +115,7 @@ export const TypeEditorComponent = () => {
       typeToEdit.rdsCategoryId = ""; // string;
       typeToEdit.category = null; //EnumBase;
     }
-  }, []);
+  }, [state.mode, state.createLibraryType]);
   return (
     <TypeEditorWrapper>
       <TypeEditorContent>
