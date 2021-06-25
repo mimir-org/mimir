@@ -14,6 +14,29 @@ export interface BadRequestDataItem {
     value: string
 }
 
+export const Token = () => {
+    const now = new Date();
+    now.setMinutes(now.getMinutes() + 2);
+
+    const timestamp = Math.floor(now.getTime() / 1000);
+    let token = null;
+
+    for (const key of Object.keys(localStorage)) {
+        if (key.includes('"authority":')) {
+            const val: any = JSON.parse(localStorage.getItem(key)!);
+
+            if (val.expiresIn) {
+                if (val.expiresIn > timestamp && val.idToken === val.accessToken) {
+                    token = val.idToken;
+                } else {
+                    localStorage.removeItem(key);
+                }
+            }
+        }
+    }
+    return token;
+}
+
 export interface HttpResponse<T> extends Response {
     data?: T;
 }
@@ -79,8 +102,7 @@ export async function get<T>(
     args: RequestInit = { method: "get" }
 ): Promise<HttpResponse<T>> {
     const req = { ...RequestInitDefault, ...args };
-    var idTokenResponse = await authProvider.getAccessToken();
-    req.headers["Authorization"] = "Bearer " + idTokenResponse.accessToken;
+    req.headers["Authorization"] = "Bearer " + Token();
     return await http<T>(new Request(path, req));
 }
 
@@ -90,8 +112,7 @@ export async function post<T>(
     args: RequestInit = { method: "post", body: JSON.stringify(body) }
 ): Promise<HttpResponse<T>> {
     const req = { ...RequestInitDefault, ...args };
-    var idTokenResponse = await authProvider.getAccessToken();
-    req.headers["Authorization"] = "Bearer " + idTokenResponse.accessToken;
+    req.headers["Authorization"] = "Bearer " + Token();
     return await http<T>(new Request(path, req));
 }
 
@@ -101,7 +122,6 @@ export async function put<T>(
     args: RequestInit = { method: "put", body: JSON.stringify(body) }
 ): Promise<HttpResponse<T>> {
     const req = { ...RequestInitDefault, ...args };
-    var idTokenResponse = await authProvider.getAccessToken();
-    req.headers["Authorization"] = "Bearer " + idTokenResponse.accessToken;
+    req.headers["Authorization"] = "Bearer " + Token();
     return await http<T>(new Request(path, req));
 }
