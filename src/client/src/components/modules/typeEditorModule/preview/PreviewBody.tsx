@@ -28,7 +28,9 @@ export const PreviewBody = () => {
         <TransportIcon style={{ fill: state.terminalColor }}></TransportIcon>
       ) : state.createLibraryType.aspect === Aspect.Function &&
         state.createLibraryType.objectType === ObjectType.Interface ? (
-        <InterfaceIcon style={{ fill: state.terminalColor }}></InterfaceIcon>
+        <InterfaceIcon
+          style={{ stroke: state.terminalColor, fill: state.terminalColor }}
+        ></InterfaceIcon>
       ) : null}
     </PreviewArea>
   );
