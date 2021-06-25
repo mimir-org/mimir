@@ -25,7 +25,6 @@ import {
 } from "./helpers/common";
 import {
   CreateBlockElements,
-  FindSelectedBlockNode,
   GetBlockEdgeTypes,
   IsBlockView,
 } from "./helpers/block";
@@ -65,9 +64,6 @@ const FlowBlock = () => {
     (state) => state.connectView.mainNodes
   ) as Node[];
 
-  const selectedBlockNodeId = FindSelectedBlockNode().id;
-  const mainNode = mainConnectNodes.find((x) => x?.id === selectedBlockNodeId);
-  const connectNodes = mainNode?.connectNodes as Node[];
   const showBackground = IsLocation(splitViewNode) || IsLocation(node);
 
   const OnLoad = useCallback(
@@ -78,13 +74,12 @@ const FlowBlock = () => {
           node,
           splitView,
           splitViewNode,
-          mainNode,
-          connectNodes
+          mainConnectNodes
         )
       );
       return setReactFlowInstance(_reactFlowInstance);
     },
-    [project, node, splitView, splitViewNode, mainNode, connectNodes]
+    [project, node, splitView, splitViewNode, mainConnectNodes]
   );
 
   const OnElementsRemove = (elementsToRemove) => {
