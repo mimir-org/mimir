@@ -24,9 +24,10 @@ const ValidateBlockEdge = (
   if (IsConnectView()) {
     if (
       fromNode !== selectedNode &&
-      IsTransportTerminal(fromConnector)
-      //   allConnectChildren?.some((node) => node.id === fromNode.id) &&
-      //   allConnectChildren?.some((node) => node.id === toNode.id)
+      IsTransportTerminal(fromConnector) &&
+      IsTransportTerminal(toConnector) &&
+      IsFunction(fromNode) &&
+      IsFunction(toNode)
     )
       return true;
     return false;

@@ -1,11 +1,14 @@
 import { useSelector } from "react-redux";
 import { ProjectState } from "../../../redux/store/project/types";
 import { RootState } from "../../../redux/store";
-import { Node } from "../../../models";
-import { GetLegendData, Legend } from "../../flow/helpers/common";
 import { ModuleBody } from "../../../compLibrary/box/modules";
 import { IsBlockView } from "../../flow/helpers/block";
 import { LegendElement, LegendColor } from "../../../compLibrary/box/library";
+import {
+  FindSelectedNode,
+  GetLegendData,
+  Legend,
+} from "../../flow/helpers/common";
 
 const LegendModule = ({ visible }) => {
   const projectState = useSelector<RootState>(
@@ -13,10 +16,7 @@ const LegendModule = ({ visible }) => {
   ) as ProjectState;
 
   let legends = GetLegendData(projectState.project, false, null) as Legend[];
-
-  let selectedNode = projectState.project?.nodes?.find(
-    (x) => x.isSelected
-  ) as Node;
+  const selectedNode = FindSelectedNode();
 
   if (IsBlockView()) {
     legends = GetLegendData(

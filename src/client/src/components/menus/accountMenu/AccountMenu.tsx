@@ -6,15 +6,15 @@ import { save } from "../../../redux/store/project/actions";
 import { GetMenuElement } from "./helpers";
 import { GetMenuIcon } from "../../../assets/helpers";
 import { MENU_TYPE, PROJECT_MENU_TYPE } from "../../../models/project";
+import { changeProjectMenu } from "../../../redux/store/projectMenu/actions";
+import { OpenProjectMenu } from "../../project/openProject";
+import { CreateProjectMenu } from "../../project/createProject";
+import { saveAs } from "file-saver";
 import {
   HrLine,
   MenuBox,
   MenuMainHeader,
 } from "../../../compLibrary/box/menus";
-import { changeProjectMenu } from "../../../redux/store/projectMenu/actions";
-import { OpenProjectMenu } from "../../project/openProject";
-import { CreateProjectMenu } from "../../project/createProject";
-import { saveAs } from "file-saver";
 
 const AccountMenu = () => {
   const dispatch = useDispatch();

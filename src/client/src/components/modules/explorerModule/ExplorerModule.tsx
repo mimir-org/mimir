@@ -37,7 +37,13 @@ export const ExplorerModule = () => {
   const stop = isOpen ? Size.ModuleOpen : Size.ModuleClosed;
 
   return (
-    <AnimatedModule type={key} start={start} stop={stop} run={animate} id={key}>
+    <AnimatedModule
+      type={key}
+      start={start}
+      stop={stop}
+      run={animate}
+      id="ExplorerModule"
+    >
       <ModuleHead explorer visible={isOpen}>
         <img src={ExplorerIcon} alt="icon" className="module-icon" />
         <img

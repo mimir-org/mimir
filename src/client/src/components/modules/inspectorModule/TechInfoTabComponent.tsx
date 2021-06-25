@@ -73,3 +73,4 @@ const TechInfoTabComponent = ({ node }) => {
   );
 };
 export default TechInfoTabComponent;
+<div></div>;

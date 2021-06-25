@@ -1,11 +1,11 @@
 import { call, put as statePut } from "redux-saga/effects";
 import {
-    FETCHING_INITIAL_SUCCESS_OR_ERROR,
-    FETCHING_RDS_SUCCESS_OR_ERROR,
-    FETCHING_TERMINALS_SUCCESS_OR_ERROR,
-    FETCHING_ATTRIBUTES_SUCCESS_OR_ERROR,
-    CREATING_TYPE_SUCCESS_OR_ERROR,
-    TypeEditorActionTypes
+  FETCHING_INITIAL_SUCCESS_OR_ERROR,
+  FETCHING_RDS_SUCCESS_OR_ERROR,
+  FETCHING_TERMINALS_SUCCESS_OR_ERROR,
+  FETCHING_ATTRIBUTES_SUCCESS_OR_ERROR,
+  CREATING_TYPE_SUCCESS_OR_ERROR,
+  TypeEditorActionTypes,
 } from "../../store/typeEditor/types";
 
 import {
@@ -48,177 +48,174 @@ export function* updateType(action){
 }
 // eslint-disable-next-line require-yield
 export function* createType(action) {
-    try {
-        const url = process.env.REACT_APP_API_BASE_URL + "typeeditor";
-        const response = yield call(post, url, action.payload.libraryType);
-        console.log(url);
-        console.log(response);
-        // This is a bad request
-        if (response.status === 400) {
-            const data = GetBadResponseData(response);
+  try {
+    const url = process.env.REACT_APP_API_BASE_URL + "typeeditor";
+    const response = yield call(post, url, action.payload.libraryType);
 
-            const apiError = {
-                key: CREATING_TYPE_SUCCESS_OR_ERROR,
-                errorMessage: data.title,
-                errorData: data,
-            } as ApiError;
+    // This is a bad request
+    if (response.status === 400) {
+      const data = GetBadResponseData(response);
 
-            const payload = {
-                apiError: apiError,
-            };
+      const apiError = {
+        key: CREATING_TYPE_SUCCESS_OR_ERROR,
+        errorMessage: data.title,
+        errorData: data,
+      } as ApiError;
 
-            yield statePut({
-                type: CREATING_TYPE_SUCCESS_OR_ERROR,
-                payload: payload,
-            });
-            return;
-        }
+      const payload = {
+        apiError: apiError,
+      };
 
-        const payload = {
-            apiError: null,
-        };
-
-        yield statePut({
-            type: CREATING_TYPE_SUCCESS_OR_ERROR,
-            payload: payload,
-        });
-
-    } catch (error) {
-
-        const apiError = {
-            key: CREATING_TYPE_SUCCESS_OR_ERROR,
-            errorMessage: error.message,
-            errorData: null,
-        } as ApiError;
-
-        const payload = {
-            apiError: apiError,
-        };
-
-        yield statePut({
-            type: CREATING_TYPE_SUCCESS_OR_ERROR,
-            payload: payload,
-        });
+      yield statePut({
+        type: CREATING_TYPE_SUCCESS_OR_ERROR,
+        payload: payload,
+      });
+      return;
     }
+
+    const payload = {
+      apiError: null,
+    };
+
+    yield statePut({
+      type: CREATING_TYPE_SUCCESS_OR_ERROR,
+      payload: payload,
+    });
+  } catch (error) {
+    const apiError = {
+      key: CREATING_TYPE_SUCCESS_OR_ERROR,
+      errorMessage: error.message,
+      errorData: null,
+    } as ApiError;
+
+    const payload = {
+      apiError: apiError,
+    };
+
+    yield statePut({
+      type: CREATING_TYPE_SUCCESS_OR_ERROR,
+      payload: payload,
+    });
+  }
 }
 
 export function* getInitialData(action: TypeEditorActionTypes) {
-    try {
-        const aspectUrl = process.env.REACT_APP_API_BASE_URL + "typeeditor/aspects";
-        const statusUrl =
-            process.env.REACT_APP_API_BASE_URL + "typeeditor/statuses";
-        const objectsUrl =
-            process.env.REACT_APP_API_BASE_URL + "typeeditor/objects";
+  try {
+    const aspectUrl = process.env.REACT_APP_API_BASE_URL + "typeeditor/aspects";
+    const statusUrl =
+      process.env.REACT_APP_API_BASE_URL + "typeeditor/statuses";
+    const objectsUrl =
+      process.env.REACT_APP_API_BASE_URL + "typeeditor/objects";
 
-        const aspectResponse = yield call(get, aspectUrl);
-        const statusResponse = yield call(get, statusUrl);
-        const objectResponse = yield call(get, objectsUrl);
+    const aspectResponse = yield call(get, aspectUrl);
+    const statusResponse = yield call(get, statusUrl);
+    const objectResponse = yield call(get, objectsUrl);
 
-        const payload = {
-            aspects: aspectResponse.data,
-            objectTypes: objectResponse.data,
-            statuses: statusResponse.data,
-        };
+    const payload = {
+      aspects: aspectResponse.data,
+      objectTypes: objectResponse.data,
+      statuses: statusResponse.data,
+    };
 
-        yield statePut({
-            type: FETCHING_INITIAL_SUCCESS_OR_ERROR,
-            payload: payload,
-        });
-    } catch (error) {
-        const payload = {
-            aspects: [],
-            objectTypes: [],
-            statuses: [],
-        };
+    yield statePut({
+      type: FETCHING_INITIAL_SUCCESS_OR_ERROR,
+      payload: payload,
+    });
+  } catch (error) {
+    const payload = {
+      aspects: [],
+      objectTypes: [],
+      statuses: [],
+    };
 
-        yield statePut({
-            type: FETCHING_INITIAL_SUCCESS_OR_ERROR,
-            payload: payload,
-        });
-    }
+    yield statePut({
+      type: FETCHING_INITIAL_SUCCESS_OR_ERROR,
+      payload: payload,
+    });
+  }
 }
 
 export function* getRDS(action) {
-    try {
-        const rdsURL =
-            process.env.REACT_APP_API_BASE_URL +
-            "typeeditor/rds/" +
-            action.payload.aspect;
+  try {
+    const rdsURL =
+      process.env.REACT_APP_API_BASE_URL +
+      "typeeditor/rds/" +
+      action.payload.aspect;
 
-        const rdsResponse = yield call(get, rdsURL);
+    const rdsResponse = yield call(get, rdsURL);
 
-        const payload = {
-            Rds: rdsResponse.data,
-        };
+    const payload = {
+      Rds: rdsResponse.data,
+    };
 
-        yield statePut({
-            type: FETCHING_RDS_SUCCESS_OR_ERROR,
-            payload: payload,
-        });
-    } catch (error) {
-        const payload = {
-            Rds: [],
-        };
+    yield statePut({
+      type: FETCHING_RDS_SUCCESS_OR_ERROR,
+      payload: payload,
+    });
+  } catch (error) {
+    const payload = {
+      Rds: [],
+    };
 
-        yield statePut({
-            type: FETCHING_RDS_SUCCESS_OR_ERROR,
-            payload: payload,
-        });
-    }
+    yield statePut({
+      type: FETCHING_RDS_SUCCESS_OR_ERROR,
+      payload: payload,
+    });
+  }
 }
 
 export function* getTerminals(action) {
-    try {
-        const terminalURL =
-            process.env.REACT_APP_API_BASE_URL + "typeeditor/terminalsbycategory";
+  try {
+    const terminalURL =
+      process.env.REACT_APP_API_BASE_URL + "typeeditor/terminalsbycategory";
 
-        const terminalResponse = yield call(get, terminalURL);
+    const terminalResponse = yield call(get, terminalURL);
 
-        const payload = {
-            terminals: terminalResponse.data,
-        };
+    const payload = {
+      terminals: terminalResponse.data,
+    };
 
-        yield statePut({
-            type: FETCHING_TERMINALS_SUCCESS_OR_ERROR,
-            payload: payload,
-        });
-    } catch (error) {
-        const payload = {
-            terminals: [],
-        };
+    yield statePut({
+      type: FETCHING_TERMINALS_SUCCESS_OR_ERROR,
+      payload: payload,
+    });
+  } catch (error) {
+    const payload = {
+      terminals: [],
+    };
 
-        yield statePut({
-            type: FETCHING_TERMINALS_SUCCESS_OR_ERROR,
-            payload: payload,
-        });
-    }
+    yield statePut({
+      type: FETCHING_TERMINALS_SUCCESS_OR_ERROR,
+      payload: payload,
+    });
+  }
 }
 
 export function* getAttributes(action) {
-    try {
-        const attributesURL =
-            process.env.REACT_APP_API_BASE_URL +
-            "typeeditor/attributes/" +
-            action.payload.aspect;
+  try {
+    const attributesURL =
+      process.env.REACT_APP_API_BASE_URL +
+      "typeeditor/attributes/" +
+      action.payload.aspect;
 
-        const attributesResponse = yield call(get, attributesURL);
+    const attributesResponse = yield call(get, attributesURL);
 
-        const payload = {
-            AttributeType: attributesResponse.data,
-        };
+    const payload = {
+      AttributeType: attributesResponse.data,
+    };
 
-        yield statePut({
-            type: FETCHING_ATTRIBUTES_SUCCESS_OR_ERROR,
-            payload: payload,
-        });
-    } catch (error) {
-        const payload = {
-            AttributeType: [],
-        };
+    yield statePut({
+      type: FETCHING_ATTRIBUTES_SUCCESS_OR_ERROR,
+      payload: payload,
+    });
+  } catch (error) {
+    const payload = {
+      AttributeType: [],
+    };
 
-        yield statePut({
-            type: FETCHING_ATTRIBUTES_SUCCESS_OR_ERROR,
-            payload: payload,
-        });
-    }
+    yield statePut({
+      type: FETCHING_ATTRIBUTES_SUCCESS_OR_ERROR,
+      payload: payload,
+    });
+  }
 }

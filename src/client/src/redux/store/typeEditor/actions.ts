@@ -27,7 +27,7 @@ import {
   TypeEditorActionTypes,
 } from "./types";
 
-// TO DO create type, save type, get attributes
+// TODO create type, save type, get attributes
 
 export function create(libraryType: CreateLibraryType): TypeEditorActionTypes {
   return {

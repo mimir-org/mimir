@@ -13,4 +13,5 @@ export { default as IsBlockView } from "./IsBlockView";
 export { default as IsBlockChecked } from "./IsBlockChecked";
 export { default as FilterConnectors } from "./FilterConnectors";
 export { default as SortConnectors } from "./SortConnectors";
+export { default as FindSelectedBlockNode } from "./FindSelectedBlockNode";
 export { default as GetBlockEdgeTypes } from "./GetBlockEdgeTypes";

@@ -2,7 +2,6 @@ import { Elements } from "react-flow-renderer";
 import { IsPartOfTerminal } from "../common";
 import { EDGE_TYPE, EdgeType } from "../../../../models/project";
 import { Node, Project } from "../../../../models";
-import { CreateConnectMainNode } from "./connectView";
 import {
   CreateBlockEdge,
   CreateSplitViewNode,
@@ -15,8 +14,7 @@ const CreateBlockElements = (
   selectedNode: Node,
   splitView: boolean,
   splitViewNode: Node,
-  mainNode: Node,
-  connectNodes: Node[]
+  mainConnectNodes: Node[]
 ): Elements => {
   if (!project) return;
   const initialElements: Elements = [];
@@ -52,12 +50,13 @@ const CreateBlockElements = (
     });
   }
 
-  // Draw connection view
-  if (connectNodes?.length > 0) {
-    CreateConnectMainNode(mainNode);
-    connectNodes?.forEach((node) => {
-      const connectNode = nodes.find((x) => x.id === node.id);
-      initialElements.push(CreateBlockNode(connectNode, mainNode, false));
+  // Draw connection nodes
+  if (mainConnectNodes?.length > 0) {
+    mainConnectNodes.forEach((mainNode) => {
+      mainNode.connectNodes?.forEach((node) => {
+        const connectNode = nodes.find((x) => x.id === node.id);
+        initialElements.push(CreateBlockNode(connectNode, mainNode, false));
+      });
     });
   }
 
