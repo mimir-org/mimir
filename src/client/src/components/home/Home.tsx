@@ -11,6 +11,9 @@ import { getContractors } from "../../redux/store/common/actions";
 import { search } from "../../redux/store/project/actions";
 import { FlowModule } from "../flow";
 import { ErrorModule } from "../modules/errorModule";
+import { AzureAD } from "react-aad-msal";
+import { authProvider } from "../../providers/authProvider";
+import { Token } from "../../models/webclient";
 
 interface RouteParams {
   type: string;
@@ -26,16 +29,23 @@ const Home = () => {
   }, [dispatch]);
 
   const params = useParams<RouteParams>();
+  const token = Token();
 
   return (
     <>
-      <ExplorerModule />
-      <AccountMenu />
-      <FilterMenu />
-      <FlowModule route={params} />
-      <InspectorModule />
-      <LibraryModule />
-      <ErrorModule />
+      <AzureAD provider={authProvider} forceLogin={token === null}>
+        {token && (
+          <>
+            <ExplorerModule />
+            <AccountMenu />
+            <FilterMenu />
+            <FlowModule route={params} />
+            <InspectorModule />
+            <LibraryModule />
+            <ErrorModule />
+          </>
+        )}
+      </AzureAD>
     </>
   );
 };

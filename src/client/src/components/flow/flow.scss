@@ -75,9 +75,9 @@
 .react-flow__handle {
   opacity: 1;
   position: absolute;
-  width: 14px;
-  height: 14px;
-  border-radius: 0%;
+  width: 14px !important;
+  height: 14px !important;
+  border-radius: 0% !important;
   border: none !important;
   background-color: transparent !important;
 }
