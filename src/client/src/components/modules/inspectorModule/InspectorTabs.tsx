@@ -1,5 +1,5 @@
 import { TabComponent, TabAdminComponent } from ".";
-import { TabEdgeAdminComponent } from "./edgeInspector";
+import { TabEdgeAdminComponent, TabEdgeComponent } from "./edgeInspector";
 import { Project, Node } from "../../../models";
 import { RootState } from "../../../redux/store";
 import { useSelector } from "react-redux";
@@ -33,7 +33,10 @@ const InspectorTabs = () => {
         </>
       )}
       {edge && (
-        <TabEdgeAdminComponent edge={edge} project={project} index={0} />
+        <>
+          <TabEdgeAdminComponent edge={edge} project={project} index={0} />
+          <TabEdgeComponent edge={edge} index={1} />
+        </>
       )}
     </>
   );

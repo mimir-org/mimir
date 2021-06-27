@@ -1,4 +1,4 @@
-import { Node, Edge, Project } from "../../../models";
+import { Node, Edge, Project, Connector } from "../../../models";
 import {
   SAVE_PROJECT,
   FETCHING_PROJECT,
@@ -23,6 +23,7 @@ import {
   DELETE_PROJECT_ERROR,
   SET_ACTIVE_CONNECTOR,
   CHANGE_ACTIVE_EDGE,
+  CHANGE_CONNECTOR_VISIBILITY,
 } from "./types";
 
 export function save(project: Project): ProjectActionTypes {
@@ -237,6 +238,19 @@ export function setActiveConnector(
       connectorId,
       visible,
       order,
+    },
+  };
+}
+
+export function ChangeConnectorVisibility(
+  connector: Connector,
+  visible: boolean
+) {
+  return {
+    type: CHANGE_CONNECTOR_VISIBILITY,
+    payload: {
+      connector,
+      visible,
     },
   };
 }

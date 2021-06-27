@@ -1,16 +1,16 @@
-import { Edge, RelationType } from "../../../../models";
+import { Connector, Edge, RelationType } from "../../../../models";
 import { IsTransportTerminal } from "../../../flow/helpers/common";
 
 const CheckEdges = (edges: Edge[], type: RelationType | string) => {
-  const edgesToRemove: Edge[] = [];
+  const elementsToRemove = [];
 
   if (type !== null) {
     edges?.forEach((edge) => {
-      if (edge.fromConnector.relationType === type) edgesToRemove.push(edge);
+      if (edge.fromConnector.relationType === type) elementsToRemove.push(edge);
     });
-    if (type === "Nuke all") {
+    if (type === "Hide all") {
       edges?.forEach((edge) => {
-        edgesToRemove.push(edge);
+        elementsToRemove.push(edge);
       });
     }
   } else {
@@ -18,12 +18,13 @@ const CheckEdges = (edges: Edge[], type: RelationType | string) => {
       if (
         IsTransportTerminal(edge.fromConnector) &&
         edge.fromConnector.relationType === undefined
-      )
-        edgesToRemove.push(edge);
+      ) {
+        elementsToRemove.push(edge);
+      }
     });
   }
 
-  return edgesToRemove;
+  return elementsToRemove;
 };
 
 export default CheckEdges;

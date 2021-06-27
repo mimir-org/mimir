@@ -1,4 +1,4 @@
-import { Project, Node, Edge } from "../../../models";
+import { Project, Node, Edge, Connector } from "../../../models";
 import { ApiError } from "../../../models/webclient";
 
 export const SAVE_PROJECT = "SAVE_PROJECT";
@@ -20,6 +20,7 @@ export const UPDATE_POSITION = "UPDATE_POSITION";
 export const UPDATE_BLOCK_POSITION = "UPDATE_BLOCK_POSITION";
 export const CHANGE_NODE_VISIBILITY = "CHANGE_NODE_VISIBILITY";
 export const CHANGE_EDGE_VISIBILITY = "CHANGE_EDGE_VISIBILITY";
+export const CHANGE_CONNECTOR_VISIBILITY = "CHANGE_CONNECTOR_VISIBILITY";
 export const CHANGE_ACTIVE_NODE = "CHANGE_ACTIVE_NODE";
 export const CHANGE_ACTIVE_BLOCKNODE = "CHANGE_ACTIVE_BLOCKNODE";
 export const CHANGE_ACTIVE_EDGE = "CHANGE_ACTIVE_EDGE";
@@ -230,6 +231,14 @@ interface SetActiveConnector {
   };
 }
 
+interface ChangeConnectorVisibility {
+  type: typeof CHANGE_CONNECTOR_VISIBILITY;
+  payload: {
+    connector: Connector;
+    visible: boolean;
+  };
+}
+
 export type ProjectActionTypes =
   | FetchingProjectAction
   | SearchProjectAction
@@ -256,4 +265,5 @@ export type ProjectActionTypes =
   | ChangeAttributeValue
   | ChangeAttributeConnectorValue
   | DeleteProjectErrorAction
-  | SetActiveConnector;
+  | SetActiveConnector
+  | ChangeConnectorVisibility;

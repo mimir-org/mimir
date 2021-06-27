@@ -30,6 +30,7 @@ import {
   DELETE_PROJECT_ERROR,
   SET_ACTIVE_CONNECTOR,
   CHANGE_ACTIVE_EDGE,
+  CHANGE_CONNECTOR_VISIBILITY,
 } from "./types";
 
 const initialState: ProjectState = {
@@ -461,6 +462,11 @@ export function projectReducer(
               : node
           ),
         },
+      };
+
+    case CHANGE_CONNECTOR_VISIBILITY:
+      return {
+        state,
       };
 
     default:
