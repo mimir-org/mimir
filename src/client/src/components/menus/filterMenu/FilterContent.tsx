@@ -1,7 +1,7 @@
 import red from "../../../redux/store";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import { CheckEdges, CheckTerminals } from "./helpers";
+import { CheckEdges, CheckTerminals, FindConnectorNode } from "./helpers";
 import { Edge } from "../../../models";
 import { TextResources } from "../../../assets/textResources";
 import { MenuColumn, MenuSubHeader } from "../../../compLibrary/box/menus";
@@ -28,26 +28,13 @@ const FilterContent = ({ type, index }) => {
           element.type === null ||
           element.type === undefined ||
           edgeType.some((x) => x === element.type?.toString());
-        console.log(isEdge);
         if (isEdge) {
-          console.log(element);
           dispatch(changeEdgeVisibility(element, !element.isHidden));
         } else {
-          // dispatch(setActiveConnector(element.))
+          const connectorNode = FindConnectorNode(element);
+          //   dispatch(setActiveConnector(element.))
         }
       });
-      //   if (selectedTerminals?.length > 0) {
-      //     selectedTerminals?.forEach((obj) => {
-      //       dispatch(
-      //         setActiveConnector(
-      //           obj.node,
-      //           obj.connector?.id,
-      //           !obj.connector?.visible,
-      //           0
-      //         )
-      //       );
-      //     });
-      //   }
     }
   };
 
