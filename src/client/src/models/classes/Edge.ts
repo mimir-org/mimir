@@ -1,5 +1,6 @@
 import { Aspect, Connector, Node } from "..";
 
+export type isEdge = keyof Edge;
 class Edge {
   id: string;
   fromConnectorId: string;

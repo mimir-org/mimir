@@ -7,8 +7,8 @@ export const CreateTreeEdge = (edge: Edge, edgeType: EdgeType): FlowElement => {
   let element = null;
 
   const nodes = red.store.getState().projectState.project.nodes as Node[];
-  const fromNode = nodes.find((node) => node.id === edge.fromNodeId);
-  const toNode = nodes.find((node) => node.id === edge.toNodeId);
+  const fromNode = nodes.find((node) => node?.id === edge.fromNodeId);
+  const toNode = nodes.find((node) => node?.id === edge.toNodeId);
 
   if (edge.fromNode && edge.toNode) {
     element = {
@@ -27,8 +27,8 @@ export const CreateTreeEdge = (edge: Edge, edgeType: EdgeType): FlowElement => {
         edge: edge,
       },
       isHidden: edge.isHidden,
-      parentType: fromNode.aspect,
-      targetType: toNode.aspect,
+      parentType: fromNode?.aspect,
+      targetType: toNode?.aspect,
     };
   }
   return element;

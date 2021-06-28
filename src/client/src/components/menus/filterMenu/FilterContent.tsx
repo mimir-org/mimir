@@ -1,25 +1,25 @@
 import red from "../../../redux/store";
 import { useDispatch } from "react-redux";
-import { changeEdgeVisibility } from "../../../redux/store/project/actions";
 import { useState } from "react";
 import { CheckEdges } from "./helpers";
 import { Edge } from "../../../models";
 import { TextResources } from "../../../assets/textResources";
 import { MenuColumn, MenuSubHeader } from "../../../compLibrary/box/menus";
+import { changeEdgeVisibility } from "../../../redux/store/project/actions";
 
 const FilterContent = ({ type, index }) => {
   const dispatch = useDispatch();
   const edges = red.store.getState().projectState.project?.edges as Edge[];
-  let selectedEdges = CheckEdges(edges, type);
+  let selectedElements = CheckEdges(edges, type) ?? [];
 
-  let isChecked = edges.find((x) => x.id === selectedEdges[0]?.id)?.isHidden;
+  let isChecked = edges.find((x) => x.id === selectedElements[0]?.id)?.isHidden;
   const [checked, setChecked] = useState(!isChecked);
 
   const handleChange = () => {
     if (edges) {
       setChecked(!checked);
-      selectedEdges.forEach((edge) => {
-        dispatch(changeEdgeVisibility(edge, !edge.isHidden));
+      selectedElements.forEach((element) => {
+        dispatch(changeEdgeVisibility(element, !element.isHidden));
       });
     }
   };
@@ -32,7 +32,7 @@ const FilterContent = ({ type, index }) => {
       : index === 2
       ? "Transport"
       : index === 3
-      ? "Nuke All"
+      ? "Show All"
       : ""; // TODO: Get name for type
 
   return (
