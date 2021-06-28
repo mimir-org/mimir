@@ -4,6 +4,7 @@ import { HandleBox } from "../../../compLibrary/blockView";
 import { Handle } from "react-flow-renderer";
 import { GetConnectorIcon, GetHandlePosition } from "../helpers/common";
 import { FilterConnectors, GetBlockHandleType } from "../helpers/block";
+import { IsMainConnectNode } from "../helpers/block/connectView";
 
 interface Props {
   data: Node;
@@ -25,8 +26,9 @@ const HandleComponent = ({ data }: Props) => {
             position={GetHandlePosition(pos)}
             key={conn.id}
             visible={conn.visible}
-            icon={GetConnectorIcon(conn)}
+            icon={GetConnectorIcon(conn.color)}
             splitNode={isSplitNode}
+            mainConnectNode={IsMainConnectNode(data.id)}
           >
             <Handle
               type={type}

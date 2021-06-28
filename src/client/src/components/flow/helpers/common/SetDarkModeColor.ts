@@ -5,10 +5,10 @@ const SetDarkModeColor = (active: boolean) => {
   let moduleColor: string;
 
   const root = document.getElementById("root");
-  const explorer = document.getElementById("Explorer");
-  const library = document.getElementById("Library");
-  const legend = document.getElementById("Legend");
-  const inspector = document.getElementById("Inspector");
+  const explorer = document.getElementById("ExplorerModule");
+  const library = document.getElementById("LibraryModule");
+  const legend = document.getElementById("LegendModule");
+  const inspector = document.getElementById("InspectorModule");
   const inspectorBody = document.getElementById("InspectorBody");
 
   if (active) {

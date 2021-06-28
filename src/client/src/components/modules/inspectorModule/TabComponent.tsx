@@ -40,7 +40,6 @@ const TabComponent = ({ node, index }: Props) => {
         )}
         {!node && index === 1 && (
           <>
-            <span>{/* TODO: selected RDS */} </span>
             <span>{typeEditorState.createLibraryType.name} </span>
           </>
         )}
@@ -56,7 +55,6 @@ const TabComponent = ({ node, index }: Props) => {
       {index === 0 && node && <NodeTitle>{node.label ?? node.name}</NodeTitle>}
       {!node && index === 1 && (
         <>
-          <span>{/* TODO: selected RDS */} </span>
           <span>{typeEditorState.createLibraryType.name} </span>
         </>
       )}

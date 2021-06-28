@@ -39,24 +39,32 @@
 // BLOCKVIEW
 .react-flow__node-BlockFunctionNode {
   border-radius: 5px;
-  width: 100px;
-  height: 60px;
+  width: 115px;
+  height: 70px;
   font-size: 11px;
   color: #222;
   text-align: center;
   border: 1px solid #222;
   background: #fef445;
+
+  &.selected {
+    border: 2px solid #1a192b !important;
+  }
 }
 
 .react-flow__node-BlockLocationNode {
   border-radius: 5px;
-  width: 100px;
-  height: 60px;
+  width: 115px;
+  height: 70px;
   font-size: 11px;
   color: #222;
   text-align: center !important;
   border: 1px solid #222;
   background: magenta;
+
+  &.selected {
+    border: 2px solid #1a192b !important;
+  }
 }
 
 .react-flow__node-FunctionBlock {
@@ -67,9 +75,9 @@
 .react-flow__handle {
   opacity: 1;
   position: absolute;
-  width: 14px;
-  height: 14px;
-  border-radius: 0%;
+  width: 14px !important;
+  height: 14px !important;
+  border-radius: 0% !important;
   border: none !important;
   background-color: transparent !important;
 }

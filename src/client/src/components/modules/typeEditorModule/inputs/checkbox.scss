@@ -16,8 +16,8 @@
   position: absolute;
   top: 0.4px;
   left: 0;
-  height: 11px;
-  width: 11px;
+  height: 12px;
+  width: 12px;
   background-color: transparent;
   border: 2px solid #007079;
   border-radius: 3px;
@@ -38,10 +38,10 @@
 }
 
 .squarecheckbox .scheckmark:after {
-  left: 4px;
+  left: 3.5px;
   top: 0px;
   width: 3px;
-  height: 8px;
+  height: 10px;
   border: solid white;
   border-width: 0 2px 2px 0;
   -webkit-transform: rotate(45deg);

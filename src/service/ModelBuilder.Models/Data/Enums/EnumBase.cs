@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography;
-using System.Text;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Mb.Models.Data.Enums
 {
@@ -20,6 +18,6 @@ namespace Mb.Models.Data.Enums
         }
 
         [JsonIgnore]
-        public string Key => $"{Name}-{InternalType}";
+        public virtual string Key => $"{Name}-{InternalType}";
     }
 }

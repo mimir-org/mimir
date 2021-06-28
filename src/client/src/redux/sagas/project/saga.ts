@@ -14,6 +14,8 @@ import {
   SAVE_PROJECT_SUCCESS_OR_ERROR,
 } from "../../store/project/types";
 
+import { ConvertProject } from ".";
+
 export function* getProject(action) {
   try {
     const url =
@@ -188,8 +190,11 @@ export function* createProject(action) {
 
 export function* updateProject(action) {
   try {
-    const url = process.env.REACT_APP_API_BASE_URL + "project/update";
-    const response = yield call(post, url, action.payload);
+    const projId = action.payload.id;
+    const proj = ConvertProject(action.payload);
+
+    const url = process.env.REACT_APP_API_BASE_URL + "project/update/" + projId;
+    const response = yield call(post, url, proj);
 
     // This is a bad request
     if (response.status === 400) {

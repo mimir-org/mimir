@@ -10,17 +10,19 @@ const TraverseTree = (
   let children: Node[] = [];
 
   edgeList.forEach((edge) => {
-    if (edge.fromNode === parentNode) {
-      let node = nodeList.find((node) => node === edge.toNode);
-      const connector = node?.connectors?.find((x) => x === edge?.toConnector);
+    if (edge.fromNodeId === parentNode.id) {
+      let node = nodeList.find((node) => node.id === edge.toNodeId);
+      const connector = node?.connectors?.find(
+        (x) => x.id === edge?.toConnectorId
+      );
 
-      if (node.aspect === parentNode.aspect && IsPartOfTerminal(connector)) {
+      if (node?.aspect === parentNode?.aspect && IsPartOfTerminal(connector)) {
         children.push(node);
         elements.push(node);
       }
       elements.push(edge);
     }
-    if (edge.toNode === parentNode) elements.push(edge);
+    if (edge.toNodeId === parentNode.id) elements.push(edge);
   });
 
   if (children.length === 0) return;

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mb.Core.Migrations
 {
     [DbContext(typeof(ModelBuilderDbContext))]
-    [Migration("20210621125708_init")]
-    partial class init
+    [Migration("20210623101830_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -508,10 +508,6 @@ namespace Mb.Core.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Name");
-
-                    b.Property<string>("ParentId")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ParentId");
 
                     b.Property<string>("ProjectOwner")
                         .IsRequired()

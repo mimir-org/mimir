@@ -27,7 +27,7 @@ export const RDSList = () => {
   };
 
   return (
-    <ListWrapper flex={0.5}>
+    <ListWrapper flex={0.7}>
       <ListHeader
         label={TextResources.TypeEditor_Properties_RDS}
         chooseVisible={true}

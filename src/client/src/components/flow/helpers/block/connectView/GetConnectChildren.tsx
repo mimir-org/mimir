@@ -1,5 +1,5 @@
 import red from "../../../../../redux/store";
-import { IsTransportTerminal } from "../../common";
+import { IsPartOfTerminal } from "../../common";
 import { Edge, Node } from "../../../../../models";
 
 const GetConnectChildren = (parentNode: Node): Node[] => {
@@ -12,7 +12,7 @@ const GetConnectChildren = (parentNode: Node): Node[] => {
     if (
       edge.fromNodeId === parentNode.id &&
       edge.toNode?.aspect === parentNode?.aspect &&
-      !IsTransportTerminal(edge.toConnector)
+      IsPartOfTerminal(edge.toConnector)
     ) {
       const toNode = nodes.find((node) => node.id === edge.toNodeId);
       elements.push(toNode);

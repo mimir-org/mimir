@@ -8,7 +8,6 @@ export { default as ChooseProperties } from "./ChooseProperties";
 export { default as TerminalName } from "./TerminalName";
 export { default as TerminalListElement } from "./TerminalListElement";
 export { default as TerminalCategoryWrapper } from "./TerminalCategoryWrapper";
-export { default as TerminalMediaTypeWrapper } from "./TerminalMediaTypeWrapper";
 export { default as AddTerminalWrapper } from "./AddTerminalWrapper";
 export { default as AddTerminalElement } from "./AddTerminalElement";
 export { default as PreviewArea } from "./PreviewArea";

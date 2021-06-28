@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { FlowTree, FlowBlock } from ".";
 import { VIEW_TYPE } from "../../models/project";
@@ -8,7 +9,10 @@ const FlowModule = ({ route }) => {
   const dispatch = useDispatch();
 
   if (!route.type) route.type = VIEW_TYPE.TREEVIEW;
-  dispatch(changeFlowView(route.type));
+
+  useEffect(() => {
+    dispatch(changeFlowView(route.type));
+  }, [dispatch, route.type]);
 
   return (
     <div className="dndflow">

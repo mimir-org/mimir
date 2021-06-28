@@ -11,9 +11,11 @@ import {
 
 interface Props {
   category: LibCategory;
+  selectedElement: any;
+  setSelectedElement: any;
 }
 
-const LibraryCategoryComponent = ({ category }: Props) => {
+const LibraryCategoryComponent = ({ category, selectedElement, setSelectedElement }: Props) => {
   const [expanded, setExpanded] = useState(false);
 
   const onDragStart = (event, node) => {
@@ -22,6 +24,10 @@ const LibraryCategoryComponent = ({ category }: Props) => {
   };
 
   const expandIcon = expanded ? ExpandedIcon : ClosedIcon;
+
+  function setNewSelectedElement(id){
+    setSelectedElement(id);
+  }
 
   return (
     <>
@@ -33,6 +39,8 @@ const LibraryCategoryComponent = ({ category }: Props) => {
         category?.nodes.map((node) => {
           return (
             <LibraryElement
+              active={selectedElement === node.id}
+              onClick={()=>setNewSelectedElement(node.id)}
               onDragStart={(event) => onDragStart(event, JSON.stringify(node))}
               key={node.id}
               draggable

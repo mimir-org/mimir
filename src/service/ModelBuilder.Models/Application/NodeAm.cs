@@ -19,7 +19,6 @@ namespace Mb.Models.Application
         [Required]
         public string Label { get; set; }
 
-        [Required]
         public string Rds { get; set; }
 
         public string Contractor { get; set; }
@@ -44,9 +43,9 @@ namespace Mb.Models.Application
         [Required]
         public string MasterProjectId { get; set; }
 
-        public IList<ConnectorAm> Connectors { get; set; }
+        public ICollection<ConnectorAm> Connectors { get; set; }
 
-        public IList<AttributeAm> Attributes { get; set; }
+        public ICollection<AttributeAm> Attributes { get; set; }
 
         [Required]
         public Aspect Aspect { get; set; }

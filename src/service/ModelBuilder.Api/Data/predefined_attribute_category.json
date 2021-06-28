@@ -1,0 +1,260 @@
+[
+  {
+    "name": "Space",
+    "description": null,
+    "semanticReference": null,
+    "parentId": null
+  },
+  {
+    "name": "Facility",
+    "description": null,
+    "semanticReference": null,
+    "parentId": null
+  },
+  {
+    "name": "Foundation structure",
+    "description": null,
+    "semanticReference": null,
+    "parentId": null
+  },
+  {
+    "name": "Module",
+    "description": null,
+    "semanticReference": null,
+    "parentId": null
+  },
+  {
+    "name": "Deck",
+    "description": null,
+    "semanticReference": null,
+    "parentId": null
+  },
+  {
+    "name": "Area",
+    "description": null,
+    "semanticReference": null,
+    "parentId": null
+  },
+  {
+    "name": "Route",
+    "description": null,
+    "semanticReference": null,
+    "parentId": null
+  },
+  {
+    "name": "Enclosure",
+    "description": null,
+    "semanticReference": null,
+    "parentId": null
+  },
+  {
+    "name": "Point grid location",
+    "description": null,
+    "semanticReference": null,
+    "parentId": null
+  },
+  {
+    "name": "Object envelope",
+    "description": null,
+    "semanticReference": null,
+    "parentId": null
+  },
+  {
+    "name": "Terminal",
+    "description": null,
+    "semanticReference": null,
+    "parentId": null
+  },
+  {
+    "name": "Installation space",
+    "description": null,
+    "semanticReference": null,
+    "parentId": "4C2B3CD74ECF24ABB1EF9CBF7E66E7F8"
+  },
+  {
+    "name": "Range space",
+    "description": null,
+    "semanticReference": null,
+    "parentId": "4C2B3CD74ECF24ABB1EF9CBF7E66E7F8"
+  },
+  {
+    "name": "Platform facility",
+    "description": null,
+    "semanticReference": null,
+    "parentId": "8906667334A9D2D52A600DBA03749BBD"
+  },
+  {
+    "name": "FPSO facility",
+    "description": null,
+    "semanticReference": null,
+    "parentId": "8906667334A9D2D52A600DBA03749BBD"
+  },
+  {
+    "name": "Terminal facility",
+    "description": null,
+    "semanticReference": null,
+    "parentId": "8906667334A9D2D52A600DBA03749BBD"
+  },
+  {
+    "name": "Subsea facility",
+    "description": null,
+    "semanticReference": null,
+    "parentId": "8906667334A9D2D52A600DBA03749BBD"
+  },
+  {
+    "name": "Jacket foundation",
+    "description": null,
+    "semanticReference": null,
+    "parentId": "CFA19075E8C700FE7D7E79685FAB9A12"
+  },
+  {
+    "name": "Floater foundation",
+    "description": null,
+    "semanticReference": null,
+    "parentId": "CFA19075E8C700FE7D7E79685FAB9A12"
+  },
+  {
+    "name": "Rig foundation",
+    "description": null,
+    "semanticReference": null,
+    "parentId": "CFA19075E8C700FE7D7E79685FAB9A12"
+  },
+  {
+    "name": "GBS foundation",
+    "description": null,
+    "semanticReference": null,
+    "parentId": "CFA19075E8C700FE7D7E79685FAB9A12"
+  },
+  {
+    "name": "Facility module",
+    "description": null,
+    "semanticReference": null,
+    "parentId": "92EF0E055371628A1A922C002AFF7038"
+  },
+  {
+    "name": "Tower module",
+    "description": null,
+    "semanticReference": null,
+    "parentId": "92EF0E055371628A1A922C002AFF7038"
+  },
+  {
+    "name": "Boom module",
+    "description": null,
+    "semanticReference": null,
+    "parentId": "92EF0E055371628A1A922C002AFF7038"
+  },
+  {
+    "name": "Bridge module",
+    "description": null,
+    "semanticReference": null,
+    "parentId": "92EF0E055371628A1A922C002AFF7038"
+  },
+  {
+    "name": "Main deck",
+    "description": null,
+    "semanticReference": null,
+    "parentId": "4576D020E0F1D1D7705D7D3EBA6F86EC"
+  },
+  {
+    "name": "Mezzanine deck",
+    "description": null,
+    "semanticReference": null,
+    "parentId": "4576D020E0F1D1D7705D7D3EBA6F86EC"
+  },
+  {
+    "name": "Partial deck",
+    "description": null,
+    "semanticReference": null,
+    "parentId": "4576D020E0F1D1D7705D7D3EBA6F86EC"
+  },
+  {
+    "name": "Area",
+    "description": null,
+    "semanticReference": null,
+    "parentId": "CA54F0EA52EB49AE91CB7604B067FD15"
+  },
+  {
+    "name": "Sub area",
+    "description": null,
+    "semanticReference": null,
+    "parentId": "CA54F0EA52EB49AE91CB7604B067FD15"
+  },
+  {
+    "name": "Function area",
+    "description": null,
+    "semanticReference": null,
+    "parentId": "CA54F0EA52EB49AE91CB7604B067FD15"
+  },
+  {
+    "name": "Route",
+    "description": null,
+    "semanticReference": null,
+    "parentId": "19751B527D37C8517495CB8F4F98EF86"
+  },
+  {
+    "name": "Container enclosure",
+    "description": null,
+    "semanticReference": null,
+    "parentId": "9C78693534646783B5DA3AE5E1B1ED7B"
+  },
+  {
+    "name": "Cabinet enclosure",
+    "description": null,
+    "semanticReference": null,
+    "parentId": "9C78693534646783B5DA3AE5E1B1ED7B"
+  },
+  {
+    "name": "Box enclosure",
+    "description": null,
+    "semanticReference": null,
+    "parentId": "9C78693534646783B5DA3AE5E1B1ED7B"
+  },
+  {
+    "name": "Point platform grid",
+    "description": null,
+    "semanticReference": null,
+    "parentId": "E51CF802280222284AE4279CCE21AB12"
+  },
+  {
+    "name": "Point local grid",
+    "description": null,
+    "semanticReference": null,
+    "parentId": "E51CF802280222284AE4279CCE21AB12"
+  },
+  {
+    "name": "Point envelope",
+    "description": null,
+    "semanticReference": null,
+    "parentId": "73FE16C10AB5A49EE4B99B5BA62869AE"
+  },
+  {
+    "name": "Outline envelope",
+    "description": null,
+    "semanticReference": null,
+    "parentId": "73FE16C10AB5A49EE4B99B5BA62869AE"
+  },
+  {
+    "name": "Actual size envelope",
+    "description": null,
+    "semanticReference": null,
+    "parentId": "73FE16C10AB5A49EE4B99B5BA62869AE"
+  },
+  {
+    "name": "Pipe terminal",
+    "description": null,
+    "semanticReference": null,
+    "parentId": "6E3C653209A0AD5B3737F6F5BD3C4537"
+  },
+  {
+    "name": "Cable terminal",
+    "description": null,
+    "semanticReference": null,
+    "parentId": "6E3C653209A0AD5B3737F6F5BD3C4537"
+  },
+  {
+    "name": "Duct terminal",
+    "description": null,
+    "semanticReference": null,
+    "parentId": "6E3C653209A0AD5B3737F6F5BD3C4537"
+  }
+]

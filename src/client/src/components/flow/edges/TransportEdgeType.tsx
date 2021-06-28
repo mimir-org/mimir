@@ -1,3 +1,4 @@
+import "./TransportEdge.scss";
 import { Connector } from "../../../models";
 import {
   ArrowHeadType,

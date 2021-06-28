@@ -11,10 +11,11 @@ import { Project } from "../../models";
 import { GetTreeEdgeType } from "./helpers/tree";
 import { IsBlockView } from "./helpers/block";
 import { changeInspectorTab } from "../../redux/store/inspector/actions";
-import { SetDarkModeColor } from "./helpers/common";
+import { FindSelectedNode, SetDarkModeColor } from "./helpers/common";
 import {
   updatePosition,
   changeActiveNode,
+  changeActiveEdge,
 } from "../../redux/store/project/actions";
 import {
   GetTreeNodeTypes,
@@ -27,6 +28,7 @@ const FlowTree = () => {
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>();
+  const darkMode = red.store.getState().darkMode.active as boolean;
 
   const project = useSelector<RootState>(
     (state) => state.projectState.project
@@ -63,7 +65,7 @@ const FlowTree = () => {
   };
 
   const OnDrop = (_event) => {
-    const selectedNode = project?.nodes?.find((x) => x.isSelected);
+    const selectedNode = FindSelectedNode();
 
     return useOnDrop(
       _event,
@@ -78,28 +80,38 @@ const FlowTree = () => {
   };
 
   const OnElementClick = (_event, element) => {
+    dispatch(changeActiveEdge(null, false));
     dispatch(changeActiveNode(element.id, true));
     dispatch(changeInspectorTab(0));
   };
 
   const OnClick = (e) => {
+    // Handle select Edge
+    if (e.target.classList.contains("react-flow__edge-path")) {
+      const edge = project.edges.find((x) => x.id === e.target.id);
+      dispatch(changeActiveEdge(edge.id, true));
+      dispatch(changeActiveNode(null, false));
+      dispatch(changeInspectorTab(0));
+      return;
+    }
+
     if (e.target.classList.contains("react-flow__pane")) {
-      const selectedNode = project?.nodes?.find((x) => x.isSelected);
+      const selectedNode = FindSelectedNode();
       if (selectedNode) {
+        dispatch(changeActiveEdge(null, false));
         dispatch(changeActiveNode(selectedNode.id, false));
+        dispatch(changeInspectorTab(0));
+        return;
       }
     }
+    dispatch(changeActiveEdge(null, false));
   };
-
-  useEffect(() => {
-    const darkMode = red.store.getState().darkMode.active as boolean;
-    SetDarkModeColor(darkMode);
-  }, []);
 
   // Force rerender
   useEffect(() => {
+    SetDarkModeColor(darkMode);
     OnLoad(reactFlowInstance);
-  }, [OnLoad, reactFlowInstance]);
+  }, [OnLoad, reactFlowInstance, darkMode]);
 
   return (
     <>

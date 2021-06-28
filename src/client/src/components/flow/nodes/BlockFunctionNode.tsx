@@ -5,13 +5,13 @@ import { RootState } from "../../../redux/store";
 import { Connector, Node } from "../../../models";
 import { Size } from "../../../compLibrary";
 import { TerminalsIcon, ConnectIcon } from "../../../assets/icons/blockView";
-import { setActiveConnector } from "../../../redux/store/project/actions";
+import { changeActiveConnector } from "../../../redux/store/project/actions";
 import { TerminalsComponent, ConnectViewComponent } from "../block";
 import { HandleComponent } from "../block";
 import { FilterConnectors } from "../helpers/block";
-import { FindNodeById } from "../helpers/block/connectView";
 import {
   GetConnectChildren,
+  IsMainConnectNode,
   SetMainConnectNodeSize,
 } from "../helpers/block/connectView";
 import {
@@ -24,7 +24,6 @@ import {
   addMainNode,
   removeConnectNode,
   removeMainNode,
-  removeMainNodes,
 } from "../../../redux/store/connectView/actions";
 
 const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
@@ -44,13 +43,11 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     (state) => state.connectView?.mainNodes
   ) as Node[];
 
-  const mainConnectNode = mainConnectNodes?.find(
+  const mainConnectNode = mainConnectNodes.find(
     (node) => node?.id === data.id
   ) as Node;
 
-  const connectNodes = useSelector<RootState>(
-    (state) => state.connectView.connectNodes
-  ) as Node[];
+  const connectNodes = mainConnectNode?.connectNodes as Node[];
 
   const onTerminalMenuClick = () => {
     showTerminalMenu(!terminalMenu);
@@ -73,52 +70,37 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const onConnectorClick = (conn: Connector) => {
     showTerminalMenu(false);
     showConnectMenu(false);
-    dispatch(setActiveConnector(data, conn.id, true, 0));
+    dispatch(changeActiveConnector(data, conn.id, true, 0));
   };
 
   const onConnectViewClick = (node: Node) => {
     if (!isChecked(node)) {
       data.width = Size.ConnectView_Width;
       data.length = Size.ConnectView_Length;
-      dispatch(addMainNode(data));
-      dispatch(addConnectNode(node));
+      if (!IsMainConnectNode(data.id)) dispatch(addMainNode(data));
+      dispatch(addConnectNode(data, node));
     } else {
-      data.width = Size.Node_Width;
-      data.length = Size.Node_Length;
-
-      connectNodes.length === 1 && showConnectMenu(false);
-      dispatch(removeMainNode(data));
-      dispatch(removeConnectNode(node));
+      if (connectNodes.length === 1) {
+        showConnectMenu(false);
+        dispatch(removeMainNode(data));
+      }
+      dispatch(removeConnectNode(data, node));
     }
   };
 
   const isChecked = (node: Node): boolean => {
     let result = false;
     connectNodes?.forEach((element) => {
-      if (element.id === node.id) result = true;
+      if (element?.id === node?.id) result = true;
     });
     return result;
   };
 
   useEffect(() => {
-    if (connectNodes.length < 1) dispatch(removeMainNodes());
-  }, [connectNodes.length, dispatch]);
-
-  useEffect(() => {
     SetMainConnectNodeSize(mainConnectNode?.id, data.id, connectNodes);
   }, [mainConnectNode, data, connectNodes]);
 
-  useEffect(() => {
-    const twinNode = FindNodeById(mainConnectNode?.id);
-    // TODO: Check this render
-    const clicked = () => {
-      if (twinNode) twinNode.style.zIndex = "1";
-    };
-    if (mainConnectNode) {
-      window.addEventListener("click", clicked);
-    } else window.removeEventListener("click", clicked);
-  });
-
+  // Force edges' z-index in ConnectView
   useEffect(() => {
     if (mainConnectNode) {
       const allEdges = document.querySelector(

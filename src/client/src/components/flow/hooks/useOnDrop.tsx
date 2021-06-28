@@ -59,10 +59,14 @@ const useOnDrop = (
   node.connectors?.forEach((c) => {
     c.id = CreateId();
     c.nodeId = node.id;
+    c.attributes?.forEach((a) => {
+      a.id = CreateId();
+    });
   });
 
   node.attributes?.forEach((a) => {
     a.nodeId = node.id;
+    a.id = CreateId();
   });
 
   node.level = 0;

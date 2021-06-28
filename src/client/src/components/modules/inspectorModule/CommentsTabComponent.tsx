@@ -1,16 +1,13 @@
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-    display: flex;
+  display: flex;
 `;
 
-const CommentsTabComponent = ( { node } ) => {
-
+const CommentsTabComponent = ({ node }) => {
   return (
     <>
-        <Wrapper>
-            
-        </Wrapper>
+      <Wrapper>Not yet implemented.</Wrapper>
     </>
   );
 };

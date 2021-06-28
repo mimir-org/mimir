@@ -1,64 +1,98 @@
-import styled from "styled-components";
-import { Attribute } from "../../../models";
 import { ActiveTerminalTypeList, AttributesContainer } from "./helpers";
-// import { AttributesList } from "../typeEditorModule"
-// import { Input, InputBox, Select } from "../../../compLibrary";
-// import { TabColumn } from "../../../compLibrary/box/inspector";
-// import {ConnectorAttributesList} from "./helpers"
+import { Attribute } from "../../../models";
+import { IsTransportTerminal } from "../../flow/helpers/common";
+import styled from "styled-components";
+import TextResources from "../../../assets/textResources/textResources";
 
+// Migth be used later: 
+// import { ConnectorAttributesList } from "./helpers";
+// import { changeConnectorAttributeValue } from "../../../redux/store/project/actions";
 interface ConnectorAttribute {
   id: string;
   name: string;
   attributes: Attribute[];
 }
-interface Props {
-  connectorAttrs: ConnectorAttribute[];
-  handleChange: any;
-  visibleConnectors: any;
-  allConnectors: any;
-}
 
-// const AttributesWrapper = styled.div`
-//   //border: red solid 1px;
-//   display: flex;
-//   flex-direction: column;
-//   margin: 10px;
-//   height: 160px;
-//   width: 250px;
-// `;
-
+/*
+Might be used later:
+const AttributesWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    height: 160px;
+    width: 250px;
+`;*/
+const TerminalsWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 550px;
+`;
 const ListWrapper = styled.div`
   display: flex;
 `;
 
-const TerminalsTabComponent = ({
-  allConnectors,
-  connectorAttrs,
-  handleChange,
-  visibleConnectors,
-}: Props): any => {
+const TerminalsTabComponent = ({ node }): any => {
+  /*
+  Might be used later:
+  const handleOnConnectorChange = (
+    id: string,
+    value: string,
+    unit: any,
+    connectorId: string
+  ) => {
+    dispatch(
+      changeConnectorAttributeValue(id, value, unit, node.id, connectorId)
+    );
+  };
+  */
+
+  let activeConnectors = [];
+  let connectorAttributes: ConnectorAttribute[] = [];
+
+  if (node) {
+    const tempAttributes: ConnectorAttribute[] = [];
+
+    node.connectors?.forEach((connector) => {
+      if (IsTransportTerminal(connector)) {
+        const data = {
+          id: connector.id,
+          name: connector.name + " " + connector.type,
+          attributes: connector.attributes,
+        } as ConnectorAttribute;
+        tempAttributes.push(data);
+      }
+    });
+    activeConnectors = node.connectors?.filter((con) => con.visible);
+    connectorAttributes = tempAttributes;
+  }
+
   return (
     <>
       <ListWrapper>
-        <ActiveTerminalTypeList
-          terminals={allConnectors}
-          title="All available Terminal Types"
-          onElementClick={() => {}}
+        <TerminalsWrapper>
+          <ActiveTerminalTypeList
+            terminals={node?.connectors}
+            title={TextResources.Inspector_Relations_All_Terminal_Types}
+            onElementClick={() => {}}
+          />
+          <ActiveTerminalTypeList
+            terminals={activeConnectors}
+            title={TextResources.Inspector_Relations_Active_Terminal_Types}
+            onElementClick={() => {}}
+          />
+        </TerminalsWrapper>
+        <AttributesContainer
+          attributes={connectorAttributes}
+          title={TextResources.Inspector_Relations_Connector_Attributes}
         />
-        <ActiveTerminalTypeList
-          terminals={visibleConnectors}
-          title="Active Terminal Types"
-          onElementClick={() => {}}
-        />
-        <AttributesContainer attributes={connectorAttrs} />
         {
           //TODO show attributes and other fields from Arjun's design on Figma
           /* <AttributesWrapper>
-      <ConnectorAttributesList
-      connectorAttrs={connectorAttrs}
-      handleChange={handleChange}
-      ></ConnectorAttributesList>
-    </AttributesWrapper> */
+        <ConnectorAttributesList
+        connectorAttrs={connectorAttributes}
+        handleChange={handleOnConnectorChange}
+        ></ConnectorAttributesList>
+      </AttributesWrapper> */
         }
       </ListWrapper>
     </>

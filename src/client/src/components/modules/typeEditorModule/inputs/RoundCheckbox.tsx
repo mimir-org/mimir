@@ -1,12 +1,52 @@
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../../redux/store";
+import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
+import {
+  changeRDS,
+  changeRDSName,
+} from "../../../../redux/store/typeEditor/actions";
 import "./roundcheckbox.scss";
+interface Props {
+  id: string;
+  name?: string;
+  label: string;
+}
 
-export const RoundCheckbox = () => {
-  const handleCheckboxChange = () => {};
+export const RoundCheckbox = ({ id, name, label }: Props) => {
+  const dispatch = useDispatch();
+
+  const state = useSelector<RootState>(
+    (state) => state.typeEditor
+  ) as TypeEditorState;
+
+  let isSelected = () => {
+    if (label === "rds") {
+      return state.createLibraryType.rdsId === id;
+    } else if (label === "terminal") {
+      return state.terminalCategory === id;
+    }
+  };
+
+  const handleCheckboxChange = () => {
+    if (id !== "" && id) {
+      if (label === "rds") {
+        dispatch(changeRDS(id));
+        dispatch(changeRDSName(name));
+      }
+    }
+  };
+
   return (
     <>
       <label className={"roundcheckbox"}>
-        <input type="checkbox" onChange={handleCheckboxChange} />
+        <input
+          type="checkbox"
+          checked={isSelected()}
+          id={id}
+          onChange={handleCheckboxChange}
+        />
         <span className="checked"></span>
+        <label htmlFor={id}></label>
       </label>
     </>
   );

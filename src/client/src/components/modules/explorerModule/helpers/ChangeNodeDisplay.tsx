@@ -12,7 +12,7 @@ export const ChangeNodeDisplay = (node: Node) => {
   ) as Project;
 
   let isParent = false;
-  let edge = project.edges?.find((x) => x.fromNode === node) as Edge;
+  let edge = project.edges?.find((x) => x.fromNodeId === node.id) as Edge;
   if (edge) isParent = true;
 
   return useCallback(() => {

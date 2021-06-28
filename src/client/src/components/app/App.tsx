@@ -9,6 +9,7 @@ import { ProjectState } from "../../redux/store/project/types";
 import { LibraryState } from "../../redux/store/library/types";
 import { UserState } from "../../redux/store/user/types";
 import { CommonState } from "../../redux/store/common/types";
+import { TypeEditorState } from "../../redux/store/typeEditor/types";
 
 const App = () => {
   const projectState = useSelector<RootState>(
@@ -27,12 +28,17 @@ const App = () => {
     (state) => state.commonState
   ) as CommonState;
 
+  const typeEditorState = useSelector<RootState>(
+    (state) => state.typeEditor
+  ) as TypeEditorState;
+
   const isFetching = () => {
     if (
       projectState.fetching ||
       libraryState.fetching ||
       userState.fetching ||
-      commonState.fetching
+      commonState.fetching ||
+      typeEditorState.fetching
     )
       return "loading";
     return "";

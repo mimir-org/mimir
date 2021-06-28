@@ -11,7 +11,7 @@ const CalculateYPosition = (
   yPos += marginTop;
 
   // TODO: fix scaling
-  connectNodes.forEach((elem, i) => {
+  connectNodes?.forEach((elem, i) => {
     if (i <= 1 && node.id === elem.id) {
       return yPos;
     }

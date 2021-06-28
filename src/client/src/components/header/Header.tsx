@@ -1,11 +1,11 @@
-import red, { RootState } from "../../redux/store";
+import { RootState } from "../../redux/store";
 import { useHistory } from "react-router-dom";
 import { TextResources } from "../../assets/textResources";
 import { useDispatch, useSelector } from "react-redux";
 import { VIEW_TYPE } from "../../models/project";
 import { changeFlowView } from "../../redux/store/flow/actions";
 import { setDarkMode } from "../../redux/store/darkMode/actions";
-import { SetDarkModeColor } from "../flow/helpers/common";
+import { FindSelectedNode, SetDarkModeColor } from "../flow/helpers/common";
 import { setSplitView, setNode } from "../../redux/store/splitView/actions";
 import { IsBlockView } from "../flow/helpers/block";
 import {
@@ -25,9 +25,7 @@ import {
 const Header = () => {
   const dispatch = useDispatch();
   const { push } = useHistory();
-
-  const project = red.store.getState().projectState.project;
-  const selectedNode = project?.nodes?.find((x) => x.isSelected);
+  const selectedNode = FindSelectedNode();
   const darkMode = useSelector<RootState>(
     (state) => state.darkMode.active
   ) as boolean;

@@ -1,9 +1,14 @@
-import { GetNodes, IsFunction } from "../../../flow/helpers/common";
+import { FindSelectedNode, IsFunction } from "../../../flow/helpers/common";
 import { useDispatch, useSelector } from "react-redux";
 import { changeActiveNode } from "../../../../redux/store/project/actions";
 import { Node } from "../../../../models";
 import { RootState } from "../../../../redux/store";
 import { setNode } from "../../../../redux/store/splitView/actions";
+import { IsConnectView } from "../../../flow/helpers/block/connectView";
+import {
+  removeConnectNodes,
+  removeMainNodes,
+} from "../../../../redux/store/connectView/actions";
 
 interface Props {
   node: Node;
@@ -12,8 +17,6 @@ interface Props {
 
 export const CheckboxBlock = ({ node, inputLabel }: Props) => {
   const dispatch = useDispatch();
-  const nodes = GetNodes();
-
   const splitView = useSelector<RootState>(
     (state) => state.splitView.visible
   ) as boolean;
@@ -22,13 +25,17 @@ export const CheckboxBlock = ({ node, inputLabel }: Props) => {
     (state) => state.splitView.node
   ) as Node;
 
-  const selectedNode = nodes.find((x) => x.isSelected);
+  const selectedNode = FindSelectedNode();
 
   const isChecked = splitView
     ? node === selectedNode || node === splitViewNode
     : node === selectedNode;
 
   const handleChange = () => {
+    if (IsConnectView()) {
+      dispatch(removeMainNodes());
+      dispatch(removeConnectNodes());
+    }
     if (splitView) {
       IsFunction(node)
         ? dispatch(changeActiveNode(node?.id, true))

@@ -1,22 +1,22 @@
-import { HttpResponse, BadRequestData } from '.';
-import { BadRequestDataItem } from './types';
-
+import { HttpResponse, BadRequestData } from ".";
+import { BadRequestDataItem } from "./types";
 
 const GetBadResponseData = (response: HttpResponse<any>): BadRequestData => {
-    if (response.status !== 400)
-        return null;
+  if (response.status !== 400) return null;
 
-    var data = {
-        title: response.data.title,
-        items: []
-    } as BadRequestData;
+  const title = response?.data?.title ?? response?.statusText ?? "";
 
-    for (const [key, value] of Object.entries(response.data)) {
-        const item = { key, value } as BadRequestDataItem
-        data.items.push(item);
-    }
+  var data = {
+    title: title,
+    items: [],
+  } as BadRequestData;
 
-    return data;
-}
+  for (const [key, value] of Object.entries(response.data)) {
+    const item = { key, value } as BadRequestDataItem;
+    data.items.push(item);
+  }
+
+  return data;
+};
 
 export default GetBadResponseData;

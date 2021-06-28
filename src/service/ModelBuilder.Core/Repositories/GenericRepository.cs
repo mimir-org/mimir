@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -88,6 +89,17 @@ namespace Mb.Core.Repositories
         public void Attach(TEntity entity, EntityState state)
         {
             Context.Entry(entity).State = state;
+        }
+
+        public void Attach(ICollection<TEntity> entities, EntityState state)
+        {
+            if(entities == null || !entities.Any())
+                return;
+
+            foreach (var entity in entities)
+            {
+                Attach(entity, state);
+            }
         }
 
         public async Task<int> SaveAsync()

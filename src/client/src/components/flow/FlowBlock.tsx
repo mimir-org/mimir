@@ -8,9 +8,11 @@ import { OpenProjectMenu } from "../project/openProject";
 import { Color } from "../../compLibrary";
 import { BackgroundBox } from "../../compLibrary/blockView";
 import { changeInspectorTab } from "../../redux/store/inspector/actions";
-import { setSplitView, setNode } from "../../redux/store/splitView/actions";
 import { Project, Node } from "../../models";
-import { changeActiveBlockNode } from "../../redux/store/project/actions";
+import {
+  changeActiveBlockNode,
+  changeActiveEdge,
+} from "../../redux/store/project/actions";
 import {
   useOnConnect,
   useOnDrop,
@@ -18,10 +20,7 @@ import {
   useOnNodeDragStop,
 } from "./hooks";
 import {
-  removeConnectNodes,
-  removeMainNodes,
-} from "../../redux/store/connectView/actions";
-import {
+  FindSelectedNode,
   GetBlockNodeTypes,
   IsFunction,
   IsLocation,
@@ -49,18 +48,12 @@ const FlowBlock = () => {
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>();
-
-  // Flush ConnectView
-  useEffect(() => {
-    dispatch(removeMainNodes());
-    dispatch(removeConnectNodes());
-  }, [dispatch]);
+  const darkMode = red.store.getState().darkMode.active as boolean;
+  const node = FindSelectedNode();
 
   const project = useSelector<RootState>(
     (state) => state.projectState?.project
   ) as Project;
-
-  const node = project?.nodes?.find((node) => node.isSelected);
 
   const splitView = useSelector<RootState>(
     (state) => state.splitView.visible
@@ -74,15 +67,6 @@ const FlowBlock = () => {
     (state) => state.connectView.mainNodes
   ) as Node[];
 
-  const connectViewNodes = useSelector<RootState>(
-    (state) => state.connectView.connectNodes
-  ) as Node[];
-
-  const selectedBlockNodeId = useSelector<RootState>(
-    (state) =>
-      state.projectState.project?.nodes.find((x) => x.isBlockSelected)?.id
-  ) as string;
-
   const showBackground = IsLocation(splitViewNode) || IsLocation(node);
 
   const OnLoad = useCallback(
@@ -91,22 +75,14 @@ const FlowBlock = () => {
         CreateBlockElements(
           project,
           node,
-          connectViewNodes,
-          selectedBlockNodeId,
           splitView,
-          splitViewNode
+          splitViewNode,
+          mainConnectNodes
         )
       );
       return setReactFlowInstance(_reactFlowInstance);
     },
-    [
-      project,
-      node,
-      connectViewNodes,
-      selectedBlockNodeId,
-      splitView,
-      splitViewNode,
-    ]
+    [project, node, splitView, splitViewNode, mainConnectNodes]
   );
 
   const OnElementsRemove = (elementsToRemove) => {
@@ -138,7 +114,7 @@ const FlowBlock = () => {
   };
 
   const OnDrop = (_event) => {
-    const selectedNode = project.nodes.find((x) => x.isSelected);
+    const selectedNode = FindSelectedNode();
 
     return useOnDrop(
       _event,
@@ -153,27 +129,40 @@ const FlowBlock = () => {
   };
 
   const OnElementClick = (_event, element) => {
-    if (mainConnectNodes.length === 0) {
-      dispatch(changeActiveBlockNode(element.id));
+    dispatch(changeActiveEdge(null, false));
+    dispatch(changeActiveBlockNode(element.id));
+    dispatch(changeInspectorTab(0));
+  };
+
+  const OnClick = (e) => {
+    // Handle select Edge
+    if (e.target.classList.contains("react-flow__edge-path")) {
+      const edge = project.edges.find((x) => x.id === e.target.id);
+      dispatch(changeActiveEdge(edge.id, true));
+      dispatch(changeActiveBlockNode(null));
       dispatch(changeInspectorTab(0));
+      return;
     }
+
+    if (e.target.classList.contains("react-flow__pane")) {
+      const selectedNode = FindSelectedNode();
+      if (selectedNode) {
+        dispatch(changeActiveEdge(null, false));
+        dispatch(changeActiveBlockNode(selectedNode.id));
+        dispatch(changeInspectorTab(0));
+        return;
+      }
+    }
+    dispatch(changeActiveEdge(null, false));
   };
 
   // Force rerender
   useEffect(() => {
-    OnLoad(reactFlowInstance);
-  }, [OnLoad, reactFlowInstance]);
-
-  // Flush SplitView
-  useEffect(() => {
-    dispatch(setSplitView(false));
-    dispatch(setNode(null));
-  }, [dispatch]);
-
-  useEffect(() => {
-    const darkMode = red.store.getState().darkMode.active as boolean;
+    // dispatch(setSplitView(false));
+    // dispatch(setNode(null));
     SetDarkModeColor(darkMode);
-  }, []);
+    OnLoad(reactFlowInstance);
+  }, [OnLoad, reactFlowInstance, dispatch, darkMode]);
 
   const splitViewPosition = () => {
     if (IsLocation(splitViewNode) && IsFunction(node)) {
@@ -199,6 +188,7 @@ const FlowBlock = () => {
               onElementClick={OnElementClick}
               zoomOnScroll={false}
               paneMoveable={false}
+              onClick={(e) => OnClick(e)}
             >
               <FullScreenBox />
               <BackgroundBox

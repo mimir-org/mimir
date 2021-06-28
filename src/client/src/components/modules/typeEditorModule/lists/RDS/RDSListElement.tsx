@@ -3,13 +3,14 @@ import { ListElem } from "../../../../../compLibrary";
 import { HelpIcon } from "../../../../../assets/icons/common";
 
 interface Props {
+  id: string;
   name: string;
 }
 
-export const RDSListElement = ({ name }: Props) => {
+export const RDSListElement = ({ id, name }: Props) => {
   return (
     <ListElem>
-      <RoundCheckbox />
+      <RoundCheckbox id={id} name={name} label="rds" />
       <p>{name}</p>
       <img src={HelpIcon} alt="help" />
     </ListElem>

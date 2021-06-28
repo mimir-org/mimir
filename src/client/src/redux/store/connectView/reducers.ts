@@ -4,13 +4,11 @@ import {
   REMOVE_MAIN_CONNECT_NODE,
   ADD_CONNECT_NODE,
   REMOVE_CONNECT_NODE,
-  REMOVE_ALL_CONNECT_NODES,
   REMOVE_ALL_MAIN_NODES,
 } from "./types";
 
 const initialState = {
   mainNodes: [] as Node[],
-  connectNodes: [] as Node[],
 };
 
 export function connectViewReducer(state = initialState, action) {
@@ -20,7 +18,7 @@ export function connectViewReducer(state = initialState, action) {
     case ADD_MAIN_CONNECT_NODE:
       return {
         ...state,
-        mainNodes: [...state?.mainNodes, node],
+        mainNodes: [...state.mainNodes, node],
       };
 
     case REMOVE_MAIN_CONNECT_NODE:
@@ -30,15 +28,39 @@ export function connectViewReducer(state = initialState, action) {
       };
 
     case ADD_CONNECT_NODE:
+      const mainNodeId = action.payload.mainNode.id;
+      const child = action.payload.child;
+
+      const mainNode = {
+        ...state.mainNodes.find((node) => node.id === mainNodeId),
+      } as Node;
+
+      mainNode.connectNodes = (mainNode.connectNodes ?? []).concat(child);
+      const filterMainNodes = state.mainNodes.filter(
+        (x) => x?.id !== mainNodeId
+      );
+
       return {
-        ...state,
-        connectNodes: [...state.connectNodes, node],
+        mainNodes: filterMainNodes.concat(mainNode),
       };
 
     case REMOVE_CONNECT_NODE:
+      const mainConnectNodeId = action.payload.mainNode.id;
+      const connectChild = action.payload.child;
+
+      const mainConnectNode = {
+        ...state.mainNodes.find((node) => node.id === mainConnectNodeId),
+      } as Node;
+
+      mainConnectNode.connectNodes = mainConnectNode.connectNodes?.filter(
+        (node) => node.id !== connectChild.id
+      );
+      const filterMainConnectNodes = state.mainNodes.filter(
+        (x) => x?.id !== mainConnectNodeId
+      );
+
       return {
-        ...state,
-        connectNodes: state.connectNodes.filter((x) => x.id !== node.id),
+        mainNodes: filterMainConnectNodes.concat(mainConnectNode),
       };
 
     case REMOVE_ALL_MAIN_NODES:
@@ -47,11 +69,11 @@ export function connectViewReducer(state = initialState, action) {
         mainNodes: [],
       };
 
-    case REMOVE_ALL_CONNECT_NODES:
-      return {
-        ...state,
-        connectNodes: [],
-      };
+    // case REMOVE_ALL_CONNECT_NODES:
+    //   return {
+    //     ...state,
+    //     connectNodes: [],
+    //   };
 
     default:
       return state;

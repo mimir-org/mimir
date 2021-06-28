@@ -80,6 +80,7 @@ export interface CreateLibraryType {
   objectType: ObjectType;
   semanticReference: string;
   rdsId: string;
+  rdsName: string;
   terminalTypes: TerminalTypeItem[];
   attributeTypes: string[];
   terminalTypeId: string;
@@ -87,5 +88,20 @@ export interface CreateLibraryType {
   code: string;
   rdsCategoryId: string;
   category: EnumBase;
-  semanticReferance: string;
+}
+export interface UpdateLibraryType {
+  name: string;
+  status: Status;
+  aspect: Aspect;
+  objectType: ObjectType;
+  semanticReference: string;
+  rdsId: string;
+  rdsName: string;
+  terminalTypes: TerminalTypeItem[];
+  attributeTypes: string[];
+  terminalTypeId: string;
+  id: number;
+  code: string;
+  rdsCategoryId: string;
+  category: EnumBase;
 }

@@ -10,8 +10,14 @@ const GetText = (type: string) => {
       ? TextResources.Account_Save_Label
       : type === "Logout"
       ? TextResources.Account_Logout
+      : type === "SaveLibrary"
+      ? TextResources.Account_Save_Label_Library_File
       : type === "SaveFile"
       ? TextResources.Account_Save_Label_File
+      : type === "ImportProject"
+      ? TextResources.Account_Import_Label_File
+      : type === "ImportLibrary"
+      ? TextResources.Account_Import_Label_Library_File
       : null;
 
   return text;

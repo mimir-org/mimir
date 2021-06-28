@@ -23,5 +23,24 @@ namespace Mb.Core.Repositories
         {
             return _modelBuilderConfiguration.Domain;
         }
+
+        public bool HasValidId(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                return false;
+
+            var isValid = Guid.TryParse(id, out _);
+            if (isValid)
+                return false;
+
+            var checkId = id.Split('_', StringSplitOptions.RemoveEmptyEntries);
+
+            return checkId.Length == 2 && Guid.TryParse(checkId[1], out _);
+        }
+
+        public string CreateOrUseId(string id)
+        {
+            return HasValidId(id) ? id : CreateUniqueId();
+        }
     }
 }

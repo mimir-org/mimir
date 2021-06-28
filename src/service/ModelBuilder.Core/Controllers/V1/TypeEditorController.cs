@@ -144,6 +144,27 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
+        /// Get predefined attributes
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("predefined-attributes")]
+        [ProducesResponseType(typeof(ICollection<PredefinedAttributeAm>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public IActionResult GetPredefinedAttributes()
+        {
+            try
+            {
+                var data = _typeEditorService.GetPredefinedAttributes().ToList();
+                return Ok(data);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
         /// Get attribute types
         /// </summary>
         /// <param name="aspect"></param>
@@ -288,7 +309,8 @@ namespace Mb.Core.Controllers.V1
             }
             catch (ModelBuilderDuplicateException e)
             {
-                return BadRequest(e.Message);
+                ModelState.AddModelError("Duplicate", e.Message);
+                return BadRequest(ModelState);
             }
             catch (Exception e)
             {

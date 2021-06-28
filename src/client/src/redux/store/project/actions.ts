@@ -21,7 +21,8 @@ import {
   CHANGE_EDGE_VISIBILITY,
   CHANGE_ACTIVE_BLOCKNODE,
   DELETE_PROJECT_ERROR,
-  SET_ACTIVE_CONNECTOR,
+  CHANGE_ACTIVE_CONNECTOR,
+  CHANGE_ACTIVE_EDGE,
 } from "./types";
 
 export function save(project: Project): ProjectActionTypes {
@@ -142,6 +143,13 @@ export function changeActiveBlockNode(nodeId: string) {
   };
 }
 
+export function changeActiveEdge(edgeId: string, isActive: boolean) {
+  return {
+    type: CHANGE_ACTIVE_EDGE,
+    payload: { edgeId, isActive },
+  };
+}
+
 export function changeSelectedProject(projectId: string) {
   return {
     type: CHANGE_SELECTED_PROJECT,
@@ -216,14 +224,14 @@ export function deleteProjectError(key: string) {
   };
 }
 
-export function setActiveConnector(
+export function changeActiveConnector(
   node: Node,
   connectorId: string,
   visible: boolean,
   order: number
 ) {
   return {
-    type: SET_ACTIVE_CONNECTOR,
+    type: CHANGE_ACTIVE_CONNECTOR,
     payload: {
       node,
       connectorId,

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { useHistory } from "react-router-dom";
 import { MODULE_TYPE } from "../../../models/project";
-import { Aspect } from "../../../models/";
+import { Aspect, ObjectType } from "../../../models/";
 import { TextResources } from "../../../assets/textResources";
 import { CloseIcon } from "../../../assets/icons/common";
 import { TypeEditorState } from "../../../redux/store/typeEditor/types";
@@ -22,7 +22,6 @@ import {
   TerminalsList,
   AttributesList,
   TypePreview,
-  TypeEditorInspector,
 } from ".";
 import {
   TypeEditorWrapper,
@@ -87,10 +86,7 @@ export const TypeEditorComponent = () => {
     const darkMode = red.store.getState().darkMode.active as boolean;
     SetDarkModeColor(darkMode);
     dispatch(getInitialData());
-    // dispatch(getRDS(state.createLibraryType.aspect));
     dispatch(changeAllModulesVisibility(false, true));
-    // dispatch(getTerminals());
-    // dispatch(getAttributes(state.aspect));
   }, [
     dispatch,
     state.createLibraryType.aspect,
@@ -98,6 +94,28 @@ export const TypeEditorComponent = () => {
     state.createLibraryType.status,
   ]);
 
+  //The intention for the code below is to fill out values in the input fields when editing an existing type.
+  // (its not done)
+  useEffect(() => {
+    if (state.mode === "edit") {
+      let typeToEdit = state.createLibraryType;
+
+      typeToEdit.name = ""; //string
+      typeToEdit.status = null; //Status;
+      typeToEdit.aspect = null; //Aspect;
+      typeToEdit.objectType = null; //ObjectType;
+      typeToEdit.semanticReference = ""; //string;
+      typeToEdit.rdsId = ""; //string;
+      typeToEdit.rdsName = ""; //string;
+      typeToEdit.terminalTypes = []; //TerminalTypeItem[];
+      typeToEdit.attributeTypes = [""]; //string[];
+      typeToEdit.terminalTypeId = ""; //string;
+      typeToEdit.id = 0; //number;
+      typeToEdit.code = ""; //string;
+      typeToEdit.rdsCategoryId = ""; // string;
+      typeToEdit.category = null; //EnumBase;
+    }
+  }, [state.mode, state.createLibraryType]);
   return (
     <TypeEditorWrapper>
       <TypeEditorContent>
@@ -141,11 +159,14 @@ export const TypeEditorComponent = () => {
         </TypeInfo>
         <ChooseProperties>
           <RDSList />
-          <TerminalsList />
-          <AttributesList />
+          <TerminalsList aspect={state.createLibraryType.aspect} />
+          {state.createLibraryType.objectType ===
+          ObjectType.Interface ? null : (
+            <AttributesList />
+          )}
           <TypePreview />
         </ChooseProperties>
-        <TypeEditorInspector />
+        {/* <TypeEditorInspector /> */}
       </TypeEditorContent>
     </TypeEditorWrapper>
   );

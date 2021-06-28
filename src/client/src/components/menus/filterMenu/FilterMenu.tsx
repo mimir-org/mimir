@@ -8,7 +8,6 @@ import {
   MenuBox,
   MenuColumn,
   MenuMainHeader,
-  MenuSubHeader,
 } from "../../../compLibrary/box/menus";
 
 const FilterModule = () => {
@@ -35,8 +34,12 @@ const FilterModule = () => {
       {showFilter && (
         <MenuBox right>
           <MenuColumn>
-            <MenuSubHeader>{TextResources.Filter_Other}</MenuSubHeader>
             <FilterContent type={RelationType.PartOf} index={0} />
+            <FilterContent type={RelationType.HasLocation} index={1} />
+          </MenuColumn>
+          <MenuColumn>
+            <FilterContent type={null} index={2} />
+            <FilterContent type={"Hide all"} index={3} />
           </MenuColumn>
         </MenuBox>
       )}

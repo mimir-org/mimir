@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
+using Newtonsoft.Json;
 
 namespace Mb.Models.Data
 {
@@ -93,10 +94,16 @@ namespace Mb.Models.Data
         public int Height { get; set; }
         
         public virtual ICollection<Connector> Connectors { get; set; }
+
         public virtual ICollection<Attribute> Attributes { get; set; }
+        
+        [JsonIgnore]
         public virtual ICollection<Project> Projects { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<Edge> FromEdges { get; set; }
+
+        [JsonIgnore]
         public virtual ICollection<Edge> ToEdges { get; set; }
     }
 }

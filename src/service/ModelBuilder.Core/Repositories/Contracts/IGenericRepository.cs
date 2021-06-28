@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -21,6 +22,7 @@ namespace Mb.Core.Repositories.Contracts
         Task Delete(string id);
         void Detach(TEntity entity);
         void Attach(TEntity entity, EntityState state);
+        void Attach(ICollection<TEntity> entities, EntityState state);
         Task<int> SaveAsync();
     }
 }

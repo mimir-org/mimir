@@ -1,6 +1,6 @@
 import moment from "moment/moment.js";
+import { TextResources } from "../../../assets/textResources";
 import { useDispatch } from "react-redux";
-import { changeNodeValue } from "../../../redux/store/project/actions";
 import { Contractor } from "../../../redux/store/common/types";
 import { TabColumn } from "../../../compLibrary/box/inspector";
 import { Input, Select, Textarea } from "../../../compLibrary";
@@ -8,6 +8,12 @@ import { Node, Project } from "../../../models";
 import { GetRdsId, GetReferenceDesignation } from "../../../assets/helpers";
 import { IsLocation } from "../../flow/helpers/common";
 import { IsBlockView } from "../../flow/helpers/block";
+import { DeleteNodeButton } from "./helpers/";
+import {
+  changeNodeValue,
+  removeEdge,
+  removeNode,
+} from "../../../redux/store/project/actions";
 
 interface Props {
   node: Node;
@@ -21,11 +27,19 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
     dispatch(changeNodeValue(node.id, key, e.target.value));
   };
 
+  const handleOnDelete = () => {
+    project.edges.forEach((edge) => {
+      if (edge.fromNodeId === node.id) dispatch(removeEdge(edge.id));
+      if (edge.toNodeId === node.id) dispatch(removeEdge(edge.id));
+    });
+    dispatch(removeNode(node.id));
+  };
+
   return (
     <>
       <TabColumn>
         <div>
-          <div>Id</div>
+          <div>{TextResources.Inspector_Admin_Id}</div>
           <Input
             readOnly={true}
             value={node.id ?? ""}
@@ -34,7 +48,7 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
           />
         </div>
         <div>
-          <div>RDS</div>
+          <div>{TextResources.Inspector_Admin_RDS}</div>
           <Input
             readOnly={true}
             value={GetRdsId(node)}
@@ -43,7 +57,7 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
           />
         </div>
         <div>
-          <div>Semantic ID</div>
+          <div>{TextResources.Inspector_Admin_Id}</div>
           <Input
             value={node.semanticReference ?? ""}
             onChange={(e: any) => handleOnChange(e, "semanticId")}
@@ -53,7 +67,7 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
       </TabColumn>
       <TabColumn>
         <div>
-          <div>Reference Designation</div>
+          <div>{TextResources.Inspector_Admin_Designation}</div>
           <Input
             readOnly={true}
             value={GetReferenceDesignation(node, project)}
@@ -62,7 +76,7 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
           />
         </div>
         <div>
-          <div>Updated by</div>
+          <div>{TextResources.Inspector_Admin_Updated_By}</div>
           <Input
             readOnly={true}
             value={node.updatedBy}
@@ -71,7 +85,7 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
           />
         </div>
         <div>
-          <div>Updated Date</div>
+          <div>{TextResources.Inspector_Admin_Updated_Date}</div>
           <Input
             readOnly={true}
             value={moment(node.updated).format("DD/MM/YYYY")}
@@ -82,7 +96,7 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
       </TabColumn>
       <TabColumn>
         <div>
-          <div>Service Description</div>
+          <div>{TextResources.Inspector_Admin_Service}</div>
           <Input
             value={node.label}
             onChange={(e: any) => handleOnChange(e, "label")}
@@ -90,7 +104,7 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
           />
         </div>
         <div>
-          <div>Type name</div>
+          <div>{TextResources.Inspector_Admin_Type}</div>
           <Input
             readOnly={true}
             value={node.name}
@@ -100,7 +114,7 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
         </div>
         {IsLocation(node) && IsBlockView() && (
           <div>
-            <div>Width (m)</div>
+            <div>{TextResources.Inspector_Admin_Width}</div>
             <Input
               value={node.width}
               onChange={(e: any) => handleOnChange(e, "width")}
@@ -108,10 +122,29 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
             />
           </div>
         )}
+        <div>
+          <div>{TextResources.Inspector_Admin_Tag}</div>
+          <Input
+            value={node.tagNumber ?? ""}
+            onChange={(e: any) => handleOnChange(e, "tagNumber")}
+            inputType=""
+          />
+        </div>
+        {IsLocation(node) && IsBlockView() && (
+          <div>
+            <div>{TextResources.Inspector_Admin_Height}</div>
+            <Input
+              value={node.height}
+              onChange={(e: any) => handleOnChange(e, "height")}
+              inputType=""
+              readOnly={true}
+            />
+          </div>
+        )}
       </TabColumn>
       <TabColumn>
         <div>
-          <div>Status</div>
+          <div>{TextResources.Inspector_Admin_Status}</div>
           <Select
             value={node.status ?? "NotSet"} // TODO: check this
             onChange={(e: any) => handleOnChange(e, "status")}
@@ -125,7 +158,7 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
           </Select>
         </div>
         <div>
-          <div>Version</div>
+          <div>{TextResources.Inspector_Admin_Version}</div>
           <Input
             value={node.version ?? ""}
             onChange={(e: any) => handleOnChange(e, "version")}
@@ -134,7 +167,7 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
         </div>
         {IsLocation(node) && IsBlockView() && (
           <div>
-            <div>Length (m)</div>
+            <div>{TextResources.Inspector_Admin_Length}</div>
             <Input
               value={node.length}
               onChange={(e: any) => handleOnChange(e, "length")}
@@ -142,10 +175,8 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
             />
           </div>
         )}
-      </TabColumn>
-      <TabColumn>
         <div>
-          <div>Contractor</div>
+          <div>{TextResources.Inspector_Admin_Contractor}</div>
           <Select
             value={node.contractor ?? "NotSet"} // TODO: check this
             onChange={(e: any) => handleOnChange(e, "contractor")}
@@ -158,29 +189,10 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
             ))}
           </Select>
         </div>
-        <div>
-          <div>Tag Number</div>
-          <Input
-            value={node.tagNumber ?? ""}
-            onChange={(e: any) => handleOnChange(e, "tagNumber")}
-            inputType=""
-          />
-        </div>
-        {IsLocation(node) && IsBlockView() && (
-          <div>
-            <div>Height (m)</div>
-            <Input
-              value={node.height}
-              onChange={(e: any) => handleOnChange(e, "height")}
-              inputType=""
-              readOnly={true}
-            />
-          </div>
-        )}
       </TabColumn>
       <TabColumn>
         <div>
-          <div>Description</div>
+          <div>{TextResources.Inspector_Admin_Description}</div>
           <Textarea
             width="300"
             height="90"
@@ -188,6 +200,9 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
             onChange={(e: any) => handleOnChange(e, "description")}
           ></Textarea>
         </div>
+      </TabColumn>
+      <TabColumn>
+        <DeleteNodeButton handleClick={handleOnDelete} />
       </TabColumn>
     </>
   );

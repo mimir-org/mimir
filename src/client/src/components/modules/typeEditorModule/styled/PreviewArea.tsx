@@ -19,7 +19,9 @@ const PreviewArea = styled.div`
 
   .object-icon {
     padding-top: 10px;
-    width: 60%;
+    max-width: 180px;
+    min-height: 50px;
+    max-height: 100px;
   }
 `;
 

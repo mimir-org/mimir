@@ -4,7 +4,7 @@ const TabColumn = styled.div`
   width: 100%;
   height: 100%;
   padding: 10px;
-  font-size: 10px;
+  font-size: 12px;
   min-width: 200px;
   display: flex;
   flex-direction: column;

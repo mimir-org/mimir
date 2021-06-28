@@ -1,13 +1,103 @@
-import { call, put } from "redux-saga/effects";
+import { call, put as statePut } from "redux-saga/effects";
 import {
   FETCHING_INITIAL_SUCCESS_OR_ERROR,
   FETCHING_RDS_SUCCESS_OR_ERROR,
   FETCHING_TERMINALS_SUCCESS_OR_ERROR,
   FETCHING_ATTRIBUTES_SUCCESS_OR_ERROR,
+  CREATING_TYPE_SUCCESS_OR_ERROR,
   TypeEditorActionTypes,
 } from "../../store/typeEditor/types";
 
-import { get } from "../../../models/webclient";
+import {
+    get,
+    post,
+    put,
+    GetBadResponseData,
+    ApiError,
+} from "../../../models/webclient";
+
+export function* updateType(action){
+    try {
+        console.log("Trying to update type..");
+        const url = process.env.REACT_APP_API_BASE_URL + "typeeditor";
+        const response = yield call(put, url, action.payload.libraryType);
+        // This is a bad request
+        if (response.status === 400) {
+            const data = GetBadResponseData(response);
+            console.log(data);
+            /*const apiError = {
+                key: CREATING_TYPE_SUCCESS_OR_ERROR,
+                errorMessage: data.title,
+                errorData: data,
+            } as ApiError;
+
+            const payload = {
+                apiError: apiError,
+            };
+
+            yield statePut({
+                type: CREATING_TYPE_SUCCESS_OR_ERROR,
+                payload: payload,
+            });
+            */
+            return;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+// eslint-disable-next-line require-yield
+export function* createType(action) {
+  try {
+    const url = process.env.REACT_APP_API_BASE_URL + "typeeditor";
+    const response = yield call(post, url, action.payload.libraryType);
+
+    // This is a bad request
+    if (response.status === 400) {
+      const data = GetBadResponseData(response);
+
+      const apiError = {
+        key: CREATING_TYPE_SUCCESS_OR_ERROR,
+        errorMessage: data.title,
+        errorData: data,
+      } as ApiError;
+
+      const payload = {
+        apiError: apiError,
+      };
+
+      yield statePut({
+        type: CREATING_TYPE_SUCCESS_OR_ERROR,
+        payload: payload,
+      });
+      return;
+    }
+
+    const payload = {
+      apiError: null,
+    };
+
+    yield statePut({
+      type: CREATING_TYPE_SUCCESS_OR_ERROR,
+      payload: payload,
+    });
+  } catch (error) {
+    const apiError = {
+      key: CREATING_TYPE_SUCCESS_OR_ERROR,
+      errorMessage: error.message,
+      errorData: null,
+    } as ApiError;
+
+    const payload = {
+      apiError: apiError,
+    };
+
+    yield statePut({
+      type: CREATING_TYPE_SUCCESS_OR_ERROR,
+      payload: payload,
+    });
+  }
+}
 
 export function* getInitialData(action: TypeEditorActionTypes) {
   try {
@@ -27,7 +117,7 @@ export function* getInitialData(action: TypeEditorActionTypes) {
       statuses: statusResponse.data,
     };
 
-    yield put({
+    yield statePut({
       type: FETCHING_INITIAL_SUCCESS_OR_ERROR,
       payload: payload,
     });
@@ -38,7 +128,7 @@ export function* getInitialData(action: TypeEditorActionTypes) {
       statuses: [],
     };
 
-    yield put({
+    yield statePut({
       type: FETCHING_INITIAL_SUCCESS_OR_ERROR,
       payload: payload,
     });
@@ -58,7 +148,7 @@ export function* getRDS(action) {
       Rds: rdsResponse.data,
     };
 
-    yield put({
+    yield statePut({
       type: FETCHING_RDS_SUCCESS_OR_ERROR,
       payload: payload,
     });
@@ -67,7 +157,7 @@ export function* getRDS(action) {
       Rds: [],
     };
 
-    yield put({
+    yield statePut({
       type: FETCHING_RDS_SUCCESS_OR_ERROR,
       payload: payload,
     });
@@ -85,7 +175,7 @@ export function* getTerminals(action) {
       terminals: terminalResponse.data,
     };
 
-    yield put({
+    yield statePut({
       type: FETCHING_TERMINALS_SUCCESS_OR_ERROR,
       payload: payload,
     });
@@ -94,7 +184,7 @@ export function* getTerminals(action) {
       terminals: [],
     };
 
-    yield put({
+    yield statePut({
       type: FETCHING_TERMINALS_SUCCESS_OR_ERROR,
       payload: payload,
     });
@@ -114,7 +204,7 @@ export function* getAttributes(action) {
       AttributeType: attributesResponse.data,
     };
 
-    yield put({
+    yield statePut({
       type: FETCHING_ATTRIBUTES_SUCCESS_OR_ERROR,
       payload: payload,
     });
@@ -123,7 +213,7 @@ export function* getAttributes(action) {
       AttributeType: [],
     };
 
-    yield put({
+    yield statePut({
       type: FETCHING_ATTRIBUTES_SUCCESS_OR_ERROR,
       payload: payload,
     });
