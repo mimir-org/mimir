@@ -1,4 +1,4 @@
-import { Project, Node, Edge, Connector } from "../../../models";
+import { Project, Node, Edge } from "../../../models";
 import { ApiError } from "../../../models/webclient";
 
 export const SAVE_PROJECT = "SAVE_PROJECT";
@@ -20,7 +20,6 @@ export const UPDATE_POSITION = "UPDATE_POSITION";
 export const UPDATE_BLOCK_POSITION = "UPDATE_BLOCK_POSITION";
 export const CHANGE_NODE_VISIBILITY = "CHANGE_NODE_VISIBILITY";
 export const CHANGE_EDGE_VISIBILITY = "CHANGE_EDGE_VISIBILITY";
-export const CHANGE_CONNECTOR_VISIBILITY = "CHANGE_CONNECTOR_VISIBILITY";
 export const CHANGE_ACTIVE_NODE = "CHANGE_ACTIVE_NODE";
 export const CHANGE_ACTIVE_BLOCKNODE = "CHANGE_ACTIVE_BLOCKNODE";
 export const CHANGE_ACTIVE_EDGE = "CHANGE_ACTIVE_EDGE";
@@ -31,7 +30,7 @@ export const CHANGE_ATTRIBUTE_VALUE = "CHANGE_ATTRIBUTE_VALUE";
 export const CHANGE_CONNECTOR_ATTRIBUTE_VALUE =
   "CHANGE_CONNECTOR_ATTRIBUTE_VALUE";
 export const DELETE_PROJECT_ERROR = "DELETE_PROJECT_ERROR";
-export const SET_ACTIVE_CONNECTOR = "SET_ACTIVE_CONNECTOR";
+export const CHANGE_ACTIVE_CONNECTOR = "CHANGE_ACTIVE_CONNECTOR";
 
 // State types
 export interface ProjectState {
@@ -221,22 +220,13 @@ interface DeleteProjectErrorAction {
   };
 }
 
-interface SetActiveConnector {
-  type: typeof SET_ACTIVE_CONNECTOR;
+interface ChangeActiveConnector {
+  type: typeof CHANGE_ACTIVE_CONNECTOR;
   payload: {
     node: Node;
     connectorId: string;
     visible: boolean;
     order: number;
-  };
-}
-
-interface ChangeConnectorVisibility {
-  type: typeof CHANGE_CONNECTOR_VISIBILITY;
-  payload: {
-    nodeId: string;
-    connector: Connector;
-    visible: boolean;
   };
 }
 
@@ -266,5 +256,4 @@ export type ProjectActionTypes =
   | ChangeAttributeValue
   | ChangeAttributeConnectorValue
   | DeleteProjectErrorAction
-  | SetActiveConnector
-  | ChangeConnectorVisibility;
+  | ChangeActiveConnector;

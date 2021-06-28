@@ -28,9 +28,8 @@ import {
   CHANGE_EDGE_VISIBILITY,
   CHANGE_ACTIVE_BLOCKNODE,
   DELETE_PROJECT_ERROR,
-  SET_ACTIVE_CONNECTOR,
+  CHANGE_ACTIVE_CONNECTOR,
   CHANGE_ACTIVE_EDGE,
-  CHANGE_CONNECTOR_VISIBILITY,
 } from "./types";
 
 const initialState: ProjectState = {
@@ -440,7 +439,7 @@ export function projectReducer(
         },
       };
 
-    case SET_ACTIVE_CONNECTOR:
+    case CHANGE_ACTIVE_CONNECTOR:
       return {
         ...state,
         project: {
@@ -455,32 +454,6 @@ export function projectReducer(
                           ...conn,
                           visible: action.payload.visible,
                           order: action.payload.order,
-                        }
-                      : conn
-                  ),
-                }
-              : node
-          ),
-        },
-      };
-
-    case CHANGE_CONNECTOR_VISIBILITY:
-      const nodeId = action.payload.nodeId;
-      const connectorId = action.payload.connector.id;
-
-      return {
-        ...state,
-        project: {
-          ...state.project,
-          nodes: state.project.nodes.map((node) =>
-            node.id === action.payload.nodeId
-              ? {
-                  ...node,
-                  connectors: node.connectors.map((conn) =>
-                    conn.id === action.payload.connector.id
-                      ? {
-                          ...conn,
-                          visible: action.payload.visible,
                         }
                       : conn
                   ),

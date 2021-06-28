@@ -1,13 +1,13 @@
 import red from "../../../redux/store";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import { CheckEdges, CheckTerminals, FindConnectorNode } from "./helpers";
+import { CheckEdges, FindConnectorNode } from "./helpers";
 import { Edge } from "../../../models";
 import { TextResources } from "../../../assets/textResources";
 import { MenuColumn, MenuSubHeader } from "../../../compLibrary/box/menus";
 import {
   changeEdgeVisibility,
-  setActiveConnector,
+  changeActiveConnector,
 } from "../../../redux/store/project/actions";
 
 const FilterContent = ({ type, index }) => {
@@ -25,14 +25,20 @@ const FilterContent = ({ type, index }) => {
       selectedElements.forEach((element) => {
         const edgeType = Object.values(Edge);
         const isEdge =
-          element.type === null ||
           element.type === undefined ||
           edgeType.some((x) => x === element.type?.toString());
         if (isEdge) {
           dispatch(changeEdgeVisibility(element, !element.isHidden));
         } else {
           const connectorNode = FindConnectorNode(element);
-          //   dispatch(setActiveConnector(element.))
+          dispatch(
+            changeActiveConnector(
+              connectorNode,
+              element.id,
+              !element.visible,
+              0
+            )
+          );
         }
       });
     }

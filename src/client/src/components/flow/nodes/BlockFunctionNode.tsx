@@ -5,7 +5,7 @@ import { RootState } from "../../../redux/store";
 import { Connector, Node } from "../../../models";
 import { Size } from "../../../compLibrary";
 import { TerminalsIcon, ConnectIcon } from "../../../assets/icons/blockView";
-import { setActiveConnector } from "../../../redux/store/project/actions";
+import { changeActiveConnector } from "../../../redux/store/project/actions";
 import { TerminalsComponent, ConnectViewComponent } from "../block";
 import { HandleComponent } from "../block";
 import { FilterConnectors } from "../helpers/block";
@@ -70,7 +70,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const onConnectorClick = (conn: Connector) => {
     showTerminalMenu(false);
     showConnectMenu(false);
-    dispatch(setActiveConnector(data, conn.id, true, 0));
+    dispatch(changeActiveConnector(data, conn.id, true, 0));
   };
 
   const onConnectViewClick = (node: Node) => {
