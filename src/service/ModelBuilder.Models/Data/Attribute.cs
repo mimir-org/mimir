@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using Mb.Models.Data.Enums;
 using Newtonsoft.Json;
@@ -12,9 +13,10 @@ namespace Mb.Models.Data
         public string Id { get; set; }
         public string Key { get; set; }
         public string Value { get; set; }
+        public string AttributeTypeId { get; set; }
         
         public string SelectedUnitId { get; set; }
-        public Unit Unit => Units?.SingleOrDefault(x => x.Id.Equals(SelectedUnitId));
+        //public Unit Unit => Units?.SingleOrDefault(x => x.Id.Equals(SelectedUnitId));
 
         public string QualifierId { get; set; }
         public AttributeQualifier Qualifier { get; set; }
@@ -28,7 +30,11 @@ namespace Mb.Models.Data
         public string FormatId { get; set; }
         public AttributeFormat Format { get; set; }
 
+        [NotMapped]
         public virtual ICollection<Unit> Units { get; set; }
+
+        [JsonIgnore]
+        public string UnitString { get; set; }
 
         public virtual string TerminalId { get; set; }
         public virtual string NodeId { get; set; }

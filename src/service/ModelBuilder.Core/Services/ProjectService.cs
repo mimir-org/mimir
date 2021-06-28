@@ -12,10 +12,12 @@ using Mb.Core.Repositories.Contracts;
 using Mb.Core.Services.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Data;
+using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
 using Mb.Models.Modules;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Attribute = Mb.Models.Data.Attribute;
 using Terminal = Mb.Models.Data.Terminal;
 
@@ -106,6 +108,33 @@ namespace Mb.Core.Services
             if (project?.Nodes != null)
             {
                 project.Nodes = project.Nodes.OrderBy(x => x.Order).ToList();
+                foreach (var node in project.Nodes)
+                {
+                    if (node.Attributes != null)
+                    {
+                        foreach (var attribute in node.Attributes)
+                        {
+                            if (!string.IsNullOrEmpty(attribute.UnitString))
+                                attribute.Units = JsonConvert.DeserializeObject<ICollection<Unit>>(attribute.UnitString);
+
+                        }
+                    }
+
+                    if (node.Connectors != null)
+                    {
+                        foreach (var connector in node.Connectors.OfType<Terminal>())
+                        {
+                            if (connector.Attributes != null)
+                            {
+                                foreach (var attribute in connector.Attributes)
+                                {
+                                    if (!string.IsNullOrEmpty(attribute.UnitString))
+                                        attribute.Units = JsonConvert.DeserializeObject<ICollection<Unit>>(attribute.UnitString);
+                                }
+                            }
+                        }
+                    }
+                }
             }
 
             return project;
@@ -373,15 +402,15 @@ namespace Mb.Core.Services
             foreach (var templateEdgeToDelete in edgesToDelete.Where(x => x.IsTemplateEdge))
             {
                 await _edgeRepository.Delete(templateEdgeToDelete.Id);
-                nodesToUpdate.RemoveAll(x=> x.MasterProjectId.Equals(templateEdgeToDelete.MasterProjectId));
-                nodesToDelete.RemoveAll(x=> x.MasterProjectId.Equals(templateEdgeToDelete.MasterProjectId));
-                edgesToUpdate.RemoveAll(x=> x.MasterProjectId.Equals(templateEdgeToDelete.MasterProjectId));
-                edgesToDelete.RemoveAll(x=> x.MasterProjectId.Equals(templateEdgeToDelete.MasterProjectId));
+                nodesToUpdate.RemoveAll(x => x.MasterProjectId.Equals(templateEdgeToDelete.MasterProjectId));
+                nodesToDelete.RemoveAll(x => x.MasterProjectId.Equals(templateEdgeToDelete.MasterProjectId));
+                edgesToUpdate.RemoveAll(x => x.MasterProjectId.Equals(templateEdgeToDelete.MasterProjectId));
+                edgesToDelete.RemoveAll(x => x.MasterProjectId.Equals(templateEdgeToDelete.MasterProjectId));
             }
 
             // Attributes
             var attributesToDelete = GetAttributesToDelete(nodesToDelete, project);
-            
+
             UpdateNodes(nodesToUpdate.Where(x => x.MasterProjectId.Equals(project.Id)).ToList());
 
             await CreateNodes(nodesToCreate, edgesToCreate, project);

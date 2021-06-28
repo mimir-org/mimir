@@ -4,6 +4,7 @@ using Mb.Core.Repositories.Contracts;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace Mb.Core.Repositories
 {
@@ -20,7 +21,14 @@ namespace Mb.Core.Repositories
         {
             foreach (var connector in entities.OfType<Terminal>())
             {
-                _attributeRepository.Attach(connector.Attributes, state);
+                if (connector.Attributes != null)
+                {
+                    foreach (var attribute in connector.Attributes)
+                    {
+                        attribute.UnitString = attribute.Units != null ? JsonConvert.SerializeObject(attribute.Units) : null;
+                        _attributeRepository.Attach(attribute, state);
+                    }
+                }
                 Attach(connector, state);
             }
 

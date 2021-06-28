@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { FontSize } from "../../../../compLibrary";
+import { ConnectorType } from "../../../../models";
 
 const Wrapper = styled.div`
   display: flex;
@@ -45,7 +46,7 @@ const ActiveTerminalTypeList = ({ terminals, title, onElementClick }) => {
               index={i}
               key={n.id}
             >
-              {n.name}
+              {n.name} {ConnectorType[n.type]}
             </ListElement>
           );
         })}

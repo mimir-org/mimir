@@ -3,7 +3,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Mb.Models.Application;
 using Mb.Models.Data;
-using Mb.Models.Data.Enums;
 using Mb.Models.Modules;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -147,23 +146,10 @@ namespace DefaultParserModule
                 FormatId = attribute.FormatId,
                 TerminalId = attribute.TerminalId,
                 NodeId = attribute.NodeId,
-                Units = attribute.Units?.Select(ParseUnit).ToList()
+                AttributeTypeId = attribute.AttributeTypeId
             };
 
             return a;
-        }
-
-        private static UnitAm ParseUnit(Unit unit)
-        {
-            var u = new UnitAm
-            {
-                Id = unit.Id,
-                Name = unit.Name,
-                Description = unit.Description,
-                SemanticReference = unit.SemanticReference
-            };
-
-            return u;
         }
     }
 }

@@ -13,7 +13,6 @@ export default function DefaultEdgeType({
   markerEndId,
 }) {
   const markerEnd = getMarkerEnd(arrowHeadType, markerEndId);
-  console.log(id, sourceX);
 
   const edgePathSmoothStep = getSmoothStepPath({
     sourceX,
