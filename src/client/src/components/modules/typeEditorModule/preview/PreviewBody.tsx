@@ -6,6 +6,7 @@ import { PreviewArea, InfoWrapper } from "../styled";
 import { ReactComponent as TransportIcon } from "../../../../assets/icons/common/transportIcon.svg";
 import { ReactComponent as InterfaceIcon } from "../../../../assets/icons/common/interfaceIcon.svg";
 import { Aspect, ObjectType } from "../../../../models";
+
 export const PreviewBody = () => {
   const state = useSelector<RootState>(
     (state) => state.typeEditor

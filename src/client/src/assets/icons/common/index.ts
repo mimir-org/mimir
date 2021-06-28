@@ -59,6 +59,7 @@ export { default as CheckmarkIcon } from "./checkmarkIcon.svg";
 export { default as SelectDownIcon } from "./selectDownIcon.svg";
 export { default as InterfaceIcon } from "./interfaceIcon.svg";
 export { default as TransportIcon } from "./transportIcon.svg";
+export { default as TerminalIcon } from "./terminalIcon.svg";
 export { default as EyeIcon } from "./inspectorIcon.svg";
 export { default as HelpIcon } from "./helpIcon.svg";
 export { default as UndoIcon } from "./undoIcon.svg";

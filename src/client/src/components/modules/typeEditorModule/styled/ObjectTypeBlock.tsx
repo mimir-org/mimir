@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 const ObjectTypeBlock = styled.div`
-  position: relative;
   display: flex;
   flex-direction: column;
   margin: auto;
