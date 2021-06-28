@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Mb.Core.Exceptions;
 using Mb.Core.Extensions;
 using Mb.Core.Repositories.Contracts;
@@ -142,6 +141,7 @@ namespace Mb.Core.Services
                 .Include(x => x.Source)
                 .Include(x => x.Condition)
                 .Include(x => x.Format)
+                .Include(x => x.Units)
                 .ToList();
             return aspect == Aspect.NotSet ?
                 all :
@@ -205,7 +205,7 @@ namespace Mb.Core.Services
             {
                 LibraryType libraryType = createLibraryType.ObjectType switch
                 {
-                    ObjectType.ObjectBlock => _mapper.Map<Models.Data.NodeType>(createLibraryType),
+                    ObjectType.ObjectBlock => _mapper.Map<NodeType>(createLibraryType),
                     ObjectType.Interface => _mapper.Map<InterfaceType>(createLibraryType),
                     ObjectType.Transport => _mapper.Map<TransportType>(createLibraryType),
                     _ => null
@@ -220,7 +220,7 @@ namespace Mb.Core.Services
 
                 switch (libraryType)
                 {
-                    case Models.Data.NodeType nt:
+                    case NodeType nt:
                     {
                         foreach (var attributeType in nt.AttributeTypes)
                         {

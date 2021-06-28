@@ -27,6 +27,8 @@ namespace Mb.Models.Application
         public ICollection<TerminalTypeItem> TerminalTypes { get; set; }
 
         public ICollection<string> AttributeTypes { get; set; }
+
+        public string LocationType { get; set; }
         
         public ICollection<PredefinedAttributeAm> PredefinedAttributes { get; set; }
 

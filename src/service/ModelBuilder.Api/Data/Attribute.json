@@ -1082,5 +1082,133 @@
     ],
     "aspect": "Function",
     "formatId": "CCA61D52018A96C3324B07AE871B6A60"
+  },
+  {
+    "entity": "Relative North",
+    "qualifierId": "23BE80E317DA30DBAAA862D672FD1E87",
+    "sourceId": "E4AC50788784BA83FAAD1821E2F1E662",
+    "conditionId": "424EE17AEA18CAEB3DB3409D2C0A467A",
+    "units": [
+      "0E58052344DCBE3692A3B088CD36A002",
+      "DF7381E76922A27B14C4C3C51A4AC631"
+    ],
+    "aspect": "Location",
+    "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2"
+  },
+  {
+    "entity": "Relative East",
+    "qualifierId": "23BE80E317DA30DBAAA862D672FD1E87",
+    "sourceId": "E4AC50788784BA83FAAD1821E2F1E662",
+    "conditionId": "424EE17AEA18CAEB3DB3409D2C0A467A",
+    "units": [
+      "0E58052344DCBE3692A3B088CD36A002",
+      "DF7381E76922A27B14C4C3C51A4AC631"
+    ],
+    "aspect": "Location",
+    "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2"
+  },
+  {
+    "entity": "Relative Elevation",
+    "qualifierId": "23BE80E317DA30DBAAA862D672FD1E87",
+    "sourceId": "E4AC50788784BA83FAAD1821E2F1E662",
+    "conditionId": "424EE17AEA18CAEB3DB3409D2C0A467A",
+    "units": [
+      "0E58052344DCBE3692A3B088CD36A002",
+      "DF7381E76922A27B14C4C3C51A4AC631"
+    ],
+    "aspect": "Location",
+    "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2"
+  },
+  {
+    "entity": "Absolute Elevation",
+    "qualifierId": "23BE80E317DA30DBAAA862D672FD1E87",
+    "sourceId": "E4AC50788784BA83FAAD1821E2F1E662",
+    "conditionId": "424EE17AEA18CAEB3DB3409D2C0A467A",
+    "units": [
+      "0E58052344DCBE3692A3B088CD36A002",
+      "DF7381E76922A27B14C4C3C51A4AC631"
+    ],
+    "aspect": "Location",
+    "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2"
+  },
+  {
+    "entity": "Size box Width",
+    "qualifierId": "23BE80E317DA30DBAAA862D672FD1E87",
+    "sourceId": "E4AC50788784BA83FAAD1821E2F1E662",
+    "conditionId": "424EE17AEA18CAEB3DB3409D2C0A467A",
+    "units": [
+      "0E58052344DCBE3692A3B088CD36A002",
+      "DF7381E76922A27B14C4C3C51A4AC631"
+    ],
+    "aspect": "Location",
+    "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2"
+  },
+  {
+    "entity": "Size box Height",
+    "qualifierId": "23BE80E317DA30DBAAA862D672FD1E87",
+    "sourceId": "E4AC50788784BA83FAAD1821E2F1E662",
+    "conditionId": "424EE17AEA18CAEB3DB3409D2C0A467A",
+    "units": [
+      "0E58052344DCBE3692A3B088CD36A002",
+      "DF7381E76922A27B14C4C3C51A4AC631"
+    ],
+    "aspect": "Location",
+    "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2"
+  },
+  {
+    "entity": "Size box Length",
+    "qualifierId": "23BE80E317DA30DBAAA862D672FD1E87",
+    "sourceId": "E4AC50788784BA83FAAD1821E2F1E662",
+    "conditionId": "424EE17AEA18CAEB3DB3409D2C0A467A",
+    "units": [
+      "0E58052344DCBE3692A3B088CD36A002",
+      "DF7381E76922A27B14C4C3C51A4AC631"
+    ],
+    "aspect": "Location",
+    "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2"
+  },
+  {
+    "entity": "Depth BSL (subsea only)",
+    "qualifierId": "23BE80E317DA30DBAAA862D672FD1E87",
+    "sourceId": "E4AC50788784BA83FAAD1821E2F1E662",
+    "conditionId": "424EE17AEA18CAEB3DB3409D2C0A467A",
+    "units": [
+      "0E58052344DCBE3692A3B088CD36A002"
+    ],
+    "aspect": "Location",
+    "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2"
+  },
+  {
+    "entity": "UTM Zone",
+    "qualifierId": "23BE80E317DA30DBAAA862D672FD1E87",
+    "sourceId": "E4AC50788784BA83FAAD1821E2F1E662",
+    "conditionId": "424EE17AEA18CAEB3DB3409D2C0A467A",
+    "units": [
+      "02DAE010EE69AD90EF56A5DD28D9E883"
+    ],
+    "aspect": "Location",
+    "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2"
+  },
+  {
+    "entity": "UTM North",
+    "qualifierId": "23BE80E317DA30DBAAA862D672FD1E87",
+    "sourceId": "E4AC50788784BA83FAAD1821E2F1E662",
+    "conditionId": "424EE17AEA18CAEB3DB3409D2C0A467A",
+    "units": [
+      "02DAE010EE69AD90EF56A5DD28D9E883"
+    ],
+    "aspect": "Location",
+    "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2"
+  },
+  {
+    "entity": "UTM East",
+    "qualifierId": "23BE80E317DA30DBAAA862D672FD1E87",
+    "sourceId": "E4AC50788784BA83FAAD1821E2F1E662",
+    "conditionId": "424EE17AEA18CAEB3DB3409D2C0A467A",
+    "units": [
+      "02DAE010EE69AD90EF56A5DD28D9E883"
+    ],
+    "aspect": "Location",
+    "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2"
   }
 ]
