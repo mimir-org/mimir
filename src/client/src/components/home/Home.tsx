@@ -7,7 +7,7 @@ import { LibraryModule } from "../modules/libraryModule";
 import { AccountMenu } from "../menus/accountMenu";
 import { FilterMenu } from "../menus/filterMenu";
 import { getUser } from "../../redux/store/user/actions";
-import { getContractors } from "../../redux/store/common/actions";
+import { getContractors, getStatuses } from "../../redux/store/common/actions";
 import { search } from "../../redux/store/project/actions";
 import { FlowModule } from "../flow";
 import { ErrorModule } from "../modules/errorModule";
@@ -25,6 +25,7 @@ const Home = () => {
   useEffect(() => {
     dispatch(getUser());
     dispatch(getContractors());
+    dispatch(getStatuses());
     dispatch(search(""));
   }, [dispatch]);
 

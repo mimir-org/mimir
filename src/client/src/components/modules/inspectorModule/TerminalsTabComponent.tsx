@@ -4,7 +4,7 @@ import { IsTransportTerminal } from "../../flow/helpers/common";
 import styled from "styled-components";
 import TextResources from "../../../assets/textResources/textResources";
 
-// Migth be used later: 
+// Migth be used later:
 // import { ConnectorAttributesList } from "./helpers";
 // import { changeConnectorAttributeValue } from "../../../redux/store/project/actions";
 interface ConnectorAttribute {
@@ -71,7 +71,7 @@ const TerminalsTabComponent = ({ node }): any => {
       <ListWrapper>
         <TerminalsWrapper>
           <ActiveTerminalTypeList
-            terminals={node?.connectors}
+            terminals={node?.connectors?.filter((x) => x.terminalCategoryId)}
             title={TextResources.Inspector_Relations_All_Terminal_Types}
             onElementClick={() => {}}
           />

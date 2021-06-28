@@ -5,6 +5,7 @@ using Mb.Core.Repositories.Contracts;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace Mb.Core.Repositories
 {
@@ -32,15 +33,30 @@ namespace Mb.Core.Repositories
             {
                 if (updates.Any(x => x.Id == node.Id))
                 {
-                    _attributeRepository.Attach(node.Attributes, EntityState.Added);
+                    if (node.Attributes != null)
+                    {
+                        foreach (var attribute in node.Attributes)
+                        {
+                            attribute.UnitString = attribute.Units != null ? JsonConvert.SerializeObject(attribute.Units) : null;
+                            _attributeRepository.Attach(attribute, EntityState.Added);
+                        }
+                    }
+
                     _connectorRepository.AttachWithAttributes(node.Connectors, EntityState.Added);
                     Attach(node, EntityState.Added);
                 }
                 else
                 {
-                    _attributeRepository.Attach(node.Attributes, EntityState.Modified);
+                    if (node.Attributes != null)
+                    {
+                        foreach (var attribute in node.Attributes)
+                        {
+                            attribute.UnitString = attribute.Units != null ? JsonConvert.SerializeObject(attribute.Units) : null;
+                            _attributeRepository.Attach(attribute, EntityState.Modified);
+                        }
+                    }
+
                     _connectorRepository.AttachWithAttributes(node.Connectors, EntityState.Modified);
-                    Attach(node, EntityState.Modified);
                     Attach(node, EntityState.Modified);
                 }
             }

@@ -32,8 +32,9 @@ const CreateBlockElements = (
       selectedNode?.aspect === edge.toNode?.aspect &&
       IsPartOfTerminal(edge.toConnector)
     ) {
-      const toNode = nodes.find((node) => node.id === edge.toNodeId);
-      initialElements.push(CreateBlockNode(toNode, null, splitView));
+      const toNode = nodes.find((node) => node?.id === edge?.toNodeId);
+      if (toNode)
+        initialElements.push(CreateBlockNode(toNode, null, splitView));
     }
   });
 
@@ -41,11 +42,11 @@ const CreateBlockElements = (
   if (splitViewNode && splitView) {
     edges.forEach((edge) => {
       if (
-        edge.fromNodeId === splitViewNode.id &&
+        edge.fromNodeId === splitViewNode?.id &&
         splitViewNode?.aspect === edge.toNode?.aspect
       ) {
-        const toNode = nodes.find((node) => node.id === edge.toNodeId);
-        initialElements.push(CreateSplitViewNode(toNode));
+        const toNode = nodes.find((node) => node?.id === edge?.toNodeId);
+        if (toNode) initialElements.push(CreateSplitViewNode(toNode));
       }
     });
   }
@@ -55,7 +56,8 @@ const CreateBlockElements = (
     mainConnectNodes.forEach((mainNode) => {
       mainNode.connectNodes?.forEach((node) => {
         const connectNode = nodes.find((x) => x.id === node.id);
-        initialElements.push(CreateBlockNode(connectNode, mainNode, false));
+        if (connectNode)
+          initialElements.push(CreateBlockNode(connectNode, mainNode, false));
       });
     });
   }
