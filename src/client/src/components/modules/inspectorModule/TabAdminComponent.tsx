@@ -4,7 +4,7 @@ import { useCallback } from "react";
 import { RootState } from "../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { Contractor } from "../../../redux/store/common/types";
-import { Node, Project } from "../../../models";
+import { EnumBase, Node, Project } from "../../../models";
 import { changeInspectorTab } from "../../../redux/store/inspector/actions";
 import {
   TabHeader,
@@ -30,6 +30,10 @@ const TabAdminComponent = ({ node, project, index }: Props) => {
     (state) => state.commonState.contractors
   ) as Contractor[];
 
+  const statuses = useSelector<RootState>(
+    (state) => state.commonState.statuses
+  ) as EnumBase[];
+
   const handleClick = useCallback(() => {
     dispatch(changeInspectorTab(index));
   }, [dispatch, index]);
@@ -47,6 +51,7 @@ const TabAdminComponent = ({ node, project, index }: Props) => {
               node={node}
               project={project}
               contractors={contractors}
+              statuses={statuses}
             />
           </div>
         )}

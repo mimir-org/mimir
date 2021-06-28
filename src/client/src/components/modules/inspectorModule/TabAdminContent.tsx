@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { Contractor } from "../../../redux/store/common/types";
 import { TabColumn } from "../../../compLibrary/box/inspector";
 import { Input, Select, Textarea } from "../../../compLibrary";
-import { Node, Project } from "../../../models";
+import { EnumBase, Node, Project } from "../../../models";
 import { GetRdsId, GetReferenceDesignation } from "../../../assets/helpers";
 import { IsLocation } from "../../flow/helpers/common";
 import { IsBlockView } from "../../flow/helpers/block";
@@ -19,9 +19,10 @@ interface Props {
   node: Node;
   project: Project;
   contractors: Contractor[];
+  statuses: EnumBase[];
 }
 
-const TabAdminContent = ({ node, project, contractors }: Props) => {
+const TabAdminContent = ({ node, project, contractors, statuses }: Props) => {
   const dispatch = useDispatch();
   const handleOnChange = (e: any, key: string) => {
     dispatch(changeNodeValue(node.id, key, e.target.value));
@@ -57,7 +58,7 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
           />
         </div>
         <div>
-          <div>{TextResources.Inspector_Admin_Id}</div>
+          <div>{TextResources.Inspector_Admin_Semantic_Id}</div>
           <Input
             value={node.semanticReference ?? ""}
             onChange={(e: any) => handleOnChange(e, "semanticId")}
@@ -146,13 +147,13 @@ const TabAdminContent = ({ node, project, contractors }: Props) => {
         <div>
           <div>{TextResources.Inspector_Admin_Status}</div>
           <Select
-            value={node.status ?? "NotSet"} // TODO: check this
-            onChange={(e: any) => handleOnChange(e, "status")}
+            value={node.statusId ?? ""}
+            onChange={(e: any) => handleOnChange(e, "statusId")}
           >
-            {node.status &&
-              Object.values(node.status)?.map((x) => (
-                <option key={x} value={x}>
-                  {x}
+            {statuses &&
+              statuses.map((x) => (
+                <option key={x.id} value={x.id}>
+                  {x.name}
                 </option>
               ))}
           </Select>

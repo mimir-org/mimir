@@ -13,7 +13,7 @@ import {
     CREATING_TYPE,
     UPDATING_TYPE,
 } from "../store/typeEditor/types";
-import { FETCHING_CONTRACTORS } from "../store/common/types";
+import { FETCHING_CONTRACTORS, FETCHING_STATUSES } from "../store/common/types";
 
 import { searchLibrary } from "./library/saga";
 import { getUser } from "./user/saga";
@@ -23,7 +23,7 @@ import {
     searchProject,
     updateProject,
 } from "./project/saga";
-import { getContractors } from "./common/saga";
+import { getContractors, getStatuses } from "./common/saga";
 import {
     getInitialData,
     getRDS,
@@ -48,5 +48,6 @@ export function* sagas() {
         takeEvery(CHANGE_ASPECT, getAttributes),
         takeEvery(CREATING_TYPE, createType),
         takeEvery(UPDATING_TYPE, updateType),
+        takeEvery(FETCHING_STATUSES, getStatuses),
     ]);
 }

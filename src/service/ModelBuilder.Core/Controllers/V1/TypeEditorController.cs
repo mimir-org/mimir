@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Mb.Core.Controllers.V1
@@ -304,6 +305,8 @@ namespace Mb.Core.Controllers.V1
 
             try
             {
+                var debugData = JsonConvert.SerializeObject(libraryType);
+                _logger.LogInformation(debugData);
                 var data = await _typeEditorService.CreateLibraryType(libraryType);
                 return Ok(data);
             }
