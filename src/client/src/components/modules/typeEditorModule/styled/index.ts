@@ -13,4 +13,6 @@ export { default as AddTerminalElement } from "./AddTerminalElement";
 export { default as PreviewArea } from "./PreviewArea";
 export { default as PreviewInstruction } from "./PreviewInstruction";
 export { default as ObjectTypeBlock } from "./ObjectTypeBlock";
+export { default as Terminals } from "./Terminals";
+export { default as InputOutputTerminals } from "./InputOutputTerminals";
 export { default as InfoWrapper } from "./InfoWrapper";

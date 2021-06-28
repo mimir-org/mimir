@@ -19,39 +19,40 @@ export const TypePreview = () => {
   ) as TypeEditorState;
 
   const saveClick = (mode) => {
-    if(mode === "new"){
+    if (mode === "new") {
       dispatch(create(state.createLibraryType));
-    } else if (mode === "edit"){
+    } else if (mode === "edit") {
       dispatch(update(state.createLibraryType));
     }
-
   };
 
   return (
-    <>
-      <ListWrapper flex={0.7} right={0}>
-        <ListHeader
-          label={TextResources.TypeEditor_New_Type_Preview}
-          chooseVisible={false}
+    <ListWrapper flex={0.7} right={0}>
+      <ListHeader
+        label={TextResources.TypeEditor_New_Type_Preview}
+        chooseVisible={false}
+      />
+      <PreviewBody />
+      <PreviewInstruction>
+        {TextResources.TypeEditor_Preview_Info}
+      </PreviewInstruction>
+      <AddEditButton>
+        <p
+          onClick={() => {
+            saveClick(state.mode);
+          }}
+        >
+          {state.mode === "new"
+            ? TextResources.TypeEditor_Button_Add
+            : TextResources.TypeEditor_Button_Edit}
+        </p>
+        <img
+          src={state.mode === "new" ? AddIcon : CheckmarkIcon}
+          alt="icon"
+          className="icon"
         />
-        <PreviewBody />
-        <PreviewInstruction>
-          {TextResources.TypeEditor_Preview_Info}
-        </PreviewInstruction>
-        <AddEditButton>
-          <p onClick={()=>{saveClick(state.mode)}}>
-            {state.mode === "new"
-              ? TextResources.TypeEditor_Button_Add
-              : TextResources.TypeEditor_Button_Edit}
-          </p>
-          <img
-            src={state.mode === "new" ? AddIcon : CheckmarkIcon}
-            alt="icon"
-            className="icon"
-          />
-        </AddEditButton>
-      </ListWrapper>
-    </>
+      </AddEditButton>
+    </ListWrapper>
   );
 };
 
