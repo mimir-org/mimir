@@ -28,7 +28,7 @@ import {
   CHANGE_EDGE_VISIBILITY,
   CHANGE_ACTIVE_BLOCKNODE,
   DELETE_PROJECT_ERROR,
-  SET_ACTIVE_CONNECTOR,
+  CHANGE_ACTIVE_CONNECTOR,
   CHANGE_ACTIVE_EDGE,
 } from "./types";
 
@@ -439,13 +439,13 @@ export function projectReducer(
         },
       };
 
-    case SET_ACTIVE_CONNECTOR:
+    case CHANGE_ACTIVE_CONNECTOR:
       return {
         ...state,
         project: {
           ...state.project,
           nodes: state.project.nodes.map((node) =>
-            node.id === action.payload.node.id
+            node?.id === action.payload.node?.id
               ? {
                   ...node,
                   connectors: node.connectors.map((conn) =>

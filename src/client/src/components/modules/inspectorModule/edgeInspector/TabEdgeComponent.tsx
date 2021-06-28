@@ -1,24 +1,24 @@
-import GetInspectorTextResource from "./helpers/GetInspectorTextResources";
-import { TabContent } from "./";
+import GetInspectorTextResource from "../helpers/GetInspectorTextResources";
 import { useCallback } from "react";
-import { RootState } from "../../../redux/store";
-import { TypeEditorState } from "../../../redux/store/typeEditor/types";
+import { RootState } from "../../../../redux/store";
+import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
 import { useDispatch, useSelector } from "react-redux";
-import { changeInspectorTab } from "../../../redux/store/inspector/actions";
-import { Node } from "../../../models";
+import { changeInspectorTab } from "../../../../redux/store/inspector/actions";
+import { Edge } from "../../../../models";
+import { TabEdgeContent } from ".";
 import {
   TabHeader,
   TabBody,
   NodeTitle,
   TabTitle,
-} from "../../../compLibrary/box/inspector";
+} from "../../../../compLibrary/box/inspector";
 
 interface Props {
-  node?: Node;
+  edge?: Edge;
   index: number;
 }
 
-const TabComponent = ({ node, index }: Props) => {
+const TabEdgeComponent = ({ edge, index }: Props) => {
   const dispatch = useDispatch();
   const isOpen = useSelector<RootState>(
     (state) => state.inspector.tabs[index]?.visible
@@ -35,10 +35,8 @@ const TabComponent = ({ node, index }: Props) => {
   return isOpen ? (
     <>
       <TabHeader active={true} onClick={handleClick}>
-        {index === 0 && node && (
-          <NodeTitle>{node.label ?? node.name}</NodeTitle>
-        )}
-        {!node && index === 1 && (
+        {index === 0 && edge && <NodeTitle>{edge.id}</NodeTitle>}
+        {!edge && index === 1 && (
           <>
             <span>{typeEditorState.createLibraryType.name} </span>
           </>
@@ -47,13 +45,13 @@ const TabComponent = ({ node, index }: Props) => {
       </TabHeader>
 
       <TabBody>
-        <TabContent node={node} index={index} />
+        <TabEdgeContent edge={edge} index={index} />
       </TabBody>
     </>
   ) : (
     <TabHeader onClick={handleClick}>
-      {index === 0 && node && <NodeTitle>{node.label ?? node.name}</NodeTitle>}
-      {!node && index === 1 && (
+      {index === 0 && edge && <NodeTitle>{edge.id}</NodeTitle>}
+      {!edge && index === 1 && (
         <>
           <span>{typeEditorState.createLibraryType.name} </span>
         </>
@@ -63,4 +61,4 @@ const TabComponent = ({ node, index }: Props) => {
   );
 };
 
-export default TabComponent;
+export default TabEdgeComponent;

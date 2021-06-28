@@ -3,7 +3,7 @@ import { NodeProps } from "react-flow-renderer";
 import { TerminalsIcon } from "../../../assets/icons/blockView";
 import { NodeBox, TerminalsMenu } from "../../../compLibrary/blockView";
 import { HandleComponent, TerminalsComponent } from "../block";
-import { setActiveConnector } from "../../../redux/store/project/actions";
+import { changeActiveConnector } from "../../../redux/store/project/actions";
 import { useDispatch } from "react-redux";
 import { Aspect, Connector } from "../../../models";
 
@@ -26,7 +26,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
 
   const onConnectorClick = (conn: Connector) => {
     showTerminalMenu(false);
-    dispatch(setActiveConnector(data, conn.id, true, 0));
+    dispatch(changeActiveConnector(data, conn.id, true, 0));
   };
 
   useEffect(() => {

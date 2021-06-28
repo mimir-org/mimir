@@ -35,30 +35,32 @@ namespace Mb.Core.Services
         public const string TerminalCategoryFileName = "termcategory";
         public const string AttributeFormatFileName = "format";
         public const string BuildStatusFileName = "buildstatus";
+        public const string PredefinedAttributeCategoryFileName = "predefined_attribute_category";
+        public const string PredefinedAttributeFileName = "predefined_attribute";
 
         private readonly IFileRepository _fileRepository;
         private readonly IRdsRepository _rdsRepository;
         private readonly IAttributeTypeRepository _attributeTypeRepository;
         private readonly ILibraryTypeRepository _libraryTypeComponentRepository;
-        private readonly ICommonRepository _commonRepository;
         private readonly IContractorRepository _contractorRepository;
         private readonly ITerminalTypeRepository _terminalTypeRepository;
         private readonly IEnumBaseRepository _enumBaseRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<TypeEditorService> _logger;
+        private readonly IPredefinedAttributeRepository _predefinedAttributeRepository;
 
-        public TypeEditorService(IFileRepository fileRepository, IRdsRepository rdsRepository, IAttributeTypeRepository attributeTypeRepository, ILibraryTypeRepository libraryTypeComponentRepository, ICommonRepository commonRepository, IContractorRepository contractorRepository, ITerminalTypeRepository terminalTypeRepository, IEnumBaseRepository enumBaseRepository, IMapper mapper, ILogger<TypeEditorService> logger)
+        public TypeEditorService(IFileRepository fileRepository, IRdsRepository rdsRepository, IAttributeTypeRepository attributeTypeRepository, ILibraryTypeRepository libraryTypeComponentRepository, IContractorRepository contractorRepository, ITerminalTypeRepository terminalTypeRepository, IEnumBaseRepository enumBaseRepository, IMapper mapper, ILogger<TypeEditorService> logger, IPredefinedAttributeRepository predefinedAttributeRepository)
         {
             _fileRepository = fileRepository;
             _rdsRepository = rdsRepository;
             _attributeTypeRepository = attributeTypeRepository;
             _libraryTypeComponentRepository = libraryTypeComponentRepository;
-            _commonRepository = commonRepository;
             _contractorRepository = contractorRepository;
             _terminalTypeRepository = terminalTypeRepository;
             _enumBaseRepository = enumBaseRepository;
             _mapper = mapper;
             _logger = logger;
+            _predefinedAttributeRepository = predefinedAttributeRepository;
         }
 
         #region Public methods
@@ -118,6 +120,16 @@ namespace Mb.Core.Services
         }
 
         /// <summary>
+        /// Get predefined attributes
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<PredefinedAttributeAm> GetPredefinedAttributes()
+        {
+            var all = _predefinedAttributeRepository.GetAll().ToList();
+            return _mapper.Map<List<PredefinedAttributeAm>>(all);
+        }
+
+        /// <summary>
         /// Get all attribute files by aspect
         /// </summary>
         /// <param name="aspect"></param>
@@ -129,6 +141,7 @@ namespace Mb.Core.Services
                 .Include(x => x.Source)
                 .Include(x => x.Condition)
                 .Include(x => x.Format)
+                .Include(x => x.Units)
                 .ToList();
             return aspect == Aspect.NotSet ?
                 all :
@@ -192,7 +205,7 @@ namespace Mb.Core.Services
             {
                 LibraryType libraryType = createLibraryType.ObjectType switch
                 {
-                    ObjectType.ObjectBlock => _mapper.Map<Models.Data.NodeType>(createLibraryType),
+                    ObjectType.ObjectBlock => _mapper.Map<NodeType>(createLibraryType),
                     ObjectType.Interface => _mapper.Map<InterfaceType>(createLibraryType),
                     ObjectType.Transport => _mapper.Map<TransportType>(createLibraryType),
                     _ => null
@@ -207,7 +220,7 @@ namespace Mb.Core.Services
 
                 switch (libraryType)
                 {
-                    case Models.Data.NodeType nt:
+                    case NodeType nt:
                     {
                         foreach (var attributeType in nt.AttributeTypes)
                         {
@@ -308,21 +321,23 @@ namespace Mb.Core.Services
 
                 //var libraryFiles = fileList.Where(x => x.ToLower().Contains(LibraryFileName)).ToList();
 
-                var unitFiles = fileList.Where(x => x.ToLower().Contains(UnitFileName)).ToList();
-                var conditionFiles = fileList.Where(x => x.ToLower().Contains(ConditionFileName)).ToList();
-                var qualifierFiles = fileList.Where(x => x.ToLower().Contains(QualifierFileName)).ToList();
-                var sourceFiles = fileList.Where(x => x.ToLower().Contains(SourceFileName)).ToList();
-                var rdsCategoryFiles = fileList.Where(x => x.ToLower().Contains(RdsCategoryFileName)).ToList();
-                var terminalCategoryFiles = fileList.Where(x => x.ToLower().Contains(TerminalCategoryFileName)).ToList();
-                var attributeFormatFiles = fileList.Where(x => x.ToLower().Contains(AttributeFormatFileName)).ToList();
-                var buildStatusFiles = fileList.Where(x => x.ToLower().Contains(BuildStatusFileName)).ToList();
+                var unitFiles = fileList.Where(x => x.ToLower().Equals(UnitFileName)).ToList();
+                var conditionFiles = fileList.Where(x => x.ToLower().Equals(ConditionFileName)).ToList();
+                var qualifierFiles = fileList.Where(x => x.ToLower().Equals(QualifierFileName)).ToList();
+                var sourceFiles = fileList.Where(x => x.ToLower().Equals(SourceFileName)).ToList();
+                var rdsCategoryFiles = fileList.Where(x => x.ToLower().Equals(RdsCategoryFileName)).ToList();
+                var terminalCategoryFiles = fileList.Where(x => x.ToLower().Equals(TerminalCategoryFileName)).ToList();
+                var attributeFormatFiles = fileList.Where(x => x.ToLower().Equals(AttributeFormatFileName)).ToList();
+                var buildStatusFiles = fileList.Where(x => x.ToLower().Equals(BuildStatusFileName)).ToList();
+                var predefinedAttributeCategoryFiles = fileList.Where(x => x.ToLower().Equals(PredefinedAttributeCategoryFileName)).ToList();
 
 
 
-                var contractorFiles = fileList.Where(x => x.ToLower().Contains(ContractorFileName)).ToList();
-                var attributeFiles = fileList.Where(x => x.ToLower().Contains(AttributeFileName)).ToList();
-                var terminalFiles = fileList.Where(x => x.ToLower().Contains(TerminalFileName)).ToList();
+                var contractorFiles = fileList.Where(x => x.ToLower().Equals(ContractorFileName)).ToList();
+                var attributeFiles = fileList.Where(x => x.ToLower().Equals(AttributeFileName)).ToList();
+                var terminalFiles = fileList.Where(x => x.ToLower().Equals(TerminalFileName)).ToList();
                 var rdsFiles = fileList.Where(x => x.ToLower().Equals(RdsFileName)).ToList();
+                var predefinedAttributeFiles = fileList.Where(x => x.ToLower().Equals(PredefinedAttributeFileName)).ToList();
 
                 //var libraries = _fileRepository.ReadAllFiles<LibraryType>(libraryFiles).ToList();
 
@@ -334,13 +349,13 @@ namespace Mb.Core.Services
                 var terminalCategories = _fileRepository.ReadAllFiles<TerminalCategory>(terminalCategoryFiles).ToList();
                 var attributeFormats = _fileRepository.ReadAllFiles<AttributeFormat>(attributeFormatFiles).ToList();
                 var buildStatuses = _fileRepository.ReadAllFiles<BuildStatus>(buildStatusFiles).ToList();
-
-
+                var predefinedCategories = _fileRepository.ReadAllFiles<PredefinedAttributeCategory>(predefinedAttributeCategoryFiles).ToList();
 
                 var contractors = _fileRepository.ReadAllFiles<Contractor>(contractorFiles).ToList();
                 var attributes = _fileRepository.ReadAllFiles<CreateAttributeType>(attributeFiles).ToList();
                 var terminals = _fileRepository.ReadAllFiles<CreateTerminalType>(terminalFiles).ToList();
                 var rds = _fileRepository.ReadAllFiles<CreateRds>(rdsFiles).ToList();
+                var predefinedAttributes = _fileRepository.ReadAllFiles<PredefinedAttribute>(predefinedAttributeFiles).ToList();
 
 
                 //await CreateAttributeTypesAsync(attributes);
@@ -355,11 +370,13 @@ namespace Mb.Core.Services
                 await CreateEnumBase<TerminalCategory>(terminalCategories);
                 await CreateEnumBase<AttributeFormat>(attributeFormats);
                 await CreateEnumBase<BuildStatus>(buildStatuses);
+                await CreateEnumBase<PredefinedAttributeCategory>(predefinedCategories);
 
                 await CreateContractorsAsync(contractors);
                 await CreateAttributeTypes(attributes);
                 await CreateTerminalTypes(terminals);
                 await CreateRdsAsync(rds);
+                await CreatePredefinedAttributes(predefinedAttributes);
             }
             catch (Exception e)
             {
@@ -516,6 +533,30 @@ namespace Mb.Core.Services
             }
             await _rdsRepository.SaveAsync();
             return data;
+        }
+
+        /// <summary>
+        /// Create Predefined attributes from a list
+        /// </summary>
+        /// <param name="attributes"></param>
+        /// <returns></returns>
+        public async Task<List<PredefinedAttribute>> CreatePredefinedAttributes(List<PredefinedAttribute> attributes)
+        {
+            if (attributes == null || !attributes.Any())
+                return new List<PredefinedAttribute>();
+
+            var existing = _predefinedAttributeRepository.GetAll().ToList();
+            var notExisting = attributes.Where(x => existing.All(y => y.Key != x.Key)).ToList();
+
+            if (!notExisting.Any())
+                return new List<PredefinedAttribute>();
+
+            foreach (var entity in notExisting)
+            {
+                await _predefinedAttributeRepository.CreateAsync(entity);
+            }
+            await _predefinedAttributeRepository.SaveAsync();
+            return attributes;
         }
 
         #endregion

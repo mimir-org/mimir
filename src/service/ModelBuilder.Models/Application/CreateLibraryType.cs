@@ -28,6 +28,10 @@ namespace Mb.Models.Application
 
         public ICollection<string> AttributeTypes { get; set; }
 
+        public string LocationType { get; set; }
+        
+        public ICollection<PredefinedAttributeAm> PredefinedAttributes { get; set; }
+
         public string TerminalTypeId { get; set; }
 
         [JsonIgnore]
