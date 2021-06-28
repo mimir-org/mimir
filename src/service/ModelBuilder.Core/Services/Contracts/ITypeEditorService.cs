@@ -15,6 +15,7 @@ namespace Mb.Core.Services.Contracts
         Dictionary<int, string> GetAspects();
         Dictionary<int, string> GetObjectTypes();
         IEnumerable<Rds> GetRds(Aspect aspect);
+        IEnumerable<PredefinedAttributeAm> GetPredefinedAttributes();
         IEnumerable<AttributeType> GetAttributeTypes(Aspect aspect);
         IEnumerable<TerminalType> GetTerminals();
         Dictionary<string, List<TerminalType>> GetTerminalsByCategory();
