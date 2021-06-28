@@ -446,7 +446,7 @@ export function projectReducer(
         project: {
           ...state.project,
           nodes: state.project.nodes.map((node) =>
-            node.id === action.payload.node.id
+            node?.id === action.payload.node?.id
               ? {
                   ...node,
                   connectors: node.connectors.map((conn) =>
@@ -465,8 +465,29 @@ export function projectReducer(
       };
 
     case CHANGE_CONNECTOR_VISIBILITY:
+      const nodeId = action.payload.nodeId;
+      const connectorId = action.payload.connector.id;
+
       return {
-        state,
+        ...state,
+        project: {
+          ...state.project,
+          nodes: state.project.nodes.map((node) =>
+            node.id === action.payload.nodeId
+              ? {
+                  ...node,
+                  connectors: node.connectors.map((conn) =>
+                    conn.id === action.payload.connector.id
+                      ? {
+                          ...conn,
+                          visible: action.payload.visible,
+                        }
+                      : conn
+                  ),
+                }
+              : node
+          ),
+        },
       };
 
     default:

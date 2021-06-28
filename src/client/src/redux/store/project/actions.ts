@@ -242,13 +242,15 @@ export function setActiveConnector(
   };
 }
 
-export function ChangeConnectorVisibility(
+export function changeConnectorVisibility(
+  nodeId: string,
   connector: Connector,
   visible: boolean
 ) {
   return {
     type: CHANGE_CONNECTOR_VISIBILITY,
     payload: {
+      nodeId,
       connector,
       visible,
     },

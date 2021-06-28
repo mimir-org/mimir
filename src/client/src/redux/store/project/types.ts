@@ -234,6 +234,7 @@ interface SetActiveConnector {
 interface ChangeConnectorVisibility {
   type: typeof CHANGE_CONNECTOR_VISIBILITY;
   payload: {
+    nodeId: string;
     connector: Connector;
     visible: boolean;
   };
