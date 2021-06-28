@@ -7,6 +7,7 @@ import {
   Aspect,
   ObjectType,
   Status,
+  LocationType,
 } from "../../../models";
 import { Dictionary } from "../../../models/project";
 import { ApiError } from "../../../models/webclient";
@@ -22,6 +23,9 @@ export const FETCHING_TERMINALS_SUCCESS_OR_ERROR =
 export const FETCHING_ATTRIBUTES = "export const FETCHING_ATTRIBUTES";
 export const FETCHING_ATTRIBUTES_SUCCESS_OR_ERROR =
   "FETCHING_ATTRIBUTES_SUCCESS_OR_ERROR";
+export const FETCHING_LOCATIONTYPES = "FETCHING_LOCATIONTYPES";
+export const FETCHING_LOCATIONTYPES_SUCCESS_OR_ERROR =
+  "FETCHING_LOCATIONTYPES_SUCCESS_OR_ERROR";
 export const CHANGE_ASPECT = "CHANGE_ASPECT";
 export const CHANGE_OBJECTTYPE = "CHANGE_OBJECTTYPE";
 export const CHANGE_TYPENAME = "CHANGE_TYPENAME";
@@ -35,6 +39,7 @@ export const UPDATING_TYPE = "UPDATING_TYPE";
 export const CHANGE_STATUS = "CHANGE_STATUS";
 export const CHANGE_RDS = "CHANGE_RDS";
 export const CHANGE_SEMANTICREFERENCE = "CHANGE_SEMANTICREFERENCE";
+export const CHANGE_LOCATION_TYPE = "CHANGE_LOCATION_TYPE";
 export const CHANGE_TERMINAL_TYPE_ID = "CHANGE_TERMINAL_TYPE_ID";
 export const UPDATE_TERMINALTYPES = "UPDATE_TERMINALTYPES";
 export const UPDATE_ATTRIBUTETYPES = "UPDATE_ATTRIBUTETYPES";
@@ -57,6 +62,7 @@ export interface TypeEditorState {
   rdsName: string;
   terminalCategory: string;
   terminalColor: string;
+  locationTypes: LocationType[];
   apiError: ApiError[];
   selectedType: string;
 }
@@ -112,6 +118,18 @@ interface FetchingAttributesActionFinished {
   type: typeof FETCHING_ATTRIBUTES_SUCCESS_OR_ERROR;
   payload: {
     AttributeType: AttributeType[];
+  };
+}
+
+interface FetchingLocationTypesAction {
+  type: typeof FETCHING_LOCATIONTYPES;
+  payload: null;
+}
+
+interface FetchingLocationTypesActionFinished {
+  type: typeof FETCHING_LOCATIONTYPES_SUCCESS_OR_ERROR;
+  payload: {
+    locationTypes: LocationType[];
   };
 }
 
@@ -185,6 +203,13 @@ export interface ChangeSemanticReference {
   };
 }
 
+export interface ChangeLocationType {
+  type: typeof CHANGE_LOCATION_TYPE;
+  payload: {
+    locationType: string;
+  };
+}
+
 export interface UpdateTerminalTypes {
   type: typeof UPDATE_TERMINALTYPES;
   payload: {
@@ -241,6 +266,8 @@ export type TypeEditorActionTypes =
   | FetchingTerminalsActionFinished
   | FetchingAttributesAction
   | FetchingAttributesActionFinished
+  | FetchingLocationTypesAction
+  | FetchingLocationTypesActionFinished
   | ChangeSelectedAspect
   | ChangeObjectType
   | ChangeTypeName
@@ -251,6 +278,7 @@ export type TypeEditorActionTypes =
   | ChangeTerminalColor
   | ChangeTerminalTypeId
   | ChangeSemanticReference
+  | ChangeLocationType
   | UpdateTerminalTypes
   | UpdateAttributesTypes
   | ChangeMode

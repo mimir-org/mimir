@@ -9,6 +9,8 @@ import {
   FETCHING_TERMINALS_SUCCESS_OR_ERROR,
   FETCHING_ATTRIBUTES,
   FETCHING_ATTRIBUTES_SUCCESS_OR_ERROR,
+  FETCHING_LOCATIONTYPES,
+  FETCHING_LOCATIONTYPES_SUCCESS_OR_ERROR,
   CHANGE_ASPECT,
   CHANGE_OBJECTTYPE,
   CHANGE_TYPENAME,
@@ -19,6 +21,7 @@ import {
   CHANGE_TERMINAL_CATEGORY,
   CHANGE_TERMINAL_COLOR,
   CHANGE_SEMANTICREFERENCE,
+  CHANGE_LOCATION_TYPE,
   CHANGE_TERMINAL_TYPE_ID,
   UPDATE_TERMINALTYPES,
   UPDATE_ATTRIBUTETYPES,
@@ -45,6 +48,7 @@ const initialState: TypeEditorState = {
     rdsId: "",
     terminalTypes: [],
     attributeTypes: [] as string[],
+    locationType: "",
     terminalTypeId: null,
   } as CreateLibraryType,
   selectedType: "",
@@ -54,6 +58,7 @@ const initialState: TypeEditorState = {
   rdsList: [],
   terminals: [],
   attributes: [],
+  locationTypes: [],
   apiError: [],
 };
 
@@ -133,6 +138,17 @@ export function typeEditorReducer(
           ? action.payload.AttributeType
           : [],
       };
+    case FETCHING_LOCATIONTYPES:
+      return {
+        ...state,
+        fetching: true,
+      };
+    case FETCHING_LOCATIONTYPES_SUCCESS_OR_ERROR:
+      return {
+        ...state,
+        fetching: false,
+        locationTypes: action.payload.locationTypes,
+      };
     case CHANGE_MODE:
       return {
         ...state,
@@ -207,6 +223,14 @@ export function typeEditorReducer(
         createLibraryType: {
           ...state.createLibraryType,
           semanticReference: action.payload.semanticReference,
+        },
+      };
+    case CHANGE_LOCATION_TYPE:
+      return {
+        ...state,
+        createLibraryType: {
+          ...state.createLibraryType,
+          locationType: action.payload.locationType,
         },
       };
     case UPDATE_TERMINALTYPES:
