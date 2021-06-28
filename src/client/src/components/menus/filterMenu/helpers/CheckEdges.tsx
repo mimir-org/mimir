@@ -1,10 +1,10 @@
 import { Edge, RelationType } from "../../../../models";
 import { IsTransportTerminal } from "../../../flow/helpers/common";
-import FindConnector from "./FindConnector";
 
 const CheckEdges = (edges: Edge[], type: RelationType | string) => {
   const elementsToRemove = [];
 
+  // Sorted on RelationType
   if (type !== null) {
     edges?.forEach((edge) => {
       if (edge.fromConnector.relationType === type) elementsToRemove.push(edge);
@@ -25,13 +25,6 @@ const CheckEdges = (edges: Edge[], type: RelationType | string) => {
       ) {
         elementsToRemove.push(edge);
       }
-      const fromConnector = FindConnector(
-        edge.fromNodeId,
-        edge.fromConnectorId
-      );
-      const toConnector = FindConnector(edge.toNodeId, edge.toConnectorId);
-      if (fromConnector) elementsToRemove.push(fromConnector);
-      if (toConnector) elementsToRemove.push(toConnector);
     });
   }
 

@@ -1,19 +1,16 @@
 import red from "../../../redux/store";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import { CheckEdges, FindConnectorNode } from "./helpers";
+import { CheckEdges } from "./helpers";
 import { Edge } from "../../../models";
 import { TextResources } from "../../../assets/textResources";
 import { MenuColumn, MenuSubHeader } from "../../../compLibrary/box/menus";
-import {
-  changeEdgeVisibility,
-  changeActiveConnector,
-} from "../../../redux/store/project/actions";
+import { changeEdgeVisibility } from "../../../redux/store/project/actions";
 
 const FilterContent = ({ type, index }) => {
   const dispatch = useDispatch();
   const edges = red.store.getState().projectState.project?.edges as Edge[];
-  let selectedElements = CheckEdges(edges, type);
+  let selectedElements = CheckEdges(edges, type) ?? [];
 
   let isChecked = edges.find((x) => x.id === selectedElements[0]?.id)?.isHidden;
   const [checked, setChecked] = useState(!isChecked);
@@ -21,25 +18,8 @@ const FilterContent = ({ type, index }) => {
   const handleChange = () => {
     if (edges) {
       setChecked(!checked);
-
       selectedElements.forEach((element) => {
-        const edgeType = Object.values(Edge);
-        const isEdge =
-          element.type === undefined ||
-          edgeType.some((x) => x === element.type?.toString());
-        if (isEdge) {
-          dispatch(changeEdgeVisibility(element, !element.isHidden));
-        } else {
-          const connectorNode = FindConnectorNode(element);
-          dispatch(
-            changeActiveConnector(
-              connectorNode,
-              element.id,
-              !element.visible,
-              0
-            )
-          );
-        }
+        dispatch(changeEdgeVisibility(element, !element.isHidden));
       });
     }
   };
