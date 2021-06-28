@@ -14,6 +14,7 @@ import {
   FETCHING_RDS,
   FETCHING_TERMINALS,
   FETCHING_ATTRIBUTES,
+  FETCHING_LOCATIONTYPES,
   CHANGE_ASPECT,
   CHANGE_OBJECTTYPE,
   CHANGE_TYPENAME,
@@ -23,6 +24,7 @@ import {
   CHANGE_TERMINAL_CATEGORY,
   CHANGE_TERMINAL_COLOR,
   CHANGE_SEMANTICREFERENCE,
+  CHANGE_LOCATION_TYPE,
   UPDATE_TERMINALTYPES,
   UPDATE_ATTRIBUTETYPES,
   CHANGE_TERMINAL_TYPE_ID,
@@ -77,6 +79,13 @@ export function getAttributes(aspect: Aspect): TypeEditorActionTypes {
     payload: {
       aspect,
     },
+  };
+}
+
+export function getLocationTypes(): TypeEditorActionTypes {
+  return {
+    type: FETCHING_LOCATIONTYPES,
+    payload: null,
   };
 }
 
@@ -166,6 +175,15 @@ export function changeTerminalTypeId(terminalTypeId: string) {
     type: CHANGE_TERMINAL_TYPE_ID,
     payload: {
       terminalTypeId,
+    },
+  };
+}
+
+export function changeLocationType(locationType: string) {
+  return {
+    type: CHANGE_LOCATION_TYPE,
+    payload: {
+      locationType,
     },
   };
 }

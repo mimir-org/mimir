@@ -73,6 +73,14 @@ export interface TerminalTypeItem {
   connectorType: ConnectorType;
 }
 
+export interface LocationType {
+  id: string;
+  name: string;
+  description: string;
+  semanticReference: string;
+  locationSubTypes: string[];
+}
+
 export interface CreateLibraryType {
   name: string;
   status: Status;
@@ -83,6 +91,7 @@ export interface CreateLibraryType {
   rdsName: string;
   terminalTypes: TerminalTypeItem[];
   attributeTypes: string[];
+  locationType: string;
   terminalTypeId: string;
   id: number;
   code: string;
@@ -99,6 +108,7 @@ export interface UpdateLibraryType {
   rdsName: string;
   terminalTypes: TerminalTypeItem[];
   attributeTypes: string[];
+  locationType: string;
   terminalTypeId: string;
   id: number;
   code: string;
