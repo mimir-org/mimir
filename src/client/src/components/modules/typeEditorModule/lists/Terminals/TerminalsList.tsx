@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../../redux/store";
 import { TypeEditorState } from "../../../../../redux/store/typeEditor/types";
-import { Aspect, ObjectType } from "../../../../../models";
+import { Aspect } from "../../../../../models";
 
 import { ListHeader } from "../ListHeader";
 import { TerminalsListBody } from "./TerminalsListBody";
@@ -21,11 +21,7 @@ export const TerminalsList = ({ aspect }: Props) => {
   const TerminalsList = () => {
     if (state.terminals) {
       let filteredTerminals = Object.entries(state.terminals);
-      if (
-        aspect === Aspect.NotSet ||
-        state.createLibraryType.objectType === ObjectType.NotSet ||
-        state.createLibraryType.name === ""
-      ) {
+      if (aspect === Aspect.NotSet) {
         filteredTerminals = [];
       }
       return filteredTerminals;

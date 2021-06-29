@@ -5,27 +5,28 @@ import {
   FETCHING_TERMINALS_SUCCESS_OR_ERROR,
   FETCHING_ATTRIBUTES_SUCCESS_OR_ERROR,
   CREATING_TYPE_SUCCESS_OR_ERROR,
+  FETCHING_LOCATIONTYPES_SUCCESS_OR_ERROR,
   TypeEditorActionTypes,
 } from "../../store/typeEditor/types";
 
 import {
-    get,
-    post,
-    put,
-    GetBadResponseData,
-    ApiError,
+  get,
+  post,
+  put,
+  GetBadResponseData,
+  ApiError,
 } from "../../../models/webclient";
 
-export function* updateType(action){
-    try {
-        console.log("Trying to update type..");
-        const url = process.env.REACT_APP_API_BASE_URL + "typeeditor";
-        const response = yield call(put, url, action.payload.libraryType);
-        // This is a bad request
-        if (response.status === 400) {
-            const data = GetBadResponseData(response);
-            console.log(data);
-            /*const apiError = {
+export function* updateType(action) {
+  try {
+    console.log("Trying to update type..");
+    const url = process.env.REACT_APP_API_BASE_URL + "typeeditor";
+    const response = yield call(put, url, action.payload.libraryType);
+    // This is a bad request
+    if (response.status === 400) {
+      const data = GetBadResponseData(response);
+      console.log(data);
+      /*const apiError = {
                 key: CREATING_TYPE_SUCCESS_OR_ERROR,
                 errorMessage: data.title,
                 errorData: data,
@@ -40,11 +41,11 @@ export function* updateType(action){
                 payload: payload,
             });
             */
-            return;
-        }
-    } catch (error) {
-        console.log(error);
+      return;
     }
+  } catch (error) {
+    console.log(error);
+  }
 }
 // eslint-disable-next-line require-yield
 export function* createType(action) {
@@ -215,6 +216,33 @@ export function* getAttributes(action) {
 
     yield statePut({
       type: FETCHING_ATTRIBUTES_SUCCESS_OR_ERROR,
+      payload: payload,
+    });
+  }
+}
+
+export function* getLocationTypes(action) {
+  try {
+    const locationTypesURL =
+      process.env.REACT_APP_API_BASE_URL + "enum/location-types";
+
+    const locationTypesResponse = yield call(get, locationTypesURL);
+
+    const payload = {
+      locationTypes: locationTypesResponse.data,
+    };
+
+    yield statePut({
+      type: FETCHING_LOCATIONTYPES_SUCCESS_OR_ERROR,
+      payload: payload,
+    });
+  } catch (error) {
+    const payload = {
+      locationTypes: [],
+    };
+
+    yield statePut({
+      type: FETCHING_LOCATIONTYPES_SUCCESS_OR_ERROR,
       payload: payload,
     });
   }

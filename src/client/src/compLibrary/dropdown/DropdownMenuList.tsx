@@ -13,7 +13,15 @@ const DropdownMenuList = styled.div`
   top: 50px;
   left: 0px;
   z-index: 1;
-  width: 99%;
+  width: 98%;
+  max-height: 250px;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export default DropdownMenuList;

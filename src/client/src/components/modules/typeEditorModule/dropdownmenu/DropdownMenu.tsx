@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { ExpandedIcon, CollapsedIcon } from "../../../../assets/icons/common";
-import GetRightMargin from "../helper/GetRightMargin";
+import { Aspect } from "../../../../models";
 import {
+  changeLocationType,
   changeSelectedAspect,
   changeSelectedObjecttype,
   changeStatus,
 } from "../../../../redux/store/typeEditor/actions";
+import GetRightMargin from "../helper/GetRightMargin";
+import { ExpandedIcon, CollapsedIcon } from "../../../../assets/icons/common";
+import { LocationTypeCategory, LocationSubType } from "../styled";
 import {
   DropdownMenuWrapper,
   DropdownMenuHeader,
@@ -16,12 +19,18 @@ import {
 import "./dropdownmenu.scss";
 
 interface Props {
+  aspect?: Aspect;
   label: string;
   placeHolder: string;
   listItems: any;
 }
 
-export const DropDownMenu = ({ label, placeHolder, listItems }: Props) => {
+export const DropDownMenu = ({
+  aspect,
+  label,
+  placeHolder,
+  listItems,
+}: Props) => {
   const dispatch = useDispatch();
 
   const [isListOpen, setIsListOpen] = useState(false);
@@ -41,6 +50,13 @@ export const DropDownMenu = ({ label, placeHolder, listItems }: Props) => {
     } else if (label === "Status") {
       dispatch(changeStatus(Number(key)));
     }
+    toggleList();
+  };
+
+  const updateLocationType = (locationTypeId, locationName) => {
+    setSelectedValue(locationName);
+    dispatch(changeLocationType(locationTypeId));
+    toggleList();
   };
 
   return (
@@ -60,17 +76,52 @@ export const DropDownMenu = ({ label, placeHolder, listItems }: Props) => {
         </div>
         {isListOpen && (
           <DropdownMenuList>
-            {listItems.map(([key, value]) => (
-              <div
-                className="listitem"
-                key={key}
-                onClick={() => handleChange([key, value])}
-              >
-                <DropdownMenuListItem>
-                  <p>{value}</p>
-                </DropdownMenuListItem>
-              </div>
-            ))}
+            {aspect === Aspect.Location
+              ? listItems.map((item) => {
+                  return (
+                    <div key={item[1].id}>
+                      {item.map((type) => {
+                        return (
+                          <div key={type}>
+                            {type.name && (
+                              <div className="listitem" key={type.id}>
+                                <LocationTypeCategory>
+                                  <p>{type.name}</p>
+                                </LocationTypeCategory>
+                                {type.locationSubTypes.map((subType) => {
+                                  return (
+                                    <LocationSubType
+                                      key={subType.id}
+                                      onClick={() =>
+                                        updateLocationType(
+                                          subType.id,
+                                          subType.name
+                                        )
+                                      }
+                                    >
+                                      <p>{subType.name}</p>
+                                    </LocationSubType>
+                                  );
+                                })}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                })
+              : listItems.map(([key, value]) => (
+                  <div
+                    className="listitem"
+                    key={key}
+                    onClick={() => handleChange([key, value])}
+                  >
+                    <DropdownMenuListItem>
+                      <p>{value}</p>
+                    </DropdownMenuListItem>
+                  </div>
+                ))}
           </DropdownMenuList>
         )}
       </DropdownMenuWrapper>

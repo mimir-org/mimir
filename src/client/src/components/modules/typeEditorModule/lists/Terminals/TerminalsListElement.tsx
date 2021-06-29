@@ -39,7 +39,6 @@ export const TerminalsListElement = ({ id, category, terminals }: Props) => {
   const [quantity, setQuantity] = useState(0);
   const [clientTerminalList, setClientTerminalList] = useState([]);
   const [expandCategory, setExpandCategory] = useState(true);
-  const [selectedTerminalId, setselectedTerminalId] = useState("");
 
   const state = useSelector<RootState>(
     (state) => state.typeEditor
@@ -62,8 +61,7 @@ export const TerminalsListElement = ({ id, category, terminals }: Props) => {
 
   const handleTerminalClick = (terminalId, terminalName, terminalColor) => {
     setsearchbarInput(terminalName);
-    setselectedTerminalId(terminalId);
-    dispatch(changeTerminalTypeId(selectedTerminalId));
+    dispatch(changeTerminalTypeId(terminalId));
     dispatch(changeTerminalColor(terminalColor));
     toggleTerminalList();
   };

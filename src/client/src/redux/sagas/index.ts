@@ -25,6 +25,7 @@ import {
 } from "./project/saga";
 import { getContractors, getStatuses } from "./common/saga";
 import {
+    getLocationTypes,
     getInitialData,
     getRDS,
     getTerminals,
@@ -43,6 +44,7 @@ export function* sagas() {
         takeEvery(SAVE_PROJECT, updateProject),
         takeEvery(FETCHING_CONTRACTORS, getContractors),
         takeEvery(FETCHING_INITIAL_DATA, getInitialData),
+        takeEvery(CHANGE_ASPECT, getLocationTypes),
         takeEvery(CHANGE_ASPECT, getRDS),
         takeEvery(CHANGE_ASPECT, getTerminals),
         takeEvery(CHANGE_ASPECT, getAttributes),

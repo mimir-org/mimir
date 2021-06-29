@@ -62,16 +62,15 @@ export const TypeEditorComponent = () => {
     return filteredAspects;
   };
 
-  //   const filterObjectTypes = () => {
-  //     let filteredtypes = Object.entries(state.objectTypes);
-  //     state.createLibraryType.aspect === Aspect.NotSet
-  //       ? (filteredtypes = [])
-  //       : state.createLibraryType.aspect === Aspect.Function
-  //       ? (filteredtypes = filteredtypes.filter(
-  //           ([, value]) => value !== "Not set"
-  //         ))
-  //       : (filteredtypes = []);
-  //   };
+  const filterObjectTypes = () => {
+    let filteredtypes;
+    if (state.createLibraryType.aspect === Aspect.Function) {
+      filteredtypes = Object.entries(state.objectTypes);
+    } else if (state.createLibraryType.aspect === Aspect.Location) {
+      filteredtypes = Object.entries(state.locationTypes);
+    }
+    return filteredtypes;
+  };
 
   const filterStatuses = () => {
     let filteredStatuses = Object.entries(state.statuses);
@@ -140,7 +139,8 @@ export const TypeEditorComponent = () => {
                 ? "Select " + TextResources.TypeEditor_Location_Type
                 : "Select " + TextResources.TypeEditor_Object_Type
             }
-            listItems={Object.entries(state.objectTypes)}
+            listItems={filterObjectTypes()}
+            aspect={state.createLibraryType.aspect}
           />
           <TypeNameInput>
             <p>{TextResources.TypeEditor_Type_Name}</p>
