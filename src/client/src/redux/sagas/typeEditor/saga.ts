@@ -6,6 +6,7 @@ import {
   FETCHING_ATTRIBUTES_SUCCESS_OR_ERROR,
   CREATING_TYPE_SUCCESS_OR_ERROR,
   FETCHING_LOCATIONTYPES_SUCCESS_OR_ERROR,
+  FETCHING_PREDEFINED_ATTRIBUTES_SUCCESS_OR_ERROR,
   TypeEditorActionTypes,
 } from "../../store/typeEditor/types";
 
@@ -243,6 +244,36 @@ export function* getLocationTypes(action) {
 
     yield statePut({
       type: FETCHING_LOCATIONTYPES_SUCCESS_OR_ERROR,
+      payload: payload,
+    });
+  }
+}
+
+export function* getPredefinedAttributes(action) {
+  try {
+    const predefinedAttributesURL =
+      process.env.REACT_APP_API_BASE_URL + "typeeditor/predefined-attributes";
+
+    const predefinedAttributesResponse = yield call(
+      get,
+      predefinedAttributesURL
+    );
+
+    const payload = {
+      predefinedAttributes: predefinedAttributesResponse.data,
+    };
+
+    yield statePut({
+      type: FETCHING_PREDEFINED_ATTRIBUTES_SUCCESS_OR_ERROR,
+      payload: payload,
+    });
+  } catch (error) {
+    const payload = {
+      predefinedAttributes: [],
+    };
+
+    yield statePut({
+      type: FETCHING_PREDEFINED_ATTRIBUTES_SUCCESS_OR_ERROR,
       payload: payload,
     });
   }

@@ -5,6 +5,7 @@ import {
   Status,
   CreateLibraryType,
   UpdateLibraryType,
+  PredefinedAttribute,
 } from "../../../models";
 import {
   CREATING_TYPE,
@@ -15,6 +16,7 @@ import {
   FETCHING_TERMINALS,
   FETCHING_ATTRIBUTES,
   FETCHING_LOCATIONTYPES,
+  FETCHING_PREDEFINED_ATTRIBUTES,
   CHANGE_ASPECT,
   CHANGE_OBJECTTYPE,
   CHANGE_TYPENAME,
@@ -25,6 +27,7 @@ import {
   CHANGE_TERMINAL_COLOR,
   CHANGE_SEMANTICREFERENCE,
   CHANGE_LOCATION_TYPE,
+  UPDATE_PREDEFINED_ATTRIBUTES,
   UPDATE_TERMINALTYPES,
   UPDATE_ATTRIBUTETYPES,
   CHANGE_TERMINAL_TYPE_ID,
@@ -85,6 +88,13 @@ export function getAttributes(aspect: Aspect): TypeEditorActionTypes {
 export function getLocationTypes(): TypeEditorActionTypes {
   return {
     type: FETCHING_LOCATIONTYPES,
+    payload: null,
+  };
+}
+
+export function getPredefinedAttributes(): TypeEditorActionTypes {
+  return {
+    type: FETCHING_PREDEFINED_ATTRIBUTES,
     payload: null,
   };
 }
@@ -193,6 +203,17 @@ export function changeSemanticReference(semanticReference: string) {
     type: CHANGE_SEMANTICREFERENCE,
     payload: {
       semanticReference,
+    },
+  };
+}
+
+export function updatePredefinedAttributes(
+  predefinedAttributes: PredefinedAttribute[]
+) {
+  return {
+    type: UPDATE_PREDEFINED_ATTRIBUTES,
+    payload: {
+      predefinedAttributes,
     },
   };
 }

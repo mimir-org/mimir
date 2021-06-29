@@ -73,6 +73,12 @@ export interface TerminalTypeItem {
   connectorType: ConnectorType;
 }
 
+export interface PredefinedAttribute {
+  key: string;
+  values: Object;
+  isMultSelect: boolean;
+}
+
 export interface LocationType {
   id: string;
   name: string;
@@ -80,7 +86,6 @@ export interface LocationType {
   semanticReference: string;
   locationSubTypes: string[];
 }
-
 export interface CreateLibraryType {
   name: string;
   status: Status;
@@ -92,6 +97,7 @@ export interface CreateLibraryType {
   terminalTypes: TerminalTypeItem[];
   attributeTypes: string[];
   locationType: string;
+  predefinedAttributes: PredefinedAttribute[];
   terminalTypeId: string;
   id: number;
   code: string;
@@ -109,6 +115,7 @@ export interface UpdateLibraryType {
   terminalTypes: TerminalTypeItem[];
   attributeTypes: string[];
   locationType: string;
+  predefinedAttributes: PredefinedAttribute[];
   terminalTypeId: string;
   id: number;
   code: string;
