@@ -76,7 +76,7 @@ export interface TerminalTypeItem {
 export interface PredefinedAttribute {
   key: string;
   values: Object;
-  isMultSelect: boolean;
+  isMultiSelect: boolean;
 }
 
 export interface LocationType {

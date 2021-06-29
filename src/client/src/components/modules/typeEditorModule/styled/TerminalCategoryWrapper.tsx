@@ -16,6 +16,20 @@ const TerminalCategoryWrapper = styled.div`
     width: 14px;
     height: 14px;
   }
+
+  .help-icon {
+    width: 12px;
+    height: 12px;
+    opacity: 0.4;
+  }
+
+  .help-icon:hover {
+    opacity: 1;
+  }
+
+  .locationAttribute {
+    padding: 9px 5px;
+  }
 `;
 
 export default TerminalCategoryWrapper;
