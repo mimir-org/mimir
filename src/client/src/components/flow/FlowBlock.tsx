@@ -12,9 +12,11 @@ import { Project, Node } from "../../models";
 import {
   changeActiveBlockNode,
   changeActiveEdge,
+  changeActiveNode,
 } from "../../redux/store/project/actions";
 import {
   useOnConnect,
+  useOnConnectStart,
   useOnDrop,
   useOnElementsRemove,
   useOnNodeDragStop,
@@ -104,6 +106,12 @@ const FlowBlock = () => {
     );
   };
 
+  const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
+    dispatch(changeActiveNode(node.id, true));
+    OnLoad(reactFlowInstance);
+    return useOnConnectStart(e, { nodeId, handleType, handleId });
+  };
+
   const OnDragOver = (event) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = "move";
@@ -161,7 +169,7 @@ const FlowBlock = () => {
     // dispatch(setNode(null));
     SetDarkModeColor(darkMode);
     OnLoad(reactFlowInstance);
-  }, [OnLoad, reactFlowInstance, dispatch, darkMode]);
+  }, [OnLoad, reactFlowInstance, darkMode]);
 
   const splitViewPosition = () => {
     if (IsLocation(splitViewNode) && IsFunction(node)) {
@@ -179,6 +187,7 @@ const FlowBlock = () => {
               nodeTypes={GetBlockNodeTypes}
               edgeTypes={GetBlockEdgeTypes}
               onConnect={OnConnect}
+              onConnectStart={OnConnectStart}
               onElementsRemove={OnElementsRemove}
               onLoad={OnLoad}
               onDrop={OnDrop}
