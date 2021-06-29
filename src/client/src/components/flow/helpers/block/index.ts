@@ -16,4 +16,6 @@ export { default as SortConnectors } from "./SortConnectors";
 export { default as FindSelectedBlockNode } from "./FindSelectedBlockNode";
 export { default as CountInputTerminals } from "./CountInputTerminals";
 export { default as CountOutputTerminals } from "./CountOutputTerminals";
+export { default as CalculateTerminalOrder } from "./CalculateTerminalOrder";
+export { default as StackTerminals } from "./StackTerminals";
 export { default as GetBlockEdgeTypes } from "./GetBlockEdgeTypes";

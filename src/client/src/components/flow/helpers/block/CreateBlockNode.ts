@@ -48,7 +48,6 @@ const CreateBlockNode = (
     selectable: true,
     connectable: true,
   };
-
   return blockNode;
 };
 

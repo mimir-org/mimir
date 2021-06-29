@@ -115,7 +115,6 @@ const FlowBlock = () => {
 
   const OnDrop = (_event) => {
     const selectedNode = FindSelectedNode();
-
     return useOnDrop(
       _event,
       dispatch,

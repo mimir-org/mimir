@@ -42,7 +42,6 @@ const FilterConnectors = (connectors, aspect) => {
       connectorList.push(conn);
   });
   return SortConnectors(connectorList);
-  //   return connectors;
 };
 
 export default FilterConnectors;

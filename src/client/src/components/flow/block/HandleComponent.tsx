@@ -1,25 +1,32 @@
 import red from "../../../redux/store";
-import { Node } from "../../../models";
+import { Connector, Node } from "../../../models";
 import { HandleBox } from "../../../compLibrary/blockView";
 import { Handle } from "react-flow-renderer";
 import { GetConnectorIcon, GetHandlePosition } from "../helpers/common";
 import { IsMainConnectNode } from "../helpers/block/connectView";
-import {
-  CountInputTerminals,
-  CountOutputTerminals,
-  FilterConnectors,
-  GetBlockHandleType,
-} from "../helpers/block";
+import { FilterConnectors, GetBlockHandleType } from "../helpers/block";
 
 interface Props {
   data: Node;
 }
 
-const calculateYPos = (amount: number) => {
-  if (amount === 1 || amount === 0) return 27;
-  if (amount === 2) return 37;
-  if (amount === 3) return 57;
-  if (amount >= 4) return 103;
+// TODO: make dynamic/remove
+// const calculateYPos = (amount: number) => {
+//   if (amount === 1 || amount === 0) return 27;
+//   if (amount === 2) return 37;
+//   if (amount === 3) return 57;
+//   if (amount >= 4) return 103;
+// };
+
+// TODO: make dynamic
+const StackTerminals = (order: number) => {
+  if (order === 0) return 50;
+  if (order === 1) return 28;
+  if (order === 2) return 72;
+  if (order === 3) return 6;
+  if (order === 4) return 94;
+  if (order === 5) return -16;
+  if (order === 6) return 116;
 };
 
 const HandleComponent = ({ data }: Props) => {
@@ -31,7 +38,7 @@ const HandleComponent = ({ data }: Props) => {
 
   return (
     <>
-      {sortedTerminals.map((conn) => {
+      {sortedTerminals.map((conn: Connector) => {
         const [type, pos] = GetBlockHandleType(conn);
         return (
           <HandleBox
@@ -42,8 +49,9 @@ const HandleComponent = ({ data }: Props) => {
             icon={GetConnectorIcon(conn.color)}
             splitNode={isSplitNode}
             mainConnectNode={IsMainConnectNode(data.id)}
-            inputYPos={calculateYPos(CountInputTerminals(sortedTerminals))}
-            outputYPos={calculateYPos(CountOutputTerminals(sortedTerminals))}
+            // inputYPos={calculateYPos(CountInputTerminals(sortedTerminals))}
+            // outputYPos={calculateYPos(CountOutputTerminals(sortedTerminals))}
+            order={StackTerminals(conn.order)}
           >
             <Handle
               type={type}
