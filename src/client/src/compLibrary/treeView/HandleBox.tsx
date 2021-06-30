@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Position } from "react-flow-renderer";
 import { ConnectorTreeViewIcon } from "../../assets/icons/blockView";
 
 const HandleBox = styled.div`
@@ -9,9 +10,15 @@ const HandleBox = styled.div`
     background: url(${ConnectorTreeViewIcon});
     border-radius: 0;
     bottom: -8px;
-    top: ${(props: { pos: string }) => props.pos === "top" && "-8px"};
-    right: ${(props: { pos: string }) => props.pos === "right" && "-6px"};
-    left: ${(props: { pos: string }) => props.pos === "left" && "-6px"};
+    top: ${(props) =>
+      props.position === Position.Left
+        ? `${props.input}%`
+        : props.position === Position.Right
+        ? `${props.output}%`
+        : props.position === Position.Top && "-8px"};
+
+    right: ${(props) => props.position === Position.Right && "-6px"};
+    left: ${(props) => props.position === Position.Left && "-6px"};
   }
 `;
 
