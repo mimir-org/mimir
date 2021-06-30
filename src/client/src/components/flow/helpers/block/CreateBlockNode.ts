@@ -5,21 +5,16 @@ import { IsFunction, IsLocation } from "../common";
 import { Size } from "../../../../compLibrary";
 import { IsMainConnectNode, SetConnectNodePosition } from "./connectView";
 
-const CreateBlockNode = (
-  node: Node,
-  mainConnectNode: Node,
-  splitView: boolean
-): FlowElement => {
-  let blockNode = null;
-  if (!node) return blockNode;
+const CreateBlockNode = (node: Node, connectNode: Node, splitView: boolean) => {
+  if (!node) return null;
 
-  const connectNodes = mainConnectNode?.connectNodes as Node[];
+  const connectNodes = connectNode?.connectNodes as Node[];
   const type = IsLocation(node) ? "BlockLocationNode" : "BlockFunctionNode";
 
   // Force node to fit Block
   let position = SetBlockNodePosition(node, splitView);
   if (connectNodes?.some((x) => x.id === node.id)) {
-    position = SetConnectNodePosition(node, mainConnectNode.id, connectNodes);
+    position = SetConnectNodePosition(node, connectNode.id, connectNodes);
   }
 
   // Handle size in ConnectView
@@ -38,18 +33,17 @@ const CreateBlockNode = (
     if (node.length === 0) node.length = Size.Node_Length;
   }
 
-  blockNode = {
+  return {
     id: node.id,
     type: type,
     data: node,
     position: position,
     isHidden: node.isHidden,
-    isSelected: node.isSelected,
     draggable: true,
     selectable: true,
     connectable: true,
-  };
-  return blockNode;
+    sourceHandle: null,
+  } as FlowElement;
 };
 
 export default CreateBlockNode;

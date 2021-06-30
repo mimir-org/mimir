@@ -39,6 +39,7 @@ export interface ProjectState {
   project: Project | null;
   projectList: [] | null;
   apiError: ApiError[];
+  refreshCount: number;
 }
 
 // Action types

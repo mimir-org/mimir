@@ -33,21 +33,19 @@ const Home = () => {
   const token = Token();
 
   return (
-    <>
-      <AzureAD provider={authProvider} forceLogin={token === null}>
-        {token && (
-          <>
-            <ExplorerModule />
-            <AccountMenu />
-            <FilterMenu />
-            <FlowModule route={params} />
-            <InspectorModule />
-            <LibraryModule />
-            <ErrorModule />
-          </>
-        )}
-      </AzureAD>
-    </>
+    <AzureAD provider={authProvider} forceLogin={token === null}>
+      {token && (
+        <>
+          <ExplorerModule />
+          <AccountMenu />
+          <FilterMenu />
+          <FlowModule route={params} />
+          <InspectorModule />
+          <LibraryModule />
+          <ErrorModule />
+        </>
+      )}
+    </AzureAD>
   );
 };
 

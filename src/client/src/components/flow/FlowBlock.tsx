@@ -104,13 +104,9 @@ const FlowBlock = () => {
     );
   };
 
-  //   const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
-  //     console.log(e.clientX, e.clientY);
-  //   };
-
-  //   const OnConnectStop = (event) => {
-  //     // console.log(event);
-  //   };
+  const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
+    console.log(e.clientX, e.clientY, handleId, e);
+  };
 
   const OnDragOver = (event) => {
     event.preventDefault();
@@ -185,6 +181,7 @@ const FlowBlock = () => {
               nodeTypes={GetBlockNodeTypes}
               edgeTypes={GetBlockEdgeTypes}
               onConnect={OnConnect}
+              onConnectStart={OnConnectStart}
               onElementsRemove={OnElementsRemove}
               onLoad={OnLoad}
               onDrop={OnDrop}

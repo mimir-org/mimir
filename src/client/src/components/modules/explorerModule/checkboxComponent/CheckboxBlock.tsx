@@ -38,9 +38,9 @@ export const CheckboxBlock = ({ node, inputLabel }: Props) => {
     }
     if (splitView) {
       IsFunction(node)
-        ? dispatch(changeActiveNode(node?.id, true))
+        ? dispatch(changeActiveNode(node.id, true))
         : dispatch(setNode(node));
-    } else dispatch(changeActiveNode(node?.id, true));
+    } else dispatch(changeActiveNode(node.id, true));
   };
 
   return (

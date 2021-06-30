@@ -113,42 +113,44 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   }, [mainConnectNode]);
 
   return (
-    <NodeBox
-      id={`BlockFunctionNode-` + data.id}
-      onMouseOver={handleOnHover}
-      onMouseOut={handleOnMouseOut}
-      width={data.width}
-      length={data.length}
-    >
-      <TerminalsMenu visible={terminalButton} onClick={onTerminalMenuClick}>
-        <img src={TerminalsIcon} alt="options" />
-      </TerminalsMenu>
-      <ConnectMenu
-        visible={connectButton && hasChildren}
-        onClick={onConnectMenuClick}
+    <>
+      <NodeBox
+        id={`BlockFunctionNode-` + data.id}
+        onMouseOver={handleOnHover}
+        onMouseOut={handleOnMouseOut}
+        width={data.width}
+        length={data.length}
       >
-        <img src={ConnectIcon} alt="options" />
-      </ConnectMenu>
+        <TerminalsMenu visible={terminalButton} onClick={onTerminalMenuClick}>
+          <img src={TerminalsIcon} alt="options" />
+        </TerminalsMenu>
+        <ConnectMenu
+          visible={connectButton && hasChildren}
+          onClick={onConnectMenuClick}
+        >
+          <img src={ConnectIcon} alt="options" />
+        </ConnectMenu>
 
-      <p className="node-name">{data.label ?? data.name}</p>
+        <p className="node-name">{data.label ?? data.name}</p>
 
-      <TerminalsComponent
-        isOpen={terminalMenu}
-        list={sortedConns}
-        width={data.width}
-        onClick={onConnectorClick}
-      />
+        <TerminalsComponent
+          isOpen={terminalMenu}
+          list={sortedConns}
+          width={data.width}
+          onClick={onConnectorClick}
+        />
 
-      <ConnectViewComponent
-        isOpen={connectMenu}
-        list={connectChildren}
-        handleClick={onConnectViewClick}
-        isChecked={isChecked}
-        width={data.width}
-      />
+        <ConnectViewComponent
+          isOpen={connectMenu}
+          list={connectChildren}
+          handleClick={onConnectViewClick}
+          isChecked={isChecked}
+          width={data.width}
+        />
+      </NodeBox>
 
       <HandleComponent data={data} />
-    </NodeBox>
+    </>
   );
 };
 
