@@ -2,12 +2,16 @@ import red from "../../../redux/store";
 import { Connector, Node } from "../../../models";
 import { HandleBox } from "../../../compLibrary/blockView";
 import { Handle } from "react-flow-renderer";
-import { GetConnectorIcon, GetHandlePosition } from "../helpers/common";
 import { IsMainConnectNode } from "../helpers/block/connectView";
+import {
+  GetConnectorIcon,
+  GetHandlePosition,
+  IsInputConnector,
+} from "../helpers/common";
 import {
   FilterConnectors,
   GetBlockHandleType,
-  StackTerminals,
+  SetTerminalYPos,
 } from "../helpers/block";
 
 interface Props {
@@ -18,14 +22,19 @@ const HandleComponent = ({ data }: Props) => {
   const splitNode = red.store.getState().splitView.node as Node;
   const sortedTerminals = FilterConnectors(data.connectors, data.aspect);
   const className = "react-flow__handle-block";
+  let outputCount = 0;
+  let inputCount = 0;
 
   return (
     <>
       {sortedTerminals.map((conn: Connector) => {
         const [type, pos] = GetBlockHandleType(conn);
+        if (IsInputConnector(conn)) inputCount++;
+        else outputCount++;
+
         return (
           <HandleBox
-            order={StackTerminals(conn.order)}
+            order={SetTerminalYPos(outputCount)}
             id={"handle-" + conn.id}
             position={GetHandlePosition(pos)}
             key={"key-" + conn.id}

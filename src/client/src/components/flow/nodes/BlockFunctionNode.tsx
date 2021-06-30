@@ -72,7 +72,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     showTerminalMenu(false);
     showConnectMenu(false);
     const order = CalculateTerminalOrder(data, 0, conn.relationType);
-    dispatch(changeActiveConnector(data, conn.id, true, order));
+    dispatch(changeActiveConnector(data, conn.id, true));
   };
 
   const onConnectViewClick = (node: Node) => {
@@ -90,7 +90,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     }
   };
 
-  const isChecked = (node: Node): boolean => {
+  const isChecked = (node: Node) => {
     let result = false;
     connectNodes?.forEach((element) => {
       if (element.id === node.id) result = true;

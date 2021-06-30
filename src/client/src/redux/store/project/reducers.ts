@@ -38,7 +38,6 @@ const initialState: ProjectState = {
   project: null,
   projectList: null,
   apiError: [],
-  refreshCount: 0,
 };
 
 export function projectReducer(
@@ -298,12 +297,10 @@ export function projectReducer(
 
     case CHANGE_ACTIVE_NODE:
       const id = action.payload.nodeId;
-      console.log(state.refreshCount);
       return {
         ...state,
         project: {
           ...state.project,
-          refreshCount: ++state.refreshCount,
           nodes: state.project.nodes.map((node) =>
             node.id === id
               ? { ...node, isSelected: action.payload.isActive }
@@ -443,12 +440,10 @@ export function projectReducer(
       };
 
     case CHANGE_ACTIVE_CONNECTOR:
-      //   console.log("HER!", state.refreshCount);
       return {
         ...state,
         project: {
           ...state.project,
-          //   refreshCount: state.refreshCount + 2,
           nodes: state.project.nodes.map((node) =>
             node?.id === action.payload.node?.id
               ? {
@@ -458,7 +453,6 @@ export function projectReducer(
                       ? {
                           ...conn,
                           visible: action.payload.visible,
-                          order: action.payload.order,
                         }
                       : conn
                   ),

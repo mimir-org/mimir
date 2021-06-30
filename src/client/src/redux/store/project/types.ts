@@ -39,7 +39,6 @@ export interface ProjectState {
   project: Project | null;
   projectList: [] | null;
   apiError: ApiError[];
-  refreshCount: number;
 }
 
 // Action types
@@ -227,7 +226,6 @@ interface ChangeActiveConnector {
     node: Node;
     connectorId: string;
     visible: boolean;
-    order: number;
   };
 }
 

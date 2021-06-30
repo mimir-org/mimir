@@ -2,14 +2,13 @@ import { FlowElement } from "react-flow-renderer";
 import { Position } from "../../../../compLibrary";
 import { Node } from "../../../../models";
 
-const CreateParentBlockNode = (node: Node): FlowElement => {
-  let elementNode = null;
-  if (!node) return elementNode;
+const CreateParentBlockNode = (node: Node) => {
+  if (!node) return null;
 
   const type = "FunctionBlock";
   const position = { x: Position.FunctionBlock_xPos, y: 0 };
 
-  elementNode = {
+  return {
     id: node.id,
     type: type,
     data: node,
@@ -18,9 +17,7 @@ const CreateParentBlockNode = (node: Node): FlowElement => {
     isSelected: false,
     draggable: false,
     selectable: false,
-  };
-
-  return elementNode;
+  } as FlowElement;
 };
 
 export default CreateParentBlockNode;
