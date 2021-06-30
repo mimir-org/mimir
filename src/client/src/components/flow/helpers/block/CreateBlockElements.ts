@@ -15,7 +15,7 @@ const CreateBlockElements = (
   splitView: boolean,
   splitViewNode: Node,
   mainConnectNodes: Node[]
-): Elements => {
+) => {
   if (!project) return;
   const elements: Elements = [];
   const nodes = project.nodes;

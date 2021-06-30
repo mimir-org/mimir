@@ -21,7 +21,7 @@ export const SplitViewComponent = () => {
     }
   }, [selectedNode]);
 
-  const handleClick = () => {
+  const onChange = () => {
     if (IsLocation(selectedNode)) return;
     if (isActive) dispatch(setNode(null));
     SetIsActive(!isActive);
@@ -30,9 +30,9 @@ export const SplitViewComponent = () => {
 
   return (
     <FooterBox visible={isVisible}>
-      <FooterContent onClick={handleClick} active={isActive}>
+      <FooterContent onClick={onChange} active={isActive}>
         <label className={"checkbox"}>
-          <input type="checkbox" checked={isActive} onChange={handleClick} />
+          <input type="checkbox" checked={isActive} onChange={onChange} />
           <span className="checkmark-footer"></span>
         </label>
         <p>{TextResources.Split_view}</p>

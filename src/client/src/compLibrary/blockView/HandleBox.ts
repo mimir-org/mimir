@@ -9,10 +9,10 @@ const HandleBox = styled.div`
 
     top: ${(props) =>
       !props.splitNode && props.position === Position.Left
-        ? props.input
-        : !props.splitNode && props.position === Position.Right
-        ? props.output
-        : "50"}%;
+        ? `${props.input}%`
+        : !props.splitNode &&
+          props.position === Position.Right &&
+          `${props.output}%`};
     right: ${(props) => props.position === Position.Right && "-16px"};
     left: ${(props) => props.position === Position.Left && "-16px"};
   }

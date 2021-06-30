@@ -8,6 +8,7 @@ import {
   GetConnectorIcon,
   GetHandlePosition,
   IsInputConnector,
+  IsLocationTerminal,
   SetTerminalYPos,
 } from "../helpers/common";
 
@@ -26,8 +27,10 @@ const HandleComponent = ({ data }: Props) => {
     <>
       {sortedTerminals.map((conn: Connector) => {
         const [type, pos] = GetBlockHandleType(conn);
-        if (IsInputConnector(conn)) inputCount++;
-        else outputCount++;
+        if (!IsLocationTerminal(conn)) {
+          if (IsInputConnector(conn)) inputCount++;
+          else outputCount++;
+        }
 
         return (
           <HandleBox

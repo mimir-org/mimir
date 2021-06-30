@@ -51,7 +51,7 @@ const AccountMenu = () => {
     if (projectState.project) dispatch(save(projectState.project));
   };
 
-  const onSaveFileClick = () => {
+  const onSaveFile = () => {
     dispatch(changeProjectMenu(PROJECT_MENU_TYPE.ACCOUNT_MENU, false));
     if (projectState.project) {
       const blob = new Blob([JSON.stringify(projectState.project, null, 2)], {
@@ -61,7 +61,7 @@ const AccountMenu = () => {
     }
   };
 
-  const onSaveLibraryFileClick = () => {
+  const onSaveLibraryFile = () => {
     dispatch(changeProjectMenu(PROJECT_MENU_TYPE.ACCOUNT_MENU, false));
     if (projectState.project) {
       const blob = new Blob([JSON.stringify(projectState.project, null, 2)], {
@@ -89,8 +89,8 @@ const AccountMenu = () => {
           <GetMenuElement type="Open" onClick={onOpenClick} />
           <GetMenuElement type="Create" onClick={onCreateClick} />
           <GetMenuElement type="Save" onClick={onSaveClick} />
-          <GetMenuElement type="SaveLibrary" onClick={onSaveLibraryFileClick} />
-          <GetMenuElement type="SaveFile" onClick={onSaveFileClick} />
+          <GetMenuElement type="SaveLibrary" onClick={onSaveLibraryFile} />
+          <GetMenuElement type="SaveFile" onClick={onSaveFile} />
           <MenuLine />
           <GetMenuElement type="ImportProject" onClick={null} />
           <GetMenuElement type="ImportLibrary" onClick={null} />
