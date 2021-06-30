@@ -70,13 +70,44 @@ export const AttributesListElement = ({
     }
   };
 
-  const handleValueCheckboxChange = ([param_key, param_value]) => {
+  const handleMultipleValuesCheckboxChange = ([param_key, param_value]) => {
     let attribute: PredefinedAttribute =
       state.createLibraryType.predefinedAttributes.find((a) => a.key === name);
     let valueslist = attribute.values;
     if (valueslist) {
       valueslist[param_key] = !param_value;
     }
+    attribute = {
+      key: name,
+      values: valueslist,
+      isMultiSelect: isMultiSelect,
+    };
+    let attributesList = state.createLibraryType.predefinedAttributes;
+    attributesList = attributesList.map((a) => {
+      if (a.key === attribute.key) {
+        a = attribute;
+      }
+      return a;
+    });
+    dispatch(updatePredefinedAttributes(attributesList));
+  };
+
+  const handleSingleValueCheckboxChange = (e) => {
+    let targetKey = e.target.value;
+    let attribute: PredefinedAttribute =
+      state.createLibraryType.predefinedAttributes.find((a) => a.key === name);
+    let valueslist = attribute.values;
+    if (valueslist) {
+      valueslist[targetKey] = !valueslist[targetKey];
+    }
+    Object.entries(valueslist)
+      .filter(([key, value]) => key !== targetKey)
+      .map(([key, value]) => {
+        if (value) {
+          valueslist[key] = false;
+        }
+        return [key, value];
+      });
     attribute = {
       key: name,
       values: valueslist,
@@ -115,7 +146,12 @@ export const AttributesListElement = ({
               {Object.entries(values)
                 .filter(([key, value]) => value === true)
                 .map(([key, value]) => {
-                  return <span key={key}>{key}, </span>;
+                  return (
+                    <span key={key}>
+                      {key}
+                      {isMultiSelect ? ", " : null}
+                    </span>
+                  );
                 })}
             </p>
             <img
@@ -131,12 +167,25 @@ export const AttributesListElement = ({
                 return (
                   <ValuesListItem key={key}>
                     <label className={"squarecheckbox"}>
-                      <input
-                        type="checkbox"
-                        defaultChecked={value}
-                        id={key}
-                        onChange={() => handleValueCheckboxChange([key, value])}
-                      />
+                      {isMultiSelect ? (
+                        <input
+                          type="checkbox"
+                          defaultChecked={value}
+                          id={key}
+                          onChange={() =>
+                            handleMultipleValuesCheckboxChange([key, value])
+                          }
+                        />
+                      ) : (
+                        <input
+                          type="radio"
+                          defaultChecked={value}
+                          name="attribute"
+                          value={key}
+                          id={key}
+                          onChange={handleSingleValueCheckboxChange}
+                        />
+                      )}
                       <span className="scheckmark"></span>
                       <label htmlFor={key}></label>
                     </label>
