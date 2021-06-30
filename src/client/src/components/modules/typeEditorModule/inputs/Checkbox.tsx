@@ -5,41 +5,45 @@ import { updateAttributesList } from "../../../../redux/store/typeEditor/actions
 import "./checkbox.scss";
 
 interface Props {
-  attributeId: string;
+  label: string;
+  id: string;
 }
 
-export const Checkbox = ({ attributeId }: Props) => {
+export const Checkbox = ({ label, id }: Props) => {
   const dispatch = useDispatch();
 
   const state = useSelector<RootState>(
     (state) => state.typeEditor
   ) as TypeEditorState;
 
-  let isSelected =
+  let attributeIsSelected =
+    label === "attribute" &&
     state.createLibraryType.attributeTypes &&
-    state.createLibraryType.attributeTypes.includes(attributeId);
+    state.createLibraryType.attributeTypes.includes(id);
 
   const handleCheckboxChange = () => {
-    let attributesArray = state.createLibraryType.attributeTypes;
-    let temp: string[];
-    if (attributeId && isSelected) {
-      temp = attributesArray.filter((a) => a !== attributeId);
-      dispatch(updateAttributesList(temp));
-    } else if (attributeId && !isSelected && attributesArray) {
-      attributesArray.push(attributeId);
-      dispatch(updateAttributesList(attributesArray));
+    if (label === "attribute") {
+      let attributesArray = state.createLibraryType.attributeTypes;
+      let temp: string[];
+      if (id && attributeIsSelected) {
+        temp = attributesArray.filter((a) => a !== id);
+        dispatch(updateAttributesList(temp));
+      } else if (id && !attributeIsSelected && attributesArray) {
+        attributesArray.push(id);
+        dispatch(updateAttributesList(attributesArray));
+      }
     }
   };
   return (
     <label className={"squarecheckbox"}>
       <input
         type="checkbox"
-        defaultChecked={isSelected}
-        id={attributeId}
+        defaultChecked={label === "attribute" && attributeIsSelected}
+        id={id}
         onChange={handleCheckboxChange}
       />
       <span className="scheckmark"></span>
-      <label htmlFor={attributeId}></label>
+      <label htmlFor={id}></label>
     </label>
   );
 };
