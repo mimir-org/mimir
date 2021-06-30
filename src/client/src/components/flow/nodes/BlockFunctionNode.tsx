@@ -34,6 +34,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const [connectMenu, showConnectMenu] = useState(false);
   const connectChildren = GetConnectChildren(data);
   const hasChildren = connectChildren?.length > 0;
+
   const sortedConns = FilterConnectors(
     data.connectors,
     data.type
@@ -110,45 +111,44 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
       allEdges.style.zIndex = "3";
     }
   }, [mainConnectNode]);
+
   return (
-    <>
-      <NodeBox
-        id={`BlockFunctionNode-` + data.id}
-        onMouseOver={handleOnHover}
-        onMouseOut={handleOnMouseOut}
-        width={data.width}
-        length={data.length}
+    <NodeBox
+      id={`BlockFunctionNode-` + data.id}
+      onMouseOver={handleOnHover}
+      onMouseOut={handleOnMouseOut}
+      width={data.width}
+      length={data.length}
+    >
+      <TerminalsMenu visible={terminalButton} onClick={onTerminalMenuClick}>
+        <img src={TerminalsIcon} alt="options" />
+      </TerminalsMenu>
+      <ConnectMenu
+        visible={connectButton && hasChildren}
+        onClick={onConnectMenuClick}
       >
-        <TerminalsMenu visible={terminalButton} onClick={onTerminalMenuClick}>
-          <img src={TerminalsIcon} alt="options" />
-        </TerminalsMenu>
-        <ConnectMenu
-          visible={connectButton && hasChildren}
-          onClick={onConnectMenuClick}
-        >
-          <img src={ConnectIcon} alt="options" />
-        </ConnectMenu>
+        <img src={ConnectIcon} alt="options" />
+      </ConnectMenu>
 
-        <p className="node-name">{data.label ?? data.name}</p>
+      <p className="node-name">{data.label ?? data.name}</p>
 
-        <TerminalsComponent
-          isOpen={terminalMenu}
-          list={sortedConns}
-          width={data.width}
-          onClick={onConnectorClick}
-        />
+      <TerminalsComponent
+        isOpen={terminalMenu}
+        list={sortedConns}
+        width={data.width}
+        onClick={onConnectorClick}
+      />
 
-        <ConnectViewComponent
-          isOpen={connectMenu}
-          list={connectChildren}
-          handleClick={onConnectViewClick}
-          isChecked={isChecked}
-          width={data.width}
-        />
+      <ConnectViewComponent
+        isOpen={connectMenu}
+        list={connectChildren}
+        handleClick={onConnectViewClick}
+        isChecked={isChecked}
+        width={data.width}
+      />
 
-        <HandleComponent data={data} />
-      </NodeBox>
-    </>
+      <HandleComponent data={data} />
+    </NodeBox>
   );
 };
 

@@ -12,11 +12,9 @@ import { Project, Node } from "../../models";
 import {
   changeActiveBlockNode,
   changeActiveEdge,
-  changeActiveNode,
 } from "../../redux/store/project/actions";
 import {
   useOnConnect,
-  useOnConnectStart,
   useOnDrop,
   useOnElementsRemove,
   useOnNodeDragStop,
@@ -106,13 +104,13 @@ const FlowBlock = () => {
     );
   };
 
-  const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
-    console.log(e.clientX, e.clientY);
-  };
+  //   const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
+  //     console.log(e.clientX, e.clientY);
+  //   };
 
-  const OnConnectStop = (event) => {
-    // console.log(event);
-  };
+  //   const OnConnectStop = (event) => {
+  //     // console.log(event);
+  //   };
 
   const OnDragOver = (event) => {
     event.preventDefault();
@@ -187,8 +185,6 @@ const FlowBlock = () => {
               nodeTypes={GetBlockNodeTypes}
               edgeTypes={GetBlockEdgeTypes}
               onConnect={OnConnect}
-              onConnectStart={OnConnectStart}
-              onConnectStop={OnConnectStop}
               onElementsRemove={OnElementsRemove}
               onLoad={OnLoad}
               onDrop={OnDrop}

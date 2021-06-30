@@ -15,9 +15,8 @@ interface Props {
 }
 
 const HandleComponent = ({ data }: Props) => {
-  const locationNode = red.store.getState().splitView.node as Node;
-  const isSplitNode = locationNode !== null;
-  const sortedTerminals = FilterConnectors(data?.connectors, data?.aspect);
+  const splitNode = red.store.getState().splitView.node as Node;
+  const sortedTerminals = FilterConnectors(data.connectors, data.aspect);
   const className = "react-flow__handle-block";
 
   return (
@@ -32,7 +31,7 @@ const HandleComponent = ({ data }: Props) => {
             key={"key-" + conn.id}
             visible={conn.visible}
             icon={GetConnectorIcon(conn.color)}
-            splitNode={isSplitNode}
+            splitNode={splitNode !== null}
             mainConnectNode={IsMainConnectNode(data.id)}
           >
             <Handle
