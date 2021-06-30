@@ -29,8 +29,8 @@ const HandleComponent = ({ data }: Props) => {
     <>
       {sortedTerminals.map((conn: Connector) => {
         const [type, pos] = GetBlockHandleType(conn);
-        if (IsInputConnector(conn)) inputCount++;
-        else outputCount++;
+        if (conn.visible && IsInputConnector(conn)) inputCount++;
+        else if (conn.visible && !IsInputConnector(conn)) outputCount++;
 
         return (
           <HandleBox

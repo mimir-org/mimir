@@ -1,8 +1,11 @@
-const StackTerminals = (count: number) => {
-  if (count === 1) return 51;
-  if (count === 4) return 30;
-  if (count === 2) return 73;
-  if (count === 3) return 9;
+/* Component to give each terminal a Y position to be handled by CSS in HandleBox */
+const SetTerminalYPos = (count: number) => {
+  const base = 50; // Middle position
+  const interval = 21;
+
+  if (count === 1) return base;
+  if (count % 2 === 0) return base - interval * (count / 2);
+  if (count % 2 !== 0) return base + interval * (count - 2);
 };
 
-export default StackTerminals;
+export default SetTerminalYPos;

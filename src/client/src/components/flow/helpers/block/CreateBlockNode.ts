@@ -42,7 +42,6 @@ const CreateBlockNode = (node: Node, connectNode: Node, splitView: boolean) => {
     draggable: true,
     selectable: true,
     connectable: true,
-    // sourceHandle: null,
   } as FlowElement;
 };
 
