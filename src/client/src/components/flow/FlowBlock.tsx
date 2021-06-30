@@ -87,10 +87,11 @@ const FlowBlock = () => {
 
   const OnElementsRemove = (elementsToRemove) => {
     const node = elementsToRemove[0];
-    const fromEdge = project.edges.find((x) => x.fromNodeId === node.id);
-    const toEdge = project.edges.find((x) => x.toNodeId === node.id);
-    if (fromEdge) elementsToRemove.push(fromEdge);
-    if (toEdge) elementsToRemove.push(toEdge);
+    project.edges.forEach((edge) => {
+      if (edge.fromNodeId === node.id || edge.toNodeId === node.id)
+        elementsToRemove.push(edge);
+    });
+
     return useOnElementsRemove(elementsToRemove, setElements, dispatch);
   };
 

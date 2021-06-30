@@ -41,29 +41,30 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   }, [data, data.id]);
 
   return (
-    <NodeBox
-      id={`BlockLocationNode-` + data.id}
-      location
-      onMouseOver={handleOnHover}
-      onMouseOut={handleOnMouseOut}
-      width={data.width}
-      length={data.length}
-    >
-      <TerminalsMenu visible={terminalButton} onClick={handleTerminalClick}>
-        <img src={TerminalsIcon} alt="options" />
-      </TerminalsMenu>
-      <p className="node-name">{data.label ?? data.name}</p>
-
-      <TerminalsComponent
-        isOpen={terminalMenu}
-        list={data.connectors}
-        type={Aspect.Location}
+    <>
+      <NodeBox
+        id={`BlockLocationNode-` + data.id}
+        location
+        onMouseOver={handleOnHover}
+        onMouseOut={handleOnMouseOut}
         width={data.width}
-        onClick={onConnectorClick}
-      />
+        length={data.length}
+      >
+        <TerminalsMenu visible={terminalButton} onClick={handleTerminalClick}>
+          <img src={TerminalsIcon} alt="options" />
+        </TerminalsMenu>
+        <p className="node-name">{data.label ?? data.name}</p>
 
+        <TerminalsComponent
+          isOpen={terminalMenu}
+          list={data.connectors}
+          type={Aspect.Location}
+          width={data.width}
+          onClick={onConnectorClick}
+        />
+      </NodeBox>
       <HandleComponent data={data} />
-    </NodeBox>
+    </>
   );
 };
 
