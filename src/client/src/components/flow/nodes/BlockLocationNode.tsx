@@ -12,7 +12,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const [terminalButton, showTerminalButton] = useState(false);
   const [terminalMenu, showTerminalMenu] = useState(false);
 
-  const handleTerminalClick = () => {
+  const onTerminalClick = () => {
     showTerminalMenu(!terminalMenu);
   };
 
@@ -29,6 +29,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
     dispatch(changeActiveConnector(data, conn.id, true));
   };
 
+  // Enforce size change of node
   useEffect(() => {
     const locationNode = document.querySelector(
       `[data-id="${data.id}"]`
@@ -44,13 +45,13 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
     <>
       <NodeBox
         id={`BlockLocationNode-` + data.id}
-        location
         onMouseOver={handleOnHover}
         onMouseOut={handleOnMouseOut}
         width={data.width}
         length={data.length}
+        location
       >
-        <TerminalsMenu visible={terminalButton} onClick={handleTerminalClick}>
+        <TerminalsMenu visible={terminalButton} onClick={onTerminalClick}>
           <img src={TerminalsIcon} alt="options" />
         </TerminalsMenu>
         <p className="node-name">{data.label ?? data.name}</p>

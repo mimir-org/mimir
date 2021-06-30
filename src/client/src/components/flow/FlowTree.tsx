@@ -107,7 +107,7 @@ const FlowTree = () => {
     dispatch(changeActiveEdge(null, false));
   };
 
-  // Force rerender
+  // Rerender
   useEffect(() => {
     SetDarkModeColor(darkMode);
     OnLoad(reactFlowInstance);

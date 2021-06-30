@@ -1,7 +1,7 @@
 import {
   SaveIcon,
   CreateProjectIcon,
-  OpenProjectIconSmall,
+  OpenProjectIcon,
   ImportLibrary,
   ImportProject,
   ExportLibrary,
@@ -15,7 +15,7 @@ const GetIcon = (type: string) => {
     case "SaveFile":
       return <img src={ExportProject} alt="save file" />;
     case "Open":
-      return <img src={OpenProjectIconSmall} alt="open" />;
+      return <img src={OpenProjectIcon} alt="open" />;
     case "Create":
       return <img src={CreateProjectIcon} alt="create" />;
     case "SaveLibrary":

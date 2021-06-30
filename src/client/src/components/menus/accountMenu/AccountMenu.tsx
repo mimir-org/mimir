@@ -11,7 +11,7 @@ import { OpenProjectMenu } from "../../project/openProject";
 import { CreateProjectMenu } from "../../project/createProject";
 import { saveAs } from "file-saver";
 import {
-  HrLine,
+  MenuLine,
   MenuBox,
   MenuMainHeader,
 } from "../../../compLibrary/box/menus";
@@ -32,26 +32,26 @@ const AccountMenu = () => {
     (state) => state.userState
   ) as UserState;
 
-  const handleAccountClick = () => {
+  const onAccountClick = () => {
     dispatch(changeProjectMenu(PROJECT_MENU_TYPE.ACCOUNT_MENU, !isOpen));
   };
 
-  const handleOpenClick = () => {
+  const onOpenClick = () => {
     dispatch(changeProjectMenu(PROJECT_MENU_TYPE.ACCOUNT_MENU, false));
     dispatch(changeProjectMenu(PROJECT_MENU_TYPE.OPEN_PROJECT_MENU, true));
   };
 
-  const handleCreateClick = () => {
+  const onCreateClick = () => {
     dispatch(changeProjectMenu(PROJECT_MENU_TYPE.ACCOUNT_MENU, false));
     dispatch(changeProjectMenu(PROJECT_MENU_TYPE.CREATE_PROJECT_MENU, true));
   };
 
-  const handleSaveClick = () => {
+  const onSaveClick = () => {
     dispatch(changeProjectMenu(PROJECT_MENU_TYPE.ACCOUNT_MENU, false));
     if (projectState.project) dispatch(save(projectState.project));
   };
 
-  const handleSaveFileClick = () => {
+  const onSaveFileClick = () => {
     dispatch(changeProjectMenu(PROJECT_MENU_TYPE.ACCOUNT_MENU, false));
     if (projectState.project) {
       const blob = new Blob([JSON.stringify(projectState.project, null, 2)], {
@@ -61,7 +61,7 @@ const AccountMenu = () => {
     }
   };
 
-  const handleSaveLibraryFileClick = () => {
+  const onSaveLibraryFileClick = () => {
     dispatch(changeProjectMenu(PROJECT_MENU_TYPE.ACCOUNT_MENU, false));
     if (projectState.project) {
       const blob = new Blob([JSON.stringify(projectState.project, null, 2)], {
@@ -70,36 +70,31 @@ const AccountMenu = () => {
       saveAs(blob, projectState.project.id + ".json");
     }
   };
-
-  const dummy = () => {};
 
   return (
     <>
       <MenuMainHeader isOpen={isOpen}>
-        <div className="text" onClick={handleAccountClick}>
+        <div className="text" onClick={onAccountClick}>
           {projectState.project && projectState.project.name}
         </div>
         <img
           src={GetMenuIcon(isOpen, type)}
           alt="icon"
           className="icon"
-          onClick={handleAccountClick}
+          onClick={onAccountClick}
         />
       </MenuMainHeader>
       {isOpen && (
         <MenuBox id={type}>
-          <GetMenuElement type="Open" onClick={handleOpenClick} />
-          <GetMenuElement type="Create" onClick={handleCreateClick} />
-          <GetMenuElement type="Save" onClick={handleSaveClick} />
-          <GetMenuElement
-            type="SaveLibrary"
-            onClick={handleSaveLibraryFileClick}
-          />
-          <GetMenuElement type="SaveFile" onClick={handleSaveFileClick} />
-          <HrLine />
-          <GetMenuElement type="ImportProject" onClick={dummy} />
-          <GetMenuElement type="ImportLibrary" onClick={dummy} />
-          <HrLine />
+          <GetMenuElement type="Open" onClick={onOpenClick} />
+          <GetMenuElement type="Create" onClick={onCreateClick} />
+          <GetMenuElement type="Save" onClick={onSaveClick} />
+          <GetMenuElement type="SaveLibrary" onClick={onSaveLibraryFileClick} />
+          <GetMenuElement type="SaveFile" onClick={onSaveFileClick} />
+          <MenuLine />
+          <GetMenuElement type="ImportProject" onClick={null} />
+          <GetMenuElement type="ImportLibrary" onClick={null} />
+          <MenuLine />
           <GetMenuElement type="Logout" userState={userState} />
         </MenuBox>
       )}

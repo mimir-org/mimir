@@ -8,9 +8,15 @@ const MenuElement = styled.div`
   cursor: ${(props) => !props.logOut && "pointer"};
 
   .text {
-    margin-left: 5px;
+    margin-left: 7px;
     display: inline;
     vertical-align: super;
+  }
+
+  .icon {
+    display: inline;
+    position: relative;
+    bottom: 3px;
   }
 
   &:hover {

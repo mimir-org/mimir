@@ -28,7 +28,6 @@ export { default as EditTypeIcon } from "./editTypeIcon.svg";
 export { default as NewProjectIcon } from "./newProjectIcon.svg";
 export { default as CreateProjectIcon } from "./createProjectIcon.svg";
 export { default as OpenProjectIcon } from "./openProjectIcon.svg";
-export { default as OpenProjectIconSmall } from "./openProjectIconSmall.svg";
 
 export { default as SaveIcon } from "./saveIcon.svg";
 export { default as SearchIcon } from "./searchIcon.svg";

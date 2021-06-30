@@ -87,7 +87,7 @@ const FlowBlock = () => {
 
   const OnElementsRemove = (elementsToRemove) => {
     const node = elementsToRemove[0];
-    project.edges.forEach((edge) => {
+    project.edges?.forEach((edge) => {
       if (edge.fromNodeId === node.id || edge.toNodeId === node.id)
         elementsToRemove.push(edge);
     });
@@ -156,7 +156,7 @@ const FlowBlock = () => {
     dispatch(changeActiveEdge(null, false));
   };
 
-  // Force rerender
+  // Rerender
   useEffect(() => {
     SetDarkModeColor(darkMode);
     OnLoad(reactFlowInstance);

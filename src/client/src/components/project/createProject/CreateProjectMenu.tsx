@@ -5,7 +5,7 @@ import { CloseIcon, RightArrowIcon } from "../../../assets/icons/common";
 import { TextResources } from "../../../assets/textResources";
 import { changeProjectMenu } from "../../../redux/store/projectMenu/actions";
 import { useState } from "react";
-import { Input, Label } from "../../../compLibrary";
+import { Input, Label, Size } from "../../../compLibrary";
 import { MenuButton } from "../../../compLibrary/buttons";
 import { create } from "../../../redux/store/project/actions";
 import {
@@ -26,24 +26,28 @@ export const CreateProjectMenu = () => {
       ).visible
   ) as boolean;
 
-  const handleReturnClick = () => {
+  const onReturnClick = () => {
     dispatch(changeProjectMenu(PROJECT_MENU_TYPE.CREATE_PROJECT_MENU, false));
   };
 
-  const handleProjectCreateClick = () => {
+  const onProjectCreateClick = () => {
     dispatch(create(projectName, projectName));
     dispatch(changeProjectMenu(PROJECT_MENU_TYPE.CREATE_PROJECT_MENU, false));
   };
 
   return (
     <>
-      <ProjectBox width={320} height={220} visible={isOpen}>
+      <ProjectBox
+        width={Size.MenuSmall_Width}
+        height={Size.MenuSmall_Height}
+        visible={isOpen}
+      >
         <ProjectBody>
           <HeaderBox>
             <img
               src={CloseIcon}
               alt="Close project"
-              onClick={handleReturnClick}
+              onClick={onReturnClick}
               className="icon"
             />
             {TextResources.Account_Create_Label}
@@ -56,13 +60,13 @@ export const CreateProjectMenu = () => {
             value={projectName}
           />
           <ButtonBox left>
-            <MenuButton onClick={() => handleReturnClick()}>
+            <MenuButton onClick={onReturnClick}>
               <p>{TextResources.Account_Cancel_Button}</p>
             </MenuButton>
           </ButtonBox>
           {projectName && (
             <ButtonBox>
-              <MenuButton onClick={() => handleProjectCreateClick()} wide>
+              <MenuButton onClick={onProjectCreateClick} wide>
                 <p>{TextResources.Account_Create_Button_Label}</p>
                 <img src={RightArrowIcon} alt="Open project" className="icon" />
               </MenuButton>
