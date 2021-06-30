@@ -26,7 +26,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
 
   const onConnectorClick = (conn: Connector) => {
     showTerminalMenu(false);
-    dispatch(changeActiveConnector(data, conn.id, true, 0));
+    dispatch(changeActiveConnector(data, conn.id, true));
   };
 
   useEffect(() => {
