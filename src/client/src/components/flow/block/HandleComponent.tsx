@@ -22,8 +22,8 @@ const HandleComponent = ({ data }: Props) => {
   const splitNode = red.store.getState().splitView.node as Node;
   const sortedTerminals = FilterConnectors(data.connectors, data.aspect);
   const className = "react-flow__handle-block";
-  let outputCount = 0;
   let inputCount = 0;
+  let outputCount = 0;
 
   return (
     <>
@@ -34,7 +34,8 @@ const HandleComponent = ({ data }: Props) => {
 
         return (
           <HandleBox
-            order={SetTerminalYPos(outputCount)}
+            input={SetTerminalYPos(inputCount)}
+            output={SetTerminalYPos(outputCount)}
             id={"handle-" + conn.id}
             position={GetHandlePosition(pos)}
             key={"key-" + conn.id}
