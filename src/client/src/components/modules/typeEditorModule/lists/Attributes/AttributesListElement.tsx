@@ -9,7 +9,7 @@ interface Props {
 export const AttributesListElement = ({ attribute }: Props) => {
   return (
     <ListElem>
-      <Checkbox attributeId={attribute[1].id} />
+      <Checkbox label="attribute" id={attribute[1].id} />
       <p>
         <span>{attribute[1].source.name} </span>
         <span>{attribute[1].entity} - </span>
