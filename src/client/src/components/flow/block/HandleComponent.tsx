@@ -13,10 +13,11 @@ import {
 interface Props {
   data: Node;
 }
+
 const HandleComponent = ({ data }: Props) => {
   const locationNode = red.store.getState().splitView.node as Node;
   const isSplitNode = locationNode !== null;
-  let sortedTerminals = FilterConnectors(data?.connectors, data?.aspect);
+  const sortedTerminals = FilterConnectors(data?.connectors, data?.aspect);
   const className = "react-flow__handle-block";
 
   return (

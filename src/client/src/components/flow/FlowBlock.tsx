@@ -107,9 +107,11 @@ const FlowBlock = () => {
   };
 
   const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
-    dispatch(changeActiveNode(node.id, true));
-    OnLoad(reactFlowInstance);
-    return useOnConnectStart(e, { nodeId, handleType, handleId });
+    console.log(e.clientX, e.clientY);
+  };
+
+  const OnConnectStop = (event) => {
+    // console.log(event);
   };
 
   const OnDragOver = (event) => {
@@ -165,8 +167,6 @@ const FlowBlock = () => {
 
   // Force rerender
   useEffect(() => {
-    // dispatch(setSplitView(false));
-    // dispatch(setNode(null));
     SetDarkModeColor(darkMode);
     OnLoad(reactFlowInstance);
   }, [OnLoad, reactFlowInstance, darkMode]);
@@ -188,6 +188,7 @@ const FlowBlock = () => {
               edgeTypes={GetBlockEdgeTypes}
               onConnect={OnConnect}
               onConnectStart={OnConnectStart}
+              onConnectStop={OnConnectStop}
               onElementsRemove={OnElementsRemove}
               onLoad={OnLoad}
               onDrop={OnDrop}

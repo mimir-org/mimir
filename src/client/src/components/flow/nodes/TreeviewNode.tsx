@@ -40,7 +40,7 @@ const TreeviewNode: FC<NodeProps> = ({ data }) => {
           <HandleBox
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}
-            key={connector.id}
+            key={"handle-treeview-" + connector.id}
             visible={connectorIsVisible(connector)}
             pos={positionHandler}
           >
@@ -48,7 +48,6 @@ const TreeviewNode: FC<NodeProps> = ({ data }) => {
               type={typeHandler}
               position={positionHandler}
               id={connector.id}
-              key={connector.id}
               className="function-treeview-handler"
             />
           </HandleBox>

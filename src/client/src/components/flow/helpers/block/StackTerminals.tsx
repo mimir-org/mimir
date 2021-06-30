@@ -1,5 +1,5 @@
 const StackTerminals = (order: number) => {
-  if (order === undefined) return 100;
+  if (order === undefined) return 50;
   if (order === 0) return 50;
   if (order === 1) return 28;
   if (order === 2) return 72;

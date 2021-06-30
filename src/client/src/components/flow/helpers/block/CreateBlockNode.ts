@@ -12,6 +12,7 @@ const CreateBlockNode = (
 ): FlowElement => {
   let blockNode = null;
   if (!node) return blockNode;
+
   const connectNodes = mainConnectNode?.connectNodes as Node[];
   const type = IsLocation(node) ? "BlockLocationNode" : "BlockFunctionNode";
 

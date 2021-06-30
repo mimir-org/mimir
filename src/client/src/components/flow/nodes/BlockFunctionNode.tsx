@@ -44,7 +44,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   ) as Node[];
 
   const mainConnectNode = mainConnectNodes.find(
-    (node) => node?.id === data.id
+    (node) => node.id === data.id
   ) as Node;
 
   const connectNodes = mainConnectNode?.connectNodes as Node[];
@@ -92,7 +92,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const isChecked = (node: Node): boolean => {
     let result = false;
     connectNodes?.forEach((element) => {
-      if (element?.id === node?.id) result = true;
+      if (element.id === node.id) result = true;
     });
     return result;
   };
@@ -110,7 +110,6 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
       allEdges.style.zIndex = "3";
     }
   }, [mainConnectNode]);
-
   return (
     <>
       <NodeBox

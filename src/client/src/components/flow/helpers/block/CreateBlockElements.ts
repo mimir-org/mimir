@@ -29,10 +29,10 @@ const CreateBlockElements = (
   edges.forEach((edge) => {
     if (
       edge.fromNodeId === selectedNode?.id &&
-      selectedNode?.aspect === edge.toNode?.aspect &&
+      selectedNode?.aspect === edge.toNode.aspect &&
       IsPartOfTerminal(edge.toConnector)
     ) {
-      const toNode = nodes.find((node) => node?.id === edge?.toNodeId);
+      const toNode = nodes.find((node) => node.id === edge.toNodeId);
       if (toNode) elements.push(CreateBlockNode(toNode, null, splitView));
     }
   });
@@ -41,10 +41,10 @@ const CreateBlockElements = (
   if (splitViewNode && splitView) {
     edges.forEach((edge) => {
       if (
-        edge.fromNodeId === splitViewNode?.id &&
-        splitViewNode?.aspect === edge.toNode?.aspect
+        edge.fromNodeId === splitViewNode.id &&
+        splitViewNode.aspect === edge.toNode.aspect
       ) {
-        const toNode = nodes.find((node) => node?.id === edge?.toNodeId);
+        const toNode = nodes.find((node) => node.id === edge.toNodeId);
         if (toNode) elements.push(CreateSplitViewNode(toNode));
       }
     });
