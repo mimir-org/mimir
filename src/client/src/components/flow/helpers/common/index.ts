@@ -26,5 +26,5 @@ export { default as SetDarkModeColor } from "./SetDarkModeColor";
 export { default as GetNodeType } from "./GetNodeType";
 export { default as GetHandleType } from "./GetHandleType";
 export { default as FindSelectedNode } from "./FindSelectedNode";
-
+export { default as SetTerminalYPos } from "./SetTerminalYPos";
 export * from "./types";

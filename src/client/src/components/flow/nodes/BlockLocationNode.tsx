@@ -16,11 +16,11 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
     showTerminalMenu(!terminalMenu);
   };
 
-  const handleOnHover = () => {
+  const onHover = () => {
     showTerminalButton(true);
   };
 
-  const handleOnMouseOut = () => {
+  const onMouseOut = () => {
     showTerminalButton(false);
   };
 
@@ -45,8 +45,8 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
     <>
       <NodeBox
         id={`BlockLocationNode-` + data.id}
-        onMouseOver={handleOnHover}
-        onMouseOut={handleOnMouseOut}
+        onMouseOver={onHover}
+        onMouseOut={onMouseOut}
         width={data.width}
         length={data.length}
         location

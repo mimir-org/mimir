@@ -3,16 +3,13 @@ import { Connector, Node } from "../../../models";
 import { HandleBox } from "../../../compLibrary/blockView";
 import { Handle } from "react-flow-renderer";
 import { IsMainConnectNode } from "../helpers/block/connectView";
+import { FilterTerminals, GetBlockHandleType } from "../helpers/block";
 import {
   GetConnectorIcon,
   GetHandlePosition,
   IsInputConnector,
-} from "../helpers/common";
-import {
-  FilterConnectors,
-  GetBlockHandleType,
   SetTerminalYPos,
-} from "../helpers/block";
+} from "../helpers/common";
 
 interface Props {
   data: Node;
@@ -20,7 +17,7 @@ interface Props {
 
 const HandleComponent = ({ data }: Props) => {
   const splitNode = red.store.getState().splitView.node as Node;
-  const sortedTerminals = FilterConnectors(data.connectors, data.aspect);
+  const sortedTerminals = FilterTerminals(data.connectors, data.aspect);
   const className = "react-flow__handle-block";
   let inputCount = 0;
   let outputCount = 0;

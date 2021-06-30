@@ -11,7 +11,7 @@ import {
   IsTransportTerminal,
 } from "../common";
 
-const FilterConnectors = (connectors, aspect) => {
+const FilterTerminals = (connectors, aspect) => {
   const isLocationNode = useSelector<RootState>((state) =>
     IsLocation(state.splitView.node)
   ) as boolean;
@@ -46,4 +46,4 @@ const FilterConnectors = (connectors, aspect) => {
   return SortConnectors(connectorList);
 };
 
-export default FilterConnectors;
+export default FilterTerminals;

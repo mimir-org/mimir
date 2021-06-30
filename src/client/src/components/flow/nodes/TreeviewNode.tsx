@@ -2,7 +2,7 @@ import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
 import { Connector } from "../../../models";
 import { HandleBox, TreeNodeNameBox } from "../../../compLibrary/treeView";
-import { SetTerminalYPos } from "../helpers/block";
+import { SetTerminalYPos } from "../helpers/common";
 import {
   GetHandleType,
   IsInputConnector,
