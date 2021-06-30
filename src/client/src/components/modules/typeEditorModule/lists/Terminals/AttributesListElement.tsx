@@ -13,9 +13,13 @@ import "./AddTerminal/directiondropdown.scss";
 import {
   TerminalListElement,
   TerminalCategoryWrapper,
-  AddTerminalWrapper,
+  SelectValue,
+  ValueHeader,
+  ValuesListWrapper,
+  ValuesListItem,
 } from "../../styled";
 import "../../inputs/checkbox.scss";
+import { useState } from "react";
 
 interface Props {
   name: string;
@@ -28,11 +32,17 @@ export const AttributesListElement = ({
   values,
   isMultiSelect,
 }: Props) => {
+  const [expandList, setExpandList] = useState(false);
+
   const dispatch = useDispatch();
 
   const state = useSelector<RootState>(
     (state) => state.typeEditor
   ) as TypeEditorState;
+
+  const toggleValuesList = () => {
+    setExpandList(!expandList);
+  };
 
   let locationAttribute: PredefinedAttribute = {
     key: name,
@@ -40,9 +50,9 @@ export const AttributesListElement = ({
     isMultiSelect: isMultiSelect,
   };
 
-  let isSelected = state.createLibraryType.predefinedAttributes.some((a) => {
-    return a.key === locationAttribute.key;
-  });
+  let isSelected = state.createLibraryType.predefinedAttributes.some(
+    (a) => a.key === locationAttribute.key
+  );
 
   const handleCheckboxChange = () => {
     let locationAttributes = state.createLibraryType.predefinedAttributes;
@@ -58,6 +68,28 @@ export const AttributesListElement = ({
         dispatch(updatePredefinedAttributes(locationAttributes));
       }
     }
+  };
+
+  const handleValueCheckboxChange = ([param_key, param_value]) => {
+    let attribute: PredefinedAttribute =
+      state.createLibraryType.predefinedAttributes.find((a) => a.key === name);
+    let valueslist = attribute.values;
+    if (valueslist) {
+      valueslist[param_key] = !param_value;
+    }
+    attribute = {
+      key: name,
+      values: valueslist,
+      isMultiSelect: isMultiSelect,
+    };
+    let attributesList = state.createLibraryType.predefinedAttributes;
+    attributesList = attributesList.map((a) => {
+      if (a.key === attribute.key) {
+        a = attribute;
+      }
+      return a;
+    });
+    dispatch(updatePredefinedAttributes(attributesList));
   };
 
   return (
@@ -76,47 +108,47 @@ export const AttributesListElement = ({
         <p className="locationAttribute">{name}</p>
         <img className="help-icon" src={HelpIcon} alt="help" />
       </TerminalCategoryWrapper>
-      <div>test</div>
-      {/* {category === selectedCategory ? (
-            <div className="terminalSearchbarWrapper">
-              <div className="terminalsearchbar_container">
-                <div className="terminalsearchbar">
-                  <label htmlFor="terminalsearch" />
-                  <input
-                    type="text"
-                    value={searchbarInput}
-                    placeholder="Search or Select Terminal Media Type"
-                    onChange={handleChange}
-                    onFocus={toggleTerminalList}
-                  />
-                  <img
-                    src={expandList ? ExpandedIcon : CollapsedIcon}
-                    alt="expand-icon"
-                    onClick={toggleTerminalList}
-                    className="icon"
-                  />
-                </div>
-                {expandList && (
-                  <div className="terminalsearchbarlist">
-                    {terminals.map((t) => {
-                      return (
-                        <div
-                          className="terminallistitem"
-                          key={t.id}
-                          onClick={() => {
-                            handleTerminalClick(t.id, t.name, t.color);
-                          }}
-                        >
-                          {t.name}
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-              <img className="helpIcon" src={HelpIcon} alt="help" />
-            </div>
-          ) : null} */}
+      {isSelected && (
+        <SelectValue>
+          <ValueHeader onClick={toggleValuesList}>
+            <p className="selectedValues">
+              {Object.entries(values)
+                .filter(([key, value]) => value === true)
+                .map(([key, value]) => {
+                  return <span key={key}>{key}, </span>;
+                })}
+            </p>
+            <img
+              src={expandList ? ExpandedIcon : CollapsedIcon}
+              alt="expand-icon"
+              onClick={toggleValuesList}
+              className="icon"
+            />
+          </ValueHeader>
+          {expandList && (
+            <ValuesListWrapper>
+              {Object.entries(values).map(([key, value]) => {
+                return (
+                  <ValuesListItem key={key}>
+                    <label className={"squarecheckbox"}>
+                      <input
+                        type="checkbox"
+                        defaultChecked={value}
+                        id={key}
+                        onChange={() => handleValueCheckboxChange([key, value])}
+                      />
+                      <span className="scheckmark"></span>
+                      <label htmlFor={key}></label>
+                    </label>
+                    <p>{key}</p>
+                    <img className="help-icon" src={HelpIcon} alt="help" />
+                  </ValuesListItem>
+                );
+              })}
+            </ValuesListWrapper>
+          )}
+        </SelectValue>
+      )}
     </TerminalListElement>
   );
 };

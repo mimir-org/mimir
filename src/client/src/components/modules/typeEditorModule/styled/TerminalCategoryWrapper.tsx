@@ -6,6 +6,10 @@ const TerminalCategoryWrapper = styled.div`
   align-items: center;
   min-height: 30px;
 
+  .squarecheckbox {
+    z-index: 0;
+  }
+
   .category {
     padding-right: 10px;
   }
