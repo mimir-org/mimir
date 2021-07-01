@@ -86,6 +86,8 @@ const FlowTree = () => {
   };
 
   const OnClick = (e) => {
+    if (!project) return;
+
     // Handle select Edge
     if (e.target.classList.contains("react-flow__edge-path")) {
       const edge = project.edges.find((x) => x.id === e.target.id);

@@ -1,47 +1,48 @@
 import { put } from "redux-saga/effects";
 import { User } from "../../../models/user";
-import { authProvider } from "../../../providers/authProvider";
 import { ApiError } from "../../../models/webclient";
+import { msalInstance } from "../../../index";
 import {
-  FETCHING_USER_SUCCESS_OR_ERROR,
-  UserActionTypes,
+    FETCHING_USER_SUCCESS_OR_ERROR,
+    UserActionTypes,
 } from "./../../store/user/types";
 
 export function* getUser(action: UserActionTypes) {
-  try {
-    const userAccount = yield authProvider.getAccount();
+    try {
 
-    const user: User = {
-      id: userAccount.userName,
-      username: userAccount.userName,
-      name: userAccount.name,
-      settings: new Map<string, string>(),
-    };
+        const account = msalInstance?.getActiveAccount();
 
-    const payload = {
-      user: user,
-      apiError: null,
-    };
+        const user: User = {
+            id: 1,
+            username: account.username,
+            name: account.name,
+            settings: new Map<string, string>(),
+        };
 
-    yield put({
-      type: FETCHING_USER_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
-  } catch (error) {
-    const apiError = {
-      key: FETCHING_USER_SUCCESS_OR_ERROR,
-      errorMessage: error.message,
-      errorData: null,
-    } as ApiError;
+        const payload = {
+            user: user,
+            apiError: null,
+        };
 
-    const payload = {
-      user: null,
-      apiError: apiError,
-    };
+        yield put({
+            type: FETCHING_USER_SUCCESS_OR_ERROR,
+            payload: payload,
+        });
+    } catch (error) {
+        const apiError = {
+            key: FETCHING_USER_SUCCESS_OR_ERROR,
+            errorMessage: error.message,
+            errorData: null,
+        } as ApiError;
 
-    yield put({
-      type: FETCHING_USER_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
-  }
+        const payload = {
+            user: null,
+            apiError: apiError,
+        };
+
+        yield put({
+            type: FETCHING_USER_SUCCESS_OR_ERROR,
+            payload: payload,
+        });
+    }
 }

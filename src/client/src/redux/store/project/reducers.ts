@@ -316,7 +316,7 @@ export function projectReducer(
                 ...state,
                 project: {
                     ...state.project,
-                    edges: state.project.edges.map((edge) =>
+                    edges: state.project.edges && state.project.edges.map((edge) =>
                         edge.id === edgeId
                             ? { ...edge, isSelected: action.payload.isActive }
                             : { ...edge, isSelected: false }

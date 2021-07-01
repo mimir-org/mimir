@@ -1,4 +1,4 @@
-import { authProvider } from "../../../../providers/authProvider";
+import { msalInstance } from "../../../../index";
 import { LogoutIcon } from "../../../../assets/icons/common";
 import { TextResources } from "../../../../assets/textResources";
 import { MenuButton } from "../../../../compLibrary/buttons";
@@ -14,7 +14,7 @@ interface Props {
 
 const GetMenuElement = ({ type, onClick, userState }: Props) => {
   const logoutClick = () => {
-    authProvider.logout();
+    msalInstance.logoutRedirect();
   };
 
   return type !== "Logout" ? (

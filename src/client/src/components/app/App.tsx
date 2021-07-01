@@ -1,4 +1,4 @@
-import { Switch, Route } from "react-router";
+import { Switch, Route, useHistory } from "react-router";
 import { Header, Home, Login } from "..";
 import { Spinner, SpinnerWrapper } from "../../compLibrary/animated";
 import { GlobalStyle } from "../../compLibrary";
@@ -11,7 +11,26 @@ import { UserState } from "../../redux/store/user/types";
 import { CommonState } from "../../redux/store/common/types";
 import { TypeEditorState } from "../../redux/store/typeEditor/types";
 
-const App = () => {
+// MSAL imports
+import {
+  MsalProvider,
+  AuthenticatedTemplate,
+  UnauthenticatedTemplate,
+} from "@azure/msal-react";
+import { IPublicClientApplication } from "@azure/msal-browser";
+import { ModelBuilderNavigationClient } from "../../models/webclient/ModelBuilderNavigationClient";
+import { msalInstance } from "../..";
+
+// Props
+type AppProps = {
+  pca: IPublicClientApplication;
+};
+
+const App = ({ pca }: AppProps) => {
+  const history = useHistory();
+  const navigationClient = new ModelBuilderNavigationClient(history);
+  pca.setNavigationClient(navigationClient);
+
   const projectState = useSelector<RootState>(
     (state) => state.projectState
   ) as ProjectState;
@@ -44,22 +63,31 @@ const App = () => {
     return "";
   };
 
+  const login = () => {
+    msalInstance.loginRedirect();
+  };
+
   return (
-    <>
-      <Header />
-      <GlobalStyle />
-      <SpinnerWrapper loading={isFetching()}>
-        <Spinner />
-      </SpinnerWrapper>
-      <AppBox loading={isFetching()}>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/home" component={Home} />
-          <Route exact path="/login" component={Login} />
-          <Route path="/home/:type" component={Home} />
-        </Switch>
-      </AppBox>
-    </>
+    <MsalProvider instance={pca}>
+      <AuthenticatedTemplate>
+        <Header />
+        <GlobalStyle />
+        <SpinnerWrapper loading={isFetching()}>
+          <Spinner />
+        </SpinnerWrapper>
+        <AppBox loading={isFetching()}>
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/home" component={Home} />
+            <Route exact path="/login" component={Login} />
+            <Route path="/home/:type" component={Home} />
+          </Switch>
+        </AppBox>
+      </AuthenticatedTemplate>
+      <UnauthenticatedTemplate>
+        <div onClick={login}>Logg inn</div>
+      </UnauthenticatedTemplate>
+    </MsalProvider>
   );
 };
 

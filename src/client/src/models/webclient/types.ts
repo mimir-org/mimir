@@ -1,4 +1,5 @@
-import { authProvider } from "../../providers/authProvider";
+import { msalInstance } from "../../../src/index";
+import { loginRequest } from "../../models/webclient/MsalConfig";
 
 export interface ApiError {
     key: string;
@@ -14,27 +15,27 @@ export interface BadRequestDataItem {
     value: string;
 }
 
-export const Token = () => {
-    const now = new Date();
-    now.setMinutes(now.getMinutes() + 2);
+export const Token = async () => {
+    const account = msalInstance.getActiveAccount();
 
-    const timestamp = Math.floor(now.getTime() / 1000);
-    let token = null;
+    // console.log(account);
+    // console.log(loginRequest);
 
-    for (const key of Object.keys(localStorage)) {
-        if (key.includes('"authority":')) {
-            const val: any = JSON.parse(localStorage.getItem(key)!);
-
-            if (val.expiresIn) {
-                if (val.expiresIn > timestamp && val.idToken === val.accessToken) {
-                    token = val.idToken;
-                } else {
-                    localStorage.removeItem(key);
-                }
-            }
-        }
+    if (!account) {
+        throw Error("No active account! Verify a user has been signed in and setActiveAccount has been called.");
     }
-    return token;
+
+    const response = await msalInstance.acquireTokenSilent({
+        ...loginRequest,
+        account: account
+    });
+
+    // console.log(response);
+    // console.log(response.accessToken);
+    // console.log(response.idToken);
+    // console.log(response.idTokenClaims);
+
+    return `Bearer ${response.accessToken}`;
 }
 
 export interface HttpResponse<T> extends Response {
@@ -42,15 +43,16 @@ export interface HttpResponse<T> extends Response {
 }
 
 export async function getUserProfile() {
-    try {
-        var idToken = await authProvider.getIdToken();
-        if (idToken) {
-            var user = { displayName: idToken.idToken.name };
-            return user;
-        }
-    } catch (error) {
-        throw new Error("Could not load user data");
-    }
+    return "Hei sveis";
+    // try {
+    //     var idToken = await msalInstance.;
+    //     if (idToken) {
+    //         var user = { displayName: idToken.idToken.name };
+    //         return user;
+    //     }
+    // } catch (error) {
+    //     throw new Error("Could not load user data");
+    // }
 }
 
 const RequestInitDefault: RequestInit = {
@@ -100,12 +102,12 @@ export async function http<T>(request: RequestInfo): Promise<HttpResponse<T>> {
     }
 }
 
-export async function get<T>(
-    path: string,
-    args: RequestInit = { method: "get" }
-): Promise<HttpResponse<T>> {
+export async function get<T>(path: string, args: RequestInit = { method: "get" }): Promise<HttpResponse<T>> {
     const req = { ...RequestInitDefault, ...args };
-    req.headers["Authorization"] = "Bearer " + Token();
+    const token = await Token();
+    console.log(token);
+    req.headers["Authorization"] = token;
+    console.log('After Token');
     return await http<T>(new Request(path, req));
 }
 
@@ -115,7 +117,7 @@ export async function post<T>(
     args: RequestInit = { method: "post", body: JSON.stringify(body) }
 ): Promise<HttpResponse<T>> {
     const req = { ...RequestInitDefault, ...args };
-    req.headers["Authorization"] = "Bearer " + Token();
+    req.headers["Authorization"] = await Token();
     return await http<T>(new Request(path, req));
 }
 
@@ -125,6 +127,6 @@ export async function put<T>(
     args: RequestInit = { method: "put", body: JSON.stringify(body) }
 ): Promise<HttpResponse<T>> {
     const req = { ...RequestInitDefault, ...args };
-    req.headers["Authorization"] = "Bearer " + Token();
+    req.headers["Authorization"] = await Token();
     return await http<T>(new Request(path, req));
 }
