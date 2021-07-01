@@ -9,7 +9,7 @@ const TerminalsBox = styled.div`
   height: auto;
   width: max-content;
   position: absolute;
-  left: ${(props) => props.width + 1}px;
+  left: ${(props) => props.width}px;
   top: -1px;
   z-index: 1;
 
