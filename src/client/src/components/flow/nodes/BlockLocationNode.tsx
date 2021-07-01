@@ -7,6 +7,7 @@ import { changeActiveConnector } from "../../../redux/store/project/actions";
 import { useDispatch } from "react-redux";
 import { Aspect, Connector } from "../../../models";
 import { CalculateTerminalOrder } from "../helpers/block";
+import { FindNodeById } from "../helpers/block/connectView";
 
 const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
@@ -33,15 +34,12 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
 
   // Enforce size change of node
   useEffect(() => {
-    const locationNode = document.querySelector(
-      `[data-id="${data.id}"]`
-    ) as HTMLElement;
-
+    const locationNode = FindNodeById(data.id);
     if (locationNode) {
       locationNode.style.width = `${data.width}px`;
       locationNode.style.height = `${data.length}px`;
     }
-  }, [data, data.id]);
+  }, [data]);
 
   return (
     <>
