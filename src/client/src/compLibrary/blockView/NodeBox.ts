@@ -3,7 +3,7 @@ import styled from "styled-components";
 const NodeBox = styled.div`
   width: ${(props) => props.width}px;
   height: ${(props) => props.length}px;
-  position: absolute;
+  position: relative;
 
   .node-name {
     display: inline-block;

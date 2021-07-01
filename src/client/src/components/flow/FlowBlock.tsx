@@ -42,6 +42,7 @@ import {
   BackgroundVariant,
   SPLITVIEW_POSITION,
 } from "../../models/project";
+import { setSplitNode } from "../../redux/store/splitView/actions";
 
 const FlowBlock = () => {
   const dispatch = useDispatch();
@@ -129,9 +130,12 @@ const FlowBlock = () => {
   };
 
   const OnElementClick = (_event, element) => {
-    dispatch(changeActiveEdge(null, false));
+    if (!splitView) {
+      dispatch(changeActiveEdge(null, false));
+    }
     dispatch(changeActiveBlockNode(element.id));
     dispatch(changeInspectorTab(0));
+    if (splitView) dispatch(setSplitNode(splitViewNode));
   };
 
   const OnClick = (e) => {

@@ -1,7 +1,7 @@
 import { Node } from "../../../../models";
 import { FlowElement } from "react-flow-renderer";
 import { SetBlockNodePosition } from ".";
-import { IsFunction, IsLocation } from "../common";
+import { IsLocation } from "../common";
 import { Size } from "../../../../compLibrary";
 import { SetConnectNodePosition } from "./connectView";
 
@@ -17,17 +17,6 @@ const CreateBlockNode = (node: Node, connectNode: Node, splitView: boolean) => {
     position = SetConnectNodePosition(node, connectNode.id, connectNodes);
   }
 
-  // Handle size
-  if (IsFunction(node)) {
-    if (connectNode?.id === node.id) {
-      node.width = Size.ConnectView_Width;
-      node.length = Size.ConnectView_Length;
-    } else {
-      node.width = Size.Node_Width;
-      node.length = Size.Node_Length;
-    }
-  }
-
   if (IsLocation(node)) {
     if (node.width === 0) node.width = Size.Node_Width;
     if (node.length === 0) node.length = Size.Node_Length;
@@ -39,7 +28,7 @@ const CreateBlockNode = (node: Node, connectNode: Node, splitView: boolean) => {
     data: node,
     position: position,
     isHidden: node.isHidden,
-    // isSelected: node.isSelected,
+    isSelected: node.isSelected,
     draggable: true,
     selectable: true,
     connectable: true,
