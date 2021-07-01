@@ -18,7 +18,7 @@ import {
   UnauthenticatedTemplate,
 } from "@azure/msal-react";
 import { IPublicClientApplication } from "@azure/msal-browser";
-import { ModelBuilderNavigationClient } from "../../models/webclient/ModelBuilderNavigationClient";
+import { ModelBuilderNavigationClient } from "../../models/webclient";
 import { msalInstance } from "../..";
 
 // Props

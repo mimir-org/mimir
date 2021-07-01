@@ -4,7 +4,7 @@ import { History } from "history";
 /**
  * This is an example for overriding the default function MSAL uses to navigate to other urls in your webpage
  */
-export class ModelBuilderNavigationClient extends NavigationClient {
+class ModelBuilderNavigationClient extends NavigationClient {
     private history: History;
 
     constructor(history: History) {
@@ -29,3 +29,5 @@ export class ModelBuilderNavigationClient extends NavigationClient {
         return false;
     }
 }
+
+export default ModelBuilderNavigationClient;
