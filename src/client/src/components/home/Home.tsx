@@ -19,10 +19,10 @@ const Home = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(search(""));
     dispatch(getUser());
     dispatch(getContractors());
     dispatch(getStatuses());
-    dispatch(search(""));
   }, [dispatch]);
 
   const params = useParams<RouteParams>();

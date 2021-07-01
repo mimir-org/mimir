@@ -1,5 +1,5 @@
 import { Switch, Route, useHistory } from "react-router";
-import { Header, Home, Login } from "..";
+import { Header, Home } from "..";
 import { Spinner, SpinnerWrapper } from "../../compLibrary/animated";
 import { GlobalStyle } from "../../compLibrary";
 import { AppBox } from "../../compLibrary/box/app";
@@ -79,7 +79,6 @@ const App = ({ pca }: AppProps) => {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/home" component={Home} />
-            <Route exact path="/login" component={Login} />
             <Route path="/home/:type" component={Home} />
           </Switch>
         </AppBox>

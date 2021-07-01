@@ -53,7 +53,6 @@ export async function get<T>(path: string, args: RequestInit = { method: "get" }
     const req = { ...RequestInitDefault, ...args };
     const token = await Token();
     req.headers["Authorization"] = token;
-    console.log('After Token');
     return await http<T>(new Request(path, req));
 }
 
