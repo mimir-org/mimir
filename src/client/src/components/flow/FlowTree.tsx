@@ -86,7 +86,6 @@ const FlowTree = () => {
   };
 
   const OnClick = (e) => {
-    // If there is no project, dont trigger click event
     if (!project) return;
 
     // Handle select Edge

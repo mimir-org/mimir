@@ -148,9 +148,9 @@ const ErrorModule = () => {
           />
           {TextResources.Error_Tile}
         </ErrorHeaderBox>
-        {errors?.map((x) => {
+        {errors?.map((x, index) => {
           return (
-            <ErrorItem key={x.module}>
+            <ErrorItem key={x.module + index}>
               <h3>{x.module}</h3>
               <p>{x.message}</p>
               {x.errorData?.items?.map((y) => {
