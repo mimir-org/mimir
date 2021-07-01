@@ -3,10 +3,14 @@ import { FlowElement } from "react-flow-renderer";
 import { SetSplitViewNodePosition } from ".";
 import { IsLocation } from "../common";
 import { Size } from "../../../../compLibrary";
+import { TextResources } from "../../../../assets/textResources";
 
 const CreateSplitViewNode = (node: Node) => {
   if (!node) return null;
-  const type = IsLocation(node) ? "BlockLocationNode" : "BlockFunctionNode";
+
+  const type = IsLocation(node)
+    ? TextResources.Type_BlockLocation
+    : TextResources.Type_BlockFunction;
 
   // Force node to fit Block
   const position = SetSplitViewNodePosition(node);

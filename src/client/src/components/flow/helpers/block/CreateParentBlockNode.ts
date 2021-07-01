@@ -1,11 +1,12 @@
 import { FlowElement } from "react-flow-renderer";
+import { TextResources } from "../../../../assets/textResources";
 import { Position } from "../../../../compLibrary";
 import { Node } from "../../../../models";
 
 const CreateParentBlockNode = (node: Node) => {
   if (!node) return null;
 
-  const type = "FunctionBlock";
+  const type = TextResources.Type_FunctionBlock;
   const position = { x: Position.FunctionBlock_xPos, y: 0 };
 
   return {

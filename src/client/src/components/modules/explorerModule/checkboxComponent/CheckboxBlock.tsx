@@ -14,6 +14,7 @@ interface Props {
 
 export const CheckboxBlock = ({ node, inputLabel }: Props) => {
   const dispatch = useDispatch();
+
   const splitView = useSelector<RootState>(
     (state) => state.splitView.visible
   ) as boolean;
@@ -23,10 +24,10 @@ export const CheckboxBlock = ({ node, inputLabel }: Props) => {
   ) as Node;
 
   const selectedNode = FindSelectedNode();
+  const isSplitViewNode =
+    (splitViewNode?.label ?? splitViewNode?.name) === inputLabel;
 
-  const isChecked = splitView
-    ? node === selectedNode || node === splitViewNode
-    : node === selectedNode;
+  const isChecked = node === selectedNode || isSplitViewNode;
 
   const handleChange = () => {
     if (IsConnectView()) {
