@@ -10,7 +10,7 @@ export function setSplitView(visible: boolean) {
   };
 }
 
-export function setNode(node: Node) {
+export function setSplitNode(node: Node) {
   return {
     type: SET_SPLIT_NODE,
     payload: {

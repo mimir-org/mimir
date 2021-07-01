@@ -1,7 +1,7 @@
 import red from "../../../../../redux/store";
 
 const IsConnectView = () => {
-  const mainConnectNodes = red.store.getState().connectView.mainNodes;
+  const mainConnectNodes = red.store.getState().connectView.mainNodes ?? [];
   return mainConnectNodes.length > 0;
 };
 

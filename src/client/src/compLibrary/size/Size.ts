@@ -20,6 +20,9 @@ const Size = {
   ModuleOpen: 331,
   InspectorModuleOpen: 257,
   ModuleClosed: 35,
+
+  MenuSmall_Width: 320,
+  MenuSmall_Height: 220,
 };
 
 export default Size;

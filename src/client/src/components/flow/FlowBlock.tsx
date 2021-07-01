@@ -87,10 +87,11 @@ const FlowBlock = () => {
 
   const OnElementsRemove = (elementsToRemove) => {
     const node = elementsToRemove[0];
-    const fromEdge = project.edges.find((x) => x.fromNodeId === node.id);
-    const toEdge = project.edges.find((x) => x.toNodeId === node.id);
-    if (fromEdge) elementsToRemove.push(fromEdge);
-    if (toEdge) elementsToRemove.push(toEdge);
+    project.edges?.forEach((edge) => {
+      if (edge.fromNodeId === node.id || edge.toNodeId === node.id)
+        elementsToRemove.push(edge);
+    });
+
     return useOnElementsRemove(elementsToRemove, setElements, dispatch);
   };
 
@@ -115,7 +116,6 @@ const FlowBlock = () => {
 
   const OnDrop = (_event) => {
     const selectedNode = FindSelectedNode();
-
     return useOnDrop(
       _event,
       dispatch,
@@ -158,13 +158,11 @@ const FlowBlock = () => {
     dispatch(changeActiveEdge(null, false));
   };
 
-  // Force rerender
+  // Rerender
   useEffect(() => {
-    // dispatch(setSplitView(false));
-    // dispatch(setNode(null));
     SetDarkModeColor(darkMode);
     OnLoad(reactFlowInstance);
-  }, [OnLoad, reactFlowInstance, dispatch, darkMode]);
+  }, [OnLoad, reactFlowInstance, darkMode]);
 
   const splitViewPosition = () => {
     if (IsLocation(splitViewNode) && IsFunction(node)) {

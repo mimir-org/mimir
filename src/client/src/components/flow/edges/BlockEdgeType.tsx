@@ -19,6 +19,9 @@ export default function BlockEdgeType({
 }) {
   const markerEnd = getMarkerEnd(ArrowHeadType.ArrowClosed, markerEndId);
 
+  // sourceY -= 15;
+  // targetY -= 15;
+
   const edgePathSmoothStep = getSmoothStepPath({
     sourceX,
     sourceY,

@@ -13,6 +13,7 @@ class Connector {
   terminalCategoryId: string;
   terminalCategory: EnumBase;
   attributes: Attribute[];
+  order: number;
 
   // Relation
   relationType: RelationType;

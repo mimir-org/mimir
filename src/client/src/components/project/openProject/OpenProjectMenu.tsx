@@ -35,16 +35,16 @@ export const OpenProjectMenu = () => {
       ).visible
   ) as boolean;
 
-  const handleReturnClick = () => {
+  const onReturnClick = () => {
     dispatch(changeProjectMenu(PROJECT_MENU_TYPE.OPEN_PROJECT_MENU, false));
   };
 
-  const handleOpenClick = () => {
+  const onOpenClick = () => {
     setConfirm(true);
     dispatch(changeProjectMenu(PROJECT_MENU_TYPE.OPEN_PROJECT_MENU, false));
   };
 
-  const handleSaveClick = () => {
+  const onSaveClick = () => {
     dispatch(get(projectId));
     setConfirm(false);
     dispatch(get(projectId));
@@ -52,7 +52,7 @@ export const OpenProjectMenu = () => {
     dispatch(changeProjectMenu("accountMenu", false));
   };
 
-  const handleNoSaveClick = () => {
+  const onNoSaveClick = () => {
     dispatch(get(projectId));
     setConfirm(false);
     dispatch(changeProjectMenu("accountMenu", false));
@@ -66,7 +66,7 @@ export const OpenProjectMenu = () => {
             <img
               src={CloseIcon}
               alt="icon"
-              onClick={handleReturnClick}
+              onClick={onReturnClick}
               className="icon"
             />
             {TextResources.Account_Open_Label}
@@ -75,7 +75,7 @@ export const OpenProjectMenu = () => {
           <ProjectList />
           <ButtonBox>
             {projectId && (
-              <MenuButton onClick={handleOpenClick} wide>
+              <MenuButton onClick={onOpenClick} wide>
                 <p>{TextResources.Project_recent_open}</p>
                 <img src={RightArrowIcon} alt="icon" className="icon" />
               </MenuButton>
@@ -85,8 +85,8 @@ export const OpenProjectMenu = () => {
       </ProjectBox>
       {confirm && (
         <MessageComponent
-          handleSave={handleSaveClick}
-          handleNoSave={handleNoSaveClick}
+          handleSave={onSaveClick}
+          handleNoSave={onNoSaveClick}
         />
       )}
     </>

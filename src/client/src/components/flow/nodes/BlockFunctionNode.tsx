@@ -8,7 +8,7 @@ import { TerminalsIcon, ConnectIcon } from "../../../assets/icons/blockView";
 import { changeActiveConnector } from "../../../redux/store/project/actions";
 import { TerminalsComponent, ConnectViewComponent } from "../block";
 import { HandleComponent } from "../block";
-import { FilterConnectors } from "../helpers/block";
+import { CalculateTerminalOrder, FilterTerminals } from "../helpers/block";
 import {
   GetConnectChildren,
   IsMainConnectNode,
@@ -34,7 +34,8 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const [connectMenu, showConnectMenu] = useState(false);
   const connectChildren = GetConnectChildren(data);
   const hasChildren = connectChildren?.length > 0;
-  const sortedConns = FilterConnectors(
+
+  const sortedConns = FilterTerminals(
     data.connectors,
     data.type
   ) as Connector[];
@@ -44,7 +45,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   ) as Node[];
 
   const mainConnectNode = mainConnectNodes.find(
-    (node) => node?.id === data.id
+    (node) => node.id === data.id
   ) as Node;
 
   const connectNodes = mainConnectNode?.connectNodes as Node[];
@@ -57,12 +58,12 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     showConnectMenu(!connectMenu);
   };
 
-  const handleOnHover = () => {
+  const onHover = () => {
     if (sortedConns.length > 0) showTerminalButton(true);
     showConnectButton(true);
   };
 
-  const handleOnMouseOut = () => {
+  const onMouseOut = () => {
     showTerminalButton(false);
     showConnectButton(false);
   };
@@ -70,7 +71,8 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const onConnectorClick = (conn: Connector) => {
     showTerminalMenu(false);
     showConnectMenu(false);
-    dispatch(changeActiveConnector(data, conn.id, true, 0));
+    const order = CalculateTerminalOrder(data, 0, conn.relationType);
+    dispatch(changeActiveConnector(data, conn.id, true, order));
   };
 
   const onConnectViewClick = (node: Node) => {
@@ -88,10 +90,10 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     }
   };
 
-  const isChecked = (node: Node): boolean => {
+  const isChecked = (node: Node) => {
     let result = false;
     connectNodes?.forEach((element) => {
-      if (element?.id === node?.id) result = true;
+      if (element.id === node.id) result = true;
     });
     return result;
   };
@@ -114,8 +116,8 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     <>
       <NodeBox
         id={`BlockFunctionNode-` + data.id}
-        onMouseOver={handleOnHover}
-        onMouseOut={handleOnMouseOut}
+        onMouseOver={onHover}
+        onMouseOut={onMouseOut}
         width={data.width}
         length={data.length}
       >
@@ -145,9 +147,9 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
           isChecked={isChecked}
           width={data.width}
         />
-
-        <HandleComponent data={data} />
       </NodeBox>
+
+      <HandleComponent data={data} />
     </>
   );
 };

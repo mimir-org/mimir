@@ -1,6 +1,6 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
-import { HandleBox } from "../../../compLibrary/treeView";
+import { TreeHandleBox } from "../../../compLibrary/treeView";
 import { GetFlowAspectIcon, GetHandleType } from "../helpers/common";
 
 const Aspect: FC<NodeProps> = ({ data }) => {
@@ -31,7 +31,7 @@ const Aspect: FC<NodeProps> = ({ data }) => {
       {data.connectors?.map((connector) => {
         const [typeHandler, positionHandler] = GetHandleType(connector);
         return (
-          <HandleBox
+          <TreeHandleBox
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}
             key={connector.id}
@@ -45,7 +45,7 @@ const Aspect: FC<NodeProps> = ({ data }) => {
               key={connector.id}
               className="function-treeview-handler"
             />
-          </HandleBox>
+          </TreeHandleBox>
         );
       })}
       {/* TODO: Fix inline styling */}

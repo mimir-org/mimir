@@ -19,7 +19,7 @@ const GetMenuElement = ({ type, onClick, userState }: Props) => {
 
   return type !== "Logout" ? (
     <MenuElement onClick={onClick}>
-      {GetIcon(type)}
+      <div className="icon">{GetIcon(type)}</div>
       <p className="text">{GetText(type)}</p>
     </MenuElement>
   ) : (

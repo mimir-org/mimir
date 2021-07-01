@@ -23,9 +23,9 @@ export const AspectComponent = ({ node, label }: Props) => {
   const aspectIcon = GetAspectIcon(node);
   const color = GetAspectColor(node, true);
   const nodes = red.store.getState().projectState.project.nodes as Node[];
-  const children = nodes.filter((node) => !IsAspectNode(node));
+  const children = nodes.filter((node) => !IsAspectNode(node)) ?? [];
 
-  const handleExpandClick = () => {
+  const onExpandClick = () => {
     setExpanded(!expanded);
   };
 
@@ -44,7 +44,7 @@ export const AspectComponent = ({ node, label }: Props) => {
           className="expandIcon"
           src={expandIcon}
           alt="expand-icon"
-          onClick={handleExpandClick}
+          onClick={onExpandClick}
         ></img>
       </AspectBox>
       {expanded &&

@@ -19,13 +19,13 @@ export const TerminalsList = ({ aspect }: Props) => {
   ) as TypeEditorState;
 
   const TerminalsList = () => {
-    if (state.terminals) {
-      let filteredTerminals = Object.entries(state.terminals);
-      if (aspect === Aspect.NotSet) {
-        filteredTerminals = [];
-      }
-      return filteredTerminals;
+    let filteredTerminals = [];
+    if (aspect === Aspect.Function && state.terminals) {
+      filteredTerminals = Object.entries(state.terminals);
+    } else if (aspect === Aspect.Location && state.predefinedAttributes) {
+      filteredTerminals = Object.entries(state.predefinedAttributes);
     }
+    return filteredTerminals;
   };
 
   return (
@@ -38,7 +38,7 @@ export const TerminalsList = ({ aspect }: Props) => {
         }
         chooseVisible={true}
       />
-      <TerminalsListBody listElements={TerminalsList()} />
+      <TerminalsListBody aspect={aspect} listElements={TerminalsList()} />
     </ListWrapper>
   );
 };

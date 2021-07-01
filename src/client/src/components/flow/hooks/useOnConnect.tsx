@@ -3,7 +3,7 @@ import { SaveEventData } from "../../../redux/store/localStorage/localStorage";
 import { CreateId } from "../helpers/common";
 import { addEdge } from "react-flow-renderer";
 import { createEdge } from "../../../redux/store/project/actions";
-import { Edge, Node } from "../../../models";
+import { Connector, Edge, Node } from "../../../models";
 
 const useOnConnect = (
   params,
@@ -13,32 +13,34 @@ const useOnConnect = (
   edgeType: EdgeType
 ) => {
   SaveEventData(null, "edgeEvent");
-
   const createdId = CreateId();
-  const sourceNode = project.nodes.find((x) => x.id === params.source) as Node;
-  const targetNode = project.nodes.find((x) => x.id === params.target) as Node;
-  let fromConnector = null;
-  let toConnector = null;
-  let currentEdge = null;
 
-  // TODO: refactor
-  for (let i = 0; i < project.nodes.length; i++) {
-    for (let j = 0; j < project.nodes[i].connectors.length; j++) {
-      if (project.nodes[i].connectors[j].id === params.sourceHandle)
-        fromConnector = project.nodes[i].connectors[j];
+  const sourceNode = project.nodes.find(
+    (node: Node) => node.id === params.source
+  ) as Node;
 
-      if (project.nodes[i].connectors[j].id === params.targetHandle)
-        toConnector = project.nodes[i].connectors[j];
-    }
-  }
+  const targetNode = project.nodes.find(
+    (node: Node) => node.id === params.target
+  ) as Node;
+
+  let fromConnector: Connector;
+  let toConnector: Connector;
+  let currentEdge: Edge;
+
+  project.nodes?.forEach((node: Node) => {
+    node.connectors?.forEach((conn: Connector) => {
+      if (conn.id === params.sourceHandle) fromConnector = conn;
+      if (conn.id === params.targetHandle) toConnector = conn;
+    });
+  });
 
   const existingEdge = project.edges?.find(
-    (x) =>
-      x.fromConnectorId === params.sourceHandle.id &&
-      x.toConnectorId === params.targetHandle.id &&
-      x.fromNodeId === sourceNode.id &&
-      x.toNodeId === targetNode.id &&
-      x.isHidden === targetNode.isHidden
+    (edge: Edge) =>
+      edge.fromConnectorId === params.sourceHandle.id &&
+      edge.toConnectorId === params.targetHandle.id &&
+      edge.fromNodeId === sourceNode.id &&
+      edge.toNodeId === targetNode.id &&
+      edge.isHidden === targetNode.isHidden
   );
 
   if (!existingEdge) {

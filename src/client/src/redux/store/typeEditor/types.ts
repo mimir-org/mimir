@@ -8,6 +8,7 @@ import {
   ObjectType,
   Status,
   LocationType,
+  PredefinedAttribute,
 } from "../../../models";
 import { Dictionary } from "../../../models/project";
 import { ApiError } from "../../../models/webclient";
@@ -26,6 +27,9 @@ export const FETCHING_ATTRIBUTES_SUCCESS_OR_ERROR =
 export const FETCHING_LOCATIONTYPES = "FETCHING_LOCATIONTYPES";
 export const FETCHING_LOCATIONTYPES_SUCCESS_OR_ERROR =
   "FETCHING_LOCATIONTYPES_SUCCESS_OR_ERROR";
+export const FETCHING_PREDEFINED_ATTRIBUTES = "FETCHING_PREDEFINED_ATTRIBUTES";
+export const FETCHING_PREDEFINED_ATTRIBUTES_SUCCESS_OR_ERROR =
+  "FETCHING_PREDEFINED_ATTRIBUTES_SUCCESS_OR_ERROR";
 export const CHANGE_ASPECT = "CHANGE_ASPECT";
 export const CHANGE_OBJECTTYPE = "CHANGE_OBJECTTYPE";
 export const CHANGE_TYPENAME = "CHANGE_TYPENAME";
@@ -41,6 +45,7 @@ export const CHANGE_RDS = "CHANGE_RDS";
 export const CHANGE_SEMANTICREFERENCE = "CHANGE_SEMANTICREFERENCE";
 export const CHANGE_LOCATION_TYPE = "CHANGE_LOCATION_TYPE";
 export const CHANGE_TERMINAL_TYPE_ID = "CHANGE_TERMINAL_TYPE_ID";
+export const UPDATE_PREDEFINED_ATTRIBUTES = "UPDATE_PREDEFINED_ATTRIBUTES";
 export const UPDATE_TERMINALTYPES = "UPDATE_TERMINALTYPES";
 export const UPDATE_ATTRIBUTETYPES = "UPDATE_ATTRIBUTETYPES";
 export const CREATING_TYPE_SUCCESS_OR_ERROR = "CREATING_TYPE_SUCCESS_OR_ERROR";
@@ -63,6 +68,7 @@ export interface TypeEditorState {
   terminalCategory: string;
   terminalColor: string;
   locationTypes: LocationType[];
+  predefinedAttributes: PredefinedAttribute[];
   apiError: ApiError[];
   selectedType: string;
 }
@@ -130,6 +136,18 @@ interface FetchingLocationTypesActionFinished {
   type: typeof FETCHING_LOCATIONTYPES_SUCCESS_OR_ERROR;
   payload: {
     locationTypes: LocationType[];
+  };
+}
+
+interface FetchingPredefinedAttributesAction {
+  type: typeof FETCHING_PREDEFINED_ATTRIBUTES;
+  payload: null;
+}
+
+interface FetchingPredefinedAttributesActionFinished {
+  type: typeof FETCHING_PREDEFINED_ATTRIBUTES_SUCCESS_OR_ERROR;
+  payload: {
+    predefinedAttributes: PredefinedAttribute[];
   };
 }
 
@@ -210,6 +228,13 @@ export interface ChangeLocationType {
   };
 }
 
+export interface UpdatePredefinedAttributes {
+  type: typeof UPDATE_PREDEFINED_ATTRIBUTES;
+  payload: {
+    predefinedAttributes: PredefinedAttribute[];
+  };
+}
+
 export interface UpdateTerminalTypes {
   type: typeof UPDATE_TERMINALTYPES;
   payload: {
@@ -268,6 +293,8 @@ export type TypeEditorActionTypes =
   | FetchingAttributesActionFinished
   | FetchingLocationTypesAction
   | FetchingLocationTypesActionFinished
+  | FetchingPredefinedAttributesAction
+  | FetchingPredefinedAttributesActionFinished
   | ChangeSelectedAspect
   | ChangeObjectType
   | ChangeTypeName
@@ -279,6 +306,7 @@ export type TypeEditorActionTypes =
   | ChangeTerminalTypeId
   | ChangeSemanticReference
   | ChangeLocationType
+  | UpdatePredefinedAttributes
   | UpdateTerminalTypes
   | UpdateAttributesTypes
   | ChangeMode

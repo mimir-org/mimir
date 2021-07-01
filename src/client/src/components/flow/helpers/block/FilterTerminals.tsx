@@ -11,15 +11,17 @@ import {
   IsTransportTerminal,
 } from "../common";
 
-const FilterConnectors = (connectors, aspect) => {
+const FilterTerminals = (connectors, aspect) => {
   const isLocationNode = useSelector<RootState>((state) =>
     IsLocation(state.splitView.node)
   ) as boolean;
 
+  if (connectors === null || aspect === null) return [];
+
   const connectorList: Connector[] = [];
 
   if (aspect === Aspect.Location) {
-    connectors?.forEach((conn) => {
+    connectors.forEach((conn) => {
       IsLocationTerminal(conn) &&
         IsInputConnector(conn) &&
         connectorList.push(conn);
@@ -27,7 +29,7 @@ const FilterConnectors = (connectors, aspect) => {
     return connectorList;
   }
 
-  connectors?.forEach((conn) => {
+  connectors.forEach((conn) => {
     IsTransportTerminal(conn) &&
       !IsLocationTerminal(conn) &&
       !IsPartOfTerminal(conn) &&
@@ -42,7 +44,6 @@ const FilterConnectors = (connectors, aspect) => {
       connectorList.push(conn);
   });
   return SortConnectors(connectorList);
-  //   return connectors;
 };
 
-export default FilterConnectors;
+export default FilterTerminals;

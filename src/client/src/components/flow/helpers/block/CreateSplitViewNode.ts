@@ -4,10 +4,8 @@ import { SetSplitViewNodePosition } from ".";
 import { IsLocation } from "../common";
 import { Size } from "../../../../compLibrary";
 
-const CreateSplitViewNode = (node: Node): FlowElement => {
-  let splitViewBlock = null;
-  if (!node) return splitViewBlock;
-
+const CreateSplitViewNode = (node: Node) => {
+  if (!node) return null;
   const type = IsLocation(node) ? "BlockLocationNode" : "BlockFunctionNode";
 
   // Force node to fit Block
@@ -19,7 +17,7 @@ const CreateSplitViewNode = (node: Node): FlowElement => {
     node.height = 0; // Z-axis
   }
 
-  splitViewBlock = {
+  return {
     id: node.id,
     type: type,
     data: node,
@@ -29,9 +27,7 @@ const CreateSplitViewNode = (node: Node): FlowElement => {
     draggable: true,
     selectable: true,
     connectable: true,
-  };
-
-  return splitViewBlock;
+  } as FlowElement;
 };
 
 export default CreateSplitViewNode;

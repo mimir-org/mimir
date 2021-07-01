@@ -1,6 +1,6 @@
 import { Node, Connector, Aspect } from "../../../models";
 import { GetConnectorIcon, GetConnectorName } from "../helpers/common";
-import { FilterConnectors } from "../helpers/block";
+import { FilterTerminals } from "../helpers/block";
 import { TerminalsBox, TerminalsElement } from "../../../compLibrary/blockView";
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
 }
 
 const TerminalsComponent = ({ isOpen, list, type, width, onClick }: Props) => {
-  let sortedList = FilterConnectors(list, type);
+  let sortedList = FilterTerminals(list, type);
 
   return (
     <TerminalsBox visible={isOpen} type={type} width={width}>

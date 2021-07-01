@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Size } from "..";
 import Color from "../colors/Color";
 
-const BlockNodeBox = styled.div`
+const BlockParentBox = styled.div`
   position: absolute;
   opacity: 1 !important;
   top: 40px;
@@ -48,4 +48,4 @@ const BlockNodeBox = styled.div`
   }
 `;
 
-export default BlockNodeBox;
+export default BlockParentBox;

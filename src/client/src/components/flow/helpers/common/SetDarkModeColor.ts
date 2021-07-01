@@ -19,12 +19,12 @@ const SetDarkModeColor = (active: boolean) => {
     moduleColor = Color.LightGrey;
   }
 
-  root.style.background = mainColor;
-  explorer.style.background = moduleColor;
-  library.style.background = moduleColor;
-  legend.style.background = moduleColor;
-  inspector.style.background = moduleColor;
-  inspectorBody.style.background = moduleColor;
+  if (root) root.style.background = mainColor;
+  if (explorer) explorer.style.background = moduleColor;
+  if (library) library.style.background = moduleColor;
+  if (legend) legend.style.background = moduleColor;
+  if (inspector) inspector.style.background = moduleColor;
+  if (inspectorBody) inspectorBody.style.background = moduleColor;
 };
 
 export default SetDarkModeColor;

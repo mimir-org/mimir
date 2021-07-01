@@ -15,26 +15,25 @@ const CreateBlockElements = (
   splitView: boolean,
   splitViewNode: Node,
   mainConnectNodes: Node[]
-): Elements => {
+) => {
   if (!project) return;
-  const initialElements: Elements = [];
+  const elements: Elements = [];
   const nodes = project.nodes;
   const edges = project.edges;
 
   // Draw parent block
   const parentBlock = CreateParentBlockNode(selectedNode);
-  if (parentBlock) initialElements.push(parentBlock);
+  if (parentBlock) elements.push(parentBlock);
 
   // Draw child nodes
   edges.forEach((edge) => {
     if (
       edge.fromNodeId === selectedNode?.id &&
-      selectedNode?.aspect === edge.toNode?.aspect &&
+      selectedNode?.aspect === edge.toNode.aspect &&
       IsPartOfTerminal(edge.toConnector)
     ) {
-      const toNode = nodes.find((node) => node?.id === edge?.toNodeId);
-      if (toNode)
-        initialElements.push(CreateBlockNode(toNode, null, splitView));
+      const toNode = nodes.find((node) => node.id === edge.toNodeId);
+      if (toNode) elements.push(CreateBlockNode(toNode, null, splitView));
     }
   });
 
@@ -42,11 +41,11 @@ const CreateBlockElements = (
   if (splitViewNode && splitView) {
     edges.forEach((edge) => {
       if (
-        edge.fromNodeId === splitViewNode?.id &&
-        splitViewNode?.aspect === edge.toNode?.aspect
+        edge.fromNodeId === splitViewNode.id &&
+        splitViewNode.aspect === edge.toNode.aspect
       ) {
-        const toNode = nodes.find((node) => node?.id === edge?.toNodeId);
-        if (toNode) initialElements.push(CreateSplitViewNode(toNode));
+        const toNode = nodes.find((node) => node.id === edge.toNodeId);
+        if (toNode) elements.push(CreateSplitViewNode(toNode));
       }
     });
   }
@@ -57,7 +56,7 @@ const CreateBlockElements = (
       mainNode.connectNodes?.forEach((node) => {
         const connectNode = nodes.find((x) => x.id === node.id);
         if (connectNode)
-          initialElements.push(CreateBlockNode(connectNode, mainNode, false));
+          elements.push(CreateBlockNode(connectNode, mainNode, false));
       });
     });
   }
@@ -65,10 +64,10 @@ const CreateBlockElements = (
   // Draw edges
   edges.forEach((edge) => {
     const blockEdge = CreateBlockEdge(nodes, edge, EDGE_TYPE.BLOCK as EdgeType);
-    if (blockEdge) initialElements.push(blockEdge);
+    if (blockEdge) elements.push(blockEdge);
   });
 
-  return initialElements;
+  return elements;
 };
 
 export default CreateBlockElements;
