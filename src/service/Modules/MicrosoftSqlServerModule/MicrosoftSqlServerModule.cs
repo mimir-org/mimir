@@ -34,19 +34,19 @@ namespace MicrosoftSqlServerModule
             var password = Environment.GetEnvironmentVariable("DatabaseConfiguration_Password");
 
             if (!string.IsNullOrEmpty(dataSource))
-                dbConfig.DataSource = dataSource;
+                dbConfig.DataSource = dataSource.Trim();
 
-            if (!string.IsNullOrEmpty(port) && int.TryParse(port, out var portAsInt))
+            if (!string.IsNullOrEmpty(port) && int.TryParse(port.Trim(), out var portAsInt))
                 dbConfig.Port = portAsInt;
 
             if (!string.IsNullOrEmpty(initialCatalog))
-                dbConfig.InitialCatalog = initialCatalog;
+                dbConfig.InitialCatalog = initialCatalog.Trim();
 
             if (!string.IsNullOrEmpty(dbUser))
-                dbConfig.DbUser = dbUser;
+                dbConfig.DbUser = dbUser.Trim();
 
             if (!string.IsNullOrEmpty(password))
-                dbConfig.Password = password;
+                dbConfig.Password = password.Trim();
 
             services.AddSingleton(Options.Create(dbConfig));
 
