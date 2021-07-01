@@ -1,4 +1,5 @@
 import {
+  Mode,
   AttributeType,
   CreateLibraryType,
   Rds,
@@ -63,7 +64,7 @@ export interface TypeEditorState {
   rdsList: Rds[];
   terminals: TerminalType[];
   attributes: AttributeType[];
-  mode: string;
+  mode: Mode;
   rdsName: string;
   terminalCategory: string;
   terminalColor: string;
@@ -252,7 +253,7 @@ export interface UpdateAttributesTypes {
 export interface ChangeMode {
   type: typeof CHANGE_MODE;
   payload: {
-    mode: string;
+    mode: Mode;
   };
 }
 interface CreatingTypeAction {

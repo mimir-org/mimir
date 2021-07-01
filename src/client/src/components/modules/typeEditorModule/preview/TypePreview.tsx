@@ -10,6 +10,7 @@ import { AddEditButton } from "../../../../compLibrary/buttons";
 import { TextResources } from "../../../../assets/textResources";
 import { AddIcon, CheckmarkIcon } from "../../../../assets/icons/common";
 import { create, update } from "../../../../redux/store/typeEditor/actions";
+import { Mode } from "../../../../models";
 
 export const TypePreview = () => {
   const dispatch = useDispatch();
@@ -19,9 +20,9 @@ export const TypePreview = () => {
   ) as TypeEditorState;
 
   const saveClick = (mode) => {
-    if (mode === "new") {
+    if (mode === Mode.New) {
       dispatch(create(state.createLibraryType));
-    } else if (mode === "edit") {
+    } else if (mode === Mode.Edit) {
       dispatch(update(state.createLibraryType));
     }
   };
@@ -42,12 +43,12 @@ export const TypePreview = () => {
             saveClick(state.mode);
           }}
         >
-          {state.mode === "new"
+          {state.mode === Mode.New
             ? TextResources.TypeEditor_Button_Add
             : TextResources.TypeEditor_Button_Edit}
         </p>
         <img
-          src={state.mode === "new" ? AddIcon : CheckmarkIcon}
+          src={state.mode === Mode.New ? AddIcon : CheckmarkIcon}
           alt="icon"
           className="icon"
         />

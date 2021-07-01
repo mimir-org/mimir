@@ -29,3 +29,9 @@ export enum ObjectType {
   Transport = 2,
   Interface = 3,
 }
+
+export enum Mode {
+  NotSet = 0,
+  New = 1,
+  Edit = 2,
+}

@@ -31,7 +31,7 @@ const Home = () => {
 
   const params = useParams<RouteParams>();
   const token = Token();
-  console.log(token);
+  //   console.log(token);
 
   return (
     <AzureAD provider={authProvider} forceLogin={token === null}>

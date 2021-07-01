@@ -1,4 +1,5 @@
 import {
+  Mode,
   TerminalTypeItem,
   Aspect,
   ObjectType,
@@ -99,7 +100,7 @@ export function getPredefinedAttributes(): TypeEditorActionTypes {
   };
 }
 
-export function changeMode(mode: string) {
+export function changeMode(mode: Mode) {
   return {
     type: CHANGE_MODE,
     payload: {

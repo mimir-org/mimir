@@ -6,23 +6,25 @@ import { TextResources } from "../../../assets/textResources";
 import { VIEW_TYPE } from "../../../models/project";
 import { TypeEditorBox, TypeEditorBoxContent } from "../../../compLibrary/box";
 import "./typeeditor.scss";
+import { Mode } from "../../../models";
 
 export const TypeEditorModule = ({ selectedElement }) => {
   const dispatch = useDispatch();
   const { push } = useHistory();
 
-  const handleClick = (param) => {
-    if ((selectedElement && param === "edit") || param === "new") {
-      dispatch(changeMode(param));
+  const handleClick = (mode) => {
+    if ((selectedElement && mode === Mode.Edit) || mode === Mode.New) {
+      dispatch(changeMode(mode));
       push(`/home/${VIEW_TYPE.TYPE_EDITOR}`);
     }
   };
 
   return (
     <>
+      {console.log(selectedElement)}
       <TypeEditorBox>
         <TypeEditorBoxContent active={true}>
-          <div onClick={() => handleClick("new")} className="typeeditor_box">
+          <div onClick={() => handleClick(Mode.New)} className="typeeditor_box">
             <img src={NewTypeIcon} alt="new-type" />
             <p>{TextResources.TypeEditor_New_Type}</p>
           </div>
@@ -31,7 +33,7 @@ export const TypeEditorModule = ({ selectedElement }) => {
           <div
             onClick={() => {
               if (selectedElement !== "") {
-                handleClick("edit");
+                handleClick(Mode.Edit);
               }
             }}
             className="typeeditor_box"
