@@ -3,15 +3,13 @@ import { FlowElement } from "react-flow-renderer";
 import { Edge, Node } from "../../../../models";
 import { EdgeType, EDGE_TYPE } from "../../../../models/project";
 
-export const CreateTreeEdge = (edge: Edge, edgeType: EdgeType): FlowElement => {
-  let element = null;
-
+export const CreateTreeEdge = (edge: Edge, edgeType: EdgeType) => {
   const nodes = red.store.getState().projectState.project.nodes as Node[];
-  const fromNode = nodes.find((node) => node?.id === edge.fromNodeId);
-  const toNode = nodes.find((node) => node?.id === edge.toNodeId);
+  const fromNode = nodes?.find((node) => node.id === edge.fromNodeId);
+  const toNode = nodes?.find((node) => node.id === edge.toNodeId);
 
   if (edge.fromNode && edge.toNode) {
-    element = {
+    return {
       id: edge.id,
       type: edgeType,
       source: edge.fromNodeId,
@@ -29,9 +27,8 @@ export const CreateTreeEdge = (edge: Edge, edgeType: EdgeType): FlowElement => {
       isHidden: edge.isHidden,
       parentType: fromNode?.aspect,
       targetType: toNode?.aspect,
-    };
+    } as FlowElement;
   }
-  return element;
 };
 
 export default CreateTreeEdge;

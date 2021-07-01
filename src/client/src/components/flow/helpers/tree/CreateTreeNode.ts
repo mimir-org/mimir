@@ -2,13 +2,11 @@ import { Node } from "../../../../models";
 import { FlowElement } from "react-flow-renderer";
 import { GetNodeType } from "../common";
 
-const CreateTreeNode = (node: Node): FlowElement => {
-  let treeNode = null;
-  if (!node) return treeNode;
-
+const CreateTreeNode = (node: Node) => {
+  if (!node) return null;
   const position = { x: node.positionX, y: node.positionY };
 
-  treeNode = {
+  return {
     id: node.id,
     type: GetNodeType(node),
     data: node,
@@ -18,9 +16,7 @@ const CreateTreeNode = (node: Node): FlowElement => {
     draggable: true,
     selectable: true,
     connectable: true,
-  };
-
-  return treeNode;
+  } as FlowElement;
 };
 
 export default CreateTreeNode;
