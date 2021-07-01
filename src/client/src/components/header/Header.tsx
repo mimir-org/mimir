@@ -6,7 +6,6 @@ import { VIEW_TYPE } from "../../models/project";
 import { changeFlowView } from "../../redux/store/flow/actions";
 import { setDarkMode } from "../../redux/store/darkMode/actions";
 import { FindSelectedNode, SetDarkModeColor } from "../flow/helpers/common";
-import { setSplitView, setNode } from "../../redux/store/splitView/actions";
 import { IsBlockView } from "../flow/helpers/block";
 import {
   HeaderBox,
@@ -30,21 +29,19 @@ const Header = () => {
     (state) => state.darkMode.active
   ) as boolean;
 
-  const handleViewClick = (e) => {
+  const onViewClick = (e) => {
     if (e.target.alt === VIEW_TYPE.BLOCKVIEW && !selectedNode) return;
     const view = e.target.alt;
-    dispatch(setSplitView(false));
-    dispatch(setNode(null));
     dispatch(changeFlowView(view));
     push(`/home/${view}`);
   };
 
-  const handleDarkMode = () => {
+  const onDarkMode = () => {
     dispatch(setDarkMode(!darkMode));
     SetDarkModeColor(!darkMode);
   };
 
-  const handleUndo = () => {
+  const onUndo = () => {
     return null;
   };
 
@@ -56,17 +53,17 @@ const Header = () => {
           <img
             src={darkMode ? DarkModeOnIcon : DarkModeOffIcon}
             alt="dark-mode"
-            onClick={handleDarkMode}
+            onClick={onDarkMode}
           />
         </OptionsElement>
         <OptionsElement>
-          <img src={UndoIcon} alt="undo" onClick={handleUndo} />
+          <img src={UndoIcon} alt="undo" onClick={onUndo} />
         </OptionsElement>
         <OptionsElement>
           <img
             src={IsBlockView() ? TreeViewOffIcon : TreeViewOnIcon}
             alt={IsBlockView() ? VIEW_TYPE.TREEVIEW : VIEW_TYPE.BLOCKVIEW}
-            onClick={handleViewClick}
+            onClick={onViewClick}
           />
         </OptionsElement>
       </OptionsBox>

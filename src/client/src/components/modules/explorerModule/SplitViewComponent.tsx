@@ -1,15 +1,20 @@
+import red from "../../../redux/store";
 import { FooterBox, FooterContent } from "../../../compLibrary/box/footer";
 import { TextResources } from "../../../assets/textResources";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { FindSelectedNode, IsLocation } from "../../flow/helpers/common";
 import { IsBlockView } from "../../flow/helpers/block";
-import { setSplitView, setNode } from "../../../redux/store/splitView/actions";
+import {
+  setSplitView,
+  setSplitNode,
+} from "../../../redux/store/splitView/actions";
 
 export const SplitViewComponent = () => {
+  const splitView = red.store.getState().splitView.visible as boolean;
   const dispatch = useDispatch();
   const [isVisible, setIsVisible] = useState(IsBlockView());
-  const [isActive, SetIsActive] = useState(false);
+  const [isActive, SetIsActive] = useState(splitView);
   const selectedNode = FindSelectedNode();
 
   useEffect(() => {
@@ -23,7 +28,7 @@ export const SplitViewComponent = () => {
 
   const onChange = () => {
     if (IsLocation(selectedNode)) return;
-    if (isActive) dispatch(setNode(null));
+    if (isActive) dispatch(setSplitNode(null));
     SetIsActive(!isActive);
     dispatch(setSplitView(!isActive));
   };

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeActiveNode } from "../../../../redux/store/project/actions";
 import { Node } from "../../../../models";
 import { RootState } from "../../../../redux/store";
-import { setNode } from "../../../../redux/store/splitView/actions";
+import { setSplitNode } from "../../../../redux/store/splitView/actions";
 import { IsConnectView } from "../../../flow/helpers/block/connectView";
 import {
   removeConnectNodes,
@@ -39,7 +39,7 @@ export const CheckboxBlock = ({ node, inputLabel }: Props) => {
     if (splitView) {
       IsFunction(node)
         ? dispatch(changeActiveNode(node.id, true))
-        : dispatch(setNode(node));
+        : dispatch(setSplitNode(node));
     } else dispatch(changeActiveNode(node.id, true));
   };
 
