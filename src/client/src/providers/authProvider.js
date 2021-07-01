@@ -4,7 +4,7 @@ import {
 } from "react-aad-msal";
 
 const regularScopes = [
-    "api://" + process.env.REACT_APP_APP_ID + "/user_impersonation",
+    "api://" + process.env.REACT_APP_APP_ID + "/access_as_user",
     "openid",
     "user.read",
     "profile",
