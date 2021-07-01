@@ -1,7 +1,7 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
 import { Connector } from "../../../models";
-import { HandleBox, TreeNodeNameBox } from "../../../compLibrary/treeView";
+import { TreeHandleBox, TreeNodeNameBox } from "../../../compLibrary/treeView";
 import { SetTerminalYPos } from "../helpers/common";
 import {
   GetHandleType,
@@ -46,7 +46,7 @@ const TreeviewNode: FC<NodeProps> = ({ data }) => {
         else if (conn.visible && !IsInputConnector(conn)) outputCount++;
 
         return (
-          <HandleBox
+          <TreeHandleBox
             input={SetTerminalYPos(inputCount)}
             output={SetTerminalYPos(outputCount)}
             onMouseEnter={() => setIsHover(true)}
@@ -61,7 +61,7 @@ const TreeviewNode: FC<NodeProps> = ({ data }) => {
               id={conn.id}
               className="function-treeview-handler"
             />
-          </HandleBox>
+          </TreeHandleBox>
         );
       })}
       <TreeNodeNameBox>{data.label ?? data.name}</TreeNodeNameBox>

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Position } from "react-flow-renderer";
 import { ConnectorTreeViewIcon } from "../../assets/icons/blockView";
 
-const HandleBox = styled.div`
+const TreeHandleBox = styled.div`
   .function-treeview-handler {
     visibility: ${(props: { visible: boolean }) => !props.visible && "hidden"};
     width: 14px;
@@ -22,4 +22,4 @@ const HandleBox = styled.div`
   }
 `;
 
-export default HandleBox;
+export default TreeHandleBox;

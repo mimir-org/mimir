@@ -8,7 +8,7 @@ import { TerminalsIcon, ConnectIcon } from "../../../assets/icons/blockView";
 import { changeActiveConnector } from "../../../redux/store/project/actions";
 import { TerminalsComponent, ConnectViewComponent } from "../block";
 import { HandleComponent } from "../block";
-import { FilterTerminals } from "../helpers/block";
+import { CalculateTerminalOrder, FilterTerminals } from "../helpers/block";
 import {
   GetConnectChildren,
   IsMainConnectNode,
@@ -71,7 +71,8 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const onConnectorClick = (conn: Connector) => {
     showTerminalMenu(false);
     showConnectMenu(false);
-    dispatch(changeActiveConnector(data, conn.id, true));
+    const order = CalculateTerminalOrder(data, 0, conn.relationType);
+    dispatch(changeActiveConnector(data, conn.id, true, order));
   };
 
   const onConnectViewClick = (node: Node) => {

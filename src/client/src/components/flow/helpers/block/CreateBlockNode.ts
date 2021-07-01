@@ -8,12 +8,12 @@ import { IsMainConnectNode, SetConnectNodePosition } from "./connectView";
 const CreateBlockNode = (node: Node, connectNode: Node, splitView: boolean) => {
   if (!node) return null;
 
-  const connectNodes = connectNode?.connectNodes as Node[];
+  const connectNodes = (connectNode?.connectNodes as Node[]) ?? [];
   const type = IsLocation(node) ? "BlockLocationNode" : "BlockFunctionNode";
 
   // Force node to fit Block
   let position = SetBlockNodePosition(node, splitView);
-  if (connectNodes?.some((x) => x.id === node.id)) {
+  if (connectNodes.some((x) => x.id === node.id)) {
     position = SetConnectNodePosition(node, connectNode.id, connectNodes);
   }
 
@@ -32,6 +32,7 @@ const CreateBlockNode = (node: Node, connectNode: Node, splitView: boolean) => {
     data: node,
     position: position,
     isHidden: node.isHidden,
+    // isSelected: node.isSelected,
     draggable: true,
     selectable: true,
     connectable: true,

@@ -227,7 +227,8 @@ export function deleteProjectError(key: string) {
 export function changeActiveConnector(
   node: Node,
   connectorId: string,
-  visible: boolean
+  visible: boolean,
+  order: number
 ) {
   return {
     type: CHANGE_ACTIVE_CONNECTOR,
@@ -235,6 +236,7 @@ export function changeActiveConnector(
       node,
       connectorId,
       visible,
+      order,
     },
   };
 }

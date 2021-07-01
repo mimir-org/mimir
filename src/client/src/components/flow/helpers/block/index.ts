@@ -14,4 +14,5 @@ export { default as IsBlockChecked } from "./IsBlockChecked";
 export { default as FilterTerminals } from "./FilterTerminals";
 export { default as SortConnectors } from "./SortConnectors";
 export { default as FindSelectedBlockNode } from "./FindSelectedBlockNode";
+export { default as CalculateTerminalOrder } from "./CalculateTerminalOrder";
 export { default as GetBlockEdgeTypes } from "./GetBlockEdgeTypes";

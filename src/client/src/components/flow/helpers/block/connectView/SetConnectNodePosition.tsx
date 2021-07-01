@@ -8,7 +8,8 @@ const SetConnectNodePosition = (
   mainConnectNodeId: string,
   connectNodes: Node[]
 ) => {
-  const nodes = red.store.getState().projectState.project.nodes as Node[];
+  const nodes =
+    (red.store.getState().projectState.project.nodes as Node[]) ?? [];
   const mainNode = nodes.find((x) => x.id === mainConnectNodeId);
 
   let xPos = mainNode ? mainNode.positionBlockX : node.positionBlockX;

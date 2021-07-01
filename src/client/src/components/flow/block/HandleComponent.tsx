@@ -1,4 +1,5 @@
 import red from "../../../redux/store";
+import { memo } from "react";
 import { Connector, Node } from "../../../models";
 import { HandleBox } from "../../../compLibrary/blockView";
 import { Handle } from "react-flow-renderer";
@@ -29,7 +30,7 @@ const HandleComponent = ({ data }: Props) => {
         const [type, pos] = GetBlockHandleType(conn);
         if (!IsLocationTerminal(conn)) {
           if (IsInputConnector(conn)) inputCount++;
-          else outputCount++;
+          if (!IsInputConnector(conn)) outputCount++;
         }
 
         return (
@@ -57,4 +58,4 @@ const HandleComponent = ({ data }: Props) => {
   );
 };
 
-export default HandleComponent;
+export default memo(HandleComponent);
