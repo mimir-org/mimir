@@ -24,9 +24,7 @@ export const CheckboxBlock = ({ node, inputLabel }: Props) => {
   ) as Node;
 
   const selectedNode = FindSelectedNode();
-  const isSplitViewNode =
-    (splitViewNode?.label ?? splitViewNode?.name) === inputLabel;
-
+  const isSplitViewNode = splitViewNode?.id === node.id;
   const isChecked = node === selectedNode || isSplitViewNode;
 
   const handleChange = () => {
