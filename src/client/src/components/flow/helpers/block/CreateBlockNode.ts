@@ -22,6 +22,9 @@ const CreateBlockNode = (node: Node, connectNode: Node, splitView: boolean) => {
     if (connectNode?.id === node.id) {
       node.width = Size.ConnectView_Width;
       node.length = Size.ConnectView_Length;
+    } else {
+      if (!node.width) node.width = Size.Node_Width;
+      if (!node.length) node.length = Size.Node_Length;
     }
   }
 
