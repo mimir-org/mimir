@@ -85,6 +85,8 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
       if (connectNodes.length === 1) {
         showConnectMenu(false);
         dispatch(removeMainNode(data));
+        data.width = Size.Node_Width;
+        data.length = Size.Node_Length;
       }
       dispatch(removeConnectNode(data, node));
     }
@@ -98,6 +100,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     return result;
   };
 
+  // Resize main connect node
   useEffect(() => {
     SetMainConnectNodeSize(mainConnectNode?.id, data.id, connectNodes);
   }, [mainConnectNode, data, connectNodes]);

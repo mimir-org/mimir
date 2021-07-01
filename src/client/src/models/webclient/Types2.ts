@@ -30,4 +30,3 @@ export const RequestInitDefault: RequestInit = {
         "Cache-Control": "no-cache",
     },
 };
-

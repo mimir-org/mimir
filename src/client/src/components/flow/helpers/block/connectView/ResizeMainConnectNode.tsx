@@ -7,15 +7,19 @@ const UpdateConnectNodeSize = (nodeCount: number, mainNodeId: string) => {
   let percent = 16;
   let count = 1;
 
-  if (nodeCount !== 2 && nodeCount % 2 === 0) {
+  // Calculate resize
+  if (nodeCount % 2 === 0)
     count = Math.ceil(nodeCount - (nodeCount * percent) / 100);
-  }
 
-  if (nodeCount !== 1 && nodeCount % 2 !== 0) {
-    count = Math.ceil(1 + nodeCount - (1 + nodeCount * percent) / 100);
-  }
+  if (nodeCount % 2 !== 0)
+    count = Math.ceil(1 + nodeCount - (nodeCount * percent) / 100);
 
-  if (mainNode) mainNode.style.minHeight = `${newHeight * count}px`;
+  // Execute resize
+  const resize = newHeight * count;
+  if (mainNode) {
+    mainNode.style.height = `${resize}px`;
+    if (nodeCount >= 5) mainNode.style.maxHeight = `${resize - 50}px`;
+  }
 };
 
 export default UpdateConnectNodeSize;
