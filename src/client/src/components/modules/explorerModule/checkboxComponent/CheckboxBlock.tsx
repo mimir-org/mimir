@@ -1,14 +1,11 @@
-import { FindSelectedNode, IsFunction } from "../../../flow/helpers/common";
 import { useDispatch, useSelector } from "react-redux";
 import { changeActiveNode } from "../../../../redux/store/project/actions";
 import { Node } from "../../../../models";
 import { RootState } from "../../../../redux/store";
 import { setSplitNode } from "../../../../redux/store/splitView/actions";
 import { IsConnectView } from "../../../flow/helpers/block/connectView";
-import {
-  removeConnectNodes,
-  removeMainNodes,
-} from "../../../../redux/store/connectView/actions";
+import { FindSelectedNode, IsFunction } from "../../../flow/helpers/common";
+import { removeMainNodes } from "../../../../redux/store/connectView/actions";
 
 interface Props {
   node: Node;
@@ -34,7 +31,6 @@ export const CheckboxBlock = ({ node, inputLabel }: Props) => {
   const handleChange = () => {
     if (IsConnectView()) {
       dispatch(removeMainNodes());
-      dispatch(removeConnectNodes());
     }
     if (splitView) {
       IsFunction(node)

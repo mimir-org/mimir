@@ -39,7 +39,7 @@ const CreateBlockNode = (node: Node, connectNode: Node, splitView: boolean) => {
     data: node,
     position: position,
     isHidden: node.isHidden,
-    // isSelected: node.isSelected,
+    isSelected: node.isSelected,
     draggable: true,
     selectable: true,
     connectable: true,

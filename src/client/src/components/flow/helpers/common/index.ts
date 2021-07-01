@@ -2,6 +2,7 @@ export { default as GetFlowAspectIcon } from "./GetFlowAspectIcon";
 export { default as GetFlowRectData } from "./GetFlowRectData";
 export { default as CreateId } from "./CreateId";
 export { default as IsChildOf } from "./IsChildOf";
+export { default as IsParentOf } from "./IsParentOf";
 export { default as IsAspectNode } from "./IsAspectNode";
 export { default as IsLocation } from "./IsLocation";
 export { default as IsFunction } from "./IsFunction";
