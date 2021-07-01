@@ -10,6 +10,9 @@ import { LibraryState } from "../../redux/store/library/types";
 import { UserState } from "../../redux/store/user/types";
 import { CommonState } from "../../redux/store/common/types";
 import { TypeEditorState } from "../../redux/store/typeEditor/types";
+import { Login } from "../modules/accountModule";
+import { LoginIcon } from "../../assets/icons/common";
+import { TextResources } from "../../assets/textResources";
 
 // MSAL imports
 import {
@@ -84,7 +87,10 @@ const App = ({ pca }: AppProps) => {
         </AppBox>
       </AuthenticatedTemplate>
       <UnauthenticatedTemplate>
-        <div onClick={login}>Logg inn</div>
+        <Login onClick={login}>
+          <img src={LoginIcon} alt="icon" className="icon" />
+          <p>{TextResources.Login_label}</p>
+        </Login>
       </UnauthenticatedTemplate>
     </MsalProvider>
   );
