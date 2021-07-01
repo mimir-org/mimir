@@ -26,7 +26,7 @@ const CreateBlockNode = (node: Node, connectNode: Node, splitView: boolean) => {
   }
 
   if (IsLocation(node)) {
-    if (!node.width || node.width === 0) node.width = Size.Node_Width;
+    if (!node.width) node.width = Size.Node_Width;
     if (!node.length) node.length = Size.Node_Length;
   }
 
