@@ -7,14 +7,12 @@ export const CreateBlockEdge = (
   nodes: Node[],
   edge: Edge,
   edgeType: EdgeType
-): FlowElement => {
-  let element = null;
-
+) => {
   const fromNode = nodes.find((node) => node.id === edge.fromNodeId);
   const toNode = nodes.find((node) => node.id === edge.toNodeId);
 
-  if (ShowBlockViewEdge(edge) && (edge.fromNode || edge.toNode)) {
-    element = {
+  if (ShowBlockViewEdge(edge)) {
+    return {
       id: edge.id,
       type: edgeType,
       source: edge.fromNodeId,
@@ -29,9 +27,8 @@ export const CreateBlockEdge = (
         edge: edge,
       },
       isHidden: edge.isHidden,
-    };
+    } as FlowElement;
   }
-  return element;
 };
 
 export default CreateBlockEdge;
