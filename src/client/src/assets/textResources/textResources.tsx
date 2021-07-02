@@ -171,7 +171,7 @@ const textResources = {
 
   // BlockView
   BlockView_Select_Message:
-    "Please select an aspect object from the same aspect OR a different aspect via the Explorer Module",
+    "Please select an additional object from the Explorer Module",
 
   // Relations
   Relations_PartOf: "Part of Relationship",

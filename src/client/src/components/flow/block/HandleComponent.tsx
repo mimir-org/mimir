@@ -24,9 +24,8 @@ const HandleComponent = ({ data }: Props) => {
   let outputCount = 0;
 
   const visible = (conn: Connector) => {
-    if (splitView) {
-      return conn.visible;
-    } else return conn.visible && !IsLocationTerminal(conn);
+    if (splitView) return conn.visible;
+    return conn.visible && !IsLocationTerminal(conn);
   };
 
   return (
