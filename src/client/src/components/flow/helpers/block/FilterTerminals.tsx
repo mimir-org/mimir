@@ -17,7 +17,6 @@ const FilterTerminals = (connectors, aspect) => {
   ) as boolean;
 
   if (connectors === null || aspect === null) return [];
-
   const connectorList: Connector[] = [];
 
   if (aspect === Aspect.Location) {
