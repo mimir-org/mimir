@@ -22,17 +22,17 @@ const AccountMenu = () => {
   ) as UserState;
 
   const onOpenClick = () => {
-    dispatch(changeMenu(MENU_TYPE.ACCOUNT_MENU, false));
+    // dispatch(changeMenu(MENU_TYPE.ACCOUNT_MENU, false));
     dispatch(changeMenu(MENU_TYPE.OPEN_PROJECT_MENU, true));
   };
 
   const onCreateClick = () => {
-    dispatch(changeMenu(MENU_TYPE.ACCOUNT_MENU, false));
+    // dispatch(changeMenu(MENU_TYPE.ACCOUNT_MENU, false));
     dispatch(changeMenu(MENU_TYPE.CREATE_PROJECT_MENU, true));
   };
 
   const onSaveClick = () => {
-    dispatch(changeMenu(MENU_TYPE.ACCOUNT_MENU, false));
+    // dispatch(changeMenu(MENU_TYPE.ACCOUNT_MENU, false));
     if (projectState.project) dispatch(save(projectState.project));
   };
 

@@ -9,7 +9,7 @@ const initialState = {
     },
     {
       type: MENU_TYPE.ACCOUNT_MENU,
-      visible: true,
+      visible: false,
     },
     {
       type: MENU_TYPE.OPEN_PROJECT_MENU,
