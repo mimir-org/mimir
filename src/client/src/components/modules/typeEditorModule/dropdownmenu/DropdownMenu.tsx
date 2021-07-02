@@ -77,7 +77,7 @@ export const DropDownMenu = ({
         {isListOpen && (
           <DropdownMenuList>
             {aspect === Aspect.Location
-              ? listItems.map((item) => {
+              ? listItems?.map((item) => {
                   return (
                     <div key={item[1].id}>
                       {item.map((type) => {
@@ -88,7 +88,7 @@ export const DropDownMenu = ({
                                 <LocationTypeCategory>
                                   <p>{type.name}</p>
                                 </LocationTypeCategory>
-                                {type.locationSubTypes.map((subType) => {
+                                {type.locationSubTypes?.map((subType) => {
                                   return (
                                     <LocationSubType
                                       key={subType.id}
@@ -111,7 +111,7 @@ export const DropDownMenu = ({
                     </div>
                   );
                 })
-              : listItems.map(([key, value]) => (
+              : listItems?.map(([key, value]) => (
                   <div
                     className="listitem"
                     key={key}
