@@ -4,14 +4,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { useHistory } from "react-router-dom";
 import { MODULE_TYPE } from "../../../models/project";
-import { Aspect, ObjectType } from "../../../models/";
+import { Aspect, Mode, ObjectType } from "../../../models/";
 import { TextResources } from "../../../assets/textResources";
 import { CloseIcon } from "../../../assets/icons/common";
 import { TypeEditorState } from "../../../redux/store/typeEditor/types";
 import { changeFlowView } from "../../../redux/store/flow/actions";
 import { SetDarkModeColor } from "../../flow/helpers/common";
 import { changeAllModulesVisibility } from "../../../redux/store/modules/actions";
-import { getInitialData } from "../../../redux/store/typeEditor/actions";
+import {
+  getInitialData,
+  //   resetCreateLibrary,
+} from "../../../redux/store/typeEditor/actions";
 import {
   changeMode,
   changeTypeName,
@@ -44,9 +47,10 @@ export const TypeEditorComponent = () => {
   ) as TypeEditorState;
 
   const handleClick = () => {
-    dispatch(changeMode("NotSet"));
+    // dispatch(resetCreateLibrary());
+    dispatch(changeMode(Mode.NotSet));
     dispatch(changeFlowView(MODULE_TYPE.TYPEEDITOR));
-    push(`/home/treeview`);
+    push(`/home`);
   };
 
   const handleChange = (e) => {
@@ -96,7 +100,7 @@ export const TypeEditorComponent = () => {
   //The intention for the code below is to fill out values in the input fields when editing an existing type.
   // (its not done)
   useEffect(() => {
-    if (state.mode === "edit") {
+    if (state.mode === Mode.Edit) {
       let typeToEdit = state.createLibraryType;
 
       typeToEdit.name = ""; //string
@@ -108,6 +112,8 @@ export const TypeEditorComponent = () => {
       typeToEdit.rdsName = ""; //string;
       typeToEdit.terminalTypes = []; //TerminalTypeItem[];
       typeToEdit.attributeTypes = [""]; //string[];
+      typeToEdit.locationType = "";
+      typeToEdit.predefinedAttributes = [];
       typeToEdit.terminalTypeId = ""; //string;
       typeToEdit.id = 0; //number;
       typeToEdit.code = ""; //string;
@@ -115,6 +121,7 @@ export const TypeEditorComponent = () => {
       typeToEdit.category = null; //EnumBase;
     }
   }, [state.mode, state.createLibraryType]);
+
   return (
     <TypeEditorWrapper>
       <TypeEditorContent>

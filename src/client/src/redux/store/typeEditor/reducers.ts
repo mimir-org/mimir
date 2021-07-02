@@ -1,4 +1,10 @@
-import { CreateLibraryType, Status, Aspect, ObjectType } from "../../../models";
+import {
+  CreateLibraryType,
+  Status,
+  Aspect,
+  ObjectType,
+  Mode,
+} from "../../../models";
 
 import {
   FETCHING_RDS,
@@ -52,7 +58,7 @@ const initialCreateLibrary = {
 const initialState: TypeEditorState = {
   fetching: false,
   creating: false,
-  mode: "NotSet",
+  mode: Mode.NotSet,
   rdsName: "",
   terminalCategory: "",
   terminalColor: "",

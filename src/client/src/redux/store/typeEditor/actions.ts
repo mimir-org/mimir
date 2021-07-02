@@ -1,4 +1,5 @@
 import {
+  Mode,
   TerminalTypeItem,
   Aspect,
   ObjectType,
@@ -36,7 +37,6 @@ import {
 } from "./types";
 
 // TODO create type, save type, get attributes
-
 export function create(libraryType: CreateLibraryType): TypeEditorActionTypes {
   return {
     type: CREATING_TYPE,
@@ -99,7 +99,7 @@ export function getPredefinedAttributes(): TypeEditorActionTypes {
   };
 }
 
-export function changeMode(mode: string) {
+export function changeMode(mode: Mode) {
   return {
     type: CHANGE_MODE,
     payload: {
