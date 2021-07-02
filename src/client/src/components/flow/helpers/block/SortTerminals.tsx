@@ -1,8 +1,8 @@
 import { Connector } from "../../../../models";
 import { IsInputTerminal, IsOutputTerminal } from "../common";
 
-const SortTerminals = (connectorList: Connector[]) => {
-  connectorList.sort((a: Connector, b: Connector) => {
+const SortTerminals = (terminals: Connector[]) => {
+  terminals.sort((a: Connector, b: Connector) => {
     if (a.type < b.type) return -1;
     if (a.type > b.type) return 1;
     if (IsInputTerminal(a) && IsInputTerminal(b) && a.name < b.name) return -1;
@@ -14,7 +14,7 @@ const SortTerminals = (connectorList: Connector[]) => {
     return 0;
   });
 
-  return connectorList;
+  return terminals;
 };
 
 export default SortTerminals;

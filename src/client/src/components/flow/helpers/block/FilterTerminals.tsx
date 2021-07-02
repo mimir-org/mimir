@@ -6,12 +6,13 @@ import {
   IsFulfilledByTerminal,
   IsInputTerminal,
   IsLocationTerminal,
+  IsOutputTerminal,
   IsPartOfTerminal,
   IsTransportTerminal,
 } from "../common";
 
-const FilterTerminals = (terminals, aspect) => {
-  const filteredTerminals: Connector[] = [];
+const FilterTerminals = (terminals: Connector[], aspect: Aspect) => {
+  let filteredTerminals: Connector[] = [];
   const splitView = useSelector<RootState>(
     (state) => state.splitView.visible
   ) as boolean;
@@ -25,7 +26,7 @@ const FilterTerminals = (terminals, aspect) => {
         filteredTerminals.push(conn);
     }
     if (aspect !== Aspect.Location) {
-      if (!IsInputTerminal(conn) && IsLocationTerminal(conn))
+      if (IsOutputTerminal(conn) && IsLocationTerminal(conn))
         filteredTerminals.push(conn);
     }
   });
