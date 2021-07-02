@@ -12,7 +12,7 @@ const Block = ({ data, location, splitView }) => {
       id={"function-block-" + data.id}
       location={location}
       splitView={splitView}
-      selected={node.isBlockSelected}
+      selected={node?.isBlockSelected}
     >
       <img src={ArrowIcon} alt="arrow" className="icon"></img>
       <h3 className="header">{data.label ?? data.name}</h3>
