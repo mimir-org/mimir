@@ -3,7 +3,8 @@ import { CreateBlockNode, IsBlockView } from "../helpers/block";
 import { Edge, LibraryNodeItem, Node } from "../../../models";
 import {
   CreateId,
-  IsInputConnector,
+  IsInputTerminal,
+  IsOutputTerminal,
   IsPartOfTerminal,
 } from "./../helpers/common";
 import {
@@ -79,10 +80,10 @@ const useOnDrop = (
     if (selectedNode.aspect !== node.aspect) return;
 
     const fromConnector = selectedNode.connectors?.find(
-      (x) => IsPartOfTerminal(x) && !IsInputConnector(x)
+      (x) => IsPartOfTerminal(x) && IsOutputTerminal(x)
     );
     const toConnector = node.connectors?.find(
-      (x) => IsPartOfTerminal(x) && IsInputConnector(x)
+      (x) => IsPartOfTerminal(x) && IsInputTerminal(x)
     );
 
     const partofEdge = {

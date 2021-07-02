@@ -5,7 +5,8 @@ import { FilterTerminals, GetBlockHandleType } from "../helpers/block";
 import {
   GetConnectorIcon,
   GetHandlePosition,
-  IsInputConnector,
+  IsInputTerminal,
+  IsOutputTerminal,
   IsLocationTerminal,
   SetTerminalYPos,
 } from "../helpers/common";
@@ -25,8 +26,8 @@ const HandleComponent = ({ data }: Props) => {
       {sortedTerminals.map((conn: Connector) => {
         const [type, pos] = GetBlockHandleType(conn);
         if (!IsLocationTerminal(conn)) {
-          if (IsInputConnector(conn)) inputCount++;
-          if (!IsInputConnector(conn)) outputCount++;
+          if (IsInputTerminal(conn)) inputCount++;
+          if (IsOutputTerminal(conn)) outputCount++;
         }
 
         return (
