@@ -21,7 +21,6 @@ export const TypeEditorModule = ({ selectedElement }) => {
 
   return (
     <>
-      {console.log(selectedElement)}
       <TypeEditorBox>
         <TypeEditorBoxContent active={true}>
           <div onClick={() => handleClick(Mode.New)} className="typeeditor_box">

@@ -11,7 +11,10 @@ import { TypeEditorState } from "../../../redux/store/typeEditor/types";
 import { changeFlowView } from "../../../redux/store/flow/actions";
 import { SetDarkModeColor } from "../../flow/helpers/common";
 import { changeAllModulesVisibility } from "../../../redux/store/modules/actions";
-import { getInitialData } from "../../../redux/store/typeEditor/actions";
+import {
+  getInitialData,
+  //   resetCreateLibrary,
+} from "../../../redux/store/typeEditor/actions";
 import {
   changeMode,
   changeTypeName,
@@ -44,6 +47,7 @@ export const TypeEditorComponent = () => {
   ) as TypeEditorState;
 
   const handleClick = () => {
+    // dispatch(resetCreateLibrary());
     dispatch(changeMode(Mode.NotSet));
     dispatch(changeFlowView(MODULE_TYPE.TYPEEDITOR));
     push(`/home`);
@@ -117,6 +121,7 @@ export const TypeEditorComponent = () => {
       typeToEdit.category = null; //EnumBase;
     }
   }, [state.mode, state.createLibraryType]);
+
   return (
     <TypeEditorWrapper>
       <TypeEditorContent>
