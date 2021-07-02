@@ -5,43 +5,43 @@ import { Aspect, Connector } from "../../../../models";
 import {
   IsFulfilledByTerminal,
   IsInputConnector,
-  IsLocation,
   IsLocationTerminal,
   IsPartOfTerminal,
   IsTransportTerminal,
 } from "../common";
 
 const FilterTerminals = (connectors, aspect) => {
-  const isLocationNode = useSelector<RootState>((state) =>
-    IsLocation(state.splitView.node)
+  const connectorList: Connector[] = [];
+  const splitView = useSelector<RootState>(
+    (state) => state.splitView.visible
   ) as boolean;
 
-  if (connectors === null || aspect === null) return [];
-  const connectorList: Connector[] = [];
+  if (connectors === null || aspect === null) return connectorList;
 
-  if (aspect === Aspect.Location) {
+  // SplitView
+  connectors.forEach((conn) => {
+    if (aspect === Aspect.Location) {
+      if (IsInputConnector(conn) && IsLocationTerminal(conn))
+        connectorList.push(conn);
+    }
+    if (aspect !== Aspect.Location) {
+      if (!IsInputConnector(conn) && IsLocationTerminal(conn))
+        connectorList.push(conn);
+    }
+  });
+
+  if (!splitView) {
     connectors.forEach((conn) => {
-      IsLocationTerminal(conn) &&
-        IsInputConnector(conn) &&
+      if (
+        IsTransportTerminal(conn) &&
+        !IsLocationTerminal(conn) &&
+        !IsPartOfTerminal(conn) &&
+        !IsFulfilledByTerminal(conn)
+      )
         connectorList.push(conn);
     });
-    return connectorList;
   }
 
-  connectors.forEach((conn) => {
-    IsTransportTerminal(conn) &&
-      !IsLocationTerminal(conn) &&
-      !IsPartOfTerminal(conn) &&
-      !IsFulfilledByTerminal(conn) &&
-      !isLocationNode &&
-      connectorList.push(conn);
-
-    // SplitView with Location
-    IsLocationTerminal(conn) &&
-      isLocationNode &&
-      !IsInputConnector(conn) &&
-      connectorList.push(conn);
-  });
   return SortConnectors(connectorList);
 };
 

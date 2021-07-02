@@ -12,7 +12,7 @@ interface Props {
 }
 
 const TerminalsComponent = ({ isOpen, list, type, width, onClick }: Props) => {
-  let sortedList = FilterTerminals(list, type);
+  const sortedList = FilterTerminals(list, type);
 
   return (
     <TerminalsBox visible={isOpen} type={type} width={width}>

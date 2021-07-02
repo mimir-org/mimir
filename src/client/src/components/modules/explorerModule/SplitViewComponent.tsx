@@ -1,8 +1,8 @@
-import red from "../../../redux/store";
+import { RootState } from "../../../redux/store";
 import { FooterBox, FooterContent } from "../../../compLibrary/box/footer";
 import { TextResources } from "../../../assets/textResources";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FindSelectedNode, IsLocation } from "../../flow/helpers/common";
 import { IsBlockView } from "../../flow/helpers/block";
 import {
@@ -11,7 +11,10 @@ import {
 } from "../../../redux/store/splitView/actions";
 
 export const SplitViewComponent = () => {
-  const splitView = red.store.getState().splitView.visible as boolean;
+  const splitView = useSelector<RootState>(
+    (state) => state.splitView.visible
+  ) as boolean;
+
   const dispatch = useDispatch();
   const [isVisible, setIsVisible] = useState(IsBlockView());
   const [isActive, SetIsActive] = useState(splitView);
