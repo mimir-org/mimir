@@ -2,14 +2,14 @@ import { RootState } from "../../redux/store";
 import { useHistory } from "react-router-dom";
 import { TextResources } from "../../assets/textResources";
 import { useDispatch, useSelector } from "react-redux";
-import { MENU_TYPE, PROJECT_MENU_TYPE, VIEW_TYPE } from "../../models/project";
+import { MENU_TYPE, VIEW_TYPE } from "../../models/project";
 import { changeFlowView } from "../../redux/store/flow/actions";
 import { setDarkMode } from "../../redux/store/darkMode/actions";
 import { FindSelectedNode, SetDarkModeColor } from "../flow/helpers/common";
 import { IsBlockView } from "../flow/helpers/block";
 import { MenuMainHeader } from "../../compLibrary/box/menus";
 import { GetMenuIcon } from "../../assets/helpers";
-import { changeProjectMenu } from "../../redux/store/projectMenu/actions";
+import { changeMenu } from "../../redux/store/projectMenu/actions";
 import { ProjectState } from "../../redux/store/project/types";
 import {
   HeaderBox,
@@ -39,7 +39,11 @@ const Header = () => {
   ) as boolean;
 
   const accountMenuOpen = useSelector<RootState>(
-    (state) => state.projectMenu.menu[1].visible
+    (state) => state.menu.list[1].visible
+  ) as boolean;
+
+  const filterMenuOpen = useSelector<RootState>(
+    (state) => state.menu.list[4].visible
   ) as boolean;
 
   const onViewClick = (e) => {
@@ -55,13 +59,11 @@ const Header = () => {
   };
 
   const onAccountClick = () => {
-    dispatch(
-      changeProjectMenu(PROJECT_MENU_TYPE.ACCOUNT_MENU, !accountMenuOpen)
-    );
+    dispatch(changeMenu(MENU_TYPE.ACCOUNT_MENU, !accountMenuOpen));
   };
 
-  const onUndo = () => {
-    return null;
+  const onFilterClick = () => {
+    dispatch(changeMenu(MENU_TYPE.VISUAL_FILTER_MENU, !filterMenuOpen));
   };
 
   return (
@@ -71,7 +73,7 @@ const Header = () => {
           {projectState.project && projectState.project.name}
         </div>
         <img
-          src={GetMenuIcon(accountMenuOpen, MENU_TYPE.ACCOUNT)}
+          src={GetMenuIcon(accountMenuOpen, MENU_TYPE.ACCOUNT_MENU)}
           alt="icon"
           className="icon"
           onClick={onAccountClick}
@@ -87,7 +89,7 @@ const Header = () => {
           />
         </OptionsElement>
         <OptionsElement>
-          <img src={UndoIcon} alt="undo" onClick={onUndo} />
+          <img src={UndoIcon} alt="undo" onClick={null} />
         </OptionsElement>
         <OptionsElement>
           <img
@@ -97,6 +99,22 @@ const Header = () => {
           />
         </OptionsElement>
       </OptionsBox>
+      <MenuMainHeader
+        isOpen={filterMenuOpen}
+        right
+        type={MENU_TYPE.VISUAL_FILTER_MENU}
+        id="FilterHeader"
+      >
+        <div className="text" onClick={onFilterClick}>
+          {TextResources.MainHeader_VisualFilter}
+        </div>
+        <img
+          src={GetMenuIcon(filterMenuOpen, MENU_TYPE.VISUAL_FILTER_MENU)}
+          alt="icon"
+          className="icon"
+          onClick={onFilterClick}
+        />
+      </MenuMainHeader>
     </HeaderBox>
   );
 };

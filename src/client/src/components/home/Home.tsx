@@ -21,7 +21,11 @@ const Home = () => {
   const dispatch = useDispatch();
 
   const accountMenuOpen = useSelector<RootState>(
-    (state) => state.projectMenu.menu[1].visible
+    (state) => state.menu.list[1].visible
+  ) as boolean;
+
+  const filterMenuOpen = useSelector<RootState>(
+    (state) => state.menu.list[4].visible
   ) as boolean;
 
   useEffect(() => {
@@ -37,7 +41,7 @@ const Home = () => {
     <>
       <ExplorerModule />
       {accountMenuOpen && <AccountMenu />}
-      <FilterMenu />
+      {filterMenuOpen && <FilterMenu />}
       <FlowModule route={params} />
       <InspectorModule />
       <LibraryModule />

@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { PROJECT_MENU_TYPE } from "../../../models/project";
+import { MENU_TYPE } from "../../../models/project";
 import { CloseIcon, RightArrowIcon } from "../../../assets/icons/common";
 import { TextResources } from "../../../assets/textResources";
-import { changeProjectMenu } from "../../../redux/store/projectMenu/actions";
+import { changeMenu } from "../../../redux/store/projectMenu/actions";
 import { useState } from "react";
 import { Input, Label, Size } from "../../../compLibrary";
 import { MenuButton } from "../../../compLibrary/buttons";
@@ -21,18 +21,17 @@ export const CreateProjectMenu = () => {
 
   const isOpen = useSelector<RootState>(
     (state) =>
-      state.projectMenu.menu.find(
-        (x) => x.type === PROJECT_MENU_TYPE.CREATE_PROJECT_MENU
-      ).visible
+      state.menu.list.find((x) => x.type === MENU_TYPE.CREATE_PROJECT_MENU)
+        .visible
   ) as boolean;
 
   const onReturnClick = () => {
-    dispatch(changeProjectMenu(PROJECT_MENU_TYPE.CREATE_PROJECT_MENU, false));
+    dispatch(changeMenu(MENU_TYPE.CREATE_PROJECT_MENU, false));
   };
 
   const onProjectCreateClick = () => {
     dispatch(create(projectName, projectName));
-    dispatch(changeProjectMenu(PROJECT_MENU_TYPE.CREATE_PROJECT_MENU, false));
+    dispatch(changeMenu(MENU_TYPE.CREATE_PROJECT_MENU, false));
   };
 
   return (

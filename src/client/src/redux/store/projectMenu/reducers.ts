@@ -1,33 +1,37 @@
-import { PROJECT_MENU_TYPE } from "../../../models/project";
-import { CHANGE_PROJECT_MENU } from "./types";
+import { MENU_TYPE } from "../../../models/project";
+import { CHANGE_MENU } from "./types";
 
 const initialState = {
-  menu: [
+  list: [
     {
-      type: PROJECT_MENU_TYPE.MAIN_MENU,
+      type: MENU_TYPE.MAIN_MENU,
       visible: false,
     },
     {
-      type: PROJECT_MENU_TYPE.ACCOUNT_MENU,
+      type: MENU_TYPE.ACCOUNT_MENU,
+      visible: true,
+    },
+    {
+      type: MENU_TYPE.OPEN_PROJECT_MENU,
       visible: false,
     },
     {
-      type: PROJECT_MENU_TYPE.OPEN_PROJECT_MENU,
+      type: MENU_TYPE.CREATE_PROJECT_MENU,
       visible: false,
     },
     {
-      type: PROJECT_MENU_TYPE.CREATE_PROJECT_MENU,
+      type: MENU_TYPE.VISUAL_FILTER_MENU,
       visible: false,
     },
   ],
 };
 
-export function projectMenuReducer(state = initialState, action) {
+export function menuReducer(state = initialState, action) {
   switch (action.type) {
-    case CHANGE_PROJECT_MENU:
+    case CHANGE_MENU:
       return {
         ...state,
-        menu: state.menu.map((menu) =>
+        list: state.list.map((menu) =>
           menu.type === action.payload.key
             ? {
                 ...menu,

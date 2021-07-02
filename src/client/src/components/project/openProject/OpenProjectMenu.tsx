@@ -1,12 +1,12 @@
 import { SearchBar, ProjectList } from ".";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { PROJECT_MENU_TYPE } from "../../../models/project";
+import { MENU_TYPE } from "../../../models/project";
 import { CloseIcon, RightArrowIcon } from "../../../assets/icons/common";
 import { MenuButton } from "../../../compLibrary/buttons";
 import { TextResources } from "../../../assets/textResources";
 import { get } from "../../../redux/store/project/actions";
-import { changeProjectMenu } from "../../../redux/store/projectMenu/actions";
+import { changeMenu } from "../../../redux/store/projectMenu/actions";
 import { useState } from "react";
 import { MessageComponent } from "../../message";
 import { ProjectSimple } from "../../../models";
@@ -30,18 +30,17 @@ export const OpenProjectMenu = () => {
 
   const isOpen = useSelector<RootState>(
     (state) =>
-      state.projectMenu.menu.find(
-        (x) => x.type === PROJECT_MENU_TYPE.OPEN_PROJECT_MENU
-      ).visible
+      state.menu.list.find((x) => x.type === MENU_TYPE.OPEN_PROJECT_MENU)
+        .visible
   ) as boolean;
 
   const onReturnClick = () => {
-    dispatch(changeProjectMenu(PROJECT_MENU_TYPE.OPEN_PROJECT_MENU, false));
+    dispatch(changeMenu(MENU_TYPE.OPEN_PROJECT_MENU, false));
   };
 
   const onOpenClick = () => {
     setConfirm(true);
-    dispatch(changeProjectMenu(PROJECT_MENU_TYPE.OPEN_PROJECT_MENU, false));
+    dispatch(changeMenu(MENU_TYPE.OPEN_PROJECT_MENU, false));
   };
 
   const onSaveClick = () => {
@@ -49,13 +48,13 @@ export const OpenProjectMenu = () => {
     setConfirm(false);
     dispatch(get(projectId));
     // dispatch(save(currentProject));
-    dispatch(changeProjectMenu("accountMenu", false));
+    dispatch(changeMenu("accountMenu", false));
   };
 
   const onNoSaveClick = () => {
     dispatch(get(projectId));
     setConfirm(false);
-    dispatch(changeProjectMenu("accountMenu", false));
+    dispatch(changeMenu("accountMenu", false));
   };
 
   return (

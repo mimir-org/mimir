@@ -7,11 +7,11 @@ import {
 } from "../icons/common";
 
 const GetMenuBoxIcon = (isOpen: boolean, type: string) => {
-  const account = type === MENU_TYPE.ACCOUNT;
+  const isAccount = type === MENU_TYPE.ACCOUNT_MENU;
   const iconFilter = isOpen ? OpenFilterIcon : ClosedFilterIcon;
   const iconAccount = isOpen ? OpenUserIcon : ClosedUserIcon;
 
-  return account ? iconAccount : iconFilter;
+  return isAccount ? iconAccount : iconFilter;
 };
 
 export default GetMenuBoxIcon;

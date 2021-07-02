@@ -6,7 +6,7 @@ import { userReducer } from "./user/reducers";
 import { projectReducer } from "./project/reducers";
 import { inspectorReducer } from "./inspector/reducers";
 import { moduleReducer } from "./modules/reducers";
-import { projectMenuReducer } from "./projectMenu/reducers";
+import { menuReducer } from "./projectMenu/reducers";
 import { commonReducer } from "./common/reducers";
 import { flowReducer } from "./flow/reducers";
 import { splitViewReducer } from "./splitView/reducers";
@@ -30,7 +30,7 @@ const rootReducers = combineReducers({
   userState: userReducer,
   projectState: projectReducer,
   modules: moduleReducer,
-  projectMenu: projectMenuReducer,
+  menu: menuReducer,
   flow: flowReducer,
   splitView: splitViewReducer,
   connectView: connectViewReducer,

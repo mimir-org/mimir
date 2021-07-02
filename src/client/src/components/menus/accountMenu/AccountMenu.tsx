@@ -4,8 +4,8 @@ import { UserState } from "../../../redux/store/user/types";
 import { ProjectState } from "../../../redux/store/project/types";
 import { save } from "../../../redux/store/project/actions";
 import { GetMenuElement } from "./helpers";
-import { MENU_TYPE, PROJECT_MENU_TYPE } from "../../../models/project";
-import { changeProjectMenu } from "../../../redux/store/projectMenu/actions";
+import { MENU_TYPE } from "../../../models/project";
+import { changeMenu } from "../../../redux/store/projectMenu/actions";
 import { OpenProjectMenu } from "../../project/openProject";
 import { CreateProjectMenu } from "../../project/createProject";
 import { saveAs } from "file-saver";
@@ -13,8 +13,6 @@ import { MenuLine, MenuBox } from "../../../compLibrary/box/menus";
 
 const AccountMenu = () => {
   const dispatch = useDispatch();
-  const type = MENU_TYPE.ACCOUNT;
-
   const projectState = useSelector<RootState>(
     (state) => state.projectState
   ) as ProjectState;
@@ -24,22 +22,22 @@ const AccountMenu = () => {
   ) as UserState;
 
   const onOpenClick = () => {
-    dispatch(changeProjectMenu(PROJECT_MENU_TYPE.ACCOUNT_MENU, false));
-    dispatch(changeProjectMenu(PROJECT_MENU_TYPE.OPEN_PROJECT_MENU, true));
+    dispatch(changeMenu(MENU_TYPE.ACCOUNT_MENU, false));
+    dispatch(changeMenu(MENU_TYPE.OPEN_PROJECT_MENU, true));
   };
 
   const onCreateClick = () => {
-    dispatch(changeProjectMenu(PROJECT_MENU_TYPE.ACCOUNT_MENU, false));
-    dispatch(changeProjectMenu(PROJECT_MENU_TYPE.CREATE_PROJECT_MENU, true));
+    dispatch(changeMenu(MENU_TYPE.ACCOUNT_MENU, false));
+    dispatch(changeMenu(MENU_TYPE.CREATE_PROJECT_MENU, true));
   };
 
   const onSaveClick = () => {
-    dispatch(changeProjectMenu(PROJECT_MENU_TYPE.ACCOUNT_MENU, false));
+    dispatch(changeMenu(MENU_TYPE.ACCOUNT_MENU, false));
     if (projectState.project) dispatch(save(projectState.project));
   };
 
   const onSaveFile = () => {
-    dispatch(changeProjectMenu(PROJECT_MENU_TYPE.ACCOUNT_MENU, false));
+    dispatch(changeMenu(MENU_TYPE.ACCOUNT_MENU, false));
     if (projectState.project) {
       const blob = new Blob([JSON.stringify(projectState.project, null, 2)], {
         type: "application/json",
@@ -49,7 +47,7 @@ const AccountMenu = () => {
   };
 
   const onSaveLibraryFile = () => {
-    dispatch(changeProjectMenu(PROJECT_MENU_TYPE.ACCOUNT_MENU, false));
+    dispatch(changeMenu(MENU_TYPE.ACCOUNT_MENU, false));
     if (projectState.project) {
       const blob = new Blob([JSON.stringify(projectState.project, null, 2)], {
         type: "application/json",
@@ -60,7 +58,7 @@ const AccountMenu = () => {
 
   return (
     <>
-      <MenuBox id={type}>
+      <MenuBox id={MENU_TYPE.ACCOUNT_MENU}>
         <GetMenuElement type="Open" onClick={onOpenClick} />
         <GetMenuElement type="Create" onClick={onCreateClick} />
         <GetMenuElement type="Save" onClick={onSaveClick} />

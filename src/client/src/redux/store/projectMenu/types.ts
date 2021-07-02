@@ -1,7 +1,7 @@
-export const CHANGE_PROJECT_MENU = "CHANGE_PROJECT_MENU";
+export const CHANGE_MENU = "CHANGE_MENU";
 
-export interface ChangeProjectMenu {
-  type: typeof CHANGE_PROJECT_MENU;
+export interface ChangeMenu {
+  type: typeof CHANGE_MENU;
   payload: {
     key: string;
     visible: boolean;

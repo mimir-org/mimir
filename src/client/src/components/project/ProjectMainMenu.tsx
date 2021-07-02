@@ -3,8 +3,8 @@ import { create } from "../../redux/store/project/actions";
 import { TextResources } from "../../assets/textResources";
 import { RootState } from "../../redux/store";
 import { NewProjectIcon, OpenProjectIcon } from "../../assets/icons/common";
-import { changeProjectMenu } from "../../redux/store/projectMenu/actions";
-import { PROJECT_MENU_TYPE } from "../../models/project";
+import { changeMenu } from "../../redux/store/projectMenu/actions";
+import { MENU_TYPE } from "../../models/project";
 import {
   ProjectBody,
   ProjectBox,
@@ -20,19 +20,18 @@ export const ProjectMainMenu = () => {
 
   const isOpen = useSelector<RootState>(
     (state) =>
-      state.projectMenu.menu.find((x) => x.type === PROJECT_MENU_TYPE.MAIN_MENU)
-        .visible
+      state.menu.list.find((x) => x.type === MENU_TYPE.MAIN_MENU).visible
   ) as boolean;
 
   const handleCreateClick = () => {
     dispatch(create("unnamed", "unnamed"));
-    dispatch(changeProjectMenu(PROJECT_MENU_TYPE.MAIN_MENU, false));
+    dispatch(changeMenu(MENU_TYPE.MAIN_MENU, false));
   };
 
   const handleOpenClick = () => {
-    dispatch(changeProjectMenu("mainMenu", false));
-    dispatch(changeProjectMenu(PROJECT_MENU_TYPE.OPEN_PROJECT_MENU, true));
-    dispatch(changeProjectMenu(PROJECT_MENU_TYPE.MAIN_MENU, false));
+    dispatch(changeMenu("mainMenu", false));
+    dispatch(changeMenu(MENU_TYPE.OPEN_PROJECT_MENU, true));
+    dispatch(changeMenu(MENU_TYPE.MAIN_MENU, false));
   };
 
   return (
