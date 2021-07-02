@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { Color, FontSize, FontType } from "./../../../..//compLibrary";
 
 const Login = styled.div`
-  width: 200px;
-  height: 40px;
+  width: 80px;
+  height: 15px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -14,7 +14,7 @@ const Login = styled.div`
   white-space: nowrap;
   cursor: pointer;
   font-family: ${FontType.Standard};
-  font-size: ${FontSize.Header};
+  font-size: ${FontSize.Standard};
   color: ${Color.Black};
   margin: auto;
   margin-top: 12px;
@@ -26,7 +26,7 @@ const Login = styled.div`
 
   .icon {
     position: relative;
-    padding: 0px 15px;
+    padding: 0px 5px;
   }
 
   &:hover {

@@ -27,7 +27,8 @@ const GetMenuElement = ({ type, onClick, userState }: Props) => {
       {userState.user && userState.user.name}
       <MenuButton onClick={logoutClick}>
         <img src={LogoutIcon} alt="logout" />
-        {TextResources.Account_Logout}
+
+        <p className="text">{TextResources.Account_Logout}</p>
       </MenuButton>
     </MenuElement>
   );

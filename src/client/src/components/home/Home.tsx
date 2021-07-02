@@ -1,5 +1,6 @@
+import { RootState } from "../../redux/store";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { ExplorerModule } from "../modules/explorerModule";
 import { InspectorModule } from "../modules/inspectorModule";
@@ -19,6 +20,10 @@ interface RouteParams {
 const Home = () => {
   const dispatch = useDispatch();
 
+  const accountMenuOpen = useSelector<RootState>(
+    (state) => state.projectMenu.menu[1].visible
+  ) as boolean;
+
   useEffect(() => {
     dispatch(search(""));
     dispatch(getUser());
@@ -31,7 +36,7 @@ const Home = () => {
   return (
     <>
       <ExplorerModule />
-      <AccountMenu />
+      {accountMenuOpen && <AccountMenu />}
       <FilterMenu />
       <FlowModule route={params} />
       <InspectorModule />
