@@ -2,7 +2,8 @@ import { Connector } from "../../../../models";
 import { HandleType, Position } from "react-flow-renderer";
 import {
   IsFulfilledByTerminal,
-  IsInputConnector,
+  IsInputTerminal,
+  IsOutputTerminal,
   IsLocationTerminal,
   IsPartOfTerminal,
   IsTransportTerminal,
@@ -10,7 +11,7 @@ import {
 
 const GetBlockHandleType = (conn: Connector): [HandleType, Position] => {
   if (
-    !IsInputConnector(conn) &&
+    IsOutputTerminal(conn) &&
     (IsLocationTerminal(conn) ||
       IsFulfilledByTerminal(conn) ||
       IsPartOfTerminal(conn))
@@ -18,12 +19,12 @@ const GetBlockHandleType = (conn: Connector): [HandleType, Position] => {
     return ["source", Position.Right];
   }
 
-  if (!IsInputConnector(conn) && IsTransportTerminal(conn)) {
+  if (IsOutputTerminal(conn) && IsTransportTerminal(conn)) {
     return ["source", Position.Right];
   }
 
   if (
-    IsInputConnector(conn) &&
+    IsInputTerminal(conn) &&
     (IsLocationTerminal(conn) ||
       IsFulfilledByTerminal(conn) ||
       IsPartOfTerminal(conn))
@@ -31,7 +32,7 @@ const GetBlockHandleType = (conn: Connector): [HandleType, Position] => {
     return ["target", Position.Left];
   }
 
-  if (IsInputConnector(conn) && IsTransportTerminal(conn)) {
+  if (IsInputTerminal(conn) && IsTransportTerminal(conn)) {
     return ["target", Position.Left];
   }
   return ["source", Position.Right];

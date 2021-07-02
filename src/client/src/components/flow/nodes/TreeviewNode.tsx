@@ -5,7 +5,8 @@ import { TreeHandleBox, TreeNodeNameBox } from "../../../compLibrary/treeView";
 import { SetTerminalYPos } from "../helpers/common";
 import {
   GetHandleType,
-  IsInputConnector,
+  IsInputTerminal,
+  IsOutputTerminal,
   IsPartOfTerminal,
 } from "../helpers/common";
 
@@ -42,8 +43,8 @@ const TreeviewNode: FC<NodeProps> = ({ data }) => {
     >
       {data.connectors?.map((conn: Connector) => {
         const [typeHandler, positionHandler] = GetHandleType(conn);
-        if (conn.visible && IsInputConnector(conn)) inputCount++;
-        else if (conn.visible && !IsInputConnector(conn)) outputCount++;
+        if (conn.visible && IsInputTerminal(conn)) inputCount++;
+        else if (conn.visible && IsOutputTerminal(conn)) outputCount++;
 
         return (
           <TreeHandleBox

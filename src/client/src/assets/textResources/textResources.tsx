@@ -177,6 +177,11 @@ const textResources = {
   Relations_PartOf: "Part of Relationship",
   Relations_HasLocation: "Has Location",
   Relations_FulfilledBy: "Fulfilled By",
+
+  // Type
+  Type_BlockLocation: "BlockLocationNode",
+  Type_BlockFunction: "BlockFunctionNode",
+  Type_FunctionBlock: "FunctionBlock",
 };
 
 export const VisualFilterResources = [

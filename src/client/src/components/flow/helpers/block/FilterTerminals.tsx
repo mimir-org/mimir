@@ -1,48 +1,49 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
-import { SortConnectors } from ".";
+import { SortTerminals } from ".";
 import { Aspect, Connector } from "../../../../models";
 import {
   IsFulfilledByTerminal,
-  IsInputConnector,
-  IsLocation,
+  IsInputTerminal,
   IsLocationTerminal,
+  IsOutputTerminal,
   IsPartOfTerminal,
   IsTransportTerminal,
 } from "../common";
 
-const FilterTerminals = (connectors, aspect) => {
-  const isLocationNode = useSelector<RootState>((state) =>
-    IsLocation(state.splitView.node)
+const FilterTerminals = (terminals: Connector[], aspect: Aspect) => {
+  let filteredTerminals: Connector[] = [];
+  const splitView = useSelector<RootState>(
+    (state) => state.splitView.visible
   ) as boolean;
 
-  if (connectors === null || aspect === null) return [];
-  const connectorList: Connector[] = [];
+  if (terminals === null || aspect === null) return filteredTerminals;
 
-  if (aspect === Aspect.Location) {
-    connectors.forEach((conn) => {
-      IsLocationTerminal(conn) &&
-        IsInputConnector(conn) &&
-        connectorList.push(conn);
+  // SplitView
+  terminals.forEach((conn) => {
+    if (aspect === Aspect.Location) {
+      if (IsInputTerminal(conn) && IsLocationTerminal(conn))
+        filteredTerminals.push(conn);
+    }
+    if (aspect !== Aspect.Location) {
+      if (IsOutputTerminal(conn) && IsLocationTerminal(conn))
+        filteredTerminals.push(conn);
+    }
+  });
+
+  if (!splitView) {
+    terminals.forEach((conn) => {
+      if (
+        IsTransportTerminal(conn) &&
+        !IsLocationTerminal(conn) &&
+        !IsPartOfTerminal(conn) &&
+        !IsFulfilledByTerminal(conn)
+      )
+        filteredTerminals.push(conn);
     });
-    return connectorList;
   }
 
-  connectors.forEach((conn) => {
-    IsTransportTerminal(conn) &&
-      !IsLocationTerminal(conn) &&
-      !IsPartOfTerminal(conn) &&
-      !IsFulfilledByTerminal(conn) &&
-      !isLocationNode &&
-      connectorList.push(conn);
-
-    // SplitView with Location
-    IsLocationTerminal(conn) &&
-      isLocationNode &&
-      !IsInputConnector(conn) &&
-      connectorList.push(conn);
-  });
-  return SortConnectors(connectorList);
+  return SortTerminals(filteredTerminals);
 };
 
 export default FilterTerminals;

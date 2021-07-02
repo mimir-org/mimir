@@ -1,3 +1,4 @@
+import "./BlockEdge.scss";
 import { Connector, RelationType, Aspect, Node } from "../../../models";
 import {
   ArrowHeadType,
@@ -18,9 +19,6 @@ export default function BlockEdgeType({
   markerEndId,
 }) {
   const markerEnd = getMarkerEnd(ArrowHeadType.ArrowClosed, markerEndId);
-
-  // sourceY -= 15;
-  // targetY -= 15;
 
   const edgePathSmoothStep = getSmoothStepPath({
     sourceX,

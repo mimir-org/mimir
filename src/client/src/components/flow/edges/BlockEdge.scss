@@ -1,0 +1,7 @@
+.react-flow__edge-BlockEdgeType {
+  &.selected {
+    .react-flow__edge-path {
+      stroke: black !important;
+    }
+  }
+}

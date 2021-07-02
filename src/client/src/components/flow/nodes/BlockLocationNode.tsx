@@ -15,7 +15,6 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const [terminalMenu, showTerminalMenu] = useState(false);
 
   const onTerminalClick = () => {
-    console.log("klikk");
     showTerminalMenu(!terminalMenu);
   };
 
