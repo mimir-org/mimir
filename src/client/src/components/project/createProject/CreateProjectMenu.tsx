@@ -32,6 +32,7 @@ export const CreateProjectMenu = () => {
   const onProjectCreateClick = () => {
     dispatch(create(projectName, projectName));
     dispatch(changeMenu(MENU_TYPE.CREATE_PROJECT_MENU, false));
+    dispatch(changeMenu(MENU_TYPE.ACCOUNT_MENU, false));
   };
 
   return (

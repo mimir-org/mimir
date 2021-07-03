@@ -48,13 +48,13 @@ export const OpenProjectMenu = () => {
     setConfirm(false);
     dispatch(get(projectId));
     // dispatch(save(currentProject));
-    dispatch(changeMenu("accountMenu", false));
+    dispatch(changeMenu(MENU_TYPE.ACCOUNT_MENU, false));
   };
 
   const onNoSaveClick = () => {
     dispatch(get(projectId));
     setConfirm(false);
-    dispatch(changeMenu("accountMenu", false));
+    dispatch(changeMenu(MENU_TYPE.ACCOUNT_MENU, false));
   };
 
   return (

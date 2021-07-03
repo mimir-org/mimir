@@ -60,6 +60,8 @@ const Header = () => {
 
   const onAccountClick = () => {
     dispatch(changeMenu(MENU_TYPE.ACCOUNT_MENU, !accountMenuOpen));
+    dispatch(changeMenu(MENU_TYPE.CREATE_PROJECT_MENU, false));
+    dispatch(changeMenu(MENU_TYPE.OPEN_PROJECT_MENU, false));
   };
 
   const onFilterClick = () => {
