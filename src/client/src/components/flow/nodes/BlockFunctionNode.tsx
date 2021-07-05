@@ -140,6 +140,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
           isOpen={terminalMenu}
           list={sortedConns}
           width={data.width}
+          type={data.aspect}
           onClick={onConnectorClick}
         />
 

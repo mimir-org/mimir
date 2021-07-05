@@ -1,5 +1,5 @@
 import red from "../../../redux/store";
-import { Connector, Node } from "../../../models";
+import { Aspect, Connector, Node } from "../../../models";
 import { HandleBox } from "../../../compLibrary/blockView";
 import { Handle } from "react-flow-renderer";
 import { FilterTerminals, GetBlockHandleType } from "../helpers/block";
@@ -25,7 +25,11 @@ const HandleComponent = ({ data }: Props) => {
 
   const visible = (conn: Connector) => {
     if (splitView) return conn.visible;
-    return conn.visible && !IsLocationTerminal(conn);
+    else {
+      if (data.aspect === Aspect.Function)
+        return conn.visible && !IsLocationTerminal(conn);
+      if (data.aspect === Aspect.Location) return conn.visible;
+    }
   };
 
   return (
