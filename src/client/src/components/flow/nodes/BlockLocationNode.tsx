@@ -59,7 +59,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
         <TerminalsComponent
           isOpen={terminalMenu}
           list={data.connectors}
-          type={Aspect.Location}
+          aspect={Aspect.Location}
           width={data.width}
           onClick={onConnectorClick}
         />

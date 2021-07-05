@@ -8,7 +8,7 @@ import { TerminalsIcon, ConnectIcon } from "../../../assets/icons/blockView";
 import { changeActiveConnector } from "../../../redux/store/project/actions";
 import { TerminalsComponent, ConnectViewComponent } from "../block";
 import { HandleComponent } from "../block";
-import { CalculateTerminalOrder, FilterTerminals } from "../helpers/block";
+import { CalculateTerminalOrder } from "../helpers/block";
 import {
   GetConnectChildren,
   IsMainConnectNode,
@@ -35,11 +35,6 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const connectChildren = GetConnectChildren(data);
   const hasChildren = connectChildren?.length > 0;
 
-  const sortedConns = FilterTerminals(
-    data.connectors,
-    data.type
-  ) as Connector[];
-
   const mainConnectNodes = useSelector<RootState>(
     (state) => state.connectView?.mainNodes
   ) as Node[];
@@ -59,7 +54,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   };
 
   const onHover = () => {
-    if (sortedConns.length > 0) showTerminalButton(true);
+    showTerminalButton(true);
     showConnectButton(true);
   };
 
@@ -138,9 +133,9 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
 
         <TerminalsComponent
           isOpen={terminalMenu}
-          list={sortedConns}
+          list={data.connectors}
           width={data.width}
-          type={data.aspect}
+          aspect={data.aspect}
           onClick={onConnectorClick}
         />
 

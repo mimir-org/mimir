@@ -11,21 +11,27 @@ import {
 interface Props {
   isOpen: boolean;
   list: Connector[];
-  type: Aspect;
+  aspect: Aspect;
   width?: number;
   onClick: any;
 }
 
-const TerminalsComponent = ({ isOpen, list, type, width, onClick }: Props) => {
+const TerminalsComponent = ({
+  isOpen,
+  list,
+  aspect,
+  width,
+  onClick,
+}: Props) => {
   const splitView = red.store.getState().splitView.visible as boolean;
-  let sortedList = FilterTerminals(list, type);
+  let sortedList = FilterTerminals(list, aspect);
   if (!splitView) {
-    if (type === Aspect.Function)
+    if (aspect === Aspect.Function)
       sortedList = sortedList.filter((x) => !IsLocationTerminal(x));
   }
 
   return (
-    <TerminalsBox visible={isOpen} type={type} width={width}>
+    <TerminalsBox visible={isOpen} width={width}>
       {sortedList.map((conn) => (
         <TerminalsElement key={conn.id} onClick={() => onClick(conn)}>
           <p className="text"> {GetConnectorName(conn)}</p>
