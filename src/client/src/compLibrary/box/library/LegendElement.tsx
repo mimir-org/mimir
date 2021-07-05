@@ -21,6 +21,7 @@ const LegendElement = styled.div`
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
     margin-bottom: 10px;
+    width: initial;
   }
 `;
 

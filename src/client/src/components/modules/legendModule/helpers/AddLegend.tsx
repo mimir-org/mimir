@@ -10,14 +10,19 @@ const AddLegend = (node: Node): Legend[] => {
 
   const IsActive = (conn: Connector) => {
     let found = false;
+
     edges.forEach((edge) => {
       if (!IsBlockView()) {
-        if (edge.fromConnectorId === conn.id) {
+        if (edge.fromConnectorId === conn.id && !edge.isHidden) {
           found = true;
           return;
         }
       } else {
-        if (edge.fromConnectorId === conn.id && !IsPartOfTerminal(conn)) {
+        if (
+          edge.fromConnectorId === conn.id &&
+          !edge.isHidden &&
+          !IsPartOfTerminal(conn)
+        ) {
           found = true;
           return;
         }
