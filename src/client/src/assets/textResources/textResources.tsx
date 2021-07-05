@@ -111,7 +111,7 @@ const textResources = {
   TypeEditor_Location_Type: "Location Type",
   TypeEditor_Type_Name: "Type name",
   TypeEditor_Status: "Status",
-  TypeEditor_Properties_Choose: "Choose",
+  TypeEditor_Properties_Choose: "Choose ",
   TypeEditor_Properties_RDS: "RDS",
   TypeEditor_Properties_Terminals: "Terminal Types",
   TypeEditor_Properties_Location_Attributes: "Predefined Location Attributes",
@@ -120,6 +120,9 @@ const textResources = {
   TypeEditor_Preview_Info: "Click on preview objects to see inspector info",
   TypeEditor_Button_Add: "Add to Library",
   TypeEditor_Button_Edit: "Save Type Edit",
+  TypeEditor_Type_Placeholder: "Write Type Name",
+  TypeEditor_Aspect_Placeholder: "Choose Aspect",
+  TypeEditor_Draft_Placeholder: "Draft",
 
   // AccountModule
   Account_Save_Label: "Save project to database",

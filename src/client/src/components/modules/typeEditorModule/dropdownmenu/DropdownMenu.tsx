@@ -1,12 +1,7 @@
+import "./dropdownmenu.scss";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Aspect } from "../../../../models";
-import {
-  changeLocationType,
-  changeSelectedAspect,
-  changeSelectedObjecttype,
-  changeStatus,
-} from "../../../../redux/store/typeEditor/actions";
 import GetRightMargin from "../helper/GetRightMargin";
 import { ExpandedIcon, CollapsedIcon } from "../../../../assets/icons/common";
 import { LocationTypeCategory, LocationSubType } from "../styled";
@@ -16,7 +11,12 @@ import {
   DropdownMenuList,
   DropdownMenuListItem,
 } from "../../../../compLibrary/dropdown";
-import "./dropdownmenu.scss";
+import {
+  changeLocationType,
+  changeSelectedAspect,
+  changeSelectedObjecttype,
+  changeStatus,
+} from "../../../../redux/store/typeEditor/actions";
 
 interface Props {
   aspect?: Aspect;
@@ -63,7 +63,7 @@ export const DropDownMenu = ({
     <>
       <DropdownMenuWrapper right={GetRightMargin(label)}>
         <label htmlFor={label} />
-        {label}
+        <div className="label"> {label}</div>
         <div onClick={toggleList}>
           <DropdownMenuHeader>
             <p>{selectedValue}</p>

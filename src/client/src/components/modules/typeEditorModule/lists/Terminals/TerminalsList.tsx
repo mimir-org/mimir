@@ -2,11 +2,9 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../../../redux/store";
 import { TypeEditorState } from "../../../../../redux/store/typeEditor/types";
 import { Aspect } from "../../../../../models";
-
 import { ListHeader } from "../ListHeader";
 import { TerminalsListBody } from "./TerminalsListBody";
 import { ListWrapper } from "../../../../../compLibrary";
-
 import { TextResources } from "../../../../../assets/textResources";
 
 interface Props {

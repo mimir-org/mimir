@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
-import { TerminalTypeItem, ConnectorType } from "../../../../../../models";
-import { AddTerminalElement } from "../../../styled";
 import "./directiondropdown.scss";
 import "./terminalsearchbar.scss";
+import { useState, useEffect, useCallback } from "react";
+import { TerminalTypeItem, ConnectorType } from "../../../../../../models";
+import { AddTerminalElement } from "../../../styled";
 import { NumericInput } from "../../../../../../compLibrary";
 import {
   HelpIcon,
@@ -60,11 +60,11 @@ export const AddTerminal = ({
 
   const StringIsNumber = (value) => isNaN(Number(value)) === false;
 
-  let filteredTerminals = terminals.filter((terminal) => {
+  const filteredTerminals = terminals.filter((terminal) => {
     return terminal.name.toLowerCase().includes(searchbarInput);
   });
 
-  const validateTerminal = () => {
+  const validateTerminal = useCallback(() => {
     let terminal: TerminalTypeItem;
     if (
       selectedTerminalId !== "" &&
@@ -77,20 +77,19 @@ export const AddTerminal = ({
         connectorType: Number(selectedDirectionId),
       };
       return terminal;
-    } else {
-      return null;
     }
-  };
+    return null;
+  }, [selectedDirectionId, selectedTerminalId, terminalQuantity]);
 
-  const addTerminalToArray = () => {
+  const addTerminalToArray = useCallback(() => {
     if (validateTerminal() !== null) {
       handleTerminalChange(validateTerminal());
     }
-  };
+  }, [handleTerminalChange, validateTerminal]);
 
   useEffect(() => {
     addTerminalToArray();
-  }, [quantity, selectedTerminalId, terminalQuantity, selectedDirectionId]);
+  }, [addTerminalToArray]);
 
   return (
     <AddTerminalElement>

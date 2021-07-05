@@ -6,15 +6,11 @@ interface Props {
   chooseVisible: boolean;
 }
 
-export const ListHeader = ({ label, chooseVisible }: Props) => {
-  return (
-    <>
-      <ListLabel>
-        {chooseVisible ? TextResources.TypeEditor_Properties_Choose : null}{" "}
-        {label}
-      </ListLabel>
-    </>
-  );
-};
+export const ListHeader = ({ label, chooseVisible }: Props) => (
+  <ListLabel>
+    {chooseVisible ? TextResources.TypeEditor_Properties_Choose : null}
+    {label}
+  </ListLabel>
+);
 
 export default ListHeader;

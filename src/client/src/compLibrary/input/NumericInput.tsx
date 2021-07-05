@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Color from "../colors/Color";
 
 const NumericInput = styled.div`
   input {
@@ -6,7 +7,7 @@ const NumericInput = styled.div`
     height: 17px;
     text-align: center;
     border-radius: 5px;
-    border: 1px solid #007079;
+    border: 1px solid ${Color.DeepCyan};
     margin: 0px 6px;
   }
   textarea:focus,
