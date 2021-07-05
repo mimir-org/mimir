@@ -1,4 +1,8 @@
 .react-flow__edge-BlockEdgeType {
+  &:hover {
+    cursor: grab;
+  }
+
   &.selected {
     .react-flow__edge-path {
       stroke: black !important;
