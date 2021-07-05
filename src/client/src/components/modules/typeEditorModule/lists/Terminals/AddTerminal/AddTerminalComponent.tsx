@@ -1,6 +1,6 @@
 import "./directiondropdown.scss";
 import "./terminalsearchbar.scss";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { TerminalTypeItem, ConnectorType } from "../../../../../../models";
 import { AddTerminalElement } from "../../../styled";
 import { NumericInput } from "../../../../../../compLibrary";
@@ -64,7 +64,7 @@ export const AddTerminal = ({
     return terminal.name.toLowerCase().includes(searchbarInput);
   });
 
-  const validateTerminal = () => {
+  const validateTerminal = useCallback(() => {
     let terminal: TerminalTypeItem;
     if (
       selectedTerminalId !== "" &&
@@ -79,17 +79,17 @@ export const AddTerminal = ({
       return terminal;
     }
     return null;
-  };
+  }, [selectedDirectionId, selectedTerminalId, terminalQuantity]);
 
-  const addTerminalToArray = () => {
+  const addTerminalToArray = useCallback(() => {
     if (validateTerminal() !== null) {
       handleTerminalChange(validateTerminal());
     }
-  };
+  }, [handleTerminalChange, validateTerminal]);
 
   useEffect(() => {
     addTerminalToArray();
-  }, [quantity, selectedTerminalId, terminalQuantity, selectedDirectionId]);
+  }, [addTerminalToArray]);
 
   return (
     <AddTerminalElement>
