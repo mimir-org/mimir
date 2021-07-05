@@ -12,8 +12,8 @@ interface Props {
   isOpen: boolean;
   list: Connector[];
   aspect: Aspect;
-  width?: number;
-  onClick: any;
+  width: number;
+  onClick: (conn: Connector) => void;
 }
 
 const TerminalsComponent = ({
@@ -25,6 +25,7 @@ const TerminalsComponent = ({
 }: Props) => {
   const splitView = red.store.getState().splitView.visible as boolean;
   let sortedList = FilterTerminals(list, aspect);
+
   if (!splitView) {
     if (aspect === Aspect.Function)
       sortedList = sortedList.filter((x) => !IsLocationTerminal(x));
