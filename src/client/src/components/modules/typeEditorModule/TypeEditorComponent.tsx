@@ -11,10 +11,7 @@ import { TypeEditorState } from "../../../redux/store/typeEditor/types";
 import { changeFlowView } from "../../../redux/store/flow/actions";
 import { SetDarkModeColor } from "../../flow/helpers/common";
 import { changeAllModulesVisibility } from "../../../redux/store/modules/actions";
-import {
-  getInitialData,
-  //   resetCreateLibrary,
-} from "../../../redux/store/typeEditor/actions";
+import { getInitialData } from "../../../redux/store/typeEditor/actions";
 import {
   changeMode,
   changeTypeName,
@@ -39,7 +36,6 @@ import {
 export const TypeEditorComponent = () => {
   const { push } = useHistory();
   const dispatch = useDispatch();
-
   const [typenameInput, settypenameInput] = useState("");
 
   const state = useSelector<RootState>(
@@ -102,7 +98,6 @@ export const TypeEditorComponent = () => {
   useEffect(() => {
     if (state.mode === Mode.Edit) {
       let typeToEdit = state.createLibraryType;
-
       typeToEdit.name = ""; //string
       typeToEdit.status = null; //Status;
       typeToEdit.aspect = null; //Aspect;

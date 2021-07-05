@@ -158,7 +158,6 @@ const GlobalStyle = createGlobalStyle`
     height: 18px;
   }
   ::-webkit-scrollbar-thumb {
-    height: 6px;
     border: 4px solid rgba(0, 0, 0, 0);
     background-clip: padding-box;
     border-radius: 7px;

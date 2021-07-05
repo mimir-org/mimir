@@ -7,14 +7,12 @@ interface Props {
   name: string;
 }
 
-export const RDSListElement = ({ id, name }: Props) => {
-  return (
-    <ListElem>
-      <RoundCheckbox id={id} name={name} label="rds" />
-      <p>{name}</p>
-      <img src={HelpIcon} alt="help" />
-    </ListElem>
-  );
-};
+export const RDSListElement = ({ id, name }: Props) => (
+  <ListElem>
+    <RoundCheckbox id={id} name={name} label="rds" />
+    <p>{name}</p>
+    <img src={HelpIcon} alt="help" />
+  </ListElem>
+);
 
 export default RDSListElement;

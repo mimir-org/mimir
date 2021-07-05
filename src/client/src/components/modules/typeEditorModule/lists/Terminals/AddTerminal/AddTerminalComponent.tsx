@@ -1,8 +1,8 @@
+import "./directiondropdown.scss";
+import "./terminalsearchbar.scss";
 import { useState, useEffect } from "react";
 import { TerminalTypeItem, ConnectorType } from "../../../../../../models";
 import { AddTerminalElement } from "../../../styled";
-import "./directiondropdown.scss";
-import "./terminalsearchbar.scss";
 import { NumericInput } from "../../../../../../compLibrary";
 import {
   HelpIcon,
@@ -60,7 +60,7 @@ export const AddTerminal = ({
 
   const StringIsNumber = (value) => isNaN(Number(value)) === false;
 
-  let filteredTerminals = terminals.filter((terminal) => {
+  const filteredTerminals = terminals.filter((terminal) => {
     return terminal.name.toLowerCase().includes(searchbarInput);
   });
 

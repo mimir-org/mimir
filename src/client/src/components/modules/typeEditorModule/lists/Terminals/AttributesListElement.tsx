@@ -1,15 +1,16 @@
+import "./AddTerminal/directiondropdown.scss";
+import "../../inputs/checkbox.scss";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../../redux/store";
 import { TypeEditorState } from "../../../../../redux/store/typeEditor/types";
 import { updatePredefinedAttributes } from "../../../../../redux/store/typeEditor/actions";
 import { PredefinedAttribute } from "../../../../../models";
-
 import {
   HelpIcon,
   ExpandedIcon,
   CollapsedIcon,
 } from "../../../../../assets/icons/common";
-import "./AddTerminal/directiondropdown.scss";
 import {
   TerminalListElement,
   TerminalCategoryWrapper,
@@ -18,8 +19,6 @@ import {
   ValuesListWrapper,
   ValuesListItem,
 } from "../../styled";
-import "../../inputs/checkbox.scss";
-import { useState } from "react";
 
 interface Props {
   name: string;
@@ -32,9 +31,8 @@ export const AttributesListElement = ({
   values,
   isMultiSelect,
 }: Props) => {
-  const [expandList, setExpandList] = useState(false);
-
   const dispatch = useDispatch();
+  const [expandList, setExpandList] = useState(false);
 
   const state = useSelector<RootState>(
     (state) => state.typeEditor
@@ -44,18 +42,18 @@ export const AttributesListElement = ({
     setExpandList(!expandList);
   };
 
-  let locationAttribute: PredefinedAttribute = {
+  const locationAttribute: PredefinedAttribute = {
     key: name,
     values: values,
     isMultiSelect: isMultiSelect,
   };
 
-  let isSelected = state.createLibraryType.predefinedAttributes.some(
+  const isSelected = state.createLibraryType.predefinedAttributes.some(
     (a) => a.key === locationAttribute.key
   );
 
   const handleCheckboxChange = () => {
-    let locationAttributes = state.createLibraryType.predefinedAttributes;
+    const locationAttributes = state.createLibraryType.predefinedAttributes;
     let temp: PredefinedAttribute[];
     if (locationAttribute) {
       if (isSelected) {
@@ -63,7 +61,7 @@ export const AttributesListElement = ({
           (a) => a.key !== locationAttribute.key
         );
         dispatch(updatePredefinedAttributes(temp));
-      } else if (!isSelected) {
+      } else {
         locationAttributes.push(locationAttribute);
         dispatch(updatePredefinedAttributes(locationAttributes));
       }
@@ -73,7 +71,7 @@ export const AttributesListElement = ({
   const handleMultipleValuesCheckboxChange = ([param_key, param_value]) => {
     let attribute: PredefinedAttribute =
       state.createLibraryType.predefinedAttributes.find((a) => a.key === name);
-    let valueslist = attribute.values;
+    const valueslist = attribute.values;
     if (valueslist) {
       valueslist[param_key] = !param_value;
     }
@@ -83,41 +81,37 @@ export const AttributesListElement = ({
       isMultiSelect: isMultiSelect,
     };
     let attributesList = state.createLibraryType.predefinedAttributes;
+
     attributesList = attributesList.map((a) => {
-      if (a.key === attribute.key) {
-        a = attribute;
-      }
+      if (a.key === attribute.key) a = attribute;
       return a;
     });
     dispatch(updatePredefinedAttributes(attributesList));
   };
 
   const handleSingleValueCheckboxChange = (e) => {
-    let targetKey = e.target.value;
+    const targetKey = e.target.value;
     let attribute: PredefinedAttribute =
       state.createLibraryType.predefinedAttributes.find((a) => a.key === name);
     let valueslist = attribute.values;
-    if (valueslist) {
-      valueslist[targetKey] = !valueslist[targetKey];
-    }
+    if (valueslist) valueslist[targetKey] = !valueslist[targetKey];
+
     Object.entries(valueslist)
-      .filter(([key, value]) => key !== targetKey)
+      .filter(([key, _value]) => key !== targetKey)
       .map(([key, value]) => {
-        if (value) {
-          valueslist[key] = false;
-        }
+        if (value) valueslist[key] = false;
         return [key, value];
       });
+
     attribute = {
       key: name,
       values: valueslist,
       isMultiSelect: isMultiSelect,
     };
+
     let attributesList = state.createLibraryType.predefinedAttributes;
     attributesList = attributesList.map((a) => {
-      if (a.key === attribute.key) {
-        a = attribute;
-      }
+      if (a.key === attribute.key) a = attribute;
       return a;
     });
     dispatch(updatePredefinedAttributes(attributesList));
@@ -144,8 +138,8 @@ export const AttributesListElement = ({
           <ValueHeader onClick={toggleValuesList}>
             <p className="selectedValues">
               {Object.entries(values)
-                .filter(([key, value]) => value === true)
-                .map(([key, value]) => {
+                .filter(([_key, value]) => value === true)
+                .map(([key, _value]) => {
                   return (
                     <span key={key}>
                       {key}
