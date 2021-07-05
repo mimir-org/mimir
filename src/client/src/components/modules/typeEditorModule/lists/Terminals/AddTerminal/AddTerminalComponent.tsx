@@ -77,9 +77,8 @@ export const AddTerminal = ({
         connectorType: Number(selectedDirectionId),
       };
       return terminal;
-    } else {
-      return null;
     }
+    return null;
   };
 
   const addTerminalToArray = () => {

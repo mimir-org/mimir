@@ -8,18 +8,20 @@ import { Block } from ".";
 import { BlockMessageBox } from "../../../compLibrary/blockView";
 
 const FunctionBlock: FC<NodeProps> = ({ data }) => {
-  const splitView = useSelector<RootState>((state) => state.splitView.visible);
+  const isSplitView = useSelector<RootState>(
+    (state) => state.splitView.visible
+  ) as boolean;
   const splitViewNode = useSelector<RootState>(
     (state) => state.splitView.node
   ) as Node;
 
-  const location = data.aspect === Aspect.Location;
+  const isLocation = data.aspect === Aspect.Location;
 
-  return !splitView ? (
-    <Block data={data} location={location} splitView={splitView} />
+  return !isSplitView ? (
+    <Block data={data} location={isLocation} splitView={isSplitView} />
   ) : (
     <>
-      <Block data={data} location={location} splitView={splitView} />
+      <Block data={data} location={isLocation} splitView={isSplitView} />
       {!splitViewNode ? (
         <BlockMessageBox>
           <p>{TextResources.BlockView_Select_Message}</p>
@@ -28,7 +30,7 @@ const FunctionBlock: FC<NodeProps> = ({ data }) => {
         <Block
           data={splitViewNode}
           location={splitViewNode}
-          splitView={splitView}
+          splitView={isSplitView}
         />
       )}
     </>

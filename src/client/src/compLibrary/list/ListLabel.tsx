@@ -7,7 +7,7 @@ const ListLabel = styled.div`
   font-weight: ${FontWeight.Bold};
   color: ${Color.DeepCyan};
   padding-bottom: 10px;
-  border-width: 0px 0px 1px 0px;
+  border-width: 0px 0px 1.5px 0px;
   border-style: solid;
   border-color: ${Color.DeepCyan};
 `;

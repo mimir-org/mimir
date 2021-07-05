@@ -127,7 +127,7 @@ export const TypeEditorComponent = () => {
         <TypeInfo>
           <DropdownMenu
             label={TextResources.TypeEditor_Aspect}
-            placeHolder="Choose Aspect"
+            placeHolder={TextResources.TypeEditor_Aspect_Placeholder}
             listItems={filterAspects()}
           />
           <DropdownMenu
@@ -149,13 +149,13 @@ export const TypeEditorComponent = () => {
             <TextInput
               inputType="text"
               value={typenameInput}
-              placeholder="Write Type name"
+              placeholder={TextResources.TypeEditor_Type_Placeholder}
               onChange={handleChange}
             />
           </TypeNameInput>
           <DropdownMenu
             label={TextResources.TypeEditor_Status}
-            placeHolder="Draft"
+            placeHolder={TextResources.TypeEditor_Draft_Placeholder}
             listItems={filterStatuses()}
           />
         </TypeInfo>

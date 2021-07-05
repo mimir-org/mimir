@@ -63,7 +63,7 @@ export const DropDownMenu = ({
     <>
       <DropdownMenuWrapper right={GetRightMargin(label)}>
         <label htmlFor={label} />
-        {label}
+        <div className="label"> {label}</div>
         <div onClick={toggleList}>
           <DropdownMenuHeader>
             <p>{selectedValue}</p>

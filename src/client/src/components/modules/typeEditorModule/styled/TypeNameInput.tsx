@@ -9,8 +9,10 @@ const TypeNameInput = styled.div`
   color: ${Color.Black};
   font-size: ${FontSize.Standard};
   font-family: ${FontType.Standard};
+  margin-top: -14px;
+
   p {
-    margin: 0px;
+    margin-bottom: 4px;
   }
 
   input::placeholder {
