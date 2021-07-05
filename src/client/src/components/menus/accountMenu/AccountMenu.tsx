@@ -8,6 +8,8 @@ import { MENU_TYPE } from "../../../models/project";
 import { changeMenu } from "../../../redux/store/projectMenu/actions";
 import { OpenProjectMenu } from "../../project/openProject";
 import { CreateProjectMenu } from "../../project/createProject";
+import { SaveProjectFileMenu } from "../../project/saveProjectFile";
+import { ImportProjectFileMenu } from "../../project/importProjectFile/ImportProjectFileMenu";
 import { saveAs } from "file-saver";
 import { MenuLine, MenuBox } from "../../../compLibrary/box/menus";
 
@@ -35,13 +37,11 @@ const AccountMenu = () => {
   };
 
   const onSaveFile = () => {
-    dispatch(changeMenu(MENU_TYPE.ACCOUNT_MENU, false));
-    if (projectState.project) {
-      const blob = new Blob([JSON.stringify(projectState.project, null, 2)], {
-        type: "application/json",
-      });
-      saveAs(blob, projectState.project.id + ".json");
-    }
+    dispatch(changeMenu(MENU_TYPE.SAVE_PROJECT_FILE_MENU, true));
+  };
+
+  const onImportProjectFile = () => {
+    dispatch(changeMenu(MENU_TYPE.IMPORT_PROJECT_FILE_MENU, true));
   };
 
   const onSaveLibraryFile = () => {
@@ -63,7 +63,7 @@ const AccountMenu = () => {
         <GetMenuElement type="SaveLibrary" onClick={onSaveLibraryFile} />
         <GetMenuElement type="SaveFile" onClick={onSaveFile} />
         <MenuLine />
-        <GetMenuElement type="ImportProject" onClick={null} />
+        <GetMenuElement type="ImportProject" onClick={onImportProjectFile} />
         <GetMenuElement type="ImportLibrary" onClick={null} />
         <MenuLine />
         <GetMenuElement type="Logout" userState={userState} />
@@ -71,6 +71,8 @@ const AccountMenu = () => {
       <div className="ProjectMenu" style={{ zIndex: 2 }}>
         <OpenProjectMenu />
         <CreateProjectMenu />
+        <SaveProjectFileMenu />
+        <ImportProjectFileMenu />
       </div>
     </>
   );

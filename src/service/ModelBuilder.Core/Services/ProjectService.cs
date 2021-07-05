@@ -141,6 +141,22 @@ namespace Mb.Core.Services
         }
 
         /// <summary>
+        /// Import project, if exist update project
+        /// </summary>
+        /// <param name="project"></param>
+        /// <returns></returns>
+        public async Task<Project> ImportProject(ProjectAm project)
+        {
+            if (project == null || string.IsNullOrEmpty(project.Id))
+                throw new ModelBuilderInvalidOperationException("You can't import an project that is null or missing id");
+
+            if (_projectRepository.FindBy(x => x.Id == project.Id).Any())
+                return await UpdateProject(project.Id, project);
+
+            return await CreateProject(project);
+        }
+
+        /// <summary>
         /// Create a new empty project. The project wil include the aspect root nodes.
         /// </summary>
         /// <param name="createProject"></param>
@@ -314,7 +330,7 @@ namespace Mb.Core.Services
 
             var par = _moduleService.Resolve<IModelBuilderParser>(parser);
             var project = await par.DeserializeProjectAm(stream.ToArray());
-            return await CreateProject(project);
+            return await ImportProject(project);
         }
 
         #region Private methods

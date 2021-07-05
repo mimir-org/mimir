@@ -11,6 +11,7 @@ namespace Mb.Core.Services.Contracts
     {
         IEnumerable<ProjectSimple> GetProjectList(string name, int from, int number);
         Task<Project> GetProject(string id, bool ignoreNotFound = false);
+        Task<Project> ImportProject(ProjectAm project);
         Task<Project> CreateProject(CreateProject createProject);
         Task<Project> CreateProject(ProjectAm project);
         Task<Project> UpdateProject(string id, ProjectAm project);

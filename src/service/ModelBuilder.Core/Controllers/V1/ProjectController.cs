@@ -148,7 +148,7 @@ namespace Mb.Core.Controllers.V1
 
             try
             {
-                var data = await _projectService.CreateProject(project);
+                var data = await _projectService.ImportProject(project);
                 return Ok(data);
             }
             catch (ModelBuilderDuplicateException e)

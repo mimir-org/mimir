@@ -140,6 +140,10 @@ const textResources = {
   Account_Save_Button: "Yes",
   Account_NoSave_Button: "No",
   Account_Cancel_Button: "Cancel",
+  Account_Save_Label_File_Name: "File name",
+  Account_Save_Label_File_Button: "Export project",
+  Account_Import_Label_File_Browse_Button: "Browse file",
+  Account_Import_Label_File_Button: "Import project",
 
   // ErrorModule
   Error_Tile: "Oops, Something Went Wrong",

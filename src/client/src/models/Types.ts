@@ -126,6 +126,11 @@ export interface User {
     username: string;
     name: string;
 }
+export interface FileData {
+    content: string;
+    name: string;
+    lastModified: number
+}
 
 export const SETTING_KEY = {
     PREFERED_TYPE: "PREFERED_TYPE",
