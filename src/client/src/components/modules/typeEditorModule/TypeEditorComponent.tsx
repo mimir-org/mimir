@@ -104,16 +104,11 @@ export const TypeEditorComponent = () => {
       typeToEdit.objectType = null; //ObjectType;
       typeToEdit.semanticReference = ""; //string;
       typeToEdit.rdsId = ""; //string;
-      typeToEdit.rdsName = ""; //string;
       typeToEdit.terminalTypes = []; //TerminalTypeItem[];
       typeToEdit.attributeTypes = [""]; //string[];
       typeToEdit.locationType = "";
       typeToEdit.predefinedAttributes = [];
       typeToEdit.terminalTypeId = ""; //string;
-      typeToEdit.id = 0; //number;
-      typeToEdit.code = ""; //string;
-      typeToEdit.rdsCategoryId = ""; // string;
-      typeToEdit.category = null; //EnumBase;
     }
   }, [state.mode, state.createLibraryType]);
 

@@ -11,6 +11,7 @@ import { CreateProjectMenu } from "../../project/createProject";
 import { SaveProjectFileMenu } from "../../project/saveProjectFile";
 import { ImportProjectFileMenu } from "../../project/importProjectFile/ImportProjectFileMenu";
 import { SaveLibraryFileMenu } from "../../project/saveLibraryFile/SaveLibraryFileMenu";
+import { ImportFileLibraryMenu } from "../../project/importLibrary/ImportFileLibraryMenu";
 import { MenuLine, MenuBox } from "../../../compLibrary/box/menus";
 
 const AccountMenu = () => {
@@ -48,6 +49,10 @@ const AccountMenu = () => {
     dispatch(changeMenu(MENU_TYPE.SAVE_LIBRARY_FILE_MENU, true));
   };
 
+  const onImportLibraryFile = () => {
+    dispatch(changeMenu(MENU_TYPE.IMPORT_LIBRARY_FILE_MENU, true));
+  };
+
   return (
     <>
       <MenuBox id={MENU_TYPE.ACCOUNT_MENU}>
@@ -58,7 +63,7 @@ const AccountMenu = () => {
         <GetMenuElement type="SaveFile" onClick={onSaveFile} />
         <MenuLine />
         <GetMenuElement type="ImportProject" onClick={onImportProjectFile} />
-        <GetMenuElement type="ImportLibrary" onClick={null} />
+        <GetMenuElement type="ImportLibrary" onClick={onImportLibraryFile} />
         <MenuLine />
         <GetMenuElement type="Logout" userState={userState} />
       </MenuBox>
@@ -68,6 +73,7 @@ const AccountMenu = () => {
         <SaveProjectFileMenu />
         <ImportProjectFileMenu />
         <SaveLibraryFileMenu />
+        <ImportFileLibraryMenu />
       </div>
     </>
   );

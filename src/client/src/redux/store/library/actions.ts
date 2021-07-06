@@ -2,8 +2,11 @@ import {
     FETCHING_LIBRARY,
     DELETE_LIBRARY_ERROR,
     EXPORT_LIBRARY,
+    IMPORT_LIBRARY,
     LibraryActionTypes,
 } from "./types";
+
+import { CreateLibraryType } from "../../../models";
 
 export function searchLibrary(searchString: string): LibraryActionTypes {
     return {
@@ -26,6 +29,16 @@ export function exportLibrary(fileName: string): LibraryActionTypes {
         type: EXPORT_LIBRARY,
         payload: {
             fileName: fileName,
+            apiError: null
+        },
+    };
+}
+
+export function importLibrary(libraryTypes: CreateLibraryType[]): LibraryActionTypes {
+    return {
+        type: IMPORT_LIBRARY,
+        payload: {
+            libraryTypes: libraryTypes,
             apiError: null
         },
     };

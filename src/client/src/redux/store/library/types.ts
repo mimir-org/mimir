@@ -1,10 +1,12 @@
-import { LibraryNodeItem } from "../../../models";
+import { LibraryNodeItem, CreateLibraryType } from "../../../models";
 import { ApiError } from "../../../models/webclient";
 export const FETCHING_LIBRARY = "FETCHING_LIBRARY";
 export const DELETE_LIBRARY_ERROR = "DELETE_LIBRARY_ERROR";
 export const FETCHING_LIBRARY_SUCCESS_OR_ERROR = "FETCHING_LIBRARY_SUCCESS_OR_ERROR";
 export const EXPORT_LIBRARY = "EXPORT_LIBRARY";
 export const EXPORT_LIBRARY_SUCCESS_OR_ERROR = "EXPORT_LIBRARY_SUCCESS_OR_ERROR";
+export const IMPORT_LIBRARY = "IMPORT_LIBRARY";
+export const IMPORT_LIBRARY_SUCCESS_OR_ERROR = "IMPORT_LIBRARY_SUCCESS_OR_ERROR";
 
 // State types
 export interface LibraryState {
@@ -48,9 +50,26 @@ export interface ExportLibraryActionFinished {
     };
 }
 
+export interface ImportLibraryAction {
+    type: typeof IMPORT_LIBRARY;
+    payload: {
+        libraryTypes: CreateLibraryType[];
+        apiError: ApiError;
+    };
+}
+
+export interface ImportLibraryActionFinished {
+    type: typeof IMPORT_LIBRARY_SUCCESS_OR_ERROR;
+    payload: {
+        apiError: ApiError;
+    };
+}
+
 export type LibraryActionTypes =
     | FetchLibraryAction
     | FetchLibraryActionFinished
     | DeleteLibraryErrorAction
     | ExportLibraryAction
-    | ExportLibraryActionFinished;
+    | ExportLibraryActionFinished
+    | ImportLibraryAction
+    | ImportLibraryActionFinished;

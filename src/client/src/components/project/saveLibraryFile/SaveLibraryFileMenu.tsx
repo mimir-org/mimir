@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { ProjectState } from "../../../redux/store/project/types";
 import { MENU_TYPE } from "../../../models/project";
 import { CloseIcon, RightArrowIcon } from "../../../assets/icons/common";
 import { TextResources } from "../../../assets/textResources";
@@ -26,19 +25,11 @@ export const SaveLibraryFileMenu = () => {
         .visible
   ) as boolean;
 
-  const projectState = useSelector<RootState>(
-    (state) => state.projectState
-  ) as ProjectState;
-
   const onReturnClick = () => {
     dispatch(changeMenu(MENU_TYPE.SAVE_LIBRARY_FILE_MENU, false));
   };
 
   const onSaveClick = () => {
-    if (!projectState.project) {
-      throw Error("Can not export a project that does not exist");
-    }
-
     dispatch(exportLibrary(fileName));
 
     dispatch(changeMenu(MENU_TYPE.SAVE_LIBRARY_FILE_MENU, false));

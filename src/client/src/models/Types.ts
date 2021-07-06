@@ -93,16 +93,11 @@ export interface CreateLibraryType {
     objectType: ObjectType;
     semanticReference: string;
     rdsId: string;
-    rdsName: string;
     terminalTypes: TerminalTypeItem[];
     attributeTypes: string[];
     locationType: string;
     predefinedAttributes: PredefinedAttribute[];
     terminalTypeId: string;
-    id: number;
-    code: string;
-    rdsCategoryId: string;
-    category: EnumBase;
 }
 export interface UpdateLibraryType {
     name: string;
@@ -111,16 +106,11 @@ export interface UpdateLibraryType {
     objectType: ObjectType;
     semanticReference: string;
     rdsId: string;
-    rdsName: string;
     terminalTypes: TerminalTypeItem[];
     attributeTypes: string[];
     locationType: string;
     predefinedAttributes: PredefinedAttribute[];
     terminalTypeId: string;
-    id: number;
-    code: string;
-    rdsCategoryId: string;
-    category: EnumBase;
 }
 export interface User {
     username: string;

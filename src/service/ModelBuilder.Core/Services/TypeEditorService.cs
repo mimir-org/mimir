@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Mb.Core.Exceptions;
 using Mb.Core.Extensions;
 using Mb.Core.Repositories.Contracts;
@@ -196,7 +194,7 @@ namespace Mb.Core.Services
         /// </summary>
         /// <param name="createLibraryTypes"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<LibraryType>> CreateLibraryTypes(List<CreateLibraryType> createLibraryTypes)
+        public async Task<IEnumerable<LibraryType>> CreateLibraryTypes(ICollection<CreateLibraryType> createLibraryTypes)
         {
             var createdLibraryTypes = new List<LibraryType>();
 

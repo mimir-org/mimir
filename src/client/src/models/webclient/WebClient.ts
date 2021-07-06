@@ -59,6 +59,7 @@ export async function get<T>(path: string, args: RequestInit = { method: "get" }
 export async function post<T>(path: string, body: any, args: RequestInit = { method: "post", body: JSON.stringify(body) }): Promise<HttpResponse<T>> {
     const token = await Token();
     const req = { ...RequestInitDefault, ...args };
+    console.log(req);
     req.headers["Authorization"] = token;
     return await http<T>(new Request(path, req));
 }

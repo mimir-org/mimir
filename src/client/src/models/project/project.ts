@@ -48,6 +48,7 @@ export const MENU_TYPE = {
     SAVE_PROJECT_FILE_MENU: "SaveProjectFile",
     IMPORT_PROJECT_FILE_MENU: "ImportProjectFile",
     SAVE_LIBRARY_FILE_MENU: "SaveLibraryFile",
+    IMPORT_LIBRARY_FILE_MENU: "ImportLibraryFile",
 };
 
 export type ViewType = keyof typeof VIEW_TYPE;

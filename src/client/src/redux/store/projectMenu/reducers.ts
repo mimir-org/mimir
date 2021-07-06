@@ -35,6 +35,10 @@ const initialState = {
             type: MENU_TYPE.SAVE_LIBRARY_FILE_MENU,
             visible: false,
         },
+        {
+            type: MENU_TYPE.IMPORT_LIBRARY_FILE_MENU,
+            visible: false,
+        },
     ],
 };
 

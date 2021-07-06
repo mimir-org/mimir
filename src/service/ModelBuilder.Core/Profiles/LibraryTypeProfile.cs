@@ -67,18 +67,27 @@ namespace Mb.Core.Profiles
             CreateMap<TransportType, CreateLibraryType>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+                .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => Aspect.NotSet))
                 .ForMember(dest => dest.ObjectType, opt => opt.MapFrom(src => ObjectType.ObjectBlock))
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
                 .ForMember(dest => dest.RdsId, opt => opt.MapFrom(src => src.RdsId))
+                .ForMember(dest => dest.TerminalTypes, opt => opt.Ignore())
                 .ForMember(dest => dest.AttributeTypes, opt => opt.MapFrom(src => src.AttributeTypes.Select(x => x.Id)))
+                .ForMember(dest => dest.LocationType, opt => opt.Ignore())
+                .ForMember(dest => dest.PredefinedAttributes, opt => opt.Ignore())
                 .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.TerminalTypeId));
 
             CreateMap<InterfaceType, CreateLibraryType>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+                .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => Aspect.NotSet))
                 .ForMember(dest => dest.ObjectType, opt => opt.MapFrom(src => ObjectType.ObjectBlock))
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
                 .ForMember(dest => dest.RdsId, opt => opt.MapFrom(src => src.RdsId))
+                .ForMember(dest => dest.TerminalTypes, opt => opt.Ignore())
+                .ForMember(dest => dest.AttributeTypes, opt => opt.Ignore())
+                .ForMember(dest => dest.LocationType, opt => opt.Ignore())
+                .ForMember(dest => dest.PredefinedAttributes, opt => opt.Ignore())
                 .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.TerminalTypeId));
 
             CreateMap<NodeTypeTerminalType, TerminalTypeItem>()
