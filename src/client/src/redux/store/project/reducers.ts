@@ -31,6 +31,7 @@ import {
     CHANGE_ACTIVE_CONNECTOR,
     CHANGE_ACTIVE_EDGE,
     IMPORT_PROJECT_SUCCESS_OR_ERROR,
+    EXPORT_PROJECT_TO_FILE,
     EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR,
     IMPORT_PROJECT
 } from "./types";
@@ -464,6 +465,13 @@ export function projectReducer(
                             : node
                     ),
                 },
+            };
+        case EXPORT_PROJECT_TO_FILE:
+            return {
+                ...state,
+                apiError: state.apiError
+                    ? state.apiError.filter((elem) => elem.key !== EXPORT_PROJECT_TO_FILE)
+                    : state.apiError,
             };
 
         case EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR:

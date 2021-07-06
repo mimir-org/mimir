@@ -8,10 +8,7 @@ import { changeMenu } from "../../../redux/store/projectMenu/actions";
 import { useState } from "react";
 import { Input, Label, Size } from "../../../compLibrary";
 import { MenuButton } from "../../../compLibrary/buttons";
-import {
-  save,
-  exportProjectToFile,
-} from "../../../redux/store/project/actions";
+import { exportLibrary } from "../../../redux/store/library/actions";
 import {
   ProjectBody,
   ProjectBox,
@@ -37,13 +34,12 @@ export const SaveLibraryFileMenu = () => {
     dispatch(changeMenu(MENU_TYPE.SAVE_LIBRARY_FILE_MENU, false));
   };
 
-  const onProjectSaveClick = () => {
+  const onSaveClick = () => {
     if (!projectState.project) {
       throw Error("Can not export a project that does not exist");
     }
 
-    dispatch(save(projectState.project));
-    dispatch(exportProjectToFile(projectState.project, fileName, true));
+    dispatch(exportLibrary(fileName));
 
     dispatch(changeMenu(MENU_TYPE.SAVE_LIBRARY_FILE_MENU, false));
     dispatch(changeMenu(MENU_TYPE.ACCOUNT_MENU, false));
@@ -64,7 +60,7 @@ export const SaveLibraryFileMenu = () => {
               onClick={onReturnClick}
               className="icon"
             />
-            {TextResources.Account_Save_Label_File}
+            {TextResources.Account_Save_Label_Library_File}
           </HeaderBox>
           <Label>{TextResources.Account_Save_Label_File_Name}</Label>
           <Input
@@ -80,9 +76,13 @@ export const SaveLibraryFileMenu = () => {
           </ButtonBox>
           {fileName && (
             <ButtonBox>
-              <MenuButton onClick={onProjectSaveClick} wide>
-                <p>{TextResources.Account_Save_Label_File_Button}</p>
-                <img src={RightArrowIcon} alt="Open project" className="icon" />
+              <MenuButton onClick={onSaveClick} wide>
+                <p>{TextResources.Account_Save_Label_File_Library_Button}</p>
+                <img
+                  src={RightArrowIcon}
+                  alt="Save library file"
+                  className="icon"
+                />
               </MenuButton>
             </ButtonBox>
           )}

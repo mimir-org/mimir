@@ -144,6 +144,7 @@ const textResources = {
   Account_Save_Label_File_Button: "Export project",
   Account_Import_Label_File_Browse_Button: "Browse file",
   Account_Import_Label_File_Button: "Import project",
+  Account_Save_Label_File_Library_Button: "Export library",
 
   // ErrorModule
   Error_Tile: "Oops, Something Went Wrong",

@@ -11,7 +11,6 @@ import { CreateProjectMenu } from "../../project/createProject";
 import { SaveProjectFileMenu } from "../../project/saveProjectFile";
 import { ImportProjectFileMenu } from "../../project/importProjectFile/ImportProjectFileMenu";
 import { SaveLibraryFileMenu } from "../../project/saveLibraryFile/SaveLibraryFileMenu";
-import { saveAs } from "file-saver";
 import { MenuLine, MenuBox } from "../../../compLibrary/box/menus";
 
 const AccountMenu = () => {
@@ -47,12 +46,6 @@ const AccountMenu = () => {
 
   const onSaveLibraryFile = () => {
     dispatch(changeMenu(MENU_TYPE.SAVE_LIBRARY_FILE_MENU, true));
-    // if (projectState.project) {
-    //   const blob = new Blob([JSON.stringify(projectState.project, null, 2)], {
-    //     type: "application/json",
-    //   });
-    //   saveAs(blob, projectState.project.id + ".json");
-    // }
   };
 
   return (
