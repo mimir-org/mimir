@@ -26,7 +26,7 @@ export const SaveProjectFileMenu = () => {
   const isOpen = useSelector<RootState>(
     (state) =>
       state.menu.list.find((x) => x.type === MENU_TYPE.SAVE_PROJECT_FILE_MENU)
-        .visible
+        ?.visible
   ) as boolean;
 
   const projectState = useSelector<RootState>(

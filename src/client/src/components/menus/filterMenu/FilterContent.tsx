@@ -19,6 +19,7 @@ import {
 const FilterContent = ({ type, index }) => {
   const dispatch = useDispatch();
   const edges = red.store.getState().projectState.project?.edges as Edge[];
+
   let selectedElements = !IsBlockView()
     ? CheckEdges(edges, type)
     : CheckBlockEdges(edges, type);
@@ -42,17 +43,6 @@ const FilterContent = ({ type, index }) => {
     }
   };
 
-  const name =
-    index === 0
-      ? "Part of"
-      : index === 1
-      ? "Has Location"
-      : index === 2
-      ? "Transport"
-      : index === 3
-      ? "Show All"
-      : ""; // TODO: Get name for type
-
   return (
     <MenuColumn>
       {index === 0 && (
@@ -62,7 +52,7 @@ const FilterContent = ({ type, index }) => {
       <label className={"checkbox-filter"}>
         <input type="checkbox" checked={checked} onChange={handleChange} />
         <span className="checkmark-filter"></span>
-        {name}
+        {type}
       </label>
     </MenuColumn>
   );

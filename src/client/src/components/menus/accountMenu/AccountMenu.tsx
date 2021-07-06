@@ -11,7 +11,6 @@ import { CreateProjectMenu } from "../../project/createProject";
 import { SaveProjectFileMenu } from "../../project/saveProjectFile";
 import { ImportProjectFileMenu } from "../../project/importProjectFile/ImportProjectFileMenu";
 import { SaveLibraryFileMenu } from "../../project/saveLibraryFile/SaveLibraryFileMenu";
-import { saveAs } from "file-saver";
 import { MenuLine, MenuBox } from "../../../compLibrary/box/menus";
 
 const AccountMenu = () => {
