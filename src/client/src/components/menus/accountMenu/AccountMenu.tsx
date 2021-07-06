@@ -10,6 +10,7 @@ import { OpenProjectMenu } from "../../project/openProject";
 import { CreateProjectMenu } from "../../project/createProject";
 import { SaveProjectFileMenu } from "../../project/saveProjectFile";
 import { ImportProjectFileMenu } from "../../project/importProjectFile/ImportProjectFileMenu";
+import { SaveLibraryFileMenu } from "../../project/saveLibraryFile/SaveLibraryFileMenu";
 import { saveAs } from "file-saver";
 import { MenuLine, MenuBox } from "../../../compLibrary/box/menus";
 
@@ -45,13 +46,13 @@ const AccountMenu = () => {
   };
 
   const onSaveLibraryFile = () => {
-    dispatch(changeMenu(MENU_TYPE.ACCOUNT_MENU, false));
-    if (projectState.project) {
-      const blob = new Blob([JSON.stringify(projectState.project, null, 2)], {
-        type: "application/json",
-      });
-      saveAs(blob, projectState.project.id + ".json");
-    }
+    dispatch(changeMenu(MENU_TYPE.SAVE_LIBRARY_FILE_MENU, true));
+    // if (projectState.project) {
+    //   const blob = new Blob([JSON.stringify(projectState.project, null, 2)], {
+    //     type: "application/json",
+    //   });
+    //   saveAs(blob, projectState.project.id + ".json");
+    // }
   };
 
   return (
@@ -73,6 +74,7 @@ const AccountMenu = () => {
         <CreateProjectMenu />
         <SaveProjectFileMenu />
         <ImportProjectFileMenu />
+        <SaveLibraryFileMenu />
       </div>
     </>
   );

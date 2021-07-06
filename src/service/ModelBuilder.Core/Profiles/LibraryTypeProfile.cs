@@ -22,8 +22,13 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
                 .ForMember(dest => dest.RdsId, opt => opt.MapFrom(src => src.RdsId))
                 .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => src.Aspect))
+                .ForMember(dest => dest.LocationType, opt => opt.MapFrom(src => src.LocationType))
                 .ForMember(dest => dest.TerminalTypes, opt => opt.MapFrom(src => CreateTerminalTypes(src.TerminalTypes.ToList(), $"{src.Key}-{commonRepository.GetDomain()}".CreateMd5()).ToList()))
-                .ForMember(dest => dest.AttributeTypes, opt => opt.MapFrom(src => CreateAttributeTypes(src.AttributeTypes.ToList()).ToList()));
+                .ForMember(dest => dest.AttributeTypes, opt => opt.MapFrom(src => CreateAttributeTypes(src.AttributeTypes.ToList()).ToList()))
+                .AfterMap((_, dest, _) =>
+                {
+                    dest.ResolvePredefinedAttributeData();
+                });
 
             CreateMap<CreateLibraryType, TransportType>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => $"{src.Key}-{commonRepository.GetDomain()}".CreateMd5()))
@@ -35,13 +40,51 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.AttributeTypes, opt => opt.MapFrom(src => CreateAttributeTypes(src.AttributeTypes.ToList()).ToList()));
 
             CreateMap<CreateLibraryType, InterfaceType>()
-                .ForMember(dest => dest.Id,
-                    opt => opt.MapFrom(src => $"{src.Key}-{commonRepository.GetDomain()}".CreateMd5()))
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => $"{src.Key}-{commonRepository.GetDomain()}".CreateMd5()))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
                 .ForMember(dest => dest.RdsId, opt => opt.MapFrom(src => src.RdsId))
                 .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.TerminalTypeId));
+
+            CreateMap<NodeType, CreateLibraryType>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+                .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => src.Aspect))
+                .ForMember(dest => dest.ObjectType, opt => opt.MapFrom(src => ObjectType.ObjectBlock))
+                .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
+                .ForMember(dest => dest.RdsId, opt => opt.MapFrom(src => src.RdsId))
+                .ForMember(dest => dest.TerminalTypes, opt => opt.MapFrom(src => src.TerminalTypes))
+                .ForMember(dest => dest.AttributeTypes, opt => opt.MapFrom(src => src.AttributeTypes.Select(x => x.Id)))
+                .ForMember(dest => dest.LocationType, opt => opt.MapFrom(src => src.LocationType))
+                .ForMember(dest => dest.PredefinedAttributes, opt => opt.MapFrom(src => src.PredefinedAttributes))
+                .ForMember(dest => dest.TerminalTypeId, opt => opt.Ignore())
+                .BeforeMap((src, _, _) =>
+                {
+                    src.ResolvePredefinedAttributes();
+                });
+
+            CreateMap<TransportType, CreateLibraryType>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+                .ForMember(dest => dest.ObjectType, opt => opt.MapFrom(src => ObjectType.ObjectBlock))
+                .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
+                .ForMember(dest => dest.RdsId, opt => opt.MapFrom(src => src.RdsId))
+                .ForMember(dest => dest.AttributeTypes, opt => opt.MapFrom(src => src.AttributeTypes.Select(x => x.Id)))
+                .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.TerminalTypeId));
+
+            CreateMap<InterfaceType, CreateLibraryType>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+                .ForMember(dest => dest.ObjectType, opt => opt.MapFrom(src => ObjectType.ObjectBlock))
+                .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
+                .ForMember(dest => dest.RdsId, opt => opt.MapFrom(src => src.RdsId))
+                .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.TerminalTypeId));
+
+            CreateMap<NodeTypeTerminalType, TerminalTypeItem>()
+                .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.TerminalTypeId))
+                .ForMember(dest => dest.Number, opt => opt.MapFrom(src => src.Number))
+                .ForMember(dest => dest.ConnectorType, opt => opt.MapFrom(src => src.ConnectorType));
 
             CreateMap<NodeType, LibraryNodeItem>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
@@ -56,7 +99,6 @@ namespace Mb.Core.Profiles
                 {
                     dest.Connectors = CreateConnectors(src.TerminalTypes, context);
                 });
-                //.ForMember(dest => dest.Connectors, opt => opt.MapFrom(src => CreateConnectors(src.TerminalTypes)));
         }
 
         private List<Connector> CreateConnectors(ICollection<NodeTypeTerminalType> terminalTypes, ResolutionContext context)
