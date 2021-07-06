@@ -48,7 +48,7 @@ const HandleComponent = ({ aspect, terminals }: Props) => {
             id={"handle-" + conn.id}
             position={GetHandlePosition(pos)}
             key={"key-" + conn.id}
-            visible={conn.visible}
+            visible={visible}
             icon={GetConnectorIcon(conn.color)}
           >
             <Handle

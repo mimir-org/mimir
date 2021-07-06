@@ -16,7 +16,7 @@ import {
   IsEdge,
 } from "./helpers";
 
-const FilterContent = ({ type, index }) => {
+const FilterContent = ({ type, name, index }) => {
   const dispatch = useDispatch();
   const edges = red.store.getState().projectState.project?.edges as Edge[];
 
@@ -52,7 +52,7 @@ const FilterContent = ({ type, index }) => {
       <label className={"checkbox-filter"}>
         <input type="checkbox" checked={checked} onChange={handleChange} />
         <span className="checkmark-filter"></span>
-        {type}
+        {name}
       </label>
     </MenuColumn>
   );

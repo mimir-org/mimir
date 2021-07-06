@@ -3,7 +3,7 @@ import { FilterContent } from ".";
 import { Connector, Node, Edge, Project } from "../../../models";
 import { MenuBox, MenuColumn } from "../../../compLibrary/box/menus";
 import { useSelector } from "react-redux";
-import { IsBlockView } from "../../flow/helpers/block";
+import { IsTransportTerminal } from "../../flow/helpers/common";
 
 const AddElement = (
   node: Node,
@@ -13,7 +13,7 @@ const AddElement = (
     let found = false;
 
     edges.forEach((edge) => {
-      if (!IsBlockView() && edge.fromConnectorId === conn.id) {
+      if (edge.fromConnectorId === conn.id) {
         found = true;
         return;
       }
@@ -21,13 +21,14 @@ const AddElement = (
     return found;
   };
 
-  let elements = [] as { id; type }[];
+  let elements = [] as { id; type; name }[];
   elements = node?.connectors
     ?.filter((conn) => IsActive(conn))
     .map((x) => {
       return {
         id: x.id,
-        type: x.name,
+        type: IsTransportTerminal(x) ? x.name : x.relationType,
+        name: x.name,
       };
     });
 
@@ -39,26 +40,35 @@ const FilterMenu = () => {
     (state) => state.projectState.project
   ) as Project;
 
-  const nodes = project.nodes;
+  const nodes = project.nodes?.filter((x) => !x.isHidden);
   const edges = project.edges;
-  const elements = [];
+  let elements = [] as { id: string; type: string; name: string }[];
 
   nodes.forEach((node) => {
     elements.push.apply(elements, AddElement(node, edges));
   });
+
+  elements = elements.filter(
+    (value, index, self) =>
+      self.map((x) => x.type).indexOf(value.type) === index
+  );
 
   return (
     <MenuBox right>
       <MenuColumn>
         {elements.map(
           (x, i) =>
-            i % 2 === 0 && <FilterContent type={x.type} index={i} key={x.id} />
+            i % 2 === 0 && (
+              <FilterContent type={x.type} name={x.name} index={i} key={x.id} />
+            )
         )}
       </MenuColumn>
       <MenuColumn>
         {elements.map(
           (x, i) =>
-            i % 2 !== 0 && <FilterContent type={x.type} index={i} key={x.id} />
+            i % 2 !== 0 && (
+              <FilterContent type={x.name} name={x.name} index={i} key={x.id} />
+            )
         )}
       </MenuColumn>
       {/* <MenuColumn>
