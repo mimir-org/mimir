@@ -63,7 +63,9 @@ const TechInfoTabComponent = ({ node }) => {
                     NotSet
                   </option>
                   {attr.units?.map((unit) => (
-                    <option value={unit.id}>{unit.name}</option>
+                    <option key={unit.id} value={unit.id}>
+                      {unit.name}
+                    </option>
                   ))}
                 </Select>
               </InputWrapper>

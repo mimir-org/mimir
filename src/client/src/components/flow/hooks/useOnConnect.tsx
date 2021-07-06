@@ -48,7 +48,7 @@ const useOnConnect = (
       id: createdId,
       fromConnectorId: fromConnector.id,
       fromConnector: fromConnector,
-      toConnectorId: toConnector.id,
+      toConnectorId: toConnector?.id,
       toConnector: toConnector,
       fromNodeId: sourceNode.id,
       fromNode: sourceNode,

@@ -16,8 +16,9 @@ const CheckEdges = (edges: Edge[], type: RelationType | string) => {
         elementsToRemove.push(edge);
       });
     }
-  } else {
-    // Transport connections
+  }
+  // Transport connections
+  if (type === "Transport") {
     edges?.forEach((edge) => {
       if (
         IsTransportTerminal(edge.fromConnector) &&

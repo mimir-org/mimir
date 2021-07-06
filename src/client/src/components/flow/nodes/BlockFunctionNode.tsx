@@ -34,11 +34,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const [connectMenu, showConnectMenu] = useState(false);
   const connectChildren = GetConnectChildren(data);
   const hasChildren = connectChildren?.length > 0;
-
-  const sortedConns = FilterTerminals(
-    data.connectors,
-    data.type
-  ) as Connector[];
+  const sortedTerminals = FilterTerminals(data.connectors, data.aspect);
 
   const mainConnectNodes = useSelector<RootState>(
     (state) => state.connectView?.mainNodes
@@ -59,7 +55,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   };
 
   const onHover = () => {
-    if (sortedConns.length > 0) showTerminalButton(true);
+    showTerminalButton(true);
     showConnectButton(true);
   };
 
@@ -138,8 +134,9 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
 
         <TerminalsComponent
           isOpen={terminalMenu}
-          list={sortedConns}
+          list={sortedTerminals}
           width={data.width}
+          aspect={data.aspect}
           onClick={onConnectorClick}
         />
 
@@ -152,7 +149,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
         />
       </NodeBox>
 
-      <HandleComponent data={data} />
+      <HandleComponent aspect={data.aspect} terminals={sortedTerminals} />
     </>
   );
 };
