@@ -35,7 +35,7 @@ export default function RelationEdgeType({
     };
   };
 
-  const getClassName = (source: Node, target: Node): string => {
+  const getClassName = (source: Node): string => {
     let defaultClassName = "react-flow__edge-path ";
 
     const fromConnector = data.source.connectors?.find(
@@ -72,14 +72,14 @@ export default function RelationEdgeType({
       <path
         id={id}
         style={getStyle()}
-        className={getClassName(data.source, data.target) + ""}
+        className={getClassName(data.source) + ""}
         d={edgePathBezier}
         markerEnd={markerEnd}
       />
       <path
         id={id}
         style={getStyle()}
-        className={getClassName(data.source, data.target) + "--dashed"}
+        className={getClassName(data.source) + "--dashed"}
         d={edgePathBezier}
         markerEnd={markerEnd}
       />
