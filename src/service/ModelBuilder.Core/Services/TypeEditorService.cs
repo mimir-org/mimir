@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Mb.Core.Exceptions;
 using Mb.Core.Extensions;
 using Mb.Core.Repositories.Contracts;
@@ -203,6 +205,9 @@ namespace Mb.Core.Services
 
             foreach (var createLibraryType in createLibraryTypes)
             {
+                if (createLibraryType.Aspect == Aspect.Location)
+                    createLibraryType.ObjectType = ObjectType.ObjectBlock;
+
                 LibraryType libraryType = createLibraryType.ObjectType switch
                 {
                     ObjectType.ObjectBlock => _mapper.Map<NodeType>(createLibraryType),
@@ -273,12 +278,39 @@ namespace Mb.Core.Services
         /// Get all library types
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<LibraryType> GetAllTypes()
+        public IEnumerable<CreateLibraryType> GetAllTypes()
         {
-            var types = _libraryTypeComponentRepository.GetAll().ToList();
-            foreach (var component in types)
+            var nodeTypes = _libraryTypeComponentRepository
+                .GetAll()
+                .OfType<NodeType>()
+                .Include(x => x.TerminalTypes)
+                .Include(x => x.AttributeTypes)
+                .ToList();
+
+            var transportTypes = _libraryTypeComponentRepository
+                .GetAll()
+                .OfType<TransportType>()
+                .Include(x => x.AttributeTypes)
+                .ToList();
+
+            var interfaceType = _libraryTypeComponentRepository
+                .GetAll()
+                .OfType<InterfaceType>()
+                .ToList();
+
+            foreach (var clt in nodeTypes.Select(x => _mapper.Map<CreateLibraryType>(x)))
             {
-                yield return component;
+                yield return clt;
+            }
+
+            foreach (var clt in transportTypes.Select(x => _mapper.Map<CreateLibraryType>(x)))
+            {
+                yield return clt;
+            }
+
+            foreach (var clt in interfaceType.Select(x => _mapper.Map<CreateLibraryType>(x)))
+            {
+                yield return clt;
             }
         }
 
