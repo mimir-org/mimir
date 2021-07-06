@@ -23,15 +23,6 @@ const HandleComponent = ({ aspect, terminals }: Props) => {
   let inputCount = 0;
   let outputCount = 0;
 
-  const visible = (conn: Connector) => {
-    if (splitView) return conn.visible;
-    else {
-      if (aspect === Aspect.Function)
-        return conn.visible && !IsLocationTerminal(conn);
-      if (aspect === Aspect.Location) return conn.visible;
-    }
-  };
-
   return (
     <>
       {terminals.map((conn: Connector) => {
@@ -48,7 +39,13 @@ const HandleComponent = ({ aspect, terminals }: Props) => {
             id={"handle-" + conn.id}
             position={GetHandlePosition(pos)}
             key={"key-" + conn.id}
-            visible={visible}
+            visible={
+              splitView
+                ? conn.visible
+                : aspect === Aspect.Function
+                ? !IsLocationTerminal(conn) && conn.visible
+                : conn.visible
+            }
             icon={GetConnectorIcon(conn.color)}
           >
             <Handle
