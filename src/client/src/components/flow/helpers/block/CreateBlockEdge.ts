@@ -2,6 +2,7 @@ import { FlowElement } from "react-flow-renderer";
 import { ShowBlockViewEdge } from ".";
 import { Edge, Node } from "../../../../models";
 import { EdgeType } from "../../../../models/project";
+import { IsTransportTerminal } from "../common";
 
 export const CreateBlockEdge = (
   nodes: Node[],
@@ -19,7 +20,7 @@ export const CreateBlockEdge = (
       target: edge.toNodeId,
       sourceHandle: edge.fromConnectorId,
       targetHandle: edge.toConnectorId,
-      animated: true, // TODO: fix
+      animated: IsTransportTerminal(edge.fromConnector),
       label: "",
       data: {
         source: fromNode,

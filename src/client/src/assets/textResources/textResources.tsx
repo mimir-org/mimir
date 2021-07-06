@@ -6,7 +6,7 @@ const textResources = {
   Login_label_email: "SSO e-mail",
 
   // Top-menu
-  MainHeader_App_Name: "Model Builder - Prototype",
+  MainHeader_App_Name: "Mímir - Prototype",
   MainHeader_Login_Heading: "Login",
   MainHeader_VisualFilter: "Visual Filter",
 

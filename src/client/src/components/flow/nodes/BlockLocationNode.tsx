@@ -6,13 +6,14 @@ import { HandleComponent, TerminalsComponent } from "../block";
 import { changeActiveConnector } from "../../../redux/store/project/actions";
 import { useDispatch } from "react-redux";
 import { Aspect, Connector } from "../../../models";
-import { CalculateTerminalOrder } from "../helpers/block";
+import { CalculateTerminalOrder, FilterTerminals } from "../helpers/block";
 import { FindNodeById } from "../helpers/block/connectView";
 
 const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
   const [terminalButton, showTerminalButton] = useState(false);
   const [terminalMenu, showTerminalMenu] = useState(false);
+  const sortedTerminals = FilterTerminals(data.connectors, data.aspect);
 
   const onTerminalClick = () => {
     showTerminalMenu(!terminalMenu);
@@ -58,13 +59,13 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
 
         <TerminalsComponent
           isOpen={terminalMenu}
-          list={data.connectors}
-          type={Aspect.Location}
+          list={sortedTerminals}
+          aspect={Aspect.Location}
           width={data.width}
           onClick={onConnectorClick}
         />
       </NodeBox>
-      <HandleComponent data={data} />
+      <HandleComponent aspect={data.aspect} terminals={sortedTerminals} />
     </>
   );
 };

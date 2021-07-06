@@ -1,6 +1,5 @@
 import red from "../../../redux/store";
 import { Connector, Aspect } from "../../../models";
-import { FilterTerminals } from "../helpers/block";
 import { TerminalsBox, TerminalsElement } from "../../../compLibrary/blockView";
 import {
   GetConnectorIcon,
@@ -11,19 +10,27 @@ import {
 interface Props {
   isOpen: boolean;
   list: Connector[];
-  type?: Aspect;
-  width?: number;
-  onClick: any;
+  aspect: Aspect;
+  width: number;
+  onClick: (conn: Connector) => void;
 }
 
-const TerminalsComponent = ({ isOpen, list, type, width, onClick }: Props) => {
+const TerminalsComponent = ({
+  isOpen,
+  list,
+  aspect,
+  width,
+  onClick,
+}: Props) => {
   const splitView = red.store.getState().splitView.visible as boolean;
-  let sortedList = FilterTerminals(list, type);
-  if (!splitView) sortedList = sortedList.filter((x) => !IsLocationTerminal(x));
+  if (!splitView) {
+    if (aspect === Aspect.Function)
+      list = list.filter((x) => !IsLocationTerminal(x));
+  }
 
   return (
-    <TerminalsBox visible={isOpen} type={type} width={width}>
-      {sortedList.map((conn) => (
+    <TerminalsBox visible={isOpen} width={width}>
+      {list.map((conn) => (
         <TerminalsElement key={conn.id} onClick={() => onClick(conn)}>
           <p className="text"> {GetConnectorName(conn)}</p>
           <img

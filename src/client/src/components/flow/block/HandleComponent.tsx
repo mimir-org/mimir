@@ -1,8 +1,8 @@
 import red from "../../../redux/store";
-import { Connector, Node } from "../../../models";
+import { Aspect, Connector } from "../../../models";
 import { HandleBox } from "../../../compLibrary/blockView";
 import { Handle } from "react-flow-renderer";
-import { FilterTerminals, GetBlockHandleType } from "../helpers/block";
+import { GetBlockHandleType } from "../helpers/block";
 import {
   GetConnectorIcon,
   GetHandlePosition,
@@ -13,11 +13,11 @@ import {
 } from "../helpers/common";
 
 interface Props {
-  data: Node;
+  aspect: Aspect;
+  terminals: Connector[];
 }
 
-const HandleComponent = ({ data }: Props) => {
-  const sortedTerminals = FilterTerminals(data.connectors, data.aspect);
+const HandleComponent = ({ aspect, terminals }: Props) => {
   const splitView = red.store.getState().splitView.visible as boolean;
   const className = "react-flow__handle-block";
   let inputCount = 0;
@@ -25,12 +25,16 @@ const HandleComponent = ({ data }: Props) => {
 
   const visible = (conn: Connector) => {
     if (splitView) return conn.visible;
-    return conn.visible && !IsLocationTerminal(conn);
+    else {
+      if (aspect === Aspect.Function)
+        return conn.visible && !IsLocationTerminal(conn);
+      if (aspect === Aspect.Location) return conn.visible;
+    }
   };
 
   return (
     <>
-      {sortedTerminals.map((conn: Connector) => {
+      {terminals.map((conn: Connector) => {
         const [type, pos] = GetBlockHandleType(conn);
         if (!IsLocationTerminal(conn)) {
           if (IsInputTerminal(conn)) inputCount++;
