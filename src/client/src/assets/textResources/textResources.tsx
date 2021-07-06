@@ -189,6 +189,9 @@ const textResources = {
   Type_BlockLocation: "BlockLocationNode",
   Type_BlockFunction: "BlockFunctionNode",
   Type_FunctionBlock: "FunctionBlock",
+
+  // Error
+  Error_ExportProject: "Can not export a project that does not exist",
 };
 
 export const VisualFilterResources = [

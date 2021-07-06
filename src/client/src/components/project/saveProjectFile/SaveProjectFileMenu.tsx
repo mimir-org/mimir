@@ -39,7 +39,7 @@ export const SaveProjectFileMenu = () => {
 
   const onProjectSaveClick = () => {
     if (!projectState.project) {
-      throw Error("Can not export a project that does not exist");
+      throw Error(TextResources.Error_ExportProject);
     }
 
     dispatch(save(projectState.project));
