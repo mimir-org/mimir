@@ -56,29 +56,25 @@ const FilterMenu = () => {
   return (
     <MenuBox right>
       <MenuColumn>
+        <FilterContent type={"Hide all"} name={"Hide all"} />
+
         {elements.map(
           (x, i) =>
             i % 2 === 0 && (
-              <FilterContent type={x.type} name={x.name} index={i} key={x.id} />
+              <FilterContent type={x.type} name={x.name} key={x.id} />
             )
         )}
       </MenuColumn>
       <MenuColumn>
+        <FilterContent type={"Transport"} name={"Transport"} />
+
         {elements.map(
           (x, i) =>
             i % 2 !== 0 && (
-              <FilterContent type={x.name} name={x.name} index={i} key={x.id} />
+              <FilterContent type={x.name} name={x.name} key={x.id} />
             )
         )}
       </MenuColumn>
-      {/* <MenuColumn>
-        <FilterContent type={RelationType.PartOf} index={0} />
-        <FilterContent type={"Transport"} index={2} />
-      </MenuColumn>
-      <MenuColumn>
-        <FilterContent type={RelationType.HasLocation} index={1} />
-        <FilterContent type={"Hide all"} index={3} />
-      </MenuColumn> */}
     </MenuBox>
   );
 };
