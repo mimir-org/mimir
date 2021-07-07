@@ -11,7 +11,10 @@ import { TypeEditorState } from "../../../redux/store/typeEditor/types";
 import { changeFlowView } from "../../../redux/store/flow/actions";
 import { SetDarkModeColor } from "../../flow/helpers/common";
 import { changeAllModulesVisibility } from "../../../redux/store/modules/actions";
-import { getInitialData } from "../../../redux/store/typeEditor/actions";
+import {
+  getInitialData,
+  getBlobData,
+} from "../../../redux/store/typeEditor/actions";
 import {
   changeMode,
   changeTypeName,
@@ -32,6 +35,8 @@ import {
   TextInput,
   ChooseProperties,
 } from "./styled";
+import { Dropdown } from "../../../compLibrary/dropdown";
+import { stat } from "fs";
 
 export const TypeEditorComponent = () => {
   const { push } = useHistory();
@@ -74,11 +79,23 @@ export const TypeEditorComponent = () => {
 
   const filterStatuses = () => {
     let filteredStatuses = Object.entries(state.statuses);
+
     filteredStatuses = filteredStatuses.filter(
       ([, value]) =>
         value === "Draft" || value === "Complete" || value === "Approved"
     );
+    // console.log(JSON.stringify(filteredStatuses));
     return filteredStatuses;
+  };
+
+  const icons = () => {
+    const entries = Object.entries(state.icons);
+    entries.forEach((element) => {
+      //   console.log(element);
+    });
+    // var keys = Object.keys(state.icons);
+    // console.log(JSON.stringify(entries));
+    // console.log(keys);
   };
 
   useEffect(() => {
@@ -86,6 +103,7 @@ export const TypeEditorComponent = () => {
     SetDarkModeColor(darkMode);
     dispatch(getInitialData());
     dispatch(changeAllModulesVisibility(false, true));
+    dispatch(getBlobData("9E9CDAC82A4EE3EE2387FC681DDB5556"));
   }, [
     dispatch,
     state.createLibraryType.aspect,
@@ -153,6 +171,16 @@ export const TypeEditorComponent = () => {
             placeHolder={TextResources.TypeEditor_Draft_Placeholder}
             listItems={filterStatuses()}
           />
+          {icons()}
+          {state.icons && (
+            <Dropdown
+              label={TextResources.TypeEditor_Symbol}
+              items={state.icons}
+              keyProp="id"
+              valueProp="name"
+              valueImageProp="data"
+            />
+          )}
         </TypeInfo>
         <ChooseProperties>
           <RDSList />

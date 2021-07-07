@@ -4,7 +4,7 @@ import { Color, FontSize, FontType } from "../../../../compLibrary";
 const TypeNameInput = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 2;
+  flex: 1;
   margin-right: 15px;
   color: ${Color.Black};
   font-size: ${FontSize.Standard};

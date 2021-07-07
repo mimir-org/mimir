@@ -14,7 +14,8 @@ namespace Mb.Models.Data.Enums.Mapping
         TerminalCategory = 5,
         AttributeFormat = 6,
         BuildStatus = 7,
-        PredefinedAttributeCategory = 8
+        PredefinedAttributeCategory = 8,
+        BlobCategory = 9
     }
 
     public static class EnumTypeExtension {
@@ -42,6 +43,7 @@ namespace Mb.Models.Data.Enums.Mapping
             EnumTypes.Add(6, typeof(AttributeFormat));
             EnumTypes.Add(7, typeof(BuildStatus));
             EnumTypes.Add(8, typeof(PredefinedAttributeCategory));
+            EnumTypes.Add(9, typeof(BlobCategory));
         }
     }
 }

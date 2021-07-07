@@ -33,6 +33,8 @@ namespace Mb.Models.Configurations
         public virtual DbSet<NodeTypeTerminalType> NodeTypeTerminalTypes { get; set; }
         public virtual DbSet<PredefinedAttributeCategory> PredefinedAttributeCategories { get; set; }
         public virtual DbSet<PredefinedAttribute> PredefinedAttributes { get; set; }
+        public virtual DbSet<BlobData> BlobData { get; set; }
+        public virtual DbSet<BlobCategory> BlobCategories { get; set; }
 
         public ModelBuilderDbContext(DbContextOptions<ModelBuilderDbContext> options) : base(options)
         {
@@ -60,6 +62,7 @@ namespace Mb.Models.Configurations
             modelBuilder.ApplyConfiguration(new TransportTypeConfiguration());
             modelBuilder.ApplyConfiguration(new PredefinedAttributeConfiguration());
             modelBuilder.ApplyConfiguration(new PredefinedAttributeCategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new BlobDataConfiguration());
         }
     }
 }

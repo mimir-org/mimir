@@ -18,6 +18,12 @@ const DropdownMenuListItem = styled.div`
     padding: 5px;
   }
 
+  img {
+    margin-left: 5px;
+    margin-right: 10px;
+    height: 14px;
+  }
+
   :hover {
     background-color: ${Color.LightBlue};
     p {

@@ -123,6 +123,7 @@ const textResources = {
   TypeEditor_Type_Placeholder: "Write Type Name",
   TypeEditor_Aspect_Placeholder: "Choose Aspect",
   TypeEditor_Draft_Placeholder: "Draft",
+  TypeEditor_Symbol: "Symbol",
 
   // AccountModule
   Account_Save_Label: "Save project to database",

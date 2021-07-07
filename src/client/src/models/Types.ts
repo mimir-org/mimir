@@ -122,6 +122,13 @@ export interface FileData {
     lastModified: number
 }
 
+export interface BlobData {
+    id: string,
+    name: string,
+    data: string,
+    categoryId: string
+}
+
 export const SETTING_KEY = {
     PREFERED_TYPE: "PREFERED_TYPE",
 };

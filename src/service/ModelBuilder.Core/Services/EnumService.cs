@@ -20,10 +20,10 @@ namespace Mb.Core.Services
             _enumBaseRepository = enumBaseRepository;
         }
 
-
         public async Task<EnumBase> CreateEnum(CreateEnum createEnum)
         {
             var enumToDb = createEnum.CreateEnum();
+            enumToDb.Id = enumToDb.Key.CreateMd5();
             await _enumBaseRepository.CreateAsync(enumToDb);
             await _enumBaseRepository.SaveAsync();
             return enumToDb;
