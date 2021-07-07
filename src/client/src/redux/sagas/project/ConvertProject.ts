@@ -9,14 +9,12 @@ import {
     RelationType,
     EnumBase,
 } from "../../../models/";
-
 export interface UnitAm {
     id: string;
     name: string;
     description: string;
     semanticReference: string;
 }
-
 export interface AttributeAm {
     id: string;
     key: string;
@@ -31,7 +29,6 @@ export interface AttributeAm {
     attributeTypeId: string;
     units: UnitAm[];
 }
-
 export interface ConnectorAm {
     id: string;
     name: string;
@@ -68,6 +65,7 @@ export interface NodeAm {
     attributes: AttributeAm[];
     aspect: Aspect;
     isRoot: boolean;
+    symbolId: string;
 }
 
 export interface EdgeAm {
@@ -187,6 +185,7 @@ const ConvertNodes = (nodes: Node[]): NodeAm[] => {
             attributes: ConvertAttributes(node.attributes),
             aspect: node.aspect,
             isRoot: node.isRoot,
+            symbolId: node.symbolId
         } as NodeAm;
 
         convertedNodes.push(n);

@@ -1,5 +1,6 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.Generic;
 using Mb.Models.Data.Enums;
+using Newtonsoft.Json;
 
 namespace Mb.Models.Data
 {
@@ -13,5 +14,8 @@ namespace Mb.Models.Data
 
         [JsonIgnore]
         public virtual string Key => $"{Name}-{CategoryId}";
+
+        [JsonIgnore]
+        public virtual ICollection<Node> Nodes { get; set; }
     }
 }

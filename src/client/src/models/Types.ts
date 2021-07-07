@@ -36,6 +36,7 @@ export interface LibraryNodeItem {
     semanticReference: string;
     statusId: string;
     version: string;
+    symbolId: string;
 }
 
 export interface ProjectSimple {
@@ -98,6 +99,7 @@ export interface CreateLibraryType {
     locationType: string;
     predefinedAttributes: PredefinedAttribute[];
     terminalTypeId: string;
+    symbolId: string;
 }
 export interface UpdateLibraryType {
     name: string;
@@ -111,6 +113,7 @@ export interface UpdateLibraryType {
     locationType: string;
     predefinedAttributes: PredefinedAttribute[];
     terminalTypeId: string;
+    symbolId: string;
 }
 export interface User {
     username: string;

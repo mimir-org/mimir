@@ -34,6 +34,8 @@ namespace Mb.Models.Application
 
         public string TerminalTypeId { get; set; }
 
+        public string SymbolId { get; set; }
+
         [JsonIgnore]
         public string Key => $"{Name}-{RdsId}";
 

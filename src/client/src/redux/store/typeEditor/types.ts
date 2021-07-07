@@ -55,6 +55,7 @@ export const UPDATE_TYPE_SUCCESS_OR_ERROR = "UPDATE_TYPE_SUCCESS_OR_ERROR";
 export const DELETE_TYPE_EDITOR_ERROR = "DELETE_TYPE_EDITOR_ERROR";
 export const FETCHING_BLOB_DATA = "FETCHING_BLOB_DATA";
 export const FETCHING_BLOB_DATA_SUCCESS_OR_ERROR = "FETCHING_BLOB_DATA_SUCCESS_OR_ERROR";
+export const SYMBOL_CHANGED = "SYMBOL_CHANGED";
 
 // State types
 export interface TypeEditorState {
@@ -302,6 +303,13 @@ export interface FetchingBlobDataActionFinished {
     }
 }
 
+export interface SymbolChanged {
+    type: typeof SYMBOL_CHANGED;
+    payload: {
+        symbolId: string;
+    }
+}
+
 export type TypeEditorActionTypes =
     | FetchingInitialDataAction
     | FetchingInitialDataActionFinished
@@ -335,4 +343,5 @@ export type TypeEditorActionTypes =
     | CreatingTypeActionFinished
     | DeleteTypeEditorErrorAction
     | FetchingBlobDataAction
-    | FetchingBlobDataActionFinished;
+    | FetchingBlobDataActionFinished
+    | SymbolChanged;

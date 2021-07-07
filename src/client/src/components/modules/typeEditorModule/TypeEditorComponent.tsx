@@ -18,6 +18,7 @@ import {
 import {
   changeMode,
   changeTypeName,
+  symbolChanged,
 } from "../../../redux/store/typeEditor/actions";
 import {
   DropdownMenu,
@@ -36,7 +37,6 @@ import {
   ChooseProperties,
 } from "./styled";
 import { Dropdown } from "../../../compLibrary/dropdown";
-import { stat } from "fs";
 
 export const TypeEditorComponent = () => {
   const { push } = useHistory();
@@ -84,18 +84,7 @@ export const TypeEditorComponent = () => {
       ([, value]) =>
         value === "Draft" || value === "Complete" || value === "Approved"
     );
-    // console.log(JSON.stringify(filteredStatuses));
     return filteredStatuses;
-  };
-
-  const icons = () => {
-    const entries = Object.entries(state.icons);
-    entries.forEach((element) => {
-      //   console.log(element);
-    });
-    // var keys = Object.keys(state.icons);
-    // console.log(JSON.stringify(entries));
-    // console.log(keys);
   };
 
   useEffect(() => {
@@ -129,6 +118,10 @@ export const TypeEditorComponent = () => {
       typeToEdit.terminalTypeId = ""; //string;
     }
   }, [state.mode, state.createLibraryType]);
+
+  const handleSymbolChanged = (value) => {
+    dispatch(symbolChanged(value.id));
+  };
 
   return (
     <TypeEditorWrapper>
@@ -171,16 +164,14 @@ export const TypeEditorComponent = () => {
             placeHolder={TextResources.TypeEditor_Draft_Placeholder}
             listItems={filterStatuses()}
           />
-          {icons()}
-          {state.icons && (
-            <Dropdown
-              label={TextResources.TypeEditor_Symbol}
-              items={state.icons}
-              keyProp="id"
-              valueProp="name"
-              valueImageProp="data"
-            />
-          )}
+          <Dropdown
+            label={TextResources.TypeEditor_Symbol}
+            items={state.icons}
+            keyProp="id"
+            valueProp="name"
+            valueImageProp="data"
+            onChange={handleSymbolChanged}
+          />
         </TypeInfo>
         <ChooseProperties>
           <RDSList />

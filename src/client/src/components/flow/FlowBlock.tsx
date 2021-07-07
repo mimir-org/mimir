@@ -8,7 +8,7 @@ import { OpenProjectMenu } from "../project/openProject";
 import { Color } from "../../compLibrary";
 import { BackgroundBox } from "../../compLibrary/blockView";
 import { changeInspectorTab } from "../../redux/store/inspector/actions";
-import { Project, Node } from "../../models";
+import { Project, Node, BlobData } from "../../models";
 import {
   changeActiveBlockNode,
   changeActiveEdge,
@@ -67,6 +67,10 @@ const FlowBlock = () => {
     (state) => state.connectView.mainNodes
   ) as Node[];
 
+  const icons = useSelector<RootState>(
+    (state) => state.typeEditor.icons
+  ) as BlobData[];
+
   const showBackground = IsLocation(splitViewNode) || IsLocation(node);
 
   const OnLoad = useCallback(
@@ -123,6 +127,7 @@ const FlowBlock = () => {
       reactFlowInstance,
       reactFlowWrapper,
       project.id,
+      icons,
       splitView,
       selectedNode
     );

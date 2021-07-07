@@ -34,6 +34,7 @@ import {
     CHANGE_TERMINAL_TYPE_ID,
     DELETE_TYPE_EDITOR_ERROR,
     FETCHING_BLOB_DATA,
+    SYMBOL_CHANGED,
     TypeEditorActionTypes,
 } from "./types";
 
@@ -253,4 +254,13 @@ export function getBlobData(categoryId: string): TypeEditorActionTypes {
             categoryId: categoryId,
         },
     };
+}
+
+export function symbolChanged(symbolId: string): TypeEditorActionTypes {
+    return {
+        type: SYMBOL_CHANGED,
+        payload: {
+            symbolId: symbolId
+        }
+    }
 }

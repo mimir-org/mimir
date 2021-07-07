@@ -4,14 +4,16 @@ using Mb.Models.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Mb.Core.Migrations
 {
     [DbContext(typeof(ModelBuilderDbContext))]
-    partial class ModelBuilderDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210707155416_BlobData_Symbol")]
+    partial class BlobData_Symbol
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -449,10 +451,6 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("StatusId");
 
-                    b.Property<string>("SymbolId")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("SymbolId");
-
                     b.Property<string>("TagNumber")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("TagNumber");
@@ -480,8 +478,6 @@ namespace Mb.Core.Migrations
                     b.HasIndex("MasterProjectId");
 
                     b.HasIndex("StatusId");
-
-                    b.HasIndex("SymbolId");
 
                     b.ToTable("Node");
                 });
@@ -1049,16 +1045,9 @@ namespace Mb.Core.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Mb.Models.Data.BlobData", "Symbol")
-                        .WithMany("Nodes")
-                        .HasForeignKey("SymbolId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
                     b.Navigation("MasterProject");
 
                     b.Navigation("Status");
-
-                    b.Navigation("Symbol");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.NodeTypeTerminalType", b =>
@@ -1212,11 +1201,6 @@ namespace Mb.Core.Migrations
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("TerminalType");
-                });
-
-            modelBuilder.Entity("Mb.Models.Data.BlobData", b =>
-                {
-                    b.Navigation("Nodes");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Connector", b =>

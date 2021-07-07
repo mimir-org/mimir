@@ -7,7 +7,7 @@ import { RootState } from "../../redux/store/index";
 import { useOnConnect, useOnDrop, useOnElementsRemove } from "./hooks";
 import { FullScreenBox } from "../../compLibrary/controls";
 import { OpenProjectMenu } from "../project/openProject/OpenProjectMenu";
-import { Project } from "../../models";
+import { BlobData, Project } from "../../models";
 import { GetTreeEdgeType } from "./helpers/tree";
 import { IsBlockView } from "./helpers/block";
 import { changeInspectorTab } from "../../redux/store/inspector/actions";
@@ -33,6 +33,10 @@ const FlowTree = () => {
   const project = useSelector<RootState>(
     (state) => state.projectState.project
   ) as Project;
+
+  const icons = useSelector<RootState>(
+    (state) => state.typeEditor.icons
+  ) as BlobData[];
 
   const OnElementsRemove = (elementsToRemove) => {
     return useOnElementsRemove(elementsToRemove, setElements, dispatch);
@@ -74,6 +78,7 @@ const FlowTree = () => {
       reactFlowInstance,
       reactFlowWrapper,
       project.id,
+      icons,
       false,
       selectedNode
     );

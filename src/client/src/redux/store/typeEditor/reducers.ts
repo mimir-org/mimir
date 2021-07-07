@@ -43,6 +43,7 @@ import {
     TypeEditorState,
     FETCHING_BLOB_DATA,
     FETCHING_BLOB_DATA_SUCCESS_OR_ERROR,
+    SYMBOL_CHANGED
 } from "./types";
 
 const initialCreateLibrary = {
@@ -56,7 +57,8 @@ const initialCreateLibrary = {
     attributeTypes: [] as string[],
     locationType: "",
     predefinedAttributes: [],
-    terminalTypeId: null
+    terminalTypeId: null,
+    symbolId: null
 } as CreateLibraryType;
 
 const initialState: TypeEditorState = {
@@ -307,6 +309,15 @@ export function typeEditorReducer(
                     ? [...state.apiError, action.payload.apiError]
                     : state.apiError,
             };
+
+        case SYMBOL_CHANGED:
+            return {
+                ...state,
+                createLibraryType: {
+                    ...state.createLibraryType,
+                    symbolId: action.payload.symbolId,
+                },
+            }
 
         default:
             return state;

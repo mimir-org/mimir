@@ -1,21 +1,19 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Aspect } from "../../models";
-// import GetRightMargin from "../helper/GetRightMargin";
+import { useState, useEffect } from "react";
 import { ExpandedIcon, CollapsedIcon } from "../../assets/icons/common";
-// import { LocationTypeCategory, LocationSubType } from "../styled";
 import {
   DropdownMenuWrapper,
   DropdownMenuHeader,
   DropdownMenuList,
   DropdownMenuListItem,
+  Symbol,
 } from ".";
-
 interface Props {
   label: string;
-  items?: any[];
+  items: any[];
   keyProp: string;
   valueProp: string;
+  onChange: Function;
+  defaultValue?: string;
   valueImageProp?: string;
 }
 
@@ -24,18 +22,32 @@ const Dropdown = ({
   items,
   keyProp,
   valueProp,
+  onChange,
+  defaultValue,
   valueImageProp,
 }: Props) => {
+  // Hooks
   const [isListOpen, setIsListOpen] = useState(false);
-  // const [selectedValue, setSelectedValue] = useState(placeHolder);
+  const [selectedItem, setSelectedItem] = useState(null);
 
-  const toggleList = () => {
+  // Use effect
+  useEffect(() => {
+    if (!items) {
+      setSelectedItem(null);
+      return;
+    }
+    if (defaultValue) {
+      setSelectedItem(items.find((x) => x[keyProp] === defaultValue));
+      return;
+    }
+    setSelectedItem(items[0]);
+  }, [defaultValue, items, keyProp]);
+
+  // Events
+  const handleChange = (_e: any, value: any) => {
+    setSelectedItem(value);
     setIsListOpen(!isListOpen);
-  };
-
-  const image = (item: any) => {
-    const source = "data:image/svg+xml;base64," + item[valueImageProp];
-    return <img src={source} alt={item.name} />;
+    onChange(value);
   };
 
   return (
@@ -43,14 +55,24 @@ const Dropdown = ({
       <DropdownMenuWrapper>
         <label htmlFor={label} />
         <div className="label"> {label}</div>
-        <div onClick={toggleList}>
+        <div onClick={(e) => setIsListOpen(!isListOpen)}>
           <DropdownMenuHeader>
-            <p>SELECTD VALUE</p>
-            <img
-              src={isListOpen ? ExpandedIcon : CollapsedIcon}
-              alt="expand-icon"
-              onClick={toggleList}
-            />
+            {selectedItem && (
+              <>
+                {valueImageProp && (
+                  <Symbol
+                    base64={selectedItem[valueImageProp]}
+                    text={selectedItem[valueProp]}
+                  />
+                )}
+                <p>{selectedItem.name}</p>
+                <img
+                  src={isListOpen ? ExpandedIcon : CollapsedIcon}
+                  alt="expand-icon"
+                  onClick={(e) => setIsListOpen(!isListOpen)}
+                />
+              </>
+            )}
           </DropdownMenuHeader>
         </div>
         {isListOpen && (
@@ -58,13 +80,20 @@ const Dropdown = ({
             {items &&
               items.map((item) => {
                 return (
-                  <DropdownMenuListItem key={item[keyProp]}>
-                    {console.log(item)}
-                    <p>
-                      {image(item)}
-                      {item.name}
-                    </p>
-                  </DropdownMenuListItem>
+                  <div
+                    onClick={(e) => handleChange(e, item)}
+                    key={item[keyProp]}
+                  >
+                    <DropdownMenuListItem>
+                      {valueImageProp && (
+                        <Symbol
+                          base64={item[valueImageProp]}
+                          text={item[valueProp]}
+                        />
+                      )}
+                      <p>{item.name}</p>
+                    </DropdownMenuListItem>
+                  </div>
                 );
               })}
           </DropdownMenuList>

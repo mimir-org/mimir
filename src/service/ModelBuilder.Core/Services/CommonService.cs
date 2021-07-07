@@ -61,6 +61,14 @@ namespace Mb.Core.Services
                 .ProjectTo<BlobDataAm>(_mapper.ConfigurationProvider)
                 .ToList();
 
+            dms.Insert(0, new BlobDataAm
+            {
+                CategoryId = null,
+                Data = null,
+                Id = null,
+                Name = "No symbol"
+            });
+
             return dms;
         }
     }
