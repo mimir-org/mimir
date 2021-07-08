@@ -1,5 +1,5 @@
 import { all, takeEvery } from "redux-saga/effects";
-import { FETCHING_LIBRARY } from "../store/library/types";
+import { FETCHING_LIBRARY, EXPORT_LIBRARY, IMPORT_LIBRARY } from "../store/library/types";
 import { FETCHING_USER } from "./../store/user/types";
 import {
     CREATING_PROJECT,
@@ -14,10 +14,11 @@ import {
     CHANGE_ASPECT,
     CREATING_TYPE,
     UPDATING_TYPE,
+    FETCHING_BLOB_DATA
 } from "../store/typeEditor/types";
 import { FETCHING_CONTRACTORS, FETCHING_STATUSES } from "../store/common/types";
 
-import { searchLibrary } from "./library/saga";
+import { searchLibrary, exportLibrary, importLibrary } from "./library/saga";
 import { getUser } from "./user/saga";
 import {
     getProject,
@@ -37,6 +38,7 @@ import {
     getAttributes,
     createType,
     updateType,
+    getblobData
 } from "./typeEditor/saga";
 
 export function* sagas() {
@@ -59,5 +61,8 @@ export function* sagas() {
         takeEvery(FETCHING_STATUSES, getStatuses),
         takeEvery(EXPORT_PROJECT_TO_FILE, exportProjectFile),
         takeEvery(IMPORT_PROJECT, importProject),
+        takeEvery(EXPORT_LIBRARY, exportLibrary),
+        takeEvery(IMPORT_LIBRARY, importLibrary),
+        takeEvery(FETCHING_BLOB_DATA, getblobData),
     ]);
 }

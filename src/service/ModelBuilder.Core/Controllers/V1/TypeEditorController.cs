@@ -377,12 +377,12 @@ namespace Mb.Core.Controllers.V1
         /// Import from file
         /// </summary>
         /// <returns></returns>
-        [HttpPost("import")]
+        [HttpPost("upload")]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> ImportTypes(IFormFile file, CancellationToken cancellationToken)
+        public async Task<IActionResult> UploadTypes(IFormFile file, CancellationToken cancellationToken)
         {
             try
             {
@@ -391,6 +391,36 @@ namespace Mb.Core.Controllers.V1
 
                 await _typeEditorService.LoadDataFromFile(file, cancellationToken);
                 return Ok(true);
+            }
+            catch (ModelBuilderDuplicateException e)
+            {
+                return Conflict(e.Message);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
+        /// Import from file
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("import")]
+        [ProducesResponseType(typeof(IEnumerable<LibraryType>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> ImportTypes(ICollection<CreateLibraryType> libraryTypes)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                var createdLibTypes = await _typeEditorService.CreateLibraryTypes(libraryTypes);
+                return Ok(createdLibTypes);
             }
             catch (ModelBuilderDuplicateException e)
             {

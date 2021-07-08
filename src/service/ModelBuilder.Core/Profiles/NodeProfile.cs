@@ -42,7 +42,9 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Width, opt => opt.Ignore())
                 .ForMember(dest => dest.Height, opt => opt.Ignore())
                 .ForMember(dest => dest.Connectors, opt => opt.MapFrom(src => src.Connectors))
-                .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes));
+                .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
+                .ForMember(dest => dest.SymbolId, opt => opt.MapFrom(src => src.SymbolId))
+                .ForMember(dest => dest.Symbol, opt => opt.Ignore());
         }
     }
 }

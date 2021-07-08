@@ -1,7 +1,11 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
 import { Connector } from "../../../models";
-import { TreeHandleBox, TreeNodeNameBox } from "../../../compLibrary/treeView";
+import {
+  TreeHandleBox,
+  TreeNodeNameBox,
+  TreeNodeWrapper,
+} from "../../../compLibrary/treeView";
 import { SetTerminalYPos } from "../helpers/common";
 import {
   GetHandleType,
@@ -9,6 +13,7 @@ import {
   IsOutputTerminal,
   IsPartOfTerminal,
 } from "../helpers/common";
+import { Symbol } from "../../../compLibrary/dropdown";
 
 const TreeviewNode: FC<NodeProps> = ({ data }) => {
   const [isHover, setIsHover] = useState(false);
@@ -37,7 +42,7 @@ const TreeviewNode: FC<NodeProps> = ({ data }) => {
   };
 
   return (
-    <div
+    <TreeNodeWrapper
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => mouseNodeLeave()}
     >
@@ -66,7 +71,8 @@ const TreeviewNode: FC<NodeProps> = ({ data }) => {
         );
       })}
       <TreeNodeNameBox>{data.label ?? data.name}</TreeNodeNameBox>
-    </div>
+      <Symbol base64={data.symbol?.data} text={data.symbol?.text} />
+    </TreeNodeWrapper>
   );
 };
 

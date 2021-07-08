@@ -139,6 +139,33 @@ namespace Mb.Core.Migrations
                     b.ToTable("AttributeType");
                 });
 
+            modelBuilder.Entity("Mb.Models.Data.BlobData", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("Id");
+
+                    b.Property<string>("CategoryId")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("CategoryId");
+
+                    b.Property<string>("Data")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Data");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("BlobData");
+                });
+
             modelBuilder.Entity("Mb.Models.Data.Connector", b =>
                 {
                     b.Property<string>("Id")
@@ -422,6 +449,10 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("StatusId");
 
+                    b.Property<string>("SymbolId")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("SymbolId");
+
                     b.Property<string>("TagNumber")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("TagNumber");
@@ -449,6 +480,8 @@ namespace Mb.Core.Migrations
                     b.HasIndex("MasterProjectId");
 
                     b.HasIndex("StatusId");
+
+                    b.HasIndex("SymbolId");
 
                     b.ToTable("Node");
                 });
@@ -742,6 +775,13 @@ namespace Mb.Core.Migrations
                     b.HasDiscriminator().HasValue("AttributeSource");
                 });
 
+            modelBuilder.Entity("Mb.Models.Data.Enums.BlobCategory", b =>
+                {
+                    b.HasBaseType("Mb.Models.Data.Enums.EnumBase");
+
+                    b.HasDiscriminator().HasValue("BlobCategory");
+                });
+
             modelBuilder.Entity("Mb.Models.Data.Enums.BuildStatus", b =>
                 {
                     b.HasBaseType("Mb.Models.Data.Enums.EnumBase");
@@ -809,6 +849,9 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PredefinedAttributeData")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SymbolId")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("NodeType");
@@ -918,6 +961,16 @@ namespace Mb.Core.Migrations
                     b.Navigation("Source");
                 });
 
+            modelBuilder.Entity("Mb.Models.Data.BlobData", b =>
+                {
+                    b.HasOne("Mb.Models.Data.Enums.BlobCategory", "Category")
+                        .WithMany("Blobs")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("Mb.Models.Data.Connector", b =>
                 {
                     b.HasOne("Mb.Models.Data.Node", "Node")
@@ -996,9 +1049,16 @@ namespace Mb.Core.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("Mb.Models.Data.BlobData", "Symbol")
+                        .WithMany("Nodes")
+                        .HasForeignKey("SymbolId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.Navigation("MasterProject");
 
                     b.Navigation("Status");
+
+                    b.Navigation("Symbol");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.NodeTypeTerminalType", b =>
@@ -1154,6 +1214,11 @@ namespace Mb.Core.Migrations
                     b.Navigation("TerminalType");
                 });
 
+            modelBuilder.Entity("Mb.Models.Data.BlobData", b =>
+                {
+                    b.Navigation("Nodes");
+                });
+
             modelBuilder.Entity("Mb.Models.Data.Connector", b =>
                 {
                     b.Navigation("FromEdges");
@@ -1217,6 +1282,11 @@ namespace Mb.Core.Migrations
                     b.Navigation("Attributes");
 
                     b.Navigation("AttributeTypes");
+                });
+
+            modelBuilder.Entity("Mb.Models.Data.Enums.BlobCategory", b =>
+                {
+                    b.Navigation("Blobs");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Enums.BuildStatus", b =>

@@ -23,6 +23,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.RdsId, opt => opt.MapFrom(src => src.RdsId))
                 .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => src.Aspect))
                 .ForMember(dest => dest.LocationType, opt => opt.MapFrom(src => src.LocationType))
+                .ForMember(dest => dest.SymbolId, opt => opt.MapFrom(src => src.SymbolId))
                 .ForMember(dest => dest.TerminalTypes, opt => opt.MapFrom(src => CreateTerminalTypes(src.TerminalTypes.ToList(), $"{src.Key}-{commonRepository.GetDomain()}".CreateMd5()).ToList()))
                 .ForMember(dest => dest.AttributeTypes, opt => opt.MapFrom(src => CreateAttributeTypes(src.AttributeTypes.ToList()).ToList()))
                 .AfterMap((_, dest, _) =>
@@ -57,6 +58,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.TerminalTypes, opt => opt.MapFrom(src => src.TerminalTypes))
                 .ForMember(dest => dest.AttributeTypes, opt => opt.MapFrom(src => src.AttributeTypes.Select(x => x.Id)))
                 .ForMember(dest => dest.LocationType, opt => opt.MapFrom(src => src.LocationType))
+                .ForMember(dest => dest.SymbolId, opt => opt.MapFrom(src => src.SymbolId))
                 .ForMember(dest => dest.PredefinedAttributes, opt => opt.MapFrom(src => src.PredefinedAttributes))
                 .ForMember(dest => dest.TerminalTypeId, opt => opt.Ignore())
                 .BeforeMap((src, _, _) =>
@@ -67,18 +69,29 @@ namespace Mb.Core.Profiles
             CreateMap<TransportType, CreateLibraryType>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+                .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => Aspect.NotSet))
                 .ForMember(dest => dest.ObjectType, opt => opt.MapFrom(src => ObjectType.ObjectBlock))
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
                 .ForMember(dest => dest.RdsId, opt => opt.MapFrom(src => src.RdsId))
+                .ForMember(dest => dest.TerminalTypes, opt => opt.Ignore())
                 .ForMember(dest => dest.AttributeTypes, opt => opt.MapFrom(src => src.AttributeTypes.Select(x => x.Id)))
+                .ForMember(dest => dest.LocationType, opt => opt.Ignore())
+                .ForMember(dest => dest.SymbolId, opt => opt.Ignore())
+                .ForMember(dest => dest.PredefinedAttributes, opt => opt.Ignore())
                 .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.TerminalTypeId));
 
             CreateMap<InterfaceType, CreateLibraryType>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+                .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => Aspect.NotSet))
                 .ForMember(dest => dest.ObjectType, opt => opt.MapFrom(src => ObjectType.ObjectBlock))
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
                 .ForMember(dest => dest.RdsId, opt => opt.MapFrom(src => src.RdsId))
+                .ForMember(dest => dest.TerminalTypes, opt => opt.Ignore())
+                .ForMember(dest => dest.AttributeTypes, opt => opt.Ignore())
+                .ForMember(dest => dest.LocationType, opt => opt.Ignore())
+                .ForMember(dest => dest.SymbolId, opt => opt.Ignore())
+                .ForMember(dest => dest.PredefinedAttributes, opt => opt.Ignore())
                 .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.TerminalTypeId));
 
             CreateMap<NodeTypeTerminalType, TerminalTypeItem>()
@@ -95,6 +108,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.AttributeTypes))
+                .ForMember(dest => dest.SymbolId, opt => opt.MapFrom(src => src.SymbolId))
                 .AfterMap((src, dest, context) =>
                 {
                     dest.Connectors = CreateConnectors(src.TerminalTypes, context);
@@ -103,13 +117,15 @@ namespace Mb.Core.Profiles
 
         private List<Connector> CreateConnectors(ICollection<NodeTypeTerminalType> terminalTypes, ResolutionContext context)
         {
-            var connectors = new List<Connector>();
-            connectors.Add(CreateRelationConnector(RelationType.PartOf, ConnectorType.Input, "Part of Relationship"));
-            connectors.Add(CreateRelationConnector(RelationType.PartOf, ConnectorType.Output, "Part of Relationship"));
-            connectors.Add(CreateRelationConnector(RelationType.HasLocation, ConnectorType.Input, "Has Location"));
-            connectors.Add(CreateRelationConnector(RelationType.HasLocation, ConnectorType.Output, "Has Location"));
-            connectors.Add(CreateRelationConnector(RelationType.FulfilledBy, ConnectorType.Output, "Fulfilled By"));
-            connectors.Add(CreateRelationConnector(RelationType.FulfilledBy, ConnectorType.Output, "Fulfilled By"));
+            var connectors = new List<Connector>
+            {
+                CreateRelationConnector(RelationType.PartOf, ConnectorType.Input, "Part of Relationship"),
+                CreateRelationConnector(RelationType.PartOf, ConnectorType.Output, "Part of Relationship"),
+                CreateRelationConnector(RelationType.HasLocation, ConnectorType.Input, "Has Location"),
+                CreateRelationConnector(RelationType.HasLocation, ConnectorType.Output, "Has Location"),
+                CreateRelationConnector(RelationType.FulfilledBy, ConnectorType.Output, "Fulfilled By"),
+                CreateRelationConnector(RelationType.FulfilledBy, ConnectorType.Output, "Fulfilled By")
+            };
 
             if (terminalTypes == null) 
                 return connectors;

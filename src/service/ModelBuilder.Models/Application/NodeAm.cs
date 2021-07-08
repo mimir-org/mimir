@@ -43,6 +43,8 @@ namespace Mb.Models.Application
         [Required]
         public string MasterProjectId { get; set; }
 
+        public string SymbolId { get; set; }
+
         public ICollection<ConnectorAm> Connectors { get; set; }
 
         public ICollection<AttributeAm> Attributes { get; set; }

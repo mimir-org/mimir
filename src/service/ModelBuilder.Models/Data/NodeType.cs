@@ -13,6 +13,7 @@ namespace Mb.Models.Data
         public ICollection<NodeTypeTerminalType> TerminalTypes { get; set; }
         public ICollection<AttributeType> AttributeTypes { get; set; }
         public string LocationType { get; set; }
+        public string SymbolId { get; set; }
 
         [NotMapped]
         public ICollection<PredefinedAttributeAm> PredefinedAttributes { get; set; }

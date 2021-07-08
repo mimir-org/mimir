@@ -19,7 +19,7 @@ namespace Mb.Core.Services.Contracts
         IEnumerable<AttributeType> GetAttributeTypes(Aspect aspect);
         IEnumerable<TerminalType> GetTerminals();
         Dictionary<string, List<TerminalType>> GetTerminalsByCategory();
-        Task<IEnumerable<LibraryType>> CreateLibraryTypes(List<CreateLibraryType> createLibraryTypes);
+        Task<IEnumerable<LibraryType>> CreateLibraryTypes(ICollection<CreateLibraryType> createLibraryTypes);
         Task<LibraryType> CreateLibraryType(CreateLibraryType createLibraryType);
         IEnumerable<CreateLibraryType> GetAllTypes();
         byte[] CreateFile();

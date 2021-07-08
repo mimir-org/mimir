@@ -36,6 +36,7 @@ export interface LibraryNodeItem {
     semanticReference: string;
     statusId: string;
     version: string;
+    symbolId: string;
 }
 
 export interface ProjectSimple {
@@ -93,16 +94,12 @@ export interface CreateLibraryType {
     objectType: ObjectType;
     semanticReference: string;
     rdsId: string;
-    rdsName: string;
     terminalTypes: TerminalTypeItem[];
     attributeTypes: string[];
     locationType: string;
     predefinedAttributes: PredefinedAttribute[];
     terminalTypeId: string;
-    id: number;
-    code: string;
-    rdsCategoryId: string;
-    category: EnumBase;
+    symbolId: string;
 }
 export interface UpdateLibraryType {
     name: string;
@@ -111,16 +108,12 @@ export interface UpdateLibraryType {
     objectType: ObjectType;
     semanticReference: string;
     rdsId: string;
-    rdsName: string;
     terminalTypes: TerminalTypeItem[];
     attributeTypes: string[];
     locationType: string;
     predefinedAttributes: PredefinedAttribute[];
     terminalTypeId: string;
-    id: number;
-    code: string;
-    rdsCategoryId: string;
-    category: EnumBase;
+    symbolId: string;
 }
 export interface User {
     username: string;
@@ -130,6 +123,13 @@ export interface FileData {
     content: string;
     name: string;
     lastModified: number
+}
+
+export interface BlobData {
+    id: string,
+    name: string,
+    data: string,
+    categoryId: string
 }
 
 export const SETTING_KEY = {

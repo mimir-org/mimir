@@ -39,9 +39,11 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.Length).HasColumnName("Length").IsRequired();
             builder.Property(p => p.Width).HasColumnName("Width").IsRequired();
             builder.Property(p => p.Height).HasColumnName("Height").IsRequired();
+            builder.Property(p => p.SymbolId).HasColumnName("SymbolId").IsRequired(false);
 
             builder.HasOne(x => x.Status).WithMany(y => y.Nodes).HasForeignKey(x => x.StatusId).OnDelete(DeleteBehavior.NoAction);
-            
+            builder.HasOne(x => x.Symbol).WithMany(y => y.Nodes).HasForeignKey(x => x.SymbolId).OnDelete(DeleteBehavior.NoAction);
+
             builder.HasOne(x => x.MasterProject).WithMany().HasForeignKey(x => x.MasterProjectId).OnDelete(DeleteBehavior.NoAction);
             builder.HasMany(x => x.Projects).WithMany(y => y.Nodes).UsingEntity<Dictionary<string, object>>("Project_Node",
                 x => x.HasOne<Project>().WithMany().HasForeignKey("ProjectId"),

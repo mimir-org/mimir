@@ -81,6 +81,10 @@ namespace Mb.Models.Data
 
         public virtual Project MasterProject { get; set; }
 
+        public string SymbolId { get; set; }
+
+        public BlobData Symbol { get; set; }
+
         public int Area => Length * Width;
 
         // Only for location aspect

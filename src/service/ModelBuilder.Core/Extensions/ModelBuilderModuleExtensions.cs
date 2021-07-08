@@ -46,6 +46,7 @@ namespace Mb.Core.Extensions
             services.AddScoped<IEnumBaseRepository, EnumBaseRepository>();
             services.AddScoped<INodeTypeTerminalType, NodeTypeTerminalType>();
             services.AddScoped<IPredefinedAttributeRepository, PredefinedAttributeRepository>();
+            services.AddScoped<IBlobDataRepository, BlobDataRepository>();
 
             services.AddScoped<ITypeEditorService, TypeEditorService>();
             services.AddScoped<IProjectService, ProjectService>();
@@ -68,6 +69,7 @@ namespace Mb.Core.Extensions
                 cfg.AddProfile(new NodeProfile(provider.GetService<IHttpContextAccessor>(), provider.GetService<ICommonRepository>()));
                 cfg.AddProfile(new ProjectProfile(provider.GetService<IHttpContextAccessor>(), provider.GetService<ICommonRepository>()));
                 cfg.AddProfile<RdsProfile>();
+                cfg.AddProfile<CommonProfile>();
                 cfg.AddProfile(new TerminalProfile(provider.GetService<ICommonRepository>()));
                 cfg.AddProfile(new LibraryTypeProfile(provider.GetService<ICommonRepository>()));
             });

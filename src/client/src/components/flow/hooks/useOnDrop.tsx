@@ -1,6 +1,6 @@
 import { addNode, createEdge } from "../../../redux/store/project/actions";
 import { CreateBlockNode, IsBlockView } from "../helpers/block";
-import { Edge, LibraryNodeItem, Node } from "../../../models";
+import { BlobData, Edge, LibraryNodeItem, Node } from "../../../models";
 import {
   CreateId,
   IsInputTerminal,
@@ -20,6 +20,7 @@ const useOnDrop = (
   reactFlowInstance,
   reactFlowWrapper,
   masterProjectId: string,
+  icons: BlobData[],
   splitView?: boolean,
   selectedNode?: Node
 ) => {
@@ -55,6 +56,8 @@ const useOnDrop = (
     statusId: data.statusId,
     version: data.version,
     masterProjectId: masterProjectId,
+    symbolId: data.symbolId,
+    symbol: icons?.find((x) => x.id === data.symbolId),
   } as Node;
 
   node.connectors?.forEach((c) => {

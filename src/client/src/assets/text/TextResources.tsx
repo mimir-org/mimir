@@ -123,6 +123,7 @@ const TextResources = {
   TypeEditor_Type_Placeholder: "Write Type Name",
   TypeEditor_Aspect_Placeholder: "Choose Aspect",
   TypeEditor_Draft_Placeholder: "Draft",
+  TypeEditor_Symbol: "Symbol",
 
   // AccountModule
   Account_Save_Label: "Save project to database",
@@ -144,6 +145,8 @@ const TextResources = {
   Account_Save_Label_File_Button: "Export project",
   Account_Import_Label_File_Browse_Button: "Browse file",
   Account_Import_Label_File_Button: "Import project",
+  Account_Save_Label_File_Library_Button: "Export library",
+  Account_Import_Label_File_Library_Button: "Import library",
 
   // Error
   Error_Tile: "Oops, something went wrong",

@@ -11,10 +11,14 @@ import { TypeEditorState } from "../../../redux/store/typeEditor/types";
 import { changeFlowView } from "../../../redux/store/flow/actions";
 import { SetDarkModeColor } from "../../flow/helpers/common";
 import { changeAllModulesVisibility } from "../../../redux/store/modules/actions";
-import { getInitialData } from "../../../redux/store/typeEditor/actions";
+import {
+  getInitialData,
+  getBlobData,
+} from "../../../redux/store/typeEditor/actions";
 import {
   changeMode,
   changeTypeName,
+  symbolChanged,
 } from "../../../redux/store/typeEditor/actions";
 import {
   DropdownMenu,
@@ -32,6 +36,7 @@ import {
   TextInput,
   ChooseProperties,
 } from "./styled";
+import { Dropdown } from "../../../compLibrary/dropdown";
 
 export const TypeEditorComponent = () => {
   const { push } = useHistory();
@@ -74,6 +79,7 @@ export const TypeEditorComponent = () => {
 
   const filterStatuses = () => {
     let filteredStatuses = Object.entries(state.statuses);
+
     filteredStatuses = filteredStatuses.filter(
       ([, value]) =>
         value === "Draft" || value === "Complete" || value === "Approved"
@@ -86,6 +92,7 @@ export const TypeEditorComponent = () => {
     SetDarkModeColor(darkMode);
     dispatch(getInitialData());
     dispatch(changeAllModulesVisibility(false, true));
+    dispatch(getBlobData());
   }, [
     dispatch,
     state.createLibraryType.aspect,
@@ -104,18 +111,17 @@ export const TypeEditorComponent = () => {
       typeToEdit.objectType = null; //ObjectType;
       typeToEdit.semanticReference = ""; //string;
       typeToEdit.rdsId = ""; //string;
-      typeToEdit.rdsName = ""; //string;
       typeToEdit.terminalTypes = []; //TerminalTypeItem[];
       typeToEdit.attributeTypes = [""]; //string[];
       typeToEdit.locationType = "";
       typeToEdit.predefinedAttributes = [];
       typeToEdit.terminalTypeId = ""; //string;
-      typeToEdit.id = 0; //number;
-      typeToEdit.code = ""; //string;
-      typeToEdit.rdsCategoryId = ""; // string;
-      typeToEdit.category = null; //EnumBase;
     }
   }, [state.mode, state.createLibraryType]);
+
+  const handleSymbolChanged = (value) => {
+    dispatch(symbolChanged(value.id));
+  };
 
   return (
     <TypeEditorWrapper>
@@ -157,6 +163,14 @@ export const TypeEditorComponent = () => {
             label={TextResources.TypeEditor_Status}
             placeHolder={TextResources.TypeEditor_Draft_Placeholder}
             listItems={filterStatuses()}
+          />
+          <Dropdown
+            label={TextResources.TypeEditor_Symbol}
+            items={state.icons}
+            keyProp="id"
+            valueProp="name"
+            valueImageProp="data"
+            onChange={handleSymbolChanged}
           />
         </TypeInfo>
         <ChooseProperties>
