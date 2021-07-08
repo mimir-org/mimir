@@ -5,6 +5,11 @@ import { IsBlockView } from "../../flow/helpers/block";
 import { Edge, RelationType } from "../../../models";
 import { MenuSubHeader } from "../../../compLibrary/box/menus";
 import {
+  IsLocationTerminal,
+  IsPartOfTerminal,
+  IsTransportTerminal,
+} from "../../flow/helpers/common";
+import {
   changeEdgeVisibility,
   changeActiveConnector,
 } from "../../../redux/store/project/actions";
@@ -26,8 +31,8 @@ const FilterContent = ({ type, name, header }) => {
   // TODO: Rewrite
   const isChecked = () => {
     if (type === "Transport") {
-      const edge = edges.find(
-        (edge) => edge.fromConnector.terminalCategoryId !== null
+      const edge = edges.find((edge) =>
+        IsTransportTerminal(edge.fromConnector)
       );
       return !edge?.isHidden;
     }
@@ -46,17 +51,21 @@ const FilterContent = ({ type, name, header }) => {
       const edge = edges.find((edge) => edge.fromConnector.name === "Water");
       return !edge?.isHidden;
     }
-    if (type === RelationType.HasLocation) {
+
+    if (type === "Multiphase") {
       const edge = edges.find(
-        (edge) => edge.fromConnector.relationType === RelationType.HasLocation
+        (edge) => edge.fromConnector.name === "Multiphase"
       );
       return !edge?.isHidden;
     }
 
+    if (type === RelationType.HasLocation) {
+      const edge = edges.find((edge) => IsLocationTerminal(edge.fromConnector));
+      return !edge?.isHidden;
+    }
+
     if (type === RelationType.PartOf) {
-      const edge = edges.find(
-        (edge) => edge.fromConnector.relationType === RelationType.PartOf
-      );
+      const edge = edges.find((edge) => IsPartOfTerminal(edge.fromConnector));
       return !edge?.isHidden;
     }
   };

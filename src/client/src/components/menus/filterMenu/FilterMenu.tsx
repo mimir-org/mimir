@@ -42,6 +42,7 @@ const FilterMenu = () => {
 
   const nodes = project.nodes?.filter((x) => !x.isHidden);
   const edges = project.edges;
+
   let elements = [] as {
     id: string;
     type: RelationType | string;
@@ -57,13 +58,35 @@ const FilterMenu = () => {
       self.map((x) => x.type).indexOf(value.type) === index
   );
 
+  let isTransport = false;
+  let isLocation = false;
+  let isPartOf = false;
+
+  // TODO: Rewrite
+  elements.forEach((elem) => {
+    if (
+      elem.type === "Oil" ||
+      elem.type === "Gas" ||
+      elem.type === "Water" ||
+      elem.type === "Multiphase"
+    )
+      isTransport = true;
+    if (elem.type === RelationType.HasLocation) isLocation = true;
+    if (elem.type === RelationType.PartOf) isPartOf = true;
+  });
+
   return (
     <MenuBox right>
       <MenuColumn>
-        <FilterContent type={"Transport"} name={"Transport"} header={true} />
+        {isTransport && (
+          <FilterContent type={"Transport"} name={"Transport"} header={true} />
+        )}
         {elements.map(
           (x, i) =>
-            (x.type === "Oil" || x.type === "Gas" || x.type === "Water") && (
+            (x.type === "Oil" ||
+              x.type === "Gas" ||
+              x.type === "Water" ||
+              x.type === "Multiphase") && (
               <FilterContent
                 type={x.type}
                 name={x.name}
@@ -73,6 +96,13 @@ const FilterMenu = () => {
             )
         )}
         <br></br>
+        {isPartOf && (
+          <FilterContent
+            type={RelationType.PartOf}
+            name={"Part of Relationship"}
+            header={true}
+          />
+        )}
         {elements.map(
           (x, i) =>
             x.type === RelationType.PartOf && (
@@ -84,7 +114,14 @@ const FilterMenu = () => {
               />
             )
         )}
-
+        <br></br>
+        {isLocation && (
+          <FilterContent
+            type={RelationType.HasLocation}
+            name={"Location"}
+            header={true}
+          />
+        )}
         {elements.map(
           (x, i) =>
             x.type === RelationType.HasLocation && (
@@ -96,17 +133,8 @@ const FilterMenu = () => {
               />
             )
         )}
+        <br></br>
       </MenuColumn>
-      {/* <MenuColumn>
-        <FilterContent type={"Transport"} name={"Transport"} />
-        {elements.map(
-          (x, i) =>
-            i % 2 !== 0 && (
-              <FilterContent type={x.name} name={x.name} key={x.id} />
-            )
-        )}
-        
-      </MenuColumn> */}
     </MenuBox>
   );
 };
