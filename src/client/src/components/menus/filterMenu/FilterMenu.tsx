@@ -84,11 +84,7 @@ const FilterMenu = () => {
         )}
         <br></br>
         {isLocation && (
-          <FilterContent
-            type={RelationType.HasLocation}
-            name={"Location"}
-            header={true}
-          />
+          <FilterContent type={"Location"} name={"Location"} header={true} />
         )}
         {elements.map(
           (x) =>
@@ -99,6 +95,7 @@ const FilterMenu = () => {
                 name={x.name}
                 key={x.id}
                 header={false}
+                node={x.fromNode}
               />
             )
         )}
