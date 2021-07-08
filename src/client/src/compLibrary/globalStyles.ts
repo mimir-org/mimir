@@ -30,6 +30,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0px 0px 7px 25px;
     cursor: pointer;
     font-size: 14px;
+    margin-bottom: 7px;
   }
 
   .checkbox-filter input {
@@ -69,11 +70,11 @@ const GlobalStyle = createGlobalStyle`
   .checkmark-filter {
     position: absolute;
     left: 0;
-    height: 12px;
-    width: 12px;
+    height: 15px;
+    width: 15px;
     background-color: ${Color.White};
     border: 2px solid ${Color.Black};
-    border-radius: 2px;
+    border-radius: 3px;
   }
 
   .checkmark-footer {
@@ -133,10 +134,10 @@ const GlobalStyle = createGlobalStyle`
   }
 
   .checkmark-filter:after {
-    left: 4px;
+    left: 5px;
     top: 0px;
-    width: 3px;
-    height: 8px;
+    width: 4px;
+    height: 10px;
     border: solid ${Color.White};
     border-width: 0 2px 2px 0;
     -webkit-transform: rotate(45deg);

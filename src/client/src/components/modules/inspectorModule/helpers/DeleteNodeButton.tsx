@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { TrashIcon } from "../../../../assets/icons/common";
-import { TextResources } from "../../../../assets/textResources";
+import { TextResources } from "../../../../assets/text";
 import { Color, FontSize } from "../../../../compLibrary";
 
 const ButtonContainer = styled.div`

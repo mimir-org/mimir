@@ -4,7 +4,7 @@ import { Input } from "../../../../compLibrary";
 import { Edge, Project } from "../../../../models";
 import { DeleteNodeButton, GetRelationName } from "./../helpers";
 import { removeEdge } from "../../../../redux/store/project/actions";
-import { TextResources } from "../../../../assets/textResources";
+import { TextResources } from "../../../../assets/text";
 
 interface Props {
   edge: Edge;

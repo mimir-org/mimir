@@ -4,18 +4,18 @@ import { MENU_TYPE } from "../../../models/project";
 import { FileData } from "../../../models";
 import { ProjectAm } from "../../../redux/sagas/project/ConvertProject";
 import { CloseIcon, RightArrowIcon } from "../../../assets/icons/common";
-import { TextResources } from "../../../assets/textResources";
+import { TextResources } from "../../../assets/text";
 import { changeMenu } from "../../../redux/store/projectMenu/actions";
 import { Size } from "../../../compLibrary";
 import { MenuButton, AddEditButton } from "../../../compLibrary/buttons";
 import { importProjectAction } from "../../../redux/store/project/actions";
+import { useFilePicker } from "use-file-picker";
 import {
   ProjectBody,
   ProjectBox,
   HeaderBox,
   ButtonBox,
 } from "../../../compLibrary/box/project";
-import { useFilePicker } from "use-file-picker";
 
 export const ImportProjectFileMenu = () => {
   const dispatch = useDispatch();
@@ -23,7 +23,7 @@ export const ImportProjectFileMenu = () => {
   const isOpen = useSelector<RootState>(
     (state) =>
       state.menu.list.find((x) => x.type === MENU_TYPE.IMPORT_PROJECT_FILE_MENU)
-        .visible
+        ?.visible
   ) as boolean;
 
   const [openFileSelector, { filesContent, plainFiles }] = useFilePicker({

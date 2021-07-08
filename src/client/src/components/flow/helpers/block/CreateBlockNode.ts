@@ -4,7 +4,7 @@ import { SetBlockNodePosition } from ".";
 import { IsFunction, IsLocation } from "../common";
 import { Size } from "../../../../compLibrary";
 import { SetConnectNodePosition } from "./connectView";
-import { TextResources } from "../../../../assets/textResources";
+import { TextResources } from "../../../../assets/text";
 
 const CreateBlockNode = (node: Node, connectNode: Node, splitView: boolean) => {
   if (!node) return null;

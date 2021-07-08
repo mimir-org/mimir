@@ -6,13 +6,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { changeActiveNode } from "../../../redux/store/project/actions";
 import { RootState } from "../../../redux/store";
 import { Project, Edge } from "../../../models";
+import styled from "styled-components";
+import TextResources from "../../../assets/text/TextResources";
 import {
   RelationColumns,
   AspectList,
   ButtonGoToAspect,
 } from "../../../compLibrary/box/inspector";
-import styled from "styled-components";
-import textResources from "../../../assets/textResources/textResources";
 
 const GoToAspectContainer = styled.div`
   padding-top: 10px;
@@ -93,11 +93,11 @@ const RelationTabComponent = ({ node }) => {
             <GoToAspectContainer key={r.node.id}>
               <div>
                 {r.aspectRelation === "Location"
-                  ? textResources.Inspector_Relations_Part_Location
+                  ? TextResources.Inspector_Relations_Part_Location
                   : r.aspectRelation === "Product"
-                  ? textResources.Inspector_Relations_Fulfilled_By
+                  ? TextResources.Inspector_Relations_Fulfilled_By
                   : r.aspectRelation === "Function"
-                  ? textResources.Inspector_Relations_Has_Function
+                  ? TextResources.Inspector_Relations_Has_Function
                   : ""}
               </div>
               <InputBox>
@@ -108,11 +108,11 @@ const RelationTabComponent = ({ node }) => {
                   <ButtonGoToAspect onClick={() => goToAspectNode(r.node)}>
                     <span>
                       {r.aspectRelation === "Location"
-                        ? textResources.Inspector_Relations_Location
+                        ? TextResources.Inspector_Relations_Location
                         : r.aspectRelation === "Product"
-                        ? textResources.Inspector_Relations_Product
+                        ? TextResources.Inspector_Relations_Product
                         : r.aspectRelation === "Function"
-                        ? textResources.Inspector_Relations_Function
+                        ? TextResources.Inspector_Relations_Function
                         : ""}
                     </span>
                     <img src={RightArrowIcon} alt="right-arrow-icon" />
@@ -168,12 +168,12 @@ const RelationTabComponent = ({ node }) => {
       <ConnectionList
         nodes={inputNodes}
         onElementClick={changeSelectedNode}
-        title={textResources.Inspector_Relations_Input_object_connetion}
+        title={TextResources.Inspector_Relations_Input_object_connetion}
       />
       <ConnectionList
         nodes={outputNodes}
         onElementClick={changeSelectedNode}
-        title={textResources.Inspector_Relations_Output_object_connetion}
+        title={TextResources.Inspector_Relations_Output_object_connetion}
       />
     </RelationColumns>
   );

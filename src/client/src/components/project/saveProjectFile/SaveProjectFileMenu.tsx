@@ -3,7 +3,7 @@ import { RootState } from "../../../redux/store";
 import { ProjectState } from "../../../redux/store/project/types";
 import { MENU_TYPE } from "../../../models/project";
 import { CloseIcon, RightArrowIcon } from "../../../assets/icons/common";
-import { TextResources } from "../../../assets/textResources";
+import { TextResources } from "../../../assets/text";
 import { changeMenu } from "../../../redux/store/projectMenu/actions";
 import { useState } from "react";
 import { Input, Label, Size } from "../../../compLibrary";
@@ -26,7 +26,7 @@ export const SaveProjectFileMenu = () => {
   const isOpen = useSelector<RootState>(
     (state) =>
       state.menu.list.find((x) => x.type === MENU_TYPE.SAVE_PROJECT_FILE_MENU)
-        .visible
+        ?.visible
   ) as boolean;
 
   const projectState = useSelector<RootState>(
@@ -39,7 +39,7 @@ export const SaveProjectFileMenu = () => {
 
   const onProjectSaveClick = () => {
     if (!projectState.project) {
-      throw Error("Can not export a project that does not exist");
+      throw Error(TextResources.Error_ExportProject);
     }
 
     dispatch(save(projectState.project));

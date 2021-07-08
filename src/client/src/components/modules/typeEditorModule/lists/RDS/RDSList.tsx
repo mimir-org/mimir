@@ -4,7 +4,7 @@ import { TypeEditorState } from "../../../../../redux/store/typeEditor/types";
 import { ListHeader } from "../ListHeader";
 import { RDSListBody } from "./RDSListBody";
 import { ListWrapper } from "../../../../../compLibrary";
-import { TextResources } from "../../../../../assets/textResources";
+import { TextResources } from "../../../../../assets/text";
 import { Aspect } from "../../../../../models";
 
 export const RDSList = () => {

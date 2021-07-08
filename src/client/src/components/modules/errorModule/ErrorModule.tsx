@@ -9,7 +9,7 @@ import { RootState } from "../../../redux/store";
 import { ErrorBox, ErrorItem, ErrorHeaderBox } from ".";
 import { ProjectBody } from "../../../compLibrary/box/project";
 import { CloseIcon } from "../../../assets/icons/common";
-import { TextResources } from "../../../assets/textResources";
+import { TextResources } from "../../../assets/text";
 import { BadRequestData } from "../../../models/webclient";
 import { deleteProjectError } from "../../../redux/store/project/actions";
 import { deleteCommonError } from "../../../redux/store/common/actions";

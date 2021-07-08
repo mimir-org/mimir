@@ -12,7 +12,7 @@ import { CommonState } from "../../redux/store/common/types";
 import { TypeEditorState } from "../../redux/store/typeEditor/types";
 import { Login } from "../modules/accountModule";
 import { LoginIcon } from "../../assets/icons/common";
-import { TextResources } from "../../assets/textResources";
+import { TextResources } from "../../assets/text";
 
 // MSAL imports
 import {

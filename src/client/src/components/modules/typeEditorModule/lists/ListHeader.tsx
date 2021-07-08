@@ -1,5 +1,5 @@
 import { ListLabel } from "../../../../compLibrary";
-import { TextResources } from "../../../../assets/textResources";
+import { TextResources } from "../../../../assets/text";
 
 interface Props {
   label: string;

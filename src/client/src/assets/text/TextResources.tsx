@@ -1,6 +1,6 @@
 /* All static text in the app is placed here */
 
-const textResources = {
+const TextResources = {
   // Log in
   Login_label: "Log in",
   Login_label_email: "SSO e-mail",
@@ -148,14 +148,15 @@ const textResources = {
   Account_Save_Label_File_Library_Button: "Export library",
   Account_Import_Label_File_Library_Button: "Import library",
 
-  // ErrorModule
-  Error_Tile: "Oops, Something Went Wrong",
+  // Error
+  Error_Tile: "Oops, something went wrong",
+  Error_ExportProject: "Can not export a project that does not exist",
 
   // LegendModule
   Legend_Heading: "Legend",
 
   // FilterModule
-  Filter_Types: "Transport/Interfaces/Terminals",
+  Filter_Transport: "Transport",
   Filter_Sub_Types: "Sub-Types",
   Filter_Other: "Other",
   Filter_Designations: "Designations",
@@ -173,8 +174,8 @@ const textResources = {
   Filter_Hydro: "Hydro",
   Filter_Fluid: "Fluid",
   Filter_Solid: "Solid pieces",
-  Filter_Has_Location: "Has location",
-  Filter_Fulfilled_By: "Fulfilled by",
+  Filter_HasLocation: "Has location",
+  Filter_FulfilledBy: "Fulfilled by",
   Filter_Explorer: "Explorer RDS",
   Filter_Show_Local: "Show local",
   Filter_Show_Path: "Show path",
@@ -194,37 +195,4 @@ const textResources = {
   Type_FunctionBlock: "FunctionBlock",
 };
 
-export const VisualFilterResources = [
-  "Transport/Interfaces/Terminals:",
-  "Sub-Types:",
-  "Other:",
-  "Designations:",
-
-  "Forces",
-  "Information",
-  "Energy [power]",
-  "Material flow",
-
-  "Energy [power]",
-  "Electric",
-  "Thermal",
-  "Solar",
-  "Material flow",
-  "Dry granulated",
-  "Mechanical",
-  "Sound",
-  "Wind",
-  "Hydro power",
-  "Fluid",
-  "Solid pieces",
-
-  "Has location",
-  "Fulfilled by",
-  "Has function",
-  "Explorer RDS",
-
-  "Show local",
-  "Show path",
-];
-
-export default textResources;
+export default TextResources;

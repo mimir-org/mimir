@@ -50,7 +50,7 @@ const ValidateBlockEdge = (
       !splitViewNode &&
       IsChildOf(fromNode, selectedNode)
     ) {
-      return true;
+      return false;
     }
     if (
       IsFunction(fromNode) &&

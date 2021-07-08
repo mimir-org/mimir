@@ -1,7 +1,7 @@
 import { memo, FC } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useSelector } from "react-redux";
-import { TextResources } from "../../../assets/textResources";
+import { TextResources } from "../../../assets/text";
 import { Aspect, Node } from "../../../models";
 import { RootState } from "../../../redux/store";
 import { Block } from ".";

@@ -1,7 +1,7 @@
 import { Node, Connector } from "../../../../models";
 import { IsTransportTerminal } from "../../../flow/helpers/common";
 import { GetAspectPartColor } from "../../../../assets/helpers";
-import { TextResources } from "../../../../assets/textResources";
+import { TextResources } from "../../../../assets/text";
 import { Color } from "../../../../compLibrary";
 import {
   IsFulfilledByTerminal,
@@ -9,7 +9,7 @@ import {
   IsPartOfTerminal,
 } from "../../../flow/helpers/common";
 
-const GetColorAndName = (conn: Connector, node: Node) => {
+const GetLegendInfo = (conn: Connector, node: Node) => {
   let color = "";
   let name = "";
 
@@ -38,4 +38,4 @@ const GetColorAndName = (conn: Connector, node: Node) => {
   }
 };
 
-export default GetColorAndName;
+export default GetLegendInfo;

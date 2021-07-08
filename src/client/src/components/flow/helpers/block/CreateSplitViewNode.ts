@@ -3,7 +3,7 @@ import { FlowElement } from "react-flow-renderer";
 import { SetSplitViewNodePosition } from ".";
 import { IsLocation } from "../common";
 import { Size } from "../../../../compLibrary";
-import { TextResources } from "../../../../assets/textResources";
+import { TextResources } from "../../../../assets/text";
 
 const CreateSplitViewNode = (node: Node) => {
   if (!node) return null;

@@ -7,7 +7,7 @@ import { PreviewBody } from "../preview/PreviewBody";
 import { PreviewInstruction } from "../styled";
 import { ListWrapper } from "../../../../compLibrary";
 import { AddEditButton } from "../../../../compLibrary/buttons";
-import { TextResources } from "../../../../assets/textResources";
+import { TextResources } from "../../../../assets/text";
 import { AddIcon, CheckmarkIcon } from "../../../../assets/icons/common";
 import { create, update } from "../../../../redux/store/typeEditor/actions";
 import { Mode } from "../../../../models";

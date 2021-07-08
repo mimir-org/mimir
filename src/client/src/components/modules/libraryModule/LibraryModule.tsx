@@ -1,4 +1,4 @@
-import { TextResources } from "../../../assets/textResources";
+import { TextResources } from "../../../assets/text";
 import { LegendModule } from "../legendModule";
 import { LibraryComponent } from "./index";
 import { useEffect } from "react";
