@@ -31,7 +31,7 @@ export const OpenProjectMenu = () => {
   const isOpen = useSelector<RootState>(
     (state) =>
       state.menu.list.find((x) => x.type === MENU_TYPE.OPEN_PROJECT_MENU)
-        .visible
+        ?.visible
   ) as boolean;
 
   const onReturnClick = () => {
