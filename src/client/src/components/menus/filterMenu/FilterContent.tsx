@@ -29,35 +29,35 @@ const FilterContent = ({ type, name, header }) => {
       const edge = edges.find(
         (edge) => edge.fromConnector.terminalCategoryId !== null
       );
-      return !edge.isHidden;
+      return !edge?.isHidden;
     }
 
     if (type === "Oil") {
       const edge = edges.find((edge) => edge.fromConnector.name === "Oil");
-      return !edge.isHidden;
+      return !edge?.isHidden;
     }
 
     if (type === "Gas") {
       const edge = edges.find((edge) => edge.fromConnector.name === "Gas");
-      return !edge.isHidden;
+      return !edge?.isHidden;
     }
 
     if (type === "Water") {
       const edge = edges.find((edge) => edge.fromConnector.name === "Water");
-      return !edge.isHidden;
+      return !edge?.isHidden;
     }
     if (type === RelationType.HasLocation) {
       const edge = edges.find(
         (edge) => edge.fromConnector.relationType === RelationType.HasLocation
       );
-      return !edge.isHidden;
+      return !edge?.isHidden;
     }
 
     if (type === RelationType.PartOf) {
       const edge = edges.find(
         (edge) => edge.fromConnector.relationType === RelationType.PartOf
       );
-      return !edge.isHidden;
+      return !edge?.isHidden;
     }
   };
 
