@@ -10,6 +10,6 @@ namespace Mb.Core.Services.Contracts
         IEnumerable<Contractor> GetAllContractors();
         Task<BlobDataAm> CreateBlobData(BlobDataAm blobData);
         Task<BlobDataAm> UpdateBlobData(BlobDataAm blobData);
-        IEnumerable<BlobDataAm> GetBlobData(string categoryId);
+        IEnumerable<BlobDataAm> GetBlobData();
     }
 }

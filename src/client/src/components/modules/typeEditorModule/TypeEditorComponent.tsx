@@ -92,7 +92,7 @@ export const TypeEditorComponent = () => {
     SetDarkModeColor(darkMode);
     dispatch(getInitialData());
     dispatch(changeAllModulesVisibility(false, true));
-    dispatch(getBlobData("9E9CDAC82A4EE3EE2387FC681DDB5556"));
+    dispatch(getBlobData());
   }, [
     dispatch,
     state.createLibraryType.aspect,

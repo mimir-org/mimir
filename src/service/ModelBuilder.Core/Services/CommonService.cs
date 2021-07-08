@@ -54,9 +54,9 @@ namespace Mb.Core.Services
             return _mapper.Map<BlobDataAm>(dm);
         }
 
-        public IEnumerable<BlobDataAm> GetBlobData(string categoryId)
+        public IEnumerable<BlobDataAm> GetBlobData()
         {
-            var dms = _blobDataRepository.FindBy(x => x.CategoryId == categoryId)
+            var dms = _blobDataRepository.GetAll()
                 .OrderBy(x => x.Name)
                 .ProjectTo<BlobDataAm>(_mapper.ConfigurationProvider)
                 .ToList();

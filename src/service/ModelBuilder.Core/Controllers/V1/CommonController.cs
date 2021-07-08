@@ -86,19 +86,18 @@ namespace Mb.Core.Controllers.V1
         /// <summary>
         /// Get blob data from category
         /// </summary>
-        /// <param name="categoryId"></param>
         /// <returns></returns>
-        [HttpGet("blob/{categoryId}")]
+        [HttpGet("blob")]
         [ProducesResponseType(typeof(ICollection<BlobDataAm>), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public IActionResult GetBlobData(string categoryId)
+        public IActionResult GetBlobData()
         {
             try
             {
-                var blobs = _commonService.GetBlobData(categoryId).ToList();
+                var blobs = _commonService.GetBlobData().ToList();
                 return Ok(blobs);
             }
             catch (Exception e)

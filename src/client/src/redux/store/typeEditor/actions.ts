@@ -247,12 +247,10 @@ export function deleteTypeEditorError(key: string) {
     };
 }
 
-export function getBlobData(categoryId: string): TypeEditorActionTypes {
+export function getBlobData(): TypeEditorActionTypes {
     return {
         type: FETCHING_BLOB_DATA,
-        payload: {
-            categoryId: categoryId,
-        },
+        payload: null,
     };
 }
 

@@ -282,9 +282,9 @@ export function* getPredefinedAttributes(action) {
     }
 }
 
-export function* getblobData(action: FetchingBlobDataAction) {
+export function* getblobData() {
     try {
-        const url = process.env.REACT_APP_API_BASE_URL + "common/blob/" + action.payload.categoryId;
+        const url = process.env.REACT_APP_API_BASE_URL + "common/blob/";
         const response = yield call(get, url);
 
         // This is a bad request

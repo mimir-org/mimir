@@ -290,9 +290,7 @@ interface DeleteTypeEditorErrorAction {
 
 export interface FetchingBlobDataAction {
     type: typeof FETCHING_BLOB_DATA;
-    payload: {
-        categoryId: string
-    }
+    payload: null
 }
 
 export interface FetchingBlobDataActionFinished {
