@@ -1,7 +1,10 @@
-import { Edge, RelationType } from "../../../../models";
-import { IsTransportTerminal } from "../../../flow/helpers/common";
+import { Edge, Node, RelationType } from "../../../../models";
+import {
+  IsPartOfTerminal,
+  IsTransportTerminal,
+} from "../../../flow/helpers/common";
 
-const CheckEdges = (edges: Edge[], type: RelationType | string) => {
+const CheckEdges = (edges: Edge[], type: RelationType | string, node: Node) => {
   const elementsToRemove = [];
 
   if (type === "Show all") {
@@ -21,8 +24,21 @@ const CheckEdges = (edges: Edge[], type: RelationType | string) => {
     });
   }
 
+  // All partOf edges
+  if (type === "Part of Relationship") {
+    edges?.forEach((edge) => {
+      if (IsPartOfTerminal(edge.fromConnector)) elementsToRemove.push(edge);
+    });
+  }
+
   edges?.forEach((edge) => {
-    if (edge.fromConnector.relationType === type) elementsToRemove.push(edge); // Part of
+    if (type === RelationType.PartOf) {
+      if (
+        edge.fromNode.aspect === node?.aspect &&
+        IsPartOfTerminal(edge.fromConnector)
+      )
+        elementsToRemove.push(edge);
+    }
     if (edge.fromConnector.name === type) elementsToRemove.push(edge); // Transport
   });
   return elementsToRemove;

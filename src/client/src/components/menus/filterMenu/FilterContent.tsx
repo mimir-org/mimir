@@ -2,13 +2,8 @@ import red from "../../../redux/store";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { IsBlockView } from "../../flow/helpers/block";
-import { Edge, RelationType } from "../../../models";
+import { Connector, Edge, Node, RelationType } from "../../../models";
 import { MenuSubHeader } from "../../../compLibrary/box/menus";
-import {
-  IsLocationTerminal,
-  IsPartOfTerminal,
-  IsTransportTerminal,
-} from "../../flow/helpers/common";
 import {
   changeEdgeVisibility,
   changeActiveConnector,
@@ -17,64 +12,31 @@ import {
   CheckBlockEdges,
   CheckEdges,
   FindConnectorNode,
+  IsChecked,
   IsEdge,
 } from "./helpers";
 
-const FilterContent = ({ type, name, header }) => {
+interface Props {
+  conn?: Connector;
+  type: RelationType | string;
+  name: string;
+  header: boolean;
+  node?: Node;
+}
+
+const FilterContent = ({ conn, type, name, header, node }: Props) => {
   const dispatch = useDispatch();
   const edges = red.store.getState().projectState.project?.edges as Edge[];
 
   let selectedElements = !IsBlockView()
-    ? CheckEdges(edges, type)
+    ? CheckEdges(edges, type, node)
     : CheckBlockEdges(edges, type);
 
-  // TODO: Rewrite
-  const isChecked = () => {
-    if (type === "Transport") {
-      const edge = edges.find((edge) =>
-        IsTransportTerminal(edge.fromConnector)
-      );
-      return !edge?.isHidden;
-    }
-
-    if (type === "Oil") {
-      const edge = edges.find((edge) => edge.fromConnector.name === "Oil");
-      return !edge?.isHidden;
-    }
-
-    if (type === "Gas") {
-      const edge = edges.find((edge) => edge.fromConnector.name === "Gas");
-      return !edge?.isHidden;
-    }
-
-    if (type === "Water") {
-      const edge = edges.find((edge) => edge.fromConnector.name === "Water");
-      return !edge?.isHidden;
-    }
-
-    if (type === "Multiphase") {
-      const edge = edges.find(
-        (edge) => edge.fromConnector.name === "Multiphase"
-      );
-      return !edge?.isHidden;
-    }
-
-    if (type === RelationType.HasLocation) {
-      const edge = edges.find((edge) => IsLocationTerminal(edge.fromConnector));
-      return !edge?.isHidden;
-    }
-
-    if (type === RelationType.PartOf) {
-      const edge = edges.find((edge) => IsPartOfTerminal(edge.fromConnector));
-      return !edge?.isHidden;
-    }
-  };
-
-  const [, setChecked] = useState(isChecked());
+  const [, setChecked] = useState(IsChecked(type, edges, conn, node, name));
 
   const onChange = () => {
     if (edges) {
-      setChecked(isChecked());
+      setChecked(IsChecked(type, edges, conn, node, name));
       selectedElements.forEach((element) => {
         if (IsEdge(element)) {
           dispatch(changeEdgeVisibility(element, !element.isHidden));
@@ -90,13 +52,21 @@ const FilterContent = ({ type, name, header }) => {
 
   return header ? (
     <label className={"checkbox"}>
-      <input type="checkbox" checked={isChecked()} onChange={onChange} />
+      <input
+        type="checkbox"
+        checked={IsChecked(type, edges, conn, node, name)}
+        onChange={onChange}
+      />
       <span className="checkmark"></span>
       {<MenuSubHeader>{name}</MenuSubHeader>}
     </label>
   ) : (
     <label className={"checkbox-filter"}>
-      <input type="checkbox" checked={isChecked()} onChange={onChange} />
+      <input
+        type="checkbox"
+        checked={IsChecked(type, edges, conn, node, name)}
+        onChange={onChange}
+      />
       <span className="checkmark-filter"></span>
       {name}
     </label>

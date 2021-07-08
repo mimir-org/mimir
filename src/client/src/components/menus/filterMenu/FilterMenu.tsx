@@ -1,39 +1,15 @@
+import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { FilterContent } from ".";
-import { Connector, Node, Edge, Project, RelationType } from "../../../models";
+import { Aspect, Project, RelationType } from "../../../models";
 import { MenuBox, MenuColumn } from "../../../compLibrary/box/menus";
-import { useSelector } from "react-redux";
-import { IsTransportTerminal } from "../../flow/helpers/common";
-
-const AddElement = (
-  node: Node,
-  edges: Edge[]
-): { id: string; type: string }[] => {
-  const IsActive = (conn: Connector) => {
-    let found = false;
-
-    edges.forEach((edge) => {
-      if (edge.fromConnectorId === conn.id) {
-        found = true;
-        return;
-      }
-    });
-    return found;
-  };
-
-  let elements = [] as { id; type; name }[];
-  elements = node?.connectors
-    ?.filter((conn) => IsActive(conn))
-    .map((x) => {
-      return {
-        id: x.id,
-        type: IsTransportTerminal(x) ? x.name : x.relationType,
-        name: x.name,
-      };
-    });
-
-  return elements;
-};
+import { AddElement } from "./helpers";
+import {
+  FilterElement,
+  IsLocationTerminal,
+  IsPartOfTerminal,
+  IsTransportTerminal,
+} from "../../flow/helpers/common";
 
 const FilterMenu = () => {
   const project = useSelector<RootState>(
@@ -43,36 +19,28 @@ const FilterMenu = () => {
   const nodes = project.nodes?.filter((x) => !x.isHidden);
   const edges = project.edges;
 
-  let elements = [] as {
-    id: string;
-    type: RelationType | string;
-    name: string;
-  }[];
+  let elements = [] as FilterElement[];
 
   nodes.forEach((node) => {
     elements.push.apply(elements, AddElement(node, edges));
   });
 
+  // Remove duplicates
   elements = elements.filter(
-    (value, index, self) =>
-      self.map((x) => x.type).indexOf(value.type) === index
+    (v, i, a) =>
+      a.findIndex(
+        (t) => t.type === v.type && t.fromNode?.aspect === v.fromNode?.aspect
+      ) === i
   );
 
   let isTransport = false;
   let isLocation = false;
   let isPartOf = false;
 
-  // TODO: Rewrite
   elements.forEach((elem) => {
-    if (
-      elem.type === "Oil" ||
-      elem.type === "Gas" ||
-      elem.type === "Water" ||
-      elem.type === "Multiphase"
-    )
-      isTransport = true;
-    if (elem.type === RelationType.HasLocation) isLocation = true;
-    if (elem.type === RelationType.PartOf) isPartOf = true;
+    if (IsTransportTerminal(elem.conn)) isTransport = true;
+    if (IsLocationTerminal(elem.conn)) isLocation = true;
+    if (IsPartOfTerminal(elem.conn)) isPartOf = true;
   });
 
   return (
@@ -82,12 +50,10 @@ const FilterMenu = () => {
           <FilterContent type={"Transport"} name={"Transport"} header={true} />
         )}
         {elements.map(
-          (x, i) =>
-            (x.type === "Oil" ||
-              x.type === "Gas" ||
-              x.type === "Water" ||
-              x.type === "Multiphase") && (
+          (x) =>
+            IsTransportTerminal(x.conn) && (
               <FilterContent
+                conn={x.conn}
                 type={x.type}
                 name={x.name}
                 key={x.id}
@@ -98,19 +64,21 @@ const FilterMenu = () => {
         <br></br>
         {isPartOf && (
           <FilterContent
-            type={RelationType.PartOf}
+            type={"Part of Relationship"}
             name={"Part of Relationship"}
             header={true}
           />
         )}
         {elements.map(
-          (x, i) =>
+          (x) =>
             x.type === RelationType.PartOf && (
               <FilterContent
+                conn={x.conn}
                 type={x.type}
-                name={x.name}
+                name={"Part of " + Aspect[x.fromNode?.aspect]}
                 key={x.id}
                 header={false}
+                node={x.fromNode}
               />
             )
         )}
@@ -123,9 +91,10 @@ const FilterMenu = () => {
           />
         )}
         {elements.map(
-          (x, i) =>
+          (x) =>
             x.type === RelationType.HasLocation && (
               <FilterContent
+                conn={x.conn}
                 type={x.type}
                 name={x.name}
                 key={x.id}
