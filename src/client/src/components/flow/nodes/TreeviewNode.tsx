@@ -1,19 +1,19 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
 import { Connector } from "../../../models";
+import { Symbol } from "../../../compLibrary/dropdown";
+import { SetTerminalYPos } from "../helpers/common";
 import {
   TreeHandleBox,
   TreeNodeNameBox,
   TreeNodeWrapper,
 } from "../../../compLibrary/treeView";
-import { SetTerminalYPos } from "../helpers/common";
 import {
   GetHandleType,
   IsInputTerminal,
   IsOutputTerminal,
   IsPartOfTerminal,
 } from "../helpers/common";
-import { Symbol } from "../../../compLibrary/dropdown";
 
 const TreeviewNode: FC<NodeProps> = ({ data }) => {
   const [isHover, setIsHover] = useState(false);
