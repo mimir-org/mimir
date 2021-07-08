@@ -151,6 +151,7 @@ const TextResources = {
   // Error
   Error_Tile: "Oops, something went wrong",
   Error_ExportProject: "Can not export a project that does not exist",
+  Error_GetFileData: "Could not create nodes and edges from file",
 
   // LegendModule
   Legend_Heading: "Legend",
