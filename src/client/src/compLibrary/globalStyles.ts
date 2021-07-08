@@ -27,10 +27,9 @@ const GlobalStyle = createGlobalStyle`
   .checkbox-filter  {
     display: flex;
     position: relative;
-    padding: 0px 0px 7px 25px;
+    padding: 4px 0px 7px 25px;
     cursor: pointer;
     font-size: 14px;
-    margin-bottom: 7px;
   }
 
   .checkbox-filter input {
@@ -75,6 +74,7 @@ const GlobalStyle = createGlobalStyle`
     background-color: ${Color.White};
     border: 2px solid ${Color.Black};
     border-radius: 3px;
+    margin-top:-1px;
   }
 
   .checkmark-footer {
