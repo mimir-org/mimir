@@ -22,7 +22,7 @@ export const ImportFileLibraryMenu = () => {
   const isOpen = useSelector<RootState>(
     (state) =>
       state.menu.list.find((x) => x.type === MENU_TYPE.IMPORT_LIBRARY_FILE_MENU)
-        .visible
+        ?.visible
   ) as boolean;
 
   const [openFileSelector, { filesContent, plainFiles }] = useFilePicker({

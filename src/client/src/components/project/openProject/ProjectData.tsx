@@ -22,6 +22,7 @@ export const ProjectDataComponent = ({
   const projects = useSelector<RootState>(
     (state) => state.projectState.projectList
   ) as ProjectSimple[];
+
   const isSelected = projects.find((x) => x.id === projectId).selected;
 
   const handleClick = () => {
