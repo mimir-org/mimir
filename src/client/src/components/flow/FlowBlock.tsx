@@ -118,10 +118,15 @@ const FlowBlock = () => {
     return useOnNodeDragStop(_event, node, dispatch);
   };
 
-  const OnDrop = (_event) => {
+  const OnDrop = (event) => {
     const selectedNode = FindSelectedNode();
+    const isFile =
+      event.dataTransfer.files && event.dataTransfer.files.length > 0;
+
     return useOnDrop(
-      _event,
+      isFile,
+      project,
+      event,
       dispatch,
       setElements,
       reactFlowInstance,

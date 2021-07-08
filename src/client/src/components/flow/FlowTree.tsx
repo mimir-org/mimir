@@ -61,18 +61,21 @@ const FlowTree = () => {
 
   const OnDragOver = (event) => {
     event.preventDefault();
-    event.dataTransfer.dropEffect = "move";
   };
 
   const OnNodeDragStop = (_event, node) => {
     dispatch(updatePosition(node.id, node.position.x, node.position.y));
   };
 
-  const OnDrop = (_event) => {
+  const OnDrop = (event) => {
     const selectedNode = FindSelectedNode();
+    const isFile =
+      event.dataTransfer.files && event.dataTransfer.files.length > 0;
 
     return useOnDrop(
-      _event,
+      isFile,
+      project,
+      event,
       dispatch,
       setElements,
       reactFlowInstance,
