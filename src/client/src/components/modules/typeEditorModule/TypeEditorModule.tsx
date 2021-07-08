@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { changeMode } from "../../../redux/store/typeEditor/actions";
 import { NewTypeIcon, EditTypeIcon } from "../../../assets/icons/common";
-import { TextResources } from "../../../assets/textResources";
+import { TextResources } from "../../../assets/text";
 import { VIEW_TYPE } from "../../../models/project";
 import { TypeEditorBox, TypeEditorBoxContent } from "../../../compLibrary/box";
 import { Mode } from "../../../models";

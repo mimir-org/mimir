@@ -1,5 +1,5 @@
 import moment from "moment/moment.js";
-import { TextResources } from "../../../assets/textResources";
+import { TextResources } from "../../../assets/text";
 import { useDispatch } from "react-redux";
 import { Contractor } from "../../../redux/store/common/types";
 import { TabColumn } from "../../../compLibrary/box/inspector";

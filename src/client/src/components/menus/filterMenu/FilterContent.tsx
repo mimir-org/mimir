@@ -2,9 +2,8 @@ import red from "../../../redux/store";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { IsBlockView } from "../../flow/helpers/block";
-import { Edge } from "../../../models";
-import { TextResources } from "../../../assets/textResources";
-import { MenuColumn, MenuSubHeader } from "../../../compLibrary/box/menus";
+import { Edge, RelationType } from "../../../models";
+import { MenuSubHeader } from "../../../compLibrary/box/menus";
 import {
   changeEdgeVisibility,
   changeActiveConnector,
@@ -16,7 +15,7 @@ import {
   IsEdge,
 } from "./helpers";
 
-const FilterContent = ({ type, name }) => {
+const FilterContent = ({ type, name, header }) => {
   const dispatch = useDispatch();
   const edges = red.store.getState().projectState.project?.edges as Edge[];
 
@@ -24,12 +23,49 @@ const FilterContent = ({ type, name }) => {
     ? CheckEdges(edges, type)
     : CheckBlockEdges(edges, type);
 
-  let isChecked = edges.find((x) => x.id === selectedElements[0]?.id)?.isHidden;
-  const [checked, setChecked] = useState(!isChecked);
+  // TODO: Rewrite
+  const isChecked = () => {
+    if (type === "Transport") {
+      const edge = edges.find(
+        (edge) => edge.fromConnector.terminalCategoryId !== null
+      );
+      return !edge.isHidden;
+    }
 
-  const handleChange = () => {
+    if (type === "Oil") {
+      const edge = edges.find((edge) => edge.fromConnector.name === "Oil");
+      return !edge.isHidden;
+    }
+
+    if (type === "Gas") {
+      const edge = edges.find((edge) => edge.fromConnector.name === "Gas");
+      return !edge.isHidden;
+    }
+
+    if (type === "Water") {
+      const edge = edges.find((edge) => edge.fromConnector.name === "Water");
+      return !edge.isHidden;
+    }
+    if (type === RelationType.HasLocation) {
+      const edge = edges.find(
+        (edge) => edge.fromConnector.relationType === RelationType.HasLocation
+      );
+      return !edge.isHidden;
+    }
+
+    if (type === RelationType.PartOf) {
+      const edge = edges.find(
+        (edge) => edge.fromConnector.relationType === RelationType.PartOf
+      );
+      return !edge.isHidden;
+    }
+  };
+
+  const [, setChecked] = useState(isChecked());
+
+  const onChange = () => {
     if (edges) {
-      setChecked(!checked);
+      setChecked(isChecked());
       selectedElements.forEach((element) => {
         if (IsEdge(element)) {
           dispatch(changeEdgeVisibility(element, !element.isHidden));
@@ -43,18 +79,18 @@ const FilterContent = ({ type, name }) => {
     }
   };
 
-  return (
-    <MenuColumn>
-      {/* {index === 0 && (
-        <MenuSubHeader>{TextResources.Filter_Other}</MenuSubHeader>
-      )} */}
-
-      <label className={"checkbox-filter"}>
-        <input type="checkbox" checked={checked} onChange={handleChange} />
-        <span className="checkmark-filter"></span>
-        {name}
-      </label>
-    </MenuColumn>
+  return header ? (
+    <label className={"checkbox"}>
+      <input type="checkbox" checked={isChecked()} onChange={onChange} />
+      <span className="checkmark"></span>
+      {<MenuSubHeader>{name}</MenuSubHeader>}
+    </label>
+  ) : (
+    <label className={"checkbox-filter"}>
+      <input type="checkbox" checked={isChecked()} onChange={onChange} />
+      <span className="checkmark-filter"></span>
+      {name}
+    </label>
   );
 };
 

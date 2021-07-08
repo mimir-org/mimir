@@ -1,6 +1,6 @@
 import { RootState } from "../../../redux/store";
 import { FooterBox, FooterContent } from "../../../compLibrary/box/footer";
-import { TextResources } from "../../../assets/textResources";
+import { TextResources } from "../../../assets/text";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FindSelectedNode, IsLocation } from "../../flow/helpers/common";

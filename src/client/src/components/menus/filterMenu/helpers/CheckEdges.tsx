@@ -4,7 +4,7 @@ import { IsTransportTerminal } from "../../../flow/helpers/common";
 const CheckEdges = (edges: Edge[], type: RelationType | string) => {
   const elementsToRemove = [];
 
-  if (type === "Hide all") {
+  if (type === "Show all") {
     edges?.forEach((edge) => {
       elementsToRemove.push(edge);
     });

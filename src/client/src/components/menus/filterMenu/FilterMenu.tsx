@@ -1,6 +1,6 @@
 import { RootState } from "../../../redux/store";
 import { FilterContent } from ".";
-import { Connector, Node, Edge, Project } from "../../../models";
+import { Connector, Node, Edge, Project, RelationType } from "../../../models";
 import { MenuBox, MenuColumn } from "../../../compLibrary/box/menus";
 import { useSelector } from "react-redux";
 import { IsTransportTerminal } from "../../flow/helpers/common";
@@ -42,7 +42,11 @@ const FilterMenu = () => {
 
   const nodes = project.nodes?.filter((x) => !x.isHidden);
   const edges = project.edges;
-  let elements = [] as { id: string; type: string; name: string }[];
+  let elements = [] as {
+    id: string;
+    type: RelationType | string;
+    name: string;
+  }[];
 
   nodes.forEach((node) => {
     elements.push.apply(elements, AddElement(node, edges));
@@ -56,25 +60,53 @@ const FilterMenu = () => {
   return (
     <MenuBox right>
       <MenuColumn>
-        <FilterContent type={"Hide all"} name={"Hide all"} />
+        <FilterContent type={"Transport"} name={"Transport"} header={true} />
+        {elements.map(
+          (x, i) =>
+            (x.type === "Oil" || x.type === "Gas" || x.type === "Water") && (
+              <FilterContent
+                type={x.type}
+                name={x.name}
+                key={x.id}
+                header={false}
+              />
+            )
+        )}
+        <br></br>
+        {elements.map(
+          (x, i) =>
+            x.type === RelationType.PartOf && (
+              <FilterContent
+                type={x.type}
+                name={x.name}
+                key={x.id}
+                header={false}
+              />
+            )
+        )}
 
         {elements.map(
           (x, i) =>
-            i % 2 === 0 && (
-              <FilterContent type={x.type} name={x.name} key={x.id} />
+            x.type === RelationType.HasLocation && (
+              <FilterContent
+                type={x.type}
+                name={x.name}
+                key={x.id}
+                header={false}
+              />
             )
         )}
       </MenuColumn>
-      <MenuColumn>
+      {/* <MenuColumn>
         <FilterContent type={"Transport"} name={"Transport"} />
-
         {elements.map(
           (x, i) =>
             i % 2 !== 0 && (
               <FilterContent type={x.name} name={x.name} key={x.id} />
             )
         )}
-      </MenuColumn>
+        
+      </MenuColumn> */}
     </MenuBox>
   );
 };

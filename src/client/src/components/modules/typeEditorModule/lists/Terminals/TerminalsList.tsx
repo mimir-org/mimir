@@ -5,7 +5,7 @@ import { Aspect } from "../../../../../models";
 import { ListHeader } from "../ListHeader";
 import { TerminalsListBody } from "./TerminalsListBody";
 import { ListWrapper } from "../../../../../compLibrary";
-import { TextResources } from "../../../../../assets/textResources";
+import { TextResources } from "../../../../../assets/text";
 
 interface Props {
   aspect: Aspect;

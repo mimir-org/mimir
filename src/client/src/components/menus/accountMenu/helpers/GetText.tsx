@@ -1,4 +1,4 @@
-import { TextResources } from "../../../../assets/textResources";
+import { TextResources } from "../../../../assets/text";
 
 const GetText = (type: string) => {
   let text =

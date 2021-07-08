@@ -1,5 +1,5 @@
 import { FlowElement } from "react-flow-renderer";
-import { TextResources } from "../../../../assets/textResources";
+import { TextResources } from "../../../../assets/text";
 import { Position } from "../../../../compLibrary";
 import { Node } from "../../../../models";
 

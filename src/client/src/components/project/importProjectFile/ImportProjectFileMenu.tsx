@@ -4,7 +4,7 @@ import { MENU_TYPE } from "../../../models/project";
 import { FileData } from "../../../models";
 import { ProjectAm } from "../../../redux/sagas/project/ConvertProject";
 import { CloseIcon, RightArrowIcon } from "../../../assets/icons/common";
-import { TextResources } from "../../../assets/textResources";
+import { TextResources } from "../../../assets/text";
 import { changeMenu } from "../../../redux/store/projectMenu/actions";
 import { Size } from "../../../compLibrary";
 import { MenuButton, AddEditButton } from "../../../compLibrary/buttons";

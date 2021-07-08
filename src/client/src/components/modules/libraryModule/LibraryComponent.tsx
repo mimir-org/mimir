@@ -1,4 +1,4 @@
-import { TextResources } from "../../../assets/textResources";
+import { TextResources } from "../../../assets/text";
 import { LibCategory } from "../../../models/project";
 import { SearchIcon } from "../../../assets/icons/common";
 import { SearchInput } from "../../../compLibrary";
@@ -23,7 +23,7 @@ const LibraryComponent = ({ categories, search }: Props) => {
     search(e.target.value);
   };
 
-  const[selectedElement, setSelectedElement] = useState("");
+  const [selectedElement, setSelectedElement] = useState("");
 
   return (
     <>
@@ -37,10 +37,15 @@ const LibraryComponent = ({ categories, search }: Props) => {
       <LibraryBody legend={isLegendOpen}>
         {categories?.map((category) => {
           return (
-            <LibraryCategoryComponent selectedElement={selectedElement} setSelectedElement={setSelectedElement} key={category.name} category={category} />
+            <LibraryCategoryComponent
+              selectedElement={selectedElement}
+              setSelectedElement={setSelectedElement}
+              key={category.name}
+              category={category}
+            />
           );
         })}
-        <TypeEditorModule selectedElement={selectedElement}/>
+        <TypeEditorModule selectedElement={selectedElement} />
       </LibraryBody>
     </>
   );

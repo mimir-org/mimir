@@ -2,7 +2,7 @@ import { ActiveTerminalTypeList, AttributesContainer } from "./helpers";
 import { Attribute } from "../../../models";
 import { IsTransportTerminal } from "../../flow/helpers/common";
 import styled from "styled-components";
-import TextResources from "../../../assets/textResources/textResources";
+import TextResources from "../../../assets/text/TextResources";
 
 // Migth be used later:
 // import { ConnectorAttributesList } from "./helpers";

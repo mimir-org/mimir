@@ -4,7 +4,7 @@ import { RootState } from "../../../redux/store";
 import { MENU_TYPE } from "../../../models/project";
 import { CloseIcon, RightArrowIcon } from "../../../assets/icons/common";
 import { MenuButton } from "../../../compLibrary/buttons";
-import { TextResources } from "../../../assets/textResources";
+import { TextResources } from "../../../assets/text";
 import { get } from "../../../redux/store/project/actions";
 import { changeMenu } from "../../../redux/store/projectMenu/actions";
 import { useState } from "react";

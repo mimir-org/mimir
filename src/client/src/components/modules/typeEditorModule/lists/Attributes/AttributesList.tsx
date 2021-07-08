@@ -5,7 +5,7 @@ import { Aspect } from "../../../../../models";
 import { ListHeader } from "../ListHeader";
 import { AttributesListBody } from "./AttributesListBody";
 import { ListWrapper } from "../../../../../compLibrary";
-import { TextResources } from "../../../../../assets/textResources";
+import { TextResources } from "../../../../../assets/text";
 
 export const AttributesList = () => {
   const state = useSelector<RootState>(

@@ -1,4 +1,4 @@
-import { TextResources } from "../../assets/textResources";
+import { TextResources } from "../../assets/text";
 import { ButtonWrap, MenuButton } from "../../compLibrary/buttons";
 import { MessageBox } from "../../compLibrary/box/message";
 

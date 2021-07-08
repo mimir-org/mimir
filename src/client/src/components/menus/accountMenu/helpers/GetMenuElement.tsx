@@ -1,6 +1,6 @@
 import { msalInstance } from "../../../../index";
 import { LogoutIcon } from "../../../../assets/icons/common";
-import { TextResources } from "../../../../assets/textResources";
+import { TextResources } from "../../../../assets/text";
 import { MenuButton } from "../../../../compLibrary/buttons";
 import { UserState } from "../../../../redux/store/user/types";
 import { MenuElement } from "../../../../compLibrary/box/menus";

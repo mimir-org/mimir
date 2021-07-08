@@ -1,6 +1,6 @@
 import { RootState } from "../../redux/store";
 import { useHistory } from "react-router-dom";
-import { TextResources } from "../../assets/textResources";
+import { TextResources } from "../../assets/text";
 import { useDispatch, useSelector } from "react-redux";
 import { MENU_TYPE, VIEW_TYPE } from "../../models/project";
 import { changeFlowView } from "../../redux/store/flow/actions";
