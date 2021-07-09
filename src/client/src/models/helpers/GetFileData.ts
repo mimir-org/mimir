@@ -1,6 +1,8 @@
-import { Project } from "..";
-import { EdgeAm, NodeAm, ProjectAm } from "../../redux/sagas/project/ConvertProject";
+import { Project, Edge, Node } from "..";
+import { ProjectAm } from "../../redux/sagas/project/ConvertProject";
 import { ConnectorType, RelationType } from "../Enums";
+import { post } from "../../models/webclient";
+import { CreateId } from "../../components/flow/helpers/common";
 
 const readFile = (event: any): Promise<any> => {
     return new Promise((resolve, reject) => {
@@ -16,7 +18,7 @@ const readFile = (event: any): Promise<any> => {
     })
 }
 
-const GetFileData = async (event: any, project: Project): Promise<[NodeAm[], EdgeAm[]]> => {
+const GetFileData = async (event: any, project: Project): Promise<[Node[], Edge[]]> => {
     try {
         let targetNodeId = event.target?.attributes["data-id"]?.value;
 
@@ -40,48 +42,70 @@ const GetFileData = async (event: any, project: Project): Promise<[NodeAm[], Edg
         if (!targetnodeConnector)
             return [[], []];
 
-
-
         let data = await readFile(event);
         const loadedProject = JSON.parse(data as string) as ProjectAm;
-        // console.log(loadedProject);
 
-        // const rootNode = loadedProject.nodes.find(
-        //     (x) => x.type === targetNodeType
-        // );
+        if (!loadedProject.isSubProject)
+            return [[], []];
 
-        // const rootNodeConnector = rootNode.connectors.find(
-        //     (x) =>
-        //         x.relationType === RelationType.PartOf &&
-        //         x.type === ConnectorType.Output
-        // );
+        const url = process.env.REACT_APP_API_BASE_URL + "project/import/";
+        const response = await post(url, loadedProject);
 
+        if (response.status !== 200) {
+            console.log("FEIL:", response);
+            throw Error("Could not create or update project");
+        }
 
-        // const edges = loadedProject.edges.filter(
-        //     (x) => x.fromConnector === rootNodeConnector.id
-        // );
+        const subProject = response.data as Project;
+        if (!subProject)
+            throw Error("Could not create or update project");
 
-        // edges.forEach((edge) => {
-        //     edge.fromConnector = targetnodeConnector.id;
-        //     edge.fromNode = targetNode.id;
-        //     edge.parentType = targetNode.type;
-        // });
+        // Add data to current project
+        // Find the rootnode for current location
+        const rootNode = subProject.nodes.find((x) => x.isRoot && x.aspect === targetNode.aspect);
 
-        // const nodesToCreate = loadedProject.nodes.filter(
-        //     (x) => x.type === targetNode.type
-        // );
-        // const edgesToCreate = loadedProject.edges.filter(
-        //     (x) => x.parentType === targetNode.type
-        // );
+        // Find the connector that should do a remap
+        const rootNodeConnector = rootNode.connectors.find(
+            (x) =>
+                x.relationType === RelationType.PartOf &&
+                x.type === ConnectorType.Output
+        );
 
-        // nodesToCreate.forEach(node => {
-        //     node.positionY = node.positionY + targetNode.positionY
-        // });
+        // Find edges that should change parent
+        const edges = subProject.edges.filter(
+            (x) => x.fromConnectorId === rootNodeConnector.id
+        );
 
-        // return [nodesToCreate, edgesToCreate];
-        return [[], []];
+        // Remap edges
+        edges.forEach((edge) => {
+            edge.id = CreateId();
+            edge.fromConnectorId = targetnodeConnector.id;
+            edge.fromNodeId = targetNode.id;
+            edge.fromConnector = targetnodeConnector;
+            edge.fromNode = targetNode;
+            edge.masterProjectId = project.id
+        });
+
+        const nodesToCreate = subProject.nodes.filter(
+            (x) => !x.isRoot &&
+                x.aspect === targetNode.aspect &&
+                !project.nodes.find(y => y.id === x.id)
+        );
+
+        const edgesToCreate = subProject.edges.filter(
+            (x) => x.fromNode.aspect === targetNode.aspect &&
+                !x.fromNode.isRoot &&
+                !project.edges.find(y => y.id === x.id)
+        );
+
+        nodesToCreate.forEach(node => {
+            node.positionY = node.positionY + targetNode.positionY
+        });
+
+        return [nodesToCreate, edgesToCreate];
+
     } catch (error) {
-        throw new Error("Could not create nodes and edges from file.");
+        throw Error("Could not create nodes and edges from file.");
     }
 };
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Mb.Core.Repositories.Contracts;
@@ -14,10 +15,10 @@ namespace Mb.Core.Repositories
         {
         }
 
-        public Task UpdateInsert(ICollection<Edge> original, Project project)
+        public IEnumerable<Edge> UpdateInsert(ICollection<Edge> original, Project project)
         {
             if (project?.Edges == null || !project.Edges.Any())
-                return Task.CompletedTask;
+                yield break;
 
             var updates = original != null
                 ? project.Edges.Where(x => original.All(y => y.Id != x.Id)).ToList()
@@ -25,20 +26,43 @@ namespace Mb.Core.Repositories
 
             foreach (var edge in project.Edges)
             {
-                Attach(edge, updates.Any(x => x.Id == edge.Id) ? EntityState.Added : EntityState.Modified);
-            }
+                if (updates.Any(x => x.Id == edge.Id))
+                {
+                    if (edge.MasterProjectId != project.Id)
+                    {
+                        Attach(edge, EntityState.Unchanged);
+                        yield return edge;
+                        continue;
+                    }
 
-            return Task.CompletedTask;
+                    Attach(edge, EntityState.Added);
+                }
+                else
+                {
+                    if (edge.MasterProjectId != project.Id)
+                        continue;
+
+                    Attach(edge, EntityState.Modified);
+                }
+            }
         }
 
-        public async Task DeleteEdges(ICollection<Edge> delete)
+        public async Task<IEnumerable<Edge>> DeleteEdges(ICollection<Edge> delete, string projectId)
         {
+            var subEdges = new List<Edge>();
+
             foreach (var edge in delete)
             {
+                if (edge.MasterProjectId != projectId)
+                {
+                    subEdges.Add(edge);
+                    continue;
+                }
+
                 await Delete(edge.Id);
             }
 
-            //await SaveAsync();
+            return subEdges;
         }
     }
 }

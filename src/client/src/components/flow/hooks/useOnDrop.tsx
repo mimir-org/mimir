@@ -43,14 +43,14 @@ const useOnDrop = (
       const data = await GetFileData(event, project);
 
       data[0].forEach((node) => {
-        // dispatch(addNode(node));
-        // setElements((es) => es.concat(CreateTreeNode(node)));
+        dispatch(addNode(node));
+        setElements((es) => es.concat(CreateTreeNode(node)));
       });
 
       data[1].forEach((edge) => {
-        // dispatch(createEdge(edge));
-        // const edgeType = GetTreeEdgeType(edge.fromConnector);
-        // setElements((es) => es.concat(CreateTreeEdge(edge, edgeType)));
+        dispatch(createEdge(edge));
+        const edgeType = GetTreeEdgeType(edge.fromConnector);
+        setElements((es) => es.concat(CreateTreeEdge(edge, edgeType)));
       });
     })();
   } else {

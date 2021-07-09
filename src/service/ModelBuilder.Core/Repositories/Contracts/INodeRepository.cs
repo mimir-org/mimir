@@ -7,7 +7,7 @@ namespace Mb.Core.Repositories.Contracts
 {
     public interface INodeRepository : IGenericRepository<ModelBuilderDbContext, Node>
     {
-        Task UpdateInsert(ICollection<Node> original, Project project);
-        Task DeleteNodes(ICollection<Node> delete);
+        IEnumerable<Node> UpdateInsert(ICollection<Node> original, Project project);
+        Task<IEnumerable<Node>> DeleteNodes(ICollection<Node> delete, string projectId);
     }
 }

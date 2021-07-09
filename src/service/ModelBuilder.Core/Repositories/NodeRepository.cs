@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Mb.Core.Repositories.Contracts;
@@ -20,10 +21,10 @@ namespace Mb.Core.Repositories
             _attributeRepository = attributeRepository;
         }
 
-        public Task UpdateInsert(ICollection<Node> original, Project project)
+        public IEnumerable<Node> UpdateInsert(ICollection<Node> original, Project project)
         {
             if (project?.Nodes == null || !project.Nodes.Any())
-                return Task.CompletedTask;
+                yield break;
 
             var updates = original != null
                 ? project.Nodes.Where(x => original.All(y => y.Id != x.Id)).ToList()
@@ -33,6 +34,13 @@ namespace Mb.Core.Repositories
             {
                 if (updates.Any(x => x.Id == node.Id))
                 {
+                    if (node.MasterProjectId != project.Id)
+                    {
+                        Attach(node, EntityState.Unchanged);
+                        yield return node;
+                        continue;
+                    }
+
                     if (node.Attributes != null)
                     {
                         foreach (var attribute in node.Attributes)
@@ -47,6 +55,9 @@ namespace Mb.Core.Repositories
                 }
                 else
                 {
+                    if (node.MasterProjectId != project.Id)
+                        continue;
+
                     if (node.Attributes != null)
                     {
                         foreach (var attribute in node.Attributes)
@@ -60,19 +71,26 @@ namespace Mb.Core.Repositories
                     Attach(node, EntityState.Modified);
                 }
             }
-
-            return Task.CompletedTask;
         }
 
-        public async Task DeleteNodes(ICollection<Node> delete)
+        public async Task<IEnumerable<Node>> DeleteNodes(ICollection<Node> delete, string projectId)
         {
+            var subNodes = new List<Node>();
+
             foreach (var node in delete)
             {
+                if (node.MasterProjectId != projectId)
+                {
+                    subNodes.Add(node);
+                    continue;
+                }
                 _attributeRepository.Attach(node.Attributes, EntityState.Deleted);
                 _connectorRepository.AttachWithAttributes(node.Connectors, EntityState.Deleted);
-                
+
                 await Delete(node.Id);
             }
+
+            return subNodes;
         }
     }
 }

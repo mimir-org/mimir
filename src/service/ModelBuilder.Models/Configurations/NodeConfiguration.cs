@@ -45,11 +45,6 @@ namespace Mb.Models.Configurations
             builder.HasOne(x => x.Symbol).WithMany(y => y.Nodes).HasForeignKey(x => x.SymbolId).OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(x => x.MasterProject).WithMany().HasForeignKey(x => x.MasterProjectId).OnDelete(DeleteBehavior.NoAction);
-            builder.HasMany(x => x.Projects).WithMany(y => y.Nodes).UsingEntity<Dictionary<string, object>>("Project_Node",
-                x => x.HasOne<Project>().WithMany().HasForeignKey("ProjectId"),
-                x => x.HasOne<Node>().WithMany().HasForeignKey("NodeId"),
-                x => x.ToTable("Project_Node")
-            );
         }
     }
 }

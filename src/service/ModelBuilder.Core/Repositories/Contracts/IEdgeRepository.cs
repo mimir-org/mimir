@@ -7,7 +7,7 @@ namespace Mb.Core.Repositories.Contracts
 {
     public interface IEdgeRepository : IGenericRepository<ModelBuilderDbContext, Edge>
     {
-        Task UpdateInsert(ICollection<Edge> original, Project project);
-        Task DeleteEdges(ICollection<Edge> delete);
+        IEnumerable<Edge> UpdateInsert(ICollection<Edge> original, Project project);
+        Task<IEnumerable<Edge>> DeleteEdges(ICollection<Edge> delete, string projectId);
     }
 }

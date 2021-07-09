@@ -135,6 +135,17 @@ namespace Mb.Core.Services
                             }
                         }
                     }
+
+                    if (node.MasterProjectId != id)
+                    {
+                        var partOfEdge = node.Connectors.OfType<Relation>().FirstOrDefault(x => x.Type == ConnectorType.Input);
+
+                        if (partOfEdge?.Node != null)
+                        {
+                            node.PositionY = node.PositionY + partOfEdge.Node.PositionY;
+                        }
+                    }
+
                 }
             }
 
@@ -248,26 +259,64 @@ namespace Mb.Core.Services
             // Edges
             var existingEdges = originalProject.Edges.ToList();
             var deleteEdges = existingEdges.Where(x => project.Edges.All(y => y.Id != x.Id)).ToList();
-            await _edgeRepository.DeleteEdges(deleteEdges);
+            var subDeleteEdges = (await _edgeRepository.DeleteEdges(deleteEdges, project.Id)).ToList();
 
             // Nodes
             var existingNodes = originalProject.Nodes.ToList();
             var deleteNodes = existingNodes.Where(x => project.Nodes.All(y => y.Id != x.Id)).ToList();
-            await _nodeRepository.DeleteNodes(deleteNodes);
+            var subDeleteNodes = (await _nodeRepository.DeleteNodes(deleteNodes, project.Id)).ToList();
 
             // Map new data
             _mapper.Map(project, originalProject);
 
-            await _nodeRepository.UpdateInsert(existingNodes, originalProject);
-            await _edgeRepository.UpdateInsert(existingEdges, originalProject);
+            var subNodes = _nodeRepository.UpdateInsert(existingNodes, originalProject).ToList();
+            var subEdges = _edgeRepository.UpdateInsert(existingEdges, originalProject).ToList();
 
             ResolveLevelAndOrder(originalProject);
 
             _projectRepository.Update(originalProject);
             await _projectRepository.SaveAsync();
+            _projectRepository.Detach(originalProject);
 
-            var updatedProject = await GetProject(id);
-            return updatedProject;
+            // Resolve
+            await ResolveSubProjects(subNodes, subDeleteNodes, subEdges, subDeleteEdges, originalProject.Id);
+
+            // Return project from database
+            return await GetProject(id);
+        }
+
+        private async Task ResolveSubProjects(ICollection<Node> subNodes, ICollection<Node> subDeleteNodes, ICollection<Edge> subEdges, ICollection<Edge> subDeleteEdges, string projectId)
+        {
+            if (!subNodes.Any() && !subDeleteNodes.Any() && !subEdges.Any() && !subDeleteEdges.Any())
+                return;
+
+            var originalProject = await _projectRepository
+                .FindBy(x => x.Id == projectId, false)
+                .Include(x => x.Edges)
+                .Include(x => x.Nodes)
+                .Include("Nodes.Attributes")
+                .Include("Nodes.Connectors")
+                .Include("Nodes.Connectors.Attributes")
+                .AsSplitQuery()
+                .OrderByDescending(x => x.Name)
+                .FirstOrDefaultAsync();
+
+            foreach (var subNode in subNodes)
+            {
+                originalProject.Nodes.Add(subNode);
+            }
+
+            foreach (var subEdge in subEdges)
+            {
+                originalProject.Edges.Add(subEdge);
+            }
+
+            originalProject.Nodes = originalProject.Nodes.Where(x => subDeleteNodes.All(y => y.Id != x.Id)).ToList();
+            originalProject.Edges = originalProject.Edges.Where(x => subDeleteEdges.All(y => y.Id != x.Id)).ToList();
+
+            _projectRepository.Update(originalProject);
+            await _projectRepository.SaveAsync();
+            _projectRepository.Detach(originalProject);
         }
 
         /// <summary>
@@ -291,8 +340,8 @@ namespace Mb.Core.Services
             var nodesToDelete = existingProject.Nodes.Where(x => x.MasterProjectId == projectId).ToList();
             var edgesToDelete = existingProject.Edges.Where(x => x.MasterProjectId == projectId).ToList();
 
-            await _edgeRepository.DeleteEdges(edgesToDelete);
-            await _nodeRepository.DeleteNodes(nodesToDelete);
+            await _edgeRepository.DeleteEdges(edgesToDelete, projectId);
+            await _nodeRepository.DeleteNodes(nodesToDelete, projectId);
             await _projectRepository.Delete(projectId);
             await _projectRepository.SaveAsync();
         }
