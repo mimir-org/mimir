@@ -1,39 +1,17 @@
+import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { FilterContent } from ".";
-import { Connector, Node, Edge, Project, RelationType } from "../../../models";
+import { Aspect, Project, RelationType } from "../../../models";
 import { MenuBox, MenuColumn } from "../../../compLibrary/box/menus";
-import { useSelector } from "react-redux";
-import { IsTransportTerminal } from "../../flow/helpers/common";
-
-const AddElement = (
-  node: Node,
-  edges: Edge[]
-): { id: string; type: string }[] => {
-  const IsActive = (conn: Connector) => {
-    let found = false;
-
-    edges.forEach((edge) => {
-      if (edge.fromConnectorId === conn.id) {
-        found = true;
-        return;
-      }
-    });
-    return found;
-  };
-
-  let elements = [] as { id; type; name }[];
-  elements = node?.connectors
-    ?.filter((conn) => IsActive(conn))
-    .map((x) => {
-      return {
-        id: x.id,
-        type: IsTransportTerminal(x) ? x.name : x.relationType,
-        name: x.name,
-      };
-    });
-
-  return elements;
-};
+import { AddElement } from "./helpers";
+import { TextResources } from "../../../assets/text";
+import {
+  CreateId,
+  FilterElement,
+  IsLocationTerminal,
+  IsPartOfTerminal,
+  IsTransportTerminal,
+} from "../../flow/helpers/common";
 
 const FilterMenu = () => {
   const project = useSelector<RootState>(
@@ -42,71 +20,118 @@ const FilterMenu = () => {
 
   const nodes = project.nodes?.filter((x) => !x.isHidden);
   const edges = project.edges;
-  let elements = [] as {
-    id: string;
-    type: RelationType | string;
-    name: string;
-  }[];
+  let elements = [] as FilterElement[];
 
   nodes.forEach((node) => {
     elements.push.apply(elements, AddElement(node, edges));
   });
 
+  // Remove duplicates
   elements = elements.filter(
-    (value, index, self) =>
-      self.map((x) => x.type).indexOf(value.type) === index
+    (value, index, elements) =>
+      elements.findIndex(
+        (elem) =>
+          elem.type === value.type &&
+          elem.fromNode?.aspect === value.fromNode?.aspect
+      ) === index
   );
+
+  let isTransport = false;
+  let isLocation = false;
+  let isPartOf = false;
+  let transportCount = 0;
+
+  elements.forEach((elem) => {
+    if (IsTransportTerminal(elem.conn)) {
+      transportCount++;
+      isTransport = true;
+    }
+    if (IsLocationTerminal(elem.conn)) {
+      isLocation = true;
+    }
+    if (IsPartOfTerminal(elem.conn)) {
+      isPartOf = true;
+    }
+  });
 
   return (
     <MenuBox right>
       <MenuColumn>
-        <FilterContent type={"Transport"} name={"Transport"} header={true} />
+        {isTransport && (
+          <FilterContent
+            type={TextResources.Filter_Transport}
+            name={TextResources.Filter_Transport}
+            header={true}
+          />
+        )}
         {elements.map(
-          (x, i) =>
-            (x.type === "Oil" || x.type === "Gas" || x.type === "Water") && (
+          (x) =>
+            IsTransportTerminal(x.conn) && (
               <FilterContent
+                conn={x.conn}
                 type={x.type}
                 name={x.name}
                 key={x.id}
                 header={false}
+              />
+            )
+        )}
+        {transportCount % 2 !== 0 && (
+          <FilterContent
+            conn={null}
+            type={null}
+            name={null}
+            key={CreateId()}
+            header={false}
+          />
+        )}
+        <br></br>
+        {isPartOf && (
+          <FilterContent
+            type={TextResources.Relations_PartOf}
+            name={TextResources.Relations_PartOf}
+            header={true}
+          />
+        )}
+        {elements.map(
+          (x) =>
+            x.type === RelationType.PartOf && (
+              <FilterContent
+                conn={x.conn}
+                type={x.type}
+                name={"Part of " + Aspect[x.fromNode?.aspect]}
+                key={x.id}
+                header={false}
+                node={x.fromNode}
               />
             )
         )}
         <br></br>
-        {elements.map(
-          (x, i) =>
-            x.type === RelationType.PartOf && (
-              <FilterContent
-                type={x.type}
-                name={x.name}
-                key={x.id}
-                header={false}
-              />
-            )
+        {isLocation && (
+          <FilterContent
+            type={TextResources.Filter_Location}
+            name={TextResources.Relations_HasLocation}
+            header={true}
+          />
         )}
-
         {elements.map(
-          (x, i) =>
+          (x) =>
             x.type === RelationType.HasLocation && (
               <FilterContent
+                conn={x.conn}
                 type={x.type}
-                name={x.name}
+                name={
+                  Aspect[x.fromNode?.aspect] +
+                  " " +
+                  TextResources.Filter_Location
+                }
                 key={x.id}
                 header={false}
+                node={x.fromNode}
               />
             )
         )}
       </MenuColumn>
-      {/* <MenuColumn>
-        <FilterContent type={"Transport"} name={"Transport"} />
-        {elements.map(
-          (x, i) =>
-            i % 2 !== 0 && (
-              <FilterContent type={x.name} name={x.name} key={x.id} />
-            )
-        )}
-        
-      </MenuColumn> */}
     </MenuBox>
   );
 };
