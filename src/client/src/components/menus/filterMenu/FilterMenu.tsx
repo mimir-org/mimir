@@ -18,8 +18,8 @@ const FilterMenu = () => {
     (state) => state.projectState.project
   ) as Project;
 
-  const nodes = project.nodes?.filter((x) => !x.isHidden);
-  const edges = project.edges;
+  const nodes = project?.nodes?.filter((x) => !x.isHidden) ?? [];
+  const edges = project?.edges;
   let elements = [] as FilterElement[];
 
   nodes.forEach((node) => {
@@ -40,6 +40,7 @@ const FilterMenu = () => {
   let isLocation = false;
   let isPartOf = false;
   let transportCount = 0;
+  let partOfCount = 0;
 
   elements.forEach((elem) => {
     if (IsTransportTerminal(elem.conn)) {
@@ -50,6 +51,7 @@ const FilterMenu = () => {
       isLocation = true;
     }
     if (IsPartOfTerminal(elem.conn)) {
+      partOfCount++;
       isPartOf = true;
     }
   });
@@ -57,6 +59,36 @@ const FilterMenu = () => {
   return (
     <MenuBox right>
       <MenuColumn>
+        {isPartOf && (
+          <FilterContent
+            type={TextResources.Relations_PartOf}
+            name={TextResources.Relations_PartOf}
+            header={true}
+          />
+        )}
+        {elements.map(
+          (x) =>
+            x.type === RelationType.PartOf && (
+              <FilterContent
+                conn={x.conn}
+                type={x.type}
+                name={"Part of " + Aspect[x.fromNode?.aspect]}
+                key={x.id}
+                header={false}
+                node={x.fromNode}
+              />
+            )
+        )}
+        {partOfCount % 2 !== 0 && (
+          <FilterContent
+            conn={null}
+            type={null}
+            name={null}
+            key={CreateId()}
+            header={false}
+          />
+        )}
+        <br></br>
         {isTransport && (
           <FilterContent
             type={TextResources.Filter_Transport}
@@ -86,27 +118,7 @@ const FilterMenu = () => {
           />
         )}
         <br></br>
-        {isPartOf && (
-          <FilterContent
-            type={TextResources.Relations_PartOf}
-            name={TextResources.Relations_PartOf}
-            header={true}
-          />
-        )}
-        {elements.map(
-          (x) =>
-            x.type === RelationType.PartOf && (
-              <FilterContent
-                conn={x.conn}
-                type={x.type}
-                name={"Part of " + Aspect[x.fromNode?.aspect]}
-                key={x.id}
-                header={false}
-                node={x.fromNode}
-              />
-            )
-        )}
-        <br></br>
+
         {isLocation && (
           <FilterContent
             type={TextResources.Filter_Location}

@@ -11,6 +11,7 @@ import { TypeEditorState } from "../../../redux/store/typeEditor/types";
 import { changeFlowView } from "../../../redux/store/flow/actions";
 import { SetDarkModeColor } from "../../flow/helpers/common";
 import { changeAllModulesVisibility } from "../../../redux/store/modules/actions";
+import { Dropdown } from "../../../compLibrary/dropdown";
 import {
   getInitialData,
   getBlobData,
@@ -36,7 +37,6 @@ import {
   TextInput,
   ChooseProperties,
 } from "./styled";
-import { Dropdown } from "../../../compLibrary/dropdown";
 
 export const TypeEditorComponent = () => {
   const { push } = useHistory();

@@ -44,6 +44,7 @@ export const DropDownMenu = ({
     setSelectedValue(value);
     setIsListOpen(!isListOpen);
     if (label === "Aspect") {
+      // TODO: fix
       dispatch(changeSelectedAspect(Number(key)));
     } else if (label === "Object Type") {
       dispatch(changeSelectedObjecttype(Number(key)));
