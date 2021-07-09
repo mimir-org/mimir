@@ -27,15 +27,15 @@ const GlobalStyle = createGlobalStyle`
   .checkbox-filter  {
     display: flex;
     position: relative;
-    padding-left:25px;
-    padding-top:5px;
+    padding-left: 25px;
+    padding-top: 2px;
     cursor: pointer;
     font-size: 14px;
 
     &:nth-child(odd){
       left:160px;     
       top:-22px;
-    }
+    } 
   }
 
   .checkbox-filter input {

@@ -16,11 +16,11 @@ const IsChecked = (
   let edge: Edge;
 
   // Sort by category
-  if (type === TextResources.Filter_Location)
+  if (type === TextResources.Filter_Transport)
     edge = edges.find((edge) => IsTransportTerminal(edge.fromConnector));
   else if (type === TextResources.Relations_PartOf)
     edge = edges.find((edge) => IsPartOfTerminal(edge.fromConnector));
-  else if (TextResources.Filter_Location)
+  else if (type === TextResources.Filter_Location)
     edge = edges.find((edge) => IsLocationTerminal(edge.fromConnector));
   // Sort by type
   else if (IsTransportTerminal(conn))
