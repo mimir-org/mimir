@@ -1,3 +1,4 @@
+import { TextResources } from "../../../../assets/text";
 import { Connector, Edge, Node, RelationType } from "../../../../models";
 import {
   IsLocationTerminal,
@@ -15,11 +16,11 @@ const IsChecked = (
   let edge: Edge;
 
   // Sort by category
-  if (type === "Transport")
+  if (type === TextResources.Filter_Location)
     edge = edges.find((edge) => IsTransportTerminal(edge.fromConnector));
-  else if (type === "Part of Relationship")
+  else if (type === TextResources.Relations_PartOf)
     edge = edges.find((edge) => IsPartOfTerminal(edge.fromConnector));
-  else if (type === "Location")
+  else if (TextResources.Filter_Location)
     edge = edges.find((edge) => IsLocationTerminal(edge.fromConnector));
   // Sort by type
   else if (IsTransportTerminal(conn))

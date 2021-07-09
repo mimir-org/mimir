@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Color } from "../../";
+import Size from "../../size/Size";
 
 const MenuBox = styled.div`
   position: absolute;
@@ -10,7 +11,8 @@ const MenuBox = styled.div`
   padding-top: 8px;
   height: min-content;
   width: auto;
-  min-width: 271px;
+  min-width: ${(props: { right: string }) =>
+    props.right ? Size.ModuleOpen : "271"}px;
   border-style: solid;
   border-color: ${Color.DeepCyan};
   border-width: 0px 2px 2px 2px;
