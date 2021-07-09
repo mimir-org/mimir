@@ -6,6 +6,7 @@ import { MenuBox, MenuColumn } from "../../../compLibrary/box/menus";
 import { AddElement } from "./helpers";
 import { TextResources } from "../../../assets/text";
 import {
+  CreateId,
   FilterElement,
   IsLocationTerminal,
   IsPartOfTerminal,
@@ -38,11 +39,19 @@ const FilterMenu = () => {
   let isTransport = false;
   let isLocation = false;
   let isPartOf = false;
+  let transportCount = 0;
 
   elements.forEach((elem) => {
-    if (IsTransportTerminal(elem.conn)) isTransport = true;
-    if (IsLocationTerminal(elem.conn)) isLocation = true;
-    if (IsPartOfTerminal(elem.conn)) isPartOf = true;
+    if (IsTransportTerminal(elem.conn)) {
+      transportCount++;
+      isTransport = true;
+    }
+    if (IsLocationTerminal(elem.conn)) {
+      isLocation = true;
+    }
+    if (IsPartOfTerminal(elem.conn)) {
+      isPartOf = true;
+    }
   });
 
   return (
@@ -66,6 +75,15 @@ const FilterMenu = () => {
                 header={false}
               />
             )
+        )}
+        {transportCount % 2 !== 0 && (
+          <FilterContent
+            conn={null}
+            type={null}
+            name={null}
+            key={CreateId()}
+            header={false}
+          />
         )}
         <br></br>
         {isPartOf && (

@@ -34,7 +34,7 @@ const GlobalStyle = createGlobalStyle`
 
     &:nth-child(odd){
       left:160px;     
-      top:-22px;
+      top:-19px;
     } 
   }
 

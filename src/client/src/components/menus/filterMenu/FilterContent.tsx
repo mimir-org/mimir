@@ -27,6 +27,7 @@ interface Props {
 const FilterContent = ({ conn, type, name, header, node }: Props) => {
   const dispatch = useDispatch();
   const edges = red.store.getState().projectState.project?.edges as Edge[];
+  const isVisible = name !== null;
 
   let selectedElements = !IsBlockView()
     ? CheckEdges(edges, type, node)
@@ -62,13 +63,17 @@ const FilterContent = ({ conn, type, name, header, node }: Props) => {
     </label>
   ) : (
     <label className={"checkbox-filter"}>
-      <input
-        type="checkbox"
-        checked={IsChecked(type, edges, conn, node, name)}
-        onChange={onChange}
-      />
-      <span className="checkmark-filter"></span>
-      {name}
+      {isVisible && (
+        <>
+          <input
+            type="checkbox"
+            checked={IsChecked(type, edges, conn, node, name)}
+            onChange={onChange}
+          />
+          <span className="checkmark-filter"></span>
+          {name}
+        </>
+      )}
     </label>
   );
 };
