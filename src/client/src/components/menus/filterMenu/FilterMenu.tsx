@@ -27,9 +27,11 @@ const FilterMenu = () => {
 
   // Remove duplicates
   elements = elements.filter(
-    (v, i, a) =>
-      a.findIndex(
-        (t) => t.type === v.type && t.fromNode?.aspect === v.fromNode?.aspect
+    (value, i, elements) =>
+      elements.findIndex(
+        (elem) =>
+          elem.type === value.type &&
+          elem.fromNode?.aspect === value.fromNode?.aspect
       ) === i
   );
 
@@ -92,7 +94,7 @@ const FilterMenu = () => {
               <FilterContent
                 conn={x.conn}
                 type={x.type}
-                name={x.name}
+                name={x.name + " " + Aspect[x.fromNode?.aspect]}
                 key={x.id}
                 header={false}
                 node={x.fromNode}

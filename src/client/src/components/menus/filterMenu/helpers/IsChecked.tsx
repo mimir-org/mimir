@@ -14,14 +14,22 @@ const IsChecked = (
 ) => {
   let edge: Edge;
 
+  // Sort by category
   if (type === "Transport")
     edge = edges.find((edge) => IsTransportTerminal(edge.fromConnector));
   else if (type === "Part of Relationship")
     edge = edges.find((edge) => IsPartOfTerminal(edge.fromConnector));
+  else if (type === "Location")
+    edge = edges.find((edge) => IsLocationTerminal(edge.fromConnector));
+  // Sort by type
   else if (IsTransportTerminal(conn))
     edge = edges.find((edge) => edge.fromConnector.name === name);
   else if (IsLocationTerminal(conn))
-    edge = edges.find((edge) => IsLocationTerminal(edge.fromConnector));
+    edge = edges.find(
+      (edge) =>
+        edge.fromNode.aspect === node?.aspect &&
+        IsLocationTerminal(edge.fromConnector)
+    );
   else if (IsPartOfTerminal(conn))
     edge = edges.find(
       (edge) =>
