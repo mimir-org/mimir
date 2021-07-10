@@ -1,20 +1,14 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../redux/store";
 import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
+import { Aspect } from "../../../../models";
 // import { ReactComponent as TerminalIcon } from "../../../../assets/icons/common/terminalIcon.svg";
 import { Color } from "../../../../compLibrary";
-import {
-  ObjectTypeBlock,
-  InfoWrapper,
-  //   Terminals, InputOutputTerminals,
-} from "../styled";
-import { Aspect } from "../../../../models"; // ConnectorType
+import { ObjectTypeBlock, InfoWrapper } from "../styled";
 
-export const ObjectBlock = () => {
-  const state = useSelector<RootState>(
-    (state) => state.typeEditor
-  ) as TypeEditorState;
+interface Props {
+  state: TypeEditorState;
+}
 
+export const ObjectBlock = ({ state }: Props) => {
   const blockColor = () => {
     let color = "";
     if (state.createLibraryType.aspect === Aspect.Function) {

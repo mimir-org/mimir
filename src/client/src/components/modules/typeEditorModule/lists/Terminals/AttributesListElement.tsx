@@ -1,8 +1,7 @@
 import "./AddTerminal/directiondropdown.scss";
 import "../../inputs/checkbox.scss";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../../../redux/store";
+import { useDispatch } from "react-redux";
 import { TypeEditorState } from "../../../../../redux/store/typeEditor/types";
 import { updatePredefinedAttributes } from "../../../../../redux/store/typeEditor/actions";
 import { PredefinedAttribute } from "../../../../../models";
@@ -24,19 +23,17 @@ interface Props {
   name: string;
   values: object;
   isMultiSelect: boolean;
+  state: TypeEditorState;
 }
 
 export const AttributesListElement = ({
   name,
   values,
   isMultiSelect,
+  state,
 }: Props) => {
   const dispatch = useDispatch();
   const [expandList, setExpandList] = useState(false);
-
-  const state = useSelector<RootState>(
-    (state) => state.typeEditor
-  ) as TypeEditorState;
 
   const toggleValuesList = () => {
     setExpandList(!expandList);
@@ -48,12 +45,12 @@ export const AttributesListElement = ({
     isMultiSelect: isMultiSelect,
   };
 
-  const isSelected = state.createLibraryType.predefinedAttributes.some(
+  const locationAttributes = state.createLibraryType.predefinedAttributes;
+  const isSelected = locationAttributes.some(
     (a) => a.key === locationAttribute.key
   );
 
   const handleCheckboxChange = () => {
-    const locationAttributes = state.createLibraryType.predefinedAttributes;
     let temp: PredefinedAttribute[];
     if (locationAttribute) {
       if (isSelected) {
@@ -72,9 +69,8 @@ export const AttributesListElement = ({
     let attribute: PredefinedAttribute =
       state.createLibraryType.predefinedAttributes.find((a) => a.key === name);
     const valueslist = attribute.values;
-    if (valueslist) {
-      valueslist[param_key] = !param_value;
-    }
+    if (valueslist) valueslist[param_key] = !param_value;
+
     attribute = {
       key: name,
       values: valueslist,

@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { TerminalTypeItem, ConnectorType } from "../../../../../../models";
 import { AddTerminalElement } from "../../../styled";
 import { NumericInput } from "../../../../../../compLibrary";
+import { TextResources } from "../../../../../../assets/text";
 import {
   HelpIcon,
   ExpandedIcon,
@@ -11,21 +12,16 @@ import {
 } from "../../../../../../assets/icons/common";
 
 interface Props {
-  quantity: number;
   terminals: any;
   handleTerminalChange: Function;
 }
 
-export const AddTerminal = ({
-  quantity,
-  terminals,
-  handleTerminalChange,
-}: Props) => {
+export const AddTerminal = ({ terminals, handleTerminalChange }: Props) => {
   const [terminalQuantity, setTerminalQuantity] = useState(0);
-  const [searchbarInput, setsearchbarInput] = useState("");
-  const [selectedTerminalId, setselectedTerminalId] = useState("");
-  const [selectedDirection, setselectedDirection] = useState("Direction");
-  const [selectedDirectionId, setselectedDirectionId] = useState(0);
+  const [searchbarInput, setSearchbarInput] = useState("");
+  const [selectedTerminalId, setSelectedTerminalId] = useState("");
+  const [selectedDirection, setSelectedDirection] = useState("Direction");
+  const [selectedDirectionId, setSelectedDirectionId] = useState(0);
   const [isListOpen, setIsListOpen] = useState(false);
   const [expandList, setExpandList] = useState(false);
 
@@ -35,13 +31,13 @@ export const AddTerminal = ({
   };
 
   const handleTerminalClick = (terminalId, terminalName) => {
-    setsearchbarInput(terminalName);
-    setselectedTerminalId(terminalId);
+    setSearchbarInput(terminalName);
+    setSelectedTerminalId(terminalId);
     toggleExpand();
   };
 
   const handleChange = (e) => {
-    setsearchbarInput(e.target.value.toLowerCase());
+    setSearchbarInput(e.target.value.toLowerCase());
   };
 
   const toggleExpand = () => {
@@ -49,8 +45,8 @@ export const AddTerminal = ({
   };
 
   const handleClick = (item) => {
-    setselectedDirection(ConnectorType[item]);
-    setselectedDirectionId(item);
+    setSelectedDirection(ConnectorType[item]);
+    setSelectedDirectionId(item);
     toggleList();
   };
 
@@ -58,7 +54,7 @@ export const AddTerminal = ({
     setIsListOpen(!isListOpen);
   };
 
-  const StringIsNumber = (value) => isNaN(Number(value)) === false;
+  const stringIsNumber = (value) => isNaN(Number(value)) === false;
 
   const filteredTerminals = terminals.filter((terminal) => {
     return terminal.name.toLowerCase().includes(searchbarInput);
@@ -106,7 +102,7 @@ export const AddTerminal = ({
             <input
               type="text"
               value={searchbarInput}
-              placeholder="Search or Select Terminal Media Type"
+              placeholder={TextResources.TypeEditor_Search}
               onChange={handleChange}
               onFocus={toggleExpand}
             />
@@ -152,7 +148,7 @@ export const AddTerminal = ({
         {isListOpen && (
           <div className="dropdown_list">
             {Object.keys(ConnectorType)
-              .filter(StringIsNumber)
+              .filter(stringIsNumber)
               .map((item) => {
                 return (
                   <div

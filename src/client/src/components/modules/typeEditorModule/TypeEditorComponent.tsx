@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { useHistory } from "react-router-dom";
 import { MODULE_TYPE } from "../../../models/project";
-import { Aspect, Mode, ObjectType } from "../../../models/";
+import { Aspect, TypeMode, ObjectType } from "../../../models/";
 import { TextResources } from "../../../assets/text";
 import { CloseIcon } from "../../../assets/icons/common";
 import { TypeEditorState } from "../../../redux/store/typeEditor/types";
@@ -47,9 +47,12 @@ export const TypeEditorComponent = () => {
     (state) => state.typeEditor
   ) as TypeEditorState;
 
+  const aspect = state.createLibraryType.aspect;
+  const objectType = state.createLibraryType.objectType;
+
   const handleClick = () => {
     // dispatch(resetCreateLibrary());
-    dispatch(changeMode(Mode.NotSet));
+    dispatch(changeMode(TypeMode.NotSet));
     dispatch(changeFlowView(MODULE_TYPE.TYPEEDITOR));
     push(`/home`);
   };
@@ -68,22 +71,24 @@ export const TypeEditorComponent = () => {
   };
 
   const filterObjectTypes = () => {
-    let filteredtypes;
-    if (state.createLibraryType.aspect === Aspect.Function) {
+    let filteredtypes = [];
+    if (aspect === Aspect.Function) {
       filteredtypes = Object.entries(state.objectTypes);
-    } else if (state.createLibraryType.aspect === Aspect.Location) {
+    } else if (aspect === Aspect.Location) {
       filteredtypes = Object.entries(state.locationTypes);
     }
     return filteredtypes;
   };
 
   const filterStatuses = () => {
+    console.log("test: ", state.statuses);
     let filteredStatuses = Object.entries(state.statuses);
 
     filteredStatuses = filteredStatuses.filter(
       ([, value]) =>
         value === "Draft" || value === "Complete" || value === "Approved"
     );
+    console.log(filteredStatuses);
     return filteredStatuses;
   };
 
@@ -93,17 +98,12 @@ export const TypeEditorComponent = () => {
     dispatch(getInitialData());
     dispatch(changeAllModulesVisibility(false, true));
     dispatch(getBlobData());
-  }, [
-    dispatch,
-    state.createLibraryType.aspect,
-    state.createLibraryType.objectType,
-    state.createLibraryType.status,
-  ]);
+  }, [dispatch, aspect, objectType, state.createLibraryType.status]);
 
   //The intention for the code below is to fill out values in the input fields when editing an existing type.
   // (its not done)
   useEffect(() => {
-    if (state.mode === Mode.Edit) {
+    if (state.mode === TypeMode.Edit) {
       let typeToEdit = state.createLibraryType;
       typeToEdit.name = ""; //string
       typeToEdit.status = null; //Status;
@@ -138,17 +138,17 @@ export const TypeEditorComponent = () => {
           />
           <DropdownMenu
             label={
-              state.createLibraryType.aspect === Aspect.Location
+              aspect === Aspect.Location
                 ? TextResources.TypeEditor_Location_Type
                 : TextResources.TypeEditor_Object_Type
             }
             placeHolder={
-              state.createLibraryType.aspect === Aspect.Location
+              aspect === Aspect.Location
                 ? "Select " + TextResources.TypeEditor_Location_Type
                 : "Select " + TextResources.TypeEditor_Object_Type
             }
             listItems={filterObjectTypes()}
-            aspect={state.createLibraryType.aspect}
+            aspect={aspect}
           />
           <TypeNameInput>
             <p>{TextResources.TypeEditor_Type_Name}</p>
@@ -174,13 +174,12 @@ export const TypeEditorComponent = () => {
           />
         </TypeInfo>
         <ChooseProperties>
-          <RDSList />
-          <TerminalsList aspect={state.createLibraryType.aspect} />
-          {state.createLibraryType.objectType ===
-          ObjectType.Interface ? null : (
-            <AttributesList />
+          <RDSList state={state} />
+          <TerminalsList state={state} />
+          {objectType === ObjectType.Interface ? null : (
+            <AttributesList state={state} />
           )}
-          <TypePreview />
+          <TypePreview state={state} />
         </ChooseProperties>
         {/* <TypeEditorInspector /> */}
       </TypeEditorContent>

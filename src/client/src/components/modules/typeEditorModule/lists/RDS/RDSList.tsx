@@ -1,5 +1,3 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../../redux/store";
 import { TypeEditorState } from "../../../../../redux/store/typeEditor/types";
 import { ListHeader } from "../ListHeader";
 import { RDSListBody } from "./RDSListBody";
@@ -7,11 +5,11 @@ import { ListWrapper } from "../../../../../compLibrary";
 import { TextResources } from "../../../../../assets/text";
 import { Aspect } from "../../../../../models";
 
-export const RDSList = () => {
-  const state = useSelector<RootState>(
-    (state) => state.typeEditor
-  ) as TypeEditorState;
+interface Props {
+  state: TypeEditorState;
+}
 
+export const RDSList = ({ state }: Props) => {
   const RDSList = () => {
     if (state.rdsList) {
       let filteredRDS = Object.entries(state.rdsList);

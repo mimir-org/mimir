@@ -26,11 +26,9 @@ const Dropdown = ({
   defaultValue,
   valueImageProp,
 }: Props) => {
-  // Hooks
   const [isListOpen, setIsListOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
-  // Use effect
   useEffect(() => {
     if (!items) {
       setSelectedItem(null);
@@ -43,7 +41,6 @@ const Dropdown = ({
     setSelectedItem(items[0]);
   }, [defaultValue, items, keyProp]);
 
-  // Events
   const handleChange = (_e: any, value: any) => {
     setSelectedItem(value);
     setIsListOpen(!isListOpen);
@@ -69,7 +66,6 @@ const Dropdown = ({
                 <img
                   src={isListOpen ? ExpandedIcon : CollapsedIcon}
                   alt="expand-icon"
-                  onClick={(e) => setIsListOpen(!isListOpen)}
                 />
               </>
             )}
@@ -77,25 +73,21 @@ const Dropdown = ({
         </div>
         {isListOpen && (
           <DropdownMenuList>
-            {items &&
-              items.map((item) => {
-                return (
-                  <div
-                    onClick={(e) => handleChange(e, item)}
-                    key={item[keyProp]}
-                  >
-                    <DropdownMenuListItem>
-                      {valueImageProp && (
-                        <Symbol
-                          base64={item[valueImageProp]}
-                          text={item[valueProp]}
-                        />
-                      )}
-                      <p>{item.name}</p>
-                    </DropdownMenuListItem>
-                  </div>
-                );
-              })}
+            {items?.map((item) => {
+              return (
+                <div onClick={(e) => handleChange(e, item)} key={item[keyProp]}>
+                  <DropdownMenuListItem>
+                    {valueImageProp && (
+                      <Symbol
+                        base64={item[valueImageProp]}
+                        text={item[valueProp]}
+                      />
+                    )}
+                    <p>{item.name}</p>
+                  </DropdownMenuListItem>
+                </div>
+              );
+            })}
           </DropdownMenuList>
         )}
       </DropdownMenuWrapper>

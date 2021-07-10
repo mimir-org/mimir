@@ -8,7 +8,7 @@ interface Props {
 
 export const ListHeader = ({ label, chooseVisible }: Props) => (
   <ListLabel>
-    {chooseVisible ? TextResources.TypeEditor_Properties_Choose : null}
+    {chooseVisible && TextResources.TypeEditor_Properties_Choose}
     {label}
   </ListLabel>
 );

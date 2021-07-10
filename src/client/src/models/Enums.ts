@@ -31,7 +31,7 @@ export enum ObjectType {
   Interface = 3,
 }
 
-export enum Mode {
+export enum TypeMode {
   NotSet = 0,
   New = 1,
   Edit = 2,

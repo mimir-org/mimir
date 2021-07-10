@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { FlowTree, FlowBlock } from ".";
 import { VIEW_TYPE } from "../../models/project";
 import { changeFlowView } from "../../redux/store/flow/actions";
-import TypeEditorComponent from "../modules/typeEditorModule/TypeEditorComponent";
+import { TypeEditorComponent } from "../modules/typeEditorModule";
 
 const FlowModule = ({ route }) => {
   const dispatch = useDispatch();
