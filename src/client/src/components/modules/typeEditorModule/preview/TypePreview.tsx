@@ -15,7 +15,9 @@ interface Props {
 
 export const TypePreview = ({ state }: Props) => {
   const dispatch = useDispatch();
-  const saveClick = (mode) => {
+  const buttonVisible = true;
+
+  const onSaveClick = (mode: TypeMode) => {
     if (mode === TypeMode.New) {
       dispatch(create(state.createLibraryType));
     } else if (mode === TypeMode.Edit) {
@@ -31,22 +33,24 @@ export const TypePreview = ({ state }: Props) => {
       />
       <PreviewBody state={state} />
       <div className="text">{TextResources.TypeEditor_Preview_Info}</div>
-      <SaveButton>
-        <p
-          onClick={() => {
-            saveClick(state.mode);
-          }}
-        >
-          {state.mode === TypeMode.New
-            ? TextResources.TypeEditor_Button_Add
-            : TextResources.TypeEditor_Button_Edit}
-        </p>
-        <img
-          src={state.mode === TypeMode.New ? AddIcon : CheckmarkIcon}
-          alt="icon"
-          className="icon"
-        />
-      </SaveButton>
+      {buttonVisible && (
+        <SaveButton>
+          <p
+            onClick={() => {
+              onSaveClick(state.mode);
+            }}
+          >
+            {state.mode === TypeMode.New
+              ? TextResources.TypeEditor_Button_Add
+              : TextResources.TypeEditor_Button_Edit}
+          </p>
+          <img
+            src={state.mode === TypeMode.New ? AddIcon : CheckmarkIcon}
+            alt="icon"
+            className="icon"
+          />
+        </SaveButton>
+      )}
     </ListWrapper>
   );
 };

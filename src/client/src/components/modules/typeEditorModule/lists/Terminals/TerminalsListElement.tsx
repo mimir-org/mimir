@@ -1,13 +1,10 @@
-import "./AddTerminal/directiondropdown.scss";
-import "./AddTerminal/terminalsearchbar.scss";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { ObjectType } from "../../../../../models";
+import { TypeEditorState } from "../../../../../redux/store/typeEditor/types";
 import { AddTerminal } from "./AddTerminal/AddTerminalComponent";
 import { RoundCheckbox } from "../../inputs/RoundCheckbox";
 import { NumericInput } from "../../../../../compLibrary";
-import { TextResources } from "../../../../../assets/text";
-import { TypeEditorState } from "../../../../../redux/store/typeEditor/types";
 import {
   updateTerminalTypes,
   changeTerminalTypeId,
@@ -26,32 +23,29 @@ import {
 } from "../../../../../assets/icons/common";
 
 interface Props {
-  state: TypeEditorState;
   category: string;
   terminals: any;
+  state: TypeEditorState;
 }
 
-/* Component for elements in the category Choose Terminal Types */
-export const TerminalsListElement = ({ state, category, terminals }: Props) => {
+export const TerminalsListElement = ({ category, terminals, state }: Props) => {
   const dispatch = useDispatch();
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [searchbarInput, setSearchbarInput] = useState("");
+  const [selectedCategory, setselectedCategory] = useState("");
+  const [searchbarInput, setsearchbarInput] = useState("");
   const [expandList, setExpandList] = useState(false);
   const [quantity, setQuantity] = useState(0);
   const [clientTerminalList, setClientTerminalList] = useState([]);
   const [expandCategory, setExpandCategory] = useState(true);
-  const objectType = state.createLibraryType.objectType;
-  const terminalTypes = state.createLibraryType.terminalTypes;
 
   const selectCategory = () => {
-    if (objectType !== ObjectType.ObjectBlock) {
-      setSelectedCategory(category);
+    if (state.createLibraryType.objectType !== ObjectType.ObjectBlock) {
+      setselectedCategory(category);
       dispatch(changeTerminalCategory(category));
     }
   };
 
   const handleChange = (e) => {
-    setSearchbarInput(e.target.value.toLowerCase());
+    setsearchbarInput(e.target.value.toLowerCase());
   };
 
   const toggleTerminalList = () => {
@@ -59,7 +53,7 @@ export const TerminalsListElement = ({ state, category, terminals }: Props) => {
   };
 
   const handleTerminalClick = (terminalId, terminalName, terminalColor) => {
-    setSearchbarInput(terminalName);
+    setsearchbarInput(terminalName);
     dispatch(changeTerminalTypeId(terminalId));
     dispatch(changeTerminalColor(terminalColor));
     toggleTerminalList();
@@ -90,6 +84,7 @@ export const TerminalsListElement = ({ state, category, terminals }: Props) => {
           }}
           key={i}
           terminals={terminals}
+          terminalCount={quantity}
         />
       );
     }
@@ -97,13 +92,13 @@ export const TerminalsListElement = ({ state, category, terminals }: Props) => {
   };
 
   const TransportOrInterface =
-    (objectType === ObjectType.Transport ||
-      objectType === ObjectType.Interface) ??
+    (state.createLibraryType.objectType === ObjectType.Transport ||
+      state.createLibraryType.objectType === ObjectType.Interface) ??
     false;
 
   useEffect(() => {
-    setClientTerminalList(terminalTypes);
-  }, [terminalTypes]);
+    setClientTerminalList(state.createLibraryType.terminalTypes);
+  }, [state.createLibraryType.terminalTypes]);
 
   return (
     <TerminalListElement>
@@ -121,7 +116,7 @@ export const TerminalsListElement = ({ state, category, terminals }: Props) => {
                   <input
                     type="text"
                     value={searchbarInput}
-                    placeholder={TextResources.TypeEditor_Search}
+                    placeholder="Search or Select Terminal Media Type"
                     onChange={handleChange}
                     onFocus={toggleTerminalList}
                   />
@@ -180,7 +175,7 @@ export const TerminalsListElement = ({ state, category, terminals }: Props) => {
       )}
       {quantity !== 0 &&
       expandCategory &&
-      objectType === ObjectType.ObjectBlock ? (
+      state.createLibraryType.objectType === ObjectType.ObjectBlock ? (
         <AddTerminalWrapper>{terminalInput(quantity)}</AddTerminalWrapper>
       ) : null}
     </TerminalListElement>

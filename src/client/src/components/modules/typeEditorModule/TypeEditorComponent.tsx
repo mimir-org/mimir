@@ -81,14 +81,12 @@ export const TypeEditorComponent = () => {
   };
 
   const filterStatuses = () => {
-    console.log("test: ", state.statuses);
     let filteredStatuses = Object.entries(state.statuses);
 
     filteredStatuses = filteredStatuses.filter(
       ([, value]) =>
         value === "Draft" || value === "Complete" || value === "Approved"
     );
-    console.log(filteredStatuses);
     return filteredStatuses;
   };
 
@@ -99,25 +97,6 @@ export const TypeEditorComponent = () => {
     dispatch(changeAllModulesVisibility(false, true));
     dispatch(getBlobData());
   }, [dispatch, aspect, objectType, state.createLibraryType.status]);
-
-  //The intention for the code below is to fill out values in the input fields when editing an existing type.
-  // (its not done)
-  useEffect(() => {
-    if (state.mode === TypeMode.Edit) {
-      let typeToEdit = state.createLibraryType;
-      typeToEdit.name = ""; //string
-      typeToEdit.status = null; //Status;
-      typeToEdit.aspect = null; //Aspect;
-      typeToEdit.objectType = null; //ObjectType;
-      typeToEdit.semanticReference = ""; //string;
-      typeToEdit.rdsId = ""; //string;
-      typeToEdit.terminalTypes = []; //TerminalTypeItem[];
-      typeToEdit.attributeTypes = [""]; //string[];
-      typeToEdit.locationType = "";
-      typeToEdit.predefinedAttributes = [];
-      typeToEdit.terminalTypeId = ""; //string;
-    }
-  }, [state.mode, state.createLibraryType]);
 
   const handleSymbolChanged = (value) => {
     dispatch(symbolChanged(value.id));
@@ -188,3 +167,22 @@ export const TypeEditorComponent = () => {
 };
 
 export default TypeEditorComponent;
+
+//The intention for the code below is to fill out values in the input fields when editing an existing type.
+// (its not done)
+//   useEffect(() => {
+//     if (state.mode === TypeMode.Edit) {
+//       let typeToEdit = state.createLibraryType;
+//       typeToEdit.name = ""; //string
+//       typeToEdit.status = null; //Status;
+//       typeToEdit.aspect = null; //Aspect;
+//       typeToEdit.objectType = null; //ObjectType;
+//       typeToEdit.semanticReference = ""; //string;
+//       typeToEdit.rdsId = ""; //string;
+//       typeToEdit.terminalTypes = []; //TerminalTypeItem[];
+//       typeToEdit.attributeTypes = [""]; //string[];
+//       typeToEdit.locationType = "";
+//       typeToEdit.predefinedAttributes = [];
+//       typeToEdit.terminalTypeId = ""; //string;
+//     }
+//   }, [state.mode, state.createLibraryType]);

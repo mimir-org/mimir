@@ -2,12 +2,12 @@ import { RDSListElement } from "../RDS/RDSListElement";
 import { ListElementsContainer } from "../../../../../compLibrary";
 
 interface Props {
-  listElements: any;
+  elements: any[];
 }
 
-export const RDSListBody = ({ listElements }: Props) => (
+export const RDSListBody = ({ elements }: Props) => (
   <ListElementsContainer>
-    {listElements?.map((element) => (
+    {elements.map((element) => (
       <RDSListElement
         key={element[1].id}
         id={element[1].id}

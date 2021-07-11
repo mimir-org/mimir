@@ -10,15 +10,11 @@ interface Props {
 }
 
 export const RDSList = ({ state }: Props) => {
-  const RDSList = () => {
-    if (state.rdsList) {
-      let filteredRDS = Object.entries(state.rdsList);
-      if (state.createLibraryType.aspect === Aspect.NotSet) {
-        filteredRDS = [];
-      }
-      return filteredRDS;
-    }
-  };
+  const aspect = state.createLibraryType.aspect;
+  let filteredRDS = [];
+
+  if (state.rdsList && aspect !== Aspect.NotSet)
+    filteredRDS = Object.entries(state.rdsList);
 
   return (
     <ListWrapper flex={0.7}>
@@ -26,7 +22,7 @@ export const RDSList = ({ state }: Props) => {
         label={TextResources.TypeEditor_Properties_RDS}
         chooseVisible={true}
       />
-      <RDSListBody listElements={RDSList()} />
+      <RDSListBody elements={filteredRDS} />
     </ListWrapper>
   );
 };
