@@ -41,6 +41,7 @@ const rootReducers = combineReducers({
 const persistConfig = {
   key: "root",
   storage,
+  blacklist: ["typeEditor"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducers);

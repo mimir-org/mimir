@@ -1,5 +1,3 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../redux/store";
 import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
 import { ObjectBlock } from "./ObjectBlock";
 import { PreviewArea, InfoWrapper } from "../styled";
@@ -7,38 +5,33 @@ import { ReactComponent as TransportIcon } from "../../../../assets/icons/common
 import { ReactComponent as InterfaceIcon } from "../../../../assets/icons/common/interfaceIcon.svg";
 import { Aspect, ObjectType } from "../../../../models";
 
-export const PreviewBody = () => {
-  const state = useSelector<RootState>(
-    (state) => state.typeEditor
-  ) as TypeEditorState;
+interface Props {
+  state: TypeEditorState;
+}
+
+export const PreviewBody = ({ state }: Props) => {
+  const aspect = state.createLibraryType.aspect;
+  const objectType = state.createLibraryType.objectType;
 
   const showObjectBlock = () => {
     if (
-      state.createLibraryType.aspect === Aspect.Location &&
-      state.createLibraryType.locationType !== ""
+      (aspect === Aspect.Location &&
+        state.createLibraryType.locationType !== "") ||
+      (aspect === Aspect.Function && objectType === ObjectType.ObjectBlock)
     ) {
-      return <ObjectBlock />;
-    } else if (
-      state.createLibraryType.aspect === Aspect.Function &&
-      state.createLibraryType.objectType === ObjectType.ObjectBlock
-    ) {
-      return <ObjectBlock />;
-    } else {
-      return null;
+      return <ObjectBlock state={state} />;
     }
+    return null;
   };
 
   const transportOrInterface = () => {
-    if (state.createLibraryType.aspect === Aspect.Function) {
-      if (
-        state.createLibraryType.objectType === ObjectType.Transport ||
-        state.createLibraryType.objectType === ObjectType.Interface
-      ) {
-        return true;
-      }
-    } else {
-      return false;
+    if (aspect === Aspect.Function) {
+      return (
+        objectType === ObjectType.Transport ||
+        objectType === ObjectType.Interface
+      );
     }
+    return false;
   };
 
   return (
@@ -50,11 +43,9 @@ export const PreviewBody = () => {
           <p>{state.createLibraryType.name}</p>
         </InfoWrapper>
       )}
-      {state.createLibraryType.aspect === Aspect.Function &&
-      state.createLibraryType.objectType === ObjectType.Transport ? (
+      {aspect === Aspect.Function && objectType === ObjectType.Transport ? (
         <TransportIcon style={{ fill: state.terminalColor }}></TransportIcon>
-      ) : state.createLibraryType.aspect === Aspect.Function &&
-        state.createLibraryType.objectType === ObjectType.Interface ? (
+      ) : aspect === Aspect.Function && objectType === ObjectType.Interface ? (
         <InterfaceIcon
           style={{ stroke: state.terminalColor, fill: state.terminalColor }}
         ></InterfaceIcon>

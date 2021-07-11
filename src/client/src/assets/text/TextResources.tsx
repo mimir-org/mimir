@@ -124,6 +124,7 @@ const TextResources = {
   TypeEditor_Aspect_Placeholder: "Choose Aspect",
   TypeEditor_Draft_Placeholder: "Draft",
   TypeEditor_Symbol: "Symbol",
+  TypeEditor_Search: "Search or Select Terminal Media Type",
 
   // AccountModule
   Account_Save_Label: "Save project to database",

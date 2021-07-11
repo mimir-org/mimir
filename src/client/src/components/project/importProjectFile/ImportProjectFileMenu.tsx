@@ -7,7 +7,7 @@ import { CloseIcon, RightArrowIcon } from "../../../assets/icons/common";
 import { TextResources } from "../../../assets/text";
 import { changeMenu } from "../../../redux/store/projectMenu/actions";
 import { Size } from "../../../compLibrary";
-import { MenuButton, AddEditButton } from "../../../compLibrary/buttons";
+import { MenuButton, SaveButton } from "../../../compLibrary/buttons";
 import { importProjectAction } from "../../../redux/store/project/actions";
 import { useFilePicker } from "use-file-picker";
 import {
@@ -45,7 +45,7 @@ export const ImportProjectFileMenu = () => {
   };
 
   const buttonBrowseText = () => {
-    if (plainFiles && plainFiles.length < 1)
+    if (plainFiles?.length < 1)
       return TextResources.Account_Import_Label_File_Browse_Button;
     return plainFiles[0].name;
   };
@@ -58,46 +58,40 @@ export const ImportProjectFileMenu = () => {
   };
 
   return (
-    <>
-      <ProjectBox
-        width={Size.MenuSmall_Width}
-        height={Size.MenuSmall_Height}
-        visible={isOpen}
-      >
-        <ProjectBody>
-          <HeaderBox>
-            <img
-              src={CloseIcon}
-              alt="Close project"
-              onClick={onReturnClick}
-              className="icon"
-            />
-            {TextResources.Account_Import_Label_File}
-          </HeaderBox>
-          <AddEditButton onClick={() => openFileSelector()}>
-            {buttonBrowseText()}
-          </AddEditButton>
+    <ProjectBox
+      width={Size.MenuSmall_Width}
+      height={Size.MenuSmall_Height}
+      visible={isOpen}
+    >
+      <ProjectBody>
+        <HeaderBox>
+          <img
+            src={CloseIcon}
+            alt="Close project"
+            onClick={onReturnClick}
+            className="icon"
+          />
+          {TextResources.Account_Import_Label_File}
+        </HeaderBox>
+        <SaveButton onClick={() => openFileSelector()}>
+          {buttonBrowseText()}
+        </SaveButton>
 
-          <ButtonBox left>
-            <MenuButton onClick={onReturnClick}>
-              <p>{TextResources.Account_Cancel_Button}</p>
+        <ButtonBox left>
+          <MenuButton onClick={onReturnClick}>
+            <p>{TextResources.Account_Cancel_Button}</p>
+          </MenuButton>
+        </ButtonBox>
+        {plainFiles?.length > 0 && data() && (
+          <ButtonBox>
+            <MenuButton onClick={onProjectSaveClick} wide>
+              <p>{TextResources.Account_Import_Label_File_Button}</p>
+              <img src={RightArrowIcon} alt="Import project" className="icon" />
             </MenuButton>
           </ButtonBox>
-          {plainFiles && plainFiles.length > 0 && data() && (
-            <ButtonBox>
-              <MenuButton onClick={onProjectSaveClick} wide>
-                <p>{TextResources.Account_Import_Label_File_Button}</p>
-                <img
-                  src={RightArrowIcon}
-                  alt="Import project"
-                  className="icon"
-                />
-              </MenuButton>
-            </ButtonBox>
-          )}
-        </ProjectBody>
-      </ProjectBox>
-    </>
+        )}
+      </ProjectBody>
+    </ProjectBox>
   );
 };
 

@@ -13,6 +13,11 @@ const ListWrapper = styled.div`
     props.height === undefined ? `250px` : props.height + `px`};
   margin-right: ${(props: { right: number }) =>
     props.right === undefined ? `15px` : props.right};
+
+  .text {
+    font-style: italic;
+    text-align: center;
+  }
 `;
 
 export default ListWrapper;

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Color, FontSize, FontType } from "..";
 
-const AddEditButton = styled.button`
+const SaveButton = styled.button`
   width: 161px;
   height: 34px;
   display: flex;
@@ -29,4 +29,4 @@ const AddEditButton = styled.button`
   }
 `;
 
-export default AddEditButton;
+export default SaveButton;

@@ -2,7 +2,7 @@ import { AttributesListElement } from "./AttributesListElement";
 import { ListElementsContainer } from "../../../../../compLibrary";
 
 interface Props {
-  listElements: any;
+  listElements: any[];
 }
 
 export const AttributesListBody = ({ listElements }: Props) => (

@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-const TypeEditorWrapper = styled.div`
+const TypeEditorContent = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
   margin: 7px;
 `;
 
-export default TypeEditorWrapper;
+export default TypeEditorContent;
