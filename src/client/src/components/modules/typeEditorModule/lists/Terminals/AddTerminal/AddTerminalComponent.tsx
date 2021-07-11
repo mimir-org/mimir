@@ -1,9 +1,12 @@
 import "./directiondropdown.scss";
 import "./terminalsearchbar.scss";
 import { useState, useEffect, useCallback } from "react";
+import { useDispatch } from "react-redux";
+import { addTerminalType } from "../../../../../../redux/store/typeEditor/actions";
 import { TerminalTypeItem, ConnectorType } from "../../../../../../models";
 import { AddTerminalElement } from "../../../styled";
 import { NumericInput } from "../../../../../../compLibrary";
+import { ValidateTerminal } from "./helpers";
 import {
   HelpIcon,
   ExpandedIcon,
@@ -12,27 +15,21 @@ import {
 
 interface Props {
   terminals: any;
-  handleTerminalChange: Function;
-  terminalCount: number;
 }
 
-export const AddTerminal = ({
-  terminals,
-  handleTerminalChange,
-  terminalCount,
-}: Props) => {
-  console.log(terminalCount);
-  const [terminalQuantity, setTerminalQuantity] = useState(0);
+export const AddTerminal = ({ terminals }: Props) => {
+  const dispatch = useDispatch();
+
   const [searchbarInput, setsearchbarInput] = useState("");
-  const [selectedTerminalId, setselectedTerminalId] = useState("");
   const [selectedDirection, setselectedDirection] = useState("Direction");
-  const [selectedDirectionId, setselectedDirectionId] = useState(0);
   const [isListOpen, setIsListOpen] = useState(false);
   const [expandList, setExpandList] = useState(false);
+  const [selectedDirectionId, setselectedDirectionId] = useState(null);
+  const [selectedTerminalId, setselectedTerminalId] = useState("");
+  const [terminalQuantity, setTerminalQuantity] = useState(0);
 
   const numberInput = (e) => {
     setTerminalQuantity(e.target.value);
-    addTerminalToArray();
   };
 
   const handleTerminalClick = (terminalId, terminalName) => {
@@ -59,34 +56,35 @@ export const AddTerminal = ({
     setIsListOpen(!isListOpen);
   };
 
-  const StringIsNumber = (value) => isNaN(Number(value)) === false;
+  const stringIsNumber = (value) => isNaN(Number(value)) === false;
 
   const filteredTerminals = terminals.filter((terminal) => {
     return terminal.name.toLowerCase().includes(searchbarInput);
   });
 
-  const validateTerminal = useCallback(() => {
-    let terminal: TerminalTypeItem;
-    if (
-      selectedTerminalId !== "" &&
-      terminalQuantity !== 0 &&
-      selectedDirectionId !== 0
-    ) {
-      terminal = {
-        terminalTypeId: selectedTerminalId,
-        number: Number(terminalQuantity),
-        connectorType: Number(selectedDirectionId),
-      };
-      return terminal;
-    }
-    return null;
-  }, [selectedDirectionId, selectedTerminalId, terminalQuantity]);
+  // Update redux
+  const updateTerminalList = useCallback(
+    (terminal: TerminalTypeItem) => {
+      dispatch(addTerminalType(terminal));
+    },
+    [dispatch]
+  );
 
+  // Validate terminals
   const addTerminalToArray = useCallback(() => {
-    if (validateTerminal() !== null) {
-      handleTerminalChange(validateTerminal());
-    }
-  }, [handleTerminalChange, validateTerminal]);
+    const terminal: TerminalTypeItem = {
+      terminalTypeId: selectedTerminalId,
+      number: terminalQuantity,
+      connectorType: selectedDirectionId,
+    };
+
+    if (ValidateTerminal(terminal)) updateTerminalList(terminal);
+  }, [
+    updateTerminalList,
+    selectedTerminalId,
+    terminalQuantity,
+    selectedDirectionId,
+  ]);
 
   useEffect(() => {
     addTerminalToArray();
@@ -96,7 +94,13 @@ export const AddTerminal = ({
     <AddTerminalElement>
       <NumericInput>
         <label className={"quantity"}>
-          <input type="number" min="0" placeholder="0" onChange={numberInput} />
+          <input
+            type="number"
+            min="0"
+            max="99"
+            placeholder="0"
+            onChange={numberInput}
+          />
           <span className="number"></span>
         </label>
       </NumericInput>
@@ -153,7 +157,7 @@ export const AddTerminal = ({
         {isListOpen && (
           <div className="dropdown_list">
             {Object.keys(ConnectorType)
-              .filter(StringIsNumber)
+              .filter(stringIsNumber)
               .map((item) => {
                 return (
                   <div

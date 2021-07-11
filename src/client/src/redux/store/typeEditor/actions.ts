@@ -29,13 +29,14 @@ import {
   CHANGE_SEMANTICREFERENCE,
   CHANGE_LOCATION_TYPE,
   UPDATE_PREDEFINED_ATTRIBUTES,
-  UPDATE_TERMINALTYPES,
+  ADD_TERMINALTYPE,
   UPDATE_ATTRIBUTETYPES,
   CHANGE_TERMINAL_TYPE_ID,
   DELETE_TYPE_EDITOR_ERROR,
   FETCHING_BLOB_DATA,
   SYMBOL_CHANGED,
   TypeEditorActionTypes,
+  REMOVE_TERMINALTYPES,
 } from "./types";
 
 // TODO create type, save type, get attributes
@@ -220,12 +221,19 @@ export function updatePredefinedAttributes(
   };
 }
 
-export function updateTerminalTypes(terminalTypes: TerminalTypeItem[]) {
+export function addTerminalType(terminal: TerminalTypeItem) {
   return {
-    type: UPDATE_TERMINALTYPES,
+    type: ADD_TERMINALTYPE,
     payload: {
-      terminalTypes,
+      terminal,
     },
+  };
+}
+
+export function removeTerminalTypes() {
+  return {
+    type: REMOVE_TERMINALTYPES,
+    payload: {},
   };
 }
 

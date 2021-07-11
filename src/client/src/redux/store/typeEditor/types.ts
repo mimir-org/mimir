@@ -48,7 +48,8 @@ export const CHANGE_SEMANTICREFERENCE = "CHANGE_SEMANTICREFERENCE";
 export const CHANGE_LOCATION_TYPE = "CHANGE_LOCATION_TYPE";
 export const CHANGE_TERMINAL_TYPE_ID = "CHANGE_TERMINAL_TYPE_ID";
 export const UPDATE_PREDEFINED_ATTRIBUTES = "UPDATE_PREDEFINED_ATTRIBUTES";
-export const UPDATE_TERMINALTYPES = "UPDATE_TERMINALTYPES";
+export const ADD_TERMINALTYPE = "ADD_TERMINALTYPE";
+export const REMOVE_TERMINALTYPES = "REMOVE_TERMINALTYPES";
 export const UPDATE_ATTRIBUTETYPES = "UPDATE_ATTRIBUTETYPES";
 export const CREATING_TYPE_SUCCESS_OR_ERROR = "CREATING_TYPE_SUCCESS_OR_ERROR";
 export const UPDATE_TYPE_SUCCESS_OR_ERROR = "UPDATE_TYPE_SUCCESS_OR_ERROR";
@@ -242,11 +243,16 @@ export interface UpdatePredefinedAttributes {
   };
 }
 
-export interface UpdateTerminalTypes {
-  type: typeof UPDATE_TERMINALTYPES;
+export interface AddTerminalType {
+  type: typeof ADD_TERMINALTYPE;
   payload: {
-    terminalTypes: TerminalTypeItem[];
+    terminal: TerminalTypeItem;
   };
+}
+
+export interface RemoveTerminalTypes {
+  type: typeof REMOVE_TERMINALTYPES;
+  payload: {};
 }
 
 export interface UpdateAttributesTypes {
@@ -334,7 +340,8 @@ export type TypeEditorActionTypes =
   | ChangeSemanticReference
   | ChangeLocationType
   | UpdatePredefinedAttributes
-  | UpdateTerminalTypes
+  | AddTerminalType
+  | RemoveTerminalTypes
   | UpdateAttributesTypes
   | ChangeMode
   | UpdatingTypeAction

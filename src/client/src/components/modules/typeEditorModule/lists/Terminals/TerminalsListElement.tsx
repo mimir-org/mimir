@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { ObjectType } from "../../../../../models";
 import { TypeEditorState } from "../../../../../redux/store/typeEditor/types";
@@ -6,10 +6,10 @@ import { AddTerminal } from "./AddTerminal/AddTerminalComponent";
 import { RoundCheckbox } from "../../inputs/RoundCheckbox";
 import { NumericInput } from "../../../../../compLibrary";
 import {
-  updateTerminalTypes,
   changeTerminalTypeId,
   changeTerminalCategory,
   changeTerminalColor,
+  removeTerminalTypes,
 } from "../../../../../redux/store/typeEditor/actions";
 import {
   TerminalListElement,
@@ -34,7 +34,6 @@ export const TerminalsListElement = ({ category, terminals, state }: Props) => {
   const [searchbarInput, setsearchbarInput] = useState("");
   const [expandList, setExpandList] = useState(false);
   const [quantity, setQuantity] = useState(0);
-  const [clientTerminalList, setClientTerminalList] = useState([]);
   const [expandCategory, setExpandCategory] = useState(true);
 
   const selectCategory = () => {
@@ -61,48 +60,29 @@ export const TerminalsListElement = ({ category, terminals, state }: Props) => {
 
   const numberInput = (e) => {
     setQuantity(e.target.value);
+    dispatch(removeTerminalTypes());
   };
 
   const toggleExpand = () => {
     setExpandCategory((expandCategory) => !expandCategory);
   };
 
-  const updateTerminalList = (i, terminal) => {
-    let temp = clientTerminalList;
-    temp[i] = terminal;
-    setClientTerminalList(temp);
-    dispatch(updateTerminalTypes(clientTerminalList));
-  };
-
   const terminalInput = (quantity) => {
     let temp = [];
     for (let i = 0; i < quantity; i++) {
-      temp.push(
-        <AddTerminal
-          handleTerminalChange={(t) => {
-            updateTerminalList(i, t);
-          }}
-          key={i}
-          terminals={terminals}
-          terminalCount={quantity}
-        />
-      );
+      temp.push(<AddTerminal key={i} terminals={terminals} />);
     }
     return <>{temp}</>;
   };
 
-  const TransportOrInterface =
+  const transportOrInterface =
     (state.createLibraryType.objectType === ObjectType.Transport ||
       state.createLibraryType.objectType === ObjectType.Interface) ??
     false;
 
-  useEffect(() => {
-    setClientTerminalList(state.createLibraryType.terminalTypes);
-  }, [state.createLibraryType.terminalTypes]);
-
   return (
     <TerminalListElement>
-      {TransportOrInterface ? (
+      {transportOrInterface ? (
         <TerminalCategoryWrapper>
           <div onClick={selectCategory}>
             <RoundCheckbox id={category} label="terminal" />

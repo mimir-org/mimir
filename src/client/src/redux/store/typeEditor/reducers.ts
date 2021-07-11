@@ -32,7 +32,7 @@ import {
   CHANGE_LOCATION_TYPE,
   CHANGE_TERMINAL_TYPE_ID,
   UPDATE_PREDEFINED_ATTRIBUTES,
-  UPDATE_TERMINALTYPES,
+  ADD_TERMINALTYPE,
   UPDATE_ATTRIBUTETYPES,
   CREATING_TYPE,
   CREATING_TYPE_SUCCESS_OR_ERROR,
@@ -42,6 +42,7 @@ import {
   FETCHING_BLOB_DATA,
   FETCHING_BLOB_DATA_SUCCESS_OR_ERROR,
   SYMBOL_CHANGED,
+  REMOVE_TERMINALTYPES,
 } from "./types";
 
 const initialCreateLibrary = {
@@ -263,12 +264,24 @@ export function typeEditorReducer(
           locationType: action.payload.locationType,
         },
       };
-    case UPDATE_TERMINALTYPES:
+    case ADD_TERMINALTYPE:
       return {
         ...state,
         createLibraryType: {
           ...state.createLibraryType,
-          terminalTypes: action.payload.terminalTypes,
+          terminalTypes: [
+            ...state.createLibraryType.terminalTypes,
+            action.payload.terminal,
+          ],
+        },
+      };
+
+    case REMOVE_TERMINALTYPES:
+      return {
+        ...state,
+        createLibraryType: {
+          ...state.createLibraryType,
+          terminalTypes: [],
         },
       };
     case UPDATE_ATTRIBUTETYPES:
