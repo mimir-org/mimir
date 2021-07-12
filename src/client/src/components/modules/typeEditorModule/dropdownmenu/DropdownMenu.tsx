@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { Aspect } from "../../../../models";
 import { ExpandedIcon, CollapsedIcon } from "../../../../assets/icons/common";
 import { LocationDropdown } from "./helpers";
+import { IsLocation } from "../helpers";
 import {
   DropdownMenuWrapper,
   DropdownMenuHeader,
@@ -52,45 +53,43 @@ export const DropDownMenu = ({
   };
 
   return (
-    <>
-      <DropdownMenuWrapper>
-        <label htmlFor={label} />
-        <div className="label"> {label}</div>
-        <div onClick={toggleList}>
-          <DropdownMenuHeader>
-            <p>{selectedValue}</p>
-            <img
-              src={isListOpen ? ExpandedIcon : CollapsedIcon}
-              alt="expand-icon"
-            />
-          </DropdownMenuHeader>
-        </div>
-        {isListOpen && (
-          <DropdownMenuList>
-            {aspect === Aspect.Location ? (
-              <LocationDropdown
-                listItems={listItems}
-                setSelectedValue={setSelectedValue}
-                setIsListOpen={setIsListOpen}
-                isListOpen={isListOpen}
-              ></LocationDropdown>
-            ) : (
-              listItems?.map(([key, value]) => (
-                <div
-                  className="listitem"
-                  key={key}
-                  onClick={() => handleChange([key, value])}
-                >
-                  <DropdownMenuListItem>
-                    <p>{value} test</p>
-                  </DropdownMenuListItem>
-                </div>
-              ))
-            )}
-          </DropdownMenuList>
-        )}
-      </DropdownMenuWrapper>
-    </>
+    <DropdownMenuWrapper>
+      <label htmlFor={label} />
+      <div className="label"> {label}</div>
+      <div onClick={toggleList}>
+        <DropdownMenuHeader>
+          <p>{selectedValue}</p>
+          <img
+            src={isListOpen ? ExpandedIcon : CollapsedIcon}
+            alt="expand-icon"
+          />
+        </DropdownMenuHeader>
+      </div>
+      {isListOpen && (
+        <DropdownMenuList>
+          {IsLocation(aspect) ? (
+            <LocationDropdown
+              listItems={listItems}
+              setSelectedValue={setSelectedValue}
+              setIsListOpen={setIsListOpen}
+              isListOpen={isListOpen}
+            ></LocationDropdown>
+          ) : (
+            listItems?.map(([key, value]) => (
+              <div
+                className="listitem"
+                key={key}
+                onClick={() => handleChange([key, value])}
+              >
+                <DropdownMenuListItem>
+                  <p>{value} test</p>
+                </DropdownMenuListItem>
+              </div>
+            ))
+          )}
+        </DropdownMenuList>
+      )}
+    </DropdownMenuWrapper>
   );
 };
 

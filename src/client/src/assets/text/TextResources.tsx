@@ -125,6 +125,8 @@ const TextResources = {
   TypeEditor_Draft_Placeholder: "Draft",
   TypeEditor_Symbol: "Symbol",
   TypeEditor_Search: "Search or Select Terminal Media Type",
+  TypeEditor_Error_Name: "Please add a name for the type",
+  TypeEditor_Error_RDS: "Please select a RDS for the type",
 
   // AccountModule
   Account_Save_Label: "Save project to database",

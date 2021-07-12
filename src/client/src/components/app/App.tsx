@@ -15,14 +15,14 @@ import { LoginIcon } from "../../assets/icons/common";
 import { TextResources } from "../../assets/text";
 
 // MSAL imports
+import { IPublicClientApplication } from "@azure/msal-browser";
+import { ModelBuilderNavigationClient } from "../../models/webclient";
+import { msalInstance } from "../..";
 import {
   MsalProvider,
   AuthenticatedTemplate,
   UnauthenticatedTemplate,
 } from "@azure/msal-react";
-import { IPublicClientApplication } from "@azure/msal-browser";
-import { ModelBuilderNavigationClient } from "../../models/webclient";
-import { msalInstance } from "../..";
 
 // Props
 type AppProps = {

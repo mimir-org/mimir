@@ -3,7 +3,8 @@ import { ObjectBlock } from "./ObjectBlock";
 import { PreviewArea, InfoWrapper } from "../styled";
 import { ReactComponent as TransportIcon } from "../../../../assets/icons/common/transportIcon.svg";
 import { ReactComponent as InterfaceIcon } from "../../../../assets/icons/common/interfaceIcon.svg";
-import { Aspect, ObjectType } from "../../../../models";
+import { ObjectType } from "../../../../models";
+import { IsLocation, IsFunction } from "../helpers";
 
 interface Props {
   state: TypeEditorState;
@@ -15,9 +16,8 @@ export const PreviewBody = ({ state }: Props) => {
 
   const showObjectBlock = () => {
     if (
-      (aspect === Aspect.Location &&
-        state.createLibraryType.locationType !== "") ||
-      (aspect === Aspect.Function && objectType === ObjectType.ObjectBlock)
+      (IsLocation(aspect) && state.createLibraryType.locationType !== "") ||
+      (IsFunction(aspect) && objectType === ObjectType.ObjectBlock)
     ) {
       return <ObjectBlock state={state} />;
     }
@@ -25,7 +25,7 @@ export const PreviewBody = ({ state }: Props) => {
   };
 
   const transportOrInterface = () => {
-    if (aspect === Aspect.Function) {
+    if (IsFunction(aspect)) {
       return (
         objectType === ObjectType.Transport ||
         objectType === ObjectType.Interface
@@ -43,9 +43,9 @@ export const PreviewBody = ({ state }: Props) => {
           <p>{state.createLibraryType.name}</p>
         </InfoWrapper>
       )}
-      {aspect === Aspect.Function && objectType === ObjectType.Transport ? (
+      {IsFunction(aspect) && objectType === ObjectType.Transport ? (
         <TransportIcon style={{ fill: state.terminalColor }}></TransportIcon>
-      ) : aspect === Aspect.Function && objectType === ObjectType.Interface ? (
+      ) : IsFunction(aspect) && objectType === ObjectType.Interface ? (
         <InterfaceIcon
           style={{ stroke: state.terminalColor, fill: state.terminalColor }}
         ></InterfaceIcon>

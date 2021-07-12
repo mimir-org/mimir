@@ -1,4 +1,4 @@
-import { TerminalTypeItem } from "../../../../../../../models";
+import { TerminalTypeItem } from "../../../../models";
 
 const ValidateTerminal = (terminal: TerminalTypeItem) => {
   return (

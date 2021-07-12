@@ -6,7 +6,8 @@ import { addTerminalType } from "../../../../../../redux/store/typeEditor/action
 import { TerminalTypeItem, ConnectorType } from "../../../../../../models";
 import { AddTerminalElement } from "../../../styled";
 import { NumericInput } from "../../../../../../compLibrary";
-import { ValidateTerminal } from "./helpers";
+import { ValidateTerminal } from "../../../validators";
+import { TextResources } from "../../../../../../assets/text";
 import {
   HelpIcon,
   ExpandedIcon,
@@ -14,12 +15,11 @@ import {
 } from "../../../../../../assets/icons/common";
 
 interface Props {
-  terminals: any;
+  terminals: any[];
 }
 
 export const AddTerminal = ({ terminals }: Props) => {
   const dispatch = useDispatch();
-
   const [searchbarInput, setsearchbarInput] = useState("");
   const [selectedDirection, setselectedDirection] = useState("Direction");
   const [isListOpen, setIsListOpen] = useState(false);
@@ -32,13 +32,13 @@ export const AddTerminal = ({ terminals }: Props) => {
     setTerminalQuantity(e.target.value);
   };
 
-  const handleTerminalClick = (terminalId, terminalName) => {
+  const onTerminalClick = (terminalId, terminalName) => {
     setsearchbarInput(terminalName);
     setselectedTerminalId(terminalId);
     toggleExpand();
   };
 
-  const handleChange = (e) => {
+  const onChange = (e) => {
     setsearchbarInput(e.target.value.toLowerCase());
   };
 
@@ -46,7 +46,7 @@ export const AddTerminal = ({ terminals }: Props) => {
     setExpandList(!expandList);
   };
 
-  const handleClick = (item) => {
+  const onDirectionClick = (item) => {
     setselectedDirection(ConnectorType[item]);
     setselectedDirectionId(item);
     toggleList();
@@ -111,8 +111,8 @@ export const AddTerminal = ({ terminals }: Props) => {
             <input
               type="text"
               value={searchbarInput}
-              placeholder="Search or Select Terminal Media Type"
-              onChange={handleChange}
+              placeholder={TextResources.TypeEditor_Search}
+              onChange={onChange}
               onFocus={toggleExpand}
             />
             <img
@@ -130,7 +130,7 @@ export const AddTerminal = ({ terminals }: Props) => {
                     className="terminallistitem"
                     key={terminal.id}
                     onClick={() => {
-                      handleTerminalClick(terminal.id, terminal.name);
+                      onTerminalClick(terminal.id, terminal.name);
                     }}
                   >
                     {terminal.name}
@@ -163,7 +163,7 @@ export const AddTerminal = ({ terminals }: Props) => {
                   <div
                     key={item}
                     className="dropdown_listitem"
-                    onClick={() => handleClick(item)}
+                    onClick={() => onDirectionClick(item)}
                   >
                     {ConnectorType[item]}
                   </div>
