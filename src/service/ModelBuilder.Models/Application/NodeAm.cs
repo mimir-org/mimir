@@ -37,6 +37,14 @@ namespace Mb.Models.Application
 
         public decimal PositionBlockY { get; set; }
 
+        public decimal? Length { get; set; }
+
+        public decimal? Width { get; set; }
+
+        public decimal? Height { get; set; }
+
+        public decimal? Cost { get; set; }
+
         [Required]
         public string StatusId { get; set; }
 
