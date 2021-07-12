@@ -12,6 +12,7 @@ import { changeFlowView } from "../../../redux/store/flow/actions";
 import { SetDarkModeColor } from "../../flow/helpers/common";
 import { changeAllModulesVisibility } from "../../../redux/store/modules/actions";
 import { Dropdown } from "../../../compLibrary/dropdown";
+import { IsFunctionAspect, IsLocationAspect } from "./helpers";
 import {
   getInitialData,
   getBlobData,
@@ -72,9 +73,9 @@ export const TypeEditorComponent = () => {
 
   const filterObjectTypes = () => {
     let filteredtypes = [];
-    if (aspect === Aspect.Function) {
+    if (IsFunctionAspect(aspect)) {
       filteredtypes = Object.entries(state.objectTypes);
-    } else if (aspect === Aspect.Location) {
+    } else if (IsLocationAspect(aspect)) {
       filteredtypes = Object.entries(state.locationTypes);
     }
     return filteredtypes;

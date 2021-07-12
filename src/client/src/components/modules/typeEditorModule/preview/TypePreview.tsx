@@ -8,6 +8,7 @@ import { TextResources } from "../../../../assets/text";
 import { AddIcon, CheckmarkIcon } from "../../../../assets/icons/common";
 import { create, update } from "../../../../redux/store/typeEditor/actions";
 import { TypeMode } from "../../../../models";
+import { ValidateType } from "../validators";
 
 interface Props {
   state: TypeEditorState;
@@ -15,13 +16,14 @@ interface Props {
 
 export const TypePreview = ({ state }: Props) => {
   const dispatch = useDispatch();
-  const buttonVisible = true;
 
   const onSaveClick = (mode: TypeMode) => {
-    if (mode === TypeMode.New) {
-      dispatch(create(state.createLibraryType));
-    } else if (mode === TypeMode.Edit) {
-      dispatch(update(state.createLibraryType));
+    if (ValidateType(state)) {
+      if (mode === TypeMode.New) {
+        dispatch(create(state.createLibraryType));
+      } else if (mode === TypeMode.Edit) {
+        dispatch(update(state.createLibraryType));
+      }
     }
   };
 
@@ -33,24 +35,22 @@ export const TypePreview = ({ state }: Props) => {
       />
       <PreviewBody state={state} />
       <div className="text">{TextResources.TypeEditor_Preview_Info}</div>
-      {buttonVisible && (
-        <SaveButton>
-          <p
-            onClick={() => {
-              onSaveClick(state.mode);
-            }}
-          >
-            {state.mode === TypeMode.New
-              ? TextResources.TypeEditor_Button_Add
-              : TextResources.TypeEditor_Button_Edit}
-          </p>
-          <img
-            src={state.mode === TypeMode.New ? AddIcon : CheckmarkIcon}
-            alt="icon"
-            className="icon"
-          />
-        </SaveButton>
-      )}
+      <SaveButton>
+        <p
+          onClick={() => {
+            onSaveClick(state.mode);
+          }}
+        >
+          {state.mode === TypeMode.New
+            ? TextResources.TypeEditor_Button_Add
+            : TextResources.TypeEditor_Button_Edit}
+        </p>
+        <img
+          src={state.mode === TypeMode.New ? AddIcon : CheckmarkIcon}
+          alt="icon"
+          className="icon"
+        />
+      </SaveButton>
     </ListWrapper>
   );
 };

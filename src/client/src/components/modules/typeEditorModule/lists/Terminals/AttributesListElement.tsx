@@ -50,7 +50,7 @@ export const AttributesListElement = ({
     (a) => a.key === locationAttribute.key
   );
 
-  const handleCheckboxChange = () => {
+  const onCheckboxChange = () => {
     let temp: PredefinedAttribute[];
     if (locationAttribute) {
       if (isSelected) {
@@ -65,7 +65,7 @@ export const AttributesListElement = ({
     }
   };
 
-  const handleMultipleValuesCheckboxChange = ([param_key, param_value]) => {
+  const onMultipleValuesCheckboxChange = ([param_key, param_value]) => {
     let attribute: PredefinedAttribute =
       state.createLibraryType.predefinedAttributes.find((a) => a.key === name);
     const valueslist = attribute.values;
@@ -85,7 +85,7 @@ export const AttributesListElement = ({
     dispatch(updatePredefinedAttributes(attributesList));
   };
 
-  const handleSingleValueCheckboxChange = (e) => {
+  const onSingleValueCheckboxChange = (e) => {
     const targetKey = e.target.value;
     let attribute: PredefinedAttribute =
       state.createLibraryType.predefinedAttributes.find((a) => a.key === name);
@@ -121,7 +121,7 @@ export const AttributesListElement = ({
             type="checkbox"
             defaultChecked={isSelected}
             id={name}
-            onChange={handleCheckboxChange}
+            onChange={onCheckboxChange}
           />
           <span className="scheckmark"></span>
           <label htmlFor={name}></label>
@@ -163,7 +163,7 @@ export const AttributesListElement = ({
                           defaultChecked={value}
                           id={key}
                           onChange={() =>
-                            handleMultipleValuesCheckboxChange([key, value])
+                            onMultipleValuesCheckboxChange([key, value])
                           }
                         />
                       ) : (
@@ -173,10 +173,10 @@ export const AttributesListElement = ({
                           name="attribute"
                           value={key}
                           id={key}
-                          onChange={handleSingleValueCheckboxChange}
+                          onChange={onSingleValueCheckboxChange}
                         />
                       )}
-                      <span className="scheckmark"></span>
+                      <span className="checkmark"></span>
                       <label htmlFor={key}></label>
                     </label>
                     <p>{key}</p>

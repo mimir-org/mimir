@@ -24,7 +24,7 @@ import {
 
 interface Props {
   category: string;
-  terminals: any;
+  terminals: any[];
   state: TypeEditorState;
 }
 
