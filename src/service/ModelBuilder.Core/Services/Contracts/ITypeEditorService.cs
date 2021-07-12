@@ -24,7 +24,6 @@ namespace Mb.Core.Services.Contracts
         IEnumerable<CreateLibraryType> GetAllTypes();
         byte[] CreateFile();
         Task LoadDataFromFile(IFormFile file, CancellationToken cancellationToken);
-        Task LoadDataFromFiles();
         Task DeleteType(string id);
         Task<AttributeType> CreateAttributeType(CreateAttributeType createAttributeType);
         Task<List<AttributeType>> CreateAttributeTypes(List<CreateAttributeType> attributeTypes);
@@ -32,5 +31,7 @@ namespace Mb.Core.Services.Contracts
         Task<List<TerminalType>> CreateTerminalTypes(List<CreateTerminalType> createTerminalTypes);
         Task<Rds> CreateRds(CreateRds createRds);
         Task<List<Rds>> CreateRdsAsync(List<CreateRds> createRds);
+        Task<List<PredefinedAttribute>> CreatePredefinedAttributes(List<PredefinedAttribute> attributes);
+        Task CreateContractorsAsync(IEnumerable<Contractor> contractors);
     }
 }

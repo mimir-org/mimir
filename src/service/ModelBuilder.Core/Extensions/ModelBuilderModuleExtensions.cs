@@ -49,6 +49,7 @@ namespace Mb.Core.Extensions
             services.AddScoped<IBlobDataRepository, BlobDataRepository>();
 
             services.AddScoped<ITypeEditorService, TypeEditorService>();
+            services.AddScoped<ISeedingService, SeedingService>();
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<ILibraryService, LibraryService>();
             services.AddScoped<ICommonService, CommonService>();
@@ -83,14 +84,14 @@ namespace Mb.Core.Extensions
         {
             using var serviceScope = app.ApplicationServices.CreateScope();
             var context = serviceScope.ServiceProvider.GetRequiredService<ModelBuilderDbContext>();
-            var typeEditorService = serviceScope.ServiceProvider.GetRequiredService<ITypeEditorService>();
+            var seedingService = serviceScope.ServiceProvider.GetRequiredService<ISeedingService>();
             var moduleService = serviceScope.ServiceProvider.GetRequiredService<IModuleService>();
             var logger = serviceScope.ServiceProvider.GetRequiredService<ILogger<TypeEditorService>>();
 
             context.Database.Migrate();
 
             
-            var awaiter = typeEditorService.LoadDataFromFiles().ConfigureAwait(true).GetAwaiter();
+            var awaiter = seedingService.LoadDataFromFiles().ConfigureAwait(true).GetAwaiter();
             while (!awaiter.IsCompleted)
             {
                 logger.LogInformation("Starting initialize db");

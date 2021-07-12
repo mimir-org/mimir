@@ -337,84 +337,6 @@ namespace Mb.Core.Services
         }
 
         /// <summary>
-        /// Load all initial data from files
-        /// </summary>
-        /// <returns></returns>
-        public async Task LoadDataFromFiles()
-        {
-            try
-            {
-                var fileList = _fileRepository.ReadJsonFileList().ToList();
-
-                if (!fileList.Any())
-                    return;
-
-                //var libraryFiles = fileList.Where(x => x.ToLower().Contains(LibraryFileName)).ToList();
-
-                var unitFiles = fileList.Where(x => x.ToLower().Equals(UnitFileName)).ToList();
-                var conditionFiles = fileList.Where(x => x.ToLower().Equals(ConditionFileName)).ToList();
-                var qualifierFiles = fileList.Where(x => x.ToLower().Equals(QualifierFileName)).ToList();
-                var sourceFiles = fileList.Where(x => x.ToLower().Equals(SourceFileName)).ToList();
-                var rdsCategoryFiles = fileList.Where(x => x.ToLower().Equals(RdsCategoryFileName)).ToList();
-                var terminalCategoryFiles = fileList.Where(x => x.ToLower().Equals(TerminalCategoryFileName)).ToList();
-                var attributeFormatFiles = fileList.Where(x => x.ToLower().Equals(AttributeFormatFileName)).ToList();
-                var buildStatusFiles = fileList.Where(x => x.ToLower().Equals(BuildStatusFileName)).ToList();
-                var predefinedAttributeCategoryFiles = fileList.Where(x => x.ToLower().Equals(PredefinedAttributeCategoryFileName)).ToList();
-
-
-
-                var contractorFiles = fileList.Where(x => x.ToLower().Equals(ContractorFileName)).ToList();
-                var attributeFiles = fileList.Where(x => x.ToLower().Equals(AttributeFileName)).ToList();
-                var terminalFiles = fileList.Where(x => x.ToLower().Equals(TerminalFileName)).ToList();
-                var rdsFiles = fileList.Where(x => x.ToLower().Equals(RdsFileName)).ToList();
-                var predefinedAttributeFiles = fileList.Where(x => x.ToLower().Equals(PredefinedAttributeFileName)).ToList();
-
-                //var libraries = _fileRepository.ReadAllFiles<LibraryType>(libraryFiles).ToList();
-
-                var units = _fileRepository.ReadAllFiles<Unit>(unitFiles).ToList();
-                var conditions = _fileRepository.ReadAllFiles<AttributeCondition>(conditionFiles).ToList();
-                var qualifiers = _fileRepository.ReadAllFiles<AttributeQualifier>(qualifierFiles).ToList();
-                var sources = _fileRepository.ReadAllFiles<AttributeSource>(sourceFiles).ToList();
-                var rdsCategories = _fileRepository.ReadAllFiles<RdsCategory>(rdsCategoryFiles).ToList();
-                var terminalCategories = _fileRepository.ReadAllFiles<TerminalCategory>(terminalCategoryFiles).ToList();
-                var attributeFormats = _fileRepository.ReadAllFiles<AttributeFormat>(attributeFormatFiles).ToList();
-                var buildStatuses = _fileRepository.ReadAllFiles<BuildStatus>(buildStatusFiles).ToList();
-                var predefinedCategories = _fileRepository.ReadAllFiles<PredefinedAttributeCategory>(predefinedAttributeCategoryFiles).ToList();
-
-                var contractors = _fileRepository.ReadAllFiles<Contractor>(contractorFiles).ToList();
-                var attributes = _fileRepository.ReadAllFiles<CreateAttributeType>(attributeFiles).ToList();
-                var terminals = _fileRepository.ReadAllFiles<CreateTerminalType>(terminalFiles).ToList();
-                var rds = _fileRepository.ReadAllFiles<CreateRds>(rdsFiles).ToList();
-                var predefinedAttributes = _fileRepository.ReadAllFiles<PredefinedAttribute>(predefinedAttributeFiles).ToList();
-
-
-                //await CreateAttributeTypesAsync(attributes);
-                //await CreateTerminalTypesAsync(terminals);
-                //await CreateLibraryTypeComponentsAsync(libraries);
-                
-                await CreateEnumBase<Unit>(units);
-                await CreateEnumBase<AttributeCondition>(conditions);
-                await CreateEnumBase<AttributeQualifier>(qualifiers);
-                await CreateEnumBase<AttributeSource>(sources);
-                await CreateEnumBase<RdsCategory>(rdsCategories);
-                await CreateEnumBase<TerminalCategory>(terminalCategories);
-                await CreateEnumBase<AttributeFormat>(attributeFormats);
-                await CreateEnumBase<BuildStatus>(buildStatuses);
-                await CreateEnumBase<PredefinedAttributeCategory>(predefinedCategories);
-
-                await CreateContractorsAsync(contractors);
-                await CreateAttributeTypes(attributes);
-                await CreateTerminalTypes(terminals);
-                await CreateRdsAsync(rds);
-                await CreatePredefinedAttributes(predefinedAttributes);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"Could not create initial data from file: error: {e.Message}");
-            }
-        }
-
-        /// <summary>
         /// Delete a type
         /// </summary>
         /// <param name="id"></param>
@@ -589,6 +511,21 @@ namespace Mb.Core.Services
             return attributes;
         }
 
+        public async Task CreateContractorsAsync(IEnumerable<Contractor> contractors)
+        {
+            var existingTypes = _contractorRepository.GetAll().ToList();
+            var notExistingTypes = contractors.Where(x => existingTypes.All(y => y.Id != x.Id)).ToList();
+            if (!notExistingTypes.Any())
+                return;
+
+            foreach (var item in notExistingTypes)
+            {
+                await _contractorRepository.CreateAsync(item);
+            }
+
+            await _contractorRepository.SaveAsync();
+        }
+
         #endregion
 
         #region Private methods
@@ -639,44 +576,6 @@ namespace Mb.Core.Services
             }
 
             await _libraryTypeComponentRepository.SaveAsync();
-        }
-
-        private async Task CreateContractorsAsync(IEnumerable<Contractor> contractors)
-        {
-            var existingTypes = _contractorRepository.GetAll().ToList();
-            var notExistingTypes = contractors.Where(x => existingTypes.All(y => y.Id != x.Id)).ToList();
-            if (!notExistingTypes.Any())
-                return;
-
-            foreach (var item in notExistingTypes)
-            {
-                await _contractorRepository.CreateAsync(item);
-            }
-
-            await _contractorRepository.SaveAsync();
-        }
-
-        private async Task CreateEnumBase<T>(IEnumerable<T> items) where T : EnumBase
-        {
-            var exitingItems = _enumBaseRepository.GetAll().OfType<T>().ToList();
-            var newItems = items.Select(x => { x.Id = x.Key.CreateMd5(); return x; }).ToList();
-            var notExistingItems = newItems.Where(x => exitingItems.All(y => y.Id != x.Id)).ToList();
-
-            if (!notExistingItems.Any())
-                return;
-
-            foreach (var item in notExistingItems)
-            {
-                item.Key.CreateMd5();
-                await _enumBaseRepository.CreateAsync(item);
-            }
-
-            await _enumBaseRepository.SaveAsync();
-
-            foreach (var notExistingItem in notExistingItems)
-            {
-                _enumBaseRepository.Detach(notExistingItem);
-            }
         }
 
         #endregion
