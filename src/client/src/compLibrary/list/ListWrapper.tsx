@@ -17,6 +17,7 @@ const ListWrapper = styled.div`
   .text {
     font-style: italic;
     text-align: center;
+    margin-top: 5px;
   }
 `;
 

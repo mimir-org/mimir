@@ -8,7 +8,9 @@ import { TextResources } from "../../../../assets/text";
 import { AddIcon, CheckmarkIcon } from "../../../../assets/icons/common";
 import { create, update } from "../../../../redux/store/typeEditor/actions";
 import { TypeMode } from "../../../../models";
-import { ValidateType } from "../validators";
+import { GetValidationMessage, ValidateType } from "../validators";
+import { useState } from "react";
+import { ErrorMessageBox } from "../styled";
 
 interface Props {
   state: TypeEditorState;
@@ -16,6 +18,7 @@ interface Props {
 
 export const TypePreview = ({ state }: Props) => {
   const dispatch = useDispatch();
+  const [validated, setValidated] = useState(true);
 
   const onSaveClick = (mode: TypeMode) => {
     if (ValidateType(state)) {
@@ -24,7 +27,7 @@ export const TypePreview = ({ state }: Props) => {
       } else if (mode === TypeMode.Edit) {
         dispatch(update(state.createLibraryType));
       }
-    }
+    } else setValidated(false);
   };
 
   return (
@@ -51,6 +54,13 @@ export const TypePreview = ({ state }: Props) => {
           className="icon"
         />
       </SaveButton>
+      {!validated && (
+        <ErrorMessageBox>
+          {GetValidationMessage(state).map((message) => (
+            <p key={message}>{message}</p>
+          ))}
+        </ErrorMessageBox>
+      )}
     </ListWrapper>
   );
 };

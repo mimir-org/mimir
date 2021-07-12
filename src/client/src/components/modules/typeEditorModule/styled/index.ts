@@ -21,3 +21,4 @@ export { default as SelectValue } from "./SelectValue";
 export { default as ValueHeader } from "./ValueHeader";
 export { default as ValuesListWrapper } from "./ValuesListWrapper";
 export { default as ValuesListItem } from "./ValuesListItem";
+export { default as ErrorMessageBox } from "./ErrorMessageBox";
