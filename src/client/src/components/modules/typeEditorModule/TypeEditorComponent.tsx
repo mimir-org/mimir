@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { useHistory } from "react-router-dom";
 import { MODULE_TYPE } from "../../../models/project";
-import { Aspect, TypeMode, ObjectType } from "../../../models/";
+import { TypeMode, ObjectType } from "../../../models/";
 import { TextResources } from "../../../assets/text";
 import { CloseIcon } from "../../../assets/icons/common";
 import { TypeEditorState } from "../../../redux/store/typeEditor/types";
@@ -42,25 +42,29 @@ import {
 export const TypeEditorComponent = () => {
   const { push } = useHistory();
   const dispatch = useDispatch();
-  const [typenameInput, settypenameInput] = useState("");
 
   const state = useSelector<RootState>(
     (state) => state.typeEditor
   ) as TypeEditorState;
 
+  const [typeName, setTypeName] = useState("");
   const aspect = state.createLibraryType.aspect;
   const objectType = state.createLibraryType.objectType;
 
-  const handleClick = () => {
+  const onCloseEditor = () => {
     // dispatch(resetCreateLibrary());
     dispatch(changeMode(TypeMode.NotSet));
     dispatch(changeFlowView(MODULE_TYPE.TYPEEDITOR));
-    push(`/home`);
+    push(`/home/treeview`);
   };
 
-  const handleChange = (e) => {
-    settypenameInput(e.target.value);
+  const onNameChange = (e) => {
+    setTypeName(e.target.value);
     dispatch(changeTypeName(e.target.value));
+  };
+
+  const onSymbolChange = (value) => {
+    dispatch(symbolChanged(value.id));
   };
 
   const filterAspects = () => {
@@ -99,16 +103,12 @@ export const TypeEditorComponent = () => {
     dispatch(getBlobData());
   }, [dispatch, aspect, objectType, state.createLibraryType.status]);
 
-  const handleSymbolChanged = (value) => {
-    dispatch(symbolChanged(value.id));
-  };
-
   return (
     <TypeEditorWrapper>
       <TypeEditorContent>
         <TypeEditorHeader>
           <p>{TextResources.TypeEditor}</p>
-          <img src={CloseIcon} alt="close-window" onClick={handleClick} />
+          <img src={CloseIcon} alt="close-window" onClick={onCloseEditor} />
         </TypeEditorHeader>
         <TypeInfo>
           <DropdownMenu
@@ -118,12 +118,12 @@ export const TypeEditorComponent = () => {
           />
           <DropdownMenu
             label={
-              aspect === Aspect.Location
+              IsLocationAspect(aspect)
                 ? TextResources.TypeEditor_Location_Type
                 : TextResources.TypeEditor_Object_Type
             }
             placeHolder={
-              aspect === Aspect.Location
+              IsLocationAspect(aspect)
                 ? "Select " + TextResources.TypeEditor_Location_Type
                 : "Select " + TextResources.TypeEditor_Object_Type
             }
@@ -134,9 +134,9 @@ export const TypeEditorComponent = () => {
             <p>{TextResources.TypeEditor_Type_Name}</p>
             <TextInput
               inputType="text"
-              value={typenameInput}
+              value={typeName}
               placeholder={TextResources.TypeEditor_Type_Placeholder}
-              onChange={handleChange}
+              onChange={onNameChange}
             />
           </TypeNameInput>
           <DropdownMenu
@@ -150,7 +150,7 @@ export const TypeEditorComponent = () => {
             keyProp="id"
             valueProp="name"
             valueImageProp="data"
-            onChange={handleSymbolChanged}
+            onChange={onSymbolChange}
           />
         </TypeInfo>
         <ChooseProperties>
