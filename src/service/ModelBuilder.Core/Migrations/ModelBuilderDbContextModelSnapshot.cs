@@ -367,7 +367,7 @@ namespace Mb.Core.Migrations
                         .HasColumnName("Contractor");
 
                     b.Property<decimal?>("Cost")
-                        .HasColumnType("decimal(5,2)")
+                        .HasColumnType("decimal(10,4)")
                         .HasColumnName("Cost");
 
                     b.Property<string>("Description")

@@ -37,7 +37,7 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.Width).HasColumnName("Width").IsRequired(false).HasColumnType("decimal(5,2)");
             builder.Property(p => p.Height).HasColumnName("Height").IsRequired(false).HasColumnType("decimal(5,2)");
             builder.Property(p => p.SymbolId).HasColumnName("SymbolId").IsRequired(false);
-            builder.Property(p => p.Cost).HasColumnName("Cost").IsRequired(false).HasColumnType("decimal(5,2)");
+            builder.Property(p => p.Cost).HasColumnName("Cost").IsRequired(false).HasColumnType("decimal(10,4)");
 
             builder.HasOne(x => x.Status).WithMany(y => y.Nodes).HasForeignKey(x => x.StatusId).OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(x => x.Symbol).WithMany(y => y.Nodes).HasForeignKey(x => x.SymbolId).OnDelete(DeleteBehavior.NoAction);
