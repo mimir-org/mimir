@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { Aspect } from "../../../../models";
 import { ExpandedIcon, CollapsedIcon } from "../../../../assets/icons/common";
 import { LocationDropdown } from "./helpers";
-import { IsLocationAspect } from "../helpers";
+import { IsLocation } from "../helpers";
 import {
   DropdownMenuWrapper,
   DropdownMenuHeader,
@@ -67,7 +67,7 @@ export const DropDownMenu = ({
       </div>
       {isListOpen && (
         <DropdownMenuList>
-          {IsLocationAspect(aspect) ? (
+          {IsLocation(aspect) ? (
             <LocationDropdown
               listItems={listItems}
               setSelectedValue={setSelectedValue}

@@ -12,7 +12,7 @@ import { changeFlowView } from "../../../redux/store/flow/actions";
 import { SetDarkModeColor } from "../../flow/helpers/common";
 import { changeAllModulesVisibility } from "../../../redux/store/modules/actions";
 import { Dropdown } from "../../../compLibrary/dropdown";
-import { IsFunctionAspect, IsLocationAspect } from "./helpers";
+import { GetAspects, GetObjectTypes, GetStatus, IsLocation } from "./helpers";
 import {
   getInitialData,
   getBlobData,
@@ -67,34 +67,6 @@ export const TypeEditorComponent = () => {
     dispatch(symbolChanged(value.id));
   };
 
-  const filterAspects = () => {
-    let filteredAspects = Object.entries(state.aspects);
-    filteredAspects = filteredAspects.filter(
-      ([, value]) => value === "Function" || value === "Location"
-    );
-    return filteredAspects;
-  };
-
-  const filterObjectTypes = () => {
-    let filteredtypes = [];
-    if (IsFunctionAspect(aspect)) {
-      filteredtypes = Object.entries(state.objectTypes);
-    } else if (IsLocationAspect(aspect)) {
-      filteredtypes = Object.entries(state.locationTypes);
-    }
-    return filteredtypes;
-  };
-
-  const filterStatuses = () => {
-    let filteredStatuses = Object.entries(state.statuses);
-
-    filteredStatuses = filteredStatuses.filter(
-      ([, value]) =>
-        value === "Draft" || value === "Complete" || value === "Approved"
-    );
-    return filteredStatuses;
-  };
-
   useEffect(() => {
     const darkMode = red.store.getState().darkMode.active as boolean;
     SetDarkModeColor(darkMode);
@@ -114,20 +86,20 @@ export const TypeEditorComponent = () => {
           <DropdownMenu
             label={TextResources.TypeEditor_Aspect}
             placeHolder={TextResources.TypeEditor_Aspect_Placeholder}
-            listItems={filterAspects()}
+            listItems={GetAspects(state)}
           />
           <DropdownMenu
             label={
-              IsLocationAspect(aspect)
+              IsLocation(aspect)
                 ? TextResources.TypeEditor_Location_Type
                 : TextResources.TypeEditor_Object_Type
             }
             placeHolder={
-              IsLocationAspect(aspect)
+              IsLocation(aspect)
                 ? "Select " + TextResources.TypeEditor_Location_Type
                 : "Select " + TextResources.TypeEditor_Object_Type
             }
-            listItems={filterObjectTypes()}
+            listItems={GetObjectTypes(state)}
             aspect={aspect}
           />
           <TypeNameInput>
@@ -142,7 +114,7 @@ export const TypeEditorComponent = () => {
           <DropdownMenu
             label={TextResources.TypeEditor_Status}
             placeHolder={TextResources.TypeEditor_Draft_Placeholder}
-            listItems={filterStatuses()}
+            listItems={GetStatus(state)}
           />
           <Dropdown
             label={TextResources.TypeEditor_Symbol}

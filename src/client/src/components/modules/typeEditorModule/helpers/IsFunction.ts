@@ -1,7 +1,7 @@
 import { Aspect } from "../../../../models";
 
-const IsFunctionAspect = (aspect: Aspect) => {
+const IsFunction = (aspect: Aspect) => {
   return aspect === Aspect.Function;
 };
 
-export default IsFunctionAspect;
+export default IsFunction;

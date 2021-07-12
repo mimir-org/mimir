@@ -4,7 +4,7 @@ import { ListHeader } from "../ListHeader";
 import { TerminalsListBody } from "./TerminalsListBody";
 import { ListWrapper } from "../../../../../compLibrary";
 import { TextResources } from "../../../../../assets/text";
-import { IsFunctionAspect, IsLocationAspect } from "../../helpers";
+import { IsFunction, IsLocation } from "../../helpers";
 
 interface Props {
   state: TypeEditorState;
@@ -14,9 +14,9 @@ export const TerminalsList = ({ state }: Props) => {
   const aspect = state.createLibraryType.aspect;
   let terminals = [];
 
-  if (IsFunctionAspect(aspect) && state.terminals) {
+  if (IsFunction(aspect) && state.terminals) {
     terminals = Object.entries(state.terminals);
-  } else if (IsLocationAspect(aspect) && state.predefinedAttributes) {
+  } else if (IsLocation(aspect) && state.predefinedAttributes) {
     terminals = Object.entries(state.predefinedAttributes);
   }
 

@@ -34,7 +34,7 @@ const LocationDropdown = ({
                   {type.name && (
                     <div className="listitem" key={type.id}>
                       <LocationTypeCategory>
-                        <p>{type.name} hei</p>
+                        <p>{type.name}</p>
                       </LocationTypeCategory>
                       {type.locationSubTypes?.map((subType) => {
                         return (

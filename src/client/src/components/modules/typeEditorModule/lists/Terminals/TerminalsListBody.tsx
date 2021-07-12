@@ -1,7 +1,7 @@
 import { TerminalsListElement } from "./TerminalsListElement";
 import { AttributesListElement } from "./AttributesListElement";
 import { TypeEditorState } from "../../../../../redux/store/typeEditor/types";
-import { IsFunctionAspect, IsLocationAspect } from "../../helpers";
+import { IsFunction, IsLocation } from "../../helpers";
 
 interface Props {
   state: TypeEditorState;
@@ -13,7 +13,7 @@ export const TerminalsListBody = ({ state, terminals }: Props) => {
 
   return (
     <>
-      {IsFunctionAspect(aspect) && terminals
+      {IsFunction(aspect) && terminals
         ? terminals.map((element) => (
             <TerminalsListElement
               key={element[1].key}
@@ -22,7 +22,7 @@ export const TerminalsListBody = ({ state, terminals }: Props) => {
               category={element[1].key}
             />
           ))
-        : IsLocationAspect(aspect) && terminals
+        : IsLocation(aspect) && terminals
         ? terminals.map((element) => (
             <AttributesListElement
               key={element[1].key}
