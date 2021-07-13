@@ -1,4 +1,4 @@
-import GetInspectorTextResource from "./helpers/GetInspectorTextResources";
+import GetInspectorText from "./helpers/GetInspectorText";
 import { TabAdminContent } from "./";
 import { useCallback } from "react";
 import { RootState } from "../../../redux/store";
@@ -42,7 +42,7 @@ const TabAdminComponent = ({ node, project, index }: Props) => {
     <>
       <TabHeader active={true} onClick={handleClick}>
         {node && <NodeTitle>{node.label ?? node.name}</NodeTitle>}
-        <TabTitle active={true}>{GetInspectorTextResource(index)}</TabTitle>
+        <TabTitle active={true}>{GetInspectorText(index)}</TabTitle>
       </TabHeader>
       <TabBody>
         {node && project && (
@@ -60,7 +60,7 @@ const TabAdminComponent = ({ node, project, index }: Props) => {
   ) : (
     <TabHeader onClick={handleClick}>
       {node && <NodeTitle>{node.label ?? node.name}</NodeTitle>}
-      <TabTitle>{GetInspectorTextResource(index)}</TabTitle>
+      <TabTitle>{GetInspectorText(index)}</TabTitle>
     </TabHeader>
   );
 };

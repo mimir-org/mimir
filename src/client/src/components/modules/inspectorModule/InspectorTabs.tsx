@@ -1,24 +1,22 @@
 import { TabComponent, TabAdminComponent } from ".";
 import { TabEdgeAdminComponent, TabEdgeComponent } from "./edgeInspector";
 import { Project, Node } from "../../../models";
-import { RootState } from "../../../redux/store";
-import { useSelector } from "react-redux";
 import { IsBlockView } from "../../flow/helpers/block";
 import { FindSelectedNode } from "../../flow/helpers/common";
 
-const InspectorTabs = () => {
-  const project = useSelector<RootState>(
-    (state) => state.projectState.project
-  ) as Project;
+interface Props {
+  project: Project;
+}
 
+const InspectorTabs = ({ project }: Props) => {
   const nodes = project?.nodes ?? [];
   const edges = project?.edges ?? [];
 
   let node: Node;
-  let edge = edges.find((edge) => edge.isSelected);
+  let edge = edges.find((x) => x.isSelected);
 
   if (IsBlockView()) {
-    node = nodes.find((node) => node.isBlockSelected);
+    node = nodes.find((x) => x.isBlockSelected);
   } else node = FindSelectedNode();
 
   return (

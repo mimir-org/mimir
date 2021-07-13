@@ -4,6 +4,7 @@ import { TypeEditorState } from "../../../../../redux/store/typeEditor/types";
 import { AddTerminal } from "./AddTerminal/AddTerminalComponent";
 import { RoundCheckbox } from "../../inputs/RoundCheckbox";
 import { NumericInput } from "../../../../../compLibrary";
+import { TextResources } from "../../../../../assets/text";
 import { IsInterface, IsObjectBlock, IsTransport } from "../../helpers";
 import {
   changeTerminalTypeId,
@@ -93,7 +94,7 @@ export const TerminalsListElement = ({ category, terminals, state }: Props) => {
                   <input
                     type="text"
                     value={searchbarInput}
-                    placeholder="Search or Select Terminal Media Type"
+                    placeholder={TextResources.TypeEditor_Search}
                     onChange={handleChange}
                     onFocus={toggleTerminalList}
                   />

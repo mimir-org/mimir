@@ -1,4 +1,4 @@
-import GetInspectorTextResource from "../helpers/GetInspectorTextResources";
+import { GetInspectorText } from "../helpers";
 import { TabEdgeAdminContent } from "../edgeInspector";
 import { useCallback } from "react";
 import { RootState } from "../../../../redux/store";
@@ -25,15 +25,15 @@ const TabEdgeAdminComponent = ({ edge, project, index }: Props) => {
     (state) => state.inspector.tabs[index].visible
   ) as boolean;
 
-  const handleClick = useCallback(() => {
+  const onClick = useCallback(() => {
     dispatch(changeInspectorTab(index));
   }, [dispatch, index]);
 
   return isOpen ? (
     <>
-      <TabHeader active={true} onClick={handleClick}>
+      <TabHeader active={true} onClick={onClick}>
         {edge && <NodeTitle>{edge.id}</NodeTitle>}
-        <TabTitle active={true}>{GetInspectorTextResource(index)}</TabTitle>
+        <TabTitle active={true}>{GetInspectorText(index)}</TabTitle>
       </TabHeader>
       <TabBody>
         {edge && project && (
@@ -44,9 +44,9 @@ const TabEdgeAdminComponent = ({ edge, project, index }: Props) => {
       </TabBody>
     </>
   ) : (
-    <TabHeader onClick={handleClick}>
+    <TabHeader onClick={onClick}>
       {edge && <NodeTitle>{edge.id}</NodeTitle>}
-      <TabTitle>{GetInspectorTextResource(index)}</TabTitle>
+      <TabTitle>{GetInspectorText(index)}</TabTitle>
     </TabHeader>
   );
 };

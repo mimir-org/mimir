@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { EyeIcon, ToggleDown, ToggleUp } from "../../../assets/icons/common";
@@ -7,8 +8,8 @@ import { Size } from "../../../compLibrary";
 import { MODULE_TYPE } from "../../../models/project";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import { IsExplorerModule, IsLibraryModule } from "../../flow/helpers/common";
-import styled from "styled-components";
 import { Color } from "../../../compLibrary/";
+import { Project } from "../../../models";
 import {
   InspectorTitle,
   InspectorBody,
@@ -26,9 +27,11 @@ const InspectorModule = () => {
   const dispatch = useDispatch();
   const key = MODULE_TYPE.INSPECTOR;
 
-  const hasProject = useSelector<RootState>(
+  const project = useSelector<RootState>(
     (state) => state.projectState.project
-  );
+  ) as Project;
+
+  const hasProject = project !== null;
 
   const animate = useSelector<RootState>(
     (state) => state.modules.types.find((x) => x.type === key).animate
@@ -64,14 +67,14 @@ const InspectorModule = () => {
       id="InspectorModule"
     >
       <InspectorBody id="InspectorBody">
-        {hasProject && <InspectorTabs />}
+        {hasProject && <InspectorTabs project={project} />}
         <TabsBottomLine>
           <ButtonBox>
-            {isInspectorOpen ? (
-              <img src={ToggleDown} alt="toggle-icon" onClick={handleClick} />
-            ) : (
-              <img src={ToggleUp} alt="toggle-icon" onClick={handleClick} />
-            )}
+            <img
+              src={isInspectorOpen ? ToggleDown : ToggleUp}
+              alt="toggle-icon"
+              onClick={handleClick}
+            />
           </ButtonBox>
           <IconWrapper>
             <InspectorTitle>{TextResources.Inspector_Heading}</InspectorTitle>

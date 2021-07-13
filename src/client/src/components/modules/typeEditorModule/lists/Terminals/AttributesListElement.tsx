@@ -44,13 +44,14 @@ export const AttributesListElement = ({
     setExpandList(!expandList);
   };
 
-  const locationAttribute: PredefinedAttribute = {
+  const locationAttribute = {
     key: name,
     values: values,
     isMultiSelect: isMultiSelect,
-  };
+  } as PredefinedAttribute;
 
   const locationAttributes = predefinedAttributes;
+
   const isSelected = locationAttributes.some(
     (a) => a.key === locationAttribute.key
   );
@@ -58,9 +59,11 @@ export const AttributesListElement = ({
   const onCheckboxChange = () => {
     OnChange(locationAttribute, locationAttributes, isSelected, dispatch);
   };
+
   const onSingleValueCheckboxChange = (e) => {
     OnSingleValueChange(e, name, predefinedAttributes, isMultiSelect, dispatch);
   };
+
   const onMultipleValuesCheckboxChange = ([param_key, param_value]) => {
     OnMultipleValuesChange(
       [param_key, param_value],

@@ -1,6 +1,6 @@
 import { TextResources } from "../../../../assets/text";
 
-const GetInspectorTextResource = (index: number) => {
+const GetInspectorText = (index: number) => {
   if (index === 0) return TextResources.Inspector_AdminInfo;
   if (index === 1) return TextResources.Inspector_TechInfo;
   if (index === 2) return TextResources.Inspector_Terminals;
@@ -9,4 +9,4 @@ const GetInspectorTextResource = (index: number) => {
   if (index === 5) return TextResources.Inspector_Changelog;
 };
 
-export default GetInspectorTextResource;
+export default GetInspectorText;

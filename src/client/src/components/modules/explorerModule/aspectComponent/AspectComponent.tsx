@@ -37,7 +37,7 @@ export const AspectComponent = ({ node, label, project }: Props) => {
           {IsBlockView() ? (
             <CheckboxBlock node={node} inputLabel={label} />
           ) : (
-            <Checkbox node={node} inputLabel={label} />
+            <Checkbox node={node} project={project} inputLabel={label} />
           )}
         </div>
         <img
@@ -57,6 +57,7 @@ export const AspectComponent = ({ node, label, project }: Props) => {
                 node={elem}
                 label={elem.label ?? elem.name}
                 indent={indent}
+                project={project}
               />
             );
           }

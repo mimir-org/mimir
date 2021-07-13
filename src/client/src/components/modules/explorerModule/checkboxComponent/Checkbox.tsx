@@ -1,13 +1,14 @@
-import { Node } from "../../../../models";
+import { Node, Project } from "../../../../models";
 import { ChangeNodeDisplay } from "../helpers/ChangeNodeDisplay";
 
 interface Props {
   node: Node;
+  project: Project;
   inputLabel: string;
 }
-export const Checkbox = ({ node, inputLabel }: Props) => {
-  let isHidden = node?.isHidden ?? false;
-  const handleChange = ChangeNodeDisplay(node);
+export const Checkbox = ({ node, project, inputLabel }: Props) => {
+  const isHidden = node?.isHidden ?? false;
+  const handleChange = ChangeNodeDisplay(node, project);
 
   return (
     <label className={"checkbox"}>

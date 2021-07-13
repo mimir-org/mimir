@@ -3,8 +3,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Aspect, ObjectType, Status } from "../../../../models";
 import { ExpandedIcon, CollapsedIcon } from "../../../../assets/icons/common";
-import { GetDefaultValue, LocationDropdown } from "./helpers";
-import { IsLocation } from "../helpers";
+import { GetDefaultValue, LocationDropdown, IsLocation } from "../helpers";
 import {
   DropdownMenuWrapper,
   DropdownMenuHeader,
@@ -36,11 +35,11 @@ export const DropDownMenu = ({ aspect, label, items, type }: Props) => {
   const onChange = ([key, value]) => {
     setSelectedValue(value);
     setIsListOpen(!isListOpen);
-    if (type === Aspect.NotSet) {
+    if (label === "Aspect") {
       dispatch(changeSelectedAspect(Number(key)));
-    } else if (type === ObjectType.NotSet) {
+    } else if (label === "Object Type") {
       dispatch(changeSelectedObjectType(Number(key)));
-    } else if (type === Status.Draft) {
+    } else if (label === "Status") {
       dispatch(changeStatus(Number(key)));
     }
     toggleList();

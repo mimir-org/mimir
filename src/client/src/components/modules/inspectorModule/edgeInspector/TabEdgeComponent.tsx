@@ -1,4 +1,4 @@
-import GetInspectorTextResource from "../helpers/GetInspectorTextResources";
+import GetInspectorText from "../helpers/GetInspectorText";
 import { useCallback } from "react";
 import { RootState } from "../../../../redux/store";
 import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
@@ -28,20 +28,18 @@ const TabEdgeComponent = ({ edge, index }: Props) => {
     (state) => state.typeEditor
   ) as TypeEditorState;
 
-  const handleClick = useCallback(() => {
+  const onClick = useCallback(() => {
     dispatch(changeInspectorTab(index));
   }, [dispatch, index]);
 
   return isOpen ? (
     <>
-      <TabHeader active={true} onClick={handleClick}>
+      <TabHeader active={true} onClick={onClick}>
         {index === 0 && edge && <NodeTitle>{edge.id}</NodeTitle>}
         {!edge && index === 1 && (
-          <>
-            <span>{typeEditorState.createLibraryType.name} </span>
-          </>
+          <span>{typeEditorState.createLibraryType.name} </span>
         )}
-        <TabTitle active={true}>{GetInspectorTextResource(index)}</TabTitle>
+        <TabTitle active={true}>{GetInspectorText(index)}</TabTitle>
       </TabHeader>
 
       <TabBody>
@@ -49,14 +47,12 @@ const TabEdgeComponent = ({ edge, index }: Props) => {
       </TabBody>
     </>
   ) : (
-    <TabHeader onClick={handleClick}>
+    <TabHeader onClick={onClick}>
       {index === 0 && edge && <NodeTitle>{edge.id}</NodeTitle>}
       {!edge && index === 1 && (
-        <>
-          <span>{typeEditorState.createLibraryType.name} </span>
-        </>
+        <span>{typeEditorState.createLibraryType.name} </span>
       )}
-      <TabTitle>{GetInspectorTextResource(index)}</TabTitle>
+      <TabTitle>{GetInspectorText(index)}</TabTitle>
     </TabHeader>
   );
 };

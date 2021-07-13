@@ -33,7 +33,7 @@ export const FETCHING_PREDEFINED_ATTRIBUTES = "FETCHING_PREDEFINED_ATTRIBUTES";
 export const FETCHING_PREDEFINED_ATTRIBUTES_SUCCESS_OR_ERROR =
   "FETCHING_PREDEFINED_ATTRIBUTES_SUCCESS_OR_ERROR";
 export const CHANGE_ASPECT = "CHANGE_ASPECT";
-export const CHANGE_OBJECTTYPE = "CHANGE_OBJECTTYPE";
+export const CHANGE_OBJECT_TYPE = "CHANGE_OBJECT_TYPE";
 export const CHANGE_TYPENAME = "CHANGE_TYPENAME";
 export const CHANGE_MODE = "CHANGE_MODE";
 export const CHANGE_SELECTED_TYPE = "CHANGE_SELECTED_TYPE";
@@ -57,7 +57,7 @@ export const DELETE_TYPE_EDITOR_ERROR = "DELETE_TYPE_EDITOR_ERROR";
 export const FETCHING_BLOB_DATA = "FETCHING_BLOB_DATA";
 export const FETCHING_BLOB_DATA_SUCCESS_OR_ERROR =
   "FETCHING_BLOB_DATA_SUCCESS_OR_ERROR";
-export const SYMBOL_CHANGED = "SYMBOL_CHANGED";
+export const CHANGE_SYMBOL = "CHANGE_SYMBOL";
 
 // State types
 export interface TypeEditorState {
@@ -167,7 +167,7 @@ export interface ChangeSelectedAspect {
 }
 
 export interface ChangeObjectType {
-  type: typeof CHANGE_OBJECTTYPE;
+  type: typeof CHANGE_OBJECT_TYPE;
   payload: {
     objectType: ObjectType;
   };
@@ -308,8 +308,8 @@ export interface FetchingBlobDataActionFinished {
   };
 }
 
-export interface SymbolChanged {
-  type: typeof SYMBOL_CHANGED;
+export interface ChangeSymbol {
+  type: typeof CHANGE_SYMBOL;
   payload: {
     symbolId: string;
   };
@@ -350,4 +350,4 @@ export type TypeEditorActionTypes =
   | DeleteTypeEditorErrorAction
   | FetchingBlobDataAction
   | FetchingBlobDataActionFinished
-  | SymbolChanged;
+  | ChangeSymbol;

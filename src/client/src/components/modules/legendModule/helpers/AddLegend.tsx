@@ -1,13 +1,9 @@
-import red from "../../../../redux/store";
 import { Connector, Edge, Node } from "../../../../models";
 import { IsPartOfTerminal, Legend } from "../../../flow/helpers/common";
 import { GetLegendInfo } from "./";
 import { IsBlockView } from "../../../flow/helpers/block";
 
-const AddLegend = (node: Node): Legend[] => {
-  const edges =
-    (red.store.getState().projectState.project?.edges as Edge[]) ?? [];
-
+const AddLegend = (node: Node, edges: Edge[]): Legend[] => {
   const IsActive = (conn: Connector) => {
     let found = false;
 

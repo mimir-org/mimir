@@ -15,19 +15,22 @@ interface Props {
   setSelectedElement: any;
 }
 
-const LibraryCategoryComponent = ({ category, selectedElement, setSelectedElement }: Props) => {
+const LibraryCategoryComponent = ({
+  category,
+  selectedElement,
+  setSelectedElement,
+}: Props) => {
   const [expanded, setExpanded] = useState(false);
+  const expandIcon = expanded ? ExpandedIcon : ClosedIcon;
 
   const onDragStart = (event, node) => {
     event.dataTransfer.setData("application/reactflow", node);
     event.dataTransfer.effectAllowed = "move";
   };
 
-  const expandIcon = expanded ? ExpandedIcon : ClosedIcon;
-
-  function setNewSelectedElement(id){
+  const setNewSelectedElement = (id: string) => {
     setSelectedElement(id);
-  }
+  };
 
   return (
     <>
@@ -40,7 +43,7 @@ const LibraryCategoryComponent = ({ category, selectedElement, setSelectedElemen
           return (
             <LibraryElement
               active={selectedElement === node.id}
-              onClick={()=>setNewSelectedElement(node.id)}
+              onClick={() => setNewSelectedElement(node.id)}
               onDragStart={(event) => onDragStart(event, JSON.stringify(node))}
               key={node.id}
               draggable

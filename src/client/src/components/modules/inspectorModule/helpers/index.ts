@@ -1,4 +1,4 @@
-export { default as GetInspectorTextResources } from "./GetInspectorTextResources";
+export { default as GetInspectorText } from "./GetInspectorText";
 export { default as SetNodeColumn } from "./SetNodeColumn";
 export { default as ConnectorAttributesList } from "./ConnectorAttributesList";
 export { default as CalculateRows } from "./CalculateRows";

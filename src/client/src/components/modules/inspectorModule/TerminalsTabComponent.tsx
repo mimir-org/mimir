@@ -1,8 +1,8 @@
+import styled from "styled-components";
 import { ActiveTerminalTypeList, AttributesContainer } from "./helpers";
 import { Attribute } from "../../../models";
 import { IsTransportTerminal } from "../../flow/helpers/common";
-import styled from "styled-components";
-import TextResources from "../../../assets/text/TextResources";
+import { TextResources } from "../../../assets/text";
 
 // Migth be used later:
 // import { ConnectorAttributesList } from "./helpers";
@@ -67,35 +67,33 @@ const TerminalsTabComponent = ({ node }): any => {
   }
 
   return (
-    <>
-      <ListWrapper>
-        <TerminalsWrapper>
-          <ActiveTerminalTypeList
-            terminals={node?.connectors?.filter((x) => x.terminalCategoryId)}
-            title={TextResources.Inspector_Relations_All_Terminal_Types}
-            onElementClick={() => {}}
-          />
-          <ActiveTerminalTypeList
-            terminals={activeConnectors}
-            title={TextResources.Inspector_Relations_Active_Terminal_Types}
-            onElementClick={() => {}}
-          />
-        </TerminalsWrapper>
-        <AttributesContainer
-          attributes={connectorAttributes}
-          title={TextResources.Inspector_Relations_Connector_Attributes}
+    <ListWrapper>
+      <TerminalsWrapper>
+        <ActiveTerminalTypeList
+          terminals={node?.connectors?.filter((x) => x.terminalCategoryId)}
+          title={TextResources.Inspector_Relations_All_Terminal_Types}
+          onElementClick={() => null}
         />
-        {
-          //TODO show attributes and other fields from Arjun's design on Figma
-          /* <AttributesWrapper>
+        <ActiveTerminalTypeList
+          terminals={activeConnectors}
+          title={TextResources.Inspector_Relations_Active_Terminal_Types}
+          onElementClick={() => null}
+        />
+      </TerminalsWrapper>
+      <AttributesContainer
+        attributes={connectorAttributes}
+        title={TextResources.Inspector_Relations_Connector_Attributes}
+      />
+      {
+        //TODO show attributes and other fields from Arjun's design on Figma
+        /* <AttributesWrapper>
         <ConnectorAttributesList
         connectorAttrs={connectorAttributes}
         handleChange={handleOnConnectorChange}
         ></ConnectorAttributesList>
       </AttributesWrapper> */
-        }
-      </ListWrapper>
-    </>
+      }
+    </ListWrapper>
   );
 };
 

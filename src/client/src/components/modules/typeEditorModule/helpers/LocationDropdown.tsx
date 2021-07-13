@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
-import { LocationTypeCategory, LocationSubType } from "../../styled";
-import { changeLocationType } from "../../../../../redux/store/typeEditor/actions";
+import { LocationTypeCategory, LocationSubType } from "../styled";
+import { changeLocationType } from "../../../../redux/store/typeEditor/actions";
 
 interface Props {
   listItems: any[];

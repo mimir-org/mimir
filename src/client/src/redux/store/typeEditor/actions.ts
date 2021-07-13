@@ -19,7 +19,7 @@ import {
   FETCHING_LOCATIONTYPES,
   FETCHING_PREDEFINED_ATTRIBUTES,
   CHANGE_ASPECT,
-  CHANGE_OBJECTTYPE,
+  CHANGE_OBJECT_TYPE,
   CHANGE_TYPENAME,
   CHANGE_STATUS,
   SET_RDS,
@@ -34,7 +34,7 @@ import {
   CHANGE_TERMINAL_TYPE_ID,
   DELETE_TYPE_EDITOR_ERROR,
   FETCHING_BLOB_DATA,
-  SYMBOL_CHANGED,
+  CHANGE_SYMBOL,
   TypeEditorActionTypes,
   REMOVE_TERMINALTYPES,
 } from "./types";
@@ -122,7 +122,7 @@ export function changeSelectedAspect(aspect: Aspect) {
 
 export function changeSelectedObjectType(objectType: ObjectType) {
   return {
-    type: CHANGE_OBJECTTYPE,
+    type: CHANGE_OBJECT_TYPE,
     payload: {
       objectType,
     },
@@ -262,9 +262,9 @@ export function getBlobData(): TypeEditorActionTypes {
   };
 }
 
-export function symbolChanged(symbolId: string): TypeEditorActionTypes {
+export function changeSymbol(symbolId: string): TypeEditorActionTypes {
   return {
-    type: SYMBOL_CHANGED,
+    type: CHANGE_SYMBOL,
     payload: {
       symbolId: symbolId,
     },

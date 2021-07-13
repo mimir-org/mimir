@@ -15,7 +15,7 @@ import { GetAspects, GetObjectTypes, GetStatus, IsLocation } from "./helpers";
 import {
   changeMode,
   changeTypeName,
-  symbolChanged,
+  changeSymbol,
   getInitialData,
   getBlobData,
 } from "../../../redux/store/typeEditor/actions";
@@ -39,7 +39,6 @@ import {
 export const TypeEditorComponent = () => {
   const { push } = useHistory();
   const dispatch = useDispatch();
-
   const state = useSelector<RootState>((s) => s.typeEditor) as TypeEditorState;
 
   const [typeName, setTypeName] = useState("");
@@ -59,7 +58,7 @@ export const TypeEditorComponent = () => {
   };
 
   const onSymbolChange = (value) => {
-    dispatch(symbolChanged(value.id));
+    dispatch(changeSymbol(value.id));
   };
 
   useEffect(() => {
@@ -105,7 +104,7 @@ export const TypeEditorComponent = () => {
           <DropdownMenu
             label={TextResources.TypeEditor_Status}
             items={GetStatus(state)}
-            type={Status.Draft}
+            type={Status.NotSet}
           />
           <Dropdown
             label={TextResources.TypeEditor_Symbol}

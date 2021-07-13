@@ -1,5 +1,5 @@
 import { TextResources } from "../../../assets/text";
-import { LibCategory } from "../../../models/project";
+import { LibCategory, MODULE_TYPE } from "../../../models/project";
 import { SearchIcon } from "../../../assets/icons/common";
 import { SearchInput } from "../../../compLibrary";
 import { LibraryCategoryComponent } from ".";
@@ -15,15 +15,16 @@ interface Props {
 }
 
 const LibraryComponent = ({ categories, search }: Props) => {
+  const [selectedElement, setSelectedElement] = useState("");
+
   const isLegendOpen = useSelector<RootState>(
-    (state) => state.modules.types.find((x) => x.type === "Legend").visible
+    (state) =>
+      state.modules.types.find((x) => x.type === MODULE_TYPE.LEGEND).visible
   ) as boolean;
 
   const onChange = (e: { target: { value: any } }) => {
     search(e.target.value);
   };
-
-  const [selectedElement, setSelectedElement] = useState("");
 
   return (
     <>

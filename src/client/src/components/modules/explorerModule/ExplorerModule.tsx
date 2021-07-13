@@ -18,6 +18,10 @@ export const ExplorerModule = () => {
   const dispatch = useDispatch();
   const key = MODULE_TYPE.EXPLORER;
 
+  const project = useSelector<RootState>(
+    (state) => state.projectState.project
+  ) as Project;
+
   const animate = useSelector<RootState>(
     (state) => state.modules.types.find((x) => x.type === key).animate
   ) as boolean;
@@ -25,10 +29,6 @@ export const ExplorerModule = () => {
   const isOpen = useSelector<RootState>(
     (state) => state.modules.types.find((x) => x.type === key).visible
   ) as boolean;
-
-  const project = useSelector<RootState>(
-    (state) => state.projectState.project
-  ) as Project;
 
   const hasProject = project !== null;
 

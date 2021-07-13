@@ -26,6 +26,7 @@ const LibraryModule = () => {
   const libraryKey = MODULE_TYPE.LIBRARY;
   const legendKey = MODULE_TYPE.LEGEND;
   const dispatch = useDispatch();
+
   const libraryState = useSelector<RootState>(
     (state) => state.library
   ) as LibraryState;
@@ -75,59 +76,53 @@ const LibraryModule = () => {
   const stopLegend = legendOpen ? Size.ModuleOpen : Size.ModuleClosed;
 
   return (
-    <>
-      <AnimatedModule
-        start={start}
-        stop={stop}
-        run={animate}
-        type={libraryKey}
-        id="LibraryModule"
-      >
-        <ModuleHead library visible={libraryOpen}>
-          <img src={LibraryIcon} alt="library-icon" className="module-icon" />
-          <img
-            className="icon"
-            src={libraryOpen ? ToggleRight : ToggleLeft}
-            alt="toggle"
-            onClick={onLibraryClick}
-          />
-          <p className="text">{TextResources.Library_Heading}</p>
-        </ModuleHead>
-        <ModuleBody visible={libraryOpen} library>
-          <LibraryComponent
-            categories={GetLibCategories(
-              selectedNode,
-              isSplitView,
-              libraryState
-            )}
-            search={search}
-          />
-        </ModuleBody>
+    <AnimatedModule
+      start={start}
+      stop={stop}
+      run={animate}
+      type={libraryKey}
+      id="LibraryModule"
+    >
+      <ModuleHead library visible={libraryOpen}>
+        <img src={LibraryIcon} alt="library-icon" className="module-icon" />
+        <img
+          className="icon"
+          src={libraryOpen ? ToggleRight : ToggleLeft}
+          alt="toggle"
+          onClick={onLibraryClick}
+        />
+        <p className="text">{TextResources.Library_Heading}</p>
+      </ModuleHead>
+      <ModuleBody visible={libraryOpen} library>
+        <LibraryComponent
+          categories={GetLibCategories(selectedNode, isSplitView, libraryState)}
+          search={search}
+        />
+      </ModuleBody>
 
-        <AnimatedModule
-          start={startLegend}
-          stop={stopLegend}
-          run={animateLegend}
-          type={legendKey}
-          id="LegendModule"
-        >
-          <ModuleHead legend>
-            <LegendHead open={legendOpen}>
-              {legendOpen ? (
-                <img src={ToggleDown} alt="" onClick={onLegendClick} />
-              ) : (
-                <img src={ToggleUp} alt="" onClick={onLegendClick} />
-              )}
-            </LegendHead>
-            <LegendIcons open={legendOpen}>
-              <img src={LegendIcon} alt="legend" className="icon" />
-              <p className="text">{TextResources.Legend_Heading}</p>
-            </LegendIcons>
-          </ModuleHead>
-          <LegendModule visible={true} />
-        </AnimatedModule>
+      <AnimatedModule
+        start={startLegend}
+        stop={stopLegend}
+        run={animateLegend}
+        type={legendKey}
+        id="LegendModule"
+      >
+        <ModuleHead legend>
+          <LegendHead open={legendOpen}>
+            <img
+              src={legendOpen ? ToggleDown : ToggleUp}
+              alt=""
+              onClick={onLegendClick}
+            />
+          </LegendHead>
+          <LegendIcons open={legendOpen}>
+            <img src={LegendIcon} alt="legend" className="icon" />
+            <p className="text">{TextResources.Legend_Heading}</p>
+          </LegendIcons>
+        </ModuleHead>
+        <LegendModule visible={true} />
       </AnimatedModule>
-    </>
+    </AnimatedModule>
   );
 };
 

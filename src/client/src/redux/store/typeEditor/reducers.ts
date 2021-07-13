@@ -20,7 +20,7 @@ import {
   FETCHING_PREDEFINED_ATTRIBUTES,
   FETCHING_PREDEFINED_ATTRIBUTES_SUCCESS_OR_ERROR,
   CHANGE_ASPECT,
-  CHANGE_OBJECTTYPE,
+  CHANGE_OBJECT_TYPE,
   CHANGE_TYPENAME,
   CHANGE_MODE,
   CHANGE_STATUS,
@@ -41,7 +41,7 @@ import {
   TypeEditorState,
   FETCHING_BLOB_DATA,
   FETCHING_BLOB_DATA_SUCCESS_OR_ERROR,
-  SYMBOL_CHANGED,
+  CHANGE_SYMBOL,
   REMOVE_TERMINALTYPES,
 } from "./types";
 
@@ -209,7 +209,7 @@ export function typeEditorReducer(
           aspect: action.payload.aspect,
         },
       };
-    case CHANGE_OBJECTTYPE:
+    case CHANGE_OBJECT_TYPE:
       return {
         ...state,
         createLibraryType: {
@@ -324,7 +324,7 @@ export function typeEditorReducer(
           : state.apiError,
       };
 
-    case SYMBOL_CHANGED:
+    case CHANGE_SYMBOL:
       return {
         ...state,
         createLibraryType: {
