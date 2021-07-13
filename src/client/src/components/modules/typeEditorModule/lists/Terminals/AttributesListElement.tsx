@@ -3,8 +3,12 @@ import "../../inputs/checkbox.scss";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { TypeEditorState } from "../../../../../redux/store/typeEditor/types";
-import { updatePredefinedAttributes } from "../../../../../redux/store/typeEditor/actions";
 import { PredefinedAttribute } from "../../../../../models";
+import {
+  OnChange,
+  OnMultipleValuesChange,
+  OnSingleValueChange,
+} from "./helpers";
 import {
   HelpIcon,
   ExpandedIcon,
@@ -52,69 +56,19 @@ export const AttributesListElement = ({
   );
 
   const onCheckboxChange = () => {
-    let temp: PredefinedAttribute[];
-    if (locationAttribute) {
-      if (isSelected) {
-        temp = locationAttributes.filter(
-          (a) => a.key !== locationAttribute.key
-        );
-        dispatch(updatePredefinedAttributes(temp));
-      } else {
-        locationAttributes.push(locationAttribute);
-        dispatch(updatePredefinedAttributes(locationAttributes));
-      }
-    }
+    OnChange(locationAttribute, locationAttributes, isSelected, dispatch);
   };
-
-  const onMultipleValuesCheckboxChange = ([param_key, param_value]) => {
-    let attribute: PredefinedAttribute = predefinedAttributes.find(
-      (a) => a.key === name
-    );
-    const valueslist = attribute.values;
-    if (valueslist) valueslist[param_key] = !param_value;
-
-    attribute = {
-      key: name,
-      values: valueslist,
-      isMultiSelect: isMultiSelect,
-    };
-    let attributesList = predefinedAttributes;
-
-    attributesList = attributesList.map((a) => {
-      if (a.key === attribute.key) a = attribute;
-      return a;
-    });
-    dispatch(updatePredefinedAttributes(attributesList));
-  };
-
   const onSingleValueCheckboxChange = (e) => {
-    const targetKey = e.target.value;
-    let attribute: PredefinedAttribute = predefinedAttributes.find(
-      (a) => a.key === name
+    OnSingleValueChange(e, name, predefinedAttributes, isMultiSelect, dispatch);
+  };
+  const onMultipleValuesCheckboxChange = ([param_key, param_value]) => {
+    OnMultipleValuesChange(
+      [param_key, param_value],
+      name,
+      predefinedAttributes,
+      isMultiSelect,
+      dispatch
     );
-    let valueslist = attribute.values;
-    if (valueslist) valueslist[targetKey] = !valueslist[targetKey];
-
-    const entries = Object.entries(valueslist).filter(
-      ([key, _value]) => key !== targetKey
-    );
-    entries.forEach(([key, value]) => {
-      if (value) valueslist[key] = false;
-      return [key, value];
-    });
-
-    attribute = {
-      key: name,
-      values: valueslist,
-      isMultiSelect: isMultiSelect,
-    };
-
-    let attributesList = predefinedAttributes;
-    attributesList = attributesList.map((a) => {
-      if (a.key === attribute.key) a = attribute;
-      return a;
-    });
-    dispatch(updatePredefinedAttributes(attributesList));
   };
 
   return (

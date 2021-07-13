@@ -1,21 +1,23 @@
 import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
-import { Aspect } from "../../../../models";
 // import { ReactComponent as TerminalIcon } from "../../../../assets/icons/common/terminalIcon.svg";
 import { Color } from "../../../../compLibrary";
 import { ObjectTypeBlock, InfoWrapper } from "../styled";
+import { IsFunction, IsLocation, IsProduct } from "../helpers";
 
 interface Props {
   state: TypeEditorState;
 }
 
 export const ObjectBlock = ({ state }: Props) => {
+  const aspect = state.createLibraryType.aspect;
+
   const blockColor = () => {
     let color = "";
-    if (state.createLibraryType.aspect === Aspect.Function) {
+    if (IsFunction(aspect)) {
       color = Color.Function;
-    } else if (state.createLibraryType.aspect === Aspect.Location) {
+    } else if (IsLocation(aspect)) {
       color = Color.Location;
-    } else if (state.createLibraryType.aspect === Aspect.Product) {
+    } else if (IsProduct(aspect)) {
       color = Color.Product;
     }
     return color;
@@ -23,9 +25,9 @@ export const ObjectBlock = ({ state }: Props) => {
 
   const blockHeight = () => {
     let height = 0;
-    if (state.createLibraryType.aspect === Aspect.Function) {
+    if (IsFunction(aspect)) {
       height = 70;
-    } else if (state.createLibraryType.aspect === Aspect.Location) {
+    } else if (IsLocation(aspect)) {
       height = 45;
     }
     return height;
@@ -33,9 +35,9 @@ export const ObjectBlock = ({ state }: Props) => {
 
   const blockPaddingTop = () => {
     let top = 0;
-    if (state.createLibraryType.aspect === Aspect.Function) {
+    if (IsFunction(aspect)) {
       top = 25;
-    } else if (state.createLibraryType.aspect === Aspect.Location) {
+    } else if (IsLocation(aspect)) {
       top = 2;
     }
     return top;

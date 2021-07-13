@@ -1,5 +1,6 @@
 export { default as IsFunction } from "./IsFunction";
 export { default as IsLocation } from "./IsLocation";
+export { default as IsProduct } from "./IsProduct";
 
 export { default as IsTransport } from "./IsTransport";
 export { default as IsInterface } from "./IsInterface";
