@@ -7,7 +7,6 @@ interface Props {
 }
 export const Checkbox = ({ node, inputLabel }: Props) => {
   let isHidden = node?.isHidden ?? false;
-
   const handleChange = ChangeNodeDisplay(node);
 
   return (

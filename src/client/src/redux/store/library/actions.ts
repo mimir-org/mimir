@@ -1,46 +1,47 @@
 import {
-    FETCHING_LIBRARY,
-    DELETE_LIBRARY_ERROR,
-    EXPORT_LIBRARY,
-    IMPORT_LIBRARY,
-    LibraryActionTypes,
+  FETCHING_LIBRARY,
+  DELETE_LIBRARY_ERROR,
+  EXPORT_LIBRARY,
+  IMPORT_LIBRARY,
+  LibraryActionTypes,
 } from "./types";
 
 import { CreateLibraryType } from "../../../models";
 
 export function searchLibrary(searchString: string): LibraryActionTypes {
-    return {
-        type: FETCHING_LIBRARY,
-        payload: searchString,
-    };
+  return {
+    type: FETCHING_LIBRARY,
+    payload: searchString,
+  };
 }
 
 export function deleteLibraryError(key: string) {
-    return {
-        type: DELETE_LIBRARY_ERROR,
-        payload: {
-            key,
-        },
-    };
+  return {
+    type: DELETE_LIBRARY_ERROR,
+    payload: {
+      key,
+    },
+  };
 }
 
 export function exportLibrary(fileName: string): LibraryActionTypes {
-    return {
-        type: EXPORT_LIBRARY,
-        payload: {
-            fileName: fileName,
-            apiError: null
-        },
-    };
+  return {
+    type: EXPORT_LIBRARY,
+    payload: {
+      fileName: fileName,
+      apiError: null,
+    },
+  };
 }
 
-export function importLibrary(libraryTypes: CreateLibraryType[]): LibraryActionTypes {
-    return {
-        type: IMPORT_LIBRARY,
-        payload: {
-            libraryTypes: libraryTypes,
-            apiError: null
-        },
-    };
+export function importLibrary(
+  libraryTypes: CreateLibraryType[]
+): LibraryActionTypes {
+  return {
+    type: IMPORT_LIBRARY,
+    payload: {
+      libraryTypes: libraryTypes,
+      apiError: null,
+    },
+  };
 }
-

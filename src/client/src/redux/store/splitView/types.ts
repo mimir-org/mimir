@@ -15,3 +15,5 @@ export interface SetSplitNode {
     node: Node;
   };
 }
+
+export type SplitViewActionTypes = SetSplitView | SetSplitNode;

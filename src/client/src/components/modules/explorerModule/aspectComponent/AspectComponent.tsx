@@ -1,7 +1,6 @@
-import red from "../../../../redux/store";
 import { useState } from "react";
 import { ExpandedIcon, ClosedIcon } from "../../../../assets/icons/common";
-import { Node } from "../../../../models";
+import { Node, Project } from "../../../../models";
 import { IsAspectNode } from "../../../flow/helpers/common";
 import { AspectElement } from ".";
 import { AspectBox } from "../../../../compLibrary/box/aspect";
@@ -16,14 +15,15 @@ import {
 interface Props {
   node: Node;
   label: string;
+  project: Project;
 }
-export const AspectComponent = ({ node, label }: Props) => {
+export const AspectComponent = ({ node, label, project }: Props) => {
   const [expanded, setExpanded] = useState(true);
   const expandIcon = expanded ? ExpandedIcon : ClosedIcon;
   const aspectIcon = GetAspectIcon(node);
   const color = GetAspectColor(node, true);
-  const nodes = red.store.getState().projectState.project.nodes as Node[];
-  const children = nodes.filter((node) => !IsAspectNode(node)) ?? [];
+  const nodes = project.nodes;
+  const children = nodes.filter((x) => !IsAspectNode(x)) ?? [];
 
   const onExpandClick = () => {
     setExpanded(!expanded);
@@ -50,7 +50,7 @@ export const AspectComponent = ({ node, label }: Props) => {
       {expanded &&
         children.map((elem) => {
           if (elem.aspect === node.aspect) {
-            const indent = elem.level ?? SetIndentLevel(elem, 0);
+            const indent = elem.level ?? SetIndentLevel(elem, 0, project);
             return (
               <AspectElement
                 key={elem.id}

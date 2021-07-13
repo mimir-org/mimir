@@ -83,8 +83,8 @@ const initialState: TypeEditorState = {
 
 // TODO: Refactor to reduce complexity
 export function typeEditorReducer(
-  action: TypeEditorActionTypes,
-  state = initialState
+  state = initialState,
+  action: TypeEditorActionTypes
 ): TypeEditorState {
   switch (action.type) {
     case DELETE_TYPE_EDITOR_ERROR:

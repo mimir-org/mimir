@@ -7,6 +7,7 @@ import { MODULE_TYPE } from "../../../models/project";
 import { AnimatedModule, Size } from "../../../compLibrary";
 import { IsBlockView } from "../../flow/helpers/block";
 import { ModuleHead, ModuleBody } from "../../../compLibrary/box/modules";
+import { Project } from "../../../models";
 import {
   ExplorerIcon,
   ToggleLeft,
@@ -25,13 +26,15 @@ export const ExplorerModule = () => {
     (state) => state.modules.types.find((x) => x.type === key).visible
   ) as boolean;
 
-  const handleClick = () => {
+  const project = useSelector<RootState>(
+    (state) => state.projectState.project
+  ) as Project;
+
+  const hasProject = project !== null;
+
+  const onClick = () => {
     dispatch(changeModuleVisibility(key, !isOpen, true));
   };
-
-  const hasProject = useSelector<RootState>(
-    (state) => state.projectState.project !== null
-  );
 
   const start = isOpen ? Size.ModuleClosed : Size.ModuleOpen;
   const stop = isOpen ? Size.ModuleOpen : Size.ModuleClosed;
@@ -50,12 +53,12 @@ export const ExplorerModule = () => {
           className="icon"
           src={isOpen ? ToggleLeft : ToggleRight}
           alt="toggle"
-          onClick={handleClick}
+          onClick={onClick}
         />
         <p className="text">{TextResources.Explorer_view}</p>
       </ModuleHead>
       <ModuleBody visible={isOpen} explorer isBlockView={IsBlockView()}>
-        {hasProject && <ProjectComponent />}
+        {hasProject && <ProjectComponent project={project} />}
         <SplitViewComponent />
       </ModuleBody>
     </AnimatedModule>

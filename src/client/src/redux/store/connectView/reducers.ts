@@ -5,26 +5,30 @@ import {
   ADD_CONNECT_NODE,
   REMOVE_CONNECT_NODE,
   REMOVE_ALL_MAIN_NODES,
+  ConnectViewActionTypes,
 } from "./types";
 
 const initialState = {
   mainNodes: [] as Node[],
 };
 
-export function connectViewReducer(action, state = initialState) {
-  const node = action.payload?.node as Node;
-
+export function connectViewReducer(
+  state = initialState,
+  action: ConnectViewActionTypes
+) {
   switch (action.type) {
     case ADD_MAIN_CONNECT_NODE:
       return {
         ...state,
-        mainNodes: [...state.mainNodes, node],
+        mainNodes: [...state.mainNodes, action.payload.node],
       };
 
     case REMOVE_MAIN_CONNECT_NODE:
       return {
         ...state,
-        mainNodes: state.mainNodes.filter((x) => x?.id !== node.id),
+        mainNodes: state.mainNodes.filter(
+          (x) => x?.id !== action.payload.node.id
+        ),
       };
 
     case ADD_CONNECT_NODE:
@@ -68,12 +72,6 @@ export function connectViewReducer(action, state = initialState) {
         ...state,
         mainNodes: [],
       };
-
-    // case REMOVE_ALL_CONNECT_NODES:
-    //   return {
-    //     ...state,
-    //     connectNodes: [],
-    //   };
 
     default:
       return state;

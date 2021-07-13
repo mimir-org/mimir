@@ -1,5 +1,5 @@
 import { ATTRIBUTE_TAB } from "../../../models/project";
-import { CHANGE_INSPECTOR_COMPONENT } from "./types";
+import { CHANGE_INSPECTOR_COMPONENT, InspectorActionTypes } from "./types";
 
 const initialState = {
   tabs: [
@@ -22,7 +22,10 @@ const initialState = {
   ],
 };
 
-export const inspectorReducer = (action, state = initialState) => {
+export const inspectorReducer = (
+  state = initialState,
+  action: InspectorActionTypes
+) => {
   if (action.type === CHANGE_INSPECTOR_COMPONENT) {
     return {
       ...state,
@@ -36,6 +39,7 @@ export const inspectorReducer = (action, state = initialState) => {
       ),
     };
   }
+  return state;
 };
 
 export default inspectorReducer;

@@ -7,3 +7,5 @@ export interface ChangeMenu {
     visible: boolean;
   };
 }
+
+export type MenuActionTypes = ChangeMenu;

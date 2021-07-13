@@ -15,7 +15,7 @@ const initialState: CommonState = {
   apiError: [],
 };
 
-export function commonReducer(action: CommonActionTypes, state = initialState) {
+export function commonReducer(state = initialState, action: CommonActionTypes) {
   switch (action.type) {
     case FETCHING_CONTRACTORS:
       return {

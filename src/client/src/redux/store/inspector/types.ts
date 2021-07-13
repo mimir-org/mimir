@@ -4,3 +4,5 @@ export interface ChangeInspectorTab {
   type: typeof CHANGE_INSPECTOR_COMPONENT;
   payload: { index: number };
 }
+
+export type InspectorActionTypes = ChangeInspectorTab;

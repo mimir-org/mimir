@@ -38,8 +38,12 @@ export interface RemoveConnectNode {
 
 export interface RemoveAllMainNodes {
   type: typeof REMOVE_ALL_MAIN_NODES;
+  payload: {};
 }
 
-export interface RemoveAllConnectNodes {
-  type: typeof REMOVE_ALL_CONNECT_NODES;
-}
+export type ConnectViewActionTypes =
+  | AddMainConnectNode
+  | RemoveMainConnectNode
+  | AddConnectNode
+  | RemoveConnectNode
+  | RemoveAllMainNodes;

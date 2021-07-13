@@ -10,8 +10,6 @@ import {
   REMOVE_NODE,
   ADD_EDGE,
   REMOVE_EDGE,
-  ProjectActionTypes,
-  ProjectState,
   UPDATE_POSITION,
   UPDATE_BLOCK_POSITION,
   CHANGE_NODE_VISIBILITY,
@@ -34,6 +32,8 @@ import {
   EXPORT_PROJECT_TO_FILE,
   EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR,
   IMPORT_PROJECT,
+  ProjectActionTypes,
+  ProjectState,
 } from "./types";
 
 const initialState: ProjectState = {
@@ -46,8 +46,8 @@ const initialState: ProjectState = {
 
 // TODO: Refactor to reduce complexity
 export function projectReducer(
-  action: ProjectActionTypes,
-  state = initialState
+  state = initialState,
+  action: ProjectActionTypes
 ) {
   switch (action.type) {
     case SAVE_PROJECT:

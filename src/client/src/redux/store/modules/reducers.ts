@@ -2,6 +2,7 @@ import { MODULE_TYPE } from "../../../models/project";
 import {
   CHANGE_MODULE_VISIBILITY,
   CHANGE_ALL_MODULES_VISIBILITY,
+  ModuleVisibilityActionTypes,
 } from "./types";
 
 const initialState = {
@@ -29,7 +30,10 @@ const initialState = {
   ],
 };
 
-export function moduleReducer(action, state = initialState) {
+export function moduleReducer(
+  state = initialState,
+  action: ModuleVisibilityActionTypes
+) {
   switch (action.type) {
     case CHANGE_MODULE_VISIBILITY:
       return {

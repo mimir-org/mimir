@@ -28,7 +28,7 @@ const FlowTree = () => {
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>();
-  const darkMode = red.store.getState().darkMode.active as boolean;
+  const darkMode = red.store.getState().darkMode.active;
 
   const project = useSelector<RootState>(
     (state) => state.projectState.project

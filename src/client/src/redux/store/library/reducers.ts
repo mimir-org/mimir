@@ -17,9 +17,9 @@ const initialState: LibraryState = {
 };
 
 export function libraryReducer(
-  action: LibraryActionTypes,
-  state = initialState
-): LibraryState {
+  state = initialState,
+  action: LibraryActionTypes
+) {
   switch (action.type) {
     case FETCHING_LIBRARY:
       return {

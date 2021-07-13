@@ -6,3 +6,5 @@ export interface SetDarkMode {
     active: boolean;
   };
 }
+
+export type DarkModeActionTypes = SetDarkMode;

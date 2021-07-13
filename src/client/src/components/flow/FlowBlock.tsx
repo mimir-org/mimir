@@ -48,7 +48,7 @@ const FlowBlock = () => {
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>();
-  const darkMode = red.store.getState().darkMode.active as boolean;
+  const darkMode = red.store.getState().darkMode.active;
   const node = FindSelectedNode();
 
   const project = useSelector<RootState>(
@@ -90,9 +90,12 @@ const FlowBlock = () => {
   );
 
   const OnElementsRemove = (elementsToRemove) => {
-    const node = elementsToRemove[0];
+    const nodeToRemove = elementsToRemove[0];
     project.edges?.forEach((edge) => {
-      if (edge.fromNodeId === node.id || edge.toNodeId === node.id)
+      if (
+        edge.fromNodeId === nodeToRemove.id ||
+        edge.toNodeId === nodeToRemove.id
+      )
         elementsToRemove.push(edge);
     });
 
@@ -114,8 +117,8 @@ const FlowBlock = () => {
     event.dataTransfer.dropEffect = "move";
   };
 
-  const OnNodeDragStop = (_event, node) => {
-    return useOnNodeDragStop(_event, node, dispatch);
+  const OnNodeDragStop = (_event, activeNode) => {
+    return useOnNodeDragStop(_event, activeNode, dispatch);
   };
 
   const OnDrop = (event) => {

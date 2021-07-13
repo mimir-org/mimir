@@ -17,3 +17,7 @@ export interface ChangeAllModulesVisibilty {
     animate: boolean;
   };
 }
+
+export type ModuleVisibilityActionTypes =
+  | ChangeModuleVisibilty
+  | ChangeAllModulesVisibilty;

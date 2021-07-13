@@ -7,3 +7,5 @@ export interface ChangeFlowView {
     view: ViewType;
   };
 }
+
+export type FlowActionTypes = ChangeFlowView;

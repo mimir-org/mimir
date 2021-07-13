@@ -4,7 +4,6 @@ import {
   REMOVE_MAIN_CONNECT_NODE,
   ADD_CONNECT_NODE,
   REMOVE_CONNECT_NODE,
-  REMOVE_ALL_CONNECT_NODES,
   REMOVE_ALL_MAIN_NODES,
 } from "./types";
 
@@ -49,11 +48,6 @@ export function removeConnectNode(mainNode: Node, child: Node) {
 export function removeMainNodes() {
   return {
     type: REMOVE_ALL_MAIN_NODES,
-  };
-}
-
-export function removeConnectNodes() {
-  return {
-    type: REMOVE_ALL_CONNECT_NODES,
+    payload: {},
   };
 }
