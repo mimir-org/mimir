@@ -1,10 +1,10 @@
-import { BlobData } from "../../../models";
 import {
   CreateLibraryType,
   Status,
   Aspect,
   ObjectType,
   TypeMode,
+  BlobData,
 } from "../../../models";
 import {
   FETCHING_RDS,
@@ -24,8 +24,8 @@ import {
   CHANGE_TYPENAME,
   CHANGE_MODE,
   CHANGE_STATUS,
-  CHANGE_RDS,
-  CHANGE_RDS_NAME,
+  SET_RDS,
+  SET_RDS_NAME,
   CHANGE_TERMINAL_CATEGORY,
   CHANGE_TERMINAL_COLOR,
   CHANGE_SEMANTICREFERENCE,
@@ -186,7 +186,7 @@ export function typeEditorReducer(
         ...state,
         mode: action.payload.mode,
       };
-    case CHANGE_RDS_NAME:
+    case SET_RDS_NAME:
       return {
         ...state,
         rdsName: action.payload.rdsName,
@@ -233,7 +233,7 @@ export function typeEditorReducer(
           status: action.payload.status,
         },
       };
-    case CHANGE_RDS:
+    case SET_RDS:
       return {
         ...state,
         createLibraryType: {

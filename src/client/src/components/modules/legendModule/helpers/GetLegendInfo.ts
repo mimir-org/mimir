@@ -1,5 +1,4 @@
 import { Node, Connector } from "../../../../models";
-import { IsTransportTerminal } from "../../../flow/helpers/common";
 import { GetAspectPartColor } from "../../../../assets/helpers";
 import { TextResources } from "../../../../assets/text";
 import { Color } from "../../../../compLibrary";
@@ -7,6 +6,7 @@ import {
   IsFulfilledByTerminal,
   IsLocationTerminal,
   IsPartOfTerminal,
+  IsTransportTerminal,
 } from "../../../flow/helpers/common";
 
 const GetLegendInfo = (conn: Connector, node: Node) => {

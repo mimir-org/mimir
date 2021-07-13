@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { MODULE_TYPE } from "../../../models/project";
-import { TypeMode, ObjectType, Status, Aspect } from "../../../models/";
+import { TypeMode, ObjectType, Aspect, Status } from "../../../models/";
 import { TextResources } from "../../../assets/text";
 import { CloseIcon } from "../../../assets/icons/common";
 import { TypeEditorState } from "../../../redux/store/typeEditor/types";
@@ -40,9 +40,7 @@ export const TypeEditorComponent = () => {
   const { push } = useHistory();
   const dispatch = useDispatch();
 
-  const state = useSelector<RootState>(
-    (state) => state.typeEditor
-  ) as TypeEditorState;
+  const state = useSelector<RootState>((s) => s.typeEditor) as TypeEditorState;
 
   const [typeName, setTypeName] = useState("");
   const aspect = state.createLibraryType.aspect;
@@ -65,7 +63,7 @@ export const TypeEditorComponent = () => {
   };
 
   useEffect(() => {
-    const darkMode = red.store.getState().darkMode.active as boolean;
+    const darkMode = red.store.getState().darkMode.active;
     SetDarkModeColor(darkMode);
     dispatch(getInitialData());
     dispatch(changeAllModulesVisibility(false, true));

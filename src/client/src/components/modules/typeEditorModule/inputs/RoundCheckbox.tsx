@@ -2,10 +2,7 @@ import "./roundcheckbox.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
-import {
-  changeRDS,
-  changeRDSName,
-} from "../../../../redux/store/typeEditor/actions";
+import { setRDS, setRDSName } from "../../../../redux/store/typeEditor/actions";
 
 interface Props {
   id: string;
@@ -25,28 +22,26 @@ export const RoundCheckbox = ({ id, name, label }: Props) => {
     }
   };
 
-  const handleCheckboxChange = () => {
+  const onCheckboxChange = () => {
     if (id !== "" && id) {
       if (label === "rds") {
-        dispatch(changeRDS(id));
-        dispatch(changeRDSName(name));
+        dispatch(setRDS(id));
+        dispatch(setRDSName(name));
       }
     }
   };
 
   return (
-    <>
-      <label className={"roundcheckbox"}>
-        <input
-          type="checkbox"
-          checked={isSelected()}
-          id={id}
-          onChange={handleCheckboxChange}
-        />
-        <span className="checked"></span>
-        <label htmlFor={id}></label>
-      </label>
-    </>
+    <label className={"roundcheckbox"}>
+      <input
+        type="checkbox"
+        checked={isSelected()}
+        id={id}
+        onChange={onCheckboxChange}
+      />
+      <span className="checked"></span>
+      <label htmlFor={id}></label>
+    </label>
   );
 };
 

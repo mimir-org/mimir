@@ -34,6 +34,7 @@ export const AttributesListElement = ({
 }: Props) => {
   const dispatch = useDispatch();
   const [expandList, setExpandList] = useState(false);
+  const predefinedAttributes = state.createLibraryType.predefinedAttributes;
 
   const toggleValuesList = () => {
     setExpandList(!expandList);
@@ -45,7 +46,7 @@ export const AttributesListElement = ({
     isMultiSelect: isMultiSelect,
   };
 
-  const locationAttributes = state.createLibraryType.predefinedAttributes;
+  const locationAttributes = predefinedAttributes;
   const isSelected = locationAttributes.some(
     (a) => a.key === locationAttribute.key
   );
@@ -66,8 +67,9 @@ export const AttributesListElement = ({
   };
 
   const onMultipleValuesCheckboxChange = ([param_key, param_value]) => {
-    let attribute: PredefinedAttribute =
-      state.createLibraryType.predefinedAttributes.find((a) => a.key === name);
+    let attribute: PredefinedAttribute = predefinedAttributes.find(
+      (a) => a.key === name
+    );
     const valueslist = attribute.values;
     if (valueslist) valueslist[param_key] = !param_value;
 
@@ -76,7 +78,7 @@ export const AttributesListElement = ({
       values: valueslist,
       isMultiSelect: isMultiSelect,
     };
-    let attributesList = state.createLibraryType.predefinedAttributes;
+    let attributesList = predefinedAttributes;
 
     attributesList = attributesList.map((a) => {
       if (a.key === attribute.key) a = attribute;
@@ -87,8 +89,9 @@ export const AttributesListElement = ({
 
   const onSingleValueCheckboxChange = (e) => {
     const targetKey = e.target.value;
-    let attribute: PredefinedAttribute =
-      state.createLibraryType.predefinedAttributes.find((a) => a.key === name);
+    let attribute: PredefinedAttribute = predefinedAttributes.find(
+      (a) => a.key === name
+    );
     let valueslist = attribute.values;
     if (valueslist) valueslist[targetKey] = !valueslist[targetKey];
 
@@ -106,7 +109,7 @@ export const AttributesListElement = ({
       isMultiSelect: isMultiSelect,
     };
 
-    let attributesList = state.createLibraryType.predefinedAttributes;
+    let attributesList = predefinedAttributes;
     attributesList = attributesList.map((a) => {
       if (a.key === attribute.key) a = attribute;
       return a;

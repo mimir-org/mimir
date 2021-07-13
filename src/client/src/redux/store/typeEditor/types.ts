@@ -37,13 +37,13 @@ export const CHANGE_OBJECTTYPE = "CHANGE_OBJECTTYPE";
 export const CHANGE_TYPENAME = "CHANGE_TYPENAME";
 export const CHANGE_MODE = "CHANGE_MODE";
 export const CHANGE_SELECTED_TYPE = "CHANGE_SELECTED_TYPE";
-export const CHANGE_RDS_NAME = "CHANGE_RDS_NAME";
 export const CHANGE_TERMINAL_CATEGORY = "CHANGE_TERMINAL_CATEGORY";
 export const CHANGE_TERMINAL_COLOR = "CHANGE_TERMINAL_COLOR";
 export const CREATING_TYPE = "CREATING_TYPE";
 export const UPDATING_TYPE = "UPDATING_TYPE";
 export const CHANGE_STATUS = "CHANGE_STATUS";
-export const CHANGE_RDS = "CHANGE_RDS";
+export const SET_RDS = "SET_RDS";
+export const SET_RDS_NAME = "SET_RDS_NAME";
 export const CHANGE_SEMANTICREFERENCE = "CHANGE_SEMANTICREFERENCE";
 export const CHANGE_LOCATION_TYPE = "CHANGE_LOCATION_TYPE";
 export const CHANGE_TERMINAL_TYPE_ID = "CHANGE_TERMINAL_TYPE_ID";
@@ -187,15 +187,15 @@ export interface ChangeStatus {
   };
 }
 
-export interface ChangeRds {
-  type: typeof CHANGE_RDS;
+export interface SetRds {
+  type: typeof SET_RDS;
   payload: {
     rds: string;
   };
 }
 
-export interface ChangeRdsName {
-  type: typeof CHANGE_RDS_NAME;
+export interface SetRdsName {
+  type: typeof SET_RDS_NAME;
   payload: {
     rdsName: string;
   };
@@ -332,8 +332,8 @@ export type TypeEditorActionTypes =
   | ChangeObjectType
   | ChangeTypeName
   | ChangeStatus
-  | ChangeRds
-  | ChangeRdsName
+  | SetRds
+  | SetRdsName
   | ChangeTerminalCategory
   | ChangeTerminalColor
   | ChangeTerminalTypeId

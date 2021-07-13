@@ -22,8 +22,8 @@ import {
   CHANGE_OBJECTTYPE,
   CHANGE_TYPENAME,
   CHANGE_STATUS,
-  CHANGE_RDS,
-  CHANGE_RDS_NAME,
+  SET_RDS,
+  SET_RDS_NAME,
   CHANGE_TERMINAL_CATEGORY,
   CHANGE_TERMINAL_COLOR,
   CHANGE_SEMANTICREFERENCE,
@@ -147,18 +147,18 @@ export function changeStatus(status: Status) {
   };
 }
 
-export function changeRDS(rds: string) {
+export function setRDS(rds: string) {
   return {
-    type: CHANGE_RDS,
+    type: SET_RDS,
     payload: {
       rds,
     },
   };
 }
 
-export function changeRDSName(rdsName: string) {
+export function setRDSName(rdsName: string) {
   return {
-    type: CHANGE_RDS_NAME,
+    type: SET_RDS_NAME,
     payload: {
       rdsName,
     },

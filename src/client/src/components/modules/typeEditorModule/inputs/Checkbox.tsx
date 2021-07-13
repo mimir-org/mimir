@@ -1,8 +1,8 @@
+import "./checkbox.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
 import { updateAttributesList } from "../../../../redux/store/typeEditor/actions";
-import "./checkbox.scss";
 
 interface Props {
   label: string;
@@ -11,19 +11,15 @@ interface Props {
 
 export const Checkbox = ({ label, id }: Props) => {
   const dispatch = useDispatch();
-
-  const state = useSelector<RootState>(
-    (state) => state.typeEditor
-  ) as TypeEditorState;
+  const state = useSelector<RootState>((s) => s.typeEditor) as TypeEditorState;
+  const attributeTypes = state.createLibraryType.attributeTypes;
 
   let attributeIsSelected =
-    label === "attribute" &&
-    state.createLibraryType.attributeTypes &&
-    state.createLibraryType.attributeTypes.includes(id);
+    label === "attribute" && attributeTypes?.includes(id);
 
-  const handleCheckboxChange = () => {
+  const onCheckboxChange = () => {
     if (label === "attribute") {
-      let attributesArray = state.createLibraryType.attributeTypes;
+      let attributesArray = attributeTypes;
       let temp: string[];
       if (id && attributeIsSelected) {
         temp = attributesArray.filter((a) => a !== id);
@@ -40,7 +36,7 @@ export const Checkbox = ({ label, id }: Props) => {
         type="checkbox"
         defaultChecked={label === "attribute" && attributeIsSelected}
         id={id}
-        onChange={handleCheckboxChange}
+        onChange={onCheckboxChange}
       />
       <span className="scheckmark"></span>
       <label htmlFor={id}></label>

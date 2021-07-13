@@ -25,7 +25,6 @@ interface Props {
 }
 
 export const DropDownMenu = ({ aspect, label, items, type }: Props) => {
-  console.log(aspect);
   const dispatch = useDispatch();
   const [isListOpen, setIsListOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState(GetDefaultValue(type));

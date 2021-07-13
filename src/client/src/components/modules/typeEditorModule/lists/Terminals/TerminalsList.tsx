@@ -1,5 +1,4 @@
 import { TypeEditorState } from "../../../../../redux/store/typeEditor/types";
-import { Aspect } from "../../../../../models";
 import { ListHeader } from "../ListHeader";
 import { TerminalsListBody } from "./TerminalsListBody";
 import { ListWrapper } from "../../../../../compLibrary";
@@ -24,7 +23,7 @@ export const TerminalsList = ({ state }: Props) => {
     <ListWrapper flex={0.8}>
       <ListHeader
         label={
-          state.createLibraryType.aspect === Aspect.Function
+          IsFunction(aspect)
             ? TextResources.TypeEditor_Properties_Terminals
             : TextResources.TypeEditor_Properties_Location_Attributes
         }

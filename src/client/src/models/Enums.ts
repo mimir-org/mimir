@@ -18,6 +18,7 @@ export enum RelationType {
   FulfilledBy = 3,
 }
 
+export type StatusEnum = keyof typeof Status;
 export enum Status {
   NotSet = 0,
   Draft = 1,

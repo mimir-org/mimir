@@ -42,14 +42,14 @@ export const AddTerminal = ({ terminals }: Props) => {
     setsearchbarInput(e.target.value.toLowerCase());
   };
 
-  const toggleExpand = () => {
-    setExpandList(!expandList);
-  };
-
   const onDirectionClick = (item) => {
     setselectedDirection(ConnectorType[item]);
     setselectedDirectionId(item);
     toggleList();
+  };
+
+  const toggleExpand = () => {
+    setExpandList(!expandList);
   };
 
   const toggleList = () => {

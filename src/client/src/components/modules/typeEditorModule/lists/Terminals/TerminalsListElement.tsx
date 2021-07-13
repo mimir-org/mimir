@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { ObjectType } from "../../../../../models";
 import { TypeEditorState } from "../../../../../redux/store/typeEditor/types";
 import { AddTerminal } from "./AddTerminal/AddTerminalComponent";
 import { RoundCheckbox } from "../../inputs/RoundCheckbox";
 import { NumericInput } from "../../../../../compLibrary";
+import { IsInterface, IsObjectBlock, IsTransport } from "../../helpers";
 import {
   changeTerminalTypeId,
   changeTerminalCategory,
@@ -35,9 +35,10 @@ export const TerminalsListElement = ({ category, terminals, state }: Props) => {
   const [expandList, setExpandList] = useState(false);
   const [quantity, setQuantity] = useState(0);
   const [expandCategory, setExpandCategory] = useState(true);
+  const objectType = state.createLibraryType.objectType;
 
   const selectCategory = () => {
-    if (state.createLibraryType.objectType !== ObjectType.ObjectBlock) {
+    if (IsObjectBlock(objectType)) {
       setselectedCategory(category);
       dispatch(changeTerminalCategory(category));
     }
@@ -67,6 +68,7 @@ export const TerminalsListElement = ({ category, terminals, state }: Props) => {
     setExpandCategory(!expandCategory);
   };
 
+  // Add terminals
   const terminalInput = (terminalCount: number) => {
     let temp = [];
     for (let i = 0; i < terminalCount; i++) {
@@ -75,14 +77,9 @@ export const TerminalsListElement = ({ category, terminals, state }: Props) => {
     return <>{temp}</>;
   };
 
-  const transportOrInterface =
-    (state.createLibraryType.objectType === ObjectType.Transport ||
-      state.createLibraryType.objectType === ObjectType.Interface) ??
-    false;
-
   return (
     <TerminalListElement>
-      {transportOrInterface ? (
+      {IsTransport(objectType) || IsInterface(objectType) ? (
         <TerminalCategoryWrapper>
           <div onClick={selectCategory}>
             <RoundCheckbox id={category} label="terminal" />
@@ -153,11 +150,9 @@ export const TerminalsListElement = ({ category, terminals, state }: Props) => {
           )}
         </TerminalCategoryWrapper>
       )}
-      {quantity !== 0 &&
-      expandCategory &&
-      state.createLibraryType.objectType === ObjectType.ObjectBlock ? (
+      {quantity !== 0 && expandCategory && IsObjectBlock(objectType) && (
         <AddTerminalWrapper>{terminalInput(quantity)}</AddTerminalWrapper>
-      ) : null}
+      )}
     </TerminalListElement>
   );
 };
