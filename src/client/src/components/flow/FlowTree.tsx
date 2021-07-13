@@ -68,6 +68,7 @@ const FlowTree = () => {
   };
 
   const OnDrop = (event) => {
+    const selectedNode = FindSelectedNode();
     const isFile =
       event.dataTransfer.files && event.dataTransfer.files.length > 0;
 
@@ -75,10 +76,14 @@ const FlowTree = () => {
       isFile,
       project,
       event,
+      dispatch,
       setElements,
       reactFlowInstance,
       reactFlowWrapper,
-      icons
+      project.id,
+      icons,
+      false,
+      selectedNode
     );
   };
 

@@ -50,7 +50,7 @@ export const AspectComponent = ({ node, label, project }: Props) => {
       {expanded &&
         children.map((elem) => {
           if (elem.aspect === node.aspect) {
-            const indent = elem.level ?? SetIndentLevel(elem, 0, project);
+            const indent = elem.level ?? SetIndentLevel(elem, 0);
             return (
               <AspectElement
                 key={elem.id}
