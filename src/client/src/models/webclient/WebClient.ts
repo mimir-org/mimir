@@ -1,14 +1,13 @@
 import { msalInstance } from "../../index";
 import { loginRequest } from "./MsalConfig";
 import { RequestInitDefault, HttpResponse } from ".";
+import { TextResources } from "../../assets/text";
 
 export const Token = async () => {
   const account = msalInstance.getActiveAccount();
 
   if (!account) {
-    throw Error(
-      "No active account! Verify a user has been signed in and setActiveAccount has been called."
-    );
+    throw Error(TextResources.Error_NoActiveAccount);
   }
 
   const response = await msalInstance.acquireTokenSilent({
@@ -33,7 +32,7 @@ export async function http<T>(request: RequestInfo): Promise<HttpResponse<T>> {
         return response;
       } else {
         if (response.status === 404) {
-          throw new Error("Ther server is unavailable");
+          throw new Error(TextResources.Error_ServerUnavailable);
         }
         response.data = await response.json();
         throw new Error(response.data.toString());
@@ -47,7 +46,7 @@ export async function http<T>(request: RequestInfo): Promise<HttpResponse<T>> {
       return response;
     }
   } catch (e) {
-    throw new Error("Ther server is unavailable");
+    throw new Error(TextResources.Error_ServerUnavailable);
   }
 }
 

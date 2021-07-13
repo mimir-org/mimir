@@ -8,7 +8,6 @@ import {
 
 const findParentNode = (currentNode: Node, project: Project): Node => {
   if (!currentNode) return null;
-
   if (IsAspectNode(currentNode)) return null;
 
   const actualConnector = currentNode.connectors.find(
@@ -21,8 +20,7 @@ const findParentNode = (currentNode: Node, project: Project): Node => {
   );
   if (!actualEdge) return null;
 
-  const nextNode = project.nodes.find((node) => node === actualEdge.fromNode);
-  return nextNode;
+  return project.nodes.find((node) => node === actualEdge.fromNode);
 };
 
 const GetReferenceDesignation = (node: Node, project: Project): string => {
@@ -32,7 +30,7 @@ const GetReferenceDesignation = (node: Node, project: Project): string => {
   let nextNode = node;
 
   while (nextNode) {
-    ref += nextNode ? (nextNode.rds ? GetRdsId(nextNode) : "") : "";
+    ref += nextNode?.rds ? GetRdsId(nextNode) : "";
     nextNode = findParentNode(nextNode, project);
   }
   return ref;

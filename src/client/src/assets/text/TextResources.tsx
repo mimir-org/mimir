@@ -155,6 +155,10 @@ const TextResources = {
   Error_Tile: "Oops, something went wrong",
   Error_ExportProject: "Can not export a project that does not exist",
   Error_GetFileData: "Could not create nodes and edges from file",
+  Error_SaveUpdateProject: "Could not create or update project",
+  Error_ServerUnavailable: "The server is unavailable",
+  Error_NoActiveAccount:
+    "No active account. Verify a user has been signed in and setActiveAccount has been called.",
 
   // LegendModule
   Legend_Heading: "Legend",
