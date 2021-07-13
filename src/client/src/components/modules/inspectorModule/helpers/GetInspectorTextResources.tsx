@@ -1,19 +1,12 @@
 import { TextResources } from "../../../../assets/text";
 
 const GetInspectorTextResource = (index: number) => {
-  return index === 0
-    ? TextResources.Inspector_AdminInfo
-    : index === 1
-    ? TextResources.Inspector_TechInfo
-    : index === 2
-    ? TextResources.Inspector_Terminals
-    : index === 3
-    ? TextResources.Inspector_Relations
-    : index === 4
-    ? TextResources.Inspector_Comments
-    : index === 5
-    ? TextResources.Inspector_Changelog
-    : TextResources.Inspector_Object;
+  if (index === 0) return TextResources.Inspector_AdminInfo;
+  if (index === 1) return TextResources.Inspector_TechInfo;
+  if (index === 2) return TextResources.Inspector_Terminals;
+  if (index === 3) return TextResources.Inspector_Relations;
+  if (index === 4) return TextResources.Inspector_Comments;
+  if (index === 5) return TextResources.Inspector_Changelog;
 };
 
 export default GetInspectorTextResource;

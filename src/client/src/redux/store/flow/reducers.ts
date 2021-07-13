@@ -5,14 +5,11 @@ const initialState = {
   view: VIEW_TYPE.TREEVIEW,
 };
 
-export function flowReducer(state = initialState, action) {
-  switch (action.type) {
-    case CHANGE_FLOW_VIEW:
-      return {
-        ...state,
-        view: action.payload.view,
-      };
-    default:
-      return state;
+export function flowReducer(action, state = initialState) {
+  if (action.type === CHANGE_FLOW_VIEW) {
+    return {
+      ...state,
+      view: action.payload.view,
+    };
   }
 }

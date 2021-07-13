@@ -43,13 +43,14 @@ export const PreviewBody = ({ state }: Props) => {
           <p>{state.createLibraryType.name}</p>
         </InfoWrapper>
       )}
-      {IsFunction(aspect) && objectType === ObjectType.Transport ? (
+      {IsFunction(aspect) && objectType === ObjectType.Transport && (
         <TransportIcon style={{ fill: state.terminalColor }}></TransportIcon>
-      ) : IsFunction(aspect) && objectType === ObjectType.Interface ? (
+      )}
+      {IsFunction(aspect) && objectType === ObjectType.Interface && (
         <InterfaceIcon
           style={{ stroke: state.terminalColor, fill: state.terminalColor }}
         ></InterfaceIcon>
-      ) : null}
+      )}
     </PreviewArea>
   );
 };

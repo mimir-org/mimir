@@ -16,13 +16,9 @@ const FlowModule = ({ route }) => {
 
   return (
     <div className="dndflow">
-      {route.type === VIEW_TYPE.TREEVIEW ? (
-        <FlowTree />
-      ) : route.type === VIEW_TYPE.BLOCKVIEW ? (
-        <FlowBlock />
-      ) : route.type === VIEW_TYPE.TYPE_EDITOR ? (
-        <TypeEditorComponent />
-      ) : null}
+      {route.type === VIEW_TYPE.TREEVIEW && <FlowTree />}
+      {route.type === VIEW_TYPE.BLOCKVIEW && <FlowBlock />}
+      {route.type === VIEW_TYPE.TYPE_EDITOR && <TypeEditorComponent />}
     </div>
   );
 };

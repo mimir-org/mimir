@@ -6,9 +6,12 @@ import { Connector, Node } from "../../../models";
 import { Size } from "../../../compLibrary";
 import { TerminalsIcon, ConnectIcon } from "../../../assets/icons/blockView";
 import { changeActiveConnector } from "../../../redux/store/project/actions";
-import { TerminalsComponent, ConnectViewComponent } from "../block";
-import { HandleComponent } from "../block";
 import { CalculateTerminalOrder, FilterTerminals } from "../helpers/block";
+import {
+  TerminalsComponent,
+  ConnectViewComponent,
+  HandleComponent,
+} from "../block";
 import {
   GetConnectChildren,
   IsMainConnectNode,
@@ -40,11 +43,8 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     (state) => state.connectView?.mainNodes
   ) as Node[];
 
-  const mainConnectNode = mainConnectNodes.find(
-    (node) => node.id === data.id
-  ) as Node;
-
-  const connectNodes = mainConnectNode?.connectNodes as Node[];
+  const mainConnectNode = mainConnectNodes.find((x) => x.id === data.id);
+  const connectNodes = mainConnectNode?.connectNodes;
 
   const onTerminalMenuClick = () => {
     showTerminalMenu(!terminalMenu);
@@ -104,9 +104,8 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   // Force edges' z-index in ConnectView
   useEffect(() => {
     if (mainConnectNode) {
-      const allEdges = document.querySelector(
-        ".react-flow__edges"
-      ) as HTMLElement;
+      const allEdges: HTMLElement =
+        document.querySelector(".react-flow__edges");
       allEdges.style.zIndex = "3";
     }
   }, [mainConnectNode]);

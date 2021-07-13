@@ -11,7 +11,7 @@ const initialState = {
   mainNodes: [] as Node[],
 };
 
-export function connectViewReducer(state = initialState, action) {
+export function connectViewReducer(action, state = initialState) {
   const node = action.payload?.node as Node;
 
   switch (action.type) {
@@ -32,7 +32,7 @@ export function connectViewReducer(state = initialState, action) {
       const child = action.payload.child;
 
       const mainNode = {
-        ...state.mainNodes.find((node) => node.id === mainNodeId),
+        ...state.mainNodes.find((x) => x.id === mainNodeId),
       } as Node;
 
       mainNode.connectNodes = (mainNode.connectNodes ?? []).concat(child);
@@ -49,11 +49,11 @@ export function connectViewReducer(state = initialState, action) {
       const connectChild = action.payload.child;
 
       const mainConnectNode = {
-        ...state.mainNodes.find((node) => node.id === mainConnectNodeId),
+        ...state.mainNodes.find((x) => x.id === mainConnectNodeId),
       } as Node;
 
       mainConnectNode.connectNodes = mainConnectNode.connectNodes?.filter(
-        (node) => node.id !== connectChild.id
+        (x) => x.id !== connectChild.id
       );
       const filterMainConnectNodes = state.mainNodes.filter(
         (x) => x?.id !== mainConnectNodeId

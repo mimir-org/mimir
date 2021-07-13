@@ -25,15 +25,13 @@ const AddLegend = (node: Node): Legend[] => {
         edge.fromConnectorId === conn.id &&
         !edge.isHidden &&
         !IsPartOfTerminal(conn)
-      ) {
+      )
         found = true;
-        return;
-      }
     });
     return found;
   };
 
-  const legends = node?.connectors
+  return node?.connectors
     ?.filter((conn) => IsActive(conn))
     .map((x) => {
       const [name, color] = GetLegendInfo(x, node);
@@ -44,8 +42,6 @@ const AddLegend = (node: Node): Legend[] => {
         color: color,
       };
     });
-
-  return legends;
 };
 
 export default AddLegend;

@@ -26,7 +26,7 @@ const LibraryModule = () => {
   const libraryKey = MODULE_TYPE.LIBRARY;
   const legendKey = MODULE_TYPE.LEGEND;
   const dispatch = useDispatch();
-  const state = useSelector<RootState>(
+  const libraryState = useSelector<RootState>(
     (state) => state.library
   ) as LibraryState;
 
@@ -95,7 +95,11 @@ const LibraryModule = () => {
         </ModuleHead>
         <ModuleBody visible={libraryOpen} library>
           <LibraryComponent
-            categories={GetLibCategories(selectedNode, isSplitView, state)}
+            categories={GetLibCategories(
+              selectedNode,
+              isSplitView,
+              libraryState
+            )}
             search={search}
           />
         </ModuleBody>

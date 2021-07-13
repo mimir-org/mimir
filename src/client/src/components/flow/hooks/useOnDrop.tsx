@@ -1,3 +1,5 @@
+import red from "../../../redux/store";
+import { useDispatch } from "react-redux";
 import { addNode, createEdge } from "../../../redux/store/project/actions";
 import { CreateBlockNode, IsBlockView } from "../helpers/block";
 import {
@@ -10,6 +12,7 @@ import {
 } from "../../../models";
 import {
   CreateId,
+  FindSelectedNode,
   IsInputTerminal,
   IsOutputTerminal,
   IsPartOfTerminal,
@@ -24,16 +27,16 @@ const useOnDrop = (
   isFile: boolean,
   project: Project,
   event,
-  dispatch,
   setElements,
   reactFlowInstance,
   reactFlowWrapper,
-  masterProjectId: string,
-  icons: BlobData[],
-  splitView?: boolean,
-  selectedNode?: Node
+  icons: BlobData[]
 ) => {
+  const dispatch = useDispatch();
   const showBlockView = IsBlockView();
+  const selectedNode = FindSelectedNode();
+  const splitView = red.store.getState().splitView.visible as boolean;
+  const masterProjectId = project.id;
 
   if (isFile && !showBlockView) {
     event.stopPropagation();
@@ -132,8 +135,7 @@ const useOnDrop = (
         masterProjectId: masterProjectId,
       } as Edge;
 
-      let parentNodeLevel = selectedNode.level;
-      node.level = ++parentNodeLevel;
+      node.level = ++selectedNode.level;
 
       dispatch(createEdge(partofEdge));
 

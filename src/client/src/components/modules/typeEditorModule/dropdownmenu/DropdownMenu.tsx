@@ -1,9 +1,9 @@
 import "./dropdownmenu.scss";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Aspect } from "../../../../models";
+import { Aspect, ObjectType, Status } from "../../../../models";
 import { ExpandedIcon, CollapsedIcon } from "../../../../assets/icons/common";
-import { LocationDropdown } from "./helpers";
+import { GetDefaultValue, LocationDropdown } from "./helpers";
 import { IsLocation } from "../helpers";
 import {
   DropdownMenuWrapper,
@@ -13,40 +13,35 @@ import {
 } from "../../../../compLibrary/dropdown";
 import {
   changeSelectedAspect,
-  changeSelectedObjecttype,
+  changeSelectedObjectType,
   changeStatus,
 } from "../../../../redux/store/typeEditor/actions";
 
 interface Props {
   aspect?: Aspect;
   label: string;
-  placeHolder: string;
-  listItems: any;
+  items: any[];
+  type: Aspect | ObjectType | Status;
 }
 
-export const DropDownMenu = ({
-  aspect,
-  label,
-  placeHolder,
-  listItems,
-}: Props) => {
+export const DropDownMenu = ({ aspect, label, items, type }: Props) => {
+  console.log(aspect);
   const dispatch = useDispatch();
   const [isListOpen, setIsListOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(placeHolder);
+  const [selectedValue, setSelectedValue] = useState(GetDefaultValue(type));
 
   const toggleList = () => {
     setIsListOpen(!isListOpen);
   };
 
-  const handleChange = ([key, value]) => {
+  const onChange = ([key, value]) => {
     setSelectedValue(value);
     setIsListOpen(!isListOpen);
-    if (label === "Aspect") {
-      // TODO: fix
+    if (type === Aspect.NotSet) {
       dispatch(changeSelectedAspect(Number(key)));
-    } else if (label === "Object Type") {
-      dispatch(changeSelectedObjecttype(Number(key)));
-    } else if (label === "Status") {
+    } else if (type === ObjectType.NotSet) {
+      dispatch(changeSelectedObjectType(Number(key)));
+    } else if (type === Status.Draft) {
       dispatch(changeStatus(Number(key)));
     }
     toggleList();
@@ -69,20 +64,20 @@ export const DropDownMenu = ({
         <DropdownMenuList>
           {IsLocation(aspect) ? (
             <LocationDropdown
-              listItems={listItems}
+              listItems={items}
               setSelectedValue={setSelectedValue}
               setIsListOpen={setIsListOpen}
               isListOpen={isListOpen}
             ></LocationDropdown>
           ) : (
-            listItems?.map(([key, value]) => (
+            items?.map(([key, value]) => (
               <div
                 className="listitem"
                 key={key}
-                onClick={() => handleChange([key, value])}
+                onClick={() => onChange([key, value])}
               >
                 <DropdownMenuListItem>
-                  <p>{value} test</p>
+                  <p>{value}</p>
                 </DropdownMenuListItem>
               </div>
             ))

@@ -119,7 +119,6 @@ const FlowBlock = () => {
   };
 
   const OnDrop = (event) => {
-    const selectedNode = FindSelectedNode();
     const isFile =
       event.dataTransfer.files && event.dataTransfer.files.length > 0;
 
@@ -127,14 +126,10 @@ const FlowBlock = () => {
       isFile,
       project,
       event,
-      dispatch,
       setElements,
       reactFlowInstance,
       reactFlowWrapper,
-      project.id,
-      icons,
-      splitView,
-      selectedNode
+      icons
     );
   };
 

@@ -1,3 +1,4 @@
+import "./roundcheckbox.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
@@ -5,7 +6,7 @@ import {
   changeRDS,
   changeRDSName,
 } from "../../../../redux/store/typeEditor/actions";
-import "./roundcheckbox.scss";
+
 interface Props {
   id: string;
   name?: string;
@@ -14,10 +15,7 @@ interface Props {
 
 export const RoundCheckbox = ({ id, name, label }: Props) => {
   const dispatch = useDispatch();
-
-  const state = useSelector<RootState>(
-    (state) => state.typeEditor
-  ) as TypeEditorState;
+  const state = useSelector<RootState>((s) => s.typeEditor) as TypeEditorState;
 
   let isSelected = () => {
     if (label === "rds") {

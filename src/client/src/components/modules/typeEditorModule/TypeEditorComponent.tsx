@@ -1,10 +1,9 @@
-import red from "../../../redux/store";
+import red, { RootState } from "../../../redux/store";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../redux/store";
 import { useHistory } from "react-router-dom";
 import { MODULE_TYPE } from "../../../models/project";
-import { TypeMode, ObjectType } from "../../../models/";
+import { TypeMode, ObjectType, Status, Aspect } from "../../../models/";
 import { TextResources } from "../../../assets/text";
 import { CloseIcon } from "../../../assets/icons/common";
 import { TypeEditorState } from "../../../redux/store/typeEditor/types";
@@ -14,13 +13,11 @@ import { changeAllModulesVisibility } from "../../../redux/store/modules/actions
 import { Dropdown } from "../../../compLibrary/dropdown";
 import { GetAspects, GetObjectTypes, GetStatus, IsLocation } from "./helpers";
 import {
-  getInitialData,
-  getBlobData,
-} from "../../../redux/store/typeEditor/actions";
-import {
   changeMode,
   changeTypeName,
   symbolChanged,
+  getInitialData,
+  getBlobData,
 } from "../../../redux/store/typeEditor/actions";
 import {
   DropdownMenu,
@@ -85,8 +82,8 @@ export const TypeEditorComponent = () => {
         <TypeInfo>
           <DropdownMenu
             label={TextResources.TypeEditor_Aspect}
-            placeHolder={TextResources.TypeEditor_Aspect_Placeholder}
-            listItems={GetAspects(state)}
+            items={GetAspects(state)}
+            type={Aspect.NotSet}
           />
           <DropdownMenu
             label={
@@ -94,13 +91,9 @@ export const TypeEditorComponent = () => {
                 ? TextResources.TypeEditor_Location_Type
                 : TextResources.TypeEditor_Object_Type
             }
-            placeHolder={
-              IsLocation(aspect)
-                ? "Select " + TextResources.TypeEditor_Location_Type
-                : "Select " + TextResources.TypeEditor_Object_Type
-            }
-            listItems={GetObjectTypes(state)}
+            items={GetObjectTypes(state)}
             aspect={aspect}
+            type={ObjectType.NotSet}
           />
           <TypeNameInput>
             <p>{TextResources.TypeEditor_Type_Name}</p>
@@ -113,8 +106,8 @@ export const TypeEditorComponent = () => {
           </TypeNameInput>
           <DropdownMenu
             label={TextResources.TypeEditor_Status}
-            placeHolder={TextResources.TypeEditor_Draft_Placeholder}
-            listItems={GetStatus(state)}
+            items={GetStatus(state)}
+            type={Status.Draft}
           />
           <Dropdown
             label={TextResources.TypeEditor_Symbol}

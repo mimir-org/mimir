@@ -22,22 +22,19 @@ const initialState = {
   ],
 };
 
-export const inspectorReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case CHANGE_INSPECTOR_COMPONENT:
-      return {
-        ...state,
-        tabs: state.tabs.map((tab, index) =>
-          index === action.payload.index
-            ? {
-                ...tab,
-                visible: true,
-              }
-            : { ...tab, visible: false }
-        ),
-      };
-    default:
-      return state;
+export const inspectorReducer = (action, state = initialState) => {
+  if (action.type === CHANGE_INSPECTOR_COMPONENT) {
+    return {
+      ...state,
+      tabs: state.tabs.map((tab, index) =>
+        index === action.payload.index
+          ? {
+              ...tab,
+              visible: true,
+            }
+          : { ...tab, visible: false }
+      ),
+    };
   }
 };
 

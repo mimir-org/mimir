@@ -1,6 +1,7 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
 import { TreeHandleBox } from "../../../compLibrary/treeView";
+import { Connector } from "../../../models";
 import { GetFlowAspectIcon, GetHandleType } from "../helpers/common";
 
 const Aspect: FC<NodeProps> = ({ data }) => {
@@ -9,12 +10,12 @@ const Aspect: FC<NodeProps> = ({ data }) => {
 
   useEffect(() => {
     if (timer) {
-      const timer = window.setInterval(() => {
+      const clock = window.setInterval(() => {
         setTimer(false);
         setIsHover(false);
       }, 5000);
       return () => {
-        window.clearInterval(timer);
+        window.clearInterval(clock);
       };
     }
   }, [timer]);
@@ -28,21 +29,21 @@ const Aspect: FC<NodeProps> = ({ data }) => {
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => mouseNodeLeave()}
     >
-      {data.connectors?.map((connector) => {
-        const [typeHandler, positionHandler] = GetHandleType(connector);
+      {data.connectors?.map((conn: Connector) => {
+        const [typeHandler, positionHandler] = GetHandleType(conn);
         return (
           <TreeHandleBox
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}
-            key={connector.id}
+            key={conn.id}
             visible={isHover}
             position={positionHandler}
           >
             <Handle
               type={typeHandler}
               position={positionHandler}
-              id={connector.id}
-              key={connector.id}
+              id={conn.id}
+              key={conn.id}
               className="function-treeview-handler"
             />
           </TreeHandleBox>

@@ -92,12 +92,13 @@ export const AttributesListElement = ({
     let valueslist = attribute.values;
     if (valueslist) valueslist[targetKey] = !valueslist[targetKey];
 
-    Object.entries(valueslist)
-      .filter(([key, _value]) => key !== targetKey)
-      .map(([key, value]) => {
-        if (value) valueslist[key] = false;
-        return [key, value];
-      });
+    const entries = Object.entries(valueslist).filter(
+      ([key, _value]) => key !== targetKey
+    );
+    entries.forEach(([key, value]) => {
+      if (value) valueslist[key] = false;
+      return [key, value];
+    });
 
     attribute = {
       key: name,

@@ -29,7 +29,7 @@ const initialState = {
   ],
 };
 
-export function moduleReducer(state = initialState, action) {
+export function moduleReducer(action, state = initialState) {
   switch (action.type) {
     case CHANGE_MODULE_VISIBILITY:
       return {

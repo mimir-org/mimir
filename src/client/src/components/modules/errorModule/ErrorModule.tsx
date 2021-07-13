@@ -16,6 +16,7 @@ import { deleteCommonError } from "../../../redux/store/common/actions";
 import { deleteLibraryError } from "../../../redux/store/library/actions";
 import { deleteUserError } from "../../../redux/store/user/actions";
 import { deleteTypeEditorError } from "../../../redux/store/typeEditor/actions";
+
 interface ErrorMessage {
   key: string;
   module: string;
@@ -64,12 +65,12 @@ const ErrorModule = () => {
   ) as TypeEditorState;
 
   useEffect(() => {
-    const errors = [];
+    const errorList = [];
 
     if (projectState.apiError) {
       projectState.apiError.forEach((error) => {
         if (error)
-          errors.push({
+          errorList.push({
             module: "Project",
             key: error.key,
             message: error.errorMessage,
@@ -81,7 +82,7 @@ const ErrorModule = () => {
     if (libraryState.apiError) {
       libraryState.apiError.forEach((error) => {
         if (error)
-          errors.push({
+          errorList.push({
             module: "Library",
             key: error.key,
             message: error.errorMessage,
@@ -93,7 +94,7 @@ const ErrorModule = () => {
     if (commonState.apiError) {
       commonState.apiError.forEach((error) => {
         if (error)
-          errors.push({
+          errorList.push({
             module: "Common",
             key: error.key,
             message: error.errorMessage,
@@ -105,7 +106,7 @@ const ErrorModule = () => {
     if (userState.apiError) {
       userState.apiError.forEach((error) => {
         if (error)
-          errors.push({
+          errorList.push({
             module: "User",
             key: error.key,
             message: error.errorMessage,
@@ -117,7 +118,7 @@ const ErrorModule = () => {
     if (typeEditorState.apiError) {
       typeEditorState.apiError.forEach((error) => {
         if (error)
-          errors.push({
+          errorList.push({
             module: "TypeEditor",
             key: error.key,
             message: error.errorMessage,
@@ -126,8 +127,8 @@ const ErrorModule = () => {
       });
     }
 
-    setErrors(errors);
-    setVisible(errors.length > 0);
+    setErrors(errorList);
+    setVisible(errorList.length > 0);
   }, [
     commonState.apiError,
     libraryState.apiError,

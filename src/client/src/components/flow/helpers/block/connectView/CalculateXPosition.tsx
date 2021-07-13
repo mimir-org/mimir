@@ -7,7 +7,7 @@ const CalculateXPosition = (
   xPos: number,
   connectNodes: Node[],
   mainConnectNode: Node
-): number => {
+) => {
   const xMargin = 7;
   ResizeMainConnectNode(connectNodes.length, mainConnectNode.id); // TODO: Move?
 

@@ -64,12 +64,12 @@ export const TerminalsListElement = ({ category, terminals, state }: Props) => {
   };
 
   const toggleExpand = () => {
-    setExpandCategory((expandCategory) => !expandCategory);
+    setExpandCategory(!expandCategory);
   };
 
-  const terminalInput = (quantity) => {
+  const terminalInput = (terminalCount: number) => {
     let temp = [];
-    for (let i = 0; i < quantity; i++) {
+    for (let i = 0; i < terminalCount; i++) {
       temp.push(<AddTerminal key={i} terminals={terminals} />);
     }
     return <>{temp}</>;
@@ -88,7 +88,7 @@ export const TerminalsListElement = ({ category, terminals, state }: Props) => {
             <RoundCheckbox id={category} label="terminal" />
           </div>
           <p className="category">{category}</p>
-          {category === selectedCategory ? (
+          {category === selectedCategory && (
             <div className="terminalSearchbarWrapper">
               <div className="terminalsearchbar_container">
                 <div className="terminalsearchbar">
@@ -127,7 +127,7 @@ export const TerminalsListElement = ({ category, terminals, state }: Props) => {
               </div>
               <img className="helpIcon" src={HelpIcon} alt="help" />
             </div>
-          ) : null}
+          )}
         </TerminalCategoryWrapper>
       ) : (
         <TerminalCategoryWrapper>
@@ -144,13 +144,13 @@ export const TerminalsListElement = ({ category, terminals, state }: Props) => {
             </label>
           </NumericInput>
           <p>{category}</p>
-          {quantity !== 0 ? (
+          {quantity !== 0 && (
             <img
               src={expandCategory ? ExpandedIcon : CollapsedIcon}
               alt="expand-icon"
               onClick={toggleExpand}
             />
-          ) : null}
+          )}
         </TerminalCategoryWrapper>
       )}
       {quantity !== 0 &&

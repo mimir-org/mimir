@@ -44,9 +44,10 @@ const initialState: ProjectState = {
   apiError: [],
 };
 
+// TODO: Refactor to reduce complexity
 export function projectReducer(
-  state = initialState,
-  action: ProjectActionTypes
+  action: ProjectActionTypes,
+  state = initialState
 ) {
   switch (action.type) {
     case SAVE_PROJECT:
@@ -156,9 +157,7 @@ export function projectReducer(
         ...state,
         project: {
           ...state.project,
-          nodes: state.project.nodes.filter(
-            (node) => node.id !== action.payload
-          ),
+          nodes: state.project.nodes.filter((x) => x.id !== action.payload),
         },
       };
 
@@ -187,14 +186,14 @@ export function projectReducer(
         ...state,
         project: {
           ...state.project,
-          nodes: state.project.nodes.map((node) =>
-            node.id === action.payload.nodeId
+          nodes: state.project.nodes.map((x) =>
+            x.id === action.payload.nodeId
               ? {
-                  ...node,
+                  ...x,
                   positionX: action.payload.x,
                   positionY: action.payload.y,
                 }
-              : node
+              : x
           ),
         },
       };
@@ -204,14 +203,14 @@ export function projectReducer(
         ...state,
         project: {
           ...state.project,
-          nodes: state.project.nodes.map((node) =>
-            node.id === action.payload.nodeId
+          nodes: state.project.nodes.map((x) =>
+            x.id === action.payload.nodeId
               ? {
-                  ...node,
+                  ...x,
                   positionBlockX: action.payload.x,
                   positionBlockY: action.payload.y,
                 }
-              : node
+              : x
           ),
         },
       };
@@ -244,10 +243,10 @@ export function projectReducer(
           ...state,
           project: {
             ...state.project,
-            nodes: nodeList.map((node) =>
-              action.payload.node.aspect === node.aspect
-                ? { ...node, isHidden: isHidden }
-                : node
+            nodes: nodeList.map((x) =>
+              action.payload.node.aspect === x.aspect
+                ? { ...x, isHidden: isHidden }
+                : x
             ),
             edges: edgeList.map((edge) =>
               node.aspect === edge.fromNode.aspect ||
@@ -270,8 +269,8 @@ export function projectReducer(
           ...state,
           project: {
             ...state.project,
-            nodes: state.project.nodes.map((node) =>
-              elements.includes(node) ? { ...node, isHidden: isHidden } : node
+            nodes: state.project.nodes.map((x) =>
+              elements.includes(x) ? { ...x, isHidden: isHidden } : x
             ),
             edges: edgeList.map((edge) =>
               elements.includes(edge) || edge.toNode === node
@@ -286,10 +285,8 @@ export function projectReducer(
         ...state,
         project: {
           ...state.project,
-          nodes: state.project.nodes.map((node) =>
-            node.id === action.payload.node.id
-              ? { ...node, isHidden: isHidden }
-              : node
+          nodes: state.project.nodes.map((x) =>
+            x.id === action.payload.node.id ? { ...x, isHidden: isHidden } : x
           ),
           edges: edgeList.map((edge) =>
             edge.fromNodeId === node.id || edge.toNodeId === node.id
@@ -305,10 +302,10 @@ export function projectReducer(
         ...state,
         project: {
           ...state.project,
-          nodes: state.project.nodes.map((node) =>
-            node.id === id
-              ? { ...node, isSelected: action.payload.isActive }
-              : { ...node, isSelected: false }
+          nodes: state.project.nodes.map((x) =>
+            x.id === id
+              ? { ...x, isSelected: action.payload.isActive }
+              : { ...x, isSelected: false }
           ),
           edges: state.project.edges,
         },
@@ -334,10 +331,10 @@ export function projectReducer(
         ...state,
         project: {
           ...state.project,
-          nodes: state.project.nodes.map((node) =>
-            node.id === blockId
-              ? { ...node, isBlockSelected: true }
-              : { ...node, isBlockSelected: false }
+          nodes: state.project.nodes.map((x) =>
+            x.id === blockId
+              ? { ...x, isBlockSelected: true }
+              : { ...x, isBlockSelected: false }
           ),
           edges: state.project.edges,
         },
@@ -363,9 +360,9 @@ export function projectReducer(
         project: {
           ...state.project,
           nodes: state.project.nodes.map(
-            (node) =>
+            (x) =>
               state && {
-                ...node,
+                ...x,
                 isHidden: true,
               }
           ),
@@ -377,13 +374,13 @@ export function projectReducer(
         ...state,
         project: {
           ...state.project,
-          nodes: state.project.nodes.map((node) =>
-            node.id === action.payload.nodeId
+          nodes: state.project.nodes.map((x) =>
+            x.id === action.payload.nodeId
               ? {
-                  ...node,
+                  ...x,
                   [action.payload.propName]: action.payload.propValue,
                 }
-              : node
+              : x
           ),
         },
       };
@@ -393,11 +390,11 @@ export function projectReducer(
         ...state,
         project: {
           ...state.project,
-          nodes: state.project.nodes.map((node) =>
-            node.id === action.payload.nodeId
+          nodes: state.project.nodes.map((x) =>
+            x.id === action.payload.nodeId
               ? {
-                  ...node,
-                  attributes: node.attributes.map((attribute) =>
+                  ...x,
+                  attributes: x.attributes.map((attribute) =>
                     attribute.id === action.payload.id
                       ? {
                           ...attribute,
@@ -407,7 +404,7 @@ export function projectReducer(
                       : attribute
                   ),
                 }
-              : node
+              : x
           ),
         },
       };
@@ -417,11 +414,11 @@ export function projectReducer(
         ...state,
         project: {
           ...state.project,
-          nodes: state.project.nodes.map((node) =>
-            node.id === action.payload.nodeId
+          nodes: state.project.nodes.map((x) =>
+            x.id === action.payload.nodeId
               ? {
-                  ...node,
-                  connectors: node.connectors.map((connector) =>
+                  ...x,
+                  connectors: x.connectors.map((connector) =>
                     connector.id === action.payload.connectorId
                       ? {
                           ...connector,
@@ -438,7 +435,7 @@ export function projectReducer(
                       : connector
                   ),
                 }
-              : node
+              : x
           ),
         },
       };
@@ -448,11 +445,11 @@ export function projectReducer(
         ...state,
         project: {
           ...state.project,
-          nodes: state.project.nodes.map((node) =>
-            node?.id === action.payload.node?.id
+          nodes: state.project.nodes.map((x) =>
+            x?.id === action.payload.node?.id
               ? {
-                  ...node,
-                  connectors: node.connectors.map((conn) =>
+                  ...x,
+                  connectors: x.connectors.map((conn) =>
                     conn.id === action.payload.connectorId
                       ? {
                           ...conn,
@@ -462,7 +459,7 @@ export function projectReducer(
                       : conn
                   ),
                 }
-              : node
+              : x
           ),
         },
       };

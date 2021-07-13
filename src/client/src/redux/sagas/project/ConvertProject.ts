@@ -218,7 +218,7 @@ const ConvertEdges = (edges: Edge[]): EdgeAm[] => {
 };
 
 const ConvertProject = (project: Project): ProjectAm => {
-  const proj = {
+  return {
     id: project.id,
     name: project.name,
     isSubProject: project.isSubProject,
@@ -227,8 +227,6 @@ const ConvertProject = (project: Project): ProjectAm => {
     nodes: ConvertNodes(project.nodes),
     edges: ConvertEdges(project.edges),
   } as ProjectAm;
-
-  return proj;
 };
 
 export default ConvertProject;

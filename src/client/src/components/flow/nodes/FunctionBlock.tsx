@@ -11,6 +11,7 @@ const FunctionBlock: FC<NodeProps> = ({ data }) => {
   const isSplitView = useSelector<RootState>(
     (state) => state.splitView.visible
   ) as boolean;
+
   const splitViewNode = useSelector<RootState>(
     (state) => state.splitView.node
   ) as Node;
@@ -22,11 +23,12 @@ const FunctionBlock: FC<NodeProps> = ({ data }) => {
   ) : (
     <>
       <Block data={data} location={isLocation} splitView={isSplitView} />
-      {!splitViewNode ? (
+      {!splitViewNode && (
         <BlockMessageBox>
           <p>{TextResources.BlockView_Select_Message}</p>
         </BlockMessageBox>
-      ) : (
+      )}
+      {splitViewNode && (
         <Block
           data={splitViewNode}
           location={splitViewNode}

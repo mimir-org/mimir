@@ -54,11 +54,11 @@ export default function BlockEdgeType({
   const getClassName = (source: Node, target: Node): string => {
     let defaultClassName = "react-flow__edge-path ";
 
-    const fromConnector = data.source.connectors?.find(
+    const fromConn = data.source.connectors?.find(
       (x: { id: any }) => x.id === data.edge.fromConnector.id
     ) as Connector;
 
-    switch (fromConnector?.relationType) {
+    switch (fromConn?.relationType) {
       case RelationType.HasLocation:
         defaultClassName += "has-location";
         break;

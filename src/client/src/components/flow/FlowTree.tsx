@@ -8,7 +8,6 @@ import { useOnConnect, useOnDrop, useOnElementsRemove } from "./hooks";
 import { FullScreenBox } from "../../compLibrary/controls";
 import { OpenProjectMenu } from "../project/openProject/OpenProjectMenu";
 import { BlobData, Project } from "../../models";
-import { GetTreeEdgeType } from "./helpers/tree";
 import { IsBlockView } from "./helpers/block";
 import { changeInspectorTab } from "../../redux/store/inspector/actions";
 import { FindSelectedNode, SetDarkModeColor } from "./helpers/common";
@@ -21,6 +20,7 @@ import {
   GetTreeNodeTypes,
   GetTreeEdgeTypes,
   CreateTreeElements,
+  GetTreeEdgeType,
 } from "./helpers/tree";
 
 const FlowTree = () => {
@@ -68,7 +68,6 @@ const FlowTree = () => {
   };
 
   const OnDrop = (event) => {
-    const selectedNode = FindSelectedNode();
     const isFile =
       event.dataTransfer.files && event.dataTransfer.files.length > 0;
 
@@ -76,14 +75,10 @@ const FlowTree = () => {
       isFile,
       project,
       event,
-      dispatch,
       setElements,
       reactFlowInstance,
       reactFlowWrapper,
-      project.id,
-      icons,
-      false,
-      selectedNode
+      icons
     );
   };
 

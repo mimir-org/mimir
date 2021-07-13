@@ -12,7 +12,7 @@ export const TypeEditorModule = ({ selectedElement }) => {
   const dispatch = useDispatch();
   const { push } = useHistory();
 
-  const handleClick = (mode) => {
+  const handleClick = (mode: TypeMode) => {
     if ((selectedElement && mode === TypeMode.Edit) || mode === TypeMode.New) {
       dispatch(changeMode(mode));
       push(`/home/${VIEW_TYPE.TYPE_EDITOR}`);

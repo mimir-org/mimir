@@ -13,8 +13,8 @@ const initialState: UserState = {
 };
 
 export function userReducer(
-  state = initialState,
-  action: UserActionTypes
+  action: UserActionTypes,
+  state = initialState
 ): UserState {
   switch (action.type) {
     case FETCHING_USER:

@@ -120,7 +120,7 @@ export function changeSelectedAspect(aspect: Aspect) {
   };
 }
 
-export function changeSelectedObjecttype(objectType: ObjectType) {
+export function changeSelectedObjectType(objectType: ObjectType) {
   return {
     type: CHANGE_OBJECTTYPE,
     payload: {

@@ -11,7 +11,7 @@ const TraverseTree = (
 
   edgeList.forEach((edge) => {
     if (edge.fromNodeId === parentNode.id) {
-      let node = nodeList.find((node) => node.id === edge.toNodeId);
+      let node = nodeList.find((x) => x.id === edge.toNodeId);
       const connector = node?.connectors?.find(
         (x) => x.id === edge?.toConnectorId
       );

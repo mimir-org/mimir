@@ -81,9 +81,10 @@ const initialState: TypeEditorState = {
   icons: [] as BlobData[],
 };
 
+// TODO: Refactor to reduce complexity
 export function typeEditorReducer(
-  state = initialState,
-  action: TypeEditorActionTypes
+  action: TypeEditorActionTypes,
+  state = initialState
 ): TypeEditorState {
   switch (action.type) {
     case DELETE_TYPE_EDITOR_ERROR:

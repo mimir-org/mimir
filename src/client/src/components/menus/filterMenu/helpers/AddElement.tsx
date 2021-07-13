@@ -9,10 +9,7 @@ const AddElement = (node: Node, edges: Edge[]) => {
     let found = false;
 
     edges.forEach((edge) => {
-      if (edge.fromConnectorId === conn.id) {
-        found = true;
-        return;
-      }
+      if (edge.fromConnectorId === conn.id) found = true;
     });
     return found;
   };

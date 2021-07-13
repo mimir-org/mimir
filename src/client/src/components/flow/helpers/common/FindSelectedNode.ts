@@ -1,11 +1,9 @@
-import { Node } from "../../../../models";
 import red from "../../../../redux/store";
+import { Node } from "../../../../models";
 
 const FindSelectedNode = () => {
   const nodes = red.store.getState().projectState?.project?.nodes as Node[];
-  const selectedNode = nodes?.find((node) => node?.isSelected);
-
-  return selectedNode;
+  return nodes?.find((node) => node?.isSelected);
 };
 
 export default FindSelectedNode;

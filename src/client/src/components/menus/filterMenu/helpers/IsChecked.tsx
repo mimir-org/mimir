@@ -17,25 +17,24 @@ const IsChecked = (
 
   // Sort by category
   if (type === TextResources.Filter_Transport)
-    edge = edges.find((edge) => IsTransportTerminal(edge.fromConnector));
+    edge = edges.find((x) => IsTransportTerminal(x.fromConnector));
   else if (type === TextResources.Relations_PartOf)
-    edge = edges.find((edge) => IsPartOfTerminal(edge.fromConnector));
+    edge = edges.find((x) => IsPartOfTerminal(x.fromConnector));
   else if (type === TextResources.Filter_Location)
-    edge = edges.find((edge) => IsLocationTerminal(edge.fromConnector));
+    edge = edges.find((x) => IsLocationTerminal(x.fromConnector));
   // Sort by type
   else if (IsTransportTerminal(conn))
-    edge = edges.find((edge) => edge.fromConnector.name === name);
+    edge = edges.find((x) => x.fromConnector.name === name);
   else if (IsLocationTerminal(conn))
     edge = edges.find(
-      (edge) =>
-        edge.fromNode.aspect === node?.aspect &&
-        IsLocationTerminal(edge.fromConnector)
+      (x) =>
+        x.fromNode.aspect === node?.aspect &&
+        IsLocationTerminal(x.fromConnector)
     );
   else if (IsPartOfTerminal(conn))
     edge = edges.find(
-      (edge) =>
-        edge.fromNode.aspect === node?.aspect &&
-        IsPartOfTerminal(edge.fromConnector)
+      (x) =>
+        x.fromNode.aspect === node?.aspect && IsPartOfTerminal(x.fromConnector)
     );
 
   return !edge?.isHidden;

@@ -2,7 +2,6 @@ import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
 import { Connector } from "../../../models";
 import { Symbol } from "../../../compLibrary/dropdown";
-import { SetTerminalYPos } from "../helpers/common";
 import {
   TreeHandleBox,
   TreeNodeNameBox,
@@ -13,6 +12,7 @@ import {
   IsInputTerminal,
   IsOutputTerminal,
   IsPartOfTerminal,
+  SetTerminalYPos,
 } from "../helpers/common";
 
 const TreeviewNode: FC<NodeProps> = ({ data }) => {
@@ -27,12 +27,12 @@ const TreeviewNode: FC<NodeProps> = ({ data }) => {
 
   useEffect(() => {
     if (timer) {
-      const timer = window.setInterval(() => {
+      const clock = window.setInterval(() => {
         setTimer(false);
         setIsHover(false);
       }, 5000);
       return () => {
-        window.clearInterval(timer);
+        window.clearInterval(clock);
       };
     }
   }, [timer]);
