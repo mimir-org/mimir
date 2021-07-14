@@ -9,7 +9,7 @@ import { TextResources } from "../../../../assets/text";
 const CreateBlockNode = (node: Node, connectNode: Node, splitView: boolean) => {
   if (!node) return null;
 
-  const connectNodes = (connectNode?.connectNodes as Node[]) ?? [];
+  const connectNodes = connectNode?.connectNodes ?? [];
   const type = IsLocation(node)
     ? TextResources.Type_BlockLocation
     : TextResources.Type_BlockFunction;

@@ -5,7 +5,7 @@ import { FindSelectedNode } from "../common";
 
 const ShowBlockViewEdge = (edge: Edge) => {
   const splitView = red.store.getState().splitView;
-  const isSplitView = splitView.visible as boolean;
+  const isSplitView = splitView.visible;
   const splitViewNode = splitView.node as Node;
   const selectedNode = FindSelectedNode();
 

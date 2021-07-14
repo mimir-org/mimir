@@ -4,9 +4,9 @@ import { AddLegend } from "./helpers";
 
 const LegendComponent = (project: Project) => {
   const legends = [] as Legend[];
-  const edges = project.edges;
 
   if (!project) return legends;
+  const edges = project.edges;
   const nodes = project.nodes?.filter((x) => !x.isHidden);
 
   nodes?.forEach((node) => {

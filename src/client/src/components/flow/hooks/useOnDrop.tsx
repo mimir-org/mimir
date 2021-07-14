@@ -50,7 +50,9 @@ const useOnDrop = (
       data[1].forEach((edge) => {
         dispatch(createEdge(edge));
         const edgeType = GetTreeEdgeType(edge.fromConnector);
-        setElements((es) => es.concat(CreateTreeEdge(edge, edgeType)));
+        setElements((es) =>
+          es.concat(CreateTreeEdge(edge, edgeType, project.nodes))
+        );
       });
     })();
   } else {
@@ -137,7 +139,9 @@ const useOnDrop = (
       dispatch(createEdge(partofEdge));
 
       const edgeType = GetTreeEdgeType(fromConnector);
-      setElements((es) => es.concat(CreateTreeEdge(partofEdge, edgeType)));
+      setElements((es) =>
+        es.concat(CreateTreeEdge(partofEdge, edgeType, project.nodes))
+      );
     }
     dispatch(addNode(node));
   }
