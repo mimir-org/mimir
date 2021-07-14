@@ -10,6 +10,7 @@ export { default as ShowBlockViewEdge } from "./ShowBlockViewEdge";
 export { default as ValidateConnector } from "./ValidateConnector";
 export { default as ValidateBlockEdge } from "./ValidateBlockEdge";
 export { default as IsBlockView } from "./IsBlockView";
+export { default as IsSplitView } from "./IsSplitView";
 export { default as FilterTerminals } from "./FilterTerminals";
 export { default as SortTerminals } from "./SortTerminals";
 export { default as FindSelectedBlockNode } from "./FindSelectedBlockNode";

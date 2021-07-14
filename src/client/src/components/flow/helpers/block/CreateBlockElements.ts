@@ -33,7 +33,7 @@ const CreateBlockElements = (
       IsPartOfTerminal(edge.toConnector)
     ) {
       const toNode = nodes.find((node) => node.id === edge.toNodeId);
-      if (toNode) elements.push(CreateBlockNode(toNode, null, splitView));
+      if (toNode) elements.push(CreateBlockNode(toNode, null));
     }
   });
 
@@ -55,8 +55,7 @@ const CreateBlockElements = (
     mainConnectNodes.forEach((mainNode) => {
       mainNode.connectNodes?.forEach((node) => {
         const connectNode = nodes.find((x) => x.id === node.id);
-        if (connectNode)
-          elements.push(CreateBlockNode(connectNode, mainNode, false));
+        if (connectNode) elements.push(CreateBlockNode(connectNode, mainNode));
       });
     });
   }

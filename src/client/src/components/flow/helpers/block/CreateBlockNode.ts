@@ -5,8 +5,9 @@ import { IsFunction, IsLocation } from "../common";
 import { Size } from "../../../../compLibrary";
 import { SetConnectNodePosition } from "./connectView";
 import { TextResources } from "../../../../assets/text";
+import { IsSplitView } from "./";
 
-const CreateBlockNode = (node: Node, connectNode: Node, splitView: boolean) => {
+const CreateBlockNode = (node: Node, connectNode: Node) => {
   if (!node) return null;
 
   const connectNodes = connectNode?.connectNodes ?? [];
@@ -15,7 +16,7 @@ const CreateBlockNode = (node: Node, connectNode: Node, splitView: boolean) => {
     : TextResources.Type_BlockFunction;
 
   // Force node to fit Block
-  let position = SetBlockNodePosition(node, splitView);
+  let position = SetBlockNodePosition(node, IsSplitView());
   if (connectNodes.some((x) => x.id === node.id)) {
     position = SetConnectNodePosition(node, connectNode.id, connectNodes);
   }

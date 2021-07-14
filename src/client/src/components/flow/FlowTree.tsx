@@ -71,22 +71,14 @@ const FlowTree = () => {
   };
 
   const OnDrop = (event) => {
-    const selectedNode = FindSelectedNode();
-    const isFile =
-      event.dataTransfer.files && event.dataTransfer.files.length > 0;
-
     return useOnDrop(
-      isFile,
       project,
       event,
       dispatch,
       setElements,
       reactFlowInstance,
       reactFlowWrapper,
-      project.id,
-      icons,
-      false,
-      selectedNode
+      icons
     );
   };
 
