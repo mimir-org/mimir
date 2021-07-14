@@ -11,7 +11,7 @@ import {
 
 interface Props {
   category: LibCategory;
-  selectedElement: any;
+  selectedElement: string;
   setSelectedElement: any;
 }
 

@@ -1,11 +1,11 @@
 import Moment from "react-moment";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { changeSelectedProject } from "../../../redux/store/project/actions";
-import { RootState } from "../../../redux/store";
 import { ProjectSimple } from "../../../models";
 import "./projectdata.scss";
 
 interface Props {
+  projects: ProjectSimple[];
   projectId: string;
   projectName: string;
   projectOwner: string;
@@ -13,19 +13,16 @@ interface Props {
 }
 
 export const ProjectDataComponent = ({
+  projects,
   projectId,
   projectName,
   projectOwner,
   updated,
 }: Props) => {
   const dispatch = useDispatch();
-  const projects = useSelector<RootState>(
-    (state) => state.projectState.projectList
-  ) as ProjectSimple[];
-
   const isSelected = projects.find((x) => x.id === projectId).selected;
 
-  const handleClick = () => {
+  const onClick = () => {
     dispatch(changeSelectedProject(projectId));
   };
 
@@ -34,7 +31,7 @@ export const ProjectDataComponent = ({
       className={
         "project_data " + (isSelected ? "selected_project" : "not_selected")
       }
-      onClick={handleClick}
+      onClick={onClick}
     >
       <p className="project_name">{projectName}</p>
       <p className="project_owner">{projectOwner}</p>

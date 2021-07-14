@@ -1,16 +1,15 @@
+import "./searchbar.scss";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { search } from "../../../redux/store/project/actions";
 import { GetIcon } from "../helpers";
-import "./searchbar.scss";
 
-export let SearchBar = () => {
+export const SearchBar = () => {
   const dispatch = useDispatch();
+  const [searchbarInput, setSearchbarInput] = useState("");
 
-  const [searchbarInput, setsearchbarInput] = useState("");
-
-  const handleChange = (e) => {
-    setsearchbarInput(e.target.value);
+  const onChange = (e) => {
+    setSearchbarInput(e.target.value);
     dispatch(search(e.target.value));
   };
 
@@ -21,7 +20,7 @@ export let SearchBar = () => {
         type="text"
         value={searchbarInput}
         placeholder="Search projects"
-        onChange={handleChange}
+        onChange={onChange}
         autoFocus
       />
       <GetIcon icon="SearchIcon" />

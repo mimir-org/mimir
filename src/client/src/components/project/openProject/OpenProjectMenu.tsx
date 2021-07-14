@@ -10,6 +10,7 @@ import { changeMenu } from "../../../redux/store/projectMenu/actions";
 import { useState } from "react";
 import { MessageComponent } from "../../message";
 import { ProjectSimple } from "../../../models";
+import { ProjectState } from "../../../redux/store/project/types";
 import {
   ProjectBody,
   ProjectBox,
@@ -17,14 +18,15 @@ import {
   ButtonBox,
 } from "../../../compLibrary/box/project";
 
-export const OpenProjectMenu = () => {
+interface Props {
+  projectState: ProjectState;
+}
+
+export const OpenProjectMenu = ({ projectState }: Props) => {
   const dispatch = useDispatch();
   const [confirm, setConfirm] = useState(false);
 
-  const projects = useSelector<RootState>(
-    (state) => state.projectState.projectList
-  ) as ProjectSimple[];
-
+  const projects = projectState.projectList as ProjectSimple[];
   const project = projects?.find((x) => x.selected);
   const projectId = project?.id;
 
@@ -71,7 +73,7 @@ export const OpenProjectMenu = () => {
             {TextResources.Account_Open_Label}
           </HeaderBox>
           <SearchBar />
-          <ProjectList />
+          <ProjectList projectList={projects} />
           <ButtonBox>
             {projectId && (
               <MenuButton onClick={onOpenClick} wide>

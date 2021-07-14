@@ -5,7 +5,7 @@ import { RootState } from "../../../redux/store";
 import { TypeEditorState } from "../../../redux/store/typeEditor/types";
 import { useDispatch, useSelector } from "react-redux";
 import { changeInspectorTab } from "../../../redux/store/inspector/actions";
-import { Node } from "../../../models";
+import { Node, Project } from "../../../models";
 import {
   TabHeader,
   TabBody,
@@ -16,9 +16,10 @@ import {
 interface Props {
   node?: Node;
   index: number;
+  project: Project;
 }
 
-const TabComponent = ({ node, index }: Props) => {
+const TabComponent = ({ node, index, project }: Props) => {
   const dispatch = useDispatch();
   const isOpen = useSelector<RootState>(
     (state) => state.inspector.tabs[index]?.visible
@@ -45,7 +46,7 @@ const TabComponent = ({ node, index }: Props) => {
       </TabHeader>
 
       <TabBody>
-        <TabContent node={node} index={index} />
+        <TabContent node={node} index={index} project={project} />
       </TabBody>
     </>
   ) : (

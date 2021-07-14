@@ -19,7 +19,11 @@ import {
   ButtonBox,
 } from "../../../compLibrary/box/project";
 
-export const SaveProjectFileMenu = () => {
+interface Props {
+  projectState: ProjectState;
+}
+
+export const SaveProjectFileMenu = ({ projectState }: Props) => {
   const dispatch = useDispatch();
   const [fileName, setFileName] = useState("");
 
@@ -28,10 +32,6 @@ export const SaveProjectFileMenu = () => {
       state.menu.list.find((x) => x.type === MENU_TYPE.SAVE_PROJECT_FILE_MENU)
         ?.visible
   ) as boolean;
-
-  const projectState = useSelector<RootState>(
-    (state) => state.projectState
-  ) as ProjectState;
 
   const onReturnClick = () => {
     dispatch(changeMenu(MENU_TYPE.SAVE_PROJECT_FILE_MENU, false));
@@ -50,45 +50,43 @@ export const SaveProjectFileMenu = () => {
   };
 
   return (
-    <>
-      <ProjectBox
-        width={Size.MenuSmall_Width}
-        height={Size.MenuSmall_Height}
-        visible={isOpen}
-      >
-        <ProjectBody>
-          <HeaderBox>
-            <img
-              src={CloseIcon}
-              alt="Close project"
-              onClick={onReturnClick}
-              className="icon"
-            />
-            {TextResources.Account_Save_Label_File}
-          </HeaderBox>
-          <Label>{TextResources.Account_Save_Label_File_Name}</Label>
-          <Input
-            onChange={(e: any) => setFileName(e.target.value)}
-            inputType="text"
-            placeholder={TextResources.Account_Save_Label_File_Name}
-            value={fileName}
+    <ProjectBox
+      width={Size.MenuSmall_Width}
+      height={Size.MenuSmall_Height}
+      visible={isOpen}
+    >
+      <ProjectBody>
+        <HeaderBox>
+          <img
+            src={CloseIcon}
+            alt="Close project"
+            onClick={onReturnClick}
+            className="icon"
           />
-          <ButtonBox left>
-            <MenuButton onClick={onReturnClick}>
-              <p>{TextResources.Account_Cancel_Button}</p>
+          {TextResources.Account_Save_Label_File}
+        </HeaderBox>
+        <Label>{TextResources.Account_Save_Label_File_Name}</Label>
+        <Input
+          onChange={(e: any) => setFileName(e.target.value)}
+          inputType="text"
+          placeholder={TextResources.Account_Save_Label_File_Name}
+          value={fileName}
+        />
+        <ButtonBox left>
+          <MenuButton onClick={onReturnClick}>
+            <p>{TextResources.Account_Cancel_Button}</p>
+          </MenuButton>
+        </ButtonBox>
+        {fileName && (
+          <ButtonBox>
+            <MenuButton onClick={onProjectSaveClick} wide>
+              <p>{TextResources.Account_Save_Label_File_Button}</p>
+              <img src={RightArrowIcon} alt="Open project" className="icon" />
             </MenuButton>
           </ButtonBox>
-          {fileName && (
-            <ButtonBox>
-              <MenuButton onClick={onProjectSaveClick} wide>
-                <p>{TextResources.Account_Save_Label_File_Button}</p>
-                <img src={RightArrowIcon} alt="Open project" className="icon" />
-              </MenuButton>
-            </ButtonBox>
-          )}
-        </ProjectBody>
-      </ProjectBox>
-    </>
+        )}
+      </ProjectBody>
+    </ProjectBox>
   );
 };
 

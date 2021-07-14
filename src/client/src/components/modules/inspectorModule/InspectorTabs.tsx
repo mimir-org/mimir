@@ -24,9 +24,9 @@ const InspectorTabs = ({ project }: Props) => {
       {node && (
         <>
           <TabAdminComponent node={node} project={project} index={0} />
-          <TabComponent node={node} index={1} />
-          <TabComponent node={node} index={2} />
-          <TabComponent node={node} index={3} />
+          <TabComponent node={node} index={1} project={project} />
+          <TabComponent node={node} index={2} project={project} />
+          <TabComponent node={node} index={3} project={project} />
           {/* <TabComponent node={node} index={4} /> //NOTE: comments-tab is not for MVP-release. To be implemented later. */}
         </>
       )}

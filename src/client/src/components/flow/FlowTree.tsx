@@ -7,7 +7,8 @@ import { RootState } from "../../redux/store/index";
 import { useOnConnect, useOnDrop, useOnElementsRemove } from "./hooks";
 import { FullScreenBox } from "../../compLibrary/controls";
 import { OpenProjectMenu } from "../project/openProject/OpenProjectMenu";
-import { BlobData, Project } from "../../models";
+import { BlobData } from "../../models";
+import { ProjectState } from "../../redux/store/project/types";
 import { IsBlockView } from "./helpers/block";
 import { changeInspectorTab } from "../../redux/store/inspector/actions";
 import { FindSelectedNode, SetDarkModeColor } from "./helpers/common";
@@ -30,9 +31,11 @@ const FlowTree = () => {
   const [elements, setElements] = useState<Elements>();
   const darkMode = red.store.getState().darkMode.active;
 
-  const project = useSelector<RootState>(
-    (state) => state.projectState.project
-  ) as Project;
+  const projectState = useSelector<RootState>(
+    (state) => state.projectState
+  ) as ProjectState;
+
+  const project = projectState?.project;
 
   const icons = useSelector<RootState>(
     (state) => state.typeEditor.icons
@@ -149,8 +152,8 @@ const FlowTree = () => {
       )}
       {!project && (
         <div>
-          <ProjectMainMenu />
-          <OpenProjectMenu />
+          <ProjectMainMenu project={project} />
+          <OpenProjectMenu projectState={projectState} />
         </div>
       )}
     </>

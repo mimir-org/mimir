@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { MODULE_TYPE } from "../../../models/project";
-import { TypeMode, ObjectType, Aspect, Status } from "../../../models/";
 import { TextResources } from "../../../assets/text";
 import { CloseIcon } from "../../../assets/icons/common";
 import { TypeEditorState } from "../../../redux/store/typeEditor/types";
@@ -11,7 +10,9 @@ import { changeFlowView } from "../../../redux/store/flow/actions";
 import { SetDarkModeColor } from "../../flow/helpers/common";
 import { changeAllModulesVisibility } from "../../../redux/store/modules/actions";
 import { Dropdown } from "../../../compLibrary/dropdown";
+import { TypeEditorInspector } from "./inspector/TypeEditorInspector";
 import { GetAspects, GetObjectTypes, GetStatus, IsLocation } from "./helpers";
+import { TypeMode, ObjectType, Aspect, Status } from "../../../models/";
 import {
   changeMode,
   changeTypeName,
@@ -123,7 +124,7 @@ export const TypeEditorComponent = () => {
           )}
           <TypePreview state={state} />
         </ChooseProperties>
-        {/* <TypeEditorInspector /> */}
+        <TypeEditorInspector />
       </TypeEditorContent>
     </TypeEditorWrapper>
   );

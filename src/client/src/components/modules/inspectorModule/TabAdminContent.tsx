@@ -150,12 +150,11 @@ const TabAdminContent = ({ node, project, contractors, statuses }: Props) => {
             value={node.statusId ?? ""}
             onChange={(e: any) => handleOnChange(e, "statusId")}
           >
-            {statuses &&
-              statuses.map((x) => (
-                <option key={x.id} value={x.id}>
-                  {x.name}
-                </option>
-              ))}
+            {statuses?.map((x) => (
+              <option key={x.id} value={x.id}>
+                {x.name}
+              </option>
+            ))}
           </Select>
         </div>
         <div>

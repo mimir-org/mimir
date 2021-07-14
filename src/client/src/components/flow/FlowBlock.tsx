@@ -8,7 +8,8 @@ import { OpenProjectMenu } from "../project/openProject";
 import { Color } from "../../compLibrary";
 import { BackgroundBox } from "../../compLibrary/blockView";
 import { changeInspectorTab } from "../../redux/store/inspector/actions";
-import { Project, Node, BlobData } from "../../models";
+import { Node, BlobData } from "../../models";
+import { ProjectState } from "../../redux/store/project/types";
 import {
   changeActiveBlockNode,
   changeActiveEdge,
@@ -51,9 +52,11 @@ const FlowBlock = () => {
   const darkMode = red.store.getState().darkMode.active;
   const node = FindSelectedNode();
 
-  const project = useSelector<RootState>(
-    (state) => state.projectState?.project
-  ) as Project;
+  const projectState = useSelector<RootState>(
+    (state) => state.projectState
+  ) as ProjectState;
+
+  const project = projectState?.project;
 
   const splitView = useSelector<RootState>(
     (state) => state.splitView.visible
@@ -223,8 +226,8 @@ const FlowBlock = () => {
       )}
       {!project && (
         <div>
-          <ProjectMainMenu />
-          <OpenProjectMenu />
+          <ProjectMainMenu project={project} />
+          <OpenProjectMenu projectState={projectState} />
         </div>
       )}
     </>

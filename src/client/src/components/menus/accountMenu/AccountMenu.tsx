@@ -68,9 +68,9 @@ const AccountMenu = () => {
         <GetMenuElement type="Logout" userState={userState} />
       </MenuBox>
       <div className="ProjectMenu" style={{ zIndex: 2 }}>
-        <OpenProjectMenu />
+        <OpenProjectMenu projectState={projectState} />
         <CreateProjectMenu />
-        <SaveProjectFileMenu />
+        <SaveProjectFileMenu projectState={projectState} />
         <ImportProjectFileMenu />
         <SaveLibraryFileMenu />
         <ImportFileLibraryMenu />

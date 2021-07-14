@@ -1,12 +1,11 @@
+import styled from "styled-components";
 import { Input, InputBox } from "../../../compLibrary";
 import { InputWrapper } from "./styled";
 import { RightArrowIcon } from "../../../assets/icons/common";
 import { ConnectionList } from "./helpers";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { changeActiveNode } from "../../../redux/store/project/actions";
-import { RootState } from "../../../redux/store";
-import { Project, Edge } from "../../../models";
-import styled from "styled-components";
+import { Project, Edge, Node } from "../../../models";
 import TextResources from "../../../assets/text/TextResources";
 import {
   RelationColumns,
@@ -22,11 +21,14 @@ const GoToAspectContainer = styled.div`
   width: 300px;
 `;
 
-const RelationTabComponent = ({ node }) => {
+interface Props {
+  project: Project;
+  node: Node;
+}
+
+const RelationTabComponent = ({ project, node }: Props) => {
   const dispatch = useDispatch();
-  const project = useSelector<RootState>(
-    (state) => state.projectState.project
-  ) as Project;
+
   const nodes = project?.nodes ?? [];
   const edges = project?.edges ?? [];
 
@@ -49,11 +51,13 @@ const RelationTabComponent = ({ node }) => {
     console.log("Cannot go to " + node.label + ": Not yet implemented.");
     //changeSelectedNode(node.id);
   }
-  interface aspectRelation {
+
+  interface AspectRelation {
     node: any;
     aspectRelation: string;
   }
-  let aspectRelationList: aspectRelation[] = [
+
+  let aspectRelationList: AspectRelation[] = [
     //this is just examples of aspect-relations to fill the list
     {
       node: {
@@ -92,13 +96,12 @@ const RelationTabComponent = ({ node }) => {
           {aspectRelationList.map((r) => (
             <GoToAspectContainer key={r.node.id}>
               <div>
-                {r.aspectRelation === "Location"
-                  ? TextResources.Inspector_Relations_Part_Location
-                  : r.aspectRelation === "Product"
-                  ? TextResources.Inspector_Relations_Fulfilled_By
-                  : r.aspectRelation === "Function"
-                  ? TextResources.Inspector_Relations_Has_Function
-                  : ""}
+                {r.aspectRelation === "Location" &&
+                  TextResources.Inspector_Relations_Part_Location}
+                {r.aspectRelation === "Product" &&
+                  TextResources.Inspector_Relations_Fulfilled_By}
+                {r.aspectRelation === "Function" &&
+                  TextResources.Inspector_Relations_Has_Function}
               </div>
               <InputBox>
                 <InputWrapper width="50%">
@@ -107,13 +110,12 @@ const RelationTabComponent = ({ node }) => {
                 <InputWrapper width="126px">
                   <ButtonGoToAspect onClick={() => goToAspectNode(r.node)}>
                     <span>
-                      {r.aspectRelation === "Location"
-                        ? TextResources.Inspector_Relations_Location
-                        : r.aspectRelation === "Product"
-                        ? TextResources.Inspector_Relations_Product
-                        : r.aspectRelation === "Function"
-                        ? TextResources.Inspector_Relations_Function
-                        : ""}
+                      {r.aspectRelation === "Location" &&
+                        TextResources.Inspector_Relations_Location}
+                      {r.aspectRelation === "Product" &&
+                        TextResources.Inspector_Relations_Product}
+                      {r.aspectRelation === "Function" &&
+                        TextResources.Inspector_Relations_Function}
                     </span>
                     <img src={RightArrowIcon} alt="right-arrow-icon" />
                   </ButtonGoToAspect>

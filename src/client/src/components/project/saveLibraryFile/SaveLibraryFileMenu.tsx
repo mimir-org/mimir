@@ -31,55 +31,52 @@ export const SaveLibraryFileMenu = () => {
 
   const onSaveClick = () => {
     dispatch(exportLibrary(fileName));
-
     dispatch(changeMenu(MENU_TYPE.SAVE_LIBRARY_FILE_MENU, false));
     dispatch(changeMenu(MENU_TYPE.ACCOUNT_MENU, false));
   };
 
   return (
-    <>
-      <ProjectBox
-        width={Size.MenuSmall_Width}
-        height={Size.MenuSmall_Height}
-        visible={isOpen}
-      >
-        <ProjectBody>
-          <HeaderBox>
-            <img
-              src={CloseIcon}
-              alt="Close project"
-              onClick={onReturnClick}
-              className="icon"
-            />
-            {TextResources.Account_Save_Label_Library_File}
-          </HeaderBox>
-          <Label>{TextResources.Account_Save_Label_File_Name}</Label>
-          <Input
-            onChange={(e: any) => setFileName(e.target.value)}
-            inputType="text"
-            placeholder={TextResources.Account_Save_Label_File_Name}
-            value={fileName}
+    <ProjectBox
+      width={Size.MenuSmall_Width}
+      height={Size.MenuSmall_Height}
+      visible={isOpen}
+    >
+      <ProjectBody>
+        <HeaderBox>
+          <img
+            src={CloseIcon}
+            alt="Close project"
+            onClick={onReturnClick}
+            className="icon"
           />
-          <ButtonBox left>
-            <MenuButton onClick={onReturnClick}>
-              <p>{TextResources.Account_Cancel_Button}</p>
+          {TextResources.Account_Save_Label_Library_File}
+        </HeaderBox>
+        <Label>{TextResources.Account_Save_Label_File_Name}</Label>
+        <Input
+          onChange={(e: any) => setFileName(e.target.value)}
+          inputType="text"
+          placeholder={TextResources.Account_Save_Label_File_Name}
+          value={fileName}
+        />
+        <ButtonBox left>
+          <MenuButton onClick={onReturnClick}>
+            <p>{TextResources.Account_Cancel_Button}</p>
+          </MenuButton>
+        </ButtonBox>
+        {fileName && (
+          <ButtonBox>
+            <MenuButton onClick={onSaveClick} wide>
+              <p>{TextResources.Account_Save_Label_File_Library_Button}</p>
+              <img
+                src={RightArrowIcon}
+                alt="Save library file"
+                className="icon"
+              />
             </MenuButton>
           </ButtonBox>
-          {fileName && (
-            <ButtonBox>
-              <MenuButton onClick={onSaveClick} wide>
-                <p>{TextResources.Account_Save_Label_File_Library_Button}</p>
-                <img
-                  src={RightArrowIcon}
-                  alt="Save library file"
-                  className="icon"
-                />
-              </MenuButton>
-            </ButtonBox>
-          )}
-        </ProjectBody>
-      </ProjectBox>
-    </>
+        )}
+      </ProjectBody>
+    </ProjectBox>
   );
 };
 
