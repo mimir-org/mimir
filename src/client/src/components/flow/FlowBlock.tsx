@@ -10,6 +10,8 @@ import { BackgroundBox } from "../../compLibrary/blockView";
 import { changeInspectorTab } from "../../redux/store/inspector/actions";
 import { Node, BlobData } from "../../models";
 import { ProjectState } from "../../redux/store/project/types";
+import { GetBlockEdgeTypes, IsBlockView } from "./helpers/block";
+import { CreateBlockElements } from "./creators";
 import {
   changeActiveBlockNode,
   changeActiveEdge,
@@ -27,11 +29,6 @@ import {
   IsLocation,
   SetDarkModeColor,
 } from "./helpers/common";
-import {
-  CreateBlockElements,
-  GetBlockEdgeTypes,
-  IsBlockView,
-} from "./helpers/block";
 import ReactFlow, {
   ReactFlowProvider,
   Elements,

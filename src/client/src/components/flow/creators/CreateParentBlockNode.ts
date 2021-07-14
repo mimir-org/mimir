@@ -1,7 +1,7 @@
 import { FlowElement } from "react-flow-renderer";
-import { TextResources } from "../../../../assets/text";
-import { Position } from "../../../../compLibrary";
-import { Node } from "../../../../models";
+import { TextResources } from "../../../assets/text";
+import { Position } from "../../../compLibrary";
+import { Node } from "../../../models";
 
 const CreateParentBlockNode = (node: Node) => {
   if (!node) return null;

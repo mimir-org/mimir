@@ -5,11 +5,11 @@ import {
   TransportEdgeType,
 } from "../../edges";
 
-const GetBlockEdgeTypes = {
+const GetEdgeTypes = {
   DefaultEdgeType: DefaultEdgeType,
   PartEdgeType: PartEdgeType,
   RelationEdgeType: RelationEdgeType,
   TransportEdgeType: TransportEdgeType,
 };
 
-export default GetBlockEdgeTypes;
+export default GetEdgeTypes;

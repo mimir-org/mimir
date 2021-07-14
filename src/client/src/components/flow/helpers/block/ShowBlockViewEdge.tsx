@@ -1,7 +1,7 @@
 import red from "../../../../redux/store";
-import { ValidateBlockEdge } from ".";
 import { Edge, Node } from "../../../../models";
 import { FindSelectedNode } from "../common";
+import { ValidateBlockEdge } from "../../validators";
 
 const ShowBlockViewEdge = (edge: Edge) => {
   const splitView = red.store.getState().splitView;

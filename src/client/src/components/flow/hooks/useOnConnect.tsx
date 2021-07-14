@@ -4,6 +4,7 @@ import { CreateId } from "../helpers/common";
 import { addEdge } from "react-flow-renderer";
 import { createEdge } from "../../../redux/store/project/actions";
 import { Connector, Edge, Node } from "../../../models";
+import { ConvertToEdge } from "../converters";
 
 const useOnConnect = (
   params,
@@ -44,19 +45,14 @@ const useOnConnect = (
   );
 
   if (!existingEdge) {
-    const edge = {
-      id: createdId,
-      fromConnectorId: fromConnector.id,
-      fromConnector: fromConnector,
-      toConnectorId: toConnector?.id,
-      toConnector: toConnector,
-      fromNodeId: sourceNode.id,
-      fromNode: sourceNode,
-      toNodeId: targetNode.id,
-      toNode: targetNode,
-      isHidden: sourceNode.isHidden,
-      masterProjectId: project.id,
-    } as Edge;
+    const edge = ConvertToEdge(
+      createdId,
+      fromConnector,
+      toConnector,
+      sourceNode,
+      targetNode,
+      project.id
+    );
 
     currentEdge = edge;
     dispatch(createEdge(edge));

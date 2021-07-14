@@ -12,17 +12,14 @@ import { ProjectState } from "../../redux/store/project/types";
 import { IsBlockView } from "./helpers/block";
 import { changeInspectorTab } from "../../redux/store/inspector/actions";
 import { FindSelectedNode, SetDarkModeColor } from "./helpers/common";
+import { CreateTreeElements } from "./creators";
+import { getBlobData } from "../../redux/store/typeEditor/actions";
+import { GetNodeTypes, GetEdgeTypes, GetEdgeType } from "./helpers/tree";
 import {
   updatePosition,
   changeActiveNode,
   changeActiveEdge,
 } from "../../redux/store/project/actions";
-import {
-  GetTreeNodeTypes,
-  GetTreeEdgeTypes,
-  CreateTreeElements,
-  GetTreeEdgeType,
-} from "./helpers/tree";
 
 const FlowTree = () => {
   const dispatch = useDispatch();
@@ -58,7 +55,7 @@ const FlowTree = () => {
     const fromConnector = fromNode.connectors.find(
       (x) => x.id === params.sourceHandle
     );
-    const edgeType = GetTreeEdgeType(fromConnector);
+    const edgeType = GetEdgeType(fromConnector);
     return useOnConnect(params, project, setElements, dispatch, edgeType);
   };
 
@@ -118,6 +115,11 @@ const FlowTree = () => {
     OnLoad(reactFlowInstance);
   }, [OnLoad, reactFlowInstance, darkMode]);
 
+  // Get symbols from TypeEditor
+  useEffect(() => {
+    dispatch(getBlobData());
+  }, [dispatch]);
+
   return (
     <>
       {!IsBlockView() && (
@@ -132,8 +134,8 @@ const FlowTree = () => {
             onDragOver={OnDragOver}
             onNodeDragStop={OnNodeDragStop}
             onElementClick={OnElementClick}
-            nodeTypes={GetTreeNodeTypes}
-            edgeTypes={GetTreeEdgeTypes}
+            nodeTypes={GetNodeTypes}
+            edgeTypes={GetEdgeTypes}
             snapToGrid={true}
             snapGrid={[5, 5]}
             onClick={(e) => OnClick(e)}

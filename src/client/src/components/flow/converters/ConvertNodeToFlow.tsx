@@ -1,11 +1,8 @@
-import { Node } from "../../../../models";
 import { FlowElement } from "react-flow-renderer";
-import { GetNodeType } from "../common";
+import { Node } from "../../../models";
+import { GetNodeType } from "../helpers/common";
 
-const CreateTreeNode = (node: Node) => {
-  if (!node) return null;
-  const position = { x: node.positionX, y: node.positionY };
-
+const ConvertNodeToFlow = (node: Node, position) => {
   return {
     id: node.id,
     type: GetNodeType(node),
@@ -19,4 +16,4 @@ const CreateTreeNode = (node: Node) => {
   } as FlowElement;
 };
 
-export default CreateTreeNode;
+export default ConvertNodeToFlow;

@@ -1,12 +1,12 @@
-import { IsConnectView } from "./connectView";
-import { Node, Connector } from "../../../../models";
+import { IsConnectView } from "../helpers/block/connectView";
+import { Node, Connector } from "../../../models";
 import {
   IsChildOf,
   IsFunction,
   IsLocation,
   IsPartOfTerminal,
   IsTransportTerminal,
-} from "../common";
+} from "../helpers/common";
 
 const ValidateBlockEdge = (
   selectedNode: Node,

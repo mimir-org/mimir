@@ -1,5 +1,5 @@
-import { Connector } from "../../../../models";
-import { IsLocationTerminal, IsTransportTerminal } from "../common";
+import { Connector } from "../../../models";
+import { IsLocationTerminal, IsTransportTerminal } from "../helpers/common";
 
 const ValidateConnector = (conn: Connector, isLocation: boolean) => {
   return (

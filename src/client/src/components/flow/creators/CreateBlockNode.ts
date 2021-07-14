@@ -1,11 +1,10 @@
-import { Node } from "../../../../models";
+import { Node } from "../../../models";
 import { FlowElement } from "react-flow-renderer";
-import { SetBlockNodePosition } from ".";
-import { IsFunction, IsLocation } from "../common";
-import { Size } from "../../../../compLibrary";
-import { SetConnectNodePosition } from "./connectView";
-import { TextResources } from "../../../../assets/text";
-import { IsSplitView } from "./";
+import { SetBlockNodePosition, IsSplitView } from "../helpers/block";
+import { IsFunction, IsLocation } from "../helpers/common";
+import { Size } from "../../../compLibrary";
+import { SetConnectNodePosition } from "../helpers/block/connectView";
+import { TextResources } from "../../../assets/text";
 
 const CreateBlockNode = (node: Node, connectNode: Node) => {
   if (!node) return null;

@@ -1,10 +1,11 @@
 import { addNode, createEdge } from "../../../redux/store/project/actions";
-import { CreateBlockNode, IsBlockView } from "../helpers/block";
+import { IsBlockView } from "../helpers/block";
+import { GetEdgeType } from "../helpers/tree";
+import { ConvertToEdge, ConvertToNode } from "../converters";
+import { CreateBlockNode, CreateTreeEdge, CreateTreeNode } from "../creators";
 import {
   BlobData,
-  Edge,
   LibraryNodeItem,
-  Node,
   Project,
   GetFileData,
 } from "../../../models";
@@ -15,11 +16,6 @@ import {
   IsOutputTerminal,
   IsPartOfTerminal,
 } from "./../helpers/common";
-import {
-  CreateTreeNode,
-  GetTreeEdgeType,
-  CreateTreeEdge,
-} from "../helpers/tree";
 
 const useOnDrop = (
   project: Project,
@@ -31,7 +27,7 @@ const useOnDrop = (
   icons: BlobData[]
 ) => {
   const showBlockView = IsBlockView();
-  const selectedNode = FindSelectedNode();
+  const sourceNode = FindSelectedNode();
   const isFile =
     event.dataTransfer.files && event.dataTransfer.files.length > 0;
 
@@ -49,7 +45,7 @@ const useOnDrop = (
 
       data[1].forEach((edge) => {
         dispatch(createEdge(edge));
-        const edgeType = GetTreeEdgeType(edge.fromConnector);
+        const edgeType = GetEdgeType(edge.fromConnector);
         setElements((es) =>
           es.concat(CreateTreeEdge(edge, edgeType, project.nodes))
         );
@@ -71,76 +67,52 @@ const useOnDrop = (
         y: event.clientY - reactFlowBounds.top,
       });
 
-    const node = {
-      id: CreateId(),
-      rds: data.rds,
-      semanticReference: data.semanticReference,
-      name: data.name,
-      label: data.name,
-      positionX: position.x,
-      positionY: position.y,
-      positionBlockX: position.x,
-      positionBlockY: position.y,
-      connectors: data.connectors,
-      attributes: data.attributes,
-      aspect: data.aspect,
-      statusId: data.statusId,
-      version: data.version,
-      masterProjectId: project.id,
-      symbolId: data.symbolId,
-      symbol: icons?.find((x) => x.id === data.symbolId),
-      level: 0,
-    } as Node;
+    const targetNode = ConvertToNode(data, position, project.id, icons);
 
-    node.connectors?.forEach((c) => {
+    targetNode.connectors?.forEach((c) => {
       c.id = CreateId();
-      c.nodeId = node.id;
+      c.nodeId = targetNode.id;
       c.attributes?.forEach((a) => {
         a.id = CreateId();
       });
     });
 
-    node.attributes?.forEach((a) => {
-      a.nodeId = node.id;
+    targetNode.attributes?.forEach((a) => {
+      a.nodeId = targetNode.id;
       a.id = CreateId();
     });
 
     showBlockView
-      ? setElements((es) => es.concat(CreateBlockNode(node, null)))
-      : setElements((es) => es.concat(CreateTreeNode(node)));
+      ? setElements((es) => es.concat(CreateBlockNode(targetNode, null)))
+      : setElements((es) => es.concat(CreateTreeNode(targetNode)));
 
-    if (selectedNode && selectedNode.aspect === node.aspect) {
-      node.level = selectedNode.level + 1;
+    if (sourceNode && sourceNode.aspect === targetNode.aspect) {
+      targetNode.level = sourceNode.level + 1;
 
-      const fromConnector = selectedNode.connectors?.find(
+      const sourceConn = sourceNode.connectors?.find(
         (x) => IsPartOfTerminal(x) && IsOutputTerminal(x)
       );
-      const toConnector = node.connectors?.find(
+      const targetConn = targetNode.connectors?.find(
         (x) => IsPartOfTerminal(x) && IsInputTerminal(x)
       );
 
-      const partofEdge = {
-        id: CreateId(),
-        fromConnectorId: fromConnector.id,
-        fromConnector: fromConnector,
-        toConnectorId: toConnector.id,
-        toConnector: toConnector,
-        fromNodeId: selectedNode.id,
-        fromNode: selectedNode,
-        toNodeId: node.id,
-        toNode: node,
-        isHidden: false,
-        masterProjectId: project.id,
-      } as Edge;
+      const partofEdge = ConvertToEdge(
+        CreateId(),
+        sourceConn,
+        targetConn,
+        sourceNode,
+        targetNode,
+        project.id
+      );
 
       dispatch(createEdge(partofEdge));
 
-      const edgeType = GetTreeEdgeType(fromConnector);
+      const edgeType = GetEdgeType(sourceConn);
       setElements((es) =>
         es.concat(CreateTreeEdge(partofEdge, edgeType, project.nodes))
       );
     }
-    dispatch(addNode(node));
+    dispatch(addNode(targetNode));
   }
 };
 
