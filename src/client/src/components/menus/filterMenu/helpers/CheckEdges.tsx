@@ -8,12 +8,6 @@ import {
 const CheckEdges = (edges: Edge[], type: RelationType | string, node: Node) => {
   const elementsToRemove = [];
 
-  if (type === "Show all") {
-    edges?.forEach((edge) => {
-      elementsToRemove.push(edge);
-    });
-  }
-
   // All transport edges
   if (type === "Transport") {
     edges?.forEach((edge) => {

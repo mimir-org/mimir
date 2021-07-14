@@ -12,16 +12,11 @@ import { Node, BlobData } from "../../models";
 import { ProjectState } from "../../redux/store/project/types";
 import { GetBlockEdgeTypes, IsBlockView } from "./helpers/block";
 import { CreateBlockElements } from "./creators";
+import { useOnConnect, useOnDrop, useOnRemove, useOnDragStop } from "./hooks";
 import {
   changeActiveBlockNode,
   changeActiveEdge,
 } from "../../redux/store/project/actions";
-import {
-  useOnConnect,
-  useOnDrop,
-  useOnElementsRemove,
-  useOnNodeDragStop,
-} from "./hooks";
 import {
   FindSelectedNode,
   GetBlockNodeTypes,
@@ -99,7 +94,7 @@ const FlowBlock = () => {
         elementsToRemove.push(edge);
     });
 
-    return useOnElementsRemove(elementsToRemove, setElements, dispatch);
+    return useOnRemove(elementsToRemove, setElements, dispatch);
   };
 
   const OnConnect = (params) => {
@@ -118,7 +113,7 @@ const FlowBlock = () => {
   };
 
   const OnNodeDragStop = (_event, activeNode) => {
-    return useOnNodeDragStop(_event, activeNode, dispatch);
+    return useOnDragStop(_event, activeNode, dispatch);
   };
 
   const OnDrop = (event) => {

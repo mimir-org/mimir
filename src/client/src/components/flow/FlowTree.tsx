@@ -4,9 +4,9 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ProjectMainMenu } from "../project";
 import { RootState } from "../../redux/store/index";
-import { useOnConnect, useOnDrop, useOnElementsRemove } from "./hooks";
+import { useOnConnect, useOnDrop, useOnRemove } from "./hooks";
 import { FullScreenBox } from "../../compLibrary/controls";
-import { OpenProjectMenu } from "../project/openProject/OpenProjectMenu";
+import { OpenProjectMenu } from "../project/openProject/";
 import { BlobData } from "../../models";
 import { ProjectState } from "../../redux/store/project/types";
 import { IsBlockView } from "./helpers/block";
@@ -39,7 +39,7 @@ const FlowTree = () => {
   ) as BlobData[];
 
   const OnElementsRemove = (elementsToRemove) => {
-    return useOnElementsRemove(elementsToRemove, setElements, dispatch);
+    return useOnRemove(elementsToRemove, setElements, dispatch);
   };
 
   const OnLoad = useCallback(

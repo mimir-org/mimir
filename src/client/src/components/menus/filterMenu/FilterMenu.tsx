@@ -28,8 +28,8 @@ const FilterMenu = () => {
 
   // Remove duplicates
   elements = elements.filter(
-    (value, index, elements) =>
-      elements.findIndex(
+    (value, index, elems) =>
+      elems.findIndex(
         (elem) =>
           elem.type === value.type &&
           elem.fromNode?.aspect === value.fromNode?.aspect
@@ -41,6 +41,7 @@ const FilterMenu = () => {
   let isPartOf = false;
   let transportCount = 0;
   let partOfCount = 0;
+  let locationCount = 0;
 
   elements.forEach((elem) => {
     if (IsTransportTerminal(elem.conn)) {
@@ -48,6 +49,7 @@ const FilterMenu = () => {
       isTransport = true;
     }
     if (IsLocationTerminal(elem.conn)) {
+      locationCount++;
       isLocation = true;
     }
     if (IsPartOfTerminal(elem.conn)) {
@@ -56,6 +58,7 @@ const FilterMenu = () => {
     }
   });
 
+  // TODO: refactor
   return (
     <MenuBox right>
       <MenuColumn>
@@ -64,6 +67,7 @@ const FilterMenu = () => {
             type={TextResources.Relations_PartOf}
             name={TextResources.Relations_PartOf}
             header={true}
+            edges={edges}
           />
         )}
         {elements.map(
@@ -76,6 +80,7 @@ const FilterMenu = () => {
                 key={x.id}
                 header={false}
                 node={x.fromNode}
+                edges={edges}
               />
             )
         )}
@@ -86,6 +91,7 @@ const FilterMenu = () => {
             name={null}
             key={CreateId()}
             header={false}
+            edges={edges}
           />
         )}
         <br></br>
@@ -94,6 +100,7 @@ const FilterMenu = () => {
             type={TextResources.Filter_Transport}
             name={TextResources.Filter_Transport}
             header={true}
+            edges={edges}
           />
         )}
         {elements.map(
@@ -105,6 +112,7 @@ const FilterMenu = () => {
                 name={x.name}
                 key={x.id}
                 header={false}
+                edges={edges}
               />
             )
         )}
@@ -115,6 +123,7 @@ const FilterMenu = () => {
             name={null}
             key={CreateId()}
             header={false}
+            edges={edges}
           />
         )}
         <br></br>
@@ -124,6 +133,7 @@ const FilterMenu = () => {
             type={TextResources.Filter_Location}
             name={TextResources.Relations_HasLocation}
             header={true}
+            edges={edges}
           />
         )}
         {elements.map(
@@ -140,8 +150,19 @@ const FilterMenu = () => {
                 key={x.id}
                 header={false}
                 node={x.fromNode}
+                edges={edges}
               />
             )
+        )}
+        {locationCount % 2 !== 0 && (
+          <FilterContent
+            conn={null}
+            type={null}
+            name={null}
+            key={CreateId()}
+            header={false}
+            edges={edges}
+          />
         )}
       </MenuColumn>
     </MenuBox>

@@ -24,14 +24,14 @@ const useOnConnect = (
     (node: Node) => node.id === params.target
   ) as Node;
 
-  let fromConnector: Connector;
-  let toConnector: Connector;
+  let sourceConn: Connector;
+  let targetConn: Connector;
   let currentEdge: Edge;
 
   project.nodes?.forEach((node: Node) => {
     node.connectors?.forEach((conn: Connector) => {
-      if (conn.id === params.sourceHandle) fromConnector = conn;
-      if (conn.id === params.targetHandle) toConnector = conn;
+      if (conn.id === params.sourceHandle) sourceConn = conn;
+      if (conn.id === params.targetHandle) targetConn = conn;
     });
   });
 
@@ -47,8 +47,8 @@ const useOnConnect = (
   if (!existingEdge) {
     const edge = ConvertToEdge(
       createdId,
-      fromConnector,
-      toConnector,
+      sourceConn,
+      targetConn,
       sourceNode,
       targetNode,
       project.id

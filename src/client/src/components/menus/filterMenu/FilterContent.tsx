@@ -22,11 +22,11 @@ interface Props {
   name: string;
   header: boolean;
   node?: Node;
+  edges: Edge[];
 }
 
-const FilterContent = ({ conn, type, name, header, node }: Props) => {
+const FilterContent = ({ conn, type, name, header, node, edges }: Props) => {
   const dispatch = useDispatch();
-  const edges = red.store.getState().projectState.project?.edges as Edge[];
   const isVisible = name !== null;
 
   let selectedElements = !IsBlockView()

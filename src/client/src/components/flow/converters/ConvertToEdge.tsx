@@ -2,18 +2,18 @@ import { Connector, Edge, Node } from "../../../models";
 
 const ConvertToEdge = (
   id: string,
-  fromConnector: Connector,
-  toConnector: Connector,
+  sourceConn: Connector,
+  targetConn: Connector,
   sourceNode: Node,
   targetNode: Node,
   projectId: string
 ) => {
   return {
     id: id,
-    fromConnectorId: fromConnector.id,
-    fromConnector: fromConnector,
-    toConnectorId: toConnector.id,
-    toConnector: toConnector,
+    fromConnectorId: sourceConn.id,
+    fromConnector: sourceConn,
+    toConnectorId: targetConn.id,
+    toConnector: targetConn,
     fromNodeId: sourceNode.id,
     fromNode: sourceNode,
     toNodeId: targetNode.id,

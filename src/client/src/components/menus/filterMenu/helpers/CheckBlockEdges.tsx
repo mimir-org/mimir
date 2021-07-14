@@ -5,21 +5,6 @@ import FindConnector from "./FindConnector";
 const CheckBlockEdges = (edges: Edge[], type: RelationType | string) => {
   const elementsToRemove = [];
 
-  // All connections
-  if (type === "Hide all") {
-    edges?.forEach((edge) => {
-      elementsToRemove.push(edge);
-      // Find connectors
-      const fromConnector = FindConnector(
-        edge.fromNodeId,
-        edge.fromConnectorId
-      );
-      const toConnector = FindConnector(edge.toNodeId, edge.toConnectorId);
-      if (fromConnector) elementsToRemove.push(fromConnector);
-      if (toConnector) elementsToRemove.push(toConnector);
-    });
-  }
-
   // Transport connections
   if (type === "Transport") {
     edges?.forEach((edge) => {
