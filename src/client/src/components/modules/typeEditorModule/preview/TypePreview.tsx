@@ -23,14 +23,12 @@ export const TypePreview = ({ state }: Props) => {
   const onSaveClick = (mode: TypeMode) => {
     if (ValidateType(state)) {
       setValidated(true);
-      console.log("her: ", mode);
       if (mode === TypeMode.New) {
         dispatch(create(state.createLibraryType));
       } else if (mode === TypeMode.Edit) {
         dispatch(update(state.createLibraryType));
       }
     } else {
-      console.log("der");
       setValidated(false);
     }
   };
