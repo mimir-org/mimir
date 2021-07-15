@@ -1,70 +1,63 @@
 export { default as ExplorerIcon } from "./explorer.svg";
-export { default as LegendIcon } from "./legendIcon.svg";
-export { default as LibraryIcon } from "./libraryIcon.svg";
-export { default as LocationIcon } from "./locationIcon.svg";
-export { default as FunctionIcon } from "./functionIcon.svg";
-export { default as ProductIcon } from "./productIcon.svg";
+export { default as LegendIcon } from "./legend.svg";
+export { default as LibraryIcon } from "./library.svg";
+export { default as LocationIcon } from "./location.svg";
+export { default as FunctionIcon } from "./function.svg";
+export { default as ProductIcon } from "./product.svg";
 
-export { default as ToggleDown } from "./toggleIconDown.svg";
-export { default as ToggleLeft } from "./toggleIconLeft.svg";
-export { default as ToggleRight } from "./toggleIconRight.svg";
-export { default as ToggleUp } from "./toggleIconUp.svg";
+export { default as DownIcon } from "./toggleDown.svg";
+export { default as LeftIcon } from "./toggleLeft.svg";
+export { default as RightIcon } from "./toggleRight.svg";
+export { default as UpIcon } from "./toggleUp.svg";
 
-export { default as CloseIcon } from "./closeIcon.svg";
-export { default as ClosedIcon } from "./unexpandedIcon.svg";
+export { default as CloseIcon } from "./close.svg";
 
-export { default as ExpandedIcon } from "./expandedIcon.svg";
-export { default as CollapsedIcon } from "./unexpandedIcon.svg";
+export { default as ExpandIcon } from "./expand.svg";
+export { default as CollapseIcon } from "./collapse.svg";
 
-export { default as FilterIconOpen } from "./VisualFilterIconOpen.svg";
-export { default as FilterIconClosed } from "./visualFilterIconClosed.svg";
+export { default as FilterOpenIcon } from "./filterOpen.svg";
+export { default as FilterClosedIcon } from "./filterClosed.svg";
 
-export { default as LoginIcon } from "./loginIcon.svg";
-export { default as LogoutIcon } from "./logoutIcon.svg";
+export { default as LoginIcon } from "./login.svg";
+export { default as LogoutIcon } from "./logout.svg";
 
-export { default as NewTypeIcon } from "./newTypeIcon.svg";
-export { default as EditTypeIcon } from "./editTypeIcon.svg";
+export { default as NewTypeIcon } from "./newType.svg";
+export { default as EditTypeIcon } from "./editType.svg";
 
-export { default as NewProjectIcon } from "./newProjectIcon.svg";
-export { default as CreateProjectIcon } from "./createProjectIcon.svg";
-export { default as OpenProjectIcon } from "./openProjectIcon.svg";
+export { default as NewProjectIcon } from "./newProject.svg";
+export { default as CreateProjectIcon } from "./createProject.svg";
+export { default as OpenProjectIcon } from "./openProject.svg";
 
-export { default as SaveIcon } from "./saveIcon.svg";
-export { default as SearchIcon } from "./searchIcon.svg";
-export { default as SplitViewIcon } from "./splitViewIcon.svg";
+export { default as SaveIcon } from "./save.svg";
+export { default as SearchIcon } from "./search.svg";
+export { default as SplitViewIcon } from "./splitView.svg";
 
-export { default as UserIconOpen } from "./userIconOpen.svg";
-export { default as UserIconClosed } from "./userIconClosed.svg";
+export { default as UserOpenIcon } from "./userOpen.svg";
+export { default as UserClosedIcon } from "./userClosed.svg";
 
-export { default as WhiteArrowIcon } from "./whiteRightArrowIcon.svg";
-export { default as WhiteRightArrowIcon } from "./whiteRightArrowIcon.svg";
-export { default as RightArrowIcon } from "./rightArrowIcon.svg";
-export { default as LeftArrowIcon } from "./leftArrowIcon.svg";
+export { default as RightArrowIcon } from "./rightArrow.svg";
 
-export { default as OpenUserIcon } from "./userIconOpen.svg";
-export { default as ClosedUserIcon } from "./userIconClosed.svg";
+export { default as OpenUser } from "./userOpen.svg";
+export { default as ClosedUser } from "./userClosed.svg";
 
-export { default as OpenFilterIcon } from "./VisualFilterIconOpen.svg";
-export { default as ClosedFilterIcon } from "./visualFilterIconClosed.svg";
+export { default as DarkModeOnIcon } from "./darkModeOn.svg";
+export { default as DarkModeOffIcon } from "./darkModeOff.svg";
 
-export { default as DarkModeOnIcon } from "./darkModeOnIcon.svg";
-export { default as DarkModeOffIcon } from "./darkModeOffIcon.svg";
+export { default as TreeViewOnIcon } from "./treeViewOn.svg";
+export { default as TreeViewOffIcon } from "./treeViewOff.svg";
 
-export { default as TreeViewOnIcon } from "./treeViewOnIcon.svg";
-export { default as TreeViewOffIcon } from "./treeViewOffIcon.svg";
+export { default as AddIcon } from "./add.svg";
+export { default as CheckIcon } from "./checkmark.svg";
+export { default as SelectDownIcon } from "./selectDown.svg";
+export { default as InterfaceIcon } from "./interface.svg";
+export { default as TransportIcon } from "./transport.svg";
+export { default as TerminalIcon } from "./terminal.svg";
+export { default as EyeIcon } from "./eye.svg";
+export { default as HelpIcon } from "./help.svg";
+export { default as UndoIcon } from "./undo.svg";
 
-export { default as AddIcon } from "./addIcon.svg";
-export { default as CheckmarkIcon } from "./checkmarkIcon.svg";
-export { default as SelectDownIcon } from "./selectDownIcon.svg";
-export { default as InterfaceIcon } from "./interfaceIcon.svg";
-export { default as TransportIcon } from "./transportIcon.svg";
-export { default as TerminalIcon } from "./terminalIcon.svg";
-export { default as EyeIcon } from "./inspectorIcon.svg";
-export { default as HelpIcon } from "./helpIcon.svg";
-export { default as UndoIcon } from "./undoIcon.svg";
-
-export { default as TrashIcon } from "./TrashIcon.svg";
-export { default as ExportLibrary } from "./exportProjectLibrary.svg";
-export { default as ExportProject } from "./exportProject.svg";
-export { default as ImportProject } from "./importProject.svg";
-export { default as ImportLibrary } from "./importProjectLibrary.svg";
+export { default as DeleteIcon } from "./delete.svg";
+export { default as ExportLibraryIcon } from "./exportProjectLibrary.svg";
+export { default as ExportProjectIcon } from "./exportProject.svg";
+export { default as ImportProjectIcon } from "./importProject.svg";
+export { default as ImportLibraryIcon } from "./importProjectLibrary.svg";

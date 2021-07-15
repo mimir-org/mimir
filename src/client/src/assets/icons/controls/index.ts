@@ -1,5 +1,5 @@
-export { default as ExpandIcon } from "./fullscreenicon.svg";
-export { default as CloseIcon } from "./fullscreencloseicon.svg";
-export { default as PlusIcon } from "./plusicon.svg";
-export { default as MinusIcon } from "./minusicon.svg";
-export { default as FitviewIcon } from "./hundredpercenticon.svg";
+export { default as ExpandIcon } from "./fullscreen.svg";
+export { default as CloseIcon } from "./fullscreenClose.svg";
+export { default as PlusIcon } from "./plus.svg";
+export { default as MinusIcon } from "./minus.svg";
+export { default as FitViewIcon } from "./fitView.svg";

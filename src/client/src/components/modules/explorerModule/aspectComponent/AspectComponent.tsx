@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ExpandedIcon, ClosedIcon } from "../../../../assets/icons/common";
+import { ExpandIcon, CollapseIcon } from "../../../../assets/icons/common";
 import { Node, Project } from "../../../../models";
 import { IsAspectNode } from "../../../flow/helpers/common";
 import { AspectElement } from ".";
@@ -19,7 +19,7 @@ interface Props {
 }
 export const AspectComponent = ({ node, label, project }: Props) => {
   const [expanded, setExpanded] = useState(true);
-  const expandIcon = expanded ? ExpandedIcon : ClosedIcon;
+  const expandIcon = expanded ? ExpandIcon : CollapseIcon;
   const aspectIcon = GetAspectIcon(node);
   const color = GetAspectColor(node, true);
   const nodes = project.nodes;

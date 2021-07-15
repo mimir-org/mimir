@@ -2,10 +2,10 @@ import {
   SaveIcon,
   CreateProjectIcon,
   OpenProjectIcon,
-  ImportLibrary,
-  ImportProject,
-  ExportLibrary,
-  ExportProject,
+  ImportLibraryIcon,
+  ImportProjectIcon,
+  ExportLibraryIcon,
+  ExportProjectIcon,
 } from "../../../../assets/icons/common";
 
 const GetIcon = (type: string) => {
@@ -13,17 +13,17 @@ const GetIcon = (type: string) => {
     case "Save":
       return <img src={SaveIcon} alt="save database" />;
     case "SaveFile":
-      return <img src={ExportProject} alt="save file" />;
+      return <img src={ExportProjectIcon} alt="save file" />;
     case "Open":
       return <img src={OpenProjectIcon} alt="open" />;
     case "Create":
       return <img src={CreateProjectIcon} alt="create" />;
     case "SaveLibrary":
-      return <img src={ExportLibrary} alt="save library" />;
+      return <img src={ExportLibraryIcon} alt="save library" />;
     case "ImportProject":
-      return <img src={ImportProject} alt="import project" />;
+      return <img src={ImportProjectIcon} alt="import project" />;
     case "ImportLibrary":
-      return <img src={ImportLibrary} alt="import library" />;
+      return <img src={ImportLibraryIcon} alt="import library" />;
     default:
       return null;
   }

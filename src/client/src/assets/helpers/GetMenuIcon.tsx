@@ -1,15 +1,15 @@
 import { MENU_TYPE } from "../../models/project";
 import {
-  ClosedFilterIcon,
-  OpenFilterIcon,
-  OpenUserIcon,
-  ClosedUserIcon,
+  FilterOpenIcon,
+  FilterClosedIcon,
+  UserOpenIcon,
+  UserClosedIcon,
 } from "../icons/common";
 
 const GetMenuBoxIcon = (isOpen: boolean, type: string) => {
   const isAccount = type === MENU_TYPE.ACCOUNT_MENU;
-  const iconFilter = isOpen ? OpenFilterIcon : ClosedFilterIcon;
-  const iconAccount = isOpen ? OpenUserIcon : ClosedUserIcon;
+  const iconFilter = isOpen ? FilterOpenIcon : FilterClosedIcon;
+  const iconAccount = isOpen ? UserOpenIcon : UserClosedIcon;
 
   return isAccount ? iconAccount : iconFilter;
 };

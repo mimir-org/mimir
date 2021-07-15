@@ -2,7 +2,7 @@ import { removeElements } from "react-flow-renderer";
 import { EDGE_TYPE } from "../../../models/project";
 import { removeEdge, removeNode } from "../../../redux/store/project/actions";
 
-const onElementsRemove = (elementsToRemove, setElements, dispatch) => {
+const useOnRemove = (elementsToRemove, setElements, dispatch) => {
   elementsToRemove.forEach((element) => {
     const edgeTypes = Object.values(EDGE_TYPE);
     const isEdge =
@@ -19,4 +19,4 @@ const onElementsRemove = (elementsToRemove, setElements, dispatch) => {
   return setElements((els) => removeElements(elementsToRemove, els));
 };
 
-export default onElementsRemove;
+export default useOnRemove;

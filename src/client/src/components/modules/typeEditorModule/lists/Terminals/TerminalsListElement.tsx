@@ -19,8 +19,8 @@ import {
 } from "../../styled";
 import {
   HelpIcon,
-  ExpandedIcon,
-  CollapsedIcon,
+  ExpandIcon,
+  CollapseIcon,
 } from "../../../../../assets/icons/common";
 
 interface Props {
@@ -99,7 +99,7 @@ export const TerminalsListElement = ({ category, terminals, state }: Props) => {
                     onFocus={toggleTerminalList}
                   />
                   <img
-                    src={expandList ? ExpandedIcon : CollapsedIcon}
+                    src={expandList ? ExpandIcon : CollapseIcon}
                     alt="expand-icon"
                     onClick={toggleTerminalList}
                     className="icon"
@@ -144,7 +144,7 @@ export const TerminalsListElement = ({ category, terminals, state }: Props) => {
           <p>{category}</p>
           {quantity !== 0 && (
             <img
-              src={expandCategory ? ExpandedIcon : CollapsedIcon}
+              src={expandCategory ? ExpandIcon : CollapseIcon}
               alt="expand-icon"
               onClick={toggleExpand}
             />

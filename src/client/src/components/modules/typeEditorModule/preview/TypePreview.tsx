@@ -5,12 +5,12 @@ import { PreviewBody } from "../preview/PreviewBody";
 import { ListWrapper } from "../../../../compLibrary";
 import { SaveButton } from "../../../../compLibrary/buttons";
 import { TextResources } from "../../../../assets/text";
-import { AddIcon, CheckmarkIcon } from "../../../../assets/icons/common";
 import { create, update } from "../../../../redux/store/typeEditor/actions";
 import { TypeMode } from "../../../../models";
 import { GetValidationMessage, ValidateType } from "../validators";
 import { useState } from "react";
 import { ErrorMessageBox } from "../styled";
+import { AddIcon, CheckIcon, CloseIcon } from "../../../../assets/icons/common";
 
 interface Props {
   state: TypeEditorState;
@@ -22,13 +22,20 @@ export const TypePreview = ({ state }: Props) => {
 
   const onSaveClick = (mode: TypeMode) => {
     if (ValidateType(state)) {
+      setValidated(true);
+      console.log("her: ", mode);
       if (mode === TypeMode.New) {
         dispatch(create(state.createLibraryType));
       } else if (mode === TypeMode.Edit) {
         dispatch(update(state.createLibraryType));
       }
-    } else setValidated(false);
+    } else {
+      console.log("der");
+      setValidated(false);
+    }
   };
+
+  const validationMessages = GetValidationMessage(state);
 
   return (
     <ListWrapper flex={0.7} right={0}>
@@ -49,15 +56,23 @@ export const TypePreview = ({ state }: Props) => {
             : TextResources.TypeEditor_Button_Edit}
         </p>
         <img
-          src={state.mode === TypeMode.New ? AddIcon : CheckmarkIcon}
+          src={state.mode === TypeMode.New ? AddIcon : CheckIcon}
           alt="icon"
           className="icon"
         />
       </SaveButton>
-      {!validated && (
+      {!validated && validationMessages.length > 0 && (
         <ErrorMessageBox>
-          {GetValidationMessage(state).map((message) => (
-            <p key={message}>{message}</p>
+          <img
+            src={CloseIcon}
+            alt="icon"
+            //   onClick={onReturnClick}
+            className="icon"
+          />
+          {validationMessages.map((message) => (
+            <p className="message" key={message}>
+              {message}
+            </p>
           ))}
         </ErrorMessageBox>
       )}

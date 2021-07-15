@@ -1,10 +1,12 @@
 import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
 
 const ValidateType = (state: TypeEditorState) => {
-  if (state.createLibraryType.name === "") return false;
-  else if (state.createLibraryType.rdsId === "") return false;
-
-  return true;
+  console.log("test ", state.createLibraryType.terminalTypes.length);
+  return (
+    state.createLibraryType.name !== "" &&
+    state.createLibraryType.rdsId !== "" &&
+    state.createLibraryType.terminalTypes.length > 1
+  );
 };
 
 export default ValidateType;

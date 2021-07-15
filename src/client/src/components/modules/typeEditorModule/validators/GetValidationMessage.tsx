@@ -8,6 +8,8 @@ const GetValidationMessage = (state: TypeEditorState) => {
     messages.push(TextResources.TypeEditor_Error_Name);
   if (state.createLibraryType.rdsId === "")
     messages.push(TextResources.TypeEditor_Error_RDS);
+  if (state.createLibraryType.terminalTypes.length < 2)
+    messages.push(TextResources.TypeEditor_Error_Terminals);
 
   return messages as string[];
 };

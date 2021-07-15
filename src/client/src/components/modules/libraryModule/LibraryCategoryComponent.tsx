@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { LibCategory } from "../../../models/project";
 import { GetAspectColor } from "../../../assets/helpers";
-import { ExpandedIcon, ClosedIcon } from "../../../assets/icons/common";
+import { ExpandIcon, CollapseIcon } from "../../../assets/icons/common";
 import {
   LibraryCategory,
   LibraryCategoryElement,
@@ -21,7 +21,7 @@ const LibraryCategoryComponent = ({
   setSelectedElement,
 }: Props) => {
   const [expanded, setExpanded] = useState(false);
-  const expandIcon = expanded ? ExpandedIcon : ClosedIcon;
+  const expandIcon = expanded ? ExpandIcon : CollapseIcon;
 
   const onDragStart = (event, node) => {
     event.dataTransfer.setData("application/reactflow", node);

@@ -11,8 +11,8 @@ import {
 } from "./helpers";
 import {
   HelpIcon,
-  ExpandedIcon,
-  CollapsedIcon,
+  ExpandIcon,
+  CollapseIcon,
 } from "../../../../../assets/icons/common";
 import {
   TerminalListElement,
@@ -106,7 +106,7 @@ export const AttributesListElement = ({
                 })}
             </p>
             <img
-              src={expandList ? ExpandedIcon : CollapsedIcon}
+              src={expandList ? ExpandIcon : CollapseIcon}
               alt="expand-icon"
               onClick={toggleValuesList}
               className="icon"

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { EyeIcon, ToggleDown, ToggleUp } from "../../../assets/icons/common";
+import { EyeIcon, DownIcon, UpIcon } from "../../../assets/icons/common";
 import { TextResources } from "../../../assets/text";
 import InspectorTabs from "./InspectorTabs";
 import { Size } from "../../../compLibrary";
@@ -71,7 +71,7 @@ const InspectorModule = () => {
         <TabsBottomLine>
           <ButtonBox>
             <img
-              src={isInspectorOpen ? ToggleDown : ToggleUp}
+              src={isInspectorOpen ? DownIcon : UpIcon}
               alt="toggle-icon"
               onClick={handleClick}
             />

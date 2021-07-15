@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ExpandedIcon, CollapsedIcon } from "../../assets/icons/common";
+import { ExpandIcon, CollapseIcon } from "../../assets/icons/common";
 import {
   DropdownMenuWrapper,
   DropdownMenuHeader,
@@ -64,7 +64,7 @@ const Dropdown = ({
                 )}
                 <p>{selectedItem.name}</p>
                 <img
-                  src={isListOpen ? ExpandedIcon : CollapsedIcon}
+                  src={isListOpen ? ExpandIcon : CollapseIcon}
                   alt="expand-icon"
                 />
               </>

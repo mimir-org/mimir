@@ -22,7 +22,7 @@ const FullScreenBox = () => {
       state.modules.types.find((x) => x.type === MODULE_TYPE.INSPECTOR).visible
   ) as boolean;
 
-  const handleOnClick = () => {
+  const OnClick = () => {
     dispatch(changeAllModulesVisibility(!isOpen, true));
   };
 
@@ -31,7 +31,7 @@ const FullScreenBox = () => {
       <img
         src={isOpen ? ExpandIcon : CloseIcon}
         alt="fullscreen"
-        onClick={handleOnClick}
+        onClick={OnClick}
       />
     </FullScreenButton>
   );

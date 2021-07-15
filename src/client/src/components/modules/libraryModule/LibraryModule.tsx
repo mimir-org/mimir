@@ -16,10 +16,10 @@ import { FindSelectedNode } from "../../flow/helpers/common";
 import {
   LegendIcon,
   LibraryIcon,
-  ToggleDown,
-  ToggleLeft,
-  ToggleRight,
-  ToggleUp,
+  DownIcon,
+  LeftIcon,
+  RightIcon,
+  UpIcon,
 } from "../../../assets/icons/common";
 
 const LibraryModule = () => {
@@ -87,7 +87,7 @@ const LibraryModule = () => {
         <img src={LibraryIcon} alt="library-icon" className="module-icon" />
         <img
           className="icon"
-          src={libraryOpen ? ToggleRight : ToggleLeft}
+          src={libraryOpen ? RightIcon : LeftIcon}
           alt="toggle"
           onClick={onLibraryClick}
         />
@@ -110,7 +110,7 @@ const LibraryModule = () => {
         <ModuleHead legend>
           <LegendHead open={legendOpen}>
             <img
-              src={legendOpen ? ToggleDown : ToggleUp}
+              src={legendOpen ? DownIcon : UpIcon}
               alt=""
               onClick={onLegendClick}
             />

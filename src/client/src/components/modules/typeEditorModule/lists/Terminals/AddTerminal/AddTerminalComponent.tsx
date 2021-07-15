@@ -10,8 +10,8 @@ import { ValidateTerminal } from "../../../validators";
 import { TextResources } from "../../../../../../assets/text";
 import {
   HelpIcon,
-  ExpandedIcon,
-  CollapsedIcon,
+  ExpandIcon,
+  CollapseIcon,
 } from "../../../../../../assets/icons/common";
 
 interface Props {
@@ -116,7 +116,7 @@ export const AddTerminal = ({ terminals }: Props) => {
               onFocus={toggleExpand}
             />
             <img
-              src={expandList ? ExpandedIcon : CollapsedIcon}
+              src={expandList ? ExpandIcon : CollapseIcon}
               alt="expand-icon"
               onClick={toggleExpand}
               className="icon"
@@ -148,7 +148,7 @@ export const AddTerminal = ({ terminals }: Props) => {
           <div className="dropdown_header">
             <p>{selectedDirection}</p>
             <img
-              src={isListOpen ? ExpandedIcon : CollapsedIcon}
+              src={isListOpen ? ExpandIcon : CollapseIcon}
               alt="expand-icon"
               onClick={toggleList}
             />

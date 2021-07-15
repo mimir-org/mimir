@@ -10,8 +10,8 @@ import { ModuleHead, ModuleBody } from "../../../compLibrary/box/modules";
 import { Project } from "../../../models";
 import {
   ExplorerIcon,
-  ToggleLeft,
-  ToggleRight,
+  LeftIcon,
+  RightIcon,
 } from "../../../assets/icons/common";
 
 export const ExplorerModule = () => {
@@ -51,7 +51,7 @@ export const ExplorerModule = () => {
         <img src={ExplorerIcon} alt="icon" className="module-icon" />
         <img
           className="icon"
-          src={isOpen ? ToggleLeft : ToggleRight}
+          src={isOpen ? LeftIcon : RightIcon}
           alt="toggle"
           onClick={onClick}
         />

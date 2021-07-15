@@ -2,7 +2,7 @@ import "./dropdownmenu.scss";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Aspect, ObjectType, Status } from "../../../../models";
-import { ExpandedIcon, CollapsedIcon } from "../../../../assets/icons/common";
+import { ExpandIcon, CollapseIcon } from "../../../../assets/icons/common";
 import { GetDefaultValue, LocationDropdown, IsLocation } from "../helpers";
 import {
   DropdownMenuWrapper,
@@ -52,10 +52,7 @@ export const DropDownMenu = ({ aspect, label, items, type }: Props) => {
       <div onClick={toggleList}>
         <DropdownMenuHeader>
           <p>{selectedValue}</p>
-          <img
-            src={isListOpen ? ExpandedIcon : CollapsedIcon}
-            alt="expand-icon"
-          />
+          <img src={isListOpen ? ExpandIcon : CollapseIcon} alt="expand-icon" />
         </DropdownMenuHeader>
       </div>
       {isListOpen && (

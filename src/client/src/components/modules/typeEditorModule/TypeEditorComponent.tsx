@@ -2,7 +2,7 @@ import red, { RootState } from "../../../redux/store";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { MODULE_TYPE } from "../../../models/project";
+import { MODULE_TYPE, VIEW_TYPE } from "../../../models/project";
 import { TextResources } from "../../../assets/text";
 import { CloseIcon } from "../../../assets/icons/common";
 import { TypeEditorState } from "../../../redux/store/typeEditor/types";
@@ -49,7 +49,7 @@ export const TypeEditorComponent = () => {
     // dispatch(resetCreateLibrary());
     dispatch(changeMode(TypeMode.NotSet));
     dispatch(changeFlowView(MODULE_TYPE.TYPEEDITOR));
-    push(`/home/treeview`);
+    push(`/home/${VIEW_TYPE.TREEVIEW}`);
   };
 
   const onNameChange = (e) => {

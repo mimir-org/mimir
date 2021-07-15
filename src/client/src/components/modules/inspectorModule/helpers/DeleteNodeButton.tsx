@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { TrashIcon } from "../../../../assets/icons/common";
+import { DeleteIcon } from "../../../../assets/icons/common";
 import { TextResources } from "../../../../assets/text";
 import { Color, FontSize } from "../../../../compLibrary";
 
@@ -30,7 +30,7 @@ const DeleteNodeButton = ({ handleClick }) => (
   <OuterButtonContainer>
     <ButtonContainer onClick={() => handleClick()}>
       {TextResources.Inspector_Delete_Node}
-      <img src={TrashIcon} alt="delete" />
+      <img src={DeleteIcon} alt="delete" />
     </ButtonContainer>
   </OuterButtonContainer>
 );

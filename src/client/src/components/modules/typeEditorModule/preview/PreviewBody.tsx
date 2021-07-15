@@ -1,8 +1,8 @@
 import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
 import { ObjectBlock } from "./ObjectBlock";
 import { PreviewArea, InfoWrapper } from "../styled";
-import { ReactComponent as TransportIcon } from "../../../../assets/icons/common/transportIcon.svg";
-import { ReactComponent as InterfaceIcon } from "../../../../assets/icons/common/interfaceIcon.svg";
+import { ReactComponent as TransportIcon } from "../../../../assets/icons/common/transport.svg";
+import { ReactComponent as InterfaceIcon } from "../../../../assets/icons/common/interface.svg";
 import {
   IsLocation,
   IsFunction,
