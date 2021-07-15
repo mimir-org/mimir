@@ -47,7 +47,7 @@ import {
 
 const initialCreateLibrary = {
   name: "",
-  status: Status.Draft,
+  status: Status.NotSet,
   aspect: Aspect.NotSet,
   objectType: ObjectType.NotSet,
   semanticReference: null,
@@ -63,7 +63,7 @@ const initialCreateLibrary = {
 const initialState: TypeEditorState = {
   fetching: false,
   creating: false,
-  mode: TypeMode.NotSet,
+  mode: TypeMode.New, // TODO: remove when implementing Edit Type
   rdsName: "",
   terminalCategory: "",
   terminalColor: "",

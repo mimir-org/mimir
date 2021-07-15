@@ -129,6 +129,7 @@ const TextResources = {
   TypeEditor_Search: "Search or Select Terminal Media Type",
   TypeEditor_Error_Name: "Please add a name for the type.",
   TypeEditor_Error_RDS: "Please select RDS for the type.",
+  TypeEditor_Error_Status: "Please select a status for the type",
   TypeEditor_Error_Attributes:
     "Please add one or more attributes. A type must have at least one attribute.",
   TypeEditor_Error_Terminals:

@@ -1,4 +1,5 @@
 import { TextResources } from "../../../../assets/text";
+import { Status } from "../../../../models";
 import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
 
 const GetValidationMessage = (state: TypeEditorState) => {
@@ -12,6 +13,8 @@ const GetValidationMessage = (state: TypeEditorState) => {
     messages.push(TextResources.TypeEditor_Error_Terminals);
   if (state.createLibraryType.attributeTypes.length < 1)
     messages.push(TextResources.TypeEditor_Error_Attributes);
+  if (state.createLibraryType.status === Status.NotSet)
+    messages.push(TextResources.TypeEditor_Error_Status);
 
   return messages as string[];
 };
