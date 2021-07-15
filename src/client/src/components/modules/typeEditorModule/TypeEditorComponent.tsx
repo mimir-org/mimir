@@ -64,6 +64,7 @@ export const TypeEditorComponent = () => {
   useEffect(() => {
     const darkMode = red.store.getState().darkMode.active;
     SetDarkModeColor(darkMode);
+    dispatch(changeMode(TypeMode.New)); // TODO: remove hard-coded mode
     dispatch(getInitialData());
     dispatch(changeAllModulesVisibility(false, true));
     dispatch(getBlobData());
