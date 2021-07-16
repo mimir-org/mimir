@@ -70,9 +70,15 @@ export interface TerminalType {
 
 export interface TerminalTypeItem {
   terminalTypeId: string;
-  number: number;
+  selected: boolean;
   connectorType: ConnectorType;
 }
+// OLD VERSION
+// export interface TerminalTypeItem {
+//   terminalTypeId: string;
+//   number: number;
+//   connectorType: ConnectorType;
+// }
 
 export interface PredefinedAttribute {
   key: string;

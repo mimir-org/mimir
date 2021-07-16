@@ -56,7 +56,6 @@ const LocationDropdown = ({
           </div>
         );
       })}
-      ;
     </>
   );
 };

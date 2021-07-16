@@ -7,7 +7,7 @@ import { SaveButton } from "../../../../compLibrary/buttons";
 import { TextResources } from "../../../../assets/text";
 import { create, update } from "../../../../redux/store/typeEditor/actions";
 import { TypeMode } from "../../../../models";
-import { GetValidationMessage, ValidateType } from "../validators";
+import { GetValidationMessage } from "../validators";
 import { useState } from "react";
 import { ErrorMessageBox } from "../styled";
 import { AddIcon, CheckIcon, CloseIcon } from "../../../../assets/icons/common";
@@ -18,22 +18,25 @@ interface Props {
 
 export const TypePreview = ({ state }: Props) => {
   const dispatch = useDispatch();
-  const [validated, setValidated] = useState(true);
+  const validationMessages = GetValidationMessage(state);
+  const [showBox, setShowBox] = useState(false);
 
   const onSaveClick = (mode: TypeMode) => {
-    if (ValidateType(state)) {
-      setValidated(true);
+    if (validationMessages.length === 0) {
+      setShowBox(false);
       if (mode === TypeMode.New) {
         dispatch(create(state.createLibraryType));
       } else if (mode === TypeMode.Edit) {
         dispatch(update(state.createLibraryType));
       }
     } else {
-      setValidated(false);
+      setShowBox(true);
     }
   };
 
-  const validationMessages = GetValidationMessage(state);
+  const onBoxClick = () => {
+    setShowBox(false);
+  };
 
   return (
     <ListWrapper flex={0.7} right={0}>
@@ -43,12 +46,12 @@ export const TypePreview = ({ state }: Props) => {
       />
       <PreviewBody state={state} />
       <div className="text">{TextResources.TypeEditor_Preview_Info}</div>
-      <SaveButton>
-        <p
-          onClick={() => {
-            onSaveClick(state.mode);
-          }}
-        >
+      <SaveButton
+        onClick={() => {
+          onSaveClick(state.mode);
+        }}
+      >
+        <p>
           {state.mode === TypeMode.New
             ? TextResources.TypeEditor_Button_Add
             : TextResources.TypeEditor_Button_Edit}
@@ -59,12 +62,12 @@ export const TypePreview = ({ state }: Props) => {
           className="icon"
         />
       </SaveButton>
-      {!validated && validationMessages.length > 0 && (
+      {showBox && validationMessages.length > 0 && (
         <ErrorMessageBox>
           <img
             src={CloseIcon}
             alt="icon"
-            //   onClick={onReturnClick}
+            onClick={onBoxClick}
             className="icon"
           />
           {validationMessages.map((message) => (
