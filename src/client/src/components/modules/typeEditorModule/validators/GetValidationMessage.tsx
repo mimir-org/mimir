@@ -1,12 +1,19 @@
 import { TextResources } from "../../../../assets/text";
 import { Status } from "../../../../models";
 import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
-import { IsInterface, IsNotSet, IsObjectBlock } from "../helpers";
 import { ValidateTerminalType } from "./";
+import {
+  IsFunction,
+  IsInterface,
+  IsLocation,
+  IsNotSet,
+  IsObjectBlock,
+} from "../helpers";
 
 const GetValidationMessage = (state: TypeEditorState) => {
   const terminals = state.createLibraryType.terminalTypes;
   const objectType = state.createLibraryType.objectType;
+  const aspect = state.createLibraryType.aspect;
   const messages = [];
 
   // Check name
@@ -27,21 +34,29 @@ const GetValidationMessage = (state: TypeEditorState) => {
       messages.push(TextResources.TypeEditor_Error_Attributes);
   }
 
-  // Check amount of terminals
-  if (IsObjectBlock(objectType) || IsNotSet(objectType)) {
-    if (terminals.length < 2)
-      messages.push(TextResources.TypeEditor_Error_Terminals);
+  // Check location attributes
+  if (IsLocation(aspect)) {
+    if (state.createLibraryType.predefinedAttributes.length === 0)
+      messages.push(TextResources.TypeEditor_Error_Location_Attributes);
   }
 
-  // Check type of terminals
-  if (IsObjectBlock(objectType)) {
-    if (!ValidateTerminalType(terminals))
-      messages.push(TextResources.TypeEditor_Error_TerminalsType);
-  }
+  if (IsFunction(aspect)) {
+    // Check amount of terminals
+    if (IsObjectBlock(objectType) || IsNotSet(objectType)) {
+      if (terminals.length < 2)
+        messages.push(TextResources.TypeEditor_Error_Terminals);
+    }
 
-  if (IsInterface(objectType)) {
-    if (state.createLibraryType.terminalTypeId === null)
-      messages.push(TextResources.TypeEditor_Error_Terminals_Interface);
+    // Check type of terminals
+    if (IsObjectBlock(objectType)) {
+      if (!ValidateTerminalType(terminals))
+        messages.push(TextResources.TypeEditor_Error_TerminalsType);
+    }
+    // Check interface terminal type
+    if (IsInterface(objectType)) {
+      if (state.createLibraryType.terminalTypeId === null)
+        messages.push(TextResources.TypeEditor_Error_Terminals_Interface);
+    }
   }
 
   return messages as string[];

@@ -131,6 +131,8 @@ const TextResources = {
   TypeEditor_Error_RDS: "Please select RDS for the type.",
   TypeEditor_Error_Status: "Please select a status for the type",
   TypeEditor_Error_Attributes: "Please add one or more attributes.",
+  TypeEditor_Error_Location_Attributes:
+    "Please add one or more location attributes.",
   TypeEditor_Error_Terminals: "Please select one or more terminals.",
   TypeEditor_Error_Terminals_Block:
     "Please select one or more terminals. An Object Block must have at least one input terminal, and one output terminal.",

@@ -78,55 +78,54 @@ export const TerminalsListElement = ({ category, terminals, state }: Props) => {
 
   return (
     <TerminalListElement>
-      {IsTransport(objectType) ||
-        (IsInterface(objectType) && (
-          <TerminalCategoryWrapper>
-            <div onClick={selectCategory}>
-              <RoundCheckbox id={category} label="terminal" />
-            </div>
-            <p className="category">{category}</p>
-            {category === selectedCategory && (
-              <div className="terminalSearchbarWrapper">
-                <div className="terminalsearchbar_container">
-                  <div className="terminalsearchbar">
-                    <label htmlFor="terminalsearch" />
-                    <input
-                      type="text"
-                      value={searchbarInput}
-                      placeholder={TextResources.TypeEditor_Search}
-                      onChange={handleChange}
-                      onFocus={toggleTerminalList}
-                    />
-                    <img
-                      src={expandList ? ExpandIcon : CollapseIcon}
-                      alt="expand-icon"
-                      onClick={toggleTerminalList}
-                      className="icon"
-                    />
-                  </div>
-                  {expandList && (
-                    <div className="terminalsearchbarlist">
-                      {terminals.map((t) => {
-                        return (
-                          <div
-                            className="terminallistitem"
-                            key={t.id}
-                            onClick={() => {
-                              handleTerminalClick(t.id, t.name, t.color);
-                            }}
-                          >
-                            {t.name}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
+      {(IsTransport(objectType) || IsInterface(objectType)) && (
+        <TerminalCategoryWrapper>
+          <div onClick={selectCategory}>
+            <RoundCheckbox id={category} label="terminal" />
+          </div>
+          <p className="category">{category}</p>
+          {category === selectedCategory && (
+            <div className="terminalSearchbarWrapper">
+              <div className="terminalsearchbar_container">
+                <div className="terminalsearchbar">
+                  <label htmlFor="terminalsearch" />
+                  <input
+                    type="text"
+                    value={searchbarInput}
+                    placeholder={TextResources.TypeEditor_Search}
+                    onChange={handleChange}
+                    onFocus={toggleTerminalList}
+                  />
+                  <img
+                    src={expandList ? ExpandIcon : CollapseIcon}
+                    alt="expand-icon"
+                    onClick={toggleTerminalList}
+                    className="icon"
+                  />
                 </div>
-                <img className="helpIcon" src={HelpIcon} alt="help" />
+                {expandList && (
+                  <div className="terminalsearchbarlist">
+                    {terminals.map((t) => {
+                      return (
+                        <div
+                          className="terminallistitem"
+                          key={t.id}
+                          onClick={() => {
+                            handleTerminalClick(t.id, t.name, t.color);
+                          }}
+                        >
+                          {t.name}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
-            )}
-          </TerminalCategoryWrapper>
-        ))}
+              <img className="helpIcon" src={HelpIcon} alt="help" />
+            </div>
+          )}
+        </TerminalCategoryWrapper>
+      )}
 
       {IsObjectBlock(objectType) && (
         <TerminalCategoryWrapper>
