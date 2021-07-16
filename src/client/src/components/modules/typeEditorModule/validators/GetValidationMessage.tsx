@@ -8,6 +8,7 @@ import {
   IsLocation,
   IsNotSet,
   IsObjectBlock,
+  IsTransport,
 } from "../helpers";
 
 const GetValidationMessage = (state: TypeEditorState) => {
@@ -53,7 +54,7 @@ const GetValidationMessage = (state: TypeEditorState) => {
         messages.push(TextResources.TypeEditor_Error_TerminalsType);
     }
     // Check interface terminal type
-    if (IsInterface(objectType)) {
+    if (IsInterface(objectType) || IsTransport(objectType)) {
       if (state.createLibraryType.terminalTypeId === null)
         messages.push(TextResources.TypeEditor_Error_Terminals_Interface);
     }
