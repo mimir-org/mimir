@@ -130,12 +130,13 @@ const TextResources = {
   TypeEditor_Error_Name: "Please add a name for the type.",
   TypeEditor_Error_RDS: "Please select RDS for the type.",
   TypeEditor_Error_Status: "Please select a status for the type",
-  TypeEditor_Error_Attributes:
-    "Please add one or more attributes. A type must have at least one attribute.",
-  TypeEditor_Error_Terminals:
+  TypeEditor_Error_Attributes: "Please add one or more attributes.",
+  TypeEditor_Error_Terminals: "Please select one or more terminals.",
+  TypeEditor_Error_Terminals_Block:
     "Please select one or more terminals. An Object Block must have at least one input terminal, and one output terminal.",
   TypeEditor_Error_TerminalsType:
     "You can only select two of each terminal, one must be input, the other must be output.",
+  TypeEditor_Error_Terminals_Interface: "Please select a terminal type.",
 
   // AccountModule
   Account_Save_Label: "Save project to database",

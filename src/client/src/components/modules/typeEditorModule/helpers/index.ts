@@ -5,6 +5,7 @@ export { default as IsProduct } from "./IsProduct";
 export { default as IsTransport } from "./IsTransport";
 export { default as IsInterface } from "./IsInterface";
 export { default as IsObjectBlock } from "./IsObjectBlock";
+export { default as IsNotSet } from "./IsNotSet";
 
 export { default as GetAspects } from "./GetAspects";
 export { default as GetObjectTypes } from "./GetObjectTypes";
