@@ -2,7 +2,7 @@ import { TerminalTypeItem } from "../../../../models";
 
 const ValidateTerminal = (terminal: TerminalTypeItem) => {
   return (
-    terminal.selected &&
+    terminal.number &&
     terminal.terminalTypeId !== "" &&
     terminal.connectorType !== null
   );

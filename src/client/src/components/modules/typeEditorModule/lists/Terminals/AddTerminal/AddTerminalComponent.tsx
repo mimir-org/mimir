@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { addTerminalType } from "../../../../../../redux/store/typeEditor/actions";
 import { TerminalTypeItem, ConnectorType } from "../../../../../../models";
+import { NumericInput } from "../../../../../../compLibrary";
 import { AddTerminalElement } from "../../../styled";
 import { ValidateTerminal } from "../../../validators";
 import { TextResources } from "../../../../../../assets/text";
@@ -25,7 +26,7 @@ export const AddTerminal = ({ terminals }: Props) => {
   const [expandList, setExpandList] = useState(false);
   const [selectedDirectionId, setselectedDirectionId] = useState(null);
   const [selectedTerminalId, setselectedTerminalId] = useState("");
-  const [isSelected, setIsSelected] = useState(false);
+  const [quantity, setQuantity] = useState(0);
 
   const onTerminalClick = (terminalId, terminalName) => {
     setsearchbarInput(terminalName);
@@ -33,8 +34,8 @@ export const AddTerminal = ({ terminals }: Props) => {
     toggleExpand();
   };
 
-  const onCheck = () => {
-    setIsSelected(!isSelected);
+  const onQuantityChange = (e) => {
+    setQuantity(e.target.value);
   };
 
   const onChange = (e) => {
@@ -73,12 +74,12 @@ export const AddTerminal = ({ terminals }: Props) => {
   const addTerminalToArray = useCallback(() => {
     const terminal: TerminalTypeItem = {
       terminalTypeId: selectedTerminalId,
-      selected: isSelected,
-      connectorType: selectedDirectionId,
+      number: Number(quantity),
+      connectorType: Number(selectedDirectionId),
     };
 
     if (ValidateTerminal(terminal)) updateTerminalList(terminal);
-  }, [updateTerminalList, selectedTerminalId, selectedDirectionId, isSelected]);
+  }, [updateTerminalList, selectedTerminalId, selectedDirectionId, quantity]);
 
   useEffect(() => {
     addTerminalToArray();
@@ -86,10 +87,18 @@ export const AddTerminal = ({ terminals }: Props) => {
 
   return (
     <AddTerminalElement>
-      <label className={"squarecheckbox"}>
-        <input type="checkbox" onChange={onCheck} />
-        <span className="scheckmark"></span>
-      </label>
+      <NumericInput>
+        <label className={"quantity"}>
+          <input
+            type="number"
+            min="0"
+            max="30"
+            placeholder="0"
+            onChange={onQuantityChange}
+          />
+          <span className="number"></span>
+        </label>
+      </NumericInput>
       <img className="help-icon" src={HelpIcon} alt="help" />
       <div className="terminalSearchbarWrapper">
         <div className="terminalsearchbar_container">
