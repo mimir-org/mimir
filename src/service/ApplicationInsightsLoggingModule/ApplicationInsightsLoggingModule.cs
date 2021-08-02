@@ -89,8 +89,11 @@ namespace ApplicationInsightsLoggingModule
                     aiOptions.DeveloperMode = enableDeveloperMode;
             }
 
+            if (!string.IsNullOrEmpty(aiOptions.InstrumentationKey))
+            {
+                services.AddApplicationInsightsTelemetry(aiOptions);
+            }
 
-            services.AddApplicationInsightsTelemetry(aiOptions);
             return services;
         }
     }
