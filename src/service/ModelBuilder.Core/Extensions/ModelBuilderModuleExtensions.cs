@@ -8,6 +8,7 @@ using Mb.Core.Services.Contracts;
 using Mb.Models.Configurations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -26,6 +27,10 @@ namespace Mb.Core.Extensions
             var modelBuilderConfiguration = new ModelBuilderConfiguration();
             modelBuilderSection.Bind(modelBuilderConfiguration);
             services.Configure<ModelBuilderConfiguration>(modelBuilderSection.Bind);
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
 
             // Dependency injection
             services.AddSingleton<IFileRepository, JsonFileRepository>();

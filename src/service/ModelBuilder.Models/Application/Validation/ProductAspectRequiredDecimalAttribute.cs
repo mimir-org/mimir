@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#nullable enable
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Mb.Models.Enums;
 
 namespace Mb.Models.Application.Validation
@@ -12,26 +8,23 @@ namespace Mb.Models.Application.Validation
     {
         protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
-            var nodeAm = validationContext.ObjectInstance as NodeAm;
-            if (nodeAm?.Aspect == Aspect.Product)
+            if (!(validationContext.ObjectInstance is NodeAm nodeAm))
+                return new ValidationResult("This validation attribute could only be used on a NodeAm object");
+
+            if (nodeAm.Aspect == Aspect.Product)
             {
-                if (value is decimal valueAsDecimal && (decimal?) valueAsDecimal > 0)
+                if(nodeAm.IsRoot)
                     return ValidationResult.Success;
-                else
-                {
-                    var memberName = validationContext.MemberName ?? "";
-                    var result = new ValidationResult($"Property {memberName} is required when aspect is Location");
-                    return result;
-                }
+
+                if (value is decimal valueAsDecimal && valueAsDecimal > 0)
+                    return ValidationResult.Success;
+
+                var memberName = validationContext.MemberName ?? "";
+                var result = new ValidationResult($"Property {memberName} is required when aspect is Location");
+                return result;
             }
-            else if (nodeAm?.Aspect == null)
-            {
-                return new ValidationResult("Aspect is required");
-            }
-            else
-            {
-                return base.IsValid(value, validationContext);
-            }
+
+            return ValidationResult.Success;
         }
     }
 }
