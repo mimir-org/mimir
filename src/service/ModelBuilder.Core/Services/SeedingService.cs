@@ -33,16 +33,14 @@ namespace Mb.Core.Services
         public const string PredefinedAttributeFileName = "predefined_attribute";
 
         private readonly IFileRepository _fileRepository;
-        private readonly IContractorRepository _contractorRepository;
         private readonly IEnumBaseRepository _enumBaseRepository;
         private readonly ILogger<TypeEditorService> _logger;
 
         private ITypeEditorService _typeEditorService;
 
-        public SeedingService(IFileRepository fileRepository, IContractorRepository contractorRepository, IEnumBaseRepository enumBaseRepository, IMapper mapper, ILogger<TypeEditorService> logger, ITypeEditorService typeEditorService)
+        public SeedingService(IFileRepository fileRepository, IEnumBaseRepository enumBaseRepository, IMapper mapper, ILogger<TypeEditorService> logger, ITypeEditorService typeEditorService)
         {
             _fileRepository = fileRepository;
-            _contractorRepository = contractorRepository;
             _enumBaseRepository = enumBaseRepository;
             _logger = logger;
             _typeEditorService = typeEditorService;

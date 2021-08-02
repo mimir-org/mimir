@@ -41,6 +41,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ApplicationInsightsLoggingModule\ApplicationInsightsLoggingModule.csproj" />
     <ProjectReference Include="..\ModelBuilder.Core\ModelBuilder.Core.csproj" />
     <ProjectReference Include="..\ModelBuilder.Models\ModelBuilder.Models.csproj" />
     <ProjectReference Include="..\Modules\AasParser\AasParserModule.csproj" />

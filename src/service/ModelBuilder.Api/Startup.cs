@@ -1,3 +1,4 @@
+using ApplicationInsightsLoggingModule;
 using AzureActiveDirectoryModule;
 using AzureActiveDirectoryModule.Models;
 using Mb.Core.Extensions;
@@ -56,6 +57,7 @@ namespace Mb.Api
             _swaggerConfiguration = swaggerConfiguration;
 
             services.AddMicrosoftSqlServerModule();
+            services.AddApplicationInsightsLoggingModule();
             services.AddModelBuilderModule(Configuration);
         }
 
