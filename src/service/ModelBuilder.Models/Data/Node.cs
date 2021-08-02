@@ -38,15 +38,6 @@ namespace Mb.Models.Data
         public bool IsLocked { get; set; }
 
         [Required]
-        public bool IsSelected { get; set; }
-        
-        [Required]
-        public bool IsBlockSelected { get; set; } 
-        
-        [Required]
-        public bool IsHidden { get; set; }
-
-        [Required]
         public decimal PositionBlockX { get; set; }
 
         [Required]
@@ -85,17 +76,17 @@ namespace Mb.Models.Data
 
         public BlobData Symbol { get; set; }
 
-        public int Area => Length * Width;
+        public decimal? Area => Length * Width;
 
-        // Only for location aspect
-        [Required]
-        public int Length { get; set; }
+        // Required Only for location aspect
+        public decimal? Length { get; set; }
 
-        [Required]
-        public int Width { get; set; }
+        public decimal? Width { get; set; }
 
-        [Required]
-        public int Height { get; set; }
+        public decimal? Height { get; set; }
+
+        // Required only for product aspect
+        public decimal? Cost { get; set; }
         
         public virtual ICollection<Connector> Connectors { get; set; }
 
@@ -109,5 +100,12 @@ namespace Mb.Models.Data
 
         [JsonIgnore]
         public virtual ICollection<Edge> ToEdges { get; set; }
+
+        public static bool IsSelected => false;
+
+        public static bool IsBlockSelected => false;
+
+        public static bool IsHidden => false;
+
     }
 }

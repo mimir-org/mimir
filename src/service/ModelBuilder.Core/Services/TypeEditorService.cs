@@ -16,29 +16,11 @@ using Mb.Models.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using AttributeCondition = Mb.Models.Data.Enums.AttributeCondition;
 
 namespace Mb.Core.Services
 {
     public class TypeEditorService : ITypeEditorService
     {
-        public const string RdsFileName = "rds";
-        public const string AttributeFileName = "attribute";
-        public const string LibraryFileName = "library";
-        public const string ContractorFileName = "contractor";
-        public const string TerminalFileName = "terminal";
-        public const string UnitFileName = "unit";
-        public const string ConditionFileName = "condition";
-        public const string QualifierFileName = "qualifier";
-        public const string SourceFileName = "source";
-        public const string RdsCategoryFileName = "rdscategory";
-        public const string TerminalCategoryFileName = "termcategory";
-        public const string AttributeFormatFileName = "format";
-        public const string BuildStatusFileName = "buildstatus";
-        public const string PredefinedAttributeCategoryFileName = "predefined_attribute_category";
-        public const string PredefinedAttributeFileName = "predefined_attribute";
-
-        private readonly IFileRepository _fileRepository;
         private readonly IRdsRepository _rdsRepository;
         private readonly IAttributeTypeRepository _attributeTypeRepository;
         private readonly ILibraryTypeRepository _libraryTypeComponentRepository;
@@ -49,9 +31,8 @@ namespace Mb.Core.Services
         private readonly ILogger<TypeEditorService> _logger;
         private readonly IPredefinedAttributeRepository _predefinedAttributeRepository;
 
-        public TypeEditorService(IFileRepository fileRepository, IRdsRepository rdsRepository, IAttributeTypeRepository attributeTypeRepository, ILibraryTypeRepository libraryTypeComponentRepository, IContractorRepository contractorRepository, ITerminalTypeRepository terminalTypeRepository, IEnumBaseRepository enumBaseRepository, IMapper mapper, ILogger<TypeEditorService> logger, IPredefinedAttributeRepository predefinedAttributeRepository)
+        public TypeEditorService(IRdsRepository rdsRepository, IAttributeTypeRepository attributeTypeRepository, ILibraryTypeRepository libraryTypeComponentRepository, IContractorRepository contractorRepository, ITerminalTypeRepository terminalTypeRepository, IEnumBaseRepository enumBaseRepository, IMapper mapper, ILogger<TypeEditorService> logger, IPredefinedAttributeRepository predefinedAttributeRepository)
         {
-            _fileRepository = fileRepository;
             _rdsRepository = rdsRepository;
             _attributeTypeRepository = attributeTypeRepository;
             _libraryTypeComponentRepository = libraryTypeComponentRepository;
