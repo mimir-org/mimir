@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
 using Newtonsoft.Json;
@@ -76,18 +77,6 @@ namespace Mb.Models.Data
 
         public BlobData Symbol { get; set; }
 
-        public decimal? Area => Length * Width;
-
-        // Required Only for location aspect
-        public decimal? Length { get; set; }
-
-        public decimal? Width { get; set; }
-
-        public decimal? Height { get; set; }
-
-        // Required only for product aspect
-        public decimal? Cost { get; set; }
-        
         public virtual ICollection<Connector> Connectors { get; set; }
 
         public virtual ICollection<Attribute> Attributes { get; set; }
@@ -101,11 +90,17 @@ namespace Mb.Models.Data
         [JsonIgnore]
         public virtual ICollection<Edge> ToEdges { get; set; }
 
-        public static bool IsSelected => false;
+        // Required Only for location aspect
+        public decimal? Length { get; set; }
 
-        public static bool IsBlockSelected => false;
+        public decimal? Width { get; set; }
 
-        public static bool IsHidden => false;
+        public decimal? Height { get; set; }
+
+        public decimal? Area => Length * Width;
+
+        // Required only for product aspect
+        public decimal? Cost { get; set; }
 
     }
 }
