@@ -42,7 +42,7 @@ namespace Mb.Core.Migrations
                 oldClrType: typeof(int),
                 oldType: "int");
 
-            migrationBuilder.AlterColumn<decimal>(
+            migrationBuilder.AddColumn<decimal>(
                 name: "Cost",
                 table: "Node",
                 type: "decimal(10,4)",
