@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Mb.Models.Application.Validation;
 using Mb.Models.Enums;
 
 namespace Mb.Models.Application
@@ -36,6 +37,17 @@ namespace Mb.Models.Application
         public decimal PositionBlockX { get; set; }
 
         public decimal PositionBlockY { get; set; }
+
+        [LocationAspectRequiredDecimal]
+        public decimal? Length { get; set; }
+
+        [LocationAspectRequiredDecimal]
+        public decimal? Width { get; set; }
+
+        public decimal? Height { get; set; }
+        
+        [ProductAspectRequiredDecimal]
+        public decimal? Cost { get; set; }
 
         [Required]
         public string StatusId { get; set; }

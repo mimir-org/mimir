@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AasParserModule", "Modules\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DefaultParserModule", "Modules\DefaultParserModule\DefaultParserModule.csproj", "{4D50D267-00B1-4772-B042-7D999221937E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationInsightsLoggingModule", "ApplicationInsightsLoggingModule\ApplicationInsightsLoggingModule.csproj", "{16C3000D-7511-4C4D-B8B5-1D621514205E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{4D50D267-00B1-4772-B042-7D999221937E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D50D267-00B1-4772-B042-7D999221937E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D50D267-00B1-4772-B042-7D999221937E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16C3000D-7511-4C4D-B8B5-1D621514205E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16C3000D-7511-4C4D-B8B5-1D621514205E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16C3000D-7511-4C4D-B8B5-1D621514205E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16C3000D-7511-4C4D-B8B5-1D621514205E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -71,6 +77,7 @@ Global
 		{9A1495B9-6CD5-46F4-9DCB-D314103A7F1B} = {C5359E03-91E7-405A-803A-11182980C4E9}
 		{56990402-9ECD-4528-8D4F-DA72614EC1BC} = {C5359E03-91E7-405A-803A-11182980C4E9}
 		{4D50D267-00B1-4772-B042-7D999221937E} = {C5359E03-91E7-405A-803A-11182980C4E9}
+		{16C3000D-7511-4C4D-B8B5-1D621514205E} = {C5359E03-91E7-405A-803A-11182980C4E9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61D7DEB6-5F0A-42C7-BDD9-B863F85B57F4}

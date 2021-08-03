@@ -22,9 +22,6 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.PositionX).HasColumnName("PositionX").HasColumnType("decimal(18,4)").IsRequired();
             builder.Property(p => p.PositionY).HasColumnName("PositionY").HasColumnType("decimal(18,4)").IsRequired();
             builder.Property(p => p.IsLocked).HasColumnName("IsLocked").IsRequired();
-            builder.Property(p => p.IsSelected).HasColumnName("IsSelected").IsRequired();
-            builder.Property(p => p.IsBlockSelected).HasColumnName("IsBlockSelected").IsRequired();
-            builder.Property(p => p.IsHidden).HasColumnName("IsHidden").IsRequired();
             builder.Property(p => p.PositionBlockX).HasColumnName("PositionBlockX").HasColumnType("decimal(18,4)").IsRequired();
             builder.Property(p => p.PositionBlockY).HasColumnName("PositionBlockY").HasColumnType("decimal(18,4)").IsRequired();
             builder.Property(p => p.Level).HasColumnName("Level").IsRequired();
@@ -36,10 +33,11 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.Aspect).HasColumnName("Aspect").IsRequired().HasConversion<string>();
             builder.Property(p => p.IsRoot).HasColumnName("IsRoot").IsRequired();
             builder.Property(p => p.MasterProjectId).HasColumnName("MasterProjectId").IsRequired();
-            builder.Property(p => p.Length).HasColumnName("Length").IsRequired();
-            builder.Property(p => p.Width).HasColumnName("Width").IsRequired();
-            builder.Property(p => p.Height).HasColumnName("Height").IsRequired();
+            builder.Property(p => p.Length).HasColumnName("Length").IsRequired(false).HasColumnType("decimal(5,2)");
+            builder.Property(p => p.Width).HasColumnName("Width").IsRequired(false).HasColumnType("decimal(5,2)");
+            builder.Property(p => p.Height).HasColumnName("Height").IsRequired(false).HasColumnType("decimal(5,2)");
             builder.Property(p => p.SymbolId).HasColumnName("SymbolId").IsRequired(false);
+            builder.Property(p => p.Cost).HasColumnName("Cost").IsRequired(false).HasColumnType("decimal(10,4)");
 
             builder.HasOne(x => x.Status).WithMany(y => y.Nodes).HasForeignKey(x => x.StatusId).OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(x => x.Symbol).WithMany(y => y.Nodes).HasForeignKey(x => x.SymbolId).OnDelete(DeleteBehavior.NoAction);
