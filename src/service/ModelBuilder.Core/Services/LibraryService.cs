@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using AutoMapper;
 using Mb.Core.Repositories.Contracts;
 using Mb.Core.Services.Contracts;
 using Mb.Models.Data;
-using Microsoft.EntityFrameworkCore;
 
 namespace Mb.Core.Services
 {
@@ -14,7 +14,7 @@ namespace Mb.Core.Services
         private readonly ILibraryRepository _libraryRepository;
         private readonly ICommonRepository _commonRepository;
         private readonly ILibraryTypeRepository _libraryTypeRepository;
-
+        
         public LibraryService(ILibraryRepository libraryRepository, IMapper mapper, ICommonRepository commonRepository, ILibraryTypeRepository libraryTypeRepository)
         {
             _libraryRepository = libraryRepository;
@@ -31,6 +31,19 @@ namespace Mb.Core.Services
         public IEnumerable<LibraryNodeItem> GetLibNodes(string searchString)
         {
             return _libraryRepository.GetAll(searchString).ToList();
+        }
+
+        /// <summary>
+        /// Get all transport types
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<TransportType> GetTransportTypes()
+        {
+            return _libraryTypeRepository.GetAll()
+                .OfType<TransportType>()
+                .Include(x => x.TerminalType)
+                .Include(x => x.AttributeTypes)
+                .ToList();
         }
     }
 }

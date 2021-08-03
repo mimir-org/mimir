@@ -54,5 +54,28 @@ namespace Mb.Core.Controllers.V1
                 return StatusCode(500, "Internal Server Error");
             }
         }
+
+        /// <summary>
+        /// Get transport types
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("transport")]
+        [ProducesResponseType(typeof(ICollection<TransportType>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult GetTransport()
+        {
+            try
+            {
+                var transportTypes = _libraryService.GetTransportTypes().ToList();
+                return Ok(transportTypes);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
     }
 }
