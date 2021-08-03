@@ -70,7 +70,7 @@ export interface TerminalType {
 
 export interface TerminalTypeItem {
   terminalTypeId: string;
-  selected: boolean;
+  number: number;
   connectorType: ConnectorType;
 }
 // OLD VERSION
