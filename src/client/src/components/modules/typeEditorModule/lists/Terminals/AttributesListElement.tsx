@@ -137,7 +137,7 @@ export const AttributesListElement = ({
                           onChange={onSingleValueCheckboxChange}
                         />
                       )}
-                      <span className="checkmark"></span>
+                      <span className="scheckmark"></span>
                       <label htmlFor={key}></label>
                     </label>
                     <p>{key}</p>
