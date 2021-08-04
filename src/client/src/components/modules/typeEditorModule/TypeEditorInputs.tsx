@@ -9,6 +9,9 @@ import { TextInput, TypeInfo, TypeNameInput } from "./styled";
 import {
   changeSymbol,
   changeTypeName,
+  changeSelectedAspect,
+  changeSelectedObjectType,
+  changeStatus,
 } from "../../../redux/store/typeEditor/actions";
 
 interface Props {
@@ -20,13 +23,25 @@ const TypeEditorInputs = ({ state, dispatch }: Props) => {
   const aspect = state.createLibraryType.aspect;
   const [typeName, setTypeName] = useState("");
 
-  const onSymbolChange = (value) => {
-    dispatch(changeSymbol(value.id));
+  const onAspectChange = (value) => {
+    dispatch(changeSelectedAspect(Number(value)));
+  };
+
+  const onObjectTypeChange = (value) => {
+    dispatch(changeSelectedObjectType(Number(value)));
   };
 
   const onNameChange = (e) => {
     setTypeName(e.target.value);
     dispatch(changeTypeName(e.target.value));
+  };
+
+  const onStatusChange = (value) => {
+    dispatch(changeStatus(Number(value)));
+  };
+
+  const onSymbolChange = (value) => {
+    dispatch(changeSymbol(value.id));
   };
 
   return (
@@ -35,6 +50,7 @@ const TypeEditorInputs = ({ state, dispatch }: Props) => {
         label={TextResources.TypeEditor_Aspect}
         items={GetAspects(state)}
         type={Aspect.NotSet}
+        onChange={onAspectChange}
       />
       <DropdownMenu
         label={
@@ -45,6 +61,7 @@ const TypeEditorInputs = ({ state, dispatch }: Props) => {
         items={GetObjectTypes(state)}
         aspect={aspect}
         type={ObjectType.NotSet}
+        onChange={onObjectTypeChange}
       />
       <TypeNameInput>
         <p>{TextResources.TypeEditor_Type_Name}</p>
@@ -59,6 +76,7 @@ const TypeEditorInputs = ({ state, dispatch }: Props) => {
         label={TextResources.TypeEditor_Status}
         items={GetStatus(state)}
         type={Status.NotSet}
+        onChange={onStatusChange}
       />
       <Dropdown
         label={TextResources.TypeEditor_Symbol}
