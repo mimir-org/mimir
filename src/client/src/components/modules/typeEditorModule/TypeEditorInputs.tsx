@@ -1,14 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { DropdownMenu } from ".";
 import { TextResources } from "../../../assets/text";
 import { Dropdown } from "../../../compLibrary/dropdown";
 import { Aspect, ObjectType, Status } from "../../../models";
 import { TypeEditorState } from "../../../redux/store/typeEditor/types";
-import { GetAspects, GetObjectTypes, GetStatus, IsLocation } from "./helpers";
+import {
+  GetAspects,
+  GetObjectTypes,
+  GetStatus,
+  IsLocation,
+  GetDefaultValue,
+} from "./helpers";
 import { TextInput, TypeInfo, TypeNameInput } from "./styled";
 import {
   changeSymbol,
   changeTypeName,
+  changeSelectedAspect,
+  changeSelectedObjectType,
+  changeStatus,
 } from "../../../redux/store/typeEditor/actions";
 
 interface Props {
@@ -20,8 +29,12 @@ const TypeEditorInputs = ({ state, dispatch }: Props) => {
   const aspect = state.createLibraryType.aspect;
   const [typeName, setTypeName] = useState("");
 
-  const onSymbolChange = (value) => {
-    dispatch(changeSymbol(value.id));
+  const onAspectChange = (value) => {
+    dispatch(changeSelectedAspect(Number(value)));
+  };
+
+  const onObjectTypeChange = (value) => {
+    dispatch(changeSelectedObjectType(Number(value)));
   };
 
   const onNameChange = (e) => {
@@ -29,12 +42,28 @@ const TypeEditorInputs = ({ state, dispatch }: Props) => {
     dispatch(changeTypeName(e.target.value));
   };
 
+  const onStatusChange = (value) => {
+    dispatch(changeStatus(Number(value)));
+  };
+
+  const onSymbolChange = (value) => {
+    dispatch(changeSymbol(value.id));
+  };
+
+  useEffect(() => {
+    if (aspect === Aspect.NotSet) {
+      setTypeName(GetDefaultValue("typeName"));
+    }
+  }, [aspect]);
+
   return (
     <TypeInfo>
       <DropdownMenu
         label={TextResources.TypeEditor_Aspect}
         items={GetAspects(state)}
+        aspect={aspect}
         type={Aspect.NotSet}
+        onChange={onAspectChange}
       />
       <DropdownMenu
         label={
@@ -45,6 +74,7 @@ const TypeEditorInputs = ({ state, dispatch }: Props) => {
         items={GetObjectTypes(state)}
         aspect={aspect}
         type={ObjectType.NotSet}
+        onChange={onObjectTypeChange}
       />
       <TypeNameInput>
         <p>{TextResources.TypeEditor_Type_Name}</p>
@@ -58,7 +88,9 @@ const TypeEditorInputs = ({ state, dispatch }: Props) => {
       <DropdownMenu
         label={TextResources.TypeEditor_Status}
         items={GetStatus(state)}
+        aspect={aspect}
         type={Status.NotSet}
+        onChange={onStatusChange}
       />
       <Dropdown
         label={TextResources.TypeEditor_Symbol}
