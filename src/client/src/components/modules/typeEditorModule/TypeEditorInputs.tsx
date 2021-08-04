@@ -85,13 +85,6 @@ const TypeEditorInputs = ({ state, dispatch }: Props) => {
           onChange={onNameChange}
         />
       </TypeNameInput>
-      <DropdownMenu
-        label={TextResources.TypeEditor_Status}
-        items={GetStatus(state)}
-        aspect={aspect}
-        type={Status.NotSet}
-        onChange={onStatusChange}
-      />
       <Dropdown
         label={TextResources.TypeEditor_Symbol}
         items={state.icons}
@@ -99,6 +92,13 @@ const TypeEditorInputs = ({ state, dispatch }: Props) => {
         valueProp="name"
         valueImageProp="data"
         onChange={onSymbolChange}
+      />
+      <DropdownMenu
+        label={TextResources.TypeEditor_Status}
+        items={GetStatus(state)}
+        aspect={aspect}
+        type={Status.NotSet}
+        onChange={onStatusChange}
       />
     </TypeInfo>
   );
