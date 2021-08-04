@@ -1,10 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { DropdownMenu } from ".";
 import { TextResources } from "../../../assets/text";
 import { Dropdown } from "../../../compLibrary/dropdown";
 import { Aspect, ObjectType, Status } from "../../../models";
 import { TypeEditorState } from "../../../redux/store/typeEditor/types";
-import { GetAspects, GetObjectTypes, GetStatus, IsLocation } from "./helpers";
+import {
+  GetAspects,
+  GetObjectTypes,
+  GetStatus,
+  IsLocation,
+  GetDefaultValue,
+} from "./helpers";
 import { TextInput, TypeInfo, TypeNameInput } from "./styled";
 import {
   changeSymbol,
@@ -44,11 +50,18 @@ const TypeEditorInputs = ({ state, dispatch }: Props) => {
     dispatch(changeSymbol(value.id));
   };
 
+  useEffect(() => {
+    if (aspect === Aspect.NotSet) {
+      setTypeName(GetDefaultValue("typeName"));
+    }
+  }, [aspect]);
+
   return (
     <TypeInfo>
       <DropdownMenu
         label={TextResources.TypeEditor_Aspect}
         items={GetAspects(state)}
+        aspect={aspect}
         type={Aspect.NotSet}
         onChange={onAspectChange}
       />
@@ -75,6 +88,7 @@ const TypeEditorInputs = ({ state, dispatch }: Props) => {
       <DropdownMenu
         label={TextResources.TypeEditor_Status}
         items={GetStatus(state)}
+        aspect={aspect}
         type={Status.NotSet}
         onChange={onStatusChange}
       />

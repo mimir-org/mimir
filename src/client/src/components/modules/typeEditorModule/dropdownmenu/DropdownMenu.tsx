@@ -1,5 +1,5 @@
 import "./dropdownmenu.scss";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Aspect, ObjectType, Status } from "../../../../models";
 import { ExpandIcon, CollapseIcon } from "../../../../assets/icons/common";
 import { GetDefaultValue, LocationDropdown, IsLocation } from "../helpers";
@@ -26,6 +26,12 @@ export const DropDownMenu = ({
 }: Props) => {
   const [isListOpen, setIsListOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState(GetDefaultValue(type));
+
+  useEffect(() => {
+    if (aspect === Aspect.NotSet) {
+      setSelectedValue(GetDefaultValue(type));
+    }
+  }, [aspect, type]);
 
   const toggleList = () => {
     setIsListOpen(!isListOpen);
