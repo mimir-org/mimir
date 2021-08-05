@@ -7,6 +7,7 @@ const DropdownMenuWrapper = styled.div`
   flex: 1;
   margin-right: 15px;
   background-color: ${Color.White};
+  opacity: ${(props: { disabled: boolean }) => (props.disabled ? 0.4 : 1)};
   font-size: ${FontSize.Standard};
   color: ${Color.Black};
   position: relative;

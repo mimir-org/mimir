@@ -10,6 +10,7 @@ const TypeNameInput = styled.div`
   font-size: ${FontSize.Standard};
   font-family: ${FontType.Standard};
   margin-top: -14px;
+  opacity: ${(props: { disabled: boolean }) => (props.disabled ? 0.4 : 1)};
 
   p {
     margin-bottom: 4px;
