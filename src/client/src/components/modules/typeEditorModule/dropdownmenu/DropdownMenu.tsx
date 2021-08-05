@@ -15,6 +15,7 @@ interface Props {
   items: any[];
   type: Aspect | ObjectType | Status;
   onChange: Function;
+  disabled?: boolean;
 }
 
 export const DropDownMenu = ({
@@ -23,6 +24,7 @@ export const DropDownMenu = ({
   items,
   type,
   onChange,
+  disabled,
 }: Props) => {
   const [isListOpen, setIsListOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState(GetDefaultValue(type));
@@ -44,10 +46,10 @@ export const DropDownMenu = ({
   };
 
   return (
-    <DropdownMenuWrapper>
+    <DropdownMenuWrapper disabled={disabled}>
       <label htmlFor={label} />
       <div className="label"> {label}</div>
-      <div onClick={toggleList}>
+      <div onClick={disabled ? null : toggleList}>
         <DropdownMenuHeader>
           <p>{selectedValue}</p>
           <img src={isListOpen ? ExpandIcon : CollapseIcon} alt="expand-icon" />

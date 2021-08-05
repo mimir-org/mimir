@@ -10,6 +10,7 @@ import {
   GetStatus,
   IsLocation,
   GetDefaultValue,
+  FieldValidator,
 } from "./helpers";
 import { TextInput, TypeInfo, TypeNameInput } from "./styled";
 import {
@@ -64,6 +65,7 @@ const TypeEditorInputs = ({ state, dispatch }: Props) => {
         aspect={aspect}
         type={Aspect.NotSet}
         onChange={onAspectChange}
+        disabled={false}
       />
       <DropdownMenu
         label={
@@ -75,23 +77,18 @@ const TypeEditorInputs = ({ state, dispatch }: Props) => {
         aspect={aspect}
         type={ObjectType.NotSet}
         onChange={onObjectTypeChange}
+        disabled={FieldValidator(state, "objectType")}
       />
-      <TypeNameInput>
+      <TypeNameInput disabled={FieldValidator(state, "typeName")}>
         <p>{TextResources.TypeEditor_Type_Name}</p>
         <TextInput
           inputType="text"
           value={typeName}
           placeholder={TextResources.TypeEditor_Type_Placeholder}
           onChange={onNameChange}
+          disabled={FieldValidator(state, "typeName")}
         />
       </TypeNameInput>
-      <DropdownMenu
-        label={TextResources.TypeEditor_Status}
-        items={GetStatus(state)}
-        aspect={aspect}
-        type={Status.NotSet}
-        onChange={onStatusChange}
-      />
       <Dropdown
         label={TextResources.TypeEditor_Symbol}
         items={state.icons}
@@ -99,6 +96,15 @@ const TypeEditorInputs = ({ state, dispatch }: Props) => {
         valueProp="name"
         valueImageProp="data"
         onChange={onSymbolChange}
+        disabled={FieldValidator(state, "symbol")}
+      />
+      <DropdownMenu
+        label={TextResources.TypeEditor_Status}
+        items={GetStatus(state)}
+        aspect={aspect}
+        type={Status.NotSet}
+        onChange={onStatusChange}
+        disabled={FieldValidator(state, "status")}
       />
     </TypeInfo>
   );
