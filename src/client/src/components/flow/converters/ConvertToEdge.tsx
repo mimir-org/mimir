@@ -1,4 +1,6 @@
 import { Connector, Edge, Node } from "../../../models";
+import { LibraryState } from "../../../redux/store/library/types";
+import { ConvertToTransport, ConvertToInterface } from ".";
 
 const ConvertToEdge = (
   id: string,
@@ -6,7 +8,8 @@ const ConvertToEdge = (
   targetConn: Connector,
   sourceNode: Node,
   targetNode: Node,
-  projectId: string
+  projectId: string,
+  library: LibraryState
 ) => {
   return {
     id: id,
@@ -20,6 +23,8 @@ const ConvertToEdge = (
     toNode: targetNode,
     isHidden: false,
     masterProjectId: projectId,
+    transport: ConvertToTransport(sourceConn, library),
+    interface: ConvertToInterface(sourceConn, library),
   } as Edge;
 };
 

@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Mb.Core.Repositories.Contracts;
 using Mb.Core.Services.Contracts;
+using Mb.Models.Application;
 using Mb.Models.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Mb.Core.Services
 {
@@ -12,15 +14,15 @@ namespace Mb.Core.Services
     {
         private readonly IMapper _mapper;
         private readonly ILibraryRepository _libraryRepository;
-        private readonly ICommonRepository _commonRepository;
-        private readonly ILibraryTypeRepository _libraryTypeRepository;
+        private readonly ITransportTypeRepository _transportTypeRepository;
+        private readonly IInterfaceTypeRepository _interfaceTypeRepository;
         
-        public LibraryService(ILibraryRepository libraryRepository, IMapper mapper, ICommonRepository commonRepository, ILibraryTypeRepository libraryTypeRepository)
+        public LibraryService(ILibraryRepository libraryRepository, IMapper mapper, ITransportTypeRepository transportTypeRepository, IInterfaceTypeRepository interfaceTypeRepository)
         {
             _libraryRepository = libraryRepository;
             _mapper = mapper;
-            _commonRepository = commonRepository;
-            _libraryTypeRepository = libraryTypeRepository;
+            _transportTypeRepository = transportTypeRepository;
+            _interfaceTypeRepository = interfaceTypeRepository;
         }
 
         /// <summary>
@@ -37,13 +39,23 @@ namespace Mb.Core.Services
         /// Get all transport types
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<TransportType> GetTransportTypes()
+        public IEnumerable<LibraryTransportItem> GetTransportTypes()
         {
-            return _libraryTypeRepository.GetAll()
-                .OfType<TransportType>()
-                .Include(x => x.TerminalType)
+            var transportTypes = _transportTypeRepository.GetAll()
                 .Include(x => x.AttributeTypes)
+                .ProjectTo<LibraryTransportItem>(_mapper.ConfigurationProvider)
                 .ToList();
+
+            return transportTypes;
+        }
+
+        public IEnumerable<LibraryInterfaceItem> GetInterfaceTypes()
+        {
+            var interfaceTypes = _interfaceTypeRepository.GetAll()
+                .ProjectTo<LibraryInterfaceItem>(_mapper.ConfigurationProvider)
+                .ToList();
+
+            return interfaceTypes;
         }
     }
 }

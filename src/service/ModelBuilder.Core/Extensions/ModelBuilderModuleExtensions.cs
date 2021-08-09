@@ -52,6 +52,10 @@ namespace Mb.Core.Extensions
             services.AddScoped<INodeTypeTerminalType, NodeTypeTerminalType>();
             services.AddScoped<IPredefinedAttributeRepository, PredefinedAttributeRepository>();
             services.AddScoped<IBlobDataRepository, BlobDataRepository>();
+            services.AddScoped<ITransportTypeRepository, TransportTypeRepository>();
+            services.AddScoped<IInterfaceTypeRepository, InterfaceTypeRepository>();
+            services.AddScoped<ITransportRepository, TransportRepository>();
+            services.AddScoped<IInterfaceRepository, InterfaceRepository>();
 
             services.AddScoped<ITypeEditorService, TypeEditorService>();
             services.AddScoped<ISeedingService, SeedingService>();
@@ -78,6 +82,8 @@ namespace Mb.Core.Extensions
                 cfg.AddProfile<CommonProfile>();
                 cfg.AddProfile(new TerminalProfile(provider.GetService<ICommonRepository>()));
                 cfg.AddProfile(new LibraryTypeProfile(provider.GetService<ICommonRepository>()));
+                cfg.AddProfile(new TransportProfile(provider.GetService<ICommonRepository>()));
+                cfg.AddProfile(new InterfaceProfile(provider.GetService<ICommonRepository>()));
             });
             services.AddSingleton(s => autoMapperConfiguration.CreateMapper());
 

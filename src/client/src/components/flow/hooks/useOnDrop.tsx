@@ -16,6 +16,7 @@ import {
   IsOutputTerminal,
   IsPartOfTerminal,
 } from "./../helpers/common";
+import { LibraryState } from "../../../redux/store/library/types";
 
 const useOnDrop = (
   project: Project,
@@ -24,7 +25,8 @@ const useOnDrop = (
   setElements,
   reactFlowInstance,
   reactFlowWrapper,
-  icons: BlobData[]
+  icons: BlobData[],
+  library: LibraryState
 ) => {
   const showBlockView = IsBlockView();
   const sourceNode = FindSelectedNode();
@@ -102,7 +104,8 @@ const useOnDrop = (
         targetConn,
         sourceNode,
         targetNode,
-        project.id
+        project.id,
+        library
       );
 
       dispatch(createEdge(partofEdge));

@@ -18,7 +18,6 @@ using Mb.Models.Modules;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using Attribute = Mb.Models.Data.Attribute;
 using Terminal = Mb.Models.Data.Terminal;
 
 namespace Mb.Core.Services
@@ -33,10 +32,8 @@ namespace Mb.Core.Services
         private readonly ICommonRepository _commonRepository;
         private readonly IConnectorRepository _connectorRepository;
         private readonly IModuleService _moduleService;
-        private readonly IAttributeRepository _attributeRepository;
-        private readonly INodeService _nodeService;
 
-        public ProjectService(IProjectRepository projectRepository, IMapper mapper, IHttpContextAccessor contextAccessor, INodeRepository nodeRepository, IEdgeRepository edgeRepository, ICommonRepository commonRepository, IConnectorRepository connectorRepository, IModuleService moduleService, IAttributeRepository attributeRepository, INodeService nodeService)
+        public ProjectService(IProjectRepository projectRepository, IMapper mapper, IHttpContextAccessor contextAccessor, INodeRepository nodeRepository, IEdgeRepository edgeRepository, ICommonRepository commonRepository, IConnectorRepository connectorRepository, IModuleService moduleService)
         {
             _projectRepository = projectRepository;
             _mapper = mapper;
@@ -46,8 +43,6 @@ namespace Mb.Core.Services
             _commonRepository = commonRepository;
             _connectorRepository = connectorRepository;
             _moduleService = moduleService;
-            _attributeRepository = attributeRepository;
-            _nodeService = nodeService;
         }
 
         /// <summary>
@@ -94,6 +89,9 @@ namespace Mb.Core.Services
                 .Include("Edges.ToNode")
                 .Include("Edges.FromConnector")
                 .Include("Edges.ToConnector")
+                .Include("Edges.Transport")
+                .Include("Edges.Transport.Attributes")
+                .Include("Edges.Interface")
                 .Include(x => x.Nodes)
                 .Include("Nodes.Attributes")
                 .Include("Nodes.Connectors")
@@ -239,6 +237,9 @@ namespace Mb.Core.Services
             var originalProject = await _projectRepository
                 .FindBy(x => x.Id == id)
                 .Include(x => x.Edges)
+                .Include("Edges.Transport")
+                .Include("Edges.Transport.Attributes")
+                .Include("Edges.Interface")
                 .Include(x => x.Nodes)
                 .Include("Nodes.Attributes")
                 .Include("Nodes.Connectors")
@@ -448,184 +449,6 @@ namespace Mb.Core.Services
             return node;
         }
 
-        private async Task<Project> UpdateProject(Project existingProject, Project project)
-        {
-            ResolveLevelAndOrder(project);
-
-            // Nodes
-            var nodesToUpdate = project.Nodes.Where(x => existingProject.Nodes.Any(y => y.Id == x.Id)).Select(y => { y.Projects = new List<Project> { project }; return y; }).ToList();
-            var nodesToCreate = project.Nodes.Where(x => existingProject.Nodes.All(y => y.Id != x.Id)).Select(y => { y.Projects = new List<Project> { project }; return y; }).ToList();
-            var nodesToDelete = existingProject.Nodes.Where(x => project.Nodes.All(y => y.Id != x.Id)).ToList();
-            project.Nodes.Clear();
-
-            // Edges
-            var edgesToUpdate = project.Edges.Where(x => existingProject.Edges.Any(y => y.Id == x.Id)).Select(y => { y.Projects = new List<Project> { project }; return y; }).ToList();
-            var edgesToCreate = project.Edges.Where(x => existingProject.Edges.All(y => y.Id != x.Id)).Select(y => { y.Projects = new List<Project> { project }; return y; }).ToList();
-            var edgesToDelete = existingProject.Edges.Where(x => project.Edges.All(y => y.Id != x.Id)).ToList();
-            project.Edges.Clear();
-
-            //Templates
-            foreach (var templateEdgeToDelete in edgesToDelete.Where(x => x.IsTemplateEdge))
-            {
-                await _edgeRepository.Delete(templateEdgeToDelete.Id);
-                nodesToUpdate.RemoveAll(x => x.MasterProjectId.Equals(templateEdgeToDelete.MasterProjectId));
-                nodesToDelete.RemoveAll(x => x.MasterProjectId.Equals(templateEdgeToDelete.MasterProjectId));
-                edgesToUpdate.RemoveAll(x => x.MasterProjectId.Equals(templateEdgeToDelete.MasterProjectId));
-                edgesToDelete.RemoveAll(x => x.MasterProjectId.Equals(templateEdgeToDelete.MasterProjectId));
-            }
-
-            // Attributes
-            var attributesToDelete = GetAttributesToDelete(nodesToDelete, project);
-
-            UpdateNodes(nodesToUpdate.Where(x => x.MasterProjectId.Equals(project.Id)).ToList());
-
-            await CreateNodes(nodesToCreate, edgesToCreate, project);
-
-            foreach (var attribute in attributesToDelete)
-            {
-                await _attributeRepository.Delete(attribute.Id);
-            }
-
-            foreach (var node in nodesToDelete.Where(x => x.MasterProjectId.Equals(project.Id)))
-                await _nodeRepository.Delete(node.Id);
-
-            foreach (var edge in edgesToUpdate.Where(x => x.MasterProjectId.Equals(project.Id)))
-                _edgeRepository.Update(edge);
-
-            foreach (var edge in edgesToCreate)
-            {
-                edge.Id = _commonRepository.CreateUniqueId();
-                if (string.IsNullOrEmpty(edge.MasterProjectId))
-                    edge.MasterProjectId = project.Id;
-
-                edge.FromConnector = null;
-                edge.ToConnector = null;
-                edge.FromNode = null;
-                edge.ToNode = null;
-                await _edgeRepository.CreateAsync(edge);
-            }
-
-            foreach (var edge in edgesToDelete.Where(x => x.MasterProjectId.Equals(project.Id)))
-            {
-                edge.FromConnector = null;
-                edge.ToConnector = null;
-                edge.FromNode = null;
-                edge.ToNode = null;
-                await _edgeRepository.Delete(edge.Id);
-            }
-
-            project.UpdatedBy = _contextAccessor.GetName();
-            project.Updated = DateTime.Now.ToUniversalTime();
-
-
-            _projectRepository.Update(project);
-            await _attributeRepository.SaveAsync();
-            await _nodeRepository.SaveAsync();
-            await _edgeRepository.SaveAsync();
-            await _projectRepository.SaveAsync();
-
-            return await GetProject(project.Id);
-        }
-
-        private async Task CreateNodes(List<Node> nodesToCreate, List<Edge> edgesToCreate, Project project)
-        {
-            foreach (var node in nodesToCreate)
-            {
-                var nodeNewId = _commonRepository.CreateUniqueId();
-                if (string.IsNullOrEmpty(node.MasterProjectId))
-                    node.MasterProjectId = project.Id;
-                if (node.Attributes != null)
-                {
-                    foreach (var nodeAttribute in node.Attributes)
-                    {
-                        nodeAttribute.Id = _commonRepository.CreateUniqueId();
-                    }
-                }
-
-                foreach (var connector in node.Connectors.OfType<Terminal>())
-                {
-                    var connectorNewId = _commonRepository.CreateUniqueId();
-
-                    if (connector.Attributes != null)
-                    {
-                        foreach (var connectorAttribute in connector.Attributes)
-                        {
-                            connectorAttribute.Id = _commonRepository.CreateUniqueId();
-                        }
-                    }
-
-                    foreach (var edge in edgesToCreate)
-                    {
-                        if (edge.FromNodeId == node.Id)
-                            edge.FromNodeId = nodeNewId;
-                        if (edge.ToNodeId == node.Id)
-                            edge.ToNodeId = nodeNewId;
-
-                        if (edge.FromConnectorId == connector.Id)
-                            edge.FromConnectorId = connectorNewId;
-                        if (edge.ToConnectorId == connector.Id)
-                            edge.ToConnectorId = connectorNewId;
-
-                        edge.FromConnector = null;
-                        edge.ToConnector = null;
-                    }
-
-                    connector.Id = connectorNewId;
-                }
-
-                node.Id = nodeNewId;
-                node.UpdatedBy = _contextAccessor.GetName();
-                node.Updated = DateTime.Now.ToUniversalTime();
-                await _nodeRepository.CreateAsync(node);
-            }
-        }
-
-        private void UpdateNodes(List<Node> nodesToUpdate)
-        {
-            foreach (var node in nodesToUpdate)
-            {
-                node.UpdatedBy = _contextAccessor.GetName();
-                node.Updated = DateTime.Now.ToUniversalTime();
-                if (node.Attributes != null)
-                {
-                    foreach (var nodeAttribute in node.Attributes)
-                    {
-                        _attributeRepository.Update(nodeAttribute);
-                    }
-                }
-
-                if (node.Connectors != null)
-                {
-                    foreach (var connector in node.Connectors.OfType<Terminal>().Where(x => x.Attributes != null))
-                    {
-                        foreach (var attribute in connector.Attributes)
-                        {
-                            _attributeRepository.Update(attribute);
-                        }
-                    }
-                }
-
-                _nodeRepository.Update(node);
-            }
-        }
-
-        private List<Attribute> GetAttributesToDelete(List<Node> nodesToDelete, Project project)
-        {
-            var attributesToDelete = new List<Attribute>();
-            foreach (var node in nodesToDelete.Where(x => x.MasterProjectId.Equals(project.Id)))
-            {
-                attributesToDelete.AddRange(node.Attributes);
-                node.Attributes.Clear();
-                foreach (var nodeConnector in node.Connectors.OfType<Terminal>())
-                {
-                    attributesToDelete.AddRange(nodeConnector.Attributes);
-                    nodeConnector.Attributes.Clear();
-                }
-            }
-
-            return attributesToDelete;
-        }
-
         private void ResolveLevelAndOrder(Project project)
         {
             if (project?.Nodes == null || project.Edges == null)
@@ -716,6 +539,56 @@ namespace Mb.Core.Services
 
                 node.Id = newNodeId;
             }
+
+            foreach (var edge in project.Edges)
+            {
+                if (edge.Transport != null)
+                    RemapTransport(edge);
+
+                if (edge.Interface != null)
+                    RemapInterface(edge);
+
+
+                if (_commonRepository.HasValidId(edge.Id))
+                    continue;
+
+                edge.Id = _commonRepository.CreateUniqueId();
+            }
+        }
+
+        private void RemapTransport(EdgeAm edge)
+        {
+            if(edge.Transport == null)
+                return;
+
+            if (!_commonRepository.HasValidId(edge.Transport.Id))
+            {
+                var newTransportId = _commonRepository.CreateUniqueId();
+                
+                if (edge.Transport.Attributes != null)
+                {
+                    foreach (var attribute in edge.Transport.Attributes)
+                    {
+                        attribute.TransportId = newTransportId;
+                    }
+                }
+
+
+                edge.Transport.Id = newTransportId;
+                
+            }
+        }
+
+        private void RemapInterface(EdgeAm edge)
+        {
+            if (edge.Interface == null)
+                return;
+
+            if (!_commonRepository.HasValidId(edge.Interface.Id))
+            {
+                var newInterfaceId = _commonRepository.CreateUniqueId();
+                edge.Interface.Id = newInterfaceId;
+            }
         }
 
         private void RemapConnectors(string newNodeId, NodeAm node, ProjectAm project)
@@ -737,6 +610,18 @@ namespace Mb.Core.Services
                         edge.FromNodeId = newNodeId;
                     if (edge.ToNodeId == node.Id)
                         edge.ToNodeId = newNodeId;
+
+                    if (edge.Transport != null)
+                    {
+                        if (edge.Transport.TerminalId == connector.Id)
+                            edge.Transport.TerminalId = newConnectorId;
+                    }
+
+                    if (edge.Interface != null)
+                    {
+                        if (edge.Interface.TerminalId == connector.Id)
+                            edge.Interface.TerminalId = newConnectorId;
+                    }
                 }
 
                 foreach (var attribute in connector.Attributes)

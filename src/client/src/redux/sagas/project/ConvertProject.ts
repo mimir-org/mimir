@@ -27,6 +27,7 @@ export interface AttributeAm {
     formatId: string;
     terminalId: string;
     nodeId: string;
+    transportId: string;
     attributeTypeId: string;
     units: UnitAm[];
 }
@@ -45,6 +46,7 @@ export interface ConnectorAm {
     color: string;
     terminalCategoryId: string;
     attributes: AttributeAm[];
+    terminalTypeId: string;
 }
 export interface NodeAm {
     id: string;
@@ -81,6 +83,8 @@ export interface EdgeAm {
     toNodeId: string;
     masterProjectId: string;
     isTemplateEdge: boolean;
+    transport: TransportAm;
+    interface: InterfaceAm;
 }
 
 export interface ProjectAm {
@@ -91,6 +95,21 @@ export interface ProjectAm {
     description: string;
     nodes: NodeAm[];
     edges: EdgeAm[];
+}
+
+export interface TransportAm {
+    id: string;
+    name: string;
+    semanticReference: string;
+    terminalId: string;
+    attributes: AttributeAm[];
+}
+
+export interface InterfaceAm {
+    id: string;
+    name: string;
+    semanticReference: string;
+    terminalId: string;
 }
 
 const ConvertUnits = (units: EnumBase[]): UnitAm[] => {
@@ -156,6 +175,7 @@ const ConvertConnectors = (connectors: Connector[]): ConnectorAm[] => {
             color: connector.color,
             terminalCategoryId: connector.terminalCategoryId,
             attributes: ConvertAttributes(connector.attributes),
+            terminalTypeId: connector.terminalTypeId
         } as ConnectorAm;
 
         converted.push(a);
@@ -217,6 +237,8 @@ const ConvertEdges = (edges: Edge[]): EdgeAm[] => {
             toNodeId: edge.toNodeId,
             masterProjectId: edge.masterProjectId,
             isTemplateEdge: edge.isTemplateEdge,
+            transport: edge.transport,
+            interface: edge.interface
         } as EdgeAm;
 
         convertedEdges.push(e);

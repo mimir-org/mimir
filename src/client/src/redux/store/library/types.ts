@@ -1,78 +1,105 @@
-import { LibraryNodeItem, CreateLibraryType } from "../../../models";
+import { LibraryNodeItem, CreateLibraryType, LibraryTransportItem, LibraryInterfaceItem } from "../../../models";
 import { ApiError } from "../../../models/webclient";
 export const FETCHING_LIBRARY = "FETCHING_LIBRARY";
 export const DELETE_LIBRARY_ERROR = "DELETE_LIBRARY_ERROR";
-export const FETCHING_LIBRARY_SUCCESS_OR_ERROR =
-  "FETCHING_LIBRARY_SUCCESS_OR_ERROR";
+export const FETCHING_LIBRARY_SUCCESS_OR_ERROR = "FETCHING_LIBRARY_SUCCESS_OR_ERROR";
 export const EXPORT_LIBRARY = "EXPORT_LIBRARY";
-export const EXPORT_LIBRARY_SUCCESS_OR_ERROR =
-  "EXPORT_LIBRARY_SUCCESS_OR_ERROR";
+export const EXPORT_LIBRARY_SUCCESS_OR_ERROR = "EXPORT_LIBRARY_SUCCESS_OR_ERROR";
 export const IMPORT_LIBRARY = "IMPORT_LIBRARY";
-export const IMPORT_LIBRARY_SUCCESS_OR_ERROR =
-  "IMPORT_LIBRARY_SUCCESS_OR_ERROR";
+export const IMPORT_LIBRARY_SUCCESS_OR_ERROR = "IMPORT_LIBRARY_SUCCESS_OR_ERROR";
+export const FETCHING_LIBRARY_TRANSPORT_TYPES = "FETCHING_LIBRARY_TRANSPORT_TYPES";
+export const FETCHING_LIBRARY_TRANSPORT_TYPES_SUCCESS_OR_ERROR = "FETCHING_LIBRARY_TRANSPORT_TYPES_SUCCESS_OR_ERROR";
+export const FETCHING_LIBRARY_INTERFACE_TYPES = "FETCHING_LIBRARY_INTERFACE_TYPES";
+export const FETCHING_LIBRARY_INTERFACE_TYPES_SUCCESS_OR_ERROR = "FETCHING_LIBRARY_INTERFACE_TYPES_SUCCESS_OR_ERROR";
 
 // State types
 export interface LibraryState {
-  fetching: boolean;
-  nodes: LibraryNodeItem[] | null;
-  apiError: ApiError[];
+    fetching: boolean;
+    nodes: LibraryNodeItem[] | null;
+    apiError: ApiError[];
+    transportTypes: LibraryTransportItem[];
+    interfaceTypes: LibraryInterfaceItem[];
 }
 
 // Action types
 interface FetchLibraryAction {
-  type: typeof FETCHING_LIBRARY;
-  payload: string;
+    type: typeof FETCHING_LIBRARY;
+    payload: string;
 }
-
 interface FetchLibraryActionFinished {
-  type: typeof FETCHING_LIBRARY_SUCCESS_OR_ERROR;
-  payload: {
-    nodes: LibraryNodeItem[];
-    apiError: ApiError;
-  };
+    type: typeof FETCHING_LIBRARY_SUCCESS_OR_ERROR;
+    payload: {
+        nodes: LibraryNodeItem[],
+        apiError: ApiError
+    };
 }
 interface DeleteLibraryErrorAction {
-  type: typeof DELETE_LIBRARY_ERROR;
-  payload: {
-    key: string;
-  };
+    type: typeof DELETE_LIBRARY_ERROR;
+    payload: {
+        key: string;
+    };
 }
-
 export interface ExportLibraryAction {
-  type: typeof EXPORT_LIBRARY;
-  payload: {
-    fileName: string;
-    apiError: ApiError;
-  };
+    type: typeof EXPORT_LIBRARY;
+    payload: {
+        fileName: string,
+        apiError: ApiError
+    };
 }
-
 export interface ExportLibraryActionFinished {
-  type: typeof EXPORT_LIBRARY_SUCCESS_OR_ERROR;
-  payload: {
-    apiError: ApiError;
-  };
+    type: typeof EXPORT_LIBRARY_SUCCESS_OR_ERROR;
+    payload: {
+        apiError: ApiError
+    };
 }
 
 export interface ImportLibraryAction {
-  type: typeof IMPORT_LIBRARY;
-  payload: {
-    libraryTypes: CreateLibraryType[];
-    apiError: ApiError;
-  };
+    type: typeof IMPORT_LIBRARY;
+    payload: {
+        libraryTypes: CreateLibraryType[];
+        apiError: ApiError
+    };
+}
+export interface ImportLibraryActionFinished {
+    type: typeof IMPORT_LIBRARY_SUCCESS_OR_ERROR;
+    payload: {
+        apiError: ApiError
+    };
+}
+export interface FetchingLibraryTransportActionTypes {
+    type: typeof FETCHING_LIBRARY_TRANSPORT_TYPES;
+    payload: null;
+}
+export interface FetchingLibraryTransportActionTypesFinished {
+    type: typeof FETCHING_LIBRARY_TRANSPORT_TYPES_SUCCESS_OR_ERROR;
+    payload: {
+        transports: LibraryTransportItem[],
+        apiError: ApiError
+    };
 }
 
-export interface ImportLibraryActionFinished {
-  type: typeof IMPORT_LIBRARY_SUCCESS_OR_ERROR;
-  payload: {
-    apiError: ApiError;
-  };
+export interface FetchingLibraryInterfaceActionTypes {
+    type: typeof FETCHING_LIBRARY_INTERFACE_TYPES;
+    payload: null;
+}
+export interface FetchingLibraryInterfaceActionTypesFinished {
+    type: typeof FETCHING_LIBRARY_INTERFACE_TYPES_SUCCESS_OR_ERROR;
+    payload: {
+        transports: LibraryInterfaceItem[],
+        apiError: ApiError
+    };
 }
 
 export type LibraryActionTypes =
-  | FetchLibraryAction
-  | FetchLibraryActionFinished
-  | DeleteLibraryErrorAction
-  | ExportLibraryAction
-  | ExportLibraryActionFinished
-  | ImportLibraryAction
-  | ImportLibraryActionFinished;
+    | FetchLibraryAction
+    | FetchLibraryActionFinished
+    | DeleteLibraryErrorAction
+    | ExportLibraryAction
+    | ExportLibraryActionFinished
+    | ImportLibraryAction
+    | ImportLibraryActionFinished
+    | FetchingLibraryTransportActionTypes
+    | FetchingLibraryTransportActionTypesFinished
+    | FetchingLibraryInterfaceActionTypes
+    | FetchingLibraryInterfaceActionTypesFinished;
+

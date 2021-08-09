@@ -7,8 +7,8 @@ namespace Mb.Core.Repositories
     public class LibraryTypeRepository : GenericRepository<ModelBuilderDbContext, LibraryType>, ILibraryTypeRepository
 
     {
-    public LibraryTypeRepository(ModelBuilderDbContext dbContext) : base(dbContext)
-    {
-    }
+        public LibraryTypeRepository(ModelBuilderDbContext dbContext) : base(dbContext)
+        {
+        }
     }
 }

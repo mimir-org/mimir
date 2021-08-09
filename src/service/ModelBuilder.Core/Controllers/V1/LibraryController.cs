@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Mb.Core.Services.Contracts;
+using Mb.Models.Application;
 using Mb.Models.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -60,16 +61,39 @@ namespace Mb.Core.Controllers.V1
         /// </summary>
         /// <returns></returns>
         [HttpGet("transport")]
-        [ProducesResponseType(typeof(ICollection<TransportType>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ICollection<LibraryTransportItem>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public IActionResult GetTransport()
+        public IActionResult GetTransports()
         {
             try
             {
                 var transportTypes = _libraryService.GetTransportTypes().ToList();
                 return Ok(transportTypes);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
+        /// Get interface types
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("interface")]
+        [ProducesResponseType(typeof(ICollection<LibraryInterfaceItem>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult GetInterfaces()
+        {
+            try
+            {
+                var interfaceTypes = _libraryService.GetInterfaceTypes().ToList();
+                return Ok(interfaceTypes);
             }
             catch (Exception e)
             {

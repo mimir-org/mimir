@@ -9,5 +9,7 @@
         public string ToNodeId { get; set; }
         public string MasterProjectId { get; set; }
         public bool IsTemplateEdge { get; set; }
+        public TransportAm Transport { get; set; }
+        public InterfaceAm Interface { get; set; }
     }
 }

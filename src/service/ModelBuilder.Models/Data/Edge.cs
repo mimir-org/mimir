@@ -21,6 +21,12 @@ namespace Mb.Models.Data
         public string ToNodeId { get; set; }
         public Node ToNode { get; set; }
 
+        public string TransportId { get; set; }
+        public Transport Transport { get; set; }
+
+        public string InterfaceId { get; set; }
+        public Interface Interface { get; set; }
+
         [Required]
         public string MasterProjectId { get; set; }
         public virtual Project MasterProject { get; set; }

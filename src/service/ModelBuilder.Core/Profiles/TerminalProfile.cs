@@ -27,6 +27,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.NodeId, opt => opt.Ignore())
                 .ForMember(dest => dest.TerminalCategoryId, opt => opt.MapFrom(src => src.TerminalCategoryId))
                 .ForMember(dest => dest.TerminalCategory, opt => opt.MapFrom(src => src.TerminalCategory))
+                .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes));
         }
     }

@@ -2,76 +2,76 @@ import { Aspect, Connector, Status, Attribute, ObjectType } from ".";
 import { ConnectorType } from "./Enums";
 
 export interface AttributeType {
-  id: string;
-  entity: string;
-  aspect: Aspect;
-  qualifierId: string;
-  qualifier: EnumBase;
-  sourceId: string;
-  source: EnumBase;
-  conditionId: string;
-  condition: EnumBase;
-  formatId: string;
-  format: EnumBase;
-  units: EnumBase[];
+    id: string;
+    entity: string;
+    aspect: Aspect;
+    qualifierId: string;
+    qualifier: EnumBase;
+    sourceId: string;
+    source: EnumBase;
+    conditionId: string;
+    condition: EnumBase;
+    formatId: string;
+    format: EnumBase;
+    units: EnumBase[];
 }
 
 export interface EnumBase {
-  id: string;
-  name: string;
-  description: string;
-  semanticReference: string;
-  color: string;
+    id: string;
+    name: string;
+    description: string;
+    semanticReference: string;
+    color: string;
 }
 
 export interface LibraryNodeItem {
-  id: string;
-  rds: string;
-  category: string;
-  name: string;
-  status: Status;
-  aspect: Aspect;
-  connectors: Connector[];
-  attributes?: Attribute[] | null;
-  semanticReference: string;
-  statusId: string;
-  version: string;
-  symbolId: string;
+    id: string;
+    rds: string;
+    category: string;
+    name: string;
+    status: Status;
+    aspect: Aspect;
+    connectors: Connector[];
+    attributes?: Attribute[] | null;
+    semanticReference: string;
+    statusId: string;
+    version: string;
+    symbolId: string;
 }
 
 export interface ProjectSimple {
-  id: string;
-  name: string;
-  description: string;
-  projectOwner: string;
-  updated: Date;
-  updatedBy: string;
-  selected: boolean;
+    id: string;
+    name: string;
+    description: string;
+    projectOwner: string;
+    updated: Date;
+    updatedBy: string;
+    selected: boolean;
 }
 
 export interface Rds {
-  id: string;
-  name: string;
-  code: string;
-  rdsCategoryId: string;
-  rdsCategory: EnumBase;
-  semanticReference: string;
-  aspect: Aspect;
+    id: string;
+    name: string;
+    code: string;
+    rdsCategoryId: string;
+    rdsCategory: EnumBase;
+    semanticReference: string;
+    aspect: Aspect;
 }
 
 export interface TerminalType {
-  id: string;
-  name: string;
-  color: string;
-  terminalCategoryId: string;
-  terminalCategory: EnumBase;
-  semanticReference: string;
+    id: string;
+    name: string;
+    color: string;
+    terminalCategoryId: string;
+    terminalCategory: EnumBase;
+    semanticReference: string;
 }
 
 export interface TerminalTypeItem {
-  terminalTypeId: string;
-  selected: boolean;
-  connectorType: ConnectorType;
+    terminalTypeId: string;
+    selected: boolean;
+    connectorType: ConnectorType;
 }
 // OLD VERSION
 // export interface TerminalTypeItem {
@@ -81,68 +81,87 @@ export interface TerminalTypeItem {
 // }
 
 export interface PredefinedAttribute {
-  key: string;
-  values: Object;
-  isMultiSelect: boolean;
+    key: string;
+    values: Object;
+    isMultiSelect: boolean;
 }
 
 export interface LocationType {
-  id: string;
-  name: string;
-  description: string;
-  semanticReference: string;
-  locationSubTypes: string[];
+    id: string;
+    name: string;
+    description: string;
+    semanticReference: string;
+    locationSubTypes: string[];
 }
 export interface CreateLibraryType {
-  name: string;
-  status: Status;
-  aspect: Aspect;
-  objectType: ObjectType;
-  semanticReference: string;
-  rdsId: string;
-  terminalTypes: TerminalTypeItem[];
-  attributeTypes: string[];
-  locationType: string;
-  predefinedAttributes: PredefinedAttribute[];
-  terminalTypeId: string;
-  symbolId: string;
+    name: string;
+    status: Status;
+    aspect: Aspect;
+    objectType: ObjectType;
+    semanticReference: string;
+    rdsId: string;
+    terminalTypes: TerminalTypeItem[];
+    attributeTypes: string[];
+    locationType: string;
+    predefinedAttributes: PredefinedAttribute[];
+    terminalTypeId: string;
+    symbolId: string;
 }
 export interface UpdateLibraryType {
-  name: string;
-  status: Status;
-  aspect: Aspect;
-  objectType: ObjectType;
-  semanticReference: string;
-  rdsId: string;
-  terminalTypes: TerminalTypeItem[];
-  attributeTypes: string[];
-  locationType: string;
-  predefinedAttributes: PredefinedAttribute[];
-  terminalTypeId: string;
-  symbolId: string;
+    name: string;
+    status: Status;
+    aspect: Aspect;
+    objectType: ObjectType;
+    semanticReference: string;
+    rdsId: string;
+    terminalTypes: TerminalTypeItem[];
+    attributeTypes: string[];
+    locationType: string;
+    predefinedAttributes: PredefinedAttribute[];
+    terminalTypeId: string;
+    symbolId: string;
 }
 export interface User {
-  username: string;
-  name: string;
+    username: string;
+    name: string;
 }
 export interface FileData {
-  content: string;
-  name: string;
-  lastModified: number;
+    content: string;
+    name: string;
+    lastModified: number;
 }
 
 export interface BlobData {
-  id: string;
-  name: string;
-  data: string;
-  categoryId: string;
+    id: string;
+    name: string;
+    data: string;
+    categoryId: string;
+}
+
+export interface LibraryTransportItem {
+    id: string;
+    name: string;
+    status: Status;
+    semanticReference: string;
+    terminalId: string;
+    terminalTypeId: string;
+    attributes?: Attribute[] | null;
+}
+
+export interface LibraryInterfaceItem {
+    id: string;
+    name: string;
+    status: Status;
+    semanticReference: string;
+    terminalId: string;
+    terminalTypeId: string;
 }
 
 export const SETTING_KEY = {
-  PREFERED_TYPE: "PREFERED_TYPE",
+    PREFERED_TYPE: "PREFERED_TYPE",
 };
 
 export const SETTING_VALUE = {
-  TREE_VIEW: "TREE_VIEW",
-  BLOCK_VIEW: "BLOCK_VIEW",
+    TREE_VIEW: "TREE_VIEW",
+    BLOCK_VIEW: "BLOCK_VIEW",
 };
