@@ -1,4 +1,4 @@
-/* All static text in the app is placed here */
+/* All static text in the application */
 
 const TextResources = {
   // Log in

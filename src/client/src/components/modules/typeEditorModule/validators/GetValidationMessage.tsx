@@ -42,7 +42,7 @@ const GetValidationMessage = (state: TypeEditorState) => {
   }
 
   if (IsFunction(aspect)) {
-    // Check amount of terminals
+    // Check number of terminals
     if (IsObjectBlock(objectType) || IsNotSet(objectType)) {
       if (terminals.length < 2)
         messages.push(TextResources.TypeEditor_Error_Terminals);

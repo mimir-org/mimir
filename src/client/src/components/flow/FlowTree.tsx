@@ -15,12 +15,12 @@ import { FindSelectedNode, SetDarkModeColor } from "./helpers/common";
 import { CreateTreeElements } from "./creators";
 import { getBlobData } from "../../redux/store/typeEditor/actions";
 import { GetNodeTypes, GetEdgeTypes, GetEdgeType } from "./helpers/tree";
+import { LibraryState } from "../../redux/store/library/types";
 import {
   updatePosition,
   changeActiveNode,
   changeActiveEdge,
 } from "../../redux/store/project/actions";
-import { LibraryState } from "../../redux/store/library/types";
 
 const FlowTree = () => {
   const dispatch = useDispatch();
