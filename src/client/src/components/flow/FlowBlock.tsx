@@ -10,6 +10,7 @@ import { BackgroundBox } from "../../compLibrary/blockView";
 import { changeInspectorTab } from "../../redux/store/inspector/actions";
 import { Node, BlobData } from "../../models";
 import { ProjectState } from "../../redux/store/project/types";
+import { LibraryState } from "../../redux/store/library/types";
 import { GetBlockEdgeTypes, IsBlockView } from "./helpers/block";
 import { CreateBlockElements } from "./creators";
 import { useOnConnect, useOnDrop, useOnRemove, useOnDragStop } from "./hooks";
@@ -66,6 +67,10 @@ const FlowBlock = () => {
     (state) => state.typeEditor.icons
   ) as BlobData[];
 
+  const library = useSelector<RootState>(
+    (state) => state.library
+  ) as LibraryState;
+
   const showBackground = IsLocation(splitViewNode) || IsLocation(node);
 
   const OnLoad = useCallback(
@@ -103,7 +108,8 @@ const FlowBlock = () => {
       project,
       setElements,
       dispatch,
-      EDGE_TYPE.BLOCK as EdgeType
+      EDGE_TYPE.BLOCK as EdgeType,
+      library
     );
   };
 
@@ -124,7 +130,8 @@ const FlowBlock = () => {
       setElements,
       reactFlowInstance,
       reactFlowWrapper,
-      icons
+      icons,
+      library
     );
   };
 

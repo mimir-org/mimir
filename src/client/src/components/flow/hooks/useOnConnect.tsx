@@ -5,13 +5,15 @@ import { addEdge } from "react-flow-renderer";
 import { createEdge } from "../../../redux/store/project/actions";
 import { Connector, Edge, Node } from "../../../models";
 import { ConvertToEdge } from "../converters";
+import { LibraryState } from "../../../redux/store/library/types";
 
 const useOnConnect = (
   params,
   project,
   setElements,
   dispatch,
-  edgeType: EdgeType
+  edgeType: EdgeType,
+  library: LibraryState
 ) => {
   SaveEventData(null, "edgeEvent");
   const createdId = CreateId();
@@ -51,7 +53,8 @@ const useOnConnect = (
       targetConn,
       sourceNode,
       targetNode,
-      project.id
+      project.id,
+      library
     );
 
     currentEdge = edge;

@@ -113,6 +113,23 @@ namespace Mb.Core.Profiles
                 {
                     dest.Connectors = CreateConnectors(src.TerminalTypes, context);
                 });
+
+            CreateMap<TransportType, LibraryTransportItem>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+                .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
+                .ForMember(dest => dest.TerminalId, opt => opt.Ignore())
+                .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.TerminalTypeId))
+                .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.AttributeTypes));
+            
+            CreateMap<InterfaceType, LibraryInterfaceItem>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+                .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
+                .ForMember(dest => dest.TerminalId, opt => opt.Ignore())
+                .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.TerminalTypeId));
         }
 
         private List<Connector> CreateConnectors(ICollection<NodeTypeTerminalType> terminalTypes, ResolutionContext context)

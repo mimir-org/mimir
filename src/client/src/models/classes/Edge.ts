@@ -1,39 +1,45 @@
-import { Aspect, Connector, Node } from "..";
+import { Aspect, Connector, Node, Transport, Interface } from "..";
 
 export type isEdge = keyof Edge;
 class Edge {
-  id: string;
-  fromConnectorId: string;
-  fromConnector: Connector;
+    id: string;
+    fromConnectorId: string;
+    fromConnector: Connector;
 
-  toConnectorId: string;
-  toConnector: Connector;
+    toConnectorId: string;
+    toConnector: Connector;
 
-  fromNodeId: string;
-  fromNode: Node;
+    fromNodeId: string;
+    fromNode: Node;
 
-  toNodeId: string;
-  toNode: Node;
+    toNodeId: string;
+    toNode: Node;
 
-  isHidden: boolean | false;
-  masterProjectId: string;
-  isTemplateEdge: boolean;
-  isSelected: boolean;
+    transportId: string;
+    transport: Transport;
 
-  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
-  constructor() {}
+    interfaceId: string;
+    interface: Interface;
 
-  parentType() {
-    if (this.fromNode) return this.fromNode.aspect;
+    isHidden: boolean | false;
+    masterProjectId: string;
+    isTemplateEdge: boolean;
+    isSelected: boolean;
 
-    return Aspect.NotSet;
-  }
+    // eslint-disable-next-line @typescript-eslint/no-useless-constructor
+    constructor() { }
 
-  targetType() {
-    if (this.toNode) return this.toNode.aspect;
+    parentType() {
+        if (this.fromNode) return this.fromNode.aspect;
 
-    return Aspect.NotSet;
-  }
+        return Aspect.NotSet;
+    }
+
+    targetType() {
+        if (this.toNode) return this.toNode.aspect;
+
+        return Aspect.NotSet;
+    }
 }
 
 export default Edge;

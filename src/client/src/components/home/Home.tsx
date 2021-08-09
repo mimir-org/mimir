@@ -9,6 +9,10 @@ import { AccountMenu } from "../menus/accountMenu";
 import { FilterMenu } from "../menus/filterMenu";
 import { getUser } from "../../redux/store/user/actions";
 import { getContractors, getStatuses } from "../../redux/store/common/actions";
+import {
+  importLibraryInterfaceTypes,
+  importLibraryTransportTypes,
+} from "../../redux/store/library/actions";
 import { search } from "../../redux/store/project/actions";
 import { FlowModule } from "../flow";
 import { ErrorModule } from "../modules/errorModule";
@@ -29,6 +33,8 @@ const Home = () => {
   ) as boolean;
 
   useEffect(() => {
+    dispatch(importLibraryInterfaceTypes());
+    dispatch(importLibraryTransportTypes());
     dispatch(search(""));
     dispatch(getUser());
     dispatch(getContractors());

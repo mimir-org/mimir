@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Mb.Models.Data.Enums;
+using Newtonsoft.Json;
 
 namespace Mb.Models.Data
 {
@@ -8,7 +9,14 @@ namespace Mb.Models.Data
         public string Color { get; set; }
         public string TerminalCategoryId { get; set; }
         public TerminalCategory TerminalCategory { get; set; }
+        public string TerminalTypeId { get; set; }
 
         public virtual ICollection<Attribute> Attributes { get; set; }
+
+        [JsonIgnore]
+        public ICollection<Transport> Transports { get; set; }
+
+        [JsonIgnore]
+        public ICollection<Interface> Interfaces { get; set; }
     }
 }

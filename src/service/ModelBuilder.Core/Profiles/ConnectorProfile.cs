@@ -1,5 +1,4 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using Mb.Core.Repositories.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Data;
@@ -46,8 +45,8 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => src.NodeId))
                 .ForMember(dest => dest.Color, opt => opt.MapFrom(src => src.Color))
                 .ForMember(dest => dest.TerminalCategoryId, opt => opt.MapFrom(src => src.TerminalCategoryId))
+                .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.TerminalTypeId))
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes));
         }
-
     }
 }

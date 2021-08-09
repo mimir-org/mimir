@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 using Mb.Models.Data.Enums;
 using Newtonsoft.Json;
 
@@ -38,11 +37,15 @@ namespace Mb.Models.Data
 
         public virtual string TerminalId { get; set; }
         public virtual string NodeId { get; set; }
+        public virtual string TransportId { get; set; }
 
         [JsonIgnore]
         public virtual Terminal Terminal { get; set; }
 
         [JsonIgnore]
         public virtual Node Node { get; set; }
+
+        [JsonIgnore]
+        public virtual Transport Transport { get; set; }
     }
 }

@@ -20,6 +20,7 @@ import {
   changeActiveNode,
   changeActiveEdge,
 } from "../../redux/store/project/actions";
+import { LibraryState } from "../../redux/store/library/types";
 
 const FlowTree = () => {
   const dispatch = useDispatch();
@@ -37,6 +38,10 @@ const FlowTree = () => {
   const icons = useSelector<RootState>(
     (state) => state.typeEditor.icons
   ) as BlobData[];
+
+  const library = useSelector<RootState>(
+    (state) => state.library
+  ) as LibraryState;
 
   const OnElementsRemove = (elementsToRemove) => {
     return useOnRemove(elementsToRemove, setElements, dispatch);
@@ -56,7 +61,14 @@ const FlowTree = () => {
       (x) => x.id === params.sourceHandle
     );
     const edgeType = GetEdgeType(fromConnector);
-    return useOnConnect(params, project, setElements, dispatch, edgeType);
+    return useOnConnect(
+      params,
+      project,
+      setElements,
+      dispatch,
+      edgeType,
+      library
+    );
   };
 
   const OnDragOver = (event) => {
@@ -75,7 +87,8 @@ const FlowTree = () => {
       setElements,
       reactFlowInstance,
       reactFlowWrapper,
-      icons
+      icons,
+      library
     );
   };
 

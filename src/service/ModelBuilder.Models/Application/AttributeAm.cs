@@ -15,6 +15,7 @@ namespace Mb.Models.Application
         public string FormatId { get; set; }
         public string TerminalId { get; set; }
         public string NodeId { get; set; }
+        public string TransportId { get; set; }
         public virtual ICollection<UnitAm> Units { get; set; }
     }
 }
