@@ -7,9 +7,10 @@ import { Aspect } from "../../../../../models";
 
 interface Props {
   state: TypeEditorState;
+  disabled: boolean;
 }
 
-export const RDSList = ({ state }: Props) => {
+export const RDSList = ({ state, disabled }: Props) => {
   const aspect = state.createLibraryType.aspect;
   let filteredRDS = [];
 
@@ -17,12 +18,12 @@ export const RDSList = ({ state }: Props) => {
     filteredRDS = Object.entries(state.rdsList);
 
   return (
-    <ListWrapper flex={0.7}>
+    <ListWrapper flex={0.7} disabled={disabled}>
       <ListHeader
         label={TextResources.TypeEditor_Properties_RDS}
         chooseVisible={true}
       />
-      <RDSListBody elements={filteredRDS} />
+      <RDSListBody elements={filteredRDS} disabled={disabled} />
     </ListWrapper>
   );
 };

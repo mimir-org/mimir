@@ -9,6 +9,7 @@ import {
   DropdownMenuList,
   DropdownMenuListItem,
 } from "../../../../compLibrary/dropdown";
+import { TextResources } from "../../../../assets/text";
 interface Props {
   aspect?: Aspect;
   label: string;
@@ -57,7 +58,8 @@ export const DropDownMenu = ({
       </div>
       {isListOpen && (
         <DropdownMenuList>
-          {IsLocation(aspect) ? (
+          {IsLocation(aspect) &&
+          label === TextResources.TypeEditor_Location_Type ? (
             <LocationDropdown
               listItems={items}
               setSelectedValue={setSelectedValue}

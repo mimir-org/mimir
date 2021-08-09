@@ -14,9 +14,10 @@ import { AddIcon, CheckIcon, CloseIcon } from "../../../../assets/icons/common";
 
 interface Props {
   state: TypeEditorState;
+  disabled: boolean;
 }
 
-export const TypePreview = ({ state }: Props) => {
+export const TypePreview = ({ state, disabled }: Props) => {
   const dispatch = useDispatch();
   const validationMessages = GetValidationMessage(state);
   const [showBox, setShowBox] = useState(false);
@@ -47,9 +48,14 @@ export const TypePreview = ({ state }: Props) => {
       <PreviewBody state={state} />
       <div className="text">{TextResources.TypeEditor_Preview_Info}</div>
       <SaveButton
-        onClick={() => {
-          onSaveClick(state.mode);
-        }}
+        disabled={disabled}
+        onClick={
+          disabled
+            ? null
+            : () => {
+                onSaveClick(state.mode);
+              }
+        }
       >
         <p>
           {state.mode === TypeMode.New
