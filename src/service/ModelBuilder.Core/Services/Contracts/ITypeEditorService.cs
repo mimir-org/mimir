@@ -21,6 +21,7 @@ namespace Mb.Core.Services.Contracts
         Dictionary<string, List<TerminalType>> GetTerminalsByCategory();
         Task<IEnumerable<LibraryType>> CreateLibraryTypes(ICollection<CreateLibraryType> createLibraryTypes);
         Task<LibraryType> CreateLibraryType(CreateLibraryType createLibraryType);
+        Task<LibraryType> UpdateLibraryType(string id, CreateLibraryType createLibraryType);
         IEnumerable<CreateLibraryType> GetAllTypes();
         byte[] CreateFile();
         Task LoadDataFromFile(IFormFile file, CancellationToken cancellationToken);

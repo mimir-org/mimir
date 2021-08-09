@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -11,7 +10,6 @@ using Mb.Core.Repositories.Contracts;
 using Mb.Core.Services.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Data;
-using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -168,6 +166,29 @@ namespace Mb.Core.Services
 
             var data = await CreateLibraryTypes(new List<CreateLibraryType> {createLibraryType});
             return data?.SingleOrDefault();
+        }
+
+        /// <summary>
+        /// Update a library type based on id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="createLibraryType"></param>
+        /// <returns></returns>
+        public async Task<LibraryType> UpdateLibraryType(string id, CreateLibraryType createLibraryType)
+        {
+            if (string.IsNullOrEmpty(id))
+                throw new ModelBuilderNullReferenceException("Can't update a type without an id");
+
+            if (createLibraryType == null)
+                throw new ModelBuilderNullReferenceException("Can't update a null type");
+
+            var existingType = await GetTypeById(id);
+            if (existingType == null)
+                throw new ModelBuilderNotFoundException($"There is no type with id:{id} to update.");
+
+            await DeleteType(id);
+            var createdType = await CreateLibraryType(createLibraryType);
+            return createdType;
         }
 
         /// <summary>
