@@ -6,7 +6,13 @@ interface Props {
 const Symbol = ({ base64, text }: Props) => {
   return (
     <>
-      {base64 && <img src={"data:image/svg+xml;base64," + base64} alt={text} />}
+      {base64 && (
+        <img
+          src={"data:image/svg+xml;base64," + base64}
+          alt={text}
+          draggable="false"
+        />
+      )}
     </>
   );
 };
