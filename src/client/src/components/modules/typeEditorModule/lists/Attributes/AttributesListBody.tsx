@@ -3,13 +3,16 @@ import { ListElementsContainer } from "../../../../../compLibrary";
 
 interface Props {
   listElements: any[];
+  disabled: boolean;
 }
 
-export const AttributesListBody = ({ listElements }: Props) => (
+export const AttributesListBody = ({ listElements, disabled }: Props) => (
   <ListElementsContainer>
-    {listElements?.map((element) => (
-      <AttributesListElement key={element[1].id} attribute={element} />
-    ))}
+    {disabled
+      ? null
+      : listElements?.map((element) => (
+          <AttributesListElement key={element[1].id} attribute={element} />
+        ))}
   </ListElementsContainer>
 );
 

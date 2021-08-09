@@ -18,6 +18,7 @@ const SaveButton = styled.button`
   color: ${Color.Black};
   margin: auto;
   margin-top: 12px;
+  opacity: ${(props: { disabled: boolean }) => (props.disabled ? 0.4 : 1)};
 
   .icon {
     position: relative;
