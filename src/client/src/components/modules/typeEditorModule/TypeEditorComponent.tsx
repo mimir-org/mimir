@@ -32,7 +32,6 @@ export const TypeEditorComponent = () => {
   const objectType = state.createLibraryType.objectType;
 
   const onCloseEditor = () => {
-    // dispatch(resetCreateLibrary());
     dispatch(changeMode(TypeMode.NotSet));
     dispatch(changeFlowView(MODULE_TYPE.TYPEEDITOR));
     push(`/home/${VIEW_TYPE.TREEVIEW}`);

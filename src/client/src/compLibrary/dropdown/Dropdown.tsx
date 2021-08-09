@@ -15,6 +15,7 @@ interface Props {
   onChange: Function;
   defaultValue?: string;
   valueImageProp?: string;
+  disabled?: boolean;
 }
 
 const Dropdown = ({
@@ -25,6 +26,7 @@ const Dropdown = ({
   onChange,
   defaultValue,
   valueImageProp,
+  disabled,
 }: Props) => {
   const [isListOpen, setIsListOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -49,10 +51,10 @@ const Dropdown = ({
 
   return (
     <>
-      <DropdownMenuWrapper>
+      <DropdownMenuWrapper disabled={disabled}>
         <label htmlFor={label} />
         <div className="label"> {label}</div>
-        <div onClick={(e) => setIsListOpen(!isListOpen)}>
+        <div onClick={disabled ? null : (e) => setIsListOpen(!isListOpen)}>
           <DropdownMenuHeader>
             {selectedItem && (
               <>

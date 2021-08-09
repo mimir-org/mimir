@@ -72,14 +72,8 @@ export interface TerminalTypeItem {
     terminalTypeId: string;
     selected: boolean;
     connectorType: ConnectorType;
+    number: number;
 }
-// OLD VERSION
-// export interface TerminalTypeItem {
-//   terminalTypeId: string;
-//   number: number;
-//   connectorType: ConnectorType;
-// }
-
 export interface PredefinedAttribute {
     key: string;
     values: Object;

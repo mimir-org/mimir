@@ -1,6 +1,5 @@
 import "./dropdownmenu.scss";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
 import { Aspect, ObjectType, Status } from "../../../../models";
 import { ExpandIcon, CollapseIcon } from "../../../../assets/icons/common";
 import { GetDefaultValue, LocationDropdown, IsLocation } from "../helpers";
@@ -10,46 +9,47 @@ import {
   DropdownMenuList,
   DropdownMenuListItem,
 } from "../../../../compLibrary/dropdown";
-import {
-  changeSelectedAspect,
-  changeSelectedObjectType,
-  changeStatus,
-} from "../../../../redux/store/typeEditor/actions";
-
 interface Props {
   aspect?: Aspect;
   label: string;
   items: any[];
   type: Aspect | ObjectType | Status;
+  onChange: Function;
+  disabled?: boolean;
 }
 
-export const DropDownMenu = ({ aspect, label, items, type }: Props) => {
-  const dispatch = useDispatch();
+export const DropDownMenu = ({
+  aspect,
+  label,
+  items,
+  type,
+  onChange,
+  disabled,
+}: Props) => {
   const [isListOpen, setIsListOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState(GetDefaultValue(type));
+
+  useEffect(() => {
+    if (aspect === Aspect.NotSet) {
+      setSelectedValue(GetDefaultValue(type));
+    }
+  }, [aspect, type]);
 
   const toggleList = () => {
     setIsListOpen(!isListOpen);
   };
 
-  const onChange = ([key, value]) => {
+  const handleChange = ([key, value]) => {
     setSelectedValue(value);
     setIsListOpen(!isListOpen);
-    if (label === "Aspect") {
-      dispatch(changeSelectedAspect(Number(key)));
-    } else if (label === "Object Type") {
-      dispatch(changeSelectedObjectType(Number(key)));
-    } else if (label === "Status") {
-      dispatch(changeStatus(Number(key)));
-    }
-    toggleList();
+    onChange(key);
   };
 
   return (
-    <DropdownMenuWrapper>
+    <DropdownMenuWrapper disabled={disabled}>
       <label htmlFor={label} />
       <div className="label"> {label}</div>
-      <div onClick={toggleList}>
+      <div onClick={disabled ? null : toggleList}>
         <DropdownMenuHeader>
           <p>{selectedValue}</p>
           <img src={isListOpen ? ExpandIcon : CollapseIcon} alt="expand-icon" />
@@ -69,7 +69,7 @@ export const DropDownMenu = ({ aspect, label, items, type }: Props) => {
               <div
                 className="listitem"
                 key={key}
-                onClick={() => onChange([key, value])}
+                onClick={() => handleChange([key, value])}
               >
                 <DropdownMenuListItem>
                   <p>{value}</p>
