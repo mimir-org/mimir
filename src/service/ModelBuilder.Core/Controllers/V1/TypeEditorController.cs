@@ -320,6 +320,43 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
+        /// Update a library type
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="libraryType"></param>
+        /// <returns></returns>
+        [HttpPost("{id}")]
+        [ProducesResponseType(typeof(LibraryType), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> UpdateLibraryType(string id, [FromBody] CreateLibraryType libraryType)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                var data = await _typeEditorService.UpdateLibraryType(id, libraryType);
+                return Ok(data);
+            }
+            catch (ModelBuilderNullReferenceException e)
+            {
+                ModelState.AddModelError("Bad request", e.Message);
+                return BadRequest(ModelState);
+            }
+            catch (ModelBuilderNotFoundException e)
+            {
+                ModelState.AddModelError("Bad request", e.Message);
+                return BadRequest(ModelState);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
         /// Delete a type
         /// </summary>
         /// <param name="id"></param>
