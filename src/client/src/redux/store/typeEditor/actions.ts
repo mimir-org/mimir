@@ -11,6 +11,7 @@ import {
 import {
   CREATING_TYPE,
   UPDATING_TYPE,
+  CHANGE_SELECTED_TYPE,
   CHANGE_MODE,
   FETCHING_INITIAL_DATA,
   FETCHING_RDS,
@@ -99,6 +100,15 @@ export function getPredefinedAttributes(): TypeEditorActionTypes {
   return {
     type: FETCHING_PREDEFINED_ATTRIBUTES,
     payload: null,
+  };
+}
+
+export function changeSelectedType(selectedType: string) {
+  return {
+    type: CHANGE_SELECTED_TYPE,
+    payload: {
+      selectedType,
+    },
   };
 }
 

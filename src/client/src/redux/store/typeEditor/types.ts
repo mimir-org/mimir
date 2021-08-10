@@ -71,13 +71,13 @@ export interface TypeEditorState {
   terminals: TerminalType[];
   attributes: AttributeType[];
   mode: TypeMode;
+  selectedType: string;
   rdsName: string;
   terminalCategory: string;
   terminalColor: string;
   locationTypes: LocationType[];
   predefinedAttributes: PredefinedAttribute[];
   apiError: ApiError[];
-  selectedType: string;
   icons: BlobData[];
 }
 
@@ -262,6 +262,13 @@ export interface UpdateAttributesTypes {
   };
 }
 
+export interface ChangeSelectedType {
+  type: typeof CHANGE_SELECTED_TYPE;
+  payload: {
+    selectedType: string;
+  };
+}
+
 export interface ChangeMode {
   type: typeof CHANGE_MODE;
   payload: {
@@ -343,6 +350,7 @@ export type TypeEditorActionTypes =
   | AddTerminalType
   | RemoveTerminalTypes
   | UpdateAttributesTypes
+  | ChangeSelectedType
   | ChangeMode
   | UpdatingTypeAction
   | CreatingTypeAction
