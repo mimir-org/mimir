@@ -13,6 +13,7 @@ const ListWrapper = styled.div`
     props.height === undefined ? `250px` : props.height + `px`};
   margin-right: ${(props: { right: number }) =>
     props.right === undefined ? `15px` : props.right};
+  opacity: ${(props: { disabled: boolean }) => (props.disabled ? 0.4 : 1)};
 
   .text {
     font-style: italic;

@@ -3,17 +3,20 @@ import { ListElementsContainer } from "../../../../../compLibrary";
 
 interface Props {
   elements: any[];
+  disabled: boolean;
 }
 
-export const RDSListBody = ({ elements }: Props) => (
+export const RDSListBody = ({ elements, disabled }: Props) => (
   <ListElementsContainer>
-    {elements.map((element) => (
-      <RDSListElement
-        key={element[1].id}
-        id={element[1].id}
-        name={element[1].name}
-      />
-    ))}
+    {disabled
+      ? null
+      : elements.map((element) => (
+          <RDSListElement
+            key={element[1].id}
+            id={element[1].id}
+            name={element[1].name}
+          />
+        ))}
   </ListElementsContainer>
 );
 

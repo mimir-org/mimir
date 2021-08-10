@@ -7,9 +7,10 @@ import { IsFunction, IsLocation } from "../../helpers";
 
 interface Props {
   state: TypeEditorState;
+  disabled: boolean;
 }
 
-export const TerminalsList = ({ state }: Props) => {
+export const TerminalsList = ({ state, disabled }: Props) => {
   const aspect = state.createLibraryType.aspect;
   let terminals = [];
 
@@ -20,7 +21,7 @@ export const TerminalsList = ({ state }: Props) => {
   }
 
   return (
-    <ListWrapper flex={0.8}>
+    <ListWrapper flex={0.8} disabled={disabled}>
       <ListHeader
         label={
           IsFunction(aspect)
@@ -29,7 +30,11 @@ export const TerminalsList = ({ state }: Props) => {
         }
         chooseVisible={true}
       />
-      <TerminalsListBody state={state} terminals={terminals} />
+      <TerminalsListBody
+        state={state}
+        terminals={terminals}
+        disabled={disabled}
+      />
     </ListWrapper>
   );
 };
