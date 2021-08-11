@@ -1,7 +1,7 @@
 import red, { RootState } from "../../../redux/store";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { MODULE_TYPE, VIEW_TYPE } from "../../../models/project";
 import { TextResources } from "../../../assets/text";
 import { CloseIcon } from "../../../assets/icons/common";
@@ -17,6 +17,7 @@ import {
   changeMode,
   getInitialData,
   getBlobData,
+  changeSelectedType,
 } from "../../../redux/store/typeEditor/actions";
 import {
   TypeEditorWrapper,
@@ -28,9 +29,12 @@ import {
 export const TypeEditorComponent = () => {
   const { push } = useHistory();
   const dispatch = useDispatch();
+  const location = useLocation();
   const state = useSelector<RootState>((s) => s.typeEditor) as TypeEditorState;
   const aspect = state.createLibraryType.aspect;
   const objectType = state.createLibraryType.objectType;
+  const selectedType = location.state["selectedType"] as string;
+  const mode = location.state["mode"] as TypeMode;
 
   const onCloseEditor = () => {
     dispatch(changeMode(TypeMode.NotSet));
@@ -44,7 +48,16 @@ export const TypeEditorComponent = () => {
     dispatch(getInitialData());
     dispatch(changeAllModulesVisibility(false, true));
     dispatch(getBlobData());
-  }, [dispatch, aspect, objectType, state.createLibraryType.status]);
+    dispatch(changeSelectedType(selectedType));
+    dispatch(changeMode(mode));
+  }, [
+    dispatch,
+    aspect,
+    objectType,
+    state.createLibraryType.status,
+    mode,
+    selectedType,
+  ]);
 
   return (
     <TypeEditorWrapper>

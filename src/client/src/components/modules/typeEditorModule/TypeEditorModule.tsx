@@ -6,23 +6,25 @@ import { NewTypeIcon, EditTypeIcon } from "../../../assets/icons/common";
 import { VIEW_TYPE } from "../../../models/project";
 import { TypeEditorBox, TypeEditorBoxContent } from "../../../compLibrary/box";
 
-export const TypeEditorModule = ({ selectedElement, onChange }) => {
+interface Props {
+  selectedElement: string;
+}
+export const TypeEditorModule = ({ selectedElement }: Props) => {
   const { push } = useHistory();
 
   const onClick = (mode: TypeMode) => {
-    onChange(mode);
-    let modeUrl = "";
-    if (mode === TypeMode.Edit) {
-      modeUrl = "edit";
-    } else if (mode === TypeMode.New) {
-      modeUrl = "new";
-    }
-    push(`/home/${VIEW_TYPE.TYPE_EDITOR}/${modeUrl}`);
+    let modeUrl = mode === TypeMode.Edit ? "edit" : "new";
+    push({
+      pathname: `/home/${VIEW_TYPE.TYPE_EDITOR}/${modeUrl}`,
+      state: {
+        selectedType: selectedElement,
+        mode: mode,
+      },
+    });
   };
 
   return (
     <TypeEditorBox>
-      {console.log(selectedElement)}
       <TypeEditorBoxContent active={true}>
         <div onClick={() => onClick(TypeMode.New)} className="typeeditor_box">
           <img src={NewTypeIcon} alt="new-type" />
