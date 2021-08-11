@@ -11,6 +11,7 @@ import { SetDarkModeColor } from "../../flow/helpers/common";
 import { changeAllModulesVisibility } from "../../../redux/store/modules/actions";
 import { TypeMode, ObjectType } from "../../../models/";
 import { TypeEditorInputs } from "./";
+import { FieldValidator } from "./helpers";
 import { RDSList, TerminalsList, AttributesList, TypePreview } from ".";
 import {
   changeMode,
@@ -54,12 +55,18 @@ export const TypeEditorComponent = () => {
         </TypeEditorHeader>
         <TypeEditorInputs state={state} dispatch={dispatch} />
         <ChooseProperties>
-          <RDSList state={state} />
-          <TerminalsList state={state} />
+          <RDSList state={state} disabled={FieldValidator(state, "rds")} />
+          <TerminalsList
+            state={state}
+            disabled={FieldValidator(state, "terminals")}
+          />
           {objectType === ObjectType.Interface ? null : (
-            <AttributesList state={state} />
+            <AttributesList
+              state={state}
+              disabled={FieldValidator(state, "terminals")}
+            />
           )}
-          <TypePreview state={state} />
+          <TypePreview state={state} disabled={FieldValidator(state, "add")} />
         </ChooseProperties>
         {/* <TypeEditorInspector /> */}
       </TypeEditorContent>
