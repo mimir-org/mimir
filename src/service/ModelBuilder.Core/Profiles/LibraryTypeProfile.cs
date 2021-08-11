@@ -182,7 +182,22 @@ namespace Mb.Core.Profiles
             if (terminalTypes == null || !terminalTypes.Any())
                 yield break;
 
+            var sortedTerminalTypes = new List<TerminalTypeItem>();
+
             foreach (var item in terminalTypes)
+            {
+                var existingSortedTerminalType = sortedTerminalTypes.FirstOrDefault(x => x.TerminalTypeId == item.TerminalTypeId && x.ConnectorType == item.ConnectorType);
+                if (existingSortedTerminalType == null)
+                {
+                    sortedTerminalTypes.Add(item);
+                }
+                else
+                {
+                    existingSortedTerminalType.Number += item.Number;
+                }
+            }
+
+            foreach (var item in sortedTerminalTypes)
             {
                 var key = $"{item.Key}-{nodeId}"; 
                 yield return new NodeTypeTerminalType
