@@ -1,32 +1,23 @@
-import styled from "styled-components";
-import { Input, InputBox } from "../../../compLibrary";
-import { InputWrapper } from "./styled";
-import { RightArrowIcon } from "../../../assets/icons/common";
-import { ConnectionList } from "./helpers";
+import { Input, InputBox } from "../../../../compLibrary";
+import { GoToAspectContainer, InputWrapper } from "../styled";
+import { RightArrowIcon } from "../../../../assets/icons/common";
+import { ConnectionList } from "../helpers";
 import { useDispatch } from "react-redux";
-import { changeActiveNode } from "../../../redux/store/project/actions";
-import { Project, Edge, Node } from "../../../models";
-import TextResources from "../../../assets/text/TextResources";
+import { changeActiveNode } from "../../../../redux/store/project/actions";
+import { Project, Edge, Node } from "../../../../models";
+import { TextResources } from "../../../../assets/text";
 import {
   RelationColumns,
   AspectList,
   ButtonGoToAspect,
-} from "../../../compLibrary/box/inspector";
-
-const GoToAspectContainer = styled.div`
-  padding-top: 10px;
-  padding-left: 10px;
-  height: 44px;
-  font-size: 12px;
-  width: 300px;
-`;
+} from "../../../../compLibrary/box/inspector";
 
 interface Props {
   project: Project;
   node: Node;
 }
 
-const RelationTabComponent = ({ project, node }: Props) => {
+const RelationComponent = ({ project, node }: Props) => {
   const dispatch = useDispatch();
 
   const nodes = project?.nodes ?? [];
@@ -180,4 +171,4 @@ const RelationTabComponent = ({ project, node }: Props) => {
     </RelationColumns>
   );
 };
-export default RelationTabComponent;
+export default RelationComponent;

@@ -14,7 +14,7 @@ interface Props {
 const TabEdgeAdminContent = ({ edge, project }: Props) => {
   const dispatch = useDispatch();
 
-  const handleOnDelete = () => {
+  const onDelete = () => {
     project.edges.forEach((x) => {
       if (x.id === edge.id) dispatch(removeEdge(edge.id));
     });
@@ -86,7 +86,7 @@ const TabEdgeAdminContent = ({ edge, project }: Props) => {
         </div>
       </TabColumn>
       <TabColumn>
-        <DeleteNodeButton handleClick={handleOnDelete} />
+        <DeleteNodeButton handleClick={onDelete} />
       </TabColumn>
     </>
   );

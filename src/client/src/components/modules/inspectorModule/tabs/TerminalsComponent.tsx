@@ -1,63 +1,28 @@
-import styled from "styled-components";
-import { ActiveTerminalTypeList, AttributesContainer } from "./helpers";
-import { Attribute } from "../../../models";
-import { IsTransportTerminal } from "../../flow/helpers/common";
-import { TextResources } from "../../../assets/text";
+import { ActiveTerminalTypeList, AttributesContainer } from "../helpers";
+import { Attribute, Connector, ConnectorType } from "../../../../models";
+import { IsTransportTerminal } from "../../../flow/helpers/common";
+import { TextResources } from "../../../../assets/text";
+import { ListWrapper, TerminalsWrapper } from "../styled";
 
-// Migth be used later:
-// import { ConnectorAttributesList } from "./helpers";
-// import { changeConnectorAttributeValue } from "../../../redux/store/project/actions";
 interface ConnectorAttribute {
   id: string;
   name: string;
   attributes: Attribute[];
 }
 
-/*
-Might be used later:
-const AttributesWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    margin: 10px;
-    height: 160px;
-    width: 250px;
-`;*/
-const TerminalsWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 550px;
-`;
-const ListWrapper = styled.div`
-  display: flex;
-`;
-
-const TerminalsTabComponent = ({ node }): any => {
-  /*
-  Might be used later:
-  const handleOnConnectorChange = (
-    id: string,
-    value: string,
-    unit: any,
-    connectorId: string
-  ) => {
-    dispatch(
-      changeConnectorAttributeValue(id, value, unit, node.id, connectorId)
-    );
-  };
-  */
-
+const TerminalsComponent = ({ node }): any => {
   let activeConnectors = [];
   let connectorAttributes: ConnectorAttribute[] = [];
 
   if (node) {
     const tempAttributes: ConnectorAttribute[] = [];
 
-    node.connectors?.forEach((connector) => {
-      if (IsTransportTerminal(connector)) {
+    node.connectors?.forEach((conn: Connector) => {
+      if (IsTransportTerminal(conn)) {
         const data = {
-          id: connector.id,
-          name: connector.name + " " + connector.type,
-          attributes: connector.attributes,
+          id: conn.id,
+          name: conn.name + " " + ConnectorType[conn.type],
+          attributes: conn.attributes,
         } as ConnectorAttribute;
         tempAttributes.push(data);
       }
@@ -97,4 +62,22 @@ const TerminalsTabComponent = ({ node }): any => {
   );
 };
 
-export default TerminalsTabComponent;
+export default TerminalsComponent;
+
+// Migth be used later:
+// import { ConnectorAttributesList } from "./helpers";
+// import { changeConnectorAttributeValue } from "../../../redux/store/project/actions";
+
+/*
+  Might be used later:
+  const handleOnConnectorChange = (
+    id: string,
+    value: string,
+    unit: any,
+    connectorId: string
+  ) => {
+    dispatch(
+      changeConnectorAttributeValue(id, value, unit, node.id, connectorId)
+    );
+  };
+  */

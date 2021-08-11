@@ -1,15 +1,14 @@
-import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { EyeIcon, DownIcon, UpIcon } from "../../../assets/icons/common";
 import { TextResources } from "../../../assets/text";
-import InspectorTabs from "./InspectorTabs";
+import { InspectorTabs } from "./";
 import { Size } from "../../../compLibrary";
 import { MODULE_TYPE } from "../../../models/project";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import { IsExplorerModule, IsLibraryModule } from "../../flow/helpers/common";
-import { Color } from "../../../compLibrary/";
 import { Project } from "../../../models";
+import { TabsBottomLine } from "./styled";
 import {
   InspectorTitle,
   InspectorBody,
@@ -17,11 +16,6 @@ import {
   IconWrapper,
   ButtonBox,
 } from "../../../compLibrary/box/inspector";
-
-const TabsBottomLine = styled.div`
-  border-bottom: 1px solid ${Color.Grey};
-  flex-grow: 1;
-`;
 
 const InspectorModule = () => {
   const dispatch = useDispatch();
@@ -49,20 +43,24 @@ const InspectorModule = () => {
     (state) => state.modules.types.find((x) => IsExplorerModule(x.type)).visible
   ) as boolean;
 
-  const handleClick = () => {
+  const onClick = () => {
     dispatch(changeModuleVisibility(key, !isInspectorOpen, true));
   };
 
-  const start = isInspectorOpen ? Size.ModuleClosed : Size.InspectorModuleOpen;
-  const stop = isInspectorOpen ? Size.InspectorModuleOpen : Size.ModuleClosed;
+  const animationStart = isInspectorOpen
+    ? Size.ModuleClosed
+    : Size.InspectorModuleOpen;
+  const animationStop = isInspectorOpen
+    ? Size.InspectorModuleOpen
+    : Size.ModuleClosed;
 
   return (
     <AnimatedInspector
       type={key}
       isLibraryOpen={isLibraryOpen}
       isExplorerOpen={isExplorerOpen}
-      start={start}
-      stop={stop}
+      start={animationStart}
+      stop={animationStop}
       run={animate}
       id="InspectorModule"
     >
@@ -73,7 +71,7 @@ const InspectorModule = () => {
             <img
               src={isInspectorOpen ? DownIcon : UpIcon}
               alt="toggle-icon"
-              onClick={handleClick}
+              onClick={onClick}
             />
           </ButtonBox>
           <IconWrapper>

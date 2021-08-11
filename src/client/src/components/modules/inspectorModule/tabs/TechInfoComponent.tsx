@@ -1,10 +1,15 @@
-import { Attribute, Connector } from "../../../models";
-import { TabRow } from "../../../compLibrary/box/inspector";
-import { IsTransportTerminal, CreateId } from "../../flow/helpers/common";
-import { Input, InputBox, Select, AttributeField } from "../../../compLibrary";
-import { InputWrapper } from "./styled";
+import { Attribute, Connector } from "../../../../models";
+import { TabRow } from "../../../../compLibrary/box/inspector";
+import { IsTransportTerminal, CreateId } from "../../../flow/helpers/common";
+import { InputWrapper } from "../styled";
 import { useDispatch } from "react-redux";
-import { changeAttributeValue } from "../../../redux/store/project/actions";
+import { changeAttributeValue } from "../../../../redux/store/project/actions";
+import {
+  Input,
+  InputBox,
+  Select,
+  AttributeField,
+} from "../../../../compLibrary";
 
 interface ConnectorAttribute {
   id: string;
@@ -12,10 +17,10 @@ interface ConnectorAttribute {
   attributes: Attribute[];
 }
 
-const TechInfoTabComponent = ({ node }) => {
+const TechInfoComponent = ({ node }) => {
   const dispatch = useDispatch();
 
-  const handleOnNodeChange = (id: string, value: string, unit: any) => {
+  const onNodeChange = (id: string, value: string, unit: any) => {
     dispatch(changeAttributeValue(id, value, unit, node.id));
   };
 
@@ -38,26 +43,24 @@ const TechInfoTabComponent = ({ node }) => {
   return (
     <TabRow>
       {nodeAttributes?.map((attr) => {
-        let inputFieldWidth = (attr.value?.length ?? 1) * 3 + 10;
-        //inputFieldWidth = (inputFieldWidth <= 10) ? 10 : inputFieldWidth;
         return (
           <AttributeField key={CreateId()}>
             <div>{attr.key}</div>
             <InputBox>
-              <InputWrapper width={inputFieldWidth + "%"} rightMargin={"4px"}>
+              <InputWrapper width={70} rightMargin={"4px"}>
                 <Input
                   value={attr.value ?? ""}
                   onChange={(e: any) =>
-                    handleOnNodeChange(attr.id, e.target.value, attr.unit)
+                    onNodeChange(attr.id, e.target.value, attr.unit)
                   }
                   inputType="tech"
                 />
               </InputWrapper>
-              <InputWrapper width={100 - inputFieldWidth + "%"}>
+              <InputWrapper width={30}>
                 <Select
                   value={attr.selectedUnitId ?? ""}
                   onChange={(e: any) =>
-                    handleOnNodeChange(attr.id, attr.value, e.target.value)
+                    onNodeChange(attr.id, attr.value, e.target.value)
                   }
                 >
                   <option value={"3A28C02532C32420AC3A775BEB2B7E5C"}>
@@ -77,4 +80,4 @@ const TechInfoTabComponent = ({ node }) => {
     </TabRow>
   );
 };
-export default TechInfoTabComponent;
+export default TechInfoComponent;

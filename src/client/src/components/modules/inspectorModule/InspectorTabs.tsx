@@ -1,8 +1,9 @@
-import { TabComponent, TabAdminComponent } from ".";
+import { TabComponent } from ".";
 import { TabEdgeAdminComponent, TabEdgeComponent } from "./edgeInspector";
 import { Project, Node } from "../../../models";
 import { IsBlockView } from "../../flow/helpers/block";
 import { FindSelectedNode } from "../../flow/helpers/common";
+import { AdminComponent } from "./tabs";
 
 interface Props {
   project: Project;
@@ -23,7 +24,7 @@ const InspectorTabs = ({ project }: Props) => {
     <>
       {node && (
         <>
-          <TabAdminComponent node={node} project={project} index={0} />
+          <AdminComponent node={node} project={project} index={0} />
           <TabComponent node={node} index={1} project={project} />
           <TabComponent node={node} index={2} project={project} />
           <TabComponent node={node} index={3} project={project} />

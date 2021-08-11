@@ -1,9 +1,9 @@
 import { Node, Project } from "../../../models";
 import {
-  RelationTabComponent,
-  TerminalsTabComponent,
-  TechInfoTabComponent,
-} from ".";
+  RelationComponent,
+  TerminalsComponent,
+  TechInfoComponent,
+} from "./tabs";
 
 interface Props {
   node: Node;
@@ -14,9 +14,9 @@ interface Props {
 const TabContent = ({ node, index, project }: Props) => {
   return (
     <>
-      {index === 1 && <TechInfoTabComponent node={node} />}
-      {index === 2 && <TerminalsTabComponent node={node} />}
-      {index === 3 && <RelationTabComponent node={node} project={project} />}
+      {index === 1 && <TechInfoComponent node={node} />}
+      {index === 2 && <TerminalsComponent node={node} />}
+      {index === 3 && <RelationComponent node={node} project={project} />}
       {/*index === 4 && <CommentsTabComponent node={node} />*/}
     </>
   );

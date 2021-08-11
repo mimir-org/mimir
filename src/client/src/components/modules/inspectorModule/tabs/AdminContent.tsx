@@ -1,19 +1,19 @@
 import moment from "moment/moment.js";
-import { TextResources } from "../../../assets/text";
 import { useDispatch } from "react-redux";
-import { Contractor } from "../../../redux/store/common/types";
-import { TabColumn } from "../../../compLibrary/box/inspector";
-import { Input, Select, Textarea } from "../../../compLibrary";
-import { EnumBase, Node, Project } from "../../../models";
-import { GetRdsId, GetReferenceDesignation } from "../../../assets/helpers";
-import { IsLocation } from "../../flow/helpers/common";
-import { IsBlockView } from "../../flow/helpers/block";
-import { DeleteNodeButton } from "./helpers/";
+import { TextResources } from "../../../../assets/text";
+import { Contractor } from "../../../../redux/store/common/types";
+import { TabColumn } from "../../../../compLibrary/box/inspector";
+import { Input, Select, Textarea } from "../../../../compLibrary";
+import { EnumBase, Node, Project } from "../../../../models";
+import { GetRdsId, GetReferenceDesignation } from "../../../../assets/helpers";
+import { IsLocation } from "../../../flow/helpers/common";
+import { IsBlockView } from "../../../flow/helpers/block";
+import { DeleteNodeButton } from "../helpers";
 import {
   changeNodeValue,
   removeEdge,
   removeNode,
-} from "../../../redux/store/project/actions";
+} from "../../../../redux/store/project/actions";
 
 interface Props {
   node: Node;
@@ -22,13 +22,14 @@ interface Props {
   statuses: EnumBase[];
 }
 
-const TabAdminContent = ({ node, project, contractors, statuses }: Props) => {
+const AdminContent = ({ node, project, contractors, statuses }: Props) => {
   const dispatch = useDispatch();
-  const handleOnChange = (e: any, key: string) => {
+
+  const onChange = (e: any, key: string) => {
     dispatch(changeNodeValue(node.id, key, e.target.value));
   };
 
-  const handleOnDelete = () => {
+  const onDelete = () => {
     project.edges.forEach((edge) => {
       if (edge.fromNodeId === node.id) dispatch(removeEdge(edge.id));
       if (edge.toNodeId === node.id) dispatch(removeEdge(edge.id));
@@ -61,7 +62,7 @@ const TabAdminContent = ({ node, project, contractors, statuses }: Props) => {
           <div>{TextResources.Inspector_Admin_Semantic_Id}</div>
           <Input
             value={node.semanticReference ?? ""}
-            onChange={(e: any) => handleOnChange(e, "semanticId")}
+            onChange={(e: any) => onChange(e, "semanticId")}
             inputType=""
           />
         </div>
@@ -100,7 +101,7 @@ const TabAdminContent = ({ node, project, contractors, statuses }: Props) => {
           <div>{TextResources.Inspector_Admin_Service}</div>
           <Input
             value={node.label}
-            onChange={(e: any) => handleOnChange(e, "label")}
+            onChange={(e: any) => onChange(e, "label")}
             inputType=""
           />
         </div>
@@ -118,7 +119,7 @@ const TabAdminContent = ({ node, project, contractors, statuses }: Props) => {
             <div>{TextResources.Inspector_Admin_Width}</div>
             <Input
               value={node.width}
-              onChange={(e: any) => handleOnChange(e, "width")}
+              onChange={(e: any) => onChange(e, "width")}
               inputType=""
             />
           </div>
@@ -127,7 +128,7 @@ const TabAdminContent = ({ node, project, contractors, statuses }: Props) => {
           <div>{TextResources.Inspector_Admin_Tag}</div>
           <Input
             value={node.tagNumber ?? ""}
-            onChange={(e: any) => handleOnChange(e, "tagNumber")}
+            onChange={(e: any) => onChange(e, "tagNumber")}
             inputType=""
           />
         </div>
@@ -136,7 +137,7 @@ const TabAdminContent = ({ node, project, contractors, statuses }: Props) => {
             <div>{TextResources.Inspector_Admin_Height}</div>
             <Input
               value={node.height}
-              onChange={(e: any) => handleOnChange(e, "height")}
+              onChange={(e: any) => onChange(e, "height")}
               inputType=""
               readOnly={true}
             />
@@ -148,7 +149,7 @@ const TabAdminContent = ({ node, project, contractors, statuses }: Props) => {
           <div>{TextResources.Inspector_Admin_Status}</div>
           <Select
             value={node.statusId ?? ""}
-            onChange={(e: any) => handleOnChange(e, "statusId")}
+            onChange={(e: any) => onChange(e, "statusId")}
           >
             {statuses?.map((x) => (
               <option key={x.id} value={x.id}>
@@ -161,7 +162,7 @@ const TabAdminContent = ({ node, project, contractors, statuses }: Props) => {
           <div>{TextResources.Inspector_Admin_Version}</div>
           <Input
             value={node.version ?? ""}
-            onChange={(e: any) => handleOnChange(e, "version")}
+            onChange={(e: any) => onChange(e, "version")}
             inputType=""
           />
         </div>
@@ -170,7 +171,7 @@ const TabAdminContent = ({ node, project, contractors, statuses }: Props) => {
             <div>{TextResources.Inspector_Admin_Length}</div>
             <Input
               value={node.length}
-              onChange={(e: any) => handleOnChange(e, "length")}
+              onChange={(e: any) => onChange(e, "length")}
               inputType=""
             />
           </div>
@@ -179,7 +180,7 @@ const TabAdminContent = ({ node, project, contractors, statuses }: Props) => {
           <div>{TextResources.Inspector_Admin_Contractor}</div>
           <Select
             value={node.contractor ?? "NotSet"} // TODO: check this
-            onChange={(e: any) => handleOnChange(e, "contractor")}
+            onChange={(e: any) => onChange(e, "contractor")}
           >
             <option value={"NotSet"}>{"NotSet"}</option>
             {contractors?.map((contractor) => (
@@ -197,15 +198,15 @@ const TabAdminContent = ({ node, project, contractors, statuses }: Props) => {
             width="300"
             height="90"
             value={node.description ?? ""}
-            onChange={(e: any) => handleOnChange(e, "description")}
+            onChange={(e: any) => onChange(e, "description")}
           ></Textarea>
         </div>
       </TabColumn>
       <TabColumn>
-        <DeleteNodeButton handleClick={handleOnDelete} />
+        <DeleteNodeButton handleClick={onDelete} />
       </TabColumn>
     </>
   );
 };
 
-export default TabAdminContent;
+export default AdminContent;

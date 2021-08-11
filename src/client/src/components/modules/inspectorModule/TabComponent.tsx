@@ -21,6 +21,7 @@ interface Props {
 
 const TabComponent = ({ node, index, project }: Props) => {
   const dispatch = useDispatch();
+
   const isOpen = useSelector<RootState>(
     (state) => state.inspector.tabs[index]?.visible
   ) as boolean;
