@@ -84,11 +84,15 @@ const InspectorModule = () => {
       run={animate}
       id="InspectorModule"
     >
-      <InspectorTopMenu>
-        {node && <NodeTitle>{node.label ?? node.name}</NodeTitle>}
-        <DeleteButtonWrapper>
-          <DeleteNodeButton handleClick={onDelete} />
-        </DeleteButtonWrapper>
+      <InspectorTopMenu id="InspectorTopMenu">
+        {node && (
+          <>
+            <NodeTitle>{node.label ?? node.name}</NodeTitle>
+            <DeleteButtonWrapper>
+              <DeleteNodeButton handleClick={onDelete} />
+            </DeleteButtonWrapper>
+          </>
+        )}
         <ButtonBox>
           <img
             src={isInspectorOpen ? DownIcon : UpIcon}
