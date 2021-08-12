@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Mb.Models.Application;
+using Mb.Models.Application.Enums;
 using Mb.Models.Data;
 using Mb.Models.Enums;
 using Microsoft.AspNetCore.Http;
@@ -23,6 +24,7 @@ namespace Mb.Core.Services.Contracts
         Task<LibraryType> CreateLibraryType(CreateLibraryType createLibraryType);
         Task<LibraryType> UpdateLibraryType(string id, CreateLibraryType createLibraryType);
         IEnumerable<CreateLibraryType> GetAllTypes();
+        Task<CreateLibraryType> ConvertToCreateLibraryType(string id, LibraryFilter filter);
         byte[] CreateFile();
         Task LoadDataFromFile(IFormFile file, CancellationToken cancellationToken);
         Task DeleteType(string id);

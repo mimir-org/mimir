@@ -4,8 +4,13 @@ namespace Mb.Models.Application.Enums
 {
     public enum LibraryFilter
     {
-        [Display(Name = "All")]
-        All = 0
+        [Display(Name = "Node")]
+        Node = 0,
 
+        [Display(Name = "Transport")]
+        Transport = 1,
+
+        [Display(Name = "Interface")]
+        Interface = 2
     }
 }
