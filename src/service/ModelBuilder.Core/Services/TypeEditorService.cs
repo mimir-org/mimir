@@ -9,6 +9,7 @@ using Mb.Core.Extensions;
 using Mb.Core.Repositories.Contracts;
 using Mb.Core.Services.Contracts;
 using Mb.Models.Application;
+using Mb.Models.Application.Enums;
 using Mb.Models.Data;
 using Mb.Models.Enums;
 using Microsoft.AspNetCore.Http;
@@ -311,6 +312,57 @@ namespace Mb.Core.Services
             foreach (var clt in interfaceType.Select(x => _mapper.Map<CreateLibraryType>(x)))
             {
                 yield return clt;
+            }
+        }
+
+        /// <summary>
+        /// Convert a LibraryType to CreateLibraryType
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        public async Task<CreateLibraryType> ConvertToCreateLibraryType(string id, LibraryFilter filter)
+        {
+            switch (filter)
+            {
+                case LibraryFilter.Node:
+                    var nodeItem = await _libraryTypeComponentRepository
+                        .FindBy(x => x.Id == id)
+                        .OfType<NodeType>()
+                        .Include(x => x.TerminalTypes)
+                        .Include(x => x.AttributeTypes)
+                        .FirstOrDefaultAsync();
+
+                    if (nodeItem == null)
+                        throw new ModelBuilderNotFoundException($"There is no type with id: {id} and filter: {filter}");
+
+                    return _mapper.Map<CreateLibraryType>(nodeItem);
+
+                case LibraryFilter.Interface:
+                    var interfaceItem = await _libraryTypeComponentRepository
+                        .FindBy(x => x.Id == id)
+                        .OfType<InterfaceType>()
+                        .FirstOrDefaultAsync();
+
+                    if (interfaceItem == null)
+                        throw new ModelBuilderNotFoundException($"There is no type with id: {id} and filter: {filter}");
+
+                    return _mapper.Map<CreateLibraryType>(interfaceItem);
+
+                case LibraryFilter.Transport:
+                    var transportItem = await _libraryTypeComponentRepository
+                        .FindBy(x => x.Id == id)
+                        .OfType<TransportType>()
+                        .Include(x => x.AttributeTypes)
+                        .FirstOrDefaultAsync();
+
+                    if (transportItem == null)
+                        throw new ModelBuilderNotFoundException($"There is no type with id: {id} and filter: {filter}");
+
+                    return _mapper.Map<CreateLibraryType>(transportItem);
+
+                default:
+                    throw new ModelBuilderInvalidOperationException("Filter type mismatch");
             }
         }
 
