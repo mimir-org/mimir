@@ -23,9 +23,10 @@ const FieldValidator = (state: TypeEditorState, input: string) => {
   const validSymbol = symbol !== "";
   const validStatus = status !== Status.NotSet;
   const validRds = rds !== "";
-  const validTerminals = isFunction && terminals !== [];
-  const validPredefinedAttributes = isLocation && predefinedAttributes !== [];
-  const validAttributes = attributes !== [];
+  const validTerminals = isFunction && terminals.length !== 0;
+  const validPredefinedAttributes =
+    isLocation && predefinedAttributes.length !== 0;
+  const validAttributes = attributes.length !== 0;
 
   switch (input) {
     case "objectType":
@@ -87,7 +88,7 @@ const FieldValidator = (state: TypeEditorState, input: string) => {
       }
       break;
     default:
-      return true;
+      return false;
   }
 };
 
