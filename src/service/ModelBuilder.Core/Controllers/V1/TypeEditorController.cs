@@ -7,6 +7,7 @@ using Mb.Core.Exceptions;
 using Mb.Core.Extensions;
 using Mb.Core.Services.Contracts;
 using Mb.Models.Application;
+using Mb.Models.Application.Enums;
 using Mb.Models.Data;
 using Mb.Models.Enums;
 using Microsoft.AspNetCore.Authorization;
@@ -14,6 +15,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
+// ReSharper disable StringLiteralTypo
 
 namespace Mb.Core.Controllers.V1
 {
@@ -50,6 +52,43 @@ namespace Mb.Core.Controllers.V1
             {
                 var allTypes = _typeEditorService.GetAllTypes().ToList();
                 return Ok(allTypes);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
+        /// Get CreateLibraryType from LibraryTypeId
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        [HttpGet("librarytype/id/{id}/filter/{filter}")]
+        [ProducesResponseType(typeof(CreateLibraryType), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CreateLibraryType(string id, LibraryFilter filter)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                var data = await _typeEditorService.ConvertToCreateLibraryType(id, filter);
+                return Ok(data);
+            }
+            catch (ModelBuilderNotFoundException e)
+            {
+                ModelState.AddModelError("Not found", e.Message);
+                return BadRequest(ModelState);
+            } 
+            catch (ModelBuilderInvalidOperationException e)
+            {
+                ModelState.AddModelError("Invalid value", e.Message);
+                return BadRequest(ModelState);
             }
             catch (Exception e)
             {
