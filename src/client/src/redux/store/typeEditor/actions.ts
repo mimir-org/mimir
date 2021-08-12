@@ -7,9 +7,11 @@ import {
   CreateLibraryType,
   UpdateLibraryType,
   PredefinedAttribute,
+  LibraryFilter,
 } from "../../../models";
 import {
   CREATING_TYPE,
+  FETCHING_TYPE,
   UPDATING_TYPE,
   CHANGE_SELECTED_TYPE,
   CHANGE_MODE,
@@ -46,6 +48,18 @@ export function create(libraryType: CreateLibraryType): TypeEditorActionTypes {
     type: CREATING_TYPE,
     payload: {
       libraryType,
+    },
+  };
+}
+export function getSelectedNode(
+  selectedType: string,
+  libraryFilter: LibraryFilter
+): TypeEditorActionTypes {
+  return {
+    type: FETCHING_TYPE,
+    payload: {
+      selectedType: selectedType,
+      filter: libraryFilter,
     },
   };
 }

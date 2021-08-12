@@ -42,6 +42,8 @@ import {
   DELETE_TYPE_EDITOR_ERROR,
   TypeEditorActionTypes,
   TypeEditorState,
+  FETCHING_TYPE,
+  FETCHING_TYPE_SUCCESS_OR_ERROR,
   FETCHING_BLOB_DATA,
   FETCHING_BLOB_DATA_SUCCESS_OR_ERROR,
   CHANGE_SYMBOL,
@@ -53,6 +55,7 @@ const initialState: TypeEditorState = {
   creating: false,
   mode: TypeMode.NotSet,
   selectedType: "",
+  selectedNode: {} as CreateLibraryType,
   rdsName: "",
   terminalCategory: "",
   terminalColor: "",
@@ -125,6 +128,17 @@ export function typeEditorReducer(
         apiError: action.payload.apiError
           ? [...state.apiError, action.payload.apiError]
           : state.apiError,
+      };
+    case FETCHING_TYPE:
+      return {
+        ...state,
+        fetching: true,
+      };
+    case FETCHING_TYPE_SUCCESS_OR_ERROR:
+      return {
+        ...state,
+        fetching: false,
+        selectedNode: action.payload.selectedNode,
       };
     case FETCHING_INITIAL_DATA:
       return {

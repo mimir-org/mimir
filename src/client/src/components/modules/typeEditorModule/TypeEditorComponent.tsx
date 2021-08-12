@@ -9,7 +9,7 @@ import { TypeEditorState } from "../../../redux/store/typeEditor/types";
 import { changeFlowView } from "../../../redux/store/flow/actions";
 import { SetDarkModeColor } from "../../flow/helpers/common";
 import { changeAllModulesVisibility } from "../../../redux/store/modules/actions";
-import { TypeMode, ObjectType } from "../../../models/";
+import { TypeMode, ObjectType, LibraryFilter } from "../../../models/";
 import { TypeEditorInputs } from "./";
 import { FieldValidator } from "./helpers";
 import { RDSList, TerminalsList, AttributesList, TypePreview } from ".";
@@ -17,6 +17,7 @@ import {
   changeMode,
   getInitialData,
   getBlobData,
+  getSelectedNode,
   changeSelectedType,
 } from "../../../redux/store/typeEditor/actions";
 import {
@@ -50,6 +51,8 @@ export const TypeEditorComponent = () => {
     dispatch(getBlobData());
     dispatch(changeSelectedType(selectedType));
     dispatch(changeMode(mode));
+    state.selectedType &&
+      dispatch(getSelectedNode(state.selectedType, LibraryFilter.Node));
   }, [
     dispatch,
     aspect,
@@ -57,6 +60,7 @@ export const TypeEditorComponent = () => {
     state.createLibraryType.status,
     mode,
     selectedType,
+    state.selectedType,
   ]);
 
   return (

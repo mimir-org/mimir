@@ -13,6 +13,7 @@ import {
   LocationType,
   PredefinedAttribute,
   BlobData,
+  LibraryFilter,
 } from "../../../models";
 
 export const FETCHING_INITIAL_DATA = "FETCHING_INITIAL_DATA";
@@ -54,6 +55,8 @@ export const UPDATE_ATTRIBUTETYPES = "UPDATE_ATTRIBUTETYPES";
 export const CREATING_TYPE_SUCCESS_OR_ERROR = "CREATING_TYPE_SUCCESS_OR_ERROR";
 export const UPDATE_TYPE_SUCCESS_OR_ERROR = "UPDATE_TYPE_SUCCESS_OR_ERROR";
 export const DELETE_TYPE_EDITOR_ERROR = "DELETE_TYPE_EDITOR_ERROR";
+export const FETCHING_TYPE = "FETCHING_TYPE";
+export const FETCHING_TYPE_SUCCESS_OR_ERROR = "FETCHING_TYPE_SUCCESS_OR_ERROR";
 export const FETCHING_BLOB_DATA = "FETCHING_BLOB_DATA";
 export const FETCHING_BLOB_DATA_SUCCESS_OR_ERROR =
   "FETCHING_BLOB_DATA_SUCCESS_OR_ERROR";
@@ -72,6 +75,7 @@ export interface TypeEditorState {
   attributes: AttributeType[];
   mode: TypeMode;
   selectedType: string;
+  selectedNode: CreateLibraryType;
   rdsName: string;
   terminalCategory: string;
   terminalColor: string;
@@ -95,7 +99,20 @@ interface FetchingInitialDataActionFinished {
     objectTypes: Dictionary[];
   };
 }
+interface FetchingTypeAction {
+  type: typeof FETCHING_TYPE;
+  payload: {
+    selectedType: string;
+    filter: LibraryFilter;
+  };
+}
 
+interface FetchingTypeActionFinished {
+  type: typeof FETCHING_TYPE_SUCCESS_OR_ERROR;
+  payload: {
+    selectedNode: CreateLibraryType;
+  };
+}
 interface FetchingRDSAction {
   type: typeof FETCHING_RDS;
   payload: {
@@ -358,4 +375,6 @@ export type TypeEditorActionTypes =
   | DeleteTypeEditorErrorAction
   | FetchingBlobDataAction
   | FetchingBlobDataActionFinished
+  | FetchingTypeAction
+  | FetchingTypeActionFinished
   | ChangeSymbol;
