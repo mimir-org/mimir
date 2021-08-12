@@ -1,4 +1,4 @@
-import { TabComponent } from "../../inspectorModule";
+import { InspectorComponent } from "../../inspectorModule";
 import { InspectorBody } from "../../../../compLibrary/box/inspector";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
@@ -16,8 +16,8 @@ export const TypeEditorInspector = () => {
 
   return (
     <InspectorBody bgColor="transparent" noTopBorder={true} top={50}>
-      <TabComponent index={1} project={project} />
-      {IsFunction(aspect) && <TabComponent index={2} project={project} />}
+      <InspectorComponent index={1} project={project} />
+      {IsFunction(aspect) && <InspectorComponent index={2} project={project} />}
     </InspectorBody>
   );
 };

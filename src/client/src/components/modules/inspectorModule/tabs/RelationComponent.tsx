@@ -26,12 +26,12 @@ const RelationComponent = ({ project, node }: Props) => {
   const edgesFromSelectedNode = edges.filter(
     (e: Edge) => e.fromNodeId === node.id
   );
-  const edgesToSelectedNode = edges.filter((e: Edge) => e.toNodeId === node.id);
+  const edgesToSelectedNode = edges.filter((edge) => edge.toNodeId === node.id);
   const inputNodes = nodes.filter((n) =>
-    edgesToSelectedNode.some((e) => e.fromNodeId === n.id)
+    edgesToSelectedNode.some((edge) => edge.fromNodeId === n.id)
   );
   const outputNodes = nodes.filter((n) =>
-    edgesFromSelectedNode.some((e) => e.toNodeId === n.id)
+    edgesFromSelectedNode.some((edge) => edge.toNodeId === n.id)
   );
 
   function changeSelectedNode(id) {

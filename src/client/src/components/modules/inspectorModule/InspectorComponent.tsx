@@ -1,5 +1,5 @@
-import { GetInspectorText } from "./helpers/";
-import { TabContent } from "./";
+import { GetInspectorText } from "./helpers";
+import { InspectorContent } from ".";
 import { useCallback } from "react";
 import { RootState } from "../../../redux/store";
 import { TypeEditorState } from "../../../redux/store/typeEditor/types";
@@ -19,7 +19,7 @@ interface Props {
   project: Project;
 }
 
-const TabComponent = ({ node, index, project }: Props) => {
+const InspectorComponent = ({ node, index, project }: Props) => {
   const dispatch = useDispatch();
 
   const isOpen = useSelector<RootState>(
@@ -47,7 +47,7 @@ const TabComponent = ({ node, index, project }: Props) => {
       </TabHeader>
 
       <TabBody>
-        <TabContent node={node} index={index} project={project} />
+        <InspectorContent node={node} index={index} project={project} />
       </TabBody>
     </>
   ) : (
@@ -61,4 +61,4 @@ const TabComponent = ({ node, index, project }: Props) => {
   );
 };
 
-export default TabComponent;
+export default InspectorComponent;

@@ -1,4 +1,4 @@
-import { Attribute, Connector } from "../../../../models";
+import { Attribute, Node } from "../../../../models";
 import { TabRow } from "../../../../compLibrary/box/inspector";
 import { IsTransportTerminal, CreateId } from "../../../flow/helpers/common";
 import { InputWrapper } from "../styled";
@@ -11,13 +11,17 @@ import {
   AttributeField,
 } from "../../../../compLibrary";
 
+interface Props {
+  node: Node;
+}
+
 interface ConnectorAttribute {
   id: string;
   name: string;
   attributes: Attribute[];
 }
 
-const TechInfoComponent = ({ node }) => {
+const TechInfoComponent = ({ node }: Props) => {
   const dispatch = useDispatch();
 
   const onNodeChange = (id: string, value: string, unit: any) => {
@@ -28,7 +32,7 @@ const TechInfoComponent = ({ node }) => {
   let nodeAttributes: Attribute[] = [];
 
   if (node) {
-    node.connectors?.forEach((conn: Connector) => {
+    node.connectors?.forEach((conn) => {
       if (IsTransportTerminal(conn)) {
         const data = {
           id: conn.id,

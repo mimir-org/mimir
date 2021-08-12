@@ -192,6 +192,11 @@ const TextResources = {
   Type_BlockLocation: "BlockLocationNode",
   Type_BlockFunction: "BlockFunctionNode",
   Type_FunctionBlock: "FunctionBlock",
+
+  // RDS
+  RDS_Function: "=",
+  RDS_Product: "-",
+  RDS_Location: "++",
 };
 
 export default TextResources;

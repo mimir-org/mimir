@@ -1,8 +1,12 @@
 import { ActiveTerminalTypeList, AttributesContainer } from "../helpers";
-import { Attribute, Connector, ConnectorType } from "../../../../models";
+import { Attribute, ConnectorType, Node } from "../../../../models";
 import { IsTransportTerminal } from "../../../flow/helpers/common";
 import { TextResources } from "../../../../assets/text";
 import { ListWrapper, TerminalsWrapper } from "../styled";
+
+interface Props {
+  node: Node;
+}
 
 interface ConnectorAttribute {
   id: string;
@@ -10,14 +14,14 @@ interface ConnectorAttribute {
   attributes: Attribute[];
 }
 
-const TerminalsComponent = ({ node }): any => {
+const TerminalsComponent = ({ node }: Props) => {
   let activeConnectors = [];
   let connectorAttributes: ConnectorAttribute[] = [];
 
   if (node) {
     const tempAttributes: ConnectorAttribute[] = [];
 
-    node.connectors?.forEach((conn: Connector) => {
+    node.connectors?.forEach((conn) => {
       if (IsTransportTerminal(conn)) {
         const data = {
           id: conn.id,
@@ -27,7 +31,7 @@ const TerminalsComponent = ({ node }): any => {
         tempAttributes.push(data);
       }
     });
-    activeConnectors = node.connectors?.filter((con) => con.visible);
+    activeConnectors = node.connectors?.filter((conn) => conn.visible);
     connectorAttributes = tempAttributes;
   }
 

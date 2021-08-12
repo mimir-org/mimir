@@ -3,6 +3,7 @@ export { default as TabsBottomLine } from "./TabsBottomLine";
 export { default as TerminalsWrapper } from "./TerminalsWrapper";
 export { default as ListWrapper } from "./ListWrapper";
 export { default as GoToAspectContainer } from "./GoToAspectContainer";
+export { default as DeleteButtonWrapper } from "./DeleteButtonWrapper";
 
 // AttributesContainer
 export { default as Wrapper } from "./Wrapper";

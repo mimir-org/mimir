@@ -11,7 +11,7 @@ interface Props {
   index?: number;
 }
 
-const TabContent = ({ node, index, project }: Props) => {
+const InspectorContent = ({ node, index, project }: Props) => {
   return (
     <>
       {index === 1 && <TechInfoComponent node={node} />}
@@ -22,4 +22,4 @@ const TabContent = ({ node, index, project }: Props) => {
   );
 };
 
-export default TabContent;
+export default InspectorContent;

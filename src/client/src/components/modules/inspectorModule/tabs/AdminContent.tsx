@@ -1,40 +1,25 @@
 import moment from "moment/moment.js";
 import { useDispatch } from "react-redux";
 import { TextResources } from "../../../../assets/text";
-import { Contractor } from "../../../../redux/store/common/types";
 import { TabColumn } from "../../../../compLibrary/box/inspector";
 import { Input, Select, Textarea } from "../../../../compLibrary";
 import { EnumBase, Node, Project } from "../../../../models";
 import { GetRdsId, GetReferenceDesignation } from "../../../../assets/helpers";
 import { IsLocation } from "../../../flow/helpers/common";
 import { IsBlockView } from "../../../flow/helpers/block";
-import { DeleteNodeButton } from "../helpers";
-import {
-  changeNodeValue,
-  removeEdge,
-  removeNode,
-} from "../../../../redux/store/project/actions";
+import { changeNodeValue } from "../../../../redux/store/project/actions";
 
 interface Props {
   node: Node;
   project: Project;
-  contractors: Contractor[];
   statuses: EnumBase[];
 }
 
-const AdminContent = ({ node, project, contractors, statuses }: Props) => {
+const AdminContent = ({ node, project, statuses }: Props) => {
   const dispatch = useDispatch();
 
   const onChange = (e: any, key: string) => {
     dispatch(changeNodeValue(node.id, key, e.target.value));
-  };
-
-  const onDelete = () => {
-    project.edges.forEach((edge) => {
-      if (edge.fromNodeId === node.id) dispatch(removeEdge(edge.id));
-      if (edge.toNodeId === node.id) dispatch(removeEdge(edge.id));
-    });
-    dispatch(removeNode(node.id));
   };
 
   return (
@@ -124,14 +109,6 @@ const AdminContent = ({ node, project, contractors, statuses }: Props) => {
             />
           </div>
         )}
-        <div>
-          <div>{TextResources.Inspector_Admin_Tag}</div>
-          <Input
-            value={node.tagNumber ?? ""}
-            onChange={(e: any) => onChange(e, "tagNumber")}
-            inputType=""
-          />
-        </div>
         {IsLocation(node) && IsBlockView() && (
           <div>
             <div>{TextResources.Inspector_Admin_Height}</div>
@@ -176,20 +153,6 @@ const AdminContent = ({ node, project, contractors, statuses }: Props) => {
             />
           </div>
         )}
-        <div>
-          <div>{TextResources.Inspector_Admin_Contractor}</div>
-          <Select
-            value={node.contractor ?? "NotSet"} // TODO: check this
-            onChange={(e: any) => onChange(e, "contractor")}
-          >
-            <option value={"NotSet"}>{"NotSet"}</option>
-            {contractors?.map((contractor) => (
-              <option key={contractor.id} value={contractor.name}>
-                {contractor.name}
-              </option>
-            ))}
-          </Select>
-        </div>
       </TabColumn>
       <TabColumn>
         <div>
@@ -201,9 +164,6 @@ const AdminContent = ({ node, project, contractors, statuses }: Props) => {
             onChange={(e: any) => onChange(e, "description")}
           ></Textarea>
         </div>
-      </TabColumn>
-      <TabColumn>
-        <DeleteNodeButton handleClick={onDelete} />
       </TabColumn>
     </>
   );
