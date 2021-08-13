@@ -15,6 +15,7 @@ const InspectorBody = styled.div`
     props.noTopBorder ? `0px 0px 1px 0px` : `1px 0px 1px 0px`};
   width: 100%;
   border-bottom: none;
+  border-top: none;
   overflow: hidden;
 `;
 
