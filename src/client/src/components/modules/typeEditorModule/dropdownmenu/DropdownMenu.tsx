@@ -1,8 +1,14 @@
 import "./dropdownmenu.scss";
 import { useState, useEffect } from "react";
-import { Aspect, ObjectType, Status } from "../../../../models";
+import { Aspect, ObjectType, Status, TypeMode } from "../../../../models";
+import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
 import { ExpandIcon, CollapseIcon } from "../../../../assets/icons/common";
-import { GetDefaultValue, LocationDropdown, IsLocation } from "../helpers";
+import {
+  GetDefaultValue,
+  GetTypeValue,
+  LocationDropdown,
+  IsLocation,
+} from "../helpers";
 import {
   DropdownMenuWrapper,
   DropdownMenuHeader,
@@ -11,30 +17,33 @@ import {
 } from "../../../../compLibrary/dropdown";
 import { TextResources } from "../../../../assets/text";
 interface Props {
-  aspect?: Aspect;
   label: string;
   items: any[];
   type: Aspect | ObjectType | Status;
   onChange: Function;
   disabled?: boolean;
+  state: TypeEditorState;
 }
 
 export const DropDownMenu = ({
-  aspect,
   label,
   items,
   type,
   onChange,
   disabled,
+  state,
 }: Props) => {
   const [isListOpen, setIsListOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState(GetDefaultValue(type));
 
   useEffect(() => {
-    if (aspect === Aspect.NotSet) {
+    if (state.mode === TypeMode.New) {
       setSelectedValue(GetDefaultValue(type));
     }
-  }, [aspect, type]);
+    if (state.mode === TypeMode.Edit) {
+      setSelectedValue(GetTypeValue(state, type));
+    }
+  }, [type, state]);
 
   const toggleList = () => {
     setIsListOpen(!isListOpen);
@@ -58,7 +67,7 @@ export const DropDownMenu = ({
       </div>
       {isListOpen && (
         <DropdownMenuList>
-          {IsLocation(aspect) &&
+          {IsLocation(state.createLibraryType.aspect) &&
           label === TextResources.TypeEditor_Location_Type ? (
             <LocationDropdown
               listItems={items}

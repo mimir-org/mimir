@@ -1,5 +1,5 @@
 import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
-import { Aspect, ObjectType, Status } from "../../../../models";
+import { Aspect, ObjectType, Status, TypeMode } from "../../../../models";
 
 const FieldValidator = (state: TypeEditorState, input: string) => {
   const aspect = state.createLibraryType.aspect;
@@ -28,67 +28,71 @@ const FieldValidator = (state: TypeEditorState, input: string) => {
     isLocation && predefinedAttributes.length !== 0;
   const validAttributes = attributes.length !== 0;
 
-  switch (input) {
-    case "objectType":
-      if (!validAspect) {
-        return true;
-      }
-      break;
-    case "typeName":
-      if (!validObjectType && !validLocationType) {
-        return true;
-      }
-      break;
-    case "symbol":
-      if ((!validObjectType && !validLocationType) || !validName) {
-        return true;
-      }
-      break;
-    case "status":
-      if (
-        (!validObjectType && !validLocationType) ||
-        !validName ||
-        !validSymbol
-      ) {
-        return true;
-      }
-      break;
-    case "rds":
-      if (
-        (!validObjectType && !validLocationType) ||
-        !validName ||
-        !validSymbol ||
-        !validStatus
-      ) {
-        return true;
-      }
-      break;
-    case "terminals":
-      if (
-        (!validObjectType && !validLocationType) ||
-        !validName ||
-        !validSymbol ||
-        !validStatus ||
-        !validRds
-      ) {
-        return true;
-      }
-      break;
-    case "add":
-      if (
-        (!validObjectType && !validLocationType) ||
-        !validName ||
-        !validSymbol ||
-        !validStatus ||
-        !validRds ||
-        (!validTerminals && !validPredefinedAttributes) ||
-        !validAttributes
-      ) {
-        return true;
-      }
-      break;
-    default:
-      return false;
+  if (state.mode === TypeMode.Edit) {
+    return false;
+  } else {
+    switch (input) {
+      case "objectType":
+        if (!validAspect) {
+          return true;
+        }
+        break;
+      case "typeName":
+        if (!validObjectType && !validLocationType) {
+          return true;
+        }
+        break;
+      case "symbol":
+        if ((!validObjectType && !validLocationType) || !validName) {
+          return true;
+        }
+        break;
+      case "status":
+        if (
+          (!validObjectType && !validLocationType) ||
+          !validName ||
+          !validSymbol
+        ) {
+          return true;
+        }
+        break;
+      case "rds":
+        if (
+          (!validObjectType && !validLocationType) ||
+          !validName ||
+          !validSymbol ||
+          !validStatus
+        ) {
+          return true;
+        }
+        break;
+      case "terminals":
+        if (
+          (!validObjectType && !validLocationType) ||
+          !validName ||
+          !validSymbol ||
+          !validStatus ||
+          !validRds
+        ) {
+          return true;
+        }
+        break;
+      case "add":
+        if (
+          (!validObjectType && !validLocationType) ||
+          !validName ||
+          !validSymbol ||
+          !validStatus ||
+          !validRds ||
+          (!validTerminals && !validPredefinedAttributes) ||
+          !validAttributes
+        ) {
+          return true;
+        }
+        break;
+      default:
+        return false;
+    }
   }
 };
 
