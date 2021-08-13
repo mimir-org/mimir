@@ -18,7 +18,7 @@ const Size = {
   BlockView_BackgroundMargin: 50,
 
   ModuleOpen: 331,
-  InspectorModuleOpen: 257,
+  InspectorModuleOpen: 295,
   ModuleClosed: 35,
 
   MenuSmall_Width: 320,

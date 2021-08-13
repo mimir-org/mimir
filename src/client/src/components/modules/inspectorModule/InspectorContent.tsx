@@ -2,7 +2,7 @@ import { Node, Project } from "../../../models";
 import {
   RelationComponent,
   TerminalsComponent,
-  TechInfoComponent,
+  ParametersComponent,
 } from "./tabs";
 
 interface Props {
@@ -14,10 +14,9 @@ interface Props {
 const InspectorContent = ({ node, index, project }: Props) => {
   return (
     <>
-      {index === 1 && <TechInfoComponent node={node} />}
+      {index === 1 && <ParametersComponent node={node} />}
       {index === 2 && <TerminalsComponent node={node} />}
       {index === 3 && <RelationComponent node={node} project={project} />}
-      {/*index === 4 && <CommentsTabComponent node={node} />*/}
     </>
   );
 };

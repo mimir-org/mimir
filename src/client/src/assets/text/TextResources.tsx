@@ -29,7 +29,7 @@ const TextResources = {
   Inspector_Heading: "Inspector",
   Inspector_AdminInfo: "Admin info",
   Inspector_Object: "Object",
-  Inspector_TechInfo: "Tech info",
+  Inspector_Parameters: "Parameters",
   Inspector_Relations: "Relations",
   Inspector_Terminals: "Terminals",
   Inspector_Inhereted: "Inhereted Requirements",

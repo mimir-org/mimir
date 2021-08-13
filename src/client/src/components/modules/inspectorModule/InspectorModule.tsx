@@ -56,18 +56,25 @@ const InspectorModule = () => {
     dispatch(changeModuleVisibility(key, !isInspectorOpen, true));
   };
 
-  const onDelete = () => {
-    project.edges.forEach((edge) => {
-      if (edge.fromNodeId === node.id) dispatch(removeEdge(edge.id));
-      if (edge.toNodeId === node.id) dispatch(removeEdge(edge.id));
+  const onNodeDelete = () => {
+    project.edges.forEach((e) => {
+      if (e.fromNodeId === node.id) dispatch(removeEdge(e.id));
+      if (e.toNodeId === node.id) dispatch(removeEdge(e.id));
     });
     dispatch(removeNode(node.id));
+  };
+
+  const onEdgeDelete = () => {
+    dispatch(removeEdge(edge.id));
   };
 
   const start = isInspectorOpen ? Size.ModuleClosed : Size.InspectorModuleOpen;
   const stop = isInspectorOpen ? Size.InspectorModuleOpen : Size.ModuleClosed;
 
   const nodes = project?.nodes ?? [];
+  const edges = project?.edges ?? [];
+
+  let edge = edges.find((x) => x.isSelected);
   let node: Node;
 
   if (IsBlockView()) {
@@ -89,7 +96,15 @@ const InspectorModule = () => {
           <>
             <NodeTitle>{node.label ?? node.name}</NodeTitle>
             <DeleteButtonWrapper>
-              <DeleteNodeButton handleClick={onDelete} />
+              <DeleteNodeButton handleClick={onNodeDelete} />
+            </DeleteButtonWrapper>
+          </>
+        )}
+        {edge && (
+          <>
+            <NodeTitle>{edge.id}</NodeTitle>
+            <DeleteButtonWrapper>
+              <DeleteNodeButton handleClick={onEdgeDelete} />
             </DeleteButtonWrapper>
           </>
         )}

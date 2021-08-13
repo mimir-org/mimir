@@ -1,5 +1,5 @@
 import { GetInspectorText } from "../helpers";
-import { TabEdgeAdminContent } from "../edgeInspector";
+import { EdgeAdminContent } from ".";
 import { useCallback } from "react";
 import { RootState } from "../../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,7 +8,6 @@ import { changeInspectorTab } from "../../../../redux/store/inspector/actions";
 import {
   TabHeader,
   TabBody,
-  NodeTitle,
   TabTitle,
 } from "../../../../compLibrary/box/inspector";
 
@@ -18,7 +17,7 @@ interface Props {
   index: number;
 }
 
-const TabEdgeAdminComponent = ({ edge, project, index }: Props) => {
+const EdgeAdminComponent = ({ edge, project, index }: Props) => {
   const dispatch = useDispatch();
 
   const isOpen = useSelector<RootState>(
@@ -32,23 +31,21 @@ const TabEdgeAdminComponent = ({ edge, project, index }: Props) => {
   return isOpen ? (
     <>
       <TabHeader active={true} onClick={onClick}>
-        {edge && <NodeTitle>{edge.id}</NodeTitle>}
         <TabTitle active={true}>{GetInspectorText(index)}</TabTitle>
       </TabHeader>
       <TabBody>
         {edge && project && (
           <div className="container">
-            <TabEdgeAdminContent edge={edge} project={project} />
+            <EdgeAdminContent edge={edge} />
           </div>
         )}
       </TabBody>
     </>
   ) : (
     <TabHeader onClick={onClick}>
-      {edge && <NodeTitle>{edge.id}</NodeTitle>}
       <TabTitle>{GetInspectorText(index)}</TabTitle>
     </TabHeader>
   );
 };
 
-export default TabEdgeAdminComponent;
+export default EdgeAdminComponent;

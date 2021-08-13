@@ -1,5 +1,5 @@
-export { default as TabEdgeAdminComponent } from "./TabEdgeAdminComponent";
-export { default as TabEdgeAdminContent } from "./TabEdgeAdminContent";
-export { default as TabEdgeContent } from "./TabEdgeContent";
-export { default as TabEdgeComponent } from "./TabEdgeComponent";
-export { default as TechInfoTabEdgeComponent } from "./TechInfoTabEdgeComponent";
+export { default as EdgeAdminComponent } from "./EdgeAdminComponent";
+export { default as EdgeAdminContent } from "./EdgeAdminContent";
+export { default as TabEdgeContent } from "./EdgeContent";
+export { default as EdgeInspectorComponent } from "./EdgeInspectorComponent";
+export { default as ParametersEdgeComponent } from "./ParametersEdgeComponent";

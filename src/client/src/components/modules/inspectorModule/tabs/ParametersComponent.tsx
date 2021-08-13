@@ -21,7 +21,7 @@ interface ConnectorAttribute {
   attributes: Attribute[];
 }
 
-const TechInfoComponent = ({ node }: Props) => {
+const ParametersComponent = ({ node }: Props) => {
   const dispatch = useDispatch();
 
   const onNodeChange = (id: string, value: string, unit: any) => {
@@ -84,4 +84,4 @@ const TechInfoComponent = ({ node }: Props) => {
     </TabRow>
   );
 };
-export default TechInfoComponent;
+export default ParametersComponent;

@@ -9,7 +9,7 @@ export interface Dictionary {
 export type AttributeTab = keyof typeof ATTRIBUTE_TAB;
 export const ATTRIBUTE_TAB = {
   ADMIN_INFO: "AdminInfo",
-  TECH_INFO: "TechInfo",
+  PARAMETERS: "Parameters",
   TERMINALS: "Terminals",
   RELATIONS: "Relations",
 };
