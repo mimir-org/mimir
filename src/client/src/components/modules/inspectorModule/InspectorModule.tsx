@@ -62,10 +62,12 @@ const InspectorModule = () => {
       if (e.toNodeId === node.id) dispatch(removeEdge(e.id));
     });
     dispatch(removeNode(node.id));
+    dispatch(changeModuleVisibility(MODULE_TYPE.INSPECTOR, false, true));
   };
 
   const onEdgeDelete = () => {
     dispatch(removeEdge(edge.id));
+    dispatch(changeModuleVisibility(MODULE_TYPE.INSPECTOR, false, true));
   };
 
   const start = isInspectorOpen ? Size.ModuleClosed : Size.InspectorModuleOpen;
