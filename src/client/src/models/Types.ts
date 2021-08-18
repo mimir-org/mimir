@@ -24,7 +24,13 @@ export interface EnumBase {
     color: string;
 }
 
-export interface LibraryNodeItem {
+export interface Library {
+    objectBlocks: LibItem[];
+    interfaces: LibItem[];
+    transports: LibItem[];
+}
+
+export interface LibItem {
     id: string;
     rds: string;
     category: string;
@@ -37,8 +43,10 @@ export interface LibraryNodeItem {
     statusId: string;
     version: string;
     symbolId: string;
+    terminalId: string;
+    terminalTypeId: string;
+    libraryType: ObjectType;
 }
-
 export interface ProjectSimple {
     id: string;
     name: string;
@@ -130,25 +138,6 @@ export interface BlobData {
     name: string;
     data: string;
     categoryId: string;
-}
-
-export interface LibraryTransportItem {
-    id: string;
-    name: string;
-    status: Status;
-    semanticReference: string;
-    terminalId: string;
-    terminalTypeId: string;
-    attributes?: Attribute[] | null;
-}
-
-export interface LibraryInterfaceItem {
-    id: string;
-    name: string;
-    status: Status;
-    semanticReference: string;
-    terminalId: string;
-    terminalTypeId: string;
 }
 
 export const SETTING_KEY = {

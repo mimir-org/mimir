@@ -17,8 +17,8 @@ export { default as IsFulfilledByTerminal } from "./IsFulfilledByTerminal";
 export { default as IsInputTerminal } from "./IsInputTerminal";
 export { default as IsOutputTerminal } from "./IsOutputTerminal";
 
-export { default as IsExplorerModule } from "./IsExplorerModule";
-export { default as IsLibraryModule } from "./IsLibraryModule";
+export { default as IsExplorer } from "./IsExplorer";
+export { default as IsLibrary } from "./IsLibrary";
 
 export { default as GetCenter } from "./GetCenter";
 export { default as GetConnectorIcon } from "./GetConnectorIcon";

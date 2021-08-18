@@ -19,7 +19,7 @@ ${!run ? (start = stop) : null}
   }  
 `;
 
-const AnimatedInspector = styled(InspectorBox)`
+const AnimatedInspector = styled((props) => <InspectorBox {...props} />)`
   animation: ${Animation} 0.3s ease-in-out;
 `;
 

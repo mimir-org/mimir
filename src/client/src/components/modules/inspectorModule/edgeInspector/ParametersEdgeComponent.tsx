@@ -4,7 +4,7 @@ import { CreateId } from "../../../flow/helpers/common";
 import { InputBox, AttributeField } from "../../../../compLibrary";
 import { InputWrapper } from "../styled";
 
-const TechInfoTabEdgeComponent = ({ edge }) => {
+const ParametersEdgeComponent = ({ edge }) => {
   let nodeAttributes: Attribute[] = [];
   nodeAttributes = edge.attributes;
 
@@ -46,4 +46,4 @@ const TechInfoTabEdgeComponent = ({ edge }) => {
     </TabRow>
   );
 };
-export default TechInfoTabEdgeComponent;
+export default ParametersEdgeComponent;

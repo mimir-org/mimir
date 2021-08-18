@@ -327,7 +327,6 @@ export function typeEditorReducer(
           attributeTypes: action.payload.attributeTypes,
         },
       };
-    // HER
     case CHANGE_ASPECT:
       return {
         ...state,

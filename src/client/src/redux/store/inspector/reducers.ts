@@ -8,7 +8,7 @@ const initialState = {
       visible: false,
     },
     {
-      type: ATTRIBUTE_TAB.TECH_INFO,
+      type: ATTRIBUTE_TAB.PARAMETERS,
       visible: false,
     },
     {

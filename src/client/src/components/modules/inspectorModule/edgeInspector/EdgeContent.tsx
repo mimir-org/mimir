@@ -1,5 +1,5 @@
 import { Edge } from "../../../../models";
-import { TechInfoTabEdgeComponent } from ".";
+import { ParametersEdgeComponent } from ".";
 
 interface Props {
   edge: Edge;
@@ -9,7 +9,7 @@ interface Props {
 const TabEdgeContent = ({ edge, index }: Props) => {
   return (
     <>
-      {index === 1 && <TechInfoTabEdgeComponent edge={edge} />}
+      {index === 1 && <ParametersEdgeComponent edge={edge} />}
       {/* {index === 2 && <TerminalsTabComponent node={node} />} */}
       {/* {index === 3 && <RelationTabComponent node={node} />} */}
     </>

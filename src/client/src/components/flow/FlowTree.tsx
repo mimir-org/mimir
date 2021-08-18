@@ -15,12 +15,14 @@ import { FindSelectedNode, SetDarkModeColor } from "./helpers/common";
 import { CreateTreeElements } from "./creators";
 import { getBlobData } from "../../redux/store/typeEditor/actions";
 import { GetNodeTypes, GetEdgeTypes, GetEdgeType } from "./helpers/tree";
+import { LibraryState } from "../../redux/store/library/types";
+import { changeModuleVisibility } from "../../redux/store/modules/actions";
+import { MODULE_TYPE } from "../../models/project";
 import {
   updatePosition,
   changeActiveNode,
   changeActiveEdge,
 } from "../../redux/store/project/actions";
-import { LibraryState } from "../../redux/store/library/types";
 
 const FlowTree = () => {
   const dispatch = useDispatch();
@@ -95,11 +97,17 @@ const FlowTree = () => {
   const OnElementClick = (_event, element) => {
     dispatch(changeActiveEdge(null, false));
     dispatch(changeActiveNode(element.id, true));
+    dispatch(changeModuleVisibility(MODULE_TYPE.INSPECTOR, true, true));
     dispatch(changeInspectorTab(0));
   };
 
   const OnClick = (e) => {
     if (!project) return;
+
+    // Close Inspector if nothing is selected
+    if (e.target.className === "react-flow__pane") {
+      dispatch(changeModuleVisibility(MODULE_TYPE.INSPECTOR, false, true));
+    }
 
     // Handle select Edge
     if (e.target.classList.contains("react-flow__edge-path")) {

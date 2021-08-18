@@ -1,28 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Mb.Core.Repositories.Contracts;
 using Mb.Core.Services.Contracts;
 using Mb.Models.Application;
-using Mb.Models.Data;
-using Microsoft.EntityFrameworkCore;
 
 namespace Mb.Core.Services
 {
     public class LibraryService : ILibraryService
     {
-        private readonly IMapper _mapper;
         private readonly ILibraryRepository _libraryRepository;
-        private readonly ITransportTypeRepository _transportTypeRepository;
-        private readonly IInterfaceTypeRepository _interfaceTypeRepository;
-        
-        public LibraryService(ILibraryRepository libraryRepository, IMapper mapper, ITransportTypeRepository transportTypeRepository, IInterfaceTypeRepository interfaceTypeRepository)
+
+        public LibraryService(ILibraryRepository libraryRepository)
         {
             _libraryRepository = libraryRepository;
-            _mapper = mapper;
-            _transportTypeRepository = transportTypeRepository;
-            _interfaceTypeRepository = interfaceTypeRepository;
         }
 
         /// <summary>
@@ -30,9 +20,25 @@ namespace Mb.Core.Services
         /// </summary>
         /// <param name="searchString"></param>
         /// <returns></returns>
-        public IEnumerable<LibraryNodeItem> GetLibNodes(string searchString)
+        public Library GetLibTypes(string searchString)
         {
-            return _libraryRepository.GetAll(searchString).ToList();
+            var library = new Library
+            {
+                ObjectBlocks = _libraryRepository.GetNodeTypes(searchString).ToList(),
+                Transports = _libraryRepository.GetTransportTypes(searchString).ToList(),
+                Interfaces = _libraryRepository.GetInterfaceTypes(searchString).ToList()
+            };
+
+            return library;
+        }
+
+        /// <summary>
+        /// Get all node types
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<LibraryNodeItem> GetNodeTypes()
+        {
+            return _libraryRepository.GetNodeTypes().ToList();
         }
 
         /// <summary>
@@ -41,21 +47,16 @@ namespace Mb.Core.Services
         /// <returns></returns>
         public IEnumerable<LibraryTransportItem> GetTransportTypes()
         {
-            var transportTypes = _transportTypeRepository.GetAll()
-                .Include(x => x.AttributeTypes)
-                .ProjectTo<LibraryTransportItem>(_mapper.ConfigurationProvider)
-                .ToList();
-
-            return transportTypes;
+            return _libraryRepository.GetTransportTypes().ToList();
         }
 
+        /// <summary>
+        /// Get all interface types
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<LibraryInterfaceItem> GetInterfaceTypes()
         {
-            var interfaceTypes = _interfaceTypeRepository.GetAll()
-                .ProjectTo<LibraryInterfaceItem>(_mapper.ConfigurationProvider)
-                .ToList();
-
-            return interfaceTypes;
+            return _libraryRepository.GetInterfaceTypes().ToList();
         }
     }
 }
