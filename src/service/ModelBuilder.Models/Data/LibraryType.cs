@@ -8,6 +8,7 @@ namespace Mb.Models.Data
         public string Name { get; set; }
         public Status Status { get; set; }
         public string SemanticReference { get; set; }
+        public Aspect Aspect { get; set; }
 
         public string RdsId { get; set; }
         public Rds Rds { get; set; }

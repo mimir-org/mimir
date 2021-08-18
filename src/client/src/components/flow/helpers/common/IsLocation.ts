@@ -1,7 +1,7 @@
-import { Aspect, LibraryNodeItem, Node } from "../../../../models";
+import { Aspect, LibItem, Node } from "../../../../models";
 
-const IsLocation = (node: Node | LibraryNodeItem) => {
-  return node?.aspect === Aspect.Location;
+const IsLocation = (node: Node | LibItem) => {
+    return node?.aspect === Aspect.Location;
 };
 
 export default IsLocation;

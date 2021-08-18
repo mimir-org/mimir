@@ -1,35 +1,36 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Mb.Core.Repositories.Contracts;
+using Mb.Models.Application;
 using Mb.Models.Data;
 using Microsoft.EntityFrameworkCore;
-using NodeType = Mb.Models.Data.NodeType;
 
 namespace Mb.Core.Repositories
 {
     public class LibraryRepository : ILibraryRepository
     {
-        private readonly ILibraryTypeRepository _libraryTypeComponentRepository;
+        private readonly ITransportTypeRepository _transportTypeRepository;
+        private readonly IInterfaceTypeRepository _interfaceTypeRepository;
+        private readonly INodeTypeRepository _nodeTypeRepository;
         private readonly IMapper _mapper;
 
-        public LibraryRepository(ILibraryTypeRepository libraryTypeComponentRepository, IMapper mapper)
+        public LibraryRepository(IMapper mapper, ITransportTypeRepository transportTypeRepository, IInterfaceTypeRepository interfaceTypeRepository, INodeTypeRepository nodeTypeRepository)
         {
-            _libraryTypeComponentRepository = libraryTypeComponentRepository;
             _mapper = mapper;
+            _transportTypeRepository = transportTypeRepository;
+            _interfaceTypeRepository = interfaceTypeRepository;
+            _nodeTypeRepository = nodeTypeRepository;
         }
 
-        public IEnumerable<LibraryNodeItem> GetAll(string searchString)
+        public IEnumerable<LibraryNodeItem> GetNodeTypes(string searchString = null)
         {
-            List<NodeType> nodeTypes;
+            List<NodeType> allNodeTypes;
 
             if (string.IsNullOrEmpty(searchString))
             {
-                nodeTypes = _libraryTypeComponentRepository.GetAll()
-                    .OfType<NodeType>()
-                    .OrderBy(x => x.Name)
-                    .Take(30)
-                    .Cast<NodeType>()
+                allNodeTypes = _nodeTypeRepository.GetAll()
                     .Include(x => x.AttributeTypes)
                     .Include("AttributeTypes.Units")
                     .Include(x => x.TerminalTypes)
@@ -39,17 +40,12 @@ namespace Mb.Core.Repositories
                     .Include("TerminalTypes.TerminalType.Attributes.Units")
                     .Include(x => x.Rds)
                     .ThenInclude(y => y.RdsCategory)
-                    .AsSplitQuery()
                     .ToList();
             }
             else
             {
-                nodeTypes = _libraryTypeComponentRepository.GetAll()
-                    .OfType<NodeType>()
-                    .OrderBy(x => x.Name)
+                allNodeTypes = _nodeTypeRepository.GetAll()
                     .Where(x => x.Name.ToLower().Contains(searchString.ToLower()))
-                    .Take(30)
-                    .Cast<NodeType>()
                     .Include(x => x.AttributeTypes)
                     .Include("AttributeTypes.Units")
                     .Include(x => x.TerminalTypes)
@@ -59,14 +55,57 @@ namespace Mb.Core.Repositories
                     .Include("TerminalTypes.TerminalType.Attributes.Units")
                     .Include(x => x.Rds)
                     .ThenInclude(y => y.RdsCategory)
-                    .AsSplitQuery()
                     .ToList();
             }
 
-            foreach (var mappedNode in nodeTypes.Select(libraryTypeComponent => _mapper.Map<LibraryNodeItem>(libraryTypeComponent)))
+            foreach (var nodeType in allNodeTypes)
             {
-                yield return mappedNode;
+                yield return _mapper.Map<LibraryNodeItem>(nodeType);
             }
+        }
+
+        public IEnumerable<LibraryInterfaceItem> GetInterfaceTypes(string searchString = null)
+        {
+            if (string.IsNullOrEmpty(searchString))
+            {
+                return _interfaceTypeRepository.GetAll()
+                    .Include(x => x.Rds)
+                    .ThenInclude(y => y.RdsCategory)
+                    .ProjectTo<LibraryInterfaceItem>(_mapper.ConfigurationProvider)
+                    .OrderBy(x => x.Name)
+                    .ToList();
+            }
+
+            return _interfaceTypeRepository.GetAll()
+                .Where(x => x.Name.ToLower().Contains(searchString.ToLower()))
+                .Include(x => x.Rds)
+                .ThenInclude(y => y.RdsCategory)
+                .ProjectTo<LibraryInterfaceItem>(_mapper.ConfigurationProvider)
+                .OrderBy(x => x.Name)
+                .ToList();
+        }
+
+        public IEnumerable<LibraryTransportItem> GetTransportTypes(string searchString = null)
+        {
+            if (string.IsNullOrEmpty(searchString))
+            {
+                return _transportTypeRepository.GetAll()
+                    .Include(x => x.AttributeTypes)
+                    .Include(x => x.Rds)
+                    .ThenInclude(y => y.RdsCategory)
+                    .ProjectTo<LibraryTransportItem>(_mapper.ConfigurationProvider)
+                    .OrderBy(x => x.Name)
+                    .ToList();
+            }
+
+            return _transportTypeRepository.GetAll()
+                .Where(x => x.Name.ToLower().Contains(searchString.ToLower()))
+                .Include(x => x.AttributeTypes)
+                .Include(x => x.Rds)
+                .ThenInclude(y => y.RdsCategory)
+                .ProjectTo<LibraryTransportItem>(_mapper.ConfigurationProvider)
+                .OrderBy(x => x.Name)
+                .ToList();
         }
     }
 }

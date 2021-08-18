@@ -1,4 +1,4 @@
-import { LibraryNodeItem, CreateLibraryType, LibraryTransportItem, LibraryInterfaceItem } from "../../../models";
+import { LibItem, CreateLibraryType } from "../../../models";
 import { ApiError } from "../../../models/webclient";
 export const FETCHING_LIBRARY = "FETCHING_LIBRARY";
 export const DELETE_LIBRARY_ERROR = "DELETE_LIBRARY_ERROR";
@@ -15,10 +15,10 @@ export const FETCHING_LIBRARY_INTERFACE_TYPES_SUCCESS_OR_ERROR = "FETCHING_LIBRA
 // State types
 export interface LibraryState {
     fetching: boolean;
-    nodes: LibraryNodeItem[] | null;
+    nodeTypes: LibItem[] | null;
     apiError: ApiError[];
-    transportTypes: LibraryTransportItem[];
-    interfaceTypes: LibraryInterfaceItem[];
+    transportTypes: LibItem[];
+    interfaceTypes: LibItem[];
 }
 
 // Action types
@@ -29,7 +29,9 @@ interface FetchLibraryAction {
 interface FetchLibraryActionFinished {
     type: typeof FETCHING_LIBRARY_SUCCESS_OR_ERROR;
     payload: {
-        nodes: LibraryNodeItem[],
+        nodeTypes: LibItem[],
+        transportTypes: LibItem[],
+        interfaceTypes: LibItem[],
         apiError: ApiError
     };
 }
@@ -73,7 +75,7 @@ export interface FetchingLibraryTransportActionTypes {
 export interface FetchingLibraryTransportActionTypesFinished {
     type: typeof FETCHING_LIBRARY_TRANSPORT_TYPES_SUCCESS_OR_ERROR;
     payload: {
-        transports: LibraryTransportItem[],
+        transports: LibItem[],
         apiError: ApiError
     };
 }
@@ -85,7 +87,7 @@ export interface FetchingLibraryInterfaceActionTypes {
 export interface FetchingLibraryInterfaceActionTypesFinished {
     type: typeof FETCHING_LIBRARY_INTERFACE_TYPES_SUCCESS_OR_ERROR;
     payload: {
-        transports: LibraryInterfaceItem[],
+        transports: LibItem[],
         apiError: ApiError
     };
 }

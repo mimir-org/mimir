@@ -36,7 +36,9 @@ export function* searchLibrary(action: LibraryActionTypes) {
             } as ApiError;
 
             const payload = {
-                nodes: [],
+                nodeTypes: [],
+                transportTypes: [],
+                interfaceTypes: [],
                 apiError: apiError,
             };
 
@@ -48,7 +50,9 @@ export function* searchLibrary(action: LibraryActionTypes) {
         }
 
         const payload = {
-            nodes: response.data,
+            nodeTypes: response.data.objectBlocks,
+            transportTypes: response.data.transports,
+            interfaceTypes: response.data.interfaces,
             apiError: null,
         };
 
@@ -64,7 +68,9 @@ export function* searchLibrary(action: LibraryActionTypes) {
         } as ApiError;
 
         const payload = {
-            nodes: [],
+            nodeTypes: [],
+            transportTypes: [],
+            interfaceTypes: [],
             apiError: apiError,
         };
 
