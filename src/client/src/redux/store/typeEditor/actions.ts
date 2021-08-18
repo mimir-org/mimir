@@ -5,72 +5,55 @@ import {
   ObjectType,
   Status,
   CreateLibraryType,
-  UpdateLibraryType,
+  //   UpdateLibraryType,
   PredefinedAttribute,
   LibraryFilter,
 } from "../../../models";
 import {
-  CREATING_TYPE,
-  FETCHING_TYPE,
-  UPDATING_TYPE,
-  CHANGE_SELECTED_TYPE,
-  CHANGE_MODE,
   FETCHING_INITIAL_DATA,
   FETCHING_RDS,
   FETCHING_TERMINALS,
   FETCHING_ATTRIBUTES,
   FETCHING_LOCATIONTYPES,
   FETCHING_PREDEFINED_ATTRIBUTES,
+  FETCHING_TYPE,
+  FETCHING_BLOB_DATA,
+  CHANGE_SELECTED_TYPE,
+  CHANGE_MODE,
+  CHOOSE_ASPECT,
+  CHOOSE_OBJECT_TYPE,
+  CHOOSE_TYPENAME,
+  CHOOSE_SYMBOL,
+  CHOOSE_STATUS,
+  CHOOSE_RDS,
+  CHOOSE_RDS_NAME,
+  CHOOSE_TERMINAL_CATEGORY,
+  CHOOSE_TERMINAL_COLOR,
+  CHOOSE_SEMANTICREFERENCE,
+  CHOOSE_LOCATION_TYPE,
+  CHOOSE_TERMINAL_TYPE_ID,
+  CHOOSE_PREDEFINED_ATTRIBUTES,
+  CHOOSE_TERMINALTYPE,
+  CHOOSE_ATTRIBUTETYPES,
   CHANGE_ASPECT,
   CHANGE_OBJECT_TYPE,
   CHANGE_TYPENAME,
+  CHANGE_SYMBOL,
   CHANGE_STATUS,
-  SET_RDS,
-  SET_RDS_NAME,
-  CHANGE_TERMINAL_CATEGORY,
-  CHANGE_TERMINAL_COLOR,
+  CHANGE_RDS,
   CHANGE_SEMANTICREFERENCE,
   CHANGE_LOCATION_TYPE,
-  UPDATE_PREDEFINED_ATTRIBUTES,
-  ADD_TERMINALTYPE,
-  UPDATE_ATTRIBUTETYPES,
   CHANGE_TERMINAL_TYPE_ID,
-  DELETE_TYPE_EDITOR_ERROR,
-  FETCHING_BLOB_DATA,
-  CHANGE_SYMBOL,
-  TypeEditorActionTypes,
+  CHANGE_PREDEFINED_ATTRIBUTES,
+  CHANGE_TERMINALTYPE,
+  CHANGE_ATTRIBUTETYPES,
   REMOVE_TERMINALTYPES,
+  CREATING_TYPE,
+  DELETE_TYPE_EDITOR_ERROR,
+  TypeEditorActionTypes,
 } from "./types";
 
 // TODO create type, save type, get attributes
-export function create(libraryType: CreateLibraryType): TypeEditorActionTypes {
-  return {
-    type: CREATING_TYPE,
-    payload: {
-      libraryType,
-    },
-  };
-}
-export function getSelectedNode(
-  selectedType: string,
-  libraryFilter: LibraryFilter
-): TypeEditorActionTypes {
-  return {
-    type: FETCHING_TYPE,
-    payload: {
-      selectedType: selectedType,
-      filter: libraryFilter,
-    },
-  };
-}
-export function update(libraryType: UpdateLibraryType): TypeEditorActionTypes {
-  return {
-    type: UPDATING_TYPE,
-    payload: {
-      libraryType,
-    },
-  };
-}
 export function getInitialData(): TypeEditorActionTypes {
   return {
     type: FETCHING_INITIAL_DATA,
@@ -117,6 +100,26 @@ export function getPredefinedAttributes(): TypeEditorActionTypes {
   };
 }
 
+export function getSelectedNode(
+  selectedType: string,
+  libraryFilter: LibraryFilter
+): TypeEditorActionTypes {
+  return {
+    type: FETCHING_TYPE,
+    payload: {
+      selectedType: selectedType,
+      filter: libraryFilter,
+    },
+  };
+}
+
+export function getBlobData(): TypeEditorActionTypes {
+  return {
+    type: FETCHING_BLOB_DATA,
+    payload: null,
+  };
+}
+
 export function changeSelectedType(selectedType: string) {
   return {
     type: CHANGE_SELECTED_TYPE,
@@ -135,123 +138,244 @@ export function changeMode(mode: TypeMode) {
   };
 }
 
-export function changeSelectedAspect(aspect: Aspect) {
-  return {
-    type: CHANGE_ASPECT,
-    payload: {
-      aspect,
-    },
-  };
+export function chooseAspect(mode: TypeMode, aspect: Aspect) {
+  if (mode === TypeMode.New)
+    return {
+      type: CHOOSE_ASPECT,
+      payload: {
+        aspect,
+      },
+    };
+  if (mode === TypeMode.Edit)
+    return {
+      type: CHANGE_ASPECT,
+      payload: {
+        aspect,
+      },
+    };
 }
 
-export function changeSelectedObjectType(objectType: ObjectType) {
-  return {
-    type: CHANGE_OBJECT_TYPE,
-    payload: {
-      objectType,
-    },
-  };
+export function chooseObjectType(mode: TypeMode, objectType: ObjectType) {
+  if (mode === TypeMode.New)
+    return {
+      type: CHOOSE_OBJECT_TYPE,
+      payload: {
+        objectType,
+      },
+    };
+  if (mode === TypeMode.Edit)
+    return {
+      type: CHANGE_OBJECT_TYPE,
+      payload: {
+        objectType,
+      },
+    };
 }
 
-export function changeTypeName(typeName: string) {
-  return {
-    type: CHANGE_TYPENAME,
-    payload: {
-      typeName,
-    },
-  };
+export function chooseTypeName(mode: TypeMode, typeName: string) {
+  if (mode === TypeMode.New)
+    return {
+      type: CHOOSE_TYPENAME,
+      payload: {
+        typeName,
+      },
+    };
+  if (mode === TypeMode.Edit)
+    return {
+      type: CHANGE_TYPENAME,
+      payload: {
+        typeName,
+      },
+    };
 }
 
-export function changeStatus(status: Status) {
-  return {
-    type: CHANGE_STATUS,
-    payload: {
-      status,
-    },
-  };
+export function chooseSymbol(
+  mode: TypeMode,
+  symbolId: string
+): TypeEditorActionTypes {
+  if (mode === TypeMode.New)
+    return {
+      type: CHOOSE_SYMBOL,
+      payload: {
+        symbolId: symbolId,
+      },
+    };
+  if (mode === TypeMode.Edit)
+    return {
+      type: CHANGE_SYMBOL,
+      payload: {
+        symbolId: symbolId,
+      },
+    };
 }
 
-export function setRDS(rds: string) {
-  return {
-    type: SET_RDS,
-    payload: {
-      rds,
-    },
-  };
+export function chooseStatus(mode: TypeMode, status: Status) {
+  if (mode === TypeMode.New)
+    return {
+      type: CHOOSE_STATUS,
+      payload: {
+        status,
+      },
+    };
+  if (mode === TypeMode.Edit)
+    return {
+      type: CHANGE_STATUS,
+      payload: {
+        status,
+      },
+    };
 }
 
-export function setRDSName(rdsName: string) {
+export function chooseRDS(mode: TypeMode, rds: string) {
+  if (mode === TypeMode.New)
+    return {
+      type: CHOOSE_RDS,
+      payload: {
+        rds,
+      },
+    };
+  if (mode === TypeMode.Edit)
+    return {
+      type: CHANGE_RDS,
+      payload: {
+        rds,
+      },
+    };
+}
+
+export function chooseRDSName(rdsName: string) {
   return {
-    type: SET_RDS_NAME,
+    type: CHOOSE_RDS_NAME,
     payload: {
       rdsName,
     },
   };
 }
 
-export function changeTerminalCategory(terminalCategory: string) {
+export function chooseTerminalCategory(terminalCategory: string) {
   return {
-    type: CHANGE_TERMINAL_CATEGORY,
+    type: CHOOSE_TERMINAL_CATEGORY,
     payload: {
       terminalCategory,
     },
   };
 }
 
-export function changeTerminalColor(terminalColor: string) {
+export function chooseTerminalColor(terminalColor: string) {
   return {
-    type: CHANGE_TERMINAL_COLOR,
+    type: CHOOSE_TERMINAL_COLOR,
     payload: {
       terminalColor,
     },
   };
 }
 
-export function changeTerminalTypeId(terminalTypeId: string) {
-  return {
-    type: CHANGE_TERMINAL_TYPE_ID,
-    payload: {
-      terminalTypeId,
-    },
-  };
+export function chooseSemanticReference(
+  mode: TypeMode,
+  semanticReference: string
+) {
+  if (mode === TypeMode.New)
+    return {
+      type: CHOOSE_SEMANTICREFERENCE,
+      payload: {
+        semanticReference,
+      },
+    };
+  if (mode === TypeMode.Edit)
+    return {
+      type: CHANGE_SEMANTICREFERENCE,
+      payload: {
+        semanticReference,
+      },
+    };
 }
 
-export function changeLocationType(locationType: string) {
-  return {
-    type: CHANGE_LOCATION_TYPE,
-    payload: {
-      locationType,
-    },
-  };
+export function chooseLocationType(mode: TypeMode, locationType: string) {
+  if (mode === TypeMode.New)
+    return {
+      type: CHOOSE_LOCATION_TYPE,
+      payload: {
+        locationType,
+      },
+    };
+  if (mode === TypeMode.Edit)
+    return {
+      type: CHANGE_LOCATION_TYPE,
+      payload: {
+        locationType,
+      },
+    };
 }
 
-export function changeSemanticReference(semanticReference: string) {
-  return {
-    type: CHANGE_SEMANTICREFERENCE,
-    payload: {
-      semanticReference,
-    },
-  };
+export function chooseTerminalTypeId(mode: TypeMode, terminalTypeId: string) {
+  if (mode === TypeMode.New)
+    return {
+      type: CHOOSE_TERMINAL_TYPE_ID,
+      payload: {
+        terminalTypeId,
+      },
+    };
+  if (mode === TypeMode.Edit)
+    return {
+      type: CHANGE_TERMINAL_TYPE_ID,
+      payload: {
+        terminalTypeId,
+      },
+    };
 }
 
-export function updatePredefinedAttributes(
+export function choosePredefinedAttributes(
+  mode: TypeMode,
   predefinedAttributes: PredefinedAttribute[]
 ) {
-  return {
-    type: UPDATE_PREDEFINED_ATTRIBUTES,
-    payload: {
-      predefinedAttributes,
-    },
-  };
+  if (mode === TypeMode.New)
+    return {
+      type: CHOOSE_PREDEFINED_ATTRIBUTES,
+      payload: {
+        predefinedAttributes,
+      },
+    };
+  if (mode === TypeMode.Edit)
+    return {
+      type: CHANGE_PREDEFINED_ATTRIBUTES,
+      payload: {
+        predefinedAttributes,
+      },
+    };
 }
 
-export function addTerminalType(terminal: TerminalTypeItem) {
-  return {
-    type: ADD_TERMINALTYPE,
-    payload: {
-      terminal,
-    },
-  };
+export function chooseTerminalType(mode: TypeMode, terminal: TerminalTypeItem) {
+  if (mode === TypeMode.New)
+    return {
+      type: CHOOSE_TERMINALTYPE,
+      payload: {
+        terminal,
+      },
+    };
+  if (mode === TypeMode.Edit)
+    return {
+      type: CHANGE_TERMINALTYPE,
+      payload: {
+        terminal,
+      },
+    };
+}
+
+export function chooseAttributeTypes(mode: TypeMode, attributeTypes: string[]) {
+  if (mode === TypeMode.New)
+    return {
+      type: CHOOSE_ATTRIBUTETYPES,
+      payload: {
+        attributeTypes,
+      },
+    };
+  if (mode === TypeMode.Edit)
+    return {
+      type: CHANGE_ATTRIBUTETYPES,
+      payload: {
+        attributeTypes,
+      },
+    };
 }
 
 export function removeTerminalTypes() {
@@ -261,36 +385,29 @@ export function removeTerminalTypes() {
   };
 }
 
-export function updateAttributesList(attributeTypes: string[]) {
+export function create(libraryType: CreateLibraryType): TypeEditorActionTypes {
   return {
-    type: UPDATE_ATTRIBUTETYPES,
+    type: CREATING_TYPE,
     payload: {
-      attributeTypes,
+      libraryType,
     },
   };
 }
+
+// export function update(libraryType: UpdateLibraryType): TypeEditorActionTypes {
+//   return {
+//     type: UPDATING_TYPE,
+//     payload: {
+//       libraryType,
+//     },
+//   };
+// }
 
 export function deleteTypeEditorError(key: string) {
   return {
     type: DELETE_TYPE_EDITOR_ERROR,
     payload: {
       key,
-    },
-  };
-}
-
-export function getBlobData(): TypeEditorActionTypes {
-  return {
-    type: FETCHING_BLOB_DATA,
-    payload: null,
-  };
-}
-
-export function changeSymbol(symbolId: string): TypeEditorActionTypes {
-  return {
-    type: CHANGE_SYMBOL,
-    payload: {
-      symbolId: symbolId,
     },
   };
 }

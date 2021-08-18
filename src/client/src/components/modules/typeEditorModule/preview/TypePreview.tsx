@@ -5,7 +5,7 @@ import { PreviewBody } from "../preview/PreviewBody";
 import { ListWrapper } from "../../../../compLibrary";
 import { SaveButton } from "../../../../compLibrary/buttons";
 import { TextResources } from "../../../../assets/text";
-import { create, update } from "../../../../redux/store/typeEditor/actions";
+import { create } from "../../../../redux/store/typeEditor/actions";
 import { TypeMode } from "../../../../models";
 import { GetValidationMessage } from "../validators";
 import { useState } from "react";
@@ -28,7 +28,7 @@ export const TypePreview = ({ state, disabled }: Props) => {
       if (mode === TypeMode.New) {
         dispatch(create(state.createLibraryType));
       } else if (mode === TypeMode.Edit) {
-        dispatch(update(state.createLibraryType));
+        // dispatch(update(state.createLibraryType));
       }
     } else {
       setShowBox(true);

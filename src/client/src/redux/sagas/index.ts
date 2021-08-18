@@ -17,6 +17,7 @@ import {
 } from "./../store/project/types";
 import {
   FETCHING_INITIAL_DATA,
+  CHOOSE_ASPECT,
   CHANGE_ASPECT,
   CREATING_TYPE,
   UPDATING_TYPE,
@@ -65,6 +66,11 @@ export function* sagas() {
     takeEvery(SAVE_PROJECT, updateProject),
     takeEvery(FETCHING_CONTRACTORS, getContractors),
     takeEvery(FETCHING_INITIAL_DATA, getInitialData),
+    takeEvery(CHOOSE_ASPECT, getPredefinedAttributes),
+    takeEvery(CHOOSE_ASPECT, getLocationTypes),
+    takeEvery(CHOOSE_ASPECT, getRDS),
+    takeEvery(CHOOSE_ASPECT, getTerminals),
+    takeEvery(CHOOSE_ASPECT, getAttributes),
     takeEvery(CHANGE_ASPECT, getPredefinedAttributes),
     takeEvery(CHANGE_ASPECT, getLocationTypes),
     takeEvery(CHANGE_ASPECT, getRDS),

@@ -37,13 +37,16 @@ export const DropDownMenu = ({
   const [selectedValue, setSelectedValue] = useState(GetDefaultValue(type));
 
   useEffect(() => {
-    if (state.mode === TypeMode.New) {
+    if (
+      state.mode === TypeMode.New &&
+      state.createLibraryType.aspect === Aspect.NotSet
+    ) {
       setSelectedValue(GetDefaultValue(type));
     }
     if (state.mode === TypeMode.Edit) {
-      setSelectedValue(GetTypeValue(state, type));
+      setSelectedValue(GetTypeValue(state, label));
     }
-  }, [type, state]);
+  }, [type, state, label]);
 
   const toggleList = () => {
     setIsListOpen(!isListOpen);
@@ -70,6 +73,7 @@ export const DropDownMenu = ({
           {IsLocation(state.createLibraryType.aspect) &&
           label === TextResources.TypeEditor_Location_Type ? (
             <LocationDropdown
+              mode={state.mode}
               listItems={items}
               setSelectedValue={setSelectedValue}
               setIsListOpen={setIsListOpen}

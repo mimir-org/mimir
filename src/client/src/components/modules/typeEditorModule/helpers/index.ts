@@ -1,3 +1,6 @@
+export { default as ModeEdit } from "./ModeEdit";
+export { default as ModeNew } from "./ModeNew";
+
 export { default as IsFunction } from "./IsFunction";
 export { default as IsLocation } from "./IsLocation";
 export { default as IsProduct } from "./IsProduct";

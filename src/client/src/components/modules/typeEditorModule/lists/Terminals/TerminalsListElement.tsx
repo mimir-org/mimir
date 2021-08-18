@@ -5,11 +5,17 @@ import { AddTerminal } from "./AddTerminal/AddTerminalComponent";
 import { RoundCheckbox } from "../../inputs/RoundCheckbox";
 import { NumericInput } from "../../../../../compLibrary";
 import { TextResources } from "../../../../../assets/text";
-import { IsInterface, IsObjectBlock, IsTransport } from "../../helpers";
 import {
-  changeTerminalTypeId,
-  changeTerminalCategory,
-  changeTerminalColor,
+  IsInterface,
+  IsObjectBlock,
+  IsTransport,
+  ModeEdit,
+} from "../../helpers";
+import { GetDefaultValue } from "./helpers";
+import {
+  chooseTerminalTypeId,
+  chooseTerminalCategory,
+  chooseTerminalColor,
   removeTerminalTypes,
 } from "../../../../../redux/store/typeEditor/actions";
 import {
@@ -34,13 +40,17 @@ export const TerminalsListElement = ({ category, terminals, state }: Props) => {
   const [selectedCategory, setselectedCategory] = useState("");
   const [searchbarInput, setsearchbarInput] = useState("");
   const [expandList, setExpandList] = useState(false);
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(
+    GetDefaultValue(state.mode, state.selectedNode)
+  );
   const [expandCategory, setExpandCategory] = useState(true);
-  const objectType = state.createLibraryType.objectType;
+  let objectType = ModeEdit(state.mode)
+    ? state.selectedNode.objectType
+    : state.createLibraryType.objectType;
 
   const selectCategory = () => {
     setselectedCategory(category);
-    dispatch(changeTerminalCategory(category));
+    dispatch(chooseTerminalCategory(category));
   };
 
   const handleChange = (e) => {
@@ -53,8 +63,8 @@ export const TerminalsListElement = ({ category, terminals, state }: Props) => {
 
   const handleTerminalClick = (terminalId, terminalName, terminalColor) => {
     setsearchbarInput(terminalName);
-    dispatch(changeTerminalTypeId(terminalId));
-    dispatch(changeTerminalColor(terminalColor));
+    dispatch(chooseTerminalTypeId(state.mode, terminalId));
+    dispatch(chooseTerminalColor(terminalColor));
     toggleTerminalList();
   };
 
@@ -67,13 +77,23 @@ export const TerminalsListElement = ({ category, terminals, state }: Props) => {
     setExpandCategory(!expandCategory);
   };
 
-  // Add terminals
-  const terminalInput = (terminalCount: number) => {
-    let temp = [];
-    for (let i = 0; i < terminalCount; i++) {
-      temp.push(<AddTerminal key={i} terminals={terminals} />);
+  const addTerminal = () => {
+    for (let i = 0; i < quantity; i++) {
+      <AddTerminal key={i} terminals={terminals} state={state} />;
     }
-    return <>{temp}</>;
+  };
+
+  const editTerminals = () => {
+    if (ModeEdit(state.mode) && state.selectedNode.terminalTypes) {
+      state.selectedNode.terminalTypes.forEach((t) => {
+        <AddTerminal
+          // key={t.terminalTypeId}
+          terminals={terminals}
+          state={state}
+          defaultTerminal={t}
+        />;
+      });
+    }
   };
 
   return (
@@ -135,8 +155,8 @@ export const TerminalsListElement = ({ category, terminals, state }: Props) => {
                 type="number"
                 min="0"
                 max="30"
-                placeholder="0"
                 onChange={numberInput}
+                defaultValue={quantity}
               />
               <span className="number"></span>
             </label>
@@ -152,7 +172,9 @@ export const TerminalsListElement = ({ category, terminals, state }: Props) => {
         </TerminalCategoryWrapper>
       )}
       {quantity !== 0 && expandCategory && IsObjectBlock(objectType) && (
-        <AddTerminalWrapper>{terminalInput(quantity)}</AddTerminalWrapper>
+        <AddTerminalWrapper>
+          {ModeEdit(state.mode) ? editTerminals : addTerminal}
+        </AddTerminalWrapper>
       )}
     </TerminalListElement>
   );

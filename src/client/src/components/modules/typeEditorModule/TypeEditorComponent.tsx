@@ -11,10 +11,11 @@ import { SetDarkModeColor } from "../../flow/helpers/common";
 import { changeAllModulesVisibility } from "../../../redux/store/modules/actions";
 import { TypeMode, ObjectType, LibraryFilter } from "../../../models/";
 import { TypeEditorInputs } from "./";
-import { FieldValidator } from "./helpers";
+import { FieldValidator, ModeEdit } from "./helpers";
 import { RDSList, TerminalsList, AttributesList, TypePreview } from ".";
 import {
   changeMode,
+  chooseAspect,
   getInitialData,
   getBlobData,
   getSelectedNode,
@@ -32,10 +33,12 @@ export const TypeEditorComponent = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const state = useSelector<RootState>((s) => s.typeEditor) as TypeEditorState;
-  const aspect = state.createLibraryType.aspect;
   const objectType = state.createLibraryType.objectType;
   const selectedType = location.state["selectedType"] as string;
   const mode = location.state["mode"] as TypeMode;
+  let aspect = ModeEdit(mode)
+    ? state.selectedNode.aspect
+    : state.createLibraryType.aspect;
 
   const onCloseEditor = () => {
     dispatch(changeMode(TypeMode.NotSet));
@@ -53,6 +56,7 @@ export const TypeEditorComponent = () => {
     dispatch(changeMode(mode));
     state.selectedType &&
       dispatch(getSelectedNode(state.selectedType, LibraryFilter.Node));
+    dispatch(chooseAspect(mode, aspect));
   }, [
     dispatch,
     aspect,
@@ -72,7 +76,10 @@ export const TypeEditorComponent = () => {
         </TypeEditorHeader>
         <TypeEditorInputs state={state} dispatch={dispatch} />
         <ChooseProperties>
-          <RDSList state={state} disabled={FieldValidator(state, "rds")} />
+          <RDSList
+            state={state}
+            disabled={ModeEdit(mode) ? false : FieldValidator(state, "rds")}
+          />
           <TerminalsList
             state={state}
             disabled={FieldValidator(state, "terminals")}

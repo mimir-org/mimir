@@ -2,7 +2,11 @@ import "./roundcheckbox.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
-import { setRDS, setRDSName } from "../../../../redux/store/typeEditor/actions";
+import {
+  chooseRDS,
+  chooseRDSName,
+} from "../../../../redux/store/typeEditor/actions";
+import { ModeEdit } from "../helpers";
 
 interface Props {
   id: string;
@@ -13,10 +17,15 @@ interface Props {
 export const RoundCheckbox = ({ id, name, label }: Props) => {
   const dispatch = useDispatch();
   const state = useSelector<RootState>((s) => s.typeEditor) as TypeEditorState;
+  const mode = state.mode;
 
   let isSelected = () => {
     if (label === "rds") {
-      return state.createLibraryType.rdsId === id;
+      if (ModeEdit(mode)) {
+        return state.selectedNode.rdsId === id;
+      } else {
+        return state.createLibraryType.rdsId === id;
+      }
     } else if (label === "terminal") {
       return state.terminalCategory === id;
     }
@@ -25,8 +34,8 @@ export const RoundCheckbox = ({ id, name, label }: Props) => {
   const onCheckboxChange = () => {
     if (id !== "" && id) {
       if (label === "rds") {
-        dispatch(setRDS(id));
-        dispatch(setRDSName(name));
+        dispatch(chooseRDS(state.mode, id));
+        dispatch(chooseRDSName(name));
       }
     }
   };
