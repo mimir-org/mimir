@@ -45,11 +45,6 @@ const FieldValidator = (state: TypeEditorState, input: string) => {
           return true;
         }
         break;
-      case "status":
-        if ((!validObjectType && !validLocationType) || !validName) {
-          return true;
-        }
-        break;
       case "rds":
         if (
           (!validObjectType && !validLocationType) ||

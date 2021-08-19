@@ -1,6 +1,6 @@
 import "./dropdownmenu.scss";
 import { useState, useEffect } from "react";
-import { Aspect, ObjectType, TypeMode } from "../../../../models";
+import { Aspect, ObjectType } from "../../../../models";
 import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
 import { ExpandIcon, CollapseIcon } from "../../../../assets/icons/common";
 import {
@@ -8,6 +8,8 @@ import {
   GetTypeValue,
   LocationDropdown,
   IsLocation,
+  ModeEdit,
+  ModeNew,
 } from "../helpers";
 import {
   DropdownMenuWrapper,
@@ -38,12 +40,12 @@ export const DropDownMenu = ({
 
   useEffect(() => {
     if (
-      state.mode === TypeMode.New &&
+      ModeNew(state.mode) &&
       state.createLibraryType.aspect === Aspect.NotSet
     ) {
       setSelectedValue(GetDefaultValue(type));
     }
-    if (state.mode === TypeMode.Edit) {
+    if (ModeEdit(state.mode)) {
       setSelectedValue(GetTypeValue(state, label));
     }
   }, [type, state, label]);

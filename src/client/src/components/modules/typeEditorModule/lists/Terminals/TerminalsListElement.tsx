@@ -96,8 +96,6 @@ export const TerminalsListElement = ({ category, terminals, state }: Props) => {
     return terminalsArray;
   };
 
-  // fortsett her i morgen :D
-
   return (
     <TerminalListElement>
       {(IsTransport(objectType) || IsInterface(objectType)) && (

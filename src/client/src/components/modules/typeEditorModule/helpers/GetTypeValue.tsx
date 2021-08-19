@@ -1,5 +1,5 @@
 import { TextResources } from "../../../../assets/text";
-import { Aspect, ObjectType, Status } from "../../../../models";
+import { Aspect, ObjectType } from "../../../../models";
 import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
 
 const GetTypeValue = (state: TypeEditorState, label: string) => {
@@ -7,8 +7,6 @@ const GetTypeValue = (state: TypeEditorState, label: string) => {
     return Aspect[state.selectedNode.aspect];
   if (label === TextResources.TypeEditor_Object_Type)
     return ObjectType[state.selectedNode.objectType];
-  if (label === TextResources.TypeEditor_Status)
-    return Status[state.selectedNode.status];
   if (label === "typeName") return state.selectedNode.name;
   if (label === "symbol") return state.selectedNode.symbolId;
 };

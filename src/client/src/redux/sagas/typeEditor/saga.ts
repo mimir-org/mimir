@@ -107,19 +107,15 @@ export function* createType(action) {
 export function* getInitialData(action: TypeEditorActionTypes) {
   try {
     const aspectUrl = process.env.REACT_APP_API_BASE_URL + "typeeditor/aspects";
-    const statusUrl =
-      process.env.REACT_APP_API_BASE_URL + "typeeditor/statuses";
     const objectsUrl =
       process.env.REACT_APP_API_BASE_URL + "typeeditor/objects";
 
     const aspectResponse = yield call(get, aspectUrl);
-    const statusResponse = yield call(get, statusUrl);
     const objectResponse = yield call(get, objectsUrl);
 
     const payload = {
       aspects: aspectResponse.data,
       objectTypes: objectResponse.data,
-      statuses: statusResponse.data,
     };
 
     yield statePut({
@@ -130,7 +126,6 @@ export function* getInitialData(action: TypeEditorActionTypes) {
     const payload = {
       aspects: [],
       objectTypes: [],
-      statuses: [],
     };
 
     yield statePut({
