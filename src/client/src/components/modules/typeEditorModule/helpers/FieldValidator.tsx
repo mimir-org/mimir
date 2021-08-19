@@ -1,5 +1,5 @@
 import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
-import { Aspect, ObjectType, Status } from "../../../../models";
+import { Aspect, ObjectType } from "../../../../models";
 
 const FieldValidator = (state: TypeEditorState, input: string) => {
   const aspect = state.createLibraryType.aspect;
@@ -7,7 +7,6 @@ const FieldValidator = (state: TypeEditorState, input: string) => {
   const locationType = state.createLibraryType.locationType;
   const name = state.createLibraryType.name;
   const symbol = state.createLibraryType.symbolId;
-  const status = state.createLibraryType.status;
   const rds = state.createLibraryType.rdsId;
   const terminals = state.createLibraryType.terminalTypes;
   const predefinedAttributes = state.createLibraryType.predefinedAttributes;
@@ -21,7 +20,6 @@ const FieldValidator = (state: TypeEditorState, input: string) => {
   const validLocationType = isLocation && locationType !== "";
   const validName = name !== "";
   const validSymbol = symbol !== "";
-  const validStatus = status !== Status.NotSet;
   const validRds = rds !== "";
   const validTerminals = isFunction && terminals !== [];
   const validPredefinedAttributes = isLocation && predefinedAttributes !== [];
@@ -56,8 +54,7 @@ const FieldValidator = (state: TypeEditorState, input: string) => {
       if (
         (!validObjectType && !validLocationType) ||
         !validName ||
-        !validSymbol ||
-        !validStatus
+        !validSymbol
       ) {
         return true;
       }
@@ -67,7 +64,6 @@ const FieldValidator = (state: TypeEditorState, input: string) => {
         (!validObjectType && !validLocationType) ||
         !validName ||
         !validSymbol ||
-        !validStatus ||
         !validRds
       ) {
         return true;
@@ -78,7 +74,6 @@ const FieldValidator = (state: TypeEditorState, input: string) => {
         (!validObjectType && !validLocationType) ||
         !validName ||
         !validSymbol ||
-        !validStatus ||
         !validRds ||
         (!validTerminals && !validPredefinedAttributes) ||
         !validAttributes

@@ -56,6 +56,7 @@ namespace Mb.Core.Extensions
             services.AddScoped<IInterfaceTypeRepository, InterfaceTypeRepository>();
             services.AddScoped<ITransportRepository, TransportRepository>();
             services.AddScoped<IInterfaceRepository, InterfaceRepository>();
+            services.AddScoped<INodeTypeRepository, NodeTypeRepository>();
 
             services.AddScoped<ITypeEditorService, TypeEditorService>();
             services.AddScoped<ISeedingService, SeedingService>();

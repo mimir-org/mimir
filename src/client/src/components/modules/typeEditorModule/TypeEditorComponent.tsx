@@ -44,7 +44,7 @@ export const TypeEditorComponent = () => {
     dispatch(getInitialData());
     dispatch(changeAllModulesVisibility(false, true));
     dispatch(getBlobData());
-  }, [dispatch, aspect, objectType, state.createLibraryType.status]);
+  }, [dispatch, aspect, objectType]);
 
   return (
     <TypeEditorWrapper>

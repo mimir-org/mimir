@@ -61,3 +61,5 @@ export { default as ExportLibraryIcon } from "./exportProjectLibrary.svg";
 export { default as ExportProjectIcon } from "./exportProject.svg";
 export { default as ImportProjectIcon } from "./importProject.svg";
 export { default as ImportLibraryIcon } from "./importProjectLibrary.svg";
+export { default as LibNodeInterface } from "./libnode_interface.svg";
+export { default as LibNodeTransport } from "./libnode_transport.svg";

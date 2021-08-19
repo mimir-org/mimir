@@ -16,7 +16,7 @@ import {
 
 const initialState: LibraryState = {
     fetching: false,
-    nodes: [],
+    nodeTypes: [],
     apiError: [],
     transportTypes: [],
     interfaceTypes: []
@@ -31,7 +31,9 @@ export function libraryReducer(
             return {
                 ...state,
                 fetching: true,
-                nodes: [],
+                nodeTypes: [],
+                transportTypes: [],
+                interfaceTypes: [],
                 apiError: state.apiError
                     ? state.apiError.filter((elem) => elem.key !== FETCHING_LIBRARY)
                     : state.apiError,
@@ -40,7 +42,9 @@ export function libraryReducer(
             return {
                 ...state,
                 fetching: false,
-                nodes: action.payload.nodes,
+                nodeTypes: action.payload.nodeTypes,
+                transportTypes: action.payload.transportTypes,
+                interfaceTypes: action.payload.interfaceTypes,
                 apiError: action.payload.apiError
                     ? [...state.apiError, action.payload.apiError]
                     : state.apiError,

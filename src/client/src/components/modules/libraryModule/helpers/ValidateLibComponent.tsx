@@ -1,7 +1,7 @@
-import { Node, LibraryNodeItem } from "../../../../models";
+import { Node, LibItem } from "../../../../models";
 
 const ValidateLibComponent = (
-  libNode: LibraryNodeItem,
+  libNode: LibItem,
   selectedNode: Node,
   isBlockView: boolean,
   isSplitView: boolean

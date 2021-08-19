@@ -122,7 +122,6 @@ const TextResources = {
   TypeEditor_Button_Edit: "Save Type Edit",
   TypeEditor_Type_Placeholder: "Write Type Name",
   TypeEditor_Aspect_Placeholder: "Select Aspect",
-  TypeEditor_Status_Placeholder: "Not set",
   TypeEditor_Object_Placeholder: "Not set",
   TypeEditor_Draft_Placeholder: "Draft",
   TypeEditor_Symbol: "Symbol",

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Mb.Core.Services.Contracts;
 using Mb.Models.Application;
-using Mb.Models.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -33,12 +32,12 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
-        /// Get all node types by search
+        /// Get all library data by search
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
         [HttpGet("")]
-        [ProducesResponseType(typeof(ICollection<LibraryNodeItem>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Library), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -46,7 +45,30 @@ namespace Mb.Core.Controllers.V1
         {
             try
             {
-                var data = _libraryService.GetLibNodes(name).ToList();
+                var data = _libraryService.GetLibTypes(name);
+                return Ok(data);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
+        /// Get all node types
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("node")]
+        [ProducesResponseType(typeof(ICollection<LibraryNodeItem>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult GetNodes()
+        {
+            try
+            {
+                var data = _libraryService.GetNodeTypes().ToList();
                 return Ok(data);
             }
             catch (Exception e)
