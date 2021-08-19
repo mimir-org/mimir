@@ -81,19 +81,24 @@ export const TerminalsListElement = ({ category, terminals, state }: Props) => {
     let terminalsArray = [];
     if (ModeEdit(state.mode) && state.selectedNode.terminalTypes) {
       terminalsArray = state.selectedNode.terminalTypes;
+      return terminalsArray.map((t, index) => {
+        return (
+          <AddTerminal
+            key={index}
+            terminals={terminals}
+            state={state}
+            defaultTerminal={t}
+          />
+        );
+      });
+    } else {
+      for (let i = 0; i < quantity; i++) {
+        terminalsArray.push(
+          <AddTerminal key={i} terminals={terminals} state={state} />
+        );
+      }
+      return terminalsArray;
     }
-    for (let i = 0; i < quantity; i++) {
-      terminalsArray.push(
-        <AddTerminal
-          key={i}
-          terminals={terminals}
-          state={state}
-          defaultTerminal={ModeEdit(state.mode) ? terminalsArray[i] : null}
-        />
-      );
-    }
-
-    return terminalsArray;
   };
 
   return (

@@ -9,7 +9,7 @@ interface Props {
 export const RDSListBody = ({ elements, disabled }: Props) => (
   <ListElementsContainer>
     {!disabled
-      ? elements.map((element) => (
+      ? elements?.map((element) => (
           <RDSListElement
             key={element[1].id}
             id={element[1].id}

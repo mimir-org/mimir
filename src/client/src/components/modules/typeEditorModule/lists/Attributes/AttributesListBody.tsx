@@ -8,11 +8,11 @@ interface Props {
 
 export const AttributesListBody = ({ listElements, disabled }: Props) => (
   <ListElementsContainer>
-    {disabled
-      ? null
-      : listElements?.map((element) => (
+    {!disabled
+      ? listElements?.map((element) => (
           <AttributesListElement key={element[1].id} attribute={element} />
-        ))}
+        ))
+      : null}
   </ListElementsContainer>
 );
 
