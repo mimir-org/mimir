@@ -77,24 +77,26 @@ export const TerminalsListElement = ({ category, terminals, state }: Props) => {
     setExpandCategory(!expandCategory);
   };
 
-  const addTerminal = () => {
-    for (let i = 0; i < quantity; i++) {
-      <AddTerminal key={i} terminals={terminals} state={state} />;
-    }
-  };
-
-  const editTerminals = () => {
+  const updateTerminals = () => {
+    let terminalsArray = [];
     if (ModeEdit(state.mode) && state.selectedNode.terminalTypes) {
-      state.selectedNode.terminalTypes.forEach((t) => {
+      terminalsArray = state.selectedNode.terminalTypes;
+    }
+    for (let i = 0; i < quantity; i++) {
+      terminalsArray.push(
         <AddTerminal
-          // key={t.terminalTypeId}
+          key={i}
           terminals={terminals}
           state={state}
-          defaultTerminal={t}
-        />;
-      });
+          defaultTerminal={ModeEdit(state.mode) ? terminalsArray[i] : null}
+        />
+      );
     }
+
+    return terminalsArray;
   };
+
+  // fortsett her i morgen :D
 
   return (
     <TerminalListElement>
@@ -172,9 +174,7 @@ export const TerminalsListElement = ({ category, terminals, state }: Props) => {
         </TerminalCategoryWrapper>
       )}
       {quantity !== 0 && expandCategory && IsObjectBlock(objectType) && (
-        <AddTerminalWrapper>
-          {ModeEdit(state.mode) ? editTerminals : addTerminal}
-        </AddTerminalWrapper>
+        <AddTerminalWrapper>{updateTerminals()}</AddTerminalWrapper>
       )}
     </TerminalListElement>
   );

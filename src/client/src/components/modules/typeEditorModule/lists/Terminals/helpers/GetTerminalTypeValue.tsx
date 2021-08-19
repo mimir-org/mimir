@@ -12,7 +12,8 @@ const GetTerminalTypeValue = (
   terminals?: any[]
 ) => {
   let terminalName = "";
-  terminals &&
+  ModeEdit(mode) &&
+    terminals &&
     terminals.forEach((t) => {
       if (t.id === terminal.terminalTypeId) {
         terminalName = t.name;
@@ -28,7 +29,7 @@ const GetTerminalTypeValue = (
     } else if (type === "terminalId") {
       return "";
     } else if (type === "direction") {
-      return null;
+      return 2;
     } else if (type === "directionName") {
       return "Direction";
     }

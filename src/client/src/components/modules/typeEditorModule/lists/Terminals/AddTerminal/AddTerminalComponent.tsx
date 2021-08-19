@@ -97,7 +97,6 @@ export const AddTerminal = ({ state, terminals, defaultTerminal }: Props) => {
       connectorType: Number(selectedDirectionId),
       selected: false,
     };
-
     if (ValidateTerminal(terminal)) updateTerminalList(terminal);
   }, [updateTerminalList, selectedTerminalId, selectedDirectionId, quantity]);
 
