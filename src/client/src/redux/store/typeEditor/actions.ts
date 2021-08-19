@@ -4,7 +4,7 @@ import {
   Aspect,
   ObjectType,
   CreateLibraryType,
-  //   UpdateLibraryType,
+  UpdateLibraryType,
   PredefinedAttribute,
   LibraryFilter,
 } from "../../../models";
@@ -46,11 +46,11 @@ import {
   CHANGE_ATTRIBUTETYPES,
   REMOVE_TERMINALTYPES,
   CREATING_TYPE,
+  UPDATING_TYPE,
   DELETE_TYPE_EDITOR_ERROR,
   TypeEditorActionTypes,
 } from "./types";
 
-// TODO create type, save type, get attributes
 export function getInitialData(): TypeEditorActionTypes {
   return {
     type: FETCHING_INITIAL_DATA,
@@ -374,14 +374,18 @@ export function create(libraryType: CreateLibraryType): TypeEditorActionTypes {
   };
 }
 
-// export function update(libraryType: UpdateLibraryType): TypeEditorActionTypes {
-//   return {
-//     type: UPDATING_TYPE,
-//     payload: {
-//       libraryType,
-//     },
-//   };
-// }
+export function update(
+  libraryType: UpdateLibraryType,
+  selectedType: string
+): TypeEditorActionTypes {
+  return {
+    type: UPDATING_TYPE,
+    payload: {
+      libraryType,
+      selectedType,
+    },
+  };
+}
 
 export function deleteTypeEditorError(key: string) {
   return {

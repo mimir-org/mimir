@@ -13,6 +13,7 @@ import {
   PredefinedAttribute,
   BlobData,
   LibraryFilter,
+  UpdateLibraryType,
 } from "../../../models";
 
 export const FETCHING_INITIAL_DATA = "FETCHING_INITIAL_DATA";
@@ -66,7 +67,7 @@ export const REMOVE_TERMINALTYPES = "REMOVE_TERMINALTYPES";
 export const CREATING_TYPE = "CREATING_TYPE";
 export const CREATING_TYPE_SUCCESS_OR_ERROR = "CREATING_TYPE_SUCCESS_OR_ERROR";
 export const UPDATING_TYPE = "UPDATING_TYPE";
-export const UPDATE_TYPE_SUCCESS_OR_ERROR = "UPDATE_TYPE_SUCCESS_OR_ERROR";
+export const UPDATING_TYPE_SUCCESS_OR_ERROR = "UPDATE_TYPE_SUCCESS_OR_ERROR";
 export const DELETE_TYPE_EDITOR_ERROR = "DELETE_TYPE_EDITOR_ERROR";
 export const FETCHING_TYPE = "FETCHING_TYPE";
 export const FETCHING_TYPE_SUCCESS_OR_ERROR = "FETCHING_TYPE_SUCCESS_OR_ERROR";
@@ -86,7 +87,7 @@ export interface TypeEditorState {
   attributes: AttributeType[];
   mode: TypeMode;
   selectedType: string;
-  selectedNode: CreateLibraryType;
+  selectedNode: UpdateLibraryType;
   rdsName: string;
   terminalCategory: string;
   terminalColor: string;
@@ -410,7 +411,8 @@ interface CreatingTypeAction {
 interface UpdatingTypeAction {
   type: typeof UPDATING_TYPE;
   payload: {
-    libraryType: CreateLibraryType;
+    libraryType: UpdateLibraryType;
+    selectedType: string;
   };
 }
 interface DeleteTypeEditorErrorAction {
@@ -422,6 +424,13 @@ interface DeleteTypeEditorErrorAction {
 
 interface CreatingTypeActionFinished {
   type: typeof CREATING_TYPE_SUCCESS_OR_ERROR;
+  payload: {
+    apiError: ApiError;
+  };
+}
+
+interface UpdatingTypeActionFinished {
+  type: typeof UPDATING_TYPE_SUCCESS_OR_ERROR;
   payload: {
     apiError: ApiError;
   };
@@ -478,4 +487,5 @@ export type TypeEditorActionTypes =
   | CreatingTypeAction
   | CreatingTypeActionFinished
   | UpdatingTypeAction
+  | UpdatingTypeActionFinished
   | DeleteTypeEditorErrorAction;

@@ -6,6 +6,7 @@ import {
   BlobData,
   TerminalTypeItem,
   PredefinedAttribute,
+  UpdateLibraryType,
 } from "../../../models";
 import {
   FETCHING_INITIAL_DATA,
@@ -54,6 +55,8 @@ import {
   REMOVE_TERMINALTYPES,
   CREATING_TYPE,
   CREATING_TYPE_SUCCESS_OR_ERROR,
+  UPDATING_TYPE,
+  UPDATING_TYPE_SUCCESS_OR_ERROR,
   DELETE_TYPE_EDITOR_ERROR,
   TypeEditorActionTypes,
   TypeEditorState,
@@ -64,7 +67,7 @@ const initialState: TypeEditorState = {
   creating: false,
   mode: TypeMode.NotSet,
   selectedType: "",
-  selectedNode: {} as CreateLibraryType,
+  selectedNode: {} as UpdateLibraryType,
   rdsName: "",
   terminalCategory: "",
   terminalColor: "",
@@ -430,6 +433,36 @@ export function typeEditorReducer(
         fetching: false,
         createLibraryType: {
           ...state.createLibraryType,
+          name: "",
+          aspect: Aspect.NotSet,
+          objectType: ObjectType.NotSet,
+          semanticReference: "",
+          rdsId: "",
+          terminalTypes: [] as TerminalTypeItem[],
+          attributeTypes: [] as string[],
+          locationType: "",
+          predefinedAttributes: [] as PredefinedAttribute[],
+          terminalTypeId: "",
+          symbolId: "",
+        },
+        apiError: action.payload.apiError
+          ? [...state.apiError, action.payload.apiError]
+          : state.apiError,
+      };
+    case UPDATING_TYPE:
+      return {
+        ...state,
+        fetching: true,
+        apiError: state.apiError
+          ? state.apiError.filter((elem) => elem.key !== UPDATING_TYPE)
+          : state.apiError,
+      };
+    case UPDATING_TYPE_SUCCESS_OR_ERROR:
+      return {
+        ...state,
+        fetching: false,
+        selectedNode: {
+          ...state.selectedNode,
           name: "",
           aspect: Aspect.NotSet,
           objectType: ObjectType.NotSet,

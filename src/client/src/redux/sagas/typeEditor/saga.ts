@@ -6,6 +6,7 @@ import {
   FETCHING_TERMINALS_SUCCESS_OR_ERROR,
   FETCHING_ATTRIBUTES_SUCCESS_OR_ERROR,
   CREATING_TYPE_SUCCESS_OR_ERROR,
+  UPDATING_TYPE_SUCCESS_OR_ERROR,
   FETCHING_LOCATIONTYPES_SUCCESS_OR_ERROR,
   FETCHING_PREDEFINED_ATTRIBUTES_SUCCESS_OR_ERROR,
   TypeEditorActionTypes,
@@ -14,43 +15,68 @@ import {
 
 import {
   get,
-  post,
   put,
+  post,
   GetBadResponseData,
   ApiError,
 } from "../../../models/webclient";
 
 export function* updateType(action) {
   try {
-    console.log("Trying to update type..");
-    const url = process.env.REACT_APP_API_BASE_URL + "typeeditor";
+    const url =
+      process.env.REACT_APP_API_BASE_URL +
+      "typeeditor/" +
+      action.paylod.selectedType;
     const response = yield call(put, url, action.payload.libraryType);
+
     // This is a bad request
     if (response.status === 400) {
       const data = GetBadResponseData(response);
-      console.log(data);
-      /*const apiError = {
-                      key: CREATING_TYPE_SUCCESS_OR_ERROR,
-                      errorMessage: data.title,
-                      errorData: data,
-                  } as ApiError;
-      
-                  const payload = {
-                      apiError: apiError,
-                  };
-      
-                  yield statePut({
-                      type: CREATING_TYPE_SUCCESS_OR_ERROR,
-                      payload: payload,
-                  });
-                  */
+
+      const apiError = {
+        key: UPDATING_TYPE_SUCCESS_OR_ERROR,
+        errorMessage: data.title,
+        errorData: data,
+      } as ApiError;
+
+      const payload = {
+        apiError: apiError,
+      };
+
+      yield statePut({
+        type: UPDATING_TYPE_SUCCESS_OR_ERROR,
+        payload: payload,
+      });
       return;
     }
+    // Bad request end
+
+    const payload = {
+      apiError: null,
+    };
+
+    yield statePut({
+      type: UPDATING_TYPE_SUCCESS_OR_ERROR,
+      payload: payload,
+    });
   } catch (error) {
-    console.log(error);
+    const apiError = {
+      key: UPDATING_TYPE_SUCCESS_OR_ERROR,
+      errorMessage: error.message,
+      errorData: null,
+    } as ApiError;
+
+    const payload = {
+      apiError: apiError,
+    };
+
+    yield statePut({
+      type: UPDATING_TYPE_SUCCESS_OR_ERROR,
+      payload: payload,
+    });
   }
 }
-// eslint-disable-next-line require-yield
+
 export function* createType(action) {
   try {
     const url = process.env.REACT_APP_API_BASE_URL + "typeeditor";

@@ -5,12 +5,13 @@ import { PreviewBody } from "../preview/PreviewBody";
 import { ListWrapper } from "../../../../compLibrary";
 import { SaveButton } from "../../../../compLibrary/buttons";
 import { TextResources } from "../../../../assets/text";
-import { create } from "../../../../redux/store/typeEditor/actions";
+import { create, update } from "../../../../redux/store/typeEditor/actions";
 import { TypeMode } from "../../../../models";
 import { GetValidationMessage } from "../validators";
 import { useState } from "react";
 import { ErrorMessageBox } from "../styled";
 import { AddIcon, CheckIcon, CloseIcon } from "../../../../assets/icons/common";
+import { ModeEdit, ModeNew } from "../helpers";
 
 interface Props {
   state: TypeEditorState;
@@ -25,10 +26,10 @@ export const TypePreview = ({ state, disabled }: Props) => {
   const onSaveClick = (mode: TypeMode) => {
     if (validationMessages.length === 0) {
       setShowBox(false);
-      if (mode === TypeMode.New) {
+      if (ModeNew(mode)) {
         dispatch(create(state.createLibraryType));
-      } else if (mode === TypeMode.Edit) {
-        // dispatch(update(state.createLibraryType));
+      } else if (ModeEdit(mode)) {
+        dispatch(update(state.selectedNode, state.selectedType));
       }
     } else {
       setShowBox(true);
@@ -58,12 +59,12 @@ export const TypePreview = ({ state, disabled }: Props) => {
         }
       >
         <p>
-          {state.mode === TypeMode.New
+          {ModeNew(state.mode)
             ? TextResources.TypeEditor_Button_Add
             : TextResources.TypeEditor_Button_Edit}
         </p>
         <img
-          src={state.mode === TypeMode.New ? AddIcon : CheckIcon}
+          src={ModeNew(state.mode) ? AddIcon : CheckIcon}
           alt="icon"
           className="icon"
         />
