@@ -142,7 +142,6 @@ export function* exportLibrary(action: ExportLibraryAction) {
 export function* importLibrary(action: ImportLibraryAction) {
     try {
         const url = process.env.REACT_APP_API_BASE_URL + "typeeditor/import";
-        console.log(action.payload.libraryTypes);
         const response = yield call(post, url, action.payload.libraryTypes);
 
         // This is a bad request

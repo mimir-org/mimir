@@ -9,7 +9,6 @@ export { default as IsNotSet } from "./IsNotSet";
 
 export { default as GetAspects } from "./GetAspects";
 export { default as GetObjectTypes } from "./GetObjectTypes";
-export { default as GetStatus } from "./GetStatus";
 export { default as GetDefaultValue } from "./GetDefaultValue";
 
 export { default as LocationDropdown } from "./LocationDropdown";

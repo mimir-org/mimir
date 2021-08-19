@@ -1,4 +1,4 @@
-import { Aspect, Connector, Status, Attribute, ObjectType } from ".";
+import { Aspect, Connector, Attribute, ObjectType } from ".";
 import { ConnectorType } from "./Enums";
 
 export interface AttributeType {
@@ -35,7 +35,6 @@ export interface LibItem {
     rds: string;
     category: string;
     name: string;
-    status: Status;
     aspect: Aspect;
     connectors: Connector[];
     attributes?: Attribute[] | null;
@@ -97,7 +96,6 @@ export interface LocationType {
 }
 export interface CreateLibraryType {
     name: string;
-    status: Status;
     aspect: Aspect;
     objectType: ObjectType;
     semanticReference: string;
@@ -111,7 +109,6 @@ export interface CreateLibraryType {
 }
 export interface UpdateLibraryType {
     name: string;
-    status: Status;
     aspect: Aspect;
     objectType: ObjectType;
     semanticReference: string;

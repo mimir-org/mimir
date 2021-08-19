@@ -1,6 +1,6 @@
 import "./dropdownmenu.scss";
 import { useState, useEffect } from "react";
-import { Aspect, ObjectType, Status } from "../../../../models";
+import { Aspect, ObjectType } from "../../../../models";
 import { ExpandIcon, CollapseIcon } from "../../../../assets/icons/common";
 import { GetDefaultValue, LocationDropdown, IsLocation } from "../helpers";
 import {
@@ -14,7 +14,7 @@ interface Props {
   aspect?: Aspect;
   label: string;
   items: any[];
-  type: Aspect | ObjectType | Status;
+  type: Aspect | ObjectType;
   onChange: Function;
   disabled?: boolean;
 }
