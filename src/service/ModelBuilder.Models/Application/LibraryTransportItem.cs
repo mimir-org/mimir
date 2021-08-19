@@ -11,7 +11,6 @@ namespace Mb.Models.Application
         public string Category { get; set; }
         public Aspect Aspect { get; set; }
         public string Name { get; set; }
-        public Status Status { get; set; }
         public string SemanticReference { get; set; }
         public string TerminalId { get; set; }
         public string TerminalTypeId { get; set; }

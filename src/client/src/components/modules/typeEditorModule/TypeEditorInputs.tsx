@@ -2,12 +2,11 @@ import { useState, useEffect } from "react";
 import { DropdownMenu } from ".";
 import { TextResources } from "../../../assets/text";
 import { Dropdown } from "../../../compLibrary/dropdown";
-import { Aspect, ObjectType, Status } from "../../../models";
+import { Aspect, ObjectType } from "../../../models";
 import { TypeEditorState } from "../../../redux/store/typeEditor/types";
 import {
   GetAspects,
   GetObjectTypes,
-  GetStatus,
   IsLocation,
   GetDefaultValue,
   GetTypeValue,
@@ -21,7 +20,6 @@ import {
   chooseTypeName,
   chooseAspect,
   chooseObjectType,
-  chooseStatus,
 } from "../../../redux/store/typeEditor/actions";
 
 interface Props {
@@ -45,10 +43,6 @@ const TypeEditorInputs = ({ state, dispatch }: Props) => {
   const onNameChange = (e) => {
     setTypeName(e.target.value);
     dispatch(chooseTypeName(mode, e.target.value));
-  };
-
-  const onStatusChange = (value) => {
-    dispatch(chooseStatus(mode, Number(value)));
   };
 
   const onSymbolChange = (value) => {
@@ -105,14 +99,6 @@ const TypeEditorInputs = ({ state, dispatch }: Props) => {
         onChange={onSymbolChange}
         disabled={FieldValidator(state, "symbol")}
         defaultValue={ModeEdit(mode) ? GetTypeValue(state, "symbol") : null}
-      />
-      <DropdownMenu
-        label={TextResources.TypeEditor_Status}
-        items={GetStatus(state)}
-        type={Status.NotSet}
-        onChange={onStatusChange}
-        disabled={FieldValidator(state, "status")}
-        state={state}
       />
     </TypeInfo>
   );

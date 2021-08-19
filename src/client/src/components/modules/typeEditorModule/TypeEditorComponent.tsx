@@ -57,15 +57,7 @@ export const TypeEditorComponent = () => {
     state.selectedType &&
       dispatch(getSelectedNode(state.selectedType, LibraryFilter.Node));
     dispatch(chooseAspect(mode, aspect));
-  }, [
-    dispatch,
-    aspect,
-    objectType,
-    state.createLibraryType.status,
-    mode,
-    selectedType,
-    state.selectedType,
-  ]);
+  }, [dispatch, aspect, objectType, mode, selectedType, state.selectedType]);
 
   return (
     <TypeEditorWrapper>

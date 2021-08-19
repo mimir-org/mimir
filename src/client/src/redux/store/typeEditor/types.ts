@@ -9,7 +9,6 @@ import {
   TerminalTypeItem,
   Aspect,
   ObjectType,
-  Status,
   LocationType,
   PredefinedAttribute,
   BlobData,
@@ -39,7 +38,6 @@ export const CHOOSE_ASPECT = "CHOOSE_ASPECT";
 export const CHOOSE_OBJECT_TYPE = "CHOOSE_OBJECT_TYPE";
 export const CHOOSE_TYPENAME = "CHOOSE_TYPENAME";
 export const CHOOSE_SYMBOL = "CHOOSE_SYMBOL";
-export const CHOOSE_STATUS = "CHOOSE_STATUS";
 export const CHOOSE_RDS = "CHOOSE_RDS";
 export const CHOOSE_RDS_NAME = "CHOOSE_RDS_NAME";
 export const CHOOSE_TERMINAL_CATEGORY = "CHOOSE_TERMINAL_CATEGORY";
@@ -54,7 +52,6 @@ export const CHANGE_ASPECT = "CHANGE_ASPECT";
 export const CHANGE_OBJECT_TYPE = "CHANGE_OBJECT_TYPE";
 export const CHANGE_TYPENAME = "CHANGE_TYPENAME";
 export const CHANGE_SYMBOL = "CHANGE_SYMBOL";
-export const CHANGE_STATUS = "CHANGE_STATUS";
 export const CHANGE_RDS = "CHANGE_RDS";
 export const CHANGE_RDS_NAME = "CHANGE_RDS_NAME";
 export const CHANGE_TERMINAL_CATEGORY = "CHANGE_TERMINAL_CATEGORY";
@@ -84,7 +81,6 @@ export interface TypeEditorState {
   createLibraryType: CreateLibraryType;
   aspects: object;
   objectTypes: object;
-  statuses: object;
   rdsList: Rds[];
   terminals: TerminalType[];
   attributes: AttributeType[];
@@ -110,7 +106,6 @@ interface FetchingInitialDataActionFinished {
   type: typeof FETCHING_INITIAL_SUCCESS_OR_ERROR;
   payload: {
     aspects: Dictionary[];
-    statuses: Dictionary[];
     objectTypes: Dictionary[];
   };
 }
@@ -246,14 +241,6 @@ export interface ChooseSymbol {
     symbolId: string;
   };
 }
-
-export interface ChooseStatus {
-  type: typeof CHOOSE_STATUS;
-  payload: {
-    status: Status;
-  };
-}
-
 export interface ChooseRds {
   type: typeof CHOOSE_RDS;
   payload: {
@@ -341,49 +328,36 @@ export interface ChangeTypeName {
     typeName: string;
   };
 }
-
 export interface ChangeSymbol {
   type: typeof CHANGE_SYMBOL;
   payload: {
     symbolId: string;
   };
 }
-
-export interface ChangeStatus {
-  type: typeof CHANGE_STATUS;
-  payload: {
-    status: Status;
-  };
-}
-
 export interface ChangeRds {
   type: typeof CHANGE_RDS;
   payload: {
     rds: string;
   };
 }
-
 export interface ChangeRdsName {
   type: typeof CHANGE_RDS_NAME;
   payload: {
     rdsName: string;
   };
 }
-
 export interface ChangeTerminalCategory {
   type: typeof CHANGE_TERMINAL_CATEGORY;
   payload: {
     terminalCategory: string;
   };
 }
-
 export interface ChangeTerminalColor {
   type: typeof CHANGE_TERMINAL_COLOR;
   payload: {
     terminalColor: string;
   };
 }
-
 export interface ChangeSemanticReference {
   type: typeof CHANGE_SEMANTICREFERENCE;
   payload: {
@@ -476,7 +450,6 @@ export type TypeEditorActionTypes =
   | ChooseObjectType
   | ChooseTypeName
   | ChooseSymbol
-  | ChooseStatus
   | ChooseRds
   | ChooseRdsName
   | ChooseTerminalCategory
@@ -491,7 +464,6 @@ export type TypeEditorActionTypes =
   | ChangeObjectType
   | ChangeTypeName
   | ChangeSymbol
-  | ChangeStatus
   | ChangeRds
   | ChangeRdsName
   | ChangeTerminalCategory

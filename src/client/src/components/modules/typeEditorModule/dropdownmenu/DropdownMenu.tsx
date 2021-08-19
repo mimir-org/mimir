@@ -1,6 +1,6 @@
 import "./dropdownmenu.scss";
 import { useState, useEffect } from "react";
-import { Aspect, ObjectType, Status, TypeMode } from "../../../../models";
+import { Aspect, ObjectType, TypeMode } from "../../../../models";
 import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
 import { ExpandIcon, CollapseIcon } from "../../../../assets/icons/common";
 import {
@@ -19,7 +19,7 @@ import { TextResources } from "../../../../assets/text";
 interface Props {
   label: string;
   items: any[];
-  type: Aspect | ObjectType | Status;
+  type: Aspect | ObjectType;
   onChange: Function;
   disabled?: boolean;
   state: TypeEditorState;

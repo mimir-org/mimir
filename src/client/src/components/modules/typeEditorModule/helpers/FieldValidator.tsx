@@ -1,5 +1,5 @@
 import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
-import { Aspect, ObjectType, Status, TypeMode } from "../../../../models";
+import { Aspect, ObjectType, TypeMode } from "../../../../models";
 
 const FieldValidator = (state: TypeEditorState, input: string) => {
   const aspect = state.createLibraryType.aspect;
@@ -7,7 +7,6 @@ const FieldValidator = (state: TypeEditorState, input: string) => {
   const locationType = state.createLibraryType.locationType;
   const name = state.createLibraryType.name;
   const symbol = state.createLibraryType.symbolId;
-  const status = state.createLibraryType.status;
   const rds = state.createLibraryType.rdsId;
   const terminals = state.createLibraryType.terminalTypes;
   const predefinedAttributes = state.createLibraryType.predefinedAttributes;
@@ -21,7 +20,6 @@ const FieldValidator = (state: TypeEditorState, input: string) => {
   const validLocationType = isLocation && locationType !== "";
   const validName = name !== "";
   const validSymbol = symbol !== "";
-  const validStatus = status !== Status.NotSet;
   const validRds = rds !== "";
   const validTerminals = isFunction && terminals.length !== 0;
   const validPredefinedAttributes =
@@ -48,11 +46,7 @@ const FieldValidator = (state: TypeEditorState, input: string) => {
         }
         break;
       case "status":
-        if (
-          (!validObjectType && !validLocationType) ||
-          !validName ||
-          !validSymbol
-        ) {
+        if ((!validObjectType && !validLocationType) || !validName) {
           return true;
         }
         break;
@@ -60,8 +54,7 @@ const FieldValidator = (state: TypeEditorState, input: string) => {
         if (
           (!validObjectType && !validLocationType) ||
           !validName ||
-          !validSymbol ||
-          !validStatus
+          !validSymbol
         ) {
           return true;
         }
@@ -71,7 +64,6 @@ const FieldValidator = (state: TypeEditorState, input: string) => {
           (!validObjectType && !validLocationType) ||
           !validName ||
           !validSymbol ||
-          !validStatus ||
           !validRds
         ) {
           return true;
@@ -82,7 +74,6 @@ const FieldValidator = (state: TypeEditorState, input: string) => {
           (!validObjectType && !validLocationType) ||
           !validName ||
           !validSymbol ||
-          !validStatus ||
           !validRds ||
           (!validTerminals && !validPredefinedAttributes) ||
           !validAttributes

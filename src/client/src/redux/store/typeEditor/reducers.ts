@@ -1,6 +1,5 @@
 import {
   CreateLibraryType,
-  Status,
   Aspect,
   ObjectType,
   TypeMode,
@@ -31,7 +30,6 @@ import {
   CHOOSE_OBJECT_TYPE,
   CHOOSE_TYPENAME,
   CHOOSE_SYMBOL,
-  CHOOSE_STATUS,
   CHOOSE_RDS,
   CHOOSE_RDS_NAME,
   CHOOSE_TERMINAL_CATEGORY,
@@ -46,7 +44,6 @@ import {
   CHANGE_OBJECT_TYPE,
   CHANGE_TYPENAME,
   CHANGE_SYMBOL,
-  CHANGE_STATUS,
   CHANGE_RDS,
   CHANGE_SEMANTICREFERENCE,
   CHANGE_LOCATION_TYPE,
@@ -73,7 +70,6 @@ const initialState: TypeEditorState = {
   terminalColor: "",
   createLibraryType: {
     name: "",
-    status: Status.NotSet,
     aspect: Aspect.NotSet,
     objectType: ObjectType.NotSet,
     semanticReference: "",
@@ -87,7 +83,6 @@ const initialState: TypeEditorState = {
   } as CreateLibraryType,
   objectTypes: {},
   aspects: {},
-  statuses: {},
   rdsList: [],
   terminals: [],
   attributes: [],
@@ -113,7 +108,6 @@ export function typeEditorReducer(
         ...state,
         fetching: false,
         aspects: action.payload.aspects,
-        statuses: action.payload.statuses,
         objectTypes: action.payload.objectTypes,
       };
     case FETCHING_RDS:
@@ -245,14 +239,6 @@ export function typeEditorReducer(
           symbolId: action.payload.symbolId,
         },
       };
-    case CHOOSE_STATUS:
-      return {
-        ...state,
-        createLibraryType: {
-          ...state.createLibraryType,
-          status: action.payload.status,
-        },
-      };
     case CHOOSE_RDS:
       return {
         ...state,
@@ -359,14 +345,6 @@ export function typeEditorReducer(
           symbolId: action.payload.symbolId,
         },
       };
-    case CHANGE_STATUS:
-      return {
-        ...state,
-        selectedNode: {
-          ...state.selectedNode,
-          status: action.payload.status,
-        },
-      };
     case CHANGE_RDS:
       return {
         ...state,
@@ -453,7 +431,6 @@ export function typeEditorReducer(
         createLibraryType: {
           ...state.createLibraryType,
           name: "",
-          status: Status.NotSet,
           aspect: Aspect.NotSet,
           objectType: ObjectType.NotSet,
           semanticReference: "",

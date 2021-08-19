@@ -3,7 +3,6 @@ import {
   TerminalTypeItem,
   Aspect,
   ObjectType,
-  Status,
   CreateLibraryType,
   //   UpdateLibraryType,
   PredefinedAttribute,
@@ -24,7 +23,6 @@ import {
   CHOOSE_OBJECT_TYPE,
   CHOOSE_TYPENAME,
   CHOOSE_SYMBOL,
-  CHOOSE_STATUS,
   CHOOSE_RDS,
   CHOOSE_RDS_NAME,
   CHOOSE_TERMINAL_CATEGORY,
@@ -39,7 +37,6 @@ import {
   CHANGE_OBJECT_TYPE,
   CHANGE_TYPENAME,
   CHANGE_SYMBOL,
-  CHANGE_STATUS,
   CHANGE_RDS,
   CHANGE_SEMANTICREFERENCE,
   CHANGE_LOCATION_TYPE,
@@ -205,23 +202,6 @@ export function chooseSymbol(
       type: CHANGE_SYMBOL,
       payload: {
         symbolId: symbolId,
-      },
-    };
-}
-
-export function chooseStatus(mode: TypeMode, status: Status) {
-  if (mode === TypeMode.New)
-    return {
-      type: CHOOSE_STATUS,
-      payload: {
-        status,
-      },
-    };
-  if (mode === TypeMode.Edit)
-    return {
-      type: CHANGE_STATUS,
-      payload: {
-        status,
       },
     };
 }
