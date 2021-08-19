@@ -1,5 +1,6 @@
 import { call, put as statePut } from "redux-saga/effects";
 import {
+  FETCHING_TYPE_SUCCESS_OR_ERROR,
   FETCHING_INITIAL_SUCCESS_OR_ERROR,
   FETCHING_RDS_SUCCESS_OR_ERROR,
   FETCHING_TERMINALS_SUCCESS_OR_ERROR,
@@ -106,19 +107,15 @@ export function* createType(action) {
 export function* getInitialData(action: TypeEditorActionTypes) {
   try {
     const aspectUrl = process.env.REACT_APP_API_BASE_URL + "typeeditor/aspects";
-    const statusUrl =
-      process.env.REACT_APP_API_BASE_URL + "typeeditor/statuses";
     const objectsUrl =
       process.env.REACT_APP_API_BASE_URL + "typeeditor/objects";
 
     const aspectResponse = yield call(get, aspectUrl);
-    const statusResponse = yield call(get, statusUrl);
     const objectResponse = yield call(get, objectsUrl);
 
     const payload = {
       aspects: aspectResponse.data,
       objectTypes: objectResponse.data,
-      statuses: statusResponse.data,
     };
 
     yield statePut({
@@ -129,7 +126,6 @@ export function* getInitialData(action: TypeEditorActionTypes) {
     const payload = {
       aspects: [],
       objectTypes: [],
-      statuses: [],
     };
 
     yield statePut({
@@ -332,6 +328,37 @@ export function* getblobData() {
 
     yield statePut({
       type: FETCHING_BLOB_DATA_SUCCESS_OR_ERROR,
+      payload: payload,
+    });
+  }
+}
+
+export function* getSelectedNode(action) {
+  try {
+    const selectedNodeURL =
+      process.env.REACT_APP_API_BASE_URL +
+      "typeeditor/librarytype/" +
+      action.payload.selectedType +
+      "/" +
+      action.payload.filter;
+
+    const selectedNodeResponse = yield call(get, selectedNodeURL);
+
+    const payload = {
+      selectedNode: selectedNodeResponse.data,
+    };
+
+    yield statePut({
+      type: FETCHING_TYPE_SUCCESS_OR_ERROR,
+      payload: payload,
+    });
+  } catch (error) {
+    const payload = {
+      selectedNode: {},
+    };
+
+    yield statePut({
+      type: FETCHING_TYPE_SUCCESS_OR_ERROR,
       payload: payload,
     });
   }

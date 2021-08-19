@@ -57,11 +57,24 @@ export const AttributesListElement = ({
   );
 
   const onCheckboxChange = () => {
-    OnChange(locationAttribute, locationAttributes, isSelected, dispatch);
+    OnChange(
+      state.mode,
+      locationAttribute,
+      locationAttributes,
+      isSelected,
+      dispatch
+    );
   };
 
   const onSingleValueCheckboxChange = (e) => {
-    OnSingleValueChange(e, name, predefinedAttributes, isMultiSelect, dispatch);
+    OnSingleValueChange(
+      e,
+      name,
+      predefinedAttributes,
+      isMultiSelect,
+      state.mode,
+      dispatch
+    );
   };
 
   const onMultipleValuesCheckboxChange = ([param_key, param_value]) => {
@@ -70,6 +83,7 @@ export const AttributesListElement = ({
       name,
       predefinedAttributes,
       isMultiSelect,
+      state.mode,
       dispatch
     );
   };

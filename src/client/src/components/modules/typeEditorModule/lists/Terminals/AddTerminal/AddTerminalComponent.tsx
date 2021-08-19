@@ -2,31 +2,54 @@ import "./directiondropdown.scss";
 import "./terminalsearchbar.scss";
 import { useState, useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { addTerminalType } from "../../../../../../redux/store/typeEditor/actions";
+import { chooseTerminalType } from "../../../../../../redux/store/typeEditor/actions";
+import { TypeEditorState } from "../../../../../../redux/store/typeEditor/types";
 import { TerminalTypeItem, ConnectorType } from "../../../../../../models";
+import { GetTerminalTypeValue } from "../helpers";
+import { ValidateTerminal } from "../../../validators";
 import { NumericInput } from "../../../../../../compLibrary";
 import { AddTerminalElement } from "../../../styled";
-import { ValidateTerminal } from "../../../validators";
 import { TextResources } from "../../../../../../assets/text";
 import {
   HelpIcon,
   ExpandIcon,
   CollapseIcon,
 } from "../../../../../../assets/icons/common";
-
 interface Props {
   terminals: any[];
+  state: TypeEditorState;
+  defaultTerminal?: TerminalTypeItem;
 }
 
-export const AddTerminal = ({ terminals }: Props) => {
+export const AddTerminal = ({ state, terminals, defaultTerminal }: Props) => {
   const dispatch = useDispatch();
-  const [searchbarInput, setsearchbarInput] = useState("");
-  const [selectedDirection, setselectedDirection] = useState("Direction");
   const [isListOpen, setIsListOpen] = useState(false);
   const [expandList, setExpandList] = useState(false);
-  const [selectedDirectionId, setselectedDirectionId] = useState(null);
-  const [selectedTerminalId, setselectedTerminalId] = useState("");
-  const [quantity, setQuantity] = useState(0);
+
+  const [quantity, setQuantity] = useState(
+    GetTerminalTypeValue(state.mode, "number", defaultTerminal)
+  );
+  const [searchbarInput, setsearchbarInput] = useState(
+    GetTerminalTypeValue(state.mode, "terminaltype", defaultTerminal, terminals)
+  );
+  const [selectedTerminalId, setselectedTerminalId] = useState(
+    GetTerminalTypeValue(
+      state.mode,
+      "terminalId",
+      defaultTerminal,
+      terminals
+    ) as string
+  );
+  const [selectedDirectionId, setselectedDirectionId] = useState(
+    GetTerminalTypeValue(state.mode, "direction", defaultTerminal)
+  );
+  const [selectedDirection, setselectedDirection] = useState(
+    GetTerminalTypeValue(state.mode, "directionName", defaultTerminal)
+  );
+
+  const filteredTerminals = terminals.filter((terminal) => {
+    return terminal.name.toLowerCase().includes(searchbarInput);
+  });
 
   const onTerminalClick = (terminalId, terminalName) => {
     setsearchbarInput(terminalName);
@@ -58,16 +81,12 @@ export const AddTerminal = ({ terminals }: Props) => {
 
   const stringIsNumber = (value) => isNaN(Number(value)) === false;
 
-  const filteredTerminals = terminals.filter((terminal) => {
-    return terminal.name.toLowerCase().includes(searchbarInput);
-  });
-
   // Update redux
   const updateTerminalList = useCallback(
     (terminal: TerminalTypeItem) => {
-      dispatch(addTerminalType(terminal));
+      dispatch(chooseTerminalType(state.mode, terminal));
     },
-    [dispatch]
+    [dispatch, state.mode]
   );
 
   // Validate terminals
@@ -78,7 +97,6 @@ export const AddTerminal = ({ terminals }: Props) => {
       connectorType: Number(selectedDirectionId),
       selected: false,
     };
-
     if (ValidateTerminal(terminal)) updateTerminalList(terminal);
   }, [updateTerminalList, selectedTerminalId, selectedDirectionId, quantity]);
 
@@ -96,6 +114,7 @@ export const AddTerminal = ({ terminals }: Props) => {
             max="30"
             placeholder="0"
             onChange={onQuantityChange}
+            defaultValue={quantity}
           />
           <span className="number"></span>
         </label>
@@ -107,7 +126,7 @@ export const AddTerminal = ({ terminals }: Props) => {
             <label htmlFor="terminalsearch" />
             <input
               type="text"
-              value={searchbarInput}
+              defaultValue={searchbarInput}
               placeholder={TextResources.TypeEditor_Search}
               onChange={onChange}
               onFocus={toggleExpand}
