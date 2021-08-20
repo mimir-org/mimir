@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { EyeIcon, DownIcon, UpIcon } from "../../../assets/icons/common";
@@ -83,7 +84,9 @@ const InspectorModule = () => {
     node = nodes.find((x) => x.isBlockSelected);
   } else node = FindSelectedNode();
 
-  ResizePanel();
+  useEffect(() => {
+    ResizePanel();
+  }, []);
 
   return (
     <AnimatedInspector

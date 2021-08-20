@@ -1,9 +1,11 @@
 import styled from "styled-components";
-import { Color } from "../..";
+import { Color, Size } from "../..";
 
 const InspectorBox = styled.div`
   color: ${Color.Black};
   height: ${(props: { stop: string }) => `${props.stop}px`};
+  max-height: 1240px;
+  min-height: ${Size.ModuleClosed}px;
   width: auto;
   min-width: 650px;
   z-index: 5;
