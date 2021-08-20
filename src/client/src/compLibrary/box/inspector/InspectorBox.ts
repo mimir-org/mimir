@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { Color } from "../..";
 
 const InspectorBox = styled.div`
-  background-color: ${Color.LightGrey};
   color: ${Color.Black};
   height: ${(props: { stop: string }) => `${props.stop}px`};
   width: auto;

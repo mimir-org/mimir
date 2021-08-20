@@ -48,7 +48,7 @@ const Home = () => {
       <ExplorerModule />
       {accountMenuOpen && <AccountMenu />}
       {filterMenuOpen && <FilterMenu />}
-      <FlowModule route={params} />
+      {/* <FlowModule route={params} /> */}
       <InspectorModule />
       <LibraryModule />
       <ErrorModule />

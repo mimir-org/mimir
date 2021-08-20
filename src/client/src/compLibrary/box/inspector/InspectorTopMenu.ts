@@ -5,7 +5,7 @@ const InspectorTopMenu = styled.div`
   display: flex;
   padding-top: ${(props: { top: number }) =>
     props.top ? props.top + `px` : `0px`};
-  background-color: ${Color.LightGrey};
+  background-color: ${Color.DeepCyanTransparent};
   color: ${Color.Black};
   height: 34px;
   border-color: ${Color.Grey};
@@ -15,6 +15,16 @@ const InspectorTopMenu = styled.div`
   width: 100%;
   border-bottom: none;
   overflow: hidden;
+
+  &::after {
+    content: "";
+    background-color: #ccc;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    cursor: n-resize;
+  }
 `;
 
 export default InspectorTopMenu;
