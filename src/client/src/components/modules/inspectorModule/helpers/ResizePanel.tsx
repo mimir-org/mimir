@@ -17,11 +17,13 @@ const ResizePanel = () => {
     panel.addEventListener("mousedown", (e) => {
       e.preventDefault();
       e.stopPropagation();
+
       if (e.offsetY < BORDER_SIZE) {
         prevY = e.clientY;
         document.addEventListener("mousemove", resize);
       }
     });
+
     document.addEventListener("mouseup", () => {
       document.removeEventListener("mousemove", resize);
       panel.removeEventListener("mousedown", resize);

@@ -11,7 +11,7 @@ import { changeInspectorTab } from "../../redux/store/inspector/actions";
 import { Node, BlobData } from "../../models";
 import { ProjectState } from "../../redux/store/project/types";
 import { LibraryState } from "../../redux/store/library/types";
-import { GetBlockEdgeTypes, IsBlockView } from "./helpers/block";
+import { GetBlockEdgeTypes, IsBlockView, OnBlockClick } from "./helpers/block";
 import { CreateBlockElements } from "./creators";
 import { useOnConnect, useOnDrop, useOnRemove, useOnDragStop } from "./hooks";
 import {
@@ -143,30 +143,6 @@ const FlowBlock = () => {
     dispatch(changeInspectorTab(0));
   };
 
-  const OnClick = (e) => {
-    if (!project) return;
-
-    // Handle select Edge
-    if (e.target.classList.contains("react-flow__edge-path")) {
-      const edge = project.edges.find((x) => x.id === e.target.id);
-      dispatch(changeActiveEdge(edge.id, true));
-      dispatch(changeActiveBlockNode(null));
-      dispatch(changeInspectorTab(0));
-      return;
-    }
-
-    if (e.target.classList.contains("react-flow__pane")) {
-      const selectedNode = FindSelectedNode();
-      if (selectedNode) {
-        dispatch(changeActiveEdge(null, false));
-        dispatch(changeActiveBlockNode(selectedNode.id));
-        dispatch(changeInspectorTab(0));
-        return;
-      }
-    }
-    dispatch(changeActiveEdge(null, false));
-  };
-
   // Rerender
   useEffect(() => {
     SetDarkModeColor(darkMode);
@@ -197,7 +173,7 @@ const FlowBlock = () => {
               onElementClick={OnElementClick}
               zoomOnScroll={false}
               paneMoveable={false}
-              onClick={(e) => OnClick(e)}
+              onClick={(e) => OnBlockClick(e, dispatch, project)}
             >
               <FullScreenBox />
               <BackgroundBox

@@ -73,7 +73,6 @@ const InspectorModule = () => {
 
   const start = isInspectorOpen ? Size.ModuleClosed : Size.InspectorModuleOpen;
   const stop = isInspectorOpen ? Size.InspectorModuleOpen : Size.ModuleClosed;
-
   const nodes = project?.nodes ?? [];
   const edges = project?.edges ?? [];
 
