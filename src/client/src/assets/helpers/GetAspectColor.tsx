@@ -1,15 +1,12 @@
 import { Color } from "../../compLibrary";
-import { LibraryNodeItem, Node } from "../../models";
+import { LibItem, Node } from "../../models";
 import {
   IsFunction,
   IsProduct,
   IsLocation,
 } from "../../components/flow/helpers/common";
 
-const GetAspectColor = (
-  node: Node | LibraryNodeItem,
-  isTransparent: boolean
-) => {
+const GetAspectColor = (node: Node | LibItem, isTransparent: boolean) => {
   if (isTransparent) {
     if (IsFunction(node)) return Color.FunctionTransparent;
     if (IsProduct(node)) return Color.ProductTransparent;

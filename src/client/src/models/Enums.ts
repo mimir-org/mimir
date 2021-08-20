@@ -18,12 +18,6 @@ export enum RelationType {
     FulfilledBy = 3,
 }
 
-export enum Status {
-    NotSet = 0,
-    Draft = 1,
-    Approved = 2,
-}
-
 export enum ObjectType {
     NotSet = 0,
     ObjectBlock = 1,

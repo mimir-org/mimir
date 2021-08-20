@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { LibCategory } from "../../../models/project";
-import { GetAspectColor } from "../../../assets/helpers";
+import { ObjectType } from "../../../models";
+import { GetObjectIcon, GetAspectColor } from "../../../assets/helpers";
 import { ExpandIcon, CollapseIcon } from "../../../assets/icons/common";
 import {
   LibraryCategory,
@@ -44,12 +45,26 @@ const LibraryCategoryComponent = ({
             <LibraryElement
               active={selectedElement === node.id}
               onClick={() => setNewSelectedElement(node.id)}
-              onDragStart={(event) => onDragStart(event, JSON.stringify(node))}
+              draggable={node.libraryType === ObjectType.ObjectBlock}
+              onDragStart={(event) =>
+                node.libraryType === ObjectType.ObjectBlock &&
+                onDragStart(event, JSON.stringify(node))
+              }
               key={node.id}
-              draggable
             >
               {node.name}
-              <LibraryElementIcon color={GetAspectColor(node, false)} />
+
+              <LibraryElementIcon color={GetAspectColor(node, false)}>
+                {(node.libraryType === ObjectType.Interface ||
+                  node.libraryType === ObjectType.Transport) && (
+                  <img
+                    src={GetObjectIcon(node)}
+                    alt="aspect-icon"
+                    className="icon"
+                    draggable="false"
+                  ></img>
+                )}
+              </LibraryElementIcon>
             </LibraryElement>
           );
         })}

@@ -3,12 +3,7 @@ import { IsBlockView } from "../helpers/block";
 import { GetEdgeType } from "../helpers/tree";
 import { ConvertToEdge, ConvertToNode } from "../converters";
 import { CreateBlockNode, CreateTreeEdge, CreateTreeNode } from "../creators";
-import {
-  BlobData,
-  LibraryNodeItem,
-  Project,
-  GetFileData,
-} from "../../../models";
+import { BlobData, LibItem, Project, GetFileData } from "../../../models";
 import {
   CreateId,
   FindSelectedNode,
@@ -58,7 +53,7 @@ const useOnDrop = (
     const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
     const data = JSON.parse(
       event.dataTransfer.getData("application/reactflow")
-    ) as LibraryNodeItem;
+    ) as LibItem;
 
     let position;
 

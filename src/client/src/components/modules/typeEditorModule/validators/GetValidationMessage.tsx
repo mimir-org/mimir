@@ -1,5 +1,4 @@
 import { TextResources } from "../../../../assets/text";
-import { Status } from "../../../../models";
 import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
 import { ValidateTerminalType } from "./";
 import {
@@ -24,10 +23,6 @@ const GetValidationMessage = (state: TypeEditorState) => {
   // Check RDS
   if (state.createLibraryType.rdsId === "")
     messages.push(TextResources.TypeEditor_Error_RDS);
-
-  // Check status type
-  if (state.createLibraryType.status === Status.NotSet)
-    messages.push(TextResources.TypeEditor_Error_Status);
 
   // Check amount of attributes
   if (!IsInterface(objectType)) {

@@ -10,9 +10,6 @@ namespace Mb.Models.Application
         [Required]
         public string Name { get; set; }
 
-        [EnumDataType(typeof(Status))]
-        public Status Status { get; set; }
-
         [EnumDataType(typeof(Aspect))]
         public Aspect Aspect { get; set; }
 

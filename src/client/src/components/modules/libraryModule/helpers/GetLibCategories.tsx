@@ -1,3 +1,4 @@
+import { concat } from "lodash";
 import { ValidateLibComponent } from ".";
 import { Node } from "../../../../models";
 import { LibCategory } from "../../../../models/project";
@@ -11,7 +12,13 @@ const GetLibCategories = (
 ) => {
   var allCategories = [];
 
-  const result = state.nodes.reduce((r, a) => {
+  var items = concat(
+    state.nodeTypes,
+    state.interfaceTypes,
+    state.transportTypes
+  );
+
+  const result = items.reduce((r, a) => {
     r[a.category] = r[a.category] || [];
     ValidateLibComponent(a, selectedNode, IsBlockView(), splitView) &&
       r[a.category].push(a);
@@ -29,6 +36,7 @@ const GetLibCategories = (
 
     libCategory.nodes.length > 0 && allCategories.push(libCategory);
   });
+
   return allCategories;
 };
 
