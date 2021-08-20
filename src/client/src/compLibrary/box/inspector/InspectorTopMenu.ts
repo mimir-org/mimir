@@ -5,7 +5,7 @@ const InspectorTopMenu = styled.div`
   display: flex;
   padding-top: ${(props: { top: number }) =>
     props.top ? props.top + `px` : `0px`};
-  background-color: ${Color.DeepCyanTransparent};
+  background-color: ${Color.LightGrey};
   color: ${Color.Black};
   height: 34px;
   border-color: ${Color.Grey};
@@ -14,15 +14,10 @@ const InspectorTopMenu = styled.div`
     props.noTopBorder ? `0px 0px 1px 0px` : `1px 0px 1px 0px`};
   width: 100%;
   border-bottom: none;
+  border-top: 1px solid ${Color.Grey};
   overflow: hidden;
 
-  &::after {
-    content: "";
-    background-color: #ccc;
-    position: absolute;
-    left: 0;
-    width: 100%;
-    height: 4px;
+  &:hover {
     cursor: n-resize;
   }
 `;

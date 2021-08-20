@@ -19,9 +19,9 @@ const GetLibCategories = (
   );
 
   const result = items.reduce((r, a) => {
-    r[a.category] = r[a.category] || [];
+    r[a?.category] = r[a?.category] || [];
     ValidateLibComponent(a, selectedNode, IsBlockView(), splitView) &&
-      r[a.category].push(a);
+      r[a?.category].push(a);
     return r;
   }, Object.create([]));
 

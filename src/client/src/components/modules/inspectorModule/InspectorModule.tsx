@@ -9,7 +9,7 @@ import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import { IsBlockView } from "../../flow/helpers/block";
 import { Node, Project } from "../../../models";
 import { DeleteButtonWrapper, TabsBottomLine } from "./styled";
-import { DeleteNodeButton } from "./helpers";
+import { DeleteNodeButton, ResizePanel } from "./helpers";
 import { removeEdge, removeNode } from "../../../redux/store/project/actions";
 import {
   FindSelectedNode,
@@ -25,7 +25,6 @@ import {
   InspectorTopMenu,
   NodeTitle,
 } from "../../../compLibrary/box/inspector";
-import "./inspector.scss";
 
 const InspectorModule = () => {
   const dispatch = useDispatch();
@@ -84,34 +83,7 @@ const InspectorModule = () => {
     node = nodes.find((x) => x.isBlockSelected);
   } else node = FindSelectedNode();
 
-  const onHover = () => {
-    const BORDER_SIZE = 4;
-    const panel = document.getElementById("right_panel");
-    let prevY;
-    function resize(e) {
-      const dx = prevY - e.clientX;
-      prevY = e.clientX;
-      panel.style.width =
-        parseInt(getComputedStyle(panel, "").width) + dx + "px";
-    }
-    panel.addEventListener(
-      "mousedown",
-      function (e) {
-        if (e.offsetX < BORDER_SIZE) {
-          prevY = e.clientX;
-          document.addEventListener("mousemove", resize, false);
-        }
-      },
-      false
-    );
-    document.addEventListener(
-      "mouseup",
-      function () {
-        document.removeEventListener("mousemove", resize, false);
-      },
-      false
-    );
-  };
+  ResizePanel();
 
   return (
     <AnimatedInspector
@@ -123,10 +95,7 @@ const InspectorModule = () => {
       run={animate}
       id="InspectorModule"
     >
-      <div id="right_panel" onMouseEnter={onHover}>
-        TEST
-      </div>
-      {/* <InspectorTopMenu id="InspectorTopMenu">
+      <InspectorTopMenu id="InspectorTopMenu">
         {node && (
           <>
             <NodeTitle>{node.label ?? node.name}</NodeTitle>
@@ -158,7 +127,7 @@ const InspectorModule = () => {
       <InspectorBody id="InspectorBody">
         {hasProject && <InspectorTabs project={project} node={node} />}
         <TabsBottomLine />
-      </InspectorBody> */}
+      </InspectorBody>
     </AnimatedInspector>
   );
 };
