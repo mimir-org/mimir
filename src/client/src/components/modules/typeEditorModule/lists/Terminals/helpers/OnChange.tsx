@@ -1,7 +1,8 @@
-import { PredefinedAttribute } from "../../../../../../models";
-import { updatePredefinedAttributes } from "../../../../../../redux/store/typeEditor/actions";
+import { PredefinedAttribute, TypeMode } from "../../../../../../models";
+import { choosePredefinedAttributes } from "../../../../../../redux/store/typeEditor/actions";
 
 const OnChange = (
+  mode: TypeMode,
   locationAttribute: PredefinedAttribute,
   locationAttributes: PredefinedAttribute[],
   isSelected: boolean,
@@ -11,10 +12,10 @@ const OnChange = (
   if (locationAttribute) {
     if (isSelected) {
       temp = locationAttributes.filter((a) => a.key !== locationAttribute.key);
-      dispatch(updatePredefinedAttributes(temp));
+      dispatch(choosePredefinedAttributes(mode, temp));
     } else {
       locationAttributes.push(locationAttribute);
-      dispatch(updatePredefinedAttributes(locationAttributes));
+      dispatch(choosePredefinedAttributes(mode, locationAttributes));
     }
   }
 };

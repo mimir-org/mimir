@@ -3,7 +3,7 @@ import { ListHeader } from "../ListHeader";
 import { TerminalsListBody } from "./TerminalsListBody";
 import { ListWrapper } from "../../../../../compLibrary";
 import { TextResources } from "../../../../../assets/text";
-import { IsFunction, IsLocation } from "../../helpers";
+import { IsFunction, IsLocation, ModeEdit } from "../../helpers";
 
 interface Props {
   state: TypeEditorState;
@@ -11,7 +11,10 @@ interface Props {
 }
 
 export const TerminalsList = ({ state, disabled }: Props) => {
-  const aspect = state.createLibraryType.aspect;
+  const mode = state.mode;
+  let aspect = ModeEdit(mode)
+    ? state.selectedNode.aspect
+    : state.createLibraryType.aspect;
   let terminals = [];
 
   if (IsFunction(aspect) && state.terminals) {
@@ -33,7 +36,7 @@ export const TerminalsList = ({ state, disabled }: Props) => {
       <TerminalsListBody
         state={state}
         terminals={terminals}
-        disabled={disabled}
+        disabled={ModeEdit(mode) ? false : disabled}
       />
     </ListWrapper>
   );

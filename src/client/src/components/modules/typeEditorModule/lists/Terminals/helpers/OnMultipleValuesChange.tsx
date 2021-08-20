@@ -1,11 +1,12 @@
-import { PredefinedAttribute } from "../../../../../../models";
-import { updatePredefinedAttributes } from "../../../../../../redux/store/typeEditor/actions";
+import { PredefinedAttribute, TypeMode } from "../../../../../../models";
+import { choosePredefinedAttributes } from "../../../../../../redux/store/typeEditor/actions";
 
 const OnMultipleValuesChange = (
   [param_key, param_value],
   name: string,
   attributes: PredefinedAttribute[],
   isMultiSelect: boolean,
+  mode: TypeMode,
   dispatch
 ) => {
   let attribute: PredefinedAttribute = attributes.find((a) => a.key === name);
@@ -23,7 +24,7 @@ const OnMultipleValuesChange = (
     if (a.key === attribute.key) a = attribute;
     return a;
   });
-  dispatch(updatePredefinedAttributes(attributesList));
+  dispatch(choosePredefinedAttributes(mode, attributesList));
 };
 
 export default OnMultipleValuesChange;

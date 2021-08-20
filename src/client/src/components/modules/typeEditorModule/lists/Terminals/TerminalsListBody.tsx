@@ -1,7 +1,7 @@
 import { TerminalsListElement } from "./TerminalsListElement";
 import { AttributesListElement } from "./AttributesListElement";
 import { TypeEditorState } from "../../../../../redux/store/typeEditor/types";
-import { IsFunction } from "../../helpers";
+import { IsFunction, ModeEdit } from "../../helpers";
 import { ListElementsContainer } from "../../../../../compLibrary";
 
 interface Props {
@@ -11,13 +11,15 @@ interface Props {
 }
 
 export const TerminalsListBody = ({ state, terminals, disabled }: Props) => {
-  const aspect = state.createLibraryType.aspect;
+  let aspect = ModeEdit(state.mode)
+    ? state.selectedNode.aspect
+    : state.createLibraryType.aspect;
 
   return (
     <ListElementsContainer background={false}>
-      {disabled ? null : (
+      {terminals && !disabled ? (
         <>
-          {IsFunction(aspect) && terminals
+          {IsFunction(aspect)
             ? terminals.map((element) => (
                 <TerminalsListElement
                   key={element[1].key}
@@ -36,7 +38,7 @@ export const TerminalsListBody = ({ state, terminals, disabled }: Props) => {
                 />
               ))}
         </>
-      )}
+      ) : null}
     </ListElementsContainer>
   );
 };
