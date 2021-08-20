@@ -87,7 +87,6 @@ const InspectorModule = () => {
   const onHover = () => {
     const BORDER_SIZE = 4;
     const panel = document.getElementById("right_panel");
-
     let prevY;
     function resize(e) {
       const dx = prevY - e.clientX;
@@ -95,7 +94,6 @@ const InspectorModule = () => {
       panel.style.width =
         parseInt(getComputedStyle(panel, "").width) + dx + "px";
     }
-
     panel.addEventListener(
       "mousedown",
       function (e) {
@@ -106,7 +104,6 @@ const InspectorModule = () => {
       },
       false
     );
-
     document.addEventListener(
       "mouseup",
       function () {
