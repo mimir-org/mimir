@@ -26,8 +26,8 @@ export function* updateType(action) {
     const url =
       process.env.REACT_APP_API_BASE_URL +
       "typeeditor/" +
-      action.paylod.selectedType;
-    const response = yield call(put, url, action.payload.libraryType);
+      action.payload?.selectedType;
+    const response = yield call(post, url, action.payload.libraryType);
 
     // This is a bad request
     if (response.status === 400) {

@@ -29,7 +29,8 @@ export const TypePreview = ({ state, disabled }: Props) => {
       if (ModeNew(mode)) {
         dispatch(create(state.createLibraryType));
       } else if (ModeEdit(mode)) {
-        dispatch(update(state.selectedNode, state.selectedType));
+        // console.log(state.selectedType);
+        dispatch(update(state.selectedType, state.selectedNode));
       }
     } else {
       setShowBox(true);

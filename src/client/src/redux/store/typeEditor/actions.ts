@@ -375,14 +375,14 @@ export function create(libraryType: CreateLibraryType): TypeEditorActionTypes {
 }
 
 export function update(
-  libraryType: UpdateLibraryType,
-  selectedType: string
+  selectedType: string,
+  libraryType: UpdateLibraryType
 ): TypeEditorActionTypes {
   return {
     type: UPDATING_TYPE,
     payload: {
-      libraryType,
       selectedType,
+      libraryType,
     },
   };
 }

@@ -2,14 +2,16 @@ import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
 // import { ReactComponent as TerminalIcon } from "../../../../assets/icons/common/terminalIcon.svg";
 import { Color } from "../../../../compLibrary";
 import { ObjectTypeBlock, InfoWrapper } from "../styled";
-import { IsFunction, IsLocation, IsProduct } from "../helpers";
+import { IsFunction, IsLocation, IsProduct, ModeEdit } from "../helpers";
 
 interface Props {
   state: TypeEditorState;
 }
 
 export const ObjectBlock = ({ state }: Props) => {
-  const aspect = state.createLibraryType.aspect;
+  const aspect = ModeEdit(state.mode)
+    ? state.selectedNode.aspect
+    : state.createLibraryType.aspect;
 
   const blockColor = () => {
     let color = "";
@@ -100,7 +102,11 @@ export const ObjectBlock = ({ state }: Props) => {
       )} */}
       <InfoWrapper blockPaddingTop={blockPaddingTop()}>
         <p>{state.rdsName}</p>
-        <p>{state.createLibraryType.name}</p>
+        <p>
+          {ModeEdit(state.mode)
+            ? state.selectedNode.name
+            : state.createLibraryType.name}
+        </p>
       </InfoWrapper>
     </ObjectTypeBlock>
   );

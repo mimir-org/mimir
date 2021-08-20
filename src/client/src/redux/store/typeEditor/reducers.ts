@@ -461,6 +461,7 @@ export function typeEditorReducer(
       return {
         ...state,
         fetching: false,
+        selectedType: "",
         selectedNode: {
           ...state.selectedNode,
           name: "",
