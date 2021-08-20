@@ -8,6 +8,7 @@ const GetTypeValue = (state: TypeEditorState, label: string) => {
   if (label === TextResources.TypeEditor_Object_Type)
     return ObjectType[state.selectedNode.objectType];
   if (label === "typeName") return state.selectedNode.name;
+  if (label === "rdsName") return state.rdsName;
   if (label === "symbol") return state.selectedNode.symbolId;
 };
 
