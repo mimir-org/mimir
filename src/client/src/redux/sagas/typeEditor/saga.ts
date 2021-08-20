@@ -15,7 +15,6 @@ import {
 
 import {
   get,
-  put,
   post,
   GetBadResponseData,
   ApiError,
