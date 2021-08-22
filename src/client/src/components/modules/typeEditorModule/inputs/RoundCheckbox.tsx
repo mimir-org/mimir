@@ -7,6 +7,7 @@ import {
   chooseRDSName,
 } from "../../../../redux/store/typeEditor/actions";
 import { ModeEdit } from "../helpers";
+import { useEffect } from "react";
 
 interface Props {
   id: string;
@@ -39,6 +40,12 @@ export const RoundCheckbox = ({ id, name, label }: Props) => {
       }
     }
   };
+
+  useEffect(() => {
+    if (ModeEdit(mode) && label === "rds" && id === state.selectedNode.rdsId) {
+      dispatch(chooseRDSName(name));
+    }
+  }, [dispatch, label, name, mode, id, state.selectedNode.rdsId]);
 
   return (
     <label className={"roundcheckbox"}>
