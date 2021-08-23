@@ -16,9 +16,10 @@ import { ModeEdit, ModeNew } from "../helpers";
 interface Props {
   state: TypeEditorState;
   disabled: boolean;
+  onChange: Function;
 }
 
-export const TypePreview = ({ state, disabled }: Props) => {
+export const TypePreview = ({ state, disabled, onChange }: Props) => {
   const dispatch = useDispatch();
   const validationMessages = GetValidationMessage(state);
   const [showBox, setShowBox] = useState(false);
@@ -35,6 +36,7 @@ export const TypePreview = ({ state, disabled }: Props) => {
     } else {
       setShowBox(true);
     }
+    onChange();
   };
 
   const onBoxClick = () => {
