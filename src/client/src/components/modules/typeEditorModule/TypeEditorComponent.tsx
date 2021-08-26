@@ -82,7 +82,11 @@ export const TypeEditorComponent = () => {
               disabled={FieldValidator(state, "terminals")}
             />
           )}
-          <TypePreview state={state} disabled={FieldValidator(state, "add")} />
+          <TypePreview
+            state={state}
+            disabled={FieldValidator(state, "add")}
+            onChange={onCloseEditor}
+          />
         </ChooseProperties>
         {/* <TypeEditorInspector /> */}
       </TypeEditorContent>
