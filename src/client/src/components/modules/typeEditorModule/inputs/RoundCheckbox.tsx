@@ -13,9 +13,10 @@ interface Props {
   id: string;
   name?: string;
   label: string;
+  defaultValue?: any;
 }
 
-export const RoundCheckbox = ({ id, name, label }: Props) => {
+export const RoundCheckbox = ({ id, name, label, defaultValue }: Props) => {
   const dispatch = useDispatch();
   const state = useSelector<RootState>((s) => s.typeEditor) as TypeEditorState;
   const mode = state.mode;
@@ -28,7 +29,11 @@ export const RoundCheckbox = ({ id, name, label }: Props) => {
         return state.createLibraryType.rdsId === id;
       }
     } else if (label === "terminal") {
-      return state.terminalCategory === id;
+      if (ModeEdit(mode)) {
+        return defaultValue.terminalCategory.name === id;
+      } else {
+        return state.terminalCategory === id;
+      }
     }
   };
 

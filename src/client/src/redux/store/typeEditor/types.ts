@@ -41,6 +41,7 @@ export const CHOOSE_TYPENAME = "CHOOSE_TYPENAME";
 export const CHOOSE_SYMBOL = "CHOOSE_SYMBOL";
 export const CHOOSE_RDS = "CHOOSE_RDS";
 export const CHOOSE_RDS_NAME = "CHOOSE_RDS_NAME";
+export const CHOOSE_TERMINAL_NAME = "CHOOSE_TERMINAL_NAME";
 export const CHOOSE_TERMINAL_CATEGORY = "CHOOSE_TERMINAL_CATEGORY";
 export const CHOOSE_TERMINAL_COLOR = "CHOOSE_TERMINAL_COLOR";
 export const CHOOSE_SEMANTICREFERENCE = "CHOOSE_SEMANTICREFERENCE";
@@ -89,6 +90,7 @@ export interface TypeEditorState {
   selectedType: string;
   selectedNode: UpdateLibraryType;
   rdsName: string;
+  terminalName: string;
   terminalCategory: string;
   terminalColor: string;
   locationTypes: LocationType[];
@@ -253,6 +255,13 @@ export interface ChooseRdsName {
   type: typeof CHOOSE_RDS_NAME;
   payload: {
     rdsName: string;
+  };
+}
+
+export interface ChooseTerminalName {
+  type: typeof CHOOSE_TERMINAL_NAME;
+  payload: {
+    terminalName: string;
   };
 }
 
@@ -461,6 +470,7 @@ export type TypeEditorActionTypes =
   | ChooseSymbol
   | ChooseRds
   | ChooseRdsName
+  | ChooseTerminalName
   | ChooseTerminalCategory
   | ChooseTerminalColor
   | ChooseSemanticReference

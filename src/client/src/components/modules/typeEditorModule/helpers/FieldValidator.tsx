@@ -76,29 +76,23 @@ const FieldValidator = (state: TypeEditorState, input: string) => {
           return true;
         }
         if (IsFunction(aspect) && IsObjectBlock(objectType)) {
-          if (
+          return !(
             validName &&
             validSymbol &&
             validRds &&
             validTerminals &&
             validAttributes
-          ) {
-            return false;
-          }
+          );
         } else if (IsFunction(aspect) && IsTransport(objectType)) {
-          if (
+          return !(
             validName &&
             validSymbol &&
             validRds &&
             validTerminalTypeId &&
             validAttributes
-          ) {
-            return false;
-          }
+          );
         } else if (IsFunction(aspect) && IsInterface(objectType)) {
-          if (validName && validSymbol && validRds && validTerminalTypeId) {
-            return false;
-          }
+          return !(validName && validSymbol && validRds && validTerminalTypeId);
         } else if (IsLocation(aspect)) {
           return !(
             validLocationType &&

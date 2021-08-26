@@ -30,7 +30,6 @@ export const TypePreview = ({ state, disabled, onChange }: Props) => {
       if (ModeNew(mode)) {
         dispatch(create(state.createLibraryType));
       } else if (ModeEdit(mode)) {
-        // console.log(state.selectedType);
         dispatch(update(state.selectedType, state.selectedNode));
       }
     } else {

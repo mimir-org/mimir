@@ -33,6 +33,7 @@ import {
   CHOOSE_SYMBOL,
   CHOOSE_RDS,
   CHOOSE_RDS_NAME,
+  CHOOSE_TERMINAL_NAME,
   CHOOSE_TERMINAL_CATEGORY,
   CHOOSE_TERMINAL_COLOR,
   CHOOSE_SEMANTICREFERENCE,
@@ -69,6 +70,7 @@ const initialState: TypeEditorState = {
   selectedType: "",
   selectedNode: {} as UpdateLibraryType,
   rdsName: "",
+  terminalName: "",
   terminalCategory: "",
   terminalColor: "",
   createLibraryType: {
@@ -254,6 +256,11 @@ export function typeEditorReducer(
       return {
         ...state,
         rdsName: action.payload.rdsName,
+      };
+    case CHOOSE_TERMINAL_NAME:
+      return {
+        ...state,
+        terminalName: action.payload.terminalName,
       };
     case CHOOSE_TERMINAL_CATEGORY:
       return {

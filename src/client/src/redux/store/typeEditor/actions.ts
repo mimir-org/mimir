@@ -25,6 +25,7 @@ import {
   CHOOSE_SYMBOL,
   CHOOSE_RDS,
   CHOOSE_RDS_NAME,
+  CHOOSE_TERMINAL_NAME,
   CHOOSE_TERMINAL_CATEGORY,
   CHOOSE_TERMINAL_COLOR,
   CHOOSE_SEMANTICREFERENCE,
@@ -228,6 +229,15 @@ export function chooseRDSName(rdsName: string) {
     type: CHOOSE_RDS_NAME,
     payload: {
       rdsName,
+    },
+  };
+}
+
+export function chooseTerminalName(terminalName: string) {
+  return {
+    type: CHOOSE_TERMINAL_NAME,
+    payload: {
+      terminalName,
     },
   };
 }
