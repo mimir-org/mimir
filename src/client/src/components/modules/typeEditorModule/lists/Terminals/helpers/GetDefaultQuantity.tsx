@@ -1,17 +1,14 @@
-import { CreateLibraryType } from "../../../../../../models";
 import { TypeEditorState } from "../../../../../../redux/store/typeEditor/types";
 import { IsObjectBlock, ModeEdit } from "../../../helpers";
 
-const GetDefaultQuantity = (
-  state: TypeEditorState,
-  selectedNode: CreateLibraryType
-) => {
+const GetDefaultQuantity = (state: TypeEditorState) => {
   if (
     ModeEdit(state.mode) &&
-    selectedNode &&
-    IsObjectBlock(selectedNode.objectType)
+    state.selectedNode &&
+    IsObjectBlock(state.selectedNode.objectType)
   ) {
-    return selectedNode.terminalTypes.length;
+    console.log(state.selectedNode.terminalTypes.length);
+    return state.selectedNode.terminalTypes.length;
   } else {
     return 0;
   }

@@ -46,14 +46,14 @@ export const TerminalsListElement = ({ category, terminals, state }: Props) => {
     GetDefaultTerminal(state, terminals)
   );
   const [selectedCategory, setselectedCategory] = useState(
-    ModeEdit(state.mode) ? selectedTerminal.terminalCategory.name : ""
+    ModeEdit(state.mode) && !IsObjectBlock(state.selectedNode.objectType)
+      ? selectedTerminal.terminalCategory.name
+      : ""
   );
-  const [searchbarInput, setsearchbarInput] = useState(
+  const [searchbarInput, setSearchbarInput] = useState(
     GetDefaultTerminalName(state, selectedTerminal)
   );
-  const [quantity, setQuantity] = useState(
-    GetDefaultQuantity(state, state.selectedNode)
-  );
+  const [quantity, setQuantity] = useState(GetDefaultQuantity(state));
   const [expandList, setExpandList] = useState(false);
   const [expandCategory, setExpandCategory] = useState(true);
   let objectType = ModeEdit(state.mode)
@@ -66,7 +66,7 @@ export const TerminalsListElement = ({ category, terminals, state }: Props) => {
   };
 
   const handleChange = (e) => {
-    setsearchbarInput(e.target.value.toLowerCase());
+    setSearchbarInput(e.target.value.toLowerCase());
     dispatch(chooseTerminalName(e.target.value));
   };
 
@@ -74,13 +74,13 @@ export const TerminalsListElement = ({ category, terminals, state }: Props) => {
     setExpandList(!expandList);
   };
 
-  const handleTerminalClick = (t) => {
-    setsearchbarInput(t.name);
-    setSelectedTerminal(t);
-    dispatch(chooseTerminalTypeId(state.mode, t.id));
-    dispatch(chooseTerminalColor(t.color));
+  const handleTerminalClick = (terminal) => {
+    setSearchbarInput(terminal.name);
+    setSelectedTerminal(terminal);
+    dispatch(chooseTerminalName(terminal.name));
+    dispatch(chooseTerminalTypeId(state.mode, terminal.id));
+    dispatch(chooseTerminalColor(terminal.color));
     dispatch(chooseTerminalCategory(category));
-    dispatch(chooseTerminalName(t.name));
     toggleTerminalList();
   };
 
@@ -136,7 +136,7 @@ export const TerminalsListElement = ({ category, terminals, state }: Props) => {
                   <label htmlFor="terminalsearch" />
                   <input
                     type="text"
-                    defaultValue={searchbarInput}
+                    value={searchbarInput}
                     placeholder={TextResources.TypeEditor_Search}
                     onChange={handleChange}
                     onFocus={toggleTerminalList}
@@ -181,7 +181,7 @@ export const TerminalsListElement = ({ category, terminals, state }: Props) => {
                 min="0"
                 max="30"
                 onChange={numberInput}
-                defaultValue={quantity}
+                value={quantity}
               />
               <span className="number"></span>
             </label>
@@ -196,7 +196,7 @@ export const TerminalsListElement = ({ category, terminals, state }: Props) => {
           )}
         </TerminalCategoryWrapper>
       )}
-      {quantity !== 0 && expandCategory && IsObjectBlock(objectType) && (
+      {quantity > 0 && expandCategory && IsObjectBlock(objectType) && (
         <AddTerminalWrapper>{updateTerminals()}</AddTerminalWrapper>
       )}
     </TerminalListElement>
