@@ -21,17 +21,22 @@ namespace Mb.Models.Application
         [Required]
         public string RdsId { get; set; }
 
+        // NodeType (Object Block)
         public ICollection<TerminalTypeItem> TerminalTypes { get; set; }
+        public string SymbolId { get; set; }
 
+        // NodeType (Object Block), TransportType
         public ICollection<string> AttributeTypes { get; set; }
 
+        // Location aspect
         public string LocationType { get; set; }
-        
         public ICollection<PredefinedAttributeAm> PredefinedAttributes { get; set; }
 
+        // InterfaceType, TransportType
         public string TerminalTypeId { get; set; }
 
-        public string SymbolId { get; set; }
+        // CompositeType
+        public ICollection<string> SimpleTypes { get; set; }
 
         [JsonIgnore]
         public string Key => $"{Name}-{RdsId}";

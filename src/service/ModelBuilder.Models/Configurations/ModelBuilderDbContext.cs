@@ -30,6 +30,7 @@ namespace Mb.Models.Configurations
         public virtual DbSet<NodeType> NodeTypes { get; set; }
         public virtual DbSet<TransportType> TransportTypes { get; set; }
         public virtual DbSet<InterfaceType> InterfaceTypes { get; set; }
+        public virtual DbSet<SimpleType> SimpleTypes { get; set; }
         public virtual DbSet<NodeTypeTerminalType> NodeTypeTerminalTypes { get; set; }
         public virtual DbSet<PredefinedAttributeCategory> PredefinedAttributeCategories { get; set; }
         public virtual DbSet<PredefinedAttribute> PredefinedAttributes { get; set; }
@@ -67,6 +68,7 @@ namespace Mb.Models.Configurations
             modelBuilder.ApplyConfiguration(new BlobDataConfiguration());
             modelBuilder.ApplyConfiguration(new TransportConfiguration());
             modelBuilder.ApplyConfiguration(new InterfaceConfiguration());
+            modelBuilder.ApplyConfiguration(new SimpleTypeConfiguration());
         }
     }
 }

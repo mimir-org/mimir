@@ -39,6 +39,12 @@ namespace Mb.Models.Configurations
                 x => x.HasOne<AttributeType>().WithMany().HasForeignKey("AttributeTypeId"),
                 x => x.ToTable("TransportType_AttributeType")
             );
+
+            builder.HasMany(x => x.SimpleTypes).WithMany(y => y.AttributeTypes).UsingEntity<Dictionary<string, object>>("SimpleType_AttributeType",
+                x => x.HasOne<SimpleType>().WithMany().HasForeignKey("SimpleTypeId"),
+                x => x.HasOne<AttributeType>().WithMany().HasForeignKey("AttributeTypeId"),
+                x => x.ToTable("SimpleType_AttributeType")
+            );
         }
     }
 }

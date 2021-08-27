@@ -106,6 +106,7 @@ export interface CreateLibraryType {
     predefinedAttributes: PredefinedAttribute[];
     terminalTypeId: string;
     symbolId: string;
+    simpleTypes: string[];
 }
 export interface UpdateLibraryType {
     name: string;

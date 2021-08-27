@@ -14,6 +14,9 @@ namespace Mb.Models.Enums
         Transport = 2,
 
         [Display(Name = "Interface")]
-        Interface = 3
+        Interface = 3,
+
+        [Display(Name = "Simple")]
+        Simple = 4
     }
 }

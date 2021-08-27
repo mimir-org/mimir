@@ -27,5 +27,6 @@ namespace Mb.Models.Data
         public virtual ICollection<TerminalType> TerminalTypes { get; set; }
         public virtual ICollection<NodeType> NodeTypes { get; set; }
         public virtual ICollection<TransportType> TransportTypes { get; set; }
+        public virtual ICollection<SimpleType> SimpleTypes { get; set; }
     }
 }
