@@ -1,5 +1,5 @@
 import { TypeEditorState } from "../../../../../redux/store/typeEditor/types";
-import { Aspect } from "../../../../../models";
+import { Aspect, TypeMode } from "../../../../../models";
 import { ListHeader } from "../ListHeader";
 import { AttributesListBody } from "./AttributesListBody";
 import { ListWrapper } from "../../../../../compLibrary";
@@ -11,6 +11,7 @@ interface Props {
 }
 
 export const AttributesList = ({ state, disabled }: Props) => {
+  const mode = state.mode;
   let filteredAttributes = [];
   if (state.attributes && state.createLibraryType.aspect !== Aspect.NotSet) {
     filteredAttributes = Object.entries(state.attributes);
@@ -24,7 +25,7 @@ export const AttributesList = ({ state, disabled }: Props) => {
       />
       <AttributesListBody
         listElements={filteredAttributes}
-        disabled={disabled}
+        disabled={mode === TypeMode.Edit ? false : disabled}
       />
     </ListWrapper>
   );

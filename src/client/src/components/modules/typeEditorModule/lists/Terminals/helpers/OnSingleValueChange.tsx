@@ -1,11 +1,12 @@
-import { PredefinedAttribute } from "../../../../../../models";
-import { updatePredefinedAttributes } from "../../../../../../redux/store/typeEditor/actions";
+import { PredefinedAttribute, TypeMode } from "../../../../../../models";
+import { choosePredefinedAttributes } from "../../../../../../redux/store/typeEditor/actions";
 
 const OnSingleValueChange = (
   e,
   name: string,
   attributes: PredefinedAttribute[],
   isMultiSelect: boolean,
+  mode: TypeMode,
   dispatch
 ) => {
   const targetKey = e.target.value;
@@ -33,7 +34,7 @@ const OnSingleValueChange = (
     if (a.key === attribute.key) a = attribute;
     return a;
   });
-  dispatch(updatePredefinedAttributes(attributesList));
+  dispatch(choosePredefinedAttributes(mode, attributesList));
 };
 
 export default OnSingleValueChange;

@@ -1,5 +1,5 @@
 import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
-import { Aspect, ObjectType, Status } from "../../../../models";
+import { Aspect, ObjectType, TypeMode } from "../../../../models";
 
 const FieldValidator = (state: TypeEditorState, input: string) => {
   const aspect = state.createLibraryType.aspect;
@@ -7,7 +7,6 @@ const FieldValidator = (state: TypeEditorState, input: string) => {
   const locationType = state.createLibraryType.locationType;
   const name = state.createLibraryType.name;
   const symbol = state.createLibraryType.symbolId;
-  const status = state.createLibraryType.status;
   const rds = state.createLibraryType.rdsId;
   const terminals = state.createLibraryType.terminalTypes;
   const predefinedAttributes = state.createLibraryType.predefinedAttributes;
@@ -21,73 +20,65 @@ const FieldValidator = (state: TypeEditorState, input: string) => {
   const validLocationType = isLocation && locationType !== "";
   const validName = name !== "";
   const validSymbol = symbol !== "";
-  const validStatus = status !== Status.NotSet;
   const validRds = rds !== "";
-  const validTerminals = isFunction && terminals !== [];
-  const validPredefinedAttributes = isLocation && predefinedAttributes !== [];
-  const validAttributes = attributes !== [];
+  const validTerminals = isFunction && terminals.length !== 0;
+  const validPredefinedAttributes =
+    isLocation && predefinedAttributes.length !== 0;
+  const validAttributes = attributes.length !== 0;
 
-  switch (input) {
-    case "objectType":
-      if (!validAspect) {
-        return true;
-      }
-      break;
-    case "typeName":
-      if (!validObjectType && !validLocationType) {
-        return true;
-      }
-      break;
-    case "symbol":
-      if ((!validObjectType && !validLocationType) || !validName) {
-        return true;
-      }
-      break;
-    case "status":
-      if (
-        (!validObjectType && !validLocationType) ||
-        !validName ||
-        !validSymbol
-      ) {
-        return true;
-      }
-      break;
-    case "rds":
-      if (
-        (!validObjectType && !validLocationType) ||
-        !validName ||
-        !validSymbol ||
-        !validStatus
-      ) {
-        return true;
-      }
-      break;
-    case "terminals":
-      if (
-        (!validObjectType && !validLocationType) ||
-        !validName ||
-        !validSymbol ||
-        !validStatus ||
-        !validRds
-      ) {
-        return true;
-      }
-      break;
-    case "add":
-      if (
-        (!validObjectType && !validLocationType) ||
-        !validName ||
-        !validSymbol ||
-        !validStatus ||
-        !validRds ||
-        (!validTerminals && !validPredefinedAttributes) ||
-        !validAttributes
-      ) {
-        return true;
-      }
-      break;
-    default:
-      return true;
+  if (state.mode === TypeMode.Edit) {
+    return false;
+  } else {
+    switch (input) {
+      case "objectType":
+        if (!validAspect) {
+          return true;
+        }
+        break;
+      case "typeName":
+        if (!validObjectType && !validLocationType) {
+          return true;
+        }
+        break;
+      case "symbol":
+        if ((!validObjectType && !validLocationType) || !validName) {
+          return true;
+        }
+        break;
+      case "rds":
+        if (
+          (!validObjectType && !validLocationType) ||
+          !validName ||
+          !validSymbol
+        ) {
+          return true;
+        }
+        break;
+      case "terminals":
+        if (
+          (!validObjectType && !validLocationType) ||
+          !validName ||
+          !validSymbol ||
+          !validRds
+        ) {
+          return true;
+        }
+        break;
+      case "add":
+        if (
+          (!validObjectType && !validLocationType) ||
+          !validName ||
+          !validSymbol ||
+          !validRds ||
+          (!validTerminals && !validPredefinedAttributes) ||
+          !validAttributes
+        ) {
+          return true;
+        }
+        break;
+      default:
+        return false;
+    }
   }
 };
 

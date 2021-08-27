@@ -1,7 +1,7 @@
-import { Node, LibraryNodeItem, Aspect } from "../../../../models";
+import { Node, LibItem, Aspect } from "../../../../models";
 
-const IsFunction = (node: Node | LibraryNodeItem) => {
-  return node?.aspect === Aspect.Function;
+const IsFunction = (node: Node | LibItem) => {
+    return node?.aspect === Aspect.Function;
 };
 
 export default IsFunction;

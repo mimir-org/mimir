@@ -1,8 +1,8 @@
 import { CreateId } from "../helpers/common";
-import { BlobData, LibraryNodeItem, Node } from "../../../models";
+import { BlobData, LibItem, Node } from "../../../models";
 
 const ConvertToNode = (
-  data: LibraryNodeItem,
+  data: LibItem,
   position,
   projectId: string,
   icons: BlobData[]

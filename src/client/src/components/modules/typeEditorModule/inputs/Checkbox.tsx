@@ -2,7 +2,7 @@ import "./checkbox.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
-import { updateAttributesList } from "../../../../redux/store/typeEditor/actions";
+import { chooseAttributeTypes } from "../../../../redux/store/typeEditor/actions";
 
 interface Props {
   label: string;
@@ -23,10 +23,10 @@ export const Checkbox = ({ label, id }: Props) => {
       let temp: string[];
       if (id && attributeIsSelected) {
         temp = attributesArray.filter((a) => a !== id);
-        dispatch(updateAttributesList(temp));
+        dispatch(chooseAttributeTypes(state.mode, temp));
       } else if (id && !attributeIsSelected && attributesArray) {
         attributesArray.push(id);
-        dispatch(updateAttributesList(attributesArray));
+        dispatch(chooseAttributeTypes(state.mode, attributesArray));
       }
     }
   };
