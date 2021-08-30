@@ -2,6 +2,8 @@ const ResizePanel = () => {
   const BORDER_SIZE = 4;
   const module = "InspectorModule";
   const panel = document.getElementById(module);
+  //   const adminTab = document.getElementById("admininfo");
+  //   const terminalsTab = document.getElementById("terminals");
   let prevY: number;
 
   const resize = (e) => {
@@ -11,6 +13,19 @@ const ResizePanel = () => {
     prevY = e.clientY;
     panel.style.height =
       parseInt(getComputedStyle(panel, "").height) + dy + "px";
+
+    const adminTab = document.getElementById("admininfo");
+    const terminalsTab = document.getElementById("terminals");
+
+    if (adminTab) {
+      adminTab.style.height =
+        parseInt(getComputedStyle(panel, "").height) - 80 + "px";
+    }
+
+    if (terminalsTab) {
+      terminalsTab.style.height =
+        parseInt(getComputedStyle(panel, "").height) - 80 + "px";
+    }
   };
 
   if (panel !== null) {

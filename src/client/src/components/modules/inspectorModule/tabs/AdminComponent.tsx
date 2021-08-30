@@ -37,7 +37,7 @@ const AdminComponent = ({ node, project, index }: Props) => {
       <TabHeader active={true} onClick={onClick}>
         <TabTitle active={true}>{GetInspectorText(index)}</TabTitle>
       </TabHeader>
-      <TabBody>
+      <TabBody id="admininfo">
         {node && project && (
           <div className="container">
             <AdminContent node={node} project={project} statuses={statuses} />
@@ -46,9 +46,12 @@ const AdminComponent = ({ node, project, index }: Props) => {
       </TabBody>
     </>
   ) : (
-    <TabHeader onClick={onClick}>
-      <TabTitle>{GetInspectorText(index)}</TabTitle>
-    </TabHeader>
+    <>
+      <TabHeader onClick={onClick}>
+        <TabTitle>{GetInspectorText(index)}</TabTitle>
+      </TabHeader>
+      <TabBody id="admininfo"></TabBody>
+    </>
   );
 };
 

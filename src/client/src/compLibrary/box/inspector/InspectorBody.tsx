@@ -5,8 +5,7 @@ const InspectorBody = styled.div`
   display: flex;
   padding-top: ${(props: { top: number }) =>
     props.top ? props.top + `px` : `0px`};
-  background-color: ${(props: { bgColor: string }) =>
-    props.bgColor ? props.bgColor : `${Color.LightGrey}`};
+  background-color: ${(props: { color: string }) => props.color}!important;
   color: ${Color.Black};
   height: 34px;
   border-color: ${Color.Grey};

@@ -14,7 +14,7 @@ const MenuBox = styled.div`
   min-width: ${(props: { right: string }) =>
     props.right ? Size.ModuleOpen : "271"}px;
   border-style: solid;
-  border-color: ${Color.DeepCyan};
+  border-color: ${Color.BlueMagenta};
   border-width: 0px 2px 2px 2px;
   z-index: 6;
   box-shadow: -1px 4px 5px rgba(0, 0, 0, 0.15);

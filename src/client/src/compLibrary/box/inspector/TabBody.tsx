@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
 const TabBody = styled.div`
-  top: 69px;
+  top: 79px;
   position: absolute;
   width: 100%;
-  height: 100%;
-  max-height: 220px;
+  /* height: 100%; */
+  /* max-height: 220px; */
   overflow-y: auto;
 
   .container {

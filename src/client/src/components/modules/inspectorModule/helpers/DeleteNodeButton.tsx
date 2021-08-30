@@ -4,16 +4,17 @@ import { TextResources } from "../../../../assets/text";
 import { Color, FontSize } from "../../../../compLibrary";
 
 const ButtonContainer = styled.div`
-  border: solid 1px ${Color.DeepCyan};
-  border-radius: 2px;
+  border: solid 1px ${Color.BlueMagenta};
+  border-radius: 4px;
   font-size: ${FontSize.Standard};
   background-color: ${Color.White};
-  width: 79px;
-  height: 27px;
+  width: 69px;
+  height: 34px;
   display: flex;
   align-items: center;
   justify-content: space-around;
   cursor: pointer;
+
   :hover {
     background-color: #e6e6e6;
   }

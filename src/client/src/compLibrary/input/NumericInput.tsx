@@ -7,7 +7,7 @@ const NumericInput = styled.div`
     height: 17px;
     text-align: center;
     border-radius: 5px;
-    border: 1px solid ${Color.DeepCyan};
+    border: 1px solid ${Color.BlueMagenta};
     margin: 0px 6px;
   }
   textarea:focus,

@@ -34,6 +34,12 @@ const InspectorComponent = ({ node, index, project }: Props) => {
     dispatch(changeInspectorTab(index));
   }, [dispatch, index]);
 
+  const getId = () => {
+    if (index === 1) return "parameters";
+    if (index === 2) return "terminals";
+    if (index === 2) return "relations";
+  };
+
   return isOpen ? (
     <>
       <TabHeader active={true} onClick={onClick}>
@@ -46,18 +52,23 @@ const InspectorComponent = ({ node, index, project }: Props) => {
         <TabTitle active={true}>{GetInspectorText(index)}</TabTitle>
       </TabHeader>
 
-      <TabBody>
+      <TabBody id={getId()}>
         <InspectorContent node={node} index={index} project={project} />
       </TabBody>
     </>
   ) : (
-    <TabHeader onClick={onClick}>
-      {index === 0 && node && <NodeTitle>{node.label ?? node.name}</NodeTitle>}
-      {!node && index === 1 && (
-        <span>{typeEditorState.createLibraryType.name} </span>
-      )}
-      <TabTitle>{GetInspectorText(index)}</TabTitle>
-    </TabHeader>
+    <>
+      <TabHeader onClick={onClick}>
+        {index === 0 && node && (
+          <NodeTitle>{node.label ?? node.name}</NodeTitle>
+        )}
+        {!node && index === 1 && (
+          <span>{typeEditorState.createLibraryType.name} </span>
+        )}
+        <TabTitle>{GetInspectorText(index)}</TabTitle>
+      </TabHeader>
+      <TabBody id={getId()}></TabBody>
+    </>
   );
 };
 

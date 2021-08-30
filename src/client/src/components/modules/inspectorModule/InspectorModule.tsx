@@ -4,7 +4,8 @@ import { RootState } from "../../../redux/store";
 import { EyeIcon, DownIcon, UpIcon } from "../../../assets/icons/common";
 import { TextResources } from "../../../assets/text";
 import { InspectorTabs } from "./";
-import { Size } from "../../../compLibrary";
+import { Color, Size } from "../../../compLibrary";
+import { Symbol } from "../../../compLibrary/dropdown";
 import { MODULE_TYPE } from "../../../models/project";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import { IsBlockView } from "../../flow/helpers/block";
@@ -15,7 +16,10 @@ import { removeEdge, removeNode } from "../../../redux/store/project/actions";
 import {
   FindSelectedNode,
   IsExplorer,
+  IsFunction,
   IsLibrary,
+  IsLocation,
+  IsProduct,
 } from "../../flow/helpers/common";
 import {
   InspectorTitle,
@@ -87,6 +91,12 @@ const InspectorModule = () => {
     ResizePanel();
   }, []);
 
+  const getColor = () => {
+    if (IsFunction(node)) return Color.FunctionTransparent;
+    else if (IsLocation(node)) return Color.LocationTransparent;
+    else if (IsProduct(node)) return Color.ProductTransparent;
+  };
+
   return (
     <AnimatedInspector
       type={key}
@@ -97,10 +107,16 @@ const InspectorModule = () => {
       run={animate}
       id="InspectorModule"
     >
-      <InspectorTopMenu id="InspectorTopMenu">
+      <InspectorTopMenu id="InspectorTopMenu" color={getColor()}>
         {node && (
           <>
-            <NodeTitle>{node.label ?? node.name}</NodeTitle>
+            <NodeTitle>
+              <Symbol
+                base64={node.symbol?.data}
+                text={node.label ?? node.name}
+              />
+              <div className="text">{node.label ?? node.name}</div>
+            </NodeTitle>
             <DeleteButtonWrapper>
               <DeleteNodeButton handleClick={onNodeDelete} />
             </DeleteButtonWrapper>
@@ -126,7 +142,7 @@ const InspectorModule = () => {
           <img src={EyeIcon} alt="inspector-icon" />
         </IconWrapper>
       </InspectorTopMenu>
-      <InspectorBody id="InspectorBody">
+      <InspectorBody id="InspectorBody" color={getColor()}>
         {hasProject && <InspectorTabs project={project} node={node} />}
         <TabsBottomLine />
       </InspectorBody>

@@ -14,9 +14,9 @@ const MenuMainHeader = styled.div`
   text-decoration: ${(props: { isOpen: boolean }) =>
     props.isOpen && "underline"};
   color: ${(props: { isOpen: boolean }) =>
-    props.isOpen ? `${Color.DeepCyan}` : `${Color.White}`};
+    props.isOpen ? `${Color.BlueMagenta}` : `${Color.White}`};
   background-color: ${(props: { isOpen: boolean }) =>
-    props.isOpen ? `${Color.White}` : `${Color.DeepCyan}`};
+    props.isOpen ? `${Color.White}` : `${Color.BlueMagenta}`};
 
   .text {
     margin-top: 3px;

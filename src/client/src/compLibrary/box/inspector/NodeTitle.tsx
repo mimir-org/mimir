@@ -1,9 +1,16 @@
 import styled from "styled-components";
 
-const NodeTitle = styled.p`
+const NodeTitle = styled.div`
   display: inline;
-  margin: 8px 0px 0px 20px;
-  font-weight: bold;
+  margin: 8px 0px 10px 10px;
+
+  .text {
+    display: inline;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    left: 50px;
+  }
 `;
 
 export default NodeTitle;

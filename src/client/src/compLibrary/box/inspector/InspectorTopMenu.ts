@@ -5,9 +5,9 @@ const InspectorTopMenu = styled.div`
   display: flex;
   padding-top: ${(props: { top: number }) =>
     props.top ? props.top + `px` : `0px`};
-  background-color: ${Color.LightGrey};
+  background-color: ${(props: { color: string }) => props.color}!important;
   color: ${Color.Black};
-  height: 34px;
+  height: 44px;
   border-color: ${Color.Grey};
   border-style: solid;
   border-width: ${(props: { noTopBorder: boolean }) =>

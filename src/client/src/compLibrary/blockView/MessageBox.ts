@@ -6,7 +6,7 @@ const BlockMessageBox = styled.div`
   position: absolute;
   left: 550px;
   top: 270px;
-  border: 2px solid ${Color.DeepCyan};
+  border: 2px solid ${Color.BlueMagenta};
   font-size: ${FontSize.Standard};
   text-align: center;
   line-height: 1.5;
