@@ -49,7 +49,7 @@ namespace Mb.Core.Extensions
             services.AddScoped<IContractorRepository, ContractorRepository>();
             services.AddScoped<ITerminalTypeRepository, TerminalTypeRepository>();
             services.AddScoped<IEnumBaseRepository, EnumBaseRepository>();
-            services.AddScoped<INodeTypeTerminalType, NodeTypeTerminalType>();
+            services.AddScoped<INodeTypeTerminalTypeRepository, NodeTypeTerminalTypeRepository>();
             services.AddScoped<IPredefinedAttributeRepository, PredefinedAttributeRepository>();
             services.AddScoped<IBlobDataRepository, BlobDataRepository>();
             services.AddScoped<ITransportTypeRepository, TransportTypeRepository>();

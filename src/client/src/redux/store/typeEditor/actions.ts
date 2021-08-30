@@ -4,7 +4,7 @@ import {
   Aspect,
   ObjectType,
   CreateLibraryType,
-  //   UpdateLibraryType,
+  UpdateLibraryType,
   PredefinedAttribute,
   LibraryFilter,
 } from "../../../models";
@@ -25,6 +25,7 @@ import {
   CHOOSE_SYMBOL,
   CHOOSE_RDS,
   CHOOSE_RDS_NAME,
+  CHOOSE_TERMINAL_NAME,
   CHOOSE_TERMINAL_CATEGORY,
   CHOOSE_TERMINAL_COLOR,
   CHOOSE_SEMANTICREFERENCE,
@@ -46,11 +47,11 @@ import {
   CHANGE_ATTRIBUTETYPES,
   REMOVE_TERMINALTYPES,
   CREATING_TYPE,
+  UPDATING_TYPE,
   DELETE_TYPE_EDITOR_ERROR,
   TypeEditorActionTypes,
 } from "./types";
 
-// TODO create type, save type, get attributes
 export function getInitialData(): TypeEditorActionTypes {
   return {
     type: FETCHING_INITIAL_DATA,
@@ -232,6 +233,15 @@ export function chooseRDSName(rdsName: string) {
   };
 }
 
+export function chooseTerminalName(terminalName: string) {
+  return {
+    type: CHOOSE_TERMINAL_NAME,
+    payload: {
+      terminalName,
+    },
+  };
+}
+
 export function chooseTerminalCategory(terminalCategory: string) {
   return {
     type: CHOOSE_TERMINAL_CATEGORY,
@@ -374,14 +384,18 @@ export function create(libraryType: CreateLibraryType): TypeEditorActionTypes {
   };
 }
 
-// export function update(libraryType: UpdateLibraryType): TypeEditorActionTypes {
-//   return {
-//     type: UPDATING_TYPE,
-//     payload: {
-//       libraryType,
-//     },
-//   };
-// }
+export function update(
+  selectedType: string,
+  libraryType: UpdateLibraryType
+): TypeEditorActionTypes {
+  return {
+    type: UPDATING_TYPE,
+    payload: {
+      selectedType,
+      libraryType,
+    },
+  };
+}
 
 export function deleteTypeEditorError(key: string) {
   return {

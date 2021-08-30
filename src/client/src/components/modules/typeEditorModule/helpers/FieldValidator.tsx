@@ -1,5 +1,14 @@
 import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
-import { Aspect, ObjectType, TypeMode } from "../../../../models";
+import { Aspect, ObjectType } from "../../../../models";
+import {
+  IsFunction,
+  IsLocation,
+  IsObjectBlock,
+  IsTransport,
+  IsInterface,
+  ModeEdit,
+  ModeNew,
+} from ".";
 
 const FieldValidator = (state: TypeEditorState, input: string) => {
   const aspect = state.createLibraryType.aspect;
@@ -11,24 +20,22 @@ const FieldValidator = (state: TypeEditorState, input: string) => {
   const terminals = state.createLibraryType.terminalTypes;
   const predefinedAttributes = state.createLibraryType.predefinedAttributes;
   const attributes = state.createLibraryType.attributeTypes;
-
-  const isFunction = aspect === Aspect.Function;
-  const isLocation = aspect === Aspect.Location;
+  const terminalTypeId = state.createLibraryType.terminalTypeId;
 
   const validAspect = aspect !== Aspect.NotSet;
-  const validObjectType = isFunction && objectType !== ObjectType.NotSet;
-  const validLocationType = isLocation && locationType !== "";
+  const validObjectType = objectType !== ObjectType.NotSet;
+  const validLocationType = locationType !== "";
   const validName = name !== "";
   const validSymbol = symbol !== "";
   const validRds = rds !== "";
-  const validTerminals = isFunction && terminals.length !== 0;
-  const validPredefinedAttributes =
-    isLocation && predefinedAttributes.length !== 0;
+  const validTerminals = terminals.length !== 0;
+  const validPredefinedAttributes = predefinedAttributes.length !== 0;
   const validAttributes = attributes.length !== 0;
+  const validTerminalTypeId = terminalTypeId !== "";
 
-  if (state.mode === TypeMode.Edit) {
+  if (ModeEdit(state.mode)) {
     return false;
-  } else {
+  } else if (ModeNew(state.mode)) {
     switch (input) {
       case "objectType":
         if (!validAspect) {
@@ -65,19 +72,40 @@ const FieldValidator = (state: TypeEditorState, input: string) => {
         }
         break;
       case "add":
-        if (
-          (!validObjectType && !validLocationType) ||
-          !validName ||
-          !validSymbol ||
-          !validRds ||
-          (!validTerminals && !validPredefinedAttributes) ||
-          !validAttributes
-        ) {
+        if (!validAspect || (!validObjectType && !validLocationType)) {
           return true;
+        }
+        if (IsFunction(aspect) && IsObjectBlock(objectType)) {
+          return !(
+            validName &&
+            validSymbol &&
+            validRds &&
+            validTerminals &&
+            validAttributes
+          );
+        } else if (IsFunction(aspect) && IsTransport(objectType)) {
+          return !(
+            validName &&
+            validSymbol &&
+            validRds &&
+            validTerminalTypeId &&
+            validAttributes
+          );
+        } else if (IsFunction(aspect) && IsInterface(objectType)) {
+          return !(validName && validSymbol && validRds && validTerminalTypeId);
+        } else if (IsLocation(aspect)) {
+          return !(
+            validLocationType &&
+            validName &&
+            validSymbol &&
+            validRds &&
+            validPredefinedAttributes &&
+            validAttributes
+          );
         }
         break;
       default:
-        return false;
+        return true;
     }
   }
 };

@@ -17,11 +17,9 @@ export const ObjectBlock = ({ state }: Props) => {
   const aspect = ModeNew(state.mode)
     ? state.createLibraryType.aspect
     : state.selectedNode.aspect;
-
   const name = ModeNew(state.mode)
     ? state.createLibraryType.name
     : state.selectedNode.name;
-
   const icon =
     state.createLibraryType.symbolId || state.selectedNode.symbolId
       ? GetSymbol(state)

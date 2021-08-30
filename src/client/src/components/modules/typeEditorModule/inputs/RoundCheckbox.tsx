@@ -7,14 +7,16 @@ import {
   chooseRDSName,
 } from "../../../../redux/store/typeEditor/actions";
 import { ModeEdit } from "../helpers";
+import { useEffect } from "react";
 
 interface Props {
   id: string;
   name?: string;
   label: string;
+  defaultValue?: any;
 }
 
-export const RoundCheckbox = ({ id, name, label }: Props) => {
+export const RoundCheckbox = ({ id, name, label, defaultValue }: Props) => {
   const dispatch = useDispatch();
   const state = useSelector<RootState>((s) => s.typeEditor) as TypeEditorState;
   const mode = state.mode;
@@ -27,7 +29,11 @@ export const RoundCheckbox = ({ id, name, label }: Props) => {
         return state.createLibraryType.rdsId === id;
       }
     } else if (label === "terminal") {
-      return state.terminalCategory === id;
+      if (ModeEdit(mode)) {
+        return defaultValue.terminalCategory.name === id;
+      } else {
+        return state.terminalCategory === id;
+      }
     }
   };
 
@@ -39,6 +45,12 @@ export const RoundCheckbox = ({ id, name, label }: Props) => {
       }
     }
   };
+
+  useEffect(() => {
+    if (ModeEdit(mode) && label === "rds" && id === state.selectedNode.rdsId) {
+      dispatch(chooseRDSName(name));
+    }
+  }, [dispatch, label, name, mode, id, state.selectedNode.rdsId]);
 
   return (
     <label className={"roundcheckbox"}>

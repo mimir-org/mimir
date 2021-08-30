@@ -1,6 +1,6 @@
 import "./typeeditor.scss";
 import { useHistory } from "react-router-dom";
-import { TypeMode } from "../../../models";
+import { ObjectType, TypeMode } from "../../../models";
 import { TextResources } from "../../../assets/text";
 import { NewTypeIcon, EditTypeIcon } from "../../../assets/icons/common";
 import { VIEW_TYPE } from "../../../models/project";
@@ -8,8 +8,12 @@ import { TypeEditorBox, TypeEditorBoxContent } from "../../../compLibrary/box";
 
 interface Props {
   selectedElement: string;
+  selectedElementType: ObjectType;
 }
-export const TypeEditorModule = ({ selectedElement }: Props) => {
+export const TypeEditorModule = ({
+  selectedElement,
+  selectedElementType,
+}: Props) => {
   const { push } = useHistory();
 
   const onClick = (mode: TypeMode) => {
@@ -17,7 +21,8 @@ export const TypeEditorModule = ({ selectedElement }: Props) => {
     push({
       pathname: `/home/${VIEW_TYPE.TYPE_EDITOR}/${modeUrl}`,
       state: {
-        selectedType: selectedElement,
+        selectedElement: selectedElement,
+        selectedElementType: selectedElementType,
         mode: mode,
       },
     });
