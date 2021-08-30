@@ -9,6 +9,7 @@ import {
   IsObjectBlock,
   IsTransport,
   IsInterface,
+  ModeEdit,
 } from "../helpers";
 
 interface Props {
@@ -16,12 +17,20 @@ interface Props {
 }
 
 export const PreviewBody = ({ state }: Props) => {
-  const aspect = state.createLibraryType.aspect;
-  const objectType = state.createLibraryType.objectType;
+  const mode = state.mode;
+  const aspect = ModeEdit(mode)
+    ? state.selectedNode.aspect
+    : state.createLibraryType.aspect;
+  const objectType = ModeEdit(mode)
+    ? state.selectedNode.objectType
+    : state.createLibraryType.objectType;
+  const locationType = ModeEdit(mode)
+    ? state.selectedNode.locationType
+    : state.createLibraryType.locationType;
 
   const showObjectBlock = () => {
     if (
-      (IsLocation(aspect) && state.createLibraryType.locationType !== "") ||
+      (IsLocation(aspect) && locationType !== "") ||
       (IsFunction(aspect) && IsObjectBlock(objectType))
     ) {
       return <ObjectBlock state={state} />;

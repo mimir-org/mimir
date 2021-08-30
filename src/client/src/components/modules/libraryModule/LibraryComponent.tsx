@@ -16,6 +16,7 @@ interface Props {
 
 const LibraryComponent = ({ categories, search }: Props) => {
   const [selectedElement, setSelectedElement] = useState("");
+  const [selectedElementType, setSelectedElementType] = useState(null);
 
   const isLegendOpen = useSelector<RootState>(
     (state) =>
@@ -41,12 +42,16 @@ const LibraryComponent = ({ categories, search }: Props) => {
             <LibraryCategoryComponent
               selectedElement={selectedElement}
               setSelectedElement={setSelectedElement}
+              setSelectedElementType={setSelectedElementType}
               key={category.name}
               category={category}
             />
           );
         })}
-        <TypeEditorModule selectedElement={selectedElement} />
+        <TypeEditorModule
+          selectedElement={selectedElement}
+          selectedElementType={selectedElementType}
+        />
       </LibraryBody>
     </>
   );

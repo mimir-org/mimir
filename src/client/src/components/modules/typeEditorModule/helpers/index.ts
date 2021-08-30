@@ -14,6 +14,7 @@ export { default as GetAspects } from "./GetAspects";
 export { default as GetObjectTypes } from "./GetObjectTypes";
 export { default as GetDefaultValue } from "./GetDefaultValue";
 export { default as GetTypeValue } from "./GetTypeValue";
+export { default as GetLibraryType } from "./GetLibraryType";
 
 export { default as LocationDropdown } from "./LocationDropdown";
 
