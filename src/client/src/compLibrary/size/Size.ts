@@ -1,4 +1,5 @@
 const Size = {
+  // Nodes
   Node_Width: 115,
   Node_Length: 70,
 
@@ -19,8 +20,8 @@ const Size = {
 
   // Modules
   ModuleOpen: 331,
-  InspectorModuleOpen: 295,
   ModuleClosed: 35,
+  InspectorModuleOpen: 295,
   Margin: 2,
 
   // Menus

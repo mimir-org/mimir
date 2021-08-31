@@ -1,4 +1,4 @@
-export { default as MenuBox } from "./menus/MenuBox";
+export { default as FilterMenuBox } from "./menus/FilterMenuBox";
 export { default as MenuColumn } from "./menus/MenuColumn";
 export { default as MenuMainHeader } from "./menus/MenuMainHeader";
 export { default as MenuElement } from "./menus/MenuElement";

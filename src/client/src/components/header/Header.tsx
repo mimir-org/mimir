@@ -7,7 +7,6 @@ import { changeFlowView } from "../../redux/store/flow/actions";
 import { setDarkMode } from "../../redux/store/darkMode/actions";
 import { Color, Size } from "../../compLibrary";
 import { MenuMainHeader } from "../../compLibrary/box/menus";
-import { GetMenuIcon } from "../../assets/helpers";
 import { changeMenu } from "../../redux/store/projectMenu/actions";
 import { ProjectState } from "../../redux/store/project/types";
 import {
@@ -27,6 +26,7 @@ import {
   TreeViewIcon,
   BlockViewIcon,
   FilterIcon,
+  UserClosedIcon,
 } from "../../assets/icons/common";
 
 const Header = () => {
@@ -104,17 +104,17 @@ const Header = () => {
   return (
     <>
       <HeaderBox>
-        {/* <MenuMainHeader isOpen={accountMenuOpen}>
-        <div className="text" onClick={onAccountClick}>
-          {projectState.project && projectState.project.name}
-        </div>
-        <img
-          src={GetMenuIcon(accountMenuOpen, MENU_TYPE.ACCOUNT_MENU)}
-          alt="icon"
-          className="icon"
-          onClick={onAccountClick}
-        />
-      </MenuMainHeader> */}
+        <MenuMainHeader isOpen={accountMenuOpen}>
+          <div className="projectName" onClick={onAccountClick}>
+            {projectState.project && projectState.project.name}
+          </div>
+          <img
+            src={UserClosedIcon}
+            alt="icon"
+            className="icon"
+            onClick={onAccountClick}
+          />
+        </MenuMainHeader>
         <LogoBox>
           <img src={MimirIcon} alt="dark-mode" onClick={onDarkMode} />
         </LogoBox>

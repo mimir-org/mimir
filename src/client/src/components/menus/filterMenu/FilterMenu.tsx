@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { FilterContent } from ".";
 import { Aspect, Project, RelationType } from "../../../models";
-import { MenuBox, MenuColumn } from "../../../compLibrary/box/menus";
+import { FilterMenuBox, MenuColumn } from "../../../compLibrary/box/menus";
 import { AddElement } from "./helpers";
 import { TextResources } from "../../../assets/text";
 import {
@@ -65,7 +65,7 @@ const FilterMenu = () => {
 
   // TODO: refactor
   return (
-    <MenuBox right isLibraryOpen={isLibraryOpen}>
+    <FilterMenuBox isLibraryOpen={isLibraryOpen}>
       <MenuColumn>
         {isPartOf && (
           <FilterContent
@@ -170,7 +170,7 @@ const FilterMenu = () => {
           />
         )}
       </MenuColumn>
-    </MenuBox>
+    </FilterMenuBox>
   );
 };
 
