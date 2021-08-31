@@ -5,7 +5,7 @@ const ButtonBox = styled.div`
   display: inline;
   position: absolute;
   right: 0px;
-  margin-top: 8px;
+  margin-top: 10px;
   margin-right: 10px;
 
   :hover {

@@ -8,7 +8,7 @@ const NodeTitle = styled.div`
     display: inline;
     font-weight: bold;
     position: absolute;
-    top: 10px;
+    top: 13px;
     left: 50px;
   }
 `;
