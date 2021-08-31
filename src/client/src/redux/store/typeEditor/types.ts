@@ -13,6 +13,7 @@ import {
   PredefinedAttribute,
   BlobData,
   LibraryFilter,
+  UpdateLibraryType,
 } from "../../../models";
 
 export const FETCHING_INITIAL_DATA = "FETCHING_INITIAL_DATA";
@@ -40,6 +41,7 @@ export const CHOOSE_TYPENAME = "CHOOSE_TYPENAME";
 export const CHOOSE_SYMBOL = "CHOOSE_SYMBOL";
 export const CHOOSE_RDS = "CHOOSE_RDS";
 export const CHOOSE_RDS_NAME = "CHOOSE_RDS_NAME";
+export const CHOOSE_TERMINAL_NAME = "CHOOSE_TERMINAL_NAME";
 export const CHOOSE_TERMINAL_CATEGORY = "CHOOSE_TERMINAL_CATEGORY";
 export const CHOOSE_TERMINAL_COLOR = "CHOOSE_TERMINAL_COLOR";
 export const CHOOSE_SEMANTICREFERENCE = "CHOOSE_SEMANTICREFERENCE";
@@ -66,7 +68,7 @@ export const REMOVE_TERMINALTYPES = "REMOVE_TERMINALTYPES";
 export const CREATING_TYPE = "CREATING_TYPE";
 export const CREATING_TYPE_SUCCESS_OR_ERROR = "CREATING_TYPE_SUCCESS_OR_ERROR";
 export const UPDATING_TYPE = "UPDATING_TYPE";
-export const UPDATE_TYPE_SUCCESS_OR_ERROR = "UPDATE_TYPE_SUCCESS_OR_ERROR";
+export const UPDATING_TYPE_SUCCESS_OR_ERROR = "UPDATE_TYPE_SUCCESS_OR_ERROR";
 export const DELETE_TYPE_EDITOR_ERROR = "DELETE_TYPE_EDITOR_ERROR";
 export const FETCHING_TYPE = "FETCHING_TYPE";
 export const FETCHING_TYPE_SUCCESS_OR_ERROR = "FETCHING_TYPE_SUCCESS_OR_ERROR";
@@ -86,8 +88,9 @@ export interface TypeEditorState {
   attributes: AttributeType[];
   mode: TypeMode;
   selectedType: string;
-  selectedNode: CreateLibraryType;
+  selectedNode: UpdateLibraryType;
   rdsName: string;
+  terminalName: string;
   terminalCategory: string;
   terminalColor: string;
   locationTypes: LocationType[];
@@ -255,6 +258,13 @@ export interface ChooseRdsName {
   };
 }
 
+export interface ChooseTerminalName {
+  type: typeof CHOOSE_TERMINAL_NAME;
+  payload: {
+    terminalName: string;
+  };
+}
+
 export interface ChooseTerminalCategory {
   type: typeof CHOOSE_TERMINAL_CATEGORY;
   payload: {
@@ -410,7 +420,8 @@ interface CreatingTypeAction {
 interface UpdatingTypeAction {
   type: typeof UPDATING_TYPE;
   payload: {
-    libraryType: CreateLibraryType;
+    libraryType: UpdateLibraryType;
+    selectedType: string;
   };
 }
 interface DeleteTypeEditorErrorAction {
@@ -422,6 +433,13 @@ interface DeleteTypeEditorErrorAction {
 
 interface CreatingTypeActionFinished {
   type: typeof CREATING_TYPE_SUCCESS_OR_ERROR;
+  payload: {
+    apiError: ApiError;
+  };
+}
+
+interface UpdatingTypeActionFinished {
+  type: typeof UPDATING_TYPE_SUCCESS_OR_ERROR;
   payload: {
     apiError: ApiError;
   };
@@ -452,6 +470,7 @@ export type TypeEditorActionTypes =
   | ChooseSymbol
   | ChooseRds
   | ChooseRdsName
+  | ChooseTerminalName
   | ChooseTerminalCategory
   | ChooseTerminalColor
   | ChooseSemanticReference
@@ -478,4 +497,5 @@ export type TypeEditorActionTypes =
   | CreatingTypeAction
   | CreatingTypeActionFinished
   | UpdatingTypeAction
+  | UpdatingTypeActionFinished
   | DeleteTypeEditorErrorAction;

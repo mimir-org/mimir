@@ -14,12 +14,14 @@ interface Props {
   category: LibCategory;
   selectedElement: string;
   setSelectedElement: any;
+  setSelectedElementType: any;
 }
 
 const LibraryCategoryComponent = ({
   category,
   selectedElement,
   setSelectedElement,
+  setSelectedElementType,
 }: Props) => {
   const [expanded, setExpanded] = useState(false);
   const expandIcon = expanded ? ExpandIcon : CollapseIcon;
@@ -33,6 +35,10 @@ const LibraryCategoryComponent = ({
     setSelectedElement(id);
   };
 
+  const setNewSelectedElementType = (libraryType: ObjectType) => {
+    setSelectedElementType(libraryType);
+  };
+
   return (
     <>
       <LibraryCategory onClick={() => setExpanded(!expanded)}>
@@ -44,7 +50,10 @@ const LibraryCategoryComponent = ({
           return (
             <LibraryElement
               active={selectedElement === node.id}
-              onClick={() => setNewSelectedElement(node.id)}
+              onClick={() => {
+                setNewSelectedElement(node.id);
+                setNewSelectedElementType(node.libraryType);
+              }}
               draggable={node.libraryType === ObjectType.ObjectBlock}
               onDragStart={(event) =>
                 node.libraryType === ObjectType.ObjectBlock &&
@@ -53,7 +62,6 @@ const LibraryCategoryComponent = ({
               key={node.id}
             >
               {node.name}
-
               <LibraryElementIcon color={GetAspectColor(node, false)}>
                 {(node.libraryType === ObjectType.Interface ||
                   node.libraryType === ObjectType.Transport) && (

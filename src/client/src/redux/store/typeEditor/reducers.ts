@@ -6,6 +6,7 @@ import {
   BlobData,
   TerminalTypeItem,
   PredefinedAttribute,
+  UpdateLibraryType,
 } from "../../../models";
 import {
   FETCHING_INITIAL_DATA,
@@ -32,6 +33,7 @@ import {
   CHOOSE_SYMBOL,
   CHOOSE_RDS,
   CHOOSE_RDS_NAME,
+  CHOOSE_TERMINAL_NAME,
   CHOOSE_TERMINAL_CATEGORY,
   CHOOSE_TERMINAL_COLOR,
   CHOOSE_SEMANTICREFERENCE,
@@ -54,6 +56,8 @@ import {
   REMOVE_TERMINALTYPES,
   CREATING_TYPE,
   CREATING_TYPE_SUCCESS_OR_ERROR,
+  UPDATING_TYPE,
+  UPDATING_TYPE_SUCCESS_OR_ERROR,
   DELETE_TYPE_EDITOR_ERROR,
   TypeEditorActionTypes,
   TypeEditorState,
@@ -64,8 +68,9 @@ const initialState: TypeEditorState = {
   creating: false,
   mode: TypeMode.NotSet,
   selectedType: "",
-  selectedNode: {} as CreateLibraryType,
+  selectedNode: {} as UpdateLibraryType,
   rdsName: "",
+  terminalName: "",
   terminalCategory: "",
   terminalColor: "",
   createLibraryType: {
@@ -252,6 +257,11 @@ export function typeEditorReducer(
         ...state,
         rdsName: action.payload.rdsName,
       };
+    case CHOOSE_TERMINAL_NAME:
+      return {
+        ...state,
+        terminalName: action.payload.terminalName,
+      };
     case CHOOSE_TERMINAL_CATEGORY:
       return {
         ...state,
@@ -430,6 +440,37 @@ export function typeEditorReducer(
         fetching: false,
         createLibraryType: {
           ...state.createLibraryType,
+          name: "",
+          aspect: Aspect.NotSet,
+          objectType: ObjectType.NotSet,
+          semanticReference: "",
+          rdsId: "",
+          terminalTypes: [] as TerminalTypeItem[],
+          attributeTypes: [] as string[],
+          locationType: "",
+          predefinedAttributes: [] as PredefinedAttribute[],
+          terminalTypeId: "",
+          symbolId: "",
+        },
+        apiError: action.payload.apiError
+          ? [...state.apiError, action.payload.apiError]
+          : state.apiError,
+      };
+    case UPDATING_TYPE:
+      return {
+        ...state,
+        fetching: true,
+        apiError: state.apiError
+          ? state.apiError.filter((elem) => elem.key !== UPDATING_TYPE)
+          : state.apiError,
+      };
+    case UPDATING_TYPE_SUCCESS_OR_ERROR:
+      return {
+        ...state,
+        fetching: false,
+        selectedType: "",
+        selectedNode: {
+          ...state.selectedNode,
           name: "",
           aspect: Aspect.NotSet,
           objectType: ObjectType.NotSet,

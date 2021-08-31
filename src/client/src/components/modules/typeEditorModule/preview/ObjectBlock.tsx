@@ -1,47 +1,29 @@
 import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
-// import { ReactComponent as TerminalIcon } from "../../../../assets/icons/common/terminalIcon.svg";
-import { Color } from "../../../../compLibrary";
+import {
+  GetBlockColor,
+  GetBlockHeight,
+  GetBlockPaddingTop,
+  GetSymbol,
+} from "./helpers";
+import { ModeNew } from "../helpers";
 import { ObjectTypeBlock, InfoWrapper } from "../styled";
-import { IsFunction, IsLocation, IsProduct } from "../helpers";
-
+import { Symbol } from "../../../../compLibrary/dropdown";
+// import { ReactComponent as TerminalIcon } from "../../../../assets/icons/common/terminalIcon.svg";
 interface Props {
   state: TypeEditorState;
 }
 
 export const ObjectBlock = ({ state }: Props) => {
-  const aspect = state.createLibraryType.aspect;
-
-  const blockColor = () => {
-    let color = "";
-    if (IsFunction(aspect)) {
-      color = Color.Function;
-    } else if (IsLocation(aspect)) {
-      color = Color.Location;
-    } else if (IsProduct(aspect)) {
-      color = Color.Product;
-    }
-    return color;
-  };
-
-  const blockHeight = () => {
-    let height = 0;
-    if (IsFunction(aspect)) {
-      height = 70;
-    } else if (IsLocation(aspect)) {
-      height = 45;
-    }
-    return height;
-  };
-
-  const blockPaddingTop = () => {
-    let top = 0;
-    if (IsFunction(aspect)) {
-      top = 25;
-    } else if (IsLocation(aspect)) {
-      top = 2;
-    }
-    return top;
-  };
+  const aspect = ModeNew(state.mode)
+    ? state.createLibraryType.aspect
+    : state.selectedNode.aspect;
+  const name = ModeNew(state.mode)
+    ? state.createLibraryType.name
+    : state.selectedNode.name;
+  const icon =
+    state.createLibraryType.symbolId || state.selectedNode.symbolId
+      ? GetSymbol(state)
+      : null;
 
   //   let terminalCategories = [];
   //   state.terminals.forEach((e) => {
@@ -74,7 +56,10 @@ export const ObjectBlock = ({ state }: Props) => {
   //   };
 
   return (
-    <ObjectTypeBlock blockColor={blockColor()} blockHeight={blockHeight()}>
+    <ObjectTypeBlock
+      blockColor={GetBlockColor(aspect)}
+      blockHeight={GetBlockHeight(aspect)}
+    >
       {/* {state.createLibraryType.aspect === Aspect.Function && (
         <InputOutputTerminals>
           <Terminals input={true}>
@@ -98,9 +83,10 @@ export const ObjectBlock = ({ state }: Props) => {
           </Terminals>
         </InputOutputTerminals>
       )} */}
-      <InfoWrapper blockPaddingTop={blockPaddingTop()}>
+      <InfoWrapper blockPaddingTop={GetBlockPaddingTop(aspect)}>
         <p>{state.rdsName}</p>
-        <p>{state.createLibraryType.name}</p>
+        <p>{name}</p>
+        {icon && <Symbol base64={icon.data} text={icon.name} />}
       </InfoWrapper>
     </ObjectTypeBlock>
   );
