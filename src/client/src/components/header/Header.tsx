@@ -153,15 +153,15 @@ const Header = () => {
           </OptionsElement>
           <OptionsElement>
             <img
-              src={IsBlockView() ? TreeViewOffIcon : BlockViewIcon}
-              alt={IsBlockView() ? VIEW_TYPE.TREEVIEW : VIEW_TYPE.BLOCKVIEW}
+              src={BlockViewIcon}
+              alt={VIEW_TYPE.BLOCKVIEW}
               onClick={onViewClick}
             />
           </OptionsElement>
           <OptionsElement>
             <img
-              src={IsBlockView() ? TreeViewOffIcon : TreeViewIcon}
-              alt={IsBlockView() ? VIEW_TYPE.TREEVIEW : VIEW_TYPE.BLOCKVIEW}
+              src={TreeViewIcon}
+              alt={VIEW_TYPE.TREEVIEW}
               onClick={onViewClick}
             />
           </OptionsElement>

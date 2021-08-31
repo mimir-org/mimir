@@ -1,6 +1,7 @@
 const Color = {
   // Redesign
   BlueMagenta: "#272738",
+  GreyBorder: "#d9d9d9",
   LocationSelected: "#A300A7",
   FunctionSelected: "#FBC913",
 
@@ -11,7 +12,6 @@ const Color = {
   DarkGrey: "#c4c4c4",
   DarkerGrey: "#898787",
   DeepCyan: "#007079",
-
   LightCyan: "#CFDADB",
   Function: "#fef445",
   Product: "#00F0FF",

@@ -8,6 +8,7 @@ import { TextResources } from "../../../assets/text";
 import {
   CreateId,
   FilterElement,
+  IsLibrary,
   IsLocationTerminal,
   IsPartOfTerminal,
   IsTransportTerminal,
@@ -58,9 +59,13 @@ const FilterMenu = () => {
     }
   });
 
+  const isLibraryOpen = useSelector<RootState>(
+    (state) => state.modules.types.find((x) => IsLibrary(x.type)).visible
+  );
+
   // TODO: refactor
   return (
-    <MenuBox right>
+    <MenuBox right isLibraryOpen={isLibraryOpen}>
       <MenuColumn>
         {isPartOf && (
           <FilterContent
