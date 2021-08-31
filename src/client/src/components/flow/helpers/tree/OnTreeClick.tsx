@@ -1,4 +1,3 @@
-import { Size } from "../../../../compLibrary";
 import { MODULE_TYPE } from "../../../../models/project";
 import { changeInspectorTab } from "../../../../redux/store/inspector/actions";
 import { changeModuleVisibility } from "../../../../redux/store/modules/actions";

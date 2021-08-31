@@ -1,11 +1,9 @@
-import styled from "styled-components";
 import { RootState } from "../../redux/store";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { MENU_TYPE, VIEW_TYPE } from "../../models/project";
 import { changeFlowView } from "../../redux/store/flow/actions";
 import { setDarkMode } from "../../redux/store/darkMode/actions";
-import { Color, Size } from "../../compLibrary";
 import { MenuMainHeader } from "../../compLibrary/box/menus";
 import { changeMenu } from "../../redux/store/projectMenu/actions";
 import { ProjectState } from "../../redux/store/project/types";
@@ -20,6 +18,7 @@ import {
   OptionsBox,
   LogoBox,
   OptionsElement,
+  MenuBar,
 } from "../../compLibrary/box/header/";
 import {
   MimirIcon,
@@ -80,27 +79,6 @@ const Header = () => {
     (state) => state.modules.types.find((x) => IsExplorer(x.type)).visible
   ) as boolean;
 
-  const SubMenu = styled.div`
-    background: ${Color.White};
-    color: #000;
-    height: 40px;
-    width: auto;
-    border-bottom: 1px solid #d9d9d9;
-    position: absolute;
-    top: 56px;
-    display: inline;
-    right: ${(props) =>
-      props.isLibraryOpen
-        ? `${Size.ModuleOpen + Size.Margin}px`
-        : `${Size.ModuleClosed + Size.Margin}px`};
-    left: ${(props) =>
-      props.isExplorerOpen
-        ? `${Size.ModuleOpen + Size.Margin}px`
-        : `${Size.ModuleClosed + Size.Margin}px`};
-    transition: left 0.3s ease-in-out, right 0.3s ease-in-out;
-    z-index: 5;
-  `;
-
   return (
     <>
       <HeaderBox>
@@ -119,7 +97,7 @@ const Header = () => {
           <img src={MimirIcon} alt="dark-mode" onClick={onDarkMode} />
         </LogoBox>
       </HeaderBox>
-      <SubMenu
+      <MenuBar
         id="MenuBar"
         isLibraryOpen={isLibraryOpen}
         isExplorerOpen={isExplorerOpen}
@@ -143,7 +121,7 @@ const Header = () => {
             />
           </OptionsElement>
         </OptionsBox>
-      </SubMenu>
+      </MenuBar>
     </>
   );
 };
