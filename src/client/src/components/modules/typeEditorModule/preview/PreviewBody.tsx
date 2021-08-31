@@ -3,6 +3,7 @@ import { ObjectBlock } from "./ObjectBlock";
 import { PreviewArea, InfoWrapper } from "../styled";
 import { ReactComponent as TransportIcon } from "../../../../assets/icons/common/transport.svg";
 import { ReactComponent as InterfaceIcon } from "../../../../assets/icons/common/interface.svg";
+import { GetTerminalColor } from "./helpers";
 import {
   IsLocation,
   IsFunction,
@@ -27,6 +28,9 @@ export const PreviewBody = ({ state }: Props) => {
   const locationType = ModeEdit(mode)
     ? state.selectedNode.locationType
     : state.createLibraryType.locationType;
+  const typeName = ModeEdit(state.mode)
+    ? state.selectedNode.name
+    : state.createLibraryType.name;
 
   const showObjectBlock = () => {
     if (
@@ -51,15 +55,20 @@ export const PreviewBody = ({ state }: Props) => {
       {transportOrInterface() && (
         <InfoWrapper>
           <p>{state.rdsName}</p>
-          <p>{state.createLibraryType.name}</p>
+          <p>{typeName}</p>
         </InfoWrapper>
       )}
       {IsFunction(aspect) && IsTransport(objectType) && (
-        <TransportIcon style={{ fill: state.terminalColor }}></TransportIcon>
+        <TransportIcon
+          style={{ fill: GetTerminalColor(state) }}
+        ></TransportIcon>
       )}
       {IsFunction(aspect) && IsInterface(objectType) && (
         <InterfaceIcon
-          style={{ stroke: state.terminalColor, fill: state.terminalColor }}
+          style={{
+            stroke: GetTerminalColor(state),
+            fill: GetTerminalColor(state),
+          }}
         ></InterfaceIcon>
       )}
     </PreviewArea>

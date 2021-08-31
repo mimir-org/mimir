@@ -20,13 +20,11 @@ export const Checkbox = ({ label, id }: Props) => {
 
   let attributeIsSelected = () => {
     if (label === "attribute") {
-      if (ModeEdit(mode)) {
-        return state.selectedNode.attributeTypes?.includes(id);
-      } else {
-        return state.createLibraryType.attributeTypes?.includes(id);
-      }
+      return attributeTypes?.includes(id);
     } else if (label === "terminal") {
       return state.terminalCategory === id;
+    } else {
+      return false;
     }
   };
 
