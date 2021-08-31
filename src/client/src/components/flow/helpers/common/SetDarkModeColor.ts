@@ -11,6 +11,7 @@ const SetDarkModeColor = (active: boolean) => {
   const inspector = document.getElementById("InspectorModule");
   const inspectorBody = document.getElementById("InspectorBody");
   const inspectorTopMenu = document.getElementById("InspectorTopMenu");
+  const menuBar = document.getElementById("MenuBar");
 
   if (active) {
     mainColor = "#888888";
@@ -27,6 +28,7 @@ const SetDarkModeColor = (active: boolean) => {
   if (inspector) inspector.style.background = moduleColor;
   if (inspectorBody) inspectorBody.style.background = moduleColor;
   if (inspectorTopMenu) inspectorTopMenu.style.background = moduleColor;
+  if (menuBar) menuBar.style.background = moduleColor;
 };
 
 export default SetDarkModeColor;

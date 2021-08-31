@@ -1,22 +1,21 @@
 import styled from "styled-components";
 import { RootState } from "../../redux/store";
 import { useHistory } from "react-router-dom";
-import { TextResources } from "../../assets/text";
 import { useDispatch, useSelector } from "react-redux";
 import { MENU_TYPE, VIEW_TYPE } from "../../models/project";
 import { changeFlowView } from "../../redux/store/flow/actions";
 import { setDarkMode } from "../../redux/store/darkMode/actions";
+import { Color, Size } from "../../compLibrary";
+import { MenuMainHeader } from "../../compLibrary/box/menus";
+import { GetMenuIcon } from "../../assets/helpers";
+import { changeMenu } from "../../redux/store/projectMenu/actions";
+import { ProjectState } from "../../redux/store/project/types";
 import {
   FindSelectedNode,
   IsExplorer,
   IsLibrary,
   SetDarkModeColor,
 } from "../flow/helpers/common";
-import { IsBlockView } from "../flow/helpers/block";
-import { MenuMainHeader } from "../../compLibrary/box/menus";
-import { GetMenuIcon } from "../../assets/helpers";
-import { changeMenu } from "../../redux/store/projectMenu/actions";
-import { ProjectState } from "../../redux/store/project/types";
 import {
   HeaderBox,
   OptionsBox,
@@ -24,16 +23,11 @@ import {
   OptionsElement,
 } from "../../compLibrary/box/header/";
 import {
-  DarkModeOffIcon,
-  DarkModeOnIcon,
   MimirIcon,
-  TreeViewOffIcon,
   TreeViewIcon,
   BlockViewIcon,
   FilterIcon,
-  UndoIcon,
 } from "../../assets/icons/common";
-import { Color } from "../../compLibrary";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -87,7 +81,7 @@ const Header = () => {
   ) as boolean;
 
   const SubMenu = styled.div`
-    background-color: ${Color.White};
+    background: ${Color.White};
     color: #000;
     height: 40px;
     width: auto;
@@ -95,8 +89,14 @@ const Header = () => {
     position: absolute;
     top: 56px;
     display: inline;
-    right: ${(props) => (props.isLibraryOpen ? "333px" : "37px")};
-    left: ${(props) => (props.isExplorerOpen ? "333px" : "37px")};
+    right: ${(props) =>
+      props.isLibraryOpen
+        ? `${Size.ModuleOpen + Size.Margin}px`
+        : `${Size.ModuleClosed + Size.Margin}px`};
+    left: ${(props) =>
+      props.isExplorerOpen
+        ? `${Size.ModuleOpen + Size.Margin}px`
+        : `${Size.ModuleClosed + Size.Margin}px`};
     transition: left 0.3s ease-in-out, right 0.3s ease-in-out;
     z-index: 5;
   `;
@@ -116,40 +116,17 @@ const Header = () => {
         />
       </MenuMainHeader> */}
         <LogoBox>
-          <img src={MimirIcon} alt="MimirIcon" />
+          <img src={MimirIcon} alt="dark-mode" onClick={onDarkMode} />
         </LogoBox>
-
-        {/* <MenuMainHeader
-        isOpen={filterMenuOpen}
-        right
-        type={MENU_TYPE.VISUAL_FILTER_MENU}
-        id="FilterHeader"
-      >
-        <div className="text" onClick={onFilterClick}>
-          {TextResources.MainHeader_VisualFilter}
-        </div>
-        <img
-          src={GetMenuIcon(filterMenuOpen, MENU_TYPE.VISUAL_FILTER_MENU)}
-          alt="icon"
-          className="icon"
-          onClick={onFilterClick}
-        />
-      </MenuMainHeader> */}
       </HeaderBox>
-      <SubMenu isLibraryOpen={isLibraryOpen} isExplorerOpen={isExplorerOpen}>
+      <SubMenu
+        id="MenuBar"
+        isLibraryOpen={isLibraryOpen}
+        isExplorerOpen={isExplorerOpen}
+      >
         <OptionsBox>
-          {/* <OptionsElement>
-            <img
-              src={darkMode ? DarkModeOnIcon : DarkModeOffIcon}
-              alt="dark-mode"
-              onClick={onDarkMode}
-            />
-          </OptionsElement> */}
-          {/* <OptionsElement>
-            <img src={UndoIcon} alt="undo" onClick={null} />
-          </OptionsElement> */}
           <OptionsElement>
-            <img src={FilterIcon} alt="Visual Filter" onClick={onFilterClick} />
+            <img src={FilterIcon} alt="VisualFilter" onClick={onFilterClick} />
           </OptionsElement>
           <OptionsElement>
             <img

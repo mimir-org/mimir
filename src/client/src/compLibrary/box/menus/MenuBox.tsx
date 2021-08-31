@@ -7,8 +7,10 @@ const MenuBox = styled.div`
   top: 97px;
   right: ${(props) =>
     props.right && !props.isLibraryOpen
-      ? "37px"
-      : props.right && props.isLibraryOpen && "333px"};
+      ? `${Size.ModuleClosed + Size.Margin}px`
+      : props.right &&
+        props.isLibraryOpen &&
+        `${Size.ModuleOpen + Size.Margin}px`};
   left: ${(props: { right: string }) => !props.right && "0px"};
   background: ${Color.White};
   padding-bottom: ${(props) => props.right && "6px"};
