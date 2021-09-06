@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { TypeEditorState } from "../../../../../redux/store/typeEditor/types";
-import { AddTerminal } from "./AddTerminal/AddTerminalComponent";
+import { default as AddTerminal } from "./AddTerminal/AddTerminalComponent";
 import { RoundCheckbox } from "../../inputs/RoundCheckbox";
 import { NumericInput } from "../../../../../compLibrary";
 import { TextResources } from "../../../../../assets/text";
@@ -33,8 +33,10 @@ import {
   ExpandIcon,
   CollapseIcon,
 } from "../../../../../assets/icons/common";
+import { ConnectorType, TerminalTypeItem } from "../../../../../models";
 
 interface Props {
+  // number: number;
   category: string;
   terminals: any[];
   state: TypeEditorState;
@@ -45,17 +47,21 @@ export const TerminalsListElement = ({ category, terminals, state }: Props) => {
   const [selectedTerminal, setSelectedTerminal] = useState(
     GetDefaultTerminal(state, terminals)
   );
+
   const [selectedCategory, setselectedCategory] = useState(
     ModeEdit(state.mode) && !IsObjectBlock(state.selectedNode.objectType)
       ? selectedTerminal.terminalCategory.name
       : ""
   );
+
   const [searchbarInput, setSearchbarInput] = useState(
     GetDefaultTerminalName(state, selectedTerminal)
   );
+
   const [quantity, setQuantity] = useState(GetDefaultQuantity(state));
   const [expandList, setExpandList] = useState(false);
   const [expandCategory, setExpandCategory] = useState(true);
+
   let objectType = ModeEdit(state.mode)
     ? state.selectedNode.objectType
     : state.createLibraryType.objectType;
@@ -89,28 +95,44 @@ export const TerminalsListElement = ({ category, terminals, state }: Props) => {
     dispatch(removeTerminalTypes());
   };
 
-  const toggleExpand = () => {
-    setExpandCategory(!expandCategory);
+  const terminalOnChange = (row: number, terminal: TerminalTypeItem) => {
+    console.log("TerminalOnChange:", row, terminal);
   };
 
   const updateTerminals = () => {
     let terminalsArray = [];
     if (ModeEdit(state.mode) && state.selectedNode.terminalTypes) {
       terminalsArray = state.selectedNode.terminalTypes;
+
+      for (let i = 0; i < state.selectedNode.terminalTypes.length; i++) {}
+
       return terminalsArray.map((t, index) => {
         return (
           <AddTerminal
+            row={index}
             key={index}
             terminals={terminals}
-            state={state}
             defaultTerminal={t}
+            onChange={terminalOnChange}
           />
         );
       });
     } else {
       for (let i = 0; i < quantity; i++) {
+        const defaultTerminal = {
+          connectorType: ConnectorType.Input,
+          number: 1,
+          terminalTypeId: null,
+        } as TerminalTypeItem;
+
         terminalsArray.push(
-          <AddTerminal key={i} terminals={terminals} state={state} />
+          <AddTerminal
+            row={i}
+            key={i}
+            terminals={terminals}
+            defaultTerminal={defaultTerminal}
+            onChange={terminalOnChange}
+          />
         );
       }
       return terminalsArray;
@@ -191,7 +213,7 @@ export const TerminalsListElement = ({ category, terminals, state }: Props) => {
             <img
               src={expandCategory ? ExpandIcon : CollapseIcon}
               alt="expand-icon"
-              onClick={toggleExpand}
+              onClick={() => setExpandCategory(!expandCategory)}
             />
           )}
         </TerminalCategoryWrapper>

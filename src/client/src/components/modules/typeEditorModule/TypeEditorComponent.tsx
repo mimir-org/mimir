@@ -74,6 +74,18 @@ export const TypeEditorComponent = () => {
     selectedLibraryType,
   ]);
 
+  const inputChanged = (id, value, hasError) => {
+    console.log("INPUT CHANGED:", id, value, hasError);
+  };
+
+  const inputBlur = (id, value, hasError) => {
+    console.log("INPUT BLUR:", id, value, hasError);
+  };
+
+  //   const validate = (value) => {
+  //     return "Missing input " + value;
+  //   };
+
   return (
     <TypeEditorWrapper>
       <TypeEditorContent>
@@ -81,6 +93,7 @@ export const TypeEditorComponent = () => {
           <p>{TextResources.TypeEditor}</p>
           <img src={CloseIcon} alt="close-window" onClick={onCloseEditor} />
         </TypeEditorHeader>
+
         <TypeEditorInputs state={state} dispatch={dispatch} />
         <ChooseProperties>
           <RDSList

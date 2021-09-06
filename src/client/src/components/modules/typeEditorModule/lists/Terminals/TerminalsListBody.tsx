@@ -19,7 +19,15 @@ export const TerminalsListBody = ({ state, terminals, disabled }: Props) => {
     <ListElementsContainer background={false}>
       {terminals && !disabled ? (
         <>
-          {IsFunction(aspect)
+          {terminals.map((element) => (
+            <TerminalsListElement
+              key={element[1].key}
+              state={state}
+              terminals={element[1].value}
+              category={element[1].key}
+            />
+          ))}
+          {/* {IsFunction(aspect)
             ? terminals.map((element) => (
                 <TerminalsListElement
                   key={element[1].key}
@@ -36,7 +44,7 @@ export const TerminalsListBody = ({ state, terminals, disabled }: Props) => {
                   isMultiSelect={element[1].isMultiSelect}
                   state={state}
                 />
-              ))}
+              ))} */}
         </>
       ) : null}
     </ListElementsContainer>

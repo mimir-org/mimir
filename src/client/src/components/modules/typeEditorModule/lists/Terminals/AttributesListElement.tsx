@@ -1,4 +1,3 @@
-import "./AddTerminal/directiondropdown.scss";
 import "../../inputs/checkbox.scss";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
