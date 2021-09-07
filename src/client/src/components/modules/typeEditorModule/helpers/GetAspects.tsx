@@ -1,11 +1,26 @@
-import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
+import { DropDownItem } from "../../../../compLibrary/dropdown/Dropdown";
+import { Aspect } from "../../../../models";
 
-const GetAspects = (state: TypeEditorState) => {
-  let filteredAspects = Object.entries(state.aspects);
+const stringIsNumber = (value) => isNaN(Number(value)) === false;
 
-  return filteredAspects.filter(
-    ([, value]) => value === "Function" || value === "Location"
+const GetAspects = (): DropDownItem[] => {
+  const categories = [] as DropDownItem[];
+  categories.push({ name: "Aspect", items: [] } as DropDownItem);
+
+  Object.keys(Aspect)
+    .filter(stringIsNumber)
+    .forEach((item) => {
+      categories[0].items.push({
+        id: item,
+        name: Aspect[item],
+      });
+    });
+
+  categories[0].items = categories[0].items.filter(
+    (x) => x.name === "Function" || x.name === "Location" || x.name === "NotSet"
   );
+
+  return categories;
 };
 
 export default GetAspects;

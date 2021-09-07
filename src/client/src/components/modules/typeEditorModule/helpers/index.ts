@@ -13,6 +13,9 @@ export { default as IsNotSet } from "./IsNotSet";
 export { default as GetAspects } from "./GetAspects";
 export { default as GetObjectTypes } from "./GetObjectTypes";
 export { default as GetDefaultValue } from "./GetDefaultValue";
+export { default as GetLocationTypes } from "./GetLocationTypes";
+export { default as GetBlobData } from "./GetBlobData";
+export { default as GetFilteredRdsList } from "./GetFilteredRdsList";
 export { default as GetTypeValue } from "./GetTypeValue";
 export { default as GetLibraryType } from "./GetLibraryType";
 

@@ -14,20 +14,23 @@ interface Props {
   name?: string;
   label: string;
   defaultValue?: any;
+  onChange: Function;
 }
 
-export const RoundCheckbox = ({ id, name, label, defaultValue }: Props) => {
+export const RoundCheckbox = ({
+  id,
+  name,
+  label,
+  defaultValue,
+  onChange,
+}: Props) => {
   const dispatch = useDispatch();
   const state = useSelector<RootState>((s) => s.typeEditor) as TypeEditorState;
   const mode = state.mode;
 
   let isSelected = () => {
     if (label === "rds") {
-      if (ModeEdit(mode)) {
-        return state.selectedNode.rdsId === id;
-      } else {
-        return state.createLibraryType.rdsId === id;
-      }
+      return defaultValue === id;
     } else if (label === "terminal") {
       if (ModeEdit(mode)) {
         return defaultValue.terminalCategory.name === id;
@@ -40,8 +43,9 @@ export const RoundCheckbox = ({ id, name, label, defaultValue }: Props) => {
   const onCheckboxChange = () => {
     if (id !== "" && id) {
       if (label === "rds") {
-        dispatch(chooseRDS(state.mode, id));
-        dispatch(chooseRDSName(name));
+        onChange("rdsId", id);
+        // dispatch(chooseRDS(state.mode, id));
+        // dispatch(chooseRDSName(name));
       }
     }
   };

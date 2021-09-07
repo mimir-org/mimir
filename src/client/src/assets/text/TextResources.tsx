@@ -112,7 +112,7 @@ const TextResources = {
   TypeEditor_Type_Name: "Type name",
   TypeEditor_Status: "Status",
   TypeEditor_Properties_Choose: "Choose ",
-  TypeEditor_Properties_RDS: "RDS",
+  TypeEditor_Properties_RDS: "Choose RDS",
   TypeEditor_Properties_Terminals: "Terminal Types",
   TypeEditor_Properties_Location_Attributes: "Predefined Location Attributes",
   TypeEditor_Properties_Block_Attributes: "Object Block Attributes",

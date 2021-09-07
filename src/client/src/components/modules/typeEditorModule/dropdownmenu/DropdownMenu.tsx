@@ -27,6 +27,8 @@ interface Props {
   state: TypeEditorState;
 }
 
+// Aspect
+
 export const DropDownMenu = ({
   label,
   items,
@@ -46,13 +48,9 @@ export const DropDownMenu = ({
       setSelectedValue(GetDefaultValue(type));
     }
     if (ModeEdit(state.mode)) {
-      setSelectedValue(GetTypeValue(state, label));
+      setSelectedValue(null);
     }
   }, [type, state, label]);
-
-  const toggleList = () => {
-    setIsListOpen(!isListOpen);
-  };
 
   const handleChange = ([key, value]) => {
     setSelectedValue(value);
@@ -64,7 +62,7 @@ export const DropDownMenu = ({
     <DropdownMenuWrapper disabled={disabled}>
       <label htmlFor={label} />
       <div className="label"> {label}</div>
-      <div onClick={disabled ? null : toggleList}>
+      <div onClick={disabled ? null : () => setIsListOpen(!isListOpen)}>
         <DropdownMenuHeader>
           <p>{selectedValue}</p>
           <img src={isListOpen ? ExpandIcon : CollapseIcon} alt="expand-icon" />

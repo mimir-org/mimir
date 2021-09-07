@@ -16,6 +16,7 @@ const DropdownMenuListItem = styled.div`
 
   p {
     padding: 5px;
+    margin-left: ${(props) => props.hasCategory && "10px"};
   }
 
   img {

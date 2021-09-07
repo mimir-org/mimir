@@ -1,18 +1,6 @@
-import red, { RootState } from "../../../redux/store";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
-import { MODULE_TYPE, VIEW_TYPE } from "../../../models/project";
-import { TextResources } from "../../../assets/text";
-import { CloseIcon } from "../../../assets/icons/common";
-import { TypeEditorState } from "../../../redux/store/typeEditor/types";
-import { changeFlowView } from "../../../redux/store/flow/actions";
-import { SetDarkModeColor } from "../../flow/helpers/common";
-import { changeAllModulesVisibility } from "../../../redux/store/modules/actions";
-import { TypeMode, ObjectType } from "../../../models/";
-import { TypeEditorInputs } from "./";
-import { FieldValidator, ModeEdit, GetLibraryType } from "./helpers";
-import { RDSList, TerminalsList, AttributesList, TypePreview } from ".";
 import {
   changeMode,
   chooseAspect,
@@ -21,70 +9,65 @@ import {
   getSelectedNode,
   changeSelectedType,
 } from "../../../redux/store/typeEditor/actions";
+
+import { changeAllModulesVisibility } from "../../../redux/store/modules/actions";
+import { FieldValidator, ModeEdit, GetLibraryType } from "./helpers";
+import { ObjectType, TypeMode } from "../../../models";
 import {
   TypeEditorWrapper,
   TypeEditorContent,
   TypeEditorHeader,
   ChooseProperties,
 } from "./styled";
+import { TextResources } from "../../../assets/text";
+import { CloseIcon } from "../../../assets/icons/common";
+import { MODULE_TYPE, VIEW_TYPE } from "../../../models/project";
+import {
+  AttributesList,
+  TypeEditorList,
+  TerminalsList,
+  TypeEditorInputs,
+  TypePreview,
+} from "./";
+import { TypeEditorState } from "../../../redux/store/typeEditor/types";
+import { RootState } from "../../../redux/store";
+import { stat } from "fs";
+import { ListType } from "./TypeEditorList";
 
 export const TypeEditorComponent = () => {
-  const { push } = useHistory();
   const dispatch = useDispatch();
   const location = useLocation();
-  const state = useSelector<RootState>((s) => s.typeEditor) as TypeEditorState;
+  const { push } = useHistory();
+
   const selectedType = location.state["selectedElement"] as string;
-  const mode = location.state["mode"] as TypeMode;
   const selectedLibraryType = location.state[
     "selectedElementType"
   ] as ObjectType;
-  const aspect = ModeEdit(mode)
-    ? state.selectedNode.aspect
-    : state.createLibraryType.aspect;
-  const objectType = ModeEdit(state.mode)
-    ? state.selectedNode.objectType
-    : state.createLibraryType.objectType;
-
-  const onCloseEditor = () => {
-    dispatch(changeMode(TypeMode.NotSet));
-    dispatch(changeFlowView(MODULE_TYPE.TYPEEDITOR));
-    push(`/home/${VIEW_TYPE.TREEVIEW}`);
-  };
+  const state = useSelector<RootState>((s) => s.typeEditor) as TypeEditorState;
 
   useEffect(() => {
-    const darkMode = red.store.getState().darkMode.active;
-    SetDarkModeColor(darkMode);
     dispatch(getInitialData());
     dispatch(changeAllModulesVisibility(false, true));
     dispatch(getBlobData());
-    dispatch(changeSelectedType(selectedType));
-    dispatch(changeMode(mode));
-    state.selectedType &&
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (selectedType) {
       dispatch(
-        getSelectedNode(state.selectedType, GetLibraryType(selectedLibraryType))
+        getSelectedNode(selectedType, GetLibraryType(selectedLibraryType))
       );
-    dispatch(chooseAspect(mode, aspect));
-  }, [
-    dispatch,
-    aspect,
-    objectType,
-    mode,
-    selectedType,
-    state.selectedType,
-    selectedLibraryType,
-  ]);
+    }
+  }, [dispatch, selectedLibraryType, selectedType]);
 
-  const inputChanged = (id, value, hasError) => {
-    console.log("INPUT CHANGED:", id, value, hasError);
+  const onCloseEditor = () => {
+    dispatch(changeMode(TypeMode.NotSet));
+    // dispatch(changeFlowView(MODULE_TYPE.TYPEEDITOR));
+    push(`/home/${VIEW_TYPE.TREEVIEW}`);
   };
 
-  const inputBlur = (id, value, hasError) => {
-    console.log("INPUT BLUR:", id, value, hasError);
+  const onChange = (key: string, value: object) => {
+    console.log(key, value);
   };
-
-  //   const validate = (value) => {
-  //     return "Missing input " + value;
-  //   };
 
   return (
     <TypeEditorWrapper>
@@ -94,22 +77,30 @@ export const TypeEditorComponent = () => {
           <img src={CloseIcon} alt="close-window" onClick={onCloseEditor} />
         </TypeEditorHeader>
 
-        <TypeEditorInputs state={state} dispatch={dispatch} />
+        <TypeEditorInputs
+          onChange={(key, value) => onChange(key, value)}
+          createLibraryType={state?.createLibraryType}
+          icons={state?.icons}
+          locationTypes={state?.locationTypes}
+        />
         <ChooseProperties>
-          <RDSList
-            state={state}
-            disabled={ModeEdit(mode) ? false : FieldValidator(state, "rds")}
+          <TypeEditorList
+            items={state?.rdsList}
+            createLibraryType={state?.createLibraryType}
+            listType={ListType.Rds}
+            onChange={(key, data) => onChange(key, data)}
+            // disabled={ModeEdit(mode) ? false : FieldValidator(state, "rds")}
           />
-          <TerminalsList
+          {/* <TerminalsList
             state={state}
             disabled={FieldValidator(state, "terminals")}
-          />
-          {objectType === ObjectType.Interface ? null : (
+          /> */}
+          {/* {objectType === ObjectType.Interface ? null : (
             <AttributesList
               state={state}
               disabled={FieldValidator(state, "terminals")}
             />
-          )}
+          )} */}
           <TypePreview
             state={state}
             disabled={FieldValidator(state, "add")}
@@ -123,3 +114,117 @@ export const TypeEditorComponent = () => {
 };
 
 export default TypeEditorComponent;
+
+// import red, { RootState } from "../../../redux/store";
+// import { useEffect } from "react";
+// import { useDispatch, useSelector } from "react-redux";
+// import { useHistory, useLocation } from "react-router-dom";
+// import { MODULE_TYPE, VIEW_TYPE } from "../../../models/project";
+// import { TextResources } from "../../../assets/text";
+// import { CloseIcon } from "../../../assets/icons/common";
+// import { TypeEditorState } from "../../../redux/store/typeEditor/types";
+// import { changeFlowView } from "../../../redux/store/flow/actions";
+// import { SetDarkModeColor } from "../../flow/helpers/common";
+// import { changeAllModulesVisibility } from "../../../redux/store/modules/actions";
+// import { TypeMode, ObjectType } from "../../../models/";
+// import { TypeEditorInputs } from "./";
+// import { FieldValidator, ModeEdit, GetLibraryType } from "./helpers";
+// import { RDSList, TerminalsList, AttributesList, TypePreview } from ".";
+// import {
+//   changeMode,
+//   chooseAspect,
+//   getInitialData,
+//   getBlobData,
+//   getSelectedNode,
+//   changeSelectedType,
+// } from "../../../redux/store/typeEditor/actions";
+// import {
+//   TypeEditorWrapper,
+//   TypeEditorContent,
+//   TypeEditorHeader,
+//   ChooseProperties,
+// } from "./styled";
+
+// export const TypeEditorComponent = () => {
+//   const { push } = useHistory();
+//   const dispatch = useDispatch();
+//   const location = useLocation();
+//   const state = useSelector<RootState>((s) => s.typeEditor) as TypeEditorState;
+//   const selectedType = location.state["selectedElement"] as string;
+//   const mode = location.state["mode"] as TypeMode;
+//   const selectedLibraryType = location.state[
+//     "selectedElementType"
+//   ] as ObjectType;
+//   const aspect = ModeEdit(mode)
+//     ? state.selectedNode.aspect
+//     : state.createLibraryType.aspect;
+//   const objectType = ModeEdit(state.mode)
+//     ? state.selectedNode.objectType
+//     : state.createLibraryType.objectType;
+
+//   const onCloseEditor = () => {
+//     dispatch(changeMode(TypeMode.NotSet));
+//     dispatch(changeFlowView(MODULE_TYPE.TYPEEDITOR));
+//     push(`/home/${VIEW_TYPE.TREEVIEW}`);
+//   };
+
+//   useEffect(() => {
+//     const darkMode = red.store.getState().darkMode.active;
+//     SetDarkModeColor(darkMode);
+//     dispatch(getInitialData());
+//     dispatch(changeAllModulesVisibility(false, true));
+//     dispatch(getBlobData());
+//     dispatch(changeSelectedType(selectedType));
+//     dispatch(changeMode(mode));
+//     state.selectedType &&
+//       dispatch(
+//         getSelectedNode(state.selectedType, GetLibraryType(selectedLibraryType))
+//       );
+//     dispatch(chooseAspect(mode, aspect));
+//   }, [
+//     dispatch,
+//     aspect,
+//     objectType,
+//     mode,
+//     selectedType,
+//     state.selectedType,
+//     selectedLibraryType,
+//   ]);
+
+//   return (
+//     <TypeEditorWrapper>
+//       <TypeEditorContent>
+//         <TypeEditorHeader>
+//           <p>{TextResources.TypeEditor}</p>
+//           <img src={CloseIcon} alt="close-window" onClick={onCloseEditor} />
+//         </TypeEditorHeader>
+
+//         <TypeEditorInputs state={state} dispatch={dispatch} />
+//         <ChooseProperties>
+//           <RDSList
+//             state={state}
+//             disabled={ModeEdit(mode) ? false : FieldValidator(state, "rds")}
+//           />
+//           <TerminalsList
+//             state={state}
+//             disabled={FieldValidator(state, "terminals")}
+//           />
+//           {objectType === ObjectType.Interface ? null : (
+//             <AttributesList
+//               state={state}
+//               disabled={FieldValidator(state, "terminals")}
+//             />
+//           )}
+//           <TypePreview
+//             state={state}
+//             disabled={FieldValidator(state, "add")}
+//             onChange={onCloseEditor}
+//           />
+//         </ChooseProperties>
+//         {/* <TypeEditorInspector /> */}
+//       </TypeEditorContent>
+//     </TypeEditorWrapper>
+//   );
+// };
+
+// export default TypeEditorComponent;

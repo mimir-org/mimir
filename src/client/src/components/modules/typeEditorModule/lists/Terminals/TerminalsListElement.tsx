@@ -148,6 +148,7 @@ export const TerminalsListElement = ({ category, terminals, state }: Props) => {
               id={category}
               label="terminal"
               defaultValue={selectedTerminal}
+              onChange={() => {}}
             />
           </div>
           <p className="category">{category}</p>
