@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import { Color } from "../..";
 
-const InspectorBody = styled.div`
+const InspectorMenu = styled.div`
   display: flex;
   padding-top: ${(props: { top: number }) =>
     props.top ? props.top + `px` : `0px`};
   background-color: ${(props: { color: string }) => props.color}!important;
   color: ${Color.Black};
-  height: 44px;
+  height: 41px;
   border-color: ${Color.Grey};
   border-style: solid;
   border-width: ${(props: { noTopBorder: boolean }) =>
@@ -18,4 +18,4 @@ const InspectorBody = styled.div`
   overflow: hidden;
 `;
 
-export default InspectorBody;
+export default InspectorMenu;

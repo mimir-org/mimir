@@ -8,8 +8,8 @@ const ButtonContainer = styled.div`
   border-radius: 4px;
   font-size: ${FontSize.Standard};
   background-color: ${Color.White};
-  width: 79px;
-  height: 33px;
+  width: 75px;
+  height: 23px;
   display: flex;
   align-items: center;
   justify-content: space-around;

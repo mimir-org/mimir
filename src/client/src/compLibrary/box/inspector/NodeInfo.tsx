@@ -8,14 +8,14 @@ const NodeInfo = styled.div`
     display: inline;
     position: absolute;
     left: 475px;
-    top: 14px;
+    top: 10px;
   }
 
   .text {
     display: inline;
     font-weight: bold;
     position: absolute;
-    top: 18px;
+    top: 14px;
     left: 510px;
   }
 `;
