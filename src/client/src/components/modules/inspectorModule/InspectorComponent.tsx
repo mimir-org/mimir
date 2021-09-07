@@ -9,7 +9,7 @@ import { Node, Project } from "../../../models";
 import {
   TabHeader,
   TabBody,
-  NodeTitle,
+  NodeInfo,
   TabTitle,
 } from "../../../compLibrary/box/inspector";
 
@@ -43,9 +43,7 @@ const InspectorComponent = ({ node, index, project }: Props) => {
   return isOpen ? (
     <>
       <TabHeader active={true} onClick={onClick}>
-        {index === 0 && node && (
-          <NodeTitle>{node.label ?? node.name}</NodeTitle>
-        )}
+        {index === 0 && node && <NodeInfo>{node.label ?? node.name}</NodeInfo>}
         {!node && index === 1 && (
           <span>{typeEditorState.createLibraryType.name} </span>
         )}
@@ -59,9 +57,7 @@ const InspectorComponent = ({ node, index, project }: Props) => {
   ) : (
     <>
       <TabHeader onClick={onClick}>
-        {index === 0 && node && (
-          <NodeTitle>{node.label ?? node.name}</NodeTitle>
-        )}
+        {index === 0 && node && <NodeInfo>{node.label ?? node.name}</NodeInfo>}
         {!node && index === 1 && (
           <span>{typeEditorState.createLibraryType.name} </span>
         )}

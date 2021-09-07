@@ -23,12 +23,11 @@ import {
 } from "../../flow/helpers/common";
 import {
   InspectorTitle,
-  InspectorBody,
+  InspectorMenu,
   AnimatedInspector,
   IconWrapper,
   ButtonBox,
-  InspectorTopMenu,
-  NodeTitle,
+  NodeInfo,
 } from "../../../compLibrary/box/inspector";
 
 const InspectorModule = () => {
@@ -107,45 +106,46 @@ const InspectorModule = () => {
       run={animate}
       id="InspectorModule"
     >
-      <InspectorTopMenu id="InspectorTopMenu" color={getColor()}>
+      <InspectorMenu id="InspectorBody" color={getColor()}>
         {node && (
           <>
-            <NodeTitle>
-              <Symbol
-                base64={node.symbol?.data}
-                text={node.label ?? node.name}
-              />
+            <NodeInfo>
+              <div className="symbol">
+                <Symbol
+                  base64={node.symbol?.data}
+                  text={node.label ?? node.name}
+                />
+              </div>
+
               <div className="text">{node.label ?? node.name}</div>
-            </NodeTitle>
+            </NodeInfo>
             <DeleteButtonWrapper>
               <DeleteNodeButton handleClick={onNodeDelete} />
             </DeleteButtonWrapper>
+            <ButtonBox>
+              <img
+                src={isInspectorOpen ? DownIcon : UpIcon}
+                alt="toggle-icon"
+                onClick={onClick}
+              />
+            </ButtonBox>
+            <IconWrapper>
+              <InspectorTitle>{TextResources.Inspector_Heading}</InspectorTitle>
+              <img src={EyeIcon} alt="inspector-icon" />
+            </IconWrapper>
           </>
         )}
         {edge && (
           <>
-            <NodeTitle>{edge.id}</NodeTitle>
+            <NodeInfo>{edge.id}</NodeInfo>
             <DeleteButtonWrapper>
               <DeleteNodeButton handleClick={onEdgeDelete} />
             </DeleteButtonWrapper>
           </>
         )}
-        <ButtonBox>
-          <img
-            src={isInspectorOpen ? DownIcon : UpIcon}
-            alt="toggle-icon"
-            onClick={onClick}
-          />
-        </ButtonBox>
-        <IconWrapper>
-          <InspectorTitle>{TextResources.Inspector_Heading}</InspectorTitle>
-          <img src={EyeIcon} alt="inspector-icon" />
-        </IconWrapper>
-      </InspectorTopMenu>
-      <InspectorBody id="InspectorBody" color={getColor()}>
         {hasProject && <InspectorTabs project={project} node={node} />}
         <TabsBottomLine />
-      </InspectorBody>
+      </InspectorMenu>
     </AnimatedInspector>
   );
 };

@@ -9,7 +9,7 @@ import { TabEdgeContent } from ".";
 import {
   TabHeader,
   TabBody,
-  NodeTitle,
+  NodeInfo,
   TabTitle,
 } from "../../../../compLibrary/box/inspector";
 
@@ -35,7 +35,7 @@ const TabEdgeComponent = ({ edge, index }: Props) => {
   return isOpen ? (
     <>
       <TabHeader active={true} onClick={onClick}>
-        {index === 0 && edge && <NodeTitle>{edge.id}</NodeTitle>}
+        {index === 0 && edge && <NodeInfo>{edge.id}</NodeInfo>}
         {!edge && index === 1 && (
           <span>{typeEditorState.createLibraryType.name} </span>
         )}
@@ -48,7 +48,7 @@ const TabEdgeComponent = ({ edge, index }: Props) => {
     </>
   ) : (
     <TabHeader onClick={onClick}>
-      {index === 0 && edge && <NodeTitle>{edge.id}</NodeTitle>}
+      {index === 0 && edge && <NodeInfo>{edge.id}</NodeInfo>}
       {!edge && index === 1 && (
         <span>{typeEditorState.createLibraryType.name} </span>
       )}

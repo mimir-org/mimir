@@ -1,5 +1,5 @@
 import { InspectorComponent } from "../../inspectorModule";
-import { InspectorBody } from "../../../../compLibrary/box/inspector";
+import { InspectorMenu } from "../../../../compLibrary/box/inspector";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
@@ -15,10 +15,10 @@ export const TypeEditorInspector = () => {
   const aspect = state.createLibraryType.aspect;
 
   return (
-    <InspectorBody bgColor="transparent" noTopBorder={true} top={50}>
+    <InspectorMenu bgColor="transparent" noTopBorder={true} top={50}>
       <InspectorComponent index={1} project={project} />
       {IsFunction(aspect) && <InspectorComponent index={2} project={project} />}
-    </InspectorBody>
+    </InspectorMenu>
   );
 };
 

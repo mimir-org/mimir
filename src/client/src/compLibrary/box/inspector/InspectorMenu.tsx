@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Color } from "../..";
 
-const InspectorTopMenu = styled.div`
+const InspectorBody = styled.div`
   display: flex;
   padding-top: ${(props: { top: number }) =>
     props.top ? props.top + `px` : `0px`};
@@ -14,12 +14,8 @@ const InspectorTopMenu = styled.div`
     props.noTopBorder ? `0px 0px 1px 0px` : `1px 0px 1px 0px`};
   width: 100%;
   border-bottom: none;
-  border-top: 1px solid ${Color.Grey};
+  border-top: none;
   overflow: hidden;
-
-  &:hover {
-    cursor: n-resize;
-  }
 `;
 
-export default InspectorTopMenu;
+export default InspectorBody;
