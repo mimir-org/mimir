@@ -16,6 +16,8 @@ export { default as GetDefaultValue } from "./GetDefaultValue";
 export { default as GetLocationTypes } from "./GetLocationTypes";
 export { default as GetBlobData } from "./GetBlobData";
 export { default as GetFilteredRdsList } from "./GetFilteredRdsList";
+export { default as GetFilteredTerminalsList } from "./GetFilteredTerminalsList";
+export { default as GetListLabel } from "./GetListLabel";
 export { default as GetTypeValue } from "./GetTypeValue";
 export { default as GetLibraryType } from "./GetLibraryType";
 

@@ -25,13 +25,11 @@ import { MODULE_TYPE, VIEW_TYPE } from "../../../models/project";
 import {
   AttributesList,
   TypeEditorList,
-  TerminalsList,
   TypeEditorInputs,
   TypePreview,
 } from "./";
 import { TypeEditorState } from "../../../redux/store/typeEditor/types";
 import { RootState } from "../../../redux/store";
-import { stat } from "fs";
 import { ListType } from "./TypeEditorList";
 
 export const TypeEditorComponent = () => {
@@ -91,10 +89,13 @@ export const TypeEditorComponent = () => {
             onChange={(key, data) => onChange(key, data)}
             // disabled={ModeEdit(mode) ? false : FieldValidator(state, "rds")}
           />
-          {/* <TerminalsList
-            state={state}
-            disabled={FieldValidator(state, "terminals")}
-          /> */}
+          <TypeEditorList
+            items={state?.terminals}
+            createLibraryType={state?.createLibraryType}
+            listType={ListType.Terminals}
+            onChange={(key, data) => onChange(key, data)}
+            // disabled={ModeEdit(mode) ? false : FieldValidator(state, "rds")}
+          />
           {/* {objectType === ObjectType.Interface ? null : (
             <AttributesList
               state={state}

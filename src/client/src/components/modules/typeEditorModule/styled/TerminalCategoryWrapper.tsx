@@ -5,6 +5,7 @@ const TerminalCategoryWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   min-height: 30px;
+  background-color: inherit;
 
   .squarecheckbox {
     z-index: 0;

@@ -4,12 +4,21 @@ import {
   ListWrapper,
 } from "../../../compLibrary";
 import { TextResources } from "../../../assets/text";
-import { CreateLibraryType } from "../../../models";
-import RDSListElement from "./lists/RDS/RDSListElement";
-import { GetFilteredRdsList } from "./helpers";
+import { Aspect, CreateLibraryType } from "../../../models";
+import {
+  RDSListElement,
+  TerminalsListElement,
+  PredefinedAttributesListElement,
+} from "./lists/";
+import {
+  GetListLabel,
+  GetFilteredRdsList,
+  GetFilteredTerminalsList,
+} from "./helpers";
 
 export enum ListType {
   Rds = 0,
+  Terminals = 1,
 }
 
 interface Props {
@@ -31,6 +40,9 @@ export const TypeEditorList = ({
     switch (listType) {
       case ListType.Rds:
         return GetFilteredRdsList(items, createLibraryType.aspect);
+      case ListType.Terminals:
+        console.log(GetFilteredTerminalsList(items));
+        return GetFilteredTerminalsList(items);
       default:
         return [] as any[];
     }
@@ -38,21 +50,32 @@ export const TypeEditorList = ({
 
   return (
     <ListWrapper flex={0.7} disabled={disabled}>
-      <ListLabel>{TextResources.TypeEditor_Properties_RDS}</ListLabel>
-
-      <ListElementsContainer>
-        {!disabled && listType === ListType.Rds
-          ? filteredList().map((element) => (
-              <RDSListElement
-                key={element.id}
-                id={element.id}
-                name={element.name}
-                onChange={(key, data) => onChange(key, data)}
-                defaultValue={createLibraryType.rdsId}
-              />
-            ))
-          : null}
-      </ListElementsContainer>
+      <ListLabel>{GetListLabel(listType)}</ListLabel>
+      {!disabled && (
+        <ListElementsContainer>
+          {listType === ListType.Rds
+            ? filteredList().map((element) => (
+                <RDSListElement
+                  key={element.id}
+                  id={element.id}
+                  name={element.name}
+                  onChange={(key, data) => onChange(key, data)}
+                  defaultValue={createLibraryType.rdsId}
+                />
+              ))
+            : listType === ListType.Terminals
+            ? filteredList().map((element) => (
+                <TerminalsListElement
+                  key={element.name}
+                  name={element.name}
+                  terminalTypes={element.items}
+                  onChange={(key, data) => onChange(key, data)}
+                  //   defaultValue={3}
+                />
+              ))
+            : null}
+        </ListElementsContainer>
+      )}
     </ListWrapper>
   );
 };

@@ -30,7 +30,7 @@ interface Props {
   state: TypeEditorState;
 }
 
-export const AttributesListElement = ({
+export const PredefinedAttributesListElement = ({
   name,
   values,
   isMultiSelect,
@@ -176,4 +176,4 @@ export const AttributesListElement = ({
   );
 };
 
-export default AttributesListElement;
+export default PredefinedAttributesListElement;
