@@ -1,5 +1,5 @@
 const DragResizePanel = () => {
-  const BORDER_SIZE = 4;
+  const BORDER_SIZE = 12;
   const module = "InspectorModule";
   const panel = document.getElementById(module);
   const adminTab = document.getElementById("admininfo");
@@ -7,8 +7,8 @@ const DragResizePanel = () => {
   let prevY: number;
 
   const resize = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
+    // e.preventDefault();
+    // e.stopPropagation();
     const dy = prevY - e.clientY;
     prevY = e.clientY;
 

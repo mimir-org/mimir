@@ -7,7 +7,7 @@ const NodeInfo = styled.div`
   .symbol {
     display: inline;
     position: absolute;
-    left: 475px;
+    left: 495px;
     top: 10px;
   }
 
@@ -16,7 +16,7 @@ const NodeInfo = styled.div`
     font-weight: bold;
     position: absolute;
     top: 14px;
-    left: ${(props) => (props.symbol ? "510px" : "480px")};
+    left: ${(props) => (props.symbol ? "525px" : "495px")};
   }
 
   .edgetext {

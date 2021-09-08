@@ -7,16 +7,18 @@ const TabHeader = styled.div`
   border-top-right-radius: 8px;
   border-top-left-radius: 6px;
   color: ${Color.Black};
-  border-right: 1px solid ${Color.Grey};
-  border-left: 1px solid ${Color.Grey};
-  border-top: 1px solid ${Color.Grey};
+  margin-right: 8px;
 
-  height: ${(props: { active: string }) => (props.active ? "39px" : "32px")};
-  margin-top: ${(props: { active: string }) => (props.active ? "3px" : "9px")};
-  background-color: ${(props: { active: string }) =>
-    props.active ? `${Color.LightGrey}` : `${Color.DarkGrey}`};
+  height: ${(props: { active: string }) => (props.active ? "41px" : "32px")};
+  margin-top: ${(props: { active: string }) => (props.active ? "0px" : "9px")};
+
+  background-color: ${(props) =>
+    props.active ? Color.GreyInspector : props.color};
+
   padding: ${(props: { active: string }) =>
-    props.active ? "8px 20px 0px 20px;" : "5px 20px 0px 20px"};
+    props.active ? "12px 20px 0px 20px;" : "7px 20px 0px 20px"};
+
+  box-shadow: 0 5px 5px -1.5px #000;
 
   :hover {
     cursor: pointer;

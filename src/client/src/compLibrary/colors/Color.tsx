@@ -3,7 +3,13 @@ const Color = {
   BlueMagenta: "#272738",
   GreyBorder: "#d9d9d9",
   LocationSelected: "#A300A7",
-  FunctionSelected: "#FBC913",
+  FunctionSelected: "#FFDE7A",
+  FunctionInspector: "#FFFAA9",
+  ProductInspector: "#47DDE7",
+
+  FunctionTab: "#FFDE7A",
+  LocationTab: "#E09AE1",
+  GreyInspector: "#FAFAFA",
 
   White: "#fff",
   Black: "#000",

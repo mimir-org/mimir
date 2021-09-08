@@ -10,7 +10,7 @@ import { MODULE_TYPE } from "../../../models/project";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import { IsBlockView } from "../../flow/helpers/block";
 import { Node, Project } from "../../../models";
-import { DeleteButtonWrapper, TabsBottomLine } from "./styled";
+import { DeleteButtonWrapper } from "./styled";
 import { removeEdge, removeNode } from "../../../redux/store/project/actions";
 import {
   DeleteNodeButton,
@@ -141,7 +141,6 @@ const InspectorModule = () => {
           <img src={EyeIcon} alt="inspector-icon" />
         </IconWrapper>
         {hasProject && <InspectorTabs project={project} node={node} />}
-        <TabsBottomLine />
       </InspectorMenu>
     </AnimatedInspector>
   );

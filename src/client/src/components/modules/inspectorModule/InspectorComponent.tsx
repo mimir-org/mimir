@@ -1,4 +1,4 @@
-import { GetInspectorText } from "./helpers";
+import { GetInspectorText, GetTabsColor } from "./helpers";
 import { InspectorContent } from ".";
 import { useCallback } from "react";
 import { RootState } from "../../../redux/store";
@@ -22,7 +22,7 @@ interface Props {
 const InspectorComponent = ({ node, index, project }: Props) => {
   const dispatch = useDispatch();
 
-  const isOpen = useSelector<RootState>(
+  const isTabOpen = useSelector<RootState>(
     (state) => state.inspector.tabs[index]?.visible
   ) as boolean;
 
@@ -40,9 +40,9 @@ const InspectorComponent = ({ node, index, project }: Props) => {
     if (index === 2) return "relations";
   };
 
-  return isOpen ? (
+  return isTabOpen ? (
     <>
-      <TabHeader active={true} onClick={onClick}>
+      <TabHeader active={true} onClick={onClick} color={GetTabsColor(node)}>
         {index === 0 && node && <NodeInfo>{node.label ?? node.name}</NodeInfo>}
         {!node && index === 1 && (
           <span>{typeEditorState.createLibraryType.name} </span>
@@ -56,7 +56,7 @@ const InspectorComponent = ({ node, index, project }: Props) => {
     </>
   ) : (
     <>
-      <TabHeader onClick={onClick}>
+      <TabHeader onClick={onClick} color={GetTabsColor(node)}>
         {index === 0 && node && <NodeInfo>{node.label ?? node.name}</NodeInfo>}
         {!node && index === 1 && (
           <span>{typeEditorState.createLibraryType.name} </span>

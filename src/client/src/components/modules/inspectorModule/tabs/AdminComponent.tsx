@@ -1,4 +1,4 @@
-import { GetInspectorText } from "../helpers";
+import { GetInspectorText, GetTabsColor } from "../helpers";
 import { useCallback } from "react";
 import { RootState } from "../../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,7 +20,7 @@ interface Props {
 const AdminComponent = ({ node, project, index }: Props) => {
   const dispatch = useDispatch();
 
-  const isOpen = useSelector<RootState>(
+  const isTabOpen = useSelector<RootState>(
     (state) => state.inspector.tabs[index].visible
   ) as boolean;
 
@@ -32,9 +32,9 @@ const AdminComponent = ({ node, project, index }: Props) => {
     dispatch(changeInspectorTab(index));
   }, [dispatch, index]);
 
-  return isOpen ? (
+  return isTabOpen ? (
     <>
-      <TabHeader active={true} onClick={onClick}>
+      <TabHeader active={true} onClick={onClick} color={GetTabsColor(node)}>
         <TabTitle active={true}>{GetInspectorText(index)}</TabTitle>
       </TabHeader>
       <TabBody id="admininfo">
@@ -47,7 +47,7 @@ const AdminComponent = ({ node, project, index }: Props) => {
     </>
   ) : (
     <>
-      <TabHeader onClick={onClick}>
+      <TabHeader onClick={onClick} color={GetTabsColor(node)}>
         <TabTitle>{GetInspectorText(index)}</TabTitle>
       </TabHeader>
       <TabBody id="admininfo"></TabBody>

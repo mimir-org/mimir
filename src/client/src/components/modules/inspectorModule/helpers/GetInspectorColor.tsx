@@ -8,7 +8,7 @@ import {
 
 const GetInspectorColor = (node: Node, edge: Edge) => {
   if (node) {
-    if (IsFunction(node)) return Color.FunctionTransparent;
+    if (IsFunction(node)) return Color.FunctionInspector;
     if (IsLocation(node)) return Color.LocationTransparent;
     if (IsProduct(node)) return Color.ProductTransparent;
   }

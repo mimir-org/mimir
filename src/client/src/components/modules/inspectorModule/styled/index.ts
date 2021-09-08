@@ -1,5 +1,4 @@
 export { default as InputWrapper } from "./InputWrapper";
-export { default as TabsBottomLine } from "./TabsBottomLine";
 export { default as TerminalsWrapper } from "./TerminalsWrapper";
 export { default as ListWrapper } from "./ListWrapper";
 export { default as GoToAspectContainer } from "./GoToAspectContainer";

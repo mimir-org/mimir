@@ -5,6 +5,7 @@ const TabBody = styled.div`
   position: absolute;
   width: 100%;
   overflow-y: auto;
+  /* cursor: default; */
 
   .container {
     display: flex;
