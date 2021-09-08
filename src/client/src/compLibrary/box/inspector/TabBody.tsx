@@ -4,6 +4,7 @@ const TabBody = styled.div`
   top: 44px;
   position: absolute;
   width: 100%;
+  height: 250px;
   overflow-y: auto;
   /* cursor: default; */
 

@@ -1,4 +1,4 @@
-import { GetInspectorText } from "../helpers";
+import { GetInspectorText, GetTabsColor } from "../helpers";
 import { EdgeAdminContent } from ".";
 import { useCallback } from "react";
 import { RootState } from "../../../../redux/store";
@@ -30,7 +30,11 @@ const EdgeAdminComponent = ({ edge, project, index }: Props) => {
 
   return isOpen ? (
     <>
-      <TabHeader active={true} onClick={onClick}>
+      <TabHeader
+        active={true}
+        onClick={onClick}
+        color={GetTabsColor(null, edge)}
+      >
         <TabTitle active={true}>{GetInspectorText(index)}</TabTitle>
       </TabHeader>
       <TabBody>
@@ -42,7 +46,7 @@ const EdgeAdminComponent = ({ edge, project, index }: Props) => {
       </TabBody>
     </>
   ) : (
-    <TabHeader onClick={onClick}>
+    <TabHeader onClick={onClick} color={GetTabsColor(null, edge)}>
       <TabTitle>{GetInspectorText(index)}</TabTitle>
     </TabHeader>
   );

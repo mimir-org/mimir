@@ -42,7 +42,11 @@ const InspectorComponent = ({ node, index, project }: Props) => {
 
   return isTabOpen ? (
     <>
-      <TabHeader active={true} onClick={onClick} color={GetTabsColor(node)}>
+      <TabHeader
+        active={true}
+        onClick={onClick}
+        color={GetTabsColor(node, null)}
+      >
         {index === 0 && node && <NodeInfo>{node.label ?? node.name}</NodeInfo>}
         {!node && index === 1 && (
           <span>{typeEditorState.createLibraryType.name} </span>
@@ -56,7 +60,7 @@ const InspectorComponent = ({ node, index, project }: Props) => {
     </>
   ) : (
     <>
-      <TabHeader onClick={onClick} color={GetTabsColor(node)}>
+      <TabHeader onClick={onClick} color={GetTabsColor(node, null)}>
         {index === 0 && node && <NodeInfo>{node.label ?? node.name}</NodeInfo>}
         {!node && index === 1 && (
           <span>{typeEditorState.createLibraryType.name} </span>

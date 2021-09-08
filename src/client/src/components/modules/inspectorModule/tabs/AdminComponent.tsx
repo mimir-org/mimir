@@ -34,7 +34,11 @@ const AdminComponent = ({ node, project, index }: Props) => {
 
   return isTabOpen ? (
     <>
-      <TabHeader active={true} onClick={onClick} color={GetTabsColor(node)}>
+      <TabHeader
+        active={true}
+        onClick={onClick}
+        color={GetTabsColor(node, null)}
+      >
         <TabTitle active={true}>{GetInspectorText(index)}</TabTitle>
       </TabHeader>
       <TabBody id="admininfo">
@@ -47,7 +51,7 @@ const AdminComponent = ({ node, project, index }: Props) => {
     </>
   ) : (
     <>
-      <TabHeader onClick={onClick} color={GetTabsColor(node)}>
+      <TabHeader onClick={onClick} color={GetTabsColor(node, null)}>
         <TabTitle>{GetInspectorText(index)}</TabTitle>
       </TabHeader>
       <TabBody id="admininfo"></TabBody>

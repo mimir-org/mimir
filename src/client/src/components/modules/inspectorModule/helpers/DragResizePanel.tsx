@@ -19,7 +19,7 @@ const DragResizePanel = () => {
     // Change tabs height
     if (adminTab) {
       adminTab.style.height =
-        parseInt(getComputedStyle(panel, "").height) - 80 + "px";
+        parseInt(getComputedStyle(panel, "").height) - 45 + "px";
     }
 
     if (terminalsTab) {

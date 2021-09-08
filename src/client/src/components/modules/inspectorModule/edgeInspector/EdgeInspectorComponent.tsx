@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeInspectorTab } from "../../../../redux/store/inspector/actions";
 import { Edge } from "../../../../models";
 import { TabEdgeContent } from ".";
+import { GetTabsColor } from "../helpers";
 import {
   TabHeader,
   TabBody,
@@ -34,7 +35,11 @@ const TabEdgeComponent = ({ edge, index }: Props) => {
 
   return isOpen ? (
     <>
-      <TabHeader active={true} onClick={onClick}>
+      <TabHeader
+        active={true}
+        onClick={onClick}
+        color={GetTabsColor(null, edge)}
+      >
         {index === 0 && edge && <NodeInfo>{edge.id}</NodeInfo>}
         {!edge && index === 1 && (
           <span>{typeEditorState.createLibraryType.name} </span>
@@ -47,7 +52,7 @@ const TabEdgeComponent = ({ edge, index }: Props) => {
       </TabBody>
     </>
   ) : (
-    <TabHeader onClick={onClick}>
+    <TabHeader onClick={onClick} color={GetTabsColor(null, edge)}>
       {index === 0 && edge && <NodeInfo>{edge.id}</NodeInfo>}
       {!edge && index === 1 && (
         <span>{typeEditorState.createLibraryType.name} </span>

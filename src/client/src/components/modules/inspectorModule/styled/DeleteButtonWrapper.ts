@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const DeleteButtonWrapper = styled.div`
   position: absolute;
-  right: 180px;
+  right: 140px;
   top: 0px;
 `;
 

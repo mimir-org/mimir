@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { EyeIcon, DownIcon, UpIcon } from "../../../assets/icons/common";
+import { DownIcon, UpIcon } from "../../../assets/icons/common";
 import { TextResources } from "../../../assets/text";
 import { InspectorTabs } from "./";
 import { Size } from "../../../compLibrary";
@@ -143,7 +143,6 @@ const InspectorModule = () => {
         </ButtonBox>
         <IconWrapper>
           <InspectorTitle>{TextResources.Inspector_Heading}</InspectorTitle>
-          <img src={EyeIcon} alt="inspector-icon" />
         </IconWrapper>
         {hasProject && <InspectorTabs project={project} node={node} />}
       </InspectorMenu>
