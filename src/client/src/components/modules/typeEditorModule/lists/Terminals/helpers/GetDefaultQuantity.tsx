@@ -7,7 +7,6 @@ const GetDefaultQuantity = (state: TypeEditorState) => {
     state.selectedNode &&
     IsObjectBlock(state.selectedNode.objectType)
   ) {
-    console.log(state.selectedNode.terminalTypes.length);
     return state.selectedNode.terminalTypes.length;
   } else {
     return 0;
