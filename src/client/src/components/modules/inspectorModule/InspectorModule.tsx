@@ -4,22 +4,19 @@ import { RootState } from "../../../redux/store";
 import { EyeIcon, DownIcon, UpIcon } from "../../../assets/icons/common";
 import { TextResources } from "../../../assets/text";
 import { InspectorTabs } from "./";
-import { Color, Size } from "../../../compLibrary";
+import { Size } from "../../../compLibrary";
 import { Symbol } from "../../../compLibrary/dropdown";
 import { MODULE_TYPE } from "../../../models/project";
 import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import { IsBlockView } from "../../flow/helpers/block";
 import { Node, Project } from "../../../models";
 import { DeleteButtonWrapper, TabsBottomLine } from "./styled";
-import { DeleteNodeButton, ResizePanel } from "./helpers";
+import { DeleteNodeButton, GetInspectorColor, ResizePanel } from "./helpers";
 import { removeEdge, removeNode } from "../../../redux/store/project/actions";
 import {
   FindSelectedNode,
   IsExplorer,
-  IsFunction,
   IsLibrary,
-  IsLocation,
-  IsProduct,
 } from "../../flow/helpers/common";
 import {
   InspectorTitle,
@@ -60,17 +57,15 @@ const InspectorModule = () => {
     dispatch(changeModuleVisibility(key, !isInspectorOpen, true));
   };
 
-  const onNodeDelete = () => {
-    project.edges.forEach((e) => {
-      if (e.fromNodeId === node.id) dispatch(removeEdge(e.id));
-      if (e.toNodeId === node.id) dispatch(removeEdge(e.id));
-    });
-    dispatch(removeNode(node.id));
-    dispatch(changeModuleVisibility(MODULE_TYPE.INSPECTOR, false, true));
-  };
+  const onDelete = () => {
+    if (node) {
+      project.edges.forEach((e) => {
+        if (e.fromNodeId === node.id) dispatch(removeEdge(e.id));
+        if (e.toNodeId === node.id) dispatch(removeEdge(e.id));
+      });
+      dispatch(removeNode(node.id));
+    } else dispatch(removeEdge(edge.id));
 
-  const onEdgeDelete = () => {
-    dispatch(removeEdge(edge.id));
     dispatch(changeModuleVisibility(MODULE_TYPE.INSPECTOR, false, true));
   };
 
@@ -90,12 +85,6 @@ const InspectorModule = () => {
     ResizePanel();
   }, []);
 
-  const getColor = () => {
-    if (IsFunction(node)) return Color.FunctionTransparent;
-    else if (IsLocation(node)) return Color.LocationTransparent;
-    else if (IsProduct(node)) return Color.ProductTransparent;
-  };
-
   return (
     <AnimatedInspector
       type={key}
@@ -106,10 +95,10 @@ const InspectorModule = () => {
       run={animate}
       id="InspectorModule"
     >
-      <InspectorMenu id="InspectorBody" color={getColor()}>
+      <InspectorMenu id="InspectorBody" color={GetInspectorColor(node, edge)}>
         {node && (
           <>
-            <NodeInfo>
+            <NodeInfo symbol={node.symbol?.id}>
               <div className="symbol">
                 <Symbol
                   base64={node.symbol?.data}
@@ -119,19 +108,21 @@ const InspectorModule = () => {
               <div className="text">{node.label ?? node.name}</div>
             </NodeInfo>
             <DeleteButtonWrapper>
-              <DeleteNodeButton handleClick={onNodeDelete} />
+              <DeleteNodeButton handleClick={onDelete} />
+            </DeleteButtonWrapper>
+          </>
+        )}
+        {edge && (
+          <>
+            <NodeInfo>
+              <div className="edgetext">{edge.id}</div>
+            </NodeInfo>
+            <DeleteButtonWrapper>
+              <DeleteNodeButton handleClick={onDelete} />
             </DeleteButtonWrapper>
           </>
         )}
 
-        {/* {edge && (
-          <>
-            <NodeInfo>{edge.id}</NodeInfo>
-            <DeleteButtonWrapper>
-              <DeleteNodeButton handleClick={onEdgeDelete} />
-            </DeleteButtonWrapper>
-          </>
-        )} */}
         <ButtonBox>
           <img
             src={isInspectorOpen ? DownIcon : UpIcon}

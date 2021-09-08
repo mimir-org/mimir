@@ -7,6 +7,7 @@ import { ProjectMainMenu } from "../project";
 import { RootState } from "../../redux/store/index";
 import { useOnConnect, useOnDrop, useOnRemove } from "./hooks";
 import { FullScreenBox } from "../../compLibrary/controls";
+import { Size } from "../../compLibrary";
 import { OpenProjectMenu } from "../project/openProject/";
 import { BlobData } from "../../models";
 import { ProjectState } from "../../redux/store/project/types";
@@ -99,6 +100,9 @@ const FlowTree = () => {
     dispatch(changeActiveNode(element.id, true));
     dispatch(changeModuleVisibility(MODULE_TYPE.INSPECTOR, true, true));
     dispatch(changeInspectorTab(0));
+    const panel = document.getElementById("InspectorModule");
+    if (panel.style.height === Size.ModuleClosed + "px")
+      panel.style.height = Size.InspectorModuleOpen + "px";
   };
 
   // Rerender

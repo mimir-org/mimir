@@ -2,6 +2,7 @@ import { MODULE_TYPE } from "../../../../models/project";
 import { changeInspectorTab } from "../../../../redux/store/inspector/actions";
 import { changeModuleVisibility } from "../../../../redux/store/modules/actions";
 import { FindSelectedNode } from "../common";
+import { Size } from "../../../../compLibrary";
 import {
   changeActiveEdge,
   changeActiveNode,
@@ -10,12 +11,13 @@ import {
 const OnTreeClick = (e, dispatch, project) => {
   if (!project) return;
 
-  // Close Inspector if nothing is selected
+  // Close Inspector if no node/edge is selected
   if (e.target.className === "react-flow__pane") {
     dispatch(changeModuleVisibility(MODULE_TYPE.INSPECTOR, false, true));
     dispatch(changeActiveNode(null, false));
-    // const panel = document.getElementById("InspectorModule");
-    // panel.style.height = Size.ModuleClosed + "px";
+    dispatch(changeActiveEdge(null, false));
+    const panel = document.getElementById("InspectorModule");
+    panel.style.height = Size.ModuleClosed + "px";
     return;
   }
 
@@ -28,14 +30,13 @@ const OnTreeClick = (e, dispatch, project) => {
     return;
   }
 
+  // TODO: Remove?
   if (e.target.classList.contains("react-flow__pane")) {
     const selectedNode = FindSelectedNode();
     if (selectedNode) {
       dispatch(changeActiveEdge(null, false));
       dispatch(changeActiveNode(selectedNode.id, false));
       dispatch(changeInspectorTab(0));
-      // const panel = document.getElementById("InspectorModule");
-      // panel.style.height = Size.InspectorModuleOpen + "px";
       return;
     }
   }

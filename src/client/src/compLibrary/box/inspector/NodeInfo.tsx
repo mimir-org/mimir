@@ -16,7 +16,15 @@ const NodeInfo = styled.div`
     font-weight: bold;
     position: absolute;
     top: 14px;
-    left: 510px;
+    left: ${(props) => (props.symbol ? "510px" : "480px")};
+  }
+
+  .edgetext {
+    display: inline;
+    font-weight: bold;
+    position: absolute;
+    top: 14px;
+    left: 260px;
   }
 `;
 
