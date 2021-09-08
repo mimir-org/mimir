@@ -11,8 +11,13 @@ import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import { IsBlockView } from "../../flow/helpers/block";
 import { Node, Project } from "../../../models";
 import { DeleteButtonWrapper, TabsBottomLine } from "./styled";
-import { DeleteNodeButton, GetInspectorColor, ResizePanel } from "./helpers";
 import { removeEdge, removeNode } from "../../../redux/store/project/actions";
+import {
+  DeleteNodeButton,
+  GetInspectorColor,
+  DragResizePanel,
+  SetPanelHeight,
+} from "./helpers";
 import {
   FindSelectedNode,
   IsExplorer,
@@ -67,6 +72,7 @@ const InspectorModule = () => {
     } else dispatch(removeEdge(edge.id));
 
     dispatch(changeModuleVisibility(MODULE_TYPE.INSPECTOR, false, true));
+    SetPanelHeight(Size.ModuleClosed);
   };
 
   const start = isInspectorOpen ? Size.ModuleClosed : Size.InspectorModuleOpen;
@@ -82,7 +88,7 @@ const InspectorModule = () => {
   } else node = FindSelectedNode();
 
   useEffect(() => {
-    ResizePanel();
+    DragResizePanel();
   }, []);
 
   return (

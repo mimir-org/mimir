@@ -19,6 +19,7 @@ import { LibraryState } from "../../redux/store/library/types";
 import { changeModuleVisibility } from "../../redux/store/modules/actions";
 import { MODULE_TYPE } from "../../models/project";
 import { getBlobData } from "../../redux/store/typeEditor/actions";
+import { SetPanelHeight } from "../modules/inspectorModule/helpers";
 import {
   updatePosition,
   changeActiveNode,
@@ -102,7 +103,7 @@ const FlowTree = () => {
     dispatch(changeInspectorTab(0));
     const panel = document.getElementById("InspectorModule");
     if (panel.style.height === Size.ModuleClosed + "px")
-      panel.style.height = Size.InspectorModuleOpen + "px";
+      SetPanelHeight(Size.InspectorModuleOpen);
   };
 
   // Rerender

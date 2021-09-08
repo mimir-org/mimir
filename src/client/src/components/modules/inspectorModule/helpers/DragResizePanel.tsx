@@ -1,4 +1,4 @@
-const ResizePanel = () => {
+const DragResizePanel = () => {
   const BORDER_SIZE = 4;
   const module = "InspectorModule";
   const panel = document.getElementById(module);
@@ -11,9 +11,12 @@ const ResizePanel = () => {
     e.stopPropagation();
     const dy = prevY - e.clientY;
     prevY = e.clientY;
+
+    // Change module height
     panel.style.height =
       parseInt(getComputedStyle(panel, "").height) + dy + "px";
 
+    // Change tabs height
     if (adminTab) {
       adminTab.style.height =
         parseInt(getComputedStyle(panel, "").height) - 80 + "px";
@@ -25,7 +28,7 @@ const ResizePanel = () => {
     }
   };
 
-  if (panel !== null) {
+  if (panel) {
     panel.addEventListener("mousedown", (e) => {
       if (e.offsetY < BORDER_SIZE) {
         prevY = e.clientY;
@@ -40,4 +43,4 @@ const ResizePanel = () => {
   }
 };
 
-export default ResizePanel;
+export default DragResizePanel;
