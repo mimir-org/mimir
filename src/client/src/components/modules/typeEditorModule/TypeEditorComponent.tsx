@@ -9,9 +9,9 @@ import { TypeEditorState } from "../../../redux/store/typeEditor/types";
 import { changeFlowView } from "../../../redux/store/flow/actions";
 import { SetDarkModeColor } from "../../flow/helpers/common";
 import { changeAllModulesVisibility } from "../../../redux/store/modules/actions";
-import { TypeMode, ObjectType, LibraryFilter } from "../../../models/";
+import { TypeMode, ObjectType } from "../../../models/";
 import { TypeEditorInputs } from "./";
-import { FieldValidator, ModeEdit } from "./helpers";
+import { FieldValidator, ModeEdit, GetLibraryType } from "./helpers";
 import { RDSList, TerminalsList, AttributesList, TypePreview } from ".";
 import {
   changeMode,
@@ -33,12 +33,17 @@ export const TypeEditorComponent = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const state = useSelector<RootState>((s) => s.typeEditor) as TypeEditorState;
-  const objectType = state.createLibraryType.objectType;
-  const selectedType = location.state["selectedType"] as string;
+  const selectedType = location.state["selectedElement"] as string;
   const mode = location.state["mode"] as TypeMode;
-  let aspect = ModeEdit(mode)
+  const selectedLibraryType = location.state[
+    "selectedElementType"
+  ] as ObjectType;
+  const aspect = ModeEdit(mode)
     ? state.selectedNode.aspect
     : state.createLibraryType.aspect;
+  const objectType = ModeEdit(state.mode)
+    ? state.selectedNode.objectType
+    : state.createLibraryType.objectType;
 
   const onCloseEditor = () => {
     dispatch(changeMode(TypeMode.NotSet));
@@ -55,9 +60,19 @@ export const TypeEditorComponent = () => {
     dispatch(changeSelectedType(selectedType));
     dispatch(changeMode(mode));
     state.selectedType &&
-      dispatch(getSelectedNode(state.selectedType, LibraryFilter.Node));
+      dispatch(
+        getSelectedNode(state.selectedType, GetLibraryType(selectedLibraryType))
+      );
     dispatch(chooseAspect(mode, aspect));
-  }, [dispatch, aspect, objectType, mode, selectedType, state.selectedType]);
+  }, [
+    dispatch,
+    aspect,
+    objectType,
+    mode,
+    selectedType,
+    state.selectedType,
+    selectedLibraryType,
+  ]);
 
   return (
     <TypeEditorWrapper>
@@ -82,7 +97,11 @@ export const TypeEditorComponent = () => {
               disabled={FieldValidator(state, "terminals")}
             />
           )}
-          <TypePreview state={state} disabled={FieldValidator(state, "add")} />
+          <TypePreview
+            state={state}
+            disabled={FieldValidator(state, "add")}
+            onChange={onCloseEditor}
+          />
         </ChooseProperties>
         {/* <TypeEditorInspector /> */}
       </TypeEditorContent>
