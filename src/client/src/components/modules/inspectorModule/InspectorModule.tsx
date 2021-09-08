@@ -58,8 +58,13 @@ const InspectorModule = () => {
     (state) => state.modules.types.find((x) => IsExplorer(x.type)).visible
   ) as boolean;
 
-  const onClick = () => {
+  const onToggleClick = () => {
     dispatch(changeModuleVisibility(key, !isInspectorOpen, true));
+    const panel = document.getElementById("InspectorModule");
+
+    if (panel.style.height === Size.ModuleClosed + "px")
+      SetPanelHeight(Size.InspectorModuleOpen);
+    else SetPanelHeight(Size.ModuleClosed);
   };
 
   const onDelete = () => {
@@ -133,7 +138,7 @@ const InspectorModule = () => {
           <img
             src={isInspectorOpen ? DownIcon : UpIcon}
             alt="toggle-icon"
-            onClick={onClick}
+            onClick={onToggleClick}
           />
         </ButtonBox>
         <IconWrapper>

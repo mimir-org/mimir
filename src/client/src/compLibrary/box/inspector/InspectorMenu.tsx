@@ -5,7 +5,7 @@ const InspectorMenu = styled.div`
   display: flex;
 
   color: ${Color.Black};
-  height: 41px;
+  height: 44px;
   width: 100%;
   overflow: hidden;
 
