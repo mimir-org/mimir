@@ -116,33 +116,33 @@ const InspectorModule = () => {
                   text={node.label ?? node.name}
                 />
               </div>
-
               <div className="text">{node.label ?? node.name}</div>
             </NodeInfo>
             <DeleteButtonWrapper>
               <DeleteNodeButton handleClick={onNodeDelete} />
             </DeleteButtonWrapper>
-            <ButtonBox>
-              <img
-                src={isInspectorOpen ? DownIcon : UpIcon}
-                alt="toggle-icon"
-                onClick={onClick}
-              />
-            </ButtonBox>
-            <IconWrapper>
-              <InspectorTitle>{TextResources.Inspector_Heading}</InspectorTitle>
-              <img src={EyeIcon} alt="inspector-icon" />
-            </IconWrapper>
           </>
         )}
-        {edge && (
+
+        {/* {edge && (
           <>
             <NodeInfo>{edge.id}</NodeInfo>
             <DeleteButtonWrapper>
               <DeleteNodeButton handleClick={onEdgeDelete} />
             </DeleteButtonWrapper>
           </>
-        )}
+        )} */}
+        <ButtonBox>
+          <img
+            src={isInspectorOpen ? DownIcon : UpIcon}
+            alt="toggle-icon"
+            onClick={onClick}
+          />
+        </ButtonBox>
+        <IconWrapper>
+          <InspectorTitle>{TextResources.Inspector_Heading}</InspectorTitle>
+          <img src={EyeIcon} alt="inspector-icon" />
+        </IconWrapper>
         {hasProject && <InspectorTabs project={project} node={node} />}
         <TabsBottomLine />
       </InspectorMenu>

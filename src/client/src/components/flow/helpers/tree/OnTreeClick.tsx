@@ -13,6 +13,7 @@ const OnTreeClick = (e, dispatch, project) => {
   // Close Inspector if nothing is selected
   if (e.target.className === "react-flow__pane") {
     dispatch(changeModuleVisibility(MODULE_TYPE.INSPECTOR, false, true));
+    dispatch(changeActiveNode(null, false));
     // const panel = document.getElementById("InspectorModule");
     // panel.style.height = Size.ModuleClosed + "px";
     return;

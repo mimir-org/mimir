@@ -14,8 +14,12 @@ const InspectorMenu = styled.div`
     props.noTopBorder ? `0px 0px 1px 0px` : `1px 0px 1px 0px`};
   width: 100%;
   border-bottom: none;
-  border-top: none;
+  border-top: solid 1px ${Color.Grey};
   overflow: hidden;
+
+  &:hover {
+    cursor: n-resize;
+  }
 `;
 
 export default InspectorMenu;
