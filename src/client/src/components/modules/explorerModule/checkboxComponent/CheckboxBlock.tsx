@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { changeActiveNode } from "../../../../redux/store/project/actions";
+import { setActiveNode } from "../../../../redux/store/project/actions";
 import { Node } from "../../../../models";
 import { RootState } from "../../../../redux/store";
 import { setSplitNode } from "../../../../redux/store/splitView/actions";
@@ -36,9 +36,9 @@ export const CheckboxBlock = ({ node, inputLabel }: Props) => {
     }
     if (splitView) {
       IsFunction(node)
-        ? dispatch(changeActiveNode(node.id, true))
+        ? dispatch(setActiveNode(node.id, true))
         : dispatch(setSplitNode(node));
-    } else dispatch(changeActiveNode(node.id, true));
+    } else dispatch(setActiveNode(node.id, true));
   };
 
   return (

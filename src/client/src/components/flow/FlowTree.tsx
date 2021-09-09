@@ -22,8 +22,8 @@ import { getBlobData } from "../../redux/store/typeEditor/actions";
 import { SetPanelHeight } from "../modules/inspectorModule/helpers";
 import {
   updatePosition,
-  changeActiveNode,
-  changeActiveEdge,
+  setActiveNode,
+  setActiveEdge,
 } from "../../redux/store/project/actions";
 
 const FlowTree = () => {
@@ -97,8 +97,8 @@ const FlowTree = () => {
   };
 
   const OnElementClick = (_event, element) => {
-    dispatch(changeActiveEdge(null, false));
-    dispatch(changeActiveNode(element.id, true));
+    dispatch(setActiveEdge(null, false));
+    dispatch(setActiveNode(element.id, true));
     dispatch(changeModuleVisibility(MODULE_TYPE.INSPECTOR, true, true));
     dispatch(changeInspectorTab(0));
     const panel = document.getElementById("InspectorModule");

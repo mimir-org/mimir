@@ -3,7 +3,7 @@ import { GoToAspectContainer, InputWrapper } from "../styled";
 import { RightArrowIcon } from "../../../../assets/icons/common";
 import { ConnectionList } from "../helpers";
 import { useDispatch } from "react-redux";
-import { changeActiveNode } from "../../../../redux/store/project/actions";
+import { setActiveNode } from "../../../../redux/store/project/actions";
 import { Project, Edge, Node } from "../../../../models";
 import { TextResources } from "../../../../assets/text";
 import {
@@ -35,7 +35,7 @@ const RelationComponent = ({ project, node }: Props) => {
   );
 
   function changeSelectedNode(id) {
-    dispatch(changeActiveNode(id, true));
+    dispatch(setActiveNode(id, true));
   }
   function goToAspectNode(node) {
     alert("Cannot go to " + node.label + ": Not yet implemented.");

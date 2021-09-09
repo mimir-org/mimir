@@ -15,8 +15,8 @@ import { GetBlockEdgeTypes, IsBlockView, OnBlockClick } from "./helpers/block";
 import { CreateBlockElements } from "./creators";
 import { useOnConnect, useOnDrop, useOnRemove, useOnDragStop } from "./hooks";
 import {
-  changeActiveBlockNode,
-  changeActiveEdge,
+  setActiveBlockNode,
+  setActiveEdge,
 } from "../../redux/store/project/actions";
 import {
   FindSelectedNode,
@@ -137,9 +137,9 @@ const FlowBlock = () => {
 
   const OnElementClick = (_event, element) => {
     if (!splitView) {
-      dispatch(changeActiveEdge(null, false));
+      dispatch(setActiveEdge(null, false));
     }
-    dispatch(changeActiveBlockNode(element.id));
+    dispatch(setActiveBlockNode(element.id));
     dispatch(changeInspectorTab(0));
   };
 

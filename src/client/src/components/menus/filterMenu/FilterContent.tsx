@@ -4,7 +4,7 @@ import { IsBlockView } from "../../flow/helpers/block";
 import { Connector, Edge, Node, RelationType } from "../../../models";
 import { MenuSubHeader } from "../../../compLibrary/box/menus";
 import {
-  changeEdgeVisibility,
+  setEdgeVisibility,
   changeActiveConnector,
 } from "../../../redux/store/project/actions";
 import {
@@ -39,7 +39,7 @@ const FilterContent = ({ conn, type, name, header, node, edges }: Props) => {
       setChecked(IsChecked(type, edges, conn, node, name));
       selectedElements.forEach((element) => {
         if (IsEdge(element)) {
-          dispatch(changeEdgeVisibility(element, !element.isHidden));
+          dispatch(setEdgeVisibility(element, !element.isHidden));
         } else {
           const connNode = FindConnectorNode(element);
           dispatch(
