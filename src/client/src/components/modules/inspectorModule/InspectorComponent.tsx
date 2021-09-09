@@ -34,6 +34,7 @@ const InspectorComponent = ({ node, index, project }: Props) => {
     dispatch(changeInspectorTab(index));
   }, [dispatch, index]);
 
+  // TODO: move
   const getId = () => {
     if (index === 1) return "parameters";
     if (index === 2) return "terminals";
@@ -59,16 +60,13 @@ const InspectorComponent = ({ node, index, project }: Props) => {
       </TabBody>
     </>
   ) : (
-    <>
-      <TabHeader onClick={onClick} color={GetTabsColor(node, null)}>
-        {index === 0 && node && <NodeInfo>{node.label ?? node.name}</NodeInfo>}
-        {!node && index === 1 && (
-          <span>{typeEditorState.createLibraryType.name} </span>
-        )}
-        <TabTitle>{GetInspectorText(index)}</TabTitle>
-      </TabHeader>
-      <TabBody id={getId()}></TabBody>
-    </>
+    <TabHeader onClick={onClick} color={GetTabsColor(node, null)}>
+      {index === 0 && node && <NodeInfo>{node.label ?? node.name}</NodeInfo>}
+      {!node && index === 1 && (
+        <span>{typeEditorState.createLibraryType.name} </span>
+      )}
+      <TabTitle>{GetInspectorText(index)}</TabTitle>
+    </TabHeader>
   );
 };
 

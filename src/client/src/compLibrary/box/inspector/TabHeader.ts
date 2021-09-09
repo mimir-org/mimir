@@ -18,7 +18,7 @@ const TabHeader = styled.div`
   padding: ${(props: { active: string }) =>
     props.active ? "12px 20px 0px 20px;" : "8px 20px 0px 20px"};
 
-  box-shadow: 0 5px 5px -1.5px #000;
+  box-shadow: 0 5px 5px -1.5px #585858;
 
   :hover {
     cursor: pointer;

@@ -28,7 +28,7 @@ import {
   InspectorMenu,
   AnimatedInspector,
   IconWrapper,
-  ButtonBox,
+  ToggleBox,
   NodeInfo,
 } from "../../../compLibrary/box/inspector";
 
@@ -134,13 +134,13 @@ const InspectorModule = () => {
           </>
         )}
 
-        <ButtonBox>
+        <ToggleBox>
           <img
             src={isInspectorOpen ? DownIcon : UpIcon}
             alt="toggle-icon"
             onClick={onToggleClick}
           />
-        </ButtonBox>
+        </ToggleBox>
         <IconWrapper>
           <InspectorTitle>{TextResources.Inspector_Heading}</InspectorTitle>
         </IconWrapper>

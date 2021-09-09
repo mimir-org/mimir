@@ -8,14 +8,14 @@ const NodeInfo = styled.div`
     display: inline;
     position: absolute;
     left: 495px;
-    top: 13px;
+    top: 10px;
   }
 
   .text {
     display: inline;
     font-weight: bold;
     position: absolute;
-    top: 17px;
+    top: 14px;
     left: ${(props) => (props.symbol ? "525px" : "495px")};
   }
 
@@ -23,7 +23,7 @@ const NodeInfo = styled.div`
     display: inline;
     font-weight: bold;
     position: absolute;
-    top: 17px;
+    top: 14px;
     left: 260px;
   }
 `;

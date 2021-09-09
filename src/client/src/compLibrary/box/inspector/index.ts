@@ -9,7 +9,7 @@ export { default as TabColumn } from "./TabColumn";
 export { default as TabRow } from "./TabRow";
 export { default as NodeInfo } from "./NodeInfo";
 export { default as TabTitle } from "./TabTitle";
-export { default as ButtonBox } from "./ButtonBox";
+export { default as ToggleBox } from "./ToggleBox";
 export { default as RelationColumns } from "./RelationColumns";
 export { default as AspectList } from "./AspectList";
 export { default as ButtonGoToAspect } from "./ButtonGoToAspect";
