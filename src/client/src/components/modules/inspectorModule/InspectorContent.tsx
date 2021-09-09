@@ -11,14 +11,12 @@ interface Props {
   index?: number;
 }
 
-const InspectorContent = ({ node, index, project }: Props) => {
-  return (
-    <>
-      {index === 1 && <ParametersComponent node={node} />}
-      {index === 2 && <TerminalsComponent node={node} />}
-      {index === 3 && <RelationComponent node={node} project={project} />}
-    </>
-  );
-};
+const InspectorContent = ({ node, index, project }: Props) => (
+  <>
+    {index === 1 && <ParametersComponent node={node} />}
+    {index === 2 && <TerminalsComponent node={node} />}
+    {index === 3 && <RelationComponent node={node} project={project} />}
+  </>
+);
 
 export default InspectorContent;

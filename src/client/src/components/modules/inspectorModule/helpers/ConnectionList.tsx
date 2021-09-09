@@ -37,25 +37,22 @@ const ListElement = styled.div`
   }
 `;
 
-const ConnectionList = ({ nodes, title, onElementClick }) => {
-  return (
-    <Wrapper>
-      <span>{title}</span>
-      <ObjectsContainer>
-        {nodes.map((n, i) => {
-          return (
-            <ListElement
-              onClick={() => onElementClick(n.id)}
-              index={i}
-              key={n.id}
-            >
-              {n.label}
-            </ListElement>
-          );
-        })}
-      </ObjectsContainer>
-    </Wrapper>
-  );
-};
-
+const ConnectionList = ({ nodes, title, onElementClick }) => (
+  <Wrapper>
+    <span>{title}</span>
+    <ObjectsContainer>
+      {nodes.map((n, i) => {
+        return (
+          <ListElement
+            onClick={() => onElementClick(n.id)}
+            index={i}
+            key={n.id}
+          >
+            {n.label}
+          </ListElement>
+        );
+      })}
+    </ObjectsContainer>
+  </Wrapper>
+);
 export default ConnectionList;

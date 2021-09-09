@@ -6,14 +6,12 @@ interface Props {
   index?: number;
 }
 
-const TabEdgeContent = ({ edge, index }: Props) => {
-  return (
-    <>
-      {index === 1 && <ParametersEdgeComponent edge={edge} />}
-      {/* {index === 2 && <TerminalsTabComponent node={node} />} */}
-      {/* {index === 3 && <RelationTabComponent node={node} />} */}
-    </>
-  );
-};
+const TabEdgeContent = ({ edge, index }: Props) => (
+  <>
+    {index === 1 && <ParametersEdgeComponent edge={edge} />}
+    {/* {index === 2 && <TerminalsTabComponent node={node} />} */}
+    {/* {index === 3 && <RelationTabComponent node={node} />} */}
+  </>
+);
 
 export default TabEdgeContent;

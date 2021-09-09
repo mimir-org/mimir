@@ -1,5 +1,5 @@
 const DragResizePanel = () => {
-  const BORDER_SIZE = 12;
+  const BORDER_SIZE = 44;
   const module = "InspectorModule";
   const panel = document.getElementById(module);
   const adminTab = document.getElementById("admininfo");

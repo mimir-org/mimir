@@ -73,7 +73,7 @@ const InspectorModule = () => {
         open={isInspectorOpen}
         type={type}
       />
-      {project && <InspectorTabs project={project} node={node} />}
+      {project && <InspectorTabs project={project} node={node} edge={edge} />}
     </AnimatedInspector>
   );
 };

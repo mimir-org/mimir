@@ -34,25 +34,22 @@ const ListElement = styled.div`
   }
 `;
 
-const ActiveTerminalTypeList = ({ terminals, title, onElementClick }) => {
-  return (
-    <Wrapper>
-      <span>{title}</span>
-      <ObjectsContainer>
-        {terminals?.map((n, i) => {
-          return (
-            <ListElement
-              onClick={() => onElementClick(n.id)}
-              index={i}
-              key={n.id}
-            >
-              {n.name} {ConnectorType[n.type]}
-            </ListElement>
-          );
-        })}
-      </ObjectsContainer>
-    </Wrapper>
-  );
-};
-
+const ActiveTerminalTypeList = ({ terminals, title, onElementClick }) => (
+  <Wrapper>
+    <span>{title}</span>
+    <ObjectsContainer>
+      {terminals?.map((n, i) => {
+        return (
+          <ListElement
+            onClick={() => onElementClick(n.id)}
+            index={i}
+            key={n.id}
+          >
+            {n.name} {ConnectorType[n.type]}
+          </ListElement>
+        );
+      })}
+    </ObjectsContainer>
+  </Wrapper>
+);
 export default ActiveTerminalTypeList;

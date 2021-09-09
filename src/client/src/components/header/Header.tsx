@@ -4,13 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { VIEW_TYPE } from "../../models/project";
 import { MenuMainHeader } from "../../compLibrary/box/menus";
 import { ProjectState } from "../../redux/store/project/types";
+import { IsExplorer, IsLibrary } from "../flow/helpers/common";
 import {
   OnAccountClick,
   OnDarkMode,
   OnFilterClick,
   OnViewClick,
 } from "./handlers";
-import { IsExplorer, IsLibrary } from "../flow/helpers/common";
 import {
   HeaderBox,
   OptionsBox,
@@ -34,15 +34,15 @@ const Header = () => {
     (state) => state.projectState
   ) as ProjectState;
 
-  const darkMode = useSelector<RootState>(
+  const isDarkMode = useSelector<RootState>(
     (state) => state.darkMode.active
   ) as boolean;
 
-  const accountMenuOpen = useSelector<RootState>(
+  const isAccountMenuOpen = useSelector<RootState>(
     (state) => state.menu.list[1].visible
   ) as boolean;
 
-  const filterMenuOpen = useSelector<RootState>(
+  const isFilterMenuOpen = useSelector<RootState>(
     (state) => state.menu.list[4].visible
   ) as boolean;
 
@@ -57,10 +57,10 @@ const Header = () => {
   return (
     <>
       <HeaderBox>
-        <MenuMainHeader isOpen={accountMenuOpen}>
+        <MenuMainHeader isOpen={isAccountMenuOpen}>
           <div
             className="projectName"
-            onClick={() => OnAccountClick(dispatch, accountMenuOpen)}
+            onClick={() => OnAccountClick(dispatch, isAccountMenuOpen)}
           >
             {projectState.project && projectState.project.name}
           </div>
@@ -68,14 +68,14 @@ const Header = () => {
             src={UserClosedIcon}
             alt="icon"
             className="icon"
-            onClick={() => OnAccountClick(dispatch, accountMenuOpen)}
+            onClick={() => OnAccountClick(dispatch, isAccountMenuOpen)}
           />
         </MenuMainHeader>
         <LogoBox>
           <img
             src={MimirIcon}
             alt="dark-mode"
-            onClick={() => OnDarkMode(dispatch, darkMode)}
+            onClick={() => OnDarkMode(dispatch, isDarkMode)}
           />
         </LogoBox>
       </HeaderBox>
@@ -89,7 +89,7 @@ const Header = () => {
             <img
               src={FilterIcon}
               alt="VisualFilter"
-              onClick={() => OnFilterClick(dispatch, filterMenuOpen)}
+              onClick={() => OnFilterClick(dispatch, isFilterMenuOpen)}
             />
           </OptionsElement>
           <OptionsElement>
