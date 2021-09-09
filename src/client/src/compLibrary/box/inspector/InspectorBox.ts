@@ -14,7 +14,6 @@ const InspectorBox = styled.div`
   overflow-x: auto;
   overflow-y: hidden;
   transition: left 0.3s ease-in-out, right 0.3s ease-in-out;
-  background-color: ${Color.GreyInspector} !important;
 
   right: ${(props) =>
     props.isLibraryOpen
