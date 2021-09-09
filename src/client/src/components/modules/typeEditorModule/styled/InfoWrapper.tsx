@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { FontSize } from "../../../../compLibrary";
 
 const InfoWrapper = styled.div`
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
   padding-top: ${(props: { blockPaddingTop: number }) =>
     props.blockPaddingTop + `px`};
@@ -12,6 +12,11 @@ const InfoWrapper = styled.div`
     text-align: center;
     margin: 10px 0px;
     font-size: ${FontSize.Medium};
+  }
+
+  img {
+    margin: 2% 5%;
+    max-height: 10%;
   }
 `;
 

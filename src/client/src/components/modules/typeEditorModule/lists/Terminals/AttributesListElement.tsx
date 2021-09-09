@@ -22,6 +22,7 @@ import {
   ValuesListWrapper,
   ValuesListItem,
 } from "../../styled";
+import { ModeEdit, ModeNew } from "../../helpers";
 
 interface Props {
   name: string;
@@ -36,9 +37,12 @@ export const AttributesListElement = ({
   isMultiSelect,
   state,
 }: Props) => {
+  const mode = state.mode;
   const dispatch = useDispatch();
   const [expandList, setExpandList] = useState(false);
-  const predefinedAttributes = state.createLibraryType.predefinedAttributes;
+  const predefinedAttributes = ModeEdit(mode)
+    ? state.selectedNode.predefinedAttributes
+    : state.createLibraryType.predefinedAttributes;
 
   const toggleValuesList = () => {
     setExpandList(!expandList);
@@ -57,11 +61,18 @@ export const AttributesListElement = ({
   );
 
   const onCheckboxChange = () => {
-    OnChange(locationAttribute, locationAttributes, isSelected, dispatch);
+    OnChange(mode, locationAttribute, locationAttributes, isSelected, dispatch);
   };
 
   const onSingleValueCheckboxChange = (e) => {
-    OnSingleValueChange(e, name, predefinedAttributes, isMultiSelect, dispatch);
+    OnSingleValueChange(
+      e,
+      name,
+      predefinedAttributes,
+      isMultiSelect,
+      mode,
+      dispatch
+    );
   };
 
   const onMultipleValuesCheckboxChange = ([param_key, param_value]) => {
@@ -70,8 +81,19 @@ export const AttributesListElement = ({
       name,
       predefinedAttributes,
       isMultiSelect,
+      mode,
       dispatch
     );
+  };
+
+  const getValues = (key) => {
+    let attribute: PredefinedAttribute;
+    if (ModeEdit(mode) && predefinedAttributes?.some((a) => a.key === key)) {
+      attribute = predefinedAttributes.find((a) => a.key === key);
+      return attribute.values;
+    } else if (ModeNew(mode)) {
+      return values;
+    }
   };
 
   return (
@@ -94,7 +116,7 @@ export const AttributesListElement = ({
         <SelectValue>
           <ValueHeader onClick={toggleValuesList}>
             <p className="selectedValues">
-              {Object.entries(values)
+              {Object.entries(getValues(name))
                 .filter(([_key, value]) => value === true)
                 .map(([key, _value]) => {
                   return (
@@ -114,19 +136,21 @@ export const AttributesListElement = ({
           </ValueHeader>
           {expandList && (
             <ValuesListWrapper>
-              {Object.entries(values).map(([key, value]) => {
+              {Object.entries(getValues(name)).map(([key, value]) => {
                 return (
                   <ValuesListItem key={key}>
                     <label className={"squarecheckbox"}>
                       {isMultiSelect ? (
-                        <input
-                          type="checkbox"
-                          defaultChecked={value}
-                          id={key}
-                          onChange={() =>
-                            onMultipleValuesCheckboxChange([key, value])
-                          }
-                        />
+                        <>
+                          <input
+                            type="checkbox"
+                            defaultChecked={value}
+                            id={key}
+                            onChange={() =>
+                              onMultipleValuesCheckboxChange([key, value])
+                            }
+                          />
+                        </>
                       ) : (
                         <input
                           type="radio"

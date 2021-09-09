@@ -14,7 +14,6 @@ using Mb.Models.Data;
 using Mb.Models.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace Mb.Core.Services
 {
@@ -27,10 +26,10 @@ namespace Mb.Core.Services
         private readonly ITerminalTypeRepository _terminalTypeRepository;
         private readonly IEnumBaseRepository _enumBaseRepository;
         private readonly IMapper _mapper;
-        private readonly ILogger<TypeEditorService> _logger;
         private readonly IPredefinedAttributeRepository _predefinedAttributeRepository;
+        private readonly INodeTypeTerminalTypeRepository _nodeTypeTerminalTypeRepository;
 
-        public TypeEditorService(IRdsRepository rdsRepository, IAttributeTypeRepository attributeTypeRepository, ILibraryTypeRepository libraryTypeComponentRepository, IContractorRepository contractorRepository, ITerminalTypeRepository terminalTypeRepository, IEnumBaseRepository enumBaseRepository, IMapper mapper, ILogger<TypeEditorService> logger, IPredefinedAttributeRepository predefinedAttributeRepository)
+        public TypeEditorService(IRdsRepository rdsRepository, IAttributeTypeRepository attributeTypeRepository, ILibraryTypeRepository libraryTypeComponentRepository, IContractorRepository contractorRepository, ITerminalTypeRepository terminalTypeRepository, IEnumBaseRepository enumBaseRepository, IMapper mapper, IPredefinedAttributeRepository predefinedAttributeRepository, INodeTypeTerminalTypeRepository nodeTypeTerminalTypeRepository)
         {
             _rdsRepository = rdsRepository;
             _attributeTypeRepository = attributeTypeRepository;
@@ -39,8 +38,8 @@ namespace Mb.Core.Services
             _terminalTypeRepository = terminalTypeRepository;
             _enumBaseRepository = enumBaseRepository;
             _mapper = mapper;
-            _logger = logger;
             _predefinedAttributeRepository = predefinedAttributeRepository;
+            _nodeTypeTerminalTypeRepository = nodeTypeTerminalTypeRepository;
         }
 
         #region Public methods
@@ -54,8 +53,34 @@ namespace Mb.Core.Services
         public async Task<LibraryType> GetTypeById(string id, bool ignoreNotFound = false)
         {
             var libraryTypeComponent = await _libraryTypeComponentRepository.GetAsync(id);
+
             if (!ignoreNotFound && libraryTypeComponent == null)
                 throw new ModelBuilderNotFoundException($"The type with id: {id} could not be found.");
+
+            if (libraryTypeComponent is NodeType)
+            {
+                return await _libraryTypeComponentRepository.FindBy(x => x.Id == id)
+                    .OfType<NodeType>()
+                    .Include(x => x.TerminalTypes)
+                    .Include(x => x.AttributeTypes)
+                    .FirstOrDefaultAsync();
+            }
+            else if (libraryTypeComponent is TransportType)
+            {
+                return await _libraryTypeComponentRepository.FindBy(x => x.Id == id)
+                    .OfType<TransportType>()
+                    .Include(x => x.TerminalType)
+                    .Include(x => x.AttributeTypes)
+                    .FirstOrDefaultAsync();
+            }
+            else if (libraryTypeComponent is InterfaceType)
+            {
+                return await _libraryTypeComponentRepository.FindBy(x => x.Id == id)
+                    .OfType<InterfaceType>()
+                    .Include(x => x.TerminalType)
+                    .FirstOrDefaultAsync();
+            }
+
             return libraryTypeComponent;
         }
 
@@ -165,7 +190,7 @@ namespace Mb.Core.Services
             if (createLibraryType == null)
                 return null;
 
-            var data = await CreateLibraryTypes(new List<CreateLibraryType> {createLibraryType});
+            var data = await CreateLibraryTypes(new List<CreateLibraryType> { createLibraryType });
             return data?.SingleOrDefault();
         }
 
@@ -227,46 +252,46 @@ namespace Mb.Core.Services
                 switch (libraryType)
                 {
                     case NodeType nt:
-                    {
-                        foreach (var attributeType in nt.AttributeTypes)
                         {
-                            _attributeTypeRepository.Attach(attributeType, EntityState.Unchanged);
+                            foreach (var attributeType in nt.AttributeTypes)
+                            {
+                                _attributeTypeRepository.Attach(attributeType, EntityState.Unchanged);
+                            }
+
+                            await _libraryTypeComponentRepository.CreateAsync(nt);
+                            await _libraryTypeComponentRepository.SaveAsync();
+
+                            foreach (var attributeType in nt.AttributeTypes)
+                            {
+                                _attributeTypeRepository.Detach(attributeType);
+                            }
+
+                            createdLibraryTypes.Add(nt);
+                            continue;
                         }
-
-                        await _libraryTypeComponentRepository.CreateAsync(nt);
-                        await _libraryTypeComponentRepository.SaveAsync();
-
-                        foreach (var attributeType in nt.AttributeTypes)
-                        {
-                            _attributeTypeRepository.Detach(attributeType);
-                        }
-
-                        createdLibraryTypes.Add(nt);
-                        continue;
-                    }
                     case InterfaceType it:
                         await _libraryTypeComponentRepository.CreateAsync(it);
                         await _libraryTypeComponentRepository.SaveAsync();
                         createdLibraryTypes.Add(it);
                         continue;
                     case TransportType tt:
-                    {
-                        foreach (var attributeType in tt.AttributeTypes)
                         {
-                            _attributeTypeRepository.Attach(attributeType, EntityState.Unchanged);
+                            foreach (var attributeType in tt.AttributeTypes)
+                            {
+                                _attributeTypeRepository.Attach(attributeType, EntityState.Unchanged);
+                            }
+
+                            await _libraryTypeComponentRepository.CreateAsync(tt);
+                            await _libraryTypeComponentRepository.SaveAsync();
+
+                            foreach (var attributeType in tt.AttributeTypes)
+                            {
+                                _attributeTypeRepository.Detach(attributeType);
+                            }
+
+                            createdLibraryTypes.Add(tt);
+                            continue;
                         }
-
-                        await _libraryTypeComponentRepository.CreateAsync(tt);
-                        await _libraryTypeComponentRepository.SaveAsync();
-
-                        foreach (var attributeType in tt.AttributeTypes)
-                        {
-                            _attributeTypeRepository.Detach(attributeType);
-                        }
-
-                        createdLibraryTypes.Add(tt);
-                        continue;
-                    }
                     default:
                         continue;
                 }
@@ -401,7 +426,18 @@ namespace Mb.Core.Services
             if (existingType == null)
                 throw new ModelBuilderNotFoundException($"Could not delete type with id: {id}. The type was not found.");
 
-            await _libraryTypeComponentRepository.Delete(id);
+            if (existingType is NodeType typeToDelete)
+            {
+                foreach (var terminalType in typeToDelete.TerminalTypes)
+                {
+                    _nodeTypeTerminalTypeRepository.Attach(terminalType, EntityState.Deleted);
+                }
+
+                await _nodeTypeTerminalTypeRepository.SaveAsync();
+            }
+
+            //_libraryTypeComponentRepository.Attach(existingType, EntityState.Deleted);
+            await _libraryTypeComponentRepository.Delete(existingType.Id);
             await _libraryTypeComponentRepository.SaveAsync();
         }
 

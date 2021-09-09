@@ -1,8 +1,10 @@
 import { useDispatch } from "react-redux";
 import { LocationTypeCategory, LocationSubType } from "../styled";
-import { changeLocationType } from "../../../../redux/store/typeEditor/actions";
+import { chooseLocationType } from "../../../../redux/store/typeEditor/actions";
+import { TypeMode } from "../../../../models";
 
 interface Props {
+  mode: TypeMode;
   listItems: any[];
   setSelectedValue: any;
   setIsListOpen: any;
@@ -10,6 +12,7 @@ interface Props {
 }
 
 const LocationDropdown = ({
+  mode,
   listItems,
   setSelectedValue,
   setIsListOpen,
@@ -19,7 +22,7 @@ const LocationDropdown = ({
 
   const updateLocationType = (locationTypeId, locationName) => {
     setSelectedValue(locationName);
-    dispatch(changeLocationType(locationTypeId));
+    dispatch(chooseLocationType(mode, locationTypeId));
     setIsListOpen(!isListOpen);
   };
 

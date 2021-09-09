@@ -4,7 +4,7 @@ const ObjectTypeBlock = styled.div`
   display: flex;
   flex-direction: column;
   margin: auto;
-  width: 45%;
+  width: 65%;
   height: 70%;
   height: ${(props: { blockHeight: number }) => props.blockHeight + `%`};
   background-color: ${(props: { blockColor: string }) => props.blockColor};
