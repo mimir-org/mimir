@@ -17,7 +17,7 @@ import {
 
 const InspectorModule = () => {
   const dispatch = useDispatch();
-  const key = MODULE_TYPE.INSPECTOR;
+  const type = MODULE_TYPE.INSPECTOR;
 
   const project = useSelector<RootState>(
     (state) => state.projectState.project
@@ -26,11 +26,11 @@ const InspectorModule = () => {
   const hasProject = project !== null;
 
   const animate = useSelector<RootState>(
-    (state) => state.modules.types.find((x) => x.type === key).animate
+    (state) => state.modules.types.find((x) => x.type === type).animate
   ) as boolean;
 
   const isInspectorOpen = useSelector<RootState>(
-    (state) => state.modules.types.find((x) => x.type === key).visible
+    (state) => state.modules.types.find((x) => x.type === type).visible
   ) as boolean;
 
   const isLibraryOpen = useSelector<RootState>(
@@ -59,7 +59,7 @@ const InspectorModule = () => {
 
   return (
     <AnimatedInspector
-      type={key}
+      type={type}
       isLibraryOpen={isLibraryOpen}
       isExplorerOpen={isExplorerOpen}
       start={start}
@@ -73,6 +73,7 @@ const InspectorModule = () => {
         edge={edge}
         dispatch={dispatch}
         open={isInspectorOpen}
+        type={type}
       />
       {hasProject && <InspectorTabs project={project} node={node} />}
     </AnimatedInspector>

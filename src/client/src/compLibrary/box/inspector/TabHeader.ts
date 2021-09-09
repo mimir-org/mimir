@@ -3,13 +3,15 @@ import { Color } from "../..";
 
 const TabHeader = styled.div`
   display: inline-block;
+  position: relative;
+  top: -44px;
   box-sizing: border-box;
   border-top-right-radius: 8px;
   border-top-left-radius: 6px;
   color: ${Color.Black};
   margin-right: 8px;
 
-  height: ${(props: { active: string }) => (props.active ? "44px" : "35px")};
+  height: ${(props: { active: string }) => (props.active ? "39px" : "35px")};
   margin-top: ${(props: { active: string }) => (props.active ? "0px" : "9px")};
 
   background-color: ${(props) =>
@@ -18,7 +20,7 @@ const TabHeader = styled.div`
   padding: ${(props: { active: string }) =>
     props.active ? "12px 20px 0px 20px;" : "8px 20px 0px 20px"};
 
-  box-shadow: 0 5px 5px -1.5px #585858;
+  box-shadow: 1px 0 10px -4px #999, -1px 0 10px -4px #999;
 
   :hover {
     cursor: pointer;
