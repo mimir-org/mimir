@@ -10,7 +10,7 @@ import { DragResizePanel } from "./helpers";
 import { AnimatedInspector } from "../../../compLibrary/box/inspector";
 import { InspectorHeader } from ".";
 import {
-  FindSelectedNode,
+  GetSelectedNode,
   IsExplorer,
   IsLibrary,
 } from "../../flow/helpers/common";
@@ -22,8 +22,6 @@ const InspectorModule = () => {
   const project = useSelector<RootState>(
     (state) => state.projectState.project
   ) as Project;
-
-  const hasProject = project !== null;
 
   const animate = useSelector<RootState>(
     (state) => state.modules.types.find((x) => x.type === type).animate
@@ -51,7 +49,7 @@ const InspectorModule = () => {
 
   if (IsBlockView()) {
     node = nodes.find((x) => x.isBlockSelected);
-  } else node = FindSelectedNode();
+  } else node = GetSelectedNode();
 
   useEffect(() => {
     DragResizePanel();
@@ -75,7 +73,7 @@ const InspectorModule = () => {
         open={isInspectorOpen}
         type={type}
       />
-      {hasProject && <InspectorTabs project={project} node={node} />}
+      {project && <InspectorTabs project={project} node={node} />}
     </AnimatedInspector>
   );
 };

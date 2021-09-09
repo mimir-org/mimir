@@ -19,7 +19,7 @@ import {
   setActiveEdge,
 } from "../../redux/store/project/actions";
 import {
-  FindSelectedNode,
+  GetSelectedNode,
   GetBlockNodeTypes,
   IsFunction,
   IsLocation,
@@ -43,7 +43,7 @@ const FlowBlock = () => {
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>();
   const darkMode = red.store.getState().darkMode.active;
-  const node = FindSelectedNode();
+  const node = GetSelectedNode();
 
   const projectState = useSelector<RootState>(
     (state) => state.projectState

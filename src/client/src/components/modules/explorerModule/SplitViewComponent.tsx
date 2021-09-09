@@ -3,7 +3,7 @@ import { FooterBox, FooterContent } from "../../../compLibrary/box/footer";
 import { TextResources } from "../../../assets/text";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FindSelectedNode, IsLocation } from "../../flow/helpers/common";
+import { GetSelectedNode, IsLocation } from "../../flow/helpers/common";
 import { IsBlockView } from "../../flow/helpers/block";
 import {
   setSplitView,
@@ -18,7 +18,7 @@ export const SplitViewComponent = () => {
   const dispatch = useDispatch();
   const [isVisible, setIsVisible] = useState(IsBlockView());
   const [isActive, SetIsActive] = useState(splitView);
-  const selectedNode = FindSelectedNode();
+  const selectedNode = GetSelectedNode();
 
   useEffect(() => {
     if (IsLocation(selectedNode)) setIsVisible(false);

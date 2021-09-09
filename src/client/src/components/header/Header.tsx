@@ -1,18 +1,16 @@
 import { RootState } from "../../redux/store";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { MENU_TYPE, VIEW_TYPE } from "../../models/project";
-import { changeFlowView } from "../../redux/store/flow/actions";
-import { setDarkMode } from "../../redux/store/darkMode/actions";
+import { VIEW_TYPE } from "../../models/project";
 import { MenuMainHeader } from "../../compLibrary/box/menus";
-import { changeMenu } from "../../redux/store/projectMenu/actions";
 import { ProjectState } from "../../redux/store/project/types";
 import {
-  FindSelectedNode,
-  IsExplorer,
-  IsLibrary,
-  SetDarkModeColor,
-} from "../flow/helpers/common";
+  OnAccountClick,
+  OnDarkMode,
+  OnFilterClick,
+  OnViewClick,
+} from "./handlers";
+import { IsExplorer, IsLibrary } from "../flow/helpers/common";
 import {
   HeaderBox,
   OptionsBox,
@@ -31,7 +29,6 @@ import {
 const Header = () => {
   const dispatch = useDispatch();
   const { push } = useHistory();
-  const selectedNode = FindSelectedNode();
 
   const projectState = useSelector<RootState>(
     (state) => state.projectState
@@ -49,28 +46,6 @@ const Header = () => {
     (state) => state.menu.list[4].visible
   ) as boolean;
 
-  const onViewClick = (e) => {
-    if (e.target.alt === VIEW_TYPE.BLOCKVIEW && !selectedNode) return;
-    const view = e.target.alt;
-    dispatch(changeFlowView(view));
-    push(`/home/${view}`);
-  };
-
-  const onDarkMode = () => {
-    dispatch(setDarkMode(!darkMode));
-    SetDarkModeColor(!darkMode);
-  };
-
-  const onAccountClick = () => {
-    dispatch(changeMenu(MENU_TYPE.ACCOUNT_MENU, !accountMenuOpen));
-    dispatch(changeMenu(MENU_TYPE.CREATE_PROJECT_MENU, false));
-    dispatch(changeMenu(MENU_TYPE.OPEN_PROJECT_MENU, false));
-  };
-
-  const onFilterClick = () => {
-    dispatch(changeMenu(MENU_TYPE.VISUAL_FILTER_MENU, !filterMenuOpen));
-  };
-
   const isLibraryOpen = useSelector<RootState>(
     (state) => state.modules.types.find((x) => IsLibrary(x.type)).visible
   ) as boolean;
@@ -83,18 +58,25 @@ const Header = () => {
     <>
       <HeaderBox>
         <MenuMainHeader isOpen={accountMenuOpen}>
-          <div className="projectName" onClick={onAccountClick}>
+          <div
+            className="projectName"
+            onClick={() => OnAccountClick(dispatch, accountMenuOpen)}
+          >
             {projectState.project && projectState.project.name}
           </div>
           <img
             src={UserClosedIcon}
             alt="icon"
             className="icon"
-            onClick={onAccountClick}
+            onClick={() => OnAccountClick(dispatch, accountMenuOpen)}
           />
         </MenuMainHeader>
         <LogoBox>
-          <img src={MimirIcon} alt="dark-mode" onClick={onDarkMode} />
+          <img
+            src={MimirIcon}
+            alt="dark-mode"
+            onClick={() => OnDarkMode(dispatch, darkMode)}
+          />
         </LogoBox>
       </HeaderBox>
       <MenuBar
@@ -104,20 +86,24 @@ const Header = () => {
       >
         <OptionsBox>
           <OptionsElement>
-            <img src={FilterIcon} alt="VisualFilter" onClick={onFilterClick} />
+            <img
+              src={FilterIcon}
+              alt="VisualFilter"
+              onClick={() => OnFilterClick(dispatch, filterMenuOpen)}
+            />
           </OptionsElement>
           <OptionsElement>
             <img
               src={BlockViewIcon}
               alt={VIEW_TYPE.BLOCKVIEW}
-              onClick={onViewClick}
+              onClick={(e) => OnViewClick(e, dispatch, push)}
             />
           </OptionsElement>
           <OptionsElement>
             <img
               src={TreeViewIcon}
               alt={VIEW_TYPE.TREEVIEW}
-              onClick={onViewClick}
+              onClick={(e) => OnViewClick(e, dispatch, push)}
             />
           </OptionsElement>
         </OptionsBox>

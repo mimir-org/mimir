@@ -4,7 +4,7 @@ import { Node } from "../../../../models";
 import { RootState } from "../../../../redux/store";
 import { setSplitNode } from "../../../../redux/store/splitView/actions";
 import { IsConnectView } from "../../../flow/helpers/block/connectView";
-import { FindSelectedNode, IsFunction } from "../../../flow/helpers/common";
+import { GetSelectedNode, IsFunction } from "../../../flow/helpers/common";
 import { removeMainNodes } from "../../../../redux/store/connectView/actions";
 
 interface Props {
@@ -23,7 +23,7 @@ export const CheckboxBlock = ({ node, inputLabel }: Props) => {
     (state) => state.splitView.node
   ) as Node;
 
-  const selectedNode = FindSelectedNode();
+  const selectedNode = GetSelectedNode();
   const isSplitViewNode = splitViewNode?.id === node.id;
 
   const isChecked = splitView

@@ -1,5 +1,5 @@
 import { changeInspectorTab } from "../../../../redux/store/inspector/actions";
-import { FindSelectedNode } from "../common";
+import { GetSelectedNode } from "../common";
 import { Project } from "../../../../models";
 import {
   setActiveBlockNode,
@@ -19,7 +19,7 @@ const OnBlockClick = (e: any, dispatch: any, project: Project) => {
   }
 
   if (e.target.classList.contains("react-flow__pane")) {
-    const selectedNode = FindSelectedNode();
+    const selectedNode = GetSelectedNode();
     if (selectedNode) {
       dispatch(setActiveEdge(null, false));
       dispatch(setActiveBlockNode(selectedNode.id));
