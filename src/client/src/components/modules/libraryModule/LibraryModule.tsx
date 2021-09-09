@@ -6,13 +6,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { LibraryState } from "../../../redux/store/library/types";
 import { searchLibrary } from "../../../redux/store/library/actions";
-import { setModuleVisibility } from "../../../redux/store/modules/actions";
 import { AnimatedModule, Size } from "../../../compLibrary";
 import { GetLibCategories } from "./helpers";
 import { ModuleBody, ModuleHead } from "../../../compLibrary/box/modules";
 import { LegendHead, LegendIcons } from "../../../compLibrary/box/library";
 import { MODULE_TYPE } from "../../../models/project";
 import { GetSelectedNode } from "../../flow/helpers/common";
+import { OnLibraryClick, OnLegendClick } from "./handlers";
 import {
   LegendIcon,
   LibraryIcon,
@@ -60,16 +60,6 @@ const LibraryModule = () => {
   ) as boolean;
 
   const selectedNode = GetSelectedNode();
-
-  const onLibraryClick = () => {
-    dispatch(setModuleVisibility(libraryKey, !libraryOpen, true));
-    dispatch(setModuleVisibility(legendKey, !libraryOpen, true));
-  };
-
-  const onLegendClick = () => {
-    dispatch(setModuleVisibility(legendKey, !legendOpen, true));
-  };
-
   const start = libraryOpen ? Size.ModuleClosed : Size.ModuleOpen;
   const stop = libraryOpen ? Size.ModuleOpen : Size.ModuleClosed;
   const startLegend = legendOpen ? Size.ModuleClosed : Size.ModuleOpen;
@@ -89,7 +79,9 @@ const LibraryModule = () => {
           className="icon"
           src={libraryOpen ? RightIcon : LeftIcon}
           alt="toggle"
-          onClick={onLibraryClick}
+          onClick={() =>
+            OnLibraryClick(dispatch, libraryOpen, libraryKey, legendKey)
+          }
         />
         <p className="text">{TextResources.Library_Heading}</p>
       </ModuleHead>
@@ -112,7 +104,7 @@ const LibraryModule = () => {
             <img
               src={legendOpen ? DownIcon : UpIcon}
               alt=""
-              onClick={onLegendClick}
+              onClick={() => OnLegendClick(dispatch, legendOpen, legendKey)}
             />
           </LegendHead>
           <LegendIcons open={legendOpen}>

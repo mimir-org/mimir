@@ -1,11 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setActiveNode } from "../../../../redux/store/project/actions";
 import { Node } from "../../../../models";
 import { RootState } from "../../../../redux/store";
-import { setSplitNode } from "../../../../redux/store/splitView/actions";
-import { IsConnectView } from "../../../flow/helpers/block/connectView";
-import { GetSelectedNode, IsFunction } from "../../../flow/helpers/common";
-import { removeMainNodes } from "../../../../redux/store/connectView/actions";
+import { GetSelectedNode } from "../../../flow/helpers/common";
+import { OnCheckboxChange } from "../handlers";
 
 interface Props {
   node: Node;
@@ -30,20 +27,13 @@ export const CheckboxBlock = ({ node, inputLabel }: Props) => {
     ? node === selectedNode || isSplitViewNode
     : node === selectedNode;
 
-  const handleChange = () => {
-    if (IsConnectView()) {
-      dispatch(removeMainNodes());
-    }
-    if (splitView) {
-      IsFunction(node)
-        ? dispatch(setActiveNode(node.id, true))
-        : dispatch(setSplitNode(node));
-    } else dispatch(setActiveNode(node.id, true));
-  };
-
   return (
     <label className={"checkbox"}>
-      <input type="checkbox" checked={isChecked} onChange={handleChange} />
+      <input
+        type="checkbox"
+        checked={isChecked}
+        onChange={() => OnCheckboxChange(dispatch, splitView, node)}
+      />
       <span className="checkmark"></span>
       <label className="checkbox_label">{inputLabel}</label>
     </label>

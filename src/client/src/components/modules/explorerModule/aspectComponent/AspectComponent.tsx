@@ -6,6 +6,7 @@ import { AspectElement } from ".";
 import { AspectBox } from "../../../../compLibrary/box/aspect";
 import { Checkbox, CheckboxBlock } from "../checkboxComponent";
 import { IsBlockView } from "../../../flow/helpers/block";
+import { OnExpandClick } from "../handlers";
 import {
   GetAspectIcon,
   GetAspectColor,
@@ -25,10 +26,6 @@ export const AspectComponent = ({ node, label, project }: Props) => {
   const nodes = project.nodes;
   const children = nodes.filter((x) => !IsAspectNode(x)) ?? [];
 
-  const onExpandClick = () => {
-    setExpanded(!expanded);
-  };
-
   return (
     <>
       <AspectBox color={color}>
@@ -44,7 +41,7 @@ export const AspectComponent = ({ node, label, project }: Props) => {
           className="expandIcon"
           src={expandIcon}
           alt="expand-icon"
-          onClick={onExpandClick}
+          onClick={() => OnExpandClick(setExpanded, expanded)}
         ></img>
       </AspectBox>
       {expanded &&
