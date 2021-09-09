@@ -1,36 +1,19 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { DownIcon, UpIcon } from "../../../assets/icons/common";
-import { TextResources } from "../../../assets/text";
 import { InspectorTabs } from "./";
 import { Size } from "../../../compLibrary";
-import { Symbol } from "../../../compLibrary/dropdown";
 import { MODULE_TYPE } from "../../../models/project";
-import { changeModuleVisibility } from "../../../redux/store/modules/actions";
 import { IsBlockView } from "../../flow/helpers/block";
 import { Node, Project } from "../../../models";
-import { DeleteButtonWrapper } from "./styled";
-import { removeEdge, removeNode } from "../../../redux/store/project/actions";
-import {
-  DeleteNodeButton,
-  GetInspectorColor,
-  DragResizePanel,
-  SetPanelHeight,
-} from "./helpers";
+import { DragResizePanel } from "./helpers";
+import { AnimatedInspector } from "../../../compLibrary/box/inspector";
+import { InspectorHeader } from ".";
 import {
   FindSelectedNode,
   IsExplorer,
   IsLibrary,
 } from "../../flow/helpers/common";
-import {
-  InspectorTitle,
-  InspectorMenu,
-  AnimatedInspector,
-  IconWrapper,
-  ToggleBox,
-  NodeInfo,
-} from "../../../compLibrary/box/inspector";
 
 const InspectorModule = () => {
   const dispatch = useDispatch();
@@ -58,28 +41,6 @@ const InspectorModule = () => {
     (state) => state.modules.types.find((x) => IsExplorer(x.type)).visible
   ) as boolean;
 
-  const onToggleClick = () => {
-    dispatch(changeModuleVisibility(key, !isInspectorOpen, true));
-    const panel = document.getElementById("InspectorModule");
-
-    if (panel.style.height === Size.ModuleClosed + "px")
-      SetPanelHeight(Size.InspectorModuleOpen);
-    else SetPanelHeight(Size.ModuleClosed);
-  };
-
-  const onDelete = () => {
-    if (node) {
-      project.edges.forEach((e) => {
-        if (e.fromNodeId === node.id) dispatch(removeEdge(e.id));
-        if (e.toNodeId === node.id) dispatch(removeEdge(e.id));
-      });
-      dispatch(removeNode(node.id));
-    } else dispatch(removeEdge(edge.id));
-
-    dispatch(changeModuleVisibility(MODULE_TYPE.INSPECTOR, false, true));
-    SetPanelHeight(Size.ModuleClosed);
-  };
-
   const start = isInspectorOpen ? Size.ModuleClosed : Size.InspectorModuleOpen;
   const stop = isInspectorOpen ? Size.InspectorModuleOpen : Size.ModuleClosed;
   const nodes = project?.nodes ?? [];
@@ -106,46 +67,14 @@ const InspectorModule = () => {
       run={animate}
       id="InspectorModule"
     >
-      <InspectorMenu id="InspectorBody" color={GetInspectorColor(node, edge)}>
-        {node && (
-          <>
-            <NodeInfo symbol={node.symbol?.id}>
-              <div className="symbol">
-                <Symbol
-                  base64={node.symbol?.data}
-                  text={node.label ?? node.name}
-                />
-              </div>
-              <div className="text">{node.label ?? node.name}</div>
-            </NodeInfo>
-            <DeleteButtonWrapper>
-              <DeleteNodeButton handleClick={onDelete} />
-            </DeleteButtonWrapper>
-          </>
-        )}
-        {edge && (
-          <>
-            <NodeInfo>
-              <div className="edgetext">{edge.id}</div>
-            </NodeInfo>
-            <DeleteButtonWrapper>
-              <DeleteNodeButton handleClick={onDelete} />
-            </DeleteButtonWrapper>
-          </>
-        )}
-
-        <ToggleBox>
-          <img
-            src={isInspectorOpen ? DownIcon : UpIcon}
-            alt="toggle-icon"
-            onClick={onToggleClick}
-          />
-        </ToggleBox>
-        <IconWrapper>
-          <InspectorTitle>{TextResources.Inspector_Heading}</InspectorTitle>
-        </IconWrapper>
-        {hasProject && <InspectorTabs project={project} node={node} />}
-      </InspectorMenu>
+      <InspectorHeader
+        project={project}
+        node={node}
+        edge={edge}
+        dispatch={dispatch}
+        open={isInspectorOpen}
+      />
+      {hasProject && <InspectorTabs project={project} node={node} />}
     </AnimatedInspector>
   );
 };

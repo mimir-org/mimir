@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { LibraryState } from "../../../redux/store/library/types";
 import { searchLibrary } from "../../../redux/store/library/actions";
-import { changeModuleVisibility } from "../../../redux/store/modules/actions";
+import { setModuleVisibility } from "../../../redux/store/modules/actions";
 import { AnimatedModule, Size } from "../../../compLibrary";
 import { GetLibCategories } from "./helpers";
 import { ModuleBody, ModuleHead } from "../../../compLibrary/box/modules";
@@ -62,12 +62,12 @@ const LibraryModule = () => {
   const selectedNode = FindSelectedNode();
 
   const onLibraryClick = () => {
-    dispatch(changeModuleVisibility(libraryKey, !libraryOpen, true));
-    dispatch(changeModuleVisibility(legendKey, !libraryOpen, true));
+    dispatch(setModuleVisibility(libraryKey, !libraryOpen, true));
+    dispatch(setModuleVisibility(legendKey, !libraryOpen, true));
   };
 
   const onLegendClick = () => {
-    dispatch(changeModuleVisibility(legendKey, !legendOpen, true));
+    dispatch(setModuleVisibility(legendKey, !legendOpen, true));
   };
 
   const start = libraryOpen ? Size.ModuleClosed : Size.ModuleOpen;

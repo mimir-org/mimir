@@ -16,7 +16,7 @@ import { changeInspectorTab } from "../../redux/store/inspector/actions";
 import { SetDarkModeColor } from "./helpers/common";
 import { CreateTreeElements } from "./creators";
 import { LibraryState } from "../../redux/store/library/types";
-import { changeModuleVisibility } from "../../redux/store/modules/actions";
+import { setModuleVisibility } from "../../redux/store/modules/actions";
 import { MODULE_TYPE } from "../../models/project";
 import { getBlobData } from "../../redux/store/typeEditor/actions";
 import { SetPanelHeight } from "../modules/inspectorModule/helpers";
@@ -99,7 +99,7 @@ const FlowTree = () => {
   const OnElementClick = (_event, element) => {
     dispatch(setActiveEdge(null, false));
     dispatch(setActiveNode(element.id, true));
-    dispatch(changeModuleVisibility(MODULE_TYPE.INSPECTOR, true, true));
+    dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, true, true));
     dispatch(changeInspectorTab(0));
     const panel = document.getElementById("InspectorModule");
     if (panel.style.height === Size.ModuleClosed + "px")

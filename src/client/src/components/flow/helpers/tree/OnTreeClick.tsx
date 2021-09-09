@@ -1,6 +1,6 @@
 import { MODULE_TYPE } from "../../../../models/project";
 import { changeInspectorTab } from "../../../../redux/store/inspector/actions";
-import { changeModuleVisibility } from "../../../../redux/store/modules/actions";
+import { setModuleVisibility } from "../../../../redux/store/modules/actions";
 import { Size } from "../../../../compLibrary";
 import { SetPanelHeight } from "../../../modules/inspectorModule/helpers";
 import { Project } from "../../../../models";
@@ -14,7 +14,7 @@ const OnTreeClick = (e: any, dispatch: any, project: Project) => {
 
   // Close Inspector if no node/edge is selected
   if (e.target.className === "react-flow__pane") {
-    dispatch(changeModuleVisibility(MODULE_TYPE.INSPECTOR, false, true));
+    dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, false, true));
     dispatch(setActiveNode(null, false));
     dispatch(setActiveEdge(null, false));
     SetPanelHeight(Size.ModuleClosed);

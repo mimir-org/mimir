@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ExpandIcon, CloseIcon } from "../../assets/icons/controls";
 import { MODULE_TYPE } from "../../models/project";
 import { RootState } from "../../redux/store";
-import { changeAllModulesVisibility } from "../../redux/store/modules/actions";
+import { setAllModulesVisibility } from "../../redux/store/modules/actions";
 import { FullScreenButton } from "./";
 
 const FullScreenBox = () => {
@@ -23,7 +23,7 @@ const FullScreenBox = () => {
   ) as boolean;
 
   const onClick = () => {
-    dispatch(changeAllModulesVisibility(!isOpen, true));
+    dispatch(setAllModulesVisibility(!isOpen, true));
   };
 
   return (
