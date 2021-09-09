@@ -26,7 +26,6 @@ const OnTreeClick = (e, dispatch, project) => {
     dispatch(changeActiveEdge(edge.id, true));
     dispatch(changeActiveNode(null, false));
     dispatch(changeInspectorTab(0));
-    return;
   }
 
   // TODO: Remove?

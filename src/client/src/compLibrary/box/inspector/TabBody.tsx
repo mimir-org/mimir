@@ -7,7 +7,6 @@ const TabBody = styled.div`
   /* height: 250px; */
   height: 100%;
   overflow-y: auto;
-  /* cursor: default; */
 
   .container {
     display: flex;
