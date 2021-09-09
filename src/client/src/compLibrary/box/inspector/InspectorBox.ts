@@ -11,17 +11,20 @@ const InspectorBox = styled.div`
   z-index: 5;
   position: absolute;
   bottom: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  transition: left 0.3s ease-in-out, right 0.3s ease-in-out;
+  background-color: ${Color.GreyInspector} !important;
+
   right: ${(props) =>
     props.isLibraryOpen
       ? `${Size.ModuleOpen + Size.Margin}px`
       : `${Size.ModuleClosed + Size.Margin}px`};
+
   left: ${(props) =>
     props.isExplorerOpen
       ? `${Size.ModuleOpen + Size.Margin}px`
       : `${Size.ModuleClosed + Size.Margin}px`};
-  transition: left 0.3s ease-in-out, right 0.3s ease-in-out;
-  overflow-x: auto;
-  overflow-y: hidden;
 `;
 
 export default InspectorBox;

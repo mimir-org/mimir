@@ -8,7 +8,12 @@ import {
   removeNode,
 } from "../../../../redux/store/project/actions";
 
-const OnDelete = (project: Project, node: Node, edge: Edge, dispatch: any) => {
+const OnDeleteClick = (
+  project: Project,
+  node: Node,
+  edge: Edge,
+  dispatch: any
+) => {
   if (node) {
     project.edges.forEach((e) => {
       if (e.fromNodeId === node.id) dispatch(removeEdge(e.id));
@@ -21,4 +26,4 @@ const OnDelete = (project: Project, node: Node, edge: Edge, dispatch: any) => {
   SetPanelHeight(Size.ModuleClosed);
 };
 
-export default OnDelete;
+export default OnDeleteClick;

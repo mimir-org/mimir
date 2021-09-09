@@ -4,7 +4,7 @@ import { Edge, Node, Project } from "../../../models";
 import { DeleteNodeButton, GetInspectorColor } from "./helpers";
 import { DeleteButtonWrapper } from "./styled";
 import { Symbol } from "../../../compLibrary/dropdown";
-import { OnDelete, OnToggleClick } from "./handlers";
+import { OnDeleteClick, OnToggleClick } from "./handlers";
 import {
   IconWrapper,
   InspectorMenu,
@@ -41,7 +41,7 @@ const InspectorHeader = ({
         </NodeInfo>
         <DeleteButtonWrapper>
           <DeleteNodeButton
-            handleClick={() => OnDelete(project, node, edge, dispatch)}
+            handleClick={() => OnDeleteClick(project, node, edge, dispatch)}
           />
         </DeleteButtonWrapper>
       </>
@@ -53,7 +53,7 @@ const InspectorHeader = ({
         </NodeInfo>
         <DeleteButtonWrapper>
           <DeleteNodeButton
-            handleClick={() => OnDelete(project, node, edge, dispatch)}
+            handleClick={() => OnDeleteClick(project, node, edge, dispatch)}
           />
         </DeleteButtonWrapper>
       </>

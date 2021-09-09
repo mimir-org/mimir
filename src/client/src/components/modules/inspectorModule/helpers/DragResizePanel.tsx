@@ -7,8 +7,6 @@ const DragResizePanel = () => {
   let prevY: number;
 
   const resize = (e) => {
-    // e.preventDefault();
-    // e.stopPropagation();
     const dy = prevY - e.clientY;
     prevY = e.clientY;
 

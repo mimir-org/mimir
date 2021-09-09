@@ -1,2 +1,2 @@
 export { default as OnToggleClick } from "./OnToggleClick";
-export { default as OnDelete } from "./OnDelete";
+export { default as OnDeleteClick } from "./OnDeleteClick";
