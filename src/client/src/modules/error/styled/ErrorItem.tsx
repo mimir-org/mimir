@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FontSize } from "./../../../..//compLibrary";
+import { FontSize } from "./../../../compLibrary";
 
 const ErrorItem = styled.div`
   h3 {
