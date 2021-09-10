@@ -1,11 +1,14 @@
-import { RootState } from "../../../redux/store";
-import { FooterBox, FooterContent } from "../../../compLibrary/box/footer";
-import { TextResources } from "../../../assets/text";
+import { RootState } from "../../redux/store";
+import { FooterBox, FooterContent } from "../../compLibrary/box/footer";
+import { TextResources } from "../../assets/text";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { GetSelectedNode, IsLocation } from "../../flow/helpers/common";
-import { IsBlockView } from "../../flow/helpers/block";
+import { IsBlockView } from "../../components/flow/helpers/block";
 import { OnChange } from "./handlers";
+import {
+  GetSelectedNode,
+  IsLocation,
+} from "../../components/flow/helpers/common";
 
 export const SplitViewComponent = () => {
   const splitView = useSelector<RootState>(

@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { setNodeVisibility } from "../../../../redux/store/project/actions";
-import { Node, Project } from "../../../../models";
+import { setNodeVisibility } from "../../../redux/store/project/actions";
+import { Node, Project } from "../../../models";
 
 export const ChangeNodeDisplay = (node: Node, project: Project) => {
   const dispatch = useDispatch();

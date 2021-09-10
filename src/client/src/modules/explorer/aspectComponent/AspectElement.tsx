@@ -1,7 +1,7 @@
-import { AspectElementBox } from "../../../../compLibrary/box/aspect";
-import { Node, Project } from "../../../../models";
-import { IsBlockView } from "../../../flow/helpers/block";
-import { IsProduct } from "../../../flow/helpers/common";
+import { AspectElementBox } from "../../../compLibrary/box/aspect";
+import { Node, Project } from "../../../models";
+import { IsBlockView } from "../../../components/flow/helpers/block";
+import { IsProduct } from "../../../components/flow/helpers/common";
 import { Checkbox, CheckboxBlock } from "../checkboxComponent";
 
 interface Props {

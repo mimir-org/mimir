@@ -1,17 +1,17 @@
 import { useState } from "react";
-import { ExpandIcon, CollapseIcon } from "../../../../assets/icons/common";
-import { Node, Project } from "../../../../models";
-import { IsAspectNode } from "../../../flow/helpers/common";
+import { ExpandIcon, CollapseIcon } from "../../../assets/icons/common";
+import { Node, Project } from "../../../models";
+import { IsAspectNode } from "../../../components/flow/helpers/common";
 import { AspectElement } from ".";
-import { AspectBox } from "../../../../compLibrary/box/aspect";
+import { AspectBox } from "../../../compLibrary/box/aspect";
 import { Checkbox, CheckboxBlock } from "../checkboxComponent";
-import { IsBlockView } from "../../../flow/helpers/block";
+import { IsBlockView } from "../../../components/flow/helpers/block";
 import { OnExpandClick } from "../handlers";
 import {
   GetAspectIcon,
   GetAspectColor,
   SetIndentLevel,
-} from "../../../../assets/helpers";
+} from "../../../assets/helpers";
 
 interface Props {
   node: Node;

@@ -1,7 +1,7 @@
+import { Project, Node } from "../../models";
 import { AspectComponent } from "./aspectComponent/AspectComponent";
-import { IsAspectNode, IsProduct } from "../../flow/helpers/common";
-import { IsBlockView } from "../../flow/helpers/block";
-import { Project, Node } from "../../../models";
+import { IsAspectNode, IsProduct } from "../../components/flow/helpers/common";
+import { IsBlockView } from "../../components/flow/helpers/block";
 
 interface Props {
   project: Project;

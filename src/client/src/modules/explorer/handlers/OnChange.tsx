@@ -1,9 +1,9 @@
-import { IsLocation } from "../../../flow/helpers/common";
-import { Node } from "../../../../models";
+import { Node } from "../../../models";
+import { IsLocation } from "../../../components/flow/helpers/common";
 import {
   setSplitView,
   setSplitNode,
-} from "../../../../redux/store/splitView/actions";
+} from "../../../redux/store/splitView/actions";
 
 const OnChange = (
   dispatch: any,

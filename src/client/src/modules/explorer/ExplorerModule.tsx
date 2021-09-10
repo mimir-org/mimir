@@ -1,18 +1,14 @@
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../../redux/store";
+import { RootState } from "../../redux/store";
 import { ProjectComponent, SplitViewComponent } from "./";
-import { TextResources } from "../../../assets/text";
-import { MODULE_TYPE } from "../../../models/project";
-import { AnimatedModule, Size } from "../../../compLibrary";
-import { IsBlockView } from "../../flow/helpers/block";
-import { ModuleHead, ModuleBody } from "../../../compLibrary/box/modules";
-import { Project } from "../../../models";
+import { TextResources } from "../../assets/text";
+import { MODULE_TYPE } from "../../models/project";
+import { AnimatedModule, Size } from "../../compLibrary";
+import { IsBlockView } from "../../components/flow/helpers/block";
+import { ModuleHead, ModuleBody } from "../../compLibrary/box/modules";
+import { Project } from "../../models";
 import { OnToggleClick } from "./handlers";
-import {
-  ExplorerIcon,
-  LeftIcon,
-  RightIcon,
-} from "../../../assets/icons/common";
+import { ExplorerIcon, LeftIcon, RightIcon } from "../../assets/icons/common";
 
 export const ExplorerModule = () => {
   const dispatch = useDispatch();
