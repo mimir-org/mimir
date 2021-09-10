@@ -1,8 +1,8 @@
 import { MODULE_TYPE } from "../../../../models/project";
-import { changeInspectorTab } from "../../../../redux/store/inspector/actions";
+import { changeInspectorTab } from "../../../../modules/inspector/redux/actions";
 import { setModuleVisibility } from "../../../../redux/store/modules/actions";
 import { Size } from "../../../../compLibrary";
-import { SetPanelHeight } from "../../../modules/inspectorModule/helpers";
+import { SetPanelHeight } from "../../../../modules/inspector/helpers";
 import { Project } from "../../../../models";
 import {
   setActiveEdge,

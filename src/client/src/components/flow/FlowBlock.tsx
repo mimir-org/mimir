@@ -7,7 +7,7 @@ import { FullScreenBox } from "../../compLibrary/controls";
 import { OpenProjectMenu } from "../project/openProject";
 import { Color } from "../../compLibrary";
 import { BackgroundBox } from "../../compLibrary/blockView";
-import { changeInspectorTab } from "../../redux/store/inspector/actions";
+import { changeInspectorTab } from "../../modules/inspector/redux/actions";
 import { Node, BlobData } from "../../models";
 import { ProjectState } from "../../redux/store/project/types";
 import { LibraryState } from "../../redux/store/library/types";

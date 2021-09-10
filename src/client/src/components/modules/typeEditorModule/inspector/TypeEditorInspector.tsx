@@ -1,4 +1,4 @@
-import { InspectorComponent } from "../../inspectorModule";
+import { InspectorComponent } from "../../../../modules/inspector";
 import { InspectorMenu } from "../../../../compLibrary/box/inspector";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";

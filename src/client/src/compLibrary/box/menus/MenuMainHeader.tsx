@@ -12,8 +12,6 @@ const MenuMainHeader = styled.div`
   background-color: ${Color.BlueMagenta};
 
   font-weight: ${(props: { isOpen: boolean }) => props.isOpen && "bold"};
-  text-decoration: ${(props: { isOpen: boolean }) =>
-    props.isOpen && "underline"};
 
   .projectName {
     margin-top: 3px;

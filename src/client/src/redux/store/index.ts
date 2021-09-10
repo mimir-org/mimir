@@ -4,7 +4,7 @@ import { libraryReducer } from "./library/reducers";
 import { typeEditorReducer } from "./typeEditor/reducers";
 import { userReducer } from "./user/reducers";
 import { projectReducer } from "./project/reducers";
-import { inspectorReducer } from "./inspector/reducers";
+import { inspectorReducer } from "../../modules/inspector/redux/reducers";
 import { moduleReducer } from "./modules/reducers";
 import { menuReducer } from "./projectMenu/reducers";
 import { commonReducer } from "./common/reducers";

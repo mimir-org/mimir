@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { ExplorerModule } from "../modules/explorerModule";
-import { InspectorModule } from "../modules/inspectorModule";
+import { InspectorModule } from "../../modules/inspector";
 import { LibraryModule } from "../modules/libraryModule";
 import { AccountMenu } from "../menus/accountMenu";
 import { FilterMenu } from "../menus/filterMenu";

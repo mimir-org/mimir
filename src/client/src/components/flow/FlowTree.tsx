@@ -12,14 +12,14 @@ import { OpenProjectMenu } from "../project/openProject/";
 import { BlobData } from "../../models";
 import { ProjectState } from "../../redux/store/project/types";
 import { IsBlockView } from "./helpers/block";
-import { changeInspectorTab } from "../../redux/store/inspector/actions";
+import { changeInspectorTab } from "../../modules/inspector/redux/actions";
 import { SetDarkModeColor } from "./helpers/common";
 import { CreateTreeElements } from "./creators";
 import { LibraryState } from "../../redux/store/library/types";
 import { setModuleVisibility } from "../../redux/store/modules/actions";
 import { MODULE_TYPE } from "../../models/project";
 import { getBlobData } from "../../redux/store/typeEditor/actions";
-import { SetPanelHeight } from "../modules/inspectorModule/helpers";
+import { SetPanelHeight } from "../../modules/inspector/helpers";
 import {
   updatePosition,
   setActiveNode,

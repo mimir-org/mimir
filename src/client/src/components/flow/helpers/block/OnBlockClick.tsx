@@ -1,4 +1,4 @@
-import { changeInspectorTab } from "../../../../redux/store/inspector/actions";
+import { changeInspectorTab } from "../../../../modules/inspector/redux/actions";
 import { GetSelectedNode } from "../common";
 import { Project } from "../../../../models";
 import {
