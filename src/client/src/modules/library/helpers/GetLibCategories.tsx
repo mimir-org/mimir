@@ -1,9 +1,9 @@
 import { concat } from "lodash";
 import { ValidateLibComponent } from ".";
-import { Node } from "../../../../models";
-import { LibCategory } from "../../../../models/project";
-import { LibraryState } from "../../../../redux/store/library/types";
-import { IsBlockView } from "../../../flow/helpers/block";
+import { Node } from "../../../models";
+import { LibCategory } from "../../../models/project";
+import { LibraryState } from "../../../redux/store/library/types";
+import { IsBlockView } from "../../../components/flow/helpers/block";
 
 const GetLibCategories = (
   selectedNode: Node,

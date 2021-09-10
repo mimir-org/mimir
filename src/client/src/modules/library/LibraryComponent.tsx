@@ -1,13 +1,13 @@
-import { TextResources } from "../../../assets/text";
-import { LibCategory, MODULE_TYPE } from "../../../models/project";
-import { SearchIcon } from "../../../assets/icons/common";
-import { SearchInput } from "../../../compLibrary";
+import { TextResources } from "../../assets/text";
+import { LibCategory, MODULE_TYPE } from "../../models/project";
+import { SearchIcon } from "../../assets/icons/common";
+import { SearchInput } from "../../compLibrary";
 import { LibraryCategoryComponent } from ".";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/store";
-import { LibraryBody, SearchIconBox } from "../../../compLibrary/box/library";
-import { TypeEditorModule } from "../../modules/typeEditorModule";
+import { RootState } from "../../redux/store";
+import { LibraryBody, SearchIconBox } from "../../compLibrary/box/library";
+import { TypeEditorModule } from "../../components/modules/typeEditorModule";
 
 interface Props {
   categories: LibCategory[];

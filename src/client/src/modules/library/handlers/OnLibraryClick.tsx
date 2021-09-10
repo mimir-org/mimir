@@ -1,4 +1,4 @@
-import { setModuleVisibility } from "../../../../redux/store/modules/actions";
+import { setModuleVisibility } from "../../../redux/store/modules/actions";
 
 const OnLibraryClick = (
   dispatch: any,

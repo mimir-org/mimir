@@ -1,17 +1,17 @@
-import { TextResources } from "../../../assets/text";
-import { LegendModule } from "../../../modules/legend";
+import { TextResources } from "../../assets/text";
+import { LegendModule } from "../../modules/legend";
 import { LibraryComponent } from "./index";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../../redux/store";
-import { LibraryState } from "../../../redux/store/library/types";
-import { searchLibrary } from "../../../redux/store/library/actions";
-import { AnimatedModule, Size } from "../../../compLibrary";
+import { RootState } from "../../redux/store";
+import { LibraryState } from "../../redux/store/library/types";
+import { searchLibrary } from "../../redux/store/library/actions";
+import { AnimatedModule, Size } from "../../compLibrary";
 import { GetLibCategories } from "./helpers";
-import { ModuleBody, ModuleHead } from "../../../compLibrary/box/modules";
-import { LegendHead, LegendIcons } from "../../../compLibrary/box/library";
-import { MODULE_TYPE } from "../../../models/project";
-import { GetSelectedNode } from "../../flow/helpers/common";
+import { ModuleBody, ModuleHead } from "../../compLibrary/box/modules";
+import { LegendHead, LegendIcons } from "../../compLibrary/box/library";
+import { MODULE_TYPE } from "../../models/project";
+import { GetSelectedNode } from "../../components/flow/helpers/common";
 import { OnLibraryClick, OnLegendClick } from "./handlers";
 import {
   LegendIcon,
@@ -20,7 +20,7 @@ import {
   LeftIcon,
   RightIcon,
   UpIcon,
-} from "../../../assets/icons/common";
+} from "../../assets/icons/common";
 
 const LibraryModule = () => {
   const libraryKey = MODULE_TYPE.LIBRARY;

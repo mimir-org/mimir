@@ -1,4 +1,4 @@
-import { Node, LibItem } from "../../../../models";
+import { Node, LibItem } from "../../../models";
 
 const ValidateLibComponent = (
   libNode: LibItem,

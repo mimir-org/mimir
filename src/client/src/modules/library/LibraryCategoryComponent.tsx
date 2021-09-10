@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { LibCategory } from "../../../models/project";
-import { ObjectType } from "../../../models";
-import { GetObjectIcon, GetAspectColor } from "../../../assets/helpers";
-import { ExpandIcon, CollapseIcon } from "../../../assets/icons/common";
+import { LibCategory } from "../../models/project";
+import { ObjectType } from "../../models";
+import { GetObjectIcon, GetAspectColor } from "../../assets/helpers";
+import { ExpandIcon, CollapseIcon } from "../../assets/icons/common";
 import {
   LibraryCategory,
   LibraryCategoryElement,
   LibraryElement,
   LibraryElementIcon,
-} from "../../../compLibrary/box/library";
+} from "../../compLibrary/box/library";
 
 interface Props {
   category: LibCategory;

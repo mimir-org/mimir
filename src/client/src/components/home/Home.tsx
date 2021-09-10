@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { ExplorerModule } from "../../modules/explorer";
 import { InspectorModule } from "../../modules/inspector";
-import { LibraryModule } from "../modules/libraryModule";
+import { LibraryModule } from "../../modules/library";
 import { AccountMenu } from "../menus/accountMenu";
 import { FilterMenu } from "../menus/filterMenu";
 import { getUser } from "../../redux/store/user/actions";
