@@ -2,7 +2,6 @@ export { default as AnimatedInspector } from "./AnimatedInspector";
 export { default as InspectorBox } from "./InspectorBox";
 export { default as InspectorTitle } from "./InspectorTitle";
 export { default as InspectorMenu } from "./InspectorMenu";
-export { default as IconWrapper } from "./IconWrapper";
 export { default as TabHeader } from "./TabHeader";
 export { default as TabBody } from "./TabBody";
 export { default as TabColumn } from "./TabColumn";

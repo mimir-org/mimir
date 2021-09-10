@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ExpandIcon, CloseIcon } from "../../assets/icons/controls";
 import { MODULE_TYPE } from "../../models/project";
 import { RootState } from "../../redux/store";
-import { setAllModulesVisibility } from "../../redux/store/modules/actions";
+import { setModulesVisibility } from "../../redux/store/modules/actions";
 import { FullScreenButton } from "./";
 
 const FullScreenBox = () => {
@@ -12,26 +12,29 @@ const FullScreenBox = () => {
     state.modules.types.find((x) => x.visible)
   ) as boolean;
 
-  const isExplorer = useSelector<RootState>(
+  const isLibraryOpen = useSelector<RootState>(
     (state) =>
-      state.modules.types.find((x) => x.type === MODULE_TYPE.EXPLORER).visible
+      state.modules.types.find((x) => x.type === MODULE_TYPE.LIBRARY).visible
   ) as boolean;
 
-  const isInspector = useSelector<RootState>(
+  const isInspectorOpen = useSelector<RootState>(
     (state) =>
       state.modules.types.find((x) => x.type === MODULE_TYPE.INSPECTOR).visible
   ) as boolean;
 
-  const onClick = () => {
-    dispatch(setAllModulesVisibility(!isOpen, true));
+  const onToggleClick = () => {
+    dispatch(setModulesVisibility(!isOpen, true));
   };
 
   return (
-    <FullScreenButton isExplorer={isExplorer} isInspector={isInspector}>
+    <FullScreenButton
+      isLibraryOpen={isLibraryOpen}
+      isInspectorOpen={isInspectorOpen}
+    >
       <img
         src={isOpen ? ExpandIcon : CloseIcon}
         alt="fullscreen"
-        onClick={onClick}
+        onClick={onToggleClick}
       />
     </FullScreenButton>
   );

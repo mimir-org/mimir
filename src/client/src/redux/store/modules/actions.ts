@@ -1,4 +1,4 @@
-import { SET_MODULE_VISIBILITY, SET_ALL_MODULES_VISIBILITY } from "./types";
+import { SET_MODULE_VISIBILITY, SET_MODULES_VISIBILITY } from "./types";
 
 export function setModuleVisibility(
   key: string,
@@ -15,9 +15,9 @@ export function setModuleVisibility(
   };
 }
 
-export function setAllModulesVisibility(visible: boolean, animate: boolean) {
+export function setModulesVisibility(visible: boolean, animate: boolean) {
   return {
-    type: SET_ALL_MODULES_VISIBILITY,
+    type: SET_MODULES_VISIBILITY,
     payload: {
       visible,
       animate,

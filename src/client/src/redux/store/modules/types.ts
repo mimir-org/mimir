@@ -1,5 +1,5 @@
 export const SET_MODULE_VISIBILITY = "SET_MODULE_VISIBILITY";
-export const SET_ALL_MODULES_VISIBILITY = "SET_ALL_MODULES_VISIBILITY";
+export const SET_MODULES_VISIBILITY = "SET_MODULES_VISIBILITY";
 
 export interface SetModuleVisibilty {
   type: typeof SET_MODULE_VISIBILITY;
@@ -10,8 +10,8 @@ export interface SetModuleVisibilty {
   };
 }
 
-export interface SetAllModulesVisibilty {
-  type: typeof SET_ALL_MODULES_VISIBILITY;
+export interface SetModulesVisibilty {
+  type: typeof SET_MODULES_VISIBILITY;
   payload: {
     visible: boolean;
     animate: boolean;
@@ -20,4 +20,4 @@ export interface SetAllModulesVisibilty {
 
 export type ModuleVisibilityActionTypes =
   | SetModuleVisibilty
-  | SetAllModulesVisibilty;
+  | SetModulesVisibilty;

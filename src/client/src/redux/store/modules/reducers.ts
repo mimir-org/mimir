@@ -1,7 +1,7 @@
 import { MODULE_TYPE } from "../../../models/project";
 import {
   SET_MODULE_VISIBILITY,
-  SET_ALL_MODULES_VISIBILITY,
+  SET_MODULES_VISIBILITY,
   ModuleVisibilityActionTypes,
 } from "./types";
 
@@ -48,7 +48,7 @@ export function moduleReducer(
             : { ...x }
         ),
       };
-    case SET_ALL_MODULES_VISIBILITY:
+    case SET_MODULES_VISIBILITY:
       return {
         ...state,
         types: state.types.map(

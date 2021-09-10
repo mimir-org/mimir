@@ -6,7 +6,6 @@ import { DeleteButtonWrapper } from "./styled";
 import { Symbol } from "../../../compLibrary/dropdown";
 import { OnDeleteClick, OnToggleClick } from "./handlers";
 import {
-  IconWrapper,
   InspectorMenu,
   InspectorTitle,
   NodeInfo,
@@ -32,33 +31,23 @@ const InspectorHeader = ({
 }: Props) => (
   <InspectorMenu id="InspectorBody" color={GetInspectorColor(node, edge)}>
     {node && (
-      <>
-        <NodeInfo symbol={node.symbol?.id}>
-          <div className="symbol">
-            <Symbol base64={node.symbol?.data} text={node.label ?? node.name} />
-          </div>
-          <div className="text">{node.label ?? node.name}</div>
-        </NodeInfo>
-        <DeleteButtonWrapper>
-          <DeleteNodeButton
-            handleClick={() => OnDeleteClick(project, node, edge, dispatch)}
-          />
-        </DeleteButtonWrapper>
-      </>
+      <NodeInfo symbol={node.symbol?.id}>
+        <div className="symbol">
+          <Symbol base64={node.symbol?.data} text={node.label ?? node.name} />
+        </div>
+        <div className="text">{node.label ?? node.name}</div>
+      </NodeInfo>
     )}
     {edge && (
-      <>
-        <NodeInfo>
-          <div className="edgetext">{edge.id}</div>
-        </NodeInfo>
-        <DeleteButtonWrapper>
-          <DeleteNodeButton
-            handleClick={() => OnDeleteClick(project, node, edge, dispatch)}
-          />
-        </DeleteButtonWrapper>
-      </>
+      <NodeInfo>
+        <div className="edgetext">{edge.id}</div>
+      </NodeInfo>
     )}
-
+    <DeleteButtonWrapper>
+      <DeleteNodeButton
+        handleClick={() => OnDeleteClick(project, node, edge, dispatch)}
+      />
+    </DeleteButtonWrapper>
     <ToggleBox>
       <img
         src={open ? DownIcon : UpIcon}
@@ -66,9 +55,7 @@ const InspectorHeader = ({
         onClick={() => OnToggleClick(dispatch, key, open)}
       />
     </ToggleBox>
-    <IconWrapper>
-      <InspectorTitle>{TextResources.Inspector_Heading}</InspectorTitle>
-    </IconWrapper>
+    <InspectorTitle>{TextResources.Inspector_Heading}</InspectorTitle>
   </InspectorMenu>
 );
 export default InspectorHeader;

@@ -1,3 +1,4 @@
+import * as Handlers from "./handlers";
 import { RootState } from "../../redux/store";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -5,12 +6,6 @@ import { VIEW_TYPE } from "../../models/project";
 import { MenuMainHeader } from "../../compLibrary/box/menus";
 import { ProjectState } from "../../redux/store/project/types";
 import { IsExplorer, IsLibrary } from "../flow/helpers/common";
-import {
-  OnAccountClick,
-  OnDarkMode,
-  OnFilterClick,
-  OnViewClick,
-} from "./handlers";
 import {
   HeaderBox,
   OptionsBox,
@@ -60,7 +55,7 @@ const Header = () => {
         <MenuMainHeader isOpen={isAccountMenuOpen}>
           <div
             className="projectName"
-            onClick={() => OnAccountClick(dispatch, isAccountMenuOpen)}
+            onClick={() => Handlers.OnAccountClick(dispatch, isAccountMenuOpen)}
           >
             {projectState.project && projectState.project.name}
           </div>
@@ -68,42 +63,39 @@ const Header = () => {
             src={UserClosedIcon}
             alt="icon"
             className="icon"
-            onClick={() => OnAccountClick(dispatch, isAccountMenuOpen)}
+            onClick={() => Handlers.OnAccountClick(dispatch, isAccountMenuOpen)}
           />
         </MenuMainHeader>
         <LogoBox>
-          <img
-            src={MimirIcon}
-            alt="dark-mode"
-            onClick={() => OnDarkMode(dispatch, isDarkMode)}
-          />
+          <img src={MimirIcon} alt="mimir-icon" />
         </LogoBox>
       </HeaderBox>
       <MenuBar
         id="MenuBar"
         isLibraryOpen={isLibraryOpen}
         isExplorerOpen={isExplorerOpen}
+        onClick={() => Handlers.OnDarkModeClick(dispatch, isDarkMode)}
       >
         <OptionsBox>
           <OptionsElement>
             <img
               src={FilterIcon}
               alt="VisualFilter"
-              onClick={() => OnFilterClick(dispatch, isFilterMenuOpen)}
+              onClick={() => Handlers.OnFilterClick(dispatch, isFilterMenuOpen)}
             />
           </OptionsElement>
           <OptionsElement>
             <img
               src={BlockViewIcon}
               alt={VIEW_TYPE.BLOCKVIEW}
-              onClick={(e) => OnViewClick(e, dispatch, push)}
+              onClick={(e) => Handlers.OnViewClick(e, dispatch, push)}
             />
           </OptionsElement>
           <OptionsElement>
             <img
               src={TreeViewIcon}
               alt={VIEW_TYPE.TREEVIEW}
-              onClick={(e) => OnViewClick(e, dispatch, push)}
+              onClick={(e) => Handlers.OnViewClick(e, dispatch, push)}
             />
           </OptionsElement>
         </OptionsBox>

@@ -8,7 +8,7 @@ import { CloseIcon } from "../../../assets/icons/common";
 import { TypeEditorState } from "../../../redux/store/typeEditor/types";
 import { changeFlowView } from "../../../redux/store/flow/actions";
 import { SetDarkModeColor } from "../../flow/helpers/common";
-import { setAllModulesVisibility } from "../../../redux/store/modules/actions";
+import { setModulesVisibility } from "../../../redux/store/modules/actions";
 import { TypeMode, ObjectType } from "../../../models/";
 import { TypeEditorInputs } from "./";
 import { FieldValidator, ModeEdit, GetLibraryType } from "./helpers";
@@ -55,7 +55,7 @@ export const TypeEditorComponent = () => {
     const darkMode = red.store.getState().darkMode.active;
     SetDarkModeColor(darkMode);
     dispatch(getInitialData());
-    dispatch(setAllModulesVisibility(false, true));
+    dispatch(setModulesVisibility(false, true));
     dispatch(getBlobData());
     dispatch(changeSelectedType(selectedType));
     dispatch(changeMode(mode));
