@@ -31,23 +31,33 @@ const InspectorHeader = ({
 }: Props) => (
   <InspectorMenu id="InspectorBody" color={GetInspectorColor(node, edge)}>
     {node && (
-      <NodeInfo symbol={node.symbol?.id}>
-        <div className="symbol">
-          <Symbol base64={node.symbol?.data} text={node.label ?? node.name} />
-        </div>
-        <div className="text">{node.label ?? node.name}</div>
-      </NodeInfo>
+      <>
+        <NodeInfo symbol={node.symbol?.id}>
+          <div className="symbol">
+            <Symbol base64={node.symbol?.data} text={node.label ?? node.name} />
+          </div>
+          <div className="text">{node.label ?? node.name}</div>
+        </NodeInfo>
+        <DeleteButtonWrapper>
+          <DeleteNodeButton
+            handleClick={() => OnDeleteClick(project, node, edge, dispatch)}
+          />
+        </DeleteButtonWrapper>
+      </>
     )}
     {edge && (
-      <NodeInfo>
-        <div className="edgetext">{edge.id}</div>
-      </NodeInfo>
+      <>
+        <NodeInfo>
+          <div className="edgetext">{edge.id}</div>
+        </NodeInfo>
+        <DeleteButtonWrapper>
+          <DeleteNodeButton
+            handleClick={() => OnDeleteClick(project, node, edge, dispatch)}
+          />
+        </DeleteButtonWrapper>
+      </>
     )}
-    <DeleteButtonWrapper>
-      <DeleteNodeButton
-        handleClick={() => OnDeleteClick(project, node, edge, dispatch)}
-      />
-    </DeleteButtonWrapper>
+
     <ToggleBox>
       <img
         src={open ? DownIcon : UpIcon}
@@ -55,7 +65,7 @@ const InspectorHeader = ({
         onClick={() => OnToggleClick(dispatch, key, open)}
       />
     </ToggleBox>
-    <InspectorTitle>{TextResources.Inspector_Heading}</InspectorTitle>
+    <InspectorTitle>{TextResources.Module_Inspector}</InspectorTitle>
   </InspectorMenu>
 );
 export default InspectorHeader;

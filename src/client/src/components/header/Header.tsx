@@ -67,14 +67,17 @@ const Header = () => {
           />
         </MenuMainHeader>
         <LogoBox>
-          <img src={MimirIcon} alt="mimir-icon" />
+          <img
+            src={MimirIcon}
+            alt="mimir-icon"
+            onClick={() => Handlers.OnDarkModeClick(dispatch, isDarkMode)}
+          />
         </LogoBox>
       </HeaderBox>
       <MenuBar
         id="MenuBar"
         isLibraryOpen={isLibraryOpen}
         isExplorerOpen={isExplorerOpen}
-        onClick={() => Handlers.OnDarkModeClick(dispatch, isDarkMode)}
       >
         <OptionsBox>
           <OptionsElement>

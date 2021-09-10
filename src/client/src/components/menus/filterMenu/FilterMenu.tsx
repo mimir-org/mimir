@@ -102,8 +102,8 @@ const FilterMenu = () => {
         <br></br>
         {isTransport && (
           <FilterContent
-            type={TextResources.Filter_Transport}
-            name={TextResources.Filter_Transport}
+            type={TextResources.Relations_Transport}
+            name={TextResources.Relations_Transport}
             header={true}
             edges={edges}
           />
@@ -135,7 +135,7 @@ const FilterMenu = () => {
 
         {isLocation && (
           <FilterContent
-            type={TextResources.Filter_Location}
+            type={TextResources.Aspect_Location}
             name={TextResources.Relations_HasLocation}
             header={true}
             edges={edges}
@@ -150,7 +150,7 @@ const FilterMenu = () => {
                 name={
                   Aspect[x.fromNode?.aspect] +
                   " " +
-                  TextResources.Filter_Location
+                  TextResources.Aspect_Location
                 }
                 key={x.id}
                 header={false}

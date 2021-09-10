@@ -1,7 +1,7 @@
 import red from "../../../../redux/store";
 import { Connector, Node } from "../../../../models";
 
-const FindConnectorNode = (connector: Connector) => {
+const GetConnectorNode = (connector: Connector) => {
   const nodes = red.store.getState().projectState?.project.nodes;
 
   return nodes.find((node) =>
@@ -9,4 +9,4 @@ const FindConnectorNode = (connector: Connector) => {
   ) as Node;
 };
 
-export default FindConnectorNode;
+export default GetConnectorNode;

@@ -83,7 +83,7 @@ const LibraryModule = () => {
             OnLibraryClick(dispatch, libraryOpen, libraryKey, legendKey)
           }
         />
-        <p className="text">{TextResources.Library_Heading}</p>
+        <p className="text">{TextResources.Module_Library}</p>
       </ModuleHead>
       <ModuleBody visible={libraryOpen} library>
         <LibraryComponent
@@ -109,7 +109,7 @@ const LibraryModule = () => {
           </LegendHead>
           <LegendIcons open={legendOpen}>
             <img src={LegendIcon} alt="legend" className="icon" />
-            <p className="text">{TextResources.Legend_Heading}</p>
+            <p className="text">{TextResources.Module_Legend}</p>
           </LegendIcons>
         </ModuleHead>
         <LegendModule visible={true} />

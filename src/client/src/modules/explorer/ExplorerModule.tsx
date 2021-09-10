@@ -45,7 +45,7 @@ export const ExplorerModule = () => {
           alt="toggle"
           onClick={() => OnToggleClick(dispatch, isOpen, type)}
         />
-        <p className="text">{TextResources.Explorer_view}</p>
+        <p className="text">{TextResources.Module_Explorer}</p>
       </ModuleHead>
       <ModuleBody visible={isOpen} explorer isBlockView={IsBlockView()}>
         {project && (

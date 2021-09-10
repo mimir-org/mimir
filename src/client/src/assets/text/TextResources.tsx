@@ -1,6 +1,23 @@
 /* All static text in the application */
 
 const TextResources = {
+  // Aspects
+  Aspect_Function: "Function",
+  Aspect_Location: "Location",
+  Aspect_Product: "Product",
+
+  // Modules
+  Module_Legend: "Legend",
+  Module_Explorer: "Explorer",
+  Module_Library: "Library",
+  Module_Inspector: "Inspector",
+
+  // Relations
+  Relations_PartOf: "Part of Relationship",
+  Relations_HasLocation: "Has Location",
+  Relations_FulfilledBy: "Fulfilled By",
+  Relations_Transport: "Transport",
+
   // Log in
   Login_label: "Log in",
   Login_label_email: "SSO e-mail",
@@ -20,12 +37,10 @@ const TextResources = {
   Project_recent_open: "Open project",
 
   // ExplorerModule
-  Explorer_view: "Explorer",
   Combined_view: "Connections",
   Split_view: "Split View",
 
   // InspectorModule
-  Inspector_Heading: "Inspector",
   Inspector_AdminInfo: "Admin info",
   Inspector_Object: "Object",
   Inspector_Parameters: "Parameters",
@@ -95,10 +110,6 @@ const TextResources = {
   Inspector_Delete_Node: "Delete",
 
   // LibraryModule
-  Library_Heading: "Library",
-  Library_Function: "Function",
-  Library_Product: "Product",
-  Library_Location: "Location",
   Library_SearchBox_Placeholder: "Search the Library",
 
   // TypeEditorModule
@@ -144,7 +155,7 @@ const TextResources = {
   Account_Save_Label_Library_File: "Export project library",
   Account_Import_Label_File: "Import project file",
   Account_Import_Label_Library_File: "Import project library",
-  Account_Logout: "Log out",
+  Account_Logout_Label: "Log out",
   Account_Open_Label: "Open a project",
   Account_Create_Label: "Create a project",
   Account_Create_Button_Label: "Create project",
@@ -160,6 +171,14 @@ const TextResources = {
   Account_Import_Label_File_Button: "Import project",
   Account_Save_Label_File_Library_Button: "Export library",
   Account_Import_Label_File_Library_Button: "Import library",
+  Account_Save: "Save",
+  Account_Save_File: "SaveFile",
+  Account_Open: "Open",
+  Account_Create: "Create",
+  Account_Save_Library: "SaveLibrary",
+  Account_Import_Project: "ImportProject",
+  Account_Import_Library: "ImportLibrary",
+  Account_Logout: "Logout",
 
   // Error
   Error_Tile: "Oops, something went wrong",
@@ -170,21 +189,9 @@ const TextResources = {
   Error_NoActiveAccount:
     "No active account. Verify a user has been signed in and setActiveAccount has been called",
 
-  // LegendModule
-  Legend_Heading: "Legend",
-
-  // FilterModule
-  Filter_Transport: "Transport",
-  Filter_Location: "Location",
-
   // BlockView
   BlockView_Select_Message:
     "Please select an additional object from the Explorer Module",
-
-  // Relations
-  Relations_PartOf: "Part of Relationship",
-  Relations_HasLocation: "Has Location",
-  Relations_FulfilledBy: "Fulfilled By",
 
   // Type
   Type_BlockLocation: "BlockLocationNode",
