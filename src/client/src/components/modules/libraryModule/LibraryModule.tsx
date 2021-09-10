@@ -1,5 +1,5 @@
 import { TextResources } from "../../../assets/text";
-import { LegendModule } from "../legendModule";
+import { LegendModule } from "../../../modules/legend";
 import { LibraryComponent } from "./index";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";

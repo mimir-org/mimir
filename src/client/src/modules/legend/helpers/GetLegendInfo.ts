@@ -1,13 +1,13 @@
-import { Node, Connector } from "../../../../models";
-import { GetAspectPartColor } from "../../../../assets/helpers";
-import { TextResources } from "../../../../assets/text";
-import { Color } from "../../../../compLibrary";
+import { Node, Connector } from "../../../models";
+import { GetAspectPartColor } from "../../../assets/helpers";
+import { TextResources } from "../../../assets/text";
+import { Color } from "../../../compLibrary";
 import {
   IsFulfilledByTerminal,
   IsLocationTerminal,
   IsPartOfTerminal,
   IsTransportTerminal,
-} from "../../../flow/helpers/common";
+} from "../../../components/flow/helpers/common";
 
 const GetLegendInfo = (conn: Connector, node: Node) => {
   let color = "";

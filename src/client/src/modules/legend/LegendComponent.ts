@@ -1,5 +1,5 @@
-import { Project } from "../../../models";
-import { Legend } from "../../flow/helpers/common";
+import { Legend } from "../../components/flow/helpers/common";
+import { Project } from "../../models";
 import { AddLegend } from "./helpers";
 
 const LegendComponent = (project: Project) => {

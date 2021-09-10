@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/store";
-import { ModuleBody } from "../../../compLibrary/box/modules";
-import { LegendElement, LegendColor } from "../../../compLibrary/box/library";
+import { RootState } from "../../redux/store";
+import { ModuleBody } from "../../compLibrary/box/modules";
+import { LegendElement, LegendColor } from "../../compLibrary/box/library";
 import { LegendComponent } from "./";
-import { Project } from "../../../models";
+import { Project } from "../../models";
 
 const LegendModule = ({ visible }) => {
   const project = useSelector<RootState>(
