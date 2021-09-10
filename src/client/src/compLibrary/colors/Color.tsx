@@ -14,7 +14,7 @@ const Color = {
   White: "#fff",
   Black: "#000",
   LightGrey: "#FBFBFF",
-  Grey: "#cbcbcb",
+  Grey: "#d9d9d9",
   DarkGrey: "#c4c4c4",
   DarkerGrey: "#898787",
   DeepCyan: "#007079",
