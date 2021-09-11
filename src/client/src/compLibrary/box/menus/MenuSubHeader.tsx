@@ -1,10 +1,9 @@
 import styled from "styled-components";
-import { Color } from "../../";
-import FontSize from "../../font/FontSize";
+import { Color, FontSize } from "../../";
 
 const MenuSubHeader = styled.p`
   display: contents;
-  color: ${Color.DeepCyan};
+  color: ${Color.BlueMagenta};
   font-size: ${FontSize.SubHeader};
 `;
 

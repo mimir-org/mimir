@@ -6,7 +6,7 @@ import { CreateBlockNode, CreateTreeEdge, CreateTreeNode } from "../creators";
 import { BlobData, LibItem, Project, GetFileData } from "../../../models";
 import {
   CreateId,
-  FindSelectedNode,
+  GetSelectedNode,
   IsInputTerminal,
   IsOutputTerminal,
   IsPartOfTerminal,
@@ -24,7 +24,7 @@ const useOnDrop = (
   library: LibraryState
 ) => {
   const showBlockView = IsBlockView();
-  const sourceNode = FindSelectedNode();
+  const sourceNode = GetSelectedNode();
   const isFile =
     event.dataTransfer.files && event.dataTransfer.files.length > 0;
 

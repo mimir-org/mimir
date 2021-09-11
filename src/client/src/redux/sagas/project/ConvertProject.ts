@@ -186,7 +186,7 @@ const ConvertConnectors = (connectors: Connector[]): ConnectorAm[] => {
             color: connector.color,
             terminalCategoryId: connector.terminalCategoryId,
             attributes: ConvertAttributes(connector.attributes),
-            terminalTypeId: connector.terminalTypeId
+            terminalTypeId: connector.terminalTypeId,
         } as ConnectorAm;
 
         converted.push(a);
@@ -270,7 +270,7 @@ const ConvertEdges = (edges: Edge[]): EdgeAm[] => {
             masterProjectId: edge.masterProjectId,
             isTemplateEdge: edge.isTemplateEdge,
             transport: edge.transport,
-            interface: edge.interface
+            interface: edge.interface,
         } as EdgeAm;
 
         convertedEdges.push(e);

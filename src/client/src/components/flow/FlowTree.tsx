@@ -1,4 +1,5 @@
 import red from "../../redux/store";
+import * as Helpers from "./helpers/tree";
 import ReactFlow, { ReactFlowProvider, Elements } from "react-flow-renderer";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,22 +7,23 @@ import { ProjectMainMenu } from "../project";
 import { RootState } from "../../redux/store/index";
 import { useOnConnect, useOnDrop, useOnRemove } from "./hooks";
 import { FullScreenBox } from "../../compLibrary/controls";
+import { Size } from "../../compLibrary";
 import { OpenProjectMenu } from "../project/openProject/";
 import { BlobData } from "../../models";
 import { ProjectState } from "../../redux/store/project/types";
 import { IsBlockView } from "./helpers/block";
-import { changeInspectorTab } from "../../redux/store/inspector/actions";
-import { FindSelectedNode, SetDarkModeColor } from "./helpers/common";
+import { changeInspectorTab } from "../../modules/inspector/redux/actions";
+import { SetDarkModeColor } from "./helpers/common";
 import { CreateTreeElements } from "./creators";
-import { getBlobData } from "../../redux/store/typeEditor/actions";
-import { GetNodeTypes, GetEdgeTypes, GetEdgeType } from "./helpers/tree";
 import { LibraryState } from "../../redux/store/library/types";
-import { changeModuleVisibility } from "../../redux/store/modules/actions";
+import { setModuleVisibility } from "../../redux/store/modules/actions";
 import { MODULE_TYPE } from "../../models/project";
+import { getBlobData } from "../../redux/store/typeEditor/actions";
+import { SetPanelHeight } from "../../modules/inspector/helpers";
 import {
   updatePosition,
-  changeActiveNode,
-  changeActiveEdge,
+  setActiveNode,
+  setActiveEdge,
 } from "../../redux/store/project/actions";
 
 const FlowTree = () => {
@@ -62,7 +64,7 @@ const FlowTree = () => {
     const fromConnector = fromNode.connectors.find(
       (x) => x.id === params.sourceHandle
     );
-    const edgeType = GetEdgeType(fromConnector);
+    const edgeType = Helpers.GetEdgeType(fromConnector);
     return useOnConnect(
       params,
       project,
@@ -95,39 +97,13 @@ const FlowTree = () => {
   };
 
   const OnElementClick = (_event, element) => {
-    dispatch(changeActiveEdge(null, false));
-    dispatch(changeActiveNode(element.id, true));
-    dispatch(changeModuleVisibility(MODULE_TYPE.INSPECTOR, true, true));
+    dispatch(setActiveEdge(null, false));
+    dispatch(setActiveNode(element.id, true));
+    dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, true, true));
     dispatch(changeInspectorTab(0));
-  };
-
-  const OnClick = (e) => {
-    if (!project) return;
-
-    // Close Inspector if nothing is selected
-    if (e.target.className === "react-flow__pane") {
-      dispatch(changeModuleVisibility(MODULE_TYPE.INSPECTOR, false, true));
-    }
-
-    // Handle select Edge
-    if (e.target.classList.contains("react-flow__edge-path")) {
-      const edge = project.edges.find((x) => x.id === e.target.id);
-      dispatch(changeActiveEdge(edge.id, true));
-      dispatch(changeActiveNode(null, false));
-      dispatch(changeInspectorTab(0));
-      return;
-    }
-
-    if (e.target.classList.contains("react-flow__pane")) {
-      const selectedNode = FindSelectedNode();
-      if (selectedNode) {
-        dispatch(changeActiveEdge(null, false));
-        dispatch(changeActiveNode(selectedNode.id, false));
-        dispatch(changeInspectorTab(0));
-        return;
-      }
-    }
-    dispatch(changeActiveEdge(null, false));
+    const panel = document.getElementById("InspectorModule");
+    if (panel.style.height === Size.ModuleClosed + "px")
+      SetPanelHeight(Size.InspectorModuleOpen);
   };
 
   // Rerender
@@ -155,11 +131,11 @@ const FlowTree = () => {
             onDragOver={OnDragOver}
             onNodeDragStop={OnNodeDragStop}
             onElementClick={OnElementClick}
-            nodeTypes={GetNodeTypes}
-            edgeTypes={GetEdgeTypes}
+            nodeTypes={Helpers.GetNodeTypes}
+            edgeTypes={Helpers.GetEdgeTypes}
             snapToGrid={true}
             snapGrid={[5, 5]}
-            onClick={(e) => OnClick(e)}
+            onClick={(e) => Helpers.OnTreeClick(e, dispatch, project)}
           >
             <FullScreenBox />
           </ReactFlow>

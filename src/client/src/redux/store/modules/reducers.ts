@@ -1,7 +1,7 @@
 import { MODULE_TYPE } from "../../../models/project";
 import {
-  CHANGE_MODULE_VISIBILITY,
-  CHANGE_ALL_MODULES_VISIBILITY,
+  SET_MODULE_VISIBILITY,
+  SET_MODULES_VISIBILITY,
   ModuleVisibilityActionTypes,
 } from "./types";
 
@@ -35,7 +35,7 @@ export function moduleReducer(
   action: ModuleVisibilityActionTypes
 ) {
   switch (action.type) {
-    case CHANGE_MODULE_VISIBILITY:
+    case SET_MODULE_VISIBILITY:
       return {
         ...state,
         types: state.types.map((x) =>
@@ -48,7 +48,7 @@ export function moduleReducer(
             : { ...x }
         ),
       };
-    case CHANGE_ALL_MODULES_VISIBILITY:
+    case SET_MODULES_VISIBILITY:
       return {
         ...state,
         types: state.types.map(

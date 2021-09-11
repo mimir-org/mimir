@@ -5,145 +5,169 @@
 .react-flow__node-Function,
 .react-flow__node-Product,
 .react-flow__node-Location {
-    border-radius: 3px;
-    width: 96px;
-    height: 69px;
-    font-size: 10px;
-    color: #222;
-    text-align: center;
-    border: 1px solid #222;
-
-    &.selected {
-        border: 2px solid #1a192b !important;
-    }
+  border-radius: 3px;
+  width: 106px;
+  height: 69px;
+  font-size: 10px;
+  color: #222;
+  text-align: center;
+  box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.2);
 }
 
 .react-flow__node-AspectLocation,
 .react-flow__node-AspectFunction,
 .react-flow__node-AspectProduct {
-    border: none;
-    width: 90px;
-    height: 52px;
+  border: none;
+  width: 90px;
+  height: 52px;
+  box-shadow: none;
+}
+
+.react-flow__node-AspectLocation {
+  &.selected {
+    border: 3px solid #a300a7 !important;
+  }
+}
+
+.react-flow__node-AspectFunction {
+  &.selected {
+    border: 3px solid #fbc913 !important;
+  }
+}
+
+.react-flow__node-AspectProduct {
+  &.selected {
+    border: 3px solid #00f0ff !important;
+  }
 }
 
 .react-flow__node-Function {
-    background: #fef445;
+  background: #fef445;
+  &.selected {
+    border: 3px solid #fbc913 !important;
+  }
 }
 
 .react-flow__node-Product {
-    background: #00f0ff;
+  background: #00f0ff;
+  &.selected {
+    border: 3px solid #1a192b !important;
+  }
 }
 
 .react-flow__node-Location {
-    background: magenta;
+  background: magenta;
+  &.selected {
+    border: 3px solid #a300a7 !important;
+  }
 }
 
 // BLOCKVIEW
 .react-flow__node-BlockFunctionNode {
-    border-radius: 5px;
-    width: 115px;
-    height: 70px;
-    font-size: 11px;
-    color: #222;
-    text-align: center;
-    border: 1px solid #222;
-    background: #fef445;
+  border-radius: 5px;
+  width: 115px;
+  height: 70px;
+  font-size: 11px;
+  color: #222;
+  text-align: center;
+  background-color: #fef445;
+  box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.2);
 
-    &.selected {
-        border: 2px solid #1a192b !important;
-    }
+  &.selected {
+    border: 3px solid #fbc913 !important;
+  }
 }
 
 .react-flow__node-BlockLocationNode {
-    border-radius: 5px;
-    width: 115px;
-    height: 70px;
-    font-size: 11px;
-    color: #222;
-    text-align: center !important;
-    border: 1px solid #222;
-    background: magenta;
+  border-radius: 5px;
+  width: 115px;
+  height: 70px;
+  font-size: 11px;
+  color: #222;
+  text-align: center !important;
+  background-color: magenta;
+  box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.2);
 
-    &.selected {
-        border: 2px solid #1a192b !important;
-    }
+  &.selected {
+    border: 3px solid #a300a7 !important;
+  }
 }
 
 .react-flow__node-FunctionBlock {
-    z-index: 1 !important;
+  z-index: 1 !important;
 }
 
 // COMMON
 .react-flow__handle {
-    opacity: 1;
-    position: absolute;
-    width: 14px !important;
-    height: 15px !important;
-    border-radius: 0% !important;
-    border: none !important;
-    background-color: transparent !important;
+  opacity: 1;
+  position: absolute;
+  width: 14px !important;
+  height: 15px !important;
+  border-radius: 0% !important;
+  border: none !important;
+  background-color: transparent !important;
 }
 
 .dndflow {
-    height: 100%;
-    display: flex;
+  height: 100%;
+  display: flex;
 }
 
 .dndflow .dndnode {
-    height: 25px;
-    width: 150px;
-    padding: 4px;
-    border: 1px solid #1a192b;
-    font-size: 14px;
-    border-radius: 2px;
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: grab;
+  height: 25px;
+  width: 150px;
+  padding: 4px;
+  border: 1px solid #1a192b;
+  font-size: 14px;
+  border-radius: 2px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: grab;
 }
 
 .dndflow .reactflow-wrapper {
-    flex: 1;
-    height: 100%;
+  flex: 1;
+  height: 100%;
 }
 
 .react-flow__node {
-    opacity: 1 !important;
-    padding: 0px !important;
+  opacity: 1 !important;
+  padding: 0px !important;
 }
 
 .react-flow__nodes {
-    z-index: 3;
+  z-index: 3;
 }
 
 .react-flow__edge {
-    cursor: grab;
+  cursor: grab;
 }
 
 .react-flow__edges {
-    z-index: 2;
+  z-index: 2;
 }
 
 .react-flow__handle-left {
-    left: -15px;
+  left: -15px;
 }
 
 .react-flow__handle.connectable {
-    cursor: crosshair;
+  cursor: crosshair;
 }
 
 .react-flow__controls {
-    position: absolute;
-    z-index: 5;
-    bottom: 15px !important;
-    left: 20px !important;
+  position: absolute;
+  z-index: 5;
+  bottom: 15px !important;
+  left: 20px !important;
 }
 
 .react-flow__minimap {
-    background-color: #f8f8f8;
-    box-shadow: 0px -3px 5px rgba(0, 0, 0, 0.15);
-    margin-bottom: 10px;
-    max-height: 78px;
-    max-width: 161px;
+  background-color: #f8f8f8;
+  box-shadow: 0px -3px 5px rgba(0, 0, 0, 0.15);
+  margin-bottom: 10px;
+  max-height: 78px;
+  max-width: 161px;
 }

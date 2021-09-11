@@ -15,13 +15,13 @@ const ProjectElement = styled.div`
     padding: 12px;
     width: 32px;
     height: 32px;
-    background-color: ${Color.DeepCyan};
+    background-color: ${Color.BlueMagenta};
     border-radius: 5px;
   }
 
   &:hover {
     text-decoration: underline;
-    background-color: ${Color.DeepCyan};
+    background-color: ${Color.BlueMagenta};
     color: ${Color.White};
   }
 `;
