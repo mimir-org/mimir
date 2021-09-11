@@ -28,6 +28,7 @@ namespace Mb.Models.Configurations
             builder.HasOne(x => x.Qualifier).WithMany(y => y.Attributes).HasForeignKey(x => x.QualifierId).OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(x => x.Source).WithMany(y => y.Attributes).HasForeignKey(x => x.SourceId).OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(x => x.Format).WithMany(y => y.Attributes).HasForeignKey(x => x.FormatId).OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(x => x.Composite).WithMany(y => y.Attributes).HasForeignKey(x => x.CompositeId).OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

@@ -36,7 +36,7 @@ namespace Mb.Models.Application
         public string TerminalTypeId { get; set; }
 
         // CompositeType
-        public ICollection<string> SimpleTypes { get; set; }
+        public ICollection<string> CompositeTypes { get; set; }
 
         [JsonIgnore]
         public string Key => $"{Name}-{RdsId}";

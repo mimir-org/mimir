@@ -17,5 +17,6 @@ namespace Mb.Models.Application
         public string Version { get; set; } = "1.0";
         public string SymbolId { get; set; }
         public ObjectType LibraryType => ObjectType.ObjectBlock;
+        public ICollection<Composite> Composites { get; set; }
     }
 }

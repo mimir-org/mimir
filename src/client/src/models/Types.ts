@@ -38,6 +38,7 @@ export interface LibItem {
     aspect: Aspect;
     connectors: Connector[];
     attributes?: Attribute[] | null;
+    composites?: Composite[] | null;
     semanticReference: string;
     statusId: string;
     version: string;
@@ -136,6 +137,21 @@ export interface BlobData {
     name: string;
     data: string;
     categoryId: string;
+}
+
+export interface Composite {
+    id: string;
+    name: string;
+    semanticReference: string;
+    attributes: Attribute[];
+    nodeId: string;
+}
+
+export interface CompositeType {
+    id: string;
+    name: string;
+    semanticReference: string;
+    attributes: AttributeType[];
 }
 
 export const SETTING_KEY = {

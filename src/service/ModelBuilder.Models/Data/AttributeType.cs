@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
+using Newtonsoft.Json;
 
 namespace Mb.Models.Data
 {
@@ -24,9 +25,16 @@ namespace Mb.Models.Data
         public string FormatId { get; set; }
         public AttributeFormat Format { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<TerminalType> TerminalTypes { get; set; }
+
+        [JsonIgnore]
         public virtual ICollection<NodeType> NodeTypes { get; set; }
+
+        [JsonIgnore]
         public virtual ICollection<TransportType> TransportTypes { get; set; }
-        public virtual ICollection<SimpleType> SimpleTypes { get; set; }
+
+        [JsonIgnore]
+        public virtual ICollection<CompositeType> CompositeTypes { get; set; }
     }
 }

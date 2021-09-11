@@ -66,6 +66,15 @@ const useOnDrop = (
 
     const targetNode = ConvertToNode(data, position, project.id, icons);
 
+    targetNode.composites?.forEach((c) => {
+      var compositeId = CreateId();
+      c.id = compositeId;
+      c.nodeId = targetNode.id;
+      c.attributes.forEach((a) => {
+        a.compositeId = compositeId;
+      });
+    });
+
     targetNode.connectors?.forEach((c) => {
       c.id = CreateId();
       c.nodeId = targetNode.id;

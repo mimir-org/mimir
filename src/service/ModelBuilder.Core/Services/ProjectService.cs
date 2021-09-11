@@ -97,6 +97,8 @@ namespace Mb.Core.Services
                 .Include("Nodes.Connectors")
                 .Include("Nodes.Connectors.Attributes")
                 .Include("Nodes.Symbol")
+                .Include("Nodes.Composites")
+                .Include("Nodes.Composites.Attributes")
                 .AsSplitQuery()
                 .OrderByDescending(x => x.Name)
                 .FirstOrDefaultAsync();
@@ -128,6 +130,21 @@ namespace Mb.Core.Services
                                 foreach (var attribute in connector.Attributes)
                                 {
                                     if (!string.IsNullOrEmpty(attribute.UnitString))
+                                        attribute.Units = JsonConvert.DeserializeObject<ICollection<Unit>>(attribute.UnitString);
+                                }
+                            }
+                        }
+                    }
+
+                    if (node.Composites != null)
+                    {
+                        foreach (var composite in node.Composites)
+                        {
+                            if (composite.Attributes != null)
+                            {
+                                foreach (var attribute in composite.Attributes)
+                                {
+                                    if(!string.IsNullOrEmpty(attribute.UnitString))
                                         attribute.Units = JsonConvert.DeserializeObject<ICollection<Unit>>(attribute.UnitString);
                                 }
                             }
@@ -244,6 +261,8 @@ namespace Mb.Core.Services
                 .Include("Nodes.Attributes")
                 .Include("Nodes.Connectors")
                 .Include("Nodes.Connectors.Attributes")
+                .Include("Nodes.Composites")
+                .Include("Nodes.Composites.Attributes")
                 .AsSplitQuery()
                 .OrderByDescending(x => x.Name)
                 .FirstOrDefaultAsync();
@@ -529,6 +548,7 @@ namespace Mb.Core.Services
             foreach (var node in project.Nodes.Where(x => !_commonRepository.HasValidId(x.Id)))
             {
                 var newNodeId = _commonRepository.CreateUniqueId();
+                RemapComposites(newNodeId, node);
                 RemapConnectors(newNodeId, node, project);
 
                 foreach (var attribute in node.Attributes)
@@ -632,6 +652,25 @@ namespace Mb.Core.Services
 
                 connector.Id = newConnectorId;
                 connector.NodeId = newNodeId;
+            }
+        }
+
+        private void RemapComposites(string newNodeId, NodeAm node)
+        {
+            if (node?.Composites == null || !node.Composites.Any())
+                return;
+
+            foreach (var composite in node.Composites)
+            {
+                if (!_commonRepository.HasValidId(composite.Id))
+                {
+                    composite.Id = _commonRepository.CreateUniqueId();
+                    foreach (var attribute in composite.Attributes)
+                    {
+                        attribute.CompositeId = composite.Id;
+                    }
+                }
+                composite.NodeId = newNodeId;
             }
         }
 

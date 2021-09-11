@@ -8,6 +8,7 @@ import {
     ConnectorType,
     RelationType,
     EnumBase,
+    Composite,
 } from "../../../models/";
 
 export interface UnitAm {
@@ -28,6 +29,7 @@ export interface AttributeAm {
     terminalId: string;
     nodeId: string;
     transportId: string;
+    compositeId: string;
     attributeTypeId: string;
     units: UnitAm[];
 }
@@ -104,6 +106,14 @@ export interface TransportAm {
     terminalId: string;
     attributes: AttributeAm[];
 }
+export interface CompositeAm {
+    id: string;
+    name: string;
+    semanticReference: string;
+    attributes: AttributeAm[];
+    nodeId: string;
+}
+
 
 export interface InterfaceAm {
     id: string;
@@ -149,6 +159,7 @@ const ConvertAttributes = (attributes: Attribute[]): AttributeAm[] => {
             terminalId: attribute.terminalId,
             nodeId: attribute.nodeId,
             attributeTypeId: attribute.attributeTypeId,
+            compositeId: attribute.compositeId,
             units: ConvertUnits(attribute.units),
         } as AttributeAm;
 
@@ -184,6 +195,25 @@ const ConvertConnectors = (connectors: Connector[]): ConnectorAm[] => {
     return converted;
 };
 
+const ConvertComposites = (composites: Composite[]): CompositeAm[] => {
+    let converted = [] as CompositeAm[];
+
+    if (!composites) return converted;
+
+    composites.forEach((composite) => {
+        const a = {
+            id: composite.id,
+            name: composite.name,
+            semanticReference: composite.semanticReference,
+            nodeId: composite.nodeId,
+            attributes: ConvertAttributes(composite.attributes),
+        } as CompositeAm;
+        converted.push(a);
+    });
+
+    return converted;
+};
+
 const ConvertNodes = (nodes: Node[]): NodeAm[] => {
     let convertedNodes = [] as NodeAm[];
 
@@ -213,8 +243,10 @@ const ConvertNodes = (nodes: Node[]): NodeAm[] => {
             symbolId: node.symbolId,
             connectors: ConvertConnectors(node.connectors),
             attributes: ConvertAttributes(node.attributes),
+            composites: ConvertComposites(node.composites),
             aspect: node.aspect,
             isRoot: node.isRoot,
+
         } as NodeAm;
 
         convertedNodes.push(n);
