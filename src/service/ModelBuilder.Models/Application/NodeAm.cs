@@ -60,6 +60,8 @@ namespace Mb.Models.Application
         public ICollection<ConnectorAm> Connectors { get; set; }
 
         public ICollection<AttributeAm> Attributes { get; set; }
+        
+        public ICollection<CompositeAm> Composites { get; set; }
 
         [Required]
         public Aspect Aspect { get; set; }
