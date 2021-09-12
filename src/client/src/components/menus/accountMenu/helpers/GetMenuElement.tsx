@@ -1,10 +1,10 @@
-import { msalInstance } from "../../../../index";
 import { LogoutIcon } from "../../../../assets/icons/common";
 import { TextResources } from "../../../../assets/text";
 import { MenuButton } from "../../../../compLibrary/buttons";
 import { UserState } from "../../../../redux/store/user/types";
 import { MenuElement } from "../../../../compLibrary/box/menus";
 import { GetText, GetIcon } from "./";
+import { OnLogOutClick } from "../handlers/";
 
 interface Props {
   type: string;
@@ -13,10 +13,6 @@ interface Props {
 }
 
 const GetMenuElement = ({ type, onClick, userState }: Props) => {
-  const logoutClick = () => {
-    msalInstance.logoutRedirect();
-  };
-
   return type !== TextResources.Account_Logout ? (
     <MenuElement onClick={onClick}>
       <div className="icon">{GetIcon(type)}</div>
@@ -25,7 +21,7 @@ const GetMenuElement = ({ type, onClick, userState }: Props) => {
   ) : (
     <MenuElement logOut>
       {userState.user && userState.user.name}
-      <MenuButton onClick={logoutClick}>
+      <MenuButton onClick={() => OnLogOutClick()}>
         <img src={LogoutIcon} alt="logout" />
 
         <p className="text">{TextResources.Account_Logout_Label}</p>
