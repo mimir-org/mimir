@@ -4,7 +4,7 @@ const ToggleBox = styled.div`
   display: inline;
   position: absolute;
   top: 14px;
-  right: 10px;
+  right: 12px;
 
   :hover {
     cursor: pointer;
