@@ -57,6 +57,8 @@ namespace Mb.Core.Extensions
             services.AddScoped<ITransportRepository, TransportRepository>();
             services.AddScoped<IInterfaceRepository, InterfaceRepository>();
             services.AddScoped<INodeTypeRepository, NodeTypeRepository>();
+            services.AddScoped<ICompositeTypeRepository, CompositeTypeRepository>();
+            services.AddScoped<ICompositeRepository, CompositeRepository>();
 
             services.AddScoped<ITypeEditorService, TypeEditorService>();
             services.AddScoped<ISeedingService, SeedingService>();
@@ -85,6 +87,7 @@ namespace Mb.Core.Extensions
                 cfg.AddProfile(new LibraryTypeProfile(provider.GetService<ICommonRepository>()));
                 cfg.AddProfile(new TransportProfile(provider.GetService<ICommonRepository>()));
                 cfg.AddProfile(new InterfaceProfile(provider.GetService<ICommonRepository>()));
+                cfg.AddProfile(new CompositeProfile(provider.GetService<ICommonRepository>()));
             });
             services.AddSingleton(s => autoMapperConfiguration.CreateMapper());
 

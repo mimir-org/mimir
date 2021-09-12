@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Mb.Core.Repositories.Contracts;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
@@ -8,36 +7,31 @@ using Newtonsoft.Json;
 
 namespace Mb.Core.Repositories
 {
-    public class ConnectorRepository : GenericRepository<ModelBuilderDbContext, Connector>, IConnectorRepository
+    public class CompositeRepository : GenericRepository<ModelBuilderDbContext, Composite>, ICompositeRepository
     {
         private readonly IAttributeRepository _attributeRepository;
 
-        public ConnectorRepository(ModelBuilderDbContext dbContext, IAttributeRepository attributeRepository) : base(dbContext)
+        public CompositeRepository(ModelBuilderDbContext dbContext, IAttributeRepository attributeRepository) : base(dbContext)
         {
             _attributeRepository = attributeRepository;
         }
 
-        public void AttachWithAttributes(ICollection<Connector> entities, EntityState state)
+        public void AttachWithAttributes(ICollection<Composite> entities, EntityState state)
         {
             if(entities == null)
                 return;
 
-            foreach (var connector in entities.OfType<Terminal>())
+            foreach (var composite in entities)
             {
-                if (connector.Attributes != null)
+                if (composite.Attributes != null)
                 {
-                    foreach (var attribute in connector.Attributes)
+                    foreach (var attribute in composite.Attributes)
                     {
                         attribute.UnitString = attribute.Units != null ? JsonConvert.SerializeObject(attribute.Units) : null;
                         _attributeRepository.Attach(attribute, state);
                     }
                 }
-                Attach(connector, state);
-            }
-
-            foreach (var connector in entities.OfType<Relation>())
-            {
-                Attach(connector, state);
+                Attach(composite, state);
             }
         }
     }

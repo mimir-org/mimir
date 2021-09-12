@@ -28,8 +28,9 @@ namespace Mb.Core.Services
         private readonly IMapper _mapper;
         private readonly IPredefinedAttributeRepository _predefinedAttributeRepository;
         private readonly INodeTypeTerminalTypeRepository _nodeTypeTerminalTypeRepository;
+        private readonly ICompositeTypeRepository _compositeTypeRepository;
 
-        public TypeEditorService(IRdsRepository rdsRepository, IAttributeTypeRepository attributeTypeRepository, ILibraryTypeRepository libraryTypeComponentRepository, IContractorRepository contractorRepository, ITerminalTypeRepository terminalTypeRepository, IEnumBaseRepository enumBaseRepository, IMapper mapper, IPredefinedAttributeRepository predefinedAttributeRepository, INodeTypeTerminalTypeRepository nodeTypeTerminalTypeRepository)
+        public TypeEditorService(IRdsRepository rdsRepository, IAttributeTypeRepository attributeTypeRepository, ILibraryTypeRepository libraryTypeComponentRepository, IContractorRepository contractorRepository, ITerminalTypeRepository terminalTypeRepository, IEnumBaseRepository enumBaseRepository, IMapper mapper, IPredefinedAttributeRepository predefinedAttributeRepository, INodeTypeTerminalTypeRepository nodeTypeTerminalTypeRepository, ICompositeTypeRepository compositeTypeRepository)
         {
             _rdsRepository = rdsRepository;
             _attributeTypeRepository = attributeTypeRepository;
@@ -40,6 +41,7 @@ namespace Mb.Core.Services
             _mapper = mapper;
             _predefinedAttributeRepository = predefinedAttributeRepository;
             _nodeTypeTerminalTypeRepository = nodeTypeTerminalTypeRepository;
+            _compositeTypeRepository = compositeTypeRepository;
         }
 
         #region Public methods
@@ -63,6 +65,8 @@ namespace Mb.Core.Services
                     .OfType<NodeType>()
                     .Include(x => x.TerminalTypes)
                     .Include(x => x.AttributeTypes)
+                    .Include(x => x.CompositeTypes)
+                    .ThenInclude(y => y.AttributeTypes)
                     .FirstOrDefaultAsync();
             }
             else if (libraryTypeComponent is TransportType)
@@ -253,17 +257,39 @@ namespace Mb.Core.Services
                 {
                     case NodeType nt:
                         {
-                            foreach (var attributeType in nt.AttributeTypes)
+                            if (nt.AttributeTypes != null && nt.AttributeTypes.Any())
                             {
-                                _attributeTypeRepository.Attach(attributeType, EntityState.Unchanged);
+                                foreach (var attributeType in nt.AttributeTypes)
+                                {
+                                    _attributeTypeRepository.Attach(attributeType, EntityState.Unchanged);
+                                }
+                            }
+
+                            if (nt.CompositeTypes != null && nt.CompositeTypes.Any())
+                            {
+                                foreach (var compositeType in nt.CompositeTypes)
+                                {
+                                    _compositeTypeRepository.Attach(compositeType, EntityState.Unchanged);
+                                }
                             }
 
                             await _libraryTypeComponentRepository.CreateAsync(nt);
                             await _libraryTypeComponentRepository.SaveAsync();
 
-                            foreach (var attributeType in nt.AttributeTypes)
+                            if (nt.AttributeTypes != null && nt.AttributeTypes.Any())
                             {
-                                _attributeTypeRepository.Detach(attributeType);
+                                foreach (var attributeType in nt.AttributeTypes)
+                                {
+                                    _attributeTypeRepository.Detach(attributeType);
+                                }
+                            }
+
+                            if (nt.CompositeTypes != null && nt.CompositeTypes.Any())
+                            {
+                                foreach (var compositeType in nt.CompositeTypes)
+                                {
+                                    _compositeTypeRepository.Detach(compositeType);
+                                }
                             }
 
                             createdLibraryTypes.Add(nt);
@@ -276,17 +302,23 @@ namespace Mb.Core.Services
                         continue;
                     case TransportType tt:
                         {
-                            foreach (var attributeType in tt.AttributeTypes)
+                            if (tt.AttributeTypes != null && tt.AttributeTypes.Any())
                             {
-                                _attributeTypeRepository.Attach(attributeType, EntityState.Unchanged);
+                                foreach (var attributeType in tt.AttributeTypes)
+                                {
+                                    _attributeTypeRepository.Attach(attributeType, EntityState.Unchanged);
+                                }
                             }
 
                             await _libraryTypeComponentRepository.CreateAsync(tt);
                             await _libraryTypeComponentRepository.SaveAsync();
 
-                            foreach (var attributeType in tt.AttributeTypes)
+                            if (tt.AttributeTypes != null && tt.AttributeTypes.Any())
                             {
-                                _attributeTypeRepository.Detach(attributeType);
+                                foreach (var attributeType in tt.AttributeTypes)
+                                {
+                                    _attributeTypeRepository.Detach(attributeType);
+                                }
                             }
 
                             createdLibraryTypes.Add(tt);
@@ -311,6 +343,8 @@ namespace Mb.Core.Services
                 .OfType<NodeType>()
                 .Include(x => x.TerminalTypes)
                 .Include(x => x.AttributeTypes)
+                .Include(x => x.CompositeTypes)
+                .ThenInclude(y => y.AttributeTypes)
                 .ToList();
 
             var transportTypes = _libraryTypeComponentRepository
@@ -601,6 +635,11 @@ namespace Mb.Core.Services
             return attributes;
         }
 
+        /// <summary>
+        /// Create contractors
+        /// </summary>
+        /// <param name="contractors"></param>
+        /// <returns></returns>
         public async Task CreateContractorsAsync(IEnumerable<Contractor> contractors)
         {
             var existingTypes = _contractorRepository.GetAll().ToList();
@@ -614,6 +653,38 @@ namespace Mb.Core.Services
             }
 
             await _contractorRepository.SaveAsync();
+        }
+
+        /// <summary>
+        /// Create a simple type
+        /// </summary>
+        /// <param name="compositeType"></param>
+        /// <returns></returns>
+        public async Task<CompositeType> CreateCompositeType(CompositeTypeAm compositeType)
+        {
+            var newType = _mapper.Map<CompositeType>(compositeType);
+            var existingType = await _compositeTypeRepository.GetAsync(newType.Id);
+            if (existingType != null)
+                throw new ModelBuilderDuplicateException($"Type with name {compositeType.Name} already exist.");
+
+            foreach (var attribute in newType.AttributeTypes)
+            {
+                _attributeTypeRepository.Attach(attribute, EntityState.Unchanged);
+            }
+
+            await _compositeTypeRepository.CreateAsync(newType);
+            await _compositeTypeRepository.SaveAsync();
+            return newType;
+        }
+
+        /// <summary>
+        /// Get all simple types
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<CompositeType> GetCompositeTypes()
+        {
+            var types = _compositeTypeRepository.GetAll().Include(x => x.AttributeTypes).ToList();
+            return types;
         }
 
         #endregion
