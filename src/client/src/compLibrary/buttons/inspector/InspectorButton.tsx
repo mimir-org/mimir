@@ -5,8 +5,14 @@ import { GetButtonText, GetButtonIcon } from "./helpers";
 The component takes two props: one handle function, and the type of the button 
 InspectorButton returns a button to be used in the Inspector Header */
 
-const InspectorButton = ({ onClick, type }) => (
-  <ButtonContainer onClick={() => onClick()}>
+interface Props {
+  onClick: () => void;
+  type: string;
+  visible: boolean;
+}
+
+const InspectorButton = ({ onClick, type, visible }: Props) => (
+  <ButtonContainer onClick={() => onClick()} visible={visible}>
     {GetButtonText(type)}
     <img src={GetButtonIcon(type)} alt={GetButtonText(type)} />
   </ButtonContainer>
