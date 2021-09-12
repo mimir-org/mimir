@@ -4,14 +4,10 @@ import { ProjectState } from "../../../redux/store/project/types";
 import { MENU_TYPE } from "../../../models/project";
 import { CloseIcon, RightArrowIcon } from "../../../assets/icons/common";
 import { TextResources } from "../../../assets/text";
-import { changeMenu } from "../../../redux/store/projectMenu/actions";
 import { useState } from "react";
 import { Input, Label, Size } from "../../../compLibrary";
 import { MenuButton } from "../../../compLibrary/buttons";
-import {
-  save,
-  exportProjectToFile,
-} from "../../../redux/store/project/actions";
+import { OnReturnClick, OnSaveClick } from "./handlers";
 import {
   ProjectBody,
   ProjectBox,
@@ -33,22 +29,6 @@ export const SaveProjectFileMenu = ({ projectState }: Props) => {
         ?.visible
   ) as boolean;
 
-  const onReturnClick = () => {
-    dispatch(changeMenu(MENU_TYPE.SAVE_PROJECT_FILE_MENU, false));
-  };
-
-  const onProjectSaveClick = () => {
-    if (!projectState.project) {
-      throw Error(TextResources.Error_ExportProject);
-    }
-
-    dispatch(save(projectState.project));
-    dispatch(exportProjectToFile(projectState.project, fileName, true));
-
-    dispatch(changeMenu(MENU_TYPE.SAVE_PROJECT_FILE_MENU, false));
-    dispatch(changeMenu(MENU_TYPE.ACCOUNT_MENU, false));
-  };
-
   return (
     <ProjectBox
       width={Size.MenuSmall_Width}
@@ -60,7 +40,7 @@ export const SaveProjectFileMenu = ({ projectState }: Props) => {
           <img
             src={CloseIcon}
             alt="Close project"
-            onClick={onReturnClick}
+            onClick={() => OnReturnClick(dispatch)}
             className="icon"
           />
           {TextResources.Account_Save_Label_File}
@@ -73,13 +53,16 @@ export const SaveProjectFileMenu = ({ projectState }: Props) => {
           value={fileName}
         />
         <ButtonBox left>
-          <MenuButton onClick={onReturnClick}>
+          <MenuButton onClick={() => OnReturnClick(dispatch)}>
             <p>{TextResources.Account_Cancel_Button}</p>
           </MenuButton>
         </ButtonBox>
         {fileName && (
           <ButtonBox>
-            <MenuButton onClick={onProjectSaveClick} wide>
+            <MenuButton
+              onClick={() => OnSaveClick(dispatch, projectState, fileName)}
+              wide
+            >
               <p>{TextResources.Account_Save_Label_File_Button}</p>
               <img src={RightArrowIcon} alt="Open project" className="icon" />
             </MenuButton>

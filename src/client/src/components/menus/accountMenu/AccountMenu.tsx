@@ -1,3 +1,4 @@
+import * as Handlers from "./handlers";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../redux/store/index";
 import { UserState } from "../../../redux/store/user/types";
@@ -11,7 +12,6 @@ import { ImportProjectFileMenu } from "../../project/importProjectFile/ImportPro
 import { SaveLibraryFileMenu } from "../../project/saveLibraryFile/SaveLibraryFileMenu";
 import { ImportFileLibraryMenu } from "../../project/importLibrary/ImportFileLibraryMenu";
 import { MenuLine, AccountMenuBox } from "../../../compLibrary/box/menus";
-import * as Handlers from "./handlers";
 
 const AccountMenu = () => {
   const dispatch = useDispatch();

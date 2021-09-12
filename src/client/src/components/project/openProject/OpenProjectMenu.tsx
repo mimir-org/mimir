@@ -1,3 +1,4 @@
+import * as Handlers from "./handlers";
 import { SearchBar, ProjectList } from ".";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
@@ -5,8 +6,6 @@ import { MENU_TYPE } from "../../../models/project";
 import { CloseIcon, RightArrowIcon } from "../../../assets/icons/common";
 import { MenuButton } from "../../../compLibrary/buttons";
 import { TextResources } from "../../../assets/text";
-import { get } from "../../../redux/store/project/actions";
-import { changeMenu } from "../../../redux/store/projectMenu/actions";
 import { useState } from "react";
 import { MessageComponent } from "../../message";
 import { ProjectSimple } from "../../../models";
@@ -25,7 +24,6 @@ interface Props {
 export const OpenProjectMenu = ({ projectState }: Props) => {
   const dispatch = useDispatch();
   const [confirm, setConfirm] = useState(false);
-
   const projects = projectState.projectList as ProjectSimple[];
   const project = projects?.find((x) => x.selected);
   const projectId = project?.id;
@@ -36,29 +34,6 @@ export const OpenProjectMenu = ({ projectState }: Props) => {
         ?.visible
   ) as boolean;
 
-  const onReturnClick = () => {
-    dispatch(changeMenu(MENU_TYPE.OPEN_PROJECT_MENU, false));
-  };
-
-  const onOpenClick = () => {
-    setConfirm(true);
-    dispatch(changeMenu(MENU_TYPE.OPEN_PROJECT_MENU, false));
-  };
-
-  const onSaveClick = () => {
-    dispatch(get(projectId));
-    setConfirm(false);
-    dispatch(get(projectId));
-    // dispatch(save(currentProject));
-    dispatch(changeMenu(MENU_TYPE.ACCOUNT_MENU, false));
-  };
-
-  const onNoSaveClick = () => {
-    dispatch(get(projectId));
-    setConfirm(false);
-    dispatch(changeMenu(MENU_TYPE.ACCOUNT_MENU, false));
-  };
-
   return (
     <>
       <ProjectBox visible={isOpen}>
@@ -67,7 +42,7 @@ export const OpenProjectMenu = ({ projectState }: Props) => {
             <img
               src={CloseIcon}
               alt="icon"
-              onClick={onReturnClick}
+              onClick={() => Handlers.OnReturnClick(dispatch)}
               className="icon"
             />
             {TextResources.Account_Open_Label}
@@ -76,7 +51,7 @@ export const OpenProjectMenu = ({ projectState }: Props) => {
           <ProjectList projectList={projects} />
           <ButtonBox>
             {projectId && (
-              <MenuButton onClick={onOpenClick} wide>
+              <MenuButton onClick={() => Handlers.OnOpenClick(dispatch)} wide>
                 <p>{TextResources.Project_recent_open}</p>
                 <img src={RightArrowIcon} alt="icon" className="icon" />
               </MenuButton>
@@ -86,8 +61,12 @@ export const OpenProjectMenu = ({ projectState }: Props) => {
       </ProjectBox>
       {confirm && (
         <MessageComponent
-          handleSave={onSaveClick}
-          handleNoSave={onNoSaveClick}
+          handleSave={() =>
+            Handlers.OnSaveClick(dispatch, projectId, setConfirm)
+          }
+          handleNoSave={() =>
+            Handlers.OnNoSaveClick(dispatch, projectId, setConfirm)
+          }
         />
       )}
     </>
