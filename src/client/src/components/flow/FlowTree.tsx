@@ -144,7 +144,7 @@ const FlowTree = () => {
       {!project && (
         <div>
           <ProjectMainMenu project={project} />
-          <OpenProjectMenu projectState={projectState} />
+          <OpenProjectMenu projectState={projectState} dispatch={dispatch} />
         </div>
       )}
     </>

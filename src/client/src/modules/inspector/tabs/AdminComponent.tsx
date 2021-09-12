@@ -1,4 +1,4 @@
-import { GetInspectorText, GetTabsColor } from "../helpers";
+import { GetInspectorColor, GetInspectorText, GetTabsColor } from "../helpers";
 import { useCallback } from "react";
 import { RootState } from "../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
@@ -38,6 +38,7 @@ const AdminComponent = ({ node, project, index }: Props) => {
         active={true}
         onClick={onClick}
         color={GetTabsColor(node, null)}
+        background={GetInspectorColor(node, null)}
       >
         <TabTitle active={true}>{GetInspectorText(index)}</TabTitle>
       </TabHeader>

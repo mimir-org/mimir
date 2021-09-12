@@ -8,14 +8,14 @@ import {
 
 const GetTabsColor = (node: Node | null, edge: Edge | null) => {
   if (node) {
-    if (IsFunction(node)) return Color.FunctionSelected;
+    if (IsFunction(node)) return Color.FunctionTab;
     if (IsLocation(node)) return Color.LocationTab;
-    if (IsProduct(node)) return Color.ProductInspector;
+    if (IsProduct(node)) return Color.ProductTab;
   }
   if (edge) {
-    if (IsFunction(edge.fromNode)) return Color.FunctionSelected;
+    if (IsFunction(edge.fromNode)) return Color.FunctionTab;
     if (IsLocation(edge.fromNode)) return Color.LocationTab;
-    if (IsProduct(edge.fromNode)) return Color.ProductInspector;
+    if (IsProduct(edge.fromNode)) return Color.ProductTab;
   }
 };
 

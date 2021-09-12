@@ -1,5 +1,5 @@
 import { TextResources } from "../../assets/text";
-import { ButtonWrap, MenuButton } from "../../compLibrary/buttons";
+import { ButtonWrap, Button } from "../../compLibrary/buttons";
 import { MessageBox } from "../../compLibrary/box/message";
 
 interface Props {
@@ -13,14 +13,13 @@ const MessageComponent = ({ handleSave, handleNoSave }: Props) => {
     <MessageBox>
       <p className="message">{TextResources.Account_Confirm_Save}</p>
       <ButtonWrap>
-        <MenuButton onClick={handleNoSave}>
-          <p className="text">{TextResources.Account_NoSave_Button}</p>
-        </MenuButton>
+        <Button
+          onClick={handleNoSave}
+          type={TextResources.Account_NoSave_Button}
+        />
       </ButtonWrap>
       <ButtonWrap>
-        <MenuButton onClick={handleSave}>
-          <p className="text"> {TextResources.Account_Save_Button}</p>
-        </MenuButton>
+        <Button onClick={handleSave} type={TextResources.Account_Save_Button} />
       </ButtonWrap>
     </MessageBox>
   );

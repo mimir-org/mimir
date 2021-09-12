@@ -3,7 +3,7 @@ import { Color } from "../..";
 
 const InspectorMenu = styled.div`
   display: flex;
-
+  justify-content: end;
   color: ${Color.Black};
   height: 44px;
   width: 100%;

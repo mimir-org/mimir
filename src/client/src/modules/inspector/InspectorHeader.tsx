@@ -1,10 +1,11 @@
 import { DownIcon, UpIcon } from "../../assets/icons/common";
 import { TextResources } from "../../assets/text";
 import { Edge, Node, Project } from "../../models";
-import { DeleteNodeButton, GetInspectorColor } from "./helpers";
-import { DeleteButtonWrapper } from "./styled";
+import { GetInspectorColor } from "./helpers";
+import { ButtonWrapper } from "./styled";
 import { Symbol } from "../../compLibrary/dropdown";
 import { OnDeleteClick, OnToggleClick } from "./handlers";
+import { InspectorButton } from "../../compLibrary/buttons";
 import {
   InspectorMenu,
   InspectorTitle,
@@ -30,33 +31,22 @@ const InspectorHeader = ({
   type: key,
 }: Props) => (
   <InspectorMenu id="InspectorBody" color={GetInspectorColor(node, edge)}>
-    {node && (
-      <>
-        <NodeInfo symbol={node.symbol?.id}>
-          <div className="symbol">
-            <Symbol base64={node.symbol?.data} text={node.label ?? node.name} />
-          </div>
-          <div className="text">{node.label ?? node.name}</div>
-        </NodeInfo>
-        <DeleteButtonWrapper>
-          <DeleteNodeButton
-            handleClick={() => OnDeleteClick(project, node, edge, dispatch)}
-          />
-        </DeleteButtonWrapper>
-      </>
-    )}
-    {edge && (
-      <>
-        <NodeInfo>
-          <div className="edgetext">{edge.id}</div>
-        </NodeInfo>
-        <DeleteButtonWrapper>
-          <DeleteNodeButton
-            handleClick={() => OnDeleteClick(project, node, edge, dispatch)}
-          />
-        </DeleteButtonWrapper>
-      </>
-    )}
+    <NodeInfo symbol={node?.symbol?.id} visible={node}>
+      <div className="symbol">
+        <Symbol base64={node?.symbol?.data} text={node?.label ?? node?.name} />
+      </div>
+      <div className="text">{node?.label ?? node?.name}</div>
+      <div className="edgetext">{edge?.id}</div>
+    </NodeInfo>
+
+    <ButtonWrapper visible={node}>
+      <InspectorButton onClick={() => null} type="validate" />
+      <InspectorButton onClick={() => null} type="lock" />
+      <InspectorButton
+        onClick={() => OnDeleteClick(project, node, edge, dispatch)}
+        type="delete"
+      />
+    </ButtonWrapper>
 
     <ToggleBox>
       <img
@@ -65,6 +55,7 @@ const InspectorHeader = ({
         onClick={() => OnToggleClick(dispatch, key, open)}
       />
     </ToggleBox>
+
     <InspectorTitle>{TextResources.Module_Inspector}</InspectorTitle>
   </InspectorMenu>
 );

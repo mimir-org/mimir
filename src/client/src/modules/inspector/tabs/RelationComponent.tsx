@@ -90,9 +90,9 @@ const RelationComponent = ({ project, node }: Props) => {
                 {r.aspectRelation === "Location" &&
                   TextResources.Inspector_Relations_Part_Location}
                 {r.aspectRelation === "Product" &&
-                  TextResources.Inspector_Relations_Fulfilled_By}
+                  TextResources.Relations_FulfilledBy}
                 {r.aspectRelation === "Function" &&
-                  TextResources.Inspector_Relations_Has_Function}
+                  TextResources.Relations_HasFunction}
               </div>
               <InputBox>
                 <InputWrapper width="50%">

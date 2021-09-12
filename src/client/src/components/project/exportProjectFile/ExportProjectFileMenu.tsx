@@ -1,17 +1,13 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { ProjectState } from "../../../redux/store/project/types";
 import { MENU_TYPE } from "../../../models/project";
-import { CloseIcon, RightArrowIcon } from "../../../assets/icons/common";
+import { CloseIcon } from "../../../assets/icons/common";
 import { TextResources } from "../../../assets/text";
-import { changeMenu } from "../../../redux/store/projectMenu/actions";
 import { useState } from "react";
 import { Input, Label, Size } from "../../../compLibrary";
-import { MenuButton } from "../../../compLibrary/buttons";
-import {
-  save,
-  exportProjectToFile,
-} from "../../../redux/store/project/actions";
+import { Button } from "../../../compLibrary/buttons";
+import { OnReturnClick, OnSaveClick } from "./handlers";
 import {
   ProjectBody,
   ProjectBox,
@@ -21,10 +17,10 @@ import {
 
 interface Props {
   projectState: ProjectState;
+  dispatch: any;
 }
 
-export const SaveProjectFileMenu = ({ projectState }: Props) => {
-  const dispatch = useDispatch();
+export const ExportProjectFileMenu = ({ projectState, dispatch }: Props) => {
   const [fileName, setFileName] = useState("");
 
   const isOpen = useSelector<RootState>(
@@ -32,22 +28,6 @@ export const SaveProjectFileMenu = ({ projectState }: Props) => {
       state.menu.list.find((x) => x.type === MENU_TYPE.SAVE_PROJECT_FILE_MENU)
         ?.visible
   ) as boolean;
-
-  const onReturnClick = () => {
-    dispatch(changeMenu(MENU_TYPE.SAVE_PROJECT_FILE_MENU, false));
-  };
-
-  const onProjectSaveClick = () => {
-    if (!projectState.project) {
-      throw Error(TextResources.Error_ExportProject);
-    }
-
-    dispatch(save(projectState.project));
-    dispatch(exportProjectToFile(projectState.project, fileName, true));
-
-    dispatch(changeMenu(MENU_TYPE.SAVE_PROJECT_FILE_MENU, false));
-    dispatch(changeMenu(MENU_TYPE.ACCOUNT_MENU, false));
-  };
 
   return (
     <ProjectBox
@@ -60,7 +40,7 @@ export const SaveProjectFileMenu = ({ projectState }: Props) => {
           <img
             src={CloseIcon}
             alt="Close project"
-            onClick={onReturnClick}
+            onClick={() => OnReturnClick(dispatch)}
             className="icon"
           />
           {TextResources.Account_Save_Label_File}
@@ -73,16 +53,17 @@ export const SaveProjectFileMenu = ({ projectState }: Props) => {
           value={fileName}
         />
         <ButtonBox left>
-          <MenuButton onClick={onReturnClick}>
-            <p>{TextResources.Account_Cancel_Button}</p>
-          </MenuButton>
+          <Button
+            onClick={() => OnReturnClick(dispatch)}
+            type={TextResources.Account_Cancel}
+          />
         </ButtonBox>
         {fileName && (
           <ButtonBox>
-            <MenuButton onClick={onProjectSaveClick} wide>
-              <p>{TextResources.Account_Save_Label_File_Button}</p>
-              <img src={RightArrowIcon} alt="Open project" className="icon" />
-            </MenuButton>
+            <Button
+              onClick={() => OnSaveClick(dispatch, projectState, fileName)}
+              type={TextResources.Account_Export_File_Label}
+            />
           </ButtonBox>
         )}
       </ProjectBody>
@@ -90,4 +71,4 @@ export const SaveProjectFileMenu = ({ projectState }: Props) => {
   );
 };
 
-export default SaveProjectFileMenu;
+export default ExportProjectFileMenu;
