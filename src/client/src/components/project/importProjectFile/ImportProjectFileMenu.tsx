@@ -67,7 +67,10 @@ export const ImportProjectFileMenu = () => {
           />
         </ButtonBox>
         <ButtonBox left>
-          <Button onClick={OnReturnClick} type={TextResources.Account_Cancel} />
+          <Button
+            onClick={() => OnReturnClick(dispatch)}
+            type={TextResources.Account_Cancel}
+          />
         </ButtonBox>
         {plainFiles?.length > 0 && data() && (
           <ButtonBox>
