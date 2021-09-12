@@ -1,12 +1,12 @@
 import * as Handlers from "./handlers";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { MENU_TYPE } from "../../../models/project";
-import { CloseIcon, RightArrowIcon } from "../../../assets/icons/common";
+import { CloseIcon } from "../../../assets/icons/common";
 import { TextResources } from "../../../assets/text";
 import { useState } from "react";
 import { Input, Label, Size } from "../../../compLibrary";
-import { MenuButton } from "../../../compLibrary/buttons";
+import { Button } from "../../../compLibrary/buttons";
 import {
   ProjectBody,
   ProjectBox,
@@ -49,21 +49,19 @@ export const CreateProjectMenu = () => {
             value={projectName}
           />
           <ButtonBox left>
-            <MenuButton onClick={() => Handlers.OnReturnClick(dispatch)}>
-              <p>{TextResources.Account_Cancel_Button}</p>
-            </MenuButton>
+            <Button
+              onClick={() => Handlers.OnReturnClick(dispatch)}
+              type={TextResources.Account_Cancel}
+            />
           </ButtonBox>
           {projectName && (
             <ButtonBox>
-              <MenuButton
+              <Button
                 onClick={() =>
                   Handlers.OnProjectCreateClick(dispatch, projectName)
                 }
-                wide
-              >
-                <p>{TextResources.Account_Create_Button_Label}</p>
-                <img src={RightArrowIcon} alt="Open project" className="icon" />
-              </MenuButton>
+                type={TextResources.Account_Create}
+              />
             </ButtonBox>
           )}
         </ProjectBody>

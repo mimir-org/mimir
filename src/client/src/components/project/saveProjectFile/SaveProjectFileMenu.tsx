@@ -1,12 +1,12 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { ProjectState } from "../../../redux/store/project/types";
 import { MENU_TYPE } from "../../../models/project";
-import { CloseIcon, RightArrowIcon } from "../../../assets/icons/common";
+import { CloseIcon } from "../../../assets/icons/common";
 import { TextResources } from "../../../assets/text";
 import { useState } from "react";
 import { Input, Label, Size } from "../../../compLibrary";
-import { MenuButton } from "../../../compLibrary/buttons";
+import { Button } from "../../../compLibrary/buttons";
 import { OnReturnClick, OnSaveClick } from "./handlers";
 import {
   ProjectBody,
@@ -17,10 +17,10 @@ import {
 
 interface Props {
   projectState: ProjectState;
+  dispatch: any;
 }
 
-export const SaveProjectFileMenu = ({ projectState }: Props) => {
-  const dispatch = useDispatch();
+export const SaveProjectFileMenu = ({ projectState, dispatch }: Props) => {
   const [fileName, setFileName] = useState("");
 
   const isOpen = useSelector<RootState>(
@@ -53,19 +53,17 @@ export const SaveProjectFileMenu = ({ projectState }: Props) => {
           value={fileName}
         />
         <ButtonBox left>
-          <MenuButton onClick={() => OnReturnClick(dispatch)}>
-            <p>{TextResources.Account_Cancel_Button}</p>
-          </MenuButton>
+          <Button
+            onClick={() => OnReturnClick(dispatch)}
+            type={TextResources.Account_Cancel}
+          />
         </ButtonBox>
         {fileName && (
           <ButtonBox>
-            <MenuButton
+            <Button
               onClick={() => OnSaveClick(dispatch, projectState, fileName)}
-              wide
-            >
-              <p>{TextResources.Account_Save_Label_File_Button}</p>
-              <img src={RightArrowIcon} alt="Open project" className="icon" />
-            </MenuButton>
+              type={TextResources.Account_Save_Label_File_Button}
+            />
           </ButtonBox>
         )}
       </ProjectBody>

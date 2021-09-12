@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Color, FontSize } from "..";
 
-const MenuButton = styled.button`
+const ButtonContainer = styled.button`
   width: ${(props) => (props.wide ? "130px" : "94px")};
   height: 34px;
   display: flex;
@@ -31,4 +31,4 @@ const MenuButton = styled.button`
   }
 `;
 
-export default MenuButton;
+export default ButtonContainer;

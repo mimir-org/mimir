@@ -21,7 +21,7 @@ const MenuElement = styled.div`
 
   &:hover {
     background-color: ${(props) =>
-      !props.logOut && `${Color.BlueMagenta}`}; // TODO: fix color;
+      !props.logOut && `${Color.DarkGrey}`}; // TODO: fix color;
     text-decoration: ${(props) => !props.logOut && "underline"};
   }
 `;

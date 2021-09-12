@@ -12,6 +12,7 @@ import { ImportProjectFileMenu } from "../../project/importProjectFile/ImportPro
 import { SaveLibraryFileMenu } from "../../project/saveLibraryFile/SaveLibraryFileMenu";
 import { ImportFileLibraryMenu } from "../../project/importLibrary/ImportFileLibraryMenu";
 import { MenuLine, AccountMenuBox } from "../../../compLibrary/box/menus";
+import { TextResources } from "../../../assets/text";
 
 const AccountMenu = () => {
   const dispatch = useDispatch();
@@ -27,42 +28,45 @@ const AccountMenu = () => {
     <>
       <AccountMenuBox id={MENU_TYPE.ACCOUNT_MENU}>
         <GetMenuElement
-          type="Open"
+          type={TextResources.Account_Open}
           onClick={() => Handlers.OnOpenClick(dispatch)}
         />
         <GetMenuElement
-          type="Create"
+          type={TextResources.Account_Create}
           onClick={() => Handlers.OnCreateClick(dispatch)}
         />
         <GetMenuElement
-          type="Save"
+          type={TextResources.Account_Save}
           onClick={() => Handlers.OnSaveClick(dispatch, projectState)}
         />
         <GetMenuElement
-          type="SaveLibrary"
+          type={TextResources.Account_Save_Library}
           onClick={() => Handlers.OnSaveLibraryFile(dispatch)}
         />
         <GetMenuElement
-          type="SaveFile"
+          type={TextResources.Account_Save_File}
           onClick={() => Handlers.OnSaveFile(dispatch)}
         />
         <MenuLine />
         <GetMenuElement
-          type="ImportProject"
+          type={TextResources.Account_Import_Project}
           onClick={() => Handlers.OnImportProjectFile(dispatch)}
         />
         <GetMenuElement
-          type="ImportLibrary"
+          type={TextResources.Account_Import_Library}
           onClick={() => Handlers.OnImportLibraryFile(dispatch)}
         />
         <MenuLine />
-        <GetMenuElement type="Logout" userState={userState} />
+        <GetMenuElement
+          type={TextResources.Account_Logout}
+          userState={userState}
+        />
       </AccountMenuBox>
 
       <div className="ProjectMenu" style={{ zIndex: 2 }}>
-        <OpenProjectMenu projectState={projectState} />
+        <OpenProjectMenu projectState={projectState} dispatch={dispatch} />
         <CreateProjectMenu />
-        <SaveProjectFileMenu projectState={projectState} />
+        <SaveProjectFileMenu projectState={projectState} dispatch={dispatch} />
         <ImportProjectFileMenu />
         <SaveLibraryFileMenu />
         <ImportFileLibraryMenu />

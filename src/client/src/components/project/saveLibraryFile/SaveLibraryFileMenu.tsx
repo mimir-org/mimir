@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { MENU_TYPE } from "../../../models/project";
-import { CloseIcon, RightArrowIcon } from "../../../assets/icons/common";
+import { CloseIcon } from "../../../assets/icons/common";
 import { TextResources } from "../../../assets/text";
 import { changeMenu } from "../../../redux/store/projectMenu/actions";
 import { useState } from "react";
 import { Input, Label, Size } from "../../../compLibrary";
-import { MenuButton } from "../../../compLibrary/buttons";
+import { Button } from "../../../compLibrary/buttons";
 import { exportLibrary } from "../../../redux/store/library/actions";
 import {
   ProjectBody,
@@ -59,20 +59,14 @@ export const SaveLibraryFileMenu = () => {
           value={fileName}
         />
         <ButtonBox left>
-          <MenuButton onClick={onReturnClick}>
-            <p>{TextResources.Account_Cancel_Button}</p>
-          </MenuButton>
+          <Button onClick={onReturnClick} type={TextResources.Account_Cancel} />
         </ButtonBox>
         {fileName && (
           <ButtonBox>
-            <MenuButton onClick={onSaveClick} wide>
-              <p>{TextResources.Account_Save_Label_File_Library_Button}</p>
-              <img
-                src={RightArrowIcon}
-                alt="Save library file"
-                className="icon"
-              />
-            </MenuButton>
+            <Button
+              onClick={onSaveClick}
+              type={TextResources.Account_Save_Label_File_Library_Button}
+            />
           </ButtonBox>
         )}
       </ProjectBody>

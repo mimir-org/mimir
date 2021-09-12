@@ -2,13 +2,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { MENU_TYPE } from "../../../models/project";
 import { FileData, CreateLibraryType } from "../../../models";
-import { CloseIcon, RightArrowIcon } from "../../../assets/icons/common";
+import { CloseIcon } from "../../../assets/icons/common";
 import { TextResources } from "../../../assets/text";
-import { changeMenu } from "../../../redux/store/projectMenu/actions";
 import { Size } from "../../../compLibrary";
-import { MenuButton, SaveButton } from "../../../compLibrary/buttons";
-import { importLibrary } from "../../../redux/store/library/actions";
+import { Button } from "../../../compLibrary/buttons";
 import { useFilePicker } from "use-file-picker";
+import { OnReturnClick, OnSaveClick } from "./handlers";
 import {
   ProjectBody,
   ProjectBox,
@@ -32,10 +31,6 @@ export const ImportFileLibraryMenu = () => {
     limitFilesConfig: { min: 1, max: 1 },
   });
 
-  const onReturnClick = () => {
-    dispatch(changeMenu(MENU_TYPE.IMPORT_LIBRARY_FILE_MENU, false));
-  };
-
   const data = () => {
     if (!filesContent || filesContent.length <= 0) return null;
 
@@ -44,16 +39,8 @@ export const ImportFileLibraryMenu = () => {
   };
 
   const buttonBrowseText = () => {
-    if (plainFiles?.length < 1)
-      return TextResources.Account_Import_Label_File_Browse_Button;
+    if (plainFiles?.length < 1) return "Import project library";
     return plainFiles[0].name;
-  };
-
-  const onSaveClick = () => {
-    const libraryTypes = data();
-    dispatch(importLibrary(libraryTypes));
-    dispatch(changeMenu(MENU_TYPE.IMPORT_LIBRARY_FILE_MENU, false));
-    dispatch(changeMenu(MENU_TYPE.ACCOUNT_MENU, false));
   };
 
   return (
@@ -67,30 +54,29 @@ export const ImportFileLibraryMenu = () => {
           <img
             src={CloseIcon}
             alt="Close project"
-            onClick={onReturnClick}
+            onClick={() => OnReturnClick(dispatch)}
             className="icon"
           />
           {TextResources.Account_Import_Label_Library_File}
         </HeaderBox>
-        <SaveButton onClick={() => openFileSelector()}>
-          {buttonBrowseText()}
-        </SaveButton>
-
+        <ButtonBox>
+          <Button
+            onClick={() => openFileSelector()}
+            type={buttonBrowseText()}
+          />
+        </ButtonBox>
         <ButtonBox left>
-          <MenuButton onClick={onReturnClick}>
-            <p>{TextResources.Account_Cancel_Button}</p>
-          </MenuButton>
+          <Button
+            onClick={() => OnReturnClick(dispatch)}
+            type={TextResources.Account_Cancel}
+          />
         </ButtonBox>
         {plainFiles?.length > 0 && data() && (
           <ButtonBox>
-            <MenuButton onClick={onSaveClick} wide>
-              <p>{TextResources.Account_Import_Label_File_Library_Button}</p>
-              <img
-                src={RightArrowIcon}
-                alt="Import library types"
-                className="icon"
-              />
-            </MenuButton>
+            <Button
+              onClick={() => OnSaveClick(dispatch, data)}
+              type={TextResources.Account_Import_Label_File_Library_Button}
+            />
           </ButtonBox>
         )}
       </ProjectBody>

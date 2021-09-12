@@ -1,10 +1,10 @@
 import * as Handlers from "./handlers";
 import { SearchBar, ProjectList } from ".";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { MENU_TYPE } from "../../../models/project";
-import { CloseIcon, RightArrowIcon } from "../../../assets/icons/common";
-import { MenuButton } from "../../../compLibrary/buttons";
+import { CloseIcon } from "../../../assets/icons/common";
+import { Button } from "../../../compLibrary/buttons";
 import { TextResources } from "../../../assets/text";
 import { useState } from "react";
 import { MessageComponent } from "../../message";
@@ -19,10 +19,10 @@ import {
 
 interface Props {
   projectState: ProjectState;
+  dispatch: any;
 }
 
-export const OpenProjectMenu = ({ projectState }: Props) => {
-  const dispatch = useDispatch();
+export const OpenProjectMenu = ({ projectState, dispatch }: Props) => {
   const [confirm, setConfirm] = useState(false);
   const projects = projectState.projectList as ProjectSimple[];
   const project = projects?.find((x) => x.selected);
@@ -51,10 +51,10 @@ export const OpenProjectMenu = ({ projectState }: Props) => {
           <ProjectList projectList={projects} />
           <ButtonBox>
             {projectId && (
-              <MenuButton onClick={() => Handlers.OnOpenClick(dispatch)} wide>
-                <p>{TextResources.Project_recent_open}</p>
-                <img src={RightArrowIcon} alt="icon" className="icon" />
-              </MenuButton>
+              <Button
+                onClick={() => Handlers.OnOpenClick(dispatch, setConfirm)}
+                type="Open"
+              />
             )}
           </ButtonBox>
         </ProjectBody>
