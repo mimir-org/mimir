@@ -6,7 +6,7 @@ import { CreateBlockNode, CreateTreeEdge, CreateTreeNode } from "../creators";
 import { BlobData, LibItem, Project, GetFileData } from "../../../models";
 import {
   CreateId,
-  FindSelectedNode,
+  GetSelectedNode,
   IsInputTerminal,
   IsOutputTerminal,
   IsPartOfTerminal,
@@ -24,7 +24,7 @@ const useOnDrop = (
   library: LibraryState
 ) => {
   const showBlockView = IsBlockView();
-  const sourceNode = FindSelectedNode();
+  const sourceNode = GetSelectedNode();
   const isFile =
     event.dataTransfer.files && event.dataTransfer.files.length > 0;
 
@@ -65,6 +65,15 @@ const useOnDrop = (
       });
 
     const targetNode = ConvertToNode(data, position, project.id, icons);
+
+    targetNode.composites?.forEach((c) => {
+      var compositeId = CreateId();
+      c.id = compositeId;
+      c.nodeId = targetNode.id;
+      c.attributes.forEach((a) => {
+        a.compositeId = compositeId;
+      });
+    });
 
     targetNode.connectors?.forEach((c) => {
       c.id = CreateId();

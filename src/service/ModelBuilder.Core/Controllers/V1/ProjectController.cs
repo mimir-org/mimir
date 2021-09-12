@@ -250,9 +250,15 @@ namespace Mb.Core.Controllers.V1
                 var data = await _projectService.CreateFile(id, parser);
                 return File(data, "application/json", $"project_{id}.json");
             }
+            catch (ModelBuilderModuleException e)
+            {
+                ModelState.AddModelError("DownloadProject", e.Message);
+                return BadRequest(ModelState);
+            }
             catch (ModelBuilderNotFoundException e)
             {
-                return NotFound(e.Message);
+                ModelState.AddModelError("DownloadProject", e.Message);
+                return BadRequest(ModelState);
             }
             catch (Exception e)
             {
@@ -283,9 +289,15 @@ namespace Mb.Core.Controllers.V1
                 var createdProject = await _projectService.CreateFromFile(file, cancellationToken, parser);
                 return CreatedAtAction(nameof(GetById), new { id = createdProject.Id }, createdProject);
             }
+            catch (ModelBuilderModuleException e)
+            {
+                ModelState.AddModelError("UploadProject", e.Message);
+                return BadRequest(ModelState);
+            }
             catch (ModelBuilderDuplicateException e)
             {
-                return Conflict(e.Message);
+                ModelState.AddModelError("UploadProject", e.Message);
+                return BadRequest(ModelState);
             }
             catch (Exception e)
             {

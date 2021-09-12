@@ -23,6 +23,7 @@ export enum ObjectType {
     ObjectBlock = 1,
     Transport = 2,
     Interface = 3,
+    Composite = 4,
 }
 
 export enum TypeMode {

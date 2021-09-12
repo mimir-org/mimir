@@ -10,8 +10,8 @@ const DropdownMenuList = styled.div`
   border-radius: 5px;
   background-color: inherit;
   position: absolute;
-  top: 54px;
-  left: 0px;
+  top: 53.5px;
+  left: 0;
   z-index: 1;
   width: 99%;
   max-height: 250px;

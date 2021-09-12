@@ -8,7 +8,7 @@ const SaveButton = styled.button`
   flex-direction: row;
   align-items: center;
   background: ${Color.LightGrey};
-  border: 1px solid ${Color.DeepCyan};
+  border: 1px solid ${Color.BlueMagenta};
   border-radius: 2px;
   padding: 15px 25px;
   white-space: nowrap;
@@ -26,7 +26,7 @@ const SaveButton = styled.button`
   }
 
   &:hover {
-    border: 2px solid ${Color.DeepCyan};
+    border: 2px solid ${Color.BlueMagenta};
   }
 `;
 

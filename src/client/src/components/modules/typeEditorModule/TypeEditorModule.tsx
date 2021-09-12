@@ -1,22 +1,31 @@
 import "./typeeditor.scss";
-import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { TypeMode } from "../../../models";
+import { ObjectType, TypeMode } from "../../../models";
 import { TextResources } from "../../../assets/text";
-import { changeMode } from "../../../redux/store/typeEditor/actions";
 import { NewTypeIcon, EditTypeIcon } from "../../../assets/icons/common";
 import { VIEW_TYPE } from "../../../models/project";
 import { TypeEditorBox, TypeEditorBoxContent } from "../../../compLibrary/box";
 
-export const TypeEditorModule = ({ selectedElement }) => {
-  const dispatch = useDispatch();
+interface Props {
+  selectedElement: string;
+  selectedElementType: ObjectType;
+}
+export const TypeEditorModule = ({
+  selectedElement,
+  selectedElementType,
+}: Props) => {
   const { push } = useHistory();
 
   const onClick = (mode: TypeMode) => {
-    if ((selectedElement && mode === TypeMode.Edit) || mode === TypeMode.New) {
-      dispatch(changeMode(mode));
-      push(`/home/${VIEW_TYPE.TYPE_EDITOR}`);
-    }
+    let modeUrl = mode === TypeMode.Edit ? "edit" : "new";
+    push({
+      pathname: `/home/${VIEW_TYPE.TYPE_EDITOR}/${modeUrl}`,
+      state: {
+        selectedElement: selectedElement,
+        selectedElementType: selectedElementType,
+        mode: mode,
+      },
+    });
   };
 
   return (
@@ -29,11 +38,7 @@ export const TypeEditorModule = ({ selectedElement }) => {
       </TypeEditorBoxContent>
       <TypeEditorBoxContent active={selectedElement !== ""}>
         <div
-          onClick={() => {
-            if (selectedElement !== "") {
-              onClick(TypeMode.Edit);
-            }
-          }}
+          onClick={selectedElement !== "" ? () => onClick(TypeMode.Edit) : null}
           className="typeeditor_box"
         >
           <img src={EditTypeIcon} alt="edit-type" />

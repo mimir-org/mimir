@@ -9,14 +9,17 @@ import {
   GetObjectTypes,
   IsLocation,
   GetDefaultValue,
+  GetTypeValue,
   FieldValidator,
+  ModeEdit,
+  ModeNew,
 } from "./helpers";
 import { TextInput, TypeInfo, TypeNameInput } from "./styled";
 import {
-  changeSymbol,
-  changeTypeName,
-  changeSelectedAspect,
-  changeSelectedObjectType,
+  chooseSymbol,
+  chooseTypeName,
+  chooseAspect,
+  chooseObjectType,
 } from "../../../redux/store/typeEditor/actions";
 
 interface Props {
@@ -26,40 +29,44 @@ interface Props {
 
 const TypeEditorInputs = ({ state, dispatch }: Props) => {
   const aspect = state.createLibraryType.aspect;
+  const mode = state.mode;
   const [typeName, setTypeName] = useState("");
 
   const onAspectChange = (value) => {
-    dispatch(changeSelectedAspect(Number(value)));
+    dispatch(chooseAspect(mode, Number(value)));
   };
 
   const onObjectTypeChange = (value) => {
-    dispatch(changeSelectedObjectType(Number(value)));
+    dispatch(chooseObjectType(mode, Number(value)));
   };
 
   const onNameChange = (e) => {
     setTypeName(e.target.value);
-    dispatch(changeTypeName(e.target.value));
+    dispatch(chooseTypeName(mode, e.target.value));
   };
 
   const onSymbolChange = (value) => {
-    dispatch(changeSymbol(value.id));
+    dispatch(chooseSymbol(mode, value.id));
   };
 
   useEffect(() => {
-    if (aspect === Aspect.NotSet) {
+    if (ModeNew(mode)) {
       setTypeName(GetDefaultValue("typeName"));
     }
-  }, [aspect]);
+    if (ModeEdit(mode)) {
+      setTypeName(GetTypeValue(state, "typeName"));
+    }
+  }, [state, mode]);
 
   return (
     <TypeInfo>
       <DropdownMenu
         label={TextResources.TypeEditor_Aspect}
         items={GetAspects(state)}
-        aspect={aspect}
         type={Aspect.NotSet}
         onChange={onAspectChange}
-        disabled={false}
+        disabled={ModeEdit(mode)}
+        state={state}
       />
       <DropdownMenu
         label={
@@ -68,16 +75,16 @@ const TypeEditorInputs = ({ state, dispatch }: Props) => {
             : TextResources.TypeEditor_Object_Type
         }
         items={GetObjectTypes(state)}
-        aspect={aspect}
         type={ObjectType.NotSet}
         onChange={onObjectTypeChange}
-        disabled={FieldValidator(state, "objectType")}
+        disabled={ModeEdit(mode) ? true : FieldValidator(state, "objectType")}
+        state={state}
       />
       <TypeNameInput disabled={FieldValidator(state, "typeName")}>
         <p>{TextResources.TypeEditor_Type_Name}</p>
         <TextInput
           inputType="text"
-          value={typeName}
+          defaultValue={typeName}
           placeholder={TextResources.TypeEditor_Type_Placeholder}
           onChange={onNameChange}
           disabled={FieldValidator(state, "typeName")}
@@ -91,6 +98,7 @@ const TypeEditorInputs = ({ state, dispatch }: Props) => {
         valueImageProp="data"
         onChange={onSymbolChange}
         disabled={FieldValidator(state, "symbol")}
+        defaultValue={ModeEdit(mode) ? GetTypeValue(state, "symbol") : null}
       />
     </TypeInfo>
   );

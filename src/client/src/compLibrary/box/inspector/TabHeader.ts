@@ -3,20 +3,23 @@ import { Color } from "../..";
 
 const TabHeader = styled.div`
   display: inline-block;
+  position: relative;
+  top: -44px;
   box-sizing: border-box;
-  border-top-right-radius: 8px;
+  border-top-right-radius: 6px;
   border-top-left-radius: 6px;
   color: ${Color.Black};
-  border-right: 1px solid ${Color.Grey};
-  border-left: 1px solid ${Color.Grey};
-  border-top: 1px solid ${Color.Grey};
+  margin-right: 7px;
+  height: 33px;
+  margin-top: ${(props: { active: string }) => (props.active ? "0px" : "9px")};
 
-  height: ${(props: { active: string }) => (props.active ? "39px" : "32px")};
-  margin-top: ${(props: { active: string }) => (props.active ? "0px" : "4px")};
-  background-color: ${(props: { active: string }) =>
-    props.active ? `${Color.LightGrey}` : `${Color.DarkGrey}`};
+  box-shadow: ${(props) => !props.active && "#888 0px 2px 4px"};
+
+  background-color: ${(props) =>
+    props.active ? props.background : props.color};
+
   padding: ${(props: { active: string }) =>
-    props.active ? "8px 20px 0px 20px;" : "5px 20px 0px 20px"};
+    props.active ? "12px 20px 0px 20px;" : "8px 20px 0px 20px"};
 
   :hover {
     cursor: pointer;

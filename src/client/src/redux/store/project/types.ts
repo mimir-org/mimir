@@ -19,11 +19,11 @@ export const ADD_EDGE = "ADD_EDGE";
 export const REMOVE_EDGE = "REMOVE_EDGE";
 export const UPDATE_POSITION = "UPDATE_POSITION";
 export const UPDATE_BLOCK_POSITION = "UPDATE_BLOCK_POSITION";
-export const CHANGE_NODE_VISIBILITY = "CHANGE_NODE_VISIBILITY";
-export const CHANGE_EDGE_VISIBILITY = "CHANGE_EDGE_VISIBILITY";
-export const CHANGE_ACTIVE_NODE = "CHANGE_ACTIVE_NODE";
-export const CHANGE_ACTIVE_BLOCKNODE = "CHANGE_ACTIVE_BLOCKNODE";
-export const CHANGE_ACTIVE_EDGE = "CHANGE_ACTIVE_EDGE";
+export const SET_NODE_VISIBILITY = "SET_NODE_VISIBILITY";
+export const SET_EDGE_VISIBILITY = "SET_EDGE_VISIBILITY";
+export const SET_ACTIVE_NODE = "SET_ACTIVE_NODE";
+export const SET_ACTIVE_BLOCKNODE = "SET_ACTIVE_BLOCKNODE";
+export const SET_ACTIVE_EDGE = "SET_ACTIVE_EDGE";
 export const CHANGE_SELECTED_PROJECT = "CHANGE_SELECTED_PROJECT";
 export const CHANGE_ALL_NODES = "CHANGE_ALL_NODES";
 export const CHANGE_NODE_PROP_VALUE = "CHANGE_NODE_PROP_VALUE";
@@ -125,40 +125,40 @@ interface UpdateBlockPositionAction {
   };
 }
 
-interface ChangeNodeVisibility {
-  type: typeof CHANGE_NODE_VISIBILITY;
+interface SetNodeVisibility {
+  type: typeof SET_NODE_VISIBILITY;
   payload: {
     node: Node;
     isParent: boolean;
   };
 }
 
-interface ChangeEdgeVisibility {
-  type: typeof CHANGE_EDGE_VISIBILITY;
+interface SetEdgeVisibility {
+  type: typeof SET_EDGE_VISIBILITY;
   payload: {
     edge: Edge;
     isHidden: boolean;
   };
 }
 
-interface ChangeActiveNode {
-  type: typeof CHANGE_ACTIVE_NODE;
+interface SetActiveNode {
+  type: typeof SET_ACTIVE_NODE;
   payload: {
     nodeId: string;
     isActive: boolean;
   };
 }
 
-interface ChangeActiveEdge {
-  type: typeof CHANGE_ACTIVE_EDGE;
+interface SetActiveEdge {
+  type: typeof SET_ACTIVE_EDGE;
   payload: {
     edgeId: string;
     isActive: boolean;
   };
 }
 
-interface ChangeActiveBlockNode {
-  type: typeof CHANGE_ACTIVE_BLOCKNODE;
+interface SetActiveBlockNode {
+  type: typeof SET_ACTIVE_BLOCKNODE;
   payload: {
     nodeId: string;
   };
@@ -273,11 +273,11 @@ export type ProjectActionTypes =
   | AddEdgeAction
   | RemoveEdgeAction
   | UpdatePositionAction
-  | ChangeNodeVisibility
-  | ChangeEdgeVisibility
-  | ChangeActiveNode
-  | ChangeActiveEdge
-  | ChangeActiveBlockNode
+  | SetNodeVisibility
+  | SetEdgeVisibility
+  | SetActiveNode
+  | SetActiveEdge
+  | SetActiveBlockNode
   | SaveProjectAction
   | SaveProjectActionFinished
   | ChangeSelectedProject

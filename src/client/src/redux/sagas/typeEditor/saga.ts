@@ -1,10 +1,12 @@
 import { call, put as statePut } from "redux-saga/effects";
 import {
+  FETCHING_TYPE_SUCCESS_OR_ERROR,
   FETCHING_INITIAL_SUCCESS_OR_ERROR,
   FETCHING_RDS_SUCCESS_OR_ERROR,
   FETCHING_TERMINALS_SUCCESS_OR_ERROR,
   FETCHING_ATTRIBUTES_SUCCESS_OR_ERROR,
   CREATING_TYPE_SUCCESS_OR_ERROR,
+  UPDATING_TYPE_SUCCESS_OR_ERROR,
   FETCHING_LOCATIONTYPES_SUCCESS_OR_ERROR,
   FETCHING_PREDEFINED_ATTRIBUTES_SUCCESS_OR_ERROR,
   TypeEditorActionTypes,
@@ -14,42 +16,66 @@ import {
 import {
   get,
   post,
-  put,
   GetBadResponseData,
   ApiError,
 } from "../../../models/webclient";
 
 export function* updateType(action) {
   try {
-    console.log("Trying to update type..");
-    const url = process.env.REACT_APP_API_BASE_URL + "typeeditor";
-    const response = yield call(put, url, action.payload.libraryType);
+    const url =
+      process.env.REACT_APP_API_BASE_URL +
+      "typeeditor/" +
+      action.payload?.selectedType;
+    const response = yield call(post, url, action.payload.libraryType);
+
     // This is a bad request
     if (response.status === 400) {
       const data = GetBadResponseData(response);
-      console.log(data);
-      /*const apiError = {
-                      key: CREATING_TYPE_SUCCESS_OR_ERROR,
-                      errorMessage: data.title,
-                      errorData: data,
-                  } as ApiError;
-      
-                  const payload = {
-                      apiError: apiError,
-                  };
-      
-                  yield statePut({
-                      type: CREATING_TYPE_SUCCESS_OR_ERROR,
-                      payload: payload,
-                  });
-                  */
+
+      const apiError = {
+        key: UPDATING_TYPE_SUCCESS_OR_ERROR,
+        errorMessage: data.title,
+        errorData: data,
+      } as ApiError;
+
+      const payload = {
+        apiError: apiError,
+      };
+
+      yield statePut({
+        type: UPDATING_TYPE_SUCCESS_OR_ERROR,
+        payload: payload,
+      });
       return;
     }
+    // Bad request end
+
+    const payload = {
+      apiError: null,
+    };
+
+    yield statePut({
+      type: UPDATING_TYPE_SUCCESS_OR_ERROR,
+      payload: payload,
+    });
   } catch (error) {
-    console.log(error);
+    const apiError = {
+      key: UPDATING_TYPE_SUCCESS_OR_ERROR,
+      errorMessage: error.message,
+      errorData: null,
+    } as ApiError;
+
+    const payload = {
+      apiError: apiError,
+    };
+
+    yield statePut({
+      type: UPDATING_TYPE_SUCCESS_OR_ERROR,
+      payload: payload,
+    });
   }
 }
-// eslint-disable-next-line require-yield
+
 export function* createType(action) {
   try {
     const url = process.env.REACT_APP_API_BASE_URL + "typeeditor";
@@ -106,19 +132,15 @@ export function* createType(action) {
 export function* getInitialData(action: TypeEditorActionTypes) {
   try {
     const aspectUrl = process.env.REACT_APP_API_BASE_URL + "typeeditor/aspects";
-    const statusUrl =
-      process.env.REACT_APP_API_BASE_URL + "typeeditor/statuses";
     const objectsUrl =
       process.env.REACT_APP_API_BASE_URL + "typeeditor/objects";
 
     const aspectResponse = yield call(get, aspectUrl);
-    const statusResponse = yield call(get, statusUrl);
     const objectResponse = yield call(get, objectsUrl);
 
     const payload = {
       aspects: aspectResponse.data,
       objectTypes: objectResponse.data,
-      statuses: statusResponse.data,
     };
 
     yield statePut({
@@ -129,7 +151,6 @@ export function* getInitialData(action: TypeEditorActionTypes) {
     const payload = {
       aspects: [],
       objectTypes: [],
-      statuses: [],
     };
 
     yield statePut({
@@ -332,6 +353,37 @@ export function* getblobData() {
 
     yield statePut({
       type: FETCHING_BLOB_DATA_SUCCESS_OR_ERROR,
+      payload: payload,
+    });
+  }
+}
+
+export function* getSelectedNode(action) {
+  try {
+    const selectedNodeURL =
+      process.env.REACT_APP_API_BASE_URL +
+      "typeeditor/librarytype/" +
+      action.payload.selectedType +
+      "/" +
+      action.payload.filter;
+
+    const selectedNodeResponse = yield call(get, selectedNodeURL);
+
+    const payload = {
+      selectedNode: selectedNodeResponse.data,
+    };
+
+    yield statePut({
+      type: FETCHING_TYPE_SUCCESS_OR_ERROR,
+      payload: payload,
+    });
+  } catch (error) {
+    const payload = {
+      selectedNode: {},
+    };
+
+    yield statePut({
+      type: FETCHING_TYPE_SUCCESS_OR_ERROR,
       payload: payload,
     });
   }

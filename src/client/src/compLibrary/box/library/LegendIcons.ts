@@ -9,12 +9,12 @@ const LegendIcons = styled.div`
   .text {
     left: -28px;
     opacity: 1 !important;
-    bottom: ${(props) => !props.open && "26px"};
+    bottom: ${(props) => !props.open && "23px"};
   }
   .icon {
     position: relative;
     left: -33px;
-    bottom: ${(props) => (props.open ? "35px" : "43px")};
+    bottom: ${(props) => (props.open ? "35px" : "40px")};
   }
 `;
 

@@ -8,7 +8,7 @@ const MessageBox = styled.div`
   width: 230px;
   height: 160px;
   background-color: ${Color.White};
-  border: 2px solid ${Color.DeepCyan};
+  border: 2px solid ${Color.BlueMagenta};
   border-radius: 5px;
   font-weight: ${FontWeight.Normal};
   font-size: ${FontSize.SubHeader};

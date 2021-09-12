@@ -1,123 +1,109 @@
+import * as Handlers from "./handlers";
 import { RootState } from "../../redux/store";
 import { useHistory } from "react-router-dom";
-import { TextResources } from "../../assets/text";
 import { useDispatch, useSelector } from "react-redux";
-import { MENU_TYPE, VIEW_TYPE } from "../../models/project";
-import { changeFlowView } from "../../redux/store/flow/actions";
-import { setDarkMode } from "../../redux/store/darkMode/actions";
-import { FindSelectedNode, SetDarkModeColor } from "../flow/helpers/common";
-import { IsBlockView } from "../flow/helpers/block";
+import { VIEW_TYPE } from "../../models/project";
 import { MenuMainHeader } from "../../compLibrary/box/menus";
-import { GetMenuIcon } from "../../assets/helpers";
-import { changeMenu } from "../../redux/store/projectMenu/actions";
 import { ProjectState } from "../../redux/store/project/types";
+import { IsExplorer, IsLibrary } from "../flow/helpers/common";
 import {
   HeaderBox,
   OptionsBox,
-  TitleBox,
+  LogoBox,
   OptionsElement,
+  MenuBar,
 } from "../../compLibrary/box/header/";
 import {
-  DarkModeOffIcon,
-  DarkModeOnIcon,
-  TreeViewOffIcon,
-  TreeViewOnIcon,
-  UndoIcon,
+  MimirIcon,
+  TreeViewIcon,
+  BlockViewIcon,
+  FilterIcon,
+  UserClosedIcon,
 } from "../../assets/icons/common";
 
 const Header = () => {
   const dispatch = useDispatch();
   const { push } = useHistory();
-  const selectedNode = FindSelectedNode();
 
   const projectState = useSelector<RootState>(
     (state) => state.projectState
   ) as ProjectState;
 
-  const darkMode = useSelector<RootState>(
+  const isDarkMode = useSelector<RootState>(
     (state) => state.darkMode.active
   ) as boolean;
 
-  const accountMenuOpen = useSelector<RootState>(
+  const isAccountMenuOpen = useSelector<RootState>(
     (state) => state.menu.list[1].visible
   ) as boolean;
 
-  const filterMenuOpen = useSelector<RootState>(
+  const isFilterMenuOpen = useSelector<RootState>(
     (state) => state.menu.list[4].visible
   ) as boolean;
 
-  const onViewClick = (e) => {
-    if (e.target.alt === VIEW_TYPE.BLOCKVIEW && !selectedNode) return;
-    const view = e.target.alt;
-    dispatch(changeFlowView(view));
-    push(`/home/${view}`);
-  };
+  const isLibraryOpen = useSelector<RootState>(
+    (state) => state.modules.types.find((x) => IsLibrary(x.type)).visible
+  ) as boolean;
 
-  const onDarkMode = () => {
-    dispatch(setDarkMode(!darkMode));
-    SetDarkModeColor(!darkMode);
-  };
-
-  const onAccountClick = () => {
-    dispatch(changeMenu(MENU_TYPE.ACCOUNT_MENU, !accountMenuOpen));
-    dispatch(changeMenu(MENU_TYPE.CREATE_PROJECT_MENU, false));
-    dispatch(changeMenu(MENU_TYPE.OPEN_PROJECT_MENU, false));
-  };
-
-  const onFilterClick = () => {
-    dispatch(changeMenu(MENU_TYPE.VISUAL_FILTER_MENU, !filterMenuOpen));
-  };
+  const isExplorerOpen = useSelector<RootState>(
+    (state) => state.modules.types.find((x) => IsExplorer(x.type)).visible
+  ) as boolean;
 
   return (
-    <HeaderBox>
-      <MenuMainHeader isOpen={accountMenuOpen}>
-        <div className="text" onClick={onAccountClick}>
-          {projectState.project && projectState.project.name}
-        </div>
-        <img
-          src={GetMenuIcon(accountMenuOpen, MENU_TYPE.ACCOUNT_MENU)}
-          alt="icon"
-          className="icon"
-          onClick={onAccountClick}
-        />
-      </MenuMainHeader>
-      <TitleBox>{TextResources.MainHeader_App_Name} </TitleBox>
-      <OptionsBox>
-        <OptionsElement>
+    <>
+      <HeaderBox>
+        <MenuMainHeader isOpen={isAccountMenuOpen}>
+          <div
+            className="projectName"
+            onClick={() => Handlers.OnAccountClick(dispatch, isAccountMenuOpen)}
+          >
+            {projectState.project && projectState.project.name}
+          </div>
           <img
-            src={darkMode ? DarkModeOnIcon : DarkModeOffIcon}
-            alt="dark-mode"
-            onClick={onDarkMode}
+            src={UserClosedIcon}
+            alt="icon"
+            className="icon"
+            onClick={() => Handlers.OnAccountClick(dispatch, isAccountMenuOpen)}
           />
-        </OptionsElement>
-        <OptionsElement>
-          <img src={UndoIcon} alt="undo" onClick={null} />
-        </OptionsElement>
-        <OptionsElement>
+        </MenuMainHeader>
+        <LogoBox>
           <img
-            src={IsBlockView() ? TreeViewOffIcon : TreeViewOnIcon}
-            alt={IsBlockView() ? VIEW_TYPE.TREEVIEW : VIEW_TYPE.BLOCKVIEW}
-            onClick={onViewClick}
+            src={MimirIcon}
+            alt="mimir-icon"
+            onClick={() => Handlers.OnDarkModeClick(dispatch, isDarkMode)}
           />
-        </OptionsElement>
-      </OptionsBox>
-      <MenuMainHeader
-        isOpen={filterMenuOpen}
-        right
-        type={MENU_TYPE.VISUAL_FILTER_MENU}
-        id="FilterHeader"
+        </LogoBox>
+      </HeaderBox>
+      <MenuBar
+        id="MenuBar"
+        isLibraryOpen={isLibraryOpen}
+        isExplorerOpen={isExplorerOpen}
       >
-        <div className="text" onClick={onFilterClick}>
-          {TextResources.MainHeader_VisualFilter}
-        </div>
-        <img
-          src={GetMenuIcon(filterMenuOpen, MENU_TYPE.VISUAL_FILTER_MENU)}
-          alt="icon"
-          className="icon"
-          onClick={onFilterClick}
-        />
-      </MenuMainHeader>
-    </HeaderBox>
+        <OptionsBox>
+          <OptionsElement>
+            <img
+              src={FilterIcon}
+              alt="VisualFilter"
+              onClick={() => Handlers.OnFilterClick(dispatch, isFilterMenuOpen)}
+            />
+          </OptionsElement>
+          <OptionsElement>
+            <img
+              src={BlockViewIcon}
+              alt={VIEW_TYPE.BLOCKVIEW}
+              onClick={(e) => Handlers.OnViewClick(e, dispatch, push)}
+            />
+          </OptionsElement>
+          <OptionsElement>
+            <img
+              src={TreeViewIcon}
+              alt={VIEW_TYPE.TREEVIEW}
+              onClick={(e) => Handlers.OnViewClick(e, dispatch, push)}
+            />
+          </OptionsElement>
+        </OptionsBox>
+      </MenuBar>
+    </>
   );
 };
 
