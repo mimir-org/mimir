@@ -7,7 +7,7 @@ Button returns a button with an icon and text to be used in Mimir */
 
 const Button = ({ onClick, type }) => (
   <ButtonContainer onClick={() => onClick()}>
-    <img src={GetButtonIcon(type)} alt={GetButtonIcon(type)} />
+    <img src={GetButtonIcon(type)} alt={GetButtonText(type)} />
     <div className="text">{GetButtonText(type)}</div>
   </ButtonContainer>
 );

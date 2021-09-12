@@ -20,7 +20,7 @@ interface Props {
   dispatch: any;
 }
 
-export const SaveProjectFileMenu = ({ projectState, dispatch }: Props) => {
+export const ExportProjectFileMenu = ({ projectState, dispatch }: Props) => {
   const [fileName, setFileName] = useState("");
 
   const isOpen = useSelector<RootState>(
@@ -62,7 +62,7 @@ export const SaveProjectFileMenu = ({ projectState, dispatch }: Props) => {
           <ButtonBox>
             <Button
               onClick={() => OnSaveClick(dispatch, projectState, fileName)}
-              type={TextResources.Account_Save_Label_File_Button}
+              type={TextResources.Account_Export_File_Label}
             />
           </ButtonBox>
         )}
@@ -71,4 +71,4 @@ export const SaveProjectFileMenu = ({ projectState, dispatch }: Props) => {
   );
 };
 
-export default SaveProjectFileMenu;
+export default ExportProjectFileMenu;

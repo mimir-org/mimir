@@ -10,7 +10,12 @@ const GetButtonText = (type: string) => {
     return TextResources.Account_Cancel;
   if (type === TextResources.Account_Import_Label_File_Browse)
     return TextResources.Account_Import_Label_File_Browse;
+  if (type === TextResources.Account_Export_File_Label)
+    return TextResources.Account_Export_File_Label;
+  if (type === TextResources.Account_Export_File_Library_Label)
+    return TextResources.Account_Export_File_Label;
   if (type === "Import project library")
+    // TODO: fix string
     return TextResources.Account_Import_Label_File_Browse;
 };
 

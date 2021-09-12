@@ -6,6 +6,8 @@ import {
   CloseIcon,
   ImportProjectIcon,
   ImportLibraryIcon,
+  ExportProjectIcon,
+  ExportLibraryIcon,
 } from "../../assets/icons/common";
 
 const GetButtonIcon = (type: string) => {
@@ -15,6 +17,10 @@ const GetButtonIcon = (type: string) => {
   if (type === TextResources.Account_Cancel) return CloseIcon;
   if (type === TextResources.Account_Import_Label_File_Browse)
     return ImportProjectIcon;
+  if (type === TextResources.Account_Export_File_Label)
+    return ExportProjectIcon;
+  if (type === TextResources.Account_Export_File_Library_Label)
+    return ExportLibraryIcon;
   if (type === "Import project library") return ImportLibraryIcon; // TODO: fix string
 };
 

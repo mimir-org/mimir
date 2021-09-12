@@ -3,11 +3,10 @@ import { RootState } from "../../../redux/store";
 import { MENU_TYPE } from "../../../models/project";
 import { CloseIcon } from "../../../assets/icons/common";
 import { TextResources } from "../../../assets/text";
-import { changeMenu } from "../../../redux/store/projectMenu/actions";
 import { useState } from "react";
 import { Input, Label, Size } from "../../../compLibrary";
 import { Button } from "../../../compLibrary/buttons";
-import { exportLibrary } from "../../../redux/store/library/actions";
+import { OnReturnClick, OnSaveClick } from "./handlers";
 import {
   ProjectBody,
   ProjectBox,
@@ -15,7 +14,7 @@ import {
   ButtonBox,
 } from "../../../compLibrary/box/project";
 
-export const SaveLibraryFileMenu = () => {
+export const ExportLibraryFileMenu = () => {
   const dispatch = useDispatch();
   const [fileName, setFileName] = useState("");
 
@@ -24,16 +23,6 @@ export const SaveLibraryFileMenu = () => {
       state.menu.list.find((x) => x.type === MENU_TYPE.SAVE_LIBRARY_FILE_MENU)
         ?.visible
   ) as boolean;
-
-  const onReturnClick = () => {
-    dispatch(changeMenu(MENU_TYPE.SAVE_LIBRARY_FILE_MENU, false));
-  };
-
-  const onSaveClick = () => {
-    dispatch(exportLibrary(fileName));
-    dispatch(changeMenu(MENU_TYPE.SAVE_LIBRARY_FILE_MENU, false));
-    dispatch(changeMenu(MENU_TYPE.ACCOUNT_MENU, false));
-  };
 
   return (
     <ProjectBox
@@ -46,7 +35,7 @@ export const SaveLibraryFileMenu = () => {
           <img
             src={CloseIcon}
             alt="Close project"
-            onClick={onReturnClick}
+            onClick={() => OnReturnClick(dispatch)}
             className="icon"
           />
           {TextResources.Account_Save_Label_Library_File}
@@ -59,13 +48,16 @@ export const SaveLibraryFileMenu = () => {
           value={fileName}
         />
         <ButtonBox left>
-          <Button onClick={onReturnClick} type={TextResources.Account_Cancel} />
+          <Button
+            onClick={() => OnReturnClick(dispatch)}
+            type={TextResources.Account_Cancel}
+          />
         </ButtonBox>
         {fileName && (
           <ButtonBox>
             <Button
-              onClick={onSaveClick}
-              type={TextResources.Account_Save_Label_File_Library_Button}
+              onClick={() => OnSaveClick(dispatch, fileName)}
+              type={TextResources.Account_Export_File_Library_Label}
             />
           </ButtonBox>
         )}
@@ -74,4 +66,4 @@ export const SaveLibraryFileMenu = () => {
   );
 };
 
-export default SaveLibraryFileMenu;
+export default ExportLibraryFileMenu;

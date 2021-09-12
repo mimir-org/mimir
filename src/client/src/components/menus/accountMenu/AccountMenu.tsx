@@ -7,9 +7,9 @@ import { GetMenuElement } from "./helpers";
 import { MENU_TYPE } from "../../../models/project";
 import { OpenProjectMenu } from "../../project/openProject";
 import { CreateProjectMenu } from "../../project/createProject";
-import { SaveProjectFileMenu } from "../../project/saveProjectFile";
+import { ExportProjectFileMenu } from "../../project/exportProjectFile";
 import { ImportProjectFileMenu } from "../../project/importProjectFile/ImportProjectFileMenu";
-import { SaveLibraryFileMenu } from "../../project/saveLibraryFile/SaveLibraryFileMenu";
+import { ExportLibraryFileMenu } from "../../project/exportLibraryFile/ExportLibraryFileMenu";
 import { ImportFileLibraryMenu } from "../../project/importLibrary/ImportFileLibraryMenu";
 import { MenuLine, AccountMenuBox } from "../../../compLibrary/box/menus";
 import { TextResources } from "../../../assets/text";
@@ -66,9 +66,12 @@ const AccountMenu = () => {
       <div className="ProjectMenu" style={{ zIndex: 2 }}>
         <OpenProjectMenu projectState={projectState} dispatch={dispatch} />
         <CreateProjectMenu />
-        <SaveProjectFileMenu projectState={projectState} dispatch={dispatch} />
+        <ExportProjectFileMenu
+          projectState={projectState}
+          dispatch={dispatch}
+        />
         <ImportProjectFileMenu />
-        <SaveLibraryFileMenu />
+        <ExportLibraryFileMenu />
         <ImportFileLibraryMenu />
       </div>
     </>
