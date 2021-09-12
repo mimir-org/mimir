@@ -7,9 +7,9 @@ import {
 } from "../../components/flow/helpers/common";
 
 const GetMapColor = (node: Node): string => {
-  if (IsFunction(node)) return Color.Function;
-  if (IsProduct(node)) return Color.Product;
-  if (IsLocation(node)) return Color.Location;
+  if (IsFunction(node)) return Color.FunctionBlock;
+  if (IsProduct(node)) return Color.ProductBlock;
+  if (IsLocation(node)) return Color.LocationBlock;
   return null;
 };
 

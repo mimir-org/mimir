@@ -56,7 +56,7 @@
 }
 
 .react-flow__node-Location {
-  background: magenta;
+  background: #fa00ff;
   &.selected {
     border: 3px solid #a300a7 !important;
   }
@@ -85,7 +85,7 @@
   font-size: 11px;
   color: #222;
   text-align: center !important;
-  background-color: magenta;
+  background-color: #fa00ff;
   box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.2);
 
   &.selected {

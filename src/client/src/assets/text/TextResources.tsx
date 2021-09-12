@@ -15,6 +15,7 @@ const TextResources = {
   // Relations
   Relations_PartOf: "Part of Relationship",
   Relations_HasLocation: "Has Location",
+  Relations_HasFunction: "Has Function",
   Relations_FulfilledBy: "Fulfilled By",
   Relations_Transport: "Transport",
 
@@ -51,14 +52,11 @@ const TextResources = {
   Inspector_Changelog: "Changelog",
 
   Inspector_Relations_Name: "Relation name",
-  Inspector_Relations_Has_Function: "Has function",
   Inspector_Relations_Updated_By: "Updated by",
   Inspector_Relations_Connected_To: "Connected to",
   Inspector_Relations_Project: "Project",
   Inspector_Relations_Updated_Date: "Updated Date",
   Inspector_Relations_Relation_Out: "Relation out",
-  Inspector_Relations_Has_Location: "Has location",
-  Inspector_Relations_Fulfilled_By: "Fulfilled by",
   Inspector_Relations_Part_Location: "Part of Location",
   Inspector_Relations_Location: "Go to location",
   Inspector_Relations_Product: "Go to product",
@@ -108,6 +106,9 @@ const TextResources = {
   Inspector_EdgeAdmin_Project: "Master Project ID",
 
   Inspector_Delete_Node: "Delete",
+  Inspector_Filter: "Filter",
+  Inspector_Lock: "Lock",
+  Inspector_Validate: "Validate",
 
   // LibraryModule
   Library_SearchBox_Placeholder: "Search the Library",

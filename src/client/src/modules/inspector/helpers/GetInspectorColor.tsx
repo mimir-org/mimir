@@ -8,14 +8,14 @@ import {
 
 const GetInspectorColor = (node: Node, edge: Edge) => {
   if (node) {
-    if (IsFunction(node)) return Color.FunctionInspector;
-    if (IsLocation(node)) return Color.LocationTransparent;
-    if (IsProduct(node)) return Color.ProductTransparent;
+    if (IsFunction(node)) return Color.FunctionHeader;
+    if (IsLocation(node)) return Color.LocationHeader;
+    if (IsProduct(node)) return Color.ProductHeader;
   }
   if (edge) {
-    if (IsFunction(edge.fromNode)) return Color.FunctionTransparent;
-    if (IsLocation(edge.fromNode)) return Color.LocationTransparent;
-    if (IsProduct(edge.fromNode)) return Color.ProductTransparent;
+    if (IsFunction(edge.fromNode)) return Color.FunctionHeader;
+    if (IsLocation(edge.fromNode)) return Color.LocationHeader;
+    if (IsProduct(edge.fromNode)) return Color.ProductHeader;
   }
   return null;
 };

@@ -27,7 +27,7 @@ const GetLegendInfo = (conn: Connector, node: Node) => {
 
   if (IsLocationTerminal(conn)) {
     name = conn.name;
-    color = Color.LocationTransparent;
+    color = Color.LocationHeader;
     return [name, color];
   }
 
