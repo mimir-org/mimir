@@ -23,7 +23,7 @@ const GetIcon = (type: string) => {
       return <img src={ExportLibraryIcon} alt="save library" />;
     case TextResources.Account_Import_Project:
       return <img src={ImportProjectIcon} alt="import project" />;
-    case TextResources.Account_Import_Library:
+    case TextResources.Account_Import_Library_Label:
       return <img src={ImportLibraryIcon} alt="import library" />;
     default:
       return null;

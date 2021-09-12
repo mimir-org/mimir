@@ -3,7 +3,7 @@ import { TextResources } from "../../assets/text";
 import { Edge, Node, Project } from "../../models";
 import { GetInspectorColor } from "./helpers";
 import { ButtonWrapper } from "./styled";
-import { Symbol } from "../../compLibrary/dropdown";
+import { Symbol } from "../../compLibrary/symbol";
 import { OnDeleteClick, OnToggleClick } from "./handlers";
 import { InspectorButton } from "../../compLibrary/buttons";
 import {

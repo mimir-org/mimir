@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Color, FontSize } from "..";
 
 const ButtonContainer = styled.button`
-  width: ${(props) => (props.wide ? "130px" : "94px")};
+  min-width: 94px;
   height: 34px;
   display: flex;
   flex-direction: row;
@@ -16,14 +16,9 @@ const ButtonContainer = styled.button`
   color: ${Color.Black};
   margin: 10px 0px;
 
-  .icon {
-    position: absolute;
-    right: 0px;
-    margin-right: 7px;
-  }
-
   .text {
     margin: auto;
+    padding-left: 5px;
   }
 
   &:hover {
