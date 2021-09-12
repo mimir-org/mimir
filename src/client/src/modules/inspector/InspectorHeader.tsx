@@ -2,7 +2,7 @@ import { DownIcon, UpIcon } from "../../assets/icons/common";
 import { TextResources } from "../../assets/text";
 import { Edge, Node, Project } from "../../models";
 import { GetInspectorColor } from "./helpers";
-import { DeleteButtonWrapper } from "./styled";
+import { ButtonWrapper } from "./styled";
 import { Symbol } from "../../compLibrary/dropdown";
 import { OnDeleteClick, OnToggleClick } from "./handlers";
 import { InspectorButton } from "../../compLibrary/buttons";
@@ -39,12 +39,14 @@ const InspectorHeader = ({
           </div>
           <div className="text">{node.label ?? node.name}</div>
         </NodeInfo>
-        <DeleteButtonWrapper>
+        <ButtonWrapper>
+          <InspectorButton onClick={() => null} type="validate" />
+          <InspectorButton onClick={() => null} type="lock" />
           <InspectorButton
             onClick={() => OnDeleteClick(project, node, edge, dispatch)}
             type="delete"
           />
-        </DeleteButtonWrapper>
+        </ButtonWrapper>
       </>
     )}
     {edge && (
@@ -52,12 +54,14 @@ const InspectorHeader = ({
         <NodeInfo>
           <div className="edgetext">{edge.id}</div>
         </NodeInfo>
-        <DeleteButtonWrapper>
+        <ButtonWrapper>
+          <InspectorButton onClick={() => null} type="validate" />
+          <InspectorButton onClick={() => null} type="lock" />
           <InspectorButton
             onClick={() => OnDeleteClick(project, node, edge, dispatch)}
             type="delete"
           />
-        </DeleteButtonWrapper>
+        </ButtonWrapper>
       </>
     )}
 
