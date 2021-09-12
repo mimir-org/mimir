@@ -32,38 +32,27 @@ const InspectorHeader = ({
 }: Props) => (
   <InspectorMenu id="InspectorBody" color={GetInspectorColor(node, edge)}>
     {node && (
-      <>
-        <NodeInfo symbol={node.symbol?.id}>
-          <div className="symbol">
-            <Symbol base64={node.symbol?.data} text={node.label ?? node.name} />
-          </div>
-          <div className="text">{node.label ?? node.name}</div>
-        </NodeInfo>
-        <ButtonWrapper>
-          <InspectorButton onClick={() => null} type="validate" />
-          <InspectorButton onClick={() => null} type="lock" />
-          <InspectorButton
-            onClick={() => OnDeleteClick(project, node, edge, dispatch)}
-            type="delete"
-          />
-        </ButtonWrapper>
-      </>
+      <NodeInfo symbol={node.symbol?.id}>
+        <div className="symbol">
+          <Symbol base64={node.symbol?.data} text={node.label ?? node.name} />
+        </div>
+        <div className="text">{node.label ?? node.name}</div>
+      </NodeInfo>
     )}
     {edge && (
-      <>
-        <NodeInfo>
-          <div className="edgetext">{edge.id}</div>
-        </NodeInfo>
-        <ButtonWrapper>
-          <InspectorButton onClick={() => null} type="validate" />
-          <InspectorButton onClick={() => null} type="lock" />
-          <InspectorButton
-            onClick={() => OnDeleteClick(project, node, edge, dispatch)}
-            type="delete"
-          />
-        </ButtonWrapper>
-      </>
+      <NodeInfo>
+        <div className="edgetext">{edge.id}</div>
+      </NodeInfo>
     )}
+
+    <ButtonWrapper visible={node}>
+      <InspectorButton onClick={() => null} type="validate" />
+      <InspectorButton onClick={() => null} type="lock" />
+      <InspectorButton
+        onClick={() => OnDeleteClick(project, node, edge, dispatch)}
+        type="delete"
+      />
+    </ButtonWrapper>
 
     <ToggleBox>
       <img
