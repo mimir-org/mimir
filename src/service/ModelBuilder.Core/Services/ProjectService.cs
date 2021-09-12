@@ -376,8 +376,8 @@ namespace Mb.Core.Services
         {
             var project = await GetProject(projectId);
 
-            if (!_moduleService.ParserModules.ContainsKey(parser))
-                parser = "Default";
+            if (!_moduleService.ParserModules.ContainsKey(parser.ToLower()))
+                throw new ModelBuilderModuleException($"There is no parser with key: {parser}");
 
             var par = _moduleService.Resolve<IModelBuilderParser>(parser);
             return await par.SerializeProject(project);
@@ -395,8 +395,8 @@ namespace Mb.Core.Services
             await using var stream = new MemoryStream();
             await file.CopyToAsync(stream, cancellationToken);
 
-            if (!_moduleService.ParserModules.ContainsKey(parser))
-                parser = "Default";
+            if (!_moduleService.ParserModules.ContainsKey(parser.ToLower()))
+                throw new ModelBuilderModuleException($"There is no parser with key: {parser}");
 
             var par = _moduleService.Resolve<IModelBuilderParser>(parser);
             var project = await par.DeserializeProjectAm(stream.ToArray());
