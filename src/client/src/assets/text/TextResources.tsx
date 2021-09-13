@@ -115,6 +115,9 @@ const TextResources = {
   Inspector_Lock: "Lock",
   Inspector_Validate: "Validate",
 
+  Inspector_Params_Clear_All: "Clear all Entities",
+  Inspector_Params_Default: "Show Default Entities",
+
   // LibraryModule
   Library_SearchBox_Placeholder: "Search the Library",
 

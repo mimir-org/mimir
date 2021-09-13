@@ -1,79 +1,49 @@
-import { useDispatch } from "react-redux";
-import { Attribute, Node } from "../../../../models";
-import { InputWrapper, TabRow } from "../../styled";
-import { changeAttributeValue } from "../../../../redux/store/project/actions";
-import { Input, InputBox, AttributeField } from "../../../../compLibrary";
+import { TextResources } from "../../../../assets/text";
 import { Dropdown } from "../../../../compLibrary/dropdown/mimir";
-import {
-  IsTransportTerminal,
-  CreateId,
-} from "../../../../components/flow/helpers/common";
+import { Node } from "../../../../models";
+import { EntityWrapper, ParametersHeader } from "./styled";
 
 interface Props {
   node: Node;
 }
-
-interface ConnectorAttribute {
-  id: string;
-  name: string;
-  attributes: Attribute[];
-}
-
 const ParametersComponent = ({ node }: Props) => {
-  const dispatch = useDispatch();
-
-  const onNodeChange = (id: string, value: string, unit: any) => {
-    dispatch(changeAttributeValue(id, value, unit, node.id));
-  };
-
-  const tempAttributes: ConnectorAttribute[] = [];
-  let nodeAttributes: Attribute[] = [];
-
-  if (node) {
-    node.connectors?.forEach((conn) => {
-      if (IsTransportTerminal(conn)) {
-        const data = {
-          id: conn.id,
-          name: conn.name + " " + conn.type,
-          attributes: conn.attributes,
-        } as ConnectorAttribute;
-        tempAttributes.push(data);
-      }
-    });
-    nodeAttributes = node.attributes;
-  }
   return (
-    <TabRow>
-      {nodeAttributes?.map((attr) => {
-        return (
-          <AttributeField key={CreateId()}>
-            <div>{attr.key}</div>
-            <InputBox>
-              <InputWrapper width={70} rightMargin={"4px"}>
-                <Input
-                  value={attr.value ?? ""}
-                  onChange={(e: any) =>
-                    onNodeChange(attr.id, e.target.value, attr.unit)
-                  }
-                  inputType="tech"
-                />
-              </InputWrapper>
-              <InputWrapper width={30}>
-                <Dropdown
-                  label=""
-                  items={attr.units}
-                  keyProp={null}
-                  valueProp={null}
-                  onChange={(e: any) =>
-                    onNodeChange(attr.id, attr.value, e.target.value)
-                  }
-                ></Dropdown>
-              </InputWrapper>
-            </InputBox>
-          </AttributeField>
-        );
-      })}
-    </TabRow>
+    <ParametersHeader>
+      <EntityWrapper>
+        <Dropdown
+          label=""
+          onChange={() => null}
+          keyProp={null}
+          valueProp={null}
+          items={node.connectors}
+        />
+        <div className="text">{TextResources.Inspector_Params_Clear_All}</div>
+        <div className="text">{TextResources.Inspector_Params_Default}</div>
+      </EntityWrapper>
+    </ParametersHeader>
   );
 };
 export default ParametersComponent;
+
+//   const dispatch = useDispatch();
+
+//   const onNodeChange = (id: string, value: string, unit: any) => {
+//     dispatch(changeAttributeValue(id, value, unit, node.id));
+//   };
+
+//   const tempAttributes: ConnectorAttribute[] = [];
+//   let nodeAttributes: Attribute[] = [];
+
+//   if (node) {
+//     node.connectors?.forEach((conn) => {
+//       if (IsTransportTerminal(conn)) {
+//         const data = {
+//           id: conn.id,
+//           name: conn.name + " " + conn.type,
+//           attributes: conn.attributes,
+//         } as ConnectorAttribute;
+//         tempAttributes.push(data);
+//       }
+//     });
+//     nodeAttributes = node.attributes;
+//   }
