@@ -3,6 +3,7 @@ const Color = {
   BlueMagenta: "#272738",
   GreyBorder: "#d9d9d9",
   GreyInspector: "#FAFAFA",
+  ListBorder: "#C4C4C4",
   White: "#fff",
   Black: "#000",
   LightGrey: "#FBFBFF",

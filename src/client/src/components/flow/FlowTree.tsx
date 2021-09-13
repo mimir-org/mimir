@@ -100,7 +100,7 @@ const FlowTree = () => {
     dispatch(setActiveEdge(null, false));
     dispatch(setActiveNode(element.id, true));
     dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, true, true));
-    dispatch(changeInspectorTab(0));
+    dispatch(changeInspectorTab(3));
     const panel = document.getElementById("InspectorModule");
     if (panel.style.height === Size.ModuleClosed + "px")
       SetPanelHeight(Size.InspectorModuleOpen);
