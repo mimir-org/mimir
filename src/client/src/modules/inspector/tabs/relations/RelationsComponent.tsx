@@ -9,10 +9,11 @@ interface Props {
 
 const RelationComponent = ({ node }: Props) => {
   const terminals = node.connectors?.filter((conn) => conn.visible);
+  const hasTerminals = terminals.length > 0;
 
   return (
     <RelationsBody>
-      {terminals.length > 0 && (
+      {hasTerminals && (
         <>
           <RelationsContent
             terminals={terminals}

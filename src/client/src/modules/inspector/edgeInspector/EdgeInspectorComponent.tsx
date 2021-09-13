@@ -1,7 +1,6 @@
 import GetInspectorText from "../helpers/GetInspectorText";
 import { useCallback } from "react";
 import { RootState } from "../../../redux/store";
-import { TypeEditorState } from "../../../redux/store/typeEditor/types";
 import { useDispatch, useSelector } from "react-redux";
 import { changeInspectorTab } from "../redux/actions";
 import { Edge } from "../../../models";
@@ -20,40 +19,26 @@ const TabEdgeComponent = ({ edge, index }: Props) => {
     (state) => state.inspector.tabs[index]?.visible
   ) as boolean;
 
-  const typeEditorState = useSelector<RootState>(
-    (state) => state.typeEditor
-  ) as TypeEditorState;
-
   const onClick = useCallback(() => {
     dispatch(changeInspectorTab(index));
   }, [dispatch, index]);
 
-  return isOpen ? (
+  return (
     <>
       <TabHeader
-        active={true}
+        active={isOpen}
         onClick={onClick}
         color={GetTabsColor(null, edge)}
       >
         {index === 0 && edge && <NodeInfo>{edge.id}</NodeInfo>}
-        {!edge && index === 1 && (
-          <span>{typeEditorState.createLibraryType.name} </span>
-        )}
-        <TabTitle active={true}>{GetInspectorText(index)}</TabTitle>
+        <TabTitle active={isOpen}>{GetInspectorText(index)}</TabTitle>
       </TabHeader>
-
-      <TabBody>
-        <TabEdgeContent edge={edge} index={index} />
-      </TabBody>
-    </>
-  ) : (
-    <TabHeader onClick={onClick} color={GetTabsColor(null, edge)}>
-      {index === 0 && edge && <NodeInfo>{edge.id}</NodeInfo>}
-      {!edge && index === 1 && (
-        <span>{typeEditorState.createLibraryType.name} </span>
+      {isOpen && (
+        <TabBody>
+          <TabEdgeContent edge={edge} index={index} />
+        </TabBody>
       )}
-      <TabTitle>{GetInspectorText(index)}</TabTitle>
-    </TabHeader>
+    </>
   );
 };
 
