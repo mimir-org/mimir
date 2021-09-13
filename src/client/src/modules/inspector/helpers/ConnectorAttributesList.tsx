@@ -1,5 +1,6 @@
-import { Input, InputBox, Select } from "../../../compLibrary";
+import { Input, InputBox } from "../../../compLibrary";
 import { TabColumn } from "../../../compLibrary/box/inspector";
+import { Dropdown } from "../../../compLibrary/dropdown";
 import { Attribute } from "../../../models";
 
 interface ConnectorAttribute {
@@ -34,8 +35,11 @@ const ConnectorAttributesList = ({ list, handleChange }: Props): any => {
               }
               inputType="tech"
             />
-            <Select
-              value={attr.unit ?? ""}
+            <Dropdown
+              label=""
+              items={attr.units}
+              keyProp={null}
+              valueProp={null}
               onChange={(e: any) =>
                 handleChange(
                   attr.id,
@@ -44,12 +48,7 @@ const ConnectorAttributesList = ({ list, handleChange }: Props): any => {
                   //   attr.connectorId
                 )
               }
-            >
-              <option value={"NotSet"}>NotSet</option>
-              {attr.units.map((unit) => (
-                <option>{unit}</option>
-              ))}
-            </Select>
+            ></Dropdown>
           </InputBox>
         </div>
       ))}

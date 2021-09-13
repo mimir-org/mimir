@@ -3,7 +3,8 @@ import { TabRow } from "../../../compLibrary/box/inspector";
 import { InputWrapper } from "../styled";
 import { useDispatch } from "react-redux";
 import { changeAttributeValue } from "../../../redux/store/project/actions";
-import { Input, InputBox, Select, AttributeField } from "../../../compLibrary";
+import { Input, InputBox, AttributeField } from "../../../compLibrary";
+import { Dropdown } from "../../../compLibrary/dropdown";
 import {
   IsTransportTerminal,
   CreateId,
@@ -59,21 +60,15 @@ const ParametersComponent = ({ node }: Props) => {
                 />
               </InputWrapper>
               <InputWrapper width={30}>
-                <Select
-                  value={attr.selectedUnitId ?? ""}
+                <Dropdown
+                  label=""
+                  items={attr.units}
+                  keyProp={null}
+                  valueProp={null}
                   onChange={(e: any) =>
                     onNodeChange(attr.id, attr.value, e.target.value)
                   }
-                >
-                  <option value={"3A28C02532C32420AC3A775BEB2B7E5C"}>
-                    NotSet
-                  </option>
-                  {attr.units?.map((unit) => (
-                    <option key={unit.id} value={unit.id}>
-                      {unit.name}
-                    </option>
-                  ))}
-                </Select>
+                ></Dropdown>
               </InputWrapper>
             </InputBox>
           </AttributeField>

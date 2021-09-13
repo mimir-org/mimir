@@ -2,12 +2,13 @@ import moment from "moment/moment.js";
 import { useDispatch } from "react-redux";
 import { TextResources } from "../../../assets/text";
 import { TabColumn } from "../../../compLibrary/box/inspector";
-import { Input, Select, Textarea } from "../../../compLibrary";
+import { Input, Textarea } from "../../../compLibrary";
 import { EnumBase, Node, Project } from "../../../models";
 import { GetRdsId, GetReferenceDesignation } from "../../../assets/helpers";
 import { IsLocation } from "../../../components/flow/helpers/common";
 import { IsBlockView } from "../../../components/flow/helpers/block";
 import { changeNodeValue } from "../../../redux/store/project/actions";
+import { Dropdown } from "../../../compLibrary/dropdown";
 
 interface Props {
   node: Node;
@@ -124,16 +125,13 @@ const AdminContent = ({ node, project, statuses }: Props) => {
       <TabColumn>
         <div>
           <div>{TextResources.Inspector_Admin_Status}</div>
-          <Select
-            value={node.statusId ?? ""}
+          <Dropdown
+            label=""
+            items={statuses}
+            keyProp={null}
+            valueProp={null}
             onChange={(e: any) => onChange(e, "statusId")}
-          >
-            {statuses?.map((x) => (
-              <option key={x.id} value={x.id}>
-                {x.name}
-              </option>
-            ))}
-          </Select>
+          ></Dropdown>
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Version}</div>
