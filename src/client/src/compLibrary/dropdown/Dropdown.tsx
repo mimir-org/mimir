@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { ExpandIcon, CollapseIcon } from "../../assets/icons/common";
+import { Symbol } from "../symbol";
 import {
   DropdownMenuWrapper,
   DropdownMenuHeader,
   DropdownMenuList,
   DropdownMenuListItem,
-  Symbol,
-} from ".";
+} from "./styled";
+
 interface Props {
   label: string;
   items: any[];

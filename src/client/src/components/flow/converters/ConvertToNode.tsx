@@ -19,6 +19,7 @@ const ConvertToNode = (
     positionBlockY: position.y,
     connectors: data.connectors,
     attributes: data.attributes,
+    composites: data.composites,
     aspect: data.aspect,
     statusId: data.statusId,
     version: data.version,

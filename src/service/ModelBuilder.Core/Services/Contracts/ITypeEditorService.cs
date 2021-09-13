@@ -36,5 +36,7 @@ namespace Mb.Core.Services.Contracts
         Task<List<Rds>> CreateRdsAsync(List<CreateRds> createRds);
         Task<List<PredefinedAttribute>> CreatePredefinedAttributes(List<PredefinedAttribute> attributes);
         Task CreateContractorsAsync(IEnumerable<Contractor> contractors);
+        Task<CompositeType> CreateCompositeType(CompositeTypeAm compositeType);
+        IEnumerable<CompositeType> GetCompositeTypes();
     }
 }

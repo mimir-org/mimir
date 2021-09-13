@@ -3,17 +3,8 @@ import { useState } from "react";
 import { IsBlockView } from "../../flow/helpers/block";
 import { Connector, Edge, Node, RelationType } from "../../../models";
 import { MenuSubHeader } from "../../../compLibrary/box/menus";
-import {
-  changeEdgeVisibility,
-  changeActiveConnector,
-} from "../../../redux/store/project/actions";
-import {
-  CheckBlockEdges,
-  CheckEdges,
-  FindConnectorNode,
-  IsChecked,
-  IsEdge,
-} from "./helpers";
+import { OnChange } from "./handlers";
+import { CheckBlockEdges, CheckEdges, IsChecked } from "./helpers";
 
 interface Props {
   conn?: Connector;
@@ -34,28 +25,23 @@ const FilterContent = ({ conn, type, name, header, node, edges }: Props) => {
 
   const [, setChecked] = useState(IsChecked(type, edges, conn, node, name));
 
-  const onChange = () => {
-    if (edges) {
-      setChecked(IsChecked(type, edges, conn, node, name));
-      selectedElements.forEach((element) => {
-        if (IsEdge(element)) {
-          dispatch(changeEdgeVisibility(element, !element.isHidden));
-        } else {
-          const connNode = FindConnectorNode(element);
-          dispatch(
-            changeActiveConnector(connNode, element.id, !element.visible, 0)
-          );
-        }
-      });
-    }
-  };
-
   return header ? (
     <label className={"checkbox"}>
       <input
         type="checkbox"
         checked={IsChecked(type, edges, conn, node, name)}
-        onChange={onChange}
+        onChange={() =>
+          OnChange(
+            edges,
+            setChecked,
+            dispatch,
+            selectedElements,
+            type,
+            name,
+            node,
+            conn
+          )
+        }
       />
       <span className="checkmark"></span>
       {<MenuSubHeader>{name}</MenuSubHeader>}
@@ -67,7 +53,18 @@ const FilterContent = ({ conn, type, name, header, node, edges }: Props) => {
           <input
             type="checkbox"
             checked={IsChecked(type, edges, conn, node, name)}
-            onChange={onChange}
+            onChange={() =>
+              OnChange(
+                edges,
+                setChecked,
+                dispatch,
+                selectedElements,
+                type,
+                name,
+                node,
+                conn
+              )
+            }
           />
           <span className="checkmark-filter"></span>
           {name}

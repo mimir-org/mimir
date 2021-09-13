@@ -1,3 +1,4 @@
+import { TextResources } from "../../../../assets/text";
 import { Edge, Node, RelationType } from "../../../../models";
 import {
   IsPartOfTerminal,
@@ -9,7 +10,7 @@ const CheckEdges = (edges: Edge[], type: RelationType | string, node: Node) => {
   const elementsToRemove = [];
 
   // All transport edges
-  if (type === "Transport") {
+  if (type === TextResources.Relations_Transport) {
     edges?.forEach((edge) => {
       if (
         IsTransportTerminal(edge.fromConnector) &&
@@ -20,14 +21,14 @@ const CheckEdges = (edges: Edge[], type: RelationType | string, node: Node) => {
   }
 
   // All partOf edges
-  if (type === "Part of Relationship") {
+  if (type === TextResources.Relations_PartOf) {
     edges?.forEach((edge) => {
       if (IsPartOfTerminal(edge.fromConnector)) elementsToRemove.push(edge);
     });
   }
 
   // All hasLocation edges
-  if (type === "Location") {
+  if (type === TextResources.Aspect_Location) {
     edges?.forEach((edge) => {
       if (IsLocationTerminal(edge.fromConnector)) elementsToRemove.push(edge);
     });

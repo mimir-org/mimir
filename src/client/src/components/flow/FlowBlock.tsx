@@ -7,19 +7,19 @@ import { FullScreenBox } from "../../compLibrary/controls";
 import { OpenProjectMenu } from "../project/openProject";
 import { Color } from "../../compLibrary";
 import { BackgroundBox } from "../../compLibrary/blockView";
-import { changeInspectorTab } from "../../redux/store/inspector/actions";
+import { changeInspectorTab } from "../../modules/inspector/redux/actions";
 import { Node, BlobData } from "../../models";
 import { ProjectState } from "../../redux/store/project/types";
 import { LibraryState } from "../../redux/store/library/types";
-import { GetBlockEdgeTypes, IsBlockView } from "./helpers/block";
+import { GetBlockEdgeTypes, IsBlockView, OnBlockClick } from "./helpers/block";
 import { CreateBlockElements } from "./creators";
 import { useOnConnect, useOnDrop, useOnRemove, useOnDragStop } from "./hooks";
 import {
-  changeActiveBlockNode,
-  changeActiveEdge,
+  setActiveBlockNode,
+  setActiveEdge,
 } from "../../redux/store/project/actions";
 import {
-  FindSelectedNode,
+  GetSelectedNode,
   GetBlockNodeTypes,
   IsFunction,
   IsLocation,
@@ -43,7 +43,7 @@ const FlowBlock = () => {
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>();
   const darkMode = red.store.getState().darkMode.active;
-  const node = FindSelectedNode();
+  const node = GetSelectedNode();
 
   const projectState = useSelector<RootState>(
     (state) => state.projectState
@@ -137,34 +137,10 @@ const FlowBlock = () => {
 
   const OnElementClick = (_event, element) => {
     if (!splitView) {
-      dispatch(changeActiveEdge(null, false));
+      dispatch(setActiveEdge(null, false));
     }
-    dispatch(changeActiveBlockNode(element.id));
+    dispatch(setActiveBlockNode(element.id));
     dispatch(changeInspectorTab(0));
-  };
-
-  const OnClick = (e) => {
-    if (!project) return;
-
-    // Handle select Edge
-    if (e.target.classList.contains("react-flow__edge-path")) {
-      const edge = project.edges.find((x) => x.id === e.target.id);
-      dispatch(changeActiveEdge(edge.id, true));
-      dispatch(changeActiveBlockNode(null));
-      dispatch(changeInspectorTab(0));
-      return;
-    }
-
-    if (e.target.classList.contains("react-flow__pane")) {
-      const selectedNode = FindSelectedNode();
-      if (selectedNode) {
-        dispatch(changeActiveEdge(null, false));
-        dispatch(changeActiveBlockNode(selectedNode.id));
-        dispatch(changeInspectorTab(0));
-        return;
-      }
-    }
-    dispatch(changeActiveEdge(null, false));
   };
 
   // Rerender
@@ -197,7 +173,7 @@ const FlowBlock = () => {
               onElementClick={OnElementClick}
               zoomOnScroll={false}
               paneMoveable={false}
-              onClick={(e) => OnClick(e)}
+              onClick={(e) => OnBlockClick(e, dispatch, project)}
             >
               <FullScreenBox />
               <BackgroundBox
@@ -218,7 +194,7 @@ const FlowBlock = () => {
       {!project && (
         <div>
           <ProjectMainMenu project={project} />
-          <OpenProjectMenu projectState={projectState} />
+          <OpenProjectMenu projectState={projectState} dispatch={dispatch} />
         </div>
       )}
     </>

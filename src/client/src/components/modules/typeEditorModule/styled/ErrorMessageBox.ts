@@ -8,7 +8,7 @@ const ErrorMessageBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: left;
-  border: 2px solid ${Color.DeepCyan};
+  border: 2px solid ${Color.BlueMagenta};
   font-size: ${FontSize.Standard};
   line-height: 1.5;
   padding: 10px 20px;

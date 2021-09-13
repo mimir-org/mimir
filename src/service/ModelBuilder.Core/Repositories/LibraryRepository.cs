@@ -39,7 +39,10 @@ namespace Mb.Core.Repositories
                     .Include("TerminalTypes.TerminalType.Attributes")
                     .Include("TerminalTypes.TerminalType.Attributes.Units")
                     .Include(x => x.Rds)
-                    .ThenInclude(y => y.RdsCategory)
+                    .Include("Rds.RdsCategory")
+                    .Include(x => x.CompositeTypes)
+                    .Include("CompositeTypes.AttributeTypes")
+                    .Include("CompositeTypes.AttributeTypes.Units")
                     .ToList();
             }
             else
@@ -54,7 +57,10 @@ namespace Mb.Core.Repositories
                     .Include("TerminalTypes.TerminalType.Attributes")
                     .Include("TerminalTypes.TerminalType.Attributes.Units")
                     .Include(x => x.Rds)
-                    .ThenInclude(y => y.RdsCategory)
+                    .Include("Rds.RdsCategory")
+                    .Include(x => x.CompositeTypes)
+                    .Include("CompositeTypes.AttributeTypes")
+                    .Include("CompositeTypes.AttributeTypes.Units")
                     .ToList();
             }
 
@@ -70,7 +76,7 @@ namespace Mb.Core.Repositories
             {
                 return _interfaceTypeRepository.GetAll()
                     .Include(x => x.Rds)
-                    .ThenInclude(y => y.RdsCategory)
+                    .Include("Rds.RdsCategory")
                     .ProjectTo<LibraryInterfaceItem>(_mapper.ConfigurationProvider)
                     .OrderBy(x => x.Name)
                     .ToList();
@@ -79,7 +85,7 @@ namespace Mb.Core.Repositories
             return _interfaceTypeRepository.GetAll()
                 .Where(x => x.Name.ToLower().Contains(searchString.ToLower()))
                 .Include(x => x.Rds)
-                .ThenInclude(y => y.RdsCategory)
+                .Include("Rds.RdsCategory")
                 .ProjectTo<LibraryInterfaceItem>(_mapper.ConfigurationProvider)
                 .OrderBy(x => x.Name)
                 .ToList();
@@ -92,7 +98,7 @@ namespace Mb.Core.Repositories
                 return _transportTypeRepository.GetAll()
                     .Include(x => x.AttributeTypes)
                     .Include(x => x.Rds)
-                    .ThenInclude(y => y.RdsCategory)
+                    .Include("Rds.RdsCategory")
                     .ProjectTo<LibraryTransportItem>(_mapper.ConfigurationProvider)
                     .OrderBy(x => x.Name)
                     .ToList();
@@ -102,7 +108,7 @@ namespace Mb.Core.Repositories
                 .Where(x => x.Name.ToLower().Contains(searchString.ToLower()))
                 .Include(x => x.AttributeTypes)
                 .Include(x => x.Rds)
-                .ThenInclude(y => y.RdsCategory)
+                .Include("Rds.RdsCategory")
                 .ProjectTo<LibraryTransportItem>(_mapper.ConfigurationProvider)
                 .OrderBy(x => x.Name)
                 .ToList();

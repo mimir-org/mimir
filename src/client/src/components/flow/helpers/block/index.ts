@@ -9,3 +9,4 @@ export { default as SortTerminals } from "./SortTerminals";
 export { default as FindSelectedBlockNode } from "./FindSelectedBlockNode";
 export { default as CalculateTerminalOrder } from "./CalculateTerminalOrder";
 export { default as GetBlockEdgeTypes } from "./GetBlockEdgeTypes";
+export { default as OnBlockClick } from "./OnBlockClick";

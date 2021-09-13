@@ -11,19 +11,19 @@ import {
   REMOVE_EDGE,
   UPDATE_POSITION,
   UPDATE_BLOCK_POSITION,
-  CHANGE_NODE_VISIBILITY,
-  CHANGE_ACTIVE_NODE,
+  SET_NODE_VISIBILITY,
+  SET_ACTIVE_NODE,
   CHANGE_SELECTED_PROJECT,
   ProjectActionTypes,
   CHANGE_ALL_NODES,
   CHANGE_NODE_PROP_VALUE,
   CHANGE_ATTRIBUTE_VALUE,
   CHANGE_CONNECTOR_ATTRIBUTE_VALUE,
-  CHANGE_EDGE_VISIBILITY,
-  CHANGE_ACTIVE_BLOCKNODE,
+  SET_EDGE_VISIBILITY,
+  SET_ACTIVE_BLOCKNODE,
   DELETE_PROJECT_ERROR,
   CHANGE_ACTIVE_CONNECTOR,
-  CHANGE_ACTIVE_EDGE,
+  SET_ACTIVE_EDGE,
   EXPORT_PROJECT_TO_FILE,
   IMPORT_PROJECT,
 } from "./types";
@@ -118,37 +118,37 @@ export function updateBlockPosition(
   };
 }
 
-export function changeNodeVisibility(node: Node, isParent: boolean) {
+export function setNodeVisibility(node: Node, isParent: boolean) {
   return {
-    type: CHANGE_NODE_VISIBILITY,
+    type: SET_NODE_VISIBILITY,
     payload: { node, isParent },
   };
 }
 
-export function changeEdgeVisibility(edge: Edge, isHidden: boolean) {
+export function setEdgeVisibility(edge: Edge, isHidden: boolean) {
   return {
-    type: CHANGE_EDGE_VISIBILITY,
+    type: SET_EDGE_VISIBILITY,
     payload: { edge, isHidden },
   };
 }
 
-export function changeActiveNode(nodeId: string, isActive: boolean) {
+export function setActiveNode(nodeId: string, isActive: boolean) {
   return {
-    type: CHANGE_ACTIVE_NODE,
+    type: SET_ACTIVE_NODE,
     payload: { nodeId, isActive },
   };
 }
 
-export function changeActiveBlockNode(nodeId: string) {
+export function setActiveBlockNode(nodeId: string) {
   return {
-    type: CHANGE_ACTIVE_BLOCKNODE,
+    type: SET_ACTIVE_BLOCKNODE,
     payload: { nodeId },
   };
 }
 
-export function changeActiveEdge(edgeId: string, isActive: boolean) {
+export function setActiveEdge(edgeId: string, isActive: boolean) {
   return {
-    type: CHANGE_ACTIVE_EDGE,
+    type: SET_ACTIVE_EDGE,
     payload: { edgeId, isActive },
   };
 }

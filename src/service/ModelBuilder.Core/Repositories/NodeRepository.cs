@@ -14,11 +14,13 @@ namespace Mb.Core.Repositories
     {
         private readonly IConnectorRepository _connectorRepository;
         private readonly IAttributeRepository _attributeRepository;
+        private readonly ICompositeRepository _compositeRepository;
 
-        public NodeRepository(ModelBuilderDbContext dbContext, IConnectorRepository connectorRepository, IAttributeRepository attributeRepository) : base(dbContext)
+        public NodeRepository(ModelBuilderDbContext dbContext, IConnectorRepository connectorRepository, IAttributeRepository attributeRepository, ICompositeRepository compositeRepository) : base(dbContext)
         {
             _connectorRepository = connectorRepository;
             _attributeRepository = attributeRepository;
+            _compositeRepository = compositeRepository;
         }
 
         public IEnumerable<Node> UpdateInsert(ICollection<Node> original, Project project)
@@ -50,6 +52,7 @@ namespace Mb.Core.Repositories
                         }
                     }
 
+                    _compositeRepository.AttachWithAttributes(node.Composites, EntityState.Added);
                     _connectorRepository.AttachWithAttributes(node.Connectors, EntityState.Added);
                     Attach(node, EntityState.Added);
                 }
@@ -67,6 +70,7 @@ namespace Mb.Core.Repositories
                         }
                     }
 
+                    _compositeRepository.AttachWithAttributes(node.Composites, EntityState.Modified);
                     _connectorRepository.AttachWithAttributes(node.Connectors, EntityState.Modified);
                     Attach(node, EntityState.Modified);
                 }
@@ -85,6 +89,7 @@ namespace Mb.Core.Repositories
                     continue;
                 }
                 _attributeRepository.Attach(node.Attributes, EntityState.Deleted);
+                _compositeRepository.AttachWithAttributes(node.Composites, EntityState.Deleted);
                 _connectorRepository.AttachWithAttributes(node.Connectors, EntityState.Deleted);
 
                 await Delete(node.Id);

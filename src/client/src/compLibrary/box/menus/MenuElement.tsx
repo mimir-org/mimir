@@ -4,7 +4,7 @@ import { Color } from "../..";
 const MenuElement = styled.div`
   padding: 6px 12px;
   margin-top: 5px;
-  color: ${Color.DeepCyan};
+  color: ${Color.BlueMagenta};
   cursor: ${(props) => !props.logOut && "pointer"};
 
   .text {
@@ -21,7 +21,7 @@ const MenuElement = styled.div`
 
   &:hover {
     background-color: ${(props) =>
-      !props.logOut && `${Color.DeepCyanTransparent}`};
+      !props.logOut && `${Color.DarkGrey}`}; // TODO: fix color;
     text-decoration: ${(props) => !props.logOut && "underline"};
   }
 `;

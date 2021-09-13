@@ -1,13 +1,12 @@
-import { useDispatch, useSelector } from "react-redux";
+import * as Handlers from "./handlers";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { MENU_TYPE } from "../../../models/project";
-import { CloseIcon, RightArrowIcon } from "../../../assets/icons/common";
+import { CloseIcon } from "../../../assets/icons/common";
 import { TextResources } from "../../../assets/text";
-import { changeMenu } from "../../../redux/store/projectMenu/actions";
 import { useState } from "react";
 import { Input, Label, Size } from "../../../compLibrary";
-import { MenuButton } from "../../../compLibrary/buttons";
-import { create } from "../../../redux/store/project/actions";
+import { Button } from "../../../compLibrary/buttons";
 import {
   ProjectBody,
   ProjectBox,
@@ -25,16 +24,6 @@ export const CreateProjectMenu = () => {
         ?.visible
   ) as boolean;
 
-  const onReturnClick = () => {
-    dispatch(changeMenu(MENU_TYPE.CREATE_PROJECT_MENU, false));
-  };
-
-  const onProjectCreateClick = () => {
-    dispatch(create(projectName, projectName));
-    dispatch(changeMenu(MENU_TYPE.CREATE_PROJECT_MENU, false));
-    dispatch(changeMenu(MENU_TYPE.ACCOUNT_MENU, false));
-  };
-
   return (
     <>
       <ProjectBox
@@ -47,7 +36,7 @@ export const CreateProjectMenu = () => {
             <img
               src={CloseIcon}
               alt="Close project"
-              onClick={onReturnClick}
+              onClick={() => Handlers.OnReturnClick(dispatch)}
               className="icon"
             />
             {TextResources.Account_Create_Label}
@@ -60,16 +49,19 @@ export const CreateProjectMenu = () => {
             value={projectName}
           />
           <ButtonBox left>
-            <MenuButton onClick={onReturnClick}>
-              <p>{TextResources.Account_Cancel_Button}</p>
-            </MenuButton>
+            <Button
+              onClick={() => Handlers.OnReturnClick(dispatch)}
+              type={TextResources.Account_Cancel}
+            />
           </ButtonBox>
           {projectName && (
             <ButtonBox>
-              <MenuButton onClick={onProjectCreateClick} wide>
-                <p>{TextResources.Account_Create_Button_Label}</p>
-                <img src={RightArrowIcon} alt="Open project" className="icon" />
-              </MenuButton>
+              <Button
+                onClick={() =>
+                  Handlers.OnProjectCreateClick(dispatch, projectName)
+                }
+                type={TextResources.Account_Create}
+              />
             </ButtonBox>
           )}
         </ProjectBody>

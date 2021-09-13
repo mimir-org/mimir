@@ -1,7 +1,7 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
 import { Connector } from "../../../models";
-import { Symbol } from "../../../compLibrary/dropdown";
+import { Symbol } from "../../../compLibrary/symbol";
 import {
   TreeHandleBox,
   TreeNodeNameBox,

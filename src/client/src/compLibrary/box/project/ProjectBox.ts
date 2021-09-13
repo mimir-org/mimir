@@ -11,7 +11,7 @@ const ProjectBox = styled.div`
     props.small ? "281px" : props.height ? `${props.height}px` : "auto"};
   max-height: 463px;
   margin: auto;
-  border: 2px solid ${Color.DeepCyan};
+  border: 2px solid ${Color.BlueMagenta};
   background-color: ${Color.White};
   box-shadow: 0px 5px 6px rgba(0, 0, 0, 0.15);
   border-radius: 5px;

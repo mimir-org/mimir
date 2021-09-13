@@ -2,12 +2,13 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { FilterContent } from ".";
 import { Aspect, Project, RelationType } from "../../../models";
-import { MenuBox, MenuColumn } from "../../../compLibrary/box/menus";
+import { FilterMenuBox, MenuColumn } from "../../../compLibrary/box/menus";
 import { AddElement } from "./helpers";
 import { TextResources } from "../../../assets/text";
 import {
   CreateId,
   FilterElement,
+  IsLibrary,
   IsLocationTerminal,
   IsPartOfTerminal,
   IsTransportTerminal,
@@ -58,9 +59,13 @@ const FilterMenu = () => {
     }
   });
 
+  const isLibraryOpen = useSelector<RootState>(
+    (state) => state.modules.types.find((x) => IsLibrary(x.type)).visible
+  );
+
   // TODO: refactor
   return (
-    <MenuBox right>
+    <FilterMenuBox isLibraryOpen={isLibraryOpen}>
       <MenuColumn>
         {isPartOf && (
           <FilterContent
@@ -97,8 +102,8 @@ const FilterMenu = () => {
         <br></br>
         {isTransport && (
           <FilterContent
-            type={TextResources.Filter_Transport}
-            name={TextResources.Filter_Transport}
+            type={TextResources.Relations_Transport}
+            name={TextResources.Relations_Transport}
             header={true}
             edges={edges}
           />
@@ -130,7 +135,7 @@ const FilterMenu = () => {
 
         {isLocation && (
           <FilterContent
-            type={TextResources.Filter_Location}
+            type={TextResources.Aspect_Location}
             name={TextResources.Relations_HasLocation}
             header={true}
             edges={edges}
@@ -145,7 +150,7 @@ const FilterMenu = () => {
                 name={
                   Aspect[x.fromNode?.aspect] +
                   " " +
-                  TextResources.Filter_Location
+                  TextResources.Aspect_Location
                 }
                 key={x.id}
                 header={false}
@@ -165,7 +170,7 @@ const FilterMenu = () => {
           />
         )}
       </MenuColumn>
-    </MenuBox>
+    </FilterMenuBox>
   );
 };
 

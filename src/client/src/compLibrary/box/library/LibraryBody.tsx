@@ -8,7 +8,7 @@ const LibraryBody = styled.div`
   overflow-y: scroll;
   overflow-x: hidden;
   padding-right: 10px;
-  max-height: ${(props) => (props.legend ? "55%" : "80%")};
+  max-height: ${(props) => (props.legend ? "60%" : "80%")};
 
   @media screen and (max-height: 1100px) {
     max-height: ${(props) => (props.legend ? "50%" : "75%")};
