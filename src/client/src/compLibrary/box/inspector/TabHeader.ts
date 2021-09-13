@@ -10,16 +10,17 @@ const TabHeader = styled.div`
   border-top-left-radius: 6px;
   color: ${Color.Black};
   margin-right: 7px;
-  height: 33px;
+  height: ${(props) => (props.active ? "44px" : "35px")};
   margin-top: ${(props: { active: string }) => (props.active ? "0px" : "9px")};
 
-  box-shadow: ${(props) => !props.active && "#888 0px 2px 4px"};
-
   background-color: ${(props) =>
-    props.active ? props.background : props.color};
+    props.active ? `${Color.GreyInspector}` : props.color};
 
   padding: ${(props: { active: string }) =>
-    props.active ? "12px 20px 0px 20px;" : "8px 20px 0px 20px"};
+    props.active ? "17px 20px 0px 20px;" : "8px 20px 0px 20px"};
+
+  box-shadow: -4px 0 4px -5px rgba(0, 0, 0, 0.4),
+    4px 0 3px -5px rgba(0, 0, 0, 0.4);
 
   :hover {
     cursor: pointer;

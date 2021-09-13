@@ -10,7 +10,7 @@ const Color = {
   DarkGrey: "#c4c4c4",
   DarkerGrey: "#898787",
   LightCyan: "#CFDADB",
-  LightBlue: "#bde6fd",
+  LightBlue: "#D9E6FF",
   DarkRed: "rgb(139,0,0)",
   Red: "rgb(255,0,0)",
 
