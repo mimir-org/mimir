@@ -372,7 +372,7 @@ namespace Mb.Core.Services
         /// <param name="projectId"></param>
         /// <param name="parser"></param>
         /// <returns></returns>
-        public async Task<byte[]> CreateFile(string projectId, string parser)
+        public async Task<(byte[] file, FileFormat format)> CreateFile(string projectId, string parser)
         {
             var project = await GetProject(projectId);
 
@@ -380,7 +380,8 @@ namespace Mb.Core.Services
                 throw new ModelBuilderModuleException($"There is no parser with key: {parser}");
 
             var par = _moduleService.Resolve<IModelBuilderParser>(parser);
-            return await par.SerializeProject(project);
+            var data = await par.SerializeProject(project);
+            return (data, par.GetFileFormat());
         }
 
         /// <summary>
