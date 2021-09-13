@@ -8,7 +8,7 @@ import { GetRdsId, GetReferenceDesignation } from "../../../assets/helpers";
 import { IsLocation } from "../../../components/flow/helpers/common";
 import { IsBlockView } from "../../../components/flow/helpers/block";
 import { changeNodeValue } from "../../../redux/store/project/actions";
-import { Dropdown } from "../../../compLibrary/dropdown";
+import { Dropdown } from "../../../compLibrary/dropdown/mimir";
 
 interface Props {
   node: Node;

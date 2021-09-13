@@ -17,7 +17,7 @@ import {
   DropdownMenuHeader,
   DropdownMenuList,
   DropdownMenuListItem,
-} from "../../../../compLibrary/dropdown/styled";
+} from "../../../../compLibrary/dropdown/typeEditor/styled";
 
 interface Props {
   label: string;

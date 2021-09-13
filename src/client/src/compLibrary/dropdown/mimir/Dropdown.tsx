@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { ExpandIcon, CollapseIcon } from "../../assets/icons/common";
-import { Symbol } from "../symbol";
+import { ExpandIcon, CollapseIcon } from "../../../assets/icons/common";
+import { Symbol } from "../../symbol";
 import {
   DropdownMenuWrapper,
   DropdownMenuHeader,
@@ -54,7 +54,6 @@ const Dropdown = ({
     <>
       <DropdownMenuWrapper disabled={disabled}>
         <label htmlFor={label} />
-        <div className="label"> {label}</div>
         <div onClick={disabled ? null : (e) => setIsListOpen(!isListOpen)}>
           <DropdownMenuHeader>
             {selectedItem && (

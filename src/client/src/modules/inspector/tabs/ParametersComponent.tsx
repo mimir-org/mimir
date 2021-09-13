@@ -4,7 +4,7 @@ import { InputWrapper } from "../styled";
 import { useDispatch } from "react-redux";
 import { changeAttributeValue } from "../../../redux/store/project/actions";
 import { Input, InputBox, AttributeField } from "../../../compLibrary";
-import { Dropdown } from "../../../compLibrary/dropdown";
+import { Dropdown } from "../../../compLibrary/dropdown/mimir";
 import {
   IsTransportTerminal,
   CreateId,

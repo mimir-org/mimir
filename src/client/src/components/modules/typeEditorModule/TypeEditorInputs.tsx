@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { DropdownMenu } from ".";
 import { TextResources } from "../../../assets/text";
-import { Dropdown } from "../../../compLibrary/dropdown";
+import { Dropdown } from "../../../compLibrary/dropdown/typeEditor";
 import { Aspect, ObjectType } from "../../../models";
 import { TypeEditorState } from "../../../redux/store/typeEditor/types";
+import { TextInput, TypeInfo, TypeNameInput } from "./styled";
 import {
   GetAspects,
   GetObjectTypes,
@@ -14,7 +15,6 @@ import {
   ModeEdit,
   ModeNew,
 } from "./helpers";
-import { TextInput, TypeInfo, TypeNameInput } from "./styled";
 import {
   chooseSymbol,
   chooseTypeName,

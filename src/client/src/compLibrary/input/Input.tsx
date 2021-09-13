@@ -1,7 +1,8 @@
 import styled from "styled-components";
+import { Color } from "..";
 
 const Input = styled.input`
-  border: 1px solid #898787;
+  border: 1px solid ${Color.Black};
   width: 100%;
   box-sizing: border-box;
   border-radius: 5px;

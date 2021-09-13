@@ -1,6 +1,6 @@
 import { Input, InputBox } from "../../../compLibrary";
 import { TabColumn } from "../../../compLibrary/box/inspector";
-import { Dropdown } from "../../../compLibrary/dropdown";
+import { Dropdown } from "../../../compLibrary/dropdown/mimir";
 import { Attribute } from "../../../models";
 
 interface ConnectorAttribute {

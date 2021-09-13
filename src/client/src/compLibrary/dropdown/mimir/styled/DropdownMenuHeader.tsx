@@ -1,14 +1,14 @@
 import styled from "styled-components";
-import { Color, FontSize } from "../..";
+import { Color, FontSize } from "../../../";
 
 const DropdownMenuHeader = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  height: 31px;
+  height: 28px;
   background: ${Color.White};
-  border: 1.5px solid ${Color.Black};
+  border: 1px solid ${Color.Black};
   border-radius: 5px;
   font-size: ${FontSize.Standard};
   color: ${Color.Black};
