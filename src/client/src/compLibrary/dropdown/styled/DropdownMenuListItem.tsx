@@ -7,7 +7,7 @@ const DropdownMenuListItem = styled.div`
   align-items: center;
   border-width: 1px 0px 0px 0px;
   border-style: solid;
-  border-color: ${Color.Grey};
+  border-color: ${Color.DarkGrey};
   font-size: ${FontSize.Standard};
   color: ${Color.Black};
   background-color: ${Color.White};
@@ -15,7 +15,7 @@ const DropdownMenuListItem = styled.div`
   z-index: 1;
 
   p {
-    padding: 5px;
+    padding: 10px;
   }
 
   img {

@@ -8,13 +8,13 @@ const DropdownMenuHeader = styled.div`
   justify-content: space-between;
   height: 31px;
   background: ${Color.White};
-  border: 1px solid ${Color.DarkerGrey};
+  border: 1.5px solid ${Color.Black};
   border-radius: 5px;
   font-size: ${FontSize.Standard};
   color: ${Color.Black};
 
   p {
-    padding: 5px;
+    padding: 10px;
   }
 
   img {

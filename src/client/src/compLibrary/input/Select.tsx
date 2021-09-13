@@ -19,6 +19,7 @@ const Select = styled.select`
   background-repeat: no-repeat;
   font-size: 13px;
   text-overflow: ellipsis;
+
   @media (min-width: 3000px) {
     height: 40px;
     font-size: 16px;
@@ -26,7 +27,7 @@ const Select = styled.select`
   option {
     display: flex;
     white-space: pre;
-    min-height: 10px;
+    min-height: 20px;
     padding: 0px 2px 1px 0px;
     text-overflow: ellipsis;
   }

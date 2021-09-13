@@ -15,6 +15,7 @@ export { default as UpIcon } from "./toggleUp.svg";
 
 export { default as CloseIcon } from "./close.svg";
 
+// Dropdown
 export { default as ExpandIcon } from "./expand.svg";
 export { default as CollapseIcon } from "./collapse.svg";
 
