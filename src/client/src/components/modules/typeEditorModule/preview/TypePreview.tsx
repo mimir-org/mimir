@@ -3,13 +3,12 @@ import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
 import { ListHeader } from "../lists/ListHeader";
 import { PreviewBody } from "../preview/PreviewBody";
 import { ListWrapper } from "../../../../compLibrary";
-import { SaveButton } from "../../../../compLibrary/buttons";
 import { TextResources } from "../../../../assets/text";
 import { create, update } from "../../../../redux/store/typeEditor/actions";
 import { TypeMode } from "../../../../models";
 import { GetValidationMessage } from "../validators";
 import { useState } from "react";
-import { ErrorMessageBox } from "../styled";
+import { ErrorMessageBox, SaveButton } from "../styled";
 import { AddIcon, CheckIcon, CloseIcon } from "../../../../assets/icons/common";
 import { ModeEdit, ModeNew } from "../helpers";
 

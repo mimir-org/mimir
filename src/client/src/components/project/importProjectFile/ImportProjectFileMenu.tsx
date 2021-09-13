@@ -40,8 +40,7 @@ export const ImportProjectFileMenu = () => {
   };
 
   const buttonBrowseText = () => {
-    if (plainFiles?.length < 1)
-      return TextResources.Account_Import_Label_File_Browse;
+    if (plainFiles?.length < 1) return TextResources.Account_Import_File;
     return plainFiles[0].name;
   };
 
@@ -59,7 +58,7 @@ export const ImportProjectFileMenu = () => {
             onClick={() => OnReturnClick(dispatch)}
             className="icon"
           />
-          {TextResources.Account_Import_Label_File}
+          {TextResources.Account_Import_File}
         </HeaderBox>
         <ButtonBox>
           <Button
@@ -68,7 +67,10 @@ export const ImportProjectFileMenu = () => {
           />
         </ButtonBox>
         <ButtonBox left>
-          <Button onClick={OnReturnClick} type={TextResources.Account_Cancel} />
+          <Button
+            onClick={() => OnReturnClick(dispatch)}
+            type={TextResources.Account_Cancel}
+          />
         </ButtonBox>
         {plainFiles?.length > 0 && data() && (
           <ButtonBox>

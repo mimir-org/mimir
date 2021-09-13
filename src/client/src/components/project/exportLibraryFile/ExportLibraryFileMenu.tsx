@@ -38,7 +38,7 @@ export const ExportLibraryFileMenu = () => {
             onClick={() => OnReturnClick(dispatch)}
             className="icon"
           />
-          {TextResources.Account_Save_Label_Library_File}
+          {TextResources.Account_Export_Library_File}
         </HeaderBox>
         <Label>{TextResources.Account_Save_Label_File_Name}</Label>
         <Input

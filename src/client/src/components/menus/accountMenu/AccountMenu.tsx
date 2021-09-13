@@ -53,7 +53,7 @@ const AccountMenu = () => {
           onClick={() => Handlers.OnImportProjectFile(dispatch)}
         />
         <GetMenuElement
-          type={TextResources.Account_Import_Library}
+          type={TextResources.Account_Import_Library_Label}
           onClick={() => Handlers.OnImportLibraryFile(dispatch)}
         />
         <MenuLine />

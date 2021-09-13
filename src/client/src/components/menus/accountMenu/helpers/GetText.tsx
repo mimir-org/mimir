@@ -10,13 +10,13 @@ const GetText = (type: string) => {
   if (type === TextResources.Account_Logout)
     return TextResources.Account_Logout_Label;
   if (type === TextResources.Account_Save_Library)
-    return TextResources.Account_Save_Label_Library_File;
+    return TextResources.Account_Export_Library_File;
   if (type === TextResources.Account_Save_File)
     return TextResources.Account_Save_Label_File;
   if (type === TextResources.Account_Import_Project)
-    return TextResources.Account_Import_Label_File;
-  if (type === TextResources.Account_Import_Library)
-    return TextResources.Account_Import_Label_Library_File;
+    return TextResources.Account_Import_File;
+  if (type === TextResources.Account_Import_Library_Label)
+    return TextResources.Account_Import_Library_File;
 };
 
 export default GetText;

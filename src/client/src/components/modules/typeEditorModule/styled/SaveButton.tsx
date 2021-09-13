@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color, FontSize, FontType } from "..";
+import { Color, FontSize, FontType } from "../../../../compLibrary";
 
 const SaveButton = styled.button`
   width: 161px;

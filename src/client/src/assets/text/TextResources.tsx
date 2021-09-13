@@ -1,4 +1,4 @@
-/* All static text in the application */
+/* All static text for Mimir */
 
 const TextResources = {
   // Aspects
@@ -153,9 +153,9 @@ const TextResources = {
   // AccountModule
   Account_Save_Label: "Save project to database",
   Account_Save_Label_File: "Export project file",
-  Account_Save_Label_Library_File: "Export project library",
-  Account_Import_Label_File: "Import project file",
-  Account_Import_Label_Library_File: "Import project library",
+  Account_Export_Library_File: "Export project library",
+  Account_Import_File: "Import project file",
+  Account_Import_Library_File: "Import project library",
   Account_Logout_Label: "Log out",
   Account_Open_Label: "Open a project",
   Account_Create_Label: "Create a project",
@@ -166,11 +166,11 @@ const TextResources = {
   Account_Save_Button: "Yes",
   Account_NoSave_Button: "No",
   Account_Save_Label_File_Name: "File name",
-  Account_Export_File_Label: "Export",
-  Account_Import_Label_File_Browse: "Browse",
+  Account_Export_File_Label: "Export file",
+  Account_Import_Browse: "Browse file",
   Account_Import_Label_File_Button: "Import project",
   Account_Export_File_Library_Label: "Export library",
-  Account_Import_Label_File_Library_Button: "Import library",
+  Account_Import_Library_Label: "Import library",
   Account_Save: "Save",
   Account_Save_File: "SaveFile",
   Account_Open: "Open",

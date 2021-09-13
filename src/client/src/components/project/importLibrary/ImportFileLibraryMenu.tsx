@@ -39,7 +39,8 @@ export const ImportFileLibraryMenu = () => {
   };
 
   const buttonBrowseText = () => {
-    if (plainFiles?.length < 1) return "Import project library";
+    if (plainFiles?.length < 1)
+      return TextResources.Account_Import_Library_File;
     return plainFiles[0].name;
   };
 
@@ -57,7 +58,7 @@ export const ImportFileLibraryMenu = () => {
             onClick={() => OnReturnClick(dispatch)}
             className="icon"
           />
-          {TextResources.Account_Import_Label_Library_File}
+          {TextResources.Account_Import_Library_File}
         </HeaderBox>
         <ButtonBox>
           <Button
@@ -75,7 +76,7 @@ export const ImportFileLibraryMenu = () => {
           <ButtonBox>
             <Button
               onClick={() => OnSaveClick(dispatch, data)}
-              type={TextResources.Account_Import_Label_File_Library_Button}
+              type={TextResources.Account_Import_Library_Label}
             />
           </ButtonBox>
         )}

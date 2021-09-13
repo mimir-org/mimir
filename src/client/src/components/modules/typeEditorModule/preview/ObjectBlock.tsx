@@ -1,13 +1,14 @@
 import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
+import { ModeNew } from "../helpers";
+import { ObjectTypeBlock, InfoWrapper } from "../styled";
+import { Symbol } from "../../../../compLibrary/symbol";
 import {
   GetBlockColor,
   GetBlockHeight,
   GetBlockPaddingTop,
   GetSymbol,
 } from "./helpers";
-import { ModeNew } from "../helpers";
-import { ObjectTypeBlock, InfoWrapper } from "../styled";
-import { Symbol } from "../../../../compLibrary/dropdown";
+
 // import { ReactComponent as TerminalIcon } from "../../../../assets/icons/common/terminalIcon.svg";
 interface Props {
   state: TypeEditorState;

@@ -3,7 +3,7 @@ import { TextResources } from "../../assets/text";
 import { Edge, Node, Project } from "../../models";
 import { GetInspectorColor } from "./helpers";
 import { ButtonWrapper } from "./styled";
-import { Symbol } from "../../compLibrary/dropdown";
+import { Symbol } from "../../compLibrary/symbol";
 import { OnDeleteClick, OnToggleClick } from "./handlers";
 import { InspectorButton } from "../../compLibrary/buttons";
 import {
@@ -40,11 +40,12 @@ const InspectorHeader = ({
     </NodeInfo>
 
     <ButtonWrapper visible={node}>
-      <InspectorButton onClick={() => null} type="validate" />
-      <InspectorButton onClick={() => null} type="lock" />
+      <InspectorButton onClick={() => null} type="validate" visible={false} />
+      <InspectorButton onClick={() => null} type="lock" visible={false} />
       <InspectorButton
         onClick={() => OnDeleteClick(project, node, edge, dispatch)}
         type="delete"
+        visible={true}
       />
     </ButtonWrapper>
 
