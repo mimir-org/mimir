@@ -1,14 +1,14 @@
 import moment from "moment/moment.js";
 import { useDispatch } from "react-redux";
-import { TextResources } from "../../../assets/text";
-import { TabColumn } from "../../../compLibrary/box/inspector";
-import { Input, Textarea } from "../../../compLibrary";
-import { EnumBase, Node, Project } from "../../../models";
-import { GetRdsId, GetReferenceDesignation } from "../../../assets/helpers";
-import { IsLocation } from "../../../components/flow/helpers/common";
-import { IsBlockView } from "../../../components/flow/helpers/block";
-import { changeNodeValue } from "../../../redux/store/project/actions";
-import { Dropdown } from "../../../compLibrary/dropdown/mimir";
+import { TextResources } from "../../../../assets/text";
+import { TabColumn } from "../../styled";
+import { Input, Textarea } from "../../../../compLibrary";
+import { EnumBase, Node, Project } from "../../../../models";
+import { GetRdsId, GetReferenceDesignation } from "../../../../assets/helpers";
+import { IsLocation } from "../../../../components/flow/helpers/common";
+import { IsBlockView } from "../../../../components/flow/helpers/block";
+import { changeNodeValue } from "../../../../redux/store/project/actions";
+import { Dropdown } from "../../../../compLibrary/dropdown/mimir";
 
 interface Props {
   node: Node;

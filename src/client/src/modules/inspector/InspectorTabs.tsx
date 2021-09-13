@@ -1,7 +1,7 @@
 import { InspectorComponent } from ".";
 import { EdgeAdminComponent, EdgeInspectorComponent } from "./edgeInspector";
 import { Project, Node, Edge } from "../../models";
-import { AdminComponent } from "./tabs";
+import { AdminComponent } from "./tabs/admin";
 
 interface Props {
   project: Project;

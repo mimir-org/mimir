@@ -1,15 +1,11 @@
-import { GetInspectorText, GetTabsColor } from "../helpers";
+import { GetInspectorText, GetTabsColor } from "../../helpers";
 import { useCallback } from "react";
-import { RootState } from "../../../redux/store";
+import { RootState } from "../../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
-import { EnumBase, Node, Project } from "../../../models";
-import { changeInspectorTab } from "../redux/actions";
-import { AdminContent } from ".";
-import {
-  TabHeader,
-  TabBody,
-  TabTitle,
-} from "../../../compLibrary/box/inspector";
+import { EnumBase, Node, Project } from "../../../../models";
+import { changeInspectorTab } from "../../redux/actions";
+import { AdminContent } from "./";
+import { TabHeader, TabBody, TabTitle } from "../../styled";
 
 interface Props {
   node: Node;

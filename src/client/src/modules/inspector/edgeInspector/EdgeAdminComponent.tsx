@@ -5,11 +5,7 @@ import { RootState } from "../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { Edge, Project } from "../../../models";
 import { changeInspectorTab } from "../redux/actions";
-import {
-  TabHeader,
-  TabBody,
-  TabTitle,
-} from "../../../compLibrary/box/inspector";
+import { TabHeader, TabBody, TabTitle } from "../styled";
 
 interface Props {
   edge: Edge;

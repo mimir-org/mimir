@@ -3,10 +3,9 @@ import { Color, FontSize } from "../../../compLibrary";
 
 const ListElement = styled.div`
   padding: 10px;
-  min-width: 220px;
+  min-width: 250px;
   font-size: ${FontSize.Medium};
   display: flex;
-  flex-wrap: wrap;
   background-color: ${(props) => props.color};
   border-bottom: 1px solid ${Color.ListBorder};
 
@@ -18,6 +17,7 @@ const ListElement = styled.div`
   :hover {
     background-color: ${Color.LightBlue};
     cursor: pointer;
+    text-decoration: underline;
   }
   :first-child {
     border-top-left-radius: 5px;

@@ -1,7 +1,7 @@
 import { Input, InputBox } from "../../../compLibrary";
 import { Attribute } from "../../../models";
 import { CreateId } from "../../../components/flow/helpers/common";
-import { TabColumn } from "../../../compLibrary/box/inspector";
+import { TabColumn } from "../styled";
 import { Dropdown } from "../../../compLibrary/dropdown/mimir";
 
 interface Props {

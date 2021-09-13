@@ -1,5 +1,5 @@
 import { InspectorComponent } from "../../../../modules/inspector";
-import { InspectorMenu } from "../../../../compLibrary/box/inspector";
+import { InspectorMenu } from "../../../../modules/inspector/styled";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import { TypeEditorState } from "../../../../redux/store/typeEditor/types";

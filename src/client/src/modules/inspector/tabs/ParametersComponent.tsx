@@ -1,5 +1,5 @@
 import { Attribute, Node } from "../../../models";
-import { TabRow } from "../../../compLibrary/box/inspector";
+import { TabRow } from "../../inspector/styled";
 import { InputWrapper } from "../styled";
 import { useDispatch } from "react-redux";
 import { changeAttributeValue } from "../../../redux/store/project/actions";

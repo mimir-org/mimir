@@ -6,12 +6,7 @@ import { TypeEditorState } from "../../redux/store/typeEditor/types";
 import { useDispatch, useSelector } from "react-redux";
 import { changeInspectorTab } from "./redux/actions";
 import { Node, Project } from "../../models";
-import {
-  TabHeader,
-  TabBody,
-  NodeInfo,
-  TabTitle,
-} from "../../compLibrary/box/inspector";
+import { TabHeader, TabBody, NodeInfo, TabTitle } from "./styled";
 
 interface Props {
   node?: Node;

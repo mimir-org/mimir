@@ -7,12 +7,7 @@ import { changeInspectorTab } from "../redux/actions";
 import { Edge } from "../../../models";
 import { TabEdgeContent } from ".";
 import { GetTabsColor } from "../helpers";
-import {
-  TabHeader,
-  TabBody,
-  NodeInfo,
-  TabTitle,
-} from "../../../compLibrary/box/inspector";
+import { TabHeader, TabBody, NodeInfo, TabTitle } from "../../inspector/styled";
 
 interface Props {
   edge?: Edge;

@@ -65,6 +65,11 @@ const TextResources = {
   Inspector_Relations_Input_object_connetion: "Input object connection",
   Inspector_Relations_Output_object_connetion: "Output object connection",
   Inspector_Relations_Active_Terminal_Types: "Active Terminal Types",
+  Inspector_Relations_Terminal_Input: "Go To: Terminal Input Object Connection",
+  Inspector_Relations_Terminal_Output:
+    "Go To: Terminal Output Object Connection",
+  Inspector_Relations_Transport: "Go To: Connected Transport",
+
   Inspector_Relations_All_Terminal_Types: "All available Terminal Types",
   Inspector_Relations_Connector_Attributes: "Connector attributes",
 

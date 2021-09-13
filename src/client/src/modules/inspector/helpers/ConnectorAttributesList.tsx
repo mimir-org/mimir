@@ -1,5 +1,5 @@
 import { Input, InputBox } from "../../../compLibrary";
-import { TabColumn } from "../../../compLibrary/box/inspector";
+import { TabColumn } from "../styled";
 import { Dropdown } from "../../../compLibrary/dropdown/mimir";
 import { Attribute } from "../../../models";
 

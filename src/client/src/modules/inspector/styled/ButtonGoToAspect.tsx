@@ -7,15 +7,14 @@ const ButtonGoToAspect = styled.div`
   height: 31px;
   border: 1px solid #007079;
   border-radius: 3px;
-  font-size: 14px;;
+  font-size: 14px;
   --padding: 5px;
   cursor: pointer;
-  span{
+  span {
     padding-top: 6px;
     padding-left: 6px;
   }
-  img{
-    
+  img {
     width: 16px;
     padding: 4px;
   }

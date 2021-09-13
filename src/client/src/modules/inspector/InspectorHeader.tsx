@@ -6,12 +6,7 @@ import { ButtonWrapper } from "./styled";
 import { Symbol } from "../../compLibrary/symbol";
 import { OnDeleteClick, OnToggleClick } from "./handlers";
 import { InspectorButton } from "../../compLibrary/buttons";
-import {
-  InspectorMenu,
-  InspectorTitle,
-  NodeInfo,
-  ToggleBox,
-} from "../../compLibrary/box/inspector";
+import { InspectorMenu, InspectorTitle, NodeInfo, ToggleBox } from "./styled";
 
 interface Props {
   project: Project;

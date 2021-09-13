@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FontWeight } from "../..";
+import { FontWeight } from "../../../compLibrary";
 
 const TabTitle = styled.p`
   position: relative;
