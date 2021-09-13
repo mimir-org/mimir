@@ -14,9 +14,9 @@ const InspectorTabs = ({ project, node, edge }: Props) => (
     {node && (
       <>
         <AdminComponent node={node} project={project} index={0} />
-        <InspectorComponent node={node} index={1} project={project} />
-        <InspectorComponent node={node} index={2} project={project} />
-        <InspectorComponent node={node} index={3} project={project} />
+        <InspectorComponent node={node} index={1} />
+        <InspectorComponent node={node} index={2} />
+        <InspectorComponent node={node} index={3} />
       </>
     )}
     {edge && (

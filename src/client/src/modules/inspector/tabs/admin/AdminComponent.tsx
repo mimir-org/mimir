@@ -28,29 +28,25 @@ const AdminComponent = ({ node, project, index }: Props) => {
     dispatch(changeInspectorTab(index));
   }, [dispatch, index]);
 
-  return isTabOpen ? (
+  return (
     <>
       <TabHeader
-        active={true}
+        active={isTabOpen}
         onClick={onClick}
         color={GetTabsColor(node, null)}
       >
-        <TabTitle active={true}>{GetInspectorText(index)}</TabTitle>
+        <TabTitle active={isTabOpen}>{GetInspectorText(index)}</TabTitle>
       </TabHeader>
-      <TabBody id="admininfo">
-        {node && project && (
-          <div className="container">
-            <AdminContent node={node} project={project} statuses={statuses} />
-          </div>
-        )}
-      </TabBody>
-    </>
-  ) : (
-    <>
-      <TabHeader onClick={onClick} color={GetTabsColor(node, null)}>
-        <TabTitle>{GetInspectorText(index)}</TabTitle>
-      </TabHeader>
-      <TabBody id="admininfo"></TabBody>
+
+      {isTabOpen && (
+        <TabBody id="admininfo">
+          {node && project && (
+            <div className="container">
+              <AdminContent node={node} project={project} statuses={statuses} />
+            </div>
+          )}
+        </TabBody>
+      )}
     </>
   );
 };

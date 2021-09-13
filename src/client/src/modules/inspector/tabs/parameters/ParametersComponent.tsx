@@ -1,14 +1,13 @@
-import { Attribute, Node } from "../../../models";
-import { TabRow } from "../../inspector/styled";
-import { InputWrapper } from "../styled";
 import { useDispatch } from "react-redux";
-import { changeAttributeValue } from "../../../redux/store/project/actions";
-import { Input, InputBox, AttributeField } from "../../../compLibrary";
-import { Dropdown } from "../../../compLibrary/dropdown/mimir";
+import { Attribute, Node } from "../../../../models";
+import { InputWrapper, TabRow } from "../../styled";
+import { changeAttributeValue } from "../../../../redux/store/project/actions";
+import { Input, InputBox, AttributeField } from "../../../../compLibrary";
+import { Dropdown } from "../../../../compLibrary/dropdown/mimir";
 import {
   IsTransportTerminal,
   CreateId,
-} from "../../../components/flow/helpers/common";
+} from "../../../../components/flow/helpers/common";
 
 interface Props {
   node: Node;

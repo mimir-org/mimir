@@ -1,18 +1,18 @@
-import { Node, Project } from "../../models";
-import { TerminalsComponent, ParametersComponent } from "./tabs";
+import { Node } from "../../models";
+import { TerminalsComponent } from "./tabs/terminals";
 import { RelationsComponent } from "./tabs/relations";
+import { ParametersComponent } from "./tabs/parameters";
 
 interface Props {
   node: Node;
-  project: Project;
   index?: number;
 }
 
-const InspectorContent = ({ node, index, project }: Props) => (
+const InspectorContent = ({ node, index }: Props) => (
   <>
     {index === 1 && <ParametersComponent node={node} />}
     {index === 2 && <TerminalsComponent node={node} />}
-    {index === 3 && <RelationsComponent node={node} project={project} />}
+    {index === 3 && <RelationsComponent node={node} />}
   </>
 );
 

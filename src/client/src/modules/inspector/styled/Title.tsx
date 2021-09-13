@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const InspectorTitle = styled.div`
+const Title = styled.div`
   position: absolute;
   right: 40px;
   margin-top: 10px;
@@ -8,4 +8,4 @@ const InspectorTitle = styled.div`
   margin-left: 5px;
 `;
 
-export default InspectorTitle;
+export default Title;

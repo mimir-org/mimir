@@ -1,8 +1,8 @@
-import { ActiveTerminalTypeList, AttributesContainer } from "../helpers";
-import { Attribute, ConnectorType, Node } from "../../../models";
-import { IsTransportTerminal } from "../../../components/flow/helpers/common";
-import { TextResources } from "../../../assets/text";
-import { ListWrapper, TerminalsWrapper } from "../styled";
+import { ActiveTerminalTypeList, AttributesContainer } from "../../helpers";
+import { Attribute, ConnectorType, Node } from "../../../../models";
+import { IsTransportTerminal } from "../../../../components/flow/helpers/common";
+import { TextResources } from "../../../../assets/text";
+import { ListWrapper, TerminalsWrapper } from "../../styled";
 
 interface Props {
   node: Node;

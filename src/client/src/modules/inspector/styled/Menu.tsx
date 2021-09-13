@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Color } from "../../../compLibrary";
 
-const InspectorMenu = styled.div`
+const Menu = styled.div`
   display: flex;
   justify-content: end;
   color: ${Color.Black};
@@ -19,4 +19,4 @@ const InspectorMenu = styled.div`
   }
 `;
 
-export default InspectorMenu;
+export default Menu;
