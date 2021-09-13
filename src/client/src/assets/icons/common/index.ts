@@ -74,3 +74,6 @@ export { default as LibNodeTransport } from "./libnode_transport.svg";
 export { default as DeleteIcon } from "./delete.svg";
 export { default as LockIcon } from "./lock.svg";
 export { default as ValidateIcon } from "./validate.svg";
+
+// Inspector Parameters
+export { default as CloseParameterIcon } from "./paramsClose.svg";

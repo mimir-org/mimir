@@ -38,6 +38,12 @@ const Color = {
   Terminal_Gas: "#FFCC00",
   Terminal_Multiphase: "#00CC66",
   TransportConnection: "#606060",
+
+  // Parameters
+  ParamsLightGreen: "#D9EAEB",
+  ParamsGreen: "#65A8AD",
+  ParamsLightPurple: "#ECEDFD",
+  ParamsPurple: "#8088FF",
 };
 
 export default Color;

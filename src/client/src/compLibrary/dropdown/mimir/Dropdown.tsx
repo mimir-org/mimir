@@ -31,6 +31,7 @@ const Dropdown = ({
 }: Props) => {
   const [isListOpen, setIsListOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  console.log({ items });
 
   useEffect(() => {
     if (!items) {
@@ -64,7 +65,7 @@ const Dropdown = ({
                     text={selectedItem[valueProp]}
                   />
                 )}
-                <p>{selectedItem.name}</p>
+                <p>{selectedItem.name ?? selectedItem.key}</p>
                 <img
                   src={isListOpen ? ExpandIcon : CollapseIcon}
                   alt="expand-icon"
@@ -85,7 +86,7 @@ const Dropdown = ({
                         text={item[valueProp]}
                       />
                     )}
-                    <p>{item.name}</p>
+                    <p>{item.name ?? item.key}</p>
                   </DropdownMenuListItem>
                 </div>
               );
