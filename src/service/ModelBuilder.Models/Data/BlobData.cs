@@ -10,7 +10,7 @@ namespace Mb.Models.Data
         public string Name { get; set; }
         public string Data { get; set; }
         public string CategoryId { get; set; }
-        public BlobCategory Category { get; set; }
+        public Purpose Purpose { get; set; }
 
         [JsonIgnore]
         public virtual string Key => $"{Name}-{CategoryId}";

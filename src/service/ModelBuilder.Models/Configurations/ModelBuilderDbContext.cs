@@ -35,7 +35,7 @@ namespace Mb.Models.Configurations
         public virtual DbSet<PredefinedAttributeCategory> PredefinedAttributeCategories { get; set; }
         public virtual DbSet<PredefinedAttribute> PredefinedAttributes { get; set; }
         public virtual DbSet<BlobData> BlobData { get; set; }
-        public virtual DbSet<BlobCategory> BlobCategories { get; set; }
+        public virtual DbSet<Purpose> BlobCategories { get; set; }
         public virtual DbSet<Transport> Transports { get; set; }
         public virtual DbSet<Interface> Interfaces { get; set; }
         public virtual DbSet<Composite> Composites { get; set; }

@@ -19,7 +19,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Data, opt => opt.MapFrom(src => src.Data))
                 .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.CategoryId))
-                .ForMember(dest => dest.Category, opt => opt.Ignore());
+                .ForMember(dest => dest.Purpose, opt => opt.Ignore());
         }
     }
 }

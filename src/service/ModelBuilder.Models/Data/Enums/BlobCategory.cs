@@ -3,9 +3,9 @@ using Newtonsoft.Json;
 
 namespace Mb.Models.Data.Enums
 {
-    public class BlobCategory : EnumBase
+    public class Purpose : EnumBase
     {
         [JsonIgnore]
-        public virtual ICollection<BlobData> Blobs { get; set; }
+        public virtual ICollection<BlobData> Purposes { get; set; }
     }
 }

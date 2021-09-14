@@ -15,7 +15,7 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.Data).HasColumnName("Data").IsRequired();
             builder.Property(p => p.CategoryId).HasColumnName("CategoryId").IsRequired(false);
 
-            builder.HasOne(x => x.Category).WithMany(y => y.Blobs).HasForeignKey(x => x.CategoryId).OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(x => x.Purpose).WithMany(y => y.Purposes).HasForeignKey(x => x.CategoryId).OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
