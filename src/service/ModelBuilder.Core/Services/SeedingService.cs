@@ -31,6 +31,7 @@ namespace Mb.Core.Services
         public const string BuildStatusFileName = "buildstatus";
         public const string PredefinedAttributeCategoryFileName = "predefined_attribute_category";
         public const string PredefinedAttributeFileName = "predefined_attribute";
+        public const string PurposeFileName = "purpose";
 
         private readonly IFileRepository _fileRepository;
         private readonly IEnumBaseRepository _enumBaseRepository;
@@ -78,6 +79,7 @@ namespace Mb.Core.Services
                 var terminalFiles = fileList.Where(x => x.ToLower().Equals(TerminalFileName)).ToList();
                 var rdsFiles = fileList.Where(x => x.ToLower().Equals(RdsFileName)).ToList();
                 var predefinedAttributeFiles = fileList.Where(x => x.ToLower().Equals(PredefinedAttributeFileName)).ToList();
+                var purposeFiles = fileList.Where(x => x.ToLower().Equals(PurposeFileName)).ToList();
 
                 //var libraries = _fileRepository.ReadAllFiles<LibraryType>(libraryFiles).ToList();
 
@@ -96,6 +98,7 @@ namespace Mb.Core.Services
                 var terminals = _fileRepository.ReadAllFiles<CreateTerminalType>(terminalFiles).ToList();
                 var rds = _fileRepository.ReadAllFiles<CreateRds>(rdsFiles).ToList();
                 var predefinedAttributes = _fileRepository.ReadAllFiles<PredefinedAttribute>(predefinedAttributeFiles).ToList();
+                var purposes = _fileRepository.ReadAllFiles<Purpose>(purposeFiles).ToList();
 
 
                 //await CreateAttributeTypesAsync(attributes);
@@ -111,6 +114,7 @@ namespace Mb.Core.Services
                 await CreateEnumBase<AttributeFormat>(attributeFormats);
                 await CreateEnumBase<BuildStatus>(buildStatuses);
                 await CreateEnumBase<PredefinedAttributeCategory>(predefinedCategories);
+                await CreateEnumBase<Purpose>(purposes);
 
                 await _typeEditorService.CreateContractorsAsync(contractors);
                 await _typeEditorService.CreateAttributeTypes(attributes);

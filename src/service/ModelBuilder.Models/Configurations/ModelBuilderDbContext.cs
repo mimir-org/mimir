@@ -71,6 +71,7 @@ namespace Mb.Models.Configurations
             modelBuilder.ApplyConfiguration(new InterfaceConfiguration());
             modelBuilder.ApplyConfiguration(new CompositeTypeConfiguration());
             modelBuilder.ApplyConfiguration(new CompositeConfiguration());
+            modelBuilder.ApplyConfiguration(new PurposeConfiguration());
         }
     }
 }

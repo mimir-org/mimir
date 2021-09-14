@@ -9,6 +9,7 @@ using Mb.Core.Repositories.Contracts;
 using Mb.Core.Services.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Data;
+using Mb.Models.Enums;
 
 namespace Mb.Core.Services
 {
@@ -63,7 +64,7 @@ namespace Mb.Core.Services
 
             dms.Insert(0, new BlobDataAm
             {
-                CategoryId = null,
+                Discipline = Discipline.None,
                 Data = null,
                 Id = null,
                 Name = "No symbol"

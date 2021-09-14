@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Mb.Models.Enums;
 
 namespace Mb.Models.Application
 {
@@ -13,6 +14,6 @@ namespace Mb.Models.Application
         public string Data { get; set; }
 
         [Required]
-        public string CategoryId { get; set; }
+        public Discipline Discipline { get; set; }
     }
 }

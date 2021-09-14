@@ -12,14 +12,13 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Data, opt => opt.MapFrom(src => src.Data))
-                .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.CategoryId));
+                .ForMember(dest => dest.Discipline, opt => opt.MapFrom(src => src.Discipline));
 
             CreateMap<BlobDataAm, BlobData>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Data, opt => opt.MapFrom(src => src.Data))
-                .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.CategoryId))
-                .ForMember(dest => dest.Purpose, opt => opt.Ignore());
+                .ForMember(dest => dest.Discipline, opt => opt.MapFrom(src => src.Discipline));
         }
     }
 }

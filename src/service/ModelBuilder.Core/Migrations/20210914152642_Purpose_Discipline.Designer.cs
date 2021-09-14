@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mb.Core.Migrations
 {
     [DbContext(typeof(ModelBuilderDbContext))]
-    [Migration("20210913133307_purpose")]
-    partial class purpose
+    [Migration("20210914152642_Purpose_Discipline")]
+    partial class Purpose_Discipline
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -188,23 +188,27 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("Id");
 
-                    b.Property<string>("CategoryId")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("CategoryId");
-
                     b.Property<string>("Data")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Data");
+
+                    b.Property<string>("Discipline")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Discipline");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Name");
 
+                    b.Property<string>("PurposeId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("PurposeId");
 
                     b.ToTable("BlobData");
                 });
@@ -947,6 +951,11 @@ namespace Mb.Core.Migrations
                 {
                     b.HasBaseType("Mb.Models.Data.Enums.EnumBase");
 
+                    b.Property<string>("Discipline")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Discipline");
+
                     b.HasDiscriminator().HasValue("Purpose");
                 });
 
@@ -1153,12 +1162,9 @@ namespace Mb.Core.Migrations
 
             modelBuilder.Entity("Mb.Models.Data.BlobData", b =>
                 {
-                    b.HasOne("Mb.Models.Data.Enums.Purpose", "Purpose")
+                    b.HasOne("Mb.Models.Data.Enums.Purpose", null)
                         .WithMany("Purposes")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("Purpose");
+                        .HasForeignKey("PurposeId");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Composite", b =>
