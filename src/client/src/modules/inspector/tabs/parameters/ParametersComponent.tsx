@@ -2,10 +2,10 @@ import { RootState } from "../../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { CloseParameterIcon } from "../../../../assets/icons/common";
 import { TextResources } from "../../../../assets/text";
-import { Dropdown } from "../../../../compLibrary/dropdown/mimir";
+import { Dropdown } from "./styled/dropdown/parameter";
 import { Attribute, Node } from "../../../../models";
 import { GetParametersColor } from "./helpers";
-import { EntityDropdown } from "./styled/dropdown";
+import { EntityDropdown } from "./styled/dropdown/entity";
 import { Menu, Body, Box, Header, Entity } from "./styled";
 import {
   OnChangeParameter,
@@ -32,7 +32,6 @@ const ParametersComponent = ({ node }: Props) => {
       <Header>
         <Menu>
           <Dropdown
-            label=""
             onChange={(value: Attribute) =>
               OnChangeParameter(value, dispatch, selectedParameters)
             }

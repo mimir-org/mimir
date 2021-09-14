@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TextResources } from "../../../../../../assets/text";
+import { TextResources } from "../../../../../../../assets/text";
 import {
   MenuWrapper,
   MenuHeader,
@@ -10,7 +10,7 @@ import {
 import {
   ExpandWhiteIcon,
   CollapseWhiteIcon,
-} from "../../../../../../assets/icons/common";
+} from "../../../../../../../assets/icons/common";
 
 interface Props {
   items: any[];
