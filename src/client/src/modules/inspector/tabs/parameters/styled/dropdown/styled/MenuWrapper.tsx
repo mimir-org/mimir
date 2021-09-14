@@ -2,10 +2,8 @@ import styled from "styled-components";
 import { Color, FontSize } from "../../../../../../../compLibrary";
 
 const MenuWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  top: 61px;
+  position: absolute;
+  margin-top: -42px;
   left: 15px;
   height: 26px;
   border-bottom-left-radius: 5px;

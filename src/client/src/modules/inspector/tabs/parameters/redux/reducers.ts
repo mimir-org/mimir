@@ -1,20 +1,43 @@
-import { SELECT_ENTITY_PARAMETER, ParametersActionTypes } from "./types";
+import { Attribute } from "../../../../../models";
+import {
+  ADD_ENTITY_PARAMETER,
+  REMOVE_ENTITY_PARAMETERS,
+  REMOVE_ENTITY_PARAMETER,
+  ParametersActionTypes,
+} from "./types";
 
 const initialState = {
-  selectedParameter: null,
+  attributes: [] as Attribute[],
 };
 
 export const parametersReducer = (
   state = initialState,
   action: ParametersActionTypes
 ) => {
-  if (action.type === SELECT_ENTITY_PARAMETER) {
-    return {
-      ...state,
-      selectedParameter: action.payload,
-    };
+  switch (action.type) {
+    case ADD_ENTITY_PARAMETER:
+      return {
+        ...state,
+        attributes: [...state.attributes, action.payload.parameter],
+      };
+
+    case REMOVE_ENTITY_PARAMETER:
+      return {
+        ...state,
+        attributes: state.attributes.filter(
+          (x) => x.id !== action.payload.parameter.id
+        ),
+      };
+
+    case REMOVE_ENTITY_PARAMETERS:
+      return {
+        ...state,
+        attributes: [],
+      };
+
+    default:
+      return state;
   }
-  return state;
 };
 
 export default parametersReducer;

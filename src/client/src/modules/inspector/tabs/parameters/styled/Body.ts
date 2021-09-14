@@ -7,7 +7,7 @@ const Body = styled.div`
   height: 100px;
   border-color: ${Color.ListBorder};
   border-style: solid;
-  border-width: 1px 0px;
+  border-width: 1px 0px 0px 0px;
 `;
 
 export default Body;

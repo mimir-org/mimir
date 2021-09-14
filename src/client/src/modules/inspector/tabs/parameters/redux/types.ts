@@ -1,9 +1,24 @@
 import { Attribute } from "../../../../../models/classes";
-export const SELECT_ENTITY_PARAMETER = "SELECT_ENTITY_PARAMETER";
+export const ADD_ENTITY_PARAMETER = "ADD_ENTITY_PARAMETER";
+export const REMOVE_ENTITY_PARAMETERS = "REMOVE_ENTITY_PARAMETERS";
+export const REMOVE_ENTITY_PARAMETER = "REMOVE_ENTITY_PARAMETER";
 
-export interface SelectEntityParameter {
-  type: typeof SELECT_ENTITY_PARAMETER;
+export interface AddEntityParameter {
+  type: typeof ADD_ENTITY_PARAMETER;
   payload: { parameter: Attribute };
 }
 
-export type ParametersActionTypes = SelectEntityParameter;
+export interface RemoveEntityParameter {
+  type: typeof REMOVE_ENTITY_PARAMETER;
+  payload: { parameter: Attribute };
+}
+
+export interface RemoveEntityParameters {
+  type: typeof REMOVE_ENTITY_PARAMETERS;
+  payload: null;
+}
+
+export type ParametersActionTypes =
+  | AddEntityParameter
+  | RemoveEntityParameter
+  | RemoveEntityParameters;

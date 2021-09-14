@@ -2,8 +2,7 @@ import styled from "styled-components";
 import { FontSize } from "../../../../../compLibrary";
 
 const Box = styled.div`
-  display: flex;
-  position: absolute;
+  position: relative;
   height: 71px;
   width: 151px;
   background-color: ${(props) => props.color};
@@ -14,14 +13,18 @@ const Box = styled.div`
   .text {
     position: absolute;
     left: 8px;
-    margin-top: 15px;
+    top: 15px;
+    padding-right: 5px;
   }
 
   .icon {
     position: relative;
-    left: 132px;
-    top: 8px;
-    height: 20px;
+    left: 126px;
+    top: -1px;
+
+    :hover {
+      cursor: pointer;
+    }
   }
 `;
 export default Box;

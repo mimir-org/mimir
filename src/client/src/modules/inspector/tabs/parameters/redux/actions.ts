@@ -1,9 +1,27 @@
 import { Attribute } from "../../../../../models";
-import { SELECT_ENTITY_PARAMETER } from "./types";
+import {
+  ADD_ENTITY_PARAMETER,
+  REMOVE_ENTITY_PARAMETERS,
+  REMOVE_ENTITY_PARAMETER,
+} from "./types";
 
-export function selectEntityParameter(parameter: Attribute) {
+export function addEntityParameter(parameter: Attribute) {
   return {
-    type: SELECT_ENTITY_PARAMETER,
+    type: ADD_ENTITY_PARAMETER,
     payload: { parameter },
+  };
+}
+
+export function removeEntityParameter(parameter: Attribute) {
+  return {
+    type: REMOVE_ENTITY_PARAMETER,
+    payload: { parameter },
+  };
+}
+
+export function removeEntityParameters() {
+  return {
+    type: REMOVE_ENTITY_PARAMETERS,
+    payload: null,
   };
 }
