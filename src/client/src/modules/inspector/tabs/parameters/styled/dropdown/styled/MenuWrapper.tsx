@@ -3,8 +3,8 @@ import { Color, FontSize } from "../../../../../../../compLibrary";
 
 const MenuWrapper = styled.div`
   position: absolute;
-  margin-top: -42px;
-  left: 15px;
+  margin-top: -40px;
+  left: 13px;
   height: 26px;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;

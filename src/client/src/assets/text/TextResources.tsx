@@ -117,6 +117,7 @@ const TextResources = {
 
   Inspector_Params_Clear_All: "Clear all Entities",
   Inspector_Params_Default: "Show Default Entities",
+  Inspector_Params_Combinations: "Select combinations",
 
   // LibraryModule
   Library_SearchBox_Placeholder: "Search the Library",

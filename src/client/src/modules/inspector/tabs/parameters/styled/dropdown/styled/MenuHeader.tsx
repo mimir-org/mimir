@@ -7,7 +7,7 @@ const MenuHeader = styled.div`
   align-items: center;
   justify-content: space-between;
   height: 26px;
-  width: 151px;
+  width: 155px;
   background-color: ${Color.ParamsPurple};
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
@@ -16,6 +16,7 @@ const MenuHeader = styled.div`
 
   p {
     padding: 10px;
+    text-decoration: ${(props) => props.open && "underline"};
   }
 
   img {

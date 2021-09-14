@@ -13,6 +13,7 @@ const MenuListItem = styled.div`
 
   p {
     padding: 10px;
+    margin-left: 22px;
   }
 
   img {

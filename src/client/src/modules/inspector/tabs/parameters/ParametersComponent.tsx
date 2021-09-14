@@ -5,13 +5,13 @@ import { TextResources } from "../../../../assets/text";
 import { Dropdown } from "../../../../compLibrary/dropdown/mimir";
 import { Attribute, Node } from "../../../../models";
 import { GetParametersColor } from "./helpers";
+import { EntityDropdown } from "./styled/dropdown";
+import { Menu, Body, Box, Header, Entity } from "./styled";
 import {
   OnChangeParameter,
   OnClearParameters,
   OnClearParameter,
 } from "./handlers";
-import { EntityDropdown } from "./styled/dropdown";
-import { Menu, Body, Box, Header, Entity } from "./styled";
 
 interface Props {
   node: Node;
@@ -63,10 +63,8 @@ const ParametersComponent = ({ node }: Props) => {
                   <div className="text">{param.key}</div>
                 </Box>
                 <EntityDropdown
-                  label=""
                   items={param.units}
                   keyProp="id"
-                  valueProp="key"
                   onChange={() => null}
                   color={GetParametersColor()}
                 />
