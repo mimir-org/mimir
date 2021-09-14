@@ -3,13 +3,8 @@ import { TextResources } from "../../../../assets/text";
 import { Dropdown } from "../../../../compLibrary/dropdown/mimir";
 import { Node } from "../../../../models";
 import { GetParametersColor } from "./helpers";
-import {
-  EntityWrapper,
-  ParametersBody,
-  ParametersBox,
-  ParametersHeader,
-  ParametersUnit,
-} from "./styled";
+import { EntityDropdown } from "./styled/dropdown";
+import { Menu, Body, Box, Header, Entity } from "./styled";
 
 interface Props {
   node: Node;
@@ -19,8 +14,8 @@ const ParametersComponent = ({ node }: Props) => {
 
   return (
     <>
-      <ParametersHeader>
-        <EntityWrapper>
+      <Header>
+        <Menu>
           <Dropdown
             label=""
             onChange={() => null}
@@ -30,19 +25,27 @@ const ParametersComponent = ({ node }: Props) => {
           />
           <div className="link">{TextResources.Inspector_Params_Clear_All}</div>
           <div className="link">{TextResources.Inspector_Params_Default}</div>
-        </EntityWrapper>
-      </ParametersHeader>
+        </Menu>
+      </Header>
 
-      <ParametersBody>
-        <ParametersUnit>
-          <ParametersBox color={GetParametersColor()}>
+      <Body>
+        <Entity id="ParametersEntity">
+          <Box color={GetParametersColor()} id="ParametersBox">
             <div className="icon">
               <img src={CloseParameterIcon} alt="icon" />
             </div>
             <div className="text">{attributes[0].key}</div>
-          </ParametersBox>
-        </ParametersUnit>
-      </ParametersBody>
+          </Box>
+          <EntityDropdown
+            label=""
+            items={attributes[0].units}
+            keyProp="id"
+            valueProp="key"
+            onChange={() => null}
+            color={GetParametersColor()}
+          />
+        </Entity>
+      </Body>
     </>
   );
 };

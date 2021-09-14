@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { Color } from "../../../../../compLibrary";
 
-const ParametersUnit = styled.div`
+const Entity = styled.div`
   display: flex;
-  width: 210px;
-  height: 120px;
+  width: 180px;
+  height: inherit;
   border-right: 1px solid ${Color.ListBorder};
 `;
-export default ParametersUnit;
+export default Entity;

@@ -18,8 +18,6 @@ const DropdownMenuHeader = styled.div`
   }
 
   img {
-    width: 15px;
-    height: 10px;
     margin-right: 4px;
     padding: 5px;
   }
