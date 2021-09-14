@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { FontSize } from "../../../../../compLibrary";
 
-const EntityWrapper = styled.div`
+const Menu = styled.div`
   display: flex;
   margin: 20px 0px 0px 5px;
   width: 550px;
@@ -15,4 +15,4 @@ const EntityWrapper = styled.div`
   }
 `;
 
-export default EntityWrapper;
+export default Menu;

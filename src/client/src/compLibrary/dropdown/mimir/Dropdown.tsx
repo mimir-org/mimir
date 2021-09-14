@@ -31,7 +31,6 @@ const Dropdown = ({
 }: Props) => {
   const [isListOpen, setIsListOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
-  console.log({ items });
 
   useEffect(() => {
     if (!items) {

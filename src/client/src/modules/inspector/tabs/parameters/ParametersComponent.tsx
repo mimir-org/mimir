@@ -1,15 +1,20 @@
+import { useDispatch } from "react-redux";
+import { selectEntityParameter } from "./redux/actions";
 import { CloseParameterIcon } from "../../../../assets/icons/common";
 import { TextResources } from "../../../../assets/text";
 import { Dropdown } from "../../../../compLibrary/dropdown/mimir";
-import { Node } from "../../../../models";
+import { Attribute, Node } from "../../../../models";
 import { GetParametersColor } from "./helpers";
+import { OnParameterChange } from "./handlers";
 import { EntityDropdown } from "./styled/dropdown";
 import { Menu, Body, Box, Header, Entity } from "./styled";
 
 interface Props {
   node: Node;
 }
+
 const ParametersComponent = ({ node }: Props) => {
+  const dispatch = useDispatch();
   const attributes = node.attributes;
 
   return (
@@ -18,7 +23,7 @@ const ParametersComponent = ({ node }: Props) => {
         <Menu>
           <Dropdown
             label=""
-            onChange={() => null}
+            onChange={(value: Attribute) => OnParameterChange(value, dispatch)}
             keyProp="id"
             valueProp="key"
             items={attributes}
