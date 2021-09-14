@@ -4,10 +4,24 @@ using Mb.Models.Modules;
 using System;
 using System.Threading.Tasks;
 
+
 namespace RdfParserModule
 {
     public class RdfParser : IModelBuilderParser
     {
+        public string GetName()
+        {
+            return "rdfparser";
+        }
+
+        public Task<byte[]> SerializeProject(Project project)
+        {
+            var graph = RdfBuilder.BuildNode(project);
+            var bytes = RdfBuilder.GetBytes(graph);
+
+            return Task.FromResult(bytes);
+        }
+
         public Task<Project> DeserializeProject(byte[] data)
         {
             throw new NotImplementedException();
@@ -17,15 +31,6 @@ namespace RdfParserModule
         {
             throw new NotImplementedException();
         }
-
-        public string GetName()
-        {
-            return "RDF Parser";
-        }
-
-        public Task<byte[]> SerializeProject(Project project)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }
