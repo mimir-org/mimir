@@ -20,15 +20,16 @@ const FunctionBlock: FC<NodeProps> = ({ data }) => {
   const nodes = useSelector<RootState>(
     (state) => state.projectState.project.nodes
   ) as Node[];
+
   const node = nodes.find((x) => x.id === data.id);
   const isSelected = node.isBlockSelected;
 
   return (
     <>
       <Block
-        data={data}
-        isLocation={IsLocation(data)}
-        isSplitView={false}
+        node={node}
+        isLocation={IsLocation(node)}
+        isSplitView={isSplitView}
         isSelected={isSelected}
       />
       )
@@ -39,7 +40,7 @@ const FunctionBlock: FC<NodeProps> = ({ data }) => {
       )}
       {splitViewNode && (
         <Block
-          data={splitViewNode}
+          node={splitViewNode}
           isLocation={true}
           isSplitView={true}
           isSelected={isSelected}
