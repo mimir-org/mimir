@@ -3,7 +3,7 @@ import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
-import { Connector, Node } from "../../../../models";
+import { Connector, Node, Edge } from "../../../../models";
 import { Size } from "../../../../compLibrary";
 import { TerminalsIcon, ConnectIcon } from "../../../../assets/icons/blockView";
 import { changeActiveConnector } from "../../../../redux/store/project/actions";
@@ -36,8 +36,14 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const [connectButton, showConnectButton] = useState(false);
   const [terminalMenu, showTerminalMenu] = useState(false);
   const [connectMenu, showConnectMenu] = useState(false);
-  const connectChildren = GetConnectChildren(data);
-  const hasChildren = connectChildren?.length > 0;
+
+  const nodes = useSelector<RootState>(
+    (state) => state.projectState.project.nodes
+  ) as Node[];
+
+  const edges = useSelector<RootState>(
+    (state) => state.projectState.project.edges
+  ) as Edge[];
 
   const splitView = useSelector<RootState>(
     (state) => state.splitView.visible
@@ -47,6 +53,9 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     (state) => state.connectView?.mainNodes
   ) as Node[];
 
+  const connectChildren = GetConnectChildren(data, nodes, edges);
+  const hasChildren = connectChildren?.length > 0;
+
   const sortedTerminals = FilterTerminals(
     data.connectors,
     data.aspect,
@@ -55,6 +64,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
 
   const mainConnectNode = mainConnectNodes.find((x) => x.id === data.id);
   const connectNodes = mainConnectNode?.connectNodes;
+  if (!mainConnectNode) data.width = Size.Node_Width;
 
   const onConnectorClick = (conn: Connector) => {
     showTerminalMenu(false);
