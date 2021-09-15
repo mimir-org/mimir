@@ -1,10 +1,12 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
-import { TreeHandleBox } from "../../../compLibrary/treeView";
-import { Connector } from "../../../models";
-import { GetFlowAspectIcon, GetHandleType } from "../helpers/common";
+import { TreeHandleBox } from "../../../../compLibrary/treeView";
+import { Connector } from "../../../../models";
+import { GetFlowAspectIcon, GetHandleType } from "../../helpers/common";
+import { OnMouseLeave } from "./handlers";
+import { AspectNodeBox } from "./styled";
 
-const Aspect: FC<NodeProps> = ({ data }) => {
+const AspectNode: FC<NodeProps> = ({ data }) => {
   const [isHover, setIsHover] = useState(false);
   const [timer, setTimer] = useState(false);
 
@@ -20,14 +22,10 @@ const Aspect: FC<NodeProps> = ({ data }) => {
     }
   }, [timer]);
 
-  const mouseNodeLeave = () => {
-    setTimer(true);
-  };
-
   return (
     <div
       onMouseEnter={() => setIsHover(true)}
-      onMouseLeave={() => mouseNodeLeave()}
+      onMouseLeave={() => OnMouseLeave(setTimer)}
     >
       {data.connectors?.map((conn: Connector) => {
         const [typeHandler, positionHandler] = GetHandleType(conn);
@@ -49,11 +47,13 @@ const Aspect: FC<NodeProps> = ({ data }) => {
           </TreeHandleBox>
         );
       })}
-      {/* TODO: Fix inline styling */}
-      <div style={{ paddingTop: "12px" }}>{GetFlowAspectIcon(data.aspect)}</div>
-      <div>{data.label ?? data.name}</div>
+
+      <AspectNodeBox>
+        <div>{GetFlowAspectIcon(data.aspect)}</div>
+        {data.label ?? data.name}
+      </AspectNodeBox>
     </div>
   );
 };
 
-export default memo(Aspect);
+export default memo(AspectNode);
