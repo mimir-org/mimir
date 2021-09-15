@@ -2,10 +2,11 @@ import { memo, FC } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useSelector } from "react-redux";
 import { TextResources } from "../../../assets/text";
-import { Aspect, Node } from "../../../models";
+import { Node } from "../../../models";
 import { RootState } from "../../../redux/store";
 import { Block } from ".";
 import { BlockMessageBox } from "../../../compLibrary/blockView";
+import { IsLocation } from "../helpers/common";
 
 const FunctionBlock: FC<NodeProps> = ({ data }) => {
   const isSplitView = useSelector<RootState>(
@@ -16,14 +17,22 @@ const FunctionBlock: FC<NodeProps> = ({ data }) => {
     (state) => state.splitView.node
   ) as Node;
 
-  const isLocation = data.aspect === Aspect.Location;
+  const nodes = useSelector<RootState>(
+    (state) => state.projectState.project.nodes
+  ) as Node[];
+  const node = nodes.find((x) => x.id === data.id);
+  const isSelected = node.isBlockSelected;
 
-  return !isSplitView ? (
-    <Block data={data} location={isLocation} splitView={isSplitView} />
-  ) : (
+  return (
     <>
-      <Block data={data} location={isLocation} splitView={isSplitView} />
-      {!splitViewNode && (
+      <Block
+        data={data}
+        isLocation={IsLocation(data)}
+        isSplitView={false}
+        isSelected={isSelected}
+      />
+      )
+      {isSplitView && !splitViewNode && (
         <BlockMessageBox>
           <p>{TextResources.BlockView_Select_Message}</p>
         </BlockMessageBox>
@@ -31,8 +40,9 @@ const FunctionBlock: FC<NodeProps> = ({ data }) => {
       {splitViewNode && (
         <Block
           data={splitViewNode}
-          location={splitViewNode}
-          splitView={isSplitView}
+          isLocation={true}
+          isSplitView={true}
+          isSelected={isSelected}
         />
       )}
     </>
