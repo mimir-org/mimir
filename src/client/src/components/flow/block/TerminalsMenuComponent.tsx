@@ -9,7 +9,7 @@ interface Props {
   onClick: (conn: Connector) => void;
 }
 
-const TerminalsComponent = ({ isOpen, list, width, onClick }: Props) => (
+const TerminalsMenuComponent = ({ isOpen, list, width, onClick }: Props) => (
   <TerminalsBox visible={isOpen} width={width}>
     {list.map((conn) => (
       <TerminalsElement key={conn.id} onClick={() => onClick(conn)}>
@@ -19,4 +19,4 @@ const TerminalsComponent = ({ isOpen, list, width, onClick }: Props) => (
     ))}
   </TerminalsBox>
 );
-export default TerminalsComponent;
+export default TerminalsMenuComponent;

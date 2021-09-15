@@ -1,4 +1,5 @@
 /* Component to give each terminal a Y position to be handled by CSS in HandleBox */
+
 const SetTerminalYPos = (count: number) => {
   const base = 50; // Middle position
   const interval = 21;

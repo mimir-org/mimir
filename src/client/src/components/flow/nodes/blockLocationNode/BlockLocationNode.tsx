@@ -1,31 +1,30 @@
+import { RootState } from "../../../../redux/store";
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { TerminalsIcon } from "../../../../assets/icons/blockView";
 import { NodeBox, TerminalsMenu } from "../../../../compLibrary/blockView";
-import { HandleComponent, TerminalsComponent } from "../../block";
+import { HandleComponent, TerminalsMenuComponent } from "../../block";
 import { changeActiveConnector } from "../../../../redux/store/project/actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Connector } from "../../../../models";
 import { CalculateTerminalOrder, FilterTerminals } from "../../helpers/block";
 import { FindNodeById } from "../../helpers/block/connectView";
+import { OnHover, OnMouseOut, OnTerminalClick } from "./handlers";
 
 const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
   const [terminalButton, showTerminalButton] = useState(false);
   const [terminalMenu, showTerminalMenu] = useState(false);
-  const sortedTerminals = FilterTerminals(data.connectors, data.aspect);
 
-  const onTerminalClick = () => {
-    showTerminalMenu(!terminalMenu);
-  };
+  const splitView = useSelector<RootState>(
+    (state) => state.splitView.visible
+  ) as boolean;
 
-  const onHover = () => {
-    showTerminalButton(true);
-  };
-
-  const onMouseOut = () => {
-    showTerminalButton(false);
-  };
+  const sortedTerminals = FilterTerminals(
+    data.connectors,
+    data.aspect,
+    splitView
+  );
 
   const onConnectorClick = (conn: Connector) => {
     showTerminalMenu(false);
@@ -46,25 +45,32 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
     <>
       <NodeBox
         id={`BlockLocationNode-` + data.id}
-        onMouseOver={onHover}
-        onMouseOut={onMouseOut}
+        onMouseOver={() => OnHover(showTerminalButton)}
+        onMouseOut={() => OnMouseOut(showTerminalButton)}
         width={data.width}
         length={data.length}
         location
       >
-        <TerminalsMenu visible={terminalButton} onClick={onTerminalClick}>
+        <TerminalsMenu
+          visible={terminalButton}
+          onClick={() => OnTerminalClick(showTerminalMenu, terminalMenu)}
+        >
           <img src={TerminalsIcon} alt="options" />
         </TerminalsMenu>
         <p className="node-name">{data.label ?? data.name}</p>
 
-        <TerminalsComponent
+        <TerminalsMenuComponent
           isOpen={terminalMenu}
           list={sortedTerminals}
           width={data.width}
           onClick={onConnectorClick}
         />
       </NodeBox>
-      <HandleComponent aspect={data.aspect} terminals={sortedTerminals} />
+      <HandleComponent
+        aspect={data.aspect}
+        terminals={sortedTerminals}
+        splitView={splitView}
+      />
     </>
   );
 };

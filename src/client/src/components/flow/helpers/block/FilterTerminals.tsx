@@ -1,48 +1,49 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../redux/store";
 import { SortTerminals } from ".";
 import { Aspect, Connector } from "../../../../models";
 import {
-  IsFulfilledByTerminal,
   IsInputTerminal,
   IsLocationTerminal,
   IsOutputTerminal,
-  IsPartOfTerminal,
   IsTransportTerminal,
 } from "../common";
 
-const FilterTerminals = (terminals: Connector[], aspect: Aspect) => {
-  let filteredTerminals: Connector[] = [];
-  const splitView = useSelector<RootState>(
-    (state) => state.splitView.visible
-  ) as boolean;
+/* Component to filter the terminals displayed on the nodes in BlockView 
+   FilterTerminals returns a call to SortTerminals that sorts the list */
 
+const FilterTerminals = (
+  terminals: Connector[],
+  aspect: Aspect,
+  splitView: boolean
+) => {
+  let filteredTerminals: Connector[] = [];
   if (terminals === null || aspect === null) return filteredTerminals;
 
-  // SplitView
-  terminals.forEach((conn) => {
-    if (aspect === Aspect.Location) {
-      if (IsInputTerminal(conn) && IsLocationTerminal(conn))
-        filteredTerminals.push(conn);
-    }
-    if (aspect !== Aspect.Location) {
-      if (IsOutputTerminal(conn) && IsLocationTerminal(conn))
-        filteredTerminals.push(conn);
-    }
-  });
-
-  if (!splitView) {
+  if (splitView) {
     terminals.forEach((conn) => {
-      if (
-        IsTransportTerminal(conn) &&
-        !IsLocationTerminal(conn) &&
-        !IsPartOfTerminal(conn) &&
-        !IsFulfilledByTerminal(conn)
-      )
-        filteredTerminals.push(conn);
+      if (aspect === Aspect.Location) {
+        IsInputTerminal(conn) &&
+          IsLocationTerminal(conn) &&
+          filteredTerminals.push(conn);
+      }
+      if (aspect === Aspect.Function) {
+        IsOutputTerminal(conn) &&
+          IsLocationTerminal(conn) &&
+          filteredTerminals.push(conn);
+      }
     });
   }
 
+  if (!splitView) {
+    terminals.forEach((conn) => {
+      if (aspect === Aspect.Function)
+        IsTransportTerminal(conn) && filteredTerminals.push(conn);
+
+      if (aspect === Aspect.Location)
+        IsLocationTerminal(conn) &&
+          IsInputTerminal(conn) &&
+          filteredTerminals.push(conn);
+    });
+  }
   return SortTerminals(filteredTerminals);
 };
 

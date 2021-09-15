@@ -1,4 +1,3 @@
-import red from "../../../redux/store";
 import { Aspect, Connector } from "../../../models";
 import { HandleBox } from "../../../compLibrary/blockView";
 import { Handle } from "react-flow-renderer";
@@ -12,14 +11,15 @@ import {
   SetTerminalYPos,
 } from "../helpers/common";
 
+/* Components for the terminals displayed on the nodes in BlockView */
+
 interface Props {
   aspect: Aspect;
   terminals: Connector[];
+  splitView: boolean;
 }
 
-const HandleComponent = ({ aspect, terminals }: Props) => {
-  const splitView = red.store.getState().splitView.visible as boolean;
-  const className = "react-flow__handle-block";
+const HandleComponent = ({ aspect, terminals, splitView }: Props) => {
   let inputCount = 0;
   let outputCount = 0;
 
@@ -52,7 +52,7 @@ const HandleComponent = ({ aspect, terminals }: Props) => {
               type={type}
               position={pos}
               id={conn.id}
-              className={className}
+              className="react-flow__handle-block"
             />
           </HandleBox>
         );
