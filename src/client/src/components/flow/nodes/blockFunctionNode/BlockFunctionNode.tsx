@@ -1,36 +1,41 @@
-import * as Handlers from "./handlers";
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../redux/store";
-import { Connector, Node } from "../../../models";
-import { Size } from "../../../compLibrary";
-import { TerminalsIcon, ConnectIcon } from "../../../assets/icons/blockView";
-import { changeActiveConnector } from "../../../redux/store/project/actions";
-import { CalculateTerminalOrder, FilterTerminals } from "../helpers/block";
-import { IsLocationTerminal } from "../helpers/common";
+import { RootState } from "../../../../redux/store";
+import { Connector, Node } from "../../../../models";
+import { Size } from "../../../../compLibrary";
+import { TerminalsIcon, ConnectIcon } from "../../../../assets/icons/blockView";
+import { changeActiveConnector } from "../../../../redux/store/project/actions";
+import { CalculateTerminalOrder, FilterTerminals } from "../../helpers/block";
+import { IsLocationTerminal } from "../../helpers/common";
+import {
+  OnHover,
+  OnMouseOut,
+  OnConnectMenuClick,
+  OnTerminalMenuClick,
+} from "./handlers";
 
 import {
   TerminalsComponent,
   ConnectViewComponent,
   HandleComponent,
-} from "../block";
+} from "../../block";
 import {
   GetConnectChildren,
   IsMainConnectNode,
   SetMainConnectNodeSize,
-} from "../helpers/block/connectView";
+} from "../../helpers/block/connectView";
 import {
   NodeBox,
   TerminalsMenu,
   ConnectMenu,
-} from "../../../compLibrary/blockView";
+} from "../../../../compLibrary/blockView";
 import {
   addConnectNode,
   addMainNode,
   removeConnectNode,
   removeMainNode,
-} from "../../../redux/store/connectView/actions";
+} from "../../../../redux/store/connectView/actions";
 
 const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
@@ -46,7 +51,8 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     (state) => state.splitView.visible
   ) as boolean;
 
-  if (splitView) sortedTerminals.filter((x) => !IsLocationTerminal(x));
+  if (splitView)
+    sortedTerminals = sortedTerminals.filter((x) => !IsLocationTerminal(x));
 
   const mainConnectNodes = useSelector<RootState>(
     (state) => state.connectView?.mainNodes
@@ -105,28 +111,20 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     <>
       <NodeBox
         id={`BlockFunctionNode-` + data.id}
-        onMouseOver={() =>
-          Handlers.OnHover(showTerminalButton, showConnectButton)
-        }
-        onMouseOut={() =>
-          Handlers.OnMouseOut(showTerminalButton, showConnectButton)
-        }
+        onMouseOver={() => OnHover(showTerminalButton, showConnectButton)}
+        onMouseOut={() => OnMouseOut(showTerminalButton, showConnectButton)}
         width={data.width}
         length={data.length}
       >
         <TerminalsMenu
           visible={terminalButton}
-          onClick={() =>
-            Handlers.OnTerminalMenuClick(showTerminalMenu, terminalMenu)
-          }
+          onClick={() => OnTerminalMenuClick(showTerminalMenu, terminalMenu)}
         >
           <img src={TerminalsIcon} alt="options" />
         </TerminalsMenu>
         <ConnectMenu
           visible={connectButton && hasChildren}
-          onClick={() =>
-            Handlers.OnConnectMenuClick(showConnectMenu, connectMenu)
-          }
+          onClick={() => OnConnectMenuClick(showConnectMenu, connectMenu)}
         >
           <img src={ConnectIcon} alt="options" />
         </ConnectMenu>

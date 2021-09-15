@@ -1,13 +1,13 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
-import { TerminalsIcon } from "../../../assets/icons/blockView";
-import { NodeBox, TerminalsMenu } from "../../../compLibrary/blockView";
-import { HandleComponent, TerminalsComponent } from "../block";
-import { changeActiveConnector } from "../../../redux/store/project/actions";
+import { TerminalsIcon } from "../../../../assets/icons/blockView";
+import { NodeBox, TerminalsMenu } from "../../../../compLibrary/blockView";
+import { HandleComponent, TerminalsComponent } from "../../block";
+import { changeActiveConnector } from "../../../../redux/store/project/actions";
 import { useDispatch } from "react-redux";
-import { Connector } from "../../../models";
-import { CalculateTerminalOrder, FilterTerminals } from "../helpers/block";
-import { FindNodeById } from "../helpers/block/connectView";
+import { Connector } from "../../../../models";
+import { CalculateTerminalOrder, FilterTerminals } from "../../helpers/block";
+import { FindNodeById } from "../../helpers/block/connectView";
 
 const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();

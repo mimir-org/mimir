@@ -1,9 +1,6 @@
-import {
-  Aspect,
-  FunctionBlock,
-  BlockFunctionNode,
-  BlockLocationNode,
-} from "../../nodes";
+import { Aspect, FunctionBlock } from "../../nodes";
+import { BlockFunctionNode } from "../../nodes/blockFunctionNode";
+import { BlockLocationNode } from "../../nodes/blockLocationNode";
 
 const GetBlockNodeTypes = {
   AspectFunction: Aspect,
