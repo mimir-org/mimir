@@ -1,3 +1,4 @@
+import * as Handlers from "./handlers";
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,6 +8,8 @@ import { Size } from "../../../compLibrary";
 import { TerminalsIcon, ConnectIcon } from "../../../assets/icons/blockView";
 import { changeActiveConnector } from "../../../redux/store/project/actions";
 import { CalculateTerminalOrder, FilterTerminals } from "../helpers/block";
+import { IsLocationTerminal } from "../helpers/common";
+
 import {
   TerminalsComponent,
   ConnectViewComponent,
@@ -37,7 +40,13 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const [connectMenu, showConnectMenu] = useState(false);
   const connectChildren = GetConnectChildren(data);
   const hasChildren = connectChildren?.length > 0;
-  const sortedTerminals = FilterTerminals(data.connectors, data.aspect);
+  let sortedTerminals = FilterTerminals(data.connectors, data.aspect);
+
+  const splitView = useSelector<RootState>(
+    (state) => state.splitView.visible
+  ) as boolean;
+
+  if (splitView) sortedTerminals.filter((x) => !IsLocationTerminal(x));
 
   const mainConnectNodes = useSelector<RootState>(
     (state) => state.connectView?.mainNodes
@@ -45,24 +54,6 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
 
   const mainConnectNode = mainConnectNodes.find((x) => x.id === data.id);
   const connectNodes = mainConnectNode?.connectNodes;
-
-  const onTerminalMenuClick = () => {
-    showTerminalMenu(!terminalMenu);
-  };
-
-  const onConnectMenuClick = () => {
-    showConnectMenu(!connectMenu);
-  };
-
-  const onHover = () => {
-    showTerminalButton(true);
-    showConnectButton(true);
-  };
-
-  const onMouseOut = () => {
-    showTerminalButton(false);
-    showConnectButton(false);
-  };
 
   const onConnectorClick = (conn: Connector) => {
     showTerminalMenu(false);
@@ -114,17 +105,28 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     <>
       <NodeBox
         id={`BlockFunctionNode-` + data.id}
-        onMouseOver={onHover}
-        onMouseOut={onMouseOut}
+        onMouseOver={() =>
+          Handlers.OnHover(showTerminalButton, showConnectButton)
+        }
+        onMouseOut={() =>
+          Handlers.OnMouseOut(showTerminalButton, showConnectButton)
+        }
         width={data.width}
         length={data.length}
       >
-        <TerminalsMenu visible={terminalButton} onClick={onTerminalMenuClick}>
+        <TerminalsMenu
+          visible={terminalButton}
+          onClick={() =>
+            Handlers.OnTerminalMenuClick(showTerminalMenu, terminalMenu)
+          }
+        >
           <img src={TerminalsIcon} alt="options" />
         </TerminalsMenu>
         <ConnectMenu
           visible={connectButton && hasChildren}
-          onClick={onConnectMenuClick}
+          onClick={() =>
+            Handlers.OnConnectMenuClick(showConnectMenu, connectMenu)
+          }
         >
           <img src={ConnectIcon} alt="options" />
         </ConnectMenu>
@@ -135,7 +137,6 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
           isOpen={terminalMenu}
           list={sortedTerminals}
           width={data.width}
-          aspect={data.aspect}
           onClick={onConnectorClick}
         />
 

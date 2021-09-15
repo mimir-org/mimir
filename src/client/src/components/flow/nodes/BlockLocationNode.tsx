@@ -5,7 +5,7 @@ import { NodeBox, TerminalsMenu } from "../../../compLibrary/blockView";
 import { HandleComponent, TerminalsComponent } from "../block";
 import { changeActiveConnector } from "../../../redux/store/project/actions";
 import { useDispatch } from "react-redux";
-import { Aspect, Connector } from "../../../models";
+import { Connector } from "../../../models";
 import { CalculateTerminalOrder, FilterTerminals } from "../helpers/block";
 import { FindNodeById } from "../helpers/block/connectView";
 
@@ -60,7 +60,6 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
         <TerminalsComponent
           isOpen={terminalMenu}
           list={sortedTerminals}
-          aspect={Aspect.Location}
           width={data.width}
           onClick={onConnectorClick}
         />
