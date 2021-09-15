@@ -10,6 +10,7 @@ using Mb.Core.Services.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace Mb.Core.Services
 {
@@ -31,28 +32,69 @@ namespace Mb.Core.Services
             return _contractorRepository.GetAll().OrderBy(x => x.Name).ToList();
         }
 
-        public async Task<BlobDataAm> CreateBlobData(BlobDataAm blobData)
+        /// <summary>
+        /// Create blob data
+        /// </summary>
+        /// <param name="blobData"></param>
+        /// <param name="saveData"></param>
+        /// <returns></returns>
+        public async Task<BlobData> CreateBlobData(BlobDataAm blobData, bool saveData = true)
         {
             if (!string.IsNullOrEmpty(blobData.Id))
                 return await UpdateBlobData(blobData);
 
             var dm = _mapper.Map<BlobData>(blobData);
             dm.Id = dm.Key.CreateMd5();
+
+            var blobExist = await _blobDataRepository.GetAsync(dm.Id);
+
+            if (blobExist != null)
+            {
+                blobData.Id = dm.Id;
+                _mapper.Map(blobData, blobExist);
+                _blobDataRepository.Attach(blobExist, EntityState.Modified);
+                
+                if(saveData)
+                    await _blobDataRepository.SaveAsync();
+
+                return blobExist;
+            }
+
             await _blobDataRepository.CreateAsync(dm);
-            await _blobDataRepository.SaveAsync();
-            return _mapper.Map<BlobDataAm>(dm);
+
+            if(saveData)
+                await _blobDataRepository.SaveAsync();
+
+            return dm;
         }
 
-        public async Task<BlobDataAm> UpdateBlobData(BlobDataAm blobData)
+        /// <summary>
+        /// Create blob data from list
+        /// </summary>
+        /// <param name="blobDataList"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<BlobData>> CreateBlobData(IEnumerable<BlobDataAm> blobDataList)
+        {
+            var blobs = new List<BlobData>();
+
+            foreach (var blobData in blobDataList)
+            {
+                blobs.Add(await CreateBlobData(blobData, false));
+            }
+
+            await _blobDataRepository.SaveAsync();
+            return blobs;
+        }
+
+        public async Task<BlobData> UpdateBlobData(BlobDataAm blobData)
         {
             var dm = await _blobDataRepository.GetAsync(blobData.Id);
             if (dm == null)
                 throw new ModelBuilderNotFoundException($"There is no blob data with id: {blobData.Id}");
 
-            _mapper.Map(blobData, dm);
             _blobDataRepository.Update(dm);
             await _blobDataRepository.SaveAsync();
-            return _mapper.Map<BlobDataAm>(dm);
+            return dm;
         }
 
         public IEnumerable<BlobDataAm> GetBlobData()

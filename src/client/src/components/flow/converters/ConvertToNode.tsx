@@ -24,8 +24,7 @@ const ConvertToNode = (
     statusId: data.statusId,
     version: data.version,
     masterProjectId: projectId,
-    symbolId: data.symbolId,
-    symbol: icons?.find((x) => x.id === data.symbolId),
+    symbol: icons?.find((x) => x.id === data.symbolId)?.data,
     level: 0,
   } as Node;
 };

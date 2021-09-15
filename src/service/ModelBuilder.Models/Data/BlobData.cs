@@ -13,8 +13,5 @@ namespace Mb.Models.Data
 
         [JsonIgnore]
         public virtual string Key => $"{Name}-{Discipline}";
-
-        [JsonIgnore]
-        public virtual ICollection<Node> Nodes { get; set; }
     }
 }

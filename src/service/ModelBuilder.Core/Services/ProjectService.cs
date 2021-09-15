@@ -96,7 +96,6 @@ namespace Mb.Core.Services
                 .Include("Nodes.Attributes")
                 .Include("Nodes.Connectors")
                 .Include("Nodes.Connectors.Attributes")
-                .Include("Nodes.Symbol")
                 .Include("Nodes.Composites")
                 .Include("Nodes.Composites.Attributes")
                 .AsSplitQuery()

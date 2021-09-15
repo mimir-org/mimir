@@ -31,9 +31,9 @@ const InspectorHeader = ({
   type: key,
 }: Props) => (
   <InspectorMenu id="InspectorBody" color={GetInspectorColor(node, edge)}>
-    <NodeInfo symbol={node?.symbol?.id} visible={node}>
+    <NodeInfo symbol={node?.symbol} visible={node}>
       <div className="symbol">
-        <Symbol base64={node?.symbol?.data} text={node?.label ?? node?.name} />
+        <Symbol base64={node?.symbol} text={node?.label ?? node?.name} />
       </div>
       <div className="text">{node?.label ?? node?.name}</div>
       <div className="edgetext">{edge?.id}</div>

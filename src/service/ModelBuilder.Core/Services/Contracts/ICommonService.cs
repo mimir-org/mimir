@@ -8,8 +8,9 @@ namespace Mb.Core.Services.Contracts
     public interface ICommonService
     {
         IEnumerable<Contractor> GetAllContractors();
-        Task<BlobDataAm> CreateBlobData(BlobDataAm blobData);
-        Task<BlobDataAm> UpdateBlobData(BlobDataAm blobData);
+        Task<BlobData> CreateBlobData(BlobDataAm blobData, bool saveData = true);
+        Task<IEnumerable<BlobData>> CreateBlobData(IEnumerable<BlobDataAm> blobDataList);
+        Task<BlobData> UpdateBlobData(BlobDataAm blobData);
         IEnumerable<BlobDataAm> GetBlobData();
     }
 }

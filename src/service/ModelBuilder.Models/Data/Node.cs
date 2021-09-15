@@ -72,9 +72,7 @@ namespace Mb.Models.Data
 
         public virtual Project MasterProject { get; set; }
 
-        public string SymbolId { get; set; }
-
-        public BlobData Symbol { get; set; }
+        public string Symbol { get; set; }
 
         public virtual ICollection<Connector> Connectors { get; set; }
 

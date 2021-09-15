@@ -41,8 +41,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Cost, opt => opt.MapFrom(src => src.Cost))
                 .ForMember(dest => dest.Connectors, opt => opt.MapFrom(src => src.Connectors))
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
-                .ForMember(dest => dest.SymbolId, opt => opt.MapFrom(src => src.SymbolId))
-                .ForMember(dest => dest.Symbol, opt => opt.Ignore());
+                .ForMember(dest => dest.Symbol, opt => opt.MapFrom(src => src.Symbol));
         }
     }
 }
