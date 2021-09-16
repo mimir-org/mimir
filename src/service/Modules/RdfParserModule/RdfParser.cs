@@ -16,7 +16,7 @@ namespace RdfParserModule
 
         public Task<byte[]> SerializeProject(Project project)
         {
-            var graph = RdfBuilder.BuildNode(project);
+            var graph = RdfBuilder.BuildProject(project);
             var bytes = RdfBuilder.GetBytes(graph);
 
             return Task.FromResult(bytes);
@@ -31,6 +31,10 @@ namespace RdfParserModule
         {
             throw new NotImplementedException();
         }
-        
+
+        public FileFormat GetFileFormat()
+        {
+            return FileFormat.Xml;
+        }
     }
 }
