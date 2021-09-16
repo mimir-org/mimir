@@ -2,6 +2,6 @@
 {
     public interface IModuleInterface
     {
-        public string GetName();
+        string GetName();
     }
 }

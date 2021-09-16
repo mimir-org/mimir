@@ -38,7 +38,6 @@ const AdminComponent = ({ node, project, index }: Props) => {
         active={true}
         onClick={onClick}
         color={GetTabsColor(node, null)}
-        background={GetInspectorColor(node, null)}
       >
         <TabTitle active={true}>{GetInspectorText(index)}</TabTitle>
       </TabHeader>
