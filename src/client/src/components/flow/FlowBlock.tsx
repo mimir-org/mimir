@@ -13,7 +13,14 @@ import { ProjectState } from "../../redux/store/project/types";
 import { LibraryState } from "../../redux/store/library/types";
 import { GetBlockEdgeTypes, IsBlockView, OnBlockClick } from "./helpers/block";
 import { CreateBlockElements } from "./creators";
-import { useOnConnect, useOnDrop, useOnRemove, useOnDragStop } from "./hooks";
+import {
+  useOnConnect,
+  useOnDrop,
+  useOnRemove,
+  useOnDragStop,
+  useOnConnectStop,
+  useOnConnectStart,
+} from "./hooks";
 import {
   setActiveBlockNode,
   setActiveEdge,
@@ -90,6 +97,7 @@ const FlowBlock = () => {
   );
 
   const OnElementsRemove = (elementsToRemove) => {
+    console.log("remove");
     const nodeToRemove = elementsToRemove[0];
     project.edges?.forEach((edge) => {
       if (
@@ -120,6 +128,21 @@ const FlowBlock = () => {
 
   const OnNodeDragStop = (_event, activeNode) => {
     return useOnDragStop(_event, activeNode, dispatch);
+  };
+
+  const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
+    return useOnConnectStart(e, { nodeId, handleType, handleId });
+  };
+
+  const OnConnectStop = (e) => {
+    return useOnConnectStop(
+      e,
+      project,
+      reactFlowInstance,
+      node.id,
+      reactFlowWrapper,
+      dispatch
+    );
   };
 
   const OnDrop = (event) => {
@@ -171,6 +194,8 @@ const FlowBlock = () => {
               onDragOver={OnDragOver}
               onNodeDragStop={OnNodeDragStop}
               onElementClick={OnElementClick}
+              onConnectStart={OnConnectStart}
+              onConnectStop={OnConnectStop}
               zoomOnScroll={false}
               paneMoveable={false}
               onClick={(e) => OnBlockClick(e, dispatch, project)}

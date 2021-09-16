@@ -48,6 +48,7 @@ const FlowTree = () => {
   ) as LibraryState;
 
   const OnElementsRemove = (elementsToRemove) => {
+    console.log("remove");
     return useOnRemove(elementsToRemove, setElements, dispatch);
   };
 

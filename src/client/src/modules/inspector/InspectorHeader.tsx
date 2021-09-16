@@ -33,7 +33,7 @@ const InspectorHeader = ({
       <div className="edgetext">{edge?.id}</div>
     </NodeInfo>
 
-    <ButtonWrapper visible={node}>
+    <ButtonWrapper visible={node || edge}>
       <InspectorButton onClick={() => null} type="validate" visible={false} />
       <InspectorButton onClick={() => null} type="lock" visible={false} />
       <InspectorButton
