@@ -21,11 +21,12 @@ const ParametersComponent = ({ node }: Props) => {
   const dispatch = useDispatch();
   const attributes = node.attributes;
 
-  const selectedParameters = useSelector<RootState>(
-    (state) => state.parametersReducer.attributes
-  ) as Attribute[];
+  const selectedParameters =
+    (useSelector<RootState>(
+      (state) => state.parametersReducer.attributes[node.id]
+    ) as Attribute[]) ?? [];
 
-  const hasParameters = selectedParameters?.length > 0;
+  const hasParameters = selectedParameters.length > 0;
 
   return (
     <>
@@ -33,13 +34,16 @@ const ParametersComponent = ({ node }: Props) => {
         <Menu>
           <Dropdown
             onChange={(value: Attribute) =>
-              OnChangeParameter(value, dispatch, selectedParameters)
+              OnChangeParameter(node.id, value, selectedParameters, dispatch)
             }
             keyProp="id"
             valueProp="key"
             items={attributes}
           />
-          <div className="link" onClick={() => OnClearParameters(dispatch)}>
+          <div
+            className="link"
+            onClick={() => OnClearParameters(node.id, dispatch)}
+          >
             {TextResources.Inspector_Params_Clear_All}
           </div>
           <div className="link">{TextResources.Inspector_Params_Default}</div>
@@ -56,7 +60,7 @@ const ParametersComponent = ({ node }: Props) => {
                     <img
                       src={CloseParameterIcon}
                       alt="icon"
-                      onClick={() => OnClearParameter(dispatch, param)}
+                      onClick={() => OnClearParameter(node.id, param, dispatch)}
                     />
                   </div>
                   <div className="text">{param.key}</div>
