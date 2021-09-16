@@ -12,6 +12,7 @@ import {
   GetAspectColor,
   SetIndentLevel,
 } from "../../../assets/helpers";
+import { HasChildren, IsAncestorInSet } from "../helpers/ParentNode";
 
 interface Props {
   node: Node;
@@ -25,6 +26,15 @@ export const AspectComponent = ({ node, label, project }: Props) => {
   const color = GetAspectColor(node, true);
   const nodes = project.nodes;
   const children = nodes.filter((x) => !IsAspectNode(x)) ?? [];
+  const [closedChildren, setClosedChildren] = useState(new Set<string>());
+
+  const onExpandElement = (_expanded: boolean, nodeId: string) => {
+    _expanded ? closedChildren.delete(nodeId) : closedChildren.add(nodeId);
+    setClosedChildren((_) => new Set(closedChildren));
+  };
+
+  const areAncestorsExpanded = (elem: Node): boolean =>
+    !IsAncestorInSet(elem, closedChildren);
 
   return (
     <>
@@ -46,7 +56,7 @@ export const AspectComponent = ({ node, label, project }: Props) => {
       </AspectBox>
       {expanded &&
         children.map((elem) => {
-          if (elem.aspect === node.aspect) {
+          if (elem.aspect === node.aspect && areAncestorsExpanded(elem)) {
             const indent = elem.level ?? SetIndentLevel(elem, 0);
             return (
               <AspectElement
@@ -55,6 +65,9 @@ export const AspectComponent = ({ node, label, project }: Props) => {
                 label={elem.label ?? elem.name}
                 indent={indent}
                 project={project}
+                isLeaf={!HasChildren(elem)}
+                expanded={!closedChildren.has(elem.id)}
+                onElementExpanded={onExpandElement}
               />
             );
           }
