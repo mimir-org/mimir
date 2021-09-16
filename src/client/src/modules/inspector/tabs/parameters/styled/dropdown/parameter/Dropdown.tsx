@@ -10,71 +10,68 @@ import {
   ExpandIcon,
   CollapseIcon,
 } from "../../../../../../../assets/icons/common";
+import { TextResources } from "../../../../../../../assets/text";
+import { Attribute } from "../../../../../../../models";
 
 interface Props {
-  items: any[];
+  items: Attribute[];
+  selectedItems: Attribute[];
   keyProp: string;
-  valueProp: string;
-  onChange: Function;
+  onChange: (value: Attribute, selected: boolean) => void;
   defaultValue?: string;
 }
 
 const Dropdown = ({
   items,
+  selectedItems,
   keyProp,
-  valueProp,
   onChange,
   defaultValue,
 }: Props) => {
   const [isListOpen, setIsListOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
 
   useEffect(() => {
     if (!items) {
-      setSelectedItem(null);
       return;
     }
     if (defaultValue) {
-      setSelectedItem(items.find((x) => x[keyProp] === defaultValue));
       return;
     }
-    setSelectedItem(items[0]);
   }, [defaultValue, items, keyProp]);
 
-  const handleChange = (_e: any, value: any) => {
-    setSelectedItem(value);
-    // setIsListOpen(!isListOpen);
-    onChange(value);
-  };
-
+  const IsAttributeSelected = (attr: Attribute): boolean =>
+    selectedItems.includes(attr);
   return (
     <>
       <MenuWrapper>
         <div onClick={(e) => setIsListOpen(!isListOpen)}>
           <MenuHeader>
-            {selectedItem && (
-              <>
-                <p>{selectedItem.name ?? selectedItem.key}</p>
-                <img
-                  src={isListOpen ? ExpandIcon : CollapseIcon}
-                  alt="expand-icon"
-                />
-              </>
-            )}
+            <>
+              <p className="searchText">
+                {TextResources.Inspector_Params_Search}
+              </p>
+              <img
+                src={isListOpen ? ExpandIcon : CollapseIcon}
+                alt="expand-icon"
+              />
+            </>
           </MenuHeader>
         </div>
         {isListOpen && (
           <MenuList>
             {items?.map((item) => {
               return (
-                <div onClick={(e) => handleChange(e, item)} key={item[keyProp]}>
+                <div
+                  onClick={() => onChange(item, IsAttributeSelected(item))}
+                  key={item[keyProp]}
+                >
                   <MenuListItem>
-                    <p>{item.name ?? item.key}</p>
+                    <p>{item.key}</p>
                     <CheckboxWrapper>
                       <label className={"checkbox-block"}>
                         <input
                           type="checkbox"
-                          checked={true}
+                          checked={IsAttributeSelected(item)}
                           onChange={() => null}
                         />
                         <span className="checkmark-block"></span>

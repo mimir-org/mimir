@@ -33,12 +33,12 @@ const ParametersComponent = ({ node }: Props) => {
       <Header>
         <Menu>
           <Dropdown
-            onChange={(value: Attribute) =>
-              OnChangeParameter(node.id, value, selectedParameters, dispatch)
+            onChange={(value: Attribute, selected: boolean) =>
+              OnChangeParameter(node.id, value, selected, dispatch)
             }
             keyProp="id"
-            valueProp="key"
             items={attributes}
+            selectedItems={selectedParameters}
           />
           <div
             className="link"
@@ -50,11 +50,11 @@ const ParametersComponent = ({ node }: Props) => {
         </Menu>
       </Header>
 
-      <Body>
-        {hasParameters &&
-          selectedParameters.map((param) => {
-            return (
-              <Entity key={param.key}>
+      {hasParameters &&
+        selectedParameters.map((param) => {
+          return (
+            <Body key={param.key}>
+              <Entity>
                 <Box color={GetParametersColor()} id="ParametersBox">
                   <div className="icon">
                     <img
@@ -72,9 +72,9 @@ const ParametersComponent = ({ node }: Props) => {
                   color={GetParametersColor()}
                 />
               </Entity>
-            );
-          })}
-      </Body>
+            </Body>
+          );
+        })}
     </>
   );
 };
