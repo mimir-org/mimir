@@ -103,13 +103,16 @@ namespace RdfParserModule
         private static IGraph CreateAttributesFromNode(IGraph g, Node node)
         {
             var rdfNode = g.CreateUriNode("mimir:" + node.Id);
-            
+            var attributeBNode = g.CreateBlankNode();
+
 
             var attributes = node.Attributes;
             foreach (Attribute attribute in attributes)
             {
                 var value = attribute.Value;
+                g.Assert(new Triple(attributeBNode, g.CreateUriNode("owl:hasValue"), g.CreateLiteralNode(value)));
                 var key = attribute.Key;
+                g.Assert(new Triple(attributeBNode, g.CreateUriNode("rdf:type"), g.CreateUriNode("mimir:" + key)));
                 var units = attribute.Units;
 
                 foreach (Unit unit in units)
