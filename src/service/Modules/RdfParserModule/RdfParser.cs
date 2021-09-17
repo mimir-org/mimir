@@ -16,8 +16,9 @@ namespace RdfParserModule
 
         public Task<byte[]> SerializeProject(Project project)
         {
-            var graph = RdfBuilder.BuildProject(project);
-            var bytes = RdfBuilder.GetBytes(graph);
+            RdfBuilder builder = new RdfBuilder(project);
+            var graph = builder.BuildProject();
+            var bytes = builder.GetBytes(graph);
 
             return Task.FromResult(bytes);
         }
