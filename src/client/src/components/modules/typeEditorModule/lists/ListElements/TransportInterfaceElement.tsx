@@ -29,9 +29,6 @@ export const TransportInterfaceElement = ({
   onChange,
   defaultTerminal,
 }: Props) => {
-  const [selectedCategory, setselectedCategory] = useState(
-    defaultTerminal ? defaultTerminal.terminalCategory.name : ""
-  );
   const [searchbarInput, setSearchbarInput] = useState(
     defaultTerminal ? defaultTerminal.name : ""
   );
@@ -47,21 +44,28 @@ export const TransportInterfaceElement = ({
     setSearchbarInput(e.target.value.toLowerCase());
   };
 
+  const isSelected = () => {
+    let selected = false;
+    terminalTypes.forEach((t) => {
+      if (t.id === defaultTerminal?.id) {
+        selected = true;
+      }
+    });
+    return selected;
+  };
+
   return (
     <TerminalListElement>
       <TerminalCategoryWrapper>
-        {console.log("categoryName", categoryName)}
-        {console.log(defaultTerminal?.terminalCategory.name)}
-        <div onClick={() => setselectedCategory(categoryName)}>
-          <RoundCheckbox
-            id={categoryName}
-            listType={ListType.Terminals}
-            defaultValue={selectedCategory}
-            onChange={setselectedCategory}
-          />
-        </div>
+        <RoundCheckbox
+          id={categoryName}
+          listType={ListType.Terminals}
+          checked={isSelected()}
+          defaultValue={terminalTypes[0].id}
+          onChange={onChange}
+        />
         <p className="category">{categoryName}</p>
-        {categoryName === selectedCategory && (
+        {isSelected() && (
           <SearchBarWrapper>
             <SearchBarContainer>
               <SearchBar>

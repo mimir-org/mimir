@@ -8,6 +8,7 @@ interface Props {
   id: string;
   listType: ListType;
   defaultValue?: any;
+  checked?: any;
   onChange: Function;
 }
 
@@ -15,17 +16,17 @@ export const RoundCheckbox = ({
   id,
   listType,
   defaultValue,
+  checked,
   onChange,
 }: Props) => {
-  let isSelected = () => {
-    if (listType === ListType.Rds) return defaultValue === id;
-    if (listType === ListType.Terminals) return defaultValue === id;
-  };
+  let rdsIsSelected = listType === ListType.Rds && defaultValue === id;
+  let terminalIsSelected = listType === ListType.Terminals && checked;
 
   const onCheckboxChange = () => {
     if (id !== "" && id) {
       if (listType === ListType.Rds) onChange("rdsId", id);
-      if (listType === ListType.Terminals) onChange(onChange(id));
+      if (listType === ListType.Terminals)
+        onChange("terminalTypeId", defaultValue);
     }
   };
 
@@ -33,7 +34,7 @@ export const RoundCheckbox = ({
     <label className={"roundcheckbox"}>
       <input
         type="checkbox"
-        checked={isSelected()}
+        checked={listType === ListType.Rds ? rdsIsSelected : terminalIsSelected}
         id={id}
         onChange={onCheckboxChange}
       />
