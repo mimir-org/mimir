@@ -4,7 +4,7 @@ import { Color, FontSize } from "..";
 const BlockOptionsElement = styled.div`
   border-bottom: 1px solid ${Color.DarkGrey};
   padding: 5px 34px 5px 5px;
-  font-size: ${FontSize.Small};
+  font-size: ${FontSize.Tiny};
   color: ${Color.Black};
   height: 15px;
   width: auto;

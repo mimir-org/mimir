@@ -1,14 +1,14 @@
 import styled from "styled-components";
-import { Color, FontSize } from "../../../";
+import { Color } from "../../../";
 
 const DropdownMenuListItem = styled.div`
   display: flex;
-  max-height: 31px;
+  height: ${(props: { height: number }) => props.height}px;
   align-items: center;
   border-width: 1px 0px 0px 0px;
   border-style: solid;
   border-color: ${Color.DarkGrey};
-  font-size: ${FontSize.Standard};
+  font-size: ${(props: { fontSize: string }) => props.fontSize};
   color: ${Color.Black};
   background-color: ${Color.White};
   cursor: pointer;

@@ -8,6 +8,7 @@ const Body = styled.div`
   border-color: ${Color.ListBorder};
   border-style: solid;
   border-width: 1px 0px 1px 0px;
+  flex-wrap: nowrap;
 `;
 
 export default Body;

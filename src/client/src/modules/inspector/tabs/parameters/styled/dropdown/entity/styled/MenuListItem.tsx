@@ -6,7 +6,7 @@ const MenuListItem = styled.div`
   max-height: 31px;
   align-items: center;
   border-bottom: 1.5px solid ${Color.ParamsPurple};
-  font-size: ${FontSize.Small};
+  font-size: ${FontSize.Tiny};
   color: ${Color.Black};
   background-color: ${Color.White};
   cursor: pointer;
