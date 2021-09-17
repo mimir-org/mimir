@@ -2,21 +2,21 @@ import { RootState } from "../../redux/store";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import { ExplorerModule } from "../modules/explorerModule";
-import { InspectorModule } from "../modules/inspectorModule";
-import { LibraryModule } from "../modules/libraryModule";
+import { ExplorerModule } from "../../modules/explorer";
+import { InspectorModule } from "../../modules/inspector";
+import { LibraryModule } from "../../modules/library";
 import { AccountMenu } from "../menus/accountMenu";
 import { FilterMenu } from "../menus/filterMenu";
 import { getUser } from "../../redux/store/user/actions";
 import { getContractors, getStatuses } from "../../redux/store/common/actions";
+import { search } from "../../redux/store/project/actions";
+import { FlowModule } from "../flow";
+import { ErrorModule } from "../../modules/error";
+import { TypeEditorComponent } from "../modules/typeEditorModule";
 import {
   importLibraryInterfaceTypes,
   importLibraryTransportTypes,
 } from "../../redux/store/library/actions";
-import { search } from "../../redux/store/project/actions";
-import { FlowModule } from "../flow";
-import { ErrorModule } from "../modules/errorModule";
-import { TypeEditorComponent } from "../../components/modules/typeEditorModule";
 
 interface RouteParams {
   type: string;

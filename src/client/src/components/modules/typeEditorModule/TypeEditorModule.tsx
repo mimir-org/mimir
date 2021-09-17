@@ -1,6 +1,5 @@
 import "./typeeditor.scss";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { ObjectType } from "../../../models";
 import { TextResources } from "../../../assets/text";
 import { NewTypeIcon, EditTypeIcon } from "../../../assets/icons/common";
@@ -22,7 +21,6 @@ export const TypeEditorModule = ({
   onChange,
 }: Props) => {
   const dispatch = useDispatch();
-  const { push } = useHistory();
 
   const onClick = () => {
     if (selectedElement && selectedElementType !== ObjectType.NotSet) {

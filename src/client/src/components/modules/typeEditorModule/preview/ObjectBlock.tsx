@@ -1,8 +1,9 @@
 // import { ReactComponent as TerminalIcon } from "../../../../assets/icons/common/terminalIcon.svg";
-import { Color } from "../../../../compLibrary";
 import { ObjectTypeBlock, InfoWrapper } from "../styled";
-import { IsFunction, IsLocation, IsProduct } from "../helpers";
 import { CreateLibraryType } from "../../../../models";
+import { GetBlockColor, GetBlockHeight, GetBlockPaddingTop } from "./helpers";
+
+// import { ReactComponent as TerminalIcon } from "../../../../assets/icons/common/terminalIcon.svg";
 interface Props {
   createLibraryType: CreateLibraryType;
   rdsName: string;
@@ -10,37 +11,6 @@ interface Props {
 
 export const ObjectBlock = ({ createLibraryType, rdsName }: Props) => {
   const aspect = createLibraryType.aspect;
-  const blockColor = () => {
-    let color = "";
-    if (IsFunction(aspect)) {
-      color = Color.Function;
-    } else if (IsLocation(aspect)) {
-      color = Color.Location;
-    } else if (IsProduct(aspect)) {
-      color = Color.Product;
-    }
-    return color;
-  };
-
-  const blockHeight = () => {
-    let height = 0;
-    if (IsFunction(aspect)) {
-      height = 70;
-    } else if (IsLocation(aspect)) {
-      height = 45;
-    }
-    return height;
-  };
-
-  const blockPaddingTop = () => {
-    let top = 0;
-    if (IsFunction(aspect)) {
-      top = 25;
-    } else if (IsLocation(aspect)) {
-      top = 2;
-    }
-    return top;
-  };
 
   //   let terminalCategories = [];
   //   state.terminals.forEach((e) => {
@@ -73,7 +43,10 @@ export const ObjectBlock = ({ createLibraryType, rdsName }: Props) => {
   //   };
 
   return (
-    <ObjectTypeBlock blockColor={blockColor()} blockHeight={blockHeight()}>
+    <ObjectTypeBlock
+      blockColor={GetBlockColor(aspect)}
+      blockHeight={GetBlockHeight(aspect)}
+    >
       {/* {state.createLibraryType.aspect === Aspect.Function && (
         <InputOutputTerminals>
           <Terminals input={true}>
@@ -97,7 +70,7 @@ export const ObjectBlock = ({ createLibraryType, rdsName }: Props) => {
           </Terminals>
         </InputOutputTerminals>
       )} */}
-      <InfoWrapper blockPaddingTop={blockPaddingTop()}>
+      <InfoWrapper blockPaddingTop={GetBlockPaddingTop(aspect)}>
         <p>{rdsName}</p>
         <p>{createLibraryType.name}</p>
       </InfoWrapper>

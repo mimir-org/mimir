@@ -8,7 +8,7 @@ const TypeEditorWrapper = styled.div`
   width: 95.2%;
   height: 90.5%;
   background: ${Color.White};
-  border: 2px solid ${Color.DeepCyan};
+  border: 2px solid ${Color.BlueMagenta};
   border-radius: 5px;
   z-index: 100;
 `;

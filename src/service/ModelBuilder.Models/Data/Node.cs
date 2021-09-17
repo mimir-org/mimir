@@ -81,6 +81,8 @@ namespace Mb.Models.Data
 
         public virtual ICollection<Attribute> Attributes { get; set; }
         
+        public virtual ICollection<Composite> Composites { get; set; }
+
         [JsonIgnore]
         public virtual ICollection<Project> Projects { get; set; }
 

@@ -1,5 +1,4 @@
 import {
-  TypeMode,
   TerminalTypeItem,
   Aspect,
   ObjectType,
@@ -18,7 +17,6 @@ import {
   FETCHING_BLOB_DATA,
   CLOSE_TYPE_EDITOR,
   UPDATE_CREATELIBRARYTYPE,
-  CHOOSE_ASPECT,
   CHOOSE_OBJECT_TYPE,
   CHOOSE_TYPENAME,
   CHOOSE_SYMBOL,

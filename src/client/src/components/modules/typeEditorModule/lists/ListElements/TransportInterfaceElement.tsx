@@ -8,7 +8,7 @@ import {
   SearchBar,
   SearchBarList,
   SearchBarListItem,
-} from "../../../../../compLibrary/dropdown/";
+} from "../../../../../compLibrary/";
 import {
   HelpIcon,
   ExpandIcon,
@@ -50,11 +50,13 @@ export const TransportInterfaceElement = ({
   return (
     <TerminalListElement>
       <TerminalCategoryWrapper>
+        {console.log("categoryName", categoryName)}
+        {console.log(defaultTerminal?.terminalCategory.name)}
         <div onClick={() => setselectedCategory(categoryName)}>
           <RoundCheckbox
             id={categoryName}
             listType={ListType.Terminals}
-            defaultValue={defaultTerminal?.terminalCategory.name}
+            defaultValue={selectedCategory}
             onChange={setselectedCategory}
           />
         </div>

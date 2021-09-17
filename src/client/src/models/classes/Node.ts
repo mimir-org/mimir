@@ -1,5 +1,5 @@
 import { EnumBase, Attribute, Aspect } from "..";
-import { BlobData } from "../Types";
+import { BlobData, Composite } from "../Types";
 import Connector from "./Connector";
 
 class Node {
@@ -31,6 +31,7 @@ class Node {
   symbol: BlobData;
   connectors: Connector[];
   attributes: Attribute[];
+  composites: Composite[];
 
   // Only for location aspect
   length: number;

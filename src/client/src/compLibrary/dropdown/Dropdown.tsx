@@ -1,17 +1,18 @@
 import { useState, useEffect } from "react";
 import { ExpandIcon, CollapseIcon } from "../../assets/icons/common";
+import { LocationTypeCategory } from "../../components/modules/typeEditorModule/styled";
+import { Symbol } from "../symbol";
 import {
   DropdownMenuWrapper,
   DropdownMenuHeader,
   DropdownMenuList,
   DropdownMenuListItem,
-  Symbol,
-} from ".";
-import { LocationTypeCategory } from "../../components/modules/typeEditorModule/styled";
+} from "./styled";
 export interface DropDownItem {
   name: string;
   items: any[];
 }
+
 interface Props {
   label: string;
   items: DropDownItem[];
@@ -43,7 +44,7 @@ const Dropdown = ({
 
     items?.forEach((x) => {
       x.items?.forEach((y) => {
-        if (y[keyProp] == defaultValue) {
+        if (y[keyProp] === defaultValue) {
           selected = y;
         }
       });

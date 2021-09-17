@@ -1,7 +1,5 @@
 import { ObjectBlock } from "./ObjectBlock";
 import { PreviewArea, InfoWrapper } from "../styled";
-import { ReactComponent as TransportIcon } from "../../../../assets/icons/common/transport.svg";
-import { ReactComponent as InterfaceIcon } from "../../../../assets/icons/common/interface.svg";
 import {
   IsLocation,
   IsFunction,

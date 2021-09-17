@@ -10,14 +10,14 @@ const SetDarkModeColor = (active: boolean) => {
   const legend = document.getElementById("LegendModule");
   const inspector = document.getElementById("InspectorModule");
   const inspectorBody = document.getElementById("InspectorBody");
-  const inspectorTopMenu = document.getElementById("InspectorTopMenu");
+  const menuBar = document.getElementById("MenuBar");
 
   if (active) {
     mainColor = "#888888";
     moduleColor = "#A8A8A8";
   } else {
     mainColor = Color.White;
-    moduleColor = Color.LightGrey;
+    moduleColor = Color.GreyInspector;
   }
 
   if (root) root.style.background = mainColor;
@@ -26,7 +26,7 @@ const SetDarkModeColor = (active: boolean) => {
   if (legend) legend.style.background = moduleColor;
   if (inspector) inspector.style.background = moduleColor;
   if (inspectorBody) inspectorBody.style.background = moduleColor;
-  if (inspectorTopMenu) inspectorTopMenu.style.background = moduleColor;
+  if (menuBar) menuBar.style.background = moduleColor;
 };
 
 export default SetDarkModeColor;

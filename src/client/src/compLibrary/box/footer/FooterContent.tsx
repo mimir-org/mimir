@@ -9,10 +9,10 @@ const FooterContent = styled.div`
   width: 110px;
   height: 38px;
   padding: 0px 10px;
-  border: 1px solid ${Color.DeepCyan};
+  border: 1px solid ${Color.BlueMagenta};
   border-radius: 2px;
   background-color: ${(props) =>
-    props.active ? `${Color.DeepCyan}` : `${Color.White}`};
+    props.active ? `${Color.BlueMagenta}` : `${Color.White}`};
   cursor: pointer;
   color: ${(props) => (props.active ? `${Color.White}` : `${Color.Black}`)};
   font-size: ${FontSize.Standard};

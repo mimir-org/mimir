@@ -1,25 +1,35 @@
 const Color = {
+  // Common
+  BlueMagenta: "#272738",
+  GreyBorder: "#d9d9d9",
+  GreyInspector: "#FAFAFA",
   White: "#fff",
   Black: "#000",
-  LightGrey: "#f2f2f2",
-  Grey: "#cbcbcb",
+  LightGrey: "#FBFBFF",
+  Grey: "#d9d9d9",
   DarkGrey: "#c4c4c4",
   DarkerGrey: "#898787",
-  DeepCyan: "#007079",
   LightCyan: "#CFDADB",
-  Function: "#fef445",
-  Product: "#00F0FF",
-  Location: "#ff00ff",
-  LightBlue: "#bde6fd",
-  FunctionTransparent: "rgba(254, 244, 69, 0.15)",
-  ProductTransparent: "rgba(0, 240, 255, 0.15)",
-  LocationTransparent: " rgba(250, 0, 255, 0.15)",
-  DeepCyanTransparent: " rgba(0, 112, 121, 0.15)",
+  LightBlue: "#D9E6FF",
   DarkRed: "rgb(139,0,0)",
   Red: "rgb(255,0,0)",
-  FunctionPart: "#FFC000",
-  ProductPart: "#00F0FF",
-  LocationPart: "#CC00D0",
+
+  // Function aspect
+  FunctionBlock: "#FEF445",
+  FunctionHeader: "#FFFAA9",
+  FunctionTab: "#FFDE7A",
+
+  // Product aspect
+  ProductBlock: "#00F0FF",
+  ProductHeader: "#B9F5F9",
+  ProductTab: "#47DDE6",
+
+  // Location aspect
+  LocationBlock: "#FA00FF",
+  LocationHeader: "#FDCCFE",
+  LocationTab: "#F083F1",
+
+  // Terminals
   Terminal_Oil: "#663300",
   Terminal_Water: "#0066FF",
   Terminal_Gas: "#FFCC00",

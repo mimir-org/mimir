@@ -44,7 +44,7 @@ const BlockParentBox = styled.div`
     height: 2px;
     margin-left: 3px;
     background-color: ${(props) =>
-      props.location ? Color.Location : Color.Function};
+      props.location ? Color.LocationBlock : Color.FunctionBlock};
   }
 `;
 

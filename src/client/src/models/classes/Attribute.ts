@@ -19,6 +19,7 @@ class Attribute {
   terminalId: string;
   nodeId: string;
   transportId: string;
+  compositeId: string;
 
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor() {}

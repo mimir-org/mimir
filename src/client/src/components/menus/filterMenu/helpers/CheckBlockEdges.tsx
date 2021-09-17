@@ -1,6 +1,6 @@
 import { Edge, RelationType } from "../../../../models";
 import { IsTransportTerminal } from "../../../flow/helpers/common";
-import FindConnector from "./FindConnector";
+import { GetConnector } from "./";
 
 const CheckBlockEdges = (edges: Edge[], type: RelationType | string) => {
   const elementsToRemove = [];
@@ -15,11 +15,8 @@ const CheckBlockEdges = (edges: Edge[], type: RelationType | string) => {
         elementsToRemove.push(edge);
       }
       // Find connectors
-      const fromConnector = FindConnector(
-        edge.fromNodeId,
-        edge.fromConnectorId
-      );
-      const toConnector = FindConnector(edge.toNodeId, edge.toConnectorId);
+      const fromConnector = GetConnector(edge.fromNodeId, edge.fromConnectorId);
+      const toConnector = GetConnector(edge.toNodeId, edge.toConnectorId);
       if (fromConnector) elementsToRemove.push(fromConnector);
       if (toConnector) elementsToRemove.push(toConnector);
     });
@@ -32,11 +29,11 @@ const CheckBlockEdges = (edges: Edge[], type: RelationType | string) => {
         elementsToRemove.push(edge);
 
         // Find connectors
-        const fromConnector = FindConnector(
+        const fromConnector = GetConnector(
           edge.fromNodeId,
           edge.fromConnectorId
         );
-        const toConnector = FindConnector(edge.toNodeId, edge.toConnectorId);
+        const toConnector = GetConnector(edge.toNodeId, edge.toConnectorId);
         if (fromConnector) elementsToRemove.push(fromConnector);
         if (toConnector) elementsToRemove.push(toConnector);
       }

@@ -3,20 +3,24 @@ import { Color } from "../..";
 
 const TabHeader = styled.div`
   display: inline-block;
+  position: relative;
+  top: -44px;
   box-sizing: border-box;
-  border-top-right-radius: 8px;
+  border-top-right-radius: 6px;
   border-top-left-radius: 6px;
   color: ${Color.Black};
-  border-right: 1px solid ${Color.Grey};
-  border-left: 1px solid ${Color.Grey};
-  border-top: 1px solid ${Color.Grey};
+  margin-right: 7px;
+  height: ${(props) => (props.active ? "44px" : "35px")};
+  margin-top: ${(props: { active: string }) => (props.active ? "0px" : "9px")};
 
-  height: ${(props: { active: string }) => (props.active ? "39px" : "32px")};
-  margin-top: ${(props: { active: string }) => (props.active ? "0px" : "4px")};
-  background-color: ${(props: { active: string }) =>
-    props.active ? `${Color.LightGrey}` : `${Color.DarkGrey}`};
+  background-color: ${(props) =>
+    props.active ? `${Color.GreyInspector}` : props.color};
+
   padding: ${(props: { active: string }) =>
-    props.active ? "8px 20px 0px 20px;" : "5px 20px 0px 20px"};
+    props.active ? "17px 20px 0px 20px;" : "8px 20px 0px 20px"};
+
+  box-shadow: -4px 0 4px -5px rgba(0, 0, 0, 0.4),
+    4px 0 3px -5px rgba(0, 0, 0, 0.4);
 
   :hover {
     cursor: pointer;

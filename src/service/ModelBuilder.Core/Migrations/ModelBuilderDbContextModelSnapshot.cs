@@ -34,6 +34,36 @@ namespace Mb.Core.Migrations
                     b.ToTable("AttributeType_Unit");
                 });
 
+            modelBuilder.Entity("CompositeType_AttributeType", b =>
+                {
+                    b.Property<string>("AttributeTypeId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CompositeTypeId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("AttributeTypeId", "CompositeTypeId");
+
+                    b.HasIndex("CompositeTypeId");
+
+                    b.ToTable("CompositeType_AttributeType");
+                });
+
+            modelBuilder.Entity("CompositeType_NodeType", b =>
+                {
+                    b.Property<string>("CompositeTypeId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("NodeTypeId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("CompositeTypeId", "NodeTypeId");
+
+                    b.HasIndex("NodeTypeId");
+
+                    b.ToTable("CompositeType_NodeType");
+                });
+
             modelBuilder.Entity("Mb.Models.Data.Attribute", b =>
                 {
                     b.Property<string>("Id")
@@ -43,6 +73,9 @@ namespace Mb.Core.Migrations
                     b.Property<string>("AttributeTypeId")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("AttributeTypeId");
+
+                    b.Property<string>("CompositeId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ConditionId")
                         .HasColumnType("nvarchar(450)");
@@ -86,6 +119,8 @@ namespace Mb.Core.Migrations
                         .HasColumnName("Value");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CompositeId");
 
                     b.HasIndex("ConditionId");
 
@@ -170,6 +205,52 @@ namespace Mb.Core.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("BlobData");
+                });
+
+            modelBuilder.Entity("Mb.Models.Data.Composite", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("Id");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Name");
+
+                    b.Property<string>("NodeId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("SemanticReference")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("SemanticReference");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NodeId");
+
+                    b.ToTable("Composite");
+                });
+
+            modelBuilder.Entity("Mb.Models.Data.CompositeType", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("Id");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Name");
+
+                    b.Property<string>("SemanticReference")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("SemanticReference");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CompositeType");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Connector", b =>
@@ -948,8 +1029,43 @@ namespace Mb.Core.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("CompositeType_AttributeType", b =>
+                {
+                    b.HasOne("Mb.Models.Data.AttributeType", null)
+                        .WithMany()
+                        .HasForeignKey("AttributeTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Mb.Models.Data.CompositeType", null)
+                        .WithMany()
+                        .HasForeignKey("CompositeTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CompositeType_NodeType", b =>
+                {
+                    b.HasOne("Mb.Models.Data.CompositeType", null)
+                        .WithMany()
+                        .HasForeignKey("CompositeTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Mb.Models.Data.NodeType", null)
+                        .WithMany()
+                        .HasForeignKey("NodeTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Mb.Models.Data.Attribute", b =>
                 {
+                    b.HasOne("Mb.Models.Data.Composite", "Composite")
+                        .WithMany("Attributes")
+                        .HasForeignKey("CompositeId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.HasOne("Mb.Models.Data.Enums.AttributeCondition", "Condition")
                         .WithMany("Attributes")
                         .HasForeignKey("ConditionId")
@@ -984,6 +1100,8 @@ namespace Mb.Core.Migrations
                         .WithMany("Attributes")
                         .HasForeignKey("TransportId")
                         .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Composite");
 
                     b.Navigation("Condition");
 
@@ -1039,6 +1157,17 @@ namespace Mb.Core.Migrations
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("Mb.Models.Data.Composite", b =>
+                {
+                    b.HasOne("Mb.Models.Data.Node", "Node")
+                        .WithMany("Composites")
+                        .HasForeignKey("NodeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Node");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Connector", b =>
@@ -1325,6 +1454,11 @@ namespace Mb.Core.Migrations
                     b.Navigation("Nodes");
                 });
 
+            modelBuilder.Entity("Mb.Models.Data.Composite", b =>
+                {
+                    b.Navigation("Attributes");
+                });
+
             modelBuilder.Entity("Mb.Models.Data.Connector", b =>
                 {
                     b.Navigation("FromEdges");
@@ -1340,6 +1474,8 @@ namespace Mb.Core.Migrations
             modelBuilder.Entity("Mb.Models.Data.Node", b =>
                 {
                     b.Navigation("Attributes");
+
+                    b.Navigation("Composites");
 
                     b.Navigation("Connectors");
 

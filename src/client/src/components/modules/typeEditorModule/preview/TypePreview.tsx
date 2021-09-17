@@ -60,12 +60,12 @@ export const TypePreview = ({ createLibraryType, rds, terminal }: Props) => {
         )}
         {IsFunction(createLibraryType?.aspect) &&
           IsTransport(createLibraryType?.objectType) && (
-            <TransportIcon style={{ fill: terminal.color }}></TransportIcon>
+            <TransportIcon style={{ fill: terminal?.color }}></TransportIcon>
           )}
         {IsFunction(createLibraryType?.aspect) &&
           IsInterface(createLibraryType?.objectType) && (
             <InterfaceIcon
-              style={{ stroke: terminal.color, fill: terminal.color }}
+              style={{ stroke: terminal?.color, fill: terminal?.color }}
             ></InterfaceIcon>
           )}
       </PreviewArea>

@@ -1,12 +1,29 @@
-/* All static text in the application */
+/* All static text for Mimir */
 
 const TextResources = {
+  // Aspects
+  Aspect_Function: "Function",
+  Aspect_Location: "Location",
+  Aspect_Product: "Product",
+
+  // Modules
+  Module_Legend: "Legend",
+  Module_Explorer: "Explorer",
+  Module_Library: "Library",
+  Module_Inspector: "Inspector",
+
+  // Relations
+  Relations_PartOf: "Part of Relationship",
+  Relations_HasLocation: "Has Location",
+  Relations_HasFunction: "Has Function",
+  Relations_FulfilledBy: "Fulfilled By",
+  Relations_Transport: "Transport",
+
   // Log in
   Login_label: "Log in",
   Login_label_email: "SSO e-mail",
 
   // Top-menu
-  MainHeader_App_Name: "Mímir - Prototype",
   MainHeader_Login_Heading: "Login",
   MainHeader_VisualFilter: "Visual Filter",
 
@@ -21,12 +38,10 @@ const TextResources = {
   Project_recent_open: "Open project",
 
   // ExplorerModule
-  Explorer_view: "Explorer",
   Combined_view: "Connections",
   Split_view: "Split View",
 
   // InspectorModule
-  Inspector_Heading: "Inspector",
   Inspector_AdminInfo: "Admin info",
   Inspector_Object: "Object",
   Inspector_Parameters: "Parameters",
@@ -37,14 +52,11 @@ const TextResources = {
   Inspector_Changelog: "Changelog",
 
   Inspector_Relations_Name: "Relation name",
-  Inspector_Relations_Has_Function: "Has function",
   Inspector_Relations_Updated_By: "Updated by",
   Inspector_Relations_Connected_To: "Connected to",
   Inspector_Relations_Project: "Project",
   Inspector_Relations_Updated_Date: "Updated Date",
   Inspector_Relations_Relation_Out: "Relation out",
-  Inspector_Relations_Has_Location: "Has location",
-  Inspector_Relations_Fulfilled_By: "Fulfilled by",
   Inspector_Relations_Part_Location: "Part of Location",
   Inspector_Relations_Location: "Go to location",
   Inspector_Relations_Product: "Go to product",
@@ -94,12 +106,11 @@ const TextResources = {
   Inspector_EdgeAdmin_Project: "Master Project ID",
 
   Inspector_Delete_Node: "Delete",
+  Inspector_Filter: "Filter",
+  Inspector_Lock: "Lock",
+  Inspector_Validate: "Validate",
 
   // LibraryModule
-  Library_Heading: "Library",
-  Library_Function: "Function",
-  Library_Product: "Product",
-  Library_Location: "Location",
   Library_SearchBox_Placeholder: "Search the Library",
 
   // TypeEditorModule
@@ -144,10 +155,10 @@ const TextResources = {
   // AccountModule
   Account_Save_Label: "Save project to database",
   Account_Save_Label_File: "Export project file",
-  Account_Save_Label_Library_File: "Export project library",
-  Account_Import_Label_File: "Import project file",
-  Account_Import_Label_Library_File: "Import project library",
-  Account_Logout: "Log out",
+  Account_Export_Library_File: "Export project library",
+  Account_Import_File: "Import project file",
+  Account_Import_Library_File: "Import project library",
+  Account_Logout_Label: "Log out",
   Account_Open_Label: "Open a project",
   Account_Create_Label: "Create a project",
   Account_Create_Button_Label: "Create project",
@@ -156,13 +167,21 @@ const TextResources = {
   Account_Confirm_Save: " Save this project before opening/starting another?",
   Account_Save_Button: "Yes",
   Account_NoSave_Button: "No",
-  Account_Cancel_Button: "Cancel",
   Account_Save_Label_File_Name: "File name",
-  Account_Save_Label_File_Button: "Export project",
-  Account_Import_Label_File_Browse_Button: "Browse file",
+  Account_Export_File_Label: "Export file",
+  Account_Import_Browse: "Browse file",
   Account_Import_Label_File_Button: "Import project",
-  Account_Save_Label_File_Library_Button: "Export library",
-  Account_Import_Label_File_Library_Button: "Import library",
+  Account_Export_File_Library_Label: "Export library",
+  Account_Import_Library_Label: "Import library",
+  Account_Save: "Save",
+  Account_Save_File: "SaveFile",
+  Account_Open: "Open",
+  Account_Create: "Create",
+  Account_Cancel: "Cancel",
+  Account_Save_Library: "SaveLibrary",
+  Account_Import_Project: "ImportProject",
+  Account_Import_Library: "ImportLibrary",
+  Account_Logout: "Logout",
 
   // Error
   Error_Tile: "Oops, something went wrong",
@@ -173,21 +192,9 @@ const TextResources = {
   Error_NoActiveAccount:
     "No active account. Verify a user has been signed in and setActiveAccount has been called",
 
-  // LegendModule
-  Legend_Heading: "Legend",
-
-  // FilterModule
-  Filter_Transport: "Transport",
-  Filter_Location: "Location",
-
   // BlockView
   BlockView_Select_Message:
     "Please select an additional object from the Explorer Module",
-
-  // Relations
-  Relations_PartOf: "Part of Relationship",
-  Relations_HasLocation: "Has Location",
-  Relations_FulfilledBy: "Fulfilled By",
 
   // Type
   Type_BlockLocation: "BlockLocationNode",

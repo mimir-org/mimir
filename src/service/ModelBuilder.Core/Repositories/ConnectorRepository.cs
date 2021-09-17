@@ -19,6 +19,9 @@ namespace Mb.Core.Repositories
 
         public void AttachWithAttributes(ICollection<Connector> entities, EntityState state)
         {
+            if(entities == null)
+                return;
+
             foreach (var connector in entities.OfType<Terminal>())
             {
                 if (connector.Attributes != null)

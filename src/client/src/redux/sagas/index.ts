@@ -1,4 +1,5 @@
 import { all, takeEvery } from "redux-saga/effects";
+import { FETCHING_CONTRACTORS, FETCHING_STATUSES } from "../store/common/types";
 import {
   FETCHING_LIBRARY,
   EXPORT_LIBRARY,
@@ -17,13 +18,10 @@ import {
 } from "./../store/project/types";
 import {
   FETCHING_INITIAL_DATA,
-  CHOOSE_ASPECT,
-  CHANGE_ASPECT,
   SAVE_LIBRARY_TYPE,
   FETCHING_BLOB_DATA,
   FETCHING_TYPE,
 } from "../store/typeEditor/types";
-import { FETCHING_CONTRACTORS, FETCHING_STATUSES } from "../store/common/types";
 
 import {
   searchLibrary,

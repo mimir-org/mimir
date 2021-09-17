@@ -17,7 +17,7 @@ const TerminalCategoryWrapper = styled.div`
     margin-left: auto;
     padding-right: 10px;
     background: ${Color.LightGrey};
-    border: 1px solid ${Color.DeepCyan};
+    border: 1px solid ${Color.BlueMagenta};
     border-radius: 2px;
     padding: 0px;
     white-space: nowrap;
@@ -27,7 +27,7 @@ const TerminalCategoryWrapper = styled.div`
     color: ${Color.Black};
 
     &:hover {
-      border: 2px solid ${Color.DeepCyan};
+      border: 2px solid ${Color.BlueMagenta};
     }
   }
 

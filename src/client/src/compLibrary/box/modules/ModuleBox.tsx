@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { MODULE_TYPE } from "../../../models/project";
-import { Color } from "./../../../compLibrary";
+import { Color, Size } from "./../../../compLibrary";
 
 const ModuleBox = styled.div`
   border-right: 1px solid ${Color.Grey};
@@ -18,7 +18,8 @@ const ModuleBox = styled.div`
   z-index: 5;
   overflow: hidden;
   position: fixed;
-  top: ${(props) => props.type !== MODULE_TYPE.LEGEND && "49px"};
+  top: ${(props) =>
+    props.type !== MODULE_TYPE.LEGEND && `${Size.TopMenu_Height}px`};
   right: ${(props) => props.type === MODULE_TYPE.LIBRARY && "0"};
 `;
 

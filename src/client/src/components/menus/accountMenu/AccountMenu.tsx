@@ -1,18 +1,18 @@
+import * as Handlers from "./handlers";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../redux/store/index";
 import { UserState } from "../../../redux/store/user/types";
 import { ProjectState } from "../../../redux/store/project/types";
-import { save } from "../../../redux/store/project/actions";
 import { GetMenuElement } from "./helpers";
 import { MENU_TYPE } from "../../../models/project";
-import { changeMenu } from "../../../redux/store/projectMenu/actions";
 import { OpenProjectMenu } from "../../project/openProject";
 import { CreateProjectMenu } from "../../project/createProject";
-import { SaveProjectFileMenu } from "../../project/saveProjectFile";
+import { ExportProjectFileMenu } from "../../project/exportProjectFile";
 import { ImportProjectFileMenu } from "../../project/importProjectFile/ImportProjectFileMenu";
-import { SaveLibraryFileMenu } from "../../project/saveLibraryFile/SaveLibraryFileMenu";
+import { ExportLibraryFileMenu } from "../../project/exportLibraryFile/ExportLibraryFileMenu";
 import { ImportFileLibraryMenu } from "../../project/importLibrary/ImportFileLibraryMenu";
-import { MenuLine, MenuBox } from "../../../compLibrary/box/menus";
+import { MenuLine, AccountMenuBox } from "../../../compLibrary/box/menus";
+import { TextResources } from "../../../assets/text";
 
 const AccountMenu = () => {
   const dispatch = useDispatch();
@@ -24,55 +24,54 @@ const AccountMenu = () => {
     (state) => state.userState
   ) as UserState;
 
-  const onOpenClick = () => {
-    dispatch(changeMenu(MENU_TYPE.OPEN_PROJECT_MENU, true));
-  };
-
-  const onCreateClick = () => {
-    dispatch(changeMenu(MENU_TYPE.CREATE_PROJECT_MENU, true));
-  };
-
-  const onSaveClick = () => {
-    dispatch(changeMenu(MENU_TYPE.ACCOUNT_MENU, false));
-    if (projectState.project) dispatch(save(projectState.project));
-  };
-
-  const onSaveFile = () => {
-    dispatch(changeMenu(MENU_TYPE.SAVE_PROJECT_FILE_MENU, true));
-  };
-
-  const onImportProjectFile = () => {
-    dispatch(changeMenu(MENU_TYPE.IMPORT_PROJECT_FILE_MENU, true));
-  };
-
-  const onSaveLibraryFile = () => {
-    dispatch(changeMenu(MENU_TYPE.SAVE_LIBRARY_FILE_MENU, true));
-  };
-
-  const onImportLibraryFile = () => {
-    dispatch(changeMenu(MENU_TYPE.IMPORT_LIBRARY_FILE_MENU, true));
-  };
-
   return (
     <>
-      <MenuBox id={MENU_TYPE.ACCOUNT_MENU}>
-        <GetMenuElement type="Open" onClick={onOpenClick} />
-        <GetMenuElement type="Create" onClick={onCreateClick} />
-        <GetMenuElement type="Save" onClick={onSaveClick} />
-        <GetMenuElement type="SaveLibrary" onClick={onSaveLibraryFile} />
-        <GetMenuElement type="SaveFile" onClick={onSaveFile} />
+      <AccountMenuBox id={MENU_TYPE.ACCOUNT_MENU}>
+        <GetMenuElement
+          type={TextResources.Account_Open}
+          onClick={() => Handlers.OnOpenClick(dispatch)}
+        />
+        <GetMenuElement
+          type={TextResources.Account_Create}
+          onClick={() => Handlers.OnCreateClick(dispatch)}
+        />
+        <GetMenuElement
+          type={TextResources.Account_Save}
+          onClick={() => Handlers.OnSaveClick(dispatch, projectState)}
+        />
+        <GetMenuElement
+          type={TextResources.Account_Save_Library}
+          onClick={() => Handlers.OnSaveLibraryFile(dispatch)}
+        />
+        <GetMenuElement
+          type={TextResources.Account_Save_File}
+          onClick={() => Handlers.OnSaveFile(dispatch)}
+        />
         <MenuLine />
-        <GetMenuElement type="ImportProject" onClick={onImportProjectFile} />
-        <GetMenuElement type="ImportLibrary" onClick={onImportLibraryFile} />
+        <GetMenuElement
+          type={TextResources.Account_Import_Project}
+          onClick={() => Handlers.OnImportProjectFile(dispatch)}
+        />
+        <GetMenuElement
+          type={TextResources.Account_Import_Library_Label}
+          onClick={() => Handlers.OnImportLibraryFile(dispatch)}
+        />
         <MenuLine />
-        <GetMenuElement type="Logout" userState={userState} />
-      </MenuBox>
+        <GetMenuElement
+          type={TextResources.Account_Logout}
+          userState={userState}
+        />
+      </AccountMenuBox>
+
       <div className="ProjectMenu" style={{ zIndex: 2 }}>
-        <OpenProjectMenu projectState={projectState} />
+        <OpenProjectMenu projectState={projectState} dispatch={dispatch} />
         <CreateProjectMenu />
-        <SaveProjectFileMenu projectState={projectState} />
+        <ExportProjectFileMenu
+          projectState={projectState}
+          dispatch={dispatch}
+        />
         <ImportProjectFileMenu />
-        <SaveLibraryFileMenu />
+        <ExportLibraryFileMenu />
         <ImportFileLibraryMenu />
       </div>
     </>

@@ -3,9 +3,9 @@ import { useState, useEffect } from "react";
 import { Aspect, ObjectType } from "../../../../models";
 import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
 import { ExpandIcon, CollapseIcon } from "../../../../assets/icons/common";
+import { TextResources } from "../../../../assets/text";
 import {
   GetDefaultValue,
-  GetTypeValue,
   LocationDropdown,
   IsLocation,
   ModeEdit,
@@ -16,8 +16,8 @@ import {
   DropdownMenuHeader,
   DropdownMenuList,
   DropdownMenuListItem,
-} from "../../../../compLibrary/dropdown";
-import { TextResources } from "../../../../assets/text";
+} from "../../../../compLibrary/dropdown/styled";
+
 interface Props {
   label: string;
   items: any[];
