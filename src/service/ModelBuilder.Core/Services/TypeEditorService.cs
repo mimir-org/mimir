@@ -310,6 +310,7 @@ namespace Mb.Core.Services
                 .GetAll()
                 .OfType<NodeType>()
                 .Include(x => x.TerminalTypes)
+                .Include("TerminalTypes.TerminalType")
                 .Include(x => x.AttributeTypes)
                 .ToList();
 
@@ -355,6 +356,7 @@ namespace Mb.Core.Services
                         .FindBy(x => x.Id == id)
                         .OfType<NodeType>()
                         .Include(x => x.TerminalTypes)
+                        .Include("TerminalTypes.TerminalType")
                         .Include(x => x.AttributeTypes)
                         .FirstOrDefaultAsync();
 

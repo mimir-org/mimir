@@ -67,7 +67,7 @@ const Dropdown = ({
   const handleChange = (_e: any, value: any) => {
     setSelectedItem(value);
     setIsListOpen(!isListOpen);
-    onChange(value);
+    onChange(value.id);
   };
 
   const getCategory = (item: DropDownItem) => {

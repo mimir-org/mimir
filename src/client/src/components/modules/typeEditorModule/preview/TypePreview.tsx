@@ -1,91 +1,75 @@
-import { useDispatch } from "react-redux";
-import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
-import { ListHeader } from "../lists/ListHeader";
-import { PreviewBody } from "../preview/PreviewBody";
-import { ListWrapper } from "../../../../compLibrary";
-import { SaveButton } from "../../../../compLibrary/buttons";
+import { CreateLibraryType, Rds, TerminalType } from "../../../../models";
+import { ListType } from "../TypeEditorList";
+import { ObjectBlock } from "./ObjectBlock";
+import { ListLabel, ListWrapper } from "../../../../compLibrary";
+import { PreviewArea, InfoWrapper } from "../styled";
+import {
+  IsLocation,
+  IsFunction,
+  IsObjectBlock,
+  IsTransport,
+  IsInterface,
+  GetListLabel,
+} from "..//helpers";
+import { ReactComponent as TransportIcon } from "../../../../assets/icons/common/transport.svg";
+import { ReactComponent as InterfaceIcon } from "../../../../assets/icons/common/interface.svg";
 import { TextResources } from "../../../../assets/text";
-import { create, update } from "../../../../redux/store/typeEditor/actions";
-import { TypeMode } from "../../../../models";
-import { GetValidationMessage } from "../validators";
-import { useState } from "react";
-import { ErrorMessageBox } from "../styled";
-import { AddIcon, CheckIcon, CloseIcon } from "../../../../assets/icons/common";
-import { ModeEdit, ModeNew } from "../helpers";
-
 interface Props {
-  state: TypeEditorState;
-  disabled: boolean;
-  onChange: Function;
+  createLibraryType: CreateLibraryType;
+  rds: Rds;
+  terminal: TerminalType;
 }
 
-export const TypePreview = ({ state, disabled, onChange }: Props) => {
-  const dispatch = useDispatch();
-  const validationMessages = GetValidationMessage(state);
-  const [showBox, setShowBox] = useState(false);
-
-  const onSaveClick = (mode: TypeMode) => {
-    if (validationMessages.length === 0) {
-      setShowBox(false);
-      if (ModeNew(mode)) {
-        dispatch(create(state.createLibraryType));
-      } else if (ModeEdit(mode)) {
-        dispatch(update(state.selectedType, state.selectedNode));
-      }
-    } else {
-      setShowBox(true);
-    }
-    onChange();
-  };
-
-  const onBoxClick = () => {
-    setShowBox(false);
-  };
-
-  return (
-    <ListWrapper flex={0.7} right={0}>
-      <ListHeader
-        label={TextResources.TypeEditor_New_Type_Preview}
-        chooseVisible={false}
-      />
-      <PreviewBody state={state} />
-      <div className="text">{TextResources.TypeEditor_Preview_Info}</div>
-      <SaveButton
-        disabled={disabled}
-        onClick={
-          disabled
-            ? null
-            : () => {
-                onSaveClick(state.mode);
-              }
-        }
-      >
-        <p>
-          {ModeNew(state.mode)
-            ? TextResources.TypeEditor_Button_Add
-            : TextResources.TypeEditor_Button_Edit}
-        </p>
-        <img
-          src={ModeNew(state.mode) ? AddIcon : CheckIcon}
-          alt="icon"
-          className="icon"
+export const TypePreview = ({ createLibraryType, rds, terminal }: Props) => {
+  const showObjectBlock = () => {
+    if (
+      (IsLocation(createLibraryType?.aspect) &&
+        createLibraryType?.locationType !== "") ||
+      (IsFunction(createLibraryType?.aspect) &&
+        IsObjectBlock(createLibraryType?.objectType))
+    ) {
+      return (
+        <ObjectBlock
+          createLibraryType={createLibraryType}
+          rdsName={rds?.name}
         />
-      </SaveButton>
-      {showBox && validationMessages.length > 0 && (
-        <ErrorMessageBox>
-          <img
-            src={CloseIcon}
-            alt="icon"
-            onClick={onBoxClick}
-            className="icon"
-          />
-          {validationMessages.map((message) => (
-            <p className="message" key={message}>
-              {message}
-            </p>
-          ))}
-        </ErrorMessageBox>
-      )}
+      );
+    }
+    return null;
+  };
+
+  const transportOrInterface = () => {
+    if (IsFunction(createLibraryType?.aspect)) {
+      return (
+        IsTransport(createLibraryType?.objectType) ||
+        IsInterface(createLibraryType?.objectType)
+      );
+    }
+    return false;
+  };
+  return (
+    <ListWrapper>
+      <ListLabel> {GetListLabel(ListType.Preview)}</ListLabel>
+      <PreviewArea>
+        {showObjectBlock()}
+        {transportOrInterface() && (
+          <InfoWrapper>
+            <p>{rds?.name}</p>
+            <p>{createLibraryType?.name}</p>
+          </InfoWrapper>
+        )}
+        {IsFunction(createLibraryType?.aspect) &&
+          IsTransport(createLibraryType?.objectType) && (
+            <TransportIcon style={{ fill: terminal.color }}></TransportIcon>
+          )}
+        {IsFunction(createLibraryType?.aspect) &&
+          IsInterface(createLibraryType?.objectType) && (
+            <InterfaceIcon
+              style={{ stroke: terminal.color, fill: terminal.color }}
+            ></InterfaceIcon>
+          )}
+      </PreviewArea>
+      <p className="text">{TextResources.TypeEditor_Preview_Info}</p>
     </ListWrapper>
   );
 };

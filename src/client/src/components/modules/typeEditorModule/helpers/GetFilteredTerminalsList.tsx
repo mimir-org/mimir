@@ -5,7 +5,11 @@ const GetFilteredTerminalsList = (terminals: any[]): any[] => {
   if (!terminals || terminals.length <= 0) return [] as any[];
 
   terminals.forEach((terminalCategory) => {
-    const cat = { name: terminalCategory.key, items: [] };
+    const cat = {
+      name: terminalCategory.key,
+      id: terminalCategory?.value[0].terminalCategoryId,
+      items: [],
+    };
     terminalCategory?.value.forEach((element, index) => {
       cat.items.push({
         id: element.id,

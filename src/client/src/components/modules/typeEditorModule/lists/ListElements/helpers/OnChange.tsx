@@ -12,10 +12,10 @@ const OnChange = (
   if (locationAttribute) {
     if (isSelected) {
       temp = locationAttributes.filter((a) => a.key !== locationAttribute.key);
-      dispatch(choosePredefinedAttributes(mode, temp));
+      dispatch(choosePredefinedAttributes(temp));
     } else {
       locationAttributes.push(locationAttribute);
-      dispatch(choosePredefinedAttributes(mode, locationAttributes));
+      dispatch(choosePredefinedAttributes(locationAttributes));
     }
   }
 };

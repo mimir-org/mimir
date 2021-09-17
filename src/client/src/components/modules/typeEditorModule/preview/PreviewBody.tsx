@@ -1,4 +1,3 @@
-import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
 import { ObjectBlock } from "./ObjectBlock";
 import { PreviewArea, InfoWrapper } from "../styled";
 import { ReactComponent as TransportIcon } from "../../../../assets/icons/common/transport.svg";
@@ -9,38 +8,31 @@ import {
   IsObjectBlock,
   IsTransport,
   IsInterface,
-  ModeEdit,
 } from "../helpers";
-
+import { CreateLibraryType } from "../../../../models";
 interface Props {
-  state: TypeEditorState;
+  createLibraryType: CreateLibraryType;
 }
 
-export const PreviewBody = ({ state }: Props) => {
-  const mode = state.mode;
-  const aspect = ModeEdit(mode)
-    ? state.selectedNode.aspect
-    : state.createLibraryType.aspect;
-  const objectType = ModeEdit(mode)
-    ? state.selectedNode.objectType
-    : state.createLibraryType.objectType;
-  const locationType = ModeEdit(mode)
-    ? state.selectedNode.locationType
-    : state.createLibraryType.locationType;
-
+export const PreviewBody = ({ createLibraryType }: Props) => {
   const showObjectBlock = () => {
     if (
-      (IsLocation(aspect) && locationType !== "") ||
-      (IsFunction(aspect) && IsObjectBlock(objectType))
+      (IsLocation(createLibraryType.aspect) &&
+        createLibraryType.locationType !== "") ||
+      (IsFunction(createLibraryType.aspect) &&
+        IsObjectBlock(createLibraryType.objectType))
     ) {
-      return <ObjectBlock state={state} />;
+      return <ObjectBlock createLibraryType={createLibraryType} rdsName={""} />;
     }
     return null;
   };
 
   const transportOrInterface = () => {
-    if (IsFunction(aspect)) {
-      return IsTransport(objectType) || IsInterface(objectType);
+    if (IsFunction(createLibraryType.aspect)) {
+      return (
+        IsTransport(createLibraryType.objectType) ||
+        IsInterface(createLibraryType.objectType)
+      );
     }
     return false;
   };
@@ -50,18 +42,20 @@ export const PreviewBody = ({ state }: Props) => {
       {showObjectBlock()}
       {transportOrInterface() && (
         <InfoWrapper>
-          <p>{state.rdsName}</p>
-          <p>{state.createLibraryType.name}</p>
+          {/* <p>{createLibraryType.rdsId}</p> */}
+          <p>{createLibraryType.name}</p>
         </InfoWrapper>
       )}
-      {IsFunction(aspect) && IsTransport(objectType) && (
-        <TransportIcon style={{ fill: state.terminalColor }}></TransportIcon>
-      )}
-      {IsFunction(aspect) && IsInterface(objectType) && (
-        <InterfaceIcon
-          style={{ stroke: state.terminalColor, fill: state.terminalColor }}
-        ></InterfaceIcon>
-      )}
+      {/* {IsFunction(createLibraryType.aspect) &&
+        IsTransport(createLibraryType.objectType) && (
+          <TransportIcon style={{ fill: state.terminalColor }}></TransportIcon>
+        )}
+      {IsFunction(createLibraryType.aspect) &&
+        IsInterface(createLibraryType.objectType) && (
+          <InterfaceIcon
+            style={{ stroke: state.terminalColor, fill: state.terminalColor }}
+          ></InterfaceIcon>
+        )} */}
     </PreviewArea>
   );
 };

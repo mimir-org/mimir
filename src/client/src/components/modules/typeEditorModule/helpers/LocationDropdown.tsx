@@ -22,7 +22,7 @@ const LocationDropdown = ({
 
   const updateLocationType = (locationTypeId, locationName) => {
     setSelectedValue(locationName);
-    dispatch(chooseLocationType(mode, locationTypeId));
+    dispatch(chooseLocationType(locationTypeId));
     setIsListOpen(!isListOpen);
   };
 

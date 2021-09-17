@@ -8,7 +8,7 @@ import {
 } from "../../../../../../compLibrary";
 import { AddTerminalElement } from "../../../styled";
 import { TextResources } from "../../../../../../assets/text";
-import { HelpIcon } from "../../../../../../assets/icons/common";
+import { HelpIcon, DeleteIcon } from "../../../../../../assets/icons/common";
 interface Props {
   row: number;
   terminals: any[];
@@ -19,17 +19,17 @@ interface Props {
 const AddTerminal = ({ row, terminals, defaultTerminal, onChange }: Props) => {
   const onTerminalIdChange = (id: string) => {
     defaultTerminal.terminalTypeId = id;
-    onChange(row, defaultTerminal);
+    onChange("update", defaultTerminal, row);
   };
 
   const onQuantityChange = (item: number) => {
     defaultTerminal.number = item;
-    onChange(row, defaultTerminal);
+    onChange("update", defaultTerminal, row);
   };
 
   const onDirectionChange = (item: ConnectorType) => {
     defaultTerminal.connectorType = item;
-    onChange(row, defaultTerminal);
+    onChange("update", defaultTerminal, row);
   };
 
   return (
@@ -54,6 +54,9 @@ const AddTerminal = ({ row, terminals, defaultTerminal, onChange }: Props) => {
         onChange={(item: ConnectorType) => onDirectionChange(item)}
         value={defaultTerminal.connectorType}
       />
+      <button onClick={() => onChange("remove", defaultTerminal, row)}>
+        <img src={DeleteIcon} alt="delete" />
+      </button>
     </AddTerminalElement>
   );
 };

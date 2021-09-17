@@ -1,6 +1,8 @@
-export { default as RDSListElement } from "./ListElements/RDSListElement";
-export { default as TerminalsListElement } from "./ListElements/TerminalsListElement";
-export { default as PredefinedAttributesListElement } from "./ListElements/PredefinedAttributesListElement";
+export { default as RDSElement } from "./ListElements/RDSElement";
+export { default as ObjectBlockElement } from "./ListElements/ObjectBlockElement";
+export { default as TransportInterfaceElement } from "./ListElements/TransportInterfaceElement";
+export { default as PredefinedLocationElement } from "./ListElements/PredefinedLocationElement";
+export { default as AttributeElement } from "./ListElements/AttributeElement";
 
 // TO DO : REMOVE THESE
 export { default as TerminalsListBody } from "./ListElements/TerminalsListBody";

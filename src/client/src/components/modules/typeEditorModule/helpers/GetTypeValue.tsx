@@ -4,12 +4,12 @@ import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
 
 const GetTypeValue = (state: TypeEditorState, label: string) => {
   if (label === TextResources.TypeEditor_Aspect)
-    return Aspect[state.selectedNode.aspect];
+    return Aspect[state.createLibraryType.aspect];
   if (label === TextResources.TypeEditor_Object_Type)
-    return ObjectType[state.selectedNode.objectType];
-  if (label === "typeName") return state.selectedNode.name;
+    return ObjectType[state.createLibraryType.objectType];
+  if (label === "typeName") return state.createLibraryType.name;
   if (label === "rdsName") return state.rdsName;
-  if (label === "symbol") return state.selectedNode.symbolId;
+  if (label === "symbol") return state.createLibraryType.symbolId;
 };
 
 export default GetTypeValue;

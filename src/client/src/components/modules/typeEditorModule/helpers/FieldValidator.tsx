@@ -28,9 +28,9 @@ const FieldValidator = (state: TypeEditorState, input: string) => {
   const validName = name !== "";
   const validSymbol = symbol !== "";
   const validRds = rds !== "";
-  const validTerminals = terminals.length !== 0;
-  const validPredefinedAttributes = predefinedAttributes.length !== 0;
-  const validAttributes = attributes.length !== 0;
+  const validTerminals = terminals?.length !== 0;
+  const validPredefinedAttributes = predefinedAttributes?.length !== 0;
+  const validAttributes = attributes?.length !== 0;
   const validTerminalTypeId = terminalTypeId !== "";
 
   if (ModeEdit(state.mode)) {

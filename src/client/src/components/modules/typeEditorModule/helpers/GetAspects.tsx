@@ -16,9 +16,9 @@ const GetAspects = (): DropDownItem[] => {
       });
     });
 
-  categories[0].items = categories[0].items.filter(
-    (x) => x.name === "Function" || x.name === "Location" || x.name === "NotSet"
-  );
+  //   categories[0].items = categories[0].items.filter(
+  //     (x) => x.name === "Function" || x.name === "Location" || x.name === "NotSet"
+  //   );
 
   return categories;
 };

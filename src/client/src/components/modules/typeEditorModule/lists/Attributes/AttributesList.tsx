@@ -12,9 +12,7 @@ interface Props {
 
 export const AttributesList = ({ state, disabled }: Props) => {
   const mode = state.mode;
-  let aspect = ModeEdit(mode)
-    ? state.selectedNode.aspect
-    : state.createLibraryType.aspect;
+  let aspect = state.createLibraryType.aspect;
   let filteredAttributes = [];
 
   if (state.attributes && aspect !== Aspect.NotSet) {

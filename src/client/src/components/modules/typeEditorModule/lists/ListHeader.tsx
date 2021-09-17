@@ -8,8 +8,8 @@ interface Props {
 
 export const ListHeader = ({ label, chooseVisible }: Props) => (
   <ListLabel>
-    {chooseVisible && TextResources.TypeEditor_Properties_Choose}
-    {label}
+    {/* {chooseVisible && TextResources.TypeEditor_Properties_Choose}
+    {label} */}
   </ListLabel>
 );
 

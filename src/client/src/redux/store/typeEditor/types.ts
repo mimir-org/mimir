@@ -13,7 +13,6 @@ import {
   PredefinedAttribute,
   BlobData,
   LibraryFilter,
-  UpdateLibraryType,
 } from "../../../models";
 
 export const FETCHING_INITIAL_DATA = "FETCHING_INITIAL_DATA";
@@ -33,8 +32,8 @@ export const FETCHING_LOCATIONTYPES_SUCCESS_OR_ERROR =
 export const FETCHING_PREDEFINED_ATTRIBUTES = "FETCHING_PREDEFINED_ATTRIBUTES";
 export const FETCHING_PREDEFINED_ATTRIBUTES_SUCCESS_OR_ERROR =
   "FETCHING_PREDEFINED_ATTRIBUTES_SUCCESS_OR_ERROR";
-export const CHANGE_SELECTED_TYPE = "CHANGE_SELECTED_TYPE";
-export const CHANGE_MODE = "CHANGE_MODE";
+export const CLOSE_TYPE_EDITOR = "CLOSE_TYPE_EDITOR";
+export const UPDATE_CREATELIBRARYTYPE = "UPDATE_CREATELIBRARYTYPE";
 export const CHOOSE_ASPECT = "CHOOSE_ASPECT";
 export const CHOOSE_OBJECT_TYPE = "CHOOSE_OBJECT_TYPE";
 export const CHOOSE_TYPENAME = "CHOOSE_TYPENAME";
@@ -64,20 +63,22 @@ export const CHANGE_TERMINAL_TYPE_ID = "CHANGE_TERMINAL_TYPE_ID";
 export const CHANGE_PREDEFINED_ATTRIBUTES = "CHANGE_PREDEFINED_ATTRIBUTES";
 export const CHANGE_TERMINALTYPE = "CHANGE_TERMINALTYPE";
 export const CHANGE_ATTRIBUTETYPES = "CHANGE_ATTRIBUTETYPES";
-export const REMOVE_TERMINALTYPES = "REMOVE_TERMINALTYPES";
-export const CREATING_TYPE = "CREATING_TYPE";
-export const CREATING_TYPE_SUCCESS_OR_ERROR = "CREATING_TYPE_SUCCESS_OR_ERROR";
-export const UPDATING_TYPE = "UPDATING_TYPE";
-export const UPDATING_TYPE_SUCCESS_OR_ERROR = "UPDATE_TYPE_SUCCESS_OR_ERROR";
+export const REMOVE_TERMINALTYPE = "REMOVE_TERMINALTYPE";
+export const UPDATE_TERMINALTYPE = "UPDATE_TERMINALTYPE";
+export const SAVE_LIBRARY_TYPE = "SAVE_LIBRARY_TYPE";
+export const SAVE_LIBRARY_TYPE_SUCCESS_OR_ERROR =
+  "SAVE_LIBRARY_TYPE_SUCCESS_OR_ERROR";
 export const DELETE_TYPE_EDITOR_ERROR = "DELETE_TYPE_EDITOR_ERROR";
 export const FETCHING_TYPE = "FETCHING_TYPE";
 export const FETCHING_TYPE_SUCCESS_OR_ERROR = "FETCHING_TYPE_SUCCESS_OR_ERROR";
 export const FETCHING_BLOB_DATA = "FETCHING_BLOB_DATA";
 export const FETCHING_BLOB_DATA_SUCCESS_OR_ERROR =
   "FETCHING_BLOB_DATA_SUCCESS_OR_ERROR";
+export const OPEN_TYPE_EDITOR = "OPEN_TYPE_EDITOR";
 
 // State types
 export interface TypeEditorState {
+  visible: boolean;
   fetching: boolean;
   creating: boolean;
   createLibraryType: CreateLibraryType;
@@ -87,8 +88,6 @@ export interface TypeEditorState {
   terminals: TerminalType[];
   attributes: AttributeType[];
   mode: TypeMode;
-  selectedType: string;
-  selectedNode: UpdateLibraryType;
   rdsName: string;
   terminalName: string;
   terminalCategory: string;
@@ -203,24 +202,21 @@ export interface FetchingBlobDataActionFinished {
   };
 }
 
-export interface ChangeSelectedType {
-  type: typeof CHANGE_SELECTED_TYPE;
-  payload: {
-    selectedType: string;
-  };
+export interface CloseTypeEditor {
+  type: typeof CLOSE_TYPE_EDITOR;
+  payload: any;
 }
 
-export interface ChangeMode {
-  type: typeof CHANGE_MODE;
-  payload: {
-    mode: TypeMode;
-  };
+export interface OpenTypeEditor {
+  type: typeof OPEN_TYPE_EDITOR;
+  payload: any;
 }
 
-export interface ChooseAspect {
-  type: typeof CHOOSE_ASPECT;
+export interface UpdateCreateLibraryType {
+  type: typeof UPDATE_CREATELIBRARYTYPE;
   payload: {
-    aspect: Aspect;
+    key: string;
+    value: any;
   };
 }
 
@@ -407,21 +403,20 @@ export interface ChangeAttributesTypes {
   };
 }
 
-export interface RemoveTerminalTypes {
-  type: typeof REMOVE_TERMINALTYPES;
-  payload: {};
+export interface RemoveTerminalType {
+  type: typeof REMOVE_TERMINALTYPE;
+  payload: { terminal: TerminalTypeItem };
 }
-interface CreatingTypeAction {
-  type: typeof CREATING_TYPE;
+
+export interface UpdateTerminalType {
+  type: typeof UPDATE_TERMINALTYPE;
+  payload: { terminal: TerminalTypeItem };
+}
+
+interface SaveLibraryType {
+  type: typeof SAVE_LIBRARY_TYPE;
   payload: {
     libraryType: CreateLibraryType;
-  };
-}
-interface UpdatingTypeAction {
-  type: typeof UPDATING_TYPE;
-  payload: {
-    libraryType: UpdateLibraryType;
-    selectedType: string;
   };
 }
 interface DeleteTypeEditorErrorAction {
@@ -430,16 +425,8 @@ interface DeleteTypeEditorErrorAction {
     key: string;
   };
 }
-
-interface CreatingTypeActionFinished {
-  type: typeof CREATING_TYPE_SUCCESS_OR_ERROR;
-  payload: {
-    apiError: ApiError;
-  };
-}
-
-interface UpdatingTypeActionFinished {
-  type: typeof UPDATING_TYPE_SUCCESS_OR_ERROR;
+interface SaveLibraryTypeFinished {
+  type: typeof SAVE_LIBRARY_TYPE_SUCCESS_OR_ERROR;
   payload: {
     apiError: ApiError;
   };
@@ -462,9 +449,8 @@ export type TypeEditorActionTypes =
   | FetchingTypeActionFinished
   | FetchingBlobDataAction
   | FetchingBlobDataActionFinished
-  | ChangeSelectedType
-  | ChangeMode
-  | ChooseAspect
+  | CloseTypeEditor
+  | UpdateCreateLibraryType
   | ChooseObjectType
   | ChooseTypeName
   | ChooseSymbol
@@ -493,9 +479,9 @@ export type TypeEditorActionTypes =
   | ChangePredefinedAttributes
   | ChangeTerminalType
   | ChangeAttributesTypes
-  | RemoveTerminalTypes
-  | CreatingTypeAction
-  | CreatingTypeActionFinished
-  | UpdatingTypeAction
-  | UpdatingTypeActionFinished
-  | DeleteTypeEditorErrorAction;
+  | RemoveTerminalType
+  | UpdateTerminalType
+  | SaveLibraryType
+  | SaveLibraryTypeFinished
+  | DeleteTypeEditorErrorAction
+  | OpenTypeEditor;

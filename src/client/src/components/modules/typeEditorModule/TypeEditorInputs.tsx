@@ -6,6 +6,7 @@ import {
   GetBlobData,
   GetLocationTypes,
   GetObjectTypes,
+  IsLocation,
 } from "./helpers";
 import { TextInput, TypeInfo, TypeNameInput } from "./styled";
 
@@ -29,33 +30,40 @@ const TypeEditorInputs = ({
         items={GetAspects()}
         keyProp="id"
         valueProp="name"
-        onChange={(data: any) => onChange("aspect", data)}
+        onChange={(data: any) => onChange("aspect", Number(data))}
         // disabled={FieldValidator(state, "symbol")}
-        defaultValue={createLibraryType && createLibraryType.aspect.toString()}
+        defaultValue={createLibraryType && createLibraryType.aspect?.toString()}
       />
-      <Dropdown
-        label={TextResources.TypeEditor_Object_Type}
-        items={GetObjectTypes()}
-        keyProp="id"
-        valueProp="name"
-        onChange={(data: any) => onChange("objectType", data)}
-        // disabled={FieldValidator(state, "symbol")}
-        defaultValue={
-          createLibraryType && createLibraryType.objectType.toString()
-        }
-      />
-      <Dropdown
-        label={TextResources.TypeEditor_Location_Type}
-        items={GetLocationTypes(locationTypes)}
-        hasCategory={true}
-        keyProp="id"
-        valueProp="name"
-        onChange={(data: any) => onChange("locationType", data)}
-        // disabled={FieldValidator(state, "symbol")}
-        defaultValue={
-          createLibraryType && createLibraryType.locationType.toString()
-        }
-      />
+      {createLibraryType && !IsLocation(createLibraryType.aspect) && (
+        <Dropdown
+          label={TextResources.TypeEditor_Object_Type}
+          items={GetObjectTypes()}
+          keyProp="id"
+          valueProp="name"
+          onChange={(data: any) => onChange("objectType", Number(data))}
+          // disabled={FieldValidator(state, "symbol")}
+          defaultValue={
+            createLibraryType && createLibraryType.objectType?.toString()
+          }
+        />
+      )}
+
+      {createLibraryType && IsLocation(createLibraryType.aspect) && (
+        <Dropdown
+          label={TextResources.TypeEditor_Location_Type}
+          items={GetLocationTypes(locationTypes)}
+          hasCategory={true}
+          keyProp="id"
+          valueProp="name"
+          onChange={(data: any) => onChange("locationType", data)}
+          // disabled={FieldValidator(state, "symbol")}
+          defaultValue={
+            createLibraryType &&
+            createLibraryType.locationType &&
+            createLibraryType.locationType.toString()
+          }
+        />
+      )}
       <TypeNameInput>
         <p>{TextResources.TypeEditor_Type_Name}</p>
         <TextInput

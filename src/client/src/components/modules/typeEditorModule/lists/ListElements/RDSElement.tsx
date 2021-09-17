@@ -1,4 +1,4 @@
-import { RoundCheckbox } from "../../inputs/RoundCheckbox";
+import { ListType, RoundCheckbox } from "../../inputs/RoundCheckbox";
 import { ListElem } from "../../../../../compLibrary";
 import { HelpIcon } from "../../../../../assets/icons/common";
 
@@ -9,12 +9,11 @@ interface Props {
   onChange: Function;
 }
 
-export const RDSListElement = ({ id, name, defaultValue, onChange }: Props) => (
+export const RDSElement = ({ id, name, defaultValue, onChange }: Props) => (
   <ListElem>
     <RoundCheckbox
       id={id}
-      name={name}
-      label="rds"
+      listType={ListType.Rds}
       onChange={(key, data) => onChange(key, data)}
       defaultValue={defaultValue}
     />
@@ -23,4 +22,4 @@ export const RDSListElement = ({ id, name, defaultValue, onChange }: Props) => (
   </ListElem>
 );
 
-export default RDSListElement;
+export default RDSElement;

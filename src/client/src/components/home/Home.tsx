@@ -16,6 +16,7 @@ import {
 import { search } from "../../redux/store/project/actions";
 import { FlowModule } from "../flow";
 import { ErrorModule } from "../modules/errorModule";
+import { TypeEditorComponent } from "../../components/modules/typeEditorModule";
 
 interface RouteParams {
   type: string;
@@ -51,6 +52,7 @@ const Home = () => {
       <FlowModule route={params} />
       <InspectorModule />
       <LibraryModule />
+      <TypeEditorComponent />
       <ErrorModule />
     </>
   );

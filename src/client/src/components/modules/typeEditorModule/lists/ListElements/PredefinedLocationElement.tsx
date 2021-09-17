@@ -1,18 +1,6 @@
-import "../../inputs/checkbox.scss";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { TypeEditorState } from "../../../../../redux/store/typeEditor/types";
 import { PredefinedAttribute } from "../../../../../models";
-import {
-  OnChange,
-  OnMultipleValuesChange,
-  OnSingleValueChange,
-} from "./helpers";
-import {
-  HelpIcon,
-  ExpandIcon,
-  CollapseIcon,
-} from "../../../../../assets/icons/common";
+import { Checkbox } from "../../inputs";
 import {
   TerminalListElement,
   TerminalCategoryWrapper,
@@ -21,101 +9,96 @@ import {
   ValuesListWrapper,
   ValuesListItem,
 } from "../../styled";
-import { ModeEdit, ModeNew } from "../../helpers";
+import {
+  HelpIcon,
+  ExpandIcon,
+  CollapseIcon,
+} from "../../../../../assets/icons/common";
+import { OnMultipleValuesChange, OnSingleValueChange } from "./helpers";
+import { Label } from "../../inputs/Checkbox";
 
 interface Props {
-  name: string;
+  attributeName: string;
   values: object;
   isMultiSelect: boolean;
-  state: TypeEditorState;
+  defaultValue?: PredefinedAttribute[];
+  onChange: Function;
 }
 
-export const PredefinedAttributesListElement = ({
-  name,
+export const PredefinedLocationElement = ({
+  attributeName,
   values,
   isMultiSelect,
-  state,
+  defaultValue,
+  onChange,
 }: Props) => {
-  const mode = state.mode;
-  const dispatch = useDispatch();
   const [expandList, setExpandList] = useState(false);
-  const predefinedAttributes = ModeEdit(mode)
-    ? state.selectedNode.predefinedAttributes
-    : state.createLibraryType.predefinedAttributes;
 
-  const toggleValuesList = () => {
-    setExpandList(!expandList);
-  };
+  const isSelected = defaultValue.some((a) => a.key === attributeName);
 
   const locationAttribute = {
-    key: name,
+    key: attributeName,
     values: values,
     isMultiSelect: isMultiSelect,
   } as PredefinedAttribute;
 
-  const locationAttributes = predefinedAttributes;
-
-  const isSelected = locationAttributes.some(
-    (a) => a.key === locationAttribute.key
-  );
-
   const onCheckboxChange = () => {
-    OnChange(mode, locationAttribute, locationAttributes, isSelected, dispatch);
+    let attributes = defaultValue;
+    if (isSelected) {
+      attributes = attributes.filter((a) => a.key !== locationAttribute.key);
+    } else {
+      attributes.push(locationAttribute);
+    }
+    onChange("predefinedAttributes", attributes);
+  };
+
+  const getValues = () => {
+    let attribute: PredefinedAttribute;
+    if (isSelected) {
+      attribute = defaultValue.find((a) => a.key === attributeName);
+      return attribute.values;
+    } else {
+      return values;
+    }
   };
 
   const onSingleValueCheckboxChange = (e) => {
     OnSingleValueChange(
       e,
-      name,
-      predefinedAttributes,
+      attributeName,
+      defaultValue,
       isMultiSelect,
-      mode,
-      dispatch
+      onChange
     );
   };
 
   const onMultipleValuesCheckboxChange = ([param_key, param_value]) => {
     OnMultipleValuesChange(
       [param_key, param_value],
-      name,
-      predefinedAttributes,
+      attributeName,
+      defaultValue,
       isMultiSelect,
-      mode,
-      dispatch
+      onChange
     );
-  };
-
-  const getValues = (key) => {
-    let attribute: PredefinedAttribute;
-    if (ModeEdit(mode) && predefinedAttributes?.some((a) => a.key === key)) {
-      attribute = predefinedAttributes.find((a) => a.key === key);
-      return attribute.values;
-    } else if (ModeNew(mode)) {
-      return values;
-    }
   };
 
   return (
     <TerminalListElement>
       <TerminalCategoryWrapper>
-        <label className={"squarecheckbox"}>
-          <input
-            type="checkbox"
-            defaultChecked={isSelected}
-            id={name}
-            onChange={onCheckboxChange}
-          />
-          <span className="scheckmark"></span>
-          <label htmlFor={name}></label>
-        </label>
-        <p className="locationAttribute">{name}</p>
+        <Checkbox
+          id={attributeName}
+          label={Label.Terminals}
+          defaultValue={defaultValue}
+          onChange={onCheckboxChange}
+        />
+        <p className="locationAttribute">{attributeName}</p>
         <img className="help-icon" src={HelpIcon} alt="help" />
       </TerminalCategoryWrapper>
       {isSelected && (
         <SelectValue>
-          <ValueHeader onClick={toggleValuesList}>
+          <ValueHeader onClick={() => setExpandList(!expandList)}>
             <p className="selectedValues">
-              {Object.entries(getValues(name))
+              {Object.entries(getValues())
                 .filter(([_key, value]) => value === true)
                 .map(([key, _value]) => {
                   return (
@@ -129,13 +112,13 @@ export const PredefinedAttributesListElement = ({
             <img
               src={expandList ? ExpandIcon : CollapseIcon}
               alt="expand-icon"
-              onClick={toggleValuesList}
+              onClick={() => setExpandList(!expandList)}
               className="icon"
             />
           </ValueHeader>
           {expandList && (
             <ValuesListWrapper>
-              {Object.entries(getValues(name)).map(([key, value]) => {
+              {Object.entries(getValues()).map(([key, value]) => {
                 return (
                   <ValuesListItem key={key}>
                     <label className={"squarecheckbox"}>
@@ -176,4 +159,4 @@ export const PredefinedAttributesListElement = ({
   );
 };
 
-export default PredefinedAttributesListElement;
+export default PredefinedLocationElement;

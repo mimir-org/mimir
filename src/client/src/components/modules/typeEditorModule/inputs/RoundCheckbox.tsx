@@ -1,60 +1,33 @@
 import "./roundcheckbox.scss";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../../redux/store";
-import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
-import {
-  chooseRDS,
-  chooseRDSName,
-} from "../../../../redux/store/typeEditor/actions";
-import { ModeEdit } from "../helpers";
-import { useEffect } from "react";
 
+export enum ListType {
+  Rds = 0,
+  Terminals = 1,
+}
 interface Props {
   id: string;
-  name?: string;
-  label: string;
+  listType: ListType;
   defaultValue?: any;
   onChange: Function;
 }
 
 export const RoundCheckbox = ({
   id,
-  name,
-  label,
+  listType,
   defaultValue,
   onChange,
 }: Props) => {
-  const dispatch = useDispatch();
-  const state = useSelector<RootState>((s) => s.typeEditor) as TypeEditorState;
-  const mode = state.mode;
-
   let isSelected = () => {
-    if (label === "rds") {
-      return defaultValue === id;
-    } else if (label === "terminal") {
-      if (ModeEdit(mode)) {
-        return defaultValue.terminalCategory.name === id;
-      } else {
-        return state.terminalCategory === id;
-      }
-    }
+    if (listType === ListType.Rds) return defaultValue === id;
+    if (listType === ListType.Terminals) return defaultValue === id;
   };
 
   const onCheckboxChange = () => {
     if (id !== "" && id) {
-      if (label === "rds") {
-        onChange("rdsId", id);
-        // dispatch(chooseRDS(state.mode, id));
-        // dispatch(chooseRDSName(name));
-      }
+      if (listType === ListType.Rds) onChange("rdsId", id);
+      if (listType === ListType.Terminals) onChange(id);
     }
   };
-
-  useEffect(() => {
-    if (ModeEdit(mode) && label === "rds" && id === state.selectedNode.rdsId) {
-      dispatch(chooseRDSName(name));
-    }
-  }, [dispatch, label, name, mode, id, state.selectedNode.rdsId]);
 
   return (
     <label className={"roundcheckbox"}>
@@ -65,7 +38,7 @@ export const RoundCheckbox = ({
         onChange={onCheckboxChange}
       />
       <span className="checked"></span>
-      <label htmlFor={id}></label>
+      <label htmlFor={id} />
     </label>
   );
 };
