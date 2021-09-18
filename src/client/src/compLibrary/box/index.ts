@@ -8,7 +8,6 @@ export { default as ModuleBox } from "./modules/ModuleBox";
 export { default as ModuleHeader } from "./modules/ModuleHead";
 export { default as ModuleBody } from "./modules/ModuleBody";
 export { default as AspectBox } from "./aspect/AspectBox";
-export { default as AspectElementBox } from "./aspect/AspectElementBox";
 export { default as FooterBox } from "./footer/FooterBox";
 export { default as FooterContent } from "./footer/FooterContent";
 export { default as LibraryBody } from "./library/LibraryBody";
