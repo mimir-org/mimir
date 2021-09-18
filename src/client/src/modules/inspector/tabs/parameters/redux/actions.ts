@@ -5,23 +5,23 @@ import {
   REMOVE_ENTITY_PARAMETER,
 } from "./types";
 
-export function addEntityParameter(parameter: Attribute) {
+export function addEntityParameter(nodeId: string, parameter: Attribute) {
   return {
     type: ADD_ENTITY_PARAMETER,
-    payload: { parameter },
+    payload: { nodeId, parameter },
   };
 }
 
-export function removeEntityParameter(parameter: Attribute) {
+export function removeEntityParameter(nodeId: string, parameter: Attribute) {
   return {
     type: REMOVE_ENTITY_PARAMETER,
-    payload: { parameter },
+    payload: { nodeId, parameter },
   };
 }
 
-export function removeEntityParameters() {
+export function removeEntityParameters(nodeId: string) {
   return {
     type: REMOVE_ENTITY_PARAMETERS,
-    payload: null,
+    payload: { nodeId },
   };
 }
