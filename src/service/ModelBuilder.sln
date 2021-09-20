@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelBuilder.Services.Tests
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Fixtures", "Fixtures", "{CF9AF418-0087-4C8C-82A6-4038AE7DC19E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamModule", "Modules\FamModule\FamModule.csproj", "{AA11C55D-75F7-4BF8-8FB1-E12D0664D57D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventHubModule", "Modules\FamModule\EventHubModule.csproj", "{AA11C55D-75F7-4BF8-8FB1-E12D0664D57D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

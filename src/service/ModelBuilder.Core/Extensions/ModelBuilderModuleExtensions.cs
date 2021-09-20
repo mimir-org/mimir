@@ -1,11 +1,18 @@
-﻿using System.Threading;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Threading;
 using AutoMapper;
 using Mb.Core.Profiles;
 using Mb.Core.Repositories;
 using Mb.Core.Repositories.Contracts;
 using Mb.Core.Services;
 using Mb.Core.Services.Contracts;
+using Mb.Models.Attributes;
 using Mb.Models.Configurations;
+using Mb.Models.Enums;
+using Mb.Models.Modules;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +27,16 @@ namespace Mb.Core.Extensions
 {
     public static class ModelBuilderModuleExtensions
     {
+        public static IEnumerable<Type> GetTypes<T>(Assembly assembly)
+        {
+            var info = typeof(T).GetTypeInfo();
+            return
+                info.Assembly.GetTypes()
+                    .Concat(assembly.GetTypes())
+                    .Where(x => info.IsAssignableFrom(x))
+                    .Where(x => x.IsClass && !x.IsAbstract && x.IsPublic);
+        }
+
         public static IServiceCollection AddModelBuilderModule(this IServiceCollection services, IConfiguration configuration)
         {
             // ModelBuilder Configuration configurations
@@ -35,8 +52,7 @@ namespace Mb.Core.Extensions
             // Dependency injection
             services.AddSingleton<IFileRepository, JsonFileRepository>();
             services.AddSingleton<ICommonRepository, CommonRepository>();
-            services.AddSingleton<IModuleService, ModuleService>();
-
+            
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<INodeRepository, NodeRepository>();
             services.AddScoped<IEdgeRepository, EdgeRepository>();
@@ -71,7 +87,29 @@ namespace Mb.Core.Extensions
             services.AddHttpContextAccessor();
             services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
+            // Automatic dependency injection for all modules
+            var moduleService = new ModuleService();
+            services.AddServicesWithAttributeOfType<SingletonAttribute>(moduleService?.Assemblies ?? new List<Assembly>());
+            services.AddServicesWithAttributeOfType<ScopeAttribute>(moduleService?.Assemblies ?? new List<Assembly>());
+            services.AddServicesWithAttributeOfType<TransientAttribute>(moduleService?.Assemblies ?? new List<Assembly>());
+
             var provider = services.BuildServiceProvider();
+
+            var plugins = moduleService.Modules.Where(x => x.ModuleType == ModuleType.Plugin || x.ModuleType == ModuleType.SyncService).ToList();
+            foreach (var plugin in plugins)
+            {
+                if (plugin.Instance is IModelBuilderPlugin p)
+                {
+                    p.CreateModule(services, configuration, provider);
+                }
+
+                if (plugin.Instance is IModelBuilderSyncService s)
+                {
+                    s.CreateModule(services, configuration, provider);
+                }
+            }
+
+            services.AddSingleton<IModuleService>(x => moduleService);
 
             // Auto-mapper
             var autoMapperConfiguration = new MapperConfiguration(cfg =>

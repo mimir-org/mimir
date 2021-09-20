@@ -6,67 +6,92 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Mb.Core.Exceptions;
 using Mb.Core.Services.Contracts;
+using Mb.Models.Enums;
 using Mb.Models.Modules;
+using Module = Mb.Models.Modules.Module;
 
 namespace Mb.Core.Services
 {
     public class ModuleService : IModuleService
     {
-        public Dictionary<string, object> ParserModules { get; set; }
-        public Dictionary<string, object> PluginModules { get; set; }
-        
+        public List<Assembly> Assemblies { get; }
+        public List<Module> Modules { get; set; }
+
         public ModuleService()
         {
-            ParserModules = new Dictionary<string, object>();
-            PluginModules = new Dictionary<string, object>();
+            Assemblies = new List<Assembly>();
+            Modules = new List<Module>();
+            LoadAssemblies();
+            Modules.AddRange(CreateModules<IModelBuilderPlugin>(ModuleType.Plugin));
+            Modules.AddRange(CreateModules<IModelBuilderParser>(ModuleType.Parser));
+            Modules.AddRange(CreateModules<IModelBuilderSyncService>(ModuleType.SyncService));
         }
 
         public Task InitialModules()
         {
-            var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-
-            if (path == null)
-                return Task.CompletedTask;
-
-            var allAssemblies = Directory.GetFiles(path, "*.dll").Select(Assembly.LoadFile).ToList();
-            CreateModules(allAssemblies);
             return Task.CompletedTask;
         }
 
-        public void CreateModules(List<Assembly> assemblies)
+        public T Resolve<T>(string name) where T : IModuleInterface
         {
+            if (string.IsNullOrEmpty(name))
+                throw new ModelBuilderModuleException("Module name is required");
+
+            var instance = Modules.FirstOrDefault(x => string.Equals(x.Name, name, StringComparison.CurrentCultureIgnoreCase))?.Instance;
+            if (instance is T obj)
+            {
+                return (T)obj;
+            }
+
+            throw new NotSupportedException("The type is not supported or empty");
+        }
+
+        private List<Module> CreateModules<T>(ModuleType moduleType) where T : IModuleInterface
+        {
+            var data = new List<Module>();
+
+            if (Assemblies == null || !Assemblies.Any())
+                return data;
+
+            foreach (var instance in Assemblies
+                .Select(assembly => assembly.GetTypes()
+                .Where(x => x.GetInterfaces().Contains(typeof(T)) &&
+                            x.GetConstructor(Type.EmptyTypes) != null)
+                .Select(Activator.CreateInstance)
+                .FirstOrDefault()))
+            {
+                if (instance is not T obj) 
+                    continue;
+                
+                data.Add(new Module
+                {
+                    Name = obj.GetName() ?? Guid.NewGuid().ToString(),
+                    Instance = obj,
+                    ModuleType = moduleType
+                });
+            }
+
+            return data;
+        }
+
+        private void LoadAssemblies()
+        {
+            var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
+            if (path == null)
+                return;
+
+            var assemblies = Directory.GetFiles(path, "*.dll").Select(Assembly.LoadFile).ToList();
             foreach (var assembly in assemblies)
             {
                 try
                 {
-                    var parserInstance = assembly.GetTypes()
-                        .Where(x => x.GetInterfaces().Contains(typeof(IModelBuilderParser)) &&
-                                    x.GetConstructor(Type.EmptyTypes) != null)
-                        .Select(y => Activator.CreateInstance(y) as IModelBuilderParser)
-                        .FirstOrDefault();
+                    var hasModuleInterface = assembly.GetTypes().Any(x => x.GetInterfaces().Contains(typeof(IModuleInterface)) && x.GetConstructor(Type.EmptyTypes) != null);
+                    if (!hasModuleInterface) 
+                        continue;
 
-                    if (parserInstance != null)
-                    {
-                        var name = parserInstance.GetName();
-                        if (string.IsNullOrEmpty(name))
-                            throw new ModelBuilderModuleException("Module name must have a value.");
-                        ParserModules.Add(name.ToLower(), parserInstance);
-                    }
-
-                    var pluginInstance = assembly.GetTypes()
-                        .Where(x => x.GetInterfaces().Contains(typeof(IModelBuilderPlugin)) &&
-                                    x.GetConstructor(Type.EmptyTypes) != null)
-                        .Select(y => Activator.CreateInstance(y) as IModelBuilderPlugin)
-                        .FirstOrDefault();
-
-                    if (pluginInstance != null)
-                    {
-                        var name = pluginInstance.GetName();
-                        if(string.IsNullOrEmpty(name))
-                            throw new ModelBuilderModuleException("Module name must have a value.");
-
-                        PluginModules.Add(name.ToLower(), pluginInstance);
-                    }
+                    var ass = Assembly.LoadFrom(assembly.Location);
+                    Assemblies.Add(ass);
                 }
                 catch (ReflectionTypeLoadException)
                 {
@@ -75,29 +100,8 @@ namespace Mb.Core.Services
                 {
                     throw new ModelBuilderModuleException($"Can't create modules. Error: {e.Message}");
                 }
+
             }
-        }
-
-        public T Resolve<T>(string name) where T : IModuleInterface
-        {
-            if (string.IsNullOrEmpty(name))
-                throw new ModelBuilderModuleException("Module name is required"); 
-
-            if (typeof(IModelBuilderParser).IsAssignableFrom(typeof(T)))
-            {
-                if (ParserModules.TryGetValue(name.ToLower(), out var objectValue))
-                    if (objectValue is IModelBuilderParser t)
-                        return (T)t;
-            }
-
-            if (typeof(IModelBuilderPlugin).IsAssignableFrom(typeof(T)))
-            {
-                if (PluginModules.TryGetValue(name.ToLower(), out var objectValue))
-                    if (objectValue is IModelBuilderPlugin t)
-                        return (T)t;
-            }
-
-            throw new NotSupportedException("The type is not supported or empty");
         }
     }
 }

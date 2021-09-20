@@ -32,7 +32,7 @@ namespace Mb.Core.Services
         private readonly ICommonRepository _commonRepository;
         private readonly IConnectorRepository _connectorRepository;
         private readonly IModuleService _moduleService;
-
+        
         public ProjectService(IProjectRepository projectRepository, IMapper mapper, IHttpContextAccessor contextAccessor, INodeRepository nodeRepository, IEdgeRepository edgeRepository, ICommonRepository commonRepository, IConnectorRepository connectorRepository, IModuleService moduleService)
         {
             _projectRepository = projectRepository;
@@ -376,7 +376,7 @@ namespace Mb.Core.Services
         {
             var project = await GetProject(projectId);
 
-            if (!_moduleService.ParserModules.ContainsKey(parser.ToLower()))
+            if (_moduleService.Modules.All(x => !string.Equals(x.Name, parser, StringComparison.CurrentCultureIgnoreCase)))
                 throw new ModelBuilderModuleException($"There is no parser with key: {parser}");
 
             var par = _moduleService.Resolve<IModelBuilderParser>(parser);
@@ -396,12 +396,47 @@ namespace Mb.Core.Services
             await using var stream = new MemoryStream();
             await file.CopyToAsync(stream, cancellationToken);
 
-            if (!_moduleService.ParserModules.ContainsKey(parser.ToLower()))
+            if (_moduleService.Modules.All(x => !string.Equals(x.Name, parser, StringComparison.CurrentCultureIgnoreCase)))
                 throw new ModelBuilderModuleException($"There is no parser with key: {parser}");
 
             var par = _moduleService.Resolve<IModelBuilderParser>(parser);
             var project = await par.DeserializeProjectAm(stream.ToArray());
             return await ImportProject(project);
+        }
+
+        /// <summary>
+        /// Resolve commit package
+        /// </summary>
+        /// <param name="package"></param>
+        /// <returns></returns>
+        public async Task CommitProject(CommitPackage package)
+        {
+            // TODO: We are missing UX here to define what to do in this workflow. For now, we only send data.
+
+            if (package == null)
+                throw new ModelBuilderNullReferenceException("Can't commit a null reference commit package");
+
+            var project = await GetProject(package.ProjectId);
+            
+            if (_moduleService.Modules.All(x => !string.Equals(x.Name, package.Parser, StringComparison.CurrentCultureIgnoreCase)))
+                throw new ModelBuilderModuleException($"There is no parser with key: {package.Parser}");
+
+            var senders = _moduleService.Modules.Where(x => x.Instance is IModelBuilderSyncService).ToList();
+
+            if (!senders.Any())
+                throw new ModelBuilderModuleException($"There is no sender module");
+
+            var parser = _moduleService.Resolve<IModelBuilderParser>(package.Parser);
+            var data = await parser.SerializeProject(project);
+            var projectString = System.Text.Encoding.UTF8.GetString(data);
+
+            foreach (var sender in senders)
+            {
+                if(sender.Instance is IModelBuilderSyncService client)
+                {
+                    await client.SendData(projectString);
+                }
+            }
         }
 
         #region Private methods

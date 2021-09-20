@@ -19,5 +19,6 @@ namespace Mb.Core.Services.Contracts
         Task DeleteProject(string projectId);
         Task<(byte[] file, FileFormat format)> CreateFile(string projectId, string parser);
         Task<Project> CreateFromFile(IFormFile file, CancellationToken cancellationToken, string parser);
+        Task CommitProject(CommitPackage package);
     }
 }

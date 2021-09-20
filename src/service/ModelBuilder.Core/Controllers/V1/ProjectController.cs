@@ -113,7 +113,7 @@ namespace Mb.Core.Controllers.V1
         {
             if (string.IsNullOrEmpty(id))
                 return BadRequest("The id can not be null or empty");
-            
+
             try
             {
                 var data = await _projectService.GetProject(id);
@@ -262,9 +262,13 @@ namespace Mb.Core.Controllers.V1
                         contentType = @"application/xml";
                         extension = "xml";
                         break;
+                    case FileFormat.Turtle:
+                        contentType = @"text/turtle";
+                        extension = "ttl";
+                        break;
                     default:
                         return StatusCode(500, "Internal Server Error. Missing file format.");
-                } 
+                }
 
                 return File(file, contentType, $"project_{id}.{extension}");
             }
@@ -337,7 +341,11 @@ namespace Mb.Core.Controllers.V1
         {
             try
             {
-                var data = _moduleService.ParserModules.Select(x => x.Key).ToList();
+                var data = _moduleService.Modules
+                    .Where(x => x.Instance is IModelBuilderParser)
+                    .Select(x => x.Name)
+                    .ToList();
+
                 return Ok(data);
             }
             catch (Exception e)
