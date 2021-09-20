@@ -1,9 +1,9 @@
-import { AttributeDict } from "../redux/types";
+import { AttributeIdDict } from "../redux/types";
 
 export const RemoveEntryIfEmpty = (
   key: string,
-  attributes: AttributeDict
-): AttributeDict => {
+  attributes: AttributeIdDict
+): AttributeIdDict => {
   if (!attributes[key].length) {
     delete attributes[key];
   }

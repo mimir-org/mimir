@@ -4,10 +4,10 @@ import {
   REMOVE_ENTITY_PARAMETERS,
   REMOVE_ENTITY_PARAMETER,
   ParametersActionTypes,
-  AttributeDict,
+  AttributeIdDict,
 } from "./types";
 
-const initialState: { attributes: AttributeDict } = {
+const initialState: { attributes: AttributeIdDict } = {
   attributes: {},
 };
 
@@ -17,11 +17,11 @@ export const parametersReducer = (
 ) => {
   switch (action.type) {
     case ADD_ENTITY_PARAMETER: {
-      const { nodeId, parameter } = action.payload;
+      const { nodeId, parameterId } = action.payload;
 
       let attributes = {
         ...state.attributes,
-        [nodeId]: [...(state.attributes[nodeId] ?? []), parameter],
+        [nodeId]: [...(state.attributes[nodeId] ?? []), parameterId],
       };
 
       return {
@@ -31,12 +31,12 @@ export const parametersReducer = (
     }
 
     case REMOVE_ENTITY_PARAMETER: {
-      const { nodeId, parameter } = action.payload;
+      const { nodeId, parameterId } = action.payload;
 
       let attributes = {
         ...state.attributes,
         [nodeId]: [
-          ...state.attributes[nodeId].filter((x) => x.id !== parameter.id),
+          ...state.attributes[nodeId].filter((x) => x !== parameterId),
         ],
       };
 

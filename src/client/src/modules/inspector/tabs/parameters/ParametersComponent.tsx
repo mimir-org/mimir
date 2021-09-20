@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { CloseParameterIcon } from "../../../../assets/icons/common";
 import { TextResources } from "../../../../assets/text";
 import { Dropdown } from "./styled/dropdown/parameter";
-import { Attribute, Node } from "../../../../models";
+import { Node } from "../../../../models";
 import { GetParametersColor } from "./helpers";
 import { EntityDropdown } from "./styled/dropdown/entity";
 import { Menu, Body, Box, Header, Entity } from "./styled";
@@ -26,9 +26,13 @@ const ParametersComponent = ({ node }: Props) => {
   const selectedAttributes =
     (useSelector<RootState>(
       (state) => state.parametersReducer.attributes[node.id]
-    ) as Attribute[]) ?? [];
+    ) as string[]) ?? [];
 
   const hasAttributes = selectedAttributes.length > 0;
+
+  const filteredAttributes = attributes.filter((x) =>
+    selectedAttributes.includes(x.id)
+  );
 
   const selectedParameters = [
     {
@@ -48,8 +52,8 @@ const ParametersComponent = ({ node }: Props) => {
       <Header>
         <Menu>
           <Dropdown
-            onChange={(value: Attribute, selected: boolean) =>
-              OnChangeParameter(node.id, value, selected, dispatch)
+            onChange={(parameterId: string, selected: boolean) =>
+              OnChangeParameter(node.id, parameterId, selected, dispatch)
             }
             keyProp="id"
             items={attributes}
@@ -66,7 +70,7 @@ const ParametersComponent = ({ node }: Props) => {
       </Header>
 
       {hasAttributes &&
-        selectedAttributes.map((attribute) => {
+        filteredAttributes.map((attribute) => {
           return (
             <Body key={attribute.key}>
               <Entity width={180}>
@@ -76,7 +80,7 @@ const ParametersComponent = ({ node }: Props) => {
                       src={CloseParameterIcon}
                       alt="icon"
                       onClick={() =>
-                        OnClearParameter(node.id, attribute, dispatch)
+                        OnClearParameter(node.id, attribute.id, dispatch)
                       }
                     />
                   </div>

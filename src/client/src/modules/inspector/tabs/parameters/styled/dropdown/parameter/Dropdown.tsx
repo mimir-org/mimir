@@ -15,9 +15,9 @@ import { Attribute } from "../../../../../../../models";
 
 interface Props {
   items: Attribute[];
-  selectedItems: Attribute[];
+  selectedItems: string[];
   keyProp: string;
-  onChange: (value: Attribute, selected: boolean) => void;
+  onChange: (parameterId: string, selected: boolean) => void;
   defaultValue?: string;
 }
 
@@ -39,8 +39,9 @@ const Dropdown = ({
     }
   }, [defaultValue, items, keyProp]);
 
-  const IsAttributeSelected = (attr: Attribute): boolean =>
-    selectedItems.includes(attr);
+  const IsAttributeSelected = (attr: Attribute): boolean => {
+    return selectedItems.includes(attr.id);
+  };
   return (
     <>
       <MenuWrapper>
@@ -62,7 +63,7 @@ const Dropdown = ({
             {items?.map((item) => {
               return (
                 <div
-                  onClick={() => onChange(item, IsAttributeSelected(item))}
+                  onClick={() => onChange(item.id, IsAttributeSelected(item))}
                   key={item[keyProp]}
                 >
                   <MenuListItem>

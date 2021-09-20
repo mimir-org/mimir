@@ -69,7 +69,7 @@ const ParameterBox = styled.div`
       width: 67px;
       height: 20px;
       font-size: ${FontSize.Small};
-      padding: 0px;
+      padding: 0px 0px 0px 2px;
     }
 
     .parameterDropdown {

@@ -1,21 +1,20 @@
-import { Attribute } from "../../../../../models";
 import {
   ADD_ENTITY_PARAMETER,
   REMOVE_ENTITY_PARAMETERS,
   REMOVE_ENTITY_PARAMETER,
 } from "./types";
 
-export function addEntityParameter(nodeId: string, parameter: Attribute) {
+export function addEntityParameter(nodeId: string, parameterId: string) {
   return {
     type: ADD_ENTITY_PARAMETER,
-    payload: { nodeId, parameter },
+    payload: { nodeId, parameterId },
   };
 }
 
-export function removeEntityParameter(nodeId: string, parameter: Attribute) {
+export function removeEntityParameter(nodeId: string, parameterId: string) {
   return {
     type: REMOVE_ENTITY_PARAMETER,
-    payload: { nodeId, parameter },
+    payload: { nodeId, parameterId },
   };
 }
 
