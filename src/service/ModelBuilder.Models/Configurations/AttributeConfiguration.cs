@@ -20,7 +20,8 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.NodeId).HasColumnName("NodeId").IsRequired(false);
             builder.Property(p => p.TerminalId).HasColumnName("TerminalId").IsRequired(false);
             builder.Property(p => p.TransportId).HasColumnName("TransportId").IsRequired(false);
-            
+            builder.Property(p => p.IsLocked).HasColumnName("IsLocked").IsRequired();
+
             builder.HasOne(x => x.Terminal).WithMany(y => y.Attributes).HasForeignKey(x => x.TerminalId).OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(x => x.Node).WithMany(y => y.Attributes).HasForeignKey(x => x.NodeId).OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(x => x.Transport).WithMany(y => y.Attributes).HasForeignKey(x => x.TransportId).OnDelete(DeleteBehavior.NoAction);

@@ -328,5 +328,42 @@ namespace Mb.Core.Controllers.V1
                 return StatusCode(500, "Internal Server Error");
             }
         }
+
+        /// <summary>
+        /// Locks or unlocks nodes and/or attributes
+        /// </summary>
+        /// <param name="lockUnlockAm"></param>
+        /// <returns>LockUnlockAm</returns>
+        [HttpPost("lockUnlock")]
+        [ProducesResponseType(typeof(ICollection<LockUnlockAm>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> LockUnlock([FromBody] LockUnlockAm lockUnlockAm)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                var result = await _projectService.LockUnlock(lockUnlockAm);
+                return Ok(result);
+            }
+            catch (ModelBuilderModuleException e)
+            {
+                ModelState.AddModelError("LockUnlock", e.Message);
+                return BadRequest(ModelState);
+            }
+            catch (ModelBuilderDuplicateException e)
+            {
+                ModelState.AddModelError("LockUnlock", e.Message);
+                return BadRequest(ModelState);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
     }
 }

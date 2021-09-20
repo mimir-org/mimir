@@ -18,7 +18,6 @@ using Mb.Models.Modules;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using Terminal = Mb.Models.Data.Terminal;
 
 namespace Mb.Core.Services
 {
@@ -32,8 +31,9 @@ namespace Mb.Core.Services
         private readonly ICommonRepository _commonRepository;
         private readonly IConnectorRepository _connectorRepository;
         private readonly IModuleService _moduleService;
+        private readonly IAttributeRepository _attributeRepository;
 
-        public ProjectService(IProjectRepository projectRepository, IMapper mapper, IHttpContextAccessor contextAccessor, INodeRepository nodeRepository, IEdgeRepository edgeRepository, ICommonRepository commonRepository, IConnectorRepository connectorRepository, IModuleService moduleService)
+        public ProjectService(IProjectRepository projectRepository, IMapper mapper, IHttpContextAccessor contextAccessor, INodeRepository nodeRepository, IEdgeRepository edgeRepository, ICommonRepository commonRepository, IConnectorRepository connectorRepository, IModuleService moduleService, IAttributeRepository attributeRepository)
         {
             _projectRepository = projectRepository;
             _mapper = mapper;
@@ -43,6 +43,7 @@ namespace Mb.Core.Services
             _commonRepository = commonRepository;
             _connectorRepository = connectorRepository;
             _moduleService = moduleService;
+            _attributeRepository = attributeRepository;
         }
 
         /// <summary>
@@ -402,7 +403,133 @@ namespace Mb.Core.Services
             return await ImportProject(project);
         }
 
+        /// <summary>
+        /// Locks or unlocks nodes and/or attributes
+        /// </summary>
+        /// <param name="lockUnlockAm"></param>
+        /// <returns>LockUnlockAm</returns>
+        public async Task<LockUnlockAm> LockUnlock(LockUnlockAm lockUnlockAm)
+        {
+            if (lockUnlockAm == null)
+                return null;
+
+            var result = new LockUnlockAm {Attributes = new List<LockUnlockIdAm>(), Nodes = new List<LockUnlockIdAm>()};
+
+            //Lock/unlock attributes
+            if (lockUnlockAm.Attributes != null && lockUnlockAm.Attributes.Any())
+            {
+                foreach (var attributeAm in lockUnlockAm.Attributes)
+                {
+                    if(attributeAm?.Id == null)
+                        continue;
+
+                    var attributeInDb = _attributeRepository.Context.Attributes.FindAsync(attributeAm.Id).Result;
+
+                    if(attributeInDb?.IsLocked == null || attributeInDb.IsLocked == attributeAm.IsLocked)
+                        continue;
+
+                    attributeInDb.IsLocked = attributeAm.IsLocked;
+                }
+
+                await _attributeRepository.SaveAsync();
+            }
+
+            if (lockUnlockAm.Nodes == null || !lockUnlockAm.Nodes.Any())
+            {
+                result.Attributes = GetLockedAttributes();
+                return result;
+            }
+
+            //Lock/unlock nodes. Also lock/unlock attributes on nodes automatically.
+            var nodesInDb = lockUnlockAm.Nodes.Select(nodeAm => _nodeRepository.Context.Nodes.FindAsync(nodeAm?.Id).Result).ToList();
+
+            foreach (var parentNode in nodesInDb)
+            {
+                if(parentNode?.Id == null)
+                    continue;
+
+                var nodeAm = lockUnlockAm.Nodes.FirstOrDefault(x => x.Id == parentNode.Id);
+
+                if(nodeAm?.IsLocked == null || parentNode.IsLocked == nodeAm.IsLocked)
+                    continue;
+
+                parentNode.IsLocked = nodeAm.IsLocked;
+                LockUnlockNodesRecursive(parentNode);
+            }
+
+            await _nodeRepository.SaveAsync();
+            await _attributeRepository.SaveAsync();
+
+            result.Attributes.Clear();
+            result.Attributes.AddRange(GetLockedAttributes());
+            result.Nodes.AddRange(GetLockedNodes());
+
+            return result;
+        }
+
         #region Private methods
+
+        private void LockUnlockNodesRecursive(Node parentNode)
+        {
+            var edges = _edgeRepository.Context.Edges.Where(x => x.FromNodeId == parentNode.Id).ToList();
+
+            if(!edges.Any())
+                return;
+
+            foreach (var edge in edges)
+            {
+                if (edge?.ToNodeId == null)
+                    return;
+
+                var childNode = _nodeRepository.Context.Nodes.FindAsync(edge.ToNodeId).Result;
+
+                if (childNode?.Level == null)
+                    continue;
+
+                if (childNode.Level > parentNode.Level)
+                    childNode.IsLocked = parentNode.IsLocked;
+
+                LockUnlockNodeAttributes(parentNode);
+                LockUnlockNodesRecursive(childNode);
+            }
+        }
+
+        private void LockUnlockNodeAttributes(Node node)
+        {
+            var attributes = _attributeRepository.Context.Attributes.Where(x => x.NodeId == node.Id);
+            
+            foreach (var attribute in attributes)
+            {
+                if(attribute?.IsLocked == null)
+                    continue;
+
+                attribute.IsLocked = node.IsLocked;
+            }
+        }
+
+        private List<LockUnlockIdAm> GetLockedNodes()
+        {
+            var lockUnlockIds = new List<LockUnlockIdAm>();
+
+            foreach (var lockedNodee in _nodeRepository.Context.Nodes.Where(x => x.IsLocked).ToList())
+            {
+                lockUnlockIds.Add(new LockUnlockIdAm{Id = lockedNodee.Id, IsLocked = lockedNodee.IsLocked});
+            }
+
+            return lockUnlockIds;
+        }
+
+        private List<LockUnlockIdAm> GetLockedAttributes()
+        {
+            var lockUnlockIds = new List<LockUnlockIdAm>();
+
+            foreach (var lockedAttribute in _attributeRepository.Context.Attributes.Where(x => x.IsLocked).ToList())
+            {
+                lockUnlockIds.Add(new LockUnlockIdAm { Id = lockedAttribute.Id, IsLocked = lockedAttribute.IsLocked });
+            }
+
+            return lockUnlockIds;
+        }
 
         private Node CreateInitAspectNode(Aspect aspect, string version, string projectId)
         {

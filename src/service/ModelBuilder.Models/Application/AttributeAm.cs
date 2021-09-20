@@ -9,6 +9,7 @@ namespace Mb.Models.Application
         public string Value { get; set; }
         public string SelectedUnitId { get; set; }
         public string AttributeTypeId { get; set; }
+        public bool IsLocked {  get; set; }
         public string QualifierId { get; set; }
         public string SourceId { get; set; }
         public string ConditionId { get; set; }
