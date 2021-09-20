@@ -3,7 +3,7 @@ import { Size } from "..";
 
 const BackgroundBox = styled.div`
   position: absolute;
-  top: 85px !important;
+  top: 100px !important;
   visibility: ${(props) => !props.visible && "hidden"};
   height: ${Size.BlockView_Height}px !important;
 

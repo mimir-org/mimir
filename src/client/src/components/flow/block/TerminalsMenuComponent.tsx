@@ -6,11 +6,18 @@ interface Props {
   isOpen: boolean;
   list: Connector[];
   width: number;
+  isParent: boolean;
   onClick: (conn: Connector) => void;
 }
 
-const TerminalsMenuComponent = ({ isOpen, list, width, onClick }: Props) => (
-  <TerminalsBox visible={isOpen} width={width}>
+const TerminalsMenuComponent = ({
+  isOpen,
+  list,
+  width,
+  isParent,
+  onClick,
+}: Props) => (
+  <TerminalsBox visible={isOpen} width={width} isParent={isParent}>
     {list.map((conn) => (
       <TerminalsElement key={conn.id} onClick={() => onClick(conn)}>
         <p className="text"> {GetConnectorName(conn)}</p>

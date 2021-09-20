@@ -34,8 +34,8 @@ const InspectorHeader = ({
     </NodeInfo>
 
     <ButtonWrapper visible={node || edge}>
-      <InspectorButton onClick={() => null} type="validate" visible={false} />
-      <InspectorButton onClick={() => null} type="lock" visible={false} />
+      <InspectorButton onClick={() => null} type="validate" visible={true} />
+      <InspectorButton onClick={() => null} type="lock" visible={true} />
       <InspectorButton
         onClick={() => OnDeleteClick(project, node, edge, dispatch)}
         type="delete"

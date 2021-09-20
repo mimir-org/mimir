@@ -77,6 +77,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     if (!isChecked(node)) {
       data.width = Size.ConnectView_Width;
       data.length = Size.ConnectView_Length;
+      console.log(data);
       if (!IsMainConnectNode(data.id)) dispatch(addMainNode(data));
       dispatch(addConnectNode(data, node));
     } else {
@@ -148,6 +149,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
           isOpen={terminalMenu}
           list={sortedTerminals}
           width={data.width}
+          isParent={false}
           onClick={onConnectorClick}
         />
 

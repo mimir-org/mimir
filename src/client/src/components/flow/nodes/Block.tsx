@@ -1,5 +1,5 @@
-import { ArrowIcon } from "../../../assets/icons/blockView";
-import { BlockParentBox } from "../../../compLibrary/blockView";
+import { ArrowIcon, TerminalsIcon } from "../../../assets/icons/blockView";
+import { BlockParentBox, TerminalsMenu } from "../../../compLibrary/blockView";
 import { Node } from "../../../models";
 
 interface Props {
@@ -7,9 +7,18 @@ interface Props {
   isLocation: boolean;
   isSplitView: boolean;
   isSelected: boolean;
+  showTerminalMenu: boolean;
+  onClick: () => void;
 }
 
-const Block = ({ node, isLocation, isSplitView, isSelected }: Props) => (
+const Block = ({
+  node,
+  isLocation,
+  isSplitView,
+  isSelected,
+  showTerminalMenu,
+  onClick,
+}: Props) => (
   <BlockParentBox
     id={"function-block-" + node.id}
     location={isLocation}
@@ -18,8 +27,9 @@ const Block = ({ node, isLocation, isSplitView, isSelected }: Props) => (
   >
     <img src={ArrowIcon} alt="arrow" className="icon"></img>
     <h3 className="header">{node.label ?? node.name}</h3>
-    <div className="line" />
-    <div className="content"></div>
+    <TerminalsMenu visible={true} onClick={onClick}>
+      <img src={TerminalsIcon} alt="options" />
+    </TerminalsMenu>
   </BlockParentBox>
 );
 

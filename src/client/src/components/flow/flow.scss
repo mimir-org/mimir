@@ -93,6 +93,32 @@
   }
 }
 
+.react-flow__node-BlockFunctionParentNode {
+  border-radius: 5px;
+  width: 950px;
+  height: 600px;
+  box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.2);
+  background-color: #fef445;
+  z-index: 1 !important;
+
+  &.selected {
+    border: 3px solid #fbc913 !important;
+  }
+}
+
+.react-flow__node-BlockLocationParentNode {
+  border-radius: 5px;
+  width: 950px;
+  height: 600px;
+  box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.2);
+  z-index: 1 !important;
+  border: 2px solid #a300a7 !important;
+
+  &.selected {
+    border: 3px solid #a300a7 !important;
+  }
+}
+
 .react-flow__node-FunctionBlock {
   z-index: 1 !important;
 }

@@ -6,6 +6,7 @@ const TerminalsMenu = styled.div`
   right: -1px;
   top: -1px;
   cursor: pointer;
+  z-index: 1;
 `;
 
 export default TerminalsMenu;

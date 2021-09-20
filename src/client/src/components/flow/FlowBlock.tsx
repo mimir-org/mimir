@@ -97,7 +97,6 @@ const FlowBlock = () => {
   );
 
   const OnElementsRemove = (elementsToRemove) => {
-    console.log("remove");
     const nodeToRemove = elementsToRemove[0];
     project.edges?.forEach((edge) => {
       if (

@@ -63,6 +63,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
           isOpen={terminalMenu}
           list={sortedTerminals}
           width={data.width}
+          isParent={false}
           onClick={onConnectorClick}
         />
       </NodeBox>
