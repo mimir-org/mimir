@@ -80,3 +80,5 @@ export { default as ValidateIcon } from "./validate.svg";
 // Inspector Parameters
 export { default as CloseParameterIcon } from "./paramsClose.svg";
 export { default as LockOpenIcon } from "./lockOpen.svg";
+export { default as WarningIcon } from "./warning.svg";
+

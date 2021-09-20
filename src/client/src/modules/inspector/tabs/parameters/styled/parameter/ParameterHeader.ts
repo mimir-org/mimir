@@ -19,7 +19,11 @@ const Header = styled.div`
     margin-left: auto;
   }
 
-  .paramterIcon {
+  .warningIcon {
+    margin: auto -10px auto 10px;
+  }
+
+  .parameterIcon {
     padding-left: 5px;
     cursor: pointer;
   }

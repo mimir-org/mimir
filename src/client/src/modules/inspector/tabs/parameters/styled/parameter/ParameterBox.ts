@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { FontSize, Color } from "../../../../../../compLibrary";
 
-const Parameter = styled.div`
+const ParameterBox = styled.div`
   position: relative;
   height: 100%;
   width: 100%;
@@ -69,6 +69,7 @@ const Parameter = styled.div`
       width: 67px;
       height: 20px;
       font-size: ${FontSize.Small};
+      padding: 0px;
     }
 
     .parameterDropdown {
@@ -78,4 +79,4 @@ const Parameter = styled.div`
     }
   }
 `;
-export default Parameter;
+export default ParameterBox;
