@@ -18,9 +18,8 @@ const DropdownHeader = styled.div`
   img {
     width: 13px;
     height: 13px;
-    opacity: 1;
     margin-left: auto;
-    padding: 4px;
+    opacity: 1;
   }
 `;
 

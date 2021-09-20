@@ -2,7 +2,6 @@ import {
   CreateLibraryType,
   Aspect,
   ObjectType,
-  TypeMode,
   BlobData,
   TerminalTypeItem,
   PredefinedAttribute,
@@ -20,26 +19,14 @@ import {
   FETCHING_LOCATIONTYPES_SUCCESS_OR_ERROR,
   FETCHING_PREDEFINED_ATTRIBUTES,
   FETCHING_PREDEFINED_ATTRIBUTES_SUCCESS_OR_ERROR,
-  FETCHING_TYPE,
-  FETCHING_TYPE_SUCCESS_OR_ERROR,
   FETCHING_BLOB_DATA,
   FETCHING_BLOB_DATA_SUCCESS_OR_ERROR,
-  CLOSE_TYPE_EDITOR,
+  FETCHING_TYPE,
+  FETCHING_TYPE_SUCCESS_OR_ERROR,
   OPEN_TYPE_EDITOR,
-  CHOOSE_OBJECT_TYPE,
-  CHOOSE_TYPENAME,
-  CHOOSE_SYMBOL,
-  CHOOSE_RDS,
-  CHOOSE_RDS_NAME,
-  CHOOSE_TERMINAL_NAME,
-  CHOOSE_TERMINAL_CATEGORY,
-  CHOOSE_TERMINAL_COLOR,
-  CHOOSE_SEMANTICREFERENCE,
-  CHOOSE_LOCATION_TYPE,
-  CHOOSE_TERMINAL_TYPE_ID,
-  CHOOSE_PREDEFINED_ATTRIBUTES,
-  CHOOSE_TERMINALTYPE,
-  CHOOSE_ATTRIBUTETYPES,
+  CLOSE_TYPE_EDITOR,
+  UPDATE_CREATELIBRARYTYPE,
+  ADD_TERMINALTYPE,
   REMOVE_TERMINALTYPE,
   UPDATE_TERMINALTYPE,
   SAVE_LIBRARY_TYPE,
@@ -47,18 +34,12 @@ import {
   DELETE_TYPE_EDITOR_ERROR,
   TypeEditorActionTypes,
   TypeEditorState,
-  UPDATE_CREATELIBRARYTYPE,
 } from "./types";
 
 const initialState: TypeEditorState = {
   visible: false,
   fetching: false,
   creating: false,
-  mode: TypeMode.NotSet,
-  rdsName: "",
-  terminalName: "",
-  terminalCategory: "",
-  terminalColor: "",
   createLibraryType: {
     libraryId: null,
     name: "",
@@ -73,8 +54,8 @@ const initialState: TypeEditorState = {
     terminalTypeId: "",
     symbolId: "",
   } as CreateLibraryType,
-  objectTypes: {},
   aspects: {},
+  objectTypes: {},
   rdsList: [],
   terminals: [],
   attributes: [],
@@ -206,11 +187,11 @@ export function typeEditorReducer(
           ? [...state.apiError, action.payload.apiError]
           : state.apiError,
       };
-    case CLOSE_TYPE_EDITOR:
+    case OPEN_TYPE_EDITOR:
       return {
         ...state,
         fetching: false,
-        visible: false,
+        visible: true,
         createLibraryType: {
           ...state.createLibraryType,
           libraryId: null,
@@ -227,11 +208,11 @@ export function typeEditorReducer(
           symbolId: "",
         },
       };
-    case OPEN_TYPE_EDITOR:
+    case CLOSE_TYPE_EDITOR:
       return {
         ...state,
         fetching: false,
-        visible: true,
+        visible: false,
         createLibraryType: {
           ...state.createLibraryType,
           libraryId: null,
@@ -256,91 +237,7 @@ export function typeEditorReducer(
           [action.payload.key]: action.payload.value,
         },
       };
-    case CHOOSE_OBJECT_TYPE:
-      return {
-        ...state,
-        createLibraryType: {
-          ...state.createLibraryType,
-          objectType: action.payload.objectType,
-        },
-      };
-    case CHOOSE_TYPENAME:
-      return {
-        ...state,
-        createLibraryType: {
-          ...state.createLibraryType,
-          name: action.payload.typeName,
-        },
-      };
-    case CHOOSE_SYMBOL:
-      return {
-        ...state,
-        createLibraryType: {
-          ...state.createLibraryType,
-          symbolId: action.payload.symbolId,
-        },
-      };
-    case CHOOSE_RDS:
-      return {
-        ...state,
-        createLibraryType: {
-          ...state.createLibraryType,
-          rdsId: action.payload.rds,
-        },
-      };
-    case CHOOSE_RDS_NAME:
-      return {
-        ...state,
-        rdsName: action.payload.rdsName,
-      };
-    case CHOOSE_TERMINAL_NAME:
-      return {
-        ...state,
-        terminalName: action.payload.terminalName,
-      };
-    case CHOOSE_TERMINAL_CATEGORY:
-      return {
-        ...state,
-        terminalCategory: action.payload.terminalCategory,
-      };
-    case CHOOSE_TERMINAL_COLOR:
-      return {
-        ...state,
-        terminalColor: action.payload.terminalColor,
-      };
-    case CHOOSE_SEMANTICREFERENCE:
-      return {
-        ...state,
-        createLibraryType: {
-          ...state.createLibraryType,
-          semanticReference: action.payload.semanticReference,
-        },
-      };
-    case CHOOSE_LOCATION_TYPE:
-      return {
-        ...state,
-        createLibraryType: {
-          ...state.createLibraryType,
-          locationType: action.payload.locationType,
-        },
-      };
-    case CHOOSE_TERMINAL_TYPE_ID:
-      return {
-        ...state,
-        createLibraryType: {
-          ...state.createLibraryType,
-          terminalTypeId: action.payload.terminalTypeId,
-        },
-      };
-    case CHOOSE_PREDEFINED_ATTRIBUTES:
-      return {
-        ...state,
-        createLibraryType: {
-          ...state.createLibraryType,
-          predefinedAttributes: action.payload.predefinedAttributes,
-        },
-      };
-    case CHOOSE_TERMINALTYPE:
+    case ADD_TERMINALTYPE:
       return {
         ...state,
         createLibraryType: {
@@ -375,14 +272,6 @@ export function typeEditorReducer(
                 : terminal
             ),
           ],
-        },
-      };
-    case CHOOSE_ATTRIBUTETYPES:
-      return {
-        ...state,
-        createLibraryType: {
-          ...state.createLibraryType,
-          attributeTypes: action.payload.attributeTypes,
         },
       };
     case SAVE_LIBRARY_TYPE:

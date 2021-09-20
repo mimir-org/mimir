@@ -1,9 +1,7 @@
 import {
   TerminalTypeItem,
   Aspect,
-  ObjectType,
   CreateLibraryType,
-  PredefinedAttribute,
   LibraryFilter,
 } from "../../../models";
 import {
@@ -15,27 +13,14 @@ import {
   FETCHING_PREDEFINED_ATTRIBUTES,
   FETCHING_TYPE,
   FETCHING_BLOB_DATA,
+  OPEN_TYPE_EDITOR,
   CLOSE_TYPE_EDITOR,
   UPDATE_CREATELIBRARYTYPE,
-  CHOOSE_OBJECT_TYPE,
-  CHOOSE_TYPENAME,
-  CHOOSE_SYMBOL,
-  CHOOSE_RDS,
-  CHOOSE_RDS_NAME,
-  CHOOSE_TERMINAL_NAME,
-  CHOOSE_TERMINAL_CATEGORY,
-  CHOOSE_TERMINAL_COLOR,
-  CHOOSE_SEMANTICREFERENCE,
-  CHOOSE_LOCATION_TYPE,
-  CHOOSE_TERMINAL_TYPE_ID,
-  CHOOSE_PREDEFINED_ATTRIBUTES,
-  CHOOSE_TERMINALTYPE,
-  CHOOSE_ATTRIBUTETYPES,
+  ADD_TERMINALTYPE,
   REMOVE_TERMINALTYPE,
   UPDATE_TERMINALTYPE,
   SAVE_LIBRARY_TYPE,
   DELETE_TYPE_EDITOR_ERROR,
-  OPEN_TYPE_EDITOR,
   TypeEditorActionTypes,
 } from "./types";
 
@@ -98,16 +83,16 @@ export function getSelectedNode(
   };
 }
 
-export function openTypeEditor(): TypeEditorActionTypes {
+export function getBlobData(): TypeEditorActionTypes {
   return {
-    type: OPEN_TYPE_EDITOR,
+    type: FETCHING_BLOB_DATA,
     payload: null,
   };
 }
 
-export function getBlobData(): TypeEditorActionTypes {
+export function openTypeEditor(): TypeEditorActionTypes {
   return {
-    type: FETCHING_BLOB_DATA,
+    type: OPEN_TYPE_EDITOR,
     payload: null,
   };
 }
@@ -129,119 +114,9 @@ export function updateValue(key: string, value: any) {
   };
 }
 
-export function chooseObjectType(objectType: ObjectType) {
-  return {
-    type: CHOOSE_OBJECT_TYPE,
-    payload: {
-      objectType,
-    },
-  };
-}
-
-export function chooseTypeName(typeName: string) {
-  return {
-    type: CHOOSE_TYPENAME,
-    payload: {
-      typeName,
-    },
-  };
-}
-
-export function chooseSymbol(symbolId: string): TypeEditorActionTypes {
-  return {
-    type: CHOOSE_SYMBOL,
-    payload: {
-      symbolId: symbolId,
-    },
-  };
-}
-
-export function chooseRDS(rds: string) {
-  return {
-    type: CHOOSE_RDS,
-    payload: {
-      rds,
-    },
-  };
-}
-
-export function chooseRDSName(rdsName: string) {
-  return {
-    type: CHOOSE_RDS_NAME,
-    payload: {
-      rdsName,
-    },
-  };
-}
-
-export function chooseTerminalName(terminalName: string) {
-  return {
-    type: CHOOSE_TERMINAL_NAME,
-    payload: {
-      terminalName,
-    },
-  };
-}
-
-export function chooseTerminalCategory(terminalCategory: string) {
-  return {
-    type: CHOOSE_TERMINAL_CATEGORY,
-    payload: {
-      terminalCategory,
-    },
-  };
-}
-
-export function chooseTerminalColor(terminalColor: string) {
-  return {
-    type: CHOOSE_TERMINAL_COLOR,
-    payload: {
-      terminalColor,
-    },
-  };
-}
-
-export function chooseSemanticReference(semanticReference: string) {
-  return {
-    type: CHOOSE_SEMANTICREFERENCE,
-    payload: {
-      semanticReference,
-    },
-  };
-}
-
-export function chooseLocationType(locationType: string) {
-  return {
-    type: CHOOSE_LOCATION_TYPE,
-    payload: {
-      locationType,
-    },
-  };
-}
-
-export function chooseTerminalTypeId(terminalTypeId: string) {
-  return {
-    type: CHOOSE_TERMINAL_TYPE_ID,
-    payload: {
-      terminalTypeId,
-    },
-  };
-}
-
-export function choosePredefinedAttributes(
-  predefinedAttributes: PredefinedAttribute[]
-) {
-  return {
-    type: CHOOSE_PREDEFINED_ATTRIBUTES,
-    payload: {
-      predefinedAttributes,
-    },
-  };
-}
-
 export function addTerminalType(terminal: TerminalTypeItem) {
   return {
-    type: CHOOSE_TERMINALTYPE,
+    type: ADD_TERMINALTYPE,
     payload: {
       terminal,
     },
@@ -262,15 +137,6 @@ export function updateTerminalType(terminal: TerminalTypeItem) {
     type: UPDATE_TERMINALTYPE,
     payload: {
       terminal,
-    },
-  };
-}
-
-export function chooseAttributeTypes(attributeTypes: string[]) {
-  return {
-    type: CHOOSE_ATTRIBUTETYPES,
-    payload: {
-      attributeTypes,
     },
   };
 }

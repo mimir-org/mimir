@@ -1,4 +1,3 @@
-import "./directiondropdown.scss";
 import { TerminalTypeItem, ConnectorType } from "../../../../../../models";
 import {
   NummericValueInput,
@@ -39,7 +38,7 @@ const AddTerminal = ({ row, terminals, defaultTerminal, onChange }: Props) => {
         onChange={(item: number) => onQuantityChange(item)}
       />
 
-      <img className="help-icon" src={HelpIcon} alt="help" />
+      <img src={HelpIcon} alt="help" />
 
       <SearchDropDown
         value={defaultTerminal.terminalTypeId}
@@ -55,7 +54,7 @@ const AddTerminal = ({ row, terminals, defaultTerminal, onChange }: Props) => {
         value={defaultTerminal.connectorType}
       />
       <button onClick={() => onChange("remove", defaultTerminal, row)}>
-        <img src={DeleteIcon} alt="delete" />
+        <img src={DeleteIcon} alt="delete" className="delete-icon" />
       </button>
     </AddTerminalElement>
   );

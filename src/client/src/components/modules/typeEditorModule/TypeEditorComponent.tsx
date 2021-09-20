@@ -140,7 +140,6 @@ export const TypeEditorComponent = () => {
                     state?.createLibraryType,
                     state.terminals
                   )}
-                  // onChange={onCloseEditor}
                   // disabled={FieldValidator(state, "add")}
                 />
                 <SaveButton onClick={onSave}>
