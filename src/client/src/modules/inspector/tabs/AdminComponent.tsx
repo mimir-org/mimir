@@ -1,4 +1,4 @@
-import { GetInspectorColor, GetInspectorText, GetTabsColor } from "../helpers";
+import { GetInspectorText, GetTabsColor } from "../helpers";
 import { useCallback } from "react";
 import { RootState } from "../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
