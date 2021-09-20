@@ -63,7 +63,7 @@ namespace RdfParserModule
             return ontology;
             
         }
-        public static IGraph BuildProject()
+        public static IGraph BuildProject(Project _project)
         {
             IGraph g = BaseGraph();
             
@@ -88,12 +88,25 @@ namespace RdfParserModule
             g.Assert(new Triple(projectNode, g.CreateUriNode("rdf:type"), g.CreateUriNode("imf:IntegratedObject")));
 
             //g = BuildNodes(g, project);
-            g = GetConnections(g);
+            g = GetConnections(g, _project);
 
             return g;
         }
 
-        private static IGraph GetConnections(IGraph g)
+
+        private static IGraph BuildNodes(IGraph g, Project _project)
+        {
+            foreach (Node node in _project.Nodes)
+            {
+                IUriNode nodeId = g.CreateUriNode("mimir:" + node.Id);
+                
+            }
+
+            return g;
+        }
+
+
+        private static IGraph GetConnections(IGraph g, Project _project)
         {
             var edges = _project.Edges;
 
@@ -256,55 +269,8 @@ namespace RdfParserModule
             return g;
         }
 
-        private static IGraph BuildNodes(IGraph g, Project project)
-        {
-            /*
-            var nodes = GetNodes(project);
-            IUriNode hasNode = g.CreateUriNode("imf:hasNode");
-            IUriNode hasAspect = g.CreateUriNode("imf:hasAspect");
 
-            foreach (Node node in nodes)
-            {
-                var nodeId = node.Id;
-                var aspect = node.Aspect;
 
-                IUriNode nodeNode = g.CreateUriNode("imf:" + nodeId);
-
-                g.Assert(new Triple(projectNode, hasNode, nodeNode));
-
-                IUriNode aspectNode = g.CreateUriNode("imf:" + aspect);
-                g.Assert(new Triple(nodeNode, hasAspect, aspectNode));
-
-                // Name is actually type name. Not node name
-                g.Assert(new Triple(nodeNode, hasName, g.CreateLiteralNode(node.Name)));
-
-                // Label is Service Description
-                g.Assert(new Triple(nodeNode, label, g.CreateLiteralNode(node.Label)));
-
-            }
-            */
-            return g;
-            
-        }
-
-        private static IGraph BuildEdges(IGraph g, Project project)
-        {
-            var edges = GetEdges(project);
-
-            foreach (Edge edge in edges)
-            {
-                IUriNode edgeNode = g.CreateUriNode("imf:" + edge.Id);
-                IUriNode fromNode = g.CreateUriNode("imf:" + edge.FromNodeId);
-                IUriNode toNode = g.CreateUriNode("imf:" + edge.ToNodeId);
-
-                IUriNode hasConnection = g.CreateUriNode("imf:connectedTo");
-
-                g.Assert(new Triple(fromNode, hasConnection, toNode));
-                g.Assert(new Triple(toNode, hasConnection, fromNode));
-            }
-
-            return g;
-        }
 
         private static ICollection<Node> GetNodes(Project project)
         {
@@ -315,6 +281,7 @@ namespace RdfParserModule
         {
             return project.Edges;
         }
+
 
         private static string RdfToString(IGraph g)
         {
