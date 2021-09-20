@@ -27,6 +27,11 @@ const LibraryComponent = ({ categories, search }: Props) => {
     search(e.target.value);
   };
 
+  const typeEditorOpen = () => {
+    setSelectedElement("");
+    setSelectedElementType(null);
+  };
+
   return (
     <>
       <SearchIconBox>
@@ -51,6 +56,7 @@ const LibraryComponent = ({ categories, search }: Props) => {
         <TypeEditorModule
           selectedElement={selectedElement}
           selectedElementType={selectedElementType}
+          onChange={typeEditorOpen}
         />
       </LibraryBody>
     </>

@@ -1,46 +1,50 @@
 import "./typeeditor.scss";
-import { useHistory } from "react-router-dom";
-import { ObjectType, TypeMode } from "../../../models";
+import { useDispatch } from "react-redux";
+import { ObjectType } from "../../../models";
 import { TextResources } from "../../../assets/text";
 import { NewTypeIcon, EditTypeIcon } from "../../../assets/icons/common";
-import { VIEW_TYPE } from "../../../models/project";
 import { TypeEditorBox, TypeEditorBoxContent } from "../../../compLibrary/box";
+import {
+  getSelectedNode,
+  openTypeEditor,
+} from "../../../redux/store/typeEditor/actions";
+import { GetLibraryType } from "./helpers";
 
 interface Props {
   selectedElement: string;
   selectedElementType: ObjectType;
+  onChange: Function;
 }
 export const TypeEditorModule = ({
   selectedElement,
   selectedElementType,
+  onChange,
 }: Props) => {
-  const { push } = useHistory();
+  const dispatch = useDispatch();
 
-  const onClick = (mode: TypeMode) => {
-    let modeUrl = mode === TypeMode.Edit ? "edit" : "new";
-    push({
-      pathname: `/home/${VIEW_TYPE.TYPE_EDITOR}/${modeUrl}`,
-      state: {
-        selectedElement: selectedElement,
-        selectedElementType: selectedElementType,
-        mode: mode,
-      },
-    });
+  const onClick = () => {
+    if (selectedElement && selectedElementType !== ObjectType.NotSet) {
+      const filter = GetLibraryType(selectedElementType);
+      dispatch(getSelectedNode(selectedElement, filter));
+      onChange();
+    } else {
+      selectedElement = null;
+      selectedElementType = ObjectType.NotSet;
+      dispatch(openTypeEditor());
+      onChange();
+    }
   };
 
   return (
     <TypeEditorBox>
       <TypeEditorBoxContent active={true}>
-        <div onClick={() => onClick(TypeMode.New)} className="typeeditor_box">
+        <div onClick={onClick} className="typeeditor_box">
           <img src={NewTypeIcon} alt="new-type" />
           <p>{TextResources.TypeEditor_New_Type}</p>
         </div>
       </TypeEditorBoxContent>
       <TypeEditorBoxContent active={selectedElement !== ""}>
-        <div
-          onClick={selectedElement !== "" ? () => onClick(TypeMode.Edit) : null}
-          className="typeeditor_box"
-        >
+        <div onClick={onClick} className="typeeditor_box">
           <img src={EditTypeIcon} alt="edit-type" />
           <p>{TextResources.TypeEditor_Edit_Type}</p>
         </div>

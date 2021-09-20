@@ -77,10 +77,12 @@ export interface TerminalType {
 }
 
 export interface TerminalTypeItem {
+  row: number;
   terminalTypeId: string;
   selected: boolean | false;
   connectorType: ConnectorType;
   number: number;
+  categoryId: string;
 }
 export interface PredefinedAttribute {
   key: string;
@@ -93,23 +95,10 @@ export interface LocationType {
   name: string;
   description: string;
   semanticReference: string;
-  locationSubTypes: string[];
+  locationSubTypes: LocationType[];
 }
 export interface CreateLibraryType {
-  name: string;
-  aspect: Aspect;
-  objectType: ObjectType;
-  semanticReference: string;
-  rdsId: string;
-  terminalTypes: TerminalTypeItem[];
-  attributeTypes: string[];
-  locationType: string;
-  predefinedAttributes: PredefinedAttribute[];
-  terminalTypeId: string;
-  symbolId: string;
-  simpleTypes: string[];
-}
-export interface UpdateLibraryType {
+  libraryId: string;
   name: string;
   aspect: Aspect;
   objectType: ObjectType;
