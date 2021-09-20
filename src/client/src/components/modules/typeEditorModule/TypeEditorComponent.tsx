@@ -120,7 +120,8 @@ export const TypeEditorComponent = () => {
                   // disabled={ModeEdit(mode) ? false : FieldValidator(state, "rds")}
                 />
               )}
-              {!IsInterface(state.createLibraryType.objectType) && (
+              {IsFunction(state?.createLibraryType.aspect) &&
+              IsInterface(state.createLibraryType.objectType) ? null : (
                 <TypeEditorList
                   items={state?.attributes}
                   createLibraryType={state?.createLibraryType}
