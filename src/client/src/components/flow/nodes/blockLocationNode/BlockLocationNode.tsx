@@ -1,13 +1,14 @@
 import { RootState } from "../../../../redux/store";
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
-import { TerminalsIcon } from "../../../../assets/icons/blockView";
+import { TerminalsMenuLocationIcon } from "../../../../assets/icons/blockView";
 import { NodeBox, TerminalsMenu } from "../../../../compLibrary/blockView";
 import { HandleComponent, TerminalsMenuComponent } from "../../block";
 import { changeActiveConnector } from "../../../../redux/store/project/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { Connector } from "../../../../models";
 import { OnHover, OnMouseOut, OnTerminalClick } from "./handlers";
+import { IsLocation } from "../../helpers/common";
 import {
   SetTerminalOrder,
   FilterTerminals,
@@ -47,17 +48,18 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
     <>
       <NodeBox
         id={`BlockLocationNode-` + data.id}
-        onMouseOver={() => OnHover(showTerminalButton)}
-        onMouseOut={() => OnMouseOut(showTerminalButton)}
+        onMouseOver={() => OnHover(showTerminalButton, data.id)}
+        onMouseOut={() => OnMouseOut(showTerminalButton, data.id)}
         width={data.width}
         length={data.length}
         location
       >
         <TerminalsMenu
           visible={terminalButton}
+          parent={false}
           onClick={() => OnTerminalClick(showTerminalMenu, terminalMenu)}
         >
-          <img src={TerminalsIcon} alt="options" />
+          <img src={TerminalsMenuLocationIcon} alt="options" />
         </TerminalsMenu>
         <p className="node-name">{data.label ?? data.name}</p>
 
@@ -66,6 +68,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
           list={sortedTerminals}
           width={data.width}
           isParent={false}
+          isLocation={IsLocation(data)}
           onClick={onConnectorClick}
         />
       </NodeBox>

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color, Size } from "..";
+import { Color, FontSize, Size } from "..";
 
 /** Styled component that sits on top of the BlockParentNode */
 
@@ -9,30 +9,37 @@ const BlockParentBox = styled.div`
   z-index: 1;
   cursor: ${(props) => (props.selected ? "default" : "pointer")};
   height: ${Size.BlockView_Height}px;
-  border: ${(props) => props.location && "2px solid #fa00ff"};
   border-radius: 5px;
-  background-color: ${(props) => !props.location && `${Color.FunctionBlock}`};
+  border: 2px solid;
+  background-color: ${(props) => !props.location && Color.White};
+
+  border-color: ${(props) =>
+    props.location ? Color.LocationTab : Color.FunctionTab};
 
   width: ${(props) =>
-    props.splitView ? `${Size.SplitView_Width}` : `${Size.BlockView_Width}`}px;
+    props.splitView ? Size.SplitView_Width : Size.BlockView_Width}px;
 
   left: ${(props) =>
     props.location &&
     props.splitView &&
-    `${Size.SplitView_Width + Size.BlockView_BackgroundMargin}`}px;
+    Size.SplitView_Width + Size.BlockView_BackgroundMargin}px;
+
+  .banner {
+    position: absolute;
+    top: 0.3px;
+    height: 30px;
+    width: 100%;
+    border-radius: 4px 4px 0px 0px;
+    background-color: ${(props) =>
+      props.location ? Color.LocationHeader : Color.FunctionHeader};
+  }
 
   .header {
     position: absolute;
-    top: -43px;
-    padding: 0px 0px 0px 22px;
-    font-size: 14px;
+    top: -7px;
+    padding: 0px 0px 0px 20px;
+    font-size: ${FontSize.Standard};
     width: fit-content;
-  }
-
-  .icon {
-    position: absolute;
-    top: -28px;
-    left: 0px;
   }
 `;
 

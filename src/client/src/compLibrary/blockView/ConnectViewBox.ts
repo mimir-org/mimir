@@ -3,13 +3,13 @@ import { Color } from "..";
 
 const ConnectViewBox = styled.div`
   visibility: ${(props: { visible: boolean }) => !props.visible && "hidden"};
-  border: 1px solid ${Color.Black};
+  border: 2px solid ${Color.FunctionTab};
   background-color: ${Color.White};
-  border-radius: 5px 0px 5px 5px;
+  border-radius: 5px;
   height: auto;
   position: absolute;
-  right: ${(props) => props.width + 1}px;
-  top: -1px;
+  right: ${(props) => props.width + 4}px;
+  top: -3px;
   z-index: 1;
 
   .button {

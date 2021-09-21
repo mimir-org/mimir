@@ -23,7 +23,7 @@ const BlockOptionsElement = styled.div`
 
   &:hover {
     text-decoration: underline;
-    background-color: ${Color.LightCyan};
+    background-color: ${Color.LightBlue};
     cursor: pointer;
 
     :first-child {

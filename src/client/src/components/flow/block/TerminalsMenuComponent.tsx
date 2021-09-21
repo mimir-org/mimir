@@ -11,6 +11,7 @@ interface Props {
   list: Connector[];
   width: number;
   isParent: boolean;
+  isLocation: boolean;
   onClick: (conn: Connector) => void;
 }
 
@@ -19,11 +20,21 @@ const TerminalsMenuComponent = ({
   list,
   width,
   isParent,
+  isLocation,
   onClick,
 }: Props) => (
-  <TerminalsBox visible={isOpen} width={width} isParent={isParent}>
+  <TerminalsBox
+    visible={isOpen}
+    width={width}
+    isParent={isParent}
+    isLocation={isLocation}
+  >
     {list.map((conn) => (
-      <TerminalsElement key={conn.id} onClick={() => onClick(conn)}>
+      <TerminalsElement
+        key={conn.id}
+        onClick={() => null}
+        isLocation={isLocation}
+      >
         <p className="text"> {GetConnectorName(conn)}</p>
         <label className={"checkbox-block"}>
           <input

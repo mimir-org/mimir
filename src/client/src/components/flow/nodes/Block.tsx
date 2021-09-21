@@ -1,4 +1,3 @@
-import { ArrowIcon } from "../../../assets/icons/blockView";
 import { BlockParentBox } from "../../../compLibrary/blockView";
 import { Node } from "../../../models";
 
@@ -16,8 +15,9 @@ const Block = ({ node, isLocation, isSplitView, isSelected }: Props) => (
     splitView={isSplitView}
     selected={isSelected}
   >
-    <img src={ArrowIcon} alt="arrow" className="icon"></img>
-    <h3 className="header">{node.label ?? node.name}</h3>
+    <div className="banner">
+      <h3 className="header">{node.label ?? node.name}</h3>
+    </div>
   </BlockParentBox>
 );
 export default Block;

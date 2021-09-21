@@ -7,9 +7,13 @@ import { RootState } from "../../../../redux/store";
 import { Block } from "..";
 import { HandleComponent, TerminalsMenuComponent } from "../../block";
 import { changeActiveConnector } from "../../../../redux/store/project/actions";
-import { TerminalsIcon } from "../../../../assets/icons/blockView";
 import { IsAspectNode, IsLocation } from "../../helpers/common";
 import { Size } from "../../../../compLibrary";
+import {
+  TerminalsMenuLocationIcon,
+  TerminalsMenuIcon,
+} from "../../../../assets/icons/blockView";
+
 import {
   BlockMessageBox,
   TerminalsMenu,
@@ -90,14 +94,21 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         />
         <TerminalsMenu
           visible={terminalButton && !IsAspectNode(node)}
+          parent={true}
           onClick={onClick}
         >
-          <img src={TerminalsIcon} alt="options" />
+          <img
+            src={
+              IsLocation(node) ? TerminalsMenuLocationIcon : TerminalsMenuIcon
+            }
+            alt="options"
+          />
         </TerminalsMenu>
 
         <TerminalsMenuComponent
           isOpen={terminalMenu}
           isParent={true}
+          isLocation={IsLocation(node)}
           list={sortedTerminals}
           width={isSplitView ? Size.SplitView_Width : Size.BlockView_Width}
           onClick={onConnectorClick}

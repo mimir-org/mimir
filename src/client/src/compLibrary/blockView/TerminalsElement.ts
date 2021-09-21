@@ -2,7 +2,9 @@ import styled from "styled-components";
 import { Color, FontSize } from "..";
 
 const TerminalsElement = styled.div`
-  border-bottom: 1px solid ${Color.DarkGrey};
+  border-bottom: 1px solid;
+  border-color: ${(props) =>
+    props.isLocation ? Color.LocationTab : Color.FunctionTab};
   padding: 5px 34px 5px 5px;
   font-size: ${FontSize.Small};
   color: ${Color.Black};
@@ -23,7 +25,7 @@ const TerminalsElement = styled.div`
 
   &:hover {
     text-decoration: underline;
-    background-color: ${Color.LightCyan};
+    background-color: ${Color.LightBlue};
     cursor: pointer;
 
     :first-child {

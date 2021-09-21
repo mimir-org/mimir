@@ -5,7 +5,7 @@ import { ProjectMainMenu } from "../project";
 import { RootState } from "../../redux/store/index";
 import { FullScreenBox } from "../../compLibrary/controls";
 import { OpenProjectMenu } from "../project/openProject";
-import { Color } from "../../compLibrary";
+import { Color, Size } from "../../compLibrary";
 import { BackgroundBox } from "../../compLibrary/blockView";
 import { changeInspectorTab } from "../../modules/inspector/redux/actions";
 import { Node, BlobData } from "../../models";
@@ -43,6 +43,7 @@ import {
   BackgroundVariant,
   SPLITVIEW_POSITION,
 } from "../../models/project";
+import { SetPanelHeight } from "../../modules/inspector/helpers";
 
 const FlowBlock = () => {
   const dispatch = useDispatch();
@@ -163,6 +164,9 @@ const FlowBlock = () => {
     }
     dispatch(setActiveBlockNode(element.id));
     dispatch(changeInspectorTab(0));
+
+    const panel = document.getElementById("InspectorModule");
+    if (panel.style.height === "44px") SetPanelHeight(Size.InspectorModuleOpen);
   };
 
   // Rerender

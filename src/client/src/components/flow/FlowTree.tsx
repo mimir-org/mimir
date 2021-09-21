@@ -48,7 +48,6 @@ const FlowTree = () => {
   ) as LibraryState;
 
   const OnElementsRemove = (elementsToRemove) => {
-    console.log("remove");
     return useOnRemove(elementsToRemove, setElements, dispatch);
   };
 
@@ -101,7 +100,7 @@ const FlowTree = () => {
     dispatch(setActiveEdge(null, false));
     dispatch(setActiveNode(element.id, true));
     dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, true, true));
-    dispatch(changeInspectorTab(1));
+    dispatch(changeInspectorTab(0));
     const panel = document.getElementById("InspectorModule");
     if (panel.style.height === Size.ModuleClosed + "px")
       SetPanelHeight(Size.InspectorModuleOpen);

@@ -5,8 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import { Connector, Node, Edge } from "../../../../models";
 import { Size } from "../../../../compLibrary";
-import { TerminalsIcon, ConnectIcon } from "../../../../assets/icons/blockView";
+import { IsLocation } from "../../helpers/common";
 import { changeActiveConnector } from "../../../../redux/store/project/actions";
+import {
+  TerminalsMenuIcon,
+  ConnectMenuIcon,
+} from "../../../../assets/icons/blockView";
+
 import {
   SetTerminalOrder,
   FilterTerminals,
@@ -21,6 +26,7 @@ import {
   GetConnectChildren,
   IsMainConnectNode,
   SetMainConnectNodeSize,
+  SetMainConnectNodeColor,
 } from "../../helpers/block/connectView";
 import {
   NodeBox,
@@ -104,6 +110,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   // Resize main connect node
   useEffect(() => {
     SetMainConnectNodeSize(mainConnectNode?.id, data.id, connectNodes);
+    SetMainConnectNodeColor(mainConnectNode?.id, data.id, connectNodes);
   }, [mainConnectNode, data, connectNodes]);
 
   // Force edges' z-index in ConnectView
@@ -117,23 +124,24 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   return (
     <>
       <NodeBox
-        id={`BlockFunctionNode-` + data.id}
+        id={"BlockFunctionNode-" + data.id}
         onMouseOver={() =>
-          Handlers.OnHover(showTerminalButton, showConnectButton)
+          Handlers.OnHover(showTerminalButton, showConnectButton, data.id)
         }
         onMouseOut={() =>
-          Handlers.OnMouseOut(showTerminalButton, showConnectButton)
+          Handlers.OnMouseOut(showTerminalButton, showConnectButton, data.id)
         }
         width={data.width}
         length={data.length}
       >
         <TerminalsMenu
           visible={terminalButton}
+          parent={false}
           onClick={() =>
             Handlers.OnTerminalMenuClick(showTerminalMenu, terminalMenu)
           }
         >
-          <img src={TerminalsIcon} alt="options" />
+          <img src={TerminalsMenuIcon} alt="options" />
         </TerminalsMenu>
         <ConnectMenu
           visible={connectButton && hasChildren}
@@ -141,7 +149,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
             Handlers.OnConnectMenuClick(showConnectMenu, connectMenu)
           }
         >
-          <img src={ConnectIcon} alt="options" />
+          <img src={ConnectMenuIcon} alt="options" />
         </ConnectMenu>
 
         <p className="node-name">{data.label ?? data.name}</p>
@@ -151,6 +159,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
           list={sortedTerminals}
           width={data.width}
           isParent={false}
+          isLocation={IsLocation(data)}
           onClick={onConnectorClick}
         />
 

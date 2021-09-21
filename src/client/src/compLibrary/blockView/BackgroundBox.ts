@@ -9,15 +9,14 @@ const BackgroundBox = styled.div`
 
   width: ${(props) =>
     props.isSplitView
-      ? `${Size.SplitView_Width}`
-      : `${Size.BlockView_Width}`}px !important;
+      ? Size.SplitView_Width
+      : Size.BlockView_Width}px !important;
 
   left: ${(props) =>
     props.right
-      ? `${Size.BlockView_MarginLeft + Size.SplitView_Width}`
-      : `${
-          Size.BlockView_MarginLeft - Size.BlockView_BackgroundMargin
-        }`}px !important;
+      ? Size.BlockView_MarginLeft + Size.SplitView_Width
+      : Size.BlockView_MarginLeft -
+        Size.BlockView_BackgroundMargin}px !important;
 `;
 
 export default BackgroundBox;
