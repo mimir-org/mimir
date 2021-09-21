@@ -8,8 +8,9 @@ import {
   SAVE_LIBRARY_TYPE_SUCCESS_OR_ERROR,
   FETCHING_LOCATIONTYPES_SUCCESS_OR_ERROR,
   FETCHING_PREDEFINED_ATTRIBUTES_SUCCESS_OR_ERROR,
-  TypeEditorActionTypes,
   FETCHING_BLOB_DATA_SUCCESS_OR_ERROR,
+  FETCHING_COMPOSITE_TYPES_SUCCESS_OR_ERROR,
+  TypeEditorActionTypes,
 } from "../../store/typeEditor/types";
 import {
   ADD_LIBRARY_ITEM,
@@ -102,59 +103,6 @@ export function* saveType(action) {
     });
   }
 }
-
-// export function* createType(action) {
-//   try {
-//     const url = process.env.REACT_APP_API_BASE_URL + "typeeditor";
-//     const response = yield call(post, url, action.payload.libraryType);
-
-//     // This is a bad request
-//     if (response.status === 400) {
-//       const data = GetBadResponseData(response);
-
-//       const apiError = {
-//         key: CREATING_TYPE_SUCCESS_OR_ERROR,
-//         errorMessage: data.title,
-//         errorData: data,
-//       } as ApiError;
-
-//       const payload = {
-//         apiError: apiError,
-//       };
-
-//       yield statePut({
-//         type: CREATING_TYPE_SUCCESS_OR_ERROR,
-//         payload: payload,
-//       });
-//       return;
-//     }
-//     // Bad request end
-
-//     const payload = {
-//       apiError: null,
-//     };
-
-//     yield statePut({
-//       type: CREATING_TYPE_SUCCESS_OR_ERROR,
-//       payload: payload,
-//     });
-//   } catch (error) {
-//     const apiError = {
-//       key: CREATING_TYPE_SUCCESS_OR_ERROR,
-//       errorMessage: error.message,
-//       errorData: null,
-//     } as ApiError;
-
-//     const payload = {
-//       apiError: apiError,
-//     };
-
-//     yield statePut({
-//       type: CREATING_TYPE_SUCCESS_OR_ERROR,
-//       payload: payload,
-//     });
-//   }
-// }
 
 export function* getInitialData(action: TypeEditorActionTypes) {
   try {
@@ -415,6 +363,33 @@ export function* getSelectedNode(action) {
 
     yield statePut({
       type: FETCHING_TYPE_SUCCESS_OR_ERROR,
+      payload: payload,
+    });
+  }
+}
+
+export function* getCompositeTypes(action) {
+  try {
+    const compositeTypeslURL =
+      process.env.REACT_APP_API_BASE_URL + "typeeditor/compositetype";
+
+    const compositeTypesURLResponse = yield call(get, compositeTypeslURL);
+
+    const payload = {
+      compositeTypes: compositeTypesURLResponse.data,
+    };
+
+    yield statePut({
+      type: FETCHING_COMPOSITE_TYPES_SUCCESS_OR_ERROR,
+      payload: payload,
+    });
+  } catch (error) {
+    const payload = {
+      compositeTypes: [],
+    };
+
+    yield statePut({
+      type: FETCHING_COMPOSITE_TYPES_SUCCESS_OR_ERROR,
       payload: payload,
     });
   }

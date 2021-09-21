@@ -11,6 +11,7 @@ import {
   PredefinedAttribute,
   BlobData,
   LibraryFilter,
+  CompositeType,
 } from "../../../models";
 
 export const FETCHING_INITIAL_DATA = "FETCHING_INITIAL_DATA";
@@ -33,6 +34,9 @@ export const FETCHING_PREDEFINED_ATTRIBUTES_SUCCESS_OR_ERROR =
 export const FETCHING_BLOB_DATA = "FETCHING_BLOB_DATA";
 export const FETCHING_BLOB_DATA_SUCCESS_OR_ERROR =
   "FETCHING_BLOB_DATA_SUCCESS_OR_ERROR";
+export const FETCHING_COMPOSITE_TYPES = "FETCHING_COMPOSITE_TYPES";
+export const FETCHING_COMPOSITE_TYPES_SUCCESS_OR_ERROR =
+  "FETCHING_COMPOSITE_TYPES_DATA_SUCCESS_OR_ERROR";
 export const FETCHING_TYPE = "FETCHING_TYPE";
 export const FETCHING_TYPE_SUCCESS_OR_ERROR = "FETCHING_TYPE_SUCCESS_OR_ERROR";
 export const OPEN_TYPE_EDITOR = "OPEN_TYPE_EDITOR";
@@ -59,6 +63,7 @@ export interface TypeEditorState {
   attributes: AttributeType[];
   locationTypes: LocationType[];
   predefinedAttributes: PredefinedAttribute[];
+  compositeTypes: CompositeType[];
   apiError: ApiError[];
   icons: BlobData[];
 }
@@ -166,6 +171,19 @@ export interface FetchingBlobDataActionFinished {
     icons: BlobData[];
   };
 }
+
+export interface FetchingCompositeTypesAction {
+  type: typeof FETCHING_COMPOSITE_TYPES;
+  payload: null;
+}
+
+export interface FetchingCompositeTypesActionFinished {
+  type: typeof FETCHING_COMPOSITE_TYPES_SUCCESS_OR_ERROR;
+  payload: {
+    apiError: ApiError;
+    compositeTypes: CompositeType[];
+  };
+}
 export interface OpenTypeEditor {
   type: typeof OPEN_TYPE_EDITOR;
   payload: any;
@@ -237,6 +255,8 @@ export type TypeEditorActionTypes =
   | FetchingTypeActionFinished
   | FetchingBlobDataAction
   | FetchingBlobDataActionFinished
+  | FetchingCompositeTypesAction
+  | FetchingCompositeTypesActionFinished
   | OpenTypeEditor
   | CloseTypeEditor
   | UpdateCreateLibraryType

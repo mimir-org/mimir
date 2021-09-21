@@ -50,6 +50,7 @@ import {
   saveType,
   getblobData,
   getSelectedNode,
+  getCompositeTypes,
 } from "./typeEditor/saga";
 
 export function* sagas() {
@@ -67,6 +68,7 @@ export function* sagas() {
     takeEvery(FETCHING_INITIAL_DATA, getTerminals),
     takeEvery(FETCHING_INITIAL_DATA, getPredefinedAttributes),
     takeEvery(FETCHING_INITIAL_DATA, getAttributes),
+    takeEvery(FETCHING_INITIAL_DATA, getCompositeTypes),
     takeEvery(FETCHING_TYPE, getSelectedNode),
     takeEvery(SAVE_LIBRARY_TYPE, saveType),
     takeEvery(FETCHING_STATUSES, getStatuses),

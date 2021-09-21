@@ -21,6 +21,8 @@ import {
   FETCHING_PREDEFINED_ATTRIBUTES_SUCCESS_OR_ERROR,
   FETCHING_BLOB_DATA,
   FETCHING_BLOB_DATA_SUCCESS_OR_ERROR,
+  FETCHING_COMPOSITE_TYPES,
+  FETCHING_COMPOSITE_TYPES_SUCCESS_OR_ERROR,
   FETCHING_TYPE,
   FETCHING_TYPE_SUCCESS_OR_ERROR,
   OPEN_TYPE_EDITOR,
@@ -61,6 +63,7 @@ const initialState: TypeEditorState = {
   attributes: [],
   locationTypes: [],
   predefinedAttributes: [],
+  compositeTypes: [],
   apiError: [],
   icons: [] as BlobData[],
 };
@@ -183,6 +186,25 @@ export function typeEditorReducer(
         ...state,
         fetching: false,
         icons: action.payload.icons,
+        apiError: action.payload.apiError
+          ? [...state.apiError, action.payload.apiError]
+          : state.apiError,
+      };
+    case FETCHING_COMPOSITE_TYPES:
+      return {
+        ...state,
+        fetching: true,
+        apiError: state.apiError
+          ? state.apiError.filter(
+              (elem) => elem.key !== FETCHING_COMPOSITE_TYPES_SUCCESS_OR_ERROR
+            )
+          : state.apiError,
+      };
+    case FETCHING_COMPOSITE_TYPES_SUCCESS_OR_ERROR:
+      return {
+        ...state,
+        fetching: false,
+        compositeTypes: action.payload.compositeTypes,
         apiError: action.payload.apiError
           ? [...state.apiError, action.payload.apiError]
           : state.apiError,

@@ -13,6 +13,7 @@ import {
   FETCHING_PREDEFINED_ATTRIBUTES,
   FETCHING_TYPE,
   FETCHING_BLOB_DATA,
+  FETCHING_COMPOSITE_TYPES,
   OPEN_TYPE_EDITOR,
   CLOSE_TYPE_EDITOR,
   UPDATE_CREATELIBRARYTYPE,
@@ -86,6 +87,13 @@ export function getSelectedNode(
 export function getBlobData(): TypeEditorActionTypes {
   return {
     type: FETCHING_BLOB_DATA,
+    payload: null,
+  };
+}
+
+export function getCompositeTypes(): TypeEditorActionTypes {
+  return {
+    type: FETCHING_COMPOSITE_TYPES,
     payload: null,
   };
 }
