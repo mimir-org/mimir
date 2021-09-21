@@ -34,6 +34,12 @@ namespace Mb.Models.Application
 
         public decimal PositionY { get; set; }
 
+        [Required]
+        public bool IsLocked { get; set; }
+
+        [Required]
+        public string IsLockedBy { get; set; }
+
         public decimal PositionBlockX { get; set; }
 
         public decimal PositionBlockY { get; set; }

@@ -18,6 +18,7 @@ namespace Mb.Core.Services.Contracts
         Task DeleteProject(string projectId);
         Task<byte[]> CreateFile(string projectId, string parser);
         Task<Project> CreateFromFile(IFormFile file, CancellationToken cancellationToken, string parser);
-        Task<LockUnlockAm> LockUnlock(LockUnlockAm lockUnlockAm);
+        Task LockUnlockNode(LockUnlockNodeAm lockUnlockNodeAm);
+        Task LockUnlockAttribute(LockUnlockAttributeAm lockUnlockAttributeAm);
     }
 }

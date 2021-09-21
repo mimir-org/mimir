@@ -38,6 +38,9 @@ namespace Mb.Models.Data
         public bool IsLocked { get; set; }
 
         [Required]
+        public string IsLockedBy { get; set; }
+
+        [Required]
         public decimal PositionBlockX { get; set; }
 
         [Required]

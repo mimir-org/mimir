@@ -33,7 +33,10 @@ namespace Mb.Core.Services
         private readonly IModuleService _moduleService;
         private readonly IAttributeRepository _attributeRepository;
 
-        public ProjectService(IProjectRepository projectRepository, IMapper mapper, IHttpContextAccessor contextAccessor, INodeRepository nodeRepository, IEdgeRepository edgeRepository, ICommonRepository commonRepository, IConnectorRepository connectorRepository, IModuleService moduleService, IAttributeRepository attributeRepository)
+        public ProjectService(IProjectRepository projectRepository, IMapper mapper,
+            IHttpContextAccessor contextAccessor, INodeRepository nodeRepository, IEdgeRepository edgeRepository,
+            ICommonRepository commonRepository, IConnectorRepository connectorRepository, IModuleService moduleService,
+            IAttributeRepository attributeRepository)
         {
             _projectRepository = projectRepository;
             _mapper = mapper;
@@ -116,7 +119,8 @@ namespace Mb.Core.Services
                         foreach (var attribute in node.Attributes)
                         {
                             if (!string.IsNullOrEmpty(attribute.UnitString))
-                                attribute.Units = JsonConvert.DeserializeObject<ICollection<Unit>>(attribute.UnitString);
+                                attribute.Units =
+                                    JsonConvert.DeserializeObject<ICollection<Unit>>(attribute.UnitString);
 
                         }
                     }
@@ -130,7 +134,8 @@ namespace Mb.Core.Services
                                 foreach (var attribute in connector.Attributes)
                                 {
                                     if (!string.IsNullOrEmpty(attribute.UnitString))
-                                        attribute.Units = JsonConvert.DeserializeObject<ICollection<Unit>>(attribute.UnitString);
+                                        attribute.Units =
+                                            JsonConvert.DeserializeObject<ICollection<Unit>>(attribute.UnitString);
                                 }
                             }
                         }
@@ -144,8 +149,9 @@ namespace Mb.Core.Services
                             {
                                 foreach (var attribute in composite.Attributes)
                                 {
-                                    if(!string.IsNullOrEmpty(attribute.UnitString))
-                                        attribute.Units = JsonConvert.DeserializeObject<ICollection<Unit>>(attribute.UnitString);
+                                    if (!string.IsNullOrEmpty(attribute.UnitString))
+                                        attribute.Units =
+                                            JsonConvert.DeserializeObject<ICollection<Unit>>(attribute.UnitString);
                                 }
                             }
                         }
@@ -153,7 +159,8 @@ namespace Mb.Core.Services
 
                     if (node.MasterProjectId != id)
                     {
-                        var partOfEdge = node.Connectors.OfType<Relation>().FirstOrDefault(x => x.Type == ConnectorType.Input);
+                        var partOfEdge = node.Connectors.OfType<Relation>()
+                            .FirstOrDefault(x => x.Type == ConnectorType.Input);
 
                         if (partOfEdge?.Node != null)
                         {
@@ -175,7 +182,8 @@ namespace Mb.Core.Services
         public async Task<Project> ImportProject(ProjectAm project)
         {
             if (project == null || string.IsNullOrEmpty(project.Id))
-                throw new ModelBuilderInvalidOperationException("You can't import an project that is null or missing id");
+                throw new ModelBuilderInvalidOperationException(
+                    "You can't import an project that is null or missing id");
 
             if (_projectRepository.FindBy(x => x.Id == project.Id).Any())
                 return await UpdateProject(project.Id, project);
@@ -305,7 +313,8 @@ namespace Mb.Core.Services
             return await GetProject(id);
         }
 
-        private async Task ResolveSubProjects(ICollection<Node> subNodes, ICollection<Node> subDeleteNodes, ICollection<Edge> subEdges, ICollection<Edge> subDeleteEdges, string projectId)
+        private async Task ResolveSubProjects(ICollection<Node> subNodes, ICollection<Node> subDeleteNodes,
+            ICollection<Edge> subEdges, ICollection<Edge> subDeleteEdges, string projectId)
         {
             if (!subNodes.Any() && !subDeleteNodes.Any() && !subEdges.Any() && !subDeleteEdges.Any())
                 return;
@@ -354,7 +363,8 @@ namespace Mb.Core.Services
             var existingProjectNodesCount = existingProject.Nodes.Count;
 
             if (masterNodesCount > existingProjectNodesCount)
-                throw new ModelBuilderInvalidOperationException("You can't delete a project that is master for other sub projects.");
+                throw new ModelBuilderInvalidOperationException(
+                    "You can't delete a project that is master for other sub projects.");
 
 
             var nodesToDelete = existingProject.Nodes.Where(x => x.MasterProjectId == projectId).ToList();
@@ -404,73 +414,65 @@ namespace Mb.Core.Services
         }
 
         /// <summary>
-        /// Locks or unlocks nodes and/or attributes
+        /// Lock or unlock an attribute
         /// </summary>
-        /// <param name="lockUnlockAm"></param>
-        /// <returns>LockUnlockAm</returns>
-        public async Task<LockUnlockAm> LockUnlock(LockUnlockAm lockUnlockAm)
+        /// <param name="lockUnlockAttributeAm"></param>
+        /// <returns>Status204NoContent</returns>
+        public async Task LockUnlockAttribute(LockUnlockAttributeAm lockUnlockAttributeAm)
         {
-            if (lockUnlockAm == null)
-                return null;
+            if (lockUnlockAttributeAm?.Id == null)
+                return;
+            
+            var attribute = await _attributeRepository.GetAsync(lockUnlockAttributeAm.Id);
 
-            var result = new LockUnlockAm {Attributes = new List<LockUnlockIdAm>(), Nodes = new List<LockUnlockIdAm>()};
+            if (attribute == null || attribute.IsLocked == lockUnlockAttributeAm.IsLocked)
+                return;
 
-            //Lock/unlock attributes
-            if (lockUnlockAm.Attributes != null && lockUnlockAm.Attributes.Any())
-            {
-                foreach (var attributeAm in lockUnlockAm.Attributes)
-                {
-                    if(attributeAm?.Id == null)
-                        continue;
+            if(attribute.IsLocked && attribute.IsLockedBy != _contextAccessor.GetName())
+                return;
 
-                    var attributeInDb = _attributeRepository.Context.Attributes.FindAsync(attributeAm.Id).Result;
+            attribute.IsLocked = lockUnlockAttributeAm.IsLocked;
+            attribute.IsLockedBy = attribute.IsLocked ? _contextAccessor.GetName() : null;
 
-                    if(attributeInDb?.IsLocked == null || attributeInDb.IsLocked == attributeAm.IsLocked)
-                        continue;
+            await _attributeRepository.SaveAsync();
+        }
 
-                    attributeInDb.IsLocked = attributeAm.IsLocked;
-                }
+        /// <summary>
+        /// Lock or unlock a node and the attributes (including all children nodes and attributes)
+        /// </summary>
+        /// <param name="lockUnlockNodeAm"></param>
+        /// <returns>Status204NoContent</returns>
+        public async Task LockUnlockNode(LockUnlockNodeAm lockUnlockNodeAm)
+        {
 
-                await _attributeRepository.SaveAsync();
-            }
+            if (lockUnlockNodeAm?.Id == null || lockUnlockNodeAm.ProjectId == null)
+                return;
 
-            if (lockUnlockAm.Nodes == null || !lockUnlockAm.Nodes.Any())
-            {
-                result.Attributes = GetLockedAttributes();
-                return result;
-            }
+            var userName = _contextAccessor.GetName();
+            var node = _nodeRepository.Context.Nodes.FirstOrDefault(x => x.Id == lockUnlockNodeAm.Id && x.MasterProjectId == lockUnlockNodeAm.ProjectId);
 
-            //Lock/unlock nodes. Also lock/unlock attributes on nodes automatically.
-            var nodesInDb = lockUnlockAm.Nodes.Select(nodeAm => _nodeRepository.Context.Nodes.FindAsync(nodeAm?.Id).Result).ToList();
+            if (node?.Id == null || node.IsLocked == lockUnlockNodeAm.IsLocked)
+                return;
 
-            foreach (var parentNode in nodesInDb)
-            {
-                if(parentNode?.Id == null)
-                    continue;
+            if (node.IsLocked && userName != node.IsLockedBy)
+                return;
 
-                var nodeAm = lockUnlockAm.Nodes.FirstOrDefault(x => x.Id == parentNode.Id);
+            node.IsLocked = lockUnlockNodeAm.IsLocked;
+            node.IsLockedBy = node.IsLocked ? userName : null;
 
-                if(nodeAm?.IsLocked == null || parentNode.IsLocked == nodeAm.IsLocked)
-                    continue;
-
-                parentNode.IsLocked = nodeAm.IsLocked;
-                LockUnlockNodesRecursive(parentNode);
-            }
+            LockUnlockNodesAndAttributesRecursive(node, userName);
 
             await _nodeRepository.SaveAsync();
             await _attributeRepository.SaveAsync();
-
-            result.Attributes.Clear();
-            result.Attributes.AddRange(GetLockedAttributes());
-            result.Nodes.AddRange(GetLockedNodes());
-
-            return result;
         }
 
         #region Private methods
 
-        private void LockUnlockNodesRecursive(Node parentNode)
+        private void LockUnlockNodesAndAttributesRecursive(Node parentNode, string userName)
         {
+            if (parentNode?.Id == null || parentNode.MasterProjectId == null)
+                return;
+
             var edges = _edgeRepository.Context.Edges.Where(x => x.FromNodeId == parentNode.Id).ToList();
 
             if(!edges.Any())
@@ -481,54 +483,45 @@ namespace Mb.Core.Services
                 if (edge?.ToNodeId == null)
                     return;
 
-                var childNode = _nodeRepository.Context.Nodes.FindAsync(edge.ToNodeId).Result;
+                var childNode = _nodeRepository.Context.Nodes.FirstOrDefault(x => x.Id == edge.ToNodeId);
 
-                if (childNode?.Level == null)
+                if (childNode == null)
+                    continue;
+
+                if(childNode.IsLocked == parentNode.IsLocked)
+                    continue;
+
+                if(childNode.IsLocked && userName != childNode.IsLockedBy)
                     continue;
 
                 if (childNode.Level > parentNode.Level)
+                {
                     childNode.IsLocked = parentNode.IsLocked;
+                    childNode.IsLockedBy = childNode.IsLocked ? userName : null;
 
-                LockUnlockNodeAttributes(parentNode);
-                LockUnlockNodesRecursive(childNode);
+                    var nodeAttributes = _attributeRepository.Context.Attributes.Where(x => x.NodeId == childNode.Id).ToList();
+
+                    if(!nodeAttributes.Any())
+                        continue;
+
+                    foreach (var nodeAttribute in nodeAttributes)
+                    {
+                        if(nodeAttribute == null)
+                            continue;
+
+                        if(nodeAttribute.IsLocked == childNode.IsLocked)
+                            continue;
+
+                        if(nodeAttribute.IsLocked && nodeAttribute.IsLockedBy != userName)
+                            continue;
+
+                        nodeAttribute.IsLocked = childNode.IsLocked;
+                        nodeAttribute.IsLockedBy = nodeAttribute.IsLocked ? userName : null;
+                    }
+                }
+
+                LockUnlockNodesAndAttributesRecursive(childNode, userName);
             }
-        }
-
-        private void LockUnlockNodeAttributes(Node node)
-        {
-            var attributes = _attributeRepository.Context.Attributes.Where(x => x.NodeId == node.Id);
-            
-            foreach (var attribute in attributes)
-            {
-                if(attribute?.IsLocked == null)
-                    continue;
-
-                attribute.IsLocked = node.IsLocked;
-            }
-        }
-
-        private List<LockUnlockIdAm> GetLockedNodes()
-        {
-            var lockUnlockIds = new List<LockUnlockIdAm>();
-
-            foreach (var lockedNodee in _nodeRepository.Context.Nodes.Where(x => x.IsLocked).ToList())
-            {
-                lockUnlockIds.Add(new LockUnlockIdAm{Id = lockedNodee.Id, IsLocked = lockedNodee.IsLocked});
-            }
-
-            return lockUnlockIds;
-        }
-
-        private List<LockUnlockIdAm> GetLockedAttributes()
-        {
-            var lockUnlockIds = new List<LockUnlockIdAm>();
-
-            foreach (var lockedAttribute in _attributeRepository.Context.Attributes.Where(x => x.IsLocked).ToList())
-            {
-                lockUnlockIds.Add(new LockUnlockIdAm { Id = lockedAttribute.Id, IsLocked = lockedAttribute.IsLocked });
-            }
-
-            return lockUnlockIds;
         }
 
         private Node CreateInitAspectNode(Aspect aspect, string version, string projectId)

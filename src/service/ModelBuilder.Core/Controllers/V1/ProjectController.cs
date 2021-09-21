@@ -330,34 +330,51 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
-        /// Locks or unlocks nodes and/or attributes
+        /// Locks or unlock node
         /// </summary>
         /// <param name="lockUnlockAm"></param>
         /// <returns>LockUnlockAm</returns>
-        [HttpPost("lockUnlock")]
-        [ProducesResponseType(typeof(ICollection<LockUnlockAm>), StatusCodes.Status200OK)]
+        [HttpPost("node/lockUnlock")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> LockUnlock([FromBody] LockUnlockAm lockUnlockAm)
+        public async Task<IActionResult> LockUnlockNode([FromBody] LockUnlockNodeAm lockUnlockAm)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                var result = await _projectService.LockUnlock(lockUnlockAm);
-                return Ok(result);
+                await _projectService.LockUnlockNode(lockUnlockAm);
+                return Ok();
             }
-            catch (ModelBuilderModuleException e)
+            catch (Exception e)
             {
-                ModelState.AddModelError("LockUnlock", e.Message);
-                return BadRequest(ModelState);
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
             }
-            catch (ModelBuilderDuplicateException e)
+        }
+
+        /// <summary>
+        /// Locks or unlock attribute
+        /// </summary>
+        /// <param name="lockUnlockAttributeAm"></param>
+        /// <returns>LockUnlockAm</returns>
+        [HttpPost("attribute/lockUnlock")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> LockUnlockAttribute([FromBody] LockUnlockAttributeAm lockUnlockAttributeAm)
+        {
+            try
             {
-                ModelState.AddModelError("LockUnlock", e.Message);
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                await _projectService.LockUnlockAttribute(lockUnlockAttributeAm);
+                return Ok();
             }
             catch (Exception e)
             {

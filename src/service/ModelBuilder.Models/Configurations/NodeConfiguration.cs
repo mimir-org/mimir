@@ -21,6 +21,7 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.PositionX).HasColumnName("PositionX").HasColumnType("decimal(18,4)").IsRequired();
             builder.Property(p => p.PositionY).HasColumnName("PositionY").HasColumnType("decimal(18,4)").IsRequired();
             builder.Property(p => p.IsLocked).HasColumnName("IsLocked").IsRequired();
+            builder.Property(p => p.IsLockedBy).HasColumnName("IsLockedBy").IsRequired(false);
             builder.Property(p => p.PositionBlockX).HasColumnName("PositionBlockX").HasColumnType("decimal(18,4)").IsRequired();
             builder.Property(p => p.PositionBlockY).HasColumnName("PositionBlockY").HasColumnType("decimal(18,4)").IsRequired();
             builder.Property(p => p.Level).HasColumnName("Level").IsRequired();
