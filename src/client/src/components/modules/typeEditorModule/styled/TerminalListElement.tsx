@@ -12,9 +12,8 @@ const TerminalListElement = styled.div`
   color: ${Color.Black};
 
   :nth-child(odd) {
-    background-color: rgba(0, 112, 121, 0.15);
+    background-color: ${Color.LighterBlue};
   }
-
   :nth-child(even) {
     background-color: ${Color.White};
   }

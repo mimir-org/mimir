@@ -1,4 +1,3 @@
-import "./typeeditor.scss";
 import { useDispatch } from "react-redux";
 import { ObjectType } from "../../../models";
 import { TextResources } from "../../../assets/text";
@@ -9,7 +8,6 @@ import {
   openTypeEditor,
 } from "../../../redux/store/typeEditor/actions";
 import { GetLibraryType } from "./helpers";
-
 interface Props {
   selectedElement: string;
   selectedElementType: ObjectType;

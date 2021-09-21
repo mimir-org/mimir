@@ -1,14 +1,16 @@
 import styled from "styled-components";
+import { Color } from "..";
 
 const SearchBar = styled.div`
   display: flex;
   flex: 1;
-  max-height: 16px;
+  max-height: 19px;
   align-items: center;
   flex-direction: row;
-  border: 1px solid #cbcbcb;
+  border: 1px solid ${Color.Grey};
   border-radius: 2px;
   padding: 2px 0px 2px 2px;
+  background-color: inherit;
 
   .icon {
     margin-left: auto;
@@ -25,14 +27,14 @@ const SearchBar = styled.div`
 
   input[type="text"] {
     min-width: 220px;
-    height: 13px;
+    height: 14px;
     font-size: 13px;
     border: 0px;
     background-color: inherit;
   }
 
   input[type="text"]::placeholder {
-    color: #898787;
+    color: ${Color.DarkerGrey};
     font-size: 13px;
     font-style: italic;
     opacity: 0.5;

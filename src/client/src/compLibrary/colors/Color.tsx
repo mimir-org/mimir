@@ -11,6 +11,7 @@ const Color = {
   DarkerGrey: "#898787",
   LightCyan: "#CFDADB",
   LightBlue: "#D9E6FF",
+  LighterBlue: "rgba(211, 214, 255, 0.40)",
   DarkRed: "rgb(139,0,0)",
   Red: "rgb(255,0,0)",
 

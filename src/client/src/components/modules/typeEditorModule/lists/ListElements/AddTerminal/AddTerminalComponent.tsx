@@ -38,7 +38,7 @@ const AddTerminal = ({ row, terminals, defaultTerminal, onChange }: Props) => {
         onChange={(item: number) => onQuantityChange(item)}
       />
 
-      <img src={HelpIcon} alt="help" />
+      <img src={HelpIcon} alt="help" className="help-icon" />
 
       <SearchDropDown
         value={defaultTerminal.terminalTypeId}
@@ -47,7 +47,7 @@ const AddTerminal = ({ row, terminals, defaultTerminal, onChange }: Props) => {
         list={terminals as SearchDropDownItem[]}
       />
 
-      <img src={HelpIcon} alt="help" />
+      <img src={HelpIcon} alt="help" className="help-icon" />
 
       <DirectionalDropdown
         onChange={(item: ConnectorType) => onDirectionChange(item)}
