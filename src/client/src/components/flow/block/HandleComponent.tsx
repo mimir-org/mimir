@@ -11,7 +11,7 @@ import {
   SetTerminalYPos,
 } from "../helpers/common";
 
-/* Components for the terminals displayed on the nodes in BlockView */
+/**  Components for the terminals displayed on the nodes in BlockView */
 
 interface Props {
   aspect: Aspect;

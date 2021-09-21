@@ -1,5 +1,7 @@
 import styled from "styled-components";
-import { Size } from "..";
+import { Color, Size } from "..";
+
+/** Styled component that sits on top of the BlockParentNode */
 
 const BlockParentBox = styled.div`
   position: absolute;
@@ -7,7 +9,9 @@ const BlockParentBox = styled.div`
   z-index: 1;
   cursor: ${(props) => (props.selected ? "default" : "pointer")};
   height: ${Size.BlockView_Height}px;
+  border: ${(props) => props.location && "2px solid #fa00ff"};
   border-radius: 5px;
+  background-color: ${(props) => !props.location && `${Color.FunctionBlock}`};
 
   width: ${(props) =>
     props.splitView ? `${Size.SplitView_Width}` : `${Size.BlockView_Width}`}px;
@@ -15,7 +19,7 @@ const BlockParentBox = styled.div`
   left: ${(props) =>
     props.location &&
     props.splitView &&
-    `${Size.SplitView_Width - Size.BlockView_BackgroundMargin * 2}`}px;
+    `${Size.SplitView_Width + Size.BlockView_BackgroundMargin}`}px;
 
   .header {
     position: absolute;

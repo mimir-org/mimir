@@ -7,9 +7,12 @@ import { HandleComponent, TerminalsMenuComponent } from "../../block";
 import { changeActiveConnector } from "../../../../redux/store/project/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { Connector } from "../../../../models";
-import { CalculateTerminalOrder, FilterTerminals } from "../../helpers/block";
-import { FindNodeById } from "../../helpers/block/connectView";
 import { OnHover, OnMouseOut, OnTerminalClick } from "./handlers";
+import {
+  SetTerminalOrder,
+  FilterTerminals,
+  FindNodeById,
+} from "../../helpers/block";
 
 const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
@@ -27,9 +30,8 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   );
 
   const onConnectorClick = (conn: Connector) => {
-    showTerminalMenu(false);
-    const order = CalculateTerminalOrder(data, 0, conn.relationType);
-    dispatch(changeActiveConnector(data, conn.id, true, order));
+    const order = SetTerminalOrder(data, 0, conn.relationType);
+    dispatch(changeActiveConnector(data, conn.id, !conn.visible, order));
   };
 
   // Enforce size change of node

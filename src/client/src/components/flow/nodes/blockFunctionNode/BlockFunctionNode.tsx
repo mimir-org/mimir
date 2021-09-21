@@ -7,7 +7,11 @@ import { Connector, Node, Edge } from "../../../../models";
 import { Size } from "../../../../compLibrary";
 import { TerminalsIcon, ConnectIcon } from "../../../../assets/icons/blockView";
 import { changeActiveConnector } from "../../../../redux/store/project/actions";
-import { CalculateTerminalOrder, FilterTerminals } from "../../helpers/block";
+import {
+  SetTerminalOrder,
+  FilterTerminals,
+  FindAllEdges,
+} from "../../helpers/block";
 import {
   TerminalsMenuComponent,
   ConnectViewComponent,
@@ -67,17 +71,15 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   if (!mainConnectNode) data.width = Size.Node_Width;
 
   const onConnectorClick = (conn: Connector) => {
-    showTerminalMenu(false);
     showConnectMenu(false);
-    const order = CalculateTerminalOrder(data, 0, conn.relationType);
-    dispatch(changeActiveConnector(data, conn.id, true, order));
+    const order = SetTerminalOrder(data, 0, conn.relationType);
+    dispatch(changeActiveConnector(data, conn.id, !conn.visible, order));
   };
 
   const onConnectViewClick = (node: Node) => {
-    if (!isChecked(node)) {
+    if (!isConnectorChecked(node)) {
       data.width = Size.ConnectView_Width;
       data.length = Size.ConnectView_Length;
-      console.log(data);
       if (!IsMainConnectNode(data.id)) dispatch(addMainNode(data));
       dispatch(addConnectNode(data, node));
     } else {
@@ -91,7 +93,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     }
   };
 
-  const isChecked = (node: Node) => {
+  const isConnectorChecked = (node: Node) => {
     let result = false;
     connectNodes?.forEach((element) => {
       if (element.id === node.id) result = true;
@@ -107,9 +109,8 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   // Force edges' z-index in ConnectView
   useEffect(() => {
     if (mainConnectNode) {
-      const allEdges: HTMLElement =
-        document.querySelector(".react-flow__edges");
-      allEdges.style.zIndex = "3";
+      const edges = FindAllEdges();
+      edges.style.zIndex = "3";
     }
   }, [mainConnectNode]);
 
@@ -157,7 +158,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
           isOpen={connectMenu}
           list={connectChildren}
           handleClick={onConnectViewClick}
-          isChecked={isChecked}
+          isChecked={isConnectorChecked}
           width={data.width}
         />
       </NodeBox>

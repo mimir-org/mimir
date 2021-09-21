@@ -1,5 +1,4 @@
-import { BlockFunctionParentNode } from "../../nodes/blockFunctionParentNode";
-import { BlockLocationParentNode } from "../../nodes/blockLocationParentNode";
+import { BlockParentNode } from "../../nodes/blockParentNode";
 import { BlockFunctionNode } from "../../nodes/blockFunctionNode";
 import { BlockLocationNode } from "../../nodes/blockLocationNode";
 import { AspectNode } from "../../nodes/aspectNode";
@@ -10,8 +9,7 @@ const GetBlockNodeTypes = {
   AspectProduct: AspectNode,
   BlockFunctionNode: BlockFunctionNode,
   BlockLocationNode: BlockLocationNode,
-  BlockFunctionParentNode: BlockFunctionParentNode,
-  BlockLocationParentNode: BlockLocationParentNode,
+  BlockParentNode: BlockParentNode,
 };
 
 export default GetBlockNodeTypes;

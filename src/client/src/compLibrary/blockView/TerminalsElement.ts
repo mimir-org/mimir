@@ -13,7 +13,7 @@ const TerminalsElement = styled.div`
 
   .text {
     position: absolute;
-    left: 6px;
+    left: 30px;
     bottom: -3px;
   }
 

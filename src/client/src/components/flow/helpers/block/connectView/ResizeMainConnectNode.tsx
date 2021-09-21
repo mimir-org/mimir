@@ -1,4 +1,4 @@
-import { FindNodeById } from ".";
+import { FindNodeById } from "../";
 import { Size } from "../../../../../compLibrary";
 
 const UpdateConnectNodeSize = (nodeCount: number, mainNodeId: string) => {

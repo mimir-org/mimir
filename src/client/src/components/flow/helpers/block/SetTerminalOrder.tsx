@@ -1,10 +1,6 @@
 import { Node, RelationType } from "../../../../models";
 
-const CalculateTerminalOrder = (
-  node: Node,
-  order: number,
-  type: RelationType
-) => {
+const SetTerminalOrder = (node: Node, order: number, type: RelationType) => {
   node.connectors.forEach((conn) => {
     if (conn.visible && conn.relationType === type) order++;
   });
@@ -12,4 +8,4 @@ const CalculateTerminalOrder = (
   return order;
 };
 
-export default CalculateTerminalOrder;
+export default SetTerminalOrder;

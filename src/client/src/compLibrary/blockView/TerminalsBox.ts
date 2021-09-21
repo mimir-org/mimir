@@ -8,6 +8,7 @@ const TerminalsBox = styled.div`
   border-radius: 0px 5px 5px 5px;
   height: auto;
   width: max-content;
+  min-width: 200px;
   position: absolute;
   left: ${(props) => props.width}px;
   top: -1px;

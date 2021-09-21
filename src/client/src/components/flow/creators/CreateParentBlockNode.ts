@@ -2,15 +2,13 @@ import { FlowElement } from "react-flow-renderer";
 import { TextResources } from "../../../assets/text";
 import { Position } from "../../../compLibrary";
 import { Node } from "../../../models";
-import { IsLocation } from "../helpers/common";
+
+/**  Component to draw the parent node in BlockView. The component returns an instance of FlowElement */
 
 const CreateParentBlockNode = (node: Node) => {
   if (!node) return null;
 
-  const type = IsLocation(node)
-    ? TextResources.Type_BlockLocationParentNode
-    : TextResources.Type_BlockFunctionParentNode;
-
+  const type = TextResources.Type_BlockParentNode;
   const position = { x: Position.FunctionBlock_xPos, y: 100 };
 
   return {

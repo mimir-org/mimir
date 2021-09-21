@@ -208,8 +208,7 @@ const TextResources = {
   // Type
   Type_BlockLocation: "BlockLocationNode",
   Type_BlockFunction: "BlockFunctionNode",
-  Type_BlockFunctionParentNode: "BlockFunctionParentNode",
-  Type_BlockLocationParentNode: "BlockLocationParentNode",
+  Type_BlockParentNode: "BlockParentNode",
 
   // RDS
   RDS_Function: "=",
