@@ -129,6 +129,7 @@ const TextResources = {
     "Choose Predefined Location Attributes",
   TypeEditor_Properties_Block_Attributes: "Choose Object Block Attributes",
   TypeEditor_Properties_Location_Attributes: "Choose Location Attributes",
+  TypeEditor_Properties_Composite_Types: "Choose Composite Types",
   TypeEditor_New_Type_Preview: "Type Preview Info:",
   TypeEditor_Preview_Info: "Click on preview objects to see inspector info",
   TypeEditor_Button_Add: "Add to Library",

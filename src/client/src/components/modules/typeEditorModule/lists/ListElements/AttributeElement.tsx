@@ -27,7 +27,6 @@ export const AttributeElement = ({
         <span>{attribute.entity} - </span>
         <span>{attribute.qualifier.name}, </span>
         <span>{attribute.condition.name}</span>
-        <span></span>
       </p>
       <img src={HelpIcon} alt="help" />
     </ListElem>

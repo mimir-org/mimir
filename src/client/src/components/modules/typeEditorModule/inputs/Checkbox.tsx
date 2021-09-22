@@ -3,6 +3,7 @@ import "./checkbox.scss";
 export enum Label {
   Attributes = 0,
   Terminals = 1,
+  CompositeTypes = 2,
 }
 interface Props {
   id: string;

@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Color } from "..";
 
 const SearchBar = styled.div`
   display: flex;
@@ -7,7 +6,7 @@ const SearchBar = styled.div`
   max-height: 19px;
   align-items: center;
   flex-direction: row;
-  border: 1px solid ${Color.Grey};
+  border: 1px solid #d9d9d9;
   border-radius: 2px;
   padding: 2px 0px 2px 2px;
   background-color: inherit;
@@ -34,7 +33,7 @@ const SearchBar = styled.div`
   }
 
   input[type="text"]::placeholder {
-    color: ${Color.DarkerGrey};
+    color: #898787;
     font-size: 13px;
     font-style: italic;
     opacity: 0.5;

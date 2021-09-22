@@ -25,6 +25,7 @@ import {
   IsInterface,
   IsObjectBlock,
   IsFunction,
+  IsProduct,
 } from "./helpers";
 import {
   TypeEditorWrapper,
@@ -97,7 +98,8 @@ export const TypeEditorComponent = () => {
                 onChange={(key, data) => onChange(key, data)}
                 // disabled={ModeEdit(mode) ? false : FieldValidator(state, "rds")}
               />
-              {IsFunction(state?.createLibraryType.aspect) && (
+              {(IsFunction(state?.createLibraryType.aspect) ||
+                IsProduct(state?.createLibraryType.aspect)) && (
                 <TypeEditorList
                   items={state?.terminals}
                   createLibraryType={state?.createLibraryType}
@@ -120,7 +122,17 @@ export const TypeEditorComponent = () => {
                   // disabled={ModeEdit(mode) ? false : FieldValidator(state, "rds")}
                 />
               )}
-              {IsFunction(state?.createLibraryType.aspect) &&
+              {IsProduct(state?.createLibraryType.aspect) && (
+                <TypeEditorList
+                  items={state?.compositeTypes}
+                  createLibraryType={state?.createLibraryType}
+                  listType={ListType.CompositeTypes}
+                  onChange={(key, data) => onChange(key, data)}
+                  // disabled={ModeEdit(mode) ? false : FieldValidator(state, "rds")}
+                />
+              )}
+              {(IsFunction(state?.createLibraryType.aspect) ||
+                IsProduct(state?.createLibraryType.aspect)) &&
               IsInterface(state.createLibraryType.objectType) ? null : (
                 <TypeEditorList
                   items={state?.attributes}

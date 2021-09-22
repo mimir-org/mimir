@@ -9,6 +9,7 @@ import {
   ObjectBlockElement,
   TransportInterfaceElement,
   PredefinedLocationElement,
+  CompositeTypeElement,
   AttributeElement,
 } from "./lists/";
 import {
@@ -28,7 +29,8 @@ export enum ListType {
   PredefinedAttributes = 2,
   ObjectAttributes = 3,
   LocationAttributes = 4,
-  Preview = 5,
+  CompositeTypes = 5,
+  Preview = 6,
 }
 
 interface Props {
@@ -110,6 +112,17 @@ export const TypeEditorList = ({
                     isMultiSelect={element.isMultiSelect}
                     defaultValue={createLibraryType?.predefinedAttributes}
                     onChange={(key, data) => onChange(key, data)}
+                  />
+                )
+              )
+            : listType === ListType.CompositeTypes
+            ? GetFilteredList(listType, items, createLibraryType).map(
+                (element) => (
+                  <CompositeTypeElement
+                    key={element.id}
+                    compositeType={element}
+                    onChange={(key, data) => onChange(key, data)}
+                    defaultValue={createLibraryType.attributeTypes}
                   />
                 )
               )

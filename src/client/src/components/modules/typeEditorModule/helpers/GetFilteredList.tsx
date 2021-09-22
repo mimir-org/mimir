@@ -22,6 +22,8 @@ const GetFilteredList = (
       return GetFilteredAttributesList(items, createLibraryType.aspect);
     case ListType.LocationAttributes:
       return GetFilteredAttributesList(items, createLibraryType.aspect);
+    case ListType.CompositeTypes:
+      return [];
     default:
       return [] as any[];
   }

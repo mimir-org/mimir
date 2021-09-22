@@ -110,6 +110,7 @@ export interface CreateLibraryType {
   predefinedAttributes: PredefinedAttribute[];
   terminalTypeId: string;
   symbolId: string;
+  compositeTypes: CompositeType[];
 }
 export interface User {
   username: string;

@@ -5,6 +5,7 @@ import {
   BlobData,
   TerminalTypeItem,
   PredefinedAttribute,
+  CompositeType,
 } from "../../../models";
 import {
   FETCHING_INITIAL_DATA,
@@ -55,6 +56,7 @@ const initialState: TypeEditorState = {
     predefinedAttributes: [] as PredefinedAttribute[],
     terminalTypeId: "",
     symbolId: "",
+    compositeTypes: [] as CompositeType[],
   } as CreateLibraryType,
   aspects: {},
   objectTypes: {},
@@ -162,6 +164,7 @@ export function typeEditorReducer(
           predefinedAttributes: [] as PredefinedAttribute[],
           terminalTypeId: "",
           symbolId: "",
+          compositeTypes: [] as CompositeType[],
         },
       };
     case FETCHING_TYPE_SUCCESS_OR_ERROR:
@@ -228,6 +231,7 @@ export function typeEditorReducer(
           predefinedAttributes: [] as PredefinedAttribute[],
           terminalTypeId: "",
           symbolId: "",
+          compositeTypes: [] as CompositeType[],
         },
       };
     case CLOSE_TYPE_EDITOR:
@@ -249,6 +253,7 @@ export function typeEditorReducer(
           predefinedAttributes: [] as PredefinedAttribute[],
           terminalTypeId: "",
           symbolId: "",
+          compositeTypes: [] as CompositeType[],
         },
       };
     case UPDATE_CREATELIBRARYTYPE:
@@ -321,6 +326,7 @@ export function typeEditorReducer(
           predefinedAttributes: [] as PredefinedAttribute[],
           terminalTypeId: "",
           symbolId: "",
+          compositeTypes: [] as CompositeType[],
         },
         apiError: action.payload.apiError
           ? [...state.apiError, action.payload.apiError]

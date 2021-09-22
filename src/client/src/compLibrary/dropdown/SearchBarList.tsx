@@ -1,11 +1,10 @@
 import styled from "styled-components";
-import { Color } from "..";
 
 const SearchBarList = styled.div`
   display: flex;
   flex-direction: column;
   border-radius: 2px;
-  background-color: ${Color.White};
+  background-color: white;
   font-size: 13px;
   position: absolute;
   top: 22px;
