@@ -10,5 +10,5 @@ export { default as FindSelectedBlockNode } from "./FindSelectedBlockNode";
 export { default as SetTerminalOrder } from "./SetTerminalOrder";
 export { default as GetBlockEdgeTypes } from "./GetBlockEdgeTypes";
 export { default as OnBlockClick } from "./OnBlockClick";
-export { default as FindNodeById } from "./FindNodeById";
+export { default as FindNodeByDataId } from "./FindNodeByDataId";
 export { default as FindAllEdges } from "./FindAllEdges";

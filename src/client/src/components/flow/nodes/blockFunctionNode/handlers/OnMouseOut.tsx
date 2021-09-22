@@ -1,9 +1,9 @@
-import { FindNodeById } from "../../../helpers/block";
+import { FindNodeByDataId } from "../../../helpers/block";
 
 const OnMouseOut = (showTerminalButton, showConnectButton, id) => {
   showTerminalButton(false);
   showConnectButton(false);
-  const node = FindNodeById(id);
+  const node = FindNodeByDataId(id);
   node.style.border = "none";
 };
 

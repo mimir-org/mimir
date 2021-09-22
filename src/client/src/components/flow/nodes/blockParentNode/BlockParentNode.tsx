@@ -2,18 +2,18 @@ import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useDispatch, useSelector } from "react-redux";
 import { TextResources } from "../../../../assets/text";
-import { Connector, Node } from "../../../../models";
+import { Connector, Node, Edge } from "../../../../models";
 import { RootState } from "../../../../redux/store";
 import { Block } from "..";
 import { HandleComponent, TerminalsMenuComponent } from "../../block";
-import { changeActiveConnector } from "../../../../redux/store/project/actions";
 import { IsAspectNode, IsLocation } from "../../helpers/common";
 import { Size } from "../../../../compLibrary";
+import { GetMenuIcon } from "./helpers";
+import { OnHover, OnMouseOut, OnMenuClick } from "./handlers";
 import {
-  TerminalsMenuLocationIcon,
-  TerminalsMenuIcon,
-} from "../../../../assets/icons/blockView";
-
+  changeActiveConnector,
+  removeEdge,
+} from "../../../../redux/store/project/actions";
 import {
   BlockMessageBox,
   TerminalsMenu,
@@ -21,7 +21,7 @@ import {
 import {
   SetTerminalOrder,
   FilterTerminals,
-  FindNodeById,
+  FindNodeByDataId,
   FindAllEdges,
 } from "../../helpers/block";
 
@@ -30,6 +30,10 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const [terminalButton, showTerminalButton] = useState(false);
 
   const dispatch = useDispatch();
+
+  const edges = useSelector<RootState>(
+    (state) => state.projectState.project.edges
+  ) as Edge[];
 
   const isSplitView = useSelector<RootState>(
     (state) => state.splitView.visible
@@ -54,38 +58,36 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
 
   // Enforce size change of node
   useEffect(() => {
-    const parentNode = FindNodeById(data.id);
+    const parentNode = FindNodeByDataId(data.id);
     if (isSplitView) {
       parentNode.style.width = `${Size.SplitView_Width}px`;
     } else parentNode.style.width = `${Size.BlockView_Width}px`;
   }, [data, isSplitView]);
 
-  // Force z-index to show edges
+  // Force z-index to display edges
   useEffect(() => {
-    const edges = FindAllEdges();
-    edges.style.zIndex = "3";
+    const allEdges = FindAllEdges();
+    allEdges.style.zIndex = "3";
   }, []);
 
   const onConnectorClick = (conn: Connector) => {
     const order = SetTerminalOrder(data, 0, conn.relationType);
     dispatch(changeActiveConnector(data, conn.id, !conn.visible, order));
-  };
 
-  const onClick = () => {
-    showTerminalMenu(!terminalMenu);
-  };
-
-  const onHover = () => {
-    showTerminalButton(true);
-  };
-
-  const onMouseOut = () => {
-    showTerminalButton(false);
+    if (conn.visible) {
+      const edge = edges.find(
+        (e) => e.fromConnector.id === conn.id || e.toConnector.id === conn.id
+      );
+      if (edge) dispatch(removeEdge(edge.id));
+    }
   };
 
   return (
     <>
-      <div onMouseOver={onHover} onMouseOut={onMouseOut}>
+      <div
+        onMouseOver={() => OnHover(showTerminalButton)}
+        onMouseOut={() => OnMouseOut(showTerminalButton)}
+      >
         <Block
           node={node}
           isLocation={IsLocation(node)}
@@ -95,14 +97,9 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         <TerminalsMenu
           visible={terminalButton && !IsAspectNode(node)}
           parent={true}
-          onClick={onClick}
+          onClick={() => OnMenuClick(showTerminalMenu, terminalMenu)}
         >
-          <img
-            src={
-              IsLocation(node) ? TerminalsMenuLocationIcon : TerminalsMenuIcon
-            }
-            alt="options"
-          />
+          <img src={GetMenuIcon(node)} alt="options" />
         </TerminalsMenu>
 
         <TerminalsMenuComponent

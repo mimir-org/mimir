@@ -7,7 +7,7 @@ const ListElement = styled.div`
   font-size: ${FontSize.Medium};
   display: flex;
   background-color: ${(props) => props.color};
-  border-bottom: 1px solid ${Color.ListBorder};
+  border-bottom: 1px solid ${Color.DarkGrey};
 
   .icon {
     display: flex;

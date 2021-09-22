@@ -12,7 +12,7 @@ import { IsLocation } from "../../helpers/common";
 import {
   SetTerminalOrder,
   FilterTerminals,
-  FindNodeById,
+  FindNodeByDataId,
 } from "../../helpers/block";
 
 const BlockLocationNode: FC<NodeProps> = ({ data }) => {
@@ -37,7 +37,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
 
   // Enforce size change of node
   useEffect(() => {
-    const locationNode = FindNodeById(data.id);
+    const locationNode = FindNodeByDataId(data.id);
     if (locationNode) {
       locationNode.style.width = `${data.width}px`;
       locationNode.style.height = `${data.length}px`;

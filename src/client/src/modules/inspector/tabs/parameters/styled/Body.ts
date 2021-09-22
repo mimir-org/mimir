@@ -5,7 +5,7 @@ const Body = styled.div`
   display: flex;
   flex-direction: column;
   height: 100px;
-  border-color: ${Color.ListBorder};
+  border-color: ${Color.DarkGrey};
   border-style: solid;
   border-width: 1px 0px 0px 0px;
 `;

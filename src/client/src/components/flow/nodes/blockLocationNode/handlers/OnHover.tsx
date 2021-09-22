@@ -1,8 +1,8 @@
-import { FindNodeById } from "../../../helpers/block";
+import { FindNodeByDataId } from "../../../helpers/block";
 
 const OnHover = (showTerminalButton, id) => {
   showTerminalButton(true);
-  const node = FindNodeById(id);
+  const node = FindNodeByDataId(id);
   node.style.border = "3px solid #a300a7";
 };
 

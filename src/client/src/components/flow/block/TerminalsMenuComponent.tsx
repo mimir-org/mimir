@@ -30,11 +30,7 @@ const TerminalsMenuComponent = ({
     isLocation={isLocation}
   >
     {list.map((conn) => (
-      <TerminalsElement
-        key={conn.id}
-        onClick={() => null}
-        isLocation={isLocation}
-      >
+      <TerminalsElement key={conn.id}>
         <p className="text"> {GetConnectorName(conn)}</p>
         <label className={"checkbox-block"}>
           <input

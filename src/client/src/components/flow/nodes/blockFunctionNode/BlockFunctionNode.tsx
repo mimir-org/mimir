@@ -6,12 +6,14 @@ import { RootState } from "../../../../redux/store";
 import { Connector, Node, Edge } from "../../../../models";
 import { Size } from "../../../../compLibrary";
 import { IsLocation } from "../../helpers/common";
-import { changeActiveConnector } from "../../../../redux/store/project/actions";
 import {
-  TerminalsMenuIcon,
+  changeActiveConnector,
+  removeEdge,
+} from "../../../../redux/store/project/actions";
+import {
+  TerminalsMenuFunctionIcon,
   ConnectMenuIcon,
 } from "../../../../assets/icons/blockView";
-
 import {
   SetTerminalOrder,
   FilterTerminals,
@@ -80,6 +82,13 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     showConnectMenu(false);
     const order = SetTerminalOrder(data, 0, conn.relationType);
     dispatch(changeActiveConnector(data, conn.id, !conn.visible, order));
+
+    if (conn.visible) {
+      const edge = edges.find(
+        (e) => e.fromConnector.id === conn.id || e.toConnector.id === conn.id
+      );
+      if (edge) dispatch(removeEdge(edge.id));
+    }
   };
 
   const onConnectViewClick = (node: Node) => {
@@ -141,7 +150,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
             Handlers.OnTerminalMenuClick(showTerminalMenu, terminalMenu)
           }
         >
-          <img src={TerminalsMenuIcon} alt="options" />
+          <img src={TerminalsMenuFunctionIcon} alt="options" />
         </TerminalsMenu>
         <ConnectMenu
           visible={connectButton && hasChildren}

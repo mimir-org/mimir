@@ -1,4 +1,4 @@
-import { FindNodeById } from "../";
+import { FindNodeByDataId } from "../";
 import { Size } from "../../../../../compLibrary";
 import { Node } from "../../../../../models";
 
@@ -7,7 +7,7 @@ const SetMainConnectNodeSize = (
   nodeId: string,
   connectNodes?: Node[]
 ) => {
-  let mainConnectNode = FindNodeById(mainConnectNodeId);
+  let mainConnectNode = FindNodeByDataId(mainConnectNodeId);
 
   // Resize MainConnectNode to large block
   if (mainConnectNode && connectNodes?.length > 0) {
@@ -17,7 +17,7 @@ const SetMainConnectNodeSize = (
   }
   // Reset MainConnectNode to normal
   else {
-    let node = FindNodeById(nodeId);
+    let node = FindNodeByDataId(nodeId);
     if (node) {
       node.style.width = `${Size.Node_Width}px`;
       node.style.height = `${Size.Node_Length}px`;

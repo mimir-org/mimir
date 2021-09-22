@@ -3,8 +3,7 @@ import { Color, FontSize } from "..";
 
 const TerminalsElement = styled.div`
   border-bottom: 1px solid;
-  border-color: ${(props) =>
-    props.isLocation ? Color.LocationTab : Color.FunctionTab};
+  border-color: ${Color.DarkGrey};
   padding: 5px 34px 5px 5px;
   font-size: ${FontSize.Small};
   color: ${Color.Black};
