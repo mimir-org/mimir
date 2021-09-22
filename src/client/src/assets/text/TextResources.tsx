@@ -64,6 +64,7 @@ const TextResources = {
   Inspector_Relations_Function: "Go to function",
   Inspector_Relations_Input_object_connetion: "Input object connection",
   Inspector_Relations_Output_object_connetion: "Output object connection",
+  Inspector_Relations_Relationships: "Go To: Active Relations",
   Inspector_Relations_Active_Terminal_Types: "Active Terminal Types",
   Inspector_Relations_Terminal_Input: "Go To: Terminal Input Object Connection",
   Inspector_Relations_Terminal_Output:
