@@ -266,6 +266,10 @@ namespace Mb.Core.Controllers.V1
                         contentType = @"text/turtle";
                         extension = "ttl";
                         break;
+                    case FileFormat.NTriples:
+                        contentType = @"application/n-triples";
+                        extension = "nt";
+                        break;
                     default:
                         return StatusCode(500, "Internal Server Error. Missing file format.");
                 }

@@ -4,6 +4,7 @@
     {
         Json = 0,
         Xml = 1,
-        Turtle = 2
+        Turtle = 2,
+        NTriples = 3
     }
 }
