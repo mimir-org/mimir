@@ -4,10 +4,9 @@ import { Color, Size } from "../../../../compLibrary";
 const TypeEditorWrapper = styled.div`
   position: fixed;
   top: ${Size.TopMenu_Height}px;
-  left: 50%;
-  transform: translate(-50%, 0);
+  left: calc(1.6px + ${Size.ModuleClosed}px);
   width: 95%;
-  height: 90%;
+  height: calc(100% - ${Size.TopMenu_Height}px - ${Size.ModuleClosed}px);
   background: ${Color.White};
   border: 2px solid ${Color.BlueMagenta};
   border-radius: 5px;
