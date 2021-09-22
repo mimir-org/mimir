@@ -480,6 +480,32 @@ namespace Mb.Core.Services
             await _attributeRepository.SaveAsync();
         }
 
+        /// <summary>
+        /// Returns a list of all locked nodes id's
+        /// If param 'projectId' is null all locked nodes in the database will be returned
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns>List of locked node id></returns>
+        public async Task<List<string>> GetLockedNodes(string projectId)
+        {
+            return projectId == null 
+                ? await Task.FromResult(_nodeRepository.FindBy(x => x.IsLocked).Select(x => x.Id).ToList())
+                : await Task.FromResult(_nodeRepository.FindBy(x => x.IsLocked && x.MasterProjectId == projectId).Select(x => x.Id).ToList());
+        }
+
+        /// <summary>
+        /// Returns a list of all locked attributes id's
+        /// If param 'projectId' is null all locked attributes in the database will be returned
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns>List of locked attribute id></returns>
+        public async Task<List<string>> GetLockedAttributes(string projectId)
+        {
+            return projectId == null
+                ? await Task.FromResult(_attributeRepository.FindBy(x => x.IsLocked).Select(x => x.Id).ToList())
+                : await Task.FromResult(_attributeRepository.FindBy(x => x.IsLocked && x.Node != null && x.Node.MasterProjectId == projectId).Select(x => x.Id).ToList());
+        }
+
         #region Private methods
 
         private void LockUnlockNodesAndAttributesRecursive(
