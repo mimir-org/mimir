@@ -1,3 +1,4 @@
+import { ObjectType } from "../../../models";
 import {
   FETCHING_LIBRARY,
   FETCHING_LIBRARY_SUCCESS_OR_ERROR,
@@ -12,6 +13,8 @@ import {
   FETCHING_LIBRARY_TRANSPORT_TYPES,
   FETCHING_LIBRARY_INTERFACE_TYPES_SUCCESS_OR_ERROR,
   FETCHING_LIBRARY_INTERFACE_TYPES,
+  ADD_LIBRARY_ITEM,
+  REMOVE_LIBRARY_ITEM,
 } from "./types";
 
 const initialState: LibraryState = {
@@ -134,6 +137,37 @@ export function libraryReducer(
           ? [...state.apiError, action.payload.apiError]
           : state.apiError,
         interfaceTypes: action.payload.transports,
+      };
+
+    case REMOVE_LIBRARY_ITEM:
+      return {
+        ...state,
+        interfaceTypes: state.interfaceTypes.filter(
+          (x) => x.id !== action.payload.id
+        ),
+        nodeTypes: state.interfaceTypes.filter(
+          (x) => x.id !== action.payload.id
+        ),
+        transportTypes: state.interfaceTypes.filter(
+          (x) => x.id !== action.payload.id
+        ),
+      };
+
+    case ADD_LIBRARY_ITEM:
+      return {
+        ...state,
+        interfaceTypes:
+          action.payload.libraryType === ObjectType.Interface
+            ? [...state.interfaceTypes, action.payload]
+            : state.interfaceTypes,
+        nodeTypes:
+          action.payload.libraryType === ObjectType.ObjectBlock
+            ? [...state.nodeTypes, action.payload]
+            : state.nodeTypes,
+        transportTypes:
+          action.payload.libraryType === ObjectType.Transport
+            ? [...state.transportTypes, action.payload]
+            : state.transportTypes,
       };
 
     default:

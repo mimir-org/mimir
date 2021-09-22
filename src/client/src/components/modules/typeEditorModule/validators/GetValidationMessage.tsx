@@ -8,57 +8,34 @@ import {
   IsNotSet,
   IsObjectBlock,
   IsTransport,
-  ModeEdit,
-  ModeNew,
 } from "../helpers";
 
 const GetValidationMessage = (state: TypeEditorState) => {
-  const mode = state.mode;
-  const terminals = ModeEdit(mode)
-    ? state.selectedNode.terminalTypes
-    : state.createLibraryType.terminalTypes;
-  const objectType = ModeEdit(mode)
-    ? state.selectedNode.objectType
-    : state.createLibraryType.objectType;
-  const aspect = ModeEdit(mode)
-    ? state.selectedNode.aspect
-    : state.createLibraryType.aspect;
+  const terminals = state.createLibraryType.terminalTypes;
+  const objectType = state.createLibraryType.objectType;
+  const aspect = state.createLibraryType.aspect;
   const messages = [];
 
   // Check name
-  if (
-    (ModeNew(mode) && state.createLibraryType.name === "") ||
-    (ModeEdit(mode) && state.selectedNode.name === "")
-  )
+  if (state.createLibraryType.name === "")
     messages.push(TextResources.TypeEditor_Error_Name);
 
   // Check RDS
-  if (
-    (ModeNew(mode) && state.createLibraryType.rdsId === "") ||
-    (ModeEdit(mode) && state.selectedNode.rdsId === "")
-  )
+  if (state.createLibraryType.rdsId === "")
     messages.push(TextResources.TypeEditor_Error_RDS);
 
   // Check amount of attributes
   if (!IsInterface(objectType)) {
     if (
-      (ModeNew(mode) &&
-        state.createLibraryType.attributeTypes &&
-        state.createLibraryType.attributeTypes.length < 1) ||
-      (ModeEdit(mode) &&
-        state.selectedNode.attributeTypes &&
-        state.selectedNode.attributeTypes.length < 1)
+      state.createLibraryType.attributeTypes &&
+      state.createLibraryType.attributeTypes.length < 1
     )
       messages.push(TextResources.TypeEditor_Error_Attributes);
   }
 
   // Check location attributes
   if (IsLocation(aspect)) {
-    if (
-      (ModeNew(mode) &&
-        state.createLibraryType.predefinedAttributes.length === 0) ||
-      (ModeEdit(mode) && state.selectedNode.predefinedAttributes.length === 0)
-    )
+    if (state.createLibraryType.predefinedAttributes.length === 0)
       messages.push(TextResources.TypeEditor_Error_Location_Attributes);
   }
 
@@ -77,10 +54,7 @@ const GetValidationMessage = (state: TypeEditorState) => {
     }
     // Check interface terminal type
     if (IsInterface(objectType) || IsTransport(objectType)) {
-      if (
-        (ModeNew(mode) && state.createLibraryType.terminalTypeId === null) ||
-        (ModeEdit(mode) && state.selectedNode.terminalTypeId === null)
-      )
+      if (state.createLibraryType.terminalTypeId === null)
         messages.push(TextResources.TypeEditor_Error_Terminals_Interface);
     }
   }
