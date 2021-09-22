@@ -2,12 +2,12 @@ import { Size } from "../../../../../compLibrary";
 import { Connector, Edge, Node } from "../../../../../models";
 import { MODULE_TYPE } from "../../../../../models/project";
 import { setModuleVisibility } from "../../../../../redux/store/modules/actions";
+import { SetPanelHeight } from "../../../helpers";
+import { changeInspectorTab } from "../../../redux/actions";
 import {
   setActiveEdge,
   setActiveNode,
 } from "../../../../../redux/store/project/actions";
-import { SetPanelHeight } from "../../../helpers";
-import { changeInspectorTab } from "../../../redux/actions";
 
 const OnClickRelation = (
   node: Node,

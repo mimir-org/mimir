@@ -5,14 +5,18 @@ import { TextResources } from "../../../../assets/text";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import { OnClickRelation, OnClickTerminal, OnClickTransport } from "./handlers";
+import { GetRelations } from "./helpers/GetRelations";
+import { GetRelationColor } from "../../helpers";
+import { Color } from "../../../../compLibrary";
 import {
   GetNameRelation,
   GetNameTerminal,
   GetNameTransport,
 } from "./helpers/GetName";
-import { GetRelations } from "./helpers/GetRelations";
-import { GetRelationColor } from "../../helpers";
-import { Color } from "../../../../compLibrary";
+import {
+  IsInputTerminal,
+  IsOutputTerminal,
+} from "../../../../components/flow/helpers/common";
 
 interface Props {
   node: Node;
@@ -31,11 +35,11 @@ const RelationComponent = ({ node }: Props) => {
   const [relations, relationEdges] = GetRelations(connectors, edges);
 
   const inputTerminals = connectors.filter(
-    (x) => x.terminalTypeId && x.type === 0
+    (x) => x.terminalTypeId && IsInputTerminal(x)
   );
 
   const outputTerminals = connectors.filter(
-    (x) => x.terminalTypeId && x.type === 1
+    (x) => x.terminalTypeId && IsOutputTerminal(x)
   );
 
   const transports = edges.filter(

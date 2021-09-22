@@ -2,7 +2,7 @@ import { Connector, Edge } from "../../../../models";
 import { ListElement } from "../../styled";
 import { RelationsColumn, RelationsHeader, TerminalList } from "./styled";
 
-type Relationitem = Connector | Edge;
+type RelationItem = Connector | Edge;
 
 interface Props<T> {
   items: T[];
@@ -12,7 +12,7 @@ interface Props<T> {
   onClick: (item: T) => void;
 }
 
-const RelationsContent = <T extends Relationitem>({
+const RelationsContent = <T extends RelationItem>({
   items,
   label,
   getName,

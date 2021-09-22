@@ -1,9 +1,9 @@
 import { Edge } from "../../../../../models";
+import { changeInspectorTab } from "../../../redux/actions";
 import {
   setActiveEdge,
   setActiveNode,
 } from "../../../../../redux/store/project/actions";
-import { changeInspectorTab } from "../../../redux/actions";
 
 const OnClickTransport = (edge: Edge, dispatch: any) => {
   dispatch(setActiveEdge(edge.id, true));
