@@ -61,6 +61,10 @@ namespace Mb.Models.Data
         [Required]
         public DateTime Updated { get; set; }
 
+        public DateTime? Created { get; set; }
+
+        public string CreatedBy { get; set; }
+
         [RegularExpression(@"^(?=.*[1-9])\d+(\.[0-9]?)?$", ErrorMessage = "The version format must be at x.y")]
         public string Version { get; set; }
 
