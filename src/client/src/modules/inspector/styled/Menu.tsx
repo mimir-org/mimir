@@ -3,7 +3,6 @@ import { Color } from "../../../compLibrary";
 
 const Menu = styled.div`
   display: flex;
-  justify-content: end;
   color: ${Color.Black};
   height: 44px;
   width: 100%;
