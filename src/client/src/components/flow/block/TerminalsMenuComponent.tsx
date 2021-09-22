@@ -1,4 +1,4 @@
-import { Connector } from "../../../models";
+import { Connector, Node } from "../../../models";
 import { TerminalsBox, TerminalsElement } from "../../../compLibrary/blockView";
 import { GetConnectorIcon, GetConnectorName } from "../helpers/common";
 
@@ -31,7 +31,7 @@ const TerminalsMenuComponent = ({
   >
     {list.map((conn) => (
       <TerminalsElement key={conn.id}>
-        <p className="text"> {GetConnectorName(conn)}</p>
+        <p className="text">{GetConnectorName(conn)}</p>
         <label className={"checkbox-block"}>
           <input
             type="checkbox"

@@ -14,7 +14,7 @@ const TerminalsBox = styled.div`
   position: absolute;
   left: ${(props) => (props.isParent ? props.width + 5 : props.width + 2)}px;
   top: ${(props) => (props.isParent ? "-1px" : "-2px")};
-  z-index: 1;
+  z-index: 2;
 
   .button {
     position: absolute;

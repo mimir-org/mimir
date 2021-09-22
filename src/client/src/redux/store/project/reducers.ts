@@ -445,11 +445,11 @@ export function projectReducer(
         ...state,
         project: {
           ...state.project,
-          nodes: state.project.nodes.map((x) =>
-            x?.id === action.payload.node?.id
+          nodes: state.project.nodes.map((n) =>
+            n?.id === action.payload.node?.id
               ? {
-                  ...x,
-                  connectors: x.connectors.map((conn) =>
+                  ...n,
+                  connectors: n.connectors.map((conn) =>
                     conn.id === action.payload.connectorId
                       ? {
                           ...conn,
@@ -459,7 +459,7 @@ export function projectReducer(
                       : conn
                   ),
                 }
-              : x
+              : n
           ),
         },
       };

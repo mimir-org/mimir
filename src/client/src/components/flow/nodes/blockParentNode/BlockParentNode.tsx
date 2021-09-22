@@ -25,11 +25,20 @@ import {
   FindAllEdges,
 } from "../../helpers/block";
 
+/** Component for parent node in BlockView.
+ *  This is the big block that displays the selected node in the Explorer
+ */
+
 const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const [terminalMenu, showTerminalMenu] = useState(false);
   const [terminalButton, showTerminalButton] = useState(false);
-
+  const [terminalLocationMenu, showTerminalLocationMenu] = useState(false);
+  const [terminalLocationButton, showTerminalLocationButton] = useState(false);
   const dispatch = useDispatch();
+
+  const nodes = useSelector<RootState>(
+    (state) => state.projectState.project.nodes
+  ) as Node[];
 
   const edges = useSelector<RootState>(
     (state) => state.projectState.project.edges
@@ -43,18 +52,8 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
     (state) => state.splitView.node
   ) as Node;
 
-  const nodes = useSelector<RootState>(
-    (state) => state.projectState.project.nodes
-  ) as Node[];
-
+  const actualSplitNode = nodes.find((x) => x.id === splitViewNode?.id);
   const node = nodes.find((x) => x.id === data.id);
-  const isSelected = node.isBlockSelected;
-
-  const sortedTerminals = FilterTerminals(
-    data.connectors,
-    data.aspect,
-    isSplitView
-  );
 
   // Enforce size change of node
   useEffect(() => {
@@ -64,15 +63,16 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
     } else parentNode.style.width = `${Size.BlockView_Width}px`;
   }, [data, isSplitView]);
 
-  // Force z-index to display edges
+  // Force z-index to display edges in ConnectView
   useEffect(() => {
     const allEdges = FindAllEdges();
     allEdges.style.zIndex = "3";
   }, []);
 
   const onConnectorClick = (conn: Connector) => {
-    const order = SetTerminalOrder(data, 0, conn.relationType);
-    dispatch(changeActiveConnector(data, conn.id, !conn.visible, order));
+    const actualNode = nodes.find((x) => x.id === conn.nodeId);
+    const order = SetTerminalOrder(actualNode, 0, conn.relationType);
+    dispatch(changeActiveConnector(actualNode, conn.id, !conn.visible, order));
 
     if (conn.visible) {
       const edge = edges.find(
@@ -92,11 +92,12 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
           node={node}
           isLocation={IsLocation(node)}
           isSplitView={isSplitView}
-          isSelected={isSelected}
+          isSelected={node.isBlockSelected}
         />
         <TerminalsMenu
           visible={terminalButton && !IsAspectNode(node)}
           parent={true}
+          splitViewNode={false}
           onClick={() => OnMenuClick(showTerminalMenu, terminalMenu)}
         >
           <img src={GetMenuIcon(node)} alt="options" />
@@ -106,13 +107,13 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
           isOpen={terminalMenu}
           isParent={true}
           isLocation={IsLocation(node)}
-          list={sortedTerminals}
+          list={FilterTerminals(node, isSplitView)}
           width={isSplitView ? Size.SplitView_Width : Size.BlockView_Width}
           onClick={onConnectorClick}
         />
         <HandleComponent
-          aspect={data.aspect}
-          terminals={sortedTerminals}
+          aspect={node.aspect}
+          terminals={FilterTerminals(node, isSplitView)}
           splitView={isSplitView}
         />
       </div>
@@ -124,12 +125,41 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
       )}
 
       {splitViewNode && (
-        <Block
-          node={splitViewNode}
-          isLocation={true}
-          isSplitView={isSplitView}
-          isSelected={isSelected}
-        />
+        <div
+          onMouseOver={() => OnHover(showTerminalLocationButton)}
+          onMouseOut={() => OnMouseOut(showTerminalLocationButton)}
+        >
+          <Block
+            node={actualSplitNode}
+            isLocation={true}
+            isSplitView={isSplitView}
+            isSelected={actualSplitNode.isBlockSelected}
+          />
+          <TerminalsMenu
+            visible={terminalLocationButton && !IsAspectNode(splitViewNode)}
+            parent={true}
+            splitViewNode={true}
+            onClick={() =>
+              OnMenuClick(showTerminalLocationMenu, terminalLocationMenu)
+            }
+          >
+            <img src={GetMenuIcon(actualSplitNode)} alt="options" />
+          </TerminalsMenu>
+
+          <TerminalsMenuComponent
+            isOpen={terminalLocationMenu}
+            isParent={true}
+            isLocation={true}
+            list={FilterTerminals(actualSplitNode, isSplitView)}
+            width={1350}
+            onClick={onConnectorClick}
+          />
+          <HandleComponent
+            aspect={actualSplitNode.aspect}
+            terminals={FilterTerminals(actualSplitNode, isSplitView)}
+            splitView={true}
+          />
+        </div>
       )}
     </>
   );

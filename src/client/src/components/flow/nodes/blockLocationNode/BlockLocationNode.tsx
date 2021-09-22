@@ -24,11 +24,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
     (state) => state.splitView.visible
   ) as boolean;
 
-  const sortedTerminals = FilterTerminals(
-    data.connectors,
-    data.aspect,
-    splitView
-  );
+  const sortedTerminals = FilterTerminals(data, splitView);
 
   const onConnectorClick = (conn: Connector) => {
     const order = SetTerminalOrder(data, 0, conn.relationType);

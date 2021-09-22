@@ -1,7 +1,9 @@
 import { SortTerminals } from ".";
-import { Aspect, Connector } from "../../../../models";
+import { Connector, Node } from "../../../../models";
 import {
+  IsFunction,
   IsInputTerminal,
+  IsLocation,
   IsLocationTerminal,
   IsOutputTerminal,
   IsTransportTerminal,
@@ -10,20 +12,16 @@ import {
 /* Component to filter the terminals displayed on the nodes in BlockView 
    FilterTerminals returns a call to SortTerminals that sorts the filtered list */
 
-const FilterTerminals = (
-  terminals: Connector[],
-  aspect: Aspect,
-  splitView: boolean
-) => {
+const FilterTerminals = (node: Node, splitView: boolean) => {
   let filteredTerminals: Connector[] = [];
 
   if (splitView) {
-    terminals?.forEach((conn) => {
-      if (aspect === Aspect.Function) {
+    node.connectors?.forEach((conn) => {
+      if (IsFunction(node)) {
         IsOutputTerminal(conn) &&
           IsLocationTerminal(conn) &&
           filteredTerminals.push(conn);
-      } else if (aspect === Aspect.Location) {
+      } else if (IsLocation(node)) {
         IsInputTerminal(conn) &&
           IsLocationTerminal(conn) &&
           filteredTerminals.push(conn);
@@ -32,10 +30,10 @@ const FilterTerminals = (
   }
 
   if (!splitView) {
-    terminals?.forEach((conn) => {
-      if (aspect === Aspect.Function)
+    node.connectors?.forEach((conn) => {
+      if (IsFunction(node))
         IsTransportTerminal(conn) && filteredTerminals.push(conn);
-      else if (aspect === Aspect.Location)
+      else if (IsLocation(node))
         IsLocationTerminal(conn) &&
           IsInputTerminal(conn) &&
           filteredTerminals.push(conn);

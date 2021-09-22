@@ -67,12 +67,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
 
   const connectChildren = GetConnectChildren(data, nodes, edges);
   const hasChildren = connectChildren?.length > 0;
-
-  const sortedTerminals = FilterTerminals(
-    data.connectors,
-    data.aspect,
-    splitView
-  );
+  const sortedTerminals = FilterTerminals(data, splitView);
 
   const mainConnectNode = mainConnectNodes.find((x) => x.id === data.id);
   const connectNodes = mainConnectNode?.connectNodes;
@@ -122,7 +117,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     SetMainConnectNodeColor(mainConnectNode?.id, data.id, connectNodes);
   }, [mainConnectNode, data, connectNodes]);
 
-  // Force edges' z-index in ConnectView
+  // Force z-index to display edges in ConnectView
   useEffect(() => {
     if (mainConnectNode) {
       const edges = FindAllEdges();

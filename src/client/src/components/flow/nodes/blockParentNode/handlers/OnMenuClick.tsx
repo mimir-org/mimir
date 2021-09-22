@@ -1,5 +1,5 @@
-const OnMenuClick = (showTerminalMenu, terminalMenu) => {
-  showTerminalMenu(!terminalMenu);
+const OnMenuClick = (showMenu, menu) => {
+  showMenu(!menu);
 };
 
 export default OnMenuClick;

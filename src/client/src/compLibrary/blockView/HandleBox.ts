@@ -11,6 +11,7 @@ const HandleBox = styled.div`
       props.position === Position.Left
         ? `${props.input}%`
         : props.position === Position.Right && `${props.output}%`};
+
     right: ${(props) => props.position === Position.Right && "-16px"};
     left: ${(props) => props.position === Position.Left && "-16px"};
   }
