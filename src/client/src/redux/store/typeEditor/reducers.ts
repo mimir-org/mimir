@@ -56,7 +56,7 @@ const initialState: TypeEditorState = {
     predefinedAttributes: [] as PredefinedAttribute[],
     terminalTypeId: "",
     symbolId: "",
-    compositeTypes: [] as CompositeType[],
+    compositeTypes: [] as string[],
   } as CreateLibraryType,
   aspects: {},
   objectTypes: {},
@@ -164,7 +164,7 @@ export function typeEditorReducer(
           predefinedAttributes: [] as PredefinedAttribute[],
           terminalTypeId: "",
           symbolId: "",
-          compositeTypes: [] as CompositeType[],
+          compositeTypes: [] as string[],
         },
       };
     case FETCHING_TYPE_SUCCESS_OR_ERROR:
@@ -231,7 +231,7 @@ export function typeEditorReducer(
           predefinedAttributes: [] as PredefinedAttribute[],
           terminalTypeId: "",
           symbolId: "",
-          compositeTypes: [] as CompositeType[],
+          compositeTypes: [] as string[],
         },
       };
     case CLOSE_TYPE_EDITOR:
@@ -253,7 +253,7 @@ export function typeEditorReducer(
           predefinedAttributes: [] as PredefinedAttribute[],
           terminalTypeId: "",
           symbolId: "",
-          compositeTypes: [] as CompositeType[],
+          compositeTypes: [] as string[],
         },
       };
     case UPDATE_CREATELIBRARYTYPE:
@@ -326,7 +326,7 @@ export function typeEditorReducer(
           predefinedAttributes: [] as PredefinedAttribute[],
           terminalTypeId: "",
           symbolId: "",
-          compositeTypes: [] as CompositeType[],
+          compositeTypes: [] as string[],
         },
         apiError: action.payload.apiError
           ? [...state.apiError, action.payload.apiError]
