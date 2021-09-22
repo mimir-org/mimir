@@ -37,7 +37,6 @@ namespace Mb.Models.Data
         [Required]
         public bool IsLocked { get; set; }
 
-        [Required]
         public string IsLockedBy { get; set; }
 
         [Required]

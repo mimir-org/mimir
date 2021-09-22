@@ -18,6 +18,7 @@ using Mb.Models.Modules;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Attribute = Mb.Models.Data.Attribute;
 
 namespace Mb.Core.Services
 {
@@ -449,9 +450,17 @@ namespace Mb.Core.Services
                 return;
 
             var userName = _contextAccessor.GetName();
-            var node = _nodeRepository.Context.Nodes.FirstOrDefault(x => x.Id == lockUnlockNodeAm.Id && x.MasterProjectId == lockUnlockNodeAm.ProjectId);
 
-            if (node?.Id == null || node.IsLocked == lockUnlockNodeAm.IsLocked)
+            var allNodesInProject = _nodeRepository.GetAll(false).Where(x => x.MasterProjectId == lockUnlockNodeAm.ProjectId);
+            var allAttributesInProject = _attributeRepository.GetAll(false).Where(x => x.Node != null && x.Node.MasterProjectId == lockUnlockNodeAm.ProjectId);
+            var allEdgesInProject = _edgeRepository.GetAll(false).Where(x => x.ToNodeId != null && x.ToNode.MasterProjectId == lockUnlockNodeAm.ProjectId);
+
+            var node = allNodesInProject.FirstOrDefault(x => x.Id == lockUnlockNodeAm.Id && x.MasterProjectId == lockUnlockNodeAm.ProjectId);
+
+            if (node?.Id == null)
+                return;
+
+            if (node.IsLocked == lockUnlockNodeAm.IsLocked)
                 return;
 
             if (node.IsLocked && userName != node.IsLockedBy)
@@ -460,7 +469,7 @@ namespace Mb.Core.Services
             node.IsLocked = lockUnlockNodeAm.IsLocked;
             node.IsLockedBy = node.IsLocked ? userName : null;
 
-            LockUnlockNodesAndAttributesRecursive(node, userName);
+            LockUnlockNodesAndAttributesRecursive(node, allNodesInProject, allAttributesInProject, allEdgesInProject, userName);
 
             await _nodeRepository.SaveAsync();
             await _attributeRepository.SaveAsync();
@@ -468,12 +477,17 @@ namespace Mb.Core.Services
 
         #region Private methods
 
-        private void LockUnlockNodesAndAttributesRecursive(Node parentNode, string userName)
+        private void LockUnlockNodesAndAttributesRecursive(
+            Node parentNode, 
+            IQueryable<Node> allNodesInProject, 
+            IQueryable<Attribute> allAttributesInProject, 
+            IQueryable<Edge> allEdgesInProject,  
+            string userName)
         {
-            if (parentNode?.Id == null || parentNode.MasterProjectId == null)
+            if (parentNode?.Id == null)
                 return;
 
-            var edges = _edgeRepository.Context.Edges.Where(x => x.FromNodeId == parentNode.Id).ToList();
+            var edges = allEdgesInProject.Where(x => x.FromNodeId == parentNode.Id);
 
             if(!edges.Any())
                 return;
@@ -483,9 +497,9 @@ namespace Mb.Core.Services
                 if (edge?.ToNodeId == null)
                     return;
 
-                var childNode = _nodeRepository.Context.Nodes.FirstOrDefault(x => x.Id == edge.ToNodeId);
+                var childNode = allNodesInProject.FirstOrDefault(x => x.Id == edge.ToNodeId);
 
-                if (childNode == null)
+                if (childNode?.Id == null)
                     continue;
 
                 if(childNode.IsLocked == parentNode.IsLocked)
@@ -499,7 +513,7 @@ namespace Mb.Core.Services
                     childNode.IsLocked = parentNode.IsLocked;
                     childNode.IsLockedBy = childNode.IsLocked ? userName : null;
 
-                    var nodeAttributes = _attributeRepository.Context.Attributes.Where(x => x.NodeId == childNode.Id).ToList();
+                    var nodeAttributes = allAttributesInProject.Where(x => x.NodeId == childNode.Id);
 
                     if(!nodeAttributes.Any())
                         continue;
@@ -520,7 +534,7 @@ namespace Mb.Core.Services
                     }
                 }
 
-                LockUnlockNodesAndAttributesRecursive(childNode, userName);
+                LockUnlockNodesAndAttributesRecursive(childNode, allNodesInProject, allAttributesInProject, allEdgesInProject, userName);
             }
         }
 
