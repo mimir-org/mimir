@@ -330,11 +330,12 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
-        /// Locks or unlock node
+        /// Locks or unlocks a node (including all attributes on the node) and all children nodes and attributes
         /// </summary>
         /// <param name="lockUnlockAm"></param>
-        /// <returns>LockUnlockAm</returns>
+        /// <returns>Status204NoContent</returns>
         [HttpPost("node/lockUnlock")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -357,11 +358,12 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
-        /// Locks or unlock attribute
+        /// Locks or unlock an attribute
         /// </summary>
         /// <param name="lockUnlockAttributeAm"></param>
-        /// <returns>LockUnlockAm</returns>
+        /// <returns>Status204NoContent</returns>
         [HttpPost("attribute/lockUnlock")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

@@ -423,23 +423,28 @@ namespace Mb.Core.Services
         {
             if (lockUnlockAttributeAm?.Id == null)
                 return;
-            
+
             var attribute = await _attributeRepository.GetAsync(lockUnlockAttributeAm.Id);
 
-            if (attribute == null || attribute.IsLocked == lockUnlockAttributeAm.IsLocked)
+            if (attribute == null)
                 return;
 
-            if(attribute.IsLocked && attribute.IsLockedBy != _contextAccessor.GetName())
+            if (attribute.IsLocked == lockUnlockAttributeAm.IsLocked)
+                return;
+
+            var userName = _contextAccessor.GetName();
+
+            if (attribute.IsLocked && attribute.IsLockedBy != userName)
                 return;
 
             attribute.IsLocked = lockUnlockAttributeAm.IsLocked;
-            attribute.IsLockedBy = attribute.IsLocked ? _contextAccessor.GetName() : null;
+            attribute.IsLockedBy = attribute.IsLocked ? userName : null;
 
             await _attributeRepository.SaveAsync();
         }
 
         /// <summary>
-        /// Lock or unlock a node and the attributes (including all children nodes and attributes)
+        /// Locks or unlocks a node (including all attributes on the node) and all children nodes and attributes
         /// </summary>
         /// <param name="lockUnlockNodeAm"></param>
         /// <returns>Status204NoContent</returns>
