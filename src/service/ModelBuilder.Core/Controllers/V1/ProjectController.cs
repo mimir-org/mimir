@@ -8,6 +8,7 @@ using Mb.Core.Extensions;
 using Mb.Core.Services.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Data;
+using Mb.Models.Modules;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -112,7 +113,7 @@ namespace Mb.Core.Controllers.V1
         {
             if (string.IsNullOrEmpty(id))
                 return BadRequest("The id can not be null or empty");
-            
+
             try
             {
                 var data = await _projectService.GetProject(id);
@@ -247,8 +248,33 @@ namespace Mb.Core.Controllers.V1
         {
             try
             {
-                var data = await _projectService.CreateFile(id, parser);
-                return File(data, "application/json", $"project_{id}.json");
+                var (file, format) = await _projectService.CreateFile(id, parser);
+                string contentType;
+                string extension;
+
+                switch (format)
+                {
+                    case FileFormat.Json:
+                        contentType = @"application/json";
+                        extension = "json";
+                        break;
+                    case FileFormat.Xml:
+                        contentType = @"application/xml";
+                        extension = "xml";
+                        break;
+                    case FileFormat.Turtle:
+                        contentType = @"text/turtle";
+                        extension = "ttl";
+                        break;
+                    case FileFormat.NTriples:
+                        contentType = @"application/n-triples";
+                        extension = "nt";
+                        break;
+                    default:
+                        return StatusCode(500, "Internal Server Error. Missing file format.");
+                }
+
+                return File(file, contentType, $"project_{id}.{extension}");
             }
             catch (ModelBuilderModuleException e)
             {
@@ -319,7 +345,11 @@ namespace Mb.Core.Controllers.V1
         {
             try
             {
-                var data = _moduleService.ParserModules.Select(x => x.Key).ToList();
+                var data = _moduleService.Modules
+                    .Where(x => x.Instance is IModelBuilderParser)
+                    .Select(x => x.Name)
+                    .ToList();
+
                 return Ok(data);
             }
             catch (Exception e)
