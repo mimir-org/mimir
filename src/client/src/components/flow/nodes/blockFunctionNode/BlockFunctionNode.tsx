@@ -162,6 +162,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
         aspect={data.aspect}
         terminals={sortedTerminals}
         splitView={splitView}
+        parent={false}
       />
     </>
   );

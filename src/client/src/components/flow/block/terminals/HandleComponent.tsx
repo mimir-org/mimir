@@ -15,12 +15,13 @@ interface Props {
   aspect: Aspect;
   terminals: Connector[];
   splitView: boolean;
+  parent: boolean;
 }
 
 /**  Components for the terminals displayed on the nodes in BlockView.
  *   The component returns a list of terminals in form of a Flow Handle element.
  */
-const HandleComponent = ({ aspect, terminals, splitView }: Props) => {
+const HandleComponent = ({ aspect, terminals, splitView, parent }: Props) => {
   let inputCount = 0;
   let outputCount = 0;
 
@@ -42,6 +43,7 @@ const HandleComponent = ({ aspect, terminals, splitView }: Props) => {
             key={"key-" + conn.id}
             splitView={splitView}
             isLocation={IsLocationTerminal(conn)}
+            parent={parent}
             visible={
               splitView
                 ? conn.visible

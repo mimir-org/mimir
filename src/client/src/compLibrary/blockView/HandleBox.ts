@@ -18,7 +18,7 @@ const HandleBox = styled.div`
     left: ${(props) =>
       props.position === Position.Left && !props.splitView
         ? "-16px"
-        : props.position === Position.Left && props.splitView
+        : props.position === Position.Left && props.splitView && props.parent
         ? "704px"
         : "unset"};
   }

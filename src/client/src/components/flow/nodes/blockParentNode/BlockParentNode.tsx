@@ -105,6 +105,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
           aspect={node.aspect}
           terminals={FilterTerminals(node, isSplitView)}
           splitView={isSplitView}
+          parent={true}
         />
       </div>
 
@@ -142,6 +143,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
             aspect={actualSplitNode.aspect}
             terminals={FilterTerminals(actualSplitNode, isSplitView)}
             splitView={true}
+            parent={true}
           />
         </div>
       )}
