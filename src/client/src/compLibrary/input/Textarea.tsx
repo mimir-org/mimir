@@ -7,7 +7,7 @@ const Textarea = styled.textarea`
   margin-bottom: 10px;
   padding: 5px;
   width: 100%;
-  height: 100px;
+  height: ${(props: { height: number }) => props.height}px;
   background-color: ${(props: { readOnly: boolean }) =>
     props.readOnly ? "#f2f2f2" : "#fff"};
 `;

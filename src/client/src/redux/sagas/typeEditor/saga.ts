@@ -5,13 +5,16 @@ import {
   FETCHING_RDS_SUCCESS_OR_ERROR,
   FETCHING_TERMINALS_SUCCESS_OR_ERROR,
   FETCHING_ATTRIBUTES_SUCCESS_OR_ERROR,
-  CREATING_TYPE_SUCCESS_OR_ERROR,
-  UPDATING_TYPE_SUCCESS_OR_ERROR,
+  SAVE_LIBRARY_TYPE_SUCCESS_OR_ERROR,
   FETCHING_LOCATIONTYPES_SUCCESS_OR_ERROR,
   FETCHING_PREDEFINED_ATTRIBUTES_SUCCESS_OR_ERROR,
   TypeEditorActionTypes,
   FETCHING_BLOB_DATA_SUCCESS_OR_ERROR,
 } from "../../store/typeEditor/types";
+import {
+  ADD_LIBRARY_ITEM,
+  REMOVE_LIBRARY_ITEM,
+} from "../../store/library/types";
 
 import {
   get,
@@ -19,21 +22,30 @@ import {
   GetBadResponseData,
   ApiError,
 } from "../../../models/webclient";
+import { Aspect, CreateLibraryType } from "../../../models";
 
-export function* updateType(action) {
+export function* saveType(action) {
   try {
-    const url =
-      process.env.REACT_APP_API_BASE_URL +
-      "typeeditor/" +
-      action.payload?.selectedType;
-    const response = yield call(post, url, action.payload.libraryType);
+    const createLibraryType = action.payload.libraryType as CreateLibraryType;
+    let url = "";
+
+    if (createLibraryType.libraryId) {
+      url =
+        process.env.REACT_APP_API_BASE_URL +
+        "typeeditor/" +
+        createLibraryType.libraryId;
+    } else {
+      url = process.env.REACT_APP_API_BASE_URL + "typeeditor";
+    }
+
+    const response = yield call(post, url, createLibraryType);
 
     // This is a bad request
     if (response.status === 400) {
       const data = GetBadResponseData(response);
 
       const apiError = {
-        key: UPDATING_TYPE_SUCCESS_OR_ERROR,
+        key: SAVE_LIBRARY_TYPE_SUCCESS_OR_ERROR,
         errorMessage: data.title,
         errorData: data,
       } as ApiError;
@@ -43,77 +55,39 @@ export function* updateType(action) {
       };
 
       yield statePut({
-        type: UPDATING_TYPE_SUCCESS_OR_ERROR,
+        type: SAVE_LIBRARY_TYPE_SUCCESS_OR_ERROR,
         payload: payload,
       });
       return;
     }
     // Bad request end
 
+    // ALT OK
     const payload = {
       apiError: null,
     };
 
     yield statePut({
-      type: UPDATING_TYPE_SUCCESS_OR_ERROR,
+      type: SAVE_LIBRARY_TYPE_SUCCESS_OR_ERROR,
       payload: payload,
     });
-  } catch (error) {
-    const apiError = {
-      key: UPDATING_TYPE_SUCCESS_OR_ERROR,
-      errorMessage: error.message,
-      errorData: null,
-    } as ApiError;
 
-    const payload = {
-      apiError: apiError,
-    };
-
-    yield statePut({
-      type: UPDATING_TYPE_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
-  }
-}
-
-export function* createType(action) {
-  try {
-    const url = process.env.REACT_APP_API_BASE_URL + "typeeditor";
-    const response = yield call(post, url, action.payload.libraryType);
-
-    // This is a bad request
-    if (response.status === 400) {
-      const data = GetBadResponseData(response);
-
-      const apiError = {
-        key: CREATING_TYPE_SUCCESS_OR_ERROR,
-        errorMessage: data.title,
-        errorData: data,
-      } as ApiError;
-
-      const payload = {
-        apiError: apiError,
-      };
-
+    if (createLibraryType.libraryId) {
       yield statePut({
-        type: CREATING_TYPE_SUCCESS_OR_ERROR,
-        payload: payload,
+        type: REMOVE_LIBRARY_ITEM,
+        payload: {
+          id: createLibraryType.libraryId,
+        },
       });
-      return;
     }
-    // Bad request end
-
-    const payload = {
-      apiError: null,
-    };
 
     yield statePut({
-      type: CREATING_TYPE_SUCCESS_OR_ERROR,
-      payload: payload,
+      type: ADD_LIBRARY_ITEM,
+      payload: response.data,
     });
   } catch (error) {
     const apiError = {
-      key: CREATING_TYPE_SUCCESS_OR_ERROR,
+      key: SAVE_LIBRARY_TYPE_SUCCESS_OR_ERROR,
       errorMessage: error.message,
       errorData: null,
     } as ApiError;
@@ -123,11 +97,64 @@ export function* createType(action) {
     };
 
     yield statePut({
-      type: CREATING_TYPE_SUCCESS_OR_ERROR,
+      type: SAVE_LIBRARY_TYPE_SUCCESS_OR_ERROR,
       payload: payload,
     });
   }
 }
+
+// export function* createType(action) {
+//   try {
+//     const url = process.env.REACT_APP_API_BASE_URL + "typeeditor";
+//     const response = yield call(post, url, action.payload.libraryType);
+
+//     // This is a bad request
+//     if (response.status === 400) {
+//       const data = GetBadResponseData(response);
+
+//       const apiError = {
+//         key: CREATING_TYPE_SUCCESS_OR_ERROR,
+//         errorMessage: data.title,
+//         errorData: data,
+//       } as ApiError;
+
+//       const payload = {
+//         apiError: apiError,
+//       };
+
+//       yield statePut({
+//         type: CREATING_TYPE_SUCCESS_OR_ERROR,
+//         payload: payload,
+//       });
+//       return;
+//     }
+//     // Bad request end
+
+//     const payload = {
+//       apiError: null,
+//     };
+
+//     yield statePut({
+//       type: CREATING_TYPE_SUCCESS_OR_ERROR,
+//       payload: payload,
+//     });
+//   } catch (error) {
+//     const apiError = {
+//       key: CREATING_TYPE_SUCCESS_OR_ERROR,
+//       errorMessage: error.message,
+//       errorData: null,
+//     } as ApiError;
+
+//     const payload = {
+//       apiError: apiError,
+//     };
+
+//     yield statePut({
+//       type: CREATING_TYPE_SUCCESS_OR_ERROR,
+//       payload: payload,
+//     });
+//   }
+// }
 
 export function* getInitialData(action: TypeEditorActionTypes) {
   try {
@@ -162,10 +189,10 @@ export function* getInitialData(action: TypeEditorActionTypes) {
 
 export function* getRDS(action) {
   try {
+    const aspect =
+      action.payload != null ? action.payload.aspect : Aspect.NotSet;
     const rdsURL =
-      process.env.REACT_APP_API_BASE_URL +
-      "typeeditor/rds/" +
-      action.payload.aspect;
+      process.env.REACT_APP_API_BASE_URL + "typeeditor/rds/" + aspect;
 
     const rdsResponse = yield call(get, rdsURL);
 
@@ -218,10 +245,10 @@ export function* getTerminals(action) {
 
 export function* getAttributes(action) {
   try {
+    const aspect =
+      action.payload != null ? action.payload.aspect : Aspect.NotSet;
     const attributesURL =
-      process.env.REACT_APP_API_BASE_URL +
-      "typeeditor/attributes/" +
-      action.payload.aspect;
+      process.env.REACT_APP_API_BASE_URL + "typeeditor/attributes/" + aspect;
 
     const attributesResponse = yield call(get, attributesURL);
 
@@ -368,10 +395,14 @@ export function* getSelectedNode(action) {
       action.payload.filter;
 
     const selectedNodeResponse = yield call(get, selectedNodeURL);
+    const createLibraryType = selectedNodeResponse.data as CreateLibraryType;
+    createLibraryType.libraryId = action.payload.selectedType;
 
     const payload = {
       selectedNode: selectedNodeResponse.data,
     };
+
+    payload.selectedNode.terminalTypes?.forEach((t, index) => (t.row = index));
 
     yield statePut({
       type: FETCHING_TYPE_SUCCESS_OR_ERROR,

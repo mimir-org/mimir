@@ -64,6 +64,7 @@ const TextResources = {
   Inspector_Relations_Function: "Go to function",
   Inspector_Relations_Input_object_connetion: "Input object connection",
   Inspector_Relations_Output_object_connetion: "Output object connection",
+  Inspector_Relations_Relationships: "Go To: Active Relations",
   Inspector_Relations_Active_Terminal_Types: "Active Terminal Types",
   Inspector_Relations_Terminal_Input: "Go To: Terminal Input Object Connection",
   Inspector_Relations_Terminal_Output:
@@ -88,7 +89,8 @@ const TextResources = {
   Inspector_Admin_Interface: "Interface",
   Inspector_Admin_Updated_By: "Updated by",
   Inspector_Admin_Contractor: "Contractor",
-  Inspector_Admin_Updated_Date: "Updated Date",
+  Inspector_Admin_Updated_Date: "Last updated",
+  Inspector_Admin_Created_Date: "Date created",
   Inspector_Admin_Local_Description: "Long Local Description",
   Inspector_Admin_Type: "Type name",
   Inspector_Admin_Width: "Width (m)",
@@ -132,12 +134,14 @@ const TextResources = {
   TypeEditor_Location_Type: "Location Type",
   TypeEditor_Type_Name: "Type name",
   TypeEditor_Status: "Status",
-  TypeEditor_Properties_Choose: "Choose ",
-  TypeEditor_Properties_RDS: "RDS",
-  TypeEditor_Properties_Terminals: "Terminal Types",
-  TypeEditor_Properties_Location_Attributes: "Predefined Location Attributes",
-  TypeEditor_Properties_Block_Attributes: "Object Block Attributes",
-  TypeEditor_New_Type_Preview: "Type Preview Info",
+  TypeEditor_Properties_RDS: "Choose RDS",
+  TypeEditor_Properties_Terminals: "Choose Terminal Types",
+  TypeEditor_Properties_Add_Terminal: "Add",
+  TypeEditor_Properties_Predefined_Location_Attributes:
+    "Choose Predefined Location Attributes",
+  TypeEditor_Properties_Block_Attributes: "Choose Object Block Attributes",
+  TypeEditor_Properties_Location_Attributes: "Choose Location Attributes",
+  TypeEditor_New_Type_Preview: "Type Preview Info:",
   TypeEditor_Preview_Info: "Click on preview objects to see inspector info",
   TypeEditor_Button_Add: "Add to Library",
   TypeEditor_Button_Edit: "Save Type Edit",
@@ -207,7 +211,7 @@ const TextResources = {
   // Type
   Type_BlockLocation: "BlockLocationNode",
   Type_BlockFunction: "BlockFunctionNode",
-  Type_FunctionBlock: "FunctionBlock",
+  Type_BlockParentNode: "BlockParentNode",
 
   // RDS
   RDS_Function: "=",

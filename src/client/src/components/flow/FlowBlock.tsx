@@ -5,7 +5,7 @@ import { ProjectMainMenu } from "../project";
 import { RootState } from "../../redux/store/index";
 import { FullScreenBox } from "../../compLibrary/controls";
 import { OpenProjectMenu } from "../project/openProject";
-import { Color } from "../../compLibrary";
+import { Color, Size } from "../../compLibrary";
 import { BackgroundBox } from "../../compLibrary/blockView";
 import { changeInspectorTab } from "../../modules/inspector/redux/actions";
 import { Node, BlobData } from "../../models";
@@ -13,6 +13,7 @@ import { ProjectState } from "../../redux/store/project/types";
 import { LibraryState } from "../../redux/store/library/types";
 import { GetBlockEdgeTypes, IsBlockView, OnBlockClick } from "./helpers/block";
 import { CreateBlockElements } from "./creators";
+import { SetPanelHeight } from "../../modules/inspector/helpers";
 import {
   useOnConnect,
   useOnDrop,
@@ -97,7 +98,6 @@ const FlowBlock = () => {
   );
 
   const OnElementsRemove = (elementsToRemove) => {
-    console.log("remove");
     const nodeToRemove = elementsToRemove[0];
     project.edges?.forEach((edge) => {
       if (
@@ -164,6 +164,9 @@ const FlowBlock = () => {
     }
     dispatch(setActiveBlockNode(element.id));
     dispatch(changeInspectorTab(0));
+
+    const panel = document.getElementById("InspectorModule");
+    if (panel.style.height === "44px") SetPanelHeight(Size.InspectorModuleOpen);
   };
 
   // Rerender

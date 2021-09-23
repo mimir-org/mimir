@@ -1,28 +1,29 @@
-import * as Handlers from "./handlers";
+import { OnHover, OnMouseOut } from "./handlers";
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import { Connector, Node, Edge } from "../../../../models";
 import { Size } from "../../../../compLibrary";
-import { TerminalsIcon, ConnectIcon } from "../../../../assets/icons/blockView";
-import { changeActiveConnector } from "../../../../redux/store/project/actions";
-import { CalculateTerminalOrder, FilterTerminals } from "../../helpers/block";
+import { IsLocation } from "../../helpers/common";
+import { NodeBox } from "../../../../compLibrary/blockView";
+import { TerminalsComponent, HandleComponent } from "../../block/terminals";
+import { ConnectViewComponent } from "../../block/connectView";
 import {
-  TerminalsMenuComponent,
-  ConnectViewComponent,
-  HandleComponent,
-} from "../../block";
+  changeActiveConnector,
+  removeEdge,
+} from "../../../../redux/store/project/actions";
+import {
+  SetTerminalOrder,
+  FilterTerminals,
+  FindAllEdges,
+} from "../../helpers/block";
 import {
   GetConnectChildren,
   IsMainConnectNode,
   SetMainConnectNodeSize,
+  SetMainConnectNodeColor,
 } from "../../helpers/block/connectView";
-import {
-  NodeBox,
-  TerminalsMenu,
-  ConnectMenu,
-} from "../../../../compLibrary/blockView";
 import {
   addConnectNode,
   addMainNode,
@@ -30,6 +31,9 @@ import {
   removeMainNode,
 } from "../../../../redux/store/connectView/actions";
 
+/** Component for a Function child node in BlockView.
+ *  BlockFunctionNode returns a node with the styling and functionality of the Function Aspect.
+ */
 const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
   const [terminalButton, showTerminalButton] = useState(false);
@@ -55,26 +59,27 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
 
   const connectChildren = GetConnectChildren(data, nodes, edges);
   const hasChildren = connectChildren?.length > 0;
-
-  const sortedTerminals = FilterTerminals(
-    data.connectors,
-    data.aspect,
-    splitView
-  );
+  const sortedTerminals = FilterTerminals(data, splitView);
 
   const mainConnectNode = mainConnectNodes.find((x) => x.id === data.id);
   const connectNodes = mainConnectNode?.connectNodes;
   if (!mainConnectNode) data.width = Size.Node_Width;
 
   const onConnectorClick = (conn: Connector) => {
-    showTerminalMenu(false);
     showConnectMenu(false);
-    const order = CalculateTerminalOrder(data, 0, conn.relationType);
-    dispatch(changeActiveConnector(data, conn.id, true, order));
+    const order = SetTerminalOrder(data, 0, conn.relationType);
+    dispatch(changeActiveConnector(data, conn.id, !conn.visible, order));
+
+    if (conn.visible) {
+      const edge = edges.find(
+        (e) => e.fromConnector.id === conn.id || e.toConnector.id === conn.id
+      );
+      if (edge) dispatch(removeEdge(edge.id));
+    }
   };
 
   const onConnectViewClick = (node: Node) => {
-    if (!isChecked(node)) {
+    if (!isConnectorChecked(node)) {
       data.width = Size.ConnectView_Width;
       data.length = Size.ConnectView_Length;
       if (!IsMainConnectNode(data.id)) dispatch(addMainNode(data));
@@ -90,7 +95,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     }
   };
 
-  const isChecked = (node: Node) => {
+  const isConnectorChecked = (node: Node) => {
     let result = false;
     connectNodes?.forEach((element) => {
       if (element.id === node.id) result = true;
@@ -101,62 +106,55 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   // Resize main connect node
   useEffect(() => {
     SetMainConnectNodeSize(mainConnectNode?.id, data.id, connectNodes);
+    SetMainConnectNodeColor(mainConnectNode?.id, data.id, connectNodes);
   }, [mainConnectNode, data, connectNodes]);
 
-  // Force edges' z-index in ConnectView
+  // Force z-index to display edges in ConnectView
   useEffect(() => {
     if (mainConnectNode) {
-      const allEdges: HTMLElement =
-        document.querySelector(".react-flow__edges");
-      allEdges.style.zIndex = "3";
+      const edges = FindAllEdges();
+      edges.style.zIndex = "3";
     }
   }, [mainConnectNode]);
 
   return (
     <>
       <NodeBox
-        id={`BlockFunctionNode-` + data.id}
+        id={"BlockFunctionNode-" + data.id}
         onMouseOver={() =>
-          Handlers.OnHover(showTerminalButton, showConnectButton)
+          OnHover(showTerminalButton, showConnectButton, data.id)
         }
         onMouseOut={() =>
-          Handlers.OnMouseOut(showTerminalButton, showConnectButton)
+          OnMouseOut(showTerminalButton, showConnectButton, data.id)
         }
         width={data.width}
         length={data.length}
       >
-        <TerminalsMenu
-          visible={terminalButton}
-          onClick={() =>
-            Handlers.OnTerminalMenuClick(showTerminalMenu, terminalMenu)
-          }
-        >
-          <img src={TerminalsIcon} alt="options" />
-        </TerminalsMenu>
-        <ConnectMenu
-          visible={connectButton && hasChildren}
-          onClick={() =>
-            Handlers.OnConnectMenuClick(showConnectMenu, connectMenu)
-          }
-        >
-          <img src={ConnectIcon} alt="options" />
-        </ConnectMenu>
-
         <p className="node-name">{data.label ?? data.name}</p>
 
-        <TerminalsMenuComponent
-          isOpen={terminalMenu}
+        <TerminalsComponent
+          node={data}
+          isMenuOpen={terminalMenu}
           list={sortedTerminals}
           width={data.width}
+          isParent={false}
+          isLocation={IsLocation(data)}
           onClick={onConnectorClick}
+          menuButton={terminalButton}
+          showTerminalMenu={showTerminalMenu}
+          terminalMenu={terminalMenu}
         />
 
         <ConnectViewComponent
-          isOpen={connectMenu}
+          isMenuOpen={connectMenu}
           list={connectChildren}
           handleClick={onConnectViewClick}
-          isChecked={isChecked}
+          isChecked={isConnectorChecked}
           width={data.width}
+          hasChildren={hasChildren}
+          connectButton={connectButton}
+          showConnectMenu={showConnectMenu}
+          connectMenu={connectMenu}
         />
       </NodeBox>
 

@@ -22,8 +22,12 @@ const CreateBlockElements = (
   const edges = project.edges;
 
   // Draw parent block
-  const parentBlock = CreateParentBlockNode(selectedNode);
+  const parentBlock = CreateParentBlockNode(selectedNode, splitView);
   if (parentBlock) elements.push(parentBlock);
+  if (splitViewNode) {
+    const parentSplitNode = CreateParentBlockNode(splitViewNode, splitView);
+    if (parentSplitNode) elements.push(parentSplitNode);
+  }
 
   // Draw child nodes
   edges.forEach((edge) => {

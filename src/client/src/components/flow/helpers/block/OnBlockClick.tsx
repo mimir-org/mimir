@@ -1,6 +1,9 @@
 import { changeInspectorTab } from "../../../../modules/inspector/redux/actions";
-import { GetSelectedNode } from "../common";
 import { Project } from "../../../../models";
+import { setModuleVisibility } from "../../../../redux/store/modules/actions";
+import { MODULE_TYPE } from "../../../../models/project";
+import { SetPanelHeight } from "../../../../modules/inspector/helpers";
+import { Size } from "../../../../compLibrary";
 import {
   setActiveBlockNode,
   setActiveEdge,
@@ -9,25 +12,20 @@ import {
 const OnBlockClick = (e: any, dispatch: any, project: Project) => {
   if (!project) return;
 
+  // Close Inspector if no node/edge is selected
+  if (e.target.className === "react-flow__pane") {
+    dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, false, true));
+    SetPanelHeight(Size.ModuleClosed);
+    return;
+  }
+
   // Handle select Edge
   if (e.target.classList.contains("react-flow__edge-path")) {
     const edge = project.edges.find((x) => x.id === e.target.id);
     dispatch(setActiveEdge(edge.id, true));
     dispatch(setActiveBlockNode(null));
     dispatch(changeInspectorTab(0));
-    return;
   }
-
-  if (e.target.classList.contains("react-flow__pane")) {
-    const selectedNode = GetSelectedNode();
-    if (selectedNode) {
-      dispatch(setActiveEdge(null, false));
-      dispatch(setActiveBlockNode(selectedNode.id));
-      dispatch(changeInspectorTab(0));
-      return;
-    }
-  }
-  dispatch(setActiveEdge(null, false));
 };
 
 export default OnBlockClick;

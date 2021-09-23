@@ -36,11 +36,10 @@ const ValidateBlockEdge = (
   if (!splitView && !IsConnectView()) {
     if (IsFunction(selectedNode)) {
       if (IsLocation(fromNode) || IsLocation(toNode)) return false;
-      if (selectedNode === toNode || selectedNode === fromNode) return false;
-      if (!IsChildOf(fromNode, selectedNode)) return false;
-      return true;
+      //   if (selectedNode === toNode || selectedNode === fromNode) return false;
+      //   if (!IsChildOf(fromNode, selectedNode)) return false;
     }
-    return false;
+    return true;
   }
 
   if (splitView) {

@@ -1,4 +1,4 @@
-import { LibItem, CreateLibraryType } from "../../../models";
+import { LibItem, CreateLibraryType, ObjectType } from "../../../models";
 import { ApiError } from "../../../models/webclient";
 export const FETCHING_LIBRARY = "FETCHING_LIBRARY";
 export const DELETE_LIBRARY_ERROR = "DELETE_LIBRARY_ERROR";
@@ -18,6 +18,8 @@ export const FETCHING_LIBRARY_INTERFACE_TYPES =
   "FETCHING_LIBRARY_INTERFACE_TYPES";
 export const FETCHING_LIBRARY_INTERFACE_TYPES_SUCCESS_OR_ERROR =
   "FETCHING_LIBRARY_INTERFACE_TYPES_SUCCESS_OR_ERROR";
+export const REMOVE_LIBRARY_ITEM = "REMOVE_LIBRARY_ITEM";
+export const ADD_LIBRARY_ITEM = "ADD_LIBRARY_ITEM";
 
 // State types
 export interface LibraryState {
@@ -98,6 +100,17 @@ export interface FetchingLibraryInterfaceActionTypesFinished {
     apiError: ApiError;
   };
 }
+export interface RemoveLibraryItem {
+  type: typeof REMOVE_LIBRARY_ITEM;
+  payload: {
+    id: string;
+    objectType: ObjectType;
+  };
+}
+export interface AddLibraryItem {
+  type: typeof ADD_LIBRARY_ITEM;
+  payload: LibItem;
+}
 
 export type LibraryActionTypes =
   | FetchLibraryAction
@@ -110,4 +123,6 @@ export type LibraryActionTypes =
   | FetchingLibraryTransportActionTypes
   | FetchingLibraryTransportActionTypesFinished
   | FetchingLibraryInterfaceActionTypes
-  | FetchingLibraryInterfaceActionTypesFinished;
+  | FetchingLibraryInterfaceActionTypesFinished
+  | RemoveLibraryItem
+  | AddLibraryItem;

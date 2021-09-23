@@ -68,7 +68,7 @@ const GlobalStyle = createGlobalStyle`
     height: 11px;
     width: 11px;
     background-color: ${Color.White};
-    border: 2px solid ${Color.Black};
+    border: 2px solid ${Color.DarkGrey};
     border-radius: 2px;
   }
 
@@ -94,7 +94,7 @@ const GlobalStyle = createGlobalStyle`
     background-color: ${Color.White};
   }
   .checkbox-block input:checked ~ .checkmark-block {
-    background-color: ${Color.Black};
+    background-color: ${Color.DarkGrey};
   }
   .checkbox-filter input:checked ~ .checkmark-filter {
     background-color: ${Color.Black};

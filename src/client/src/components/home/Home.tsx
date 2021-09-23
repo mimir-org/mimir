@@ -12,6 +12,7 @@ import { getContractors, getStatuses } from "../../redux/store/common/actions";
 import { search } from "../../redux/store/project/actions";
 import { FlowModule } from "../flow";
 import { ErrorModule } from "../../modules/error";
+import { TypeEditorComponent } from "../modules/typeEditorModule";
 import {
   importLibraryInterfaceTypes,
   importLibraryTransportTypes,
@@ -51,6 +52,7 @@ const Home = () => {
       <FlowModule route={params} />
       <InspectorModule />
       <LibraryModule />
+      <TypeEditorComponent />
       <ErrorModule />
     </>
   );

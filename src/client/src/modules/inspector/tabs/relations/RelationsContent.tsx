@@ -1,29 +1,37 @@
-import { RightArrowIcon } from "../../../../assets/icons/common";
-import { Connector, ConnectorType } from "../../../../models";
-import { GetRelationColor } from "../../helpers";
+import { Connector, Edge } from "../../../../models";
 import { ListElement } from "../../styled";
 import { RelationsColumn, RelationsHeader, TerminalList } from "./styled";
 
-interface Props {
-  terminals: Connector[];
+type RelationItem = Connector | Edge;
+
+interface Props<T> {
+  items: T[];
   label: string;
+  getName: (item: T) => string;
+  getColor: (item: T) => string;
+  onClick: (item: T) => void;
 }
 
-const RelationsContent = ({ terminals, label }: Props) => {
+const RelationsContent = <T extends RelationItem>({
+  items,
+  label,
+  getName,
+  getColor,
+  onClick,
+}: Props<T>) => {
   return (
     <RelationsColumn>
       <RelationsHeader>{label}</RelationsHeader>
       <TerminalList>
-        {terminals?.map((conn, i) => {
+        {items?.map((item, i) => {
           return (
             <ListElement
-              onClick={() => null}
+              onClick={() => onClick(item)}
               index={i}
-              key={conn.id}
-              color={GetRelationColor(conn)}
+              key={item.id}
+              color={getColor(item)}
             >
-              {conn.name} {ConnectorType[conn.type]}
-              <img src={RightArrowIcon} alt="icon" className="icon" />
+              {getName(item)}
             </ListElement>
           );
         })}

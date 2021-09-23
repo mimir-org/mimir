@@ -4,8 +4,7 @@ import { Color } from "../../../../../compLibrary";
 const Entity = styled.div`
   width: ${(props: { width: number }) => props.width}px;
   height: inherit;
-  border-right: 1px solid ${Color.ListBorder};
-  border-bottom: 1px solid ${Color.ListBorder};
-  flex: none;
+  border-right: 1px solid ${Color.DarkGrey};
+  border-bottom: 1px solid ${Color.DarkGrey};
 `;
 export default Entity;

@@ -1,4 +1,3 @@
-import { ArrowIcon } from "../../../assets/icons/blockView";
 import { BlockParentBox } from "../../../compLibrary/blockView";
 import { Node } from "../../../models";
 
@@ -9,6 +8,9 @@ interface Props {
   isSelected: boolean;
 }
 
+/** Component for the node block in BlockView.
+ *  Block serves as a container for a Mimir node in BlockView.
+ */
 const Block = ({ node, isLocation, isSplitView, isSelected }: Props) => (
   <BlockParentBox
     id={"function-block-" + node.id}
@@ -16,11 +18,9 @@ const Block = ({ node, isLocation, isSplitView, isSelected }: Props) => (
     splitView={isSplitView}
     selected={isSelected}
   >
-    <img src={ArrowIcon} alt="arrow" className="icon"></img>
-    <h3 className="header">{node.label ?? node.name}</h3>
-    <div className="line" />
-    <div className="content"></div>
+    <div className="banner">
+      <h3 className="header">{node.label ?? node.name}</h3>
+    </div>
   </BlockParentBox>
 );
-
 export default Block;
