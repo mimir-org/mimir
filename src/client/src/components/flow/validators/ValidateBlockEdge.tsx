@@ -8,7 +8,17 @@ import {
   IsTransportTerminal,
 } from "../helpers/common";
 
-/** Component to validate each edge in BlockView. Each mode - splitView,connectView - has different rules */
+/**
+ * Component to validate and display an edge in BlockView
+ * @param selectedNode
+ * @param fromNode
+ * @param toNode
+ * @param splitViewNode
+ * @param fromConnector
+ * @param toConnector
+ * @param splitView
+ * @returns a boolean value
+ */
 const ValidateBlockEdge = (
   selectedNode: Node,
   fromNode: Node,

@@ -14,8 +14,10 @@ import {
   FindNodeByDataId,
 } from "../../helpers/block";
 
-/** Component for a Loaction child node in BlockView.
- *  BlockLocationNode returns a node with the styling and functionality of the Location Aspect.
+/**
+ * Component for a Location node in BlockView
+ * @param param0 - the data for the node
+ * @returns a Location node
  */
 const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();

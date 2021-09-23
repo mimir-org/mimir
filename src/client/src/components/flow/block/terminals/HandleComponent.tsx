@@ -19,8 +19,10 @@ interface Props {
   terminals: Connector[];
   splitView: boolean;
 }
-/**  Components for the terminals displayed on the nodes in BlockView.
- *   The component returns a list of terminals in form of a Flow Handle element.
+/**
+ * Component for the terminals displayed on the nodes in BlockView.
+ * @param param0
+ * @returns a Mimir terminal in form of a Flow Handler
  */
 const HandleComponent = ({ node, nodes, terminals, splitView }: Props) => {
   let inputCount = 0;
