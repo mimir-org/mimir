@@ -99,7 +99,8 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
           terminalMenu={terminalMenu}
         />
         <HandleComponent
-          aspect={node.aspect}
+          node={node}
+          nodes={nodes}
           terminals={FilterTerminals(node, isSplitView)}
           splitView={isSplitView}
         />

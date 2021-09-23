@@ -5,7 +5,7 @@ import { NodeBox } from "../../../../compLibrary/blockView";
 import { HandleComponent, TerminalsComponent } from "../../block/terminals";
 import { changeActiveConnector } from "../../../../redux/store/project/actions";
 import { useDispatch, useSelector } from "react-redux";
-import { Connector } from "../../../../models";
+import { Connector, Node } from "../../../../models";
 import { OnHover, OnMouseOut } from "./handlers";
 import { IsLocation } from "../../helpers/common";
 import {
@@ -21,6 +21,10 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
   const [terminalButton, showTerminalButton] = useState(false);
   const [terminalMenu, showTerminalMenu] = useState(false);
+
+  const nodes = useSelector<RootState>(
+    (state) => state.projectState.project.nodes
+  ) as Node[];
 
   const splitView = useSelector<RootState>(
     (state) => state.splitView.visible
@@ -67,7 +71,8 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
         />
       </NodeBox>
       <HandleComponent
-        aspect={data.aspect}
+        node={data}
+        nodes={nodes}
         terminals={sortedTerminals}
         splitView={splitView}
       />
