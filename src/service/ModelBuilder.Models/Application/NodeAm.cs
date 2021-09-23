@@ -34,6 +34,11 @@ namespace Mb.Models.Application
 
         public decimal PositionY { get; set; }
 
+        [Required]
+        public bool IsLocked { get; set; }
+
+        public string IsLockedBy { get; set; }
+
         public decimal PositionBlockX { get; set; }
 
         public decimal PositionBlockY { get; set; }
@@ -55,7 +60,7 @@ namespace Mb.Models.Application
         [Required]
         public string MasterProjectId { get; set; }
 
-        public string SymbolId { get; set; }
+        public string Symbol { get; set; }
 
         public ICollection<ConnectorAm> Connectors { get; set; }
 

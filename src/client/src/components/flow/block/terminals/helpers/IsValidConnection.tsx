@@ -8,7 +8,7 @@ const IsValidConnection = (
 ) => {
   const targetNode = nodes.find((x) => x.id === conn.target);
   const sourceTerminal = terminals.find((x) => x.id === conn.sourceHandle);
-  const targetTerminal = targetNode.connectors.find(
+  const targetTerminal = targetNode?.connectors.find(
     (x) => x.id === conn.targetHandle
   );
 

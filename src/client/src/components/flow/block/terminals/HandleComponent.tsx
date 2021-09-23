@@ -2,6 +2,7 @@ import { Node, Connector } from "../../../../models";
 import { HandleBox } from "../../../../compLibrary/blockView";
 import { Handle } from "react-flow-renderer";
 import { GetBlockHandleType } from "../../helpers/block";
+import { IsValidConnection } from "./helpers";
 import {
   GetConnectorIcon,
   GetHandlePosition,
@@ -11,7 +12,6 @@ import {
   SetTerminalYPos,
   IsFunction,
 } from "../../helpers/common";
-import { IsValidConnection } from "./helpers";
 
 interface Props {
   node: Node;

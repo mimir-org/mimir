@@ -71,7 +71,7 @@ const TreeviewNode: FC<NodeProps> = ({ data }) => {
         );
       })}
       <TreeNodeNameBox>{data.label ?? data.name}</TreeNodeNameBox>
-      <Symbol base64={data.symbol?.data} text={data.symbol?.text} />
+      <Symbol base64={data.symbol} text={data.name} />
     </TreeNodeWrapper>
   );
 };

@@ -23,7 +23,8 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Label, opt => opt.MapFrom(src => src.Label))
                 .ForMember(dest => dest.PositionX, opt => opt.MapFrom(src => src.PositionX))
                 .ForMember(dest => dest.PositionY, opt => opt.MapFrom(src => src.PositionY))
-                .ForMember(dest => dest.IsLocked, opt => opt.Ignore())
+                .ForMember(dest => dest.IsLocked, opt => opt.MapFrom(src => src.IsLocked))
+                .ForMember(dest => dest.IsLockedBy, opt => opt.MapFrom(src => src.IsLockedBy))
                 .ForMember(dest => dest.PositionBlockX, opt => opt.MapFrom(src => src.PositionBlockX))
                 .ForMember(dest => dest.PositionBlockY, opt => opt.MapFrom(src => src.PositionBlockY))
                 .ForMember(dest => dest.Level, opt => opt.Ignore())
@@ -31,6 +32,8 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.StatusId, opt => opt.MapFrom(src => src.StatusId))
                 .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => contextAccessor.GetName()))
                 .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => DateTime.Now.ToUniversalTime()))
+                .ForMember(dest => dest.Created, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
                 .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => src.Aspect))
                 .ForMember(dest => dest.IsRoot, opt => opt.MapFrom(src => src.IsRoot))
@@ -41,8 +44,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Cost, opt => opt.MapFrom(src => src.Cost))
                 .ForMember(dest => dest.Connectors, opt => opt.MapFrom(src => src.Connectors))
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
-                .ForMember(dest => dest.SymbolId, opt => opt.MapFrom(src => src.SymbolId))
-                .ForMember(dest => dest.Symbol, opt => opt.Ignore());
+                .ForMember(dest => dest.Symbol, opt => opt.MapFrom(src => src.Symbol));
         }
     }
 }

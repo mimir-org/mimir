@@ -2,11 +2,11 @@ import { DownIcon, UpIcon } from "../../assets/icons/common";
 import { TextResources } from "../../assets/text";
 import { Edge, Node, Project } from "../../models";
 import { GetInspectorColor } from "./helpers";
-import { Symbol } from "../../compLibrary/symbol";
 import { OnDeleteClick, OnToggleClick } from "./handlers";
 import { InspectorButton } from "../../compLibrary/buttons";
 import { Menu, Title, NodeInfo, ToggleBox, ButtonWrapper } from "./styled";
 import { InspectorTabs } from ".";
+import { Symbol } from "../../compLibrary/symbol";
 
 interface Props {
   project: Project;
@@ -27,17 +27,17 @@ const InspectorHeader = ({
 }: Props) => (
   <Menu id="InspectorBody" color={GetInspectorColor(node, edge)}>
     {project && <InspectorTabs project={project} node={node} edge={edge} />}
-    <NodeInfo symbol={node?.symbol?.id} visible={node}>
+    <NodeInfo symbol={node?.symbol} visible={node}>
       <div className="symbol">
-        <Symbol base64={node?.symbol?.data} text={node?.label ?? node?.name} />
+        <Symbol base64={node?.symbol} text={node?.label ?? node?.name} />
       </div>
       <div className="text">{node?.label ?? node?.name}</div>
       <div className="edgetext">{edge?.id}</div>
     </NodeInfo>
 
     <ButtonWrapper visible={node || edge}>
-      <InspectorButton onClick={() => null} type="validate" visible={true} />
-      <InspectorButton onClick={() => null} type="lock" visible={true} />
+      <InspectorButton onClick={() => null} type="validate" visible={false} />
+      <InspectorButton onClick={() => null} type="lock" visible={false} />
       <InspectorButton
         onClick={() => OnDeleteClick(project, node, edge, dispatch)}
         type="delete"
