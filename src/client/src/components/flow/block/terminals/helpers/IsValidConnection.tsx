@@ -12,7 +12,7 @@ const IsValidConnection = (
     (x) => x.id === conn.targetHandle
   );
 
-  return targetTerminal.terminalTypeId === sourceTerminal.terminalTypeId;
+  return sourceTerminal?.terminalTypeId === targetTerminal?.terminalTypeId;
 };
 
 export default IsValidConnection;
