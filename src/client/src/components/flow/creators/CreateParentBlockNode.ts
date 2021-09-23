@@ -12,7 +12,7 @@ const CreateParentBlockNode = (node: Node, splitView: boolean) => {
   let position = { x: Position.FunctionBlock_xPos, y: 100 };
 
   if (IsLocation(node) && splitView)
-    position = { x: Position.FunctionBlock_xPos + 750, y: 100 }; // TODO: remove magic number
+    position.x = Position.FunctionBlock_xPos + 750; // TODO: remove magic number
 
   return {
     id: node.id,
