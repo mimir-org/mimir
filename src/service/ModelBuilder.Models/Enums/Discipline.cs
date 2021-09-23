@@ -12,16 +12,22 @@ namespace Mb.Models.Enums
         [Display(Name = "Not set")]
         NotSet = 1,
 
-        [Display(Name = "Process")]
-        Process = 2,
+        [Display(Name = "Project management and administration")]
+        ProjectManagement = 2,
 
-        [Display(Name = "Electro")]
-        Electro = 4,
+        [Display(Name = "Electrical")]
+        Electrical = 4,
 
         [Display(Name = "Automation")]
         Automation = 8,
 
         [Display(Name = "Structural")]
-        Structural = 16
+        Structural = 16,
+
+        [Display(Name = "Operation")]
+        Operation = 32,
+
+        [Display(Name = "Process")]
+        Process = 64
     }
 }

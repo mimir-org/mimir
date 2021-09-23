@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using Mb.Core.Exceptions;
 using Mb.Core.Extensions;
 using Mb.Core.Services.Contracts;
@@ -33,7 +34,7 @@ namespace Mb.Core.Controllers.V1
     {
         private readonly ILogger<ProjectController> _logger;
         private readonly ITypeEditorService _typeEditorService;
-
+        
         public TypeEditorController(ILogger<ProjectController> logger, ITypeEditorService typeEditorService)
         {
             _logger = logger;
@@ -344,10 +345,32 @@ namespace Mb.Core.Controllers.V1
 
             try
             {
-                var data = await _typeEditorService.CreateLibraryType(libraryType);
-                return Ok(data);
+                switch (libraryType.ObjectType)
+                {
+                    case ObjectType.ObjectBlock:
+                        var ob = await _typeEditorService.CreateLibraryType<LibraryNodeItem>(libraryType);
+                        return Ok(ob);
+                    case ObjectType.Transport:
+                        var ln = await _typeEditorService.CreateLibraryType<LibraryTransportItem>(libraryType);
+                        return Ok(ln);
+                    case ObjectType.Interface:
+                        var libraryInterfaceItem = await _typeEditorService.CreateLibraryType<LibraryInterfaceItem>(libraryType);
+                        return Ok(libraryInterfaceItem);
+                    default:
+                        throw new ModelBuilderInvalidOperationException($"Can't create type of: {libraryType.ObjectType}");
+                }
             }
             catch (ModelBuilderDuplicateException e)
+            {
+                ModelState.AddModelError("Duplicate", e.Message);
+                return BadRequest(ModelState);
+            }
+            catch (ModelBuilderNullReferenceException e)
+            {
+                ModelState.AddModelError("Duplicate", e.Message);
+                return BadRequest(ModelState);
+            }
+            catch (ModelBuilderInvalidOperationException e)
             {
                 ModelState.AddModelError("Duplicate", e.Message);
                 return BadRequest(ModelState);
@@ -376,8 +399,20 @@ namespace Mb.Core.Controllers.V1
 
             try
             {
-                var data = await _typeEditorService.UpdateLibraryType(id, libraryType);
-                return Ok(data);
+                switch (libraryType.ObjectType)
+                {
+                    case ObjectType.ObjectBlock:
+                        var ob = await _typeEditorService.UpdateLibraryType<LibraryNodeItem>(id, libraryType);
+                        return Ok(ob);
+                    case ObjectType.Transport:
+                        var ln = await _typeEditorService.UpdateLibraryType<LibraryTransportItem>(id, libraryType);
+                        return Ok(ln);
+                    case ObjectType.Interface:
+                        var libraryInterfaceItem = await _typeEditorService.UpdateLibraryType<LibraryInterfaceItem>(id, libraryType);
+                        return Ok(libraryInterfaceItem);
+                    default:
+                        throw new ModelBuilderInvalidOperationException($"Can't create type of: {libraryType.ObjectType}");
+                }
             }
             catch (ModelBuilderNullReferenceException e)
             {

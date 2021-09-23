@@ -51,55 +51,55 @@
     "name": "Generate",
     "description": null,
     "semanticReference": null,
-    "Discipline": "Electro"
+    "Discipline": "Electrical"
   },
   {
     "name": "Switch",
     "description": null,
     "semanticReference": null,
-    "Discipline": "Electro"
+    "Discipline": "Electrical"
   },
   {
     "name": "Break",
     "description": null,
     "semanticReference": null,
-    "Discipline": "Electro"
+    "Discipline": "Electrical"
   },
   {
     "name": "Distribute",
     "description": null,
     "semanticReference": null,
-    "Discipline": "Process, Electro"
+    "Discipline": "Process, Electrical"
   },
   {
     "name": "Transform",
     "description": null,
     "semanticReference": null,
-    "Discipline": "Electro"
+    "Discipline": "Electrical"
   },
   {
     "name": "Convert",
     "description": null,
     "semanticReference": null,
-    "Discipline": "Electro"
+    "Discipline": "Electrical"
   },
   {
     "name": "Drive",
     "description": null,
     "semanticReference": null,
-    "Discipline": "Electro"
+    "Discipline": "Electrical"
   },
   {
     "name": "Heat",
     "description": null,
     "semanticReference": null,
-    "Discipline": "Electro"
+    "Discipline": "Electrical"
   },
   {
     "name": "Store",
     "description": null,
     "semanticReference": null,
-    "Discipline": "Electro"
+    "Discipline": "Electrical"
   },
   {
     "name": "Measure",
