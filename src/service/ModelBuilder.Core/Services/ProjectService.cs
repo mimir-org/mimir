@@ -475,6 +475,23 @@ namespace Mb.Core.Services
             node.IsLocked = lockUnlockNodeAm.IsLocked;
             node.IsLockedBy = node.IsLocked ? userName : null;
 
+            var nodeAttributes = allAttributesInProject.Where(x => x.NodeId == node.Id);
+
+            foreach (var nodeAttribute in nodeAttributes)
+            {
+                if (nodeAttribute == null)
+                    continue;
+
+                if (nodeAttribute.IsLocked == node.IsLocked)
+                    continue;
+
+                if (nodeAttribute.IsLocked && nodeAttribute.IsLockedBy != userName)
+                    continue;
+
+                nodeAttribute.IsLocked = node.IsLocked;
+                nodeAttribute.IsLockedBy = nodeAttribute.IsLocked ? userName : null;
+            }
+
             LockUnlockNodesAndAttributesRecursive(node, allNodesInProject, allAttributesInProject, allEdgesInProject, userName);
 
             await _nodeRepository.SaveAsync();
