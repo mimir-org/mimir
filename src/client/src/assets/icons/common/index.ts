@@ -58,6 +58,7 @@ export { default as SelectDownIcon } from "./selectDown.svg";
 export { default as InterfaceIcon } from "./interface.svg";
 export { default as TransportIcon } from "./transport.svg";
 export { default as TerminalIcon } from "./terminal.svg";
+export { ReactComponent as TypeEditorTerminalIcon } from "./terminal.svg";
 export { default as EyeIcon } from "./eye.svg";
 export { default as HelpIcon } from "./help.svg";
 export { default as UndoIcon } from "./undo.svg";

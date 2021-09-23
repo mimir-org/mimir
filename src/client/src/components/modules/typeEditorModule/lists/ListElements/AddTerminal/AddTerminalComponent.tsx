@@ -26,8 +26,8 @@ const AddTerminal = ({ row, terminals, defaultTerminal, onChange }: Props) => {
     onChange("update", defaultTerminal, row);
   };
 
-  const onDirectionChange = (item: ConnectorType) => {
-    defaultTerminal.connectorType = item;
+  const onDirectionChange = (item: number) => {
+    defaultTerminal.connectorType = Number(item);
     onChange("update", defaultTerminal, row);
   };
 

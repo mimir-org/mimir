@@ -1,12 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { TerminalTypeItem } from "../../../models";
-import { TextResources } from "../../../assets/text";
-import { AddIcon, CheckIcon, CloseIcon } from "../../../assets/icons/common";
-import { TypeEditorList, TypeEditorInputs, TypePreview } from "./";
-import { TypeEditorState } from "../../../redux/store/typeEditor/types";
 import { RootState } from "../../../redux/store";
-import { ListType } from "./TypeEditorList";
+import { TypeEditorState } from "../../../redux/store/typeEditor/types";
 import { setModulesVisibility } from "../../../redux/store/modules/actions";
 import {
   closeTypeEditor,
@@ -18,14 +13,11 @@ import {
   updateTerminalType,
   saveLibraryType,
 } from "../../../redux/store/typeEditor/actions";
-import {
-  GetSelectedRds,
-  GetSelectedTerminal,
-  IsLocation,
-  IsInterface,
-  IsObjectBlock,
-  IsFunction,
-} from "./helpers";
+import { TerminalTypeItem } from "../../../models";
+import { TypeEditorList, TypeEditorInputs, TypePreview } from "./";
+import { ListType } from "./TypeEditorList";
+import { AddIcon, CheckIcon, CloseIcon } from "../../../assets/icons/common";
+import { TextResources } from "../../../assets/text";
 import {
   TypeEditorWrapper,
   TypeEditorContent,
@@ -34,6 +26,15 @@ import {
   TypePreviewColumn,
   SaveButton,
 } from "./styled";
+import {
+  GetSelectedRds,
+  GetSelectedTerminal,
+  IsLocation,
+  IsInterface,
+  IsObjectBlock,
+  IsFunction,
+} from "./helpers";
+import { GetInputTerminals, GetOutputTerminals } from "./preview/helpers";
 
 export const TypeEditorComponent = () => {
   const dispatch = useDispatch();
@@ -137,10 +138,27 @@ export const TypeEditorComponent = () => {
                 <TypePreview
                   createLibraryType={state?.createLibraryType}
                   rds={GetSelectedRds(state?.createLibraryType, state.rdsList)}
-                  terminal={GetSelectedTerminal(
-                    state?.createLibraryType,
-                    state.terminals
-                  )}
+                  inputTerminals={
+                    state?.createLibraryType.terminalTypes &&
+                    GetInputTerminals(
+                      state?.createLibraryType,
+                      state?.terminals
+                    )
+                  }
+                  outputTerminals={
+                    state?.createLibraryType.terminalTypes &&
+                    GetOutputTerminals(
+                      state?.createLibraryType,
+                      state?.terminals
+                    )
+                  }
+                  terminal={
+                    state?.createLibraryType.terminalTypeId &&
+                    GetSelectedTerminal(
+                      state?.createLibraryType,
+                      state?.terminals
+                    )
+                  }
                   // disabled={FieldValidator(state, "add")}
                 />
                 <SaveButton onClick={onSave}>

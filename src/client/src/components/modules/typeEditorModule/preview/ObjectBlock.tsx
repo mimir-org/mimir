@@ -1,80 +1,70 @@
-// import { ReactComponent as TerminalIcon } from "../../../../assets/icons/common/terminalIcon.svg";
-import { ObjectTypeBlock, InfoWrapper } from "../styled";
-import { CreateLibraryType } from "../../../../models";
+import { CreateLibraryType, TerminalType } from "../../../../models";
 import { GetBlockColor, GetBlockHeight, GetBlockPaddingTop } from "./helpers";
-
-// import { ReactComponent as TerminalIcon } from "../../../../assets/icons/common/terminalIcon.svg";
+import { TypeEditorTerminalIcon } from "../../../../assets/icons/common";
+import {
+  PreviewObjectBlock,
+  InfoWrapper,
+  InputOutputTerminals,
+  Terminals,
+} from "../styled";
 interface Props {
   createLibraryType: CreateLibraryType;
   rdsName: string;
+  inputTerminals: TerminalType[];
+  outputTerminals: TerminalType[];
 }
 
-export const ObjectBlock = ({ createLibraryType, rdsName }: Props) => {
+export const ObjectBlock = ({
+  createLibraryType,
+  rdsName,
+  inputTerminals,
+  outputTerminals,
+}: Props) => {
   const aspect = createLibraryType.aspect;
 
-  //   let terminalCategories = [];
-  //   state.terminals.forEach((e) => {
-  //     let t = e as unknown as TerminalCategory;
-  //     terminalCategories.push(t);
-  //   });
-  //   let colorsArray = terminalCategories.map((category) => {
-  //     category.value = category.value.map((terminal) => {});
-  //     return category;
-  //     //   let obj = {
-  //     //       id: t[1].id,
-  //     //       color: t[1].color
-  //     //   }
-  //   });
-
-  //   const inputTerminals = () => {
-  //     let inputTerminals: string[];
-  //     if (state.createLibraryType.terminalTypes) {
-  //       state.createLibraryType.terminalTypes
-  //         .filter((t) => t.connectorType === ConnectorType.Input)
-  //         .forEach((t) => {
-  //           inputTerminals.push(t.terminalTypeId);
-  //         });
-  //       colorsArray.forEach((terminal) => {
-  //         inputTerminals.filter((t) => terminal["id"] === t);
-  //       });
-  //       console.log("input terminaler", inputTerminals);
-  //         return inputTerminals;
-  //     }
-  //   };
+  const showTerminals = (input: boolean): any[] => {
+    let terminalsArray = [];
+    if (input) {
+      inputTerminals?.forEach((t, index) => {
+        terminalsArray.push(
+          <span key={index}>
+            <TypeEditorTerminalIcon style={{ fill: t.color }} />
+          </span>
+        );
+      });
+    } else {
+      outputTerminals?.forEach((t, index) => {
+        terminalsArray.push(
+          <span key={index}>
+            <TypeEditorTerminalIcon style={{ fill: t.color }} />
+          </span>
+        );
+      });
+    }
+    return terminalsArray;
+  };
 
   return (
-    <ObjectTypeBlock
+    <PreviewObjectBlock
       blockColor={GetBlockColor(aspect)}
       blockHeight={GetBlockHeight(aspect)}
     >
-      {/* {state.createLibraryType.aspect === Aspect.Function && (
-        <InputOutputTerminals>
-          <Terminals input={true}>
-            <span>
-              <TerminalIcon style={{ fill: "pink" }} />
-            </span>
-            <span>
-              <TerminalIcon />
-            </span>
-            <span>
-              <TerminalIcon />
-            </span>
-          </Terminals>
-          <Terminals input={false}>
-            <span>
-              <TerminalIcon />
-            </span>
-            <span>
-              <TerminalIcon />
-            </span>
-          </Terminals>
-        </InputOutputTerminals>
-      )} */}
+      {console.log("terminals to show", createLibraryType.terminalTypes)}
+      {console.log("inputTerminals", inputTerminals)}
+      {console.log("outputTerminals", outputTerminals)}
+      <InputOutputTerminals>
+        {inputTerminals && (
+          <Terminals input={true}>{showTerminals(true)}</Terminals>
+        )}
+        {outputTerminals && (
+          <Terminals input={false}>{showTerminals(false)}</Terminals>
+        )}
+      </InputOutputTerminals>
       <InfoWrapper blockPaddingTop={GetBlockPaddingTop(aspect)}>
         <p>{rdsName}</p>
         <p>{createLibraryType.name}</p>
       </InfoWrapper>
-    </ObjectTypeBlock>
+    </PreviewObjectBlock>
   );
 };
 
