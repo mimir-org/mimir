@@ -26,7 +26,7 @@ interface Props {
   menuButton: boolean;
   showTerminalMenu: any;
   terminalMenu: boolean;
-  splitViewNode?: boolean;
+  isSplitView?: boolean;
   onClick: (conn: Connector) => void;
 }
 
@@ -40,14 +40,14 @@ const TerminalsComponent = ({
   menuButton,
   showTerminalMenu,
   terminalMenu,
-  splitViewNode,
+  isSplitView,
   onClick,
 }: Props) => (
   <>
     <TerminalsBox
       visible={menuButton && !IsAspectNode(node)}
       parent={isParent}
-      splitViewNode={splitViewNode}
+      isSplitView={isSplitView}
       onClick={() => OnMenuClick(showTerminalMenu, terminalMenu)}
     >
       <img src={GetMenuIcon(node)} alt="options" />
