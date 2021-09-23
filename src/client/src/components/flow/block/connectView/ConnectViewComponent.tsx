@@ -1,11 +1,7 @@
 import { Node, Connector } from "../../../../models";
 import { ConnectMenuIcon } from "../../../../assets/icons/blockView";
 import { OnConnectMenuClick } from "./handlers";
-import {
-  ConnectViewBox,
-  ConnectViewMenu,
-  ConnectViewElement,
-} from "../../../../compLibrary/blockView";
+import { ConnectViewBox, ConnectViewMenu, ConnectViewElement } from "./styled";
 
 interface Props {
   isMenuOpen: boolean;

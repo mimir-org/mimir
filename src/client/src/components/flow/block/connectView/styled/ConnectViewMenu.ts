@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "..";
+import { Color } from "../../../../../compLibrary";
 
 /** Styled component that displays the drop-down menu for the ConnectViewMenu. */
 const ConnectViewMenu = styled.div`

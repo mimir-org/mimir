@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color, FontSize } from "..";
+import { Color, FontSize } from "../../../../../compLibrary";
 
 /** Styled component that displays an element in the drop-down menu for the ConnectViewMenu. */
 const BlockOptionsElement = styled.div`

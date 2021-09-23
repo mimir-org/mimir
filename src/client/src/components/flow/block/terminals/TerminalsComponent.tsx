@@ -1,11 +1,7 @@
 import { Connector, Node } from "../../../../models";
 import { GetMenuIcon } from "../../nodes/blockParentNode/helpers";
 import { OnMenuClick } from "../../nodes/blockParentNode/handlers";
-import {
-  TerminalsMenu,
-  TerminalsElement,
-  TerminalsBox,
-} from "../../../../compLibrary/blockView";
+import { TerminalsMenu, TerminalsElement, TerminalsBox } from "./styled";
 import {
   GetConnectorIcon,
   GetConnectorName,
