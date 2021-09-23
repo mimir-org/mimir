@@ -1,12 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Mb.Core.Extensions;
 using Mb.Core.Repositories.Contracts;
 using Mb.Core.Services.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Data;
+using Microsoft.AspNetCore.Http;
 
 namespace Mb.Core.Services
 {
@@ -17,14 +20,16 @@ namespace Mb.Core.Services
         private readonly IAttributeRepository _attributeRepository;
         private readonly IProjectRepository _projectRepository;
         private readonly IConnectorRepository _connectorRepository;
+        private readonly IHttpContextAccessor _contextAccessor;
 
-        public NodeService(INodeRepository nodeRepository, IMapper mapper, IAttributeRepository attributeRepository, IProjectRepository projectRepository, IConnectorRepository connectorRepository)
+        public NodeService(INodeRepository nodeRepository, IMapper mapper, IAttributeRepository attributeRepository, IProjectRepository projectRepository, IConnectorRepository connectorRepository, IHttpContextAccessor contextAccessor)
         {
             _nodeRepository = nodeRepository;
             _mapper = mapper;
             _attributeRepository = attributeRepository;
             _projectRepository = projectRepository;
             _connectorRepository = connectorRepository;
+            _contextAccessor = contextAccessor;
         }
 
         public async Task UpdateNodes(string projectId, List<NodeAm> nodes)
@@ -98,6 +103,8 @@ namespace Mb.Core.Services
                 var destinationNode = new Node();
                 _mapper.Map(node, destinationNode);
                 destinationNode.Projects = new List<Project> { new() { Id = projectId } };
+                destinationNode.CreatedBy = _contextAccessor.GetName();
+                destinationNode.Created = DateTime.Now.ToUniversalTime();
                 await _nodeRepository.CreateAsync(destinationNode);
             }
         }
