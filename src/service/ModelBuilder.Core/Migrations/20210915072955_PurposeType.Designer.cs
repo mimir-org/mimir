@@ -4,19 +4,21 @@ using Mb.Models.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Mb.Core.Migrations
 {
     [DbContext(typeof(ModelBuilderDbContext))]
-    partial class ModelBuilderDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210915072955_PurposeType")]
+    partial class PurposeType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.10")
+                .HasAnnotation("ProductVersion", "5.0.5")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("AttributeType_Unit", b =>
@@ -83,14 +85,6 @@ namespace Mb.Core.Migrations
                     b.Property<string>("FormatId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<bool>("IsLocked")
-                        .HasColumnType("bit")
-                        .HasColumnName("IsLocked");
-
-                    b.Property<string>("IsLockedBy")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("IsLockedBy");
-
                     b.Property<string>("Key")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -106,10 +100,6 @@ namespace Mb.Core.Migrations
                     b.Property<string>("SelectedUnitId")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("SelectedUnitId");
-
-                    b.Property<string>("SemanticReference")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("SemanticReference");
 
                     b.Property<string>("SourceId")
                         .HasColumnType("nvarchar(450)");
@@ -505,14 +495,6 @@ namespace Mb.Core.Migrations
                         .HasColumnType("decimal(10,4)")
                         .HasColumnName("Cost");
 
-                    b.Property<DateTime?>("Created")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("Created");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("CreatedBy");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Description");
@@ -524,10 +506,6 @@ namespace Mb.Core.Migrations
                     b.Property<bool>("IsLocked")
                         .HasColumnType("bit")
                         .HasColumnName("IsLocked");
-
-                    b.Property<string>("IsLockedBy")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("IsLockedBy");
 
                     b.Property<bool>("IsRoot")
                         .HasColumnType("bit")
@@ -588,9 +566,9 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("StatusId");
 
-                    b.Property<string>("Symbol")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Symbol");
+                    b.Property<string>("SymbolId")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("SymbolId");
 
                     b.Property<string>("TagNumber")
                         .HasColumnType("nvarchar(max)")
@@ -619,6 +597,8 @@ namespace Mb.Core.Migrations
                     b.HasIndex("MasterProjectId");
 
                     b.HasIndex("StatusId");
+
+                    b.HasIndex("SymbolId");
 
                     b.ToTable("Node");
                 });
@@ -1289,9 +1269,16 @@ namespace Mb.Core.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("Mb.Models.Data.BlobData", "Symbol")
+                        .WithMany("Nodes")
+                        .HasForeignKey("SymbolId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.Navigation("MasterProject");
 
                     b.Navigation("Status");
+
+                    b.Navigation("Symbol");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.NodeTypeTerminalType", b =>
@@ -1456,6 +1443,11 @@ namespace Mb.Core.Migrations
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("TerminalType");
+                });
+
+            modelBuilder.Entity("Mb.Models.Data.BlobData", b =>
+                {
+                    b.Navigation("Nodes");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Composite", b =>

@@ -1,5 +1,5 @@
 import { Aspect, Connector, Attribute, ObjectType } from ".";
-import { ConnectorType } from "./Enums";
+import { ConnectorType, Discipline } from "./Enums";
 
 export interface AttributeType {
     id: string;
@@ -123,10 +123,10 @@ export interface FileData {
 }
 
 export interface BlobData {
-    id: string;
-    name: string;
-    data: string;
-    categoryId: string;
+  id: string;
+  name: string;
+  data: string;
+  discipline: Discipline;
 }
 
 export interface Composite {

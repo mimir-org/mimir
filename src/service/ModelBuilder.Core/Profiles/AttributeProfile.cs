@@ -46,6 +46,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateOrUseId(src.Id)))
                 .ForMember(dest => dest.Key, opt => opt.MapFrom(src => src.Key))
                 .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Value))
+                .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
                 .ForMember(dest => dest.SelectedUnitId, opt => opt.MapFrom(src => src.SelectedUnitId))
                 .ForMember(dest => dest.QualifierId, opt => opt.MapFrom(src => src.QualifierId))
                 .ForMember(dest => dest.Qualifier, opt => opt.Ignore())
@@ -60,7 +61,9 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.TerminalId, opt => opt.MapFrom(src => src.TerminalId))
                 .ForMember(dest => dest.Terminal, opt => opt.Ignore())
                 .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => src.NodeId))
-                .ForMember(dest => dest.Node, opt => opt.Ignore());
+                .ForMember(dest => dest.Node, opt => opt.Ignore())
+                .ForMember(dest => dest.IsLocked, opt => opt.MapFrom(src => src.IsLocked))
+                .ForMember(dest => dest.IsLockedBy, opt => opt.MapFrom(src => src.IsLockedBy));
 
             CreateMap<UnitAm, Unit>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
@@ -73,6 +76,5 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Values, opt => opt.MapFrom(src => src.Values.ToDictionary(x => x, x => false)))
                 .ForMember(dest => dest.IsMultiSelect, opt => opt.MapFrom(src => src.IsMultiSelect));
         }
-
     }
 }

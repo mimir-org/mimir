@@ -4,14 +4,16 @@ using Mb.Models.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Mb.Core.Migrations
 {
     [DbContext(typeof(ModelBuilderDbContext))]
-    partial class ModelBuilderDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210917124458_lockUnlock")]
+    partial class lockUnlock
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,10 +89,6 @@ namespace Mb.Core.Migrations
                         .HasColumnType("bit")
                         .HasColumnName("IsLocked");
 
-                    b.Property<string>("IsLockedBy")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("IsLockedBy");
-
                     b.Property<string>("Key")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -106,10 +104,6 @@ namespace Mb.Core.Migrations
                     b.Property<string>("SelectedUnitId")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("SelectedUnitId");
-
-                    b.Property<string>("SemanticReference")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("SemanticReference");
 
                     b.Property<string>("SourceId")
                         .HasColumnType("nvarchar(450)");
@@ -505,14 +499,6 @@ namespace Mb.Core.Migrations
                         .HasColumnType("decimal(10,4)")
                         .HasColumnName("Cost");
 
-                    b.Property<DateTime?>("Created")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("Created");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("CreatedBy");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Description");
@@ -524,10 +510,6 @@ namespace Mb.Core.Migrations
                     b.Property<bool>("IsLocked")
                         .HasColumnType("bit")
                         .HasColumnName("IsLocked");
-
-                    b.Property<string>("IsLockedBy")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("IsLockedBy");
 
                     b.Property<bool>("IsRoot")
                         .HasColumnType("bit")
