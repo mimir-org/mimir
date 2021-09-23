@@ -54,12 +54,7 @@ const TerminalsComponent = ({
     </TerminalsBox>
 
     {isMenuOpen && (
-      <TerminalsMenu
-        visible={isMenuOpen}
-        width={width}
-        isParent={isParent}
-        isLocation={isLocation}
-      >
+      <TerminalsMenu width={width} isParent={isParent} isLocation={isLocation}>
         {list.map((conn) => (
           <TerminalsElement key={conn.id}>
             <p className="text">{GetConnectorName(conn)}</p>

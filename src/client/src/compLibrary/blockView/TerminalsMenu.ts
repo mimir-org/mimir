@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { Color } from "..";
 
 const TerminalsMenu = styled.div`
-  visibility: ${(props: { visible: boolean }) => !props.visible && "hidden"};
   border: 2px solid;
   border-color: ${(props) =>
     props.isLocation ? Color.LocationTab : Color.FunctionTab};
