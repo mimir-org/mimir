@@ -115,6 +115,7 @@ const TextResources = {
   Inspector_Delete_Node: "Delete",
   Inspector_Filter: "Filter",
   Inspector_Lock: "Lock",
+  Inspector_Open: "Open",
   Inspector_Validate: "Validate",
 
   Inspector_Params_Clear_All: "Clear all Entities",
