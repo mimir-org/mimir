@@ -39,7 +39,11 @@ export const IMPORT_PROJECT = "IMPORT_PROJECT";
 export const IMPORT_PROJECT_SUCCESS_OR_ERROR =
   "IMPORT_PROJECT_SUCCESS_OR_ERROR";
 export const LOCK_UNLOCK_NODE = "LOCK_UNLOCK_NODE";
+export const LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR =
+  "LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR";
 export const LOCK_UNLOCK_ATTRIBUTE = "LOCK_UNLOCK_ATTRIBUTE";
+export const LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR =
+  "LLOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR";
 
 // State types
 export interface ProjectState {
@@ -272,12 +276,26 @@ export interface LockUnlockNode {
   };
 }
 
+export interface LockUnlockNodeFinished {
+  type: typeof LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR;
+  payload: {
+    apiError: ApiError;
+  };
+}
+
 export interface LockUnlockAttribute {
   type: typeof LOCK_UNLOCK_ATTRIBUTE;
   payload: {
     id: string;
     nodeId: string;
     isLocked: boolean;
+  };
+}
+
+export interface LockUnlockAttributeFinished {
+  type: typeof LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR;
+  payload: {
+    apiError: ApiError;
   };
 }
 
@@ -313,4 +331,6 @@ export type ProjectActionTypes =
   | ExportProjectFileActionFinished
   | ImportProjectActionFinished
   | LockUnlockNode
-  | LockUnlockAttribute;
+  | LockUnlockNodeFinished
+  | LockUnlockAttribute
+  | LockUnlockAttributeFinished;

@@ -15,6 +15,8 @@ import {
   SAVE_PROJECT,
   EXPORT_PROJECT_TO_FILE,
   IMPORT_PROJECT,
+  LOCK_UNLOCK_NODE,
+  LOCK_UNLOCK_ATTRIBUTE,
 } from "./../store/project/types";
 import {
   FETCHING_INITIAL_DATA,
@@ -38,6 +40,8 @@ import {
   updateProject,
   exportProjectFile,
   importProject,
+  lockUnlockNode,
+  lockUnlockAttribute,
 } from "./project/saga";
 import { getContractors, getStatuses } from "./common/saga";
 import {
@@ -73,6 +77,8 @@ export function* sagas() {
     takeEvery(EXPORT_PROJECT_TO_FILE, exportProjectFile),
     takeEvery(IMPORT_PROJECT, importProject),
     takeEvery(EXPORT_LIBRARY, exportLibrary),
+    takeEvery(LOCK_UNLOCK_NODE, lockUnlockNode),
+    takeEvery(LOCK_UNLOCK_ATTRIBUTE, lockUnlockAttribute),
     takeEvery(IMPORT_LIBRARY, importLibrary),
     takeEvery(FETCHING_BLOB_DATA, getblobData),
     takeEvery(FETCHING_LIBRARY_TRANSPORT_TYPES, getTransportTypes),

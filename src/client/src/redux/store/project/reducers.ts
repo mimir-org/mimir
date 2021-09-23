@@ -36,6 +36,8 @@ import {
   LOCK_UNLOCK_ATTRIBUTE,
   ProjectActionTypes,
   ProjectState,
+  LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR,
+  LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
 } from "./types";
 
 const initialState: ProjectState = {
@@ -518,6 +520,15 @@ export function projectReducer(
         },
       };
 
+    case LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR:
+      return {
+        ...state,
+        fetching: false,
+        apiError: action.payload.apiError
+          ? [...state.apiError, action.payload.apiError]
+          : state.apiError,
+      };
+
     case LOCK_UNLOCK_ATTRIBUTE:
       return {
         ...state,
@@ -539,6 +550,15 @@ export function projectReducer(
               : x
           ),
         },
+      };
+
+    case LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR:
+      return {
+        ...state,
+        fetching: false,
+        apiError: action.payload.apiError
+          ? [...state.apiError, action.payload.apiError]
+          : state.apiError,
       };
     default:
       return state;

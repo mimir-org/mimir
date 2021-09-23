@@ -41,8 +41,9 @@ export async function http<T>(request: RequestInfo): Promise<HttpResponse<T>> {
       if (response.status === 204) {
         throw new Error(response.statusText);
       }
-
-      response.data = await response.json();
+      if (response.bodyUsed) {
+        response.data = await response.json();
+      }
       return response;
     }
   } catch (e) {
