@@ -64,6 +64,7 @@ const TextResources = {
   Inspector_Relations_Function: "Go to function",
   Inspector_Relations_Input_object_connetion: "Input object connection",
   Inspector_Relations_Output_object_connetion: "Output object connection",
+  Inspector_Relations_Relationships: "Go To: Active Relations",
   Inspector_Relations_Active_Terminal_Types: "Active Terminal Types",
   Inspector_Relations_Terminal_Input: "Go To: Terminal Input Object Connection",
   Inspector_Relations_Terminal_Output:
@@ -88,7 +89,8 @@ const TextResources = {
   Inspector_Admin_Interface: "Interface",
   Inspector_Admin_Updated_By: "Updated by",
   Inspector_Admin_Contractor: "Contractor",
-  Inspector_Admin_Updated_Date: "Updated Date",
+  Inspector_Admin_Updated_Date: "Last updated",
+  Inspector_Admin_Created_Date: "Date created",
   Inspector_Admin_Local_Description: "Long Local Description",
   Inspector_Admin_Type: "Type name",
   Inspector_Admin_Width: "Width (m)",

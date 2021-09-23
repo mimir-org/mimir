@@ -6,6 +6,7 @@ import { Symbol } from "../../compLibrary/symbol";
 import { OnDeleteClick, OnToggleClick } from "./handlers";
 import { InspectorButton } from "../../compLibrary/buttons";
 import { Menu, Title, NodeInfo, ToggleBox, ButtonWrapper } from "./styled";
+import { InspectorTabs } from ".";
 
 interface Props {
   project: Project;
@@ -25,6 +26,7 @@ const InspectorHeader = ({
   type: key,
 }: Props) => (
   <Menu id="InspectorBody" color={GetInspectorColor(node, edge)}>
+    {project && <InspectorTabs project={project} node={node} edge={edge} />}
     <NodeInfo symbol={node?.symbol?.id} visible={node}>
       <div className="symbol">
         <Symbol base64={node?.symbol?.data} text={node?.label ?? node?.name} />
@@ -41,16 +43,16 @@ const InspectorHeader = ({
         type="delete"
         visible={true}
       />
-    </ButtonWrapper>
+      <Title>{TextResources.Module_Inspector}</Title>
 
-    <ToggleBox>
-      <img
-        src={open ? DownIcon : UpIcon}
-        alt="toggle-icon"
-        onClick={() => OnToggleClick(dispatch, key, open)}
-      />
-    </ToggleBox>
-    <Title>{TextResources.Module_Inspector}</Title>
+      <ToggleBox>
+        <img
+          src={open ? DownIcon : UpIcon}
+          alt="toggle-icon"
+          onClick={() => OnToggleClick(dispatch, key, open)}
+        />
+      </ToggleBox>
+    </ButtonWrapper>
   </Menu>
 );
 export default InspectorHeader;

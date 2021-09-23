@@ -13,7 +13,7 @@ interface Props {
 
 const InspectorButton = ({ onClick, type, visible }: Props) => (
   <ButtonContainer onClick={() => onClick()} visible={visible}>
-    {GetButtonText(type)}
+    <div>{GetButtonText(type)}</div>
     <img src={GetButtonIcon(type)} alt={GetButtonText(type)} />
   </ButtonContainer>
 );

@@ -10,6 +10,8 @@ import { IsBlockView } from "../../../../components/flow/helpers/block";
 import { changeNodeValue } from "../../../../redux/store/project/actions";
 import { Dropdown } from "../../../../compLibrary/dropdown/mimir";
 
+type Event = React.ChangeEvent<HTMLInputElement>;
+
 interface Props {
   node: Node;
   project: Project;
@@ -19,13 +21,13 @@ interface Props {
 const AdminContent = ({ node, project, statuses }: Props) => {
   const dispatch = useDispatch();
 
-  const onChange = (e: any, key: string) => {
-    dispatch(changeNodeValue(node.id, key, e.target.value));
+  const onChange = (key: string, value: any) => {
+    dispatch(changeNodeValue(node.id, key, value));
   };
 
   return (
     <>
-      <TabColumn>
+      <TabColumn width={250}>
         <div>
           <div>{TextResources.Inspector_Admin_Id}</div>
           <Input
@@ -48,17 +50,25 @@ const AdminContent = ({ node, project, statuses }: Props) => {
           <div>{TextResources.Inspector_Admin_Semantic_Id}</div>
           <Input
             value={node.semanticReference ?? ""}
-            onChange={(e: any) => onChange(e, "semanticId")}
+            onChange={(e: Event) => onChange("semanticId", e.target.value)}
             inputType=""
           />
         </div>
       </TabColumn>
-      <TabColumn>
+      <TabColumn width={250}>
         <div>
-          <div>{TextResources.Inspector_Admin_Designation}</div>
+          <div>{TextResources.Inspector_Admin_Service}</div>
+          <Input
+            value={node.label}
+            onChange={(e: Event) => onChange("label", e.target.value)}
+            inputType=""
+          />
+        </div>
+        <div>
+          <div>{TextResources.Inspector_Admin_Type}</div>
           <Input
             readOnly={true}
-            value={GetReferenceDesignation(node, project)}
+            value={node.name}
             onChange={() => null}
             inputType=""
           />
@@ -72,6 +82,8 @@ const AdminContent = ({ node, project, statuses }: Props) => {
             inputType=""
           />
         </div>
+      </TabColumn>
+      <TabColumn width={125}>
         <div>
           <div>{TextResources.Inspector_Admin_Updated_Date}</div>
           <Input
@@ -81,21 +93,20 @@ const AdminContent = ({ node, project, statuses }: Props) => {
             inputType=""
           />
         </div>
-      </TabColumn>
-      <TabColumn>
         <div>
-          <div>{TextResources.Inspector_Admin_Service}</div>
+          <div>{TextResources.Inspector_Admin_Created_Date}</div>
           <Input
-            value={node.label}
-            onChange={(e: any) => onChange(e, "label")}
+            readOnly={true}
+            value={""}
+            onChange={() => null}
             inputType=""
           />
         </div>
         <div>
-          <div>{TextResources.Inspector_Admin_Type}</div>
+          <div>{TextResources.Inspector_Admin_Designation}</div>
           <Input
             readOnly={true}
-            value={node.name}
+            value={GetReferenceDesignation(node, project)}
             onChange={() => null}
             inputType=""
           />
@@ -105,7 +116,7 @@ const AdminContent = ({ node, project, statuses }: Props) => {
             <div>{TextResources.Inspector_Admin_Width}</div>
             <Input
               value={node.width}
-              onChange={(e: any) => onChange(e, "width")}
+              onChange={(e: Event) => onChange("width", e.target.value)}
               inputType=""
             />
           </div>
@@ -115,29 +126,29 @@ const AdminContent = ({ node, project, statuses }: Props) => {
             <div>{TextResources.Inspector_Admin_Height}</div>
             <Input
               value={node.height}
-              onChange={(e: any) => onChange(e, "height")}
+              onChange={(e: Event) => onChange("height", e.target.value)}
               inputType=""
               readOnly={true}
             />
           </div>
         )}
       </TabColumn>
-      <TabColumn>
+      <TabColumn width={125}>
         <div>
           <div>{TextResources.Inspector_Admin_Status}</div>
           <Dropdown
             label=""
             items={statuses}
-            keyProp={null}
+            keyProp={"id"}
             valueProp={null}
-            onChange={(e: any) => onChange(e, "statusId")}
+            onChange={(value: any) => onChange("statusId", value)}
           ></Dropdown>
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Version}</div>
           <Input
             value={node.version ?? ""}
-            onChange={(e: any) => onChange(e, "version")}
+            onChange={(e: Event) => onChange("version", e.target.value)}
             inputType=""
           />
         </div>
@@ -146,20 +157,19 @@ const AdminContent = ({ node, project, statuses }: Props) => {
             <div>{TextResources.Inspector_Admin_Length}</div>
             <Input
               value={node.length}
-              onChange={(e: any) => onChange(e, "length")}
+              onChange={(e: Event) => onChange("length", e.target.value)}
               inputType=""
             />
           </div>
         )}
       </TabColumn>
-      <TabColumn>
+      <TabColumn width={465}>
         <div>
           <div>{TextResources.Inspector_Admin_Description}</div>
           <Textarea
-            width="300"
-            height="90"
+            height={200}
             value={node.description ?? ""}
-            onChange={(e: any) => onChange(e, "description")}
+            onChange={(e: Event) => onChange("description", e.target.value)}
           ></Textarea>
         </div>
       </TabColumn>
