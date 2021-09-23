@@ -35,10 +35,9 @@ import {
   removeMainNode,
 } from "../../../../redux/store/connectView/actions";
 
-/** Component for a function child node in BlockView.
+/** Component for a Function child node in BlockView.
  *  BlockFunctionNode returns a node with the styling and functionality of the Function Aspect
  */
-
 const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
   const [terminalButton, showTerminalButton] = useState(false);

@@ -12,10 +12,6 @@ import {
   IsAspectNode,
 } from "../helpers/common";
 
-/** Component for the terminals menu. This is the menu in the upper-right corner of a node
- *  The component returns a drop-down menu where you can select from the nodes' terminals
- */
-
 interface Props {
   node: Node;
   isMenuOpen: boolean;
@@ -30,6 +26,9 @@ interface Props {
   onClick: (conn: Connector) => void;
 }
 
+/** Component for the terminals menu. This is the menu in the upper-right corner of a node
+ *  The component returns a drop-down menu where you can select from the nodes' terminals
+ */
 const TerminalsComponent = ({
   node,
   isMenuOpen,

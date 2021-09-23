@@ -24,7 +24,6 @@ import {
 /** Component for parent node in BlockView.
  *  This is the big block that displays the selected node in the Explorer
  */
-
 const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const [terminalMenu, showTerminalMenu] = useState(false);
   const [terminalButton, showTerminalButton] = useState(false);

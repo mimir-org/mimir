@@ -14,10 +14,9 @@ import {
   FindNodeByDataId,
 } from "../../helpers/block";
 
-/** Component for a loaction child node in BlockView.
+/** Component for a Loaction child node in BlockView.
  *  BlockLocationNode returns a node with the styling and functionality of the Location Aspect
  */
-
 const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
   const [terminalButton, showTerminalButton] = useState(false);

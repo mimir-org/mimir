@@ -1,8 +1,7 @@
 import styled from "styled-components";
 import { Color, FontSize, Size } from "..";
 
-/** Styled component that sits on top of the BlockParentNode */
-
+/** Styled component that sits on top of a Block element in Mimir */
 const BlockParentBox = styled.div`
   position: absolute;
   opacity: 1 !important;
