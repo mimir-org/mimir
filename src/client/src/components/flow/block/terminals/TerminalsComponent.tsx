@@ -1,6 +1,6 @@
 import { Connector, Node } from "../../../../models";
-import { GetMenuIcon } from "../../nodes/blockParentNode/helpers";
-import { OnMenuClick } from "../../nodes/blockParentNode/handlers";
+import { GetMenuIcon } from "./helpers";
+import { OnTerminalMenuClick } from "./handlers";
 import { TerminalsMenu, TerminalsElement, TerminalsBox } from "./styled";
 import {
   GetConnectorIcon,
@@ -43,7 +43,7 @@ const TerminalsComponent = ({
       visible={menuButton && !IsAspectNode(node)}
       parent={isParent}
       isSplitView={isSplitView}
-      onClick={() => OnMenuClick(showTerminalMenu, terminalMenu)}
+      onClick={() => OnTerminalMenuClick(showTerminalMenu, terminalMenu)}
     >
       <img src={GetMenuIcon(node)} alt="options" />
     </TerminalsBox>
