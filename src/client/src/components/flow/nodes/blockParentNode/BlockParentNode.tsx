@@ -22,7 +22,7 @@ import {
 } from "../../helpers/block";
 
 /** Component for parent node in BlockView.
- *  This is the big block that displays the selected node in the Explorer
+ *  This is the large block that displays the selected node in the Explorer.
  */
 const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const [terminalMenu, showTerminalMenu] = useState(false);

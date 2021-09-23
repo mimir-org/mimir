@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Color } from "..";
 
-/** Styled component that displays the drop-down menu for a nodes' terminals */
+/** Styled component that displays the drop-down menu for a nodes' terminals. */
 const TerminalsMenu = styled.div`
   border: 2px solid;
   border-color: ${(props) =>

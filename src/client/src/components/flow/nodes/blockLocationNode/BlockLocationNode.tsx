@@ -15,7 +15,7 @@ import {
 } from "../../helpers/block";
 
 /** Component for a Loaction child node in BlockView.
- *  BlockLocationNode returns a node with the styling and functionality of the Location Aspect
+ *  BlockLocationNode returns a node with the styling and functionality of the Location Aspect.
  */
 const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();

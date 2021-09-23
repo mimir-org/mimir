@@ -11,16 +11,15 @@ import {
   SetTerminalYPos,
 } from "../helpers/common";
 
-/**  Components for the terminals displayed on the nodes in BlockView
- *   The component returns a list of terminals in form of a JSX Element
- */
-
 interface Props {
   aspect: Aspect;
   terminals: Connector[];
   splitView: boolean;
 }
 
+/**  Components for the terminals displayed on the nodes in BlockView.
+ *   The component returns a list of terminals in form of a JSX Element.
+ */
 const HandleComponent = ({ aspect, terminals, splitView }: Props) => {
   let inputCount = 0;
   let outputCount = 0;

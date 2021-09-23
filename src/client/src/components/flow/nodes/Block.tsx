@@ -9,7 +9,7 @@ interface Props {
 }
 
 /** Component for the node block in BlockView.
- *  Block serves as a container for a Mimir node in BlockView
+ *  Block serves as a container for a Mimir node in BlockView.
  */
 const Block = ({ node, isLocation, isSplitView, isSelected }: Props) => (
   <BlockParentBox
