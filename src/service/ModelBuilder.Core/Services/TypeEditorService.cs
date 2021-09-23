@@ -29,8 +29,9 @@ namespace Mb.Core.Services
         private readonly IPredefinedAttributeRepository _predefinedAttributeRepository;
         private readonly INodeTypeTerminalTypeRepository _nodeTypeTerminalTypeRepository;
         private readonly ICompositeTypeRepository _compositeTypeRepository;
+        private readonly ILibraryRepository _libraryRepository;
 
-        public TypeEditorService(IRdsRepository rdsRepository, IAttributeTypeRepository attributeTypeRepository, ILibraryTypeRepository libraryTypeComponentRepository, IContractorRepository contractorRepository, ITerminalTypeRepository terminalTypeRepository, IEnumBaseRepository enumBaseRepository, IMapper mapper, IPredefinedAttributeRepository predefinedAttributeRepository, INodeTypeTerminalTypeRepository nodeTypeTerminalTypeRepository, ICompositeTypeRepository compositeTypeRepository)
+        public TypeEditorService(IRdsRepository rdsRepository, IAttributeTypeRepository attributeTypeRepository, ILibraryTypeRepository libraryTypeComponentRepository, IContractorRepository contractorRepository, ITerminalTypeRepository terminalTypeRepository, IEnumBaseRepository enumBaseRepository, IMapper mapper, IPredefinedAttributeRepository predefinedAttributeRepository, INodeTypeTerminalTypeRepository nodeTypeTerminalTypeRepository, ICompositeTypeRepository compositeTypeRepository, ILibraryRepository libraryRepository)
         {
             _rdsRepository = rdsRepository;
             _attributeTypeRepository = attributeTypeRepository;
@@ -42,6 +43,7 @@ namespace Mb.Core.Services
             _predefinedAttributeRepository = predefinedAttributeRepository;
             _nodeTypeTerminalTypeRepository = nodeTypeTerminalTypeRepository;
             _compositeTypeRepository = compositeTypeRepository;
+            _libraryRepository = libraryRepository;
         }
 
         #region Public methods
@@ -189,13 +191,17 @@ namespace Mb.Core.Services
         /// </summary>
         /// <param name="createLibraryType"></param>
         /// <returns></returns>
-        public async Task<LibraryType> CreateLibraryType(CreateLibraryType createLibraryType)
+        public async Task<T> CreateLibraryType<T>(CreateLibraryType createLibraryType) where T : class, new()
         {
             if (createLibraryType == null)
                 return null;
 
-            var data = await CreateLibraryTypes(new List<CreateLibraryType> { createLibraryType });
-            return data?.SingleOrDefault();
+            var data = (await CreateLibraryTypes(new List<CreateLibraryType> { createLibraryType }))?.FirstOrDefault();
+            if (data == null)
+                throw new ModelBuilderNullReferenceException("Could not create type");
+
+            var obj = await _libraryRepository.GetLibraryItem<T>(data.Id);
+            return obj;
         }
 
         /// <summary>
@@ -204,7 +210,7 @@ namespace Mb.Core.Services
         /// <param name="id"></param>
         /// <param name="createLibraryType"></param>
         /// <returns></returns>
-        public async Task<LibraryType> UpdateLibraryType(string id, CreateLibraryType createLibraryType)
+        public async Task<T> UpdateLibraryType<T>(string id, CreateLibraryType createLibraryType) where T : class, new()
         {
             if (string.IsNullOrEmpty(id))
                 throw new ModelBuilderNullReferenceException("Can't update a type without an id");
@@ -217,8 +223,7 @@ namespace Mb.Core.Services
                 throw new ModelBuilderNotFoundException($"There is no type with id:{id} to update.");
 
             await DeleteType(id);
-            var createdType = await CreateLibraryType(createLibraryType);
-            return createdType;
+            return await CreateLibraryType<T>(createLibraryType);
         }
 
         /// <summary>
