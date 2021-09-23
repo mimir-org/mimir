@@ -2,10 +2,8 @@ import styled from "styled-components";
 import { Color } from "../../../compLibrary";
 
 const TabHeader = styled.div`
-  display: inline-block;
-  position: relative;
-  top: -44px;
   box-sizing: border-box;
+  min-width: 120px;
   border-top-right-radius: 6px;
   border-top-left-radius: 6px;
   color: ${Color.Black};
