@@ -40,6 +40,7 @@ const AdminComponent = ({ node, project, index }: Props) => {
 
       {isTabOpen && (
         <TabBody id="admininfo">
+          <hr />
           {node && project && (
             <div className="container">
               <AdminContent node={node} project={project} statuses={statuses} />
