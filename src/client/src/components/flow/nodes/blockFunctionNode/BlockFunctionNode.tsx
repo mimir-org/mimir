@@ -6,14 +6,12 @@ import { RootState } from "../../../../redux/store";
 import { Connector, Node, Edge } from "../../../../models";
 import { Size } from "../../../../compLibrary";
 import { IsLocation } from "../../helpers/common";
+import { NodeBox, ConnectMenu } from "../../../../compLibrary/blockView";
+import { ConnectMenuIcon } from "../../../../assets/icons/blockView";
 import {
   changeActiveConnector,
   removeEdge,
 } from "../../../../redux/store/project/actions";
-import {
-  TerminalsMenuFunctionIcon,
-  ConnectMenuIcon,
-} from "../../../../assets/icons/blockView";
 import {
   SetTerminalOrder,
   FilterTerminals,
@@ -30,11 +28,6 @@ import {
   SetMainConnectNodeSize,
   SetMainConnectNodeColor,
 } from "../../helpers/block/connectView";
-import {
-  NodeBox,
-  TerminalsMenu,
-  ConnectMenu,
-} from "../../../../compLibrary/blockView";
 import {
   addConnectNode,
   addMainNode,
@@ -138,15 +131,6 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
         width={data.width}
         length={data.length}
       >
-        <TerminalsMenu
-          visible={terminalButton}
-          parent={false}
-          onClick={() =>
-            Handlers.OnTerminalMenuClick(showTerminalMenu, terminalMenu)
-          }
-        >
-          <img src={TerminalsMenuFunctionIcon} alt="options" />
-        </TerminalsMenu>
         <ConnectMenu
           visible={connectButton && hasChildren}
           onClick={() =>
@@ -159,12 +143,16 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
         <p className="node-name">{data.label ?? data.name}</p>
 
         <TerminalsMenuComponent
+          node={data}
           isOpen={terminalMenu}
           list={sortedTerminals}
           width={data.width}
           isParent={false}
           isLocation={IsLocation(data)}
           onClick={onConnectorClick}
+          showMenuButton={terminalButton}
+          showTerminalMenu={showTerminalMenu}
+          terminalMenu={terminalMenu}
         />
 
         <ConnectViewComponent

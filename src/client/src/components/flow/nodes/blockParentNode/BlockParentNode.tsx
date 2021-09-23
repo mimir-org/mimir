@@ -6,18 +6,14 @@ import { Connector, Node, Edge } from "../../../../models";
 import { RootState } from "../../../../redux/store";
 import { Block } from "..";
 import { HandleComponent, TerminalsMenuComponent } from "../../block";
-import { IsAspectNode, IsLocation } from "../../helpers/common";
+import { IsLocation } from "../../helpers/common";
 import { Size } from "../../../../compLibrary";
-import { GetMenuIcon } from "./helpers";
-import { OnHover, OnMouseOut, OnMenuClick } from "./handlers";
+import { OnHover, OnMouseOut } from "./handlers";
+import { BlockMessageBox } from "../../../../compLibrary/blockView";
 import {
   changeActiveConnector,
   removeEdge,
 } from "../../../../redux/store/project/actions";
-import {
-  BlockMessageBox,
-  TerminalsMenu,
-} from "../../../../compLibrary/blockView";
 import {
   SetTerminalOrder,
   FilterTerminals,
@@ -94,22 +90,17 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
           isSplitView={isSplitView}
           isSelected={node.isBlockSelected}
         />
-        <TerminalsMenu
-          visible={terminalButton && !IsAspectNode(node)}
-          parent={true}
-          splitViewNode={false}
-          onClick={() => OnMenuClick(showTerminalMenu, terminalMenu)}
-        >
-          <img src={GetMenuIcon(node)} alt="options" />
-        </TerminalsMenu>
-
         <TerminalsMenuComponent
+          node={node}
           isOpen={terminalMenu}
           isParent={true}
           isLocation={IsLocation(node)}
           list={FilterTerminals(node, isSplitView)}
           width={isSplitView ? Size.SplitView_Width : Size.BlockView_Width}
           onClick={onConnectorClick}
+          showMenuButton={terminalButton}
+          showTerminalMenu={showTerminalMenu}
+          terminalMenu={terminalMenu}
         />
         <HandleComponent
           aspect={node.aspect}
@@ -135,24 +126,18 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
             isSplitView={isSplitView}
             isSelected={actualSplitNode.isBlockSelected}
           />
-          <TerminalsMenu
-            visible={terminalLocationButton && !IsAspectNode(splitViewNode)}
-            parent={true}
-            splitViewNode={true}
-            onClick={() =>
-              OnMenuClick(showTerminalLocationMenu, terminalLocationMenu)
-            }
-          >
-            <img src={GetMenuIcon(actualSplitNode)} alt="options" />
-          </TerminalsMenu>
-
           <TerminalsMenuComponent
+            node={actualSplitNode}
             isOpen={terminalLocationMenu}
             isParent={true}
             isLocation={true}
             list={FilterTerminals(actualSplitNode, isSplitView)}
             width={1350}
             onClick={onConnectorClick}
+            showMenuButton={terminalLocationButton}
+            showTerminalMenu={showTerminalLocationMenu}
+            terminalMenu={terminalLocationMenu}
+            splitViewNode={true}
           />
           <HandleComponent
             aspect={actualSplitNode.aspect}
