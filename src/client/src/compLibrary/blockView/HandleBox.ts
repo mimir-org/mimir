@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Position } from "react-flow-renderer";
 
+/** Styled component for the terminals displayed on a node */
 const HandleBox = styled.div`
   .react-flow__handle-block {
     position: absolute;
@@ -9,11 +10,17 @@ const HandleBox = styled.div`
 
     top: ${(props) =>
       props.position === Position.Left
-        ? `${props.input}%`
-        : props.position === Position.Right && `${props.output}%`};
+        ? props.input
+        : props.position === Position.Right && props.output}%;
 
     right: ${(props) => props.position === Position.Right && "-16px"};
-    left: ${(props) => props.position === Position.Left && "-16px"};
+
+    left: ${(props) =>
+      props.position === Position.Left && !props.splitView
+        ? "-16px"
+        : props.position === Position.Left && props.splitView
+        ? "704px"
+        : "unset"};
   }
 `;
 

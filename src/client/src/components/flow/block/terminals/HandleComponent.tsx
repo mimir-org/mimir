@@ -18,7 +18,7 @@ interface Props {
 }
 
 /**  Components for the terminals displayed on the nodes in BlockView.
- *   The component returns a list of terminals in form of a JSX Element.
+ *   The component returns a list of terminals in form of a Flow Handle element.
  */
 const HandleComponent = ({ aspect, terminals, splitView }: Props) => {
   let inputCount = 0;
@@ -40,6 +40,8 @@ const HandleComponent = ({ aspect, terminals, splitView }: Props) => {
             id={"handle-" + conn.id}
             position={GetHandlePosition(pos)}
             key={"key-" + conn.id}
+            splitView={splitView}
+            isLocation={IsLocationTerminal(conn)}
             visible={
               splitView
                 ? conn.visible
