@@ -14,13 +14,7 @@ const HandleBox = styled.div`
         : props.position === Position.Right && props.output}%;
 
     right: ${(props) => props.position === Position.Right && "-16px"};
-
-    left: ${(props) =>
-      props.position === Position.Left && !props.splitView
-        ? "-16px"
-        : props.position === Position.Left && props.splitView && props.parent
-        ? "704px"
-        : "unset"};
+    left: ${(props) => props.position === Position.Left && "-16px"};
   }
 `;
 

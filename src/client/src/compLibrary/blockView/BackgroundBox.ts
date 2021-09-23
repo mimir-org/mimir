@@ -14,7 +14,7 @@ const BackgroundBox = styled.div`
 
   left: ${(props) =>
     props.right
-      ? Size.BlockView_MarginLeft + Size.SplitView_Width + 20
+      ? Size.BlockView_MarginLeft + Size.SplitView_Width + 50
       : Size.BlockView_MarginLeft -
         Size.BlockView_BackgroundMargin}px !important;
 `;

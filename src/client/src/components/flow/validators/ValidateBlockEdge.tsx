@@ -37,7 +37,7 @@ const ValidateBlockEdge = (
     if (IsFunction(selectedNode)) {
       if (IsLocation(fromNode) || IsLocation(toNode)) return false;
       //   if (selectedNode === toNode || selectedNode === fromNode) return false;
-      if (!IsChildOf(fromNode, selectedNode)) return false;
+      //   if (!IsChildOf(fromNode, selectedNode)) return false;
     }
     return true;
   }

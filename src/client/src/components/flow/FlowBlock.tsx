@@ -13,6 +13,7 @@ import { ProjectState } from "../../redux/store/project/types";
 import { LibraryState } from "../../redux/store/library/types";
 import { GetBlockEdgeTypes, IsBlockView, OnBlockClick } from "./helpers/block";
 import { CreateBlockElements } from "./creators";
+import { SetPanelHeight } from "../../modules/inspector/helpers";
 import {
   useOnConnect,
   useOnDrop,
@@ -43,7 +44,6 @@ import {
   BackgroundVariant,
   SPLITVIEW_POSITION,
 } from "../../models/project";
-import { SetPanelHeight } from "../../modules/inspector/helpers";
 
 const FlowBlock = () => {
   const dispatch = useDispatch();

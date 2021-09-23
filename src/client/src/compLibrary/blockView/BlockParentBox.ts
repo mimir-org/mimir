@@ -18,10 +18,10 @@ const BlockParentBox = styled.div`
   width: ${(props) =>
     props.splitView ? Size.SplitView_Width : Size.BlockView_Width}px;
 
-  left: ${(props) =>
+  /* left: ${(props) =>
     props.location &&
     props.splitView &&
-    Size.SplitView_Width + Size.BlockView_BackgroundMargin + 20}px;
+    Size.SplitView_Width + Size.BlockView_BackgroundMargin + 20}px; */
 
   .banner {
     position: absolute;

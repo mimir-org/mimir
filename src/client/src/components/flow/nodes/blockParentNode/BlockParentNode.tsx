@@ -27,8 +27,6 @@ import {
 const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const [terminalMenu, showTerminalMenu] = useState(false);
   const [terminalButton, showTerminalButton] = useState(false);
-  const [terminalLocationMenu, showTerminalLocationMenu] = useState(false);
-  const [terminalLocationButton, showTerminalLocationButton] = useState(false);
   const dispatch = useDispatch();
 
   const nodes = useSelector<RootState>(
@@ -47,7 +45,6 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
     (state) => state.splitView.node
   ) as Node;
 
-  const actualSplitNode = nodes.find((x) => x.id === splitViewNode?.id);
   const node = nodes.find((x) => x.id === data.id);
 
   // Enforce size change of node
@@ -105,7 +102,6 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
           aspect={node.aspect}
           terminals={FilterTerminals(node, isSplitView)}
           splitView={isSplitView}
-          parent={true}
         />
       </div>
 
@@ -113,39 +109,6 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         <BlockMessageBox>
           <p>{TextResources.BlockView_Select_Message}</p>
         </BlockMessageBox>
-      )}
-
-      {splitViewNode && (
-        <div
-          onMouseOver={() => OnHover(showTerminalLocationButton)}
-          onMouseOut={() => OnMouseOut(showTerminalLocationButton)}
-        >
-          <Block
-            node={actualSplitNode}
-            isLocation={true}
-            isSplitView={true}
-            isSelected={actualSplitNode.isBlockSelected}
-          />
-          <TerminalsComponent
-            node={actualSplitNode}
-            isMenuOpen={terminalLocationMenu}
-            isParent={true}
-            isLocation={true}
-            list={FilterTerminals(actualSplitNode, isSplitView)}
-            width={Size.BlockView_Width + Size.BlockView_MarginLeft}
-            onClick={onConnectorClick}
-            menuButton={terminalLocationButton}
-            showTerminalMenu={showTerminalLocationMenu}
-            terminalMenu={terminalLocationMenu}
-            isSplitView={isSplitView}
-          />
-          <HandleComponent
-            aspect={actualSplitNode.aspect}
-            terminals={FilterTerminals(actualSplitNode, isSplitView)}
-            splitView={true}
-            parent={true}
-          />
-        </div>
       )}
     </>
   );
