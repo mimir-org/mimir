@@ -1,11 +1,11 @@
-import { Node, Connector } from "../../../models";
-import { ConnectMenuIcon } from "../../../assets/icons/blockView";
-import { OnConnectMenuClick } from "../nodes/blockFunctionNode/handlers";
+import { Node, Connector } from "../../../../models";
+import { ConnectMenuIcon } from "../../../../assets/icons/blockView";
+import { OnConnectMenuClick } from "./handlers";
 import {
   ConnectViewBox,
   ConnectViewMenu,
   ConnectViewElement,
-} from "../../../compLibrary/blockView";
+} from "../../../../compLibrary/blockView";
 
 interface Props {
   isMenuOpen: boolean;

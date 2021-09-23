@@ -2,7 +2,7 @@ import { RootState } from "../../../../redux/store";
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { NodeBox } from "../../../../compLibrary/blockView";
-import { HandleComponent, TerminalsComponent } from "../../block";
+import { HandleComponent, TerminalsComponent } from "../../block/terminals";
 import { changeActiveConnector } from "../../../../redux/store/project/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { Connector } from "../../../../models";

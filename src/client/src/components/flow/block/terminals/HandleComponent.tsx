@@ -1,7 +1,7 @@
-import { Aspect, Connector } from "../../../models";
-import { HandleBox } from "../../../compLibrary/blockView";
+import { Aspect, Connector } from "../../../../models";
+import { HandleBox } from "../../../../compLibrary/blockView";
 import { Handle } from "react-flow-renderer";
-import { GetBlockHandleType } from "../helpers/block";
+import { GetBlockHandleType } from "../../helpers/block";
 import {
   GetConnectorIcon,
   GetHandlePosition,
@@ -9,7 +9,7 @@ import {
   IsOutputTerminal,
   IsLocationTerminal,
   SetTerminalYPos,
-} from "../helpers/common";
+} from "../../helpers/common";
 
 interface Props {
   aspect: Aspect;

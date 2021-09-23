@@ -1,16 +1,16 @@
-import { Connector, Node } from "../../../models";
-import { GetMenuIcon } from "../nodes/blockParentNode/helpers";
-import { OnMenuClick } from "../nodes/blockParentNode/handlers";
+import { Connector, Node } from "../../../../models";
+import { GetMenuIcon } from "../../nodes/blockParentNode/helpers";
+import { OnMenuClick } from "../../nodes/blockParentNode/handlers";
 import {
   TerminalsMenu,
   TerminalsElement,
   TerminalsBox,
-} from "../../../compLibrary/blockView";
+} from "../../../../compLibrary/blockView";
 import {
   GetConnectorIcon,
   GetConnectorName,
   IsAspectNode,
-} from "../helpers/common";
+} from "../../helpers/common";
 
 interface Props {
   node: Node;

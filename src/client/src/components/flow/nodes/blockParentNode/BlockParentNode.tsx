@@ -5,7 +5,7 @@ import { TextResources } from "../../../../assets/text";
 import { Connector, Node, Edge } from "../../../../models";
 import { RootState } from "../../../../redux/store";
 import { Block } from "..";
-import { HandleComponent, TerminalsComponent } from "../../block";
+import { HandleComponent, TerminalsComponent } from "../../block/terminals";
 import { IsLocation } from "../../helpers/common";
 import { Size } from "../../../../compLibrary";
 import { OnHover, OnMouseOut } from "./handlers";
