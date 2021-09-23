@@ -84,7 +84,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
           node={node}
           isLocation={IsLocation(node)}
           isSplitView={isSplitView}
-          isSelected={node.isBlockSelected}
+          isSelected={node?.isBlockSelected}
         />
         <TerminalsComponent
           node={node}
