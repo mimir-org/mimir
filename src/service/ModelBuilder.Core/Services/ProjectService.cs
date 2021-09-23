@@ -476,22 +476,8 @@ namespace Mb.Core.Services
             node.IsLockedBy = node.IsLocked ? userName : null;
 
             var nodeAttributes = allAttributesInProject.Where(x => x.NodeId == node.Id);
-
-            foreach (var nodeAttribute in nodeAttributes)
-            {
-                if (nodeAttribute == null)
-                    continue;
-
-                if (nodeAttribute.IsLocked == node.IsLocked)
-                    continue;
-
-                if (nodeAttribute.IsLocked && nodeAttribute.IsLockedBy != userName)
-                    continue;
-
-                nodeAttribute.IsLocked = node.IsLocked;
-                nodeAttribute.IsLockedBy = nodeAttribute.IsLocked ? userName : null;
-            }
-
+            
+            LockUnlockAttributes(nodeAttributes, node, userName);
             LockUnlockNodesAndAttributesRecursive(node, allNodesInProject, allAttributesInProject, allEdgesInProject, userName);
 
             await _nodeRepository.SaveAsync();
@@ -596,29 +582,33 @@ namespace Mb.Core.Services
                 {
                     childNode.IsLocked = parentNode.IsLocked;
                     childNode.IsLockedBy = childNode.IsLocked ? userName : null;
-
+                    
                     var nodeAttributes = allAttributesInProject.Where(x => x.NodeId == childNode.Id);
-
-                    if(!nodeAttributes.Any())
-                        continue;
-
-                    foreach (var nodeAttribute in nodeAttributes)
-                    {
-                        if(nodeAttribute == null)
-                            continue;
-
-                        if(nodeAttribute.IsLocked == childNode.IsLocked)
-                            continue;
-
-                        if(nodeAttribute.IsLocked && nodeAttribute.IsLockedBy != userName)
-                            continue;
-
-                        nodeAttribute.IsLocked = childNode.IsLocked;
-                        nodeAttribute.IsLockedBy = nodeAttribute.IsLocked ? userName : null;
-                    }
+                    LockUnlockAttributes(nodeAttributes, childNode, userName);
                 }
 
                 LockUnlockNodesAndAttributesRecursive(childNode, allNodesInProject, allAttributesInProject, allEdgesInProject, userName);
+            }
+        }
+
+        private void LockUnlockAttributes(IQueryable<Attribute> attributes, Node node, string userName)
+        {
+            if (!attributes.Any())
+                return;
+
+            foreach (var nodeAttribute in attributes)
+            {
+                if (nodeAttribute == null)
+                    continue;
+
+                if (nodeAttribute.IsLocked == node.IsLocked)
+                    continue;
+
+                if (nodeAttribute.IsLocked && nodeAttribute.IsLockedBy != userName)
+                    continue;
+
+                nodeAttribute.IsLocked = node.IsLocked;
+                nodeAttribute.IsLockedBy = nodeAttribute.IsLocked ? userName : null;
             }
         }
 
