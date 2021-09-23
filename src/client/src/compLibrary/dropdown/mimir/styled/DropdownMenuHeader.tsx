@@ -14,7 +14,7 @@ const DropdownMenuHeader = styled.div`
   color: ${Color.Black};
 
   p {
-    padding: 10px;
+    padding: 5px;
   }
 
   img {

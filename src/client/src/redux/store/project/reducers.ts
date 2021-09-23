@@ -32,6 +32,8 @@ import {
   EXPORT_PROJECT_TO_FILE,
   EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR,
   IMPORT_PROJECT,
+  LOCK_UNLOCK_NODE,
+  LOCK_UNLOCK_ATTRIBUTE,
   ProjectActionTypes,
   ProjectState,
 } from "./types";
@@ -497,6 +499,44 @@ export function projectReducer(
           : state.apiError,
       };
 
+    case LOCK_UNLOCK_NODE:
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          nodes: state.project.nodes.map((x) =>
+            x.id === action.payload.id
+              ? {
+                  ...x,
+                  isLocked: action.payload.isLocked,
+                }
+              : x
+          ),
+        },
+      };
+
+    case LOCK_UNLOCK_ATTRIBUTE:
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          nodes: state.project.nodes.map((x) =>
+            x.id === action.payload.nodeId
+              ? {
+                  ...x,
+                  attributes: x.attributes.map((attribute) =>
+                    attribute.id === action.payload.id
+                      ? {
+                          ...attribute,
+                          isLocked: action.payload.isLocked,
+                        }
+                      : attribute
+                  ),
+                }
+              : x
+          ),
+        },
+      };
     default:
       return state;
   }

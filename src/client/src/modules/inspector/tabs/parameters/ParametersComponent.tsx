@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { CloseParameterIcon } from "../../../../assets/icons/common";
 import { TextResources } from "../../../../assets/text";
 import { Dropdown } from "./styled/dropdown/parameter";
-import { Node } from "../../../../models";
+import { Attribute, Node } from "../../../../models";
 import { GetParametersColor } from "./helpers";
 import { EntityDropdown } from "./styled/dropdown/entity";
 import { Menu, Body, Box, Header, Entity } from "./styled";
@@ -14,6 +14,7 @@ import {
   OnChangeParameterValue,
 } from "./handlers";
 import Parameter from "./Parameter";
+import { lockUnlockAttribute } from "../../../../redux/store/project/actions";
 
 interface Props {
   node: Node;
@@ -43,7 +44,9 @@ const ParametersComponent = ({ node }: Props) => {
     },
   ];
 
-  const onLockParameter = () => {};
+  const onLockParameter = (attribute: Attribute, isLocked: boolean) => {
+    dispatch(lockUnlockAttribute(attribute, node.id, isLocked));
+  };
 
   const onCloseParameter = () => {};
 
@@ -72,7 +75,7 @@ const ParametersComponent = ({ node }: Props) => {
       {hasAttributes &&
         filteredAttributes.map((attribute) => {
           return (
-            <Body key={attribute.key}>
+            <Body key={attribute.id}>
               <Entity width={180}>
                 <Box color={GetParametersColor()} id="ParametersBox">
                   <div className="icon">
@@ -97,6 +100,7 @@ const ParametersComponent = ({ node }: Props) => {
                 <Parameter
                   key={param.id}
                   attribute={attribute}
+                  isNodeLocked={node.isLocked}
                   onChange={(id, value, unit, nodeId) =>
                     OnChangeParameterValue(id, value, unit, nodeId, dispatch)
                   }

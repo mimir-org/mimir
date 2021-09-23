@@ -3,6 +3,7 @@ import {
   HelpIcon,
   LockOpenIcon,
   CloseIcon,
+  LockClosedIcon,
 } from "../../../../assets/icons/common";
 import { FontSize } from "../../../../compLibrary";
 import { GetParametersColor } from "./helpers";
@@ -15,19 +16,31 @@ import { useState } from "react";
 
 interface Props {
   attribute: Attribute;
+  isNodeLocked: boolean;
   onChange: (id: string, value: string, unit: string, nodeId: string) => void;
-  onLock: () => void;
+  onLock: (attribute: Attribute, isLocked: boolean) => void;
   onClose: () => void;
 }
 
-function Parameter({ attribute, onLock, onClose, onChange }: Props) {
+function Parameter({
+  attribute,
+  isNodeLocked,
+  onLock,
+  onClose,
+  onChange,
+}: Props) {
   const [value, setValue] = useState(attribute.value ?? "");
   const [unit, setUnit] = useState(attribute.unit ?? attribute.units[0]);
+
+  const isDisabled = () => isNodeLocked || attribute.isLocked;
 
   return (
     <Entity width={255}>
       <ParameterBox>
-        <ParameterHeader color={GetParametersColor()}>
+        <ParameterHeader
+          color={GetParametersColor()}
+          isLocked={attribute.isLocked}
+        >
           {false && (
             <img src={WarningIcon} className="warningIcon" alt="icon" />
           )}
@@ -41,11 +54,12 @@ function Parameter({ attribute, onLock, onClose, onChange }: Props) {
               onClick={() => null}
             />
             <img
-              src={LockOpenIcon}
-              className="parameterIcon"
+              src={attribute.isLocked ? LockClosedIcon : LockOpenIcon}
+              className="parameterIcon lockIcon"
               alt="icon"
-              onClick={onLock}
+              onClick={() => onLock(attribute, !attribute.isLocked)}
             />
+
             <img
               src={CloseIcon}
               className="parameterIcon"
@@ -59,6 +73,7 @@ function Parameter({ attribute, onLock, onClose, onChange }: Props) {
           <input
             name="parameterInput"
             className="parameterInput"
+            disabled={isDisabled()}
             value={value}
             type="text"
             onChange={(e) => setValue(e.target.value)}
@@ -70,6 +85,7 @@ function Parameter({ attribute, onLock, onClose, onChange }: Props) {
             <CompDropdown
               label="hello"
               items={attribute.units}
+              disabled={isDisabled()}
               keyProp="id"
               valueProp="value"
               onChange={(_unit) => {

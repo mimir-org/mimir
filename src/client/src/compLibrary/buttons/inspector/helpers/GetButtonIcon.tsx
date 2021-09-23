@@ -1,12 +1,12 @@
 import {
   DeleteIcon,
-  LockIcon,
   ValidateIcon,
+  LockOpenIcon,
 } from "../../../../assets/icons/common";
 
 const GetButtonIcon = (type: string) => {
   if (type === "delete") return DeleteIcon;
-  if (type === "lock") return LockIcon;
+  if (type === "lock") return LockOpenIcon;
   if (type === "validate") return ValidateIcon;
 };
 

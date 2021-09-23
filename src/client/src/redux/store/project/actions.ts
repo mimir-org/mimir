@@ -1,4 +1,4 @@
-import { Node, Edge, Project } from "../../../models";
+import { Node, Edge, Project, Attribute } from "../../../models";
 import { ProjectAm } from "../../sagas/project/ConvertProject";
 import {
   SAVE_PROJECT,
@@ -26,6 +26,8 @@ import {
   SET_ACTIVE_EDGE,
   EXPORT_PROJECT_TO_FILE,
   IMPORT_PROJECT,
+  LOCK_UNLOCK_NODE,
+  LOCK_UNLOCK_ATTRIBUTE,
 } from "./types";
 
 export function save(project: Project): ProjectActionTypes {
@@ -263,5 +265,35 @@ export function importProjectAction(project: ProjectAm) {
   return {
     type: IMPORT_PROJECT,
     payload: project,
+  };
+}
+
+export function lockUnlockNode(
+  node: Node,
+  project: Project,
+  isLocked: boolean
+) {
+  return {
+    type: LOCK_UNLOCK_NODE,
+    payload: {
+      id: node.id,
+      projectId: project.id,
+      isLocked,
+    },
+  };
+}
+
+export function lockUnlockAttribute(
+  attribute: Attribute,
+  nodeId: string,
+  isLocked: boolean
+) {
+  return {
+    type: LOCK_UNLOCK_ATTRIBUTE,
+    payload: {
+      id: attribute.id,
+      nodeId,
+      isLocked,
+    },
   };
 }
