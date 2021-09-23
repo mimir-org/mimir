@@ -1,21 +1,12 @@
 import styled from "styled-components";
-import { Color } from "..";
 
+/** Styled component that displays the button for showing the ConnectViewMenu. */
 const ConnectViewBox = styled.div`
-  visibility: ${(props: { visible: boolean }) => !props.visible && "hidden"};
-  border: 2px solid ${Color.FunctionTab};
-  background-color: ${Color.White};
-  border-radius: 5px;
-  height: auto;
+  visibility: ${(props) => !props.visible && "hidden"};
   position: absolute;
-  right: ${(props) => props.width + 4}px;
-  top: -3px;
-  z-index: 1;
-
-  .button {
-    position: absolute;
-    right: 3px;
-  }
+  left: -1px;
+  top: 3px;
+  cursor: pointer;
 `;
 
 export default ConnectViewBox;

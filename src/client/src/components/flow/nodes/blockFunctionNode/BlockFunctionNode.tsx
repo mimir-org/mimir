@@ -1,4 +1,4 @@
-import * as Handlers from "./handlers";
+import { OnHover, OnMouseOut } from "./handlers";
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,8 +6,7 @@ import { RootState } from "../../../../redux/store";
 import { Connector, Node, Edge } from "../../../../models";
 import { Size } from "../../../../compLibrary";
 import { IsLocation } from "../../helpers/common";
-import { NodeBox, ConnectMenu } from "../../../../compLibrary/blockView";
-import { ConnectMenuIcon } from "../../../../assets/icons/blockView";
+import { NodeBox } from "../../../../compLibrary/blockView";
 import {
   changeActiveConnector,
   removeEdge,
@@ -126,23 +125,14 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
       <NodeBox
         id={"BlockFunctionNode-" + data.id}
         onMouseOver={() =>
-          Handlers.OnHover(showTerminalButton, showConnectButton, data.id)
+          OnHover(showTerminalButton, showConnectButton, data.id)
         }
         onMouseOut={() =>
-          Handlers.OnMouseOut(showTerminalButton, showConnectButton, data.id)
+          OnMouseOut(showTerminalButton, showConnectButton, data.id)
         }
         width={data.width}
         length={data.length}
       >
-        <ConnectMenu
-          visible={connectButton && hasChildren}
-          onClick={() =>
-            Handlers.OnConnectMenuClick(showConnectMenu, connectMenu)
-          }
-        >
-          <img src={ConnectMenuIcon} alt="options" />
-        </ConnectMenu>
-
         <p className="node-name">{data.label ?? data.name}</p>
 
         <TerminalsComponent
@@ -164,6 +154,10 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
           handleClick={onConnectViewClick}
           isChecked={isConnectorChecked}
           width={data.width}
+          hasChildren={hasChildren}
+          connectButton={connectButton}
+          showConnectMenu={showConnectMenu}
+          connectMenu={connectMenu}
         />
       </NodeBox>
 
