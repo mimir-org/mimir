@@ -18,7 +18,7 @@ import {
 
 interface Props {
   node: Node;
-  isOpen: boolean;
+  isMenuOpen: boolean;
   list: Connector[];
   width: number;
   isParent: boolean;
@@ -32,7 +32,7 @@ interface Props {
 
 const TerminalsComponent = ({
   node,
-  isOpen,
+  isMenuOpen,
   list,
   width,
   isParent,
@@ -53,9 +53,9 @@ const TerminalsComponent = ({
       <img src={GetMenuIcon(node)} alt="options" />
     </TerminalsBox>
 
-    {isOpen && (
+    {isMenuOpen && (
       <TerminalsMenu
-        visible={isOpen}
+        visible={isMenuOpen}
         width={width}
         isParent={isParent}
         isLocation={isLocation}

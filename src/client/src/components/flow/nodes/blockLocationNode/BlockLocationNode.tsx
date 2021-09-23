@@ -14,6 +14,10 @@ import {
   FindNodeByDataId,
 } from "../../helpers/block";
 
+/** Component for a loaction child node in BlockView.
+ *  BlockLocationNode returns a node with the styling and functionality of the Location Aspect
+ */
+
 const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
   const [terminalButton, showTerminalButton] = useState(false);
@@ -52,7 +56,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
         <p className="node-name">{data.label ?? data.name}</p>
         <TerminalsComponent
           node={data}
-          isOpen={terminalMenu}
+          isMenuOpen={terminalMenu}
           list={sortedTerminals}
           width={data.width}
           isParent={false}

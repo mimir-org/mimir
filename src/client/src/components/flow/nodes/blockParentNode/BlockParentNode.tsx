@@ -92,7 +92,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         />
         <TerminalsComponent
           node={node}
-          isOpen={terminalMenu}
+          isMenuOpen={terminalMenu}
           isParent={true}
           isLocation={IsLocation(node)}
           list={FilterTerminals(node, isSplitView)}
@@ -128,7 +128,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
           />
           <TerminalsComponent
             node={actualSplitNode}
-            isOpen={terminalLocationMenu}
+            isMenuOpen={terminalLocationMenu}
             isParent={true}
             isLocation={true}
             list={FilterTerminals(actualSplitNode, isSplitView)}
