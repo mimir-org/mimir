@@ -3,7 +3,6 @@ import { Color } from "..";
 
 /** Styled component that displays the drop-down menu for a the ConnectViewMenu. */
 const ConnectViewMenu = styled.div`
-  visibility: ${(props: { visible: boolean }) => !props.visible && "hidden"};
   border: 2px solid ${Color.FunctionTab};
   background-color: ${Color.White};
   border-radius: 5px;

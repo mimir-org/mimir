@@ -149,7 +149,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
         />
 
         <ConnectViewComponent
-          isOpen={connectMenu}
+          isMenuOpen={connectMenu}
           list={connectChildren}
           handleClick={onConnectViewClick}
           isChecked={isConnectorChecked}

@@ -8,7 +8,7 @@ import {
 } from "../../../compLibrary/blockView";
 
 interface Props {
-  isOpen: boolean;
+  isMenuOpen: boolean;
   list: (Node | Connector)[];
   handleClick: any;
   isChecked?: any;
@@ -23,7 +23,7 @@ interface Props {
  *  The component returns a drop-down menu where you can select the children nodes.
  */
 const ConnectViewComponent = ({
-  isOpen,
+  isMenuOpen,
   list,
   handleClick,
   isChecked,
@@ -40,8 +40,9 @@ const ConnectViewComponent = ({
     >
       <img src={ConnectMenuIcon} alt="options" />
     </ConnectViewBox>
-    {isOpen && (
-      <ConnectViewMenu visible={isOpen} width={width}>
+
+    {isMenuOpen && (
+      <ConnectViewMenu width={width}>
         {list.map((node: Node) => {
           return (
             <ConnectViewElement key={node.id}>
