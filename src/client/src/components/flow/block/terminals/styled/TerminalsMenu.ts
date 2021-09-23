@@ -12,8 +12,8 @@ const TerminalsMenu = styled.div`
   width: max-content;
   min-width: 200px;
   position: absolute;
-  left: ${(props) => (props.isParent ? props.width + 5 : props.width + 2)}px;
-  top: ${(props) => (props.isParent ? "-1px" : "-2px")};
+  left: ${(props) => (props.isParent ? props.width + 5 : props.width + 3)}px;
+  top: ${(props) => (props.isParent ? "-1px" : "-3px")};
   z-index: 2;
 
   .button {

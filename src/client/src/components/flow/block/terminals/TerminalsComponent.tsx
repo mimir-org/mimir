@@ -41,7 +41,6 @@ const TerminalsComponent = ({
   <>
     <TerminalsBox
       visible={menuButton && !IsAspectNode(node)}
-      parent={isParent}
       isSplitView={isSplitView}
       onClick={() => OnTerminalMenuClick(showTerminalMenu, terminalMenu)}
     >
