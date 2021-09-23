@@ -150,7 +150,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
           isParent={false}
           isLocation={IsLocation(data)}
           onClick={onConnectorClick}
-          showMenuButton={terminalButton}
+          menuButton={terminalButton}
           showTerminalMenu={showTerminalMenu}
           terminalMenu={terminalMenu}
         />

@@ -23,7 +23,7 @@ interface Props {
   width: number;
   isParent: boolean;
   isLocation: boolean;
-  showMenuButton: boolean;
+  menuButton: boolean;
   showTerminalMenu: any;
   terminalMenu: boolean;
   splitViewNode?: boolean;
@@ -37,7 +37,7 @@ const TerminalsComponent = ({
   width,
   isParent,
   isLocation,
-  showMenuButton,
+  menuButton,
   showTerminalMenu,
   terminalMenu,
   splitViewNode,
@@ -45,7 +45,7 @@ const TerminalsComponent = ({
 }: Props) => (
   <>
     <TerminalsBox
-      visible={showMenuButton && !IsAspectNode(node)}
+      visible={menuButton && !IsAspectNode(node)}
       parent={isParent}
       splitViewNode={splitViewNode}
       onClick={() => OnMenuClick(showTerminalMenu, terminalMenu)}
