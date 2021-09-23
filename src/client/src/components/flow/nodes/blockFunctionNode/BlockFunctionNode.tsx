@@ -18,7 +18,7 @@ import {
   FindAllEdges,
 } from "../../helpers/block";
 import {
-  TerminalsMenuComponent,
+  TerminalsComponent,
   ConnectViewComponent,
   HandleComponent,
 } from "../../block";
@@ -142,7 +142,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
 
         <p className="node-name">{data.label ?? data.name}</p>
 
-        <TerminalsMenuComponent
+        <TerminalsComponent
           node={data}
           isOpen={terminalMenu}
           list={sortedTerminals}

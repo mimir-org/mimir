@@ -5,7 +5,7 @@ import { TextResources } from "../../../../assets/text";
 import { Connector, Node, Edge } from "../../../../models";
 import { RootState } from "../../../../redux/store";
 import { Block } from "..";
-import { HandleComponent, TerminalsMenuComponent } from "../../block";
+import { HandleComponent, TerminalsComponent } from "../../block";
 import { IsLocation } from "../../helpers/common";
 import { Size } from "../../../../compLibrary";
 import { OnHover, OnMouseOut } from "./handlers";
@@ -90,7 +90,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
           isSplitView={isSplitView}
           isSelected={node.isBlockSelected}
         />
-        <TerminalsMenuComponent
+        <TerminalsComponent
           node={node}
           isOpen={terminalMenu}
           isParent={true}
@@ -126,7 +126,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
             isSplitView={isSplitView}
             isSelected={actualSplitNode.isBlockSelected}
           />
-          <TerminalsMenuComponent
+          <TerminalsComponent
             node={actualSplitNode}
             isOpen={terminalLocationMenu}
             isParent={true}

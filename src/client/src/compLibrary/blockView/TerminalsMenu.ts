@@ -1,12 +1,25 @@
 import styled from "styled-components";
+import { Color } from "..";
 
 const TerminalsMenu = styled.div`
-  visibility: ${(props) => !props.visible && "hidden"};
+  visibility: ${(props: { visible: boolean }) => !props.visible && "hidden"};
+  border: 2px solid;
+  border-color: ${(props) =>
+    props.isLocation ? Color.LocationTab : Color.FunctionTab};
+  background-color: ${Color.White};
+  border-radius: 5px;
+  height: auto;
+  width: max-content;
+  min-width: 200px;
   position: absolute;
-  right: ${(props) => (props.splitViewNode ? "-701px" : "-3px")};
-  top: ${(props) => (props.parent ? "6px" : "-1px")};
-  cursor: pointer;
-  z-index: 1;
+  left: ${(props) => (props.isParent ? props.width + 5 : props.width + 2)}px;
+  top: ${(props) => (props.isParent ? "-1px" : "-2px")};
+  z-index: 2;
+
+  .button {
+    position: absolute;
+    right: 8px;
+  }
 `;
 
 export default TerminalsMenu;
