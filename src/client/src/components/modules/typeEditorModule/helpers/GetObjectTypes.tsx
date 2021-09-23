@@ -1,11 +1,22 @@
-import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
-import { IsFunction, IsLocation } from "./";
+import { DropDownItem } from "../../../../compLibrary/dropdown/Dropdown";
+import { ObjectType } from "../../../../models";
 
-const GetObjectTypes = (state: TypeEditorState) => {
-  const aspect = state.createLibraryType.aspect;
+const stringIsNumber = (value) => isNaN(Number(value)) === false;
 
-  if (IsFunction(aspect)) return Object.entries(state.objectTypes);
-  else if (IsLocation(aspect)) return Object.entries(state.locationTypes);
+const GetObjectTypes = (): DropDownItem[] => {
+  const categories = [] as DropDownItem[];
+  categories.push({ name: "ObjectType", items: [] } as DropDownItem);
+
+  Object.keys(ObjectType)
+    .filter(stringIsNumber)
+    .forEach((item) => {
+      categories[0].items.push({
+        id: item,
+        name: ObjectType[item],
+      });
+    });
+
+  return categories;
 };
 
 export default GetObjectTypes;
