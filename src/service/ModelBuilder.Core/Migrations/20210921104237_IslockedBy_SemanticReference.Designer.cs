@@ -4,14 +4,16 @@ using Mb.Models.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Mb.Core.Migrations
 {
     [DbContext(typeof(ModelBuilderDbContext))]
-    partial class ModelBuilderDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210921104237_IslockedBy_SemanticReference")]
+    partial class IslockedBy_SemanticReference
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -504,14 +506,6 @@ namespace Mb.Core.Migrations
                     b.Property<decimal?>("Cost")
                         .HasColumnType("decimal(10,4)")
                         .HasColumnName("Cost");
-
-                    b.Property<DateTime?>("Created")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("Created");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("CreatedBy");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)")

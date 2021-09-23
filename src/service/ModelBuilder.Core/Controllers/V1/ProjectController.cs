@@ -358,5 +358,117 @@ namespace Mb.Core.Controllers.V1
                 return StatusCode(500, "Internal Server Error");
             }
         }
+
+        /// <summary>
+        /// Locks or unlocks a node (including all attributes on the node) and all children nodes and attributes
+        /// </summary>
+        /// <param name="lockUnlockAm"></param>
+        /// <returns>Status204NoContent</returns>
+        [HttpPost("node/lockUnlock")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> LockUnlockNode([FromBody] LockUnlockNodeAm lockUnlockAm)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                await _projectService.LockUnlockNode(lockUnlockAm);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
+        /// Locks or unlock an attribute
+        /// </summary>
+        /// <param name="lockUnlockAttributeAm"></param>
+        /// <returns>Status204NoContent</returns>
+        [HttpPost("attribute/lockUnlock")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> LockUnlockAttribute([FromBody] LockUnlockAttributeAm lockUnlockAttributeAm)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                await _projectService.LockUnlockAttribute(lockUnlockAttributeAm);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
+        /// Returns a list of all locked nodes id's
+        /// If param 'projectId' is null all locked nodes in the database will be returned
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns>List of locked node id></returns>
+        [HttpGet("node/locked")]
+        [ProducesResponseType(typeof(ICollection<string>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetLockedNodes(string projectId)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                var result = await _projectService.GetLockedNodes(projectId);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
+        /// Returns a list of all locked attributes id's
+        /// If param 'projectId' is null all locked attributes in the database will be returned
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns>List of locked attribute id></returns>
+        [HttpGet("attribute/locked")]
+        [ProducesResponseType(typeof(ICollection<string>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetLockedAttributes(string projectId)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                var result = await _projectService.GetLockedAttributes(projectId);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
     }
 }
