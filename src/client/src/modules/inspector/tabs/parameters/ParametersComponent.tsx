@@ -45,7 +45,8 @@ const ParametersComponent = ({ node }: Props) => {
   ];
 
   const onLockParameter = (attribute: Attribute, isLocked: boolean) => {
-    dispatch(lockUnlockAttribute(attribute, node.id, isLocked));
+    if (!node.isLocked)
+      dispatch(lockUnlockAttribute(attribute, node.id, isLocked));
   };
 
   const onCloseParameter = () => {};

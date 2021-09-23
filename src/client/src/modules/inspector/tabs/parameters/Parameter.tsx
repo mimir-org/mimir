@@ -39,7 +39,7 @@ function Parameter({
       <ParameterBox>
         <ParameterHeader
           color={GetParametersColor()}
-          isLocked={attribute.isLocked}
+          isNodeLocked={isNodeLocked}
         >
           {false && (
             <img src={WarningIcon} className="warningIcon" alt="icon" />
@@ -54,7 +54,7 @@ function Parameter({
               onClick={() => null}
             />
             <img
-              src={attribute.isLocked ? LockClosedIcon : LockOpenIcon}
+              src={isDisabled() ? LockClosedIcon : LockOpenIcon}
               className="parameterIcon lockIcon"
               alt="icon"
               onClick={() => onLock(attribute, !attribute.isLocked)}

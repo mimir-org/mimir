@@ -27,6 +27,11 @@ const Header = styled.div`
     padding-left: 5px;
     cursor: pointer;
   }
+
+  .lockIcon {
+    cursor: ${(props: { isNodeLocked: boolean }) =>
+      props.isNodeLocked ? "default" : "pointer"};
+  }
 `;
 
 export default Header;

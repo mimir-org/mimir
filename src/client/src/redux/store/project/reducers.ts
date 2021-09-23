@@ -509,6 +509,9 @@ export function projectReducer(
               ? {
                   ...x,
                   isLocked: action.payload.isLocked,
+                  attributes: x.attributes.map((attribute) => {
+                    return { ...attribute, isLocked: action.payload.isLocked };
+                  }),
                 }
               : x
           ),
