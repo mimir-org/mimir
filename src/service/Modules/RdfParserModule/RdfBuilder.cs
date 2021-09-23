@@ -34,6 +34,7 @@ namespace RdfParserModule
                 {"cw", "http://example.com/rds/cw#"},
                 {"og1", "http://example.com/rds/og1#"},
                 {"og2", "http://example.com/rds/og2#"},
+                {"og3", "http://example.com/rds/og3#"},
                 {"ps", "http://example.com/rds/ps#"},
                 {"rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#"},
                 {"rdfs", "http://www.w3.org/2000/01/rdf-schema#"},
@@ -102,18 +103,47 @@ namespace RdfParserModule
 
             foreach (Node node in _project.Nodes)
             {
-                IUriNode nodeId = g.CreateUriNode("mimir:" + node.Id);
+                IUriNode nodeId = g.CreateUriNode("mimir:" + node.Id);              
 
-                g.Assert(new Triple(nodeId, label, g.CreateLiteralNode(node.Label)));
 
                 if (node.IsRoot)
                 {
                     g.Assert(new Triple(nodeId, g.CreateUriNode("imf:isAspectOf"),
                         g.CreateUriNode("mimir:" + node.MasterProjectId)));
 
-                    g.Assert(new Triple(nodeId, label, g.CreateLiteralNode("Project " + node.Aspect)));
+                    g.Assert(new Triple(nodeId, label, g.CreateLiteralNode(_project.Name + " " + node.Aspect)));
+
+                    continue;
                 }
                 
+                g.Assert(new Triple(nodeId, label, g.CreateLiteralNode(node.Rds + " " +node.Label)));
+
+                var hasTerminal = g.CreateUriNode("imf:hasTerminal");
+                var isTerminal = g.CreateUriNode("imf:Terminal");
+
+                foreach (Connector connector in node.Connectors)
+                {
+                    switch (connector)
+                    {
+                        case Terminal terminal:
+                            //TODO Check if this can actually be called 'transmitter'
+                            var transmitter = g.CreateUriNode("imf:" + terminal.Name + "Transmitter");
+                            
+
+                            var terminalKey = g.CreateUriNode("imf:" + terminal.Type + "Terminal");
+                            var nodeTerminal = g.CreateUriNode("mimir:" + terminal.Id + "_node");
+                            g.Assert(new Triple(nodeId, hasTerminal, nodeTerminal));
+                            g.Assert(new Triple(nodeTerminal, type, terminalKey));
+
+                            var terminalLabel = g.CreateLiteralNode(terminal.Name + " " + terminal.Type);
+                            g.Assert(new Triple(nodeTerminal, label, terminalLabel));
+
+                            g.Assert(new Triple(nodeTerminal, type, transmitter));
+
+                            break;
+                    }
+                }
+
                 var nodeAspect = g.CreateUriNode("imf:" + node.Aspect);
                 g.Assert(new Triple(nodeId, hasAspect, nodeAspect));
 
@@ -140,21 +170,32 @@ namespace RdfParserModule
                         continue;
                     }
                     var attributeNode = g.CreateUriNode("mimir:" + attribute.Id);
-       
+
                     var attributeTypeNode = g.CreateUriNode("mimir:" + attribute.AttributeTypeId);
+                    g.Assert(new Triple(attributeTypeNode, g.CreateUriNode("rdfs:subClassOf"),
+                        g.CreateUriNode("imf:Attribute")));
+
+                    g.Assert(new Triple(attributeTypeNode, label, g.CreateLiteralNode(attribute.Key)));
 
                     g.Assert(new Triple(nodeId, g.CreateUriNode("imf:hasAttribute"), attributeNode));
+                    // Using the AttributeTypeId as the IRI should probably not 
                     g.Assert(new Triple(attributeNode, g.CreateUriNode("rdf:type"), attributeTypeNode));
                     g.Assert(new Triple(attributeNode, g.CreateUriNode("imf:hasValue"), g.CreateLiteralNode(value)));
 
                     g.Assert(new Triple(attributeNode, label, g.CreateLiteralNode(attribute.Key)));
 
+                    //TODO Fix this, but here is at least the Unit ID for the selected Unit. Just have to find out what the name of the selected unit is
+                    g.Assert(new Triple(attributeTypeNode, g.CreateUriNode("imf:selectedUnit"), g.CreateLiteralNode(
+                        attribute.SelectedUnitId)));
+
                     // UnitString ikkje Units
                     var units = attribute.Units;
                     foreach (Unit unit in units)
                     {
-                        var allowedUnit = unit.Key;
-                        var unitDesc = unit.Description;
+                        var unitName = unit.Name;
+
+                        g.Assert(new Triple(attributeNode, g.CreateUriNode("imf:allowedUnit"),
+                            g.CreateLiteralNode(unitName)));
                     }
                 }
             }
@@ -166,12 +207,11 @@ namespace RdfParserModule
         private static IGraph BuildEdges(IGraph g, Project _project)
         {
             var edges = _project.Edges;
-            var hasTerminal = g.CreateUriNode("imf:hasTerminal");
             var label = g.CreateUriNode("rdfs:label");
             var type = g.CreateUriNode("rdf:type");
             var hasAspect = g.CreateUriNode("imf:hasAspect");
+            
 
-            var isTerminal = g.CreateUriNode("imf:Terminal");
 
             foreach (Edge edge in edges)
             {
@@ -181,11 +221,6 @@ namespace RdfParserModule
 
                 switch (edge.FromConnector)
                 {
-                    case Terminal terminal:
-                        var fromNodeTerminal = g.CreateUriNode("mimir:" + terminal.Id + "_node");
-                        g.Assert(new Triple(fromNode, hasTerminal, fromNodeTerminal));
-                        g.Assert(new Triple(fromNodeTerminal, type, isTerminal));
-                        break;
                     case Relation relation:
                         var relationString = relation.RelationType.ToString();
 
@@ -198,13 +233,13 @@ namespace RdfParserModule
 
                 switch (edge.ToConnector)
                 {
-                    case Terminal terminal:
-                        var toNodeTerminal = g.CreateUriNode("mimir:" + terminal.Id + "_node");
-                        g.Assert(new Triple(fromNode, hasTerminal, toNodeTerminal));
-                        g.Assert(new Triple(toNodeTerminal, type, isTerminal));
-                        break;
                     case Relation relation:
                         var relationString = relation.RelationType.ToString();
+
+                        //TODO Can be removed when Mimir has correct IMF relation names
+                        relationString = relationString.Substring(0, 1).ToLower() + relationString.Substring(1);
+
+
                         IUriNode relationToNode = g.CreateUriNode("imf:" + relationString);
                         g.Assert(new Triple(toNode, relationToNode, fromNode));
                         break;
@@ -229,175 +264,12 @@ namespace RdfParserModule
             return g;
         }
 
-        private static IGraph CreateAttributesFromEdge(IGraph g, Edge edge)
-        {
-            var nodes = new List<Node> {edge.FromNode, edge.ToNode};
-
-            foreach (Node node in nodes)
-            {
-                ICollection<Attribute> attributes = node.Attributes;
-
-                if (attributes is null)
-                {
-                    return g;
-                }
-
-                var rdfNode = g.CreateUriNode("mimir:" + node.Id);
-
-
-                foreach (Attribute attribute in attributes)
-                {
-                    var attributeNode = g.CreateUriNode("mimir:" + attribute.Id);
-                    var value = attribute.Value;
-                    var attributeTypeNode = g.CreateUriNode("mimir:" + attribute.AttributeTypeId);
-
-                    g.Assert(new Triple(rdfNode, g.CreateUriNode("imf:hasAttribute"), attributeNode));
-                    g.Assert(new Triple(attributeNode, g.CreateUriNode("rdf:type"), attributeTypeNode));
-                    g.Assert(new Triple(attributeNode, g.CreateUriNode("imf:hasValue"), g.CreateLiteralNode(value)));
-
-                    // UnitString ikkje Units
-                    var units = attribute.Units;
-                    foreach (Unit unit in units)
-                    {
-                        var allowedUnit = unit.Key;
-                        var unitDesc = unit.Description;
-                    }
-                }
-                
-            }
-
-            
-            return g;
-        }
-
-       /* private static IGraph CreateNodesFromEdge(IGraph g, Edge edge)
-        {
-            IUriNode fromNode = g.CreateUriNode("mimir:" + edge.FromNodeId);
-            IUriNode toNode = g.CreateUriNode("mimir:" + edge.ToNodeId);
-            IUriNode label = g.CreateUriNode("rdfs:label");
-
-            if (edge.FromNode.IsRoot)
-            {
-                g.Assert(new Triple(fromNode, g.CreateUriNode("imf:isAspectOf"),
-                    g.CreateUriNode("mimir:" + edge.MasterProjectId)));
-
-                g.Assert(new Triple(fromNode, label, g.CreateLiteralNode("Project " + edge.FromNode.Aspect)));
-
-                return g;
-            }
-
-
-            var type = g.CreateUriNode("rdf:type");
-
-            var hasTerminal = g.CreateUriNode("imf:hasTerminal");
-
-            if (!string.IsNullOrEmpty(edge.TransportId))
-            {
-                var transportNode = g.CreateUriNode("mimir:" + edge.TransportId);
-                g.Assert(new Triple(transportNode, type, g.CreateUriNode("imf:Transport")));
-                g.Assert(new Triple(transportNode, hasTerminal,g.CreateUriNode("mimir:" + edge.FromConnectorId +"_transport")));
-                g.Assert(new Triple(transportNode, hasTerminal, g.CreateUriNode("mimir:" + edge.ToConnectorId + "_transport")));
-
-                g.Assert(new Triple(fromNode, hasTerminal, g.CreateUriNode("mimir:" + edge.FromConnectorId + "_node")));
-                g.Assert(new Triple(toNode, hasTerminal, g.CreateUriNode("mimir:" + edge.ToConnectorId +"_node")));
-            }
-            if (!string.IsNullOrEmpty(edge.InterfaceId))
-            {
-                var transportNode = g.CreateUriNode("mimir:" + edge.InterfaceId);
-                g.Assert(new Triple(transportNode, type, g.CreateUriNode("imf:Interface")));
-            }
-            
-
-   
-
-
-            var fromTerminal = g.CreateUriNode("mimir:" + edge.FromConnectorId);
-            var toTerminal = g.CreateUriNode("mimir:" + edge.ToConnectorId);
-            //var connectedTo = g.CreateUriNode("imf:connectedTo");
-
-
-            //g.Assert(new Triple(fromTerminal, connectedTo, toTerminal));
-
-            g.Assert(new Triple(fromTerminal, type, g.CreateUriNode("imf:Terminal")));
-            g.Assert(new Triple(toTerminal, type, g.CreateUriNode("imf:Terminal")));
-
-            switch (edge.FromConnector)
-            {
-                case Terminal terminal:
-                    IUriNode terminalNode = g.CreateUriNode("mimir:" + terminal.Id);
-                    g.Assert(new Triple(fromNode, hasTerminal, terminalNode));
-                    break;
-                case Relation relation:
-                    IUriNode relationFromNode = g.CreateUriNode("imf:" + relation.RelationType.ToString());
-                    g.Assert(new Triple(fromNode, relationFromNode, toNode));
-                    break;
-            }
-
-            switch (edge.ToConnector)
-            {
-                case Terminal terminal:
-                    IUriNode terminalNode = g.CreateUriNode("mimir:" + terminal.Id);
-                    g.Assert(new Triple(toNode, hasTerminal, terminalNode));
-                    break;
-                case Relation relation:
-                    //TODO If relation is PartOf, ignore this direction
-                    IUriNode relationToNode = g.CreateUriNode("imf:" + relation.RelationType.ToString());
-                    g.Assert(new Triple(toNode, relationToNode, fromNode));
-                    break;
-            }
-
-            var fromNodeAspect = g.CreateUriNode("imf:" + edge.FromNode.Aspect);
-            var toNodeAspect = g.CreateUriNode("imf:" + edge.ToNode.Aspect);
-            var hasAspect = g.CreateUriNode("imf:hasAspect");
-
-
-            g.Assert(new Triple(fromNode, hasAspect, fromNodeAspect));
-            g.Assert(new Triple(toNode, hasAspect, toNodeAspect));
-
-
-
-            g.Assert(new Triple(fromNode, label, g.CreateLiteralNode(edge.FromNode.Label)));
-            g.Assert(new Triple(toNode, label, g.CreateLiteralNode(edge.ToNode.Label)));
-
-            if (!string.IsNullOrEmpty(edge.FromNode.Rds))
-            {
-                var qname = "og" + edge.FromNode.Rds.Length + ":" + edge.FromNode.Rds;
-                var fromNodeRds = g.CreateUriNode(qname);
-                g.Assert(new Triple(fromNode, type, fromNodeRds));
-            }
-
-            if (!string.IsNullOrEmpty(edge.ToNode.Rds))
-            {
-                var qname = "og" + edge.ToNode.Rds.Length + ":" + edge.ToNode.Rds;
-                var toNodeRds = g.CreateUriNode(qname);
-                g.Assert(new Triple(toNode, type, toNodeRds));
-            }
-
-            g = CreateAttributesFromEdge(g, edge);
-
-
-            return g;
-        }*/
-
-
-
-
-        private static ICollection<Node> GetNodes(Project project)
-        {
-            return project.Nodes;
-        }
-
-        private static ICollection<Edge> GetEdges(Project project)
-        {
-            return project.Edges;
-        }
-
 
         private static string RdfToString(IGraph g)
         {
-            TurtleWriter writer = new TurtleWriter();
+            CompressingTurtleWriter writer = new CompressingTurtleWriter();
 
-            string data = VDS.RDF.Writing.StringWriter.Write(g, writer);
+            string data = StringWriter.Write(g, writer);
 
             return data;
         }
