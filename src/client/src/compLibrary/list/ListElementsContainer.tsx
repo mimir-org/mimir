@@ -8,7 +8,7 @@ const ListElementsContainer = styled.div`
 
   div:nth-child(odd) {
     background-color: ${(props: { background: boolean }) =>
-      props.background === false ? "" : Color.LighterBlue};
+      props.background === false ? "" : Color.LightPurple};
   }
 `;
 
