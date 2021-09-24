@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Mb.Models.Data;
 using Mb.Models.Data.Enums;
+using Mb.Models.Enums;
 using VDS.RDF;
 using VDS.RDF.Ontology;
 using VDS.RDF.Parsing;
@@ -149,7 +150,20 @@ namespace RdfParserModule
 
                 if (!string.IsNullOrEmpty(node.Rds))
                 {
-                    var qname = "og" + node.Rds.Length + ":" + node.Rds;
+                    var prefix = "";
+                    switch (node.Aspect)
+                    {
+                        case (Aspect)2:
+                            prefix = "=";
+                            break;
+                        case (Aspect)4:
+                            prefix = "-";
+                            break;
+                        case (Aspect)8:
+                            prefix = "+";
+                            break;
+                    }
+                    var qname = "og" + node.Rds.Length + ":" + prefix + node.Rds;
                     var nodeRds = g.CreateUriNode(qname);
                     g.Assert(new Triple(nodeId, type, nodeRds));
                 }
@@ -267,6 +281,7 @@ namespace RdfParserModule
 
         private static string RdfToString(IGraph g)
         {
+            //NTriplesWriter writer = new NTriplesWriter();
             CompressingTurtleWriter writer = new CompressingTurtleWriter();
 
             string data = StringWriter.Write(g, writer);

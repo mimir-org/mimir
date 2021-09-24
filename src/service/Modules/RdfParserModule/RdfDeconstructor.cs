@@ -28,6 +28,15 @@ namespace RdfParserModule
         {
             var p = new ProjectAm();
 
+            ParserNode root = new ParserNode("topNodeId");
+            ParserGraph graph = new ParserGraph(root);
+
+            ParserNode childNode = new ParserNode("childNodeId");
+
+            root.AddConnection(childNode, "hasPart");
+
+            root.GetConnection(childNode);
+
             return p;
         }
 
