@@ -140,8 +140,9 @@ const AdminContent = ({ node, project, statuses }: Props) => {
             label=""
             items={statuses}
             keyProp={"id"}
+            defaultValue={node?.statusId}
             valueProp={null}
-            onChange={(value: any) => onChange("statusId", value)}
+            onChange={(value: any) => onChange("statusId", value.id)}
           ></Dropdown>
         </div>
         <div>
