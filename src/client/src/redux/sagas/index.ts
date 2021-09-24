@@ -1,4 +1,5 @@
 import { all, takeEvery } from "redux-saga/effects";
+import { FETCHING_CONTRACTORS, FETCHING_STATUSES } from "../store/common/types";
 import {
   FETCHING_LIBRARY,
   EXPORT_LIBRARY,
@@ -17,14 +18,10 @@ import {
 } from "./../store/project/types";
 import {
   FETCHING_INITIAL_DATA,
-  CHOOSE_ASPECT,
-  CHANGE_ASPECT,
-  CREATING_TYPE,
-  UPDATING_TYPE,
+  SAVE_LIBRARY_TYPE,
   FETCHING_BLOB_DATA,
   FETCHING_TYPE,
 } from "../store/typeEditor/types";
-import { FETCHING_CONTRACTORS, FETCHING_STATUSES } from "../store/common/types";
 
 import {
   searchLibrary,
@@ -50,8 +47,7 @@ import {
   getRDS,
   getTerminals,
   getAttributes,
-  createType,
-  updateType,
+  saveType,
   getblobData,
   getSelectedNode,
 } from "./typeEditor/saga";
@@ -66,19 +62,13 @@ export function* sagas() {
     takeEvery(SAVE_PROJECT, updateProject),
     takeEvery(FETCHING_CONTRACTORS, getContractors),
     takeEvery(FETCHING_INITIAL_DATA, getInitialData),
-    takeEvery(CHOOSE_ASPECT, getPredefinedAttributes),
-    takeEvery(CHOOSE_ASPECT, getLocationTypes),
-    takeEvery(CHOOSE_ASPECT, getRDS),
-    takeEvery(CHOOSE_ASPECT, getTerminals),
-    takeEvery(CHOOSE_ASPECT, getAttributes),
-    takeEvery(CHANGE_ASPECT, getPredefinedAttributes),
-    takeEvery(CHANGE_ASPECT, getLocationTypes),
-    takeEvery(CHANGE_ASPECT, getRDS),
-    takeEvery(CHANGE_ASPECT, getTerminals),
-    takeEvery(CHANGE_ASPECT, getAttributes),
-    takeEvery(CREATING_TYPE, createType),
+    takeEvery(FETCHING_INITIAL_DATA, getLocationTypes),
+    takeEvery(FETCHING_INITIAL_DATA, getRDS),
+    takeEvery(FETCHING_INITIAL_DATA, getTerminals),
+    takeEvery(FETCHING_INITIAL_DATA, getPredefinedAttributes),
+    takeEvery(FETCHING_INITIAL_DATA, getAttributes),
     takeEvery(FETCHING_TYPE, getSelectedNode),
-    takeEvery(UPDATING_TYPE, updateType),
+    takeEvery(SAVE_LIBRARY_TYPE, saveType),
     takeEvery(FETCHING_STATUSES, getStatuses),
     takeEvery(EXPORT_PROJECT_TO_FILE, exportProjectFile),
     takeEvery(IMPORT_PROJECT, importProject),

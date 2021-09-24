@@ -16,7 +16,7 @@ namespace Mb.Core.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.5")
+                .HasAnnotation("ProductVersion", "5.0.10")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("AttributeType_Unit", b =>
@@ -83,6 +83,14 @@ namespace Mb.Core.Migrations
                     b.Property<string>("FormatId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<bool>("IsLocked")
+                        .HasColumnType("bit")
+                        .HasColumnName("IsLocked");
+
+                    b.Property<string>("IsLockedBy")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("IsLockedBy");
+
                     b.Property<string>("Key")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -98,6 +106,10 @@ namespace Mb.Core.Migrations
                     b.Property<string>("SelectedUnitId")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("SelectedUnitId");
+
+                    b.Property<string>("SemanticReference")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("SemanticReference");
 
                     b.Property<string>("SourceId")
                         .HasColumnType("nvarchar(450)");
@@ -186,14 +198,15 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("Id");
 
-                    b.Property<string>("CategoryId")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("CategoryId");
-
                     b.Property<string>("Data")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Data");
+
+                    b.Property<string>("Discipline")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Discipline");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -201,8 +214,6 @@ namespace Mb.Core.Migrations
                         .HasColumnName("Name");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
 
                     b.ToTable("BlobData");
                 });
@@ -494,6 +505,14 @@ namespace Mb.Core.Migrations
                         .HasColumnType("decimal(10,4)")
                         .HasColumnName("Cost");
 
+                    b.Property<DateTime?>("Created")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("Created");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("CreatedBy");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Description");
@@ -505,6 +524,10 @@ namespace Mb.Core.Migrations
                     b.Property<bool>("IsLocked")
                         .HasColumnType("bit")
                         .HasColumnName("IsLocked");
+
+                    b.Property<string>("IsLockedBy")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("IsLockedBy");
 
                     b.Property<bool>("IsRoot")
                         .HasColumnType("bit")
@@ -565,9 +588,9 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("StatusId");
 
-                    b.Property<string>("SymbolId")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("SymbolId");
+                    b.Property<string>("Symbol")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Symbol");
 
                     b.Property<string>("TagNumber")
                         .HasColumnType("nvarchar(max)")
@@ -596,8 +619,6 @@ namespace Mb.Core.Migrations
                     b.HasIndex("MasterProjectId");
 
                     b.HasIndex("StatusId");
-
-                    b.HasIndex("SymbolId");
 
                     b.ToTable("Node");
                 });
@@ -922,13 +943,6 @@ namespace Mb.Core.Migrations
                     b.HasDiscriminator().HasValue("AttributeSource");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.Enums.BlobCategory", b =>
-                {
-                    b.HasBaseType("Mb.Models.Data.Enums.EnumBase");
-
-                    b.HasDiscriminator().HasValue("BlobCategory");
-                });
-
             modelBuilder.Entity("Mb.Models.Data.Enums.BuildStatus", b =>
                 {
                     b.HasBaseType("Mb.Models.Data.Enums.EnumBase");
@@ -946,6 +960,18 @@ namespace Mb.Core.Migrations
                     b.HasIndex("ParentId");
 
                     b.HasDiscriminator().HasValue("PredefinedAttributeCategory");
+                });
+
+            modelBuilder.Entity("Mb.Models.Data.Enums.Purpose", b =>
+                {
+                    b.HasBaseType("Mb.Models.Data.Enums.EnumBase");
+
+                    b.Property<string>("Discipline")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Discipline");
+
+                    b.HasDiscriminator().HasValue("Purpose");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Enums.RdsCategory", b =>
@@ -1149,16 +1175,6 @@ namespace Mb.Core.Migrations
                     b.Navigation("Source");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.BlobData", b =>
-                {
-                    b.HasOne("Mb.Models.Data.Enums.BlobCategory", "Category")
-                        .WithMany("Blobs")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("Category");
-                });
-
             modelBuilder.Entity("Mb.Models.Data.Composite", b =>
                 {
                     b.HasOne("Mb.Models.Data.Node", "Node")
@@ -1273,16 +1289,9 @@ namespace Mb.Core.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Mb.Models.Data.BlobData", "Symbol")
-                        .WithMany("Nodes")
-                        .HasForeignKey("SymbolId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
                     b.Navigation("MasterProject");
 
                     b.Navigation("Status");
-
-                    b.Navigation("Symbol");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.NodeTypeTerminalType", b =>
@@ -1449,11 +1458,6 @@ namespace Mb.Core.Migrations
                     b.Navigation("TerminalType");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.BlobData", b =>
-                {
-                    b.Navigation("Nodes");
-                });
-
             modelBuilder.Entity("Mb.Models.Data.Composite", b =>
                 {
                     b.Navigation("Attributes");
@@ -1540,11 +1544,6 @@ namespace Mb.Core.Migrations
                     b.Navigation("Attributes");
 
                     b.Navigation("AttributeTypes");
-                });
-
-            modelBuilder.Entity("Mb.Models.Data.Enums.BlobCategory", b =>
-                {
-                    b.Navigation("Blobs");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Enums.BuildStatus", b =>

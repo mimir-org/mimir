@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
 using Newtonsoft.Json;
@@ -38,6 +37,8 @@ namespace Mb.Models.Data
         [Required]
         public bool IsLocked { get; set; }
 
+        public string IsLockedBy { get; set; }
+
         [Required]
         public decimal PositionBlockX { get; set; }
 
@@ -60,6 +61,10 @@ namespace Mb.Models.Data
         [Required]
         public DateTime Updated { get; set; }
 
+        public DateTime? Created { get; set; }
+
+        public string CreatedBy { get; set; }
+
         [RegularExpression(@"^(?=.*[1-9])\d+(\.[0-9]?)?$", ErrorMessage = "The version format must be at x.y")]
         public string Version { get; set; }
 
@@ -73,9 +78,7 @@ namespace Mb.Models.Data
 
         public virtual Project MasterProject { get; set; }
 
-        public string SymbolId { get; set; }
-
-        public BlobData Symbol { get; set; }
+        public string Symbol { get; set; }
 
         public virtual ICollection<Connector> Connectors { get; set; }
 

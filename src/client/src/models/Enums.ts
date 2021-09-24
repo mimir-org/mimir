@@ -37,3 +37,12 @@ export enum LibraryFilter {
   Transport = 1,
   Interface = 2,
 }
+
+export enum Discipline {
+  None = 0,
+  NotSet = 1,
+  Process = 2,
+  Electro = 4,
+  Automation = 8,
+  Structural = 16,
+}

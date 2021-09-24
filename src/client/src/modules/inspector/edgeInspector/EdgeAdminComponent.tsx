@@ -5,11 +5,7 @@ import { RootState } from "../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { Edge, Project } from "../../../models";
 import { changeInspectorTab } from "../redux/actions";
-import {
-  TabHeader,
-  TabBody,
-  TabTitle,
-} from "../../../compLibrary/box/inspector";
+import { TabHeader, TabBody, TabTitle } from "../styled";
 
 interface Props {
   edge: Edge;
@@ -28,27 +24,25 @@ const EdgeAdminComponent = ({ edge, project, index }: Props) => {
     dispatch(changeInspectorTab(index));
   }, [dispatch, index]);
 
-  return isOpen ? (
+  return (
     <>
       <TabHeader
-        active={true}
+        active={isOpen}
         onClick={onClick}
         color={GetTabsColor(null, edge)}
       >
-        <TabTitle active={true}>{GetInspectorText(index)}</TabTitle>
+        <TabTitle active={isOpen}>{GetInspectorText(index)}</TabTitle>
       </TabHeader>
-      <TabBody>
-        {edge && project && (
-          <div className="container">
-            <EdgeAdminContent edge={edge} />
-          </div>
-        )}
-      </TabBody>
+      {isOpen && (
+        <TabBody>
+          {edge && project && (
+            <div className="container">
+              <EdgeAdminContent edge={edge} />
+            </div>
+          )}
+        </TabBody>
+      )}
     </>
-  ) : (
-    <TabHeader onClick={onClick} color={GetTabsColor(null, edge)}>
-      <TabTitle>{GetInspectorText(index)}</TabTitle>
-    </TabHeader>
   );
 };
 

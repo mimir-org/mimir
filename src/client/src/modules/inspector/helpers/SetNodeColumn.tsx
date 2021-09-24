@@ -1,7 +1,8 @@
-import { Input, InputBox, Select } from "../../../compLibrary";
+import { Input, InputBox } from "../../../compLibrary";
 import { Attribute } from "../../../models";
 import { CreateId } from "../../../components/flow/helpers/common";
-import { TabColumn } from "../../../compLibrary/box/inspector";
+import { TabColumn } from "../styled";
+import { Dropdown } from "../../../compLibrary/dropdown/mimir";
 
 interface Props {
   list: Attribute[];
@@ -21,17 +22,15 @@ const SetNodeColumn = ({ list, handleChange }: Props) => (
             }
             inputType="tech"
           />
-          <Select
-            value={attr.unit}
+          <Dropdown
+            label=""
+            items={attr.units}
+            keyProp={null}
+            valueProp={null}
             onChange={(e: any) =>
               handleChange(attr.id, attr.value, e.target.value)
             }
-          >
-            <option value={"NotSet"}>NotSet</option>
-            {attr.units.map((unit) => (
-              <option>{unit}</option>
-            ))}
-          </Select>
+          ></Dropdown>
         </InputBox>
       </div>
     ))}

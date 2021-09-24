@@ -1,5 +1,5 @@
 import { EnumBase, Attribute, Aspect } from "..";
-import { BlobData, Composite } from "../Types";
+import { Composite } from "../Types";
 import Connector from "./Connector";
 
 class Node {
@@ -27,8 +27,7 @@ class Node {
   aspect: Aspect;
   isRoot: boolean | false;
   masterProjectId: string;
-  symbolId: string;
-  symbol: BlobData;
+  symbol: string;
   connectors: Connector[];
   attributes: Attribute[];
   composites: Composite[];

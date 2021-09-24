@@ -5,6 +5,11 @@ import { VIEW_TYPE } from "../../models/project";
 import { changeFlowView } from "../../redux/store/flow/actions";
 import { TypeEditorComponent } from "../modules/typeEditorModule";
 
+/**
+ * Component to display a module in Flow
+ * @param param0 the route type
+ * @returns a JSX element containing either TreeView, BlockView or the TypeEditor
+ */
 const FlowModule = ({ route }) => {
   const dispatch = useDispatch();
 

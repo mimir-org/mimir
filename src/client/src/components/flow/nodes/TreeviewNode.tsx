@@ -15,6 +15,11 @@ import {
   SetTerminalYPos,
 } from "../helpers/common";
 
+/**
+ * Component to display a node in TreeView
+ * @param param0 data - the data for the node
+ * @returns a node in the FlowTree context
+ */
 const TreeviewNode: FC<NodeProps> = ({ data }) => {
   const [isHover, setIsHover] = useState(false);
   const [timer, setTimer] = useState(false);
@@ -71,7 +76,7 @@ const TreeviewNode: FC<NodeProps> = ({ data }) => {
         );
       })}
       <TreeNodeNameBox>{data.label ?? data.name}</TreeNodeNameBox>
-      <Symbol base64={data.symbol?.data} text={data.symbol?.text} />
+      <Symbol base64={data.symbol} text={data.name} />
     </TreeNodeWrapper>
   );
 };

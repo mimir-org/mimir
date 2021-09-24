@@ -1,30 +1,16 @@
-import { TypeEditorState } from "../../../../redux/store/typeEditor/types";
-import { ModeNew } from "../helpers";
+// import { ReactComponent as TerminalIcon } from "../../../../assets/icons/common/terminalIcon.svg";
 import { ObjectTypeBlock, InfoWrapper } from "../styled";
-import { Symbol } from "../../../../compLibrary/symbol";
-import {
-  GetBlockColor,
-  GetBlockHeight,
-  GetBlockPaddingTop,
-  GetSymbol,
-} from "./helpers";
+import { CreateLibraryType } from "../../../../models";
+import { GetBlockColor, GetBlockHeight, GetBlockPaddingTop } from "./helpers";
 
 // import { ReactComponent as TerminalIcon } from "../../../../assets/icons/common/terminalIcon.svg";
 interface Props {
-  state: TypeEditorState;
+  createLibraryType: CreateLibraryType;
+  rdsName: string;
 }
 
-export const ObjectBlock = ({ state }: Props) => {
-  const aspect = ModeNew(state.mode)
-    ? state.createLibraryType.aspect
-    : state.selectedNode.aspect;
-  const name = ModeNew(state.mode)
-    ? state.createLibraryType.name
-    : state.selectedNode.name;
-  const icon =
-    state.createLibraryType.symbolId || state.selectedNode.symbolId
-      ? GetSymbol(state)
-      : null;
+export const ObjectBlock = ({ createLibraryType, rdsName }: Props) => {
+  const aspect = createLibraryType.aspect;
 
   //   let terminalCategories = [];
   //   state.terminals.forEach((e) => {
@@ -85,9 +71,8 @@ export const ObjectBlock = ({ state }: Props) => {
         </InputOutputTerminals>
       )} */}
       <InfoWrapper blockPaddingTop={GetBlockPaddingTop(aspect)}>
-        <p>{state.rdsName}</p>
-        <p>{name}</p>
-        {icon && <Symbol base64={icon.data} text={icon.name} />}
+        <p>{rdsName}</p>
+        <p>{createLibraryType.name}</p>
       </InfoWrapper>
     </ObjectTypeBlock>
   );

@@ -10,6 +10,10 @@ import { Project } from "../../models";
 import { OnToggleClick } from "./handlers";
 import { ExplorerIcon, LeftIcon, RightIcon } from "../../assets/icons/common";
 
+/**
+ * Component for the Explorer Module in Mimir
+ * @returns a JSX module where all nodes are listed
+ */
 export const ExplorerModule = () => {
   const dispatch = useDispatch();
   const type = MODULE_TYPE.EXPLORER;

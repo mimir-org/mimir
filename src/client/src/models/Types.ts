@@ -1,5 +1,5 @@
 import { Aspect, Connector, Attribute, ObjectType } from ".";
-import { ConnectorType } from "./Enums";
+import { ConnectorType, Discipline } from "./Enums";
 
 export interface AttributeType {
   id: string;
@@ -77,10 +77,12 @@ export interface TerminalType {
 }
 
 export interface TerminalTypeItem {
+  row: number;
   terminalTypeId: string;
   selected: boolean | false;
   connectorType: ConnectorType;
   number: number;
+  categoryId: string;
 }
 export interface PredefinedAttribute {
   key: string;
@@ -93,9 +95,10 @@ export interface LocationType {
   name: string;
   description: string;
   semanticReference: string;
-  locationSubTypes: string[];
+  locationSubTypes: LocationType[];
 }
 export interface CreateLibraryType {
+  libraryId: string;
   name: string;
   aspect: Aspect;
   objectType: ObjectType;
@@ -107,20 +110,7 @@ export interface CreateLibraryType {
   predefinedAttributes: PredefinedAttribute[];
   terminalTypeId: string;
   symbolId: string;
-  simpleTypes: string[];
-}
-export interface UpdateLibraryType {
-  name: string;
-  aspect: Aspect;
-  objectType: ObjectType;
-  semanticReference: string;
-  rdsId: string;
-  terminalTypes: TerminalTypeItem[];
-  attributeTypes: string[];
-  locationType: string;
-  predefinedAttributes: PredefinedAttribute[];
-  terminalTypeId: string;
-  symbolId: string;
+  compositeTypes: string[];
 }
 export interface User {
   username: string;
@@ -136,7 +126,7 @@ export interface BlobData {
   id: string;
   name: string;
   data: string;
-  categoryId: string;
+  discipline: Discipline;
 }
 
 export interface Composite {

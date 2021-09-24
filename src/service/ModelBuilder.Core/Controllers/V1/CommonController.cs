@@ -61,7 +61,7 @@ namespace Mb.Core.Controllers.V1
         /// <param name="blobData"></param>
         /// <returns></returns>
         [HttpPost("blob")]
-        [ProducesResponseType(typeof(BlobDataAm), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(BlobData), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

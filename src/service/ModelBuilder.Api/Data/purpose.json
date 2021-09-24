@@ -1,0 +1,134 @@
+[
+  {
+    "name": "Manifold",
+    "description": null,
+    "semanticReference": null,
+    "Discipline": "Process"
+  },
+  {
+    "name": "Separate",
+    "description": null,
+    "semanticReference": null,
+    "Discipline": "Process"
+  },
+  {
+    "name": "Pump",
+    "description": null,
+    "semanticReference": null,
+    "Discipline": "Process"
+  },
+  {
+    "name": "Compress",
+    "description": null,
+    "semanticReference": null,
+    "Discipline": "Process"
+  },
+  {
+    "name": "Mix",
+    "description": null,
+    "semanticReference": null,
+    "Discipline": "Process"
+  },
+  {
+    "name": "Exchange (heat)",
+    "description": null,
+    "semanticReference": null,
+    "Discipline": "Process"
+  },
+  {
+    "name": "React",
+    "description": null,
+    "semanticReference": null,
+    "Discipline": "Process"
+  },
+  {
+    "name": "Transform",
+    "description": null,
+    "semanticReference": null,
+    "Discipline": "Process"
+  },
+  {
+    "name": "Generate",
+    "description": null,
+    "semanticReference": null,
+    "Discipline": "Electrical"
+  },
+  {
+    "name": "Switch",
+    "description": null,
+    "semanticReference": null,
+    "Discipline": "Electrical"
+  },
+  {
+    "name": "Break",
+    "description": null,
+    "semanticReference": null,
+    "Discipline": "Electrical"
+  },
+  {
+    "name": "Distribute",
+    "description": null,
+    "semanticReference": null,
+    "Discipline": "Process, Electrical"
+  },
+  {
+    "name": "Transform",
+    "description": null,
+    "semanticReference": null,
+    "Discipline": "Electrical"
+  },
+  {
+    "name": "Convert",
+    "description": null,
+    "semanticReference": null,
+    "Discipline": "Electrical"
+  },
+  {
+    "name": "Drive",
+    "description": null,
+    "semanticReference": null,
+    "Discipline": "Electrical"
+  },
+  {
+    "name": "Heat",
+    "description": null,
+    "semanticReference": null,
+    "Discipline": "Electrical"
+  },
+  {
+    "name": "Store",
+    "description": null,
+    "semanticReference": null,
+    "Discipline": "Electrical"
+  },
+  {
+    "name": "Measure",
+    "description": null,
+    "semanticReference": null,
+    "Discipline": "Automation"
+  },
+  {
+    "name": "Control",
+    "description": null,
+    "semanticReference": null,
+    "Discipline": "Automation"
+  },
+  {
+    "name": "Actuate",
+    "description": null,
+    "semanticReference": null,
+    "Discipline": "Automation"
+  },
+  {
+    "name": "Support",
+    "description": null,
+    "semanticReference": null,
+    "Discipline": "Structural"
+  },
+  {
+    "name": "Enclose",
+    "description": null,
+    "semanticReference": null,
+    "Discipline": "Structural"
+  }
+]
