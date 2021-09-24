@@ -40,7 +40,7 @@ const InspectorHeader = ({
         <InspectorButton onClick={() => null} type="validate" visible={true} />
         <InspectorButton
           onClick={() => OnLockClick(node, project, !node.isLocked, dispatch)}
-          type={node.isLocked ? "unlock" : "lock"}
+          type={node?.isLocked ? "unlock" : "lock"}
           visible={true}
         />
         <InspectorButton

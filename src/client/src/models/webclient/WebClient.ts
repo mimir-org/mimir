@@ -23,28 +23,24 @@ export async function http<T>(request: RequestInfo): Promise<HttpResponse<T>> {
 
   try {
     response = await fetch(request);
-    if (!response || !response.ok) {
-      if (
-        (response.status >= 200 && response.status < 300) ||
-        response.status === 400
-      ) {
-        response.data = await response.json();
-        return response;
-      } else {
-        if (response.status === 404) {
-          throw new Error(TextResources.Error_ServerUnavailable);
-        }
-        response.data = await response.json();
-        throw new Error(response.data.toString());
-      }
-    } else {
-      if (response.status === 204) {
-        throw new Error(response.statusText);
-      }
-      if (response.bodyUsed) {
-        response.data = await response.json();
-      }
+
+    if (response.status === 204) {
+      throw new Error(response.statusText);
+    }
+
+    if (response.status === 404) {
+      throw new Error(TextResources.Error_ServerUnavailable);
+    }
+
+    response.data = await response.json();
+
+    if (
+      (response.status >= 200 && response.status < 300) ||
+      response.status === 400
+    ) {
       return response;
+    } else {
+      throw new Error(response.data.toString());
     }
   } catch (e) {
     throw new Error(TextResources.Error_ServerUnavailable);
