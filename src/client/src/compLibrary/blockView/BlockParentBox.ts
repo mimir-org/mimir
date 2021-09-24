@@ -10,7 +10,7 @@ const BlockParentBox = styled.div`
   height: ${Size.BlockView_Height}px;
   border-radius: 10px;
   border: 2px solid;
-  background-color: ${(props) => !props.location && Color.Black};
+  background-color: ${(props) => !props.location && Color.White};
 
   border-color: ${(props) =>
     props.location ? Color.LocationTab : Color.FunctionTab};
