@@ -13,11 +13,8 @@ const useOnRemove = (elementsToRemove, setElements, dispatch) => {
       element.type === undefined ||
       edgeTypes.some((x) => x === element.type?.toString());
 
-    if (isEdge) {
-      dispatch(removeEdge(element.id));
-    } else {
-      dispatch(removeNode(element.id));
-    }
+    if (isEdge) dispatch(removeEdge(element.id));
+    else dispatch(removeNode(element.id));
   });
   dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, false, true));
   SetPanelHeight(Size.ModuleClosed);

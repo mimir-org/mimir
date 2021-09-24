@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Mb.Models.Application;
 using Mb.Models.Data;
+using Mb.Models.Modules;
 using Microsoft.AspNetCore.Http;
 
 namespace Mb.Core.Services.Contracts
@@ -16,11 +17,12 @@ namespace Mb.Core.Services.Contracts
         Task<Project> CreateProject(ProjectAm project);
         Task<Project> UpdateProject(string id, ProjectAm project);
         Task DeleteProject(string projectId);
-        Task<byte[]> CreateFile(string projectId, string parser);
+        Task<(byte[] file, FileFormat format)> CreateFile(string projectId, string parser);
         Task<Project> CreateFromFile(IFormFile file, CancellationToken cancellationToken, string parser);
         Task LockUnlockNode(LockUnlockNodeAm lockUnlockNodeAm);
         Task LockUnlockAttribute(LockUnlockAttributeAm lockUnlockAttributeAm);
-        Task<List<string>> GetLockedNodes(string projectId);
-        Task<List<string>> GetLockedAttributes(string projectId);
+        IEnumerable<string> GetLockedNodes(string projectId);
+        IEnumerable<string> GetLockedAttributes(string projectId);
+        Task CommitProject(CommitPackage package);
     }
 }

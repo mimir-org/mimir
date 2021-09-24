@@ -8,6 +8,7 @@ using Mb.Core.Extensions;
 using Mb.Core.Services.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Data;
+using Mb.Models.Modules;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -112,7 +113,7 @@ namespace Mb.Core.Controllers.V1
         {
             if (string.IsNullOrEmpty(id))
                 return BadRequest("The id can not be null or empty");
-            
+
             try
             {
                 var data = await _projectService.GetProject(id);
@@ -247,8 +248,33 @@ namespace Mb.Core.Controllers.V1
         {
             try
             {
-                var data = await _projectService.CreateFile(id, parser);
-                return File(data, "application/json", $"project_{id}.json");
+                var (file, format) = await _projectService.CreateFile(id, parser);
+                string contentType;
+                string extension;
+
+                switch (format)
+                {
+                    case FileFormat.Json:
+                        contentType = @"application/json";
+                        extension = "json";
+                        break;
+                    case FileFormat.Xml:
+                        contentType = @"application/xml";
+                        extension = "xml";
+                        break;
+                    case FileFormat.Turtle:
+                        contentType = @"text/turtle";
+                        extension = "ttl";
+                        break;
+                    case FileFormat.NTriples:
+                        contentType = @"application/n-triples";
+                        extension = "nt";
+                        break;
+                    default:
+                        return StatusCode(500, "Internal Server Error. Missing file format.");
+                }
+
+                return File(file, contentType, $"project_{id}.{extension}");
             }
             catch (ModelBuilderModuleException e)
             {
@@ -319,7 +345,11 @@ namespace Mb.Core.Controllers.V1
         {
             try
             {
-                var data = _moduleService.ParserModules.Select(x => x.Key).ToList();
+                var data = _moduleService.Modules
+                    .Where(x => x.Instance is IModelBuilderParser)
+                    .Select(x => x.Name)
+                    .ToList();
+
                 return Ok(data);
             }
             catch (Exception e)
@@ -335,20 +365,24 @@ namespace Mb.Core.Controllers.V1
         /// <param name="lockUnlockAm"></param>
         /// <returns>Status204NoContent</returns>
         [HttpPost("node/lockUnlock")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> LockUnlockNode([FromBody] LockUnlockNodeAm lockUnlockAm)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             try
             {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
-
                 await _projectService.LockUnlockNode(lockUnlockAm);
-                return Ok();
+                return NoContent();
+            }
+            catch (ModelBuilderUnauthorizedAccessException e)
+            {
+                ModelState.AddModelError("node/lockUnlock", e.Message);
+                return BadRequest(ModelState);
             }
             catch (Exception e)
             {
@@ -363,20 +397,24 @@ namespace Mb.Core.Controllers.V1
         /// <param name="lockUnlockAttributeAm"></param>
         /// <returns>Status204NoContent</returns>
         [HttpPost("attribute/lockUnlock")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> LockUnlockAttribute([FromBody] LockUnlockAttributeAm lockUnlockAttributeAm)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             try
             {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
-
                 await _projectService.LockUnlockAttribute(lockUnlockAttributeAm);
-                return Ok();
+                return NoContent();
+            }
+            catch (ModelBuilderUnauthorizedAccessException e)
+            {
+                ModelState.AddModelError("attribute/lockUnlock", e.Message);
+                return BadRequest(ModelState);
             }
             catch (Exception e)
             {
@@ -393,17 +431,18 @@ namespace Mb.Core.Controllers.V1
         /// <returns>List of locked node id></returns>
         [HttpGet("node/locked")]
         [ProducesResponseType(typeof(ICollection<string>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetLockedNodes(string projectId)
+        public IActionResult GetLockedNodes(string projectId)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             try
             {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
-
-                var result = await _projectService.GetLockedNodes(projectId);
+                var result = _projectService.GetLockedNodes(projectId).ToList();
                 return Ok(result);
             }
             catch (Exception e)
@@ -421,17 +460,18 @@ namespace Mb.Core.Controllers.V1
         /// <returns>List of locked attribute id></returns>
         [HttpGet("attribute/locked")]
         [ProducesResponseType(typeof(ICollection<string>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetLockedAttributes(string projectId)
+        public IActionResult GetLockedAttributes(string projectId)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             try
             {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
-
-                var result = await _projectService.GetLockedAttributes(projectId);
+                var result = _projectService.GetLockedAttributes(projectId).ToList();
                 return Ok(result);
             }
             catch (Exception e)

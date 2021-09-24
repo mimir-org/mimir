@@ -34,7 +34,6 @@ const useOnDrop = (
 
     (async () => {
       const data = await GetFileData(event, project);
-
       data[0].forEach((node) => {
         dispatch(addNode(node));
         setElements((es) => es.concat(CreateTreeNode(node)));

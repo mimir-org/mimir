@@ -17,6 +17,12 @@ namespace DefaultParserModule
             return "Default";
         }
 
+        public FileFormat GetFileFormat()
+        {
+            return FileFormat.Json;
+        }
+
+
         public Task<byte[]> SerializeProject(Project project)
         {
             var serializerSettings = new JsonSerializerSettings

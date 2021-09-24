@@ -53,18 +53,18 @@ const Header = () => {
     <>
       <HeaderBox>
         <MenuMainHeader isOpen={isAccountMenuOpen}>
-          <div
-            className="projectName"
-            onClick={() => Handlers.OnAccountClick(dispatch, isAccountMenuOpen)}
-          >
-            {projectState.project && projectState.project.name}
-          </div>
           <img
             src={UserClosedIcon}
             alt="icon"
             className="icon"
             onClick={() => Handlers.OnAccountClick(dispatch, isAccountMenuOpen)}
           />
+          <div
+            className="projectName"
+            onClick={() => Handlers.OnAccountClick(dispatch, isAccountMenuOpen)}
+          >
+            {projectState.project && projectState.project.name}
+          </div>
         </MenuMainHeader>
         <LogoBox>
           <img

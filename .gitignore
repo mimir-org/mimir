@@ -351,3 +351,6 @@ MigrationBackup/
 
 # Jetbrains
 .idea/
+
+/src/service/ModelBuilder.Core/Controllers/V1/TestController.cs
+

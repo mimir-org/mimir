@@ -383,15 +383,16 @@ namespace Mb.Core.Services
         /// <param name="projectId"></param>
         /// <param name="parser"></param>
         /// <returns></returns>
-        public async Task<byte[]> CreateFile(string projectId, string parser)
+        public async Task<(byte[] file, FileFormat format)> CreateFile(string projectId, string parser)
         {
             var project = await GetProject(projectId);
 
-            if (!_moduleService.ParserModules.ContainsKey(parser.ToLower()))
+            if (_moduleService.Modules.All(x => !string.Equals(x.Name, parser, StringComparison.CurrentCultureIgnoreCase)))
                 throw new ModelBuilderModuleException($"There is no parser with key: {parser}");
 
             var par = _moduleService.Resolve<IModelBuilderParser>(parser);
-            return await par.SerializeProject(project);
+            var data = await par.SerializeProject(project);
+            return (data, par.GetFileFormat());
         }
 
         /// <summary>
@@ -406,7 +407,7 @@ namespace Mb.Core.Services
             await using var stream = new MemoryStream();
             await file.CopyToAsync(stream, cancellationToken);
 
-            if (!_moduleService.ParserModules.ContainsKey(parser.ToLower()))
+            if (_moduleService.Modules.All(x => !string.Equals(x.Name, parser, StringComparison.CurrentCultureIgnoreCase)))
                 throw new ModelBuilderModuleException($"There is no parser with key: {parser}");
 
             var par = _moduleService.Resolve<IModelBuilderParser>(parser);
@@ -435,7 +436,7 @@ namespace Mb.Core.Services
             var userName = _contextAccessor.GetName();
 
             if (attribute.IsLocked && attribute.IsLockedBy != userName)
-                return;
+                throw new ModelBuilderUnauthorizedAccessException("Locked by: " + attribute.IsLockedBy);
 
             attribute.IsLocked = lockUnlockAttributeAm.IsLocked;
             attribute.IsLockedBy = attribute.IsLocked ? userName : null;
@@ -469,11 +470,14 @@ namespace Mb.Core.Services
                 return;
 
             if (node.IsLocked && userName != node.IsLockedBy)
-                return;
+                throw new ModelBuilderUnauthorizedAccessException("Locked by: " + node.IsLockedBy); ;
 
             node.IsLocked = lockUnlockNodeAm.IsLocked;
             node.IsLockedBy = node.IsLocked ? userName : null;
 
+            var nodeAttributes = allAttributesInProject.Where(x => x.NodeId == node.Id);
+            
+            LockUnlockAttributes(nodeAttributes, node, userName);
             LockUnlockNodesAndAttributesRecursive(node, allNodesInProject, allAttributesInProject, allEdgesInProject, userName);
 
             await _nodeRepository.SaveAsync();
@@ -486,11 +490,11 @@ namespace Mb.Core.Services
         /// </summary>
         /// <param name="projectId"></param>
         /// <returns>List of locked node id></returns>
-        public async Task<List<string>> GetLockedNodes(string projectId)
+        public IEnumerable<string> GetLockedNodes(string projectId)
         {
             return projectId == null 
-                ? await Task.FromResult(_nodeRepository.FindBy(x => x.IsLocked).Select(x => x.Id).ToList())
-                : await Task.FromResult(_nodeRepository.FindBy(x => x.IsLocked && x.MasterProjectId == projectId).Select(x => x.Id).ToList());
+                ? _nodeRepository.FindBy(x => x.IsLocked).Select(x => x.Id)
+                : _nodeRepository.FindBy(x => x.IsLocked && x.MasterProjectId == projectId).Select(x => x.Id);
         }
 
         /// <summary>
@@ -499,11 +503,46 @@ namespace Mb.Core.Services
         /// </summary>
         /// <param name="projectId"></param>
         /// <returns>List of locked attribute id></returns>
-        public async Task<List<string>> GetLockedAttributes(string projectId)
+        public IEnumerable<string> GetLockedAttributes(string projectId)
         {
             return projectId == null
-                ? await Task.FromResult(_attributeRepository.FindBy(x => x.IsLocked).Select(x => x.Id).ToList())
-                : await Task.FromResult(_attributeRepository.FindBy(x => x.IsLocked && x.Node != null && x.Node.MasterProjectId == projectId).Select(x => x.Id).ToList());
+                ? _attributeRepository.FindBy(x => x.IsLocked).Select(x => x.Id)
+                : _attributeRepository.FindBy(x => x.IsLocked && x.Node != null && x.Node.MasterProjectId == projectId).Select(x => x.Id);
+        }
+
+        /// <summary>
+        /// Resolve commit package
+        /// </summary>
+        /// <param name="package"></param>
+        /// <returns></returns>
+        public async Task CommitProject(CommitPackage package)
+        {
+            // TODO: We are missing UX here to define what to do in this workflow. For now, we only send data.
+
+            if (package == null)
+                throw new ModelBuilderNullReferenceException("Can't commit a null reference commit package");
+
+            var project = await GetProject(package.ProjectId);
+            
+            if (_moduleService.Modules.All(x => !string.Equals(x.Name, package.Parser, StringComparison.CurrentCultureIgnoreCase)))
+                throw new ModelBuilderModuleException($"There is no parser with key: {package.Parser}");
+
+            var senders = _moduleService.Modules.Where(x => x.Instance is IModelBuilderSyncService).ToList();
+
+            if (!senders.Any())
+                throw new ModelBuilderModuleException($"There is no sender module");
+
+            var parser = _moduleService.Resolve<IModelBuilderParser>(package.Parser);
+            var data = await parser.SerializeProject(project);
+            var projectString = System.Text.Encoding.UTF8.GetString(data);
+
+            foreach (var sender in senders)
+            {
+                if(sender.Instance is IModelBuilderSyncService client)
+                {
+                    await client.SendData(projectString);
+                }
+            }
         }
 
         #region Private methods
@@ -543,29 +582,33 @@ namespace Mb.Core.Services
                 {
                     childNode.IsLocked = parentNode.IsLocked;
                     childNode.IsLockedBy = childNode.IsLocked ? userName : null;
-
+                    
                     var nodeAttributes = allAttributesInProject.Where(x => x.NodeId == childNode.Id);
-
-                    if(!nodeAttributes.Any())
-                        continue;
-
-                    foreach (var nodeAttribute in nodeAttributes)
-                    {
-                        if(nodeAttribute == null)
-                            continue;
-
-                        if(nodeAttribute.IsLocked == childNode.IsLocked)
-                            continue;
-
-                        if(nodeAttribute.IsLocked && nodeAttribute.IsLockedBy != userName)
-                            continue;
-
-                        nodeAttribute.IsLocked = childNode.IsLocked;
-                        nodeAttribute.IsLockedBy = nodeAttribute.IsLocked ? userName : null;
-                    }
+                    LockUnlockAttributes(nodeAttributes, childNode, userName);
                 }
 
                 LockUnlockNodesAndAttributesRecursive(childNode, allNodesInProject, allAttributesInProject, allEdgesInProject, userName);
+            }
+        }
+
+        private void LockUnlockAttributes(IQueryable<Attribute> attributes, Node node, string userName)
+        {
+            if (!attributes.Any())
+                return;
+
+            foreach (var nodeAttribute in attributes)
+            {
+                if (nodeAttribute == null)
+                    continue;
+
+                if (nodeAttribute.IsLocked == node.IsLocked)
+                    continue;
+
+                if (nodeAttribute.IsLocked && nodeAttribute.IsLockedBy != userName)
+                    continue;
+
+                nodeAttribute.IsLocked = node.IsLocked;
+                nodeAttribute.IsLockedBy = nodeAttribute.IsLocked ? userName : null;
             }
         }
 

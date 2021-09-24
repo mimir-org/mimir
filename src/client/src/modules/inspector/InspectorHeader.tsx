@@ -48,6 +48,7 @@ const InspectorHeader = ({
           type="delete"
           visible={true}
         />
+
         <Title>{TextResources.Module_Inspector}</Title>
 
         <ToggleBox>

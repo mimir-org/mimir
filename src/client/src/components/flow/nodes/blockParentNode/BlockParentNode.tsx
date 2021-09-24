@@ -21,7 +21,7 @@ import {
   FindAllEdges,
 } from "../../helpers/block";
 
-/** Component for parent node in BlockView.
+/** Component for a parent node in BlockView.
  *  This is the large block that displays the selected node in the Explorer.
  */
 const BlockParentNode: FC<NodeProps> = ({ data }) => {
@@ -84,7 +84,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
           node={node}
           isLocation={IsLocation(node)}
           isSplitView={isSplitView}
-          isSelected={node.isBlockSelected}
+          isSelected={node?.isBlockSelected}
         />
         <TerminalsComponent
           node={node}
@@ -99,7 +99,8 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
           terminalMenu={terminalMenu}
         />
         <HandleComponent
-          aspect={node.aspect}
+          node={node}
+          nodes={nodes}
           terminals={FilterTerminals(node, isSplitView)}
           splitView={isSplitView}
         />

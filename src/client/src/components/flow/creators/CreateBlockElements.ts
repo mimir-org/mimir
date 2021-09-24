@@ -25,8 +25,8 @@ const CreateBlockElements = (
   const parentBlock = CreateParentBlockNode(selectedNode, splitView);
   if (parentBlock) elements.push(parentBlock);
   if (splitViewNode) {
-    const parentSplitNode = CreateParentBlockNode(splitViewNode, splitView);
-    if (parentSplitNode) elements.push(parentSplitNode);
+    const parentSplitBlock = CreateParentBlockNode(splitViewNode, splitView);
+    if (parentSplitBlock) elements.push(parentSplitBlock);
   }
 
   // Draw child nodes

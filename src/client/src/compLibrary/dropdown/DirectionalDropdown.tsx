@@ -10,14 +10,12 @@ interface Props {
 
 const DirectionalDropdown = ({ value, onChange }: Props) => {
   const [isListOpen, setIsListOpen] = useState(false);
-  const [selected, setSelected] = useState(
-    ConnectorType[ConnectorType.Input.toString()]
-  );
+  const [selected, setSelected] = useState(ConnectorType[ConnectorType.Input]);
   const stringIsNumber = (value) => isNaN(Number(value)) === false;
 
   useEffect(() => {
     if (value) {
-      setSelected(ConnectorType[value.toString()]);
+      setSelected(ConnectorType[value]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -47,7 +45,7 @@ const DirectionalDropdown = ({ value, onChange }: Props) => {
                     onClick={() => {
                       setSelected(ConnectorType[item]);
                       setIsListOpen(false);
-                      onChange(ConnectorType[item]);
+                      onChange(item);
                     }}
                   >
                     {ConnectorType[item]}

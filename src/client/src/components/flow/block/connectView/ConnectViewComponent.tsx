@@ -15,8 +15,10 @@ interface Props {
   connectMenu: boolean;
 }
 
-/** Component for the ConnectView menu. This is the menu in the upper-left corner of a parent node.
- *  The component returns a drop-down menu where you can select the children nodes.
+/**
+ * Component for the ConnectView menu in BlockView
+ * @param param0
+ * @returns a drop-down list from where you can select a nodes' children
  */
 const ConnectViewComponent = ({
   isMenuOpen,

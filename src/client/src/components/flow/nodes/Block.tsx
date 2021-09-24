@@ -13,13 +13,13 @@ interface Props {
  */
 const Block = ({ node, isLocation, isSplitView, isSelected }: Props) => (
   <BlockParentBox
-    id={"function-block-" + node.id}
+    id={"function-block-" + node?.id}
     location={isLocation}
     splitView={isSplitView}
     selected={isSelected}
   >
     <div className="banner">
-      <h3 className="header">{node.label ?? node.name}</h3>
+      <h3 className="header">{node?.label ?? node?.name}</h3>
     </div>
   </BlockParentBox>
 );

@@ -47,6 +47,7 @@
     <ProjectReference Include="..\Modules\AasParser\AasParserModule.csproj" />
     <ProjectReference Include="..\Modules\AzureActiveDirectory\AzureActiveDirectoryModule.csproj" />
     <ProjectReference Include="..\Modules\DefaultParserModule\DefaultParserModule.csproj" />
+    <ProjectReference Include="..\Modules\FamModule\EventHubModule.csproj" />
     <ProjectReference Include="..\Modules\MicrosoftSqlServerModule\MicrosoftSqlServerModule.csproj" />
   </ItemGroup>
 

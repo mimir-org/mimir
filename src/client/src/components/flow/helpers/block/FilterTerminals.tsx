@@ -9,11 +9,11 @@ import {
   IsTransportTerminal,
 } from "../common";
 
-/* Component to filter the terminals displayed on the nodes in BlockView 
-   FilterTerminals returns a call to SortTerminals that sorts the filtered list */
-
+/* Component to filter the terminals displayed on the nodes in BlockView. 
+   FilterTerminals returns a call to SortTerminals that sorts the filtered list. */
 const FilterTerminals = (node: Node, splitView: boolean) => {
   let filteredTerminals: Connector[] = [];
+  if (node === undefined) return [];
 
   if (splitView) {
     node.connectors?.forEach((conn) => {
