@@ -18,7 +18,7 @@ using Mb.Models.Modules;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using Terminal = Mb.Models.Data.Terminal;
+using Attribute = Mb.Models.Data.Attribute;
 
 namespace Mb.Core.Services
 {
@@ -32,8 +32,12 @@ namespace Mb.Core.Services
         private readonly ICommonRepository _commonRepository;
         private readonly IConnectorRepository _connectorRepository;
         private readonly IModuleService _moduleService;
+        private readonly IAttributeRepository _attributeRepository;
 
-        public ProjectService(IProjectRepository projectRepository, IMapper mapper, IHttpContextAccessor contextAccessor, INodeRepository nodeRepository, IEdgeRepository edgeRepository, ICommonRepository commonRepository, IConnectorRepository connectorRepository, IModuleService moduleService)
+        public ProjectService(IProjectRepository projectRepository, IMapper mapper,
+            IHttpContextAccessor contextAccessor, INodeRepository nodeRepository, IEdgeRepository edgeRepository,
+            ICommonRepository commonRepository, IConnectorRepository connectorRepository, IModuleService moduleService,
+            IAttributeRepository attributeRepository)
         {
             _projectRepository = projectRepository;
             _mapper = mapper;
@@ -43,6 +47,7 @@ namespace Mb.Core.Services
             _commonRepository = commonRepository;
             _connectorRepository = connectorRepository;
             _moduleService = moduleService;
+            _attributeRepository = attributeRepository;
         }
 
         /// <summary>
@@ -96,7 +101,6 @@ namespace Mb.Core.Services
                 .Include("Nodes.Attributes")
                 .Include("Nodes.Connectors")
                 .Include("Nodes.Connectors.Attributes")
-                .Include("Nodes.Symbol")
                 .Include("Nodes.Composites")
                 .Include("Nodes.Composites.Attributes")
                 .AsSplitQuery()
@@ -116,7 +120,8 @@ namespace Mb.Core.Services
                         foreach (var attribute in node.Attributes)
                         {
                             if (!string.IsNullOrEmpty(attribute.UnitString))
-                                attribute.Units = JsonConvert.DeserializeObject<ICollection<Unit>>(attribute.UnitString);
+                                attribute.Units =
+                                    JsonConvert.DeserializeObject<ICollection<Unit>>(attribute.UnitString);
 
                         }
                     }
@@ -130,7 +135,8 @@ namespace Mb.Core.Services
                                 foreach (var attribute in connector.Attributes)
                                 {
                                     if (!string.IsNullOrEmpty(attribute.UnitString))
-                                        attribute.Units = JsonConvert.DeserializeObject<ICollection<Unit>>(attribute.UnitString);
+                                        attribute.Units =
+                                            JsonConvert.DeserializeObject<ICollection<Unit>>(attribute.UnitString);
                                 }
                             }
                         }
@@ -144,8 +150,9 @@ namespace Mb.Core.Services
                             {
                                 foreach (var attribute in composite.Attributes)
                                 {
-                                    if(!string.IsNullOrEmpty(attribute.UnitString))
-                                        attribute.Units = JsonConvert.DeserializeObject<ICollection<Unit>>(attribute.UnitString);
+                                    if (!string.IsNullOrEmpty(attribute.UnitString))
+                                        attribute.Units =
+                                            JsonConvert.DeserializeObject<ICollection<Unit>>(attribute.UnitString);
                                 }
                             }
                         }
@@ -153,7 +160,8 @@ namespace Mb.Core.Services
 
                     if (node.MasterProjectId != id)
                     {
-                        var partOfEdge = node.Connectors.OfType<Relation>().FirstOrDefault(x => x.Type == ConnectorType.Input);
+                        var partOfEdge = node.Connectors.OfType<Relation>()
+                            .FirstOrDefault(x => x.Type == ConnectorType.Input);
 
                         if (partOfEdge?.Node != null)
                         {
@@ -175,7 +183,8 @@ namespace Mb.Core.Services
         public async Task<Project> ImportProject(ProjectAm project)
         {
             if (project == null || string.IsNullOrEmpty(project.Id))
-                throw new ModelBuilderInvalidOperationException("You can't import an project that is null or missing id");
+                throw new ModelBuilderInvalidOperationException(
+                    "You can't import an project that is null or missing id");
 
             if (_projectRepository.FindBy(x => x.Id == project.Id).Any())
                 return await UpdateProject(project.Id, project);
@@ -305,7 +314,8 @@ namespace Mb.Core.Services
             return await GetProject(id);
         }
 
-        private async Task ResolveSubProjects(ICollection<Node> subNodes, ICollection<Node> subDeleteNodes, ICollection<Edge> subEdges, ICollection<Edge> subDeleteEdges, string projectId)
+        private async Task ResolveSubProjects(ICollection<Node> subNodes, ICollection<Node> subDeleteNodes,
+            ICollection<Edge> subEdges, ICollection<Edge> subDeleteEdges, string projectId)
         {
             if (!subNodes.Any() && !subDeleteNodes.Any() && !subEdges.Any() && !subDeleteEdges.Any())
                 return;
@@ -354,7 +364,8 @@ namespace Mb.Core.Services
             var existingProjectNodesCount = existingProject.Nodes.Count;
 
             if (masterNodesCount > existingProjectNodesCount)
-                throw new ModelBuilderInvalidOperationException("You can't delete a project that is master for other sub projects.");
+                throw new ModelBuilderInvalidOperationException(
+                    "You can't delete a project that is master for other sub projects.");
 
 
             var nodesToDelete = existingProject.Nodes.Where(x => x.MasterProjectId == projectId).ToList();
@@ -376,7 +387,7 @@ namespace Mb.Core.Services
         {
             var project = await GetProject(projectId);
 
-            if (!_moduleService.ParserModules.ContainsKey(parser.ToLower()))
+            if (_moduleService.Modules.All(x => !string.Equals(x.Name, parser, StringComparison.CurrentCultureIgnoreCase)))
                 throw new ModelBuilderModuleException($"There is no parser with key: {parser}");
 
             var par = _moduleService.Resolve<IModelBuilderParser>(parser);
@@ -396,7 +407,7 @@ namespace Mb.Core.Services
             await using var stream = new MemoryStream();
             await file.CopyToAsync(stream, cancellationToken);
 
-            if (!_moduleService.ParserModules.ContainsKey(parser.ToLower()))
+            if (_moduleService.Modules.All(x => !string.Equals(x.Name, parser, StringComparison.CurrentCultureIgnoreCase)))
                 throw new ModelBuilderModuleException($"There is no parser with key: {parser}");
 
             var par = _moduleService.Resolve<IModelBuilderParser>(parser);
@@ -404,7 +415,202 @@ namespace Mb.Core.Services
             return await ImportProject(project);
         }
 
+        /// <summary>
+        /// Lock or unlock an attribute
+        /// </summary>
+        /// <param name="lockUnlockAttributeAm"></param>
+        /// <returns>Status204NoContent</returns>
+        public async Task LockUnlockAttribute(LockUnlockAttributeAm lockUnlockAttributeAm)
+        {
+            if (lockUnlockAttributeAm?.Id == null)
+                return;
+
+            var attribute = await _attributeRepository.GetAsync(lockUnlockAttributeAm.Id);
+
+            if (attribute == null)
+                return;
+
+            if (attribute.IsLocked == lockUnlockAttributeAm.IsLocked)
+                return;
+
+            var userName = _contextAccessor.GetName();
+
+            if (attribute.IsLocked && attribute.IsLockedBy != userName)
+                return;
+
+            attribute.IsLocked = lockUnlockAttributeAm.IsLocked;
+            attribute.IsLockedBy = attribute.IsLocked ? userName : null;
+
+            await _attributeRepository.SaveAsync();
+        }
+
+        /// <summary>
+        /// Locks or unlocks a node (including all attributes on the node) and all children nodes and attributes
+        /// </summary>
+        /// <param name="lockUnlockNodeAm"></param>
+        /// <returns>Status204NoContent</returns>
+        public async Task LockUnlockNode(LockUnlockNodeAm lockUnlockNodeAm)
+        {
+
+            if (lockUnlockNodeAm?.Id == null || lockUnlockNodeAm.ProjectId == null)
+                return;
+
+            var userName = _contextAccessor.GetName();
+
+            var allNodesInProject = _nodeRepository.GetAll(false).Where(x => x.MasterProjectId == lockUnlockNodeAm.ProjectId);
+            var allAttributesInProject = _attributeRepository.GetAll(false).Where(x => x.Node != null && x.Node.MasterProjectId == lockUnlockNodeAm.ProjectId);
+            var allEdgesInProject = _edgeRepository.GetAll(false).Where(x => x.ToNodeId != null && x.ToNode.MasterProjectId == lockUnlockNodeAm.ProjectId);
+
+            var node = allNodesInProject.FirstOrDefault(x => x.Id == lockUnlockNodeAm.Id && x.MasterProjectId == lockUnlockNodeAm.ProjectId);
+
+            if (node?.Id == null)
+                return;
+
+            if (node.IsLocked == lockUnlockNodeAm.IsLocked)
+                return;
+
+            if (node.IsLocked && userName != node.IsLockedBy)
+                return;
+
+            node.IsLocked = lockUnlockNodeAm.IsLocked;
+            node.IsLockedBy = node.IsLocked ? userName : null;
+
+            var nodeAttributes = allAttributesInProject.Where(x => x.NodeId == node.Id);
+            
+            LockUnlockAttributes(nodeAttributes, node, userName);
+            LockUnlockNodesAndAttributesRecursive(node, allNodesInProject, allAttributesInProject, allEdgesInProject, userName);
+
+            await _nodeRepository.SaveAsync();
+            await _attributeRepository.SaveAsync();
+        }
+
+        /// <summary>
+        /// Returns a list of all locked nodes id's
+        /// If param 'projectId' is null all locked nodes in the database will be returned
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns>List of locked node id></returns>
+        public async Task<List<string>> GetLockedNodes(string projectId)
+        {
+            return projectId == null 
+                ? await Task.FromResult(_nodeRepository.FindBy(x => x.IsLocked).Select(x => x.Id).ToList())
+                : await Task.FromResult(_nodeRepository.FindBy(x => x.IsLocked && x.MasterProjectId == projectId).Select(x => x.Id).ToList());
+        }
+
+        /// <summary>
+        /// Returns a list of all locked attributes id's
+        /// If param 'projectId' is null all locked attributes in the database will be returned
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns>List of locked attribute id></returns>
+        public async Task<List<string>> GetLockedAttributes(string projectId)
+        {
+            return projectId == null
+                ? await Task.FromResult(_attributeRepository.FindBy(x => x.IsLocked).Select(x => x.Id).ToList())
+                : await Task.FromResult(_attributeRepository.FindBy(x => x.IsLocked && x.Node != null && x.Node.MasterProjectId == projectId).Select(x => x.Id).ToList());
+        }
+
+        /// <summary>
+        /// Resolve commit package
+        /// </summary>
+        /// <param name="package"></param>
+        /// <returns></returns>
+        public async Task CommitProject(CommitPackage package)
+        {
+            // TODO: We are missing UX here to define what to do in this workflow. For now, we only send data.
+
+            if (package == null)
+                throw new ModelBuilderNullReferenceException("Can't commit a null reference commit package");
+
+            var project = await GetProject(package.ProjectId);
+            
+            if (_moduleService.Modules.All(x => !string.Equals(x.Name, package.Parser, StringComparison.CurrentCultureIgnoreCase)))
+                throw new ModelBuilderModuleException($"There is no parser with key: {package.Parser}");
+
+            var senders = _moduleService.Modules.Where(x => x.Instance is IModelBuilderSyncService).ToList();
+
+            if (!senders.Any())
+                throw new ModelBuilderModuleException($"There is no sender module");
+
+            var parser = _moduleService.Resolve<IModelBuilderParser>(package.Parser);
+            var data = await parser.SerializeProject(project);
+            var projectString = System.Text.Encoding.UTF8.GetString(data);
+
+            foreach (var sender in senders)
+            {
+                if(sender.Instance is IModelBuilderSyncService client)
+                {
+                    await client.SendData(projectString);
+                }
+            }
+        }
+
         #region Private methods
+
+        private void LockUnlockNodesAndAttributesRecursive(
+            Node parentNode, 
+            IQueryable<Node> allNodesInProject, 
+            IQueryable<Attribute> allAttributesInProject, 
+            IQueryable<Edge> allEdgesInProject,  
+            string userName)
+        {
+            if (parentNode?.Id == null)
+                return;
+
+            var edges = allEdgesInProject.Where(x => x.FromNodeId == parentNode.Id);
+
+            if(!edges.Any())
+                return;
+
+            foreach (var edge in edges)
+            {
+                if (edge?.ToNodeId == null)
+                    return;
+
+                var childNode = allNodesInProject.FirstOrDefault(x => x.Id == edge.ToNodeId);
+
+                if (childNode?.Id == null)
+                    continue;
+
+                if(childNode.IsLocked == parentNode.IsLocked)
+                    continue;
+
+                if(childNode.IsLocked && userName != childNode.IsLockedBy)
+                    continue;
+
+                if (childNode.Level > parentNode.Level)
+                {
+                    childNode.IsLocked = parentNode.IsLocked;
+                    childNode.IsLockedBy = childNode.IsLocked ? userName : null;
+                    
+                    var nodeAttributes = allAttributesInProject.Where(x => x.NodeId == childNode.Id);
+                    LockUnlockAttributes(nodeAttributes, childNode, userName);
+                }
+
+                LockUnlockNodesAndAttributesRecursive(childNode, allNodesInProject, allAttributesInProject, allEdgesInProject, userName);
+            }
+        }
+
+        private void LockUnlockAttributes(IQueryable<Attribute> attributes, Node node, string userName)
+        {
+            if (!attributes.Any())
+                return;
+
+            foreach (var nodeAttribute in attributes)
+            {
+                if (nodeAttribute == null)
+                    continue;
+
+                if (nodeAttribute.IsLocked == node.IsLocked)
+                    continue;
+
+                if (nodeAttribute.IsLocked && nodeAttribute.IsLockedBy != userName)
+                    continue;
+
+                nodeAttribute.IsLocked = node.IsLocked;
+                nodeAttribute.IsLockedBy = nodeAttribute.IsLocked ? userName : null;
+            }
+        }
 
         private Node CreateInitAspectNode(Aspect aspect, string version, string projectId)
         {

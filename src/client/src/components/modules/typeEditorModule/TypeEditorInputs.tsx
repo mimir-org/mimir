@@ -1,104 +1,92 @@
-import { useState, useEffect } from "react";
-import { DropdownMenu } from ".";
 import { TextResources } from "../../../assets/text";
 import { Dropdown } from "../../../compLibrary/dropdown";
-import { Aspect, ObjectType } from "../../../models";
-import { TypeEditorState } from "../../../redux/store/typeEditor/types";
+import { BlobData, CreateLibraryType, LocationType } from "../../../models";
 import {
   GetAspects,
+  GetBlobData,
+  GetLocationTypes,
   GetObjectTypes,
   IsLocation,
-  GetDefaultValue,
-  GetTypeValue,
-  FieldValidator,
-  ModeEdit,
-  ModeNew,
 } from "./helpers";
 import { TextInput, TypeInfo, TypeNameInput } from "./styled";
-import {
-  chooseSymbol,
-  chooseTypeName,
-  chooseAspect,
-  chooseObjectType,
-} from "../../../redux/store/typeEditor/actions";
 
 interface Props {
-  state: TypeEditorState;
-  dispatch;
+  onChange: Function;
+  createLibraryType: CreateLibraryType;
+  icons: BlobData[];
+  locationTypes: LocationType[];
 }
 
-const TypeEditorInputs = ({ state, dispatch }: Props) => {
-  const aspect = state.createLibraryType.aspect;
-  const mode = state.mode;
-  const [typeName, setTypeName] = useState("");
-
-  const onAspectChange = (value) => {
-    dispatch(chooseAspect(mode, Number(value)));
-  };
-
-  const onObjectTypeChange = (value) => {
-    dispatch(chooseObjectType(mode, Number(value)));
-  };
-
-  const onNameChange = (e) => {
-    setTypeName(e.target.value);
-    dispatch(chooseTypeName(mode, e.target.value));
-  };
-
-  const onSymbolChange = (value) => {
-    dispatch(chooseSymbol(mode, value.id));
-  };
-
-  useEffect(() => {
-    if (ModeNew(mode)) {
-      setTypeName(GetDefaultValue("typeName"));
-    }
-    if (ModeEdit(mode)) {
-      setTypeName(GetTypeValue(state, "typeName"));
-    }
-  }, [state, mode]);
-
+const TypeEditorInputs = ({
+  onChange,
+  createLibraryType,
+  icons,
+  locationTypes,
+}: Props) => {
   return (
     <TypeInfo>
-      <DropdownMenu
+      <Dropdown
         label={TextResources.TypeEditor_Aspect}
-        items={GetAspects(state)}
-        type={Aspect.NotSet}
-        onChange={onAspectChange}
-        disabled={ModeEdit(mode)}
-        state={state}
+        items={GetAspects()}
+        keyProp="id"
+        valueProp="name"
+        onChange={(data: any) => onChange("aspect", Number(data))}
+        // disabled={FieldValidator(state, "symbol")}
+        defaultValue={createLibraryType && createLibraryType.aspect?.toString()}
       />
-      <DropdownMenu
-        label={
-          IsLocation(aspect)
-            ? TextResources.TypeEditor_Location_Type
-            : TextResources.TypeEditor_Object_Type
-        }
-        items={GetObjectTypes(state)}
-        type={ObjectType.NotSet}
-        onChange={onObjectTypeChange}
-        disabled={ModeEdit(mode) ? true : FieldValidator(state, "objectType")}
-        state={state}
-      />
-      <TypeNameInput disabled={FieldValidator(state, "typeName")}>
+      {createLibraryType && !IsLocation(createLibraryType.aspect) && (
+        <Dropdown
+          label={TextResources.TypeEditor_Object_Type}
+          items={GetObjectTypes()}
+          keyProp="id"
+          valueProp="name"
+          onChange={(data: any) => onChange("objectType", Number(data))}
+          // disabled={FieldValidator(state, "symbol")}
+          defaultValue={
+            createLibraryType && createLibraryType.objectType?.toString()
+          }
+        />
+      )}
+
+      {createLibraryType && IsLocation(createLibraryType.aspect) && (
+        <Dropdown
+          label={TextResources.TypeEditor_Location_Type}
+          items={GetLocationTypes(locationTypes)}
+          hasCategory={true}
+          keyProp="id"
+          valueProp="name"
+          onChange={(data: any) => onChange("locationType", data)}
+          // disabled={FieldValidator(state, "symbol")}
+          defaultValue={
+            createLibraryType &&
+            createLibraryType.locationType &&
+            createLibraryType.locationType.toString()
+          }
+        />
+      )}
+      <TypeNameInput>
         <p>{TextResources.TypeEditor_Type_Name}</p>
         <TextInput
           inputType="text"
-          defaultValue={typeName}
+          defaultValue={createLibraryType && createLibraryType.name}
           placeholder={TextResources.TypeEditor_Type_Placeholder}
-          onChange={onNameChange}
-          disabled={FieldValidator(state, "typeName")}
+          onChange={(e: any) => {
+            onChange("name", e.target.value);
+          }}
+          //   disabled={FieldValidator(state, "typeName")}
         />
       </TypeNameInput>
       <Dropdown
         label={TextResources.TypeEditor_Symbol}
-        items={state.icons}
+        items={GetBlobData(icons)}
         keyProp="id"
         valueProp="name"
         valueImageProp="data"
-        onChange={onSymbolChange}
-        disabled={FieldValidator(state, "symbol")}
-        defaultValue={ModeEdit(mode) ? GetTypeValue(state, "symbol") : null}
+        onChange={(data: any) => {
+          onChange("symbolId", data);
+        }}
+        // disabled={FieldValidator(state, "symbol")}
+        defaultValue={createLibraryType && createLibraryType.symbolId}
       />
     </TypeInfo>
   );

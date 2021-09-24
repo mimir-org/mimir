@@ -19,5 +19,10 @@ namespace Mb.Core.Services.Contracts
         Task DeleteProject(string projectId);
         Task<(byte[] file, FileFormat format)> CreateFile(string projectId, string parser);
         Task<Project> CreateFromFile(IFormFile file, CancellationToken cancellationToken, string parser);
+        Task LockUnlockNode(LockUnlockNodeAm lockUnlockNodeAm);
+        Task LockUnlockAttribute(LockUnlockAttributeAm lockUnlockAttributeAm);
+        Task<List<string>> GetLockedNodes(string projectId);
+        Task<List<string>> GetLockedAttributes(string projectId);
+        Task CommitProject(CommitPackage package);
     }
 }

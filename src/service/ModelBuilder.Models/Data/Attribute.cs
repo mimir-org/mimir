@@ -12,11 +12,13 @@ namespace Mb.Models.Data
         public string Id { get; set; }
         public string Key { get; set; }
         public string Value { get; set; }
+        public string SemanticReference { get; set; }
         public string AttributeTypeId { get; set; }
+        public bool IsLocked {  get; set; }
+        public string IsLockedBy {  get; set; }
         
         public string SelectedUnitId { get; set; }
-        //public Unit Unit => Units?.SingleOrDefault(x => x.Id.Equals(SelectedUnitId));
-
+        
         public string QualifierId { get; set; }
         public AttributeQualifier Qualifier { get; set; }
 
@@ -51,5 +53,6 @@ namespace Mb.Models.Data
 
         [JsonIgnore]
         public virtual Transport Transport { get; set; }
+
     }
 }

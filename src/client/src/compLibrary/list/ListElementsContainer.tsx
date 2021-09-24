@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const ListElementsContainer = styled.div`
-  max-height: 230px;
+  height: 100%;
   overflow: hidden;
   overflow-y: auto;
 
