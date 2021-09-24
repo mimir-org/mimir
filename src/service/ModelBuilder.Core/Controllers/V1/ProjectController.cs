@@ -426,14 +426,14 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetLockedNodes(string projectId)
+        public IActionResult GetLockedNodes(string projectId)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                var result = await _projectService.GetLockedNodes(projectId);
+                var result = _projectService.GetLockedNodes(projectId).ToList();
                 return Ok(result);
             }
             catch (Exception e)
@@ -454,14 +454,14 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetLockedAttributes(string projectId)
+        public IActionResult GetLockedAttributes(string projectId)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                var result = await _projectService.GetLockedAttributes(projectId);
+                var result = _projectService.GetLockedAttributes(projectId).ToList();
                 return Ok(result);
             }
             catch (Exception e)

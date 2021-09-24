@@ -490,11 +490,11 @@ namespace Mb.Core.Services
         /// </summary>
         /// <param name="projectId"></param>
         /// <returns>List of locked node id></returns>
-        public async Task<List<string>> GetLockedNodes(string projectId)
+        public IEnumerable<string> GetLockedNodes(string projectId)
         {
             return projectId == null 
-                ? await Task.FromResult(_nodeRepository.FindBy(x => x.IsLocked).Select(x => x.Id).ToList())
-                : await Task.FromResult(_nodeRepository.FindBy(x => x.IsLocked && x.MasterProjectId == projectId).Select(x => x.Id).ToList());
+                ? _nodeRepository.FindBy(x => x.IsLocked).Select(x => x.Id)
+                : _nodeRepository.FindBy(x => x.IsLocked && x.MasterProjectId == projectId).Select(x => x.Id);
         }
 
         /// <summary>
@@ -503,11 +503,11 @@ namespace Mb.Core.Services
         /// </summary>
         /// <param name="projectId"></param>
         /// <returns>List of locked attribute id></returns>
-        public async Task<List<string>> GetLockedAttributes(string projectId)
+        public IEnumerable<string> GetLockedAttributes(string projectId)
         {
             return projectId == null
-                ? await Task.FromResult(_attributeRepository.FindBy(x => x.IsLocked).Select(x => x.Id).ToList())
-                : await Task.FromResult(_attributeRepository.FindBy(x => x.IsLocked && x.Node != null && x.Node.MasterProjectId == projectId).Select(x => x.Id).ToList());
+                ? _attributeRepository.FindBy(x => x.IsLocked).Select(x => x.Id)
+                : _attributeRepository.FindBy(x => x.IsLocked && x.Node != null && x.Node.MasterProjectId == projectId).Select(x => x.Id);
         }
 
         /// <summary>
