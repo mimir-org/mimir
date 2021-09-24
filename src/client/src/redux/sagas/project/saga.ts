@@ -349,8 +349,6 @@ export function* lockUnlockNode(action: LockUnlockNode) {
     const url = process.env.REACT_APP_API_BASE_URL + "project/node/lockunlock";
     const response = yield call(post, url, action.payload);
 
-    console.log(response);
-
     // This is a bad request
     if (response.status === 400) {
       const data = GetBadResponseData(response);
@@ -380,7 +378,6 @@ export function* lockUnlockNode(action: LockUnlockNode) {
       payload: payload,
     });
   } catch (error) {
-    console.log(error);
     const apiError = {
       key: LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR,
       errorMessage: error.message,

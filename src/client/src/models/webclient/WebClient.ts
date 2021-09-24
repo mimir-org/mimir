@@ -24,24 +24,20 @@ export async function http<T>(request: RequestInfo): Promise<HttpResponse<T>> {
   try {
     response = await fetch(request);
 
-    if (response.status === 204) {
-      throw new Error(response.statusText);
-    }
-
-    if (response.status === 404) {
-      throw new Error(TextResources.Error_ServerUnavailable);
-    }
-
-    response.data = await response.json();
-
     if (
-      (response.status >= 200 && response.status < 300) ||
-      response.status === 400
+      !(
+        (response.status >= 200 && response.status < 300) ||
+        response.status === 400
+      )
     ) {
-      return response;
-    } else {
-      throw new Error(response.data.toString());
+      throw new Error();
     }
+
+    if (response.status !== 204) {
+      response.data = await response.json();
+    }
+
+    return response;
   } catch (e) {
     throw new Error(TextResources.Error_ServerUnavailable);
   }
@@ -54,7 +50,7 @@ export async function get<T>(
   const req = { ...RequestInitDefault, ...args };
   const token = await Token();
   req.headers["Authorization"] = token;
-  return await http<T>(new Request(path, req));
+  return http<T>(new Request(path, req));
 }
 
 export async function post<T>(
@@ -65,7 +61,7 @@ export async function post<T>(
   const token = await Token();
   const req = { ...RequestInitDefault, ...args };
   req.headers["Authorization"] = token;
-  return await http<T>(new Request(path, req));
+  return http<T>(new Request(path, req));
 }
 
 export async function put<T>(
@@ -76,5 +72,5 @@ export async function put<T>(
   const token = await Token();
   const req = { ...RequestInitDefault, ...args };
   req.headers["Authorization"] = token;
-  return await http<T>(new Request(path, req));
+  return http<T>(new Request(path, req));
 }
