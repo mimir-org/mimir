@@ -46,7 +46,7 @@ namespace RdfParserModule
 
         public FileFormat GetFileFormat()
         {
-            return FileFormat.Xml;
+            return FileFormat.NTriples;
         }
     }
 }

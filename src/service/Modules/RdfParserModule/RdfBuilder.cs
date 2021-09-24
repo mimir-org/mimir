@@ -9,6 +9,7 @@ using Mb.Models.Enums;
 using VDS.RDF;
 using VDS.RDF.Ontology;
 using VDS.RDF.Parsing;
+using VDS.RDF.Parsing.Tokens;
 using VDS.RDF.Writing;
 using Attribute = Mb.Models.Data.Attribute;
 
@@ -95,7 +96,6 @@ namespace RdfParserModule
             return g;
         }
 
-
         private static IGraph BuildNodes(IGraph g, Project _project)
         {
             var label = g.CreateUriNode("rdfs:label");
@@ -153,13 +153,13 @@ namespace RdfParserModule
                     var prefix = "";
                     switch (node.Aspect)
                     {
-                        case (Aspect)2:
+                        case Aspect.Function:
                             prefix = "=";
                             break;
-                        case (Aspect)4:
+                        case Aspect.Product:
                             prefix = "-";
                             break;
-                        case (Aspect)8:
+                        case Aspect.Location:
                             prefix = "+";
                             break;
                     }
@@ -238,8 +238,11 @@ namespace RdfParserModule
                     case Relation relation:
                         var relationString = relation.RelationType.ToString();
 
-                        //TODO If relation is PartOf, ignore this direction
-                        if (relationString.ToLower().Contains("partof")) { break; }
+                        //TODO If relation is PartOf, put it to hasChild
+                        if (relationString.ToLower().Contains("partof"))
+                        {
+                            relationString = "hasChild";
+                        }
                         IUriNode relationFromNode = g.CreateUriNode("imf:" + relationString);
                         g.Assert(new Triple(fromNode, relationFromNode, toNode));
                         break;
@@ -251,6 +254,10 @@ namespace RdfParserModule
                         var relationString = relation.RelationType.ToString();
 
                         //TODO Can be removed when Mimir has correct IMF relation names
+                        if (relationString.ToLower().Contains("partof"))
+                        {
+                            relationString = "hasParent";
+                        }
                         relationString = relationString.Substring(0, 1).ToLower() + relationString.Substring(1);
 
 
@@ -278,11 +285,9 @@ namespace RdfParserModule
             return g;
         }
 
-
         private static string RdfToString(IGraph g)
         {
-            //NTriplesWriter writer = new NTriplesWriter();
-            CompressingTurtleWriter writer = new CompressingTurtleWriter();
+            NTriplesWriter writer = new NTriplesWriter();
 
             string data = StringWriter.Write(g, writer);
 
