@@ -372,13 +372,18 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> LockUnlockNode([FromBody] LockUnlockNodeAm lockUnlockAm)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             try
             {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
-
                 await _projectService.LockUnlockNode(lockUnlockAm);
                 return Ok();
+            }
+            catch (ModelBuilderUnauthorizedAccessException e)
+            {
+                ModelState.AddModelError("node/lockUnlock", e.Message);
+                return BadRequest(ModelState);
             }
             catch (Exception e)
             {
@@ -400,13 +405,18 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> LockUnlockAttribute([FromBody] LockUnlockAttributeAm lockUnlockAttributeAm)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             try
             {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
-
                 await _projectService.LockUnlockAttribute(lockUnlockAttributeAm);
                 return Ok();
+            }
+            catch (ModelBuilderUnauthorizedAccessException e)
+            {
+                ModelState.AddModelError("attribute/lockUnlock", e.Message);
+                return BadRequest(ModelState);
             }
             catch (Exception e)
             {
@@ -428,11 +438,11 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult GetLockedNodes(string projectId)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             try
             {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
-
                 var result = _projectService.GetLockedNodes(projectId).ToList();
                 return Ok(result);
             }
@@ -456,11 +466,11 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult GetLockedAttributes(string projectId)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             try
             {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
-
                 var result = _projectService.GetLockedAttributes(projectId).ToList();
                 return Ok(result);
             }

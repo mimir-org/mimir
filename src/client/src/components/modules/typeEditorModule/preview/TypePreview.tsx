@@ -4,8 +4,9 @@ import { ObjectBlock } from "./ObjectBlock";
 import { ListLabel, ListWrapper } from "../../../../compLibrary";
 import { PreviewArea, InfoWrapper } from "../styled";
 import {
-  IsLocation,
   IsFunction,
+  IsLocation,
+  IsProduct,
   IsObjectBlock,
   IsTransport,
   IsInterface,
@@ -17,21 +18,32 @@ import { TextResources } from "../../../../assets/text";
 interface Props {
   createLibraryType: CreateLibraryType;
   rds: Rds;
-  terminal: TerminalType;
+  inputTerminals?: TerminalType[];
+  outputTerminals?: TerminalType[];
+  terminal?: TerminalType;
 }
 
-export const TypePreview = ({ createLibraryType, rds, terminal }: Props) => {
+export const TypePreview = ({
+  createLibraryType,
+  rds,
+  terminal,
+  inputTerminals,
+  outputTerminals,
+}: Props) => {
   const showObjectBlock = () => {
     if (
       (IsLocation(createLibraryType?.aspect) &&
         createLibraryType?.locationType !== "") ||
       (IsFunction(createLibraryType?.aspect) &&
-        IsObjectBlock(createLibraryType?.objectType))
+        IsObjectBlock(createLibraryType?.objectType)) ||
+      IsProduct(createLibraryType?.aspect)
     ) {
       return (
         <ObjectBlock
           createLibraryType={createLibraryType}
           rdsName={rds?.name}
+          inputTerminals={inputTerminals}
+          outputTerminals={outputTerminals}
         />
       );
     }

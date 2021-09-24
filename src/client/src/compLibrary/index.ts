@@ -12,7 +12,6 @@ export { default as DropdownList } from "./dropdown/DropdownList";
 export { default as DropdownHeader } from "./dropdown/DropdownHeader";
 export { default as DirectionalDropdown } from "./dropdown/DirectionalDropdown";
 export { default as Label } from "./input/Label";
-export { default as Select } from "./input/Select";
 export { default as AttributeField } from "./input/AttributeField";
 export { default as Textarea } from "./input/Textarea";
 export { default as Color } from "./colors/Color";

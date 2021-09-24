@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { UseIndentLevel, GetAspectColor } from "../../../assets/helpers";
 import { Node } from "../../../models";
+
 const AspectBox = styled.div`
   display: flex;
   cursor: pointer;

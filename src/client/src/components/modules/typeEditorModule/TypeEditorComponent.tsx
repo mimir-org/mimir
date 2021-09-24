@@ -1,12 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { TerminalTypeItem } from "../../../models";
-import { TextResources } from "../../../assets/text";
-import { AddIcon, CheckIcon, CloseIcon } from "../../../assets/icons/common";
-import { TypeEditorList, TypeEditorInputs, TypePreview } from "./";
-import { TypeEditorState } from "../../../redux/store/typeEditor/types";
 import { RootState } from "../../../redux/store";
-import { ListType } from "./TypeEditorList";
+import { TypeEditorState } from "../../../redux/store/typeEditor/types";
 import { setModulesVisibility } from "../../../redux/store/modules/actions";
 import {
   closeTypeEditor,
@@ -18,14 +13,11 @@ import {
   updateTerminalType,
   saveLibraryType,
 } from "../../../redux/store/typeEditor/actions";
-import {
-  GetSelectedRds,
-  GetSelectedTerminal,
-  IsLocation,
-  IsInterface,
-  IsObjectBlock,
-  IsFunction,
-} from "./helpers";
+import { TerminalTypeItem } from "../../../models";
+import { TypeEditorList, TypeEditorInputs, TypePreview } from "./";
+import { ListType } from "./TypeEditorList";
+import { AddIcon, CheckIcon, CloseIcon } from "../../../assets/icons/common";
+import { TextResources } from "../../../assets/text";
 import {
   TypeEditorWrapper,
   TypeEditorContent,
@@ -34,7 +26,20 @@ import {
   TypePreviewColumn,
   SaveButton,
 } from "./styled";
+import {
+  GetSelectedRds,
+  GetSelectedTerminal,
+  IsLocation,
+  IsInterface,
+  IsObjectBlock,
+  IsFunction,
+} from "./helpers";
+import { GetInputTerminals, GetOutputTerminals } from "./preview/helpers";
 
+/**
+ * Component for adding or editing a type
+ * @returns the visual Type Editor window
+ */
 export const TypeEditorComponent = () => {
   const dispatch = useDispatch();
   const state = useSelector<RootState>((s) => s.typeEditor) as TypeEditorState;
@@ -62,7 +67,7 @@ export const TypeEditorComponent = () => {
     key: string,
     value: TerminalTypeItem,
     categoryId: string,
-    row: number
+    terminalId: string
   ) => {
     if (key === "add") {
       dispatch(addTerminalType(value));
@@ -82,7 +87,6 @@ export const TypeEditorComponent = () => {
               <p>{TextResources.TypeEditor}</p>
               <img src={CloseIcon} alt="close-window" onClick={onCloseEditor} />
             </TypeEditorHeader>
-
             <TypeEditorInputs
               onChange={(key, value) => onChange(key, value)}
               createLibraryType={state?.createLibraryType}
@@ -104,8 +108,13 @@ export const TypeEditorComponent = () => {
                   listType={ListType.Terminals}
                   onChange={
                     IsObjectBlock(state?.createLibraryType.objectType)
-                      ? (key, data, categoryId, row) =>
-                          onTerminalCategoryChange(key, data, categoryId, row)
+                      ? (key, data, categoryId, terminalId) =>
+                          onTerminalCategoryChange(
+                            key,
+                            data,
+                            categoryId,
+                            terminalId
+                          )
                       : (key, data) => onChange(key, data)
                   }
                   // disabled={ModeEdit(mode) ? false : FieldValidator(state, "rds")}
@@ -137,10 +146,27 @@ export const TypeEditorComponent = () => {
                 <TypePreview
                   createLibraryType={state?.createLibraryType}
                   rds={GetSelectedRds(state?.createLibraryType, state.rdsList)}
-                  terminal={GetSelectedTerminal(
-                    state?.createLibraryType,
-                    state.terminals
-                  )}
+                  inputTerminals={
+                    state?.createLibraryType.terminalTypes &&
+                    GetInputTerminals(
+                      state?.createLibraryType,
+                      state?.terminals
+                    )
+                  }
+                  outputTerminals={
+                    state?.createLibraryType.terminalTypes &&
+                    GetOutputTerminals(
+                      state?.createLibraryType,
+                      state?.terminals
+                    )
+                  }
+                  terminal={
+                    state?.createLibraryType.terminalTypeId &&
+                    GetSelectedTerminal(
+                      state?.createLibraryType,
+                      state?.terminals
+                    )
+                  }
                   // disabled={FieldValidator(state, "add")}
                 />
                 <SaveButton onClick={onSave}>

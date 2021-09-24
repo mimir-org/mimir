@@ -69,8 +69,8 @@ const FilterMenu = () => {
       <MenuColumn>
         {isPartOf && (
           <FilterContent
-            type={TextResources.Relations_PartOf}
-            name={TextResources.Relations_PartOf}
+            type={TextResources.Relations_PartOf_Relationship}
+            name={TextResources.Relations_PartOf_Relationship}
             header={true}
             edges={edges}
           />

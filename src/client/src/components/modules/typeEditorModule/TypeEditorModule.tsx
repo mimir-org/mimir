@@ -15,6 +15,11 @@ interface Props {
   selectedElementType: ObjectType;
   onChange: Function;
 }
+/**
+ * Component for opening Type Editor window
+ * @param param0
+ * @returns buttons to add or edit a type in library module
+ */
 export const TypeEditorModule = ({
   selectedElement,
   selectedElementType,
