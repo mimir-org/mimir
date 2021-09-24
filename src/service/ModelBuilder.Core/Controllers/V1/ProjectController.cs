@@ -365,7 +365,6 @@ namespace Mb.Core.Controllers.V1
         /// <param name="lockUnlockAm"></param>
         /// <returns>Status204NoContent</returns>
         [HttpPost("node/lockUnlock")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -378,7 +377,7 @@ namespace Mb.Core.Controllers.V1
             try
             {
                 await _projectService.LockUnlockNode(lockUnlockAm);
-                return Ok();
+                return NoContent();
             }
             catch (ModelBuilderUnauthorizedAccessException e)
             {
@@ -398,7 +397,6 @@ namespace Mb.Core.Controllers.V1
         /// <param name="lockUnlockAttributeAm"></param>
         /// <returns>Status204NoContent</returns>
         [HttpPost("attribute/lockUnlock")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -411,7 +409,7 @@ namespace Mb.Core.Controllers.V1
             try
             {
                 await _projectService.LockUnlockAttribute(lockUnlockAttributeAm);
-                return Ok();
+                return NoContent();
             }
             catch (ModelBuilderUnauthorizedAccessException e)
             {
@@ -433,6 +431,8 @@ namespace Mb.Core.Controllers.V1
         /// <returns>List of locked node id></returns>
         [HttpGet("node/locked")]
         [ProducesResponseType(typeof(ICollection<string>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -444,7 +444,7 @@ namespace Mb.Core.Controllers.V1
             try
             {
                 var result = _projectService.GetLockedNodes(projectId).ToList();
-                return Ok(result);
+                return result.Any() ? Ok(result) : NoContent();
             }
             catch (Exception e)
             {
@@ -461,6 +461,8 @@ namespace Mb.Core.Controllers.V1
         /// <returns>List of locked attribute id></returns>
         [HttpGet("attribute/locked")]
         [ProducesResponseType(typeof(ICollection<string>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -472,7 +474,7 @@ namespace Mb.Core.Controllers.V1
             try
             {
                 var result = _projectService.GetLockedAttributes(projectId).ToList();
-                return Ok(result);
+                return result.Any() ? Ok(result) : NoContent();
             }
             catch (Exception e)
             {
