@@ -5,6 +5,7 @@ import { GetSelectedNode } from "../../flow/helpers/common";
 const OnViewClick = (e: any, dispatch: any, push) => {
   const selectedNode = GetSelectedNode();
 
+  // Block View can only be opened when a node is selected
   if (e.target.alt === VIEW_TYPE.BLOCKVIEW && !selectedNode) return;
 
   const view = e.target.alt;

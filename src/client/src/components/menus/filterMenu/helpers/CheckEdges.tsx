@@ -21,7 +21,7 @@ const CheckEdges = (edges: Edge[], type: RelationType | string, node: Node) => {
   }
 
   // All partOf edges
-  if (type === TextResources.Relations_PartOf) {
+  if (type === TextResources.Relations_PartOf_Relationship) {
     edges?.forEach((edge) => {
       if (IsPartOfTerminal(edge.fromConnector)) elementsToRemove.push(edge);
     });

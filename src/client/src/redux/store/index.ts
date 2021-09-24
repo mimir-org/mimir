@@ -1,5 +1,6 @@
-import { combineReducers, createStore, compose, applyMiddleware } from "redux";
+import storage from "redux-persist/lib/storage";
 import createSagaMiddleware from "redux-saga";
+import { combineReducers, createStore, compose, applyMiddleware } from "redux";
 import { libraryReducer } from "./library/reducers";
 import { typeEditorReducer } from "./typeEditor/reducers";
 import { userReducer } from "./user/reducers";
@@ -12,9 +13,9 @@ import { flowReducer } from "./flow/reducers";
 import { splitViewReducer } from "./splitView/reducers";
 import { connectViewReducer } from "./connectView/reducers";
 import { darkModeReducer } from "./darkMode/reducers";
+import { parametersReducer } from "../../modules/inspector/tabs/parameters/redux/reducers";
 import { sagas } from "../sagas";
 import { persistStore, persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -36,6 +37,7 @@ const rootReducers = combineReducers({
   connectView: connectViewReducer,
   commonState: commonReducer,
   darkMode: darkModeReducer,
+  parametersReducer: parametersReducer,
 });
 
 const persistConfig = {

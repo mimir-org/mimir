@@ -1,25 +1,26 @@
-import red from "../../../redux/store";
-import { Node } from "../../../models";
-import { ArrowIcon } from "../../../assets/icons/blockView";
 import { BlockParentBox } from "../../../compLibrary/blockView";
+import { Node } from "../../../models";
 
-const Block = ({ data, location, splitView }) => {
-  const nodes = red.store.getState().projectState.project.nodes as Node[];
-  const node = nodes.find((x) => x.id === data.id);
+interface Props {
+  node: Node;
+  isLocation: boolean;
+  isSplitView: boolean;
+  isSelected: boolean;
+}
 
-  return (
-    <BlockParentBox
-      id={"function-block-" + data.id}
-      location={location}
-      splitView={splitView}
-      selected={node?.isBlockSelected}
-    >
-      <img src={ArrowIcon} alt="arrow" className="icon"></img>
-      <h3 className="header">{data.label ?? data.name}</h3>
-      <div className="line" />
-      <div className="content"></div>
-    </BlockParentBox>
-  );
-};
-
+/** Component for the node block in BlockView.
+ *  Block serves as a container for a Mimir node in BlockView.
+ */
+const Block = ({ node, isLocation, isSplitView, isSelected }: Props) => (
+  <BlockParentBox
+    id={"function-block-" + node?.id}
+    location={isLocation}
+    splitView={isSplitView}
+    selected={isSelected}
+  >
+    <div className="banner">
+      <h3 className="header">{node?.label ?? node?.name}</h3>
+    </div>
+  </BlockParentBox>
+);
 export default Block;

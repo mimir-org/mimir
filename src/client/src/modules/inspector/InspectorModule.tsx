@@ -1,13 +1,12 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { InspectorTabs } from "./";
 import { Size } from "../../compLibrary";
 import { MODULE_TYPE } from "../../models/project";
 import { IsBlockView } from "../../components/flow/helpers/block";
 import { Node, Project } from "../../models";
 import { DragResizePanel } from "./helpers";
-import { AnimatedInspector } from "../../compLibrary/box/inspector";
+import { AnimatedInspector } from "./styled";
 import { InspectorHeader } from ".";
 import {
   GetSelectedNode,
@@ -73,7 +72,6 @@ const InspectorModule = () => {
         open={isInspectorOpen}
         type={type}
       />
-      {project && <InspectorTabs project={project} node={node} edge={edge} />}
     </AnimatedInspector>
   );
 };

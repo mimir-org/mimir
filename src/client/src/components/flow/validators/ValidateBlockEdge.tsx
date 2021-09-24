@@ -8,6 +8,17 @@ import {
   IsTransportTerminal,
 } from "../helpers/common";
 
+/**
+ * Component to validate and display an edge in BlockView
+ * @param selectedNode
+ * @param fromNode
+ * @param toNode
+ * @param splitViewNode
+ * @param fromConnector
+ * @param toConnector
+ * @param splitView
+ * @returns a boolean value
+ */
 const ValidateBlockEdge = (
   selectedNode: Node,
   fromNode: Node,
@@ -21,6 +32,32 @@ const ValidateBlockEdge = (
   if (IsPartOfTerminal(fromConnector) || IsPartOfTerminal(toConnector))
     return false;
 
+  // Regular BlockView
+  if (!splitView && !IsConnectView()) {
+    if (IsFunction(selectedNode)) {
+      if (
+        toNode.level - selectedNode.level === 1 &&
+        fromNode.level - selectedNode.level === 0 &&
+        fromNode.id === selectedNode.id
+      )
+        return true;
+      if (
+        fromNode.level - selectedNode.level === 1 &&
+        toNode.level - selectedNode.level === 0 &&
+        toNode.id === selectedNode.id
+      )
+        return true;
+      if (
+        fromNode.level - selectedNode.level === 1 &&
+        toNode.level - selectedNode.level === 1 &&
+        IsChildOf(toNode, selectedNode) &&
+        IsChildOf(fromNode, selectedNode)
+      )
+        return true;
+    }
+    return false;
+  }
+
   if (IsConnectView()) {
     if (
       fromNode !== selectedNode &&
@@ -30,16 +67,6 @@ const ValidateBlockEdge = (
       IsFunction(toNode)
     )
       return true;
-    return false;
-  }
-
-  if (!splitView && !IsConnectView()) {
-    if (IsFunction(selectedNode)) {
-      if (IsLocation(fromNode) || IsLocation(toNode)) return false;
-      if (selectedNode === toNode || selectedNode === fromNode) return false;
-      if (!IsChildOf(fromNode, selectedNode)) return false;
-      return true;
-    }
     return false;
   }
 
