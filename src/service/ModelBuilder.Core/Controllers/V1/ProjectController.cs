@@ -432,7 +432,6 @@ namespace Mb.Core.Controllers.V1
         [HttpGet("node/locked")]
         [ProducesResponseType(typeof(ICollection<string>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -444,7 +443,7 @@ namespace Mb.Core.Controllers.V1
             try
             {
                 var result = _projectService.GetLockedNodes(projectId).ToList();
-                return result.Any() ? Ok(result) : NoContent();
+                return Ok(result);
             }
             catch (Exception e)
             {
@@ -462,7 +461,6 @@ namespace Mb.Core.Controllers.V1
         [HttpGet("attribute/locked")]
         [ProducesResponseType(typeof(ICollection<string>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -474,7 +472,7 @@ namespace Mb.Core.Controllers.V1
             try
             {
                 var result = _projectService.GetLockedAttributes(projectId).ToList();
-                return result.Any() ? Ok(result) : NoContent();
+                return Ok(result);
             }
             catch (Exception e)
             {
