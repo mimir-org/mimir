@@ -255,7 +255,8 @@ export function typeEditorReducer(
           ...state.createLibraryType,
           terminalTypes: [
             ...state.createLibraryType.terminalTypes.filter(
-              (terminal) => terminal.row !== action.payload.terminal.row
+              (terminal) =>
+                terminal.terminalId !== action.payload.terminal.terminalId
             ),
           ],
         },
@@ -267,7 +268,7 @@ export function typeEditorReducer(
           ...state.createLibraryType,
           terminalTypes: [
             ...state.createLibraryType.terminalTypes.map((terminal) =>
-              terminal.row === action.payload.terminal.row
+              terminal.terminalId === action.payload.terminal.terminalId
                 ? action.payload.terminal
                 : terminal
             ),

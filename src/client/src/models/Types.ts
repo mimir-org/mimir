@@ -77,7 +77,7 @@ export interface TerminalType {
 }
 
 export interface TerminalTypeItem {
-  row: number;
+  terminalId: string;
   terminalTypeId: string;
   selected: boolean | false;
   connectorType: ConnectorType;
