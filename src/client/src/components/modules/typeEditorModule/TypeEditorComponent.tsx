@@ -36,6 +36,10 @@ import {
 } from "./helpers";
 import { GetInputTerminals, GetOutputTerminals } from "./preview/helpers";
 
+/**
+ * Component for adding or editing a type
+ * @returns the visual Type Editor window
+ */
 export const TypeEditorComponent = () => {
   const dispatch = useDispatch();
   const state = useSelector<RootState>((s) => s.typeEditor) as TypeEditorState;
@@ -63,7 +67,7 @@ export const TypeEditorComponent = () => {
     key: string,
     value: TerminalTypeItem,
     categoryId: string,
-    row: number
+    terminalId: string
   ) => {
     if (key === "add") {
       dispatch(addTerminalType(value));
@@ -83,7 +87,6 @@ export const TypeEditorComponent = () => {
               <p>{TextResources.TypeEditor}</p>
               <img src={CloseIcon} alt="close-window" onClick={onCloseEditor} />
             </TypeEditorHeader>
-
             <TypeEditorInputs
               onChange={(key, value) => onChange(key, value)}
               createLibraryType={state?.createLibraryType}
@@ -105,8 +108,13 @@ export const TypeEditorComponent = () => {
                   listType={ListType.Terminals}
                   onChange={
                     IsObjectBlock(state?.createLibraryType.objectType)
-                      ? (key, data, categoryId, row) =>
-                          onTerminalCategoryChange(key, data, categoryId, row)
+                      ? (key, data, categoryId, terminalId) =>
+                          onTerminalCategoryChange(
+                            key,
+                            data,
+                            categoryId,
+                            terminalId
+                          )
                       : (key, data) => onChange(key, data)
                   }
                   // disabled={ModeEdit(mode) ? false : FieldValidator(state, "rds")}

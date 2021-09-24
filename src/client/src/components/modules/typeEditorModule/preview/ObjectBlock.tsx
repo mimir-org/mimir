@@ -13,7 +13,11 @@ interface Props {
   inputTerminals: TerminalType[];
   outputTerminals: TerminalType[];
 }
-
+/**
+ * Component to show an object block with input output terminals
+ * @param param0
+ * @returns the visual block in Type Preview Info
+ */
 export const ObjectBlock = ({
   createLibraryType,
   rdsName,
@@ -49,9 +53,9 @@ export const ObjectBlock = ({
       blockColor={GetBlockColor(aspect)}
       blockHeight={GetBlockHeight(aspect)}
     >
-      {console.log("terminals to show", createLibraryType.terminalTypes)}
+      {/* {console.log("terminals to show", createLibraryType.terminalTypes)}
       {console.log("inputTerminals", inputTerminals)}
-      {console.log("outputTerminals", outputTerminals)}
+      {console.log("outputTerminals", outputTerminals)} */}
       <InputOutputTerminals>
         {inputTerminals && (
           <Terminals input={true}>{showTerminals(true)}</Terminals>
