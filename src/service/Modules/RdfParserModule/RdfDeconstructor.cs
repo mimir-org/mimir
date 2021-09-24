@@ -35,7 +35,7 @@ namespace RdfParserModule
 
             root.AddConnection(childNode, "hasPart");
 
-            root.GetConnection(childNode);
+            //root.GetConnection(childNode);
 
             return p;
         }
