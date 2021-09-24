@@ -1,5 +1,5 @@
 import { Aspect, Connector, Attribute, ObjectType } from ".";
-import { ConnectorType } from "./Enums";
+import { ConnectorType, Discipline } from "./Enums";
 
 export interface AttributeType {
   id: string;
@@ -110,6 +110,7 @@ export interface CreateLibraryType {
   predefinedAttributes: PredefinedAttribute[];
   terminalTypeId: string;
   symbolId: string;
+  compositeTypes: string[];
 }
 export interface User {
   username: string;
@@ -125,7 +126,7 @@ export interface BlobData {
   id: string;
   name: string;
   data: string;
-  categoryId: string;
+  discipline: Discipline;
 }
 
 export interface Composite {

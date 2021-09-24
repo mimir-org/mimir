@@ -39,7 +39,7 @@ export default function BlockEdgeType({
   });
 
   const fromConnector = data.source.connectors?.find(
-    (x) => x.id === data.edge.fromConnectorId
+    (conn: Connector) => conn.id === data.edge.fromConnectorId
   ) as Connector;
 
   const hasLocation = fromConnector?.relationType === RelationType.HasLocation;

@@ -1,5 +1,5 @@
 const Position = {
-  FunctionBlock_xPos: 520,
+  FunctionBlock_xPos: 370,
 };
 
 export default Position;

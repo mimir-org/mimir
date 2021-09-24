@@ -15,8 +15,11 @@ export { default as UpIcon } from "./toggleUp.svg";
 
 export { default as CloseIcon } from "./close.svg";
 
+// Dropdown
 export { default as ExpandIcon } from "./expand.svg";
 export { default as CollapseIcon } from "./collapse.svg";
+export { default as ExpandWhiteIcon } from "./expandWhite.svg";
+export { default as CollapseWhiteIcon } from "./collapseWhite.svg";
 
 export { default as FilterIcon } from "./filter.svg";
 export { default as FilterOpenIcon } from "./filterOpen.svg";
@@ -74,3 +77,6 @@ export { default as LibNodeTransport } from "./libnode_transport.svg";
 export { default as DeleteIcon } from "./delete.svg";
 export { default as LockIcon } from "./lock.svg";
 export { default as ValidateIcon } from "./validate.svg";
+
+// Inspector Parameters
+export { default as CloseParameterIcon } from "./paramsClose.svg";

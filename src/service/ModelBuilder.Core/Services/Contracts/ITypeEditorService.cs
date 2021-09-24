@@ -21,8 +21,8 @@ namespace Mb.Core.Services.Contracts
         IEnumerable<TerminalType> GetTerminals();
         Dictionary<string, List<TerminalType>> GetTerminalsByCategory();
         Task<IEnumerable<LibraryType>> CreateLibraryTypes(ICollection<CreateLibraryType> createLibraryTypes);
-        Task<LibraryType> CreateLibraryType(CreateLibraryType createLibraryType);
-        Task<LibraryType> UpdateLibraryType(string id, CreateLibraryType createLibraryType);
+        Task<T> CreateLibraryType<T>(CreateLibraryType createLibraryType) where T : class, new();
+        Task<T> UpdateLibraryType<T>(string id, CreateLibraryType createLibraryType) where T : class, new();
         IEnumerable<CreateLibraryType> GetAllTypes();
         Task<CreateLibraryType> ConvertToCreateLibraryType(string id, LibraryFilter filter);
         byte[] CreateFile();

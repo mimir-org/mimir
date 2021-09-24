@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Mb.Core.Repositories.Contracts;
@@ -112,6 +113,52 @@ namespace Mb.Core.Repositories
                 .ProjectTo<LibraryTransportItem>(_mapper.ConfigurationProvider)
                 .OrderBy(x => x.Name)
                 .ToList();
+        }
+
+        public async Task<T> GetLibraryItem<T>(string id) where T : class, new()
+        {
+            if (typeof(LibraryNodeItem).IsAssignableFrom(typeof(T)))
+            {
+                var nodeType = await _nodeTypeRepository.FindBy(x => x.Id == id)
+                    .Include(x => x.AttributeTypes)
+                    .Include("AttributeTypes.Units")
+                    .Include(x => x.TerminalTypes)
+                    .Include("TerminalTypes.TerminalType")
+                    .Include("TerminalTypes.TerminalType.TerminalCategory")
+                    .Include("TerminalTypes.TerminalType.Attributes")
+                    .Include("TerminalTypes.TerminalType.Attributes.Units")
+                    .Include(x => x.Rds)
+                    .Include("Rds.RdsCategory")
+                    .Include(x => x.CompositeTypes)
+                    .Include("CompositeTypes.AttributeTypes")
+                    .Include("CompositeTypes.AttributeTypes.Units")
+                    .FirstOrDefaultAsync();
+
+                return _mapper.Map<T>(nodeType);
+            }
+
+            if (typeof(LibraryInterfaceItem).IsAssignableFrom(typeof(T)))
+            {
+                var interfaceType = await _interfaceTypeRepository.FindBy(x => x.Id == id)
+                    .Include(x => x.Rds)
+                    .Include("Rds.RdsCategory")
+                    .OrderBy(x => x.Name)
+                    .FirstOrDefaultAsync();
+                return _mapper.Map<T>(interfaceType);
+            }
+
+            if (typeof(LibraryTransportItem).IsAssignableFrom(typeof(T)))
+            {
+                var transportType = await _transportTypeRepository.FindBy(x => x.Id == id)
+                    .Include(x => x.AttributeTypes)
+                    .Include(x => x.Rds)
+                    .Include("Rds.RdsCategory")
+                    .OrderBy(x => x.Name)
+                    .FirstOrDefaultAsync();
+                return _mapper.Map<T>(transportType);
+            }
+
+            return null;
         }
     }
 }

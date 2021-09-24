@@ -1,6 +1,7 @@
 import { TextResources } from "../../../assets/text";
-import { Dropdown } from "../../../compLibrary/dropdown";
 import { BlobData, CreateLibraryType, LocationType } from "../../../models";
+import { TextInput, TypeInfo, TypeNameInput } from "./styled";
+import { Dropdown } from "../../../compLibrary/dropdown/typeEditor";
 import {
   GetAspects,
   GetBlobData,
@@ -8,7 +9,6 @@ import {
   GetObjectTypes,
   IsLocation,
 } from "./helpers";
-import { TextInput, TypeInfo, TypeNameInput } from "./styled";
 
 interface Props {
   onChange: Function;

@@ -1,3 +1,5 @@
+/* All static sizes used in Mimir  */
+
 const Size = {
   // Nodes
   Node_Width: 115,

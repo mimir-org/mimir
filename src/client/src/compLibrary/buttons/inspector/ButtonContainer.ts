@@ -13,7 +13,15 @@ const ButtonContainer = styled.div`
   align-items: center;
   justify-content: space-around;
   cursor: pointer;
-  margin-top: 10px;
+  margin: 10px;
+
+  div {
+    padding-left: 10px;
+  }
+
+  img {
+    padding: 5px;
+  }
 
   :hover {
     background-color: #e6e6e6;

@@ -13,6 +13,11 @@ namespace AasParserModule
             return "AasParser";
         }
 
+        public FileFormat GetFileFormat()
+        {
+            return FileFormat.Json;
+        }
+
         public Task<byte[]> SerializeProject(Project project)
         {
             throw new NotImplementedException();

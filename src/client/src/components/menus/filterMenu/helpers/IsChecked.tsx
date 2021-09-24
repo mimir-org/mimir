@@ -18,7 +18,7 @@ const IsChecked = (
   // Sort by category
   if (type === TextResources.Relations_Transport)
     edge = edges.find((x) => IsTransportTerminal(x.fromConnector));
-  else if (type === TextResources.Relations_PartOf)
+  else if (type === TextResources.Relations_PartOf_Relationship)
     edge = edges.find((x) => IsPartOfTerminal(x.fromConnector));
   else if (type === TextResources.Aspect_Location)
     edge = edges.find((x) => IsLocationTerminal(x.fromConnector));
