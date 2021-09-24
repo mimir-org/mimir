@@ -10,6 +10,7 @@ using Mb.Models.Enums;
 using Microsoft.VisualBasic;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
+using VDS.RDF.Writing;
 
 namespace RdfParserModule
 {
@@ -22,9 +23,9 @@ namespace RdfParserModule
 
         public Task<byte[]> SerializeProject(Project project)
         {
-            // RdfBuilder builder = new RdfBuilder(project);
-            var graph = RdfBuilder.BuildProject(project);
-            var bytes = RdfBuilder.GetBytes(graph);
+            IRdfBuilder builder = new RdfBuilder();
+            builder.BuildProject(project);
+            var bytes = builder.GetBytes<NTriplesWriter>();
 
             return Task.FromResult(bytes);
         }
@@ -46,7 +47,7 @@ namespace RdfParserModule
 
         public FileFormat GetFileFormat()
         {
-            return FileFormat.NTriples;
+            return FileFormat.Xml;
         }
     }
 }
