@@ -16,7 +16,6 @@ import {
   ADD_LIBRARY_ITEM,
   REMOVE_LIBRARY_ITEM,
 } from "../../store/library/types";
-
 import {
   get,
   post,
@@ -41,7 +40,6 @@ export function* saveType(action) {
 
     const response = yield call(post, url, createLibraryType);
 
-    // This is a bad request
     if (response.status === 400) {
       const data = GetBadResponseData(response);
 
@@ -61,9 +59,7 @@ export function* saveType(action) {
       });
       return;
     }
-    // Bad request end
 
-    // ALT OK
     const payload = {
       apiError: null,
     };
@@ -73,6 +69,7 @@ export function* saveType(action) {
       payload: payload,
     });
 
+    // Remove item from library
     if (createLibraryType.libraryId) {
       yield statePut({
         type: REMOVE_LIBRARY_ITEM,
@@ -82,6 +79,7 @@ export function* saveType(action) {
       });
     }
 
+    // Add the new item to library
     yield statePut({
       type: ADD_LIBRARY_ITEM,
       payload: response.data,

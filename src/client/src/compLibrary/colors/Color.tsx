@@ -1,6 +1,7 @@
 const Color = {
   // Common
   BlueMagenta: "#272738",
+  GreyHeader: "#4F4F4F",
   GreyBorder: "#d9d9d9",
   GreyInspector: "#FAFAFA",
   White: "#fff",
@@ -11,7 +12,7 @@ const Color = {
   DarkerGrey: "#898787",
   LightCyan: "#CFDADB",
   LightBlue: "#D9E6FF",
-  LighterBlue: "rgba(211, 214, 255, 0.40)",
+  LightPurple: "#D8D8EC",
   DarkRed: "rgb(139,0,0)",
   Red: "rgb(255,0,0)",
 
@@ -36,6 +37,12 @@ const Color = {
   Terminal_Gas: "#FFCC00",
   Terminal_Multiphase: "#00CC66",
   TransportConnection: "#606060",
+
+  // Parameters
+  ParamsLightGreen: "#D9EAEB",
+  ParamsGreen: "#65A8AD",
+  ParamsLightPurple: "#ECEDFD",
+  ParamsPurple: "#8088FF",
 };
 
 export default Color;

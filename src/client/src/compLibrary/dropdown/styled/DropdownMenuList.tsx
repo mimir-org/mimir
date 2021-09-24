@@ -16,7 +16,6 @@ const DropdownMenuList = styled.div`
   width: 99%;
   max-height: 250px;
   overflow-y: auto;
-
   .listitem {
     background-color: white;
     display: flex;

@@ -13,7 +13,8 @@ const TextResources = {
   Module_Inspector: "Inspector",
 
   // Relations
-  Relations_PartOf: "Part of Relationship",
+  Relations_PartOf_Relationship: "Part of Relationship",
+  Relation_PartOf: "Part of",
   Relations_HasLocation: "Has Location",
   Relations_HasFunction: "Has Function",
   Relations_FulfilledBy: "Fulfilled By",
@@ -63,7 +64,12 @@ const TextResources = {
   Inspector_Relations_Function: "Go to function",
   Inspector_Relations_Input_object_connetion: "Input object connection",
   Inspector_Relations_Output_object_connetion: "Output object connection",
+  Inspector_Relations_Relationships: "Go To: Active Relations",
   Inspector_Relations_Active_Terminal_Types: "Active Terminal Types",
+  Inspector_Relations_Terminal_Input: "Go To: Terminal Input Object Connection",
+  Inspector_Relations_Terminal_Output:
+    "Go To: Terminal Output Object Connection",
+  Inspector_Relations_Transport: "Go To: Connected Transport",
   Inspector_Relations_All_Terminal_Types: "All available Terminal Types",
   Inspector_Relations_Connector_Attributes: "Connector attributes",
 
@@ -83,7 +89,8 @@ const TextResources = {
   Inspector_Admin_Interface: "Interface",
   Inspector_Admin_Updated_By: "Updated by",
   Inspector_Admin_Contractor: "Contractor",
-  Inspector_Admin_Updated_Date: "Updated Date",
+  Inspector_Admin_Updated_Date: "Last updated",
+  Inspector_Admin_Created_Date: "Date created",
   Inspector_Admin_Local_Description: "Long Local Description",
   Inspector_Admin_Type: "Type name",
   Inspector_Admin_Width: "Width (m)",
@@ -109,6 +116,10 @@ const TextResources = {
   Inspector_Filter: "Filter",
   Inspector_Lock: "Lock",
   Inspector_Validate: "Validate",
+
+  Inspector_Params_Clear_All: "Clear all Entities",
+  Inspector_Params_Default: "Show Default Entities",
+  Inspector_Params_Combinations: "Select combinations",
 
   // LibraryModule
   Library_SearchBox_Placeholder: "Search the Library",
@@ -200,7 +211,7 @@ const TextResources = {
   // Type
   Type_BlockLocation: "BlockLocationNode",
   Type_BlockFunction: "BlockFunctionNode",
-  Type_FunctionBlock: "FunctionBlock",
+  Type_BlockParentNode: "BlockParentNode",
 
   // RDS
   RDS_Function: "=",

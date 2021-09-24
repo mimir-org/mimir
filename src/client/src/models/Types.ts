@@ -1,5 +1,5 @@
 import { Aspect, Connector, Attribute, ObjectType } from ".";
-import { ConnectorType } from "./Enums";
+import { ConnectorType, Discipline } from "./Enums";
 
 export interface AttributeType {
   id: string;
@@ -77,7 +77,7 @@ export interface TerminalType {
 }
 
 export interface TerminalTypeItem {
-  row: number;
+  terminalId: string;
   terminalTypeId: string;
   selected: boolean | false;
   connectorType: ConnectorType;
@@ -126,7 +126,7 @@ export interface BlobData {
   id: string;
   name: string;
   data: string;
-  categoryId: string;
+  discipline: Discipline;
 }
 
 export interface Composite {

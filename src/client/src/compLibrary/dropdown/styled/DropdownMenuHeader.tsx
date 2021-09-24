@@ -12,11 +12,9 @@ const DropdownMenuHeader = styled.div`
   border-radius: 5px;
   font-size: ${FontSize.Standard};
   color: ${Color.Black};
-
   p {
     padding: 5px;
   }
-
   img {
     width: 15px;
     height: 10px;

@@ -1,4 +1,4 @@
-import { TabColumn } from "../../../compLibrary/box/inspector";
+import { TabColumn } from "../styled";
 import { Input } from "../../../compLibrary";
 import { Edge } from "../../../models";
 import { GetRelationName } from "./../helpers";
