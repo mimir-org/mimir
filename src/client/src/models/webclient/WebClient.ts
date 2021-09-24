@@ -24,16 +24,11 @@ export async function http<T>(request: RequestInfo): Promise<HttpResponse<T>> {
   try {
     response = await fetch(request);
 
-    if (
-      !(
-        (response.status >= 200 && response.status < 300) ||
-        response.status === 400
-      )
-    ) {
+    if (!isValidStatus(response.status)) {
       throw new Error();
     }
 
-    if (response.status !== 204) {
+    if (hasContent(response)) {
       response.data = await response.json();
     }
 
@@ -42,6 +37,11 @@ export async function http<T>(request: RequestInfo): Promise<HttpResponse<T>> {
     throw new Error(TextResources.Error_ServerUnavailable);
   }
 }
+
+const isValidStatus = (status: number) =>
+  (status >= 200 && status < 300) || status === 400;
+
+const hasContent = <T>(response: HttpResponse<T>) => response.status !== 204;
 
 export async function get<T>(
   path: string,
