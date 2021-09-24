@@ -19,7 +19,7 @@ interface Props {
   isNodeLocked: boolean;
   onChange: (id: string, value: string, unit: string, nodeId: string) => void;
   onLock: (attribute: Attribute, isLocked: boolean) => void;
-  onClose: () => void;
+  onClose: (id: string) => void;
 }
 
 function Parameter({
@@ -64,7 +64,7 @@ function Parameter({
               src={CloseIcon}
               className="parameterIcon"
               alt="icon"
-              onClick={onClose}
+              onClick={() => onClose(attribute.id)}
             />
           </div>
         </ParameterHeader>

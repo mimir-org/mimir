@@ -11,23 +11,27 @@ import {
   CollapseIcon,
 } from "../../../../../../../assets/icons/common";
 import { TextResources } from "../../../../../../../assets/text";
-import { Attribute } from "../../../../../../../models";
 
-interface Props {
-  items: Attribute[];
+interface DropdownItem {
+  id: string;
+  key: string;
+}
+
+interface Props<T> {
+  items: T[];
   selectedItems: string[];
   keyProp: string;
   onChange: (parameterId: string, selected: boolean) => void;
   defaultValue?: string;
 }
 
-const Dropdown = ({
+const Dropdown = <T extends DropdownItem>({
   items,
   selectedItems,
   keyProp,
   onChange,
   defaultValue,
-}: Props) => {
+}: Props<T>) => {
   const [isListOpen, setIsListOpen] = useState(false);
 
   useEffect(() => {
@@ -39,7 +43,7 @@ const Dropdown = ({
     }
   }, [defaultValue, items, keyProp]);
 
-  const IsAttributeSelected = (attr: Attribute): boolean => {
+  const IsAttributeSelected = (attr: T): boolean => {
     return selectedItems.includes(attr.id);
   };
   return (

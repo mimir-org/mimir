@@ -22,10 +22,6 @@ interface Props {
 const EntityDropdown = ({ items, keyProp, onChange, color }: Props) => {
   const [isListOpen, setIsListOpen] = useState(false);
 
-  const handleChange = (_e: any, value: any) => {
-    onChange(value);
-  };
-
   return (
     <MenuWrapper>
       <div onClick={(e) => setIsListOpen(!isListOpen)}>
@@ -41,7 +37,7 @@ const EntityDropdown = ({ items, keyProp, onChange, color }: Props) => {
         <MenuList>
           {items?.map((item) => {
             return (
-              <div onClick={(e) => handleChange(e, item)} key={item[keyProp]}>
+              <div onClick={() => onChange(item)} key={item[keyProp]}>
                 <MenuListItem color={color}>
                   <p>{item.name ?? item.key}</p>
                   <CheckboxWrapper>

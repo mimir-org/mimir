@@ -15,6 +15,7 @@ import {
 } from "./handlers";
 import Parameter from "./Parameter";
 import { lockUnlockAttribute } from "../../../../redux/store/project/actions";
+import { useState } from "react";
 
 interface Props {
   node: Node;
@@ -23,6 +24,10 @@ interface Props {
 const ParametersComponent = ({ node }: Props) => {
   const dispatch = useDispatch();
   const attributes = node.attributes;
+
+  const [selectedParameters, setSelectedParameters] = useState(
+    new Map<string, string[]>()
+  );
 
   const selectedAttributes =
     (useSelector<RootState>(
@@ -35,30 +40,54 @@ const ParametersComponent = ({ node }: Props) => {
     selectedAttributes.includes(x.id)
   );
 
-  const selectedParameters = [
+  const attributeCombinations = [
     {
       id: "aaaa",
+      key: "bbbb",
+      name: "Operating/Calculated/Maximum",
       qualifier: "Operating",
       source: "Calculcated",
       condition: "Maximum",
     },
   ];
 
+  const onChangeParameterChoice = (
+    id: string,
+    attributeId: string,
+    selected: boolean
+  ) => {
+    if (!selectedParameters.has(attributeId)) {
+      selectedParameters.set(attributeId, []);
+    }
+
+    const parameters = selectedParameters.get(attributeId);
+
+    selected
+      ? selectedParameters.set(
+          attributeId,
+          parameters.filter((x) => x !== id)
+        )
+      : parameters.push(id);
+
+    setSelectedParameters(new Map(selectedParameters));
+  };
+
   const onLockParameter = (attribute: Attribute, isLocked: boolean) => {
     if (!node.isLocked)
       dispatch(lockUnlockAttribute(attribute, node.id, isLocked));
   };
 
-  const onCloseParameter = () => {};
+  const onCloseParameter = (id: string, attributeId: string) =>
+    onChangeParameterChoice(id, attributeId, true);
 
   return (
     <>
       <Header>
         <Menu>
           <Dropdown
-            onChange={(parameterId: string, selected: boolean) =>
-              OnChangeParameter(node.id, parameterId, selected, dispatch)
-            }
+            onChange={(parameterId: string, selected: boolean) => {
+              OnChangeParameter(node.id, parameterId, selected, dispatch);
+            }}
             keyProp="id"
             items={attributes}
             selectedItems={selectedAttributes}
@@ -75,6 +104,8 @@ const ParametersComponent = ({ node }: Props) => {
 
       {hasAttributes &&
         filteredAttributes.map((attribute) => {
+          const parameters = selectedParameters.get(attribute.id) ?? [];
+
           return (
             <Body key={attribute.id}>
               <Entity width={180}>
@@ -90,23 +121,25 @@ const ParametersComponent = ({ node }: Props) => {
                   </div>
                   <div className="text">{attribute.key}</div>
                 </Box>
-                <EntityDropdown
-                  items={attribute.units}
+                <Dropdown
+                  items={attributeCombinations}
+                  selectedItems={parameters}
                   keyProp="id"
-                  onChange={() => null}
-                  color={GetParametersColor()}
+                  onChange={(id, selected) =>
+                    onChangeParameterChoice(id, attribute.id, selected)
+                  }
                 />
               </Entity>
-              {selectedParameters.map((param) => (
+              {parameters.map((param) => (
                 <Parameter
-                  key={param.id}
+                  key={param}
                   attribute={attribute}
                   isNodeLocked={node.isLocked}
                   onChange={(id, value, unit, nodeId) =>
                     OnChangeParameterValue(id, value, unit, nodeId, dispatch)
                   }
                   onLock={onLockParameter}
-                  onClose={onCloseParameter}
+                  onClose={(id) => onCloseParameter(param, id)}
                 />
               ))}
             </Body>
