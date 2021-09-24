@@ -27,6 +27,7 @@ const SortNodesWithIndent = (nodes: Node[]): [Node, number][] => {
 
     if (indent === 0) {
       sortedNodedWithIndent = bucket.map((node) => [node, indent]);
+      continue;
     }
 
     for (let node of bucket) {
