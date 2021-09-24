@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const ObjectTypeBlock = styled.div`
+const PreviewObjectBlock = styled.div`
   display: flex;
   flex-direction: column;
   margin: auto;
@@ -12,4 +12,4 @@ const ObjectTypeBlock = styled.div`
   border-radius: 2px;
 `;
 
-export default ObjectTypeBlock;
+export default PreviewObjectBlock;
