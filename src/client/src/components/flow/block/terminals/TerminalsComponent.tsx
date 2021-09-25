@@ -23,7 +23,7 @@ interface Props {
 }
 
 /**
- * Component for the terminals menu on nodes in BlockView. The menu is triggered from the icon in the upper-right corner.
+ * Component for the terminals menu on nodes in BlockView. The menu is opened from the icon in the upper-right corner.
  * @param param0
  * @returns a drop-down menu where you can select from the nodes' terminals.
  */

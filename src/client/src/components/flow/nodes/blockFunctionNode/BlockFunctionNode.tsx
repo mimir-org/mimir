@@ -33,7 +33,7 @@ import {
 
 /**
  * Component for a Function Node in BlockView.
- * @param param0 the data for the node.
+ * @param data the data for the node.
  * @returns a Function Node of the Flow node type with Mimir styling and functionality.
  */
 const BlockFunctionNode: FC<NodeProps> = ({ data }) => {

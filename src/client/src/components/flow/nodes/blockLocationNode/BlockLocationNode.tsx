@@ -16,7 +16,7 @@ import {
 
 /**
  * Component for a Location Node in BlockView.
- * @param param0 the data for the node.
+ * @param data the data for the node.
  * @returns a Location Node of the Flow node type with Mimir styling and functionality.
  */
 const BlockLocationNode: FC<NodeProps> = ({ data }) => {

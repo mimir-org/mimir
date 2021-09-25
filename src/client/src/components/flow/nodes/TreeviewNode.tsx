@@ -17,7 +17,7 @@ import {
 
 /**
  * Component to display a node in TreeView.
- * @param param0 data - the data for the node.
+ * @param data the data for the node.
  * @returns a node in the FlowTree context.
  */
 const TreeviewNode: FC<NodeProps> = ({ data }) => {

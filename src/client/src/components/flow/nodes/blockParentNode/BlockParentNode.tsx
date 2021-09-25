@@ -22,9 +22,9 @@ import {
 } from "../../helpers/block";
 
 /**
- * Component for the large parent block in BlockView
- * @param param0 the nodes data
- * @returns a parent node of the Flow node type with Mimir styling and functionality
+ * Component for the large parent block in BlockView.
+ * @param data the data for the node.
+ * @returns a parent node of the Flow node type with Mimir styling and functionality.
  */
 const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const [terminalMenu, showTerminalMenu] = useState(false);
