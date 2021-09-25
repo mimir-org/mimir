@@ -22,7 +22,7 @@ interface Props {
 /**
  * Component for the terminals displayed on the nodes in BlockView.
  * @param param0
- * @returns a Mimir terminal in form of a Flow Handler
+ * @returns a Mimir terminal in form of a Flow Handler.
  */
 const HandleComponent = ({ node, nodes, terminals, splitView }: Props) => {
   let inputCount = 0;

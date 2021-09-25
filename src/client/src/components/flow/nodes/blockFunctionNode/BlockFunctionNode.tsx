@@ -31,8 +31,10 @@ import {
   removeMainNode,
 } from "../../../../redux/store/connectView/actions";
 
-/** Component for a Function child node in BlockView.
- *  BlockFunctionNode returns a node with the styling and functionality of the Function Aspect.
+/**
+ * Component for a Function Node in BlockView.
+ * @param param0 the data for the node.
+ * @returns a Function Node of the Flow node type with Mimir styling and functionality.
  */
 const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
