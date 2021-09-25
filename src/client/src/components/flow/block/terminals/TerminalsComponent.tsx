@@ -46,7 +46,6 @@ const TerminalsComponent = ({
       visible={menuButton && !IsAspectNode(node)}
       isSplitView={isSplitView}
       isParent={isParent}
-      onClick={() => OnTerminalMenuClick(showTerminalMenu, terminalMenu)}
     >
       {isParent && (
         <>
@@ -54,7 +53,11 @@ const TerminalsComponent = ({
           <img src={ArrowDown} alt="down" className="arrow" />
         </>
       )}
-      <img src={GetMenuIcon(node, isParent)} alt="menu" />
+      <img
+        src={GetMenuIcon(node, isParent)}
+        alt="menu"
+        onClick={() => OnTerminalMenuClick(showTerminalMenu, terminalMenu)}
+      />
     </TerminalsBox>
 
     {isMenuOpen && (
