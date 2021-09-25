@@ -12,7 +12,7 @@ import {
 import { ExpandIcon, CollapseIcon } from "../../../../../assets/icons/common";
 import AddTerminal from "./AddTerminal/AddTerminalComponent";
 import { TextResources } from "../../../../../assets/text";
-
+import { CreateId } from "../../../../flow/helpers/common";
 interface Props {
   name: string;
   terminalTypes: TerminalType[];
@@ -33,7 +33,7 @@ export const ObjectBlockElement = ({
   const terminalsQuantity = defaultTerminals?.length;
 
   const defaultTerminal = {
-    row: terminalsQuantity,
+    terminalId: CreateId(),
     terminalTypeId: "",
     selected: false,
     connectorType: ConnectorType.Input,
@@ -49,20 +49,20 @@ export const ObjectBlockElement = ({
   const onCategoryUpdateOrRemove = (
     key: string,
     terminal: TerminalTypeItem,
-    row: number
+    terminalId: string
   ) => {
-    onChange(key, terminal, categoryId, row);
+    onChange(key, terminal, categoryId, terminalId);
   };
 
   const showTerminals = () => {
     let terminalsArray = [];
     if (terminalsQuantity > 0) {
       terminalsArray = defaultTerminals;
-      return terminalsArray.map((t, index) => {
+      return terminalsArray.map((t) => {
         return (
           <AddTerminal
-            row={index}
-            key={index}
+            terminalId={t.terminalId}
+            key={t.terminalId}
             terminals={terminalTypes}
             defaultTerminal={t}
             onChange={onCategoryUpdateOrRemove}

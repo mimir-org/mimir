@@ -436,7 +436,7 @@ namespace Mb.Core.Services
             var userName = _contextAccessor.GetName();
 
             if (attribute.IsLocked && attribute.IsLockedBy != userName)
-                return;
+                throw new ModelBuilderUnauthorizedAccessException("Locked by: " + attribute.IsLockedBy);
 
             attribute.IsLocked = lockUnlockAttributeAm.IsLocked;
             attribute.IsLockedBy = attribute.IsLocked ? userName : null;
@@ -470,7 +470,7 @@ namespace Mb.Core.Services
                 return;
 
             if (node.IsLocked && userName != node.IsLockedBy)
-                return;
+                throw new ModelBuilderUnauthorizedAccessException("Locked by: " + node.IsLockedBy); ;
 
             node.IsLocked = lockUnlockNodeAm.IsLocked;
             node.IsLockedBy = node.IsLocked ? userName : null;
