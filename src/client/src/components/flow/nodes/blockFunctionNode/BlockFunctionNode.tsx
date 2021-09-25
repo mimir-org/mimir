@@ -161,10 +161,8 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
       </NodeBox>
 
       <HandleComponent
-        node={data}
         nodes={nodes}
         terminals={sortedTerminals}
-        splitView={splitView}
         isParent={false}
       />
     </>

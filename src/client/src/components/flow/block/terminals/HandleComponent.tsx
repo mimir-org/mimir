@@ -13,10 +13,8 @@ import {
 } from "../../helpers/common";
 
 interface Props {
-  node: Node;
   nodes: Node[];
   terminals: Connector[];
-  splitView: boolean;
   isParent: boolean;
 }
 /**
@@ -24,13 +22,7 @@ interface Props {
  * @param param0
  * @returns a Mimir terminal in form of a Flow Handler.
  */
-const HandleComponent = ({
-  node,
-  nodes,
-  terminals,
-  splitView,
-  isParent,
-}: Props) => {
+const HandleComponent = ({ nodes, terminals, isParent }: Props) => {
   let inputCount = 0;
   let outputCount = 0;
 
