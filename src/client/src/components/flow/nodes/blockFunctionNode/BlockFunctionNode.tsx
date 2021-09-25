@@ -114,8 +114,8 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   // Force z-index to display edges in ConnectView
   useEffect(() => {
     if (mainConnectNode) {
-      const edges = FindAllEdges();
-      edges.style.zIndex = "3";
+      const allEdges = FindAllEdges();
+      allEdges.style.zIndex = "3";
     }
   }, [mainConnectNode]);
 
@@ -165,6 +165,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
         nodes={nodes}
         terminals={sortedTerminals}
         splitView={splitView}
+        isParent={false}
       />
     </>
   );

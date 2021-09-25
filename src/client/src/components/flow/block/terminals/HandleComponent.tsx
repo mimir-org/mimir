@@ -10,7 +10,6 @@ import {
   IsOutputTerminal,
   IsLocationTerminal,
   SetTerminalYPos,
-  IsFunction,
 } from "../../helpers/common";
 
 interface Props {
@@ -18,24 +17,27 @@ interface Props {
   nodes: Node[];
   terminals: Connector[];
   splitView: boolean;
+  isParent: boolean;
 }
 /**
  * Component for the terminals displayed on the nodes in BlockView.
  * @param param0
  * @returns a Mimir terminal in form of a Flow Handler.
  */
-const HandleComponent = ({ node, nodes, terminals, splitView }: Props) => {
+const HandleComponent = ({
+  node,
+  nodes,
+  terminals,
+  splitView,
+  isParent,
+}: Props) => {
   let inputCount = 0;
   let outputCount = 0;
 
   return (
     <>
       {terminals.map((conn: Connector) => {
-        const [type, pos] = GetBlockHandleType(
-          conn,
-          node.isSelected,
-          splitView
-        );
+        const [type, pos] = GetBlockHandleType(conn);
         if (!IsLocationTerminal(conn)) {
           if (IsInputTerminal(conn)) inputCount++;
           if (IsOutputTerminal(conn)) outputCount++;
@@ -43,18 +45,12 @@ const HandleComponent = ({ node, nodes, terminals, splitView }: Props) => {
 
         return (
           <HandleBox
-            input={SetTerminalYPos(inputCount)}
-            output={SetTerminalYPos(outputCount)}
+            input={SetTerminalYPos(inputCount, isParent)}
+            output={SetTerminalYPos(outputCount, isParent)}
             id={"handle-" + conn.id}
             position={GetHandlePosition(pos)}
             key={"key-" + conn.id}
-            visible={
-              splitView
-                ? conn.visible
-                : IsFunction(node)
-                ? !IsLocationTerminal(conn) && conn.visible
-                : conn.visible
-            }
+            visible={conn.visible}
             icon={GetConnectorIcon(conn.color)}
           >
             <Handle

@@ -101,6 +101,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
           terminalMenu={terminalMenu}
         />
         <HandleComponent
+          isParent={true}
           node={node}
           nodes={nodes}
           terminals={FilterTerminals(node, isSplitView)}

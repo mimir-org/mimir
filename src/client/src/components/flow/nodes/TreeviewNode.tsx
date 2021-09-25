@@ -58,8 +58,8 @@ const TreeviewNode: FC<NodeProps> = ({ data }) => {
 
         return (
           <TreeHandleBox
-            input={SetTerminalYPos(inputCount)}
-            output={SetTerminalYPos(outputCount)}
+            input={SetTerminalYPos(inputCount, false)}
+            output={SetTerminalYPos(outputCount, false)}
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}
             key={"handle-treeview-" + conn.id}

@@ -77,6 +77,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
         nodes={nodes}
         terminals={sortedTerminals}
         splitView={splitView}
+        isParent={false}
       />
     </>
   );
