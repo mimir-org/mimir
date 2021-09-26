@@ -22,8 +22,10 @@ interface Props {
   onClick: (conn: Connector) => void;
 }
 
-/** Component for the terminals menu. This is the menu in the upper-right corner of a node.
- *  The component returns a drop-down menu where you can select from the nodes' terminals.
+/**
+ * Component for the terminals menu on a blockView nodes
+ * @param param0
+ * @returns a drop-down menu that displays all available terminals
  */
 const TerminalsComponent = ({
   node,
