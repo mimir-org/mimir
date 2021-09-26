@@ -56,6 +56,10 @@ const ConnectViewComponent = ({
             </ConnectViewElement>
           );
         })}
+        <ConnectViewElement key={"test"}>
+          <p className="link"> Select all</p>
+          <p className="link"> Clear all</p>
+        </ConnectViewElement>
       </ConnectViewMenu>
     )}
   </>
