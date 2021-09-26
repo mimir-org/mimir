@@ -4,18 +4,19 @@ import { Color, FontSize } from "../../../../../compLibrary";
 /** Styled component that displays an element in the drop-down menu for the ConnectViewMenu. */
 const ConnectViewElement = styled.div`
   border-top: 1.3px solid ${Color.DarkGrey};
-  padding: 5px 34px 5px 5px;
+  padding: 5px 10px 0px 0px;
   font-size: ${FontSize.Small};
   color: ${Color.Black};
-  height: 15px;
-  width: auto;
-  min-width: 150px;
+  height: 20px;
+  min-width: 115px;
   position: relative;
+  display: flex;
 
   .text {
-    position: absolute;
-    left: 30px;
-    bottom: -3px;
+    position: relative;
+    text-align: left;
+    padding-left: 30px;
+    bottom: 8px;
   }
 
   .link {
@@ -24,7 +25,8 @@ const ConnectViewElement = styled.div`
     top: -2px;
 
     &:last-child {
-      left: 146px;
+      left: unset;
+      right: 8px;
     }
 
     &:hover {
