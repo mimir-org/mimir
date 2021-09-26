@@ -148,15 +148,16 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
         />
 
         <ConnectViewComponent
+          node={data}
           isMenuOpen={connectMenu}
           list={connectChildren}
           handleClick={onConnectViewClick}
           isChecked={isConnectorChecked}
-          width={data.width}
           hasChildren={hasChildren}
           connectButton={connectButton}
           showConnectMenu={showConnectMenu}
           connectMenu={connectMenu}
+          dispatch={dispatch}
         />
       </NodeBox>
 

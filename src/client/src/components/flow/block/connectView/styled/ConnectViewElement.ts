@@ -19,10 +19,10 @@ const ConnectViewElement = styled.div`
     bottom: 8px;
   }
 
-  .link {
+  .select {
     position: absolute;
     left: 7px;
-    top: -2px;
+    top: 7px;
 
     &:last-child {
       left: unset;

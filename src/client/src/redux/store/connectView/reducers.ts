@@ -4,6 +4,7 @@ import {
   REMOVE_MAIN_CONNECT_NODE,
   ADD_CONNECT_NODE,
   REMOVE_CONNECT_NODE,
+  REMOVE_CONNECT_NODES,
   REMOVE_ALL_MAIN_NODES,
   ConnectViewActionTypes,
 } from "./types";
@@ -65,6 +66,18 @@ export function connectViewReducer(
 
       return {
         mainNodes: filterMainConnectNodes.concat(mainConnectNode),
+      };
+
+    case REMOVE_CONNECT_NODES:
+      const main = {
+        ...state.mainNodes.find((x) => x.id === action.payload.node.id),
+      } as Node;
+
+      main.connectNodes = [];
+      const filterMainNodes2 = state.mainNodes.filter((x) => x?.id !== main.id);
+
+      return {
+        mainNodes: filterMainNodes2.concat(main),
       };
 
     case REMOVE_ALL_MAIN_NODES:
