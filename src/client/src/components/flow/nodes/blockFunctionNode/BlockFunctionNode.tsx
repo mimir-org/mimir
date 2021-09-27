@@ -60,7 +60,6 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   ) as Node[];
 
   const connectChildren = GetConnectChildren(data, nodes, edges);
-  const hasChildren = connectChildren?.length > 0;
   const sortedTerminals = FilterTerminals(data, splitView);
 
   const mainConnectNode = mainConnectNodes.find((x) => x.id === data.id);
@@ -80,7 +79,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     }
   };
 
-  const onConnectViewClick = (node: Node) => {
+  const onConnectNodeClick = (node: Node) => {
     if (!isConnectorChecked(node)) {
       data.width = Size.ConnectView_Width;
       data.length = Size.ConnectView_Length;
@@ -151,9 +150,8 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
           node={data}
           isMenuOpen={connectMenu}
           children={connectChildren}
-          handleClick={onConnectViewClick}
+          handleClick={onConnectNodeClick}
           isChecked={isConnectorChecked}
-          hasChildren={hasChildren}
           connectButton={connectButton}
           showConnectMenu={showConnectMenu}
           connectMenu={connectMenu}
@@ -162,9 +160,11 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
       </NodeBox>
 
       <HandleComponent
+        node={data}
         nodes={nodes}
         terminals={sortedTerminals}
         isParent={false}
+        splitView={splitView}
       />
     </>
   );

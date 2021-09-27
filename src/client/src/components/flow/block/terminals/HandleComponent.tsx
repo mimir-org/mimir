@@ -13,23 +13,35 @@ import {
 } from "../../helpers/common";
 
 interface Props {
+  node: Node;
   nodes: Node[];
   terminals: Connector[];
   isParent: boolean;
+  splitView: boolean;
 }
 /**
  * Component for the terminals displayed on the nodes in BlockView.
  * @param param0
  * @returns a Mimir terminal in form of a Flow Handler.
  */
-const HandleComponent = ({ nodes, terminals, isParent }: Props) => {
+const HandleComponent = ({
+  node,
+  nodes,
+  terminals,
+  isParent,
+  splitView,
+}: Props) => {
   let inputCount = 0;
   let outputCount = 0;
 
   return (
     <>
       {terminals.map((conn: Connector) => {
-        const [type, pos] = GetBlockHandleType(conn);
+        const [type, pos] = GetBlockHandleType(
+          conn,
+          node.isSelected,
+          splitView
+        );
         if (!IsLocationTerminal(conn)) {
           if (IsInputTerminal(conn)) inputCount++;
           if (IsOutputTerminal(conn)) outputCount++;

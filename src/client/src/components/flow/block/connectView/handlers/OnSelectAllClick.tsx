@@ -1,7 +1,6 @@
 import { Node } from "../../../../../models";
 import { IsMainConnectNode } from "../../../helpers/block/connectView";
 import { Size } from "../../../../../compLibrary";
-
 import {
   addConnectNodes,
   addMainNode,

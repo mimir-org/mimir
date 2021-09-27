@@ -10,7 +10,6 @@ interface Props {
   children: Node[];
   handleClick: any;
   isChecked?: any;
-  hasChildren: boolean;
   connectButton: boolean;
   showConnectMenu: any;
   connectMenu: boolean;
@@ -28,7 +27,6 @@ const ConnectViewComponent = ({
   children,
   handleClick,
   isChecked,
-  hasChildren,
   connectButton,
   showConnectMenu,
   connectMenu,
@@ -36,7 +34,7 @@ const ConnectViewComponent = ({
 }: Props) => (
   <>
     <ConnectViewBox
-      visible={connectButton && hasChildren}
+      visible={connectButton && children.length > 0}
       onClick={() => Handlers.OnConnectMenuClick(showConnectMenu, connectMenu)}
     >
       <img src={ConnectMenuIcon} alt="options" />
