@@ -18,12 +18,13 @@ const Box = styled.div`
   }
 
   .icon {
-    position: relative;
-    left: 130px;
-    top: -1px;
+    display: flex;
+    img {
+      margin-left: auto;
 
-    :hover {
-      cursor: pointer;
+      :hover {
+        cursor: pointer;
+      }
     }
   }
 `;

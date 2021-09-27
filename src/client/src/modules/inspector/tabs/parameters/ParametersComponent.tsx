@@ -16,6 +16,7 @@ import {
 import Parameter from "./Parameter";
 import { lockUnlockAttribute } from "../../../../redux/store/project/actions";
 import { useState } from "react";
+import { Color } from "../../../../compLibrary";
 
 interface Props {
   node: Node;
@@ -121,13 +122,14 @@ const ParametersComponent = ({ node }: Props) => {
                   </div>
                   <div className="text">{attribute.key}</div>
                 </Box>
-                <Dropdown
+                <EntityDropdown
                   items={attributeCombinations}
                   selectedItems={parameters}
                   keyProp="id"
                   onChange={(id, selected) =>
                     onChangeParameterChoice(id, attribute.id, selected)
                   }
+                  color={Color.ParamsPurple}
                 />
               </Entity>
               {parameters.map((param) => (

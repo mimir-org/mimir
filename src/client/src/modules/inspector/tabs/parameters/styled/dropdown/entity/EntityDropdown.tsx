@@ -12,18 +12,33 @@ import {
   CollapseWhiteIcon,
 } from "../../../../../../../assets/icons/common";
 
-interface Props {
-  items: any[];
+interface DropdownItem {
+  id: string;
+  key: string;
+}
+interface Props<T> {
+  items: T[];
+  selectedItems: string[];
   keyProp: string;
-  onChange: Function;
+  onChange: (parameterId: string, selected: boolean) => void;
   color: string;
 }
 
-const EntityDropdown = ({ items, keyProp, onChange, color }: Props) => {
+const EntityDropdown = <T extends DropdownItem>({
+  items,
+  selectedItems,
+  keyProp,
+  onChange,
+  color,
+}: Props<T>) => {
   const [isListOpen, setIsListOpen] = useState(false);
 
+  const IsItemSelected = (item: T): boolean => {
+    return selectedItems.includes(item.id);
+  };
+
   return (
-    <MenuWrapper>
+    <MenuWrapper tabIndex={0} onBlur={() => setIsListOpen(false)}>
       <div onClick={(e) => setIsListOpen(!isListOpen)}>
         <MenuHeader open={isListOpen}>
           <p>{TextResources.Inspector_Params_Combinations}</p>
@@ -37,15 +52,18 @@ const EntityDropdown = ({ items, keyProp, onChange, color }: Props) => {
         <MenuList>
           {items?.map((item) => {
             return (
-              <div onClick={() => onChange(item)} key={item[keyProp]}>
+              <div
+                onClick={() => onChange(item.id, IsItemSelected(item))}
+                key={item[keyProp]}
+              >
                 <MenuListItem color={color}>
-                  <p>{item.name ?? item.key}</p>
+                  <p>{item.key}</p>
                   <CheckboxWrapper>
                     <label className={"checkbox-block"}>
                       <input
                         type="checkbox"
-                        checked={true}
-                        onChange={() => null}
+                        checked={IsItemSelected(item)}
+                        readOnly={true}
                       />
                       <span className="checkmark-block"></span>
                     </label>
