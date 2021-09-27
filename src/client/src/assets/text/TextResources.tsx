@@ -206,6 +206,8 @@ const TextResources = {
   // BlockView
   BlockView_Select_Message:
     "Please select an additional object from the Explorer Module",
+  ConnectMenu_Select_All: "Select all",
+  ConnectMenu_Clear_All: "Clear all",
 
   // Type
   Type_BlockLocation: "BlockLocationNode",

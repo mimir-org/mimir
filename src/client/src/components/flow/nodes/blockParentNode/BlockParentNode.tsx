@@ -8,7 +8,6 @@ import { Block } from "..";
 import { HandleComponent, TerminalsComponent } from "../../block/terminals";
 import { IsLocation } from "../../helpers/common";
 import { Size } from "../../../../compLibrary";
-import { OnHover, OnMouseOut } from "./handlers";
 import { BlockMessageBox } from "../../../../compLibrary/blockView";
 import {
   changeActiveConnector,
@@ -21,12 +20,13 @@ import {
   FindAllEdges,
 } from "../../helpers/block";
 
-/** Component for a parent node in BlockView.
- *  This is the large block that displays the selected node in the Explorer.
+/**
+ * Component for the large parent block in BlockView.
+ * @param data the data for the node.
+ * @returns a parent node of the Flow node type with Mimir styling and functionality.
  */
 const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const [terminalMenu, showTerminalMenu] = useState(false);
-  const [terminalButton, showTerminalButton] = useState(false);
   const dispatch = useDispatch();
 
   const nodes = useSelector<RootState>(
@@ -76,35 +76,31 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
 
   return (
     <>
-      <div
-        onMouseOver={() => OnHover(showTerminalButton)}
-        onMouseOut={() => OnMouseOut(showTerminalButton)}
-      >
-        <Block
-          node={node}
-          isLocation={IsLocation(node)}
-          isSplitView={isSplitView}
-          isSelected={node?.isBlockSelected}
-        />
-        <TerminalsComponent
-          node={node}
-          isMenuOpen={terminalMenu}
-          isParent={true}
-          isLocation={IsLocation(node)}
-          list={FilterTerminals(node, isSplitView)}
-          width={isSplitView ? Size.SplitView_Width : Size.BlockView_Width}
-          onClick={onConnectorClick}
-          menuButton={terminalButton}
-          showTerminalMenu={showTerminalMenu}
-          terminalMenu={terminalMenu}
-        />
-        <HandleComponent
-          node={node}
-          nodes={nodes}
-          terminals={FilterTerminals(node, isSplitView)}
-          splitView={isSplitView}
-        />
-      </div>
+      <Block
+        node={node}
+        isLocation={IsLocation(node)}
+        isSplitView={isSplitView}
+        isSelected={node?.isBlockSelected}
+      />
+      <TerminalsComponent
+        node={node}
+        isMenuOpen={terminalMenu}
+        isParent={true}
+        isLocation={IsLocation(node)}
+        terminals={FilterTerminals(node, isSplitView)}
+        width={isSplitView ? Size.SplitView_Width : Size.BlockView_Width}
+        onClick={onConnectorClick}
+        menuButton={true}
+        showTerminalMenu={showTerminalMenu}
+        terminalMenu={terminalMenu}
+      />
+      <HandleComponent
+        node={node}
+        isParent={true}
+        nodes={nodes}
+        terminals={FilterTerminals(node, isSplitView)}
+        splitView={isSplitView}
+      />
 
       {isSplitView && !splitViewNode && (
         <BlockMessageBox>

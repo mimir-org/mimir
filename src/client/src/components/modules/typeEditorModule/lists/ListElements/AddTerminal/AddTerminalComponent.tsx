@@ -1,13 +1,14 @@
 import { TerminalTypeItem, ConnectorType } from "../../../../../../models";
+import { AddTerminalElement } from "../../../styled";
+import { TextResources } from "../../../../../../assets/text";
+import { HelpIcon, DeleteIcon } from "../../../../../../assets/icons/common";
 import {
-  NummericValueInput,
+  NumericValueInput,
   SearchDropDown,
   SearchDropDownItem,
   DirectionalDropdown,
 } from "../../../../../../compLibrary";
-import { AddTerminalElement } from "../../../styled";
-import { TextResources } from "../../../../../../assets/text";
-import { HelpIcon, DeleteIcon } from "../../../../../../assets/icons/common";
+
 interface Props {
   terminalId: string;
   terminals: any[];
@@ -38,7 +39,7 @@ const AddTerminal = ({
 
   return (
     <AddTerminalElement>
-      <NummericValueInput
+      <NumericValueInput
         value={defaultTerminal.number.toString()}
         onChange={(item: number) => onQuantityChange(item)}
       />

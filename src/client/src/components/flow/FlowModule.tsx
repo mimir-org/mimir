@@ -7,7 +7,7 @@ import { TypeEditorComponent } from "../modules/typeEditorModule";
 
 /**
  * Component to display a module in Flow
- * @param param0 the route type
+ * @param route the route type
  * @returns a JSX element containing either TreeView, BlockView or the TypeEditor
  */
 const FlowModule = ({ route }) => {
