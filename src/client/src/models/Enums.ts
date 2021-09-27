@@ -41,8 +41,10 @@ export enum LibraryFilter {
 export enum Discipline {
   None = 0,
   NotSet = 1,
-  Process = 2,
-  Electro = 4,
+  ProjectManagement = 2,
+  Electrical = 4,
   Automation = 8,
   Structural = 16,
+  Operation = 32,
+  Process = 64,
 }

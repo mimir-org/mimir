@@ -92,6 +92,7 @@ export const TypeEditorComponent = () => {
               createLibraryType={state?.createLibraryType}
               icons={state?.icons}
               locationTypes={state?.locationTypes}
+              purposes={state?.purposes}
             />
             <ChooseProperties>
               <TypeEditorList

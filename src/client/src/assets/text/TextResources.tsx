@@ -131,6 +131,7 @@ const TextResources = {
   TypeEditor_Aspect: "Aspect",
   TypeEditor_Object_Type: "Object Type",
   TypeEditor_Location_Type: "Location Type",
+  TypeEditor_Purpose: "Purpose",
   TypeEditor_Type_Name: "Type name",
   TypeEditor_Status: "Status",
   TypeEditor_Properties_RDS: "Choose RDS",

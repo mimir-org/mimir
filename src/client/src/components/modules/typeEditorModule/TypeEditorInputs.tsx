@@ -1,5 +1,10 @@
 import { TextResources } from "../../../assets/text";
-import { BlobData, CreateLibraryType, LocationType } from "../../../models";
+import {
+  BlobData,
+  CreateLibraryType,
+  LocationType,
+  Purpose,
+} from "../../../models";
 import { TextInput, TypeInfo, TypeNameInput } from "./styled";
 import { Dropdown } from "../../../compLibrary/dropdown/typeEditor";
 import {
@@ -7,6 +12,7 @@ import {
   GetBlobData,
   GetLocationTypes,
   GetObjectTypes,
+  GetPurposes,
   IsLocation,
 } from "./helpers";
 
@@ -15,6 +21,7 @@ interface Props {
   createLibraryType: CreateLibraryType;
   icons: BlobData[];
   locationTypes: LocationType[];
+  purposes: Purpose[];
 }
 
 const TypeEditorInputs = ({
@@ -22,6 +29,7 @@ const TypeEditorInputs = ({
   createLibraryType,
   icons,
   locationTypes,
+  purposes,
 }: Props) => {
   return (
     <TypeInfo>
@@ -47,7 +55,6 @@ const TypeEditorInputs = ({
           }
         />
       )}
-
       {createLibraryType && IsLocation(createLibraryType.aspect) && (
         <Dropdown
           label={TextResources.TypeEditor_Location_Type}
@@ -64,6 +71,17 @@ const TypeEditorInputs = ({
           }
         />
       )}
+      <Dropdown
+        label={TextResources.TypeEditor_Purpose}
+        items={GetPurposes(purposes)}
+        keyProp="id"
+        valueProp="name"
+        onChange={(data: any) => onChange("purpose", data)}
+        // disabled={FieldValidator(state, "symbol")}
+        defaultValue={
+          createLibraryType && createLibraryType.purpose?.toString()
+        }
+      />
       <TypeNameInput>
         <p>{TextResources.TypeEditor_Type_Name}</p>
         <TextInput

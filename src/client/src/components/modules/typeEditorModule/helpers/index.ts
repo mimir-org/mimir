@@ -9,6 +9,7 @@ export { default as IsNotSet } from "./IsNotSet";
 
 export { default as GetAspects } from "./GetAspects";
 export { default as GetObjectTypes } from "./GetObjectTypes";
+export { default as GetPurposes } from "./GetPurposes";
 export { default as GetDefaultValue } from "./GetDefaultValue";
 export { default as GetDefaultTerminal } from "./GetDefaultTerminal";
 export { default as GetDefaultTerminals } from "./GetDefaultTerminals";

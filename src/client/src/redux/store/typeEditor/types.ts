@@ -7,6 +7,7 @@ import {
   TerminalType,
   TerminalTypeItem,
   Aspect,
+  Purpose,
   LocationType,
   PredefinedAttribute,
   BlobData,
@@ -58,6 +59,7 @@ export interface TypeEditorState {
   createLibraryType: CreateLibraryType;
   aspects: object;
   objectTypes: object;
+  purposes: Purpose[];
   rdsList: Rds[];
   terminals: TerminalType[];
   attributes: AttributeType[];
@@ -79,6 +81,7 @@ interface FetchingInitialDataActionFinished {
   payload: {
     aspects: Dictionary[];
     objectTypes: Dictionary[];
+    purposes: Purpose[];
   };
 }
 

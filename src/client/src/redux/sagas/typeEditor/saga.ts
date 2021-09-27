@@ -107,13 +107,16 @@ export function* getInitialData(action: TypeEditorActionTypes) {
     const aspectUrl = process.env.REACT_APP_API_BASE_URL + "typeeditor/aspects";
     const objectsUrl =
       process.env.REACT_APP_API_BASE_URL + "typeeditor/objects";
+    const purposesUrl = process.env.REACT_APP_API_BASE_URL + "enum/9";
 
     const aspectResponse = yield call(get, aspectUrl);
     const objectResponse = yield call(get, objectsUrl);
+    const purposesResponse = yield call(get, purposesUrl);
 
     const payload = {
       aspects: aspectResponse.data,
       objectTypes: objectResponse.data,
+      purposes: purposesResponse.data,
     };
 
     yield statePut({
@@ -124,6 +127,7 @@ export function* getInitialData(action: TypeEditorActionTypes) {
     const payload = {
       aspects: [],
       objectTypes: [],
+      purposes: [],
     };
 
     yield statePut({

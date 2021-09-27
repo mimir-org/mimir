@@ -5,7 +5,6 @@ import {
   BlobData,
   TerminalTypeItem,
   PredefinedAttribute,
-  CompositeType,
 } from "../../../models";
 import {
   FETCHING_INITIAL_DATA,
@@ -48,6 +47,7 @@ const initialState: TypeEditorState = {
     name: "",
     aspect: Aspect.NotSet,
     objectType: ObjectType.NotSet,
+    purpose: "",
     semanticReference: "",
     rdsId: "",
     terminalTypes: [] as TerminalTypeItem[],
@@ -60,6 +60,7 @@ const initialState: TypeEditorState = {
   } as CreateLibraryType,
   aspects: {},
   objectTypes: {},
+  purposes: [],
   rdsList: [],
   terminals: [],
   attributes: [],
@@ -87,6 +88,7 @@ export function typeEditorReducer(
         fetching: false,
         aspects: action.payload.aspects,
         objectTypes: action.payload.objectTypes,
+        purposes: action.payload.purposes,
       };
     case FETCHING_RDS:
       return {
@@ -156,6 +158,7 @@ export function typeEditorReducer(
           name: "",
           aspect: Aspect.NotSet,
           objectType: ObjectType.NotSet,
+          purpose: "",
           semanticReference: "",
           rdsId: "",
           terminalTypes: [] as TerminalTypeItem[],
@@ -223,6 +226,7 @@ export function typeEditorReducer(
           name: "",
           aspect: Aspect.NotSet,
           objectType: ObjectType.NotSet,
+          purpose: "",
           semanticReference: "",
           rdsId: "",
           terminalTypes: [] as TerminalTypeItem[],
@@ -245,6 +249,7 @@ export function typeEditorReducer(
           name: "",
           aspect: Aspect.NotSet,
           objectType: ObjectType.NotSet,
+          purpose: "",
           semanticReference: "",
           rdsId: "",
           terminalTypes: [] as TerminalTypeItem[],
@@ -319,6 +324,7 @@ export function typeEditorReducer(
           name: "",
           aspect: Aspect.NotSet,
           objectType: ObjectType.NotSet,
+          purpose: "",
           semanticReference: "",
           rdsId: "",
           terminalTypes: [] as TerminalTypeItem[],
