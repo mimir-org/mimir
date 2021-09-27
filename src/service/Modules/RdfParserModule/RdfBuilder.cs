@@ -16,7 +16,10 @@ namespace RdfParserModule
     {
         public Project Project;
         public IGraph Graph;
-        
+
+        public IUriNode FunctionRoot;
+        public IUriNode LocationRoot;
+        public IUriNode ProductRoot;
 
 
         private IDictionary<string, string> GetNamespaces()
@@ -97,6 +100,7 @@ namespace RdfParserModule
             var type = Graph.CreateUriNode("rdf:type");
             var hasAspect = Graph.CreateUriNode("imf:hasAspect");
 
+
             foreach (Node node in Project.Nodes)
             {
                 IUriNode nodeId = Graph.CreateUriNode("mimir:" + node.Id);              
@@ -106,6 +110,19 @@ namespace RdfParserModule
                 {
                     Graph.Assert(new Triple(nodeId, Graph.CreateUriNode("imf:isAspectOf"),
                         Graph.CreateUriNode("mimir:" + node.MasterProjectId)));
+
+                    switch (node.Aspect)
+                    {
+                        case Aspect.Function:
+                            FunctionRoot = nodeId;
+                            break;
+                        case Aspect.Location:
+                            LocationRoot = nodeId;
+                            break;
+                        case Aspect.Product:
+                            ProductRoot = nodeId;
+                            break;
+                    }
 
                     Graph.Assert(new Triple(nodeId, label, Graph.CreateLiteralNode(Project.Name + " " + node.Aspect)));
 
@@ -215,8 +232,8 @@ namespace RdfParserModule
         {
             var edges = Project.Edges;
             var type = Graph.CreateUriNode("rdf:type");
-            
-
+            var hasParent = Graph.CreateUriNode("imf:hasParent");
+            var label = Graph.CreateUriNode("rdfs:label");
 
             foreach (Edge edge in edges)
             {
@@ -229,12 +246,12 @@ namespace RdfParserModule
                     case Relation relation:
                         var relationString = relation.RelationType.ToString();
 
-                        //TODO If relation is PartOf, put it to hasChild
+                        //TODO Breaks if it should be a hasChild relation. We only explicitly state hasParent .
                         if (relationString.ToLower().Contains("partof"))
                         {
-                            relationString = "hasChild";
+                            break;
                         }
-                        IUriNode relationFromNode = Graph.CreateUriNode("imf:" + relationString);
+                        var relationFromNode = Graph.CreateUriNode("imf:" + relationString);
                         Graph.Assert(new Triple(fromNode, relationFromNode, toNode));
                         break;
                 }
@@ -262,13 +279,43 @@ namespace RdfParserModule
                 {
                     var transportNode = Graph.CreateUriNode("mimir:" + edge.TransportId);
                     Graph.Assert(new Triple(transportNode, type, Graph.CreateUriNode("imf:Transport")));
-                    Graph.Assert(new Triple(transportNode, Graph.CreateUriNode("imf:childOf"), Graph.CreateUriNode("mimir:" + Project.Id)));
+
+                    switch (edge.FromNode.Aspect)
+                    {
+                        case Aspect.Function:
+                            Graph.Assert(new Triple(transportNode, hasParent, FunctionRoot));
+                            break;
+                        case Aspect.Location:
+                            Graph.Assert(new Triple(transportNode, hasParent, LocationRoot));
+                            break;
+                        case Aspect.Product:
+                            Graph.Assert(new Triple(transportNode, hasParent, ProductRoot));
+                            break;
+                    }
+
+                    Graph.Assert(new Triple(transportNode, label, Graph.CreateLiteralNode(edge.Transport.Name)));
+
+
                 }
                 if (!string.IsNullOrEmpty(edge.InterfaceId))
                 {
-                    var transportNode = Graph.CreateUriNode("mimir:" + edge.InterfaceId);
-                    Graph.Assert(new Triple(transportNode, type, Graph.CreateUriNode("imf:Interface")));
-                    Graph.Assert(new Triple(transportNode, Graph.CreateUriNode("imf:childOf"), Graph.CreateUriNode("mimir:" + Project.Id)));
+                    var interfaceNode = Graph.CreateUriNode("mimir:" + edge.InterfaceId);
+                    Graph.Assert(new Triple(interfaceNode, type, Graph.CreateUriNode("imf:Interface")));
+
+                    switch (edge.FromNode.Aspect)
+                    {
+                        case Aspect.Function:
+                            Graph.Assert(new Triple(interfaceNode, hasParent, FunctionRoot));
+                            break;
+                        case Aspect.Location:
+                            Graph.Assert(new Triple(interfaceNode, hasParent, LocationRoot));
+                            break;
+                        case Aspect.Product:
+                            Graph.Assert(new Triple(interfaceNode, hasParent, ProductRoot));
+                            break;
+                    }
+                    Graph.Assert(new Triple(interfaceNode, label, Graph.CreateLiteralNode(edge.Interface.Name)));
+
                 }
             }
         }
