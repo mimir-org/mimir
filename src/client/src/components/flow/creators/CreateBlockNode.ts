@@ -1,11 +1,17 @@
 import { Node } from "../../../models";
 import { FlowElement } from "react-flow-renderer";
 import { SetBlockNodePosition, IsSplitView } from "../helpers/block";
-import { IsFunction, IsLocation } from "../helpers/common";
-import { Size } from "../../../compLibrary";
+import { IsLocation } from "../helpers/common";
 import { SetConnectNodePosition } from "../helpers/block/connectView";
 import { TextResources } from "../../../assets/text";
 
+/**
+ * Component to create a node in BlockView.
+ * @param node
+ * @param connectNode
+ * @param nodes
+ * @returns a node of the type FlowElement.
+ */
 const CreateBlockNode = (node: Node, connectNode: Node, nodes: Node[]) => {
   if (!node) return null;
 
@@ -24,17 +30,6 @@ const CreateBlockNode = (node: Node, connectNode: Node, nodes: Node[]) => {
       nodes
     );
   }
-
-  // Handle size
-  if (IsFunction(node)) {
-    if (connectNode?.id === node.id) {
-      node.width = Size.ConnectView_Width;
-      node.length = Size.ConnectView_Length;
-    }
-  }
-
-  if (!node.width) node.width = Size.Node_Width;
-  if (!node.length) node.length = Size.Node_Length;
 
   return {
     id: node.id,
