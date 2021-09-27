@@ -6,7 +6,7 @@ import { Size } from "../../../compLibrary";
 import { SetConnectNodePosition } from "../helpers/block/connectView";
 import { TextResources } from "../../../assets/text";
 
-const CreateBlockNode = (node: Node, connectNode: Node) => {
+const CreateBlockNode = (node: Node, connectNode: Node, nodes: Node[]) => {
   if (!node) return null;
 
   const connectNodes = connectNode?.connectNodes ?? [];
@@ -17,7 +17,12 @@ const CreateBlockNode = (node: Node, connectNode: Node) => {
   // Force node to fit Block
   let position = SetBlockNodePosition(node, IsSplitView());
   if (connectNodes.some((x) => x.id === node.id)) {
-    position = SetConnectNodePosition(node, connectNode.id, connectNodes);
+    position = SetConnectNodePosition(
+      node,
+      connectNode.id,
+      connectNodes,
+      nodes
+    );
   }
 
   // Handle size

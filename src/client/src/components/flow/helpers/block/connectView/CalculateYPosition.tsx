@@ -6,8 +6,8 @@ const CalculateYPosition = (
   yPos: number,
   connectNodes: Node[]
 ): number => {
-  const yMargin = 25;
-  const marginTop = Size.Node_Length - 10;
+  const yMargin = 30;
+  const marginTop = Size.Node_Length - 15;
   yPos += marginTop;
 
   // TODO: fix scaling

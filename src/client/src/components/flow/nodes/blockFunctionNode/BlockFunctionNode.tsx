@@ -21,8 +21,8 @@ import {
 import {
   GetConnectChildren,
   IsMainConnectNode,
-  SetMainConnectNodeSize,
   SetMainConnectNodeColor,
+  ResizeMainConnectNode,
 } from "../../helpers/block/connectView";
 import {
   addConnectNode,
@@ -104,9 +104,8 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     return result;
   };
 
-  // Resize main connect node
   useEffect(() => {
-    SetMainConnectNodeSize(mainConnectNode?.id, data.id, connectNodes);
+    ResizeMainConnectNode(connectNodes?.length, mainConnectNode?.id, data.id);
     SetMainConnectNodeColor(mainConnectNode?.id, data.id, connectNodes);
   }, [mainConnectNode, data, connectNodes]);
 
