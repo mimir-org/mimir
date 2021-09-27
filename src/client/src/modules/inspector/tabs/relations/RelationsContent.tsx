@@ -22,7 +22,7 @@ const RelationsContent = <T extends RelationItem>({
   return (
     <RelationsColumn>
       <RelationsHeader>{label}</RelationsHeader>
-      <TerminalList>
+      <TerminalList hasItems={items.length > 0}>
         {items?.map((item, i) => {
           return (
             <ListElement

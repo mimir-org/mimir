@@ -14,7 +14,7 @@ const NumericValueInput = ({ value, onChange }: Props) => {
       var num = parseInt(value) || 0;
       setQuantity(num.toString());
     }
-  }, []);
+  }, [value]);
 
   const handleChange = (e: any) => {
     var num = parseInt(e.target.value) || 0;
