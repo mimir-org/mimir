@@ -1,5 +1,9 @@
-import { Connector, ConnectorType, Edge, Node } from "../../../../../models";
+import { Connector, Edge, Node } from "../../../../../models";
 import { GetRelationName } from "../../../helpers";
+import {
+  GetOtherNodeFromEdgeViaConnector,
+  GetOtherNodeFromEdgeViaNode,
+} from "../../../../../components/flow/helpers/common";
 
 const GetNameRelation = (
   conn: Connector,
@@ -9,23 +13,25 @@ const GetNameRelation = (
 
   const edge = relationEdges.get(conn.id);
 
-  const otherNode =
-    edge.fromConnector.id === conn.id ? edge.toNode : edge.fromNode;
+  const otherNode = GetOtherNodeFromEdgeViaConnector(edge, conn);
 
   return `${name}: ${otherNode.label}`;
 };
 
-const GetNameTerminal = (conn: Connector): string => {
-  return `${conn.name} - ${ConnectorType[conn.type]}`;
+const GetNameTerminal = (conn: Connector, edges: Edge[]): string => {
+  const edge = edges.find(
+    (e) => e.fromConnector.id === conn.id || e.toConnector.id === conn.id
+  );
+
+  const otherNode = GetOtherNodeFromEdgeViaConnector(edge, conn);
+
+  return `${conn.name}: ${otherNode?.label ?? ""}`;
 };
 
 const GetNameTransport = (edge: Edge, node: Node): string => {
-  const suffix =
-    edge.fromNode.id === node.id
-      ? `To ${edge.toNode.label}`
-      : `From ${edge.fromNode.label}`;
+  const otherNode = GetOtherNodeFromEdgeViaNode(edge, node);
 
-  return `${edge.fromConnector.name} ${suffix}`;
+  return `${edge.fromConnector.name} ${otherNode.label}`;
 };
 
 export { GetNameRelation, GetNameTerminal, GetNameTransport };

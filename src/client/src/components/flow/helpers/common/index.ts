@@ -25,6 +25,10 @@ export { default as GetConnectorIcon } from "./GetConnectorIcon";
 export { default as GetHandlePosition } from "./GetHandlePosition";
 export { default as GetConnectorName } from "./GetConnectorName";
 export { default as GetBlockNodeTypes } from "../block/GetBlockNodeTypes";
+export {
+  GetOtherNodeFromEdgeViaConnector,
+  GetOtherNodeFromEdgeViaNode,
+} from "./GetOtherNodeFromEdge";
 export { default as SetDarkModeColor } from "./SetDarkModeColor";
 export { default as GetNodeType } from "./GetNodeType";
 export { default as GetHandleType } from "./GetHandleType";

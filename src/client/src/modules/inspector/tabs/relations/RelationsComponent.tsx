@@ -13,10 +13,7 @@ import {
   GetNameTerminal,
   GetNameTransport,
 } from "./helpers/GetName";
-import {
-  IsInputTerminal,
-  IsOutputTerminal,
-} from "../../../../components/flow/helpers/common";
+import GetTerminalsAndTransports from "./helpers/GetTerminals";
 
 interface Props {
   node: Node;
@@ -34,19 +31,8 @@ const RelationComponent = ({ node }: Props) => {
 
   const [relations, relationEdges] = GetRelations(connectors, edges);
 
-  const inputTerminals = connectors.filter(
-    (x) => x.terminalTypeId && IsInputTerminal(x)
-  );
-
-  const outputTerminals = connectors.filter(
-    (x) => x.terminalTypeId && IsOutputTerminal(x)
-  );
-
-  const transports = edges.filter(
-    (e) =>
-      (e.toNodeId === node.id || e.fromNodeId === node.id) &&
-      e.fromConnector.terminalTypeId
-  );
+  const [inputTerminals, outputTerminals, transports] =
+    GetTerminalsAndTransports(connectors, edges, node);
 
   return (
     <RelationsBody>
@@ -64,14 +50,14 @@ const RelationComponent = ({ node }: Props) => {
           <RelationsContent
             items={inputTerminals}
             label={TextResources.Inspector_Relations_Terminal_Input}
-            getName={GetNameTerminal}
+            getName={(terminal) => GetNameTerminal(terminal, transports)}
             getColor={(conn) => GetRelationColor(conn)}
             onClick={OnClickTerminal}
           />
           <RelationsContent
             items={outputTerminals}
             label={TextResources.Inspector_Relations_Terminal_Output}
-            getName={GetNameTerminal}
+            getName={(terminal) => GetNameTerminal(terminal, transports)}
             getColor={(conn) => GetRelationColor(conn)}
             onClick={OnClickTerminal}
           />
