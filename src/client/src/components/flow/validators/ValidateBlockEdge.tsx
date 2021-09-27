@@ -34,28 +34,28 @@ const ValidateBlockEdge = (
 
   // Regular BlockView
   if (!splitView && !IsConnectView()) {
-    if (IsFunction(selectedNode)) {
-      if (
-        toNode.level - selectedNode.level === 1 &&
-        fromNode.level - selectedNode.level === 0 &&
-        fromNode.id === selectedNode.id
-      )
-        return true;
-      if (
-        fromNode.level - selectedNode.level === 1 &&
-        toNode.level - selectedNode.level === 0 &&
-        toNode.id === selectedNode.id
-      )
-        return true;
-      if (
-        fromNode.level - selectedNode.level === 1 &&
-        toNode.level - selectedNode.level === 1 &&
-        IsChildOf(toNode, selectedNode) &&
-        IsChildOf(fromNode, selectedNode)
-      )
-        return true;
-    }
-    return false;
+    // if (IsFunction(selectedNode)) {
+    //   if (
+    //     toNode.level - selectedNode.level === 1 &&
+    //     fromNode.level - selectedNode.level === 0 &&
+    //     fromNode.id === selectedNode.id
+    //   )
+    //     return true;
+    //   if (
+    //     fromNode.level - selectedNode.level === 1 &&
+    //     toNode.level - selectedNode.level === 0 &&
+    //     toNode.id === selectedNode.id
+    //   )
+    //     return true;
+    //   if (
+    //     fromNode.level - selectedNode.level === 1 &&
+    //     toNode.level - selectedNode.level === 1 &&
+    //     IsChildOf(toNode, selectedNode) &&
+    //     IsChildOf(fromNode, selectedNode)
+    //   )
+    //     return true;
+    // }
+    return true;
   }
 
   if (IsConnectView()) {

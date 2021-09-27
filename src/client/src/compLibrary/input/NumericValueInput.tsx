@@ -6,7 +6,7 @@ interface Props {
   onChange: Function;
 }
 
-const NummericValueInput = ({ value, onChange }: Props) => {
+const NumericValueInput = ({ value, onChange }: Props) => {
   const [quantity, setQuantity] = useState("1");
 
   useEffect(() => {
@@ -39,4 +39,4 @@ const NummericValueInput = ({ value, onChange }: Props) => {
   );
 };
 
-export default NummericValueInput;
+export default NumericValueInput;

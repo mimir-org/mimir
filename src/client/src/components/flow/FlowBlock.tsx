@@ -14,14 +14,7 @@ import { LibraryState } from "../../redux/store/library/types";
 import { GetBlockEdgeTypes, IsBlockView, OnBlockClick } from "./helpers/block";
 import { CreateBlockElements } from "./creators";
 import { SetPanelHeight } from "../../modules/inspector/helpers";
-import {
-  useOnConnect,
-  useOnDrop,
-  useOnRemove,
-  useOnDragStop,
-  useOnConnectStop,
-  useOnConnectStart,
-} from "./hooks";
+import { useOnConnect, useOnDrop, useOnRemove, useOnDragStop } from "./hooks";
 import {
   setActiveBlockNode,
   setActiveEdge,
@@ -130,21 +123,6 @@ const FlowBlock = () => {
     return useOnDragStop(_event, activeNode, dispatch);
   };
 
-  const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
-    return useOnConnectStart(e, { nodeId, handleType, handleId });
-  };
-
-  const OnConnectStop = (e) => {
-    return useOnConnectStop(
-      e,
-      project,
-      reactFlowInstance,
-      node.id,
-      reactFlowWrapper,
-      dispatch
-    );
-  };
-
   const OnDrop = (event) => {
     return useOnDrop(
       project,
@@ -197,8 +175,6 @@ const FlowBlock = () => {
               onDragOver={OnDragOver}
               onNodeDragStop={OnNodeDragStop}
               onElementClick={OnElementClick}
-              onConnectStart={OnConnectStart}
-              onConnectStop={OnConnectStop}
               zoomOnScroll={false}
               paneMoveable={false}
               onClick={(e) => OnBlockClick(e, dispatch, project)}

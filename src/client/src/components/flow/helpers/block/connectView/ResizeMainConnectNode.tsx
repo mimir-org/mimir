@@ -1,7 +1,7 @@
 import { FindNodeByDataId } from "../";
 import { Size } from "../../../../../compLibrary";
 
-const UpdateConnectNodeSize = (nodeCount: number, mainNodeId: string) => {
+const ResizeMainConnectNode = (nodeCount: number, mainNodeId: string) => {
   const mainNode = FindNodeByDataId(mainNodeId);
   let newHeight = Size.Node_Length;
   let percent = 16;
@@ -22,4 +22,4 @@ const UpdateConnectNodeSize = (nodeCount: number, mainNodeId: string) => {
   }
 };
 
-export default UpdateConnectNodeSize;
+export default ResizeMainConnectNode;

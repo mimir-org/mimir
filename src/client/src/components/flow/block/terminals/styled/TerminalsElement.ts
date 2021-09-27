@@ -15,7 +15,7 @@ const TerminalsElement = styled.div`
     padding-left: 28px;
     text-align: left;
     position: relative;
-    bottom: 10px;
+    bottom: 9px;
   }
 
   :last-child {
