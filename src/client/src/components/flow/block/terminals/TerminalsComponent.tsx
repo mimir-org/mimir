@@ -2,6 +2,7 @@ import { Connector, Node } from "../../../../models";
 import { GetMenuIcon } from "./helpers";
 import { OnTerminalMenuClick } from "./handlers";
 import { TerminalsMenu, TerminalsElement, TerminalsBox } from "./styled";
+import { ArrowDown, ArrowUp } from "../../../../assets/icons/blockView";
 import {
   GetConnectorIcon,
   GetConnectorName,
@@ -11,7 +12,7 @@ import {
 interface Props {
   node: Node;
   isMenuOpen: boolean;
-  list: Connector[];
+  terminals: Connector[];
   width: number;
   isParent: boolean;
   isLocation: boolean;
@@ -22,13 +23,15 @@ interface Props {
   onClick: (conn: Connector) => void;
 }
 
-/** Component for the terminals menu. This is the menu in the upper-right corner of a node.
- *  The component returns a drop-down menu where you can select from the nodes' terminals.
+/**
+ * Component for the terminals menu on nodes in BlockView. The menu is opened from the icon in the upper-right corner.
+ * @param param0
+ * @returns a drop-down menu where you can select from the nodes' terminals.
  */
 const TerminalsComponent = ({
   node,
   isMenuOpen,
-  list,
+  terminals,
   width,
   isParent,
   isLocation,
@@ -42,14 +45,24 @@ const TerminalsComponent = ({
     <TerminalsBox
       visible={menuButton && !IsAspectNode(node)}
       isSplitView={isSplitView}
-      onClick={() => OnTerminalMenuClick(showTerminalMenu, terminalMenu)}
+      isParent={isParent}
     >
-      <img src={GetMenuIcon(node)} alt="options" />
+      {isParent && (
+        <>
+          <img src={ArrowUp} alt="up" className="arrow" />
+          <img src={ArrowDown} alt="down" className="arrow" />
+        </>
+      )}
+      <img
+        src={GetMenuIcon(node, isParent)}
+        alt="menu"
+        onClick={() => OnTerminalMenuClick(showTerminalMenu, terminalMenu)}
+      />
     </TerminalsBox>
 
     {isMenuOpen && (
       <TerminalsMenu width={width} isParent={isParent} isLocation={isLocation}>
-        {list.map((conn) => (
+        {terminals.map((conn) => (
           <TerminalsElement key={conn.id}>
             <p className="text">{GetConnectorName(conn)}</p>
             <label className={"checkbox-block"}>

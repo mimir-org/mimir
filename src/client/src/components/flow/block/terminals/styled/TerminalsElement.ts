@@ -5,18 +5,17 @@ import { Color, FontSize } from "../../../../../compLibrary";
 const TerminalsElement = styled.div`
   border-bottom: 1px solid;
   border-color: ${Color.DarkGrey};
-  padding: 5px 34px 5px 5px;
   font-size: ${FontSize.Small};
   color: ${Color.Black};
-  height: 15px;
-  width: auto;
-  min-width: 120px;
-  position: relative;
+  padding: 5px 30px 0px 0px;
+  height: 20px;
+  display: flex;
 
   .text {
-    position: absolute;
-    left: 30px;
-    bottom: -3px;
+    padding-left: 28px;
+    text-align: left;
+    position: relative;
+    bottom: 9px;
   }
 
   :last-child {

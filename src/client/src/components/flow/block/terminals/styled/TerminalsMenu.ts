@@ -8,13 +8,12 @@ const TerminalsMenu = styled.div`
     props.isLocation ? Color.LocationTab : Color.FunctionTab};
   background-color: ${Color.White};
   border-radius: 5px;
-  height: auto;
-  width: max-content;
-  min-width: 200px;
-  position: absolute;
-  left: ${(props) => (props.isParent ? props.width + 5 : props.width + 3)}px;
-  top: ${(props) => (props.isParent ? "-1px" : "-3px")};
   z-index: 2;
+  min-width: 190px;
+  width: max-content;
+  position: absolute;
+  left: ${(props) => props.width + 5}px;
+  top: ${(props) => (props.isParent ? "-1px" : "5px")};
 
   .button {
     position: absolute;

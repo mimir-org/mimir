@@ -6,6 +6,7 @@ const TabTitle = styled.p`
   bottom: ${(props) => (props.active ? "20px" : "16px")};
   font-weight: ${(props: { active: boolean }) =>
     props.active && `${FontWeight.Bold}`};
+  text-align: center;
 `;
 
 export default TabTitle;
