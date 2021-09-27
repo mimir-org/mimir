@@ -17,6 +17,7 @@ const ConnectViewElement = styled.div`
     text-align: left;
     padding-left: 30px;
     bottom: 8px;
+    width: max-content;
   }
 
   .select {

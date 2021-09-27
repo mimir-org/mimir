@@ -17,7 +17,7 @@ const Size = {
   BlockView_MarginRight: 220,
   BlockView_MarginTop: 120,
   BlockView_BackgroundMargin: 50,
-  ConnectView_Width: 380,
+  ConnectView_Width: 400,
   ConnectView_Length: 180,
 
   // Modules
