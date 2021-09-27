@@ -31,7 +31,7 @@ const GetNameTerminal = (conn: Connector, edges: Edge[]): string => {
 const GetNameTransport = (edge: Edge, node: Node): string => {
   const otherNode = GetOtherNodeFromEdgeViaNode(edge, node);
 
-  return `${edge.fromConnector.name} ${otherNode.label}`;
+  return `${edge.fromConnector.name}:${otherNode.label}`;
 };
 
 export { GetNameRelation, GetNameTerminal, GetNameTransport };
