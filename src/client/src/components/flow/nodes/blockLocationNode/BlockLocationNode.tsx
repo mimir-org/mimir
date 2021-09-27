@@ -15,9 +15,9 @@ import {
 } from "../../helpers/block";
 
 /**
- * Component for a Location node in BlockView
- * @param param0 - the data for the node
- * @returns a Location node
+ * Component for a Location Node in BlockView.
+ * @param data the data for the node.
+ * @returns a Location Node of the Flow node type with Mimir styling and functionality.
  */
 const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
@@ -62,7 +62,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
         <TerminalsComponent
           node={data}
           isMenuOpen={terminalMenu}
-          list={sortedTerminals}
+          terminals={sortedTerminals}
           width={data.width}
           isParent={false}
           isLocation={IsLocation(data)}
@@ -76,6 +76,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
         node={data}
         nodes={nodes}
         terminals={sortedTerminals}
+        isParent={false}
         splitView={splitView}
       />
     </>

@@ -1,6 +1,6 @@
 export { default as Input } from "./input/Input";
 export { default as NumericInput } from "./input/NumericInput";
-export { default as NummericValueInput } from "./input/NummericValueInput";
+export { default as NumericValueInput } from "./input/NumericValueInput";
 export { default as SearchDropDown } from "./dropdown/SearchDropDown";
 export { default as SearchBarWrapper } from "./dropdown/SearchBarWrapper";
 export { default as SearchBar } from "./dropdown/SearchBar";

@@ -28,8 +28,12 @@ const ValidateBlockEdge = (
   toConnector: Connector,
   splitView: boolean
 ) => {
-  if (!fromNode || !toNode) return false;
-  if (IsPartOfTerminal(fromConnector) || IsPartOfTerminal(toConnector))
+  if (
+    !fromNode ||
+    !toNode ||
+    IsPartOfTerminal(fromConnector) ||
+    IsPartOfTerminal(toConnector)
+  )
     return false;
 
   // Regular BlockView
@@ -59,15 +63,13 @@ const ValidateBlockEdge = (
   }
 
   if (IsConnectView()) {
-    if (
+    return (
       fromNode !== selectedNode &&
       IsTransportTerminal(fromConnector) &&
       IsTransportTerminal(toConnector) &&
       IsFunction(fromNode) &&
       IsFunction(toNode)
-    )
-      return true;
-    return false;
+    );
   }
 
   if (splitView) {

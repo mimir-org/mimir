@@ -13,6 +13,7 @@ const TabBody = styled.div`
     width: 100%;
     height: 100%;
     overflow-y: hidden;
+    min-width: 1400px;
   }
 
   hr {

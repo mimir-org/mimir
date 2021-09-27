@@ -436,7 +436,7 @@ namespace Mb.Core.Services
             var userName = _contextAccessor.GetName();
 
             if (attribute.IsLocked && attribute.IsLockedBy != userName)
-                return;
+                throw new ModelBuilderUnauthorizedAccessException("Locked by: " + attribute.IsLockedBy);
 
             attribute.IsLocked = lockUnlockAttributeAm.IsLocked;
             attribute.IsLockedBy = attribute.IsLocked ? userName : null;
@@ -470,7 +470,7 @@ namespace Mb.Core.Services
                 return;
 
             if (node.IsLocked && userName != node.IsLockedBy)
-                return;
+                throw new ModelBuilderUnauthorizedAccessException("Locked by: " + node.IsLockedBy); ;
 
             node.IsLocked = lockUnlockNodeAm.IsLocked;
             node.IsLockedBy = node.IsLocked ? userName : null;
@@ -536,11 +536,19 @@ namespace Mb.Core.Services
             var data = await parser.SerializeProject(project);
             var projectString = System.Text.Encoding.UTF8.GetString(data);
 
+            var export = new ExportData
+            {
+                Id = project.Id,
+                Version = project.Version,
+                Environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"),
+                Document = projectString
+            };
+
             foreach (var sender in senders)
             {
                 if(sender.Instance is IModelBuilderSyncService client)
                 {
-                    await client.SendData(projectString);
+                    await client.SendData(export);
                 }
             }
         }
