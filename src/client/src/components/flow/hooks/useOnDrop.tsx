@@ -4,6 +4,7 @@ import { GetEdgeType } from "../helpers/tree";
 import { ConvertToEdge, ConvertToNode } from "../converters";
 import { CreateBlockNode, CreateTreeEdge, CreateTreeNode } from "../creators";
 import { BlobData, LibItem, Project, GetFileData } from "../../../models";
+import { LibraryState } from "../../../redux/store/library/types";
 import {
   CreateId,
   GetSelectedNode,
@@ -11,7 +12,6 @@ import {
   IsOutputTerminal,
   IsPartOfTerminal,
 } from "./../helpers/common";
-import { LibraryState } from "../../../redux/store/library/types";
 
 const useOnDrop = (
   project: Project,
@@ -34,7 +34,6 @@ const useOnDrop = (
 
     (async () => {
       const data = await GetFileData(event, project);
-
       data[0].forEach((node) => {
         dispatch(addNode(node));
         setElements((es) => es.concat(CreateTreeNode(node)));

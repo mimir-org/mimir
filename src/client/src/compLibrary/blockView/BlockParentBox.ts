@@ -1,50 +1,39 @@
 import styled from "styled-components";
-import { Size } from "..";
-import Color from "../colors/Color";
+import { Color, FontSize, Size } from "..";
 
+/** Styled component that sits on top of a Block element in Mimir. */
 const BlockParentBox = styled.div`
   position: absolute;
   opacity: 1 !important;
-  top: 40px;
+  z-index: 1;
   cursor: ${(props) => (props.selected ? "default" : "pointer")};
   height: ${Size.BlockView_Height}px;
+  border-radius: 10px;
+  border: 2px solid;
+  background-color: ${(props) => !props.location && Color.White};
+
+  border-color: ${(props) =>
+    props.location ? Color.LocationTab : Color.FunctionTab};
 
   width: ${(props) =>
-    props.splitView ? `${Size.SplitView_Width}` : `${Size.BlockView_Width}`}px;
+    props.splitView ? Size.SplitView_Width : Size.BlockView_Width}px;
 
-  left: ${(props) =>
-    props.location && props.splitView
-      ? `${Size.SplitView_Width - Size.BlockView_BackgroundMargin * 2}`
-      : -`${Size.SplitView_MarginLeft}`}px;
+  .banner {
+    position: absolute;
+    top: 0.3px;
+    height: 30px;
+    width: 100%;
+    border-radius: 10px 10px 0px 0px;
+    background-color: ${(props) =>
+      props.location ? Color.LocationHeader : Color.FunctionHeader};
+  }
 
   .header {
-    padding: 0px 0px 0px 22px;
-    font-size: 14px;
-  }
-
-  .content {
-    border: 2px solid black;
-    border-radius: 4px;
-    width: inherit;
-    height: inherit;
-  }
-
-  .icon {
     position: absolute;
-    top: 14px;
-  }
-
-  .line {
-    position: absolute;
-    top: 37px;
-    width: ${(props) =>
-      props.splitView
-        ? `${Size.SplitView_Width - 3}`
-        : `${Size.BlockView_Width - 3}`}px;
-    height: 2px;
-    margin-left: 3px;
-    background-color: ${(props) =>
-      props.location ? Color.LocationBlock : Color.FunctionBlock};
+    top: -7px;
+    padding: 0px 0px 0px 20px;
+    font-size: ${FontSize.Standard};
+    width: fit-content;
   }
 `;
 

@@ -5,7 +5,7 @@ import { ProjectMainMenu } from "../project";
 import { RootState } from "../../redux/store/index";
 import { FullScreenBox } from "../../compLibrary/controls";
 import { OpenProjectMenu } from "../project/openProject";
-import { Color } from "../../compLibrary";
+import { Color, Size } from "../../compLibrary";
 import { BackgroundBox } from "../../compLibrary/blockView";
 import { changeInspectorTab } from "../../modules/inspector/redux/actions";
 import { Node, BlobData } from "../../models";
@@ -13,7 +13,15 @@ import { ProjectState } from "../../redux/store/project/types";
 import { LibraryState } from "../../redux/store/library/types";
 import { GetBlockEdgeTypes, IsBlockView, OnBlockClick } from "./helpers/block";
 import { CreateBlockElements } from "./creators";
-import { useOnConnect, useOnDrop, useOnRemove, useOnDragStop } from "./hooks";
+import { SetPanelHeight } from "../../modules/inspector/helpers";
+import {
+  useOnConnect,
+  useOnDrop,
+  useOnRemove,
+  useOnDragStop,
+  useOnConnectStop,
+  useOnConnectStart,
+} from "./hooks";
 import {
   setActiveBlockNode,
   setActiveEdge,
@@ -122,6 +130,21 @@ const FlowBlock = () => {
     return useOnDragStop(_event, activeNode, dispatch);
   };
 
+  const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
+    return useOnConnectStart(e, { nodeId, handleType, handleId });
+  };
+
+  const OnConnectStop = (e) => {
+    return useOnConnectStop(
+      e,
+      project,
+      reactFlowInstance,
+      node.id,
+      reactFlowWrapper,
+      dispatch
+    );
+  };
+
   const OnDrop = (event) => {
     return useOnDrop(
       project,
@@ -141,6 +164,9 @@ const FlowBlock = () => {
     }
     dispatch(setActiveBlockNode(element.id));
     dispatch(changeInspectorTab(0));
+
+    const panel = document.getElementById("InspectorModule");
+    if (panel.style.height === "44px") SetPanelHeight(Size.InspectorModuleOpen); // TODO: rewrite
   };
 
   // Rerender
@@ -171,6 +197,8 @@ const FlowBlock = () => {
               onDragOver={OnDragOver}
               onNodeDragStop={OnNodeDragStop}
               onElementClick={OnElementClick}
+              onConnectStart={OnConnectStart}
+              onConnectStop={OnConnectStop}
               zoomOnScroll={false}
               paneMoveable={false}
               onClick={(e) => OnBlockClick(e, dispatch, project)}
