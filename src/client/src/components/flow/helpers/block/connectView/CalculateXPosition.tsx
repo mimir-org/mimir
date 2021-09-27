@@ -9,7 +9,7 @@ const CalculateXPosition = (
   mainConnectNode: Node
 ) => {
   const xMargin = 7;
-  ResizeMainConnectNode(connectNodes.length, mainConnectNode.id); // TODO: Move?
+  ResizeMainConnectNode(connectNodes.length, mainConnectNode?.id); // TODO: Move?
 
   if (connectNodes.length === 1) {
     return xPos + Size.ConnectView_Width / 2 - Size.Node_Width / 2;

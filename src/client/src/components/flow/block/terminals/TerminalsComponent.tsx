@@ -12,7 +12,7 @@ import {
 interface Props {
   node: Node;
   isMenuOpen: boolean;
-  list: Connector[];
+  terminals: Connector[];
   width: number;
   isParent: boolean;
   isLocation: boolean;
@@ -31,7 +31,7 @@ interface Props {
 const TerminalsComponent = ({
   node,
   isMenuOpen,
-  list,
+  terminals,
   width,
   isParent,
   isLocation,
@@ -62,7 +62,7 @@ const TerminalsComponent = ({
 
     {isMenuOpen && (
       <TerminalsMenu width={width} isParent={isParent} isLocation={isLocation}>
-        {list.map((conn) => (
+        {terminals.map((conn) => (
           <TerminalsElement key={conn.id}>
             <p className="text">{GetConnectorName(conn)}</p>
             <label className={"checkbox-block"}>

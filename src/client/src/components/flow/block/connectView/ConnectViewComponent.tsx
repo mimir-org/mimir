@@ -1,5 +1,5 @@
 import * as Handlers from "./handlers";
-import { Node, Connector } from "../../../../models";
+import { Node } from "../../../../models";
 import { ConnectMenuIcon } from "../../../../assets/icons/blockView";
 import { TextResources } from "../../../../assets/text";
 import { ConnectViewBox, ConnectViewMenu, ConnectViewElement } from "./styled";
@@ -7,7 +7,7 @@ import { ConnectViewBox, ConnectViewMenu, ConnectViewElement } from "./styled";
 interface Props {
   node: Node;
   isMenuOpen: boolean;
-  list: (Node | Connector)[];
+  children: Node[];
   handleClick: any;
   isChecked?: any;
   hasChildren: boolean;
@@ -25,7 +25,7 @@ interface Props {
 const ConnectViewComponent = ({
   node,
   isMenuOpen,
-  list,
+  children,
   handleClick,
   isChecked,
   hasChildren,
@@ -44,7 +44,7 @@ const ConnectViewComponent = ({
 
     {isMenuOpen && (
       <ConnectViewMenu width={node.width}>
-        {list.map((n: Node) => {
+        {children.map((n: Node) => {
           return (
             <ConnectViewElement key={n.id}>
               <p className="text">{n.label ?? n.name}</p>
@@ -62,7 +62,7 @@ const ConnectViewComponent = ({
         <ConnectViewElement>
           <div
             className="select"
-            onClick={() => Handlers.OnSelectAllClick(dispatch)}
+            onClick={() => Handlers.OnSelectAllClick(dispatch, node, children)}
           >
             {TextResources.ConnectMenu_Select_All}
           </div>

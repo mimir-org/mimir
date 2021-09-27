@@ -1,12 +1,12 @@
 import { Node } from "../../../../../models";
 import {
   removeConnectNodes,
-  removeMainNodes,
+  removeMainNode,
 } from "../../../../../redux/store/connectView/actions";
 
 const OnClearAllClick = (dispatch: any, node: Node) => {
   dispatch(removeConnectNodes(node));
-  dispatch(removeMainNodes());
+  dispatch(removeMainNode(node));
 };
 
 export default OnClearAllClick;

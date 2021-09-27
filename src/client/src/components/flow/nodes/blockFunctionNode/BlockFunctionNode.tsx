@@ -137,7 +137,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
         <TerminalsComponent
           node={data}
           isMenuOpen={terminalMenu}
-          list={sortedTerminals}
+          terminals={sortedTerminals}
           width={data.width}
           isParent={false}
           isLocation={IsLocation(data)}
@@ -150,7 +150,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
         <ConnectViewComponent
           node={data}
           isMenuOpen={connectMenu}
-          list={connectChildren}
+          children={connectChildren}
           handleClick={onConnectViewClick}
           isChecked={isConnectorChecked}
           hasChildren={hasChildren}

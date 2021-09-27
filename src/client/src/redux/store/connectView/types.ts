@@ -1,10 +1,12 @@
 import { Node } from "../../../models";
 export const ADD_MAIN_CONNECT_NODE = "ADD_MAIN_CONNECT_NODE";
 export const REMOVE_MAIN_CONNECT_NODE = "REMOVE_MAIN_CONNECT_NODE";
+export const REMOVE_MAIN_CONNECT_NODES = "REMOVE_MAIN_CONNECT_NODES";
+
 export const ADD_CONNECT_NODE = "ADD_CONNECT_NODE";
+export const ADD_CONNECT_NODES = "ADD_CONNECT_NODES";
 export const REMOVE_CONNECT_NODE = "REMOVE_CONNECT_NODE";
 export const REMOVE_CONNECT_NODES = "REMOVE_CONNECT_NODES";
-export const REMOVE_ALL_MAIN_NODES = "REMOVE_ALL_MAIN_NODES";
 
 export interface AddMainConnectNode {
   type: typeof ADD_MAIN_CONNECT_NODE;
@@ -20,11 +22,24 @@ export interface RemoveMainConnectNode {
   };
 }
 
+export interface RemoveMainConnectNodes {
+  type: typeof REMOVE_MAIN_CONNECT_NODES;
+  payload: {};
+}
+
 export interface AddConnectNode {
   type: typeof ADD_CONNECT_NODE;
   payload: {
     mainNode: Node;
     child: Node;
+  };
+}
+
+export interface AddConnectNodes {
+  type: typeof ADD_CONNECT_NODES;
+  payload: {
+    mainNode: Node;
+    nodes: Node[];
   };
 }
 
@@ -43,15 +58,11 @@ export interface RemoveConnectNodes {
   };
 }
 
-export interface RemoveAllMainNodes {
-  type: typeof REMOVE_ALL_MAIN_NODES;
-  payload: {};
-}
-
 export type ConnectViewActionTypes =
   | AddMainConnectNode
+  | RemoveMainConnectNodes
   | RemoveMainConnectNode
   | AddConnectNode
+  | AddConnectNodes
   | RemoveConnectNode
-  | RemoveConnectNodes
-  | RemoveAllMainNodes;
+  | RemoveConnectNodes;

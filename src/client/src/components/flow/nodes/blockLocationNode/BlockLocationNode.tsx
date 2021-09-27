@@ -62,7 +62,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
         <TerminalsComponent
           node={data}
           isMenuOpen={terminalMenu}
-          list={sortedTerminals}
+          terminals={sortedTerminals}
           width={data.width}
           isParent={false}
           isLocation={IsLocation(data)}

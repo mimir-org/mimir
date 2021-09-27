@@ -30,7 +30,6 @@ const ConnectViewElement = styled.div`
     }
 
     &:hover {
-      text-decoration: underline;
       font-weight: bold;
       cursor: pointer;
     }
@@ -47,7 +46,6 @@ const ConnectViewElement = styled.div`
   }
 
   &:hover {
-    text-decoration: underline;
     background-color: ${Color.LightBlue};
     cursor: pointer;
 
