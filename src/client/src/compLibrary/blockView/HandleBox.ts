@@ -9,9 +9,13 @@ const HandleBox = styled.div`
     visibility: ${(props) => (props.visible ? "visible" : "hidden")} !important;
 
     top: ${(props) =>
-      props.position === Position.Left
+      props.position === Position.Left && !props.isParent
         ? props.input
-        : props.position === Position.Right && props.output}%;
+        : props.position === Position.Right && !props.isParent
+        ? props.output
+        : props.position === Position.Left && props.isParent
+        ? props.output
+        : props.input}%;
 
     right: ${(props) => props.position === Position.Right && "-16px"};
     left: ${(props) => props.position === Position.Left && "-16px"};

@@ -49,6 +49,7 @@ const HandleComponent = ({
 
         return (
           <HandleBox
+            isParent={isParent}
             input={SetTerminalYPos(inputCount, isParent)}
             output={SetTerminalYPos(outputCount, isParent)}
             id={"handle-" + conn.id}
