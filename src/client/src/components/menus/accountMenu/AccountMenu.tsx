@@ -47,6 +47,10 @@ const AccountMenu = () => {
           type={TextResources.Account_Save_File}
           onClick={() => Handlers.OnSaveFile(dispatch)}
         />
+        <GetMenuElement
+          type={TextResources.Account_Commit_Project}
+          onClick={() => Handlers.OnCommitClick(dispatch, projectState)}
+        />
         <MenuLine />
         <GetMenuElement
           type={TextResources.Account_Import_Project}

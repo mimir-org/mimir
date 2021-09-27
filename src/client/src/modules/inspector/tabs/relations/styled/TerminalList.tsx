@@ -4,16 +4,22 @@ import { Color } from "../../../../../compLibrary";
 const TerminalList = styled.div`
   display: flex;
   flex-direction: column;
+  min-width: 250px;
   margin: 5px 10px 10px 10px;
-  border: 1px solid ${Color.Black};
+  border: ${(props) => getBorder(props.hasItems)};
   border-radius: 5px;
 
   :first-child {
     border: none;
   }
+
   :last-child {
-    border: 1px solid ${Color.Black};
+    border: ${(props) => getBorder(props.hasItems)};
     border-radius: 5px;
   }
 `;
+
+const getBorder = (hasItems: boolean) =>
+  hasItems ? `1px solid ${Color.Black}` : "none";
+
 export default TerminalList;

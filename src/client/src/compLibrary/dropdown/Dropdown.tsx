@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { ExpandIcon, CollapseIcon } from "../../assets/icons/common";
 import { LocationTypeCategory } from "../../components/modules/typeEditorModule/styled";
 import { Symbol } from "../symbol";
@@ -40,7 +40,7 @@ const Dropdown = ({
   const [isListOpen, setIsListOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
-  const findSelectedItem = () => {
+  const findSelectedItem = useCallback(() => {
     let selected = null as any;
 
     items?.forEach((x) => {
@@ -51,7 +51,7 @@ const Dropdown = ({
       });
     });
     return selected;
-  };
+  }, [defaultValue, keyProp, items]);
 
   useEffect(() => {
     if (!items) {
@@ -59,12 +59,12 @@ const Dropdown = ({
       return;
     }
     if (defaultValue) {
-      const selectedItem = findSelectedItem();
-      setSelectedItem(selectedItem);
+      const _selectedItem = findSelectedItem();
+      setSelectedItem(_selectedItem);
       return;
     }
     setSelectedItem(items[0]?.items[0]);
-  }, [defaultValue, items, keyProp]);
+  }, [defaultValue, items, keyProp, findSelectedItem]);
 
   const handleChange = (_e: any, value: any) => {
     setSelectedItem(value);

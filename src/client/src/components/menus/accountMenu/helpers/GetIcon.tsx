@@ -15,6 +15,8 @@ const GetIcon = (type: string) => {
       return <img src={SaveIcon} alt="save database" />;
     case TextResources.Account_Save_File:
       return <img src={ExportProjectIcon} alt="save file" />;
+    case TextResources.Account_Commit_Project:
+      return <img src={ExportProjectIcon} alt="commit project" />;
     case TextResources.Account_Open:
       return <img src={OpenProjectIcon} alt="open" />;
     case TextResources.Account_Create:

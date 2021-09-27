@@ -28,46 +28,48 @@ const ValidateBlockEdge = (
   toConnector: Connector,
   splitView: boolean
 ) => {
-  if (!fromNode || !toNode) return false;
-  if (IsPartOfTerminal(fromConnector) || IsPartOfTerminal(toConnector))
+  if (
+    !fromNode ||
+    !toNode ||
+    IsPartOfTerminal(fromConnector) ||
+    IsPartOfTerminal(toConnector)
+  )
     return false;
 
   // Regular BlockView
   if (!splitView && !IsConnectView()) {
-    // if (IsFunction(selectedNode)) {
-    //   if (
-    //     toNode.level - selectedNode.level === 1 &&
-    //     fromNode.level - selectedNode.level === 0 &&
-    //     fromNode.id === selectedNode.id
-    //   )
-    //     return true;
-    //   if (
-    //     fromNode.level - selectedNode.level === 1 &&
-    //     toNode.level - selectedNode.level === 0 &&
-    //     toNode.id === selectedNode.id
-    //   )
-    //     return true;
-    //   if (
-    //     fromNode.level - selectedNode.level === 1 &&
-    //     toNode.level - selectedNode.level === 1 &&
-    //     IsChildOf(toNode, selectedNode) &&
-    //     IsChildOf(fromNode, selectedNode)
-    //   )
-    //     return true;
-    // }
-    return true;
+    if (IsFunction(selectedNode)) {
+      if (
+        toNode.level - selectedNode.level === 1 &&
+        fromNode.level - selectedNode.level === 0 &&
+        fromNode.id === selectedNode.id
+      )
+        return true;
+      if (
+        fromNode.level - selectedNode.level === 1 &&
+        toNode.level - selectedNode.level === 0 &&
+        toNode.id === selectedNode.id
+      )
+        return true;
+      if (
+        fromNode.level - selectedNode.level === 1 &&
+        toNode.level - selectedNode.level === 1 &&
+        IsChildOf(toNode, selectedNode) &&
+        IsChildOf(fromNode, selectedNode)
+      )
+        return true;
+    }
+    return false;
   }
 
   if (IsConnectView()) {
-    if (
+    return (
       fromNode !== selectedNode &&
       IsTransportTerminal(fromConnector) &&
       IsTransportTerminal(toConnector) &&
       IsFunction(fromNode) &&
       IsFunction(toNode)
-    )
-      return true;
-    return false;
+    );
   }
 
   if (splitView) {
