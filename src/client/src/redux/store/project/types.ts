@@ -1,8 +1,11 @@
-import { Project, Node, Edge } from "../../../models";
+import { Project, Node, Edge, CommitPackage } from "../../../models";
 import { ProjectAm } from "../../sagas/project/ConvertProject";
 import { ApiError } from "../../../models/webclient";
 
 export const SAVE_PROJECT = "SAVE_PROJECT";
+export const COMMIT_PROJECT = "COMMIT_PROJECT";
+export const COMMIT_PROJECT_SUCCESS_OR_ERROR =
+  "COMMIT_PROJECT_SUCCESS_OR_ERROR";
 export const SAVE_PROJECT_SUCCESS_OR_ERROR = "SAVE_PROJECT_SUCCESS_OR_ERROR";
 export const FETCHING_PROJECT = "FETCHING_PROJECT";
 export const SEARCH_PROJECT = "SEARCH_PROJECT";
@@ -43,7 +46,7 @@ export const LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR =
   "LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR";
 export const LOCK_UNLOCK_ATTRIBUTE = "LOCK_UNLOCK_ATTRIBUTE";
 export const LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR =
-  "LLOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR";
+  "LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR";
 
 // State types
 export interface ProjectState {
@@ -267,6 +270,17 @@ export interface ImportProjectActionFinished {
   };
 }
 
+export interface CommitProject {
+  type: typeof COMMIT_PROJECT;
+  payload: CommitPackage;
+}
+export interface CommitProjectFinished {
+  type: typeof COMMIT_PROJECT_SUCCESS_OR_ERROR;
+  payload: {
+    apiError: ApiError;
+  };
+}
+
 export interface LockUnlockNode {
   type: typeof LOCK_UNLOCK_NODE;
   payload: {
@@ -333,4 +347,6 @@ export type ProjectActionTypes =
   | LockUnlockNode
   | LockUnlockNodeFinished
   | LockUnlockAttribute
-  | LockUnlockAttributeFinished;
+  | LockUnlockAttributeFinished
+  | CommitProject
+  | CommitProjectFinished;

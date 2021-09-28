@@ -75,6 +75,10 @@
 
   &.selected {
     border: 3px solid #fbc913 !important;
+    box-shadow: none;
+  }
+  &:hover {
+    box-shadow: none;
   }
 }
 
@@ -90,6 +94,10 @@
 
   &.selected {
     border: 3px solid #a300a7 !important;
+    box-shadow: none;
+  }
+  &:hover {
+    box-shadow: none;
   }
 }
 

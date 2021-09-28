@@ -24,7 +24,6 @@ const GetBlockHandleType = (
       if (IsOutputTerminal(conn)) return ["source", Position.Left];
     }
   }
-
   if (
     IsOutputTerminal(conn) &&
     (IsLocationTerminal(conn) ||

@@ -93,23 +93,22 @@ namespace Mb.Core.Extensions
             services.AddServicesWithAttributeOfType<ScopeAttribute>(moduleService?.Assemblies ?? new List<Assembly>());
             services.AddServicesWithAttributeOfType<TransientAttribute>(moduleService?.Assemblies ?? new List<Assembly>());
 
-            var provider = services.BuildServiceProvider();
-
             var plugins = moduleService.Modules.Where(x => x.ModuleType == ModuleType.Plugin || x.ModuleType == ModuleType.SyncService).ToList();
             foreach (var plugin in plugins)
             {
                 if (plugin.Instance is IModelBuilderPlugin p)
                 {
-                    p.CreateModule(services, configuration, provider);
+                    p.CreateModule(services, configuration);
                 }
 
                 if (plugin.Instance is IModelBuilderSyncService s)
                 {
-                    s.CreateModule(services, configuration, provider);
+                    s.CreateModule(services, configuration);
                 }
             }
 
             services.AddSingleton<IModuleService>(x => moduleService);
+            var provider = services.BuildServiceProvider();
 
             // Auto-mapper
             var autoMapperConfiguration = new MapperConfiguration(cfg =>

@@ -8,15 +8,15 @@ const TerminalsElement = styled.div`
   padding: 5px 34px 5px 5px;
   font-size: ${FontSize.Tiny};
   color: ${Color.Black};
-  height: 15px;
-  width: auto;
-  min-width: 120px;
-  position: relative;
+  padding: 5px 30px 0px 0px;
+  height: 20px;
+  display: flex;
 
   .text {
-    position: absolute;
-    left: 30px;
-    bottom: -3px;
+    padding-left: 28px;
+    text-align: left;
+    position: relative;
+    bottom: 9px;
   }
 
   :last-child {

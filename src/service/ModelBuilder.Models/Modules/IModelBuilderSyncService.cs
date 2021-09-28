@@ -6,7 +6,7 @@ namespace Mb.Models.Modules
 {
     public interface IModelBuilderSyncService : IModuleInterface
     {
-        void CreateModule(IServiceCollection services, IConfiguration configuration, ServiceProvider provider);
+        void CreateModule(IServiceCollection services, IConfiguration configuration);
         Task SendData<T>(T data) where T : class;
     }
 }

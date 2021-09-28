@@ -49,6 +49,7 @@
     <ProjectReference Include="..\Modules\DefaultParserModule\DefaultParserModule.csproj" />
     <ProjectReference Include="..\Modules\FamModule\EventHubModule.csproj" />
     <ProjectReference Include="..\Modules\MicrosoftSqlServerModule\MicrosoftSqlServerModule.csproj" />
+    <ProjectReference Include="..\Modules\RdfParserModule\RdfParserModule.csproj" />
   </ItemGroup>
 
 </Project>

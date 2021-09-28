@@ -43,7 +43,7 @@ const SearchDropDown = ({ value, placeHolder, list, onChange }: Props) => {
       const listItem = list.find((x) => x.id === value);
       setSearchString(listItem.name);
     }
-  }, []);
+  }, [value, list]);
 
   return (
     <SearchBarWrapper>

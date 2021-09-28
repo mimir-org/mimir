@@ -4,6 +4,7 @@ const TreeNodeWrapper = styled.div`
   img {
     position: relative;
     bottom: 15px;
+    pointer-events: none;
   }
 `;
 

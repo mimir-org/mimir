@@ -32,12 +32,14 @@ import {
   EXPORT_PROJECT_TO_FILE,
   EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR,
   IMPORT_PROJECT,
+  COMMIT_PROJECT_SUCCESS_OR_ERROR,
+  COMMIT_PROJECT,
   LOCK_UNLOCK_NODE,
   LOCK_UNLOCK_ATTRIBUTE,
-  ProjectActionTypes,
-  ProjectState,
   LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR,
   LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
+  ProjectActionTypes,
+  ProjectState,
 } from "./types";
 
 const initialState: ProjectState = {
@@ -61,6 +63,26 @@ export function projectReducer(
         creating: false,
         apiError: state.apiError
           ? state.apiError.filter((elem) => elem.key !== SAVE_PROJECT)
+          : state.apiError,
+      };
+
+    case COMMIT_PROJECT:
+      return {
+        ...state,
+        fetching: true,
+        creating: false,
+        apiError: state.apiError
+          ? state.apiError.filter((elem) => elem.key !== COMMIT_PROJECT)
+          : state.apiError,
+      };
+
+    case COMMIT_PROJECT_SUCCESS_OR_ERROR:
+      return {
+        ...state,
+        fetching: false,
+        creating: false,
+        apiError: action.payload.apiError
+          ? [...state.apiError, action.payload.apiError]
           : state.apiError,
       };
 
@@ -560,6 +582,7 @@ export function projectReducer(
           ? [...state.apiError, action.payload.apiError]
           : state.apiError,
       };
+
     default:
       return state;
   }

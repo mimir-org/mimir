@@ -2,40 +2,59 @@ import styled from "styled-components";
 import { Color, FontSize } from "../../../../../compLibrary";
 
 /** Styled component that displays an element in the drop-down menu for the ConnectViewMenu. */
-const BlockOptionsElement = styled.div`
-  border-bottom: 1px solid ${Color.DarkGrey};
-  padding: 5px 34px 5px 5px;
-  font-size: ${FontSize.Tiny};
+const ConnectViewElement = styled.div`
+  border-top: 1.3px solid ${Color.DarkGrey};
+  padding: 5px 10px 0px 0px;
+  font-size: ${FontSize.Small};
   color: ${Color.Black};
-  height: 15px;
-  width: auto;
-  min-width: 120px;
+  height: 20px;
+  min-width: 115px;
   position: relative;
+  display: flex;
 
   .text {
-    position: absolute;
-    left: 30px;
-    bottom: -3px;
+    position: relative;
+    text-align: left;
+    padding-left: 30px;
+    bottom: 8px;
+    width: max-content;
   }
 
-  :last-child {
-    border-bottom: none;
+  .select {
+    position: absolute;
+    left: 7px;
+    top: 7px;
+
+    &:last-child {
+      left: unset;
+      right: 8px;
+    }
+
+    &:hover {
+      font-weight: bold;
+      cursor: pointer;
+    }
+  }
+
+  &:first-child {
+    border-top: none;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+  }
+
+  &:last-child {
+    border-top: 1.4px solid ${Color.FunctionTab};
   }
 
   &:hover {
-    text-decoration: underline;
     background-color: ${Color.LightBlue};
     cursor: pointer;
 
-    :first-child {
-      border-top-left-radius: 4px;
-    }
-
-    :last-child {
-      border-bottom-right-radius: 4px;
-      border-bottom-left-radius: 4px;
+    &:last-child {
+      background-color: ${Color.White};
+      cursor: auto;
     }
   }
 `;
 
-export default BlockOptionsElement;
+export default ConnectViewElement;

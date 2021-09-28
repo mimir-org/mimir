@@ -1,4 +1,4 @@
-import { Node, Edge, Project, Attribute } from "../../../models";
+import { Node, Edge, Project, CommitPackage, Attribute } from "../../../models";
 import { ProjectAm } from "../../sagas/project/ConvertProject";
 import {
   SAVE_PROJECT,
@@ -26,9 +26,19 @@ import {
   SET_ACTIVE_EDGE,
   EXPORT_PROJECT_TO_FILE,
   IMPORT_PROJECT,
+  COMMIT_PROJECT,
   LOCK_UNLOCK_NODE,
   LOCK_UNLOCK_ATTRIBUTE,
 } from "./types";
+
+export function commitProject(
+  commitPackage: CommitPackage
+): ProjectActionTypes {
+  return {
+    type: COMMIT_PROJECT,
+    payload: commitPackage,
+  };
+}
 
 export function save(project: Project): ProjectActionTypes {
   return {

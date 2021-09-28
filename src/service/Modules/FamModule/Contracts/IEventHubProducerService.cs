@@ -7,7 +7,6 @@ namespace EventHubModule.Contracts
     [Singleton]
     public interface IEventHubProducerService
     {
-        EventHubConfiguration EventHubConfiguration { get; set; }
         Task SendDataAsync<T>(List<T> data);
     }
 }

@@ -17,6 +17,8 @@ import {
   ImportProjectAction,
   EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR,
   IMPORT_PROJECT_SUCCESS_OR_ERROR,
+  COMMIT_PROJECT_SUCCESS_OR_ERROR,
+  CommitProject,
   LockUnlockNode,
   LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR,
   LockUnlockAttribute,
@@ -339,6 +341,58 @@ export function* importProject(action: ImportProjectAction) {
 
     yield put({
       type: IMPORT_PROJECT_SUCCESS_OR_ERROR,
+      payload: payload,
+    });
+  }
+}
+
+export function* commitProject(action: CommitProject) {
+  try {
+    const url = process.env.REACT_APP_API_BASE_URL + "commit";
+    const response = yield call(post, url, action.payload);
+
+    // This is a bad request
+    if (response.status === 400) {
+      const data = GetBadResponseData(response);
+
+      const apiError = {
+        key: COMMIT_PROJECT_SUCCESS_OR_ERROR,
+        errorMessage: data.title,
+        errorData: data,
+      } as ApiError;
+
+      const payload = {
+        apiError: apiError,
+      };
+
+      yield put({
+        type: COMMIT_PROJECT_SUCCESS_OR_ERROR,
+        payload: payload,
+      });
+      return;
+    }
+
+    const payload = {
+      apiError: null,
+    };
+
+    yield put({
+      type: COMMIT_PROJECT_SUCCESS_OR_ERROR,
+      payload: payload,
+    });
+  } catch (error) {
+    const apiError = {
+      key: COMMIT_PROJECT_SUCCESS_OR_ERROR,
+      errorMessage: error.message,
+      errorData: null,
+    } as ApiError;
+
+    const payload = {
+      apiError: apiError,
+    };
+
+    yield put({
+      type: COMMIT_PROJECT_SUCCESS_OR_ERROR,
       payload: payload,
     });
   }
