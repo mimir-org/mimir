@@ -1,11 +1,12 @@
-import * as Handlers from "./handlers";
+import * as Click from "./handlers";
 import { Node } from "../../../../models";
 import { ConnectMenuIcon } from "../../../../assets/icons/blockView";
 import { TextResources } from "../../../../assets/text";
-import { ConnectViewBox, ConnectViewMenu, ConnectViewElement } from "./styled";
+import { ConnectViewBox, Menu, Element, Footer } from "./styled";
 
 interface Props {
   node: Node;
+  height: number;
   isMenuOpen: boolean;
   children: Node[];
   handleClick: any;
@@ -23,6 +24,7 @@ interface Props {
  */
 const ConnectViewComponent = ({
   node,
+  height,
   isMenuOpen,
   children,
   handleClick,
@@ -35,43 +37,39 @@ const ConnectViewComponent = ({
   <>
     <ConnectViewBox
       visible={connectButton && children.length > 0}
-      onClick={() => Handlers.OnConnectMenuClick(showConnectMenu, connectMenu)}
+      onClick={() => Click.OnConnectMenu(showConnectMenu, connectMenu)}
     >
       <img src={ConnectMenuIcon} alt="options" />
     </ConnectViewBox>
 
     {isMenuOpen && (
-      <ConnectViewMenu width={node.width}>
-        {children.map((n: Node) => {
-          return (
-            <ConnectViewElement key={n.id}>
-              <p className="text">{n.label ?? n.name}</p>
-              <label className={"checkbox-block"}>
-                <input
-                  type="checkbox"
-                  checked={isChecked(n)}
-                  onChange={() => handleClick(n)}
-                />
-                <span className="checkmark-block"></span>
-              </label>
-            </ConnectViewElement>
-          );
-        })}
-        <ConnectViewElement>
-          <div
-            className="select"
-            onClick={() => Handlers.OnSelectAllClick(dispatch, node, children)}
-          >
-            {TextResources.ConnectMenu_Select_All}
+      <>
+        <Menu height={height}>
+          {children.map((n: Node) => {
+            return (
+              <Element key={n.id}>
+                <p className="text">{n.label ?? n.name}</p>
+                <label className={"checkbox-block"}>
+                  <input
+                    type="checkbox"
+                    checked={isChecked(n)}
+                    onChange={() => handleClick(n)}
+                  />
+                  <span className="checkmark-block"></span>
+                </label>
+              </Element>
+            );
+          })}
+        </Menu>
+        <Footer>
+          <div onClick={() => Click.OnSelectAll(dispatch, node, children)}>
+            <p className="select">{TextResources.ConnectMenu_Select_All}</p>
           </div>
-          <div
-            className="select"
-            onClick={() => Handlers.OnClearAllClick(dispatch, node)}
-          >
-            {TextResources.ConnectMenu_Clear_All}
+          <div onClick={() => Click.OnClearAll(dispatch, node)}>
+            <p className="select">{TextResources.ConnectMenu_Clear_All}</p>
           </div>
-        </ConnectViewElement>
-      </ConnectViewMenu>
+        </Footer>
+      </>
     )}
   </>
 );

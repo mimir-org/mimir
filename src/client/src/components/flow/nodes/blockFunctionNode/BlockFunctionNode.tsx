@@ -17,6 +17,7 @@ import {
   SetTerminalOrder,
   FilterTerminals,
   FindAllEdges,
+  FindNodeByDataId,
 } from "../../helpers/block";
 import {
   GetConnectChildren,
@@ -104,6 +105,13 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     return result;
   };
 
+  let height = 82;
+  const mainNode = FindNodeByDataId(mainConnectNode?.id);
+  if (mainNode) {
+    height = parseInt(getComputedStyle(mainNode, "").height);
+    console.log(height);
+  }
+
   useEffect(() => {
     ResizeMainConnectNode(connectNodes?.length, mainConnectNode?.id, data.id);
     SetMainConnectNodeColor(mainConnectNode?.id, data.id, connectNodes);
@@ -116,7 +124,6 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
       allEdges.style.zIndex = "3";
     }
   }, [mainConnectNode]);
-
   return (
     <>
       <NodeBox
@@ -147,6 +154,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
 
         <ConnectViewComponent
           node={data}
+          height={height}
           isMenuOpen={connectMenu}
           children={connectChildren}
           handleClick={onConnectNodeClick}

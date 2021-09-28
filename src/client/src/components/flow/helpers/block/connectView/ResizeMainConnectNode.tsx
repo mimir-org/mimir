@@ -13,8 +13,8 @@ const ResizeMainConnectNode = (
   nodeId: string
 ) => {
   const mainNode = FindNodeByDataId(mainNodeId);
+  const percent = 16;
   let newHeight = Size.Node_Length;
-  let percent = 16;
   let count = 1;
 
   // Calculate resize
@@ -33,7 +33,7 @@ const ResizeMainConnectNode = (
     mainNode.style.zIndex = "1";
     if (nodeCount >= 5) mainNode.style.maxHeight = `${resize - 50}px`;
   } else {
-    let node = FindNodeByDataId(nodeId);
+    const node = FindNodeByDataId(nodeId);
     if (node) {
       node.style.width = `${Size.Node_Width}px`;
       node.style.height = `${Size.Node_Length}px`;

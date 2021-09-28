@@ -20,40 +20,15 @@ const ConnectViewElement = styled.div`
     width: max-content;
   }
 
-  .select {
-    position: absolute;
-    left: 7px;
-    top: 7px;
-
-    &:last-child {
-      left: unset;
-      right: 8px;
-    }
-
-    &:hover {
-      font-weight: bold;
-      cursor: pointer;
-    }
-  }
-
   &:first-child {
     border-top: none;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
   }
 
-  &:last-child {
-    border-top: 1.4px solid ${Color.FunctionTab};
-  }
-
   &:hover {
     background-color: ${Color.LightBlue};
     cursor: pointer;
-
-    &:last-child {
-      background-color: ${Color.White};
-      cursor: auto;
-    }
   }
 `;
 

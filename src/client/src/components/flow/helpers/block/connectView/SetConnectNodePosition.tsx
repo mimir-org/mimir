@@ -8,7 +8,7 @@ import { CalculateXPosition, CalculateYPosition } from ".";
  * @param mainConnectNodeId
  * @param connectNodes - the selected child nodes in ConnectView
  * @param allNodes - all nodes in Mimir
- * @returns a X and Y position in form of numbers
+ * @returns an X and Y position in form of numbers
  */
 const SetConnectNodePosition = (
   node: Node,
