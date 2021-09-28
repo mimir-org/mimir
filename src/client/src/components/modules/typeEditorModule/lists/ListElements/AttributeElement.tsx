@@ -18,7 +18,7 @@ export const AttributeElement = ({
     <ListElem>
       <Checkbox
         id={attribute.id}
-        label={Label.Attributes}
+        label={Label.attributeTypes}
         defaultValue={defaultValue}
         onChange={onChange}
       />

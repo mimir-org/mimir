@@ -63,12 +63,7 @@ export const TypeEditorComponent = () => {
     dispatch(closeTypeEditor());
   };
 
-  const onTerminalCategoryChange = (
-    key: string,
-    value: TerminalTypeItem,
-    categoryId: string,
-    terminalId: string
-  ) => {
+  const onTerminalCategoryChange = (key: string, value: TerminalTypeItem) => {
     if (key === "add") {
       dispatch(addTerminalType(value));
     } else if (key === "remove") {
@@ -110,13 +105,7 @@ export const TypeEditorComponent = () => {
                   listType={ListType.Terminals}
                   onChange={
                     IsObjectBlock(state?.createLibraryType.objectType)
-                      ? (key, data, categoryId, terminalId) =>
-                          onTerminalCategoryChange(
-                            key,
-                            data,
-                            categoryId,
-                            terminalId
-                          )
+                      ? (key, data) => onTerminalCategoryChange(key, data)
                       : (key, data) => onChange(key, data)
                   }
                   // disabled={ModeEdit(mode) ? false : FieldValidator(state, "rds")}
@@ -127,15 +116,6 @@ export const TypeEditorComponent = () => {
                   items={state?.predefinedAttributes}
                   createLibraryType={state?.createLibraryType}
                   listType={ListType.PredefinedAttributes}
-                  onChange={(key, data) => onChange(key, data)}
-                  // disabled={ModeEdit(mode) ? false : FieldValidator(state, "rds")}
-                />
-              )}
-              {IsProduct(state?.createLibraryType.aspect) && (
-                <TypeEditorList
-                  items={state?.compositeTypes}
-                  createLibraryType={state?.createLibraryType}
-                  listType={ListType.CompositeTypes}
                   onChange={(key, data) => onChange(key, data)}
                   // disabled={ModeEdit(mode) ? false : FieldValidator(state, "rds")}
                 />
@@ -152,6 +132,15 @@ export const TypeEditorComponent = () => {
                       : ListType.ObjectAttributes
                   }
                   onChange={(key, data) => onChange(key, data)}
+                />
+              )}
+              {IsProduct(state?.createLibraryType.aspect) && (
+                <TypeEditorList
+                  items={state?.simpleTypes}
+                  createLibraryType={state?.createLibraryType}
+                  listType={ListType.SimpleTypes}
+                  onChange={(key, data) => onChange(key, data)}
+                  // disabled={ModeEdit(mode) ? false : FieldValidator(state, "rds")}
                 />
               )}
               <TypePreviewColumn>

@@ -9,7 +9,7 @@ import {
   ObjectBlockElement,
   TransportInterfaceElement,
   PredefinedLocationElement,
-  CompositeTypeElement,
+  SimpleTypeElement,
   AttributeElement,
 } from "./lists/";
 import {
@@ -29,7 +29,7 @@ export enum ListType {
   PredefinedAttributes = 2,
   ObjectAttributes = 3,
   LocationAttributes = 4,
-  CompositeTypes = 5,
+  SimpleTypes = 5,
   Preview = 6,
 }
 
@@ -115,14 +115,14 @@ export const TypeEditorList = ({
                   />
                 )
               )
-            : listType === ListType.CompositeTypes
+            : listType === ListType.SimpleTypes
             ? GetFilteredList(listType, items, createLibraryType).map(
                 (element) => (
-                  <CompositeTypeElement
+                  <SimpleTypeElement
                     key={element.id}
-                    compositeType={element}
+                    simpleType={element}
                     onChange={(key, data) => onChange(key, data)}
-                    defaultValue={createLibraryType.attributeTypes}
+                    defaultValue={createLibraryType.compositeTypes}
                   />
                 )
               )

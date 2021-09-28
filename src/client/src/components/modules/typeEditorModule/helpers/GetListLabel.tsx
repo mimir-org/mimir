@@ -11,8 +11,8 @@ const GetListLabel = (listType: ListType): string => {
     return TextResources.TypeEditor_Properties_Block_Attributes;
   if (listType === ListType.LocationAttributes)
     return TextResources.TypeEditor_Properties_Location_Attributes;
-  if (listType === ListType.CompositeTypes)
-    return TextResources.TypeEditor_Properties_Composite_Types;
+  if (listType === ListType.SimpleTypes)
+    return TextResources.TypeEditor_Properties_Simple_Types;
   if (listType === ListType.Preview)
     return TextResources.TypeEditor_New_Type_Preview;
 };
