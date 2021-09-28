@@ -18,6 +18,20 @@ const ConvertToInterface = (sourceConn: Connector, library: LibraryState) => {
     outputTerminal.type = ConnectorType.Output;
     outputTerminal.nodeId = null;
 
+    if (inputTerminal?.attributes) {
+      inputTerminal.attributes.forEach((x) => {
+        x.id = CreateId();
+        x.terminalId = inputTerminal.id;
+      })
+    }
+
+    if (outputTerminal?.attributes) {
+      outputTerminal.attributes.forEach((x) => {
+        x.id = CreateId();
+        x.terminalId = outputTerminal.id;
+      })
+    }
+
     return {
       id: CreateId(),
       name: currentInterface.name,

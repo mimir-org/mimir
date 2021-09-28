@@ -239,7 +239,10 @@ const ConvertComposites = (composites: Composite[]): CompositeAm[] => {
 };
 
 const ConvertTransport = (data: Transport): TransportAm => {
-  const c = {
+  if (!data)
+    return null;
+
+  return {
     id: data.id,
     name: data.name,
     semanticReference: data.semanticReference,
@@ -249,11 +252,13 @@ const ConvertTransport = (data: Transport): TransportAm => {
     outputTerminal: ConvertConnector(data.outputTerminal),
     attributes: ConvertAttributes(data.attributes)
   } as TransportAm;
-  return c;
 }
 
 const ConvertInterface = (data: Interface): InterfaceAm => {
-  const c = {
+  if (!data)
+    return null;
+
+  return {
     id: data.id,
     name: data.name,
     semanticReference: data.semanticReference,
@@ -262,7 +267,6 @@ const ConvertInterface = (data: Interface): InterfaceAm => {
     outputTerminalId: data.outputTerminalId,
     outputTerminal: ConvertConnector(data.outputTerminal)
   } as InterfaceAm;
-  return c;
 }
 
 const ConvertNodes = (nodes: Node[]): NodeAm[] => {
