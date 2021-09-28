@@ -150,7 +150,7 @@ export interface CompositeType {
   id: string;
   name: string;
   semanticReference: string;
-  attributes: AttributeType[];
+  attributeTypes: AttributeType[];
 }
 
 export const SETTING_KEY = {

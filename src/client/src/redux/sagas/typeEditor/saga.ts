@@ -9,7 +9,7 @@ import {
   FETCHING_LOCATIONTYPES_SUCCESS_OR_ERROR,
   FETCHING_PREDEFINED_ATTRIBUTES_SUCCESS_OR_ERROR,
   FETCHING_BLOB_DATA_SUCCESS_OR_ERROR,
-  FETCHING_COMPOSITE_TYPES_SUCCESS_OR_ERROR,
+  FETCHING_SIMPLE_TYPES_SUCCESS_OR_ERROR,
   TypeEditorActionTypes,
 } from "../../store/typeEditor/types";
 import {
@@ -28,6 +28,7 @@ export function* saveType(action) {
   try {
     const createLibraryType = action.payload.libraryType as CreateLibraryType;
     let url = "";
+    // console.log("payload save", action.payload);
 
     if (createLibraryType.libraryId) {
       url =
@@ -351,8 +352,8 @@ export function* getSelectedNode(action) {
     const payload = {
       selectedNode: selectedNodeResponse.data,
     };
-
-    payload.selectedNode.terminalTypes?.forEach((t, index) => (t.row = index));
+    // console.log("payload get selected", createLibraryType);
+    // payload.selectedNode.terminalTypes?.forEach((t, index) => (t.row = index));
 
     yield statePut({
       type: FETCHING_TYPE_SUCCESS_OR_ERROR,
@@ -370,28 +371,28 @@ export function* getSelectedNode(action) {
   }
 }
 
-export function* getCompositeTypes(action) {
+export function* getSimpleTypes(action) {
   try {
-    const compositeTypeslURL =
+    const simpleTypeslURL =
       process.env.REACT_APP_API_BASE_URL + "typeeditor/compositetype";
 
-    const compositeTypesURLResponse = yield call(get, compositeTypeslURL);
+    const simpleTypesURLResponse = yield call(get, simpleTypeslURL);
 
     const payload = {
-      compositeTypes: compositeTypesURLResponse.data,
+      simpleTypes: simpleTypesURLResponse.data,
     };
 
     yield statePut({
-      type: FETCHING_COMPOSITE_TYPES_SUCCESS_OR_ERROR,
+      type: FETCHING_SIMPLE_TYPES_SUCCESS_OR_ERROR,
       payload: payload,
     });
   } catch (error) {
     const payload = {
-      compositeTypes: [],
+      simpleTypes: [],
     };
 
     yield statePut({
-      type: FETCHING_COMPOSITE_TYPES_SUCCESS_OR_ERROR,
+      type: FETCHING_SIMPLE_TYPES_SUCCESS_OR_ERROR,
       payload: payload,
     });
   }
