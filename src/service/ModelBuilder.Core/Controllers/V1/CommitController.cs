@@ -37,7 +37,7 @@ namespace Mb.Core.Controllers.V1
         /// <param name="package"></param>
         /// <returns></returns>
         [HttpPost("")]
-        [ProducesResponseType(typeof(IActionResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IActionResult), StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -49,7 +49,7 @@ namespace Mb.Core.Controllers.V1
             try
             {
                 await _projectService.CommitProject(package);
-                return Ok(null);
+                return NoContent();
             }
             catch (ModelBuilderNotFoundException e)
             {

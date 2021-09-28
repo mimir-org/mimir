@@ -1,5 +1,5 @@
 import { Aspect, Connector, Attribute, ObjectType } from ".";
-import { ConnectorType, Discipline } from "./Enums";
+import { CommitStatus, ConnectorType, Discipline } from "./Enums";
 
 export interface AttributeType {
   id: string;
@@ -151,6 +151,26 @@ export interface CompositeType {
   name: string;
   semanticReference: string;
   attributeTypes: AttributeType[];
+}
+
+export interface CommitPackage {
+  projectId: string;
+  commitStatus: CommitStatus;
+  parser: string;
+}
+
+export interface CombinedAttribute {
+  qualifierId: string;
+  qualifier: string;
+  sourceId: string;
+  source: string;
+  conditionId: string;
+  condition: string;
+  combined: string;
+}
+export interface CombinedAttributeFilter {
+  name: string;
+  combinedAttributes: CombinedAttribute[];
 }
 
 export const SETTING_KEY = {

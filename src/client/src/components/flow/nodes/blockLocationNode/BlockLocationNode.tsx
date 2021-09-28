@@ -13,6 +13,7 @@ import {
   FilterTerminals,
   FindNodeByDataId,
 } from "../../helpers/block";
+import BlockNodeNameBox from "../../../../compLibrary/blockView/BlockNodeNameBox";
 
 /**
  * Component for a Location Node in BlockView.
@@ -58,7 +59,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
         length={data.length}
         location
       >
-        <p className="node-name">{data.label ?? data.name}</p>
+        <BlockNodeNameBox>{data.label ?? data.name}</BlockNodeNameBox>
         <TerminalsComponent
           node={data}
           isMenuOpen={terminalMenu}

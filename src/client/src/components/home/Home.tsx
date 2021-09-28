@@ -8,7 +8,11 @@ import { LibraryModule } from "../../modules/library";
 import { AccountMenu } from "../menus/accountMenu";
 import { FilterMenu } from "../menus/filterMenu";
 import { getUser } from "../../redux/store/user/actions";
-import { getContractors, getStatuses } from "../../redux/store/common/actions";
+import {
+  getContractors,
+  getStatuses,
+  getAttributeFilters,
+} from "../../redux/store/common/actions";
 import { search } from "../../redux/store/project/actions";
 import { FlowModule } from "../flow";
 import { ErrorModule } from "../../modules/error";
@@ -44,6 +48,7 @@ const Home = () => {
     dispatch(getUser());
     dispatch(getContractors());
     dispatch(getStatuses());
+    dispatch(getAttributeFilters());
   }, [dispatch]);
 
   const params = useParams<RouteParams>();

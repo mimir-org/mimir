@@ -1,5 +1,5 @@
 import { all, takeEvery } from "redux-saga/effects";
-import { FETCHING_CONTRACTORS, FETCHING_STATUSES } from "../store/common/types";
+import { FETCHING_CONTRACTORS, FETCHING_STATUSES, FETCHING_COMBINED_ATTRIBUTE_FILTERS } from "../store/common/types";
 import {
   FETCHING_LIBRARY,
   EXPORT_LIBRARY,
@@ -15,6 +15,7 @@ import {
   SAVE_PROJECT,
   EXPORT_PROJECT_TO_FILE,
   IMPORT_PROJECT,
+  COMMIT_PROJECT,
 } from "./../store/project/types";
 import {
   FETCHING_INITIAL_DATA,
@@ -38,8 +39,9 @@ import {
   updateProject,
   exportProjectFile,
   importProject,
+  commitProject,
 } from "./project/saga";
-import { getContractors, getStatuses } from "./common/saga";
+import { getContractors, getStatuses, getAttributeFilters } from "./common/saga";
 import {
   getPredefinedAttributes,
   getLocationTypes,
@@ -79,5 +81,7 @@ export function* sagas() {
     takeEvery(FETCHING_BLOB_DATA, getblobData),
     takeEvery(FETCHING_LIBRARY_TRANSPORT_TYPES, getTransportTypes),
     takeEvery(FETCHING_LIBRARY_INTERFACE_TYPES, getInterfaceTypes),
+    takeEvery(COMMIT_PROJECT, commitProject),
+    takeEvery(FETCHING_COMBINED_ATTRIBUTE_FILTERS, getAttributeFilters),
   ]);
 }
