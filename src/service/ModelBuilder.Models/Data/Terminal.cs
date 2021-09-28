@@ -20,6 +20,11 @@ namespace Mb.Models.Data
         public ICollection<Transport> OutputTransports { get; set; }
 
         [JsonIgnore]
-        public ICollection<Interface> Interfaces { get; set; }
+        public ICollection<Interface> InputInterfaces { get; set; }
+
+        [JsonIgnore]
+        public ICollection<Interface> OutputInterfaces { get; set; }
+
+
     }
 }
