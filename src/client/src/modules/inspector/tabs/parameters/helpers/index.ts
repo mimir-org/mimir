@@ -1,2 +1,5 @@
 export { default as GetParametersColor } from "./GetParametersColor";
-export { RemoveEntryIfEmpty } from "./ReducerHelper";
+export {
+  GetPossibleCombinations,
+  DoesCombinationMatchAttribute,
+} from "./GetPossibleCombinations";

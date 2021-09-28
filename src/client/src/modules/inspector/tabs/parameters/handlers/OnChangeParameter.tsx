@@ -1,15 +1,15 @@
-import { addEntityParameter, removeEntityParameter } from "../redux/actions";
+import { addAttributeFilter, removeAttributeFilter } from "../redux/actions";
 
 const OnParameterChange = (
   nodeId: string,
-  parameterId: string,
+  filterName: string,
   selected: boolean,
   dispatch: any
 ) => {
   if (!selected) {
-    dispatch(addEntityParameter(nodeId, parameterId));
+    dispatch(addAttributeFilter(nodeId, filterName));
   } else {
-    dispatch(removeEntityParameter(nodeId, parameterId));
+    dispatch(removeAttributeFilter(nodeId, filterName));
   }
 };
 

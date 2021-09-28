@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   MenuWrapper,
   MenuHeader,
@@ -11,40 +11,25 @@ import {
   CollapseIcon,
 } from "../../../../../../../assets/icons/common";
 import { TextResources } from "../../../../../../../assets/text";
+import { CombinedAttributeFilter } from "../../../../../../../models";
+import { FilterDict } from "../../../redux/types";
 
-interface DropdownItem {
-  id: string;
-  key: string;
+interface Props {
+  items: CombinedAttributeFilter[];
+  selectedItems: FilterDict;
+  onChange: (filter: CombinedAttributeFilter, selected: boolean) => void;
 }
 
-interface Props<T> {
-  items: T[];
-  selectedItems: string[];
-  keyProp: string;
-  onChange: (parameterId: string, selected: boolean) => void;
-  defaultValue?: string;
-}
-
-const Dropdown = <T extends DropdownItem>({
+const Dropdown = ({
   items,
   selectedItems,
-  keyProp,
+
   onChange,
-  defaultValue,
-}: Props<T>) => {
+}: Props) => {
   const [isListOpen, setIsListOpen] = useState(false);
 
-  useEffect(() => {
-    if (!items) {
-      return;
-    }
-    if (defaultValue) {
-      return;
-    }
-  }, [defaultValue, items, keyProp]);
-
-  const IsAttributeSelected = (attr: T): boolean => {
-    return selectedItems.includes(attr.id);
+  const IsAttributeSelected = (filter: CombinedAttributeFilter): boolean => {
+    return !!selectedItems[filter.name];
   };
   return (
     <>
@@ -67,11 +52,11 @@ const Dropdown = <T extends DropdownItem>({
             {items?.map((item) => {
               return (
                 <div
-                  onClick={() => onChange(item.id, IsAttributeSelected(item))}
-                  key={item[keyProp]}
+                  onClick={() => onChange(item, IsAttributeSelected(item))}
+                  key={item.name}
                 >
                   <MenuListItem>
-                    <p>{item.key}</p>
+                    <p>{item.name}</p>
                     <CheckboxWrapper>
                       <label className={"checkbox-block"}>
                         <input

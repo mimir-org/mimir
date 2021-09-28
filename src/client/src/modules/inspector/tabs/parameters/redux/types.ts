@@ -1,25 +1,57 @@
-export const ADD_ENTITY_PARAMETER = "ADD_ENTITY_PARAMETER";
-export const REMOVE_ENTITY_PARAMETERS = "REMOVE_ENTITY_PARAMETERS";
-export const REMOVE_ENTITY_PARAMETER = "REMOVE_ENTITY_PARAMETER";
+import { CombinedAttribute } from "../../../../../models";
 
-export type AttributeIdDict = { [nodeId: string]: string[] };
+export const ADD_ATTRIBUTE_FILTER = "ADD_ATTRIBUTE_FILTER";
+export const REMOVE_ATTRIBUTE_FILTER = "REMOVE_ATTRIBUTE_FILTER";
+export const REMOVE_ALL_ATTRIBUTE_FILTERS = "REMOVE_ALL_ATTRIBUTE_FILTERS";
+export const ADD_COMBINED_ATTRIBUTE = "ADD_COMBINED_ATTRIBUTE";
+export const REMOVE_COMBINED_ATTRIBUTE = "REMOVE_COMBINED_ATTRIBUTE";
 
-export interface AddEntityParameter {
-  type: typeof ADD_ENTITY_PARAMETER;
-  payload: { nodeId: string; parameterId: string };
+export type ReducerState = {
+  selectedAttributeFilters: AttributeDict;
+};
+
+export type AttributeDict = {
+  [nodeId: string]: FilterDict;
+};
+
+export type FilterDict = { [filterName: string]: CombinedAttribute[] };
+
+export interface AddAttributeFilter {
+  type: typeof ADD_ATTRIBUTE_FILTER;
+  payload: { nodeId: string; filterName: string };
 }
 
-export interface RemoveEntityParameter {
-  type: typeof REMOVE_ENTITY_PARAMETER;
-  payload: { nodeId: string; parameterId: string };
+export interface RemoveAttributeFilter {
+  type: typeof REMOVE_ATTRIBUTE_FILTER;
+  payload: { nodeId: string; filterName: string };
 }
 
-export interface RemoveEntityParameters {
-  type: typeof REMOVE_ENTITY_PARAMETERS;
+export interface RemoveAllAttributeFilters {
+  type: typeof REMOVE_ALL_ATTRIBUTE_FILTERS;
   payload: { nodeId: string };
 }
 
+export interface AddCombinedAttribute {
+  type: typeof ADD_COMBINED_ATTRIBUTE;
+  payload: {
+    nodeId: string;
+    filterName: string;
+    combination: CombinedAttribute;
+  };
+}
+
+export interface RemoveCombinedAttribute {
+  type: typeof REMOVE_COMBINED_ATTRIBUTE;
+  payload: {
+    nodeId: string;
+    filterName: string;
+    combination: CombinedAttribute;
+  };
+}
+
 export type ParametersActionTypes =
-  | AddEntityParameter
-  | RemoveEntityParameter
-  | RemoveEntityParameters;
+  | AddAttributeFilter
+  | RemoveAttributeFilter
+  | RemoveAllAttributeFilters
+  | AddCombinedAttribute
+  | RemoveCombinedAttribute;

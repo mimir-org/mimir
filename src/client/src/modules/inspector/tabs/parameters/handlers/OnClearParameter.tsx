@@ -1,11 +1,11 @@
-import { removeEntityParameter } from "../redux/actions";
+import { removeAttributeFilter } from "../redux/actions";
 
 const OnClearParameter = (
   nodeId: string,
   parameterId: string,
   dispatch: any
 ) => {
-  dispatch(removeEntityParameter(nodeId, parameterId));
+  dispatch(removeAttributeFilter(nodeId, parameterId));
 };
 
 export default OnClearParameter;
