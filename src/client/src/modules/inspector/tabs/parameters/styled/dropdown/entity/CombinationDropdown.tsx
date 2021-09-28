@@ -11,30 +11,27 @@ import {
   ExpandWhiteIcon,
   CollapseWhiteIcon,
 } from "../../../../../../../assets/icons/common";
+import { CombinedAttribute } from "../../../../../../../models";
 
-interface DropdownItem {
-  id: string;
-  key: string;
-}
-interface Props<T> {
-  items: T[];
-  selectedItems: string[];
+interface Props {
+  items: CombinedAttribute[];
+  selectedItems: CombinedAttribute[];
   keyProp: string;
-  onChange: (parameterId: string, selected: boolean) => void;
+  onChange: (combination: CombinedAttribute, selected: boolean) => void;
   color: string;
 }
 
-const EntityDropdown = <T extends DropdownItem>({
+const EntityDropdown = ({
   items,
   selectedItems,
   keyProp,
   onChange,
   color,
-}: Props<T>) => {
+}: Props) => {
   const [isListOpen, setIsListOpen] = useState(false);
 
-  const IsItemSelected = (item: T): boolean => {
-    return selectedItems.includes(item.id);
+  const IsItemSelected = (item: CombinedAttribute): boolean => {
+    return selectedItems.includes(item);
   };
 
   return (
@@ -53,11 +50,11 @@ const EntityDropdown = <T extends DropdownItem>({
           {items?.map((item) => {
             return (
               <div
-                onClick={() => onChange(item.id, IsItemSelected(item))}
+                onClick={() => onChange(item, IsItemSelected(item))}
                 key={item[keyProp]}
               >
                 <MenuListItem color={color}>
-                  <p>{item.key}</p>
+                  <p>{item.combined}</p>
                   <CheckboxWrapper>
                     <label className={"checkbox-block"}>
                       <input

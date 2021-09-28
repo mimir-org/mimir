@@ -11,11 +11,12 @@ import ParameterDescriptor from "./ParameterDescriptor";
 import { Entity } from "./styled";
 import { ParameterBox, ParameterHeader } from "./styled/parameter";
 import { Dropdown as CompDropdown } from "../../../../compLibrary/dropdown/mimir";
-import { Attribute } from "../../../../models";
+import { Attribute, CombinedAttribute } from "../../../../models";
 import { useState } from "react";
 
 interface Props {
   attribute: Attribute;
+  combination: CombinedAttribute;
   isNodeLocked: boolean;
   onChange: (id: string, value: string, unit: string, nodeId: string) => void;
   onLock: (attribute: Attribute, isLocked: boolean) => void;
@@ -24,6 +25,7 @@ interface Props {
 
 function Parameter({
   attribute,
+  combination,
   isNodeLocked,
   onLock,
   onClose,
@@ -45,7 +47,7 @@ function Parameter({
             <img src={WarningIcon} className="warningIcon" alt="icon" />
           )}
 
-          <div className="parameterHeader">Flowrate</div>
+          <div className="parameterHeader">{attribute.key}</div>
           <div className="icons">
             <img
               src={HelpIcon}
@@ -68,7 +70,11 @@ function Parameter({
             />
           </div>
         </ParameterHeader>
-        <ParameterDescriptor />
+        <ParameterDescriptor
+          qualifier={combination.qualifier}
+          source={combination.source}
+          condition={combination.condition}
+        />
         <div className="inputContainer">
           <input
             name="parameterInput"

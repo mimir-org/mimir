@@ -1,4 +1,14 @@
-export default function ParameterDescriptor() {
+interface Props {
+  qualifier: string;
+  source: string;
+  condition: string;
+}
+
+export default function ParameterDescriptor({
+  qualifier,
+  source,
+  condition,
+}: Props) {
   return (
     <div className="descriptors">
       <div className="descriptors-top">
@@ -8,9 +18,9 @@ export default function ParameterDescriptor() {
       </div>
       <hr />
       <div className="descriptors-bottom">
-        <div>Operating</div>
-        <div>Calculated</div>
-        <div>Maximum</div>
+        <div>{qualifier}</div>
+        <div>{source}</div>
+        <div>{condition}</div>
       </div>
     </div>
   );

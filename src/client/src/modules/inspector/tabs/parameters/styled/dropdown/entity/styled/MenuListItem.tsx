@@ -3,7 +3,7 @@ import { Color, FontSize } from "../../../../../../../../compLibrary";
 
 const MenuListItem = styled.div`
   display: flex;
-  max-height: 31px;
+  max-height: 45px;
   align-items: center;
   border-bottom: 1.5px solid ${Color.ParamsPurple};
   font-size: ${FontSize.Tiny};

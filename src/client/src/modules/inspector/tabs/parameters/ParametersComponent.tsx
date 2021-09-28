@@ -3,9 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { CloseParameterIcon } from "../../../../assets/icons/common";
 import { TextResources } from "../../../../assets/text";
 import { Dropdown } from "./styled/dropdown/parameter";
-import { Attribute, Node } from "../../../../models";
+import {
+  Attribute,
+  CombinedAttribute,
+  CombinedAttributeFilter,
+  Node,
+} from "../../../../models";
 import { GetParametersColor } from "./helpers";
-import { EntityDropdown } from "./styled/dropdown/entity";
+import { CombinationDropdown } from "./styled/dropdown/entity";
 import { Menu, Body, Box, Header, Entity } from "./styled";
 import {
   OnChangeParameter,
@@ -26,14 +31,21 @@ const ParametersComponent = ({ node }: Props) => {
   const dispatch = useDispatch();
   const attributes = node.attributes;
 
-  const [selectedParameters, setSelectedParameters] = useState(
-    new Map<string, string[]>()
-  );
+  const attributeFilters =
+    (
+      useSelector<RootState>(
+        (state) => state.commonState.filters
+      ) as CombinedAttributeFilter[]
+    ).filter((x) => node.attributes.find((att) => att.key === x.name)) ?? [];
 
   const selectedAttributes =
     (useSelector<RootState>(
       (state) => state.parametersReducer.attributes[node.id]
     ) as string[]) ?? [];
+
+  const [selectedCombinations, setSelectedCombinations] = useState(
+    new Map<string, CombinedAttribute[]>()
+  );
 
   const hasAttributes = selectedAttributes.length > 0;
 
@@ -41,36 +53,25 @@ const ParametersComponent = ({ node }: Props) => {
     selectedAttributes.includes(x.id)
   );
 
-  const attributeCombinations = [
-    {
-      id: "aaaa",
-      key: "bbbb",
-      name: "Operating/Calculated/Maximum",
-      qualifier: "Operating",
-      source: "Calculcated",
-      condition: "Maximum",
-    },
-  ];
-
   const onChangeParameterChoice = (
-    id: string,
+    combination: CombinedAttribute,
     attributeId: string,
     selected: boolean
   ) => {
-    if (!selectedParameters.has(attributeId)) {
-      selectedParameters.set(attributeId, []);
+    if (!selectedCombinations.has(attributeId)) {
+      selectedCombinations.set(attributeId, []);
     }
 
-    const parameters = selectedParameters.get(attributeId);
+    const combinations = selectedCombinations.get(attributeId);
 
     selected
-      ? selectedParameters.set(
+      ? selectedCombinations.set(
           attributeId,
-          parameters.filter((x) => x !== id)
+          combinations.filter((x) => x.combined !== combination.combined)
         )
-      : parameters.push(id);
+      : combinations.push(combination);
 
-    setSelectedParameters(new Map(selectedParameters));
+    setSelectedCombinations(new Map(selectedCombinations));
   };
 
   const onLockParameter = (attribute: Attribute, isLocked: boolean) => {
@@ -78,8 +79,10 @@ const ParametersComponent = ({ node }: Props) => {
       dispatch(lockUnlockAttribute(attribute, node.id, isLocked));
   };
 
-  const onCloseParameter = (id: string, attributeId: string) =>
-    onChangeParameterChoice(id, attributeId, true);
+  const onCloseParameter = (
+    combination: CombinedAttribute,
+    attributeId: string
+  ) => onChangeParameterChoice(combination, attributeId, true);
 
   return (
     <>
@@ -105,7 +108,7 @@ const ParametersComponent = ({ node }: Props) => {
 
       {hasAttributes &&
         filteredAttributes.map((attribute) => {
-          const parameters = selectedParameters.get(attribute.id) ?? [];
+          const combinations = selectedCombinations.get(attribute.id) ?? [];
 
           return (
             <Body key={attribute.id}>
@@ -122,26 +125,31 @@ const ParametersComponent = ({ node }: Props) => {
                   </div>
                   <div className="text">{attribute.key}</div>
                 </Box>
-                <EntityDropdown
-                  items={attributeCombinations}
-                  selectedItems={parameters}
-                  keyProp="id"
-                  onChange={(id, selected) =>
-                    onChangeParameterChoice(id, attribute.id, selected)
+                <CombinationDropdown
+                  items={
+                    attributeFilters.find(
+                      (filter) => filter.name === attribute.key
+                    )?.combinedAttributes
+                  }
+                  selectedItems={combinations}
+                  keyProp="combined"
+                  onChange={(combination, selected) =>
+                    onChangeParameterChoice(combination, attribute.id, selected)
                   }
                   color={Color.ParamsPurple}
                 />
               </Entity>
-              {parameters.map((param) => (
+              {combinations.map((combination) => (
                 <Parameter
-                  key={param}
+                  key={combination.combined}
                   attribute={attribute}
+                  combination={combination}
                   isNodeLocked={node.isLocked}
                   onChange={(id, value, unit, nodeId) =>
                     OnChangeParameterValue(id, value, unit, nodeId, dispatch)
                   }
                   onLock={onLockParameter}
-                  onClose={(id) => onCloseParameter(param, id)}
+                  onClose={(id) => onCloseParameter(combination, id)}
                 />
               ))}
             </Body>
