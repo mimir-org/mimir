@@ -846,12 +846,6 @@ namespace Mb.Core.Services
                     if (edge.ToNodeId == node.Id)
                         edge.ToNodeId = newNodeId;
 
-                    if (edge.Transport != null)
-                    {
-                        if (edge.Transport.TerminalId == connector.Id)
-                            edge.Transport.TerminalId = newConnectorId;
-                    }
-
                     if (edge.Interface != null)
                     {
                         if (edge.Interface.TerminalId == connector.Id)

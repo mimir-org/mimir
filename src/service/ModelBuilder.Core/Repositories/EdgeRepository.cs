@@ -14,12 +14,14 @@ namespace Mb.Core.Repositories
         private readonly IAttributeRepository _attributeRepository;
         private readonly ITransportRepository _transportRepository;
         private readonly IInterfaceRepository _interfaceRepository;
+        private readonly IConnectorRepository _connectorRepository;
 
-        public EdgeRepository(ModelBuilderDbContext dbContext, IAttributeRepository attributeRepository, ITransportRepository transportRepository, IInterfaceRepository interfaceRepository) : base(dbContext)
+        public EdgeRepository(ModelBuilderDbContext dbContext, IAttributeRepository attributeRepository, ITransportRepository transportRepository, IInterfaceRepository interfaceRepository, IConnectorRepository connectorRepository) : base(dbContext)
         {
             _attributeRepository = attributeRepository;
             _transportRepository = transportRepository;
             _interfaceRepository = interfaceRepository;
+            _connectorRepository = connectorRepository;
         }
 
         public IEnumerable<Edge> UpdateInsert(ICollection<Edge> original, Project project)
@@ -33,6 +35,7 @@ namespace Mb.Core.Repositories
 
             foreach (var edge in project.Edges)
             {
+                //Add
                 if (updates.Any(x => x.Id == edge.Id))
                 {
                     if (edge.MasterProjectId != project.Id)
@@ -44,6 +47,32 @@ namespace Mb.Core.Repositories
 
                     if (edge.Transport != null)
                     {
+                        if (edge.Transport.InputTerminal != null)
+                        {
+                            edge.Transport.InputTerminalId = edge.Transport.InputTerminal.Id;
+                            foreach (var attribute in edge.Transport.InputTerminal.Attributes)
+                            {
+                                attribute.UnitString = attribute.Units != null
+                                    ? JsonConvert.SerializeObject(attribute.Units)
+                                    : null;
+                                _attributeRepository.Attach(attribute, EntityState.Added);
+                            }
+                            _connectorRepository.Attach(edge.Transport.InputTerminal, EntityState.Added);
+                        }
+
+                        if (edge.Transport.OutputTerminal != null)
+                        {
+                            edge.Transport.OutputTerminalId = edge.Transport.OutputTerminal.Id;
+                            foreach (var attribute in edge.Transport.OutputTerminal.Attributes)
+                            {
+                                attribute.UnitString = attribute.Units != null
+                                    ? JsonConvert.SerializeObject(attribute.Units)
+                                    : null;
+                                _attributeRepository.Attach(attribute, EntityState.Added);
+                            }
+                            _connectorRepository.Attach(edge.Transport.OutputTerminal, EntityState.Added);
+                        }
+
                         if (edge.Transport?.Attributes != null)
                         {
                             foreach (var attribute in edge.Transport.Attributes)
@@ -64,6 +93,7 @@ namespace Mb.Core.Repositories
 
                     Attach(edge, EntityState.Added);
                 }
+                //update
                 else
                 {
                     if (edge.MasterProjectId != project.Id)
@@ -71,6 +101,32 @@ namespace Mb.Core.Repositories
 
                     if (edge.Transport != null)
                     {
+                        if (edge.Transport.InputTerminal != null)
+                        {
+                            edge.Transport.InputTerminalId = edge.Transport.InputTerminal.Id;
+                            foreach (var attribute in edge.Transport.InputTerminal.Attributes)
+                            {
+                                attribute.UnitString = attribute.Units != null
+                                    ? JsonConvert.SerializeObject(attribute.Units)
+                                    : null;
+                                _attributeRepository.Attach(attribute, EntityState.Modified);
+                            }
+                            _connectorRepository.Attach(edge.Transport.InputTerminal, EntityState.Modified);
+                        }
+
+                        if (edge.Transport.OutputTerminal != null)
+                        {
+                            edge.Transport.OutputTerminalId = edge.Transport.OutputTerminal.Id;
+                            foreach (var attribute in edge.Transport.OutputTerminal.Attributes)
+                            {
+                                attribute.UnitString = attribute.Units != null
+                                    ? JsonConvert.SerializeObject(attribute.Units)
+                                    : null;
+                                _attributeRepository.Attach(attribute, EntityState.Modified);
+                            }
+                            _connectorRepository.Attach(edge.Transport.OutputTerminal, EntityState.Modified);
+                        }
+
                         if (edge.Transport?.Attributes != null)
                         {
                             foreach (var attribute in edge.Transport.Attributes)
