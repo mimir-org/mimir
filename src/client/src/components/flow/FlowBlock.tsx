@@ -36,7 +36,9 @@ import {
   EdgeType,
   BackgroundVariant,
   SPLITVIEW_POSITION,
+  MODULE_TYPE,
 } from "../../models/project";
+import { setModuleVisibility } from "../../redux/store/modules/actions";
 
 const FlowBlock = () => {
   const dispatch = useDispatch();
@@ -141,6 +143,7 @@ const FlowBlock = () => {
       dispatch(setActiveEdge(null, false));
     }
     dispatch(setActiveBlockNode(element.id));
+    dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, true, true));
     dispatch(changeInspectorTab(0));
 
     const panel = document.getElementById("InspectorModule");
