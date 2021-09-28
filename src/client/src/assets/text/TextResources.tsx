@@ -169,6 +169,7 @@ const TextResources = {
   Account_Export_Library_File: "Export project library",
   Account_Import_File: "Import project file",
   Account_Import_Library_File: "Import project library",
+  Account_Commit_Project_Label: "Commit project",
   Account_Logout_Label: "Log out",
   Account_Open_Label: "Open a project",
   Account_Create_Label: "Create a project",
@@ -186,6 +187,7 @@ const TextResources = {
   Account_Import_Library_Label: "Import library",
   Account_Save: "Save",
   Account_Save_File: "SaveFile",
+  Account_Commit_Project: "CommitProject",
   Account_Open: "Open",
   Account_Create: "Create",
   Account_Cancel: "Cancel",
@@ -206,6 +208,8 @@ const TextResources = {
   // BlockView
   BlockView_Select_Message:
     "Please select an additional object from the Explorer Module",
+  ConnectMenu_Select_All: "Select all",
+  ConnectMenu_Clear_All: "Clear all",
 
   // Type
   Type_BlockLocation: "BlockLocationNode",

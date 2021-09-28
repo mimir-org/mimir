@@ -5,6 +5,6 @@ namespace Mb.Models.Modules
 {
     public interface IModelBuilderPlugin : IModuleInterface
     {
-        void CreateModule(IServiceCollection services, IConfiguration configuration, ServiceProvider provider);
+        void CreateModule(IServiceCollection services, IConfiguration configuration);
     }
 }

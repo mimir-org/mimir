@@ -8,8 +8,8 @@ const ConnectViewMenu = styled.div`
   border-radius: 5px;
   height: auto;
   position: absolute;
-  right: ${(props) => props.width + 4}px;
-  top: -3px;
+  right: ${(props) => props.width + 5}px;
+  top: 5px;
   z-index: 1;
 
   .button {

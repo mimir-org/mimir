@@ -31,8 +31,10 @@ import {
   removeMainNode,
 } from "../../../../redux/store/connectView/actions";
 
-/** Component for a Function child node in BlockView.
- *  BlockFunctionNode returns a node with the styling and functionality of the Function Aspect.
+/**
+ * Component for a Function Node in BlockView.
+ * @param data the data for the node.
+ * @returns a Function Node of the Flow node type with Mimir styling and functionality.
  */
 const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
@@ -58,7 +60,6 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   ) as Node[];
 
   const connectChildren = GetConnectChildren(data, nodes, edges);
-  const hasChildren = connectChildren?.length > 0;
   const sortedTerminals = FilterTerminals(data, splitView);
 
   const mainConnectNode = mainConnectNodes.find((x) => x.id === data.id);
@@ -78,7 +79,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     }
   };
 
-  const onConnectViewClick = (node: Node) => {
+  const onConnectNodeClick = (node: Node) => {
     if (!isConnectorChecked(node)) {
       data.width = Size.ConnectView_Width;
       data.length = Size.ConnectView_Length;
@@ -112,8 +113,8 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   // Force z-index to display edges in ConnectView
   useEffect(() => {
     if (mainConnectNode) {
-      const edges = FindAllEdges();
-      edges.style.zIndex = "3";
+      const allEdges = FindAllEdges();
+      allEdges.style.zIndex = "3";
     }
   }, [mainConnectNode]);
 
@@ -135,7 +136,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
         <TerminalsComponent
           node={data}
           isMenuOpen={terminalMenu}
-          list={sortedTerminals}
+          terminals={sortedTerminals}
           width={data.width}
           isParent={false}
           isLocation={IsLocation(data)}
@@ -146,15 +147,15 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
         />
 
         <ConnectViewComponent
+          node={data}
           isMenuOpen={connectMenu}
-          list={connectChildren}
-          handleClick={onConnectViewClick}
+          children={connectChildren}
+          handleClick={onConnectNodeClick}
           isChecked={isConnectorChecked}
-          width={data.width}
-          hasChildren={hasChildren}
           connectButton={connectButton}
           showConnectMenu={showConnectMenu}
           connectMenu={connectMenu}
+          dispatch={dispatch}
         />
       </NodeBox>
 
@@ -162,6 +163,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
         node={data}
         nodes={nodes}
         terminals={sortedTerminals}
+        isParent={false}
         splitView={splitView}
       />
     </>

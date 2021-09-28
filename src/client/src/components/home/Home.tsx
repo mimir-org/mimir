@@ -22,6 +22,10 @@ interface RouteParams {
   type: string;
 }
 
+/**
+ * The main component for Mimir
+ * @returns a JSX Element containing all the modules and components.
+ */
 const Home = () => {
   const dispatch = useDispatch();
 

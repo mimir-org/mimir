@@ -16,9 +16,9 @@ import {
 } from "../helpers/common";
 
 /**
- * Component to display a node in TreeView
- * @param param0 data - the data for the node
- * @returns a node in the FlowTree context
+ * Component to display a node in TreeView.
+ * @param data the data for the node.
+ * @returns a node in the FlowTree context.
  */
 const TreeviewNode: FC<NodeProps> = ({ data }) => {
   const [isHover, setIsHover] = useState(false);
@@ -58,8 +58,8 @@ const TreeviewNode: FC<NodeProps> = ({ data }) => {
 
         return (
           <TreeHandleBox
-            input={SetTerminalYPos(inputCount)}
-            output={SetTerminalYPos(outputCount)}
+            input={SetTerminalYPos(inputCount, false)}
+            output={SetTerminalYPos(outputCount, false)}
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}
             key={"handle-treeview-" + conn.id}
