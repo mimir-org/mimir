@@ -1,24 +1,17 @@
 import styled from "styled-components";
-import { Color, Size } from "../../../../../compLibrary";
+import { Color } from "../../../../../compLibrary";
 
 /** Styled component that displays the drop-down menu for the ConnectViewMenu. */
 const ConnectViewMenu = styled.div`
   border: 2px solid ${Color.FunctionTab};
-  border-bottom: none;
   background-color: ${Color.White};
-  border-radius: 5px 5px 0px 0px;
+  border-radius: 5px;
   height: auto;
-  max-height: 200px;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  display: flex;
-  flex-direction: column;
-  top: ${(props) => props.height - 85}px;
-  left: -1px;
-  /* min-width: ${Size.Node_Width - 10}px; */
-  width: 100%;
-  z-index: 1;
+  width: max-content;
   position: absolute;
+  right: ${(props) => props.width + 4}px;
+  top: 110px;
+  z-index: 1;
 
   .button {
     position: absolute;

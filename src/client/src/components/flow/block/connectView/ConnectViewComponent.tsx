@@ -2,7 +2,7 @@ import * as Click from "./handlers";
 import { Node } from "../../../../models";
 import { ConnectMenuIcon } from "../../../../assets/icons/blockView";
 import { TextResources } from "../../../../assets/text";
-import { ConnectViewBox, Menu, Element, Footer } from "./styled";
+import { ConnectViewBox, Menu, Element } from "./styled";
 
 interface Props {
   node: Node;
@@ -39,7 +39,7 @@ const ConnectViewComponent = ({
       visible={connectButton && children.length > 0}
       onClick={() => Click.OnConnectMenu(showConnectMenu, connectMenu)}
     >
-      <img src={ConnectMenuIcon} alt="options" />
+      <img src={ConnectMenuIcon} alt="menu" />
     </ConnectViewBox>
 
     {isMenuOpen && (
@@ -60,15 +60,21 @@ const ConnectViewComponent = ({
               </Element>
             );
           })}
+          <Element>
+            <div
+              className="select"
+              onClick={() => Click.OnSelectAll(dispatch, node, children)}
+            >
+              {TextResources.ConnectMenu_Select_All}
+            </div>
+            <div
+              className="select"
+              onClick={() => Click.OnClearAll(dispatch, node)}
+            >
+              {TextResources.ConnectMenu_Clear_All}
+            </div>
+          </Element>
         </Menu>
-        <Footer>
-          <div onClick={() => Click.OnSelectAll(dispatch, node, children)}>
-            <p className="select">{TextResources.ConnectMenu_Select_All}</p>
-          </div>
-          <div onClick={() => Click.OnClearAll(dispatch, node)}>
-            <p className="select">{TextResources.ConnectMenu_Clear_All}</p>
-          </div>
-        </Footer>
       </>
     )}
   </>

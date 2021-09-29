@@ -16,8 +16,23 @@ const ConnectViewElement = styled.div`
     position: relative;
     text-align: left;
     padding-left: 30px;
-    bottom: 8px;
-    width: max-content;
+    bottom: 10px;
+  }
+
+  .select {
+    position: absolute;
+    left: 7px;
+    top: 7px;
+
+    &:last-child {
+      left: unset;
+      right: 8px;
+    }
+
+    &:hover {
+      font-weight: bold;
+      cursor: pointer;
+    }
   }
 
   &:first-child {
@@ -26,9 +41,18 @@ const ConnectViewElement = styled.div`
     border-top-right-radius: 4px;
   }
 
+  &:last-child {
+    border-top: 1.4px solid ${Color.FunctionTab};
+  }
+
   &:hover {
     background-color: ${Color.LightBlue};
     cursor: pointer;
+
+    &:last-child {
+      background-color: ${Color.White};
+      cursor: auto;
+    }
   }
 `;
 

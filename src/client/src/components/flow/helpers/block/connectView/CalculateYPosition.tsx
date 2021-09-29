@@ -18,6 +18,7 @@ const CalculateYPosition = (node: Node, yPos: number, connectNodes: Node[]) => {
 
   connectNodes?.forEach((elem, i) => {
     if (i > 1 && node.id === elem.id) {
+      // DETTE SKAL BLI EN ALGO
       if (i > 3 && i < 6) increaseYPos += test * reidar;
       if (i >= 6 && i < 8) increaseYPos += test * (reidar * 2);
       if (i >= 8 && i < 10) increaseYPos += test * (reidar * 3);
