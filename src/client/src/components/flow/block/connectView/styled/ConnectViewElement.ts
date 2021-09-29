@@ -20,14 +20,10 @@ const ConnectViewElement = styled.div`
   }
 
   .select {
-    position: absolute;
-    left: 7px;
-    top: 7px;
-
-    &:last-child {
-      left: unset;
-      right: 8px;
-    }
+    position: relative;
+    margin-left: 10px;
+    top: 2px;
+    width: 100%;
 
     &:hover {
       font-weight: bold;
