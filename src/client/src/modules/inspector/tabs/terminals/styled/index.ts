@@ -1,3 +1,3 @@
 export * from "./TerminalsBody";
-export * from "./TerminalsWrapper";
+export * from "./TerminalsColumn";
 export * from "./searchbar";

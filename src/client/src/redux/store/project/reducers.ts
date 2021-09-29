@@ -1,5 +1,5 @@
-import { Edge, Node, ProjectSimple } from "../../../models";
-import { TraverseTree } from "./helpers/";
+import { Connector, Edge, Node, ProjectSimple } from "../../../models";
+import { FindTerminalAndNode, TraverseTree } from "./helpers/";
 import { IsAspectNode } from "../../../components/flow/helpers/common";
 import {
   FETCHING_PROJECT,
@@ -35,11 +35,12 @@ import {
   COMMIT_PROJECT_SUCCESS_OR_ERROR,
   COMMIT_PROJECT,
   LOCK_UNLOCK_NODE,
-  LOCK_UNLOCK_ATTRIBUTE,
+  LOCK_UNLOCK_NODE_ATTRIBUTE,
   LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR,
   LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
   ProjectActionTypes,
   ProjectState,
+  LOCK_UNLOCK_TERMINAL_ATTRIBUTE,
 } from "./types";
 
 const initialState: ProjectState = {
@@ -257,7 +258,7 @@ export function projectReducer(
         },
       };
 
-    case SET_NODE_VISIBILITY:
+    case SET_NODE_VISIBILITY: {
       const node = action.payload.node;
       const nodeList = state.project.nodes;
       const edgeList = state.project.edges;
@@ -321,15 +322,16 @@ export function projectReducer(
           ),
         },
       };
+    }
 
     case SET_ACTIVE_NODE:
-      const id = action.payload.nodeId;
+      const nodeId = action.payload.nodeId;
       return {
         ...state,
         project: {
           ...state.project,
           nodes: state.project.nodes.map((x) =>
-            x.id === id
+            x.id === nodeId
               ? { ...x, isSelected: action.payload.isActive }
               : { ...x, isSelected: false }
           ),
@@ -551,7 +553,7 @@ export function projectReducer(
           : state.apiError,
       };
 
-    case LOCK_UNLOCK_ATTRIBUTE:
+    case LOCK_UNLOCK_NODE_ATTRIBUTE:
       return {
         ...state,
         project: {
@@ -573,6 +575,44 @@ export function projectReducer(
           ),
         },
       };
+
+    case LOCK_UNLOCK_TERMINAL_ATTRIBUTE: {
+      const { id, isLocked, terminalId } = action.payload;
+
+      let [node, terminal] = FindTerminalAndNode(
+        state.project.nodes,
+        terminalId
+      );
+
+      if (!node || !terminal) return { ...state };
+
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          nodes: {
+            ...state.project.nodes,
+            [node.id]: {
+              ...node,
+              connectors: {
+                ...node.connectors,
+                [terminalId]: {
+                  ...terminal,
+                  attributes: terminal.attributes.map((attribute) =>
+                    attribute.id === id
+                      ? {
+                          ...attribute,
+                          isLocked,
+                        }
+                      : attribute
+                  ),
+                },
+              },
+            },
+          },
+        },
+      };
+    }
 
     case LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR:
       return {
