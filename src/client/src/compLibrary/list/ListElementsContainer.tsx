@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Color } from "../../compLibrary";
 
 const ListElementsContainer = styled.div`
   height: 100%;
@@ -7,7 +8,7 @@ const ListElementsContainer = styled.div`
 
   div:nth-child(odd) {
     background-color: ${(props: { background: boolean }) =>
-      props.background === false ? "" : "rgba(0, 112, 121, 0.15)"};
+      props.background === false ? "" : Color.LightPurple};
   }
 `;
 
