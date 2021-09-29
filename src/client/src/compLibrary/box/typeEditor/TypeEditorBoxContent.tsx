@@ -17,6 +17,13 @@ const TypeEditorBoxContent = styled.div`
   color: ${Color.Black};
   font-size: ${FontSize.Standard};
   white-space: nowrap;
+
+  .typeeditor_box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex: 1;
+  }
 `;
 
 export default TypeEditorBoxContent;

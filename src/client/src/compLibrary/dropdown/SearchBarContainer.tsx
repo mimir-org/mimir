@@ -5,7 +5,7 @@ const SearchBarContainer = styled.div`
   flex: 1;
   flex-direction: column;
   max-height: 20px;
-  font-family: Roboto;
+  font-family: roboto;
   background-color: white;
   position: relative;
 `;

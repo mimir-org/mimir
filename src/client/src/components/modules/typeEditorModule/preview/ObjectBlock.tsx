@@ -53,9 +53,6 @@ export const ObjectBlock = ({
       blockColor={GetBlockColor(aspect)}
       blockHeight={GetBlockHeight(aspect)}
     >
-      {/* {console.log("terminals to show", createLibraryType.terminalTypes)}
-      {console.log("inputTerminals", inputTerminals)}
-      {console.log("outputTerminals", outputTerminals)} */}
       <InputOutputTerminals>
         {inputTerminals && (
           <Terminals input={true}>{showTerminals(true)}</Terminals>

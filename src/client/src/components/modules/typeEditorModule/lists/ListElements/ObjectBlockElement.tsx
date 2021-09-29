@@ -58,11 +58,11 @@ export const ObjectBlockElement = ({
     let terminalsArray = [];
     if (terminalsQuantity > 0) {
       terminalsArray = defaultTerminals;
-      return terminalsArray.map((t) => {
+      return terminalsArray.map((t, index) => {
         return (
           <AddTerminal
+            key={index}
             terminalId={t.terminalId}
-            key={t.terminalId}
             terminals={terminalTypes}
             defaultTerminal={t}
             onChange={onCategoryUpdateOrRemove}

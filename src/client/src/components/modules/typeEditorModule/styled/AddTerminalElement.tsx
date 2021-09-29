@@ -5,6 +5,10 @@ const AddTerminalElement = styled.div`
   flex-direction: row;
   padding: 2px 8px 2px 20px;
 
+  .help-icon {
+    display: none;
+  }
+
   img {
     padding: 0px 5px;
     opacity: 1;
