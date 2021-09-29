@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { TextResources } from "../../../../assets/text";
 import { Connector, Node, Edge } from "../../../../models";
 import { RootState } from "../../../../redux/store";
-import { Block } from "..";
 import { HandleComponent, TerminalsComponent } from "../../block/terminals";
 import { IsLocation } from "../../helpers/common";
 import { Size } from "../../../../compLibrary";
-import { BlockMessageBox } from "../../../../compLibrary/blockView";
 import { OnParentClick, OnChildClick } from "./handlers";
+import { BlockComponent } from "./";
+import { BlockMessageBox } from "../../block/styled";
 import {
   changeActiveConnector,
   removeEdge,
@@ -77,7 +77,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
 
   return (
     <>
-      <Block
+      <BlockComponent
         node={node}
         isLocation={IsLocation(node)}
         isSplitView={isSplitView}

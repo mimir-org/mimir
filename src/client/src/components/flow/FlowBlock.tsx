@@ -6,7 +6,7 @@ import { RootState } from "../../redux/store/index";
 import { FullScreenBox } from "../../compLibrary/controls";
 import { OpenProjectMenu } from "../project/openProject";
 import { Color, Size } from "../../compLibrary";
-import { BackgroundBox } from "../../compLibrary/blockView";
+import { BackgroundBox } from "./block/styled";
 import { changeInspectorTab } from "../../modules/inspector/redux/actions";
 import { Node, BlobData } from "../../models";
 import { ProjectState } from "../../redux/store/project/types";
@@ -15,6 +15,7 @@ import { GetBlockEdgeTypes, IsBlockView, OnBlockClick } from "./helpers/block";
 import { CreateBlockElements } from "./creators";
 import { SetPanelHeight } from "../../modules/inspector/helpers";
 import { useOnConnect, useOnDrop, useOnRemove, useOnDragStop } from "./hooks";
+import { setModuleVisibility } from "../../redux/store/modules/actions";
 import {
   setActiveBlockNode,
   setActiveEdge,
@@ -38,7 +39,6 @@ import {
   SPLITVIEW_POSITION,
   MODULE_TYPE,
 } from "../../models/project";
-import { setModuleVisibility } from "../../redux/store/modules/actions";
 
 const FlowBlock = () => {
   const dispatch = useDispatch();

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "..";
+import { Color } from "../../../compLibrary";
 
 const OptionsButton = styled.div`
   height: 30px;

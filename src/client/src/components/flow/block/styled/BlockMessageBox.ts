@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color, FontSize } from "..";
+import { Color, FontSize } from "../../../../compLibrary";
 
 const BlockMessageBox = styled.div`
   width: 200px;

@@ -1,4 +1,4 @@
-import { TreeviewNode } from "../../nodes";
+import { TreeviewNode } from "../../nodes/treeViewNode";
 import { AspectNode } from "../../nodes/aspectNode";
 
 const GetNodeTypes = {

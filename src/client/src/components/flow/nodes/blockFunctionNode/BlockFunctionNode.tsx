@@ -6,7 +6,7 @@ import { RootState } from "../../../../redux/store";
 import { Connector, Node, Edge } from "../../../../models";
 import { Size } from "../../../../compLibrary";
 import { IsLocation } from "../../helpers/common";
-import { NodeBox } from "../../../../compLibrary/blockView";
+import { NodeBox } from "../../styled";
 import { TerminalsComponent, HandleComponent } from "../../block/terminals";
 import { ConnectViewComponent } from "../../block/connectView";
 import {

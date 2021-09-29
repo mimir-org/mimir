@@ -1,7 +1,8 @@
 import { RootState } from "../../../../redux/store";
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
-import { NodeBox } from "../../../../compLibrary/blockView";
+import { NodeBox } from "../../styled";
+import { BlockNodeNameBox } from "../../block/styled";
 import { HandleComponent, TerminalsComponent } from "../../block/terminals";
 import { changeActiveConnector } from "../../../../redux/store/project/actions";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,7 +14,6 @@ import {
   FilterTerminals,
   FindNodeByDataId,
 } from "../../helpers/block";
-import BlockNodeNameBox from "../../../../compLibrary/blockView/BlockNodeNameBox";
 
 /**
  * Component for a Location Node in BlockView.

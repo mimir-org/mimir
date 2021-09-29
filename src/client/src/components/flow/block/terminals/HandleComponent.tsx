@@ -1,8 +1,8 @@
 import { Node, Connector } from "../../../../models";
-import { HandleBox } from "../../../../compLibrary/blockView";
 import { Handle } from "react-flow-renderer";
 import { GetBlockHandleType } from "../../helpers/block";
 import { IsValidConnection } from "./helpers";
+import { HandleBox } from "./styled";
 import {
   GetConnectorIcon,
   GetHandlePosition,
