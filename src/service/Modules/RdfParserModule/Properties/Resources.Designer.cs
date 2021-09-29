@@ -390,7 +390,7 @@ namespace RdfParserModule.Properties {
         internal static string project {
             get {
                 return ResourceManager.GetString("project", resourceCulture);
-            }
+        }
         }
         
         /// <summary>
