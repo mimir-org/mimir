@@ -1,10 +1,10 @@
+import { CreateLibraryType } from "../../../../models";
+import { ListType } from "../TypeEditorList";
 import {
   GetFilteredRdsList,
   GetFilteredTerminalsList,
   GetFilteredAttributesList,
 } from ".";
-import { CreateLibraryType } from "../../../../models";
-import { ListType } from "../TypeEditorList";
 
 const GetFilteredList = (
   listType: ListType,

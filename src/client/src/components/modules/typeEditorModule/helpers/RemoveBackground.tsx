@@ -1,13 +1,9 @@
 import { ListType } from "../TypeEditorList";
 
 const RemoveBackground = (listType: ListType): boolean => {
-  if (
+  return !(
     listType === ListType.Terminals ||
     listType === ListType.PredefinedAttributes
-  ) {
-    return false;
-  } else {
-    return true;
-  }
+  );
 };
 export default RemoveBackground;

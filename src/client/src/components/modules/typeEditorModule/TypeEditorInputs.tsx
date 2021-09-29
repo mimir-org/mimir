@@ -1,12 +1,12 @@
 import { TextResources } from "../../../assets/text";
+import { TextInput, TypeInfo, TypeNameInput } from "./styled";
+import { Dropdown } from "../../../compLibrary/dropdown/typeEditor";
 import {
   BlobData,
   CreateLibraryType,
   LocationType,
   Purpose,
 } from "../../../models";
-import { TextInput, TypeInfo, TypeNameInput } from "./styled";
-import { Dropdown } from "../../../compLibrary/dropdown/typeEditor";
 import {
   GetAspects,
   GetBlobData,

@@ -3,6 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { TypeEditorState } from "../../../redux/store/typeEditor/types";
 import { setModulesVisibility } from "../../../redux/store/modules/actions";
+import { TerminalTypeItem } from "../../../models";
+import { TypeEditorList, TypeEditorInputs, TypePreview } from "./";
+import { ListType } from "./TypeEditorList";
+import { AddIcon, CheckIcon, CloseIcon } from "../../../assets/icons/common";
+import { TextResources } from "../../../assets/text";
+import { GetInputTerminals, GetOutputTerminals } from "./preview/helpers";
 import {
   closeTypeEditor,
   getInitialData,
@@ -22,11 +28,6 @@ import {
   IsFunction,
   IsProduct,
 } from "./helpers";
-import { TerminalTypeItem } from "../../../models";
-import { TypeEditorList, TypeEditorInputs, TypePreview } from "./";
-import { ListType } from "./TypeEditorList";
-import { AddIcon, CheckIcon, CloseIcon } from "../../../assets/icons/common";
-import { TextResources } from "../../../assets/text";
 import {
   TypeEditorWrapper,
   TypeEditorContent,
@@ -35,7 +36,6 @@ import {
   TypePreviewColumn,
   SaveButton,
 } from "./styled";
-import { GetInputTerminals, GetOutputTerminals } from "./preview/helpers";
 /**
  * Component for adding or editing a type
  * @returns the visual Type Editor window

@@ -9,7 +9,6 @@ const SearchBarList = styled.div`
   position: absolute;
   top: 22px;
   left: 0px;
-  z-index: 888888888;
   width: 100%;
 `;
 
