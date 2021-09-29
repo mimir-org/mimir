@@ -552,11 +552,12 @@ namespace Mb.Core.Services
             var data = await parser.SerializeProject(project);
             var projectString = System.Text.Encoding.UTF8.GetString(data);
 
-            var export = new ExportData
+            var export = new ImfData
             {
                 Id = project.Id,
                 Version = project.Version,
                 Environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"),
+                Parser = package.Parser,
                 Document = projectString
             };
 
