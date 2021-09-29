@@ -31,6 +31,7 @@ const ResizeMainConnectNode = (
     mainNode.style.height = `${resize}px`;
     mainNode.style.width = `${Size.ConnectView_Width}px`;
     mainNode.style.zIndex = "1";
+
     if (nodeCount >= 5) mainNode.style.maxHeight = `${resize - 50}px`;
   } else {
     const node = FindNodeByDataId(nodeId);

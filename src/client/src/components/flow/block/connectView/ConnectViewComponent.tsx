@@ -20,7 +20,7 @@ interface Props {
 /**
  * Component for the ConnectView menu in BlockView
  * @param param0
- * @returns a drop-down list from where you can select a nodes' children
+ * @returns a drop-down list where you can select a nodes' children
  */
 const ConnectViewComponent = ({
   node,

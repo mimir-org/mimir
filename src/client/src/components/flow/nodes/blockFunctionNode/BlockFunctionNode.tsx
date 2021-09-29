@@ -17,7 +17,6 @@ import {
   SetTerminalOrder,
   FilterTerminals,
   FindAllEdges,
-  FindNodeByDataId,
 } from "../../helpers/block";
 import {
   GetConnectChildren,
@@ -82,16 +81,12 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
 
   const onConnectNodeClick = (node: Node) => {
     if (!isConnectorChecked(node)) {
-      data.width = Size.ConnectView_Width;
-      data.length = Size.ConnectView_Length;
       if (!IsMainConnectNode(data.id)) dispatch(addMainNode(data));
       dispatch(addConnectNode(data, node));
     } else {
       if (connectNodes.length === 1) {
         showConnectMenu(false);
         dispatch(removeMainNode(data));
-        data.width = Size.Node_Width;
-        data.length = Size.Node_Length;
       }
       dispatch(removeConnectNode(data, node));
     }
@@ -105,13 +100,6 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     return result;
   };
 
-  let height = 82;
-  const mainNode = FindNodeByDataId(mainConnectNode?.id);
-  if (mainNode) {
-    height = parseInt(getComputedStyle(mainNode, "").height);
-    console.log(height);
-  }
-
   useEffect(() => {
     ResizeMainConnectNode(connectNodes?.length, mainConnectNode?.id, data.id);
     SetMainConnectNodeColor(mainConnectNode?.id, data.id, connectNodes);
@@ -124,6 +112,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
       allEdges.style.zIndex = "3";
     }
   }, [mainConnectNode]);
+
   return (
     <>
       <NodeBox
@@ -134,8 +123,6 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
         onMouseOut={() =>
           OnMouseOut(showTerminalButton, showConnectButton, data.id)
         }
-        width={data.width}
-        length={data.length}
       >
         <p className="node-name">{data.label ?? data.name}</p>
 
@@ -154,7 +141,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
 
         <ConnectViewComponent
           node={data}
-          height={height}
+          height={data.length}
           isMenuOpen={connectMenu}
           children={connectChildren}
           handleClick={onConnectNodeClick}

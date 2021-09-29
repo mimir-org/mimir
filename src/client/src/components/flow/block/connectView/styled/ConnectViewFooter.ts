@@ -1,10 +1,12 @@
 import styled from "styled-components";
-import { Color, Size } from "../../../../../compLibrary";
+import { Color } from "../../../../../compLibrary";
 
 const ConnectViewFooter = styled.div`
   display: flex;
-  position: relative;
-  min-width: ${Size.Node_Width}px;
+  position: absolute;
+  top: 297px;
+  left: -1px;
+  width: 100%;
   height: 25px;
   border: 2px solid ${Color.FunctionTab};
   border-top: 1px solid ${Color.FunctionTab};
@@ -13,7 +15,8 @@ const ConnectViewFooter = styled.div`
   z-index: 2;
 
   .select {
-    margin: 6px 10px 0px 6px;
+    margin-top: 6px;
+    padding: 0px 9px;
     width: 100%;
 
     &:hover {

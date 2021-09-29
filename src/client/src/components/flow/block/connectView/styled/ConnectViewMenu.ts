@@ -13,10 +13,12 @@ const ConnectViewMenu = styled.div`
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
-  margin-top: ${(props) => props.height - 45}px;
-  left: -2px;
-  min-width: ${Size.Node_Width}px;
+  top: ${(props) => props.height - 85}px;
+  left: -1px;
+  /* min-width: ${Size.Node_Width - 10}px; */
+  width: 100%;
   z-index: 1;
+  position: absolute;
 
   .button {
     position: absolute;
