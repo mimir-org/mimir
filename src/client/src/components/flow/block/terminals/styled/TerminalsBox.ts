@@ -9,16 +9,10 @@ const TerminalsBox = styled.div`
       ? "-722px"
       : !props.isSplitView && !props.isParent
       ? "-1px"
-      : "50px"};
+      : "5px"};
   top: 6px;
   cursor: pointer;
   z-index: 1;
-
-  .arrow {
-    position: relative;
-    left: 48px;
-    padding-left: 5px;
-  }
 `;
 
 export default TerminalsBox;

@@ -2,7 +2,6 @@ import { Connector, Node } from "../../../../models";
 import { GetMenuIcon } from "./helpers";
 import { OnTerminalMenuClick } from "./handlers";
 import { TerminalsMenu, TerminalsElement, TerminalsBox } from "./styled";
-import { ArrowDown, ArrowUp } from "../../../../assets/icons/blockView";
 import {
   GetConnectorIcon,
   GetConnectorName,
@@ -47,12 +46,6 @@ const TerminalsComponent = ({
       isSplitView={isSplitView}
       isParent={isParent}
     >
-      {isParent && (
-        <>
-          <img src={ArrowUp} alt="up" className="arrow" />
-          <img src={ArrowDown} alt="down" className="arrow" />
-        </>
-      )}
       <img
         src={GetMenuIcon(node, isParent)}
         alt="menu"

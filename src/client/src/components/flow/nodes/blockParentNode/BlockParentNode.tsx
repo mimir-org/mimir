@@ -9,6 +9,7 @@ import { HandleComponent, TerminalsComponent } from "../../block/terminals";
 import { IsLocation } from "../../helpers/common";
 import { Size } from "../../../../compLibrary";
 import { BlockMessageBox } from "../../../../compLibrary/blockView";
+import { OnParentClick, OnChildClick } from "./handlers";
 import {
   changeActiveConnector,
   removeEdge,
@@ -81,6 +82,8 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         isLocation={IsLocation(node)}
         isSplitView={isSplitView}
         isSelected={node?.isBlockSelected}
+        onParentClick={() => OnParentClick(dispatch, node, nodes, edges)}
+        onChildClick={() => OnChildClick(dispatch, node, nodes, edges)}
       />
       <TerminalsComponent
         node={node}

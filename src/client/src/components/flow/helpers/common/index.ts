@@ -2,6 +2,8 @@ export { default as GetFlowAspectIcon } from "./GetFlowAspectIcon";
 export { default as GetFlowRectData } from "./GetFlowRectData";
 export { default as CreateId } from "./CreateId";
 
+export { default as GetParent } from "./GetParent";
+export { default as GetChild } from "./GetChild";
 export { default as IsChildOf } from "./IsChildOf";
 export { default as IsParentOf } from "./IsParentOf";
 export { default as IsAspectNode } from "./IsAspectNode";
@@ -25,13 +27,16 @@ export { default as GetConnectorIcon } from "./GetConnectorIcon";
 export { default as GetHandlePosition } from "./GetHandlePosition";
 export { default as GetConnectorName } from "./GetConnectorName";
 export { default as GetBlockNodeTypes } from "../block/GetBlockNodeTypes";
-export {
-  GetOtherNodeFromEdgeViaConnector,
-  GetOtherNodeFromEdgeViaNode,
-} from "./GetOtherNodeFromEdge";
+
 export { default as SetDarkModeColor } from "./SetDarkModeColor";
 export { default as GetNodeType } from "./GetNodeType";
 export { default as GetHandleType } from "./GetHandleType";
 export { default as GetSelectedNode } from "./GetSelectedNode";
 export { default as SetTerminalYPos } from "./SetTerminalYPos";
+
+export {
+  GetOtherNodeFromEdgeViaConnector,
+  GetOtherNodeFromEdgeViaNode,
+} from "./GetOtherNodeFromEdge";
+
 export * from "./types";

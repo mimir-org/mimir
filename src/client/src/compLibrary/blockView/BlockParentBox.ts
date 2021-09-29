@@ -30,10 +30,21 @@ const BlockParentBox = styled.div`
 
   .header {
     position: absolute;
-    top: -7px;
-    padding: 0px 0px 0px 20px;
+    top: -8px;
+    left: 250px;
     font-size: ${FontSize.Standard};
     width: fit-content;
+  }
+
+  .arrow {
+    position: relative;
+    left: 205px;
+    top: 4px;
+    padding-left: 5px;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 `;
 
