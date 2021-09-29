@@ -1,71 +1,110 @@
-import { RemoveEntryIfEmpty } from "../helpers";
 import {
-  ADD_ENTITY_PARAMETER,
-  REMOVE_ENTITY_PARAMETERS,
-  REMOVE_ENTITY_PARAMETER,
+  ADD_ATTRIBUTE_FILTER,
+  REMOVE_ALL_ATTRIBUTE_FILTERS,
+  REMOVE_ATTRIBUTE_FILTER,
   ParametersActionTypes,
-  AttributeDict,
+  ADD_COMBINED_ATTRIBUTE,
+  REMOVE_COMBINED_ATTRIBUTE,
+  ReducerState,
 } from "./types";
 
-const initialState: { attributes: AttributeDict } = {
-  attributes: {},
+const initialState: ReducerState = {
+  selectedAttributeFilters: {},
 };
 
-export const parametersReducer = (
+export function parametersReducer(
   state = initialState,
   action: ParametersActionTypes
-) => {
+): ReducerState {
   switch (action.type) {
-    case ADD_ENTITY_PARAMETER: {
-      const { nodeId, parameter } = action.payload;
+    case ADD_ATTRIBUTE_FILTER: {
+      const { nodeId, filterName } = action.payload;
 
-      let attributes = {
-        ...state.attributes,
-        [nodeId]: [...(state.attributes[nodeId] ?? []), parameter],
+      const selectedAttributeFilters = {
+        ...state.selectedAttributeFilters,
+        [nodeId]: {
+          ...state.selectedAttributeFilters[nodeId],
+          [filterName]: [],
+        },
       };
 
       return {
         ...state,
-        attributes,
+        selectedAttributeFilters,
       };
     }
 
-    case REMOVE_ENTITY_PARAMETER: {
-      const { nodeId, parameter } = action.payload;
+    case REMOVE_ATTRIBUTE_FILTER: {
+      const { nodeId, filterName } = action.payload;
 
-      let attributes = {
-        ...state.attributes,
-        [nodeId]: [
-          ...state.attributes[nodeId].filter((x) => x.id !== parameter.id),
-        ],
+      const { [filterName]: removed, ...filters } =
+        state.selectedAttributeFilters[nodeId];
+
+      const selectedAttributeFilters = {
+        ...state.selectedAttributeFilters,
+        [nodeId]: filters,
       };
-
-      attributes = RemoveEntryIfEmpty(nodeId, attributes);
 
       return {
         ...state,
-        attributes,
+        selectedAttributeFilters,
       };
     }
 
-    case REMOVE_ENTITY_PARAMETERS: {
+    case REMOVE_ALL_ATTRIBUTE_FILTERS: {
       const { nodeId } = action.payload;
 
-      const { [nodeId]: removed, ...remainder } = state.attributes;
+      const { [nodeId]: removed, ...selectedAttributeFilters } =
+        state.selectedAttributeFilters;
 
-      let attributes = {
-        ...remainder,
+      return {
+        ...state,
+        selectedAttributeFilters,
+      };
+    }
+
+    case ADD_COMBINED_ATTRIBUTE: {
+      const { nodeId, filterName, combination } = action.payload;
+
+      const selectedAttributeFilters = {
+        ...state.selectedAttributeFilters,
+        [nodeId]: {
+          ...state.selectedAttributeFilters[nodeId],
+          [filterName]: [
+            ...state.selectedAttributeFilters[nodeId][filterName],
+            combination,
+          ],
+        },
       };
 
       return {
         ...state,
-        attributes,
+        selectedAttributeFilters,
+      };
+    }
+
+    case REMOVE_COMBINED_ATTRIBUTE: {
+      const { nodeId, filterName, combination } = action.payload;
+
+      const combinations = state.selectedAttributeFilters[nodeId][
+        filterName
+      ].filter((c) => c.combined !== combination.combined);
+
+      const selectedAttributeFilters = {
+        ...state.selectedAttributeFilters,
+        [nodeId]: {
+          ...state.selectedAttributeFilters[nodeId],
+          [filterName]: combinations,
+        },
+      };
+
+      return {
+        ...state,
+        selectedAttributeFilters,
       };
     }
 
     default:
       return state;
   }
-};
-
-export default parametersReducer;
+}

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   MenuWrapper,
   MenuHeader,
@@ -10,71 +10,58 @@ import {
   ExpandIcon,
   CollapseIcon,
 } from "../../../../../../../assets/icons/common";
+import { TextResources } from "../../../../../../../assets/text";
+import { CombinedAttributeFilter } from "../../../../../../../models";
+import { FilterDict } from "../../../redux/types";
 
 interface Props {
-  items: any[];
-  keyProp: string;
-  valueProp: string;
-  onChange: Function;
-  defaultValue?: string;
+  items: CombinedAttributeFilter[];
+  selectedItems: FilterDict;
+  onChange: (filter: CombinedAttributeFilter, selected: boolean) => void;
 }
 
 const Dropdown = ({
   items,
-  keyProp,
-  valueProp,
+  selectedItems,
+
   onChange,
-  defaultValue,
 }: Props) => {
   const [isListOpen, setIsListOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
 
-  useEffect(() => {
-    if (!items) {
-      setSelectedItem(null);
-      return;
-    }
-    if (defaultValue) {
-      setSelectedItem(items.find((x) => x[keyProp] === defaultValue));
-      return;
-    }
-    setSelectedItem(items[0]);
-  }, [defaultValue, items, keyProp]);
-
-  const handleChange = (_e: any, value: any) => {
-    setSelectedItem(value);
-    // setIsListOpen(!isListOpen);
-    onChange(value);
+  const IsAttributeSelected = (filter: CombinedAttributeFilter): boolean => {
+    return !!selectedItems[filter.name];
   };
-
   return (
     <>
       <MenuWrapper>
         <div onClick={(e) => setIsListOpen(!isListOpen)}>
           <MenuHeader>
-            {selectedItem && (
-              <>
-                <p>{selectedItem.name ?? selectedItem.key}</p>
-                <img
-                  src={isListOpen ? ExpandIcon : CollapseIcon}
-                  alt="expand-icon"
-                />
-              </>
-            )}
+            <>
+              <p className="searchText">
+                {TextResources.Inspector_Params_Search}
+              </p>
+              <img
+                src={isListOpen ? ExpandIcon : CollapseIcon}
+                alt="expand-icon"
+              />
+            </>
           </MenuHeader>
         </div>
         {isListOpen && (
           <MenuList>
             {items?.map((item) => {
               return (
-                <div onClick={(e) => handleChange(e, item)} key={item[keyProp]}>
+                <div
+                  onClick={() => onChange(item, IsAttributeSelected(item))}
+                  key={item.name}
+                >
                   <MenuListItem>
-                    <p>{item.name ?? item.key}</p>
+                    <p>{item.name}</p>
                     <CheckboxWrapper>
                       <label className={"checkbox-block"}>
                         <input
                           type="checkbox"
-                          checked={true}
+                          checked={IsAttributeSelected(item)}
                           onChange={() => null}
                         />
                         <span className="checkmark-block"></span>

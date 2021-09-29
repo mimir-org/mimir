@@ -11,23 +11,31 @@ import {
   ExpandWhiteIcon,
   CollapseWhiteIcon,
 } from "../../../../../../../assets/icons/common";
+import { CombinedAttribute } from "../../../../../../../models";
 
 interface Props {
-  items: any[];
+  items: CombinedAttribute[];
+  selectedItems: CombinedAttribute[];
   keyProp: string;
-  onChange: Function;
+  onChange: (combination: CombinedAttribute, selected: boolean) => void;
   color: string;
 }
 
-const EntityDropdown = ({ items, keyProp, onChange, color }: Props) => {
+const EntityDropdown = ({
+  items,
+  selectedItems,
+  keyProp,
+  onChange,
+  color,
+}: Props) => {
   const [isListOpen, setIsListOpen] = useState(false);
 
-  const handleChange = (_e: any, value: any) => {
-    onChange(value);
+  const IsItemSelected = (item: CombinedAttribute): boolean => {
+    return !!selectedItems.find((other) => item.combined === other.combined);
   };
 
   return (
-    <MenuWrapper>
+    <MenuWrapper tabIndex={0} onBlur={() => setIsListOpen(false)}>
       <div onClick={(e) => setIsListOpen(!isListOpen)}>
         <MenuHeader open={isListOpen}>
           <p>{TextResources.Inspector_Params_Combinations}</p>
@@ -41,15 +49,18 @@ const EntityDropdown = ({ items, keyProp, onChange, color }: Props) => {
         <MenuList>
           {items?.map((item) => {
             return (
-              <div onClick={(e) => handleChange(e, item)} key={item[keyProp]}>
+              <div
+                onClick={() => onChange(item, IsItemSelected(item))}
+                key={item[keyProp]}
+              >
                 <MenuListItem color={color}>
-                  <p>{item.name ?? item.key}</p>
+                  <p>{item.combined}</p>
                   <CheckboxWrapper>
                     <label className={"checkbox-block"}>
                       <input
                         type="checkbox"
-                        checked={true}
-                        onChange={() => null}
+                        checked={IsItemSelected(item)}
+                        readOnly={true}
                       />
                       <span className="checkmark-block"></span>
                     </label>

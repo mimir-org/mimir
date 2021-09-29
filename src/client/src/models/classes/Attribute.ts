@@ -4,6 +4,8 @@ class Attribute {
   id: string;
   key: string;
   value: string;
+  isLocked: boolean;
+  isLockedBy: string;
   selectedUnitId: string;
   unit: EnumBase;
   qualifierId: string;

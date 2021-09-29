@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { FontSize } from "../..";
 import { ExpandIcon, CollapseIcon } from "../../../assets/icons/common";
 import { Symbol } from "../../symbol";
 import {
@@ -17,6 +18,9 @@ interface Props {
   defaultValue?: string;
   valueImageProp?: string;
   disabled?: boolean;
+  borderRadius?: number;
+  fontSize?: string;
+  height?: number;
 }
 
 const Dropdown = ({
@@ -28,6 +32,9 @@ const Dropdown = ({
   defaultValue,
   valueImageProp,
   disabled,
+  borderRadius = 5,
+  fontSize = FontSize.Standard,
+  height = 28,
 }: Props) => {
   const [isListOpen, setIsListOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -55,7 +62,11 @@ const Dropdown = ({
       <DropdownMenuWrapper disabled={disabled}>
         <label htmlFor={label} />
         <div onClick={disabled ? null : (e) => setIsListOpen(!isListOpen)}>
-          <DropdownMenuHeader>
+          <DropdownMenuHeader
+            borderRadius={borderRadius}
+            fontSize={fontSize}
+            height={height}
+          >
             {selectedItem && (
               <>
                 {valueImageProp && (
@@ -74,11 +85,11 @@ const Dropdown = ({
           </DropdownMenuHeader>
         </div>
         {isListOpen && (
-          <DropdownMenuList>
+          <DropdownMenuList borderRadius={borderRadius} fontSize={fontSize}>
             {items?.map((item) => {
               return (
                 <div onClick={(e) => handleChange(e, item)} key={item[keyProp]}>
-                  <DropdownMenuListItem>
+                  <DropdownMenuListItem fontSize={fontSize} height={height}>
                     {valueImageProp && (
                       <Symbol
                         base64={item[valueImageProp]}
