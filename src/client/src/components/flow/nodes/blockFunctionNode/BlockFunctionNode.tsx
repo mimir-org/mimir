@@ -9,6 +9,8 @@ import { IsLocation } from "../../helpers/common";
 import { NodeBox } from "../../../../compLibrary/blockView";
 import { TerminalsComponent, HandleComponent } from "../../block/terminals";
 import { ConnectViewComponent } from "../../block/connectView";
+import { Symbol } from "../../../../compLibrary/symbol";
+
 import {
   changeActiveConnector,
   removeEdge,
@@ -30,6 +32,7 @@ import {
   removeConnectNode,
   removeMainNode,
 } from "../../../../redux/store/connectView/actions";
+import BlockNodeNameBox from "../../../../compLibrary/blockView/BlockNodeNameBox";
 
 /**
  * Component for a Function Node in BlockView.
@@ -131,7 +134,8 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
         width={data.width}
         length={data.length}
       >
-        <p className="node-name">{data.label ?? data.name}</p>
+        <BlockNodeNameBox>{data.label ?? data.name}</BlockNodeNameBox>
+        <Symbol base64={data.symbol} text={data.name} />
 
         <TerminalsComponent
           node={data}

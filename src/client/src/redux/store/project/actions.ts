@@ -278,7 +278,7 @@ export function importProjectAction(project: ProjectAm) {
   };
 }
 
-export function lockUnlockNode(
+export function setIsLockedNode(
   node: Node,
   project: Project,
   isLocked: boolean
@@ -293,7 +293,7 @@ export function lockUnlockNode(
   };
 }
 
-export function lockUnlockAttribute(
+export function setIsLockedAttribute(
   attribute: Attribute,
   nodeId: string,
   isLocked: boolean

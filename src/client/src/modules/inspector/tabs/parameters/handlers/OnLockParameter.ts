@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { Attribute, Node } from "../../../../../models";
-import { lockUnlockAttribute } from "../../../../../redux/store/project/actions";
+import { setIsLockedAttribute } from "../../../../../redux/store/project/actions";
 
 const OnLockParameter = (
   node: Node,
@@ -9,7 +9,7 @@ const OnLockParameter = (
   dispatch: Dispatch<any>
 ) => {
   if (!node.isLocked)
-    dispatch(lockUnlockAttribute(attribute, node.id, isLocked));
+    dispatch(setIsLockedAttribute(attribute, node.id, isLocked));
 };
 
 export default OnLockParameter;
