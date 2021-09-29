@@ -115,11 +115,13 @@ const TextResources = {
   Inspector_Delete_Node: "Delete",
   Inspector_Filter: "Filter",
   Inspector_Lock: "Lock",
+  Inspector_Open: "Open",
   Inspector_Validate: "Validate",
 
   Inspector_Params_Clear_All: "Clear all Entities",
   Inspector_Params_Default: "Show Default Entities",
   Inspector_Params_Combinations: "Select combinations",
+  Inspector_Params_Search: "Search or Select Entity...",
 
   // LibraryModule
   Library_SearchBox_Placeholder: "Search the Library",
