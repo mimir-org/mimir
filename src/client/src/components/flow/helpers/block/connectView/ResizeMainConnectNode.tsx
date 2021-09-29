@@ -1,16 +1,17 @@
 import { FindNodeByDataId } from "../";
 import { Size } from "../../../../../compLibrary";
+import { Node } from "../../../../../models";
 
 /**
  * Function to resize the ConnectView node based on number of children
  * @param nodeCount
  * @param mainNodeId
- * @param nodeId
+ * @param data
  */
 const ResizeMainConnectNode = (
   nodeCount: number,
   mainNodeId: string,
-  nodeId: string
+  data: Node
 ) => {
   const mainNode = FindNodeByDataId(mainNodeId);
   const percent = 16;
@@ -34,7 +35,7 @@ const ResizeMainConnectNode = (
 
     if (nodeCount >= 5) mainNode.style.maxHeight = `${resize - 50}px`;
   } else {
-    const node = FindNodeByDataId(nodeId);
+    const node = FindNodeByDataId(data.id);
     if (node) {
       node.style.width = `${Size.Node_Width}px`;
       node.style.height = `${Size.Node_Length}px`;

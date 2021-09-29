@@ -14,14 +14,14 @@ const CalculateYPosition = (node: Node, yPos: number, connectNodes: Node[]) => {
   let increaseYPos = 1;
   yPos += marginTop;
   let test = 4;
-  let reidar = 1;
+  let increment = 1;
 
   connectNodes?.forEach((elem, i) => {
     if (i > 1 && node.id === elem.id) {
-      // DETTE SKAL BLI EN ALGO
-      if (i > 3 && i < 6) increaseYPos += test * reidar;
-      if (i >= 6 && i < 8) increaseYPos += test * (reidar * 2);
-      if (i >= 8 && i < 10) increaseYPos += test * (reidar * 3);
+      // TODO: make algo
+      if (i > 3 && i < 6) increaseYPos += test * increment;
+      if (i >= 6 && i < 8) increaseYPos += test * (increment * 2);
+      if (i >= 8 && i < 10) increaseYPos += test * (increment * 3);
       return (yPos += Size.Node_Length + yMargin * increaseYPos);
     }
   });

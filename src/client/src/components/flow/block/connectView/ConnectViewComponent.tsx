@@ -6,7 +6,6 @@ import { ConnectViewBox, Menu, Element } from "./styled";
 
 interface Props {
   node: Node;
-  height: number;
   isMenuOpen: boolean;
   children: Node[];
   handleClick: any;
@@ -24,7 +23,6 @@ interface Props {
  */
 const ConnectViewComponent = ({
   node,
-  height,
   isMenuOpen,
   children,
   handleClick,
@@ -44,7 +42,7 @@ const ConnectViewComponent = ({
 
     {isMenuOpen && (
       <>
-        <Menu height={height}>
+        <Menu>
           {children.map((n: Node) => {
             return (
               <Element key={n.id}>

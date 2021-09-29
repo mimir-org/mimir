@@ -101,7 +101,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   };
 
   useEffect(() => {
-    ResizeMainConnectNode(connectNodes?.length, mainConnectNode?.id, data.id);
+    ResizeMainConnectNode(connectNodes?.length, mainConnectNode?.id, data);
     SetMainConnectNodeColor(mainConnectNode?.id, data.id, connectNodes);
   }, [mainConnectNode, data, connectNodes]);
 
@@ -141,7 +141,6 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
 
         <ConnectViewComponent
           node={data}
-          height={data.length}
           isMenuOpen={connectMenu}
           children={connectChildren}
           handleClick={onConnectNodeClick}
