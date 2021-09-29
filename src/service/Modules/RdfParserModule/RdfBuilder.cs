@@ -4,6 +4,7 @@ using System.Text;
 using Mb.Models.Data;
 using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
+using RdfParserModule.Properties;
 using VDS.RDF;
 using VDS.RDF.Ontology;
 using VDS.RDF.Writing;
@@ -131,7 +132,7 @@ namespace RdfParserModule
 
                 Graph.Assert(new Triple(nodeId, label, Graph.CreateLiteralNode(node.Rds + " " +node.Label)));
 
-                var hasTerminal = Graph.CreateUriNode("imf:hasTerminal");
+                
 
                 foreach (Connector connector in node.Connectors)
                 {
@@ -139,8 +140,9 @@ namespace RdfParserModule
                     {
                         case Terminal terminal:
                             //TODO Check if this can actually be called 'transmitter'
-                            var transmitter = Graph.CreateUriNode("imf:" + terminal.Name + "Transmitter");
-                            
+                            var transmitter = Graph.CreateUriNode("mimir:" + terminal.Name + "Transmitter");
+
+                            var hasTerminal = Graph.CreateUriNode("imf:has" + terminal.Type + "Terminal");
 
                             var terminalKey = Graph.CreateUriNode("imf:" + terminal.Type + "Terminal");
                             var nodeTerminal = Graph.CreateUriNode("mimir:" + terminal.Id + "_node");
@@ -151,7 +153,7 @@ namespace RdfParserModule
                             Graph.Assert(new Triple(nodeTerminal, label, terminalLabel));
 
                             Graph.Assert(new Triple(nodeTerminal, type, transmitter));
-
+                            Graph.Assert(new Triple(nodeTerminal, type, Graph.CreateUriNode(Resources.FSBTerminal)));
                             break;
                     }
                 }
@@ -232,8 +234,9 @@ namespace RdfParserModule
         {
             var edges = Project.Edges;
             var type = Graph.CreateUriNode("rdf:type");
-            var hasParent = Graph.CreateUriNode("imf:hasParent");
+            var hasParent = Graph.CreateUriNode(Resources.hasParent);
             var label = Graph.CreateUriNode("rdfs:label");
+            var connectedTo = Graph.CreateUriNode(Resources.connectedTo);
 
             foreach (Edge edge in edges)
             {
@@ -279,6 +282,29 @@ namespace RdfParserModule
                 {
                     var transportNode = Graph.CreateUriNode("mimir:" + edge.TransportId);
                     Graph.Assert(new Triple(transportNode, type, Graph.CreateUriNode("imf:Transport")));
+
+
+
+                    //Temporary logic to create terminals for Transports
+                    var transportIn = Graph.CreateUriNode("mimir:" + edge.TransportId + "_transportIn");
+                    var transportOut = Graph.CreateUriNode("mimir:" + edge.TransportId + "_transportOut");
+                    var streamTerminal = Graph.CreateUriNode("imf:StreamTerminal");
+                    
+                    Graph.Assert(new Triple(transportIn, type, streamTerminal));
+                    Graph.Assert(new Triple(transportOut, type, streamTerminal));
+                    Graph.Assert(new Triple(transportIn, type,
+                        Graph.CreateUriNode("imf:InputTerminal")));
+                    Graph.Assert(new Triple(transportOut, type,
+                        Graph.CreateUriNode("imf:OutputTerminal")));
+
+                    Graph.Assert(new Triple(transportNode, Graph.CreateUriNode("imf:hasInputTerminal"), transportIn));
+                    Graph.Assert(new Triple(transportNode, Graph.CreateUriNode("imf:hasOutputTerminal"), transportOut));
+
+                    Graph.Assert(new Triple(transportIn, connectedTo,
+                        Graph.CreateUriNode("mimir:" + edge.FromConnectorId + "_node")));
+                    Graph.Assert(new Triple(transportOut, connectedTo,
+                        Graph.CreateUriNode("mimir:" + edge.ToConnectorId + "_node")));
+
 
                     switch (edge.FromNode.Aspect)
                     {
