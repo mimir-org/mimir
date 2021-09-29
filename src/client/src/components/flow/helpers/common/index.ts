@@ -25,7 +25,6 @@ export { default as IsLibrary } from "./IsLibrary";
 export { default as GetCenter } from "./GetCenter";
 export { default as GetConnectorIcon } from "./GetConnectorIcon";
 export { default as GetHandlePosition } from "./GetHandlePosition";
-export { default as GetConnectorName } from "./GetConnectorName";
 export { default as GetBlockNodeTypes } from "../block/GetBlockNodeTypes";
 
 export { default as SetDarkModeColor } from "./SetDarkModeColor";

@@ -24,7 +24,6 @@ const TerminalsElement = styled.div`
   }
 
   &:hover {
-    text-decoration: underline;
     background-color: ${Color.LightBlue};
     cursor: pointer;
 

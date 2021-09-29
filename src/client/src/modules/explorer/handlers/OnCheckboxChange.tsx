@@ -10,6 +10,7 @@ import {
 } from "../../../redux/store/project/actions";
 
 const OnCheckboxChange = (dispatch: any, splitView: boolean, node: Node) => {
+  console.log("her");
   if (IsConnectView()) {
     dispatch(removeMainNodes());
   }

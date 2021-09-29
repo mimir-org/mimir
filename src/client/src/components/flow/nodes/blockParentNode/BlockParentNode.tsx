@@ -92,7 +92,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         isLocation={IsLocation(node)}
         terminals={FilterTerminals(node, isSplitView)}
         width={isSplitView ? Size.SplitView_Width : Size.BlockView_Width}
-        onClick={onConnectorClick}
+        onClick={() => onConnectorClick}
         menuButton={true}
         showTerminalMenu={showTerminalMenu}
         terminalMenu={terminalMenu}

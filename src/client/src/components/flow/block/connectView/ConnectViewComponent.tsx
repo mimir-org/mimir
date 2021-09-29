@@ -41,39 +41,37 @@ const ConnectViewComponent = ({
     </ConnectViewBox>
 
     {isMenuOpen && (
-      <>
-        <Menu>
-          {children.map((n: Node) => {
-            return (
-              <Element key={n.id}>
-                <p className="text">{n.label ?? n.name}</p>
-                <label className={"checkbox-block"}>
-                  <input
-                    type="checkbox"
-                    checked={isChecked(n)}
-                    onChange={() => handleClick(n)}
-                  />
-                  <span className="checkmark-block"></span>
-                </label>
-              </Element>
-            );
-          })}
-          <Element>
-            <div
-              className="select"
-              onClick={() => Click.OnSelectAll(dispatch, node, children)}
-            >
-              {TextResources.ConnectMenu_Select_All}
-            </div>
-            <div
-              className="select"
-              onClick={() => Click.OnClearAll(dispatch, node)}
-            >
-              {TextResources.ConnectMenu_Clear_All}
-            </div>
-          </Element>
-        </Menu>
-      </>
+      <Menu>
+        {children.map((n: Node) => {
+          return (
+            <Element key={n.id}>
+              <p className="text">{n.label ?? n.name}</p>
+              <label className={"checkbox-block"}>
+                <input
+                  type="checkbox"
+                  checked={isChecked(n)}
+                  onChange={() => handleClick(n)}
+                />
+                <span className="checkmark-block"></span>
+              </label>
+            </Element>
+          );
+        })}
+        <Element>
+          <div
+            className="select"
+            onClick={() => Click.OnSelectAll(dispatch, node, children)}
+          >
+            {TextResources.ConnectMenu_Select_All}
+          </div>
+          <div
+            className="select"
+            onClick={() => Click.OnClearAll(dispatch, node)}
+          >
+            {TextResources.ConnectMenu_Clear_All}
+          </div>
+        </Element>
+      </Menu>
     )}
   </>
 );

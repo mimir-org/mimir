@@ -4,12 +4,7 @@ import styled from "styled-components";
 const TerminalsBox = styled.div`
   visibility: ${(props) => !props.visible && "hidden"};
   position: absolute;
-  right: ${(props) =>
-    props.isSplitView
-      ? "-722px"
-      : !props.isSplitView && !props.isParent
-      ? "-1px"
-      : "5px"};
+  right: ${(props) => props.position}px;
   top: 6px;
   cursor: pointer;
   z-index: 1;

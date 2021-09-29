@@ -10,8 +10,8 @@ const ConnectViewMenu = styled.div`
   width: max-content;
   position: absolute;
   min-width: 200px;
-  top: -1px;
-  left: -215px;
+  top: 4px;
+  left: -211px;
   z-index: 1;
 
   .button {
