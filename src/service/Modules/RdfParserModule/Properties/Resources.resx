@@ -1,0 +1,258 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="allowedUnit" xml:space="preserve">
+    <value>imf:allowedUnit</value>
+  </data>
+  <data name="Aspect" xml:space="preserve">
+    <value>imf:Aspect</value>
+  </data>
+  <data name="AspectObject" xml:space="preserve">
+    <value>imf:AspectObject</value>
+  </data>
+  <data name="Attribute" xml:space="preserve">
+    <value>imf:Attribute</value>
+  </data>
+  <data name="BiTerminal" xml:space="preserve">
+    <value>imf:BiTerminal</value>
+  </data>
+  <data name="connectedTo" xml:space="preserve">
+    <value>imf:connectedTo</value>
+  </data>
+  <data name="context" xml:space="preserve">
+    <value>imf:context</value>
+  </data>
+  <data name="FSB" xml:space="preserve">
+    <value>imf:FunctionalSystemBlock</value>
+  </data>
+  <data name="FSBTerminal" xml:space="preserve">
+    <value>imf:FunctionalSystemBlockTerminal</value>
+  </data>
+  <data name="fulfilledBy" xml:space="preserve">
+    <value>imf:fulfilledBy</value>
+  </data>
+  <data name="Function" xml:space="preserve">
+    <value>imf:Function</value>
+  </data>
+  <data name="FunctionAspectObject" xml:space="preserve">
+    <value>imf:FunctionAspectObject</value>
+  </data>
+  <data name="hasActivity" xml:space="preserve">
+    <value>imf:hasActivity</value>
+  </data>
+  <data name="hasAspect" xml:space="preserve">
+    <value>imf:hasAspect</value>
+  </data>
+  <data name="hasAttribute" xml:space="preserve">
+    <value>imf:hasAttribute</value>
+  </data>
+  <data name="hasChild" xml:space="preserve">
+    <value>imf:hasChild</value>
+  </data>
+  <data name="hasInputTerminal" xml:space="preserve">
+    <value>imf:hasInputTerminal</value>
+  </data>
+  <data name="hasLocation" xml:space="preserve">
+    <value>imf:hasLocation</value>
+  </data>
+  <data name="hasOutputTerminal" xml:space="preserve">
+    <value>imf:hasOutputTerminal</value>
+  </data>
+  <data name="hasParent" xml:space="preserve">
+    <value>imf:hasParent</value>
+  </data>
+  <data name="hasTerminal" xml:space="preserve">
+    <value>imf:hasTerminal</value>
+  </data>
+  <data name="hasValue" xml:space="preserve">
+    <value>imf:hasValue</value>
+  </data>
+  <data name="InputTerminal" xml:space="preserve">
+    <value>imf:InTerminal</value>
+  </data>
+  <data name="Installed" xml:space="preserve">
+    <value>imf:Installed</value>
+  </data>
+  <data name="installedAs" xml:space="preserve">
+    <value>imf:installedAs</value>
+  </data>
+  <data name="InstalledAspectObject" xml:space="preserve">
+    <value>imf:InstalledAspectObject</value>
+  </data>
+  <data name="IntegratedObject" xml:space="preserve">
+    <value>imf:IntegratedObject</value>
+  </data>
+  <data name="Interface" xml:space="preserve">
+    <value>imf:Interface</value>
+  </data>
+  <data name="isAspectOf" xml:space="preserve">
+    <value>imf:isAspectOf</value>
+  </data>
+  <data name="label" xml:space="preserve">
+    <value>rdfs:label</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>imf:Location</value>
+  </data>
+  <data name="LocationAspectObject" xml:space="preserve">
+    <value>imf:LocationAspectObject</value>
+  </data>
+  <data name="OutputTerminal" xml:space="preserve">
+    <value>imf:OutTerminal</value>
+  </data>
+  <data name="PrimaryAspect" xml:space="preserve">
+    <value>imf:PrimaryAspect</value>
+  </data>
+  <data name="Product" xml:space="preserve">
+    <value>imf:Product</value>
+  </data>
+  <data name="ProductAspectObject" xml:space="preserve">
+    <value>imf:ProductAspectObject</value>
+  </data>
+  <data name="project" xml:space="preserve">
+    <value>mimir:Project</value>
+  </data>
+  <data name="RDSCodeIndex" xml:space="preserve">
+    <value>imf:RDSCodeIndex</value>
+  </data>
+  <data name="RDSCodePrefix" xml:space="preserve">
+    <value>imf:RDSCodePrefix</value>
+  </data>
+  <data name="SecondaryAspect" xml:space="preserve">
+    <value>imf:SecondaryAspect</value>
+  </data>
+  <data name="selectedUnit" xml:space="preserve">
+    <value>imf:selectedUnit</value>
+  </data>
+  <data name="StreamTerminal" xml:space="preserve">
+    <value>imf:StreamTerminal</value>
+  </data>
+  <data name="subClassOf" xml:space="preserve">
+    <value>rdfs:subClassOf</value>
+  </data>
+  <data name="Terminal" xml:space="preserve">
+    <value>imf:Terminal</value>
+  </data>
+  <data name="Transport" xml:space="preserve">
+    <value>imf:Transport</value>
+  </data>
+  <data name="type" xml:space="preserve">
+    <value>rdf:type</value>
+  </data>
+</root>
