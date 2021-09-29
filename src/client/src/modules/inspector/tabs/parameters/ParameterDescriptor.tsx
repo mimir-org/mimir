@@ -4,11 +4,7 @@ interface Props {
   condition: string;
 }
 
-export default function ParameterDescriptor({
-  qualifier,
-  source,
-  condition,
-}: Props) {
+export function ParameterDescriptor({ qualifier, source, condition }: Props) {
   return (
     <div className="descriptors">
       <div className="descriptors-top">

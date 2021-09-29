@@ -1,5 +1,5 @@
 import { Project, Node } from "../../../models";
-import { lockUnlockNode } from "../../../redux/store/project/actions";
+import { setIsLockedNode } from "../../../redux/store/project/actions";
 
 const OnLockClick = (
   node: Node,
@@ -7,7 +7,7 @@ const OnLockClick = (
   isLocked: boolean,
   dispatch: any
 ) => {
-  dispatch(lockUnlockNode(node, project, isLocked));
+  dispatch(setIsLockedNode(node, project, isLocked));
 };
 
 export default OnLockClick;

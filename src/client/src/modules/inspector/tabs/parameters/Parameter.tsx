@@ -1,3 +1,11 @@
+import { FontSize } from "../../../../compLibrary";
+import { GetParametersColor } from "./helpers";
+import { ParameterDescriptor } from "./ParameterDescriptor";
+import { ParameterBox, ParameterHeader } from "./styled/parameter";
+import { Dropdown as CompDropdown } from "../../../../compLibrary/dropdown/mimir";
+import { Attribute, CombinedAttribute } from "../../../../models";
+import { useState } from "react";
+import { Entity } from "./styled";
 import {
   WarningIcon,
   HelpIcon,
@@ -5,14 +13,6 @@ import {
   CloseIcon,
   LockClosedIcon,
 } from "../../../../assets/icons/common";
-import { FontSize } from "../../../../compLibrary";
-import { GetParametersColor } from "./helpers";
-import ParameterDescriptor from "./ParameterDescriptor";
-import { ParameterBox, ParameterHeader } from "./styled/parameter";
-import { Dropdown as CompDropdown } from "../../../../compLibrary/dropdown/mimir";
-import { Attribute, CombinedAttribute } from "../../../../models";
-import { useState } from "react";
-import { Entity } from "./styled";
 
 interface Props {
   attribute: Attribute;

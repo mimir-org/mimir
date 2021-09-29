@@ -2,16 +2,16 @@ import { Dispatch } from "redux";
 import { CloseParameterIcon } from "../../../../assets/icons/common";
 import { Color } from "../../../../compLibrary";
 import { CombinedAttribute, Node } from "../../../../models";
+import { GetParametersColor, DoesCombinationMatchAttribute } from "./helpers";
+import Parameter from "./Parameter";
+import { Body, Entity, Box } from "./styled";
+import { CombinationDropdown } from "./styled/dropdown/combination";
 import {
   OnChangeParameterValue,
   OnChangeFilterChoice,
   OnLockParameter,
   OnChangeAttributeCombinationChoice,
 } from "./handlers";
-import { GetParametersColor, DoesCombinationMatchAttribute } from "./helpers";
-import Parameter from "./Parameter";
-import { Body, Entity, Box } from "./styled";
-import { CombinationDropdown } from "./styled/dropdown/combination";
 
 interface Props {
   node: Node;
