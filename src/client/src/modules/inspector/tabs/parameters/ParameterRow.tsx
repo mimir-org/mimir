@@ -1,55 +1,56 @@
+import { Dispatch } from "redux";
 import { CloseParameterIcon } from "../../../../assets/icons/common";
 import { Color } from "../../../../compLibrary";
-import { Attribute, CombinedAttribute, Node } from "../../../../models";
-import { lockUnlockAttribute } from "../../../../redux/store/project/actions";
-import { OnClearParameter, OnChangeParameterValue } from "./handlers";
-import OnChangeFilterCombination from "./handlers/OnChangeFilterCombination";
+import { CombinedAttribute, Node } from "../../../../models";
+import {
+  OnChangeParameterValue,
+  OnChangeFilterChoice,
+  OnLockParameter,
+  OnChangeAttributeCombinationChoice,
+} from "./handlers";
 import { GetParametersColor, DoesCombinationMatchAttribute } from "./helpers";
 import Parameter from "./Parameter";
 import { Body, Entity, Box } from "./styled";
-import { CombinationDropdown } from "./styled/dropdown/entity";
+import { CombinationDropdown } from "./styled/dropdown/combination";
 
 interface Props {
   node: Node;
-  possibleCombinations: CombinedAttribute[];
+  combinations: CombinedAttribute[];
   selectedCombinations: CombinedAttribute[];
   filterName: string;
-  dispatch: any;
+  dispatch: Dispatch<any>;
 }
 
 function ParameterRow({
   node,
-  possibleCombinations,
+  combinations,
   selectedCombinations,
   filterName,
   dispatch,
 }: Props) {
   const attributes = node.attributes;
 
-  const onLockParameter = (attribute: Attribute, isLocked: boolean) => {
-    if (!node.isLocked)
-      dispatch(lockUnlockAttribute(attribute, node.id, isLocked));
-  };
-
   return (
-    <Body key={filterName}>
+    <Body>
       <Entity width={180}>
         <Box color={GetParametersColor()} id="ParametersBox">
           <div className="icon">
             <img
               src={CloseParameterIcon}
               alt="icon"
-              onClick={() => OnClearParameter(node.id, filterName, dispatch)}
+              onClick={() =>
+                OnChangeFilterChoice(node.id, filterName, true, dispatch)
+              }
             />
           </div>
           <div className="text">{filterName}</div>
         </Box>
         <CombinationDropdown
-          items={possibleCombinations}
+          items={combinations}
           selectedItems={selectedCombinations}
           keyProp="combined"
           onChange={(combination, selected) =>
-            OnChangeFilterCombination(
+            OnChangeAttributeCombinationChoice(
               node.id,
               filterName,
               combination,
@@ -73,9 +74,11 @@ function ParameterRow({
           onChange={(id, value, unit, nodeId) =>
             OnChangeParameterValue(id, value, unit, nodeId, dispatch)
           }
-          onLock={onLockParameter}
+          onLock={(attribute, isLocked) =>
+            OnLockParameter(node, attribute, isLocked, dispatch)
+          }
           onClose={() =>
-            OnChangeFilterCombination(
+            OnChangeAttributeCombinationChoice(
               node.id,
               filterName,
               combination,

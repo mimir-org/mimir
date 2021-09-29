@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { TextResources } from "../../../../assets/text";
 import { Dropdown } from "./styled/dropdown/parameter";
 import { CombinedAttributeFilter, Node } from "../../../../models";
-import { GetPossibleCombinations } from "./helpers";
+import { GetAttributeCombinations } from "./helpers";
 import { Menu, Header } from "./styled";
-import { OnChangeParameter, OnClearParameters } from "./handlers";
+import { OnChangeFilterChoice, OnClearAllFilters } from "./handlers";
 import { FilterDict } from "./redux/types";
 import ParameterRow from "./ParameterRow";
 
@@ -31,7 +31,7 @@ const ParametersComponent = ({ node }: Props) => {
 
   const hasFilters = Object.keys(selectedFilters).length > 0;
 
-  const possibleCombinations = GetPossibleCombinations(
+  const attributeCombinations = GetAttributeCombinations(
     attributeFilters,
     attributes
   );
@@ -42,14 +42,14 @@ const ParametersComponent = ({ node }: Props) => {
         <Menu>
           <Dropdown
             onChange={(filter: CombinedAttributeFilter, selected: boolean) => {
-              OnChangeParameter(node.id, filter.name, selected, dispatch);
+              OnChangeFilterChoice(node.id, filter.name, selected, dispatch);
             }}
             items={attributeFilters}
             selectedItems={selectedFilters}
           />
           <div
             className="link"
-            onClick={() => OnClearParameters(node.id, dispatch)}
+            onClick={() => OnClearAllFilters(node.id, dispatch)}
           >
             {TextResources.Inspector_Params_Clear_All}
           </div>
@@ -60,8 +60,9 @@ const ParametersComponent = ({ node }: Props) => {
         Object.entries(selectedFilters).map(
           ([filterName, selectedCombinations]) => (
             <ParameterRow
+              key={filterName}
               node={node}
-              possibleCombinations={possibleCombinations[filterName]}
+              combinations={attributeCombinations[filterName]}
               selectedCombinations={selectedCombinations}
               filterName={filterName}
               dispatch={dispatch}

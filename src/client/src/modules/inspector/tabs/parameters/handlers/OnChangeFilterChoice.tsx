@@ -1,10 +1,11 @@
+import { Dispatch } from "redux";
 import { addAttributeFilter, removeAttributeFilter } from "../redux/actions";
 
-const OnParameterChange = (
+const OnChangeFilterChoice = (
   nodeId: string,
   filterName: string,
   selected: boolean,
-  dispatch: any
+  dispatch: Dispatch<any>
 ) => {
   if (!selected) {
     dispatch(addAttributeFilter(nodeId, filterName));
@@ -13,4 +14,4 @@ const OnParameterChange = (
   }
 };
 
-export default OnParameterChange;
+export default OnChangeFilterChoice;

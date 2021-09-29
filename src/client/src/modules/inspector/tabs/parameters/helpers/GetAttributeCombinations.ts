@@ -4,7 +4,7 @@ import {
   CombinedAttributeFilter,
 } from "../../../../../models";
 
-const GetPossibleCombinations = (
+const GetAttributeCombinations = (
   attributeFilters: CombinedAttributeFilter[],
   attributes: Attribute[]
 ) => {
@@ -32,4 +32,4 @@ const DoesCombinationMatchAttribute = (
   combination.sourceId === attribute.sourceId &&
   combination.conditionId === attribute.conditionId;
 
-export { GetPossibleCombinations, DoesCombinationMatchAttribute };
+export { GetAttributeCombinations, DoesCombinationMatchAttribute };

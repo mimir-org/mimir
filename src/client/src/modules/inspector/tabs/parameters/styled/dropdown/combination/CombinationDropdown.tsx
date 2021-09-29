@@ -31,7 +31,7 @@ const EntityDropdown = ({
   const [isListOpen, setIsListOpen] = useState(false);
 
   const IsItemSelected = (item: CombinedAttribute): boolean => {
-    return selectedItems.includes(item);
+    return !!selectedItems.find((other) => item.combined === other.combined);
   };
 
   return (

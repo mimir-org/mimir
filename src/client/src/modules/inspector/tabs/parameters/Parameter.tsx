@@ -8,11 +8,11 @@ import {
 import { FontSize } from "../../../../compLibrary";
 import { GetParametersColor } from "./helpers";
 import ParameterDescriptor from "./ParameterDescriptor";
-import { Entity } from "./styled";
 import { ParameterBox, ParameterHeader } from "./styled/parameter";
 import { Dropdown as CompDropdown } from "../../../../compLibrary/dropdown/mimir";
 import { Attribute, CombinedAttribute } from "../../../../models";
 import { useState } from "react";
+import { Entity } from "./styled";
 
 interface Props {
   attribute: Attribute;
@@ -43,7 +43,7 @@ function Parameter({
           color={GetParametersColor()}
           isNodeLocked={isNodeLocked}
         >
-          {false && (
+          {false && ( //TODO: Add proper logic for warningIcon when validation feature is added
             <img src={WarningIcon} className="warningIcon" alt="icon" />
           )}
 

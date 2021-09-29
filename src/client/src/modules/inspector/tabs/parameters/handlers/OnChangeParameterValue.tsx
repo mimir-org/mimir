@@ -1,3 +1,4 @@
+import { Dispatch } from "redux";
 import { changeAttributeValue } from "../../../../../redux/store/project/actions";
 
 const OnChangeParameterValue = (
@@ -5,7 +6,7 @@ const OnChangeParameterValue = (
   value: string,
   unit: string,
   nodeId: string,
-  dispatch: any
+  dispatch: Dispatch<any>
 ) => {
   dispatch(changeAttributeValue(id, value, unit, nodeId));
 };

@@ -1,5 +1,5 @@
 export { default as GetParametersColor } from "./GetParametersColor";
 export {
-  GetPossibleCombinations,
+  GetAttributeCombinations,
   DoesCombinationMatchAttribute,
-} from "./GetPossibleCombinations";
+} from "./GetAttributeCombinations";
