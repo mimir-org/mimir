@@ -1,9 +1,12 @@
 import styled from "styled-components";
 
-const TerminalsWrapper = styled.div`
+const TerminalsColumn = styled.div`
   display: flex;
-  flex-direction: row;
-  width: 550px;
+  flex-direction: column;
+  padding: 0px 20px;
+
+  width: 400px;
+  height: 100%;
 `;
 
-export { TerminalsWrapper };
+export { TerminalsColumn };

@@ -123,6 +123,8 @@ const TextResources = {
   Inspector_Params_Combinations: "Select combinations",
   Inspector_Params_Search: "Search or Select Entity...",
 
+  Inspector_Terminals_Search: "Search Terminal Type",
+
   // LibraryModule
   Library_SearchBox_Placeholder: "Search the Library",
 
