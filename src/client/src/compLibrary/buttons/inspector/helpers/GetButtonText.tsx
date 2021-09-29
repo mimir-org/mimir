@@ -4,6 +4,7 @@ const GetButtonText = (type: string) => {
   if (type === "delete") return TextResources.Inspector_Delete_Node;
   if (type === "filter") return TextResources.Inspector_Filter;
   if (type === "lock") return TextResources.Inspector_Lock;
+  if (type === "unlock") return TextResources.Inspector_Open;
   if (type === "validate") return TextResources.Inspector_Validate;
 };
 

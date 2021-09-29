@@ -1,17 +1,13 @@
 import { RootState } from "../../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
-import { CloseParameterIcon } from "../../../../assets/icons/common";
 import { TextResources } from "../../../../assets/text";
 import { Dropdown } from "./styled/dropdown/parameter";
-import { Attribute, Node } from "../../../../models";
-import { GetParametersColor } from "./helpers";
-import { EntityDropdown } from "./styled/dropdown/entity";
-import { Menu, Body, Box, Header, Entity } from "./styled";
-import {
-  OnChangeParameter,
-  OnClearParameters,
-  OnClearParameter,
-} from "./handlers";
+import { CombinedAttributeFilter, Node } from "../../../../models";
+import { GetAttributeCombinations } from "./helpers";
+import { Menu, Header } from "./styled";
+import { OnChangeFilterChoice, OnClearAllFilters } from "./handlers";
+import { FilterDict } from "./redux/types";
+import ParameterRow from "./ParameterRow";
 
 interface Props {
   node: Node;
@@ -21,60 +17,58 @@ const ParametersComponent = ({ node }: Props) => {
   const dispatch = useDispatch();
   const attributes = node.attributes;
 
-  const selectedParameters =
-    (useSelector<RootState>(
-      (state) => state.parametersReducer.attributes[node.id]
-    ) as Attribute[]) ?? [];
+  const attributeFilters =
+    (
+      useSelector<RootState>(
+        (state) => state.commonState.filters
+      ) as CombinedAttributeFilter[]
+    ).filter((x) => attributes.find((att) => att.key === x.name)) ?? [];
 
-  const hasParameters = selectedParameters.length > 0;
+  const selectedFilters =
+    (useSelector<RootState>(
+      (state) => state.parametersReducer.selectedAttributeFilters[node.id]
+    ) as FilterDict) ?? {};
+
+  const hasFilters = Object.keys(selectedFilters).length > 0;
+
+  const attributeCombinations = GetAttributeCombinations(
+    attributeFilters,
+    attributes
+  );
 
   return (
     <>
       <Header>
         <Menu>
           <Dropdown
-            onChange={(value: Attribute) =>
-              OnChangeParameter(node.id, value, selectedParameters, dispatch)
-            }
-            keyProp="id"
-            valueProp="key"
-            items={attributes}
+            onChange={(filter: CombinedAttributeFilter, selected: boolean) => {
+              OnChangeFilterChoice(node.id, filter.name, selected, dispatch);
+            }}
+            items={attributeFilters}
+            selectedItems={selectedFilters}
           />
           <div
             className="link"
-            onClick={() => OnClearParameters(node.id, dispatch)}
+            onClick={() => OnClearAllFilters(node.id, dispatch)}
           >
             {TextResources.Inspector_Params_Clear_All}
           </div>
           <div className="link">{TextResources.Inspector_Params_Default}</div>
         </Menu>
       </Header>
-
-      <Body>
-        {hasParameters &&
-          selectedParameters.map((param) => {
-            return (
-              <Entity key={param.key}>
-                <Box color={GetParametersColor()} id="ParametersBox">
-                  <div className="icon">
-                    <img
-                      src={CloseParameterIcon}
-                      alt="icon"
-                      onClick={() => OnClearParameter(node.id, param, dispatch)}
-                    />
-                  </div>
-                  <div className="text">{param.key}</div>
-                </Box>
-                <EntityDropdown
-                  items={param.units}
-                  keyProp="id"
-                  onChange={() => null}
-                  color={GetParametersColor()}
-                />
-              </Entity>
-            );
-          })}
-      </Body>
+      {hasFilters &&
+        Object.entries(selectedFilters).map(
+          ([filterName, selectedCombinations]) => (
+            <ParameterRow
+              key={filterName}
+              node={node}
+              combinations={attributeCombinations[filterName]}
+              selectedCombinations={selectedCombinations}
+              filterName={filterName}
+              dispatch={dispatch}
+            />
+          )
+        )}
     </>
   );
 };
