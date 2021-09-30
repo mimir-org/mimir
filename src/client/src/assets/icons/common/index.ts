@@ -79,7 +79,8 @@ export { default as LockIcon } from "./lock.svg";
 export { default as ValidateIcon } from "./validate.svg";
 
 // Inspector Parameters
-export { default as CloseParameterIcon } from "./paramsClose.svg";
+export { default as CloseParameterFilterIcon } from "./closeParameterFilter.svg";
+export { default as CloseParameterIcon } from "./closeParameter.svg";
 export { default as LockOpenIcon } from "./lockOpen.svg";
 export { default as WarningIcon } from "./warning.svg";
 export { default as LockClosedIcon } from "./lockParameter.svg";

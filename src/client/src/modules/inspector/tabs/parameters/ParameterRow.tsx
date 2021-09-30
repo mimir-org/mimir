@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { CloseParameterIcon } from "../../../../assets/icons/common";
+import { CloseParameterFilterIcon } from "../../../../assets/icons/common";
 import { Color } from "../../../../compLibrary";
 import { CombinedAttribute, Connector, Node } from "../../../../models";
 import { GetParametersColor, DoesCombinationMatchAttribute } from "./helpers";
@@ -42,7 +42,7 @@ function ParameterRow({
         <Box color={GetParametersColor()} id="ParametersBox">
           <div className="icon">
             <img
-              src={CloseParameterIcon}
+              src={CloseParameterFilterIcon}
               alt="icon"
               onClick={() =>
                 OnChangeFilterChoice(element.id, filterName, true, dispatch)

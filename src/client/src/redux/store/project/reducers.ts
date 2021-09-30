@@ -590,26 +590,28 @@ export function projectReducer(
         ...state,
         project: {
           ...state.project,
-          nodes: {
-            ...state.project.nodes,
-            [node.id]: {
-              ...node,
-              connectors: {
-                ...node.connectors,
-                [terminalId]: {
-                  ...terminal,
-                  attributes: terminal.attributes.map((attribute) =>
-                    attribute.id === id
+          nodes: state.project.nodes.map((n) =>
+            n.id === node.id
+              ? {
+                  ...n,
+                  connectors: n.connectors.map((conn) =>
+                    conn.id === terminalId
                       ? {
-                          ...attribute,
-                          isLocked,
+                          ...conn,
+                          attributes: conn.attributes.map((attribute) =>
+                            attribute.id === id
+                              ? {
+                                  ...attribute,
+                                  isLocked,
+                                }
+                              : attribute
+                          ),
                         }
-                      : attribute
+                      : conn
                   ),
-                },
-              },
-            },
-          },
+                }
+              : n
+          ),
         },
       };
     }
