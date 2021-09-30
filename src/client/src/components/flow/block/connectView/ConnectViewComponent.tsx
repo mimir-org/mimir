@@ -3,6 +3,7 @@ import { Node } from "../../../../models";
 import { ConnectMenuIcon } from "../../../../assets/icons/blockView";
 import { TextResources } from "../../../../assets/text";
 import { ConnectViewBox, Menu, Element } from "./styled";
+import { CalculateMenuPos } from "./helpers";
 
 interface Props {
   node: Node;
@@ -41,7 +42,7 @@ const ConnectViewComponent = ({
     </ConnectViewBox>
 
     {isMenuOpen && (
-      <Menu>
+      <Menu bottom={CalculateMenuPos(children.length)}>
         {children.map((n: Node) => {
           return (
             <Element key={n.id}>

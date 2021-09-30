@@ -5,7 +5,7 @@ const ConnectViewBox = styled.div`
   visibility: ${(props) => !props.visible && "hidden"};
   position: absolute;
   left: 8px;
-  top: 62px;
+  bottom: -4px;
   cursor: pointer;
 `;
 
