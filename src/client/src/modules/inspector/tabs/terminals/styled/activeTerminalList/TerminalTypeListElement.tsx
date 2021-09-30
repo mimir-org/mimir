@@ -9,13 +9,16 @@ export const TerminalTypeListElement = styled.div`
   background-color: ${(props) => props.color};
   border-bottom: 1px solid ${Color.DarkGrey};
 
-  text-decoration: ${(props) => (props.isSelected ? "underline" : "none")};
   font-weight: ${(props) => (props.isSelected ? "bold" : "normal")};
 
   .dropdownIcon {
     margin: auto 20px auto auto;
     width: 10px;
     height: 5px;
+  }
+
+  .numTypeTerminals {
+    padding-right: 10px;
   }
 
   :hover {

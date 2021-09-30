@@ -22,6 +22,9 @@ const ListElement = styled.div`
     width: 10px;
     height: 5px;
   }
+  .numCategoryTerminals {
+    padding-right: 10px;
+  }
 
   :hover {
     background-color: ${Color.LightBlue};

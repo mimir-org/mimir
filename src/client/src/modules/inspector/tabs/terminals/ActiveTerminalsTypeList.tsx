@@ -41,6 +41,7 @@ function ActiveTerminalsTypeList({
         onClick={() => onTypeClick(terminalType, connectorType)}
         isSelected={!!selectedTerminal}
       >
+        <div className="numTypeTerminals">{terminals.length}</div>
         {formatTerminalTypeName(terminalType.name)}
         <img
           src={

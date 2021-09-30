@@ -78,7 +78,11 @@ function ActiveTerminalsList({
   return (
     <div>
       {filteredCategories.map((category, i) => {
-        const categorySelected = isCategoryExpanded(category);
+        const categoryExpanded = isCategoryExpanded(category);
+
+        const numCategoryTerminals = terminals.filter(
+          (term) => term.terminalCategoryId === category.id
+        ).length;
 
         return (
           <TerminalsListElementWrapper key={category.id}>
@@ -89,16 +93,18 @@ function ActiveTerminalsList({
               index={i}
               color={i % 2 ? undefined : Color.LightPurple}
             >
+              <div className="numCategoryTerminals">{numCategoryTerminals}</div>
+
               {category.name}
               <img
                 src={
-                  categorySelected ? ExpandAccordionIcon : CollapseAccordionIcon
+                  categoryExpanded ? ExpandAccordionIcon : CollapseAccordionIcon
                 }
                 className="dropdownIcon"
                 alt="expand-icon"
               />
             </ListElement>
-            {categorySelected &&
+            {categoryExpanded &&
               category.items.map((terminalType) => {
                 const inputTerminals = terminals.filter(
                   (terminal) =>
