@@ -2,17 +2,12 @@ import { Color } from "../../../../compLibrary";
 import { TerminalCategory } from "../../../../components/modules/typeEditorModule/helpers/GetFilteredTerminalsList";
 import { Connector, ConnectorType, TerminalType } from "../../../../models";
 import { ListElement } from "../../styled";
-import { useState } from "react";
-import {
-  TerminalTypeListElement,
-  TerminalsListElementWrapper,
-  TerminalListElement,
-} from "./styled/activeTerminalList";
+import React, { useState } from "react";
+import { TerminalsListElementWrapper } from "./styled/activeTerminalList";
+import ActiveTerminalsTypeList from "./ActiveTerminalsTypeList";
 import {
   ExpandAccordionIcon,
   CollapseAccordionIcon,
-  ExpandAccordionNestedIcon,
-  CollapseAccordionNestedIcon,
 } from "../../../../assets/icons/common";
 
 interface Props {
@@ -47,11 +42,14 @@ function ActiveTerminalsList({
       ),
     }));
 
+  const formatTypeId = (type: TerminalType, connectorType: ConnectorType) =>
+    `${type.id} ${connectorType}`;
+
   const isCategoryExpanded = (category: TerminalCategory) =>
     selectedCategoriesIds.includes(category.id);
 
-  const isTypeExpanded = (type: TerminalType) =>
-    selectedTypesIds.includes(type.id);
+  const isTypeExpanded = (type: TerminalType, connectorType: ConnectorType) =>
+    selectedTypesIds.includes(formatTypeId(type, connectorType));
 
   const onCategoryClick = (category: TerminalCategory) => {
     if (isCategoryExpanded(category)) {
@@ -63,11 +61,13 @@ function ActiveTerminalsList({
     }
   };
 
-  const onTypeClick = (type: TerminalType) => {
-    if (isTypeExpanded(type)) {
-      setSelectedTypesIds(selectedTypesIds.filter((id) => id !== type.id));
+  const onTypeClick = (type: TerminalType, connectorType: ConnectorType) => {
+    const typeId = formatTypeId(type, connectorType);
+
+    if (isTypeExpanded(type, connectorType)) {
+      setSelectedTypesIds(selectedTypesIds.filter((id) => id !== typeId));
     } else {
-      setSelectedTypesIds([...selectedTypesIds, type.id]);
+      setSelectedTypesIds([...selectedTypesIds, typeId]);
     }
   };
 
@@ -100,43 +100,49 @@ function ActiveTerminalsList({
             </ListElement>
             {categorySelected &&
               category.items.map((terminalType) => {
-                const typeSelected = isTypeExpanded(terminalType);
+                const inputTerminals = terminals.filter(
+                  (terminal) =>
+                    terminal.terminalTypeId === terminalType.id &&
+                    terminal.type === ConnectorType.Input
+                );
+
+                const outputTerminals = terminals.filter(
+                  (terminal) =>
+                    terminal.terminalTypeId === terminalType.id &&
+                    terminal.type === ConnectorType.Output
+                );
+
                 return (
-                  <TerminalsListElementWrapper key={terminalType.id}>
-                    <TerminalTypeListElement
-                      onClick={() => onTypeClick(terminalType)}
-                      isSelected={
-                        selectedTerminal?.terminalTypeId === terminalType.id
-                      }
-                    >
-                      {terminalType.name}
-                      <img
-                        src={
-                          typeSelected
-                            ? ExpandAccordionNestedIcon
-                            : CollapseAccordionNestedIcon
-                        }
-                        className="dropdownIcon"
-                        alt="expand-icon"
+                  <React.Fragment key={terminalType.id}>
+                    {inputTerminals.length > 0 && (
+                      <ActiveTerminalsTypeList
+                        terminalType={terminalType}
+                        connectorType={ConnectorType.Input}
+                        expanded={isTypeExpanded(
+                          terminalType,
+                          ConnectorType.Input
+                        )}
+                        terminals={inputTerminals}
+                        selectedTerminalId={selectedTerminalId}
+                        onTypeClick={onTypeClick}
+                        onSelectTerminal={onSelectTerminal}
                       />
-                    </TerminalTypeListElement>
-                    {typeSelected &&
-                      terminals
-                        .filter(
-                          (term) => term.terminalTypeId === terminalType.id
-                        )
-                        .map((terminal) => (
-                          <TerminalListElement
-                            key={terminal.id}
-                            isSelected={selectedTerminal?.id === terminal.id}
-                            onClick={() => onSelectTerminal(terminal)}
-                          >
-                            {`${terminal.name} [${ConnectorType[
-                              terminal.type
-                            ].toLowerCase()}]`}
-                          </TerminalListElement>
-                        ))}
-                  </TerminalsListElementWrapper>
+                    )}
+                    {outputTerminals.length > 0 && (
+                      <ActiveTerminalsTypeList
+                        terminalType={terminalType}
+                        connectorType={ConnectorType.Output}
+                        expanded={isTypeExpanded(
+                          terminalType,
+                          ConnectorType.Output
+                        )}
+                        terminals={outputTerminals}
+                        selectedTerminalId={selectedTerminalId}
+                        onTypeClick={onTypeClick}
+                        onSelectTerminal={onSelectTerminal}
+                      />
+                    )}
+                  </React.Fragment>
                 );
               })}
           </TerminalsListElementWrapper>

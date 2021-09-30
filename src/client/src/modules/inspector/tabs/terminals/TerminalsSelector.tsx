@@ -21,7 +21,11 @@ function TerminalsSelector({
 }: Props) {
   const [searchString, setSearchString] = useState("");
 
-  const filteredTerminals = FilterBySearchString(terminals, searchString);
+  const filteredTerminals = FilterBySearchString(
+    terminals,
+    terminalCategories,
+    searchString
+  );
 
   const onChange = (value: string) => {
     setSearchString(value);
