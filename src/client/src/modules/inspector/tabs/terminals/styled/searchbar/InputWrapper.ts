@@ -9,6 +9,9 @@ const InputWrapper = styled.div`
 
   input {
     padding: 10px;
+  }
+
+  .input-placeholder {
     font-style: italic;
   }
 `;

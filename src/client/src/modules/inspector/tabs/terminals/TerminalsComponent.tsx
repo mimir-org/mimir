@@ -19,7 +19,11 @@ const TerminalsComponent = ({ node }: Props) => {
 
   return (
     <TerminalsWrapper>
-      <TerminalsSelector terminals={terminals} onItemSelect={onItemSelect} />
+      <TerminalsSelector
+        terminals={terminals}
+        selectedTerminalId={selectedTerminalId}
+        onItemSelect={onItemSelect}
+      />
       {selectedTerminalId && (
         <TerminalsParametersWrapper>
           <ParametersContent

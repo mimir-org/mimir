@@ -7,10 +7,15 @@ import TerminalsSearchBar from "./TerminalsSearchBar";
 
 interface Props {
   terminals: Connector[];
+  selectedTerminalId: string;
   onItemSelect: (item: any) => void;
 }
 
-function TerminalsSelector({ terminals, onItemSelect }: Props) {
+function TerminalsSelector({
+  terminals,
+  selectedTerminalId,
+  onItemSelect,
+}: Props) {
   const [searchString, setSearchString] = useState("");
 
   const filteredTerminals = FilterBySearchString(terminals, searchString);
@@ -24,6 +29,7 @@ function TerminalsSelector({ terminals, onItemSelect }: Props) {
       <TerminalsSearchBar searchString={searchString} onChange={onChange} />
       <ActiveTerminalsList
         items={filteredTerminals}
+        selectedTerminalId={selectedTerminalId}
         onItemSelect={onItemSelect}
       />
     </TerminalsColumn>
