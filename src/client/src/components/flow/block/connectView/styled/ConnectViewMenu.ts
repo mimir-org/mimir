@@ -6,7 +6,7 @@ const ConnectViewMenu = styled.div`
   border: 2px solid ${Color.FunctionTab};
   background-color: ${Color.White};
   border-radius: 5px;
-  width: 100%;
+  width: max-content;
   position: absolute;
   bottom: ${(props) => props.bottom}px;
   z-index: 1;

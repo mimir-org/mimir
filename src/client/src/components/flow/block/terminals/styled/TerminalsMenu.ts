@@ -8,21 +8,21 @@ const TerminalsMenu = styled.div`
     props.isLocation ? Color.LocationTab : Color.FunctionTab};
   background-color: ${Color.White};
   border-radius: 5px;
-  z-index: 2;
-  min-width: 190px;
+  z-index: 4;
+  min-width: 150px;
   width: max-content;
   position: absolute;
-  /* left: ${(props) => props.position}px; */
   top: ${(props) => (props.isParent ? "0px" : "5px")};
-  /* left: ${(props) => props.width + 5}px; */
 
   right: ${(props) =>
     props.isInput && props.isParent && !props.splitView
       ? "955px"
       : props.isInput && props.isParent && props.splitView
       ? "50px"
-      : props.isInput && !props.isParent
+      : props.isInput && !props.isParent && !props.isConnectView
       ? "137px"
+      : props.isInput && !props.isParent && props.isConnectView
+      ? "405px"
       : "unset"};
 
   left: ${(props) =>
@@ -30,8 +30,10 @@ const TerminalsMenu = styled.div`
       ? "957px"
       : !props.isInput && props.isParent && props.splitView
       ? "657px"
-      : !props.isInput && !props.isParent
+      : !props.isInput && !props.isParent && !props.isConnectView
       ? "137px"
+      : !props.isInput && !props.isParent && props.isConnectView
+      ? "405px"
       : "unset"};
 
   .button {

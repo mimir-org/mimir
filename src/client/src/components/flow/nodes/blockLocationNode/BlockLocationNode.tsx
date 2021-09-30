@@ -67,7 +67,6 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
           isInputMenuOpen={inputTerminalMenu}
           isOutputMenuOpen={outputTerminalMenu}
           terminals={sortedTerminals}
-          width={data.width}
           isParent={false}
           isLocation={IsLocation(data)}
           isSplitView={splitView}

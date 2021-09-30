@@ -1,10 +1,10 @@
-import { Connector } from "../../../../models";
+import { Connector, Node } from "../../../../models";
+import { IsMainConnectNode } from "../../helpers/block/connectView";
 import { GetConnectorIcon } from "../../helpers/common";
-import { SetTerminalsMenuPosition } from "./helpers";
 import { TerminalsMenu, TerminalsElement } from "./styled";
 
 interface Props {
-  width: number;
+  node: Node;
   isParent: boolean;
   isLocation: boolean;
   isInput: boolean;
@@ -19,7 +19,7 @@ interface Props {
  * @returns a drop-down menu with a nodes' input or output terminals.
  */
 const TerminalsMenuComponent = ({
-  width,
+  node,
   isParent,
   isLocation,
   isInput,
@@ -32,8 +32,7 @@ const TerminalsMenuComponent = ({
     isParent={isParent}
     isLocation={isLocation}
     isInput={isInput}
-    position={SetTerminalsMenuPosition(splitView, isParent, isInput)}
-    width={width}
+    isConnectView={IsMainConnectNode(node.id)}
   >
     {terminals.map((conn) => (
       <TerminalsElement key={conn.id}>

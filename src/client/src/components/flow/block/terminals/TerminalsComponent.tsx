@@ -10,7 +10,6 @@ interface Props {
   isInputMenuOpen: boolean;
   isOutputMenuOpen: boolean;
   terminals: Connector[];
-  width: number;
   isParent: boolean;
   isLocation: boolean;
   menuButton: boolean;
@@ -30,7 +29,6 @@ const TerminalsComponent = ({
   isInputMenuOpen,
   isOutputMenuOpen,
   terminals,
-  width,
   isParent,
   isLocation,
   menuButton,
@@ -76,7 +74,7 @@ const TerminalsComponent = ({
 
       {isInputMenuOpen && (
         <TerminalsMenuComponent
-          width={width}
+          node={node}
           isParent={isParent}
           isLocation={isLocation}
           isInput={true}
@@ -87,7 +85,7 @@ const TerminalsComponent = ({
       )}
       {isOutputMenuOpen && (
         <TerminalsMenuComponent
-          width={width}
+          node={node}
           isParent={isParent}
           isLocation={isLocation}
           isInput={false}
