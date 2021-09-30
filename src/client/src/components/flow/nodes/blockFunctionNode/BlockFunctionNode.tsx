@@ -38,9 +38,10 @@ import {
  */
 const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
-  const [terminalButton, showTerminalButton] = useState(false);
+  const [inputTerminalButton, showInputTerminalButton] = useState(false);
+  const [inputTerminalMenu, showInputTerminalMenu] = useState(false);
+  const [outputTerminalMenu, showOutputTerminalMenu] = useState(false);
   const [connectButton, showConnectButton] = useState(false);
-  const [terminalMenu, showTerminalMenu] = useState(false);
   const [connectMenu, showConnectMenu] = useState(false);
 
   const nodes = useSelector<RootState>(
@@ -118,25 +119,26 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
       <NodeBox
         id={"BlockFunctionNode-" + data.id}
         onMouseOver={() =>
-          OnHover(showTerminalButton, showConnectButton, data.id)
+          OnHover(showInputTerminalButton, showConnectButton, data.id)
         }
         onMouseOut={() =>
-          OnMouseOut(showTerminalButton, showConnectButton, data.id)
+          OnMouseOut(showInputTerminalButton, showConnectButton, data.id)
         }
       >
         <p className="node-name">{data.label ?? data.name}</p>
 
         <TerminalsComponent
           node={data}
-          isMenuOpen={terminalMenu}
+          isInputMenuOpen={inputTerminalMenu}
+          isOutputMenuOpen={outputTerminalMenu}
           terminals={sortedTerminals}
           width={data.width}
           isParent={false}
           isLocation={IsLocation(data)}
           onClick={() => onConnectorClick}
-          menuButton={terminalButton}
-          showTerminalMenu={showTerminalMenu}
-          terminalMenu={terminalMenu}
+          menuButton={inputTerminalButton}
+          showInputTerminalMenu={showInputTerminalMenu}
+          showOutputTerminalMenu={showOutputTerminalMenu}
         />
 
         <ConnectViewComponent

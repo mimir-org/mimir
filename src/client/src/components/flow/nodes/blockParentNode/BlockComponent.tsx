@@ -1,7 +1,7 @@
 import { ArrowDown, ArrowUp } from "../../../../assets/icons/blockView";
 import { Node } from "../../../../models";
 import { IsAspectNode } from "../../helpers/common";
-import { Arrow, Banner, Block, Header } from "./styled";
+import { Navigation, Banner, Block, Header } from "./styled";
 
 interface Props {
   node: Node;
@@ -32,15 +32,17 @@ const BlockComponent = ({
     selected={isSelected}
   >
     <Banner>
-      <Header>={node?.label ?? node?.name}</Header>
-      <Arrow left={205}>
-        {!IsAspectNode(node) && (
-          <img src={ArrowUp} alt="up" onClick={() => onParentClick()} />
-        )}
-      </Arrow>
-      <Arrow left={220}>
-        <img src={ArrowDown} alt="down" onClick={() => onChildClick()} />
-      </Arrow>
+      <Header>
+        <Navigation>
+          {!IsAspectNode(node) && (
+            <img src={ArrowUp} alt="up" onClick={() => onParentClick()} />
+          )}
+        </Navigation>
+        <Navigation>
+          <img src={ArrowDown} alt="down" onClick={() => onChildClick()} />
+        </Navigation>
+        <p className="text">={node?.label ?? node?.name}</p>
+      </Header>
     </Banner>
   </Block>
 );

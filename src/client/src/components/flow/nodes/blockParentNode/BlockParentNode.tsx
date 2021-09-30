@@ -27,7 +27,9 @@ import {
  * @returns a parent node of the Flow node type with Mimir styling and functionality.
  */
 const BlockParentNode: FC<NodeProps> = ({ data }) => {
-  const [terminalMenu, showTerminalMenu] = useState(false);
+  const [inputTerminalMenu, showInputTerminalMenu] = useState(false);
+  const [outputTerminalMenu, showOutputTerminalMenu] = useState(false);
+
   const dispatch = useDispatch();
 
   const nodes = useSelector<RootState>(
@@ -87,15 +89,16 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
       />
       <TerminalsComponent
         node={node}
-        isMenuOpen={terminalMenu}
+        isInputMenuOpen={inputTerminalMenu}
+        isOutputMenuOpen={outputTerminalMenu}
         isParent={true}
         isLocation={IsLocation(node)}
         terminals={FilterTerminals(node, isSplitView)}
         width={isSplitView ? Size.SplitView_Width : Size.BlockView_Width}
         onClick={() => onConnectorClick}
         menuButton={true}
-        showTerminalMenu={showTerminalMenu}
-        terminalMenu={terminalMenu}
+        showInputTerminalMenu={showInputTerminalMenu}
+        showOutputTerminalMenu={showOutputTerminalMenu}
       />
       <HandleComponent
         node={node}

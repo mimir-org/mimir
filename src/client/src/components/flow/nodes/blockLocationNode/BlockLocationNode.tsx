@@ -23,7 +23,8 @@ import {
 const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
   const [terminalButton, showTerminalButton] = useState(false);
-  const [terminalMenu, showTerminalMenu] = useState(false);
+  const [inputTerminalMenu, showInputTerminalMenu] = useState(false);
+  const [outputTerminalMenu, showOutputTerminalMenu] = useState(false);
 
   const nodes = useSelector<RootState>(
     (state) => state.projectState.project.nodes
@@ -60,19 +61,22 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
         location
       >
         <BlockNodeNameBox>{data.label ?? data.name}</BlockNodeNameBox>
+
         <TerminalsComponent
           node={data}
-          isMenuOpen={terminalMenu}
+          isInputMenuOpen={inputTerminalMenu}
+          isOutputMenuOpen={outputTerminalMenu}
           terminals={sortedTerminals}
           width={data.width}
           isParent={false}
           isLocation={IsLocation(data)}
           onClick={() => onConnectorClick}
           menuButton={terminalButton}
-          showTerminalMenu={showTerminalMenu}
-          terminalMenu={terminalMenu}
+          showInputTerminalMenu={showInputTerminalMenu}
+          showOutputTerminalMenu={showOutputTerminalMenu}
         />
       </NodeBox>
+
       <HandleComponent
         node={data}
         nodes={nodes}

@@ -2,11 +2,16 @@ import styled from "styled-components";
 import { FontSize } from "../../../../../compLibrary";
 
 const Header = styled.div`
-  position: absolute;
-  top: 6px;
-  left: 250px;
+  display: flex;
+  justify-content: center;
   font-size: ${FontSize.Standard};
+  position: relative;
+  bottom: 7px;
   font-weight: bold;
+
+  .text {
+    margin-left: 20px;
+  }
 `;
 
 export default Header;

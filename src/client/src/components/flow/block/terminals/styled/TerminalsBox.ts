@@ -4,7 +4,21 @@ import styled from "styled-components";
 const TerminalsBox = styled.div`
   visibility: ${(props) => !props.visible && "hidden"};
   position: absolute;
-  right: ${(props) => props.position}px;
+
+  left: ${(props) =>
+    props.isInput && props.isParent
+      ? "9px"
+      : props.isInput && !props.isParent
+      ? "0px"
+      : "unset"};
+
+  right: ${(props) =>
+    !props.isInput && props.isParent
+      ? "7px"
+      : !props.isInput && !props.isParent
+      ? "-1px"
+      : "unset"};
+
   top: 6px;
   cursor: pointer;
   z-index: 1;
