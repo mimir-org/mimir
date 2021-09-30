@@ -2,8 +2,8 @@ import * as Click from "./handlers";
 import { Node } from "../../../../models";
 import { ConnectMenuIcon } from "../../../../assets/icons/blockView";
 import { TextResources } from "../../../../assets/text";
-import { ConnectViewBox, Menu, Element } from "./styled";
 import { CalculateMenuPos } from "./helpers";
+import { ConnectViewBox, Menu, Element, Footer } from "./styled";
 
 interface Props {
   node: Node;
@@ -19,9 +19,9 @@ interface Props {
 }
 
 /**
- * Component for the ConnectView menu in BlockView
+ * Component for the ConnectView menu in BlockView.
  * @param param0
- * @returns a drop-down list where you can select a nodes' children
+ * @returns a drop-down list where you can select a nodes' children.
  */
 const ConnectViewComponent = ({
   node,
@@ -61,18 +61,12 @@ const ConnectViewComponent = ({
           );
         })}
         <Element>
-          <div
-            className="select"
-            onClick={() => Click.OnSelectAll(dispatch, node, children)}
-          >
+          <Footer onClick={() => Click.OnSelectAll(dispatch, node, children)}>
             {TextResources.ConnectMenu_Select_All}
-          </div>
-          <div
-            className="select"
-            onClick={() => Click.OnClearAll(dispatch, node)}
-          >
+          </Footer>
+          <Footer onClick={() => Click.OnClearAll(dispatch, node)}>
             {TextResources.ConnectMenu_Clear_All}
-          </div>
+          </Footer>
         </Element>
       </Menu>
     )}
