@@ -397,6 +397,7 @@ namespace Mb.Core.Services
                         .Include(x => x.TerminalTypes)
                         .Include("TerminalTypes.TerminalType")
                         .Include(x => x.AttributeTypes)
+                        .Include(x => x.CompositeTypes)
                         .FirstOrDefaultAsync();
 
                     if (nodeItem == null)
