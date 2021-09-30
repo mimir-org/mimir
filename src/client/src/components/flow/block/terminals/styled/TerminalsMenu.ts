@@ -12,8 +12,27 @@ const TerminalsMenu = styled.div`
   min-width: 190px;
   width: max-content;
   position: absolute;
-  left: ${(props) => props.position}px;
-  top: ${(props) => (props.isParent ? "-1px" : "5px")};
+  /* left: ${(props) => props.position}px; */
+  top: ${(props) => (props.isParent ? "0px" : "5px")};
+  /* left: ${(props) => props.width + 5}px; */
+
+  right: ${(props) =>
+    props.isInput && props.isParent && !props.splitView
+      ? "955px"
+      : props.isInput && props.isParent && props.splitView
+      ? "50px"
+      : props.isInput && !props.isParent
+      ? "137px"
+      : "unset"};
+
+  left: ${(props) =>
+    !props.isInput && props.isParent && !props.splitView
+      ? "957px"
+      : !props.isInput && props.isParent && props.splitView
+      ? "657px"
+      : !props.isInput && !props.isParent
+      ? "137px"
+      : "unset"};
 
   .button {
     position: absolute;

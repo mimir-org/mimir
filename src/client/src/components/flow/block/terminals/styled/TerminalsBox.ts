@@ -9,7 +9,7 @@ const TerminalsBox = styled.div`
     props.isInput && props.isParent
       ? "9px"
       : props.isInput && !props.isParent
-      ? "0px"
+      ? "-1px"
       : "unset"};
 
   right: ${(props) =>

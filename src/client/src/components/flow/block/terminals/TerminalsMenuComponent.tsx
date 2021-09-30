@@ -8,6 +8,7 @@ interface Props {
   isParent: boolean;
   isLocation: boolean;
   isInput: boolean;
+  splitView: boolean;
   terminals: Connector[];
   onClick: (conn: Connector) => void;
 }
@@ -22,19 +23,23 @@ const TerminalsMenuComponent = ({
   isParent,
   isLocation,
   isInput,
+  splitView,
   terminals,
   onClick,
 }: Props) => (
   <TerminalsMenu
-    width={width}
+    splitView={splitView}
     isParent={isParent}
     isLocation={isLocation}
     isInput={isInput}
-    position={SetTerminalsMenuPosition(false, isParent, isInput)}
+    position={SetTerminalsMenuPosition(splitView, isParent, isInput)}
+    width={width}
   >
     {terminals.map((conn) => (
       <TerminalsElement key={conn.id}>
-        <p className="text">{conn.name}</p>
+        <p className="text">
+          {conn.name} {conn.type}
+        </p>
         <label className={"checkbox-block"}>
           <input
             type="checkbox"

@@ -135,7 +135,8 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
           width={data.width}
           isParent={false}
           isLocation={IsLocation(data)}
-          onClick={() => onConnectorClick}
+          isSplitView={splitView}
+          onClick={(conn) => onConnectorClick(conn)}
           menuButton={inputTerminalButton}
           showInputTerminalMenu={showInputTerminalMenu}
           showOutputTerminalMenu={showOutputTerminalMenu}

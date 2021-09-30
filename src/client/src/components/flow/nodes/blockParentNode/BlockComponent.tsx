@@ -31,7 +31,7 @@ const BlockComponent = ({
     splitView={isSplitView}
     selected={isSelected}
   >
-    <Banner>
+    <Banner location={isLocation}>
       <Header>
         <Navigation>
           {!IsAspectNode(node) && (

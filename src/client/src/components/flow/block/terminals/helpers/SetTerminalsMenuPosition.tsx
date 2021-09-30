@@ -12,10 +12,15 @@ const SetTerminalsMenuPosition = (
 ) => {
   if (!splitView) {
     if (isParent && !isInput) return 960;
-    if (isParent && isInput) return -201;
     if (!isParent && !isInput) return 137;
     if (!isParent && isInput) return -206;
   }
+
+  if (splitView) {
+    if (isParent && !isInput) return 660;
+  }
+
+  if (isParent && isInput) return -201;
 };
 
 export default SetTerminalsMenuPosition;

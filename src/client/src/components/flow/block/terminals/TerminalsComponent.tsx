@@ -16,8 +16,8 @@ interface Props {
   menuButton: boolean;
   showInputTerminalMenu: any;
   showOutputTerminalMenu: any;
-  isSplitView?: boolean;
-  onClick: () => void;
+  isSplitView: boolean;
+  onClick: (conn: Connector) => void;
 }
 
 /**
@@ -38,58 +38,65 @@ const TerminalsComponent = ({
   showOutputTerminalMenu,
   isSplitView,
   onClick,
-}: Props) => (
-  <>
-    <TerminalsBox
-      visible={menuButton && !IsAspectNode(node)}
-      isSplitView={isSplitView}
-      isParent={isParent}
-      isInput={true}
-    >
-      <img
-        src={GetMenuIcon(node, isParent, true)}
-        alt="menu"
-        onClick={() =>
-          Click.OnInputMenu(showInputTerminalMenu, isInputMenuOpen)
-        }
-      />
-    </TerminalsBox>
+}: Props) => {
+  const inTerminals = terminals.filter((t) => IsInputTerminal(t));
+  const outTerminals = terminals.filter((t) => !IsInputTerminal(t));
 
-    <TerminalsBox
-      visible={menuButton && !IsAspectNode(node)}
-      isSplitView={isSplitView}
-      isParent={isParent}
-      isinput={false}
-    >
-      <img
-        src={GetMenuIcon(node, isParent, false)}
-        alt="menu"
-        onClick={() =>
-          Click.OnOutputMenu(showOutputTerminalMenu, isOutputMenuOpen)
-        }
-      />
-    </TerminalsBox>
-
-    {isInputMenuOpen && (
-      <TerminalsMenuComponent
-        width={width}
+  return (
+    <>
+      <TerminalsBox
+        visible={menuButton && !IsAspectNode(node) && inTerminals.length > 0}
+        isSplitView={isSplitView}
         isParent={isParent}
-        isLocation={isLocation}
         isInput={true}
-        terminals={terminals.filter((t) => IsInputTerminal(t))}
-        onClick={onClick}
-      />
-    )}
-    {isOutputMenuOpen && (
-      <TerminalsMenuComponent
-        width={width}
+      >
+        <img
+          src={GetMenuIcon(node, isParent, true)}
+          alt="menu"
+          onClick={() =>
+            Click.OnInputMenu(showInputTerminalMenu, isInputMenuOpen)
+          }
+        />
+      </TerminalsBox>
+
+      <TerminalsBox
+        visible={menuButton && !IsAspectNode(node) && outTerminals.length > 0}
+        isSplitView={isSplitView}
         isParent={isParent}
-        isLocation={isLocation}
-        isInput={false}
-        terminals={terminals.filter((t) => !IsInputTerminal(t))}
-        onClick={onClick}
-      />
-    )}
-  </>
-);
+        isinput={false}
+      >
+        <img
+          src={GetMenuIcon(node, isParent, false)}
+          alt="menu"
+          onClick={() =>
+            Click.OnOutputMenu(showOutputTerminalMenu, isOutputMenuOpen)
+          }
+        />
+      </TerminalsBox>
+
+      {isInputMenuOpen && (
+        <TerminalsMenuComponent
+          width={width}
+          isParent={isParent}
+          isLocation={isLocation}
+          isInput={true}
+          splitView={isSplitView}
+          terminals={inTerminals}
+          onClick={onClick}
+        />
+      )}
+      {isOutputMenuOpen && (
+        <TerminalsMenuComponent
+          width={width}
+          isParent={isParent}
+          isLocation={isLocation}
+          isInput={false}
+          splitView={isSplitView}
+          terminals={outTerminals}
+          onClick={onClick}
+        />
+      )}
+    </>
+  );
+};
 export default TerminalsComponent;
