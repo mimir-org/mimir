@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { TerminalCategory } from "../../../../components/modules/typeEditorModule/helpers/GetFilteredTerminalsList";
 import { Connector } from "../../../../models";
 import ActiveTerminalsList from "./ActiveTerminalsList";
 import { FilterBySearchString } from "./helpers";
@@ -7,14 +8,16 @@ import TerminalsSearchBar from "./TerminalsSearchBar";
 
 interface Props {
   terminals: Connector[];
+  terminalCategories: TerminalCategory[];
   selectedTerminalId: string;
-  onItemSelect: (item: any) => void;
+  onSelectTerminal: (item: any) => void;
 }
 
 function TerminalsSelector({
   terminals,
+  terminalCategories,
   selectedTerminalId,
-  onItemSelect,
+  onSelectTerminal,
 }: Props) {
   const [searchString, setSearchString] = useState("");
 
@@ -28,9 +31,10 @@ function TerminalsSelector({
     <TerminalsColumn>
       <TerminalsSearchBar searchString={searchString} onChange={onChange} />
       <ActiveTerminalsList
-        items={filteredTerminals}
+        terminals={filteredTerminals}
+        terminalCategories={terminalCategories}
         selectedTerminalId={selectedTerminalId}
-        onItemSelect={onItemSelect}
+        onSelectTerminal={onSelectTerminal}
       />
     </TerminalsColumn>
   );

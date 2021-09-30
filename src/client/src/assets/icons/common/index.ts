@@ -84,3 +84,10 @@ export { default as CloseParameterIcon } from "./closeParameter.svg";
 export { default as LockOpenIcon } from "./lockOpen.svg";
 export { default as WarningIcon } from "./warning.svg";
 export { default as LockClosedIcon } from "./lockParameter.svg";
+
+//Inspector Terminals
+
+export { default as ExpandAccordionIcon } from "./expandAccordion.svg";
+export { default as CollapseAccordionIcon } from "./collapseAccordion.svg";
+export { default as ExpandAccordionNestedIcon } from "./expandAccordionNested.svg";
+export { default as CollapseAccordionNestedIcon } from "./collapseAccordionNested.svg";
