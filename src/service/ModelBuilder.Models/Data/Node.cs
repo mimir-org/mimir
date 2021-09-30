@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
 using Newtonsoft.Json;
@@ -79,6 +80,11 @@ namespace Mb.Models.Data
         public virtual Project MasterProject { get; set; }
 
         public string Symbol { get; set; }
+
+        public string PurposeString { get; set; }
+
+        [NotMapped]
+        public virtual Purpose Purpose { get; set; }
 
         public virtual ICollection<Connector> Connectors { get; set; }
 

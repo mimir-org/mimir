@@ -26,6 +26,7 @@ const ConvertToNode = (
     masterProjectId: projectId,
     symbol: icons?.find((x) => x.id === data.symbolId)?.data,
     level: 0,
+    purpose: data.purpose,
   } as Node;
 };
 

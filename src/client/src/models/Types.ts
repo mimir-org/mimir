@@ -46,6 +46,7 @@ export interface LibItem {
   terminalId: string;
   terminalTypeId: string;
   libraryType: ObjectType;
+  purpose: Purpose;
 }
 export interface ProjectSimple {
   id: string;

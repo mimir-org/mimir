@@ -4,14 +4,16 @@ using Mb.Models.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Mb.Core.Migrations
 {
     [DbContext(typeof(ModelBuilderDbContext))]
-    partial class ModelBuilderDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210930103017_LibraryTypePurpose")]
+    partial class LibraryTypePurpose
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -580,10 +582,6 @@ namespace Mb.Core.Migrations
                     b.Property<decimal>("PositionY")
                         .HasColumnType("decimal(18,4)")
                         .HasColumnName("PositionY");
-
-                    b.Property<string>("PurposeString")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("PurposeString");
 
                     b.Property<string>("Rds")
                         .HasColumnType("nvarchar(max)")
