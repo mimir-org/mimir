@@ -1,6 +1,13 @@
 import { IsPartOfTerminal } from "../../common";
 import { Edge, Node } from "../../../../../models";
 
+/**
+ * Function to find a nodes' children
+ * @param parentNode
+ * @param nodes
+ * @param edges
+ * @returns an array of children nodes
+ */
 const GetConnectChildren = (
   parentNode: Node,
   nodes: Node[],

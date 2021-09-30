@@ -1,5 +1,4 @@
 import { Connector, Node } from "../../../../models";
-import { IsMainConnectNode } from "../../helpers/block/connectView";
 import { GetConnectorIcon } from "../../helpers/common";
 import { TerminalsMenu, TerminalsElement } from "./styled";
 
@@ -32,7 +31,6 @@ const TerminalsMenuComponent = ({
     isParent={isParent}
     isLocation={isLocation}
     isInput={isInput}
-    isConnectView={IsMainConnectNode(node.id)}
   >
     {terminals.map((conn) => (
       <TerminalsElement key={conn.id}>

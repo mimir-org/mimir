@@ -9,6 +9,7 @@ import { IsLocation } from "../../helpers/common";
 import { NodeBox } from "../../styled";
 import { TerminalsComponent, HandleComponent } from "../../block/terminals";
 import { ConnectViewComponent } from "../../block/connectView";
+import { IsChildConnectNode, IsConnectNodeChecked } from "./helpers";
 import {
   changeActiveConnector,
   removeEdge,
@@ -38,10 +39,10 @@ import {
  */
 const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
-  const [inputTerminalButton, showInputTerminalButton] = useState(false);
-  const [inputTerminalMenu, showInputTerminalMenu] = useState(false);
-  const [outputTerminalMenu, showOutputTerminalMenu] = useState(false);
-  const [connectButton, showConnectButton] = useState(false);
+  const [inTerminalMenu, showInTerminalMenu] = useState(false);
+  const [outTerminalMenu, showOutTerminalMenu] = useState(false);
+  const [terminalBox, showTerminalBox] = useState(false);
+  const [connectBox, showConnectBox] = useState(false);
   const [connectMenu, showConnectMenu] = useState(false);
 
   const nodes = useSelector<RootState>(
@@ -67,6 +68,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const connectNodes = mainConnectNode?.connectNodes;
   if (!mainConnectNode) data.width = Size.Node_Width;
 
+  // Terminals click
   const onConnectorClick = (conn: Connector) => {
     showConnectMenu(false);
     const order = SetTerminalOrder(data, 0, conn.relationType);
@@ -80,8 +82,9 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     }
   };
 
+  // ConnectView click
   const onConnectNodeClick = (node: Node) => {
-    if (!isConnectorChecked(node)) {
+    if (!IsConnectNodeChecked(node, connectNodes)) {
       if (!IsMainConnectNode(data.id)) dispatch(addMainNode(data));
       dispatch(addConnectNode(data, node));
     } else {
@@ -91,14 +94,6 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
       }
       dispatch(removeConnectNode(data, node));
     }
-  };
-
-  const isConnectorChecked = (node: Node) => {
-    let result = false;
-    connectNodes?.forEach((element) => {
-      if (element.id === node.id) result = true;
-    });
-    return result;
   };
 
   useEffect(() => {
@@ -118,40 +113,38 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     <>
       <NodeBox
         id={"BlockFunctionNode-" + data.id}
-        onMouseOver={() =>
-          OnHover(showInputTerminalButton, showConnectButton, data.id)
-        }
-        onMouseOut={() =>
-          OnMouseOut(showInputTerminalButton, showConnectButton, data.id)
-        }
+        onMouseOver={() => OnHover(showTerminalBox, showConnectBox, data.id)}
+        onMouseOut={() => OnMouseOut(showTerminalBox, showConnectBox, data.id)}
       >
         <p className="node-name">{data.label ?? data.name}</p>
 
         <TerminalsComponent
           node={data}
-          isInputMenuOpen={inputTerminalMenu}
-          isOutputMenuOpen={outputTerminalMenu}
+          isInputMenuOpen={inTerminalMenu}
+          isOutputMenuOpen={outTerminalMenu}
           terminals={sortedTerminals}
           isParent={false}
           isLocation={IsLocation(data)}
           isSplitView={splitView}
           onClick={(conn) => onConnectorClick(conn)}
-          menuButton={inputTerminalButton}
-          showInputTerminalMenu={showInputTerminalMenu}
-          showOutputTerminalMenu={showOutputTerminalMenu}
+          menuButton={terminalBox}
+          showInputTerminalMenu={showInTerminalMenu}
+          showOutputTerminalMenu={showOutTerminalMenu}
         />
-
-        <ConnectViewComponent
-          node={data}
-          isMenuOpen={connectMenu}
-          children={connectChildren}
-          handleClick={onConnectNodeClick}
-          isChecked={isConnectorChecked}
-          connectButton={connectButton}
-          showConnectMenu={showConnectMenu}
-          connectMenu={connectMenu}
-          dispatch={dispatch}
-        />
+        {!IsChildConnectNode(mainConnectNodes, data.id) && (
+          <ConnectViewComponent
+            node={data}
+            isMenuOpen={connectMenu}
+            children={connectChildren}
+            connectNodes={connectNodes}
+            handleClick={onConnectNodeClick}
+            isChecked={IsConnectNodeChecked}
+            connectBox={connectBox}
+            showConnectMenu={showConnectMenu}
+            connectMenu={connectMenu}
+            dispatch={dispatch}
+          />
+        )}
       </NodeBox>
 
       <HandleComponent

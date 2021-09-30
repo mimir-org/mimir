@@ -9,9 +9,10 @@ interface Props {
   node: Node;
   isMenuOpen: boolean;
   children: Node[];
+  connectNodes: Node[];
   handleClick: any;
-  isChecked?: any;
-  connectButton: boolean;
+  isChecked: (node: Node, nodes: Node[]) => boolean;
+  connectBox: boolean;
   showConnectMenu: any;
   connectMenu: boolean;
   dispatch: any;
@@ -26,16 +27,17 @@ const ConnectViewComponent = ({
   node,
   isMenuOpen,
   children,
+  connectNodes,
   handleClick,
   isChecked,
-  connectButton,
+  connectBox,
   showConnectMenu,
   connectMenu,
   dispatch,
 }: Props) => (
   <>
     <ConnectViewBox
-      visible={connectButton && children.length > 0}
+      visible={connectBox && children.length > 0}
       onClick={() => Click.OnConnectMenu(showConnectMenu, connectMenu)}
     >
       <img src={ConnectMenuIcon} alt="menu" />
@@ -50,7 +52,7 @@ const ConnectViewComponent = ({
               <label className={"checkbox-block"}>
                 <input
                   type="checkbox"
-                  checked={isChecked(n)}
+                  checked={isChecked(n, connectNodes)}
                   onChange={() => handleClick(n)}
                 />
                 <span className="checkmark-block"></span>
