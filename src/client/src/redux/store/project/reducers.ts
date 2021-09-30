@@ -1,4 +1,4 @@
-import { Connector, Edge, Node, ProjectSimple } from "../../../models";
+import { Edge, Node, ProjectSimple } from "../../../models";
 import { FindTerminalAndNode, TraverseTree } from "./helpers/";
 import { IsAspectNode } from "../../../components/flow/helpers/common";
 import {
