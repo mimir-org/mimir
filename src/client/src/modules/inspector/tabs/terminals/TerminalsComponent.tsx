@@ -27,6 +27,10 @@ const TerminalsComponent = ({ node }: Props) => {
 
   const onSelectTerminal = (item: Connector) => setSelectedTerminalId(item.id);
 
+  const selectedTerminal = terminals.find(
+    (terminal) => terminal.id === selectedTerminalId
+  );
+
   return (
     <TerminalsWrapper>
       <TerminalsSelector
@@ -35,12 +39,10 @@ const TerminalsComponent = ({ node }: Props) => {
         selectedTerminalId={selectedTerminalId}
         onSelectTerminal={onSelectTerminal}
       />
-      {selectedTerminalId && (
+      {selectedTerminal && (
         <TerminalsParametersWrapper>
           <ParametersContent
-            element={terminals.find(
-              (terminal) => terminal.id === selectedTerminalId
-            )}
+            element={selectedTerminal}
             elementIsLocked={node.isLocked}
           />
         </TerminalsParametersWrapper>

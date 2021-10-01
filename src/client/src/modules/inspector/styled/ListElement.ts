@@ -9,21 +9,9 @@ const ListElement = styled.div`
   background-color: ${(props) => props.color};
   border-bottom: 1px solid ${Color.DarkGrey};
 
-  text-decoration: ${(props) => (props.isSelected ? "underline" : "none")};
-  font-weight: ${(props) => (props.isSelected ? "bold" : "normal")};
-
   .icon {
     display: flex;
     margin-left: auto;
-  }
-
-  .dropdownIcon {
-    margin: auto 20px auto auto;
-    width: 10px;
-    height: 5px;
-  }
-  .numCategoryTerminals {
-    padding-right: 10px;
   }
 
   :hover {
@@ -32,18 +20,14 @@ const ListElement = styled.div`
     text-decoration: underline;
   }
   :first-child {
-    border-top-left-radius: ${(props) => props.radius} px;
-    border-top-right-radius: ${(props) => props.radius}px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
   }
   :last-child {
-    border-bottom-left-radius: ${(props) => props.radius}px;
-    border-bottom-right-radius: ${(props) => props.radius}px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
     border-bottom: none;
   }
 `;
-
-ListElement.defaultProps = {
-  radius: 5,
-};
 
 export default ListElement;

@@ -1,9 +1,11 @@
 import { Color } from "../../../../compLibrary";
 import { TerminalCategory } from "../../../../components/modules/typeEditorModule/helpers/GetFilteredTerminalsList";
 import { Connector, ConnectorType, TerminalType } from "../../../../models";
-import { ListElement } from "../../styled";
 import React, { useState } from "react";
-import { TerminalsListElementWrapper } from "./styled/activeTerminalList";
+import {
+  TerminalsListElementWrapper,
+  TerminalsCategoryListElement,
+} from "./styled/activeTerminalList";
 import ActiveTerminalsTypeList from "./ActiveTerminalsTypeList";
 import {
   ExpandAccordionIcon,
@@ -86,7 +88,7 @@ function ActiveTerminalsList({
 
         return (
           <TerminalsListElementWrapper key={category.id}>
-            <ListElement
+            <TerminalsCategoryListElement
               isSelected={selectedTerminal?.terminalCategoryId === category.id}
               radius={0}
               onClick={() => onCategoryClick(category)}
@@ -103,7 +105,7 @@ function ActiveTerminalsList({
                 className="dropdownIcon"
                 alt="expand-icon"
               />
-            </ListElement>
+            </TerminalsCategoryListElement>
             {categoryExpanded &&
               category.items.map((terminalType) => {
                 const inputTerminals = terminals.filter(
