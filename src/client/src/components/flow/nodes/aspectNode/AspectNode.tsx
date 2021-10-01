@@ -23,10 +23,7 @@ const AspectNode: FC<NodeProps> = ({ data }) => {
   }, [timer]);
 
   return (
-    <div
-      onMouseEnter={() => setIsHover(true)}
-      onMouseLeave={() => OnMouseLeave(setTimer)}
-    >
+    <div onMouseEnter={() => setIsHover(true)} onMouseLeave={() => OnMouseLeave(setTimer)}>
       {data.connectors?.map((conn: Connector) => {
         const [typeHandler, positionHandler] = GetHandleType(conn);
         return (

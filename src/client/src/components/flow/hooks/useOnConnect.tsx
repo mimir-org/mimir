@@ -17,14 +17,8 @@ const useOnConnect = (
 ) => {
   SaveEventData(null, "edgeEvent");
   const createdId = CreateId();
-
-  const sourceNode = project.nodes.find(
-    (node: Node) => node.id === params.source
-  ) as Node;
-
-  const targetNode = project.nodes.find(
-    (node: Node) => node.id === params.target
-  ) as Node;
+  const sourceNode = project.nodes.find((node: Node) => node.id === params.source) as Node;
+  const targetNode = project.nodes.find((node: Node) => node.id === params.target) as Node;
 
   let sourceConn: Connector;
   let targetConn: Connector;

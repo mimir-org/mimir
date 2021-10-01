@@ -9,11 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Connector, Node } from "../../../../models";
 import { OnHover, OnMouseOut } from "./handlers";
 import { IsLocation } from "../../helpers/common";
-import {
-  SetTerminalOrder,
-  FilterTerminals,
-  FindNodeByDataId,
-} from "../../helpers/block";
+import { SetTerminalOrder, FilterTerminals, FindNodeByDataId } from "../../helpers/block";
 
 /**
  * Component for a Location Node in BlockView.
@@ -26,14 +22,8 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const [inputTerminalMenu, showInputTerminalMenu] = useState(false);
   const [outputTerminalMenu, showOutputTerminalMenu] = useState(false);
 
-  const nodes = useSelector<RootState>(
-    (state) => state.projectState.project.nodes
-  ) as Node[];
-
-  const splitView = useSelector<RootState>(
-    (state) => state.splitView.visible
-  ) as boolean;
-
+  const nodes = useSelector<RootState>((state) => state.projectState.project.nodes) as Node[];
+  const splitView = useSelector<RootState>((state) => state.splitView.visible) as boolean;
   const sortedTerminals = FilterTerminals(data, splitView);
 
   const onConnectorClick = (conn: Connector) => {

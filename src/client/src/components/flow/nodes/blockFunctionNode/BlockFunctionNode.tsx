@@ -12,6 +12,8 @@ import { ConnectViewComponent } from "../../block/connectView";
 import { IsChildConnectNode, IsConnectNodeChecked } from "./helpers";
 import { changeActiveConnector, removeEdge } from "../../../../redux/store/project/actions";
 import { SetTerminalOrder, FilterTerminals, FindAllEdges } from "../../helpers/block";
+import { Symbol } from "../../../../compLibrary/symbol";
+import { BlockNodeNameBox } from "../../block/styled";
 import {
   GetConnectChildren,
   IsMainConnectNode,
@@ -101,7 +103,8 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
         onMouseOver={() => OnHover(showTerminalBox, showConnectBox, data.id)}
         onMouseOut={() => OnMouseOut(showTerminalBox, showConnectBox, data.id)}
       >
-        <p className="node-name">{data.label ?? data.name}</p>
+        <BlockNodeNameBox>{data.label ?? data.name}</BlockNodeNameBox>
+        <Symbol base64={data.symbol} text={data.name} />
 
         <TerminalsComponent
           node={data}

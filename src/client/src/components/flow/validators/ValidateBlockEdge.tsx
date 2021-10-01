@@ -28,12 +28,7 @@ const ValidateBlockEdge = (
   toConnector: Connector,
   splitView: boolean
 ) => {
-  if (
-    !fromNode ||
-    !toNode ||
-    IsPartOfTerminal(fromConnector) ||
-    IsPartOfTerminal(toConnector)
-  )
+  if (!fromNode || !toNode || IsPartOfTerminal(fromConnector) || IsPartOfTerminal(toConnector))
     return false;
 
   // Regular BlockView

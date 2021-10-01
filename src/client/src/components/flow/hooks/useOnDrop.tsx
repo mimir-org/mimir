@@ -25,8 +25,7 @@ const useOnDrop = (
 ) => {
   const showBlockView = IsBlockView();
   const sourceNode = GetSelectedNode();
-  const isFile =
-    event.dataTransfer.files && event.dataTransfer.files.length > 0;
+  const isFile = event.dataTransfer.files && event.dataTransfer.files.length > 0;
 
   if (isFile && !showBlockView) {
     event.stopPropagation();
@@ -42,17 +41,13 @@ const useOnDrop = (
       data[1].forEach((edge) => {
         dispatch(createEdge(edge));
         const edgeType = GetEdgeType(edge.fromConnector);
-        setElements((es) =>
-          es.concat(CreateTreeEdge(edge, edgeType, project.nodes))
-        );
+        setElements((es) => es.concat(CreateTreeEdge(edge, edgeType, project.nodes)));
       });
     })();
   } else {
     event.preventDefault();
     const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
-    const data = JSON.parse(
-      event.dataTransfer.getData("application/reactflow")
-    ) as LibItem;
+    const data = JSON.parse(event.dataTransfer.getData("application/reactflow")) as LibItem;
 
     let position;
 
@@ -88,9 +83,7 @@ const useOnDrop = (
     });
 
     showBlockView
-      ? setElements((es) =>
-          es.concat(CreateBlockNode(targetNode, null, project.nodes))
-        )
+      ? setElements((es) => es.concat(CreateBlockNode(targetNode, null, project.nodes)))
       : setElements((es) => es.concat(CreateTreeNode(targetNode)));
 
     if (sourceNode && sourceNode.aspect === targetNode.aspect) {
@@ -116,9 +109,7 @@ const useOnDrop = (
       dispatch(createEdge(partofEdge));
 
       const edgeType = GetEdgeType(sourceConn);
-      setElements((es) =>
-        es.concat(CreateTreeEdge(partofEdge, edgeType, project.nodes))
-      );
+      setElements((es) => es.concat(CreateTreeEdge(partofEdge, edgeType, project.nodes)));
     }
     dispatch(addNode(targetNode));
   }
