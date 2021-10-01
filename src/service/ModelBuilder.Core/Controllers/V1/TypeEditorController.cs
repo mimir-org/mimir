@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
+
 // ReSharper disable StringLiteralTypo
 
 namespace Mb.Core.Controllers.V1
@@ -34,7 +35,7 @@ namespace Mb.Core.Controllers.V1
     {
         private readonly ILogger<ProjectController> _logger;
         private readonly ITypeEditorService _typeEditorService;
-        
+
         public TypeEditorController(ILogger<ProjectController> logger, ITypeEditorService typeEditorService)
         {
             _logger = logger;
@@ -86,7 +87,7 @@ namespace Mb.Core.Controllers.V1
             {
                 ModelState.AddModelError("Not found", e.Message);
                 return BadRequest(ModelState);
-            } 
+            }
             catch (ModelBuilderInvalidOperationException e)
             {
                 ModelState.AddModelError("Invalid value", e.Message);
@@ -345,6 +346,11 @@ namespace Mb.Core.Controllers.V1
 
             try
             {
+                if (libraryType.Aspect == Aspect.Location && libraryType.ObjectType == ObjectType.NotSet)
+                {
+                    libraryType.ObjectType = ObjectType.ObjectBlock;
+                }
+
                 switch (libraryType.ObjectType)
                 {
                     case ObjectType.ObjectBlock:
@@ -354,10 +360,12 @@ namespace Mb.Core.Controllers.V1
                         var ln = await _typeEditorService.CreateLibraryType<LibraryTransportItem>(libraryType);
                         return Ok(ln);
                     case ObjectType.Interface:
-                        var libraryInterfaceItem = await _typeEditorService.CreateLibraryType<LibraryInterfaceItem>(libraryType);
+                        var libraryInterfaceItem =
+                            await _typeEditorService.CreateLibraryType<LibraryInterfaceItem>(libraryType);
                         return Ok(libraryInterfaceItem);
                     default:
-                        throw new ModelBuilderInvalidOperationException($"Can't create type of: {libraryType.ObjectType}");
+                        throw new ModelBuilderInvalidOperationException(
+                            $"Can't create type of: {libraryType.ObjectType}");
                 }
             }
             catch (ModelBuilderDuplicateException e)
@@ -408,10 +416,12 @@ namespace Mb.Core.Controllers.V1
                         var ln = await _typeEditorService.UpdateLibraryType<LibraryTransportItem>(id, libraryType);
                         return Ok(ln);
                     case ObjectType.Interface:
-                        var libraryInterfaceItem = await _typeEditorService.UpdateLibraryType<LibraryInterfaceItem>(id, libraryType);
+                        var libraryInterfaceItem =
+                            await _typeEditorService.UpdateLibraryType<LibraryInterfaceItem>(id, libraryType);
                         return Ok(libraryInterfaceItem);
                     default:
-                        throw new ModelBuilderInvalidOperationException($"Can't create type of: {libraryType.ObjectType}");
+                        throw new ModelBuilderInvalidOperationException(
+                            $"Can't create type of: {libraryType.ObjectType}");
                 }
             }
             catch (ModelBuilderNullReferenceException e)
