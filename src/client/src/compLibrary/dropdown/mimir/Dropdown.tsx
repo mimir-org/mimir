@@ -62,7 +62,6 @@ const Dropdown = ({
       disabled={disabled}
       tabIndex={0}
       onBlur={() => {
-        console.log("blurred");
         setIsListOpen(false);
       }}
     >
