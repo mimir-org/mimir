@@ -138,6 +138,9 @@
   <data name="context" xml:space="preserve">
     <value>imf:context</value>
   </data>
+  <data name="equinorPrefix" xml:space="preserve">
+    <value>eq:</value>
+  </data>
   <data name="FSB" xml:space="preserve">
     <value>imf:FunctionalSystemBlock</value>
   </data>
@@ -183,6 +186,9 @@
   <data name="hasValue" xml:space="preserve">
     <value>imf:hasValue</value>
   </data>
+  <data name="imfPrefix" xml:space="preserve">
+    <value>imf:</value>
+  </data>
   <data name="InputTerminal" xml:space="preserve">
     <value>imf:InTerminal</value>
   </data>
@@ -212,6 +218,9 @@
   </data>
   <data name="LocationAspectObject" xml:space="preserve">
     <value>imf:LocationAspectObject</value>
+  </data>
+  <data name="mimirPrefix" xml:space="preserve">
+    <value>mimir:</value>
   </data>
   <data name="OutputTerminal" xml:space="preserve">
     <value>imf:OutTerminal</value>

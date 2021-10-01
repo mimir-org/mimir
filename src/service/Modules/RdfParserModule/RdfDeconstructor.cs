@@ -16,31 +16,52 @@ namespace RdfParserModule
 {
     class RdfDeconstructor
     {
-        public static IGraph LoadGraph(string valueAsString)
-        {
-            IGraph g = new Graph();
-            g.LoadFromString(valueAsString);
+        public IGraph RdfGraph { get; set; }
+        public ParserGraph ParserGraph { get; set; }
 
-            return g;
+        public void LoadGraph(string valueAsString)
+        {
+            RdfGraph = new Graph();
+            RdfGraph.LoadFromString(valueAsString);
         }
 
-        public static ProjectAm ExampleProject(IGraph g)
+        public ProjectAm ExampleProject()
         {
+            ParserGraph = new ParserGraph();
+
+            var functionObjects = GetAllFunctionObjects();
+            foreach (var funcObj in functionObjects)
+            {
+                ParserGraph.Nodes.Add(funcObj);
+            }
+
             var p = new ProjectAm();
-
-            ParserNode root = new ParserNode("topNodeId");
-            ParserGraph graph = new ParserGraph(root);
-
-            ParserNode childNode = new ParserNode("childNodeId");
-
-            root.AddConnection(childNode, "hasPart");
-
-            //root.GetConnection(childNode);
-
             return p;
         }
 
-        private static string RdfToString(IGraph g)
+        public List<ParserNode> GetAllFunctionObjects()
+        {
+            var store = new TripleStore();
+            store.Add(RdfGraph);
+
+            var pred = RdfGraph.CreateUriNode("imf:hasAspect");
+            var obj = RdfGraph.CreateUriNode("imf:Function");
+
+            var subs = store.GetTriplesWithPredicateObject(pred, obj).Select(t => t.Subject).ToList();
+            
+            var nodes = subs.Select(node => new ParserNode
+            {
+                Aspect = "Function",
+                Id = node.ToString(),
+                SemanticReference = node.ToString(),
+                IsRoot = false
+
+            }).ToList();
+
+            return nodes;
+        }
+
+        private string RdfToString(IGraph g)
         {
             RdfJsonWriter writer = new RdfJsonWriter();
 
@@ -49,57 +70,8 @@ namespace RdfParserModule
             return data;
         }
 
-        private static IDictionary<string, string> GetMetaDataFromGraph(IGraph g)
+        public ProjectAm GetProject()
         {
-            TripleStore store = new TripleStore();
-            store.Add(g);
-
-            InMemoryDataset ds = new InMemoryDataset(store, true);
-            ISparqlQueryProcessor processor = new LeviathanQueryProcessor(ds);
-
-            SparqlQueryParser parser = new SparqlQueryParser();
-            SparqlQuery query = parser.ParseFromString(@"PREFIX imf: <http://example.com/imf#>
-                    PREFIX  owl: <http://www.w3.org/2002/07/owl#>
-                    PREFIX  rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-                    PREFIX  rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-                    prefix imf: <http://example.com/imf#>
-                    prefix mimir: <http://example.com/mimir#>
-
-
-                    SELECT ?id ?label ?version WHERE {
-                        ?project a imf:IntegratedObject .
-                        ?project rdfs:label ?label .
-                        ?project mimir:id ?id .
-                        ?project owl:versionInfo ?version .
-                    }");
-
-            var resultStrings = new Dictionary<string, string>();
-
-            var results = processor.ProcessQuery(query);
-            if (results is SparqlResultSet)
-            {
-                SparqlResultSet rset = (SparqlResultSet) results;
-                foreach (SparqlResult result in rset)
-                {
-                    foreach (var variable in result.Variables)
-                    {
-                        resultStrings[variable] = result[variable].ToString();
-                    }
-                }
-            }
-
-            return resultStrings;
-        }
-
-        public static ProjectAm GetProject(IGraph g)
-        {
-
-            var metaData = GetMetaDataFromGraph(g);
-
-            string projectId = metaData["id"];
-            string version = metaData["version"];
-            string projectLabel = metaData["label"];
-
 
             var fromNode = new NodeAm
             {
@@ -110,11 +82,11 @@ namespace RdfParserModule
                 PositionY = 5.0m,
                 Connectors = new Collection<ConnectorAm>(),
                 Attributes = new Collection<AttributeAm>(),
-                Version = version,
+                Version = "version",
                 Rds = "KEA",
                 StatusId = "4590637F39B6BA6F39C74293BE9138DF",
                 IsRoot = true,
-                MasterProjectId = projectId,
+                MasterProjectId = "projectId",
                 Aspect = Aspect.Function
             };
 
@@ -127,11 +99,11 @@ namespace RdfParserModule
                 PositionY = 5.0m,
                 Connectors = new Collection<ConnectorAm>(),
                 Attributes = new Collection<AttributeAm>(),
-                Version = version,
+                Version = "version",
                 Rds = "KEA",
                 StatusId = "4590637F39B6BA6F39C74293BE9138DF",
                 IsRoot = false,
-                MasterProjectId = projectId,
+                MasterProjectId = "projectId",
                 Aspect = Aspect.Function
             };
 
@@ -176,9 +148,9 @@ namespace RdfParserModule
 
             var p = new ProjectAm
             {
-                Id = projectId,
-                Version = version,
-                Name = projectLabel,
+                Id = "projectId",
+                Version = "version",
+                Name = "projectLabel",
                 Description = "Project Description",
                 Nodes = new Collection<NodeAm>(),
                 Edges = new Collection<EdgeAm>()
@@ -191,7 +163,7 @@ namespace RdfParserModule
                 ToConnectorId = toConnector.Id,
                 FromNodeId = fromNode.Id,
                 ToNodeId = toNode.Id,
-                MasterProjectId = projectId,
+                MasterProjectId = "projectId",
                 IsTemplateEdge = false
             };
 

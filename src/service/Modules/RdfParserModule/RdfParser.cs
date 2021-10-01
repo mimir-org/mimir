@@ -17,8 +17,9 @@ namespace RdfParserModule
 
         public Task<byte[]> SerializeProject(Project project)
         {
-            IRdfBuilder builder = new RdfBuilder();
+            var builder = new RdfBuilder();
             builder.BuildProject(project);
+
             var bytes = builder.GetBytes<CompressingTurtleWriter>();
 
             return Task.FromResult(bytes);
@@ -33,8 +34,10 @@ namespace RdfParserModule
         {
             var valueAsString = Encoding.UTF8.GetString(data, 0, data.Length);
 
-            var graph = RdfDeconstructor.LoadGraph(valueAsString);
-            var project = RdfDeconstructor.ExampleProject(graph);
+            var rdf = new RdfDeconstructor();
+
+            rdf.LoadGraph(valueAsString);
+            var project = rdf.ExampleProject();
 
             return Task.FromResult(project);
         }

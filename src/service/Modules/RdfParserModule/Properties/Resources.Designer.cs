@@ -124,6 +124,15 @@ namespace RdfParserModule.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to eq:.
+        /// </summary>
+        internal static string equinorPrefix {
+            get {
+                return ResourceManager.GetString("equinorPrefix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to imf:FunctionalSystemBlock.
         /// </summary>
         internal static string FSB {
@@ -259,6 +268,15 @@ namespace RdfParserModule.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to imf:.
+        /// </summary>
+        internal static string imfPrefix {
+            get {
+                return ResourceManager.GetString("imfPrefix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to imf:InTerminal.
         /// </summary>
         internal static string InputTerminal {
@@ -349,6 +367,15 @@ namespace RdfParserModule.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to mimir:.
+        /// </summary>
+        internal static string mimirPrefix {
+            get {
+                return ResourceManager.GetString("mimirPrefix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to imf:OutTerminal.
         /// </summary>
         internal static string OutputTerminal {
@@ -390,7 +417,7 @@ namespace RdfParserModule.Properties {
         internal static string project {
             get {
                 return ResourceManager.GetString("project", resourceCulture);
-        }
+            }
         }
         
         /// <summary>
