@@ -5,7 +5,6 @@ using Mb.Core.Repositories.Contracts;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 
 namespace Mb.Core.Repositories
 {
@@ -14,26 +13,26 @@ namespace Mb.Core.Repositories
         private readonly IAttributeRepository _attributeRepository;
         private readonly ITransportRepository _transportRepository;
         private readonly IInterfaceRepository _interfaceRepository;
+        private readonly IConnectorRepository _connectorRepository;
 
-        public EdgeRepository(ModelBuilderDbContext dbContext, IAttributeRepository attributeRepository, ITransportRepository transportRepository, IInterfaceRepository interfaceRepository) : base(dbContext)
+        public EdgeRepository(ModelBuilderDbContext dbContext, IAttributeRepository attributeRepository, ITransportRepository transportRepository, IInterfaceRepository interfaceRepository, IConnectorRepository connectorRepository) : base(dbContext)
         {
             _attributeRepository = attributeRepository;
             _transportRepository = transportRepository;
             _interfaceRepository = interfaceRepository;
+            _connectorRepository = connectorRepository;
         }
 
         public IEnumerable<Edge> UpdateInsert(ICollection<Edge> original, Project project)
         {
-            if (project?.Edges == null || !project.Edges.Any())
+            if (project?.Edges == null || !project.Edges.Any() || original == null)
                 yield break;
 
-            var updates = original != null
-                ? project.Edges.Where(x => original.All(y => y.Id != x.Id)).ToList()
-                : new List<Edge>();
+            var newEdges = project.Edges.Where(x => original.All(y => y.Id != x.Id)).ToList();
 
             foreach (var edge in project.Edges)
             {
-                if (updates.Any(x => x.Id == edge.Id))
+                if (newEdges.Any(x => x.Id == edge.Id))
                 {
                     if (edge.MasterProjectId != project.Id)
                     {
@@ -42,26 +41,8 @@ namespace Mb.Core.Repositories
                         continue;
                     }
 
-                    if (edge.Transport != null)
-                    {
-                        if (edge.Transport?.Attributes != null)
-                        {
-                            foreach (var attribute in edge.Transport.Attributes)
-                            {
-                                attribute.UnitString = attribute.Units != null
-                                    ? JsonConvert.SerializeObject(attribute.Units)
-                                    : null;
-                                _attributeRepository.Attach(attribute, EntityState.Added);
-                            }
-                        }
-                        _transportRepository.Attach(edge.Transport, EntityState.Added);
-                    }
-
-                    if (edge.Interface != null)
-                    {
-                        _interfaceRepository.Attach(edge.Interface, EntityState.Added);
-                    }
-
+                    _transportRepository.UpdateInsert(edge.Transport, EntityState.Added);
+                    _interfaceRepository.UpdateInsert(edge.Interface, EntityState.Added);
                     Attach(edge, EntityState.Added);
                 }
                 else
@@ -69,26 +50,8 @@ namespace Mb.Core.Repositories
                     if (edge.MasterProjectId != project.Id)
                         continue;
 
-                    if (edge.Transport != null)
-                    {
-                        if (edge.Transport?.Attributes != null)
-                        {
-                            foreach (var attribute in edge.Transport.Attributes)
-                            {
-                                attribute.UnitString = attribute.Units != null
-                                    ? JsonConvert.SerializeObject(attribute.Units)
-                                    : null;
-                                _attributeRepository.Attach(attribute, EntityState.Modified);
-                            }
-                        }
-                        _transportRepository.Attach(edge.Transport, EntityState.Modified);
-                    }
-
-                    if (edge.Interface != null)
-                    {
-                        _interfaceRepository.Attach(edge.Interface, EntityState.Modified);
-                    }
-
+                    _transportRepository.UpdateInsert(edge.Transport, EntityState.Modified);
+                    _interfaceRepository.UpdateInsert(edge.Interface, EntityState.Modified);
                     Attach(edge, EntityState.Modified);
                 }
             }
@@ -98,24 +61,73 @@ namespace Mb.Core.Repositories
         {
             var subEdges = new List<Edge>();
 
+            if (delete == null || projectId == null || !delete.Any())
+                return subEdges;
+
             foreach (var edge in delete)
             {
-                if (edge.MasterProjectId != projectId)
+                if (edge.MasterProjectId != null && edge.MasterProjectId != projectId)
                 {
                     subEdges.Add(edge);
                     continue;
                 }
 
-                if (edge.Transport?.Attributes != null)
+                //Attributes - Transport (delete)
+                if(edge.Transport?.Attributes != null && edge.Transport.Attributes.Any())
                     _attributeRepository.Attach(edge.Transport.Attributes, EntityState.Deleted);
 
-                if (edge.Transport != null)
-                    await _transportRepository.Delete(edge.Transport.Id);
+                //Attributes - Interface (delete)
+                if (edge.Interface?.Attributes != null && edge.Interface.Attributes.Any())
+                    _attributeRepository.Attach(edge.Interface.Attributes, EntityState.Deleted);
 
+                //Attributes - Terminal transport (delete)
+                if (edge.Transport?.InputTerminalId != null && edge.Transport?.OutputTerminalId != null)
+                {
+                    var terminalTransportAttributes = _attributeRepository.FindBy(x =>
+                        x.TerminalId == edge.Transport.InputTerminalId ||
+                        x.TerminalId == edge.Transport.OutputTerminalId).ToList();
+
+                    if(terminalTransportAttributes.Any())
+                        _attributeRepository.Attach(terminalTransportAttributes, EntityState.Deleted);
+                }
+
+                //Attributes - Terminal Interface (delete)
+                if (edge.Interface?.InputTerminalId != null && edge.Interface?.OutputTerminalId != null)
+                {
+                    var terminalInterfaceAttributes = _attributeRepository.FindBy(x =>
+                        x.TerminalId == edge.Interface.InputTerminalId ||
+                        x.TerminalId == edge.Interface.OutputTerminalId).ToList();
+
+                    if(terminalInterfaceAttributes.Any())
+                        _attributeRepository.Attach(terminalInterfaceAttributes, EntityState.Deleted);
+                }
+
+                //Transport - (delete)
+                if(edge.Transport != null)
+                    _transportRepository.Attach(edge.Transport, EntityState.Deleted);
+
+                //Interface - (delete)
                 if (edge.Interface != null)
-                    await _interfaceRepository.Delete(edge.Interface.Id);
+                    _interfaceRepository.Attach(edge.Interface, EntityState.Deleted);
 
-                await Delete(edge.Id);
+                //Edge - (delete)
+                Attach(edge, EntityState.Deleted);
+
+                //Terminal - Transport output (delete) 
+                if (edge.Transport?.InputTerminalId != null)
+                    await _connectorRepository.Delete(edge.Transport.InputTerminalId);
+
+                //Terminal - Transport input (delete)
+                if (edge.Transport?.OutputTerminalId != null)
+                    await _connectorRepository.Delete(edge.Transport.OutputTerminalId);
+
+                //Terminal - Interface input (delete)
+                if (edge.Interface?.InputTerminalId != null)
+                    await _connectorRepository.Delete(edge.Interface.InputTerminalId);
+
+                //Terminal - Interface output (delete)
+                if (edge.Interface?.OutputTerminalId != null)
+                    await _connectorRepository.Delete(edge.Interface.OutputTerminalId);
             }
 
             return subEdges;

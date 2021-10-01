@@ -475,16 +475,7 @@ export function* lockUnlockAttribute(action: LockUnlockNodeAttribute) {
         type: LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
         payload: payload,
       });
-      return;
     }
-
-    const payload = {
-      apiError: null,
-    };
-    yield put({
-      type: LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
   } catch (error) {
     const apiError = {
       key: LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
