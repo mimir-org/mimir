@@ -15,10 +15,7 @@ interface Props {
 
 const EdgeAdminComponent = ({ edge, project, index }: Props) => {
   const dispatch = useDispatch();
-
-  const isOpen = useSelector<RootState>(
-    (state) => state.inspector.tabs[index].visible
-  ) as boolean;
+  const isOpen = useSelector<RootState>((state) => state.inspector.tabs[index].visible) as boolean;
 
   const onClick = useCallback(() => {
     dispatch(changeInspectorTab(index));
@@ -26,11 +23,7 @@ const EdgeAdminComponent = ({ edge, project, index }: Props) => {
 
   return (
     <>
-      <TabHeader
-        active={isOpen}
-        onClick={onClick}
-        color={GetTabsColor(null, edge)}
-      >
+      <TabHeader active={isOpen} onClick={onClick} color={GetTabsColor(null, edge)}>
         <TabTitle active={isOpen}>{GetInspectorText(index)}</TabTitle>
       </TabHeader>
       {isOpen && (

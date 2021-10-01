@@ -14,8 +14,12 @@ import { MODULE_TYPE } from "../../models/project";
 import { GetSelectedNode } from "../../components/flow/helpers/common";
 import { OnLibraryClick, OnLegendClick } from "./handlers";
 import { Project } from "../../models";
-import { LegendIcon, LibraryIcon } from "../../assets/icons/common";
+import { LegendIcon, LibraryIcon, UpIcon, DownIcon } from "../../assets/icons/common";
 
+/**
+ * Component for Mimir's type library and Legend Module (to be removed).
+ * @returns a module with a drop-down of types and a search input.
+ */
 const LibraryModule = () => {
   const libraryKey = MODULE_TYPE.LIBRARY;
   const legendKey = MODULE_TYPE.LEGEND;
@@ -83,7 +87,7 @@ const LibraryModule = () => {
         <ModuleHead legend>
           <LegendHead open={legendOpen}>
             <img
-              src={LegendIcon}
+              src={legendOpen ? DownIcon : UpIcon}
               alt="arrow"
               onClick={() => OnLegendClick(dispatch, legendOpen, legendKey)}
             />
