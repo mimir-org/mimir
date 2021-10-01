@@ -14,9 +14,17 @@ namespace Mb.Models.Data
         public virtual ICollection<Attribute> Attributes { get; set; }
 
         [JsonIgnore]
-        public ICollection<Transport> Transports { get; set; }
+        public ICollection<Transport> InputTransports { get; set; }
 
         [JsonIgnore]
-        public ICollection<Interface> Interfaces { get; set; }
+        public ICollection<Transport> OutputTransports { get; set; }
+
+        [JsonIgnore]
+        public ICollection<Interface> InputInterfaces { get; set; }
+
+        [JsonIgnore]
+        public ICollection<Interface> OutputInterfaces { get; set; }
+
+
     }
 }
