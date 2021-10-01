@@ -23,14 +23,7 @@ interface Props {
   onClose: (id: string) => void;
 }
 
-function Parameter({
-  attribute,
-  combination,
-  isNodeLocked,
-  onLock,
-  onClose,
-  onChange,
-}: Props) {
+function Parameter({ attribute, combination, isNodeLocked, onLock, onClose, onChange }: Props) {
   const [value, setValue] = useState(attribute.value ?? "");
   const [unit, setUnit] = useState(attribute.unit ?? attribute.units[0]);
 
@@ -39,22 +32,14 @@ function Parameter({
   return (
     <Entity width={255}>
       <ParameterBox>
-        <ParameterHeader
-          color={GetParametersColor()}
-          isNodeLocked={isNodeLocked}
-        >
+        <ParameterHeader color={GetParametersColor()} isNodeLocked={isNodeLocked}>
           {false && ( //TODO: Add proper logic for warningIcon when validation feature is added
             <img src={WarningIcon} className="warningIcon" alt="icon" />
           )}
 
           <div className="parameterHeader">{attribute.key}</div>
           <div className="icons">
-            <img
-              src={HelpIcon}
-              className="parameterIcon"
-              alt="icon"
-              onClick={() => null}
-            />
+            <img src={HelpIcon} className="parameterIcon" alt="icon" onClick={() => null} />
             <img
               src={isDisabled() ? LockClosedIcon : LockOpenIcon}
               className="parameterIcon lockIcon"
@@ -83,9 +68,7 @@ function Parameter({
             value={value}
             type="text"
             onChange={(e) => setValue(e.target.value)}
-            onBlur={() =>
-              onChange(attribute.id, value, unit.id, attribute.nodeId)
-            }
+            onBlur={() => onChange(attribute.id, value, unit.id, attribute.nodeId)}
           />
           <div className="parameterDropdown">
             <CompDropdown

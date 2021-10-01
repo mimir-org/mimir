@@ -20,10 +20,7 @@ const GetMenuElement = ({ type, onClick, userState }: Props) => {
   ) : (
     <MenuElement logOut>
       {userState.user && userState.user.name}
-      <Button
-        onClick={() => OnLogOutClick()}
-        type={TextResources.Account_Logout}
-      />
+      <Button onClick={() => OnLogOutClick()} type={TextResources.Account_Logout} />
     </MenuElement>
   );
 };

@@ -44,9 +44,7 @@ function ParameterRow({
             <img
               src={CloseParameterFilterIcon}
               alt="icon"
-              onClick={() =>
-                OnChangeFilterChoice(element.id, filterName, true, dispatch)
-              }
+              onClick={() => OnChangeFilterChoice(element.id, filterName, true, dispatch)}
             />
           </div>
           <div className="text">{filterName}</div>
@@ -71,9 +69,7 @@ function ParameterRow({
         <Parameter
           key={combination.combined}
           attribute={attributes.find(
-            (attr) =>
-              attr.key === filterName &&
-              DoesCombinationMatchAttribute(combination, attr)
+            (attr) => attr.key === filterName && DoesCombinationMatchAttribute(combination, attr)
           )}
           combination={combination}
           isNodeLocked={elementIsLocked}
@@ -91,13 +87,7 @@ function ParameterRow({
             )
           }
           onClose={() =>
-            OnChangeAttributeCombinationChoice(
-              element.id,
-              filterName,
-              combination,
-              true,
-              dispatch
-            )
+            OnChangeAttributeCombinationChoice(element.id, filterName, combination, true, dispatch)
           }
         />
       ))}

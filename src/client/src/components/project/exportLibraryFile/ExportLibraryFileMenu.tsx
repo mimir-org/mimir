@@ -7,29 +7,18 @@ import { useState } from "react";
 import { Input, Label, Size } from "../../../compLibrary";
 import { Button } from "../../../compLibrary/buttons";
 import { OnReturnClick, OnSaveClick } from "./handlers";
-import {
-  ProjectBody,
-  ProjectBox,
-  HeaderBox,
-  ButtonBox,
-} from "../../../compLibrary/box/project";
+import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../../../compLibrary/box/project";
 
 export const ExportLibraryFileMenu = () => {
   const dispatch = useDispatch();
   const [fileName, setFileName] = useState("");
 
   const isOpen = useSelector<RootState>(
-    (state) =>
-      state.menu.list.find((x) => x.type === MENU_TYPE.SAVE_LIBRARY_FILE_MENU)
-        ?.visible
+    (state) => state.menu.list.find((x) => x.type === MENU_TYPE.SAVE_LIBRARY_FILE_MENU)?.visible
   ) as boolean;
 
   return (
-    <ProjectBox
-      width={Size.MenuSmall_Width}
-      height={Size.MenuSmall_Height}
-      visible={isOpen}
-    >
+    <ProjectBox width={Size.MenuSmall_Width} height={Size.MenuSmall_Height} visible={isOpen}>
       <ProjectBody>
         <HeaderBox>
           <img
@@ -48,10 +37,7 @@ export const ExportLibraryFileMenu = () => {
           value={fileName}
         />
         <ButtonBox left>
-          <Button
-            onClick={() => OnReturnClick(dispatch)}
-            type={TextResources.Account_Cancel}
-          />
+          <Button onClick={() => OnReturnClick(dispatch)} type={TextResources.Account_Cancel} />
         </ButtonBox>
         {fileName && (
           <ButtonBox>

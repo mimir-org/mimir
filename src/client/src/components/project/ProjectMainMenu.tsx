@@ -5,11 +5,7 @@ import { NewProjectIcon, OpenProjectIcon } from "../../assets/icons/common";
 import { MENU_TYPE } from "../../models/project";
 import { Project } from "../../models";
 import { OnCreateClick, OnOpenClick } from "./handlers";
-import {
-  ProjectBody,
-  ProjectBox,
-  ProjectElement,
-} from "../../compLibrary/box/project";
+import { ProjectBody, ProjectBox, ProjectElement } from "../../compLibrary/box/project";
 
 interface Props {
   project: Project;
@@ -20,8 +16,7 @@ export const ProjectMainMenu = ({ project }: Props) => {
   const hasProject = project !== null;
 
   const isOpen = useSelector<RootState>(
-    (state) =>
-      state.menu.list.find((x) => x.type === MENU_TYPE.MAIN_MENU).visible
+    (state) => state.menu.list.find((x) => x.type === MENU_TYPE.MAIN_MENU).visible
   ) as boolean;
 
   return (

@@ -15,7 +15,6 @@ export const CheckboxBlock = ({ node, inputLabel }: Props) => {
   const splitViewNode = useSelector<RootState>((state) => state.splitView.node) as Node;
   const selectedNode = GetSelectedNode();
   const isSplitViewNode = splitViewNode?.id === node.id;
-
   const isChecked = splitView ? node === selectedNode || isSplitViewNode : node === selectedNode;
 
   return (

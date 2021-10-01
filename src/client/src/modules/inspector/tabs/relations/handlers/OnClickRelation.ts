@@ -4,10 +4,7 @@ import { MODULE_TYPE } from "../../../../../models/project";
 import { setModuleVisibility } from "../../../../../redux/store/modules/actions";
 import { SetPanelHeight } from "../../../helpers";
 import { changeInspectorTab } from "../../../redux/actions";
-import {
-  setActiveEdge,
-  setActiveNode,
-} from "../../../../../redux/store/project/actions";
+import { setActiveEdge, setActiveNode } from "../../../../../redux/store/project/actions";
 
 const OnClickRelation = (
   node: Node,
@@ -23,15 +20,10 @@ const OnClickRelation = (
   dispatch(changeInspectorTab(3));
 
   const panel = document.getElementById("InspectorModule");
-  if (panel.style.height === Size.ModuleClosed + "px")
-    SetPanelHeight(Size.InspectorModuleOpen);
+  if (panel.style.height === Size.ModuleClosed + "px") SetPanelHeight(Size.InspectorModuleOpen);
 };
 
-const FindToNodeByConnector = (
-  node: Node,
-  conn: Connector,
-  edges: Map<string, Edge>
-): Node => {
+const FindToNodeByConnector = (node: Node, conn: Connector, edges: Map<string, Edge>): Node => {
   const edge = edges.get(conn.id);
 
   return edge.fromNodeId === node.id ? edge.toNode : edge.fromNode;

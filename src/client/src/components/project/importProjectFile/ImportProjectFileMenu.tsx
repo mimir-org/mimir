@@ -9,20 +9,13 @@ import { Size } from "../../../compLibrary";
 import { Button } from "../../../compLibrary/buttons";
 import { useFilePicker } from "use-file-picker";
 import { OnReturnClick, OnProjectSaveClick } from "./handlers";
-import {
-  ProjectBody,
-  ProjectBox,
-  HeaderBox,
-  ButtonBox,
-} from "../../../compLibrary/box/project";
+import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../../../compLibrary/box/project";
 
 export const ImportProjectFileMenu = () => {
   const dispatch = useDispatch();
 
   const isOpen = useSelector<RootState>(
-    (state) =>
-      state.menu.list.find((x) => x.type === MENU_TYPE.IMPORT_PROJECT_FILE_MENU)
-        ?.visible
+    (state) => state.menu.list.find((x) => x.type === MENU_TYPE.IMPORT_PROJECT_FILE_MENU)?.visible
   ) as boolean;
 
   const [openFileSelector, { filesContent, plainFiles }] = useFilePicker({
@@ -45,11 +38,7 @@ export const ImportProjectFileMenu = () => {
   };
 
   return (
-    <ProjectBox
-      width={Size.MenuSmall_Width}
-      height={Size.MenuSmall_Height}
-      visible={isOpen}
-    >
+    <ProjectBox width={Size.MenuSmall_Width} height={Size.MenuSmall_Height} visible={isOpen}>
       <ProjectBody>
         <HeaderBox>
           <img
@@ -61,16 +50,10 @@ export const ImportProjectFileMenu = () => {
           {TextResources.Account_Import_File}
         </HeaderBox>
         <ButtonBox>
-          <Button
-            onClick={() => openFileSelector()}
-            type={buttonBrowseText()}
-          />
+          <Button onClick={() => openFileSelector()} type={buttonBrowseText()} />
         </ButtonBox>
         <ButtonBox left>
-          <Button
-            onClick={() => OnReturnClick(dispatch)}
-            type={TextResources.Account_Cancel}
-          />
+          <Button onClick={() => OnReturnClick(dispatch)} type={TextResources.Account_Cancel} />
         </ButtonBox>
         {plainFiles?.length > 0 && data() && (
           <ButtonBox>

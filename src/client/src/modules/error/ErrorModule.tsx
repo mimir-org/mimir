@@ -44,25 +44,11 @@ const ErrorModule = () => {
     setVisible(false);
   };
 
-  const projectState = useSelector<RootState>(
-    (state) => state.projectState
-  ) as ProjectState;
-
-  const libraryState = useSelector<RootState>(
-    (state) => state.library
-  ) as LibraryState;
-
-  const userState = useSelector<RootState>(
-    (state) => state.userState
-  ) as UserState;
-
-  const commonState = useSelector<RootState>(
-    (state) => state.commonState
-  ) as CommonState;
-
-  const typeEditorState = useSelector<RootState>(
-    (state) => state.typeEditor
-  ) as TypeEditorState;
+  const projectState = useSelector<RootState>((state) => state.projectState) as ProjectState;
+  const libraryState = useSelector<RootState>((state) => state.library) as LibraryState;
+  const userState = useSelector<RootState>((state) => state.userState) as UserState;
+  const commonState = useSelector<RootState>((state) => state.commonState) as CommonState;
+  const typeEditorState = useSelector<RootState>((state) => state.typeEditor) as TypeEditorState;
 
   useEffect(() => {
     const errorList = [];

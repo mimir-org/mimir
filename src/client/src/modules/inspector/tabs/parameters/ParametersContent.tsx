@@ -20,9 +20,7 @@ const ParametersContent = ({ element, elementIsLocked }: Props) => {
 
   const attributeFilters =
     (
-      useSelector<RootState>(
-        (state) => state.commonState.filters
-      ) as CombinedAttributeFilter[]
+      useSelector<RootState>((state) => state.commonState.filters) as CombinedAttributeFilter[]
     ).filter((x) => attributes.find((att) => att.key === x.name)) ?? [];
 
   const selectedFilters =
@@ -32,10 +30,7 @@ const ParametersContent = ({ element, elementIsLocked }: Props) => {
 
   const hasFilters = Object.keys(selectedFilters).length > 0;
 
-  const attributeCombinations = GetAttributeCombinations(
-    attributeFilters,
-    attributes
-  );
+  const attributeCombinations = GetAttributeCombinations(attributeFilters, attributes);
 
   return (
     <>
@@ -48,29 +43,24 @@ const ParametersContent = ({ element, elementIsLocked }: Props) => {
             items={attributeFilters}
             selectedItems={selectedFilters}
           />
-          <div
-            className="link"
-            onClick={() => OnClearAllFilters(element.id, dispatch)}
-          >
+          <div className="link" onClick={() => OnClearAllFilters(element.id, dispatch)}>
             {TextResources.Inspector_Params_Clear_All}
           </div>
           <div className="link">{TextResources.Inspector_Params_Default}</div>
         </Menu>
       </Header>
       {hasFilters &&
-        Object.entries(selectedFilters).map(
-          ([filterName, selectedCombinations]) => (
-            <ParameterRow
-              key={filterName}
-              element={element}
-              elementIsLocked={elementIsLocked}
-              combinations={attributeCombinations[filterName]}
-              selectedCombinations={selectedCombinations}
-              filterName={filterName}
-              dispatch={dispatch}
-            />
-          )
-        )}
+        Object.entries(selectedFilters).map(([filterName, selectedCombinations]) => (
+          <ParameterRow
+            key={filterName}
+            element={element}
+            elementIsLocked={elementIsLocked}
+            combinations={attributeCombinations[filterName]}
+            selectedCombinations={selectedCombinations}
+            filterName={filterName}
+            dispatch={dispatch}
+          />
+        ))}
     </>
   );
 };

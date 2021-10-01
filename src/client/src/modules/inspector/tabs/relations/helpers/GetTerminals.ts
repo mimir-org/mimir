@@ -1,9 +1,9 @@
+import { Connector, Edge, Node } from "../../../../../models";
 import {
   IsInputTerminal,
   IsOutputTerminal,
   IsTransportTerminal,
 } from "../../../../../components/flow/helpers/common";
-import { Connector, Edge, Node } from "../../../../../models";
 
 const GetTerminalsAndTransports = (
   connectors: Connector[],
@@ -12,8 +12,7 @@ const GetTerminalsAndTransports = (
 ): [Connector[], Connector[], Edge[]] => {
   const transports = edges.filter(
     (e) =>
-      (e.toNodeId === node.id || e.fromNodeId === node.id) &&
-      IsTransportTerminal(e.fromConnector)
+      (e.toNodeId === node.id || e.fromNodeId === node.id) && IsTransportTerminal(e.fromConnector)
   );
 
   const inputTerminals = connectors.filter(
@@ -28,8 +27,6 @@ const GetTerminalsAndTransports = (
 };
 
 const HasEdge = (edges: Edge[], conn: Connector) =>
-  edges.find(
-    (e) => e.fromConnector.id === conn.id || e.toConnector.id === conn.id
-  );
+  edges.find((e) => e.fromConnector.id === conn.id || e.toConnector.id === conn.id);
 
 export default GetTerminalsAndTransports;

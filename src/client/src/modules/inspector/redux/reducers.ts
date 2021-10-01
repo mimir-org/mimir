@@ -22,10 +22,7 @@ const initialState = {
   ],
 };
 
-export const inspectorReducer = (
-  state = initialState,
-  action: InspectorActionTypes
-) => {
+export const inspectorReducer = (state = initialState, action: InspectorActionTypes) => {
   if (action.type === CHANGE_INSPECTOR_COMPONENT) {
     return {
       ...state,

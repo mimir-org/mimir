@@ -1,22 +1,16 @@
+import React, { useState } from "react";
 import { Color } from "../../../../compLibrary";
 import { TerminalCategory } from "../../../../components/modules/typeEditorModule/helpers/GetFilteredTerminalsList";
 import { Connector, ConnectorType, TerminalType } from "../../../../models";
-import React, { useState } from "react";
 import ActiveTerminalsTypeList from "./ActiveTerminalsTypeList";
 import { OnCategoryClick, OnTypeClick } from "./handlers";
 import { FilterTerminalCategories, FormatTypeId } from "./helpers";
+import { IsInputTerminal, IsOutputTerminal } from "../../../../components/flow/helpers/common";
+import { ExpandAccordionIcon, CollapseAccordionIcon } from "../../../../assets/icons/common";
 import {
   TerminalsListElementWrapper,
   TerminalsCategoryListElement,
 } from "./styled/activeTerminalList";
-import {
-  IsInputTerminal,
-  IsOutputTerminal,
-} from "../../../../components/flow/helpers/common";
-import {
-  ExpandAccordionIcon,
-  CollapseAccordionIcon,
-} from "../../../../assets/icons/common";
 
 interface Props {
   terminals: Connector[];
@@ -31,16 +25,9 @@ function ActiveTerminalsList({
   selectedTerminalId,
   onSelectTerminal,
 }: Props) {
-  const [selectedCategoriesIds, setSelectedCategoriesIds] = useState<string[]>(
-    []
-  );
-
+  const [selectedCategoriesIds, setSelectedCategoriesIds] = useState<string[]>([]);
   const [selectedTypesIds, setSelectedTypesIds] = useState<string[]>([]);
-
-  const filteredCategories = FilterTerminalCategories(
-    terminalCategories,
-    terminals
-  );
+  const filteredCategories = FilterTerminalCategories(terminalCategories, terminals);
 
   const isCategoryExpanded = (category: TerminalCategory) =>
     selectedCategoriesIds.includes(category.id);
@@ -48,9 +35,7 @@ function ActiveTerminalsList({
   const isTypeExpanded = (type: TerminalType, connectorType: ConnectorType) =>
     selectedTypesIds.includes(FormatTypeId(type, connectorType));
 
-  const selectedTerminal = terminals.find(
-    (term) => term.id === selectedTerminalId
-  );
+  const selectedTerminal = terminals.find((term) => term.id === selectedTerminalId);
 
   return (
     <>
@@ -81,9 +66,7 @@ function ActiveTerminalsList({
 
               {category.name}
               <img
-                src={
-                  categoryExpanded ? ExpandAccordionIcon : CollapseAccordionIcon
-                }
+                src={categoryExpanded ? ExpandAccordionIcon : CollapseAccordionIcon}
                 className="dropdownIcon"
                 alt="expand-icon"
               />
@@ -92,14 +75,12 @@ function ActiveTerminalsList({
               category.items.map((terminalType) => {
                 const inputTerminals = terminals.filter(
                   (terminal) =>
-                    terminal.terminalTypeId === terminalType.id &&
-                    IsInputTerminal(terminal)
+                    terminal.terminalTypeId === terminalType.id && IsInputTerminal(terminal)
                 );
 
                 const outputTerminals = terminals.filter(
                   (terminal) =>
-                    terminal.terminalTypeId === terminalType.id &&
-                    IsOutputTerminal(terminal)
+                    terminal.terminalTypeId === terminalType.id && IsOutputTerminal(terminal)
                 );
 
                 const terminalTypeListProps = {
@@ -123,10 +104,7 @@ function ActiveTerminalsList({
                         {...terminalTypeListProps}
                         terminals={inputTerminals}
                         connectorType={ConnectorType.Input}
-                        expanded={isTypeExpanded(
-                          terminalType,
-                          ConnectorType.Input
-                        )}
+                        expanded={isTypeExpanded(terminalType, ConnectorType.Input)}
                       />
                     )}
                     {outputTerminals.length > 0 && (
@@ -134,10 +112,7 @@ function ActiveTerminalsList({
                         {...terminalTypeListProps}
                         terminals={outputTerminals}
                         connectorType={ConnectorType.Output}
-                        expanded={isTypeExpanded(
-                          terminalType,
-                          ConnectorType.Output
-                        )}
+                        expanded={isTypeExpanded(terminalType, ConnectorType.Output)}
                       />
                     )}
                   </React.Fragment>

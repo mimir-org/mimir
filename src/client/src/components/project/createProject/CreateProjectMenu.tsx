@@ -7,30 +7,19 @@ import { TextResources } from "../../../assets/text";
 import { useState } from "react";
 import { Input, Label, Size } from "../../../compLibrary";
 import { Button } from "../../../compLibrary/buttons";
-import {
-  ProjectBody,
-  ProjectBox,
-  HeaderBox,
-  ButtonBox,
-} from "../../../compLibrary/box/project";
+import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../../../compLibrary/box/project";
 
 export const CreateProjectMenu = () => {
   const dispatch = useDispatch();
   const [projectName, setProjectName] = useState("");
 
   const isOpen = useSelector<RootState>(
-    (state) =>
-      state.menu.list.find((x) => x.type === MENU_TYPE.CREATE_PROJECT_MENU)
-        ?.visible
+    (state) => state.menu.list.find((x) => x.type === MENU_TYPE.CREATE_PROJECT_MENU)?.visible
   ) as boolean;
 
   return (
     <>
-      <ProjectBox
-        width={Size.MenuSmall_Width}
-        height={Size.MenuSmall_Height}
-        visible={isOpen}
-      >
+      <ProjectBox width={Size.MenuSmall_Width} height={Size.MenuSmall_Height} visible={isOpen}>
         <ProjectBody>
           <HeaderBox>
             <img
@@ -57,9 +46,7 @@ export const CreateProjectMenu = () => {
           {projectName && (
             <ButtonBox>
               <Button
-                onClick={() =>
-                  Handlers.OnProjectCreateClick(dispatch, projectName)
-                }
+                onClick={() => Handlers.OnProjectCreateClick(dispatch, projectName)}
                 type={TextResources.Account_Create}
               />
             </ButtonBox>

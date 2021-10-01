@@ -31,16 +31,7 @@ const FilterContent = ({ conn, type, name, header, node, edges }: Props) => {
         type="checkbox"
         checked={IsChecked(type, edges, conn, node, name)}
         onChange={() =>
-          OnChange(
-            edges,
-            setChecked,
-            dispatch,
-            selectedElements,
-            type,
-            name,
-            node,
-            conn
-          )
+          OnChange(edges, setChecked, dispatch, selectedElements, type, name, node, conn)
         }
       />
       <span className="checkmark"></span>
@@ -54,16 +45,7 @@ const FilterContent = ({ conn, type, name, header, node, edges }: Props) => {
             type="checkbox"
             checked={IsChecked(type, edges, conn, node, name)}
             onChange={() =>
-              OnChange(
-                edges,
-                setChecked,
-                dispatch,
-                selectedElements,
-                type,
-                name,
-                node,
-                conn
-              )
+              OnChange(edges, setChecked, dispatch, selectedElements, type, name, node, conn)
             }
           />
           <span className="checkmark-filter"></span>

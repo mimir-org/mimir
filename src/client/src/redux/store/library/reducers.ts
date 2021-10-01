@@ -25,10 +25,7 @@ const initialState: LibraryState = {
   interfaceTypes: [],
 };
 
-export function libraryReducer(
-  state = initialState,
-  action: LibraryActionTypes
-) {
+export function libraryReducer(state = initialState, action: LibraryActionTypes) {
   switch (action.type) {
     case FETCHING_LIBRARY:
       return {
@@ -102,9 +99,7 @@ export function libraryReducer(
         ...state,
         fetching: true,
         apiError: state.apiError
-          ? state.apiError.filter(
-              (elem) => elem.key !== FETCHING_LIBRARY_TRANSPORT_TYPES
-            )
+          ? state.apiError.filter((elem) => elem.key !== FETCHING_LIBRARY_TRANSPORT_TYPES)
           : state.apiError,
       };
 
@@ -123,9 +118,7 @@ export function libraryReducer(
         ...state,
         fetching: true,
         apiError: state.apiError
-          ? state.apiError.filter(
-              (elem) => elem.key !== FETCHING_LIBRARY_INTERFACE_TYPES
-            )
+          ? state.apiError.filter((elem) => elem.key !== FETCHING_LIBRARY_INTERFACE_TYPES)
           : state.apiError,
       };
 
@@ -142,13 +135,9 @@ export function libraryReducer(
     case REMOVE_LIBRARY_ITEM:
       return {
         ...state,
-        interfaceTypes: state.interfaceTypes.filter(
-          (x) => x.id !== action.payload.id
-        ),
+        interfaceTypes: state.interfaceTypes.filter((x) => x.id !== action.payload.id),
         nodeTypes: state.nodeTypes.filter((x) => x.id !== action.payload.id),
-        transportTypes: state.transportTypes.filter(
-          (x) => x.id !== action.payload.id
-        ),
+        transportTypes: state.transportTypes.filter((x) => x.id !== action.payload.id),
       };
 
     case ADD_LIBRARY_ITEM:

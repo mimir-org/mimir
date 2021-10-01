@@ -10,7 +10,7 @@ import {
   EnumBase,
   Composite,
   Transport,
-  Interface
+  Interface,
 } from "../../../models/";
 
 export interface UnitAm {
@@ -239,8 +239,7 @@ const ConvertComposites = (composites: Composite[]): CompositeAm[] => {
 };
 
 const ConvertTransport = (data: Transport): TransportAm => {
-  if (!data)
-    return null;
+  if (!data) return null;
 
   return {
     id: data.id,
@@ -250,13 +249,12 @@ const ConvertTransport = (data: Transport): TransportAm => {
     inputTerminal: ConvertConnector(data.inputTerminal),
     outputTerminalId: data.outputTerminalId,
     outputTerminal: ConvertConnector(data.outputTerminal),
-    attributes: ConvertAttributes(data.attributes)
+    attributes: ConvertAttributes(data.attributes),
   } as TransportAm;
-}
+};
 
 const ConvertInterface = (data: Interface): InterfaceAm => {
-  if (!data)
-    return null;
+  if (!data) return null;
 
   return {
     id: data.id,
@@ -265,9 +263,9 @@ const ConvertInterface = (data: Interface): InterfaceAm => {
     inputTerminalId: data.inputTerminalId,
     inputTerminal: ConvertConnector(data.inputTerminal),
     outputTerminalId: data.outputTerminalId,
-    outputTerminal: ConvertConnector(data.outputTerminal)
+    outputTerminal: ConvertConnector(data.outputTerminal),
   } as InterfaceAm;
-}
+};
 
 const ConvertNodes = (nodes: Node[]): NodeAm[] => {
   let convertedNodes = [] as NodeAm[];

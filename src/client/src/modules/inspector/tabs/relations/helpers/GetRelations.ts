@@ -1,9 +1,6 @@
 import { Connector, Edge } from "../../../../../models";
 
-const GetRelations = (
-  connectors: Connector[],
-  edges: Edge[]
-): [Connector[], Map<string, Edge>] => {
+const GetRelations = (connectors: Connector[], edges: Edge[]): [Connector[], Map<string, Edge>] => {
   const relations: Connector[] = [];
   const relationEdges: Map<string, Edge> = new Map();
 
@@ -13,9 +10,7 @@ const GetRelations = (
     if (
       connector.relationType &&
       (edge = edges.find(
-        (e) =>
-          e.fromConnector.id === connector.id ||
-          e.toConnector.id === connector.id
+        (e) => e.fromConnector.id === connector.id || e.toConnector.id === connector.id
       ))
     ) {
       relations.push(connector);
@@ -24,9 +19,7 @@ const GetRelations = (
   }
 
   relations.sort((a, b) =>
-    a.relationType === b.relationType
-      ? a.type - b.type
-      : a.relationType - b.relationType
+    a.relationType === b.relationType ? a.type - b.type : a.relationType - b.relationType
   );
 
   return [relations, relationEdges];

@@ -30,10 +30,7 @@ const initialState = {
   ],
 };
 
-export function moduleReducer(
-  state = initialState,
-  action: ModuleVisibilityActionTypes
-) {
+export function moduleReducer(state = initialState, action: ModuleVisibilityActionTypes) {
   switch (action.type) {
     case SET_MODULE_VISIBILITY:
       return {

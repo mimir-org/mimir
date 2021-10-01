@@ -1,21 +1,14 @@
 import { Connector, Edge, Node } from "../../../models";
 import { GetLegendInfo } from "./";
 import { IsBlockView } from "../../../components/flow/helpers/block";
-import {
-  IsPartOfTerminal,
-  Legend,
-} from "../../../components/flow/helpers/common";
+import { IsPartOfTerminal, Legend } from "../../../components/flow/helpers/common";
 
 const AddLegend = (node: Node, edges: Edge[]): Legend[] => {
   const IsActive = (conn: Connector) => {
     let found = false;
 
     edges.forEach((edge) => {
-      if (
-        !IsBlockView() &&
-        edge.fromConnectorId === conn.id &&
-        !edge.isHidden
-      ) {
+      if (!IsBlockView() && edge.fromConnectorId === conn.id && !edge.isHidden) {
         found = true;
         return;
       }

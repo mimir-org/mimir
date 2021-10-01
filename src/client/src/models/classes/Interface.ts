@@ -10,7 +10,7 @@ class Interface {
   outputTerminal: Connector;
 
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
-  constructor() { }
+  constructor() {}
 }
 
 export default Interface;

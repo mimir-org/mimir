@@ -1,3 +1,4 @@
+import { TextResources } from "../../../../assets/text";
 import { Edge, RelationType } from "../../../../models";
 import { IsTransportTerminal } from "../../../flow/helpers/common";
 import { GetConnector } from "./";
@@ -6,7 +7,7 @@ const CheckBlockEdges = (edges: Edge[], type: RelationType | string) => {
   const elementsToRemove = [];
 
   // Transport connections
-  if (type === "Transport") {
+  if (type === TextResources.Relations_Transport) {
     edges?.forEach((edge) => {
       if (
         IsTransportTerminal(edge.fromConnector) &&
@@ -29,10 +30,7 @@ const CheckBlockEdges = (edges: Edge[], type: RelationType | string) => {
         elementsToRemove.push(edge);
 
         // Find connectors
-        const fromConnector = GetConnector(
-          edge.fromNodeId,
-          edge.fromConnectorId
-        );
+        const fromConnector = GetConnector(edge.fromNodeId, edge.fromConnectorId);
         const toConnector = GetConnector(edge.toNodeId, edge.toConnectorId);
         if (fromConnector) elementsToRemove.push(fromConnector);
         if (toConnector) elementsToRemove.push(toConnector);

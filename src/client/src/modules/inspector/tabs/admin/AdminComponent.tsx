@@ -20,9 +20,7 @@ const AdminComponent = ({ node, project, index }: Props) => {
     (state) => state.inspector.tabs[index].visible
   ) as boolean;
 
-  const statuses = useSelector<RootState>(
-    (state) => state.commonState.statuses
-  ) as EnumBase[];
+  const statuses = useSelector<RootState>((state) => state.commonState.statuses) as EnumBase[];
 
   const onClick = useCallback(() => {
     dispatch(changeInspectorTab(index));
@@ -30,11 +28,7 @@ const AdminComponent = ({ node, project, index }: Props) => {
 
   return (
     <>
-      <TabHeader
-        active={isTabOpen}
-        onClick={onClick}
-        color={GetTabsColor(node, null)}
-      >
+      <TabHeader active={isTabOpen} onClick={onClick} color={GetTabsColor(node, null)}>
         <TabTitle active={isTabOpen}>{GetInspectorText(index)}</TabTitle>
       </TabHeader>
 

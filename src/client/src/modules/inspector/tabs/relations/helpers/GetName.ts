@@ -5,10 +5,7 @@ import {
   GetOtherNodeFromEdgeViaNode,
 } from "../../../../../components/flow/helpers/common";
 
-const GetNameRelation = (
-  conn: Connector,
-  relationEdges: Map<string, Edge>
-): string => {
+const GetNameRelation = (conn: Connector, relationEdges: Map<string, Edge>): string => {
   const name = GetRelationName(conn.relationType);
 
   const edge = relationEdges.get(conn.id);
@@ -19,9 +16,7 @@ const GetNameRelation = (
 };
 
 const GetNameTerminal = (conn: Connector, edges: Edge[]): string => {
-  const edge = edges.find(
-    (e) => e.fromConnector.id === conn.id || e.toConnector.id === conn.id
-  );
+  const edge = edges.find((e) => e.fromConnector.id === conn.id || e.toConnector.id === conn.id);
 
   const otherNode = GetOtherNodeFromEdgeViaConnector(edge, conn);
 

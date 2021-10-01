@@ -16,13 +16,8 @@ import { TextResources } from "../../../assets/text";
 
 const AccountMenu = () => {
   const dispatch = useDispatch();
-  const projectState = useSelector<RootState>(
-    (state) => state.projectState
-  ) as ProjectState;
-
-  const userState = useSelector<RootState>(
-    (state) => state.userState
-  ) as UserState;
+  const projectState = useSelector<RootState>((state) => state.projectState) as ProjectState;
+  const userState = useSelector<RootState>((state) => state.userState) as UserState;
 
   return (
     <>
@@ -61,19 +56,13 @@ const AccountMenu = () => {
           onClick={() => Handlers.OnImportLibraryFile(dispatch)}
         />
         <MenuLine />
-        <GetMenuElement
-          type={TextResources.Account_Logout}
-          userState={userState}
-        />
+        <GetMenuElement type={TextResources.Account_Logout} userState={userState} />
       </AccountMenuBox>
 
       <div className="ProjectMenu" style={{ zIndex: 2 }}>
         <OpenProjectMenu projectState={projectState} dispatch={dispatch} />
         <CreateProjectMenu />
-        <ExportProjectFileMenu
-          projectState={projectState}
-          dispatch={dispatch}
-        />
+        <ExportProjectFileMenu projectState={projectState} dispatch={dispatch} />
         <ImportProjectFileMenu />
         <ExportLibraryFileMenu />
         <ImportFileLibraryMenu />

@@ -6,8 +6,7 @@ const OnToggleClick = (dispatch: any, type: string, open: boolean) => {
   dispatch(setModuleVisibility(type, !open, true));
   const panel = document.getElementById("InspectorModule");
 
-  if (panel.style.height === Size.ModuleClosed + "px")
-    SetPanelHeight(Size.InspectorModuleOpen);
+  if (panel.style.height === Size.ModuleClosed + "px") SetPanelHeight(Size.InspectorModuleOpen);
   else SetPanelHeight(Size.ModuleClosed);
 };
 

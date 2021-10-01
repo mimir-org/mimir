@@ -30,21 +30,11 @@ const AdminContent = ({ node, project, statuses }: Props) => {
       <TabColumn width={250}>
         <div>
           <div>{TextResources.Inspector_Admin_Id}</div>
-          <Input
-            readOnly={true}
-            value={node.id ?? ""}
-            onChange={() => null}
-            inputType=""
-          />
+          <Input readOnly={true} value={node.id ?? ""} onChange={() => null} inputType="" />
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_RDS}</div>
-          <Input
-            readOnly={true}
-            value={GetRdsId(node)}
-            onChange={() => null}
-            inputType=""
-          />
+          <Input readOnly={true} value={GetRdsId(node)} onChange={() => null} inputType="" />
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Semantic_Id}</div>
@@ -66,21 +56,11 @@ const AdminContent = ({ node, project, statuses }: Props) => {
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Type}</div>
-          <Input
-            readOnly={true}
-            value={node.name}
-            onChange={() => null}
-            inputType=""
-          />
+          <Input readOnly={true} value={node.name} onChange={() => null} inputType="" />
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Updated_By}</div>
-          <Input
-            readOnly={true}
-            value={node.updatedBy}
-            onChange={() => null}
-            inputType=""
-          />
+          <Input readOnly={true} value={node.updatedBy} onChange={() => null} inputType="" />
         </div>
       </TabColumn>
       <TabColumn width={125}>
@@ -95,12 +75,7 @@ const AdminContent = ({ node, project, statuses }: Props) => {
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Created_Date}</div>
-          <Input
-            readOnly={true}
-            value={""}
-            onChange={() => null}
-            inputType=""
-          />
+          <Input readOnly={true} value={""} onChange={() => null} inputType="" />
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Designation}</div>

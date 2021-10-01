@@ -28,9 +28,7 @@ export const ProjectDataComponent = ({
 
   return (
     <div
-      className={
-        "project_data " + (isSelected ? "selected_project" : "not_selected")
-      }
+      className={"project_data " + (isSelected ? "selected_project" : "not_selected")}
       onClick={onClick}
     >
       <p className="project_name">{projectName}</p>

@@ -15,10 +15,7 @@ import {
 } from "../../flow/helpers/common";
 
 const FilterMenu = () => {
-  const project = useSelector<RootState>(
-    (state) => state.projectState.project
-  ) as Project;
-
+  const project = useSelector<RootState>((state) => state.projectState.project) as Project;
   const nodes = project?.nodes?.filter((x) => !x.isHidden) ?? [];
   const edges = project?.edges;
   let elements = [] as FilterElement[];
@@ -31,9 +28,7 @@ const FilterMenu = () => {
   elements = elements.filter(
     (value, index, elems) =>
       elems.findIndex(
-        (elem) =>
-          elem.type === value.type &&
-          elem.fromNode?.aspect === value.fromNode?.aspect
+        (elem) => elem.type === value.type && elem.fromNode?.aspect === value.fromNode?.aspect
       ) === index
   );
 
@@ -147,11 +142,7 @@ const FilterMenu = () => {
               <FilterContent
                 conn={x.conn}
                 type={x.type}
-                name={
-                  Aspect[x.fromNode?.aspect] +
-                  " " +
-                  TextResources.Aspect_Location
-                }
+                name={Aspect[x.fromNode?.aspect] + " " + TextResources.Aspect_Location}
                 key={x.id}
                 header={false}
                 node={x.fromNode}

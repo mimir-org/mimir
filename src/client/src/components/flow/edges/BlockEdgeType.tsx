@@ -1,11 +1,6 @@
 import "./BlockEdge.scss";
 import { Connector, RelationType, Aspect, Node } from "../../../models";
-import {
-  ArrowHeadType,
-  getBezierPath,
-  getMarkerEnd,
-  getSmoothStepPath,
-} from "react-flow-renderer";
+import { ArrowHeadType, getBezierPath, getMarkerEnd, getSmoothStepPath } from "react-flow-renderer";
 
 export default function BlockEdgeType({
   id,

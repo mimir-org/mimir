@@ -35,9 +35,7 @@ export function exportLibrary(fileName: string): LibraryActionTypes {
   };
 }
 
-export function importLibrary(
-  libraryTypes: CreateLibraryType[]
-): LibraryActionTypes {
+export function importLibrary(libraryTypes: CreateLibraryType[]): LibraryActionTypes {
   return {
     type: IMPORT_LIBRARY,
     payload: {

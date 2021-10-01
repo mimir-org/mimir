@@ -15,21 +15,13 @@ interface Props {
 
 const TerminalsComponent = ({ node }: Props) => {
   const categoryTypes =
-    (useSelector<RootState>(
-      (state) => state.typeEditor.terminals
-    ) as TerminalType[]) ?? [];
+    (useSelector<RootState>((state) => state.typeEditor.terminals) as TerminalType[]) ?? [];
 
   const terminals = node.connectors.filter((conn) => IsTransportTerminal(conn));
-
   const terminalCategories = GetFilteredTerminalsList(categoryTypes);
-
   const [selectedTerminalId, setSelectedTerminalId] = useState<string>(null);
-
   const onSelectTerminal = (item: Connector) => setSelectedTerminalId(item.id);
-
-  const selectedTerminal = terminals.find(
-    (terminal) => terminal.id === selectedTerminalId
-  );
+  const selectedTerminal = terminals.find((terminal) => terminal.id === selectedTerminalId);
 
   return (
     <TerminalsWrapper>
@@ -41,10 +33,7 @@ const TerminalsComponent = ({ node }: Props) => {
       />
       {selectedTerminal && (
         <TerminalsParametersWrapper>
-          <ParametersContent
-            element={selectedTerminal}
-            elementIsLocked={node.isLocked}
-          />
+          <ParametersContent element={selectedTerminal} elementIsLocked={node.isLocked} />
         </TerminalsParametersWrapper>
       )}
     </TerminalsWrapper>
