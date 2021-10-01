@@ -161,7 +161,16 @@ namespace RdfParserModule
 
                             var hasTerminal = Graph.CreateUriNode("imf:has" + terminal.Type + "Terminal");
 
-                            var terminalKey = Graph.CreateUriNode("imf:" + terminal.Type + "Terminal");
+                            string terminalType;
+                            if (terminal.Type.ToString().Contains("In"))
+                            {
+                                terminalType = "In";
+                            }
+                            else
+                            {
+                                terminalType = "Out";
+                            }
+                            var terminalKey = Graph.CreateUriNode("imf:" + terminalType + "Terminal");
                             var nodeTerminal = Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, terminal.Id, "node"));
                             Graph.Assert(new Triple(nodeId, hasTerminal, nodeTerminal));
                             Graph.Assert(new Triple(nodeTerminal, type, terminalKey));
@@ -317,10 +326,17 @@ namespace RdfParserModule
                     Graph.Assert(new Triple(transportNode, Graph.CreateUriNode(Resources.hasInputTerminal), transportIn));
                     Graph.Assert(new Triple(transportNode, Graph.CreateUriNode(Resources.hasOutputTerminal), transportOut));
 
+
+
                     Graph.Assert(new Triple(transportIn, connectedTo,
                         Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.FromConnectorId, "node"))));
                     Graph.Assert(new Triple(transportOut, connectedTo,
                         Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.ToConnectorId, "node"))));
+
+                    Graph.Assert(new Triple(Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.FromConnectorId, "node")), connectedTo,
+                        transportIn));
+                    Graph.Assert(new Triple(Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.ToConnectorId, "node")), connectedTo,
+                        transportOut));
 
 
                     switch (edge.FromNode.Aspect)
