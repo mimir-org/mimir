@@ -1,9 +1,5 @@
 import { Aspect } from "../../../../models";
-import {
-  ProductIcon,
-  FunctionIcon,
-  LocationIcon,
-} from "../../../../assets/icons/common";
+import { ProductIcon, FunctionIcon, LocationIcon } from "../../../../assets/icons/common";
 
 const GetFlowAspectIcon = (aspect: Aspect) => {
   let AspectIcon: string;
@@ -11,14 +7,7 @@ const GetFlowAspectIcon = (aspect: Aspect) => {
   if (aspect === Aspect.Product) AspectIcon = ProductIcon;
   if (aspect === Aspect.Location) AspectIcon = LocationIcon;
 
-  return (
-    <img
-      src={AspectIcon}
-      className="aspect-icon"
-      alt={Aspect[aspect]}
-      draggable={false}
-    />
-  );
+  return <img src={AspectIcon} className="aspect-icon" alt={Aspect[aspect]} draggable={false} />;
 };
 
 export default GetFlowAspectIcon;

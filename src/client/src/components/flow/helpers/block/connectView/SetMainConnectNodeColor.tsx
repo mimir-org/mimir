@@ -2,7 +2,7 @@ import { FindNodeByDataId } from "..";
 import { Color } from "../../../../../compLibrary";
 import { Node } from "../../../../../models";
 
-const SetMainConnectNodeSize = (
+const SetMainConnectNodeColor = (
   mainConnectNodeId: string,
   nodeId: string,
   connectNodes?: Node[]
@@ -19,4 +19,4 @@ const SetMainConnectNodeSize = (
   }
 };
 
-export default SetMainConnectNodeSize;
+export default SetMainConnectNodeColor;

@@ -1,9 +1,5 @@
 import { Aspect, Node } from "../../models";
-import {
-  FunctionIcon,
-  ProductIcon,
-  LocationIcon,
-} from "../../assets/icons/common";
+import { FunctionIcon, ProductIcon, LocationIcon } from "../../assets/icons/common";
 
 const GetAspectIcon = (node: Node): string => {
   if (node.aspect === Aspect.Function) return FunctionIcon;

@@ -8,23 +8,15 @@ import { Node } from "../../../../../models";
  * @param mainNodeId
  * @param data
  */
-const ResizeMainConnectNode = (
-  nodeCount: number,
-  mainNodeId: string,
-  data: Node
-) => {
+const ResizeMainConnectNode = (nodeCount: number, mainNodeId: string, data: Node) => {
   const mainNode = FindNodeByDataId(mainNodeId);
   const percent = 16;
   let newHeight = Size.Node_Length;
   let count = 1;
 
   // Calculate resize
-  if (nodeCount % 2 === 0)
-    count = Math.ceil(nodeCount - (nodeCount * percent) / 100);
-
-  if (nodeCount % 2 !== 0)
-    count = Math.ceil(1 + nodeCount - (nodeCount * percent) / 100);
-
+  if (nodeCount % 2 === 0) count = Math.ceil(nodeCount - (nodeCount * percent) / 100);
+  if (nodeCount % 2 !== 0) count = Math.ceil(1 + nodeCount - (nodeCount * percent) / 100);
   const resize = newHeight * count;
 
   // Execute resize

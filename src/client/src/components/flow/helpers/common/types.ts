@@ -18,6 +18,4 @@ export interface Legend {
   key: string;
   name: string;
   color: string;
-
-  // TODO: En type striplet, pil etc.
 }

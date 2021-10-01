@@ -8,11 +8,7 @@ import { Edge, Node } from "../../../../../models";
  * @param edges
  * @returns an array of children nodes
  */
-const GetConnectChildren = (
-  parentNode: Node,
-  nodes: Node[],
-  edges: Edge[]
-): Node[] => {
+const GetConnectChildren = (parentNode: Node, nodes: Node[], edges: Edge[]): Node[] => {
   let children: Node[] = [];
 
   edges.forEach((edge) => {

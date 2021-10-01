@@ -22,25 +22,18 @@ const FilterTerminals = (node: Node, splitView: boolean) => {
   if (splitView) {
     node.connectors?.forEach((conn) => {
       if (IsFunction(node)) {
-        IsOutputTerminal(conn) &&
-          IsLocationTerminal(conn) &&
-          filteredTerminals.push(conn);
+        IsOutputTerminal(conn) && IsLocationTerminal(conn) && filteredTerminals.push(conn);
       } else if (IsLocation(node)) {
-        IsInputTerminal(conn) &&
-          IsLocationTerminal(conn) &&
-          filteredTerminals.push(conn);
+        IsInputTerminal(conn) && IsLocationTerminal(conn) && filteredTerminals.push(conn);
       }
     });
   }
 
   if (!splitView) {
     node.connectors?.forEach((conn) => {
-      if (IsFunction(node))
-        IsTransportTerminal(conn) && filteredTerminals.push(conn);
+      if (IsFunction(node)) IsTransportTerminal(conn) && filteredTerminals.push(conn);
       else if (IsLocation(node))
-        IsLocationTerminal(conn) &&
-          IsInputTerminal(conn) &&
-          filteredTerminals.push(conn);
+        IsLocationTerminal(conn) && IsInputTerminal(conn) && filteredTerminals.push(conn);
     });
   }
   return SortTerminals(filteredTerminals);

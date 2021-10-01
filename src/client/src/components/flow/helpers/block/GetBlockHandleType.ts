@@ -9,8 +9,12 @@ import {
   IsTransportTerminal,
 } from "../common";
 
-/** Component to provide a handle/terminal with position(left/right) and type(target/source)
- *  GetBlockHandleType returns a tuple with the position and type
+/**
+ * Function to give a handle/terminal a position and type.
+ * @param conn
+ * @param selected
+ * @param splitView
+ * @returns a tuple with position(left/right) and type (target/source).
  */
 const GetBlockHandleType = (
   conn: Connector,
@@ -26,9 +30,7 @@ const GetBlockHandleType = (
   }
   if (
     IsOutputTerminal(conn) &&
-    (IsLocationTerminal(conn) ||
-      IsFulfilledByTerminal(conn) ||
-      IsPartOfTerminal(conn))
+    (IsLocationTerminal(conn) || IsFulfilledByTerminal(conn) || IsPartOfTerminal(conn))
   ) {
     return ["source", Position.Right];
   }
@@ -39,9 +41,7 @@ const GetBlockHandleType = (
 
   if (
     IsInputTerminal(conn) &&
-    (IsLocationTerminal(conn) ||
-      IsFulfilledByTerminal(conn) ||
-      IsPartOfTerminal(conn))
+    (IsLocationTerminal(conn) || IsFulfilledByTerminal(conn) || IsPartOfTerminal(conn))
   ) {
     return ["target", Position.Left];
   }

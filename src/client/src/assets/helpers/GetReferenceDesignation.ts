@@ -15,9 +15,7 @@ const findParentNode = (currentNode: Node, project: Project): Node => {
   );
   if (!actualConnector) return null;
 
-  const actualEdge = project.edges.find(
-    (x) => x.toConnector === actualConnector
-  );
+  const actualEdge = project.edges.find((x) => x.toConnector === actualConnector);
   if (!actualEdge) return null;
 
   return project.nodes.find((node) => node === actualEdge.fromNode);

@@ -9,28 +9,14 @@ import {
 } from "../common";
 
 const GetHandleType = (conn: Connector): [HandleType, Position] => {
-  if (IsInputTerminal(conn) && IsPartOfTerminal(conn))
-    return ["target", Position.Top];
-
-  if (!IsInputTerminal(conn) && IsPartOfTerminal(conn))
-    return ["source", Position.Bottom];
-
-  if (IsInputTerminal(conn) && IsTransportTerminal(conn))
+  if (IsInputTerminal(conn) && IsPartOfTerminal(conn)) return ["target", Position.Top];
+  if (!IsInputTerminal(conn) && IsPartOfTerminal(conn)) return ["source", Position.Bottom];
+  if (IsInputTerminal(conn) && IsTransportTerminal(conn)) return ["target", Position.Left];
+  if (!IsInputTerminal(conn) && IsTransportTerminal(conn)) return ["source", Position.Right];
+  if (IsInputTerminal(conn) && (IsLocationTerminal(conn) || IsFulfilledByTerminal(conn)))
     return ["target", Position.Left];
 
-  if (!IsInputTerminal(conn) && IsTransportTerminal(conn))
-    return ["source", Position.Right];
-
-  if (
-    IsInputTerminal(conn) &&
-    (IsLocationTerminal(conn) || IsFulfilledByTerminal(conn))
-  )
-    return ["target", Position.Left];
-
-  if (
-    !IsInputTerminal(conn) &&
-    (IsLocationTerminal(conn) || IsFulfilledByTerminal(conn))
-  )
+  if (!IsInputTerminal(conn) && (IsLocationTerminal(conn) || IsFulfilledByTerminal(conn)))
     return ["source", Position.Right];
 };
 

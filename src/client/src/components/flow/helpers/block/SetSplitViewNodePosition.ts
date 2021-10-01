@@ -1,6 +1,11 @@
 import { Size } from "../../../../compLibrary";
 import { Node } from "../../../../models";
 
+/**
+ * Function to force a node to fit within the parent block in SplitView.
+ * @param node
+ * @returns an updated position, containing X and Y values.
+ */
 const SetSplitViewNodePosition = (node: Node) => {
   const yMax = Size.SplitView_Height;
   const yMin = Size.BlockView_MarginTop;

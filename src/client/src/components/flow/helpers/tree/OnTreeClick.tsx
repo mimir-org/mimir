@@ -4,10 +4,7 @@ import { setModuleVisibility } from "../../../../redux/store/modules/actions";
 import { Size } from "../../../../compLibrary";
 import { SetPanelHeight } from "../../../../modules/inspector/helpers";
 import { Project } from "../../../../models";
-import {
-  setActiveEdge,
-  setActiveNode,
-} from "../../../../redux/store/project/actions";
+import { setActiveEdge, setActiveNode } from "../../../../redux/store/project/actions";
 
 const OnTreeClick = (e: any, dispatch: any, project: Project) => {
   if (!project) return;

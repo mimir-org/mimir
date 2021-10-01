@@ -12,8 +12,7 @@ const SortTerminals = (terminals: Connector[]) => {
     if (a.type > b.type) return 1;
     if (IsInputTerminal(a) && IsInputTerminal(b) && a.name < b.name) return -1;
     if (IsInputTerminal(a) && IsInputTerminal(b) && a.name > b.name) return 1;
-    if (IsOutputTerminal(a) && IsOutputTerminal(b) && a.name < b.name)
-      return -1;
+    if (IsOutputTerminal(a) && IsOutputTerminal(b) && a.name < b.name) return -1;
     if (IsOutputTerminal(a) && IsOutputTerminal(b) && a.name > b.name) return 1;
     return 0;
   });

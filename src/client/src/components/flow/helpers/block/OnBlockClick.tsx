@@ -4,10 +4,7 @@ import { setModuleVisibility } from "../../../../redux/store/modules/actions";
 import { MODULE_TYPE } from "../../../../models/project";
 import { SetPanelHeight } from "../../../../modules/inspector/helpers";
 import { Size } from "../../../../compLibrary";
-import {
-  setActiveBlockNode,
-  setActiveEdge,
-} from "../../../../redux/store/project/actions";
+import { setActiveBlockNode, setActiveEdge } from "../../../../redux/store/project/actions";
 
 const OnBlockClick = (e: any, dispatch: any, project: Project) => {
   if (!project) return;
