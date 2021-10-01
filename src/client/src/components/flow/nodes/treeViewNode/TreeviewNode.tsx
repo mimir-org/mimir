@@ -2,11 +2,7 @@ import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
 import { Connector } from "../../../../models";
 import { Symbol } from "../../../../compLibrary/symbol";
-import {
-  TreeHandleBox,
-  TreeNodeNameBox,
-  TreeNodeWrapper,
-} from "../../../../compLibrary/treeView";
+import { TreeHandleBox, TreeNodeNameBox, TreeNodeWrapper } from "../../../../compLibrary/treeView";
 import {
   GetHandleType,
   IsInputTerminal,
@@ -47,10 +43,7 @@ const TreeviewNode: FC<NodeProps> = ({ data }) => {
   };
 
   return (
-    <TreeNodeWrapper
-      onMouseEnter={() => setIsHover(true)}
-      onMouseLeave={() => mouseNodeLeave()}
-    >
+    <TreeNodeWrapper onMouseEnter={() => setIsHover(true)} onMouseLeave={() => mouseNodeLeave()}>
       {data.connectors?.map((conn: Connector) => {
         const [typeHandler, positionHandler] = GetHandleType(conn);
         if (conn.visible && IsInputTerminal(conn)) inputCount++;

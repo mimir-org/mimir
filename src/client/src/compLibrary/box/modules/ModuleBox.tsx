@@ -16,8 +16,7 @@ const ModuleBox = styled.div`
     props.type === MODULE_TYPE.LEGEND ? `${props.stop}px` : "100%"};
 
   position: ${(props) =>
-    (props.type === MODULE_TYPE.LEGEND || props.type === MODULE_TYPE.LIBRARY) &&
-    "fixed"};
+    (props.type === MODULE_TYPE.LEGEND || props.type === MODULE_TYPE.LIBRARY) && "fixed"};
 
   bottom: ${(props) => props.type === MODULE_TYPE.LEGEND && "0"};
   z-index: 5;

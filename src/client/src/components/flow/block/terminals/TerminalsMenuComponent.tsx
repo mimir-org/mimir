@@ -47,11 +47,7 @@ const TerminalsMenuComponent = ({
             {conn.name} {conn.type}
           </div>
           <label className={"checkbox-block"}>
-            <input
-              type="checkbox"
-              checked={conn.visible}
-              onChange={() => onClick(conn)}
-            />
+            <input type="checkbox" checked={conn.visible} onChange={() => onClick(conn)} />
             <span className="checkmark-block"></span>
           </label>
           <img

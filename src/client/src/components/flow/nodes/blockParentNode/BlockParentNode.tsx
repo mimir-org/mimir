@@ -10,10 +10,7 @@ import { Size } from "../../../../compLibrary";
 import { OnParentClick, OnChildClick } from "./handlers";
 import { BlockComponent } from "./";
 import { BlockMessageBox } from "../../block/styled";
-import {
-  changeActiveConnector,
-  removeEdge,
-} from "../../../../redux/store/project/actions";
+import { changeActiveConnector, removeEdge } from "../../../../redux/store/project/actions";
 import {
   SetTerminalOrder,
   FilterTerminals,
@@ -31,23 +28,10 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const [outputTerminalMenu, showOutputTerminalMenu] = useState(false);
 
   const dispatch = useDispatch();
-
-  const nodes = useSelector<RootState>(
-    (state) => state.projectState.project.nodes
-  ) as Node[];
-
-  const edges = useSelector<RootState>(
-    (state) => state.projectState.project.edges
-  ) as Edge[];
-
-  const isSplitView = useSelector<RootState>(
-    (state) => state.splitView.visible
-  ) as boolean;
-
-  const splitViewNode = useSelector<RootState>(
-    (state) => state.splitView.node
-  ) as Node;
-
+  const nodes = useSelector<RootState>((state) => state.projectState.project.nodes) as Node[];
+  const edges = useSelector<RootState>((state) => state.projectState.project.edges) as Edge[];
+  const isSplitView = useSelector<RootState>((state) => state.splitView.visible) as boolean;
+  const splitViewNode = useSelector<RootState>((state) => state.splitView.node) as Node;
   const node = nodes.find((x) => x.id === data.id);
 
   // Enforce size change of node

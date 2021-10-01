@@ -8,9 +8,8 @@ const ConvertToInterface = (sourceConn: Connector, library: LibraryState) => {
   );
 
   if (currentInterface) {
-
-    const inputTerminal = (JSON.parse(JSON.stringify(sourceConn))) as Connector;
-    const outputTerminal = (JSON.parse(JSON.stringify(sourceConn))) as Connector;
+    const inputTerminal = JSON.parse(JSON.stringify(sourceConn)) as Connector;
+    const outputTerminal = JSON.parse(JSON.stringify(sourceConn)) as Connector;
     inputTerminal.id = CreateId();
     inputTerminal.type = ConnectorType.Input;
     inputTerminal.nodeId = null;
@@ -22,14 +21,14 @@ const ConvertToInterface = (sourceConn: Connector, library: LibraryState) => {
       inputTerminal.attributes.forEach((x) => {
         x.id = CreateId();
         x.terminalId = inputTerminal.id;
-      })
+      });
     }
 
     if (outputTerminal?.attributes) {
       outputTerminal.attributes.forEach((x) => {
         x.id = CreateId();
         x.terminalId = outputTerminal.id;
-      })
+      });
     }
 
     return {
@@ -39,7 +38,7 @@ const ConvertToInterface = (sourceConn: Connector, library: LibraryState) => {
       inputTerminalId: inputTerminal.id,
       inputTerminal: inputTerminal,
       outputTerminalId: outputTerminal.id,
-      outputTerminal: outputTerminal
+      outputTerminal: outputTerminal,
     } as Interface;
   }
   return null;

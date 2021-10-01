@@ -16,10 +16,8 @@ import { CreateBlockElements } from "./creators";
 import { SetPanelHeight } from "../../modules/inspector/helpers";
 import { useOnConnect, useOnDrop, useOnRemove, useOnDragStop } from "./hooks";
 import { setModuleVisibility } from "../../redux/store/modules/actions";
-import {
-  setActiveBlockNode,
-  setActiveEdge,
-} from "../../redux/store/project/actions";
+import { setActiveBlockNode, setActiveEdge } from "../../redux/store/project/actions";
+import ReactFlow, { ReactFlowProvider, Elements, Background } from "react-flow-renderer";
 import {
   GetSelectedNode,
   GetBlockNodeTypes,
@@ -27,11 +25,6 @@ import {
   IsLocation,
   SetDarkModeColor,
 } from "./helpers/common";
-import ReactFlow, {
-  ReactFlowProvider,
-  Elements,
-  Background,
-} from "react-flow-renderer";
 import {
   EDGE_TYPE,
   EdgeType,
@@ -48,45 +41,18 @@ const FlowBlock = () => {
   const darkMode = red.store.getState().darkMode.active;
   const node = GetSelectedNode();
 
-  const projectState = useSelector<RootState>(
-    (state) => state.projectState
-  ) as ProjectState;
-
+  const projectState = useSelector<RootState>((state) => state.projectState) as ProjectState;
   const project = projectState?.project;
-
-  const splitView = useSelector<RootState>(
-    (state) => state.splitView.visible
-  ) as boolean;
-
-  const splitViewNode = useSelector<RootState>(
-    (state) => state.splitView.node
-  ) as Node;
-
-  const mainConnectNodes = useSelector<RootState>(
-    (state) => state.connectView.mainNodes
-  ) as Node[];
-
-  const icons = useSelector<RootState>(
-    (state) => state.typeEditor.icons
-  ) as BlobData[];
-
-  const library = useSelector<RootState>(
-    (state) => state.library
-  ) as LibraryState;
-
+  const splitView = useSelector<RootState>((state) => state.splitView.visible) as boolean;
+  const splitViewNode = useSelector<RootState>((state) => state.splitView.node) as Node;
+  const mainConnectNodes = useSelector<RootState>((state) => state.connectView.mainNodes) as Node[];
+  const icons = useSelector<RootState>((state) => state.typeEditor.icons) as BlobData[];
+  const library = useSelector<RootState>((state) => state.library) as LibraryState;
   const showBackground = IsLocation(splitViewNode) || IsLocation(node);
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(
-        CreateBlockElements(
-          project,
-          node,
-          splitView,
-          splitViewNode,
-          mainConnectNodes
-        )
-      );
+      setElements(CreateBlockElements(project, node, splitView, splitViewNode, mainConnectNodes));
       return setReactFlowInstance(_reactFlowInstance);
     },
     [project, node, splitView, splitViewNode, mainConnectNodes]
@@ -95,10 +61,7 @@ const FlowBlock = () => {
   const OnElementsRemove = (elementsToRemove) => {
     const nodeToRemove = elementsToRemove[0];
     project.edges?.forEach((edge) => {
-      if (
-        edge.fromNodeId === nodeToRemove.id ||
-        edge.toNodeId === nodeToRemove.id
-      )
+      if (edge.fromNodeId === nodeToRemove.id || edge.toNodeId === nodeToRemove.id)
         elementsToRemove.push(edge);
     });
 
@@ -188,11 +151,7 @@ const FlowBlock = () => {
                 isSplitView={splitView}
                 right={splitViewPosition()}
               >
-                <Background
-                  size={0.5}
-                  color={Color.Grey}
-                  variant={BackgroundVariant.Lines}
-                />
+                <Background size={0.5} color={Color.Grey} variant={BackgroundVariant.Lines} />
               </BackgroundBox>
             </ReactFlow>
           </div>

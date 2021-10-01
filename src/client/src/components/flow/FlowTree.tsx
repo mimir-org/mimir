@@ -20,11 +20,7 @@ import { setModuleVisibility } from "../../redux/store/modules/actions";
 import { MODULE_TYPE } from "../../models/project";
 import { getBlobData } from "../../redux/store/typeEditor/actions";
 import { SetPanelHeight } from "../../modules/inspector/helpers";
-import {
-  updatePosition,
-  setActiveNode,
-  setActiveEdge,
-} from "../../redux/store/project/actions";
+import { updatePosition, setActiveNode, setActiveEdge } from "../../redux/store/project/actions";
 
 const FlowTree = () => {
   const dispatch = useDispatch();
@@ -32,20 +28,10 @@ const FlowTree = () => {
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>();
   const darkMode = red.store.getState().darkMode.active;
-
-  const projectState = useSelector<RootState>(
-    (state) => state.projectState
-  ) as ProjectState;
-
+  const projectState = useSelector<RootState>((state) => state.projectState) as ProjectState;
   const project = projectState?.project;
-
-  const icons = useSelector<RootState>(
-    (state) => state.typeEditor.icons
-  ) as BlobData[];
-
-  const library = useSelector<RootState>(
-    (state) => state.library
-  ) as LibraryState;
+  const icons = useSelector<RootState>((state) => state.typeEditor.icons) as BlobData[];
+  const library = useSelector<RootState>((state) => state.library) as LibraryState;
 
   const OnElementsRemove = (elementsToRemove) => {
     return useOnRemove(elementsToRemove, setElements, dispatch);
@@ -61,18 +47,9 @@ const FlowTree = () => {
 
   const OnConnect = (params) => {
     const fromNode = project.nodes.find((x) => x.id === params.source);
-    const fromConnector = fromNode.connectors.find(
-      (x) => x.id === params.sourceHandle
-    );
+    const fromConnector = fromNode.connectors.find((x) => x.id === params.sourceHandle);
     const edgeType = Helpers.GetEdgeType(fromConnector);
-    return useOnConnect(
-      params,
-      project,
-      setElements,
-      dispatch,
-      edgeType,
-      library
-    );
+    return useOnConnect(params, project, setElements, dispatch, edgeType, library);
   };
 
   const OnDragOver = (event) => {
@@ -102,8 +79,7 @@ const FlowTree = () => {
     dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, true, true));
     dispatch(changeInspectorTab(0));
     const panel = document.getElementById("InspectorModule");
-    if (panel.style.height === Size.ModuleClosed + "px")
-      SetPanelHeight(Size.InspectorModuleOpen);
+    if (panel.style.height === Size.ModuleClosed + "px") SetPanelHeight(Size.InspectorModuleOpen);
   };
 
   // Rerender

@@ -14,21 +14,12 @@ import { MODULE_TYPE } from "../../models/project";
 import { GetSelectedNode } from "../../components/flow/helpers/common";
 import { OnLibraryClick, OnLegendClick } from "./handlers";
 import { Project } from "../../models";
-import {
-  LegendIcon,
-  LibraryIcon,
-  DownIcon,
-  UpIcon,
-} from "../../assets/icons/common";
+import { LegendIcon, LibraryIcon } from "../../assets/icons/common";
 
 const LibraryModule = () => {
   const libraryKey = MODULE_TYPE.LIBRARY;
   const legendKey = MODULE_TYPE.LEGEND;
   const dispatch = useDispatch();
-
-  const libraryState = useSelector<RootState>(
-    (state) => state.library
-  ) as LibraryState;
 
   useEffect(() => {
     dispatch(searchLibrary(""));
@@ -38,9 +29,9 @@ const LibraryModule = () => {
     dispatch(searchLibrary(text));
   };
 
-  const project = useSelector<RootState>(
-    (state) => state.projectState?.project
-  ) as Project;
+  const libraryState = useSelector<RootState>((state) => state.library) as LibraryState;
+  const project = useSelector<RootState>((state) => state.projectState?.project) as Project;
+  const isSplitView = useSelector<RootState>((state) => state.splitView.visible) as boolean;
 
   const libraryOpen = useSelector<RootState>(
     (state) => state.modules.types.find((x) => x.type === libraryKey).visible
@@ -58,10 +49,6 @@ const LibraryModule = () => {
     (state) => state.modules.types.find((x) => x.type === legendKey).animate
   ) as boolean;
 
-  const isSplitView = useSelector<RootState>(
-    (state) => state.splitView.visible
-  ) as boolean;
-
   const selectedNode = GetSelectedNode();
   const start = libraryOpen ? Size.ModuleClosed : Size.ModuleOpen;
   const stop = libraryOpen ? Size.ModuleOpen : Size.ModuleClosed;
@@ -69,21 +56,13 @@ const LibraryModule = () => {
   const stopLegend = legendOpen ? Size.ModuleOpen : Size.ModuleClosed;
 
   return (
-    <AnimatedModule
-      start={start}
-      stop={stop}
-      run={animate}
-      type={libraryKey}
-      id="LibraryModule"
-    >
+    <AnimatedModule start={start} stop={stop} run={animate} type={libraryKey} id="LibraryModule">
       <ModuleHead library visible={libraryOpen}>
         <img
           className="icon"
           src={LibraryIcon}
           alt="toggle"
-          onClick={() =>
-            OnLibraryClick(dispatch, libraryOpen, libraryKey, legendKey)
-          }
+          onClick={() => OnLibraryClick(dispatch, libraryOpen, libraryKey, legendKey)}
         />
         <p className="text">{TextResources.Module_Library}</p>
       </ModuleHead>

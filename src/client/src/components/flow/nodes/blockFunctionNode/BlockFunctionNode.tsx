@@ -10,15 +10,8 @@ import { NodeBox } from "../../styled";
 import { TerminalsComponent, HandleComponent } from "../../block/terminals";
 import { ConnectViewComponent } from "../../block/connectView";
 import { IsChildConnectNode, IsConnectNodeChecked } from "./helpers";
-import {
-  changeActiveConnector,
-  removeEdge,
-} from "../../../../redux/store/project/actions";
-import {
-  SetTerminalOrder,
-  FilterTerminals,
-  FindAllEdges,
-} from "../../helpers/block";
+import { changeActiveConnector, removeEdge } from "../../../../redux/store/project/actions";
+import { SetTerminalOrder, FilterTerminals, FindAllEdges } from "../../helpers/block";
 import {
   GetConnectChildren,
   IsMainConnectNode,
@@ -45,17 +38,9 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const [connectBox, showConnectBox] = useState(false);
   const [connectMenu, showConnectMenu] = useState(false);
 
-  const nodes = useSelector<RootState>(
-    (state) => state.projectState.project.nodes
-  ) as Node[];
-
-  const edges = useSelector<RootState>(
-    (state) => state.projectState.project.edges
-  ) as Edge[];
-
-  const splitView = useSelector<RootState>(
-    (state) => state.splitView.visible
-  ) as boolean;
+  const nodes = useSelector<RootState>((state) => state.projectState.project.nodes) as Node[];
+  const edges = useSelector<RootState>((state) => state.projectState.project.edges) as Edge[];
+  const splitView = useSelector<RootState>((state) => state.splitView.visible) as boolean;
 
   const mainConnectNodes = useSelector<RootState>(
     (state) => state.connectView?.mainNodes

@@ -46,11 +46,7 @@ const ConnectViewComponent = ({
     </ConnectViewBox>
 
     {visible && (
-      <Menu
-        bottom={CalculateMenuPos(children.length)}
-        tabIndex={0}
-        onBlur={onBlur}
-      >
+      <Menu bottom={CalculateMenuPos(children.length)} tabIndex={0} onBlur={onBlur}>
         {children.map((n: Node) => {
           return (
             <Element key={n.id}>

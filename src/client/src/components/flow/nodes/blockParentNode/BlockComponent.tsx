@@ -25,17 +25,11 @@ const BlockComponent = ({
   onParentClick,
   onChildClick,
 }: Props) => (
-  <Block
-    id={"function-block-" + node?.id}
-    splitView={isSplitView}
-    selected={isSelected}
-  >
+  <Block id={"function-block-" + node?.id} splitView={isSplitView} selected={isSelected}>
     <Banner location={isLocation}>
       <Header>
         <Navigation>
-          {!IsAspectNode(node) && (
-            <img src={ArrowUp} alt="up" onClick={() => onParentClick()} />
-          )}
+          {!IsAspectNode(node) && <img src={ArrowUp} alt="up" onClick={() => onParentClick()} />}
         </Navigation>
         <Navigation>
           <img src={ArrowDown} alt="down" onClick={() => onChildClick()} />

@@ -3,12 +3,7 @@ import { Edge, Node } from "../../../models";
 import { EdgeType, EDGE_TYPE } from "../../../models/project";
 import { IsTransportTerminal } from "../helpers/common";
 
-const ConvertEdgeToFlow = (
-  edge: Edge,
-  edgeType: EdgeType,
-  sourceNode: Node,
-  targetNode: Node
-) => {
+const ConvertEdgeToFlow = (edge: Edge, edgeType: EdgeType, sourceNode: Node, targetNode: Node) => {
   return {
     id: edge.id,
     type: edgeType,
@@ -17,9 +12,7 @@ const ConvertEdgeToFlow = (
     sourceHandle: edge.fromConnectorId,
     targetHandle: edge.toConnectorId,
     arrowHeadType: null,
-    animated:
-      edgeType === EDGE_TYPE.TRANSPORT ||
-      IsTransportTerminal(edge.fromConnector),
+    animated: edgeType === EDGE_TYPE.TRANSPORT || IsTransportTerminal(edge.fromConnector),
     label: "",
     data: {
       source: sourceNode,

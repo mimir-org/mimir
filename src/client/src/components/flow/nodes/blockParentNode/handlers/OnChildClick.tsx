@@ -6,12 +6,7 @@ import {
   setActiveNode,
 } from "../../../../../redux/store/project/actions";
 
-const OnChildClick = (
-  dispatch: any,
-  node: Node,
-  nodes: Node[],
-  edges: Edge[]
-) => {
+const OnChildClick = (dispatch: any, node: Node, nodes: Node[], edges: Edge[]) => {
   const childNode = GetChild(node, nodes, edges);
 
   dispatch(setActiveEdge(null, false));

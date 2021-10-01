@@ -51,9 +51,7 @@ const TerminalsComponent = ({
         <img
           src={GetMenuIcon(node, isParent, true)}
           alt="menu"
-          onClick={() =>
-            Click.OnInputMenu(showInputTerminalMenu, isInputMenuOpen)
-          }
+          onClick={() => Click.OnInputMenu(showInputTerminalMenu, isInputMenuOpen)}
         />
       </TerminalsBox>
 
@@ -66,9 +64,7 @@ const TerminalsComponent = ({
         <img
           src={GetMenuIcon(node, isParent, false)}
           alt="menu"
-          onClick={() =>
-            Click.OnOutputMenu(showOutputTerminalMenu, isOutputMenuOpen)
-          }
+          onClick={() => Click.OnOutputMenu(showOutputTerminalMenu, isOutputMenuOpen)}
         />
       </TerminalsBox>
 
