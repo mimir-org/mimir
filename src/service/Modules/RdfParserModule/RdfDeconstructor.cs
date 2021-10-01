@@ -210,5 +210,6 @@ namespace RdfParserModule
 
             return nodes;
         }
+
     }
 }
