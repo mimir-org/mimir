@@ -28,7 +28,8 @@ import {
   IMPORT_PROJECT,
   COMMIT_PROJECT,
   LOCK_UNLOCK_NODE,
-  LOCK_UNLOCK_ATTRIBUTE,
+  LOCK_UNLOCK_NODE_ATTRIBUTE,
+  LOCK_UNLOCK_TERMINAL_ATTRIBUTE,
 } from "./types";
 
 export function commitProject(
@@ -293,16 +294,31 @@ export function setIsLockedNode(
   };
 }
 
-export function setIsLockedAttribute(
+export function setIsLockedNodeAttribute(
   attribute: Attribute,
   nodeId: string,
   isLocked: boolean
 ) {
   return {
-    type: LOCK_UNLOCK_ATTRIBUTE,
+    type: LOCK_UNLOCK_NODE_ATTRIBUTE,
     payload: {
       id: attribute.id,
       nodeId,
+      isLocked,
+    },
+  };
+}
+
+export function setIsLockedTerminalAttribute(
+  attribute: Attribute,
+  terminalId: string,
+  isLocked: boolean
+) {
+  return {
+    type: LOCK_UNLOCK_TERMINAL_ATTRIBUTE,
+    payload: {
+      id: attribute.id,
+      terminalId,
       isLocked,
     },
   };

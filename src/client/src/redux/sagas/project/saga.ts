@@ -21,7 +21,7 @@ import {
   CommitProject,
   LockUnlockNode,
   LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR,
-  LockUnlockAttribute,
+  LockUnlockNodeAttribute,
   LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
 } from "../../store/project/types";
 
@@ -449,11 +449,13 @@ export function* lockUnlockNode(action: LockUnlockNode) {
   }
 }
 
-export function* lockUnlockAttribute(action: LockUnlockAttribute) {
+export function* lockUnlockAttribute(action: LockUnlockNodeAttribute) {
   try {
     const url =
       process.env.REACT_APP_API_BASE_URL + "project/attribute/lockunlock";
-    const response = yield call(post, url, action.payload);
+
+    const { id, isLocked } = action.payload;
+    const response = yield call(post, url, { id, isLocked });
 
     // This is a bad request
     if (response.status === 400) {

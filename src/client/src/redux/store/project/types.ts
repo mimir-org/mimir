@@ -44,7 +44,8 @@ export const IMPORT_PROJECT_SUCCESS_OR_ERROR =
 export const LOCK_UNLOCK_NODE = "LOCK_UNLOCK_NODE";
 export const LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR =
   "LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR";
-export const LOCK_UNLOCK_ATTRIBUTE = "LOCK_UNLOCK_ATTRIBUTE";
+export const LOCK_UNLOCK_NODE_ATTRIBUTE = "LOCK_UNLOCK_NODE_ATTRIBUTE";
+export const LOCK_UNLOCK_TERMINAL_ATTRIBUTE = "LOCK_UNLOCK_TERMINAL_ATTRIBUTE";
 export const LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR =
   "LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR";
 
@@ -297,11 +298,20 @@ export interface LockUnlockNodeFinished {
   };
 }
 
-export interface LockUnlockAttribute {
-  type: typeof LOCK_UNLOCK_ATTRIBUTE;
+export interface LockUnlockNodeAttribute {
+  type: typeof LOCK_UNLOCK_NODE_ATTRIBUTE;
   payload: {
     id: string;
     nodeId: string;
+    isLocked: boolean;
+  };
+}
+
+export interface LockUnlockTerminalAttribute {
+  type: typeof LOCK_UNLOCK_TERMINAL_ATTRIBUTE;
+  payload: {
+    id: string;
+    terminalId: string;
     isLocked: boolean;
   };
 }
@@ -346,7 +356,8 @@ export type ProjectActionTypes =
   | ImportProjectActionFinished
   | LockUnlockNode
   | LockUnlockNodeFinished
-  | LockUnlockAttribute
+  | LockUnlockNodeAttribute
+  | LockUnlockTerminalAttribute
   | LockUnlockAttributeFinished
   | CommitProject
   | CommitProjectFinished;

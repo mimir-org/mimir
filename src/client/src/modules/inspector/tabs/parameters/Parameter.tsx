@@ -10,7 +10,7 @@ import {
   WarningIcon,
   HelpIcon,
   LockOpenIcon,
-  CloseIcon,
+  CloseParameterIcon,
   LockClosedIcon,
 } from "../../../../assets/icons/common";
 
@@ -63,7 +63,7 @@ function Parameter({
             />
 
             <img
-              src={CloseIcon}
+              src={CloseParameterIcon}
               className="parameterIcon"
               alt="icon"
               onClick={() => onClose(attribute.id)}
