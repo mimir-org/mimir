@@ -25,11 +25,7 @@ const InspectorComponent = ({ node, index }: Props) => {
 
   return (
     <>
-      <TabHeader
-        active={isTabOpen}
-        onClick={onClick}
-        color={GetTabsColor(node, null)}
-      >
+      <TabHeader active={isTabOpen} onClick={onClick} color={GetTabsColor(node, null)}>
         {index === 0 && node && <NodeInfo>{node.label ?? node.name}</NodeInfo>}
         <TabTitle active={isTabOpen}>{GetInspectorText(index)}</TabTitle>
       </TabHeader>

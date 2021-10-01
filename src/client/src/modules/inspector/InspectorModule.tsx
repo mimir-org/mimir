@@ -8,19 +8,12 @@ import { Node, Project } from "../../models";
 import { DragResizePanel } from "./helpers";
 import { AnimatedInspector } from "./styled";
 import { InspectorHeader } from ".";
-import {
-  GetSelectedNode,
-  IsExplorer,
-  IsLibrary,
-} from "../../components/flow/helpers/common";
+import { GetSelectedNode, IsExplorer, IsLibrary } from "../../components/flow/helpers/common";
 
 const InspectorModule = () => {
   const dispatch = useDispatch();
   const type = MODULE_TYPE.INSPECTOR;
-
-  const project = useSelector<RootState>(
-    (state) => state.projectState.project
-  ) as Project;
+  const project = useSelector<RootState>((state) => state.projectState.project) as Project;
 
   const animate = useSelector<RootState>(
     (state) => state.modules.types.find((x) => x.type === type).animate

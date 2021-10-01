@@ -17,14 +17,7 @@ interface Props {
   type: string;
 }
 
-const InspectorHeader = ({
-  project,
-  node,
-  edge,
-  dispatch,
-  open,
-  type: key,
-}: Props) => {
+const InspectorHeader = ({ project, node, edge, dispatch, open, type: key }: Props) => {
   return (
     <Menu id="InspectorBody" color={GetInspectorColor(node, edge)}>
       {project && <InspectorTabs project={project} node={node} edge={edge} />}
