@@ -9,6 +9,8 @@ import {
   RelationType,
   EnumBase,
   Composite,
+  Transport,
+  Interface
 } from "../../../models/";
 
 export interface UnitAm {
@@ -103,7 +105,10 @@ export interface TransportAm {
   id: string;
   name: string;
   semanticReference: string;
-  terminalId: string;
+  inputTerminalId: string;
+  inputTerminal: ConnectorAm;
+  outputTerminalId: string;
+  outputTerminal: ConnectorAm;
   attributes: AttributeAm[];
 }
 export interface CompositeAm {
@@ -118,7 +123,10 @@ export interface InterfaceAm {
   id: string;
   name: string;
   semanticReference: string;
-  terminalId: string;
+  inputTerminalId: string;
+  inputTerminal: ConnectorAm;
+  outputTerminalId: string;
+  outputTerminal: ConnectorAm;
 }
 
 const ConvertUnits = (units: EnumBase[]): UnitAm[] => {
@@ -194,6 +202,23 @@ const ConvertConnectors = (connectors: Connector[]): ConnectorAm[] => {
   return converted;
 };
 
+const ConvertConnector = (connector: Connector): ConnectorAm => {
+  if (!connector) return {} as ConnectorAm;
+  return {
+    id: connector.id,
+    name: connector.name,
+    type: connector.type,
+    semanticReference: connector.semanticReference,
+    visible: connector.visible,
+    nodeId: connector.nodeId,
+    relationType: connector.relationType,
+    color: connector.color,
+    terminalCategoryId: connector.terminalCategoryId,
+    attributes: ConvertAttributes(connector.attributes),
+    terminalTypeId: connector.terminalTypeId,
+  } as ConnectorAm;
+};
+
 const ConvertComposites = (composites: Composite[]): CompositeAm[] => {
   let converted = [] as CompositeAm[];
 
@@ -212,6 +237,37 @@ const ConvertComposites = (composites: Composite[]): CompositeAm[] => {
 
   return converted;
 };
+
+const ConvertTransport = (data: Transport): TransportAm => {
+  if (!data)
+    return null;
+
+  return {
+    id: data.id,
+    name: data.name,
+    semanticReference: data.semanticReference,
+    inputTerminalId: data.inputTerminalId,
+    inputTerminal: ConvertConnector(data.inputTerminal),
+    outputTerminalId: data.outputTerminalId,
+    outputTerminal: ConvertConnector(data.outputTerminal),
+    attributes: ConvertAttributes(data.attributes)
+  } as TransportAm;
+}
+
+const ConvertInterface = (data: Interface): InterfaceAm => {
+  if (!data)
+    return null;
+
+  return {
+    id: data.id,
+    name: data.name,
+    semanticReference: data.semanticReference,
+    inputTerminalId: data.inputTerminalId,
+    inputTerminal: ConvertConnector(data.inputTerminal),
+    outputTerminalId: data.outputTerminalId,
+    outputTerminal: ConvertConnector(data.outputTerminal)
+  } as InterfaceAm;
+}
 
 const ConvertNodes = (nodes: Node[]): NodeAm[] => {
   let convertedNodes = [] as NodeAm[];
@@ -267,8 +323,8 @@ const ConvertEdges = (edges: Edge[]): EdgeAm[] => {
       toNodeId: edge.toNodeId,
       masterProjectId: edge.masterProjectId,
       isTemplateEdge: edge.isTemplateEdge,
-      transport: edge.transport,
-      interface: edge.interface,
+      transport: ConvertTransport(edge.transport),
+      interface: ConvertInterface(edge.interface),
     } as EdgeAm;
 
     convertedEdges.push(e);
