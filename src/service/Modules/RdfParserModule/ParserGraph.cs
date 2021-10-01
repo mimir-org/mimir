@@ -18,7 +18,7 @@ namespace RdfParserModule
 
         public ParserNode GetNode(string nodeId)
         {
-            foreach(var node in Nodes)
+            foreach (var node in Nodes)
             {
                 if (node.Id == nodeId)
                 {
@@ -27,6 +27,11 @@ namespace RdfParserModule
             }
 
             throw new Exception("No such node found");
+        }
+
+        public override string ToString()
+        {
+            return "Project_" + Id;
         }
     }
 }

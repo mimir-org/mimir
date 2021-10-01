@@ -35,11 +35,10 @@ namespace RdfParserModule
             var valueAsString = Encoding.UTF8.GetString(data, 0, data.Length);
 
             var rdf = new RdfDeconstructor();
-
             rdf.LoadGraph(valueAsString);
-            var project = rdf.ExampleProject();
 
-            return Task.FromResult(project);
+            var p = new ProjectAm();
+            return Task.FromResult(p);
         }
 
         public FileFormat GetFileFormat()

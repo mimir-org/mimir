@@ -9,6 +9,7 @@ namespace RdfParserModule
 {
     public class ParserNode
     {
+        public string Prefix { get; set; }
         public string Id { get; set; }
         public string Name { get; set; }
         public string Version { get; set; }
@@ -22,6 +23,12 @@ namespace RdfParserModule
         public bool IsRoot { get; set; }
         public decimal Length { get; set; }
         public decimal Width { get; set; }
+        public bool IsTransport { get; set; }
         public ICollection<ParserTerminal> Terminals { get; set; }
+
+        public override string ToString()
+        {
+            return Label;
+        }
     }
 }
