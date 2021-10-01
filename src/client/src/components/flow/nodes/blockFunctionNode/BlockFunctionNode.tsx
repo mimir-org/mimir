@@ -9,8 +9,6 @@ import { IsLocation } from "../../helpers/common";
 import { NodeBox } from "../../../../compLibrary/blockView";
 import { TerminalsComponent, HandleComponent } from "../../block/terminals";
 import { ConnectViewComponent } from "../../block/connectView";
-import { Symbol } from "../../../../compLibrary/symbol";
-
 import {
   changeActiveConnector,
   removeEdge,
@@ -23,8 +21,8 @@ import {
 import {
   GetConnectChildren,
   IsMainConnectNode,
-  SetMainConnectNodeSize,
   SetMainConnectNodeColor,
+  ResizeMainConnectNode,
 } from "../../helpers/block/connectView";
 import {
   addConnectNode,
@@ -32,7 +30,6 @@ import {
   removeConnectNode,
   removeMainNode,
 } from "../../../../redux/store/connectView/actions";
-import BlockNodeNameBox from "../../../../compLibrary/blockView/BlockNodeNameBox";
 
 /**
  * Component for a Function Node in BlockView.
@@ -84,16 +81,12 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
 
   const onConnectNodeClick = (node: Node) => {
     if (!isConnectorChecked(node)) {
-      data.width = Size.ConnectView_Width;
-      data.length = Size.ConnectView_Length;
       if (!IsMainConnectNode(data.id)) dispatch(addMainNode(data));
       dispatch(addConnectNode(data, node));
     } else {
       if (connectNodes.length === 1) {
         showConnectMenu(false);
         dispatch(removeMainNode(data));
-        data.width = Size.Node_Width;
-        data.length = Size.Node_Length;
       }
       dispatch(removeConnectNode(data, node));
     }
@@ -107,9 +100,8 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     return result;
   };
 
-  // Resize main connect node
   useEffect(() => {
-    SetMainConnectNodeSize(mainConnectNode?.id, data.id, connectNodes);
+    ResizeMainConnectNode(connectNodes?.length, mainConnectNode?.id, data);
     SetMainConnectNodeColor(mainConnectNode?.id, data.id, connectNodes);
   }, [mainConnectNode, data, connectNodes]);
 
@@ -131,11 +123,8 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
         onMouseOut={() =>
           OnMouseOut(showTerminalButton, showConnectButton, data.id)
         }
-        width={data.width}
-        length={data.length}
       >
-        <BlockNodeNameBox>{data.label ?? data.name}</BlockNodeNameBox>
-        <Symbol base64={data.symbol} text={data.name} />
+        <p className="node-name">{data.label ?? data.name}</p>
 
         <TerminalsComponent
           node={data}

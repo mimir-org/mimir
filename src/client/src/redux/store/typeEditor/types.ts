@@ -7,10 +7,12 @@ import {
   TerminalType,
   TerminalTypeItem,
   Aspect,
+  Purpose,
   LocationType,
   PredefinedAttribute,
   BlobData,
   LibraryFilter,
+  CompositeType,
 } from "../../../models";
 
 export const FETCHING_INITIAL_DATA = "FETCHING_INITIAL_DATA";
@@ -33,6 +35,9 @@ export const FETCHING_PREDEFINED_ATTRIBUTES_SUCCESS_OR_ERROR =
 export const FETCHING_BLOB_DATA = "FETCHING_BLOB_DATA";
 export const FETCHING_BLOB_DATA_SUCCESS_OR_ERROR =
   "FETCHING_BLOB_DATA_SUCCESS_OR_ERROR";
+export const FETCHING_SIMPLE_TYPES = "FETCHING_SIMPLE_TYPES";
+export const FETCHING_SIMPLE_TYPES_SUCCESS_OR_ERROR =
+  "FETCHING_SIMPLE_TYPES_SUCCESS_OR_ERROR";
 export const FETCHING_TYPE = "FETCHING_TYPE";
 export const FETCHING_TYPE_SUCCESS_OR_ERROR = "FETCHING_TYPE_SUCCESS_OR_ERROR";
 export const OPEN_TYPE_EDITOR = "OPEN_TYPE_EDITOR";
@@ -54,11 +59,13 @@ export interface TypeEditorState {
   createLibraryType: CreateLibraryType;
   aspects: object;
   objectTypes: object;
+  purposes: Purpose[];
   rdsList: Rds[];
   terminals: TerminalType[];
   attributes: AttributeType[];
   locationTypes: LocationType[];
   predefinedAttributes: PredefinedAttribute[];
+  simpleTypes: CompositeType[];
   apiError: ApiError[];
   icons: BlobData[];
 }
@@ -74,6 +81,7 @@ interface FetchingInitialDataActionFinished {
   payload: {
     aspects: Dictionary[];
     objectTypes: Dictionary[];
+    purposes: Purpose[];
   };
 }
 
@@ -166,6 +174,19 @@ export interface FetchingBlobDataActionFinished {
     icons: BlobData[];
   };
 }
+
+export interface FetchingSimpleTypesAction {
+  type: typeof FETCHING_SIMPLE_TYPES;
+  payload: null;
+}
+
+export interface FetchingSimpleTypesActionFinished {
+  type: typeof FETCHING_SIMPLE_TYPES_SUCCESS_OR_ERROR;
+  payload: {
+    apiError: ApiError;
+    simpleTypes: CompositeType[];
+  };
+}
 export interface OpenTypeEditor {
   type: typeof OPEN_TYPE_EDITOR;
   payload: any;
@@ -237,6 +258,8 @@ export type TypeEditorActionTypes =
   | FetchingTypeActionFinished
   | FetchingBlobDataAction
   | FetchingBlobDataActionFinished
+  | FetchingSimpleTypesAction
+  | FetchingSimpleTypesActionFinished
   | OpenTypeEditor
   | CloseTypeEditor
   | UpdateCreateLibraryType

@@ -88,7 +88,9 @@ const useOnDrop = (
     });
 
     showBlockView
-      ? setElements((es) => es.concat(CreateBlockNode(targetNode, null)))
+      ? setElements((es) =>
+          es.concat(CreateBlockNode(targetNode, null, project.nodes))
+        )
       : setElements((es) => es.concat(CreateTreeNode(targetNode)));
 
     if (sourceNode && sourceNode.aspect === targetNode.aspect) {

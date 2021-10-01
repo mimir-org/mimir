@@ -1,8 +1,9 @@
 import "./checkbox.scss";
 
 export enum Label {
-  Attributes = 0,
+  attributeTypes = 0,
   Terminals = 1,
+  compositeTypes = 2,
 }
 interface Props {
   id: string;
@@ -13,22 +14,22 @@ interface Props {
 
 export const Checkbox = ({ id, label, defaultValue, onChange }: Props) => {
   const isSelected = () => {
-    if (label === Label.Attributes) {
-      return defaultValue.includes(id);
+    if (label === Label.attributeTypes || label === Label.compositeTypes) {
+      return defaultValue?.includes(id);
     } else if (label === Label.Terminals) {
-      return defaultValue.some((a) => a.key === id);
+      return defaultValue?.some((a) => a.key === id);
     }
   };
 
   const onCheckboxChange = () => {
-    if (label === Label.Attributes) {
+    if (label === Label.attributeTypes || label === Label.compositeTypes) {
       let array = defaultValue;
       if (id && isSelected()) {
         array = array.filter((a) => a !== id);
       } else if (id && !isSelected() && array) {
         array.push(id);
       }
-      onChange("attributeTypes", array);
+      onChange(Label[label], array);
     } else if (label === Label.Terminals) {
       onChange(onChange);
     }
