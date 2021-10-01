@@ -10,7 +10,9 @@ interface Props {
   isInput: boolean;
   splitView: boolean;
   terminals: Connector[];
+  visible: boolean;
   onClick: (conn: Connector) => void;
+  onBlur: () => void;
 }
 
 /**
@@ -25,38 +27,42 @@ const TerminalsMenuComponent = ({
   isInput,
   splitView,
   terminals,
+  visible,
   onClick,
-}: Props) => (
-  <TerminalsMenu
-    splitView={splitView}
-    isParent={isParent}
-    isLocation={isLocation}
-    isInput={isInput}
-    isConnectView={IsMainConnectNode(node.id)}
-    tabIndex="0"
-  >
-    {terminals.map((conn) => (
-      <TerminalsElement key={conn.id}>
-        <div className="text" onClick={() => onClick(conn)}>
-          {conn.name} {conn.type}
-        </div>
-        <label className={"checkbox-block"}>
-          <input
-            type="checkbox"
-            checked={conn.visible}
-            onChange={() => onClick(conn)}
+  onBlur,
+}: Props) =>
+  visible && (
+    <TerminalsMenu
+      splitView={splitView}
+      isParent={isParent}
+      isLocation={isLocation}
+      isInput={isInput}
+      isConnectView={IsMainConnectNode(node.id)}
+      tabIndex={0}
+      onBlur={onBlur}
+    >
+      {terminals.map((conn) => (
+        <TerminalsElement key={conn.id}>
+          <div className="text" onClick={() => onClick(conn)}>
+            {conn.name} {conn.type}
+          </div>
+          <label className={"checkbox-block"}>
+            <input
+              type="checkbox"
+              checked={conn.visible}
+              onChange={() => onClick(conn)}
+            />
+            <span className="checkmark-block"></span>
+          </label>
+          <img
+            src={GetConnectorIcon(conn.color)}
+            alt="icon"
+            className="button"
+            onClick={() => onClick(conn)}
           />
-          <span className="checkmark-block"></span>
-        </label>
-        <img
-          src={GetConnectorIcon(conn.color)}
-          alt="icon"
-          className="button"
-          onClick={() => onClick(conn)}
-        />
-      </TerminalsElement>
-    ))}
-  </TerminalsMenu>
-);
+        </TerminalsElement>
+      ))}
+    </TerminalsMenu>
+  );
 
 export default TerminalsMenuComponent;

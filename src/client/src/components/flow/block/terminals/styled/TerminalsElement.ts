@@ -16,6 +16,8 @@ const TerminalsElement = styled.div`
     margin-left: 28px;
     height: 16px;
     text-align: left;
+    width: 100%;
+    padding-top: 2px;
   }
 
   :last-child {

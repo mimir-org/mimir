@@ -2,7 +2,7 @@ import { Size } from "../../../../../compLibrary";
 import { Node } from "../../../../../models";
 
 const CalculateXPosition = (node: Node, xPos: number, connectNodes: Node[]) => {
-  const xMargin = 10;
+  const xMargin = 5;
 
   if (connectNodes.length === 1)
     return xPos + Size.ConnectView_Width / 2 - Size.Node_Width / 2;

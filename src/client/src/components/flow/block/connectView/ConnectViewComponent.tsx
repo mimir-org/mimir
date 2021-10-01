@@ -1,4 +1,5 @@
 import * as Click from "./handlers";
+import { useState } from "react";
 import { Node } from "../../../../models";
 import { ConnectMenuIcon } from "../../../../assets/icons/blockView";
 import { TextResources } from "../../../../assets/text";
@@ -34,45 +35,56 @@ const ConnectViewComponent = ({
   showConnectMenu,
   connectMenu,
   dispatch,
-}: Props) => (
-  <>
-    <ConnectViewBox
-      visible={connectBox && children.length > 0}
-      onClick={() => Click.OnConnectMenu(showConnectMenu, connectMenu)}
-    >
-      <img src={ConnectMenuIcon} alt="menu" />
-    </ConnectViewBox>
+}: Props) => {
+  const [visible, setVisible] = useState(true);
+  const onBlur = () => {
+    setVisible(!visible);
+  };
 
-    {isMenuOpen && (
-      <Menu bottom={CalculateMenuPos(children.length)}>
-        {children.map((n: Node) => {
-          return (
-            <Element key={n.id}>
-              <div className="text" onClick={() => handleClick(n)}>
-                {n.label ?? n.name}
-              </div>
-              <label className={"checkbox-block"}>
-                <input
-                  type="checkbox"
-                  checked={isChecked(n, connectNodes)}
-                  onChange={() => handleClick(n)}
-                />
-                <span className="checkmark-block"></span>
-              </label>
-            </Element>
-          );
-        })}
-        <Element>
-          <Footer onClick={() => Click.OnSelectAll(dispatch, node, children)}>
-            {TextResources.ConnectMenu_Select_All}
-          </Footer>
-          <Footer onClick={() => Click.OnClearAll(dispatch, node)}>
-            {TextResources.ConnectMenu_Clear_All}
-          </Footer>
-        </Element>
-      </Menu>
-    )}
-  </>
-);
+  return (
+    <>
+      <ConnectViewBox
+        visible={connectBox && children.length > 0}
+        onClick={() => Click.OnConnectMenu(showConnectMenu, connectMenu)}
+      >
+        <img src={ConnectMenuIcon} alt="menu" />
+      </ConnectViewBox>
+
+      {isMenuOpen && visible && (
+        <Menu
+          bottom={CalculateMenuPos(children.length)}
+          tabIndex={0}
+          onBlur={onBlur}
+        >
+          {children.map((n: Node) => {
+            return (
+              <Element key={n.id}>
+                <div className="text" onClick={() => handleClick(n)}>
+                  {n.label ?? n.name}
+                </div>
+                <label className={"checkbox-block"}>
+                  <input
+                    type="checkbox"
+                    checked={isChecked(n, connectNodes)}
+                    onChange={() => handleClick(n)}
+                  />
+                  <span className="checkmark-block"></span>
+                </label>
+              </Element>
+            );
+          })}
+          <Element>
+            <Footer onClick={() => Click.OnSelectAll(dispatch, node, children)}>
+              {TextResources.ConnectMenu_Select_All}
+            </Footer>
+            <Footer onClick={() => Click.OnClearAll(dispatch, node)}>
+              {TextResources.ConnectMenu_Clear_All}
+            </Footer>
+          </Element>
+        </Menu>
+      )}
+    </>
+  );
+};
 
 export default ConnectViewComponent;

@@ -80,7 +80,9 @@ const TerminalsComponent = ({
           isInput={true}
           splitView={isSplitView}
           terminals={inTerminals}
+          visible={isInputMenuOpen}
           onClick={onClick}
+          onBlur={() => Click.OnBlur(showInputTerminalMenu, isInputMenuOpen)}
         />
       )}
       {isOutputMenuOpen && (
@@ -90,8 +92,10 @@ const TerminalsComponent = ({
           isLocation={isLocation}
           isInput={false}
           splitView={isSplitView}
+          visible={isOutputMenuOpen}
           terminals={outTerminals}
           onClick={onClick}
+          onBlur={() => Click.OnBlur(showOutputTerminalMenu, isOutputMenuOpen)}
         />
       )}
     </>
