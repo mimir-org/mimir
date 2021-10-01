@@ -14,6 +14,7 @@ class Node {
   positionX: number;
   positionY: number;
   isLocked: boolean | false;
+  isLockedBy: string;
 
   positionBlockX: number;
   positionBlockY: number;

@@ -1,5 +1,9 @@
 import { all, takeEvery } from "redux-saga/effects";
-import { FETCHING_CONTRACTORS, FETCHING_STATUSES, FETCHING_COMBINED_ATTRIBUTE_FILTERS } from "../store/common/types";
+import {
+  FETCHING_CONTRACTORS,
+  FETCHING_STATUSES,
+  FETCHING_COMBINED_ATTRIBUTE_FILTERS,
+} from "../store/common/types";
 import {
   FETCHING_LIBRARY,
   EXPORT_LIBRARY,
@@ -15,6 +19,8 @@ import {
   SAVE_PROJECT,
   EXPORT_PROJECT_TO_FILE,
   IMPORT_PROJECT,
+  LOCK_UNLOCK_NODE,
+  LOCK_UNLOCK_ATTRIBUTE,
   COMMIT_PROJECT,
 } from "./../store/project/types";
 import {
@@ -39,9 +45,15 @@ import {
   updateProject,
   exportProjectFile,
   importProject,
+  lockUnlockNode,
+  lockUnlockAttribute,
   commitProject,
 } from "./project/saga";
-import { getContractors, getStatuses, getAttributeFilters } from "./common/saga";
+import {
+  getContractors,
+  getStatuses,
+  getAttributeFilters,
+} from "./common/saga";
 import {
   getPredefinedAttributes,
   getLocationTypes,
@@ -52,6 +64,7 @@ import {
   saveType,
   getblobData,
   getSelectedNode,
+  getSimpleTypes,
 } from "./typeEditor/saga";
 
 export function* sagas() {
@@ -69,12 +82,15 @@ export function* sagas() {
     takeEvery(FETCHING_INITIAL_DATA, getTerminals),
     takeEvery(FETCHING_INITIAL_DATA, getPredefinedAttributes),
     takeEvery(FETCHING_INITIAL_DATA, getAttributes),
+    takeEvery(FETCHING_INITIAL_DATA, getSimpleTypes),
     takeEvery(FETCHING_TYPE, getSelectedNode),
     takeEvery(SAVE_LIBRARY_TYPE, saveType),
     takeEvery(FETCHING_STATUSES, getStatuses),
     takeEvery(EXPORT_PROJECT_TO_FILE, exportProjectFile),
     takeEvery(IMPORT_PROJECT, importProject),
     takeEvery(EXPORT_LIBRARY, exportLibrary),
+    takeEvery(LOCK_UNLOCK_NODE, lockUnlockNode),
+    takeEvery(LOCK_UNLOCK_ATTRIBUTE, lockUnlockAttribute),
     takeEvery(IMPORT_LIBRARY, importLibrary),
     takeEvery(FETCHING_BLOB_DATA, getblobData),
     takeEvery(FETCHING_LIBRARY_TRANSPORT_TYPES, getTransportTypes),

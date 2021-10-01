@@ -84,6 +84,14 @@ export interface TerminalTypeItem {
   number: number;
   categoryId: string;
 }
+
+export interface Purpose {
+  id: string;
+  name: string;
+  disipline: EnumBase;
+  description: string;
+  semanticReference: string;
+}
 export interface PredefinedAttribute {
   key: string;
   values: Object;
@@ -102,6 +110,7 @@ export interface CreateLibraryType {
   name: string;
   aspect: Aspect;
   objectType: ObjectType;
+  purpose: string;
   semanticReference: string;
   rdsId: string;
   terminalTypes: TerminalTypeItem[];
@@ -141,7 +150,7 @@ export interface CompositeType {
   id: string;
   name: string;
   semanticReference: string;
-  attributes: AttributeType[];
+  attributeTypes: AttributeType[];
 }
 
 export interface CommitPackage {

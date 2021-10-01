@@ -23,5 +23,9 @@ const TabBody = styled.div`
     border-style: solid;
     border-width: 1px 0px 0px 0px;
   }
+
+  &:hover {
+    cursor: default;
+  }
 `;
 export default TabBody;

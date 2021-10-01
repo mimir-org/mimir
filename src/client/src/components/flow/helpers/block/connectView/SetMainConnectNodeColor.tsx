@@ -7,14 +7,14 @@ const SetMainConnectNodeSize = (
   nodeId: string,
   connectNodes?: Node[]
 ) => {
-  let mainConnectNode = FindNodeByDataId(mainConnectNodeId);
+  const mainConnectNode = FindNodeByDataId(mainConnectNodeId);
 
   // Set new background color
   if (mainConnectNode && connectNodes?.length > 0)
     mainConnectNode.style.background = Color.FunctionHeader;
   // Reset color to normal
   else {
-    let node = FindNodeByDataId(nodeId);
+    const node = FindNodeByDataId(nodeId);
     if (node) node.style.background = Color.FunctionBlock;
   }
 };
