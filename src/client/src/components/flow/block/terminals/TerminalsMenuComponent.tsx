@@ -1,4 +1,5 @@
 import { Connector, Node } from "../../../../models";
+import { IsMainConnectNode } from "../../helpers/block/connectView";
 import { GetConnectorIcon } from "../../helpers/common";
 import { TerminalsMenu, TerminalsElement } from "./styled";
 
@@ -31,12 +32,14 @@ const TerminalsMenuComponent = ({
     isParent={isParent}
     isLocation={isLocation}
     isInput={isInput}
+    isConnectView={IsMainConnectNode(node.id)}
+    tabIndex="0"
   >
     {terminals.map((conn) => (
       <TerminalsElement key={conn.id}>
-        <p className="text">
+        <div className="text" onClick={() => onClick(conn)}>
           {conn.name} {conn.type}
-        </p>
+        </div>
         <label className={"checkbox-block"}>
           <input
             type="checkbox"
@@ -45,7 +48,12 @@ const TerminalsMenuComponent = ({
           />
           <span className="checkmark-block"></span>
         </label>
-        <img src={GetConnectorIcon(conn.color)} alt="icon" className="button" />
+        <img
+          src={GetConnectorIcon(conn.color)}
+          alt="icon"
+          className="button"
+          onClick={() => onClick(conn)}
+        />
       </TerminalsElement>
     ))}
   </TerminalsMenu>

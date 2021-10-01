@@ -8,6 +8,7 @@ const NodeBox = styled.div`
 
   .node-name {
     display: inline-block;
+    font-weight: bold;
     padding-top: 15px;
     height: auto;
     width: 95%;

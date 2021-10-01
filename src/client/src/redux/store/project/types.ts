@@ -1,7 +1,6 @@
 import { Project, Node, Edge, CommitPackage } from "../../../models";
 import { ProjectAm } from "../../sagas/project/ConvertProject";
 import { ApiError } from "../../../models/webclient";
-
 export const SAVE_PROJECT = "SAVE_PROJECT";
 export const COMMIT_PROJECT = "COMMIT_PROJECT";
 export const COMMIT_PROJECT_SUCCESS_OR_ERROR =

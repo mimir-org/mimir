@@ -10,7 +10,7 @@ interface Props {
   isMenuOpen: boolean;
   children: Node[];
   connectNodes: Node[];
-  handleClick: any;
+  handleClick: (node: Node) => void;
   isChecked: (node: Node, nodes: Node[]) => boolean;
   connectBox: boolean;
   showConnectMenu: any;
@@ -48,7 +48,9 @@ const ConnectViewComponent = ({
         {children.map((n: Node) => {
           return (
             <Element key={n.id}>
-              <p className="text">{n.label ?? n.name}</p>
+              <div className="text" onClick={() => handleClick(n)}>
+                {n.label ?? n.name}
+              </div>
               <label className={"checkbox-block"}>
                 <input
                   type="checkbox"
