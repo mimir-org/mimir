@@ -14,7 +14,6 @@ interface Props {
   isChecked: (node: Node, nodes: Node[]) => boolean;
   connectBox: boolean;
   showConnectMenu: any;
-  connectMenu: boolean;
   dispatch: any;
   onBlur: () => void;
 }
@@ -33,14 +32,13 @@ const ConnectViewComponent = ({
   isChecked,
   connectBox,
   showConnectMenu,
-  connectMenu,
   dispatch,
   onBlur,
 }: Props) => (
   <>
     <ConnectViewBox
       visible={connectBox && children.length > 0}
-      onClick={() => Click.OnConnectMenu(showConnectMenu, connectMenu)}
+      onClick={() => Click.OnConnectMenu(showConnectMenu, visible)}
     >
       <img src={ConnectMenuIcon} alt="menu" />
     </ConnectViewBox>

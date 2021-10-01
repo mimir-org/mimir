@@ -11,8 +11,8 @@ import { OnToggleClick } from "./handlers";
 import { ExplorerIcon } from "../../assets/icons/common";
 
 /**
- * Component for the Explorer Module in Mimir
- * @returns a JSX module where all nodes are listed
+ * Component for the Explorer Module in Mimir.
+ * @returns a module where all nodes in Mimir are listed.
  */
 export const ExplorerModule = () => {
   const dispatch = useDispatch();

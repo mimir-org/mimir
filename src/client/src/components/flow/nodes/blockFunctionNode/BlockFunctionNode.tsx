@@ -1,4 +1,4 @@
-import { OnHover, OnMouseOut } from "./handlers";
+import { OnHover, OnMouseOut, OnBlur } from "./handlers";
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useDispatch, useSelector } from "react-redux";
@@ -129,9 +129,8 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
             isChecked={IsConnectNodeChecked}
             connectBox={connectBox}
             showConnectMenu={showConnectMenu}
-            connectMenu={connectMenu}
             dispatch={dispatch}
-            onBlur={() => null}
+            onBlur={() => OnBlur(showConnectMenu, connectMenu)}
           />
         )}
       </NodeBox>
