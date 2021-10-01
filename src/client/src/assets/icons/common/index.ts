@@ -9,8 +9,6 @@ export { default as ProductIcon } from "./product.svg";
 
 // Module Expand
 export { default as DownIcon } from "./toggleDown.svg";
-export { default as LeftIcon } from "./toggleLeft.svg";
-export { default as RightIcon } from "./toggleRight.svg";
 export { default as UpIcon } from "./toggleUp.svg";
 
 export { default as CloseIcon } from "./close.svg";

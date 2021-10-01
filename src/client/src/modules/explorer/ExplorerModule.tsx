@@ -8,7 +8,7 @@ import { IsBlockView } from "../../components/flow/helpers/block";
 import { ModuleHead, ModuleBody } from "../../compLibrary/box/modules";
 import { Project } from "../../models";
 import { OnToggleClick } from "./handlers";
-import { ExplorerIcon, LeftIcon, RightIcon } from "../../assets/icons/common";
+import { ExplorerIcon } from "../../assets/icons/common";
 
 /**
  * Component for the Explorer Module in Mimir
@@ -42,10 +42,9 @@ export const ExplorerModule = () => {
       id="ExplorerModule"
     >
       <ModuleHead explorer visible={isOpen}>
-        <img src={ExplorerIcon} alt="icon" className="module-icon" />
         <img
           className="icon"
-          src={isOpen ? LeftIcon : RightIcon}
+          src={ExplorerIcon}
           alt="toggle"
           onClick={() => OnToggleClick(dispatch, isOpen, type)}
         />

@@ -1,5 +1,4 @@
 import * as Click from "./handlers";
-import { useState } from "react";
 import { Node } from "../../../../models";
 import { ConnectMenuIcon } from "../../../../assets/icons/blockView";
 import { TextResources } from "../../../../assets/text";
@@ -8,7 +7,7 @@ import { ConnectViewBox, Menu, Element, Footer } from "./styled";
 
 interface Props {
   node: Node;
-  isMenuOpen: boolean;
+  visible: boolean;
   children: Node[];
   connectNodes: Node[];
   handleClick: (node: Node) => void;
@@ -17,6 +16,7 @@ interface Props {
   showConnectMenu: any;
   connectMenu: boolean;
   dispatch: any;
+  onBlur: () => void;
 }
 
 /**
@@ -26,7 +26,7 @@ interface Props {
  */
 const ConnectViewComponent = ({
   node,
-  isMenuOpen,
+  visible,
   children,
   connectNodes,
   handleClick,
@@ -35,56 +35,50 @@ const ConnectViewComponent = ({
   showConnectMenu,
   connectMenu,
   dispatch,
-}: Props) => {
-  const [visible, setVisible] = useState(true);
-  const onBlur = () => {
-    setVisible(!visible);
-  };
+  onBlur,
+}: Props) => (
+  <>
+    <ConnectViewBox
+      visible={connectBox && children.length > 0}
+      onClick={() => Click.OnConnectMenu(showConnectMenu, connectMenu)}
+    >
+      <img src={ConnectMenuIcon} alt="menu" />
+    </ConnectViewBox>
 
-  return (
-    <>
-      <ConnectViewBox
-        visible={connectBox && children.length > 0}
-        onClick={() => Click.OnConnectMenu(showConnectMenu, connectMenu)}
+    {visible && (
+      <Menu
+        bottom={CalculateMenuPos(children.length)}
+        tabIndex={0}
+        onBlur={onBlur}
       >
-        <img src={ConnectMenuIcon} alt="menu" />
-      </ConnectViewBox>
-
-      {isMenuOpen && visible && (
-        <Menu
-          bottom={CalculateMenuPos(children.length)}
-          tabIndex={0}
-          onBlur={onBlur}
-        >
-          {children.map((n: Node) => {
-            return (
-              <Element key={n.id}>
-                <div className="text" onClick={() => handleClick(n)}>
-                  {n.label ?? n.name}
-                </div>
-                <label className={"checkbox-block"}>
-                  <input
-                    type="checkbox"
-                    checked={isChecked(n, connectNodes)}
-                    onChange={() => handleClick(n)}
-                  />
-                  <span className="checkmark-block"></span>
-                </label>
-              </Element>
-            );
-          })}
-          <Element>
-            <Footer onClick={() => Click.OnSelectAll(dispatch, node, children)}>
-              {TextResources.ConnectMenu_Select_All}
-            </Footer>
-            <Footer onClick={() => Click.OnClearAll(dispatch, node)}>
-              {TextResources.ConnectMenu_Clear_All}
-            </Footer>
-          </Element>
-        </Menu>
-      )}
-    </>
-  );
-};
+        {children.map((n: Node) => {
+          return (
+            <Element key={n.id}>
+              <div className="text" onClick={() => handleClick(n)}>
+                {n.label ?? n.name}
+              </div>
+              <label className={"checkbox-block"}>
+                <input
+                  type="checkbox"
+                  checked={isChecked(n, connectNodes)}
+                  onChange={() => handleClick(n)}
+                />
+                <span className="checkmark-block"></span>
+              </label>
+            </Element>
+          );
+        })}
+        <Element>
+          <Footer onClick={() => Click.OnSelectAll(dispatch, node, children)}>
+            {TextResources.ConnectMenu_Select_All}
+          </Footer>
+          <Footer onClick={() => Click.OnClearAll(dispatch, node)}>
+            {TextResources.ConnectMenu_Clear_All}
+          </Footer>
+        </Element>
+      </Menu>
+    )}
+  </>
+);
 
 export default ConnectViewComponent;

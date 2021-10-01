@@ -12,7 +12,7 @@ const TabHeader = styled.div`
   margin-top: ${(props: { active: string }) => (props.active ? "0px" : "9px")};
 
   background-color: ${(props) =>
-    props.active ? `${Color.GreyInspector}` : props.color};
+    props.active ? Color.LightGrey : props.color};
 
   padding: ${(props: { active: string }) =>
     props.active ? "17px 20px 0px 20px;" : "8px 20px 0px 20px"};

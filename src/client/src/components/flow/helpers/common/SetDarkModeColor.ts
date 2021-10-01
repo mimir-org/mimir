@@ -17,7 +17,7 @@ const SetDarkModeColor = (active: boolean) => {
     moduleColor = "#A8A8A8";
   } else {
     mainColor = Color.White;
-    moduleColor = Color.GreyInspector;
+    moduleColor = Color.LightGrey;
   }
 
   if (root) root.style.background = mainColor;

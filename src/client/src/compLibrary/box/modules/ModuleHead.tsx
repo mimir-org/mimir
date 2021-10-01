@@ -46,23 +46,6 @@ const ModuleHeader = styled.div`
     bottom: 25px;
     margin-top: 6px;
   }
-
-  .module-icon {
-    position: absolute;
-    right: ${(props) =>
-      props.explorer && props.visible
-        ? "190px"
-        : props.explorer
-        ? "2px"
-        : "85px"};
-    left: ${(props) =>
-      props.library && props.visible
-        ? "100px"
-        : props.library
-        ? "0px"
-        : "unset"};
-    top: ${(props) => !(props.visible || props.legend) && "42px"};
-  }
 `;
 
 export default ModuleHeader;

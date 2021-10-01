@@ -134,7 +134,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
         {!IsChildConnectNode(mainConnectNodes, data.id) && (
           <ConnectViewComponent
             node={data}
-            isMenuOpen={connectMenu}
+            visible={connectMenu}
             children={connectChildren}
             connectNodes={connectNodes}
             handleClick={onConnectNodeClick}
@@ -143,6 +143,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
             showConnectMenu={showConnectMenu}
             connectMenu={connectMenu}
             dispatch={dispatch}
+            onBlur={() => null}
           />
         )}
       </NodeBox>

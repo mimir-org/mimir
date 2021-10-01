@@ -13,12 +13,11 @@ import { LegendHead, LegendIcons } from "../../compLibrary/box/library";
 import { MODULE_TYPE } from "../../models/project";
 import { GetSelectedNode } from "../../components/flow/helpers/common";
 import { OnLibraryClick, OnLegendClick } from "./handlers";
+import { Project } from "../../models";
 import {
   LegendIcon,
   LibraryIcon,
   DownIcon,
-  LeftIcon,
-  RightIcon,
   UpIcon,
 } from "../../assets/icons/common";
 
@@ -38,6 +37,10 @@ const LibraryModule = () => {
   const search = (text: string) => {
     dispatch(searchLibrary(text));
   };
+
+  const project = useSelector<RootState>(
+    (state) => state.projectState?.project
+  ) as Project;
 
   const libraryOpen = useSelector<RootState>(
     (state) => state.modules.types.find((x) => x.type === libraryKey).visible
@@ -74,10 +77,9 @@ const LibraryModule = () => {
       id="LibraryModule"
     >
       <ModuleHead library visible={libraryOpen}>
-        <img src={LibraryIcon} alt="library-icon" className="module-icon" />
         <img
           className="icon"
-          src={libraryOpen ? RightIcon : LeftIcon}
+          src={LibraryIcon}
           alt="toggle"
           onClick={() =>
             OnLibraryClick(dispatch, libraryOpen, libraryKey, legendKey)
@@ -102,8 +104,8 @@ const LibraryModule = () => {
         <ModuleHead legend>
           <LegendHead open={legendOpen}>
             <img
-              src={legendOpen ? DownIcon : UpIcon}
-              alt=""
+              src={LegendIcon}
+              alt="arrow"
               onClick={() => OnLegendClick(dispatch, legendOpen, legendKey)}
             />
           </LegendHead>
@@ -112,7 +114,7 @@ const LibraryModule = () => {
             <p className="text">{TextResources.Module_Legend}</p>
           </LegendIcons>
         </ModuleHead>
-        <LegendModule visible={true} />
+        <LegendModule visible={true} project={project} />
       </AnimatedModule>
     </AnimatedModule>
   );
