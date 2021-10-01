@@ -27,7 +27,6 @@ const BlockComponent = ({
 }: Props) => (
   <Block
     id={"function-block-" + node?.id}
-    location={isLocation}
     splitView={isSplitView}
     selected={isSelected}
   >
