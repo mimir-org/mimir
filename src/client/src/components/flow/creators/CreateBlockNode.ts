@@ -23,12 +23,7 @@ const CreateBlockNode = (node: Node, connectNode: Node, nodes: Node[]) => {
   // Force node to fit Block
   let position = SetBlockNodePosition(node, IsSplitView());
   if (connectNodes.some((x) => x.id === node.id)) {
-    position = SetConnectNodePosition(
-      node,
-      connectNode.id,
-      connectNodes,
-      nodes
-    );
+    position = SetConnectNodePosition(node, connectNode.id, connectNodes, nodes);
   }
 
   return {

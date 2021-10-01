@@ -19,8 +19,7 @@ const LibraryComponent = ({ categories, search }: Props) => {
   const [selectedElementType, setSelectedElementType] = useState(null);
 
   const isLegendOpen = useSelector<RootState>(
-    (state) =>
-      state.modules.types.find((x) => x.type === MODULE_TYPE.LEGEND).visible
+    (state) => state.modules.types.find((x) => x.type === MODULE_TYPE.LEGEND).visible
   ) as boolean;
 
   const onChange = (e: { target: { value: any } }) => {
@@ -37,10 +36,7 @@ const LibraryComponent = ({ categories, search }: Props) => {
       <SearchIconBox>
         <img src={SearchIcon} alt="search" />
       </SearchIconBox>
-      <SearchInput
-        placeholder={TextResources.Library_SearchBox_Placeholder}
-        onChange={onChange}
-      />
+      <SearchInput placeholder={TextResources.Library_SearchBox_Placeholder} onChange={onChange} />
       <LibraryBody legend={isLegendOpen}>
         {categories?.map((category) => {
           return (

@@ -32,9 +32,7 @@ export const AspectComponent = ({
   return (
     <>
       <AspectBox indent={indent} node={node} isRoot={isRoot}>
-        {IsAspectNode(node) && (
-          <img src={aspectIcon} alt="aspect-icon" className="icon"></img>
-        )}
+        {IsAspectNode(node) && <img src={aspectIcon} alt="aspect-icon" className="icon"></img>}
         <div className="checkbox_container">
           {IsBlockView() ? (
             <CheckboxBlock node={node} inputLabel={label} />

@@ -14,10 +14,7 @@ const initialState = {
   mainNodes: [] as Node[],
 };
 
-export function connectViewReducer(
-  state = initialState,
-  action: ConnectViewActionTypes
-) {
+export function connectViewReducer(state = initialState, action: ConnectViewActionTypes) {
   switch (action.type) {
     case ADD_MAIN_CONNECT_NODE:
       return {
@@ -28,9 +25,7 @@ export function connectViewReducer(
     case REMOVE_MAIN_CONNECT_NODE:
       return {
         ...state,
-        mainNodes: state.mainNodes.filter(
-          (x) => x?.id !== action.payload.node.id
-        ),
+        mainNodes: state.mainNodes.filter((x) => x?.id !== action.payload.node.id),
       };
 
     case REMOVE_MAIN_CONNECT_NODES:
@@ -47,10 +42,7 @@ export function connectViewReducer(
 
       const child = action.payload.child;
       mainNode.connectNodes = (mainNode.connectNodes ?? []).concat(child);
-
-      const filterMainNodes = state.mainNodes.filter(
-        (x) => x?.id !== action.payload.mainNode.id
-      );
+      const filterMainNodes = state.mainNodes.filter((x) => x?.id !== action.payload.mainNode.id);
 
       return {
         mainNodes: filterMainNodes.concat(mainNode),
@@ -65,16 +57,12 @@ export function connectViewReducer(
       const children = action.payload.nodes;
 
       children.forEach((n) => {
-        const isNodeAdded =
-          parent.connectNodes?.find((x) => x.id === n.id) !== undefined;
-        if (!isNodeAdded)
-          parent.connectNodes = (parent.connectNodes ?? []).concat(n);
+        const isNodeAdded = parent.connectNodes?.find((x) => x.id === n.id) !== undefined;
+        if (!isNodeAdded) parent.connectNodes = (parent.connectNodes ?? []).concat(n);
       });
 
       return {
-        mainNodes: state.mainNodes
-          .filter((x) => x?.id !== parent.id)
-          .concat(parent),
+        mainNodes: state.mainNodes.filter((x) => x?.id !== parent.id).concat(parent),
       };
 
     case REMOVE_CONNECT_NODE:
@@ -100,9 +88,7 @@ export function connectViewReducer(
       main.connectNodes = [];
 
       return {
-        mainNodes: state.mainNodes
-          .filter((x) => x?.id !== main.id)
-          .concat(main),
+        mainNodes: state.mainNodes.filter((x) => x?.id !== main.id).concat(main),
       };
 
     default:

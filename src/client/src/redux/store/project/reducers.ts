@@ -52,10 +52,7 @@ const initialState: ProjectState = {
 };
 
 // TODO: Refactor to reduce complexity
-export function projectReducer(
-  state = initialState,
-  action: ProjectActionTypes
-) {
+export function projectReducer(state = initialState, action: ProjectActionTypes) {
   switch (action.type) {
     case SAVE_PROJECT:
       return {
@@ -202,9 +199,7 @@ export function projectReducer(
         ...state,
         project: {
           ...state.project,
-          edges: state.project.edges.filter(
-            (edge) => edge?.id !== action.payload
-          ),
+          edges: state.project.edges.filter((edge) => edge?.id !== action.payload),
         },
       };
 
@@ -271,9 +266,7 @@ export function projectReducer(
           project: {
             ...state.project,
             nodes: nodeList.map((x) =>
-              action.payload.node.aspect === x.aspect
-                ? { ...x, isHidden: isHidden }
-                : x
+              action.payload.node.aspect === x.aspect ? { ...x, isHidden: isHidden } : x
             ),
             edges: edgeList.map((edge) =>
               node.aspect === edge.fromNode.aspect ||
@@ -360,9 +353,7 @@ export function projectReducer(
         project: {
           ...state.project,
           nodes: state.project.nodes.map((x) =>
-            x.id === blockId
-              ? { ...x, isBlockSelected: true }
-              : { ...x, isBlockSelected: false }
+            x.id === blockId ? { ...x, isBlockSelected: true } : { ...x, isBlockSelected: false }
           ),
           edges: state.project.edges,
         },
@@ -579,10 +570,7 @@ export function projectReducer(
     case LOCK_UNLOCK_TERMINAL_ATTRIBUTE: {
       const { id, isLocked, terminalId } = action.payload;
 
-      let [node, terminal] = FindTerminalAndNode(
-        state.project.nodes,
-        terminalId
-      );
+      let [node, terminal] = FindTerminalAndNode(state.project.nodes, terminalId);
 
       if (!node || !terminal) return { ...state };
 

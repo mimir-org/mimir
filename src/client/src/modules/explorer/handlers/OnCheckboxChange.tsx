@@ -10,14 +10,11 @@ import {
 } from "../../../redux/store/project/actions";
 
 const OnCheckboxChange = (dispatch: any, splitView: boolean, node: Node) => {
-  console.log("her");
   if (IsConnectView()) {
     dispatch(removeMainNodes());
   }
   if (splitView) {
-    IsFunction(node)
-      ? dispatch(setActiveNode(node.id, true))
-      : dispatch(setSplitNode(node));
+    IsFunction(node) ? dispatch(setActiveNode(node.id, true)) : dispatch(setSplitNode(node));
   } else {
     dispatch(setActiveEdge(null, false));
     dispatch(setActiveBlockNode(node.id));

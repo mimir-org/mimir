@@ -32,9 +32,7 @@ import {
   LOCK_UNLOCK_TERMINAL_ATTRIBUTE,
 } from "./types";
 
-export function commitProject(
-  commitPackage: CommitPackage
-): ProjectActionTypes {
+export function commitProject(commitPackage: CommitPackage): ProjectActionTypes {
   return {
     type: COMMIT_PROJECT,
     payload: commitPackage,
@@ -101,11 +99,7 @@ export function removeEdge(edgeId: string): ProjectActionTypes {
   };
 }
 
-export function updatePosition(
-  nodeId: string,
-  x: number,
-  y: number
-): ProjectActionTypes {
+export function updatePosition(nodeId: string, x: number, y: number): ProjectActionTypes {
   return {
     type: UPDATE_POSITION,
     payload: {
@@ -116,11 +110,7 @@ export function updatePosition(
   };
 }
 
-export function updateBlockPosition(
-  nodeId: string,
-  x: number,
-  y: number
-): ProjectActionTypes {
+export function updateBlockPosition(nodeId: string, x: number, y: number): ProjectActionTypes {
   return {
     type: UPDATE_BLOCK_POSITION,
     payload: {
@@ -180,11 +170,7 @@ export function changeAllNodes(visible: boolean) {
   };
 }
 
-export function changeNodeValue(
-  nodeId: string,
-  propName: string,
-  propValue: any
-) {
+export function changeNodeValue(nodeId: string, propName: string, propValue: any) {
   return {
     type: CHANGE_NODE_PROP_VALUE,
     payload: {
@@ -195,12 +181,7 @@ export function changeNodeValue(
   };
 }
 
-export function changeAttributeValue(
-  id: string,
-  value: string,
-  unit: string,
-  nodeId: string
-) {
+export function changeAttributeValue(id: string, value: string, unit: string, nodeId: string) {
   return {
     type: CHANGE_ATTRIBUTE_VALUE,
     payload: {
@@ -257,11 +238,7 @@ export function changeActiveConnector(
   };
 }
 
-export function exportProjectToFile(
-  project: Project,
-  fileName: string,
-  isSubProject: boolean
-) {
+export function exportProjectToFile(project: Project, fileName: string, isSubProject: boolean) {
   return {
     type: EXPORT_PROJECT_TO_FILE,
     payload: {
@@ -279,11 +256,7 @@ export function importProjectAction(project: ProjectAm) {
   };
 }
 
-export function setIsLockedNode(
-  node: Node,
-  project: Project,
-  isLocked: boolean
-) {
+export function setIsLockedNode(node: Node, project: Project, isLocked: boolean) {
   return {
     type: LOCK_UNLOCK_NODE,
     payload: {
@@ -294,11 +267,7 @@ export function setIsLockedNode(
   };
 }
 
-export function setIsLockedNodeAttribute(
-  attribute: Attribute,
-  nodeId: string,
-  isLocked: boolean
-) {
+export function setIsLockedNodeAttribute(attribute: Attribute, nodeId: string, isLocked: boolean) {
   return {
     type: LOCK_UNLOCK_NODE_ATTRIBUTE,
     payload: {

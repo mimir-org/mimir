@@ -18,9 +18,7 @@ export const ExplorerModule = () => {
   const dispatch = useDispatch();
   const type = MODULE_TYPE.EXPLORER;
 
-  const project = useSelector<RootState>(
-    (state) => state.projectState.project
-  ) as Project;
+  const project = useSelector<RootState>((state) => state.projectState.project) as Project;
 
   const animate = useSelector<RootState>(
     (state) => state.modules.types.find((x) => x.type === type).animate
@@ -34,13 +32,7 @@ export const ExplorerModule = () => {
   const stop = isOpen ? Size.ModuleOpen : Size.ModuleClosed;
 
   return (
-    <AnimatedModule
-      type={type}
-      start={start}
-      stop={stop}
-      run={animate}
-      id="ExplorerModule"
-    >
+    <AnimatedModule type={type} start={start} stop={stop} run={animate} id="ExplorerModule">
       <ModuleHead explorer visible={isOpen}>
         <img
           className="icon"
@@ -51,9 +43,7 @@ export const ExplorerModule = () => {
         <p className="text">{TextResources.Module_Explorer}</p>
       </ModuleHead>
       <ModuleBody visible={isOpen} explorer isBlockView={IsBlockView()}>
-        {project && (
-          <ProjectComponent project={project} nodes={project.nodes ?? []} />
-        )}
+        {project && <ProjectComponent project={project} nodes={project.nodes ?? []} />}
         <SplitViewComponent />
       </ModuleBody>
     </AnimatedModule>

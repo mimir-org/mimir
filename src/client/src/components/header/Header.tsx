@@ -25,20 +25,12 @@ const Header = () => {
   const dispatch = useDispatch();
   const { push } = useHistory();
 
-  const projectState = useSelector<RootState>(
-    (state) => state.projectState
-  ) as ProjectState;
-
-  const isDarkMode = useSelector<RootState>(
-    (state) => state.darkMode.active
-  ) as boolean;
+  const projectState = useSelector<RootState>((state) => state.projectState) as ProjectState;
+  const isDarkMode = useSelector<RootState>((state) => state.darkMode.active) as boolean;
+  const isFilterMenuOpen = useSelector<RootState>((state) => state.menu.list[4].visible) as boolean;
 
   const isAccountMenuOpen = useSelector<RootState>(
     (state) => state.menu.list[1].visible
-  ) as boolean;
-
-  const isFilterMenuOpen = useSelector<RootState>(
-    (state) => state.menu.list[4].visible
   ) as boolean;
 
   const isLibraryOpen = useSelector<RootState>(
@@ -74,11 +66,7 @@ const Header = () => {
           />
         </LogoBox>
       </HeaderBox>
-      <MenuBar
-        id="MenuBar"
-        isLibraryOpen={isLibraryOpen}
-        isExplorerOpen={isExplorerOpen}
-      >
+      <MenuBar id="MenuBar" isLibraryOpen={isLibraryOpen} isExplorerOpen={isExplorerOpen}>
         <OptionsBox>
           <OptionsElement>
             <img

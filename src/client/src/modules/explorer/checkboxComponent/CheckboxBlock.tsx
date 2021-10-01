@@ -11,21 +11,12 @@ interface Props {
 
 export const CheckboxBlock = ({ node, inputLabel }: Props) => {
   const dispatch = useDispatch();
-
-  const splitView = useSelector<RootState>(
-    (state) => state.splitView.visible
-  ) as boolean;
-
-  const splitViewNode = useSelector<RootState>(
-    (state) => state.splitView.node
-  ) as Node;
-
+  const splitView = useSelector<RootState>((state) => state.splitView.visible) as boolean;
+  const splitViewNode = useSelector<RootState>((state) => state.splitView.node) as Node;
   const selectedNode = GetSelectedNode();
   const isSplitViewNode = splitViewNode?.id === node.id;
 
-  const isChecked = splitView
-    ? node === selectedNode || isSplitViewNode
-    : node === selectedNode;
+  const isChecked = splitView ? node === selectedNode || isSplitViewNode : node === selectedNode;
 
   return (
     <label className={"checkbox"}>

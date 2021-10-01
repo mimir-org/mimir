@@ -11,8 +11,7 @@ const CreateParentBlockNode = (node: Node, splitView: boolean) => {
   const type = TextResources.Type_BlockParentNode;
   let position = { x: Position.FunctionBlock_xPos, y: 100 };
 
-  if (IsLocation(node) && splitView)
-    position.x = Position.FunctionBlock_xPos + 750; // TODO: remove magic number
+  if (IsLocation(node) && splitView) position.x = Position.FunctionBlock_xPos + 750; // TODO: remove magic number
 
   return {
     id: node.id,

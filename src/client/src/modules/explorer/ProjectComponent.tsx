@@ -19,14 +19,12 @@ export const ProjectComponent = ({ project, nodes }: Props) => {
     setClosedNodes((_) => new Set(closedNodes));
   };
 
-  const areAncestorsExpanded = (elem: Node): boolean =>
-    !IsAncestorInSet(elem, closedNodes);
+  const areAncestorsExpanded = (elem: Node): boolean => !IsAncestorInSet(elem, closedNodes);
 
   return (
     <>
       {SortNodesWithIndent(nodes).map(([node, indent]) => {
-        if ((IsBlockView() && IsProduct(node)) || !areAncestorsExpanded(node))
-          return null;
+        if ((IsBlockView() && IsProduct(node)) || !areAncestorsExpanded(node)) return null;
         return (
           <AspectComponent
             key={node.id}
