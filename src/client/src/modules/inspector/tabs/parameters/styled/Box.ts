@@ -4,7 +4,6 @@ import { FontSize } from "../../../../../compLibrary";
 const Box = styled.div`
   display: flex;
   flex-direction: column;
-  position: relative;
   height: 73px;
   width: 155px;
   background-color: ${(props) => props.color};
@@ -13,6 +12,8 @@ const Box = styled.div`
   font-size: ${FontSize.Medium};
 
   .text {
+    position: relative;
+    top: -5px;
     margin: 0px auto 0px 10px;
   }
 
@@ -22,6 +23,8 @@ const Box = styled.div`
 
   img {
     margin-left: auto;
+
+    width: 30px;
 
     :hover {
       cursor: pointer;

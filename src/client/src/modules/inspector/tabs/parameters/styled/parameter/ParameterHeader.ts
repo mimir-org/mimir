@@ -17,6 +17,10 @@ const Header = styled.div`
     display: flex;
     flex-direction: row;
     margin-left: auto;
+
+    :last-child {
+      padding-right: 5px;
+    }
   }
 
   .warningIcon {
@@ -26,6 +30,9 @@ const Header = styled.div`
   .parameterIcon {
     padding-left: 5px;
     cursor: pointer;
+    width: 12px;
+    height: 12px;
+    margin: auto;
   }
 
   .lockIcon {

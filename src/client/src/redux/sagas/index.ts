@@ -20,8 +20,9 @@ import {
   EXPORT_PROJECT_TO_FILE,
   IMPORT_PROJECT,
   LOCK_UNLOCK_NODE,
-  LOCK_UNLOCK_ATTRIBUTE,
+  LOCK_UNLOCK_NODE_ATTRIBUTE,
   COMMIT_PROJECT,
+  LOCK_UNLOCK_TERMINAL_ATTRIBUTE,
 } from "./../store/project/types";
 import {
   FETCHING_INITIAL_DATA,
@@ -90,7 +91,8 @@ export function* sagas() {
     takeEvery(IMPORT_PROJECT, importProject),
     takeEvery(EXPORT_LIBRARY, exportLibrary),
     takeEvery(LOCK_UNLOCK_NODE, lockUnlockNode),
-    takeEvery(LOCK_UNLOCK_ATTRIBUTE, lockUnlockAttribute),
+    takeEvery(LOCK_UNLOCK_NODE_ATTRIBUTE, lockUnlockAttribute),
+    takeEvery(LOCK_UNLOCK_TERMINAL_ATTRIBUTE, lockUnlockAttribute),
     takeEvery(IMPORT_LIBRARY, importLibrary),
     takeEvery(FETCHING_BLOB_DATA, getblobData),
     takeEvery(FETCHING_LIBRARY_TRANSPORT_TYPES, getTransportTypes),

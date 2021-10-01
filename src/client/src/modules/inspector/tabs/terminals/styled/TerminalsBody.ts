@@ -1,7 +1,5 @@
 import styled from "styled-components";
 
-const ListWrapper = styled.div`
+export const TerminalsBody = styled.div`
   display: flex;
 `;
-
-export default ListWrapper;

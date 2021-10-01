@@ -10,6 +10,7 @@ const MenuWrapper = styled.div`
   font-size: ${FontSize.Standard};
   color: ${Color.Black};
   position: relative;
+  padding-left: 10px;
 
   .label {
     margin-bottom: 4px;
