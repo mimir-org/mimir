@@ -110,7 +110,7 @@ const FlowBlock = () => {
     dispatch(changeInspectorTab(0));
 
     const panel = document.getElementById("InspectorModule");
-    if (panel.style.height === "44px") SetPanelHeight(Size.InspectorModuleOpen); // TODO: rewrite
+    // if (panel.style.height === "44px") SetPanelHeight(Size.InspectorModuleOpen); // TODO: rewrite
   };
 
   // Rerender

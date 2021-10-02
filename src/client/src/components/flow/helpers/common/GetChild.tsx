@@ -8,6 +8,8 @@ import { Node, Edge } from "../../../../models";
  * @param edges  - all edges
  * @returns the parentNode
  */
+
+// TODO: this is used to traverse down one step in BlockView. How to find the correct child node will be defined later.
 const GetChild = (node: Node, nodes: Node[], edges: Edge[]) => {
   const childEdge = edges.find((e) => e.fromNodeId === node.id && IsPartOfTerminal(e.toConnector));
   const childNode = nodes.find((n) => n.id === childEdge?.toNodeId);

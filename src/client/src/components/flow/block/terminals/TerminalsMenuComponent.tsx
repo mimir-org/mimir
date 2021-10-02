@@ -44,7 +44,7 @@ const TerminalsMenuComponent = ({
       {terminals.map((conn) => (
         <TerminalsElement key={conn.id}>
           <div className="text" onClick={() => onClick(conn)}>
-            {conn.name} {conn.type}
+            {conn.name}
           </div>
           <label className={"checkbox-block"}>
             <input type="checkbox" checked={conn.visible} onChange={() => onClick(conn)} />

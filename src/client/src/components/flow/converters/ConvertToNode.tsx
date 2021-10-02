@@ -1,6 +1,12 @@
 import { CreateId } from "../helpers/common";
 import { BlobData, LibItem, Node } from "../../../models";
 
+/**
+ * Function to convert data to a Mimir Node.
+ * @param node
+ * @param position
+ * @returns a Node.
+ */
 const ConvertToNode = (data: LibItem, position, projectId: string, icons: BlobData[]) => {
   return {
     id: CreateId(),
