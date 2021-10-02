@@ -19,10 +19,6 @@ export { default as CollapseIcon } from "./collapse.svg";
 export { default as ExpandWhiteIcon } from "./expandWhite.svg";
 export { default as CollapseWhiteIcon } from "./collapseWhite.svg";
 
-export { default as FilterIcon } from "./filter.svg";
-export { default as FilterOpenIcon } from "./filterOpen.svg";
-export { default as FilterClosedIcon } from "./filterClosed.svg";
-
 export { default as LoginIcon } from "./login.svg";
 export { default as LogoutIcon } from "./logout.svg";
 
@@ -45,13 +41,17 @@ export { default as RightArrowIcon } from "./rightArrow.svg";
 export { default as OpenUser } from "./userOpen.svg";
 export { default as ClosedUser } from "./userClosed.svg";
 
-export { default as DarkModeOnIcon } from "./darkModeOn.svg";
-export { default as DarkModeOffIcon } from "./darkModeOff.svg";
-
+// MenuBar
 export { default as BlockViewIcon } from "./blockView.svg";
 export { default as TreeViewIcon } from "./treeView.svg";
 export { default as TreeViewOnIcon } from "./treeViewOn.svg";
 export { default as TreeViewOffIcon } from "./treeViewOff.svg";
+export { default as LandscapeIcon } from "./landscape.svg";
+export { default as DarkModeOnIcon } from "./darkModeOn.svg";
+export { default as DarkModeOffIcon } from "./darkModeOff.svg";
+export { default as FilterIcon } from "./filter.svg";
+export { default as FilterOpenIcon } from "./filterOpen.svg";
+export { default as FilterClosedIcon } from "./filterClosed.svg";
 
 export { default as AddIcon } from "./add.svg";
 export { default as CheckIcon } from "./checkmark.svg";
@@ -84,7 +84,6 @@ export { default as WarningIcon } from "./warning.svg";
 export { default as LockClosedIcon } from "./lockParameter.svg";
 
 //Inspector Terminals
-
 export { default as ExpandAccordionIcon } from "./expandAccordion.svg";
 export { default as CollapseAccordionIcon } from "./collapseAccordion.svg";
 export { default as ExpandAccordionNestedIcon } from "./expandAccordionNested.svg";

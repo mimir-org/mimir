@@ -1,11 +1,12 @@
 import styled from "styled-components";
+import { Color } from "../..";
 
 const OptionsElement = styled.div`
   cursor: pointer;
   position: absolute;
   display: inline;
-  border-left: 1px solid #d9d9d9;
-  border-right: 1px solid #d9d9d9;
+  border-left: 1px solid ${Color.Grey};
+  border-right: 1px solid ${Color.Grey};
   padding: 12px;
   top: -59px;
   right: -200px;
@@ -25,8 +26,13 @@ const OptionsElement = styled.div`
     border-left: none;
   }
 
+  &:nth-child(3) {
+    right: -154px;
+    border-left: none;
+  }
+
   &:last-child {
-    right: -153px;
+    right: -90px;
   }
 `;
 export default OptionsElement;

@@ -18,8 +18,6 @@ const OnBlockClick = (e: any, dispatch: any, project: Project) => {
 
   // Close Inspector if no node/edge is selected
   if (e.target.className === "react-flow__pane") {
-    console.log("tesetset");
-
     dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, false, true));
     SetPanelHeight(Size.ModuleClosed);
     return;

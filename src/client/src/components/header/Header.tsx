@@ -19,12 +19,12 @@ import {
   BlockViewIcon,
   FilterIcon,
   UserClosedIcon,
+  LandscapeIcon,
 } from "../../assets/icons/common";
 
 const Header = () => {
   const dispatch = useDispatch();
   const { push } = useHistory();
-
   const projectState = useSelector<RootState>((state) => state.projectState) as ProjectState;
   const isDarkMode = useSelector<RootState>((state) => state.darkMode.active) as boolean;
   const isFilterMenuOpen = useSelector<RootState>((state) => state.menu.list[4].visible) as boolean;
@@ -74,6 +74,9 @@ const Header = () => {
               alt="VisualFilter"
               onClick={() => Handlers.OnFilterClick(dispatch, isFilterMenuOpen)}
             />
+          </OptionsElement>
+          <OptionsElement>
+            <img src={LandscapeIcon} alt="Landscape" onClick={() => null} />
           </OptionsElement>
           <OptionsElement>
             <img
