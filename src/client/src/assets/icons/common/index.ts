@@ -1,11 +1,9 @@
-export { default as ExplorerIcon } from "./explorer.svg";
-export { default as LegendIcon } from "./legend.svg";
-export { default as LibraryIcon } from "./library.svg";
-
 // Module Expand
 export { default as DownIcon } from "./toggleDown.svg";
 export { default as UpIcon } from "./toggleUp.svg";
 export { default as CloseIcon } from "./close.svg";
+
+export { default as ValidateIcon } from "./validate.svg";
 
 // Dropdown
 export { default as ExpandIcon } from "./expand.svg";
@@ -28,9 +26,7 @@ export { default as InterfaceIcon } from "./interface.svg";
 export { default as TransportIcon } from "./transport.svg";
 export { default as TerminalIcon } from "./terminal.svg";
 export { ReactComponent as TypeEditorTerminalIcon } from "./terminal.svg";
-export { default as EyeIcon } from "./eye.svg";
 export { default as HelpIcon } from "./help.svg";
-export { default as UndoIcon } from "./undo.svg";
 
 // Project
 export { default as LibNodeInterface } from "./libnode_interface.svg";
@@ -39,7 +35,6 @@ export { default as LibNodeTransport } from "./libnode_transport.svg";
 // Inspector
 export { default as DeleteIcon } from "./delete.svg";
 export { default as LockIcon } from "./lock.svg";
-export { default as ValidateIcon } from "./validate.svg";
 
 // Inspector Parameters
 export { default as CloseParameterFilterIcon } from "./closeParameterFilter.svg";
