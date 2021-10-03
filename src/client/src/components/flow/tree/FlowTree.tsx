@@ -21,15 +21,19 @@ import { getBlobData } from "../../../redux/store/typeEditor/actions";
 import { SetPanelHeight } from "../../../modules/inspector/helpers";
 import { updatePosition, setActiveNode, setActiveEdge } from "../../../redux/store/project/actions";
 
+/**
+ * Component for the Flow library in TreeView
+ * @returns a scene with Flow elements and Mimir nodes, transports and edges.
+ */
 const FlowTree = () => {
   const dispatch = useDispatch();
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>();
-  const darkMode = useSelector<RootState>((state) => state.darkMode.active) as boolean;
-  const projectState = useSelector<RootState>((state) => state.projectState) as ProjectState;
-  const icons = useSelector<RootState>((state) => state.typeEditor.icons) as BlobData[];
-  const library = useSelector<RootState>((state) => state.library) as LibraryState;
+  const darkMode = useSelector<RootState>((s) => s.darkMode.active) as boolean;
+  const projectState = useSelector<RootState>((s) => s.projectState) as ProjectState;
+  const icons = useSelector<RootState>((s) => s.typeEditor.icons) as BlobData[];
+  const library = useSelector<RootState>((s) => s.library) as LibraryState;
   const project = projectState?.project;
 
   const OnElementsRemove = (elementsToRemove) => {
@@ -69,7 +73,7 @@ const FlowTree = () => {
     dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, true, true));
     dispatch(changeInspectorTab(0));
     const panel = document.getElementById("InspectorModule");
-    if (panel.style.height === Size.ModuleClosed + "px") SetPanelHeight(Size.InspectorModuleOpen);
+    if (panel.style.height === Size.ModuleClosed + "px") SetPanelHeight(Size.InspectorModuleOpen); // TODO: rewrite
   };
 
   // Rerender

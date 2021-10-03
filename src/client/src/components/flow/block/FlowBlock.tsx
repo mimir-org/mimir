@@ -1,3 +1,4 @@
+import ReactFlow, { ReactFlowProvider, Elements, Background } from "react-flow-renderer";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ProjectMainMenu } from "../../project";
@@ -12,30 +13,33 @@ import { ProjectState } from "../../../redux/store/project/types";
 import { LibraryState } from "../../../redux/store/library/types";
 import { GetBlockEdgeTypes, IsBlockView, OnBlockClick } from "../block/helpers";
 import { CreateBlockElements } from "../creators";
-import { SetPanelHeight } from "../../../modules/inspector/helpers";
 import { useOnConnect, useOnDrop, useOnRemove, useOnDragStop } from "../hooks";
 import { setModuleVisibility } from "../../../redux/store/modules/actions";
 import { setActiveBlockNode, setActiveEdge } from "../../../redux/store/project/actions";
-import ReactFlow, { ReactFlowProvider, Elements, Background } from "react-flow-renderer";
 import { GetSelectedNode, GetBlockNodeTypes, IsFunction, IsLocation, SetDarkModeColor } from "../helpers";
 import { EDGE_TYPE, EdgeType, BackgroundVariant, SPLITVIEW_POSITION, MODULE_TYPE } from "../../../models/project";
+import { changeInspectorHeight } from "../../../modules/inspector/redux/height/actions";
 
+/**
+ * Component for the Flow library in BlockView
+ * @returns a scene with Flow elements and Mimir nodes, transports and edges.
+ */
 const FlowBlock = () => {
   const dispatch = useDispatch();
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>();
-  const node = GetSelectedNode();
-  const darkMode = useSelector<RootState>((state) => state.darkMode.active) as boolean;
-  const projectState = useSelector<RootState>((state) => state.projectState) as ProjectState;
-  const project = projectState?.project;
-  const splitView = useSelector<RootState>((state) => state.splitView.visible) as boolean;
-  const splitViewNode = useSelector<RootState>((state) => state.splitView.node) as Node;
-  const mainConnectNodes = useSelector<RootState>((state) => state.connectView.mainNodes) as Node[];
-  const icons = useSelector<RootState>((state) => state.typeEditor.icons) as BlobData[];
-  const library = useSelector<RootState>((state) => state.library) as LibraryState;
-  const showBackground = IsLocation(splitViewNode) || IsLocation(node);
+  const darkMode = useSelector<RootState>((s) => s.darkMode.active) as boolean;
+  const projectState = useSelector<RootState>((s) => s.projectState) as ProjectState;
+  const splitView = useSelector<RootState>((s) => s.splitView.visible) as boolean;
+  const splitViewNode = useSelector<RootState>((s) => s.splitView.node) as Node;
+  const mainConnectNodes = useSelector<RootState>((s) => s.connectView.mainNodes) as Node[];
+  const icons = useSelector<RootState>((s) => s.typeEditor.icons) as BlobData[];
+  const library = useSelector<RootState>((s) => s.library) as LibraryState;
   const inspectorOpen = useSelector<RootState>((s) => s.modules.types[0].visible) as boolean;
+  const node = GetSelectedNode();
+  const showBackground = IsLocation(splitViewNode) || IsLocation(node);
+  const project = projectState?.project;
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
@@ -78,7 +82,8 @@ const FlowBlock = () => {
     dispatch(setActiveBlockNode(element.id));
     dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, true, true));
     dispatch(changeInspectorTab(0));
-    // if (!inspectorOpen) SetPanelHeight(Size.ModuleOpen);
+    if (inspectorOpen) dispatch(changeInspectorHeight(Size.ModuleClosed));
+    else dispatch(changeInspectorHeight(Size.ModuleOpen));
   };
 
   // Rerender
