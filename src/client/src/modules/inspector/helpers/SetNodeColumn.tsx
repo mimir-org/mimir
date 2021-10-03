@@ -1,6 +1,6 @@
 import { Input, InputBox } from "../../../compLibrary";
 import { Attribute } from "../../../models";
-import { CreateId } from "../../../components/flow/helpers/common";
+import { CreateId } from "../../../components/flow/helpers";
 import { TabColumn } from "../styled";
 import { Dropdown } from "../../../compLibrary/dropdown/mimir";
 

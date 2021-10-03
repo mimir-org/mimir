@@ -1,6 +1,6 @@
 import { TextResources } from "../../../../assets/text";
 import { Edge, RelationType } from "../../../../models";
-import { IsTransportTerminal } from "../../../flow/helpers/common";
+import { IsTransportTerminal } from "../../../flow/helpers";
 import { GetConnector } from "./";
 
 const CheckBlockEdges = (edges: Edge[], type: RelationType | string) => {

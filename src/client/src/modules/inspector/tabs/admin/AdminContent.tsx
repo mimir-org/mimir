@@ -5,8 +5,8 @@ import { TabColumn } from "../../styled";
 import { Input, Textarea } from "../../../../compLibrary";
 import { EnumBase, Node, Project } from "../../../../models";
 import { GetRdsId, GetReferenceDesignation } from "../../../../assets/helpers";
-import { IsLocation } from "../../../../components/flow/helpers/common";
-import { IsBlockView } from "../../../../components/flow/helpers/block";
+import { IsLocation } from "../../../../components/flow/helpers";
+import { IsBlockView } from "../../../../components/flow/block/helpers";
 import { changeNodeValue } from "../../../../redux/store/project/actions";
 import { Dropdown } from "../../../../compLibrary/dropdown/mimir";
 

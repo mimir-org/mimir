@@ -1,7 +1,7 @@
 import { Node } from "../../../models";
 import { FlowElement } from "react-flow-renderer";
-import { SetSplitViewNodePosition } from "../helpers/block";
-import { IsLocation } from "../helpers/common";
+import { SetSplitViewNodePosition } from "../block/helpers";
+import { IsLocation } from "../helpers";
 import { Size } from "../../../compLibrary";
 import { TextResources } from "../../../assets/text";
 

@@ -2,7 +2,7 @@ import { FlowElement } from "react-flow-renderer";
 import { TextResources } from "../../../assets/text";
 import { Position } from "../../../compLibrary";
 import { Node } from "../../../models";
-import { IsLocation } from "../helpers/common";
+import { IsLocation } from "../helpers";
 
 /**  Component to draw the parent node in BlockView. The component returns an instance of FlowElement */
 const CreateParentBlockNode = (node: Node, splitView: boolean) => {

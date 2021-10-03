@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import { IsBlockView } from "../../flow/helpers/block";
+import { IsBlockView } from "../../flow/block/helpers";
 import { Connector, Edge, Node, RelationType } from "../../../models";
 import { MenuSubHeader } from "../../../compLibrary/box/menus";
 import { OnChange } from "./handlers";

@@ -3,9 +3,9 @@ import { FooterBox, FooterContent } from "../../compLibrary/box/footer";
 import { TextResources } from "../../assets/text";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { IsBlockView } from "../../components/flow/helpers/block";
+import { IsBlockView } from "../../components/flow/block/helpers";
 import { OnChange } from "./handlers";
-import { GetSelectedNode, IsLocation } from "../../components/flow/helpers/common";
+import { GetSelectedNode, IsLocation } from "../../components/flow/helpers";
 
 export const SplitViewComponent = () => {
   const splitView = useSelector<RootState>((state) => state.splitView.visible) as boolean;

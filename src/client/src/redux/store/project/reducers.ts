@@ -1,6 +1,6 @@
 import { Edge, Node, ProjectSimple } from "../../../models";
 import { FindTerminalAndNode, TraverseTree } from "./helpers/";
-import { IsAspectNode } from "../../../components/flow/helpers/common";
+import { IsAspectNode } from "../../../components/flow/helpers";
 import {
   FETCHING_PROJECT,
   FETCHING_PROJECT_SUCCESS_OR_ERROR,

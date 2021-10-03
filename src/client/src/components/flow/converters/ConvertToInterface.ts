@@ -1,6 +1,6 @@
 import { Connector, Interface, ConnectorType } from "../../../models";
 import { LibraryState } from "../../../redux/store/library/types";
-import { CreateId } from "../helpers/common";
+import { CreateId } from "../helpers";
 
 const ConvertToInterface = (sourceConn: Connector, library: LibraryState) => {
   const currentInterface = library?.interfaceTypes.find(

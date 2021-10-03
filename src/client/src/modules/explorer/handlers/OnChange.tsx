@@ -1,5 +1,5 @@
 import { Node } from "../../../models";
-import { IsLocation } from "../../../components/flow/helpers/common";
+import { IsLocation } from "../../../components/flow/helpers";
 import { setSplitView, setSplitNode } from "../../../redux/store/splitView/actions";
 
 const OnChange = (dispatch: any, isActive: boolean, setIsActive: any, node: Node) => {

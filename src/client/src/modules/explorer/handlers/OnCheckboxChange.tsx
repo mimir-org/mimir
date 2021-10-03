@@ -1,8 +1,8 @@
 import { removeMainNodes } from "../../../redux/store/connectView/actions";
 import { Node } from "../../../models";
 import { setSplitNode } from "../../../redux/store/splitView/actions";
-import { IsConnectView } from "../../../components/flow/helpers/block/connectView";
-import { IsFunction } from "../../../components/flow/helpers/common";
+import { IsConnectView } from "../../../components/flow/block/connectView/helpers";
+import { IsFunction } from "../../../components/flow/helpers";
 import {
   setActiveNode,
   setActiveBlockNode,

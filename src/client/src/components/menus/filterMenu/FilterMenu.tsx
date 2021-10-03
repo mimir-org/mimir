@@ -12,7 +12,7 @@ import {
   IsLocationTerminal,
   IsPartOfTerminal,
   IsTransportTerminal,
-} from "../../flow/helpers/common";
+} from "../../flow/helpers";
 
 const FilterMenu = () => {
   const project = useSelector<RootState>((state) => state.projectState.project) as Project;

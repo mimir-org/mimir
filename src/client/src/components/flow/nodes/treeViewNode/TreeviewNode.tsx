@@ -9,7 +9,7 @@ import {
   IsOutputTerminal,
   IsPartOfTerminal,
   SetTerminalYPos,
-} from "../../helpers/common";
+} from "../../helpers";
 
 /**
  * Component to display a node in TreeView.

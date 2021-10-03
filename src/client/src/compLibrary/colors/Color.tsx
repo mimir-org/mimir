@@ -44,7 +44,6 @@ const Color = {
   ParamsPurple: "#8088FF",
 
   // Inspector Terminals
-
   TerminalsPurple: "#A5A5DC",
 };
 

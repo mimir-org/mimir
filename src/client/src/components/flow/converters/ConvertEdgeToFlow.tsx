@@ -1,7 +1,7 @@
 import { FlowElement } from "react-flow-renderer";
 import { Edge, Node } from "../../../models";
 import { EdgeType, EDGE_TYPE } from "../../../models/project";
-import { IsTransportTerminal } from "../helpers/common";
+import { IsTransportTerminal } from "../helpers";
 
 /**
  * Function to convert a Mimir Edge to a FlowElement that interacts with the Flow library.

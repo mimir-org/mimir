@@ -2,7 +2,7 @@ import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
 import { TreeHandleBox } from "../../../../compLibrary/treeView";
 import { Connector } from "../../../../models";
-import { GetFlowAspectIcon, GetHandleType } from "../../helpers/common";
+import { GetFlowAspectIcon, GetHandleType } from "../../helpers";
 import { OnMouseLeave } from "./handlers";
 import { AspectNodeBox } from "./styled";
 

@@ -1,10 +1,6 @@
 import { GetRdsId } from ".";
 import { Node, Project } from "../../models";
-import {
-  IsAspectNode,
-  IsPartOfTerminal,
-  IsTransportTerminal,
-} from "../../components/flow/helpers/common";
+import { IsAspectNode, IsPartOfTerminal, IsTransportTerminal } from "../../components/flow/helpers";
 
 const findParentNode = (currentNode: Node, project: Project): Node => {
   if (!currentNode) return null;

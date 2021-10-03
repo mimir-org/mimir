@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Node } from "../../../models";
 import { RootState } from "../../../redux/store";
-import { GetSelectedNode } from "../../../components/flow/helpers/common";
+import { GetSelectedNode } from "../../../components/flow/helpers";
 import { OnCheckboxChange } from "../handlers";
 
 interface Props {

@@ -36,7 +36,6 @@ export function parametersReducer(
 
     case REMOVE_ATTRIBUTE_FILTER: {
       const { nodeId, filterName } = action.payload;
-
       const { [filterName]: removed, ...filters } = state.selectedAttributeFilters[nodeId];
 
       const selectedAttributeFilters = {
@@ -52,7 +51,6 @@ export function parametersReducer(
 
     case REMOVE_ALL_ATTRIBUTE_FILTERS: {
       const { nodeId } = action.payload;
-
       const { [nodeId]: removed, ...selectedAttributeFilters } = state.selectedAttributeFilters;
 
       return {

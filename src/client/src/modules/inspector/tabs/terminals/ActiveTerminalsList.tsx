@@ -5,7 +5,7 @@ import { Connector, ConnectorType, TerminalType } from "../../../../models";
 import ActiveTerminalsTypeList from "./ActiveTerminalsTypeList";
 import { OnCategoryClick, OnTypeClick } from "./handlers";
 import { FilterTerminalCategories, FormatTypeId } from "./helpers";
-import { IsInputTerminal, IsOutputTerminal } from "../../../../components/flow/helpers/common";
+import { IsInputTerminal, IsOutputTerminal } from "../../../../components/flow/helpers";
 import { ExpandAccordionIcon, CollapseAccordionIcon } from "../../../../assets/icons/common";
 import {
   TerminalsListElementWrapper,

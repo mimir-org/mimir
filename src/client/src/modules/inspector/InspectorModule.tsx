@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { Size } from "../../compLibrary";
 import { MODULE_TYPE } from "../../models/project";
-import { IsBlockView } from "../../components/flow/helpers/block";
+import { IsBlockView } from "../../components/flow/block/helpers";
 import { Node, Project } from "../../models";
 import { DragResizePanel } from "./helpers";
 import { AnimatedInspector } from "./styled";
 import { InspectorHeader } from ".";
-import { GetSelectedNode, IsExplorer, IsLibrary } from "../../components/flow/helpers/common";
+import { GetSelectedNode, IsExplorer, IsLibrary } from "../../components/flow/helpers";
 
 const InspectorModule = () => {
   const dispatch = useDispatch();
@@ -59,6 +59,7 @@ const InspectorModule = () => {
       start={start}
       stop={stop}
       run={animate}
+      height={height}
     >
       <InspectorHeader
         project={project}

@@ -1,5 +1,5 @@
 import { Node, Edge } from "../../../../../models";
-import { GetParent } from "../../../helpers/common";
+import { GetParent } from "../../../helpers";
 import {
   setActiveBlockNode,
   setActiveEdge,

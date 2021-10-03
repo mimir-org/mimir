@@ -1,6 +1,6 @@
 import { ArrowDown, ArrowUp } from "../../../../assets/icons/blockView";
 import { Node } from "../../../../models";
-import { IsAspectNode } from "../../helpers/common";
+import { IsAspectNode } from "../../helpers";
 import { Navigation, Banner, Block, Header } from "./styled";
 
 interface Props {

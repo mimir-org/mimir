@@ -7,7 +7,7 @@ import {
   IsLocationTerminal,
   IsPartOfTerminal,
   IsTransportTerminal,
-} from "../../../components/flow/helpers/common";
+} from "../../../components/flow/helpers";
 
 const GetLegendInfo = (conn: Connector, node: Node) => {
   let color = "";

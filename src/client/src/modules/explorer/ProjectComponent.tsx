@@ -1,7 +1,7 @@
 import { Project, Node } from "../../models";
 import { AspectComponent } from "./aspectComponent/AspectComponent";
-import { IsAspectNode, IsProduct } from "../../components/flow/helpers/common";
-import { IsBlockView } from "../../components/flow/helpers/block";
+import { IsAspectNode, IsProduct } from "../../components/flow/helpers";
+import { IsBlockView } from "../../components/flow/block/helpers";
 import { HasChildren, IsAncestorInSet } from "./helpers/ParentNode";
 import { useState } from "react";
 import { SortNodesWithIndent } from "./helpers/SortNodesWithIndent";

@@ -5,7 +5,7 @@ import { TextResources } from "../../../../assets/text";
 import { Connector, Node, Edge } from "../../../../models";
 import { RootState } from "../../../../redux/store";
 import { HandleComponent, TerminalsComponent } from "../../block/terminals";
-import { IsLocation } from "../../helpers/common";
+import { IsLocation } from "../../helpers";
 import { Size } from "../../../../compLibrary";
 import { OnParentClick, OnChildClick } from "./handlers";
 import { BlockComponent } from "./";
@@ -16,7 +16,7 @@ import {
   FilterTerminals,
   FindNodeByDataId,
   FindAllEdges,
-} from "../../helpers/block";
+} from "../../block/helpers";
 
 /**
  * Component for the large parent block in BlockView.

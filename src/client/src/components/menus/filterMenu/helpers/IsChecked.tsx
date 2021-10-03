@@ -1,10 +1,6 @@
 import { TextResources } from "../../../../assets/text";
 import { Connector, Edge, Node, RelationType } from "../../../../models";
-import {
-  IsLocationTerminal,
-  IsPartOfTerminal,
-  IsTransportTerminal,
-} from "../../../flow/helpers/common";
+import { IsLocationTerminal, IsPartOfTerminal, IsTransportTerminal } from "../../../flow/helpers";
 
 const IsChecked = (
   type: RelationType | string,
@@ -23,18 +19,14 @@ const IsChecked = (
   else if (type === TextResources.Aspect_Location)
     edge = edges.find((x) => IsLocationTerminal(x.fromConnector));
   // Sort by type
-  else if (IsTransportTerminal(conn))
-    edge = edges.find((x) => x.fromConnector.name === name);
+  else if (IsTransportTerminal(conn)) edge = edges.find((x) => x.fromConnector.name === name);
   else if (IsLocationTerminal(conn))
     edge = edges.find(
-      (x) =>
-        x.fromNode.aspect === node?.aspect &&
-        IsLocationTerminal(x.fromConnector)
+      (x) => x.fromNode.aspect === node?.aspect && IsLocationTerminal(x.fromConnector)
     );
   else if (IsPartOfTerminal(conn))
     edge = edges.find(
-      (x) =>
-        x.fromNode.aspect === node?.aspect && IsPartOfTerminal(x.fromConnector)
+      (x) => x.fromNode.aspect === node?.aspect && IsPartOfTerminal(x.fromConnector)
     );
 
   return !edge?.isHidden;

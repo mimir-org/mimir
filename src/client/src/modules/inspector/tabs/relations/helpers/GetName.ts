@@ -3,7 +3,7 @@ import { GetRelationName } from "../../../helpers";
 import {
   GetOtherNodeFromEdgeViaConnector,
   GetOtherNodeFromEdgeViaNode,
-} from "../../../../../components/flow/helpers/common";
+} from "../../../../../components/flow/helpers";
 
 const GetNameRelation = (conn: Connector, relationEdges: Map<string, Edge>): string => {
   const name = GetRelationName(conn.relationType);

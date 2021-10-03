@@ -1,6 +1,6 @@
 import { FlowElement } from "react-flow-renderer";
 import { Node } from "../../../models";
-import { GetNodeType } from "../helpers/common";
+import { GetNodeType } from "../helpers";
 
 /**
  * Function to convert a Mimir Node to a FlowElement that interacts with the Flow library.

@@ -17,12 +17,9 @@ interface Props {
 
 const RelationComponent = ({ node }: Props) => {
   const dispatch = useDispatch();
-
   const connectors = node.connectors;
   const hasConnectors = connectors.length > 0;
-
   const edges = useSelector<RootState>((state) => state.projectState.project.edges) as Edge[];
-
   const [relations, relationEdges] = GetRelations(connectors, edges);
 
   const [inputTerminals, outputTerminals, transports] = GetTerminalsAndTransports(

@@ -3,7 +3,7 @@ import { Color, Size } from "../../../compLibrary";
 
 const InspectorBox = styled.div`
   color: ${Color.Black};
-  height: ${(props: { stop: string }) => props.stop}px;
+  height: ${(props) => props.height}px;
   max-height: 89vh;
   min-height: ${Size.ModuleClosed}px;
   width: auto;
@@ -13,7 +13,7 @@ const InspectorBox = styled.div`
   bottom: 0;
   overflow-x: auto;
   overflow-y: hidden;
-  transition: left 0.3s ease-in-out, right 0.3s ease-in-out;
+  transition: left 0.3s ease-in-out, right 0.3s ease-in-out, height 0.3s ease-in-out;
 
   right: ${(props) =>
     props.isLibraryOpen ? Size.ModuleOpen + Size.Margin : Size.ModuleClosed + Size.Margin}px;

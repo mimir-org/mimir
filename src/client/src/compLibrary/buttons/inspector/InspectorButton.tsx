@@ -6,7 +6,6 @@ interface Props {
   type: string;
   visible: boolean;
 }
-
 /**
  * Component for buttons in the Inspector Module.
  * @param param0

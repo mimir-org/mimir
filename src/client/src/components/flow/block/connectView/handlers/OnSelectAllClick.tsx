@@ -1,5 +1,5 @@
 import { Node } from "../../../../../models";
-import { IsMainConnectNode } from "../../../helpers/block/connectView";
+import { IsMainConnectNode } from "../../../block/connectView/helpers";
 import { Size } from "../../../../../compLibrary";
 import { addConnectNodes, addMainNode } from "../../../../../redux/store/connectView/actions";
 

@@ -1,4 +1,4 @@
-import { Legend } from "../../components/flow/helpers/common";
+import { Legend } from "../../components/flow/helpers";
 import { Project } from "../../models";
 import { AddLegend } from "./helpers";
 

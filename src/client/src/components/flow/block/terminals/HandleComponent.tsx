@@ -1,6 +1,6 @@
 import { Node, Connector } from "../../../../models";
 import { Handle } from "react-flow-renderer";
-import { GetBlockHandleType } from "../../helpers/block";
+import { GetBlockHandleType } from "../../block/helpers";
 import { IsValidConnection } from "./helpers";
 import { HandleBox } from "./styled";
 import {
@@ -10,7 +10,7 @@ import {
   IsOutputTerminal,
   IsLocationTerminal,
   SetTerminalYPos,
-} from "../../helpers/common";
+} from "../../helpers";
 
 interface Props {
   node: Node;

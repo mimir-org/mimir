@@ -3,7 +3,7 @@ import {
   IsInputTerminal,
   IsOutputTerminal,
   IsTransportTerminal,
-} from "../../../../../components/flow/helpers/common";
+} from "../../../../../components/flow/helpers";
 
 const GetTerminalsAndTransports = (
   connectors: Connector[],

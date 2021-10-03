@@ -1,4 +1,4 @@
-import { ShowBlockViewEdge } from "../helpers/block";
+import { ShowBlockViewEdge } from "../block/helpers";
 import { Edge, Node } from "../../../models";
 import { EdgeType } from "../../../models/project";
 import { ConvertEdgeToFlow } from "../converters";

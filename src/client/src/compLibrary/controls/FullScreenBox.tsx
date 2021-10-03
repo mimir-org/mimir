@@ -8,18 +8,14 @@ import { FullScreenButton } from "./";
 const FullScreenBox = () => {
   const dispatch = useDispatch();
 
-  const isOpen = useSelector<RootState>((state) =>
-    state.modules.types.find((x) => x.visible)
+  const isOpen = useSelector<RootState>((s) => s.modules.types.find((x) => x.visible)) as boolean;
+
+  const libraryOpen = useSelector<RootState>(
+    (s) => s.modules.types.find((x) => x.type === MODULE_TYPE.LIBRARY).visible
   ) as boolean;
 
-  const isLibraryOpen = useSelector<RootState>(
-    (state) =>
-      state.modules.types.find((x) => x.type === MODULE_TYPE.LIBRARY).visible
-  ) as boolean;
-
-  const isInspectorOpen = useSelector<RootState>(
-    (state) =>
-      state.modules.types.find((x) => x.type === MODULE_TYPE.INSPECTOR).visible
+  const inspectorOpen = useSelector<RootState>(
+    (s) => s.modules.types.find((x) => x.type === MODULE_TYPE.INSPECTOR).visible
   ) as boolean;
 
   const onToggleClick = () => {
@@ -27,15 +23,8 @@ const FullScreenBox = () => {
   };
 
   return (
-    <FullScreenButton
-      isLibraryOpen={isLibraryOpen}
-      isInspectorOpen={isInspectorOpen}
-    >
-      <img
-        src={isOpen ? ExpandIcon : CloseIcon}
-        alt="fullscreen"
-        onClick={onToggleClick}
-      />
+    <FullScreenButton libraryOpen={libraryOpen} inspectorOpen={inspectorOpen}>
+      <img src={isOpen ? ExpandIcon : CloseIcon} alt="fullscreen" onClick={onToggleClick} />
     </FullScreenButton>
   );
 };

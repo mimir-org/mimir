@@ -29,7 +29,6 @@ const ParametersContent = ({ element, elementIsLocked }: Props) => {
     ) as FilterDict) ?? {};
 
   const hasFilters = Object.keys(selectedFilters).length > 0;
-
   const attributeCombinations = GetAttributeCombinations(attributeFilters, attributes);
 
   return (

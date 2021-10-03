@@ -6,16 +6,17 @@ import { SetPanelHeight } from "./../helpers";
 /**
  * Function to open/close the Inspector Module.
  * @param dispatch
- * @param type - the Inspector Module type
+ * @param type - Module type
  * @param open
  */
 const OnToggleClick = (dispatch: any, type: string, open: boolean) => {
+  console.log("test her: ", open);
   dispatch(setModuleVisibility(type, !open, true));
   if (open) dispatch(changeInspectorHeight(Size.ModuleClosed));
   else dispatch(changeInspectorHeight(Size.ModuleOpen));
 
-  if (open) SetPanelHeight(Size.ModuleClosed);
-  else SetPanelHeight(Size.ModuleOpen);
+  // if (open) SetPanelHeight(Size.ModuleClosed);
+  // else SetPanelHeight(Size.ModuleOpen);
 };
 
 export default OnToggleClick;

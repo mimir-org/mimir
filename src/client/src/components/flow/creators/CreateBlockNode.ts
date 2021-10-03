@@ -1,8 +1,8 @@
 import { Node } from "../../../models";
 import { FlowElement } from "react-flow-renderer";
-import { SetBlockNodePosition, IsSplitView } from "../helpers/block";
-import { IsLocation } from "../helpers/common";
-import { SetConnectNodePosition } from "../helpers/block/connectView";
+import { SetBlockNodePosition, IsSplitView } from "../block/helpers";
+import { IsLocation } from "../helpers";
+import { SetConnectNodePosition } from "../block/connectView/helpers";
 import { TextResources } from "../../../assets/text";
 
 /**

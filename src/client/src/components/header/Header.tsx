@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { VIEW_TYPE } from "../../models/project";
 import { MenuMainHeader } from "../../compLibrary/box/menus";
 import { ProjectState } from "../../redux/store/project/types";
-import { IsExplorer, IsLibrary } from "../flow/helpers/common";
+import { IsExplorer, IsLibrary } from "../flow/helpers";
 import {
   HeaderBox,
   OptionsBox,

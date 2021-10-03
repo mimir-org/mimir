@@ -1,6 +1,6 @@
 import { VIEW_TYPE } from "../../../models/project";
 import { changeFlowView } from "../../../redux/store/flow/actions";
-import { GetSelectedNode } from "../../flow/helpers/common";
+import { GetSelectedNode } from "../../flow/helpers";
 
 const OnViewClick = (e: any, dispatch: any, push) => {
   const selectedNode = GetSelectedNode();

@@ -1,6 +1,6 @@
 import { addNode, createEdge } from "../../../redux/store/project/actions";
-import { IsBlockView } from "../helpers/block";
-import { GetEdgeType } from "../helpers/tree";
+import { IsBlockView } from "../block/helpers";
+import { GetEdgeType } from "../tree/helpers";
 import { ConvertToEdge, ConvertToNode } from "../converters";
 import { CreateBlockNode, CreateTreeEdge, CreateTreeNode } from "../creators";
 import { BlobData, LibItem, Project, GetFileData } from "../../../models";
@@ -11,7 +11,7 @@ import {
   IsInputTerminal,
   IsOutputTerminal,
   IsPartOfTerminal,
-} from "./../helpers/common";
+} from "./../helpers";
 
 const useOnDrop = (
   project: Project,

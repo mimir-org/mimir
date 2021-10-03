@@ -1,6 +1,6 @@
 import red from "../../redux/store";
 import { Node, Edge } from "../../models";
-import { IsPartOfTerminal } from "../../components/flow/helpers/common";
+import { IsPartOfTerminal } from "../../components/flow/helpers";
 
 const SetIndentLevel = (node: Node, count: number): number => {
   const edge = red.store

@@ -1,5 +1,5 @@
 import { Elements } from "react-flow-renderer";
-import { IsPartOfTerminal } from "../helpers/common";
+import { IsPartOfTerminal } from "../helpers";
 import { EDGE_TYPE, EdgeType } from "../../../models/project";
 import { Node, Project } from "../../../models";
 import { CreateBlockEdge, CreateSplitViewNode, CreateParentBlockNode, CreateBlockNode } from ".";

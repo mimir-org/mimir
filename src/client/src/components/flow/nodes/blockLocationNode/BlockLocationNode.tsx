@@ -8,8 +8,8 @@ import { changeActiveConnector } from "../../../../redux/store/project/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { Connector, Node } from "../../../../models";
 import { OnHover, OnMouseOut } from "./handlers";
-import { IsLocation } from "../../helpers/common";
-import { SetTerminalOrder, FilterTerminals, FindNodeByDataId } from "../../helpers/block";
+import { IsLocation } from "../../helpers";
+import { SetTerminalOrder, FilterTerminals, FindNodeByDataId } from "../../block/helpers";
 
 /**
  * Component for a Location Node in BlockView.

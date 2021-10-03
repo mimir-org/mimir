@@ -4,7 +4,7 @@ import { ProjectComponent, SplitViewComponent } from "./";
 import { TextResources } from "../../assets/text";
 import { MODULE_TYPE } from "../../models/project";
 import { AnimatedModule, Size } from "../../compLibrary";
-import { IsBlockView } from "../../components/flow/helpers/block";
+import { IsBlockView } from "../../components/flow/block/helpers";
 import { ModuleHead, ModuleBody } from "../../compLibrary/box/modules";
 import { Project } from "../../models";
 import { OnToggleClick } from "./handlers";

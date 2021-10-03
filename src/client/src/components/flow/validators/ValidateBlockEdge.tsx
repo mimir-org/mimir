@@ -1,4 +1,4 @@
-import { IsConnectView } from "../helpers/block/connectView";
+import { IsConnectView } from "../block/connectView/helpers";
 import { Node, Connector } from "../../../models";
 import {
   IsChildOf,
@@ -6,7 +6,7 @@ import {
   IsLocation,
   IsPartOfTerminal,
   IsTransportTerminal,
-} from "../helpers/common";
+} from "../helpers";
 
 /**
  * Component to validate and display an edge in BlockView

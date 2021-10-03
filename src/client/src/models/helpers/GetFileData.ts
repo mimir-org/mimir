@@ -2,7 +2,7 @@ import { Project, Edge, Node } from "..";
 import { ProjectAm } from "../../redux/sagas/project/ConvertProject";
 import { ConnectorType, RelationType } from "../Enums";
 import { post } from "../../models/webclient";
-import { CreateId } from "../../components/flow/helpers/common";
+import { CreateId } from "../../components/flow/helpers";
 import { TextResources } from "../../assets/text";
 
 const readFile = (event: any): Promise<any> => {

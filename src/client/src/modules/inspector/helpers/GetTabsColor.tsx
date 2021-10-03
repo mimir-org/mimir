@@ -1,6 +1,6 @@
 import { Color } from "../../../compLibrary";
 import { Edge, Node } from "../../../models";
-import { IsFunction, IsLocation, IsProduct } from "../../../components/flow/helpers/common";
+import { IsFunction, IsLocation, IsProduct } from "../../../components/flow/helpers";
 
 const GetTabsColor = (node: Node | null, edge: Edge | null) => {
   if (node) {

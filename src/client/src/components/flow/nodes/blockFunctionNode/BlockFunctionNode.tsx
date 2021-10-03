@@ -5,13 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import { Connector, Node, Edge } from "../../../../models";
 import { Size } from "../../../../compLibrary";
-import { IsLocation } from "../../helpers/common";
+import { IsLocation } from "../../helpers";
 import { NodeBox } from "../../styled";
 import { TerminalsComponent, HandleComponent } from "../../block/terminals";
 import { ConnectViewComponent } from "../../block/connectView";
 import { IsChildConnectNode, IsConnectNodeChecked } from "./helpers";
 import { changeActiveConnector, removeEdge } from "../../../../redux/store/project/actions";
-import { SetTerminalOrder, FilterTerminals, FindAllEdges } from "../../helpers/block";
+import { SetTerminalOrder, FilterTerminals, FindAllEdges } from "../../block/helpers";
 import { Symbol } from "../../../../compLibrary/symbol";
 import { BlockNodeNameBox } from "../../block/styled";
 import {
@@ -19,7 +19,7 @@ import {
   IsMainConnectNode,
   SetMainConnectNodeColor,
   ResizeMainConnectNode,
-} from "../../helpers/block/connectView";
+} from "../../block/connectView/helpers";
 import {
   addConnectNode,
   addMainNode,

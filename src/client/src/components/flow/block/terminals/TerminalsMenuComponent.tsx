@@ -1,6 +1,6 @@
 import { Connector, Node } from "../../../../models";
-import { IsMainConnectNode } from "../../helpers/block/connectView";
-import { GetConnectorIcon } from "../../helpers/common";
+import { IsMainConnectNode } from "../../block/connectView/helpers";
+import { GetConnectorIcon } from "../../helpers";
 import { TerminalsMenu, TerminalsElement } from "./styled";
 
 interface Props {

@@ -1,10 +1,6 @@
 import { TextResources } from "../../../../assets/text";
 import { Edge, Node, RelationType } from "../../../../models";
-import {
-  IsPartOfTerminal,
-  IsTransportTerminal,
-  IsLocationTerminal,
-} from "../../../flow/helpers/common";
+import { IsPartOfTerminal, IsTransportTerminal, IsLocationTerminal } from "../../../flow/helpers";
 
 const CheckEdges = (edges: Edge[], type: RelationType | string, node: Node) => {
   const elementsToRemove = [];
@@ -12,10 +8,7 @@ const CheckEdges = (edges: Edge[], type: RelationType | string, node: Node) => {
   // All transport edges
   if (type === TextResources.Relations_Transport) {
     edges?.forEach((edge) => {
-      if (
-        IsTransportTerminal(edge.fromConnector) &&
-        edge.fromConnector.relationType === undefined
-      )
+      if (IsTransportTerminal(edge.fromConnector) && edge.fromConnector.relationType === undefined)
         elementsToRemove.push(edge);
     });
   }
@@ -36,18 +29,12 @@ const CheckEdges = (edges: Edge[], type: RelationType | string, node: Node) => {
 
   edges?.forEach((edge) => {
     if (type === RelationType.PartOf) {
-      if (
-        edge.fromNode.aspect === node?.aspect &&
-        IsPartOfTerminal(edge.fromConnector)
-      )
+      if (edge.fromNode.aspect === node?.aspect && IsPartOfTerminal(edge.fromConnector))
         elementsToRemove.push(edge); // Part of
     }
 
     if (type === RelationType.HasLocation) {
-      if (
-        edge.fromNode.aspect === node?.aspect &&
-        IsLocationTerminal(edge.fromConnector)
-      )
+      if (edge.fromNode.aspect === node?.aspect && IsLocationTerminal(edge.fromConnector))
         elementsToRemove.push(edge); // Has Location
     }
     if (edge.fromConnector.name === type) elementsToRemove.push(edge); // Transport
