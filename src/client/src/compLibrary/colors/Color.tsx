@@ -15,6 +15,10 @@ const Color = {
   DarkRed: "rgb(139,0,0)",
   Red: "rgb(255,0,0)",
 
+  // DarkMode
+  DarkModeMain: "#888",
+  DarkModeModule: "#A8A8A8",
+
   // Function aspect
   FunctionBlock: "#FEF445",
   FunctionHeader: "#FFFAA9",

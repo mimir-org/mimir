@@ -12,7 +12,6 @@ export { default as TabRow } from "./TabRow";
 export { default as NodeInfo } from "./NodeInfo";
 export { default as TabTitle } from "./TabTitle";
 export { default as ToggleBox } from "./ToggleBox";
-export { default as ButtonGoToAspect } from "./ButtonGoToAspect";
 
 // AttributesContainer
 export { default as Wrapper } from "./Wrapper";

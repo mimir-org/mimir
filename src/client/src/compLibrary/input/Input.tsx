@@ -1,7 +1,8 @@
 import styled from "styled-components";
+import Color from "../colors/Color";
 
 const Input = styled.input`
-  border: 1px solid #000;
+  border: 1px solid ${Color.White};
   width: 100%;
   box-sizing: border-box;
   border-radius: 5px;
@@ -11,7 +12,7 @@ const Input = styled.input`
   text-align: left;
   margin-right: ${(props) => props.inputType === "tech" && "4px"};
   background-color: ${(props: { readOnly: boolean }) =>
-    props.readOnly ? "#f2f2f2" : "#fff"};
+    props.readOnly ? Color.Grey : Color.White};
   font-size: ${(props) => GetFontSize(props.fontSize)}px;
 
   @media (min-width: 3000px) {

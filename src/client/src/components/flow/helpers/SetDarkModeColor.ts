@@ -13,8 +13,8 @@ const SetDarkModeColor = (active: boolean) => {
   const menuBar = document.getElementById("MenuBar");
 
   if (active) {
-    mainColor = "#888888";
-    moduleColor = "#A8A8A8";
+    mainColor = Color.DarkModeMain;
+    moduleColor = Color.DarkModeModule;
   } else {
     mainColor = Color.White;
     moduleColor = Color.LightGrey;

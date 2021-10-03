@@ -4,7 +4,12 @@ import { Position } from "../../../compLibrary";
 import { Node } from "../../../models";
 import { IsLocation } from "../helpers";
 
-/**  Component to draw the parent node in BlockView. The component returns an instance of FlowElement */
+/**
+ * Component to create a parent node in BlockView.
+ * @param node
+ * @param splitView
+ * @returns a FlowElement, the big box in BlockView.
+ */
 const CreateParentBlockNode = (node: Node, splitView: boolean) => {
   if (!node) return null;
 

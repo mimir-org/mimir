@@ -24,14 +24,12 @@ export default function DefaultEdgeType({
   });
 
   return (
-    <>
-      <path
-        id={id}
-        style={style}
-        className="react-flow__edge-path"
-        d={edgePathSmoothStep}
-        markerEnd={markerEnd}
-      />
-    </>
+    <path
+      id={id}
+      style={style}
+      className="react-flow__edge-path"
+      d={edgePathSmoothStep}
+      markerEnd={markerEnd}
+    />
   );
 }

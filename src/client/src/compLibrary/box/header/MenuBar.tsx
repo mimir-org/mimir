@@ -3,7 +3,7 @@ import { Color, Size } from "../..";
 
 const MenuBar = styled.div`
   background-color: ${Color.White} !important;
-  color: #000;
+  color: ${Color.Black};
   height: 40px;
   width: auto;
   border-bottom: 1px solid ${Color.Grey};
