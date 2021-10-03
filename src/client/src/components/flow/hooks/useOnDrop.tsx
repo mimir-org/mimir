@@ -5,13 +5,7 @@ import { ConvertToEdge, ConvertToNode } from "../converters";
 import { CreateBlockNode, CreateTreeEdge, CreateTreeNode } from "../creators";
 import { BlobData, LibItem, Project, GetFileData } from "../../../models";
 import { LibraryState } from "../../../redux/store/library/types";
-import {
-  CreateId,
-  GetSelectedNode,
-  IsInputTerminal,
-  IsOutputTerminal,
-  IsPartOfTerminal,
-} from "./../helpers";
+import { CreateId, GetSelectedNode, IsInputTerminal, IsOutputTerminal, IsPartOfTerminal } from "./../helpers";
 
 const useOnDrop = (
   project: Project,
@@ -89,22 +83,10 @@ const useOnDrop = (
     if (sourceNode && sourceNode.aspect === targetNode.aspect) {
       targetNode.level = sourceNode.level + 1;
 
-      const sourceConn = sourceNode.connectors?.find(
-        (x) => IsPartOfTerminal(x) && IsOutputTerminal(x)
-      );
-      const targetConn = targetNode.connectors?.find(
-        (x) => IsPartOfTerminal(x) && IsInputTerminal(x)
-      );
+      const sourceConn = sourceNode.connectors?.find((x) => IsPartOfTerminal(x) && IsOutputTerminal(x));
+      const targetConn = targetNode.connectors?.find((x) => IsPartOfTerminal(x) && IsInputTerminal(x));
 
-      const partofEdge = ConvertToEdge(
-        CreateId(),
-        sourceConn,
-        targetConn,
-        sourceNode,
-        targetNode,
-        project.id,
-        library
-      );
+      const partofEdge = ConvertToEdge(CreateId(), sourceConn, targetConn, sourceNode, targetNode, project.id, library);
 
       dispatch(createEdge(partofEdge));
 

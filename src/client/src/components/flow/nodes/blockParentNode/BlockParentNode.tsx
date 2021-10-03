@@ -11,12 +11,7 @@ import { OnParentClick, OnChildClick } from "./handlers";
 import { BlockComponent } from "./";
 import { BlockMessageBox } from "../../block/styled";
 import { changeActiveConnector, removeEdge } from "../../../../redux/store/project/actions";
-import {
-  SetTerminalOrder,
-  FilterTerminals,
-  FindNodeByDataId,
-  FindAllEdges,
-} from "../../block/helpers";
+import { SetTerminalOrder, FilterTerminals, FindNodeByDataId, FindAllEdges } from "../../block/helpers";
 
 /**
  * Component for the large parent block in BlockView.
@@ -54,9 +49,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
     dispatch(changeActiveConnector(actualNode, conn.id, !conn.visible, order));
 
     if (conn.visible) {
-      const edge = edges.find(
-        (e) => e.fromConnector.id === conn.id || e.toConnector.id === conn.id
-      );
+      const edge = edges.find((e) => e.fromConnector.id === conn.id || e.toConnector.id === conn.id);
       if (edge) dispatch(removeEdge(edge.id));
     }
   };

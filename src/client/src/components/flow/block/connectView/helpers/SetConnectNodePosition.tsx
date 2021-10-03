@@ -10,12 +10,7 @@ import { CalculateXPosition, CalculateYPosition } from ".";
  * @param allNodes - all nodes in Mimir
  * @returns an X and Y position in form of numbers
  */
-const SetConnectNodePosition = (
-  node: Node,
-  mainConnectNodeId: string,
-  connectNodes: Node[],
-  allNodes: Node[]
-) => {
+const SetConnectNodePosition = (node: Node, mainConnectNodeId: string, connectNodes: Node[], allNodes: Node[]) => {
   const mainNode = allNodes.find((x) => x.id === mainConnectNodeId);
 
   let xPos = mainNode ? mainNode.positionBlockX : node.positionBlockX;

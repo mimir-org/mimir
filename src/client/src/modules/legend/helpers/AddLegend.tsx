@@ -12,13 +12,7 @@ const AddLegend = (node: Node, edges: Edge[]): Legend[] => {
         found = true;
         return;
       }
-      if (
-        IsBlockView() &&
-        edge.fromConnectorId === conn.id &&
-        !edge.isHidden &&
-        !IsPartOfTerminal(conn)
-      )
-        found = true;
+      if (IsBlockView() && edge.fromConnectorId === conn.id && !edge.isHidden && !IsPartOfTerminal(conn)) found = true;
     });
     return found;
   };

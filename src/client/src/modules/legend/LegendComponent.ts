@@ -14,8 +14,7 @@ const LegendComponent = (project: Project) => {
   });
 
   return legends.filter(
-    (value, index, self) =>
-      self.map((x) => x.name + x.color).indexOf(value.name + value.color) === index
+    (value, index, self) => self.map((x) => x.name + x.color).indexOf(value.name + value.color) === index
   );
 };
 

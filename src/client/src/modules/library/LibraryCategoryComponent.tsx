@@ -17,12 +17,7 @@ interface Props {
   setSelectedElementType: any;
 }
 
-const LibraryCategoryComponent = ({
-  category,
-  selectedElement,
-  setSelectedElement,
-  setSelectedElementType,
-}: Props) => {
+const LibraryCategoryComponent = ({ category, selectedElement, setSelectedElement, setSelectedElementType }: Props) => {
   const [expanded, setExpanded] = useState(false);
   const expandIcon = expanded ? ExpandIcon : CollapseIcon;
 
@@ -56,21 +51,14 @@ const LibraryCategoryComponent = ({
               }}
               draggable={node.libraryType === ObjectType.ObjectBlock}
               onDragStart={(event) =>
-                node.libraryType === ObjectType.ObjectBlock &&
-                onDragStart(event, JSON.stringify(node))
+                node.libraryType === ObjectType.ObjectBlock && onDragStart(event, JSON.stringify(node))
               }
               key={node.id}
             >
               {node.name}
               <LibraryElementIcon color={GetAspectColor(node, false)}>
-                {(node.libraryType === ObjectType.Interface ||
-                  node.libraryType === ObjectType.Transport) && (
-                  <img
-                    src={GetObjectIcon(node)}
-                    alt="aspect-icon"
-                    className="icon"
-                    draggable="false"
-                  ></img>
+                {(node.libraryType === ObjectType.Interface || node.libraryType === ObjectType.Transport) && (
+                  <img src={GetObjectIcon(node)} alt="aspect-icon" className="icon" draggable="false"></img>
                 )}
               </LibraryElementIcon>
             </LibraryElement>

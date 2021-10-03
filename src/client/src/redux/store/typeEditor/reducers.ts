@@ -72,10 +72,7 @@ const initialState: TypeEditorState = {
 };
 
 // TODO: Refactor to reduce complexity
-export function typeEditorReducer(
-  state = initialState,
-  action: TypeEditorActionTypes
-): TypeEditorState {
+export function typeEditorReducer(state = initialState, action: TypeEditorActionTypes): TypeEditorState {
   switch (action.type) {
     case FETCHING_INITIAL_DATA:
       return {
@@ -121,9 +118,7 @@ export function typeEditorReducer(
       return {
         ...state,
         fetching: false,
-        attributes: action.payload.AttributeType
-          ? action.payload.AttributeType
-          : [],
+        attributes: action.payload.AttributeType ? action.payload.AttributeType : [],
       };
     case FETCHING_LOCATIONTYPES:
       return {
@@ -182,9 +177,7 @@ export function typeEditorReducer(
         ...state,
         fetching: true,
         apiError: state.apiError
-          ? state.apiError.filter(
-              (elem) => elem.key !== FETCHING_BLOB_DATA_SUCCESS_OR_ERROR
-            )
+          ? state.apiError.filter((elem) => elem.key !== FETCHING_BLOB_DATA_SUCCESS_OR_ERROR)
           : state.apiError,
       };
     case FETCHING_BLOB_DATA_SUCCESS_OR_ERROR:
@@ -192,18 +185,14 @@ export function typeEditorReducer(
         ...state,
         fetching: false,
         icons: action.payload.icons,
-        apiError: action.payload.apiError
-          ? [...state.apiError, action.payload.apiError]
-          : state.apiError,
+        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
     case FETCHING_SIMPLE_TYPES:
       return {
         ...state,
         fetching: true,
         apiError: state.apiError
-          ? state.apiError.filter(
-              (elem) => elem.key !== FETCHING_SIMPLE_TYPES_SUCCESS_OR_ERROR
-            )
+          ? state.apiError.filter((elem) => elem.key !== FETCHING_SIMPLE_TYPES_SUCCESS_OR_ERROR)
           : state.apiError,
       };
     case FETCHING_SIMPLE_TYPES_SUCCESS_OR_ERROR:
@@ -211,9 +200,7 @@ export function typeEditorReducer(
         ...state,
         fetching: false,
         simpleTypes: action.payload.simpleTypes,
-        apiError: action.payload.apiError
-          ? [...state.apiError, action.payload.apiError]
-          : state.apiError,
+        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
     case OPEN_TYPE_EDITOR:
       return {
@@ -274,10 +261,7 @@ export function typeEditorReducer(
         ...state,
         createLibraryType: {
           ...state.createLibraryType,
-          terminalTypes: [
-            ...state.createLibraryType.terminalTypes,
-            action.payload.terminal,
-          ],
+          terminalTypes: [...state.createLibraryType.terminalTypes, action.payload.terminal],
         },
       };
     case REMOVE_TERMINALTYPE:
@@ -287,8 +271,7 @@ export function typeEditorReducer(
           ...state.createLibraryType,
           terminalTypes: [
             ...state.createLibraryType.terminalTypes.filter(
-              (terminal) =>
-                terminal.terminalId !== action.payload.terminal.terminalId
+              (terminal) => terminal.terminalId !== action.payload.terminal.terminalId
             ),
           ],
         },
@@ -300,9 +283,7 @@ export function typeEditorReducer(
           ...state.createLibraryType,
           terminalTypes: [
             ...state.createLibraryType.terminalTypes.map((terminal) =>
-              terminal.terminalId === action.payload.terminal.terminalId
-                ? action.payload.terminal
-                : terminal
+              terminal.terminalId === action.payload.terminal.terminalId ? action.payload.terminal : terminal
             ),
           ],
         },
@@ -311,9 +292,7 @@ export function typeEditorReducer(
       return {
         ...state,
         fetching: true,
-        apiError: state.apiError
-          ? state.apiError.filter((elem) => elem.key !== SAVE_LIBRARY_TYPE)
-          : state.apiError,
+        apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== SAVE_LIBRARY_TYPE) : state.apiError,
       };
     case SAVE_LIBRARY_TYPE_SUCCESS_OR_ERROR:
       return {
@@ -335,16 +314,12 @@ export function typeEditorReducer(
           symbolId: "",
           compositeTypes: [] as string[],
         },
-        apiError: action.payload.apiError
-          ? [...state.apiError, action.payload.apiError]
-          : state.apiError,
+        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
     case DELETE_TYPE_EDITOR_ERROR:
       return {
         ...state,
-        apiError: state.apiError
-          ? state.apiError.filter((elem) => elem.key !== action.payload.key)
-          : state.apiError,
+        apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== action.payload.key) : state.apiError,
       };
     default:
       return state;

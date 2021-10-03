@@ -1,12 +1,6 @@
 import { IsConnectView } from "../block/connectView/helpers";
 import { Node, Connector } from "../../../models";
-import {
-  IsChildOf,
-  IsFunction,
-  IsLocation,
-  IsPartOfTerminal,
-  IsTransportTerminal,
-} from "../helpers";
+import { IsChildOf, IsFunction, IsLocation, IsPartOfTerminal, IsTransportTerminal } from "../helpers";
 
 /**
  * Component to validate and display an edge in BlockView
@@ -28,8 +22,7 @@ const ValidateBlockEdge = (
   toConnector: Connector,
   splitView: boolean
 ) => {
-  if (!fromNode || !toNode || IsPartOfTerminal(fromConnector) || IsPartOfTerminal(toConnector))
-    return false;
+  if (!fromNode || !toNode || IsPartOfTerminal(fromConnector) || IsPartOfTerminal(toConnector)) return false;
 
   // Regular BlockView
   if (!splitView && !IsConnectView()) {
@@ -68,12 +61,7 @@ const ValidateBlockEdge = (
   }
 
   if (splitView) {
-    if (
-      IsFunction(fromNode) &&
-      IsFunction(toNode) &&
-      !splitViewNode &&
-      IsChildOf(fromNode, selectedNode)
-    ) {
+    if (IsFunction(fromNode) && IsFunction(toNode) && !splitViewNode && IsChildOf(fromNode, selectedNode)) {
       return false;
     }
     if (

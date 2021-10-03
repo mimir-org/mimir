@@ -1,11 +1,6 @@
 import { Connector } from "../../../../models";
 import { EdgeType, EDGE_TYPE } from "../../../../models/project";
-import {
-  IsFulfilledByTerminal,
-  IsLocationTerminal,
-  IsPartOfTerminal,
-  IsTransportTerminal,
-} from "../../helpers";
+import { IsFulfilledByTerminal, IsLocationTerminal, IsPartOfTerminal, IsTransportTerminal } from "../../helpers";
 
 const GetEdgeType = (conn: Connector): EdgeType => {
   if (IsPartOfTerminal(conn)) return EDGE_TYPE.PART as EdgeType;

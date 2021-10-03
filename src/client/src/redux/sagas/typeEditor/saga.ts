@@ -234,8 +234,7 @@ export function* getLocationTypes(action) {
 
 export function* getPredefinedAttributes(action) {
   try {
-    const predefinedAttributesURL =
-      process.env.REACT_APP_API_BASE_URL + "typeeditor/predefined-attributes";
+    const predefinedAttributesURL = process.env.REACT_APP_API_BASE_URL + "typeeditor/predefined-attributes";
 
     const predefinedAttributesResponse = yield call(get, predefinedAttributesURL);
 

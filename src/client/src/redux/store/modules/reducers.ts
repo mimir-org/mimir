@@ -1,9 +1,5 @@
 import { MODULE_TYPE } from "../../../models/project";
-import {
-  SET_MODULE_VISIBILITY,
-  SET_MODULES_VISIBILITY,
-  ModuleVisibilityActionTypes,
-} from "./types";
+import { SET_MODULE_VISIBILITY, SET_MODULES_VISIBILITY, ModuleVisibilityActionTypes } from "./types";
 
 const initialState = {
   types: [

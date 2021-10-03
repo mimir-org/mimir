@@ -126,12 +126,7 @@ const ErrorModule = () => {
     <ErrorBox visible={visible}>
       <ProjectBody>
         <ErrorHeaderBox>
-          <img
-            src={CloseIcon}
-            alt="Close error message"
-            onClick={() => closeHeader()}
-            className="icon"
-          />
+          <img src={CloseIcon} alt="Close error message" onClick={() => closeHeader()} className="icon" />
           {TextResources.Error_Tile}
         </ErrorHeaderBox>
         {errors?.map((x, index) => {

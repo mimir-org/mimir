@@ -4,10 +4,8 @@ import { Color, FontSize } from "./../../../compLibrary";
 const ProjectBox = styled.div`
   width: ${(props) => (props.small ? "308px" : "auto")};
   width: ${(props) => (props.small ? "308px" : props.width ? props.width + "px" : "auto")};
-
   height: ${(props) => (props.small ? "281px" : "auto")};
   height: ${(props) => (props.small ? "281px" : props.height ? props.height + "px" : "auto")};
-
   max-width: 502px;
   max-height: 463px;
   margin: auto;

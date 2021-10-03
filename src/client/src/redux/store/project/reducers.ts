@@ -59,9 +59,7 @@ export function projectReducer(state = initialState, action: ProjectActionTypes)
         ...state,
         fetching: true,
         creating: false,
-        apiError: state.apiError
-          ? state.apiError.filter((elem) => elem.key !== SAVE_PROJECT)
-          : state.apiError,
+        apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== SAVE_PROJECT) : state.apiError,
       };
 
     case COMMIT_PROJECT:
@@ -69,9 +67,7 @@ export function projectReducer(state = initialState, action: ProjectActionTypes)
         ...state,
         fetching: true,
         creating: false,
-        apiError: state.apiError
-          ? state.apiError.filter((elem) => elem.key !== COMMIT_PROJECT)
-          : state.apiError,
+        apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== COMMIT_PROJECT) : state.apiError,
       };
 
     case COMMIT_PROJECT_SUCCESS_OR_ERROR:
@@ -79,9 +75,7 @@ export function projectReducer(state = initialState, action: ProjectActionTypes)
         ...state,
         fetching: false,
         creating: false,
-        apiError: action.payload.apiError
-          ? [...state.apiError, action.payload.apiError]
-          : state.apiError,
+        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
 
     case SAVE_PROJECT_SUCCESS_OR_ERROR:
@@ -90,9 +84,7 @@ export function projectReducer(state = initialState, action: ProjectActionTypes)
         fetching: false,
         creating: false,
         project: action.payload.project,
-        apiError: action.payload.apiError
-          ? [...state.apiError, action.payload.apiError]
-          : state.apiError,
+        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
 
     case SEARCH_PROJECT:
@@ -101,9 +93,7 @@ export function projectReducer(state = initialState, action: ProjectActionTypes)
         fetching: true,
         creating: false,
         projectList: null,
-        apiError: state.apiError
-          ? state.apiError.filter((elem) => elem.key !== SEARCH_PROJECT)
-          : state.apiError,
+        apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== SEARCH_PROJECT) : state.apiError,
       };
 
     case SEARCH_PROJECT_SUCCESS_OR_ERROR:
@@ -112,9 +102,7 @@ export function projectReducer(state = initialState, action: ProjectActionTypes)
         fetching: false,
         creating: false,
         projectList: action.payload.projectList ?? state.projectList,
-        apiError: action.payload.apiError
-          ? [...state.apiError, action.payload.apiError]
-          : state.apiError,
+        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
 
     case FETCHING_PROJECT:
@@ -122,9 +110,7 @@ export function projectReducer(state = initialState, action: ProjectActionTypes)
         ...state,
         fetching: true,
         creating: false,
-        apiError: state.apiError
-          ? state.apiError.filter((elem) => elem.key !== FETCHING_PROJECT)
-          : state.apiError,
+        apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== FETCHING_PROJECT) : state.apiError,
       };
 
     case FETCHING_PROJECT_SUCCESS_OR_ERROR:
@@ -133,9 +119,7 @@ export function projectReducer(state = initialState, action: ProjectActionTypes)
         fetching: false,
         creating: false,
         project: action.payload.project ?? state.project,
-        apiError: action.payload.apiError
-          ? [...state.apiError, action.payload.apiError]
-          : state.apiError,
+        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
 
     case CREATING_PROJECT:
@@ -143,9 +127,7 @@ export function projectReducer(state = initialState, action: ProjectActionTypes)
         ...state,
         fetching: false,
         creating: true,
-        apiError: state.apiError
-          ? state.apiError.filter((elem) => elem.key !== CREATING_PROJECT)
-          : state.apiError,
+        apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== CREATING_PROJECT) : state.apiError,
       };
 
     case CREATING_PROJECT_SUCCESS_OR_ERROR:
@@ -154,17 +136,13 @@ export function projectReducer(state = initialState, action: ProjectActionTypes)
         fetching: false,
         creating: false,
         project: action.payload.project ?? state.project,
-        apiError: action.payload.apiError
-          ? [...state.apiError, action.payload.apiError]
-          : state.apiError,
+        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
 
     case DELETE_PROJECT_ERROR:
       return {
         ...state,
-        apiError: state.apiError
-          ? state.apiError.filter((elem) => elem.key !== action.payload.key)
-          : state.apiError,
+        apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== action.payload.key) : state.apiError,
       };
 
     case ADD_NODE:
@@ -265,13 +243,9 @@ export function projectReducer(state = initialState, action: ProjectActionTypes)
           ...state,
           project: {
             ...state.project,
-            nodes: nodeList.map((x) =>
-              action.payload.node.aspect === x.aspect ? { ...x, isHidden: isHidden } : x
-            ),
+            nodes: nodeList.map((x) => (action.payload.node.aspect === x.aspect ? { ...x, isHidden: isHidden } : x)),
             edges: edgeList.map((edge) =>
-              node.aspect === edge.fromNode.aspect ||
-              node.aspect === edge.toNode.aspect ||
-              edge.fromNode === node
+              node.aspect === edge.fromNode.aspect || node.aspect === edge.toNode.aspect || edge.fromNode === node
                 ? { ...edge, isHidden: isHidden }
                 : edge
             ),
@@ -289,13 +263,9 @@ export function projectReducer(state = initialState, action: ProjectActionTypes)
           ...state,
           project: {
             ...state.project,
-            nodes: state.project.nodes.map((x) =>
-              elements.includes(x) ? { ...x, isHidden: isHidden } : x
-            ),
+            nodes: state.project.nodes.map((x) => (elements.includes(x) ? { ...x, isHidden: isHidden } : x)),
             edges: edgeList.map((edge) =>
-              elements.includes(edge) || edge.toNode === node
-                ? { ...edge, isHidden: isHidden }
-                : edge
+              elements.includes(edge) || edge.toNode === node ? { ...edge, isHidden: isHidden } : edge
             ),
           },
         };
@@ -305,13 +275,9 @@ export function projectReducer(state = initialState, action: ProjectActionTypes)
         ...state,
         project: {
           ...state.project,
-          nodes: state.project.nodes.map((x) =>
-            x.id === action.payload.node.id ? { ...x, isHidden: isHidden } : x
-          ),
+          nodes: state.project.nodes.map((x) => (x.id === action.payload.node.id ? { ...x, isHidden: isHidden } : x)),
           edges: edgeList.map((edge) =>
-            edge.fromNodeId === node.id || edge.toNodeId === node.id
-              ? { ...edge, isHidden: isHidden }
-              : edge
+            edge.fromNodeId === node.id || edge.toNodeId === node.id ? { ...edge, isHidden: isHidden } : edge
           ),
         },
       };
@@ -324,9 +290,7 @@ export function projectReducer(state = initialState, action: ProjectActionTypes)
         project: {
           ...state.project,
           nodes: state.project.nodes.map((x) =>
-            x.id === nodeId
-              ? { ...x, isSelected: action.payload.isActive }
-              : { ...x, isSelected: false }
+            x.id === nodeId ? { ...x, isSelected: action.payload.isActive } : { ...x, isSelected: false }
           ),
           edges: state.project.edges,
         },
@@ -339,9 +303,7 @@ export function projectReducer(state = initialState, action: ProjectActionTypes)
         project: {
           ...state.project,
           edges: state.project.edges.map((edge) =>
-            edge.id === edgeId
-              ? { ...edge, isSelected: action.payload.isActive }
-              : { ...edge, isSelected: false }
+            edge.id === edgeId ? { ...edge, isSelected: action.payload.isActive } : { ...edge, isSelected: false }
           ),
         },
       };
@@ -367,9 +329,7 @@ export function projectReducer(state = initialState, action: ProjectActionTypes)
         ...state,
         ...state.project,
         projectList: projects.map((project) =>
-          project.id === projectId
-            ? { ...project, selected: true }
-            : { ...project, selected: false }
+          project.id === projectId ? { ...project, selected: true } : { ...project, selected: false }
         ),
       };
 
@@ -493,27 +453,21 @@ export function projectReducer(state = initialState, action: ProjectActionTypes)
     case EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR:
       return {
         ...state,
-        apiError: action.payload.apiError
-          ? [...state.apiError, action.payload.apiError]
-          : state.apiError,
+        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
 
     case IMPORT_PROJECT:
       return {
         ...state,
         fetching: true,
-        apiError: state.apiError
-          ? state.apiError.filter((elem) => elem.key !== IMPORT_PROJECT)
-          : state.apiError,
+        apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== IMPORT_PROJECT) : state.apiError,
       };
 
     case IMPORT_PROJECT_SUCCESS_OR_ERROR:
       return {
         ...state,
         fetching: false,
-        apiError: action.payload.apiError
-          ? [...state.apiError, action.payload.apiError]
-          : state.apiError,
+        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
 
     case LOCK_UNLOCK_NODE:
@@ -539,9 +493,7 @@ export function projectReducer(state = initialState, action: ProjectActionTypes)
       return {
         ...state,
         fetching: false,
-        apiError: action.payload.apiError
-          ? [...state.apiError, action.payload.apiError]
-          : state.apiError,
+        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
 
     case LOCK_UNLOCK_NODE_ATTRIBUTE:
@@ -608,9 +560,7 @@ export function projectReducer(state = initialState, action: ProjectActionTypes)
       return {
         ...state,
         fetching: false,
-        apiError: action.payload.apiError
-          ? [...state.apiError, action.payload.apiError]
-          : state.apiError,
+        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
 
     default:

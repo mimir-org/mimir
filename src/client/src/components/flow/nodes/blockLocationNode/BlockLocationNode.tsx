@@ -67,13 +67,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
         />
       </NodeBox>
 
-      <HandleComponent
-        node={data}
-        nodes={nodes}
-        terminals={sortedTerminals}
-        isParent={false}
-        splitView={splitView}
-      />
+      <HandleComponent node={data} nodes={nodes} terminals={sortedTerminals} isParent={false} splitView={splitView} />
     </>
   );
 };

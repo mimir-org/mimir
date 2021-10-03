@@ -16,13 +16,7 @@ export const SearchBar = () => {
   return (
     <div className="searchbar_container">
       <label htmlFor="search" />
-      <input
-        type="text"
-        value={searchbarInput}
-        placeholder="Search projects"
-        onChange={onChange}
-        autoFocus
-      />
+      <input type="text" value={searchbarInput} placeholder="Search projects" onChange={onChange} autoFocus />
       <GetIcon icon="SearchIcon" />
     </div>
   );

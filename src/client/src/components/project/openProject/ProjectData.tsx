@@ -12,13 +12,7 @@ interface Props {
   updated: Date;
 }
 
-export const ProjectDataComponent = ({
-  projects,
-  projectId,
-  projectName,
-  projectOwner,
-  updated,
-}: Props) => {
+export const ProjectDataComponent = ({ projects, projectId, projectName, projectOwner, updated }: Props) => {
   const dispatch = useDispatch();
   const isSelected = projects.find((x) => x.id === projectId).selected;
 
@@ -27,10 +21,7 @@ export const ProjectDataComponent = ({
   };
 
   return (
-    <div
-      className={"project_data " + (isSelected ? "selected_project" : "not_selected")}
-      onClick={onClick}
-    >
+    <div className={"project_data " + (isSelected ? "selected_project" : "not_selected")} onClick={onClick}>
       <p className="project_name">{projectName}</p>
       <p className="project_owner">{projectOwner}</p>
       <p className="last_edited">

@@ -3,13 +3,7 @@ import { NodeProps, Handle } from "react-flow-renderer";
 import { Connector } from "../../../../models";
 import { Symbol } from "../../../../compLibrary/symbol";
 import { TreeHandleBox, TreeNodeNameBox, TreeNodeWrapper } from "./styled";
-import {
-  GetHandleType,
-  IsInputTerminal,
-  IsOutputTerminal,
-  IsPartOfTerminal,
-  SetTerminalYPos,
-} from "../../helpers";
+import { GetHandleType, IsInputTerminal, IsOutputTerminal, IsPartOfTerminal, SetTerminalYPos } from "../../helpers";
 
 /**
  * Component to display a node in TreeView.
@@ -59,12 +53,7 @@ const TreeviewNode: FC<NodeProps> = ({ data }) => {
             visible={connectorIsVisible(conn)}
             position={positionHandler}
           >
-            <Handle
-              type={typeHandler}
-              position={positionHandler}
-              id={conn.id}
-              className="function-treeview-handler"
-            />
+            <Handle type={typeHandler} position={positionHandler} id={conn.id} className="function-treeview-handler" />
           </TreeHandleBox>
         );
       })}

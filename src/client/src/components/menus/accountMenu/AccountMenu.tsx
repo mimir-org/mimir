@@ -22,14 +22,8 @@ const AccountMenu = () => {
   return (
     <>
       <AccountMenuBox id={MENU_TYPE.ACCOUNT_MENU}>
-        <GetMenuElement
-          type={TextResources.Account_Open}
-          onClick={() => Handlers.OnOpenClick(dispatch)}
-        />
-        <GetMenuElement
-          type={TextResources.Account_Create}
-          onClick={() => Handlers.OnCreateClick(dispatch)}
-        />
+        <GetMenuElement type={TextResources.Account_Open} onClick={() => Handlers.OnOpenClick(dispatch)} />
+        <GetMenuElement type={TextResources.Account_Create} onClick={() => Handlers.OnCreateClick(dispatch)} />
         <GetMenuElement
           type={TextResources.Account_Save}
           onClick={() => Handlers.OnSaveClick(dispatch, projectState)}
@@ -38,10 +32,7 @@ const AccountMenu = () => {
           type={TextResources.Account_Save_Library}
           onClick={() => Handlers.OnSaveLibraryFile(dispatch)}
         />
-        <GetMenuElement
-          type={TextResources.Account_Save_File}
-          onClick={() => Handlers.OnSaveFile(dispatch)}
-        />
+        <GetMenuElement type={TextResources.Account_Save_File} onClick={() => Handlers.OnSaveFile(dispatch)} />
         <GetMenuElement
           type={TextResources.Account_Commit_Project}
           onClick={() => Handlers.OnCommitClick(dispatch, projectState)}

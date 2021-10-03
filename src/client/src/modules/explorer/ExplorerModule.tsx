@@ -17,15 +17,11 @@ import { ExplorerIcon } from "../../assets/icons/common/modules";
 export const ExplorerModule = () => {
   const dispatch = useDispatch();
   const type = MODULE_TYPE.EXPLORER;
-
   const project = useSelector<RootState>((state) => state.projectState.project) as Project;
+  const isOpen = useSelector<RootState>((state) => state.modules.types.find((x) => x.type === type).visible) as boolean;
 
   const animate = useSelector<RootState>(
     (state) => state.modules.types.find((x) => x.type === type).animate
-  ) as boolean;
-
-  const isOpen = useSelector<RootState>(
-    (state) => state.modules.types.find((x) => x.type === type).visible
   ) as boolean;
 
   const start = isOpen ? Size.ModuleClosed : Size.ModuleOpen;
@@ -34,12 +30,7 @@ export const ExplorerModule = () => {
   return (
     <AnimatedModule type={type} start={start} stop={stop} run={animate} id="ExplorerModule">
       <ModuleHead explorer visible={isOpen}>
-        <img
-          className="icon"
-          src={ExplorerIcon}
-          alt="toggle"
-          onClick={() => OnToggleClick(dispatch, isOpen, type)}
-        />
+        <img className="icon" src={ExplorerIcon} alt="toggle" onClick={() => OnToggleClick(dispatch, isOpen, type)} />
         <p className="text">{TextResources.Module_Explorer}</p>
       </ModuleHead>
       <ModuleBody visible={isOpen} explorer isBlockView={IsBlockView()}>

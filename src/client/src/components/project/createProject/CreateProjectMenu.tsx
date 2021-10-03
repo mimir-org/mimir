@@ -38,10 +38,7 @@ export const CreateProjectMenu = () => {
             value={projectName}
           />
           <ButtonBox left>
-            <Button
-              onClick={() => Handlers.OnReturnClick(dispatch)}
-              type={TextResources.Account_Cancel}
-            />
+            <Button onClick={() => Handlers.OnReturnClick(dispatch)} type={TextResources.Account_Cancel} />
           </ButtonBox>
           {projectName && (
             <ButtonBox>

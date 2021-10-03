@@ -26,9 +26,7 @@ export function commonReducer(state = initialState, action: CommonActionTypes) {
         ...state,
         fetching: true,
         contractors: [],
-        apiError: state.apiError
-          ? state.apiError.filter((elem) => elem.key !== FETCHING_CONTRACTORS)
-          : state.apiError,
+        apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== FETCHING_CONTRACTORS) : state.apiError,
       };
 
     case FETCHING_CONTRACTORS_SUCCESS_OR_ERROR:
@@ -36,9 +34,7 @@ export function commonReducer(state = initialState, action: CommonActionTypes) {
         ...state,
         fetching: false,
         contractors: action.payload.contractors,
-        apiError: action.payload.apiError
-          ? [...state.apiError, action.payload.apiError]
-          : state.apiError,
+        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
 
     case FETCHING_STATUSES:
@@ -46,9 +42,7 @@ export function commonReducer(state = initialState, action: CommonActionTypes) {
         ...state,
         fetching: true,
         statuses: [],
-        apiError: state.apiError
-          ? state.apiError.filter((elem) => elem.key !== FETCHING_STATUSES)
-          : state.apiError,
+        apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== FETCHING_STATUSES) : state.apiError,
       };
 
     case FETCHING_STATUSES_SUCCESS_OR_ERROR:
@@ -56,17 +50,13 @@ export function commonReducer(state = initialState, action: CommonActionTypes) {
         ...state,
         fetching: false,
         statuses: action.payload.statuses,
-        apiError: action.payload.apiError
-          ? [...state.apiError, action.payload.apiError]
-          : state.apiError,
+        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
 
     case DELETE_COMMON_ERROR:
       return {
         ...state,
-        apiError: state.apiError
-          ? state.apiError.filter((elem) => elem.key !== action.payload.key)
-          : state.apiError,
+        apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== action.payload.key) : state.apiError,
       };
 
     case FETCHING_COMBINED_ATTRIBUTE_FILTERS:
@@ -84,9 +74,7 @@ export function commonReducer(state = initialState, action: CommonActionTypes) {
         ...state,
         fetching: false,
         filters: action.payload.filters,
-        apiError: action.payload.apiError
-          ? [...state.apiError, action.payload.apiError]
-          : state.apiError,
+        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
     default:
       return state;

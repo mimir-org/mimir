@@ -14,10 +14,7 @@ interface Props {
 
 const InspectorComponent = ({ node, index }: Props) => {
   const dispatch = useDispatch();
-
-  const isTabOpen = useSelector<RootState>(
-    (state) => state.inspector.tabs[index]?.visible
-  ) as boolean;
+  const isTabOpen = useSelector<RootState>((state) => state.inspector.tabs[index]?.visible) as boolean;
 
   const onClick = useCallback(() => {
     dispatch(changeInspectorTab(index));

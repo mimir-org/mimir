@@ -77,15 +77,11 @@ const GetFileData = async (event: any, project: Project): Promise<[Node[], Edge[
     });
 
     const nodesToCreate = subProject.nodes.filter(
-      (x) =>
-        !x.isRoot && x.aspect === targetNode.aspect && !project.nodes.find((y) => y.id === x.id)
+      (x) => !x.isRoot && x.aspect === targetNode.aspect && !project.nodes.find((y) => y.id === x.id)
     );
 
     const edgesToCreate = subProject.edges.filter(
-      (x) =>
-        x.fromNode.aspect === targetNode.aspect &&
-        !x.fromNode.isRoot &&
-        !project.edges.find((y) => y.id === x.id)
+      (x) => x.fromNode.aspect === targetNode.aspect && !x.fromNode.isRoot && !project.edges.find((y) => y.id === x.id)
     );
 
     nodesToCreate.forEach((node) => {

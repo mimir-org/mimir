@@ -36,20 +36,12 @@ const InspectorHeader = ({ project, node, edge, dispatch, open, type: key }: Pro
           type={node?.isLocked ? "unlock" : "lock"}
           visible={true}
         />
-        <InspectorButton
-          onClick={() => OnDeleteClick(project, node, edge, dispatch)}
-          type="delete"
-          visible={true}
-        />
+        <InspectorButton onClick={() => OnDeleteClick(project, node, edge, dispatch)} type="delete" visible={true} />
 
         <Title>{TextResources.Module_Inspector}</Title>
 
         <ToggleBox>
-          <img
-            src={open ? DownIcon : UpIcon}
-            alt="toggle-icon"
-            onClick={() => OnToggleClick(dispatch, key, open)}
-          />
+          <img src={open ? DownIcon : UpIcon} alt="toggle-icon" onClick={() => OnToggleClick(dispatch, key, open)} />
         </ToggleBox>
       </ButtonWrapper>
     </Menu>

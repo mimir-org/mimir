@@ -221,12 +221,7 @@ export function deleteProjectError(key: string) {
   };
 }
 
-export function changeActiveConnector(
-  node: Node,
-  connectorId: string,
-  visible: boolean,
-  order: number
-) {
+export function changeActiveConnector(node: Node, connectorId: string, visible: boolean, order: number) {
   return {
     type: CHANGE_ACTIVE_CONNECTOR,
     payload: {
@@ -278,11 +273,7 @@ export function setIsLockedNodeAttribute(attribute: Attribute, nodeId: string, i
   };
 }
 
-export function setIsLockedTerminalAttribute(
-  attribute: Attribute,
-  terminalId: string,
-  isLocked: boolean
-) {
+export function setIsLockedTerminalAttribute(attribute: Attribute, terminalId: string, isLocked: boolean) {
   return {
     type: LOCK_UNLOCK_TERMINAL_ATTRIBUTE,
     payload: {

@@ -16,9 +16,7 @@ const CreateBlockNode = (node: Node, connectNode: Node, nodes: Node[]) => {
   if (!node) return null;
 
   const connectNodes = connectNode?.connectNodes ?? [];
-  const type = IsLocation(node)
-    ? TextResources.Type_BlockLocation
-    : TextResources.Type_BlockFunction;
+  const type = IsLocation(node) ? TextResources.Type_BlockLocation : TextResources.Type_BlockFunction;
 
   // Force node to fit Block
   let position = SetBlockNodePosition(node, IsSplitView());

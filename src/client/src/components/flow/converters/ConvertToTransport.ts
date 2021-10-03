@@ -3,10 +3,7 @@ import { LibraryState } from "../../../redux/store/library/types";
 import { CreateId } from "../helpers";
 
 const ConvertToTransport = (sourceConn: Connector, library: LibraryState) => {
-  const currentTransport = library?.transportTypes.find(
-    (x) => x.terminalTypeId === sourceConn.terminalTypeId
-  );
-
+  const currentTransport = library?.transportTypes.find((x) => x.terminalTypeId === sourceConn.terminalTypeId);
   const transportId = CreateId();
 
   if (currentTransport) {

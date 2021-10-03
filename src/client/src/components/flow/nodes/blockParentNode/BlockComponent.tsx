@@ -17,20 +17,11 @@ interface Props {
  * @param param0
  * @returns a container that sits on top of a Flow node
  */
-const BlockComponent = ({
-  node,
-  isLocation,
-  isSplitView,
-  isSelected,
-  onParentClick,
-  onChildClick,
-}: Props) => (
+const BlockComponent = ({ node, isLocation, isSplitView, isSelected, onParentClick, onChildClick }: Props) => (
   <Block id={"function-block-" + node?.id} splitView={isSplitView} selected={isSelected}>
     <Banner location={isLocation}>
       <Header>
-        <Navigation>
-          {!IsAspectNode(node) && <img src={ArrowUp} alt="up" onClick={() => onParentClick()} />}
-        </Navigation>
+        <Navigation>{!IsAspectNode(node) && <img src={ArrowUp} alt="up" onClick={() => onParentClick()} />}</Navigation>
         <Navigation>
           <img src={ArrowDown} alt="down" onClick={() => onChildClick()} />
         </Navigation>

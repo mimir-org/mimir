@@ -41,12 +41,7 @@ export const ImportProjectFileMenu = () => {
     <ProjectBox width={Size.MenuSmall_Width} height={Size.MenuSmall_Height} visible={isOpen}>
       <ProjectBody>
         <HeaderBox>
-          <img
-            src={CloseIcon}
-            alt="Close project"
-            onClick={() => OnReturnClick(dispatch)}
-            className="icon"
-          />
+          <img src={CloseIcon} alt="Close project" onClick={() => OnReturnClick(dispatch)} className="icon" />
           {TextResources.Account_Import_File}
         </HeaderBox>
         <ButtonBox>

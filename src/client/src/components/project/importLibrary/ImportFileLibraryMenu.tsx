@@ -40,12 +40,7 @@ export const ImportFileLibraryMenu = () => {
     <ProjectBox width={Size.MenuSmall_Width} height={Size.MenuSmall_Height} visible={isOpen}>
       <ProjectBody>
         <HeaderBox>
-          <img
-            src={CloseIcon}
-            alt="Close project"
-            onClick={() => OnReturnClick(dispatch)}
-            className="icon"
-          />
+          <img src={CloseIcon} alt="Close project" onClick={() => OnReturnClick(dispatch)} className="icon" />
           {TextResources.Account_Import_Library_File}
         </HeaderBox>
         <ButtonBox>
@@ -56,10 +51,7 @@ export const ImportFileLibraryMenu = () => {
         </ButtonBox>
         {plainFiles?.length > 0 && data() && (
           <ButtonBox>
-            <Button
-              onClick={() => OnSaveClick(dispatch, data)}
-              type={TextResources.Account_Import_Library_Label}
-            />
+            <Button onClick={() => OnSaveClick(dispatch, data)} type={TextResources.Account_Import_Library_Label} />
           </ButtonBox>
         )}
       </ProjectBody>

@@ -19,11 +19,7 @@ export const CheckboxBlock = ({ node, inputLabel }: Props) => {
 
   return (
     <label className={"checkbox"}>
-      <input
-        type="checkbox"
-        checked={isChecked}
-        onChange={() => OnCheckboxChange(dispatch, splitView, node)}
-      />
+      <input type="checkbox" checked={isChecked} onChange={() => OnCheckboxChange(dispatch, splitView, node)} />
       <span className="checkmark"></span>
       <label className="checkbox_label">{inputLabel}</label>
     </label>

@@ -72,19 +72,10 @@ const LibraryModule = () => {
         <p className="text">{TextResources.Module_Library}</p>
       </ModuleHead>
       <ModuleBody visible={libraryOpen} library>
-        <LibraryComponent
-          categories={GetLibCategories(selectedNode, isSplitView, libraryState)}
-          search={search}
-        />
+        <LibraryComponent categories={GetLibCategories(selectedNode, isSplitView, libraryState)} search={search} />
       </ModuleBody>
 
-      <AnimatedModule
-        start={startLegend}
-        stop={stopLegend}
-        run={animateLegend}
-        type={legendKey}
-        id="LegendModule"
-      >
+      <AnimatedModule start={startLegend} stop={stopLegend} run={animateLegend} type={legendKey} id="LegendModule">
         <ModuleHead legend>
           <LegendHead open={legendOpen}>
             <img

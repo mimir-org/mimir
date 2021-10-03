@@ -5,10 +5,7 @@ const initialState = {
   height: Size.ModuleClosed,
 };
 
-export const inspectorHeightReducer = (
-  state = initialState,
-  action: InspectorHeightActionTypes
-) => {
+export const inspectorHeightReducer = (state = initialState, action: InspectorHeightActionTypes) => {
   if (action.type === CHANGE_INSPECTOR_HEIGHT) {
     return {
       ...state,

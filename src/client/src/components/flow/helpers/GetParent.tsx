@@ -9,10 +9,7 @@ import { Node, Edge } from "../../../models";
  * @returns the parentNode
  */
 const GetParent = (childNode: Node, nodes: Node[], edges: Edge[]) => {
-  const parentEdge = edges.find(
-    (e) => e.toNodeId === childNode.id && IsPartOfTerminal(e.toConnector)
-  );
-
+  const parentEdge = edges.find((e) => e.toNodeId === childNode.id && IsPartOfTerminal(e.toConnector));
   const parentNode = nodes.find((n) => n.id === parentEdge?.fromNodeId);
 
   return parentNode ?? childNode;

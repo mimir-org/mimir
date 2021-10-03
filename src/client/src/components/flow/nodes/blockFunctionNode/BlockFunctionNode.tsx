@@ -43,10 +43,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const nodes = useSelector<RootState>((state) => state.projectState.project.nodes) as Node[];
   const edges = useSelector<RootState>((state) => state.projectState.project.edges) as Edge[];
   const splitView = useSelector<RootState>((state) => state.splitView.visible) as boolean;
-
-  const mainConnectNodes = useSelector<RootState>(
-    (state) => state.connectView?.mainNodes
-  ) as Node[];
+  const mainConnectNodes = useSelector<RootState>((state) => state.connectView?.mainNodes) as Node[];
 
   const connectChildren = GetConnectChildren(data, nodes, edges);
   const sortedTerminals = FilterTerminals(data, splitView);
@@ -62,9 +59,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     dispatch(changeActiveConnector(data, conn.id, !conn.visible, order));
 
     if (conn.visible) {
-      const edge = edges.find(
-        (e) => e.fromConnector.id === conn.id || e.toConnector.id === conn.id
-      );
+      const edge = edges.find((e) => e.fromConnector.id === conn.id || e.toConnector.id === conn.id);
       if (edge) dispatch(removeEdge(edge.id));
     }
   };
@@ -135,13 +130,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
         )}
       </NodeBox>
 
-      <HandleComponent
-        node={data}
-        nodes={nodes}
-        terminals={sortedTerminals}
-        isParent={false}
-        splitView={splitView}
-      />
+      <HandleComponent node={data} nodes={nodes} terminals={sortedTerminals} isParent={false} splitView={splitView} />
     </>
   );
 };

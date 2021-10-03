@@ -50,12 +50,7 @@ const TerminalsMenuComponent = ({
             <input type="checkbox" checked={conn.visible} onChange={() => onClick(conn)} />
             <span className="checkmark-block"></span>
           </label>
-          <img
-            src={GetConnectorIcon(conn.color)}
-            alt="icon"
-            className="button"
-            onClick={() => onClick(conn)}
-          />
+          <img src={GetConnectorIcon(conn.color)} alt="icon" className="button" onClick={() => onClick(conn)} />
         </TerminalsElement>
       ))}
     </TerminalsMenu>

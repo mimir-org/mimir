@@ -19,10 +19,7 @@ const FilterContent = ({ conn, type, name, header, node, edges }: Props) => {
   const dispatch = useDispatch();
   const isVisible = name !== null;
 
-  let selectedElements = !IsBlockView()
-    ? CheckEdges(edges, type, node)
-    : CheckBlockEdges(edges, type);
-
+  let selectedElements = !IsBlockView() ? CheckEdges(edges, type, node) : CheckBlockEdges(edges, type);
   const [, setChecked] = useState(IsChecked(type, edges, conn, node, name));
 
   return header ? (
@@ -30,9 +27,7 @@ const FilterContent = ({ conn, type, name, header, node, edges }: Props) => {
       <input
         type="checkbox"
         checked={IsChecked(type, edges, conn, node, name)}
-        onChange={() =>
-          OnChange(edges, setChecked, dispatch, selectedElements, type, name, node, conn)
-        }
+        onChange={() => OnChange(edges, setChecked, dispatch, selectedElements, type, name, node, conn)}
       />
       <span className="checkmark"></span>
       {<MenuSubHeader>{name}</MenuSubHeader>}
@@ -44,9 +39,7 @@ const FilterContent = ({ conn, type, name, header, node, edges }: Props) => {
           <input
             type="checkbox"
             checked={IsChecked(type, edges, conn, node, name)}
-            onChange={() =>
-              OnChange(edges, setChecked, dispatch, selectedElements, type, name, node, conn)
-            }
+            onChange={() => OnChange(edges, setChecked, dispatch, selectedElements, type, name, node, conn)}
           />
           <span className="checkmark-filter"></span>
           {name}

@@ -17,20 +17,8 @@ import { useOnConnect, useOnDrop, useOnRemove, useOnDragStop } from "../hooks";
 import { setModuleVisibility } from "../../../redux/store/modules/actions";
 import { setActiveBlockNode, setActiveEdge } from "../../../redux/store/project/actions";
 import ReactFlow, { ReactFlowProvider, Elements, Background } from "react-flow-renderer";
-import {
-  GetSelectedNode,
-  GetBlockNodeTypes,
-  IsFunction,
-  IsLocation,
-  SetDarkModeColor,
-} from "../helpers";
-import {
-  EDGE_TYPE,
-  EdgeType,
-  BackgroundVariant,
-  SPLITVIEW_POSITION,
-  MODULE_TYPE,
-} from "../../../models/project";
+import { GetSelectedNode, GetBlockNodeTypes, IsFunction, IsLocation, SetDarkModeColor } from "../helpers";
+import { EDGE_TYPE, EdgeType, BackgroundVariant, SPLITVIEW_POSITION, MODULE_TYPE } from "../../../models/project";
 
 const FlowBlock = () => {
   const dispatch = useDispatch();
@@ -60,22 +48,14 @@ const FlowBlock = () => {
   const OnElementsRemove = (elementsToRemove) => {
     const nodeToRemove = elementsToRemove[0];
     project.edges?.forEach((edge) => {
-      if (edge.fromNodeId === nodeToRemove.id || edge.toNodeId === nodeToRemove.id)
-        elementsToRemove.push(edge);
+      if (edge.fromNodeId === nodeToRemove.id || edge.toNodeId === nodeToRemove.id) elementsToRemove.push(edge);
     });
 
     return useOnRemove(elementsToRemove, setElements, dispatch);
   };
 
   const OnConnect = (params) => {
-    return useOnConnect(
-      params,
-      project,
-      setElements,
-      dispatch,
-      EDGE_TYPE.BLOCK as EdgeType,
-      library
-    );
+    return useOnConnect(params, project, setElements, dispatch, EDGE_TYPE.BLOCK as EdgeType, library);
   };
 
   const OnDragOver = (event) => {
@@ -88,16 +68,7 @@ const FlowBlock = () => {
   };
 
   const OnDrop = (event) => {
-    return useOnDrop(
-      project,
-      event,
-      dispatch,
-      setElements,
-      reactFlowInstance,
-      reactFlowWrapper,
-      icons,
-      library
-    );
+    return useOnDrop(project, event, dispatch, setElements, reactFlowInstance, reactFlowWrapper, icons, library);
   };
 
   const OnElementClick = (_event, element) => {
@@ -143,11 +114,7 @@ const FlowBlock = () => {
               onClick={(e) => OnBlockClick(e, dispatch, project)}
             >
               <FullScreenBox />
-              <BackgroundBox
-                visible={showBackground}
-                isSplitView={splitView}
-                right={splitViewPosition()}
-              >
+              <BackgroundBox visible={showBackground} isSplitView={splitView} right={splitViewPosition()}>
                 <Background size={0.5} color={Color.Grey} variant={BackgroundVariant.Lines} />
               </BackgroundBox>
             </ReactFlow>

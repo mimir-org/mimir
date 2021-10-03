@@ -6,9 +6,7 @@ const findParentNode = (currentNode: Node, project: Project): Node => {
   if (!currentNode) return null;
   if (IsAspectNode(currentNode)) return null;
 
-  const actualConnector = currentNode.connectors.find(
-    (x) => IsPartOfTerminal(x) && IsTransportTerminal(x)
-  );
+  const actualConnector = currentNode.connectors.find((x) => IsPartOfTerminal(x) && IsTransportTerminal(x));
   if (!actualConnector) return null;
 
   const actualEdge = project.edges.find((x) => x.toConnector === actualConnector);

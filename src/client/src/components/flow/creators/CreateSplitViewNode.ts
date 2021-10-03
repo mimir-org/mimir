@@ -7,10 +7,7 @@ import { TextResources } from "../../../assets/text";
 
 const CreateSplitViewNode = (node: Node) => {
   if (!node) return null;
-
-  const type = IsLocation(node)
-    ? TextResources.Type_BlockLocation
-    : TextResources.Type_BlockFunction;
+  const type = IsLocation(node) ? TextResources.Type_BlockLocation : TextResources.Type_BlockFunction;
 
   // Force node to fit Block
   const position = SetSplitViewNodePosition(node);

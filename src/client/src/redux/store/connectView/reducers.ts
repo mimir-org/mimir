@@ -70,14 +70,10 @@ export function connectViewReducer(state = initialState, action: ConnectViewActi
         ...state.mainNodes.find((x) => x.id === action.payload.mainNode.id),
       } as Node;
 
-      mainConnectNode.connectNodes = mainConnectNode.connectNodes?.filter(
-        (x) => x.id !== action.payload.child.id
-      );
+      mainConnectNode.connectNodes = mainConnectNode.connectNodes?.filter((x) => x.id !== action.payload.child.id);
 
       return {
-        mainNodes: state.mainNodes
-          .filter((x) => x?.id !== action.payload.mainNode.id)
-          .concat(mainConnectNode),
+        mainNodes: state.mainNodes.filter((x) => x?.id !== action.payload.mainNode.id).concat(mainConnectNode),
       };
 
     case REMOVE_CONNECT_NODES:

@@ -1,9 +1,4 @@
-import {
-  TerminalTypeItem,
-  Aspect,
-  CreateLibraryType,
-  LibraryFilter,
-} from "../../../models";
+import { TerminalTypeItem, Aspect, CreateLibraryType, LibraryFilter } from "../../../models";
 import {
   FETCHING_INITIAL_DATA,
   FETCHING_RDS,
@@ -71,10 +66,7 @@ export function getPredefinedAttributes(): TypeEditorActionTypes {
   };
 }
 
-export function getSelectedNode(
-  selectedType: string,
-  libraryFilter: LibraryFilter
-): TypeEditorActionTypes {
+export function getSelectedNode(selectedType: string, libraryFilter: LibraryFilter): TypeEditorActionTypes {
   return {
     type: FETCHING_TYPE,
     payload: {
@@ -149,9 +141,7 @@ export function updateTerminalType(terminal: TerminalTypeItem) {
   };
 }
 
-export function saveLibraryType(
-  libraryType: CreateLibraryType
-): TypeEditorActionTypes {
+export function saveLibraryType(libraryType: CreateLibraryType): TypeEditorActionTypes {
   return {
     type: SAVE_LIBRARY_TYPE,
     payload: {

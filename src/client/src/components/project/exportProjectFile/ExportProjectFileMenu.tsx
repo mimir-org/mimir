@@ -26,12 +26,7 @@ export const ExportProjectFileMenu = ({ projectState, dispatch }: Props) => {
     <ProjectBox width={Size.MenuSmall_Width} height={Size.MenuSmall_Height} visible={isOpen}>
       <ProjectBody>
         <HeaderBox>
-          <img
-            src={CloseIcon}
-            alt="Close project"
-            onClick={() => OnReturnClick(dispatch)}
-            className="icon"
-          />
+          <img src={CloseIcon} alt="Close project" onClick={() => OnReturnClick(dispatch)} className="icon" />
           {TextResources.Account_Save_Label_File}
         </HeaderBox>
         <Label>{TextResources.Account_Save_Label_File_Name}</Label>

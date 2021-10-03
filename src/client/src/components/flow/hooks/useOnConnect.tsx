@@ -7,14 +7,7 @@ import { Connector, Edge, Node } from "../../../models";
 import { ConvertToEdge } from "../converters";
 import { LibraryState } from "../../../redux/store/library/types";
 
-const useOnConnect = (
-  params,
-  project,
-  setElements,
-  dispatch,
-  edgeType: EdgeType,
-  library: LibraryState
-) => {
+const useOnConnect = (params, project, setElements, dispatch, edgeType: EdgeType, library: LibraryState) => {
   SaveEventData(null, "edgeEvent");
   const createdId = CreateId();
   const sourceNode = project.nodes.find((node: Node) => node.id === params.source) as Node;
@@ -41,15 +34,7 @@ const useOnConnect = (
   );
 
   if (!existingEdge) {
-    const edge = ConvertToEdge(
-      createdId,
-      sourceConn,
-      targetConn,
-      sourceNode,
-      targetNode,
-      project.id,
-      library
-    );
+    const edge = ConvertToEdge(createdId, sourceConn, targetConn, sourceNode, targetNode, project.id, library);
 
     currentEdge = edge;
     dispatch(createEdge(edge));

@@ -52,11 +52,7 @@ const ConnectViewComponent = ({
                 {n.label ?? n.name}
               </div>
               <label className={"checkbox-block"}>
-                <input
-                  type="checkbox"
-                  checked={isChecked(n, connectNodes)}
-                  onChange={() => handleClick(n)}
-                />
+                <input type="checkbox" checked={isChecked(n, connectNodes)} onChange={() => handleClick(n)} />
                 <span className="checkmark-block"></span>
               </label>
             </Element>
@@ -66,9 +62,7 @@ const ConnectViewComponent = ({
           <Footer onClick={() => Click.OnSelectAll(dispatch, node, children)}>
             {TextResources.ConnectMenu_Select_All}
           </Footer>
-          <Footer onClick={() => Click.OnClearAll(dispatch, node)}>
-            {TextResources.ConnectMenu_Clear_All}
-          </Footer>
+          <Footer onClick={() => Click.OnClearAll(dispatch, node)}>{TextResources.ConnectMenu_Clear_All}</Footer>
         </Element>
       </Menu>
     )}

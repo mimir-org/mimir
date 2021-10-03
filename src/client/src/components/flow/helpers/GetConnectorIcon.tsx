@@ -1,11 +1,5 @@
 import { Color } from "../../../compLibrary";
-import {
-  ConnectorIcon,
-  GasIcon,
-  MultiphaseIcon,
-  OilIcon,
-  WaterIcon,
-} from "../../../assets/icons/blockView";
+import { ConnectorIcon, GasIcon, MultiphaseIcon, OilIcon, WaterIcon } from "../../../assets/icons/blockView";
 
 const GetConnectorIcon = (color: string) => {
   if (color === Color.Terminal_Oil) return OilIcon;

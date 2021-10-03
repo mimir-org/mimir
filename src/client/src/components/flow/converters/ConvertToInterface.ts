@@ -3,9 +3,7 @@ import { LibraryState } from "../../../redux/store/library/types";
 import { CreateId } from "../helpers";
 
 const ConvertToInterface = (sourceConn: Connector, library: LibraryState) => {
-  const currentInterface = library?.interfaceTypes.find(
-    (x) => x.terminalTypeId === sourceConn.terminalTypeId
-  );
+  const currentInterface = library?.interfaceTypes.find((x) => x.terminalTypeId === sourceConn.terminalTypeId);
 
   if (currentInterface) {
     const inputTerminal = JSON.parse(JSON.stringify(sourceConn)) as Connector;

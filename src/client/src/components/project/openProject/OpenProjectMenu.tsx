@@ -32,20 +32,13 @@ export const OpenProjectMenu = ({ projectState, dispatch }: Props) => {
       <ProjectBox visible={isOpen}>
         <ProjectBody>
           <HeaderBox>
-            <img
-              src={CloseIcon}
-              alt="icon"
-              onClick={() => Handlers.OnReturnClick(dispatch)}
-              className="icon"
-            />
+            <img src={CloseIcon} alt="icon" onClick={() => Handlers.OnReturnClick(dispatch)} className="icon" />
             {TextResources.Account_Open_Label}
           </HeaderBox>
           <SearchBar />
           <ProjectList projectList={projects} />
           <ButtonBox>
-            {projectId && (
-              <Button onClick={() => Handlers.OnOpenClick(dispatch, setConfirm)} type="Open" />
-            )}
+            {projectId && <Button onClick={() => Handlers.OnOpenClick(dispatch, setConfirm)} type="Open" />}
           </ButtonBox>
         </ProjectBody>
       </ProjectBox>

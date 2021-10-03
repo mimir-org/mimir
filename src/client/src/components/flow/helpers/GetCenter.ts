@@ -1,11 +1,6 @@
 import { GetCenterParams } from ".";
 
-const GetCenter = ({
-  sourceX,
-  sourceY,
-  targetX,
-  targetY,
-}: GetCenterParams): [number, number, number, number] => {
+const GetCenter = ({ sourceX, sourceY, targetX, targetY }: GetCenterParams): [number, number, number, number] => {
   const xOffset = Math.abs(targetX - sourceX) / 2;
   const centerX = targetX < sourceX ? targetX + xOffset : targetX - xOffset;
 
