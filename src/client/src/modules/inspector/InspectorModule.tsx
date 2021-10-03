@@ -13,28 +13,16 @@ import { GetSelectedNode, IsExplorer, IsLibrary } from "../../components/flow/he
 const InspectorModule = () => {
   const dispatch = useDispatch();
   const type = MODULE_TYPE.INSPECTOR;
-  const project = useSelector<RootState>((state) => state.projectState.project) as Project;
+  const project = useSelector<RootState>((s) => s.projectState.project) as Project;
+  const animate = useSelector<RootState>((s) => s.modules.types.find((x) => x.type === type).animate) as boolean;
+  const inspectorOpen = useSelector<RootState>((s) => s.modules.types.find((x) => x.type === type).visible) as boolean;
+  const libraryOpen = useSelector<RootState>((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible) as boolean;
+  const explorerOpen = useSelector<RootState>((s) => s.modules.types.find((x) => IsExplorer(x.type)).visible) as boolean;
+  const height = useSelector<RootState>((s) => s.inspectorHeight.height) as number;
 
-  const animate = useSelector<RootState>(
-    (state) => state.modules.types.find((x) => x.type === type).animate
-  ) as boolean;
-
-  const isInspectorOpen = useSelector<RootState>(
-    (state) => state.modules.types.find((x) => x.type === type).visible
-  ) as boolean;
-
-  const isLibraryOpen = useSelector<RootState>(
-    (state) => state.modules.types.find((x) => IsLibrary(x.type)).visible
-  ) as boolean;
-
-  const isExplorerOpen = useSelector<RootState>(
-    (state) => state.modules.types.find((x) => IsExplorer(x.type)).visible
-  ) as boolean;
-
-  const height = useSelector<RootState>((state) => state.inspectorHeight.height);
   console.log({ height });
-  const start = isInspectorOpen ? height : Size.ModuleClosed;
-  const stop = isInspectorOpen ? Size.ModuleClosed : height;
+  const start = inspectorOpen ? height : Size.ModuleClosed;
+  const stop = inspectorOpen ? Size.ModuleClosed : height;
 
   const nodes = project?.nodes ?? [];
   const edges = project?.edges ?? [];
@@ -54,21 +42,14 @@ const InspectorModule = () => {
     <AnimatedInspector
       id="InspectorModule"
       type={type}
-      isLibraryOpen={isLibraryOpen}
-      isExplorerOpen={isExplorerOpen}
+      isLibraryOpen={libraryOpen}
+      isExplorerOpen={explorerOpen}
       start={start}
       stop={stop}
       run={animate}
       height={height}
     >
-      <InspectorHeader
-        project={project}
-        node={node}
-        edge={edge}
-        dispatch={dispatch}
-        open={isInspectorOpen}
-        type={type}
-      />
+      <InspectorHeader project={project} node={node} edge={edge} dispatch={dispatch} open={inspectorOpen} type={type} />
     </AnimatedInspector>
   );
 };

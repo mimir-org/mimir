@@ -17,10 +17,8 @@ interface Props {
 const LibraryComponent = ({ categories, search }: Props) => {
   const [selectedElement, setSelectedElement] = useState("");
   const [selectedElementType, setSelectedElementType] = useState(null);
-
-  const isLegendOpen = useSelector<RootState>(
-    (state) => state.modules.types.find((x) => x.type === MODULE_TYPE.LEGEND).visible
-  ) as boolean;
+  const type = MODULE_TYPE.LEGEND;
+  const legendOpen = useSelector<RootState>((s) => s.modules.types.find((x) => x.type === type).visible) as boolean;
 
   const onChange = (e: { target: { value: any } }) => {
     search(e.target.value);
@@ -37,7 +35,7 @@ const LibraryComponent = ({ categories, search }: Props) => {
         <img src={SearchIcon} alt="search" />
       </SearchIconBox>
       <SearchInput placeholder={TextResources.Library_SearchBox_Placeholder} onChange={onChange} />
-      <LibraryBody legend={isLegendOpen}>
+      <LibraryBody legend={legendOpen}>
         {categories?.map((category) => {
           return (
             <LibraryCategoryComponent

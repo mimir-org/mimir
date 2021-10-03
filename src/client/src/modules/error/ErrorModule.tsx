@@ -114,13 +114,7 @@ const ErrorModule = () => {
 
     setErrors(errorList);
     setVisible(errorList.length > 0);
-  }, [
-    commonState.apiError,
-    libraryState.apiError,
-    projectState.apiError,
-    userState.apiError,
-    typeEditorState.apiError,
-  ]);
+  }, [commonState.apiError, libraryState.apiError, projectState.apiError, userState.apiError, typeEditorState.apiError]);
 
   return (
     <ErrorBox visible={visible}>
