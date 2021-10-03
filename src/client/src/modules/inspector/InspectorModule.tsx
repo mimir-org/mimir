@@ -20,7 +20,6 @@ const InspectorModule = () => {
   const explorerOpen = useSelector<RootState>((s) => s.modules.types.find((x) => IsExplorer(x.type)).visible) as boolean;
   const height = useSelector<RootState>((s) => s.inspectorHeight.height) as number;
 
-  console.log({ height });
   const start = inspectorOpen ? height : Size.ModuleClosed;
   const stop = inspectorOpen ? Size.ModuleClosed : height;
 

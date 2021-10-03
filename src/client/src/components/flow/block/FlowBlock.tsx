@@ -76,14 +76,11 @@ const FlowBlock = () => {
   };
 
   const OnElementClick = (_event, element) => {
-    if (!splitView) {
-      dispatch(setActiveEdge(null, false));
-    }
+    if (!splitView) dispatch(setActiveEdge(null, false));
     dispatch(setActiveBlockNode(element.id));
     dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, true, true));
     dispatch(changeInspectorTab(0));
-    if (inspectorOpen) dispatch(changeInspectorHeight(Size.ModuleClosed));
-    else dispatch(changeInspectorHeight(Size.ModuleOpen));
+    if (!inspectorOpen) dispatch(changeInspectorHeight(Size.ModuleOpen));
   };
 
   // Rerender

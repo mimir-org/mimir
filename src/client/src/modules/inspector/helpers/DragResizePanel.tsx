@@ -20,13 +20,10 @@ const DragResizePanel = (dispatch: any) => {
       }
     });
     document.addEventListener("mouseup", () => {
-      console.log("herehrherh");
-
       if (
         parseInt(getComputedStyle(panel, "").height) !== Size.ModuleClosed &&
         parseInt(getComputedStyle(panel, "").height) !== Size.ModuleOpen
       ) {
-        console.log("change: ", parseInt(getComputedStyle(panel, "").height));
         dispatch(changeInspectorHeight(parseInt(getComputedStyle(panel, "").height)));
       }
 
@@ -44,8 +41,7 @@ const DragResizePanel = (dispatch: any) => {
       panel.style.height = parseInt(getComputedStyle(panel, "").height) + dy + "px";
       // Change tabs height
       if (admin) admin.style.height = parseInt(getComputedStyle(panel, "").height) - 45 + "px";
-      if (terminal)
-        terminal.style.height = parseInt(getComputedStyle(panel, "").height) - 80 + "px";
+      if (terminal) terminal.style.height = parseInt(getComputedStyle(panel, "").height) - 80 + "px";
     }
   };
 };
