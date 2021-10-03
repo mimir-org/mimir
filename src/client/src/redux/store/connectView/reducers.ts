@@ -1,41 +1,32 @@
+import * as Types from "./types";
 import { Node } from "../../../models";
-import {
-  ADD_MAIN_CONNECT_NODE,
-  REMOVE_MAIN_CONNECT_NODE,
-  ADD_CONNECT_NODE,
-  ADD_CONNECT_NODES,
-  REMOVE_CONNECT_NODE,
-  REMOVE_CONNECT_NODES,
-  REMOVE_MAIN_CONNECT_NODES,
-  ConnectViewActionTypes,
-} from "./types";
 
 const initialState = {
   mainNodes: [] as Node[],
 };
 
-export function connectViewReducer(state = initialState, action: ConnectViewActionTypes) {
+export function connectViewReducer(state = initialState, action: Types.ConnectViewActionTypes) {
   switch (action.type) {
-    case ADD_MAIN_CONNECT_NODE:
+    case Types.ADD_MAIN_CONNECT_NODE:
       return {
         ...state,
         mainNodes: [...state.mainNodes, action.payload.node],
       };
 
-    case REMOVE_MAIN_CONNECT_NODE:
+    case Types.REMOVE_MAIN_CONNECT_NODE:
       return {
         ...state,
         mainNodes: state.mainNodes.filter((x) => x?.id !== action.payload.node.id),
       };
 
-    case REMOVE_MAIN_CONNECT_NODES:
+    case Types.REMOVE_MAIN_CONNECT_NODES:
       return {
         ...state,
         mainNodes: [],
       };
 
     // Select one connect node from drop-down
-    case ADD_CONNECT_NODE:
+    case Types.ADD_CONNECT_NODE:
       const mainNode = {
         ...state.mainNodes.find((x) => x.id === action.payload.mainNode.id),
       } as Node;
@@ -49,7 +40,7 @@ export function connectViewReducer(state = initialState, action: ConnectViewActi
       };
 
     // Select all connect nodes from drop-down
-    case ADD_CONNECT_NODES:
+    case Types.ADD_CONNECT_NODES:
       const parent = {
         ...state.mainNodes.find((x) => x.id === action.payload.mainNode.id),
       } as Node;
@@ -65,7 +56,7 @@ export function connectViewReducer(state = initialState, action: ConnectViewActi
         mainNodes: state.mainNodes.filter((x) => x?.id !== parent.id).concat(parent),
       };
 
-    case REMOVE_CONNECT_NODE:
+    case Types.REMOVE_CONNECT_NODE:
       const mainConnectNode = {
         ...state.mainNodes.find((x) => x.id === action.payload.mainNode.id),
       } as Node;
@@ -76,7 +67,7 @@ export function connectViewReducer(state = initialState, action: ConnectViewActi
         mainNodes: state.mainNodes.filter((x) => x?.id !== action.payload.mainNode.id).concat(mainConnectNode),
       };
 
-    case REMOVE_CONNECT_NODES:
+    case Types.REMOVE_CONNECT_NODES:
       const main = {
         ...state.mainNodes.find((x) => x.id === action.payload.node.id),
       } as Node;

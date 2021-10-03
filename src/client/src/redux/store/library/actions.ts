@@ -1,33 +1,25 @@
+import * as Types from "./types";
 import { CreateLibraryType } from "../../../models";
-import {
-  FETCHING_LIBRARY,
-  DELETE_LIBRARY_ERROR,
-  EXPORT_LIBRARY,
-  IMPORT_LIBRARY,
-  FETCHING_LIBRARY_TRANSPORT_TYPES,
-  LibraryActionTypes,
-  FETCHING_LIBRARY_INTERFACE_TYPES,
-} from "./types";
 
-export function searchLibrary(searchString: string): LibraryActionTypes {
+export function searchLibrary(searchString: string): Types.LibraryActionTypes {
   return {
-    type: FETCHING_LIBRARY,
+    type: Types.FETCHING_LIBRARY,
     payload: searchString,
   };
 }
 
 export function deleteLibraryError(key: string) {
   return {
-    type: DELETE_LIBRARY_ERROR,
+    type: Types.DELETE_LIBRARY_ERROR,
     payload: {
       key,
     },
   };
 }
 
-export function exportLibrary(fileName: string): LibraryActionTypes {
+export function exportLibrary(fileName: string): Types.LibraryActionTypes {
   return {
-    type: EXPORT_LIBRARY,
+    type: Types.EXPORT_LIBRARY,
     payload: {
       fileName: fileName,
       apiError: null,
@@ -35,9 +27,9 @@ export function exportLibrary(fileName: string): LibraryActionTypes {
   };
 }
 
-export function importLibrary(libraryTypes: CreateLibraryType[]): LibraryActionTypes {
+export function importLibrary(libraryTypes: CreateLibraryType[]): Types.LibraryActionTypes {
   return {
-    type: IMPORT_LIBRARY,
+    type: Types.IMPORT_LIBRARY,
     payload: {
       libraryTypes: libraryTypes,
       apiError: null,
@@ -45,16 +37,16 @@ export function importLibrary(libraryTypes: CreateLibraryType[]): LibraryActionT
   };
 }
 
-export function importLibraryTransportTypes(): LibraryActionTypes {
+export function importLibraryTransportTypes(): Types.LibraryActionTypes {
   return {
-    type: FETCHING_LIBRARY_TRANSPORT_TYPES,
+    type: Types.FETCHING_LIBRARY_TRANSPORT_TYPES,
     payload: null,
   };
 }
 
-export function importLibraryInterfaceTypes(): LibraryActionTypes {
+export function importLibraryInterfaceTypes(): Types.LibraryActionTypes {
   return {
-    type: FETCHING_LIBRARY_INTERFACE_TYPES,
+    type: Types.FETCHING_LIBRARY_INTERFACE_TYPES,
     payload: null,
   };
 }
