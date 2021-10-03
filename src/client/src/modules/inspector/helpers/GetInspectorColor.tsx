@@ -1,10 +1,6 @@
 import { Color } from "../../../compLibrary";
 import { Node, Edge } from "../../../models";
-import {
-  IsFunction,
-  IsLocation,
-  IsProduct,
-} from "../../../components/flow/helpers/common";
+import { IsFunction, IsLocation, IsProduct } from "../../../components/flow/helpers/common";
 
 const GetInspectorColor = (node: Node, edge: Edge) => {
   if (node) {

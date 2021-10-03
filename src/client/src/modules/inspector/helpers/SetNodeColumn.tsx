@@ -17,9 +17,7 @@ const SetNodeColumn = ({ list, handleChange }: Props) => (
         <InputBox>
           <Input
             value={attr.value ?? ""}
-            onChange={(e: any) =>
-              handleChange(attr.id, e.target.value, attr.unit)
-            }
+            onChange={(e: any) => handleChange(attr.id, e.target.value, attr.unit)}
             inputType="tech"
           />
           <Dropdown
@@ -27,9 +25,7 @@ const SetNodeColumn = ({ list, handleChange }: Props) => (
             items={attr.units}
             keyProp={null}
             valueProp={null}
-            onChange={(e: any) =>
-              handleChange(attr.id, attr.value, e.target.value)
-            }
+            onChange={(e: any) => handleChange(attr.id, attr.value, e.target.value)}
           ></Dropdown>
         </InputBox>
       </div>
