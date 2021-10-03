@@ -2,7 +2,7 @@ import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
 import { Connector } from "../../../../models";
 import { Symbol } from "../../../../compLibrary/symbol";
-import { TreeHandleBox, TreeNodeNameBox, TreeNodeWrapper } from "../../../../compLibrary/treeView";
+import { TreeHandleBox, TreeNodeNameBox, TreeNodeWrapper } from "./styled";
 import {
   GetHandleType,
   IsInputTerminal,

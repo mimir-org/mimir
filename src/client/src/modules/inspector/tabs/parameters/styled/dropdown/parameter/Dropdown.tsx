@@ -1,15 +1,6 @@
 import { useState } from "react";
-import {
-  MenuWrapper,
-  MenuHeader,
-  MenuList,
-  MenuListItem,
-  CheckboxWrapper,
-} from "./styled";
-import {
-  ExpandIcon,
-  CollapseIcon,
-} from "../../../../../../../assets/icons/common";
+import { MenuWrapper, MenuHeader, MenuList, MenuListItem, CheckboxWrapper } from "./styled";
+import { ExpandIcon, CollapseIcon } from "../../../../../../../assets/icons/common";
 import { TextResources } from "../../../../../../../assets/text";
 import { CombinedAttributeFilter } from "../../../../../../../models";
 import { FilterDict } from "../../../redux/types";
@@ -37,13 +28,8 @@ const Dropdown = ({
         <div onClick={(e) => setIsListOpen(!isListOpen)}>
           <MenuHeader>
             <>
-              <p className="searchText">
-                {TextResources.Inspector_Params_Search}
-              </p>
-              <img
-                src={isListOpen ? ExpandIcon : CollapseIcon}
-                alt="expand-icon"
-              />
+              <p className="searchText">{TextResources.Inspector_Params_Search}</p>
+              <img src={isListOpen ? ExpandIcon : CollapseIcon} alt="expand-icon" />
             </>
           </MenuHeader>
         </div>
@@ -51,10 +37,7 @@ const Dropdown = ({
           <MenuList>
             {items?.map((item) => {
               return (
-                <div
-                  onClick={() => onChange(item, IsAttributeSelected(item))}
-                  key={item.name}
-                >
+                <div onClick={() => onChange(item, IsAttributeSelected(item))} key={item.name}>
                   <MenuListItem>
                     <p>{item.name}</p>
                     <CheckboxWrapper>

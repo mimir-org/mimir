@@ -23,7 +23,6 @@ const Box = styled.div`
 
   img {
     margin-left: auto;
-
     width: 30px;
 
     :hover {

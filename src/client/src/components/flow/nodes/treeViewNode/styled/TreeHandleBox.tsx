@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Position } from "react-flow-renderer";
-import { ConnectorTreeViewIcon } from "../../assets/icons/blockView";
+import { ConnectorTreeViewIcon } from "../../../../../assets/icons/blockView";
 
 const TreeHandleBox = styled.div`
   .function-treeview-handler {
@@ -17,8 +17,8 @@ const TreeHandleBox = styled.div`
         ? `${props.output}%`
         : props.position === Position.Top && "-8px"};
 
-    right: ${(props) => props.position === Position.Right && "-6px"};
-    left: ${(props) => props.position === Position.Left && "-6px"};
+    right: ${(props) => props.position === Position.Right && -6}px;
+    left: ${(props) => props.position === Position.Left && -6}px;
   }
 `;
 
