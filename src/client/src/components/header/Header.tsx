@@ -1,4 +1,5 @@
 import * as Handlers from "./handlers";
+import * as Icons from "../../assets/icons/common/header";
 import { RootState } from "../../redux/store";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,14 +14,6 @@ import {
   OptionsElement,
   MenuBar,
 } from "../../compLibrary/box/header/";
-import {
-  MimirIcon,
-  TreeViewIcon,
-  BlockViewIcon,
-  FilterIcon,
-  UserClosedIcon,
-  LandscapeIcon,
-} from "../../assets/icons/common";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -46,7 +39,7 @@ const Header = () => {
       <HeaderBox>
         <MenuMainHeader isOpen={isAccountMenuOpen}>
           <img
-            src={UserClosedIcon}
+            src={Icons.User}
             alt="icon"
             className="icon"
             onClick={() => Handlers.OnAccountClick(dispatch, isAccountMenuOpen)}
@@ -60,7 +53,7 @@ const Header = () => {
         </MenuMainHeader>
         <LogoBox>
           <img
-            src={MimirIcon}
+            src={Icons.Mimir}
             alt="mimir-icon"
             onClick={() => Handlers.OnDarkModeClick(dispatch, isDarkMode)}
           />
@@ -70,24 +63,24 @@ const Header = () => {
         <OptionsBox>
           <OptionsElement>
             <img
-              src={FilterIcon}
+              src={Icons.Filter}
               alt="VisualFilter"
               onClick={() => Handlers.OnFilterClick(dispatch, isFilterMenuOpen)}
             />
           </OptionsElement>
           <OptionsElement>
-            <img src={LandscapeIcon} alt="Landscape" onClick={() => null} />
+            <img src={Icons.Landscape} alt="Landscape" onClick={() => null} />
           </OptionsElement>
           <OptionsElement>
             <img
-              src={BlockViewIcon}
+              src={Icons.BlockView}
               alt={VIEW_TYPE.BLOCKVIEW}
               onClick={(e) => Handlers.OnViewClick(e, dispatch, push)}
             />
           </OptionsElement>
           <OptionsElement>
             <img
-              src={TreeViewIcon}
+              src={Icons.TreeView}
               alt={VIEW_TYPE.TREEVIEW}
               onClick={(e) => Handlers.OnViewClick(e, dispatch, push)}
             />
