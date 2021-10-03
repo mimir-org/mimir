@@ -3,7 +3,7 @@ import { InspectorContent } from ".";
 import { useCallback } from "react";
 import { RootState } from "../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
-import { changeInspectorTab } from "./redux/actions";
+import { changeInspectorTab } from "./redux/tabs/actions";
 import { Node } from "../../models";
 import { TabHeader, TabBody, NodeInfo, TabTitle } from "./styled";
 

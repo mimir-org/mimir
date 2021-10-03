@@ -2,7 +2,7 @@ import GetInspectorText from "../helpers/GetInspectorText";
 import { useCallback } from "react";
 import { RootState } from "../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
-import { changeInspectorTab } from "../redux/actions";
+import { changeInspectorTab } from "../redux/tabs/actions";
 import { Edge } from "../../../models";
 import { TabEdgeContent } from ".";
 import { GetTabsColor } from "../helpers";

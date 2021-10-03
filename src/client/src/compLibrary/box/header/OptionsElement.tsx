@@ -11,28 +11,28 @@ const OptionsElement = styled.div`
   top: -59px;
   right: -200px;
   height: 15px;
-  width: 40px;
+  width: 20px;
   text-align: center;
   transition: right 0.3s ease-in-out;
 
   &:first-child {
-    right: -282px;
+    right: -285px;
     border-right: none;
     border-left: none;
   }
 
   &:nth-child(2) {
-    right: -218px;
+    right: -239px;
     border-left: none;
   }
 
   &:nth-child(3) {
-    right: -154px;
+    right: -190px;
     border-left: none;
   }
 
   &:last-child {
-    right: -90px;
+    right: -142px;
   }
 `;
 export default OptionsElement;

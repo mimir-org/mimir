@@ -1,4 +1,3 @@
-import red from "../../redux/store";
 import * as Helpers from "./helpers/tree";
 import ReactFlow, { ReactFlowProvider, Elements } from "react-flow-renderer";
 import { useState, useRef, useEffect, useCallback } from "react";
@@ -12,7 +11,7 @@ import { OpenProjectMenu } from "../project/openProject/";
 import { BlobData } from "../../models";
 import { ProjectState } from "../../redux/store/project/types";
 import { IsBlockView } from "./helpers/block";
-import { changeInspectorTab } from "../../modules/inspector/redux/actions";
+import { changeInspectorTab } from "../../modules/inspector/redux/tabs/actions";
 import { SetDarkModeColor } from "./helpers/common";
 import { CreateTreeElements } from "./creators";
 import { LibraryState } from "../../redux/store/library/types";
@@ -27,11 +26,11 @@ const FlowTree = () => {
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>();
-  const darkMode = red.store.getState().darkMode.active;
+  const darkMode = useSelector<RootState>((state) => state.darkMode.active) as boolean;
   const projectState = useSelector<RootState>((state) => state.projectState) as ProjectState;
-  const project = projectState?.project;
   const icons = useSelector<RootState>((state) => state.typeEditor.icons) as BlobData[];
   const library = useSelector<RootState>((state) => state.library) as LibraryState;
+  const project = projectState?.project;
 
   const OnElementsRemove = (elementsToRemove) => {
     return useOnRemove(elementsToRemove, setElements, dispatch);

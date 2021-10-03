@@ -3,7 +3,7 @@ import { Connector, Edge, Node } from "../../../../../models";
 import { MODULE_TYPE } from "../../../../../models/project";
 import { setModuleVisibility } from "../../../../../redux/store/modules/actions";
 import { SetPanelHeight } from "../../../helpers";
-import { changeInspectorTab } from "../../../redux/actions";
+import { changeInspectorTab } from "../../../redux/tabs/actions";
 import { setActiveEdge, setActiveNode } from "../../../../../redux/store/project/actions";
 
 const OnClickRelation = (

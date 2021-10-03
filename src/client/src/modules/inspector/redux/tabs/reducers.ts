@@ -1,4 +1,4 @@
-import { ATTRIBUTE_TAB } from "../../../models/project";
+import { ATTRIBUTE_TAB } from "../../../../models/project";
 import { CHANGE_INSPECTOR_COMPONENT, InspectorActionTypes } from "./types";
 
 const initialState = {

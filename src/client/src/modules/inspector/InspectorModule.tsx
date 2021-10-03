@@ -31,8 +31,11 @@ const InspectorModule = () => {
     (state) => state.modules.types.find((x) => IsExplorer(x.type)).visible
   ) as boolean;
 
-  const start = isInspectorOpen ? Size.ModuleClosed : Size.InspectorModuleOpen;
-  const stop = isInspectorOpen ? Size.InspectorModuleOpen : Size.ModuleClosed;
+  const height = useSelector<RootState>((state) => state.inspectorHeight.height);
+  console.log({ height });
+  const start = isInspectorOpen ? height : Size.ModuleClosed;
+  const stop = isInspectorOpen ? Size.ModuleClosed : height;
+
   const nodes = project?.nodes ?? [];
   const edges = project?.edges ?? [];
 
@@ -44,18 +47,18 @@ const InspectorModule = () => {
   } else node = GetSelectedNode();
 
   useEffect(() => {
-    DragResizePanel();
-  }, []);
+    DragResizePanel(dispatch);
+  }, [dispatch]);
 
   return (
     <AnimatedInspector
+      id="InspectorModule"
       type={type}
       isLibraryOpen={isLibraryOpen}
       isExplorerOpen={isExplorerOpen}
       start={start}
       stop={stop}
       run={animate}
-      id="InspectorModule"
     >
       <InspectorHeader
         project={project}

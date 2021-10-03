@@ -17,8 +17,8 @@ interface Props {
   type: string;
 }
 
-const InspectorHeader = ({ project, node, edge, dispatch, open, type: key }: Props) => {
-  return (
+const InspectorHeader = ({ project, node, edge, dispatch, open, type: key }: Props) => (
+  <>
     <Menu id="InspectorBody" color={GetInspectorColor(node, edge)}>
       {project && <InspectorTabs project={project} node={node} edge={edge} />}
       <NodeInfo symbol={node?.symbol} visible={node}>
@@ -53,6 +53,6 @@ const InspectorHeader = ({ project, node, edge, dispatch, open, type: key }: Pro
         </ToggleBox>
       </ButtonWrapper>
     </Menu>
-  );
-};
+  </>
+);
 export default InspectorHeader;

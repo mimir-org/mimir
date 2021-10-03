@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import { RootState } from "../../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { EnumBase, Node, Project } from "../../../../models";
-import { changeInspectorTab } from "../../redux/actions";
+import { changeInspectorTab } from "../../redux/tabs/actions";
 import { AdminContent } from "./";
 import { TabHeader, TabBody, TabTitle } from "../../styled";
 

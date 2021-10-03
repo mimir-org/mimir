@@ -10,7 +10,6 @@ const Block = styled.div`
   border-radius: 10px;
   border: 2px solid;
   border-color: ${Color.DarkGrey};
-
   width: ${(props) => (props.splitView ? Size.SplitView_Width - 4 : Size.BlockView_Width - 4)}px;
 `;
 

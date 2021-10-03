@@ -1,4 +1,3 @@
-import red from "../../redux/store";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ProjectMainMenu } from "../project";
@@ -7,7 +6,7 @@ import { FullScreenBox } from "../../compLibrary/controls";
 import { OpenProjectMenu } from "../project/openProject";
 import { Color, Size } from "../../compLibrary";
 import { BackgroundBox } from "./block/styled";
-import { changeInspectorTab } from "../../modules/inspector/redux/actions";
+import { changeInspectorTab } from "../../modules/inspector/redux/tabs/actions";
 import { Node, BlobData } from "../../models";
 import { ProjectState } from "../../redux/store/project/types";
 import { LibraryState } from "../../redux/store/library/types";
@@ -38,9 +37,8 @@ const FlowBlock = () => {
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>();
-  const darkMode = red.store.getState().darkMode.active;
   const node = GetSelectedNode();
-
+  const darkMode = useSelector<RootState>((state) => state.darkMode.active) as boolean;
   const projectState = useSelector<RootState>((state) => state.projectState) as ProjectState;
   const project = projectState?.project;
   const splitView = useSelector<RootState>((state) => state.splitView.visible) as boolean;
@@ -49,6 +47,7 @@ const FlowBlock = () => {
   const icons = useSelector<RootState>((state) => state.typeEditor.icons) as BlobData[];
   const library = useSelector<RootState>((state) => state.library) as LibraryState;
   const showBackground = IsLocation(splitViewNode) || IsLocation(node);
+  const inspectorOpen = useSelector<RootState>((s) => s.modules.types[0].visible) as boolean;
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
@@ -108,9 +107,7 @@ const FlowBlock = () => {
     dispatch(setActiveBlockNode(element.id));
     dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, true, true));
     dispatch(changeInspectorTab(0));
-
-    const panel = document.getElementById("InspectorModule");
-    if (panel.style.height === "44px") SetPanelHeight(Size.InspectorModuleOpen); // TODO: rewrite
+    if (!inspectorOpen) SetPanelHeight(Size.ModuleOpen);
   };
 
   // Rerender

@@ -3,7 +3,7 @@ import { Color, Size } from "../../../compLibrary";
 
 const InspectorBox = styled.div`
   color: ${Color.Black};
-  height: ${(props: { stop: string }) => `${props.stop}px`};
+  height: ${(props: { stop: string }) => props.stop}px;
   max-height: 89vh;
   min-height: ${Size.ModuleClosed}px;
   width: auto;
@@ -16,14 +16,10 @@ const InspectorBox = styled.div`
   transition: left 0.3s ease-in-out, right 0.3s ease-in-out;
 
   right: ${(props) =>
-    props.isLibraryOpen
-      ? `${Size.ModuleOpen + Size.Margin}px`
-      : `${Size.ModuleClosed + Size.Margin}px`};
+    props.isLibraryOpen ? Size.ModuleOpen + Size.Margin : Size.ModuleClosed + Size.Margin}px;
 
   left: ${(props) =>
-    props.isExplorerOpen
-      ? `${Size.ModuleOpen + Size.Margin}px`
-      : `${Size.ModuleClosed + Size.Margin}px`};
+    props.isExplorerOpen ? Size.ModuleOpen + Size.Margin : Size.ModuleClosed + Size.Margin}px;
 `;
 
 export default InspectorBox;
