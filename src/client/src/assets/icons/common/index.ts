@@ -85,7 +85,7 @@ export {
 } from "./closeParameterFilter.svg";
 export { default as CloseParameterIcon } from "./closeParameter.svg";
 export { default as LockOpenIcon, ReactComponent as LockOpenIconComponent } from "./lockOpen.svg";
-export { default as lockClosedIcon } from "./lockClosed.svg";
+export { default as LockClosedIcon } from "./lockClosed.svg";
 export { default as WarningIcon } from "./warning.svg";
 export {
   default as LockClosedParameterIcon,
