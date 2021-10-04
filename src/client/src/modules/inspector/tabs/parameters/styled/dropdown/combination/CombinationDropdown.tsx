@@ -22,7 +22,7 @@ const EntityDropdown = ({ items, selectedItems, keyProp, onChange, color }: Prop
   return (
     <MenuWrapper tabIndex={0} onBlur={() => setIsListOpen(false)}>
       <div onClick={(e) => setIsListOpen(!isListOpen)}>
-        <MenuHeader open={isListOpen}>
+        <MenuHeader open={isListOpen} color={color}>
           <p>{TextResources.Inspector_Params_Combinations}</p>
           <img src={isListOpen ? ExpandWhiteIcon : CollapseWhiteIcon} alt="expand-icon" />
         </MenuHeader>

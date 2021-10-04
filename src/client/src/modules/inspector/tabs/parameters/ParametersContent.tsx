@@ -3,11 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { TextResources } from "../../../../assets/text";
 import { Dropdown } from "./styled/dropdown/parameter";
 import { CombinedAttributeFilter, Connector, Node } from "../../../../models";
-import { GetAttributeCombinations } from "./helpers";
+import { GetAttributeCombinations, GetParametersColor } from "./helpers";
 import { Menu, Header } from "./styled";
 import { OnChangeFilterChoice, OnClearAllFilters } from "./handlers";
 import { FilterDict } from "./redux/types";
 import { ParameterRow } from "./";
+import { useState } from "react";
 
 interface Props {
   element: Node | Connector;
@@ -30,6 +31,8 @@ const ParametersContent = ({ element, elementIsLocked }: Props) => {
   const hasFilters = Object.keys(selectedFilters).length > 0;
   const attributeCombinations = GetAttributeCombinations(attributeFilters, attributes);
 
+  const [colorMapping] = useState(new Map<string, [string, string]>());
+
   return (
     <>
       <Header>
@@ -48,17 +51,25 @@ const ParametersContent = ({ element, elementIsLocked }: Props) => {
         </Menu>
       </Header>
       {hasFilters &&
-        Object.entries(selectedFilters).map(([filterName, selectedCombinations]) => (
-          <ParameterRow
-            key={filterName}
-            element={element}
-            elementIsLocked={elementIsLocked}
-            combinations={attributeCombinations[filterName]}
-            selectedCombinations={selectedCombinations}
-            filterName={filterName}
-            dispatch={dispatch}
-          />
-        ))}
+        Object.entries(selectedFilters).map(([filterName, selectedCombinations], index) => {
+          if (!colorMapping.has(filterName)) colorMapping.set(filterName, GetParametersColor(index));
+
+          let [headerColor, bodyColor] = colorMapping.get(filterName);
+
+          return (
+            <ParameterRow
+              key={filterName}
+              element={element}
+              elementIsLocked={elementIsLocked}
+              combinations={attributeCombinations[filterName]}
+              selectedCombinations={selectedCombinations}
+              filterName={filterName}
+              headerColor={headerColor}
+              bodyColor={bodyColor}
+              dispatch={dispatch}
+            />
+          );
+        })}
     </>
   );
 };

@@ -1,9 +1,8 @@
 import { Dispatch } from "redux";
-import { CloseParameterFilterIcon } from "../../../../assets/icons/common";
-import { Color } from "../../../../compLibrary";
+import { CloseParameterFilterIconComponent } from "../../../../assets/icons/common";
 import { CombinedAttribute, Connector, Node } from "../../../../models";
-import { GetParametersColor, DoesCombinationMatchAttribute } from "./helpers";
 import { Parameter } from "./";
+import { DoesCombinationMatchAttribute } from "./helpers";
 import { Body, Entity, Box } from "./styled";
 import { CombinationDropdown } from "./styled/dropdown/combination";
 import {
@@ -21,21 +20,32 @@ interface Props {
   combinations: CombinedAttribute[];
   selectedCombinations: CombinedAttribute[];
   filterName: string;
+  headerColor: string;
+  bodyColor: string;
   dispatch: Dispatch<any>;
 }
 
-function ParameterRow({ element, elementIsLocked, combinations, selectedCombinations, filterName, dispatch }: Props) {
+function ParameterRow({
+  element,
+  elementIsLocked,
+  combinations,
+  selectedCombinations,
+  filterName,
+  headerColor,
+  bodyColor,
+  dispatch,
+}: Props) {
   const attributes = element.attributes;
   const isElementNode = (element as Node).connectors !== undefined;
 
   return (
     <Body>
       <Entity width={180}>
-        <Box color={GetParametersColor()} id="ParametersBox">
+        <Box color={bodyColor} id="ParametersBox">
           <div className="icon">
-            <img
-              src={CloseParameterFilterIcon}
-              alt="icon"
+            <CloseParameterFilterIconComponent
+              fill={headerColor}
+              stroke={headerColor}
               onClick={() => OnChangeFilterChoice(element.id, filterName, true, dispatch)}
             />
           </div>
@@ -48,7 +58,7 @@ function ParameterRow({ element, elementIsLocked, combinations, selectedCombinat
           onChange={(combination, selected) =>
             OnChangeAttributeCombinationChoice(element.id, filterName, combination, selected, dispatch)
           }
-          color={Color.ParamsPurple}
+          color={headerColor}
         />
       </Entity>
       {selectedCombinations.map((combination) => (
@@ -59,6 +69,8 @@ function ParameterRow({ element, elementIsLocked, combinations, selectedCombinat
           )}
           combination={combination}
           isNodeLocked={elementIsLocked}
+          headerColor={headerColor}
+          bodyColor={bodyColor}
           onChange={(id, value, unit, nodeId) => OnChangeParameterValue(id, value, unit, nodeId, dispatch)}
           onLock={(attribute, isLocked) =>
             OnLockParameter(attribute, isLocked, element.id, elementIsLocked, isElementNode, dispatch)

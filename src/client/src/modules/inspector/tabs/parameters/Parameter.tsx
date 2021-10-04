@@ -1,5 +1,4 @@
 import { FontSize } from "../../../../compLibrary";
-import { GetParametersColor } from "./helpers";
 import { ParameterDescriptor } from "./";
 import { ParameterBox, ParameterHeader } from "./styled/parameter";
 import { Dropdown as CompDropdown } from "../../../../compLibrary/dropdown/mimir";
@@ -9,21 +8,23 @@ import { Entity } from "./styled";
 import {
   WarningIcon,
   HelpIcon,
-  LockOpenIcon,
+  LockOpenIconComponent,
   CloseParameterIcon,
-  LockClosedIcon,
+  LockClosedParameterIconComponent,
 } from "../../../../assets/icons/common";
 
 interface Props {
   attribute: Attribute;
   combination: CombinedAttribute;
   isNodeLocked: boolean;
+  headerColor: string;
+  bodyColor: string;
   onChange: (id: string, value: string, unit: string, nodeId: string) => void;
   onLock: (attribute: Attribute, isLocked: boolean) => void;
   onClose: (id: string) => void;
 }
 
-function Parameter({ attribute, combination, isNodeLocked, onLock, onClose, onChange }: Props) {
+function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColor, onLock, onClose, onChange }: Props) {
   const [value, setValue] = useState(attribute.value ?? "");
   const [unit, setUnit] = useState(attribute.unit ?? attribute.units[0]);
 
@@ -32,7 +33,7 @@ function Parameter({ attribute, combination, isNodeLocked, onLock, onClose, onCh
   return (
     <Entity width={255}>
       <ParameterBox>
-        <ParameterHeader color={GetParametersColor()} isNodeLocked={isNodeLocked}>
+        <ParameterHeader color={bodyColor} isNodeLocked={isNodeLocked}>
           {false && ( //TODO: Add proper logic for warningIcon when validation feature is added
             <img src={WarningIcon} className="warningIcon" alt="icon" />
           )}
@@ -40,12 +41,19 @@ function Parameter({ attribute, combination, isNodeLocked, onLock, onClose, onCh
           <div className="parameterHeader">{attribute.key}</div>
           <div className="icons">
             <img src={HelpIcon} className="parameterIcon" alt="icon" onClick={() => null} />
-            <img
-              src={isDisabled() ? LockClosedIcon : LockOpenIcon}
-              className="parameterIcon lockIcon"
-              alt="icon"
-              onClick={() => onLock(attribute, !attribute.isLocked)}
-            />
+
+            {isDisabled() ? (
+              <LockClosedParameterIconComponent
+                className="parameterIcon lockIcon"
+                fill={headerColor}
+                onClick={() => onLock(attribute, !attribute.isLocked)}
+              />
+            ) : (
+              <LockOpenIconComponent
+                className="parameterIcon lockIcon"
+                onClick={() => onLock(attribute, !attribute.isLocked)}
+              />
+            )}
 
             <img src={CloseParameterIcon} className="parameterIcon" alt="icon" onClick={() => onClose(attribute.id)} />
           </div>

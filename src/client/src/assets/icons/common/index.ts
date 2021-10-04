@@ -37,11 +37,18 @@ export { default as DeleteIcon } from "./delete.svg";
 export { default as LockIcon } from "./lock.svg";
 
 // Inspector Parameters
-export { default as CloseParameterFilterIcon } from "./closeParameterFilter.svg";
+export {
+  default as CloseParameterFilterIcon,
+  ReactComponent as CloseParameterFilterIconComponent,
+} from "./closeParameterFilter.svg";
 export { default as CloseParameterIcon } from "./closeParameter.svg";
-export { default as LockOpenIcon } from "./lockOpen.svg";
+export { default as LockOpenIcon, ReactComponent as LockOpenIconComponent } from "./lockOpen.svg";
+export { default as LockClosedIcon } from "./lockClosed.svg";
 export { default as WarningIcon } from "./warning.svg";
-export { default as LockClosedIcon } from "./lockParameter.svg";
+export {
+  default as LockClosedParameterIcon,
+  ReactComponent as LockClosedParameterIconComponent,
+} from "./lockParameter.svg";
 
 //Inspector Terminals
 export { default as ExpandAccordionIcon } from "./expandAccordion.svg";
