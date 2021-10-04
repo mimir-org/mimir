@@ -20,7 +20,6 @@ export function* saveType(action) {
   try {
     const createLibraryType = action.payload.libraryType as CreateLibraryType;
     let url = "";
-    // console.log("payload save", action.payload);
 
     if (createLibraryType.libraryId) {
       url = process.env.REACT_APP_API_BASE_URL + "typeeditor/" + createLibraryType.libraryId;
