@@ -3,7 +3,7 @@ import { CloseParameterFilterIcon } from "../../../../assets/icons/common";
 import { Color } from "../../../../compLibrary";
 import { CombinedAttribute, Connector, Node } from "../../../../models";
 import { GetParametersColor, DoesCombinationMatchAttribute } from "./helpers";
-import Parameter from "./Parameter";
+import { Parameter } from "./";
 import { Body, Entity, Box } from "./styled";
 import { CombinationDropdown } from "./styled/dropdown/combination";
 import {
@@ -24,16 +24,8 @@ interface Props {
   dispatch: Dispatch<any>;
 }
 
-function ParameterRow({
-  element,
-  elementIsLocked,
-  combinations,
-  selectedCombinations,
-  filterName,
-  dispatch,
-}: Props) {
+function ParameterRow({ element, elementIsLocked, combinations, selectedCombinations, filterName, dispatch }: Props) {
   const attributes = element.attributes;
-
   const isElementNode = (element as Node).connectors !== undefined;
 
   return (
@@ -54,13 +46,7 @@ function ParameterRow({
           selectedItems={selectedCombinations}
           keyProp="combined"
           onChange={(combination, selected) =>
-            OnChangeAttributeCombinationChoice(
-              element.id,
-              filterName,
-              combination,
-              selected,
-              dispatch
-            )
+            OnChangeAttributeCombinationChoice(element.id, filterName, combination, selected, dispatch)
           }
           color={Color.ParamsPurple}
         />
@@ -73,22 +59,11 @@ function ParameterRow({
           )}
           combination={combination}
           isNodeLocked={elementIsLocked}
-          onChange={(id, value, unit, nodeId) =>
-            OnChangeParameterValue(id, value, unit, nodeId, dispatch)
-          }
+          onChange={(id, value, unit, nodeId) => OnChangeParameterValue(id, value, unit, nodeId, dispatch)}
           onLock={(attribute, isLocked) =>
-            OnLockParameter(
-              attribute,
-              isLocked,
-              element.id,
-              elementIsLocked,
-              isElementNode,
-              dispatch
-            )
+            OnLockParameter(attribute, isLocked, element.id, elementIsLocked, isElementNode, dispatch)
           }
-          onClose={() =>
-            OnChangeAttributeCombinationChoice(element.id, filterName, combination, true, dispatch)
-          }
+          onClose={() => OnChangeAttributeCombinationChoice(element.id, filterName, combination, true, dispatch)}
         />
       ))}
     </Body>

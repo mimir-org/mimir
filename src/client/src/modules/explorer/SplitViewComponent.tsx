@@ -8,9 +8,8 @@ import { OnChange } from "./handlers";
 import { GetSelectedNode, IsLocation } from "../../components/flow/helpers";
 
 export const SplitViewComponent = () => {
-  const splitView = useSelector<RootState>((state) => state.splitView.visible) as boolean;
-
   const dispatch = useDispatch();
+  const splitView = useSelector<RootState>((state) => state.splitView.visible) as boolean;
   const [isVisible, setIsVisible] = useState(IsBlockView());
   const [isActive, setIsActive] = useState(splitView);
   const selectedNode = GetSelectedNode();

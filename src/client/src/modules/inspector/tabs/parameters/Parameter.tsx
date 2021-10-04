@@ -1,6 +1,6 @@
 import { FontSize } from "../../../../compLibrary";
 import { GetParametersColor } from "./helpers";
-import { ParameterDescriptor } from "./ParameterDescriptor";
+import { ParameterDescriptor } from "./";
 import { ParameterBox, ParameterHeader } from "./styled/parameter";
 import { Dropdown as CompDropdown } from "../../../../compLibrary/dropdown/mimir";
 import { Attribute, CombinedAttribute } from "../../../../models";
@@ -47,12 +47,7 @@ function Parameter({ attribute, combination, isNodeLocked, onLock, onClose, onCh
               onClick={() => onLock(attribute, !attribute.isLocked)}
             />
 
-            <img
-              src={CloseParameterIcon}
-              className="parameterIcon"
-              alt="icon"
-              onClick={() => onClose(attribute.id)}
-            />
+            <img src={CloseParameterIcon} className="parameterIcon" alt="icon" onClick={() => onClose(attribute.id)} />
           </div>
         </ParameterHeader>
         <ParameterDescriptor

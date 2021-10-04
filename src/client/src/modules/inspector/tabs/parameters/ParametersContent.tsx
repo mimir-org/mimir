@@ -7,7 +7,7 @@ import { GetAttributeCombinations } from "./helpers";
 import { Menu, Header } from "./styled";
 import { OnChangeFilterChoice, OnClearAllFilters } from "./handlers";
 import { FilterDict } from "./redux/types";
-import ParameterRow from "./ParameterRow";
+import { ParameterRow } from "./";
 
 interface Props {
   element: Node | Connector;
@@ -19,14 +19,13 @@ const ParametersContent = ({ element, elementIsLocked }: Props) => {
   const attributes = element.attributes;
 
   const attributeFilters =
-    (
-      useSelector<RootState>((state) => state.commonState.filters) as CombinedAttributeFilter[]
-    ).filter((x) => attributes.find((att) => att.key === x.name)) ?? [];
+    (useSelector<RootState>((state) => state.commonState.filters) as CombinedAttributeFilter[]).filter((x) =>
+      attributes.find((att) => att.key === x.name)
+    ) ?? [];
 
   const selectedFilters =
-    (useSelector<RootState>(
-      (state) => state.parametersReducer.selectedAttributeFilters[element.id]
-    ) as FilterDict) ?? {};
+    (useSelector<RootState>((state) => state.parametersReducer.selectedAttributeFilters[element.id]) as FilterDict) ??
+    {};
 
   const hasFilters = Object.keys(selectedFilters).length > 0;
   const attributeCombinations = GetAttributeCombinations(attributeFilters, attributes);

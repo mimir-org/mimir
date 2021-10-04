@@ -23,7 +23,6 @@ const Size = {
   // Modules
   ModuleOpen: 331,
   ModuleClosed: 45,
-  InspectorModuleOpen: 295,
   Margin: 2,
 
   // Menus

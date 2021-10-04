@@ -3,7 +3,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ProjectMainMenu } from "../../project";
 import { RootState } from "../../../redux/store/index";
-import { FullScreenBox } from "../../../compLibrary/controls";
+import { FullScreenComponent } from "../../../compLibrary/controls";
 import { OpenProjectMenu } from "../../project/openProject";
 import { Color, Size } from "../../../compLibrary";
 import { BackgroundBox } from "./styled";
@@ -19,6 +19,7 @@ import { setActiveBlockNode, setActiveEdge } from "../../../redux/store/project/
 import { GetSelectedNode, GetBlockNodeTypes, IsFunction, IsLocation, SetDarkModeColor } from "../helpers";
 import { EDGE_TYPE, EdgeType, BackgroundVariant, SPLITVIEW_POSITION, MODULE_TYPE } from "../../../models/project";
 import { changeInspectorHeight } from "../../../modules/inspector/redux/height/actions";
+import { SetPanelHeight } from "../../../modules/inspector/helpers";
 
 /**
  * Component for the Flow library in BlockView
@@ -80,7 +81,11 @@ const FlowBlock = () => {
     dispatch(setActiveBlockNode(element.id));
     dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, true, true));
     dispatch(changeInspectorTab(0));
-    if (!inspectorOpen) dispatch(changeInspectorHeight(Size.ModuleOpen));
+
+    if (!inspectorOpen) {
+      dispatch(changeInspectorHeight(Size.ModuleOpen));
+      SetPanelHeight(Size.ModuleOpen);
+    }
   };
 
   // Rerender
@@ -115,7 +120,7 @@ const FlowBlock = () => {
               paneMoveable={false}
               onClick={(e) => OnBlockClick(e, dispatch, project)}
             >
-              <FullScreenBox />
+              <FullScreenComponent />
               <BackgroundBox visible={showBackground} isSplitView={splitView} right={splitViewPosition()}>
                 <Background size={0.5} color={Color.Grey} variant={BackgroundVariant.Lines} />
               </BackgroundBox>

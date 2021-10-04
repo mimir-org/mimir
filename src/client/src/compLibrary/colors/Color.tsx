@@ -6,6 +6,7 @@ const Color = {
   White: "#fff",
   Black: "#000",
   LightGrey: "#FBFBFF",
+  LighterGrey: "#F2F2F2",
   Grey: "#d9d9d9",
   DarkGrey: "#c4c4c4",
   DarkerGrey: "#898787",

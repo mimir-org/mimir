@@ -15,12 +15,8 @@ interface Props {
 
 const AdminComponent = ({ node, project, index }: Props) => {
   const dispatch = useDispatch();
-
-  const isTabOpen = useSelector<RootState>(
-    (state) => state.inspector.tabs[index].visible
-  ) as boolean;
-
-  const statuses = useSelector<RootState>((state) => state.commonState.statuses) as EnumBase[];
+  const isTabOpen = useSelector<RootState>((s) => s.inspector.tabs[index].visible) as boolean;
+  const statuses = useSelector<RootState>((s) => s.commonState.statuses) as EnumBase[];
 
   const onClick = useCallback(() => {
     dispatch(changeInspectorTab(index));

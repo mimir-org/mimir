@@ -1,15 +1,12 @@
-import { Size } from "../../../compLibrary";
-import { changeInspectorHeight } from "../redux/height/actions";
-
 /**
- * Function to change height of Inspector by click and drag.
+ * Function to resize the height of the Inspector by click and drag.
  */
-const DragResizePanel = (dispatch: any) => {
+const DragResizePanel = () => {
   const BORDER_SIZE = 44;
   const module = "InspectorModule";
   const panel = document.getElementById(module);
-  const admin = document.getElementById("admininfo");
-  const terminal = document.getElementById("terminals");
+  const adminTab = document.getElementById("admininfo");
+  const terminalsTab = document.getElementById("terminals");
   let prevY: number;
 
   if (panel) {
@@ -19,14 +16,8 @@ const DragResizePanel = (dispatch: any) => {
         document.addEventListener("mousemove", resize);
       }
     });
-    document.addEventListener("mouseup", () => {
-      if (
-        parseInt(getComputedStyle(panel, "").height) !== Size.ModuleClosed &&
-        parseInt(getComputedStyle(panel, "").height) !== Size.ModuleOpen
-      ) {
-        dispatch(changeInspectorHeight(parseInt(getComputedStyle(panel, "").height)));
-      }
 
+    document.addEventListener("mouseup", () => {
       document.removeEventListener("mousemove", resize);
       panel.removeEventListener("mousedown", resize);
     });
@@ -37,13 +28,11 @@ const DragResizePanel = (dispatch: any) => {
     prevY = e.clientY;
 
     // Change module height
-    if (prevY < 1100) {
-      panel.style.height = parseInt(getComputedStyle(panel, "").height) + dy + "px";
-      // Change tabs height
-      if (admin) admin.style.height = parseInt(getComputedStyle(panel, "").height) - 45 + "px";
-      if (terminal) terminal.style.height = parseInt(getComputedStyle(panel, "").height) - 80 + "px";
-    }
+    panel.style.height = parseInt(getComputedStyle(panel, "").height) + dy + "px";
+
+    // Change tabs height
+    if (adminTab) adminTab.style.height = parseInt(getComputedStyle(panel, "").height) - 45 + "px";
+    if (terminalsTab) terminalsTab.style.height = parseInt(getComputedStyle(panel, "").height) - 80 + "px";
   };
 };
-
 export default DragResizePanel;

@@ -1,9 +1,6 @@
 import { Dispatch } from "redux";
 import { Attribute } from "../../../../../models";
-import {
-  setIsLockedNodeAttribute,
-  setIsLockedTerminalAttribute,
-} from "../../../../../redux/store/project/actions";
+import { setIsLockedNodeAttribute, setIsLockedTerminalAttribute } from "../../../../../redux/store/project/actions";
 
 const OnLockParameter = (
   attribute: Attribute,

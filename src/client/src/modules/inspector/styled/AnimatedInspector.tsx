@@ -2,20 +2,21 @@ import styled, { keyframes } from "styled-components";
 import { InspectorBox } from "./";
 
 interface Props {
-  start: string;
-  stop: string;
+  start: number;
+  stop: number;
   run: boolean;
   library: boolean;
   explorer: boolean;
+  height: number;
 }
 
 const Animation = ({ start, stop, run }: Props) => keyframes`
 ${!run ? (start = stop) : null}
   from {
-    height: ${stop}px;
+    height: ${start}px;
   }
   to {
-    height: ${start}px;
+    height: ${stop}px;
   }  
 `;
 

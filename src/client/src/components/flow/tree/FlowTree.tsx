@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ProjectMainMenu } from "../../project";
 import { RootState } from "../../../redux/store/index";
 import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
-import { FullScreenBox } from "../../../compLibrary/controls";
+import { FullScreenComponent } from "../../../compLibrary/controls";
 import { Size } from "../../../compLibrary";
 import { OpenProjectMenu } from "../../project/openProject/";
 import { BlobData } from "../../../models";
@@ -20,6 +20,7 @@ import { MODULE_TYPE } from "../../../models/project";
 import { getBlobData } from "../../../redux/store/typeEditor/actions";
 import { SetPanelHeight } from "../../../modules/inspector/helpers";
 import { updatePosition, setActiveNode, setActiveEdge } from "../../../redux/store/project/actions";
+import { changeInspectorHeight } from "../../../modules/inspector/redux/height/actions";
 
 /**
  * Component for the Flow library in TreeView
@@ -34,6 +35,7 @@ const FlowTree = () => {
   const projectState = useSelector<RootState>((s) => s.projectState) as ProjectState;
   const icons = useSelector<RootState>((s) => s.typeEditor.icons) as BlobData[];
   const library = useSelector<RootState>((s) => s.library) as LibraryState;
+  const inspectorOpen = useSelector<RootState>((s) => s.modules.types[0].visible) as boolean;
   const project = projectState?.project;
 
   const OnElementsRemove = (elementsToRemove) => {
@@ -72,8 +74,10 @@ const FlowTree = () => {
     dispatch(setActiveNode(element.id, true));
     dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, true, true));
     dispatch(changeInspectorTab(0));
-    const panel = document.getElementById("InspectorModule");
-    if (panel.style.height === Size.ModuleClosed + "px") SetPanelHeight(Size.InspectorModuleOpen); // TODO: rewrite
+    if (!inspectorOpen) {
+      dispatch(changeInspectorHeight(Size.ModuleOpen));
+      SetPanelHeight(Size.ModuleOpen);
+    }
   };
 
   // Rerender
@@ -107,7 +111,7 @@ const FlowTree = () => {
             snapGrid={[5, 5]}
             onClick={(e) => Helpers.OnTreeClick(e, dispatch, project)}
           >
-            <FullScreenBox />
+            <FullScreenComponent />
           </ReactFlow>
         </ReactFlowProvider>
       )}

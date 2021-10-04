@@ -1,7 +1,5 @@
 import { changeInspectorTab } from "../../../../modules/inspector/redux/tabs/actions";
 import { Project } from "../../../../models";
-import { setModuleVisibility } from "../../../../redux/store/modules/actions";
-import { MODULE_TYPE } from "../../../../models/project";
 import { setActiveBlockNode, setActiveEdge } from "../../../../redux/store/project/actions";
 
 /**
@@ -20,7 +18,6 @@ const OnBlockClick = (e: any, dispatch: any, project: Project) => {
     dispatch(setActiveEdge(edge.id, true));
     dispatch(setActiveBlockNode(null));
     dispatch(changeInspectorTab(0));
-    dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, true, true));
   }
 };
 
