@@ -1,9 +1,6 @@
 import { Node, Edge, RelationType, Connector } from "../../../../models";
 import { GetConnectorNode, IsChecked, IsEdge } from "../helpers";
-import {
-  changeActiveConnector,
-  setEdgeVisibility,
-} from "../../../../redux/store/project/actions";
+import { changeActiveConnector, setEdgeVisibility } from "../../../../redux/store/project/actions";
 
 const OnChange = (
   edges: Edge[],
@@ -22,9 +19,7 @@ const OnChange = (
         dispatch(setEdgeVisibility(element, !element.isHidden));
       } else {
         const connNode = GetConnectorNode(element);
-        dispatch(
-          changeActiveConnector(connNode, element.id, !element.visible, 0)
-        );
+        dispatch(changeActiveConnector(connNode, element.id, !element.visible, 0));
       }
     });
   }

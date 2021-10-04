@@ -9,10 +9,7 @@ const CheckBlockEdges = (edges: Edge[], type: RelationType | string) => {
   // Transport connections
   if (type === TextResources.Relations_Transport) {
     edges?.forEach((edge) => {
-      if (
-        IsTransportTerminal(edge.fromConnector) &&
-        edge.fromConnector.relationType === undefined
-      ) {
+      if (IsTransportTerminal(edge.fromConnector) && edge.fromConnector.relationType === undefined) {
         elementsToRemove.push(edge);
       }
       // Find connectors
@@ -37,7 +34,6 @@ const CheckBlockEdges = (edges: Edge[], type: RelationType | string) => {
       }
     });
   }
-
   return elementsToRemove;
 };
 

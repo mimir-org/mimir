@@ -28,15 +28,12 @@ const CheckEdges = (edges: Edge[], type: RelationType | string, node: Node) => {
   }
 
   edges?.forEach((edge) => {
-    if (type === RelationType.PartOf) {
-      if (edge.fromNode.aspect === node?.aspect && IsPartOfTerminal(edge.fromConnector))
-        elementsToRemove.push(edge); // Part of
-    }
+    if (type === RelationType.PartOf)
+      if (edge.fromNode.aspect === node?.aspect && IsPartOfTerminal(edge.fromConnector)) elementsToRemove.push(edge); // Part of
 
-    if (type === RelationType.HasLocation) {
-      if (edge.fromNode.aspect === node?.aspect && IsLocationTerminal(edge.fromConnector))
-        elementsToRemove.push(edge); // Has Location
-    }
+    if (type === RelationType.HasLocation)
+      if (edge.fromNode.aspect === node?.aspect && IsLocationTerminal(edge.fromConnector)) elementsToRemove.push(edge); // Has Location
+
     if (edge.fromConnector.name === type) elementsToRemove.push(edge); // Transport
   });
   return elementsToRemove;

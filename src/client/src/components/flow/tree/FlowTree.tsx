@@ -38,6 +38,9 @@ const FlowTree = () => {
   const inspectorOpen = useSelector<RootState>((s) => s.modules.types[0].visible) as boolean;
   const project = projectState?.project;
 
+  const OnDragOver = (event) => event.preventDefault();
+  const OnNodeDragStop = (_event, node) => dispatch(updatePosition(node.id, node.position.x, node.position.y));
+
   const OnElementsRemove = (elementsToRemove) => {
     return useOnRemove(elementsToRemove, setElements, dispatch);
   };
@@ -55,14 +58,6 @@ const FlowTree = () => {
     const fromConnector = fromNode.connectors.find((x) => x.id === params.sourceHandle);
     const edgeType = Helpers.GetEdgeType(fromConnector);
     return useOnConnect(params, project, setElements, dispatch, edgeType, library);
-  };
-
-  const OnDragOver = (event) => {
-    event.preventDefault();
-  };
-
-  const OnNodeDragStop = (_event, node) => {
-    dispatch(updatePosition(node.id, node.position.x, node.position.y));
   };
 
   const OnDrop = (event) => {

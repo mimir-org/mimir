@@ -30,7 +30,7 @@ const FilterContent = ({ conn, type, name, header, node, edges }: Props) => {
         onChange={() => OnChange(edges, setChecked, dispatch, selectedElements, type, name, node, conn)}
       />
       <span className="checkmark"></span>
-      {<MenuSubHeader>{name}</MenuSubHeader>}
+      <MenuSubHeader>{name}</MenuSubHeader>
     </label>
   ) : (
     <label className={"checkbox-filter"}>

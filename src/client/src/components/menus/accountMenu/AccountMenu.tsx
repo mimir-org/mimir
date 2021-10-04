@@ -1,4 +1,4 @@
-import * as Handlers from "./handlers";
+import * as Click from "./handlers";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../redux/store/index";
 import { UserState } from "../../../redux/store/user/types";
@@ -22,29 +22,20 @@ const AccountMenu = () => {
   return (
     <>
       <AccountMenuBox id={MENU_TYPE.ACCOUNT_MENU}>
-        <GetMenuElement type={TextResources.Account_Open} onClick={() => Handlers.OnOpenClick(dispatch)} />
-        <GetMenuElement type={TextResources.Account_Create} onClick={() => Handlers.OnCreateClick(dispatch)} />
-        <GetMenuElement
-          type={TextResources.Account_Save}
-          onClick={() => Handlers.OnSaveClick(dispatch, projectState)}
-        />
-        <GetMenuElement
-          type={TextResources.Account_Save_Library}
-          onClick={() => Handlers.OnSaveLibraryFile(dispatch)}
-        />
-        <GetMenuElement type={TextResources.Account_Save_File} onClick={() => Handlers.OnSaveFile(dispatch)} />
+        <GetMenuElement type={TextResources.Account_Open} onClick={() => Click.OnOpenC(dispatch)} />
+        <GetMenuElement type={TextResources.Account_Create} onClick={() => Click.OnCreate(dispatch)} />
+        <GetMenuElement type={TextResources.Account_Save} onClick={() => Click.OnSave(dispatch, projectState)} />
+        <GetMenuElement type={TextResources.Account_Save_Library} onClick={() => Click.OnSaveLibrary(dispatch)} />
+        <GetMenuElement type={TextResources.Account_Save_File} onClick={() => Click.OnSaveFile(dispatch)} />
         <GetMenuElement
           type={TextResources.Account_Commit_Project}
-          onClick={() => Handlers.OnCommitClick(dispatch, projectState)}
+          onClick={() => Click.OnCommit(dispatch, projectState)}
         />
         <MenuLine />
-        <GetMenuElement
-          type={TextResources.Account_Import_Project}
-          onClick={() => Handlers.OnImportProjectFile(dispatch)}
-        />
+        <GetMenuElement type={TextResources.Account_Import_Project} onClick={() => Click.OnImportProject(dispatch)} />
         <GetMenuElement
           type={TextResources.Account_Import_Library_Label}
-          onClick={() => Handlers.OnImportLibraryFile(dispatch)}
+          onClick={() => Click.OnImportLibrary(dispatch)}
         />
         <MenuLine />
         <GetMenuElement type={TextResources.Account_Logout} userState={userState} />

@@ -55,7 +55,6 @@ const FlowBlock = () => {
     project.edges?.forEach((edge) => {
       if (edge.fromNodeId === nodeToRemove.id || edge.toNodeId === nodeToRemove.id) elementsToRemove.push(edge);
     });
-
     return useOnRemove(elementsToRemove, setElements, dispatch);
   };
 
@@ -95,9 +94,7 @@ const FlowBlock = () => {
   }, [OnLoad, reactFlowInstance, darkMode]);
 
   const splitViewPosition = () => {
-    if (IsLocation(splitViewNode) && IsFunction(node)) {
-      return SPLITVIEW_POSITION.RIGHT;
-    }
+    if (IsLocation(splitViewNode) && IsFunction(node)) return SPLITVIEW_POSITION.RIGHT;
   };
 
   return (

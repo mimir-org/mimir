@@ -3,7 +3,7 @@ import { Button } from "../../../../compLibrary/buttons";
 import { UserState } from "../../../../redux/store/user/types";
 import { MenuElement } from "../../../../compLibrary/box/menus";
 import { GetText, GetIcon } from "./";
-import { OnLogOutClick } from "../handlers/";
+import { OnLogOut } from "../handlers/";
 
 interface Props {
   type: string;
@@ -20,7 +20,7 @@ const GetMenuElement = ({ type, onClick, userState }: Props) => {
   ) : (
     <MenuElement logOut>
       {userState.user && userState.user.name}
-      <Button onClick={() => OnLogOutClick()} type={TextResources.Account_Logout} />
+      <Button onClick={() => OnLogOut()} type={TextResources.Account_Logout} />
     </MenuElement>
   );
 };
