@@ -1,6 +1,6 @@
 import { Elements } from "react-flow-renderer";
 import { CreateTreeEdge, CreateTreeNode } from "./";
-import { GetEdgeType } from "../helpers/tree";
+import { GetEdgeType } from "../tree/helpers";
 import { Project, Edge } from "../../../models";
 
 const CreateTreeElements = (project: Project): Elements => {

@@ -12,13 +12,10 @@ import {
   IsLocationTerminal,
   IsPartOfTerminal,
   IsTransportTerminal,
-} from "../../flow/helpers/common";
+} from "../../flow/helpers";
 
 const FilterMenu = () => {
-  const project = useSelector<RootState>(
-    (state) => state.projectState.project
-  ) as Project;
-
+  const project = useSelector<RootState>((state) => state.projectState.project) as Project;
   const nodes = project?.nodes?.filter((x) => !x.isHidden) ?? [];
   const edges = project?.edges;
   let elements = [] as FilterElement[];
@@ -30,11 +27,7 @@ const FilterMenu = () => {
   // Remove duplicates
   elements = elements.filter(
     (value, index, elems) =>
-      elems.findIndex(
-        (elem) =>
-          elem.type === value.type &&
-          elem.fromNode?.aspect === value.fromNode?.aspect
-      ) === index
+      elems.findIndex((elem) => elem.type === value.type && elem.fromNode?.aspect === value.fromNode?.aspect) === index
   );
 
   let isTransport = false;
@@ -59,9 +52,7 @@ const FilterMenu = () => {
     }
   });
 
-  const isLibraryOpen = useSelector<RootState>(
-    (state) => state.modules.types.find((x) => IsLibrary(x.type)).visible
-  );
+  const isLibraryOpen = useSelector<RootState>((state) => state.modules.types.find((x) => IsLibrary(x.type)).visible);
 
   // TODO: refactor
   return (
@@ -90,14 +81,7 @@ const FilterMenu = () => {
             )
         )}
         {partOfCount % 2 !== 0 && (
-          <FilterContent
-            conn={null}
-            type={null}
-            name={null}
-            key={CreateId()}
-            header={false}
-            edges={edges}
-          />
+          <FilterContent conn={null} type={null} name={null} key={CreateId()} header={false} edges={edges} />
         )}
         <br></br>
         {isTransport && (
@@ -111,25 +95,11 @@ const FilterMenu = () => {
         {elements.map(
           (x) =>
             IsTransportTerminal(x.conn) && (
-              <FilterContent
-                conn={x.conn}
-                type={x.type}
-                name={x.name}
-                key={x.id}
-                header={false}
-                edges={edges}
-              />
+              <FilterContent conn={x.conn} type={x.type} name={x.name} key={x.id} header={false} edges={edges} />
             )
         )}
         {transportCount % 2 !== 0 && (
-          <FilterContent
-            conn={null}
-            type={null}
-            name={null}
-            key={CreateId()}
-            header={false}
-            edges={edges}
-          />
+          <FilterContent conn={null} type={null} name={null} key={CreateId()} header={false} edges={edges} />
         )}
         <br></br>
 
@@ -147,11 +117,7 @@ const FilterMenu = () => {
               <FilterContent
                 conn={x.conn}
                 type={x.type}
-                name={
-                  Aspect[x.fromNode?.aspect] +
-                  " " +
-                  TextResources.Aspect_Location
-                }
+                name={Aspect[x.fromNode?.aspect] + " " + TextResources.Aspect_Location}
                 key={x.id}
                 header={false}
                 node={x.fromNode}
@@ -160,14 +126,7 @@ const FilterMenu = () => {
             )
         )}
         {locationCount % 2 !== 0 && (
-          <FilterContent
-            conn={null}
-            type={null}
-            name={null}
-            key={CreateId()}
-            header={false}
-            edges={edges}
-          />
+          <FilterContent conn={null} type={null} name={null} key={CreateId()} header={false} edges={edges} />
         )}
       </MenuColumn>
     </FilterMenuBox>

@@ -18,11 +18,7 @@ import { TextResources } from "../../assets/text";
 import { IPublicClientApplication } from "@azure/msal-browser";
 import { ModelBuilderNavigationClient } from "../../models/webclient";
 import { msalInstance } from "../..";
-import {
-  MsalProvider,
-  AuthenticatedTemplate,
-  UnauthenticatedTemplate,
-} from "@azure/msal-react";
+import { MsalProvider, AuthenticatedTemplate, UnauthenticatedTemplate } from "@azure/msal-react";
 
 // Props
 type AppProps = {
@@ -34,25 +30,11 @@ const App = ({ pca }: AppProps) => {
   const navigationClient = new ModelBuilderNavigationClient(history);
   pca.setNavigationClient(navigationClient);
 
-  const projectState = useSelector<RootState>(
-    (state) => state.projectState
-  ) as ProjectState;
-
-  const libraryState = useSelector<RootState>(
-    (state) => state.library
-  ) as LibraryState;
-
-  const userState = useSelector<RootState>(
-    (state) => state.library
-  ) as UserState;
-
-  const commonState = useSelector<RootState>(
-    (state) => state.commonState
-  ) as CommonState;
-
-  const typeEditorState = useSelector<RootState>(
-    (state) => state.typeEditor
-  ) as TypeEditorState;
+  const projectState = useSelector<RootState>((state) => state.projectState) as ProjectState;
+  const libraryState = useSelector<RootState>((state) => state.library) as LibraryState;
+  const userState = useSelector<RootState>((state) => state.library) as UserState;
+  const commonState = useSelector<RootState>((state) => state.commonState) as CommonState;
+  const typeEditorState = useSelector<RootState>((state) => state.typeEditor) as TypeEditorState;
 
   const isFetching = () => {
     if (

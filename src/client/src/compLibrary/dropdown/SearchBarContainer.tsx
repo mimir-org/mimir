@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Color from "../colors/Color";
 
 const SearchBarContainer = styled.div`
   display: flex;
@@ -6,7 +7,7 @@ const SearchBarContainer = styled.div`
   flex-direction: column;
   max-height: 20px;
   font-family: roboto;
-  background-color: white;
+  background-color: ${Color.White};
   position: relative;
 `;
 

@@ -7,8 +7,7 @@ const ListElementsContainer = styled.div`
   overflow-y: auto;
 
   div:nth-child(odd) {
-    background-color: ${(props: { background: boolean }) =>
-      props.background === false ? "" : Color.LightPurple};
+    background-color: ${(props: { background: boolean }) => (props.background === false ? "" : Color.LightPurple)};
   }
 `;
 

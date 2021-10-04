@@ -16,9 +16,7 @@ const TerminalsSearchBar = ({ searchString, onChange }: Props) => {
         className={searchString.length > 0 ? "" : "input-placeholder"}
         value={searchString}
         placeholder={TextResources.Inspector_Terminals_Search}
-        onChange={(e: ChangeEvent<HTMLInputElement>) =>
-          onChange(e.currentTarget.value)
-        }
+        onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e.currentTarget.value)}
       />
     </InputWrapper>
   );

@@ -23,15 +23,5 @@ export default function DefaultEdgeType({
     targetPosition,
   });
 
-  return (
-    <>
-      <path
-        id={id}
-        style={style}
-        className="react-flow__edge-path"
-        d={edgePathSmoothStep}
-        markerEnd={markerEnd}
-      />
-    </>
-  );
+  return <path id={id} style={style} className="react-flow__edge-path" d={edgePathSmoothStep} markerEnd={markerEnd} />;
 }

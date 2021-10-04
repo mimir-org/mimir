@@ -5,7 +5,7 @@ import {
   FETCHING_CONTRACTORS_SUCCESS_OR_ERROR,
   Contractor,
   FETCHING_STATUSES_SUCCESS_OR_ERROR,
-  FETCHING_COMBINED_ATTRIBUTE_FILTERS_SUCCESS_OR_ERROR
+  FETCHING_COMBINED_ATTRIBUTE_FILTERS_SUCCESS_OR_ERROR,
 } from "../../store/common/types";
 
 export function* getContractors() {
@@ -160,8 +160,6 @@ export function* getAttributeFilters() {
       type: FETCHING_COMBINED_ATTRIBUTE_FILTERS_SUCCESS_OR_ERROR,
       payload: payload,
     });
-
-
   } catch (error) {
     const apiError = {
       key: FETCHING_COMBINED_ATTRIBUTE_FILTERS_SUCCESS_OR_ERROR,

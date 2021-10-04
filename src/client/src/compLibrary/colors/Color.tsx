@@ -2,11 +2,11 @@ const Color = {
   // Common
   BlueMagenta: "#272738",
   GreyHeader: "#4F4F4F",
-  GreyBorder: "#d9d9d9",
   GreyInspector: "#FAFAFA",
   White: "#fff",
   Black: "#000",
   LightGrey: "#FBFBFF",
+  LighterGrey: "#F2F2F2",
   Grey: "#d9d9d9",
   DarkGrey: "#c4c4c4",
   DarkerGrey: "#898787",
@@ -15,6 +15,10 @@ const Color = {
   LightPurple: "#D8D8EC",
   DarkRed: "rgb(139,0,0)",
   Red: "rgb(255,0,0)",
+
+  // DarkMode
+  DarkModeMain: "#888",
+  DarkModeModule: "#A8A8A8",
 
   // Function aspect
   FunctionBlock: "#FEF445",
@@ -53,7 +57,6 @@ const Color = {
   ParamsYellow: "#E3A814",
 
   // Inspector Terminals
-
   TerminalsPurple: "#A5A5DC",
 };
 

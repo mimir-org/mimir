@@ -1,19 +1,15 @@
 import { RootState } from "../../../../redux/store";
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
-import { NodeBox } from "../../../../compLibrary/blockView";
+import { NodeBox } from "../../styled";
+import { BlockNodeNameBox } from "../../block/styled";
 import { HandleComponent, TerminalsComponent } from "../../block/terminals";
 import { changeActiveConnector } from "../../../../redux/store/project/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { Connector, Node } from "../../../../models";
 import { OnHover, OnMouseOut } from "./handlers";
-import { IsLocation } from "../../helpers/common";
-import {
-  SetTerminalOrder,
-  FilterTerminals,
-  FindNodeByDataId,
-} from "../../helpers/block";
-import BlockNodeNameBox from "../../../../compLibrary/blockView/BlockNodeNameBox";
+import { IsLocation } from "../../helpers";
+import { SetTerminalOrder, FilterTerminals, FindNodeByDataId } from "../../block/helpers";
 
 /**
  * Component for a Location Node in BlockView.
@@ -23,16 +19,11 @@ import BlockNodeNameBox from "../../../../compLibrary/blockView/BlockNodeNameBox
 const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
   const [terminalButton, showTerminalButton] = useState(false);
-  const [terminalMenu, showTerminalMenu] = useState(false);
+  const [inputTerminalMenu, showInputTerminalMenu] = useState(false);
+  const [outputTerminalMenu, showOutputTerminalMenu] = useState(false);
 
-  const nodes = useSelector<RootState>(
-    (state) => state.projectState.project.nodes
-  ) as Node[];
-
-  const splitView = useSelector<RootState>(
-    (state) => state.splitView.visible
-  ) as boolean;
-
+  const nodes = useSelector<RootState>((state) => state.projectState.project.nodes) as Node[];
+  const splitView = useSelector<RootState>((state) => state.splitView.visible) as boolean;
   const sortedTerminals = FilterTerminals(data, splitView);
 
   const onConnectorClick = (conn: Connector) => {
@@ -60,26 +51,23 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
         location
       >
         <BlockNodeNameBox>{data.label ?? data.name}</BlockNodeNameBox>
+
         <TerminalsComponent
           node={data}
-          isMenuOpen={terminalMenu}
+          isInputMenuOpen={inputTerminalMenu}
+          isOutputMenuOpen={outputTerminalMenu}
           terminals={sortedTerminals}
-          width={data.width}
           isParent={false}
           isLocation={IsLocation(data)}
-          onClick={onConnectorClick}
+          isSplitView={splitView}
+          onClick={(conn) => onConnectorClick(conn)}
           menuButton={terminalButton}
-          showTerminalMenu={showTerminalMenu}
-          terminalMenu={terminalMenu}
+          showInputTerminalMenu={showInputTerminalMenu}
+          showOutputTerminalMenu={showOutputTerminalMenu}
         />
       </NodeBox>
-      <HandleComponent
-        node={data}
-        nodes={nodes}
-        terminals={sortedTerminals}
-        isParent={false}
-        splitView={splitView}
-      />
+
+      <HandleComponent node={data} nodes={nodes} terminals={sortedTerminals} isParent={false} splitView={splitView} />
     </>
   );
 };

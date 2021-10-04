@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { TypeEditorState } from "../../../redux/store/typeEditor/types";
-import { setModulesVisibility } from "../../../redux/store/modules/actions";
 import { TerminalTypeItem } from "../../../models";
 import { TypeEditorList, TypeEditorInputs, TypePreview } from "./";
 import { ListType } from "./TypeEditorList";
@@ -46,7 +45,6 @@ export const TypeEditorComponent = () => {
 
   useEffect(() => {
     dispatch(getInitialData());
-    dispatch(setModulesVisibility(false, true));
     dispatch(getBlobData());
   }, [dispatch]);
 
@@ -97,8 +95,7 @@ export const TypeEditorComponent = () => {
                 onChange={(key, data) => onChange(key, data)}
                 // disabled={ModeEdit(mode) ? false : FieldValidator(state, "rds")}
               />
-              {(IsFunction(state?.createLibraryType.aspect) ||
-                IsProduct(state?.createLibraryType.aspect)) && (
+              {(IsFunction(state?.createLibraryType.aspect) || IsProduct(state?.createLibraryType.aspect)) && (
                 <TypeEditorList
                   items={state?.terminals}
                   createLibraryType={state?.createLibraryType}
@@ -120,16 +117,13 @@ export const TypeEditorComponent = () => {
                   // disabled={ModeEdit(mode) ? false : FieldValidator(state, "rds")}
                 />
               )}
-              {(IsFunction(state?.createLibraryType.aspect) ||
-                IsProduct(state?.createLibraryType.aspect)) &&
+              {(IsFunction(state?.createLibraryType.aspect) || IsProduct(state?.createLibraryType.aspect)) &&
               IsInterface(state.createLibraryType.objectType) ? null : (
                 <TypeEditorList
                   items={state?.attributes}
                   createLibraryType={state?.createLibraryType}
                   listType={
-                    IsLocation(state?.createLibraryType.aspect)
-                      ? ListType.LocationAttributes
-                      : ListType.ObjectAttributes
+                    IsLocation(state?.createLibraryType.aspect) ? ListType.LocationAttributes : ListType.ObjectAttributes
                   }
                   onChange={(key, data) => onChange(key, data)}
                 />
@@ -149,24 +143,15 @@ export const TypeEditorComponent = () => {
                   rds={GetSelectedRds(state?.createLibraryType, state.rdsList)}
                   inputTerminals={
                     state?.createLibraryType.terminalTypes &&
-                    GetInputTerminals(
-                      state?.createLibraryType,
-                      state?.terminals
-                    )
+                    GetInputTerminals(state?.createLibraryType, state?.terminals)
                   }
                   outputTerminals={
                     state?.createLibraryType.terminalTypes &&
-                    GetOutputTerminals(
-                      state?.createLibraryType,
-                      state?.terminals
-                    )
+                    GetOutputTerminals(state?.createLibraryType, state?.terminals)
                   }
                   terminal={
                     state?.createLibraryType.terminalTypeId &&
-                    GetSelectedTerminal(
-                      state?.createLibraryType,
-                      state?.terminals
-                    )
+                    GetSelectedTerminal(state?.createLibraryType, state?.terminals)
                   }
                   // disabled={FieldValidator(state, "add")}
                 />
@@ -177,11 +162,7 @@ export const TypeEditorComponent = () => {
                       : TextResources.TypeEditor_Button_Edit}
                   </p>
                   <img
-                    src={
-                      state.createLibraryType.libraryId === null
-                        ? AddIcon
-                        : CheckIcon
-                    }
+                    src={state.createLibraryType.libraryId === null ? AddIcon : CheckIcon}
                     alt="icon"
                     className="icon"
                   />

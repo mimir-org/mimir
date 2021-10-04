@@ -28,6 +28,11 @@ const ErrorModule = () => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [errors, setErrors] = useState([] as ErrorMessage[]);
+  const projectState = useSelector<RootState>((state) => state.projectState) as ProjectState;
+  const libraryState = useSelector<RootState>((state) => state.library) as LibraryState;
+  const userState = useSelector<RootState>((state) => state.userState) as UserState;
+  const commonState = useSelector<RootState>((state) => state.commonState) as CommonState;
+  const typeEditorState = useSelector<RootState>((state) => state.typeEditor) as TypeEditorState;
 
   const closeHeader = () => {
     if (errors) {
@@ -43,26 +48,6 @@ const ErrorModule = () => {
     }
     setVisible(false);
   };
-
-  const projectState = useSelector<RootState>(
-    (state) => state.projectState
-  ) as ProjectState;
-
-  const libraryState = useSelector<RootState>(
-    (state) => state.library
-  ) as LibraryState;
-
-  const userState = useSelector<RootState>(
-    (state) => state.userState
-  ) as UserState;
-
-  const commonState = useSelector<RootState>(
-    (state) => state.commonState
-  ) as CommonState;
-
-  const typeEditorState = useSelector<RootState>(
-    (state) => state.typeEditor
-  ) as TypeEditorState;
 
   useEffect(() => {
     const errorList = [];
@@ -129,24 +114,13 @@ const ErrorModule = () => {
 
     setErrors(errorList);
     setVisible(errorList.length > 0);
-  }, [
-    commonState.apiError,
-    libraryState.apiError,
-    projectState.apiError,
-    userState.apiError,
-    typeEditorState.apiError,
-  ]);
+  }, [commonState.apiError, libraryState.apiError, projectState.apiError, userState.apiError, typeEditorState.apiError]);
 
   return (
     <ErrorBox visible={visible}>
       <ProjectBody>
         <ErrorHeaderBox>
-          <img
-            src={CloseIcon}
-            alt="Close error message"
-            onClick={() => closeHeader()}
-            className="icon"
-          />
+          <img src={CloseIcon} alt="Close error message" onClick={() => closeHeader()} className="icon" />
           {TextResources.Error_Tile}
         </ErrorHeaderBox>
         {errors?.map((x, index) => {

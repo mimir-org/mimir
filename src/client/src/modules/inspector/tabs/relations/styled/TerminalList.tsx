@@ -19,7 +19,6 @@ const TerminalList = styled.div`
   }
 `;
 
-const getBorder = (hasItems: boolean) =>
-  hasItems ? `1px solid ${Color.Black}` : "none";
+const getBorder = (hasItems: boolean) => (hasItems ? `1px solid ${Color.Black}` : "none");
 
 export default TerminalList;

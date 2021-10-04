@@ -1,9 +1,5 @@
 import { MODULE_TYPE } from "../../../models/project";
-import {
-  SET_MODULE_VISIBILITY,
-  SET_MODULES_VISIBILITY,
-  ModuleVisibilityActionTypes,
-} from "./types";
+import { SET_MODULE_VISIBILITY, SET_MODULES_VISIBILITY, ModuleVisibilityActionTypes } from "./types";
 
 const initialState = {
   types: [
@@ -30,10 +26,7 @@ const initialState = {
   ],
 };
 
-export function moduleReducer(
-  state = initialState,
-  action: ModuleVisibilityActionTypes
-) {
+export function moduleReducer(state = initialState, action: ModuleVisibilityActionTypes) {
   switch (action.type) {
     case SET_MODULE_VISIBILITY:
       return {
@@ -43,7 +36,7 @@ export function moduleReducer(
             ? {
                 ...x,
                 visible: action.payload.visible,
-                animate: action.payload.animate,
+                animate: true,
               }
             : { ...x }
         ),

@@ -6,14 +6,10 @@ export const FilterTerminalCategories = (
   terminals: Connector[]
 ) =>
   terminalCategories
-    .filter((cat) =>
-      terminals.find((term) => term.terminalCategoryId === cat.id)
-    )
+    .filter((cat) => terminals.find((term) => term.terminalCategoryId === cat.id))
     .map((cat) => ({
       ...cat,
       items: cat.items.filter((terminalType) =>
-        terminals.find(
-          (terminal) => terminal.terminalTypeId === terminalType.id
-        )
+        terminals.find((terminal) => terminal.terminalTypeId === terminalType.id)
       ),
     }));

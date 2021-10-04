@@ -7,7 +7,7 @@ import {
   IsLocationTerminal,
   IsPartOfTerminal,
   IsTransportTerminal,
-} from "../../../components/flow/helpers/common";
+} from "../../../components/flow/helpers";
 
 const GetLegendInfo = (conn: Connector, node: Node) => {
   let color = "";
@@ -33,7 +33,7 @@ const GetLegendInfo = (conn: Connector, node: Node) => {
 
   if (IsFulfilledByTerminal(conn)) {
     name = conn.name;
-    color = GetAspectPartColor(node.aspect); // TODO:fix
+    color = GetAspectPartColor(node.aspect);
     return [name, color];
   }
 };

@@ -1,8 +1,8 @@
 import { Node, Connector } from "../../../../models";
-import { HandleBox } from "../../../../compLibrary/blockView";
 import { Handle } from "react-flow-renderer";
-import { GetBlockHandleType } from "../../helpers/block";
+import { GetBlockHandleType } from "../../block/helpers";
 import { IsValidConnection } from "./helpers";
+import { HandleBox } from "./styled";
 import {
   GetConnectorIcon,
   GetHandlePosition,
@@ -10,7 +10,7 @@ import {
   IsOutputTerminal,
   IsLocationTerminal,
   SetTerminalYPos,
-} from "../../helpers/common";
+} from "../../helpers";
 
 interface Props {
   node: Node;
@@ -24,24 +24,14 @@ interface Props {
  * @param param0
  * @returns a Mimir terminal in form of a Flow Handler.
  */
-const HandleComponent = ({
-  node,
-  nodes,
-  terminals,
-  isParent,
-  splitView,
-}: Props) => {
+const HandleComponent = ({ node, nodes, terminals, isParent, splitView }: Props) => {
   let inputCount = 0;
   let outputCount = 0;
 
   return (
     <>
       {terminals.map((conn: Connector) => {
-        const [type, pos] = GetBlockHandleType(
-          conn,
-          node.isSelected,
-          splitView
-        );
+        const [type, pos] = GetBlockHandleType(conn, node.isSelected, splitView);
         if (!IsLocationTerminal(conn)) {
           if (IsInputTerminal(conn)) inputCount++;
           if (IsOutputTerminal(conn)) outputCount++;
@@ -63,9 +53,7 @@ const HandleComponent = ({
               position={pos}
               id={conn.id}
               className="react-flow__handle-block"
-              isValidConnection={(connection) =>
-                IsValidConnection(connection, nodes, terminals)
-              }
+              isValidConnection={(connection) => IsValidConnection(connection, nodes, terminals)}
             />
           </HandleBox>
         );
