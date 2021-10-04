@@ -1,6 +1,12 @@
 import { TerminalType } from "../../../../models";
 
-const GetFilteredTerminalsList = (terminals: any[]): any[] => {
+export type TerminalCategory = {
+  id: string;
+  name: string;
+  items: TerminalType[];
+};
+
+const GetFilteredTerminalsList = (terminals: any[]): TerminalCategory[] => {
   const categories = [];
   if (!terminals || terminals.length <= 0) return [] as any[];
 
@@ -9,7 +15,7 @@ const GetFilteredTerminalsList = (terminals: any[]): any[] => {
       name: terminalCategory.key,
       id: terminalCategory?.value[0].terminalCategoryId,
       items: [],
-    };
+    } as TerminalCategory;
     terminalCategory?.value.forEach((element, index) => {
       cat.items.push({
         id: element.id,

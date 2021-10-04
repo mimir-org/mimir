@@ -4,6 +4,7 @@ const SearchBarWrapper = styled.div`
   display: flex;
   flex-direction: row;
   flex: 1;
+  padding-right: 3px;
 
   .helpIcon {
     height: 12px;

@@ -65,12 +65,9 @@
 // BLOCKVIEW
 .react-flow__node-BlockFunctionNode {
   border-radius: 10px;
-  width: 115px;
-  height: 70px;
   font-size: 11px;
   color: #222;
   text-align: center;
-  background-color: #fef445;
   box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.2);
 
   &.selected {

@@ -21,6 +21,8 @@ import {
   FETCHING_PREDEFINED_ATTRIBUTES_SUCCESS_OR_ERROR,
   FETCHING_BLOB_DATA,
   FETCHING_BLOB_DATA_SUCCESS_OR_ERROR,
+  FETCHING_SIMPLE_TYPES,
+  FETCHING_SIMPLE_TYPES_SUCCESS_OR_ERROR,
   FETCHING_TYPE,
   FETCHING_TYPE_SUCCESS_OR_ERROR,
   OPEN_TYPE_EDITOR,
@@ -45,6 +47,7 @@ const initialState: TypeEditorState = {
     name: "",
     aspect: Aspect.NotSet,
     objectType: ObjectType.NotSet,
+    purpose: "",
     semanticReference: "",
     rdsId: "",
     terminalTypes: [] as TerminalTypeItem[],
@@ -53,14 +56,17 @@ const initialState: TypeEditorState = {
     predefinedAttributes: [] as PredefinedAttribute[],
     terminalTypeId: "",
     symbolId: "",
+    compositeTypes: [] as string[],
   } as CreateLibraryType,
   aspects: {},
   objectTypes: {},
+  purposes: [],
   rdsList: [],
   terminals: [],
   attributes: [],
   locationTypes: [],
   predefinedAttributes: [],
+  simpleTypes: [],
   apiError: [],
   icons: [] as BlobData[],
 };
@@ -82,6 +88,7 @@ export function typeEditorReducer(
         fetching: false,
         aspects: action.payload.aspects,
         objectTypes: action.payload.objectTypes,
+        purposes: action.payload.purposes,
       };
     case FETCHING_RDS:
       return {
@@ -151,6 +158,7 @@ export function typeEditorReducer(
           name: "",
           aspect: Aspect.NotSet,
           objectType: ObjectType.NotSet,
+          purpose: "",
           semanticReference: "",
           rdsId: "",
           terminalTypes: [] as TerminalTypeItem[],
@@ -159,6 +167,7 @@ export function typeEditorReducer(
           predefinedAttributes: [] as PredefinedAttribute[],
           terminalTypeId: "",
           symbolId: "",
+          compositeTypes: [] as string[],
         },
       };
     case FETCHING_TYPE_SUCCESS_OR_ERROR:
@@ -187,6 +196,25 @@ export function typeEditorReducer(
           ? [...state.apiError, action.payload.apiError]
           : state.apiError,
       };
+    case FETCHING_SIMPLE_TYPES:
+      return {
+        ...state,
+        fetching: true,
+        apiError: state.apiError
+          ? state.apiError.filter(
+              (elem) => elem.key !== FETCHING_SIMPLE_TYPES_SUCCESS_OR_ERROR
+            )
+          : state.apiError,
+      };
+    case FETCHING_SIMPLE_TYPES_SUCCESS_OR_ERROR:
+      return {
+        ...state,
+        fetching: false,
+        simpleTypes: action.payload.simpleTypes,
+        apiError: action.payload.apiError
+          ? [...state.apiError, action.payload.apiError]
+          : state.apiError,
+      };
     case OPEN_TYPE_EDITOR:
       return {
         ...state,
@@ -198,6 +226,7 @@ export function typeEditorReducer(
           name: "",
           aspect: Aspect.NotSet,
           objectType: ObjectType.NotSet,
+          purpose: "",
           semanticReference: "",
           rdsId: "",
           terminalTypes: [] as TerminalTypeItem[],
@@ -206,6 +235,7 @@ export function typeEditorReducer(
           predefinedAttributes: [] as PredefinedAttribute[],
           terminalTypeId: "",
           symbolId: "",
+          compositeTypes: [] as string[],
         },
       };
     case CLOSE_TYPE_EDITOR:
@@ -219,6 +249,7 @@ export function typeEditorReducer(
           name: "",
           aspect: Aspect.NotSet,
           objectType: ObjectType.NotSet,
+          purpose: "",
           semanticReference: "",
           rdsId: "",
           terminalTypes: [] as TerminalTypeItem[],
@@ -227,6 +258,7 @@ export function typeEditorReducer(
           predefinedAttributes: [] as PredefinedAttribute[],
           terminalTypeId: "",
           symbolId: "",
+          compositeTypes: [] as string[],
         },
       };
     case UPDATE_CREATELIBRARYTYPE:
@@ -292,6 +324,7 @@ export function typeEditorReducer(
           name: "",
           aspect: Aspect.NotSet,
           objectType: ObjectType.NotSet,
+          purpose: "",
           semanticReference: "",
           rdsId: "",
           terminalTypes: [] as TerminalTypeItem[],
@@ -300,6 +333,7 @@ export function typeEditorReducer(
           predefinedAttributes: [] as PredefinedAttribute[],
           terminalTypeId: "",
           symbolId: "",
+          compositeTypes: [] as string[],
         },
         apiError: action.payload.apiError
           ? [...state.apiError, action.payload.apiError]

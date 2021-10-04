@@ -2,7 +2,8 @@ import styled from "styled-components";
 import { FontSize } from "../../../../../compLibrary";
 
 const Box = styled.div`
-  position: relative;
+  display: flex;
+  flex-direction: column;
   height: 73px;
   width: 155px;
   background-color: ${(props) => props.color};
@@ -11,16 +12,19 @@ const Box = styled.div`
   font-size: ${FontSize.Medium};
 
   .text {
-    position: absolute;
-    left: 8px;
-    top: 15px;
-    padding-right: 5px;
+    position: relative;
+    top: -5px;
+    margin: 0px auto 0px 10px;
   }
 
   .icon {
-    position: relative;
-    left: 130px;
-    top: -1px;
+    display: flex;
+  }
+
+  svg {
+    margin-left: auto;
+
+    width: 30px;
 
     :hover {
       cursor: pointer;

@@ -38,11 +38,23 @@ const Color = {
   Terminal_Multiphase: "#00CC66",
   TransportConnection: "#606060",
 
-  // Parameters
-  ParamsLightGreen: "#D9EAEB",
-  ParamsGreen: "#65A8AD",
+  // Inspector Parameters
+  ParamsLightCyan: "#D9EAEB",
+  ParamsCyan: "#65A8AD",
   ParamsLightPurple: "#ECEDFD",
   ParamsPurple: "#8088FF",
+  ParamsLightPink: "#F7DEF8",
+  ParamsPink: "#D06BD4",
+  ParamsLightOrange: "#FFEEE1",
+  ParamsOrange: "#DF6A10",
+  ParamsLightGreen: "#DFF1CC",
+  ParamsGreen: "#7A9F53",
+  ParamsLightYellow: "#FCF7C7",
+  ParamsYellow: "#E3A814",
+
+  // Inspector Terminals
+
+  TerminalsPurple: "#A5A5DC",
 };
 
 export default Color;

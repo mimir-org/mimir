@@ -1,20 +1,20 @@
 import styled from "styled-components";
-import { Color, FontSize } from "../../../";
+import { Color } from "../../../";
 
 const DropdownMenuHeader = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  height: 28px;
+  height: ${(props: { height: string }) => props.height}px;
   background: ${Color.White};
   border: 1px solid ${Color.Black};
-  border-radius: 5px;
-  font-size: ${FontSize.Standard};
+  border-radius: ${(props: { borderRadius: number }) => props.borderRadius}px;
+  font-size: ${(props: { fontSize: number }) => props.fontSize};
   color: ${Color.Black};
 
   p {
-    padding: 10px;
+    padding: 5px;
   }
 
   img {

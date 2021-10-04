@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color, FontSize } from "../../../";
+import { Color } from "../../../";
 
 const DropdownMenuWrapper = styled.div`
   display: flex;
@@ -8,7 +8,7 @@ const DropdownMenuWrapper = styled.div`
   margin-bottom: 10px;
   background-color: ${Color.White};
   opacity: ${(props: { disabled: boolean }) => (props.disabled ? 0.4 : 1)};
-  font-size: ${FontSize.Standard};
+  font-size: ${(props: { fontSize: string }) => props.fontSize};
   color: ${Color.Black};
   position: relative;
 

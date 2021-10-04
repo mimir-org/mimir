@@ -5,7 +5,8 @@ import { Color, FontSize } from "../../../../../compLibrary";
 const TerminalsElement = styled.div`
   border-bottom: 1px solid;
   border-color: ${Color.DarkGrey};
-  font-size: ${FontSize.Small};
+  padding: 5px 34px 5px 5px;
+  font-size: ${FontSize.Tiny};
   color: ${Color.Black};
   padding: 5px 30px 0px 0px;
   height: 20px;

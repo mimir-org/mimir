@@ -10,6 +10,8 @@ const Textarea = styled.textarea`
   height: ${(props: { height: number }) => props.height}px;
   background-color: ${(props: { readOnly: boolean }) =>
     props.readOnly ? "#f2f2f2" : "#fff"};
+  font-family: inherit;
+  font-size: 14px;
 `;
 
 export default Textarea;

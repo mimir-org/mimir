@@ -1,27 +1,51 @@
-import { Attribute } from "../../../../../models";
+import { CombinedAttribute } from "../../../../../models";
 import {
-  ADD_ENTITY_PARAMETER,
-  REMOVE_ENTITY_PARAMETERS,
-  REMOVE_ENTITY_PARAMETER,
+  ADD_ATTRIBUTE_FILTER,
+  ADD_COMBINED_ATTRIBUTE,
+  REMOVE_ALL_ATTRIBUTE_FILTERS,
+  REMOVE_ATTRIBUTE_FILTER,
+  REMOVE_COMBINED_ATTRIBUTE,
 } from "./types";
 
-export function addEntityParameter(nodeId: string, parameter: Attribute) {
+export function addAttributeFilter(nodeId: string, filterName: string) {
   return {
-    type: ADD_ENTITY_PARAMETER,
-    payload: { nodeId, parameter },
+    type: ADD_ATTRIBUTE_FILTER,
+    payload: { nodeId, filterName },
   };
 }
 
-export function removeEntityParameter(nodeId: string, parameter: Attribute) {
+export function removeAttributeFilter(nodeId: string, filterName: string) {
   return {
-    type: REMOVE_ENTITY_PARAMETER,
-    payload: { nodeId, parameter },
+    type: REMOVE_ATTRIBUTE_FILTER,
+    payload: { nodeId, filterName },
   };
 }
 
-export function removeEntityParameters(nodeId: string) {
+export function removeAllAttributeFilters(nodeId: string) {
   return {
-    type: REMOVE_ENTITY_PARAMETERS,
+    type: REMOVE_ALL_ATTRIBUTE_FILTERS,
     payload: { nodeId },
+  };
+}
+
+export function addCombinedAttribute(
+  nodeId: string,
+  filterName: string,
+  combination: CombinedAttribute
+) {
+  return {
+    type: ADD_COMBINED_ATTRIBUTE,
+    payload: { nodeId, filterName, combination },
+  };
+}
+
+export function removeCombinedAttribute(
+  nodeId: string,
+  filterName: string,
+  combination: CombinedAttribute
+) {
+  return {
+    type: REMOVE_COMBINED_ATTRIBUTE,
+    payload: { nodeId, filterName, combination },
   };
 }
