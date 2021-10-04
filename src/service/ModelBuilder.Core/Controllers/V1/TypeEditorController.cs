@@ -346,7 +346,7 @@ namespace Mb.Core.Controllers.V1
 
             try
             {
-                if (libraryType.Aspect == Aspect.Location && libraryType.ObjectType == ObjectType.NotSet)
+                if (libraryType.Aspect == Aspect.Location)
                 {
                     libraryType.ObjectType = ObjectType.ObjectBlock;
                 }
