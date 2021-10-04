@@ -111,7 +111,7 @@ namespace Mb.Core.Controllers.V1
         /// <param name="id"></param>
         /// <param name="parser"></param>
         /// <returns></returns>
-        [HttpGet("Download equinor.com_fb2bfb76")]
+        [HttpGet("Download Mimir built project")]
         [ProducesResponseType(typeof(FileContentResult), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -120,7 +120,7 @@ namespace Mb.Core.Controllers.V1
         {
             try
             {
-                var id = "equinor.com_dbcdcce6-d5a6-47cf-9f04-570461a32f34";
+                var id = "equinor.com_01166d78-8c6f-4048-b568-3c406e0849df";
                 var parser = "rdfparser";
 
                 var (file, format) = await _projectService.CreateFile(id, parser);

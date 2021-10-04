@@ -156,7 +156,7 @@ namespace RdfParserModule
                     switch (connector)
                     {
                         case Terminal terminal:
-                            //TODO Check if this can actually be called 'transmitter'
+
                             var transmitter = Graph.CreateUriNode(Resources.mimirPrefix + terminal.Name.Replace(" ", "-") + "Transmitter");
 
                             var hasTerminal = Graph.CreateUriNode("imf:has" + terminal.Type + "Terminal");
@@ -171,7 +171,7 @@ namespace RdfParserModule
                                 terminalType = "Out";
                             }
                             var terminalKey = Graph.CreateUriNode("imf:" + terminalType + "Terminal");
-                            var nodeTerminal = Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, terminal.Id, "node"));
+                            var nodeTerminal = Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, terminal.Id));
                             Graph.Assert(new Triple(nodeId, hasTerminal, nodeTerminal));
                             Graph.Assert(new Triple(nodeTerminal, type, terminalKey));
 
@@ -263,12 +263,70 @@ namespace RdfParserModule
             var hasParent = Graph.CreateUriNode(Resources.hasParent);
             var label = Graph.CreateUriNode(Resources.label);
             var connectedTo = Graph.CreateUriNode(Resources.connectedTo);
+            var transport = Graph.CreateUriNode(Resources.Transport);
+            var inTerminal = Graph.CreateUriNode(Resources.InputTerminal);
+            var hasInTerminal = Graph.CreateUriNode(Resources.hasInputTerminal);
+            var hasOutTerminal = Graph.CreateUriNode(Resources.hasOutputTerminal);
+            var outTerminal = Graph.CreateUriNode(Resources.OutputTerminal);
 
             foreach (Edge edge in edges)
             {
                 var fromNode = Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.FromNodeId));
                 var toNode = Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.ToNodeId));
 
+                if (edge.Transport != null)
+                {
+                    var transportNode = Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.TransportId));
+                    Graph.Assert(new Triple(transportNode, type, transport));
+
+                    Graph.Assert(new Triple(transportNode, label, Graph.CreateLiteralNode(edge.Transport.Name)));
+
+                    switch (edge.FromNode.Aspect)
+                    {
+                        case Aspect.Function:
+                            Graph.Assert(new Triple(transportNode, hasParent, FunctionRoot));
+                            break;
+                        case Aspect.Location:
+                            Graph.Assert(new Triple(transportNode, hasParent, LocationRoot));
+                            break;
+                        case Aspect.Product:
+                            Graph.Assert(new Triple(transportNode, hasParent, ProductRoot));
+                            break;
+                    }
+
+                    if (edge.Transport.InputTerminal != null)
+                    {
+                        var terminal = edge.Transport.InputTerminal;
+                        var transportIn =
+                            Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.Transport.InputTerminalId));
+                        Graph.Assert(new Triple(transportIn, type, inTerminal));
+
+                        Graph.Assert(new Triple(transportNode, hasInTerminal, transportIn));
+
+
+                        Graph.Assert(new Triple(transportIn, connectedTo,
+                            Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.FromConnectorId))));
+
+                        var terminalLabel = Graph.CreateLiteralNode(terminal.Name + " " + terminal.Type);
+                        Graph.Assert(new Triple(transportIn, label, terminalLabel));
+
+                    }
+                    if (edge.Transport.OutputTerminal != null)
+                    {
+                        var terminal = edge.Transport.OutputTerminal;
+                        var transportOut =
+                            Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.Transport.OutputTerminalId));
+                        Graph.Assert(new Triple(transportOut, type, outTerminal));
+
+                        Graph.Assert(new Triple(transportNode, hasOutTerminal, transportOut));
+
+                        Graph.Assert(new Triple(transportOut, connectedTo,
+                            Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.ToConnectorId))));
+
+                        var terminalLabel = Graph.CreateLiteralNode(terminal.Name + " " + terminal.Type);
+                        Graph.Assert(new Triple(transportOut, label, terminalLabel));
+                    }
+                }
 
                 switch (edge.FromConnector)
                 {
@@ -306,53 +364,39 @@ namespace RdfParserModule
 
                 if (!string.IsNullOrEmpty(edge.TransportId))
                 {
-                    var transportNode = Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.TransportId));
-                    Graph.Assert(new Triple(transportNode, type, Graph.CreateUriNode("imf:Transport")));
+                    //var transportNode = Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.TransportId));
+                    //Graph.Assert(new Triple(transportNode, type, Graph.CreateUriNode("imf:Transport")));
 
 
 
-                    //Temporary logic to create terminals for Transports
-                    var transportIn = Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.TransportId, "transportInput"));
-                    var transportOut = Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.TransportId, "transportOutput"));
-                    var streamTerminal = Graph.CreateUriNode(Resources.StreamTerminal);
+                    ////Temporary logic to create terminals for Transports
+                    //var transportIn = Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.TransportId, "transportInput"));
+                    //var transportOut = Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.TransportId, "transportOutput"));
+                    //var streamTerminal = Graph.CreateUriNode(Resources.StreamTerminal);
                     
-                    Graph.Assert(new Triple(transportIn, type, streamTerminal));
-                    Graph.Assert(new Triple(transportOut, type, streamTerminal));
-                    Graph.Assert(new Triple(transportIn, type,
-                        Graph.CreateUriNode(Resources.InputTerminal)));
-                    Graph.Assert(new Triple(transportOut, type,
-                        Graph.CreateUriNode(Resources.OutputTerminal)));
+                    //Graph.Assert(new Triple(transportIn, type, streamTerminal));
+                    //Graph.Assert(new Triple(transportOut, type, streamTerminal));
+                    //Graph.Assert(new Triple(transportIn, type,
+                    //    Graph.CreateUriNode(Resources.InputTerminal)));
+                    //Graph.Assert(new Triple(transportOut, type,
+                    //    Graph.CreateUriNode(Resources.OutputTerminal)));
 
-                    Graph.Assert(new Triple(transportNode, Graph.CreateUriNode(Resources.hasInputTerminal), transportIn));
-                    Graph.Assert(new Triple(transportNode, Graph.CreateUriNode(Resources.hasOutputTerminal), transportOut));
-
-
-
-                    Graph.Assert(new Triple(transportIn, connectedTo,
-                        Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.FromConnectorId, "node"))));
-                    Graph.Assert(new Triple(transportOut, connectedTo,
-                        Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.ToConnectorId, "node"))));
-
-                    Graph.Assert(new Triple(Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.FromConnectorId, "node")), connectedTo,
-                        transportIn));
-                    Graph.Assert(new Triple(Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.ToConnectorId, "node")), connectedTo,
-                        transportOut));
+                    //Graph.Assert(new Triple(transportNode, Graph.CreateUriNode(Resources.hasInputTerminal), transportIn));
+                    //Graph.Assert(new Triple(transportNode, Graph.CreateUriNode(Resources.hasOutputTerminal), transportOut));
 
 
-                    switch (edge.FromNode.Aspect)
-                    {
-                        case Aspect.Function:
-                            Graph.Assert(new Triple(transportNode, hasParent, FunctionRoot));
-                            break;
-                        case Aspect.Location:
-                            Graph.Assert(new Triple(transportNode, hasParent, LocationRoot));
-                            break;
-                        case Aspect.Product:
-                            Graph.Assert(new Triple(transportNode, hasParent, ProductRoot));
-                            break;
-                    }
 
-                    Graph.Assert(new Triple(transportNode, label, Graph.CreateLiteralNode(edge.Transport.Name)));
+                    //Graph.Assert(new Triple(transportIn, connectedTo,
+                    //    Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.FromConnectorId, "node"))));
+                    //Graph.Assert(new Triple(transportOut, connectedTo,
+                    //    Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.ToConnectorId, "node"))));
+
+                    //Graph.Assert(new Triple(Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.FromConnectorId, "node")), connectedTo,
+                    //    transportIn));
+                    //Graph.Assert(new Triple(Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.ToConnectorId, "node")), connectedTo,
+                    //    transportOut));
+
+
 
 
                 }
