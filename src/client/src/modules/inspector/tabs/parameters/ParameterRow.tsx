@@ -1,6 +1,5 @@
 import { Dispatch } from "redux";
-import { CloseParameterFilterIcon } from "../../../../assets/icons/common";
-import { Color } from "../../../../compLibrary";
+import { CloseParameterFilterIconComponent } from "../../../../assets/icons/common";
 import { CombinedAttribute, Connector, Node } from "../../../../models";
 import { GetParametersColor, DoesCombinationMatchAttribute } from "./helpers";
 import Parameter from "./Parameter";
@@ -16,6 +15,7 @@ import {
 type Element = Node | Connector;
 
 interface Props {
+  index: number;
   element: Element;
   elementIsLocked: boolean;
   combinations: CombinedAttribute[];
@@ -25,6 +25,7 @@ interface Props {
 }
 
 function ParameterRow({
+  index,
   element,
   elementIsLocked,
   combinations,
@@ -36,17 +37,17 @@ function ParameterRow({
 
   const isElementNode = (element as Node).connectors !== undefined;
 
+  const [headerColor, bodyColor] = GetParametersColor(index);
+
   return (
     <Body>
       <Entity width={180}>
-        <Box color={GetParametersColor()} id="ParametersBox">
+        <Box color={bodyColor} id="ParametersBox">
           <div className="icon">
-            <img
-              src={CloseParameterFilterIcon}
-              alt="icon"
-              onClick={() =>
-                OnChangeFilterChoice(element.id, filterName, true, dispatch)
-              }
+            <CloseParameterFilterIconComponent
+              fill={headerColor}
+              stroke={headerColor}
+              onClick={() => OnChangeFilterChoice(element.id, filterName, true, dispatch)}
             />
           </div>
           <div className="text">{filterName}</div>
@@ -64,19 +65,19 @@ function ParameterRow({
               dispatch
             )
           }
-          color={Color.ParamsPurple}
+          color={headerColor}
         />
       </Entity>
       {selectedCombinations.map((combination) => (
         <Parameter
           key={combination.combined}
           attribute={attributes.find(
-            (attr) =>
-              attr.key === filterName &&
-              DoesCombinationMatchAttribute(combination, attr)
+            (attr) => attr.key === filterName && DoesCombinationMatchAttribute(combination, attr)
           )}
           combination={combination}
           isNodeLocked={elementIsLocked}
+          headerColor={headerColor}
+          bodyColor={bodyColor}
           onChange={(id, value, unit, nodeId) =>
             OnChangeParameterValue(id, value, unit, nodeId, dispatch)
           }
@@ -91,13 +92,7 @@ function ParameterRow({
             )
           }
           onClose={() =>
-            OnChangeAttributeCombinationChoice(
-              element.id,
-              filterName,
-              combination,
-              true,
-              dispatch
-            )
+            OnChangeAttributeCombinationChoice(element.id, filterName, combination, true, dispatch)
           }
         />
       ))}
