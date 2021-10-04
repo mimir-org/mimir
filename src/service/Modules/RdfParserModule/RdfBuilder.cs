@@ -193,13 +193,13 @@ namespace RdfParserModule
                     switch (node.Aspect)
                     {
                         case Aspect.Function:
-                            prefix = "=";
+                            prefix = "Function";
                             break;
                         case Aspect.Product:
-                            prefix = "-";
+                            prefix = "Product";
                             break;
                         case Aspect.Location:
-                            prefix = "+";
+                            prefix = "Location";
                             break;
                     }
 
@@ -328,6 +328,62 @@ namespace RdfParserModule
                     }
                 }
 
+                if (edge.Interface != null)
+                {
+                    var interfaceNode = Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.InterfaceId));
+                    Graph.Assert(new Triple(interfaceNode, type, Graph.CreateUriNode(Resources.Interface)));
+
+                    switch (edge.FromNode.Aspect)
+                    {
+                        case Aspect.Function:
+                            Graph.Assert(new Triple(interfaceNode, hasParent, FunctionRoot));
+                            break;
+                        case Aspect.Location:
+                            Graph.Assert(new Triple(interfaceNode, hasParent, LocationRoot));
+                            break;
+                        case Aspect.Product:
+                            Graph.Assert(new Triple(interfaceNode, hasParent, ProductRoot));
+                            break;
+                    }
+                    Graph.Assert(new Triple(interfaceNode, label, Graph.CreateLiteralNode(edge.Interface.Name)));
+
+
+                    if (edge.Interface.InputTerminal != null)
+                    {
+                        var inter = edge.Interface.InputTerminal;
+                        var interIn =
+                            Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.Interface.InputTerminalId));
+                        Graph.Assert(new Triple(interIn, type, inTerminal));
+
+                        Graph.Assert(new Triple(interfaceNode, hasInTerminal, interIn));
+
+
+                        Graph.Assert(new Triple(interIn, connectedTo,
+                            Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.FromConnectorId))));
+
+                        var interfaceLabel = Graph.CreateLiteralNode(inter.Name + " " + inter.Type);
+                        Graph.Assert(new Triple(interIn, label, interfaceLabel));
+
+                    }
+                    if (edge.Interface.OutputTerminal != null)
+                    {
+                        var inter = edge.Interface.OutputTerminal;
+                        var interOut =
+                            Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.Interface.OutputTerminalId));
+                        Graph.Assert(new Triple(interOut, type, outTerminal));
+
+                        Graph.Assert(new Triple(interfaceNode, hasOutTerminal, interOut));
+
+
+                        Graph.Assert(new Triple(interOut, connectedTo,
+                            Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.ToConnectorId))));
+
+                        var interfaceLabel = Graph.CreateLiteralNode(inter.Name + " " + inter.Type);
+                        Graph.Assert(new Triple(interOut, label, interfaceLabel));
+                    }
+                }
+
+
                 switch (edge.FromConnector)
                 {
                     case Relation relation:
@@ -361,65 +417,26 @@ namespace RdfParserModule
                         break;
                 }
 
+                //if (!string.IsNullOrEmpty(edge.InterfaceId))
+                //{
+                //    var interfaceNode = Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.InterfaceId));
+                //    Graph.Assert(new Triple(interfaceNode, type, Graph.CreateUriNode(Resources.Interface)));
 
-                if (!string.IsNullOrEmpty(edge.TransportId))
-                {
-                    //var transportNode = Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.TransportId));
-                    //Graph.Assert(new Triple(transportNode, type, Graph.CreateUriNode("imf:Transport")));
+                //    switch (edge.FromNode.Aspect)
+                //    {
+                //        case Aspect.Function:
+                //            Graph.Assert(new Triple(interfaceNode, hasParent, FunctionRoot));
+                //            break;
+                //        case Aspect.Location:
+                //            Graph.Assert(new Triple(interfaceNode, hasParent, LocationRoot));
+                //            break;
+                //        case Aspect.Product:
+                //            Graph.Assert(new Triple(interfaceNode, hasParent, ProductRoot));
+                //            break;
+                //    }
+                //    Graph.Assert(new Triple(interfaceNode, label, Graph.CreateLiteralNode(edge.Interface.Name)));
 
-
-
-                    ////Temporary logic to create terminals for Transports
-                    //var transportIn = Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.TransportId, "transportInput"));
-                    //var transportOut = Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.TransportId, "transportOutput"));
-                    //var streamTerminal = Graph.CreateUriNode(Resources.StreamTerminal);
-                    
-                    //Graph.Assert(new Triple(transportIn, type, streamTerminal));
-                    //Graph.Assert(new Triple(transportOut, type, streamTerminal));
-                    //Graph.Assert(new Triple(transportIn, type,
-                    //    Graph.CreateUriNode(Resources.InputTerminal)));
-                    //Graph.Assert(new Triple(transportOut, type,
-                    //    Graph.CreateUriNode(Resources.OutputTerminal)));
-
-                    //Graph.Assert(new Triple(transportNode, Graph.CreateUriNode(Resources.hasInputTerminal), transportIn));
-                    //Graph.Assert(new Triple(transportNode, Graph.CreateUriNode(Resources.hasOutputTerminal), transportOut));
-
-
-
-                    //Graph.Assert(new Triple(transportIn, connectedTo,
-                    //    Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.FromConnectorId, "node"))));
-                    //Graph.Assert(new Triple(transportOut, connectedTo,
-                    //    Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.ToConnectorId, "node"))));
-
-                    //Graph.Assert(new Triple(Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.FromConnectorId, "node")), connectedTo,
-                    //    transportIn));
-                    //Graph.Assert(new Triple(Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.ToConnectorId, "node")), connectedTo,
-                    //    transportOut));
-
-
-
-
-                }
-                if (!string.IsNullOrEmpty(edge.InterfaceId))
-                {
-                    var interfaceNode = Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.InterfaceId));
-                    Graph.Assert(new Triple(interfaceNode, type, Graph.CreateUriNode(Resources.Interface)));
-
-                    switch (edge.FromNode.Aspect)
-                    {
-                        case Aspect.Function:
-                            Graph.Assert(new Triple(interfaceNode, hasParent, FunctionRoot));
-                            break;
-                        case Aspect.Location:
-                            Graph.Assert(new Triple(interfaceNode, hasParent, LocationRoot));
-                            break;
-                        case Aspect.Product:
-                            Graph.Assert(new Triple(interfaceNode, hasParent, ProductRoot));
-                            break;
-                    }
-                    Graph.Assert(new Triple(interfaceNode, label, Graph.CreateLiteralNode(edge.Interface.Name)));
-
-                }
+                //}
             }
         }
 
