@@ -4,12 +4,16 @@ import { RootState } from "../../redux/store";
 import { Size } from "../../compLibrary";
 import { MODULE_TYPE } from "../../models/project";
 import { IsBlockView } from "../../components/flow/block/helpers";
-import { Node, Project } from "../../models";
+import { Project } from "../../models";
 import { DragResizePanel } from "./helpers";
 import { AnimatedInspector } from "./styled";
 import { InspectorHeader } from ".";
 import { GetSelectedNode, IsExplorer, IsLibrary } from "../../components/flow/helpers";
 
+/**
+ * Component for the Inspector Module that shows the data for each object in Flow.
+ * @returns a module with multiple tabs for different operations.
+ */
 const InspectorModule = () => {
   const dispatch = useDispatch();
   const type = MODULE_TYPE.INSPECTOR;
@@ -19,25 +23,18 @@ const InspectorModule = () => {
   const libraryOpen = useSelector<RootState>((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible) as boolean;
   const explorerOpen = useSelector<RootState>((s) => s.modules.types.find((x) => IsExplorer(x.type)).visible) as boolean;
   let height = (useSelector<RootState>((s) => s.inspectorHeight.height) as number) ?? Size.ModuleOpen;
-
   if (!inspectorOpen) height = Size.ModuleClosed;
 
   const stop = inspectorOpen ? height : Size.ModuleClosed;
   const start = inspectorOpen ? Size.ModuleClosed : Size.ModuleOpen;
-  console.log("start: ", start, "stop: ", stop, inspectorOpen);
 
   const nodes = project?.nodes ?? [];
   const edges = project?.edges ?? [];
-
-  let edge = edges.find((x) => x.isSelected);
-  let node: Node;
-
-  if (IsBlockView()) {
-    node = nodes.find((x) => x.isBlockSelected);
-  } else node = GetSelectedNode();
+  const edge = edges.find((x) => x.isSelected);
+  const node = IsBlockView() ? nodes?.find((x) => x.isBlockSelected) : GetSelectedNode();
 
   useEffect(() => {
-    DragResizePanel(inspectorOpen);
+    if (inspectorOpen) DragResizePanel();
   }, [inspectorOpen]);
 
   return (
@@ -48,18 +45,10 @@ const InspectorModule = () => {
       isExplorerOpen={explorerOpen}
       start={start}
       stop={stop}
-      run={true}
+      run={animate}
       height={height}
     >
-      <InspectorHeader
-        project={project}
-        node={node}
-        edge={edge}
-        dispatch={dispatch}
-        open={inspectorOpen}
-        type={type}
-        height={height}
-      />
+      <InspectorHeader project={project} node={node} edge={edge} dispatch={dispatch} open={inspectorOpen} type={type} />
     </AnimatedInspector>
   );
 };

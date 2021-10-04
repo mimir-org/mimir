@@ -11,7 +11,7 @@ interface Props {
 }
 
 const Animation = ({ start, stop, run }: Props) => keyframes`
-/* ${!run ? (start = stop) : null} */
+${!run ? (start = stop) : null}
   from {
     height: ${start}px;
   }

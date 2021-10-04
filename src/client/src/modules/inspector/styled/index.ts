@@ -1,5 +1,4 @@
 export { default as InputWrapper } from "./InputWrapper";
-export { default as GoToAspectContainer } from "./GoToAspectContainer";
 export { default as ButtonWrapper } from "./ButtonWrapper";
 export { default as AnimatedInspector } from "./AnimatedInspector";
 export { default as InspectorBox } from "./InspectorBox";

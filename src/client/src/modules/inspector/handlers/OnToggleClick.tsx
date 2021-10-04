@@ -8,9 +8,8 @@ import { changeInspectorHeight } from "../redux/height/actions";
  * @param dispatch
  * @param type - Module type
  * @param open
- * @param height
  */
-const OnToggleClick = (dispatch: any, type: string, open: boolean, height: number) => {
+const OnToggleClick = (dispatch: any, type: string, open: boolean) => {
   dispatch(setModuleVisibility(type, !open, true));
   if (open) {
     dispatch(changeInspectorHeight(Size.ModuleClosed));

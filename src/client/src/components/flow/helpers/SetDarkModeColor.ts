@@ -1,18 +1,18 @@
 import { Color } from "../../../compLibrary";
 
-const SetDarkModeColor = (active: boolean) => {
+const SetDarkModeColor = (dark: boolean) => {
   let mainColor: string;
   let moduleColor: string;
 
   const root = document.getElementById("root");
+  const menuBar = document.getElementById("MenuBar");
   const explorer = document.getElementById("ExplorerModule");
   const library = document.getElementById("LibraryModule");
   const legend = document.getElementById("LegendModule");
   const inspector = document.getElementById("InspectorModule");
   const inspectorBody = document.getElementById("InspectorBody");
-  const menuBar = document.getElementById("MenuBar");
 
-  if (active) {
+  if (dark) {
     mainColor = Color.DarkModeMain;
     moduleColor = Color.DarkModeModule;
   } else {
@@ -26,7 +26,7 @@ const SetDarkModeColor = (active: boolean) => {
   if (legend) legend.style.background = moduleColor;
   if (inspector) inspector.style.background = moduleColor;
   if (inspectorBody) inspectorBody.style.background = moduleColor;
-  if (menuBar) menuBar.style.background = moduleColor;
+  if (menuBar) menuBar.style.background = mainColor;
 };
 
 export default SetDarkModeColor;

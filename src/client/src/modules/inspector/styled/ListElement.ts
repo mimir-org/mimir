@@ -6,7 +6,7 @@ const ListElement = styled.div`
   min-width: 250px;
   font-size: ${FontSize.Medium};
   display: flex;
-  background-color: ${(props) => props.color};
+  background-color: ${(props: { color: string }) => props.color};
   border-bottom: 1px solid ${Color.DarkGrey};
 
   .icon {

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Color, Size } from "../..";
 
 const MenuBar = styled.div`
-  background-color: ${Color.White} !important;
+  background-color: ${Color.White};
   color: ${Color.Black};
   height: 40px;
   width: auto;
@@ -10,12 +10,14 @@ const MenuBar = styled.div`
   position: absolute;
   top: 56px;
   display: inline;
-  right: ${(props) =>
-    props.isLibraryOpen ? Size.ModuleOpen + Size.Margin : Size.ModuleClosed + Size.Margin}px;
-  left: ${(props) =>
-    props.isExplorerOpen ? Size.ModuleOpen + Size.Margin : Size.ModuleClosed + Size.Margin}px;
   transition: left 0.3s ease-in-out, right 0.3s ease-in-out;
   z-index: 5;
+
+  right: ${(props: { isLibraryOpen: boolean }) =>
+    props.isLibraryOpen ? Size.ModuleOpen + Size.Margin : Size.ModuleClosed + Size.Margin}px;
+
+  left: ${(props: { isExplorerOpen: boolean }) =>
+    props.isExplorerOpen ? Size.ModuleOpen + Size.Margin : Size.ModuleClosed + Size.Margin}px;
 `;
 
 export default MenuBar;

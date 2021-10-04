@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const ButtonWrapper = styled.div`
-  visibility: ${(props) => !props.visible && "hidden"};
+  visibility: ${(props: { visible: boolean }) => !props.visible && "hidden"};
   display: flex;
   margin-left: auto;
   justify-content: space-evenly;

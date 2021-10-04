@@ -14,8 +14,11 @@ const InspectorBox = styled.div`
   overflow-x: auto;
   overflow-y: hidden;
   transition: left 0.3s ease-in-out, right 0.3s ease-in-out;
-  right: ${(props) => (props.isLibraryOpen ? Size.ModuleOpen + Size.Margin : Size.ModuleClosed + Size.Margin)}px;
-  left: ${(props) => (props.isExplorerOpen ? Size.ModuleOpen + Size.Margin : Size.ModuleClosed + Size.Margin)}px;
+
+  right: ${(props: { isLibraryOpen: boolean }) =>
+    props.isLibraryOpen ? Size.ModuleOpen + Size.Margin : Size.ModuleClosed + Size.Margin}px;
+  left: ${(props: { isExplorerOpen: boolean }) =>
+    props.isExplorerOpen ? Size.ModuleOpen + Size.Margin : Size.ModuleClosed + Size.Margin}px;
 `;
 
 export default InspectorBox;

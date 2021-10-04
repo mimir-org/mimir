@@ -1,4 +1,4 @@
-import { ButtonContainer } from "./";
+import { ButtonContainer } from "./styled";
 import { GetButtonText, GetButtonIcon } from "./helpers";
 
 interface Props {
