@@ -48,9 +48,7 @@ const TextResources = {
   Inspector_Parameters: "Parameters",
   Inspector_Relations: "Relations",
   Inspector_Terminals: "Terminals",
-  Inspector_Inhereted: "Inhereted Requirements",
-  Inspector_Comments: "Comments",
-  Inspector_Changelog: "Changelog",
+  Inspector_SimpleTypes: "Simple Types",
 
   Inspector_Relations_Name: "Relation name",
   Inspector_Relations_Updated_By: "Updated by",
