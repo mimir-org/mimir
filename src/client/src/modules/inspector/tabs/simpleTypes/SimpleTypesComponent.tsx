@@ -1,4 +1,5 @@
 import { Node } from "../../../../models";
+import { SimpleTypesContent } from "./";
 
 interface Props {
   node: Node;
@@ -8,12 +9,6 @@ interface Props {
  * Component for the Simple Types Inspector tab for the Product Aspect.
  * @param param0
  */
-const SimpleTypesComponent = ({ node }: Props) => {
-  return (
-    <>
-      <div>{node.name}</div>
-    </>
-  );
-};
+const SimpleTypesComponent = ({ node }: Props) => <SimpleTypesContent element={node} elementIsLocked={node.isLocked} />;
 
 export default SimpleTypesComponent;
