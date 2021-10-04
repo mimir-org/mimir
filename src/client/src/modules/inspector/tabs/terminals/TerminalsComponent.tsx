@@ -2,7 +2,7 @@ import { Connector, Node, TerminalType } from "../../../../models";
 import { IsTransportTerminal } from "../../../../components/flow/helpers";
 import TerminalsSelector from "./TerminalsSelector";
 import { useState } from "react";
-import ParametersContent from "../parameters/ParametersContent";
+import { ParametersContent } from "../parameters";
 import { TerminalsWrapper } from "./styled/TerminalsWrapper";
 import { TerminalsParametersWrapper } from "./styled/TerminalsParametersWrapper";
 import { useSelector } from "react-redux";
@@ -14,8 +14,7 @@ interface Props {
 }
 
 const TerminalsComponent = ({ node }: Props) => {
-  const categoryTypes =
-    (useSelector<RootState>((state) => state.typeEditor.terminals) as TerminalType[]) ?? [];
+  const categoryTypes = (useSelector<RootState>((state) => state.typeEditor.terminals) as TerminalType[]) ?? [];
 
   const terminals = node.connectors.filter((conn) => IsTransportTerminal(conn));
   const terminalCategories = GetFilteredTerminalsList(categoryTypes);

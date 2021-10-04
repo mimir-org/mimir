@@ -12,6 +12,7 @@ export const ATTRIBUTE_TAB = {
   PARAMETERS: "Parameters",
   TERMINALS: "Terminals",
   RELATIONS: "Relations",
+  SIMPLE_TYPES: "SimpleTypes",
 };
 
 export type EdgeType = keyof typeof EDGE_TYPE;
