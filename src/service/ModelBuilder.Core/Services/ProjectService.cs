@@ -96,7 +96,15 @@ namespace Mb.Core.Services
                 .Include("Edges.ToConnector")
                 .Include("Edges.Transport")
                 .Include("Edges.Transport.Attributes")
+                .Include("Edges.Transport.InputTerminal")
+                .Include("Edges.Transport.InputTerminal.Attributes")
+                .Include("Edges.Transport.OutputTerminal")
+                .Include("Edges.Transport.OutputTerminal.Attributes")
                 .Include("Edges.Interface")
+                .Include("Edges.Interface.InputTerminal")
+                .Include("Edges.Interface.InputTerminal.Attributes")
+                .Include("Edges.Interface.OutputTerminal")
+                .Include("Edges.Interface.OutputTerminal.Attributes")
                 .Include(x => x.Nodes)
                 .Include("Nodes.Attributes")
                 .Include("Nodes.Connectors")
@@ -265,7 +273,15 @@ namespace Mb.Core.Services
                 .Include(x => x.Edges)
                 .Include("Edges.Transport")
                 .Include("Edges.Transport.Attributes")
+                .Include("Edges.Transport.InputTerminal")
+                .Include("Edges.Transport.InputTerminal.Attributes")
+                .Include("Edges.Transport.OutputTerminal")
+                .Include("Edges.Transport.OutputTerminal.Attributes")
                 .Include("Edges.Interface")
+                .Include("Edges.Interface.InputTerminal")
+                .Include("Edges.Interface.InputTerminal.Attributes")
+                .Include("Edges.Interface.OutputTerminal")
+                .Include("Edges.Interface.OutputTerminal.Attributes")
                 .Include(x => x.Nodes)
                 .Include("Nodes.Attributes")
                 .Include("Nodes.Connectors")
@@ -536,11 +552,12 @@ namespace Mb.Core.Services
             var data = await parser.SerializeProject(project);
             var projectString = System.Text.Encoding.UTF8.GetString(data);
 
-            var export = new ExportData
+            var export = new ImfData
             {
                 Id = project.Id,
                 Version = project.Version,
                 Environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"),
+                Parser = package.Parser,
                 Document = projectString
             };
 
@@ -845,18 +862,6 @@ namespace Mb.Core.Services
                         edge.FromNodeId = newNodeId;
                     if (edge.ToNodeId == node.Id)
                         edge.ToNodeId = newNodeId;
-
-                    if (edge.Transport != null)
-                    {
-                        if (edge.Transport.TerminalId == connector.Id)
-                            edge.Transport.TerminalId = newConnectorId;
-                    }
-
-                    if (edge.Interface != null)
-                    {
-                        if (edge.Interface.TerminalId == connector.Id)
-                            edge.Interface.TerminalId = newConnectorId;
-                    }
                 }
 
                 foreach (var attribute in connector.Attributes)

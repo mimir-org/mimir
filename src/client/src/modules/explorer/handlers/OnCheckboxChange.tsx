@@ -6,6 +6,7 @@ import { IsFunction } from "../../../components/flow/helpers/common";
 import {
   setActiveNode,
   setActiveBlockNode,
+  setActiveEdge,
 } from "../../../redux/store/project/actions";
 
 const OnCheckboxChange = (dispatch: any, splitView: boolean, node: Node) => {
@@ -17,6 +18,7 @@ const OnCheckboxChange = (dispatch: any, splitView: boolean, node: Node) => {
       ? dispatch(setActiveNode(node.id, true))
       : dispatch(setSplitNode(node));
   } else {
+    dispatch(setActiveEdge(null, false));
     dispatch(setActiveBlockNode(node.id));
     dispatch(setActiveNode(node.id, true));
   }

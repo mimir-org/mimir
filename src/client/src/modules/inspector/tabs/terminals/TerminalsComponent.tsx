@@ -1,87 +1,54 @@
-import { ActiveTerminalTypeList, AttributesContainer } from "../../helpers";
-import { Attribute, ConnectorType, Node } from "../../../../models";
+import { Connector, Node, TerminalType } from "../../../../models";
 import { IsTransportTerminal } from "../../../../components/flow/helpers/common";
-import { TextResources } from "../../../../assets/text";
-import { ListWrapper, TerminalsWrapper } from "../../styled";
+import TerminalsSelector from "./TerminalsSelector";
+import { useState } from "react";
+import ParametersContent from "../parameters/ParametersContent";
+import { TerminalsWrapper } from "./styled/TerminalsWrapper";
+import { TerminalsParametersWrapper } from "./styled/TerminalsParametersWrapper";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../redux/store";
+import { GetFilteredTerminalsList } from "../../../../components/modules/typeEditorModule/helpers";
 
 interface Props {
   node: Node;
 }
 
-interface ConnectorAttribute {
-  id: string;
-  name: string;
-  attributes: Attribute[];
-}
-
 const TerminalsComponent = ({ node }: Props) => {
-  let activeConnectors = [];
-  let connectorAttributes: ConnectorAttribute[] = [];
+  const categoryTypes =
+    (useSelector<RootState>(
+      (state) => state.typeEditor.terminals
+    ) as TerminalType[]) ?? [];
 
-  if (node) {
-    const tempAttributes: ConnectorAttribute[] = [];
+  const terminals = node.connectors.filter((conn) => IsTransportTerminal(conn));
 
-    node.connectors?.forEach((conn) => {
-      if (IsTransportTerminal(conn)) {
-        const data = {
-          id: conn.id,
-          name: conn.name + " " + ConnectorType[conn.type],
-          attributes: conn.attributes,
-        } as ConnectorAttribute;
-        tempAttributes.push(data);
-      }
-    });
-    activeConnectors = node.connectors?.filter((conn) => conn.visible);
-    connectorAttributes = tempAttributes;
-  }
+  const terminalCategories = GetFilteredTerminalsList(categoryTypes);
+
+  const [selectedTerminalId, setSelectedTerminalId] = useState<string>(null);
+
+  const onSelectTerminal = (item: Connector) => setSelectedTerminalId(item.id);
+
+  const selectedTerminal = terminals.find(
+    (terminal) => terminal.id === selectedTerminalId
+  );
 
   return (
-    <ListWrapper>
-      <TerminalsWrapper>
-        <ActiveTerminalTypeList
-          terminals={node?.connectors?.filter((x) => x.terminalCategoryId)}
-          title={TextResources.Inspector_Relations_All_Terminal_Types}
-          onElementClick={() => null}
-        />
-        <ActiveTerminalTypeList
-          terminals={activeConnectors}
-          title={TextResources.Inspector_Relations_Active_Terminal_Types}
-          onElementClick={() => null}
-        />
-      </TerminalsWrapper>
-      <AttributesContainer
-        attributes={connectorAttributes}
-        title={TextResources.Inspector_Relations_Connector_Attributes}
+    <TerminalsWrapper>
+      <TerminalsSelector
+        terminals={terminals}
+        terminalCategories={terminalCategories}
+        selectedTerminalId={selectedTerminalId}
+        onSelectTerminal={onSelectTerminal}
       />
-      {
-        //TODO show attributes and other fields from Arjun's design on Figma
-        /* <AttributesWrapper>
-        <ConnectorAttributesList
-        connectorAttrs={connectorAttributes}
-        handleChange={handleOnConnectorChange}
-        ></ConnectorAttributesList>
-      </AttributesWrapper> */
-      }
-    </ListWrapper>
+      {selectedTerminal && (
+        <TerminalsParametersWrapper>
+          <ParametersContent
+            element={selectedTerminal}
+            elementIsLocked={node.isLocked}
+          />
+        </TerminalsParametersWrapper>
+      )}
+    </TerminalsWrapper>
   );
 };
 
 export default TerminalsComponent;
-
-// Migth be used later:
-// import { ConnectorAttributesList } from "./helpers";
-// import { changeConnectorAttributeValue } from "../../../redux/store/project/actions";
-
-/*
-  Might be used later:
-  const handleOnConnectorChange = (
-    id: string,
-    value: string,
-    unit: any,
-    connectorId: string
-  ) => {
-    dispatch(
-      changeConnectorAttributeValue(id, value, unit, node.id, connectorId)
-    );
-  };
-  */

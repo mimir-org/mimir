@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import { Color } from "../../../../compLibrary";
+import { Color, Size } from "../../../../compLibrary";
 
 const TypeEditorWrapper = styled.div`
   position: fixed;
-  top: 5.3%;
-  left: 2.3%;
-  width: 95.2%;
-  height: 90.5%;
+  top: ${Size.TopMenu_Height}px;
+  left: calc(1.6px + ${Size.ModuleClosed}px);
+  width: 95%;
+  height: calc(100% - ${Size.TopMenu_Height}px - ${Size.ModuleClosed}px);
   background: ${Color.White};
   border: 2px solid ${Color.BlueMagenta};
   border-radius: 5px;

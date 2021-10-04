@@ -7,10 +7,10 @@ const DropdownMenuList = styled.div`
   border-width: 1px;
   border-style: solid;
   border-color: ${Color.Black};
-  border-radius: 5px;
+  border-radius: ${(props: { borderRadius: number }) => props.borderRadius};
   background-color: inherit;
   position: absolute;
-  top: 38px;
+  top: 25px;
   left: 0;
   z-index: 1;
   width: 100%;

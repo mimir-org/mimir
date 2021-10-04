@@ -12,7 +12,7 @@ const Input = styled.input`
   margin-right: ${(props) => props.inputType === "tech" && "4px"};
   background-color: ${(props: { readOnly: boolean }) =>
     props.readOnly ? "#f2f2f2" : "#fff"};
-  font-size: 13px;
+  font-size: ${(props) => GetFontSize(props.fontSize)}px;
 
   @media (min-width: 3000px) {
     height: 40px;
@@ -20,4 +20,5 @@ const Input = styled.input`
   }
 `;
 
+const GetFontSize = (fontSize: number) => fontSize ?? 13;
 export default Input;

@@ -19,12 +19,14 @@ namespace Mb.Core.Services
         private readonly IContractorRepository _contractorRepository;
         private readonly IBlobDataRepository _blobDataRepository;
         private readonly IMapper _mapper;
+        private readonly IAttributeRepository _attributeRepository;
 
-        public CommonService(IContractorRepository contractorRepository, IBlobDataRepository blobDataRepository, IMapper mapper)
+        public CommonService(IContractorRepository contractorRepository, IBlobDataRepository blobDataRepository, IMapper mapper, IAttributeRepository attributeRepository)
         {
             _contractorRepository = contractorRepository;
             _blobDataRepository = blobDataRepository;
             _mapper = mapper;
+            _attributeRepository = attributeRepository;
         }
 
         public IEnumerable<Contractor> GetAllContractors()
@@ -113,6 +115,43 @@ namespace Mb.Core.Services
             });
 
             return dms;
+        }
+
+        /// <summary>
+        /// Get all combined attributes
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<CombinedAttributeFilter> GetAllCombinedAttributeFilters()
+        {
+            var allFilteredAttributes = _attributeRepository.GetAll()
+                .Include(x => x.Qualifier)
+                .Include(x => x.Source)
+                .Include(x => x.Condition)
+                .Select(x => new {x.Key, x.Qualifier, x.Source, x.Condition}).Distinct()
+                .ToList();
+
+            var groups = allFilteredAttributes.GroupBy(x => x.Key).Select(x => x.ToList());
+            foreach (var group in groups)
+            {
+                if(!group.Any())
+                    continue;
+
+                var combinedAttributes = group.Select(x => new CombinedAttribute
+                {
+                    Condition = x.Condition.Name,
+                    ConditionId = x.Condition.Id,
+                    Qualifier = x.Qualifier.Name,
+                    QualifierId = x.Qualifier.Id,
+                    Source = x.Source.Name,
+                    SourceId = x.Source.Id
+                }).ToList();
+
+                yield return new CombinedAttributeFilter
+                {
+                    Name = group[0].Key,
+                    CombinedAttributes = combinedAttributes
+                };
+            }
         }
     }
 }

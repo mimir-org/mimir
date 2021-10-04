@@ -1,3 +1,3 @@
-export { default as OnConnectMenuClick } from "./OnConnectMenuClick";
-export { default as OnSelectAllClick } from "./OnSelectAllClick";
-export { default as OnClearAllClick } from "./OnClearAllClick";
+export { default as OnConnectMenu } from "./OnConnectMenuClick";
+export { default as OnSelectAll } from "./OnSelectAllClick";
+export { default as OnClearAll } from "./OnClearAllClick";

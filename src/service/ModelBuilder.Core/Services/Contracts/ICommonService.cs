@@ -12,5 +12,6 @@ namespace Mb.Core.Services.Contracts
         Task<IEnumerable<BlobData>> CreateBlobData(IEnumerable<BlobDataAm> blobDataList);
         Task<BlobData> UpdateBlobData(BlobDataAm blobData);
         IEnumerable<BlobDataAm> GetBlobData();
+        IEnumerable<CombinedAttributeFilter> GetAllCombinedAttributeFilters();
     }
 }

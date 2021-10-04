@@ -21,6 +21,10 @@ const MenuHeader = styled.div`
     margin-right: 4px;
     padding: 5px;
   }
+  .searchText {
+    opacity: 0.5;
+    font-style: italic;
+  }
 `;
 
 export default MenuHeader;

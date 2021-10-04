@@ -1,3 +1,4 @@
+import { CombinedAttributeFilter } from "../../../models";
 import {
   CommonActionTypes,
   CommonState,
@@ -6,11 +7,14 @@ import {
   DELETE_COMMON_ERROR,
   FETCHING_STATUSES,
   FETCHING_STATUSES_SUCCESS_OR_ERROR,
+  FETCHING_COMBINED_ATTRIBUTE_FILTERS,
+  FETCHING_COMBINED_ATTRIBUTE_FILTERS_SUCCESS_OR_ERROR
 } from "./types";
 
 const initialState: CommonState = {
   fetching: false,
   contractors: [],
+  filters: [] as CombinedAttributeFilter[],
   statuses: [],
   apiError: [],
 };
@@ -62,6 +66,26 @@ export function commonReducer(state = initialState, action: CommonActionTypes) {
         ...state,
         apiError: state.apiError
           ? state.apiError.filter((elem) => elem.key !== action.payload.key)
+          : state.apiError,
+      };
+
+    case FETCHING_COMBINED_ATTRIBUTE_FILTERS:
+      return {
+        ...state,
+        fetching: true,
+        filters: [] as CombinedAttributeFilter[],
+        apiError: state.apiError
+          ? state.apiError.filter((elem) => elem.key !== FETCHING_COMBINED_ATTRIBUTE_FILTERS)
+          : state.apiError,
+      };
+
+    case FETCHING_COMBINED_ATTRIBUTE_FILTERS_SUCCESS_OR_ERROR:
+      return {
+        ...state,
+        fetching: false,
+        filters: action.payload.filters,
+        apiError: action.payload.apiError
+          ? [...state.apiError, action.payload.apiError]
           : state.apiError,
       };
     default:

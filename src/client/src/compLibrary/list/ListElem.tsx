@@ -8,6 +8,7 @@ const ListElem = styled.div`
   padding: 2px 5px 2px 0px;
 
   img {
+    display: none;
     margin-left: auto;
     opacity: 0.4;
   }
