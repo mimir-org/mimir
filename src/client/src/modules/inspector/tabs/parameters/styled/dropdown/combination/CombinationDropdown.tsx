@@ -74,7 +74,7 @@ const EntityDropdown = ({ items, selectedItems, keyProp, onChange, color }: Prop
       </div>
       {isListOpen && (
         <MenuList>
-          {renderSelectAll()}
+          {items.length > 1 && renderSelectAll()}
           {items?.map((item) => renderListItem(item))}
         </MenuList>
       )}
