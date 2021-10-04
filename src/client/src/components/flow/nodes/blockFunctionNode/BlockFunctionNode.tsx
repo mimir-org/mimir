@@ -1,3 +1,5 @@
+import * as Actions from "../../block/connectView/redux/actions";
+import * as Helpers from "../../block/connectView/helpers";
 import { OnHover, OnMouseOut, OnBlur } from "./handlers";
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
@@ -14,18 +16,6 @@ import { changeActiveConnector, removeEdge } from "../../../../redux/store/proje
 import { SetTerminalOrder, FilterTerminals, FindAllEdges } from "../../block/helpers";
 import { Symbol } from "../../../../compLibrary/symbol";
 import { BlockNodeNameBox } from "../../block/styled";
-import {
-  GetConnectChildren,
-  IsMainConnectNode,
-  SetMainConnectNodeColor,
-  ResizeMainConnectNode,
-} from "../../block/connectView/helpers";
-import {
-  addConnectNode,
-  addMainNode,
-  removeConnectNode,
-  removeMainNode,
-} from "../../../../redux/store/connectView/actions";
 
 /**
  * Component for a Function Node in BlockView.
@@ -45,7 +35,7 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const splitView = useSelector<RootState>((state) => state.splitView.visible) as boolean;
   const mainConnectNodes = useSelector<RootState>((state) => state.connectView?.mainNodes) as Node[];
 
-  const connectChildren = GetConnectChildren(data, nodes, edges);
+  const connectChildren = Helpers.GetConnectChildren(data, nodes, edges);
   const sortedTerminals = FilterTerminals(data, splitView);
 
   const mainConnectNode = mainConnectNodes.find((x) => x.id === data.id);
@@ -67,20 +57,20 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   // ConnectView click
   const onConnectNodeClick = (node: Node) => {
     if (!IsConnectNodeChecked(node, connectNodes)) {
-      if (!IsMainConnectNode(data.id)) dispatch(addMainNode(data));
-      dispatch(addConnectNode(data, node));
+      if (!Helpers.IsMainConnectNode(data.id)) dispatch(Actions.addMainNode(data));
+      dispatch(Actions.addConnectNode(data, node));
     } else {
       if (connectNodes.length === 1) {
         showConnectMenu(false);
-        dispatch(removeMainNode(data));
+        dispatch(Actions.removeMainNode(data));
       }
-      dispatch(removeConnectNode(data, node));
+      dispatch(Actions.removeConnectNode(data, node));
     }
   };
 
   useEffect(() => {
-    ResizeMainConnectNode(connectNodes?.length, mainConnectNode?.id, data);
-    SetMainConnectNodeColor(mainConnectNode?.id, data.id, connectNodes);
+    Helpers.ResizeMainConnectNode(connectNodes?.length, mainConnectNode?.id, data);
+    Helpers.SetMainConnectNodeColor(mainConnectNode?.id, data.id, connectNodes);
   }, [mainConnectNode, data, connectNodes]);
 
   // Force z-index to display edges in ConnectView

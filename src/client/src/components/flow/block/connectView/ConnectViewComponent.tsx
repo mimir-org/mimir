@@ -2,7 +2,7 @@ import * as Click from "./handlers";
 import { Node } from "../../../../models";
 import { ConnectMenuIcon } from "../../../../assets/icons/blockView";
 import { TextResources } from "../../../../assets/text";
-import { CalculateMenuPos } from "./helpers";
+import { CalculateMenuPos } from "./helpers/position";
 import { ConnectViewBox, Menu, Element, Footer } from "./styled";
 
 interface Props {

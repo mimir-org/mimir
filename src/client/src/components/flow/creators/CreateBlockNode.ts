@@ -2,7 +2,7 @@ import { Node } from "../../../models";
 import { FlowElement } from "react-flow-renderer";
 import { SetBlockNodePosition, IsSplitView } from "../block/helpers";
 import { IsLocation } from "../helpers";
-import { SetConnectNodePosition } from "../block/connectView/helpers";
+import { SetConnectNodePosition } from "../block/connectView/helpers/position";
 import { TextResources } from "../../../assets/text";
 
 /**
@@ -20,9 +20,8 @@ const CreateBlockNode = (node: Node, connectNode: Node, nodes: Node[]) => {
 
   // Force node to fit Block
   let position = SetBlockNodePosition(node, IsSplitView());
-  if (connectNodes.some((x) => x.id === node.id)) {
+  if (connectNodes.some((x) => x.id === node.id))
     position = SetConnectNodePosition(node, connectNode.id, connectNodes, nodes);
-  }
 
   return {
     id: node.id,

@@ -22,17 +22,14 @@ import { LegendIcon, LibraryIcon } from "../../assets/icons/common/modules";
  * @returns a module with a drop-down of types and a search input.
  */
 const LibraryModule = () => {
+  const dispatch = useDispatch();
   const lib = MODULE_TYPE.LIBRARY;
   const legend = MODULE_TYPE.LEGEND;
-  const dispatch = useDispatch();
+  const search = (text: string) => dispatch(searchLibrary(text));
 
   useEffect(() => {
     dispatch(searchLibrary(""));
   }, [dispatch]);
-
-  const search = (text: string) => {
-    dispatch(searchLibrary(text));
-  };
 
   const libState = useSelector<RootState>((s) => s.library) as LibraryState;
   const project = useSelector<RootState>((s) => s.projectState?.project) as Project;

@@ -1,7 +1,7 @@
 import { Node } from "../../../../../models";
 import { IsMainConnectNode } from "../../../block/connectView/helpers";
 import { Size } from "../../../../../compLibrary";
-import { addConnectNodes, addMainNode } from "../../../../../redux/store/connectView/actions";
+import { addConnectNodes, addMainNode } from "../redux/actions";
 
 const OnSelectAllClick = (dispatch: any, node: Node, connectNodes: Node[]) => {
   if (!IsMainConnectNode(node.id)) {

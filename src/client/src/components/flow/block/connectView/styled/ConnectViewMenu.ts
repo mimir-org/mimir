@@ -8,7 +8,7 @@ const ConnectViewMenu = styled.div`
   border-radius: 5px;
   width: max-content;
   position: absolute;
-  bottom: ${(props) => props.bottom}px;
+  bottom: ${(props: { bottom: number }) => props.bottom}px;
   z-index: 1;
 
   .button {

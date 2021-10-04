@@ -2,7 +2,7 @@ import { CHANGE_INSPECTOR_HEIGHT, InspectorHeightActionTypes } from "./types";
 import { Size } from "../../../../compLibrary";
 
 const initialState = {
-  height: Size.ModuleClosed,
+  height: Size.ModuleOpen,
 };
 
 export const inspectorHeightReducer = (state = initialState, action: InspectorHeightActionTypes) => {

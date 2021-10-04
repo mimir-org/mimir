@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { TypeEditorState } from "../../../redux/store/typeEditor/types";
-import { setModulesVisibility } from "../../../redux/store/modules/actions";
 import { TerminalTypeItem } from "../../../models";
 import { TypeEditorList, TypeEditorInputs, TypePreview } from "./";
 import { ListType } from "./TypeEditorList";
@@ -46,7 +45,6 @@ export const TypeEditorComponent = () => {
 
   useEffect(() => {
     dispatch(getInitialData());
-    dispatch(setModulesVisibility(false, true));
     dispatch(getBlobData());
   }, [dispatch]);
 

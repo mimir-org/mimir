@@ -19,10 +19,9 @@ import { SetTerminalOrder, FilterTerminals, FindNodeByDataId, FindAllEdges } fro
  * @returns a parent node of the Flow node type with Mimir styling and functionality.
  */
 const BlockParentNode: FC<NodeProps> = ({ data }) => {
+  const dispatch = useDispatch();
   const [inputTerminalMenu, showInputTerminalMenu] = useState(false);
   const [outputTerminalMenu, showOutputTerminalMenu] = useState(false);
-
-  const dispatch = useDispatch();
   const nodes = useSelector<RootState>((state) => state.projectState.project.nodes) as Node[];
   const edges = useSelector<RootState>((state) => state.projectState.project.edges) as Edge[];
   const isSplitView = useSelector<RootState>((state) => state.splitView.visible) as boolean;

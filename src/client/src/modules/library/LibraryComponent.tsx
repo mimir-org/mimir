@@ -20,9 +20,7 @@ const LibraryComponent = ({ categories, search }: Props) => {
   const type = MODULE_TYPE.LEGEND;
   const legendOpen = useSelector<RootState>((s) => s.modules.types.find((x) => x.type === type).visible) as boolean;
 
-  const onChange = (e: { target: { value: any } }) => {
-    search(e.target.value);
-  };
+  const onChange = (e: { target: { value: any } }) => search(e.target.value);
 
   const typeEditorOpen = () => {
     setSelectedElement("");

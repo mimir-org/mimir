@@ -36,7 +36,7 @@ export function moduleReducer(state = initialState, action: ModuleVisibilityActi
             ? {
                 ...x,
                 visible: action.payload.visible,
-                animate: action.payload.animate,
+                animate: true,
               }
             : { ...x }
         ),

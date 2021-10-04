@@ -26,13 +26,8 @@ const LibraryCategoryComponent = ({ category, selectedElement, setSelectedElemen
     event.dataTransfer.effectAllowed = "move";
   };
 
-  const setNewSelectedElement = (id: string) => {
-    setSelectedElement(id);
-  };
-
-  const setNewSelectedElementType = (libraryType: ObjectType) => {
-    setSelectedElementType(libraryType);
-  };
+  const setNewSelectedElement = (id: string) => setSelectedElement(id);
+  const setNewSelectedElementType = (libraryType: ObjectType) => setSelectedElementType(libraryType);
 
   return (
     <>

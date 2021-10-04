@@ -18,10 +18,13 @@ const InspectorModule = () => {
   const inspectorOpen = useSelector<RootState>((s) => s.modules.types.find((x) => x.type === type).visible) as boolean;
   const libraryOpen = useSelector<RootState>((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible) as boolean;
   const explorerOpen = useSelector<RootState>((s) => s.modules.types.find((x) => IsExplorer(x.type)).visible) as boolean;
-  const height = (useSelector<RootState>((s) => s.inspectorHeight.height) as number) ?? Size.ModuleOpen;
+  let height = (useSelector<RootState>((s) => s.inspectorHeight.height) as number) ?? Size.ModuleOpen;
+
+  if (!inspectorOpen) height = Size.ModuleClosed;
 
   const stop = inspectorOpen ? height : Size.ModuleClosed;
-  const start = inspectorOpen ? Size.ModuleClosed : height;
+  const start = inspectorOpen ? Size.ModuleClosed : Size.ModuleOpen;
+  console.log("start: ", start, "stop: ", stop, inspectorOpen);
 
   const nodes = project?.nodes ?? [];
   const edges = project?.edges ?? [];
@@ -34,7 +37,7 @@ const InspectorModule = () => {
   } else node = GetSelectedNode();
 
   useEffect(() => {
-    if (inspectorOpen) DragResizePanel(inspectorOpen);
+    DragResizePanel(inspectorOpen);
   }, [inspectorOpen]);
 
   return (
@@ -45,7 +48,7 @@ const InspectorModule = () => {
       isExplorerOpen={explorerOpen}
       start={start}
       stop={stop}
-      run={animate}
+      run={true}
       height={height}
     >
       <InspectorHeader

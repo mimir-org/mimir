@@ -12,7 +12,7 @@ import { menuReducer } from "./projectMenu/reducers";
 import { commonReducer } from "./common/reducers";
 import { flowReducer } from "./flow/reducers";
 import { splitViewReducer } from "./splitView/reducers";
-import { connectViewReducer } from "./connectView/reducers";
+import { connectViewReducer } from "../../components/flow/block/connectView/redux/reducers";
 import { darkModeReducer } from "./darkMode/reducers";
 import { parametersReducer } from "../../modules/inspector/tabs/parameters/redux/reducers";
 import { sagas } from "../sagas";

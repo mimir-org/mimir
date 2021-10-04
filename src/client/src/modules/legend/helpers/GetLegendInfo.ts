@@ -33,7 +33,7 @@ const GetLegendInfo = (conn: Connector, node: Node) => {
 
   if (IsFulfilledByTerminal(conn)) {
     name = conn.name;
-    color = GetAspectPartColor(node.aspect); // TODO:fix
+    color = GetAspectPartColor(node.aspect);
     return [name, color];
   }
 };

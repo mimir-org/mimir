@@ -1,5 +1,5 @@
 import * as Types from "./types";
-import { Node } from "../../../models";
+import { Node } from "../../../../../models";
 
 export function addMainNode(node: Node) {
   return {

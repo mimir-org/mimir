@@ -1,5 +1,5 @@
-import { Node } from "../../../../../models";
-import { Size } from "../../../../../compLibrary";
+import { Node } from "../../../../../../models";
+import { Size } from "../../../../../../compLibrary";
 import { CalculateXPosition, CalculateYPosition } from ".";
 
 /**

@@ -1,5 +1,5 @@
-import { Size } from "../../../../../compLibrary";
-import { Node } from "../../../../../models";
+import { Size } from "../../../../../../compLibrary";
+import { Node } from "../../../../../../models";
 
 /**
  * Function to calculate the X position for a child node in ConnectView.
