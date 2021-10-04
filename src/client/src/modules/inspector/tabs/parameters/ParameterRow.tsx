@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { CloseParameterFilterIconComponent } from "../../../../assets/icons/common";
 import { CombinedAttribute, Connector, Node } from "../../../../models";
-import { GetParametersColor, DoesCombinationMatchAttribute } from "./helpers";
+import { DoesCombinationMatchAttribute } from "./helpers";
 import Parameter from "./Parameter";
 import { Body, Entity, Box } from "./styled";
 import { CombinationDropdown } from "./styled/dropdown/combination";
@@ -15,29 +15,29 @@ import {
 type Element = Node | Connector;
 
 interface Props {
-  index: number;
   element: Element;
   elementIsLocked: boolean;
   combinations: CombinedAttribute[];
   selectedCombinations: CombinedAttribute[];
   filterName: string;
+  headerColor: string;
+  bodyColor: string;
   dispatch: Dispatch<any>;
 }
 
 function ParameterRow({
-  index,
   element,
   elementIsLocked,
   combinations,
   selectedCombinations,
   filterName,
+  headerColor,
+  bodyColor,
   dispatch,
 }: Props) {
   const attributes = element.attributes;
 
   const isElementNode = (element as Node).connectors !== undefined;
-
-  const [headerColor, bodyColor] = GetParametersColor(index);
 
   return (
     <Body>

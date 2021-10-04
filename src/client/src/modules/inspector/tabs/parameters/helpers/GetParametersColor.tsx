@@ -1,8 +1,6 @@
 import { Color } from "../../../../../compLibrary";
 
 const GetParametersColor = (index: number): [string, string] => {
-  console.log(index % 6);
-
   switch (index % 6) {
     case 0:
       return [Color.ParamsCyan, Color.ParamsLightCyan];
