@@ -1,0 +1,18 @@
+﻿@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix mimir: <http://equinor.com/mimir#>.
+@prefix eq: <http://equinor.com/#>.
+@prefix imf: <http://example.com/imf#>.
+@prefix rds: <http://example.com/rds>.
+@prefix cw: <http://example.com/rds/cw#>.
+@prefix og1: <http://example.com/rds/og1#>.
+@prefix og2: <http://example.com/rds/og2#>.
+@prefix og3: <http://example.com/rds/og3#>.
+@prefix ps: <http://example.com/rds/ps#>.
+@prefix xml: <http://www.w3.org/XML/1998/namespace>.
+@base <http://equinor.com/ontologies>.
+
+<http://equinor.com/ontologies> rdf:type owl:Ontology ;
+                          owl:versionIRI <http://equinor.com/ontologies/202110> .

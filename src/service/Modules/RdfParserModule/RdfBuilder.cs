@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 using Mb.Models.Data;
-using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
 using RdfParserModule.Properties;
 using VDS.RDF;
 using VDS.RDF.Ontology;
+using VDS.RDF.Parsing;
 using VDS.RDF.Writing;
-using Attribute = Mb.Models.Data.Attribute;
 
 
 namespace RdfParserModule
@@ -46,6 +45,29 @@ namespace RdfParserModule
 
             return namespaces;
         }
+        private IGraph BaseGraph()
+        {
+            // IMF Ontology: https://raw.githubusercontent.com/Sirius-sfi/aas-imf/main/imf-ontology/imf-202109.owl
+            var ontology = new OntologyGraph();
+
+            // Loads base ontology directly from file. Maps all the namespaces automatically
+            ontology.LoadFromFile("C:\\Git\\ti-spine-modelbuilder\\src\\service\\Modules\\RdfParserModule\\ontologies.owl", new TurtleParser());
+
+
+            //IDictionary<string, string> namespaces = GetNamespaces();
+
+            //foreach(KeyValuePair<string, string> ns in namespaces)
+            //{
+            //    var prefix = ns.Key;
+            //    var uri = ns.Value;
+
+            //    ontology.NamespaceMap.AddNamespace(prefix, new Uri(uri));
+            //}
+
+
+            return ontology;
+
+        }
 
         private string IDtoIRI(string prefix, string id, string qualifier = "")
         {
@@ -61,24 +83,7 @@ namespace RdfParserModule
             }
         }
 
-        private IGraph BaseGraph()
-        {
-            // IMF Ontology: https://raw.githubusercontent.com/Sirius-sfi/aas-imf/main/imf-ontology/imf-202109.owl
-            OntologyGraph ontology = new OntologyGraph();
-            IDictionary<string, string> namespaces = GetNamespaces();
 
-            foreach(KeyValuePair<string, string> ns in namespaces)
-            {
-                var prefix = ns.Key;
-                var uri = ns.Value;
-
-                ontology.NamespaceMap.AddNamespace(prefix, new Uri(uri));
-            }
-
-
-            return ontology;
-            
-        }
 
 
         public void BuildProject(Project project)
@@ -119,9 +124,9 @@ namespace RdfParserModule
             var hasAspect = Graph.CreateUriNode(Resources.hasAspect);
 
 
-            foreach (Node node in Project.Nodes)
+            foreach (var node in Project.Nodes)
             {
-                IUriNode nodeId = Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, node.Id));              
+                var nodeId = Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, node.Id));              
 
 
                 if (node.IsRoot)
@@ -151,7 +156,7 @@ namespace RdfParserModule
 
                 
 
-                foreach (Connector connector in node.Connectors)
+                foreach (var connector in node.Connectors)
                 {
                     switch (connector)
                     {
@@ -161,15 +166,8 @@ namespace RdfParserModule
 
                             var hasTerminal = Graph.CreateUriNode("imf:has" + terminal.Type + "Terminal");
 
-                            string terminalType;
-                            if (terminal.Type.ToString().Contains("In"))
-                            {
-                                terminalType = "In";
-                            }
-                            else
-                            {
-                                terminalType = "Out";
-                            }
+                            var terminalType = terminal.Type.ToString().Contains("In") ? "In" : "Out";
+
                             var terminalKey = Graph.CreateUriNode("imf:" + terminalType + "Terminal");
                             var nodeTerminal = Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, terminal.Id));
                             Graph.Assert(new Triple(nodeId, hasTerminal, nodeTerminal));
@@ -210,13 +208,13 @@ namespace RdfParserModule
 
 
                 // Modelling attributes
-                ICollection<Attribute> attributes = node.Attributes;
+                var attributes = node.Attributes;
 
                 if (attributes is null) { return; }
 
 
 
-                foreach (Attribute attribute in attributes)
+                foreach (var attribute in attributes)
                 {
                     var value = attribute.Value;
                     if (value is null)
@@ -244,7 +242,7 @@ namespace RdfParserModule
 
                     // UnitString ikkje Units
                     var units = attribute.Units;
-                    foreach (Unit unit in units)
+                    foreach (var unit in units)
                     {
                         var unitName = unit.Name;
 
@@ -269,7 +267,7 @@ namespace RdfParserModule
             var hasOutTerminal = Graph.CreateUriNode(Resources.hasOutputTerminal);
             var outTerminal = Graph.CreateUriNode(Resources.OutputTerminal);
 
-            foreach (Edge edge in edges)
+            foreach (var edge in edges)
             {
                 var fromNode = Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.FromNodeId));
                 var toNode = Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.ToNodeId));
@@ -347,7 +345,6 @@ namespace RdfParserModule
                     }
                     Graph.Assert(new Triple(interfaceNode, label, Graph.CreateLiteralNode(edge.Interface.Name)));
 
-
                     if (edge.Interface.InputTerminal != null)
                     {
                         var inter = edge.Interface.InputTerminal;
@@ -416,27 +413,6 @@ namespace RdfParserModule
                         Graph.Assert(new Triple(toNode, relationToNode, fromNode));
                         break;
                 }
-
-                //if (!string.IsNullOrEmpty(edge.InterfaceId))
-                //{
-                //    var interfaceNode = Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, edge.InterfaceId));
-                //    Graph.Assert(new Triple(interfaceNode, type, Graph.CreateUriNode(Resources.Interface)));
-
-                //    switch (edge.FromNode.Aspect)
-                //    {
-                //        case Aspect.Function:
-                //            Graph.Assert(new Triple(interfaceNode, hasParent, FunctionRoot));
-                //            break;
-                //        case Aspect.Location:
-                //            Graph.Assert(new Triple(interfaceNode, hasParent, LocationRoot));
-                //            break;
-                //        case Aspect.Product:
-                //            Graph.Assert(new Triple(interfaceNode, hasParent, ProductRoot));
-                //            break;
-                //    }
-                //    Graph.Assert(new Triple(interfaceNode, label, Graph.CreateLiteralNode(edge.Interface.Name)));
-
-                //}
             }
         }
 
