@@ -80,6 +80,7 @@ const TextResources = {
   Inspector_Admin_Service: "Service Description",
   Inspector_Admin_Change: "Change mode",
   Inspector_Admin_Version: "Version",
+  Inspector_Admin_Cost: "Cost: USD/NOK",
   Inspector_Admin_Kind: "Kind",
   Inspector_Admin_Status: "Status",
   Inspector_Admin_Project: "Project",
