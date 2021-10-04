@@ -34,8 +34,8 @@ const InspectorModule = () => {
   } else node = GetSelectedNode();
 
   useEffect(() => {
-    DragResizePanel();
-  }, []);
+    if (inspectorOpen) DragResizePanel(inspectorOpen);
+  }, [inspectorOpen]);
 
   return (
     <AnimatedInspector
