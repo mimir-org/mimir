@@ -120,6 +120,8 @@ const TextResources = {
   Inspector_Params_Clear_All: "Clear all Entities",
   Inspector_Params_Default: "Show Default Entities",
   Inspector_Params_Combinations: "Select combinations",
+  Inspector_Params_Combinations_Select_All: "Select all",
+
   Inspector_Params_Search: "Search or Select Entity...",
 
   Inspector_Terminals_Search: "Search Terminal Type",
