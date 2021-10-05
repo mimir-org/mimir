@@ -31,6 +31,7 @@ import {
   ADD_TERMINALTYPE,
   REMOVE_TERMINALTYPE,
   UPDATE_TERMINALTYPE,
+  REMOVE_TERMINALTYPE_BY_CATEGORY,
   SAVE_LIBRARY_TYPE,
   SAVE_LIBRARY_TYPE_SUCCESS_OR_ERROR,
   DELETE_TYPE_EDITOR_ERROR,
@@ -307,6 +308,19 @@ export function typeEditorReducer(
           ],
         },
       };
+    case REMOVE_TERMINALTYPE_BY_CATEGORY:
+      return {
+        ...state,
+        createLibraryType: {
+          ...state.createLibraryType,
+          terminalTypes: [
+            ...state.createLibraryType.terminalTypes.filter(
+              (terminal) => terminal.categoryId !== action.payload.categoryId
+            ),
+          ],
+        },
+      };
+
     case SAVE_LIBRARY_TYPE:
       return {
         ...state,

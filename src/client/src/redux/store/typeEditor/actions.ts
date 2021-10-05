@@ -20,6 +20,7 @@ import {
   ADD_TERMINALTYPE,
   REMOVE_TERMINALTYPE,
   UPDATE_TERMINALTYPE,
+  REMOVE_TERMINALTYPE_BY_CATEGORY,
   SAVE_LIBRARY_TYPE,
   DELETE_TYPE_EDITOR_ERROR,
   TypeEditorActionTypes,
@@ -145,6 +146,15 @@ export function updateTerminalType(terminal: TerminalTypeItem) {
     type: UPDATE_TERMINALTYPE,
     payload: {
       terminal,
+    },
+  };
+}
+
+export function removeTerminalTypeByCategory(categoryId: string) {
+  return {
+    type: REMOVE_TERMINALTYPE_BY_CATEGORY,
+    payload: {
+      categoryId,
     },
   };
 }
