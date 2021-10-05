@@ -13,44 +13,37 @@ const Header = () => {
   const dispatch = useDispatch();
   const { push } = useHistory();
   const projectState = useSelector<RootState>((state) => state.projectState) as ProjectState;
-  const isDarkMode = useSelector<RootState>((state) => state.darkMode.active) as boolean;
-  const isFilterMenuOpen = useSelector<RootState>((state) => state.menu.filterMenuVisibility) as boolean;
-
-  const isAccountMenuOpen = useSelector<RootState>((state) => state.menu.accountMenuVisibility) as boolean;
-
-  const isLibraryOpen = useSelector<RootState>(
-    (state) => state.modules.types.find((x) => IsLibrary(x.type)).visible
-  ) as boolean;
-
-  const isExplorerOpen = useSelector<RootState>(
-    (state) => state.modules.types.find((x) => IsExplorer(x.type)).visible
-  ) as boolean;
+  const darkMode = useSelector<RootState>((state) => state.darkMode.active) as boolean;
+  const filterMenuOpen = useSelector<RootState>((state) => state.menu.filterMenuVisibility) as boolean;
+  const accountMenuOpen = useSelector<RootState>((state) => state.menu.accountMenuVisibility) as boolean;
+  const libraryOpen = useSelector<RootState>((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible) as boolean;
+  const explorerOpen = useSelector<RootState>((s) => s.modules.types.find((x) => IsExplorer(x.type)).visible) as boolean;
 
   return (
     <>
       <HeaderBox>
-        <MenuMainHeader isOpen={isAccountMenuOpen}>
+        <MenuMainHeader isOpen={accountMenuOpen}>
           <img
             src={Icons.User}
             alt="icon"
             className="icon"
-            onClick={() => Handlers.OnAccountClick(dispatch, isAccountMenuOpen)}
+            onClick={() => Handlers.OnAccountClick(dispatch, accountMenuOpen)}
           />
-          <div className="projectName" onClick={() => Handlers.OnAccountClick(dispatch, isAccountMenuOpen)}>
+          <div className="projectName" onClick={() => Handlers.OnAccountClick(dispatch, accountMenuOpen)}>
             {projectState.project && projectState.project.name}
           </div>
         </MenuMainHeader>
         <LogoBox>
-          <img src={Icons.Mimir} alt="mimir-icon" onClick={() => Handlers.OnDarkModeClick(dispatch, isDarkMode)} />
+          <img src={Icons.Mimir} alt="mimir-icon" onClick={() => Handlers.OnDarkModeClick(dispatch, darkMode)} />
         </LogoBox>
       </HeaderBox>
-      <MenuBar id="MenuBar" isLibraryOpen={isLibraryOpen} isExplorerOpen={isExplorerOpen}>
+      <MenuBar id="MenuBar" isLibraryOpen={libraryOpen} isExplorerOpen={explorerOpen}>
         <OptionsBox>
           <OptionsElement>
             <img
               src={Icons.Filter}
               alt="VisualFilter"
-              onClick={() => Handlers.OnFilterClick(dispatch, isFilterMenuOpen)}
+              onClick={() => Handlers.OnFilterClick(dispatch, filterMenuOpen)}
             />
           </OptionsElement>
           <OptionsElement>
