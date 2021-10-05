@@ -7,6 +7,7 @@ interface Props {
   run: boolean;
   library: boolean;
   explorer: boolean;
+  inspectorOpen: boolean;
   height: number;
 }
 
