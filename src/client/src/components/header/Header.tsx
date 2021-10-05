@@ -1,4 +1,4 @@
-import * as Handlers from "./handlers";
+import * as Click from "./handlers";
 import * as Icons from "../../assets/icons/common/header";
 import { RootState } from "../../redux/store";
 import { useHistory } from "react-router-dom";
@@ -23,45 +23,28 @@ const Header = () => {
     <>
       <HeaderBox>
         <MenuMainHeader isOpen={accountMenuOpen}>
-          <img
-            src={Icons.User}
-            alt="icon"
-            className="icon"
-            onClick={() => Handlers.OnAccountClick(dispatch, accountMenuOpen)}
-          />
-          <div className="projectName" onClick={() => Handlers.OnAccountClick(dispatch, accountMenuOpen)}>
+          <img src={Icons.User} alt="icon" className="icon" onClick={() => Click.OnAccount(dispatch, accountMenuOpen)} />
+          <div className="projectName" onClick={() => Click.OnAccount(dispatch, accountMenuOpen)}>
             {projectState.project && projectState.project.name}
           </div>
         </MenuMainHeader>
         <LogoBox>
-          <img src={Icons.Mimir} alt="mimir-icon" onClick={() => Handlers.OnDarkModeClick(dispatch, darkMode)} />
+          <img src={Icons.Mimir} alt="mimir-icon" onClick={() => Click.OnDarkMode(dispatch, darkMode)} />
         </LogoBox>
       </HeaderBox>
       <MenuBar id="MenuBar" isLibraryOpen={libraryOpen} isExplorerOpen={explorerOpen}>
         <OptionsBox>
           <OptionsElement>
-            <img
-              src={Icons.Filter}
-              alt="VisualFilter"
-              onClick={() => Handlers.OnFilterClick(dispatch, filterMenuOpen)}
-            />
+            <img src={Icons.Filter} alt="VisualFilter" onClick={() => Click.OnFilter(dispatch, filterMenuOpen)} />
           </OptionsElement>
           <OptionsElement>
             <img src={Icons.Landscape} alt="Landscape" onClick={() => null} />
           </OptionsElement>
           <OptionsElement>
-            <img
-              src={Icons.BlockView}
-              alt={VIEW_TYPE.BLOCKVIEW}
-              onClick={(e) => Handlers.OnViewClick(e, dispatch, push)}
-            />
+            <img src={Icons.BlockView} alt={VIEW_TYPE.BLOCKVIEW} onClick={(e) => Click.OnView(e, dispatch, push)} />
           </OptionsElement>
           <OptionsElement>
-            <img
-              src={Icons.TreeView}
-              alt={VIEW_TYPE.TREEVIEW}
-              onClick={(e) => Handlers.OnViewClick(e, dispatch, push)}
-            />
+            <img src={Icons.TreeView} alt={VIEW_TYPE.TREEVIEW} onClick={(e) => Click.OnView(e, dispatch, push)} />
           </OptionsElement>
         </OptionsBox>
       </MenuBar>

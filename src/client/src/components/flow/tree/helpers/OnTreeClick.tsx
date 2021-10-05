@@ -5,10 +5,10 @@ import { Size } from "../../../../compLibrary";
 import { SetPanelHeight } from "../../../../modules/inspector/helpers";
 import { Project } from "../../../../models";
 import { setActiveEdge, setActiveNode } from "../../../../redux/store/project/actions";
+import { changeInspectorHeight } from "../../../../modules/inspector/redux/height/actions";
 
 /**
  * Component to handle clicks on the Flow component in TreeView.
- * @param e
  * @param e
  * @param dispatch
  * @param project
@@ -22,7 +22,8 @@ const OnTreeClick = (e: any, dispatch: any, project: Project) => {
     dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, false, true));
     dispatch(setActiveNode(null, false));
     dispatch(setActiveEdge(null, false));
-    SetPanelHeight(Size.ModuleClosed);
+    dispatch(changeInspectorHeight(Size.ModuleClosed));
+    SetPanelHeight(Size.ModuleClosed); // TODO: remove
     return;
   }
 

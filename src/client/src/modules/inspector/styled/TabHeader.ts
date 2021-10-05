@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Color } from "../../../compLibrary";
 
 const TabHeader = styled.div`
+  pointer-events: initial;
   box-sizing: border-box;
   min-width: 120px;
   border-top-right-radius: 6px;

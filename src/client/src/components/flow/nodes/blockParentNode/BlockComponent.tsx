@@ -21,10 +21,16 @@ const BlockComponent = ({ node, color, isSplitView, isSelected, onParentClick, o
   <Block id={"function-block-" + node?.id} splitView={isSplitView} selected={isSelected}>
     <Banner color={color}>
       <Header>
-        <Navigation>{!IsAspectNode(node) && <img src={ArrowUp} alt="up" onClick={() => onParentClick()} />}</Navigation>
-        <Navigation>
-          <img src={ArrowDown} alt="down" onClick={() => onChildClick()} />
-        </Navigation>
+        {!isSplitView && (
+          <>
+            <Navigation>
+              {!IsAspectNode(node) && <img src={ArrowUp} alt="up" onClick={() => onParentClick()} />}
+            </Navigation>
+            <Navigation>
+              <img src={ArrowDown} alt="down" onClick={() => onChildClick()} />
+            </Navigation>
+          </>
+        )}
         <p className="text">={node?.label ?? node?.name}</p>
       </Header>
     </Banner>

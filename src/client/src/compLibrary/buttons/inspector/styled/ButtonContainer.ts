@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Color, FontSize } from "../../..";
 
 const ButtonContainer = styled.div`
+  pointer-events: initial;
   visibility: ${(props: { visible: boolean }) => !props.visible && "hidden"};
   border: solid 1px ${Color.BlueMagenta};
   border-radius: 4px;
