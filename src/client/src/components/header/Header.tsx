@@ -7,24 +7,16 @@ import { VIEW_TYPE } from "../../models/project";
 import { MenuMainHeader } from "../../compLibrary/box/menus";
 import { ProjectState } from "../../redux/store/project/types";
 import { IsExplorer, IsLibrary } from "../flow/helpers";
-import {
-  HeaderBox,
-  OptionsBox,
-  LogoBox,
-  OptionsElement,
-  MenuBar,
-} from "../../compLibrary/box/header/";
+import { HeaderBox, OptionsBox, LogoBox, OptionsElement, MenuBar } from "../../compLibrary/box/header/";
 
 const Header = () => {
   const dispatch = useDispatch();
   const { push } = useHistory();
   const projectState = useSelector<RootState>((state) => state.projectState) as ProjectState;
   const isDarkMode = useSelector<RootState>((state) => state.darkMode.active) as boolean;
-  const isFilterMenuOpen = useSelector<RootState>((state) => state.menu.list[4].visible) as boolean;
+  const isFilterMenuOpen = useSelector<RootState>((state) => state.menu.filterMenuVisibility) as boolean;
 
-  const isAccountMenuOpen = useSelector<RootState>(
-    (state) => state.menu.list[1].visible
-  ) as boolean;
+  const isAccountMenuOpen = useSelector<RootState>((state) => state.menu.accountMenuVisibility) as boolean;
 
   const isLibraryOpen = useSelector<RootState>(
     (state) => state.modules.types.find((x) => IsLibrary(x.type)).visible
@@ -44,19 +36,12 @@ const Header = () => {
             className="icon"
             onClick={() => Handlers.OnAccountClick(dispatch, isAccountMenuOpen)}
           />
-          <div
-            className="projectName"
-            onClick={() => Handlers.OnAccountClick(dispatch, isAccountMenuOpen)}
-          >
+          <div className="projectName" onClick={() => Handlers.OnAccountClick(dispatch, isAccountMenuOpen)}>
             {projectState.project && projectState.project.name}
           </div>
         </MenuMainHeader>
         <LogoBox>
-          <img
-            src={Icons.Mimir}
-            alt="mimir-icon"
-            onClick={() => Handlers.OnDarkModeClick(dispatch, isDarkMode)}
-          />
+          <img src={Icons.Mimir} alt="mimir-icon" onClick={() => Handlers.OnDarkModeClick(dispatch, isDarkMode)} />
         </LogoBox>
       </HeaderBox>
       <MenuBar id="MenuBar" isLibraryOpen={isLibraryOpen} isExplorerOpen={isExplorerOpen}>
