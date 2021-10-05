@@ -8,20 +8,14 @@ import { FullScreenButton } from ".";
 const FullScreenComponent = () => {
   const dispatch = useDispatch();
   const lib = MODULE_TYPE.LIBRARY;
-  const inspector = MODULE_TYPE.INSPECTOR;
-
   const isOpen = useSelector<RootState>((s) => s.modules.types.find((x) => x.visible)) as boolean;
   const libOpen = useSelector<RootState>((s) => s.modules.types.find((x) => x.type === lib).visible) as boolean;
-  const inspectorOpen = useSelector<RootState>(
-    (s) => s.modules.types.find((x) => x.type === inspector).visible
-  ) as boolean;
+  const inspectorHeight = useSelector<RootState>((state) => state.inspectorHeight.height) as number;
 
-  const onToggleClick = () => {
-    dispatch(setModulesVisibility(!isOpen, true));
-  };
+  const onToggleClick = () => dispatch(setModulesVisibility(!isOpen, true));
 
   return (
-    <FullScreenButton libraryOpen={libOpen} inspectorOpen={inspectorOpen}>
+    <FullScreenButton libraryOpen={libOpen} height={inspectorHeight}>
       <img src={isOpen ? ExpandIcon : CloseIcon} alt="fullscreen" onClick={onToggleClick} />
     </FullScreenButton>
   );

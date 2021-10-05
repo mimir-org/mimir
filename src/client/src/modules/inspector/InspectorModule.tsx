@@ -26,16 +26,17 @@ const InspectorModule = () => {
   if (!inspectorOpen) height = Size.ModuleClosed;
 
   const stop = inspectorOpen ? height : Size.ModuleClosed;
-  const start = inspectorOpen ? Size.ModuleClosed : Size.ModuleOpen;
+  const start = inspectorOpen ? Size.ModuleClosed : height;
 
   const nodes = project?.nodes ?? [];
   const edges = project?.edges ?? [];
   const edge = edges.find((x) => x.isSelected);
   const node = IsBlockView() ? nodes?.find((x) => x.isBlockSelected) : GetSelectedNode();
 
+  console.log({ inspectorOpen });
   useEffect(() => {
-    if (inspectorOpen) DragResizePanel();
-  }, [inspectorOpen]);
+    if (inspectorOpen) DragResizePanel(dispatch);
+  }, [inspectorOpen, dispatch]);
 
   return (
     <AnimatedInspector
