@@ -63,58 +63,40 @@
 }
 
 // BLOCKVIEW
-.react-flow__node-BlockFunctionNode {
+.react-flow__node-BlockFunctionNode,
+.react-flow__node-BlockLocationNode,
+.react-flow__node-BlockProductNode {
+  width: 130px;
+  height: 80px;
   border-radius: 10px;
   font-size: 11px;
   color: #222;
   text-align: center;
   box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.2);
+}
 
+.react-flow__node-BlockFunctionNode {
+  background-color: #fef445;
+  &:hover,
   &.selected {
-    border: 3px solid #ffde7a !important;
-    box-shadow: none;
-  }
-  &:hover {
     border: 3px solid #ffde7a !important;
     box-shadow: none;
   }
 }
 
 .react-flow__node-BlockLocationNode {
-  border-radius: 10px;
-  width: 115px;
-  height: 70px;
-  font-size: 11px;
-  color: #222;
-  text-align: center !important;
   background-color: #fa00ff;
-  box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.2);
-
+  &:hover,
   &.selected {
-    border: 3px solid #f083f1 !important;
-    box-shadow: none;
-  }
-  &:hover {
     border: 3px solid #f083f1 !important;
     box-shadow: none;
   }
 }
 
 .react-flow__node-BlockProductNode {
-  border-radius: 10px;
-  width: 115px;
-  height: 70px;
-  font-size: 11px;
-  color: #222;
-  text-align: center !important;
   background-color: #00f0ff;
-  box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.2);
-
+  &:hover,
   &.selected {
-    border: 3px solid #47dde6 !important;
-    box-shadow: none;
-  }
-  &:hover {
     border: 3px solid #47dde6 !important;
     box-shadow: none;
   }

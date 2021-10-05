@@ -8,7 +8,6 @@ import { changeActiveConnector } from "../../../../redux/store/project/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { Connector, Node } from "../../../../models";
 import { OnHover, OnMouseOut } from "./handlers";
-import { IsLocation } from "../../helpers";
 import { SetTerminalOrder, FilterTerminals, FindNodeByDataId } from "../../block/helpers";
 import { Symbol } from "../../../../compLibrary/symbol";
 
@@ -57,7 +56,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
           isOutputMenuOpen={outputTerminalMenu}
           terminals={sortedTerminals}
           isParent={false}
-          isLocation={IsLocation(data)}
+          isLocation={true}
           isSplitView={splitView}
           onClick={(conn) => onConnectorClick(conn)}
           menuButton={terminalButton}
