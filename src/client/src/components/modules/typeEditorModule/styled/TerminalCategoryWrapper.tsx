@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color, FontSize, FontType } from "../../../../compLibrary";
+import { Color, FontSize, FontType, FontWeight } from "../../../../compLibrary";
 
 const TerminalCategoryWrapper = styled.div`
   display: flex;
@@ -7,27 +7,45 @@ const TerminalCategoryWrapper = styled.div`
   align-items: center;
   min-height: 30px;
 
-  p {
-    margin-left: 10px;
+  .terminal-name {
+    font-size: ${FontSize.Small};
+    margin-left: 16px;
+  }
+
+  .terminal-name:hover {
+    font-weight: ${FontWeight.Bold};
+    text-decoration: underline;
+    cursor: pointer;
   }
 
   button {
-    width: 40px;
+    display: flex;
+    align-items: center;
     height: 20px;
-    margin-left: auto;
-    padding-right: 10px;
-    background: ${Color.LightGrey};
-    border: 1px solid ${Color.BlueMagenta};
-    border-radius: 2px;
-    padding: 0px;
-    white-space: nowrap;
+    background: transparent;
+    border: none;
     cursor: pointer;
+    font-weight: ${FontWeight.Bold};
     font-family: ${FontType.Standard};
-    font-size: ${FontSize.Medium};
+    font-size: ${FontSize.Tiny};
     color: ${Color.Black};
 
-    &:hover {
-      border: 2px solid ${Color.BlueMagenta};
+    .add-text {
+      margin-left: 3px;
+    }
+
+    .add-icon {
+      width: 8px;
+      height: 8px;
+    }
+  }
+
+  .delete-button {
+    margin-left: auto;
+
+    .delete-text {
+      margin-left: 3px;
+      margin-right: 10px;
     }
   }
 
@@ -39,12 +57,12 @@ const TerminalCategoryWrapper = styled.div`
     padding-right: 10px;
   }
 
-  img {
-    margin-left: auto;
+  /* img {
+    margin-left: auto; 
     padding-right: 12px;
     width: 14px;
     height: 14px;
-  }
+  } */
 
   .help-icon {
     width: 12px;

@@ -17,7 +17,7 @@ const SaveButton = styled.button`
   font-size: ${FontSize.Standard};
   color: ${Color.Black};
   margin: auto;
-  margin-top: 12px;
+  margin-top: -36px;
   opacity: ${(props: { disabled: boolean }) => (props.disabled ? 0.4 : 1)};
 
   .icon {

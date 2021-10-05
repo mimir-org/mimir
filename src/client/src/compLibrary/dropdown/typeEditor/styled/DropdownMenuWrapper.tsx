@@ -4,16 +4,16 @@ import { Color, FontSize } from "../../../";
 const DropdownMenuWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 1;
-  margin-right: 15px;
+  min-width: 15%;
+  margin-right: 25px;
   background-color: ${Color.White};
   opacity: ${(props: { disabled: boolean }) => (props.disabled ? 0.4 : 1)};
-  font-size: ${FontSize.Standard};
+  font-size: ${FontSize.Tiny};
   color: ${Color.Black};
   position: relative;
 
   .label {
-    margin-bottom: 4px;
+    margin-bottom: 7px;
   }
 `;
 

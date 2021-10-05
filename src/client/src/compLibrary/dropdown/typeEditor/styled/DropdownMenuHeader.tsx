@@ -6,7 +6,7 @@ const DropdownMenuHeader = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  height: 31px;
+  height: 27px;
   background: ${Color.White};
   border: 1.5px solid ${Color.Black};
   border-radius: 5px;
@@ -14,12 +14,11 @@ const DropdownMenuHeader = styled.div`
   color: ${Color.Black};
 
   p {
-    padding: 10px;
+    padding: 5px 0px 5px 9px;
   }
 
   img {
-    margin-right: 4px;
-    padding: 5px;
+    padding: 11px 10px;
   }
 `;
 

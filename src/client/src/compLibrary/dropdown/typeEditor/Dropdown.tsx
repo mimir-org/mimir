@@ -99,7 +99,7 @@ const Dropdown = ({
     <>
       <DropdownMenuWrapper disabled={disabled}>
         <label htmlFor={label} />
-        <div className="label"> {label}</div>
+        <div className="label">{label}</div>
         <div onClick={disabled ? null : (e) => setIsListOpen(!isListOpen)}>
           <DropdownMenuHeader>
             {selectedItem && (

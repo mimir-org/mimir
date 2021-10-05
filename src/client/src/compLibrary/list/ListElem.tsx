@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { FontWeight } from "../../compLibrary";
 
 const ListElem = styled.div`
   display: flex;
@@ -6,6 +7,12 @@ const ListElem = styled.div`
   align-items: center;
   height: 35px;
   padding: 2px 5px 2px 0px;
+
+  p:hover {
+    font-weight: ${FontWeight.Bold};
+    text-decoration: underline;
+    cursor: pointer;
+  }
 
   img {
     display: none;
