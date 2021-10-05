@@ -36,10 +36,10 @@ const FlowTree = () => {
   const inspectorOpen = useSelector<RootState>((s) => s.modules.types[0].visible) as boolean;
   const project = projectState?.project;
 
-  const OnDragOver = (event) => event.preventDefault();
-  const OnNodeDragStop = (_event, node) => dispatch(updatePosition(node.id, node.position.x, node.position.y));
+  const OnDragOver = (event: any) => event.preventDefault();
+  const OnNodeDragStop = (_event: any, node: any) => dispatch(updatePosition(node.id, node.position.x, node.position.y));
 
-  const OnElementsRemove = (elementsToRemove) => {
+  const OnElementsRemove = (elementsToRemove: any[]) => {
     return useOnRemove(elementsToRemove, setElements, dispatch);
   };
 

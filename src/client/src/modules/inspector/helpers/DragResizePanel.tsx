@@ -6,40 +6,39 @@ import { changeInspectorHeight } from "../redux/height/actions";
  */
 const DragResizePanel = (dispatch: any) => {
   const BORDER_SIZE = 44;
-  const panel = document.getElementById("InspectorModule");
-
+  const inspector = document.getElementById("InspectorModule");
+  const adminTab = document.getElementById("admininfo");
+  const terminalsTab = document.getElementById("terminals");
   let prevY: number;
 
-  // Function to calculate new height
   const resize = (e) => {
     const dy = prevY - e.clientY;
     prevY = e.clientY;
 
     // Change module height
-    panel.style.height = parseInt(getComputedStyle(panel, "").height) + dy + "px";
+    inspector.style.height = parseInt(getComputedStyle(inspector, "").height) + dy + "px";
+
+    // Change tabs height
+    if (adminTab) adminTab.style.height = parseInt(getComputedStyle(inspector, "").height) - 45 + "px";
+    if (terminalsTab) terminalsTab.style.height = parseInt(getComputedStyle(inspector, "").height) - 80 + "px";
   };
 
-  const drag = (e) => {
-    e.preventDefault();
-    if (e.offsetY < BORDER_SIZE) {
-      prevY = e.clientY;
-      panel.addEventListener("mousemove", resize);
-    }
-  };
+  if (inspector) {
+    inspector.addEventListener("mousedown", (e) => {
+      if (e.offsetY < BORDER_SIZE) {
+        prevY = e.clientY;
+        document.addEventListener("mousemove", resize);
+      }
+    });
 
-  if (panel) {
-    panel.addEventListener("mousedown", drag);
+    document.addEventListener("mouseup", () => {
+      const height = parseInt(getComputedStyle(inspector, "").height);
+      if (height !== Size.ModuleClosed && height !== Size.ModuleOpen) dispatch(changeInspectorHeight(height));
 
-    panel.addEventListener("mouseup", () => {
-      if (
-        parseInt(getComputedStyle(panel, "").height) !== Size.ModuleOpen &&
-        parseInt(getComputedStyle(panel, "").height) !== Size.ModuleClosed
-      )
-        dispatch(changeInspectorHeight(parseInt(getComputedStyle(panel, "").height)));
-
-      panel.removeEventListener("mousemove", resize);
-      panel.removeEventListener("mousedown", drag);
+      document.removeEventListener("mousemove", resize);
+      inspector.removeEventListener("mousedown", resize);
     });
   }
 };
+
 export default DragResizePanel;

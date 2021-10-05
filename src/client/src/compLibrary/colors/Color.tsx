@@ -26,7 +26,7 @@ const Color = {
   FunctionTab: "#FFDE7A",
 
   // Product aspect
-  ProductBlock: "#00F0FF",
+  ProductBlock: "#00A6B0",
   ProductHeader: "#B9F5F9",
   ProductTab: "#47DDE6",
 

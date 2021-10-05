@@ -22,21 +22,18 @@ const InspectorModule = () => {
   const inspectorOpen = useSelector<RootState>((s) => s.modules.types.find((x) => x.type === type).visible) as boolean;
   const libraryOpen = useSelector<RootState>((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible) as boolean;
   const explorerOpen = useSelector<RootState>((s) => s.modules.types.find((x) => IsExplorer(x.type)).visible) as boolean;
-  let height = (useSelector<RootState>((s) => s.inspectorHeight.height) as number) ?? Size.ModuleOpen;
-  if (!inspectorOpen) height = Size.ModuleClosed;
 
-  const stop = inspectorOpen ? height : Size.ModuleClosed;
-  const start = inspectorOpen ? Size.ModuleClosed : height;
+  const stop = inspectorOpen ? Size.ModuleOpen : Size.ModuleClosed;
+  const start = inspectorOpen ? Size.ModuleClosed : Size.ModuleOpen;
 
   const nodes = project?.nodes ?? [];
   const edges = project?.edges ?? [];
   const edge = edges.find((x) => x.isSelected);
   const node = IsBlockView() ? nodes?.find((x) => x.isBlockSelected) : GetSelectedNode();
 
-  console.log({ inspectorOpen });
   useEffect(() => {
-    if (inspectorOpen) DragResizePanel(dispatch);
-  }, [inspectorOpen, dispatch]);
+    DragResizePanel(dispatch);
+  }, [dispatch]);
 
   return (
     <AnimatedInspector
@@ -44,10 +41,10 @@ const InspectorModule = () => {
       type={type}
       isLibraryOpen={libraryOpen}
       isExplorerOpen={explorerOpen}
+      inspectorOpen={inspectorOpen}
       start={start}
       stop={stop}
       run={animate}
-      height={height}
     >
       <InspectorHeader project={project} node={node} edge={edge} dispatch={dispatch} open={inspectorOpen} type={type} />
     </AnimatedInspector>
