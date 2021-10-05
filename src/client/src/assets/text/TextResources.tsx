@@ -131,7 +131,7 @@ const TextResources = {
   TypeEditor_New_Type: "New Type",
   TypeEditor_Edit_Type: "Edit Type",
   TypeEditor_Aspect: "Aspect",
-  TypeEditor_Object_Type: "Object Type",
+  TypeEditor_Object_Type: "Select Object Type",
   TypeEditor_Location_Type: "Location Type",
   TypeEditor_Purpose: "Purpose",
   TypeEditor_Type_Name: "Type name",
@@ -139,6 +139,7 @@ const TextResources = {
   TypeEditor_Properties_RDS: "Choose RDS String",
   TypeEditor_Properties_Terminals: "Select Terminal Types",
   TypeEditor_Properties_Add_Terminal: "Add",
+  TypeEditor_Properties_Clear_All_Terminal: "Clear all",
   TypeEditor_Properties_Predefined_Location_Attributes:
     "Select Predefined Location Attributes",
   TypeEditor_Properties_Block_Attributes: "Select Block Attributes",
