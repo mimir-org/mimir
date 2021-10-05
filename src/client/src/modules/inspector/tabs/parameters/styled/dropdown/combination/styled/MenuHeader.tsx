@@ -8,7 +8,7 @@ const MenuHeader = styled.div`
   justify-content: space-between;
   height: 26px;
   width: 155px;
-  background-color: ${Color.ParamsPurple};
+  background-color: ${(props) => props.color};
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   font-size: ${FontSize.Medium};

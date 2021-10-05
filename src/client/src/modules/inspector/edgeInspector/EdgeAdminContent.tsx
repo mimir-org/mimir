@@ -13,12 +13,7 @@ const EdgeAdminContent = ({ edge }: Props) => (
     <TabColumn>
       <div>
         <div>{TextResources.Inspector_EdgeAdmin_Id}</div>
-        <Input
-          readOnly={true}
-          value={edge.id ?? ""}
-          onChange={() => null}
-          inputType=""
-        />
+        <Input readOnly={true} value={edge.id ?? ""} onChange={() => null} inputType="" />
       </div>
       <div>
         <div>{TextResources.Inspector_EdgeAdmin_Relation}</div>
@@ -31,23 +26,14 @@ const EdgeAdminContent = ({ edge }: Props) => (
       </div>
       <div>
         <div>{TextResources.Inspector_EdgeAdmin_Template}</div>
-        <Input
-          readOnly={true}
-          value={edge.isTemplateEdge}
-          onChange={() => null}
-          inputType=""
-        />
+        <Input readOnly={true} value={edge.isTemplateEdge} onChange={() => null} inputType="" />
       </div>
     </TabColumn>
     <TabColumn>
       <div>
         <div>{TextResources.Inspector_EdgeAdmin_Source}</div>
         <Input
-          value={
-            (edge.fromNode.label ?? edge.fromNode.name) +
-            " - " +
-            edge.fromNodeId
-          }
+          value={(edge.fromNode.label ?? edge.fromNode.name) + " - " + edge.fromNodeId}
           onChange={() => null}
           inputType=""
         />
@@ -56,21 +42,14 @@ const EdgeAdminContent = ({ edge }: Props) => (
         <div>{TextResources.Inspector_EdgeAdmin_Target}</div>
         <Input
           readOnly={true}
-          value={
-            (edge.toNode.label ?? edge.toNode.name) + " - " + edge.toNodeId
-          }
+          value={(edge.toNode.label ?? edge.toNode.name) + " - " + edge.toNodeId}
           onChange={() => null}
           inputType=""
         />
       </div>
       <div>
         <div>{TextResources.Inspector_EdgeAdmin_Project}</div>
-        <Input
-          readOnly={true}
-          value={edge.masterProjectId}
-          onChange={() => null}
-          inputType=""
-        />
+        <Input readOnly={true} value={edge.masterProjectId} onChange={() => null} inputType="" />
       </div>
     </TabColumn>
   </>

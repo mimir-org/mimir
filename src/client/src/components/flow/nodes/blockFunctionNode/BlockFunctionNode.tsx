@@ -1,35 +1,21 @@
-import { OnHover, OnMouseOut } from "./handlers";
+import * as Actions from "../../block/connectView/redux/actions";
+import * as Helpers from "../../block/connectView/helpers";
+import { OnHover, OnMouseOut, OnBlur } from "./handlers";
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import { Connector, Node, Edge } from "../../../../models";
 import { Size } from "../../../../compLibrary";
-import { IsLocation } from "../../helpers/common";
-import { NodeBox } from "../../../../compLibrary/blockView";
+import { IsLocation } from "../../helpers";
+import { NodeBox } from "../../styled";
 import { TerminalsComponent, HandleComponent } from "../../block/terminals";
 import { ConnectViewComponent } from "../../block/connectView";
-import {
-  changeActiveConnector,
-  removeEdge,
-} from "../../../../redux/store/project/actions";
-import {
-  SetTerminalOrder,
-  FilterTerminals,
-  FindAllEdges,
-} from "../../helpers/block";
-import {
-  GetConnectChildren,
-  IsMainConnectNode,
-  SetMainConnectNodeColor,
-  ResizeMainConnectNode,
-} from "../../helpers/block/connectView";
-import {
-  addConnectNode,
-  addMainNode,
-  removeConnectNode,
-  removeMainNode,
-} from "../../../../redux/store/connectView/actions";
+import { IsChildConnectNode, IsConnectNodeChecked } from "./helpers";
+import { changeActiveConnector, removeEdge } from "../../../../redux/store/project/actions";
+import { SetTerminalOrder, FilterTerminals, FindAllEdges } from "../../block/helpers";
+import { Symbol } from "../../../../compLibrary/symbol";
+import { BlockNodeNameBox } from "../../block/styled";
 
 /**
  * Component for a Function Node in BlockView.
@@ -38,71 +24,53 @@ import {
  */
 const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
-  const [terminalButton, showTerminalButton] = useState(false);
-  const [connectButton, showConnectButton] = useState(false);
-  const [terminalMenu, showTerminalMenu] = useState(false);
+  const [inTerminalMenu, showInTerminalMenu] = useState(false);
+  const [outTerminalMenu, showOutTerminalMenu] = useState(false);
+  const [terminalBox, showTerminalBox] = useState(false);
+  const [connectBox, showConnectBox] = useState(false);
   const [connectMenu, showConnectMenu] = useState(false);
 
-  const nodes = useSelector<RootState>(
-    (state) => state.projectState.project.nodes
-  ) as Node[];
+  const nodes = useSelector<RootState>((state) => state.projectState.project.nodes) as Node[];
+  const edges = useSelector<RootState>((state) => state.projectState.project.edges) as Edge[];
+  const splitView = useSelector<RootState>((state) => state.splitView.visible) as boolean;
+  const mainConnectNodes = useSelector<RootState>((state) => state.connectView?.mainNodes) as Node[];
 
-  const edges = useSelector<RootState>(
-    (state) => state.projectState.project.edges
-  ) as Edge[];
-
-  const splitView = useSelector<RootState>(
-    (state) => state.splitView.visible
-  ) as boolean;
-
-  const mainConnectNodes = useSelector<RootState>(
-    (state) => state.connectView?.mainNodes
-  ) as Node[];
-
-  const connectChildren = GetConnectChildren(data, nodes, edges);
+  const connectChildren = Helpers.GetConnectChildren(data, nodes, edges);
   const sortedTerminals = FilterTerminals(data, splitView);
 
   const mainConnectNode = mainConnectNodes.find((x) => x.id === data.id);
   const connectNodes = mainConnectNode?.connectNodes;
   if (!mainConnectNode) data.width = Size.Node_Width;
 
+  // Terminals click
   const onConnectorClick = (conn: Connector) => {
     showConnectMenu(false);
     const order = SetTerminalOrder(data, 0, conn.relationType);
     dispatch(changeActiveConnector(data, conn.id, !conn.visible, order));
 
     if (conn.visible) {
-      const edge = edges.find(
-        (e) => e.fromConnector.id === conn.id || e.toConnector.id === conn.id
-      );
+      const edge = edges.find((e) => e.fromConnector.id === conn.id || e.toConnector.id === conn.id);
       if (edge) dispatch(removeEdge(edge.id));
     }
   };
 
+  // ConnectView click
   const onConnectNodeClick = (node: Node) => {
-    if (!isConnectorChecked(node)) {
-      if (!IsMainConnectNode(data.id)) dispatch(addMainNode(data));
-      dispatch(addConnectNode(data, node));
+    if (!IsConnectNodeChecked(node, connectNodes)) {
+      if (!Helpers.IsMainConnectNode(data.id)) dispatch(Actions.addMainNode(data));
+      dispatch(Actions.addConnectNode(data, node));
     } else {
       if (connectNodes.length === 1) {
         showConnectMenu(false);
-        dispatch(removeMainNode(data));
+        dispatch(Actions.removeMainNode(data));
       }
-      dispatch(removeConnectNode(data, node));
+      dispatch(Actions.removeConnectNode(data, node));
     }
   };
 
-  const isConnectorChecked = (node: Node) => {
-    let result = false;
-    connectNodes?.forEach((element) => {
-      if (element.id === node.id) result = true;
-    });
-    return result;
-  };
-
   useEffect(() => {
-    ResizeMainConnectNode(connectNodes?.length, mainConnectNode?.id, data);
-    SetMainConnectNodeColor(mainConnectNode?.id, data.id, connectNodes);
+    Helpers.ResizeMainConnectNode(connectNodes?.length, mainConnectNode?.id, data);
+    Helpers.SetMainConnectNodeColor(mainConnectNode?.id, data.id, connectNodes);
   }, [mainConnectNode, data, connectNodes]);
 
   // Force z-index to display edges in ConnectView
@@ -117,48 +85,42 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     <>
       <NodeBox
         id={"BlockFunctionNode-" + data.id}
-        onMouseOver={() =>
-          OnHover(showTerminalButton, showConnectButton, data.id)
-        }
-        onMouseOut={() =>
-          OnMouseOut(showTerminalButton, showConnectButton, data.id)
-        }
+        onMouseOver={() => OnHover(showTerminalBox, showConnectBox, data.id)}
+        onMouseOut={() => OnMouseOut(showTerminalBox, showConnectBox, data.id)}
       >
-        <p className="node-name">{data.label ?? data.name}</p>
+        <BlockNodeNameBox>{data.label ?? data.name}</BlockNodeNameBox>
+        <Symbol base64={data.symbol} text={data.name} />
 
         <TerminalsComponent
           node={data}
-          isMenuOpen={terminalMenu}
+          isInputMenuOpen={inTerminalMenu}
+          isOutputMenuOpen={outTerminalMenu}
           terminals={sortedTerminals}
-          width={data.width}
           isParent={false}
           isLocation={IsLocation(data)}
-          onClick={onConnectorClick}
-          menuButton={terminalButton}
-          showTerminalMenu={showTerminalMenu}
-          terminalMenu={terminalMenu}
+          isSplitView={splitView}
+          onClick={(conn) => onConnectorClick(conn)}
+          menuButton={terminalBox}
+          showInputTerminalMenu={showInTerminalMenu}
+          showOutputTerminalMenu={showOutTerminalMenu}
         />
-
-        <ConnectViewComponent
-          node={data}
-          isMenuOpen={connectMenu}
-          children={connectChildren}
-          handleClick={onConnectNodeClick}
-          isChecked={isConnectorChecked}
-          connectButton={connectButton}
-          showConnectMenu={showConnectMenu}
-          connectMenu={connectMenu}
-          dispatch={dispatch}
-        />
+        {!IsChildConnectNode(mainConnectNodes, data.id) && (
+          <ConnectViewComponent
+            node={data}
+            visible={connectMenu}
+            children={connectChildren}
+            connectNodes={connectNodes}
+            handleClick={onConnectNodeClick}
+            isChecked={IsConnectNodeChecked}
+            connectBox={connectBox}
+            showConnectMenu={showConnectMenu}
+            dispatch={dispatch}
+            onBlur={() => OnBlur(showConnectMenu, connectMenu)}
+          />
+        )}
       </NodeBox>
 
-      <HandleComponent
-        node={data}
-        nodes={nodes}
-        terminals={sortedTerminals}
-        isParent={false}
-        splitView={splitView}
-      />
+      <HandleComponent node={data} nodes={nodes} terminals={sortedTerminals} isParent={false} splitView={splitView} />
     </>
   );
 };

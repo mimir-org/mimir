@@ -1,32 +1,24 @@
+import * as Icons from "../../../../assets/icons/common/project";
 import { TextResources } from "../../../../assets/text";
-import {
-  SaveIcon,
-  CreateProjectIcon,
-  OpenProjectIcon,
-  ImportLibraryIcon,
-  ImportProjectIcon,
-  ExportLibraryIcon,
-  ExportProjectIcon,
-} from "../../../../assets/icons/common";
 
 const GetIcon = (type: string) => {
   switch (type) {
     case TextResources.Account_Save:
-      return <img src={SaveIcon} alt="save database" />;
+      return <img src={Icons.Save} alt="save database" />;
     case TextResources.Account_Save_File:
-      return <img src={ExportProjectIcon} alt="save file" />;
+      return <img src={Icons.ExportProject} alt="save file" />;
     case TextResources.Account_Commit_Project:
-      return <img src={ExportProjectIcon} alt="commit project" />;
+      return <img src={Icons.ExportLibrary} alt="commit project" />;
     case TextResources.Account_Open:
-      return <img src={OpenProjectIcon} alt="open" />;
+      return <img src={Icons.OpenProject} alt="open" />;
     case TextResources.Account_Create:
-      return <img src={CreateProjectIcon} alt="create" />;
+      return <img src={Icons.CreateProject} alt="create" />;
     case TextResources.Account_Save_Library:
-      return <img src={ExportLibraryIcon} alt="save library" />;
+      return <img src={Icons.ExportLibrary} alt="save library" />;
     case TextResources.Account_Import_Project:
-      return <img src={ImportProjectIcon} alt="import project" />;
+      return <img src={Icons.ImportProject} alt="import project" />;
     case TextResources.Account_Import_Library_Label:
-      return <img src={ImportLibraryIcon} alt="import library" />;
+      return <img src={Icons.ImportLibrary} alt="import library" />;
     default:
       return null;
   }

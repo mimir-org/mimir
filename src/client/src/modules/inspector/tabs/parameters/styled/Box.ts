@@ -21,9 +21,8 @@ const Box = styled.div`
     display: flex;
   }
 
-  img {
+  svg {
     margin-left: auto;
-
     width: 30px;
 
     :hover {

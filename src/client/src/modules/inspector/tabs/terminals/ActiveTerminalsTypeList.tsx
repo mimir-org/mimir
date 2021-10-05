@@ -28,9 +28,7 @@ function ActiveTerminalsTypeList({
   onTypeClick,
   onSelectTerminal,
 }: Props) {
-  const selectedTerminal = terminals.find(
-    (term) => term.id === selectedTerminalId
-  );
+  const selectedTerminal = terminals.find((term) => term.id === selectedTerminalId);
 
   const formatTerminalTypeName = (name: string) =>
     `${name} [${ConnectorType[connectorType].toLowerCase()}]`;
@@ -44,9 +42,7 @@ function ActiveTerminalsTypeList({
         <div className="numTypeTerminals">{terminals.length}</div>
         {formatTerminalTypeName(terminalType.name)}
         <img
-          src={
-            expanded ? ExpandAccordionNestedIcon : CollapseAccordionNestedIcon
-          }
+          src={expanded ? ExpandAccordionNestedIcon : CollapseAccordionNestedIcon}
           className="dropdownIcon"
           alt="expand-icon"
         />

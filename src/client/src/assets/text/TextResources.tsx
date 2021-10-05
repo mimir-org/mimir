@@ -67,8 +67,7 @@ const TextResources = {
   Inspector_Relations_Relationships: "Go To: Active Relations",
   Inspector_Relations_Active_Terminal_Types: "Active Terminal Types",
   Inspector_Relations_Terminal_Input: "Go To: Terminal Input Object Connection",
-  Inspector_Relations_Terminal_Output:
-    "Go To: Terminal Output Object Connection",
+  Inspector_Relations_Terminal_Output: "Go To: Terminal Output Object Connection",
   Inspector_Relations_Transport: "Go To: Connected Transport",
   Inspector_Relations_All_Terminal_Types: "All available Terminal Types",
   Inspector_Relations_Connector_Attributes: "Connector attributes",
@@ -121,9 +120,14 @@ const TextResources = {
   Inspector_Params_Clear_All: "Clear all Entities",
   Inspector_Params_Default: "Show Default Entities",
   Inspector_Params_Combinations: "Select combinations",
+  Inspector_Params_Combinations_Select_All: "Select all",
+
   Inspector_Params_Search: "Search or Select Entity...",
 
   Inspector_Terminals_Search: "Search Terminal Type",
+  Inspector_Qualifier: "Qualifier",
+  Inspector_Source: "Source",
+  Inspector_Condition: "Condition",
 
   // LibraryModule
   Library_SearchBox_Placeholder: "Search the Library",
@@ -141,8 +145,7 @@ const TextResources = {
   TypeEditor_Properties_RDS: "Choose RDS String",
   TypeEditor_Properties_Terminals: "Select Terminal Types",
   TypeEditor_Properties_Add_Terminal: "Add",
-  TypeEditor_Properties_Predefined_Location_Attributes:
-    "Select Predefined Location Attributes",
+  TypeEditor_Properties_Predefined_Location_Attributes: "Select Predefined Location Attributes",
   TypeEditor_Properties_Block_Attributes: "Select Block Attributes",
   TypeEditor_Properties_Location_Attributes: "Select Location Attributes",
   TypeEditor_Properties_Simple_Types: "Select Simple Types",
@@ -159,8 +162,7 @@ const TextResources = {
   TypeEditor_Error_RDS: "Please select RDS for the type.",
   TypeEditor_Error_Status: "Please select a status for the type",
   TypeEditor_Error_Attributes: "Please add one or more attributes.",
-  TypeEditor_Error_Location_Attributes:
-    "Please add one or more location attributes.",
+  TypeEditor_Error_Location_Attributes: "Please add one or more location attributes.",
   TypeEditor_Error_Terminals: "Please select one or more terminals.",
   TypeEditor_Error_Terminals_Block:
     "Please select one or more terminals. An Object Block must have at least one input terminal, and one output terminal.",
@@ -207,12 +209,10 @@ const TextResources = {
   Error_GetFileData: "Could not create nodes and edges from file",
   Error_SaveUpdateProject: "Could not create or update project",
   Error_ServerUnavailable: "The server is unavailable",
-  Error_NoActiveAccount:
-    "No active account. Verify a user has been signed in and setActiveAccount has been called",
+  Error_NoActiveAccount: "No active account. Verify a user has been signed in and setActiveAccount has been called",
 
   // BlockView
-  BlockView_Select_Message:
-    "Please select an additional object from the Explorer Module",
+  BlockView_Select_Message: "Please select an additional object from the Explorer Module",
   ConnectMenu_Select_All: "Select all",
   ConnectMenu_Clear_All: "Clear all",
 

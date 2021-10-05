@@ -3,11 +3,9 @@ import { ObjectType } from "../../../models";
 import { TextResources } from "../../../assets/text";
 import { NewTypeIcon, EditTypeIcon } from "../../../assets/icons/common";
 import { TypeEditorBox, TypeEditorBoxContent } from "../../../compLibrary/box";
-import {
-  getSelectedNode,
-  openTypeEditor,
-} from "../../../redux/store/typeEditor/actions";
+import { getSelectedNode, openTypeEditor } from "../../../redux/store/typeEditor/actions";
 import { GetLibraryType } from "./helpers";
+
 interface Props {
   selectedElement: string;
   selectedElementType: ObjectType;
@@ -18,11 +16,7 @@ interface Props {
  * @param param0
  * @returns buttons to add or edit a type in library module
  */
-export const TypeEditorModule = ({
-  selectedElement,
-  selectedElementType,
-  onChange,
-}: Props) => {
+export const TypeEditorModule = ({ selectedElement, selectedElementType, onChange }: Props) => {
   const dispatch = useDispatch();
 
   const onClick = () => {

@@ -45,8 +45,10 @@ const GlobalStyle = createGlobalStyle`
 
   .checkbox-block input {
     position: absolute;
-    opacity: 0;
+    opacity: 0;    
+    z-index:1;
   }
+  
   .checkbox input {
     position: absolute;
     opacity: 0;

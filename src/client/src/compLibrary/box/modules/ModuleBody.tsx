@@ -9,26 +9,22 @@ const ModuleBody = styled.div`
   overflow-y: auto;
   height: 100%;
   max-height: ${(props) =>
-    props.legend
-      ? "265px"
-      : props.explorer && props.isBlockView
-      ? "79%"
-      : "89%"};
+    props.legend ? "265px" : props.explorer && props.isBlockView ? "79%" : "89%"};
 
   @media screen and (max-height: 1100px) {
-    max-height: ${(props) => props.explorer && props.isBlockView && "76%"};
+    max-height: ${(props) => props.explorer && props.isBlockView && 76}%;
   }
   @media screen and (max-height: 1000px) {
-    max-height: ${(props) => props.explorer && props.isBlockView && "72%"};
+    max-height: ${(props) => props.explorer && props.isBlockView && 72}%;
   }
   @media screen and (max-height: 900px) {
-    max-height: ${(props) => props.explorer && props.isBlockView && "67%"};
+    max-height: ${(props) => props.explorer && props.isBlockView && 67}%;
   }
   @media screen and (max-height: 700px) {
-    max-height: ${(props) => props.explorer && props.isBlockView && "55%"};
+    max-height: ${(props) => props.explorer && props.isBlockView && 55}%;
   }
   @media screen and (max-height: 550px) {
-    max-height: ${(props) => props.explorer && props.isBlockView && "40%"};
+    max-height: ${(props) => props.explorer && props.isBlockView && 40}%;
   }
 `;
 

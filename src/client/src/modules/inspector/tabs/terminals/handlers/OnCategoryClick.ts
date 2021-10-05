@@ -7,9 +7,7 @@ export const OnCategoryClick = (
   setSelectedCategoriesIds: (categoryIds: string[]) => void
 ) => {
   if (expanded) {
-    setSelectedCategoriesIds(
-      selectedCategoriesIds.filter((id) => id !== category.id)
-    );
+    setSelectedCategoriesIds(selectedCategoriesIds.filter((id) => id !== category.id));
   } else {
     setSelectedCategoriesIds([...selectedCategoriesIds, category.id]);
   }

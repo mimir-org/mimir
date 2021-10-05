@@ -28,6 +28,7 @@ const DropdownMenuListItem = styled.div`
 
   :hover {
     background-color: ${Color.LightBlue};
+
     p {
       text-decoration: underline;
     }

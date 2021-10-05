@@ -1,6 +1,6 @@
 import { Attribute } from "../../../models";
 import { TabRow } from "../../inspector/styled";
-import { CreateId } from "../../../components/flow/helpers/common";
+import { CreateId } from "../../../components/flow/helpers";
 import { InputBox, AttributeField } from "../../../compLibrary";
 import { InputWrapper } from "../styled";
 

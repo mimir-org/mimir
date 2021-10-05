@@ -1,7 +1,13 @@
 import { FlowElement } from "react-flow-renderer";
 import { Node } from "../../../models";
-import { GetNodeType } from "../helpers/common";
+import { GetNodeType } from "../helpers";
 
+/**
+ * Function to convert a Mimir Node to a FlowElement that interacts with the Flow library.
+ * @param node
+ * @param position
+ * @returns a FlowElement
+ */
 const ConvertNodeToFlow = (node: Node, position) => {
   return {
     id: node.id,

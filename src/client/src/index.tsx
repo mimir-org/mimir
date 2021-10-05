@@ -1,3 +1,4 @@
+import "./index.scss";
 import red from "./redux/store/index";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
@@ -6,18 +7,10 @@ import { App } from "./components";
 import { PersistGate } from "redux-persist/integration/react";
 
 // MSAL imports
-import {
-  PublicClientApplication,
-  EventType,
-  EventMessage,
-  AuthenticationResult,
-} from "@azure/msal-browser";
 import { msalConfig } from "./models/webclient/MsalConfig";
-
-import "./index.scss";
+import { PublicClientApplication, EventType, EventMessage, AuthenticationResult } from "@azure/msal-browser";
 
 const rootElement = document.getElementById("root");
-
 export const msalInstance = new PublicClientApplication(msalConfig);
 
 const accounts = msalInstance.getAllAccounts();

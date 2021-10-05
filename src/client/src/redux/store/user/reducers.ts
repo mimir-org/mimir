@@ -12,10 +12,7 @@ const initialState: UserState = {
   apiError: [],
 };
 
-export function userReducer(
-  state = initialState,
-  action: UserActionTypes
-): UserState {
+export function userReducer(state = initialState, action: UserActionTypes): UserState {
   switch (action.type) {
     case FETCHING_USER:
       return {

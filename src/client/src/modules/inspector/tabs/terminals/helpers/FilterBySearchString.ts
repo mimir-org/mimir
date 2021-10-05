@@ -11,8 +11,7 @@ export const FilterBySearchString = (
     terminals.filter(
       (x) =>
         x &&
-        ((x.name &&
-          x.name.toLowerCase().includes(searchString.toLowerCase())) ||
+        ((x.name && x.name.toLowerCase().includes(searchString.toLowerCase())) ||
           (x.terminalCategoryId &&
             terminalCategories
               .find((cat) => cat.id === x.terminalCategoryId)

@@ -1,11 +1,6 @@
 import { call, put } from "redux-saga/effects";
 import { saveAs } from "file-saver";
-import {
-  get,
-  post,
-  ApiError,
-  GetBadResponseData,
-} from "../../../models/webclient";
+import { get, post, ApiError, GetBadResponseData } from "../../../models/webclient";
 import {
   FETCHING_LIBRARY_SUCCESS_OR_ERROR,
   EXPORT_LIBRARY_SUCCESS_OR_ERROR,
@@ -21,8 +16,7 @@ import {
 
 export function* searchLibrary(action: LibraryActionTypes) {
   try {
-    const url =
-      process.env.REACT_APP_API_BASE_URL + "library?name=" + action.payload;
+    const url = process.env.REACT_APP_API_BASE_URL + "library?name=" + action.payload;
     const response = yield call(get, url);
 
     // This is a bad request
@@ -192,9 +186,7 @@ export function* importLibrary(action: ImportLibraryAction) {
   }
 }
 
-export function* getTransportTypes(
-  action: FetchingLibraryTransportActionTypes
-) {
+export function* getTransportTypes(action: FetchingLibraryTransportActionTypes) {
   try {
     const url = process.env.REACT_APP_API_BASE_URL + "library/transport";
     const response = yield call(get, url);
@@ -243,9 +235,7 @@ export function* getTransportTypes(
   }
 }
 
-export function* getInterfaceTypes(
-  action: FetchingLibraryInterfaceActionTypes
-) {
+export function* getInterfaceTypes(action: FetchingLibraryInterfaceActionTypes) {
   try {
     const url = process.env.REACT_APP_API_BASE_URL + "library/interface";
     const response = yield call(get, url);

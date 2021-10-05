@@ -2,7 +2,7 @@ import GetInspectorText from "../helpers/GetInspectorText";
 import { useCallback } from "react";
 import { RootState } from "../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
-import { changeInspectorTab } from "../redux/actions";
+import { changeInspectorTab } from "../redux/tabs/actions";
 import { Edge } from "../../../models";
 import { TabEdgeContent } from ".";
 import { GetTabsColor } from "../helpers";
@@ -15,9 +15,7 @@ interface Props {
 
 const TabEdgeComponent = ({ edge, index }: Props) => {
   const dispatch = useDispatch();
-  const isOpen = useSelector<RootState>(
-    (state) => state.inspector.tabs[index]?.visible
-  ) as boolean;
+  const isOpen = useSelector<RootState>((state) => state.inspector.tabs[index]?.visible) as boolean;
 
   const onClick = useCallback(() => {
     dispatch(changeInspectorTab(index));
@@ -25,11 +23,7 @@ const TabEdgeComponent = ({ edge, index }: Props) => {
 
   return (
     <>
-      <TabHeader
-        active={isOpen}
-        onClick={onClick}
-        color={GetTabsColor(null, edge)}
-      >
+      <TabHeader active={isOpen} onClick={onClick} color={GetTabsColor(null, edge)}>
         {index === 0 && edge && <NodeInfo>{edge.id}</NodeInfo>}
         <TabTitle active={isOpen}>{GetInspectorText(index)}</TabTitle>
       </TabHeader>

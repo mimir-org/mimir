@@ -32,7 +32,4 @@ interface DeleteUserErrorAction {
   };
 }
 
-export type UserActionTypes =
-  | FetchUserAction
-  | FetchUserActionFinished
-  | DeleteUserErrorAction;
+export type UserActionTypes = FetchUserAction | FetchUserActionFinished | DeleteUserErrorAction;

@@ -1,3 +1,3 @@
-export { default as OnToggleClick } from "./OnToggleClick";
-export { default as OnDeleteClick } from "./OnDeleteClick";
-export { default as OnLockClick } from "./OnLockClick";
+export { default as OnToggle } from "./OnToggleClick";
+export { default as OnDelete } from "./OnDeleteClick";
+export { default as OnLock } from "./OnLockClick";

@@ -2,7 +2,7 @@ import { Project, Edge, Node } from "..";
 import { ProjectAm } from "../../redux/sagas/project/ConvertProject";
 import { ConnectorType, RelationType } from "../Enums";
 import { post } from "../../models/webclient";
-import { CreateId } from "../../components/flow/helpers/common";
+import { CreateId } from "../../components/flow/helpers";
 import { TextResources } from "../../assets/text";
 
 const readFile = (event: any): Promise<any> => {
@@ -19,10 +19,7 @@ const readFile = (event: any): Promise<any> => {
   });
 };
 
-const GetFileData = async (
-  event: any,
-  project: Project
-): Promise<[Node[], Edge[]]> => {
+const GetFileData = async (event: any, project: Project): Promise<[Node[], Edge[]]> => {
   try {
     let targetNodeId = event.target?.attributes["data-id"]?.value;
 
@@ -36,9 +33,7 @@ const GetFileData = async (
     if (!targetNode) return [[], []];
 
     const targetnodeConnector = targetNode.connectors.find(
-      (x) =>
-        x.relationType === RelationType.PartOf &&
-        x.type === ConnectorType.Output
+      (x) => x.relationType === RelationType.PartOf && x.type === ConnectorType.Output
     );
 
     if (!targetnodeConnector) return [[], []];
@@ -61,21 +56,15 @@ const GetFileData = async (
 
     // Add data to current project
     // Find the rootnode for current location
-    const rootNode = subProject.nodes.find(
-      (x) => x.isRoot && x.aspect === targetNode.aspect
-    );
+    const rootNode = subProject.nodes.find((x) => x.isRoot && x.aspect === targetNode.aspect);
 
     // Find the connector that should do a remap
     const rootNodeConnector = rootNode.connectors.find(
-      (x) =>
-        x.relationType === RelationType.PartOf &&
-        x.type === ConnectorType.Output
+      (x) => x.relationType === RelationType.PartOf && x.type === ConnectorType.Output
     );
 
     // Find edges that should change parent
-    const edges = subProject.edges.filter(
-      (x) => x.fromConnectorId === rootNodeConnector.id
-    );
+    const edges = subProject.edges.filter((x) => x.fromConnectorId === rootNodeConnector.id);
 
     // Remap edges
     edges.forEach((edge) => {
@@ -88,17 +77,11 @@ const GetFileData = async (
     });
 
     const nodesToCreate = subProject.nodes.filter(
-      (x) =>
-        !x.isRoot &&
-        x.aspect === targetNode.aspect &&
-        !project.nodes.find((y) => y.id === x.id)
+      (x) => !x.isRoot && x.aspect === targetNode.aspect && !project.nodes.find((y) => y.id === x.id)
     );
 
     const edgesToCreate = subProject.edges.filter(
-      (x) =>
-        x.fromNode.aspect === targetNode.aspect &&
-        !x.fromNode.isRoot &&
-        !project.edges.find((y) => y.id === x.id)
+      (x) => x.fromNode.aspect === targetNode.aspect && !x.fromNode.isRoot && !project.edges.find((y) => y.id === x.id)
     );
 
     nodesToCreate.forEach((node) => {

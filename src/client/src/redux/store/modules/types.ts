@@ -18,6 +18,4 @@ export interface SetModulesVisibilty {
   };
 }
 
-export type ModuleVisibilityActionTypes =
-  | SetModuleVisibilty
-  | SetModulesVisibilty;
+export type ModuleVisibilityActionTypes = SetModuleVisibilty | SetModulesVisibilty;

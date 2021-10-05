@@ -1,4 +1,4 @@
-import * as Handlers from "./handlers";
+import * as Click from "./handlers";
 import { SearchBar, ProjectList } from ".";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
@@ -10,12 +10,7 @@ import { useState } from "react";
 import { MessageComponent } from "../../message";
 import { ProjectSimple } from "../../../models";
 import { ProjectState } from "../../../redux/store/project/types";
-import {
-  ProjectBody,
-  ProjectBox,
-  HeaderBox,
-  ButtonBox,
-} from "../../../compLibrary/box/project";
+import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../../../compLibrary/box/project";
 
 interface Props {
   projectState: ProjectState;
@@ -29,9 +24,7 @@ export const OpenProjectMenu = ({ projectState, dispatch }: Props) => {
   const projectId = project?.id;
 
   const isOpen = useSelector<RootState>(
-    (state) =>
-      state.menu.list.find((x) => x.type === MENU_TYPE.OPEN_PROJECT_MENU)
-        ?.visible
+    (state) => state.menu.list.find((x) => x.type === MENU_TYPE.OPEN_PROJECT_MENU)?.visible
   ) as boolean;
 
   return (
@@ -39,34 +32,18 @@ export const OpenProjectMenu = ({ projectState, dispatch }: Props) => {
       <ProjectBox visible={isOpen}>
         <ProjectBody>
           <HeaderBox>
-            <img
-              src={CloseIcon}
-              alt="icon"
-              onClick={() => Handlers.OnReturnClick(dispatch)}
-              className="icon"
-            />
+            <img src={CloseIcon} alt="icon" onClick={() => Click.OnReturn(dispatch)} className="icon" />
             {TextResources.Account_Open_Label}
           </HeaderBox>
           <SearchBar />
           <ProjectList projectList={projects} />
-          <ButtonBox>
-            {projectId && (
-              <Button
-                onClick={() => Handlers.OnOpenClick(dispatch, setConfirm)}
-                type="Open"
-              />
-            )}
-          </ButtonBox>
+          <ButtonBox>{projectId && <Button onClick={() => Click.OnOpen(dispatch, setConfirm)} type="Open" />}</ButtonBox>
         </ProjectBody>
       </ProjectBox>
       {confirm && (
         <MessageComponent
-          handleSave={() =>
-            Handlers.OnSaveClick(dispatch, projectId, setConfirm)
-          }
-          handleNoSave={() =>
-            Handlers.OnNoSaveClick(dispatch, projectId, setConfirm)
-          }
+          handleSave={() => Click.OnSave(dispatch, projectId, setConfirm)}
+          handleNoSave={() => Click.OnNoSave(dispatch, projectId, setConfirm)}
         />
       )}
     </>

@@ -1,9 +1,8 @@
 import { Dispatch } from "redux";
-import { CloseParameterFilterIcon } from "../../../../assets/icons/common";
-import { Color } from "../../../../compLibrary";
+import { CloseParameterFilterIconComponent } from "../../../../assets/icons/common";
 import { CombinedAttribute, Connector, Node } from "../../../../models";
-import { GetParametersColor, DoesCombinationMatchAttribute } from "./helpers";
-import Parameter from "./Parameter";
+import { Parameter } from "./";
+import { DoesCombinationMatchAttribute } from "./helpers";
 import { Body, Entity, Box } from "./styled";
 import { CombinationDropdown } from "./styled/dropdown/combination";
 import {
@@ -21,6 +20,8 @@ interface Props {
   combinations: CombinedAttribute[];
   selectedCombinations: CombinedAttribute[];
   filterName: string;
+  headerColor: string;
+  bodyColor: string;
   dispatch: Dispatch<any>;
 }
 
@@ -30,23 +31,22 @@ function ParameterRow({
   combinations,
   selectedCombinations,
   filterName,
+  headerColor,
+  bodyColor,
   dispatch,
 }: Props) {
   const attributes = element.attributes;
-
   const isElementNode = (element as Node).connectors !== undefined;
 
   return (
     <Body>
       <Entity width={180}>
-        <Box color={GetParametersColor()} id="ParametersBox">
+        <Box color={bodyColor} id="ParametersBox">
           <div className="icon">
-            <img
-              src={CloseParameterFilterIcon}
-              alt="icon"
-              onClick={() =>
-                OnChangeFilterChoice(element.id, filterName, true, dispatch)
-              }
+            <CloseParameterFilterIconComponent
+              fill={headerColor}
+              stroke={headerColor}
+              onClick={() => OnChangeFilterChoice(element.id, filterName, true, dispatch)}
             />
           </div>
           <div className="text">{filterName}</div>
@@ -56,49 +56,26 @@ function ParameterRow({
           selectedItems={selectedCombinations}
           keyProp="combined"
           onChange={(combination, selected) =>
-            OnChangeAttributeCombinationChoice(
-              element.id,
-              filterName,
-              combination,
-              selected,
-              dispatch
-            )
+            OnChangeAttributeCombinationChoice(element.id, filterName, combination, selected, dispatch)
           }
-          color={Color.ParamsPurple}
+          color={headerColor}
         />
       </Entity>
       {selectedCombinations.map((combination) => (
         <Parameter
           key={combination.combined}
           attribute={attributes.find(
-            (attr) =>
-              attr.key === filterName &&
-              DoesCombinationMatchAttribute(combination, attr)
+            (attr) => attr.key === filterName && DoesCombinationMatchAttribute(combination, attr)
           )}
           combination={combination}
           isNodeLocked={elementIsLocked}
-          onChange={(id, value, unit, nodeId) =>
-            OnChangeParameterValue(id, value, unit, nodeId, dispatch)
-          }
+          headerColor={headerColor}
+          bodyColor={bodyColor}
+          onChange={(id, value, unit, nodeId) => OnChangeParameterValue(id, value, unit, nodeId, dispatch)}
           onLock={(attribute, isLocked) =>
-            OnLockParameter(
-              attribute,
-              isLocked,
-              element.id,
-              elementIsLocked,
-              isElementNode,
-              dispatch
-            )
+            OnLockParameter(attribute, isLocked, element.id, elementIsLocked, isElementNode, dispatch)
           }
-          onClose={() =>
-            OnChangeAttributeCombinationChoice(
-              element.id,
-              filterName,
-              combination,
-              true,
-              dispatch
-            )
-          }
+          onClose={() => OnChangeAttributeCombinationChoice(element.id, filterName, combination, true, dispatch)}
         />
       ))}
     </Body>
