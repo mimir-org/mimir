@@ -43,15 +43,16 @@ namespace Mb.Models.Application
 
         public decimal PositionBlockY { get; set; }
 
-        [LocationAspectRequiredDecimal]
+        [ValidatePositiveDecimal]
         public decimal? Length { get; set; }
 
-        [LocationAspectRequiredDecimal]
+        [ValidatePositiveDecimal]
         public decimal? Width { get; set; }
 
+        [ValidatePositiveDecimal]
         public decimal? Height { get; set; }
         
-        [ProductAspectRequiredDecimal]
+        [ValidatePositiveDecimal]
         public decimal? Cost { get; set; }
 
         [Required]

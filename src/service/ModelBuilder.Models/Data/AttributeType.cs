@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
+using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
 using Newtonsoft.Json;
 
 namespace Mb.Models.Data
@@ -25,6 +26,8 @@ namespace Mb.Models.Data
         public string FormatId { get; set; }
         public AttributeFormat Format { get; set; }
 
+        public string Description => CreateDescription();
+
         [JsonIgnore]
         public virtual ICollection<TerminalType> TerminalTypes { get; set; }
 
@@ -36,5 +39,28 @@ namespace Mb.Models.Data
 
         [JsonIgnore]
         public virtual ICollection<CompositeType> CompositeTypes { get; set; }
+
+        private string CreateDescription()
+        {
+            var text = string.Empty;
+
+            if (Source?.Name != null && Source?.Name != "NotSet")
+                text += Source.Name + " ";
+
+            text += Entity;
+
+            var subText = string.Empty;
+
+            if (Qualifier?.Name != null && Qualifier.Name != "NotSet")
+                subText = Qualifier.Name;
+
+            if (Condition?.Name != null && Condition.Name != "NotSet")
+                subText += ", " + Condition.Name;
+
+            if (!string.IsNullOrEmpty(subText))
+                text += " - " + subText;
+
+            return text;
+        }
     }
 }
