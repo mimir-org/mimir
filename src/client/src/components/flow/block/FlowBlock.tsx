@@ -1,10 +1,8 @@
 import ReactFlow, { ReactFlowProvider, Elements, Background } from "react-flow-renderer";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ProjectMainMenu } from "../../project";
 import { RootState } from "../../../redux/store/index";
 import { FullScreenComponent } from "../../../compLibrary/controls";
-import { OpenProjectMenu } from "../../project/openProject";
 import { Color, Size } from "../../../compLibrary";
 import { BackgroundBox } from "./styled";
 import { changeInspectorTab } from "../../../modules/inspector/redux/tabs/actions";
@@ -124,12 +122,6 @@ const FlowBlock = () => {
             </ReactFlow>
           </div>
         </ReactFlowProvider>
-      )}
-      {!project && (
-        <div>
-          <ProjectMainMenu project={project} />
-          <OpenProjectMenu projectState={projectState} dispatch={dispatch} />
-        </div>
       )}
     </>
   );
