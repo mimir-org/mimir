@@ -17,7 +17,7 @@ import { setModuleVisibility } from "../../../redux/store/modules/actions";
 import { MODULE_TYPE } from "../../../models/project";
 import { getBlobData } from "../../../redux/store/typeEditor/actions";
 import { SetPanelHeight } from "../../../modules/inspector/helpers";
-import { updatePosition, setActiveNode, setActiveEdge } from "../../../redux/store/project/actions";
+import { updatePosition, setActiveNode, setActiveEdge, setActiveBlockNode } from "../../../redux/store/project/actions";
 import { changeInspectorHeight } from "../../../modules/inspector/redux/height/actions";
 
 /**
@@ -65,6 +65,7 @@ const FlowTree = () => {
   const OnElementClick = (_event, element) => {
     dispatch(setActiveEdge(null, false));
     dispatch(setActiveNode(element.id, true));
+    dispatch(setActiveBlockNode(element.id));
     dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, true, true));
     dispatch(changeInspectorTab(0));
     if (!inspectorOpen) {
