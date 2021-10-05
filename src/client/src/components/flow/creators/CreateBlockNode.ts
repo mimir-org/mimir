@@ -1,9 +1,8 @@
 import { Node } from "../../../models";
 import { FlowElement } from "react-flow-renderer";
-import { SetBlockNodePosition, IsSplitView } from "../block/helpers";
-import { IsLocation } from "../helpers";
+import { IsSplitView } from "../block/helpers";
 import { SetConnectNodePosition } from "../block/connectView/helpers/position";
-import { TextResources } from "../../../assets/text";
+import { GetNodeTypeString, SetBlockNodePosition } from "./helpers";
 
 /**
  * Component to create a node in BlockView.
@@ -16,7 +15,7 @@ const CreateBlockNode = (node: Node, connectNode: Node, nodes: Node[]) => {
   if (!node) return null;
 
   const connectNodes = connectNode?.connectNodes ?? [];
-  const type = IsLocation(node) ? TextResources.Type_BlockLocation : TextResources.Type_BlockFunction;
+  const type = GetNodeTypeString(node);
 
   // Force node to fit Block
   let position = SetBlockNodePosition(node, IsSplitView());

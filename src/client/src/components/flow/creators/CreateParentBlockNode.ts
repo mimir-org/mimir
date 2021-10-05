@@ -2,7 +2,7 @@ import { FlowElement } from "react-flow-renderer";
 import { TextResources } from "../../../assets/text";
 import { Position } from "../../../compLibrary";
 import { Node } from "../../../models";
-import { IsLocation } from "../helpers";
+import { IsFunction } from "../helpers";
 
 /**
  * Component to create a parent node in BlockView.
@@ -16,7 +16,7 @@ const CreateParentBlockNode = (node: Node, splitView: boolean) => {
   const type = TextResources.Type_BlockParentNode;
   let position = { x: Position.FunctionBlock_xPos, y: 100 };
 
-  if (IsLocation(node) && splitView) position.x = Position.FunctionBlock_xPos + 750; // TODO: remove magic number
+  if (!IsFunction(node) && splitView) position.x = Position.FunctionBlock_xPos + 750; // TODO: remove magic number
 
   return {
     id: node.id,

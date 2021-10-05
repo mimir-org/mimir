@@ -85,8 +85,8 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
     <>
       <NodeBox
         id={"BlockFunctionNode-" + data.id}
-        onMouseOver={() => OnHover(showTerminalBox, showConnectBox, data.id)}
-        onMouseOut={() => OnMouseOut(showTerminalBox, showConnectBox, data.id)}
+        onMouseOver={() => OnHover(showTerminalBox, showConnectBox)}
+        onMouseOut={() => OnMouseOut(showTerminalBox, showConnectBox)}
       >
         <BlockNodeNameBox>{data.label ?? data.name}</BlockNodeNameBox>
         <Symbol base64={data.symbol} text={data.name} />

@@ -7,6 +7,7 @@ import { RootState } from "../../../../redux/store";
 import { HandleComponent, TerminalsComponent } from "../../block/terminals";
 import { IsLocation } from "../../helpers";
 import { Size } from "../../../../compLibrary";
+import { GetParentColor } from "./helpers";
 import { OnParentClick, OnChildClick } from "./handlers";
 import { BlockComponent } from "./";
 import { BlockMessageBox } from "../../block/styled";
@@ -57,7 +58,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
     <>
       <BlockComponent
         node={node}
-        isLocation={IsLocation(node)}
+        color={GetParentColor(node)}
         isSplitView={isSplitView}
         isSelected={node?.isBlockSelected}
         onParentClick={() => OnParentClick(dispatch, node, nodes, edges)}

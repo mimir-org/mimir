@@ -10,6 +10,7 @@ import { Connector, Node } from "../../../../models";
 import { OnHover, OnMouseOut } from "./handlers";
 import { IsLocation } from "../../helpers";
 import { SetTerminalOrder, FilterTerminals, FindNodeByDataId } from "../../block/helpers";
+import { Symbol } from "../../../../compLibrary/symbol";
 
 /**
  * Component for a Location Node in BlockView.
@@ -44,13 +45,11 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
     <>
       <NodeBox
         id={`BlockLocationNode-` + data.id}
-        onMouseOver={() => OnHover(showTerminalButton, data.id)}
-        onMouseOut={() => OnMouseOut(showTerminalButton, data.id)}
-        width={data.width}
-        length={data.length}
-        location
+        onMouseOver={() => OnHover(showTerminalButton)}
+        onMouseOut={() => OnMouseOut(showTerminalButton)}
       >
         <BlockNodeNameBox>{data.label ?? data.name}</BlockNodeNameBox>
+        <Symbol base64={data.symbol} text={data.name} />
 
         <TerminalsComponent
           node={data}

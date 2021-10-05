@@ -5,7 +5,7 @@ import { Navigation, Banner, Block, Header } from "./styled";
 
 interface Props {
   node: Node;
-  isLocation: boolean;
+  color: string;
   isSplitView: boolean;
   isSelected: boolean;
   onParentClick: () => void;
@@ -14,12 +14,12 @@ interface Props {
 
 /**
  * Component for the parent node block in BlockView
- * @param param0
+ * @param interface
  * @returns a container that sits on top of a Flow node
  */
-const BlockComponent = ({ node, isLocation, isSplitView, isSelected, onParentClick, onChildClick }: Props) => (
+const BlockComponent = ({ node, color, isSplitView, isSelected, onParentClick, onChildClick }: Props) => (
   <Block id={"function-block-" + node?.id} splitView={isSplitView} selected={isSelected}>
-    <Banner location={isLocation}>
+    <Banner color={color}>
       <Header>
         <Navigation>{!IsAspectNode(node) && <img src={ArrowUp} alt="up" onClick={() => onParentClick()} />}</Navigation>
         <Navigation>

@@ -6,6 +6,7 @@ const GetConnectorIcon = (color: string) => {
   if (color === Color.Terminal_Water) return WaterIcon;
   if (color === Color.Terminal_Gas) return GasIcon;
   if (color === Color.Terminal_Multiphase) return MultiphaseIcon;
+  // TODO: fix solution for all terminals
 
   return ConnectorIcon;
 };
