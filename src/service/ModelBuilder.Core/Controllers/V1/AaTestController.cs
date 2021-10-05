@@ -120,7 +120,7 @@ namespace Mb.Core.Controllers.V1
         {
             try
             {
-                var id = "equinor.com_01166d78-8c6f-4048-b568-3c406e0849df";
+                var id = "equinor.com_16857111-7c79-45f2-b2d9-b9d67e52ca9e";
                 var parser = "rdfparser";
 
                 var (file, format) = await _projectService.CreateFile(id, parser);
