@@ -15,9 +15,7 @@ export const ProjectMainMenu = ({ project }: Props) => {
   const dispatch = useDispatch();
   const hasProject = project !== null;
 
-  const isOpen = useSelector<RootState>(
-    (state) => state.menu.list.find((x) => x.type === MENU_TYPE.MAIN_MENU).visible
-  ) as boolean;
+  const isOpen = useSelector<RootState>((state) => state.menu.activeMenu === MENU_TYPE.MAIN_MENU) as boolean;
 
   return (
     !hasProject && (

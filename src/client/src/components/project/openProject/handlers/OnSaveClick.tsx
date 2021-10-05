@@ -1,5 +1,4 @@
-import { MENU_TYPE } from "../../../../models/project";
-import { changeMenu } from "../../../../redux/store/projectMenu/actions";
+import { setAccountMenuVisibility } from "../../../../redux/store/projectMenu/actions";
 import { get } from "../../../../redux/store/project/actions";
 
 const OnSaveClick = (dispatch: any, projectId: string, setConfirm: any) => {
@@ -7,7 +6,7 @@ const OnSaveClick = (dispatch: any, projectId: string, setConfirm: any) => {
   setConfirm(false);
   dispatch(get(projectId));
   // dispatch(save(currentProject));
-  dispatch(changeMenu(MENU_TYPE.ACCOUNT_MENU, false));
+  dispatch(setAccountMenuVisibility(false));
 };
 
 export default OnSaveClick;

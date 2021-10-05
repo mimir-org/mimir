@@ -15,7 +15,7 @@ export const ImportProjectFileMenu = () => {
   const dispatch = useDispatch();
 
   const isOpen = useSelector<RootState>(
-    (state) => state.menu.list.find((x) => x.type === MENU_TYPE.IMPORT_PROJECT_FILE_MENU)?.visible
+    (state) => state.menu.activeMenu === MENU_TYPE.IMPORT_PROJECT_FILE_MENU
   ) as boolean;
 
   const [openFileSelector, { filesContent, plainFiles }] = useFilePicker({
