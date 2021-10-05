@@ -19,7 +19,7 @@ export const ExportProjectFileMenu = ({ projectState, dispatch }: Props) => {
   const [fileName, setFileName] = useState("");
 
   const isOpen = useSelector<RootState>(
-    (state) => state.menu.list.find((x) => x.type === MENU_TYPE.SAVE_PROJECT_FILE_MENU)?.visible
+    (state) => state.menu.activeMenu === MENU_TYPE.SAVE_PROJECT_FILE_MENU
   ) as boolean;
 
   return (

@@ -25,8 +25,8 @@ interface RouteParams {
  */
 const Home = () => {
   const dispatch = useDispatch();
-  const accountMenuOpen = useSelector<RootState>((state) => state.menu.list[1].visible) as boolean;
-  const filterMenuOpen = useSelector<RootState>((state) => state.menu.list[4].visible) as boolean;
+  const accountMenuOpen = useSelector<RootState>((state) => state.menu.accountMenuVisibility) as boolean;
+  const filterMenuOpen = useSelector<RootState>((state) => state.menu.filterMenuVisibility) as boolean;
   const params = useParams<RouteParams>();
 
   useEffect(() => {

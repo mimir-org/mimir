@@ -23,9 +23,7 @@ export const OpenProjectMenu = ({ projectState, dispatch }: Props) => {
   const project = projects?.find((x) => x.selected);
   const projectId = project?.id;
 
-  const isOpen = useSelector<RootState>(
-    (state) => state.menu.list.find((x) => x.type === MENU_TYPE.OPEN_PROJECT_MENU)?.visible
-  ) as boolean;
+  const isOpen = useSelector<RootState>((state) => state.menu.activeMenu === MENU_TYPE.OPEN_PROJECT_MENU) as boolean;
 
   return (
     <>

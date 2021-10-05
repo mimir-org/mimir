@@ -43,7 +43,6 @@ export type MenuType = keyof typeof MENU_TYPE;
 export const MENU_TYPE = {
   ACCOUNT_MENU: "AccountMenu",
   OPEN_PROJECT_MENU: "OpenProjectMenu",
-  MAIN_MENU: "MainMenu",
   CREATE_PROJECT_MENU: "CreateProjectMenu",
   VISUAL_FILTER_MENU: "VisualFilter",
   SAVE_PROJECT_FILE_MENU: "SaveProjectFile",

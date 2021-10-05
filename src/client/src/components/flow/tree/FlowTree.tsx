@@ -2,12 +2,10 @@ import * as Helpers from "./helpers/";
 import ReactFlow, { ReactFlowProvider, Elements } from "react-flow-renderer";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ProjectMainMenu } from "../../project";
 import { RootState } from "../../../redux/store/index";
 import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
 import { FullScreenComponent } from "../../../compLibrary/controls";
 import { Size } from "../../../compLibrary";
-import { OpenProjectMenu } from "../../project/openProject/";
 import { BlobData } from "../../../models";
 import { ProjectState } from "../../../redux/store/project/types";
 import { IsBlockView } from "../block/helpers";
@@ -109,12 +107,6 @@ const FlowTree = () => {
             <FullScreenComponent />
           </ReactFlow>
         </ReactFlowProvider>
-      )}
-      {!project && (
-        <div>
-          <ProjectMainMenu project={project} />
-          <OpenProjectMenu projectState={projectState} dispatch={dispatch} />
-        </div>
       )}
     </>
   );
