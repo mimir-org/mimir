@@ -1,5 +1,5 @@
 import { FontSize } from "../../../../compLibrary";
-import { ParameterDescriptor } from "./ParameterDescriptor";
+import { ParameterDescriptor } from "./";
 import { ParameterBox, ParameterHeader } from "./styled/parameter";
 import { Dropdown as CompDropdown } from "../../../../compLibrary/dropdown/mimir";
 import { Attribute, CombinedAttribute } from "../../../../models";
@@ -24,16 +24,7 @@ interface Props {
   onClose: (id: string) => void;
 }
 
-function Parameter({
-  attribute,
-  combination,
-  isNodeLocked,
-  headerColor,
-  bodyColor,
-  onLock,
-  onClose,
-  onChange,
-}: Props) {
+function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColor, onLock, onClose, onChange }: Props) {
   const [value, setValue] = useState(attribute.value ?? "");
   const [unit, setUnit] = useState(attribute.unit ?? attribute.units[0]);
 
@@ -64,12 +55,7 @@ function Parameter({
               />
             )}
 
-            <img
-              src={CloseParameterIcon}
-              className="parameterIcon"
-              alt="icon"
-              onClick={() => onClose(attribute.id)}
-            />
+            <img src={CloseParameterIcon} className="parameterIcon" alt="icon" onClick={() => onClose(attribute.id)} />
           </div>
         </ParameterHeader>
         <ParameterDescriptor

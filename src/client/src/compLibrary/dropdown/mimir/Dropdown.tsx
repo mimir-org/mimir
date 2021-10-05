@@ -2,12 +2,7 @@ import { useState, useEffect } from "react";
 import { FontSize } from "../..";
 import { ExpandIcon, CollapseIcon } from "../../../assets/icons/common";
 import { Symbol } from "../../symbol";
-import {
-  DropdownMenuWrapper,
-  DropdownMenuHeader,
-  DropdownMenuList,
-  DropdownMenuListItem,
-} from "./styled";
+import { DropdownMenuWrapper, DropdownMenuHeader, DropdownMenuList, DropdownMenuListItem } from "./styled";
 
 interface Props {
   label: string;
@@ -67,24 +62,12 @@ const Dropdown = ({
     >
       <label htmlFor={label} />
       <div onClick={disabled ? null : (e) => setIsListOpen(!isListOpen)}>
-        <DropdownMenuHeader
-          borderRadius={borderRadius}
-          fontSize={fontSize}
-          height={height}
-        >
+        <DropdownMenuHeader borderRadius={borderRadius} fontSize={fontSize} height={height}>
           {selectedItem && (
             <>
-              {valueImageProp && (
-                <Symbol
-                  base64={selectedItem[valueImageProp]}
-                  text={selectedItem[valueProp]}
-                />
-              )}
+              {valueImageProp && <Symbol base64={selectedItem[valueImageProp]} text={selectedItem[valueProp]} />}
               <p>{selectedItem.name ?? selectedItem.key}</p>
-              <img
-                src={isListOpen ? ExpandIcon : CollapseIcon}
-                alt="expand-icon"
-              />
+              <img src={isListOpen ? ExpandIcon : CollapseIcon} alt="expand-icon" />
             </>
           )}
         </DropdownMenuHeader>
@@ -94,17 +77,8 @@ const Dropdown = ({
           {items?.map((item) => {
             return (
               <div onClick={(e) => handleChange(e, item)} key={item[keyProp]}>
-                <DropdownMenuListItem
-                  fontSize={fontSize}
-                  height={height}
-                  borderRadius={borderRadius}
-                >
-                  {valueImageProp && (
-                    <Symbol
-                      base64={item[valueImageProp]}
-                      text={item[valueProp]}
-                    />
-                  )}
+                <DropdownMenuListItem fontSize={fontSize} height={height} borderRadius={borderRadius}>
+                  {valueImageProp && <Symbol base64={item[valueImageProp]} text={item[valueProp]} />}
 
                   <p>{item.name ?? item.key}</p>
                 </DropdownMenuListItem>

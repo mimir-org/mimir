@@ -1,4 +1,4 @@
-const OnMouseLeave = (setTimer) => {
+const OnMouseLeave = (setTimer: any) => {
   setTimer(true);
 };
 

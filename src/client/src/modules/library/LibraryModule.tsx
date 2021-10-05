@@ -11,100 +11,62 @@ import { GetLibCategories } from "./helpers";
 import { ModuleBody, ModuleHead } from "../../compLibrary/box/modules";
 import { LegendHead, LegendIcons } from "../../compLibrary/box/library";
 import { MODULE_TYPE } from "../../models/project";
-import { GetSelectedNode } from "../../components/flow/helpers/common";
+import { GetSelectedNode } from "../../components/flow/helpers";
 import { OnLibraryClick, OnLegendClick } from "./handlers";
-import {
-  LegendIcon,
-  LibraryIcon,
-  DownIcon,
-  LeftIcon,
-  RightIcon,
-  UpIcon,
-} from "../../assets/icons/common";
+import { Project } from "../../models";
+import { UpIcon, DownIcon } from "../../assets/icons/common";
+import { LegendIcon, LibraryIcon } from "../../assets/icons/common/modules";
 
+/**
+ * Component for Mimir's type library and Legend Module (to be removed).
+ * @returns a module with a drop-down of types and a search input.
+ */
 const LibraryModule = () => {
-  const libraryKey = MODULE_TYPE.LIBRARY;
-  const legendKey = MODULE_TYPE.LEGEND;
   const dispatch = useDispatch();
-
-  const libraryState = useSelector<RootState>(
-    (state) => state.library
-  ) as LibraryState;
+  const lib = MODULE_TYPE.LIBRARY;
+  const legend = MODULE_TYPE.LEGEND;
+  const search = (text: string) => dispatch(searchLibrary(text));
 
   useEffect(() => {
     dispatch(searchLibrary(""));
   }, [dispatch]);
 
-  const search = (text: string) => {
-    dispatch(searchLibrary(text));
-  };
-
-  const libraryOpen = useSelector<RootState>(
-    (state) => state.modules.types.find((x) => x.type === libraryKey).visible
-  ) as boolean;
-
-  const legendOpen = useSelector<RootState>(
-    (state) => state.modules.types.find((x) => x.type === legendKey).visible
-  ) as boolean;
-
-  const animate = useSelector<RootState>(
-    (state) => state.modules.types.find((x) => x.type === libraryKey).animate
-  ) as boolean;
-
-  const animateLegend = useSelector<RootState>(
-    (state) => state.modules.types.find((x) => x.type === legendKey).animate
-  ) as boolean;
-
-  const isSplitView = useSelector<RootState>(
-    (state) => state.splitView.visible
-  ) as boolean;
+  const libState = useSelector<RootState>((s) => s.library) as LibraryState;
+  const project = useSelector<RootState>((s) => s.projectState?.project) as Project;
+  const splitView = useSelector<RootState>((s) => s.splitView.visible) as boolean;
+  const legendOpen = useSelector<RootState>((s) => s.modules.types.find((x) => x.type === legend).visible) as boolean;
+  const animate = useSelector<RootState>((s) => s.modules.types.find((x) => x.type === lib).animate) as boolean;
+  const libOpen = useSelector<RootState>((s) => s.modules.types.find((x) => x.type === lib).visible) as boolean;
+  const animateLegend = useSelector<RootState>((s) => s.modules.types.find((x) => x.type === legend).animate) as boolean;
 
   const selectedNode = GetSelectedNode();
-  const start = libraryOpen ? Size.ModuleClosed : Size.ModuleOpen;
-  const stop = libraryOpen ? Size.ModuleOpen : Size.ModuleClosed;
+  const start = libOpen ? Size.ModuleClosed : Size.ModuleOpen;
+  const stop = libOpen ? Size.ModuleOpen : Size.ModuleClosed;
   const startLegend = legendOpen ? Size.ModuleClosed : Size.ModuleOpen;
   const stopLegend = legendOpen ? Size.ModuleOpen : Size.ModuleClosed;
 
   return (
-    <AnimatedModule
-      start={start}
-      stop={stop}
-      run={animate}
-      type={libraryKey}
-      id="LibraryModule"
-    >
-      <ModuleHead library visible={libraryOpen}>
-        <img src={LibraryIcon} alt="library-icon" className="module-icon" />
+    <AnimatedModule start={start} stop={stop} run={animate} type={lib} id="LibraryModule">
+      <ModuleHead library visible={libOpen}>
         <img
           className="icon"
-          src={libraryOpen ? RightIcon : LeftIcon}
+          src={LibraryIcon}
           alt="toggle"
-          onClick={() =>
-            OnLibraryClick(dispatch, libraryOpen, libraryKey, legendKey)
-          }
+          onClick={() => OnLibraryClick(dispatch, libOpen, lib, legend)}
         />
         <p className="text">{TextResources.Module_Library}</p>
       </ModuleHead>
-      <ModuleBody visible={libraryOpen} library>
-        <LibraryComponent
-          categories={GetLibCategories(selectedNode, isSplitView, libraryState)}
-          search={search}
-        />
+      <ModuleBody visible={libOpen} library>
+        <LibraryComponent categories={GetLibCategories(selectedNode, splitView, libState)} search={search} />
       </ModuleBody>
 
-      <AnimatedModule
-        start={startLegend}
-        stop={stopLegend}
-        run={animateLegend}
-        type={legendKey}
-        id="LegendModule"
-      >
+      <AnimatedModule start={startLegend} stop={stopLegend} run={animateLegend} type={legend} id="LegendModule">
         <ModuleHead legend>
           <LegendHead open={legendOpen}>
             <img
               src={legendOpen ? DownIcon : UpIcon}
-              alt=""
-              onClick={() => OnLegendClick(dispatch, legendOpen, legendKey)}
+              alt="arrow"
+              onClick={() => OnLegendClick(dispatch, legendOpen, legend)}
             />
           </LegendHead>
           <LegendIcons open={legendOpen}>
@@ -112,7 +74,7 @@ const LibraryModule = () => {
             <p className="text">{TextResources.Module_Legend}</p>
           </LegendIcons>
         </ModuleHead>
-        <LegendModule visible={true} />
+        <LegendModule visible={true} project={project} />
       </AnimatedModule>
     </AnimatedModule>
   );

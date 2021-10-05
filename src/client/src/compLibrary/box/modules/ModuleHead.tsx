@@ -5,8 +5,8 @@ const ModuleHeader = styled.div`
   font-family: ${FontType.Standard};
   font-size: ${FontSize.Header};
   text-align: center;
-  padding-top: ${(props) => (props.legend ? "15px" : "5px")};
-  height: ${(props) => (props.legend ? "60px" : "25px")};
+  padding-top: ${(props) => (props.legend ? 15 : 5)}px;
+  height: ${(props) => (props.legend ? 60 : 25)}px;
   position: relative;
   margin-left: ${(props) => props.library && "7px"};
   margin-right: ${(props) => props.explorer && "7px"};
@@ -14,7 +14,7 @@ const ModuleHeader = styled.div`
   margin-bottom: ${(props) => props.inspector && "12px"};
   width: ${(props) => (props.inspector ? "154px" : "initial")};
   float: ${(props) => props.inspector && "right"};
-  border-top: ${(props) => props.legend && `1px solid ${Color.Grey}`};
+  border-top: ${(props) => props.legend && "1px solid" + Color.Grey};
 
   .text {
     position: relative;
@@ -45,23 +45,6 @@ const ModuleHeader = styled.div`
     float: right;
     bottom: 25px;
     margin-top: 6px;
-  }
-
-  .module-icon {
-    position: absolute;
-    right: ${(props) =>
-      props.explorer && props.visible
-        ? "190px"
-        : props.explorer
-        ? "2px"
-        : "85px"};
-    left: ${(props) =>
-      props.library && props.visible
-        ? "100px"
-        : props.library
-        ? "0px"
-        : "unset"};
-    top: ${(props) => !(props.visible || props.legend) && "42px"};
   }
 `;
 

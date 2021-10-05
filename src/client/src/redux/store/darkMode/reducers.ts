@@ -4,10 +4,7 @@ const initialState = {
   active: false,
 };
 
-export function darkModeReducer(
-  state = initialState,
-  action: DarkModeActionTypes
-) {
+export function darkModeReducer(state = initialState, action: DarkModeActionTypes) {
   if (action.type === SET_DARK_MODE) {
     return {
       ...state,

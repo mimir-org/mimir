@@ -1,4 +1,4 @@
-import { FindNodeByDataId } from "../../../helpers/block";
+import { FindNodeByDataId } from "../../../block/helpers";
 
 const OnMouseOut = (showTerminalButton, id) => {
   showTerminalButton(false);

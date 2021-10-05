@@ -1,18 +1,11 @@
 import { useState } from "react";
-import {
-  ConnectorType,
-  TerminalType,
-  TerminalTypeItem,
-} from "../../../../../models";
-import {
-  TerminalListElement,
-  TerminalCategoryWrapper,
-  AddTerminalWrapper,
-} from "../../styled";
+import { ConnectorType, TerminalType, TerminalTypeItem } from "../../../../../models";
+import { TerminalListElement, TerminalCategoryWrapper, AddTerminalWrapper } from "../../styled";
 import { ExpandIcon, CollapseIcon } from "../../../../../assets/icons/common";
 import AddTerminal from "./AddTerminal/AddTerminalComponent";
 import { TextResources } from "../../../../../assets/text";
-import { CreateId } from "../../../../flow/helpers/common";
+import { CreateId } from "../../../../flow/helpers";
+
 interface Props {
   name: string;
   terminalTypes: TerminalType[];

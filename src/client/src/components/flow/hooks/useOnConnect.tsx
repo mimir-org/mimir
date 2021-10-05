@@ -1,30 +1,17 @@
 import { EdgeType, EDGE_TYPE } from "../../../models/project";
 import { SaveEventData } from "../../../redux/store/localStorage/localStorage";
-import { CreateId } from "../helpers/common";
+import { CreateId } from "../helpers";
 import { addEdge } from "react-flow-renderer";
 import { createEdge } from "../../../redux/store/project/actions";
 import { Connector, Edge, Node } from "../../../models";
 import { ConvertToEdge } from "../converters";
 import { LibraryState } from "../../../redux/store/library/types";
 
-const useOnConnect = (
-  params,
-  project,
-  setElements,
-  dispatch,
-  edgeType: EdgeType,
-  library: LibraryState
-) => {
+const useOnConnect = (params, project, setElements, dispatch, edgeType: EdgeType, library: LibraryState) => {
   SaveEventData(null, "edgeEvent");
   const createdId = CreateId();
-
-  const sourceNode = project.nodes.find(
-    (node: Node) => node.id === params.source
-  ) as Node;
-
-  const targetNode = project.nodes.find(
-    (node: Node) => node.id === params.target
-  ) as Node;
+  const sourceNode = project.nodes.find((node: Node) => node.id === params.source) as Node;
+  const targetNode = project.nodes.find((node: Node) => node.id === params.target) as Node;
 
   let sourceConn: Connector;
   let targetConn: Connector;
@@ -47,15 +34,7 @@ const useOnConnect = (
   );
 
   if (!existingEdge) {
-    const edge = ConvertToEdge(
-      createdId,
-      sourceConn,
-      targetConn,
-      sourceNode,
-      targetNode,
-      project.id,
-      library
-    );
+    const edge = ConvertToEdge(createdId, sourceConn, targetConn, sourceNode, targetNode, project.id, library);
 
     currentEdge = edge;
     dispatch(createEdge(edge));

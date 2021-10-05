@@ -1,4 +1,4 @@
-const OnConnectMenuClick = (showConnectMenu, connectMenu: boolean) => {
+const OnConnectMenuClick = (showConnectMenu: any, connectMenu: boolean) => {
   showConnectMenu(!connectMenu);
 };
 

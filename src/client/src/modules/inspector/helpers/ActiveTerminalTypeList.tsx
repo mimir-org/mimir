@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { FontSize } from "../../../compLibrary";
 import { ConnectorType } from "../../../models";
 
+// TODO: move styled components
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -40,11 +41,7 @@ const ActiveTerminalTypeList = ({ terminals, title, onElementClick }) => (
     <ObjectsContainer>
       {terminals?.map((n, i) => {
         return (
-          <ListElement
-            onClick={() => onElementClick(n.id)}
-            index={i}
-            key={n.id}
-          >
+          <ListElement onClick={() => onElementClick(n.id)} index={i} key={n.id}>
             {n.name} {ConnectorType[n.type]}
           </ListElement>
         );

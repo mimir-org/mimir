@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { FlowTree, FlowBlock } from ".";
+import { FlowTree } from "./tree";
+import { FlowBlock } from "./block";
 import { VIEW_TYPE } from "../../models/project";
 import { changeFlowView } from "../../redux/store/flow/actions";
 import { TypeEditorComponent } from "../modules/typeEditorModule";

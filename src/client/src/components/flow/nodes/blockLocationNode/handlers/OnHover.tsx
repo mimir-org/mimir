@@ -1,4 +1,4 @@
-import { FindNodeByDataId } from "../../../helpers/block";
+import { FindNodeByDataId } from "../../../block/helpers";
 
 const OnHover = (showTerminalButton, id) => {
   showTerminalButton(true);

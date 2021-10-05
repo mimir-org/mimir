@@ -3,75 +3,52 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { Size } from "../../compLibrary";
 import { MODULE_TYPE } from "../../models/project";
-import { IsBlockView } from "../../components/flow/helpers/block";
-import { Node, Project } from "../../models";
+import { IsBlockView } from "../../components/flow/block/helpers";
+import { Project } from "../../models";
 import { DragResizePanel } from "./helpers";
 import { AnimatedInspector } from "./styled";
 import { InspectorHeader } from ".";
-import {
-  GetSelectedNode,
-  IsExplorer,
-  IsLibrary,
-} from "../../components/flow/helpers/common";
+import { GetSelectedNode, IsExplorer, IsLibrary } from "../../components/flow/helpers";
 
+/**
+ * Component for the Inspector Module that shows the data for each object in Flow.
+ * @returns a module with multiple tabs for different operations.
+ */
 const InspectorModule = () => {
   const dispatch = useDispatch();
   const type = MODULE_TYPE.INSPECTOR;
+  const project = useSelector<RootState>((s) => s.projectState.project) as Project;
+  const animate = useSelector<RootState>((s) => s.modules.types.find((x) => x.type === type).animate) as boolean;
+  const inspectorOpen = useSelector<RootState>((s) => s.modules.types.find((x) => x.type === type).visible) as boolean;
+  const libraryOpen = useSelector<RootState>((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible) as boolean;
+  const explorerOpen = useSelector<RootState>((s) => s.modules.types.find((x) => IsExplorer(x.type)).visible) as boolean;
+  let height = (useSelector<RootState>((s) => s.inspectorHeight.height) as number) ?? Size.ModuleOpen;
+  if (!inspectorOpen) height = Size.ModuleClosed;
 
-  const project = useSelector<RootState>(
-    (state) => state.projectState.project
-  ) as Project;
+  const stop = inspectorOpen ? height : Size.ModuleClosed;
+  const start = inspectorOpen ? Size.ModuleClosed : Size.ModuleOpen;
 
-  const animate = useSelector<RootState>(
-    (state) => state.modules.types.find((x) => x.type === type).animate
-  ) as boolean;
-
-  const isInspectorOpen = useSelector<RootState>(
-    (state) => state.modules.types.find((x) => x.type === type).visible
-  ) as boolean;
-
-  const isLibraryOpen = useSelector<RootState>(
-    (state) => state.modules.types.find((x) => IsLibrary(x.type)).visible
-  ) as boolean;
-
-  const isExplorerOpen = useSelector<RootState>(
-    (state) => state.modules.types.find((x) => IsExplorer(x.type)).visible
-  ) as boolean;
-
-  const start = isInspectorOpen ? Size.ModuleClosed : Size.InspectorModuleOpen;
-  const stop = isInspectorOpen ? Size.InspectorModuleOpen : Size.ModuleClosed;
   const nodes = project?.nodes ?? [];
   const edges = project?.edges ?? [];
-
-  let edge = edges.find((x) => x.isSelected);
-  let node: Node;
-
-  if (IsBlockView()) {
-    node = nodes.find((x) => x.isBlockSelected);
-  } else node = GetSelectedNode();
+  const edge = edges.find((x) => x.isSelected);
+  const node = IsBlockView() ? nodes?.find((x) => x.isBlockSelected) : GetSelectedNode();
 
   useEffect(() => {
-    DragResizePanel();
-  }, []);
+    if (inspectorOpen) DragResizePanel();
+  }, [inspectorOpen]);
 
   return (
     <AnimatedInspector
+      id="InspectorModule"
       type={type}
-      isLibraryOpen={isLibraryOpen}
-      isExplorerOpen={isExplorerOpen}
+      isLibraryOpen={libraryOpen}
+      isExplorerOpen={explorerOpen}
       start={start}
       stop={stop}
       run={animate}
-      id="InspectorModule"
+      height={height}
     >
-      <InspectorHeader
-        project={project}
-        node={node}
-        edge={edge}
-        dispatch={dispatch}
-        open={isInspectorOpen}
-        type={type}
-      />
+      <InspectorHeader project={project} node={node} edge={edge} dispatch={dispatch} open={inspectorOpen} type={type} />
     </AnimatedInspector>
   );
 };

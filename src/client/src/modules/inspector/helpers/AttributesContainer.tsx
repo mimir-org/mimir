@@ -1,9 +1,4 @@
-import {
-  InnerListElement,
-  ListContainer,
-  ListElement,
-  Wrapper,
-} from "../styled";
+import { InnerListElement, ListContainer, ListElement, Wrapper } from "../styled";
 
 const AttributesContainer = ({ attributes, title }) => (
   <Wrapper>

@@ -1,49 +1,9 @@
+import * as Types from "./types";
 import { Edge, Node, ProjectSimple } from "../../../models";
 import { FindTerminalAndNode, TraverseTree } from "./helpers/";
-import { IsAspectNode } from "../../../components/flow/helpers/common";
-import {
-  FETCHING_PROJECT,
-  FETCHING_PROJECT_SUCCESS_OR_ERROR,
-  CREATING_PROJECT,
-  CREATING_PROJECT_SUCCESS_OR_ERROR,
-  ADD_NODE,
-  REMOVE_NODE,
-  ADD_EDGE,
-  REMOVE_EDGE,
-  UPDATE_POSITION,
-  UPDATE_BLOCK_POSITION,
-  SET_NODE_VISIBILITY,
-  SEARCH_PROJECT,
-  SEARCH_PROJECT_SUCCESS_OR_ERROR,
-  SET_ACTIVE_NODE,
-  SAVE_PROJECT,
-  SAVE_PROJECT_SUCCESS_OR_ERROR,
-  CHANGE_SELECTED_PROJECT,
-  CHANGE_ALL_NODES,
-  CHANGE_NODE_PROP_VALUE,
-  CHANGE_ATTRIBUTE_VALUE,
-  CHANGE_CONNECTOR_ATTRIBUTE_VALUE,
-  SET_EDGE_VISIBILITY,
-  SET_ACTIVE_BLOCKNODE,
-  DELETE_PROJECT_ERROR,
-  CHANGE_ACTIVE_CONNECTOR,
-  SET_ACTIVE_EDGE,
-  IMPORT_PROJECT_SUCCESS_OR_ERROR,
-  EXPORT_PROJECT_TO_FILE,
-  EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR,
-  IMPORT_PROJECT,
-  COMMIT_PROJECT_SUCCESS_OR_ERROR,
-  COMMIT_PROJECT,
-  LOCK_UNLOCK_NODE,
-  LOCK_UNLOCK_NODE_ATTRIBUTE,
-  LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR,
-  LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
-  ProjectActionTypes,
-  ProjectState,
-  LOCK_UNLOCK_TERMINAL_ATTRIBUTE,
-} from "./types";
+import { IsAspectNode } from "../../../components/flow/helpers";
 
-const initialState: ProjectState = {
+const initialState: Types.ProjectState = {
   fetching: false,
   creating: false,
   project: null,
@@ -52,125 +12,104 @@ const initialState: ProjectState = {
 };
 
 // TODO: Refactor to reduce complexity
-export function projectReducer(
-  state = initialState,
-  action: ProjectActionTypes
-) {
+export function projectReducer(state = initialState, action: Types.ProjectActionTypes) {
   switch (action.type) {
-    case SAVE_PROJECT:
+    case Types.SAVE_PROJECT:
       return {
         ...state,
         fetching: true,
         creating: false,
-        apiError: state.apiError
-          ? state.apiError.filter((elem) => elem.key !== SAVE_PROJECT)
-          : state.apiError,
+        apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== Types.SAVE_PROJECT) : state.apiError,
       };
 
-    case COMMIT_PROJECT:
+    case Types.COMMIT_PROJECT:
       return {
         ...state,
         fetching: true,
         creating: false,
-        apiError: state.apiError
-          ? state.apiError.filter((elem) => elem.key !== COMMIT_PROJECT)
-          : state.apiError,
+        apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== Types.COMMIT_PROJECT) : state.apiError,
       };
 
-    case COMMIT_PROJECT_SUCCESS_OR_ERROR:
+    case Types.COMMIT_PROJECT_SUCCESS_OR_ERROR:
       return {
         ...state,
         fetching: false,
         creating: false,
-        apiError: action.payload.apiError
-          ? [...state.apiError, action.payload.apiError]
-          : state.apiError,
+        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
 
-    case SAVE_PROJECT_SUCCESS_OR_ERROR:
+    case Types.SAVE_PROJECT_SUCCESS_OR_ERROR:
       return {
         ...state,
         fetching: false,
         creating: false,
         project: action.payload.project,
-        apiError: action.payload.apiError
-          ? [...state.apiError, action.payload.apiError]
-          : state.apiError,
+        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
 
-    case SEARCH_PROJECT:
+    case Types.SEARCH_PROJECT:
       return {
         ...state,
         fetching: true,
         creating: false,
         projectList: null,
-        apiError: state.apiError
-          ? state.apiError.filter((elem) => elem.key !== SEARCH_PROJECT)
-          : state.apiError,
+        apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== Types.SEARCH_PROJECT) : state.apiError,
       };
 
-    case SEARCH_PROJECT_SUCCESS_OR_ERROR:
+    case Types.SEARCH_PROJECT_SUCCESS_OR_ERROR:
       return {
         ...state,
         fetching: false,
         creating: false,
         projectList: action.payload.projectList ?? state.projectList,
-        apiError: action.payload.apiError
-          ? [...state.apiError, action.payload.apiError]
-          : state.apiError,
+        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
 
-    case FETCHING_PROJECT:
+    case Types.FETCHING_PROJECT:
       return {
         ...state,
         fetching: true,
         creating: false,
         apiError: state.apiError
-          ? state.apiError.filter((elem) => elem.key !== FETCHING_PROJECT)
+          ? state.apiError.filter((elem) => elem.key !== Types.FETCHING_PROJECT)
           : state.apiError,
       };
 
-    case FETCHING_PROJECT_SUCCESS_OR_ERROR:
+    case Types.FETCHING_PROJECT_SUCCESS_OR_ERROR:
       return {
         ...state,
         fetching: false,
         creating: false,
         project: action.payload.project ?? state.project,
-        apiError: action.payload.apiError
-          ? [...state.apiError, action.payload.apiError]
-          : state.apiError,
+        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
 
-    case CREATING_PROJECT:
+    case Types.CREATING_PROJECT:
       return {
         ...state,
         fetching: false,
         creating: true,
         apiError: state.apiError
-          ? state.apiError.filter((elem) => elem.key !== CREATING_PROJECT)
+          ? state.apiError.filter((elem) => elem.key !== Types.CREATING_PROJECT)
           : state.apiError,
       };
 
-    case CREATING_PROJECT_SUCCESS_OR_ERROR:
+    case Types.CREATING_PROJECT_SUCCESS_OR_ERROR:
       return {
         ...state,
         fetching: false,
         creating: false,
         project: action.payload.project ?? state.project,
-        apiError: action.payload.apiError
-          ? [...state.apiError, action.payload.apiError]
-          : state.apiError,
+        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
 
-    case DELETE_PROJECT_ERROR:
+    case Types.DELETE_PROJECT_ERROR:
       return {
         ...state,
-        apiError: state.apiError
-          ? state.apiError.filter((elem) => elem.key !== action.payload.key)
-          : state.apiError,
+        apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== action.payload.key) : state.apiError,
       };
 
-    case ADD_NODE:
+    case Types.ADD_NODE:
       return {
         ...state,
         project: {
@@ -179,7 +118,7 @@ export function projectReducer(
         },
       };
 
-    case REMOVE_NODE:
+    case Types.REMOVE_NODE:
       return {
         ...state,
         project: {
@@ -188,7 +127,7 @@ export function projectReducer(
         },
       };
 
-    case ADD_EDGE:
+    case Types.ADD_EDGE:
       return {
         ...state,
         project: {
@@ -197,18 +136,16 @@ export function projectReducer(
         },
       };
 
-    case REMOVE_EDGE:
+    case Types.REMOVE_EDGE:
       return {
         ...state,
         project: {
           ...state.project,
-          edges: state.project.edges.filter(
-            (edge) => edge?.id !== action.payload
-          ),
+          edges: state.project.edges.filter((edge) => edge?.id !== action.payload),
         },
       };
 
-    case UPDATE_POSITION:
+    case Types.UPDATE_POSITION:
       return {
         ...state,
         project: {
@@ -225,7 +162,7 @@ export function projectReducer(
         },
       };
 
-    case UPDATE_BLOCK_POSITION:
+    case Types.UPDATE_BLOCK_POSITION:
       return {
         ...state,
         project: {
@@ -242,7 +179,7 @@ export function projectReducer(
         },
       };
 
-    case SET_EDGE_VISIBILITY:
+    case Types.SET_EDGE_VISIBILITY:
       return {
         ...state,
         project: {
@@ -258,7 +195,7 @@ export function projectReducer(
         },
       };
 
-    case SET_NODE_VISIBILITY: {
+    case Types.SET_NODE_VISIBILITY: {
       const node = action.payload.node;
       const nodeList = state.project.nodes;
       const edgeList = state.project.edges;
@@ -270,15 +207,9 @@ export function projectReducer(
           ...state,
           project: {
             ...state.project,
-            nodes: nodeList.map((x) =>
-              action.payload.node.aspect === x.aspect
-                ? { ...x, isHidden: isHidden }
-                : x
-            ),
+            nodes: nodeList.map((x) => (action.payload.node.aspect === x.aspect ? { ...x, isHidden: isHidden } : x)),
             edges: edgeList.map((edge) =>
-              node.aspect === edge.fromNode.aspect ||
-              node.aspect === edge.toNode.aspect ||
-              edge.fromNode === node
+              node.aspect === edge.fromNode.aspect || node.aspect === edge.toNode.aspect || edge.fromNode === node
                 ? { ...edge, isHidden: isHidden }
                 : edge
             ),
@@ -296,13 +227,9 @@ export function projectReducer(
           ...state,
           project: {
             ...state.project,
-            nodes: state.project.nodes.map((x) =>
-              elements.includes(x) ? { ...x, isHidden: isHidden } : x
-            ),
+            nodes: state.project.nodes.map((x) => (elements.includes(x) ? { ...x, isHidden: isHidden } : x)),
             edges: edgeList.map((edge) =>
-              elements.includes(edge) || edge.toNode === node
-                ? { ...edge, isHidden: isHidden }
-                : edge
+              elements.includes(edge) || edge.toNode === node ? { ...edge, isHidden: isHidden } : edge
             ),
           },
         };
@@ -312,63 +239,53 @@ export function projectReducer(
         ...state,
         project: {
           ...state.project,
-          nodes: state.project.nodes.map((x) =>
-            x.id === action.payload.node.id ? { ...x, isHidden: isHidden } : x
-          ),
+          nodes: state.project.nodes.map((x) => (x.id === action.payload.node.id ? { ...x, isHidden: isHidden } : x)),
           edges: edgeList.map((edge) =>
-            edge.fromNodeId === node.id || edge.toNodeId === node.id
-              ? { ...edge, isHidden: isHidden }
-              : edge
+            edge.fromNodeId === node.id || edge.toNodeId === node.id ? { ...edge, isHidden: isHidden } : edge
           ),
         },
       };
     }
 
-    case SET_ACTIVE_NODE:
+    case Types.SET_ACTIVE_NODE:
       const nodeId = action.payload.nodeId;
       return {
         ...state,
         project: {
           ...state.project,
           nodes: state.project.nodes.map((x) =>
-            x.id === nodeId
-              ? { ...x, isSelected: action.payload.isActive }
-              : { ...x, isSelected: false }
+            x.id === nodeId ? { ...x, isSelected: action.payload.isActive } : { ...x, isSelected: false }
           ),
           edges: state.project.edges,
         },
       };
 
-    case SET_ACTIVE_EDGE:
+    case Types.SET_ACTIVE_EDGE:
       const edgeId = action.payload.edgeId;
       return {
         ...state,
         project: {
           ...state.project,
           edges: state.project.edges.map((edge) =>
-            edge.id === edgeId
-              ? { ...edge, isSelected: action.payload.isActive }
-              : { ...edge, isSelected: false }
+            edge.id === edgeId ? { ...edge, isSelected: action.payload.isActive } : { ...edge, isSelected: false }
           ),
         },
       };
 
-    case SET_ACTIVE_BLOCKNODE:
+    case Types.SET_ACTIVE_BLOCKNODE:
       const blockId = action.payload.nodeId;
       return {
         ...state,
         project: {
           ...state.project,
           nodes: state.project.nodes.map((x) =>
-            x.id === blockId
-              ? { ...x, isBlockSelected: true }
-              : { ...x, isBlockSelected: false }
+            x.id === blockId ? { ...x, isBlockSelected: true } : { ...x, isBlockSelected: false }
           ),
           edges: state.project.edges,
         },
       };
 
-    case CHANGE_SELECTED_PROJECT:
+    case Types.CHANGE_SELECTED_PROJECT:
       const projectId = action.payload.projectId;
       const projects = state.projectList as ProjectSimple[];
 
@@ -376,13 +293,11 @@ export function projectReducer(
         ...state,
         ...state.project,
         projectList: projects.map((project) =>
-          project.id === projectId
-            ? { ...project, selected: true }
-            : { ...project, selected: false }
+          project.id === projectId ? { ...project, selected: true } : { ...project, selected: false }
         ),
       };
 
-    case CHANGE_ALL_NODES:
+    case Types.CHANGE_ALL_NODES:
       return {
         ...state,
         project: {
@@ -397,7 +312,7 @@ export function projectReducer(
         },
       };
 
-    case CHANGE_NODE_PROP_VALUE:
+    case Types.CHANGE_NODE_PROP_VALUE:
       return {
         ...state,
         project: {
@@ -413,7 +328,7 @@ export function projectReducer(
         },
       };
 
-    case CHANGE_ATTRIBUTE_VALUE:
+    case Types.CHANGE_ATTRIBUTE_VALUE:
       return {
         ...state,
         project: {
@@ -437,7 +352,7 @@ export function projectReducer(
         },
       };
 
-    case CHANGE_CONNECTOR_ATTRIBUTE_VALUE:
+    case Types.CHANGE_CONNECTOR_ATTRIBUTE_VALUE:
       return {
         ...state,
         project: {
@@ -468,7 +383,7 @@ export function projectReducer(
         },
       };
 
-    case CHANGE_ACTIVE_CONNECTOR:
+    case Types.CHANGE_ACTIVE_CONNECTOR:
       return {
         ...state,
         project: {
@@ -491,41 +406,35 @@ export function projectReducer(
           ),
         },
       };
-    case EXPORT_PROJECT_TO_FILE:
+    case Types.EXPORT_PROJECT_TO_FILE:
       return {
         ...state,
         apiError: state.apiError
-          ? state.apiError.filter((elem) => elem.key !== EXPORT_PROJECT_TO_FILE)
+          ? state.apiError.filter((elem) => elem.key !== Types.EXPORT_PROJECT_TO_FILE)
           : state.apiError,
       };
 
-    case EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR:
+    case Types.EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR:
       return {
         ...state,
-        apiError: action.payload.apiError
-          ? [...state.apiError, action.payload.apiError]
-          : state.apiError,
+        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
 
-    case IMPORT_PROJECT:
+    case Types.IMPORT_PROJECT:
       return {
         ...state,
         fetching: true,
-        apiError: state.apiError
-          ? state.apiError.filter((elem) => elem.key !== IMPORT_PROJECT)
-          : state.apiError,
+        apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== Types.IMPORT_PROJECT) : state.apiError,
       };
 
-    case IMPORT_PROJECT_SUCCESS_OR_ERROR:
+    case Types.IMPORT_PROJECT_SUCCESS_OR_ERROR:
       return {
         ...state,
         fetching: false,
-        apiError: action.payload.apiError
-          ? [...state.apiError, action.payload.apiError]
-          : state.apiError,
+        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
 
-    case LOCK_UNLOCK_NODE:
+    case Types.LOCK_UNLOCK_NODE:
       return {
         ...state,
         project: {
@@ -544,16 +453,14 @@ export function projectReducer(
         },
       };
 
-    case LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR:
+    case Types.LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR:
       return {
         ...state,
         fetching: false,
-        apiError: action.payload.apiError
-          ? [...state.apiError, action.payload.apiError]
-          : state.apiError,
+        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
 
-    case LOCK_UNLOCK_NODE_ATTRIBUTE:
+    case Types.LOCK_UNLOCK_NODE_ATTRIBUTE:
       return {
         ...state,
         project: {
@@ -576,13 +483,10 @@ export function projectReducer(
         },
       };
 
-    case LOCK_UNLOCK_TERMINAL_ATTRIBUTE: {
+    case Types.LOCK_UNLOCK_TERMINAL_ATTRIBUTE: {
       const { id, isLocked, terminalId } = action.payload;
 
-      let [node, terminal] = FindTerminalAndNode(
-        state.project.nodes,
-        terminalId
-      );
+      let [node, terminal] = FindTerminalAndNode(state.project.nodes, terminalId);
 
       if (!node || !terminal) return { ...state };
 
@@ -616,13 +520,11 @@ export function projectReducer(
       };
     }
 
-    case LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR:
+    case Types.LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR:
       return {
         ...state,
         fetching: false,
-        apiError: action.payload.apiError
-          ? [...state.apiError, action.payload.apiError]
-          : state.apiError,
+        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
 
     default:

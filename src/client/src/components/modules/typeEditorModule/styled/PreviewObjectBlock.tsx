@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Color } from "../../../../compLibrary";
 
 const PreviewObjectBlock = styled.div`
   display: flex;
@@ -6,9 +7,9 @@ const PreviewObjectBlock = styled.div`
   margin: auto;
   width: 65%;
   height: 70%;
-  height: ${(props: { blockHeight: number }) => props.blockHeight + `%`};
+  height: ${(props: { blockHeight: number }) => props.blockHeight}%;
   background-color: ${(props: { blockColor: string }) => props.blockColor};
-  border: 1px solid #000000;
+  border: 1px solid ${Color.Black};
   border-radius: 2px;
 `;
 

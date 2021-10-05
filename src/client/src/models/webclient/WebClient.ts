@@ -38,9 +38,7 @@ export async function http<T>(request: RequestInfo): Promise<HttpResponse<T>> {
   }
 }
 
-const isValidStatus = (status: number) =>
-  (status >= 200 && status < 300) || status === 400;
-
+const isValidStatus = (status: number) => (status >= 200 && status < 300) || status === 400;
 const hasContent = <T>(response: HttpResponse<T>) => response.status !== 204;
 
 export async function get<T>(

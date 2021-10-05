@@ -36,8 +36,7 @@ const Header = styled.div`
   }
 
   .lockIcon {
-    cursor: ${(props: { isNodeLocked: boolean }) =>
-      props.isNodeLocked ? "default" : "pointer"};
+    cursor: ${(props: { isNodeLocked: boolean }) => (props.isNodeLocked ? "default" : "pointer")};
   }
 `;
 

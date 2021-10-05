@@ -1,15 +1,14 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
 import { ModuleBody } from "../../compLibrary/box/modules";
 import { LegendElement, LegendColor } from "../../compLibrary/box/library";
 import { LegendComponent } from "./";
 import { Project } from "../../models";
 
-const LegendModule = ({ visible }) => {
-  const project = useSelector<RootState>(
-    (state) => state.projectState?.project
-  ) as Project;
+interface Props {
+  visible: boolean;
+  project: Project;
+}
 
+const LegendModule = ({ visible, project }: Props) => {
   const legends = LegendComponent(project);
 
   return (

@@ -1,87 +1,100 @@
+import * as Click from "./handlers";
+import { TerminalsMenuComponent } from ".";
 import { Connector, Node } from "../../../../models";
 import { GetMenuIcon } from "./helpers";
-import { OnTerminalMenuClick } from "./handlers";
-import { TerminalsMenu, TerminalsElement, TerminalsBox } from "./styled";
-import { ArrowDown, ArrowUp } from "../../../../assets/icons/blockView";
-import {
-  GetConnectorIcon,
-  GetConnectorName,
-  IsAspectNode,
-} from "../../helpers/common";
+import { TerminalsBox } from "./styled";
+import { IsAspectNode, IsInputTerminal } from "../../helpers";
 
 interface Props {
   node: Node;
-  isMenuOpen: boolean;
+  isInputMenuOpen: boolean;
+  isOutputMenuOpen: boolean;
   terminals: Connector[];
-  width: number;
   isParent: boolean;
   isLocation: boolean;
   menuButton: boolean;
-  showTerminalMenu: any;
-  terminalMenu: boolean;
-  isSplitView?: boolean;
+  showInputTerminalMenu: any;
+  showOutputTerminalMenu: any;
+  isSplitView: boolean;
   onClick: (conn: Connector) => void;
 }
 
 /**
- * Component for the terminals menu on nodes in BlockView. The menu is opened from the icon in the upper-right corner.
+ * Component for the terminals menu on the nodes in BlockView.
  * @param param0
- * @returns a drop-down menu where you can select from the nodes' terminals.
+ * @returns two buttons to activate two drop-down menus of input and output terminals.
  */
 const TerminalsComponent = ({
   node,
-  isMenuOpen,
+  isInputMenuOpen,
+  isOutputMenuOpen,
   terminals,
-  width,
   isParent,
   isLocation,
   menuButton,
-  showTerminalMenu,
-  terminalMenu,
+  showInputTerminalMenu,
+  showOutputTerminalMenu,
   isSplitView,
   onClick,
-}: Props) => (
-  <>
-    <TerminalsBox
-      visible={menuButton && !IsAspectNode(node)}
-      isSplitView={isSplitView}
-      isParent={isParent}
-    >
-      {isParent && (
-        <>
-          <img src={ArrowUp} alt="up" className="arrow" />
-          <img src={ArrowDown} alt="down" className="arrow" />
-        </>
-      )}
-      <img
-        src={GetMenuIcon(node, isParent)}
-        alt="menu"
-        onClick={() => OnTerminalMenuClick(showTerminalMenu, terminalMenu)}
-      />
-    </TerminalsBox>
+}: Props) => {
+  const inTerminals = terminals.filter((t) => IsInputTerminal(t));
+  const outTerminals = terminals.filter((t) => !IsInputTerminal(t));
 
-    {isMenuOpen && (
-      <TerminalsMenu width={width} isParent={isParent} isLocation={isLocation}>
-        {terminals.map((conn) => (
-          <TerminalsElement key={conn.id}>
-            <p className="text">{GetConnectorName(conn)}</p>
-            <label className={"checkbox-block"}>
-              <input
-                type="checkbox"
-                checked={conn.visible}
-                onChange={() => onClick(conn)}
-              />
-              <span className="checkmark-block"></span>
-            </label>
-            <img
-              src={GetConnectorIcon(conn.color)}
-              alt="icon"
-              className="button"
-            />
-          </TerminalsElement>
-        ))}
-      </TerminalsMenu>
-    )}
-  </>
-);
+  return (
+    <>
+      <TerminalsBox
+        visible={menuButton && !IsAspectNode(node) && inTerminals.length > 0}
+        isSplitView={isSplitView}
+        isParent={isParent}
+        isInput={true}
+      >
+        <img
+          src={GetMenuIcon(node, isParent, true)}
+          alt="menu"
+          onClick={() => Click.OnInputMenu(showInputTerminalMenu, isInputMenuOpen)}
+        />
+      </TerminalsBox>
+
+      <TerminalsBox
+        visible={menuButton && !IsAspectNode(node) && outTerminals.length > 0}
+        isSplitView={isSplitView}
+        isParent={isParent}
+        isinput={false}
+      >
+        <img
+          src={GetMenuIcon(node, isParent, false)}
+          alt="menu"
+          onClick={() => Click.OnOutputMenu(showOutputTerminalMenu, isOutputMenuOpen)}
+        />
+      </TerminalsBox>
+
+      {isInputMenuOpen && (
+        <TerminalsMenuComponent
+          node={node}
+          isParent={isParent}
+          isLocation={isLocation}
+          isInput={true}
+          splitView={isSplitView}
+          terminals={inTerminals}
+          visible={isInputMenuOpen}
+          onClick={onClick}
+          onBlur={() => Click.OnBlur(showInputTerminalMenu, isInputMenuOpen)}
+        />
+      )}
+      {isOutputMenuOpen && (
+        <TerminalsMenuComponent
+          node={node}
+          isParent={isParent}
+          isLocation={isLocation}
+          isInput={false}
+          splitView={isSplitView}
+          visible={isOutputMenuOpen}
+          terminals={outTerminals}
+          onClick={onClick}
+          onBlur={() => Click.OnBlur(showOutputTerminalMenu, isOutputMenuOpen)}
+        />
+      )}
+    </>
+  );
+};
 export default TerminalsComponent;

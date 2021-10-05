@@ -1,70 +1,38 @@
+import * as Types from "./types";
 import { Node, Edge, Project, CommitPackage, Attribute } from "../../../models";
 import { ProjectAm } from "../../sagas/project/ConvertProject";
-import {
-  SAVE_PROJECT,
-  FETCHING_PROJECT,
-  CREATING_PROJECT,
-  SEARCH_PROJECT,
-  ADD_NODE,
-  REMOVE_NODE,
-  ADD_EDGE,
-  REMOVE_EDGE,
-  UPDATE_POSITION,
-  UPDATE_BLOCK_POSITION,
-  SET_NODE_VISIBILITY,
-  SET_ACTIVE_NODE,
-  CHANGE_SELECTED_PROJECT,
-  ProjectActionTypes,
-  CHANGE_ALL_NODES,
-  CHANGE_NODE_PROP_VALUE,
-  CHANGE_ATTRIBUTE_VALUE,
-  CHANGE_CONNECTOR_ATTRIBUTE_VALUE,
-  SET_EDGE_VISIBILITY,
-  SET_ACTIVE_BLOCKNODE,
-  DELETE_PROJECT_ERROR,
-  CHANGE_ACTIVE_CONNECTOR,
-  SET_ACTIVE_EDGE,
-  EXPORT_PROJECT_TO_FILE,
-  IMPORT_PROJECT,
-  COMMIT_PROJECT,
-  LOCK_UNLOCK_NODE,
-  LOCK_UNLOCK_NODE_ATTRIBUTE,
-  LOCK_UNLOCK_TERMINAL_ATTRIBUTE,
-} from "./types";
 
-export function commitProject(
-  commitPackage: CommitPackage
-): ProjectActionTypes {
+export function commitProject(commitPackage: CommitPackage): Types.ProjectActionTypes {
   return {
-    type: COMMIT_PROJECT,
+    type: Types.COMMIT_PROJECT,
     payload: commitPackage,
   };
 }
 
-export function save(project: Project): ProjectActionTypes {
+export function save(project: Project): Types.ProjectActionTypes {
   return {
-    type: SAVE_PROJECT,
+    type: Types.SAVE_PROJECT,
     payload: project,
   };
 }
 
-export function get(id: string): ProjectActionTypes {
+export function get(id: string): Types.ProjectActionTypes {
   return {
-    type: FETCHING_PROJECT,
+    type: Types.FETCHING_PROJECT,
     payload: id,
   };
 }
 
-export function search(name: string): ProjectActionTypes {
+export function search(name: string): Types.ProjectActionTypes {
   return {
-    type: SEARCH_PROJECT,
+    type: Types.SEARCH_PROJECT,
     payload: name,
   };
 }
 
-export function create(name: string, description: string): ProjectActionTypes {
+export function create(name: string, description: string): Types.ProjectActionTypes {
   return {
-    type: CREATING_PROJECT,
+    type: Types.CREATING_PROJECT,
     payload: {
       name: name,
       description: description,
@@ -73,41 +41,37 @@ export function create(name: string, description: string): ProjectActionTypes {
   };
 }
 
-export function addNode(node: Node): ProjectActionTypes {
+export function addNode(node: Node): Types.ProjectActionTypes {
   return {
-    type: ADD_NODE,
+    type: Types.ADD_NODE,
     payload: node,
   };
 }
 
-export function removeNode(nodeId: string): ProjectActionTypes {
+export function removeNode(nodeId: string): Types.ProjectActionTypes {
   return {
-    type: REMOVE_NODE,
+    type: Types.REMOVE_NODE,
     payload: nodeId,
   };
 }
 
-export function createEdge(edge: Edge): ProjectActionTypes {
+export function createEdge(edge: Edge): Types.ProjectActionTypes {
   return {
-    type: ADD_EDGE,
+    type: Types.ADD_EDGE,
     payload: edge,
   };
 }
 
-export function removeEdge(edgeId: string): ProjectActionTypes {
+export function removeEdge(edgeId: string): Types.ProjectActionTypes {
   return {
-    type: REMOVE_EDGE,
+    type: Types.REMOVE_EDGE,
     payload: edgeId,
   };
 }
 
-export function updatePosition(
-  nodeId: string,
-  x: number,
-  y: number
-): ProjectActionTypes {
+export function updatePosition(nodeId: string, x: number, y: number): Types.ProjectActionTypes {
   return {
-    type: UPDATE_POSITION,
+    type: Types.UPDATE_POSITION,
     payload: {
       nodeId: nodeId,
       x: x,
@@ -116,13 +80,9 @@ export function updatePosition(
   };
 }
 
-export function updateBlockPosition(
-  nodeId: string,
-  x: number,
-  y: number
-): ProjectActionTypes {
+export function updateBlockPosition(nodeId: string, x: number, y: number): Types.ProjectActionTypes {
   return {
-    type: UPDATE_BLOCK_POSITION,
+    type: Types.UPDATE_BLOCK_POSITION,
     payload: {
       nodeId: nodeId,
       x: x,
@@ -133,60 +93,56 @@ export function updateBlockPosition(
 
 export function setNodeVisibility(node: Node, isParent: boolean) {
   return {
-    type: SET_NODE_VISIBILITY,
+    type: Types.SET_NODE_VISIBILITY,
     payload: { node, isParent },
   };
 }
 
 export function setEdgeVisibility(edge: Edge, isHidden: boolean) {
   return {
-    type: SET_EDGE_VISIBILITY,
+    type: Types.SET_EDGE_VISIBILITY,
     payload: { edge, isHidden },
   };
 }
 
 export function setActiveNode(nodeId: string, isActive: boolean) {
   return {
-    type: SET_ACTIVE_NODE,
+    type: Types.SET_ACTIVE_NODE,
     payload: { nodeId, isActive },
   };
 }
 
 export function setActiveBlockNode(nodeId: string) {
   return {
-    type: SET_ACTIVE_BLOCKNODE,
+    type: Types.SET_ACTIVE_BLOCKNODE,
     payload: { nodeId },
   };
 }
 
 export function setActiveEdge(edgeId: string, isActive: boolean) {
   return {
-    type: SET_ACTIVE_EDGE,
+    type: Types.SET_ACTIVE_EDGE,
     payload: { edgeId, isActive },
   };
 }
 
 export function changeSelectedProject(projectId: string) {
   return {
-    type: CHANGE_SELECTED_PROJECT,
+    type: Types.CHANGE_SELECTED_PROJECT,
     payload: { projectId },
   };
 }
 
 export function changeAllNodes(visible: boolean) {
   return {
-    type: CHANGE_ALL_NODES,
+    type: Types.CHANGE_ALL_NODES,
     payload: visible,
   };
 }
 
-export function changeNodeValue(
-  nodeId: string,
-  propName: string,
-  propValue: any
-) {
+export function changeNodeValue(nodeId: string, propName: string, propValue: any) {
   return {
-    type: CHANGE_NODE_PROP_VALUE,
+    type: Types.CHANGE_NODE_PROP_VALUE,
     payload: {
       nodeId,
       propName,
@@ -195,14 +151,9 @@ export function changeNodeValue(
   };
 }
 
-export function changeAttributeValue(
-  id: string,
-  value: string,
-  unit: string,
-  nodeId: string
-) {
+export function changeAttributeValue(id: string, value: string, unit: string, nodeId: string) {
   return {
-    type: CHANGE_ATTRIBUTE_VALUE,
+    type: Types.CHANGE_ATTRIBUTE_VALUE,
     payload: {
       id,
       value,
@@ -220,7 +171,7 @@ export function changeConnectorAttributeValue(
   connectorId: string
 ) {
   return {
-    type: CHANGE_CONNECTOR_ATTRIBUTE_VALUE,
+    type: Types.CHANGE_CONNECTOR_ATTRIBUTE_VALUE,
     payload: {
       id,
       value,
@@ -233,21 +184,16 @@ export function changeConnectorAttributeValue(
 
 export function deleteProjectError(key: string) {
   return {
-    type: DELETE_PROJECT_ERROR,
+    type: Types.DELETE_PROJECT_ERROR,
     payload: {
       key,
     },
   };
 }
 
-export function changeActiveConnector(
-  node: Node,
-  connectorId: string,
-  visible: boolean,
-  order: number
-) {
+export function changeActiveConnector(node: Node, connectorId: string, visible: boolean, order: number) {
   return {
-    type: CHANGE_ACTIVE_CONNECTOR,
+    type: Types.CHANGE_ACTIVE_CONNECTOR,
     payload: {
       node,
       connectorId,
@@ -257,13 +203,9 @@ export function changeActiveConnector(
   };
 }
 
-export function exportProjectToFile(
-  project: Project,
-  fileName: string,
-  isSubProject: boolean
-) {
+export function exportProjectToFile(project: Project, fileName: string, isSubProject: boolean) {
   return {
-    type: EXPORT_PROJECT_TO_FILE,
+    type: Types.EXPORT_PROJECT_TO_FILE,
     payload: {
       project: project,
       fileName: fileName,
@@ -274,18 +216,14 @@ export function exportProjectToFile(
 
 export function importProjectAction(project: ProjectAm) {
   return {
-    type: IMPORT_PROJECT,
+    type: Types.IMPORT_PROJECT,
     payload: project,
   };
 }
 
-export function setIsLockedNode(
-  node: Node,
-  project: Project,
-  isLocked: boolean
-) {
+export function setIsLockedNode(node: Node, project: Project, isLocked: boolean) {
   return {
-    type: LOCK_UNLOCK_NODE,
+    type: Types.LOCK_UNLOCK_NODE,
     payload: {
       id: node.id,
       projectId: project.id,
@@ -294,13 +232,9 @@ export function setIsLockedNode(
   };
 }
 
-export function setIsLockedNodeAttribute(
-  attribute: Attribute,
-  nodeId: string,
-  isLocked: boolean
-) {
+export function setIsLockedNodeAttribute(attribute: Attribute, nodeId: string, isLocked: boolean) {
   return {
-    type: LOCK_UNLOCK_NODE_ATTRIBUTE,
+    type: Types.LOCK_UNLOCK_NODE_ATTRIBUTE,
     payload: {
       id: attribute.id,
       nodeId,
@@ -309,13 +243,9 @@ export function setIsLockedNodeAttribute(
   };
 }
 
-export function setIsLockedTerminalAttribute(
-  attribute: Attribute,
-  terminalId: string,
-  isLocked: boolean
-) {
+export function setIsLockedTerminalAttribute(attribute: Attribute, terminalId: string, isLocked: boolean) {
   return {
-    type: LOCK_UNLOCK_TERMINAL_ATTRIBUTE,
+    type: Types.LOCK_UNLOCK_TERMINAL_ATTRIBUTE,
     payload: {
       id: attribute.id,
       terminalId,

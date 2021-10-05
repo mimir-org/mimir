@@ -1,9 +1,6 @@
 import { Dispatch } from "redux";
 import { CombinedAttribute } from "../../../../../models";
-import {
-  addCombinedAttribute,
-  removeCombinedAttribute,
-} from "../redux/actions";
+import { addCombinedAttribute, removeCombinedAttribute } from "../redux/actions";
 
 const OnChangeAttributeCombinationChoice = (
   nodeId: string,

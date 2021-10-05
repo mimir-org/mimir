@@ -23,12 +23,7 @@ const SearchDropDown = ({ value, placeHolder, list, onChange }: Props) => {
   const filter =
     (searchString &&
       searchString.length > 0 &&
-      list.filter(
-        (x) =>
-          x &&
-          x.name &&
-          x.name.toLowerCase().includes(searchString.toLowerCase())
-      )) ||
+      list.filter((x) => x && x.name && x.name.toLowerCase().includes(searchString.toLowerCase()))) ||
     list;
 
   const valueChanged = (_e, id: string, name: string) => {
@@ -71,10 +66,7 @@ const SearchDropDown = ({ value, placeHolder, list, onChange }: Props) => {
             list &&
             filter.map((item) => {
               return (
-                <SearchBarListItem
-                  key={item.id}
-                  onClick={(e: any) => valueChanged(e, item.id, item.name)}
-                >
+                <SearchBarListItem key={item.id} onClick={(e: any) => valueChanged(e, item.id, item.name)}>
                   {item.name}
                 </SearchBarListItem>
               );

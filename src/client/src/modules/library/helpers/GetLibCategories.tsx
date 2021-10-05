@@ -3,25 +3,16 @@ import { ValidateLibComponent } from ".";
 import { Node } from "../../../models";
 import { LibCategory } from "../../../models/project";
 import { LibraryState } from "../../../redux/store/library/types";
-import { IsBlockView } from "../../../components/flow/helpers/block";
+import { IsBlockView } from "../../../components/flow/block/helpers";
 
-const GetLibCategories = (
-  selectedNode: Node,
-  splitView: boolean,
-  state: LibraryState
-) => {
+const GetLibCategories = (selectedNode: Node, splitView: boolean, state: LibraryState) => {
   var allCategories = [];
 
-  var items = concat(
-    state.nodeTypes,
-    state.interfaceTypes,
-    state.transportTypes
-  );
+  var items = concat(state.nodeTypes, state.interfaceTypes, state.transportTypes);
 
   const result = items.reduce((r, a) => {
     r[a?.category] = r[a?.category] || [];
-    ValidateLibComponent(a, selectedNode, IsBlockView(), splitView) &&
-      r[a?.category].push(a);
+    ValidateLibComponent(a, selectedNode, IsBlockView(), splitView) && r[a?.category].push(a);
     return r;
   }, Object.create([]));
 

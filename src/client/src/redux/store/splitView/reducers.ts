@@ -5,10 +5,7 @@ const initialState = {
   node: null,
 };
 
-export function splitViewReducer(
-  state = initialState,
-  action: SplitViewActionTypes
-) {
+export function splitViewReducer(state = initialState, action: SplitViewActionTypes) {
   switch (action.type) {
     case SET_SPLITVIEW:
       return {

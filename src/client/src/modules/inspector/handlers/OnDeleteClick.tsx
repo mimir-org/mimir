@@ -5,12 +5,7 @@ import { setModuleVisibility } from "../../../redux/store/modules/actions";
 import { SetPanelHeight } from "../helpers";
 import { removeEdge, removeNode } from "../../../redux/store/project/actions";
 
-const OnDeleteClick = (
-  project: Project,
-  node: Node,
-  edge: Edge,
-  dispatch: any
-) => {
+const OnDeleteClick = (project: Project, node: Node, edge: Edge, dispatch: any) => {
   if (node) {
     project.edges.forEach((e) => {
       if (e.fromNodeId === node.id) dispatch(removeEdge(e.id));

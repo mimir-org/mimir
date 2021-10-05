@@ -1,8 +1,5 @@
 import { Connector, Node, Edge } from "../../../../models";
-import {
-  FilterElement,
-  IsTransportTerminal,
-} from "../../../flow/helpers/common";
+import { FilterElement, IsTransportTerminal } from "../../../flow/helpers";
 
 const AddElement = (node: Node, edges: Edge[]) => {
   const isActive = (conn: Connector) => {
