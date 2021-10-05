@@ -6,12 +6,11 @@ export { default as WaterIcon } from "./connectorWater.svg";
 export { default as SandIcon } from "./connectorSand.svg";
 export { default as MultiphaseIcon } from "./connectorMultiphase.svg";
 export { default as ConnectorTreeViewIcon } from "./connectorTreeView.svg";
-export { default as TerminalsIcon } from "./terminals.svg";
-export { default as TerminalsMenuFunctionIcon } from "./functionTerminalsMenu.svg";
-export { default as TerminalsMenuLocationIcon } from "./locationTerminalsMenu.svg";
-export { default as TerminalsMenuParent } from "./parentTerminalsMenu.svg";
+
 export { default as ConnectMenuIcon } from "./connect.svg";
 export { default as ArrowIcon } from "./arrow.svg";
 export { default as ArrowSmallIcon } from "./arrowSmall.svg";
 export { default as ArrowUp } from "./arrowUp.svg";
 export { default as ArrowDown } from "./arrowDown.svg";
+
+export { default as TerminalsIcon } from "./terminals.svg";

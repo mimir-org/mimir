@@ -1,4 +1,4 @@
-export { default as OnReturnClick } from "./OnReturnClick";
-export { default as OnOpenClick } from "./OnOpenClick";
-export { default as OnSaveClick } from "./OnSaveClick";
-export { default as OnNoSaveClick } from "./OnNoSaveClick";
+export { default as OnReturn } from "./OnReturnClick";
+export { default as OnOpen } from "./OnOpenClick";
+export { default as OnSave } from "./OnSaveClick";
+export { default as OnNoSave } from "./OnNoSaveClick";

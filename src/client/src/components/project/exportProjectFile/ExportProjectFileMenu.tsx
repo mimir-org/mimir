@@ -8,12 +8,7 @@ import { useState } from "react";
 import { Input, Label, Size } from "../../../compLibrary";
 import { Button } from "../../../compLibrary/buttons";
 import { OnReturnClick, OnSaveClick } from "./handlers";
-import {
-  ProjectBody,
-  ProjectBox,
-  HeaderBox,
-  ButtonBox,
-} from "../../../compLibrary/box/project";
+import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../../../compLibrary/box/project";
 
 interface Props {
   projectState: ProjectState;
@@ -24,25 +19,14 @@ export const ExportProjectFileMenu = ({ projectState, dispatch }: Props) => {
   const [fileName, setFileName] = useState("");
 
   const isOpen = useSelector<RootState>(
-    (state) =>
-      state.menu.list.find((x) => x.type === MENU_TYPE.SAVE_PROJECT_FILE_MENU)
-        ?.visible
+    (state) => state.menu.activeMenu === MENU_TYPE.SAVE_PROJECT_FILE_MENU
   ) as boolean;
 
   return (
-    <ProjectBox
-      width={Size.MenuSmall_Width}
-      height={Size.MenuSmall_Height}
-      visible={isOpen}
-    >
+    <ProjectBox width={Size.MenuSmall_Width} height={Size.MenuSmall_Height} visible={isOpen}>
       <ProjectBody>
         <HeaderBox>
-          <img
-            src={CloseIcon}
-            alt="Close project"
-            onClick={() => OnReturnClick(dispatch)}
-            className="icon"
-          />
+          <img src={CloseIcon} alt="Close project" onClick={() => OnReturnClick(dispatch)} className="icon" />
           {TextResources.Account_Save_Label_File}
         </HeaderBox>
         <Label>{TextResources.Account_Save_Label_File_Name}</Label>
@@ -53,10 +37,7 @@ export const ExportProjectFileMenu = ({ projectState, dispatch }: Props) => {
           value={fileName}
         />
         <ButtonBox left>
-          <Button
-            onClick={() => OnReturnClick(dispatch)}
-            type={TextResources.Account_Cancel}
-          />
+          <Button onClick={() => OnReturnClick(dispatch)} type={TextResources.Account_Cancel} />
         </ButtonBox>
         {fileName && (
           <ButtonBox>

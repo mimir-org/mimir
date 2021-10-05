@@ -1,11 +1,6 @@
 import "./BlockEdge.scss";
 import { Connector, RelationType, Aspect, Node } from "../../../models";
-import {
-  ArrowHeadType,
-  getBezierPath,
-  getMarkerEnd,
-  getSmoothStepPath,
-} from "react-flow-renderer";
+import { ArrowHeadType, getBezierPath, getMarkerEnd, getSmoothStepPath } from "react-flow-renderer";
 
 export default function BlockEdgeType({
   id,
@@ -54,9 +49,7 @@ export default function BlockEdgeType({
   const getClassName = (source: Node, target: Node): string => {
     let defaultClassName = "react-flow__edge-path ";
 
-    const fromConn = data.source.connectors?.find(
-      (x: { id: any }) => x.id === data.edge.fromConnector.id
-    ) as Connector;
+    const fromConn = data.source.connectors?.find((x: { id: any }) => x.id === data.edge.fromConnector.id) as Connector;
 
     switch (fromConn?.relationType) {
       case RelationType.HasLocation:

@@ -24,6 +24,7 @@ interface Props {
   valueImageProp?: string;
   disabled?: boolean;
   hasCategory?: boolean;
+  placeholder?: string;
 }
 
 const Dropdown = ({
@@ -36,6 +37,7 @@ const Dropdown = ({
   valueImageProp,
   disabled,
   hasCategory,
+  placeholder,
 }: Props) => {
   const [isListOpen, setIsListOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -63,7 +65,6 @@ const Dropdown = ({
       setSelectedItem(_selectedItem);
       return;
     }
-    setSelectedItem(items[0]?.items[0]);
   }, [defaultValue, items, keyProp, findSelectedItem]);
 
   const handleChange = (_e: any, value: any) => {
@@ -102,21 +103,21 @@ const Dropdown = ({
         <div className="label">{label}</div>
         <div onClick={disabled ? null : (e) => setIsListOpen(!isListOpen)}>
           <DropdownMenuHeader>
-            {selectedItem && (
+            {
               <>
-                {valueImageProp && (
+                {selectedItem && valueImageProp && (
                   <Symbol
                     base64={selectedItem[valueImageProp]}
                     text={selectedItem[valueProp]}
                   />
                 )}
-                <p>{selectedItem.name}</p>
+                <p>{selectedItem?.name ?? placeholder}</p>
                 <img
                   src={isListOpen ? ExpandIcon : CollapseIcon}
                   alt="expand-icon"
                 />
               </>
-            )}
+            }
           </DropdownMenuHeader>
         </div>
         {isListOpen && (

@@ -1,13 +1,8 @@
 import { Elements } from "react-flow-renderer";
-import { IsPartOfTerminal } from "../helpers/common";
+import { IsPartOfTerminal } from "../helpers";
 import { EDGE_TYPE, EdgeType } from "../../../models/project";
 import { Node, Project } from "../../../models";
-import {
-  CreateBlockEdge,
-  CreateSplitViewNode,
-  CreateParentBlockNode,
-  CreateBlockNode,
-} from ".";
+import { CreateBlockEdge, CreateSplitViewNode, CreateParentBlockNode, CreateBlockNode } from ".";
 
 const CreateBlockElements = (
   project: Project,
@@ -37,17 +32,14 @@ const CreateBlockElements = (
       IsPartOfTerminal(edge.toConnector)
     ) {
       const toNode = nodes.find((node) => node.id === edge.toNodeId);
-      if (toNode) elements.push(CreateBlockNode(toNode, null));
+      if (toNode) elements.push(CreateBlockNode(toNode, null, nodes));
     }
   });
 
   // Draw splitview nodes
   if (splitViewNode && splitView) {
     edges.forEach((edge) => {
-      if (
-        edge.fromNodeId === splitViewNode.id &&
-        splitViewNode.aspect === edge.toNode.aspect
-      ) {
+      if (edge.fromNodeId === splitViewNode.id && splitViewNode.aspect === edge.toNode.aspect) {
         const toNode = nodes.find((node) => node.id === edge.toNodeId);
         if (toNode) elements.push(CreateSplitViewNode(toNode));
       }
@@ -59,7 +51,7 @@ const CreateBlockElements = (
     mainConnectNodes.forEach((mainNode) => {
       mainNode.connectNodes?.forEach((node) => {
         const connectNode = nodes.find((x) => x.id === node.id);
-        if (connectNode) elements.push(CreateBlockNode(connectNode, mainNode));
+        if (connectNode) elements.push(CreateBlockNode(connectNode, mainNode, nodes));
       });
     });
   }

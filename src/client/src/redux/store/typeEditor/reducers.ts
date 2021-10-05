@@ -1,45 +1,7 @@
-import {
-  CreateLibraryType,
-  Aspect,
-  ObjectType,
-  BlobData,
-  TerminalTypeItem,
-  PredefinedAttribute,
-} from "../../../models";
-import {
-  FETCHING_INITIAL_DATA,
-  FETCHING_INITIAL_SUCCESS_OR_ERROR,
-  FETCHING_RDS,
-  FETCHING_RDS_SUCCESS_OR_ERROR,
-  FETCHING_TERMINALS,
-  FETCHING_TERMINALS_SUCCESS_OR_ERROR,
-  FETCHING_ATTRIBUTES,
-  FETCHING_ATTRIBUTES_SUCCESS_OR_ERROR,
-  FETCHING_LOCATIONTYPES,
-  FETCHING_LOCATIONTYPES_SUCCESS_OR_ERROR,
-  FETCHING_PREDEFINED_ATTRIBUTES,
-  FETCHING_PREDEFINED_ATTRIBUTES_SUCCESS_OR_ERROR,
-  FETCHING_BLOB_DATA,
-  FETCHING_BLOB_DATA_SUCCESS_OR_ERROR,
-  FETCHING_SIMPLE_TYPES,
-  FETCHING_SIMPLE_TYPES_SUCCESS_OR_ERROR,
-  FETCHING_TYPE,
-  FETCHING_TYPE_SUCCESS_OR_ERROR,
-  OPEN_TYPE_EDITOR,
-  CLOSE_TYPE_EDITOR,
-  UPDATE_CREATELIBRARYTYPE,
-  ADD_TERMINALTYPE,
-  REMOVE_TERMINALTYPE,
-  UPDATE_TERMINALTYPE,
-  REMOVE_TERMINALTYPE_BY_CATEGORY,
-  SAVE_LIBRARY_TYPE,
-  SAVE_LIBRARY_TYPE_SUCCESS_OR_ERROR,
-  DELETE_TYPE_EDITOR_ERROR,
-  TypeEditorActionTypes,
-  TypeEditorState,
-} from "./types";
+import * as Types from "./types";
+import { CreateLibraryType, Aspect, ObjectType, BlobData, TerminalTypeItem, PredefinedAttribute } from "../../../models";
 
-const initialState: TypeEditorState = {
+const initialState: Types.TypeEditorState = {
   visible: false,
   fetching: false,
   creating: false,
@@ -73,17 +35,14 @@ const initialState: TypeEditorState = {
 };
 
 // TODO: Refactor to reduce complexity
-export function typeEditorReducer(
-  state = initialState,
-  action: TypeEditorActionTypes
-): TypeEditorState {
+export function typeEditorReducer(state = initialState, action: Types.TypeEditorActionTypes): Types.TypeEditorState {
   switch (action.type) {
-    case FETCHING_INITIAL_DATA:
+    case Types.FETCHING_INITIAL_DATA:
       return {
         ...state,
         fetching: true,
       };
-    case FETCHING_INITIAL_SUCCESS_OR_ERROR:
+    case Types.FETCHING_INITIAL_SUCCESS_OR_ERROR:
       return {
         ...state,
         fetching: false,
@@ -91,64 +50,62 @@ export function typeEditorReducer(
         objectTypes: action.payload.objectTypes,
         purposes: action.payload.purposes,
       };
-    case FETCHING_RDS:
+    case Types.FETCHING_RDS:
       return {
         ...state,
         fetching: true,
       };
-    case FETCHING_RDS_SUCCESS_OR_ERROR:
+    case Types.FETCHING_RDS_SUCCESS_OR_ERROR:
       return {
         ...state,
         fetching: false,
         rdsList: action.payload.Rds ? action.payload.Rds : [],
       };
-    case FETCHING_TERMINALS:
+    case Types.FETCHING_TERMINALS:
       return {
         ...state,
         fetching: true,
       };
-    case FETCHING_TERMINALS_SUCCESS_OR_ERROR:
+    case Types.FETCHING_TERMINALS_SUCCESS_OR_ERROR:
       return {
         ...state,
         fetching: false,
         terminals: action.payload.terminals,
       };
-    case FETCHING_ATTRIBUTES:
+    case Types.FETCHING_ATTRIBUTES:
       return {
         ...state,
         fetching: true,
       };
-    case FETCHING_ATTRIBUTES_SUCCESS_OR_ERROR:
+    case Types.FETCHING_ATTRIBUTES_SUCCESS_OR_ERROR:
       return {
         ...state,
         fetching: false,
-        attributes: action.payload.AttributeType
-          ? action.payload.AttributeType
-          : [],
+        attributes: action.payload.AttributeType ? action.payload.AttributeType : [],
       };
-    case FETCHING_LOCATIONTYPES:
+    case Types.FETCHING_LOCATIONTYPES:
       return {
         ...state,
         fetching: true,
       };
-    case FETCHING_LOCATIONTYPES_SUCCESS_OR_ERROR:
+    case Types.FETCHING_LOCATIONTYPES_SUCCESS_OR_ERROR:
       return {
         ...state,
         fetching: false,
         locationTypes: action.payload.locationTypes,
       };
-    case FETCHING_PREDEFINED_ATTRIBUTES:
+    case Types.FETCHING_PREDEFINED_ATTRIBUTES:
       return {
         ...state,
         fetching: true,
       };
-    case FETCHING_PREDEFINED_ATTRIBUTES_SUCCESS_OR_ERROR:
+    case Types.FETCHING_PREDEFINED_ATTRIBUTES_SUCCESS_OR_ERROR:
       return {
         ...state,
         fetching: false,
         predefinedAttributes: action.payload.predefinedAttributes,
       };
-    case FETCHING_TYPE:
+    case Types.FETCHING_TYPE:
       return {
         ...state,
         fetching: true,
@@ -171,52 +128,44 @@ export function typeEditorReducer(
           compositeTypes: [] as string[],
         },
       };
-    case FETCHING_TYPE_SUCCESS_OR_ERROR:
+    case Types.FETCHING_TYPE_SUCCESS_OR_ERROR:
       return {
         ...state,
         fetching: false,
         visible: true,
         createLibraryType: action.payload.selectedNode,
       };
-    case FETCHING_BLOB_DATA:
+    case Types.FETCHING_BLOB_DATA:
       return {
         ...state,
         fetching: true,
         apiError: state.apiError
-          ? state.apiError.filter(
-              (elem) => elem.key !== FETCHING_BLOB_DATA_SUCCESS_OR_ERROR
-            )
+          ? state.apiError.filter((elem) => elem.key !== Types.FETCHING_BLOB_DATA_SUCCESS_OR_ERROR)
           : state.apiError,
       };
-    case FETCHING_BLOB_DATA_SUCCESS_OR_ERROR:
+    case Types.FETCHING_BLOB_DATA_SUCCESS_OR_ERROR:
       return {
         ...state,
         fetching: false,
         icons: action.payload.icons,
-        apiError: action.payload.apiError
-          ? [...state.apiError, action.payload.apiError]
-          : state.apiError,
+        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
-    case FETCHING_SIMPLE_TYPES:
+    case Types.FETCHING_SIMPLE_TYPES:
       return {
         ...state,
         fetching: true,
         apiError: state.apiError
-          ? state.apiError.filter(
-              (elem) => elem.key !== FETCHING_SIMPLE_TYPES_SUCCESS_OR_ERROR
-            )
+          ? state.apiError.filter((elem) => elem.key !== Types.FETCHING_SIMPLE_TYPES_SUCCESS_OR_ERROR)
           : state.apiError,
       };
-    case FETCHING_SIMPLE_TYPES_SUCCESS_OR_ERROR:
+    case Types.FETCHING_SIMPLE_TYPES_SUCCESS_OR_ERROR:
       return {
         ...state,
         fetching: false,
         simpleTypes: action.payload.simpleTypes,
-        apiError: action.payload.apiError
-          ? [...state.apiError, action.payload.apiError]
-          : state.apiError,
+        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
-    case OPEN_TYPE_EDITOR:
+    case Types.OPEN_TYPE_EDITOR:
       return {
         ...state,
         fetching: false,
@@ -239,7 +188,7 @@ export function typeEditorReducer(
           compositeTypes: [] as string[],
         },
       };
-    case CLOSE_TYPE_EDITOR:
+    case Types.CLOSE_TYPE_EDITOR:
       return {
         ...state,
         fetching: false,
@@ -262,7 +211,7 @@ export function typeEditorReducer(
           compositeTypes: [] as string[],
         },
       };
-    case UPDATE_CREATELIBRARYTYPE:
+    case Types.UPDATE_CREATELIBRARYTYPE:
       return {
         ...state,
         createLibraryType: {
@@ -270,45 +219,39 @@ export function typeEditorReducer(
           [action.payload.key]: action.payload.value,
         },
       };
-    case ADD_TERMINALTYPE:
+    case Types.ADD_TERMINALTYPE:
       return {
         ...state,
         createLibraryType: {
           ...state.createLibraryType,
-          terminalTypes: [
-            ...state.createLibraryType.terminalTypes,
-            action.payload.terminal,
-          ],
+          terminalTypes: [...state.createLibraryType.terminalTypes, action.payload.terminal],
         },
       };
-    case REMOVE_TERMINALTYPE:
+    case Types.REMOVE_TERMINALTYPE:
       return {
         ...state,
         createLibraryType: {
           ...state.createLibraryType,
           terminalTypes: [
             ...state.createLibraryType.terminalTypes.filter(
-              (terminal) =>
-                terminal.terminalId !== action.payload.terminal.terminalId
+              (terminal) => terminal.terminalId !== action.payload.terminal.terminalId
             ),
           ],
         },
       };
-    case UPDATE_TERMINALTYPE:
+    case Types.UPDATE_TERMINALTYPE:
       return {
         ...state,
         createLibraryType: {
           ...state.createLibraryType,
           terminalTypes: [
             ...state.createLibraryType.terminalTypes.map((terminal) =>
-              terminal.terminalId === action.payload.terminal.terminalId
-                ? action.payload.terminal
-                : terminal
+              terminal.terminalId === action.payload.terminal.terminalId ? action.payload.terminal : terminal
             ),
           ],
         },
       };
-    case REMOVE_TERMINALTYPE_BY_CATEGORY:
+    case Types.REMOVE_TERMINALTYPE_BY_CATEGORY:
       return {
         ...state,
         createLibraryType: {
@@ -320,16 +263,15 @@ export function typeEditorReducer(
           ],
         },
       };
-
-    case SAVE_LIBRARY_TYPE:
+    case Types.SAVE_LIBRARY_TYPE:
       return {
         ...state,
         fetching: true,
         apiError: state.apiError
-          ? state.apiError.filter((elem) => elem.key !== SAVE_LIBRARY_TYPE)
+          ? state.apiError.filter((elem) => elem.key !== Types.SAVE_LIBRARY_TYPE)
           : state.apiError,
       };
-    case SAVE_LIBRARY_TYPE_SUCCESS_OR_ERROR:
+    case Types.SAVE_LIBRARY_TYPE_SUCCESS_OR_ERROR:
       return {
         ...state,
         fetching: false,
@@ -349,16 +291,12 @@ export function typeEditorReducer(
           symbolId: "",
           compositeTypes: [] as string[],
         },
-        apiError: action.payload.apiError
-          ? [...state.apiError, action.payload.apiError]
-          : state.apiError,
+        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
-    case DELETE_TYPE_EDITOR_ERROR:
+    case Types.DELETE_TYPE_EDITOR_ERROR:
       return {
         ...state,
-        apiError: state.apiError
-          ? state.apiError.filter((elem) => elem.key !== action.payload.key)
-          : state.apiError,
+        apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== action.payload.key) : state.apiError,
       };
     default:
       return state;

@@ -1,18 +1,10 @@
 import { useState } from "react";
 import { AddTerminalComponent } from "../";
 import { TextResources } from "../../../../../assets/text";
-import { CreateId } from "../../../../flow/helpers/common";
+import { CreateId } from "../../../../flow/helpers";
 import { AddIcon, DeleteIcon } from "../../../../../assets/icons/common";
-import {
-  ConnectorType,
-  TerminalType,
-  TerminalTypeItem,
-} from "../../../../../models";
-import {
-  TerminalListElement,
-  TerminalCategoryWrapper,
-  AddTerminalWrapper,
-} from "../../styled";
+import { ConnectorType, TerminalType, TerminalTypeItem } from "../../../../../models";
+import { TerminalListElement, TerminalCategoryWrapper, AddTerminalWrapper } from "../../styled";
 interface Props {
   name: string;
   terminalTypes: TerminalType[];
@@ -21,13 +13,7 @@ interface Props {
   defaultTerminals?: TerminalTypeItem[];
 }
 
-export const ObjectBlockElement = ({
-  name,
-  categoryId,
-  terminalTypes,
-  onChange,
-  defaultTerminals,
-}: Props) => {
+export const ObjectBlockElement = ({ name, categoryId, terminalTypes, onChange, defaultTerminals }: Props) => {
   const [expandCategory, setExpandCategory] = useState(true);
 
   const terminalsQuantity = defaultTerminals?.length;
@@ -46,11 +32,7 @@ export const ObjectBlockElement = ({
     onChange("add", terminal, categoryId, defaultTerminals.length);
   };
 
-  const onCategoryUpdateOrRemove = (
-    key: string,
-    terminal: TerminalTypeItem,
-    terminalId: string
-  ) => {
+  const onCategoryUpdateOrRemove = (key: string, terminal: TerminalTypeItem, terminalId: string) => {
     onChange(key, terminal, categoryId, terminalId);
   };
 
@@ -77,33 +59,19 @@ export const ObjectBlockElement = ({
       <TerminalCategoryWrapper>
         <button onClick={() => onCategoryAdd(defaultTerminal)}>
           <img src={AddIcon} alt="add-icon" className="add-icon" />
-          <p className="add-text">
-            {TextResources.TypeEditor_Properties_Add_Terminal}
-          </p>
+          <p className="add-text">{TextResources.TypeEditor_Properties_Add_Terminal}</p>
         </button>
-        <p
-          className="terminal-name"
-          onClick={() =>
-            terminalsQuantity > 0 && setExpandCategory(!expandCategory)
-          }
-        >
+        <p className="terminal-name" onClick={() => terminalsQuantity > 0 && setExpandCategory(!expandCategory)}>
           {name}
         </p>
         {terminalsQuantity > 0 && (
-          <button
-            className="delete-button"
-            onClick={() => onChange("removeAll", categoryId)}
-          >
+          <button className="delete-button" onClick={() => onChange("removeAll", categoryId)}>
             <img src={DeleteIcon} alt="delete-icon" className="delete-icon" />
-            <p className="delete-text">
-              {TextResources.TypeEditor_Properties_Clear_All_Terminal}
-            </p>
+            <p className="delete-text">{TextResources.TypeEditor_Properties_Clear_All_Terminal}</p>
           </button>
         )}
       </TerminalCategoryWrapper>
-      {terminalsQuantity > 0 && expandCategory && (
-        <AddTerminalWrapper>{showTerminals()}</AddTerminalWrapper>
-      )}
+      {terminalsQuantity > 0 && expandCategory && <AddTerminalWrapper>{showTerminals()}</AddTerminalWrapper>}
     </TerminalListElement>
   );
 };

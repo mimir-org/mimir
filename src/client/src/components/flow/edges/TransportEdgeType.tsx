@@ -1,10 +1,6 @@
 import "./TransportEdge.scss";
 import { Connector } from "../../../models";
-import {
-  ArrowHeadType,
-  getMarkerEnd,
-  getSmoothStepPath,
-} from "react-flow-renderer";
+import { ArrowHeadType, getMarkerEnd, getSmoothStepPath } from "react-flow-renderer";
 
 export default function TransportEdgeType({
   id,
@@ -29,9 +25,7 @@ export default function TransportEdgeType({
   });
 
   const getStyle = () => {
-    const fromConnector = data.source.connectors?.find(
-      (x) => x.id === data.edge.fromConnector.id
-    ) as Connector;
+    const fromConnector = data.source.connectors?.find((x) => x.id === data.edge.fromConnector.id) as Connector;
 
     return {
       stroke: fromConnector?.color,
@@ -40,12 +34,6 @@ export default function TransportEdgeType({
   };
 
   return (
-    <path
-      id={id}
-      style={getStyle()}
-      className="react-flow__edge-path"
-      d={edgePathSmoothStep}
-      markerEnd={markerEnd}
-    />
+    <path id={id} style={getStyle()} className="react-flow__edge-path" d={edgePathSmoothStep} markerEnd={markerEnd} />
   );
 }

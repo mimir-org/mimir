@@ -2,10 +2,7 @@ import { put } from "redux-saga/effects";
 import { User } from "../../../models";
 import { ApiError } from "../../../models/webclient";
 import { msalInstance } from "../../../index";
-import {
-  FETCHING_USER_SUCCESS_OR_ERROR,
-  UserActionTypes,
-} from "./../../store/user/types";
+import { FETCHING_USER_SUCCESS_OR_ERROR, UserActionTypes } from "./../../store/user/types";
 
 export function* getUser(action: UserActionTypes) {
   try {

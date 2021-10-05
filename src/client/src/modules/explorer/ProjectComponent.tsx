@@ -1,7 +1,7 @@
 import { Project, Node } from "../../models";
 import { AspectComponent } from "./aspectComponent/AspectComponent";
-import { IsAspectNode, IsProduct } from "../../components/flow/helpers/common";
-import { IsBlockView } from "../../components/flow/helpers/block";
+import { IsAspectNode, IsProduct } from "../../components/flow/helpers";
+import { IsBlockView } from "../../components/flow/block/helpers";
 import { HasChildren, IsAncestorInSet } from "./helpers/ParentNode";
 import { useState } from "react";
 import { SortNodesWithIndent } from "./helpers/SortNodesWithIndent";
@@ -19,14 +19,12 @@ export const ProjectComponent = ({ project, nodes }: Props) => {
     setClosedNodes((_) => new Set(closedNodes));
   };
 
-  const areAncestorsExpanded = (elem: Node): boolean =>
-    !IsAncestorInSet(elem, closedNodes);
+  const areAncestorsExpanded = (elem: Node): boolean => !IsAncestorInSet(elem, closedNodes);
 
   return (
     <>
       {SortNodesWithIndent(nodes).map(([node, indent]) => {
-        if ((IsBlockView() && IsProduct(node)) || !areAncestorsExpanded(node))
-          return null;
+        if ((IsBlockView() && IsProduct(node)) || !areAncestorsExpanded(node)) return null;
         return (
           <AspectComponent
             key={node.id}

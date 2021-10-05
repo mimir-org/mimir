@@ -1,83 +1,55 @@
-import {
-  TerminalTypeItem,
-  Aspect,
-  CreateLibraryType,
-  LibraryFilter,
-} from "../../../models";
-import {
-  FETCHING_INITIAL_DATA,
-  FETCHING_RDS,
-  FETCHING_TERMINALS,
-  FETCHING_ATTRIBUTES,
-  FETCHING_LOCATIONTYPES,
-  FETCHING_PREDEFINED_ATTRIBUTES,
-  FETCHING_TYPE,
-  FETCHING_BLOB_DATA,
-  FETCHING_SIMPLE_TYPES,
-  OPEN_TYPE_EDITOR,
-  CLOSE_TYPE_EDITOR,
-  UPDATE_CREATELIBRARYTYPE,
-  ADD_TERMINALTYPE,
-  REMOVE_TERMINALTYPE,
-  UPDATE_TERMINALTYPE,
-  REMOVE_TERMINALTYPE_BY_CATEGORY,
-  SAVE_LIBRARY_TYPE,
-  DELETE_TYPE_EDITOR_ERROR,
-  TypeEditorActionTypes,
-} from "./types";
+import * as Types from "./types";
+import { TerminalTypeItem, Aspect, CreateLibraryType, LibraryFilter } from "../../../models";
 
-export function getInitialData(): TypeEditorActionTypes {
+export function getInitialData(): Types.TypeEditorActionTypes {
   return {
-    type: FETCHING_INITIAL_DATA,
+    type: Types.FETCHING_INITIAL_DATA,
     payload: null,
   };
 }
 
-export function getRDS(aspect: Aspect): TypeEditorActionTypes {
+export function getRDS(aspect: Aspect): Types.TypeEditorActionTypes {
   return {
-    type: FETCHING_RDS,
+    type: Types.FETCHING_RDS,
     payload: {
       aspect,
     },
   };
 }
 
-export function getTerminals(): TypeEditorActionTypes {
+export function getTerminals(): Types.TypeEditorActionTypes {
   return {
-    type: FETCHING_TERMINALS,
+    type: Types.FETCHING_TERMINALS,
     payload: null,
   };
 }
 
-export function getAttributes(aspect: Aspect): TypeEditorActionTypes {
+export function getAttributes(aspect: Aspect): Types.TypeEditorActionTypes {
   return {
-    type: FETCHING_ATTRIBUTES,
+    type: Types.FETCHING_ATTRIBUTES,
     payload: {
       aspect,
     },
   };
 }
 
-export function getLocationTypes(): TypeEditorActionTypes {
+export function getLocationTypes(): Types.TypeEditorActionTypes {
   return {
-    type: FETCHING_LOCATIONTYPES,
+    type: Types.FETCHING_LOCATIONTYPES,
     payload: null,
   };
 }
 
-export function getPredefinedAttributes(): TypeEditorActionTypes {
+export function getPredefinedAttributes(): Types.TypeEditorActionTypes {
   return {
-    type: FETCHING_PREDEFINED_ATTRIBUTES,
+    type: Types.FETCHING_PREDEFINED_ATTRIBUTES,
     payload: null,
   };
 }
 
-export function getSelectedNode(
-  selectedType: string,
-  libraryFilter: LibraryFilter
-): TypeEditorActionTypes {
+export function getSelectedNode(selectedType: string, libraryFilter: LibraryFilter): Types.TypeEditorActionTypes {
   return {
-    type: FETCHING_TYPE,
+    type: Types.FETCHING_TYPE,
     payload: {
       selectedType: selectedType,
       filter: libraryFilter,
@@ -85,37 +57,37 @@ export function getSelectedNode(
   };
 }
 
-export function getBlobData(): TypeEditorActionTypes {
+export function getBlobData(): Types.TypeEditorActionTypes {
   return {
-    type: FETCHING_BLOB_DATA,
+    type: Types.FETCHING_BLOB_DATA,
     payload: null,
   };
 }
 
-export function getSimpleTypes(): TypeEditorActionTypes {
+export function getSimpleTypes(): Types.TypeEditorActionTypes {
   return {
-    type: FETCHING_SIMPLE_TYPES,
+    type: Types.FETCHING_SIMPLE_TYPES,
     payload: null,
   };
 }
 
-export function openTypeEditor(): TypeEditorActionTypes {
+export function openTypeEditor(): Types.TypeEditorActionTypes {
   return {
-    type: OPEN_TYPE_EDITOR,
+    type: Types.OPEN_TYPE_EDITOR,
     payload: null,
   };
 }
 
 export function closeTypeEditor() {
   return {
-    type: CLOSE_TYPE_EDITOR,
+    type: Types.CLOSE_TYPE_EDITOR,
     payload: null,
   };
 }
 
 export function updateValue(key: string, value: any) {
   return {
-    type: UPDATE_CREATELIBRARYTYPE,
+    type: Types.UPDATE_CREATELIBRARYTYPE,
     payload: {
       key: key,
       value: value,
@@ -125,7 +97,7 @@ export function updateValue(key: string, value: any) {
 
 export function addTerminalType(terminal: TerminalTypeItem) {
   return {
-    type: ADD_TERMINALTYPE,
+    type: Types.ADD_TERMINALTYPE,
     payload: {
       terminal,
     },
@@ -134,16 +106,7 @@ export function addTerminalType(terminal: TerminalTypeItem) {
 
 export function removeTerminalType(terminal: TerminalTypeItem) {
   return {
-    type: REMOVE_TERMINALTYPE,
-    payload: {
-      terminal,
-    },
-  };
-}
-
-export function updateTerminalType(terminal: TerminalTypeItem) {
-  return {
-    type: UPDATE_TERMINALTYPE,
+    type: Types.REMOVE_TERMINALTYPE,
     payload: {
       terminal,
     },
@@ -152,18 +115,25 @@ export function updateTerminalType(terminal: TerminalTypeItem) {
 
 export function removeTerminalTypeByCategory(categoryId: string) {
   return {
-    type: REMOVE_TERMINALTYPE_BY_CATEGORY,
+    type: Types.REMOVE_TERMINALTYPE_BY_CATEGORY,
     payload: {
       categoryId,
     },
   };
 }
 
-export function saveLibraryType(
-  libraryType: CreateLibraryType
-): TypeEditorActionTypes {
+export function updateTerminalType(terminal: TerminalTypeItem) {
   return {
-    type: SAVE_LIBRARY_TYPE,
+    type: Types.UPDATE_TERMINALTYPE,
+    payload: {
+      terminal,
+    },
+  };
+}
+
+export function saveLibraryType(libraryType: CreateLibraryType): Types.TypeEditorActionTypes {
+  return {
+    type: Types.SAVE_LIBRARY_TYPE,
     payload: {
       libraryType,
     },
@@ -172,7 +142,7 @@ export function saveLibraryType(
 
 export function deleteTypeEditorError(key: string) {
   return {
-    type: DELETE_TYPE_EDITOR_ERROR,
+    type: Types.DELETE_TYPE_EDITOR_ERROR,
     payload: {
       key,
     },

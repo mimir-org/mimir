@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { FontSize } from "../../../compLibrary";
 
+//TODO: Move styled components
 const Wrapper = styled.div`
   //border: red solid 1px;
   display: flex;
@@ -43,11 +44,7 @@ const ConnectionList = ({ nodes, title, onElementClick }) => (
     <ObjectsContainer>
       {nodes.map((n, i) => {
         return (
-          <ListElement
-            onClick={() => onElementClick(n.id)}
-            index={i}
-            key={n.id}
-          >
+          <ListElement onClick={() => onElementClick(n.id)} index={i} key={n.id}>
             {n.label}
           </ListElement>
         );

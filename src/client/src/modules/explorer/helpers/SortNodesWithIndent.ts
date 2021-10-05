@@ -1,8 +1,12 @@
 import { SetIndentLevel } from "../../../assets/helpers";
-import { IsParentOf } from "../../../components/flow/helpers/common";
+import { IsParentOf } from "../../../components/flow/helpers";
 import { Node } from "../../../models";
 
 const SortNodesWithIndent = (nodes: Node[]): [Node, number][] => {
+  // Ensure nodes are sorted according to aspect
+
+  nodes.sort((a, b) => b.aspect - a.aspect);
+
   // Group nodes according to indent level
 
   const buckets: Map<number, Node[]> = new Map();
@@ -39,11 +43,7 @@ const SortNodesWithIndent = (nodes: Node[]): [Node, number][] => {
 };
 
 // Scan through sortedNodes, looking for parent node of *node*. Insert node at index of parent + 1.
-const AddNodeFromBucket = (
-  node: Node,
-  indent: number,
-  sortedNodedWithIndent: [Node, number][]
-) => {
+const AddNodeFromBucket = (node: Node, indent: number, sortedNodedWithIndent: [Node, number][]) => {
   for (let i = 0; i < sortedNodedWithIndent.length; i++) {
     let [otherNode] = sortedNodedWithIndent[i];
 

@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import { RootState } from "../../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { EnumBase, Node, Project } from "../../../../models";
-import { changeInspectorTab } from "../../redux/actions";
+import { changeInspectorTab } from "../../redux/tabs/actions";
 import { AdminContent } from "./";
 import { TabHeader, TabBody, TabTitle } from "../../styled";
 
@@ -15,14 +15,8 @@ interface Props {
 
 const AdminComponent = ({ node, project, index }: Props) => {
   const dispatch = useDispatch();
-
-  const isTabOpen = useSelector<RootState>(
-    (state) => state.inspector.tabs[index].visible
-  ) as boolean;
-
-  const statuses = useSelector<RootState>(
-    (state) => state.commonState.statuses
-  ) as EnumBase[];
+  const isTabOpen = useSelector<RootState>((s) => s.inspector.tabs[index].visible) as boolean;
+  const statuses = useSelector<RootState>((s) => s.commonState.statuses) as EnumBase[];
 
   const onClick = useCallback(() => {
     dispatch(changeInspectorTab(index));
@@ -30,11 +24,7 @@ const AdminComponent = ({ node, project, index }: Props) => {
 
   return (
     <>
-      <TabHeader
-        active={isTabOpen}
-        onClick={onClick}
-        color={GetTabsColor(node, null)}
-      >
+      <TabHeader active={isTabOpen} onClick={onClick} color={GetTabsColor(node, null)}>
         <TabTitle active={isTabOpen}>{GetInspectorText(index)}</TabTitle>
       </TabHeader>
 

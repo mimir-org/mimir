@@ -14,6 +14,7 @@ export interface AttributeType {
   formatId: string;
   format: EnumBase;
   units: EnumBase[];
+  description: string;
 }
 
 export interface EnumBase {

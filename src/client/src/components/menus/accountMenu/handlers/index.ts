@@ -1,9 +1,9 @@
-export { default as OnLogOutClick } from "./OnLogOutClick";
-export { default as OnOpenClick } from "./OnOpenClick";
-export { default as OnCreateClick } from "./OnCreateClick";
-export { default as OnSaveClick } from "./OnSaveClick";
+export { default as OnLogOut } from "./OnLogOutClick";
+export { default as OnOpenC } from "./OnOpenClick";
+export { default as OnCreate } from "./OnCreateClick";
+export { default as OnSave } from "./OnSaveClick";
 export { default as OnSaveFile } from "./OnSaveFile";
-export { default as OnImportProjectFile } from "./OnImportProjectFile";
-export { default as OnSaveLibraryFile } from "./OnSaveLibraryFile";
-export { default as OnImportLibraryFile } from "./OnImportLibraryFile";
-export { default as OnCommitClick } from "./OnCommitClick";
+export { default as OnImportProject } from "./OnImportProjectFile";
+export { default as OnSaveLibrary } from "./OnSaveLibraryFile";
+export { default as OnImportLibrary } from "./OnImportLibraryFile";
+export { default as OnCommit } from "./OnCommitClick";

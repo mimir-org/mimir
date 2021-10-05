@@ -4,21 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { TextResources } from "../../../../assets/text";
 import { Connector, Node, Edge } from "../../../../models";
 import { RootState } from "../../../../redux/store";
-import { Block } from "..";
 import { HandleComponent, TerminalsComponent } from "../../block/terminals";
-import { IsLocation } from "../../helpers/common";
+import { IsLocation } from "../../helpers";
 import { Size } from "../../../../compLibrary";
-import { BlockMessageBox } from "../../../../compLibrary/blockView";
-import {
-  changeActiveConnector,
-  removeEdge,
-} from "../../../../redux/store/project/actions";
-import {
-  SetTerminalOrder,
-  FilterTerminals,
-  FindNodeByDataId,
-  FindAllEdges,
-} from "../../helpers/block";
+import { OnParentClick, OnChildClick } from "./handlers";
+import { BlockComponent } from "./";
+import { BlockMessageBox } from "../../block/styled";
+import { changeActiveConnector, removeEdge } from "../../../../redux/store/project/actions";
+import { SetTerminalOrder, FilterTerminals, FindNodeByDataId, FindAllEdges } from "../../block/helpers";
 
 /**
  * Component for the large parent block in BlockView.
@@ -26,25 +19,13 @@ import {
  * @returns a parent node of the Flow node type with Mimir styling and functionality.
  */
 const BlockParentNode: FC<NodeProps> = ({ data }) => {
-  const [terminalMenu, showTerminalMenu] = useState(false);
   const dispatch = useDispatch();
-
-  const nodes = useSelector<RootState>(
-    (state) => state.projectState.project.nodes
-  ) as Node[];
-
-  const edges = useSelector<RootState>(
-    (state) => state.projectState.project.edges
-  ) as Edge[];
-
-  const isSplitView = useSelector<RootState>(
-    (state) => state.splitView.visible
-  ) as boolean;
-
-  const splitViewNode = useSelector<RootState>(
-    (state) => state.splitView.node
-  ) as Node;
-
+  const [inputTerminalMenu, showInputTerminalMenu] = useState(false);
+  const [outputTerminalMenu, showOutputTerminalMenu] = useState(false);
+  const nodes = useSelector<RootState>((state) => state.projectState.project.nodes) as Node[];
+  const edges = useSelector<RootState>((state) => state.projectState.project.edges) as Edge[];
+  const isSplitView = useSelector<RootState>((state) => state.splitView.visible) as boolean;
+  const splitViewNode = useSelector<RootState>((state) => state.splitView.node) as Node;
   const node = nodes.find((x) => x.id === data.id);
 
   // Enforce size change of node
@@ -67,32 +48,33 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
     dispatch(changeActiveConnector(actualNode, conn.id, !conn.visible, order));
 
     if (conn.visible) {
-      const edge = edges.find(
-        (e) => e.fromConnector.id === conn.id || e.toConnector.id === conn.id
-      );
+      const edge = edges.find((e) => e.fromConnector.id === conn.id || e.toConnector.id === conn.id);
       if (edge) dispatch(removeEdge(edge.id));
     }
   };
 
   return (
     <>
-      <Block
+      <BlockComponent
         node={node}
         isLocation={IsLocation(node)}
         isSplitView={isSplitView}
         isSelected={node?.isBlockSelected}
+        onParentClick={() => OnParentClick(dispatch, node, nodes, edges)}
+        onChildClick={() => OnChildClick(dispatch, node, nodes, edges)}
       />
       <TerminalsComponent
         node={node}
-        isMenuOpen={terminalMenu}
+        isInputMenuOpen={inputTerminalMenu}
+        isOutputMenuOpen={outputTerminalMenu}
         isParent={true}
+        isSplitView={isSplitView}
         isLocation={IsLocation(node)}
         terminals={FilterTerminals(node, isSplitView)}
-        width={isSplitView ? Size.SplitView_Width : Size.BlockView_Width}
-        onClick={onConnectorClick}
+        onClick={(conn) => onConnectorClick(conn)}
         menuButton={true}
-        showTerminalMenu={showTerminalMenu}
-        terminalMenu={terminalMenu}
+        showInputTerminalMenu={showInputTerminalMenu}
+        showOutputTerminalMenu={showOutputTerminalMenu}
       />
       <HandleComponent
         node={node}

@@ -16,6 +16,7 @@ const MenuList = styled.div`
   width: 100%;
   max-height: 250px;
   overflow-y: auto;
+  margin-left: 10px;
 `;
 
 export default MenuList;

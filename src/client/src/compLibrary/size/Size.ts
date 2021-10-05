@@ -2,8 +2,8 @@
 
 const Size = {
   // Nodes
-  Node_Width: 115,
-  Node_Length: 70,
+  Node_Width: 130,
+  Node_Length: 80,
 
   // SplitView
   SplitView_Width: 650,
@@ -23,7 +23,6 @@ const Size = {
   // Modules
   ModuleOpen: 331,
   ModuleClosed: 45,
-  InspectorModuleOpen: 295,
   Margin: 2,
 
   // Menus

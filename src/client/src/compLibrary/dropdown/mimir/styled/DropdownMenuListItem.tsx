@@ -9,6 +9,7 @@ const DropdownMenuListItem = styled.div`
   border-style: solid;
   border-color: ${Color.DarkGrey};
   font-size: ${(props: { fontSize: string }) => props.fontSize};
+  border-radius: ${(props: { borderRadius: number }) => props.borderRadius};
   color: ${Color.Black};
   background-color: ${Color.White};
   cursor: pointer;
@@ -27,6 +28,7 @@ const DropdownMenuListItem = styled.div`
 
   :hover {
     background-color: ${Color.LightBlue};
+
     p {
       text-decoration: underline;
     }

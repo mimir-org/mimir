@@ -8,19 +8,12 @@ import { LibraryModule } from "../../modules/library";
 import { AccountMenu } from "../menus/accountMenu";
 import { FilterMenu } from "../menus/filterMenu";
 import { getUser } from "../../redux/store/user/actions";
-import {
-  getContractors,
-  getStatuses,
-  getAttributeFilters,
-} from "../../redux/store/common/actions";
 import { search } from "../../redux/store/project/actions";
 import { FlowModule } from "../flow";
 import { ErrorModule } from "../../modules/error";
 import { TypeEditorComponent } from "../modules/typeEditorModule";
-import {
-  importLibraryInterfaceTypes,
-  importLibraryTransportTypes,
-} from "../../redux/store/library/actions";
+import { getContractors, getStatuses, getAttributeFilters } from "../../redux/store/common/actions";
+import { importLibraryInterfaceTypes, importLibraryTransportTypes } from "../../redux/store/library/actions";
 
 interface RouteParams {
   type: string;
@@ -32,14 +25,9 @@ interface RouteParams {
  */
 const Home = () => {
   const dispatch = useDispatch();
-
-  const accountMenuOpen = useSelector<RootState>(
-    (state) => state.menu.list[1].visible
-  ) as boolean;
-
-  const filterMenuOpen = useSelector<RootState>(
-    (state) => state.menu.list[4].visible
-  ) as boolean;
+  const accountMenuOpen = useSelector<RootState>((state) => state.menu.accountMenuVisibility) as boolean;
+  const filterMenuOpen = useSelector<RootState>((state) => state.menu.filterMenuVisibility) as boolean;
+  const params = useParams<RouteParams>();
 
   useEffect(() => {
     dispatch(importLibraryInterfaceTypes());
@@ -50,8 +38,6 @@ const Home = () => {
     dispatch(getStatuses());
     dispatch(getAttributeFilters());
   }, [dispatch]);
-
-  const params = useParams<RouteParams>();
 
   return (
     <>

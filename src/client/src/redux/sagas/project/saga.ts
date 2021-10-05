@@ -2,12 +2,7 @@ import { call, put } from "redux-saga/effects";
 import { Project } from "../../../models";
 import { ConvertProject } from ".";
 import { saveAs } from "file-saver";
-import {
-  get,
-  post,
-  GetBadResponseData,
-  ApiError,
-} from "../../../models/webclient";
+import { get, post, GetBadResponseData, ApiError } from "../../../models/webclient";
 import {
   FETCHING_PROJECT_SUCCESS_OR_ERROR,
   CREATING_PROJECT_SUCCESS_OR_ERROR,
@@ -21,14 +16,13 @@ import {
   CommitProject,
   LockUnlockNode,
   LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR,
-  LockUnlockAttribute,
+  LockUnlockNodeAttribute,
   LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
 } from "../../store/project/types";
 
 export function* getProject(action) {
   try {
-    const url =
-      process.env.REACT_APP_API_BASE_URL + "project/" + action.payload;
+    const url = process.env.REACT_APP_API_BASE_URL + "project/" + action.payload;
     const response = yield call(get, url);
 
     // This is a bad request
@@ -85,10 +79,7 @@ export function* getProject(action) {
 
 export function* searchProject(action) {
   try {
-    const url =
-      process.env.REACT_APP_API_BASE_URL +
-      "project/search?name=" +
-      action.payload;
+    const url = process.env.REACT_APP_API_BASE_URL + "project/search?name=" + action.payload;
     const response = yield call(get, url);
 
     // This is a bad request
@@ -449,11 +440,12 @@ export function* lockUnlockNode(action: LockUnlockNode) {
   }
 }
 
-export function* lockUnlockAttribute(action: LockUnlockAttribute) {
+export function* lockUnlockAttribute(action: LockUnlockNodeAttribute) {
   try {
-    const url =
-      process.env.REACT_APP_API_BASE_URL + "project/attribute/lockunlock";
-    const response = yield call(post, url, action.payload);
+    const url = process.env.REACT_APP_API_BASE_URL + "project/attribute/lockunlock";
+
+    const { id, isLocked } = action.payload;
+    const response = yield call(post, url, { id, isLocked });
 
     // This is a bad request
     if (response.status === 400) {
@@ -473,16 +465,7 @@ export function* lockUnlockAttribute(action: LockUnlockAttribute) {
         type: LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
         payload: payload,
       });
-      return;
     }
-
-    const payload = {
-      apiError: null,
-    };
-    yield put({
-      type: LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
   } catch (error) {
     const apiError = {
       key: LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR,

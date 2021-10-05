@@ -8,11 +8,7 @@ import { OnClickRelation, OnClickTerminal, OnClickTransport } from "./handlers";
 import { GetRelations } from "./helpers/GetRelations";
 import { GetRelationColor } from "../../helpers";
 import { Color } from "../../../../compLibrary";
-import {
-  GetNameRelation,
-  GetNameTerminal,
-  GetNameTransport,
-} from "./helpers/GetName";
+import { GetNameRelation, GetNameTerminal, GetNameTransport } from "./helpers/GetName";
 import GetTerminalsAndTransports from "./helpers/GetTerminals";
 
 interface Props {
@@ -21,18 +17,16 @@ interface Props {
 
 const RelationComponent = ({ node }: Props) => {
   const dispatch = useDispatch();
-
   const connectors = node.connectors;
   const hasConnectors = connectors.length > 0;
-
-  const edges = useSelector<RootState>(
-    (state) => state.projectState.project.edges
-  ) as Edge[];
-
+  const edges = useSelector<RootState>((state) => state.projectState.project.edges) as Edge[];
   const [relations, relationEdges] = GetRelations(connectors, edges);
 
-  const [inputTerminals, outputTerminals, transports] =
-    GetTerminalsAndTransports(connectors, edges, node);
+  const [inputTerminals, outputTerminals, transports] = GetTerminalsAndTransports(
+    connectors,
+    edges,
+    node
+  );
 
   return (
     <RelationsBody>
@@ -43,9 +37,7 @@ const RelationComponent = ({ node }: Props) => {
             label={TextResources.Inspector_Relations_Relationships}
             getName={(conn) => GetNameRelation(conn, relationEdges)}
             getColor={(conn) => GetRelationColor(conn)}
-            onClick={(conn) =>
-              OnClickRelation(node, conn, relationEdges, dispatch)
-            }
+            onClick={(conn) => OnClickRelation(node, conn, relationEdges, dispatch)}
           />
           <RelationsContent
             items={inputTerminals}

@@ -1,7 +1,8 @@
 import styled from "styled-components";
+import Color from "../colors/Color";
 
 const Input = styled.input`
-  border: 1px solid #000;
+  border: 1px solid ${Color.Black};
   width: 100%;
   box-sizing: border-box;
   border-radius: 5px;
@@ -10,9 +11,8 @@ const Input = styled.input`
   height: 31px;
   text-align: left;
   margin-right: ${(props) => props.inputType === "tech" && "4px"};
-  background-color: ${(props: { readOnly: boolean }) =>
-    props.readOnly ? "#f2f2f2" : "#fff"};
-  font-size: 13px;
+  background-color: ${(props: { readOnly: boolean }) => (props.readOnly ? Color.LighterGrey : Color.White)};
+  font-size: ${(props) => GetFontSize(props.fontSize)}px;
 
   @media (min-width: 3000px) {
     height: 40px;
@@ -20,4 +20,5 @@ const Input = styled.input`
   }
 `;
 
+const GetFontSize = (fontSize: number) => fontSize ?? 13;
 export default Input;

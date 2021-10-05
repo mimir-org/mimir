@@ -1,7 +1,8 @@
 import styled from "styled-components";
+import { Color } from "../../../compLibrary";
 
 const ListContainer = styled.div`
-  border: solid 2px #898787;
+  border: solid 2px ${Color.DarkerGrey};
   border-radius: 3px;
   display: flex;
   flex-direction: row;

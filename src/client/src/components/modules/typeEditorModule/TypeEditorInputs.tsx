@@ -69,6 +69,7 @@ const TypeEditorInputs = ({
             createLibraryType.locationType &&
             createLibraryType.locationType.toString()
           }
+          placeholder="-"
         />
       )}
       <Dropdown
@@ -81,6 +82,7 @@ const TypeEditorInputs = ({
         defaultValue={
           createLibraryType && createLibraryType.purpose?.toString()
         }
+        placeholder="-"
       />
       <TypeNameInput>
         <p className="label">{TextResources.TypeEditor_Type_Name}</p>
@@ -103,6 +105,7 @@ const TypeEditorInputs = ({
         onChange={(data: any) => {
           onChange("symbolId", data);
         }}
+        placeholder="-"
         // disabled={FieldValidator(state, "symbol")}
         defaultValue={createLibraryType && createLibraryType.symbolId}
       />

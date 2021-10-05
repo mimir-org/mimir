@@ -1,10 +1,6 @@
 import { Node } from "../../models";
 import { TextResources } from "../text";
-import {
-  IsFunction,
-  IsLocation,
-  IsProduct,
-} from "../../components/flow/helpers/common";
+import { IsFunction, IsLocation, IsProduct } from "../../components/flow/helpers";
 
 const GetRdsId = (node: Node): string => {
   if (!node || !node.rds) return "";

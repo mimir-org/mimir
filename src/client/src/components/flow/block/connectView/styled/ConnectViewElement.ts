@@ -13,22 +13,17 @@ const ConnectViewElement = styled.div`
   display: flex;
 
   .text {
-    position: relative;
     text-align: left;
-    padding-left: 30px;
-    bottom: 8px;
-    width: max-content;
+    margin-left: 30px;
+    width: 100%;
+    height: 15px;
   }
 
   .select {
-    position: absolute;
-    left: 7px;
-    top: 7px;
-
-    &:last-child {
-      left: unset;
-      right: 8px;
-    }
+    position: relative;
+    margin-left: 10px;
+    top: 2px;
+    width: 100%;
 
     &:hover {
       font-weight: bold;

@@ -1,9 +1,9 @@
 import { ExpandIcon, CollapseIcon } from "../../../assets/icons/common";
 import { Node, Project } from "../../../models";
-import { IsAspectNode } from "../../../components/flow/helpers/common";
+import { IsAspectNode } from "../../../components/flow/helpers";
 import { AspectBox } from "../../../compLibrary/box/aspect";
 import { Checkbox, CheckboxBlock } from "../checkboxComponent";
-import { IsBlockView } from "../../../components/flow/helpers/block";
+import { IsBlockView } from "../../../components/flow/block/helpers";
 import { GetAspectIcon } from "../../../assets/helpers";
 
 interface Props {
@@ -32,9 +32,7 @@ export const AspectComponent = ({
   return (
     <>
       <AspectBox indent={indent} node={node} isRoot={isRoot}>
-        {IsAspectNode(node) && (
-          <img src={aspectIcon} alt="aspect-icon" className="icon"></img>
-        )}
+        {IsAspectNode(node) && <img src={aspectIcon} alt="aspect-icon" className="icon"></img>}
         <div className="checkbox_container">
           {IsBlockView() ? (
             <CheckboxBlock node={node} inputLabel={label} />

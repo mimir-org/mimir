@@ -7,38 +7,20 @@ import { TextResources } from "../../../assets/text";
 import { useState } from "react";
 import { Input, Label, Size } from "../../../compLibrary";
 import { Button } from "../../../compLibrary/buttons";
-import {
-  ProjectBody,
-  ProjectBox,
-  HeaderBox,
-  ButtonBox,
-} from "../../../compLibrary/box/project";
+import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../../../compLibrary/box/project";
 
 export const CreateProjectMenu = () => {
   const dispatch = useDispatch();
   const [projectName, setProjectName] = useState("");
 
-  const isOpen = useSelector<RootState>(
-    (state) =>
-      state.menu.list.find((x) => x.type === MENU_TYPE.CREATE_PROJECT_MENU)
-        ?.visible
-  ) as boolean;
+  const isOpen = useSelector<RootState>((state) => state.menu.activeMenu === MENU_TYPE.CREATE_PROJECT_MENU) as boolean;
 
   return (
     <>
-      <ProjectBox
-        width={Size.MenuSmall_Width}
-        height={Size.MenuSmall_Height}
-        visible={isOpen}
-      >
+      <ProjectBox width={Size.MenuSmall_Width} height={Size.MenuSmall_Height} visible={isOpen}>
         <ProjectBody>
           <HeaderBox>
-            <img
-              src={CloseIcon}
-              alt="Close project"
-              onClick={() => Handlers.OnReturnClick(dispatch)}
-              className="icon"
-            />
+            <img src={CloseIcon} alt="Close project" onClick={() => Handlers.OnReturnClick(dispatch)} className="icon" />
             {TextResources.Account_Create_Label}
           </HeaderBox>
           <Label>{TextResources.Account_Name_Project_Label}</Label>
@@ -49,17 +31,12 @@ export const CreateProjectMenu = () => {
             value={projectName}
           />
           <ButtonBox left>
-            <Button
-              onClick={() => Handlers.OnReturnClick(dispatch)}
-              type={TextResources.Account_Cancel}
-            />
+            <Button onClick={() => Handlers.OnReturnClick(dispatch)} type={TextResources.Account_Cancel} />
           </ButtonBox>
           {projectName && (
             <ButtonBox>
               <Button
-                onClick={() =>
-                  Handlers.OnProjectCreateClick(dispatch, projectName)
-                }
+                onClick={() => Handlers.OnProjectCreateClick(dispatch, projectName)}
                 type={TextResources.Account_Create}
               />
             </ButtonBox>

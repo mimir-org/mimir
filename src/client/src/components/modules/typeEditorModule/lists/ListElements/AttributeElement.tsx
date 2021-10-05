@@ -9,24 +9,12 @@ interface Props {
   defaultValue?: string[];
 }
 
-export const AttributeElement = ({
-  attribute,
-  onChange,
-  defaultValue,
-}: Props) => {
+export const AttributeElement = ({ attribute, onChange, defaultValue }: Props) => {
   return (
     <ListElem>
-      <Checkbox
-        id={attribute.id}
-        label={Label.attributeTypes}
-        defaultValue={defaultValue}
-        onChange={onChange}
-      />
+      <Checkbox id={attribute.id} label={Label.attributeTypes} defaultValue={defaultValue} onChange={onChange} />
       <p>
-        <span>{attribute.source.name} </span>
-        <span>{attribute.entity} - </span>
-        <span>{attribute.qualifier.name}, </span>
-        <span>{attribute.condition.name}</span>
+        <span>{attribute.description}</span>
       </p>
       <img src={HelpIcon} alt="help" />
     </ListElem>

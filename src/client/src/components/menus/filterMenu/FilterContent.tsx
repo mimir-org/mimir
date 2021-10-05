@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import { IsBlockView } from "../../flow/helpers/block";
+import { IsBlockView } from "../../flow/block/helpers";
 import { Connector, Edge, Node, RelationType } from "../../../models";
 import { MenuSubHeader } from "../../../compLibrary/box/menus";
 import { OnChange } from "./handlers";
@@ -19,10 +19,7 @@ const FilterContent = ({ conn, type, name, header, node, edges }: Props) => {
   const dispatch = useDispatch();
   const isVisible = name !== null;
 
-  let selectedElements = !IsBlockView()
-    ? CheckEdges(edges, type, node)
-    : CheckBlockEdges(edges, type);
-
+  let selectedElements = !IsBlockView() ? CheckEdges(edges, type, node) : CheckBlockEdges(edges, type);
   const [, setChecked] = useState(IsChecked(type, edges, conn, node, name));
 
   return header ? (
@@ -30,21 +27,10 @@ const FilterContent = ({ conn, type, name, header, node, edges }: Props) => {
       <input
         type="checkbox"
         checked={IsChecked(type, edges, conn, node, name)}
-        onChange={() =>
-          OnChange(
-            edges,
-            setChecked,
-            dispatch,
-            selectedElements,
-            type,
-            name,
-            node,
-            conn
-          )
-        }
+        onChange={() => OnChange(edges, setChecked, dispatch, selectedElements, type, name, node, conn)}
       />
       <span className="checkmark"></span>
-      {<MenuSubHeader>{name}</MenuSubHeader>}
+      <MenuSubHeader>{name}</MenuSubHeader>
     </label>
   ) : (
     <label className={"checkbox-filter"}>
@@ -53,18 +39,7 @@ const FilterContent = ({ conn, type, name, header, node, edges }: Props) => {
           <input
             type="checkbox"
             checked={IsChecked(type, edges, conn, node, name)}
-            onChange={() =>
-              OnChange(
-                edges,
-                setChecked,
-                dispatch,
-                selectedElements,
-                type,
-                name,
-                node,
-                conn
-              )
-            }
+            onChange={() => OnChange(edges, setChecked, dispatch, selectedElements, type, name, node, conn)}
           />
           <span className="checkmark-filter"></span>
           {name}

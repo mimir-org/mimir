@@ -1,15 +1,22 @@
 import { Dispatch } from "redux";
-import { Attribute, Node } from "../../../../../models";
-import { setIsLockedAttribute } from "../../../../../redux/store/project/actions";
+import { Attribute } from "../../../../../models";
+import { setIsLockedNodeAttribute, setIsLockedTerminalAttribute } from "../../../../../redux/store/project/actions";
 
 const OnLockParameter = (
-  node: Node,
   attribute: Attribute,
   isLocked: boolean,
+  elementId: string,
+  isNodeLocked: boolean,
+  isElementNode: boolean,
   dispatch: Dispatch<any>
 ) => {
-  if (!node.isLocked)
-    dispatch(setIsLockedAttribute(attribute, node.id, isLocked));
+  if (isNodeLocked) return;
+
+  if (isElementNode) {
+    dispatch(setIsLockedNodeAttribute(attribute, elementId, isLocked));
+  } else {
+    dispatch(setIsLockedTerminalAttribute(attribute, elementId, isLocked));
+  }
 };
 
 export default OnLockParameter;

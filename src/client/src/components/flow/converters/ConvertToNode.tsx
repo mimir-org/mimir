@@ -1,12 +1,13 @@
-import { CreateId } from "../helpers/common";
+import { CreateId } from "../helpers";
 import { BlobData, LibItem, Node } from "../../../models";
 
-const ConvertToNode = (
-  data: LibItem,
-  position,
-  projectId: string,
-  icons: BlobData[]
-) => {
+/**
+ * Function to convert data to a Mimir Node.
+ * @param node
+ * @param position
+ * @returns a Node.
+ */
+const ConvertToNode = (data: LibItem, position, projectId: string, icons: BlobData[]) => {
   return {
     id: CreateId(),
     rds: data.rds,

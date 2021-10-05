@@ -1,45 +1,22 @@
 import * as Handlers from "./handlers";
+import * as Icons from "../../assets/icons/common/header";
 import { RootState } from "../../redux/store";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { VIEW_TYPE } from "../../models/project";
 import { MenuMainHeader } from "../../compLibrary/box/menus";
 import { ProjectState } from "../../redux/store/project/types";
-import { IsExplorer, IsLibrary } from "../flow/helpers/common";
-import {
-  HeaderBox,
-  OptionsBox,
-  LogoBox,
-  OptionsElement,
-  MenuBar,
-} from "../../compLibrary/box/header/";
-import {
-  MimirIcon,
-  TreeViewIcon,
-  BlockViewIcon,
-  FilterIcon,
-  UserClosedIcon,
-} from "../../assets/icons/common";
+import { IsExplorer, IsLibrary } from "../flow/helpers";
+import { HeaderBox, OptionsBox, LogoBox, OptionsElement, MenuBar } from "../../compLibrary/box/header/";
 
 const Header = () => {
   const dispatch = useDispatch();
   const { push } = useHistory();
+  const projectState = useSelector<RootState>((state) => state.projectState) as ProjectState;
+  const isDarkMode = useSelector<RootState>((state) => state.darkMode.active) as boolean;
+  const isFilterMenuOpen = useSelector<RootState>((state) => state.menu.filterMenuVisibility) as boolean;
 
-  const projectState = useSelector<RootState>(
-    (state) => state.projectState
-  ) as ProjectState;
-
-  const isDarkMode = useSelector<RootState>(
-    (state) => state.darkMode.active
-  ) as boolean;
-
-  const isAccountMenuOpen = useSelector<RootState>(
-    (state) => state.menu.list[1].visible
-  ) as boolean;
-
-  const isFilterMenuOpen = useSelector<RootState>(
-    (state) => state.menu.list[4].visible
-  ) as boolean;
+  const isAccountMenuOpen = useSelector<RootState>((state) => state.menu.accountMenuVisibility) as boolean;
 
   const isLibraryOpen = useSelector<RootState>(
     (state) => state.modules.types.find((x) => IsLibrary(x.type)).visible
@@ -54,49 +31,41 @@ const Header = () => {
       <HeaderBox>
         <MenuMainHeader isOpen={isAccountMenuOpen}>
           <img
-            src={UserClosedIcon}
+            src={Icons.User}
             alt="icon"
             className="icon"
             onClick={() => Handlers.OnAccountClick(dispatch, isAccountMenuOpen)}
           />
-          <div
-            className="projectName"
-            onClick={() => Handlers.OnAccountClick(dispatch, isAccountMenuOpen)}
-          >
+          <div className="projectName" onClick={() => Handlers.OnAccountClick(dispatch, isAccountMenuOpen)}>
             {projectState.project && projectState.project.name}
           </div>
         </MenuMainHeader>
         <LogoBox>
-          <img
-            src={MimirIcon}
-            alt="mimir-icon"
-            onClick={() => Handlers.OnDarkModeClick(dispatch, isDarkMode)}
-          />
+          <img src={Icons.Mimir} alt="mimir-icon" onClick={() => Handlers.OnDarkModeClick(dispatch, isDarkMode)} />
         </LogoBox>
       </HeaderBox>
-      <MenuBar
-        id="MenuBar"
-        isLibraryOpen={isLibraryOpen}
-        isExplorerOpen={isExplorerOpen}
-      >
+      <MenuBar id="MenuBar" isLibraryOpen={isLibraryOpen} isExplorerOpen={isExplorerOpen}>
         <OptionsBox>
           <OptionsElement>
             <img
-              src={FilterIcon}
+              src={Icons.Filter}
               alt="VisualFilter"
               onClick={() => Handlers.OnFilterClick(dispatch, isFilterMenuOpen)}
             />
           </OptionsElement>
           <OptionsElement>
+            <img src={Icons.Landscape} alt="Landscape" onClick={() => null} />
+          </OptionsElement>
+          <OptionsElement>
             <img
-              src={BlockViewIcon}
+              src={Icons.BlockView}
               alt={VIEW_TYPE.BLOCKVIEW}
               onClick={(e) => Handlers.OnViewClick(e, dispatch, push)}
             />
           </OptionsElement>
           <OptionsElement>
             <img
-              src={TreeViewIcon}
+              src={Icons.TreeView}
               alt={VIEW_TYPE.TREEVIEW}
               onClick={(e) => Handlers.OnViewClick(e, dispatch, push)}
             />
