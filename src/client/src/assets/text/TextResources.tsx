@@ -21,26 +21,25 @@ const TextResources = {
   Relations_Transport: "Transport",
 
   // Log in
-  Login_label: "Log in",
-  Login_label_email: "SSO e-mail",
+  Login_Label: "Log in",
+  Login_Label_Email: "SSO e-mail",
 
   // Top-menu
   MainHeader_Login_Heading: "Login",
   MainHeader_VisualFilter: "Visual Filter",
 
   // Project options
-  Project_heading: "Projects",
-  Project_new_project: "Create project",
-  Project_open_project: "Open project",
-  Project_recent_project: "Recent projects",
-  Project_recent_name: "Project name",
-  Project_recent_owner: "Project owner",
-  Project_recent_edited: "Last edited",
-  Project_recent_open: "Open project",
+  Project_Heading: "Projects",
+  Project_New: "Create project",
+  Project_Open: "Open project",
+  Project_Recent: "Recent projects",
+  Project_Recent_Name: "Project name",
+  Project_Recent_Owner: "Project owner",
+  Project_Recent_Edited: "Last edited",
+  Project_Recent_Open: "Open project",
 
   // ExplorerModule
-  Combined_view: "Connections",
-  Split_view: "Split View",
+  Split_View: "Split View",
 
   // InspectorModule
   Inspector_AdminInfo: "Admin info",

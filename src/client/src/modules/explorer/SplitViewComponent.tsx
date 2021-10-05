@@ -10,29 +10,25 @@ import { GetSelectedNode, IsLocation } from "../../components/flow/helpers";
 export const SplitViewComponent = () => {
   const dispatch = useDispatch();
   const splitView = useSelector<RootState>((state) => state.splitView.visible) as boolean;
-  const [visible, setIsVisible] = useState(IsBlockView());
-  const [active, setIsActive] = useState(splitView);
+  const [visible, setVisible] = useState(IsBlockView());
+  const [active, setActive] = useState(splitView);
   const selectedNode = GetSelectedNode();
 
   useEffect(() => {
-    if (IsLocation(selectedNode)) setIsVisible(false);
-    else IsBlockView() && setIsVisible(true);
+    if (IsLocation(selectedNode)) setVisible(false);
+    else IsBlockView() && setVisible(true);
 
-    if (!selectedNode) setIsActive(false);
+    if (!selectedNode) setActive(false);
   }, [selectedNode]);
 
   return (
     <FooterBox visible={visible}>
       <FooterContent active={active}>
         <label className={"checkbox"}>
-          <input
-            type="checkbox"
-            checked={active}
-            onChange={() => OnChange(dispatch, active, setIsActive, selectedNode)}
-          />
+          <input type="checkbox" checked={active} onChange={() => OnChange(dispatch, active, setActive, selectedNode)} />
           <span className="checkmark-footer"></span>
         </label>
-        <div onClick={() => OnChange(dispatch, active, setIsActive, selectedNode)}>{TextResources.Split_view}</div>
+        <div onClick={() => OnChange(dispatch, active, setActive, selectedNode)}>{TextResources.Split_View}</div>
       </FooterContent>
     </FooterBox>
   );

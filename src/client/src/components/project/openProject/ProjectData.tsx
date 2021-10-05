@@ -15,10 +15,7 @@ interface Props {
 export const ProjectDataComponent = ({ projects, projectId, projectName, projectOwner, updated }: Props) => {
   const dispatch = useDispatch();
   const isSelected = projects.find((x) => x.id === projectId).selected;
-
-  const onClick = () => {
-    dispatch(changeSelectedProject(projectId));
-  };
+  const onClick = () => dispatch(changeSelectedProject(projectId));
 
   return (
     <div className={"project_data " + (isSelected ? "selected_project" : "not_selected")} onClick={onClick}>
