@@ -11,6 +11,7 @@ import {
   Composite,
   Transport,
   Interface,
+  Purpose,
 } from "../../../models/";
 
 export interface UnitAm {
@@ -77,6 +78,7 @@ export interface NodeAm {
   attributes: AttributeAm[];
   aspect: Aspect;
   isRoot: boolean;
+  purpose: Purpose;
 }
 
 export interface EdgeAm {
@@ -299,6 +301,7 @@ const ConvertNodes = (nodes: Node[]): NodeAm[] => {
       composites: ConvertComposites(node.composites),
       aspect: node.aspect,
       isRoot: node.isRoot,
+      purpose: node.purpose,
     } as NodeAm;
 
     convertedNodes.push(n);
