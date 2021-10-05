@@ -1,4 +1,8 @@
 import { useState } from "react";
+import { AddTerminalComponent } from "../";
+import { TextResources } from "../../../../../assets/text";
+import { CreateId } from "../../../../flow/helpers/common";
+import { AddIcon, DeleteIcon } from "../../../../../assets/icons/common";
 import {
   ConnectorType,
   TerminalType,
@@ -9,10 +13,6 @@ import {
   TerminalCategoryWrapper,
   AddTerminalWrapper,
 } from "../../styled";
-import { ExpandIcon, CollapseIcon } from "../../../../../assets/icons/common";
-import AddTerminal from "./AddTerminal/AddTerminalComponent";
-import { TextResources } from "../../../../../assets/text";
-import { CreateId } from "../../../../flow/helpers/common";
 interface Props {
   name: string;
   terminalTypes: TerminalType[];
@@ -60,7 +60,7 @@ export const ObjectBlockElement = ({
       terminalsArray = defaultTerminals;
       return terminalsArray.map((t, index) => {
         return (
-          <AddTerminal
+          <AddTerminalComponent
             key={index}
             terminalId={t.terminalId}
             terminals={terminalTypes}
@@ -75,16 +75,30 @@ export const ObjectBlockElement = ({
   return (
     <TerminalListElement>
       <TerminalCategoryWrapper>
-        <p>{name}</p>
         <button onClick={() => onCategoryAdd(defaultTerminal)}>
-          {TextResources.TypeEditor_Properties_Add_Terminal}
+          <img src={AddIcon} alt="add-icon" className="add-icon" />
+          <p className="add-text">
+            {TextResources.TypeEditor_Properties_Add_Terminal}
+          </p>
         </button>
+        <p
+          className="terminal-name"
+          onClick={() =>
+            terminalsQuantity > 0 && setExpandCategory(!expandCategory)
+          }
+        >
+          {name}
+        </p>
         {terminalsQuantity > 0 && (
-          <img
-            src={expandCategory ? ExpandIcon : CollapseIcon}
-            alt="expand-icon"
-            onClick={() => setExpandCategory(!expandCategory)}
-          />
+          <button
+            className="delete-button"
+            onClick={() => onChange("removeAll", categoryId)}
+          >
+            <img src={DeleteIcon} alt="delete-icon" className="delete-icon" />
+            <p className="delete-text">
+              {TextResources.TypeEditor_Properties_Clear_All_Terminal}
+            </p>
+          </button>
         )}
       </TerminalCategoryWrapper>
       {terminalsQuantity > 0 && expandCategory && (

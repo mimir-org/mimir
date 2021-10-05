@@ -39,6 +39,9 @@ const AddTerminal = ({
 
   return (
     <AddTerminalElement>
+      <button onClick={() => onChange("remove", defaultTerminal, terminalId)}>
+        <img src={DeleteIcon} alt="delete" className="delete-icon" />
+      </button>
       <NumericValueInput
         value={defaultTerminal.number.toString()}
         onChange={(item: number) => onQuantityChange(item)}
@@ -59,9 +62,6 @@ const AddTerminal = ({
         onChange={(item: ConnectorType) => onDirectionChange(item)}
         value={defaultTerminal.connectorType}
       />
-      <button onClick={() => onChange("remove", defaultTerminal, terminalId)}>
-        <img src={DeleteIcon} alt="delete" className="delete-icon" />
-      </button>
     </AddTerminalElement>
   );
 };

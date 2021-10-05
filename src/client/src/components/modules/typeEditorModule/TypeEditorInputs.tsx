@@ -83,7 +83,7 @@ const TypeEditorInputs = ({
         }
       />
       <TypeNameInput>
-        <p>{TextResources.TypeEditor_Type_Name}</p>
+        <p className="label">{TextResources.TypeEditor_Type_Name}</p>
         <TextInput
           inputType="text"
           defaultValue={createLibraryType && createLibraryType.name}

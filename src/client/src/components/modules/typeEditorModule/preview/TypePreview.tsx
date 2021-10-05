@@ -3,6 +3,8 @@ import { ListType } from "../TypeEditorList";
 import { ObjectBlock } from "./ObjectBlock";
 import { ListLabel, ListWrapper } from "../../../../compLibrary";
 import { PreviewArea, InfoWrapper } from "../styled";
+import { ReactComponent as TransportIcon } from "../../../../assets/icons/common/transport.svg";
+import { ReactComponent as InterfaceIcon } from "../../../../assets/icons/common/interface.svg";
 import {
   IsFunction,
   IsLocation,
@@ -12,9 +14,6 @@ import {
   IsInterface,
   GetListLabel,
 } from "..//helpers";
-import { ReactComponent as TransportIcon } from "../../../../assets/icons/common/transport.svg";
-import { ReactComponent as InterfaceIcon } from "../../../../assets/icons/common/interface.svg";
-import { TextResources } from "../../../../assets/text";
 interface Props {
   createLibraryType: CreateLibraryType;
   rds: Rds;
@@ -60,8 +59,10 @@ export const TypePreview = ({
     return false;
   };
   return (
-    <ListWrapper>
-      <ListLabel> {GetListLabel(ListType.Preview)}</ListLabel>
+    <ListWrapper right={0}>
+      <ListLabel>
+        {GetListLabel(ListType.Preview, createLibraryType?.objectType)}
+      </ListLabel>
       <PreviewArea>
         {showObjectBlock()}
         {transportOrInterface() && (
@@ -81,7 +82,6 @@ export const TypePreview = ({
             ></InterfaceIcon>
           )}
       </PreviewArea>
-      <p className="text">{TextResources.TypeEditor_Preview_Info}</p>
     </ListWrapper>
   );
 };

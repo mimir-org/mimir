@@ -17,7 +17,7 @@ export const RDSElement = ({ id, name, defaultValue, onChange }: Props) => (
       onChange={(key, data) => onChange(key, data)}
       defaultValue={defaultValue}
     />
-    <p>{name}</p>
+    <p onClick={() => onChange("rdsId", id)}>{name}</p>
     <img src={HelpIcon} alt="help" />
   </ListElem>
 );

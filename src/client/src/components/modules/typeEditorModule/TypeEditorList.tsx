@@ -17,10 +17,11 @@ import {
   GetFilteredList,
   GetDefaultTerminal,
   GetDefaultTerminals,
+  ShowObjectBlock,
   RemoveBackground,
-  IsObjectBlock,
   IsTransport,
   IsInterface,
+  GetWidth,
 } from "./helpers";
 
 export enum ListType {
@@ -49,8 +50,10 @@ export const TypeEditorList = ({
   onChange,
 }: Props) => {
   return (
-    <ListWrapper flex={1} disabled={disabled}>
-      <ListLabel>{GetListLabel(listType)}</ListLabel>
+    <ListWrapper wide={GetWidth(listType)} disabled={disabled}>
+      <ListLabel>
+        {GetListLabel(listType, createLibraryType?.objectType)}
+      </ListLabel>
       {!disabled && (
         <ListElementsContainer background={RemoveBackground(listType)}>
           {listType === ListType.Rds
@@ -65,8 +68,7 @@ export const TypeEditorList = ({
                   />
                 )
               )
-            : listType === ListType.Terminals &&
-              IsObjectBlock(createLibraryType.objectType)
+            : ShowObjectBlock(listType, createLibraryType)
             ? GetFilteredList(listType, items, createLibraryType).map(
                 (element) => (
                   <ObjectBlockElement

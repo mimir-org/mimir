@@ -4,7 +4,12 @@ import { RootState } from "../../../redux/store";
 import { TypeEditorState } from "../../../redux/store/typeEditor/types";
 import { setModulesVisibility } from "../../../redux/store/modules/actions";
 import { TerminalTypeItem } from "../../../models";
-import { TypeEditorList, TypeEditorInputs, TypePreview } from "./";
+import {
+  TypeEditorList,
+  TypeEditorInputs,
+  TypePreview,
+  TypeEditorInspector,
+} from "./";
 import { ListType } from "./TypeEditorList";
 import { AddIcon, CheckIcon, CloseIcon } from "../../../assets/icons/common";
 import { TextResources } from "../../../assets/text";
@@ -17,6 +22,7 @@ import {
   addTerminalType,
   removeTerminalType,
   updateTerminalType,
+  removeTerminalTypeByCategory,
   saveLibraryType,
 } from "../../../redux/store/typeEditor/actions";
 import {
@@ -27,6 +33,7 @@ import {
   IsObjectBlock,
   IsFunction,
   IsProduct,
+  GetWidth,
 } from "./helpers";
 import {
   TypeEditorWrapper,
@@ -63,13 +70,15 @@ export const TypeEditorComponent = () => {
     dispatch(closeTypeEditor());
   };
 
-  const onTerminalCategoryChange = (key: string, value: TerminalTypeItem) => {
+  const onTerminalCategoryChange = (key: string, value: any) => {
     if (key === "add") {
       dispatch(addTerminalType(value));
     } else if (key === "remove") {
       dispatch(removeTerminalType(value));
     } else if (key === "update") {
       dispatch(updateTerminalType(value));
+    } else if (key === "removeAll") {
+      dispatch(removeTerminalTypeByCategory(value));
     }
   };
 
@@ -97,8 +106,7 @@ export const TypeEditorComponent = () => {
                 onChange={(key, data) => onChange(key, data)}
                 // disabled={ModeEdit(mode) ? false : FieldValidator(state, "rds")}
               />
-              {(IsFunction(state?.createLibraryType.aspect) ||
-                IsProduct(state?.createLibraryType.aspect)) && (
+              {IsLocation(state?.createLibraryType.aspect) ? null : (
                 <TypeEditorList
                   items={state?.terminals}
                   createLibraryType={state?.createLibraryType}
@@ -143,7 +151,7 @@ export const TypeEditorComponent = () => {
                   // disabled={ModeEdit(mode) ? false : FieldValidator(state, "rds")}
                 />
               )}
-              <TypePreviewColumn>
+              <TypePreviewColumn wide={GetWidth(ListType.Preview)}>
                 <TypePreview
                   createLibraryType={state?.createLibraryType}
                   rds={GetSelectedRds(state?.createLibraryType, state.rdsList)}
@@ -188,7 +196,7 @@ export const TypeEditorComponent = () => {
                 </SaveButton>
               </TypePreviewColumn>
             </ChooseProperties>
-            {/* <TypeEditorInspector /> */}
+            <TypeEditorInspector />
           </TypeEditorContent>
         </TypeEditorWrapper>
       )}
