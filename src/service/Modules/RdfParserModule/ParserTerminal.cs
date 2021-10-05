@@ -10,7 +10,6 @@
         public string NodeId { get; set; }
         public string ConnectedToId { get; set; }
         public string Label { get; set; }
-
         public override string ToString()
         {
             return (Label is null) ? Id : Label;

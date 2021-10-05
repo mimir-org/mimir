@@ -179,7 +179,7 @@ namespace Mb.Core.Controllers.V1
         {
             try
             {
-                var id = "ProjectId";
+                var id = "Test Import Id";
                 var parser = "rdfparser";
 
                 var (file, format) = await _projectService.CreateFile(id, parser);

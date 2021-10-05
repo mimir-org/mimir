@@ -20,10 +20,14 @@ namespace RdfParserModule
         public decimal Width { get; set; }
         public bool IsTransport { get; set; }
         public ICollection<ParserTerminal> Terminals { get; set; }
+        public ICollection<ParserEdge> Edges { get; set; }
+        public ParserNode HasParent { get; set; }
+        public ParserNode HasLocation { get; set; }
+        public ParserNode FulfilledBy { get; set; }
 
         public override string ToString()
         {
-            return Label;
+            return Label ?? Id;
         }
     }
 }

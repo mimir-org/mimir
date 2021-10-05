@@ -20,7 +20,7 @@ namespace RdfParserModule
             var builder = new RdfBuilder();
             builder.BuildProject(project);
 
-            var bytes = builder.GetBytes<CompressingTurtleWriter>();
+            var bytes = builder.GetBytes<NTriplesWriter>();
 
             return Task.FromResult(bytes);
         }
@@ -36,14 +36,14 @@ namespace RdfParserModule
 
             var rdf = new RdfDeconstructor();
             rdf.LoadGraph(valueAsString);
+            rdf.MakeProject();
 
-            var p = new ProjectAm();
-            return Task.FromResult(p);
+            return Task.FromResult(rdf.Project);
         }
 
         public FileFormat GetFileFormat()
         {
-            return FileFormat.Xml;
+            return FileFormat.NTriples;
         }
     }
 }
