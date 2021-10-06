@@ -19,8 +19,8 @@ const GetMenuIcon = (node: Node, isParent: boolean, isInput: boolean) => {
   }
 
   if (IsProduct(node)) {
-    if (isInput) return Icons.FunctionInputMenu;
-    return Icons.FunctionOutputMenu;
+    if (isInput) return Icons.ProductInputMenu;
+    return Icons.ProductOutputMenu;
   }
 };
 
