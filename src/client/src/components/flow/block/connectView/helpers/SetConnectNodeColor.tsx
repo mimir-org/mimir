@@ -3,7 +3,7 @@ import { Color } from "../../../../../compLibrary";
 import { Node } from "../../../../../models";
 import { IsFunction } from "../../../helpers";
 
-const SetMainConnectNodeColor = (mainConnectNodeId: string, connectNodes: Node[], data: Node) => {
+const SetConnectNodeColor = (mainConnectNodeId: string, connectNodes: Node[], data: Node) => {
   const mainConnectNode = FindNodeByDataId(mainConnectNodeId);
   const mainColor = IsFunction(data) ? Color.FunctionMain : Color.ProductMain;
   const headerColor = IsFunction(data) ? Color.FunctionHeader : Color.ProductHeader;
@@ -17,4 +17,4 @@ const SetMainConnectNodeColor = (mainConnectNodeId: string, connectNodes: Node[]
   }
 };
 
-export default SetMainConnectNodeColor;
+export default SetConnectNodeColor;

@@ -2,8 +2,7 @@ import { Connector, Edge, Node } from "../../../../../models";
 import { changeActiveConnector, removeEdge } from "../../../../../redux/store/project/actions";
 import { SetTerminalOrder } from "../../../block/helpers";
 
-const OnConnector = (conn: Connector, showConnectMenu: any, data: Node, dispatch: any, edges: Edge[]) => {
-  showConnectMenu(false);
+const OnTerminalClick = (conn: Connector, data: Node, dispatch: any, edges: Edge[]) => {
   const order = SetTerminalOrder(data, 0, conn.relationType);
   dispatch(changeActiveConnector(data, conn.id, !conn.visible, order));
 
@@ -13,4 +12,4 @@ const OnConnector = (conn: Connector, showConnectMenu: any, data: Node, dispatch
   }
 };
 
-export default OnConnector;
+export default OnTerminalClick;

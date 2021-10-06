@@ -8,7 +8,7 @@ import { Node } from "../../../../../models";
  * @param mainNodeId
  * @param data
  */
-const ResizeMainConnectNode = (nodeCount: number, mainNodeId: string, data: Node) => {
+const ResizeConnectNode = (nodeCount: number, mainNodeId: string, data: Node) => {
   const mainNode = FindNodeByDataId(mainNodeId);
   const percent = 16;
   let newHeight = Size.Node_Length;
@@ -35,4 +35,4 @@ const ResizeMainConnectNode = (nodeCount: number, mainNodeId: string, data: Node
   }
 };
 
-export default ResizeMainConnectNode;
+export default ResizeConnectNode;

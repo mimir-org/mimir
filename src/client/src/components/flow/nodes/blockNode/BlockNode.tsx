@@ -1,5 +1,5 @@
-import { ResizeMainConnectNode, SetMainConnectNodeColor, GetConnectChildren } from "../../block/connectView/helpers";
-import { OnHover, OnMouseOut, OnBlur, OnConnector, OnConnectNode } from "./handlers";
+import * as Click from "./handlers";
+import { ResizeConnectNode, SetConnectNodeColor, GetConnectChildren } from "../../block/connectView/helpers";
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useDispatch, useSelector } from "react-redux";
@@ -41,8 +41,8 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   if (!mainConnectNode) data.width = Size.Node_Width;
 
   useEffect(() => {
-    ResizeMainConnectNode(connectNodes?.length, mainConnectNode?.id, data);
-    SetMainConnectNodeColor(mainConnectNode?.id, connectNodes, data);
+    ResizeConnectNode(connectNodes?.length, mainConnectNode?.id, data);
+    SetConnectNodeColor(mainConnectNode?.id, connectNodes, data);
   }, [mainConnectNode, data, connectNodes]);
 
   // Force z-index to display edges in ConnectView
@@ -57,8 +57,8 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
     <>
       <NodeBox
         id={type + data.id}
-        onMouseOver={() => OnHover(showTerminalBox, showConnectBox)}
-        onMouseOut={() => OnMouseOut(showTerminalBox, showConnectBox)}
+        onMouseOver={() => Click.OnHover(showTerminalBox, showConnectBox)}
+        onMouseOut={() => Click.OnMouseOut(showTerminalBox, showConnectBox)}
       >
         <BlockNodeNameBox>{data.label ?? data.name}</BlockNodeNameBox>
         <Symbol base64={data.symbol} text={data.name} />
@@ -71,7 +71,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
           isParent={false}
           isLocation={false}
           splitView={splitView}
-          onClick={(conn) => OnConnector(conn, showConnectMenu, data, dispatch, edges)}
+          onClick={(conn) => Click.OnTerminal(conn, data, dispatch, edges)}
           menuBox={terminalBox}
           showInTerminalMenu={showInTerminalMenu}
           showOutTerminalMenu={showOutTerminalMenu}
@@ -82,12 +82,12 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
             visible={connectMenu}
             children={connectChildren}
             connectNodes={connectNodes}
-            handleClick={(node) => OnConnectNode(node, data, dispatch, connectNodes, showConnectMenu)}
+            onClick={(n) => Click.OnConnect(n, data, dispatch, connectNodes, showConnectMenu)}
             isChecked={IsConnectNodeChecked}
             connectBox={connectBox}
             showConnectMenu={showConnectMenu}
             dispatch={dispatch}
-            onBlur={() => OnBlur(showConnectMenu, connectMenu)}
+            onBlur={() => Click.OnBlur(showConnectMenu, connectMenu)}
           />
         )}
       </NodeBox>
