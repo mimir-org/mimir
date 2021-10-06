@@ -1,12 +1,11 @@
 import styled from "styled-components";
-import { Color } from "../../../";
 
 const DropdownMenuList = styled.div`
   display: flex;
   flex-direction: column;
   border-width: 1px;
   border-style: solid;
-  border-color: ${Color.Black};
+  border-color: ${(props: { borderColor: string }) => props.borderColor};
   border-radius: ${(props: { borderRadius: number }) => props.borderRadius};
   background-color: inherit;
   position: absolute;

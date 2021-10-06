@@ -1,4 +1,4 @@
-import { FontSize } from "../../../../compLibrary";
+import { Color, FontSize } from "../../../../compLibrary";
 import { ParameterDescriptor } from "./";
 import { ParameterBox, ParameterHeader } from "./styled/parameter";
 import { Dropdown as CompDropdown } from "../../../../compLibrary/dropdown/mimir";
@@ -85,6 +85,7 @@ function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColo
                 onChange(attribute.id, value, unit.id, attribute.nodeId);
               }}
               borderRadius={2}
+              borderColor={Color.InspectorGreyBorder}
               fontSize={FontSize.Small}
               height={22}
             />

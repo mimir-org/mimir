@@ -7,11 +7,11 @@ const MenuHeader = styled.div`
   align-items: center;
   justify-content: space-between;
   height: 26px;
-  width: 155px;
+  width: 151px;
   background-color: ${(props) => props.color};
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
-  font-size: ${FontSize.Medium};
+  font-size: ${FontSize.Tiny};
   color: ${Color.White};
 
   p {

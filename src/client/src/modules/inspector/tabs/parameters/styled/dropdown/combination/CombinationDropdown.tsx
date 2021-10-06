@@ -36,7 +36,7 @@ const EntityDropdown = ({ items, selectedItems, keyProp, onChange, headerColor, 
         }
       >
         <MenuListItem color={bodyColor}>
-          <p>{TextResources.Inspector_Params_Combinations_Select_All}</p>
+          <div className="label">{TextResources.Inspector_Params_Combinations_Select_All}</div>
           <CheckboxWrapper>
             <label className={"checkbox-block"}>
               <input type="checkbox" checked={areAllItemsSelected} readOnly={true} />

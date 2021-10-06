@@ -8,7 +8,7 @@ const DropdownMenuHeader = styled.div`
   justify-content: space-between;
   height: ${(props: { height: string }) => props.height}px;
   background: ${Color.White};
-  border: 1px solid ${Color.Black};
+  border: 1px solid ${(props: { borderColor: string }) => props.borderColor};
   border-radius: ${(props: { borderRadius: number }) => props.borderRadius}px;
   font-size: ${(props: { fontSize: number }) => props.fontSize};
   color: ${Color.Black};

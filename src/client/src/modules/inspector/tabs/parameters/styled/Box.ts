@@ -4,18 +4,18 @@ import { FontSize } from "../../../../../compLibrary";
 const Box = styled.div`
   display: flex;
   flex-direction: column;
-  height: 73px;
-  width: 155px;
+  height: 71px;
+  width: 151px;
   background-color: ${(props) => props.color};
   border-radius: 9px;
-  margin: 13px;
+  margin: 20px;
   font-size: ${FontSize.Medium};
 
   .text {
     display: flex;
     align-items: center;
     position: relative;
-    top: -10px;
+    top: -13px;
     margin: 0px auto 0px 10px;
     width: 125px;
     height: 33px;

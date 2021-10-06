@@ -40,10 +40,12 @@ function ParameterRow({
 
   return (
     <Body>
-      <Entity width={180}>
+      <Entity width={191}>
         <Box color={bodyColor} id="ParametersBox">
           <div className="icon">
             <CloseParameterFilterIconComponent
+              width={26}
+              height={26}
               fill={headerColor}
               stroke={headerColor}
               onClick={() => OnChangeFilterChoice(element.id, filterName, true, dispatch)}
