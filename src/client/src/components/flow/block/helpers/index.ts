@@ -6,7 +6,9 @@ export { default as FilterTerminals } from "./FilterTerminals";
 export { default as SortTerminals } from "./SortTerminals";
 export { default as FindSelectedBlockNode } from "./FindSelectedBlockNode";
 export { default as SetTerminalOrder } from "./SetTerminalOrder";
-export { default as GetBlockEdgeTypes } from "./GetBlockEdgeTypes";
 export { default as OnBlockClick } from "./OnBlockClick";
 export { default as FindNodeByDataId } from "./FindNodeByDataId";
 export { default as FindAllEdges } from "./FindAllEdges";
+export { default as SetSplitViewBackground } from "./SetSplitViewBackground";
+
+export { default as GetBlockEdgeTypes } from "./GetBlockEdgeTypes";
