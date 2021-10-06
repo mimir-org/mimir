@@ -14,7 +14,7 @@ const TerminalsMenu = styled.div`
   position: absolute;
   top: ${(props: { isParent: boolean }) => (props.isParent ? 0 : 5)}px;
 
-  right: ${(props) =>
+  right: ${(props: { isInput: boolean; isParent: boolean; splitView: boolean; isConnectView: boolean }) =>
     props.isInput && props.isParent && !props.splitView
       ? "955px"
       : props.isInput && props.isParent && props.splitView
@@ -25,7 +25,7 @@ const TerminalsMenu = styled.div`
       ? "405px"
       : "unset"};
 
-  left: ${(props) =>
+  left: ${(props: { isInput: boolean; isParent: boolean; splitView: boolean; isConnectView: boolean }) =>
     !props.isInput && props.isParent && !props.splitView
       ? "957px"
       : !props.isInput && props.isParent && props.splitView

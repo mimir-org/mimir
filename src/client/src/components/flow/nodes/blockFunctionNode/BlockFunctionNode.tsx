@@ -30,13 +30,13 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
   const [connectBox, showConnectBox] = useState(false);
   const [connectMenu, showConnectMenu] = useState(false);
 
-  const nodes = useSelector<RootState>((state) => state.projectState.project.nodes) as Node[];
-  const edges = useSelector<RootState>((state) => state.projectState.project.edges) as Edge[];
-  const splitView = useSelector<RootState>((state) => state.splitView.visible) as boolean;
-  const mainConnectNodes = useSelector<RootState>((state) => state.connectView?.mainNodes) as Node[];
+  const nodes = useSelector<RootState>((s) => s.projectState.project.nodes) as Node[];
+  const edges = useSelector<RootState>((s) => s.projectState.project.edges) as Edge[];
+  const splitView = useSelector<RootState>((s) => s.splitView.visible) as boolean;
+  const splitNode = useSelector<RootState>((s) => s.splitView.node) as Node;
 
+  const mainConnectNodes = useSelector<RootState>((s) => s.connectView?.mainNodes) as Node[];
   const connectChildren = Helpers.GetConnectChildren(data, nodes, edges);
-  const sortedTerminals = FilterTerminals(data, splitView);
 
   const mainConnectNode = mainConnectNodes.find((x) => x.id === data.id);
   const connectNodes = mainConnectNode?.connectNodes;
@@ -93,16 +93,16 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
 
         <TerminalsComponent
           node={data}
-          isInputMenuOpen={inTerminalMenu}
-          isOutputMenuOpen={outTerminalMenu}
-          terminals={sortedTerminals}
+          inputMenuOpen={inTerminalMenu}
+          outputMenuOpen={outTerminalMenu}
+          terminals={FilterTerminals(data, splitView, splitNode)}
           isParent={false}
           isLocation={IsLocation(data)}
-          isSplitView={splitView}
+          splitView={splitView}
           onClick={(conn) => onConnectorClick(conn)}
-          menuButton={terminalBox}
-          showInputTerminalMenu={showInTerminalMenu}
-          showOutputTerminalMenu={showOutTerminalMenu}
+          menuBox={terminalBox}
+          showInTerminalMenu={showInTerminalMenu}
+          showOutTerminalMenu={showOutTerminalMenu}
         />
         {!IsChildConnectNode(mainConnectNodes, data.id) && (
           <ConnectViewComponent
@@ -120,7 +120,13 @@ const BlockFunctionNode: FC<NodeProps> = ({ data }) => {
         )}
       </NodeBox>
 
-      <HandleComponent node={data} nodes={nodes} terminals={sortedTerminals} isParent={false} splitView={splitView} />
+      <HandleComponent
+        node={data}
+        nodes={nodes}
+        terminals={FilterTerminals(data, splitView, splitNode)}
+        isParent={false}
+        splitView={splitView}
+      />
     </>
   );
 };

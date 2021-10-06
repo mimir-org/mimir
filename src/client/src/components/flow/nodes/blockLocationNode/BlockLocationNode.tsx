@@ -19,12 +19,12 @@ import { Symbol } from "../../../../compLibrary/symbol";
 const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
   const [terminalButton, showTerminalButton] = useState(false);
-  const [inputTerminalMenu, showInputTerminalMenu] = useState(false);
-  const [outputTerminalMenu, showOutputTerminalMenu] = useState(false);
+  const [inTerminalMenu, showInTerminalMenu] = useState(false);
+  const [outTerminalMenu, showOutTerminalMenu] = useState(false);
 
-  const nodes = useSelector<RootState>((state) => state.projectState.project.nodes) as Node[];
-  const splitView = useSelector<RootState>((state) => state.splitView.visible) as boolean;
-  const sortedTerminals = FilterTerminals(data, splitView);
+  const nodes = useSelector<RootState>((s) => s.projectState.project.nodes) as Node[];
+  const splitView = useSelector<RootState>((s) => s.splitView.visible) as boolean;
+  const splitNode = useSelector<RootState>((s) => s.splitView.node) as Node;
 
   const onConnectorClick = (conn: Connector) => {
     const order = SetTerminalOrder(data, 0, conn.relationType);
@@ -52,20 +52,26 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
 
         <TerminalsComponent
           node={data}
-          isInputMenuOpen={inputTerminalMenu}
-          isOutputMenuOpen={outputTerminalMenu}
-          terminals={sortedTerminals}
+          inputMenuOpen={inTerminalMenu}
+          outputMenuOpen={outTerminalMenu}
+          terminals={FilterTerminals(data, splitView, splitNode)}
           isParent={false}
           isLocation={true}
-          isSplitView={splitView}
+          splitView={splitView}
           onClick={(conn) => onConnectorClick(conn)}
-          menuButton={terminalButton}
-          showInputTerminalMenu={showInputTerminalMenu}
-          showOutputTerminalMenu={showOutputTerminalMenu}
+          menuBox={terminalButton}
+          showInTerminalMenu={showInTerminalMenu}
+          showOutTerminalMenu={showOutTerminalMenu}
         />
       </NodeBox>
 
-      <HandleComponent node={data} nodes={nodes} terminals={sortedTerminals} isParent={false} splitView={splitView} />
+      <HandleComponent
+        node={data}
+        nodes={nodes}
+        terminals={FilterTerminals(data, splitView, splitNode)}
+        isParent={false}
+        splitView={splitView}
+      />
     </>
   );
 };

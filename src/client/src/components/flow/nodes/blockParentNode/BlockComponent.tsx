@@ -6,8 +6,8 @@ import { Navigation, Banner, Block, Header } from "./styled";
 interface Props {
   node: Node;
   color: string;
-  isSplitView: boolean;
-  isSelected: boolean;
+  splitView: boolean;
+  selected: boolean;
   onParentClick: () => void;
   onChildClick: () => void;
 }
@@ -17,11 +17,11 @@ interface Props {
  * @param interface
  * @returns a container that sits on top of a Flow node
  */
-const BlockComponent = ({ node, color, isSplitView, isSelected, onParentClick, onChildClick }: Props) => (
-  <Block id={"function-block-" + node?.id} splitView={isSplitView} selected={isSelected}>
+const BlockComponent = ({ node, color, splitView, selected, onParentClick, onChildClick }: Props) => (
+  <Block id={"function-block-" + node?.id} splitView={splitView} selected={selected}>
     <Banner color={color}>
       <Header>
-        {!isSplitView && (
+        {!splitView && (
           <>
             <Navigation>
               {!IsAspectNode(node) && <img src={ArrowUp} alt="up" onClick={() => onParentClick()} />}

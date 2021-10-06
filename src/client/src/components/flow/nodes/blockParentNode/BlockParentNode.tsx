@@ -21,21 +21,21 @@ import { SetTerminalOrder, FilterTerminals, FindNodeByDataId, FindAllEdges } fro
  */
 const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
-  const [inputTerminalMenu, showInputTerminalMenu] = useState(false);
-  const [outputTerminalMenu, showOutputTerminalMenu] = useState(false);
-  const nodes = useSelector<RootState>((state) => state.projectState.project.nodes) as Node[];
-  const edges = useSelector<RootState>((state) => state.projectState.project.edges) as Edge[];
-  const isSplitView = useSelector<RootState>((state) => state.splitView.visible) as boolean;
-  const splitViewNode = useSelector<RootState>((state) => state.splitView.node) as Node;
+  const [inTerminalMenu, showInTerminalMenu] = useState(false);
+  const [outTerminalMenu, showOutTerminalMenu] = useState(false);
+  const nodes = useSelector<RootState>((s) => s.projectState.project.nodes) as Node[];
+  const edges = useSelector<RootState>((s) => s.projectState.project.edges) as Edge[];
+  const splitView = useSelector<RootState>((s) => s.splitView.visible) as boolean;
+  const splitNode = useSelector<RootState>((s) => s.splitView.node) as Node;
   const node = nodes.find((x) => x.id === data.id);
 
   // Enforce size change of node
   useEffect(() => {
     const parentNode = FindNodeByDataId(data.id);
-    if (isSplitView) {
+    if (splitView) {
       parentNode.style.width = `${Size.SplitView_Width}px`;
     } else parentNode.style.width = `${Size.BlockView_Width}px`;
-  }, [data, isSplitView]);
+  }, [data, splitView]);
 
   // Force z-index to display edges in ConnectView
   useEffect(() => {
@@ -59,33 +59,33 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
       <BlockComponent
         node={node}
         color={GetParentColor(node)}
-        isSplitView={isSplitView}
-        isSelected={node?.isBlockSelected}
+        splitView={splitView}
+        selected={node?.isBlockSelected}
         onParentClick={() => OnParentClick(dispatch, node, nodes, edges)}
         onChildClick={() => OnChildClick(dispatch, node, nodes, edges)}
       />
       <TerminalsComponent
         node={node}
-        isInputMenuOpen={inputTerminalMenu}
-        isOutputMenuOpen={outputTerminalMenu}
+        inputMenuOpen={inTerminalMenu}
+        outputMenuOpen={outTerminalMenu}
         isParent={true}
-        isSplitView={isSplitView}
+        splitView={splitView}
         isLocation={IsLocation(node)}
-        terminals={FilterTerminals(node, isSplitView)}
+        terminals={FilterTerminals(node, splitView, splitNode)}
         onClick={(conn) => onConnectorClick(conn)}
-        menuButton={true}
-        showInputTerminalMenu={showInputTerminalMenu}
-        showOutputTerminalMenu={showOutputTerminalMenu}
+        menuBox={true}
+        showInTerminalMenu={showInTerminalMenu}
+        showOutTerminalMenu={showOutTerminalMenu}
       />
       <HandleComponent
         node={node}
         isParent={true}
         nodes={nodes}
-        terminals={FilterTerminals(node, isSplitView)}
-        splitView={isSplitView}
+        terminals={FilterTerminals(node, splitView, splitNode)}
+        splitView={splitView}
       />
 
-      {isSplitView && !splitViewNode && (
+      {splitView && !splitNode && (
         <BlockMessageBox>
           <p>{TextResources.BlockView_Select_Message}</p>
         </BlockMessageBox>

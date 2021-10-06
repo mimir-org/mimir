@@ -7,15 +7,15 @@ import { IsAspectNode, IsInputTerminal } from "../../helpers";
 
 interface Props {
   node: Node;
-  isInputMenuOpen: boolean;
-  isOutputMenuOpen: boolean;
+  inputMenuOpen: boolean;
+  outputMenuOpen: boolean;
   terminals: Connector[];
   isParent: boolean;
   isLocation: boolean;
-  menuButton: boolean;
-  showInputTerminalMenu: any;
-  showOutputTerminalMenu: any;
-  isSplitView: boolean;
+  menuBox: boolean;
+  showInTerminalMenu: any;
+  showOutTerminalMenu: any;
+  splitView: boolean;
   onClick: (conn: Connector) => void;
 }
 
@@ -26,15 +26,15 @@ interface Props {
  */
 const TerminalsComponent = ({
   node,
-  isInputMenuOpen,
-  isOutputMenuOpen,
+  inputMenuOpen,
+  outputMenuOpen,
   terminals,
   isParent,
   isLocation,
-  menuButton,
-  showInputTerminalMenu,
-  showOutputTerminalMenu,
-  isSplitView,
+  menuBox,
+  showInTerminalMenu,
+  showOutTerminalMenu,
+  splitView,
   onClick,
 }: Props) => {
   const inTerminals = terminals.filter((t) => IsInputTerminal(t));
@@ -43,55 +43,53 @@ const TerminalsComponent = ({
   return (
     <>
       <TerminalsBox
-        visible={menuButton && !IsAspectNode(node) && inTerminals.length > 0}
-        isSplitView={isSplitView}
+        visible={menuBox && !IsAspectNode(node) && inTerminals.length > 0}
         isParent={isParent}
         isInput={true}
       >
         <img
           src={GetMenuIcon(node, isParent, true)}
           alt="menu"
-          onClick={() => Click.OnInputMenu(showInputTerminalMenu, isInputMenuOpen)}
+          onClick={() => Click.OnInputMenu(showInTerminalMenu, inputMenuOpen)}
         />
       </TerminalsBox>
 
       <TerminalsBox
-        visible={menuButton && !IsAspectNode(node) && outTerminals.length > 0}
-        isSplitView={isSplitView}
+        visible={menuBox && !IsAspectNode(node) && outTerminals.length > 0}
         isParent={isParent}
-        isinput={false}
+        isInput={false}
       >
         <img
           src={GetMenuIcon(node, isParent, false)}
           alt="menu"
-          onClick={() => Click.OnOutputMenu(showOutputTerminalMenu, isOutputMenuOpen)}
+          onClick={() => Click.OnOutputMenu(showOutTerminalMenu, outputMenuOpen)}
         />
       </TerminalsBox>
 
-      {isInputMenuOpen && (
+      {inputMenuOpen && (
         <TerminalsMenuComponent
           node={node}
           isParent={isParent}
           isLocation={isLocation}
           isInput={true}
-          splitView={isSplitView}
+          splitView={splitView}
           terminals={inTerminals}
-          visible={isInputMenuOpen}
+          visible={inputMenuOpen}
           onClick={onClick}
-          onBlur={() => Click.OnBlur(showInputTerminalMenu, isInputMenuOpen)}
+          onBlur={() => Click.OnBlur(showInTerminalMenu, inputMenuOpen)}
         />
       )}
-      {isOutputMenuOpen && (
+      {outputMenuOpen && (
         <TerminalsMenuComponent
           node={node}
           isParent={isParent}
           isLocation={isLocation}
           isInput={false}
-          splitView={isSplitView}
-          visible={isOutputMenuOpen}
+          splitView={splitView}
+          visible={outputMenuOpen}
           terminals={outTerminals}
           onClick={onClick}
-          onBlur={() => Click.OnBlur(showOutputTerminalMenu, isOutputMenuOpen)}
+          onBlur={() => Click.OnBlur(showOutTerminalMenu, outputMenuOpen)}
         />
       )}
     </>
