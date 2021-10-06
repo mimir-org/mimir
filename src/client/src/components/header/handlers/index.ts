@@ -1,4 +1,4 @@
-export { default as OnViewClick } from "./OnViewClick";
-export { default as OnAccountClick } from "./OnAccountClick";
-export { default as OnFilterClick } from "./OnFilterClick";
-export { default as OnDarkModeClick } from "./OnDarkModeClick";
+export { default as OnView } from "./OnView";
+export { default as OnAccount } from "./OnAccount";
+export { default as OnFilter } from "./OnFilter";
+export { default as OnDarkMode } from "./OnDarkMode";

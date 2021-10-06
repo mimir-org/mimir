@@ -9,6 +9,7 @@ import { OnChangeFilterChoice, OnClearAllFilters } from "./handlers";
 import { FilterDict } from "./redux/types";
 import { ParameterRow } from "./";
 import { useState } from "react";
+import ParametersRowWrapper from "./styled/ParametersRowWrapper";
 
 interface Props {
   element: Node | Connector;
@@ -50,26 +51,28 @@ const ParametersContent = ({ element, elementIsLocked }: Props) => {
           <div className="link">{TextResources.Inspector_Params_Default}</div>
         </Menu>
       </Header>
-      {hasFilters &&
-        Object.entries(selectedFilters).map(([filterName, selectedCombinations], index) => {
-          if (!colorMapping.has(filterName)) colorMapping.set(filterName, GetParametersColor(index));
+      <ParametersRowWrapper>
+        {hasFilters &&
+          Object.entries(selectedFilters).map(([filterName, selectedCombinations], index) => {
+            if (!colorMapping.has(filterName)) colorMapping.set(filterName, GetParametersColor(index));
 
-          let [headerColor, bodyColor] = colorMapping.get(filterName);
+            let [headerColor, bodyColor] = colorMapping.get(filterName);
 
-          return (
-            <ParameterRow
-              key={filterName}
-              element={element}
-              elementIsLocked={elementIsLocked}
-              combinations={attributeCombinations[filterName]}
-              selectedCombinations={selectedCombinations}
-              filterName={filterName}
-              headerColor={headerColor}
-              bodyColor={bodyColor}
-              dispatch={dispatch}
-            />
-          );
-        })}
+            return (
+              <ParameterRow
+                key={filterName}
+                element={element}
+                elementIsLocked={elementIsLocked}
+                combinations={attributeCombinations[filterName]}
+                selectedCombinations={selectedCombinations}
+                filterName={filterName}
+                headerColor={headerColor}
+                bodyColor={bodyColor}
+                dispatch={dispatch}
+              />
+            );
+          })}
+      </ParametersRowWrapper>
     </>
   );
 };
