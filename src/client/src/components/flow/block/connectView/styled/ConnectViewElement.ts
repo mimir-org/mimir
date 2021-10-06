@@ -38,7 +38,8 @@ const ConnectViewElement = styled.div`
   }
 
   &:last-child {
-    border-top: 1.4px solid ${Color.FunctionSelected};
+    border-top: 1.4px solid;
+    border-color: ${(props: { color: string }) => props.color};
   }
 
   &:hover {

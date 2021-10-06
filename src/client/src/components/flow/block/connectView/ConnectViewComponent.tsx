@@ -1,9 +1,11 @@
 import * as Click from "./handlers";
 import { Node } from "../../../../models";
-import { ConnectMenuIcon } from "../../../../assets/icons/blockView";
+import { FunctionConnectMenu, ProductConnectMenu } from "../../../../assets/icons/blockView/connectView";
 import { TextResources } from "../../../../assets/text";
 import { CalculateMenuPos } from "./helpers/position";
 import { ConnectViewBox, Menu, Element, Footer } from "./styled";
+import { IsFunction } from "../../helpers";
+import { Color } from "../../../../compLibrary";
 
 interface Props {
   node: Node;
@@ -40,11 +42,16 @@ const ConnectViewComponent = ({
       visible={connectBox && children.length > 0}
       onClick={() => Click.OnConnectMenu(showConnectMenu, visible)}
     >
-      <img src={ConnectMenuIcon} alt="menu" />
+      <img src={IsFunction(node) ? FunctionConnectMenu : ProductConnectMenu} alt="menu" />
     </ConnectViewBox>
 
     {visible && (
-      <Menu bottom={CalculateMenuPos(children.length)} tabIndex={0} onBlur={onBlur}>
+      <Menu
+        bottom={CalculateMenuPos(children.length)}
+        tabIndex={0}
+        onBlur={onBlur}
+        color={IsFunction(node) ? Color.FunctionSelected : Color.ProductSelected}
+      >
         {children.map((n: Node) => {
           return (
             <Element key={n.id}>
@@ -58,7 +65,7 @@ const ConnectViewComponent = ({
             </Element>
           );
         })}
-        <Element>
+        <Element color={IsFunction(node) ? Color.FunctionSelected : Color.ProductSelected}>
           <Footer onClick={() => Click.OnSelectAll(dispatch, node, children)}>
             {TextResources.ConnectMenu_Select_All}
           </Footer>

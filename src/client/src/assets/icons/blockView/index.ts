@@ -7,7 +7,6 @@ export { default as SandIcon } from "./connectorSand.svg";
 export { default as MultiphaseIcon } from "./connectorMultiphase.svg";
 export { default as ConnectorTreeViewIcon } from "./connectorTreeView.svg";
 
-export { default as ConnectMenuIcon } from "./connect.svg";
 export { default as ArrowIcon } from "./arrow.svg";
 export { default as ArrowSmallIcon } from "./arrowSmall.svg";
 export { default as ArrowUp } from "./arrowUp.svg";

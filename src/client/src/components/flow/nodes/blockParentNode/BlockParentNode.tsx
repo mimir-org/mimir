@@ -2,17 +2,16 @@ import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useDispatch, useSelector } from "react-redux";
 import { TextResources } from "../../../../assets/text";
-import { Connector, Node, Edge } from "../../../../models";
+import { Node, Edge } from "../../../../models";
 import { RootState } from "../../../../redux/store";
 import { HandleComponent, TerminalsComponent } from "../../block/terminals";
 import { IsLocation } from "../../helpers";
 import { Size } from "../../../../compLibrary";
 import { GetParentColor } from "./helpers";
-import { OnParentClick, OnChildClick } from "./handlers";
+import { OnParentClick, OnChildClick, OnConnectorClick } from "./handlers";
 import { BlockComponent } from "./";
 import { BlockMessageBox } from "../../block/styled";
-import { changeActiveConnector, removeEdge } from "../../../../redux/store/project/actions";
-import { SetTerminalOrder, FilterTerminals, FindNodeByDataId, FindAllEdges } from "../../block/helpers";
+import { FilterTerminals, FindNodeByDataId, FindAllEdges } from "../../block/helpers";
 
 /**
  * Component for the large parent block in BlockView.
@@ -43,17 +42,6 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
     allEdges.style.zIndex = "3";
   }, []);
 
-  const onConnectorClick = (conn: Connector) => {
-    const actualNode = nodes.find((x) => x.id === conn.nodeId);
-    const order = SetTerminalOrder(actualNode, 0, conn.relationType);
-    dispatch(changeActiveConnector(actualNode, conn.id, !conn.visible, order));
-
-    if (conn.visible) {
-      const edge = edges.find((e) => e.fromConnector.id === conn.id || e.toConnector.id === conn.id);
-      if (edge) dispatch(removeEdge(edge.id));
-    }
-  };
-
   return (
     <>
       <BlockComponent
@@ -72,7 +60,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         splitView={splitView}
         isLocation={IsLocation(node)}
         terminals={FilterTerminals(node, splitView, splitNode)}
-        onClick={(conn) => onConnectorClick(conn)}
+        onClick={(conn) => OnConnectorClick(conn, dispatch, edges, nodes)}
         menuBox={true}
         showInTerminalMenu={showInTerminalMenu}
         showOutTerminalMenu={showOutTerminalMenu}

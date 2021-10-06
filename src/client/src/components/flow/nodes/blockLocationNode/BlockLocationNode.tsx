@@ -4,11 +4,10 @@ import { NodeProps } from "react-flow-renderer";
 import { NodeBox } from "../../styled";
 import { BlockNodeNameBox } from "../../block/styled";
 import { HandleComponent, TerminalsComponent } from "../../block/terminals";
-import { changeActiveConnector } from "../../../../redux/store/project/actions";
 import { useDispatch, useSelector } from "react-redux";
-import { Connector, Node } from "../../../../models";
-import { OnHover, OnMouseOut } from "./handlers";
-import { SetTerminalOrder, FilterTerminals, FindNodeByDataId } from "../../block/helpers";
+import { Node } from "../../../../models";
+import { OnHover, OnMouseOut, OnConnectorClick } from "./handlers";
+import { FilterTerminals, FindNodeByDataId } from "../../block/helpers";
 import { Symbol } from "../../../../compLibrary/symbol";
 
 /**
@@ -21,15 +20,9 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const [terminalButton, showTerminalButton] = useState(false);
   const [inTerminalMenu, showInTerminalMenu] = useState(false);
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
-
   const nodes = useSelector<RootState>((s) => s.projectState.project.nodes) as Node[];
   const splitView = useSelector<RootState>((s) => s.splitView.visible) as boolean;
   const splitNode = useSelector<RootState>((s) => s.splitView.node) as Node;
-
-  const onConnectorClick = (conn: Connector) => {
-    const order = SetTerminalOrder(data, 0, conn.relationType);
-    dispatch(changeActiveConnector(data, conn.id, !conn.visible, order));
-  };
 
   // Enforce size change of node
   useEffect(() => {
@@ -43,7 +36,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   return (
     <>
       <NodeBox
-        id={`BlockLocationNode-` + data.id}
+        id={"BlockLocationNode-" + data.id}
         onMouseOver={() => OnHover(showTerminalButton)}
         onMouseOut={() => OnMouseOut(showTerminalButton)}
       >
@@ -58,7 +51,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
           isParent={false}
           isLocation={true}
           splitView={splitView}
-          onClick={(conn) => onConnectorClick(conn)}
+          onClick={(conn) => OnConnectorClick(conn, data, dispatch)}
           menuBox={terminalButton}
           showInTerminalMenu={showInTerminalMenu}
           showOutTerminalMenu={showOutTerminalMenu}
