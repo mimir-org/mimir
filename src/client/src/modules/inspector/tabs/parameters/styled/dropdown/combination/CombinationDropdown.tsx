@@ -65,7 +65,7 @@ const EntityDropdown = ({ items, selectedItems, keyProp, onChange, headerColor, 
   };
 
   return (
-    <MenuWrapper /* tabIndex={0} */ onBlur={() => setIsListOpen(false)}>
+    <MenuWrapper tabIndex={0} onBlur={() => setIsListOpen(false)}>
       <div onClick={() => setIsListOpen(!isListOpen)}>
         <MenuHeader open={isListOpen} color={headerColor}>
           <p>{TextResources.Inspector_Params_Combinations}</p>

@@ -9,7 +9,7 @@ const Box = styled.div`
   background-color: ${(props) => props.color};
   border-radius: 9px;
   margin: 20px;
-  font-size: ${FontSize.Medium};
+  font-size: ${FontSize.Small};
 
   .text {
     display: flex;
