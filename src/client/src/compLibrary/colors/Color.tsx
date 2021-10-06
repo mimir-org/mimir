@@ -36,6 +36,7 @@ const Color = {
   LocationTab: "#F083F1",
 
   // Terminals
+  Terminal_Default: "#C05046",
   Terminal_Oil: "#663300",
   Terminal_Water: "#0066FF",
   Terminal_Gas: "#FFCC00",

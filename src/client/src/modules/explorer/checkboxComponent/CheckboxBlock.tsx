@@ -20,7 +20,6 @@ export const CheckboxBlock = ({ node, inputLabel }: Props) => {
   const selectedNode = GetSelectedNode();
   const isSplitViewNode = splitViewNode?.id === node.id;
   const isChecked = splitView ? node === selectedNode || isSplitViewNode : node === selectedNode;
-  console.log("test: ", splitViewNode);
 
   return (
     <label className={"checkbox"}>
