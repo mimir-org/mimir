@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const CheckboxWrapper = styled.div`
   position: absolute;
-  margin-bottom: 13px;
+  margin-bottom: 16px;
   left: 3px;
 `;
 

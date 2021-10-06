@@ -58,7 +58,8 @@ function ParameterRow({
           onChange={(combination, selected) =>
             OnChangeAttributeCombinationChoice(element.id, filterName, combination, selected, dispatch)
           }
-          color={headerColor}
+          headerColor={headerColor}
+          bodyColor={bodyColor}
         />
       </Entity>
       {selectedCombinations.map((combination) => (

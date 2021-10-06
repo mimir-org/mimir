@@ -9,15 +9,15 @@ interface Props {
   selectedItems: CombinedAttribute[];
   keyProp: string;
   onChange: (combination: CombinedAttribute, selected: boolean) => void;
-  color: string;
+  headerColor: string;
+  bodyColor: string;
 }
 
-const EntityDropdown = ({ items, selectedItems, keyProp, onChange, color }: Props) => {
+const EntityDropdown = ({ items, selectedItems, keyProp, onChange, headerColor, bodyColor }: Props) => {
   const [isListOpen, setIsListOpen] = useState(false);
 
   const IsItemSelected = useCallback(
-    (item: CombinedAttribute): boolean =>
-      !!selectedItems.find((other) => item.combined === other.combined),
+    (item: CombinedAttribute): boolean => !!selectedItems.find((other) => item.combined === other.combined),
     [selectedItems]
   );
 
@@ -35,7 +35,7 @@ const EntityDropdown = ({ items, selectedItems, keyProp, onChange, color }: Prop
             .forEach((item) => onChange(item, areAllItemsSelected))
         }
       >
-        <MenuListItem color={color}>
+        <MenuListItem color={bodyColor}>
           <p>{TextResources.Inspector_Params_Combinations_Select_All}</p>
           <CheckboxWrapper>
             <label className={"checkbox-block"}>
@@ -51,8 +51,8 @@ const EntityDropdown = ({ items, selectedItems, keyProp, onChange, color }: Prop
   const renderListItem = (item: CombinedAttribute) => {
     return (
       <div onClick={() => onChange(item, IsItemSelected(item))} key={item[keyProp]}>
-        <MenuListItem color={color}>
-          <p>{item.combined}</p>
+        <MenuListItem color={bodyColor}>
+          <div className="label">{item.combined}</div>
           <CheckboxWrapper>
             <label className={"checkbox-block"}>
               <input type="checkbox" checked={IsItemSelected(item)} readOnly={true} />
@@ -65,17 +65,18 @@ const EntityDropdown = ({ items, selectedItems, keyProp, onChange, color }: Prop
   };
 
   return (
-    <MenuWrapper tabIndex={0} onBlur={() => setIsListOpen(false)}>
+    <MenuWrapper /* tabIndex={0} */ onBlur={() => setIsListOpen(false)}>
       <div onClick={() => setIsListOpen(!isListOpen)}>
-        <MenuHeader open={isListOpen} color={color}>
+        <MenuHeader open={isListOpen} color={headerColor}>
           <p>{TextResources.Inspector_Params_Combinations}</p>
           <img src={isListOpen ? ExpandWhiteIcon : CollapseWhiteIcon} alt="expand-icon" />
         </MenuHeader>
       </div>
       {isListOpen && (
-        <MenuList>
+        <MenuList color={headerColor}>
           {items.length > 1 && renderSelectAll()}
-          {items?.map((item) => renderListItem(item))}
+
+          {items?.map((item) => [0, 1, 2, 3, 4, 5, 6, 7].map((_) => renderListItem(item)))}
         </MenuList>
       )}
     </MenuWrapper>
