@@ -15,8 +15,5 @@ namespace Mb.Models.Enums
 
         [Display(Name = "Interface")]
         Interface = 3,
-
-        [Display(Name = "Composite")]
-        Composite = 4
     }
 }
