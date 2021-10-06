@@ -2,7 +2,7 @@ import { Node } from "../../../models";
 import { FlowElement } from "react-flow-renderer";
 import { GetNodeTypeString, SetSplitViewNodePosition } from "./helpers";
 
-const CreateSplitViewNode = (node: Node) => {
+const CreateSplitViewChildNode = (node: Node) => {
   if (!node) return null;
   const type = GetNodeTypeString(node);
 
@@ -22,4 +22,4 @@ const CreateSplitViewNode = (node: Node) => {
   } as FlowElement;
 };
 
-export default CreateSplitViewNode;
+export default CreateSplitViewChildNode;
