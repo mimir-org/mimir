@@ -22,6 +22,7 @@ const CreateBlockElements = (
   if (!project) return;
   const elements: Elements = [];
   const connectView = mainConnectNodes?.length > 0;
+  const allNodes = project.nodes;
 
   const parentBlock = CreateParentBlockNode(selectedNode, splitView, false);
   parentBlock && elements.push(parentBlock);
@@ -31,10 +32,10 @@ const CreateBlockElements = (
     parentSplitBlock && elements.push(parentSplitBlock);
   }
 
-  DrawChildNodes(project.edges, project.nodes, selectedNode, elements);
-  DrawEdges(project.edges, project.nodes, elements);
-  splitView && DrawSplitViewChildren(project.edges, project.nodes, splitViewNode, elements);
-  connectView && DrawConnectViewChildren(mainConnectNodes, elements, project.nodes);
+  DrawChildNodes(project.edges, allNodes, selectedNode, elements);
+  DrawEdges(project.edges, allNodes, elements);
+  splitView && DrawSplitViewChildren(project.edges, allNodes, splitViewNode, elements);
+  connectView && DrawConnectViewChildren(mainConnectNodes, elements, allNodes);
 
   return elements;
 };

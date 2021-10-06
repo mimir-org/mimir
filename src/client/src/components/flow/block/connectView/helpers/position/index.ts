@@ -1,4 +1,4 @@
 export { default as CalculateMenuPos } from "./CalculateMenuPos";
-export { default as SetConnectNodePosition } from "./SetConnectNodePosition";
-export { default as CalculateXPosition } from "./CalculateXPosition";
-export { default as CalculateYPosition } from "./CalculateYPosition";
+export { default as SetConnectNodePos } from "./SetConnectNodePos";
+export { default as CalculateXPos } from "./CalculateXPos";
+export { default as CalculateYPos } from "./CalculateYPos";

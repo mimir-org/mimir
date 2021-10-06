@@ -6,9 +6,9 @@ import { Node } from "../../../../models";
  * @param node
  * @returns an updated position, containing X and Y values.
  */
-const SetSplitViewNodePosition = (node: Node) => {
+const SetSplitViewNodePos = (node: Node) => {
   const yMax = Size.SplitView_Height;
-  const yMin = Size.BlockView_MarginTop + 20;
+  const yMin = Size.BlockView_MarginTop;
 
   const xMax = Size.BlockView_Width + Size.SplitView_Width;
   const xMin = Size.BlockView_Width + Size.BlockView_MarginRight;
@@ -21,4 +21,4 @@ const SetSplitViewNodePosition = (node: Node) => {
   return { x: node.positionBlockX, y: node.positionBlockY };
 };
 
-export default SetSplitViewNodePosition;
+export default SetSplitViewNodePos;

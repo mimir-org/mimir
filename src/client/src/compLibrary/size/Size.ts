@@ -13,9 +13,9 @@ const Size = {
   // BlockView
   BlockView_Width: 950,
   BlockView_Height: 600,
-  BlockView_MarginLeft: 420,
-  BlockView_MarginRight: 220,
-  BlockView_MarginTop: 120,
+  BlockView_MarginLeft: 380,
+  BlockView_MarginRight: 200,
+  BlockView_MarginTop: 140,
   BlockView_BackgroundMargin: 50,
   ConnectView_Width: 400,
   ConnectView_Length: 180,

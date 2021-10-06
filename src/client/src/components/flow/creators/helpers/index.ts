@@ -1,6 +1,6 @@
 export { default as GetNodeTypeString } from "./GetNodeTypeString";
-export { default as SetBlockNodePosition } from "./SetBlockNodePosition";
-export { default as SetSplitViewNodePosition } from "./SetSplitViewNodePosition";
+export { default as SetBlockNodePos } from "./SetBlockNodePos";
+export { default as SetSplitViewNodePos } from "./SetSplitViewNodePos";
 
 export { default as DrawChildNodes } from "./DrawChildNodes";
 export { default as DrawSplitViewChildren } from "./DrawSplitViewChildren";

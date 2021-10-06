@@ -1,7 +1,13 @@
 import { Size } from "../../../../compLibrary";
 import { Node } from "../../../../models";
 
-const SetBlockNodePosition = (node: Node, splitView: boolean) => {
+/**
+ * Function to force a node to fit within the parent block in BlockView.
+ * @param node
+ * @param splitView
+ * @returns an updated position, containing X and Y values.
+ */
+const SetBlockNodePos = (node: Node, splitView: boolean) => {
   const yMax = Size.BlockView_Height;
   const yMin = Size.BlockView_MarginTop;
 
@@ -18,4 +24,4 @@ const SetBlockNodePosition = (node: Node, splitView: boolean) => {
   return { x: node.positionBlockX, y: node.positionBlockY };
 };
 
-export default SetBlockNodePosition;
+export default SetBlockNodePos;
