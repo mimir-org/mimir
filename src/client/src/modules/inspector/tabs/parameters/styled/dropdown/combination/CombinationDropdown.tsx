@@ -15,6 +15,9 @@ interface Props {
 
 const EntityDropdown = ({ items, selectedItems, keyProp, onChange, headerColor, bodyColor }: Props) => {
   const [isListOpen, setIsListOpen] = useState(false);
+  const [activeToolTip, setActiveToolTip] = useState<CombinedAttribute>(null);
+  const [activeToolTipTimeOutId, setActiveToolTipTimeOutId] = useState<NodeJS.Timeout>(null);
+  const [shouldShowToolTip, setShouldShowToolTip] = useState<boolean>(false);
 
   const IsItemSelected = useCallback(
     (item: CombinedAttribute): boolean => !!selectedItems.find((other) => item.combined === other.combined),
@@ -25,6 +28,28 @@ const EntityDropdown = ({ items, selectedItems, keyProp, onChange, headerColor, 
     () => selectedItems.filter(IsItemSelected).length === items?.length,
     [items, selectedItems, IsItemSelected]
   );
+
+  const onMouseEnter = (item: CombinedAttribute) => {
+    setActiveToolTipTimeOutId(setTimeout(() => setShouldShowToolTip(true), 500));
+    setActiveToolTip(item);
+  };
+
+  const onMouseOut = () => {
+    setShouldShowToolTip(false);
+    setActiveToolTip(null);
+    if (activeToolTipTimeOutId) {
+      clearTimeout(activeToolTipTimeOutId);
+      setActiveToolTipTimeOutId(null);
+    }
+  };
+
+  const calculateTop = (item: CombinedAttribute) => {
+    let base = 8.5;
+
+    let numItemOffset = items.length > 1 ? 2 : 1;
+
+    return base + (items.indexOf(item) + numItemOffset) * 27;
+  };
 
   const renderSelectAll = () => {
     return (
@@ -52,7 +77,9 @@ const EntityDropdown = ({ items, selectedItems, keyProp, onChange, headerColor, 
     return (
       <div onClick={() => onChange(item, IsItemSelected(item))} key={item[keyProp]}>
         <MenuListItem color={bodyColor}>
-          <div className="label">{item.combined}</div>
+          <div className="label" onMouseEnter={() => onMouseEnter(item)} onMouseOut={onMouseOut}>
+            {item.combined}
+          </div>
           <CheckboxWrapper>
             <label className={"checkbox-block"}>
               <input type="checkbox" checked={IsItemSelected(item)} readOnly={true} />
@@ -73,11 +100,18 @@ const EntityDropdown = ({ items, selectedItems, keyProp, onChange, headerColor, 
         </MenuHeader>
       </div>
       {isListOpen && (
-        <MenuList color={headerColor}>
-          {items.length > 1 && renderSelectAll()}
+        <>
+          <MenuList color={headerColor}>
+            {items.length > 1 && renderSelectAll()}
 
-          {items?.map((item) => renderListItem(item))}
-        </MenuList>
+            {items?.map((item) => renderListItem(item))}
+          </MenuList>
+          {shouldShowToolTip && activeToolTip && (
+            <div className="tooltipText" style={{ top: `${calculateTop(activeToolTip)}px` }}>
+              <span>{activeToolTip.combined}</span>
+            </div>
+          )}
+        </>
       )}
     </MenuWrapper>
   );

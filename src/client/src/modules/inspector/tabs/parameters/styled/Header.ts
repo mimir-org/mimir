@@ -10,7 +10,7 @@ const Header = styled.div`
   top: 0px;
   z-index: 5;
 
-  background-color: rgb(251, 251, 255);
+  background-color: ${Color.GreyInspector};
 
   & > hr {
     margin-top: 10px;

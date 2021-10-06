@@ -3,6 +3,7 @@ import { Color, FontSize } from "../../../../../../../../compLibrary";
 
 const MenuListItem = styled.div`
   display: flex;
+  position: relative;
   height: 27px;
   max-height: 45px;
   align-items: center;
@@ -28,8 +29,11 @@ const MenuListItem = styled.div`
 
   :hover {
     background-color: ${(props) => props.color};
-    p {
+    div {
       text-decoration: underline;
+    }
+    .tooltipText {
+      visibility: visible;
     }
   }
 `;
