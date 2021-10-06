@@ -5,7 +5,7 @@ import { Color } from "../../../../../compLibrary";
 const TerminalsMenu = styled.div`
   border: 1px solid;
   border-color: ${(props: { isLocation: boolean }) =>
-    props.isLocation ? Color.LocationTab : "#FBC913"}; // TODO: fix color
+    props.isLocation ? Color.LocationSelected : "#FBC913"}; // TODO: fix color
   background-color: ${Color.White};
   border-radius: 5px;
   z-index: 4;

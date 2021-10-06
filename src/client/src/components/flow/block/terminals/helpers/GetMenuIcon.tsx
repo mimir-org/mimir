@@ -1,6 +1,6 @@
 import * as Icons from "../../../../../assets/icons/blockView/terminalsMenu";
 import { Node } from "../../../../../models";
-import { IsFunction, IsLocation } from "../../../helpers";
+import { IsFunction, IsLocation, IsProduct } from "../../../helpers";
 
 /**
  * Function to get an icon for the terminals menu in BlockView.
@@ -10,11 +10,17 @@ import { IsFunction, IsLocation } from "../../../helpers";
  * @returns an icon
  */
 const GetMenuIcon = (node: Node, isParent: boolean, isInput: boolean) => {
-  if (isParent) return Icons.TerminalsParentMenu;
-  if (IsLocation(node)) return Icons.TerminalsLocationMenu;
+  if (isParent) return Icons.ParentMenu;
+  if (IsLocation(node)) return Icons.LocationInputMenu;
+
   if (IsFunction(node)) {
-    if (isInput) return Icons.TerminalsInputMenu;
-    else return Icons.TerminalsOutputMenu;
+    if (isInput) return Icons.FunctionInputMenu;
+    return Icons.FunctionOutputMenu;
+  }
+
+  if (IsProduct(node)) {
+    if (isInput) return Icons.FunctionInputMenu;
+    return Icons.FunctionOutputMenu;
   }
 };
 

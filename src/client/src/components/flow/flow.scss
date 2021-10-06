@@ -37,27 +37,30 @@
 
 .react-flow__node-AspectProduct {
   &.selected {
-    border: 3px solid #00f0ff !important;
+    border: 3px solid #069098 !important;
   }
 }
 
 .react-flow__node-Function {
   background: #fef445;
-  &.selected {
+  &.selected,
+  &:hover {
     border: 3px solid #fbc913 !important;
   }
 }
 
 .react-flow__node-Product {
   background: #47dde6;
-  &.selected {
-    border: 3px solid #00f0ff !important;
+  &.selected,
+  &:hover {
+    border: 3px solid #069098 !important;
   }
 }
 
 .react-flow__node-Location {
   background: #fa00ff;
-  &.selected {
+  &.selected,
+  &:hover {
     border: 3px solid #a300a7 !important;
   }
 }
@@ -88,7 +91,7 @@
   background-color: #fa00ff;
   &:hover,
   &.selected {
-    border: 3px solid #f083f1 !important;
+    border: 3px solid #a300a7 !important;
     box-shadow: none;
   }
 }
@@ -97,7 +100,7 @@
   background-color: #00f0ff;
   &:hover,
   &.selected {
-    border: 3px solid #47dde6 !important;
+    border: 3px solid #069098 !important;
     box-shadow: none;
   }
 }

@@ -38,7 +38,7 @@ const ConnectViewElement = styled.div`
   }
 
   &:last-child {
-    border-top: 1.4px solid ${Color.FunctionTab};
+    border-top: 1.4px solid ${Color.FunctionSelected};
   }
 
   &:hover {

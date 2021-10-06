@@ -38,7 +38,7 @@ const Header = () => {
             <img src={Icons.Filter} alt="VisualFilter" onClick={() => Click.OnFilter(dispatch, filterMenuOpen)} />
           </OptionsElement>
           <OptionsElement>
-            <img src={Icons.Landscape} alt="Landscape" onClick={() => null} />
+            <img src={Icons.Vertical} alt="Direction" onClick={() => null} />
           </OptionsElement>
           <OptionsElement>
             <img src={Icons.BlockView} alt={VIEW_TYPE.BLOCKVIEW} onClick={(e) => Click.OnView(e, dispatch, push)} />

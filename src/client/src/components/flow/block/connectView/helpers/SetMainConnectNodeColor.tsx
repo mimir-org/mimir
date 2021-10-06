@@ -10,7 +10,7 @@ const SetMainConnectNodeColor = (mainConnectNodeId: string, nodeId: string, conn
   // Reset color to normal
   else {
     const node = FindNodeByDataId(nodeId);
-    if (node) node.style.background = Color.FunctionBlock;
+    if (node) node.style.background = Color.FunctionMain;
   }
 };
 

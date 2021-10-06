@@ -13,7 +13,7 @@ const OptionsElement = styled.div`
   height: 15px;
   width: 20px;
   text-align: center;
-  transition: right 0.3s ease-in-out;
+  transition: right 0.2s ease-in-out;
 
   &:first-child {
     right: -285px;
