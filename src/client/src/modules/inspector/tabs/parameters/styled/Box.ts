@@ -12,9 +12,13 @@ const Box = styled.div`
   font-size: ${FontSize.Medium};
 
   .text {
+    display: flex;
+    align-items: center;
     position: relative;
-    top: -5px;
+    top: -10px;
     margin: 0px auto 0px 10px;
+    width: 125px;
+    height: 33px;
   }
 
   .icon {

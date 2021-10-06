@@ -76,7 +76,7 @@ const EntityDropdown = ({ items, selectedItems, keyProp, onChange, headerColor, 
         <MenuList color={headerColor}>
           {items.length > 1 && renderSelectAll()}
 
-          {items?.map((item) => [0, 1, 2, 3, 4, 5, 6, 7].map((_) => renderListItem(item)))}
+          {items?.map((item) => renderListItem(item))}
         </MenuList>
       )}
     </MenuWrapper>
