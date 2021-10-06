@@ -22,7 +22,7 @@ ${!run ? (start = stop) : null}
 `;
 
 const AnimatedInspector = styled((props) => <InspectorBox {...props} />)`
-  animation: ${Animation} 0.2s ease-in-out;
+  animation: ${Animation} 0.1s ease-in-out;
 `;
 
 export default AnimatedInspector;

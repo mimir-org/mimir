@@ -25,32 +25,25 @@ export const AspectComponent = ({
   isLeaf,
   isRoot,
   onElementExpanded,
-}: Props) => {
-  const expandIcon = expanded ? ExpandIcon : CollapseIcon;
-  const aspectIcon = GetAspectIcon(node);
-
-  return (
-    <>
-      <AspectBox indent={indent} node={node} isRoot={isRoot}>
-        {IsAspectNode(node) && <img src={aspectIcon} alt="aspect-icon" className="icon"></img>}
-        <div className="checkbox_container">
-          {IsBlockView() ? (
-            <CheckboxBlock node={node} inputLabel={label} />
-          ) : (
-            <Checkbox node={node} project={project} inputLabel={label} />
-          )}
-        </div>
-        {!isLeaf && (
-          <img
-            className="expandIcon"
-            src={expandIcon}
-            alt="expand-icon"
-            onClick={() => onElementExpanded(!expanded, node.id)}
-          ></img>
-        )}
-      </AspectBox>
-    </>
-  );
-};
+}: Props) => (
+  <AspectBox indent={indent} node={node} isRoot={isRoot}>
+    {IsAspectNode(node) && <img src={GetAspectIcon(node)} alt="aspect-icon" className="icon"></img>}
+    <div className="checkbox_container">
+      {IsBlockView() ? (
+        <CheckboxBlock node={node} inputLabel={label} />
+      ) : (
+        <Checkbox node={node} project={project} inputLabel={label} />
+      )}
+    </div>
+    {!isLeaf && (
+      <img
+        className="expandIcon"
+        src={expanded ? ExpandIcon : CollapseIcon}
+        alt="expand-icon"
+        onClick={() => onElementExpanded(!expanded, node.id)}
+      ></img>
+    )}
+  </AspectBox>
+);
 
 export default AspectComponent;
