@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Mb.Models.Enums;
 
 namespace Mb.Models.Application
 {
@@ -21,5 +22,8 @@ namespace Mb.Models.Application
         public string TransportId { get; set; }
         public string CompositeId { get; set; }
         public virtual ICollection<UnitAm> Units { get; set; }
+        public ICollection<string> SelectValues { get; set; }
+        public SelectType SelectType { get; set; }
+        public Discipline Discipline { get; set; }
     }
 }
