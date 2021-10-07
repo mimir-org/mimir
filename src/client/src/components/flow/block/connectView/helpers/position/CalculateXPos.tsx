@@ -9,7 +9,7 @@ import { Node } from "../../../../../../models";
  */
 const CalculateXPos = (node: Node, xPos: number, connectNodes: Node[]) => {
   const leftMargin = 35;
-  const rightMargin = 235;
+  const rightMargin = 239;
   const center = 135;
 
   if (connectNodes.length === 1) return xPos + center;
