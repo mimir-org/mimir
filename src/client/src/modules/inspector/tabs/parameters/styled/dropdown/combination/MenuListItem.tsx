@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color, FontSize } from "../../../../../../../../compLibrary";
+import { Color, FontSize } from "../../../../../../../compLibrary";
 
 const MenuListItem = styled.div`
   display: flex;

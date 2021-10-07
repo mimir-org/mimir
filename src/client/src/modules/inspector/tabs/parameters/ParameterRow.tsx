@@ -4,7 +4,7 @@ import { CombinedAttribute, Connector, Node } from "../../../../models";
 import { Parameter } from "./";
 import { DoesCombinationMatchAttribute } from "./helpers";
 import { Body, Entity, Box } from "./styled";
-import { CombinationDropdown } from "./styled/dropdown/combination";
+import { CombinationDropdown } from "./CombinationDropdown";
 import {
   OnChangeParameterValue,
   OnChangeFilterChoice,
