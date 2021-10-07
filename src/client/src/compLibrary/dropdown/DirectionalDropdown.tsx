@@ -4,21 +4,21 @@ import { DropdownContainer, DropdownHeader, DropdownList } from "..";
 import { ConnectorType } from "../../models";
 
 interface Props {
-  value?: ConnectorType;
+  defaultValue?: ConnectorType;
   onChange: Function;
 }
 
-const DirectionalDropdown = ({ value, onChange }: Props) => {
+const DirectionalDropdown = ({ defaultValue, onChange }: Props) => {
   const [isListOpen, setIsListOpen] = useState(false);
   const [selected, setSelected] = useState(ConnectorType[ConnectorType.Input]);
-  const stringIsNumber = (value) => isNaN(Number(value)) === false;
+  const stringIsNumber = (v) => isNaN(Number(v)) === false;
 
   useEffect(() => {
-    if (value) {
-      setSelected(ConnectorType[value]);
+    if (defaultValue) {
+      setSelected(ConnectorType[defaultValue]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [defaultValue]);
 
   return (
     <>
@@ -30,6 +30,7 @@ const DirectionalDropdown = ({ value, onChange }: Props) => {
             src={isListOpen ? ExpandIcon : CollapseIcon}
             alt="expand-icon"
             onClick={(e) => setIsListOpen(!isListOpen)}
+            className="icon"
           />
         </DropdownHeader>
 

@@ -12,7 +12,7 @@ const DropdownMenuWrapper = styled.div`
   color: ${Color.Black};
   position: relative;
 
-  .label {
+  .dropdown-label {
     margin-bottom: 7px;
   }
 `;

@@ -1,23 +1,26 @@
 import styled from "styled-components";
+import Color from "../colors/Color";
 
 const DropdownList = styled.div`
   display: flex;
   flex-direction: column;
-  border-radius: 2px;
-  font-size: 13px;
+  background-color: ${Color.White};
+  border: 1px solid #272738; //{Color.BlueMagenta};
+  border-radius: 5px;
+  padding: 1px;
+  font-size: 11px;
   position: absolute;
-  top: 22.5px;
+  top: 23px;
   left: 0px;
+  max-height: 40px;
+  width: 95%;
   z-index: 1;
-  width: 100%;
 
   .dropdown_listitem {
-    max-height: 16px;
-    padding: 2px 0px 2px 4px;
-    border-width: 0px 1px 1px 1px;
-    border-style: solid;
-    border-color: #cbcbcb;
-    background-color: white;
+    border-bottom: 1px solid ${Color.DarkGrey};
+    background-color: ${Color.White};
+    background-color: ${Color.White};
+    padding: 2px 5px;
   }
 
   .dropdown_listitem:hover {

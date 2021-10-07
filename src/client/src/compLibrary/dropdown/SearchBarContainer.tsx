@@ -1,13 +1,12 @@
 import styled from "styled-components";
-import Color from "../colors/Color";
+import FontType from "../font/FontType";
 
 const SearchBarContainer = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
   max-height: 20px;
-  font-family: roboto;
-  background-color: ${Color.White};
+  font-family: ${FontType.Standard};
   position: relative;
 `;
 

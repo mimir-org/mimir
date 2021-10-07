@@ -2,12 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { ExpandIcon, CollapseIcon } from "../../../assets/icons/common";
 import { LocationTypeCategory } from "../../../components/modules/typeEditorModule/styled";
 import { Symbol } from "../../symbol";
-import {
-  DropdownMenuWrapper,
-  DropdownMenuHeader,
-  DropdownMenuList,
-  DropdownMenuListItem,
-} from "./styled";
+import { DropdownMenuWrapper, DropdownMenuHeader, DropdownMenuList, DropdownMenuListItem } from "./styled";
 
 export interface DropDownItem {
   name: string;
@@ -86,9 +81,7 @@ const Dropdown = ({
       return (
         <div onClick={(e) => handleChange(e, item)} key={item[keyProp]}>
           <DropdownMenuListItem hasCategory={hasCategory}>
-            {valueImageProp && (
-              <Symbol base64={item[valueImageProp]} text={item[valueProp]} />
-            )}
+            {valueImageProp && <Symbol base64={item[valueImageProp]} text={item[valueProp]} />}
             <p>{item.name}</p>
           </DropdownMenuListItem>
         </div>
@@ -100,22 +93,16 @@ const Dropdown = ({
     <>
       <DropdownMenuWrapper disabled={disabled}>
         <label htmlFor={label} />
-        <div className="label">{label}</div>
+        <div className="dropdown-label">{label}</div>
         <div onClick={disabled ? null : (e) => setIsListOpen(!isListOpen)}>
           <DropdownMenuHeader>
             {
               <>
                 {selectedItem && valueImageProp && (
-                  <Symbol
-                    base64={selectedItem[valueImageProp]}
-                    text={selectedItem[valueProp]}
-                  />
+                  <Symbol base64={selectedItem[valueImageProp]} text={selectedItem[valueProp]} />
                 )}
                 <p>{selectedItem?.name ?? placeholder}</p>
-                <img
-                  src={isListOpen ? ExpandIcon : CollapseIcon}
-                  alt="expand-icon"
-                />
+                <img src={isListOpen ? ExpandIcon : CollapseIcon} alt="expand-icon" />
               </>
             }
           </DropdownMenuHeader>
