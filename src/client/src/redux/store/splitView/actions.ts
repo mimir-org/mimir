@@ -1,5 +1,5 @@
 import { Node } from "../../../models";
-import { SET_SPLITVIEW, SET_SPLIT_NODE } from "./types";
+import { SET_SPLITVIEW, SET_SPLIT_PARENT_NODE } from "./types";
 
 export function setSplitView(visible: boolean) {
   return {
@@ -10,9 +10,9 @@ export function setSplitView(visible: boolean) {
   };
 }
 
-export function setSplitNode(node: Node) {
+export function setSplitParentNode(node: Node) {
   return {
-    type: SET_SPLIT_NODE,
+    type: SET_SPLIT_PARENT_NODE,
     payload: {
       node,
     },

@@ -10,7 +10,7 @@ const MenuBar = styled.div`
   position: absolute;
   top: 56px;
   display: inline;
-  transition: left 0.3s ease-in-out, right 0.3s ease-in-out;
+  transition: left 0.2s ease-in-out, right 0.2s ease-in-out;
   z-index: 5;
 
   right: ${(props: { isLibraryOpen: boolean }) =>

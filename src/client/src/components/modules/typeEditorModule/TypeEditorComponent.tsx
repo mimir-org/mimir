@@ -7,6 +7,7 @@ import { CheckIcon, CloseIcon } from "../../../assets/icons/common";
 import { TextResources } from "../../../assets/text";
 import { GetInputTerminals, GetOutputTerminals } from "./preview/helpers";
 import { TypeEditorList, TypeEditorInputs, TypePreview, TypeEditorInspector } from "./";
+import { LibraryIcon } from "../../../assets/icons/common/modules";
 import {
   GetSelectedRds,
   GetSelectedTerminal,
@@ -35,7 +36,6 @@ import {
   TypePreviewColumn,
   SaveButton,
 } from "./styled";
-import { LibraryIcon } from "../../../assets/icons/common/modules";
 /**
  * Component for adding or editing a type
  * @returns the visual Type Editor window

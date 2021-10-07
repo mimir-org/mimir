@@ -1,9 +1,6 @@
 import { Connector, Edge, Node } from "../../../../../models";
 import { GetRelationName } from "../../../helpers";
-import {
-  GetOtherNodeFromEdgeViaConnector,
-  GetOtherNodeFromEdgeViaNode,
-} from "../../../../../components/flow/helpers";
+import { GetOtherNodeFromEdgeViaConnector, GetOtherNodeFromEdgeViaNode } from "../../../../../components/flow/helpers";
 
 const GetNameRelation = (conn: Connector, relationEdges: Map<string, Edge>): string => {
   const name = GetRelationName(conn.relationType);

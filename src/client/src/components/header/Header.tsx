@@ -18,6 +18,7 @@ const Header = () => {
   const accountMenuOpen = useSelector<RootState>((state) => state.menu.accountMenuVisibility) as boolean;
   const libraryOpen = useSelector<RootState>((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible) as boolean;
   const explorerOpen = useSelector<RootState>((s) => s.modules.types.find((x) => IsExplorer(x.type)).visible) as boolean;
+  const treeView = useSelector<RootState>((s) => s.flow.view === VIEW_TYPE.TREEVIEW) as boolean;
 
   return (
     <>
@@ -38,13 +39,21 @@ const Header = () => {
             <img src={Icons.Filter} alt="VisualFilter" onClick={() => Click.OnFilter(dispatch, filterMenuOpen)} />
           </OptionsElement>
           <OptionsElement>
-            <img src={Icons.Landscape} alt="Landscape" onClick={() => null} />
+            <img src={Icons.Vertical} alt="Direction" onClick={() => null} />
           </OptionsElement>
-          <OptionsElement>
-            <img src={Icons.BlockView} alt={VIEW_TYPE.BLOCKVIEW} onClick={(e) => Click.OnView(e, dispatch, push)} />
+          <OptionsElement treeView={treeView}>
+            <img
+              src={treeView ? Icons.BlockView : Icons.BlockViewActive}
+              alt={VIEW_TYPE.BLOCKVIEW}
+              onClick={(e) => Click.OnView(e, dispatch, push)}
+            />
           </OptionsElement>
-          <OptionsElement>
-            <img src={Icons.TreeView} alt={VIEW_TYPE.TREEVIEW} onClick={(e) => Click.OnView(e, dispatch, push)} />
+          <OptionsElement treeView={treeView}>
+            <img
+              src={treeView ? Icons.TreeViewActive : Icons.TreeView}
+              alt={VIEW_TYPE.TREEVIEW}
+              onClick={(e) => Click.OnView(e, dispatch, push)}
+            />
           </OptionsElement>
         </OptionsBox>
       </MenuBar>

@@ -13,7 +13,7 @@ const TerminalsElement = styled.div`
   display: flex;
 
   .text {
-    margin-left: 28px;
+    margin-left: 40px;
     height: 16px;
     text-align: left;
     width: 100%;

@@ -1,4 +1,10 @@
-export { default as TerminalsInputMenu } from "./terminalsInputMenu.svg";
-export { default as TerminalsOutputMenu } from "./terminalsOutputMenu.svg";
-export { default as TerminalsLocationMenu } from "./terminalsLocationMenu.svg";
-export { default as TerminalsParentMenu } from "./terminalsParentMenu.svg";
+export { default as FunctionInputMenu } from "./functionInputMenu.svg";
+export { default as FunctionOutputMenu } from "./functionOutputMenu.svg";
+
+export { default as ProductInputMenu } from "./productInputMenu.svg";
+export { default as ProductOutputMenu } from "./productOutputMenu.svg";
+
+export { default as LocationInputMenu } from "./locationInputMenu.svg";
+export { default as LocationOutputMenu } from "./locationOutputMenu.svg";
+
+export { default as ParentMenu } from "./parentMenu.svg";

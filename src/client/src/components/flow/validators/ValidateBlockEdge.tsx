@@ -1,6 +1,14 @@
 import { IsConnectView } from "../block/connectView/helpers";
 import { Node, Connector } from "../../../models";
-import { IsChildOf, IsFunction, IsLocation, IsPartOfTerminal, IsTransportTerminal } from "../helpers";
+import {
+  IsChildOf,
+  IsFunction,
+  IsLocation,
+  IsPartOfTerminal,
+  IsProduct,
+  IsSiblingNodes,
+  IsTransportTerminal,
+} from "../helpers";
 
 /**
  * Component to validate and display an edge in BlockView
@@ -25,53 +33,32 @@ const ValidateBlockEdge = (
   if (!fromNode || !toNode || IsPartOfTerminal(fromConnector) || IsPartOfTerminal(toConnector)) return false;
 
   // Regular BlockView
-  if (!splitView && !IsConnectView()) {
-    if (IsFunction(selectedNode)) {
-      if (
-        toNode.level - selectedNode.level === 1 &&
-        fromNode.level - selectedNode.level === 0 &&
-        fromNode.id === selectedNode.id
-      )
-        return true;
-      if (
-        fromNode.level - selectedNode.level === 1 &&
-        toNode.level - selectedNode.level === 0 &&
-        toNode.id === selectedNode.id
-      )
-        return true;
-      if (
-        fromNode.level - selectedNode.level === 1 &&
-        toNode.level - selectedNode.level === 1 &&
-        IsChildOf(toNode, selectedNode) &&
-        IsChildOf(fromNode, selectedNode)
-      )
+  if (!splitView && !IsConnectView())
+    if (!IsLocation(selectedNode)) {
+      if (IsSiblingNodes(fromNode, toNode) && IsChildOf(toNode, selectedNode) && IsChildOf(fromNode, selectedNode))
         return true;
     }
-    return false;
-  }
 
   if (IsConnectView()) {
     return (
-      fromNode !== selectedNode &&
-      IsTransportTerminal(fromConnector) &&
-      IsTransportTerminal(toConnector) &&
-      IsFunction(fromNode) &&
-      IsFunction(toNode)
+      (fromNode !== selectedNode &&
+        IsTransportTerminal(fromConnector) &&
+        IsTransportTerminal(toConnector) &&
+        IsFunction(fromNode) &&
+        IsFunction(toNode)) ||
+      (IsProduct(fromNode) && IsProduct(toNode))
     );
   }
 
   if (splitView) {
-    if (IsFunction(fromNode) && IsFunction(toNode) && !splitViewNode && IsChildOf(fromNode, selectedNode)) {
-      return false;
+    if (splitViewNode && !IsLocation(splitViewNode)) {
+      if (IsFunction(fromNode) && IsProduct(toNode)) return true;
+      if (IsProduct(fromNode) && IsFunction(toNode)) return true;
+      if (IsSiblingNodes(fromNode, toNode)) return true;
     }
-    if (
-      IsFunction(fromNode) &&
-      IsLocation(toNode) &&
-      IsChildOf(fromNode, selectedNode) &&
-      IsChildOf(toNode, splitViewNode) &&
-      splitViewNode
-    )
-      return true;
+
+    if (splitViewNode && IsLocation(splitViewNode)) if (IsFunction(fromNode) && IsLocation(toNode)) return true;
+    if (!splitViewNode) if (IsSiblingNodes(fromNode, toNode) && IsChildOf(fromNode, selectedNode)) return true;
   }
   return false;
 };

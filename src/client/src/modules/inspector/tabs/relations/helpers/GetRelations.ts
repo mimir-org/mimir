@@ -9,18 +9,14 @@ const GetRelations = (connectors: Connector[], edges: Edge[]): [Connector[], Map
 
     if (
       connector.relationType &&
-      (edge = edges.find(
-        (e) => e.fromConnector.id === connector.id || e.toConnector.id === connector.id
-      ))
+      (edge = edges.find((e) => e.fromConnector.id === connector.id || e.toConnector.id === connector.id))
     ) {
       relations.push(connector);
       relationEdges.set(connector.id, edge);
     }
   }
 
-  relations.sort((a, b) =>
-    a.relationType === b.relationType ? a.type - b.type : a.relationType - b.relationType
-  );
+  relations.sort((a, b) => (a.relationType === b.relationType ? a.type - b.type : a.relationType - b.relationType));
 
   return [relations, relationEdges];
 };

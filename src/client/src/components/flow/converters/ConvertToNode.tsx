@@ -1,10 +1,13 @@
-import { CreateId } from "../helpers";
+import { CreateId, IsLocation } from "../helpers";
 import { BlobData, LibItem, Node } from "../../../models";
+import { Size } from "../../../compLibrary";
 
 /**
  * Function to convert data to a Mimir Node.
- * @param node
+ * @param data
  * @param position
+ * @param projectId
+ * @param icons
  * @returns a Node.
  */
 const ConvertToNode = (data: LibItem, position, projectId: string, icons: BlobData[]) => {
@@ -27,6 +30,10 @@ const ConvertToNode = (data: LibItem, position, projectId: string, icons: BlobDa
     masterProjectId: projectId,
     symbol: icons?.find((x) => x.id === data.symbolId)?.data,
     level: 0,
+    cost: null,
+    height: null,
+    length: IsLocation(data) ? Size.Node_Length : null,
+    width: IsLocation(data) ? Size.Node_Width : null,
     purpose: data.purpose,
   } as Node;
 };

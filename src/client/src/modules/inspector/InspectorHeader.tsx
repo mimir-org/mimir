@@ -29,14 +29,15 @@ const InspectorHeader = ({ project, node, edge, dispatch, open, type }: Props) =
     </NodeInfo>
 
     <ButtonWrapper visible={node || edge}>
-      <InspectorButton onClick={() => alert("Arjun er søt")} type="validate" visible={true} />
+      <InspectorButton onClick={() => alert("Magnus er søt")} type="validate" visible={true} />
       <InspectorButton
         onClick={() => Click.OnLock(node, project, !node.isLocked, dispatch)}
         type={node?.isLocked ? "unlock" : "lock"}
         visible={true}
       />
       <InspectorButton onClick={() => Click.OnDelete(project, node, edge, dispatch)} type="delete" visible={true} />
-      <Title>{TextResources.Module_Inspector}</Title>
+
+      <Title onClick={() => Click.OnToggle(dispatch, type, open)}>{TextResources.Module_Inspector}</Title>
       <ToggleBox>
         <img src={open ? DownIcon : UpIcon} alt="toggle-icon" onClick={() => Click.OnToggle(dispatch, type, open)} />
       </ToggleBox>

@@ -4,12 +4,11 @@ import { NodeProps } from "react-flow-renderer";
 import { NodeBox } from "../../styled";
 import { BlockNodeNameBox } from "../../block/styled";
 import { HandleComponent, TerminalsComponent } from "../../block/terminals";
-import { changeActiveConnector } from "../../../../redux/store/project/actions";
 import { useDispatch, useSelector } from "react-redux";
-import { Connector, Node } from "../../../../models";
-import { OnHover, OnMouseOut } from "./handlers";
-import { IsLocation } from "../../helpers";
-import { SetTerminalOrder, FilterTerminals, FindNodeByDataId } from "../../block/helpers";
+import { Node } from "../../../../models";
+import { OnHover, OnMouseOut, OnConnectorClick } from "./handlers";
+import { FilterTerminals, FindNodeByDataId } from "../../block/helpers";
+import { Symbol } from "../../../../compLibrary/symbol";
 
 /**
  * Component for a Location Node in BlockView.
@@ -19,17 +18,11 @@ import { SetTerminalOrder, FilterTerminals, FindNodeByDataId } from "../../block
 const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
   const [terminalButton, showTerminalButton] = useState(false);
-  const [inputTerminalMenu, showInputTerminalMenu] = useState(false);
-  const [outputTerminalMenu, showOutputTerminalMenu] = useState(false);
-
-  const nodes = useSelector<RootState>((state) => state.projectState.project.nodes) as Node[];
-  const splitView = useSelector<RootState>((state) => state.splitView.visible) as boolean;
-  const sortedTerminals = FilterTerminals(data, splitView);
-
-  const onConnectorClick = (conn: Connector) => {
-    const order = SetTerminalOrder(data, 0, conn.relationType);
-    dispatch(changeActiveConnector(data, conn.id, !conn.visible, order));
-  };
+  const [inTerminalMenu, showInTerminalMenu] = useState(false);
+  const [outTerminalMenu, showOutTerminalMenu] = useState(false);
+  const nodes = useSelector<RootState>((s) => s.projectState.project.nodes) as Node[];
+  const splitView = useSelector<RootState>((s) => s.splitView.visible) as boolean;
+  const splitNode = useSelector<RootState>((s) => s.splitView.node) as Node;
 
   // Enforce size change of node
   useEffect(() => {
@@ -43,31 +36,36 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   return (
     <>
       <NodeBox
-        id={`BlockLocationNode-` + data.id}
-        onMouseOver={() => OnHover(showTerminalButton, data.id)}
-        onMouseOut={() => OnMouseOut(showTerminalButton, data.id)}
-        width={data.width}
-        length={data.length}
-        location
+        id={"BlockLocationNode-" + data.id}
+        onMouseOver={() => OnHover(showTerminalButton)}
+        onMouseOut={() => OnMouseOut(showTerminalButton)}
       >
         <BlockNodeNameBox>{data.label ?? data.name}</BlockNodeNameBox>
+        <Symbol base64={data.symbol} text={data.name} />
 
         <TerminalsComponent
           node={data}
-          isInputMenuOpen={inputTerminalMenu}
-          isOutputMenuOpen={outputTerminalMenu}
-          terminals={sortedTerminals}
+          inputMenuOpen={inTerminalMenu}
+          outputMenuOpen={outTerminalMenu}
+          terminals={FilterTerminals(data, splitView, splitNode)}
           isParent={false}
-          isLocation={IsLocation(data)}
-          isSplitView={splitView}
-          onClick={(conn) => onConnectorClick(conn)}
-          menuButton={terminalButton}
-          showInputTerminalMenu={showInputTerminalMenu}
-          showOutputTerminalMenu={showOutputTerminalMenu}
+          isLocation={true}
+          splitView={splitView}
+          onClick={(conn) => OnConnectorClick(conn, data, dispatch)}
+          menuBox={terminalButton}
+          mainConnectNode={false}
+          showInTerminalMenu={showInTerminalMenu}
+          showOutTerminalMenu={showOutTerminalMenu}
         />
       </NodeBox>
 
-      <HandleComponent node={data} nodes={nodes} terminals={sortedTerminals} isParent={false} splitView={splitView} />
+      <HandleComponent
+        node={data}
+        nodes={nodes}
+        terminals={FilterTerminals(data, splitView, splitNode)}
+        isParent={false}
+        splitView={splitView}
+      />
     </>
   );
 };
