@@ -1,7 +1,6 @@
 import { CompositeType } from "../../../../../models";
 import { Checkbox, Label } from "../../inputs/Checkbox";
 import { ListElem } from "../../../../../compLibrary";
-import { HelpIcon } from "../../../../../assets/icons/common";
 
 interface Props {
   simpleType: CompositeType;
@@ -9,11 +8,7 @@ interface Props {
   defaultValue?: string[];
 }
 
-export const SimpleTypeElement = ({
-  simpleType,
-  onChange,
-  defaultValue,
-}: Props) => {
+export const SimpleTypeElement = ({ simpleType, onChange, defaultValue }: Props) => {
   //   const showAttributes = () => {
   //     return simpleType.attributeTypes.map((a) => {
   //       return (
@@ -26,17 +21,17 @@ export const SimpleTypeElement = ({
   //       );
   //     });
   //   };
+  const isSelected = defaultValue?.includes(simpleType.id);
   return (
-    <ListElem>
+    <ListElem isSelected={isSelected}>
       <Checkbox
         id={simpleType.id}
+        name={simpleType.name}
         label={Label.compositeTypes}
         defaultValue={defaultValue}
         onChange={onChange}
       />
-      <p>{simpleType.name}</p>
       {/* <p>{showAttributes()}</p> */}
-      <img src={HelpIcon} alt="help" />
     </ListElem>
   );
 };

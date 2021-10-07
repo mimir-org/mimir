@@ -9,11 +9,7 @@ import {
   SearchBarList,
   SearchBarListItem,
 } from "../../../../../compLibrary/";
-import {
-  HelpIcon,
-  ExpandIcon,
-  CollapseIcon,
-} from "../../../../../assets/icons/common";
+import { ExpandIcon, CollapseIcon } from "../../../../../assets/icons/common";
 import { TextResources } from "../../../../../assets/text";
 
 interface Props {
@@ -23,15 +19,8 @@ interface Props {
   defaultTerminal?: TerminalType;
 }
 
-export const TransportInterfaceElement = ({
-  categoryName,
-  terminalTypes,
-  onChange,
-  defaultTerminal,
-}: Props) => {
-  const [searchbarInput, setSearchbarInput] = useState(
-    defaultTerminal ? defaultTerminal.name : ""
-  );
+export const TransportInterfaceElement = ({ categoryName, terminalTypes, onChange, defaultTerminal }: Props) => {
+  const [searchbarInput, setSearchbarInput] = useState(defaultTerminal ? defaultTerminal.name : "");
   const [expandList, setExpandList] = useState(false);
 
   const handleTerminalClick = (terminal) => {
@@ -56,15 +45,15 @@ export const TransportInterfaceElement = ({
 
   return (
     <TerminalListElement>
-      <TerminalCategoryWrapper>
+      <TerminalCategoryWrapper isSelected={isSelected()}>
         <RoundCheckbox
           id={categoryName}
+          label={categoryName}
           listType={ListType.Terminals}
           checked={isSelected()}
           defaultValue={terminalTypes[0].id}
           onChange={onChange}
         />
-        <p className="category">{categoryName}</p>
         {isSelected() && (
           <SearchBarWrapper>
             <SearchBarContainer>
@@ -88,9 +77,7 @@ export const TransportInterfaceElement = ({
               {expandList && (
                 <SearchBarList>
                   {terminalTypes
-                    .filter((t) =>
-                      t.name.match(new RegExp(searchbarInput, "i"))
-                    )
+                    .filter((t) => t.name.match(new RegExp(searchbarInput, "i")))
                     .map((t) => {
                       return (
                         <SearchBarListItem
@@ -99,14 +86,13 @@ export const TransportInterfaceElement = ({
                             handleTerminalClick(t);
                           }}
                         >
-                          {t.name}
+                          <p>{t.name}</p>
                         </SearchBarListItem>
                       );
                     })}
                 </SearchBarList>
               )}
             </SearchBarContainer>
-            <img className="helpIcon" src={HelpIcon} alt="help" />
           </SearchBarWrapper>
         )}
       </TerminalCategoryWrapper>

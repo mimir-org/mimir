@@ -2,9 +2,8 @@
   display: flex;
   position: relative;
   background-color: transparent;
-  padding: 5px 10px 10px 10px;
-  margin: 0px 5px;
   cursor: pointer;
+  margin: 0px 7px;
 }
 
 .roundcheckbox input {
@@ -36,9 +35,9 @@
 .roundcheckbox .checked:after {
   position: relative;
   top: 2.3px;
-  left: 2px;
-  height: 5.9px;
-  width: 6px;
+  left: 2.3px;
+  height: 5.5px;
+  width: 5.5px;
   background-color: black;
   border: 1px solid black;
   border-radius: 10px;

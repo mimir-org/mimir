@@ -29,11 +29,11 @@ export const ObjectBlockElement = ({ name, categoryId, terminalTypes, onChange, 
 
   const onCategoryAdd = (terminal: TerminalTypeItem) => {
     setExpandCategory(true);
-    onChange("add", terminal, categoryId, defaultTerminals.length);
+    onChange("add", terminal);
   };
 
-  const onCategoryUpdateOrRemove = (key: string, terminal: TerminalTypeItem, terminalId: string) => {
-    onChange(key, terminal, categoryId, terminalId);
+  const onCategoryUpdateOrRemove = (key: string, terminal: TerminalTypeItem) => {
+    onChange(key, terminal);
   };
 
   const showTerminals = () => {
@@ -44,10 +44,9 @@ export const ObjectBlockElement = ({ name, categoryId, terminalTypes, onChange, 
         return (
           <AddTerminalComponent
             key={index}
-            terminalId={t.terminalId}
             terminals={terminalTypes}
             defaultTerminal={t}
-            onChange={onCategoryUpdateOrRemove}
+            onChange={(key, data) => onCategoryUpdateOrRemove(key, data)}
           />
         );
       });
@@ -56,7 +55,7 @@ export const ObjectBlockElement = ({ name, categoryId, terminalTypes, onChange, 
 
   return (
     <TerminalListElement>
-      <TerminalCategoryWrapper>
+      <TerminalCategoryWrapper expanded={terminalsQuantity > 0}>
         <button onClick={() => onCategoryAdd(defaultTerminal)}>
           <img src={AddIcon} alt="add-icon" className="add-icon" />
           <p className="add-text">{TextResources.TypeEditor_Properties_Add_Terminal}</p>

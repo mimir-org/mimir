@@ -1,19 +1,26 @@
 import styled from "styled-components";
 import { Color, FontSize, FontType, FontWeight } from "../../../../compLibrary";
 
-const TerminalCategoryWrapper = styled.div`
+interface Props {
+  expanded: boolean;
+  isSelected: boolean;
+}
+
+const TerminalCategoryWrapper = styled.div<Props>`
   display: flex;
   flex-direction: row;
   align-items: center;
   min-height: 30px;
+  border-bottom: ${(props) => (props.expanded ? "dashed 1px" + Color.DarkGrey : 0)};
 
   .terminal-name {
+    font-weight: ${(props) => props.expanded && FontWeight.Bold};
+    text-decoration: ${(props) => props.expanded && "underline"};
     font-size: ${FontSize.Small};
-    margin-left: 16px;
+    margin-left: 9px;
   }
 
   .terminal-name:hover {
-    font-weight: ${FontWeight.Bold};
     text-decoration: underline;
     cursor: pointer;
   }
@@ -53,29 +60,15 @@ const TerminalCategoryWrapper = styled.div`
     z-index: 0;
   }
 
-  .category {
-    padding-right: 10px;
+  label:hover {
+    text-decoration: underline;
+    cursor: pointer;
   }
 
-  /* img {
-    margin-left: auto; 
-    padding-right: 12px;
-    width: 14px;
-    height: 14px;
-  } */
-
-  .help-icon {
-    width: 12px;
-    height: 12px;
-    opacity: 0.4;
-  }
-
-  .help-icon:hover {
-    opacity: 1;
-  }
-
-  .locationAttribute {
-    padding: 9px 5px;
+  label {
+    text-decoration: ${(props) => props.isSelected && "underline"};
+    font-weight: ${(props) => props.isSelected && FontWeight.Bold};
+    /* padding-right: 10px; */
   }
 `;
 

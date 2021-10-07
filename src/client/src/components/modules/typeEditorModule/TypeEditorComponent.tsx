@@ -3,10 +3,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { TypeEditorState } from "../../../redux/store/typeEditor/types";
 import { ListType } from "./TypeEditorList";
-import { AddIcon, CheckIcon, CloseIcon } from "../../../assets/icons/common";
+import { CheckIcon, CloseIcon } from "../../../assets/icons/common";
 import { TextResources } from "../../../assets/text";
 import { GetInputTerminals, GetOutputTerminals } from "./preview/helpers";
 import { TypeEditorList, TypeEditorInputs, TypePreview, TypeEditorInspector } from "./";
+import {
+  GetSelectedRds,
+  GetSelectedTerminal,
+  IsLocation,
+  IsInterface,
+  IsObjectBlock,
+  IsProduct,
+  GetWidth,
+} from "./helpers";
 import {
   closeTypeEditor,
   getInitialData,
@@ -19,16 +28,6 @@ import {
   saveLibraryType,
 } from "../../../redux/store/typeEditor/actions";
 import {
-  GetSelectedRds,
-  GetSelectedTerminal,
-  IsLocation,
-  IsInterface,
-  IsObjectBlock,
-  IsFunction,
-  IsProduct,
-  GetWidth,
-} from "./helpers";
-import {
   TypeEditorWrapper,
   TypeEditorContent,
   TypeEditorHeader,
@@ -36,6 +35,7 @@ import {
   TypePreviewColumn,
   SaveButton,
 } from "./styled";
+import { LibraryIcon } from "../../../assets/icons/common/modules";
 /**
  * Component for adding or editing a type
  * @returns the visual Type Editor window
@@ -98,7 +98,7 @@ export const TypeEditorComponent = () => {
                 onChange={(key, data) => onChange(key, data)}
                 // disabled={ModeEdit(mode) ? false : FieldValidator(state, "rds")}
               />
-              {IsLocation(state?.createLibraryType.aspect) ? null : (
+              {!IsLocation(state?.createLibraryType.aspect) && (
                 <TypeEditorList
                   items={state?.terminals}
                   createLibraryType={state?.createLibraryType}
@@ -120,8 +120,7 @@ export const TypeEditorComponent = () => {
                   // disabled={ModeEdit(mode) ? false : FieldValidator(state, "rds")}
                 />
               )}
-              {(IsFunction(state?.createLibraryType.aspect) || IsProduct(state?.createLibraryType.aspect)) &&
-              IsInterface(state.createLibraryType.objectType) ? null : (
+              {!IsInterface(state.createLibraryType.objectType) && (
                 <TypeEditorList
                   items={state?.attributes}
                   createLibraryType={state?.createLibraryType}
@@ -165,7 +164,7 @@ export const TypeEditorComponent = () => {
                       : TextResources.TypeEditor_Button_Edit}
                   </p>
                   <img
-                    src={state.createLibraryType.libraryId === null ? AddIcon : CheckIcon}
+                    src={state.createLibraryType.libraryId === null ? LibraryIcon : CheckIcon}
                     alt="icon"
                     className="icon"
                   />

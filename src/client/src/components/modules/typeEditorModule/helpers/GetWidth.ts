@@ -3,11 +3,13 @@ import { ListType } from "../TypeEditorList";
 const GetWidth = (listType: ListType) => {
   switch (listType) {
     case ListType.Terminals:
-      return 35;
+      return 2;
     case ListType.PredefinedAttributes:
-      return 35;
+      return 2;
+    case ListType.Preview:
+      return 1.5;
     default:
-      return 20;
+      return 1;
   }
 };
 
