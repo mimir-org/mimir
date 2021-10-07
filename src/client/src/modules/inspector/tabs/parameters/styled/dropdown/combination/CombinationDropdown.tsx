@@ -1,13 +1,10 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { TextResources } from "../../../../../../../assets/text";
-import { MenuWrapper, MenuHeader, MenuList, MenuListItem, CheckboxWrapper } from "./styled";
+import { MenuWrapper, MenuHeader, MenuList, MenuListItem, CheckboxWrapper, ToolTip } from "./styled";
 import { ExpandWhiteIcon, CollapseWhiteIcon } from "../../../../../../../assets/icons/common";
 import { CombinedAttribute } from "../../../../../../../models";
-import { MENU_LIST_ITEM_BORDER_WIDTH } from "./styled/MenuList";
-import { MENU_LIST_ITEM_HEIGHT } from "./styled/MenuListItem";
 
-const MENU_ITEM_TOOLTIP_BASE_OFFSET: number = 7;
-const MENU_ITEM_OFFSET: number = MENU_LIST_ITEM_BORDER_WIDTH + MENU_LIST_ITEM_HEIGHT;
+const MENU_ITEM_TOOLTIP_BASE_OFFSET: number = 6;
 
 interface Props {
   items: CombinedAttribute[];
@@ -21,8 +18,11 @@ interface Props {
 const EntityDropdown = ({ items, selectedItems, keyProp, onChange, headerColor, bodyColor }: Props) => {
   const [isListOpen, setIsListOpen] = useState(false);
   const [activeToolTip, setActiveToolTip] = useState<CombinedAttribute>(null);
+  const [activeToolTipRef, setActiveToolTipRef] = useState<HTMLDivElement>(null);
   const [activeToolTipTimeOutId, setActiveToolTipTimeOutId] = useState<NodeJS.Timeout>(null);
   const [shouldShowToolTip, setShouldShowToolTip] = useState<boolean>(false);
+
+  const listRef = useRef<HTMLDivElement>(null);
 
   const IsItemSelected = useCallback(
     (item: CombinedAttribute): boolean => !!selectedItems.find((other) => item.combined === other.combined),
@@ -34,11 +34,22 @@ const EntityDropdown = ({ items, selectedItems, keyProp, onChange, headerColor, 
     [items, selectedItems, IsItemSelected]
   );
 
+  const refCallback = (element: HTMLDivElement, item: CombinedAttribute) => {
+    if (item.combined === activeToolTip?.combined) {
+      setActiveToolTipRef(element);
+    }
+  };
+
   const onMouseEnter = (item: CombinedAttribute) => {
     if (item.combined !== activeToolTip?.combined) {
       setShouldShowToolTip(false);
       setActiveToolTip(null);
-      setActiveToolTipTimeOutId(setTimeout(() => setShouldShowToolTip(true), 500));
+      setActiveToolTipTimeOutId(
+        setTimeout(() => {
+          setShouldShowToolTip(true);
+          setActiveToolTipTimeOutId(null);
+        }, 500)
+      );
       setActiveToolTip(item);
     }
   };
@@ -57,13 +68,20 @@ const EntityDropdown = ({ items, selectedItems, keyProp, onChange, headerColor, 
     }
   };
 
-  const calculateTop = (item: CombinedAttribute) => {
-    let base = MENU_ITEM_TOOLTIP_BASE_OFFSET;
-
-    let numItemOffset = items.length > 1 ? 2 : 1;
-
-    return base + (items.indexOf(item) + numItemOffset) * MENU_ITEM_OFFSET;
+  const onScroll = () => {
+    setActiveToolTip(null);
+    setShouldShowToolTip(false);
   };
+
+  const tooltipTopPosition = useMemo(() => {
+    if (!activeToolTipRef) return 0;
+
+    const rect = activeToolTipRef.getBoundingClientRect();
+
+    const listRect = listRef.current.getBoundingClientRect();
+
+    return MENU_ITEM_TOOLTIP_BASE_OFFSET + (rect.top - listRect.top);
+  }, [activeToolTipRef, listRef]);
 
   const renderSelectAll = () => {
     return (
@@ -93,7 +111,7 @@ const EntityDropdown = ({ items, selectedItems, keyProp, onChange, headerColor, 
     return (
       <div onClick={() => onChange(item, IsItemSelected(item))} key={item[keyProp]}>
         <MenuListItem color={bodyColor}>
-          <div className="label" onMouseEnter={() => onMouseEnter(item)}>
+          <div className="label" onMouseEnter={() => onMouseEnter(item)} ref={(ele) => refCallback(ele, item)}>
             {item.combined}
           </div>
           <CheckboxWrapper>
@@ -108,7 +126,7 @@ const EntityDropdown = ({ items, selectedItems, keyProp, onChange, headerColor, 
   };
 
   return (
-    <MenuWrapper tabIndex={0} onBlur={() => setIsListOpen(false)} onMouseLeave={onMouseOut}>
+    <MenuWrapper tabIndex={0} onBlur={() => setIsListOpen(false)} onMouseLeave={onMouseOut} ref={listRef}>
       <div onClick={() => setIsListOpen(!isListOpen)}>
         <MenuHeader open={isListOpen} color={headerColor}>
           <p>{TextResources.Inspector_Params_Combinations}</p>
@@ -117,15 +135,15 @@ const EntityDropdown = ({ items, selectedItems, keyProp, onChange, headerColor, 
       </div>
       {isListOpen && (
         <>
-          <MenuList color={headerColor}>
+          <MenuList color={headerColor} onScroll={onScroll}>
             {items.length > 1 && renderSelectAll()}
 
             {items?.map((item) => renderListItem(item))}
           </MenuList>
           {shouldShowToolTip && activeToolTip && (
-            <div className="tooltipText" style={{ top: `${calculateTop(activeToolTip)}px` }}>
+            <ToolTip tooltipTopPosition={tooltipTopPosition}>
               <span>{activeToolTip.combined}</span>
-            </div>
+            </ToolTip>
           )}
         </>
       )}

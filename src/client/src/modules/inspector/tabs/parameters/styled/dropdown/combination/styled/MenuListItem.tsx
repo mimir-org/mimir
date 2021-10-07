@@ -1,12 +1,10 @@
 import styled from "styled-components";
 import { Color, FontSize } from "../../../../../../../../compLibrary";
 
-export const MENU_LIST_ITEM_HEIGHT: number = 27;
-
 const MenuListItem = styled.div`
   display: flex;
   position: relative;
-  height: ${MENU_LIST_ITEM_HEIGHT}px;
+  height: 27px;
   max-height: 45px;
   align-items: center;
   font-size: ${FontSize.Small};
