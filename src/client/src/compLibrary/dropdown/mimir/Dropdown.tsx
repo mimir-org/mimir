@@ -53,41 +53,45 @@ const Dropdown = ({
   };
 
   return (
-    <DropdownMenuWrapper
-      disabled={disabled}
-      tabIndex={0}
-      onBlur={() => {
-        setIsListOpen(false);
-      }}
-    >
-      <label htmlFor={label} />
-      <div onClick={disabled ? null : (e) => setIsListOpen(!isListOpen)}>
-        <DropdownMenuHeader borderRadius={borderRadius} fontSize={fontSize} height={height}>
-          {selectedItem && (
-            <>
-              {valueImageProp && <Symbol base64={selectedItem[valueImageProp]} text={selectedItem[valueProp]} />}
-              <p>{selectedItem.name ?? selectedItem.key}</p>
-              <img src={isListOpen ? ExpandIcon : CollapseIcon} alt="expand-icon" />
-            </>
-          )}
-        </DropdownMenuHeader>
-      </div>
-      {isListOpen && (
-        <DropdownMenuList borderRadius={borderRadius} fontSize={fontSize}>
-          {items?.map((item) => {
-            return (
-              <div onClick={(e) => handleChange(e, item)} key={item[keyProp]}>
-                <DropdownMenuListItem fontSize={fontSize} height={height} borderRadius={borderRadius}>
-                  {valueImageProp && <Symbol base64={item[valueImageProp]} text={item[valueProp]} />}
+    <>
+      {items && items.length > 0 && (
+        <DropdownMenuWrapper
+          disabled={disabled}
+          tabIndex={0}
+          onBlur={() => {
+            setIsListOpen(false);
+          }}
+        >
+          <label htmlFor={label} />
+          <div onClick={disabled ? null : (e) => setIsListOpen(!isListOpen)}>
+            <DropdownMenuHeader borderRadius={borderRadius} fontSize={fontSize} height={height}>
+              {selectedItem && (
+                <>
+                  {valueImageProp && <Symbol base64={selectedItem[valueImageProp]} text={selectedItem[valueProp]} />}
+                  <p>{selectedItem.name ?? selectedItem.key}</p>
+                  <img src={isListOpen ? ExpandIcon : CollapseIcon} alt="expand-icon" />
+                </>
+              )}
+            </DropdownMenuHeader>
+          </div>
+          {isListOpen && (
+            <DropdownMenuList borderRadius={borderRadius} fontSize={fontSize}>
+              {items?.map((item) => {
+                return (
+                  <div onClick={(e) => handleChange(e, item)} key={item[keyProp]}>
+                    <DropdownMenuListItem fontSize={fontSize} height={height} borderRadius={borderRadius}>
+                      {valueImageProp && <Symbol base64={item[valueImageProp]} text={item[valueProp]} />}
 
-                  <p>{item.name ?? item.key}</p>
-                </DropdownMenuListItem>
-              </div>
-            );
-          })}
-        </DropdownMenuList>
+                      <p>{item.name ?? item.key}</p>
+                    </DropdownMenuListItem>
+                  </div>
+                );
+              })}
+            </DropdownMenuList>
+          )}
+        </DropdownMenuWrapper>
       )}
-    </DropdownMenuWrapper>
+    </>
   );
 };
 

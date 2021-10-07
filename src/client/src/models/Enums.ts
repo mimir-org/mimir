@@ -56,3 +56,9 @@ export enum CommitStatus {
   Committed = 8,
   Sent = 16,
 }
+
+export enum SelectType {
+  None = 0,
+  SingleSelect = 1,
+  MultiSelect = 2
+}

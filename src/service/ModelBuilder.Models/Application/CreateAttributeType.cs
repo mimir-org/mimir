@@ -22,6 +22,14 @@ namespace Mb.Models.Application
         public string ConditionId { get; set; }
 
         public ICollection<string> Units { get; set; }
+        
+        public ICollection<string> SelectValues { get; set; }
+
+        [Required]
+        public SelectType SelectType { get; set; }
+
+        [Required]
+        public Discipline Discipline { get; set; }
 
         [Required]
         public Aspect Aspect { get; set; }
