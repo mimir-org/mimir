@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { FontSize } from "../..";
+import { Color, FontSize } from "../..";
 import { ExpandIcon, CollapseIcon } from "../../../assets/icons/common";
 import { Symbol } from "../../symbol";
 import { DropdownMenuWrapper, DropdownMenuHeader, DropdownMenuList, DropdownMenuListItem } from "./styled";
@@ -14,6 +14,7 @@ interface Props {
   valueImageProp?: string;
   disabled?: boolean;
   borderRadius?: number;
+  borderColor?: string;
   fontSize?: string;
   height?: number;
 }
@@ -28,6 +29,7 @@ const Dropdown = ({
   valueImageProp,
   disabled,
   borderRadius = 5,
+  borderColor = Color.Black,
   fontSize = FontSize.Standard,
   height = 28,
 }: Props) => {
@@ -64,7 +66,12 @@ const Dropdown = ({
         >
           <label htmlFor={label} />
           <div onClick={disabled ? null : (e) => setIsListOpen(!isListOpen)}>
-            <DropdownMenuHeader borderRadius={borderRadius} fontSize={fontSize} height={height}>
+            <DropdownMenuHeader
+              borderRadius={borderRadius}
+              borderColor={borderColor}
+              fontSize={fontSize}
+              height={height}
+            >
               {selectedItem && (
                 <>
                   {valueImageProp && <Symbol base64={selectedItem[valueImageProp]} text={selectedItem[valueProp]} />}
@@ -75,11 +82,16 @@ const Dropdown = ({
             </DropdownMenuHeader>
           </div>
           {isListOpen && (
-            <DropdownMenuList borderRadius={borderRadius} fontSize={fontSize}>
+            <DropdownMenuList borderRadius={borderRadius} borderColor={borderColor} fontSize={fontSize}>
               {items?.map((item) => {
                 return (
                   <div onClick={(e) => handleChange(e, item)} key={item[keyProp]}>
-                    <DropdownMenuListItem fontSize={fontSize} height={height} borderRadius={borderRadius}>
+                    <DropdownMenuListItem
+                      fontSize={fontSize}
+                      borderColor={borderColor}
+                      height={height}
+                      borderRadius={borderRadius}
+                    >
                       {valueImageProp && <Symbol base64={item[valueImageProp]} text={item[valueProp]} />}
 
                       <p>{item.name ?? item.key}</p>

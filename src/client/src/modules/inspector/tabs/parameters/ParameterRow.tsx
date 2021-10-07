@@ -4,7 +4,7 @@ import { CombinedAttribute, Connector, Node } from "../../../../models";
 import { Parameter } from "./";
 import { DoesCombinationMatchAttribute } from "./helpers";
 import { Body, Entity, Box } from "./styled";
-import { CombinationDropdown } from "./styled/dropdown/combination";
+import { CombinationDropdown } from "./CombinationDropdown";
 import {
   OnChangeParameterValue,
   OnChangeFilterChoice,
@@ -40,10 +40,12 @@ function ParameterRow({
 
   return (
     <Body>
-      <Entity width={180}>
+      <Entity width={191}>
         <Box color={bodyColor} id="ParametersBox">
           <div className="icon">
             <CloseParameterFilterIconComponent
+              width={26}
+              height={26}
               fill={headerColor}
               stroke={headerColor}
               onClick={() => OnChangeFilterChoice(element.id, filterName, true, dispatch)}
@@ -58,7 +60,8 @@ function ParameterRow({
           onChange={(combination, selected) =>
             OnChangeAttributeCombinationChoice(element.id, filterName, combination, selected, dispatch)
           }
-          color={headerColor}
+          headerColor={headerColor}
+          bodyColor={bodyColor}
         />
       </Entity>
       {selectedCombinations.map((combination) => (

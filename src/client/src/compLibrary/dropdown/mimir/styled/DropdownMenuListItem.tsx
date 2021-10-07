@@ -7,7 +7,7 @@ const DropdownMenuListItem = styled.div`
   align-items: center;
   border-width: 1px 0px 0px 0px;
   border-style: solid;
-  border-color: ${Color.DarkGrey};
+  border-color: ${(props: { borderColor: string }) => props.borderColor};
   font-size: ${(props: { fontSize: string }) => props.fontSize};
   border-radius: ${(props: { borderRadius: number }) => props.borderRadius};
   color: ${Color.Black};
