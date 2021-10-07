@@ -1,13 +1,6 @@
 import { Connector, ConnectorType, TerminalType } from "../../../../models";
-import {
-  TerminalTypeListElement,
-  TerminalsListElementWrapper,
-  TerminalListElement,
-} from "./styled/activeTerminalList";
-import {
-  ExpandAccordionNestedIcon,
-  CollapseAccordionNestedIcon,
-} from "../../../../assets/icons/common";
+import { TerminalTypeListElement, TerminalsListElementWrapper, TerminalListElement } from "./styled/activeTerminalList";
+import { ExpandAccordionNestedIcon, CollapseAccordionNestedIcon } from "../../../../assets/icons/common";
 
 interface Props {
   terminalType: TerminalType;
@@ -29,16 +22,11 @@ function ActiveTerminalsTypeList({
   onSelectTerminal,
 }: Props) {
   const selectedTerminal = terminals.find((term) => term.id === selectedTerminalId);
-
-  const formatTerminalTypeName = (name: string) =>
-    `${name} [${ConnectorType[connectorType].toLowerCase()}]`;
+  const formatTerminalTypeName = (name: string) => `${name} [${ConnectorType[connectorType].toLowerCase()}]`;
 
   return (
     <TerminalsListElementWrapper>
-      <TerminalTypeListElement
-        onClick={() => onTypeClick(terminalType, connectorType)}
-        isSelected={!!selectedTerminal}
-      >
+      <TerminalTypeListElement onClick={() => onTypeClick(terminalType, connectorType)} isSelected={!!selectedTerminal}>
         <div className="numTypeTerminals">{terminals.length}</div>
         {formatTerminalTypeName(terminalType.name)}
         <img

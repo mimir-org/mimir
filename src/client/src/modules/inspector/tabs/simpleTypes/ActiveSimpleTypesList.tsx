@@ -4,10 +4,10 @@ import { TerminalsListElementWrapper, TerminalsCategoryListElement } from "../te
 
 interface Props {
   simpleTypes: Composite[];
-  onSelectSimpleType: (item: Composite) => void;
+  onSelect: (item: Composite) => void;
 }
 
-function ActiveSimpleTypesList({ simpleTypes, onSelectSimpleType }: Props) {
+function ActiveSimpleTypesList({ simpleTypes, onSelect }: Props) {
   return (
     <>
       {simpleTypes.map((type, i) => {
@@ -15,7 +15,7 @@ function ActiveSimpleTypesList({ simpleTypes, onSelectSimpleType }: Props) {
           <TerminalsListElementWrapper key={type.id}>
             <TerminalsCategoryListElement
               radius={0}
-              onClick={() => onSelectSimpleType(type)}
+              onClick={() => onSelect(type)}
               index={i}
               color={i % 2 ? undefined : Color.LightPurple}
             >

@@ -27,7 +27,7 @@ class Attribute {
   discipline: Discipline;
 
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
-  constructor() { }
+  constructor() {}
 }
 
 export default Attribute;

@@ -7,7 +7,7 @@ const GetIcon = (type: string) => {
       return <img src={Icons.Save} alt="save database" />;
     case TextResources.Account_Save_File:
       return <img src={Icons.ExportProject} alt="save file" />;
-    case TextResources.Account_Commit_Project:
+    case TextResources.Account_Commit:
       return <img src={Icons.ExportLibrary} alt="commit project" />;
     case TextResources.Account_Open:
       return <img src={Icons.OpenProject} alt="open" />;
@@ -17,7 +17,7 @@ const GetIcon = (type: string) => {
       return <img src={Icons.ExportLibrary} alt="save library" />;
     case TextResources.Account_Import_Project:
       return <img src={Icons.ImportProject} alt="import project" />;
-    case TextResources.Account_Import_Library_Label:
+    case TextResources.Account_Import_Lib_Label:
       return <img src={Icons.ImportLibrary} alt="import library" />;
     default:
       return null;

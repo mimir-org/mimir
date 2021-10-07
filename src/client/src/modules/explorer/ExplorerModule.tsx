@@ -17,9 +17,9 @@ import { ExplorerIcon } from "../../assets/icons/common/modules";
 export const ExplorerModule = () => {
   const dispatch = useDispatch();
   const type = MODULE_TYPE.EXPLORER;
-  const project = useSelector<RootState>((state) => state.projectState.project) as Project;
-  const isOpen = useSelector<RootState>((state) => state.modules.types.find((x) => x.type === type).visible) as boolean;
-  const animate = useSelector<RootState>((state) => state.modules.types.find((x) => x.type === type).animate) as boolean;
+  const project = useSelector<RootState>((s) => s.projectState.project) as Project;
+  const isOpen = useSelector<RootState>((s) => s.modules.types.find((x) => x.type === type).visible) as boolean;
+  const animate = useSelector<RootState>((s) => s.modules.types.find((x) => x.type === type).animate) as boolean;
 
   const start = isOpen ? Size.ModuleClosed : Size.ModuleOpen;
   const stop = isOpen ? Size.ModuleOpen : Size.ModuleClosed;

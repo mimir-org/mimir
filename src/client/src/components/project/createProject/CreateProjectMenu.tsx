@@ -12,7 +12,6 @@ import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../../../compLibr
 export const CreateProjectMenu = () => {
   const dispatch = useDispatch();
   const [projectName, setProjectName] = useState("");
-
   const isOpen = useSelector<RootState>((state) => state.menu.activeMenu === MENU_TYPE.CREATE_PROJECT_MENU) as boolean;
 
   return (

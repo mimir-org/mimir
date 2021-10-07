@@ -27,16 +27,10 @@ const AccountMenu = () => {
         <GetMenuElement type={TextResources.Account_Save} onClick={() => Click.OnSave(dispatch, projectState)} />
         <GetMenuElement type={TextResources.Account_Save_Library} onClick={() => Click.OnSaveLibrary(dispatch)} />
         <GetMenuElement type={TextResources.Account_Save_File} onClick={() => Click.OnSaveFile(dispatch)} />
-        <GetMenuElement
-          type={TextResources.Account_Commit_Project}
-          onClick={() => Click.OnCommit(dispatch, projectState)}
-        />
+        <GetMenuElement type={TextResources.Account_Commit} onClick={() => Click.OnCommit(dispatch, projectState)} />
         <MenuLine />
         <GetMenuElement type={TextResources.Account_Import_Project} onClick={() => Click.OnImportProject(dispatch)} />
-        <GetMenuElement
-          type={TextResources.Account_Import_Library_Label}
-          onClick={() => Click.OnImportLibrary(dispatch)}
-        />
+        <GetMenuElement type={TextResources.Account_Import_Lib_Label} onClick={() => Click.OnImportLibrary(dispatch)} />
         <MenuLine />
         <GetMenuElement type={TextResources.Account_Logout} userState={userState} />
       </AccountMenuBox>

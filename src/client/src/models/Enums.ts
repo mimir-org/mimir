@@ -22,7 +22,7 @@ export enum ObjectType {
   NotSet = 0,
   ObjectBlock = 1,
   Transport = 2,
-  Interface = 3
+  Interface = 3,
 }
 
 export enum TypeMode {
@@ -60,5 +60,5 @@ export enum CommitStatus {
 export enum SelectType {
   None = 0,
   SingleSelect = 1,
-  MultiSelect = 2
+  MultiSelect = 2,
 }

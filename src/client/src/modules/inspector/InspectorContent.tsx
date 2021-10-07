@@ -6,7 +6,7 @@ import { SimpleTypesComponent } from "./tabs/simpleTypes";
 
 interface Props {
   node: Node;
-  index?: number;
+  index: number;
 }
 
 const InspectorContent = ({ node, index }: Props) => (

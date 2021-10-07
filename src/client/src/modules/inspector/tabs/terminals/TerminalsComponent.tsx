@@ -1,6 +1,6 @@
 import { Connector, Node, TerminalType } from "../../../../models";
 import { IsTransportTerminal } from "../../../../components/flow/helpers";
-import TerminalsSelector from "./TerminalsSelector";
+import { TerminalsSelector } from "./";
 import { useState } from "react";
 import { ParametersContent } from "../parameters";
 import { TerminalsWrapper } from "./styled/TerminalsWrapper";

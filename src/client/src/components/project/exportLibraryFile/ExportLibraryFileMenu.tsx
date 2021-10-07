@@ -12,10 +12,7 @@ import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../../../compLibr
 export const ExportLibraryFileMenu = () => {
   const dispatch = useDispatch();
   const [fileName, setFileName] = useState("");
-
-  const isOpen = useSelector<RootState>(
-    (state) => state.menu.activeMenu === MENU_TYPE.SAVE_LIBRARY_FILE_MENU
-  ) as boolean;
+  const isOpen = useSelector<RootState>((s) => s.menu.activeMenu === MENU_TYPE.SAVE_LIBRARY_FILE_MENU) as boolean;
 
   return (
     <ProjectBox width={Size.MenuSmall_Width} height={Size.MenuSmall_Height} visible={isOpen}>

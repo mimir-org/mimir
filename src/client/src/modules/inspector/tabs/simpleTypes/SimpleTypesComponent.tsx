@@ -18,11 +18,11 @@ const SimpleTypesComponent = ({ node }: Props) => {
   const [selectedSimpleTypeId, setSelectedSimpleTypeId] = useState<string>(null);
 
   const selectedSimpleType = simpleTypes.find((t) => t.id === selectedSimpleTypeId);
-  const onSelectSimpleType = (item: Composite) => setSelectedSimpleTypeId(item.id);
+  const onSelect = (item: Composite) => setSelectedSimpleTypeId(item.id);
 
   return (
     <TerminalsWrapper>
-      <SimpleTypesSelector simpleTypes={simpleTypes} onSelectSimpleType={onSelectSimpleType} />
+      <SimpleTypesSelector simpleTypes={simpleTypes} onSelect={onSelect} />
       {selectedSimpleType && (
         <TerminalsParametersWrapper>
           <ParametersContent element={selectedSimpleType} elementIsLocked={node.isLocked} />

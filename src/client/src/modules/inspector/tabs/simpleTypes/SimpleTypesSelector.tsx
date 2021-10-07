@@ -5,10 +5,10 @@ import { Composite } from "../../../../models";
 
 interface Props {
   simpleTypes: Composite[];
-  onSelectSimpleType: (item: Composite) => void;
+  onSelect: (item: Composite) => void;
 }
 
-function SimpleTypesSelector({ simpleTypes, onSelectSimpleType }: Props) {
+function SimpleTypesSelector({ simpleTypes, onSelect }: Props) {
   const [searchString, setSearchString] = useState("");
   const onChange = (value: string) => {
     setSearchString(value);
@@ -17,7 +17,7 @@ function SimpleTypesSelector({ simpleTypes, onSelectSimpleType }: Props) {
   return (
     <TerminalsColumn>
       <SimpleTypesSearchBar searchString={searchString} onChange={onChange} />
-      <ActiveSimpleTypesList simpleTypes={simpleTypes} onSelectSimpleType={onSelectSimpleType} />
+      <ActiveSimpleTypesList simpleTypes={simpleTypes} onSelect={onSelect} />
     </TerminalsColumn>
   );
 }
