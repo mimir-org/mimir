@@ -24,7 +24,10 @@ const MenuWrapper = styled.div`
 
     font-size: ${FontSize.ToolTip};
     background-color: ${Color.GreyInspector};
+
     border: 1px solid ${Color.Black};
+    box-shadow: 1px 1px ${Color.Black};
+
     text-align: center;
     padding: 2px;
 

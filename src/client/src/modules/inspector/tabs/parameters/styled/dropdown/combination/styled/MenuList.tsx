@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+export const MENU_LIST_ITEM_BORDER_WIDTH: number = 1.5;
+
 const MenuList = styled.div`
   display: flex;
   flex-direction: column;
@@ -17,7 +19,7 @@ const MenuList = styled.div`
   z-index: 1;
 
   div:not(:first-child) {
-    border-top: 1.5px solid ${(props) => props.color};
+    border-top: ${MENU_LIST_ITEM_BORDER_WIDTH}px solid ${(props) => props.color};
   }
 `;
 
