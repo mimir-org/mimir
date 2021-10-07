@@ -2,6 +2,7 @@ import { SortTerminals } from ".";
 import { Connector, Node } from "../../../../models";
 import {
   IsFunction,
+  IsProduct,
   IsInputTerminal,
   IsLocation,
   IsLocationTerminal,
@@ -17,25 +18,33 @@ import {
  * @returns a call to SortTerminals that sorts the filtered list.
  */
 const FilterTerminals = (node: Node, splitView: boolean, splitNode: Node) => {
+  console.log({ splitNode });
   let terminals: Connector[] = [];
   if (node === undefined) return [];
 
-  if (splitView) {
-    node.connectors?.forEach((conn) => {
-      if (IsFunction(node)) {
-        IsOutputTerminal(conn) && IsLocationTerminal(conn) && terminals.push(conn);
-      } else if (IsLocation(node)) {
-        IsInputTerminal(conn) && IsLocationTerminal(conn) && terminals.push(conn);
-      }
+  if (!splitView) {
+    node.connectors?.forEach((c) => {
+      if (IsFunction(node) || IsProduct(node)) IsTransportTerminal(c) && terminals.push(c);
+      else if (IsLocation(node)) IsLocationTerminal(c) && terminals.push(c);
     });
   }
 
-  if (!splitView) {
-    node.connectors?.forEach((conn) => {
-      if (IsFunction(node)) IsTransportTerminal(conn) && terminals.push(conn);
-      else if (IsLocation(node)) IsLocationTerminal(conn) && IsInputTerminal(conn) && terminals.push(conn);
-    });
+  if (splitView) {
+    if (!splitNode) {
+      node.connectors?.forEach((c) => {
+        if (IsFunction(node) || IsProduct(node)) IsTransportTerminal(c) && terminals.push(c);
+      });
+    } else {
+      node.connectors?.forEach((c) => {
+        if ((IsFunction(node) || IsProduct(node)) && IsLocation(splitNode))
+          IsOutputTerminal(c) && IsLocationTerminal(c) && terminals.push(c);
+
+        if ((IsFunction(node) || IsProduct(node)) && !IsLocation(splitNode)) IsTransportTerminal(c) && terminals.push(c);
+        else if (IsLocation(node)) IsInputTerminal(c) && IsLocationTerminal(c) && terminals.push(c);
+      });
+    }
   }
+
   return SortTerminals(terminals);
 };
 
