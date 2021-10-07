@@ -29,7 +29,7 @@ const InspectorHeader = ({ project, node, edge, dispatch, open, type }: Props) =
     </NodeInfo>
 
     <ButtonWrapper visible={node || edge}>
-      <InspectorButton onClick={() => alert("Arjun er søt")} type="validate" visible={true} />
+      <InspectorButton onClick={() => alert("Magnus er søt")} type="validate" visible={true} />
       <InspectorButton
         onClick={() => Click.OnLock(node, project, !node.isLocked, dispatch)}
         type={node?.isLocked ? "unlock" : "lock"}

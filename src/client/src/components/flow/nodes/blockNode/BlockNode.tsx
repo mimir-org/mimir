@@ -62,8 +62,8 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
         onMouseOut={() => Click.OnMouseOut(showTerminalBox, showConnectBox)}
       >
         <BlockNodeNameBox>{data.label ?? data.name}</BlockNodeNameBox>
-        <Symbol base64={data.symbol} text={data.name} />
-        {data.id === mainConnectNode?.id && <hr className="line" />}
+        {data.id !== mainConnectNode?.id && <Symbol base64={data.symbol} text={data.name} />}
+        {data.id === mainConnectNode?.id && <div className="line" />}
 
         <TerminalsComponent
           node={data}
@@ -75,6 +75,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
           splitView={splitView}
           onClick={(conn) => Click.OnTerminal(conn, data, dispatch, edges)}
           menuBox={terminalBox}
+          mainConnectNode={data.id === mainConnectNode?.id}
           showInTerminalMenu={showInTerminalMenu}
           showOutTerminalMenu={showOutTerminalMenu}
         />

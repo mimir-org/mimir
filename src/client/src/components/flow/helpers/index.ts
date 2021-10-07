@@ -6,8 +6,9 @@ export { default as GetParent } from "./GetParent";
 export { default as GetChild } from "./GetChild";
 export { default as IsChildOf } from "./IsChildOf";
 export { default as IsParentOf } from "./IsParentOf";
-export { default as IsAspectNode } from "./IsAspectNode";
+export { default as IsSiblingNodes } from "./IsSiblingNodes";
 
+export { default as IsAspectNode } from "./IsAspectNode";
 export { default as IsLocation } from "./IsLocation";
 export { default as IsFunction } from "./IsFunction";
 export { default as IsProduct } from "./IsProduct";

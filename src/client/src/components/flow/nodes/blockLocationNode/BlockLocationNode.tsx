@@ -53,6 +53,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
           splitView={splitView}
           onClick={(conn) => OnConnectorClick(conn, data, dispatch)}
           menuBox={terminalButton}
+          mainConnectNode={false}
           showInTerminalMenu={showInTerminalMenu}
           showOutTerminalMenu={showOutTerminalMenu}
         />

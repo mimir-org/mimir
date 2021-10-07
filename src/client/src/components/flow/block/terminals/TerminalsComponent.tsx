@@ -13,6 +13,7 @@ interface Props {
   isParent: boolean;
   isLocation: boolean;
   menuBox: boolean;
+  mainConnectNode: boolean;
   showInTerminalMenu: any;
   showOutTerminalMenu: any;
   splitView: boolean;
@@ -32,6 +33,7 @@ const TerminalsComponent = ({
   isParent,
   isLocation,
   menuBox,
+  mainConnectNode,
   showInTerminalMenu,
   showOutTerminalMenu,
   splitView,
@@ -44,11 +46,12 @@ const TerminalsComponent = ({
     <>
       <TerminalsBox
         visible={menuBox && !IsAspectNode(node) && inTerminals.length > 0}
-        isParent={isParent}
+        isParent={isParent || mainConnectNode}
         isInput={true}
+        mainConnectNode={mainConnectNode}
       >
         <img
-          src={GetMenuIcon(node, isParent, true)}
+          src={GetMenuIcon(node, isParent, true, mainConnectNode)}
           alt="menu"
           onClick={() => Click.OnInputMenu(showInTerminalMenu, inputMenuOpen)}
         />
@@ -56,11 +59,12 @@ const TerminalsComponent = ({
 
       <TerminalsBox
         visible={menuBox && !IsAspectNode(node) && !IsLocation(node) && outTerminals.length > 0}
-        isParent={isParent}
+        isParent={isParent || mainConnectNode}
         isInput={false}
+        mainConnectNode={mainConnectNode}
       >
         <img
-          src={GetMenuIcon(node, isParent, false)}
+          src={GetMenuIcon(node, isParent, false, mainConnectNode)}
           alt="menu"
           onClick={() => Click.OnOutputMenu(showOutTerminalMenu, outputMenuOpen)}
         />

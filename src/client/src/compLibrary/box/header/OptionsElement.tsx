@@ -36,7 +36,7 @@ const OptionsElement = styled.div`
     border-left: none;
     background-color: ${(props: { treeView: boolean }) => (!props.treeView ? "#6F6F6F" : "transparent")};
     &:hover {
-      background-color: ${(props) => props.treeView && Color.LightBlue};
+      background-color: ${(props: { treeView: boolean }) => props.treeView && Color.LightBlue};
     }
   }
 

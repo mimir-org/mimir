@@ -62,6 +62,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         terminals={FilterTerminals(node, splitView, splitNode)}
         onClick={(conn) => OnConnectorClick(conn, dispatch, edges, nodes)}
         menuBox={true}
+        mainConnectNode={false}
         showInTerminalMenu={showInTerminalMenu}
         showOutTerminalMenu={showOutTerminalMenu}
       />

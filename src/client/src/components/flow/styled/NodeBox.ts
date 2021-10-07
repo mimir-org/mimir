@@ -8,10 +8,13 @@ const NodeBox = styled.div`
   max-height: inherit;
 
   .line {
-    border: 1px solid;
-    border-color: ${(props: { function: boolean }) => (props.function ? Color.FunctionSelected : Color.ProductSelected)};
+    height: 1px;
+    width: auto;
+    background-color: ${(props: { function: boolean }) =>
+      props.function ? Color.FunctionSelected : Color.ProductSelected};
     position: relative;
-    bottom: 36px;
+    bottom: 15px;
+    left: 0px;
   }
 `;
 
