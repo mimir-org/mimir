@@ -123,6 +123,8 @@ const TextResources = {
   Inspector_Params_Search: "Search or Select Entity...",
 
   Inspector_Terminals_Search: "Search Terminal Type",
+  Inspector_SimpleTypes_Search: "Search Simple Types",
+
   Inspector_Qualifier: "Qualifier",
   Inspector_Source: "Source",
   Inspector_Condition: "Condition",

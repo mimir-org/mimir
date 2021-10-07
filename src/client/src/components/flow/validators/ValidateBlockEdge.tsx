@@ -24,40 +24,15 @@ const ValidateBlockEdge = (
 ) => {
   if (!fromNode || !toNode || IsPartOfTerminal(fromConnector) || IsPartOfTerminal(toConnector)) return false;
 
+  // TODO: refactor this shit
+
   // Regular BlockView
   if (!splitView && !IsConnectView()) {
-    if (IsFunction(selectedNode)) {
-      if (
-        toNode.level - selectedNode.level === 1 &&
-        fromNode.level - selectedNode.level === 0 &&
-        fromNode.id === selectedNode.id
-      )
-        return true;
-      if (
-        fromNode.level - selectedNode.level === 1 &&
-        toNode.level - selectedNode.level === 0 &&
-        toNode.id === selectedNode.id
-      )
-        return true;
-      if (
-        fromNode.level - selectedNode.level === 1 &&
-        toNode.level - selectedNode.level === 1 &&
-        IsChildOf(toNode, selectedNode) &&
-        IsChildOf(fromNode, selectedNode)
-      )
-        return true;
-    }
-    return false;
+    if (IsFunction(selectedNode)) validateNodeLevel(toNode, fromNode, selectedNode);
   }
 
   if (IsConnectView()) {
-    return (
-      fromNode !== selectedNode &&
-      IsTransportTerminal(fromConnector) &&
-      IsTransportTerminal(toConnector) &&
-      IsFunction(fromNode) &&
-      IsFunction(toNode)
-    );
+    validateConnectView(fromNode, toNode, selectedNode, fromConnector, toConnector);
   }
 
   if (splitView) {
@@ -75,5 +50,36 @@ const ValidateBlockEdge = (
   }
   return false;
 };
+
+function validateNodeLevel(toNode: Node, fromNode: Node, selectedNode: Node) {
+  return (
+    (toNode.level - selectedNode.level === 1 &&
+      fromNode.level - selectedNode.level === 0 &&
+      fromNode.id === selectedNode.id) ||
+    (fromNode.level - selectedNode.level === 1 &&
+      toNode.level - selectedNode.level === 0 &&
+      toNode.id === selectedNode.id) ||
+    (fromNode.level - selectedNode.level === 1 &&
+      toNode.level - selectedNode.level === 1 &&
+      IsChildOf(toNode, selectedNode) &&
+      IsChildOf(fromNode, selectedNode))
+  );
+}
+
+function validateConnectView(
+  fromNode: Node,
+  toNode: Node,
+  selectedNode: Node,
+  fromConnector: Connector,
+  toConnector: Connector
+) {
+  return (
+    fromNode !== selectedNode &&
+    IsTransportTerminal(fromConnector) &&
+    IsTransportTerminal(toConnector) &&
+    IsFunction(fromNode) &&
+    IsFunction(toNode)
+  );
+}
 
 export default ValidateBlockEdge;
