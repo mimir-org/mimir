@@ -23,7 +23,6 @@ export { default as IsExplorer } from "./IsExplorer";
 export { default as IsLibrary } from "./IsLibrary";
 
 export { default as GetCenter } from "./GetCenter";
-export { default as GetConnectorIcon } from "./GetConnectorIcon";
 export { default as GetHandlePosition } from "./GetHandlePosition";
 export { default as GetBlockNodeTypes } from "../block/helpers/GetBlockNodeTypes";
 
@@ -33,9 +32,6 @@ export { default as GetHandleType } from "./GetHandleType";
 export { default as GetSelectedNode } from "./GetSelectedNode";
 export { default as SetTerminalYPos } from "./SetTerminalYPos";
 
-export {
-  GetOtherNodeFromEdgeViaConnector,
-  GetOtherNodeFromEdgeViaNode,
-} from "./GetOtherNodeFromEdge";
+export { GetOtherNodeFromEdgeViaConnector, GetOtherNodeFromEdgeViaNode } from "./GetOtherNodeFromEdge";
 
 export * from "./types";

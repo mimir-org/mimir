@@ -1,10 +1,4 @@
-export { default as ConnectorIcon } from "./connector.svg";
-export { default as FluidIcon } from "./connectorFluid.svg";
-export { default as GasIcon } from "./connectorGas.svg";
-export { default as OilIcon } from "./connectorOil.svg";
-export { default as WaterIcon } from "./connectorWater.svg";
-export { default as SandIcon } from "./connectorSand.svg";
-export { default as MultiphaseIcon } from "./connectorMultiphase.svg";
+export { ReactComponent as ConnectorIcon } from "./connector.svg";
 export { default as ConnectorTreeViewIcon } from "./connectorTreeView.svg";
 
 export { default as ArrowIcon } from "./arrow.svg";

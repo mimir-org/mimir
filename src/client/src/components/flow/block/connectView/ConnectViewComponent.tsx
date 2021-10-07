@@ -22,7 +22,7 @@ interface Props {
 
 /**
  * Component for the ConnectView menu in BlockView.
- * @param param0
+ * @param interface
  * @returns a drop-down list where you can select a nodes' children.
  */
 const ConnectViewComponent = ({
@@ -69,7 +69,7 @@ const ConnectViewComponent = ({
           <Footer onClick={() => Click.OnSelectAll(dispatch, node, children)}>
             {TextResources.ConnectMenu_Select_All}
           </Footer>
-          <Footer onClick={() => Click.OnClearAll(dispatch, node)}>{TextResources.ConnectMenu_Clear_All}</Footer>
+          <Footer onClick={() => Click.OnClearAll(dispatch, node)}>{TextResources.ConnectMenu_Clear}</Footer>
         </Element>
       </Menu>
     )}
