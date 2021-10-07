@@ -1,17 +1,22 @@
 import styled from "styled-components";
-import { Color, FontSize } from "../../../../../../../../compLibrary";
+import { Color, FontSize } from "../../../../../../../compLibrary";
 
 const MenuListItem = styled.div`
   display: flex;
+  position: relative;
+  height: 27px;
   max-height: 45px;
   align-items: center;
-  border-bottom: 1.5px solid ${Color.ParamsPurple};
-  font-size: ${FontSize.Tiny};
+  font-size: ${FontSize.Small};
   color: ${Color.Black};
   background-color: ${Color.White};
   cursor: pointer;
 
-  p {
+  .label {
+    height: 10px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
     padding: 10px;
     margin-left: 22px;
   }
@@ -24,8 +29,11 @@ const MenuListItem = styled.div`
 
   :hover {
     background-color: ${(props) => props.color};
-    p {
+    div {
       text-decoration: underline;
+    }
+    .tooltipText {
+      visibility: visible;
     }
   }
 `;

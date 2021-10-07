@@ -11,7 +11,8 @@ import {
   Composite,
   Transport,
   Interface,
-  Purpose,
+  SelectType,
+  Discipline,
 } from "../../../models/";
 
 export interface UnitAm {
@@ -35,6 +36,9 @@ export interface AttributeAm {
   compositeId: string;
   attributeTypeId: string;
   units: UnitAm[];
+  selectValues: string[];
+  selectType: SelectType;
+  discipline: Discipline;
 }
 export interface ConnectorAm {
   id: string;
@@ -170,6 +174,9 @@ const ConvertAttributes = (attributes: Attribute[]): AttributeAm[] => {
       attributeTypeId: attribute.attributeTypeId,
       compositeId: attribute.compositeId,
       units: ConvertUnits(attribute.units),
+      selectValues: attribute.selectValues,
+      selectType: attribute.selectType,
+      discipline: attribute.discipline,
     } as AttributeAm;
 
     converted.push(a);

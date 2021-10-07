@@ -16,7 +16,7 @@ const TabBody = styled.div`
     min-width: 1400px;
   }
 
-  hr {
+  & > hr {
     margin-top: 70px;
     margin-bottom: 0px;
     color: ${Color.DarkGrey};

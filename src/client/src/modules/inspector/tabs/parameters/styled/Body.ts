@@ -4,7 +4,7 @@ import { Color } from "../../../../../compLibrary";
 const Body = styled.div`
   display: flex;
   flex-direction: row;
-  height: 100px;
+  height: 108px;
   border-bottom: 1px solid ${Color.DarkGrey};
 `;
 
