@@ -16,10 +16,14 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
             builder.Property(p => p.Entity).HasColumnName("Entity").IsRequired();
             builder.Property(p => p.Aspect).HasColumnName("Aspect").IsRequired().HasConversion<string>();
+            builder.Property(p => p.SelectValuesString).HasColumnName("SelectValuesString").IsRequired(false);
+            builder.Property(p => p.SelectType).HasColumnName("SelectType").IsRequired().HasConversion<string>();
+            builder.Property(p => p.Discipline).HasColumnName("Discipline").IsRequired().HasConversion<string>();
 
             builder.HasOne(x => x.Condition).WithMany(y => y.AttributeTypes).HasForeignKey(x => x.ConditionId).OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(x => x.Qualifier).WithMany(y => y.AttributeTypes).HasForeignKey(x => x.QualifierId).OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(x => x.Source).WithMany(y => y.AttributeTypes).HasForeignKey(x => x.SourceId).OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(x => x.Format).WithMany(y => y.AttributeTypes).HasForeignKey(x => x.FormatId).OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(x => x.Format).WithMany(y => y.AttributeTypes).HasForeignKey(x => x.FormatId).OnDelete(DeleteBehavior.NoAction);
 
             builder.HasMany(x => x.Units).WithMany(y => y.AttributeTypes).UsingEntity<Dictionary<string, object>>("AttributeType_Unit",

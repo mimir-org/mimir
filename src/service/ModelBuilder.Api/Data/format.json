@@ -38,5 +38,10 @@
     "name": "Boolean",
     "description": null,
     "semanticReference": null
+  },
+  {
+    "name": "String",
+    "description": null,
+    "semanticReference": null
   }
 ]

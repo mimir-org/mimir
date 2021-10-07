@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
-using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
+using Mb.Models.Extensions;
 using Newtonsoft.Json;
 
 namespace Mb.Models.Data
@@ -25,6 +26,16 @@ namespace Mb.Models.Data
         
         public string FormatId { get; set; }
         public AttributeFormat Format { get; set; }
+
+        [NotMapped]
+        public ICollection<string> SelectValues => string.IsNullOrEmpty(SelectValuesString) ? null : SelectValuesString.ConvertToArray();
+
+        [JsonIgnore]
+        public string SelectValuesString { get; set; }
+
+        public SelectType SelectType { get; set; }
+
+        public Discipline Discipline { get; set; }
 
         public string Description => CreateDescription();
 

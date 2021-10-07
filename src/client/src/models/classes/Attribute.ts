@@ -1,4 +1,4 @@
-import { EnumBase } from "..";
+import { Discipline, EnumBase, SelectType } from "..";
 
 class Attribute {
   id: string;
@@ -22,9 +22,12 @@ class Attribute {
   nodeId: string;
   transportId: string;
   compositeId: string;
+  selectValues: string[];
+  selectType: SelectType;
+  discipline: Discipline;
 
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
-  constructor() {}
+  constructor() { }
 }
 
 export default Attribute;

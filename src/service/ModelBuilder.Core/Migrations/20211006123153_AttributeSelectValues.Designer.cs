@@ -4,14 +4,16 @@ using Mb.Models.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Mb.Core.Migrations
 {
     [DbContext(typeof(ModelBuilderDbContext))]
-    partial class ModelBuilderDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211006123153_AttributeSelectValues")]
+    partial class AttributeSelectValues
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,11 +82,6 @@ namespace Mb.Core.Migrations
                     b.Property<string>("ConditionId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Discipline")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Discipline");
-
                     b.Property<string>("FormatId")
                         .HasColumnType("nvarchar(450)");
 
@@ -110,11 +107,6 @@ namespace Mb.Core.Migrations
 
                     b.Property<string>("QualifierId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("SelectType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("SelectType");
 
                     b.Property<string>("SelectValuesString")
                         .HasColumnType("nvarchar(max)")
@@ -184,11 +176,6 @@ namespace Mb.Core.Migrations
                     b.Property<string>("ConditionId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Discipline")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Discipline");
-
                     b.Property<string>("Entity")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -199,11 +186,6 @@ namespace Mb.Core.Migrations
 
                     b.Property<string>("QualifierId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("SelectType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("SelectType");
 
                     b.Property<string>("SelectValuesString")
                         .HasColumnType("nvarchar(max)")
