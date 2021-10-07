@@ -4,14 +4,16 @@ using Mb.Models.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Mb.Core.Migrations
 {
     [DbContext(typeof(ModelBuilderDbContext))]
-    partial class ModelBuilderDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211006131511_AttributeSelecttype")]
+    partial class AttributeSelecttype
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,11 +81,6 @@ namespace Mb.Core.Migrations
 
                     b.Property<string>("ConditionId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Discipline")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Discipline");
 
                     b.Property<string>("FormatId")
                         .HasColumnType("nvarchar(450)");
@@ -183,11 +180,6 @@ namespace Mb.Core.Migrations
 
                     b.Property<string>("ConditionId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Discipline")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Discipline");
 
                     b.Property<string>("Entity")
                         .IsRequired()

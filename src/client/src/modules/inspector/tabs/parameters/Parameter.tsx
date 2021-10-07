@@ -71,7 +71,7 @@ function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColo
             value={value}
             type="text"
             onChange={(e) => setValue(e.target.value)}
-            onBlur={() => onChange(attribute.id, value, unit.id, attribute.nodeId)}
+            onBlur={() => onChange(attribute.id, value, unit?.id, attribute.nodeId)}
           />
           <div className="parameterDropdown">
             <CompDropdown

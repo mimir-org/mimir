@@ -1,5 +1,5 @@
 import { Aspect, Connector, Attribute, ObjectType } from ".";
-import { CommitStatus, ConnectorType, Discipline } from "./Enums";
+import { CommitStatus, ConnectorType, Discipline, SelectType } from "./Enums";
 
 export interface AttributeType {
   id: string;
@@ -15,6 +15,9 @@ export interface AttributeType {
   format: EnumBase;
   units: EnumBase[];
   description: string;
+  selectValues: string[];
+  selectType: SelectType;
+  discipline: Discipline;
 }
 
 export interface EnumBase {
