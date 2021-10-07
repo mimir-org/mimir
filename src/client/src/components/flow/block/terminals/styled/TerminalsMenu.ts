@@ -18,9 +18,9 @@ const TerminalsMenu = styled.div`
     props.isInput && props.isParent && !props.splitView
       ? "955px"
       : props.isInput && props.isParent && props.splitView
-      ? "50px"
+      ? "657px"
       : props.isInput && !props.isParent && !props.isConnectView
-      ? "137px"
+      ? "unset"
       : props.isInput && !props.isParent && props.isConnectView
       ? "405px"
       : "unset"};
@@ -32,6 +32,8 @@ const TerminalsMenu = styled.div`
       ? "657px"
       : !props.isInput && !props.isParent && !props.isConnectView
       ? "137px"
+      : props.isInput && !props.isParent && !props.isConnectView
+      ? "-160px"
       : !props.isInput && !props.isParent && props.isConnectView
       ? "405px"
       : "unset"};
