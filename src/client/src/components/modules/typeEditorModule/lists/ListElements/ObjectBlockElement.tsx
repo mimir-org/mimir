@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { ConnectorType, TerminalType, TerminalTypeItem } from "../../../../../models";
-import { TerminalListElement, TerminalCategoryWrapper, AddTerminalWrapper } from "../../styled";
-import { ExpandIcon, CollapseIcon } from "../../../../../assets/icons/common";
-import AddTerminal from "./AddTerminal/AddTerminalComponent";
+import { AddTerminalComponent } from "../";
 import { TextResources } from "../../../../../assets/text";
 import { CreateId } from "../../../../flow/helpers";
-
+import { AddIcon, DeleteIcon } from "../../../../../assets/icons/common";
+import { ConnectorType, TerminalType, TerminalTypeItem } from "../../../../../models";
+import { TerminalListElement, TerminalCategoryWrapper, AddTerminalWrapper } from "../../styled";
 interface Props {
   name: string;
   terminalTypes: TerminalType[];
@@ -14,13 +13,7 @@ interface Props {
   defaultTerminals?: TerminalTypeItem[];
 }
 
-export const ObjectBlockElement = ({
-  name,
-  categoryId,
-  terminalTypes,
-  onChange,
-  defaultTerminals,
-}: Props) => {
+export const ObjectBlockElement = ({ name, categoryId, terminalTypes, onChange, defaultTerminals }: Props) => {
   const [expandCategory, setExpandCategory] = useState(true);
 
   const terminalsQuantity = defaultTerminals?.length;
@@ -36,15 +29,11 @@ export const ObjectBlockElement = ({
 
   const onCategoryAdd = (terminal: TerminalTypeItem) => {
     setExpandCategory(true);
-    onChange("add", terminal, categoryId, defaultTerminals.length);
+    onChange("add", terminal);
   };
 
-  const onCategoryUpdateOrRemove = (
-    key: string,
-    terminal: TerminalTypeItem,
-    terminalId: string
-  ) => {
-    onChange(key, terminal, categoryId, terminalId);
+  const onCategoryUpdateOrRemove = (key: string, terminal: TerminalTypeItem) => {
+    onChange(key, terminal);
   };
 
   const showTerminals = () => {
@@ -53,12 +42,11 @@ export const ObjectBlockElement = ({
       terminalsArray = defaultTerminals;
       return terminalsArray.map((t, index) => {
         return (
-          <AddTerminal
+          <AddTerminalComponent
             key={index}
-            terminalId={t.terminalId}
             terminals={terminalTypes}
             defaultTerminal={t}
-            onChange={onCategoryUpdateOrRemove}
+            onChange={(key, data) => onCategoryUpdateOrRemove(key, data)}
           />
         );
       });
@@ -67,22 +55,22 @@ export const ObjectBlockElement = ({
 
   return (
     <TerminalListElement>
-      <TerminalCategoryWrapper>
-        <p>{name}</p>
+      <TerminalCategoryWrapper expanded={terminalsQuantity > 0}>
         <button onClick={() => onCategoryAdd(defaultTerminal)}>
-          {TextResources.TypeEditor_Properties_Add_Terminal}
+          <img src={AddIcon} alt="add-icon" className="add-icon" />
+          <p className="add-text">{TextResources.TypeEditor_Properties_Add_Terminal}</p>
         </button>
+        <p className="terminal-name" onClick={() => terminalsQuantity > 0 && setExpandCategory(!expandCategory)}>
+          {name}
+        </p>
         {terminalsQuantity > 0 && (
-          <img
-            src={expandCategory ? ExpandIcon : CollapseIcon}
-            alt="expand-icon"
-            onClick={() => setExpandCategory(!expandCategory)}
-          />
+          <button className="delete-button" onClick={() => onChange("removeAll", categoryId)}>
+            <img src={DeleteIcon} alt="delete-icon" className="delete-icon" />
+            <p className="delete-text">{TextResources.TypeEditor_Properties_Clear_All_Terminal}</p>
+          </button>
         )}
       </TerminalCategoryWrapper>
-      {terminalsQuantity > 0 && expandCategory && (
-        <AddTerminalWrapper>{showTerminals()}</AddTerminalWrapper>
-      )}
+      {terminalsQuantity > 0 && expandCategory && <AddTerminalWrapper>{showTerminals()}</AddTerminalWrapper>}
     </TerminalListElement>
   );
 };

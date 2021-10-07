@@ -1,9 +1,5 @@
 import { CreateLibraryType } from "../../../models";
-import {
-  ListElementsContainer,
-  ListLabel,
-  ListWrapper,
-} from "../../../compLibrary";
+import { ListElementsContainer, ListLabel, ListWrapper } from "../../../compLibrary";
 import {
   RDSElement,
   ObjectBlockElement,
@@ -17,10 +13,12 @@ import {
   GetFilteredList,
   GetDefaultTerminal,
   GetDefaultTerminals,
+  ShowObjectBlock,
+  ShowBlockAttributes,
   RemoveBackground,
-  IsObjectBlock,
   IsTransport,
   IsInterface,
+  GetWidth,
 } from "./helpers";
 
 export enum ListType {
@@ -41,103 +39,73 @@ interface Props {
   onChange: Function;
 }
 
-export const TypeEditorList = ({
-  createLibraryType,
-  items,
-  disabled,
-  listType,
-  onChange,
-}: Props) => {
+export const TypeEditorList = ({ createLibraryType, items, disabled, listType, onChange }: Props) => {
   return (
-    <ListWrapper flex={1} disabled={disabled}>
-      <ListLabel>{GetListLabel(listType)}</ListLabel>
+    <ListWrapper wide={GetWidth(listType)} disabled={disabled}>
+      <ListLabel>{GetListLabel(listType, createLibraryType)}</ListLabel>
       {!disabled && (
         <ListElementsContainer background={RemoveBackground(listType)}>
           {listType === ListType.Rds
-            ? GetFilteredList(listType, items, createLibraryType).map(
-                (element) => (
-                  <RDSElement
-                    key={element.id}
-                    id={element.id}
-                    name={element.name}
-                    onChange={(key, data) => onChange(key, data)}
-                    defaultValue={createLibraryType?.rdsId}
-                  />
-                )
-              )
+            ? GetFilteredList(listType, items, createLibraryType).map((element) => (
+                <RDSElement
+                  key={element.id}
+                  id={element.id}
+                  name={element.name}
+                  onChange={(key, data) => onChange(key, data)}
+                  defaultValue={createLibraryType?.rdsId}
+                />
+              ))
+            : ShowObjectBlock(listType, createLibraryType)
+            ? GetFilteredList(listType, items, createLibraryType).map((element) => (
+                <ObjectBlockElement
+                  key={element.name}
+                  name={element.name}
+                  categoryId={element.id}
+                  defaultTerminals={GetDefaultTerminals(element.id, createLibraryType)}
+                  terminalTypes={element.items}
+                  onChange={(key, data) => onChange(key, data)}
+                />
+              ))
             : listType === ListType.Terminals &&
-              IsObjectBlock(createLibraryType.objectType)
-            ? GetFilteredList(listType, items, createLibraryType).map(
-                (element) => (
-                  <ObjectBlockElement
-                    key={element.name}
-                    name={element.name}
-                    categoryId={element.id}
-                    defaultTerminals={GetDefaultTerminals(
-                      element.id,
-                      createLibraryType
-                    )}
-                    terminalTypes={element.items}
-                    onChange={(key, data, categoryId, row) =>
-                      onChange(key, data, categoryId, row)
-                    }
-                  />
-                )
-              )
-            : listType === ListType.Terminals &&
-              (IsTransport(createLibraryType.objectType) ||
-                IsInterface(createLibraryType.objectType))
-            ? GetFilteredList(listType, items, createLibraryType).map(
-                (element) => (
-                  <TransportInterfaceElement
-                    key={element.name}
-                    categoryName={element.name}
-                    terminalTypes={element.items}
-                    defaultTerminal={GetDefaultTerminal(
-                      listType,
-                      createLibraryType,
-                      items
-                    )}
-                    onChange={(key, data) => onChange(key, data)}
-                  />
-                )
-              )
+              (IsTransport(createLibraryType.objectType) || IsInterface(createLibraryType.objectType))
+            ? GetFilteredList(listType, items, createLibraryType).map((element) => (
+                <TransportInterfaceElement
+                  key={element.name}
+                  categoryName={element.name}
+                  terminalTypes={element.items}
+                  defaultTerminal={GetDefaultTerminal(listType, createLibraryType, items)}
+                  onChange={(key, data) => onChange(key, data)}
+                />
+              ))
             : listType === ListType.PredefinedAttributes
-            ? GetFilteredList(listType, items, createLibraryType).map(
-                (element) => (
-                  <PredefinedLocationElement
-                    key={element.key}
-                    attributeName={element.key}
-                    values={element.values}
-                    isMultiSelect={element.isMultiSelect}
-                    defaultValue={createLibraryType?.predefinedAttributes}
-                    onChange={(key, data) => onChange(key, data)}
-                  />
-                )
-              )
+            ? GetFilteredList(listType, items, createLibraryType).map((element) => (
+                <PredefinedLocationElement
+                  key={element.key}
+                  attributeName={element.key}
+                  values={element.values}
+                  isMultiSelect={element.isMultiSelect}
+                  defaultValue={createLibraryType?.predefinedAttributes}
+                  onChange={(key, data) => onChange(key, data)}
+                />
+              ))
+            : ShowBlockAttributes(listType)
+            ? GetFilteredList(listType, items, createLibraryType).map((element) => (
+                <AttributeElement
+                  key={element.id}
+                  attribute={element}
+                  onChange={(key, data) => onChange(key, data)}
+                  defaultValue={createLibraryType.attributeTypes}
+                />
+              ))
             : listType === ListType.SimpleTypes
-            ? GetFilteredList(listType, items, createLibraryType).map(
-                (element) => (
-                  <SimpleTypeElement
-                    key={element.id}
-                    simpleType={element}
-                    onChange={(key, data) => onChange(key, data)}
-                    defaultValue={createLibraryType.compositeTypes}
-                  />
-                )
-              )
-            : listType === ListType.ObjectAttributes ||
-              listType === ListType.LocationAttributes
-            ? GetFilteredList(listType, items, createLibraryType).map(
-                (element) => (
-                  <AttributeElement
-                    key={element.id}
-                    attribute={element}
-                    onChange={(key, data) => onChange(key, data)}
-                    defaultValue={createLibraryType.attributeTypes}
-                  />
-                )
-              )
+            ? GetFilteredList(listType, items, createLibraryType).map((element) => (
+                <SimpleTypeElement
+                  key={element.id}
+                  simpleType={element}
+                  onChange={(key, data) => onChange(key, data)}
+                  defaultValue={createLibraryType.compositeTypes}
+                />
+              ))
             : null}
         </ListElementsContainer>
       )}

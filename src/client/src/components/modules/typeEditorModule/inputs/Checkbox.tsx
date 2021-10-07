@@ -7,12 +7,13 @@ export enum Label {
 }
 interface Props {
   id: string;
+  name?: string;
   label: Label;
   defaultValue?: any;
   onChange: Function;
 }
 
-export const Checkbox = ({ id, label, defaultValue, onChange }: Props) => {
+export const Checkbox = ({ id, name, label, defaultValue, onChange }: Props) => {
   const isSelected = () => {
     if (label === Label.attributeTypes || label === Label.compositeTypes) {
       return defaultValue?.includes(id);
@@ -36,15 +37,12 @@ export const Checkbox = ({ id, label, defaultValue, onChange }: Props) => {
   };
 
   return (
-    <label className={"squarecheckbox"}>
-      <input
-        type="checkbox"
-        defaultChecked={isSelected()}
-        id={id}
-        onChange={onCheckboxChange}
-      />
+    <label className="squarecheckbox">
+      <input type="checkbox" defaultChecked={isSelected()} id={id} onChange={onCheckboxChange} />
       <span className="scheckmark"></span>
-      <label htmlFor={id}></label>
+      <label className="label" htmlFor={id}>
+        {name}
+      </label>
     </label>
   );
 };

@@ -12,10 +12,7 @@ const initialState: ReducerState = {
   selectedAttributeFilters: {},
 };
 
-export function parametersReducer(
-  state = initialState,
-  action: ParametersActionTypes
-): ReducerState {
+export function parametersReducer(state = initialState, action: ParametersActionTypes): ReducerState {
   switch (action.type) {
     case ADD_ATTRIBUTE_FILTER: {
       const { nodeId, filterName } = action.payload;

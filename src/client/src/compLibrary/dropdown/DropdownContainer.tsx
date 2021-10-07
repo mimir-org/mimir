@@ -1,12 +1,12 @@
 import styled from "styled-components";
+import Color from "../colors/Color";
 
 const DropdownContainer = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 0.3;
-  font-size: 13px;
-  color: black;
+  color: ${Color.Black};
   position: relative;
+  max-height: 20px;
 `;
 
 export default DropdownContainer;

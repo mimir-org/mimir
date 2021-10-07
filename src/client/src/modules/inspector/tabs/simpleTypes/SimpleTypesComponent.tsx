@@ -8,7 +8,11 @@ import { TerminalsParametersWrapper } from "../terminals/styled/TerminalsParamet
 interface Props {
   node: Node;
 }
-
+/**
+ * Component for SimpleTypes in the Inspector for all Product aspects.
+ * @param node
+ * @returns a drop-down menu where you can access a Node's SimpleTypes and attributes.
+ */
 const SimpleTypesComponent = ({ node }: Props) => {
   const simpleTypes = node.composites;
   const [selectedSimpleTypeId, setSelectedSimpleTypeId] = useState<string>(null);

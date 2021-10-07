@@ -39,6 +39,8 @@ export const UPDATE_CREATELIBRARYTYPE = "UPDATE_CREATELIBRARYTYPE";
 export const ADD_TERMINALTYPE = "ADD_TERMINALTYPE";
 export const REMOVE_TERMINALTYPE = "REMOVE_TERMINALTYPE";
 export const UPDATE_TERMINALTYPE = "UPDATE_TERMINALTYPE";
+export const REMOVE_TERMINALTYPE_BY_CATEGORY =
+  "REMOVE_TERMINALTYPE_BY_CATEGORY";
 export const SAVE_LIBRARY_TYPE = "SAVE_LIBRARY_TYPE";
 export const SAVE_LIBRARY_TYPE_SUCCESS_OR_ERROR = "SAVE_LIBRARY_TYPE_SUCCESS_OR_ERROR";
 export const DELETE_TYPE_EDITOR_ERROR = "DELETE_TYPE_EDITOR_ERROR";
@@ -213,6 +215,11 @@ export interface UpdateTerminalType {
   payload: { terminal: TerminalTypeItem };
 }
 
+export interface RemoveTerminalTypeByCategory {
+  type: typeof REMOVE_TERMINALTYPE_BY_CATEGORY;
+  payload: { categoryId: string };
+}
+
 interface SaveLibraryType {
   type: typeof SAVE_LIBRARY_TYPE;
   payload: {
@@ -258,6 +265,7 @@ export type TypeEditorActionTypes =
   | AddTerminalType
   | RemoveTerminalType
   | UpdateTerminalType
+  | RemoveTerminalTypeByCategory
   | SaveLibraryType
   | SaveLibraryTypeFinished
   | DeleteTypeEditorErrorAction;

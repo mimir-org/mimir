@@ -3,7 +3,7 @@ import { Composite } from "../../../../models";
 import { TerminalsListElementWrapper, TerminalsCategoryListElement } from "../terminals/styled/activeTerminalList";
 
 interface Props {
-  simpleTypes: any[];
+  simpleTypes: Composite[];
   onSelectSimpleType: (item: Composite) => void;
 }
 

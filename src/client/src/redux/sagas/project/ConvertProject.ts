@@ -13,6 +13,7 @@ import {
   Interface,
   SelectType,
   Discipline,
+  Purpose,
 } from "../../../models/";
 
 export interface UnitAm {
@@ -82,6 +83,7 @@ export interface NodeAm {
   attributes: AttributeAm[];
   aspect: Aspect;
   isRoot: boolean;
+  purpose: Purpose;
 }
 
 export interface EdgeAm {
@@ -175,7 +177,7 @@ const ConvertAttributes = (attributes: Attribute[]): AttributeAm[] => {
       units: ConvertUnits(attribute.units),
       selectValues: attribute.selectValues,
       selectType: attribute.selectType,
-      discipline: attribute.discipline
+      discipline: attribute.discipline,
     } as AttributeAm;
 
     converted.push(a);
@@ -307,6 +309,7 @@ const ConvertNodes = (nodes: Node[]): NodeAm[] => {
       composites: ConvertComposites(node.composites),
       aspect: node.aspect,
       isRoot: node.isRoot,
+      purpose: node.purpose,
     } as NodeAm;
 
     convertedNodes.push(n);

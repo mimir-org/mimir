@@ -34,6 +34,7 @@ const ConvertToNode = (data: LibItem, position, projectId: string, icons: BlobDa
     height: null,
     length: IsLocation(data) ? Size.Node_Length : null,
     width: IsLocation(data) ? Size.Node_Width : null,
+    purpose: data.purpose,
   } as Node;
 };
 

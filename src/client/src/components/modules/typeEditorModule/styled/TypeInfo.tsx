@@ -3,8 +3,8 @@ import styled from "styled-components";
 const TypeInfo = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  margin: 30px 24px;
+  justify-content: flex-start;
+  padding: 23px 0px 35px 20px;
 `;
 
 export default TypeInfo;

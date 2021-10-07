@@ -4,14 +4,16 @@ using Mb.Models.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Mb.Core.Migrations
 {
     [DbContext(typeof(ModelBuilderDbContext))]
-    partial class ModelBuilderDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210930103017_LibraryTypePurpose")]
+    partial class LibraryTypePurpose
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,15 +82,7 @@ namespace Mb.Core.Migrations
                     b.Property<string>("ConditionId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Discipline")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Discipline");
-
                     b.Property<string>("FormatId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("InterfaceId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsLocked")
@@ -110,15 +104,6 @@ namespace Mb.Core.Migrations
 
                     b.Property<string>("QualifierId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("SelectType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("SelectType");
-
-                    b.Property<string>("SelectValuesString")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("SelectValuesString");
 
                     b.Property<string>("SelectedUnitId")
                         .HasColumnType("nvarchar(max)")
@@ -155,8 +140,6 @@ namespace Mb.Core.Migrations
 
                     b.HasIndex("FormatId");
 
-                    b.HasIndex("InterfaceId");
-
                     b.HasIndex("NodeId");
 
                     b.HasIndex("QualifierId");
@@ -184,11 +167,6 @@ namespace Mb.Core.Migrations
                     b.Property<string>("ConditionId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Discipline")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Discipline");
-
                     b.Property<string>("Entity")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -199,15 +177,6 @@ namespace Mb.Core.Migrations
 
                     b.Property<string>("QualifierId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("SelectType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("SelectType");
-
-                    b.Property<string>("SelectValuesString")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("SelectValuesString");
 
                     b.Property<string>("SourceId")
                         .HasColumnType("nvarchar(450)");
@@ -313,6 +282,7 @@ namespace Mb.Core.Migrations
                         .HasColumnName("Name");
 
                     b.Property<string>("NodeId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("NodeId");
 
@@ -463,30 +433,23 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("Id");
 
-                    b.Property<string>("InputTerminalId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("InputTerminalId");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Name");
 
-                    b.Property<string>("OutputTerminalId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("OutputTerminalId");
-
                     b.Property<string>("SemanticReference")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("SemanticReference");
 
+                    b.Property<string>("TerminalId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("TerminalId");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("InputTerminalId");
-
-                    b.HasIndex("OutputTerminalId");
+                    b.HasIndex("TerminalId");
 
                     b.ToTable("Interface");
                 });
@@ -619,10 +582,6 @@ namespace Mb.Core.Migrations
                     b.Property<decimal>("PositionY")
                         .HasColumnType("decimal(18,4)")
                         .HasColumnName("PositionY");
-
-                    b.Property<string>("PurposeString")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("PurposeString");
 
                     b.Property<string>("Rds")
                         .HasColumnType("nvarchar(max)")
@@ -835,30 +794,23 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("Id");
 
-                    b.Property<string>("InputTerminalId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("InputTerminalId");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Name");
 
-                    b.Property<string>("OutputTerminalId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("OutputTerminalId");
-
                     b.Property<string>("SemanticReference")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("SemanticReference");
 
+                    b.Property<string>("TerminalId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("TerminalId");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("InputTerminalId");
-
-                    b.HasIndex("OutputTerminalId");
+                    b.HasIndex("TerminalId");
 
                     b.ToTable("Transport");
                 });
@@ -1158,10 +1110,6 @@ namespace Mb.Core.Migrations
                         .HasForeignKey("FormatId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Mb.Models.Data.Interface", null)
-                        .WithMany("Attributes")
-                        .HasForeignKey("InterfaceId");
-
                     b.HasOne("Mb.Models.Data.Node", "Node")
                         .WithMany("Attributes")
                         .HasForeignKey("NodeId")
@@ -1251,7 +1199,8 @@ namespace Mb.Core.Migrations
                     b.HasOne("Mb.Models.Data.Node", "Node")
                         .WithMany("Connectors")
                         .HasForeignKey("NodeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Node");
                 });
@@ -1315,21 +1264,13 @@ namespace Mb.Core.Migrations
 
             modelBuilder.Entity("Mb.Models.Data.Interface", b =>
                 {
-                    b.HasOne("Mb.Models.Data.Terminal", "InputTerminal")
-                        .WithMany("InputInterfaces")
-                        .HasForeignKey("InputTerminalId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                    b.HasOne("Mb.Models.Data.Terminal", "Terminal")
+                        .WithMany("Interfaces")
+                        .HasForeignKey("TerminalId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Mb.Models.Data.Terminal", "OutputTerminal")
-                        .WithMany("OutputInterfaces")
-                        .HasForeignKey("OutputTerminalId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("InputTerminal");
-
-                    b.Navigation("OutputTerminal");
+                    b.Navigation("Terminal");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.LibraryType", b =>
@@ -1407,21 +1348,13 @@ namespace Mb.Core.Migrations
 
             modelBuilder.Entity("Mb.Models.Data.Transport", b =>
                 {
-                    b.HasOne("Mb.Models.Data.Terminal", "InputTerminal")
-                        .WithMany("InputTransports")
-                        .HasForeignKey("InputTerminalId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                    b.HasOne("Mb.Models.Data.Terminal", "Terminal")
+                        .WithMany("Transports")
+                        .HasForeignKey("TerminalId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Mb.Models.Data.Terminal", "OutputTerminal")
-                        .WithMany("OutputTransports")
-                        .HasForeignKey("OutputTerminalId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("InputTerminal");
-
-                    b.Navigation("OutputTerminal");
+                    b.Navigation("Terminal");
                 });
 
             modelBuilder.Entity("NodeType_AttributeType", b =>
@@ -1554,8 +1487,6 @@ namespace Mb.Core.Migrations
 
             modelBuilder.Entity("Mb.Models.Data.Interface", b =>
                 {
-                    b.Navigation("Attributes");
-
                     b.Navigation("Edges");
                 });
 
@@ -1597,13 +1528,9 @@ namespace Mb.Core.Migrations
                 {
                     b.Navigation("Attributes");
 
-                    b.Navigation("InputInterfaces");
+                    b.Navigation("Interfaces");
 
-                    b.Navigation("InputTransports");
-
-                    b.Navigation("OutputInterfaces");
-
-                    b.Navigation("OutputTransports");
+                    b.Navigation("Transports");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Enums.AttributeCondition", b =>

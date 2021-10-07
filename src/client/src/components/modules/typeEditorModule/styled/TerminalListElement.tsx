@@ -4,11 +4,10 @@ import { Color, FontSize, FontType } from "../../../../compLibrary";
 const TerminalListElement = styled.div`
   display: flex;
   flex-direction: column;
-  /* height: 100%; */
   width: inherit;
   padding: 2px 1px;
   font-family: ${FontType.Standard};
-  font-size: ${FontSize.Standard};
+  font-size: ${FontSize.Small};
   color: ${Color.Black};
 
   :nth-child(odd) {

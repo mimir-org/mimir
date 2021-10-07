@@ -4,7 +4,7 @@ import { TerminalsColumn } from "../terminals/styled";
 import { Composite } from "../../../../models";
 
 interface Props {
-  simpleTypes: any[];
+  simpleTypes: Composite[];
   onSelectSimpleType: (item: Composite) => void;
 }
 

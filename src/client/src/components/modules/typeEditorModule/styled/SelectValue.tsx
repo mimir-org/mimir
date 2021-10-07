@@ -1,10 +1,15 @@
 import styled from "styled-components";
+import { Color } from "../../../../compLibrary";
 
-const SelectValue = styled.div`
+interface Props {
+  isSelected: boolean;
+}
+
+const SelectValue = styled.div<Props>`
   display: flex;
   flex-direction: column;
-  padding: 5px 0px;
   position: relative;
+  border-top: ${(props) => (props.isSelected ? "dashed 1px" + Color.DarkGrey : 0)};
 `;
 
 export default SelectValue;
