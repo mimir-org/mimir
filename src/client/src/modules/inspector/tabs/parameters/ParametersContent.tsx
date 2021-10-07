@@ -50,6 +50,7 @@ const ParametersContent = ({ element, elementIsLocked }: Props) => {
           </div>
           <div className="link">{TextResources.Inspector_Params_Default}</div>
         </Menu>
+        <hr />
       </Header>
       <ParametersRowWrapper>
         {hasFilters &&

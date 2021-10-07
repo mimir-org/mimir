@@ -46,6 +46,9 @@ const Color = {
   Terminal_Multiphase: "#00CC66",
   TransportConnection: "#606060",
 
+  // Inspector
+  InspectorGreyBorder: "#8C8C8C",
+
   // Inspector Parameters
   ParamsLightCyan: "#D9EAEB",
   ParamsCyan: "#65A8AD",
