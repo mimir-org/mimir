@@ -1,5 +1,7 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { TextResources } from "../../../../assets/text";
+import { ExpandWhiteIcon, CollapseWhiteIcon } from "../../../../assets/icons/common";
+import { CombinedAttribute } from "../../../../models";
 import {
   MenuWrapper,
   MenuHeader,
@@ -8,8 +10,6 @@ import {
   CheckboxWrapper,
   ToolTip,
 } from "./styled/dropdown/combination";
-import { ExpandWhiteIcon, CollapseWhiteIcon } from "../../../../assets/icons/common";
-import { CombinedAttribute } from "../../../../models";
 
 const MENU_ITEM_TOOLTIP_BASE_OFFSET: number = 6;
 
@@ -76,7 +76,6 @@ export const CombinationDropdown = ({ items, selectedItems, keyProp, onChange, h
     if (!activeToolTipRef) return 0;
 
     const rect = activeToolTipRef.getBoundingClientRect();
-
     const listRect = listRef.current.getBoundingClientRect();
 
     return MENU_ITEM_TOOLTIP_BASE_OFFSET + (rect.top - listRect.top);

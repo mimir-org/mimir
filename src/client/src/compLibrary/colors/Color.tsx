@@ -43,7 +43,6 @@ const Color = {
   TransportConnection: "#606060",
 
   // Inspector
-
   InspectorGreyBorder: "#8C8C8C",
 
   // Inspector Parameters
