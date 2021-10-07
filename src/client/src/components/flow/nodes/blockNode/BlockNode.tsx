@@ -57,11 +57,13 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
     <>
       <NodeBox
         id={type + data.id}
+        function={IsFunction(data)}
         onMouseOver={() => Click.OnHover(showTerminalBox, showConnectBox)}
         onMouseOut={() => Click.OnMouseOut(showTerminalBox, showConnectBox)}
       >
         <BlockNodeNameBox>{data.label ?? data.name}</BlockNodeNameBox>
         <Symbol base64={data.symbol} text={data.name} />
+        {data.id === mainConnectNode?.id && <hr className="line" />}
 
         <TerminalsComponent
           node={data}
