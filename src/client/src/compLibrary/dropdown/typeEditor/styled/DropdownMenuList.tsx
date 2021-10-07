@@ -4,13 +4,13 @@ import { Color } from "../../../";
 const DropdownMenuList = styled.div`
   display: flex;
   flex-direction: column;
-  border-width: 1.5px;
+  border-width: 1px;
   border-style: solid;
   border-color: ${Color.Black};
   border-radius: 5px;
   background-color: inherit;
   position: absolute;
-  top: 62px;
+  top: 50px;
   left: 0;
   z-index: 1;
   width: 99%;

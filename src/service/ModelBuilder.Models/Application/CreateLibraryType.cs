@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
 using Newtonsoft.Json;
 
@@ -20,6 +21,8 @@ namespace Mb.Models.Application
 
         [Required]
         public string RdsId { get; set; }
+
+        public string Purpose { get; set; }
 
         // NodeType (Object Block)
         public ICollection<TerminalTypeItem> TerminalTypes { get; set; }

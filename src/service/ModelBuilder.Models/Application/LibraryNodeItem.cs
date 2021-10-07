@@ -19,6 +19,7 @@ namespace Mb.Models.Application
         public string SymbolId { get; set; }
         public ObjectType LibraryType => ObjectType.ObjectBlock;
         public ICollection<Composite> Composites { get; set; }
+        public Purpose Purpose { get; set; }
 
         public string StatusId => "4590637F39B6BA6F39C74293BE9138DF";
     }

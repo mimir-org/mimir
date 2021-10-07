@@ -4,18 +4,7 @@ const SearchBarWrapper = styled.div`
   display: flex;
   flex-direction: row;
   flex: 1;
-  padding-right: 3px;
-
-  .helpIcon {
-    height: 12px;
-    padding: 3px 10px 0px 10px;
-    margin-left: auto;
-    opacity: 0.4;
-  }
-
-  .helpIcon:hover {
-    opacity: 1;
-  }
+  padding: 0px 7px 0px 14px;
 `;
 
 export default SearchBarWrapper;

@@ -1,4 +1,4 @@
-import { EnumBase, Attribute, Aspect } from "..";
+import { EnumBase, Attribute, Aspect, Purpose } from "..";
 import { Composite } from "../Types";
 import Connector from "./Connector";
 
@@ -15,6 +15,7 @@ class Node {
   positionY: number;
   isLocked: boolean | false;
   isLockedBy: string;
+  purpose: Purpose;
 
   positionBlockX: number;
   positionBlockY: number;

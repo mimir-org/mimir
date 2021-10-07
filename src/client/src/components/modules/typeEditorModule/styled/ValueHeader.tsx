@@ -1,34 +1,34 @@
 import styled from "styled-components";
+import { FontSize, Color } from "../../../../compLibrary";
 
 const ValueHeader = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   flex: 1;
-  margin: 2px 15px 0px 5px;
-  height: 18px;
-  border: 1px solid #898787;
-  border-radius: 2px;
-  background-color: white;
-  padding: 2px;
+  width: 307px;
+  min-height: 20px;
+  border: 1px solid ${Color.Black};
+  border-radius: 5px;
+  margin: 5px 0px 5px 32px;
+  background-color: ${Color.White};
 
   .selectedValues {
-    max-height: 18px;
-    max-width: 265px;
+    max-height: 20px;
+    max-width: 300px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    padding: 2px 4px;
-    font-style: italic;
-    font-size: 12px;
-    color: #898787;
+    margin: 2px 13px 2px 13px;
+    font-size: ${FontSize.Medium};
+    color: ${Color.Black};
   }
 
   img {
     margin-left: auto;
-    padding-right: 8px;
-    width: 14px;
-    height: 14px;
+    padding-right: 7px;
+    width: 10px;
+    height: 6px;
   }
 `;
 

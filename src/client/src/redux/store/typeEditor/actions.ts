@@ -113,6 +113,15 @@ export function removeTerminalType(terminal: TerminalTypeItem) {
   };
 }
 
+export function removeTerminalTypeByCategory(categoryId: string) {
+  return {
+    type: Types.REMOVE_TERMINALTYPE_BY_CATEGORY,
+    payload: {
+      categoryId,
+    },
+  };
+}
+
 export function updateTerminalType(terminal: TerminalTypeItem) {
   return {
     type: Types.UPDATE_TERMINALTYPE,
