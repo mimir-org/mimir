@@ -14,19 +14,16 @@ const FilterTerminals = (n: Node, splitView: boolean, splitNode: Node) => {
   if (n === undefined) return [];
 
   n.connectors?.forEach((c) => {
-    validateFilterTerminal(n, splitNode, c, splitView) && terminals.push(c);
+    validate(n, splitNode, c, splitView) && terminals.push(c);
   });
   return SortTerminals(terminals);
 };
 
-function validateFilterTerminal(n: Node, splitNode: Node, c: Connector, splitView: boolean) {
+function validate(n: Node, splitNode: Node, c: Connector, splitView: boolean) {
   if (!splitView) return (IsLocation(n) && IsLocationTerminal(c)) || IsTransportTerminal(c);
-  if (splitView && !splitNode) return IsTransportTerminal(c);
+  if (splitView && splitNode && IsLocation(splitNode)) return IsLocationTerminal(c);
 
-  if (splitView && splitNode) {
-    if (IsLocation(splitNode)) return IsLocationTerminal(c);
-    return IsTransportTerminal(c);
-  }
+  return IsTransportTerminal(c);
 }
 
 export default FilterTerminals;
