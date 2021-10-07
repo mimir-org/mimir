@@ -125,7 +125,7 @@ export const CombinationDropdown = ({ items, selectedItems, keyProp, onChange, h
   };
 
   return (
-    <MenuWrapper /* tabIndex={0} */ onBlur={() => setIsListOpen(false)} onMouseLeave={onMouseOut} ref={listRef}>
+    <MenuWrapper tabIndex={0} onBlur={() => setIsListOpen(false)} onMouseLeave={onMouseOut} ref={listRef}>
       <div onClick={() => setIsListOpen(!isListOpen)}>
         <MenuHeader open={isListOpen} color={headerColor}>
           <p>{TextResources.Inspector_Params_Combinations}</p>
