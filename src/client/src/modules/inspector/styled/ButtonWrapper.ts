@@ -5,6 +5,7 @@ const ButtonWrapper = styled.div`
   display: flex;
   margin-left: auto;
   justify-content: space-evenly;
+  position: relative;
 `;
 
 export default ButtonWrapper;

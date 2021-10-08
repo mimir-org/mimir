@@ -44,6 +44,7 @@ const Color = {
 
   // Inspector
   InspectorGreyBorder: "#8C8C8C",
+  InspectorDarkBorder: "#3D113F",
 
   // Inspector Parameters
   ParamsLightCyan: "#D9EAEB",

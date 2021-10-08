@@ -1,10 +1,30 @@
-import { DeleteIcon, LockOpenIcon, LockClosedIcon, ValidateIcon } from "../../../../assets/icons/common";
+import React, { ReactElement } from "react";
+import {
+  DeleteIconComponent,
+  DeleteActiveIconComponent,
+  LockOpenIconComponent,
+  LockClosedIconComponent,
+  InspectorCheckmarkEmptyIconComponent,
+  InspectorCheckmarkCheckedIconComponent,
+} from "../../../../assets/icons/common";
+import { InspectorButtonType } from "../InspectorButton";
 
-const GetButtonIcon = (type: string) => {
-  if (type === "delete") return DeleteIcon;
-  if (type === "lock") return LockOpenIcon;
-  if (type === "unlock") return LockClosedIcon;
-  if (type === "validate") return ValidateIcon; // TODO: fix checkbox
+export const GetButtonIcon = (type: InspectorButtonType): ReactElement => {
+  switch (type) {
+    case InspectorButtonType.Validate:
+      return <InspectorCheckmarkEmptyIconComponent />;
+    case InspectorButtonType.ValidateCorrect:
+      return <InspectorCheckmarkCheckedIconComponent />;
+    case InspectorButtonType.Lock:
+      return <LockOpenIconComponent />;
+    case InspectorButtonType.Unlock:
+      return <LockClosedIconComponent />;
+    case InspectorButtonType.Delete:
+      return <DeleteIconComponent />;
+  }
 };
 
-export default GetButtonIcon;
+export const GetActiveButtonIcon = (type: InspectorButtonType) => {
+  if (type === InspectorButtonType.Delete) return <DeleteActiveIconComponent />;
+  else return GetButtonIcon(type);
+};
