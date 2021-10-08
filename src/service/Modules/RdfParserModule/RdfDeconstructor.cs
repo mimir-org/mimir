@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using AngleSharp.Dom;
 using Mb.Models.Application;
@@ -22,7 +24,8 @@ namespace RdfParserModule
         public void LoadGraph(string valueAsString)
         {
             RdfGraph = new OntologyGraph();
-            RdfGraph.LoadFromFile("C:\\Git\\ti-spine-modelbuilder\\src\\service\\Modules\\RdfParserModule\\ontologies.owl", new TurtleParser());
+            var filePath = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}/Data/ontologies.owl";
+            RdfGraph.LoadFromFile(filePath, new TurtleParser());
 
             IGraph graph = new Graph();
             graph.LoadFromString(valueAsString);
