@@ -1,4 +1,5 @@
 import React, { ReactElement } from "react";
+import { InspectorButtonType } from "../InspectorButton";
 import {
   DeleteIconComponent,
   DeleteActiveIconComponent,
@@ -7,7 +8,6 @@ import {
   InspectorCheckmarkEmptyIconComponent,
   InspectorCheckmarkCheckedIconComponent,
 } from "../../../../assets/icons/common";
-import { InspectorButtonType } from "../InspectorButton";
 
 export const GetButtonIcon = (type: InspectorButtonType): ReactElement => {
   switch (type) {
