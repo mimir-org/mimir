@@ -5,7 +5,7 @@ import { PreviewObjectBlock, InfoWrapper, InputOutputTerminals, Terminals } from
 
 interface Props {
   createLibraryType: CreateLibraryType;
-  rdsName: string;
+  rdsLabel: string;
   inputTerminals: TerminalType[];
   outputTerminals: TerminalType[];
 }
@@ -14,7 +14,7 @@ interface Props {
  * @param param0
  * @returns the visual block in Type Preview Info
  */
-export const ObjectBlock = ({ createLibraryType, rdsName, inputTerminals, outputTerminals }: Props) => {
+export const ObjectBlock = ({ createLibraryType, rdsLabel, inputTerminals, outputTerminals }: Props) => {
   const aspect = createLibraryType.aspect;
 
   const showTerminals = (input: boolean): any[] => {
@@ -46,7 +46,7 @@ export const ObjectBlock = ({ createLibraryType, rdsName, inputTerminals, output
         {outputTerminals && <Terminals input={false}>{showTerminals(false)}</Terminals>}
       </InputOutputTerminals>
       <InfoWrapper blockPaddingTop={GetBlockPaddingTop(aspect)}>
-        <p>{rdsName}</p>
+        <p>{rdsLabel}</p>
         <p>{createLibraryType.name}</p>
       </InfoWrapper>
     </PreviewObjectBlock>

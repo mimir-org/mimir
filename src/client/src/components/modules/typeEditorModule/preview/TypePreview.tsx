@@ -16,6 +16,7 @@ interface Props {
 }
 
 export const TypePreview = ({ createLibraryType, rds, terminal, inputTerminals, outputTerminals }: Props) => {
+  const rdsLabel = rds.code + " - " + rds.name;
   const showObjectBlock = () => {
     if (
       (IsLocation(createLibraryType?.aspect) && createLibraryType?.locationType !== "") ||
@@ -25,7 +26,7 @@ export const TypePreview = ({ createLibraryType, rds, terminal, inputTerminals, 
       return (
         <ObjectBlock
           createLibraryType={createLibraryType}
-          rdsName={rds?.name}
+          rdsLabel={rdsLabel}
           inputTerminals={inputTerminals}
           outputTerminals={outputTerminals}
         />

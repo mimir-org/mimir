@@ -51,6 +51,7 @@ export const TypeEditorList = ({ createLibraryType, items, disabled, listType, o
                   key={element.id}
                   id={element.id}
                   name={element.name}
+                  code={element.code}
                   onChange={(key, data) => onChange(key, data)}
                   defaultValue={createLibraryType?.rdsId}
                 />
