@@ -1,66 +1,59 @@
 import { IsConnectView } from "../block/connectView/helpers";
 import { Node, Connector } from "../../../models";
-import {
-  IsChildOf,
-  IsFunction,
-  IsLocation,
-  IsPartOfTerminal,
-  IsProduct,
-  IsSiblingNodes,
-  IsTransportTerminal,
-} from "../helpers";
+import { IsChildOf, IsFunction, IsLocation, IsProduct, IsSiblingNodes, IsTransportTerminal } from "../helpers";
 
 /**
- * Component to validate and display an edge in BlockView
- * @param selectedNode
+ * Component to validate an edge in BlockView, where different rules apply for different states.
+ * @param activeNode
  * @param fromNode
  * @param toNode
- * @param splitViewNode
+ * @param splitNode
  * @param fromConnector
  * @param toConnector
  * @param splitView
  * @returns a boolean value
  */
 const ValidateBlockEdge = (
-  selectedNode: Node,
+  activeNode: Node,
   fromNode: Node,
   toNode: Node,
-  splitViewNode: Node,
+  splitNode: Node,
   fromConnector: Connector,
   toConnector: Connector,
   splitView: boolean
 ) => {
-  if (!fromNode || !toNode || IsPartOfTerminal(fromConnector) || IsPartOfTerminal(toConnector)) return false;
-
-  // Regular BlockView
-  if (!splitView && !IsConnectView())
-    if (!IsLocation(selectedNode)) {
-      if (IsSiblingNodes(fromNode, toNode) && IsChildOf(toNode, selectedNode) && IsChildOf(fromNode, selectedNode))
-        return true;
-    }
-
-  if (IsConnectView()) {
-    return (
-      (fromNode !== selectedNode &&
-        IsTransportTerminal(fromConnector) &&
-        IsTransportTerminal(toConnector) &&
-        IsFunction(fromNode) &&
-        IsFunction(toNode)) ||
-      (IsProduct(fromNode) && IsProduct(toNode))
-    );
-  }
-
-  if (splitView) {
-    if (splitViewNode && !IsLocation(splitViewNode)) {
-      if (IsFunction(fromNode) && IsProduct(toNode)) return true;
-      if (IsProduct(fromNode) && IsFunction(toNode)) return true;
-      if (IsSiblingNodes(fromNode, toNode)) return true;
-    }
-
-    if (splitViewNode && IsLocation(splitViewNode)) if (!IsLocation(fromNode) && IsLocation(toNode)) return true;
-    if (!splitViewNode) if (IsSiblingNodes(fromNode, toNode) && IsChildOf(fromNode, selectedNode)) return true;
-  }
+  if (!splitView && !IsConnectView()) return validBlockView(activeNode, fromNode, toNode);
+  if (splitView) return validSplitView(activeNode, splitNode, fromNode, toNode);
+  if (IsConnectView()) return validConnectView(activeNode, fromNode, toNode, fromConnector, toConnector);
   return false;
 };
+
+function validBlockView(activeNode: Node, fromNode: Node, toNode: Node) {
+  if (!IsLocation(activeNode))
+    return IsSiblingNodes(fromNode, toNode) && IsChildOf(toNode, activeNode) && IsChildOf(fromNode, activeNode);
+}
+
+function validSplitView(activeNode: Node, splitNode: Node, fromNode: Node, toNode: Node) {
+  if (splitNode && !IsLocation(splitNode))
+    return (
+      (IsFunction(fromNode) && IsProduct(toNode)) ||
+      (IsProduct(fromNode) && IsFunction(toNode)) ||
+      IsSiblingNodes(fromNode, toNode)
+    );
+
+  if (splitNode && IsLocation(splitNode)) return !IsLocation(fromNode) && IsLocation(toNode);
+  if (!splitNode) return IsSiblingNodes(fromNode, toNode) && IsChildOf(fromNode, activeNode);
+}
+
+function validConnectView(activeNode: Node, fromNode: Node, toNode: Node, fromConn: Connector, toConn: Connector) {
+  return (
+    (fromNode !== activeNode &&
+      IsTransportTerminal(fromConn) &&
+      IsTransportTerminal(toConn) &&
+      IsFunction(fromNode) &&
+      IsFunction(toNode)) ||
+    (IsProduct(fromNode) && IsProduct(toNode))
+  );
+}
 
 export default ValidateBlockEdge;
