@@ -32,8 +32,18 @@ export { default as LibNodeInterface } from "./libnode_interface.svg";
 export { default as LibNodeTransport } from "./libnode_transport.svg";
 
 // Inspector
-export { default as DeleteIcon } from "./delete.svg";
-export { default as LockIcon } from "./lock.svg";
+export { default as DeleteIcon, ReactComponent as DeleteIconComponent } from "./delete.svg";
+export { default as DeleteActiveIcon, ReactComponent as DeleteActiveIconComponent } from "./deleteActive.svg";
+
+export { default as LockIcon, ReactComponent as LockIconComponent } from "./lock.svg";
+export {
+  default as InspectorCheckmarkEmptyIcon,
+  ReactComponent as InspectorCheckmarkEmptyIconComponent,
+} from "./checkmarkInspectorEmpty.svg";
+export {
+  default as InspectorCheckmarkCheckedIcon,
+  ReactComponent as InspectorCheckmarkCheckedIconComponent,
+} from "./checkmarkInspectorChecked.svg";
 
 // Inspector Parameters
 export {
@@ -42,7 +52,7 @@ export {
 } from "./closeParameterFilter.svg";
 export { default as CloseParameterIcon } from "./closeParameter.svg";
 export { default as LockOpenIcon, ReactComponent as LockOpenIconComponent } from "./lockOpen.svg";
-export { default as LockClosedIcon } from "./lockClosed.svg";
+export { default as LockClosedIcon, ReactComponent as LockClosedIconComponent } from "./lockClosed.svg";
 export { default as WarningIcon } from "./warning.svg";
 export {
   default as LockClosedParameterIcon,

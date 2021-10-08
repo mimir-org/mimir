@@ -1,2 +1,3 @@
-export { default as GetButtonIcon } from "./GetButtonIcon";
+export * from "./GetButtonIcon";
 export { default as GetButtonText } from "./GetButtonText";
+export * from "./GetButtonWidth";

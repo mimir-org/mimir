@@ -1,21 +1,45 @@
 import { ButtonContainer } from "./styled";
-import { GetButtonText, GetButtonIcon } from "./helpers";
+import { GetButtonText, GetButtonIcon, GetActiveButtonIcon, GetButtonWidth } from "./helpers";
+import { useState } from "react";
 
 interface Props {
   onClick: () => void;
-  type: string;
+  type: InspectorButtonType;
   visible: boolean;
 }
+
+export enum InspectorButtonType {
+  Validate,
+  ValidateCorrect,
+  Lock,
+  Unlock,
+  Delete,
+}
+
 /**
  * Component for buttons in the Inspector Module.
  * @param param0
  * @returns a button to be used in the Inspector Header.
  */
-const InspectorButton = ({ onClick, type, visible }: Props) => (
-  <ButtonContainer onClick={() => onClick()} visible={visible}>
-    <div>{GetButtonText(type)}</div>
-    <img src={GetButtonIcon(type)} alt={GetButtonText(type)} />
-  </ButtonContainer>
-);
+const InspectorButton = ({ onClick, type, visible }: Props) => {
+  const [active, setActive] = useState(false);
+
+  const icon = GetButtonIcon(type);
+  const activeIcon = GetActiveButtonIcon(type);
+
+  return (
+    <ButtonContainer
+      width={GetButtonWidth(type)}
+      onClick={() => onClick()}
+      onMouseDown={() => setActive(true)}
+      onMouseUp={() => setActive(false)}
+      onMouseLeave={() => setActive(false)}
+      visible={visible}
+    >
+      <div>{GetButtonText(type)}</div>
+      {active ? activeIcon : icon}
+    </ButtonContainer>
+  );
+};
 
 export default InspectorButton;
