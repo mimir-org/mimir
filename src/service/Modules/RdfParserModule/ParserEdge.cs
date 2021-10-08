@@ -1,24 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RdfParserModule
+﻿namespace RdfParserModule
 {
     public class ParserEdge
     {
-
-        public ParserNode From;
-        public ParserNode To;
-        public string Relation;
-
-        public ParserEdge(ParserNode fromNode, ParserNode toNode, string relation = "partOf")
-        {
-            From = fromNode;
-            To = toNode;
-            Relation = relation;
-        }
-
+        public string Id { get; set; }
+        public string NormalId { get; set; }
+        public string FromConnectorId { get; set; }
+        public string ToConnectorId { get; set; }
+        public string FromNodeId { get; set; }
+        public string ToNodeId { get; set; }
+        public string MasterProjectId { get; set; }
+        public ParserNode Transport { get; set; }
+        public ParserNode Interface { get; set; }
+        public ParserTerminal InputTerminal { get; set; }
+        public ParserTerminal OutputTerminal { get; set; }
     }
 }
