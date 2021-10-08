@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using System.Text;
 using Mb.Models.Data;
 using Mb.Models.Enums;
@@ -7,7 +9,7 @@ using RdfParserModule.Properties;
 using VDS.RDF;
 using VDS.RDF.Ontology;
 using VDS.RDF.Parsing;
-using VDS.RDF.Writing;
+using StringWriter = VDS.RDF.Writing.StringWriter;
 
 
 namespace RdfParserModule
@@ -51,7 +53,8 @@ namespace RdfParserModule
             var ontology = new OntologyGraph();
 
             // Loads base ontology directly from file. Maps all the namespaces automatically
-            ontology.LoadFromFile("C:\\Git\\ti-spine-modelbuilder\\src\\service\\Modules\\RdfParserModule\\ontologies.owl", new TurtleParser());
+            var filePath = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}/Data/ontologies.owl";
+            ontology.LoadFromFile(filePath, new TurtleParser());
 
 
             //IDictionary<string, string> namespaces = GetNamespaces();
