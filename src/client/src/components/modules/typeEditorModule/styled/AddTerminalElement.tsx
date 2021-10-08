@@ -3,28 +3,21 @@ import styled from "styled-components";
 const AddTerminalElement = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 2px 8px 2px 20px;
-
-  .help-icon {
-    display: none;
-  }
-
-  img {
-    padding: 0px 5px;
-    opacity: 1;
-  }
-
-  img:hover {
-    opacity: 1;
-  }
+  margin: 3px 10px 2px 16px;
 
   button {
-    margin: 0px 3px;
+    display: flex;
+    align-items: center;
+    max-height: 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    margin: 0px;
   }
 
   .delete-icon {
-    width: 11px;
-    height: 11px;
+    width: 10px;
+    height: 10px;
   }
 `;
 

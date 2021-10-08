@@ -1,9 +1,5 @@
-import { FindNodeByDataId } from "../../../block/helpers";
-
-const OnMouseOut = (showTerminalButton, id) => {
+const OnMouseOut = (showTerminalButton: any) => {
   showTerminalButton(false);
-  const node = FindNodeByDataId(id);
-  node.style.border = "none";
 };
 
 export default OnMouseOut;

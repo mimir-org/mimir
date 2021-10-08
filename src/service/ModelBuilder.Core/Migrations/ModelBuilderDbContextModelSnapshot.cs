@@ -509,6 +509,10 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Name");
 
+                    b.Property<string>("PurposeId")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("PurposeId");
+
                     b.Property<string>("RdsId")
                         .HasColumnType("nvarchar(450)");
 
@@ -517,6 +521,8 @@ namespace Mb.Core.Migrations
                         .HasColumnName("SemanticReference");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PurposeId");
 
                     b.HasIndex("RdsId");
 
@@ -613,6 +619,10 @@ namespace Mb.Core.Migrations
                     b.Property<decimal>("PositionY")
                         .HasColumnType("decimal(18,4)")
                         .HasColumnName("PositionY");
+
+                    b.Property<string>("PurposeString")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("PurposeString");
 
                     b.Property<string>("Rds")
                         .HasColumnType("nvarchar(max)")
@@ -1324,10 +1334,17 @@ namespace Mb.Core.Migrations
 
             modelBuilder.Entity("Mb.Models.Data.LibraryType", b =>
                 {
+                    b.HasOne("Mb.Models.Data.Enums.Purpose", "Purpose")
+                        .WithMany("LibraryTypes")
+                        .HasForeignKey("PurposeId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.HasOne("Mb.Models.Data.Rds", "Rds")
                         .WithMany("LibraryTypes")
                         .HasForeignKey("RdsId")
                         .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Purpose");
 
                     b.Navigation("Rds");
                 });
@@ -1625,6 +1642,11 @@ namespace Mb.Core.Migrations
             modelBuilder.Entity("Mb.Models.Data.Enums.PredefinedAttributeCategory", b =>
                 {
                     b.Navigation("Children");
+                });
+
+            modelBuilder.Entity("Mb.Models.Data.Enums.Purpose", b =>
+                {
+                    b.Navigation("LibraryTypes");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Enums.RdsCategory", b =>

@@ -21,7 +21,6 @@ export { default as RightArrowIcon } from "./rightArrow.svg";
 
 export { default as AddIcon } from "./add.svg";
 export { default as CheckIcon } from "./checkmark.svg";
-export { default as SelectDownIcon } from "./selectDown.svg";
 export { default as InterfaceIcon } from "./interface.svg";
 export { default as TransportIcon } from "./transport.svg";
 export { default as TerminalIcon } from "./terminal.svg";

@@ -6,7 +6,7 @@ const PreviewObjectBlock = styled.div`
   flex-direction: column;
   margin: auto;
   width: 65%;
-  height: 70%;
+  height: 65%;
   height: ${(props: { blockHeight: number }) => props.blockHeight}%;
   background-color: ${(props: { blockColor: string }) => props.blockColor};
   border: 1px solid ${Color.Black};

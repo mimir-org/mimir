@@ -8,9 +8,9 @@ const GetAspectColor = (node: Node | LibItem, isTransparent: boolean) => {
     if (IsProduct(node)) return Color.ProductHeader;
     if (IsLocation(node)) return Color.LocationHeader;
   }
-  if (IsFunction(node)) return Color.FunctionBlock;
-  if (IsProduct(node)) return Color.ProductBlock;
-  if (IsLocation(node)) return Color.LocationBlock;
+  if (IsFunction(node)) return Color.FunctionMain;
+  if (IsProduct(node)) return Color.ProductMain;
+  if (IsLocation(node)) return Color.LocationMain;
 };
 
 export default GetAspectColor;

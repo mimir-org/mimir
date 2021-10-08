@@ -2,7 +2,7 @@ import { RootState } from "../../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { TextResources } from "../../../../assets/text";
 import { Dropdown } from "./styled/dropdown/parameter";
-import { CombinedAttributeFilter, Connector, Node } from "../../../../models";
+import { CombinedAttributeFilter, Composite, Connector, Node } from "../../../../models";
 import { GetAttributeCombinations, GetParametersColor } from "./helpers";
 import { Menu, Header } from "./styled";
 import { OnChangeFilterChoice, OnClearAllFilters } from "./handlers";
@@ -12,7 +12,7 @@ import { useState } from "react";
 import ParametersRowWrapper from "./styled/ParametersRowWrapper";
 
 interface Props {
-  element: Node | Connector;
+  element: Node | Connector | Composite;
   elementIsLocked: boolean;
 }
 

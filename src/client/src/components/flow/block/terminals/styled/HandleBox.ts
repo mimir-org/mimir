@@ -5,8 +5,7 @@ import { Position } from "react-flow-renderer";
 const HandleBox = styled.div`
   .react-flow__handle-block {
     position: absolute;
-    background: url(${(props) => props.icon});
-    visibility: ${(props) => (props.visible ? "visible" : "hidden")} !important;
+    visibility: ${(props: { visible: boolean }) => (props.visible ? "visible" : "hidden")} !important;
 
     top: ${(props) =>
       props.position === Position.Left && !props.isParent
@@ -17,8 +16,8 @@ const HandleBox = styled.div`
         ? props.output
         : props.input}%;
 
-    right: ${(props) => props.position === Position.Right && "-16px"};
-    left: ${(props) => props.position === Position.Left && "-16px"};
+    right: ${(props: { position: Position }) => props.position === Position.Right && "-16px"};
+    left: ${(props: { position: Position }) => props.position === Position.Left && "-16px"};
   }
 `;
 

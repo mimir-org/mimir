@@ -1,39 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace RdfParserModule
 {
     public class ParserGraph
     {
-        private readonly ICollection<ParserNode> _nodes;
-        private readonly ParserNode _root;
+        public string Id { get; set; }
+        public string NormalId { get; set; }
+        public string Name { get; set; }
+        public string Label { get; set; }
+        public bool IsSubProject { get; set; }
+        public string Version { get; set; }
+        public ICollection<ParserNode> Nodes { get; set; }
+        public ICollection<ParserEdge> Edges { get; set; }
 
-        public ParserGraph(ParserNode root)
+        public ParserNode GetNode(string nodeId)
         {
-            _nodes = new Collection<ParserNode>();
-            _root = root;
-        }
-
-        public void AddNode(ParserNode node)
-        {
-            _nodes.Add(node);
-        }
-
-        public ParserNode GetNode(string id)
-        {
-            foreach (var node in _nodes)
+            foreach (var node in Nodes)
             {
-                if (node.Id == id)
+                if (node.Id == nodeId)
                 {
                     return node;
                 }
             }
 
-            throw new Exception("No node with that id found");
+            throw new Exception("No such node found");
+        }
+
+        public override string ToString()
+        {
+            return "Project_" + Id;
         }
     }
 }

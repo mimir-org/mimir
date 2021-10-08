@@ -1,7 +1,7 @@
+import { Color } from "../../../../compLibrary";
 import { Connector, Node } from "../../../../models";
 import { IsMainConnectNode } from "../../block/connectView/helpers";
-import { GetConnectorIcon } from "../../helpers";
-import { TerminalsMenu, TerminalsElement } from "./styled";
+import { TerminalsMenu, TerminalsElement, ColorBar } from "./styled";
 
 interface Props {
   node: Node;
@@ -43,6 +43,7 @@ const TerminalsMenuComponent = ({
     >
       {terminals.map((conn) => (
         <TerminalsElement key={conn.id}>
+          <ColorBar color={conn.color ?? Color.Terminal_Default} />
           <div className="text" onClick={() => onClick(conn)}>
             {conn.name}
           </div>
@@ -50,7 +51,6 @@ const TerminalsMenuComponent = ({
             <input type="checkbox" checked={conn.visible} onChange={() => onClick(conn)} />
             <span className="checkmark-block"></span>
           </label>
-          <img src={GetConnectorIcon(conn.color)} alt="icon" className="button" onClick={() => onClick(conn)} />
         </TerminalsElement>
       ))}
     </TerminalsMenu>

@@ -2,12 +2,21 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { TypeEditorState } from "../../../redux/store/typeEditor/types";
-import { TerminalTypeItem } from "../../../models";
-import { TypeEditorList, TypeEditorInputs, TypePreview } from "./";
 import { ListType } from "./TypeEditorList";
-import { AddIcon, CheckIcon, CloseIcon } from "../../../assets/icons/common";
+import { CheckIcon, CloseIcon } from "../../../assets/icons/common";
 import { TextResources } from "../../../assets/text";
 import { GetInputTerminals, GetOutputTerminals } from "./preview/helpers";
+import { TypeEditorList, TypeEditorInputs, TypePreview, TypeEditorInspector } from "./";
+import { LibraryIcon } from "../../../assets/icons/common/modules";
+import {
+  GetSelectedRds,
+  GetSelectedTerminal,
+  IsLocation,
+  IsInterface,
+  IsObjectBlock,
+  IsProduct,
+  GetWidth,
+} from "./helpers";
 import {
   closeTypeEditor,
   getInitialData,
@@ -16,17 +25,9 @@ import {
   addTerminalType,
   removeTerminalType,
   updateTerminalType,
+  removeTerminalTypeByCategory,
   saveLibraryType,
 } from "../../../redux/store/typeEditor/actions";
-import {
-  GetSelectedRds,
-  GetSelectedTerminal,
-  IsLocation,
-  IsInterface,
-  IsObjectBlock,
-  IsFunction,
-  IsProduct,
-} from "./helpers";
 import {
   TypeEditorWrapper,
   TypeEditorContent,
@@ -61,13 +62,15 @@ export const TypeEditorComponent = () => {
     dispatch(closeTypeEditor());
   };
 
-  const onTerminalCategoryChange = (key: string, value: TerminalTypeItem) => {
+  const onTerminalCategoryChange = (key: string, value: any) => {
     if (key === "add") {
       dispatch(addTerminalType(value));
     } else if (key === "remove") {
       dispatch(removeTerminalType(value));
     } else if (key === "update") {
       dispatch(updateTerminalType(value));
+    } else if (key === "removeAll") {
+      dispatch(removeTerminalTypeByCategory(value));
     }
   };
 
@@ -95,7 +98,7 @@ export const TypeEditorComponent = () => {
                 onChange={(key, data) => onChange(key, data)}
                 // disabled={ModeEdit(mode) ? false : FieldValidator(state, "rds")}
               />
-              {(IsFunction(state?.createLibraryType.aspect) || IsProduct(state?.createLibraryType.aspect)) && (
+              {!IsLocation(state?.createLibraryType.aspect) && (
                 <TypeEditorList
                   items={state?.terminals}
                   createLibraryType={state?.createLibraryType}
@@ -117,8 +120,7 @@ export const TypeEditorComponent = () => {
                   // disabled={ModeEdit(mode) ? false : FieldValidator(state, "rds")}
                 />
               )}
-              {(IsFunction(state?.createLibraryType.aspect) || IsProduct(state?.createLibraryType.aspect)) &&
-              IsInterface(state.createLibraryType.objectType) ? null : (
+              {!IsInterface(state.createLibraryType.objectType) && (
                 <TypeEditorList
                   items={state?.attributes}
                   createLibraryType={state?.createLibraryType}
@@ -137,7 +139,7 @@ export const TypeEditorComponent = () => {
                   // disabled={ModeEdit(mode) ? false : FieldValidator(state, "rds")}
                 />
               )}
-              <TypePreviewColumn>
+              <TypePreviewColumn wide={GetWidth(ListType.Preview)}>
                 <TypePreview
                   createLibraryType={state?.createLibraryType}
                   rds={GetSelectedRds(state?.createLibraryType, state.rdsList)}
@@ -162,14 +164,14 @@ export const TypeEditorComponent = () => {
                       : TextResources.TypeEditor_Button_Edit}
                   </p>
                   <img
-                    src={state.createLibraryType.libraryId === null ? AddIcon : CheckIcon}
+                    src={state.createLibraryType.libraryId === null ? LibraryIcon : CheckIcon}
                     alt="icon"
                     className="icon"
                   />
                 </SaveButton>
               </TypePreviewColumn>
             </ChooseProperties>
-            {/* <TypeEditorInspector /> */}
+            <TypeEditorInspector />
           </TypeEditorContent>
         </TypeEditorWrapper>
       )}

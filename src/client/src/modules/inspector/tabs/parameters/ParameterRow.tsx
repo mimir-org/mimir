@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { CloseParameterFilterIconComponent } from "../../../../assets/icons/common";
-import { CombinedAttribute, Connector, Node } from "../../../../models";
+import { CombinedAttribute, Composite, Connector, Node } from "../../../../models";
 import { Parameter } from "./";
 import { DoesCombinationMatchAttribute } from "./helpers";
 import { Body, Entity, Box } from "./styled";
@@ -12,7 +12,7 @@ import {
   OnChangeAttributeCombinationChoice,
 } from "./handlers";
 
-type Element = Node | Connector;
+type Element = Node | Connector | Composite;
 
 interface Props {
   element: Element;

@@ -44,6 +44,7 @@ namespace Mb.Core.Repositories
                     .Include(x => x.CompositeTypes)
                     .Include("CompositeTypes.AttributeTypes")
                     .Include("CompositeTypes.AttributeTypes.Units")
+                    .Include(x => x.Purpose)
                     .ToList();
             }
             else
@@ -62,6 +63,7 @@ namespace Mb.Core.Repositories
                     .Include(x => x.CompositeTypes)
                     .Include("CompositeTypes.AttributeTypes")
                     .Include("CompositeTypes.AttributeTypes.Units")
+                    .Include(x => x.Purpose)
                     .ToList();
             }
 
@@ -78,6 +80,7 @@ namespace Mb.Core.Repositories
                 return _interfaceTypeRepository.GetAll()
                     .Include(x => x.Rds)
                     .Include("Rds.RdsCategory")
+                    .Include(x => x.Purpose)
                     .ProjectTo<LibraryInterfaceItem>(_mapper.ConfigurationProvider)
                     .OrderBy(x => x.Name)
                     .ToList();
@@ -87,6 +90,7 @@ namespace Mb.Core.Repositories
                 .Where(x => x.Name.ToLower().Contains(searchString.ToLower()))
                 .Include(x => x.Rds)
                 .Include("Rds.RdsCategory")
+                .Include(x => x.Purpose)
                 .ProjectTo<LibraryInterfaceItem>(_mapper.ConfigurationProvider)
                 .OrderBy(x => x.Name)
                 .ToList();
@@ -100,6 +104,7 @@ namespace Mb.Core.Repositories
                     .Include(x => x.AttributeTypes)
                     .Include(x => x.Rds)
                     .Include("Rds.RdsCategory")
+                    .Include(x => x.Purpose)
                     .ProjectTo<LibraryTransportItem>(_mapper.ConfigurationProvider)
                     .OrderBy(x => x.Name)
                     .ToList();
@@ -110,6 +115,7 @@ namespace Mb.Core.Repositories
                 .Include(x => x.AttributeTypes)
                 .Include(x => x.Rds)
                 .Include("Rds.RdsCategory")
+                .Include(x => x.Purpose)
                 .ProjectTo<LibraryTransportItem>(_mapper.ConfigurationProvider)
                 .OrderBy(x => x.Name)
                 .ToList();
@@ -132,6 +138,7 @@ namespace Mb.Core.Repositories
                     .Include(x => x.CompositeTypes)
                     .Include("CompositeTypes.AttributeTypes")
                     .Include("CompositeTypes.AttributeTypes.Units")
+                    .Include(x => x.Purpose)
                     .FirstOrDefaultAsync();
 
                 return _mapper.Map<T>(nodeType);
@@ -142,6 +149,7 @@ namespace Mb.Core.Repositories
                 var interfaceType = await _interfaceTypeRepository.FindBy(x => x.Id == id)
                     .Include(x => x.Rds)
                     .Include("Rds.RdsCategory")
+                    .Include(x => x.Purpose)
                     .OrderBy(x => x.Name)
                     .FirstOrDefaultAsync();
                 return _mapper.Map<T>(interfaceType);
@@ -153,6 +161,7 @@ namespace Mb.Core.Repositories
                     .Include(x => x.AttributeTypes)
                     .Include(x => x.Rds)
                     .Include("Rds.RdsCategory")
+                    .Include(x => x.Purpose)
                     .OrderBy(x => x.Name)
                     .FirstOrDefaultAsync();
                 return _mapper.Map<T>(transportType);

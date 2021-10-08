@@ -3,8 +3,8 @@ import styled from "styled-components";
 const TypeEditorContent = styled.div`
   position: relative;
   display: flex;
+  height: 100%;
   flex-direction: column;
-  margin: 7px;
 `;
 
 export default TypeEditorContent;

@@ -1,33 +1,58 @@
 import styled from "styled-components";
-import { Color, FontSize, FontType } from "../../../../compLibrary";
+import { Color, FontSize, FontType, FontWeight } from "../../../../compLibrary";
 
-const TerminalCategoryWrapper = styled.div`
+interface Props {
+  expanded: boolean;
+  isSelected: boolean;
+}
+
+const TerminalCategoryWrapper = styled.div<Props>`
   display: flex;
   flex-direction: row;
   align-items: center;
   min-height: 30px;
+  border-bottom: ${(props) => (props.expanded ? "dashed 1px" + Color.DarkGrey : 0)};
 
-  p {
-    margin-left: 10px;
+  .terminal-name {
+    font-weight: ${(props) => props.expanded && FontWeight.Bold};
+    text-decoration: ${(props) => props.expanded && "underline"};
+    font-size: ${FontSize.Small};
+    margin-left: 9px;
+  }
+
+  .terminal-name:hover {
+    text-decoration: underline;
+    cursor: pointer;
   }
 
   button {
-    width: 40px;
+    display: flex;
+    align-items: center;
     height: 20px;
-    margin-left: auto;
-    padding-right: 10px;
-    background: ${Color.LightGrey};
-    border: 1px solid ${Color.BlueMagenta};
-    border-radius: 2px;
-    padding: 0px;
-    white-space: nowrap;
+    background: transparent;
+    border: none;
     cursor: pointer;
+    font-weight: ${FontWeight.Bold};
     font-family: ${FontType.Standard};
-    font-size: ${FontSize.Medium};
+    font-size: ${FontSize.Tiny};
     color: ${Color.Black};
 
-    &:hover {
-      border: 2px solid ${Color.BlueMagenta};
+    .add-text {
+      margin-left: 3px;
+    }
+
+    .add-icon {
+      width: 8px;
+      height: 8px;
+    }
+  }
+
+  .delete-button {
+    margin-left: auto;
+
+    .delete-text {
+      margin-left: 3px;
+      margin-right: 10px;
     }
   }
 
@@ -35,29 +60,15 @@ const TerminalCategoryWrapper = styled.div`
     z-index: 0;
   }
 
-  .category {
-    padding-right: 10px;
+  label:hover {
+    text-decoration: underline;
+    cursor: pointer;
   }
 
-  img {
-    margin-left: auto;
-    padding-right: 12px;
-    width: 14px;
-    height: 14px;
-  }
-
-  .help-icon {
-    width: 12px;
-    height: 12px;
-    opacity: 0.4;
-  }
-
-  .help-icon:hover {
-    opacity: 1;
-  }
-
-  .locationAttribute {
-    padding: 9px 5px;
+  label {
+    text-decoration: ${(props) => props.isSelected && "underline"};
+    font-weight: ${(props) => props.isSelected && FontWeight.Bold};
+    /* padding-right: 10px; */
   }
 `;
 

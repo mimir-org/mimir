@@ -71,7 +71,7 @@ const App = ({ pca }: AppProps) => {
       <UnauthenticatedTemplate>
         <Login onClick={login}>
           <img src={LoginIcon} alt="icon" className="icon" />
-          <p>{TextResources.Login_label}</p>
+          <p>{TextResources.Login_Label}</p>
         </Login>
       </UnauthenticatedTemplate>
     </MsalProvider>

@@ -3,14 +3,9 @@ import { Handle } from "react-flow-renderer";
 import { GetBlockHandleType } from "../../block/helpers";
 import { IsValidConnection } from "./helpers";
 import { HandleBox } from "./styled";
-import {
-  GetConnectorIcon,
-  GetHandlePosition,
-  IsInputTerminal,
-  IsOutputTerminal,
-  IsLocationTerminal,
-  SetTerminalYPos,
-} from "../../helpers";
+import { GetHandlePosition, IsInputTerminal, SetTerminalYPos } from "../../helpers";
+import { ConnectorIcon } from "../../../../assets/icons/blockView";
+import { Color } from "../../../../compLibrary";
 
 interface Props {
   node: Node;
@@ -21,10 +16,11 @@ interface Props {
 }
 /**
  * Component for the terminals displayed on the nodes in BlockView.
- * @param param0
+ * @param interface
  * @returns a Mimir terminal in form of a Flow Handler.
  */
 const HandleComponent = ({ node, nodes, terminals, isParent, splitView }: Props) => {
+  const className = "react-flow__handle-block";
   let inputCount = 0;
   let outputCount = 0;
 
@@ -32,10 +28,8 @@ const HandleComponent = ({ node, nodes, terminals, isParent, splitView }: Props)
     <>
       {terminals.map((conn: Connector) => {
         const [type, pos] = GetBlockHandleType(conn, node.isSelected, splitView);
-        if (!IsLocationTerminal(conn)) {
-          if (IsInputTerminal(conn)) inputCount++;
-          if (IsOutputTerminal(conn)) outputCount++;
-        }
+        if (IsInputTerminal(conn)) inputCount++;
+        if (!IsInputTerminal(conn)) outputCount++;
 
         return (
           <HandleBox
@@ -46,13 +40,13 @@ const HandleComponent = ({ node, nodes, terminals, isParent, splitView }: Props)
             position={GetHandlePosition(pos)}
             key={"key-" + conn.id}
             visible={conn.visible}
-            icon={GetConnectorIcon(conn.color)}
           >
+            <ConnectorIcon style={{ fill: conn.color ?? Color.Terminal_Default }} className={className} />
             <Handle
               type={type}
               position={pos}
               id={conn.id}
-              className="react-flow__handle-block"
+              className={className}
               isValidConnection={(connection) => IsValidConnection(connection, nodes, terminals)}
             />
           </HandleBox>

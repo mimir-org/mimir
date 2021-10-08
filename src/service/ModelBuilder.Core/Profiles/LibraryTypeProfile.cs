@@ -26,6 +26,8 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.TerminalTypes, opt => opt.MapFrom(src => CreateTerminalTypes(src.TerminalTypes.ToList(), $"{src.Key}-{commonRepository.GetDomain()}".CreateMd5()).ToList()))
                 .ForMember(dest => dest.AttributeTypes, opt => opt.MapFrom(src => CreateAttributeTypes(src.AttributeTypes.ToList()).ToList()))
                 .ForMember(dest => dest.CompositeTypes, opt => opt.MapFrom(src => CompositeTypes(src.CompositeTypes.ToList()).ToList()))
+                .ForMember(dest => dest.PurposeId, opt => opt.MapFrom(src => src.Purpose))
+                .ForMember(dest => dest.Purpose, opt => opt.Ignore())
                 .AfterMap((_, dest, _) =>
                 {
                     dest.ResolvePredefinedAttributeData();
@@ -38,6 +40,8 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.RdsId, opt => opt.MapFrom(src => src.RdsId))
                 .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => src.Aspect))
                 .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.TerminalTypeId))
+                .ForMember(dest => dest.PurposeId, opt => opt.MapFrom(src => src.Purpose))
+                .ForMember(dest => dest.Purpose, opt => opt.Ignore())
                 .ForMember(dest => dest.AttributeTypes, opt => opt.MapFrom(src => CreateAttributeTypes(src.AttributeTypes.ToList()).ToList()));
 
             CreateMap<CreateLibraryType, InterfaceType>()
@@ -46,6 +50,8 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
                 .ForMember(dest => dest.RdsId, opt => opt.MapFrom(src => src.RdsId))
                 .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => src.Aspect))
+                .ForMember(dest => dest.PurposeId, opt => opt.MapFrom(src => src.Purpose))
+                .ForMember(dest => dest.Purpose, opt => opt.Ignore())
                 .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.TerminalTypeId));
 
             CreateMap<NodeType, CreateLibraryType>()
@@ -61,6 +67,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.SymbolId, opt => opt.MapFrom(src => src.SymbolId))
                 .ForMember(dest => dest.PredefinedAttributes, opt => opt.MapFrom(src => src.PredefinedAttributes))
                 .ForMember(dest => dest.TerminalTypeId, opt => opt.Ignore())
+                .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => src.PurposeId))
                 .BeforeMap((src, _, _) =>
                 {
                     src.ResolvePredefinedAttributes();
@@ -78,7 +85,8 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.LocationType, opt => opt.Ignore())
                 .ForMember(dest => dest.SymbolId, opt => opt.Ignore())
                 .ForMember(dest => dest.PredefinedAttributes, opt => opt.Ignore())
-                .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.TerminalTypeId));
+                .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.TerminalTypeId))
+                .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => src.PurposeId));
 
             CreateMap<InterfaceType, CreateLibraryType>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
@@ -92,7 +100,8 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.LocationType, opt => opt.Ignore())
                 .ForMember(dest => dest.SymbolId, opt => opt.Ignore())
                 .ForMember(dest => dest.PredefinedAttributes, opt => opt.Ignore())
-                .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.TerminalTypeId));
+                .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.TerminalTypeId))
+                .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => src.PurposeId));
 
             CreateMap<NodeTypeTerminalType, TerminalTypeItem>()
                 .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.TerminalTypeId))
@@ -110,6 +119,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.AttributeTypes))
                 .ForMember(dest => dest.SymbolId, opt => opt.MapFrom(src => src.SymbolId))
                 .ForMember(dest => dest.Composites, opt => opt.MapFrom(src => src.CompositeTypes))
+                .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => src.Purpose))
                 .AfterMap((src, dest, context) =>
                 {
                     dest.Connectors = CreateConnectors(src.TerminalTypes, context);
@@ -124,7 +134,8 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
                 .ForMember(dest => dest.TerminalId, opt => opt.Ignore())
                 .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.TerminalTypeId))
-                .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.AttributeTypes));
+                .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.AttributeTypes))
+                .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => src.Purpose));
             
             CreateMap<InterfaceType, LibraryInterfaceItem>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
@@ -134,7 +145,8 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => src.Aspect))
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
                 .ForMember(dest => dest.TerminalId, opt => opt.Ignore())
-                .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.TerminalTypeId));
+                .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.TerminalTypeId))
+                .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => src.Purpose));
 
             CreateMap<CompositeType, Composite>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateUniqueId()))

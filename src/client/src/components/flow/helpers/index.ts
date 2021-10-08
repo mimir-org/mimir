@@ -6,8 +6,9 @@ export { default as GetParent } from "./GetParent";
 export { default as GetChild } from "./GetChild";
 export { default as IsChildOf } from "./IsChildOf";
 export { default as IsParentOf } from "./IsParentOf";
-export { default as IsAspectNode } from "./IsAspectNode";
+export { default as IsSiblingNodes } from "./IsSiblingNodes";
 
+export { default as IsAspectNode } from "./IsAspectNode";
 export { default as IsLocation } from "./IsLocation";
 export { default as IsFunction } from "./IsFunction";
 export { default as IsProduct } from "./IsProduct";
@@ -23,7 +24,6 @@ export { default as IsExplorer } from "./IsExplorer";
 export { default as IsLibrary } from "./IsLibrary";
 
 export { default as GetCenter } from "./GetCenter";
-export { default as GetConnectorIcon } from "./GetConnectorIcon";
 export { default as GetHandlePosition } from "./GetHandlePosition";
 export { default as GetBlockNodeTypes } from "../block/helpers/GetBlockNodeTypes";
 
@@ -33,9 +33,6 @@ export { default as GetHandleType } from "./GetHandleType";
 export { default as GetSelectedNode } from "./GetSelectedNode";
 export { default as SetTerminalYPos } from "./SetTerminalYPos";
 
-export {
-  GetOtherNodeFromEdgeViaConnector,
-  GetOtherNodeFromEdgeViaNode,
-} from "./GetOtherNodeFromEdge";
+export { GetOtherNodeFromEdgeViaConnector, GetOtherNodeFromEdgeViaNode } from "./GetOtherNodeFromEdge";
 
 export * from "./types";

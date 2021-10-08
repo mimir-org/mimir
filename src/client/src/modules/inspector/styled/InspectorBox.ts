@@ -14,7 +14,7 @@ const InspectorBox = styled.div`
   bottom: 0;
   overflow-x: auto;
   overflow-y: hidden;
-  transition: left 0.3s ease-in-out, right 0.3s ease-in-out;
+  transition: left 0.2s ease-in-out, right 0.2s ease-in-out;
 
   right: ${(props: { isLibraryOpen: boolean }) =>
     props.isLibraryOpen ? Size.ModuleOpen + Size.Margin : Size.ModuleClosed + Size.Margin}px;

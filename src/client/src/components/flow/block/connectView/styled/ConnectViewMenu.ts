@@ -3,7 +3,8 @@ import { Color } from "../../../../../compLibrary";
 
 /** Styled component that displays the drop-down menu for the ConnectViewMenu. */
 const ConnectViewMenu = styled.div`
-  border: 2px solid ${Color.FunctionTab};
+  border: 2px solid;
+  border-color: ${(props: { color: string }) => props.color};
   background-color: ${Color.White};
   border-radius: 5px;
   width: max-content;

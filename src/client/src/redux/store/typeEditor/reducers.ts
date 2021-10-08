@@ -1,12 +1,5 @@
 import * as Types from "./types";
-import {
-  CreateLibraryType,
-  Aspect,
-  ObjectType,
-  BlobData,
-  TerminalTypeItem,
-  PredefinedAttribute,
-} from "../../../models";
+import { CreateLibraryType, Aspect, ObjectType, BlobData, TerminalTypeItem, PredefinedAttribute } from "../../../models";
 
 const initialState: Types.TypeEditorState = {
   visible: false,
@@ -254,6 +247,18 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
           terminalTypes: [
             ...state.createLibraryType.terminalTypes.map((terminal) =>
               terminal.terminalId === action.payload.terminal.terminalId ? action.payload.terminal : terminal
+            ),
+          ],
+        },
+      };
+    case Types.REMOVE_TERMINALTYPE_BY_CATEGORY:
+      return {
+        ...state,
+        createLibraryType: {
+          ...state.createLibraryType,
+          terminalTypes: [
+            ...state.createLibraryType.terminalTypes.filter(
+              (terminal) => terminal.categoryId !== action.payload.categoryId
             ),
           ],
         },

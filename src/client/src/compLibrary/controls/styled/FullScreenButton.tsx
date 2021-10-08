@@ -5,7 +5,7 @@ const FullScreenButton = styled.div`
   cursor: pointer;
   bottom: ${(props: { height: number }) => props.height}px !important;
   right: ${(props: { libraryOpen: boolean }) => (props.libraryOpen ? 344 : 60)}px !important;
-  transition: right 0.3s ease-in-out, bottom 0.3s ease-in-out;
+  transition: right 0.2s ease-in-out, bottom 0.2s ease-in-out;
   z-index: 4;
 `;
 

@@ -49,7 +49,7 @@ const InspectorHeader = ({ project, node, edge, dispatch, open, type }: Props) =
           type={InspectorButtonType.Delete}
           visible={true}
         />
-        <Title>{TextResources.Module_Inspector}</Title>
+        <Title onClick={() => Click.OnToggle(dispatch, type, open)}>{TextResources.Module_Inspector}</Title>
         <ToggleBox>
           <img src={open ? DownIcon : UpIcon} alt="toggle-icon" onClick={() => Click.OnToggle(dispatch, type, open)} />
         </ToggleBox>

@@ -1,33 +1,27 @@
-import {
-  CHANGE_ACTIVE_MENU,
-  SET_ACCOUNT_MENU_VISIBILITY,
-  MenuActionTypes,
-  MenuState,
-  SET_FILTER_MENU_VISIBILITY,
-} from "./types";
+import * as Types from "./types";
 
-const initialState: MenuState = {
+const initialState: Types.MenuState = {
   accountMenuVisibility: false,
   filterMenuVisibility: false,
   activeMenu: null,
 };
 
-export function menuReducer(state = initialState, action: MenuActionTypes): MenuState {
+export function menuReducer(state = initialState, action: Types.MenuActionTypes): Types.MenuState {
   switch (action.type) {
-    case CHANGE_ACTIVE_MENU: {
+    case Types.CHANGE_ACTIVE_MENU: {
       return {
         ...state,
         activeMenu: action.payload.key,
       };
     }
 
-    case SET_ACCOUNT_MENU_VISIBILITY:
+    case Types.SET_ACCOUNT_MENU_VISIBILITY:
       return {
         ...state,
         accountMenuVisibility: action.payload.visibility,
       };
 
-    case SET_FILTER_MENU_VISIBILITY:
+    case Types.SET_FILTER_MENU_VISIBILITY:
       return {
         ...state,
         filterMenuVisibility: action.payload.visibility,

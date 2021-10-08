@@ -9,11 +9,11 @@ interface Props {
 
 export const ProjectList = ({ projectList }: Props) => (
   <div className="project_list">
-    <p className="recent_projects_text">{TextResources.Project_recent_project}</p>
+    <p className="recent_projects_text">{TextResources.Project_Recent}</p>
     <div className="project_list_labels">
-      <p className="project_name">{TextResources.Project_recent_name}</p>
-      <p className="project_owner">{TextResources.Project_recent_owner}</p>
-      <p className="last_edited">{TextResources.Project_recent_edited}</p>
+      <p className="project_name">{TextResources.Project_Recent_Name}</p>
+      <p className="project_owner">{TextResources.Project_Recent_Owner}</p>
+      <p className="last_edited">{TextResources.Project_Recent_Edited}</p>
     </div>
     {projectList?.map((project) => {
       return (

@@ -61,7 +61,7 @@ const GlobalStyle = createGlobalStyle`
     height: 15px;
     width: 15px;
     background-color: ${Color.White};
-    border: 2px solid ${Color.BlueMagenta};
+    border: 2px solid ${Color.GreyHeader};
     border-radius: 3px;
   }
   .checkmark-block {
@@ -80,7 +80,7 @@ const GlobalStyle = createGlobalStyle`
     height: 15px;
     width: 15px;
     background-color: ${Color.White};
-    border: 2px solid ${Color.Black};
+    border: 2px solid ${Color.GreyHeader};
     border-radius: 3px;
     margin-top:-1px;
   }
@@ -90,7 +90,7 @@ const GlobalStyle = createGlobalStyle`
     top: -5px;
   }
   .checkbox input:checked ~ .checkmark {
-    background-color: ${Color.BlueMagenta};
+    background-color: ${Color.GreyHeader};
   }
   .checkbox input:checked ~ .checkmark-footer {
     background-color: ${Color.White};
@@ -99,7 +99,7 @@ const GlobalStyle = createGlobalStyle`
     background-color: ${Color.DarkGrey};
   }
   .checkbox-filter input:checked ~ .checkmark-filter {
-    background-color: ${Color.Black};
+    background-color: ${Color.GreyHeader};
   }
 
   .checkmark:after,

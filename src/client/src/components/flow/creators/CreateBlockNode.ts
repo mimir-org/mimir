@@ -1,27 +1,27 @@
 import { Node } from "../../../models";
 import { FlowElement } from "react-flow-renderer";
-import { SetBlockNodePosition, IsSplitView } from "../block/helpers";
-import { IsLocation } from "../helpers";
-import { SetConnectNodePosition } from "../block/connectView/helpers/position";
-import { TextResources } from "../../../assets/text";
+import { IsSplitView } from "../block/helpers";
+import { SetConnectNodePos } from "../block/connectView/helpers/position";
+import { GetNodeTypeString, SetBlockNodePos } from "./helpers";
 
 /**
  * Component to create a node in BlockView.
  * @param node
  * @param connectNode
- * @param nodes
+ * @param allNodes - all nodes in Mimir
  * @returns a node of the type FlowElement.
  */
-const CreateBlockNode = (node: Node, connectNode: Node, nodes: Node[]) => {
+const CreateBlockNode = (node: Node, connectNode: Node, allNodes: Node[]) => {
   if (!node) return null;
 
   const connectNodes = connectNode?.connectNodes ?? [];
-  const type = IsLocation(node) ? TextResources.Type_BlockLocation : TextResources.Type_BlockFunction;
+  const type = GetNodeTypeString(node);
 
   // Force node to fit Block
-  let position = SetBlockNodePosition(node, IsSplitView());
-  if (connectNodes.some((x) => x.id === node.id))
-    position = SetConnectNodePosition(node, connectNode.id, connectNodes, nodes);
+  let position = SetBlockNodePos(node, IsSplitView());
+
+  if (connectNodes.some((n) => n.id === node.id))
+    position = SetConnectNodePos(node, connectNode.id, connectNodes, allNodes);
 
   return {
     id: node.id,

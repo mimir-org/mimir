@@ -21,21 +21,25 @@ const Color = {
   DarkModeModule: "#A8A8A8",
 
   // Function aspect
-  FunctionBlock: "#FEF445",
+  FunctionMain: "#FEF445",
   FunctionHeader: "#FFFAA9",
   FunctionTab: "#FFDE7A",
+  FunctionSelected: "#FBC913",
 
   // Product aspect
-  ProductBlock: "#00A6B0",
+  ProductMain: "#00F0FF",
   ProductHeader: "#B9F5F9",
   ProductTab: "#47DDE6",
+  ProductSelected: "#069098",
 
   // Location aspect
-  LocationBlock: "#FA00FF",
+  LocationMain: "#FA00FF",
   LocationHeader: "#FDCCFE",
   LocationTab: "#F083F1",
+  LocationSelected: "#A300A7",
 
   // Terminals
+  Terminal_Default: "#C05046",
   Terminal_Oil: "#663300",
   Terminal_Water: "#0066FF",
   Terminal_Gas: "#FFCC00",

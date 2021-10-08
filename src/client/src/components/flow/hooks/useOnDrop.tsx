@@ -17,11 +17,10 @@ const useOnDrop = (
   icons: BlobData[],
   library: LibraryState
 ) => {
-  const showBlockView = IsBlockView();
   const sourceNode = GetSelectedNode();
   const isFile = event.dataTransfer.files && event.dataTransfer.files.length > 0;
 
-  if (isFile && !showBlockView) {
+  if (isFile && !IsBlockView()) {
     event.stopPropagation();
     event.preventDefault();
 
@@ -42,7 +41,6 @@ const useOnDrop = (
     event.preventDefault();
     const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
     const data = JSON.parse(event.dataTransfer.getData("application/reactflow")) as LibItem;
-
     let position;
 
     if (!reactFlowInstance) position = { x: event.clientX, y: event.clientY };
@@ -76,16 +74,14 @@ const useOnDrop = (
       a.id = CreateId();
     });
 
-    showBlockView
+    IsBlockView()
       ? setElements((es) => es.concat(CreateBlockNode(targetNode, null, project.nodes)))
       : setElements((es) => es.concat(CreateTreeNode(targetNode)));
 
     if (sourceNode && sourceNode.aspect === targetNode.aspect) {
       targetNode.level = sourceNode.level + 1;
-
       const sourceConn = sourceNode.connectors?.find((x) => IsPartOfTerminal(x) && IsOutputTerminal(x));
       const targetConn = targetNode.connectors?.find((x) => IsPartOfTerminal(x) && IsInputTerminal(x));
-
       const partofEdge = ConvertToEdge(CreateId(), sourceConn, targetConn, sourceNode, targetNode, project.id, library);
 
       dispatch(createEdge(partofEdge));

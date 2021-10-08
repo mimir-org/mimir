@@ -23,6 +23,9 @@ export { default as GetListLabel } from "./GetListLabel";
 export { default as GetSelectedRds } from "./GetSelectedRds";
 export { default as GetSelectedTerminal } from "./GetSelectedTerminal";
 export { default as GetLibraryType } from "./GetLibraryType";
+export { default as GetWidth } from "./GetWidth";
 
+export { default as ShowObjectBlock } from "./ShowObjectBlock";
+export { default as ShowBlockAttributes } from "./ShowBlockAttributes";
 export { default as RemoveBackground } from "./RemoveBackground";
 export { default as FieldValidator } from "./FieldValidator";

@@ -132,6 +132,11 @@ namespace Mb.Core.Services
                                     JsonConvert.DeserializeObject<ICollection<Unit>>(attribute.UnitString);
 
                         }
+
+                        if (!string.IsNullOrEmpty(node.PurposeString))
+                        {
+                            node.Purpose = JsonConvert.DeserializeObject<Purpose>(node.PurposeString);
+                        }
                     }
 
                     if (node.Connectors != null)

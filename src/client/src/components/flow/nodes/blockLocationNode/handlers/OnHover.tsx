@@ -1,9 +1,5 @@
-import { FindNodeByDataId } from "../../../block/helpers";
-
-const OnHover = (showTerminalButton, id) => {
+const OnHover = (showTerminalButton: any) => {
   showTerminalButton(true);
-  const node = FindNodeByDataId(id);
-  node.style.border = "3px solid #a300a7";
 };
 
 export default OnHover;

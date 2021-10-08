@@ -22,11 +22,7 @@ const RelationComponent = ({ node }: Props) => {
   const edges = useSelector<RootState>((state) => state.projectState.project.edges) as Edge[];
   const [relations, relationEdges] = GetRelations(connectors, edges);
 
-  const [inputTerminals, outputTerminals, transports] = GetTerminalsAndTransports(
-    connectors,
-    edges,
-    node
-  );
+  const [inputTerminals, outputTerminals, transports] = GetTerminalsAndTransports(connectors, edges, node);
 
   return (
     <RelationsBody>
