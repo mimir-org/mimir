@@ -4,28 +4,33 @@ import { Color, FontSize } from "../../..";
 const ButtonContainer = styled.div`
   pointer-events: initial;
   visibility: ${(props: { visible: boolean }) => !props.visible && "hidden"};
-  border: solid 1px ${Color.BlueMagenta};
+  box-shadow: inset 0 0 0 1px ${Color.InspectorGreyBorder};
   border-radius: 4px;
   font-size: ${FontSize.Standard};
   background-color: ${Color.White};
-  width: 75px;
+  width: ${(props) => props.width}px;
   height: 23px;
   display: flex;
   align-items: center;
-  justify-content: space-around;
   cursor: pointer;
   margin: 10px;
 
   div {
-    padding-left: 10px;
+    padding: 6px;
+    padding-right: 4px;
   }
 
-  img {
-    padding: 5px;
+  svg {
+    margin-left: auto;
+    margin-right: 6px;
   }
 
   :hover {
-    background-color: #e6e6e6;
+    box-shadow: inset 0 0 0 1.5px ${Color.InspectorGreyBorder};
+  }
+
+  :active {
+    box-shadow: inset 0 0 0 1.5px ${Color.InspectorDarkBorder};
   }
 `;
 export default ButtonContainer;
