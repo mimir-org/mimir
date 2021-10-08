@@ -17,6 +17,7 @@ interface Props {
   borderColor?: string;
   fontSize?: string;
   height?: number;
+  listTop?: number;
 }
 
 const Dropdown = ({
@@ -32,6 +33,7 @@ const Dropdown = ({
   borderColor = Color.Black,
   fontSize = FontSize.Standard,
   height = 28,
+  listTop = 25,
 }: Props) => {
   const [isListOpen, setIsListOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -82,7 +84,7 @@ const Dropdown = ({
             </DropdownMenuHeader>
           </div>
           {isListOpen && (
-            <DropdownMenuList borderRadius={borderRadius} borderColor={borderColor} fontSize={fontSize}>
+            <DropdownMenuList borderRadius={borderRadius} borderColor={borderColor} fontSize={fontSize} top={listTop}>
               {items?.map((item) => {
                 return (
                   <div onClick={(e) => handleChange(e, item)} key={item[keyProp]}>

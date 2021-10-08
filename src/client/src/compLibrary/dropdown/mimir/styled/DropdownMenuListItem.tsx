@@ -9,7 +9,6 @@ const DropdownMenuListItem = styled.div`
   border-style: solid;
   border-color: ${(props: { borderColor: string }) => props.borderColor};
   font-size: ${(props: { fontSize: string }) => props.fontSize};
-  border-radius: ${(props: { borderRadius: number }) => props.borderRadius};
   color: ${Color.Black};
   background-color: ${Color.White};
   cursor: pointer;

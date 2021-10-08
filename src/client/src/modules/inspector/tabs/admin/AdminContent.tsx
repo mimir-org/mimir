@@ -2,7 +2,7 @@ import moment from "moment/moment.js";
 import { useDispatch } from "react-redux";
 import { TextResources } from "../../../../assets/text";
 import { TabColumn } from "../../styled";
-import { Input, Textarea } from "../../../../compLibrary";
+import { FontSize, Input, Textarea } from "../../../../compLibrary";
 import { EnumBase, Node, Project } from "../../../../models";
 import { GetRdsId, GetReferenceDesignation } from "../../../../assets/helpers";
 import { IsLocation, IsProduct } from "../../../../components/flow/helpers";
@@ -27,15 +27,22 @@ const AdminContent = ({ node, project, statuses }: Props) => {
       <TabColumn width={250}>
         <div>
           <div>{TextResources.Inspector_Admin_Id}</div>
-          <Input readOnly={true} value={node.id ?? ""} onChange={() => null} inputType="" />
+          <Input fontSize={FontSize.Standard} readOnly={true} value={node.id ?? ""} onChange={() => null} inputType="" />
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_RDS}</div>
-          <Input readOnly={true} value={GetRdsId(node)} onChange={() => null} inputType="" />
+          <Input
+            fontSize={FontSize.Standard}
+            readOnly={true}
+            value={GetRdsId(node)}
+            onChange={() => null}
+            inputType=""
+          />
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Semantic_Id}</div>
           <Input
+            fontSize={FontSize.Standard}
             value={node.semanticReference ?? ""}
             onChange={(e: Event) => onChange("semanticId", e.target.value)}
             inputType=""
@@ -45,40 +52,69 @@ const AdminContent = ({ node, project, statuses }: Props) => {
       <TabColumn width={250}>
         <div>
           <div>{TextResources.Inspector_Admin_Service}</div>
-          <Input value={node.label} onChange={(e: Event) => onChange("label", e.target.value)} inputType="" />
+          <Input
+            fontSize={FontSize.Standard}
+            value={node.label}
+            onChange={(e: Event) => onChange("label", e.target.value)}
+            inputType=""
+          />
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Type}</div>
-          <Input readOnly={true} value={node.name} onChange={() => null} inputType="" />
+          <Input fontSize={FontSize.Standard} readOnly={true} value={node.name} onChange={() => null} inputType="" />
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Updated_By}</div>
-          <Input readOnly={true} value={node.updatedBy} onChange={() => null} inputType="" />
+          <Input
+            fontSize={FontSize.Standard}
+            readOnly={true}
+            value={node.updatedBy}
+            onChange={() => null}
+            inputType=""
+          />
         </div>
       </TabColumn>
       <TabColumn width={125}>
         <div>
           <div>{TextResources.Inspector_Admin_Updated_Date}</div>
-          <Input readOnly={true} value={moment(node.updated).format("DD/MM/YYYY")} onChange={() => null} inputType="" />
+          <Input
+            fontSize={FontSize.Standard}
+            readOnly={true}
+            value={moment(node.updated).format("DD/MM/YYYY")}
+            onChange={() => null}
+            inputType=""
+          />
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Created_Date}</div>
-          <Input readOnly={true} value={""} onChange={() => null} inputType="" />
+          <Input fontSize={FontSize.Standard} readOnly={true} value={""} onChange={() => null} inputType="" />
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Designation}</div>
-          <Input readOnly={true} value={GetReferenceDesignation(node, project)} onChange={() => null} inputType="" />
+          <Input
+            fontSize={FontSize.Standard}
+            readOnly={true}
+            value={GetReferenceDesignation(node, project)}
+            onChange={() => null}
+            inputType=""
+          />
         </div>
         {IsLocation(node) && IsBlockView() && (
           <div>
             <div>{TextResources.Inspector_Admin_Width}</div>
-            <Input value={node.width} onChange={(e: Event) => onChange("width", e.target.value)} inputType="" />
+            <Input
+              fontSize={FontSize.Standard}
+              value={node.width}
+              onChange={(e: Event) => onChange("width", e.target.value)}
+              inputType=""
+            />
           </div>
         )}
         {IsLocation(node) && IsBlockView() && (
           <div>
             <div>{TextResources.Inspector_Admin_Height}</div>
             <Input
+              fontSize={FontSize.Standard}
               value={node.height}
               onChange={(e: Event) => onChange("height", e.target.value)}
               inputType=""
@@ -88,7 +124,7 @@ const AdminContent = ({ node, project, statuses }: Props) => {
         )}
       </TabColumn>
       <TabColumn width={125}>
-        <div>
+        <div className="statusDropdown">
           <div>{TextResources.Inspector_Admin_Status}</div>
           <Dropdown
             label=""
@@ -97,23 +133,40 @@ const AdminContent = ({ node, project, statuses }: Props) => {
             defaultValue={node?.statusId}
             valueProp={null}
             onChange={(value: any) => onChange("statusId", value.id)}
+            listTop={31}
+            borderRadius={5}
           ></Dropdown>
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Version}</div>
-          <Input value={node.version ?? ""} onChange={(e: Event) => onChange("version", e.target.value)} inputType="" />
+          <Input
+            fontSize={FontSize.Standard}
+            value={node.version ?? ""}
+            onChange={(e: Event) => onChange("version", e.target.value)}
+            inputType=""
+          />
         </div>
         {IsProduct(node) && (
           <div>
             <div>{TextResources.Inspector_Admin_Cost}</div>
-            <Input value={node.cost ?? ""} onChange={(e: Event) => onChange("cost", e.target.value)} inputType="" />
+            <Input
+              fontSize={FontSize.Standard}
+              value={node.cost ?? ""}
+              onChange={(e: Event) => onChange("cost", e.target.value)}
+              inputType=""
+            />
           </div>
         )}
 
         {IsLocation(node) && IsBlockView() && (
           <div>
             <div>{TextResources.Inspector_Admin_Length}</div>
-            <Input value={node.length} onChange={(e: Event) => onChange("length", e.target.value)} inputType="" />
+            <Input
+              fontSize={FontSize.Standard}
+              value={node.length}
+              onChange={(e: Event) => onChange("length", e.target.value)}
+              inputType=""
+            />
           </div>
         )}
       </TabColumn>
