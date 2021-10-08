@@ -120,7 +120,7 @@ namespace Mb.Core.Controllers.V1
         {
             try
             {
-                var id = "equinor.com_16857111-7c79-45f2-b2d9-b9d67e52ca9e";
+                var id = "equinor.com_385834d5-1c1e-4ec2-9865-4f232b38966d";
                 var parser = "rdfparser";
 
                 var (file, format) = await _projectService.CreateFile(id, parser);
@@ -170,7 +170,7 @@ namespace Mb.Core.Controllers.V1
         /// <param name="id"></param>
         /// <param name="parser"></param>
         /// <returns></returns>
-        [HttpGet("download ProjectId")]
+        [HttpGet("download project imported as rdf")]
         [ProducesResponseType(typeof(FileContentResult), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -179,7 +179,7 @@ namespace Mb.Core.Controllers.V1
         {
             try
             {
-                var id = "Test Import Id";
+                var id = "equinor.com_mimirID16857111-7c79-45f2-b2d9-b9d67e52ca9e";
                 var parser = "rdfparser";
 
                 var (file, format) = await _projectService.CreateFile(id, parser);

@@ -94,7 +94,7 @@ namespace RdfParserModule
             var id = Project.Id;
             var name = Project.Name;
             var version = Project.Version;
-            var desc = Project.Description;
+            var desc = Project.Description ?? Project.Name;
 
 
             // Node for the project (named after its ID)
@@ -266,6 +266,7 @@ namespace RdfParserModule
             var hasInTerminal = Graph.CreateUriNode(Resources.hasInputTerminal);
             var hasOutTerminal = Graph.CreateUriNode(Resources.hasOutputTerminal);
             var outTerminal = Graph.CreateUriNode(Resources.OutputTerminal);
+            var hasAspect = Graph.CreateUriNode(Resources.hasAspect);
 
             foreach (var edge in edges)
             {
@@ -283,12 +284,15 @@ namespace RdfParserModule
                     {
                         case Aspect.Function:
                             Graph.Assert(new Triple(transportNode, hasParent, FunctionRoot));
+                            Graph.Assert(new Triple(transportNode, hasAspect, Graph.CreateUriNode("imf:Function")));
                             break;
                         case Aspect.Location:
                             Graph.Assert(new Triple(transportNode, hasParent, LocationRoot));
+                            Graph.Assert(new Triple(transportNode, hasAspect, Graph.CreateUriNode("imf:Location")));
                             break;
                         case Aspect.Product:
                             Graph.Assert(new Triple(transportNode, hasParent, ProductRoot));
+                            Graph.Assert(new Triple(transportNode, hasAspect, Graph.CreateUriNode("imf:Product")));
                             break;
                     }
 
