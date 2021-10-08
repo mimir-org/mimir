@@ -57,7 +57,7 @@ const ValidateBlockEdge = (
       if (IsSiblingNodes(fromNode, toNode)) return true;
     }
 
-    if (splitViewNode && IsLocation(splitViewNode)) if (IsFunction(fromNode) && IsLocation(toNode)) return true;
+    if (splitViewNode && IsLocation(splitViewNode)) if (!IsLocation(fromNode) && IsLocation(toNode)) return true;
     if (!splitViewNode) if (IsSiblingNodes(fromNode, toNode) && IsChildOf(fromNode, selectedNode)) return true;
   }
   return false;
