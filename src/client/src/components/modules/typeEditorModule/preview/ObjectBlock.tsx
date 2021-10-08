@@ -1,12 +1,8 @@
 import { CreateLibraryType, TerminalType } from "../../../../models";
 import { GetBlockColor, GetBlockHeight, GetBlockPaddingTop } from "./helpers";
 import { TypeEditorTerminalIcon } from "../../../../assets/icons/common";
-import {
-  PreviewObjectBlock,
-  InfoWrapper,
-  InputOutputTerminals,
-  Terminals,
-} from "../styled";
+import { PreviewObjectBlock, InfoWrapper, InputOutputTerminals, Terminals } from "../styled";
+
 interface Props {
   createLibraryType: CreateLibraryType;
   rdsName: string;
@@ -18,12 +14,7 @@ interface Props {
  * @param param0
  * @returns the visual block in Type Preview Info
  */
-export const ObjectBlock = ({
-  createLibraryType,
-  rdsName,
-  inputTerminals,
-  outputTerminals,
-}: Props) => {
+export const ObjectBlock = ({ createLibraryType, rdsName, inputTerminals, outputTerminals }: Props) => {
   const aspect = createLibraryType.aspect;
 
   const showTerminals = (input: boolean): any[] => {
@@ -49,17 +40,10 @@ export const ObjectBlock = ({
   };
 
   return (
-    <PreviewObjectBlock
-      blockColor={GetBlockColor(aspect)}
-      blockHeight={GetBlockHeight(aspect)}
-    >
+    <PreviewObjectBlock blockColor={GetBlockColor(aspect)} blockHeight={GetBlockHeight(aspect)}>
       <InputOutputTerminals>
-        {inputTerminals && (
-          <Terminals input={true}>{showTerminals(true)}</Terminals>
-        )}
-        {outputTerminals && (
-          <Terminals input={false}>{showTerminals(false)}</Terminals>
-        )}
+        {inputTerminals && <Terminals input={true}>{showTerminals(true)}</Terminals>}
+        {outputTerminals && <Terminals input={false}>{showTerminals(false)}</Terminals>}
       </InputOutputTerminals>
       <InfoWrapper blockPaddingTop={GetBlockPaddingTop(aspect)}>
         <p>{rdsName}</p>

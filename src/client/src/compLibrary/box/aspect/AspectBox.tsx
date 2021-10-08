@@ -7,11 +7,8 @@ const AspectBox = styled.div`
   cursor: pointer;
   padding: 5px;
   padding-top: ${(props: { isRoot: boolean }) => (props.isRoot ? 5 : 0)}px;
-  padding-left: ${(props: { indent: number; isRoot: boolean }) =>
-    props.isRoot ? 5 : UseIndentLevel(props.indent)}px;
-
-  background-color: ${(props: { node: Node }) =>
-    GetAspectColor(props.node, true)};
+  padding-left: ${(props: { indent: number; isRoot: boolean }) => (props.isRoot ? 5 : UseIndentLevel(props.indent))}px;
+  background-color: ${(props: { node: Node }) => GetAspectColor(props.node, true)};
 
   .icon {
     position: relative;

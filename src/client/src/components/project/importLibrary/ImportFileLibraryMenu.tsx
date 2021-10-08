@@ -12,10 +12,7 @@ import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../../../compLibr
 
 export const ImportFileLibraryMenu = () => {
   const dispatch = useDispatch();
-
-  const isOpen = useSelector<RootState>(
-    (state) => state.menu.activeMenu === MENU_TYPE.IMPORT_LIBRARY_FILE_MENU
-  ) as boolean;
+  const isOpen = useSelector<RootState>((s) => s.menu.activeMenu === MENU_TYPE.IMPORT_LIBRARY_FILE_MENU) as boolean;
 
   const [openFileSelector, { filesContent, plainFiles }] = useFilePicker({
     multiple: false,
@@ -51,7 +48,7 @@ export const ImportFileLibraryMenu = () => {
         </ButtonBox>
         {plainFiles?.length > 0 && data() && (
           <ButtonBox>
-            <Button onClick={() => OnSaveClick(dispatch, data)} type={TextResources.Account_Import_Library_Label} />
+            <Button onClick={() => OnSaveClick(dispatch, data)} type={TextResources.Account_Import_Lib_Label} />
           </ButtonBox>
         )}
       </ProjectBody>

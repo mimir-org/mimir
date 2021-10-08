@@ -63,7 +63,9 @@ const ParameterBox = styled.div`
   .inputContainer {
     display: flex;
     flex-direction: row;
+    margin-top: 5px;
     padding-left: 20px;
+    border-color: ${Color.InspectorGreyBorder};
 
     .parameterInput {
       width: 67px;

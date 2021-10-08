@@ -163,6 +163,7 @@ interface SetActiveBlockNode {
     nodeId: string;
   };
 }
+
 interface SaveProjectAction {
   type: typeof SAVE_PROJECT;
   payload: Project;
@@ -198,6 +199,7 @@ interface ChangeNodePropValue {
     propValue: any;
   };
 }
+
 interface ChangeAttributeValue {
   type: typeof CHANGE_ATTRIBUTE_VALUE;
   payload: {
@@ -265,6 +267,7 @@ export interface CommitProject {
   type: typeof COMMIT_PROJECT;
   payload: CommitPackage;
 }
+
 export interface CommitProjectFinished {
   type: typeof COMMIT_PROJECT_SUCCESS_OR_ERROR;
   payload: {

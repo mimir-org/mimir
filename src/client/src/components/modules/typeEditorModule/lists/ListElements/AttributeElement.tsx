@@ -1,7 +1,6 @@
 import { AttributeType } from "../../../../../models";
 import { Checkbox, Label } from "../../inputs/Checkbox";
 import { ListElem } from "../../../../../compLibrary";
-import { HelpIcon } from "../../../../../assets/icons/common";
 
 interface Props {
   attribute: AttributeType;
@@ -10,13 +9,16 @@ interface Props {
 }
 
 export const AttributeElement = ({ attribute, onChange, defaultValue }: Props) => {
+  const isSelected = defaultValue?.includes(attribute.id);
   return (
-    <ListElem>
-      <Checkbox id={attribute.id} label={Label.attributeTypes} defaultValue={defaultValue} onChange={onChange} />
-      <p>
-        <span>{attribute.description}</span>
-      </p>
-      <img src={HelpIcon} alt="help" />
+    <ListElem isSelected={isSelected}>
+      <Checkbox
+        id={attribute.id}
+        name={attribute.description}
+        label={Label.attributeTypes}
+        defaultValue={defaultValue}
+        onChange={onChange}
+      />
     </ListElem>
   );
 };

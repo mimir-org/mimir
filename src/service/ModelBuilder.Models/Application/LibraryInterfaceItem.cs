@@ -1,4 +1,5 @@
-﻿using Mb.Models.Enums;
+﻿using Mb.Models.Data.Enums;
+using Mb.Models.Enums;
 
 namespace Mb.Models.Application
 {
@@ -13,5 +14,6 @@ namespace Mb.Models.Application
         public string TerminalId { get; set; }
         public string TerminalTypeId { get; set; }
         public ObjectType LibraryType => ObjectType.Interface;
+        public Purpose Purpose { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-import { SET_SPLITVIEW, SET_SPLIT_NODE, SplitViewActionTypes } from "./types";
+import { SET_SPLITVIEW, SET_SPLIT_PARENT_NODE, SplitViewActionTypes } from "./types";
 
 const initialState = {
   visible: false,
@@ -12,7 +12,7 @@ export function splitViewReducer(state = initialState, action: SplitViewActionTy
         ...state,
         visible: action.payload.visible,
       };
-    case SET_SPLIT_NODE:
+    case SET_SPLIT_PARENT_NODE:
       return {
         ...state,
         node: action.payload.node,

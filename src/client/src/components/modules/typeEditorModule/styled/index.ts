@@ -24,3 +24,4 @@ export { default as ValuesListWrapper } from "./ValuesListWrapper";
 export { default as ValuesListItem } from "./ValuesListItem";
 export { default as ErrorMessageBox } from "./ErrorMessageBox";
 export { default as SaveButton } from "./SaveButton";
+export { default as Inspector } from "./Inspector/TypeEditorInspector";

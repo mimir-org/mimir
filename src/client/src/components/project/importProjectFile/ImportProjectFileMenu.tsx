@@ -13,10 +13,7 @@ import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../../../compLibr
 
 export const ImportProjectFileMenu = () => {
   const dispatch = useDispatch();
-
-  const isOpen = useSelector<RootState>(
-    (state) => state.menu.activeMenu === MENU_TYPE.IMPORT_PROJECT_FILE_MENU
-  ) as boolean;
+  const isOpen = useSelector<RootState>((s) => s.menu.activeMenu === MENU_TYPE.IMPORT_PROJECT_FILE_MENU) as boolean;
 
   const [openFileSelector, { filesContent, plainFiles }] = useFilePicker({
     multiple: false,

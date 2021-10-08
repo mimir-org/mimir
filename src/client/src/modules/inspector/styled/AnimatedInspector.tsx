@@ -7,6 +7,7 @@ interface Props {
   run: boolean;
   library: boolean;
   explorer: boolean;
+  inspectorOpen: boolean;
   height: number;
 }
 
@@ -21,7 +22,7 @@ ${!run ? (start = stop) : null}
 `;
 
 const AnimatedInspector = styled((props) => <InspectorBox {...props} />)`
-  animation: ${Animation} 0.3s ease-in-out;
+  animation: ${Animation} 0.1s ease-in-out;
 `;
 
 export default AnimatedInspector;

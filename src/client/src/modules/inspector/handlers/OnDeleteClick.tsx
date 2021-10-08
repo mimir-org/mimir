@@ -4,6 +4,7 @@ import { MODULE_TYPE } from "../../../models/project";
 import { setModuleVisibility } from "../../../redux/store/modules/actions";
 import { SetPanelHeight } from "../helpers";
 import { removeEdge, removeNode } from "../../../redux/store/project/actions";
+import { changeInspectorHeight } from "../redux/height/actions";
 
 const OnDeleteClick = (project: Project, node: Node, edge: Edge, dispatch: any) => {
   if (node) {
@@ -15,6 +16,7 @@ const OnDeleteClick = (project: Project, node: Node, edge: Edge, dispatch: any) 
   } else dispatch(removeEdge(edge.id));
 
   dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, false, true));
+  dispatch(changeInspectorHeight(Size.ModuleClosed));
   SetPanelHeight(Size.ModuleClosed);
 };
 

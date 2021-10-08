@@ -9,11 +9,7 @@ import {
   ValuesListWrapper,
   ValuesListItem,
 } from "../../styled";
-import {
-  HelpIcon,
-  ExpandIcon,
-  CollapseIcon,
-} from "../../../../../assets/icons/common";
+import { ExpandIcon, CollapseIcon } from "../../../../../assets/icons/common";
 import { OnMultipleValuesChange, OnSingleValueChange } from "./helpers";
 import { Label } from "../../inputs/Checkbox";
 
@@ -25,13 +21,7 @@ interface Props {
   onChange: Function;
 }
 
-export const PredefinedLocationElement = ({
-  attributeName,
-  values,
-  isMultiSelect,
-  defaultValue,
-  onChange,
-}: Props) => {
+export const PredefinedLocationElement = ({ attributeName, values, isMultiSelect, defaultValue, onChange }: Props) => {
   const [expandList, setExpandList] = useState(false);
 
   const isSelected = defaultValue.some((a) => a.key === attributeName);
@@ -63,39 +53,26 @@ export const PredefinedLocationElement = ({
   };
 
   const onSingleValueCheckboxChange = (e) => {
-    OnSingleValueChange(
-      e,
-      attributeName,
-      defaultValue,
-      isMultiSelect,
-      onChange
-    );
+    OnSingleValueChange(e, attributeName, defaultValue, isMultiSelect, onChange);
   };
 
   const onMultipleValuesCheckboxChange = ([param_key, param_value]) => {
-    OnMultipleValuesChange(
-      [param_key, param_value],
-      attributeName,
-      defaultValue,
-      isMultiSelect,
-      onChange
-    );
+    OnMultipleValuesChange([param_key, param_value], attributeName, defaultValue, isMultiSelect, onChange);
   };
 
   return (
     <TerminalListElement>
-      <TerminalCategoryWrapper>
+      <TerminalCategoryWrapper isSelected={isSelected}>
         <Checkbox
           id={attributeName}
+          name={attributeName}
           label={Label.Terminals}
           defaultValue={defaultValue}
           onChange={onCheckboxChange}
         />
-        <p className="locationAttribute">{attributeName}</p>
-        <img className="help-icon" src={HelpIcon} alt="help" />
       </TerminalCategoryWrapper>
       {isSelected && (
-        <SelectValue>
+        <SelectValue isSelected={isSelected}>
           <ValueHeader onClick={() => setExpandList(!expandList)}>
             <p className="selectedValues">
               {Object.entries(getValues())
@@ -128,9 +105,7 @@ export const PredefinedLocationElement = ({
                             type="checkbox"
                             defaultChecked={value}
                             id={key}
-                            onChange={() =>
-                              onMultipleValuesCheckboxChange([key, value])
-                            }
+                            onChange={() => onMultipleValuesCheckboxChange([key, value])}
                           />
                         </>
                       ) : (
@@ -144,10 +119,11 @@ export const PredefinedLocationElement = ({
                         />
                       )}
                       <span className="scheckmark"></span>
-                      <label htmlFor={key}></label>
+                      <label className="label" htmlFor={key}>
+                        {key}
+                      </label>
                     </label>
-                    <p>{key}</p>
-                    <img className="help-icon" src={HelpIcon} alt="help" />
+                    {/* <p>{key}</p> */}
                   </ValuesListItem>
                 );
               })}

@@ -1,10 +1,14 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using Mb.Core.Extensions;
 using Mb.Core.Repositories.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Data.Enums;
+using Mb.Models.Extensions;
+using Attribute = Mb.Models.Data.Attribute;
 
 namespace Mb.Core.Profiles
 {
@@ -20,7 +24,10 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.SourceId, opt => opt.MapFrom(src => src.SourceId))
                 .ForMember(dest => dest.ConditionId, opt => opt.MapFrom(src => src.ConditionId))
                 .ForMember(dest => dest.FormatId, opt => opt.MapFrom(src => src.FormatId))
-                .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src.ConvertToObject));
+                .ForMember(dest => dest.SelectType, opt => opt.MapFrom(src => src.SelectType))
+                .ForMember(dest => dest.Discipline, opt => opt.MapFrom(src => src.Discipline))
+                .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src.ConvertToObject))
+                .ForMember(dest => dest.SelectValuesString, opt => opt.MapFrom(src => src.SelectValues == null ? null : src.SelectValues.ConvertToString()));
 
             CreateMap<AttributeType, Attribute>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateUniqueId()))
@@ -40,7 +47,10 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.TerminalId, opt => opt.Ignore())
                 .ForMember(dest => dest.Terminal, opt => opt.Ignore())
                 .ForMember(dest => dest.NodeId, opt => opt.Ignore())
-                .ForMember(dest => dest.Node, opt => opt.Ignore());
+                .ForMember(dest => dest.Node, opt => opt.Ignore())
+                .ForMember(dest => dest.SelectType, opt => opt.MapFrom(src => src.SelectType))
+                .ForMember(dest => dest.Discipline, opt => opt.MapFrom(src => src.Discipline))
+                .ForMember(dest => dest.SelectValuesString, opt => opt.MapFrom(src => src.SelectValuesString));
 
             CreateMap<AttributeAm, Attribute>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateOrUseId(src.Id)))
@@ -63,7 +73,11 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => src.NodeId))
                 .ForMember(dest => dest.Node, opt => opt.Ignore())
                 .ForMember(dest => dest.IsLocked, opt => opt.MapFrom(src => src.IsLocked))
-                .ForMember(dest => dest.IsLockedBy, opt => opt.MapFrom(src => src.IsLockedBy));
+                .ForMember(dest => dest.IsLockedBy, opt => opt.MapFrom(src => src.IsLockedBy))
+                .ForMember(dest => dest.SelectType, opt => opt.MapFrom(src => src.SelectType))
+                .ForMember(dest => dest.Discipline, opt => opt.MapFrom(src => src.Discipline))
+                .ForMember(dest => dest.SelectValues, opt => opt.MapFrom(src => src.SelectValues))
+                .ForMember(dest => dest.SelectValuesString, opt => opt.MapFrom(src => src.SelectValues == null ? null : src.SelectValues.ConvertToString()));
 
             CreateMap<UnitAm, Unit>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))

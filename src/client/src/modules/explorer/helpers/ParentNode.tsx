@@ -5,17 +5,13 @@ import { IsPartOfTerminal } from "../../../components/flow/helpers";
 const FindParentEdge = (node: Node): Edge => {
   return red.store
     .getState()
-    .projectState.project.edges.find(
-      (x) => x.toNodeId === node.id && IsPartOfTerminal(x.fromConnector)
-    ) as Edge;
+    .projectState.project.edges.find((x) => x.toNodeId === node.id && IsPartOfTerminal(x.fromConnector)) as Edge;
 };
 
 const FindChildrenEdge = (node: Node): Edge => {
   return red.store
     .getState()
-    .projectState.project.edges.find(
-      (x) => x.fromNodeId === node.id && IsPartOfTerminal(x.fromConnector)
-    ) as Edge;
+    .projectState.project.edges.find((x) => x.fromNodeId === node.id && IsPartOfTerminal(x.fromConnector)) as Edge;
 };
 
 const HasChildren = (_node: Node) => {
@@ -28,7 +24,6 @@ const IsAncestorInSet = (elem: Node, set: Set<string>): boolean => {
   if (!edge) return false;
 
   const parentNode = edge.fromNode;
-
   if (set.has(parentNode.id)) return true;
 
   return IsAncestorInSet(parentNode, set);

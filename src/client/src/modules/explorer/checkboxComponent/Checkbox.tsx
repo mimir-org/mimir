@@ -6,17 +6,12 @@ interface Props {
   project: Project;
   inputLabel: string;
 }
-export const Checkbox = ({ node, project, inputLabel }: Props) => {
-  const isHidden = node?.isHidden ?? false;
-  const handleChange = ChangeNodeDisplay(node, project);
-
-  return (
-    <label className={"checkbox"}>
-      <input type="checkbox" checked={!isHidden} onChange={handleChange} />
-      <span className="checkmark"></span>
-      <label className="checkbox_label">{inputLabel}</label>
-    </label>
-  );
-};
+export const Checkbox = ({ node, project, inputLabel }: Props) => (
+  <label className={"checkbox"}>
+    <input type="checkbox" checked={!node?.isHidden ?? false} onChange={ChangeNodeDisplay(node, project)} />
+    <span className="checkmark"></span>
+    <label className="checkbox_label">{inputLabel}</label>
+  </label>
+);
 
 export default Checkbox;

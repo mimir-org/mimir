@@ -2,15 +2,12 @@ import React, { useState } from "react";
 import { Color } from "../../../../compLibrary";
 import { TerminalCategory } from "../../../../components/modules/typeEditorModule/helpers/GetFilteredTerminalsList";
 import { Connector, ConnectorType, TerminalType } from "../../../../models";
-import ActiveTerminalsTypeList from "./ActiveTerminalsTypeList";
+import { ActiveTerminalsTypeList } from "./";
 import { OnCategoryClick, OnTypeClick } from "./handlers";
 import { FilterTerminalCategories, FormatTypeId } from "./helpers";
 import { IsInputTerminal, IsOutputTerminal } from "../../../../components/flow/helpers";
 import { ExpandAccordionIcon, CollapseAccordionIcon } from "../../../../assets/icons/common";
-import {
-  TerminalsListElementWrapper,
-  TerminalsCategoryListElement,
-} from "./styled/activeTerminalList";
+import { TerminalsListElementWrapper, TerminalsCategoryListElement } from "./styled/activeTerminalList";
 
 interface Props {
   terminals: Connector[];
@@ -19,18 +16,12 @@ interface Props {
   onSelectTerminal: (item: Connector) => void;
 }
 
-function ActiveTerminalsList({
-  terminals,
-  terminalCategories,
-  selectedTerminalId,
-  onSelectTerminal,
-}: Props) {
+function ActiveTerminalsList({ terminals, terminalCategories, selectedTerminalId, onSelectTerminal }: Props) {
   const [selectedCategoriesIds, setSelectedCategoriesIds] = useState<string[]>([]);
   const [selectedTypesIds, setSelectedTypesIds] = useState<string[]>([]);
   const filteredCategories = FilterTerminalCategories(terminalCategories, terminals);
 
-  const isCategoryExpanded = (category: TerminalCategory) =>
-    selectedCategoriesIds.includes(category.id);
+  const isCategoryExpanded = (category: TerminalCategory) => selectedCategoriesIds.includes(category.id);
 
   const isTypeExpanded = (type: TerminalType, connectorType: ConnectorType) =>
     selectedTypesIds.includes(FormatTypeId(type, connectorType));
@@ -41,10 +32,7 @@ function ActiveTerminalsList({
     <>
       {filteredCategories.map((category, i) => {
         const categoryExpanded = isCategoryExpanded(category);
-
-        const numCategoryTerminals = terminals.filter(
-          (term) => term.terminalCategoryId === category.id
-        ).length;
+        const numCategoryTerminals = terminals.filter((term) => term.terminalCategoryId === category.id).length;
 
         return (
           <TerminalsListElementWrapper key={category.id}>
@@ -52,12 +40,7 @@ function ActiveTerminalsList({
               isSelected={selectedTerminal?.terminalCategoryId === category.id}
               radius={0}
               onClick={() =>
-                OnCategoryClick(
-                  category,
-                  isCategoryExpanded(category),
-                  selectedCategoriesIds,
-                  setSelectedCategoriesIds
-                )
+                OnCategoryClick(category, isCategoryExpanded(category), selectedCategoriesIds, setSelectedCategoriesIds)
               }
               index={i}
               color={i % 2 ? undefined : Color.LightPurple}
@@ -74,13 +57,11 @@ function ActiveTerminalsList({
             {categoryExpanded &&
               category.items.map((terminalType) => {
                 const inputTerminals = terminals.filter(
-                  (terminal) =>
-                    terminal.terminalTypeId === terminalType.id && IsInputTerminal(terminal)
+                  (terminal) => terminal.terminalTypeId === terminalType.id && IsInputTerminal(terminal)
                 );
 
                 const outputTerminals = terminals.filter(
-                  (terminal) =>
-                    terminal.terminalTypeId === terminalType.id && IsOutputTerminal(terminal)
+                  (terminal) => terminal.terminalTypeId === terminalType.id && IsOutputTerminal(terminal)
                 );
 
                 const terminalTypeListProps = {

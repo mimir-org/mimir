@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Mb.Models.Data;
+using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
 
 namespace Mb.Models.Application
@@ -16,5 +17,6 @@ namespace Mb.Models.Application
         public string TerminalTypeId { get; set; }
         public ICollection<Attribute> Attributes { get; set; }
         public ObjectType LibraryType => ObjectType.Transport;
+        public Purpose Purpose { get; set; }
     }
 }

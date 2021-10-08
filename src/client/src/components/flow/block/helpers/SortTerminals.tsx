@@ -2,11 +2,11 @@ import { Connector } from "../../../../models";
 import { IsInputTerminal, IsOutputTerminal } from "../../helpers";
 
 /**
- * Component to sort the order of the terminals displayed on the nodes in BlockView.
+ * Function to sort the order of the terminals displayed on the nodes in BlockView.
  * @param terminals an array of Terminals
  * @returns an ordered list
  */
-const SortTerminals = (terminals: Connector[]) => {
+function SortTerminals(terminals: Connector[]) {
   terminals.sort((a: Connector, b: Connector) => {
     if (a.type < b.type) return -1;
     if (a.type > b.type) return 1;
@@ -18,6 +18,6 @@ const SortTerminals = (terminals: Connector[]) => {
   });
 
   return terminals;
-};
+}
 
 export default SortTerminals;

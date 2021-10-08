@@ -5,7 +5,7 @@ import { TabColumn } from "../../styled";
 import { Input, Textarea } from "../../../../compLibrary";
 import { EnumBase, Node, Project } from "../../../../models";
 import { GetRdsId, GetReferenceDesignation } from "../../../../assets/helpers";
-import { IsLocation } from "../../../../components/flow/helpers";
+import { IsLocation, IsProduct } from "../../../../components/flow/helpers";
 import { IsBlockView } from "../../../../components/flow/block/helpers";
 import { changeNodeValue } from "../../../../redux/store/project/actions";
 import { Dropdown } from "../../../../compLibrary/dropdown/mimir";
@@ -103,6 +103,13 @@ const AdminContent = ({ node, project, statuses }: Props) => {
           <div>{TextResources.Inspector_Admin_Version}</div>
           <Input value={node.version ?? ""} onChange={(e: Event) => onChange("version", e.target.value)} inputType="" />
         </div>
+        {IsProduct(node) && (
+          <div>
+            <div>{TextResources.Inspector_Admin_Cost}</div>
+            <Input value={node.cost ?? ""} onChange={(e: Event) => onChange("cost", e.target.value)} inputType="" />
+          </div>
+        )}
+
         {IsLocation(node) && IsBlockView() && (
           <div>
             <div>{TextResources.Inspector_Admin_Length}</div>

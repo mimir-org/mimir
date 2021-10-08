@@ -1,41 +1,29 @@
 import { SortTerminals } from ".";
 import { Connector, Node } from "../../../../models";
-import {
-  IsFunction,
-  IsInputTerminal,
-  IsLocation,
-  IsLocationTerminal,
-  IsOutputTerminal,
-  IsTransportTerminal,
-} from "../../helpers";
+import { IsLocation, IsLocationTerminal, IsTransportTerminal } from "../../helpers";
 
 /**
  * Component to filter the terminals displayed on the nodes in BlockView.
- * @param node the selected node
+ * @param n the selected node
  * @param splitView is splitView activated
+ * @param splitNode selected SplitNode, if any
  * @returns a call to SortTerminals that sorts the filtered list.
  */
-const FilterTerminals = (node: Node, splitView: boolean) => {
-  let filteredTerminals: Connector[] = [];
-  if (node === undefined) return [];
+const FilterTerminals = (n: Node, splitView: boolean, splitNode: Node) => {
+  let terminals: Connector[] = [];
+  if (n === undefined) return [];
 
-  if (splitView) {
-    node.connectors?.forEach((conn) => {
-      if (IsFunction(node)) {
-        IsOutputTerminal(conn) && IsLocationTerminal(conn) && filteredTerminals.push(conn);
-      } else if (IsLocation(node)) {
-        IsInputTerminal(conn) && IsLocationTerminal(conn) && filteredTerminals.push(conn);
-      }
-    });
-  }
-
-  if (!splitView) {
-    node.connectors?.forEach((conn) => {
-      if (IsFunction(node)) IsTransportTerminal(conn) && filteredTerminals.push(conn);
-      else if (IsLocation(node)) IsLocationTerminal(conn) && IsInputTerminal(conn) && filteredTerminals.push(conn);
-    });
-  }
-  return SortTerminals(filteredTerminals);
+  n.connectors?.forEach((c) => {
+    validate(n, splitNode, c, splitView) && terminals.push(c);
+  });
+  return SortTerminals(terminals);
 };
+
+function validate(n: Node, splitNode: Node, c: Connector, splitView: boolean) {
+  if (!splitView) return (IsLocation(n) && IsLocationTerminal(c)) || IsTransportTerminal(c);
+  if (splitView && splitNode && IsLocation(splitNode)) return IsLocationTerminal(c);
+
+  return IsTransportTerminal(c);
+}
 
 export default FilterTerminals;

@@ -4,7 +4,7 @@
  * @returns a number used by the styled component HandleBox.
  */
 const SetTerminalYPos = (count: number, isParent: boolean) => {
-  const base = 50; // Middle position
+  const base = 40; // Middle position
   const interval = isParent ? 3 : 22; // Default vertical distance between each terminal
 
   if (count === 0 || count === 1) return base;
