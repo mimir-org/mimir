@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using AngleSharp.Dom;
 using Mb.Models.Application;
 using Mb.Models.Enums;
 using VDS.RDF;
@@ -64,25 +63,36 @@ namespace RdfParserModule
 
                 if (terms is null) { continue; }
 
+                funcObj.Terminals = terms;
                 foreach (var term in terms)
                 {
-                    funcObj.Terminals.Add(term);
-                    if (term.ConnectedToId is null) continue;
-                    var edge = new ParserEdge()
-                    {
-                        FromConnectorId = term.Id,
-                        ToConnectorId = term.ConnectedToId,
-                        FromNodeId = funcObj.Id,
-                        MasterProjectId = Graph.Id
-                    };
-
-                    var pred = new string[] { "imf:hasTerminal", "imf:hasOutputTerminal", "imf:hasInputTerminal" };
-                    var toNodeList = GetSubjects(pred, term.ConnectedToId, true);
-
-                    if (toNodeList is null ) continue;
-                    edge.ToNodeId = toNodeList.First().ToString();
                     
-                    Graph.Edges.Add(edge);
+
+                    //var edge = new ParserEdge()
+                    //{
+                    //    FromConnectorId = term.Id,
+                    //    FromNodeId = funcObj.Id,
+                    //    MasterProjectId = Graph.Id
+                    //};
+
+                    //funcObj.Terminals.Add(term);
+                    //if (term.ToConnectorId != null)
+                    //{
+                    //    edge.ToConnectorId = term.ToConnectorId;
+                    //    var pred = new string[] { "imf:hasTerminal", "imf:hasOutputTerminal", "imf:hasInputTerminal" };
+                    //    var toNodeList = GetSubjects(pred, term.ToConnectorId, true);
+
+                    //    if (toNodeList is null) continue;
+                    //    edge.ToNodeId = toNodeList.First().ToString();
+                    //}
+
+                    //if (term.FromConnectorId != null)
+                    //{
+                    //    edge.FromConnectorId = term.FromConnectorId;
+                    //    Console.WriteLine("FromConnectorId is not null? SHould you deal with me?");
+                    //}
+
+                    //Graph.Edges.Add(edge);
                 }
                 Graph.Nodes.Add(funcObj);
             }
@@ -121,7 +131,7 @@ namespace RdfParserModule
             {
                 var n = new NodeAm()
                 {
-                    Id = node.Id,
+                    Id = node.NormalId,
                     Name = node.Name,
                     Version = node.Version,
                     IsLocked = node.IsLocked,
@@ -146,58 +156,57 @@ namespace RdfParserModule
                 {
                     var c = new ConnectorAm()
                     {
-                        Id = term.Id,
+                        Id = term.NormalId,
                         Name = term.Name,
                         Type = (term.Type == "Input") ? ConnectorType.Input : ConnectorType.Output,
-                        Attributes = new List<AttributeAm>()
+                        Attributes = new List<AttributeAm>(),
+                        RelationType = term.Relation
                     };
 
                     n.Connectors.Add(c);
                 }
                 nodes.Add(n);
             }
-
-
-
-
+            
             var edges = Graph.Edges.Select(edge => new EdgeAm()
                 {
                     FromConnectorId = edge.FromConnectorId,
                     ToConnectorId = edge.ToConnectorId,
-                    FromNodeId = edge.FromNodeId,
-                    ToNodeId = edge.ToNodeId,
-                    MasterProjectId = edge.MasterProjectId
+                    FromNodeId = NormaliseID(edge.FromNodeId),
+                    ToNodeId = NormaliseID(edge.ToNodeId),
+                    MasterProjectId = Graph.NormalId
                 })
                 .ToList();
 
             var transports = GetTransports();
             var transportEdges = transports.Select(edge => new EdgeAm()
             {
-                FromConnectorId = edge.FromConnectorId,
-                ToConnectorId = edge.ToConnectorId,
-                FromNodeId = edge.FromNodeId,
-                ToNodeId = edge.ToNodeId,
-                MasterProjectId = edge.MasterProjectId,
-                Transport = new TransportAm()
-                {
-                    Id = edge.Transport.Id,
-                    Name = edge.Transport.Name,
-                    InputTerminal = new TerminalAm()
-                    {
-                        Id = edge.InputTerminal.Id,
-                        Type = ConnectorType.Input,
-                        NodeId = edge.InputTerminal.NodeId,
-                        Name = edge.InputTerminal.Name
-                    },
-                    OutputTerminal = new TerminalAm()
-                    {
-                        Id = edge.OutputTerminal.Id,
-                        Type = ConnectorType.Output,
-                        NodeId = edge.OutputTerminal.NodeId,
-                        Name = edge.OutputTerminal.Name
-                    }
-                }
+                FromConnectorId = NormaliseID(edge.FromConnectorId),
+                ToConnectorId = NormaliseID(edge.ToConnectorId),
+                FromNodeId = NormaliseID(edge.FromNodeId),
+                ToNodeId = NormaliseID(edge.ToNodeId),
+                MasterProjectId = NormaliseID(edge.MasterProjectId),
+                //Transport = new TransportAm()
+                //{
+                //    Id = NormaliseID(edge.Transport.Id),
+                //    Name = edge.Transport.Name,
+                //    InputTerminal = new TerminalAm()
+                //    {
+                //        Id = NormaliseID(edge.InputTerminal.Id),
+                //        Type = ConnectorType.Input,
+                //        NodeId = NormaliseID(edge.InputTerminal.NodeId),
+                //        Name = edge.InputTerminal.Name
+                //    },
+                //    OutputTerminal = new TerminalAm()
+                //    {
+                //        Id = NormaliseID(edge.OutputTerminal.Id),
+                //        Type = ConnectorType.Output,
+                //        NodeId = NormaliseID(edge.OutputTerminal.NodeId),
+                //        Name = edge.OutputTerminal.Name
+                //    }
+                //}
             }).ToList();
+
 
             edges.AddRange(transportEdges);
 
@@ -220,8 +229,8 @@ namespace RdfParserModule
             var label = GetObjects(projectId.ToString(), "rdfs:label").First();
             //var version = Store.GetTriplesWithSubjectPredicate(projectId, RdfGraph.CreateUriNode("owl:versionInfo"));
             var version = GetObjects(projectId.ToString(), "owl:versionInfo").First();
-
-            Graph.Id = projectId.ToString();
+            
+            Graph.Id = NormaliseID(projectId.ToString());
             Graph.Label = label.ToString();
             Graph.Name = label.ToString();
             Graph.Version = version.ToString();
@@ -359,21 +368,24 @@ namespace RdfParserModule
                 {
                     Id = obj.ToString(),
                     NormalId = NormaliseID(obj.ToString()),
-                    Relation = "hasInputTerminal",
                     Type = "Input",
                     SemanticReference = obj.ToString(),
-                    NodeId = nodeId
+                    NodeId = NormaliseID(nodeId),
+                    Relation = RelationType.PartOf
 
                 }).ToList();
+
+                // Den som INPUT er connectedTo er jo FromConnectorId
+                // Og den som OUTPUT er connectedTo er ToConnectorId
 
                 var outTerms = GetObjects(nodeId, "imf:hasOutputTerminal").Select(obj => new ParserTerminal
                 {
                     Id = obj.ToString(),
                     NormalId = NormaliseID(obj.ToString()),
-                    Relation = "hasOutputTerminal",
+                    Relation = RelationType.PartOf,
                     Type = "Output",
                     SemanticReference = obj.ToString(),
-                    NodeId = nodeId
+                    NodeId = NormaliseID(nodeId)
 
                 }).ToList();
 
@@ -383,13 +395,13 @@ namespace RdfParserModule
                     var connection = GetObjects(o.Id, "imf:connectedTo");
                     if (connection != null)
                     {
-                        o.ConnectedToId = connection.First().ToString();
+                        o.ToConnectorId = connection.First().ToString();
                     }
                     var label = GetObjects(o.Id, "rdfs:label");
                     if (label == null) continue;
 
                     o.Label = label[0].ToString();
-                    o.Name = o.Label;
+                    o.Name = o.Label.Replace(" Output", "").Replace(" Input", "");
                 }
 
                 foreach (var o in inTerms)
@@ -398,13 +410,13 @@ namespace RdfParserModule
                     var connection = GetObjects(o.Id, "imf:connectedTo");
                     if (connection != null)
                     {
-                        o.ConnectedToId = connection.First().ToString();
+                        o.FromConnectorId = connection.First().ToString();
                     }
                     var label = GetObjects(o.Id, "rdfs:label");
 
                     if (label == null) continue;
                     o.Label = label[0].ToString();
-                    o.Name = o.Label;
+                    o.Name = o.Label.Replace(" Output", "").Replace(" Input", "");
                 }
                 outTerms.AddRange(inTerms);
 
@@ -430,7 +442,8 @@ namespace RdfParserModule
                 IsTransport = true,
                 StatusId = "4590637F39B6BA6F39C74293BE9138DF",
                 Version = "0.0",
-                Terminals = new List<ParserTerminal>()
+                Terminals = new List<ParserTerminal>(),
+                MasterProjectId = Graph.NormalId
             }).ToList();
 
 
@@ -454,20 +467,24 @@ namespace RdfParserModule
                 foreach (var term in terms)
                 {
                     node.Terminals.Add(term);
- 
-                    if (term.ConnectedToId is null) continue;
-  
+
                     if (term.Type == "Input") { edge.InputTerminal = term; }
                     else { edge.OutputTerminal = term; }
 
-                    var termPred = new string[] { "imf:hasTerminal", "imf:hasOutputTerminal", "imf:hasInputTerminal" };
-                    var toNodeList = GetSubjects(termPred, term.ConnectedToId, true);
+                    if (term.FromConnectorId != null)
+                    {
+                        edge.FromConnectorId = term.FromConnectorId; 
+                    }
 
+                    if (term.ToConnectorId != null)
+                    {
+                        edge.ToConnectorId = term.ToConnectorId;
 
-                    if (toNodeList is null) continue;
-                    edge.ToNodeId = toNodeList.First().ToString();
-
-                   
+                        var termPred = new string[] { "imf:hasTerminal", "imf:hasOutputTerminal", "imf:hasInputTerminal" };
+                        var toNodeList = GetSubjects(termPred, term.ToConnectorId, true);
+                        if (toNodeList is null) continue;
+                        edge.ToNodeId = toNodeList.First().ToString();
+                    }
                 }
                 edges.Add(edge);
             }
