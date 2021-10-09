@@ -1,5 +1,5 @@
 import * as Click from "./handlers";
-import * as Icons from "../../assets/icons/common/header";
+import * as Icons from "../../assets/icons/header";
 import { RootState } from "../../redux/store";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";

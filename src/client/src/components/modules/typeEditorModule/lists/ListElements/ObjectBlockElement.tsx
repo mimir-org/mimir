@@ -2,9 +2,11 @@ import { useState } from "react";
 import { AddTerminalComponent } from "../";
 import { TextResources } from "../../../../../assets/text";
 import { CreateId } from "../../../../flow/helpers";
-import { AddIcon, DeleteIcon } from "../../../../../assets/icons/common";
+import { AddIcon } from "../../../../../assets/icons/type";
 import { ConnectorType, TerminalType, TerminalTypeItem } from "../../../../../models";
 import { TerminalListElement, TerminalCategoryWrapper, AddTerminalWrapper } from "../../styled";
+import { DeleteIcon } from "../../../../../assets/icons/delete";
+
 interface Props {
   name: string;
   terminalTypes: TerminalType[];
@@ -15,7 +17,6 @@ interface Props {
 
 export const ObjectBlockElement = ({ name, categoryId, terminalTypes, onChange, defaultTerminals }: Props) => {
   const [expandCategory, setExpandCategory] = useState(true);
-
   const terminalsQuantity = defaultTerminals?.length;
 
   const defaultTerminal = {

@@ -7,10 +7,8 @@ const HeaderBox = styled.div`
 
   .icon {
     position: absolute;
-    right: 5px;
-    top: 5px;
-    width: 18px;
-    height: 18px;
+    right: 10px;
+    top: 10px;
     cursor: pointer;
   }
 `;

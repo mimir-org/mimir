@@ -2,6 +2,8 @@ import { useState } from "react";
 import { TerminalType } from "../../../../../models";
 import { ListType, RoundCheckbox } from "../../inputs/RoundCheckbox";
 import { TerminalListElement, TerminalCategoryWrapper } from "../../styled";
+import { ExpandIcon, CollapseIcon } from "../../../../../assets/icons/chevron";
+import { TextResources } from "../../../../../assets/text";
 import {
   SearchBarWrapper,
   SearchBarContainer,
@@ -9,8 +11,6 @@ import {
   SearchBarList,
   SearchBarListItem,
 } from "../../../../../compLibrary/";
-import { ExpandIcon, CollapseIcon } from "../../../../../assets/icons/common";
-import { TextResources } from "../../../../../assets/text";
 
 interface Props {
   categoryName: string;

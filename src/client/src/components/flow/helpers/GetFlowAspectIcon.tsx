@@ -1,4 +1,4 @@
-import * as Icons from "../../../assets/icons/common/aspects";
+import * as Icons from "../../../assets/icons/aspects";
 import { Aspect } from "../../../models";
 
 const GetFlowAspectIcon = (aspect: Aspect) => {

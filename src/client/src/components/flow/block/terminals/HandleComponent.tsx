@@ -4,7 +4,7 @@ import { GetBlockHandleType } from "../../block/helpers";
 import { IsValidConnection } from "./helpers";
 import { HandleBox } from "./styled";
 import { GetHandlePosition, IsInputTerminal, SetTerminalYPos } from "../../helpers";
-import { ConnectorIcon } from "../../../../assets/icons/blockView";
+import { ConnectorIcon } from "../../../../assets/icons/connectors";
 import { Color } from "../../../../compLibrary";
 
 interface Props {

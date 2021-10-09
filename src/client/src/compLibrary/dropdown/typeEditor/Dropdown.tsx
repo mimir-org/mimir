@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { ExpandIcon, CollapseIcon } from "../../../assets/icons/common";
+import { ExpandIcon, CollapseIcon } from "../../../assets/icons/chevron";
 import { LocationTypeCategory } from "../../../components/modules/typeEditorModule/styled";
 import { Symbol } from "../../symbol";
 import { DropdownMenuWrapper, DropdownMenuHeader, DropdownMenuList, DropdownMenuListItem } from "./styled";

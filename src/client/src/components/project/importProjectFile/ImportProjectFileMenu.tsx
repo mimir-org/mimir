@@ -3,7 +3,7 @@ import { RootState } from "../../../redux/store";
 import { MENU_TYPE } from "../../../models/project";
 import { FileData } from "../../../models";
 import { ProjectAm } from "../../../redux/sagas/project/ConvertProject";
-import { CloseIcon } from "../../../assets/icons/common";
+import { CloseIcon } from "../../../assets/icons/close";
 import { TextResources } from "../../../assets/text";
 import { Size } from "../../../compLibrary";
 import { Button } from "../../../compLibrary/buttons";

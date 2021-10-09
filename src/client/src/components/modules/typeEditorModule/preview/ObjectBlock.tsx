@@ -1,7 +1,7 @@
 import { CreateLibraryType, TerminalType } from "../../../../models";
 import { GetBlockColor, GetBlockHeight, GetBlockPaddingTop } from "./helpers";
-import { TypeEditorTerminalIcon } from "../../../../assets/icons/common";
 import { PreviewObjectBlock, InfoWrapper, InputOutputTerminals, Terminals } from "../styled";
+import { ConnectorIcon } from "../../../../assets/icons/connectors";
 
 interface Props {
   createLibraryType: CreateLibraryType;
@@ -23,7 +23,7 @@ export const ObjectBlock = ({ createLibraryType, rdsName, inputTerminals, output
       inputTerminals?.forEach((t, index) => {
         terminalsArray.push(
           <span key={index}>
-            <TypeEditorTerminalIcon style={{ fill: t.color }} />
+            <ConnectorIcon style={{ fill: t.color }} />
           </span>
         );
       });
@@ -31,7 +31,7 @@ export const ObjectBlock = ({ createLibraryType, rdsName, inputTerminals, output
       outputTerminals?.forEach((t, index) => {
         terminalsArray.push(
           <span key={index}>
-            <TypeEditorTerminalIcon style={{ fill: t.color }} />
+            <ConnectorIcon style={{ fill: t.color }} />
           </span>
         );
       });

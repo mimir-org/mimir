@@ -2,7 +2,7 @@ import { useState } from "react";
 import { LibCategory } from "../../models/project";
 import { ObjectType } from "../../models";
 import { GetObjectIcon, GetAspectColor } from "../../assets/helpers";
-import { ExpandIcon, CollapseIcon } from "../../assets/icons/common";
+import { ExpandIcon, CollapseIcon } from "../../assets/icons/chevron";
 import {
   LibraryCategory,
   LibraryCategoryElement,

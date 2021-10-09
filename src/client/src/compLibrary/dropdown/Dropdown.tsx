@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { ExpandIcon, CollapseIcon } from "../../assets/icons/common";
+import { ExpandIcon, CollapseIcon } from "../../assets/icons/chevron";
 import { LocationTypeCategory } from "../../components/modules/typeEditorModule/styled";
 import { Symbol } from "../symbol";
 import { DropdownMenuWrapper, DropdownMenuHeader, DropdownMenuList, DropdownMenuListItem } from "./styled";
@@ -89,35 +89,33 @@ const Dropdown = ({
   };
 
   return (
-    <>
-      <DropdownMenuWrapper disabled={disabled}>
-        <label htmlFor={label} />
-        <div className="label"> {label}</div>
-        <div onClick={disabled ? null : (e) => setIsListOpen(!isListOpen)}>
-          <DropdownMenuHeader>
-            {selectedItem && (
-              <>
-                {valueImageProp && <Symbol base64={selectedItem[valueImageProp]} text={selectedItem[valueProp]} />}
-                <p>{selectedItem.name}</p>
-                <img src={isListOpen ? ExpandIcon : CollapseIcon} alt="expand-icon" />
-              </>
-            )}
-          </DropdownMenuHeader>
-        </div>
-        {isListOpen && (
-          <DropdownMenuList>
-            {items?.map((category) => {
-              return (
-                <div key={category.name}>
-                  {hasCategory && getCategory(category)}
-                  {getItems(category.items)}
-                </div>
-              );
-            })}
-          </DropdownMenuList>
-        )}
-      </DropdownMenuWrapper>
-    </>
+    <DropdownMenuWrapper disabled={disabled}>
+      <label htmlFor={label} />
+      <div className="label"> {label}</div>
+      <div onClick={disabled ? null : (e) => setIsListOpen(!isListOpen)}>
+        <DropdownMenuHeader>
+          {selectedItem && (
+            <>
+              {valueImageProp && <Symbol base64={selectedItem[valueImageProp]} text={selectedItem[valueProp]} />}
+              <p>{selectedItem.name}</p>
+              <img src={isListOpen ? ExpandIcon : CollapseIcon} alt="expand-icon" />
+            </>
+          )}
+        </DropdownMenuHeader>
+      </div>
+      {isListOpen && (
+        <DropdownMenuList>
+          {items?.map((category) => {
+            return (
+              <div key={category.name}>
+                {hasCategory && getCategory(category)}
+                {getItems(category.items)}
+              </div>
+            );
+          })}
+        </DropdownMenuList>
+      )}
+    </DropdownMenuWrapper>
   );
 };
 

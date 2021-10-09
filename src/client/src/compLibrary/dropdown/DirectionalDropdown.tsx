@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ExpandIcon, CollapseIcon } from "../../assets/icons/common";
+import { ExpandIcon, CollapseIcon } from "../../assets/icons/chevron";
 import { DropdownContainer, DropdownHeader, DropdownList } from "..";
 import { ConnectorType } from "../../models";
 
@@ -21,42 +21,40 @@ const DirectionalDropdown = ({ defaultValue, onChange }: Props) => {
   }, [defaultValue]);
 
   return (
-    <>
-      <DropdownContainer>
-        <label htmlFor="direction" />
-        <DropdownHeader onClick={() => setIsListOpen(!isListOpen)}>
-          <p>{selected}</p>
-          <img
-            src={isListOpen ? ExpandIcon : CollapseIcon}
-            alt="expand-icon"
-            onClick={(e) => setIsListOpen(!isListOpen)}
-            className="icon"
-          />
-        </DropdownHeader>
+    <DropdownContainer>
+      <label htmlFor="direction" />
+      <DropdownHeader onClick={() => setIsListOpen(!isListOpen)}>
+        <p>{selected}</p>
+        <img
+          src={isListOpen ? ExpandIcon : CollapseIcon}
+          alt="expand-icon"
+          onClick={(e) => setIsListOpen(!isListOpen)}
+          className="icon"
+        />
+      </DropdownHeader>
 
-        {isListOpen && (
-          <DropdownList>
-            {Object.keys(ConnectorType)
-              .filter(stringIsNumber)
-              .map((item) => {
-                return (
-                  <div
-                    key={item}
-                    className="dropdown_listitem"
-                    onClick={() => {
-                      setSelected(ConnectorType[item]);
-                      setIsListOpen(false);
-                      onChange(item);
-                    }}
-                  >
-                    {ConnectorType[item]}
-                  </div>
-                );
-              })}
-          </DropdownList>
-        )}
-      </DropdownContainer>
-    </>
+      {isListOpen && (
+        <DropdownList>
+          {Object.keys(ConnectorType)
+            .filter(stringIsNumber)
+            .map((item) => {
+              return (
+                <div
+                  key={item}
+                  className="dropdown_listitem"
+                  onClick={() => {
+                    setSelected(ConnectorType[item]);
+                    setIsListOpen(false);
+                    onChange(item);
+                  }}
+                >
+                  {ConnectorType[item]}
+                </div>
+              );
+            })}
+        </DropdownList>
+      )}
+    </DropdownContainer>
   );
 };
 

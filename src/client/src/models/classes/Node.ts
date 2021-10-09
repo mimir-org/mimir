@@ -52,7 +52,6 @@ class Node {
 
   area(): number {
     if (!this.length || !this.width) return 0;
-
     return this.length * this.width;
   }
 

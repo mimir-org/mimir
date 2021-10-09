@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { PredefinedAttribute } from "../../../../../models";
 import { Checkbox } from "../../inputs";
+import { ExpandIcon, CollapseIcon } from "../../../../../assets/icons/chevron";
+import { OnMultipleValuesChange, OnSingleValueChange } from "./helpers";
+import { Label } from "../../inputs/Checkbox";
 import {
   TerminalListElement,
   TerminalCategoryWrapper,
@@ -9,9 +12,6 @@ import {
   ValuesListWrapper,
   ValuesListItem,
 } from "../../styled";
-import { ExpandIcon, CollapseIcon } from "../../../../../assets/icons/common";
-import { OnMultipleValuesChange, OnSingleValueChange } from "./helpers";
-import { Label } from "../../inputs/Checkbox";
 
 interface Props {
   attributeName: string;
@@ -23,7 +23,6 @@ interface Props {
 
 export const PredefinedLocationElement = ({ attributeName, values, isMultiSelect, defaultValue, onChange }: Props) => {
   const [expandList, setExpandList] = useState(false);
-
   const isSelected = defaultValue.some((a) => a.key === attributeName);
 
   const locationAttribute = {

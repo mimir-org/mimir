@@ -4,8 +4,8 @@ import { ObjectBlock } from "./ObjectBlock";
 import { ListLabel, ListWrapper } from "../../../../compLibrary";
 import { PreviewArea, InfoWrapper } from "../styled";
 import { IsFunction, IsLocation, IsProduct, IsObjectBlock, IsTransport, IsInterface, GetListLabel } from "..//helpers";
-import { ReactComponent as TransportIcon } from "../../../../assets/icons/common/transport.svg";
-import { ReactComponent as InterfaceIcon } from "../../../../assets/icons/common/interface.svg";
+import { ReactComponent as TransportIcon } from "../../../../assets/icons/transport.svg";
+import { ReactComponent as InterfaceIcon } from "../../../../assets/icons/interface.svg";
 
 interface Props {
   createLibraryType: CreateLibraryType;

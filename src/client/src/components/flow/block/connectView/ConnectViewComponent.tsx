@@ -1,6 +1,6 @@
 import * as Click from "./handlers";
 import { Node } from "../../../../models";
-import { FunctionConnectMenu, ProductConnectMenu } from "../../../../assets/icons/blockView/connectView";
+import { FunctionConnectMenu, ProductConnectMenu } from "../../../../assets/icons/connectView";
 import { TextResources } from "../../../../assets/text";
 import { CalculateMenuPos } from "./helpers/position";
 import { ConnectViewBox, Menu, Element, Footer } from "./styled";

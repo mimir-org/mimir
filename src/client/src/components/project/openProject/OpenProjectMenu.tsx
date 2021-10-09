@@ -3,7 +3,7 @@ import { SearchBar, ProjectList } from ".";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { MENU_TYPE } from "../../../models/project";
-import { CloseIcon } from "../../../assets/icons/common";
+import { CloseIcon } from "../../../assets/icons/close";
 import { Button } from "../../../compLibrary/buttons";
 import { TextResources } from "../../../assets/text";
 import { useState } from "react";

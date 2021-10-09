@@ -1,6 +1,9 @@
-import * as ProjectIcons from "../../assets/icons/common/project";
+import * as ProjectIcons from "../../assets/icons/project";
 import { TextResources } from "../../assets/text";
-import { LogoutIcon, RightArrowIcon, CloseIcon, ValidateIcon } from "../../assets/icons/common";
+import { ValidateIcon } from "../../assets/icons/";
+import { RightArrowIcon } from "../../assets/icons/arrow";
+import { CloseIcon } from "../../assets/icons/close";
+import { LogoutIcon } from "../../assets/icons/login";
 
 const GetButtonIcon = (type: string) => {
   if (type === TextResources.Account_Logout) return LogoutIcon;

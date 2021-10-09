@@ -1,10 +1,10 @@
 import { Dispatch } from "redux";
-import { CloseParameterFilterIconComponent } from "../../../../assets/icons/common";
 import { CombinedAttribute, Composite, Connector, Node } from "../../../../models";
 import { Parameter } from "./";
 import { DoesCombinationMatchAttribute } from "./helpers";
 import { Body, Entity, Box } from "./styled";
 import { CombinationDropdown } from "./CombinationDropdown";
+import { RemoveIconComponent } from "../../../../assets/icons/close";
 import {
   OnChangeParameterValue,
   OnChangeFilterChoice,
@@ -43,7 +43,7 @@ function ParameterRow({
       <Entity width={191}>
         <Box color={bodyColor} id="ParametersBox">
           <div className="icon">
-            <CloseParameterFilterIconComponent
+            <RemoveIconComponent
               width={26}
               height={26}
               fill={headerColor}

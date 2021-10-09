@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { ProjectState } from "../../../redux/store/project/types";
 import { MENU_TYPE } from "../../../models/project";
-import { CloseIcon } from "../../../assets/icons/common";
+import { CloseIcon } from "../../../assets/icons/close";
 import { TextResources } from "../../../assets/text";
 import { useState } from "react";
 import { Input, Label, Size } from "../../../compLibrary";
