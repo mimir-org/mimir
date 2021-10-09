@@ -7,7 +7,7 @@ import { VIEW_TYPE } from "../../models/project";
 import { MenuMainHeader } from "../../compLibrary/box/menus";
 import { ProjectState } from "../../redux/store/project/types";
 import { IsExplorer, IsLibrary } from "../flow/helpers";
-import { HeaderBox, OptionsBox, LogoBox, OptionsElement, MenuBar } from "../../compLibrary/box/header/";
+import { HeaderBox, OptionsBox, LogoBox, OptionsElement, ToolBar } from "../../compLibrary/box/header/";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -33,7 +33,8 @@ const Header = () => {
           <img src={Icons.Mimir} alt="mimir-icon" onClick={() => Click.OnDarkMode(dispatch, darkMode)} />
         </LogoBox>
       </HeaderBox>
-      <MenuBar id="MenuBar" isLibraryOpen={libraryOpen} isExplorerOpen={explorerOpen}>
+
+      <ToolBar id="ToolBar" isLibraryOpen={libraryOpen} isExplorerOpen={explorerOpen}>
         <OptionsBox>
           <OptionsElement>
             <img src={Icons.Filter} alt="VisualFilter" onClick={() => Click.OnFilter(dispatch, filterMenuOpen)} />
@@ -56,7 +57,7 @@ const Header = () => {
             />
           </OptionsElement>
         </OptionsBox>
-      </MenuBar>
+      </ToolBar>
     </>
   );
 };

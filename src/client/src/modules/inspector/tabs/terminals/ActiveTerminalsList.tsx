@@ -6,7 +6,7 @@ import { ActiveTerminalsTypeList } from "./";
 import { OnCategoryClick, OnTypeClick } from "./handlers";
 import { FilterTerminalCategories, FormatTypeId } from "./helpers";
 import { IsInputTerminal, IsOutputTerminal } from "../../../../components/flow/helpers";
-import { ExpandAccordionIcon, CollapseAccordionIcon } from "../../../../assets/icons/";
+import { ExpandAccordionIcon, CollapseAccordionIcon } from "../../../../assets/icons/toogle";
 import { TerminalsListElementWrapper, TerminalsCategoryListElement } from "./styled/activeTerminalList";
 
 interface Props {

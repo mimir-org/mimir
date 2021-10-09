@@ -1,5 +1,5 @@
 import "./getIcon.scss";
-import { SearchIcon } from "../../../assets/icons/";
+import { SearchIcon } from "../../../assets/icons/common";
 
 interface Props {
   icon: string;

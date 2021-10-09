@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Color, Size } from "../..";
 
-const MenuBar = styled.div`
+const ToolBar = styled.div`
   background-color: ${Color.White};
   color: ${Color.Black};
   height: 40px;
@@ -20,4 +20,4 @@ const MenuBar = styled.div`
     props.isExplorerOpen ? Size.ModuleOpen + Size.Margin : Size.ModuleClosed + Size.Margin}px;
 `;
 
-export default MenuBar;
+export default ToolBar;

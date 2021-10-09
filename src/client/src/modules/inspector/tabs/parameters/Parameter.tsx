@@ -5,7 +5,7 @@ import { Color, FontSize } from "../../../../compLibrary";
 import { ParameterBox, ParameterHeader } from "./styled/parameter";
 import { Dropdown as CompDropdown } from "../../../../compLibrary/dropdown/mimir";
 import { Attribute, CombinedAttribute } from "../../../../models";
-import { WarningIcon, HelpIcon } from "../../../../assets/icons/";
+import { WarningIcon, HelpIcon } from "../../../../assets/icons/common";
 import { LockClosedParameterComponent, LockOpenComponent } from "../../../../assets/icons/lock";
 import { CloseIcon } from "../../../../assets/icons/close";
 

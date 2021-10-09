@@ -5,7 +5,7 @@ const SetDarkModeColor = (dark: boolean) => {
   let moduleColor: string;
 
   const root = document.getElementById("root");
-  const menuBar = document.getElementById("MenuBar");
+  const menuBar = document.getElementById("ToolBar");
   const explorer = document.getElementById("ExplorerModule");
   const library = document.getElementById("LibraryModule");
   const legend = document.getElementById("LegendModule");

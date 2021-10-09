@@ -1,6 +1,6 @@
 import * as ProjectIcons from "../../assets/icons/project";
 import { TextResources } from "../../assets/text";
-import { ValidateIcon } from "../../assets/icons/";
+import { ValidateIcon } from "../../assets/icons/common";
 import { RightArrowIcon } from "../../assets/icons/arrow";
 import { CloseIcon } from "../../assets/icons/close";
 import { LogoutIcon } from "../../assets/icons/login";
