@@ -1,6 +1,6 @@
 import * as Click from "./handlers";
 import { Node } from "../../../../models";
-import { ConnectMenuIcon } from "../../../../assets/icons/connectView";
+import { ConnectFunctionMenu, ConnectProductMenu } from "../../../../assets/icons/connectView";
 import { TextResources } from "../../../../assets/text";
 import { CalculateMenuPos } from "./helpers/position";
 import { ConnectViewBox, Menu, Element, Footer } from "./styled";
@@ -42,11 +42,7 @@ const ConnectViewComponent = ({
       visible={connectBox && children.length > 0}
       onClick={() => Click.OnConnectMenu(showConnectMenu, visible)}
     >
-      <ConnectMenuIcon
-        style={{
-          fill: IsFunction(node) ? Color.FunctionSelected : Color.ProductSelected,
-        }}
-      />
+      <img src={IsFunction(node) ? ConnectFunctionMenu : ConnectProductMenu} alt="menu" />
     </ConnectViewBox>
 
     {visible && (

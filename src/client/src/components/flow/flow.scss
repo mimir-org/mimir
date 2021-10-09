@@ -6,8 +6,8 @@
 .react-flow__node-Product,
 .react-flow__node-Location {
   border-radius: 10px;
-  width: 130px;
-  height: 80px;
+  width: 120px;
+  height: 75px;
   font-size: 11px;
   color: #222;
   text-align: center;
@@ -43,24 +43,21 @@
 
 .react-flow__node-Function {
   background: #fef445;
-  &.selected,
-  &:hover {
+  &.selected {
     border: 3px solid #fbc913 !important;
   }
 }
 
 .react-flow__node-Product {
   background: #47dde6;
-  &.selected,
-  &:hover {
+  &.selected {
     border: 3px solid #069098 !important;
   }
 }
 
 .react-flow__node-Location {
   background: #fa00ff;
-  &.selected,
-  &:hover {
+  &.selected {
     border: 3px solid #a300a7 !important;
   }
 }
