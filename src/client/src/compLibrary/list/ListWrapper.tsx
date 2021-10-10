@@ -7,8 +7,8 @@ const ListWrapper = styled.div`
   font-size: ${FontSize.Small};
   font-weight: ${FontWeight.Normal};
   flex: ${(props: { wide: number }) => (props.wide === undefined ? 1 : props.wide)};
-  height: ${(props: { height: number }) => (props.height === undefined ? `345px` : props.height + `px`)};
-  margin-right: ${(props: { right: number }) => (props.right === undefined ? `15px` : props.right)};
+  height: ${(props: { height: number }) => (props.height === undefined ? 523 : props.height)}px;
+  margin-right: ${(props: { right: number }) => (props.right === undefined ? 15 : props.right)}px;
   opacity: ${(props: { disabled: boolean }) => (props.disabled ? 0.4 : 1)};
 `;
 
