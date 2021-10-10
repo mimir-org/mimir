@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { LibBody, SearchIconBox } from "../../compLibrary/box/library";
-import { TypeEditorModule } from "../../components/modules/typeEditorModule";
+import { TypeEditorModule } from "../../typeEditor";
 
 interface Props {
   categories: LibraryCategory[];
