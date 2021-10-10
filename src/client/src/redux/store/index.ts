@@ -2,7 +2,7 @@ import storage from "redux-persist/lib/storage";
 import createSagaMiddleware from "redux-saga";
 import { combineReducers, createStore, compose, applyMiddleware } from "redux";
 import { libraryReducer } from "./library/reducers";
-import { typeEditorReducer } from "./typeEditor/reducers";
+import { typeEditorReducer } from "../../typeEditor/redux/reducers";
 import { userReducer } from "./user/reducers";
 import { projectReducer } from "./project/reducers";
 import { inspectorReducer } from "../../modules/inspector/redux/tabs/reducers";

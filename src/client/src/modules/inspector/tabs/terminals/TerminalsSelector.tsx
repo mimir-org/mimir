@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TerminalCategory } from "../../../../components/modules/typeEditorModule/helpers/GetFilteredTerminalsList";
+import { TerminalCategory } from "../../../../typeEditor/helpers/GetFilteredTerminalsList";
 import { Connector } from "../../../../models";
 import { ActiveTerminalsList, TerminalsSearchBar } from "./";
 import { FilterBySearchString } from "./helpers";

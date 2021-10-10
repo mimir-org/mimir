@@ -15,7 +15,7 @@ import { CreateTreeElements } from "../creators";
 import { LibraryState } from "../../../redux/store/library/types";
 import { setModuleVisibility } from "../../../redux/store/modules/actions";
 import { MODULE_TYPE } from "../../../models/project";
-import { getBlobData } from "../../../redux/store/typeEditor/actions";
+import { getBlobData } from "../../../typeEditor/redux/actions";
 import { SetPanelHeight } from "../../../modules/inspector/helpers";
 import { updatePosition, setActiveNode, setActiveEdge, setActiveBlockNode } from "../../../redux/store/project/actions";
 import { changeInspectorHeight } from "../../../modules/inspector/redux/height/actions";
