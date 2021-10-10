@@ -1,5 +1,5 @@
-import { Dictionary } from "../../../models/project";
-import { ApiError } from "../../../models/webclient";
+import { Dictionary } from "../../models/project";
+import { ApiError } from "../../models/webclient";
 import {
   AttributeType,
   CreateLibraryType,
@@ -13,7 +13,7 @@ import {
   BlobData,
   LibraryFilter,
   CompositeType,
-} from "../../../models";
+} from "../../models";
 
 export const FETCHING_INITIAL_DATA = "FETCHING_INITIAL_DATA";
 export const FETCHING_INITIAL_SUCCESS_OR_ERROR = "FETCHING_INITIAL_SUCCESS_OR_ERROR";

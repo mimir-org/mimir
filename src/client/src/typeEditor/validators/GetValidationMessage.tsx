@@ -1,6 +1,5 @@
 import { TextResources } from "../../assets/text";
-import { TypeEditorState } from "../../redux/store/typeEditor/types";
-// import { ValidateTerminalType } from "./";
+import { TypeEditorState } from "../redux/types";
 import { IsFunction, IsInterface, IsLocation, IsNotSet, IsObjectBlock, IsTransport } from "../helpers";
 
 const GetValidationMessage = (state: TypeEditorState) => {

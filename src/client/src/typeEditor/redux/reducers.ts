@@ -1,5 +1,5 @@
 import * as Types from "./types";
-import { CreateLibraryType, Aspect, ObjectType, BlobData, TerminalTypeItem, PredefinedAttribute } from "../../../models";
+import { CreateLibraryType, Aspect, ObjectType, BlobData, TerminalTypeItem, PredefinedAttribute } from "../../models";
 
 const initialState: Types.TypeEditorState = {
   visible: false,

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { TypeEditorState } from "../redux/store/typeEditor/types";
+import { TypeEditorState } from "./redux/types";
 import { ListType } from "./TypeEditorList";
 import { CloseIcon } from "../assets/icons/close";
 import { CheckIcon } from "../assets/icons/checkmark";
@@ -28,7 +28,7 @@ import {
   updateTerminalType,
   removeTerminalTypeByCategory,
   saveLibraryType,
-} from "../redux/store/typeEditor/actions";
+} from "./redux/actions";
 import {
   TypeEditorWrapper,
   TypeEditorContent,

@@ -1,5 +1,5 @@
 import * as Types from "./types";
-import { TerminalTypeItem, Aspect, CreateLibraryType, LibraryFilter } from "../../../models";
+import { TerminalTypeItem, Aspect, CreateLibraryType, LibraryFilter } from "../../models";
 
 export function getInitialData(): Types.TypeEditorActionTypes {
   return {

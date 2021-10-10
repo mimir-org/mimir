@@ -9,7 +9,7 @@ import { ProjectState } from "../../redux/store/project/types";
 import { LibraryState } from "../../redux/store/library/types";
 import { UserState } from "../../redux/store/user/types";
 import { CommonState } from "../../redux/store/common/types";
-import { TypeEditorState } from "../../redux/store/typeEditor/types";
+import { TypeEditorState } from "../../typeEditor/redux/types";
 import { Login } from "../../compLibrary/box/menus";
 import { LoginIcon } from "../../assets/icons/login";
 import { TextResources } from "../../assets/text";

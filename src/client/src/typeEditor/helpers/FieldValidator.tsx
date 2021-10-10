@@ -1,4 +1,4 @@
-import { TypeEditorState } from "../../redux/store/typeEditor/types";
+import { TypeEditorState } from "../redux/types";
 import { Aspect, ObjectType } from "../../models";
 import { IsFunction, IsLocation, IsObjectBlock, IsTransport, IsInterface } from ".";
 
