@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { TerminalTypeItem, ConnectorType } from "../../../../../../models";
 import { AddTerminalElement } from "../../../styled";
 import { TextResources } from "../../../../../../assets/text";
@@ -32,10 +31,6 @@ const AddTerminal = ({ terminals, defaultTerminal, onChange }: Props) => {
     onChange("update", defaultTerminal);
   };
 
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [defaultTerminal]);
-
   return (
     <AddTerminalElement>
       <NumericValueInput value={defaultTerminal.number.toString()} onChange={(item: number) => onQuantityChange(item)} />
@@ -46,8 +41,8 @@ const AddTerminal = ({ terminals, defaultTerminal, onChange }: Props) => {
         list={terminals as SearchDropDownItem[]}
       />
       <DirectionalDropdown
-        onChange={(item: ConnectorType) => onDirectionChange(item)}
-        defaultValue={defaultTerminal.connectorType}
+        onChange={(item: number) => onDirectionChange(item)}
+        value={defaultTerminal ? Number(defaultTerminal.connectorType) : Number(ConnectorType.Input)}
       />
       <button onClick={() => onChange("remove", defaultTerminal)}>
         <img src={CloseIcon} alt="delete" className="delete-icon" />
