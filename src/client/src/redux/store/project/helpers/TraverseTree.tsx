@@ -1,12 +1,7 @@
 import { IsPartOfTerminal } from "../../../../components/flow/helpers";
 import { Edge, Node } from "../../../../models";
 
-const TraverseTree = (
-  edgeList: Edge[],
-  nodeList: Node[],
-  parentNode: Node,
-  elements: (Node | Edge)[]
-) => {
+const TraverseTree = (edgeList: Edge[], nodeList: Node[], parentNode: Node, elements: (Node | Edge)[]) => {
   let children: Node[] = [];
 
   edgeList.forEach((edge) => {
