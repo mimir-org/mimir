@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Color } from "../..";
 
-const LibraryElementIcon = styled.div`
+const LibElementIcon = styled.div`
   display: flex;
   margin-right: 7px;
   width: 20px;
@@ -16,4 +16,4 @@ const LibraryElementIcon = styled.div`
   }
 `;
 
-export default LibraryElementIcon;
+export default LibElementIcon;

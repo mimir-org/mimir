@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const LibraryCategoryElement = styled.span`
+const LibCategoryElement = styled.span`
   display: flex;
   position: relative;
   padding: 7px 30px 7px 0px;
@@ -10,4 +10,4 @@ const LibraryCategoryElement = styled.span`
   width: 80%;
 `;
 
-export default LibraryCategoryElement;
+export default LibCategoryElement;

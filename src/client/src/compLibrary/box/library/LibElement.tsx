@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import { Color, FontSize } from "../../";
+import { Color, FontSize } from "../..";
 
-const LibraryElement = styled.div`
+const LibElement = styled.div`
   width: 286px;
   height: 36px;
-  border: ${props => props.active ?  "1px solid black" : "1px solid" + Color.DarkerGrey};
-  border-style: ${props => props.active ?  "dashed" : "default"};
+  border: ${(props) => (props.active ? "1px solid black" : "1px solid" + Color.DarkerGrey)};
+  border-style: ${(props) => (props.active ? "dashed" : "default")};
   border-radius: 3px;
   background-color: ${Color.White};
   margin: 0px 0px 5px 0px;
@@ -18,4 +18,4 @@ const LibraryElement = styled.div`
   cursor: pointer;
 `;
 
-export default LibraryElement;
+export default LibElement;

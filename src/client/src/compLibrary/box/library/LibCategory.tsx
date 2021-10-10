@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Color, FontSize } from "../../";
 
-const LibraryCategory = styled.div`
+const LibCategory = styled.div`
   width: 284px;
   height: 35px;
   border: 2px solid ${Color.Black};
@@ -20,4 +20,4 @@ const LibraryCategory = styled.div`
   user-select: none;
 `;
 
-export default LibraryCategory;
+export default LibCategory;
