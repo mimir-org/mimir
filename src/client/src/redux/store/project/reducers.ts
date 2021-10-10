@@ -70,9 +70,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         ...state,
         fetching: true,
         creating: false,
-        apiError: state.apiError
-          ? state.apiError.filter((elem) => elem.key !== Types.FETCHING_PROJECT)
-          : state.apiError,
+        apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== Types.FETCHING_PROJECT) : state.apiError,
       };
 
     case Types.FETCHING_PROJECT_SUCCESS_OR_ERROR:
@@ -89,9 +87,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         ...state,
         fetching: false,
         creating: true,
-        apiError: state.apiError
-          ? state.apiError.filter((elem) => elem.key !== Types.CREATING_PROJECT)
-          : state.apiError,
+        apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== Types.CREATING_PROJECT) : state.apiError,
       };
 
     case Types.CREATING_PROJECT_SUCCESS_OR_ERROR:

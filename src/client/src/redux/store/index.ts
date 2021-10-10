@@ -8,7 +8,7 @@ import { projectReducer } from "./project/reducers";
 import { inspectorReducer } from "../../modules/inspector/redux/tabs/reducers";
 import { inspectorHeightReducer } from "../../modules/inspector/redux/height/reducers";
 import { moduleReducer } from "./modules/reducers";
-import { menuReducer } from "./projectMenu/reducers";
+import { menuReducer } from "../../components/menus/project/redux/reducers";
 import { commonReducer } from "./common/reducers";
 import { flowReducer } from "./flow/reducers";
 import { splitViewReducer } from "./splitView/reducers";
