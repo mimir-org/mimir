@@ -3,8 +3,9 @@ import { ListType } from "../TypeEditorList";
 import { ObjectBlock } from "./ObjectBlock";
 import { ListLabel, ListWrapper } from "../../../../compLibrary";
 import { PreviewArea, InfoWrapper } from "../styled";
-import { IsFunction, IsLocation, IsProduct, IsObjectBlock, IsTransport, IsInterface, GetListLabel } from "..//helpers";
 import { TransportIcon, InterfaceIcon } from "../../../../assets/icons/type";
+import { IsFunction, IsLocation, IsProduct, IsObjectBlock, IsTransport, IsInterface, GetListLabel } from "../helpers";
+import { IsTransportOrInterface } from "./helpers";
 
 interface Props {
   createLibraryType: CreateLibraryType;
@@ -33,18 +34,12 @@ export const TypePreview = ({ createLibraryType, rds, terminal, inputTerminals, 
     return null;
   };
 
-  const transportOrInterface = () => {
-    if (IsFunction(createLibraryType?.aspect)) {
-      return IsTransport(createLibraryType?.objectType) || IsInterface(createLibraryType?.objectType);
-    }
-    return false;
-  };
   return (
     <ListWrapper height={150} right={0}>
-      <ListLabel>{GetListLabel(ListType.Preview, createLibraryType)}</ListLabel>
+      <ListLabel preview={true}>{GetListLabel(ListType.Preview, createLibraryType)}</ListLabel>
       <PreviewArea>
         {showObjectBlock()}
-        {transportOrInterface() && (
+        {IsTransportOrInterface(createLibraryType) && (
           <InfoWrapper>
             <p>{rds?.name}</p>
             <p>{createLibraryType?.name}</p>
