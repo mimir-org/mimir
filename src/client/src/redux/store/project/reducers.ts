@@ -70,12 +70,11 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         ...state,
         fetching: true,
         creating: false,
-        apiError: state.apiError
-          ? state.apiError.filter((elem) => elem.key !== Types.FETCHING_PROJECT)
-          : state.apiError,
+        apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== Types.FETCHING_PROJECT) : state.apiError,
       };
 
     case Types.FETCHING_PROJECT_SUCCESS_OR_ERROR:
+    case Types.CREATING_PROJECT_SUCCESS_OR_ERROR:
       return {
         ...state,
         fetching: false,
@@ -89,18 +88,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         ...state,
         fetching: false,
         creating: true,
-        apiError: state.apiError
-          ? state.apiError.filter((elem) => elem.key !== Types.CREATING_PROJECT)
-          : state.apiError,
-      };
-
-    case Types.CREATING_PROJECT_SUCCESS_OR_ERROR:
-      return {
-        ...state,
-        fetching: false,
-        creating: false,
-        project: action.payload.project ?? state.project,
-        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
+        apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== Types.CREATING_PROJECT) : state.apiError,
       };
 
     case Types.DELETE_PROJECT_ERROR:
@@ -428,6 +416,8 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
       };
 
     case Types.IMPORT_PROJECT_SUCCESS_OR_ERROR:
+    case Types.LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR:
+    case Types.LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR:
       return {
         ...state,
         fetching: false,
@@ -451,13 +441,6 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
               : x
           ),
         },
-      };
-
-    case Types.LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR:
-      return {
-        ...state,
-        fetching: false,
-        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
 
     case Types.LOCK_UNLOCK_NODE_ATTRIBUTE:
@@ -485,9 +468,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
 
     case Types.LOCK_UNLOCK_TERMINAL_ATTRIBUTE: {
       const { id, isLocked, terminalId } = action.payload;
-
       let [node, terminal] = FindTerminalAndNode(state.project.nodes, terminalId);
-
       if (!node || !terminal) return { ...state };
 
       return {
@@ -519,13 +500,6 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         },
       };
     }
-
-    case Types.LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR:
-      return {
-        ...state,
-        fetching: false,
-        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
-      };
 
     default:
       return state;

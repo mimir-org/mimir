@@ -8,7 +8,7 @@ import { TypeEditorState } from "../../redux/store/typeEditor/types";
 import { RootState } from "../../redux/store";
 import { ErrorBox, ErrorItem, ErrorHeaderBox } from ".";
 import { ProjectBody } from "../../compLibrary/box/project";
-import { CloseIcon } from "../../assets/icons/common";
+import { CloseIcon } from "../../assets/icons/close";
 import { TextResources } from "../../assets/text";
 import { BadRequestData } from "../../models/webclient";
 import { deleteProjectError } from "../../redux/store/project/actions";

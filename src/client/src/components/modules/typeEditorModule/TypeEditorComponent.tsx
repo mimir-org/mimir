@@ -3,11 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { TypeEditorState } from "../../../redux/store/typeEditor/types";
 import { ListType } from "./TypeEditorList";
-import { CheckIcon, CloseIcon } from "../../../assets/icons/common";
+import { CloseIcon } from "../../../assets/icons/close";
+import { CheckIcon } from "../../../assets/icons/checkmark";
 import { TextResources } from "../../../assets/text";
 import { GetInputTerminals, GetOutputTerminals } from "./preview/helpers";
 import { TypeEditorList, TypeEditorInputs, TypePreview, TypeEditorInspector } from "./";
-import { LibraryIcon } from "../../../assets/icons/common/modules";
+import { LibraryIcon } from "../../../assets/icons/modules";
 import {
   GetSelectedRds,
   GetSelectedTerminal,

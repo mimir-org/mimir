@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Color, FontSize } from "../..";
-import { ExpandIcon, CollapseIcon } from "../../../assets/icons/common";
+import { ExpandIcon, CollapseIcon } from "../../../assets/icons/chevron";
 import { Symbol } from "../../symbol";
 import { DropdownMenuWrapper, DropdownMenuHeader, DropdownMenuList, DropdownMenuListItem } from "./styled";
 

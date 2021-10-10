@@ -1,4 +1,4 @@
-import { ExpandIcon, CollapseIcon } from "../../../assets/icons/common";
+import { ExpandIcon, CollapseIcon } from "../../../assets/icons/chevron";
 import { Node, Project } from "../../../models";
 import { IsAspectNode } from "../../../components/flow/helpers";
 import { AspectBox } from "../../../compLibrary/box/aspect";

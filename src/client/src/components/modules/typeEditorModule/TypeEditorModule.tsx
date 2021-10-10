@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { ObjectType } from "../../../models";
 import { TextResources } from "../../../assets/text";
-import { NewTypeIcon, EditTypeIcon } from "../../../assets/icons/common";
+import { NewTypeIcon, EditTypeIcon } from "../../../assets/icons/type";
 import { TypeEditorBox, TypeEditorBoxContent } from "../../../compLibrary/box";
 import { getSelectedNode, openTypeEditor } from "../../../redux/store/typeEditor/actions";
 import { GetLibraryType } from "./helpers";

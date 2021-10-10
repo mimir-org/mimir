@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ExpandIcon, CollapseIcon } from "../../assets/icons/common";
+import { ExpandIcon, CollapseIcon } from "../../assets/icons/chevron";
 import {
   SearchDropDownItem,
   SearchBarWrapper,

@@ -10,8 +10,8 @@ import { LibraryState } from "../../redux/store/library/types";
 import { UserState } from "../../redux/store/user/types";
 import { CommonState } from "../../redux/store/common/types";
 import { TypeEditorState } from "../../redux/store/typeEditor/types";
-import { Login } from "../../modules/account";
-import { LoginIcon } from "../../assets/icons/common";
+import { Login } from "../../compLibrary/box/menus";
+import { LoginIcon } from "../../assets/icons/login";
 import { TextResources } from "../../assets/text";
 
 // MSAL imports

@@ -1,7 +1,7 @@
 import { TerminalTypeItem, ConnectorType } from "../../../../../../models";
 import { AddTerminalElement } from "../../../styled";
 import { TextResources } from "../../../../../../assets/text";
-import { CloseIcon } from "../../../../../../assets/icons/common";
+import { CloseIcon } from "../../../../../../assets/icons/close";
 import {
   NumericValueInput,
   SearchDropDown,

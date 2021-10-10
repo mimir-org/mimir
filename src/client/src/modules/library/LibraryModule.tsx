@@ -14,7 +14,7 @@ import { MODULE_TYPE } from "../../models/project";
 import { GetSelectedNode } from "../../components/flow/helpers";
 import { OnLibraryClick, OnLegendClick } from "./handlers";
 import { Project } from "../../models";
-import { LegendIcon, LibraryIcon } from "../../assets/icons/common/modules";
+import { LegendIcon, LibraryIcon } from "../../assets/icons/modules";
 
 /**
  * Component for Mimir's type library and Legend Module (to be removed).
