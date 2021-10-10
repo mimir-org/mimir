@@ -8,6 +8,7 @@ export { default as IsObjectBlock } from "./IsObjectBlock";
 export { default as IsNotSet } from "./IsNotSet";
 
 export { default as GetAspects } from "./GetAspects";
+export { default as GetObjectTypeDescription } from "./GetObjectTypeDescription";
 export { default as GetObjectTypes } from "./GetObjectTypes";
 export { default as GetPurposes } from "./GetPurposes";
 export { default as GetDefaultValue } from "./GetDefaultValue";

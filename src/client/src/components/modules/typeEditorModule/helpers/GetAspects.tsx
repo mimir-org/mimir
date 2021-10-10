@@ -1,11 +1,12 @@
-import { DropDownItem } from "../../../../compLibrary/dropdown/Dropdown";
+import { DropDownItem } from "../../../../compLibrary/dropdown/typeEditor/Dropdown";
 import { Aspect } from "../../../../models";
+import { CreateId } from "../../../flow/helpers";
 
-const stringIsNumber = (value) => isNaN(Number(value)) === false;
+const stringIsNumber = (value: any) => isNaN(Number(value)) === false;
 
 const GetAspects = (): DropDownItem[] => {
   const categories = [] as DropDownItem[];
-  categories.push({ name: "Aspect", items: [] } as DropDownItem);
+  categories.push({ id: CreateId(), name: "Aspect", description: "Aspect", image: null, items: [] });
 
   Object.keys(Aspect)
     .filter(stringIsNumber)
@@ -13,6 +14,9 @@ const GetAspects = (): DropDownItem[] => {
       categories[0].items.push({
         id: item,
         name: Aspect[item],
+        description: Aspect[item],
+        image: null,
+        items: [],
       });
     });
 

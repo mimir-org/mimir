@@ -18,8 +18,6 @@ const TypeEditorInputs = ({ onChange, createLibraryType, icons, locationTypes, p
       <Dropdown
         label={TextResources.TypeEditor_Aspect}
         items={GetAspects()}
-        keyProp="id"
-        valueProp="name"
         onChange={(data: any) => onChange("aspect", Number(data))}
         // disabled={FieldValidator(state, "symbol")}
         defaultValue={createLibraryType && createLibraryType.aspect?.toString()}
@@ -28,9 +26,7 @@ const TypeEditorInputs = ({ onChange, createLibraryType, icons, locationTypes, p
       {createLibraryType && !IsLocation(createLibraryType.aspect) && (
         <Dropdown
           label={TextResources.TypeEditor_Object_Type}
-          items={GetObjectTypes()}
-          keyProp="id"
-          valueProp="name"
+          items={GetObjectTypes(createLibraryType.aspect)}
           onChange={(data: any) => onChange("objectType", Number(data))}
           // disabled={FieldValidator(state, "symbol")}
           defaultValue={createLibraryType && createLibraryType.objectType?.toString()}
@@ -42,8 +38,6 @@ const TypeEditorInputs = ({ onChange, createLibraryType, icons, locationTypes, p
           label={TextResources.TypeEditor_Location_Type}
           items={GetLocationTypes(locationTypes)}
           hasCategory={true}
-          keyProp="id"
-          valueProp="name"
           onChange={(data: any) => onChange("locationType", data)}
           // disabled={FieldValidator(state, "symbol")}
           defaultValue={createLibraryType && createLibraryType.locationType && createLibraryType.locationType.toString()}
@@ -53,8 +47,6 @@ const TypeEditorInputs = ({ onChange, createLibraryType, icons, locationTypes, p
       <Dropdown
         label={TextResources.TypeEditor_Purpose}
         items={GetPurposes(purposes)}
-        keyProp="id"
-        valueProp="name"
         onChange={(data: any) => onChange("purpose", data)}
         // disabled={FieldValidator(state, "symbol")}
         defaultValue={createLibraryType && createLibraryType.purpose?.toString()}
@@ -75,9 +67,6 @@ const TypeEditorInputs = ({ onChange, createLibraryType, icons, locationTypes, p
       <Dropdown
         label={TextResources.TypeEditor_Symbol}
         items={GetBlobData(icons)}
-        keyProp="id"
-        valueProp="name"
-        valueImageProp="data"
         onChange={(data: any) => {
           onChange("symbolId", data);
         }}

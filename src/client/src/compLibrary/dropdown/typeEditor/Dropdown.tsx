@@ -5,50 +5,39 @@ import { Symbol } from "../../symbol";
 import { DropdownMenuWrapper, DropdownMenuHeader, DropdownMenuList, DropdownMenuListItem } from "./styled";
 
 export interface DropDownItem {
+  id: string;
   name: string;
-  items: any[];
+  description: string;
+  items: DropDownItem[];
+  image: string;
 }
 
 interface Props {
   label: string;
   items: DropDownItem[];
-  keyProp: string;
-  valueProp: string;
   onChange: Function;
   defaultValue?: string;
-  valueImageProp?: string;
   disabled?: boolean;
   hasCategory?: boolean;
   placeholder?: string;
 }
 
-const Dropdown = ({
-  label,
-  items,
-  keyProp,
-  valueProp,
-  onChange,
-  defaultValue,
-  valueImageProp,
-  disabled,
-  hasCategory,
-  placeholder,
-}: Props) => {
+const Dropdown = ({ label, items, onChange, defaultValue, disabled, hasCategory, placeholder }: Props) => {
   const [isListOpen, setIsListOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedItem, setSelectedItem] = useState(null as DropDownItem);
 
   const findSelectedItem = useCallback(() => {
-    let selected = null as any;
+    let selected = null as DropDownItem;
 
     items?.forEach((x) => {
       x.items?.forEach((y) => {
-        if (y[keyProp] === defaultValue) {
+        if (y.id === defaultValue) {
           selected = y;
         }
       });
     });
     return selected;
-  }, [defaultValue, keyProp, items]);
+  }, [defaultValue, items]);
 
   useEffect(() => {
     if (!items) {
@@ -60,9 +49,9 @@ const Dropdown = ({
       setSelectedItem(_selectedItem);
       return;
     }
-  }, [defaultValue, items, keyProp, findSelectedItem]);
+  }, [defaultValue, findSelectedItem, items]);
 
-  const handleChange = (_e: any, value: any) => {
+  const handleChange = (_e: any, value: DropDownItem) => {
     setSelectedItem(value);
     setIsListOpen(!isListOpen);
     onChange(value.id);
@@ -71,18 +60,18 @@ const Dropdown = ({
   const getCategory = (item: DropDownItem) => {
     return (
       <LocationTypeCategory>
-        <p>{item.name}</p>
+        <p>{item.description}</p>
       </LocationTypeCategory>
     );
   };
 
-  const getItems = (items: any[]) => {
+  const getItems = (items: DropDownItem[]) => {
     return items?.map((item) => {
       return (
-        <div onClick={(e) => handleChange(e, item)} key={item[keyProp]}>
+        <div onClick={(e) => handleChange(e, item)} key={item.id}>
           <DropdownMenuListItem hasCategory={hasCategory}>
-            {valueImageProp && <Symbol base64={item[valueImageProp]} text={item[valueProp]} />}
-            <p>{item.name}</p>
+            {item.image && <Symbol base64={item.image} text={item.description} />}
+            <p>{item.description}</p>
           </DropdownMenuListItem>
         </div>
       );
@@ -98,10 +87,10 @@ const Dropdown = ({
           <DropdownMenuHeader>
             {
               <>
-                {selectedItem && valueImageProp && (
-                  <Symbol base64={selectedItem[valueImageProp]} text={selectedItem[valueProp]} />
+                {selectedItem && selectedItem.image && (
+                  <Symbol base64={selectedItem.image} text={selectedItem.description} />
                 )}
-                <p>{selectedItem?.name ?? placeholder}</p>
+                <p>{selectedItem?.description ?? placeholder}</p>
                 <img src={isListOpen ? ExpandIcon : CollapseIcon} alt="expand-icon" />
               </>
             }
