@@ -67,14 +67,14 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         showInTerminalMenu={showInTerminalMenu}
         showOutTerminalMenu={showOutTerminalMenu}
       />
-      {/* <HandleComponent
+      <HandleComponent
         node={node}
         isParent={true}
         nodes={nodes}
         terminals={FilterTerminals(node, splitView, splitNode)}
         splitView={splitView}
         electro={electro}
-      /> */}
+      />
 
       {splitView && !splitNode && (
         <BlockMessageBox>

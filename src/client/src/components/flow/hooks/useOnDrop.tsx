@@ -9,11 +9,11 @@ import { CreateId, GetSelectedNode, IsInputTerminal, IsOutputTerminal, IsPartOfT
 
 const useOnDrop = (
   project: Project,
-  event,
-  dispatch,
-  setElements,
-  reactFlowInstance,
-  reactFlowWrapper,
+  event: any,
+  dispatch: any,
+  setElements: any,
+  reactFlowInstance: any,
+  reactFlowWrapper: any,
   icons: BlobData[],
   library: LibraryState
 ) => {

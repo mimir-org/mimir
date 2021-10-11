@@ -37,7 +37,6 @@ const FlowBlock = () => {
   const icons = useSelector<RootState>((s) => s.typeEditor.icons) as BlobData[];
   const library = useSelector<RootState>((s) => s.library) as LibraryState;
   const inspectorOpen = useSelector<RootState>((s) => s.modules.types[0].visible) as boolean;
-  const electro = useSelector<RootState>((s) => s.electro.visible) as boolean;
   const node = GetSelectedNode();
   const showBackground = IsLocation(splitNode) || IsLocation(node);
   const project = projectState?.project;
@@ -67,17 +66,6 @@ const FlowBlock = () => {
     event.dataTransfer.dropEffect = "move";
   };
 
-  const onConnectStart = () => {
-    // _event.preventDefault();
-    // console.log({ _event });
-    // console.log({ element });
-    // let test;
-    // project.nodes.forEach((n) => {
-    //   test = n.connectors.find((x) => x.id === element.handleId);
-    // });
-    // console.log("test: ", test);
-  };
-
   const OnNodeDragStop = (_event, activeNode) => {
     return useOnDragStop(_event, activeNode, dispatch);
   };
@@ -102,7 +90,7 @@ const FlowBlock = () => {
   useEffect(() => {
     SetDarkModeColor(darkMode);
     OnLoad(reactFlowInstance);
-  }, [OnLoad, reactFlowInstance, darkMode, electro]);
+  }, [OnLoad, reactFlowInstance, darkMode]);
 
   return (
     <>
@@ -119,12 +107,11 @@ const FlowBlock = () => {
               onDrop={OnDrop}
               onDragOver={OnDragOver}
               onNodeDragStop={OnNodeDragStop}
-              onConnectStart={onConnectStart}
               onElementClick={OnElementClick}
               zoomOnScroll={false}
               paneMoveable={false}
-              onClick={(e) => OnBlockClick(e, dispatch, project)}
               zoomOnDoubleClick={false}
+              onClick={(e) => OnBlockClick(e, dispatch, project)}
               onlyRenderVisibleElements={true}
             >
               <FullScreenComponent />

@@ -27,8 +27,8 @@ const HandleComponent = ({ node, nodes, terminals, isParent, splitView, electro 
 
   return (
     <>
-      {terminals.map((conn: Connector) => {
-        const [type, pos] = GetBlockHandleType(conn, node.isSelected, splitView, electro);
+      {terminals.map((conn) => {
+        const [type, pos] = GetBlockHandleType(conn, node?.isSelected, splitView, electro);
         IsInputTerminal(conn) ? inputCount++ : outputCount++;
 
         return (
@@ -36,16 +36,15 @@ const HandleComponent = ({ node, nodes, terminals, isParent, splitView, electro 
             top={SetTopPos(pos, electro, isParent, inputCount, outputCount)}
             left={SetLeftPos(pos, electro, isParent, inputCount, outputCount)}
             visible={conn.visible}
-            id={"handle-z" + conn.id}
-            key={"keyz-" + conn.id}
+            id={"handle-" + conn.id}
+            key={"key-" + conn.id}
           >
             <ConnectorIcon style={{ fill: conn.color ?? Color.Terminal_Default }} className={className} />
             <Handle
-              key={"key-" + conn.id}
               type={type}
               style={electro ? { marginLeft: "7px" } : { marginRight: "7px", marginTop: "7px" }}
               position={pos}
-              id={"handle-" + conn.id}
+              id={conn.id}
               className={className}
               isValidConnection={(connection) => IsValidConnection(connection, nodes, terminals)}
             />

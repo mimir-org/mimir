@@ -1,5 +1,5 @@
 import { FlowElement } from "react-flow-renderer";
-import { Connector, Edge, Node } from "../../../models";
+import { Edge, Node } from "../../../models";
 import { EdgeType, EDGE_TYPE } from "../../../models/project";
 import { IsTransportTerminal } from "../helpers";
 
@@ -9,23 +9,16 @@ import { IsTransportTerminal } from "../helpers";
  * @param position
  * @returns a FlowElement
  */
-const ConvertEdgeToFlow = (
-  edge: Edge,
-  edgeType: EdgeType,
-  sourceNode: Node,
-  targetNode: Node,
-  fromConn: Connector,
-  toConn: Connector
-) => {
+const ConvertEdgeToFlow = (edge: Edge, edgeType: EdgeType, sourceNode: Node, targetNode: Node) => {
   return {
     id: edge.id,
     type: edgeType,
-    source: sourceNode?.id,
-    target: targetNode?.id,
-    sourceHandle: fromConn?.id,
-    targetHandle: toConn?.id,
+    source: edge.fromNodeId,
+    target: edge.toNodeId,
+    sourceHandle: edge.fromConnectorId,
+    targetHandle: edge.toConnectorId,
     arrowHeadType: null,
-    animated: edgeType === EDGE_TYPE.TRANSPORT || IsTransportTerminal(fromConn),
+    animated: edgeType === EDGE_TYPE.TRANSPORT || IsTransportTerminal(edge.fromConnector),
     label: "",
     data: {
       source: sourceNode,
