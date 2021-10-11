@@ -8,6 +8,7 @@ using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
+using Mb.Models.Extensions;
 using VDS.RDF;
 using VDS.RDF.Ontology;
 using VDS.RDF.Parsing;
@@ -377,7 +378,7 @@ namespace RdfParserModule
 
                 }).ToList();
 
-                //var (termCatId, termTypeId) = metode("Information", "Telenet");
+                var (termCatId, termTypeId) = "Telenet".CreateCategoryIdAndTerminalTypeId("Information");
 
                 //var termCat = new TerminalCategory
                 //{
