@@ -18,5 +18,10 @@
     "name": "Rating",
     "description": null,
     "semanticReference": null
+  },
+  {
+    "name": "Required",
+    "description": null,
+    "semanticReference": null
   }
 ]

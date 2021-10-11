@@ -8,7 +8,11 @@ interface Props {
   node: Node;
   inputLabel: string;
 }
-
+/**
+ * Checkbox used in the Explorer in BlockView
+ * @param interface
+ * @returns a checkbox
+ */
 export const CheckboxBlock = ({ node, inputLabel }: Props) => {
   const dispatch = useDispatch();
   const splitView = useSelector<RootState>((state) => state.splitView.visible) as boolean;
@@ -19,7 +23,11 @@ export const CheckboxBlock = ({ node, inputLabel }: Props) => {
 
   return (
     <label className={"checkbox"}>
-      <input type="checkbox" checked={isChecked} onChange={() => OnCheckboxChange(dispatch, splitView, node)} />
+      <input
+        type="checkbox"
+        checked={isChecked}
+        onChange={() => OnCheckboxChange(dispatch, splitView, node, selectedNode)}
+      />
       <span className="checkmark"></span>
       <label className="checkbox_label">{inputLabel}</label>
     </label>

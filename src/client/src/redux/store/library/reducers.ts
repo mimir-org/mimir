@@ -18,9 +18,7 @@ export function libraryReducer(state = initialState, action: Types.LibraryAction
         nodeTypes: [],
         transportTypes: [],
         interfaceTypes: [],
-        apiError: state.apiError
-          ? state.apiError.filter((elem) => elem.key !== Types.FETCHING_LIBRARY)
-          : state.apiError,
+        apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== Types.FETCHING_LIBRARY) : state.apiError,
       };
     case Types.FETCHING_LIBRARY_SUCCESS_OR_ERROR:
       return {
@@ -46,6 +44,7 @@ export function libraryReducer(state = initialState, action: Types.LibraryAction
       };
 
     case Types.EXPORT_LIBRARY_SUCCESS_OR_ERROR:
+    case Types.IMPORT_LIBRARY_SUCCESS_OR_ERROR:
       return {
         ...state,
         fetching: false,
@@ -57,13 +56,6 @@ export function libraryReducer(state = initialState, action: Types.LibraryAction
         ...state,
         fetching: true,
         apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== Types.IMPORT_LIBRARY) : state.apiError,
-      };
-
-    case Types.IMPORT_LIBRARY_SUCCESS_OR_ERROR:
-      return {
-        ...state,
-        fetching: false,
-        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
 
     case Types.FETCHING_LIBRARY_TRANSPORT_TYPES:
@@ -116,9 +108,7 @@ export function libraryReducer(state = initialState, action: Types.LibraryAction
             ? [...state.interfaceTypes, action.payload]
             : state.interfaceTypes,
         nodeTypes:
-          action.payload.libraryType === ObjectType.ObjectBlock
-            ? [...state.nodeTypes, action.payload]
-            : state.nodeTypes,
+          action.payload.libraryType === ObjectType.ObjectBlock ? [...state.nodeTypes, action.payload] : state.nodeTypes,
         transportTypes:
           action.payload.libraryType === ObjectType.Transport
             ? [...state.transportTypes, action.payload]

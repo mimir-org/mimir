@@ -4,18 +4,18 @@ import { ProjectState } from "../../redux/store/project/types";
 import { LibraryState } from "../../redux/store/library/types";
 import { UserState } from "../../redux/store/user/types";
 import { CommonState } from "../../redux/store/common/types";
-import { TypeEditorState } from "../../redux/store/typeEditor/types";
+import { TypeEditorState } from "../../typeEditor/redux/types";
 import { RootState } from "../../redux/store";
 import { ErrorBox, ErrorItem, ErrorHeaderBox } from ".";
 import { ProjectBody } from "../../compLibrary/box/project";
-import { CloseIcon } from "../../assets/icons/common";
+import { CloseIcon } from "../../assets/icons/close";
 import { TextResources } from "../../assets/text";
 import { BadRequestData } from "../../models/webclient";
 import { deleteProjectError } from "../../redux/store/project/actions";
 import { deleteCommonError } from "../../redux/store/common/actions";
 import { deleteLibraryError } from "../../redux/store/library/actions";
 import { deleteUserError } from "../../redux/store/user/actions";
-import { deleteTypeEditorError } from "../../redux/store/typeEditor/actions";
+import { deleteTypeEditorError } from "../../typeEditor/redux/actions";
 
 interface ErrorMessage {
   key: string;

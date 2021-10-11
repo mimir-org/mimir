@@ -1,10 +1,7 @@
-import { TerminalCategory } from "../../../../../components/modules/typeEditorModule/helpers/GetFilteredTerminalsList";
+import { TerminalCategory } from "../../../../../typeEditor/helpers/GetFilteredTerminalsList";
 import { Connector } from "../../../../../models";
 
-export const FilterTerminalCategories = (
-  terminalCategories: TerminalCategory[],
-  terminals: Connector[]
-) =>
+export const FilterTerminalCategories = (terminalCategories: TerminalCategory[], terminals: Connector[]) =>
   terminalCategories
     .filter((cat) => terminals.find((term) => term.terminalCategoryId === cat.id))
     .map((cat) => ({

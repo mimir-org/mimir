@@ -132,6 +132,11 @@ namespace Mb.Core.Services
                                     JsonConvert.DeserializeObject<ICollection<Unit>>(attribute.UnitString);
 
                         }
+
+                        if (!string.IsNullOrEmpty(node.PurposeString))
+                        {
+                            node.Purpose = JsonConvert.DeserializeObject<Purpose>(node.PurposeString);
+                        }
                     }
 
                     if (node.Connectors != null)
@@ -684,7 +689,10 @@ namespace Mb.Core.Services
                 StatusId = "4590637F39B6BA6F39C74293BE9138DF",
                 IsRoot = true,
                 MasterProjectId = projectId,
-                Aspect = aspect
+                Aspect = aspect,
+                Length = null,
+                Height = null,
+                Cost = null
             };
 
             var connector = new Relation

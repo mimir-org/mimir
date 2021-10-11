@@ -1,8 +1,8 @@
 import { MENU_TYPE } from "../../../../models/project";
-import { changeMenu } from "../../../../redux/store/projectMenu/actions";
+import { changeActiveMenu } from "../../../menus/project/redux/actions";
 
 const OnCreateClick = (dispatch: any) => {
-  dispatch(changeMenu(MENU_TYPE.CREATE_PROJECT_MENU, true));
+  dispatch(changeActiveMenu(MENU_TYPE.CREATE_PROJECT_MENU));
 };
 
 export default OnCreateClick;

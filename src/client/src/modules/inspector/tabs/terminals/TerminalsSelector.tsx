@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { TerminalCategory } from "../../../../components/modules/typeEditorModule/helpers/GetFilteredTerminalsList";
+import { TerminalCategory } from "../../../../typeEditor/helpers/GetFilteredTerminalsList";
 import { Connector } from "../../../../models";
-import ActiveTerminalsList from "./ActiveTerminalsList";
+import { ActiveTerminalsList, TerminalsSearchBar } from "./";
 import { FilterBySearchString } from "./helpers";
 import { TerminalsColumn } from "./styled";
-import TerminalsSearchBar from "./TerminalsSearchBar";
 
 interface Props {
   terminals: Connector[];
@@ -13,14 +12,8 @@ interface Props {
   onSelectTerminal: (item: any) => void;
 }
 
-function TerminalsSelector({
-  terminals,
-  terminalCategories,
-  selectedTerminalId,
-  onSelectTerminal,
-}: Props) {
+function TerminalsSelector({ terminals, terminalCategories, selectedTerminalId, onSelectTerminal }: Props) {
   const [searchString, setSearchString] = useState("");
-
   const filteredTerminals = FilterBySearchString(terminals, terminalCategories, searchString);
 
   const onChange = (value: string) => {

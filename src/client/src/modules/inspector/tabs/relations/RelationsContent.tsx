@@ -12,32 +12,19 @@ interface Props<T> {
   onClick: (item: T) => void;
 }
 
-const RelationsContent = <T extends RelationItem>({
-  items,
-  label,
-  getName,
-  getColor,
-  onClick,
-}: Props<T>) => {
-  return (
-    <RelationsColumn>
-      <RelationsHeader>{label}</RelationsHeader>
-      <TerminalList hasItems={items.length > 0}>
-        {items?.map((item, i) => {
-          return (
-            <ListElement
-              onClick={() => onClick(item)}
-              index={i}
-              key={item.id}
-              color={getColor(item)}
-            >
-              {getName(item)}
-            </ListElement>
-          );
-        })}
-      </TerminalList>
-    </RelationsColumn>
-  );
-};
+const RelationsContent = <T extends RelationItem>({ items, label, getName, getColor, onClick }: Props<T>) => (
+  <RelationsColumn>
+    <RelationsHeader>{label}</RelationsHeader>
+    <TerminalList hasItems={items.length > 0}>
+      {items?.map((item, i) => {
+        return (
+          <ListElement onClick={() => onClick(item)} index={i} key={item.id} color={getColor(item)}>
+            {getName(item)}
+          </ListElement>
+        );
+      })}
+    </TerminalList>
+  </RelationsColumn>
+);
 
 export default RelationsContent;

@@ -14,7 +14,7 @@ import {
   FETCHING_BLOB_DATA_SUCCESS_OR_ERROR,
   FETCHING_SIMPLE_TYPES_SUCCESS_OR_ERROR,
   TypeEditorActionTypes,
-} from "../../store/typeEditor/types";
+} from "../../../typeEditor/redux/types";
 
 export function* saveType(action) {
   try {

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
+using Newtonsoft.Json;
 
 namespace Mb.Models.Data
 {
@@ -16,6 +17,7 @@ namespace Mb.Models.Data
         public string SemanticReference { get; set; }
         public Aspect Aspect { get; set; }
 
+        [JsonIgnore]
         public ICollection<LibraryType> LibraryTypes { get; set; }
     }
 }

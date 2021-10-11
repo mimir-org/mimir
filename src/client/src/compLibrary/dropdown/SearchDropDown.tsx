@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ExpandIcon, CollapseIcon } from "../../assets/icons/common";
+import { ExpandIcon, CollapseIcon } from "../../assets/icons/chevron";
 import {
   SearchDropDownItem,
   SearchBarWrapper,
@@ -61,17 +61,18 @@ const SearchDropDown = ({ value, placeHolder, list, onChange }: Props) => {
             className="icon"
           />
         </SearchBar>
-        <SearchBarList>
-          {isListOpen &&
-            list &&
-            filter.map((item) => {
+
+        {isListOpen && list && (
+          <SearchBarList>
+            {filter.map((item) => {
               return (
                 <SearchBarListItem key={item.id} onClick={(e: any) => valueChanged(e, item.id, item.name)}>
-                  {item.name}
+                  <p>{item.name}</p>
                 </SearchBarListItem>
               );
             })}
-        </SearchBarList>
+          </SearchBarList>
+        )}
       </SearchBarContainer>
     </SearchBarWrapper>
   );

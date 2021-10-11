@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import FontSize from "../font/FontSize";
 import Color from "../colors/Color";
 
 const Textarea = styled.textarea`
@@ -11,7 +12,7 @@ const Textarea = styled.textarea`
   height: ${(props: { height: number }) => props.height}px;
   background-color: ${(props: { readOnly: boolean }) => (props.readOnly ? Color.Grey : Color.White)};
   font-family: inherit;
-  font-size: 14px;
+  font-size: ${FontSize.Standard};
 `;
 
 export default Textarea;

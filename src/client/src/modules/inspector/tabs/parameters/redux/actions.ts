@@ -28,22 +28,14 @@ export function removeAllAttributeFilters(nodeId: string) {
   };
 }
 
-export function addCombinedAttribute(
-  nodeId: string,
-  filterName: string,
-  combination: CombinedAttribute
-) {
+export function addCombinedAttribute(nodeId: string, filterName: string, combination: CombinedAttribute) {
   return {
     type: ADD_COMBINED_ATTRIBUTE,
     payload: { nodeId, filterName, combination },
   };
 }
 
-export function removeCombinedAttribute(
-  nodeId: string,
-  filterName: string,
-  combination: CombinedAttribute
-) {
+export function removeCombinedAttribute(nodeId: string, filterName: string, combination: CombinedAttribute) {
   return {
     type: REMOVE_COMBINED_ATTRIBUTE,
     payload: { nodeId, filterName, combination },

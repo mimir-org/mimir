@@ -1,8 +1,8 @@
 import { MENU_TYPE } from "../../../../models/project";
-import { changeMenu } from "../../../../redux/store/projectMenu/actions";
+import { changeActiveMenu } from "../../../menus/project/redux/actions";
 
 const OnOpenClick = (dispatch: any) => {
-  dispatch(changeMenu(MENU_TYPE.OPEN_PROJECT_MENU, true));
+  dispatch(changeActiveMenu(MENU_TYPE.OPEN_PROJECT_MENU));
 };
 
 export default OnOpenClick;

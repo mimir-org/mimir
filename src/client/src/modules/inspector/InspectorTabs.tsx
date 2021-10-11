@@ -2,6 +2,7 @@ import { InspectorComponent } from ".";
 import { EdgeAdminComponent, EdgeInspectorComponent } from "./edgeInspector";
 import { Project, Node, Edge } from "../../models";
 import { AdminComponent } from "./tabs/admin";
+import { IsProduct } from "../../components/flow/helpers";
 
 interface Props {
   project: Project;
@@ -17,6 +18,7 @@ const InspectorTabs = ({ project, node, edge }: Props) => (
         <InspectorComponent node={node} index={1} />
         <InspectorComponent node={node} index={2} />
         <InspectorComponent node={node} index={3} />
+        {IsProduct(node) && <InspectorComponent node={node} index={4} />}
       </>
     )}
     {edge && (

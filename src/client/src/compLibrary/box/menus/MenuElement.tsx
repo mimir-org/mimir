@@ -2,10 +2,10 @@ import styled from "styled-components";
 import { Color } from "../..";
 
 const MenuElement = styled.div`
-  padding: 6px 12px;
+  padding: 10px 12px 3px 12px;
   margin-top: 5px;
   color: ${Color.BlueMagenta};
-  cursor: ${(props) => !props.logOut && "pointer"};
+  cursor: ${(props: { logOut: boolean }) => !props.logOut && "pointer"};
 
   .text {
     margin-left: 12px;
@@ -20,8 +20,8 @@ const MenuElement = styled.div`
   }
 
   &:hover {
-    background-color: ${(props) => !props.logOut && Color.DarkGrey};
-    text-decoration: ${(props) => !props.logOut && "underline"};
+    background-color: ${(props: { logOut: boolean }) => !props.logOut && Color.DarkGrey};
+    text-decoration: ${(props: { logOut: boolean }) => !props.logOut && "underline"};
   }
 `;
 

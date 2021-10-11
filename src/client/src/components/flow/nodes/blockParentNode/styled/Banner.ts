@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Color } from "../../../../../compLibrary";
 
 const Header = styled.div`
   position: absolute;
@@ -7,8 +6,7 @@ const Header = styled.div`
   height: 30px;
   width: 100%;
   border-radius: 10px 10px 0px 0px;
-  background-color: ${(props) =>
-    props.location ? Color.LocationHeader : Color.FunctionHeader};
+  background-color: ${(props: { color: string }) => props.color};
 `;
 
 export default Header;

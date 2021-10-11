@@ -1,4 +1,4 @@
-import { TerminalCategory } from "../../../../../components/modules/typeEditorModule/helpers/GetFilteredTerminalsList";
+import { TerminalCategory } from "../../../../../typeEditor/helpers/GetFilteredTerminalsList";
 import { Connector } from "../../../../../models";
 
 export const FilterBySearchString = (

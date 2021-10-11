@@ -1,79 +1,82 @@
 import { IsConnectView } from "../block/connectView/helpers";
 import { Node, Connector } from "../../../models";
-import { IsChildOf, IsFunction, IsLocation, IsPartOfTerminal, IsTransportTerminal } from "../helpers";
+import {
+  IsChildOf,
+  IsFunction,
+  IsLocation,
+  IsLocationTerminal,
+  IsProduct,
+  IsSiblingNodes,
+  IsTransportTerminal,
+} from "../helpers";
 
 /**
- * Component to validate and display an edge in BlockView
- * @param selectedNode
+ * Component to validate an edge in BlockView, where different rules apply for each state.
+ * @param activeNode
  * @param fromNode
  * @param toNode
- * @param splitViewNode
+ * @param splitNode
  * @param fromConnector
  * @param toConnector
  * @param splitView
- * @returns a boolean value
+ * @returns a boolean value.
  */
 const ValidateBlockEdge = (
-  selectedNode: Node,
+  activeNode: Node,
   fromNode: Node,
   toNode: Node,
-  splitViewNode: Node,
+  splitNode: Node,
   fromConnector: Connector,
   toConnector: Connector,
   splitView: boolean
 ) => {
-  if (!fromNode || !toNode || IsPartOfTerminal(fromConnector) || IsPartOfTerminal(toConnector)) return false;
+  if (!splitView && !IsConnectView()) return validBlockView(activeNode, fromNode, toNode);
+  if (splitView) return validSplitView(activeNode, splitNode, fromNode, toNode, fromConnector, toConnector);
+  if (IsConnectView()) return validConnectView(activeNode, fromNode, toNode, fromConnector, toConnector);
+  return false;
+};
 
-  // Regular BlockView
-  if (!splitView && !IsConnectView()) {
-    if (IsFunction(selectedNode)) {
-      if (
-        toNode.level - selectedNode.level === 1 &&
-        fromNode.level - selectedNode.level === 0 &&
-        fromNode.id === selectedNode.id
-      )
-        return true;
-      if (
-        fromNode.level - selectedNode.level === 1 &&
-        toNode.level - selectedNode.level === 0 &&
-        toNode.id === selectedNode.id
-      )
-        return true;
-      if (
-        fromNode.level - selectedNode.level === 1 &&
-        toNode.level - selectedNode.level === 1 &&
-        IsChildOf(toNode, selectedNode) &&
-        IsChildOf(fromNode, selectedNode)
-      )
-        return true;
-    }
-    return false;
-  }
+function validBlockView(active: Node, from: Node, to: Node) {
+  if (!IsLocation(active)) return IsSiblingNodes(from, to) && IsChildOf(to, active) && IsChildOf(from, active);
+}
 
-  if (IsConnectView()) {
+function validSplitView(activeNode: Node, split: Node, from: Node, to: Node, fromC: Connector, toC: Connector) {
+  if (!split) return IsSiblingNodes(from, to) && IsChildOf(from, activeNode);
+
+  if (split && !IsLocation(split)) {
     return (
-      fromNode !== selectedNode &&
-      IsTransportTerminal(fromConnector) &&
-      IsTransportTerminal(toConnector) &&
-      IsFunction(fromNode) &&
-      IsFunction(toNode)
+      from.level - activeNode.level === 1 &&
+      to.level - activeNode.level === 1 &&
+      from.level - split.level === 1 &&
+      to.level - split.level === 1 &&
+      IsTransportTerminal(fromC) &&
+      IsTransportTerminal(toC)
     );
   }
 
-  if (splitView) {
-    if (IsFunction(fromNode) && IsFunction(toNode) && !splitViewNode && IsChildOf(fromNode, selectedNode)) {
-      return false;
-    }
-    if (
-      IsFunction(fromNode) &&
-      IsLocation(toNode) &&
-      IsChildOf(fromNode, selectedNode) &&
-      IsChildOf(toNode, splitViewNode) &&
-      splitViewNode
-    )
-      return true;
+  if (IsLocation(split)) {
+    return (
+      IsLocation(to) &&
+      IsLocationTerminal(fromC) &&
+      IsLocationTerminal(toC) &&
+      from.aspect === activeNode.aspect &&
+      from.level - activeNode.level === 1 &&
+      to.level - activeNode.level === 1 &&
+      from.level - split.level === 1 &&
+      to.level - split.level === 1
+    );
   }
-  return false;
-};
+}
+
+function validConnectView(activeNode: Node, fromNode: Node, toNode: Node, fromConn: Connector, toConn: Connector) {
+  return (
+    (fromNode !== activeNode &&
+      IsTransportTerminal(fromConn) &&
+      IsTransportTerminal(toConn) &&
+      IsFunction(fromNode) &&
+      IsFunction(toNode)) ||
+    (IsProduct(fromNode) && IsProduct(toNode))
+  );
+}
 
 export default ValidateBlockEdge;

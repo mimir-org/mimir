@@ -1,11 +1,10 @@
 import { ProjectState } from "../../../../redux/store/project/types";
-import { MENU_TYPE } from "../../../../models/project";
-import { changeMenu } from "../../../../redux/store/projectMenu/actions";
+import { setAccountMenuVisibility } from "../../../menus/project/redux/actions";
 import { commitProject } from "../../../../redux/store/project/actions";
 import { CommitPackage, CommitStatus } from "../../../../models";
 
 const OnCommitClick = (dispatch: any, projectState: ProjectState) => {
-  dispatch(changeMenu(MENU_TYPE.ACCOUNT_MENU, false));
+  dispatch(setAccountMenuVisibility(false));
   if (projectState.project) {
     const commitPackage = {
       projectId: projectState.project.id,

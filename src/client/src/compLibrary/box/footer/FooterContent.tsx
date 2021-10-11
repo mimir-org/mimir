@@ -11,11 +11,11 @@ const FooterContent = styled.div`
   padding: 0px 10px;
   border: 1px solid ${Color.BlueMagenta};
   border-radius: 2px;
-  background-color: ${(props) => (props.active ? Color.BlueMagenta : Color.White)};
+  background-color: ${(props: { active: boolean }) => (props.active ? Color.BlueMagenta : Color.White)};
   cursor: pointer;
-  color: ${(props) => (props.active ? Color.White : Color.Black)};
+  color: ${(props: { active: boolean }) => (props.active ? Color.White : Color.Black)};
   font-size: ${FontSize.Standard};
-  text-decoration: ${(props) => props.active && "underline"};
+  text-decoration: ${(props: { active: boolean }) => props.active && "underline"};
   white-space: nowrap;
 `;
 

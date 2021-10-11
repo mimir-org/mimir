@@ -19,6 +19,10 @@ const initialState = {
       type: ATTRIBUTE_TAB.TERMINALS,
       visible: false,
     },
+    {
+      type: ATTRIBUTE_TAB.SIMPLE_TYPES,
+      visible: false,
+    },
   ],
 };
 

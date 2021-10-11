@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { FontSize } from "../..";
-import { ExpandIcon, CollapseIcon } from "../../../assets/icons/common";
+import { Color, FontSize } from "../..";
+import { ExpandIcon, CollapseIcon } from "../../../assets/icons/chevron";
 import { Symbol } from "../../symbol";
 import { DropdownMenuWrapper, DropdownMenuHeader, DropdownMenuList, DropdownMenuListItem } from "./styled";
 
@@ -14,8 +14,10 @@ interface Props {
   valueImageProp?: string;
   disabled?: boolean;
   borderRadius?: number;
+  borderColor?: string;
   fontSize?: string;
   height?: number;
+  listTop?: number;
 }
 
 const Dropdown = ({
@@ -28,8 +30,10 @@ const Dropdown = ({
   valueImageProp,
   disabled,
   borderRadius = 5,
+  borderColor = Color.Black,
   fontSize = FontSize.Standard,
   height = 28,
+  listTop = 25,
 }: Props) => {
   const [isListOpen, setIsListOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -53,41 +57,55 @@ const Dropdown = ({
   };
 
   return (
-    <DropdownMenuWrapper
-      disabled={disabled}
-      tabIndex={0}
-      onBlur={() => {
-        setIsListOpen(false);
-      }}
-    >
-      <label htmlFor={label} />
-      <div onClick={disabled ? null : (e) => setIsListOpen(!isListOpen)}>
-        <DropdownMenuHeader borderRadius={borderRadius} fontSize={fontSize} height={height}>
-          {selectedItem && (
-            <>
-              {valueImageProp && <Symbol base64={selectedItem[valueImageProp]} text={selectedItem[valueProp]} />}
-              <p>{selectedItem.name ?? selectedItem.key}</p>
-              <img src={isListOpen ? ExpandIcon : CollapseIcon} alt="expand-icon" />
-            </>
-          )}
-        </DropdownMenuHeader>
-      </div>
-      {isListOpen && (
-        <DropdownMenuList borderRadius={borderRadius} fontSize={fontSize}>
-          {items?.map((item) => {
-            return (
-              <div onClick={(e) => handleChange(e, item)} key={item[keyProp]}>
-                <DropdownMenuListItem fontSize={fontSize} height={height} borderRadius={borderRadius}>
-                  {valueImageProp && <Symbol base64={item[valueImageProp]} text={item[valueProp]} />}
+    <>
+      {items && items.length > 0 && (
+        <DropdownMenuWrapper
+          disabled={disabled}
+          tabIndex={0}
+          onBlur={() => {
+            setIsListOpen(false);
+          }}
+        >
+          <label htmlFor={label} />
+          <div onClick={disabled ? null : (e) => setIsListOpen(!isListOpen)}>
+            <DropdownMenuHeader
+              borderRadius={borderRadius}
+              borderColor={borderColor}
+              fontSize={fontSize}
+              height={height}
+            >
+              {selectedItem && (
+                <>
+                  {valueImageProp && <Symbol base64={selectedItem[valueImageProp]} text={selectedItem[valueProp]} />}
+                  <p>{selectedItem.name ?? selectedItem.key}</p>
+                  <img src={isListOpen ? ExpandIcon : CollapseIcon} alt="expand-icon" />
+                </>
+              )}
+            </DropdownMenuHeader>
+          </div>
+          {isListOpen && (
+            <DropdownMenuList borderRadius={borderRadius} borderColor={borderColor} fontSize={fontSize} top={listTop}>
+              {items?.map((item) => {
+                return (
+                  <div onClick={(e) => handleChange(e, item)} key={item[keyProp]}>
+                    <DropdownMenuListItem
+                      fontSize={fontSize}
+                      borderColor={borderColor}
+                      height={height}
+                      borderRadius={borderRadius}
+                    >
+                      {valueImageProp && <Symbol base64={item[valueImageProp]} text={item[valueProp]} />}
 
-                  <p>{item.name ?? item.key}</p>
-                </DropdownMenuListItem>
-              </div>
-            );
-          })}
-        </DropdownMenuList>
+                      <p>{item.name ?? item.key}</p>
+                    </DropdownMenuListItem>
+                  </div>
+                );
+              })}
+            </DropdownMenuList>
+          )}
+        </DropdownMenuWrapper>
       )}
-    </DropdownMenuWrapper>
+    </>
   );
 };
 

@@ -1,16 +1,16 @@
 import { TextResources } from "../../assets/text";
-import { LibCategory, MODULE_TYPE } from "../../models/project";
+import { LibraryCategory, MODULE_TYPE } from "../../models/project";
 import { SearchIcon } from "../../assets/icons/common";
 import { SearchInput } from "../../compLibrary";
 import { LibraryCategoryComponent } from ".";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { LibraryBody, SearchIconBox } from "../../compLibrary/box/library";
-import { TypeEditorModule } from "../../components/modules/typeEditorModule";
+import { LibBody, SearchIconBox } from "../../compLibrary/box/library";
+import { TypeEditorModule } from "../../typeEditor";
 
 interface Props {
-  categories: LibCategory[];
+  categories: LibraryCategory[];
   search: Function;
 }
 
@@ -33,7 +33,7 @@ const LibraryComponent = ({ categories, search }: Props) => {
         <img src={SearchIcon} alt="search" />
       </SearchIconBox>
       <SearchInput placeholder={TextResources.Library_SearchBox_Placeholder} onChange={onChange} />
-      <LibraryBody legend={legendOpen}>
+      <LibBody legend={legendOpen}>
         {categories?.map((category) => {
           return (
             <LibraryCategoryComponent
@@ -50,7 +50,7 @@ const LibraryComponent = ({ categories, search }: Props) => {
           selectedElementType={selectedElementType}
           onChange={typeEditorOpen}
         />
-      </LibraryBody>
+      </LibBody>
     </>
   );
 };

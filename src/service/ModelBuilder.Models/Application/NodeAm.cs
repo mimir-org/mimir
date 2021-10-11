@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Mb.Models.Application.Validation;
+using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
 
 namespace Mb.Models.Application
@@ -43,15 +44,17 @@ namespace Mb.Models.Application
 
         public decimal PositionBlockY { get; set; }
 
-        [LocationAspectRequiredDecimal]
+        [ValidatePositiveDecimal]
         public decimal? Length { get; set; }
 
-        [LocationAspectRequiredDecimal]
+        [ValidatePositiveDecimal]
         public decimal? Width { get; set; }
 
+        [ValidatePositiveDecimal]
         public decimal? Height { get; set; }
         
-        [ProductAspectRequiredDecimal]
+        [ValidatePositiveDecimal]
+        //[ProductAspectRequiredDecimal]
         public decimal? Cost { get; set; }
 
         [Required]
@@ -61,6 +64,8 @@ namespace Mb.Models.Application
         public string MasterProjectId { get; set; }
 
         public string Symbol { get; set; }
+
+        public Purpose Purpose { get; set; }
 
         public ICollection<ConnectorAm> Connectors { get; set; }
 

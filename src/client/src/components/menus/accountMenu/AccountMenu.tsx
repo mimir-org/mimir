@@ -5,13 +5,13 @@ import { UserState } from "../../../redux/store/user/types";
 import { ProjectState } from "../../../redux/store/project/types";
 import { GetMenuElement } from "./helpers";
 import { MENU_TYPE } from "../../../models/project";
-import { OpenProjectMenu } from "../../project/openProject";
-import { CreateProjectMenu } from "../../project/createProject";
-import { ExportProjectFileMenu } from "../../project/exportProjectFile";
-import { ImportProjectFileMenu } from "../../project/importProjectFile/ImportProjectFileMenu";
-import { ExportLibraryFileMenu } from "../../project/exportLibraryFile/ExportLibraryFileMenu";
-import { ImportFileLibraryMenu } from "../../project/importLibrary/ImportFileLibraryMenu";
-import { MenuLine, AccountMenuBox } from "../../../compLibrary/box/menus";
+import { OpenProjectMenu } from "../project/openProject";
+import { CreateProjectMenu } from "../project/createProject";
+import { ExportProjectFileMenu } from "../project/exportProjectFile";
+import { ImportProjectFileMenu } from "../project/importProjectFile/ImportProjectFileMenu";
+import { ExportLibraryFileMenu } from "../project/exportLibraryFile/ExportLibraryFileMenu";
+import { ImportFileLibraryMenu } from "../project/importLibrary/ImportFileLibraryMenu";
+import { MenuLine, AccountMenuBox, ProjectMenuBox } from "../../../compLibrary/box/menus";
 import { TextResources } from "../../../assets/text";
 
 const AccountMenu = () => {
@@ -27,28 +27,22 @@ const AccountMenu = () => {
         <GetMenuElement type={TextResources.Account_Save} onClick={() => Click.OnSave(dispatch, projectState)} />
         <GetMenuElement type={TextResources.Account_Save_Library} onClick={() => Click.OnSaveLibrary(dispatch)} />
         <GetMenuElement type={TextResources.Account_Save_File} onClick={() => Click.OnSaveFile(dispatch)} />
-        <GetMenuElement
-          type={TextResources.Account_Commit_Project}
-          onClick={() => Click.OnCommit(dispatch, projectState)}
-        />
+        <GetMenuElement type={TextResources.Account_Commit} onClick={() => Click.OnCommit(dispatch, projectState)} />
         <MenuLine />
         <GetMenuElement type={TextResources.Account_Import_Project} onClick={() => Click.OnImportProject(dispatch)} />
-        <GetMenuElement
-          type={TextResources.Account_Import_Library_Label}
-          onClick={() => Click.OnImportLibrary(dispatch)}
-        />
+        <GetMenuElement type={TextResources.Account_Import_Lib_Label} onClick={() => Click.OnImportLibrary(dispatch)} />
         <MenuLine />
         <GetMenuElement type={TextResources.Account_Logout} userState={userState} />
       </AccountMenuBox>
 
-      <div className="ProjectMenu" style={{ zIndex: 2 }}>
+      <ProjectMenuBox>
         <OpenProjectMenu projectState={projectState} dispatch={dispatch} />
         <CreateProjectMenu />
         <ExportProjectFileMenu projectState={projectState} dispatch={dispatch} />
         <ImportProjectFileMenu />
         <ExportLibraryFileMenu />
         <ImportFileLibraryMenu />
-      </div>
+      </ProjectMenuBox>
     </>
   );
 };

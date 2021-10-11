@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
 using Mb.Core.Extensions;
 using Mb.Core.Repositories.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Data;
+using Mb.Models.Data.Enums;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace Mb.Core.Profiles
 {
@@ -44,7 +47,17 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Cost, opt => opt.MapFrom(src => src.Cost))
                 .ForMember(dest => dest.Connectors, opt => opt.MapFrom(src => src.Connectors))
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
-                .ForMember(dest => dest.Symbol, opt => opt.MapFrom(src => src.Symbol));
+                .ForMember(dest => dest.Symbol, opt => opt.MapFrom(src => src.Symbol))
+                .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => src.Purpose))
+                .ForMember(dest => dest.PurposeString, opt => opt.MapFrom(src => SerializePurpose(src)));
+        }
+
+        private object SerializePurpose(NodeAm src)
+        {
+            if (src?.Purpose == null)
+                return null;
+
+            return JsonConvert.SerializeObject(src.Purpose);
         }
     }
 }

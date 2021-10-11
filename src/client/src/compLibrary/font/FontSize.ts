@@ -5,6 +5,7 @@ const FontSize = {
   Medium: "12px",
   Small: "11px",
   Tiny: "10px",
+  ToolTip: "8px",
 };
 
 export default FontSize;

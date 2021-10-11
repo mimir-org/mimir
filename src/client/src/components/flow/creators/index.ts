@@ -6,5 +6,5 @@ export { default as CreateTreeNode } from "./CreateTreeNode";
 export { default as CreateTreeEdge } from "./CreateTreeEdge";
 export { default as CreateTreeElements } from "./CreateTreeElements";
 
-export { default as CreateSplitViewNode } from "./CreateSplitViewNode";
+export { default as CreateSplitViewChildNode } from "./CreateSplitViewChildNode";
 export { default as CreateParentBlockNode } from "./CreateParentBlockNode";

@@ -1,17 +1,13 @@
-import { FontSize } from "../../../../compLibrary";
+import { useState } from "react";
 import { ParameterDescriptor } from "./";
+import { Entity } from "./styled";
+import { Color, FontSize } from "../../../../compLibrary";
 import { ParameterBox, ParameterHeader } from "./styled/parameter";
 import { Dropdown as CompDropdown } from "../../../../compLibrary/dropdown/mimir";
 import { Attribute, CombinedAttribute } from "../../../../models";
-import { useState } from "react";
-import { Entity } from "./styled";
-import {
-  WarningIcon,
-  HelpIcon,
-  LockOpenIconComponent,
-  CloseParameterIcon,
-  LockClosedParameterIconComponent,
-} from "../../../../assets/icons/common";
+import { WarningIcon, HelpIcon } from "../../../../assets/icons/common";
+import { LockClosedParameterComponent, LockOpenComponent } from "../../../../assets/icons/lock";
+import { CloseIcon } from "../../../../assets/icons/close";
 
 interface Props {
   attribute: Attribute;
@@ -43,19 +39,19 @@ function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColo
             <img src={HelpIcon} className="parameterIcon" alt="icon" onClick={() => null} />
 
             {isDisabled() ? (
-              <LockClosedParameterIconComponent
+              <LockClosedParameterComponent
                 className="parameterIcon lockIcon"
                 fill={headerColor}
                 onClick={() => onLock(attribute, !attribute.isLocked)}
               />
             ) : (
-              <LockOpenIconComponent
+              <LockOpenComponent
                 className="parameterIcon lockIcon"
                 onClick={() => onLock(attribute, !attribute.isLocked)}
               />
             )}
 
-            <img src={CloseParameterIcon} className="parameterIcon" alt="icon" onClick={() => onClose(attribute.id)} />
+            <img src={CloseIcon} className="parameterIcon" alt="icon" onClick={() => onClose(attribute.id)} />
           </div>
         </ParameterHeader>
         <ParameterDescriptor
@@ -71,7 +67,7 @@ function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColo
             value={value}
             type="text"
             onChange={(e) => setValue(e.target.value)}
-            onBlur={() => onChange(attribute.id, value, unit.id, attribute.nodeId)}
+            onBlur={() => onChange(attribute.id, value, unit?.id, attribute.nodeId)}
           />
           <div className="parameterDropdown">
             <CompDropdown
@@ -85,6 +81,7 @@ function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColo
                 onChange(attribute.id, value, unit.id, attribute.nodeId);
               }}
               borderRadius={2}
+              borderColor={Color.InspectorGreyBorder}
               fontSize={FontSize.Small}
               height={22}
             />

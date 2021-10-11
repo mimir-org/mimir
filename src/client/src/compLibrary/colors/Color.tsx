@@ -1,19 +1,21 @@
 const Color = {
   // Common
   BlueMagenta: "#272738",
+  LightBlue: "#D9E6FF",
+
   GreyHeader: "#4F4F4F",
   GreyInspector: "#FAFAFA",
-  White: "#fff",
-  Black: "#000",
-  LightGrey: "#FBFBFF",
-  LighterGrey: "#F2F2F2",
   Grey: "#d9d9d9",
   DarkGrey: "#c4c4c4",
   DarkerGrey: "#898787",
+  LightGrey: "#FBFBFF",
+  LighterGrey: "#F2F2F2",
+
+  White: "#fff",
+  Black: "#000",
+
   LightCyan: "#CFDADB",
-  LightBlue: "#D9E6FF",
   LightPurple: "#D8D8EC",
-  DarkRed: "rgb(139,0,0)",
   Red: "rgb(255,0,0)",
 
   // DarkMode
@@ -21,26 +23,30 @@ const Color = {
   DarkModeModule: "#A8A8A8",
 
   // Function aspect
-  FunctionBlock: "#FEF445",
+  FunctionMain: "#FEF445",
   FunctionHeader: "#FFFAA9",
   FunctionTab: "#FFDE7A",
+  FunctionSelected: "#FBC913",
 
   // Product aspect
-  ProductBlock: "#00F0FF",
+  ProductMain: "#00F0FF",
   ProductHeader: "#B9F5F9",
   ProductTab: "#47DDE6",
+  ProductSelected: "#069098",
 
   // Location aspect
-  LocationBlock: "#FA00FF",
+  LocationMain: "#FA00FF",
   LocationHeader: "#FDCCFE",
   LocationTab: "#F083F1",
+  LocationSelected: "#A300A7",
 
   // Terminals
-  Terminal_Oil: "#663300",
-  Terminal_Water: "#0066FF",
-  Terminal_Gas: "#FFCC00",
-  Terminal_Multiphase: "#00CC66",
+  Terminal_Default: "#C05046",
   TransportConnection: "#606060",
+
+  // Inspector
+  InspectorGreyBorder: "#8C8C8C",
+  InspectorDarkBorder: "#3D113F",
 
   // Inspector Parameters
   ParamsLightCyan: "#D9EAEB",

@@ -1,8 +1,8 @@
 import { MENU_TYPE } from "../../../../models/project";
-import { changeMenu } from "../../../../redux/store/projectMenu/actions";
+import { changeActiveMenu } from "../../../menus/project/redux/actions";
 
 const OnImportLibraryFile = (dispatch: any) => {
-  dispatch(changeMenu(MENU_TYPE.IMPORT_LIBRARY_FILE_MENU, true));
+  dispatch(changeActiveMenu(MENU_TYPE.IMPORT_LIBRARY_FILE_MENU));
 };
 
 export default OnImportLibraryFile;

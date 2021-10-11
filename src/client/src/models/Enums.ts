@@ -23,7 +23,6 @@ export enum ObjectType {
   ObjectBlock = 1,
   Transport = 2,
   Interface = 3,
-  Composite = 4,
 }
 
 export enum TypeMode {
@@ -56,4 +55,10 @@ export enum CommitStatus {
   Approved = 4,
   Committed = 8,
   Sent = 16,
+}
+
+export enum SelectType {
+  None = 0,
+  SingleSelect = 1,
+  MultiSelect = 2,
 }

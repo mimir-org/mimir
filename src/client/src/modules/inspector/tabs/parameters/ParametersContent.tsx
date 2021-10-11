@@ -2,16 +2,16 @@ import { RootState } from "../../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { TextResources } from "../../../../assets/text";
 import { Dropdown } from "./styled/dropdown/parameter";
-import { CombinedAttributeFilter, Connector, Node } from "../../../../models";
+import { CombinedAttributeFilter, Composite, Connector, Node } from "../../../../models";
 import { GetAttributeCombinations, GetParametersColor } from "./helpers";
-import { Menu, Header } from "./styled";
+import { Menu, Header, ParametersRowWrapper } from "./styled";
 import { OnChangeFilterChoice, OnClearAllFilters } from "./handlers";
 import { FilterDict } from "./redux/types";
 import { ParameterRow } from "./";
 import { useState } from "react";
 
 interface Props {
-  element: Node | Connector;
+  element: Node | Connector | Composite;
   elementIsLocked: boolean;
 }
 
@@ -49,27 +49,30 @@ const ParametersContent = ({ element, elementIsLocked }: Props) => {
           </div>
           <div className="link">{TextResources.Inspector_Params_Default}</div>
         </Menu>
+        <hr />
       </Header>
-      {hasFilters &&
-        Object.entries(selectedFilters).map(([filterName, selectedCombinations], index) => {
-          if (!colorMapping.has(filterName)) colorMapping.set(filterName, GetParametersColor(index));
+      <ParametersRowWrapper>
+        {hasFilters &&
+          Object.entries(selectedFilters).map(([filterName, selectedCombinations], index) => {
+            if (!colorMapping.has(filterName)) colorMapping.set(filterName, GetParametersColor(index));
 
-          let [headerColor, bodyColor] = colorMapping.get(filterName);
+            let [headerColor, bodyColor] = colorMapping.get(filterName);
 
-          return (
-            <ParameterRow
-              key={filterName}
-              element={element}
-              elementIsLocked={elementIsLocked}
-              combinations={attributeCombinations[filterName]}
-              selectedCombinations={selectedCombinations}
-              filterName={filterName}
-              headerColor={headerColor}
-              bodyColor={bodyColor}
-              dispatch={dispatch}
-            />
-          );
-        })}
+            return (
+              <ParameterRow
+                key={filterName}
+                element={element}
+                elementIsLocked={elementIsLocked}
+                combinations={attributeCombinations[filterName]}
+                selectedCombinations={selectedCombinations}
+                filterName={filterName}
+                headerColor={headerColor}
+                bodyColor={bodyColor}
+                dispatch={dispatch}
+              />
+            );
+          })}
+      </ParametersRowWrapper>
     </>
   );
 };
