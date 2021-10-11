@@ -142,8 +142,9 @@ const AdminContent = ({ node, project, statuses }: Props) => {
           <div>{TextResources.Inspector_Admin_Version}</div>
           <Input
             fontSize={FontSize.Standard}
+            readOnly={true}
             value={node.version ?? ""}
-            onChange={(e: Event) => onChange("version", e.target.value)}
+            onChange={() => null}
             inputType=""
           />
         </div>
