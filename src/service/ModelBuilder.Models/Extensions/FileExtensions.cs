@@ -1,11 +1,11 @@
 ﻿using System.Text;
-using Mb.Core.Exceptions;
+using Mb.Models.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 
-namespace Mb.Core.Extensions
+namespace Mb.Models.Extensions
 {
     public static class FileExtensions
     {

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Mb.Core.Exceptions;
 using Mb.Core.Services.Contracts;
 using Mb.Models.Application;
+using Mb.Models.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

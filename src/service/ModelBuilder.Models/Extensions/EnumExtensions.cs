@@ -4,12 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using Mb.Models.Application;
-using Mb.Models.Data;
 using Mb.Models.Data.Enums;
 using Mb.Models.Data.Enums.Mapping;
 using Attribute = System.Attribute;
 
-namespace Mb.Core.Extensions
+namespace Mb.Models.Extensions
 {
     public static class EnumExtensions
     {

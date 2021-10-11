@@ -5,6 +5,7 @@ using Mb.Core.Extensions;
 using Mb.Core.Repositories.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Data;
+using Mb.Models.Extensions;
 
 namespace Mb.Core.Profiles
 {

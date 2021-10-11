@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Mb.Core.Exceptions
+namespace Mb.Models.Exceptions
 {
     [Serializable]
     public class ModelBuilderDuplicateException : Exception
