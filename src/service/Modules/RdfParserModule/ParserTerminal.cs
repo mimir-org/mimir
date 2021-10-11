@@ -7,7 +7,7 @@ namespace RdfParserModule
         public string Id { get; set; }
         public string NormalId { get; set; }
         public string Name { get; set; }
-        public string Type { get; set; }
+        public ConnectorType Type { get; set; }
         public string SemanticReference { get; set; }
         public string NodeId { get; set; }
         public string FromConnectorId { get; set; }

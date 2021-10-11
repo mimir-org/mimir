@@ -5,6 +5,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using Mb.Models.Application;
+using Mb.Models.Data;
+using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
 using VDS.RDF;
 using VDS.RDF.Ontology;
@@ -158,7 +160,7 @@ namespace RdfParserModule
                     {
                         Id = term.NormalId,
                         Name = term.Name,
-                        Type = (term.Type == "Input") ? ConnectorType.Input : ConnectorType.Output,
+                        Type = term.Type,
                         Attributes = new List<AttributeAm>(),
                         RelationType = term.Relation
                     };
@@ -211,7 +213,7 @@ namespace RdfParserModule
             edges.AddRange(transportEdges);
 
             Project.Id = Graph.Id;
-            Project.Name = Graph.Name;
+            Project.Name = Graph.Name + "Import Test";
             Project.IsSubProject = Graph.IsSubProject;
             Project.Description = Graph.Name;
             Project.Version = Graph.Version;
@@ -368,12 +370,27 @@ namespace RdfParserModule
                 {
                     Id = obj.ToString(),
                     NormalId = NormaliseID(obj.ToString()),
-                    Type = "Input",
+                    Type = ConnectorType.Input,
                     SemanticReference = obj.ToString(),
                     NodeId = NormaliseID(nodeId),
-                    Relation = RelationType.PartOf
+                    Relation = RelationType.NotSet
 
                 }).ToList();
+
+                //var (termCatId, termTypeId) = metode("Information", "Telenet");
+
+                //var termCat = new TerminalCategory
+                //{
+                //    Name = "Information"
+                //};
+                //var termCatId = termCat.Key.CreateMd5();
+
+                //var termType = new TerminalType
+                //{
+                //    Name = "Oil",
+                //    TerminalCategoryId = termCatId
+                //};
+                //var termTypeId = termType.Key.CreateMd5();
 
                 // Den som INPUT er connectedTo er jo FromConnectorId
                 // Og den som OUTPUT er connectedTo er ToConnectorId
@@ -382,10 +399,10 @@ namespace RdfParserModule
                 {
                     Id = obj.ToString(),
                     NormalId = NormaliseID(obj.ToString()),
-                    Relation = RelationType.PartOf,
-                    Type = "Output",
+                    Type = ConnectorType.Output,
                     SemanticReference = obj.ToString(),
-                    NodeId = NormaliseID(nodeId)
+                    NodeId = NormaliseID(nodeId),
+                    Relation = RelationType.NotSet
 
                 }).ToList();
 
