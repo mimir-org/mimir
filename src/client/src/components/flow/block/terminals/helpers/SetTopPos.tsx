@@ -8,7 +8,7 @@ import { SetTerminalYPos } from "./";
  * @param isParent
  * @param inputCount
  * @param outputCount
- * @returns a number used by the styled component HandleBox.
+ * @returns a string used by the styled component HandleBox.
  */
 const SetTopPos = (pos: Position, electro: boolean, isParent: boolean, inputCount: number, outputCount: number) => {
   if (!electro) {

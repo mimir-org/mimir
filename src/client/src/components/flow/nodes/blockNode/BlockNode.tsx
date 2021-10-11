@@ -34,6 +34,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const splitNode = useSelector<RootState>((s) => s.splitView.node) as Node;
   const electro = useSelector<RootState>((s) => s.electro.visible) as boolean;
   const type = IsFunction(data) ? "BlockFunctionNode-" : "BlockProductNode-";
+  const node = nodes.find((x) => x.id === data.id);
 
   const mainConnectNodes = useSelector<RootState>((s) => s.connectView?.mainNodes) as Node[];
   const connectChildren = GetConnectChildren(data, nodes, edges);
@@ -62,6 +63,14 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
         onMouseOver={() => Click.OnHover(showTerminalBox, showConnectBox)}
         onMouseOut={() => Click.OnMouseOut(showTerminalBox, showConnectBox)}
       >
+        <HandleComponent
+          node={node}
+          nodes={nodes}
+          terminals={FilterTerminals(data, splitView, splitNode)}
+          isParent={false}
+          splitView={splitView}
+          electro={electro}
+        />
         <BlockNodeNameBox>{data.label ?? data.name}</BlockNodeNameBox>
         {data.id !== mainConnectNode?.id && <Symbol base64={data.symbol} text={data.name} />}
         {data.id === mainConnectNode?.id && <div className="line" />}
@@ -95,15 +104,6 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
           />
         )}
       </NodeBox>
-
-      <HandleComponent
-        node={data}
-        nodes={nodes}
-        terminals={FilterTerminals(data, splitView, splitNode)}
-        isParent={false}
-        splitView={splitView}
-        electro={electro}
-      />
     </>
   );
 };

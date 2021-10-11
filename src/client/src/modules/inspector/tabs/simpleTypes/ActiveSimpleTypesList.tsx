@@ -16,7 +16,6 @@ function ActiveSimpleTypesList({ simpleTypes, onSelect }: Props) {
             <TerminalsCategoryListElement
               radius={0}
               onClick={() => onSelect(type)}
-              index={i}
               color={i % 2 ? undefined : Color.LightPurple}
             >
               {type.name}

@@ -1,7 +1,11 @@
 import styled from "styled-components";
 import { Color, FontSize } from "../..";
 
-const TypeEditorBoxContent = styled.div`
+interface Props {
+  active: boolean;
+}
+
+const TypeEditorBoxContent = styled.div<Props>`
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;

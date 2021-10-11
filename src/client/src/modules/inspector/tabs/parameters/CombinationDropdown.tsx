@@ -139,7 +139,7 @@ export const CombinationDropdown = ({ items, selectedItems, keyProp, onChange, h
             {items?.map((item) => renderListItem(item))}
           </MenuList>
           {shouldShowToolTip && activeToolTip && (
-            <ToolTip tooltipTopPosition={tooltipTopPosition}>
+            <ToolTip top={tooltipTopPosition}>
               <span>{activeToolTip.combined}</span>
             </ToolTip>
           )}

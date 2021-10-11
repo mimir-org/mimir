@@ -1,7 +1,15 @@
 import styled from "styled-components";
 import { FontType, FontSize, Color } from "../..";
 
-const ModuleHeader = styled.div`
+interface Props {
+  legend?: boolean;
+  inspector?: boolean;
+  visible?: boolean;
+  explorer?: boolean;
+  library?: boolean;
+}
+
+const ModuleHeader = styled.div<Props>`
   font-family: ${FontType.Standard};
   font-size: ${FontSize.Header};
   text-align: center;

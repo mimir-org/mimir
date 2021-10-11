@@ -3,8 +3,8 @@ import { ModuleBox } from "../box/modules";
 import { MODULE_TYPE } from "../../models/project";
 
 interface Props {
-  start: string;
-  stop: string;
+  start: number;
+  stop: number;
   run: boolean;
   type: string;
 }

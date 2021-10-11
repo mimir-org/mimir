@@ -9,6 +9,7 @@ import { IsLocation, IsProduct } from "../../../../components/flow/helpers";
 import { IsBlockView } from "../../../../components/flow/block/helpers";
 import { changeNodeValue } from "../../../../redux/store/project/actions";
 import { Dropdown } from "../../../../compLibrary/dropdown/mimir";
+import React from "react";
 
 type Event = React.ChangeEvent<HTMLInputElement>;
 
@@ -87,7 +88,7 @@ const AdminContent = ({ node, project, statuses }: Props) => {
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Created_Date}</div>
-          <Input fontSize={FontSize.Standard} readOnly={true} value={""} onChange={() => null} inputType="" />
+          <Input fontSize={FontSize.Standard} readOnly={true} onChange={() => null} inputType="" />
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Designation}</div>
@@ -141,8 +142,9 @@ const AdminContent = ({ node, project, statuses }: Props) => {
           <div>{TextResources.Inspector_Admin_Version}</div>
           <Input
             fontSize={FontSize.Standard}
+            readOnly={true}
             value={node.version ?? ""}
-            onChange={(e: Event) => onChange("version", e.target.value)}
+            onChange={() => null}
             inputType=""
           />
         </div>
@@ -176,7 +178,7 @@ const AdminContent = ({ node, project, statuses }: Props) => {
           <Textarea
             height={200}
             value={node.description ?? ""}
-            onChange={(e: Event) => onChange("description", e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => onChange("description", e.target.value)}
           ></Textarea>
         </div>
       </TabColumn>

@@ -26,7 +26,7 @@ const EdgeAdminContent = ({ edge }: Props) => (
       </div>
       <div>
         <div>{TextResources.Inspector_EdgeAdmin_Template}</div>
-        <Input readOnly={true} value={edge.isTemplateEdge} onChange={() => null} inputType="" />
+        <Input readOnly={true} onChange={() => null} inputType="" />
       </div>
     </TabColumn>
     <TabColumn>

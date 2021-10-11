@@ -1,8 +1,12 @@
 import styled from "styled-components";
 import { Color, FontSize } from "../../../../../compLibrary";
 
+interface Props {
+  color?: string;
+}
+
 /** Styled component that displays an element in the drop-down menu for the ConnectViewMenu. */
-const ConnectViewElement = styled.div`
+const ConnectViewElement = styled.div<Props>`
   border-top: 1.3px solid ${Color.DarkGrey};
   padding: 5px 10px 0px 0px;
   font-size: ${FontSize.Small};
@@ -39,7 +43,7 @@ const ConnectViewElement = styled.div`
 
   &:last-child {
     border-top: 1.4px solid;
-    border-color: ${(props: { color: string }) => props.color};
+    border-color: ${(props) => props.color};
   }
 
   &:hover {

@@ -84,7 +84,7 @@ const Dropdown = ({
             </DropdownMenuHeader>
           </div>
           {isListOpen && (
-            <DropdownMenuList borderRadius={borderRadius} borderColor={borderColor} fontSize={fontSize} top={listTop}>
+            <DropdownMenuList borderRadius={borderRadius} borderColor={borderColor} top={listTop}>
               {items?.map((item) => {
                 return (
                   <div onClick={(e) => handleChange(e, item)} key={item[keyProp]}>

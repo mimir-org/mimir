@@ -1,7 +1,11 @@
 import styled from "styled-components";
 import { Color } from "../../../compLibrary";
 
-const NodeBox = styled.div`
+interface Props {
+  function?: boolean;
+}
+
+const NodeBox = styled.div<Props>`
   position: relative;
   height: inherit;
   width: inherit;
@@ -10,11 +14,14 @@ const NodeBox = styled.div`
   .line {
     height: 1px;
     width: auto;
-    background-color: ${(props: { function: boolean }) =>
-      props.function ? Color.FunctionSelected : Color.ProductSelected};
+    background-color: ${(props) => (props.function ? Color.FunctionSelected : Color.ProductSelected)};
     position: relative;
     bottom: 15px;
     left: 0px;
+  }
+
+  .symbolImg {
+    pointer-events: none;
   }
 `;
 

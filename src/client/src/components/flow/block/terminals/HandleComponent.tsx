@@ -6,7 +6,6 @@ import { HandleBox } from "./styled";
 import { IsInputTerminal } from "../../helpers";
 import { ConnectorIcon } from "../../../../assets/icons/connectors";
 import { Color } from "../../../../compLibrary";
-import { useEffect } from "react";
 
 interface Props {
   node: Node;
@@ -26,8 +25,6 @@ const HandleComponent = ({ node, nodes, terminals, isParent, splitView, electro 
   let inputCount = 0;
   let outputCount = 0;
 
-  useEffect(() => {}, [electro]);
-
   return (
     <>
       {terminals.map((conn: Connector) => {
@@ -38,16 +35,17 @@ const HandleComponent = ({ node, nodes, terminals, isParent, splitView, electro 
           <HandleBox
             top={SetTopPos(pos, electro, isParent, inputCount, outputCount)}
             left={SetLeftPos(pos, electro, isParent, inputCount, outputCount)}
-            id={"handle-" + conn.id}
-            key={"key-" + conn.id}
             visible={conn.visible}
+            id={"handle-z" + conn.id}
+            key={"keyz-" + conn.id}
           >
             <ConnectorIcon style={{ fill: conn.color ?? Color.Terminal_Default }} className={className} />
             <Handle
+              key={"key-" + conn.id}
               type={type}
               style={electro ? { marginLeft: "7px" } : { marginRight: "7px", marginTop: "7px" }}
               position={pos}
-              id={conn.id}
+              id={"handle-" + conn.id}
               className={className}
               isValidConnection={(connection) => IsValidConnection(connection, nodes, terminals)}
             />

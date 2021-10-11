@@ -67,6 +67,17 @@ const FlowBlock = () => {
     event.dataTransfer.dropEffect = "move";
   };
 
+  const onConnectStart = () => {
+    // _event.preventDefault();
+    // console.log({ _event });
+    // console.log({ element });
+    // let test;
+    // project.nodes.forEach((n) => {
+    //   test = n.connectors.find((x) => x.id === element.handleId);
+    // });
+    // console.log("test: ", test);
+  };
+
   const OnNodeDragStop = (_event, activeNode) => {
     return useOnDragStop(_event, activeNode, dispatch);
   };
@@ -108,10 +119,13 @@ const FlowBlock = () => {
               onDrop={OnDrop}
               onDragOver={OnDragOver}
               onNodeDragStop={OnNodeDragStop}
+              onConnectStart={onConnectStart}
               onElementClick={OnElementClick}
               zoomOnScroll={false}
               paneMoveable={false}
               onClick={(e) => OnBlockClick(e, dispatch, project)}
+              zoomOnDoubleClick={false}
+              onlyRenderVisibleElements={true}
             >
               <FullScreenComponent />
               <BackgroundBox
