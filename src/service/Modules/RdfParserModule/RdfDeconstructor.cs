@@ -485,7 +485,7 @@ namespace RdfParserModule
                 {
                     node.Terminals.Add(term);
 
-                    if (term.Type == "Input") { edge.InputTerminal = term; }
+                    if (term.Type == ConnectorType.Input) { edge.InputTerminal = term; }
                     else { edge.OutputTerminal = term; }
 
                     if (term.FromConnectorId != null)
