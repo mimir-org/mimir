@@ -55,7 +55,7 @@ const TypeEditorInputs = ({ onChange, createLibraryType, icons, locationTypes, p
       <TypeNameInput>
         <p className="label">{TextResources.TypeEditor_Type_Name}</p>
         <TextInput
-          inputType="text"
+          type="text"
           defaultValue={createLibraryType && createLibraryType.name}
           placeholder={TextResources.TypeEditor_Type_Placeholder}
           onChange={(e: any) => {

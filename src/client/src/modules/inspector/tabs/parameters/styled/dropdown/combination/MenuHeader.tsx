@@ -1,7 +1,11 @@
 import styled from "styled-components";
 import { Color, FontSize } from "../../../../../../../compLibrary";
 
-const MenuHeader = styled.div`
+interface Props {
+  open: boolean;
+}
+
+const MenuHeader = styled.div<Props>`
   display: flex;
   flex-direction: row;
   align-items: center;

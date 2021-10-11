@@ -1,11 +1,14 @@
 import styled from "styled-components";
 import { Color, Size } from "../..";
 
-const FilterMenuBox = styled.div`
+interface Props {
+  isLibraryOpen: boolean;
+}
+
+const FilterMenuBox = styled.div<Props>`
   position: absolute;
   top: 97px;
-  right: ${(props) =>
-    !props.isLibraryOpen ? Size.ModuleClosed + Size.Margin : Size.ModuleOpen + Size.Margin}px;
+  right: ${(props) => (!props.isLibraryOpen ? Size.ModuleClosed + Size.Margin : Size.ModuleOpen + Size.Margin)}px;
   background: ${Color.White};
   padding-bottom: 6px;
   padding-top: 8px;

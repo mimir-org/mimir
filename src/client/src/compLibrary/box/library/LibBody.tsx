@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-const LibraryBody = styled.div`
+interface Props {
+  legend: boolean;
+}
+
+const LibraryBody = styled.div<Props>`
   position: fixed;
   margin-left: 15px;
   width: 306px;

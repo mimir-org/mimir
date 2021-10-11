@@ -1,8 +1,12 @@
 import styled from "styled-components";
 import { Color, FontSize } from "../../../compLibrary";
 
-const TabColumn = styled.div`
-  width: ${(props: { width: number }) => getWidth(props.width)};
+interface Props {
+  width?: number;
+}
+
+const TabColumn = styled.div<Props>`
+  width: ${(props) => getWidth(props.width)};
   height: 100%;
   padding: 10px;
   padding-left: 20px;

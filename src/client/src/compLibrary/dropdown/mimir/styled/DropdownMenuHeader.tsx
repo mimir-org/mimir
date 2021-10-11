@@ -1,16 +1,23 @@
 import styled from "styled-components";
 import { Color } from "../../../";
 
-const DropdownMenuHeader = styled.div`
+interface Props {
+  height: number;
+  borderColor: string;
+  borderRadius: number;
+  fontSize: string;
+}
+
+const DropdownMenuHeader = styled.div<Props>`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  height: ${(props: { height: string }) => props.height}px;
+  height: ${(props) => props.height}px;
   background: ${Color.White};
   border: 1px solid ${(props: { borderColor: string }) => props.borderColor};
   border-radius: ${(props: { borderRadius: number }) => props.borderRadius}px;
-  font-size: ${(props: { fontSize: number }) => props.fontSize};
+  font-size: ${(props) => props.fontSize};
   color: ${Color.Black};
 
   p {

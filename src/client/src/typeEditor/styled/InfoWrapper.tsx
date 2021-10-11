@@ -1,10 +1,14 @@
 import styled from "styled-components";
 import { FontSize } from "../../compLibrary";
 
-const InfoWrapper = styled.div`
+interface Props {
+  blockPaddingTop?: number;
+}
+
+const InfoWrapper = styled.div<Props>`
   display: inline-flex;
   flex-direction: column;
-  padding-top: ${(props: { blockPaddingTop: number }) => props.blockPaddingTop + `px`};
+  padding-top: ${(props) => props.blockPaddingTop && props.blockPaddingTop + `px`};
 
   p {
     padding: 0px 10px;

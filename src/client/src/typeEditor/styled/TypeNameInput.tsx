@@ -1,7 +1,11 @@
 import styled from "styled-components";
 import { Color, FontSize, FontType } from "../../compLibrary";
 
-const TypeNameInput = styled.div`
+interface Props {
+  disabled?: boolean;
+}
+
+const TypeNameInput = styled.div<Props>`
   display: flex;
   flex-direction: column;
   min-width: 15%;
@@ -9,7 +13,7 @@ const TypeNameInput = styled.div`
   color: ${Color.Black};
   font-size: ${FontSize.Tiny};
   font-family: ${FontType.Standard};
-  opacity: ${(props: { disabled: boolean }) => (props.disabled ? 0.4 : 1)};
+  opacity: ${(props) => (props.disabled ? 0.4 : 1)};
 
   p {
     margin: 0px;

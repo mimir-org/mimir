@@ -69,7 +69,7 @@ const Dropdown = ({ label, items, onChange, defaultValue, disabled, hasCategory,
     return items?.map((item) => {
       return (
         <div onClick={(e) => handleChange(e, item)} key={item.id}>
-          <DropdownMenuListItem hasCategory={hasCategory}>
+          <DropdownMenuListItem>
             {item.image && <Symbol base64={item.image} text={item.description} />}
             <p>{item.description}</p>
           </DropdownMenuListItem>

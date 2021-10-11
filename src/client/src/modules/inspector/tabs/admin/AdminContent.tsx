@@ -9,6 +9,7 @@ import { IsLocation, IsProduct } from "../../../../components/flow/helpers";
 import { IsBlockView } from "../../../../components/flow/block/helpers";
 import { changeNodeValue } from "../../../../redux/store/project/actions";
 import { Dropdown } from "../../../../compLibrary/dropdown/mimir";
+import React from "react";
 
 type Event = React.ChangeEvent<HTMLInputElement>;
 
@@ -176,7 +177,7 @@ const AdminContent = ({ node, project, statuses }: Props) => {
           <Textarea
             height={200}
             value={node.description ?? ""}
-            onChange={(e: Event) => onChange("description", e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => onChange("description", e.target.value)}
           ></Textarea>
         </div>
       </TabColumn>

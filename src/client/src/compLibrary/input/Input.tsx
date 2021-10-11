@@ -1,7 +1,13 @@
 import styled from "styled-components";
 import Color from "../colors/Color";
 
-const Input = styled.input`
+interface Props {
+  inputType?: string;
+  readOnly?: boolean;
+  fontSize?: string;
+}
+
+const Input = styled.input<Props>`
   border: 1px solid ${Color.Black};
   width: 100%;
   box-sizing: border-box;
@@ -11,7 +17,7 @@ const Input = styled.input`
   height: 31px;
   text-align: left;
   margin-right: ${(props) => props.inputType === "tech" && "4px"};
-  background-color: ${(props: { readOnly: boolean }) => (props.readOnly ? Color.LighterGrey : Color.White)};
+  background-color: ${(props) => (props.readOnly ? Color.LighterGrey : Color.White)};
   font-size: ${(props) => GetFontSize(props.fontSize)};
 
   @media (min-width: 3000px) {

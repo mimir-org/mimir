@@ -1,14 +1,19 @@
 import styled from "styled-components";
 import { Color } from "../../../compLibrary";
 
-const Menu = styled.div`
+interface Props {
+  top?: number;
+  color: string;
+}
+
+const Menu = styled.div<Props>`
   display: flex;
   color: ${Color.Black};
   height: 44px;
   width: 100%;
   overflow: hidden;
-  padding-top: ${(props: { top: number }) => (props.top ? props.top : 0)}px;
-  background-color: ${(props: { color: string }) => props.color}!important;
+  padding-top: ${(props) => (props.top ? props.top : 0)}px;
+  background-color: ${(props) => props.color}!important;
 
   &:hover {
     cursor: n-resize;
