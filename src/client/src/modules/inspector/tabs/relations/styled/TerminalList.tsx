@@ -1,7 +1,11 @@
 import styled from "styled-components";
 import { Color } from "../../../../../compLibrary";
 
-const TerminalList = styled.div`
+interface Props {
+  hasItems: boolean;
+}
+
+const TerminalList = styled.div<Props>`
   display: flex;
   flex-direction: column;
   min-width: 250px;

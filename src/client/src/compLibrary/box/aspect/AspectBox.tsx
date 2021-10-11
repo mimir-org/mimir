@@ -2,13 +2,19 @@ import styled from "styled-components";
 import { UseIndentLevel, GetAspectColor } from "../../../assets/helpers";
 import { Node } from "../../../models";
 
-const AspectBox = styled.div`
+interface Props {
+  node: Node;
+  isRoot: boolean;
+  indent: number;
+}
+
+const AspectBox = styled.div<Props>`
   display: flex;
   cursor: pointer;
   padding: 5px;
-  padding-top: ${(props: { isRoot: boolean }) => (props.isRoot ? 5 : 0)}px;
-  padding-left: ${(props: { indent: number; isRoot: boolean }) => (props.isRoot ? 5 : UseIndentLevel(props.indent))}px;
-  background-color: ${(props: { node: Node }) => GetAspectColor(props.node, true)};
+  padding-top: ${(props) => (props.isRoot ? 5 : 0)}px;
+  padding-left: ${(props) => (props.isRoot ? 5 : UseIndentLevel(props.indent))}px;
+  background-color: ${(props) => GetAspectColor(props.node, true)};
 
   .icon {
     position: relative;

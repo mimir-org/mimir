@@ -2,21 +2,22 @@ import styled from "styled-components";
 import { MODULE_TYPE } from "../../../models/project";
 import { Color, Size } from "./../../../compLibrary";
 
-const ModuleBox = styled.div`
+interface Props {
+  type: string;
+  stop: number;
+}
+
+const ModuleBox = styled.div<Props>`
   border-right: 1px solid ${Color.Grey};
-  border-left: ${(props: { type: string }) =>
-    props.type !== MODULE_TYPE.LEGEND && "1px solid" + Color.Grey};
+  border-left: ${(props) => props.type !== MODULE_TYPE.LEGEND && "1px solid" + Color.Grey};
 
   background-color: ${Color.LightGrey};
 
-  width: ${(props: { stop: string; type: string }) =>
-    props.type !== MODULE_TYPE.LEGEND && props.stop}px;
+  width: ${(props) => props.type !== MODULE_TYPE.LEGEND && props.stop}px;
 
-  height: ${(props: { stop: string; type: string }) =>
-    props.type === MODULE_TYPE.LEGEND ? props.stop + "px" : "100%"};
+  height: ${(props) => (props.type === MODULE_TYPE.LEGEND ? props.stop + "px" : "100%")};
 
-  position: ${(props) =>
-    (props.type === MODULE_TYPE.LEGEND || props.type === MODULE_TYPE.LIBRARY) && "fixed"};
+  position: ${(props) => (props.type === MODULE_TYPE.LEGEND || props.type === MODULE_TYPE.LIBRARY) && "fixed"};
 
   bottom: ${(props) => props.type === MODULE_TYPE.LEGEND && "0"};
   right: ${(props) => props.type === MODULE_TYPE.LIBRARY && "0"};

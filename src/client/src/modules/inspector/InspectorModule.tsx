@@ -19,12 +19,14 @@ const InspectorModule = () => {
   const type = MODULE_TYPE.INSPECTOR;
   const project = useSelector<RootState>((s) => s.projectState.project) as Project;
   const animate = useSelector<RootState>((s) => s.modules.types.find((x) => x.type === type).animate) as boolean;
-  const inspectorOpen = useSelector<RootState>((s) => s.modules.types.find((x) => x.type === type).visible) as boolean;
-  const libraryOpen = useSelector<RootState>((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible) as boolean;
-  const explorerOpen = useSelector<RootState>((s) => s.modules.types.find((x) => IsExplorer(x.type)).visible) as boolean;
+  const isInspectorOpen = useSelector<RootState>((s) => s.modules.types.find((x) => x.type === type).visible) as boolean;
+  const isLibraryOpen = useSelector<RootState>((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible) as boolean;
+  const isExplorerOpen = useSelector<RootState>(
+    (s) => s.modules.types.find((x) => IsExplorer(x.type)).visible
+  ) as boolean;
 
-  const stop = inspectorOpen ? Size.ModuleOpen : Size.ModuleClosed;
-  const start = inspectorOpen ? Size.ModuleClosed : Size.ModuleOpen;
+  const stop = isInspectorOpen ? Size.ModuleOpen : Size.ModuleClosed;
+  const start = isInspectorOpen ? Size.ModuleClosed : Size.ModuleOpen;
 
   const nodes = project?.nodes ?? [];
   const edges = project?.edges ?? [];
@@ -39,14 +41,21 @@ const InspectorModule = () => {
     <AnimatedInspector
       id="InspectorModule"
       type={type}
-      isLibraryOpen={libraryOpen}
-      isExplorerOpen={explorerOpen}
-      inspectorOpen={inspectorOpen}
+      isLibraryOpen={isLibraryOpen}
+      isExplorerOpen={isExplorerOpen}
+      isInspectorOpen={isInspectorOpen}
       start={start}
       stop={stop}
       run={animate}
     >
-      <InspectorHeader project={project} node={node} edge={edge} dispatch={dispatch} open={inspectorOpen} type={type} />
+      <InspectorHeader
+        project={project}
+        node={node}
+        edge={edge}
+        dispatch={dispatch}
+        open={isInspectorOpen}
+        type={type}
+      />
     </AnimatedInspector>
   );
 };

@@ -1,12 +1,16 @@
 import styled from "styled-components";
 import { Color, FontSize } from "../../../compLibrary";
 
-const ListElement = styled.div`
+interface Props {
+  color: string;
+}
+
+const ListElement = styled.div<Props>`
   padding: 10px;
   min-width: 250px;
   font-size: ${FontSize.Medium};
   display: flex;
-  background-color: ${(props: { color: string }) => props.color};
+  background-color: ${(props) => props.color};
   border-bottom: 1px solid ${Color.DarkGrey};
 
   .icon {

@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { Color, FontSize, FontType, FontWeight } from "../../../../compLibrary";
 
 interface Props {
-  expanded: boolean;
-  isSelected: boolean;
+  expanded?: boolean;
+  isSelected?: boolean;
 }
 
 const TerminalCategoryWrapper = styled.div<Props>`

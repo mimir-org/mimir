@@ -17,7 +17,7 @@ const ParametersEdgeComponent = ({ edge }) => {
           <AttributeField key={CreateId()}>
             <div>{attr.key}</div>
             <InputBox>
-              <InputWrapper width={inputFieldWidth + "%"} rightMargin={"4px"}>
+              <InputWrapper width={inputFieldWidth} rightMargin={"4px"}>
                 {/* <Input
                   value={attr.value ?? ""}
                   onChange={(e: any) =>
@@ -26,7 +26,7 @@ const ParametersEdgeComponent = ({ edge }) => {
                   inputType="tech"
                 /> */}
               </InputWrapper>
-              <InputWrapper width={100 - inputFieldWidth + "%"}>
+              <InputWrapper width={100 - inputFieldWidth}>
                 {/* <Select
                   value={attr.unit ?? ""}
                   onChange={(e: any) =>

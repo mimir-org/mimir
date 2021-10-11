@@ -16,9 +16,9 @@ const RelationsContent = <T extends RelationItem>({ items, label, getName, getCo
   <RelationsColumn>
     <RelationsHeader>{label}</RelationsHeader>
     <TerminalList hasItems={items.length > 0}>
-      {items?.map((item, i) => {
+      {items?.map((item) => {
         return (
-          <ListElement onClick={() => onClick(item)} index={i} key={item.id} color={getColor(item)}>
+          <ListElement onClick={() => onClick(item)} key={item.id} color={getColor(item)}>
             {getName(item)}
           </ListElement>
         );

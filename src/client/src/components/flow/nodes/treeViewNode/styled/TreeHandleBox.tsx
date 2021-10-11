@@ -2,7 +2,14 @@ import styled from "styled-components";
 import { Position } from "react-flow-renderer";
 import { ConnectorTreeViewIcon } from "../../../../../assets/icons/blockView";
 
-const TreeHandleBox = styled.div`
+interface Props {
+  visible: boolean;
+  position: Position;
+  input?: number;
+  output?: number;
+}
+
+const TreeHandleBox = styled.div<Props>`
   .function-treeview-handler {
     visibility: ${(props: { visible: boolean }) => !props.visible && "hidden"};
     width: 14px;

@@ -25,7 +25,7 @@ const InspectorHeader = ({ project, node, edge, dispatch, open, type }: Props) =
   return (
     <Menu id="InspectorBody" color={GetInspectorColor(node, edge)}>
       {project && <InspectorTabs project={project} node={node} edge={edge} />}
-      <NodeInfo symbol={node?.symbol} visible={node}>
+      <NodeInfo>
         <div className="symbol">
           <Symbol base64={node?.symbol} text={node?.label ?? node?.name} />
         </div>
@@ -33,7 +33,7 @@ const InspectorHeader = ({ project, node, edge, dispatch, open, type }: Props) =
         <div className="edgetext">{edge?.id}</div>
       </NodeInfo>
 
-      <ButtonWrapper visible={node || edge}>
+      <ButtonWrapper visible={!!node || !!edge}>
         <InspectorButton
           onClick={() => setValidated(!validated)}
           type={validated ? InspectorButtonType.ValidateCorrect : InspectorButtonType.Validate}

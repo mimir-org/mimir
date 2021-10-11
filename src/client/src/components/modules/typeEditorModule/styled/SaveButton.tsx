@@ -1,7 +1,11 @@
 import styled from "styled-components";
 import { Color, FontSize, FontType } from "../../../../compLibrary";
 
-const SaveButton = styled.button`
+interface Props {
+  disabled?: boolean;
+}
+
+const SaveButton = styled.button<Props>`
   width: 151px;
   height: 34px;
   display: flex;
@@ -16,7 +20,7 @@ const SaveButton = styled.button`
   font-family: ${FontType.Standard};
   font-size: ${FontSize.Standard};
   color: ${Color.Black};
-  opacity: ${(props: { disabled: boolean }) => (props.disabled ? 0.4 : 1)};
+  opacity: ${(props) => (props.disabled ? 0.4 : 1)};
   position: absolute;
   bottom: 16px;
 

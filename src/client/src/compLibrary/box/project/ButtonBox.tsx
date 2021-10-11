@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-const ButtonBox = styled.div`
+interface Props {
+  left?: boolean;
+}
+
+const ButtonBox = styled.div<Props>`
   margin-bottom: 30px;
   position: absolute;
   bottom: 0;

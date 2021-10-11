@@ -1,10 +1,15 @@
 import styled from "styled-components";
 
-const Header = styled.div`
+interface Props {
+  color: string;
+  isNodeLocked: boolean;
+}
+
+const Header = styled.div<Props>`
   display: flex;
   flex-direction: row;
   height: 27px;
-  background-color: ${(props: { color: string }) => props.color};
+  background-color: ${(props) => props.color};
   margin: auto;
 
   .parameterHeader {
@@ -36,7 +41,7 @@ const Header = styled.div`
   }
 
   .lockIcon {
-    cursor: ${(props: { isNodeLocked: boolean }) => (props.isNodeLocked ? "default" : "pointer")};
+    cursor: ${(props) => (props.isNodeLocked ? "default" : "pointer")};
   }
 `;
 

@@ -55,7 +55,7 @@ const LibraryModule = () => {
         />
         <p className="text">{TextResources.Module_Library}</p>
       </ModuleHead>
-      <ModuleBody visible={libOpen} library>
+      <ModuleBody visible={libOpen}>
         <LibraryComponent categories={GetLibCategories(selectedNode, splitView, libState)} search={search} />
       </ModuleBody>
 
