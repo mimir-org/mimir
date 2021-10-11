@@ -1,4 +1,4 @@
-import { changeActiveMenu, setAccountMenuVisibility } from "../../../redux/store/projectMenu/actions";
+import { changeActiveMenu, setAccountMenuVisibility } from "../../menus/project/redux/actions";
 
 const OnAccount = (dispatch: any, open: boolean) => {
   if (open) dispatch(changeActiveMenu(null));

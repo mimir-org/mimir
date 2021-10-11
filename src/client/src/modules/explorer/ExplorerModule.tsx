@@ -8,7 +8,7 @@ import { IsBlockView } from "../../components/flow/block/helpers";
 import { ModuleHead, ModuleBody } from "../../compLibrary/box/modules";
 import { Project } from "../../models";
 import { OnToggleClick } from "./handlers";
-import { ExplorerIcon } from "../../assets/icons/common/modules";
+import { ExplorerIcon } from "../../assets/icons/modules";
 
 /**
  * Component for the Explorer Module in Mimir.

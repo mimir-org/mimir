@@ -7,7 +7,8 @@ const ListLabel = styled.div`
   font-weight: ${FontWeight.Bold};
   color: ${Color.BlueMagenta};
   padding-bottom: 8px;
-  border-width: 0px 0px 2px 0px;
+  border-width: 0;
+  border-bottom-width: ${(props: { preview: boolean }) => (props.preview ? 0 : 2)}px;
   border-style: solid;
   border-color: ${Color.BlueMagenta};
 `;

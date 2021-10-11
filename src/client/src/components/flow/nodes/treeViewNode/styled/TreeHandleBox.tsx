@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Position } from "react-flow-renderer";
-import { ConnectorTreeViewIcon } from "../../../../../assets/icons/blockView";
+import { ConnectorTreeViewIcon } from "../../../../../assets/icons/connectors";
 
 interface Props {
   visible: boolean;
@@ -17,15 +17,16 @@ const TreeHandleBox = styled.div<Props>`
     background: url(${ConnectorTreeViewIcon});
     border-radius: 0;
     bottom: -8px;
+    z-index: 1;
+    right: ${(props: { position: Position }) => props.position === Position.Right && -6}px;
+    left: ${(props: { position: Position }) => props.position === Position.Left && -6}px;
+
     top: ${(props) =>
       props.position === Position.Left
-        ? `${props.input}%`
+        ? props.input + "%"
         : props.position === Position.Right
-        ? `${props.output}%`
-        : props.position === Position.Top && "-8px"};
-
-    right: ${(props) => props.position === Position.Right && -6}px;
-    left: ${(props) => props.position === Position.Left && -6}px;
+        ? props.output + "%"
+        : props.position === Position.Top && "-15px"};
   }
 `;
 

@@ -35,8 +35,6 @@ const Header = styled.div<Props>`
   .parameterIcon {
     padding-left: 5px;
     cursor: pointer;
-    width: 12px;
-    height: 12px;
     margin: auto;
   }
 

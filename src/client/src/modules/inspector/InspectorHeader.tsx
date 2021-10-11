@@ -1,5 +1,5 @@
 import * as Click from "./handlers";
-import { DownIcon, UpIcon } from "../../assets/icons/common";
+import { DownIcon, UpIcon } from "../../assets/icons/toogle";
 import { TextResources } from "../../assets/text";
 import { Edge, Node, Project } from "../../models";
 import { GetInspectorColor } from "./helpers";

@@ -1,5 +1,5 @@
 /**
- * Method to calculate a terminal's Y position in BlockView.
+ * Method to calculate a terminal's Y position in BlockView and TreeView.
  * @param count the count of input or output terminals for a node.
  * @returns a number used by the styled component HandleBox.
  */

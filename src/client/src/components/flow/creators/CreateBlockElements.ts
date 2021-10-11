@@ -34,7 +34,7 @@ const CreateBlockElements = (
 
   DrawChildNodes(project.edges, allNodes, selectedNode, elements);
   DrawEdges(project.edges, allNodes, elements);
-  splitView && DrawSplitViewChildren(project.edges, allNodes, splitViewNode, elements);
+  splitView && splitViewNode && DrawSplitViewChildren(project.edges, allNodes, splitViewNode, elements);
   connectView && DrawConnectViewChildren(mainConnectNodes, elements, allNodes);
 
   return elements;

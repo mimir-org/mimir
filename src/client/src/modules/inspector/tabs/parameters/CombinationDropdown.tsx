@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { TextResources } from "../../../../assets/text";
-import { ExpandWhiteIcon, CollapseWhiteIcon } from "../../../../assets/icons/common";
+import { ExpandWhiteIcon, CollapseWhiteIcon } from "../../../../assets/icons/chevron";
 import { CombinedAttribute } from "../../../../models";
 import {
   MenuWrapper,

@@ -6,7 +6,7 @@ interface Props {
 }
 
 const MenuElement = styled.div<Props>`
-  padding: 6px 12px;
+  padding: 10px 12px 3px 12px;
   margin-top: 5px;
   color: ${Color.BlueMagenta};
   cursor: ${(props) => !props.logOut && "pointer"};

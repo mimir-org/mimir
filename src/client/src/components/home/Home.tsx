@@ -11,7 +11,7 @@ import { getUser } from "../../redux/store/user/actions";
 import { search } from "../../redux/store/project/actions";
 import { FlowModule } from "../flow";
 import { ErrorModule } from "../../modules/error";
-import { TypeEditorComponent } from "../modules/typeEditorModule";
+import { TypeEditorComponent } from "../../typeEditor";
 import { getContractors, getStatuses, getAttributeFilters } from "../../redux/store/common/actions";
 import { importLibraryInterfaceTypes, importLibraryTransportTypes } from "../../redux/store/library/actions";
 

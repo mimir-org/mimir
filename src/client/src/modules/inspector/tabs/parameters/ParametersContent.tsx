@@ -4,12 +4,11 @@ import { TextResources } from "../../../../assets/text";
 import { Dropdown } from "./styled/dropdown/parameter";
 import { CombinedAttributeFilter, Composite, Connector, Node } from "../../../../models";
 import { GetAttributeCombinations, GetParametersColor } from "./helpers";
-import { Menu, Header } from "./styled";
+import { Menu, Header, ParametersRowWrapper } from "./styled";
 import { OnChangeFilterChoice, OnClearAllFilters } from "./handlers";
 import { FilterDict } from "./redux/types";
 import { ParameterRow } from "./";
 import { useState } from "react";
-import ParametersRowWrapper from "./styled/ParametersRowWrapper";
 
 interface Props {
   element: Node | Connector | Composite;

@@ -10,5 +10,6 @@ export { default as FindNodeByDataId } from "./FindNodeByDataId";
 export { default as FindAllEdges } from "./FindAllEdges";
 export { default as SetSplitViewBackground } from "./SetSplitViewBackground";
 export { default as FilterTerminals } from "./FilterTerminals";
+export { default as IsDirectChild } from "./IsDirectChild";
 
 export { default as GetBlockEdgeTypes } from "./GetBlockEdgeTypes";

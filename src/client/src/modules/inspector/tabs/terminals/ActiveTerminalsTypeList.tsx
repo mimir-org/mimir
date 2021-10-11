@@ -1,6 +1,6 @@
 import { Connector, ConnectorType, TerminalType } from "../../../../models";
 import { TerminalTypeListElement, TerminalsListElementWrapper, TerminalListElement } from "./styled/activeTerminalList";
-import { ExpandAccordionNestedIcon, CollapseAccordionNestedIcon } from "../../../../assets/icons/common";
+import { ExpandAccordionNestedIcon, CollapseAccordionNestedIcon } from "../../../../assets/icons/toogle";
 
 interface Props {
   terminalType: TerminalType;

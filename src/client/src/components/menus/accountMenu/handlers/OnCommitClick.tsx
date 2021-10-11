@@ -1,5 +1,5 @@
 import { ProjectState } from "../../../../redux/store/project/types";
-import { setAccountMenuVisibility } from "../../../../redux/store/projectMenu/actions";
+import { setAccountMenuVisibility } from "../../../menus/project/redux/actions";
 import { commitProject } from "../../../../redux/store/project/actions";
 import { CommitPackage, CommitStatus } from "../../../../models";
 
