@@ -3,7 +3,7 @@ import * as Icons from "../../assets/icons/header";
 import { RootState } from "../../redux/store";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { VIEW_TYPE } from "../../models/project";
+import { ViewType, VIEW_TYPE } from "../../models/project";
 import { MenuMainHeader } from "../../compLibrary/box/menus";
 import { ProjectState } from "../../redux/store/project/types";
 import { IsExplorer, IsLibrary } from "../flow/helpers";
@@ -37,29 +37,23 @@ const Header = () => {
 
       <ToolBar id="ToolBar" isLibraryOpen={libraryOpen} isExplorerOpen={explorerOpen}>
         <OptionsBox>
-          <OptionsElement>
-            <img src={Icons.Filter} alt="VisualFilter" onClick={() => Click.OnFilter(dispatch, filterMenuOpen)} />
+          <OptionsElement onClick={() => Click.OnFilter(dispatch, filterMenuOpen)}>
+            <img src={Icons.Filter} alt="VisualFilter" />
           </OptionsElement>
-          <OptionsElement>
-            <img
-              src={electro ? Icons.Vertical : Icons.Horizontal}
-              alt="Direction"
-              onClick={() => Click.OnElectro(dispatch, electro)}
-            />
+          <OptionsElement onClick={() => Click.OnElectro(dispatch, electro)}>
+            <img src={electro ? Icons.Vertical : Icons.Horizontal} alt="Direction" />
           </OptionsElement>
-          <OptionsElement treeView={treeView}>
-            <img
-              src={treeView ? Icons.BlockView : Icons.BlockViewActive}
-              alt={VIEW_TYPE.BLOCKVIEW}
-              onClick={(e) => Click.OnView(e, dispatch, push)}
-            />
+          <OptionsElement
+            treeView={treeView}
+            onClick={() => Click.OnView(VIEW_TYPE.BLOCKVIEW as ViewType, dispatch, push)}
+          >
+            <img src={treeView ? Icons.BlockView : Icons.BlockViewActive} alt={VIEW_TYPE.BLOCKVIEW} />
           </OptionsElement>
-          <OptionsElement treeView={treeView}>
-            <img
-              src={treeView ? Icons.TreeViewActive : Icons.TreeView}
-              alt={VIEW_TYPE.TREEVIEW}
-              onClick={(e) => Click.OnView(e, dispatch, push)}
-            />
+          <OptionsElement
+            treeView={treeView}
+            onClick={() => Click.OnView(VIEW_TYPE.TREEVIEW as ViewType, dispatch, push)}
+          >
+            <img src={treeView ? Icons.TreeViewActive : Icons.TreeView} alt={VIEW_TYPE.TREEVIEW} />
           </OptionsElement>
         </OptionsBox>
       </ToolBar>

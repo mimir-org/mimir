@@ -6,6 +6,7 @@ import { HandleBox } from "./styled";
 import { IsInputTerminal } from "../../helpers";
 import { ConnectorIcon } from "../../../../assets/icons/connectors";
 import { Color } from "../../../../compLibrary";
+import { useEffect } from "react";
 
 interface Props {
   node: Node;
@@ -24,6 +25,8 @@ const HandleComponent = ({ node, nodes, terminals, isParent, splitView, electro 
   const className = "react-flow__handle-block";
   let inputCount = 0;
   let outputCount = 0;
+
+  useEffect(() => {}, [electro]);
 
   return (
     <>
