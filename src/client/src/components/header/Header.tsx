@@ -19,6 +19,7 @@ const Header = () => {
   const libraryOpen = useSelector<RootState>((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible) as boolean;
   const explorerOpen = useSelector<RootState>((s) => s.modules.types.find((x) => IsExplorer(x.type)).visible) as boolean;
   const treeView = useSelector<RootState>((s) => s.flow.view === VIEW_TYPE.TREEVIEW) as boolean;
+  const electro = useSelector<RootState>((s) => s.electro.visible) as boolean;
 
   return (
     <>
@@ -40,7 +41,11 @@ const Header = () => {
             <img src={Icons.Filter} alt="VisualFilter" onClick={() => Click.OnFilter(dispatch, filterMenuOpen)} />
           </OptionsElement>
           <OptionsElement>
-            <img src={Icons.Vertical} alt="Direction" onClick={() => null} />
+            <img
+              src={electro ? Icons.Vertical : Icons.Horizontal}
+              alt="Direction"
+              onClick={() => Click.OnElectro(dispatch, electro)}
+            />
           </OptionsElement>
           <OptionsElement treeView={treeView}>
             <img

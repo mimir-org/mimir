@@ -13,17 +13,17 @@ interface Props {
   terminals: Connector[];
   isParent: boolean;
   splitView: boolean;
+  electro: boolean;
 }
 /**
  * Component for the terminals displayed on the nodes in BlockView.
  * @param interface
  * @returns a Mimir terminal in form of a Flow Handle element with an icon on top.
  */
-const HandleComponent = ({ node, nodes, terminals, isParent, splitView }: Props) => {
+const HandleComponent = ({ node, nodes, terminals, isParent, splitView, electro }: Props) => {
   const className = "react-flow__handle-block";
   let inputCount = 0;
   let outputCount = 0;
-  const electro = false;
 
   return (
     <>

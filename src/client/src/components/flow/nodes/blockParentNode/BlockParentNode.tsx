@@ -26,6 +26,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const edges = useSelector<RootState>((s) => s.projectState.project.edges) as Edge[];
   const splitView = useSelector<RootState>((s) => s.splitView.visible) as boolean;
   const splitNode = useSelector<RootState>((s) => s.splitView.node) as Node;
+  const electro = useSelector<RootState>((s) => s.electro.visible) as boolean;
   const node = nodes.find((x) => x.id === data.id);
 
   // Enforce size change of node
@@ -72,6 +73,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         nodes={nodes}
         terminals={FilterTerminals(node, splitView, splitNode)}
         splitView={splitView}
+        electro={electro}
       />
 
       {splitView && !splitNode && (

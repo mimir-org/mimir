@@ -32,6 +32,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const edges = useSelector<RootState>((s) => s.projectState.project.edges) as Edge[];
   const splitView = useSelector<RootState>((s) => s.splitView.visible) as boolean;
   const splitNode = useSelector<RootState>((s) => s.splitView.node) as Node;
+  const electro = useSelector<RootState>((s) => s.electro.visible) as boolean;
   const type = IsFunction(data) ? "BlockFunctionNode-" : "BlockProductNode-";
 
   const mainConnectNodes = useSelector<RootState>((s) => s.connectView?.mainNodes) as Node[];
@@ -101,6 +102,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
         terminals={FilterTerminals(data, splitView, splitNode)}
         isParent={false}
         splitView={splitView}
+        electro={electro}
       />
     </>
   );
