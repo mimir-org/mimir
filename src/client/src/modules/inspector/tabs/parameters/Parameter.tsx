@@ -9,6 +9,8 @@ import { WarningIcon, HelpIcon } from "../../../../assets/icons/common";
 import { LockClosedParameterComponent, LockOpenComponent } from "../../../../assets/icons/lock";
 import { CloseIcon } from "../../../../assets/icons/close";
 
+export const PARAMETER_ENTITY_WIDTH: number = 255;
+
 interface Props {
   attribute: Attribute;
   combination: CombinedAttribute;
@@ -27,7 +29,7 @@ function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColo
   const isDisabled = () => isNodeLocked || attribute.isLocked;
 
   return (
-    <Entity width={255}>
+    <Entity width={PARAMETER_ENTITY_WIDTH}>
       <ParameterBox>
         <ParameterHeader color={bodyColor} isNodeLocked={isNodeLocked}>
           {false && ( //TODO: Add proper logic for warningIcon when validation feature is added
