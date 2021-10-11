@@ -22,8 +22,6 @@ const SaveButton = styled.button`
 
   .icon {
     padding: 0px 6px;
-    width: 24px;
-    height: 24px;
   }
 
   &:hover {
