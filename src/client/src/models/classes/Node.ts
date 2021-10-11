@@ -23,6 +23,8 @@ class Node {
   order: number;
   statusId: string;
   status: EnumBase;
+  createdBy: string;
+  created: Date;
   updatedBy: string;
   updated: Date;
   version: string;

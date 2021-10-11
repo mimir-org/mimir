@@ -88,7 +88,7 @@ const AdminContent = ({ node, project, statuses }: Props) => {
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Created_Date}</div>
-          <Input fontSize={FontSize.Standard} readOnly={true} value={""} onChange={() => null} inputType="" />
+          <Input fontSize={FontSize.Standard} readOnly={true} onChange={() => null} inputType="" />
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Designation}</div>
