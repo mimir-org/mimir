@@ -1,5 +1,6 @@
 import { Switch, Route, useHistory } from "react-router";
-import { Header, Home } from "..";
+import { Home } from "../home/";
+import { Header } from "../header";
 import { Spinner, SpinnerWrapper } from "../../compLibrary/animated";
 import { GlobalStyle } from "../../compLibrary";
 import { AppBox } from "../../compLibrary/box/app";
