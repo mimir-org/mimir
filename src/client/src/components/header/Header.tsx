@@ -40,8 +40,8 @@ const Header = () => {
           <OptionsElement onClick={() => Click.OnFilter(dispatch, filterMenuOpen)}>
             <img src={Icons.Filter} alt="VisualFilter" />
           </OptionsElement>
-          <OptionsElement onClick={() => Click.OnElectro(dispatch, electro)}>
-            <img src={electro ? Icons.Vertical : Icons.Horizontal} alt="Direction" />
+          <OptionsElement onClick={() => Click.OnElectro(dispatch, electro, treeView)}>
+            <img src={treeView || !electro ? Icons.Vertical : Icons.Horizontal} alt="Electro" />
           </OptionsElement>
           <OptionsElement
             treeView={treeView}
