@@ -17,7 +17,9 @@ const OnCheckboxChange = (dispatch: any, splitView: boolean, node: Node, selecte
   if (IsConnectView()) dispatch(removeMainNodes());
 
   if (!splitView) {
-    IsFunction(node) || IsProduct(node) ? dispatch(setActiveNode(node.id, true)) : dispatch(setActiveEdge(null, false));
+    IsFunction(node) || IsProduct(node) || IsLocation(node)
+      ? dispatch(setActiveNode(node.id, true))
+      : dispatch(setActiveEdge(null, false));
     dispatch(setActiveBlockNode(node.id));
     return;
   }

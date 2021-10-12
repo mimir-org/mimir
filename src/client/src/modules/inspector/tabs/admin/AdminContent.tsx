@@ -35,7 +35,7 @@ const AdminContent = ({ node, project, statuses }: Props) => {
           <Input
             fontSize={FontSize.Standard}
             readOnly={true}
-            value={GetRdsId(node)}
+            value={GetRdsId(node) ?? ""}
             onChange={() => null}
             inputType=""
           />
@@ -55,7 +55,7 @@ const AdminContent = ({ node, project, statuses }: Props) => {
           <div>{TextResources.Inspector_Admin_Service}</div>
           <Input
             fontSize={FontSize.Standard}
-            value={node.label}
+            value={node.label ?? ""}
             onChange={(e: Event) => onChange("label", e.target.value)}
             inputType=""
           />
@@ -69,7 +69,7 @@ const AdminContent = ({ node, project, statuses }: Props) => {
           <Input
             fontSize={FontSize.Standard}
             readOnly={true}
-            value={node.updatedBy}
+            value={node.updatedBy ?? ""}
             onChange={() => null}
             inputType=""
           />
@@ -81,7 +81,7 @@ const AdminContent = ({ node, project, statuses }: Props) => {
           <Input
             fontSize={FontSize.Standard}
             readOnly={true}
-            value={moment(node.updated).format("DD/MM/YYYY")}
+            value={moment(node.updated).format("DD/MM/YYYY") ?? ""}
             onChange={() => null}
             inputType=""
           />
@@ -105,7 +105,7 @@ const AdminContent = ({ node, project, statuses }: Props) => {
             <div>{TextResources.Inspector_Admin_Width}</div>
             <Input
               fontSize={FontSize.Standard}
-              value={node.width}
+              value={node.width ?? ""}
               onChange={(e: Event) => onChange("width", e.target.value)}
               inputType=""
             />
@@ -116,7 +116,7 @@ const AdminContent = ({ node, project, statuses }: Props) => {
             <div>{TextResources.Inspector_Admin_Height}</div>
             <Input
               fontSize={FontSize.Standard}
-              value={node.height}
+              value={node.height ?? ""}
               onChange={(e: Event) => onChange("height", e.target.value)}
               inputType=""
               readOnly={true}
@@ -165,7 +165,7 @@ const AdminContent = ({ node, project, statuses }: Props) => {
             <div>{TextResources.Inspector_Admin_Length}</div>
             <Input
               fontSize={FontSize.Standard}
-              value={node.length}
+              value={node.length ?? ""}
               onChange={(e: Event) => onChange("length", e.target.value)}
               inputType=""
             />
