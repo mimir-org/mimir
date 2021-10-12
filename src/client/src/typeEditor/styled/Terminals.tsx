@@ -6,8 +6,8 @@ const Terminals = styled.div`
   flex-direction: column;
   position: absolute;
   top: 5px;
-  left: ${(props: { input: boolean }) => (props.input ? `-15px` : null)};
-  right: ${(props: { input: boolean }) => (props.input ? null : `-15px`)};
+  left: ${(props: { input: boolean }) => (props.input ? `-115px` : null)};
+  right: ${(props: { input: boolean }) => (props.input ? null : `-115px`)};
   span {
     padding-bottom: 2px;
   }
