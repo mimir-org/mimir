@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using EventHubModule.Contracts;
 using Mb.Models.Modules;
 using Microsoft.Extensions.Configuration;
@@ -17,6 +18,11 @@ namespace EventHubModule
         public string GetName()
         {
             return "eventhub";
+        }
+
+        public ICollection<Profile> GetProfiles()
+        {
+            return new List<Profile>();
         }
 
         public void CreateModule(IServiceCollection services, IConfiguration configuration)

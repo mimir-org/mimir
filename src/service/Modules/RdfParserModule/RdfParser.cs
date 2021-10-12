@@ -2,14 +2,28 @@
 using Mb.Models.Data;
 using Mb.Models.Modules;
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using VDS.RDF.Writing;
 
 namespace RdfParserModule
 {
     public class RdfParser : IModelBuilderParser
     {
+        public void CreateModule(IServiceCollection services, IConfiguration configuration)
+        {
+            
+        }
+
+        public ICollection<Profile> GetProfiles()
+        {
+            return null;
+        }
+
         public string GetName()
         {
             return "rdfparser";
@@ -43,7 +57,11 @@ namespace RdfParserModule
 
         public FileFormat GetFileFormat()
         {
-            return FileFormat.NTriples;
+            return new()
+            {
+                ContentType = @"application/n-triples",
+                FileExtension = "nt"
+            };
         }
     }
 }

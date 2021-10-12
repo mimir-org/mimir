@@ -21,6 +21,13 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => src.NodeId))
                 .ForMember(dest => dest.Node, opt => opt.Ignore());
 
+            CreateMap<Composite, CompositeAm>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateOrUseId(src.Id)))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
+                .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
+                .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => src.NodeId));
+
             CreateMap<CompositeTypeAm, CompositeType>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Key.CreateMd5()))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))

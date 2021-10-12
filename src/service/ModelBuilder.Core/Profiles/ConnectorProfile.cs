@@ -20,6 +20,7 @@ namespace Mb.Core.Profiles
             CreateMap<TerminalAm, Terminal>()
                 .ForMember(dest => dest.Color, opt => opt.MapFrom(src => src.Color))
                 .ForMember(dest => dest.TerminalCategoryId, opt => opt.MapFrom(src => src.TerminalCategoryId))
+                .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.TerminalTypeId))
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
                 .IncludeBase<ConnectorAm, Connector>();
 
@@ -47,6 +48,25 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.TerminalCategoryId, opt => opt.MapFrom(src => src.TerminalCategoryId))
                 .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.TerminalTypeId))
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes));
+
+            CreateMap<Connector, ConnectorAm>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateOrUseId(src.Id)))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type))
+                .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
+                .ForMember(dest => dest.Visible, opt => opt.MapFrom(src => src.Visible))
+                .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => src.NodeId));
+
+            CreateMap<Terminal, TerminalAm>()
+                .ForMember(dest => dest.Color, opt => opt.MapFrom(src => src.Color))
+                .ForMember(dest => dest.TerminalCategoryId, opt => opt.MapFrom(src => src.TerminalCategoryId))
+                .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.TerminalTypeId))
+                .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
+                .IncludeBase<Connector, ConnectorAm>();
+
+            CreateMap<Relation, RelationAm>()
+                .ForMember(dest => dest.RelationType, opt => opt.MapFrom(src => src.RelationType))
+                .IncludeBase<Connector, ConnectorAm>();
         }
     }
 }
