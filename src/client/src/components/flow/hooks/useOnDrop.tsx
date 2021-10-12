@@ -5,7 +5,14 @@ import { ConvertToEdge, ConvertToNode } from "../converters";
 import { CreateBlockNode, CreateTreeEdge, CreateTreeNode } from "../creators";
 import { BlobData, LibItem, Project, GetFileData } from "../../../models";
 import { LibraryState } from "../../../redux/store/library/types";
-import { CreateId, GetSelectedNode, IsInputTerminal, IsOutputTerminal, IsPartOfTerminal } from "./../helpers";
+import {
+  CreateId,
+  GetSelectedNode,
+  IsInputTerminal,
+  IsOutputTerminal,
+  IsPartOfTerminal,
+  SetSiblingIndexOnNodeDrop,
+} from "./../helpers";
 
 const useOnDrop = (
   project: Project,
@@ -84,11 +91,14 @@ const useOnDrop = (
       const targetConn = targetNode.connectors?.find((x) => IsPartOfTerminal(x) && IsInputTerminal(x));
       const partofEdge = ConvertToEdge(CreateId(), sourceConn, targetConn, sourceNode, targetNode, project.id, library);
 
+      SetSiblingIndexOnNodeDrop(targetNode, project, sourceNode);
+
       dispatch(createEdge(partofEdge));
 
       const edgeType = GetEdgeType(sourceConn);
       setElements((es) => es.concat(CreateTreeEdge(partofEdge, edgeType, project.nodes)));
     }
+
     dispatch(addNode(targetNode));
   }
 };

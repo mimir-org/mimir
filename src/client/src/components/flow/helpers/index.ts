@@ -38,4 +38,6 @@ export { default as SetTerminalYPos } from "./SetTerminalYPos";
 
 export { GetOtherNodeFromEdgeViaConnector, GetOtherNodeFromEdgeViaNode } from "./GetOtherNodeFromEdge";
 
+export * from "./SetSiblingRDS";
+
 export * from "./types";

@@ -1,6 +1,6 @@
 import { EdgeType, EDGE_TYPE } from "../../../models/project";
 import { SaveEventData } from "../../../redux/store/localStorage/localStorage";
-import { CreateId } from "../helpers";
+import { CreateId, IsPartOfTerminal, UpdateSiblingIndexOnEdgeConnect } from "../helpers";
 import { addEdge } from "react-flow-renderer";
 import { createEdge } from "../../../redux/store/project/actions";
 import { Connector, Edge, Project } from "../../../models";
@@ -44,6 +44,10 @@ const useOnConnect = (
     currentEdge = ConvertToEdge(createdId, sourceConn, targetConn, sourceNode, targetNode, project.id, library);
     dispatch(createEdge(currentEdge));
   } else currentEdge = existingEdge;
+
+  if (IsPartOfTerminal(currentEdge.fromConnector)) {
+    UpdateSiblingIndexOnEdgeConnect(currentEdge, project, dispatch);
+  }
 
   return setElements((els) => {
     return addEdge(

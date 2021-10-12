@@ -44,8 +44,9 @@ const AdminContent = ({ node, project, statuses }: Props) => {
           <div>{TextResources.Inspector_Admin_Semantic_Id}</div>
           <Input
             fontSize={FontSize.Standard}
+            readOnly={true}
             value={node.semanticReference ?? ""}
-            onChange={(e: Event) => onChange("semanticId", e.target.value)}
+            onChange={() => null}
             inputType=""
           />
         </div>
