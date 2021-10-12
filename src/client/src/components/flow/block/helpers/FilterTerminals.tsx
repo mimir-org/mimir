@@ -35,9 +35,13 @@ function validate(n: Node, splitNode: Node, c: Connector, splitView: boolean) {
     );
   }
 
-  if (splitView && splitNode && IsLocation(splitNode)) return IsLocationTerminal(c);
-  if (splitView && splitNode && IsProduct(splitNode)) return IsFulfilledByTerminal(c);
-  if (splitView && splitNode && IsFunction(splitNode)) return IsFulfilledByTerminal(c);
+  if (splitNode) {
+    if (IsLocation(splitNode)) return IsLocationTerminal(c);
+    if (IsFunction(splitNode) || IsProduct(splitNode)) return IsFulfilledByTerminal(c);
+  }
+
+  if (IsFunction(n)) return IsTransportTerminal(c);
+  if (IsProduct(n)) return IsFulfilledByTerminal(c);
 
   return false;
 }

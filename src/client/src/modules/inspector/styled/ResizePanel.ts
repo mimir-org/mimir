@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const InspectorDrag = styled.div`
+const ResizePanel = styled.div`
   position: absolute;
   height: 44px;
   width: 100%;
@@ -10,4 +10,4 @@ const InspectorDrag = styled.div`
   }
 `;
 
-export default InspectorDrag;
+export default ResizePanel;
