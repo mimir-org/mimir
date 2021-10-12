@@ -3,7 +3,7 @@ import { Connector, RelationType, Aspect } from "../../../../models";
 const GetClassName = (data: any): string => {
   let defaultClassName = "react-flow__edge-path ";
 
-  const fromConn = data.source.connectors?.find((x: { id: any }) => x.id === data.edge.fromConnector.id) as Connector;
+  const fromConn = data.source?.connectors?.find((x: { id: any }) => x.id === data.edge.fromConnector.id) as Connector;
 
   switch (fromConn?.relationType) {
     case RelationType.HasLocation:
@@ -16,7 +16,7 @@ const GetClassName = (data: any): string => {
       defaultClassName += "";
   }
 
-  switch (data.source.aspect) {
+  switch (data.source?.aspect) {
     case Aspect.Product:
       defaultClassName += "-product";
       break;

@@ -2,7 +2,7 @@ import { removeMainNodes } from "../../../components/flow/block/connectView/redu
 import { Node } from "../../../models";
 import { setSplitParentNode } from "../../../redux/store/splitView/actions";
 import { IsConnectView } from "../../../components/flow/block/connectView/helpers";
-import { IsFunction, IsProduct } from "../../../components/flow/helpers";
+import { IsFunction, IsProduct, IsLocation } from "../../../components/flow/helpers";
 import { setActiveNode, setActiveBlockNode, setActiveEdge } from "../../../redux/store/project/actions";
 
 /**
@@ -11,20 +11,30 @@ import { setActiveNode, setActiveBlockNode, setActiveEdge } from "../../../redux
  * @param splitView
  * @param node
  * @param selectedNode
+ * @param splitViewNode
  */
-const OnCheckboxChange = (dispatch: any, splitView: boolean, node: Node, selectedNode: Node) => {
+const OnCheckboxChange = (dispatch: any, splitView: boolean, node: Node, selectedNode: Node, splitViewNode: Node) => {
   if (IsConnectView()) dispatch(removeMainNodes());
 
-  // In SplitView two boxes can be checked, one for ActiveNode(left) and one for SplitViewParent(right)
-  if (splitView) {
-    if (node === selectedNode) dispatch(setActiveNode(node.id, true));
-    if (node !== selectedNode && node.aspect === selectedNode.aspect) dispatch(setActiveNode(node.id, true));
-    if (node !== selectedNode && node.aspect !== selectedNode.aspect) dispatch(setSplitParentNode(node));
+  if (!splitView) {
+    IsFunction(node) || IsProduct(node) ? dispatch(setActiveNode(node.id, true)) : dispatch(setActiveEdge(null, false));
+    dispatch(setActiveBlockNode(node.id));
     return;
   }
 
-  IsFunction(node) || IsProduct(node) ? dispatch(setActiveNode(node.id, true)) : dispatch(setActiveEdge(null, false));
-  dispatch(setActiveBlockNode(node.id));
+  // In SplitView two boxes can be checked, one for ActiveNode(left) and one for SplitViewParent(right)
+  if (node === selectedNode) dispatch(setActiveNode(node.id, true));
+  if (node !== selectedNode && node.aspect === selectedNode.aspect) dispatch(setActiveNode(node.id, true));
+  if (node !== selectedNode && node.aspect !== selectedNode.aspect) {
+    if (!IsLocation(splitViewNode)) {
+      if (IsLocation(node)) {
+        setTimeout(() => {
+          window.location.reload();
+        }, 100);
+      }
+    }
+    dispatch(setSplitParentNode(node));
+  }
 };
 
 export default OnCheckboxChange;
