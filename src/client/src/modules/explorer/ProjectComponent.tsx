@@ -18,7 +18,7 @@ export const ProjectComponent = ({ project, nodes }: Props) => {
     setClosedNodes((_) => new Set(closedNodes));
   };
 
-  const areAncestorsExpanded = (elem: Node): boolean => !IsAncestorInSet(elem, closedNodes);
+  const areAncestorsExpanded = (elem: Node): boolean => !IsAncestorInSet(elem, closedNodes, project);
 
   return (
     <>
@@ -32,7 +32,7 @@ export const ProjectComponent = ({ project, nodes }: Props) => {
             indent={indent}
             expanded={!closedNodes.has(node.id)}
             isRoot={IsAspectNode(node)}
-            isLeaf={!HasChildren(node)}
+            isLeaf={!HasChildren(node, project)}
             project={project}
             onElementExpanded={onExpandElement}
           />
