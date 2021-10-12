@@ -53,8 +53,8 @@ const GetBlockHandleType = (
   if (!electro) {
     if (!splitView) {
       if (selected) {
-        if (IsInputTerminal(conn)) return ["target", Position.Right];
-        if (IsOutputTerminal(conn)) return ["source", Position.Left];
+        if (IsInputTerminal(conn)) return ["source", Position.Left];
+        if (IsOutputTerminal(conn)) return ["target", Position.Right];
       }
     }
     if (IsOutputTerminal(conn) && (IsLocationTerminal(conn) || IsFulfilledByTerminal(conn) || IsPartOfTerminal(conn))) {

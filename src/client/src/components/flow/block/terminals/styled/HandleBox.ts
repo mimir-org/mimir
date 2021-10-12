@@ -10,7 +10,7 @@ interface Props {
 const HandleBox = styled.div<Props>`
   .react-flow__handle-block {
     position: absolute;
-    visibility: ${(props) => (props.visible ? "visible" : "hidden")} !important;
+    visibility: ${(props) => !props.visible && "hidden"} !important;
     top: ${(props) => props.top};
     left: ${(props) => props.left};
   }
