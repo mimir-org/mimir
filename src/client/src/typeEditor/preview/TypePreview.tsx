@@ -1,21 +1,35 @@
-import { CreateLibraryType, Rds, TerminalType } from "../../models";
+import { BlobData, CreateLibraryType, Rds, TerminalType } from "../../models";
 import { ListType } from "../TypeEditorList";
 import { ObjectBlock } from "./ObjectBlock";
 import { ListLabel, ListWrapper } from "../../compLibrary";
 import { PreviewArea, InfoWrapper } from "../styled";
-import { TransportIcon, InterfaceIcon } from "../../assets/icons/type";
-import { IsFunction, IsLocation, IsProduct, IsObjectBlock, IsTransport, IsInterface, GetListLabel } from "../helpers";
 import { IsTransportOrInterface } from "./helpers";
-
+import { TransportIcon, InterfaceIcon } from "../../assets/icons/type";
+import {
+  IsFunction,
+  IsLocation,
+  IsProduct,
+  IsObjectBlock,
+  IsTransport,
+  IsInterface,
+  GetListLabel,
+  GetWidth,
+} from "../helpers";
 interface Props {
   createLibraryType: CreateLibraryType;
   rds: Rds;
   inputTerminals?: TerminalType[];
   outputTerminals?: TerminalType[];
   terminal?: TerminalType;
+  symbol: BlobData;
 }
-
-export const TypePreview = ({ createLibraryType, rds, terminal, inputTerminals, outputTerminals }: Props) => {
+/**
+ * Component to show Preview area with selected object type, type name, rds and symbol
+ * @param param0
+ * @returns the visual type preview area
+ */
+export const TypePreview = ({ createLibraryType, rds, terminal, inputTerminals, outputTerminals, symbol }: Props) => {
+  const rdsLabel = rds ? rds.code + " - " + rds.name : null;
   const showObjectBlock = () => {
     if (
       (IsLocation(createLibraryType?.aspect) && createLibraryType?.locationType !== "") ||
@@ -25,9 +39,10 @@ export const TypePreview = ({ createLibraryType, rds, terminal, inputTerminals, 
       return (
         <ObjectBlock
           createLibraryType={createLibraryType}
-          rdsName={rds?.name}
+          rdsLabel={rdsLabel}
           inputTerminals={inputTerminals}
           outputTerminals={outputTerminals}
+          symbol={symbol}
         />
       );
     }
@@ -35,7 +50,7 @@ export const TypePreview = ({ createLibraryType, rds, terminal, inputTerminals, 
   };
 
   return (
-    <ListWrapper height={150} right={0}>
+    <ListWrapper wide={GetWidth(ListType.Preview)} height={150} right={0}>
       <ListLabel preview={true}>{GetListLabel(ListType.Preview, createLibraryType)}</ListLabel>
       <PreviewArea>
         {showObjectBlock()}

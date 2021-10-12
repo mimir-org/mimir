@@ -3,6 +3,8 @@ export { default as TypeEditorContent } from "./TypeEditorContent";
 export { default as TypeEditorHeader } from "./TypeEditorHeader";
 export { default as TypeInfo } from "./TypeInfo";
 export { default as TypePreviewColumn } from "./TypePreviewColumn";
+export { default as ListElementCategory } from "./ListElementCategory";
+export { default as RdsListElement } from "./RdsListElement";
 export { default as TextInput } from "./TextInput";
 export { default as TypeNameInput } from "./TypeNameInput";
 export { default as ChooseProperties } from "./ChooseProperties";

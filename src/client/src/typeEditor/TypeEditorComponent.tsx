@@ -10,6 +10,15 @@ import { GetInputTerminals, GetOutputTerminals } from "./preview/helpers";
 import { TypeEditorList, TypeEditorInputs, TypePreview, TypeEditorInspector } from "./";
 import { LibraryIcon } from "../assets/icons/modules";
 import {
+  TypeEditorWrapper,
+  TypeEditorContent,
+  TypeEditorHeader,
+  ChooseProperties,
+  TypePreviewColumn,
+  SaveButton,
+} from "./styled";
+import {
+  GetSelectedIcon,
   GetSelectedRds,
   GetSelectedTerminal,
   IsLocation,
@@ -29,14 +38,6 @@ import {
   removeTerminalTypeByCategory,
   saveLibraryType,
 } from "./redux/actions";
-import {
-  TypeEditorWrapper,
-  TypeEditorContent,
-  TypeEditorHeader,
-  ChooseProperties,
-  TypePreviewColumn,
-  SaveButton,
-} from "./styled";
 /**
  * Component for adding or editing a type
  * @returns the visual Type Editor window
@@ -156,6 +157,7 @@ export const TypeEditorComponent = () => {
                     state?.createLibraryType.terminalTypeId &&
                     GetSelectedTerminal(state?.createLibraryType, state?.terminals)
                   }
+                  symbol={GetSelectedIcon(state?.createLibraryType, state?.icons)}
                   // disabled={FieldValidator(state, "add")}
                 />
                 <SaveButton onClick={onSave}>
