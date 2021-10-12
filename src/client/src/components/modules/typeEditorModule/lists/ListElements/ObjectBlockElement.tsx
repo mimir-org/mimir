@@ -2,7 +2,7 @@ import { useState } from "react";
 import { AddTerminalComponent } from "../";
 import { TextResources } from "../../../../../assets/text";
 import { CreateId } from "../../../../flow/helpers";
-import { AddIcon, DeleteIcon } from "../../../../../assets/icons/common";
+import { AddIcon } from "../../../../../assets/icons/common";
 import { ConnectorType, TerminalType, TerminalTypeItem } from "../../../../../models";
 import { TerminalListElement, TerminalCategoryWrapper, AddTerminalWrapper } from "../../styled";
 interface Props {
@@ -65,7 +65,6 @@ export const ObjectBlockElement = ({ name, categoryId, terminalTypes, onChange, 
         </p>
         {terminalsQuantity > 0 && (
           <button className="delete-button" onClick={() => onChange("removeAll", categoryId)}>
-            <img src={DeleteIcon} alt="delete-icon" className="delete-icon" />
             <p className="delete-text">{TextResources.TypeEditor_Properties_Clear_All_Terminal}</p>
           </button>
         )}

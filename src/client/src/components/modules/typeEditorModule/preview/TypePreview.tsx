@@ -1,9 +1,18 @@
-import { CreateLibraryType, Rds, TerminalType } from "../../../../models";
+import { BlobData, CreateLibraryType, Rds, TerminalType } from "../../../../models";
 import { ListType } from "../TypeEditorList";
 import { ObjectBlock } from "./ObjectBlock";
 import { ListLabel, ListWrapper } from "../../../../compLibrary";
 import { PreviewArea, InfoWrapper } from "../styled";
-import { IsFunction, IsLocation, IsProduct, IsObjectBlock, IsTransport, IsInterface, GetListLabel } from "..//helpers";
+import {
+  IsFunction,
+  IsLocation,
+  IsProduct,
+  IsObjectBlock,
+  IsTransport,
+  IsInterface,
+  GetListLabel,
+  GetWidth,
+} from "..//helpers";
 import { ReactComponent as TransportIcon } from "../../../../assets/icons/common/transport.svg";
 import { ReactComponent as InterfaceIcon } from "../../../../assets/icons/common/interface.svg";
 
@@ -13,10 +22,11 @@ interface Props {
   inputTerminals?: TerminalType[];
   outputTerminals?: TerminalType[];
   terminal?: TerminalType;
+  symbol: BlobData;
 }
 
-export const TypePreview = ({ createLibraryType, rds, terminal, inputTerminals, outputTerminals }: Props) => {
-  const rdsLabel = rds.code + " - " + rds.name;
+export const TypePreview = ({ createLibraryType, rds, terminal, inputTerminals, outputTerminals, symbol }: Props) => {
+  const rdsLabel = rds ? rds.code + " - " + rds.name : null;
   const showObjectBlock = () => {
     if (
       (IsLocation(createLibraryType?.aspect) && createLibraryType?.locationType !== "") ||
@@ -29,6 +39,7 @@ export const TypePreview = ({ createLibraryType, rds, terminal, inputTerminals, 
           rdsLabel={rdsLabel}
           inputTerminals={inputTerminals}
           outputTerminals={outputTerminals}
+          symbol={symbol}
         />
       );
     }
@@ -42,7 +53,7 @@ export const TypePreview = ({ createLibraryType, rds, terminal, inputTerminals, 
     return false;
   };
   return (
-    <ListWrapper height={150} right={0}>
+    <ListWrapper wide={GetWidth(ListType.Preview)} height={150} right={0}>
       <ListLabel>{GetListLabel(ListType.Preview, createLibraryType)}</ListLabel>
       <PreviewArea>
         {showObjectBlock()}

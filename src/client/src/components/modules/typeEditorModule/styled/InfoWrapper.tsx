@@ -4,19 +4,21 @@ import { FontSize } from "../../../../compLibrary";
 const InfoWrapper = styled.div`
   display: inline-flex;
   flex-direction: column;
-  padding-top: ${(props: { blockPaddingTop: number }) =>
-    props.blockPaddingTop + `px`};
 
   p {
-    padding: 0px 10px;
     text-align: center;
     margin: 10px 0px;
     font-size: ${FontSize.Medium};
+    font-weight: bold;
   }
 
   img {
-    margin: 2% 5%;
-    max-height: 10%;
+    margin: auto;
+    padding: 3px 0px;
+    min-width: 12px;
+    min-height: 12px;
+    max-width: 20px;
+    max-height: 20px;
   }
 `;
 
