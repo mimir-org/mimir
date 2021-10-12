@@ -24,13 +24,7 @@ const BlockEdgeType = ({ id, sourceX, sourceY, targetX, targetY, data, markerEnd
   });
 
   return !hasLocation ? (
-    <path
-      id={"edge-path-" + id}
-      style={GetStyle(fromConn)}
-      className="react-flow__edge-path"
-      d={smooth}
-      markerEnd={markerEnd}
-    />
+    <path id={id} style={GetStyle(fromConn)} className="react-flow__edge-path" d={smooth} markerEnd={markerEnd} />
   ) : (
     <>
       <path
