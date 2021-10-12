@@ -14,12 +14,11 @@ const ListElementsContainer = styled.div`
   }
 
   div:nth-child(even) {
-    background-color: ${(props: { background: boolean }) =>
-      props.background === false ? "" : Color.White};
+    background-color: ${(props: { background: boolean }) => (props.background === false ? "" : Color.White)};
   }
 
   div:nth-child(n):hover {
-    background-color: ${Color.LightBlue};
+    background-color: ${(props: { hover: boolean }) => (props.hover ? "none" : Color.LightBlue)};
   }
 
   :before {
