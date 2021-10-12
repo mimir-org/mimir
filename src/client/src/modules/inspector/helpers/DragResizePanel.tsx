@@ -4,10 +4,10 @@ import { changeInspectorHeight } from "../redux/height/actions";
 /**
  * Function to resize the height of the Inspector by click and drag.
  */
-const DragResizePanel = (dispatch: any) => {
+function DragResizePanel(dispatch: any) {
   const BORDER_SIZE = 44;
   const inspector = document.getElementById("InspectorModule");
-  const header = document.getElementById("InspectorDrag");
+  const header = document.getElementById("ResizePanel");
   const adminTab = document.getElementById("admininfo");
   const terminalsTab = document.getElementById("terminals");
   let prevY: number;
@@ -40,6 +40,6 @@ const DragResizePanel = (dispatch: any) => {
       header.removeEventListener("mousedown", resize);
     });
   }
-};
+}
 
 export default DragResizePanel;
