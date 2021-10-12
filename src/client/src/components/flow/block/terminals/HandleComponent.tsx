@@ -1,11 +1,10 @@
 import { Node, Connector } from "../../../../models";
 import { Handle } from "react-flow-renderer";
 import { GetBlockHandleType } from "../../block/helpers";
-import { IsValidConnection, SetTopPos, SetLeftPos } from "./helpers";
+import { IsValidConnection, SetTopPos, SetLeftPos, GetTerminalColor } from "./helpers";
 import { HandleBox } from "./styled";
 import { CreateId, IsInputTerminal } from "../../helpers";
 import { ConnectorIcon } from "../../../../assets/icons/connectors";
-import { Color } from "../../../../compLibrary";
 
 interface Props {
   node: Node;
@@ -39,7 +38,7 @@ const HandleComponent = ({ node, nodes, terminals, isParent, splitView, electro 
             id={"handle-" + conn.id}
             key={"key-" + conn.id}
           >
-            <ConnectorIcon style={{ fill: conn.color ?? Color.Terminal_Default }} className={className} />
+            <ConnectorIcon style={{ fill: GetTerminalColor(conn) }} className={className} />
             <Handle
               key={CreateId()}
               type={type}

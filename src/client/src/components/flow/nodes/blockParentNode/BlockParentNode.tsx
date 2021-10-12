@@ -5,7 +5,6 @@ import { TextResources } from "../../../../assets/text";
 import { Node, Edge } from "../../../../models";
 import { RootState } from "../../../../redux/store";
 import { HandleComponent, TerminalsComponent } from "../../block/terminals";
-import { IsLocation } from "../../helpers";
 import { Size } from "../../../../compLibrary";
 import { GetParentColor } from "./helpers";
 import { OnParentClick, OnChildClick, OnConnectorClick } from "./handlers";
@@ -59,7 +58,6 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         outputMenuOpen={outTerminalMenu}
         isParent={true}
         splitView={splitView}
-        isLocation={IsLocation(node)}
         terminals={FilterTerminals(node, splitView, splitNode)}
         onClick={(conn) => OnConnectorClick(conn, dispatch, edges, nodes)}
         menuBox={true}
