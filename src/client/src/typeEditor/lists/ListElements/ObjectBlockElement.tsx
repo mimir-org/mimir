@@ -5,7 +5,6 @@ import { CreateId } from "../../../components/flow/helpers";
 import { AddIcon } from "../../../assets/icons/type";
 import { ConnectorType, TerminalType, TerminalTypeItem } from "../../../models";
 import { TerminalListElement, TerminalCategoryWrapper, AddTerminalWrapper } from "../../styled";
-import { DeleteIcon } from "../../../assets/icons/delete";
 
 interface Props {
   name: string;
@@ -66,7 +65,6 @@ export const ObjectBlockElement = ({ name, categoryId, terminalTypes, onChange, 
         </p>
         {terminalsQuantity > 0 && (
           <button className="delete-button" onClick={() => onChange("removeAll", categoryId)}>
-            <img src={DeleteIcon} alt="delete-icon" className="delete-icon" />
             <p className="delete-text">{TextResources.TypeEditor_Properties_Clear_All_Terminal}</p>
           </button>
         )}

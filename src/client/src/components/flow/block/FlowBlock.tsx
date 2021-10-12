@@ -109,6 +109,7 @@ const FlowBlock = () => {
               onNodeDragStop={OnNodeDragStop}
               onElementClick={OnElementClick}
               zoomOnScroll={false}
+              zoomOnDoubleClick={false}
               paneMoveable={false}
               onClick={(e) => OnBlockClick(e, dispatch, project)}
             >
