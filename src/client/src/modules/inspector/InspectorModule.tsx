@@ -6,7 +6,7 @@ import { MODULE_TYPE } from "../../models/project";
 import { IsBlockView } from "../../components/flow/block/helpers";
 import { Project } from "../../models";
 import { DragResizePanel } from "./helpers";
-import { AnimatedInspector } from "./styled";
+import { AnimatedInspector, InspectorDrag } from "./styled";
 import { InspectorHeader } from ".";
 import { GetSelectedNode, IsExplorer, IsLibrary } from "../../components/flow/helpers";
 
@@ -48,6 +48,7 @@ const InspectorModule = () => {
       stop={stop}
       run={animate}
     >
+      <InspectorDrag id="InspectorDrag" />
       <InspectorHeader
         project={project}
         node={node}

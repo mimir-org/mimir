@@ -7,7 +7,7 @@ import { changeInspectorHeight } from "../redux/height/actions";
 const DragResizePanel = (dispatch: any) => {
   const BORDER_SIZE = 44;
   const inspector = document.getElementById("InspectorModule");
-  const header = document.getElementById("InspectorBody");
+  const header = document.getElementById("InspectorDrag");
   const adminTab = document.getElementById("admininfo");
   const terminalsTab = document.getElementById("terminals");
   let prevY: number;
