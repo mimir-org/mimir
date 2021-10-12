@@ -9,6 +9,7 @@ import { Menu, Title, NodeInfo, ToggleBox, ButtonWrapper } from "./styled";
 import { InspectorTabs } from ".";
 import { useState } from "react";
 import { InspectorButtonType } from "../../compLibrary/buttons/inspector/InspectorButton";
+import { IsAspectNode } from "../../components/flow/helpers";
 
 interface Props {
   project: Project;
@@ -47,7 +48,7 @@ const InspectorHeader = ({ project, node, edge, dispatch, open, type }: Props) =
         <InspectorButton
           onClick={() => Click.OnDelete(project, node, edge, dispatch)}
           type={InspectorButtonType.Delete}
-          visible={true}
+          visible={!IsAspectNode(node)}
         />
         <Title onClick={() => Click.OnToggle(dispatch, type, open)}>{TextResources.Module_Inspector}</Title>
         <ToggleBox>

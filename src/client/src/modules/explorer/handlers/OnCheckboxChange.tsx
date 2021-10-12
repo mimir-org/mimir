@@ -29,7 +29,7 @@ const OnCheckboxChange = (dispatch: any, splitView: boolean, node: Node, selecte
     if (!IsLocation(splitViewNode)) {
       if (IsLocation(node)) {
         setTimeout(() => {
-          window.location.reload();
+          window.location.reload(); // Reload required because of Flow displaying wrong position for terminals
         }, 100);
       }
     }

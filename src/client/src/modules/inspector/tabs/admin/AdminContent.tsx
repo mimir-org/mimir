@@ -95,7 +95,7 @@ const AdminContent = ({ node, project, statuses }: Props) => {
           <Input
             fontSize={FontSize.Standard}
             readOnly={true}
-            value={GetReferenceDesignation(node, project)}
+            value={GetReferenceDesignation(node, project) ?? ""}
             onChange={() => null}
             inputType=""
           />
