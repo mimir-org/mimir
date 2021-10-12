@@ -1,11 +1,7 @@
 import styled from "styled-components";
-import { Color, FontWeight } from "../../compLibrary";
+import { FontWeight } from "../../compLibrary";
 
-interface Props {
-  isSelected: boolean;
-}
-
-const ListElementCategory = styled.div<Props>`
+const ListElementCategory = styled.div`
   display: flex;
   flex-direction: column;
 
@@ -14,14 +10,6 @@ const ListElementCategory = styled.div<Props>`
     height: 30px;
     line-height: 30px;
     font-weight: ${FontWeight.Bold};
-  }
-
-  :nth-child(odd) {
-    background-color: ${(props: { background: boolean }) => (props.background === false ? "" : Color.LightPurple)};
-  }
-
-  :nth-child(even) {
-    background-color: ${(props: { background: boolean }) => (props.background === false ? "" : Color.White)};
   }
 `;
 

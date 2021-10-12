@@ -28,7 +28,7 @@ const InspectorHeader = ({ project, node, edge, dispatch, open, type }: Props) =
       {project && <InspectorTabs project={project} node={node} edge={edge} />}
       <NodeInfo>
         <div className="symbol">
-          <Symbol base64={node?.symbol} text={node?.label ?? node?.name} />
+          {!IsAspectNode(node) && <Symbol base64={node?.symbol} text={node?.label ?? node?.name} />}
         </div>
         <div className="text">{node?.label ?? node?.name}</div>
         <div className="edgetext">{edge?.id}</div>
