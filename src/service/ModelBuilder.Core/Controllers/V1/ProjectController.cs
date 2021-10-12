@@ -250,32 +250,7 @@ namespace Mb.Core.Controllers.V1
             try
             {
                 var (file, format) = await _projectService.CreateFile(id, parser);
-                string contentType;
-                string extension;
-
-                switch (format)
-                {
-                    case FileFormat.Json:
-                        contentType = @"application/json";
-                        extension = "json";
-                        break;
-                    case FileFormat.Xml:
-                        contentType = @"application/xml";
-                        extension = "xml";
-                        break;
-                    case FileFormat.Turtle:
-                        contentType = @"text/turtle";
-                        extension = "ttl";
-                        break;
-                    case FileFormat.NTriples:
-                        contentType = @"application/n-triples";
-                        extension = "nt";
-                        break;
-                    default:
-                        return StatusCode(500, "Internal Server Error. Missing file format.");
-                }
-
-                return File(file, contentType, $"project_{id}.{extension}");
+                return File(file, format.ContentType, $"project_{id}.{format.FileExtension}");
             }
             catch (ModelBuilderModuleException e)
             {
