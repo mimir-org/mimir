@@ -49,7 +49,7 @@ export const ObjectBlock = ({ createLibraryType, rdsLabel, inputTerminals, outpu
       <InfoWrapper blockPaddingTop={GetBlockPaddingTop(aspect)}>
         <p>{rdsLabel}</p>
         <p>{createLibraryType.name}</p>
-        <Symbol base64={symbol?.data} text={symbol?.name} />
+        {symbol && <Symbol base64={symbol.data} text={symbol.name} />}
       </InfoWrapper>
     </PreviewObjectBlock>
   );
