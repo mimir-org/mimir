@@ -51,7 +51,7 @@ export const TypePreview = ({ createLibraryType, rds, terminal, inputTerminals, 
 
   return (
     <ListWrapper wide={GetWidth(ListType.Preview)} height={150} right={0}>
-      <ListLabel>{GetListLabel(ListType.Preview, createLibraryType)}</ListLabel>
+      <ListLabel preview={true}>{GetListLabel(ListType.Preview, createLibraryType)}</ListLabel>
       <PreviewArea>
         {showObjectBlock()}
         {IsTransportOrInterface(createLibraryType) && (
