@@ -36,17 +36,15 @@ const App = ({ pca }: AppProps) => {
   const commonState = useSelector<RootState>((state) => state.commonState) as CommonState;
   const typeEditorState = useSelector<RootState>((state) => state.typeEditor) as TypeEditorState;
 
-  const isFetching = () => {
-    if (
+  function isFetching() {
+    return (
       projectState.fetching ||
       libraryState.fetching ||
       userState.fetching ||
       commonState.fetching ||
       typeEditorState.fetching
-    )
-      return "loading";
-    return "";
-  };
+    );
+  }
 
   const login = () => {
     msalInstance.loginRedirect();
@@ -57,10 +55,10 @@ const App = ({ pca }: AppProps) => {
       <AuthenticatedTemplate>
         <Header />
         <GlobalStyle />
-        <SpinnerWrapper loading={isFetching()}>
+        <SpinnerWrapper fetching={isFetching()}>
           <Spinner />
         </SpinnerWrapper>
-        <AppBox loading={isFetching()}>
+        <AppBox fetching={isFetching()}>
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/home" component={Home} />

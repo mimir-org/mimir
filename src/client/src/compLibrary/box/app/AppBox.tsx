@@ -1,14 +1,15 @@
 import styled from "styled-components";
+import { Color } from "../..";
 
-const AppBox = styled.div`
+interface Props {
+  fetching: boolean;
+}
+
+const AppBox = styled.div<Props>`
   width: 100%;
   height: 100%;
-
-  ${(props: { loading: string }) =>
-    props.loading === "loading" &&
-    `opacity: 0.2;
-    background: #ccc;
-    `}
+  background: ${(props) => props.fetching && Color.Grey};
+  opacity: ${(props) => props.fetching && 0.2};
 `;
 
 export default AppBox;

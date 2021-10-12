@@ -37,6 +37,7 @@ const FlowBlock = () => {
   const icons = useSelector<RootState>((s) => s.typeEditor.icons) as BlobData[];
   const library = useSelector<RootState>((s) => s.library) as LibraryState;
   const inspectorOpen = useSelector<RootState>((s) => s.modules.types[0].visible) as boolean;
+  const electro = useSelector<RootState>((s) => s.electro.visible) as boolean;
   const node = GetSelectedNode();
   const showBackground = IsLocation(splitNode) || IsLocation(node);
   const project = projectState?.project;
@@ -90,7 +91,7 @@ const FlowBlock = () => {
   useEffect(() => {
     SetDarkModeColor(darkMode);
     OnLoad(reactFlowInstance);
-  }, [OnLoad, reactFlowInstance, darkMode]);
+  }, [OnLoad, reactFlowInstance, darkMode, electro]);
 
   return (
     <>

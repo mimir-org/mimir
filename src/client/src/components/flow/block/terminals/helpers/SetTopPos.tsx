@@ -16,7 +16,8 @@ const SetTopPos = (pos: Position, electro: boolean, isParent: boolean, inputCoun
     if (pos === Position.Right) return SetTerminalYPos(outputCount, isParent) + "%";
   }
   if (pos === Position.Top) return "-15px";
-  if (pos === Position.Bottom) return "80px";
+  if (pos === Position.Bottom && !isParent) return "80px";
+  if (pos === Position.Bottom && isParent) return "605px";
 };
 
 export default SetTopPos;

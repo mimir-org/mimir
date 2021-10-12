@@ -2,7 +2,7 @@ import { removeMainNodes } from "../../../components/flow/block/connectView/redu
 import { Node } from "../../../models";
 import { setSplitParentNode } from "../../../redux/store/splitView/actions";
 import { IsConnectView } from "../../../components/flow/block/connectView/helpers";
-import { IsFunction } from "../../../components/flow/helpers";
+import { IsFunction, IsProduct } from "../../../components/flow/helpers";
 import { setActiveNode, setActiveBlockNode, setActiveEdge } from "../../../redux/store/project/actions";
 
 /**
@@ -23,9 +23,8 @@ const OnCheckboxChange = (dispatch: any, splitView: boolean, node: Node, selecte
     return;
   }
 
-  IsFunction(node) ? dispatch(setActiveNode(node.id, true)) : dispatch(setActiveEdge(null, false));
+  IsFunction(node) || IsProduct(node) ? dispatch(setActiveNode(node.id, true)) : dispatch(setActiveEdge(null, false));
   dispatch(setActiveBlockNode(node.id));
-  dispatch(setActiveNode(node.id, true));
 };
 
 export default OnCheckboxChange;

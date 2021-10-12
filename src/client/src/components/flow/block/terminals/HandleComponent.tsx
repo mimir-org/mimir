@@ -3,7 +3,7 @@ import { Handle } from "react-flow-renderer";
 import { GetBlockHandleType } from "../../block/helpers";
 import { IsValidConnection, SetTopPos, SetLeftPos } from "./helpers";
 import { HandleBox } from "./styled";
-import { IsInputTerminal } from "../../helpers";
+import { CreateId, IsInputTerminal } from "../../helpers";
 import { ConnectorIcon } from "../../../../assets/icons/connectors";
 import { Color } from "../../../../compLibrary";
 
@@ -26,7 +26,7 @@ const HandleComponent = ({ node, nodes, terminals, isParent, splitView, electro 
   let outputCount = 0;
 
   return (
-    <>
+    <div key={CreateId()}>
       {terminals.map((conn) => {
         const [type, pos] = GetBlockHandleType(conn, node?.isSelected, splitView, electro);
         IsInputTerminal(conn) ? inputCount++ : outputCount++;
@@ -41,6 +41,7 @@ const HandleComponent = ({ node, nodes, terminals, isParent, splitView, electro 
           >
             <ConnectorIcon style={{ fill: conn.color ?? Color.Terminal_Default }} className={className} />
             <Handle
+              key={CreateId()}
               type={type}
               style={electro ? { marginLeft: "7px" } : { marginRight: "7px", marginTop: "7px" }}
               position={pos}
@@ -51,7 +52,7 @@ const HandleComponent = ({ node, nodes, terminals, isParent, splitView, electro 
           </HandleBox>
         );
       })}
-    </>
+    </div>
   );
 };
 
