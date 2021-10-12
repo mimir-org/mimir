@@ -1,3 +1,4 @@
+import React from "react";
 import moment from "moment/moment.js";
 import { useDispatch } from "react-redux";
 import { TextResources } from "../../../../assets/text";
@@ -5,11 +6,10 @@ import { TabColumn } from "../../styled";
 import { FontSize, Input, Textarea } from "../../../../compLibrary";
 import { EnumBase, Node, Project } from "../../../../models";
 import { GetRdsId, GetReferenceDesignation } from "../../../../assets/helpers";
-import { IsLocation, IsProduct } from "../../../../components/flow/helpers";
+import { IsAspectNode, IsLocation, IsProduct } from "../../../../components/flow/helpers";
 import { IsBlockView } from "../../../../components/flow/block/helpers";
 import { changeNodeValue } from "../../../../redux/store/project/actions";
 import { Dropdown } from "../../../../compLibrary/dropdown/mimir";
-import React from "react";
 
 type Event = React.ChangeEvent<HTMLInputElement>;
 
@@ -56,6 +56,7 @@ const AdminContent = ({ node, project, statuses }: Props) => {
           <div>{TextResources.Inspector_Admin_Service}</div>
           <Input
             fontSize={FontSize.Standard}
+            readOnly={IsAspectNode(node)}
             value={node.label ?? ""}
             onChange={(e: Event) => onChange("label", e.target.value)}
             inputType=""
@@ -106,6 +107,7 @@ const AdminContent = ({ node, project, statuses }: Props) => {
             <div>{TextResources.Inspector_Admin_Width}</div>
             <Input
               fontSize={FontSize.Standard}
+              readOnly={IsAspectNode(node)}
               value={node.width ?? ""}
               onChange={(e: Event) => onChange("width", e.target.value)}
               inputType=""
@@ -137,6 +139,7 @@ const AdminContent = ({ node, project, statuses }: Props) => {
             onChange={(value: any) => onChange("statusId", value.id)}
             listTop={31}
             borderRadius={5}
+            disabled={IsAspectNode(node)}
           ></Dropdown>
         </div>
         <div>
@@ -154,6 +157,7 @@ const AdminContent = ({ node, project, statuses }: Props) => {
             <div>{TextResources.Inspector_Admin_Cost}</div>
             <Input
               fontSize={FontSize.Standard}
+              readOnly={IsAspectNode(node)}
               value={node.cost ?? ""}
               onChange={(e: Event) => onChange("cost", e.target.value)}
               inputType=""
@@ -166,6 +170,7 @@ const AdminContent = ({ node, project, statuses }: Props) => {
             <div>{TextResources.Inspector_Admin_Length}</div>
             <Input
               fontSize={FontSize.Standard}
+              readOnly={IsAspectNode(node)}
               value={node.length ?? ""}
               onChange={(e: Event) => onChange("length", e.target.value)}
               inputType=""
@@ -179,6 +184,7 @@ const AdminContent = ({ node, project, statuses }: Props) => {
           <Textarea
             height={200}
             value={node.description ?? ""}
+            readOnly={IsAspectNode(node)}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => onChange("description", e.target.value)}
           ></Textarea>
         </div>
