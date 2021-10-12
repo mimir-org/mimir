@@ -103,6 +103,7 @@ const FlowTree = () => {
             edgeTypes={Helpers.GetEdgeTypes}
             snapToGrid={true}
             snapGrid={[5, 5]}
+            zoomOnDoubleClick={false}
             onClick={(e) => Helpers.OnTreeClick(e, dispatch, project)}
           >
             <FullScreenComponent />
