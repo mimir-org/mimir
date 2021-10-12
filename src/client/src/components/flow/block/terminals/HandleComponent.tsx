@@ -34,7 +34,7 @@ const HandleComponent = ({ node, nodes, terminals, isParent, splitView, electro 
         return (
           <HandleBox
             top={SetTopPos(pos, electro, isParent, inputCount, outputCount)}
-            left={SetLeftPos(pos, electro, isParent, inputCount, outputCount)}
+            left={SetLeftPos(pos, electro, isParent, inputCount, outputCount, splitView)}
             visible={conn.visible}
             id={"handle-" + conn.id}
             key={"key-" + conn.id}
