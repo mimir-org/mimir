@@ -4,7 +4,7 @@ import { FlowTree } from "./tree";
 import { FlowBlock } from "./block";
 import { VIEW_TYPE } from "../../models/project";
 import { changeFlowView } from "../../redux/store/flow/actions";
-import { TypeEditorComponent } from "../modules/typeEditorModule";
+import { TypeEditorComponent } from "../../typeEditor";
 
 /**
  * Component to display a module in Flow

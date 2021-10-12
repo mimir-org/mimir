@@ -7,7 +7,7 @@ import { TerminalsWrapper } from "./styled/TerminalsWrapper";
 import { TerminalsParametersWrapper } from "./styled/TerminalsParametersWrapper";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
-import { GetFilteredTerminalsList } from "../../../../components/modules/typeEditorModule/helpers";
+import { GetFilteredTerminalsList } from "../../../../typeEditor/helpers";
 
 interface Props {
   node: Node;

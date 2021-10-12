@@ -1,10 +1,4 @@
-import {
-  FETCHING_USER,
-  FETCHING_USER_SUCCESS_OR_ERROR,
-  DELETE_USER_ERROR,
-  UserActionTypes,
-  UserState,
-} from "./types";
+import { FETCHING_USER, FETCHING_USER_SUCCESS_OR_ERROR, DELETE_USER_ERROR, UserActionTypes, UserState } from "./types";
 
 const initialState: UserState = {
   fetching: false,
@@ -19,26 +13,23 @@ export function userReducer(state = initialState, action: UserActionTypes): User
         ...state,
         fetching: true,
         user: null,
-        apiError: state.apiError
-          ? state.apiError.filter((elem) => elem.key !== FETCHING_USER)
-          : state.apiError,
+        apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== FETCHING_USER) : state.apiError,
       };
+
     case FETCHING_USER_SUCCESS_OR_ERROR:
       return {
         ...state,
         fetching: false,
         user: action.payload.user,
-        apiError: action.payload.apiError
-          ? [...state.apiError, action.payload.apiError]
-          : state.apiError,
+        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
+
     case DELETE_USER_ERROR:
       return {
         ...state,
-        apiError: state.apiError
-          ? state.apiError.filter((elem) => elem.key !== action.payload.key)
-          : state.apiError,
+        apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== action.payload.key) : state.apiError,
       };
+
     default:
       return state;
   }

@@ -2,8 +2,14 @@ import { all, takeEvery } from "redux-saga/effects";
 import { FETCHING_CONTRACTORS, FETCHING_STATUSES, FETCHING_COMBINED_ATTRIBUTE_FILTERS } from "../store/common/types";
 import { getContractors, getStatuses, getAttributeFilters } from "./common/saga";
 import { FETCHING_USER } from "./../store/user/types";
-import { FETCHING_INITIAL_DATA, SAVE_LIBRARY_TYPE, FETCHING_BLOB_DATA, FETCHING_TYPE } from "../store/typeEditor/types";
 import { searchLibrary, exportLibrary, importLibrary, getTransportTypes, getInterfaceTypes } from "./library/saga";
+import {
+  FETCHING_INITIAL_DATA,
+  SAVE_LIBRARY_TYPE,
+  FETCHING_BLOB_DATA,
+  FETCHING_TYPE,
+} from "../../typeEditor/redux/types";
+
 import { getUser } from "./user/saga";
 import {
   FETCHING_LIBRARY,

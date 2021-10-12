@@ -1,7 +1,11 @@
 import styled from "styled-components";
 import { Color, FontSize } from "../../../../../../compLibrary";
 
-export const TerminalListElement = styled.div`
+interface Props {
+  isSelected: boolean;
+}
+
+export const TerminalListElement = styled.div<Props>`
   padding: 5px 10px 5px 60px;
   min-width: 250px;
   font-size: ${FontSize.Tiny};

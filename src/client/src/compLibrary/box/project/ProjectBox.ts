@@ -1,7 +1,14 @@
 import styled from "styled-components";
 import { Color, FontSize } from "./../../../compLibrary";
 
-const ProjectBox = styled.div`
+interface Props {
+  small?: boolean;
+  visible: boolean;
+  height?: number;
+  width?: number;
+}
+
+const ProjectBox = styled.div<Props>`
   width: ${(props) => (props.small ? "308px" : "auto")};
   width: ${(props) => (props.small ? "308px" : props.width ? props.width + "px" : "auto")};
   height: ${(props) => (props.small ? "281px" : "auto")};

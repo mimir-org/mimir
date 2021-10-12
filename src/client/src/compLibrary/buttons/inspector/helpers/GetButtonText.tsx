@@ -1,11 +1,18 @@
 import { TextResources } from "../../../../assets/text";
+import { InspectorButtonType } from "../InspectorButton";
 
-const GetButtonText = (type: string) => {
-  if (type === "delete") return TextResources.Inspector_Delete_Node;
-  if (type === "filter") return TextResources.Inspector_Filter;
-  if (type === "lock") return TextResources.Inspector_Lock;
-  if (type === "unlock") return TextResources.Inspector_Open;
-  if (type === "validate") return TextResources.Inspector_Validate;
+const GetButtonText = (type: InspectorButtonType) => {
+  switch (type) {
+    case InspectorButtonType.Validate:
+    case InspectorButtonType.ValidateCorrect:
+      return TextResources.Inspector_Validate;
+    case InspectorButtonType.Lock:
+      return TextResources.Inspector_Lock;
+    case InspectorButtonType.Unlock:
+      return TextResources.Inspector_Open;
+    case InspectorButtonType.Delete:
+      return TextResources.Inspector_Delete_Node;
+  }
 };
 
 export default GetButtonText;

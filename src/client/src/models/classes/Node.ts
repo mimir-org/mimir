@@ -23,6 +23,8 @@ class Node {
   order: number;
   statusId: string;
   status: EnumBase;
+  createdBy: string;
+  created: Date;
   updatedBy: string;
   updated: Date;
   version: string;
@@ -52,7 +54,6 @@ class Node {
 
   area(): number {
     if (!this.length || !this.width) return 0;
-
     return this.length * this.width;
   }
 

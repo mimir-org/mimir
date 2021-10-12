@@ -1,19 +1,21 @@
 const Color = {
   // Common
   BlueMagenta: "#272738",
+  LightBlue: "#D9E6FF",
+
   GreyHeader: "#4F4F4F",
   GreyInspector: "#FAFAFA",
-  White: "#fff",
-  Black: "#000",
-  LightGrey: "#FBFBFF",
-  LighterGrey: "#F2F2F2",
   Grey: "#d9d9d9",
   DarkGrey: "#c4c4c4",
   DarkerGrey: "#898787",
+  LightGrey: "#FBFBFF",
+  LighterGrey: "#F2F2F2",
+
+  White: "#fff",
+  Black: "#000",
+
   LightCyan: "#CFDADB",
-  LightBlue: "#D9E6FF",
   LightPurple: "#D8D8EC",
-  DarkRed: "rgb(139,0,0)",
   Red: "rgb(255,0,0)",
 
   // DarkMode
@@ -40,14 +42,11 @@ const Color = {
 
   // Terminals
   Terminal_Default: "#C05046",
-  Terminal_Oil: "#663300",
-  Terminal_Water: "#0066FF",
-  Terminal_Gas: "#FFCC00",
-  Terminal_Multiphase: "#00CC66",
   TransportConnection: "#606060",
 
   // Inspector
   InspectorGreyBorder: "#8C8C8C",
+  InspectorDarkBorder: "#3D113F",
 
   // Inspector Parameters
   ParamsLightCyan: "#D9EAEB",

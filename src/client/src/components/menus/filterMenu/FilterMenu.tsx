@@ -52,7 +52,9 @@ const FilterMenu = () => {
     }
   });
 
-  const isLibraryOpen = useSelector<RootState>((state) => state.modules.types.find((x) => IsLibrary(x.type)).visible);
+  const isLibraryOpen = useSelector<RootState>(
+    (state) => state.modules.types.find((x) => IsLibrary(x.type)).visible
+  ) as boolean;
 
   // TODO: refactor
   return (

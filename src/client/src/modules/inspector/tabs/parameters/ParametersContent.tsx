@@ -4,12 +4,11 @@ import { TextResources } from "../../../../assets/text";
 import { Dropdown } from "./styled/dropdown/parameter";
 import { CombinedAttributeFilter, Composite, Connector, Node } from "../../../../models";
 import { GetAttributeCombinations, GetParametersColor } from "./helpers";
-import { Menu, Header } from "./styled";
+import { Menu, Header, ParametersRowWrapper, ParametersContentWrapper } from "./styled";
 import { OnChangeFilterChoice, OnClearAllFilters } from "./handlers";
 import { FilterDict } from "./redux/types";
 import { ParameterRow } from "./";
 import { useState } from "react";
-import ParametersRowWrapper from "./styled/ParametersRowWrapper";
 
 interface Props {
   element: Node | Connector | Composite;
@@ -32,10 +31,14 @@ const ParametersContent = ({ element, elementIsLocked }: Props) => {
   const hasFilters = Object.keys(selectedFilters).length > 0;
   const attributeCombinations = GetAttributeCombinations(attributeFilters, attributes);
 
+  const maxNumSelectedCombinations = Math.max(
+    ...Object.values(selectedFilters).map((combinations) => combinations.length)
+  );
+
   const [colorMapping] = useState(new Map<string, [string, string]>());
 
   return (
-    <>
+    <ParametersContentWrapper>
       <Header>
         <Menu>
           <Dropdown
@@ -66,6 +69,7 @@ const ParametersContent = ({ element, elementIsLocked }: Props) => {
                 elementIsLocked={elementIsLocked}
                 combinations={attributeCombinations[filterName]}
                 selectedCombinations={selectedCombinations}
+                maxNumSelectedCombinations={maxNumSelectedCombinations}
                 filterName={filterName}
                 headerColor={headerColor}
                 bodyColor={bodyColor}
@@ -74,7 +78,7 @@ const ParametersContent = ({ element, elementIsLocked }: Props) => {
             );
           })}
       </ParametersRowWrapper>
-    </>
+    </ParametersContentWrapper>
   );
 };
 export default ParametersContent;

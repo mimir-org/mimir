@@ -64,7 +64,7 @@ export const SPLITVIEW_POSITION = {
   LEFT: "left",
 };
 
-export interface LibCategory {
+export interface LibraryCategory {
   name: string;
   nodes: LibItem[];
 }

@@ -3,8 +3,8 @@ import { Handle } from "react-flow-renderer";
 import { GetBlockHandleType } from "../../block/helpers";
 import { IsValidConnection } from "./helpers";
 import { HandleBox } from "./styled";
-import { GetHandlePosition, IsInputTerminal, SetTerminalYPos } from "../../helpers";
-import { ConnectorIcon } from "../../../../assets/icons/blockView";
+import { IsInputTerminal, SetTerminalYPos } from "../../helpers";
+import { ConnectorIcon } from "../../../../assets/icons/connectors";
 import { Color } from "../../../../compLibrary";
 
 interface Props {
@@ -37,7 +37,7 @@ const HandleComponent = ({ node, nodes, terminals, isParent, splitView }: Props)
             input={SetTerminalYPos(inputCount, isParent)}
             output={SetTerminalYPos(outputCount, isParent)}
             id={"handle-" + conn.id}
-            position={GetHandlePosition(pos)}
+            position={pos}
             key={"key-" + conn.id}
             visible={conn.visible}
           >

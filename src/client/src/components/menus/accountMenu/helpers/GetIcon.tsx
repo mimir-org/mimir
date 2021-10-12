@@ -1,4 +1,4 @@
-import * as Icons from "../../../../assets/icons/common/project";
+import * as Icons from "../../../../assets/icons/project";
 import { TextResources } from "../../../../assets/text";
 
 const GetIcon = (type: string) => {

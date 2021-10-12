@@ -1,17 +1,12 @@
 import { useState } from "react";
-import { LibCategory } from "../../models/project";
+import { LibraryCategory } from "../../models/project";
 import { ObjectType } from "../../models";
 import { GetObjectIcon, GetAspectColor } from "../../assets/helpers";
-import { ExpandIcon, CollapseIcon } from "../../assets/icons/common";
-import {
-  LibraryCategory,
-  LibraryCategoryElement,
-  LibraryElement,
-  LibraryElementIcon,
-} from "../../compLibrary/box/library";
+import { ExpandIcon, CollapseIcon } from "../../assets/icons/chevron";
+import { LibCategory, LibCategoryElement, LibElement, LibElementIcon } from "../../compLibrary/box/library";
 
 interface Props {
-  category: LibCategory;
+  category: LibraryCategory;
   selectedElement: string;
   setSelectedElement: any;
   setSelectedElementType: any;
@@ -31,14 +26,14 @@ const LibraryCategoryComponent = ({ category, selectedElement, setSelectedElemen
 
   return (
     <>
-      <LibraryCategory onClick={() => setExpanded(!expanded)}>
-        <LibraryCategoryElement>{category.name}</LibraryCategoryElement>
+      <LibCategory onClick={() => setExpanded(!expanded)}>
+        <LibCategoryElement>{category.name}</LibCategoryElement>
         <img className="expandIcon" src={expandIcon} alt="expand-icon"></img>
-      </LibraryCategory>
+      </LibCategory>
       {expanded &&
         category?.nodes.map((node) => {
           return (
-            <LibraryElement
+            <LibElement
               active={selectedElement === node.id}
               onClick={() => {
                 setNewSelectedElement(node.id);
@@ -51,12 +46,12 @@ const LibraryCategoryComponent = ({ category, selectedElement, setSelectedElemen
               key={node.id}
             >
               {node.name}
-              <LibraryElementIcon color={GetAspectColor(node, false)}>
+              <LibElementIcon color={GetAspectColor(node, false)}>
                 {(node.libraryType === ObjectType.Interface || node.libraryType === ObjectType.Transport) && (
                   <img src={GetObjectIcon(node)} alt="aspect-icon" className="icon" draggable="false"></img>
                 )}
-              </LibraryElementIcon>
-            </LibraryElement>
+              </LibElementIcon>
+            </LibElement>
           );
         })}
     </>

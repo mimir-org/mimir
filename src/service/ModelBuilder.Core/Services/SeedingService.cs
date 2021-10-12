@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using Mb.Core.Extensions;
 using Mb.Core.Repositories.Contracts;
 using Mb.Core.Services.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Data.Enums;
+using Mb.Models.Extensions;
 using Microsoft.Extensions.Logging;
 
 namespace Mb.Core.Services

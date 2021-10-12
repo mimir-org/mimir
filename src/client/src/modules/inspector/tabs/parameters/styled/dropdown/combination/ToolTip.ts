@@ -1,7 +1,11 @@
 import styled from "styled-components";
 import { FontSize, Color } from "../../../../../../../compLibrary";
 
-const ToolTip = styled.div`
+interface Props {
+  top: number;
+}
+
+const ToolTip = styled.div<Props>`
   display: flex;
 
   width: auto;
@@ -19,7 +23,7 @@ const ToolTip = styled.div`
   position: absolute;
   z-index: 10;
   left: 90px;
-  top: ${(props) => props.tooltipTopPosition}px;
+  top: ${(props) => props.top}px;
 
   transition: 2s all ease;
   transition-delay: 0s;
