@@ -1,4 +1,4 @@
-import * as Icons from "../../../../../assets/icons/blockView/terminalsMenu";
+import * as Icons from "../../../../../assets/icons/terminalsMenu";
 import { Node } from "../../../../../models";
 import { IsFunction, IsLocation, IsProduct } from "../../../helpers";
 

@@ -41,6 +41,7 @@ export function moduleReducer(state = initialState, action: ModuleVisibilityActi
             : { ...x }
         ),
       };
+
     case SET_MODULES_VISIBILITY:
       return {
         ...state,
@@ -53,6 +54,7 @@ export function moduleReducer(state = initialState, action: ModuleVisibilityActi
             }
         ),
       };
+
     default:
       return state;
   }

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Color } from "../../../../compLibrary";
-import { TerminalCategory } from "../../../../components/modules/typeEditorModule/helpers/GetFilteredTerminalsList";
+import { TerminalCategory } from "../../../../typeEditor/helpers/GetFilteredTerminalsList";
 import { Connector, ConnectorType, TerminalType } from "../../../../models";
 import { ActiveTerminalsTypeList } from "./";
 import { OnCategoryClick, OnTypeClick } from "./handlers";
 import { FilterTerminalCategories, FormatTypeId } from "./helpers";
 import { IsInputTerminal, IsOutputTerminal } from "../../../../components/flow/helpers";
-import { ExpandAccordionIcon, CollapseAccordionIcon } from "../../../../assets/icons/common";
+import { ExpandAccordionIcon, CollapseAccordionIcon } from "../../../../assets/icons/toogle";
 import { TerminalsListElementWrapper, TerminalsCategoryListElement } from "./styled/activeTerminalList";
 
 interface Props {
@@ -20,7 +20,6 @@ function ActiveTerminalsList({ terminals, terminalCategories, selectedTerminalId
   const [selectedCategoriesIds, setSelectedCategoriesIds] = useState<string[]>([]);
   const [selectedTypesIds, setSelectedTypesIds] = useState<string[]>([]);
   const filteredCategories = FilterTerminalCategories(terminalCategories, terminals);
-
   const isCategoryExpanded = (category: TerminalCategory) => selectedCategoriesIds.includes(category.id);
 
   const isTypeExpanded = (type: TerminalType, connectorType: ConnectorType) =>
@@ -42,7 +41,6 @@ function ActiveTerminalsList({ terminals, terminalCategories, selectedTerminalId
               onClick={() =>
                 OnCategoryClick(category, isCategoryExpanded(category), selectedCategoriesIds, setSelectedCategoriesIds)
               }
-              index={i}
               color={i % 2 ? undefined : Color.LightPurple}
             >
               <div className="numCategoryTerminals">{numCategoryTerminals}</div>

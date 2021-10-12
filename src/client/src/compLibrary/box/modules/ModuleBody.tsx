@@ -1,6 +1,13 @@
 import styled from "styled-components";
 
-const ModuleBody = styled.div`
+interface Props {
+  explorer?: boolean;
+  visible: boolean;
+  isBlockView?: boolean;
+  legend?: boolean;
+}
+
+const ModuleBody = styled.div<Props>`
   float: ${(props) => (props.explorer ? "right" : "left")};
   width: 331px;
   opacity: ${(props: { visible: boolean }) => (props.visible ? 1 : 0)};
@@ -8,8 +15,7 @@ const ModuleBody = styled.div`
   bottom: ${(props) => props.legend && "0"};
   overflow-y: auto;
   height: 100%;
-  max-height: ${(props) =>
-    props.legend ? "265px" : props.explorer && props.isBlockView ? "79%" : "89%"};
+  max-height: ${(props) => (props.legend ? "265px" : props.explorer && props.isBlockView ? "79%" : "89%")};
 
   @media screen and (max-height: 1100px) {
     max-height: ${(props) => props.explorer && props.isBlockView && 76}%;

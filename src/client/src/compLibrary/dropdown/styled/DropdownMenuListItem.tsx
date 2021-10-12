@@ -1,7 +1,11 @@
 import styled from "styled-components";
 import { Color, FontSize } from "../../";
 
-const DropdownMenuListItem = styled.div`
+interface Props {
+  hasCategory: boolean;
+}
+
+const DropdownMenuListItem = styled.div<Props>`
   display: flex;
   max-height: 31px;
   align-items: center;

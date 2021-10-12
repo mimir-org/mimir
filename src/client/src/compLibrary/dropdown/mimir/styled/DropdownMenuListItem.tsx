@@ -1,14 +1,22 @@
 import styled from "styled-components";
 import { Color } from "../../../";
 
-const DropdownMenuListItem = styled.div`
+interface Props {
+  height: number;
+  borderColor: string;
+  borderRadius: number;
+  fontSize: string;
+  hasCategory?: boolean;
+}
+
+const DropdownMenuListItem = styled.div<Props>`
   display: flex;
-  height: ${(props: { height: number }) => props.height}px;
+  height: ${(props) => props.height}px;
   align-items: center;
   border-width: 1px 0px 0px 0px;
   border-style: solid;
-  border-color: ${(props: { borderColor: string }) => props.borderColor};
-  font-size: ${(props: { fontSize: string }) => props.fontSize};
+  border-color: ${(props) => props.borderColor};
+  font-size: ${(props) => props.fontSize};
   color: ${Color.Black};
   background-color: ${Color.White};
   cursor: pointer;

@@ -1,6 +1,6 @@
-import { ArrowDown, ArrowUp } from "../../../../assets/icons/blockView";
+import * as Icons from "../../../../assets/icons/arrow";
 import { Node } from "../../../../models";
-import { IsAspectNode } from "../../helpers";
+import { HasChildren, IsAspectNode } from "../../helpers";
 import { Navigation, Banner, Block, Header } from "./styled";
 
 interface Props {
@@ -24,10 +24,18 @@ const BlockComponent = ({ node, color, splitView, selected, onParentClick, onChi
         {!splitView && (
           <>
             <Navigation>
-              {!IsAspectNode(node) && <img src={ArrowUp} alt="up" onClick={() => onParentClick()} />}
+              <img
+                src={IsAspectNode(node) ? Icons.ArrowUpInactive : Icons.ArrowUp}
+                alt="up"
+                onClick={() => onParentClick()}
+              />
             </Navigation>
             <Navigation>
-              <img src={ArrowDown} alt="down" onClick={() => onChildClick()} />
+              <img
+                src={HasChildren(node) ? Icons.ArrowDown : Icons.ArrowDownInactive}
+                alt="down"
+                onClick={() => onChildClick()}
+              />
             </Navigation>
           </>
         )}

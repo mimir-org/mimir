@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Mb.Core.Extensions;
 using Mb.Core.Repositories.Contracts;
 using Mb.Core.Services.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Data.Enums;
 using Mb.Models.Data.Enums.Mapping;
+using Mb.Models.Extensions;
 
 namespace Mb.Core.Services
 {

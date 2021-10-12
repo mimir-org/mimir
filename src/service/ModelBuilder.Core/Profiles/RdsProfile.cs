@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Mb.Core.Extensions;
 using Mb.Models.Application;
 using Mb.Models.Data;
+using Mb.Models.Extensions;
 
 namespace Mb.Core.Profiles
 {

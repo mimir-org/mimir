@@ -1,9 +1,14 @@
 import styled from "styled-components";
 import { Color, FontSize } from "../../..";
 
-const ButtonContainer = styled.div`
+interface Props {
+  width: number;
+  visible: boolean;
+}
+
+const ButtonContainer = styled.div<Props>`
   pointer-events: initial;
-  visibility: ${(props: { visible: boolean }) => !props.visible && "hidden"};
+  visibility: ${(props) => !props.visible && "hidden"};
   box-shadow: inset 0 0 0 1px ${Color.InspectorGreyBorder};
   border-radius: 4px;
   font-size: ${FontSize.Standard};

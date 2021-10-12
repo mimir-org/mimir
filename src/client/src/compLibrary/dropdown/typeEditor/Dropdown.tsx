@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
-import { ExpandIcon, CollapseIcon } from "../../../assets/icons/common";
-import { LocationTypeCategory } from "../../../components/modules/typeEditorModule/styled";
+import { ExpandIcon, CollapseIcon } from "../../../assets/icons/chevron";
+import { LocationTypeCategory } from "../../../typeEditor/styled";
 import { Symbol } from "../../symbol";
 import { DropdownMenuWrapper, DropdownMenuHeader, DropdownMenuList, DropdownMenuListItem } from "./styled";
 
@@ -69,7 +69,7 @@ const Dropdown = ({ label, items, onChange, defaultValue, disabled, hasCategory,
     return items?.map((item) => {
       return (
         <div onClick={(e) => handleChange(e, item)} key={item.id}>
-          <DropdownMenuListItem hasCategory={hasCategory}>
+          <DropdownMenuListItem>
             {item.image && <Symbol base64={item.image} text={item.description} />}
             <p>{item.description}</p>
           </DropdownMenuListItem>

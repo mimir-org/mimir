@@ -1,7 +1,11 @@
 import styled from "styled-components";
 import { Color, FontSize } from "./../../../compLibrary";
 
-const ErrorBox = styled.div`
+interface Props {
+  visible: boolean;
+}
+
+const ErrorBox = styled.div<Props>`
   width: 400px;
   height: 70%;
   margin: auto;

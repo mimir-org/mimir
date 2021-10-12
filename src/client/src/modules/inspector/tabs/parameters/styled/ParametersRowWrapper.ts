@@ -4,8 +4,9 @@ const ParametersRowWrapper = styled.div`
   display: flex;
   flex-direction: column;
 
-  :last-child {
-    margin-bottom: 200px;
-  }
+  overflow: auto;
+
+  padding-bottom: 150px;
+  margin-bottom: 50px;
 `;
 export default ParametersRowWrapper;

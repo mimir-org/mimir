@@ -1,7 +1,13 @@
 import styled from "styled-components";
 import { Color, FontSize } from "../../../../../../compLibrary";
 
-export const TerminalsCategoryListElement = styled.div`
+interface Props {
+  isSelected?: boolean;
+  radius: number;
+  color: string;
+}
+
+export const TerminalsCategoryListElement = styled.div<Props>`
   padding: 10px;
   min-width: 250px;
   font-size: ${FontSize.Small};
