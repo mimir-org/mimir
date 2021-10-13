@@ -20,7 +20,7 @@ const SetLeftPos = (
 ) => {
   if (!electro) {
     if (pos === Position.Left) return "-16px";
-    if (pos === Position.Right && !isParent) return "130px";
+    if (pos === Position.Right && !isParent) return "132px";
     if (pos === Position.Right && isParent && !splitView) return "950px"; // TODO: Make scalable
     if (pos === Position.Right && isParent && splitView) return "650px";
   }
