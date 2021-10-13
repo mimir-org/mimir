@@ -2,8 +2,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Mb.Models.Application;
+using Mb.Models.Application.Mimir;
 using Mb.Models.Data;
-using Mb.Models.Modules;
+using Mb.Modules;
 using Microsoft.AspNetCore.Http;
 
 namespace Mb.Core.Services.Contracts

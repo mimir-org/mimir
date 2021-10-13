@@ -5,26 +5,24 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Mb.Core.Services.Contracts;
-using Mb.Models.Enums;
 using Mb.Models.Exceptions;
-using Mb.Models.Modules;
-using Module = Mb.Models.Modules.Module;
+using Module = Mb.Modules;
 
 namespace Mb.Core.Services
 {
     public class ModuleService : IModuleService
     {
         public List<Assembly> Assemblies { get; }
-        public List<Module> Modules { get; set; }
+        public List<Module.Module> Modules { get; set; }
 
         public ModuleService()
         {
             Assemblies = new List<Assembly>();
-            Modules = new List<Module>();
+            Modules = new List<Module.Module>();
             LoadAssemblies();
-            Modules.AddRange(CreateModules<IModelBuilderPlugin>(ModuleType.Plugin));
-            Modules.AddRange(CreateModules<IModelBuilderParser>(ModuleType.Parser));
-            Modules.AddRange(CreateModules<IModelBuilderSyncService>(ModuleType.SyncService));
+            Modules.AddRange(CreateModules<Module.IModelBuilderPlugin>(Module.ModuleType.Plugin));
+            Modules.AddRange(CreateModules<Module.IModelBuilderParser>(Module.ModuleType.Parser));
+            Modules.AddRange(CreateModules<Module.IModelBuilderSyncService>(Module.ModuleType.SyncService));
         }
 
         public Task InitialModules()
@@ -32,7 +30,7 @@ namespace Mb.Core.Services
             return Task.CompletedTask;
         }
 
-        public T Resolve<T>(string name) where T : IModuleInterface
+        public T Resolve<T>(string name) where T : Module.IModuleInterface
         {
             if (string.IsNullOrEmpty(name))
                 throw new ModelBuilderModuleException("Module name is required");
@@ -40,15 +38,15 @@ namespace Mb.Core.Services
             var instance = Modules.FirstOrDefault(x => string.Equals(x.Name, name, StringComparison.CurrentCultureIgnoreCase))?.Instance;
             if (instance is T obj)
             {
-                return (T)obj;
+                return obj;
             }
 
             throw new NotSupportedException("The type is not supported or empty");
         }
 
-        private List<Module> CreateModules<T>(ModuleType moduleType) where T : IModuleInterface
+        private IEnumerable<Module.Module> CreateModules<T>(Module.ModuleType moduleType) where T : Module.IModuleInterface
         {
-            var data = new List<Module>();
+            var data = new List<Module.Module>();
 
             if (Assemblies == null || !Assemblies.Any())
                 return data;
@@ -63,7 +61,7 @@ namespace Mb.Core.Services
                 if (instance is not T obj) 
                     continue;
                 
-                data.Add(new Module
+                data.Add(new Module.Module
                 {
                     Name = obj.GetName() ?? Guid.NewGuid().ToString(),
                     Instance = obj,
@@ -86,7 +84,7 @@ namespace Mb.Core.Services
             {
                 try
                 {
-                    var hasModuleInterface = assembly.GetTypes().Any(x => x.GetInterfaces().Contains(typeof(IModuleInterface)) && x.GetConstructor(Type.EmptyTypes) != null);
+                    var hasModuleInterface = assembly.GetTypes().Any(x => x.GetInterfaces().Contains(typeof(Module.IModuleInterface)) && x.GetConstructor(Type.EmptyTypes) != null);
                     if (!hasModuleInterface) 
                         continue;
 

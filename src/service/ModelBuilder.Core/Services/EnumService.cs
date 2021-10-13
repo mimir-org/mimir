@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Mb.Core.Repositories.Contracts;
 using Mb.Core.Services.Contracts;
 using Mb.Models.Application;
+using Mb.Models.Application.TypeEditor;
 using Mb.Models.Data.Enums;
 using Mb.Models.Data.Enums.Mapping;
 using Mb.Models.Extensions;

@@ -7,11 +7,13 @@ using AutoMapper;
 using Mb.Core.Repositories.Contracts;
 using Mb.Core.Services.Contracts;
 using Mb.Models.Application;
-using Mb.Models.Application.Enums;
+using Mb.Models.Application.TypeEditor;
 using Mb.Models.Data;
 using Mb.Models.Enums;
 using Mb.Models.Exceptions;
 using Mb.Models.Extensions;
+using Mb.TypeEditor.Core.Contracts;
+using Mb.TypeEditor.Data.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,68 +29,66 @@ namespace Mb.Core.Services
         private readonly IEnumBaseRepository _enumBaseRepository;
         private readonly IMapper _mapper;
         private readonly IPredefinedAttributeRepository _predefinedAttributeRepository;
-        private readonly INodeTypeTerminalTypeRepository _nodeTypeTerminalTypeRepository;
         private readonly ICompositeTypeRepository _compositeTypeRepository;
-        private readonly ILibraryRepository _libraryRepository;
-
-        public TypeEditorService(IRdsRepository rdsRepository, IAttributeTypeRepository attributeTypeRepository, ILibraryTypeRepository libraryTypeComponentRepository, IContractorRepository contractorRepository, ITerminalTypeRepository terminalTypeRepository, IEnumBaseRepository enumBaseRepository, IMapper mapper, IPredefinedAttributeRepository predefinedAttributeRepository, INodeTypeTerminalTypeRepository nodeTypeTerminalTypeRepository, ICompositeTypeRepository compositeTypeRepository, ILibraryRepository libraryRepository)
+        private readonly ILibraryTypeService _libraryTypeService;
+        
+        public TypeEditorService(IRdsRepository rdsRepository, IAttributeTypeRepository attributeTypeRepository, IContractorRepository contractorRepository, ITerminalTypeRepository terminalTypeRepository, IEnumBaseRepository enumBaseRepository, IMapper mapper, IPredefinedAttributeRepository predefinedAttributeRepository, ICompositeTypeRepository compositeTypeRepository, ILibraryTypeRepository libraryTypeComponentRepository, ILibraryTypeService libraryTypeService)
         {
             _rdsRepository = rdsRepository;
             _attributeTypeRepository = attributeTypeRepository;
-            _libraryTypeComponentRepository = libraryTypeComponentRepository;
             _contractorRepository = contractorRepository;
             _terminalTypeRepository = terminalTypeRepository;
             _enumBaseRepository = enumBaseRepository;
             _mapper = mapper;
             _predefinedAttributeRepository = predefinedAttributeRepository;
-            _nodeTypeTerminalTypeRepository = nodeTypeTerminalTypeRepository;
             _compositeTypeRepository = compositeTypeRepository;
-            _libraryRepository = libraryRepository;
+            _libraryTypeComponentRepository = libraryTypeComponentRepository;
+            _libraryTypeService = libraryTypeService;
         }
 
         #region Public methods
 
-        /// <summary>
-        /// Get type by id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="ignoreNotFound"></param>
-        /// <returns></returns>
-        public async Task<LibraryType> GetTypeById(string id, bool ignoreNotFound = false)
-        {
-            var libraryTypeComponent = await _libraryTypeComponentRepository.GetAsync(id);
+        ///// <summary>
+        ///// Get type by id
+        ///// </summary>
+        ///// <param name="id"></param>
+        ///// <param name="ignoreNotFound"></param>
+        ///// <returns></returns>
+        //public async Task<LibraryType> GetTypeById(string id, bool ignoreNotFound = false)
+        //{
+        //    var libraryTypeComponent = await _libraryTypeComponentRepository.GetAsync(id);
 
-            if (!ignoreNotFound && libraryTypeComponent == null)
-                throw new ModelBuilderNotFoundException($"The type with id: {id} could not be found.");
+        //    if (!ignoreNotFound && libraryTypeComponent == null)
+        //        throw new ModelBuilderNotFoundException($"The type with id: {id} could not be found.");
 
-            if (libraryTypeComponent is NodeType)
-            {
-                return await _libraryTypeComponentRepository.FindBy(x => x.Id == id)
-                    .OfType<NodeType>()
-                    .Include(x => x.TerminalTypes)
-                    .Include(x => x.AttributeTypes)
-                    .Include(x => x.CompositeTypes)
-                    .ThenInclude(y => y.AttributeTypes)
-                    .FirstOrDefaultAsync();
-            }
-            else if (libraryTypeComponent is TransportType)
-            {
-                return await _libraryTypeComponentRepository.FindBy(x => x.Id == id)
-                    .OfType<TransportType>()
-                    .Include(x => x.TerminalType)
-                    .Include(x => x.AttributeTypes)
-                    .FirstOrDefaultAsync();
-            }
-            else if (libraryTypeComponent is InterfaceType)
-            {
-                return await _libraryTypeComponentRepository.FindBy(x => x.Id == id)
-                    .OfType<InterfaceType>()
-                    .Include(x => x.TerminalType)
-                    .FirstOrDefaultAsync();
-            }
+        //    if (libraryTypeComponent is NodeType)
+        //    {
+        //        return await _libraryTypeComponentRepository.FindBy(x => x.Id == id)
+        //            .OfType<NodeType>()
+        //            .Include(x => x.TerminalTypes)
+        //            .Include(x => x.AttributeTypes)
+        //            .Include(x => x.CompositeTypes)
+        //            .ThenInclude(y => y.AttributeTypes)
+        //            .FirstOrDefaultAsync();
+        //    }
+        //    else if (libraryTypeComponent is TransportType)
+        //    {
+        //        return await _libraryTypeComponentRepository.FindBy(x => x.Id == id)
+        //            .OfType<TransportType>()
+        //            .Include(x => x.TerminalType)
+        //            .Include(x => x.AttributeTypes)
+        //            .FirstOrDefaultAsync();
+        //    }
+        //    else if (libraryTypeComponent is InterfaceType)
+        //    {
+        //        return await _libraryTypeComponentRepository.FindBy(x => x.Id == id)
+        //            .OfType<InterfaceType>()
+        //            .Include(x => x.TerminalType)
+        //            .FirstOrDefaultAsync();
+        //    }
 
-            return libraryTypeComponent;
-        }
+        //    return libraryTypeComponent;
+        //}
 
         /// <summary>
         /// Get all type editor statuses
@@ -159,329 +159,329 @@ namespace Mb.Core.Services
                 all.Where(x => x.Aspect.HasFlag(aspect));
         }
 
-        /// <summary>
-        /// Get all terminals
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<TerminalType> GetTerminals()
-        {
-            return _terminalTypeRepository.GetAll()
-                .Include(x => x.TerminalCategory)
-                .Include(x => x.Attributes)
-                .ToList();
-        }
+        ///// <summary>
+        ///// Get all terminals
+        ///// </summary>
+        ///// <returns></returns>
+        //public IEnumerable<TerminalType> GetTerminals()
+        //{
+        //    return _terminalTypeRepository.GetAll()
+        //        .Include(x => x.TerminalCategory)
+        //        .Include(x => x.Attributes)
+        //        .ToList();
+        //}
 
-        /// <summary>
-        /// Get all terminals
-        /// </summary>
-        /// <returns></returns>
-        public Dictionary<string, List<TerminalType>> GetTerminalsByCategory()
-        {
-            return _terminalTypeRepository.GetAll()
-                .Include(x => x.TerminalCategory)
-                .Include(x => x.Attributes)
-                .AsEnumerable()
-                .GroupBy(x => x.TerminalCategory.Name)
-                .ToDictionary(g => g.Key, g => g.ToList());
-        }
+        ///// <summary>
+        ///// Get all terminals
+        ///// </summary>
+        ///// <returns></returns>
+        //public Dictionary<string, List<TerminalType>> GetTerminalsByCategory()
+        //{
+        //    return _terminalTypeRepository.GetAll()
+        //        .Include(x => x.TerminalCategory)
+        //        .Include(x => x.Attributes)
+        //        .AsEnumerable()
+        //        .GroupBy(x => x.TerminalCategory.Name)
+        //        .ToDictionary(g => g.Key, g => g.ToList());
+        //}
 
 
-        /// <summary>
-        /// Create a library component
-        /// </summary>
-        /// <param name="createLibraryType"></param>
-        /// <returns></returns>
-        public async Task<T> CreateLibraryType<T>(CreateLibraryType createLibraryType) where T : class, new()
-        {
-            if (createLibraryType == null)
-                return null;
+        ///// <summary>
+        ///// Create a library component
+        ///// </summary>
+        ///// <param name="createLibraryType"></param>
+        ///// <returns></returns>
+        //public async Task<T> CreateLibraryType<T>(CreateLibraryType createLibraryType) where T : class, new()
+        //{
+        //    if (createLibraryType == null)
+        //        return null;
 
-            var data = (await CreateLibraryTypes(new List<CreateLibraryType> { createLibraryType }))?.FirstOrDefault();
-            if (data == null)
-                throw new ModelBuilderNullReferenceException("Could not create type");
+        //    var data = (await CreateLibraryTypes(new List<CreateLibraryType> { createLibraryType }))?.FirstOrDefault();
+        //    if (data == null)
+        //        throw new ModelBuilderNullReferenceException("Could not create type");
 
-            var obj = await _libraryRepository.GetLibraryItem<T>(data.Id);
-            return obj;
-        }
+        //    var obj = await _libraryRepository.GetLibraryItem<T>(data.Id);
+        //    return obj;
+        //}
 
-        /// <summary>
-        /// Update a library type based on id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="createLibraryType"></param>
-        /// <returns></returns>
-        public async Task<T> UpdateLibraryType<T>(string id, CreateLibraryType createLibraryType) where T : class, new()
-        {
-            if (string.IsNullOrEmpty(id))
-                throw new ModelBuilderNullReferenceException("Can't update a type without an id");
+        ///// <summary>
+        ///// Update a library type based on id
+        ///// </summary>
+        ///// <param name="id"></param>
+        ///// <param name="createLibraryType"></param>
+        ///// <returns></returns>
+        //public async Task<T> UpdateLibraryType<T>(string id, CreateLibraryType createLibraryType) where T : class, new()
+        //{
+        //    if (string.IsNullOrEmpty(id))
+        //        throw new ModelBuilderNullReferenceException("Can't update a type without an id");
 
-            if (createLibraryType == null)
-                throw new ModelBuilderNullReferenceException("Can't update a null type");
+        //    if (createLibraryType == null)
+        //        throw new ModelBuilderNullReferenceException("Can't update a null type");
 
-            var existingType = await GetTypeById(id);
-            if (existingType == null)
-                throw new ModelBuilderNotFoundException($"There is no type with id:{id} to update.");
+        //    var existingType = await GetTypeById(id);
+        //    if (existingType == null)
+        //        throw new ModelBuilderNotFoundException($"There is no type with id:{id} to update.");
 
-            await DeleteType(id);
-            return await CreateLibraryType<T>(createLibraryType);
-        }
+        //    await DeleteType(id);
+        //    return await CreateLibraryType<T>(createLibraryType);
+        //}
 
-        /// <summary>
-        /// Create library components
-        /// </summary>
-        /// <param name="createLibraryTypes"></param>
-        /// <returns></returns>
-        public async Task<IEnumerable<LibraryType>> CreateLibraryTypes(ICollection<CreateLibraryType> createLibraryTypes)
-        {
-            var createdLibraryTypes = new List<LibraryType>();
+        ///// <summary>
+        ///// Create library components
+        ///// </summary>
+        ///// <param name="createLibraryTypes"></param>
+        ///// <returns></returns>
+        //public async Task<IEnumerable<LibraryType>> CreateLibraryTypes(ICollection<CreateLibraryType> createLibraryTypes)
+        //{
+        //    var createdLibraryTypes = new List<LibraryType>();
 
-            if (createLibraryTypes == null || !createLibraryTypes.Any())
-                return createdLibraryTypes;
+        //    if (createLibraryTypes == null || !createLibraryTypes.Any())
+        //        return createdLibraryTypes;
 
-            foreach (var createLibraryType in createLibraryTypes)
-            {
-                if (createLibraryType.Aspect == Aspect.Location)
-                    createLibraryType.ObjectType = ObjectType.ObjectBlock;
+        //    foreach (var createLibraryType in createLibraryTypes)
+        //    {
+        //        if (createLibraryType.Aspect == Aspect.Location)
+        //            createLibraryType.ObjectType = ObjectType.ObjectBlock;
 
-                LibraryType libraryType = createLibraryType.ObjectType switch
-                {
-                    ObjectType.ObjectBlock => _mapper.Map<NodeType>(createLibraryType),
-                    ObjectType.Interface => _mapper.Map<InterfaceType>(createLibraryType),
-                    ObjectType.Transport => _mapper.Map<TransportType>(createLibraryType),
-                    _ => null
-                };
+        //        LibraryType libraryType = createLibraryType.ObjectType switch
+        //        {
+        //            ObjectType.ObjectBlock => _mapper.Map<NodeType>(createLibraryType),
+        //            ObjectType.Interface => _mapper.Map<InterfaceType>(createLibraryType),
+        //            ObjectType.Transport => _mapper.Map<TransportType>(createLibraryType),
+        //            _ => null
+        //        };
 
-                if (libraryType?.Id == null)
-                    return null;
+        //        if (libraryType?.Id == null)
+        //            return null;
 
-                var existingType = await _libraryTypeComponentRepository.GetAsync(libraryType.Id);
-                if (existingType != null)
-                    throw new ModelBuilderDuplicateException($"The type with id:{libraryType.Id} already exist.");
+        //        var existingType = await _libraryTypeComponentRepository.GetAsync(libraryType.Id);
+        //        if (existingType != null)
+        //            throw new ModelBuilderDuplicateException($"The type with id:{libraryType.Id} already exist.");
 
-                switch (libraryType)
-                {
-                    case NodeType nt:
-                        {
-                            if (nt.AttributeTypes != null && nt.AttributeTypes.Any())
-                            {
-                                foreach (var attributeType in nt.AttributeTypes)
-                                {
-                                    _attributeTypeRepository.Attach(attributeType, EntityState.Unchanged);
-                                }
-                            }
+        //        switch (libraryType)
+        //        {
+        //            case NodeType nt:
+        //                {
+        //                    if (nt.AttributeTypes != null && nt.AttributeTypes.Any())
+        //                    {
+        //                        foreach (var attributeType in nt.AttributeTypes)
+        //                        {
+        //                            _attributeTypeRepository.Attach(attributeType, EntityState.Unchanged);
+        //                        }
+        //                    }
 
-                            if (nt.CompositeTypes != null && nt.CompositeTypes.Any())
-                            {
-                                foreach (var compositeType in nt.CompositeTypes)
-                                {
-                                    _compositeTypeRepository.Attach(compositeType, EntityState.Unchanged);
-                                }
-                            }
+        //                    if (nt.CompositeTypes != null && nt.CompositeTypes.Any())
+        //                    {
+        //                        foreach (var compositeType in nt.CompositeTypes)
+        //                        {
+        //                            _compositeTypeRepository.Attach(compositeType, EntityState.Unchanged);
+        //                        }
+        //                    }
 
-                            await _libraryTypeComponentRepository.CreateAsync(nt);
-                            await _libraryTypeComponentRepository.SaveAsync();
+        //                    await _libraryTypeComponentRepository.CreateAsync(nt);
+        //                    await _libraryTypeComponentRepository.SaveAsync();
 
-                            if (nt.AttributeTypes != null && nt.AttributeTypes.Any())
-                            {
-                                foreach (var attributeType in nt.AttributeTypes)
-                                {
-                                    _attributeTypeRepository.Detach(attributeType);
-                                }
-                            }
+        //                    if (nt.AttributeTypes != null && nt.AttributeTypes.Any())
+        //                    {
+        //                        foreach (var attributeType in nt.AttributeTypes)
+        //                        {
+        //                            _attributeTypeRepository.Detach(attributeType);
+        //                        }
+        //                    }
 
-                            if (nt.CompositeTypes != null && nt.CompositeTypes.Any())
-                            {
-                                foreach (var compositeType in nt.CompositeTypes)
-                                {
-                                    _compositeTypeRepository.Detach(compositeType);
-                                }
-                            }
+        //                    if (nt.CompositeTypes != null && nt.CompositeTypes.Any())
+        //                    {
+        //                        foreach (var compositeType in nt.CompositeTypes)
+        //                        {
+        //                            _compositeTypeRepository.Detach(compositeType);
+        //                        }
+        //                    }
 
-                            createdLibraryTypes.Add(nt);
-                            continue;
-                        }
-                    case InterfaceType it:
-                        await _libraryTypeComponentRepository.CreateAsync(it);
-                        await _libraryTypeComponentRepository.SaveAsync();
-                        createdLibraryTypes.Add(it);
-                        continue;
-                    case TransportType tt:
-                        {
-                            if (tt.AttributeTypes != null && tt.AttributeTypes.Any())
-                            {
-                                foreach (var attributeType in tt.AttributeTypes)
-                                {
-                                    _attributeTypeRepository.Attach(attributeType, EntityState.Unchanged);
-                                }
-                            }
+        //                    createdLibraryTypes.Add(nt);
+        //                    continue;
+        //                }
+        //            case InterfaceType it:
+        //                await _libraryTypeComponentRepository.CreateAsync(it);
+        //                await _libraryTypeComponentRepository.SaveAsync();
+        //                createdLibraryTypes.Add(it);
+        //                continue;
+        //            case TransportType tt:
+        //                {
+        //                    if (tt.AttributeTypes != null && tt.AttributeTypes.Any())
+        //                    {
+        //                        foreach (var attributeType in tt.AttributeTypes)
+        //                        {
+        //                            _attributeTypeRepository.Attach(attributeType, EntityState.Unchanged);
+        //                        }
+        //                    }
 
-                            await _libraryTypeComponentRepository.CreateAsync(tt);
-                            await _libraryTypeComponentRepository.SaveAsync();
+        //                    await _libraryTypeComponentRepository.CreateAsync(tt);
+        //                    await _libraryTypeComponentRepository.SaveAsync();
 
-                            if (tt.AttributeTypes != null && tt.AttributeTypes.Any())
-                            {
-                                foreach (var attributeType in tt.AttributeTypes)
-                                {
-                                    _attributeTypeRepository.Detach(attributeType);
-                                }
-                            }
+        //                    if (tt.AttributeTypes != null && tt.AttributeTypes.Any())
+        //                    {
+        //                        foreach (var attributeType in tt.AttributeTypes)
+        //                        {
+        //                            _attributeTypeRepository.Detach(attributeType);
+        //                        }
+        //                    }
 
-                            createdLibraryTypes.Add(tt);
-                            continue;
-                        }
-                    default:
-                        continue;
-                }
-            }
+        //                    createdLibraryTypes.Add(tt);
+        //                    continue;
+        //                }
+        //            default:
+        //                continue;
+        //        }
+        //    }
 
-            return createdLibraryTypes;
-        }
+        //    return createdLibraryTypes;
+        //}
 
-        /// <summary>
-        /// Get all library types
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<CreateLibraryType> GetAllTypes()
-        {
-            var nodeTypes = _libraryTypeComponentRepository
-                .GetAll()
-                .OfType<NodeType>()
-                .Include(x => x.TerminalTypes)
-                .Include("TerminalTypes.TerminalType")
-                .Include(x => x.AttributeTypes)
-                .Include(x => x.CompositeTypes)
-                .ThenInclude(y => y.AttributeTypes)
-                .ToList();
+        ///// <summary>
+        ///// Get all library types
+        ///// </summary>
+        ///// <returns></returns>
+        //public IEnumerable<CreateLibraryType> GetAllTypes()
+        //{
+        //    var nodeTypes = _libraryTypeComponentRepository
+        //        .GetAll()
+        //        .OfType<NodeType>()
+        //        .Include(x => x.TerminalTypes)
+        //        .Include("TerminalTypes.TerminalType")
+        //        .Include(x => x.AttributeTypes)
+        //        .Include(x => x.CompositeTypes)
+        //        .ThenInclude(y => y.AttributeTypes)
+        //        .ToList();
 
-            var transportTypes = _libraryTypeComponentRepository
-                .GetAll()
-                .OfType<TransportType>()
-                .Include(x => x.AttributeTypes)
-                .ToList();
+        //    var transportTypes = _libraryTypeComponentRepository
+        //        .GetAll()
+        //        .OfType<TransportType>()
+        //        .Include(x => x.AttributeTypes)
+        //        .ToList();
 
-            var interfaceType = _libraryTypeComponentRepository
-                .GetAll()
-                .OfType<InterfaceType>()
-                .ToList();
+        //    var interfaceType = _libraryTypeComponentRepository
+        //        .GetAll()
+        //        .OfType<InterfaceType>()
+        //        .ToList();
 
-            foreach (var clt in nodeTypes.Select(x => _mapper.Map<CreateLibraryType>(x)))
-            {
-                yield return clt;
-            }
+        //    foreach (var clt in nodeTypes.Select(x => _mapper.Map<CreateLibraryType>(x)))
+        //    {
+        //        yield return clt;
+        //    }
 
-            foreach (var clt in transportTypes.Select(x => _mapper.Map<CreateLibraryType>(x)))
-            {
-                yield return clt;
-            }
+        //    foreach (var clt in transportTypes.Select(x => _mapper.Map<CreateLibraryType>(x)))
+        //    {
+        //        yield return clt;
+        //    }
 
-            foreach (var clt in interfaceType.Select(x => _mapper.Map<CreateLibraryType>(x)))
-            {
-                yield return clt;
-            }
-        }
+        //    foreach (var clt in interfaceType.Select(x => _mapper.Map<CreateLibraryType>(x)))
+        //    {
+        //        yield return clt;
+        //    }
+        //}
 
-        /// <summary>
-        /// Convert a LibraryType to CreateLibraryType
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="filter"></param>
-        /// <returns></returns>
-        public async Task<CreateLibraryType> ConvertToCreateLibraryType(string id, LibraryFilter filter)
-        {
-            switch (filter)
-            {
-                case LibraryFilter.Node:
-                    var nodeItem = await _libraryTypeComponentRepository
-                        .FindBy(x => x.Id == id)
-                        .OfType<NodeType>()
-                        .Include(x => x.TerminalTypes)
-                        .Include("TerminalTypes.TerminalType")
-                        .Include(x => x.AttributeTypes)
-                        .Include(x => x.CompositeTypes)
-                        .FirstOrDefaultAsync();
+        ///// <summary>
+        ///// Convert a LibraryType to CreateLibraryType
+        ///// </summary>
+        ///// <param name="id"></param>
+        ///// <param name="filter"></param>
+        ///// <returns></returns>
+        //public async Task<CreateLibraryType> ConvertToCreateLibraryType(string id, LibraryFilter filter)
+        //{
+        //    switch (filter)
+        //    {
+        //        case LibraryFilter.Node:
+        //            var nodeItem = await _libraryTypeComponentRepository
+        //                .FindBy(x => x.Id == id)
+        //                .OfType<NodeType>()
+        //                .Include(x => x.TerminalTypes)
+        //                .Include("TerminalTypes.TerminalType")
+        //                .Include(x => x.AttributeTypes)
+        //                .Include(x => x.CompositeTypes)
+        //                .FirstOrDefaultAsync();
 
-                    if (nodeItem == null)
-                        throw new ModelBuilderNotFoundException($"There is no type with id: {id} and filter: {filter}");
+        //            if (nodeItem == null)
+        //                throw new ModelBuilderNotFoundException($"There is no type with id: {id} and filter: {filter}");
 
-                    return _mapper.Map<CreateLibraryType>(nodeItem);
+        //            return _mapper.Map<CreateLibraryType>(nodeItem);
 
-                case LibraryFilter.Interface:
-                    var interfaceItem = await _libraryTypeComponentRepository
-                        .FindBy(x => x.Id == id)
-                        .OfType<InterfaceType>()
-                        .FirstOrDefaultAsync();
+        //        case LibraryFilter.Interface:
+        //            var interfaceItem = await _libraryTypeComponentRepository
+        //                .FindBy(x => x.Id == id)
+        //                .OfType<InterfaceType>()
+        //                .FirstOrDefaultAsync();
 
-                    if (interfaceItem == null)
-                        throw new ModelBuilderNotFoundException($"There is no type with id: {id} and filter: {filter}");
+        //            if (interfaceItem == null)
+        //                throw new ModelBuilderNotFoundException($"There is no type with id: {id} and filter: {filter}");
 
-                    return _mapper.Map<CreateLibraryType>(interfaceItem);
+        //            return _mapper.Map<CreateLibraryType>(interfaceItem);
 
-                case LibraryFilter.Transport:
-                    var transportItem = await _libraryTypeComponentRepository
-                        .FindBy(x => x.Id == id)
-                        .OfType<TransportType>()
-                        .Include(x => x.AttributeTypes)
-                        .FirstOrDefaultAsync();
+        //        case LibraryFilter.Transport:
+        //            var transportItem = await _libraryTypeComponentRepository
+        //                .FindBy(x => x.Id == id)
+        //                .OfType<TransportType>()
+        //                .Include(x => x.AttributeTypes)
+        //                .FirstOrDefaultAsync();
 
-                    if (transportItem == null)
-                        throw new ModelBuilderNotFoundException($"There is no type with id: {id} and filter: {filter}");
+        //            if (transportItem == null)
+        //                throw new ModelBuilderNotFoundException($"There is no type with id: {id} and filter: {filter}");
 
-                    return _mapper.Map<CreateLibraryType>(transportItem);
+        //            return _mapper.Map<CreateLibraryType>(transportItem);
 
-                default:
-                    throw new ModelBuilderInvalidOperationException("Filter type mismatch");
-            }
-        }
+        //        default:
+        //            throw new ModelBuilderInvalidOperationException("Filter type mismatch");
+        //    }
+        //}
 
-        /// <summary>
-        /// Create a json byte array of all types
-        /// </summary>
-        /// <returns></returns>
-        public byte[] CreateFile()
-        {
-            var types = GetAllTypes().ToList();
-            return types.Serialize();
-        }
+        ///// <summary>
+        ///// Create a json byte array of all types
+        ///// </summary>
+        ///// <returns></returns>
+        //public byte[] CreateFile()
+        //{
+        //    var types = _libraryTypeService.GetAllTypes().ToList();
+        //    return types.Serialize();
+        //}
 
-        /// <summary>
-        ///  Load types from file
-        /// </summary>
-        /// <param name="file"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public async Task LoadDataFromFile(IFormFile file, CancellationToken cancellationToken)
-        {
-            await using var stream = new MemoryStream();
-            await file.CopyToAsync(stream, cancellationToken);
-            var types = stream.ToArray().Deserialize<List<LibraryType>>();
-            await CreateLibraryTypeComponentsAsync(types);
-        }
+        ///// <summary>
+        /////  Load types from file
+        ///// </summary>
+        ///// <param name="file"></param>
+        ///// <param name="cancellationToken"></param>
+        ///// <returns></returns>
+        //public async Task LoadDataFromFile(IFormFile file, CancellationToken cancellationToken)
+        //{
+        //    await using var stream = new MemoryStream();
+        //    await file.CopyToAsync(stream, cancellationToken);
+        //    var types = stream.ToArray().Deserialize<List<LibraryType>>();
+        //    await CreateLibraryTypeComponentsAsync(types);
+        //}
 
-        /// <summary>
-        /// Delete a type
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public async Task DeleteType(string id)
-        {
-            var existingType = await GetTypeById(id);
-            if (existingType == null)
-                throw new ModelBuilderNotFoundException($"Could not delete type with id: {id}. The type was not found.");
+        ///// <summary>
+        ///// Delete a type
+        ///// </summary>
+        ///// <param name="id"></param>
+        ///// <returns></returns>
+        //public async Task DeleteType(string id)
+        //{
+        //    var existingType = await GetTypeById(id);
+        //    if (existingType == null)
+        //        throw new ModelBuilderNotFoundException($"Could not delete type with id: {id}. The type was not found.");
 
-            if (existingType is NodeType typeToDelete)
-            {
-                foreach (var terminalType in typeToDelete.TerminalTypes)
-                {
-                    _nodeTypeTerminalTypeRepository.Attach(terminalType, EntityState.Deleted);
-                }
+        //    if (existingType is NodeType typeToDelete)
+        //    {
+        //        foreach (var terminalType in typeToDelete.TerminalTypes)
+        //        {
+        //            _nodeTypeTerminalTypeRepository.Attach(terminalType, EntityState.Deleted);
+        //        }
 
-                await _nodeTypeTerminalTypeRepository.SaveAsync();
-            }
+        //        await _nodeTypeTerminalTypeRepository.SaveAsync();
+        //    }
 
-            //_libraryTypeComponentRepository.Attach(existingType, EntityState.Deleted);
-            await _libraryTypeComponentRepository.Delete(existingType.Id);
-            await _libraryTypeComponentRepository.SaveAsync();
-        }
+        //    //_libraryTypeComponentRepository.Attach(existingType, EntityState.Deleted);
+        //    await _libraryTypeComponentRepository.Delete(existingType.Id);
+        //    await _libraryTypeComponentRepository.SaveAsync();
+        //}
 
         /// <summary>
         /// Create an attribute type
@@ -535,52 +535,52 @@ namespace Mb.Core.Services
             return data;
         }
 
-        /// <summary>
-        /// Create a terminal type
-        /// </summary>
-        /// <param name="createTerminalType"></param>
-        /// <returns></returns>
-        public async Task<TerminalType> CreateTerminalType(CreateTerminalType createTerminalType)
-        {
-            var data = await CreateTerminalTypes(new List<CreateTerminalType> { createTerminalType });
-            return data.SingleOrDefault();
-        }
+        ///// <summary>
+        ///// Create a terminal type
+        ///// </summary>
+        ///// <param name="createTerminalType"></param>
+        ///// <returns></returns>
+        //public async Task<TerminalType> CreateTerminalType(CreateTerminalType createTerminalType)
+        //{
+        //    var data = await CreateTerminalTypes(new List<CreateTerminalType> { createTerminalType });
+        //    return data.SingleOrDefault();
+        //}
 
-        /// <summary>
-        /// Create from a list of terminal types
-        /// </summary>
-        /// <param name="createTerminalTypes"></param>
-        /// <returns></returns>
-        public async Task<List<TerminalType>> CreateTerminalTypes(List<CreateTerminalType> createTerminalTypes)
-        {
-            if (createTerminalTypes == null || !createTerminalTypes.Any())
-                return new List<TerminalType>();
+        ///// <summary>
+        ///// Create from a list of terminal types
+        ///// </summary>
+        ///// <param name="createTerminalTypes"></param>
+        ///// <returns></returns>
+        //public async Task<List<TerminalType>> CreateTerminalTypes(List<CreateTerminalType> createTerminalTypes)
+        //{
+        //    if (createTerminalTypes == null || !createTerminalTypes.Any())
+        //        return new List<TerminalType>();
 
-            var data = _mapper.Map<List<TerminalType>>(createTerminalTypes);
-            var existing = _terminalTypeRepository.GetAll().ToList();
-            var notExisting = data.Where(x => existing.All(y => y.Id != x.Id)).ToList();
+        //    var data = _mapper.Map<List<TerminalType>>(createTerminalTypes);
+        //    var existing = _terminalTypeRepository.GetAll().ToList();
+        //    var notExisting = data.Where(x => existing.All(y => y.Id != x.Id)).ToList();
 
-            if (!notExisting.Any())
-                return new List<TerminalType>();
+        //    if (!notExisting.Any())
+        //        return new List<TerminalType>();
 
-            foreach (var entity in notExisting)
-            {
-                foreach (var entityAttribute in entity.Attributes)
-                {
-                    _attributeTypeRepository.Attach(entityAttribute, EntityState.Unchanged);
-                }
+        //    foreach (var entity in notExisting)
+        //    {
+        //        foreach (var entityAttribute in entity.Attributes)
+        //        {
+        //            _attributeTypeRepository.Attach(entityAttribute, EntityState.Unchanged);
+        //        }
 
-                await _terminalTypeRepository.CreateAsync(entity);
-                await _terminalTypeRepository.SaveAsync();
+        //        await _terminalTypeRepository.CreateAsync(entity);
+        //        await _terminalTypeRepository.SaveAsync();
 
-                foreach (var entityAttribute in entity.Attributes)
-                {
-                    _attributeTypeRepository.Detach(entityAttribute);
-                }
-            }
+        //        foreach (var entityAttribute in entity.Attributes)
+        //        {
+        //            _attributeTypeRepository.Detach(entityAttribute);
+        //        }
+        //    }
 
-            return data;
-        }
+        //    return data;
+        //}
 
         /// <summary>
         /// Create a RDS
@@ -731,21 +731,21 @@ namespace Mb.Core.Services
             await _terminalTypeRepository.SaveAsync();
         }
 
-        private async Task CreateLibraryTypeComponentsAsync(IEnumerable<LibraryType> libraryTypes)
-        {
-            var existingTypes = _libraryTypeComponentRepository.GetAll().ToList();
-            var notExistingTypes = libraryTypes.Where(x => existingTypes.All(y => y.Id != x.Id)).ToList();
-            if (!notExistingTypes.Any())
-                return;
+        //private async Task CreateLibraryTypeComponentsAsync(IEnumerable<LibraryType> libraryTypes)
+        //{
+        //    var existingTypes = _libraryTypeComponentRepository.GetAll().ToList();
+        //    var notExistingTypes = libraryTypes.Where(x => existingTypes.All(y => y.Id != x.Id)).ToList();
+        //    if (!notExistingTypes.Any())
+        //        return;
 
-            foreach (var item in notExistingTypes)
-            {
-                //item.CreateJsonData(); // TODO: Fix this
-                await _libraryTypeComponentRepository.CreateAsync(item);
-            }
+        //    foreach (var item in notExistingTypes)
+        //    {
+        //        //item.CreateJsonData(); // TODO: Fix this
+        //        await _libraryTypeComponentRepository.CreateAsync(item);
+        //    }
 
-            await _libraryTypeComponentRepository.SaveAsync();
-        }
+        //    await _libraryTypeComponentRepository.SaveAsync();
+        //}
 
         #endregion
     }

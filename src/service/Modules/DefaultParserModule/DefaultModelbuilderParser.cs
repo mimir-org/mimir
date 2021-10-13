@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Mb.Models.Application;
 using Mb.Models.Data;
-using Mb.Models.Modules;
+using Mb.Modules;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;

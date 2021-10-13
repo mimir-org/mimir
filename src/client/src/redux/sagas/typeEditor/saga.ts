@@ -22,9 +22,9 @@ export function* saveType(action) {
     let url = "";
 
     if (createLibraryType.libraryId) {
-      url = process.env.REACT_APP_API_BASE_URL + "typeeditor/" + createLibraryType.libraryId;
+      url = process.env.REACT_APP_API_BASE_URL + "librarytype/" + createLibraryType.libraryId;
     } else {
-      url = process.env.REACT_APP_API_BASE_URL + "typeeditor";
+      url = process.env.REACT_APP_API_BASE_URL + "librarytype";
     }
 
     const response = yield call(post, url, createLibraryType);
@@ -154,7 +154,7 @@ export function* getRDS(action) {
 
 export function* getTerminals(action) {
   try {
-    const terminalURL = process.env.REACT_APP_API_BASE_URL + "typeeditor/terminalsbycategory";
+    const terminalURL = process.env.REACT_APP_API_BASE_URL + "terminaltype/category";
 
     const terminalResponse = yield call(get, terminalURL);
 
@@ -317,7 +317,7 @@ export function* getSelectedNode(action) {
   try {
     const selectedNodeURL =
       process.env.REACT_APP_API_BASE_URL +
-      "typeeditor/librarytype/" +
+      "librarytype/" +
       action.payload.selectedType +
       "/" +
       action.payload.filter;

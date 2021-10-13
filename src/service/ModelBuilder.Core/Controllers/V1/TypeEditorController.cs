@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Mb.Core.Services.Contracts;
 using Mb.Models.Application;
-using Mb.Models.Application.Enums;
+using Mb.Models.Application.TypeEditor;
 using Mb.Models.Data;
 using Mb.Models.Enums;
 using Mb.Models.Exceptions;
@@ -41,63 +41,63 @@ namespace Mb.Core.Controllers.V1
             _typeEditorService = typeEditorService;
         }
 
-        /// <summary>
-        /// Get all library types
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("")]
-        [ProducesResponseType(typeof(ICollection<LibraryType>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public IActionResult GetAllLibraryTypes()
-        {
-            try
-            {
-                var allTypes = _typeEditorService.GetAllTypes().ToList();
-                return Ok(allTypes);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
-        }
+        ///// <summary>
+        ///// Get all library types
+        ///// </summary>
+        ///// <returns></returns>
+        //[HttpGet("")]
+        //[ProducesResponseType(typeof(ICollection<LibraryType>), StatusCodes.Status200OK)]
+        //[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        //public IActionResult GetAllLibraryTypes()
+        //{
+        //    try
+        //    {
+        //        var allTypes = _typeEditorService.GetAllTypes().ToList();
+        //        return Ok(allTypes);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+        //        return StatusCode(500, "Internal Server Error");
+        //    }
+        //}
 
-        /// <summary>
-        /// Get CreateLibraryType from LibraryTypeId
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="filter"></param>
-        /// <returns></returns>
-        [HttpGet("librarytype/{id}/{filter}")]
-        [ProducesResponseType(typeof(CreateLibraryType), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateLibraryType([Required] string id, [Required] LibraryFilter filter)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+        ///// <summary>
+        ///// Get CreateLibraryType from LibraryTypeId
+        ///// </summary>
+        ///// <param name="id"></param>
+        ///// <param name="filter"></param>
+        ///// <returns></returns>
+        //[HttpGet("librarytype/{id}/{filter}")]
+        //[ProducesResponseType(typeof(CreateLibraryType), StatusCodes.Status200OK)]
+        //[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //public async Task<IActionResult> CreateLibraryType([Required] string id, [Required] LibraryFilter filter)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return BadRequest(ModelState);
 
-            try
-            {
-                var data = await _typeEditorService.ConvertToCreateLibraryType(id, filter);
-                return Ok(data);
-            }
-            catch (ModelBuilderNotFoundException e)
-            {
-                ModelState.AddModelError("Not found", e.Message);
-                return BadRequest(ModelState);
-            }
-            catch (ModelBuilderInvalidOperationException e)
-            {
-                ModelState.AddModelError("Invalid value", e.Message);
-                return BadRequest(ModelState);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
-        }
+        //    try
+        //    {
+        //        var data = await _typeEditorService.ConvertToCreateLibraryType(id, filter);
+        //        return Ok(data);
+        //    }
+        //    catch (ModelBuilderNotFoundException e)
+        //    {
+        //        ModelState.AddModelError("Not found", e.Message);
+        //        return BadRequest(ModelState);
+        //    }
+        //    catch (ModelBuilderInvalidOperationException e)
+        //    {
+        //        ModelState.AddModelError("Invalid value", e.Message);
+        //        return BadRequest(ModelState);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+        //        return StatusCode(500, "Internal Server Error");
+        //    }
+        //}
 
         /// <summary>
         /// Get statuses
@@ -228,48 +228,6 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
-        /// Get terminal types
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("terminals")]
-        [ProducesResponseType(typeof(ICollection<TerminalType>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public IActionResult GetTerminalTypes()
-        {
-            try
-            {
-                var data = _typeEditorService.GetTerminals().ToList();
-                return Ok(data);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
-        }
-
-        /// <summary>
-        /// Get terminal types by category
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("terminalsByCategory")]
-        [ProducesResponseType(typeof(Dictionary<string, TerminalType>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public IActionResult GetTerminalTypesByCategory()
-        {
-            try
-            {
-                var data = _typeEditorService.GetTerminalsByCategory().ToList();
-                return Ok(data);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
-        }
-
-        /// <summary>
         /// Create an attribute type
         /// </summary>
         /// <param name="createAttributeType"></param>
@@ -299,260 +257,230 @@ namespace Mb.Core.Controllers.V1
             }
         }
 
-        /// <summary>
-        /// Create a terminal type
-        /// </summary>
-        /// <param name="createTerminalType"></param>
-        /// <returns></returns>
-        [HttpPost("terminal")]
-        [ProducesResponseType(typeof(AttributeType), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CreateTerminalType([FromBody] CreateTerminalType createTerminalType)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+        ///// <summary>
+        ///// Create a library type
+        ///// </summary>
+        ///// <param name="libraryType"></param>
+        ///// <returns></returns>
+        //[HttpPost("")]
+        //[ProducesResponseType(typeof(LibraryType), StatusCodes.Status200OK)]
+        //[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //public async Task<IActionResult> CreateLibraryType([FromBody] CreateLibraryType libraryType)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return BadRequest(ModelState);
 
-            try
-            {
-                var createdTerminalType = await _typeEditorService.CreateTerminalType(createTerminalType);
-                if (createdTerminalType == null)
-                    return BadRequest("The terminal type already exist");
+        //    try
+        //    {
+        //        if (libraryType.Aspect == Aspect.Location)
+        //        {
+        //            libraryType.ObjectType = ObjectType.ObjectBlock;
+        //        }
 
-                return Ok(createdTerminalType);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
-        }
+        //        switch (libraryType.ObjectType)
+        //        {
+        //            case ObjectType.ObjectBlock:
+        //                var ob = await _typeEditorService.CreateLibraryType<LibraryNodeItem>(libraryType);
+        //                return Ok(ob);
+        //            case ObjectType.Transport:
+        //                var ln = await _typeEditorService.CreateLibraryType<LibraryTransportItem>(libraryType);
+        //                return Ok(ln);
+        //            case ObjectType.Interface:
+        //                var libraryInterfaceItem =
+        //                    await _typeEditorService.CreateLibraryType<LibraryInterfaceItem>(libraryType);
+        //                return Ok(libraryInterfaceItem);
+        //            default:
+        //                throw new ModelBuilderInvalidOperationException(
+        //                    $"Can't create type of: {libraryType.ObjectType}");
+        //        }
+        //    }
+        //    catch (ModelBuilderDuplicateException e)
+        //    {
+        //        ModelState.AddModelError("Duplicate", e.Message);
+        //        return BadRequest(ModelState);
+        //    }
+        //    catch (ModelBuilderNullReferenceException e)
+        //    {
+        //        ModelState.AddModelError("Duplicate", e.Message);
+        //        return BadRequest(ModelState);
+        //    }
+        //    catch (ModelBuilderInvalidOperationException e)
+        //    {
+        //        ModelState.AddModelError("Duplicate", e.Message);
+        //        return BadRequest(ModelState);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+        //        return StatusCode(500, "Internal Server Error");
+        //    }
+        //}
 
-        /// <summary>
-        /// Create a library type
-        /// </summary>
-        /// <param name="libraryType"></param>
-        /// <returns></returns>
-        [HttpPost("")]
-        [ProducesResponseType(typeof(LibraryType), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateLibraryType([FromBody] CreateLibraryType libraryType)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+        ///// <summary>
+        ///// Update a library type
+        ///// </summary>
+        ///// <param name="id"></param>
+        ///// <param name="libraryType"></param>
+        ///// <returns></returns>
+        //[HttpPost("{id}")]
+        //[ProducesResponseType(typeof(LibraryType), StatusCodes.Status200OK)]
+        //[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //public async Task<IActionResult> UpdateLibraryType(string id, [FromBody] CreateLibraryType libraryType)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return BadRequest(ModelState);
 
-            try
-            {
-                if (libraryType.Aspect == Aspect.Location)
-                {
-                    libraryType.ObjectType = ObjectType.ObjectBlock;
-                }
+        //    try
+        //    {
+        //        switch (libraryType.ObjectType)
+        //        {
+        //            case ObjectType.ObjectBlock:
+        //                var ob = await _typeEditorService.UpdateLibraryType<LibraryNodeItem>(id, libraryType);
+        //                return Ok(ob);
+        //            case ObjectType.Transport:
+        //                var ln = await _typeEditorService.UpdateLibraryType<LibraryTransportItem>(id, libraryType);
+        //                return Ok(ln);
+        //            case ObjectType.Interface:
+        //                var libraryInterfaceItem =
+        //                    await _typeEditorService.UpdateLibraryType<LibraryInterfaceItem>(id, libraryType);
+        //                return Ok(libraryInterfaceItem);
+        //            default:
+        //                throw new ModelBuilderInvalidOperationException(
+        //                    $"Can't create type of: {libraryType.ObjectType}");
+        //        }
+        //    }
+        //    catch (ModelBuilderNullReferenceException e)
+        //    {
+        //        ModelState.AddModelError("Bad request", e.Message);
+        //        return BadRequest(ModelState);
+        //    }
+        //    catch (ModelBuilderNotFoundException e)
+        //    {
+        //        ModelState.AddModelError("Bad request", e.Message);
+        //        return BadRequest(ModelState);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+        //        return StatusCode(500, "Internal Server Error");
+        //    }
+        //}
 
-                switch (libraryType.ObjectType)
-                {
-                    case ObjectType.ObjectBlock:
-                        var ob = await _typeEditorService.CreateLibraryType<LibraryNodeItem>(libraryType);
-                        return Ok(ob);
-                    case ObjectType.Transport:
-                        var ln = await _typeEditorService.CreateLibraryType<LibraryTransportItem>(libraryType);
-                        return Ok(ln);
-                    case ObjectType.Interface:
-                        var libraryInterfaceItem =
-                            await _typeEditorService.CreateLibraryType<LibraryInterfaceItem>(libraryType);
-                        return Ok(libraryInterfaceItem);
-                    default:
-                        throw new ModelBuilderInvalidOperationException(
-                            $"Can't create type of: {libraryType.ObjectType}");
-                }
-            }
-            catch (ModelBuilderDuplicateException e)
-            {
-                ModelState.AddModelError("Duplicate", e.Message);
-                return BadRequest(ModelState);
-            }
-            catch (ModelBuilderNullReferenceException e)
-            {
-                ModelState.AddModelError("Duplicate", e.Message);
-                return BadRequest(ModelState);
-            }
-            catch (ModelBuilderInvalidOperationException e)
-            {
-                ModelState.AddModelError("Duplicate", e.Message);
-                return BadRequest(ModelState);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
-        }
+        ///// <summary>
+        ///// Delete a type
+        ///// </summary>
+        ///// <param name="id"></param>
+        ///// <returns></returns>
+        //[HttpDelete("{id}")]
+        //[ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        //[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //public async Task<IActionResult> DeleteType(string id)
+        //{
+        //    if (string.IsNullOrEmpty(id))
+        //        return BadRequest("The id could not be null or empty");
 
-        /// <summary>
-        /// Update a library type
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="libraryType"></param>
-        /// <returns></returns>
-        [HttpPost("{id}")]
-        [ProducesResponseType(typeof(LibraryType), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> UpdateLibraryType(string id, [FromBody] CreateLibraryType libraryType)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+        //    try
+        //    {
+        //        await _typeEditorService.DeleteType(id);
+        //        return Ok(true);
+        //    }
+        //    catch (ModelBuilderNotFoundException e)
+        //    {
+        //        return NotFound(e);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+        //        return StatusCode(500, "Internal Server Error");
+        //    }
+        //}
 
-            try
-            {
-                switch (libraryType.ObjectType)
-                {
-                    case ObjectType.ObjectBlock:
-                        var ob = await _typeEditorService.UpdateLibraryType<LibraryNodeItem>(id, libraryType);
-                        return Ok(ob);
-                    case ObjectType.Transport:
-                        var ln = await _typeEditorService.UpdateLibraryType<LibraryTransportItem>(id, libraryType);
-                        return Ok(ln);
-                    case ObjectType.Interface:
-                        var libraryInterfaceItem =
-                            await _typeEditorService.UpdateLibraryType<LibraryInterfaceItem>(id, libraryType);
-                        return Ok(libraryInterfaceItem);
-                    default:
-                        throw new ModelBuilderInvalidOperationException(
-                            $"Can't create type of: {libraryType.ObjectType}");
-                }
-            }
-            catch (ModelBuilderNullReferenceException e)
-            {
-                ModelState.AddModelError("Bad request", e.Message);
-                return BadRequest(ModelState);
-            }
-            catch (ModelBuilderNotFoundException e)
-            {
-                ModelState.AddModelError("Bad request", e.Message);
-                return BadRequest(ModelState);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
-        }
+        ///// <summary>
+        ///// Export to file
+        ///// </summary>
+        ///// <returns></returns>
+        //[HttpGet("export")]
+        //[ProducesResponseType(typeof(FileContentResult), StatusCodes.Status200OK)]
+        //[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        //[ProducesResponseType(StatusCodes.Status404NotFound)]
+        //public IActionResult ExportTypes()
+        //{
+        //    try
+        //    {
+        //        var data = _typeEditorService.CreateFile();
+        //        return File(data, "application/json", "types.json");
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+        //        return StatusCode(500, "Internal Server Error");
+        //    }
+        //}
 
-        /// <summary>
-        /// Delete a type
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpDelete("{id}")]
-        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> DeleteType(string id)
-        {
-            if (string.IsNullOrEmpty(id))
-                return BadRequest("The id could not be null or empty");
+        ///// <summary>
+        ///// Import from file
+        ///// </summary>
+        ///// <returns></returns>
+        //[HttpPost("upload")]
+        //[ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        //[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //public async Task<IActionResult> UploadTypes(IFormFile file, CancellationToken cancellationToken)
+        //{
+        //    try
+        //    {
+        //        if (!file.ValidateJsonFile())
+        //            return BadRequest("Invalid file extension. The file must be a json file");
 
-            try
-            {
-                await _typeEditorService.DeleteType(id);
-                return Ok(true);
-            }
-            catch (ModelBuilderNotFoundException e)
-            {
-                return NotFound(e);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
-        }
+        //        await _typeEditorService.LoadDataFromFile(file, cancellationToken);
+        //        return Ok(true);
+        //    }
+        //    catch (ModelBuilderDuplicateException e)
+        //    {
+        //        return Conflict(e.Message);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+        //        return StatusCode(500, "Internal Server Error");
+        //    }
+        //}
 
-        /// <summary>
-        /// Export to file
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("export")]
-        [ProducesResponseType(typeof(FileContentResult), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult ExportTypes()
-        {
-            try
-            {
-                var data = _typeEditorService.CreateFile();
-                return File(data, "application/json", "types.json");
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
-        }
+        ///// <summary>
+        ///// Import from file
+        ///// </summary>
+        ///// <returns></returns>
+        //[HttpPost("import")]
+        //[ProducesResponseType(typeof(IEnumerable<LibraryType>), StatusCodes.Status200OK)]
+        //[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //public async Task<IActionResult> ImportTypes(ICollection<CreateLibraryType> libraryTypes)
+        //{
+        //    try
+        //    {
+        //        if (!ModelState.IsValid)
+        //            return BadRequest(ModelState);
 
-        /// <summary>
-        /// Import from file
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost("upload")]
-        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> UploadTypes(IFormFile file, CancellationToken cancellationToken)
-        {
-            try
-            {
-                if (!file.ValidateJsonFileExtension())
-                    return BadRequest("Invalid file extension. The file must be a json file");
-
-                await _typeEditorService.LoadDataFromFile(file, cancellationToken);
-                return Ok(true);
-            }
-            catch (ModelBuilderDuplicateException e)
-            {
-                return Conflict(e.Message);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
-        }
-
-        /// <summary>
-        /// Import from file
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost("import")]
-        [ProducesResponseType(typeof(IEnumerable<LibraryType>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> ImportTypes(ICollection<CreateLibraryType> libraryTypes)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
-
-                var createdLibTypes = await _typeEditorService.CreateLibraryTypes(libraryTypes);
-                return Ok(createdLibTypes);
-            }
-            catch (ModelBuilderDuplicateException e)
-            {
-                return Conflict(e.Message);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
-        }
+        //        var createdLibTypes = await _typeEditorService.CreateLibraryTypes(libraryTypes);
+        //        return Ok(createdLibTypes);
+        //    }
+        //    catch (ModelBuilderDuplicateException e)
+        //    {
+        //        return Conflict(e.Message);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+        //        return StatusCode(500, "Internal Server Error");
+        //    }
+        //}
 
         /// <summary>
         /// Create a simple type

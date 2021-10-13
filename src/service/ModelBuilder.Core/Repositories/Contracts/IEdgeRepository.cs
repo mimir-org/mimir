@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Mb.Models.Abstract;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
 

@@ -10,10 +10,10 @@ using Mb.Core.Repositories;
 using Mb.Core.Repositories.Contracts;
 using Mb.Core.Services;
 using Mb.Core.Services.Contracts;
-using Mb.Models.Attributes;
 using Mb.Models.Configurations;
-using Mb.Models.Enums;
-using Mb.Models.Modules;
+using Mb.Modules;
+using Mb.TypeEditor.Data.Contracts;
+using Mb.TypeEditor.Data.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +24,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
-using Module = Mb.Models.Modules.Module;
 
 namespace Mb.Core.Extensions
 {
@@ -61,22 +60,22 @@ namespace Mb.Core.Extensions
             services.AddScoped<IEdgeRepository, EdgeRepository>();
             services.AddScoped<ILibraryRepository, LibraryRepository>();
             services.AddScoped<IRdsRepository, RdsRepository>();
-            services.AddScoped<IAttributeTypeRepository, AttributeTypeRepository>();
-            services.AddScoped<ILibraryTypeRepository, LibraryTypeRepository>();
+            
+            
             services.AddScoped<IConnectorRepository, ConnectorRepository>();
             services.AddScoped<IAttributeRepository, AttributeRepository>();
             services.AddScoped<IContractorRepository, ContractorRepository>();
             services.AddScoped<ITerminalTypeRepository, TerminalTypeRepository>();
             services.AddScoped<IEnumBaseRepository, EnumBaseRepository>();
-            services.AddScoped<INodeTypeTerminalTypeRepository, NodeTypeTerminalTypeRepository>();
+            
             services.AddScoped<IPredefinedAttributeRepository, PredefinedAttributeRepository>();
             services.AddScoped<IBlobDataRepository, BlobDataRepository>();
-            services.AddScoped<ITransportTypeRepository, TransportTypeRepository>();
-            services.AddScoped<IInterfaceTypeRepository, InterfaceTypeRepository>();
+            
+            
             services.AddScoped<ITransportRepository, TransportRepository>();
             services.AddScoped<IInterfaceRepository, InterfaceRepository>();
-            services.AddScoped<INodeTypeRepository, NodeTypeRepository>();
-            services.AddScoped<ICompositeTypeRepository, CompositeTypeRepository>();
+            
+            
             services.AddScoped<ICompositeRepository, CompositeRepository>();
 
             services.AddScoped<ITypeEditorService, TypeEditorService>();
@@ -93,11 +92,11 @@ namespace Mb.Core.Extensions
 
             // Automatic dependency injection for all modules
             var moduleService = new ModuleService();
-            services.AddServicesWithAttributeOfType<SingletonAttribute>(moduleService?.Assemblies ?? new List<Assembly>());
-            services.AddServicesWithAttributeOfType<ScopeAttribute>(moduleService?.Assemblies ?? new List<Assembly>());
-            services.AddServicesWithAttributeOfType<TransientAttribute>(moduleService?.Assemblies ?? new List<Assembly>());
+            services.AddServicesWithAttributeOfType<SingletonAttribute>(moduleService.Assemblies ?? new List<Assembly>());
+            services.AddServicesWithAttributeOfType<ScopeAttribute>(moduleService.Assemblies ?? new List<Assembly>());
+            services.AddServicesWithAttributeOfType<TransientAttribute>(moduleService.Assemblies ?? new List<Assembly>());
 
-            services.AddSingleton<IModuleService>(x => moduleService);
+            services.AddSingleton<IModuleService>(_ => moduleService);
             var modules = moduleService.Modules.Where(x => x.ModuleType == ModuleType.Plugin || x.ModuleType == ModuleType.SyncService || x.ModuleType == ModuleType.Parser).ToList();
 
             // Auto-mapper
@@ -119,7 +118,7 @@ namespace Mb.Core.Extensions
             cfg.CreateProfiles(modules);
 
             var mapperConfig = new MapperConfiguration(cfg);
-            services.AddSingleton(s => mapperConfig.CreateMapper());
+            services.AddSingleton(_ => mapperConfig.CreateMapper());
 
             // Add modules
             services.CreateModules(configuration, modules);
@@ -158,7 +157,7 @@ namespace Mb.Core.Extensions
 
         #region Private Methods
 
-        private static void CreateModules(this IServiceCollection services, IConfiguration configuration, IEnumerable<Module> modules)
+        private static void CreateModules(this IServiceCollection services, IConfiguration configuration, IEnumerable<Modules.Module> modules)
         {
             // Create modules
             foreach (var module in modules)
@@ -167,7 +166,7 @@ namespace Mb.Core.Extensions
             }
         }
 
-        private static void CreateProfiles(this IMapperConfigurationExpression cfg, IEnumerable<Module> modules)
+        private static void CreateProfiles(this IMapperConfigurationExpression cfg, IEnumerable<Modules.Module> modules)
         {
             // Create modules
             foreach (var module in modules)

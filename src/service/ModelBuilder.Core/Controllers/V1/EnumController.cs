@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Mb.Core.Services.Contracts;
 using Mb.Models.Application;
+using Mb.Models.Application.TypeEditor;
 using Mb.Models.Data.Enums;
 using Mb.Models.Data.Enums.Mapping;
 using Microsoft.AspNetCore.Authorization;

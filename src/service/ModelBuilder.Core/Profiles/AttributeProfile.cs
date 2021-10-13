@@ -5,6 +5,8 @@ using AutoMapper;
 using Mb.Core.Extensions;
 using Mb.Core.Repositories.Contracts;
 using Mb.Models.Application;
+using Mb.Models.Application.Mimir;
+using Mb.Models.Application.TypeEditor;
 using Mb.Models.Data;
 using Mb.Models.Data.Enums;
 using Mb.Models.Extensions;

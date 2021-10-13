@@ -10,11 +10,12 @@ using Mb.Core.Extensions;
 using Mb.Core.Repositories.Contracts;
 using Mb.Core.Services.Contracts;
 using Mb.Models.Application;
+using Mb.Models.Application.Mimir;
 using Mb.Models.Data;
 using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
 using Mb.Models.Exceptions;
-using Mb.Models.Modules;
+using Mb.Modules;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -491,7 +492,7 @@ namespace Mb.Core.Services
                 return;
 
             if (node.IsLocked && userName != node.IsLockedBy)
-                throw new ModelBuilderUnauthorizedAccessException("Locked by: " + node.IsLockedBy); ;
+                throw new ModelBuilderUnauthorizedAccessException("Locked by: " + node.IsLockedBy);
 
             node.IsLocked = lockUnlockNodeAm.IsLocked;
             node.IsLockedBy = node.IsLocked ? userName : null;

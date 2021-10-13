@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Mb.Core.Repositories.Contracts;
 using Mb.Core.Services.Contracts;
 using Mb.Models.Application;
+using Mb.TypeEditor.Data.Contracts;
 
 namespace Mb.Core.Services
 {

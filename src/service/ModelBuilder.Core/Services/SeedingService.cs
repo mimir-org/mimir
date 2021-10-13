@@ -6,9 +6,12 @@ using AutoMapper;
 using Mb.Core.Repositories.Contracts;
 using Mb.Core.Services.Contracts;
 using Mb.Models.Application;
+using Mb.Models.Application.Mimir;
+using Mb.Models.Application.TypeEditor;
 using Mb.Models.Data;
 using Mb.Models.Data.Enums;
 using Mb.Models.Extensions;
+using Mb.TypeEditor.Core.Contracts;
 using Microsoft.Extensions.Logging;
 
 namespace Mb.Core.Services
@@ -40,14 +43,16 @@ namespace Mb.Core.Services
 
         private readonly ITypeEditorService _typeEditorService;
         private readonly ICommonService _commonService;
+        private readonly ITerminalTypeService _terminalTypeService;
 
-        public SeedingService(IFileRepository fileRepository, IEnumBaseRepository enumBaseRepository, IMapper mapper, ILogger<TypeEditorService> logger, ITypeEditorService typeEditorService, ICommonService commonService)
+        public SeedingService(IFileRepository fileRepository, IEnumBaseRepository enumBaseRepository, IMapper mapper, ILogger<TypeEditorService> logger, ITypeEditorService typeEditorService, ICommonService commonService, ITerminalTypeService terminalTypeService)
         {
             _fileRepository = fileRepository;
             _enumBaseRepository = enumBaseRepository;
             _logger = logger;
             _typeEditorService = typeEditorService;
             _commonService = commonService;
+            _terminalTypeService = terminalTypeService;
         }
 
         /// <summary>
@@ -123,7 +128,7 @@ namespace Mb.Core.Services
 
                 await _typeEditorService.CreateContractorsAsync(contractors);
                 await _typeEditorService.CreateAttributeTypes(attributes);
-                await _typeEditorService.CreateTerminalTypes(terminals);
+                await _terminalTypeService.CreateTerminalTypes(terminals);
                 await _typeEditorService.CreateRdsAsync(rds);
                 await _typeEditorService.CreatePredefinedAttributes(predefinedAttributes);
                 await _commonService.CreateBlobData(symbols);

@@ -31,7 +31,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Fixtures", "Fixtures", "{CF
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventHubModule", "Modules\FamModule\EventHubModule.csproj", "{AA11C55D-75F7-4BF8-8FB1-E12D0664D57D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RdfParserModule", "Modules\RdfParserModule\RdfParserModule.csproj", "{C16FF8AB-3AF0-403B-AACC-F4A7F41EE277}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RdfParserModule", "Modules\RdfParserModule\RdfParserModule.csproj", "{C16FF8AB-3AF0-403B-AACC-F4A7F41EE277}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelBuilder.Modules", "ModelBuilder.Modules\ModelBuilder.Modules.csproj", "{5D6D1BDA-FEA6-4C8F-80D1-A9428724583C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelBuilder.TypeEditor.Core", "ModelBuilder.TypeEditor.Core\ModelBuilder.TypeEditor.Core.csproj", "{C535F993-BEE2-4217-BB37-1F7CFD76BC29}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelBuilder.TypeEditor.Data", "ModelBuilder.TypeEditor.Data\ModelBuilder.TypeEditor.Data.csproj", "{8AC6604A-C0F1-4AFF-B30C-5E5E3DD1C974}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,6 +93,18 @@ Global
 		{C16FF8AB-3AF0-403B-AACC-F4A7F41EE277}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C16FF8AB-3AF0-403B-AACC-F4A7F41EE277}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C16FF8AB-3AF0-403B-AACC-F4A7F41EE277}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D6D1BDA-FEA6-4C8F-80D1-A9428724583C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D6D1BDA-FEA6-4C8F-80D1-A9428724583C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D6D1BDA-FEA6-4C8F-80D1-A9428724583C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D6D1BDA-FEA6-4C8F-80D1-A9428724583C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C535F993-BEE2-4217-BB37-1F7CFD76BC29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C535F993-BEE2-4217-BB37-1F7CFD76BC29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C535F993-BEE2-4217-BB37-1F7CFD76BC29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C535F993-BEE2-4217-BB37-1F7CFD76BC29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AC6604A-C0F1-4AFF-B30C-5E5E3DD1C974}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AC6604A-C0F1-4AFF-B30C-5E5E3DD1C974}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AC6604A-C0F1-4AFF-B30C-5E5E3DD1C974}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AC6604A-C0F1-4AFF-B30C-5E5E3DD1C974}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

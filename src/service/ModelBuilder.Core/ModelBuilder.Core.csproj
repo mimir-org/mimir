@@ -26,6 +26,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ModelBuilder.Models\ModelBuilder.Models.csproj" />
+    <ProjectReference Include="..\ModelBuilder.Modules\ModelBuilder.Modules.csproj" />
+    <ProjectReference Include="..\ModelBuilder.TypeEditor.Core\ModelBuilder.TypeEditor.Core.csproj" />
+    <ProjectReference Include="..\ModelBuilder.TypeEditor.Data\ModelBuilder.TypeEditor.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>

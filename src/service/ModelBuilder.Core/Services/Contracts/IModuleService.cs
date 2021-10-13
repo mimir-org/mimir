@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
-using Mb.Models.Modules;
-using Module = Mb.Models.Modules.Module;
+using Mb.Modules;
+using Module = Mb.Modules.Module;
 
 namespace Mb.Core.Services.Contracts
 {
