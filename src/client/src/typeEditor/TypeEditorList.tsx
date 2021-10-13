@@ -17,6 +17,7 @@ import {
   ShowBlockAttributes,
   RemoveHover,
   RemoveBackground,
+  SwitchBackground,
   IsTransport,
   IsInterface,
   GetWidth,
@@ -45,7 +46,11 @@ export const TypeEditorList = ({ createLibraryType, items, disabled, listType, o
     <ListWrapper wide={GetWidth(listType)} disabled={disabled}>
       <ListLabel>{GetListLabel(listType, createLibraryType)}</ListLabel>
       {!disabled && (
-        <ListElementsContainer hover={RemoveHover(listType)} background={RemoveBackground(listType)}>
+        <ListElementsContainer
+          hover={RemoveHover(listType)}
+          background={RemoveBackground(listType)}
+          switchBackground={SwitchBackground(listType)}
+        >
           {listType === ListType.Rds
             ? GetFilteredList(listType, items, createLibraryType).map((element) => (
                 <RDSElement

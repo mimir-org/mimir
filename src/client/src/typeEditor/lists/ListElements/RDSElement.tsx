@@ -1,6 +1,6 @@
 import { ListType, RoundCheckbox } from "../../inputs/RoundCheckbox";
 import { Rds } from "../../../models";
-import { ListElementCategory, RdsListElement } from "../../styled";
+import { ListElementCategoryWrapper, RdsCategoryElement, RdsListElement } from "../../styled";
 
 interface Props {
   category: string;
@@ -11,8 +11,10 @@ interface Props {
 
 export const RDSElement = ({ category, rds, defaultValue, onChange }: Props) => {
   return (
-    <ListElementCategory>
-      <p className="rds-category">{category}</p>
+    <ListElementCategoryWrapper>
+      <RdsCategoryElement>
+        <p>{category}</p>
+      </RdsCategoryElement>
       {rds.map((element) => (
         <RdsListElement key={element.id} isSelected={element.id === defaultValue}>
           <RoundCheckbox
@@ -24,7 +26,7 @@ export const RDSElement = ({ category, rds, defaultValue, onChange }: Props) => 
           />
         </RdsListElement>
       ))}
-    </ListElementCategory>
+    </ListElementCategoryWrapper>
   );
 };
 export default RDSElement;

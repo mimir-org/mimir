@@ -29,6 +29,7 @@ export { default as GetWidth } from "./GetWidth";
 
 export { default as ShowObjectBlock } from "./ShowObjectBlock";
 export { default as ShowBlockAttributes } from "./ShowBlockAttributes";
+export { default as SwitchBackground } from "./SwitchBackground";
 export { default as RemoveBackground } from "./RemoveBackground";
 export { default as RemoveHover } from "./RemoveHover";
 export { default as FieldValidator } from "./FieldValidator";

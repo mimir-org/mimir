@@ -4,6 +4,7 @@ import { Color } from "../../compLibrary";
 interface Props {
   background: boolean;
   hover: boolean;
+  switchBackground: boolean;
 }
 
 const ListElementsContainer = styled.div<Props>`
@@ -16,10 +17,12 @@ const ListElementsContainer = styled.div<Props>`
 
   div:nth-child(odd) {
     background-color: ${(props) => props.background && Color.LightPurple};
+    background-color: ${(props) => props.switchBackground && Color.White};
   }
 
   div:nth-child(even) {
     background-color: ${(props) => props.background && Color.White};
+    background-color: ${(props) => props.switchBackground && Color.LightPurple};
   }
 
   div:nth-child(n):hover {
