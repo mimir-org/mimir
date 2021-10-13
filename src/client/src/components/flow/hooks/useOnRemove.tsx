@@ -5,22 +5,19 @@ import { SetPanelHeight } from "../../../modules/inspector/helpers";
 import { changeInspectorHeight } from "../../../modules/inspector/redux/height/actions";
 import { setModuleVisibility } from "../../../redux/store/modules/actions";
 import { removeEdge, removeNode } from "../../../redux/store/project/actions";
-import { GetSelectedEdge, IsAspectNode } from "../helpers";
+import { GetSelectedNode, IsAspectNode } from "../helpers";
 
-const useOnRemove = (elementsToRemove, setElements, dispatch) => {
+const useOnRemove = (elements: any[], setElements: any, dispatch: any) => {
   const verifiedList: any[] = [];
-  elementsToRemove = elementsToRemove.filter((el) => !IsAspectNode(el.data));
-  const selectedEdge = GetSelectedEdge();
+  const selectedNode = GetSelectedNode();
+  const edgeTypes = Object.values(EDGE_TYPE);
+  elements = elements.filter((el) => !IsAspectNode(el.data));
 
-  elementsToRemove.forEach((elem: any) => {
-    const edgeTypes = Object.values(EDGE_TYPE);
+  elements.forEach((elem) => {
     const isEdge = edgeTypes.some((x) => x === elem.type?.toString());
 
     if (isEdge) {
-      if (
-        (!IsAspectNode(elem.data.edge.fromNode) && !IsAspectNode(elem.data.edge.toNode)) ||
-        elem.id === selectedEdge?.id
-      ) {
+      if (!IsAspectNode(selectedNode)) {
         dispatch(removeEdge(elem.id));
         verifiedList.push(elem);
       }
