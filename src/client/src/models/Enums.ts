@@ -25,12 +25,6 @@ export enum ObjectType {
   Interface = 3,
 }
 
-export enum TypeMode {
-  NotSet = 0,
-  New = 1,
-  Edit = 2,
-}
-
 export enum LibraryFilter {
   Node = 0,
   Transport = 1,

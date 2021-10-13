@@ -93,7 +93,7 @@ export interface TerminalTypeItem {
 export interface Purpose {
   id: string;
   name: string;
-  disipline: EnumBase;
+  discipline: Discipline;
   description: string;
   semanticReference: string;
 }
