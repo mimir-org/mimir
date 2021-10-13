@@ -5,9 +5,11 @@ import { IsTransportTerminal } from "../helpers";
 
 /**
  * Function to convert a Mimir Edge to a FlowElement that interacts with the Flow library.
- * @param node
- * @param position
- * @returns a FlowElement
+ * @param edge
+ * @param edgeType
+ * @param sourceNode
+ * @param targetNode
+ * @returns a Flow Element.
  */
 const ConvertEdgeToFlow = (edge: Edge, edgeType: EdgeType, sourceNode: Node, targetNode: Node) => {
   return {

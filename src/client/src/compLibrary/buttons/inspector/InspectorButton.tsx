@@ -14,6 +14,7 @@ export enum InspectorButtonType {
   Lock,
   Unlock,
   Delete,
+  DeleteDisabled,
 }
 
 /**

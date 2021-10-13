@@ -1,12 +1,12 @@
-import { Color } from "../../../../compLibrary";
 import { Connector, Node } from "../../../../models";
 import { IsMainConnectNode } from "../../block/connectView/helpers";
+import { GetMenuColor, GetTerminalColor } from "./helpers";
 import { TerminalsMenu, TerminalsElement, ColorBar } from "./styled";
+import { IsLocation } from "../../helpers";
 
 interface Props {
   node: Node;
-  isParent: boolean;
-  isLocation: boolean;
+  parent: boolean;
   isInput: boolean;
   splitView: boolean;
   terminals: Connector[];
@@ -20,30 +20,21 @@ interface Props {
  * @param param0
  * @returns a drop-down menu with a nodes' input or output terminals.
  */
-const TerminalsMenuComponent = ({
-  node,
-  isParent,
-  isLocation,
-  isInput,
-  splitView,
-  terminals,
-  visible,
-  onClick,
-  onBlur,
-}: Props) =>
+const TerminalsMenuComponent = ({ node, parent, isInput, splitView, terminals, visible, onClick, onBlur }: Props) =>
   visible && (
     <TerminalsMenu
       splitView={splitView}
-      isParent={isParent}
-      isLocation={isLocation}
+      parent={parent}
+      location={IsLocation(node)}
       isInput={isInput}
-      isConnectView={IsMainConnectNode(node.id)}
+      connectView={IsMainConnectNode(node.id)}
       tabIndex={0}
       onBlur={onBlur}
+      color={GetMenuColor(node)}
     >
       {terminals.map((conn) => (
         <TerminalsElement key={conn.id}>
-          <ColorBar color={conn.color ?? Color.Terminal_Default} />
+          <ColorBar color={GetTerminalColor(conn)} />
           <div className="text" onClick={() => onClick(conn)}>
             {conn.name}
           </div>

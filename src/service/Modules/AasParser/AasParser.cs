@@ -1,13 +1,27 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Modules;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AasParserModule
 {
     public class AasParser : IModelBuilderParser
     {
+        public void CreateModule(IServiceCollection services, IConfiguration configuration)
+        {
+            
+        }
+
+        public ICollection<Profile> GetProfiles()
+        {
+            return null;
+        }
+
         public string GetName()
         {
             return "AasParser";
@@ -15,7 +29,11 @@ namespace AasParserModule
 
         public FileFormat GetFileFormat()
         {
-            return FileFormat.Json;
+            return new()
+            {
+                ContentType = @"application/json",
+                FileExtension = "json"
+            };
         }
 
         public Task<byte[]> SerializeProject(Project project)

@@ -14,10 +14,6 @@ const Menu = styled.div<Props>`
   overflow: hidden;
   padding-top: ${(props) => (props.top ? props.top : 0)}px;
   background-color: ${(props) => props.color}!important;
-
-  &:hover {
-    cursor: n-resize;
-  }
 `;
 
 export default Menu;

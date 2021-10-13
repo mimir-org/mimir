@@ -97,6 +97,7 @@ export interface Purpose {
   description: string;
   semanticReference: string;
 }
+
 export interface PredefinedAttribute {
   key: string;
   values: Object;
@@ -110,6 +111,7 @@ export interface LocationType {
   semanticReference: string;
   locationSubTypes: LocationType[];
 }
+
 export interface CreateLibraryType {
   libraryId: string;
   name: string;
@@ -126,10 +128,12 @@ export interface CreateLibraryType {
   symbolId: string;
   compositeTypes: string[];
 }
+
 export interface User {
   username: string;
   name: string;
 }
+
 export interface FileData {
   content: string;
   name: string;
@@ -173,6 +177,7 @@ export interface CombinedAttribute {
   condition: string;
   combined: string;
 }
+
 export interface CombinedAttributeFilter {
   name: string;
   combinedAttributes: CombinedAttribute[];
