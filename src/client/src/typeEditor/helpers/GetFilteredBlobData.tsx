@@ -1,8 +1,9 @@
 import { DropDownItem } from "../../compLibrary/dropdown/typeEditor/Dropdown";
-import { BlobData } from "../../models";
+import { BlobData, Discipline } from "../../models";
 import { CreateId } from "../../components/flow/helpers";
 
-const GetBlobData = (blobs: BlobData[]): DropDownItem[] => {
+const GetFilteredBlobData = (blobs: BlobData[], discipline: Discipline): DropDownItem[] => {
+  blobs = blobs.filter((b) => discipline & b.discipline);
   const categories = [] as DropDownItem[];
   categories.push({ id: CreateId(), name: "Blobs", description: "Symbol", image: null, items: [] });
   blobs.forEach((blob) => {
@@ -18,4 +19,4 @@ const GetBlobData = (blobs: BlobData[]): DropDownItem[] => {
   return categories;
 };
 
-export default GetBlobData;
+export default GetFilteredBlobData;

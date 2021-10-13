@@ -15,7 +15,7 @@ export { default as GetDefaultValue } from "./GetDefaultValue";
 export { default as GetDefaultTerminal } from "./GetDefaultTerminal";
 export { default as GetDefaultTerminals } from "./GetDefaultTerminals";
 export { default as GetLocationTypes } from "./GetLocationTypes";
-export { default as GetBlobData } from "./GetBlobData";
+export { default as GetFilteredBlobData } from "./GetFilteredBlobData";
 export { default as GetFilteredList } from "./GetFilteredList";
 export { default as GetFilteredRdsList } from "./GetFilteredRdsList";
 export { default as GetFilteredTerminalsList } from "./GetFilteredTerminalsList";
@@ -24,6 +24,7 @@ export { default as GetListLabel } from "./GetListLabel";
 export { default as GetSelectedRds } from "./GetSelectedRds";
 export { default as GetSelectedIcon } from "./GetSelectedIcon";
 export { default as GetSelectedTerminal } from "./GetSelectedTerminal";
+export { default as GetSelectedDiscipline } from "./GetSelectedDiscipline";
 export { default as GetLibraryType } from "./GetLibraryType";
 export { default as GetWidth } from "./GetWidth";
 
