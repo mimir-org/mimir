@@ -24,6 +24,8 @@ interface Props {
 const InspectorHeader = ({ project, element, dispatch, open, type }: Props) => {
   const [validated, setValidated] = useState(false);
 
+  const deleteDisabled = IsNode(element) && IsAspectNode(element);
+
   return (
     <Menu id="InspectorHeader" color={GetInspectorColor(element)}>
       {project && <InspectorTabs project={project} element={element} />}
@@ -54,11 +56,10 @@ const InspectorHeader = ({ project, element, dispatch, open, type }: Props) => {
           visible={true}
         />
         <InspectorButton
-          onClick={() => Click.OnDelete(project, element, dispatch)}
-          type={
-            !IsNode(element) || !IsAspectNode(element) ? InspectorButtonType.Delete : InspectorButtonType.DeleteDisabled
-          }
+          onClick={() => !deleteDisabled && Click.OnDelete(project, element, dispatch)}
+          type={!deleteDisabled ? InspectorButtonType.Delete : InspectorButtonType.DeleteDisabled}
           visible={true}
+          disabled={deleteDisabled}
         />
         <Title onClick={() => Click.OnToggle(dispatch, type, open)}>{TextResources.Module_Inspector}</Title>
         <ToggleBox>
