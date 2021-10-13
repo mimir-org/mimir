@@ -221,7 +221,7 @@ export function importProjectAction(project: ProjectAm) {
   };
 }
 
-export function setIsLockedNode(node: Node, project: Project, isLocked: boolean) {
+export function setIsLockedNode(node: Node, project: Project, isLocked: boolean): Types.LockUnlockNode {
   return {
     type: Types.LOCK_UNLOCK_NODE,
     payload: {
@@ -232,7 +232,11 @@ export function setIsLockedNode(node: Node, project: Project, isLocked: boolean)
   };
 }
 
-export function setIsLockedNodeAttribute(attribute: Attribute, nodeId: string, isLocked: boolean) {
+export function setIsLockedNodeAttribute(
+  attribute: Attribute,
+  nodeId: string,
+  isLocked: boolean
+): Types.LockUnlockNodeAttribute {
   return {
     type: Types.LOCK_UNLOCK_NODE_ATTRIBUTE,
     payload: {
@@ -243,12 +247,61 @@ export function setIsLockedNodeAttribute(attribute: Attribute, nodeId: string, i
   };
 }
 
-export function setIsLockedTerminalAttribute(attribute: Attribute, terminalId: string, isLocked: boolean) {
+export function setIsLockedTerminalAttribute(
+  attribute: Attribute,
+  terminalId: string,
+  isLocked: boolean
+): Types.LockUnlockTerminalAttribute {
   return {
     type: Types.LOCK_UNLOCK_TERMINAL_ATTRIBUTE,
     payload: {
       id: attribute.id,
       terminalId,
+      isLocked,
+    },
+  };
+}
+
+export function setIsLockedTransportAttribute(
+  attribute: Attribute,
+  transportId: string,
+  isLocked: boolean
+): Types.LockUnlockTransportAttribute {
+  return {
+    type: Types.LOCK_UNLOCK_TRANSPORT_ATTRIBUTE,
+    payload: {
+      id: attribute.id,
+      transportId,
+      isLocked,
+    },
+  };
+}
+
+export function setIsLockedInterfaceAttribute(
+  attribute: Attribute,
+  interfaceId: string,
+  isLocked: boolean
+): Types.LockUnlockInterfaceAttribute {
+  return {
+    type: Types.LOCK_UNLOCK_INTERFACE_ATTRIBUTE,
+    payload: {
+      id: attribute.id,
+      interfaceId,
+      isLocked,
+    },
+  };
+}
+
+export function setIsLockedCompositeAttribute(
+  attribute: Attribute,
+  compositeId: string,
+  isLocked: boolean
+): Types.LockUnlockCompositeAttribute {
+  return {
+    type: Types.LOCK_UNLOCK_COMPOSITE_ATTRIBUTE,
+    payload: {
+      id: attribute.id,
+      compositeId,
       isLocked,
     },
   };

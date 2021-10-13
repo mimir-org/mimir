@@ -1,5 +1,7 @@
 import { ConnectorType, EnumBase, Attribute, RelationType } from "..";
 
+export const CONNECTOR_KIND: string = "Connector";
+
 class Connector {
   id: string;
   name: string;
@@ -18,6 +20,8 @@ class Connector {
 
   // Relation
   relationType: RelationType;
+
+  kind: string = CONNECTOR_KIND;
 
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor() {}

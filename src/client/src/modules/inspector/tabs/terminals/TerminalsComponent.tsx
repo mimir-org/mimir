@@ -16,7 +16,6 @@ interface Props {
 
 const TerminalsComponent = ({ element }: Props) => {
   const categoryTypes = (useSelector<RootState>((state) => state.typeEditor.terminals) as TerminalType[]) ?? [];
-
   const terminals = GetTerminals(element);
   const terminalCategories = GetFilteredTerminalsList(categoryTypes);
   const [selectedTerminalId, setSelectedTerminalId] = useState<string>(null);

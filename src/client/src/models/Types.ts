@@ -1,4 +1,4 @@
-import { Aspect, Connector, Attribute, ObjectType } from ".";
+import { Aspect, Connector, Attribute, ObjectType, Composite } from ".";
 import { CommitStatus, ConnectorType, Discipline, SelectType } from "./Enums";
 
 export interface AttributeType {
@@ -145,14 +145,6 @@ export interface BlobData {
   name: string;
   data: string;
   discipline: Discipline;
-}
-
-export interface Composite {
-  id: string;
-  name: string;
-  semanticReference: string;
-  attributes: Attribute[];
-  nodeId: string;
 }
 
 export interface CompositeType {

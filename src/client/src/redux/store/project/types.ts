@@ -37,6 +37,9 @@ export const LOCK_UNLOCK_NODE = "LOCK_UNLOCK_NODE";
 export const LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR = "LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR";
 export const LOCK_UNLOCK_NODE_ATTRIBUTE = "LOCK_UNLOCK_NODE_ATTRIBUTE";
 export const LOCK_UNLOCK_TERMINAL_ATTRIBUTE = "LOCK_UNLOCK_TERMINAL_ATTRIBUTE";
+export const LOCK_UNLOCK_TRANSPORT_ATTRIBUTE = "LOCK_UNLOCK_TRANSPORT_ATTRIBUTE";
+export const LOCK_UNLOCK_INTERFACE_ATTRIBUTE = "LOCK_UNLOCK_INTERFACE_ATTRIBUTE";
+export const LOCK_UNLOCK_COMPOSITE_ATTRIBUTE = "LOCK_UNLOCK_COMPOSITE_ATTRIBUTE";
 export const LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR = "LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR";
 
 // State types
@@ -309,6 +312,33 @@ export interface LockUnlockTerminalAttribute {
   };
 }
 
+export interface LockUnlockTransportAttribute {
+  type: typeof LOCK_UNLOCK_TRANSPORT_ATTRIBUTE;
+  payload: {
+    id: string;
+    transportId: string;
+    isLocked: boolean;
+  };
+}
+
+export interface LockUnlockInterfaceAttribute {
+  type: typeof LOCK_UNLOCK_INTERFACE_ATTRIBUTE;
+  payload: {
+    id: string;
+    interfaceId: string;
+    isLocked: boolean;
+  };
+}
+
+export interface LockUnlockCompositeAttribute {
+  type: typeof LOCK_UNLOCK_COMPOSITE_ATTRIBUTE;
+  payload: {
+    id: string;
+    compositeId: string;
+    isLocked: boolean;
+  };
+}
+
 export interface LockUnlockAttributeFinished {
   type: typeof LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR;
   payload: {
@@ -351,6 +381,9 @@ export type ProjectActionTypes =
   | LockUnlockNodeFinished
   | LockUnlockNodeAttribute
   | LockUnlockTerminalAttribute
+  | LockUnlockTransportAttribute
+  | LockUnlockInterfaceAttribute
+  | LockUnlockCompositeAttribute
   | LockUnlockAttributeFinished
   | CommitProject
   | CommitProjectFinished;

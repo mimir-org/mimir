@@ -1,5 +1,4 @@
-import { EnumBase, Attribute, Aspect, Purpose } from "..";
-import { Composite } from "../Types";
+import { EnumBase, Attribute, Aspect, Purpose, Composite } from "..";
 import Connector from "./Connector";
 
 export const NODE_KIND: string = "Node";

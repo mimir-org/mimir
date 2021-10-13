@@ -12,6 +12,6 @@ export const GetTerminals = (element: InspectorElement): Connector[] => {
       element.transport?.outputTerminal,
       element.interface?.inputTerminal,
       element.interface?.outputTerminal,
-    ];
+    ].filter((x) => x);
   }
 };

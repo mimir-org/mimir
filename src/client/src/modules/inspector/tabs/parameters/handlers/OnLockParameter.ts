@@ -1,21 +1,28 @@
 import { Dispatch } from "redux";
 import { Attribute } from "../../../../../models";
 import { setIsLockedNodeAttribute, setIsLockedTerminalAttribute } from "../../../../../redux/store/project/actions";
+import { IsNode, IsTransport, IsInterface, IsConnector, IsComposite } from "../../../helpers/IsType";
+import { InspectorParametersElement } from "../../../types";
 
 const OnLockParameter = (
+  element: InspectorParametersElement,
   attribute: Attribute,
   isLocked: boolean,
-  elementId: string,
-  isNodeLocked: boolean,
-  isElementNode: boolean,
+  isTopElementLocked: boolean,
   dispatch: Dispatch<any>
 ) => {
-  if (isNodeLocked) return;
+  if (isTopElementLocked) return;
 
-  if (isElementNode) {
-    dispatch(setIsLockedNodeAttribute(attribute, elementId, isLocked));
-  } else {
-    dispatch(setIsLockedTerminalAttribute(attribute, elementId, isLocked));
+  if (IsNode(element)) {
+    dispatch(setIsLockedNodeAttribute(attribute, element.id, isLocked));
+  } else if (IsTransport(element)) {
+    //TODO: Handle Edge case
+  } else if (IsInterface(element)) {
+    //TODO: Handle Edge case
+  } else if (IsConnector(element)) {
+    dispatch(setIsLockedTerminalAttribute(attribute, element.id, isLocked));
+  } else if (IsComposite(element)) {
+    //TODO: Handle Edge case
   }
 };
 

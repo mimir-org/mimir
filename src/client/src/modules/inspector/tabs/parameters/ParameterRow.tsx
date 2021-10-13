@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { CombinedAttribute, Node } from "../../../../models";
+import { CombinedAttribute } from "../../../../models";
 import { Parameter, PARAMETER_ENTITY_WIDTH } from "./";
 import { DoesCombinationMatchAttribute } from "./helpers";
 import { Body, Entity, Box } from "./styled";
@@ -40,7 +40,6 @@ function ParameterRow({
   dispatch,
 }: Props) {
   const attributes = element.attributes;
-  const isElementNode = (element as Node).connectors !== undefined;
 
   const bodyWidth = useMemo(
     () => maxNumSelectedCombinations * PARAMETER_ENTITY_WIDTH + FILTER_ENTITY_WIDTH,
@@ -85,9 +84,7 @@ function ParameterRow({
             headerColor={headerColor}
             bodyColor={bodyColor}
             onChange={(id, value, unit, nodeId) => OnChangeParameterValue(id, value, unit, nodeId, dispatch)}
-            onLock={(attribute, isLocked) =>
-              OnLockParameter(attribute, isLocked, element.id, elementIsLocked, isElementNode, dispatch)
-            }
+            onLock={(attribute, isLocked) => OnLockParameter(element, attribute, isLocked, elementIsLocked, dispatch)}
             onClose={() => OnChangeAttributeCombinationChoice(element.id, filterName, combination, true, dispatch)}
           />
         ))}

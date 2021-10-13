@@ -1,5 +1,7 @@
 import { Attribute, Connector } from ".";
 
+export const TRANSPORT_KIND: string = "Transport";
+
 class Transport {
   id: string;
   name: string;
@@ -9,6 +11,8 @@ class Transport {
   inputTerminal: Connector;
   outputTerminalId: string;
   outputTerminal: Connector;
+
+  kind: string = TRANSPORT_KIND;
 
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor() {}

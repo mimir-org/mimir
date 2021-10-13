@@ -501,6 +501,19 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
       };
     }
 
+    case Types.LOCK_UNLOCK_TRANSPORT_ATTRIBUTE: {
+      const { id, isLocked, transportId } = action.payload;
+      return state;
+    }
+
+    case Types.LOCK_UNLOCK_INTERFACE_ATTRIBUTE: {
+      return state;
+    }
+
+    case Types.LOCK_UNLOCK_COMPOSITE_ATTRIBUTE: {
+      return state;
+    }
+
     default:
       return state;
   }
