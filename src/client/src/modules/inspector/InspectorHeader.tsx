@@ -47,8 +47,8 @@ const InspectorHeader = ({ project, node, edge, dispatch, open, type }: Props) =
         />
         <InspectorButton
           onClick={() => Click.OnDelete(project, node, edge, dispatch)}
-          type={InspectorButtonType.Delete}
-          visible={!IsAspectNode(node)}
+          type={!IsAspectNode(node) ? InspectorButtonType.Delete : InspectorButtonType.DeleteDisabled}
+          visible={true}
         />
         <Title onClick={() => Click.OnToggle(dispatch, type, open)}>{TextResources.Module_Inspector}</Title>
         <ToggleBox>

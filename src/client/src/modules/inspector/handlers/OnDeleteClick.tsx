@@ -5,10 +5,15 @@ import { setModuleVisibility } from "../../../redux/store/modules/actions";
 import { SetPanelHeight } from "../helpers";
 import { removeEdge, removeNode } from "../../../redux/store/project/actions";
 import { changeInspectorHeight } from "../redux/height/actions";
-import { IsPartOfTerminal } from "../../../components/flow/helpers";
-import { UpdateSiblingIndexOnEdgeDelete, UpdateSiblingIndexOnNodeDelete } from "../../../components/flow/helpers";
+import {
+  IsAspectNode,
+  IsPartOfTerminal,
+  UpdateSiblingIndexOnEdgeDelete,
+  UpdateSiblingIndexOnNodeDelete,
+} from "../../../components/flow/helpers";
 
 const OnDeleteClick = (project: Project, node: Node, edge: Edge, dispatch: any) => {
+  if (IsAspectNode(node)) return;
   if (node) {
     project.edges.forEach((e) => {
       if (e.fromNodeId === node.id) dispatch(removeEdge(e.id));
@@ -19,10 +24,7 @@ const OnDeleteClick = (project: Project, node: Node, edge: Edge, dispatch: any) 
 
     dispatch(removeNode(node.id));
   } else {
-    if (IsPartOfTerminal(edge.fromConnector)) {
-      UpdateSiblingIndexOnEdgeDelete(edge, project, dispatch);
-    }
-
+    if (IsPartOfTerminal(edge.fromConnector)) UpdateSiblingIndexOnEdgeDelete(edge, project, dispatch);
     dispatch(removeEdge(edge.id));
   }
 
