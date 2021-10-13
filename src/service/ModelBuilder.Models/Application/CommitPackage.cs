@@ -13,5 +13,8 @@ namespace Mb.Models.Application
 
         [Required]
         public string Parser { get; set; }
+
+        [Required]
+        public string ReceivingDomain { get; set; }
     }
 }
