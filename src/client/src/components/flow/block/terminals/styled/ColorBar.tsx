@@ -1,7 +1,11 @@
 import styled from "styled-components";
 
-const ColorBar = styled.div`
-  background-color: ${(props: { color: string }) => props.color};
+interface Props {
+  color: string;
+}
+
+const ColorBar = styled.div<Props>`
+  background-color: ${(props) => props.color};
   width: 20px;
   height: 26px;
   position: relative;

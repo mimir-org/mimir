@@ -26,7 +26,7 @@ export const CheckboxBlock = ({ node, inputLabel }: Props) => {
       <input
         type="checkbox"
         checked={isChecked}
-        onChange={() => OnCheckboxChange(dispatch, splitView, node, selectedNode)}
+        onChange={() => OnCheckboxChange(dispatch, splitView, node, selectedNode, splitViewNode)}
       />
       <span className="checkmark"></span>
       <label className="checkbox_label">{inputLabel}</label>

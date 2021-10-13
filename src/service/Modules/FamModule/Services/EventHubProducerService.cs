@@ -20,7 +20,7 @@ namespace EventHubModule.Services
             _eventHubConfiguration = eventHubConfiguration?.Value;
         }
 
-        public async Task SendDataAsync<T>(List<T> data)
+        public async Task SendDataAsync<T>(List<T> data) where T: class
         {
             if (string.IsNullOrEmpty(_eventHubConfiguration?.ConnectionString) || string.IsNullOrEmpty(_eventHubConfiguration?.ConnectionString))
                 throw new Exception("The configuration connection or event hub name string is missing");

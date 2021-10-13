@@ -2,21 +2,36 @@ import { removeElements } from "react-flow-renderer";
 import { Size } from "../../../compLibrary";
 import { EDGE_TYPE, MODULE_TYPE } from "../../../models/project";
 import { SetPanelHeight } from "../../../modules/inspector/helpers";
+import { changeInspectorHeight } from "../../../modules/inspector/redux/height/actions";
 import { setModuleVisibility } from "../../../redux/store/modules/actions";
 import { removeEdge, removeNode } from "../../../redux/store/project/actions";
+import { GetSelectedNode, IsAspectNode } from "../helpers";
 
-const useOnRemove = (elementsToRemove, setElements, dispatch) => {
-  elementsToRemove.forEach((element) => {
-    const edgeTypes = Object.values(EDGE_TYPE);
-    const isEdge =
-      element.type === null || element.type === undefined || edgeTypes.some((x) => x === element.type?.toString());
+const useOnRemove = (elements: any[], setElements: any, dispatch: any) => {
+  const verifiedList: any[] = [];
+  const selectedNode = GetSelectedNode();
+  const edgeTypes = Object.values(EDGE_TYPE);
+  elements = elements.filter((el) => !IsAspectNode(el.data));
 
-    if (isEdge) dispatch(removeEdge(element.id));
-    else dispatch(removeNode(element.id));
+  elements.forEach((elem) => {
+    const isEdge = edgeTypes.some((x) => x === elem.type?.toString());
+
+    if (isEdge) {
+      if (!IsAspectNode(selectedNode)) {
+        dispatch(removeEdge(elem.id));
+        verifiedList.push(elem);
+      }
+    } else {
+      dispatch(removeNode(elem.id));
+      verifiedList.push(elem);
+    }
   });
+
   dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, false, true));
   SetPanelHeight(Size.ModuleClosed);
-  return setElements((els) => removeElements(elementsToRemove, els));
+  dispatch(changeInspectorHeight(Size.ModuleClosed));
+
+  return setElements((els) => removeElements(verifiedList, els));
 };
 
 export default useOnRemove;

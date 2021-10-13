@@ -1,18 +1,12 @@
 import { GetRdsId } from ".";
 import { Node, Project } from "../../models";
-import { IsAspectNode, IsPartOfTerminal, IsTransportTerminal } from "../../components/flow/helpers";
+import { IsAspectNode } from "../../components/flow/helpers";
+import { FindParentEdge } from "../../modules/explorer/helpers/ParentNode";
 
 const findParentNode = (currentNode: Node, project: Project): Node => {
-  if (!currentNode) return null;
-  if (IsAspectNode(currentNode)) return null;
+  if (!currentNode || IsAspectNode(currentNode)) return null;
 
-  const actualConnector = currentNode.connectors.find((x) => IsPartOfTerminal(x) && IsTransportTerminal(x));
-  if (!actualConnector) return null;
-
-  const actualEdge = project.edges.find((x) => x.toConnector === actualConnector);
-  if (!actualEdge) return null;
-
-  return project.nodes.find((node) => node === actualEdge.fromNode);
+  return FindParentEdge(currentNode, project)?.fromNode;
 };
 
 const GetReferenceDesignation = (node: Node, project: Project): string => {

@@ -24,7 +24,7 @@ const InspectorHeader = ({ project, node, edge, dispatch, open, type }: Props) =
   const [validated, setValidated] = useState(false);
 
   return (
-    <Menu id="InspectorBody" color={GetInspectorColor(node, edge)}>
+    <Menu id="InspectorHeader" color={GetInspectorColor(node, edge)}>
       {project && <InspectorTabs project={project} node={node} edge={edge} />}
       <NodeInfo>
         <div className="symbol">
@@ -47,8 +47,8 @@ const InspectorHeader = ({ project, node, edge, dispatch, open, type }: Props) =
         />
         <InspectorButton
           onClick={() => Click.OnDelete(project, node, edge, dispatch)}
-          type={InspectorButtonType.Delete}
-          visible={!IsAspectNode(node)}
+          type={!IsAspectNode(node) ? InspectorButtonType.Delete : InspectorButtonType.DeleteDisabled}
+          visible={true}
         />
         <Title onClick={() => Click.OnToggle(dispatch, type, open)}>{TextResources.Module_Inspector}</Title>
         <ToggleBox>

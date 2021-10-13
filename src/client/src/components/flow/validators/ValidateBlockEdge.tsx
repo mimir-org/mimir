@@ -1,7 +1,9 @@
 import { IsConnectView } from "../block/connectView/helpers";
 import { Node, Connector } from "../../../models";
+import { IsDirectChild } from "../block/helpers";
 import {
   IsChildOf,
+  IsFulfilledByTerminal,
   IsFunction,
   IsLocation,
   IsLocationTerminal,
@@ -11,7 +13,7 @@ import {
 } from "../helpers";
 
 /**
- * Component to validate an edge in BlockView, where different rules apply for each state.
+ * Validator for an edge in BlockView, where different rules apply for each state.
  * @param activeNode
  * @param fromNode
  * @param toNode
@@ -40,30 +42,30 @@ function validBlockView(active: Node, from: Node, to: Node) {
   if (!IsLocation(active)) return IsSiblingNodes(from, to) && IsChildOf(to, active) && IsChildOf(from, active);
 }
 
-function validSplitView(activeNode: Node, split: Node, from: Node, to: Node, fromC: Connector, toC: Connector) {
-  if (!split) return IsSiblingNodes(from, to) && IsChildOf(from, activeNode);
+function validSplitView(activeNode: Node, splitNode: Node, from: Node, to: Node, fromC: Connector, toC: Connector) {
+  if (!splitNode) return IsSiblingNodes(from, to) && IsChildOf(from, activeNode);
 
-  if (split && !IsLocation(split)) {
+  if (splitNode && !IsLocation(splitNode)) {
     return (
-      from.level - activeNode.level === 1 &&
-      to.level - activeNode.level === 1 &&
-      from.level - split.level === 1 &&
-      to.level - split.level === 1 &&
-      IsTransportTerminal(fromC) &&
-      IsTransportTerminal(toC)
+      IsDirectChild(from, activeNode) &&
+      IsDirectChild(to, activeNode) &&
+      IsDirectChild(from, splitNode) &&
+      IsDirectChild(to, splitNode) &&
+      IsFulfilledByTerminal(fromC) &&
+      IsFulfilledByTerminal(toC)
     );
   }
 
-  if (IsLocation(split)) {
+  if (IsLocation(splitNode)) {
     return (
       IsLocation(to) &&
       IsLocationTerminal(fromC) &&
       IsLocationTerminal(toC) &&
       from.aspect === activeNode.aspect &&
-      from.level - activeNode.level === 1 &&
-      to.level - activeNode.level === 1 &&
-      from.level - split.level === 1 &&
-      to.level - split.level === 1
+      IsDirectChild(from, activeNode) &&
+      IsDirectChild(to, activeNode) &&
+      IsDirectChild(from, splitNode) &&
+      IsDirectChild(to, splitNode)
     );
   }
 }

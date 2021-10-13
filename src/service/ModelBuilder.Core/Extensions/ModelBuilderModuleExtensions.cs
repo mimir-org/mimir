@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.Configuration;
 using Mb.Core.Profiles;
@@ -10,6 +11,8 @@ using Mb.Core.Repositories;
 using Mb.Core.Repositories.Contracts;
 using Mb.Core.Services;
 using Mb.Core.Services.Contracts;
+using Mb.Models.Application;
+using Mb.Models.Attributes;
 using Mb.Models.Configurations;
 using Mb.Modules;
 using Mb.TypeEditor.Data.Contracts;
@@ -163,6 +166,12 @@ namespace Mb.Core.Extensions
             foreach (var module in modules)
             {
                 module.Instance.CreateModule(services, configuration);
+                if (module.ModuleType == ModuleType.SyncService)
+                {
+                    if (module.Instance is IModelBuilderSyncService service)
+                        service.ReceiveData();
+                }
+                    
             }
         }
 
