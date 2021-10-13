@@ -2,22 +2,23 @@ import { RootState } from "../../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { TextResources } from "../../../../assets/text";
 import { Dropdown } from "./styled/dropdown/parameter";
-import { CombinedAttributeFilter, Composite, Connector, Node } from "../../../../models";
+import { CombinedAttributeFilter } from "../../../../models";
 import { GetAttributeCombinations, GetParametersColor } from "./helpers";
 import { Menu, Header, ParametersRowWrapper, ParametersContentWrapper } from "./styled";
 import { OnChangeFilterChoice, OnClearAllFilters } from "./handlers";
 import { FilterDict } from "./redux/types";
 import { ParameterRow } from "./";
 import { useState } from "react";
+import { InspectorParametersElement } from "../../types";
 
 interface Props {
-  element: Node | Connector | Composite;
+  parametersElement: InspectorParametersElement;
   elementIsLocked: boolean;
 }
 
-const ParametersContent = ({ element, elementIsLocked }: Props) => {
+const ParametersContent = ({ parametersElement, elementIsLocked }: Props) => {
   const dispatch = useDispatch();
-  const attributes = element.attributes;
+  const attributes = parametersElement.attributes;
 
   const attributeFilters =
     (useSelector<RootState>((state) => state.commonState.filters) as CombinedAttributeFilter[]).filter((x) =>
@@ -25,8 +26,9 @@ const ParametersContent = ({ element, elementIsLocked }: Props) => {
     ) ?? [];
 
   const selectedFilters =
-    (useSelector<RootState>((state) => state.parametersReducer.selectedAttributeFilters[element.id]) as FilterDict) ??
-    {};
+    (useSelector<RootState>(
+      (state) => state.parametersReducer.selectedAttributeFilters[parametersElement.id]
+    ) as FilterDict) ?? {};
 
   const hasFilters = Object.keys(selectedFilters).length > 0;
   const attributeCombinations = GetAttributeCombinations(attributeFilters, attributes);
@@ -43,12 +45,12 @@ const ParametersContent = ({ element, elementIsLocked }: Props) => {
         <Menu>
           <Dropdown
             onChange={(filter: CombinedAttributeFilter, selected: boolean) => {
-              OnChangeFilterChoice(element.id, filter.name, selected, dispatch);
+              OnChangeFilterChoice(parametersElement.id, filter.name, selected, dispatch);
             }}
             items={attributeFilters}
             selectedItems={selectedFilters}
           />
-          <div className="link" onClick={() => OnClearAllFilters(element.id, dispatch)}>
+          <div className="link" onClick={() => OnClearAllFilters(parametersElement.id, dispatch)}>
             {TextResources.Inspector_Params_Clear_All}
           </div>
           <div className="link">{TextResources.Inspector_Params_Default}</div>
@@ -65,7 +67,7 @@ const ParametersContent = ({ element, elementIsLocked }: Props) => {
             return (
               <ParameterRow
                 key={filterName}
-                element={element}
+                element={parametersElement}
                 elementIsLocked={elementIsLocked}
                 combinations={attributeCombinations[filterName]}
                 selectedCombinations={selectedCombinations}

@@ -1,5 +1,4 @@
-import Connector from "./Connector";
-import Attribute from "./Attribute";
+import { Attribute, Connector } from ".";
 
 class Transport {
   id: string;

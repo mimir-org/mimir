@@ -25,7 +25,7 @@ const SimpleTypesComponent = ({ node }: Props) => {
       <SimpleTypesSelector simpleTypes={simpleTypes} onSelect={onSelect} />
       {selectedSimpleType && (
         <TerminalsParametersWrapper>
-          <ParametersContent element={selectedSimpleType} elementIsLocked={node.isLocked} />
+          <ParametersContent parametersElement={selectedSimpleType} elementIsLocked={node.isLocked} />
         </TerminalsParametersWrapper>
       )}
     </TerminalsWrapper>

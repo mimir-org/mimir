@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { CombinedAttribute, Composite, Connector, Node } from "../../../../models";
+import { CombinedAttribute, Node } from "../../../../models";
 import { Parameter, PARAMETER_ENTITY_WIDTH } from "./";
 import { DoesCombinationMatchAttribute } from "./helpers";
 import { Body, Entity, Box } from "./styled";
@@ -12,13 +12,12 @@ import {
   OnChangeAttributeCombinationChoice,
 } from "./handlers";
 import { useMemo } from "react";
+import { InspectorParametersElement } from "../../types";
 
 const FILTER_ENTITY_WIDTH: number = 191;
 
-type Element = Node | Connector | Composite;
-
 interface Props {
-  element: Element;
+  element: InspectorParametersElement;
   elementIsLocked: boolean;
   combinations: CombinedAttribute[];
   selectedCombinations: CombinedAttribute[];

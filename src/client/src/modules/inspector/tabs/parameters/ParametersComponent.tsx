@@ -1,9 +1,14 @@
-import { Node } from "../../../../models";
+import { InspectorElement } from "../../types";
 import { ParametersContent } from "./";
+import { GetParametersElement } from "./helpers/GetParametersElement";
 
 interface Props {
-  node: Node;
+  element: InspectorElement;
 }
 
-const ParametersComponent = ({ node }: Props) => <ParametersContent element={node} elementIsLocked={node.isLocked} />;
+const ParametersComponent = ({ element }: Props) => {
+  const parametersElement = GetParametersElement(element);
+
+  return <ParametersContent parametersElement={parametersElement} elementIsLocked={element.isLocked} />;
+};
 export default ParametersComponent;

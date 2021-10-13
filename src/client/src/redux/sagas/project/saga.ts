@@ -1,6 +1,6 @@
 import { call, put } from "redux-saga/effects";
 import { Project } from "../../../models";
-import { ConvertProject } from ".";
+import { ConvertProject, InitializeProject } from ".";
 import { saveAs } from "file-saver";
 import { get, post, GetBadResponseData, ApiError } from "../../../models/webclient";
 import {
@@ -47,7 +47,7 @@ export function* getProject(action) {
       return;
     }
 
-    const project = response.data as Project;
+    const project = InitializeProject(response.data);
 
     const payload = {
       project: project,

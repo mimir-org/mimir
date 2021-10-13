@@ -1,17 +1,19 @@
 import { Color } from "../../../compLibrary";
-import { Edge, Node } from "../../../models";
 import { IsFunction, IsLocation, IsProduct } from "../../../components/flow/helpers";
+import { InspectorElement } from "../types";
+import { IsNode, IsEdge } from "./IsType";
 
-const GetTabsColor = (node: Node | null, edge: Edge | null) => {
-  if (node) {
-    if (IsFunction(node)) return Color.FunctionTab;
-    if (IsLocation(node)) return Color.LocationTab;
-    if (IsProduct(node)) return Color.ProductTab;
+const GetTabsColor = (element: InspectorElement) => {
+  if (IsNode(element)) {
+    if (IsFunction(element)) return Color.FunctionTab;
+    if (IsLocation(element)) return Color.LocationTab;
+    if (IsProduct(element)) return Color.ProductTab;
   }
-  if (edge) {
-    if (IsFunction(edge.fromNode)) return Color.FunctionTab;
-    if (IsLocation(edge.fromNode)) return Color.LocationTab;
-    if (IsProduct(edge.fromNode)) return Color.ProductTab;
+
+  if (IsEdge(element)) {
+    if (IsFunction(element.fromNode)) return Color.FunctionTab;
+    if (IsLocation(element.fromNode)) return Color.LocationTab;
+    if (IsProduct(element.fromNode)) return Color.ProductTab;
   }
 };
 
