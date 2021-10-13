@@ -9,6 +9,7 @@ export const GetButtonWidth = (type: InspectorButtonType): number => {
     case InspectorButtonType.Unlock:
       return 62;
     case InspectorButtonType.Delete:
+    case InspectorButtonType.DeleteDisabled:
       return 66;
   }
 };

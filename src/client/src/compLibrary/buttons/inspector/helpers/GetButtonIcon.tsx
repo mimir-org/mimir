@@ -13,6 +13,7 @@ export const GetButtonIcon = (type: InspectorButtonType): ReactElement => {
     case InspectorButtonType.Lock:
       return <LockOpenComponent />;
     case InspectorButtonType.Unlock:
+    case InspectorButtonType.DeleteDisabled:
       return <LockClosedComponent />;
     case InspectorButtonType.Delete:
       return <DeleteIconComponent />;
