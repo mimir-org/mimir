@@ -15,6 +15,7 @@ import { splitViewReducer } from "./splitView/reducers";
 import { connectViewReducer } from "../../components/flow/block/connectView/redux/reducers";
 import { darkModeReducer } from "./darkMode/reducers";
 import { parametersReducer } from "../../modules/inspector/tabs/parameters/redux/reducers";
+import { electroViewReducer } from "../store/electro/reducers";
 import { sagas } from "../sagas";
 import { persistStore, persistReducer } from "redux-persist";
 
@@ -34,6 +35,7 @@ const rootReducers = combineReducers({
   menu: menuReducer,
   flow: flowReducer,
   splitView: splitViewReducer,
+  electro: electroViewReducer,
   connectView: connectViewReducer,
   commonState: commonReducer,
   darkMode: darkModeReducer,

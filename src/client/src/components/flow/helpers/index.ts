@@ -32,6 +32,7 @@ export { default as SetDarkModeColor } from "./SetDarkModeColor";
 export { default as GetNodeType } from "./GetNodeType";
 export { default as GetHandleType } from "./GetHandleType";
 export { default as GetSelectedNode } from "./GetSelectedNode";
+export { default as GetSelectedEdge } from "./GetSelectedEdge";
 
 export { default as SetTerminalYPos } from "./SetTerminalYPos";
 

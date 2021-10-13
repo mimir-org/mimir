@@ -3,29 +3,36 @@ import { SaveEventData } from "../../../redux/store/localStorage/localStorage";
 import { CreateId, IsPartOfTerminal, UpdateSiblingIndexOnEdgeConnect } from "../helpers";
 import { addEdge } from "react-flow-renderer";
 import { createEdge } from "../../../redux/store/project/actions";
-import { Connector, Edge, Node } from "../../../models";
+import { Connector, Edge, Project } from "../../../models";
 import { ConvertToEdge } from "../converters";
 import { LibraryState } from "../../../redux/store/library/types";
 
-const useOnConnect = (params, project, setElements, dispatch, edgeType: EdgeType, library: LibraryState) => {
+const useOnConnect = (
+  params: any,
+  project: Project,
+  setElements: any,
+  dispatch: any,
+  edgeType: EdgeType,
+  library: LibraryState
+) => {
   SaveEventData(null, "edgeEvent");
   const createdId = CreateId();
-  const sourceNode = project.nodes.find((node: Node) => node.id === params.source) as Node;
-  const targetNode = project.nodes.find((node: Node) => node.id === params.target) as Node;
+  const sourceNode = project.nodes.find((node) => node.id === params.source);
+  const targetNode = project.nodes.find((node) => node.id === params.target);
 
   let sourceConn: Connector;
   let targetConn: Connector;
   let currentEdge: Edge;
 
-  project.nodes?.forEach((node: Node) => {
-    node.connectors?.forEach((conn: Connector) => {
+  project.nodes?.forEach((node) => {
+    node.connectors?.forEach((conn) => {
       if (conn.id === params.sourceHandle) sourceConn = conn;
       if (conn.id === params.targetHandle) targetConn = conn;
     });
   });
 
   const existingEdge = project.edges?.find(
-    (edge: Edge) =>
+    (edge) =>
       edge.fromConnectorId === params.sourceHandle.id &&
       edge.toConnectorId === params.targetHandle.id &&
       edge.fromNodeId === sourceNode.id &&
@@ -34,13 +41,9 @@ const useOnConnect = (params, project, setElements, dispatch, edgeType: EdgeType
   );
 
   if (!existingEdge) {
-    const edge = ConvertToEdge(createdId, sourceConn, targetConn, sourceNode, targetNode, project.id, library);
-
-    currentEdge = edge;
-    dispatch(createEdge(edge));
-  } else {
-    currentEdge = existingEdge;
-  }
+    currentEdge = ConvertToEdge(createdId, sourceConn, targetConn, sourceNode, targetNode, project.id, library);
+    dispatch(createEdge(currentEdge));
+  } else currentEdge = existingEdge;
 
   if (IsPartOfTerminal(currentEdge.fromConnector)) {
     UpdateSiblingIndexOnEdgeConnect(currentEdge, project, dispatch);

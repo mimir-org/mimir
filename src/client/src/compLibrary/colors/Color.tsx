@@ -41,7 +41,6 @@ const Color = {
   LocationSelected: "#A300A7",
 
   // Terminals
-  Terminal_Default: "#C05046",
   TransportConnection: "#606060",
 
   // Inspector

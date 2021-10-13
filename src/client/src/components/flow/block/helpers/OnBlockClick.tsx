@@ -15,7 +15,8 @@ const OnBlockClick = (e: any, dispatch: any, project: Project) => {
   // Handle select Edge
   if (e.target.classList.contains("react-flow__edge-path")) {
     const edge = project.edges.find((x) => x.id === e.target.id);
-    dispatch(setActiveEdge(edge.id, true));
+    console.log({ edge });
+    dispatch(setActiveEdge(edge?.id, true));
     dispatch(setActiveBlockNode(null));
     dispatch(changeInspectorTab(0));
   }

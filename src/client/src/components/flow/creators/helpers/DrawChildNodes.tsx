@@ -13,11 +13,11 @@ import { IsPartOfTerminal } from "../../helpers";
 const DrawChildNodes = (edges: Edge[], allNodes: Node[], selectedNode: Node, elements: Elements<any>) => {
   edges.forEach((edge) => {
     if (
-      edge.fromNodeId === selectedNode?.id &&
+      edge.fromNode.id === selectedNode?.id &&
       selectedNode?.aspect === edge.toNode.aspect &&
       IsPartOfTerminal(edge.toConnector)
     ) {
-      const toNode = allNodes.find((n) => n.id === edge.toNodeId);
+      const toNode = allNodes.find((n) => n.id === edge.toNode.id);
       if (toNode) elements.push(CreateBlockNode(toNode, null, allNodes));
     }
   });

@@ -2,11 +2,11 @@ import styled from "styled-components";
 import { Color, Size } from "../..";
 
 interface Props {
-  isLibraryOpen: boolean;
-  isExplorerOpen: boolean;
+  libOpen: boolean;
+  explorerOpen: boolean;
 }
 
-const ToolBar = styled.div<Props>`
+const ToolBarBox = styled.div<Props>`
   background-color: ${Color.White};
   color: ${Color.Black};
   height: 40px;
@@ -18,9 +18,8 @@ const ToolBar = styled.div<Props>`
   transition: left 0.2s ease-in-out, right 0.2s ease-in-out;
   z-index: 5;
 
-  right: ${(props) => (props.isLibraryOpen ? Size.ModuleOpen + Size.Margin : Size.ModuleClosed + Size.Margin)}px;
-
-  left: ${(props) => (props.isExplorerOpen ? Size.ModuleOpen + Size.Margin : Size.ModuleClosed + Size.Margin)}px;
+  right: ${(props) => (props.libOpen ? Size.ModuleOpen + Size.Margin : Size.ModuleClosed + Size.Margin)}px;
+  left: ${(props) => (props.explorerOpen ? Size.ModuleOpen + Size.Margin : Size.ModuleClosed + Size.Margin)}px;
 `;
 
-export default ToolBar;
+export default ToolBarBox;

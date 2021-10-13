@@ -3,6 +3,7 @@ import { FlowElement } from "react-flow-renderer";
 import { IsSplitView } from "../block/helpers";
 import { SetConnectNodePos } from "../block/connectView/helpers/position";
 import { GetNodeTypeString, SetBlockNodePos } from "./helpers";
+import { CreateId } from "../helpers";
 
 /**
  * Component to create a node in BlockView.
@@ -24,6 +25,7 @@ const CreateBlockNode = (node: Node, connectNode: Node, allNodes: Node[]) => {
     position = SetConnectNodePos(node, connectNode.id, connectNodes, allNodes);
 
   return {
+    key: CreateId(),
     id: node.id,
     type: type,
     data: node,

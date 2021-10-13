@@ -23,6 +23,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const nodes = useSelector<RootState>((s) => s.projectState.project.nodes) as Node[];
   const splitView = useSelector<RootState>((s) => s.splitView.visible) as boolean;
   const splitNode = useSelector<RootState>((s) => s.splitView.node) as Node;
+  const electro = useSelector<RootState>((s) => s.electro.visible) as boolean;
 
   // Enforce size change of node
   useEffect(() => {
@@ -49,7 +50,6 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
           outputMenuOpen={outTerminalMenu}
           terminals={FilterTerminals(data, splitView, splitNode)}
           isParent={false}
-          isLocation={true}
           splitView={splitView}
           onClick={(conn) => OnConnectorClick(conn, data, dispatch)}
           menuBox={terminalButton}
@@ -65,6 +65,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
         terminals={FilterTerminals(data, splitView, splitNode)}
         isParent={false}
         splitView={splitView}
+        electro={electro}
       />
     </>
   );

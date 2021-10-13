@@ -6,7 +6,7 @@ import { MODULE_TYPE } from "../../models/project";
 import { IsBlockView } from "../../components/flow/block/helpers";
 import { Project } from "../../models";
 import { DragResizePanel } from "./helpers";
-import { AnimatedInspector } from "./styled";
+import { AnimatedInspector, ResizePanel } from "./styled";
 import { InspectorHeader } from ".";
 import { GetSelectedNode, IsExplorer, IsLibrary } from "../../components/flow/helpers";
 
@@ -19,14 +19,12 @@ const InspectorModule = () => {
   const type = MODULE_TYPE.INSPECTOR;
   const project = useSelector<RootState>((s) => s.projectState.project) as Project;
   const animate = useSelector<RootState>((s) => s.modules.types.find((x) => x.type === type).animate) as boolean;
-  const isInspectorOpen = useSelector<RootState>((s) => s.modules.types.find((x) => x.type === type).visible) as boolean;
-  const isLibraryOpen = useSelector<RootState>((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible) as boolean;
-  const isExplorerOpen = useSelector<RootState>(
-    (s) => s.modules.types.find((x) => IsExplorer(x.type)).visible
-  ) as boolean;
+  const inspectorOpen = useSelector<RootState>((s) => s.modules.types.find((x) => x.type === type).visible) as boolean;
+  const libOpen = useSelector<RootState>((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible) as boolean;
+  const explorerOpen = useSelector<RootState>((s) => s.modules.types.find((x) => IsExplorer(x.type)).visible) as boolean;
 
-  const stop = isInspectorOpen ? Size.ModuleOpen : Size.ModuleClosed;
-  const start = isInspectorOpen ? Size.ModuleClosed : Size.ModuleOpen;
+  const stop = inspectorOpen ? Size.ModuleOpen : Size.ModuleClosed;
+  const start = inspectorOpen ? Size.ModuleClosed : Size.ModuleOpen;
 
   const nodes = project?.nodes ?? [];
   const edges = project?.edges ?? [];
@@ -41,21 +39,15 @@ const InspectorModule = () => {
     <AnimatedInspector
       id="InspectorModule"
       type={type}
-      isLibraryOpen={isLibraryOpen}
-      isExplorerOpen={isExplorerOpen}
-      isInspectorOpen={isInspectorOpen}
+      isLibraryOpen={libOpen}
+      isExplorerOpen={explorerOpen}
+      isInspectorOpen={inspectorOpen}
       start={start}
       stop={stop}
       run={animate}
     >
-      <InspectorHeader
-        project={project}
-        node={node}
-        edge={edge}
-        dispatch={dispatch}
-        open={isInspectorOpen}
-        type={type}
-      />
+      <ResizePanel id="ResizePanel" />
+      <InspectorHeader project={project} node={node} edge={edge} dispatch={dispatch} open={inspectorOpen} type={type} />
     </AnimatedInspector>
   );
 };
