@@ -9,6 +9,7 @@ import { DragResizePanel } from "./helpers";
 import { AnimatedInspector, ResizePanel } from "./styled";
 import { InspectorHeader } from ".";
 import { GetSelectedNode, IsExplorer, IsLibrary } from "../../components/flow/helpers";
+import { InspectorElement } from "./types";
 
 /**
  * Component for the Inspector Module that shows the data for each object in Flow.
@@ -31,6 +32,8 @@ const InspectorModule = () => {
   const edge = edges.find((x) => x.isSelected);
   const node = IsBlockView() ? nodes?.find((x) => x.isBlockSelected) : GetSelectedNode();
 
+  const element: InspectorElement = node || edge;
+
   useEffect(() => {
     DragResizePanel(dispatch);
   }, [dispatch]);
@@ -47,7 +50,7 @@ const InspectorModule = () => {
       run={animate}
     >
       <ResizePanel id="ResizePanel" />
-      <InspectorHeader project={project} node={node} edge={edge} dispatch={dispatch} open={inspectorOpen} type={type} />
+      <InspectorHeader project={project} element={element} dispatch={dispatch} open={inspectorOpen} type={type} />
     </AnimatedInspector>
   );
 };

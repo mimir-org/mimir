@@ -1,8 +1,8 @@
-import { TabColumn } from "../styled";
-import { Input } from "../../../compLibrary";
-import { Edge } from "../../../models";
-import { GetRelationName } from "./../helpers";
-import { TextResources } from "../../../assets/text";
+import { TabColumn } from "../../styled";
+import { Input } from "../../../../compLibrary";
+import { Edge } from "../../../../models";
+import { GetRelationName } from "../../helpers";
+import { TextResources } from "../../../../assets/text";
 
 interface Props {
   edge: Edge;

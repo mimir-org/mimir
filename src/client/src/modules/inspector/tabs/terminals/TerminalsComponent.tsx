@@ -1,5 +1,4 @@
-import { Connector, Node, TerminalType } from "../../../../models";
-import { IsTransportTerminal } from "../../../../components/flow/helpers";
+import { Connector, TerminalType } from "../../../../models";
 import { TerminalsSelector } from "./";
 import { useState } from "react";
 import { ParametersContent } from "../parameters";
@@ -8,15 +7,17 @@ import { TerminalsParametersWrapper } from "./styled/TerminalsParametersWrapper"
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import { GetFilteredTerminalsList } from "../../../../typeEditor/helpers";
+import { InspectorElement } from "../../types";
+import { GetTerminalParentElement, GetTerminals } from "./helpers";
 
 interface Props {
-  node: Node;
+  element: InspectorElement;
 }
 
-const TerminalsComponent = ({ node }: Props) => {
+const TerminalsComponent = ({ element }: Props) => {
   const categoryTypes = (useSelector<RootState>((state) => state.typeEditor.terminals) as TerminalType[]) ?? [];
-
-  const terminals = node.connectors.filter((conn) => IsTransportTerminal(conn));
+  const terminals = GetTerminals(element);
+  const terminalParentElement = GetTerminalParentElement(element);
   const terminalCategories = GetFilteredTerminalsList(categoryTypes);
   const [selectedTerminalId, setSelectedTerminalId] = useState<string>(null);
   const onSelectTerminal = (item: Connector) => setSelectedTerminalId(item.id);
@@ -32,7 +33,12 @@ const TerminalsComponent = ({ node }: Props) => {
       />
       {selectedTerminal && (
         <TerminalsParametersWrapper>
-          <ParametersContent element={selectedTerminal} elementIsLocked={node.isLocked} />
+          <ParametersContent
+            parametersElement={selectedTerminal}
+            inspectorParentElement={element}
+            terminalParentElement={terminalParentElement}
+            elementIsLocked={element.isLocked}
+          />
         </TerminalsParametersWrapper>
       )}
     </TerminalsWrapper>

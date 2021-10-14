@@ -17,7 +17,7 @@ const ConvertToEdge = (
   projectId: string,
   library: LibraryState
 ) => {
-  return {
+  return new Edge({
     id: id,
     fromConnectorId: sourceConn.id,
     fromConnector: sourceConn,
@@ -31,7 +31,7 @@ const ConvertToEdge = (
     masterProjectId: projectId,
     transport: ConvertToTransport(sourceConn, library),
     interface: ConvertToInterface(sourceConn, library),
-  } as Edge;
+  } as Edge);
 };
 
 export default ConvertToEdge;

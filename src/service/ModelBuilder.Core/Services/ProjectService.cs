@@ -10,6 +10,7 @@ using Mb.Core.Extensions;
 using Mb.Core.Repositories.Contracts;
 using Mb.Core.Services.Contracts;
 using Mb.Models.Application;
+using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
@@ -17,6 +18,7 @@ using Mb.Models.Exceptions;
 using Mb.Models.Modules;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Attribute = Mb.Models.Data.Attribute;
 
@@ -33,11 +35,12 @@ namespace Mb.Core.Services
         private readonly IConnectorRepository _connectorRepository;
         private readonly IModuleService _moduleService;
         private readonly IAttributeRepository _attributeRepository;
+        private readonly ModelBuilderConfiguration _modelBuilderConfiguration;
 
         public ProjectService(IProjectRepository projectRepository, IMapper mapper,
             IHttpContextAccessor contextAccessor, INodeRepository nodeRepository, IEdgeRepository edgeRepository,
             ICommonRepository commonRepository, IConnectorRepository connectorRepository, IModuleService moduleService,
-            IAttributeRepository attributeRepository)
+            IAttributeRepository attributeRepository, IOptions<ModelBuilderConfiguration> modelBuilderConfiguration)
         {
             _projectRepository = projectRepository;
             _mapper = mapper;
@@ -48,6 +51,7 @@ namespace Mb.Core.Services
             _connectorRepository = connectorRepository;
             _moduleService = moduleService;
             _attributeRepository = attributeRepository;
+            _modelBuilderConfiguration = modelBuilderConfiguration?.Value;
         }
 
         /// <summary>
@@ -559,10 +563,13 @@ namespace Mb.Core.Services
 
             var export = new ImfData
             {
-                Id = project.Id,
+                ProjectId = project.Id,
                 Version = project.Version,
                 Environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"),
                 Parser = package.Parser,
+                CommitStatus = package.CommitStatus,
+                SenderDomain = _modelBuilderConfiguration.Domain,
+                ReceivingDomain = package.ReceivingDomain,
                 Document = projectString
             };
 

@@ -11,7 +11,7 @@ import { Size } from "../../../compLibrary";
  * @returns a Node.
  */
 const ConvertToNode = (data: LibItem, position, projectId: string, icons: BlobData[]) => {
-  return {
+  return new Node({
     id: CreateId(),
     rds: data.rds,
     semanticReference: data.semanticReference,
@@ -35,7 +35,7 @@ const ConvertToNode = (data: LibItem, position, projectId: string, icons: BlobDa
     length: IsLocation(data) ? Size.Node_Length : null,
     width: IsLocation(data) ? Size.Node_Width : null,
     purpose: data.purpose,
-  } as Node;
+  } as Node);
 };
 
 export default ConvertToNode;
