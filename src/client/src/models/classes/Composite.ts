@@ -11,8 +11,9 @@ class Composite {
 
   kind: string = COMPOSITE_KIND;
 
-  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
-  constructor() {}
+  constructor(composite: Composite) {
+    Object.assign(this, composite);
+  }
 }
 
 export default Composite;

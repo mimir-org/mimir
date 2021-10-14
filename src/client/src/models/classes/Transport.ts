@@ -14,8 +14,9 @@ class Transport {
 
   kind: string = TRANSPORT_KIND;
 
-  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
-  constructor() {}
+  constructor(transport: Transport) {
+    Object.assign(this, transport);
+  }
 }
 
 export default Transport;

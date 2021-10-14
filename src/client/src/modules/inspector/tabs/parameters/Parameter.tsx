@@ -4,7 +4,7 @@ import { Entity } from "./styled";
 import { Color, FontSize } from "../../../../compLibrary";
 import { ParameterBox, ParameterHeader } from "./styled/parameter";
 import { Dropdown as CompDropdown } from "../../../../compLibrary/dropdown/mimir";
-import { Attribute, CombinedAttribute } from "../../../../models";
+import { Attribute, CombinedAttribute, EnumBase } from "../../../../models";
 import { WarningIcon, HelpIcon } from "../../../../assets/icons/common";
 import { LockClosedParameterComponent, LockOpenComponent } from "../../../../assets/icons/lock";
 import { CloseIcon } from "../../../../assets/icons/close";
@@ -24,7 +24,7 @@ interface Props {
 
 function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColor, onLock, onClose, onChange }: Props) {
   const [value, setValue] = useState(attribute.value ?? "");
-  const [unit, setUnit] = useState(attribute.unit ?? attribute.units[0]);
+  const [unit, setUnit] = useState<EnumBase>(attribute.unit || attribute.units?.[0]);
 
   const isDisabled = () => isNodeLocked || attribute.isLocked;
 

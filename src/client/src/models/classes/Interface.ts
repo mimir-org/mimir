@@ -14,8 +14,9 @@ class Interface {
 
   kind: string = INTERFACE_KIND;
 
-  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
-  constructor() {}
+  constructor(otherInterface: Interface) {
+    Object.assign(this, otherInterface);
+  }
 }
 
 export default Interface;

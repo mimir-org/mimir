@@ -1,6 +1,12 @@
 import * as Types from "./types";
 import { Edge, Node, ProjectSimple } from "../../../models";
-import { FindTerminalAndNode, TraverseTree } from "./helpers/";
+import {
+  FindEdgeForInterface,
+  FindEdgeForTransport,
+  FindNodeForComposite,
+  FindNodeForTerminal,
+  TraverseTree,
+} from "./helpers/";
 import { IsAspectNode } from "../../../components/flow/helpers";
 
 const initialState: Types.ProjectState = {
@@ -468,8 +474,8 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
 
     case Types.LOCK_UNLOCK_TERMINAL_ATTRIBUTE: {
       const { id, isLocked, terminalId } = action.payload;
-      let [node, terminal] = FindTerminalAndNode(state.project.nodes, terminalId);
-      if (!node || !terminal) return { ...state };
+      let node = FindNodeForTerminal(state.project.nodes, terminalId);
+      if (!node) return state;
 
       return {
         ...state,
@@ -503,15 +509,99 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
 
     case Types.LOCK_UNLOCK_TRANSPORT_ATTRIBUTE: {
       const { id, isLocked, transportId } = action.payload;
-      return state;
+      const edge = FindEdgeForTransport(state.project.edges, transportId);
+      if (!edge) return state;
+
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          edges: state.project.edges.map((e) =>
+            e.id === edge.id
+              ? {
+                  ...e,
+                  transport: {
+                    ...e.transport,
+                    attributes: e.transport.attributes.map((attribute) =>
+                      attribute.id === id
+                        ? {
+                            ...attribute,
+                            isLocked,
+                          }
+                        : attribute
+                    ),
+                  },
+                }
+              : e
+          ),
+        },
+      };
     }
 
     case Types.LOCK_UNLOCK_INTERFACE_ATTRIBUTE: {
-      return state;
+      const { id, isLocked, interfaceId } = action.payload;
+      const edge = FindEdgeForInterface(state.project.edges, interfaceId);
+      if (!edge) return state;
+
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          edges: state.project.edges.map((e) =>
+            e.id === edge.id
+              ? {
+                  ...e,
+                  interface: {
+                    ...e.transport,
+                    attributes: e.transport.attributes.map((attribute) =>
+                      attribute.id === id
+                        ? {
+                            ...attribute,
+                            isLocked,
+                          }
+                        : attribute
+                    ),
+                  },
+                }
+              : e
+          ),
+        },
+      };
     }
 
     case Types.LOCK_UNLOCK_COMPOSITE_ATTRIBUTE: {
-      return state;
+      const { id, isLocked, compositeId } = action.payload;
+      let node = FindNodeForComposite(state.project.nodes, compositeId);
+      if (!node) return state;
+
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          nodes: state.project.nodes.map((n) =>
+            n.id === node.id
+              ? {
+                  ...n,
+                  composites: n.composites.map((comp) =>
+                    comp.id === compositeId
+                      ? {
+                          ...comp,
+                          attributes: comp.attributes.map((attribute) =>
+                            attribute.id === id
+                              ? {
+                                  ...attribute,
+                                  isLocked,
+                                }
+                              : attribute
+                          ),
+                        }
+                      : comp
+                  ),
+                }
+              : n
+          ),
+        },
+      };
     }
 
     default:
