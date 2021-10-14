@@ -1,11 +1,7 @@
 import styled from "styled-components";
 import { FontSize } from "../../../compLibrary";
 
-interface Props {
-  namepadding?: boolean;
-}
-
-const InfoWrapper = styled.div<Props>`
+const InfoWrapper = styled.div`
   display: inline-flex;
   flex-direction: column;
 
@@ -13,10 +9,6 @@ const InfoWrapper = styled.div<Props>`
     text-align: center;
     margin: 10px;
     font-size: ${FontSize.Medium};
-  }
-
-  .typeName {
-    padding-bottom: ${(props) => props.namepadding && `15px`};
   }
 
   img {

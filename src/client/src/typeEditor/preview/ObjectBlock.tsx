@@ -1,5 +1,5 @@
 import { BlobData, CreateLibraryType, TerminalType } from "../../models";
-import { GetBlockColor, GetBlockPaddingTop } from "./helpers";
+import { GetBlockColor } from "./helpers";
 import { PreviewObjectBlock, InfoWrapper, InputOutputTerminals, Terminals } from "../styled";
 import { ConnectorIcon } from "../../assets/icons/connectors";
 import { Symbol } from "../../compLibrary/symbol";
@@ -46,7 +46,7 @@ export const ObjectBlock = ({ createLibraryType, rdsLabel, inputTerminals, outpu
         {inputTerminals && <Terminals input={true}>{showTerminals(true)}</Terminals>}
         {outputTerminals && <Terminals input={false}>{showTerminals(false)}</Terminals>}
       </InputOutputTerminals>
-      <InfoWrapper blockPaddingTop={GetBlockPaddingTop(aspect)}>
+      <InfoWrapper>
         <p>{rdsLabel}</p>
         <p>{createLibraryType.name}</p>
         {symbol && <Symbol base64={symbol.data} text={symbol.name} />}
