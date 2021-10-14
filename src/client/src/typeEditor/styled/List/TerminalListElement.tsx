@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color, FontSize, FontType } from "../../compLibrary";
+import { Color, FontSize, FontType } from "../../../compLibrary";
 
 const TerminalListElement = styled.div`
   display: flex;

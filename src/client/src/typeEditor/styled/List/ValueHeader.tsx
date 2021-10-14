@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FontSize, Color } from "../../compLibrary";
+import { FontSize, Color } from "../../../compLibrary";
 
 const ValueHeader = styled.div`
   display: flex;
@@ -19,6 +19,7 @@ const ValueHeader = styled.div`
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    text-transform: capitalize;
     margin: 2px 13px 2px 13px;
     font-size: ${FontSize.Medium};
     color: ${Color.Black};

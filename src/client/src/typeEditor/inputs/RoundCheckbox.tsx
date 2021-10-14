@@ -1,5 +1,3 @@
-import "./roundcheckbox.scss";
-
 export enum ListType {
   Rds = 0,
   Terminals = 1,
@@ -25,7 +23,7 @@ export const RoundCheckbox = ({ id, label, listType, defaultValue, checked, onCh
   };
 
   return (
-    <label className={"roundcheckbox"}>
+    <label className="roundcheckbox">
       <input
         type="checkbox"
         checked={listType === ListType.Rds ? rdsIsSelected : terminalIsSelected}

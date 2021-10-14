@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { FontSize } from "../../compLibrary";
+import { FontSize } from "../../../compLibrary";
 
 interface Props {
-  blockPaddingTop?: number;
+  namepadding?: boolean;
 }
 
 const InfoWrapper = styled.div<Props>`
@@ -11,18 +11,19 @@ const InfoWrapper = styled.div<Props>`
 
   p {
     text-align: center;
-    margin: 10px 0px;
+    margin: 10px;
     font-size: ${FontSize.Medium};
-    font-weight: bold;
+  }
+
+  .typeName {
+    padding-bottom: ${(props) => props.namepadding && `15px`};
   }
 
   img {
     margin: auto;
-    padding: 3px 0px;
-    min-width: 12px;
-    min-height: 12px;
-    max-width: 20px;
-    max-height: 20px;
+    padding: 2px 0px;
+    min-width: 13px;
+    min-height: 13px;
   }
 `;
 

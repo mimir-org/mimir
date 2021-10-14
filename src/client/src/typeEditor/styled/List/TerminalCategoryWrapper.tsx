@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color, FontSize, FontType, FontWeight } from "../../compLibrary";
+import { Color, FontSize, FontType, FontWeight } from "../../../compLibrary";
 
 interface Props {
   expanded?: boolean;
@@ -68,7 +68,6 @@ const TerminalCategoryWrapper = styled.div<Props>`
   label {
     text-decoration: ${(props) => props.isSelected && "underline"};
     font-weight: ${(props) => props.isSelected && FontWeight.Bold};
-    /* padding-right: 10px; */
   }
 `;
 

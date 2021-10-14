@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { TerminalType } from "../../../models";
 import { ListType, RoundCheckbox } from "../../inputs/RoundCheckbox";
-import { TerminalListElement, TerminalCategoryWrapper } from "../../styled";
+import { TerminalListElement, TerminalCategoryWrapper, RoundBox } from "../../styled";
 import { ExpandIcon, CollapseIcon } from "../../../assets/icons/chevron";
 import { TextResources } from "../../../assets/text";
 import {
@@ -22,6 +22,7 @@ interface Props {
 export const TransportInterfaceElement = ({ categoryName, terminalTypes, onChange, defaultTerminal }: Props) => {
   const [searchbarInput, setSearchbarInput] = useState(defaultTerminal ? defaultTerminal.name : "");
   const [expandList, setExpandList] = useState(false);
+  const filter = terminalTypes?.filter((t) => t.name.match(new RegExp(searchbarInput, "i")));
 
   const handleTerminalClick = (terminal) => {
     setSearchbarInput(terminal.name);
@@ -43,17 +44,36 @@ export const TransportInterfaceElement = ({ categoryName, terminalTypes, onChang
     return selected;
   };
 
+  const showListItems = () => {
+    const isInArray = terminalTypes.find((t) => t.name === searchbarInput);
+    const filteredList = isInArray ? terminalTypes : filter;
+    return filteredList.map((t) => {
+      return (
+        <SearchBarListItem
+          key={t.id}
+          onClick={() => {
+            handleTerminalClick(t);
+          }}
+        >
+          <p>{t.name}</p>
+        </SearchBarListItem>
+      );
+    });
+  };
+
   return (
     <TerminalListElement>
       <TerminalCategoryWrapper isSelected={isSelected()}>
-        <RoundCheckbox
-          id={categoryName}
-          label={categoryName}
-          listType={ListType.Terminals}
-          checked={isSelected()}
-          defaultValue={terminalTypes[0].id}
-          onChange={onChange}
-        />
+        <RoundBox>
+          <RoundCheckbox
+            id={categoryName}
+            label={categoryName}
+            listType={ListType.Terminals}
+            checked={isSelected()}
+            defaultValue={terminalTypes[0].id}
+            onChange={onChange}
+          />
+        </RoundBox>
         {isSelected() && (
           <SearchBarWrapper>
             <SearchBarContainer>
@@ -74,24 +94,7 @@ export const TransportInterfaceElement = ({ categoryName, terminalTypes, onChang
                   className="icon"
                 />
               </SearchBar>
-              {expandList && (
-                <SearchBarList>
-                  {terminalTypes
-                    .filter((t) => t.name.match(new RegExp(searchbarInput, "i")))
-                    .map((t) => {
-                      return (
-                        <SearchBarListItem
-                          key={t.id}
-                          onClick={() => {
-                            handleTerminalClick(t);
-                          }}
-                        >
-                          <p>{t.name}</p>
-                        </SearchBarListItem>
-                      );
-                    })}
-                </SearchBarList>
-              )}
+              {expandList && <SearchBarList>{showListItems()}</SearchBarList>}
             </SearchBarContainer>
           </SearchBarWrapper>
         )}
