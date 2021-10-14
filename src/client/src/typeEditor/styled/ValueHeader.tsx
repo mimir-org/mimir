@@ -19,6 +19,7 @@ const ValueHeader = styled.div`
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    text-transform: capitalize;
     margin: 2px 13px 2px 13px;
     font-size: ${FontSize.Medium};
     color: ${Color.Black};

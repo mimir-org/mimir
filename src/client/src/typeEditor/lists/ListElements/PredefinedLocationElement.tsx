@@ -122,7 +122,6 @@ export const PredefinedLocationElement = ({ attributeName, values, isMultiSelect
                         {key}
                       </label>
                     </label>
-                    {/* <p>{key}</p> */}
                   </ValuesListItem>
                 );
               })}

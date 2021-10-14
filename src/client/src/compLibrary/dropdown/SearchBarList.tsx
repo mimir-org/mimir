@@ -5,7 +5,7 @@ const SearchBarList = styled.div`
   display: flex;
   flex-direction: column;
   background-color: ${Color.White};
-  border: 1px solid #272738; //{Color.BlueMagenta};
+  border: 1px solid ${Color.BlueMagenta};
   border-radius: 5px;
   padding: 1px;
   font-size: 11px;

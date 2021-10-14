@@ -11,9 +11,8 @@ const InfoWrapper = styled.div<Props>`
 
   p {
     text-align: center;
-    margin: 10px 0px;
+    margin: 10px;
     font-size: ${FontSize.Medium};
-    font-weight: bold;
   }
 
   img {

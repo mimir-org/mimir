@@ -15,6 +15,10 @@ const ValuesListItem = styled.div`
   label::first-letter {
     text-transform: uppercase;
   }
+
+  :hover {
+    background-color: ${Color.LightBlue};
+  }
 `;
 
 export default ValuesListItem;
