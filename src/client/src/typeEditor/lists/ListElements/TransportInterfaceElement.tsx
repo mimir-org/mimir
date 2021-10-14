@@ -22,6 +22,7 @@ interface Props {
 export const TransportInterfaceElement = ({ categoryName, terminalTypes, onChange, defaultTerminal }: Props) => {
   const [searchbarInput, setSearchbarInput] = useState(defaultTerminal ? defaultTerminal.name : "");
   const [expandList, setExpandList] = useState(false);
+  const filter = terminalTypes?.filter((t) => t.name.match(new RegExp(searchbarInput, "i")));
 
   const handleTerminalClick = (terminal) => {
     setSearchbarInput(terminal.name);
@@ -41,6 +42,23 @@ export const TransportInterfaceElement = ({ categoryName, terminalTypes, onChang
       }
     });
     return selected;
+  };
+
+  const showListItems = () => {
+    const isInArray = terminalTypes.find((t) => t.name === searchbarInput);
+    const filteredList = isInArray ? terminalTypes : filter;
+    return filteredList.map((t) => {
+      return (
+        <SearchBarListItem
+          key={t.id}
+          onClick={() => {
+            handleTerminalClick(t);
+          }}
+        >
+          <p>{t.name}</p>
+        </SearchBarListItem>
+      );
+    });
   };
 
   return (
@@ -74,24 +92,7 @@ export const TransportInterfaceElement = ({ categoryName, terminalTypes, onChang
                   className="icon"
                 />
               </SearchBar>
-              {expandList && (
-                <SearchBarList>
-                  {terminalTypes
-                    .filter((t) => t.name.match(new RegExp(searchbarInput, "i")))
-                    .map((t) => {
-                      return (
-                        <SearchBarListItem
-                          key={t.id}
-                          onClick={() => {
-                            handleTerminalClick(t);
-                          }}
-                        >
-                          <p>{t.name}</p>
-                        </SearchBarListItem>
-                      );
-                    })}
-                </SearchBarList>
-              )}
+              {expandList && <SearchBarList>{showListItems()}</SearchBarList>}
             </SearchBarContainer>
           </SearchBarWrapper>
         )}
