@@ -21,10 +21,16 @@ namespace Mb.TypeEditor.Core.Extensions
             services.AddScoped<ITerminalTypeRepository, TerminalTypeRepository>();
             services.AddScoped<ITransportTypeRepository, TransportTypeRepository>();
             services.AddScoped<ILibraryRepository, LibraryRepository>();
+            services.AddScoped<IPredefinedAttributeRepository, PredefinedAttributeRepository>();
+            services.AddScoped<IEnumBaseRepository, EnumBaseRepository>();
+            services.AddScoped<IRdsRepository, RdsRepository>();
 
             services.AddScoped<ITerminalTypeService, TerminalTypeService>();
             services.AddScoped<ILibraryTypeService, LibraryTypeService>();
             services.AddScoped<ILibraryTypeFileService, LibraryTypeFileService>();
+            services.AddScoped<IAttributeTypeService, AttributeTypeService>();
+            services.AddScoped<IEnumService, EnumService>();
+            services.AddScoped<IRdsService, RdsService>();
 
 
             return services;

@@ -59,13 +59,13 @@ namespace EventHubModule
             if (consumer != null)
             {
                 consumer.DataReceived += ProcessData;
-                //await consumer.RunAsync();
+                await consumer.RunAsync();
             }
         }
 
         private void ProcessData(object? sender, ImfData e)
         {
-            throw new NotImplementedException();
+            var data = string.Empty;
         }
     }
 }

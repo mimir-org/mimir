@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Mb.Core.Repositories.Contracts;
 using Mb.Core.Services.Contracts;
-using Mb.Models.Application;
 using Mb.Models.Application.Mimir;
 using Mb.Models.Application.TypeEditor;
 using Mb.Models.Data;
 using Mb.Models.Data.Enums;
 using Mb.Models.Extensions;
 using Mb.TypeEditor.Core.Contracts;
+using Mb.TypeEditor.Data.Contracts;
 using Microsoft.Extensions.Logging;
 
 namespace Mb.Core.Services
@@ -39,20 +39,21 @@ namespace Mb.Core.Services
 
         private readonly IFileRepository _fileRepository;
         private readonly IEnumBaseRepository _enumBaseRepository;
-        private readonly ILogger<TypeEditorService> _logger;
-
-        private readonly ITypeEditorService _typeEditorService;
+        private readonly ILogger<SeedingService> _logger;
         private readonly ICommonService _commonService;
         private readonly ITerminalTypeService _terminalTypeService;
+        private readonly IAttributeTypeService _attributeTypeService;
+        private readonly IRdsService _rdsService;
 
-        public SeedingService(IFileRepository fileRepository, IEnumBaseRepository enumBaseRepository, IMapper mapper, ILogger<TypeEditorService> logger, ITypeEditorService typeEditorService, ICommonService commonService, ITerminalTypeService terminalTypeService)
+        public SeedingService(IFileRepository fileRepository, IEnumBaseRepository enumBaseRepository, IMapper mapper, ILogger<SeedingService> logger, ICommonService commonService, ITerminalTypeService terminalTypeService, IAttributeTypeService attributeTypeService, IRdsService rdsService)
         {
             _fileRepository = fileRepository;
             _enumBaseRepository = enumBaseRepository;
             _logger = logger;
-            _typeEditorService = typeEditorService;
             _commonService = commonService;
             _terminalTypeService = terminalTypeService;
+            _attributeTypeService = attributeTypeService;
+            _rdsService = rdsService;
         }
 
         /// <summary>
@@ -126,11 +127,11 @@ namespace Mb.Core.Services
                 await CreateEnumBase<PredefinedAttributeCategory>(predefinedCategories);
                 await CreateEnumBase<Purpose>(purposes);
 
-                await _typeEditorService.CreateContractorsAsync(contractors);
-                await _typeEditorService.CreateAttributeTypes(attributes);
+                await _commonService.CreateContractorsAsync(contractors);
+                await _attributeTypeService.CreateAttributeTypes(attributes);
                 await _terminalTypeService.CreateTerminalTypes(terminals);
-                await _typeEditorService.CreateRdsAsync(rds);
-                await _typeEditorService.CreatePredefinedAttributes(predefinedAttributes);
+                await _rdsService.CreateRdsAsync(rds);
+                await _attributeTypeService.CreatePredefinedAttributes(predefinedAttributes);
                 await _commonService.CreateBlobData(symbols);
 
             }

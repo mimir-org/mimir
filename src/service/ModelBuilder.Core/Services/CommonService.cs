@@ -154,5 +154,25 @@ namespace Mb.Core.Services
                 };
             }
         }
+
+        /// <summary>
+        /// Create contractors
+        /// </summary>
+        /// <param name="contractors"></param>
+        /// <returns></returns>
+        public async Task CreateContractorsAsync(IEnumerable<Contractor> contractors)
+        {
+            var existingTypes = _contractorRepository.GetAll().ToList();
+            var notExistingTypes = contractors.Where(x => existingTypes.All(y => y.Id != x.Id)).ToList();
+            if (!notExistingTypes.Any())
+                return;
+
+            foreach (var item in notExistingTypes)
+            {
+                await _contractorRepository.CreateAsync(item);
+            }
+
+            await _contractorRepository.SaveAsync();
+        }
     }
 }

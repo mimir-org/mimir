@@ -1,12 +1,11 @@
-﻿using System.Threading.Tasks;
-using Mb.Models.Abstract;
+﻿using Mb.Models.Abstract;
 using Mb.Models.Configurations;
 using Mb.Models.Data.Enums;
 
-namespace Mb.Core.Repositories.Contracts
+namespace Mb.TypeEditor.Data.Contracts
 {
     public interface IEnumBaseRepository : IGenericRepository<ModelBuilderDbContext, EnumBase>
     {
-        Task InitData();
+        
     }
 }

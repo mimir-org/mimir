@@ -321,6 +321,38 @@ namespace Mb.TypeEditor.Core.Services
         }
 
         /// <summary>
+        /// Create a simple type
+        /// </summary>
+        /// <param name="compositeType"></param>
+        /// <returns></returns>
+        public async Task<CompositeType> CreateCompositeType(CompositeTypeAm compositeType)
+        {
+            var newType = _mapper.Map<CompositeType>(compositeType);
+            var existingType = await _compositeTypeRepository.GetAsync(newType.Id);
+            if (existingType != null)
+                throw new ModelBuilderDuplicateException($"Type with name {compositeType.Name} already exist.");
+
+            foreach (var attribute in newType.AttributeTypes)
+            {
+                _attributeTypeRepository.Attach(attribute, EntityState.Unchanged);
+            }
+
+            await _compositeTypeRepository.CreateAsync(newType);
+            await _compositeTypeRepository.SaveAsync();
+            return newType;
+        }
+
+        /// <summary>
+        /// Get all simple types
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<CompositeType> GetCompositeTypes()
+        {
+            var types = _compositeTypeRepository.GetAll().Include(x => x.AttributeTypes).ToList();
+            return types;
+        }
+
+        /// <summary>
         /// Delete a type
         /// </summary>
         /// <param name="id"></param>
@@ -345,5 +377,7 @@ namespace Mb.TypeEditor.Core.Services
             await _libraryTypeComponentRepository.Delete(existingType.Id);
             await _libraryTypeComponentRepository.SaveAsync();
         }
+
+        
     }
 }

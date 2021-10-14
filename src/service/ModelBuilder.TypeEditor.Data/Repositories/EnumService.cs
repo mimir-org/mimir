@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Mb.Core.Repositories.Contracts;
-using Mb.Core.Services.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Application.TypeEditor;
 using Mb.Models.Data.Enums;
 using Mb.Models.Data.Enums.Mapping;
 using Mb.Models.Extensions;
+using Mb.TypeEditor.Data.Contracts;
 
-namespace Mb.Core.Services
+namespace Mb.TypeEditor.Data.Repositories
 {
     public class EnumService : IEnumService
     {
@@ -21,6 +20,11 @@ namespace Mb.Core.Services
             _enumBaseRepository = enumBaseRepository;
         }
 
+        /// <summary>
+        /// Create an enum
+        /// </summary>
+        /// <param name="createEnum"></param>
+        /// <returns></returns>
         public async Task<EnumBase> CreateEnum(CreateEnum createEnum)
         {
             var enumToDb = createEnum.CreateEnum();
@@ -30,6 +34,11 @@ namespace Mb.Core.Services
             return enumToDb;
         }
 
+        /// <summary>
+        /// Get all enums of given type
+        /// </summary>
+        /// <param name="enumType"></param>
+        /// <returns></returns>
         public IEnumerable<EnumBase> GetAllOfType(EnumType enumType)
         {
             var enumT = enumType.GetEnumTypeFromEnum();
@@ -39,6 +48,10 @@ namespace Mb.Core.Services
             return result?.ToList();
         }
 
+        /// <summary>
+        /// Get all location predefined types
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<LocationTypeAm> GetAllLocationTypes()
         {
             var locationTypes = GetAllOfType(EnumType.PredefinedAttributeCategory).OfType<PredefinedAttributeCategory>().OrderBy(x => x.Name).ToList();

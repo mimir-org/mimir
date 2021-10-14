@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.Configuration;
 using Mb.Core.Profiles;
@@ -11,8 +10,6 @@ using Mb.Core.Repositories;
 using Mb.Core.Repositories.Contracts;
 using Mb.Core.Services;
 using Mb.Core.Services.Contracts;
-using Mb.Models.Application;
-using Mb.Models.Attributes;
 using Mb.Models.Configurations;
 using Mb.Modules;
 using Mb.TypeEditor.Data.Contracts;
@@ -61,17 +58,14 @@ namespace Mb.Core.Extensions
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<INodeRepository, NodeRepository>();
             services.AddScoped<IEdgeRepository, EdgeRepository>();
-            services.AddScoped<ILibraryRepository, LibraryRepository>();
-            services.AddScoped<IRdsRepository, RdsRepository>();
+            
             
             
             services.AddScoped<IConnectorRepository, ConnectorRepository>();
             services.AddScoped<IAttributeRepository, AttributeRepository>();
             services.AddScoped<IContractorRepository, ContractorRepository>();
-            services.AddScoped<ITerminalTypeRepository, TerminalTypeRepository>();
-            services.AddScoped<IEnumBaseRepository, EnumBaseRepository>();
             
-            services.AddScoped<IPredefinedAttributeRepository, PredefinedAttributeRepository>();
+            
             services.AddScoped<IBlobDataRepository, BlobDataRepository>();
             
             
@@ -81,12 +75,10 @@ namespace Mb.Core.Extensions
             
             services.AddScoped<ICompositeRepository, CompositeRepository>();
 
-            services.AddScoped<ITypeEditorService, TypeEditorService>();
             services.AddScoped<ISeedingService, SeedingService>();
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<ILibraryService, LibraryService>();
             services.AddScoped<ICommonService, CommonService>();
-            services.AddScoped<IEnumService, EnumService>();
             services.AddScoped<INodeService, NodeService>();
 
             services.AddHttpContextAccessor();
@@ -135,7 +127,8 @@ namespace Mb.Core.Extensions
             var context = serviceScope.ServiceProvider.GetRequiredService<ModelBuilderDbContext>();
             var seedingService = serviceScope.ServiceProvider.GetRequiredService<ISeedingService>();
             var moduleService = serviceScope.ServiceProvider.GetRequiredService<IModuleService>();
-            var logger = serviceScope.ServiceProvider.GetRequiredService<ILogger<TypeEditorService>>();
+            var seedingServiceLogger = serviceScope.ServiceProvider.GetRequiredService<ILogger<ISeedingService>>();
+            var moduleServiceLogger = serviceScope.ServiceProvider.GetRequiredService<ILogger<IModuleService>>();
 
             context.Database.Migrate();
 
@@ -143,7 +136,7 @@ namespace Mb.Core.Extensions
             var awaiter = seedingService.LoadDataFromFiles().ConfigureAwait(true).GetAwaiter();
             while (!awaiter.IsCompleted)
             {
-                logger.LogInformation("Starting initialize db");
+                seedingServiceLogger.LogInformation("Starting initialize db");
                 Thread.Sleep(2000);
             }
 
@@ -151,7 +144,7 @@ namespace Mb.Core.Extensions
 
             while (!moduleReaderAwaiter.IsCompleted)
             {
-                logger.LogInformation("Reading modules");
+                moduleServiceLogger.LogInformation("Reading modules");
                 Thread.Sleep(2000);
             }
 
