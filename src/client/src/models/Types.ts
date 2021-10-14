@@ -93,7 +93,7 @@ export interface TerminalTypeItem {
 export interface Purpose {
   id: string;
   name: string;
-  disipline: EnumBase;
+  discipline: Discipline;
   description: string;
   semanticReference: string;
 }
@@ -158,6 +158,7 @@ export interface CommitPackage {
   projectId: string;
   commitStatus: CommitStatus;
   parser: string;
+  receivingDomain: string;
 }
 
 export interface CombinedAttribute {

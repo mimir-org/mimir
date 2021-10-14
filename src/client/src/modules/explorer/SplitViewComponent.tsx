@@ -6,12 +6,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { IsBlockView } from "../../components/flow/block/helpers";
 import { OnChange } from "./handlers";
 import { GetSelectedNode, IsLocation } from "../../components/flow/helpers";
+import { Node } from "../../models";
 
 export const SplitViewComponent = () => {
   const dispatch = useDispatch();
-  const splitView = useSelector<RootState>((state) => state.splitView.visible) as boolean;
+  const splitView = useSelector<RootState>((s) => s.splitView.visible) as boolean;
   const [visible, setVisible] = useState(IsBlockView());
   const [active, setActive] = useState(splitView);
+  const splitNode = useSelector<RootState>((s) => s.splitView.node) as Node;
   const selectedNode = GetSelectedNode();
 
   useEffect(() => {
@@ -25,10 +27,16 @@ export const SplitViewComponent = () => {
     <FooterBox visible={visible}>
       <FooterContent active={active}>
         <label className={"checkbox"}>
-          <input type="checkbox" checked={active} onChange={() => OnChange(dispatch, active, setActive, selectedNode)} />
+          <input
+            type="checkbox"
+            checked={active}
+            onChange={() => OnChange(dispatch, active, setActive, selectedNode, splitNode)}
+          />
           <span className="checkmark-footer"></span>
         </label>
-        <div onClick={() => OnChange(dispatch, active, setActive, selectedNode)}>{TextResources.Split_View}</div>
+        <div onClick={() => OnChange(dispatch, active, setActive, selectedNode, splitNode)}>
+          {TextResources.Split_View}
+        </div>
       </FooterContent>
     </FooterBox>
   );
