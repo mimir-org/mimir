@@ -44,6 +44,16 @@ const RoundBox = styled.span`
     border: 1px solid black;
     border-radius: 10px;
   }
+
+  .label {
+    margin-left: 25px;
+    white-space: nowrap;
+  }
+
+  label:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
 `;
 
 export default RoundBox;

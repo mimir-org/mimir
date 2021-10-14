@@ -63,13 +63,15 @@ export const PredefinedLocationElement = ({ attributeName, values, isMultiSelect
   return (
     <TerminalListElement>
       <TerminalCategoryWrapper isSelected={isSelected}>
-        <SquareCheckbox
-          id={attributeName}
-          name={attributeName}
-          label={Label.Terminals}
-          defaultValue={defaultValue}
-          onChange={onCheckboxChange}
-        />
+        <SquareBox>
+          <SquareCheckbox
+            id={attributeName}
+            name={attributeName}
+            label={Label.Terminals}
+            defaultValue={defaultValue}
+            onChange={onCheckboxChange}
+          />
+        </SquareBox>
       </TerminalCategoryWrapper>
       {isSelected && (
         <SelectValue isSelected={isSelected}>
@@ -98,31 +100,31 @@ export const PredefinedLocationElement = ({ attributeName, values, isMultiSelect
               {Object.entries(getValues()).map(([key, value]) => {
                 return (
                   <ValuesListItem key={key}>
-                    <label className={"squarecheckbox"}>
-                      {isMultiSelect ? (
-                        <SquareBox>
+                    <SquareBox>
+                      <label className={"squarecheckbox"}>
+                        {isMultiSelect ? (
                           <input
                             type="checkbox"
                             defaultChecked={value}
                             id={key}
                             onChange={() => onMultipleValuesCheckboxChange([key, value])}
                           />
-                        </SquareBox>
-                      ) : (
-                        <input
-                          type="radio"
-                          defaultChecked={value}
-                          name="attribute"
-                          value={key}
-                          id={key}
-                          onChange={onSingleValueCheckboxChange}
-                        />
-                      )}
-                      <span className="scheckmark"></span>
-                      <label className="label" htmlFor={key}>
-                        {key}
+                        ) : (
+                          <input
+                            type="radio"
+                            defaultChecked={value}
+                            name="attribute"
+                            value={key}
+                            id={key}
+                            onChange={onSingleValueCheckboxChange}
+                          />
+                        )}
+                        <span className="scheckmark"></span>
+                        <label className="label" htmlFor={key}>
+                          {key}
+                        </label>
                       </label>
-                    </label>
+                    </SquareBox>
                   </ValuesListItem>
                 );
               })}

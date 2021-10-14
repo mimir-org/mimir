@@ -1,5 +1,3 @@
-import "./checkbox.scss";
-
 export enum Label {
   attributeTypes = 0,
   Terminals = 1,
