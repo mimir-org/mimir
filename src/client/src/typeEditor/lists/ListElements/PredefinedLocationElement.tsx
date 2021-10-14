@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { PredefinedAttribute } from "../../../models";
-import { Checkbox } from "../../inputs";
+import { SquareCheckbox } from "../../inputs";
 import { ExpandIcon, CollapseIcon } from "../../../assets/icons/chevron";
 import { OnMultipleValuesChange, OnSingleValueChange } from "./helpers";
-import { Label } from "../../inputs/Checkbox";
+import { Label } from "../../inputs/SquareCheckbox";
 import {
   TerminalListElement,
   TerminalCategoryWrapper,
@@ -11,6 +11,7 @@ import {
   ValueHeader,
   ValuesListWrapper,
   ValuesListItem,
+  SquareBox,
 } from "../../styled";
 
 interface Props {
@@ -62,7 +63,7 @@ export const PredefinedLocationElement = ({ attributeName, values, isMultiSelect
   return (
     <TerminalListElement>
       <TerminalCategoryWrapper isSelected={isSelected}>
-        <Checkbox
+        <SquareCheckbox
           id={attributeName}
           name={attributeName}
           label={Label.Terminals}
@@ -99,14 +100,14 @@ export const PredefinedLocationElement = ({ attributeName, values, isMultiSelect
                   <ValuesListItem key={key}>
                     <label className={"squarecheckbox"}>
                       {isMultiSelect ? (
-                        <>
+                        <SquareBox>
                           <input
                             type="checkbox"
                             defaultChecked={value}
                             id={key}
                             onChange={() => onMultipleValuesCheckboxChange([key, value])}
                           />
-                        </>
+                        </SquareBox>
                       ) : (
                         <input
                           type="radio"

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { TerminalType } from "../../../models";
 import { ListType, RoundCheckbox } from "../../inputs/RoundCheckbox";
-import { TerminalListElement, TerminalCategoryWrapper } from "../../styled";
+import { TerminalListElement, TerminalCategoryWrapper, RoundBox } from "../../styled";
 import { ExpandIcon, CollapseIcon } from "../../../assets/icons/chevron";
 import { TextResources } from "../../../assets/text";
 import {
@@ -64,14 +64,16 @@ export const TransportInterfaceElement = ({ categoryName, terminalTypes, onChang
   return (
     <TerminalListElement>
       <TerminalCategoryWrapper isSelected={isSelected()}>
-        <RoundCheckbox
-          id={categoryName}
-          label={categoryName}
-          listType={ListType.Terminals}
-          checked={isSelected()}
-          defaultValue={terminalTypes[0].id}
-          onChange={onChange}
-        />
+        <RoundBox>
+          <RoundCheckbox
+            id={categoryName}
+            label={categoryName}
+            listType={ListType.Terminals}
+            checked={isSelected()}
+            defaultValue={terminalTypes[0].id}
+            onChange={onChange}
+          />
+        </RoundBox>
         {isSelected() && (
           <SearchBarWrapper>
             <SearchBarContainer>

@@ -10,6 +10,7 @@ export { default as TypeNameInput } from "./Inputs/TypeNameInput";
 export { default as LocationTypeCategory } from "./Inputs/LocationTypeCategory";
 export { default as LocationSubType } from "./Inputs/LocationSubType";
 export { default as RoundBox } from "./Inputs/RoundBox";
+export { default as SquareBox } from "./Inputs/SquareBox";
 
 // List
 export { default as ListElementCategoryWrapper } from "./List/ListElementCategoryWrapper";

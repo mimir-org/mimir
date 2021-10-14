@@ -13,7 +13,7 @@ interface Props {
   onChange: Function;
 }
 
-export const Checkbox = ({ id, name, label, defaultValue, onChange }: Props) => {
+export const SquareCheckbox = ({ id, name, label, defaultValue, onChange }: Props) => {
   const isSelected = () => {
     if (label === Label.attributeTypes || label === Label.compositeTypes) {
       return defaultValue?.includes(id);
@@ -47,4 +47,4 @@ export const Checkbox = ({ id, name, label, defaultValue, onChange }: Props) => 
   );
 };
 
-export default Checkbox;
+export default SquareCheckbox;
