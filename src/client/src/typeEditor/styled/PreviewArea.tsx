@@ -16,13 +16,6 @@ const PreviewArea = styled.div`
     font-size: ${FontSize.Medium};
     color: ${Color.Black};
   }
-
-  .object-icon {
-    padding-top: 10px;
-    max-width: 180px;
-    min-height: 50px;
-    max-height: 100px;
-  }
 `;
 
 export default PreviewArea;

@@ -55,13 +55,13 @@ export const TypePreview = ({ createLibraryType, rds, terminal, inputTerminals, 
       <PreviewArea>
         {showObjectBlock()}
         {IsTransportOrInterface(createLibraryType) && (
-          <InfoWrapper>
-            <p>{rds?.name}</p>
-            <p>{createLibraryType?.name}</p>
+          <InfoWrapper namepadding={IsTransport(createLibraryType?.objectType)}>
+            <p className="rdsName">{rds?.name}</p>
+            <p className="typeName">{createLibraryType?.name}</p>
           </InfoWrapper>
         )}
         {IsFunction(createLibraryType?.aspect) && IsTransport(createLibraryType?.objectType) && (
-          <TransportIcon style={{ fill: terminal?.color }}></TransportIcon>
+          <TransportIcon style={{ stroke: terminal?.color, fill: terminal?.color }}></TransportIcon>
         )}
         {IsFunction(createLibraryType?.aspect) && IsInterface(createLibraryType?.objectType) && (
           <InterfaceIcon style={{ stroke: terminal?.color, fill: terminal?.color }}></InterfaceIcon>

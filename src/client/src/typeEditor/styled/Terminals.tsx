@@ -1,13 +1,16 @@
 import styled from "styled-components";
+interface Props {
+  input?: boolean;
+}
 
-const Terminals = styled.div`
+const Terminals = styled.div<Props>`
   max-height: 130px;
   display: flex;
   flex-direction: column;
   position: absolute;
   top: 5px;
-  left: ${(props: { input: boolean }) => (props.input ? `-115px` : null)};
-  right: ${(props: { input: boolean }) => (props.input ? null : `-115px`)};
+  left: ${(props) => props.input && `-115px`};
+  right: ${(props) => !props.input && `-115px`};
   span {
     padding-bottom: 2px;
   }
