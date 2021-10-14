@@ -17,7 +17,7 @@ interface Props {
   isNodeLocked: boolean;
   headerColor: string;
   bodyColor: string;
-  onChange: (id: string, value: string, unit: string, nodeId: string) => void;
+  onChange: (id: string, value: string, unit: EnumBase, nodeId: string) => void;
   onLock: (attribute: Attribute, isLocked: boolean) => void;
   onClose: (id: string) => void;
 }
@@ -69,7 +69,7 @@ function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColo
             value={value}
             type="text"
             onChange={(e) => setValue(e.target.value)}
-            onBlur={() => onChange(attribute.id, value, unit?.id, attribute.nodeId)}
+            onBlur={() => onChange(attribute.id, value, unit, attribute.nodeId)}
           />
           <div className="parameterDropdown">
             <CompDropdown
@@ -80,7 +80,7 @@ function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColo
               valueProp="value"
               onChange={(_unit) => {
                 setUnit(_unit);
-                onChange(attribute.id, value, unit.id, attribute.nodeId);
+                onChange(attribute.id, value, unit, attribute.nodeId);
               }}
               borderRadius={2}
               borderColor={Color.InspectorGreyBorder}

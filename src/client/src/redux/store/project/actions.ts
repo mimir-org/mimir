@@ -1,5 +1,5 @@
 import * as Types from "./types";
-import { Node, Edge, Project, CommitPackage, Attribute } from "../../../models";
+import { Node, Edge, Project, CommitPackage, Attribute, Connector, Composite } from "../../../models";
 import { ProjectAm } from "../../sagas/project/ConvertProject";
 
 export function commitProject(commitPackage: CommitPackage): Types.ProjectActionTypes {
@@ -151,33 +151,129 @@ export function changeNodeValue(nodeId: string, propName: string, propValue: any
   };
 }
 
-export function changeAttributeValue(id: string, value: string, unit: string, nodeId: string) {
+export function changeNodeAttributeValue(
+  id: string,
+  node: Node,
+  value: string,
+  unitId: string
+): Types.ChangeNodeAttributeValue {
   return {
-    type: Types.CHANGE_ATTRIBUTE_VALUE,
+    type: Types.CHANGE_NODE_ATTRIBUTE_VALUE,
     payload: {
       id,
       value,
-      unit,
-      nodeId,
+      unitId,
+      nodeId: node.id,
     },
   };
 }
 
-export function changeConnectorAttributeValue(
+export function changeTransportAttributeValue(
   id: string,
+  edge: Edge,
   value: string,
-  unit: string,
-  nodeId: string,
-  connectorId: string
-) {
+  unitId: string
+): Types.ChangeTransportAttributeValue {
   return {
-    type: Types.CHANGE_CONNECTOR_ATTRIBUTE_VALUE,
+    type: Types.CHANGE_TRANSPORT_ATTRIBUTE_VALUE,
     payload: {
       id,
       value,
-      unit,
-      nodeId,
-      connectorId,
+      unitId,
+      edgeId: edge.id,
+    },
+  };
+}
+
+export function changeInterfaceAttributeValue(
+  id: string,
+  edge: Edge,
+  value: string,
+  unitId: string
+): Types.ChangeInterfaceAttributeValue {
+  return {
+    type: Types.CHANGE_INTERFACE_ATTRIBUTE_VALUE,
+    payload: {
+      id,
+      value,
+      unitId,
+      edgeId: edge.id,
+    },
+  };
+}
+
+export function changeNodeTerminalAttributeValue(
+  id: string,
+  terminal: Connector,
+  node: Node,
+  value: string,
+  unitId: string
+): Types.ChangeNodeTerminalAttributeValue {
+  return {
+    type: Types.CHANGE_NODE_TERMINAL_ATTRIBUTE_VALUE,
+    payload: {
+      id,
+      value,
+      unitId,
+      terminalId: terminal.id,
+      nodeId: node.id,
+    },
+  };
+}
+
+export function changeTransportTerminalAttributeValue(
+  id: string,
+  terminal: Connector,
+  edge: Edge,
+  value: string,
+  unitId: string
+): Types.ChangeTransportTerminalAttributeValue {
+  return {
+    type: Types.CHANGE_TRANSPORT_TERMINAL_ATTRIBUTE_VALUE,
+    payload: {
+      id,
+      value,
+      unitId,
+      terminalId: terminal.id,
+      edgeId: edge.id,
+    },
+  };
+}
+
+export function changeInterfaceTerminalAttributeValue(
+  id: string,
+  terminal: Connector,
+  edge: Edge,
+  value: string,
+  unitId: string
+): Types.ChangeInterfaceTerminalAttributeValue {
+  return {
+    type: Types.CHANGE_INTERFACE_TERMINAL_ATTRIBUTE_VALUE,
+    payload: {
+      id,
+      value,
+      unitId,
+      terminalId: terminal.id,
+      edgeId: edge.id,
+    },
+  };
+}
+
+export function changeCompositeAttributeValue(
+  id: string,
+  composite: Composite,
+  node: Node,
+  value: string,
+  unitId: string
+): Types.ChangeCompositeAttributeValue {
+  return {
+    type: Types.CHANGE_COMPOSITE_ATTRIBUTE_VALUE,
+    payload: {
+      id,
+      value,
+      unitId,
+      compositeId: composite.id,
+      nodeId: node.id,
     },
   };
 }
@@ -247,31 +343,16 @@ export function setIsLockedNodeAttribute(
   };
 }
 
-export function setIsLockedTerminalAttribute(
-  attribute: Attribute,
-  terminalId: string,
-  isLocked: boolean
-): Types.LockUnlockTerminalAttribute {
-  return {
-    type: Types.LOCK_UNLOCK_TERMINAL_ATTRIBUTE,
-    payload: {
-      id: attribute.id,
-      terminalId,
-      isLocked,
-    },
-  };
-}
-
 export function setIsLockedTransportAttribute(
   attribute: Attribute,
-  transportId: string,
+  edge: Edge,
   isLocked: boolean
 ): Types.LockUnlockTransportAttribute {
   return {
     type: Types.LOCK_UNLOCK_TRANSPORT_ATTRIBUTE,
     payload: {
       id: attribute.id,
-      transportId,
+      edgeId: edge.id,
       isLocked,
     },
   };
@@ -279,15 +360,64 @@ export function setIsLockedTransportAttribute(
 
 export function setIsLockedInterfaceAttribute(
   attribute: Attribute,
-  interfaceId: string,
+  edge: Edge,
   isLocked: boolean
 ): Types.LockUnlockInterfaceAttribute {
   return {
     type: Types.LOCK_UNLOCK_INTERFACE_ATTRIBUTE,
     payload: {
       id: attribute.id,
-      interfaceId,
+      edgeId: edge.id,
       isLocked,
+    },
+  };
+}
+
+export function setIsLockedNodeTerminalAttribute(
+  attribute: Attribute,
+  terminalId: string,
+  node: Node,
+  isLocked: boolean
+): Types.LockUnlockNodeTerminalAttribute {
+  return {
+    type: Types.LOCK_UNLOCK_NODE_TERMINAL_ATTRIBUTE,
+    payload: {
+      id: attribute.id,
+      terminalId,
+      nodeId: node.id,
+      isLocked,
+    },
+  };
+}
+export function setIsLockedTransportTerminalAttribute(
+  attribute: Attribute,
+  terminalId: string,
+  edge: Edge,
+  isLocked: boolean
+): Types.LockUnlockTransportTerminalAttribute {
+  return {
+    type: Types.LOCK_UNLOCK_TRANSPORT_TERMINAL_ATTRIBUTE,
+    payload: {
+      id: attribute.id,
+      terminalId,
+      edgeId: edge.id,
+      isLocked,
+    },
+  };
+}
+export function setIsLockedInterfaceTerminalAttribute(
+  attribute: Attribute,
+  terminalId: string,
+  edge: Edge,
+  isLocked: boolean
+): Types.LockUnlockInterfaceTerminalAttribute {
+  return {
+    type: Types.LOCK_UNLOCK_INTERFACE_TERMINAL_ATTRIBUTE,
+    payload: {
+      id: attribute.id,
+      terminalId,
+      isLocked,
+      edgeId: edge.id,
     },
   };
 }
@@ -295,6 +425,7 @@ export function setIsLockedInterfaceAttribute(
 export function setIsLockedCompositeAttribute(
   attribute: Attribute,
   compositeId: string,
+  node: Node,
   isLocked: boolean
 ): Types.LockUnlockCompositeAttribute {
   return {
@@ -302,6 +433,7 @@ export function setIsLockedCompositeAttribute(
     payload: {
       id: attribute.id,
       compositeId,
+      nodeId: node.id,
       isLocked,
     },
   };

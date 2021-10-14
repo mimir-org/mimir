@@ -25,8 +25,13 @@ export const SET_ACTIVE_EDGE = "SET_ACTIVE_EDGE";
 export const CHANGE_SELECTED_PROJECT = "CHANGE_SELECTED_PROJECT";
 export const CHANGE_ALL_NODES = "CHANGE_ALL_NODES";
 export const CHANGE_NODE_PROP_VALUE = "CHANGE_NODE_PROP_VALUE";
-export const CHANGE_ATTRIBUTE_VALUE = "CHANGE_ATTRIBUTE_VALUE";
-export const CHANGE_CONNECTOR_ATTRIBUTE_VALUE = "CHANGE_CONNECTOR_ATTRIBUTE_VALUE";
+export const CHANGE_NODE_ATTRIBUTE_VALUE = "CHANGE_NODE_ATTRIBUTE_VALUE";
+export const CHANGE_TRANSPORT_ATTRIBUTE_VALUE = "CHANGE_TRANSPORT_ATTRIBUTE_VALUE";
+export const CHANGE_INTERFACE_ATTRIBUTE_VALUE = "CHANGE_INTERFACE_ATTRIBUTE_VALUE";
+export const CHANGE_NODE_TERMINAL_ATTRIBUTE_VALUE = "CHANGE_NODE_TERMINAL_ATTRIBUTE_VALUE";
+export const CHANGE_TRANSPORT_TERMINAL_ATTRIBUTE_VALUE = "CHANGE_TRANSPORT_TERMINAL_ATTRIBUTE_VALUE";
+export const CHANGE_INTERFACE_TERMINAL_ATTRIBUTE_VALUE = "CHANGE_INTERFACE_TERMINAL_ATTRIBUTE_VALUE";
+export const CHANGE_COMPOSITE_ATTRIBUTE_VALUE = "CHANGE_COMPOSITE_ATTRIBUTE_VALUE";
 export const DELETE_PROJECT_ERROR = "DELETE_PROJECT_ERROR";
 export const CHANGE_ACTIVE_CONNECTOR = "CHANGE_ACTIVE_CONNECTOR";
 export const EXPORT_PROJECT_TO_FILE = "EXPORT_PROJECT_TO_FILE";
@@ -36,10 +41,13 @@ export const IMPORT_PROJECT_SUCCESS_OR_ERROR = "IMPORT_PROJECT_SUCCESS_OR_ERROR"
 export const LOCK_UNLOCK_NODE = "LOCK_UNLOCK_NODE";
 export const LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR = "LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR";
 export const LOCK_UNLOCK_NODE_ATTRIBUTE = "LOCK_UNLOCK_NODE_ATTRIBUTE";
-export const LOCK_UNLOCK_TERMINAL_ATTRIBUTE = "LOCK_UNLOCK_TERMINAL_ATTRIBUTE";
 export const LOCK_UNLOCK_TRANSPORT_ATTRIBUTE = "LOCK_UNLOCK_TRANSPORT_ATTRIBUTE";
 export const LOCK_UNLOCK_INTERFACE_ATTRIBUTE = "LOCK_UNLOCK_INTERFACE_ATTRIBUTE";
 export const LOCK_UNLOCK_COMPOSITE_ATTRIBUTE = "LOCK_UNLOCK_COMPOSITE_ATTRIBUTE";
+export const LOCK_UNLOCK_NODE_TERMINAL_ATTRIBUTE = "LOCK_UNLOCK_NODE_TERMINAL_ATTRIBUTE";
+export const LOCK_UNLOCK_TRANSPORT_TERMINAL_ATTRIBUTE = "LOCK_UNLOCK_TRANSPORT_TERMINAL_ATTRIBUTE";
+export const LOCK_UNLOCK_INTERFACE_TERMINAL_ATTRIBUTE = "LOCK_UNLOCK_INTERFACE_TERMINAL_ATTRIBUTE";
+
 export const LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR = "LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR";
 
 // State types
@@ -203,24 +211,73 @@ interface ChangeNodePropValue {
   };
 }
 
-interface ChangeAttributeValue {
-  type: typeof CHANGE_ATTRIBUTE_VALUE;
+export interface ChangeNodeAttributeValue {
+  type: typeof CHANGE_NODE_ATTRIBUTE_VALUE;
   payload: {
     id: string;
     value: string;
-    unit: string;
+    unitId: string;
     nodeId: string;
   };
 }
-
-interface ChangeAttributeConnectorValue {
-  type: typeof CHANGE_CONNECTOR_ATTRIBUTE_VALUE;
+export interface ChangeTransportAttributeValue {
+  type: typeof CHANGE_TRANSPORT_ATTRIBUTE_VALUE;
   payload: {
     id: string;
     value: string;
-    unit: string;
+    unitId: string;
+    edgeId: string;
+  };
+}
+export interface ChangeInterfaceAttributeValue {
+  type: typeof CHANGE_INTERFACE_ATTRIBUTE_VALUE;
+  payload: {
+    id: string;
+    value: string;
+    unitId: string;
+    edgeId: string;
+  };
+}
+export interface ChangeNodeTerminalAttributeValue {
+  type: typeof CHANGE_NODE_TERMINAL_ATTRIBUTE_VALUE;
+  payload: {
+    id: string;
+    nodeId;
+    value: string;
+    unitId: string;
+    terminalId: string;
+  };
+}
+
+export interface ChangeTransportTerminalAttributeValue {
+  type: typeof CHANGE_TRANSPORT_TERMINAL_ATTRIBUTE_VALUE;
+  payload: {
+    id: string;
+    edgeId: string;
+    value: string;
+    unitId: string;
+    terminalId: string;
+  };
+}
+
+export interface ChangeInterfaceTerminalAttributeValue {
+  type: typeof CHANGE_INTERFACE_TERMINAL_ATTRIBUTE_VALUE;
+  payload: {
+    id: string;
+    edgeId: string;
+    value: string;
+    unitId: string;
+    terminalId: string;
+  };
+}
+export interface ChangeCompositeAttributeValue {
+  type: typeof CHANGE_COMPOSITE_ATTRIBUTE_VALUE;
+  payload: {
+    id: string;
+    value: string;
+    unitId: string;
     nodeId: string;
-    connectorId: string;
+    compositeId: string;
   };
 }
 
@@ -303,20 +360,11 @@ export interface LockUnlockNodeAttribute {
   };
 }
 
-export interface LockUnlockTerminalAttribute {
-  type: typeof LOCK_UNLOCK_TERMINAL_ATTRIBUTE;
-  payload: {
-    id: string;
-    terminalId: string;
-    isLocked: boolean;
-  };
-}
-
 export interface LockUnlockTransportAttribute {
   type: typeof LOCK_UNLOCK_TRANSPORT_ATTRIBUTE;
   payload: {
     id: string;
-    transportId: string;
+    edgeId: string;
     isLocked: boolean;
   };
 }
@@ -325,7 +373,37 @@ export interface LockUnlockInterfaceAttribute {
   type: typeof LOCK_UNLOCK_INTERFACE_ATTRIBUTE;
   payload: {
     id: string;
-    interfaceId: string;
+    edgeId: string;
+    isLocked: boolean;
+  };
+}
+
+export interface LockUnlockNodeTerminalAttribute {
+  type: typeof LOCK_UNLOCK_NODE_TERMINAL_ATTRIBUTE;
+  payload: {
+    id: string;
+    terminalId: string;
+    nodeId: string;
+    isLocked: boolean;
+  };
+}
+
+export interface LockUnlockTransportTerminalAttribute {
+  type: typeof LOCK_UNLOCK_TRANSPORT_TERMINAL_ATTRIBUTE;
+  payload: {
+    id: string;
+    terminalId: string;
+    edgeId: string;
+    isLocked: boolean;
+  };
+}
+
+export interface LockUnlockInterfaceTerminalAttribute {
+  type: typeof LOCK_UNLOCK_INTERFACE_TERMINAL_ATTRIBUTE;
+  payload: {
+    id: string;
+    terminalId: string;
+    edgeId: string;
     isLocked: boolean;
   };
 }
@@ -335,6 +413,7 @@ export interface LockUnlockCompositeAttribute {
   payload: {
     id: string;
     compositeId: string;
+    nodeId: string;
     isLocked: boolean;
   };
 }
@@ -345,6 +424,15 @@ export interface LockUnlockAttributeFinished {
     apiError: ApiError;
   };
 }
+
+export type LockUnlockAttributeUnion =
+  | LockUnlockNodeAttribute
+  | LockUnlockTransportAttribute
+  | LockUnlockInterfaceAttribute
+  | LockUnlockNodeTerminalAttribute
+  | LockUnlockTransportTerminalAttribute
+  | LockUnlockInterfaceTerminalAttribute
+  | LockUnlockCompositeAttribute;
 
 export type ProjectActionTypes =
   | FetchingProjectAction
@@ -369,8 +457,13 @@ export type ProjectActionTypes =
   | UpdateBlockPositionAction
   | ChangeAllNodes
   | ChangeNodePropValue
-  | ChangeAttributeValue
-  | ChangeAttributeConnectorValue
+  | ChangeNodeAttributeValue
+  | ChangeTransportAttributeValue
+  | ChangeInterfaceAttributeValue
+  | ChangeNodeTerminalAttributeValue
+  | ChangeTransportTerminalAttributeValue
+  | ChangeInterfaceTerminalAttributeValue
+  | ChangeCompositeAttributeValue
   | DeleteProjectErrorAction
   | ChangeActiveConnector
   | ExportProjectFileAction
@@ -380,7 +473,9 @@ export type ProjectActionTypes =
   | LockUnlockNode
   | LockUnlockNodeFinished
   | LockUnlockNodeAttribute
-  | LockUnlockTerminalAttribute
+  | LockUnlockNodeTerminalAttribute
+  | LockUnlockTransportTerminalAttribute
+  | LockUnlockInterfaceTerminalAttribute
   | LockUnlockTransportAttribute
   | LockUnlockInterfaceAttribute
   | LockUnlockCompositeAttribute

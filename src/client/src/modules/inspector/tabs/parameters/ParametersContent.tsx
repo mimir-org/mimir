@@ -9,14 +9,21 @@ import { OnChangeFilterChoice, OnClearAllFilters } from "./handlers";
 import { FilterDict } from "./redux/types";
 import { ParameterRow } from "./";
 import { useState } from "react";
-import { InspectorParametersElement } from "../../types";
+import { InspectorElement, InspectorParametersElement, InspectorTerminalsElement } from "../../types";
 
 interface Props {
   parametersElement: InspectorParametersElement;
+  inspectorParentElement?: InspectorElement;
+  terminalParentElement?: InspectorTerminalsElement;
   elementIsLocked: boolean;
 }
 
-const ParametersContent = ({ parametersElement, elementIsLocked }: Props) => {
+const ParametersContent = ({
+  parametersElement,
+  inspectorParentElement,
+  terminalParentElement,
+  elementIsLocked,
+}: Props) => {
   const dispatch = useDispatch();
   const attributes = parametersElement.attributes;
 
@@ -69,6 +76,8 @@ const ParametersContent = ({ parametersElement, elementIsLocked }: Props) => {
                 key={filterName}
                 element={parametersElement}
                 elementIsLocked={elementIsLocked}
+                inspectorParentElement={inspectorParentElement}
+                terminalParentElement={terminalParentElement}
                 combinations={attributeCombinations[filterName]}
                 selectedCombinations={selectedCombinations}
                 maxNumSelectedCombinations={maxNumSelectedCombinations}

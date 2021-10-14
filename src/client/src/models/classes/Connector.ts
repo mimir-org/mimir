@@ -23,8 +23,9 @@ class Connector {
 
   kind: string = CONNECTOR_KIND;
 
-  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
-  constructor() {}
+  constructor(connector: Connector) {
+    Object.assign(this, connector);
+  }
 }
 
 export default Connector;

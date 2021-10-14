@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import { GetFilteredTerminalsList } from "../../../../typeEditor/helpers";
 import { InspectorElement } from "../../types";
-import { GetTerminals } from "./helpers";
+import { GetTerminalParentElement, GetTerminals } from "./helpers";
 
 interface Props {
   element: InspectorElement;
@@ -17,6 +17,7 @@ interface Props {
 const TerminalsComponent = ({ element }: Props) => {
   const categoryTypes = (useSelector<RootState>((state) => state.typeEditor.terminals) as TerminalType[]) ?? [];
   const terminals = GetTerminals(element);
+  const terminalParentElement = GetTerminalParentElement(element);
   const terminalCategories = GetFilteredTerminalsList(categoryTypes);
   const [selectedTerminalId, setSelectedTerminalId] = useState<string>(null);
   const onSelectTerminal = (item: Connector) => setSelectedTerminalId(item.id);
@@ -32,7 +33,12 @@ const TerminalsComponent = ({ element }: Props) => {
       />
       {selectedTerminal && (
         <TerminalsParametersWrapper>
-          <ParametersContent parametersElement={selectedTerminal} elementIsLocked={element.isLocked} />
+          <ParametersContent
+            parametersElement={selectedTerminal}
+            inspectorParentElement={element}
+            terminalParentElement={terminalParentElement}
+            elementIsLocked={element.isLocked}
+          />
         </TerminalsParametersWrapper>
       )}
     </TerminalsWrapper>

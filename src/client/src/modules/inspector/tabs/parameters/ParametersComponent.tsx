@@ -9,6 +9,12 @@ interface Props {
 const ParametersComponent = ({ element }: Props) => {
   const parametersElement = GetParametersElement(element);
 
-  return <ParametersContent parametersElement={parametersElement} elementIsLocked={element.isLocked} />;
+  return (
+    <ParametersContent
+      parametersElement={parametersElement}
+      inspectorParentElement={element}
+      elementIsLocked={element.isLocked}
+    />
+  );
 };
 export default ParametersComponent;

@@ -12,13 +12,15 @@ import {
   OnChangeAttributeCombinationChoice,
 } from "./handlers";
 import { useMemo } from "react";
-import { InspectorParametersElement } from "../../types";
+import { InspectorElement, InspectorParametersElement, InspectorTerminalsElement } from "../../types";
 
 const FILTER_ENTITY_WIDTH: number = 191;
 
 interface Props {
   element: InspectorParametersElement;
   elementIsLocked: boolean;
+  inspectorParentElement?: InspectorElement;
+  terminalParentElement?: InspectorTerminalsElement;
   combinations: CombinedAttribute[];
   selectedCombinations: CombinedAttribute[];
   maxNumSelectedCombinations: number;
@@ -31,6 +33,8 @@ interface Props {
 function ParameterRow({
   element,
   elementIsLocked,
+  inspectorParentElement,
+  terminalParentElement,
   combinations,
   selectedCombinations,
   maxNumSelectedCombinations,
@@ -83,8 +87,28 @@ function ParameterRow({
             isNodeLocked={elementIsLocked}
             headerColor={headerColor}
             bodyColor={bodyColor}
-            onChange={(id, value, unit, nodeId) => OnChangeParameterValue(id, value, unit, nodeId, dispatch)}
-            onLock={(attribute, isLocked) => OnLockParameter(element, attribute, isLocked, elementIsLocked, dispatch)}
+            onChange={(id, value, unit) =>
+              OnChangeParameterValue(
+                element,
+                inspectorParentElement,
+                terminalParentElement,
+                id,
+                value,
+                unit?.id,
+                dispatch
+              )
+            }
+            onLock={(attribute, isLocked) =>
+              OnLockParameter(
+                element,
+                inspectorParentElement,
+                terminalParentElement,
+                attribute,
+                isLocked,
+                elementIsLocked,
+                dispatch
+              )
+            }
             onClose={() => OnChangeAttributeCombinationChoice(element.id, filterName, combination, true, dispatch)}
           />
         ))}
