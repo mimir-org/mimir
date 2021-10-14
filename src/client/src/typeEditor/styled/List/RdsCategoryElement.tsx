@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color, FontWeight } from "../../compLibrary";
+import { Color, FontWeight } from "../../../compLibrary";
 
 const RdsCategoryElement = styled.div`
   border-top: 1px solid ${Color.BlueMagenta};

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FontSize, Color } from "../../compLibrary";
+import { FontSize, Color } from "../../../compLibrary";
 
 const ValueHeader = styled.div`
   display: flex;
