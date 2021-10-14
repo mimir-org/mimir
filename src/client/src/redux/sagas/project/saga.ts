@@ -218,7 +218,7 @@ export function* updateProject(action) {
       return;
     }
 
-    const project = response.data as Project;
+    const project = InitializeProject(response.data);
 
     if (project.nodes && action.payload.nodes) {
       project.nodes.forEach((node) => {
