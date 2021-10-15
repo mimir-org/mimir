@@ -1,4 +1,4 @@
-import { CreateLibraryType } from "../models";
+import { CreateLibraryType, Discipline } from "../models";
 import { ListElementsContainer, ListLabel, ListWrapper } from "../compLibrary";
 import {
   RDSElement,
@@ -32,16 +32,16 @@ export enum ListType {
   SimpleTypes = 5,
   Preview = 6,
 }
-
 interface Props {
   createLibraryType: CreateLibraryType;
   items: any[];
+  discipline?: Discipline;
   disabled?: boolean;
   listType: ListType;
   onChange: Function;
 }
 
-export const TypeEditorList = ({ createLibraryType, items, disabled, listType, onChange }: Props) => {
+export const TypeEditorList = ({ createLibraryType, items, discipline, disabled, listType, onChange }: Props) => {
   return (
     <ListWrapper wide={GetWidth(listType)} disabled={disabled}>
       <ListLabel>{GetListLabel(listType, createLibraryType)}</ListLabel>
@@ -95,12 +95,13 @@ export const TypeEditorList = ({ createLibraryType, items, disabled, listType, o
                 />
               ))
             : ShowBlockAttributes(listType)
-            ? GetFilteredList(listType, items, createLibraryType).map((element) => (
+            ? GetFilteredList(listType, items, createLibraryType, discipline).map((element) => (
                 <AttributeElement
-                  key={element.id}
-                  attribute={element}
+                  key={element.discipline}
+                  discipline={element.discipline}
+                  attributes={element.items}
                   onChange={(key, data) => onChange(key, data)}
-                  defaultValue={createLibraryType.attributeTypes}
+                  defaultValue={createLibraryType?.attributeTypes}
                 />
               ))
             : listType === ListType.SimpleTypes
@@ -109,7 +110,7 @@ export const TypeEditorList = ({ createLibraryType, items, disabled, listType, o
                   key={element.id}
                   simpleType={element}
                   onChange={(key, data) => onChange(key, data)}
-                  defaultValue={createLibraryType.compositeTypes}
+                  defaultValue={createLibraryType?.compositeTypes}
                 />
               ))
             : null}
