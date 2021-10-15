@@ -15,7 +15,9 @@ import {
   GetDefaultTerminals,
   ShowObjectBlock,
   ShowBlockAttributes,
+  RemoveHover,
   RemoveBackground,
+  SwitchBackground,
   IsTransport,
   IsInterface,
   GetWidth,
@@ -44,13 +46,17 @@ export const TypeEditorList = ({ createLibraryType, items, disabled, listType, o
     <ListWrapper wide={GetWidth(listType)} disabled={disabled}>
       <ListLabel>{GetListLabel(listType, createLibraryType)}</ListLabel>
       {!disabled && (
-        <ListElementsContainer background={RemoveBackground(listType)}>
+        <ListElementsContainer
+          hover={RemoveHover(listType)}
+          background={RemoveBackground(listType)}
+          switchBackground={SwitchBackground(listType)}
+        >
           {listType === ListType.Rds
             ? GetFilteredList(listType, items, createLibraryType).map((element) => (
                 <RDSElement
-                  key={element.id}
-                  id={element.id}
-                  name={element.name}
+                  key={element.name}
+                  category={element.name}
+                  rds={element.items}
                   onChange={(key, data) => onChange(key, data)}
                   defaultValue={createLibraryType?.rdsId}
                 />

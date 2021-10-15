@@ -30,7 +30,7 @@ const OnTreeClick = (e: any, dispatch: any, project: Project) => {
   // Handle select Edge
   if (e.target.classList.contains("react-flow__edge-path")) {
     const edge = project.edges.find((x) => x.id === e.target.id);
-    dispatch(setActiveEdge(edge.id, true));
+    dispatch(setActiveEdge(edge?.id, true));
     dispatch(setActiveNode(null, false));
     dispatch(changeInspectorTab(0));
   }

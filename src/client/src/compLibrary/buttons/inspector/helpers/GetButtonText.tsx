@@ -11,6 +11,7 @@ const GetButtonText = (type: InspectorButtonType) => {
     case InspectorButtonType.Unlock:
       return TextResources.Inspector_Open;
     case InspectorButtonType.Delete:
+    case InspectorButtonType.DeleteDisabled:
       return TextResources.Inspector_Delete_Node;
   }
 };

@@ -4,10 +4,12 @@ import { Entity } from "./styled";
 import { Color, FontSize } from "../../../../compLibrary";
 import { ParameterBox, ParameterHeader } from "./styled/parameter";
 import { Dropdown as CompDropdown } from "../../../../compLibrary/dropdown/mimir";
-import { Attribute, CombinedAttribute } from "../../../../models";
+import { Attribute, CombinedAttribute, EnumBase } from "../../../../models";
 import { WarningIcon, HelpIcon } from "../../../../assets/icons/common";
 import { LockClosedParameterComponent, LockOpenComponent } from "../../../../assets/icons/lock";
 import { CloseIcon } from "../../../../assets/icons/close";
+
+export const PARAMETER_ENTITY_WIDTH: number = 255;
 
 interface Props {
   attribute: Attribute;
@@ -15,19 +17,19 @@ interface Props {
   isNodeLocked: boolean;
   headerColor: string;
   bodyColor: string;
-  onChange: (id: string, value: string, unit: string, nodeId: string) => void;
+  onChange: (id: string, value: string, unit: EnumBase, nodeId: string) => void;
   onLock: (attribute: Attribute, isLocked: boolean) => void;
   onClose: (id: string) => void;
 }
 
 function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColor, onLock, onClose, onChange }: Props) {
   const [value, setValue] = useState(attribute.value ?? "");
-  const [unit, setUnit] = useState(attribute.unit ?? attribute.units[0]);
+  const [unit, setUnit] = useState<EnumBase>(attribute.unit || attribute.units?.[0]);
 
   const isDisabled = () => isNodeLocked || attribute.isLocked;
 
   return (
-    <Entity width={255}>
+    <Entity width={PARAMETER_ENTITY_WIDTH}>
       <ParameterBox>
         <ParameterHeader color={bodyColor} isNodeLocked={isNodeLocked}>
           {false && ( //TODO: Add proper logic for warningIcon when validation feature is added
@@ -67,7 +69,7 @@ function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColo
             value={value}
             type="text"
             onChange={(e) => setValue(e.target.value)}
-            onBlur={() => onChange(attribute.id, value, unit?.id, attribute.nodeId)}
+            onBlur={() => onChange(attribute.id, value, unit, attribute.nodeId)}
           />
           <div className="parameterDropdown">
             <CompDropdown
@@ -78,7 +80,7 @@ function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColo
               valueProp="value"
               onChange={(_unit) => {
                 setUnit(_unit);
-                onChange(attribute.id, value, unit.id, attribute.nodeId);
+                onChange(attribute.id, value, unit, attribute.nodeId);
               }}
               borderRadius={2}
               borderColor={Color.InspectorGreyBorder}

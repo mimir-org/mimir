@@ -28,7 +28,12 @@ import {
   LOCK_UNLOCK_NODE,
   LOCK_UNLOCK_NODE_ATTRIBUTE,
   COMMIT_PROJECT,
-  LOCK_UNLOCK_TERMINAL_ATTRIBUTE,
+  LOCK_UNLOCK_NODE_TERMINAL_ATTRIBUTE,
+  LOCK_UNLOCK_COMPOSITE_ATTRIBUTE,
+  LOCK_UNLOCK_INTERFACE_ATTRIBUTE,
+  LOCK_UNLOCK_INTERFACE_TERMINAL_ATTRIBUTE,
+  LOCK_UNLOCK_TRANSPORT_ATTRIBUTE,
+  LOCK_UNLOCK_TRANSPORT_TERMINAL_ATTRIBUTE,
 } from "./../store/project/types";
 
 import {
@@ -55,6 +60,8 @@ import {
   getSimpleTypes,
 } from "./typeEditor/saga";
 
+//TODO: Add takeEvery for LOCK_UNLOCK on
+
 export function* sagas() {
   yield all([
     takeEvery(FETCHING_LIBRARY, searchLibrary),
@@ -79,7 +86,12 @@ export function* sagas() {
     takeEvery(EXPORT_LIBRARY, exportLibrary),
     takeEvery(LOCK_UNLOCK_NODE, lockUnlockNode),
     takeEvery(LOCK_UNLOCK_NODE_ATTRIBUTE, lockUnlockAttribute),
-    takeEvery(LOCK_UNLOCK_TERMINAL_ATTRIBUTE, lockUnlockAttribute),
+    takeEvery(LOCK_UNLOCK_TRANSPORT_ATTRIBUTE, lockUnlockAttribute),
+    takeEvery(LOCK_UNLOCK_INTERFACE_ATTRIBUTE, lockUnlockAttribute),
+    takeEvery(LOCK_UNLOCK_NODE_TERMINAL_ATTRIBUTE, lockUnlockAttribute),
+    takeEvery(LOCK_UNLOCK_TRANSPORT_TERMINAL_ATTRIBUTE, lockUnlockAttribute),
+    takeEvery(LOCK_UNLOCK_INTERFACE_TERMINAL_ATTRIBUTE, lockUnlockAttribute),
+    takeEvery(LOCK_UNLOCK_COMPOSITE_ATTRIBUTE, lockUnlockAttribute),
     takeEvery(IMPORT_LIBRARY, importLibrary),
     takeEvery(FETCHING_BLOB_DATA, getblobData),
     takeEvery(FETCHING_LIBRARY_TRANSPORT_TYPES, getTransportTypes),

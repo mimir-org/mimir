@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Mb.Models.Application
@@ -18,6 +19,10 @@ namespace Mb.Models.Application
         public string Version { get; set; }
 
         public string Description { get; set; }
+
+        public string ProjectOwner { get; set; }
+        public string UpdatedBy { get; set; }
+        public DateTime Updated { get; set; }
 
         public ICollection<NodeAm> Nodes { get; set; }
 

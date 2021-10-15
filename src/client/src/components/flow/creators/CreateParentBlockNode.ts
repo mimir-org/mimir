@@ -2,6 +2,7 @@ import { FlowElement } from "react-flow-renderer";
 import { TextResources } from "../../../assets/text";
 import { Position } from "../../../compLibrary";
 import { Node } from "../../../models";
+import { CreateId } from "../helpers";
 
 /**
  * Component to create a parent node in BlockView.
@@ -19,6 +20,7 @@ const CreateParentBlockNode = (node: Node, splitView: boolean, isSplitViewNode: 
   if (splitView && isSplitViewNode) position.x = Position.FunctionBlock_xPos + 750; // TODO: remove magic number
 
   return {
+    key: CreateId(),
     id: node.id,
     type: type,
     data: node,

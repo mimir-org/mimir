@@ -2,6 +2,7 @@ export { default as InputWrapper } from "./InputWrapper";
 export { default as ButtonWrapper } from "./ButtonWrapper";
 export { default as AnimatedInspector } from "./AnimatedInspector";
 export { default as InspectorBox } from "./InspectorBox";
+export { default as ResizePanel } from "./ResizePanel";
 export { default as Title } from "./Title";
 export { default as Menu } from "./Menu";
 export { default as TabHeader } from "./TabHeader";

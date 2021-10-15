@@ -5,7 +5,6 @@ import { TextResources } from "../../../../assets/text";
 import { Node, Edge } from "../../../../models";
 import { RootState } from "../../../../redux/store";
 import { HandleComponent, TerminalsComponent } from "../../block/terminals";
-import { IsLocation } from "../../helpers";
 import { Size } from "../../../../compLibrary";
 import { GetParentColor } from "./helpers";
 import { OnParentClick, OnChildClick, OnConnectorClick } from "./handlers";
@@ -26,6 +25,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const edges = useSelector<RootState>((s) => s.projectState.project.edges) as Edge[];
   const splitView = useSelector<RootState>((s) => s.splitView.visible) as boolean;
   const splitNode = useSelector<RootState>((s) => s.splitView.node) as Node;
+  const electro = useSelector<RootState>((s) => s.electro.visible) as boolean;
   const node = nodes.find((x) => x.id === data.id);
 
   // Enforce size change of node
@@ -58,7 +58,6 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         outputMenuOpen={outTerminalMenu}
         isParent={true}
         splitView={splitView}
-        isLocation={IsLocation(node)}
         terminals={FilterTerminals(node, splitView, splitNode)}
         onClick={(conn) => OnConnectorClick(conn, dispatch, edges, nodes)}
         menuBox={true}
@@ -72,6 +71,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         nodes={nodes}
         terminals={FilterTerminals(node, splitView, splitNode)}
         splitView={splitView}
+        electro={electro}
       />
 
       {splitView && !splitNode && (

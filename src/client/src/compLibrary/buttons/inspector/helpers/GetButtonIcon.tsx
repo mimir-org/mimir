@@ -2,7 +2,11 @@ import { ReactElement } from "react";
 import { InspectorButtonType } from "../InspectorButton";
 import { LockClosedComponent, LockOpenComponent } from "../../../../assets/icons/lock";
 import { CheckmarkEmptyComponent, CheckmarkCheckedComponent } from "../../../../assets/icons/checkmark";
-import { DeleteIconComponent, DeleteActiveIconComponent } from "../../../../assets/icons/delete";
+import {
+  DeleteIconComponent,
+  DeleteActiveIconComponent,
+  DeleteDisabledIconComponent,
+} from "../../../../assets/icons/delete";
 
 export const GetButtonIcon = (type: InspectorButtonType): ReactElement => {
   switch (type) {
@@ -16,6 +20,8 @@ export const GetButtonIcon = (type: InspectorButtonType): ReactElement => {
       return <LockClosedComponent />;
     case InspectorButtonType.Delete:
       return <DeleteIconComponent />;
+    case InspectorButtonType.DeleteDisabled:
+      return <DeleteDisabledIconComponent />;
   }
 };
 

@@ -1,6 +1,9 @@
 import { Aspect, Connector, Node, Transport, Interface } from "..";
 
 export type isEdge = keyof Edge;
+
+export const EDGE_KIND: string = "Edge";
+
 class Edge {
   id: string;
   fromConnectorId: string;
@@ -21,13 +24,18 @@ class Edge {
   interfaceId: string;
   interface: Interface;
 
+  isLocked: boolean | false;
+  isLockedBy: string;
   isHidden: boolean | false;
   masterProjectId: string;
   isTemplateEdge: boolean;
   isSelected: boolean;
 
-  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
-  constructor() {}
+  kind: string = EDGE_KIND;
+
+  constructor(edge: Edge) {
+    Object.assign(this, edge);
+  }
 
   parentType() {
     if (this.fromNode) return this.fromNode.aspect;

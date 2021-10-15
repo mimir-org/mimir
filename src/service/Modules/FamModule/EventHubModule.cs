@@ -1,7 +1,10 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using EventHubModule.Contracts;
+using Mb.Models.Application;
 using Mb.Models.Modules;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,11 +15,16 @@ namespace EventHubModule
 {
     public class EventHubModule : IModelBuilderSyncService
     {
-        private ServiceProvider _provider; 
+        private ServiceProvider? _provider; 
 
         public string GetName()
         {
             return "eventhub";
+        }
+
+        public ICollection<Profile> GetProfiles()
+        {
+            return new List<Profile>();
         }
 
         public void CreateModule(IServiceCollection services, IConfiguration configuration)
@@ -36,12 +44,28 @@ namespace EventHubModule
         public async Task SendData<T>(T data) where T : class
         {
             var datalist = new List<T> {data};
-            var eventHubProducerService = _provider.GetService<IEventHubProducerService>();
+            var eventHubProducerService = _provider?.GetService<IEventHubProducerService>();
 
             if (eventHubProducerService == null)
                 return;
 
             await eventHubProducerService.SendDataAsync(datalist);
+        }
+
+        public async Task ReceiveData()
+        {
+            var consumer = _provider?.GetService<IEventHubConsumerService<ImfData>>();
+
+            if (consumer != null)
+            {
+                consumer.DataReceived += ProcessData;
+                //await consumer.RunAsync();
+            }
+        }
+
+        private void ProcessData(object? sender, ImfData e)
+        {
+            throw new NotImplementedException();
         }
     }
 }

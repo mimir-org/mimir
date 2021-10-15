@@ -11,7 +11,6 @@ interface Props {
   outputMenuOpen: boolean;
   terminals: Connector[];
   isParent: boolean;
-  isLocation: boolean;
   menuBox: boolean;
   mainConnectNode: boolean;
   showInTerminalMenu: any;
@@ -31,7 +30,6 @@ const TerminalsComponent = ({
   outputMenuOpen,
   terminals,
   isParent,
-  isLocation,
   menuBox,
   mainConnectNode,
   showInTerminalMenu,
@@ -73,8 +71,7 @@ const TerminalsComponent = ({
       {inputMenuOpen && (
         <TerminalsMenuComponent
           node={node}
-          isParent={isParent}
-          isLocation={isLocation}
+          parent={isParent}
           isInput={true}
           splitView={splitView}
           terminals={inTerminals}
@@ -86,8 +83,7 @@ const TerminalsComponent = ({
       {outputMenuOpen && (
         <TerminalsMenuComponent
           node={node}
-          isParent={isParent}
-          isLocation={isLocation}
+          parent={isParent}
           isInput={false}
           splitView={splitView}
           visible={outputMenuOpen}

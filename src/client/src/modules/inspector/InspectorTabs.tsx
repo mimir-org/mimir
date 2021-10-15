@@ -1,33 +1,35 @@
 import { InspectorComponent } from ".";
-import { EdgeAdminComponent, EdgeInspectorComponent } from "./edgeInspector";
-import { Project, Node, Edge } from "../../models";
+import { Project } from "../../models";
 import { AdminComponent } from "./tabs/admin";
 import { IsProduct } from "../../components/flow/helpers";
+import { InspectorElement } from "./types";
+import { IsEdge, IsNode } from "./helpers/IsType";
+import { IsRelationEdge } from "../../components/flow/helpers/IsRelationEdge";
 
 interface Props {
   project: Project;
-  node: Node;
-  edge: Edge;
+  element: InspectorElement;
 }
 
-const InspectorTabs = ({ project, node, edge }: Props) => (
-  <>
-    {node && (
-      <>
-        <AdminComponent node={node} project={project} index={0} />
-        <InspectorComponent node={node} index={1} />
-        <InspectorComponent node={node} index={2} />
-        <InspectorComponent node={node} index={3} />
-        {IsProduct(node) && <InspectorComponent node={node} index={4} />}
-      </>
-    )}
-    {edge && (
-      <>
-        <EdgeAdminComponent edge={edge} project={project} index={0} />
-        <EdgeInspectorComponent edge={edge} index={1} />
-      </>
-    )}
-  </>
-);
+const InspectorTabs = ({ project, element }: Props) => {
+  const shouldShowParameters = IsNode(element) || (IsEdge(element) && !IsRelationEdge(element));
+  const shouldShowTerminals = IsNode(element) || (IsEdge(element) && !IsRelationEdge(element));
+  const shouldShowRelations = IsNode(element);
+  const shouldShowSimpleTypes = IsNode(element) && IsProduct(element);
+
+  return (
+    <>
+      {element && (
+        <>
+          <AdminComponent element={element} project={project} index={0} />
+          {shouldShowParameters && <InspectorComponent element={element} index={1} />}
+          {shouldShowTerminals && <InspectorComponent element={element} index={2} />}
+          {shouldShowRelations && <InspectorComponent element={element} index={3} />}
+          {shouldShowSimpleTypes && <InspectorComponent element={element} index={4} />}
+        </>
+      )}
+    </>
+  );
+};
 
 export default InspectorTabs;

@@ -1,10 +1,8 @@
 ﻿namespace Mb.Models.Modules
 {
-    public enum FileFormat
+    public class FileFormat
     {
-        Json = 0,
-        Xml = 1,
-        Turtle = 2,
-        NTriples = 3
+       public string ContentType { get; set; }
+       public string FileExtension { get; set; }
     }
 }

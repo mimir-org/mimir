@@ -5,6 +5,7 @@ const Color = {
 
   GreyHeader: "#4F4F4F",
   GreyInspector: "#FAFAFA",
+  GreyInspectorDisabled: "#C5C5C5",
   Grey: "#d9d9d9",
   DarkGrey: "#c4c4c4",
   DarkerGrey: "#898787",
@@ -41,7 +42,6 @@ const Color = {
   LocationSelected: "#A300A7",
 
   // Terminals
-  Terminal_Default: "#C05046",
   TransportConnection: "#606060",
 
   // Inspector

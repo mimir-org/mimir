@@ -1,6 +1,7 @@
-import { EnumBase, Attribute, Aspect, Purpose } from "..";
-import { Composite } from "../Types";
+import { EnumBase, Attribute, Aspect, Purpose, Composite } from "..";
 import Connector from "./Connector";
+
+export const NODE_KIND: string = "Node";
 
 class Node {
   id: string;
@@ -23,6 +24,8 @@ class Node {
   order: number;
   statusId: string;
   status: EnumBase;
+  createdBy: string;
+  created: Date;
   updatedBy: string;
   updated: Date;
   version: string;
@@ -50,13 +53,16 @@ class Node {
   isBlockSelected: boolean | false;
   isHidden: boolean | false;
 
+  kind: string = NODE_KIND;
+
   area(): number {
     if (!this.length || !this.width) return 0;
     return this.length * this.width;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
-  constructor() {}
+  constructor(node: Node) {
+    Object.assign(this, node);
+  }
 }
 
 export default Node;

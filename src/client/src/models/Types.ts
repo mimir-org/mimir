@@ -1,4 +1,4 @@
-import { Aspect, Connector, Attribute, ObjectType } from ".";
+import { Aspect, Connector, Attribute, ObjectType, Composite } from ".";
 import { CommitStatus, ConnectorType, Discipline, SelectType } from "./Enums";
 
 export interface AttributeType {
@@ -93,10 +93,11 @@ export interface TerminalTypeItem {
 export interface Purpose {
   id: string;
   name: string;
-  disipline: EnumBase;
+  discipline: Discipline;
   description: string;
   semanticReference: string;
 }
+
 export interface PredefinedAttribute {
   key: string;
   values: Object;
@@ -110,6 +111,7 @@ export interface LocationType {
   semanticReference: string;
   locationSubTypes: LocationType[];
 }
+
 export interface CreateLibraryType {
   libraryId: string;
   name: string;
@@ -126,10 +128,12 @@ export interface CreateLibraryType {
   symbolId: string;
   compositeTypes: string[];
 }
+
 export interface User {
   username: string;
   name: string;
 }
+
 export interface FileData {
   content: string;
   name: string;
@@ -143,14 +147,6 @@ export interface BlobData {
   discipline: Discipline;
 }
 
-export interface Composite {
-  id: string;
-  name: string;
-  semanticReference: string;
-  attributes: Attribute[];
-  nodeId: string;
-}
-
 export interface CompositeType {
   id: string;
   name: string;
@@ -162,6 +158,7 @@ export interface CommitPackage {
   projectId: string;
   commitStatus: CommitStatus;
   parser: string;
+  receivingDomain: string;
 }
 
 export interface CombinedAttribute {
@@ -173,6 +170,7 @@ export interface CombinedAttribute {
   condition: string;
   combined: string;
 }
+
 export interface CombinedAttributeFilter {
   name: string;
   combinedAttributes: CombinedAttribute[];

@@ -4,7 +4,8 @@ interface Props {
 }
 
 const Symbol = ({ base64, text }: Props) => {
-  return <>{base64 && <img src={"data:image/svg+xml;base64," + base64} alt={text} draggable="false" />}</>;
+  if (base64 === undefined) return null;
+  return <img src={"data:image/svg+xml;base64," + base64} className="symbolImg" alt={text} draggable="false" />;
 };
 
 export default Symbol;

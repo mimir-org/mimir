@@ -5,19 +5,44 @@ import { setModuleVisibility } from "../../../redux/store/modules/actions";
 import { SetPanelHeight } from "../helpers";
 import { removeEdge, removeNode } from "../../../redux/store/project/actions";
 import { changeInspectorHeight } from "../redux/height/actions";
+import {
+  IsAspectNode,
+  IsPartOfTerminal,
+  UpdateSiblingIndexOnEdgeDelete,
+  UpdateSiblingIndexOnNodeDelete,
+} from "../../../components/flow/helpers";
+import { InspectorElement } from "../types";
+import { IsEdge, IsNode } from "../helpers/IsType";
+import { Dispatch } from "redux";
 
-const OnDeleteClick = (project: Project, node: Node, edge: Edge, dispatch: any) => {
-  if (node) {
-    project.edges.forEach((e) => {
-      if (e.fromNodeId === node.id) dispatch(removeEdge(e.id));
-      if (e.toNodeId === node.id) dispatch(removeEdge(e.id));
-    });
-    dispatch(removeNode(node.id));
-  } else dispatch(removeEdge(edge.id));
+const OnDeleteClick = (project: Project, element: InspectorElement, dispatch: any) => {
+  if (IsNode(element)) {
+    HandleNodeDelete(element, project, dispatch);
+  } else if (IsEdge(element)) {
+    HandleEdgeDelete(element, project, dispatch);
+  }
 
   dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, false, true));
   dispatch(changeInspectorHeight(Size.ModuleClosed));
   SetPanelHeight(Size.ModuleClosed);
+};
+
+const HandleNodeDelete = (node: Node, project: Project, dispatch: Dispatch) => {
+  if (IsAspectNode(node)) return;
+
+  project.edges.forEach((e) => {
+    if (e.fromNodeId === node.id) dispatch(removeEdge(e.id));
+    if (e.toNodeId === node.id) dispatch(removeEdge(e.id));
+  });
+
+  UpdateSiblingIndexOnNodeDelete(node, project, dispatch);
+
+  dispatch(removeNode(node.id));
+};
+
+const HandleEdgeDelete = (edge: Edge, project: Project, dispatch: Dispatch) => {
+  if (IsPartOfTerminal(edge.fromConnector)) UpdateSiblingIndexOnEdgeDelete(edge, project, dispatch);
+  dispatch(removeEdge(edge.id));
 };
 
 export default OnDeleteClick;

@@ -10,6 +10,7 @@ const OnCommitClick = (dispatch: any, projectState: ProjectState) => {
       projectId: projectState.project.id,
       commitStatus: CommitStatus.Sent,
       parser: "rdfparser",
+      receivingDomain: "aibel.com",
     } as CommitPackage;
     dispatch(commitProject(commitPackage));
   }

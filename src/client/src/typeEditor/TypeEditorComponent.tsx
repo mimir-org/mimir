@@ -10,10 +10,18 @@ import { GetInputTerminals, GetOutputTerminals } from "./preview/helpers";
 import { TypeEditorList, TypeEditorInputs, TypePreview, TypeEditorInspector } from "./";
 import { LibraryIcon } from "../assets/icons/modules";
 import {
+  TypeEditorWrapper,
+  TypeEditorContent,
+  TypeEditorHeader,
+  ChooseProperties,
+  TypePreviewColumn,
+  SaveButton,
+} from "./styled";
+import {
+  GetSelectedIcon,
   GetSelectedRds,
   GetSelectedTerminal,
   IsLocation,
-  IsInterface,
   IsObjectBlock,
   IsProduct,
   GetWidth,
@@ -29,14 +37,6 @@ import {
   removeTerminalTypeByCategory,
   saveLibraryType,
 } from "./redux/actions";
-import {
-  TypeEditorWrapper,
-  TypeEditorContent,
-  TypeEditorHeader,
-  ChooseProperties,
-  TypePreviewColumn,
-  SaveButton,
-} from "./styled";
 /**
  * Component for adding or editing a type
  * @returns the visual Type Editor window
@@ -121,16 +121,14 @@ export const TypeEditorComponent = () => {
                   // disabled={ModeEdit(mode) ? false : FieldValidator(state, "rds")}
                 />
               )}
-              {!IsInterface(state.createLibraryType.objectType) && (
-                <TypeEditorList
-                  items={state?.attributes}
-                  createLibraryType={state?.createLibraryType}
-                  listType={
-                    IsLocation(state?.createLibraryType.aspect) ? ListType.LocationAttributes : ListType.ObjectAttributes
-                  }
-                  onChange={(key, data) => onChange(key, data)}
-                />
-              )}
+              <TypeEditorList
+                items={state?.attributes}
+                createLibraryType={state?.createLibraryType}
+                listType={
+                  IsLocation(state?.createLibraryType.aspect) ? ListType.LocationAttributes : ListType.ObjectAttributes
+                }
+                onChange={(key, data) => onChange(key, data)}
+              />
               {IsProduct(state?.createLibraryType.aspect) && (
                 <TypeEditorList
                   items={state?.simpleTypes}
@@ -156,6 +154,7 @@ export const TypeEditorComponent = () => {
                     state?.createLibraryType.terminalTypeId &&
                     GetSelectedTerminal(state?.createLibraryType, state?.terminals)
                   }
+                  symbol={GetSelectedIcon(state?.createLibraryType, state?.icons)}
                   // disabled={FieldValidator(state, "add")}
                 />
                 <SaveButton onClick={onSave}>

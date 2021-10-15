@@ -1,7 +1,13 @@
 import styled from "styled-components";
 import { Color } from "../../compLibrary";
 
-const ListElementsContainer = styled.div`
+interface Props {
+  background: boolean;
+  hover: boolean;
+  switchBackground: boolean;
+}
+
+const ListElementsContainer = styled.div<Props>`
   position: relative;
   height: calc(100% - 45px);
   border-bottom: black 1px solid;
@@ -10,16 +16,17 @@ const ListElementsContainer = styled.div`
   overflow-y: overlay;
 
   div:nth-child(odd) {
-    background-color: ${(props: { background: boolean }) => (props.background === false ? "" : Color.LightPurple)};
+    background-color: ${(props) => props.background && Color.LightPurple};
+    background-color: ${(props) => props.switchBackground && Color.White};
   }
 
   div:nth-child(even) {
-    background-color: ${(props: { background: boolean }) =>
-      props.background === false ? "" : Color.White};
+    background-color: ${(props) => props.background && Color.White};
+    background-color: ${(props) => props.switchBackground && Color.LightPurple};
   }
 
   div:nth-child(n):hover {
-    background-color: ${Color.LightBlue};
+    background-color: ${(props) => !props.hover && Color.LightBlue};
   }
 
   :before {

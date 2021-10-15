@@ -41,7 +41,6 @@ function ActiveTerminalsList({ terminals, terminalCategories, selectedTerminalId
               onClick={() =>
                 OnCategoryClick(category, isCategoryExpanded(category), selectedCategoriesIds, setSelectedCategoriesIds)
               }
-              index={i}
               color={i % 2 ? undefined : Color.LightPurple}
             >
               <div className="numCategoryTerminals">{numCategoryTerminals}</div>

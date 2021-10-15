@@ -1,7 +1,11 @@
 import styled from "styled-components";
 import { Color } from "../..";
 
-const OptionsElement = styled.div`
+interface Props {
+  treeView: boolean;
+}
+
+const OptionsElement = styled.div<Props>`
   cursor: pointer;
   position: absolute;
   display: inline;
@@ -14,38 +18,40 @@ const OptionsElement = styled.div`
   width: 20px;
   text-align: center;
   transition: right 0.2s ease-in-out;
-  background-color: ${(props: { treeView: boolean }) => (props.treeView ? Color.Grey : "transparent")};
-
-  &:hover {
-    background-color: ${Color.LightBlue};
-  }
+  background-color: transparent;
 
   &:first-child {
     right: -288px;
     border-right: none;
     border-left: none;
+    &:hover {
+      background-color: ${Color.LightBlue};
+    }
   }
 
   &:nth-child(2) {
     right: -244px;
     border-left: none;
+    &:hover {
+      background-color: ${Color.LightBlue};
+    }
   }
 
   &:nth-child(3) {
     right: -199px;
     border-left: none;
-    background-color: ${(props: { treeView: boolean }) => (!props.treeView ? "#6F6F6F" : "transparent")};
+    background-color: ${(props) => !props.treeView && "#6F6F6F"};
     &:hover {
-      background-color: ${(props: { treeView: boolean }) => props.treeView && Color.LightBlue};
+      background-color: ${(props) => props.treeView && Color.LightBlue};
     }
   }
 
   &:last-child {
-    right: -154px;
-    background-color: ${(props: { treeView: boolean }) => (props.treeView ? "#6F6F6F" : "transparent")};
+    right: ${(props) => (props.treeView ? -199 : -154)}px;
+    background-color: ${(props) => props.treeView && "#6F6F6F"};
 
     &:hover {
-      background-color: ${(props: { treeView: boolean }) => !props.treeView && Color.LightBlue};
+      background-color: ${(props) => !props.treeView && Color.LightBlue};
     }
   }
 `;

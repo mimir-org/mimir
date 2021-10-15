@@ -9,7 +9,7 @@ const SearchBar = styled.div`
   border: 1px solid ${Color.BlueMagenta};
   border-radius: 5px;
   padding: 1px;
-  background-color: ${Color.White};
+  background-color: ${Color.White} !important;
 
   input:focus,
   textarea:focus,
@@ -23,7 +23,6 @@ const SearchBar = styled.div`
     height: 12px;
     font-size: ${FontSize.Medium};
     border: 0px;
-    background-color: inherit;
   }
 
   input[type="text"]::placeholder {

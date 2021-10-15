@@ -1,7 +1,11 @@
 import styled from "styled-components";
 import { Color, FontSize } from "../..";
 
-const LibElement = styled.div`
+interface Props {
+  active: boolean;
+}
+
+const LibElement = styled.div<Props>`
   width: 286px;
   height: 36px;
   border: ${(props) => (props.active ? "1px solid black" : "1px solid" + Color.DarkerGrey)};
