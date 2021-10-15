@@ -1,12 +1,12 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
 import { TreeHandleBox } from "../treeViewNode/styled";
-import { Connector } from "../../../../models";
+import { Connector, Node } from "../../../../models";
 import { GetFlowAspectIcon, GetHandleType } from "../../helpers";
 import { OnMouseLeave } from "./handlers";
 import { AspectNodeBox } from "./styled";
 
-const AspectNode: FC<NodeProps> = ({ data }) => {
+const AspectNode: FC<NodeProps<Node>> = ({ data }) => {
   const [isHover, setIsHover] = useState(false);
   const [timer, setTimer] = useState(false);
 

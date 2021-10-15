@@ -1,16 +1,16 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
-import { Connector } from "../../../../models";
+import { Connector, Node } from "../../../../models";
 import { Symbol } from "../../../../compLibrary/symbol";
-import { TreeHandleBox, TreeNodeNameBox, TreeNodeWrapper } from "./styled";
 import { GetHandleType, IsInputTerminal, IsOutputTerminal, IsPartOfTerminal, SetTerminalYPos } from "../../helpers";
+import { TreeNodeWrapper, TreeHandleBox, TreeNodeNameBox } from "./styled";
 
 /**
  * Component to display a node in TreeView.
  * @param data the data for the node.
  * @returns a node in the FlowTree context.
  */
-const TreeviewNode: FC<NodeProps> = ({ data }) => {
+const TreeviewNode: FC<NodeProps<Node>> = ({ data }) => {
   const [isHover, setIsHover] = useState(false);
   const [timer, setTimer] = useState(false);
   let inputCount = 0;

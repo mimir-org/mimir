@@ -8,13 +8,11 @@ const CreateTreeElements = (project: Project): Elements => {
 
   if (!project) return elements;
 
-  // Create TreeNodes
   project.nodes?.forEach((node) => {
     let treeNode = CreateTreeNode(node);
     if (treeNode) elements.push(treeNode);
   });
 
-  // Create TreeEdges
   project.edges?.forEach((edge: Edge) => {
     const edgeType = GetEdgeType(edge.fromConnector);
     const treeEdge = CreateTreeEdge(edge, edgeType, project.nodes);
