@@ -39,11 +39,14 @@ export const ObjectBlockElement = ({ name, categoryId, terminalTypes, onChange, 
   const showTerminals = () => {
     let terminalsArray = [];
     if (terminalsQuantity > 0) {
-      terminalsArray = defaultTerminals;
-      return terminalsArray.map((t, index) => {
+      terminalsArray = defaultTerminals.map((t) => {
+        t.terminalId = CreateId();
+        return t;
+      });
+      return terminalsArray.map((t) => {
         return (
           <AddTerminalComponent
-            key={index}
+            key={t.terminalId}
             terminals={terminalTypes}
             defaultTerminal={t}
             onChange={(key, data) => onCategoryUpdateOrRemove(key, data)}

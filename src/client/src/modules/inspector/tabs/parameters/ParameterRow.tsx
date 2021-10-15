@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { CombinedAttribute, Composite, Connector, Node } from "../../../../models";
+import { CombinedAttribute } from "../../../../models";
 import { Parameter, PARAMETER_ENTITY_WIDTH } from "./";
 import { DoesCombinationMatchAttribute } from "./helpers";
 import { Body, Entity, Box } from "./styled";
@@ -12,14 +12,15 @@ import {
   OnChangeAttributeCombinationChoice,
 } from "./handlers";
 import { useMemo } from "react";
+import { InspectorElement, InspectorParametersElement, InspectorTerminalsElement } from "../../types";
 
 const FILTER_ENTITY_WIDTH: number = 191;
 
-type Element = Node | Connector | Composite;
-
 interface Props {
-  element: Element;
+  element: InspectorParametersElement;
   elementIsLocked: boolean;
+  inspectorParentElement?: InspectorElement;
+  terminalParentElement?: InspectorTerminalsElement;
   combinations: CombinedAttribute[];
   selectedCombinations: CombinedAttribute[];
   maxNumSelectedCombinations: number;
@@ -32,6 +33,8 @@ interface Props {
 function ParameterRow({
   element,
   elementIsLocked,
+  inspectorParentElement,
+  terminalParentElement,
   combinations,
   selectedCombinations,
   maxNumSelectedCombinations,
@@ -41,7 +44,6 @@ function ParameterRow({
   dispatch,
 }: Props) {
   const attributes = element.attributes;
-  const isElementNode = (element as Node).connectors !== undefined;
 
   const bodyWidth = useMemo(
     () => maxNumSelectedCombinations * PARAMETER_ENTITY_WIDTH + FILTER_ENTITY_WIDTH,
@@ -85,9 +87,27 @@ function ParameterRow({
             isNodeLocked={elementIsLocked}
             headerColor={headerColor}
             bodyColor={bodyColor}
-            onChange={(id, value, unit, nodeId) => OnChangeParameterValue(id, value, unit, nodeId, dispatch)}
+            onChange={(id, value, unit) =>
+              OnChangeParameterValue(
+                element,
+                inspectorParentElement,
+                terminalParentElement,
+                id,
+                value,
+                unit?.id,
+                dispatch
+              )
+            }
             onLock={(attribute, isLocked) =>
-              OnLockParameter(attribute, isLocked, element.id, elementIsLocked, isElementNode, dispatch)
+              OnLockParameter(
+                element,
+                inspectorParentElement,
+                terminalParentElement,
+                attribute,
+                isLocked,
+                elementIsLocked,
+                dispatch
+              )
             }
             onClose={() => OnChangeAttributeCombinationChoice(element.id, filterName, combination, true, dispatch)}
           />

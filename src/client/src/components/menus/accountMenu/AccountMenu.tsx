@@ -13,15 +13,23 @@ import { ExportLibraryFileMenu } from "../project/exportLibraryFile/ExportLibrar
 import { ImportFileLibraryMenu } from "../project/importLibrary/ImportFileLibraryMenu";
 import { MenuLine, AccountMenuBox, ProjectMenuBox } from "../../../compLibrary/box/menus";
 import { TextResources } from "../../../assets/text";
+import { useRef } from "react";
+import { setAccountMenuVisibility } from "../project/redux/actions";
+import { useOutsideClick } from "./hooks/useOutsideClick";
 
 const AccountMenu = () => {
   const dispatch = useDispatch();
   const projectState = useSelector<RootState>((state) => state.projectState) as ProjectState;
   const userState = useSelector<RootState>((state) => state.userState) as UserState;
+  const activeMenu = useSelector<RootState>((state) => state.menu.activeMenu) as string;
+
+  const menuRef = useRef(null);
+
+  useOutsideClick(menuRef, () => !activeMenu && dispatch(setAccountMenuVisibility(false)));
 
   return (
     <>
-      <AccountMenuBox id={MENU_TYPE.ACCOUNT_MENU}>
+      <AccountMenuBox ref={menuRef} id={MENU_TYPE.ACCOUNT_MENU}>
         <GetMenuElement type={TextResources.Account_Open} onClick={() => Click.OnOpenC(dispatch)} />
         <GetMenuElement type={TextResources.Account_Create} onClick={() => Click.OnCreate(dispatch)} />
         <GetMenuElement type={TextResources.Account_Save} onClick={() => Click.OnSave(dispatch, projectState)} />

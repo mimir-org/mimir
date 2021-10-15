@@ -1,29 +1,43 @@
+// Type Editor
 export { default as TypeEditorWrapper } from "./TypeEditorWrapper";
 export { default as TypeEditorContent } from "./TypeEditorContent";
 export { default as TypeEditorHeader } from "./TypeEditorHeader";
-export { default as TypeInfo } from "./TypeInfo";
-export { default as TypePreviewColumn } from "./TypePreviewColumn";
-export { default as ListElementCategory } from "./ListElementCategory";
-export { default as RdsListElement } from "./RdsListElement";
-export { default as TextInput } from "./TextInput";
-export { default as TypeNameInput } from "./TypeNameInput";
 export { default as ChooseProperties } from "./ChooseProperties";
-export { default as TerminalName } from "./TerminalName";
-export { default as TerminalListElement } from "./TerminalListElement";
-export { default as TerminalCategoryWrapper } from "./TerminalCategoryWrapper";
-export { default as AddTerminalWrapper } from "./AddTerminalWrapper";
-export { default as AddTerminalElement } from "./AddTerminalElement";
-export { default as PreviewArea } from "./PreviewArea";
-export { default as PreviewObjectBlock } from "./PreviewObjectBlock";
-export { default as Terminals } from "./Terminals";
-export { default as InputOutputTerminals } from "./InputOutputTerminals";
-export { default as InfoWrapper } from "./InfoWrapper";
-export { default as LocationTypeCategory } from "./LocationTypeCategory";
-export { default as LocationSubType } from "./LocationSubType";
-export { default as SelectValue } from "./SelectValue";
-export { default as ValueHeader } from "./ValueHeader";
-export { default as ValuesListWrapper } from "./ValuesListWrapper";
-export { default as ValuesListItem } from "./ValuesListItem";
-export { default as ErrorMessageBox } from "./ErrorMessageBox";
-export { default as SaveButton } from "./SaveButton";
+
+// Inputs
+export { default as TextInput } from "./Inputs/TextInput";
+export { default as TypeNameInput } from "./Inputs/TypeNameInput";
+export { default as LocationTypeCategory } from "./Inputs/LocationTypeCategory";
+export { default as LocationSubType } from "./Inputs/LocationSubType";
+export { default as RoundBox } from "./Inputs/RoundBox";
+export { default as SquareBox } from "./Inputs/SquareBox";
+
+// List
+export { default as ListElementCategoryWrapper } from "./List/ListElementCategoryWrapper";
+export { default as ListCategoryElement } from "./List/ListCategoryElement";
+export { default as RdsListElement } from "./List/RdsListElement";
+export { default as TerminalName } from "./List/TerminalName";
+export { default as TerminalListElement } from "./List/TerminalListElement";
+export { default as TerminalCategoryWrapper } from "./List/TerminalCategoryWrapper";
+export { default as AddTerminalWrapper } from "./List/AddTerminalWrapper";
+export { default as AddTerminalElement } from "./List/AddTerminalElement";
+export { default as SelectValue } from "./List/SelectValue";
+export { default as ValueHeader } from "./List/ValueHeader";
+export { default as ValuesListWrapper } from "./List/ValuesListWrapper";
+export { default as ValuesListItem } from "./List/ValuesListItem";
+
+// Preview
+export { default as TypeInfo } from "./Preview/TypeInfo";
+export { default as TypePreviewColumn } from "./Preview/TypePreviewColumn";
+export { default as PreviewArea } from "./Preview/PreviewArea";
+export { default as PreviewObjectBlock } from "./Preview/PreviewObjectBlock";
+export { default as Terminals } from "./Preview/Terminals";
+export { default as InputOutputTerminals } from "./Preview/InputOutputTerminals";
+export { default as InfoWrapper } from "./Preview/InfoWrapper";
+export { default as SaveButton } from "./Preview/SaveButton";
+
+// Inspector
 export { default as Inspector } from "./Inspector/TypeEditorInspector";
+
+// Misc
+export { default as ErrorMessageBox } from "./ErrorMessageBox";

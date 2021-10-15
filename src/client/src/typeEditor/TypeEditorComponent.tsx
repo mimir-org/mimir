@@ -22,10 +22,10 @@ import {
   GetSelectedRds,
   GetSelectedTerminal,
   IsLocation,
-  IsInterface,
   IsObjectBlock,
   IsProduct,
   GetWidth,
+  GetSelectedDiscipline,
 } from "./helpers";
 import {
   closeTypeEditor,
@@ -122,16 +122,15 @@ export const TypeEditorComponent = () => {
                   // disabled={ModeEdit(mode) ? false : FieldValidator(state, "rds")}
                 />
               )}
-              {!IsInterface(state.createLibraryType.objectType) && (
-                <TypeEditorList
-                  items={state?.attributes}
-                  createLibraryType={state?.createLibraryType}
-                  listType={
-                    IsLocation(state?.createLibraryType.aspect) ? ListType.LocationAttributes : ListType.ObjectAttributes
-                  }
-                  onChange={(key, data) => onChange(key, data)}
-                />
-              )}
+              <TypeEditorList
+                createLibraryType={state?.createLibraryType}
+                items={state?.attributes}
+                discipline={GetSelectedDiscipline(state.createLibraryType?.purpose, state?.purposes)}
+                listType={
+                  IsLocation(state?.createLibraryType.aspect) ? ListType.LocationAttributes : ListType.ObjectAttributes
+                }
+                onChange={(key, data) => onChange(key, data)}
+              />
               {IsProduct(state?.createLibraryType.aspect) && (
                 <TypeEditorList
                   items={state?.simpleTypes}

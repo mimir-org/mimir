@@ -322,8 +322,6 @@ export function* getSelectedNode(action) {
     const payload = {
       selectedNode: selectedNodeResponse.data,
     };
-    // console.log("payload get selected", createLibraryType);
-    // payload.selectedNode.terminalTypes?.forEach((t, index) => (t.row = index));
 
     yield statePut({
       type: FETCHING_TYPE_SUCCESS_OR_ERROR,

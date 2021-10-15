@@ -47,7 +47,6 @@ const GetFileData = async (event: any, project: Project): Promise<[Node[], Edge[
     const response = await post(url, loadedProject);
 
     if (response.status !== 200) {
-      console.log("FEIL:", response);
       throw Error(TextResources.Error_SaveUpdateProject);
     }
 

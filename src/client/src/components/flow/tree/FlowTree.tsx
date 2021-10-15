@@ -1,6 +1,6 @@
 import * as Helpers from "./helpers/";
 import ReactFlow, { ReactFlowProvider, Elements } from "react-flow-renderer";
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/index";
 import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
@@ -10,7 +10,7 @@ import { BlobData } from "../../../models";
 import { ProjectState } from "../../../redux/store/project/types";
 import { IsBlockView } from "../block/helpers";
 import { changeInspectorTab } from "../../../modules/inspector/redux/tabs/actions";
-import { SetDarkModeColor } from "../helpers";
+import { GetSelectedNode, SetDarkModeColor } from "../helpers";
 import { CreateTreeElements } from "../creators";
 import { LibraryState } from "../../../redux/store/library/types";
 import { setModuleVisibility } from "../../../redux/store/modules/actions";
@@ -19,6 +19,7 @@ import { getBlobData } from "../../../typeEditor/redux/actions";
 import { SetPanelHeight } from "../../../modules/inspector/helpers";
 import { updatePosition, setActiveNode, setActiveEdge, setActiveBlockNode } from "../../../redux/store/project/actions";
 import { changeInspectorHeight } from "../../../modules/inspector/redux/height/actions";
+import { FlowManipulator } from "./FlowManipulator";
 
 /**
  * Component for the Flow library in TreeView
@@ -35,6 +36,10 @@ const FlowTree = () => {
   const library = useSelector<RootState>((s) => s.library) as LibraryState;
   const inspectorOpen = useSelector<RootState>((s) => s.modules.types[0].visible) as boolean;
   const project = projectState?.project;
+  const selectedElementId = useMemo(
+    () => GetSelectedNode()?.id ?? project.edges.find((edge) => edge.isSelected)?.id,
+    [project]
+  );
 
   const OnDragOver = (event: any) => event.preventDefault();
   const OnNodeDragStop = (_event: any, node: any) => dispatch(updatePosition(node.id, node.position.x, node.position.y));
@@ -107,6 +112,7 @@ const FlowTree = () => {
             onClick={(e) => Helpers.OnTreeClick(e, dispatch, project)}
           >
             <FullScreenComponent />
+            <FlowManipulator elements={elements} selectedId={selectedElementId} />
           </ReactFlow>
         </ReactFlowProvider>
       )}

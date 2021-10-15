@@ -1,4 +1,4 @@
-import { addNode, createEdge } from "../../../redux/store/project/actions";
+import { addNode, createEdge, setActiveNode } from "../../../redux/store/project/actions";
 import { IsBlockView } from "../block/helpers";
 import { GetEdgeType } from "../tree/helpers";
 import { ConvertToEdge, ConvertToNode } from "../converters";
@@ -100,6 +100,8 @@ const useOnDrop = (
     }
 
     dispatch(addNode(targetNode));
+
+    dispatch(setActiveNode(targetNode.id, true));
   }
 };
 
