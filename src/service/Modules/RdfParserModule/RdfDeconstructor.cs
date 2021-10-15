@@ -377,21 +377,8 @@ namespace RdfParserModule
                     Relation = RelationType.NotSet
 
                 }).ToList();
+                
 
-                var (termCatId, termTypeId) = "Telenet".CreateCategoryIdAndTerminalTypeId("Information");
-
-                //var termCat = new TerminalCategory
-                //{
-                //    Name = "Information"
-                //};
-                //var termCatId = termCat.Key.CreateMd5();
-
-                //var termType = new TerminalType
-                //{
-                //    Name = "Oil",
-                //    TerminalCategoryId = termCatId
-                //};
-                //var termTypeId = termType.Key.CreateMd5();
 
                 // Den som INPUT er connectedTo er jo FromConnectorId
                 // Og den som OUTPUT er connectedTo er ToConnectorId
@@ -420,6 +407,10 @@ namespace RdfParserModule
 
                     o.Label = label[0].ToString();
                     o.Name = o.Label.Replace(" Output", "").Replace(" Input", "");
+
+                    // Du må finne Category Name. Dette manglar på eksport.
+                    // Døme: Energy Electrical, Material Granulate, Material Fluid, Energy Mechanical, Information
+                    var (termcatId, termTypeId) = o.Name.CreateCategoryIdAndTerminalTypeId("Multi");
                 }
 
                 foreach (var o in inTerms)

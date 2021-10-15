@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using Mb.Models.Data;
+using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
 using RdfParserModule.Properties;
 using VDS.RDF;
@@ -164,22 +165,52 @@ namespace RdfParserModule
                     switch (connector)
                     {
                         case Terminal terminal:
+                            
+                            var nodeTerminal = Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, terminal.Id));
+                            string terminalIri;
 
-                            var transmitter = Graph.CreateUriNode(Resources.mimirPrefix + terminal.Name.Replace(" ", "-") + "Transmitter");
+                            
+
+
+                            // This will be obsolote soon, we always want the name of the terminal category
+                            switch (terminal.TerminalCategory)
+                            { 
+                                case TerminalCategory termCat:
+                                    
+                                    terminalIri = $"{Resources.mimirPrefix}Transmitter-{terminal.TerminalCategory.Name}-{terminal.Name}";
+                                    break;
+                                case null:
+                                    terminalIri = $"{Resources.mimirPrefix}Transmitter-{terminal.TerminalCategoryId}-{terminal.Name}";
+                                    break;
+                            }
+                            
+                            switch (terminal.TerminalCategoryId)
+                            {
+                                case string:
+                                    // In this case it is always a transport/terminal connector/terminal
+                                    break;
+                                case null:
+                                    // In this case it is always a part of/has location/fulfilled by connector/terminal
+                                    Console.WriteLine(@"It is a partof thing!");
+                                    break;
+                            }
+
+                            var transmitter = Graph.CreateUriNode(terminalIri);
+                            Graph.Assert(new Triple(nodeTerminal, type, transmitter));
+                            Graph.Assert(new Triple(transmitter, type, Graph.CreateUriNode("imf:Transmitter")));
 
                             var hasTerminal = Graph.CreateUriNode("imf:has" + terminal.Type + "Terminal");
+
 
                             var terminalType = terminal.Type.ToString().Contains("In") ? "In" : "Out";
 
                             var terminalKey = Graph.CreateUriNode("imf:" + terminalType + "Terminal");
-                            var nodeTerminal = Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, terminal.Id));
                             Graph.Assert(new Triple(nodeId, hasTerminal, nodeTerminal));
                             Graph.Assert(new Triple(nodeTerminal, type, terminalKey));
 
                             var terminalLabel = Graph.CreateLiteralNode(terminal.Name + " " + terminal.Type);
                             Graph.Assert(new Triple(nodeTerminal, label, terminalLabel));
 
-                            Graph.Assert(new Triple(nodeTerminal, type, transmitter));
                             Graph.Assert(new Triple(nodeTerminal, type, Graph.CreateUriNode(Resources.FSBTerminal)));
                             break;
                     }
