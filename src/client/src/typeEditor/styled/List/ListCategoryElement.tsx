@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Color, FontWeight } from "../../../compLibrary";
 
-const RdsCategoryElement = styled.div`
+const ListCategoryElement = styled.div`
   border-top: 1px solid ${Color.BlueMagenta};
   border-bottom: 1px solid ${Color.BlueMagenta};
   background-color: ${Color.White} !important;
@@ -15,4 +15,4 @@ const RdsCategoryElement = styled.div`
   }
 `;
 
-export default RdsCategoryElement;
+export default ListCategoryElement;

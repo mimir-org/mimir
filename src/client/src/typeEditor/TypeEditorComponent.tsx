@@ -25,6 +25,7 @@ import {
   IsObjectBlock,
   IsProduct,
   GetWidth,
+  GetSelectedDiscipline,
 } from "./helpers";
 import {
   closeTypeEditor,
@@ -122,8 +123,9 @@ export const TypeEditorComponent = () => {
                 />
               )}
               <TypeEditorList
-                items={state?.attributes}
                 createLibraryType={state?.createLibraryType}
+                items={state?.attributes}
+                discipline={GetSelectedDiscipline(state.createLibraryType?.purpose, state?.purposes)}
                 listType={
                   IsLocation(state?.createLibraryType.aspect) ? ListType.LocationAttributes : ListType.ObjectAttributes
                 }
