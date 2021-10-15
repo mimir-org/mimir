@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Mb.Models.Application.TypeEditor;
 using Mb.Models.Data;
-using Mb.TypeEditor.Core.Contracts;
+using Mb.TypeEditor.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

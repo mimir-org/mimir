@@ -82,7 +82,7 @@ namespace Mb.Api
                 endpoints.MapControllers();
             });
 
-            app.UseModelBuilderModule();
+            app.UseModelBuilderModule().UseTypeEditorModule();
         }
     }
 }

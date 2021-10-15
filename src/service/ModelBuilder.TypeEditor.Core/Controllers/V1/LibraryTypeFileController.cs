@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Mb.Models.Exceptions;
 using Mb.Models.Extensions;
-using Mb.TypeEditor.Core.Contracts;
+using Mb.TypeEditor.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

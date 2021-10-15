@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
-using Mb.Core.Extensions;
-using Mb.Core.Repositories.Contracts;
-using Mb.Models.Application;
+using Mb.Data.Contracts;
 using Mb.Models.Application.Mimir;
 using Mb.Models.Application.TypeEditor;
 using Mb.Models.Data;

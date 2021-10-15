@@ -6,7 +6,7 @@ using Mb.Models.Application;
 using Mb.Models.Application.TypeEditor;
 using Mb.Models.Data;
 using Mb.Models.Enums;
-using Mb.TypeEditor.Core.Contracts;
+using Mb.TypeEditor.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

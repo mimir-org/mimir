@@ -6,14 +6,12 @@ using System.Threading;
 using AutoMapper;
 using AutoMapper.Configuration;
 using Mb.Core.Profiles;
-using Mb.Core.Repositories;
-using Mb.Core.Repositories.Contracts;
-using Mb.Core.Services;
-using Mb.Core.Services.Contracts;
+using Mb.Data.Contracts;
+using Mb.Data.Repositories;
 using Mb.Models.Configurations;
 using Mb.Modules;
-using Mb.TypeEditor.Data.Contracts;
-using Mb.TypeEditor.Data.Repositories;
+using Mb.Services.Contracts;
+using Mb.Services.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -52,7 +50,7 @@ namespace Mb.Core.Extensions
             });
 
             // Dependency injection
-            services.AddSingleton<IFileRepository, JsonFileRepository>();
+            
             services.AddSingleton<ICommonRepository, CommonRepository>();
             
             services.AddScoped<IProjectRepository, ProjectRepository>();
@@ -66,7 +64,7 @@ namespace Mb.Core.Extensions
             services.AddScoped<IContractorRepository, ContractorRepository>();
             
             
-            services.AddScoped<IBlobDataRepository, BlobDataRepository>();
+            
             
             
             services.AddScoped<ITransportRepository, TransportRepository>();
@@ -75,7 +73,7 @@ namespace Mb.Core.Extensions
             
             services.AddScoped<ICompositeRepository, CompositeRepository>();
 
-            services.AddScoped<ISeedingService, SeedingService>();
+            
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<ILibraryService, LibraryService>();
             services.AddScoped<ICommonService, CommonService>();
@@ -125,26 +123,15 @@ namespace Mb.Core.Extensions
         {
             using var serviceScope = app.ApplicationServices.CreateScope();
             var context = serviceScope.ServiceProvider.GetRequiredService<ModelBuilderDbContext>();
-            var seedingService = serviceScope.ServiceProvider.GetRequiredService<ISeedingService>();
             var moduleService = serviceScope.ServiceProvider.GetRequiredService<IModuleService>();
-            var seedingServiceLogger = serviceScope.ServiceProvider.GetRequiredService<ILogger<ISeedingService>>();
-            var moduleServiceLogger = serviceScope.ServiceProvider.GetRequiredService<ILogger<IModuleService>>();
+            var logger = serviceScope.ServiceProvider.GetRequiredService<ILogger<IModuleService>>();
 
             context.Database.Migrate();
-
-            
-            var awaiter = seedingService.LoadDataFromFiles().ConfigureAwait(true).GetAwaiter();
-            while (!awaiter.IsCompleted)
-            {
-                seedingServiceLogger.LogInformation("Starting initialize db");
-                Thread.Sleep(2000);
-            }
-
             var moduleReaderAwaiter = moduleService.InitialModules().ConfigureAwait(true).GetAwaiter();
 
             while (!moduleReaderAwaiter.IsCompleted)
             {
-                moduleServiceLogger.LogInformation("Reading modules");
+                logger.LogInformation("Reading modules");
                 Thread.Sleep(2000);
             }
 

@@ -1,5 +1,4 @@
-﻿using Mb.Core.Services.Contracts;
-using Mb.Models.Data;
+﻿using Mb.Models.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -9,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Mb.Models.Exceptions;
 using Mb.Models.Extensions;
+using Mb.Services.Contracts;
 
 namespace Mb.Core.Controllers.V1
 {
