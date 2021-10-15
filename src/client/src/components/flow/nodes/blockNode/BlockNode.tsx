@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import { Node, Edge } from "../../../../models";
 import { Size } from "../../../../compLibrary";
-import { IsFunction } from "../../helpers";
+import { IsFunction, IsProduct } from "../../helpers";
 import { NodeBox } from "../../styled";
 import { TerminalsComponent, HandleComponent } from "../../block/terminals";
 import { ConnectViewComponent } from "../../block/connectView";
@@ -59,7 +59,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
     <>
       <NodeBox
         id={type + data.id}
-        function={IsFunction(data)}
+        product={IsProduct(data)}
         onMouseOver={() => Click.OnHover(showTerminalBox, showConnectBox)}
         onMouseOut={() => Click.OnMouseOut(showTerminalBox, showConnectBox)}
       >
