@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Mb.Models.Application;
+using Mb.Models.Application.Mimir;
 using Mb.Models.Data;
 
 namespace Mb.Core.Profiles

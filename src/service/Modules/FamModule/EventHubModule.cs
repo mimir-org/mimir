@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using EventHubModule.Contracts;
 using Mb.Models.Application;
-using Mb.Models.Modules;
+using Mb.Modules;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -59,13 +59,13 @@ namespace EventHubModule
             if (consumer != null)
             {
                 consumer.DataReceived += ProcessData;
-                //await consumer.RunAsync();
+                await consumer.RunAsync();
             }
         }
 
         private void ProcessData(object? sender, ImfData e)
         {
-            throw new NotImplementedException();
+            var data = string.Empty;
         }
     }
 }

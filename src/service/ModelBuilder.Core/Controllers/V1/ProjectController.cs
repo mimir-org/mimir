@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Mb.Core.Extensions;
-using Mb.Core.Services.Contracts;
 using Mb.Models.Application;
+using Mb.Models.Application.Mimir;
 using Mb.Models.Data;
 using Mb.Models.Exceptions;
 using Mb.Models.Extensions;
-using Mb.Models.Modules;
+using Mb.Modules;
+using Mb.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -285,7 +285,7 @@ namespace Mb.Core.Controllers.V1
         {
             try
             {
-                if (!file.ValidateJsonFileExtension())
+                if (!file.ValidateJsonFile())
                     return BadRequest("Invalid file extension. The file must be a json file");
 
                 var createdProject = await _projectService.CreateFromFile(file, cancellationToken, parser);

@@ -32,7 +32,7 @@ namespace Mb.Models.Extensions
             return JsonConvert.DeserializeObject<T>(valueAsString);
         }
 
-        public static bool ValidateJsonFileExtension(this IFormFile file)
+        public static bool ValidateJsonFile(this IFormFile file)
         {
             var extension = "." + file.FileName.Split('.')[file.FileName.Split('.').Length - 1];
             return (extension.ToLower() == ".json");
