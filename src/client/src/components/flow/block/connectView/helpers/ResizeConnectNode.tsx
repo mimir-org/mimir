@@ -1,4 +1,4 @@
-import { FindNodeByDataId } from "../../helpers";
+import { GetNodeByDataId } from "../../helpers";
 import { Size } from "../../../../../compLibrary";
 import { Node } from "../../../../../models";
 
@@ -9,7 +9,7 @@ import { Node } from "../../../../../models";
  * @param data
  */
 const ResizeConnectNode = (nodeCount: number, mainNodeId: string, data: Node) => {
-  const mainNode = FindNodeByDataId(mainNodeId);
+  const mainNode = GetNodeByDataId(mainNodeId);
   const percent = 16;
   let newHeight = Size.Node_Length;
   let count = 1;
@@ -27,7 +27,7 @@ const ResizeConnectNode = (nodeCount: number, mainNodeId: string, data: Node) =>
 
     if (nodeCount >= 5) mainNode.style.maxHeight = `${resize - 50}px`;
   } else {
-    const node = FindNodeByDataId(data.id);
+    const node = GetNodeByDataId(data.id);
     if (node) {
       node.style.width = `${Size.Node_Width}px`;
       node.style.height = `${Size.Node_Length}px`;

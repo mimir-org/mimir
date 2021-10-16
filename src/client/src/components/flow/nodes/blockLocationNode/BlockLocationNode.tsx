@@ -7,7 +7,7 @@ import { HandleComponent, TerminalsComponent } from "../../block/terminals";
 import { useDispatch, useSelector } from "react-redux";
 import { Node } from "../../../../models";
 import { OnHover, OnMouseOut, OnConnectorClick } from "./handlers";
-import { FilterTerminals, FindNodeByDataId } from "../../block/helpers";
+import { FilterTerminals, GetNodeByDataId } from "../../block/helpers";
 import { Symbol } from "../../../../compLibrary/symbol";
 
 /**
@@ -27,7 +27,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
 
   // Enforce size change of node
   useEffect(() => {
-    const locationNode = FindNodeByDataId(data.id);
+    const locationNode = GetNodeByDataId(data.id);
     if (locationNode) {
       locationNode.style.width = `${data.width}px`;
       locationNode.style.height = `${data.length}px`;

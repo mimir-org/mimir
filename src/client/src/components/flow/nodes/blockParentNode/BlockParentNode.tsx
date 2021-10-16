@@ -10,7 +10,7 @@ import { GetParentColor } from "./helpers";
 import { OnParentClick, OnChildClick, OnConnectorClick } from "./handlers";
 import { BlockComponent } from "./";
 import { BlockMessageBox } from "../../block/styled";
-import { FilterTerminals, FindNodeByDataId, FindAllEdges } from "../../block/helpers";
+import { FilterTerminals, GetNodeByDataId, FindAllEdges } from "../../block/helpers";
 
 /**
  * Component for the large parent block in BlockView.
@@ -30,7 +30,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
 
   // Enforce size change of node
   useEffect(() => {
-    const parentNode = FindNodeByDataId(data.id);
+    const parentNode = GetNodeByDataId(data.id);
     if (splitView) {
       parentNode.style.width = `${Size.SplitView_Width}px`;
     } else parentNode.style.width = `${Size.BlockView_Width}px`;

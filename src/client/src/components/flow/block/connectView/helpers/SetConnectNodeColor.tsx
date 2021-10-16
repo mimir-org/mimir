@@ -1,10 +1,10 @@
-import { FindNodeByDataId } from "../../helpers";
+import { GetNodeByDataId } from "../../helpers";
 import { Color } from "../../../../../compLibrary";
 import { Node } from "../../../../../models";
 import { IsFunction } from "../../../helpers";
 
 const SetConnectNodeColor = (mainConnectNodeId: string, connectNodes: Node[], data: Node) => {
-  const mainConnectNode = FindNodeByDataId(mainConnectNodeId);
+  const mainConnectNode = GetNodeByDataId(mainConnectNodeId);
   const mainColor = IsFunction(data) ? Color.FunctionMain : Color.ProductMain;
   const headerColor = IsFunction(data) ? Color.FunctionHeader : Color.ProductHeader;
 
@@ -12,7 +12,7 @@ const SetConnectNodeColor = (mainConnectNodeId: string, connectNodes: Node[], da
   if (mainConnectNode && connectNodes?.length > 0) mainConnectNode.style.background = headerColor;
   // Reset color to normal
   else {
-    const node = FindNodeByDataId(data.id);
+    const node = GetNodeByDataId(data.id);
     if (node) node.style.background = mainColor;
   }
 };
