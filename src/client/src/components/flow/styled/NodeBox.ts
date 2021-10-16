@@ -3,12 +3,13 @@ import { Color } from "../../../compLibrary";
 
 interface Props {
   product?: boolean;
+  width: number;
 }
 
 const NodeBox = styled.div<Props>`
   position: relative;
   height: inherit;
-  width: inherit;
+  width: ${(props) => props.width}px;
   max-height: inherit;
 
   .line {

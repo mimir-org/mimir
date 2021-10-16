@@ -5,6 +5,7 @@ import { IsValidConnection, SetTopPos, SetLeftPos, GetTerminalColor } from "./he
 import { HandleBox } from "./styled";
 import { CreateId, IsInputTerminal } from "../../helpers";
 import { ConnectorIcon } from "../../../../assets/icons/connectors";
+import { Size } from "../../../../compLibrary";
 
 interface Props {
   node: Node;
@@ -32,8 +33,8 @@ const HandleComponent = ({ node, nodes, terminals, isParent, splitView, electro 
 
         return (
           <HandleBox
-            top={SetTopPos(pos, electro, isParent, inputCount, outputCount)}
-            left={SetLeftPos(pos, electro, isParent, inputCount, outputCount, splitView)}
+            top={SetTopPos(pos, electro, isParent, inputCount, outputCount, node?.length ?? Size.Node_Length)}
+            left={SetLeftPos(pos, electro, isParent, inputCount, outputCount, splitView, node?.width)}
             visible={conn.visible}
             id={"handle-" + conn.id}
             key={"key-" + conn.id}

@@ -1,25 +1,25 @@
 import { Elements } from "react-flow-renderer";
-import { CreateTreeEdge, CreateTreeNode } from "./";
-import { GetEdgeType } from "../tree/helpers";
-import { Project, Edge } from "../../../models";
+import { BuildTreeEdge, BuildTreeNode } from ".";
+import { GetEdgeType } from "../helpers";
+import { Project, Edge } from "../../../../models";
 
-const CreateTreeElements = (project: Project): Elements => {
+const BuildTreeElements = (project: Project): Elements => {
   const elements: Elements = [];
 
   if (!project) return elements;
 
   project.nodes?.forEach((node) => {
-    let treeNode = CreateTreeNode(node);
+    let treeNode = BuildTreeNode(node);
     if (treeNode) elements.push(treeNode);
   });
 
   project.edges?.forEach((edge: Edge) => {
     const edgeType = GetEdgeType(edge.fromConnector);
-    const treeEdge = CreateTreeEdge(edge, edgeType, project.nodes);
+    const treeEdge = BuildTreeEdge(edge, edgeType, project.nodes);
     if (treeEdge) elements.push(treeEdge);
   });
 
   return elements;
 };
 
-export default CreateTreeElements;
+export default BuildTreeElements;

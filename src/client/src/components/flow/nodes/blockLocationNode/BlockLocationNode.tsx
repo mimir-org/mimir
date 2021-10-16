@@ -38,6 +38,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
     <>
       <NodeBox
         id={"BlockLocationNode-" + data.id}
+        width={data.width}
         onMouseOver={() => OnHover(showTerminalButton)}
         onMouseOut={() => OnMouseOut(showTerminalButton)}
       >

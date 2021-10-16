@@ -3,7 +3,7 @@ import { Color, Size } from "../../../../../compLibrary";
 
 interface Props {
   selected: boolean;
-  splitView: boolean;
+  width: number;
 }
 
 const Block = styled.div<Props>`
@@ -15,7 +15,7 @@ const Block = styled.div<Props>`
   border-radius: 10px;
   border: 2px solid;
   border-color: ${Color.DarkGrey};
-  width: ${(props) => (props.splitView ? Size.SplitView_Width - 4 : Size.BlockView_Width - 4)}px;
+  width: ${(props) => props.width}px;
 `;
 
 export default Block;

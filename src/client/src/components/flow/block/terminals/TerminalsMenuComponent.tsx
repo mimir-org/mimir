@@ -2,7 +2,6 @@ import { Connector, Node } from "../../../../models";
 import { IsMainConnectNode } from "../../block/connectView/helpers";
 import { GetMenuColor, GetTerminalColor } from "./helpers";
 import { TerminalsMenu, TerminalsElement, ColorBar } from "./styled";
-import { IsLocation } from "../../helpers";
 
 interface Props {
   node: Node;
@@ -25,12 +24,12 @@ const TerminalsMenuComponent = ({ node, parent, isInput, splitView, terminals, v
     <TerminalsMenu
       splitView={splitView}
       parent={parent}
-      location={IsLocation(node)}
       isInput={isInput}
       connectView={IsMainConnectNode(node.id)}
       tabIndex={0}
       onBlur={onBlur}
       color={GetMenuColor(node)}
+      width={node.width}
     >
       {terminals.map((conn) => (
         <TerminalsElement key={conn.id}>

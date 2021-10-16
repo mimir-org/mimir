@@ -8,8 +8,8 @@ import { Node, Edge } from "../../../models";
  * @returns a boolean value.
  */
 const HasChildren = (node: Node) => {
-  const edges = red.store.getState().projectState.project.edges as Edge[];
-  const edge = edges.find((e) => e.fromNodeId === node?.id);
+  const edges = red.store.getState().projectState.project?.edges as Edge[];
+  const edge = edges?.find((e) => e.fromNodeId === node?.id);
 
   return edge && IsPartOfTerminal(edge.fromConnector);
 };

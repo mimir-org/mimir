@@ -1,7 +1,7 @@
 import { Elements } from "react-flow-renderer";
-import { CreateBlockNode } from "..";
-import { Node, Edge } from "../../../../models";
-import { IsPartOfTerminal } from "../../helpers";
+import { BuildBlockNode } from "..";
+import { Node, Edge } from "../../../../../models";
+import { IsPartOfTerminal } from "../../../helpers";
 
 /**
  * Component to draw all children nodes in BlockView.
@@ -18,7 +18,7 @@ const DrawChildNodes = (edges: Edge[], allNodes: Node[], selectedNode: Node, ele
       IsPartOfTerminal(edge.toConnector)
     ) {
       const toNode = allNodes.find((n) => n.id === edge.toNode.id);
-      if (toNode) elements.push(CreateBlockNode(toNode, null, allNodes));
+      if (toNode) elements.push(BuildBlockNode(toNode, null, allNodes));
     }
   });
 };
