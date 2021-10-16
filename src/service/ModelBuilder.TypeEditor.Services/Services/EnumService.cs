@@ -8,8 +8,9 @@ using Mb.Models.Data.Enums;
 using Mb.Models.Data.Enums.Mapping;
 using Mb.Models.Extensions;
 using Mb.TypeEditor.Data.Contracts;
+using Mb.TypeEditor.Services.Contracts;
 
-namespace Mb.TypeEditor.Data.Repositories
+namespace Mb.TypeEditor.Services.Services
 {
     public class EnumService : IEnumService
     {

@@ -29,7 +29,7 @@
     <ProjectReference Include="..\ModelBuilder.Models\ModelBuilder.Models.csproj" />
     <ProjectReference Include="..\ModelBuilder.Modules\ModelBuilder.Modules.csproj" />
     <ProjectReference Include="..\ModelBuilder.Services\ModelBuilder.Services.csproj" />
-    <ProjectReference Include="..\ModelBuilder.TypeEditor.Data\ModelBuilder.TypeEditor.Data.csproj" />
+    <ProjectReference Include="..\ModelBuilder.TypeEditor.Services\ModelBuilder.TypeEditor.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>
