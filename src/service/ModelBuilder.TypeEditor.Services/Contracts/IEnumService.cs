@@ -5,7 +5,7 @@ using Mb.Models.Application.TypeEditor;
 using Mb.Models.Data.Enums;
 using Mb.Models.Data.Enums.Mapping;
 
-namespace Mb.TypeEditor.Data.Contracts
+namespace Mb.TypeEditor.Services.Contracts
 {
     public interface IEnumService
     {
