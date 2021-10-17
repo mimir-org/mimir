@@ -3,7 +3,7 @@ import { TerminalsMenuComponent } from ".";
 import { Connector, Node } from "../../../../models";
 import { GetMenuIcon } from "./helpers";
 import { TerminalsBox } from "./styled";
-import { IsAspectNode, IsInputTerminal, IsLocation } from "../../helpers";
+import { IsAspectNode, IsInputTerminal } from "../../helpers";
 
 interface Props {
   node: Node;
@@ -56,7 +56,7 @@ const TerminalsComponent = ({
       </TerminalsBox>
 
       <TerminalsBox
-        visible={menuBox && !IsAspectNode(node) && !IsLocation(node) && outTerminals.length > 0}
+        visible={menuBox && !IsAspectNode(node) && outTerminals.length > 0}
         parent={parent || mainConnectNode}
         input={false}
         mainConnectNode={mainConnectNode}
