@@ -10,8 +10,8 @@ import { IsFunction, IsProduct } from "../../helpers";
 import { NodeBox } from "../../styled";
 import { TerminalsComponent, HandleComponent } from "../../block/terminals";
 import { ConnectViewComponent } from "../../block/connectView";
-import { IsChildConnectNode, IsConnectNodeChecked, ResizeElectroNode } from "./helpers";
-import { FilterTerminals, FindAllEdges } from "../../block/helpers";
+import { IsChildConnectNode, IsConnectNodeChecked, SetNodeWidth, SetNodeLength } from "./helpers";
+import { FilterTerminals, FindAllEdges, GetNodeByDataId } from "../../block/helpers";
 import { Symbol } from "../../../../compLibrary/symbol";
 import { BlockNodeNameBox } from "../../block/styled";
 
@@ -28,24 +28,28 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const [connectBox, showConnectBox] = useState(false);
   const [connectMenu, showConnectMenu] = useState(false);
 
-  const nodes = useSelector<RootState>((s) => s.projectState.project.nodes) as Node[];
-  const edges = useSelector<RootState>((s) => s.projectState.project.edges) as Edge[];
+  const nodes = useSelector<RootState>((s) => s.projectState.project?.nodes) as Node[];
+  const edges = useSelector<RootState>((s) => s.projectState.project?.edges) as Edge[];
   const splitView = useSelector<RootState>((s) => s.splitView.visible) as boolean;
   const splitNode = useSelector<RootState>((s) => s.splitView.node) as Node;
   const electro = useSelector<RootState>((s) => s.electro.visible) as boolean;
   const type = IsFunction(data) ? "BlockFunctionNode-" : "BlockProductNode-";
-  const node = nodes.find((x) => x.id === data.id);
+  const node = nodes?.find((x) => x.id === data.id);
   const terminals = FilterTerminals(data, splitView, splitNode);
 
   const mainConnectNodes = useSelector<RootState>((s) => s.connectView?.mainNodes) as Node[];
   const connectChildren = GetConnectChildren(data, nodes, edges);
   const mainConnectNode = mainConnectNodes.find((x) => x.id === data.id);
   const connectNodes = mainConnectNode?.connectNodes;
-  if (!mainConnectNode) data.width = Size.Node_Width;
+
+  if (!mainConnectNode) {
+    data.width = Size.Node_Width;
+    data.length = Size.Node_Length;
+  }
 
   useEffect(() => {
-    if (mainConnectNodes?.length === 0) return;
-    ResizeConnectNode(connectNodes?.length, mainConnectNode?.id, data);
+    if (connectNodes?.length === undefined) return;
+    ResizeConnectNode(connectNodes?.length, mainConnectNode, data);
     SetConnectNodeColor(mainConnectNode?.id, connectNodes, data);
   }, [mainConnectNode, data, connectNodes, mainConnectNodes]);
 
@@ -57,14 +61,24 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
     }
   }, [mainConnectNode]);
 
-  if (electro) ResizeElectroNode(terminals, data);
+  electro ? SetNodeWidth(terminals, data) : SetNodeLength(terminals, data);
+
+  // Remove in new BlockView
+  if (mainConnectNodes.length === 0) {
+    const flowNode = GetNodeByDataId(data.id);
+    if (flowNode) {
+      flowNode.style.width = `${data.width}px`;
+      flowNode.style.height = `${data.length}px`;
+    }
+  }
 
   return (
     <>
       <NodeBox
         id={type + data.id}
         product={IsProduct(data)}
-        width={data.width}
+        width={mainConnectNode ? mainConnectNode.width : data.width}
+        length={mainConnectNode ? mainConnectNode.length : data.length}
         onMouseOver={() => Click.OnHover(showTerminalBox, showConnectBox)}
         onMouseOut={() => Click.OnMouseOut(showTerminalBox, showConnectBox)}
       >
@@ -72,9 +86,10 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
           node={node}
           nodes={nodes}
           terminals={terminals}
-          isParent={false}
+          parent={false}
           splitView={splitView}
           electro={electro}
+          mainConnectNode={mainConnectNode?.id === data.id}
         />
         <BlockNodeNameBox>{data.label ?? data.name}</BlockNodeNameBox>
         {data.id !== mainConnectNode?.id && <Symbol base64={data.symbol} text={data.name} />}

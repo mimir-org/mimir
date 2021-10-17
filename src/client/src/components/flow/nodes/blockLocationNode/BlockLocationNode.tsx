@@ -9,6 +9,7 @@ import { Node } from "../../../../models";
 import { OnHover, OnMouseOut, OnConnectorClick } from "./handlers";
 import { FilterTerminals, GetNodeByDataId } from "../../block/helpers";
 import { Symbol } from "../../../../compLibrary/symbol";
+import { Size } from "../../../../compLibrary";
 
 /**
  * Component for a Location Node in BlockView.
@@ -24,6 +25,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const splitView = useSelector<RootState>((s) => s.splitView.visible) as boolean;
   const splitNode = useSelector<RootState>((s) => s.splitView.node) as Node;
   const electro = useSelector<RootState>((s) => s.electro.visible) as boolean;
+  if (data) data.width = Size.Node_Width;
 
   // Enforce size change of node
   useEffect(() => {
@@ -39,6 +41,8 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
       <NodeBox
         id={"BlockLocationNode-" + data.id}
         width={data.width}
+        length={data.length}
+        product={false}
         onMouseOver={() => OnHover(showTerminalButton)}
         onMouseOut={() => OnMouseOut(showTerminalButton)}
       >
@@ -64,9 +68,10 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
         node={data}
         nodes={nodes}
         terminals={FilterTerminals(data, splitView, splitNode)}
-        isParent={false}
+        parent={false}
         splitView={splitView}
         electro={electro}
+        mainConnectNode={false}
       />
     </>
   );

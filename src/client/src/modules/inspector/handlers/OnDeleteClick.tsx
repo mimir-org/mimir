@@ -5,15 +5,15 @@ import { setModuleVisibility } from "../../../redux/store/modules/actions";
 import { SetPanelHeight } from "../helpers";
 import { removeEdge, removeNode } from "../../../redux/store/project/actions";
 import { changeInspectorHeight } from "../redux/height/actions";
+import { InspectorElement } from "../types";
+import { IsEdge, IsNode } from "../helpers/IsType";
+import { Dispatch } from "redux";
 import {
   IsAspectNode,
   IsPartOfTerminal,
   UpdateSiblingIndexOnEdgeDelete,
   UpdateSiblingIndexOnNodeDelete,
 } from "../../../components/flow/helpers";
-import { InspectorElement } from "../types";
-import { IsEdge, IsNode } from "../helpers/IsType";
-import { Dispatch } from "redux";
 
 const OnDeleteClick = (project: Project, element: InspectorElement, dispatch: any) => {
   if (IsNode(element)) {

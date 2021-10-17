@@ -43,6 +43,8 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
     allEdges.style.zIndex = "3";
   }, []);
 
+  if (splitView) node.width = Size.SplitView_Width;
+
   return (
     <>
       <BlockComponent
@@ -68,11 +70,12 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
       />
       <HandleComponent
         node={node}
-        isParent={true}
+        parent={true}
         nodes={nodes}
         terminals={FilterTerminals(node, splitView, splitNode)}
         splitView={splitView}
         electro={electro}
+        mainConnectNode={false}
       />
 
       {splitView && !splitNode && (

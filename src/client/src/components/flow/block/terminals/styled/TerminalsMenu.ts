@@ -21,8 +21,8 @@ const TerminalsMenu = styled.div<Props>`
   width: max-content;
   position: absolute;
   top: ${(props) => (props.parent ? 0 : 5)}px;
-  left: ${(props) => !props.isInput && props.width + 2}px;
-  right: ${(props) => props.isInput && props.width + 2}px;
+  left: ${(props) => !props.isInput && props.width + 22}px;
+  right: ${(props) => props.isInput && props.width + 22}px;
 `;
 
 export default TerminalsMenu;

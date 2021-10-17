@@ -6,27 +6,29 @@ import { SetTerminalYPos } from "./";
  * Component to set the top position of a terminal in BlockView
  * @param pos
  * @param electro
- * @param isParent
+ * @param parent
  * @param inputCount
  * @param outputCount
  * @param nodeHeight
+ * @param mainConnectNode
  * @returns a number used by the styled component HandleBox.
  */
 const SetTopPos = (
   pos: Position,
   electro: boolean,
-  isParent: boolean,
+  parent: boolean,
   inputCount: number,
   outputCount: number,
-  nodeHeight: number
+  nodeHeight: number,
+  mainConnectNode: boolean
 ) => {
   if (!electro) {
-    if (pos === Position.Left) return SetTerminalYPos(inputCount, isParent, nodeHeight);
-    if (pos === Position.Right) return SetTerminalYPos(outputCount, isParent, nodeHeight);
+    if (pos === Position.Left) return SetTerminalYPos(inputCount, parent, nodeHeight, mainConnectNode);
+    if (pos === Position.Right) return SetTerminalYPos(outputCount, parent, nodeHeight, mainConnectNode);
   }
   if (pos === Position.Top) return -15;
-  if (pos === Position.Bottom && !isParent) return Size.Node_Length;
-  if (pos === Position.Bottom && isParent) return 605;
+  if (pos === Position.Bottom && !parent) return Size.Node_Length;
+  if (pos === Position.Bottom && parent) return 605;
 };
 
 export default SetTopPos;

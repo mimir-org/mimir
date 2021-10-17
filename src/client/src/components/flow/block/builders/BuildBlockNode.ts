@@ -33,7 +33,6 @@ const BuildBlockNode = (node: Node, connectNode: Node, allNodes: Node[]) => {
     draggable: true,
     selectable: true,
     connectable: true,
-    style: { width: "300px !important" },
   } as FlowElement;
 };
 
