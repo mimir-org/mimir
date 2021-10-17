@@ -1,4 +1,7 @@
-﻿namespace Mb.Modules
+﻿using Mb.Models.Abstract;
+using Mb.Models.Enums;
+
+namespace Mb.Models.Application
 {
     public class Module
     {

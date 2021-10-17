@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Mb.Models.Attributes;
 using Mb.Models.Extensions;
-using Mb.Modules;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Mb.Core.Extensions

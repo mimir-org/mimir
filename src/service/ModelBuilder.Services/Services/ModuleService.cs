@@ -4,25 +4,26 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Mb.Models.Abstract;
+using Mb.Models.Enums;
 using Mb.Models.Exceptions;
 using Mb.Services.Contracts;
-using Module = Mb.Modules;
 
 namespace Mb.Services.Services
 {
     public class ModuleService : IModuleService
     {
         public List<Assembly> Assemblies { get; }
-        public List<Module.Module> Modules { get; set; }
+        public List<Models.Application.Module> Modules { get; set; }
 
         public ModuleService()
         {
             Assemblies = new List<Assembly>();
-            Modules = new List<Module.Module>();
+            Modules = new List<Models.Application.Module>();
             LoadAssemblies();
-            Modules.AddRange(CreateModules<Module.IModelBuilderPlugin>(Module.ModuleType.Plugin));
-            Modules.AddRange(CreateModules<Module.IModelBuilderParser>(Module.ModuleType.Parser));
-            Modules.AddRange(CreateModules<Module.IModelBuilderSyncService>(Module.ModuleType.SyncService));
+            Modules.AddRange(CreateModules<IModelBuilderPlugin>(ModuleType.Plugin));
+            Modules.AddRange(CreateModules<IModelBuilderParser>(ModuleType.Parser));
+            Modules.AddRange(CreateModules<IModelBuilderSyncService>(ModuleType.SyncService));
         }
 
         public Task InitialModules()
@@ -30,7 +31,7 @@ namespace Mb.Services.Services
             return Task.CompletedTask;
         }
 
-        public T Resolve<T>(string name) where T : Module.IModuleInterface
+        public T Resolve<T>(string name) where T : IModuleInterface
         {
             if (string.IsNullOrEmpty(name))
                 throw new ModelBuilderModuleException("Module name is required");
@@ -44,9 +45,9 @@ namespace Mb.Services.Services
             throw new NotSupportedException("The type is not supported or empty");
         }
 
-        private IEnumerable<Module.Module> CreateModules<T>(Module.ModuleType moduleType) where T : Module.IModuleInterface
+        private IEnumerable<Models.Application.Module> CreateModules<T>(ModuleType moduleType) where T : IModuleInterface
         {
-            var data = new List<Module.Module>();
+            var data = new List<Models.Application.Module>();
 
             if (Assemblies == null || !Assemblies.Any())
                 return data;
@@ -61,7 +62,7 @@ namespace Mb.Services.Services
                 if (instance is not T obj) 
                     continue;
                 
-                data.Add(new Module.Module
+                data.Add(new Models.Application.Module
                 {
                     Name = obj.GetName() ?? Guid.NewGuid().ToString(),
                     Instance = obj,
@@ -84,7 +85,7 @@ namespace Mb.Services.Services
             {
                 try
                 {
-                    var hasModuleInterface = assembly.GetTypes().Any(x => x.GetInterfaces().Contains(typeof(Module.IModuleInterface)) && x.GetConstructor(Type.EmptyTypes) != null);
+                    var hasModuleInterface = assembly.GetTypes().Any(x => x.GetInterfaces().Contains(typeof(IModuleInterface)) && x.GetConstructor(Type.EmptyTypes) != null);
                     if (!hasModuleInterface) 
                         continue;
 

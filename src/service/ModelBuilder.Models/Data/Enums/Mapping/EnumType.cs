@@ -42,7 +42,7 @@ namespace Mb.Models.Data.Enums.Mapping
             EnumTypes.Add(5, typeof(TerminalCategory));
             EnumTypes.Add(6, typeof(AttributeFormat));
             EnumTypes.Add(7, typeof(BuildStatus));
-            EnumTypes.Add(8, typeof(PredefinedAttributeCategory));
+            EnumTypes.Add(8, typeof(TypeAttribute));
             EnumTypes.Add(9, typeof(Purpose));
         }
     }

@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace Mb.Core.Controllers.V1
+namespace Mb.TypeEditor.Core.Controllers.V1
 {
 
     /// <summary>
