@@ -3,7 +3,7 @@ import { NodeProps, Handle } from "react-flow-renderer";
 import { Connector, Node } from "../../../../../models";
 import { Symbol } from "../../../../../compLibrary/symbol";
 import { TreeNodeWrapper, TreeHandleBox, TreeNodeNameBox } from "./styled";
-import { GetHandleType, IsInputTerminal, IsOutputTerminal, IsPartOfTerminal, SetTerminalYPos } from "../../../helpers";
+import { GetHandleType, IsPartOfTerminal } from "../../../helpers";
 
 /**
  * Component to display a node in TreeView.
@@ -13,8 +13,6 @@ import { GetHandleType, IsInputTerminal, IsOutputTerminal, IsPartOfTerminal, Set
 const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
   const [isHover, setIsHover] = useState(false);
   const [timer, setTimer] = useState(false);
-  let inputCount = 0;
-  let outputCount = 0;
 
   const connectorIsVisible = (conn: Connector) => {
     return IsPartOfTerminal(conn) && isHover;
@@ -32,21 +30,15 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
     }
   }, [timer]);
 
-  const mouseNodeLeave = () => {
-    setTimer(true);
-  };
+  const mouseNodeLeave = () => setTimer(true);
 
   return (
     <TreeNodeWrapper onMouseEnter={() => setIsHover(true)} onMouseLeave={() => mouseNodeLeave()}>
       {data.connectors?.map((conn: Connector) => {
         const [typeHandler, positionHandler] = GetHandleType(conn);
-        if (conn.visible && IsInputTerminal(conn)) inputCount++;
-        else if (conn.visible && IsOutputTerminal(conn)) outputCount++;
 
         return (
           <TreeHandleBox
-            input={SetTerminalYPos(inputCount, false)}
-            output={SetTerminalYPos(outputCount, false)}
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}
             key={"handle-treeview-" + conn.id}

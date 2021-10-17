@@ -5,8 +5,6 @@ import { ConnectorTreeViewIcon } from "../../../../../../assets/icons/connectors
 interface Props {
   visible: boolean;
   position: Position;
-  input?: number;
-  output?: number;
 }
 
 const TreeHandleBox = styled.div<Props>`
@@ -23,9 +21,9 @@ const TreeHandleBox = styled.div<Props>`
 
     top: ${(props) =>
       props.position === Position.Left
-        ? props.input + "%"
+        ? "50%"
         : props.position === Position.Right
-        ? props.output + "%"
+        ? "50%"
         : props.position === Position.Top && "-15px"};
   }
 `;
