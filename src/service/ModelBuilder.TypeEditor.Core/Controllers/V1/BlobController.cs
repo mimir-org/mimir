@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Mb.Models.Application.Mimir;
+using Mb.Models.Application;
 using Mb.Models.Data.TypeEditor;
 using Mb.TypeEditor.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;

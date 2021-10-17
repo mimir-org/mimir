@@ -9,7 +9,6 @@ using AutoMapper.QueryableExtensions;
 using Mb.Data.Contracts;
 using Mb.Models.Abstract;
 using Mb.Models.Application;
-using Mb.Models.Application.Mimir;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Mb.Models.Data.TypeEditor.EnumTypes;

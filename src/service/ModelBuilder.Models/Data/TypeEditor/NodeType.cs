@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using Mb.Models.Application;
+using Mb.Models.Application.TypeEditor;
 using Newtonsoft.Json;
 
 namespace Mb.Models.Data.TypeEditor

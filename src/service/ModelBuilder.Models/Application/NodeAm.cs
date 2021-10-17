@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Mb.Models.Application.Mimir;
 using Mb.Models.Attributes;
 using Mb.Models.Data.TypeEditor.EnumTypes;
 using Mb.Models.Enums;

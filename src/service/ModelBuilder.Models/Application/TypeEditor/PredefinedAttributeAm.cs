@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Mb.Models.Application
+namespace Mb.Models.Application.TypeEditor
 {
     public class PredefinedAttributeAm
     {

@@ -3,7 +3,6 @@ using System.Linq;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Mb.Models.Application;
-using Mb.Models.Application.Mimir;
 using Mb.Models.Data;
 using ModelBuilder.Api.Tests.Fixture;
 using Newtonsoft.Json;

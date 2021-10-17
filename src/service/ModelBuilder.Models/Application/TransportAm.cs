@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Mb.Models.Application.Mimir;
 
 namespace Mb.Models.Application
 {

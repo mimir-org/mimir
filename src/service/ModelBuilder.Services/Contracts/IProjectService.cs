@@ -2,7 +2,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Mb.Models.Application;
-using Mb.Models.Application.Mimir;
 using Mb.Models.Data;
 using Microsoft.AspNetCore.Http;
 

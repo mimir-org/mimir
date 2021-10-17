@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Mb.Models.Application.Mimir
+namespace Mb.Models.Application
 {
     public class CombinedAttributeFilter
     {

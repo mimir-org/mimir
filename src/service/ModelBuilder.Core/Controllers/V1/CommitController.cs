@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Mb.Models.Application.Mimir;
+using Mb.Models.Application;
 using Mb.Models.Exceptions;
 using Mb.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;

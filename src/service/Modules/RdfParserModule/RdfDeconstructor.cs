@@ -5,7 +5,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using Mb.Models.Application;
-using Mb.Models.Application.Mimir;
 using Mb.Models.Enums;
 using Mb.Models.Extensions;
 using VDS.RDF;

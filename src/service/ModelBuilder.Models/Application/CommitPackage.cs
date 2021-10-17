@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Mb.Models.Enums;
 
-namespace Mb.Models.Application.Mimir
+namespace Mb.Models.Application
 {
     public class CommitPackage
     {

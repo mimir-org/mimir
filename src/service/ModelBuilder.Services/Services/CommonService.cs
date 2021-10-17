@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Mb.Data.Contracts;
-using Mb.Models.Application.Mimir;
+using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Services.Contracts;
 using Microsoft.EntityFrameworkCore;

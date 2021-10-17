@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Mb.Models.Application.Mimir;
+using Mb.Models.Application;
 using Mb.Models.Data.TypeEditor;
 using Mb.Models.Enums;
 using Mb.Models.Exceptions;

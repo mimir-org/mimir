@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Mb.Models.Application.Mimir;
+using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;

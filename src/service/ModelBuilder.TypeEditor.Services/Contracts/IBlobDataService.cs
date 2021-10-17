@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Mb.Models.Application.Mimir;
+using Mb.Models.Application;
 using Mb.Models.Data.TypeEditor;
 
 namespace Mb.TypeEditor.Services.Contracts

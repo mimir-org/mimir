@@ -2,7 +2,7 @@
 using System.Linq;
 using AutoMapper;
 using Mb.Data.Contracts;
-using Mb.Models.Application.Mimir;
+using Mb.Models.Application;
 using Mb.Models.Application.TypeEditor;
 using Mb.Models.Data;
 using Mb.Models.Data.TypeEditor;
