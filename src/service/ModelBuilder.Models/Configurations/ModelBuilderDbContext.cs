@@ -66,7 +66,6 @@ namespace Mb.Models.Configurations
             modelBuilder.ApplyConfiguration(new InterfaceTypeConfiguration());
             modelBuilder.ApplyConfiguration(new TransportTypeConfiguration());
             modelBuilder.ApplyConfiguration(new PredefinedAttributeConfiguration());
-            modelBuilder.ApplyConfiguration(new TypeAttributeConfiguration());
             modelBuilder.ApplyConfiguration(new BlobDataConfiguration());
             modelBuilder.ApplyConfiguration(new TransportConfiguration());
             modelBuilder.ApplyConfiguration(new InterfaceConfiguration());
