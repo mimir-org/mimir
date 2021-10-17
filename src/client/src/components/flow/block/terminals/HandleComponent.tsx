@@ -5,11 +5,12 @@ import { IsValidConnection, SetTopPos, SetLeftPos, GetTerminalColor } from "./he
 import { HandleBox } from "./styled";
 import { CreateId, IsInputTerminal } from "../../helpers";
 import { ConnectorIcon } from "../../../../assets/icons/connectors";
-import { Size } from "../../../../compLibrary";
 
 interface Props {
   node: Node;
   nodes: Node[];
+  width: number;
+  length: number;
   terminals: Connector[];
   parent: boolean;
   splitView: boolean;
@@ -21,7 +22,17 @@ interface Props {
  * @param interface
  * @returns a Mimir terminal in form of a Flow Handle element with an icon on top.
  */
-const HandleComponent = ({ node, nodes, terminals, parent, splitView, electro, mainConnectNode }: Props) => {
+const HandleComponent = ({
+  node,
+  nodes,
+  length,
+  width,
+  terminals,
+  parent,
+  splitView,
+  electro,
+  mainConnectNode,
+}: Props) => {
   const className = "react-flow__handle-block";
   let inputs = 0;
   let outputs = 0;
@@ -37,17 +48,8 @@ const HandleComponent = ({ node, nodes, terminals, parent, splitView, electro, m
             visible={conn.visible}
             id={"handle-" + conn.id}
             key={"key-" + conn.id}
-            top={SetTopPos(pos, electro, parent, inputs, outputs, node?.length ?? Size.Node_Length, mainConnectNode)}
-            left={SetLeftPos(
-              pos,
-              electro,
-              parent,
-              inputs,
-              outputs,
-              splitView,
-              node?.width ?? Size.Node_Width,
-              mainConnectNode
-            )}
+            top={SetTopPos(pos, electro, parent, inputs, outputs, length, mainConnectNode)}
+            left={SetLeftPos(pos, electro, parent, inputs, outputs, splitView, width, mainConnectNode)}
           >
             <ConnectorIcon style={{ fill: GetTerminalColor(conn) }} className={className} />
             <Handle

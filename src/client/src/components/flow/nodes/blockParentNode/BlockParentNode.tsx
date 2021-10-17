@@ -59,7 +59,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         node={node}
         inputMenuOpen={inTerminalMenu}
         outputMenuOpen={outTerminalMenu}
-        isParent={true}
+        parent={true}
         splitView={splitView}
         terminals={FilterTerminals(node, splitView, splitNode)}
         onClick={(conn) => OnConnectorClick(conn, dispatch, edges, nodes)}
@@ -72,6 +72,8 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         node={node}
         parent={true}
         nodes={nodes}
+        length={node.length}
+        width={node.width}
         terminals={FilterTerminals(node, splitView, splitNode)}
         splitView={splitView}
         electro={electro}

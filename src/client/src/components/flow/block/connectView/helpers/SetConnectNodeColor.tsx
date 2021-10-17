@@ -9,12 +9,13 @@ const SetConnectNodeColor = (mainConnectNodeId: string, connectNodes: Node[], da
   const headerColor = IsFunction(data) ? Color.FunctionHeader : Color.ProductHeader;
 
   // Set new background color
-  if (mainConnectNode && connectNodes?.length > 0) mainConnectNode.style.background = headerColor;
-  // Reset color to normal
-  else {
-    const node = GetNodeByDataId(data.id);
-    if (node) node.style.background = mainColor;
+  if (mainConnectNode && connectNodes?.length > 0) {
+    mainConnectNode.style.background = headerColor;
+    return;
   }
+  // Reset color to normal
+  const node = GetNodeByDataId(data.id);
+  if (node) node.style.background = mainColor;
 };
 
 export default SetConnectNodeColor;
