@@ -1,8 +1,8 @@
 import { FlowElement } from "react-flow-renderer";
-import { TextResources } from "../../../assets/text";
-import { Position } from "../../../compLibrary";
-import { Node } from "../../../models";
-import { CreateId } from "../helpers";
+import { TextResources } from "../../../../assets/text";
+import { Position } from "../../../../compLibrary";
+import { Node } from "../../../../models";
+import { CreateId } from "../../helpers";
 
 /**
  * Component to create a parent node in BlockView.
@@ -11,7 +11,7 @@ import { CreateId } from "../helpers";
  * @param isSplitViewNode
  * @returns a FlowElement, the big box in BlockView.
  */
-const CreateParentBlockNode = (node: Node, splitView: boolean, isSplitViewNode: boolean) => {
+const BuildParentBlockNode = (node: Node, splitView: boolean, isSplitViewNode: boolean) => {
   if (!node) return null;
 
   const type = TextResources.Type_BlockParentNode;
@@ -32,4 +32,4 @@ const CreateParentBlockNode = (node: Node, splitView: boolean, isSplitViewNode: 
   } as FlowElement;
 };
 
-export default CreateParentBlockNode;
+export default BuildParentBlockNode;

@@ -1,6 +1,6 @@
 import { Elements } from "react-flow-renderer";
-import { Node, Project } from "../../../models";
-import { CreateParentBlockNode } from ".";
+import { Node, Project } from "../../../../models";
+import { BuildParentBlockNode } from ".";
 import { DrawChildNodes, DrawConnectViewChildren, DrawEdges, DrawSplitViewChildren } from "./helpers";
 
 /**
@@ -12,7 +12,7 @@ import { DrawChildNodes, DrawConnectViewChildren, DrawEdges, DrawSplitViewChildr
  * @param mainConnectNodes
  * @returns all Elements.
  */
-const CreateBlockElements = (
+const BuildBlockElements = (
   project: Project,
   selectedNode: Node,
   splitView: boolean,
@@ -24,11 +24,11 @@ const CreateBlockElements = (
   const connectView = mainConnectNodes?.length > 0;
   const allNodes = project.nodes;
 
-  const parentBlock = CreateParentBlockNode(selectedNode, splitView, false);
+  const parentBlock = BuildParentBlockNode(selectedNode, splitView, false);
   parentBlock && elements.push(parentBlock);
 
   if (splitViewNode) {
-    const parentSplitBlock = CreateParentBlockNode(splitViewNode, true, true);
+    const parentSplitBlock = BuildParentBlockNode(splitViewNode, true, true);
     parentSplitBlock && elements.push(parentSplitBlock);
   }
 
@@ -40,4 +40,4 @@ const CreateBlockElements = (
   return elements;
 };
 
-export default CreateBlockElements;
+export default BuildBlockElements;

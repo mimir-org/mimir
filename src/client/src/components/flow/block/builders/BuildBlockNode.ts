@@ -1,9 +1,8 @@
-import { Node } from "../../../models";
+import { Node } from "../../../../models";
 import { FlowElement } from "react-flow-renderer";
-import { IsSplitView } from "../block/helpers";
-import { SetConnectNodePos } from "../block/connectView/helpers/position";
+import { IsSplitView } from "../helpers";
+import { SetConnectNodePos } from "../connectView/helpers/position";
 import { GetNodeTypeString, SetBlockNodePos } from "./helpers";
-import { CreateId } from "../helpers";
 
 /**
  * Component to create a node in BlockView.
@@ -12,7 +11,7 @@ import { CreateId } from "../helpers";
  * @param allNodes - all nodes in Mimir
  * @returns a node of the type FlowElement.
  */
-const CreateBlockNode = (node: Node, connectNode: Node, allNodes: Node[]) => {
+const BuildBlockNode = (node: Node, connectNode: Node, allNodes: Node[]) => {
   if (!node) return null;
 
   const connectNodes = connectNode?.connectNodes ?? [];
@@ -25,7 +24,6 @@ const CreateBlockNode = (node: Node, connectNode: Node, allNodes: Node[]) => {
     position = SetConnectNodePos(node, connectNode.id, connectNodes, allNodes);
 
   return {
-    key: CreateId(),
     id: node.id,
     type: type,
     data: node,
@@ -38,4 +36,4 @@ const CreateBlockNode = (node: Node, connectNode: Node, allNodes: Node[]) => {
   } as FlowElement;
 };
 
-export default CreateBlockNode;
+export default BuildBlockNode;

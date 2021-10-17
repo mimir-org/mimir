@@ -1,7 +1,7 @@
 import { Elements } from "react-flow-renderer";
-import { CreateSplitViewChildNode } from "..";
-import { Node, Edge } from "../../../../models";
-import { IsDirectChild } from "../../block/helpers";
+import { BuildSplitViewChildNode } from "..";
+import { Node, Edge } from "../../../../../models";
+import { IsDirectChild } from "../../helpers";
 
 /**
  * Component to draw all SplitView children nodes in BlockView.
@@ -15,7 +15,7 @@ const DrawSplitViewChildren = (edges: Edge[], nodes: Node[], splitViewNode: Node
     edges.forEach((edge) => {
       if (edge.fromNodeId === splitViewNode.id && splitViewNode.aspect === edge.toNode.aspect) {
         const toNode = nodes.find((node) => node.id === edge.toNodeId && IsDirectChild(node, splitViewNode));
-        if (toNode) elements.push(CreateSplitViewChildNode(toNode));
+        if (toNode) elements.push(BuildSplitViewChildNode(toNode));
       }
     });
   }

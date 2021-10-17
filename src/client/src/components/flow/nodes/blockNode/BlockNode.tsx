@@ -10,8 +10,8 @@ import { IsFunction, IsProduct } from "../../helpers";
 import { NodeBox } from "../../styled";
 import { TerminalsComponent, HandleComponent } from "../../block/terminals";
 import { ConnectViewComponent } from "../../block/connectView";
-import { IsChildConnectNode, IsConnectNodeChecked } from "./helpers";
-import { FilterTerminals, FindAllEdges } from "../../block/helpers";
+import { IsChildConnectNode, IsConnectNodeChecked, SetNodeWidth, SetNodeLength } from "./helpers";
+import { FilterTerminals, FindAllEdges, GetNodeByDataId } from "../../block/helpers";
 import { Symbol } from "../../../../compLibrary/symbol";
 import { BlockNodeNameBox } from "../../block/styled";
 
@@ -28,24 +28,30 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const [connectBox, showConnectBox] = useState(false);
   const [connectMenu, showConnectMenu] = useState(false);
 
-  const nodes = useSelector<RootState>((s) => s.projectState.project.nodes) as Node[];
-  const edges = useSelector<RootState>((s) => s.projectState.project.edges) as Edge[];
+  const nodes = useSelector<RootState>((s) => s.projectState.project?.nodes) as Node[];
+  const edges = useSelector<RootState>((s) => s.projectState.project?.edges) as Edge[];
   const splitView = useSelector<RootState>((s) => s.splitView.visible) as boolean;
   const splitNode = useSelector<RootState>((s) => s.splitView.node) as Node;
   const electro = useSelector<RootState>((s) => s.electro.visible) as boolean;
   const type = IsFunction(data) ? "BlockFunctionNode-" : "BlockProductNode-";
-  const node = nodes.find((x) => x.id === data.id);
+  const node = nodes?.find((x) => x.id === data.id);
+  const terminals = FilterTerminals(data, splitView, splitNode);
 
   const mainConnectNodes = useSelector<RootState>((s) => s.connectView?.mainNodes) as Node[];
   const connectChildren = GetConnectChildren(data, nodes, edges);
   const mainConnectNode = mainConnectNodes.find((x) => x.id === data.id);
   const connectNodes = mainConnectNode?.connectNodes;
-  if (!mainConnectNode) data.width = Size.Node_Width;
+
+  if (!mainConnectNode) {
+    data.width = Size.Node_Width;
+    data.length = Size.Node_Length;
+  }
 
   useEffect(() => {
-    ResizeConnectNode(connectNodes?.length, mainConnectNode?.id, data);
+    if (connectNodes?.length === undefined) return;
+    ResizeConnectNode(connectNodes?.length, mainConnectNode, data);
     SetConnectNodeColor(mainConnectNode?.id, connectNodes, data);
-  }, [mainConnectNode, data, connectNodes]);
+  }, [mainConnectNode, data, connectNodes, mainConnectNodes]);
 
   // Force z-index to display edges in ConnectView
   useEffect(() => {
@@ -55,21 +61,35 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
     }
   }, [mainConnectNode]);
 
+  electro ? SetNodeWidth(terminals, data) : SetNodeLength(terminals, data);
+
+  // Remove in new BlockView
+  if (mainConnectNodes.length === 0) {
+    const flowNode = GetNodeByDataId(data.id);
+    if (flowNode) {
+      flowNode.style.width = `${data.width}px`;
+      flowNode.style.height = `${data.length}px`;
+    }
+  }
+
   return (
     <>
       <NodeBox
         id={type + data.id}
         product={IsProduct(data)}
+        width={mainConnectNode ? mainConnectNode.width : data.width}
+        length={mainConnectNode ? mainConnectNode.length : data.length}
         onMouseOver={() => Click.OnHover(showTerminalBox, showConnectBox)}
         onMouseOut={() => Click.OnMouseOut(showTerminalBox, showConnectBox)}
       >
         <HandleComponent
           node={node}
           nodes={nodes}
-          terminals={FilterTerminals(data, splitView, splitNode)}
-          isParent={false}
+          terminals={terminals}
+          parent={false}
           splitView={splitView}
           electro={electro}
+          mainConnectNode={mainConnectNode?.id === data.id}
         />
         <BlockNodeNameBox>{data.label ?? data.name}</BlockNodeNameBox>
         {data.id !== mainConnectNode?.id && <Symbol base64={data.symbol} text={data.name} />}
@@ -79,7 +99,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
           node={data}
           inputMenuOpen={inTerminalMenu}
           outputMenuOpen={outTerminalMenu}
-          terminals={FilterTerminals(data, splitView, splitNode)}
+          terminals={terminals}
           isParent={false}
           splitView={splitView}
           onClick={(conn) => Click.OnTerminal(conn, data, dispatch, edges)}

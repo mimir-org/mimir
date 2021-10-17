@@ -1,5 +1,5 @@
-import { Size } from "../../../../compLibrary";
-import { Node } from "../../../../models";
+import { Size } from "../../../../../compLibrary";
+import { Node } from "../../../../../models";
 
 /**
  * Function to force a node to fit within the parent block in SplitView.

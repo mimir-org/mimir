@@ -21,12 +21,13 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
   const [inTerminalMenu, showInTerminalMenu] = useState(false);
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
-  const nodes = useSelector<RootState>((s) => s.projectState.project.nodes) as Node[];
-  const edges = useSelector<RootState>((s) => s.projectState.project.edges) as Edge[];
+  const nodes = useSelector<RootState>((s) => s.projectState.project?.nodes) as Node[];
+  const edges = useSelector<RootState>((s) => s.projectState.project?.edges) as Edge[];
   const splitView = useSelector<RootState>((s) => s.splitView.visible) as boolean;
   const splitNode = useSelector<RootState>((s) => s.splitView.node) as Node;
   const electro = useSelector<RootState>((s) => s.electro.visible) as boolean;
-  const node = nodes.find((x) => x.id === data.id);
+  const node = nodes?.find((x) => x.id === data.id);
+  if (node) node.width = Size.BlockView_Width;
 
   // Enforce size change of node
   useEffect(() => {
@@ -41,6 +42,8 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
     const allEdges = FindAllEdges();
     allEdges.style.zIndex = "3";
   }, []);
+
+  if (splitView) node.width = Size.SplitView_Width;
 
   return (
     <>
@@ -67,11 +70,12 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
       />
       <HandleComponent
         node={node}
-        isParent={true}
+        parent={true}
         nodes={nodes}
         terminals={FilterTerminals(node, splitView, splitNode)}
         splitView={splitView}
         electro={electro}
+        mainConnectNode={false}
       />
 
       {splitView && !splitNode && (

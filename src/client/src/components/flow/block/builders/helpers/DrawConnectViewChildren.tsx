@@ -1,6 +1,6 @@
 import { Elements } from "react-flow-renderer";
-import { CreateBlockNode } from "..";
-import { Node } from "../../../../models";
+import { BuildBlockNode } from "..";
+import { Node } from "../../../../../models";
 
 /**
  * Component to draw all ConnectView children nodes in BlockView.
@@ -12,7 +12,7 @@ const DrawConnectViewChildren = (mainConnectNodes: Node[], elements: Elements<an
   mainConnectNodes.forEach((mainNode) => {
     mainNode.connectNodes?.forEach((node) => {
       const connectNode = allNodes.find((n) => n.id === node.id);
-      if (connectNode) elements.push(CreateBlockNode(connectNode, mainNode, allNodes));
+      if (connectNode) elements.push(BuildBlockNode(connectNode, mainNode, allNodes));
     });
   });
 };
