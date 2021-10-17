@@ -53,30 +53,19 @@ namespace Mb.Core.Extensions
             });
 
             // Dependency injection
-            
+
             services.AddSingleton<ICommonRepository, CommonRepository>();
-            
+
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<INodeRepository, NodeRepository>();
             services.AddScoped<IEdgeRepository, EdgeRepository>();
-            
-            
-            
             services.AddScoped<IConnectorRepository, ConnectorRepository>();
             services.AddScoped<IAttributeRepository, AttributeRepository>();
             services.AddScoped<IContractorRepository, ContractorRepository>();
-            
-            
-            
-            
-            
             services.AddScoped<ITransportRepository, TransportRepository>();
             services.AddScoped<IInterfaceRepository, InterfaceRepository>();
-            
-            
             services.AddScoped<ICompositeRepository, CompositeRepository>();
 
-            
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<ILibraryService, LibraryService>();
             services.AddScoped<ICommonService, CommonService>();
@@ -111,14 +100,14 @@ namespace Mb.Core.Extensions
             cfg.AddProfile(new CompositeProfile(provider.GetService<ICommonRepository>()));
 
             // Create profiles
-            cfg.CreateProfiles(modules);
+            cfg.CreateProfiles(provider, modules);
 
             var mapperConfig = new MapperConfiguration(cfg);
             services.AddSingleton(_ => mapperConfig.CreateMapper());
 
             // Add modules
-            services.CreateModules(configuration, modules);
-            
+            services.CreateModules(provider, configuration, modules);
+
             return services;
         }
 
@@ -143,36 +132,51 @@ namespace Mb.Core.Extensions
 
         #region Private Methods
 
-        private static void CreateModules(this IServiceCollection services, IConfiguration configuration, IEnumerable<Module> modules)
+        private static void CreateModules(this IServiceCollection services, IServiceProvider provider, IConfiguration configuration, IEnumerable<Module> modules)
         {
-            // Create modules
-            foreach (var module in modules)
-            {
-                module.Instance.CreateModule(services, configuration);
-                if (module.ModuleType == ModuleType.SyncService)
-                {
-                    if (module.Instance is IModelBuilderSyncService service)
-                        service.ReceiveData();
-                }
-                    
-            }
-        }
+            var logger = provider.GetService<ILogger<IModuleService>>();
 
-        private static void CreateProfiles(this IMapperConfigurationExpression cfg, IEnumerable<Module> modules)
-        {
             // Create modules
             foreach (var module in modules)
             {
-                var profiles = module.Instance.GetProfiles()?.ToList();
-                if (profiles != null && profiles.Any())
+                try
                 {
-                    cfg.AddProfiles(profiles);
+                    module.Instance.CreateModule(services, configuration);
+                    if (module.ModuleType == ModuleType.SyncService)
+                    {
+                        if (module.Instance is IModelBuilderSyncService service)
+                            service.ReceiveData();
+                    }
+                }
+                catch (Exception e)
+                {
+                    logger.LogError($"Module error: ({module.Name}), {e.Message}");
                 }
             }
         }
 
+        private static void CreateProfiles(this IMapperConfigurationExpression cfg, IServiceProvider provider, IEnumerable<Module> modules)
+        {
+            var logger = provider.GetService<ILogger<IModuleService>>();
+
+            // Create modules
+            foreach (var module in modules)
+            {
+                try
+                {
+                    var profiles = module.Instance.GetProfiles()?.ToList();
+                    if (profiles != null && profiles.Any())
+                    {
+                        cfg.AddProfiles(profiles);
+                    }
+                }
+                catch (Exception e)
+                {
+                    logger.LogError($"Module error: ({module.Name}), {e.Message}");
+                }
+            }
+        }
 
         #endregion
-
     }
 }
