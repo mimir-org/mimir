@@ -1,8 +1,8 @@
 import "./BlockEdge.scss";
-import { Connector, RelationType, Aspect, Node } from "../../../models";
 import { ArrowHeadType, getBezierPath, getMarkerEnd, getSmoothStepPath } from "react-flow-renderer";
-import { IsLocationTerminal } from "../helpers";
-import { GetStyle } from "./helpers";
+import { Connector } from "../../../../models";
+import { IsLocationTerminal } from "../../helpers";
+import { SetClassName, GetStyle } from "./helpers";
 
 export default function BlockEdgeType({
   id,
@@ -37,38 +37,6 @@ export default function BlockEdgeType({
     targetPosition,
   });
 
-  const getClassName = (source: Node): string => {
-    let defaultClassName = "react-flow__edge-path ";
-
-    const sourceConn = data.source.connectors?.find(
-      (x: { id: any }) => x.id === data.edge.fromConnector.id
-    ) as Connector;
-
-    switch (sourceConn?.relationType) {
-      case RelationType.HasLocation:
-        defaultClassName += "has-location";
-        break;
-      case RelationType.FulfilledBy:
-        defaultClassName += "fulfilled-by";
-        break;
-      default:
-        defaultClassName += "";
-    }
-
-    switch (source.aspect) {
-      case Aspect.Product:
-        defaultClassName += "-product";
-        break;
-      case Aspect.Function:
-        defaultClassName += "-function";
-        break;
-      default:
-        defaultClassName += "";
-    }
-
-    return defaultClassName;
-  };
-
   return (
     <>
       {!hasLocation ? (
@@ -78,14 +46,14 @@ export default function BlockEdgeType({
           <path
             id={id}
             style={GetStyle(fromConn)}
-            className={getClassName(data.source) + ""}
+            className={SetClassName(data) + ""}
             d={bezier}
             markerEnd={markerEnd}
           />
           <path
             id={id}
             style={GetStyle(fromConn)}
-            className={getClassName(data.source) + "--dashed"}
+            className={SetClassName(data) + "--dashed"}
             d={bezier}
             markerEnd={markerEnd}
           />

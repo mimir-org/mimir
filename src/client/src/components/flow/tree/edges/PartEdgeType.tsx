@@ -1,6 +1,6 @@
 import "./PartEdge.scss";
-import { GetAspectPartColor } from "../../../assets/helpers";
 import { getSmoothStepPath } from "react-flow-renderer";
+import { GetAspectPartColor } from "../../../../assets/helpers";
 
 export default function PartEdgeType({ id, sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data }) {
   const edgePathSmoothStep = getSmoothStepPath({

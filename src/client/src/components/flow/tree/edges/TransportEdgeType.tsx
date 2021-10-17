@@ -1,6 +1,6 @@
 import "./TransportEdge.scss";
-import { Connector } from "../../../models";
 import { ArrowHeadType, getMarkerEnd, getSmoothStepPath } from "react-flow-renderer";
+import { Connector } from "../../../../models";
 
 export default function TransportEdgeType({
   id,

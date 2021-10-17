@@ -1,6 +1,6 @@
 import "./RelationEdge.scss";
 import { getBezierPath, getMarkerEnd } from "react-flow-renderer";
-import { Aspect, Connector, Node, RelationType } from "../../../models";
+import { Aspect, Connector, Node, RelationType } from "../../../../models";
 
 export default function RelationEdgeType({
   id,

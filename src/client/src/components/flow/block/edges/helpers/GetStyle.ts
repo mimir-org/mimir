@@ -1,4 +1,4 @@
-import { Connector } from "../../../../models";
+import { Connector } from "../../../../../models";
 
 const GetStyle = (fromConnector: Connector) => {
   return {
