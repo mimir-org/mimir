@@ -151,7 +151,10 @@ namespace Mb.TypeEditor.Services.Services
             if (!notExistingItems.Any())
                 return;
 
-            foreach (var item in notExistingItems)
+            var parents = notExistingItems.Where(x => string.IsNullOrEmpty(x.ParentId)).ToList();
+            var children = notExistingItems.Where(x => !string.IsNullOrEmpty(x.ParentId)).ToList();
+
+            foreach (var item in parents)
             {
                 item.Key.CreateMd5();
                 await _enumBaseRepository.CreateAsync(item);
@@ -159,9 +162,22 @@ namespace Mb.TypeEditor.Services.Services
 
             await _enumBaseRepository.SaveAsync();
 
-            foreach (var notExistingItem in notExistingItems)
+            foreach (var item in parents)
             {
-                _enumBaseRepository.Detach(notExistingItem);
+                _enumBaseRepository.Detach(item);
+            }
+
+            foreach (var item in children)
+            {
+                item.Key.CreateMd5();
+                await _enumBaseRepository.CreateAsync(item);
+            }
+
+            await _enumBaseRepository.SaveAsync();
+
+            foreach (var item in children)
+            {
+                _enumBaseRepository.Detach(item);
             }
         }
     }
