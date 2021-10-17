@@ -54,7 +54,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
           inputMenuOpen={inTerminalMenu}
           outputMenuOpen={outTerminalMenu}
           terminals={FilterTerminals(data, splitView, splitNode)}
-          isParent={false}
+          parent={false}
           splitView={splitView}
           onClick={(conn) => OnConnectorClick(conn, data, dispatch)}
           menuBox={terminalButton}
@@ -67,6 +67,8 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
       <HandleComponent
         node={data}
         nodes={nodes}
+        length={data.length}
+        width={data.width}
         terminals={FilterTerminals(data, splitView, splitNode)}
         parent={false}
         splitView={splitView}

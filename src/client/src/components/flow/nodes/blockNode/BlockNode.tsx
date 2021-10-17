@@ -48,9 +48,9 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   }
 
   useEffect(() => {
+    SetConnectNodeColor(mainConnectNode?.id, connectNodes, data);
     if (connectNodes?.length === undefined) return;
     ResizeConnectNode(connectNodes?.length, mainConnectNode, data);
-    SetConnectNodeColor(mainConnectNode?.id, connectNodes, data);
   }, [mainConnectNode, data, connectNodes, mainConnectNodes]);
 
   // Force z-index to display edges in ConnectView
@@ -85,6 +85,8 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
         <HandleComponent
           node={node}
           nodes={nodes}
+          length={mainConnectNode ? mainConnectNode.length : data.length}
+          width={mainConnectNode ? mainConnectNode.width : data.width}
           terminals={terminals}
           parent={false}
           splitView={splitView}
@@ -100,7 +102,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
           inputMenuOpen={inTerminalMenu}
           outputMenuOpen={outTerminalMenu}
           terminals={terminals}
-          isParent={false}
+          parent={false}
           splitView={splitView}
           onClick={(conn) => Click.OnTerminal(conn, data, dispatch, edges)}
           menuBox={terminalBox}

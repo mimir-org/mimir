@@ -6,7 +6,7 @@ import { TerminalsMenu, TerminalsElement, ColorBar } from "./styled";
 interface Props {
   node: Node;
   parent: boolean;
-  isInput: boolean;
+  input: boolean;
   splitView: boolean;
   terminals: Connector[];
   visible: boolean;
@@ -19,12 +19,12 @@ interface Props {
  * @param param0
  * @returns a drop-down menu with a nodes' input or output terminals.
  */
-const TerminalsMenuComponent = ({ node, parent, isInput, splitView, terminals, visible, onClick, onBlur }: Props) =>
+const TerminalsMenuComponent = ({ node, parent, input, splitView, terminals, visible, onClick, onBlur }: Props) =>
   visible && (
     <TerminalsMenu
       splitView={splitView}
       parent={parent}
-      isInput={isInput}
+      input={input}
       connectView={IsMainConnectNode(node.id)}
       tabIndex={0}
       onBlur={onBlur}

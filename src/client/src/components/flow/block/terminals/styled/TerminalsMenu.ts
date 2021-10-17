@@ -4,7 +4,7 @@ import { Color } from "../../../../../compLibrary";
 interface Props {
   color: string;
   parent: boolean;
-  isInput: boolean;
+  input: boolean;
   connectView: boolean;
   splitView: boolean;
   width: number;
@@ -21,8 +21,8 @@ const TerminalsMenu = styled.div<Props>`
   width: max-content;
   position: absolute;
   top: ${(props) => (props.parent ? 0 : 5)}px;
-  left: ${(props) => !props.isInput && props.width + 22}px;
-  right: ${(props) => props.isInput && props.width + 22}px;
+  left: ${(props) => !props.input && props.width + 22}px;
+  right: ${(props) => props.input && props.width + 22}px;
 `;
 
 export default TerminalsMenu;

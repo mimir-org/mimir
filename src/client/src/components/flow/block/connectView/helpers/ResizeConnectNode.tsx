@@ -25,19 +25,17 @@ const ResizeConnectNode = (nodeCount: number, mainNode: Node, data: Node) => {
     flowMainNode.style.width = `${Size.ConnectView_Width}px`;
     flowMainNode.style.height = `${newLength}px`;
     flowMainNode.style.zIndex = "1";
-    if (nodeCount >= 5) flowMainNode.style.maxHeight = `${newLength - 50}px`;
+    return;
   }
 
   // Reset
-  else {
-    const node = GetNodeByDataId(data.id);
-    if (node) {
-      node.style.width = `${Size.Node_Width}px`;
-      node.style.height = `${Size.Node_Length}px`;
-    }
-    data.width = Size.Node_Width;
-    data.length = Size.Node_Length;
+  const node = GetNodeByDataId(data.id);
+  if (node) {
+    node.style.width = `${Size.Node_Width}px`;
+    node.style.height = `${Size.Node_Length}px`;
   }
+  data.width = Size.Node_Width;
+  data.length = Size.Node_Length;
 };
 
 export default ResizeConnectNode;
