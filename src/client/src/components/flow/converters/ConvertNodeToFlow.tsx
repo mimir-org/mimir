@@ -8,7 +8,7 @@ import { GetNodeType } from "../helpers";
  * @param position
  * @returns a FlowElement
  */
-const ConvertNodeToFlow = (node: Node, position) => {
+const ConvertNodeToFlow = (node: Node, position: any) => {
   return {
     id: node.id,
     type: GetNodeType(node),

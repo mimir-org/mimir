@@ -3,11 +3,11 @@ import { Color } from "../../../../../compLibrary";
 
 interface Props {
   color: string;
-  location: boolean;
   parent: boolean;
-  isInput: boolean;
+  input: boolean;
   connectView: boolean;
   splitView: boolean;
+  width: number;
 }
 
 /** Styled component that displays the drop-down menu for a nodes' terminals. */
@@ -21,30 +21,8 @@ const TerminalsMenu = styled.div<Props>`
   width: max-content;
   position: absolute;
   top: ${(props) => (props.parent ? 0 : 5)}px;
-
-  right: ${(props) =>
-    props.isInput && props.parent && !props.splitView
-      ? "955px"
-      : props.isInput && props.parent && props.splitView
-      ? "657px"
-      : props.isInput && !props.parent && !props.connectView && !props.location
-      ? "137px"
-      : props.isInput && !props.parent && props.connectView
-      ? "405px"
-      : "unset"};
-
-  left: ${(props) =>
-    !props.isInput && props.parent && !props.splitView
-      ? "957px"
-      : !props.isInput && props.parent && props.splitView
-      ? "657px"
-      : !props.isInput && !props.parent && !props.connectView
-      ? "137px"
-      : props.isInput && !props.parent && !props.connectView && props.location
-      ? "-162px"
-      : !props.isInput && !props.parent && props.connectView
-      ? "405px"
-      : "unset"};
+  left: ${(props) => !props.input && props.width + 22}px;
+  right: ${(props) => props.input && props.width + 22}px;
 `;
 
 export default TerminalsMenu;

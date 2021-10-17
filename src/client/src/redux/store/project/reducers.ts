@@ -1,7 +1,8 @@
 import * as Types from "./types";
 import { Edge, Node, ProjectSimple } from "../../../models";
-import { FindTerminalAndNode, TraverseTree } from "./helpers/";
+import { GetUpdatedEdgeInnerWithTerminalAttributeIsLocked, TraverseTree } from "./helpers/";
 import { IsAspectNode } from "../../../components/flow/helpers";
+import { GetUpdatedEdgeInnerWithTerminalAttributeValue } from "./helpers";
 
 const initialState: Types.ProjectState = {
   fetching: false,
@@ -235,7 +236,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
       };
     }
 
-    case Types.SET_ACTIVE_NODE:
+    case Types.SET_ACTIVE_NODE: {
       const nodeId = action.payload.nodeId;
       return {
         ...state,
@@ -247,8 +248,9 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           edges: state.project.edges,
         },
       };
+    }
 
-    case Types.SET_ACTIVE_EDGE:
+    case Types.SET_ACTIVE_EDGE: {
       const edgeId = action.payload.edgeId;
       return {
         ...state,
@@ -259,6 +261,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           ),
         },
       };
+    }
 
     case Types.SET_ACTIVE_BLOCKNODE:
       const blockId = action.payload.nodeId;
@@ -316,7 +319,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         },
       };
 
-    case Types.CHANGE_ATTRIBUTE_VALUE:
+    case Types.CHANGE_NODE_ATTRIBUTE_VALUE:
       return {
         ...state,
         project: {
@@ -330,7 +333,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
                       ? {
                           ...attribute,
                           value: action.payload.value,
-                          selectedUnitId: action.payload.unit,
+                          selectedUnitId: action.payload.unitId,
                         }
                       : attribute
                   ),
@@ -340,36 +343,166 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         },
       };
 
-    case Types.CHANGE_CONNECTOR_ATTRIBUTE_VALUE:
+    case Types.CHANGE_TRANSPORT_ATTRIBUTE_VALUE: {
+      const { id, edgeId, value, unitId } = action.payload;
+
       return {
         ...state,
         project: {
           ...state.project,
-          nodes: state.project.nodes.map((x) =>
-            x.id === action.payload.nodeId
+          edges: state.project.edges.map((e) =>
+            e.id === edgeId
               ? {
-                  ...x,
-                  connectors: x.connectors.map((connector) =>
-                    connector.id === action.payload.connectorId
+                  ...e,
+                  transport: {
+                    ...e.transport,
+                    attributes: e.transport.attributes.map((attribute) =>
+                      attribute.id === id
+                        ? {
+                            ...attribute,
+                            value,
+                            selectedUnitId: unitId,
+                          }
+                        : attribute
+                    ),
+                  },
+                }
+              : e
+          ),
+        },
+      };
+    }
+    case Types.CHANGE_INTERFACE_ATTRIBUTE_VALUE: {
+      const { id, edgeId, unitId, value } = action.payload;
+
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          edges: state.project.edges.map((e) =>
+            e.id === edgeId
+              ? {
+                  ...e,
+                  interface: {
+                    ...e.transport,
+                    attributes: e.transport.attributes.map((attribute) =>
+                      attribute.id === id
+                        ? {
+                            ...attribute,
+                            selectedUnitId: unitId,
+                            value,
+                          }
+                        : attribute
+                    ),
+                  },
+                }
+              : e
+          ),
+        },
+      };
+    }
+    case Types.CHANGE_NODE_TERMINAL_ATTRIBUTE_VALUE: {
+      const { id, terminalId, nodeId, value, unitId } = action.payload;
+
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          nodes: state.project.nodes.map((n) =>
+            n.id === nodeId
+              ? {
+                  ...n,
+                  connectors: n.connectors.map((conn) =>
+                    conn.id === terminalId
                       ? {
-                          ...connector,
-                          attributes: connector.attributes.map((attribute) =>
-                            attribute.id === action.payload.id
+                          ...conn,
+                          attributes: conn.attributes.map((attribute) =>
+                            attribute.id === id
                               ? {
                                   ...attribute,
-                                  value: action.payload.value,
-                                  unit: action.payload.unit,
+                                  value,
+                                  selectedUnitId: unitId,
                                 }
                               : attribute
                           ),
                         }
-                      : connector
+                      : conn
                   ),
                 }
-              : x
+              : n
           ),
         },
       };
+    }
+    case Types.CHANGE_TRANSPORT_TERMINAL_ATTRIBUTE_VALUE: {
+      const { id, terminalId, edgeId, value, unitId } = action.payload;
+
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          edges: state.project.edges.map((e) =>
+            e.id === edgeId
+              ? {
+                  ...e,
+                  transport: GetUpdatedEdgeInnerWithTerminalAttributeValue(e.transport, terminalId, id, value, unitId),
+                }
+              : e
+          ),
+        },
+      };
+    }
+    case Types.CHANGE_INTERFACE_TERMINAL_ATTRIBUTE_VALUE: {
+      const { id, terminalId, edgeId, value, unitId } = action.payload;
+
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          edges: state.project.edges.map((e) =>
+            e.id === edgeId
+              ? {
+                  ...e,
+                  interface: GetUpdatedEdgeInnerWithTerminalAttributeValue(e.interface, terminalId, id, value, unitId),
+                }
+              : e
+          ),
+        },
+      };
+    }
+    case Types.CHANGE_COMPOSITE_ATTRIBUTE_VALUE: {
+      const { id, compositeId, nodeId, value, unitId } = action.payload;
+
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          nodes: state.project.nodes.map((n) =>
+            n.id === nodeId
+              ? {
+                  ...n,
+                  composites: n.composites.map((comp) =>
+                    comp.id === compositeId
+                      ? {
+                          ...comp,
+                          attributes: comp.attributes.map((attribute) =>
+                            attribute.id === id
+                              ? {
+                                  ...attribute,
+                                  value,
+                                  selectedUnitId: unitId,
+                                }
+                              : attribute
+                          ),
+                        }
+                      : comp
+                  ),
+                }
+              : n
+          ),
+        },
+      };
+    }
 
     case Types.CHANGE_ACTIVE_CONNECTOR:
       return {
@@ -466,17 +599,15 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         },
       };
 
-    case Types.LOCK_UNLOCK_TERMINAL_ATTRIBUTE: {
-      const { id, isLocked, terminalId } = action.payload;
-      let [node, terminal] = FindTerminalAndNode(state.project.nodes, terminalId);
-      if (!node || !terminal) return { ...state };
+    case Types.LOCK_UNLOCK_NODE_TERMINAL_ATTRIBUTE: {
+      const { id, isLocked, terminalId, nodeId } = action.payload;
 
       return {
         ...state,
         project: {
           ...state.project,
           nodes: state.project.nodes.map((n) =>
-            n.id === node.id
+            n.id === nodeId
               ? {
                   ...n,
                   connectors: n.connectors.map((conn) =>
@@ -493,6 +624,133 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
                           ),
                         }
                       : conn
+                  ),
+                }
+              : n
+          ),
+        },
+      };
+    }
+    case Types.LOCK_UNLOCK_TRANSPORT_TERMINAL_ATTRIBUTE: {
+      const { id, terminalId, edgeId, isLocked } = action.payload;
+
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          edges: state.project.edges.map((e) =>
+            e.id === edgeId
+              ? {
+                  ...e,
+                  transport: GetUpdatedEdgeInnerWithTerminalAttributeIsLocked(e.transport, terminalId, id, isLocked),
+                }
+              : e
+          ),
+        },
+      };
+    }
+    case Types.LOCK_UNLOCK_INTERFACE_TERMINAL_ATTRIBUTE: {
+      const { id, terminalId, edgeId, isLocked } = action.payload;
+
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          edges: state.project.edges.map((e) =>
+            e.id === edgeId
+              ? {
+                  ...e,
+                  interface: GetUpdatedEdgeInnerWithTerminalAttributeIsLocked(e.interface, terminalId, id, isLocked),
+                }
+              : e
+          ),
+        },
+      };
+    }
+
+    case Types.LOCK_UNLOCK_TRANSPORT_ATTRIBUTE: {
+      const { id, isLocked, edgeId } = action.payload;
+
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          edges: state.project.edges.map((e) =>
+            e.id === edgeId
+              ? {
+                  ...e,
+                  transport: {
+                    ...e.transport,
+                    attributes: e.transport.attributes.map((attribute) =>
+                      attribute.id === id
+                        ? {
+                            ...attribute,
+                            isLocked,
+                          }
+                        : attribute
+                    ),
+                  },
+                }
+              : e
+          ),
+        },
+      };
+    }
+
+    case Types.LOCK_UNLOCK_INTERFACE_ATTRIBUTE: {
+      const { id, isLocked, edgeId } = action.payload;
+
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          edges: state.project.edges.map((e) =>
+            e.id === edgeId
+              ? {
+                  ...e,
+                  interface: {
+                    ...e.transport,
+                    attributes: e.transport.attributes.map((attribute) =>
+                      attribute.id === id
+                        ? {
+                            ...attribute,
+                            isLocked,
+                          }
+                        : attribute
+                    ),
+                  },
+                }
+              : e
+          ),
+        },
+      };
+    }
+
+    case Types.LOCK_UNLOCK_COMPOSITE_ATTRIBUTE: {
+      const { id, compositeId, nodeId, isLocked } = action.payload;
+
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          nodes: state.project.nodes.map((n) =>
+            n.id === nodeId
+              ? {
+                  ...n,
+                  composites: n.composites.map((comp) =>
+                    comp.id === compositeId
+                      ? {
+                          ...comp,
+                          attributes: comp.attributes.map((attribute) =>
+                            attribute.id === id
+                              ? {
+                                  ...attribute,
+                                  isLocked,
+                                }
+                              : attribute
+                          ),
+                        }
+                      : comp
                   ),
                 }
               : n

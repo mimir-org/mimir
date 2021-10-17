@@ -1,6 +1,6 @@
 import { call, put } from "redux-saga/effects";
 import { Project } from "../../../models";
-import { ConvertProject } from ".";
+import { ConvertProject, InitializeProject } from ".";
 import { saveAs } from "file-saver";
 import { get, post, GetBadResponseData, ApiError } from "../../../models/webclient";
 import {
@@ -16,8 +16,8 @@ import {
   CommitProject,
   LockUnlockNode,
   LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR,
-  LockUnlockNodeAttribute,
   LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
+  LockUnlockAttributeUnion,
 } from "../../store/project/types";
 
 export function* getProject(action) {
@@ -47,7 +47,7 @@ export function* getProject(action) {
       return;
     }
 
-    const project = response.data as Project;
+    const project = InitializeProject(response.data);
 
     const payload = {
       project: project,
@@ -218,7 +218,7 @@ export function* updateProject(action) {
       return;
     }
 
-    const project = response.data as Project;
+    const project = InitializeProject(response.data);
 
     if (project.nodes && action.payload.nodes) {
       project.nodes.forEach((node) => {
@@ -440,10 +440,9 @@ export function* lockUnlockNode(action: LockUnlockNode) {
   }
 }
 
-export function* lockUnlockAttribute(action: LockUnlockNodeAttribute) {
+export function* lockUnlockAttribute(action: LockUnlockAttributeUnion) {
   try {
     const url = process.env.REACT_APP_API_BASE_URL + "project/attribute/lockunlock";
-
     const { id, isLocked } = action.payload;
     const response = yield call(post, url, { id, isLocked });
 

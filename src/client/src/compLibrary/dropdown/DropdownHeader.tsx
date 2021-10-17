@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Color from "../colors/Color";
 
 const DropdownHeader = styled.div`
   display: flex;
@@ -6,11 +7,11 @@ const DropdownHeader = styled.div`
   align-items: center;
   flex-direction: row;
   width: 63px;
-  border: 1px solid #272738; //{Color.BlueMagenta};
+  border: 1px solid ${Color.BlueMagenta};
   border-radius: 5px;
   padding: 1px;
   font-size: 11px;
-  background-color: white;
+  background-color: ${Color.White} !important;
 
   p {
     padding: 2px 5px;

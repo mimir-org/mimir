@@ -1,5 +1,6 @@
 ﻿using Mb.Models.Data;
-using Mb.Models.Data.Enums;
+using Mb.Models.Data.TypeEditor;
+using Mb.Models.Data.TypeEditor.EnumTypes;
 using Microsoft.EntityFrameworkCore;
 
 namespace Mb.Models.Configurations
@@ -32,7 +33,7 @@ namespace Mb.Models.Configurations
         public virtual DbSet<InterfaceType> InterfaceTypes { get; set; }
         public virtual DbSet<CompositeType> CompositeTypes { get; set; }
         public virtual DbSet<NodeTypeTerminalType> NodeTypeTerminalTypes { get; set; }
-        public virtual DbSet<PredefinedAttributeCategory> PredefinedAttributeCategories { get; set; }
+        public virtual DbSet<TypeAttribute> TypeAttributes { get; set; }
         public virtual DbSet<PredefinedAttribute> PredefinedAttributes { get; set; }
         public virtual DbSet<BlobData> BlobData { get; set; }
         public virtual DbSet<Purpose> BlobCategories { get; set; }
@@ -65,7 +66,7 @@ namespace Mb.Models.Configurations
             modelBuilder.ApplyConfiguration(new InterfaceTypeConfiguration());
             modelBuilder.ApplyConfiguration(new TransportTypeConfiguration());
             modelBuilder.ApplyConfiguration(new PredefinedAttributeConfiguration());
-            modelBuilder.ApplyConfiguration(new PredefinedAttributeCategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new TypeAttributeConfiguration());
             modelBuilder.ApplyConfiguration(new BlobDataConfiguration());
             modelBuilder.ApplyConfiguration(new TransportConfiguration());
             modelBuilder.ApplyConfiguration(new InterfaceConfiguration());

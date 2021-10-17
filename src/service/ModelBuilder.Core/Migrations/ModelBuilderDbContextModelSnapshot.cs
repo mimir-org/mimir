@@ -4,7 +4,6 @@ using Mb.Models.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Mb.Core.Migrations
 {
@@ -1006,18 +1005,6 @@ namespace Mb.Core.Migrations
                     b.HasDiscriminator().HasValue("BuildStatus");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.Enums.PredefinedAttributeCategory", b =>
-                {
-                    b.HasBaseType("Mb.Models.Data.Enums.EnumBase");
-
-                    b.Property<string>("ParentId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasIndex("ParentId");
-
-                    b.HasDiscriminator().HasValue("PredefinedAttributeCategory");
-                });
-
             modelBuilder.Entity("Mb.Models.Data.Enums.Purpose", b =>
                 {
                     b.HasBaseType("Mb.Models.Data.Enums.EnumBase");
@@ -1045,6 +1032,23 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("TerminalCategory");
+                });
+
+            modelBuilder.Entity("Mb.Models.Data.Enums.TypeAttribute", b =>
+                {
+                    b.HasBaseType("Mb.Models.Data.Enums.EnumBase");
+
+                    b.Property<string>("Aspect")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Aspect");
+
+                    b.Property<string>("ParentId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasIndex("ParentId");
+
+                    b.HasDiscriminator().HasValue("TypeAttribute");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Enums.Unit", b =>
@@ -1510,9 +1514,9 @@ namespace Mb.Core.Migrations
                     b.Navigation("TerminalCategory");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.Enums.PredefinedAttributeCategory", b =>
+            modelBuilder.Entity("Mb.Models.Data.Enums.TypeAttribute", b =>
                 {
-                    b.HasOne("Mb.Models.Data.Enums.PredefinedAttributeCategory", "Parent")
+                    b.HasOne("Mb.Models.Data.Enums.TypeAttribute", "Parent")
                         .WithMany("Children")
                         .HasForeignKey("ParentId")
                         .OnDelete(DeleteBehavior.NoAction);
@@ -1639,11 +1643,6 @@ namespace Mb.Core.Migrations
                     b.Navigation("Nodes");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.Enums.PredefinedAttributeCategory", b =>
-                {
-                    b.Navigation("Children");
-                });
-
             modelBuilder.Entity("Mb.Models.Data.Enums.Purpose", b =>
                 {
                     b.Navigation("LibraryTypes");
@@ -1659,6 +1658,11 @@ namespace Mb.Core.Migrations
                     b.Navigation("Terminals");
 
                     b.Navigation("TerminalTypes");
+                });
+
+            modelBuilder.Entity("Mb.Models.Data.Enums.TypeAttribute", b =>
+                {
+                    b.Navigation("Children");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.NodeType", b =>

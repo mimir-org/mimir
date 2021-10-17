@@ -6,6 +6,7 @@ interface Props {
   onClick: () => void;
   type: InspectorButtonType;
   visible: boolean;
+  disabled?: boolean;
 }
 
 export enum InspectorButtonType {
@@ -22,7 +23,7 @@ export enum InspectorButtonType {
  * @param param0
  * @returns a button to be used in the Inspector Header.
  */
-const InspectorButton = ({ onClick, type, visible }: Props) => {
+const InspectorButton = ({ onClick, type, visible, disabled }: Props) => {
   const [active, setActive] = useState(false);
 
   const icon = GetButtonIcon(type);
@@ -36,6 +37,7 @@ const InspectorButton = ({ onClick, type, visible }: Props) => {
       onMouseUp={() => setActive(false)}
       onMouseLeave={() => setActive(false)}
       visible={visible}
+      disabled={disabled}
     >
       <div>{GetButtonText(type)}</div>
       {active ? activeIcon : icon}

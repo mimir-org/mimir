@@ -10,7 +10,7 @@ import { Node, BlobData } from "../../../models";
 import { ProjectState } from "../../../redux/store/project/types";
 import { LibraryState } from "../../../redux/store/library/types";
 import { GetBlockEdgeTypes, IsBlockView, OnBlockClick } from "../block/helpers";
-import { CreateBlockElements } from "../creators";
+import { BuildBlockElements } from "./builders";
 import { useOnConnect, useOnDrop, useOnRemove, useOnDragStop } from "../hooks";
 import { setModuleVisibility } from "../../../redux/store/modules/actions";
 import { setActiveBlockNode, setActiveEdge } from "../../../redux/store/project/actions";
@@ -44,7 +44,7 @@ const FlowBlock = () => {
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(CreateBlockElements(project, node, splitView, splitNode, mainConnectNodes));
+      setElements(BuildBlockElements(project, node, splitView, splitNode, mainConnectNodes));
       return setReactFlowInstance(_reactFlowInstance);
     },
     [project, node, splitView, splitNode, mainConnectNodes]

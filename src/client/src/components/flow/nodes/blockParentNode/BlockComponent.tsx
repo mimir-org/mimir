@@ -18,7 +18,7 @@ interface Props {
  * @returns a container that sits on top of a Flow node
  */
 const BlockComponent = ({ node, color, splitView, selected, onParentClick, onChildClick }: Props) => (
-  <Block id={"function-block-" + node?.id} splitView={splitView} selected={selected}>
+  <Block id={"function-block-" + node?.id} selected={selected} width={node?.width}>
     <Banner color={color}>
       <Header>
         {!splitView && (

@@ -1,6 +1,6 @@
 export enum Aspect {
-  None = 0,
-  NotSet = 1,
+  NotSet = 0,
+  None = 1,
   Function = 2,
   Product = 4,
   Location = 8,
@@ -23,12 +23,6 @@ export enum ObjectType {
   ObjectBlock = 1,
   Transport = 2,
   Interface = 3,
-}
-
-export enum TypeMode {
-  NotSet = 0,
-  New = 1,
-  Edit = 2,
 }
 
 export enum LibraryFilter {

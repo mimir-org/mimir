@@ -15,12 +15,12 @@ const initialState: ReducerState = {
 export function parametersReducer(state = initialState, action: ParametersActionTypes): ReducerState {
   switch (action.type) {
     case ADD_ATTRIBUTE_FILTER: {
-      const { nodeId, filterName } = action.payload;
+      const { elementId, filterName } = action.payload;
 
       const selectedAttributeFilters = {
         ...state.selectedAttributeFilters,
-        [nodeId]: {
-          ...state.selectedAttributeFilters[nodeId],
+        [elementId]: {
+          ...state.selectedAttributeFilters[elementId],
           [filterName]: [],
         },
       };
@@ -32,12 +32,12 @@ export function parametersReducer(state = initialState, action: ParametersAction
     }
 
     case REMOVE_ATTRIBUTE_FILTER: {
-      const { nodeId, filterName } = action.payload;
-      const { [filterName]: removed, ...filters } = state.selectedAttributeFilters[nodeId];
+      const { elementId, filterName } = action.payload;
+      const { [filterName]: removed, ...filters } = state.selectedAttributeFilters[elementId];
 
       const selectedAttributeFilters = {
         ...state.selectedAttributeFilters,
-        [nodeId]: filters,
+        [elementId]: filters,
       };
 
       return {
@@ -47,8 +47,8 @@ export function parametersReducer(state = initialState, action: ParametersAction
     }
 
     case REMOVE_ALL_ATTRIBUTE_FILTERS: {
-      const { nodeId } = action.payload;
-      const { [nodeId]: removed, ...selectedAttributeFilters } = state.selectedAttributeFilters;
+      const { elementId } = action.payload;
+      const { [elementId]: removed, ...selectedAttributeFilters } = state.selectedAttributeFilters;
 
       return {
         ...state,
@@ -57,13 +57,13 @@ export function parametersReducer(state = initialState, action: ParametersAction
     }
 
     case ADD_COMBINED_ATTRIBUTE: {
-      const { nodeId, filterName, combination } = action.payload;
+      const { elementId, filterName, combination } = action.payload;
 
       const selectedAttributeFilters = {
         ...state.selectedAttributeFilters,
-        [nodeId]: {
-          ...state.selectedAttributeFilters[nodeId],
-          [filterName]: [...state.selectedAttributeFilters[nodeId][filterName], combination],
+        [elementId]: {
+          ...state.selectedAttributeFilters[elementId],
+          [filterName]: [...state.selectedAttributeFilters[elementId][filterName], combination],
         },
       };
 
@@ -74,16 +74,16 @@ export function parametersReducer(state = initialState, action: ParametersAction
     }
 
     case REMOVE_COMBINED_ATTRIBUTE: {
-      const { nodeId, filterName, combination } = action.payload;
+      const { elementId, filterName, combination } = action.payload;
 
-      const combinations = state.selectedAttributeFilters[nodeId][filterName].filter(
+      const combinations = state.selectedAttributeFilters[elementId][filterName].filter(
         (c) => c.combined !== combination.combined
       );
 
       const selectedAttributeFilters = {
         ...state.selectedAttributeFilters,
-        [nodeId]: {
-          ...state.selectedAttributeFilters[nodeId],
+        [elementId]: {
+          ...state.selectedAttributeFilters[elementId],
           [filterName]: combinations,
         },
       };

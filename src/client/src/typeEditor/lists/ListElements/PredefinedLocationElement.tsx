@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { PredefinedAttribute } from "../../../models";
-import { Checkbox } from "../../inputs";
+import { SquareCheckbox } from "../../inputs";
 import { ExpandIcon, CollapseIcon } from "../../../assets/icons/chevron";
 import { OnMultipleValuesChange, OnSingleValueChange } from "./helpers";
-import { Label } from "../../inputs/Checkbox";
+import { Label } from "../../inputs/SquareCheckbox";
 import {
   TerminalListElement,
   TerminalCategoryWrapper,
@@ -11,6 +11,7 @@ import {
   ValueHeader,
   ValuesListWrapper,
   ValuesListItem,
+  SquareBox,
 } from "../../styled";
 
 interface Props {
@@ -62,13 +63,15 @@ export const PredefinedLocationElement = ({ attributeName, values, isMultiSelect
   return (
     <TerminalListElement>
       <TerminalCategoryWrapper isSelected={isSelected}>
-        <Checkbox
-          id={attributeName}
-          name={attributeName}
-          label={Label.Terminals}
-          defaultValue={defaultValue}
-          onChange={onCheckboxChange}
-        />
+        <SquareBox>
+          <SquareCheckbox
+            id={attributeName}
+            name={attributeName}
+            label={Label.Terminals}
+            defaultValue={defaultValue}
+            onChange={onCheckboxChange}
+          />
+        </SquareBox>
       </TerminalCategoryWrapper>
       {isSelected && (
         <SelectValue isSelected={isSelected}>
@@ -97,32 +100,31 @@ export const PredefinedLocationElement = ({ attributeName, values, isMultiSelect
               {Object.entries(getValues()).map(([key, value]) => {
                 return (
                   <ValuesListItem key={key}>
-                    <label className={"squarecheckbox"}>
-                      {isMultiSelect ? (
-                        <>
+                    <SquareBox>
+                      <label className={"squarecheckbox"}>
+                        {isMultiSelect ? (
                           <input
                             type="checkbox"
                             defaultChecked={value}
                             id={key}
                             onChange={() => onMultipleValuesCheckboxChange([key, value])}
                           />
-                        </>
-                      ) : (
-                        <input
-                          type="radio"
-                          defaultChecked={value}
-                          name="attribute"
-                          value={key}
-                          id={key}
-                          onChange={onSingleValueCheckboxChange}
-                        />
-                      )}
-                      <span className="scheckmark"></span>
-                      <label className="label" htmlFor={key}>
-                        {key}
+                        ) : (
+                          <input
+                            type="radio"
+                            defaultChecked={value}
+                            name="attribute"
+                            value={key}
+                            id={key}
+                            onChange={onSingleValueCheckboxChange}
+                          />
+                        )}
+                        <span className="scheckmark"></span>
+                        <label className="label" htmlFor={key}>
+                          {key}
+                        </label>
                       </label>
-                    </label>
-                    {/* <p>{key}</p> */}
+                    </SquareBox>
                   </ValuesListItem>
                 );
               })}

@@ -1,6 +1,7 @@
 import { CompositeType } from "../../../models";
-import { Checkbox, Label } from "../../inputs/Checkbox";
 import { ListElem } from "../../../compLibrary";
+import { SquareBox } from "../../styled";
+import { SquareCheckbox, Label } from "../../inputs/SquareCheckbox";
 
 interface Props {
   simpleType: CompositeType;
@@ -12,13 +13,15 @@ export const SimpleTypeElement = ({ simpleType, onChange, defaultValue }: Props)
   const isSelected = defaultValue?.includes(simpleType.id);
   return (
     <ListElem isSelected={isSelected}>
-      <Checkbox
-        id={simpleType.id}
-        name={simpleType.name}
-        label={Label.compositeTypes}
-        defaultValue={defaultValue}
-        onChange={onChange}
-      />
+      <SquareBox>
+        <SquareCheckbox
+          id={simpleType.id}
+          name={simpleType.name}
+          label={Label.compositeTypes}
+          defaultValue={defaultValue}
+          onChange={onChange}
+        />
+      </SquareBox>
     </ListElem>
   );
 };

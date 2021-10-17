@@ -50,8 +50,6 @@ export interface TypeEditorState {
   fetching: boolean;
   creating: boolean;
   createLibraryType: CreateLibraryType;
-  aspects: object;
-  objectTypes: object;
   purposes: Purpose[];
   rdsList: Rds[];
   terminals: TerminalType[];

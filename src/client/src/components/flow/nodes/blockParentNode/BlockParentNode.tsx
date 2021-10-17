@@ -10,7 +10,7 @@ import { GetParentColor } from "./helpers";
 import { OnParentClick, OnChildClick, OnConnectorClick } from "./handlers";
 import { BlockComponent } from "./";
 import { BlockMessageBox } from "../../block/styled";
-import { FilterTerminals, FindNodeByDataId, FindAllEdges } from "../../block/helpers";
+import { FilterTerminals, GetNodeByDataId, FindAllEdges } from "../../block/helpers";
 
 /**
  * Component for the large parent block in BlockView.
@@ -21,16 +21,17 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useDispatch();
   const [inTerminalMenu, showInTerminalMenu] = useState(false);
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
-  const nodes = useSelector<RootState>((s) => s.projectState.project.nodes) as Node[];
-  const edges = useSelector<RootState>((s) => s.projectState.project.edges) as Edge[];
+  const nodes = useSelector<RootState>((s) => s.projectState.project?.nodes) as Node[];
+  const edges = useSelector<RootState>((s) => s.projectState.project?.edges) as Edge[];
   const splitView = useSelector<RootState>((s) => s.splitView.visible) as boolean;
   const splitNode = useSelector<RootState>((s) => s.splitView.node) as Node;
   const electro = useSelector<RootState>((s) => s.electro.visible) as boolean;
-  const node = nodes.find((x) => x.id === data.id);
+  const node = nodes?.find((x) => x.id === data.id);
+  if (node) node.width = Size.BlockView_Width;
 
   // Enforce size change of node
   useEffect(() => {
-    const parentNode = FindNodeByDataId(data.id);
+    const parentNode = GetNodeByDataId(data.id);
     if (splitView) {
       parentNode.style.width = `${Size.SplitView_Width}px`;
     } else parentNode.style.width = `${Size.BlockView_Width}px`;
@@ -41,6 +42,8 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
     const allEdges = FindAllEdges();
     allEdges.style.zIndex = "3";
   }, []);
+
+  if (splitView) node.width = Size.SplitView_Width;
 
   return (
     <>
@@ -56,7 +59,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         node={node}
         inputMenuOpen={inTerminalMenu}
         outputMenuOpen={outTerminalMenu}
-        isParent={true}
+        parent={true}
         splitView={splitView}
         terminals={FilterTerminals(node, splitView, splitNode)}
         onClick={(conn) => OnConnectorClick(conn, dispatch, edges, nodes)}
@@ -67,11 +70,14 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
       />
       <HandleComponent
         node={node}
-        isParent={true}
+        parent={true}
         nodes={nodes}
+        length={node.length}
+        width={node.width}
         terminals={FilterTerminals(node, splitView, splitNode)}
         splitView={splitView}
         electro={electro}
+        mainConnectNode={false}
       />
 
       {splitView && !splitNode && (

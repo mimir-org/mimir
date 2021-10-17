@@ -19,6 +19,7 @@ interface Props {
 const SearchDropDown = ({ value, placeHolder, list, onChange }: Props) => {
   const [isListOpen, setIsListOpen] = useState(false);
   const [searchString, setSearchString] = useState("");
+  const isInArray = list.find((x) => x.name === searchString);
 
   const filter =
     (searchString &&
@@ -31,6 +32,17 @@ const SearchDropDown = ({ value, placeHolder, list, onChange }: Props) => {
     setSearchString(name);
     setIsListOpen(false);
     onChange(value);
+  };
+
+  const showListItems = () => {
+    const filteredList = isInArray ? list : filter;
+    return filteredList.map((item) => {
+      return (
+        <SearchBarListItem key={item.id} onClick={(e: any) => valueChanged(e, item.id, item.name)}>
+          <p>{item.name}</p>
+        </SearchBarListItem>
+      );
+    });
   };
 
   useEffect(() => {
@@ -61,18 +73,7 @@ const SearchDropDown = ({ value, placeHolder, list, onChange }: Props) => {
             className="icon"
           />
         </SearchBar>
-
-        {isListOpen && list && (
-          <SearchBarList>
-            {filter.map((item) => {
-              return (
-                <SearchBarListItem key={item.id} onClick={(e: any) => valueChanged(e, item.id, item.name)}>
-                  <p>{item.name}</p>
-                </SearchBarListItem>
-              );
-            })}
-          </SearchBarList>
-        )}
+        {isListOpen && list && <SearchBarList>{showListItems()}</SearchBarList>}
       </SearchBarContainer>
     </SearchBarWrapper>
   );

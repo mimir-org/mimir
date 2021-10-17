@@ -26,9 +26,9 @@ const SetConnectNodePos = (node: Node, mainConnectNodeId: string, connectNodes: 
 };
 
 function setXPos(node: Node, xPos: number, connectNodes: Node[]) {
-  const leftMargin = 35;
-  const rightMargin = 239;
-  const center = 135;
+  const leftMargin = 55;
+  const rightMargin = 260;
+  const center = 155;
 
   if (connectNodes.length === 1) return xPos + center;
 
@@ -47,10 +47,9 @@ function setYPos(node: Node, yPos: number, connectNodes: Node[]) {
   yPos += marginTop;
   let test = 4;
   let increment = 1;
-
+  // TODO: make algo and remove funky variables
   connectNodes?.forEach((elem, i) => {
     if (i > 1 && node.id === elem.id) {
-      // TODO: make algo and remove funky variables
       if (i > 3 && i < 6) increaseYPos += test * increment;
       if (i >= 6 && i < 8) increaseYPos += test * (increment * 2);
       if (i >= 8 && i < 10) increaseYPos += test * (increment * 3);
