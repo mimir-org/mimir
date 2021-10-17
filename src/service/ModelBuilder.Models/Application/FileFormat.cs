@@ -1,4 +1,4 @@
-﻿namespace Mb.Modules
+﻿namespace Mb.Models.Application
 {
     public class FileFormat
     {

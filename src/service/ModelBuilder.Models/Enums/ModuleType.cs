@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Mb.Modules
+namespace Mb.Models.Enums
 {
     public enum ModuleType
     {

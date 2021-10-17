@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace Mb.Modules
+namespace Mb.Models.Attributes
 {
     [AttributeUsage(AttributeTargets.Interface | AttributeTargets.Class)]
-    public class ScopeAttribute : Attribute
+    public sealed class SingletonAttribute : Attribute
     {
     }
 }

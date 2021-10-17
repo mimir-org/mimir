@@ -2,7 +2,7 @@
 using Mb.Models.Application;
 using Mb.Models.Data;
 
-namespace Mb.Modules
+namespace Mb.Models.Abstract
 {
     public interface IModelBuilderParser : IModuleInterface
     {

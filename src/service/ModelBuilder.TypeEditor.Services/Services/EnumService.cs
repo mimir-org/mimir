@@ -55,7 +55,7 @@ namespace Mb.TypeEditor.Services.Services
         /// <returns></returns>
         public IEnumerable<LocationTypeAm> GetAllLocationTypes()
         {
-            var locationTypes = GetAllOfType(EnumType.PredefinedAttributeCategory).OfType<PredefinedAttributeCategory>().OrderBy(x => x.Name).ToList();
+            var locationTypes = GetAllOfType(EnumType.PredefinedAttributeCategory).OfType<TypeAttribute>().OrderBy(x => x.Name).ToList();
             var mainTypes = locationTypes.Where(x => x.ParentId == null).ToList();
             foreach (var category in mainTypes)
             {
@@ -65,14 +65,14 @@ namespace Mb.TypeEditor.Services.Services
             }
         }
 
-        private LocationTypeAm ConvertLocationType(PredefinedAttributeCategory category)
+        private LocationTypeAm ConvertLocationType(TypeAttribute typeAttribute)
         {
             return new()
             {
-                Id = category.Id,
-                Description = category.Description,
-                Name = category.Name,
-                SemanticReference = category.SemanticReference,
+                Id = typeAttribute.Id,
+                Description = typeAttribute.Description,
+                Name = typeAttribute.Name,
+                SemanticReference = typeAttribute.SemanticReference,
                 LocationSubTypes = new List<LocationTypeAm>()
             };
         }

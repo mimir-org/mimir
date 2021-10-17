@@ -8,8 +8,10 @@ using AutoMapper.Configuration;
 using Mb.Core.Profiles;
 using Mb.Data.Contracts;
 using Mb.Data.Repositories;
+using Mb.Models.Abstract;
+using Mb.Models.Attributes;
 using Mb.Models.Configurations;
-using Mb.Modules;
+using Mb.Models.Enums;
 using Mb.Services.Contracts;
 using Mb.Services.Services;
 using Microsoft.AspNetCore.Builder;
@@ -22,6 +24,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
+using Module = Mb.Models.Application.Module;
 
 namespace Mb.Core.Extensions
 {
@@ -140,7 +143,7 @@ namespace Mb.Core.Extensions
 
         #region Private Methods
 
-        private static void CreateModules(this IServiceCollection services, IConfiguration configuration, IEnumerable<Modules.Module> modules)
+        private static void CreateModules(this IServiceCollection services, IConfiguration configuration, IEnumerable<Module> modules)
         {
             // Create modules
             foreach (var module in modules)
@@ -155,7 +158,7 @@ namespace Mb.Core.Extensions
             }
         }
 
-        private static void CreateProfiles(this IMapperConfigurationExpression cfg, IEnumerable<Modules.Module> modules)
+        private static void CreateProfiles(this IMapperConfigurationExpression cfg, IEnumerable<Module> modules)
         {
             // Create modules
             foreach (var module in modules)

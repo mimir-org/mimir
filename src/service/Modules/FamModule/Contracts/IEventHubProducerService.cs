@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Mb.Modules;
+using Mb.Models.Attributes;
 
 namespace EventHubModule.Contracts
 {

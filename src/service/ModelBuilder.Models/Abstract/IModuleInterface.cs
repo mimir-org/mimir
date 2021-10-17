@@ -3,7 +3,7 @@ using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Mb.Modules
+namespace Mb.Models.Abstract
 {
     public interface IModuleInterface
     {

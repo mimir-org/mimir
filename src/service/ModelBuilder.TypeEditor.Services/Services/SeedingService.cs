@@ -30,7 +30,7 @@ namespace Mb.TypeEditor.Services.Services
         public const string TerminalCategoryFileName = "termcategory";
         public const string AttributeFormatFileName = "format";
         public const string BuildStatusFileName = "buildstatus";
-        public const string PredefinedAttributeCategoryFileName = "predefined_attribute_category";
+        public const string TypeAttributeFileName = "type_attribute";
         public const string PredefinedAttributeFileName = "predefined_attribute";
         public const string PurposeFileName = "purpose";
         public const string SymbolFileName = "symbol";
@@ -79,7 +79,7 @@ namespace Mb.TypeEditor.Services.Services
                 var terminalCategoryFiles = fileList.Where(x => x.ToLower().Equals(TerminalCategoryFileName)).ToList();
                 var attributeFormatFiles = fileList.Where(x => x.ToLower().Equals(AttributeFormatFileName)).ToList();
                 var buildStatusFiles = fileList.Where(x => x.ToLower().Equals(BuildStatusFileName)).ToList();
-                var predefinedAttributeCategoryFiles = fileList.Where(x => x.ToLower().Equals(PredefinedAttributeCategoryFileName)).ToList();
+                var typeAttributeFiles = fileList.Where(x => x.ToLower().Equals(TypeAttributeFileName)).ToList();
                 
                 //Other
                 var contractorFiles = fileList.Where(x => x.ToLower().Equals(ContractorFileName)).ToList();
@@ -100,7 +100,7 @@ namespace Mb.TypeEditor.Services.Services
                 var terminalCategories = _fileRepository.ReadAllFiles<TerminalCategory>(terminalCategoryFiles).ToList();
                 var attributeFormats = _fileRepository.ReadAllFiles<AttributeFormat>(attributeFormatFiles).ToList();
                 var buildStatuses = _fileRepository.ReadAllFiles<BuildStatus>(buildStatusFiles).ToList();
-                var predefinedCategories = _fileRepository.ReadAllFiles<PredefinedAttributeCategory>(predefinedAttributeCategoryFiles).ToList();
+                var typeAttributes = _fileRepository.ReadAllFiles<TypeAttribute>(typeAttributeFiles).ToList();
                 var symbols = _fileRepository.ReadAllFiles<BlobDataAm>(symbolFileNames).ToList();
 
                 //var contractors = _fileRepository.ReadAllFiles<Contractor>(contractorFiles).ToList();
@@ -123,7 +123,7 @@ namespace Mb.TypeEditor.Services.Services
                 await CreateEnumBase<TerminalCategory>(terminalCategories);
                 await CreateEnumBase<AttributeFormat>(attributeFormats);
                 await CreateEnumBase<BuildStatus>(buildStatuses);
-                await CreateEnumBase<PredefinedAttributeCategory>(predefinedCategories);
+                await CreateEnumBase<TypeAttribute>(typeAttributes);
                 await CreateEnumBase<Purpose>(purposes);
 
                 //await _commonService.CreateContractorsAsync(contractors);

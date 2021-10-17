@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Mb.Modules
+namespace Mb.Models.Abstract
 {
     public interface IModelBuilderSyncService : IModuleInterface
     {

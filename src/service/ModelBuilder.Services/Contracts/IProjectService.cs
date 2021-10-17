@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Mb.Models.Application;
 using Mb.Models.Application.Mimir;
 using Mb.Models.Data;
-using Mb.Modules;
 using Microsoft.AspNetCore.Http;
 
 namespace Mb.Services.Contracts

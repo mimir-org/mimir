@@ -38,7 +38,8 @@ namespace Mb.TypeEditor.Core.Controllers.V1
         #region Get
 
         /// <summary>
-        /// Get attribute types
+        /// Get all attribute types by aspect.
+        /// If aspect is NotSet, all attribute types will be returned
         /// </summary>
         /// <param name="aspect"></param>
         /// <returns></returns>

@@ -34,35 +34,7 @@ namespace Mb.TypeEditor.Core.Controllers.V1
         }
 
         #region Get
-
-        /// <summary>
-        /// Create a new blob data object
-        /// </summary>
-        /// <param name="blobData"></param>
-        /// <returns></returns>
-        [HttpPost("")]
-        [ProducesResponseType(typeof(BlobData), StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CreateOrUpdateBlob([FromBody] BlobDataAm blobData)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            try
-            {
-                var createdBlob = await _blobDataService.CreateBlobData(blobData);
-                return StatusCode(201, createdBlob);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
-        }
-
+        
         /// <summary>
         /// Get blob data from category
         /// </summary>
@@ -91,7 +63,33 @@ namespace Mb.TypeEditor.Core.Controllers.V1
 
         #region Post
 
+        /// <summary>
+        /// Create a new blob data object
+        /// </summary>
+        /// <param name="blobData"></param>
+        /// <returns></returns>
+        [HttpPost("")]
+        [ProducesResponseType(typeof(BlobData), StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> CreateOrUpdateBlob([FromBody] BlobDataAm blobData)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
+            try
+            {
+                var createdBlob = await _blobDataService.CreateBlobData(blobData);
+                return StatusCode(201, createdBlob);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
 
         #endregion
 
