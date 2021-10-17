@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Mb.Models.Application.TypeEditor;
-using Mb.Models.Data;
+using Mb.Models.Data.TypeEditor;
 using Mb.Models.Enums;
 
 namespace Mb.TypeEditor.Services.Contracts

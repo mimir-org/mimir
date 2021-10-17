@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Mb.Models.Data.Enums.Mapping;
+using Mb.Models.Enums;
 
 namespace Mb.Models.Application
 {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Mb.Models.Data.Enums;
+using Mb.Models.Data.TypeEditor.EnumTypes;
 
-namespace Mb.Models.Data
+namespace Mb.Models.Data.TypeEditor
 {
     public class TerminalType
     {

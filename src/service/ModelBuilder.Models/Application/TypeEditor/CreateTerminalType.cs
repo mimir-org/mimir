@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using Mb.Models.Data;
+using Mb.Models.Data.TypeEditor;
 using Newtonsoft.Json;
 
 namespace Mb.Models.Application.TypeEditor

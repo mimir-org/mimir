@@ -4,7 +4,7 @@ using System.Linq;
 using Mb.Models.Application;
 using Newtonsoft.Json;
 
-namespace Mb.Models.Data
+namespace Mb.Models.Data.TypeEditor
 {
     public class NodeType : LibraryType
     {

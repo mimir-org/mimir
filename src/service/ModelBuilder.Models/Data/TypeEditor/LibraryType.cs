@@ -1,7 +1,7 @@
-﻿using Mb.Models.Data.Enums;
+﻿using Mb.Models.Data.TypeEditor.EnumTypes;
 using Mb.Models.Enums;
 
-namespace Mb.Models.Data
+namespace Mb.Models.Data.TypeEditor
 {
     public class LibraryType
     {

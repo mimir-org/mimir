@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Mb.Models.Data;
+using Mb.Models.Data.TypeEditor;
 using Mb.Models.Extensions;
 using Mb.TypeEditor.Data.Contracts;
 using Mb.TypeEditor.Services.Contracts;

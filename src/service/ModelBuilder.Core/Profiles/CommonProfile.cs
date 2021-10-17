@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Mb.Models.Application.Mimir;
-using Mb.Models.Data;
+using Mb.Models.Data.TypeEditor;
 
 namespace Mb.Core.Profiles
 {

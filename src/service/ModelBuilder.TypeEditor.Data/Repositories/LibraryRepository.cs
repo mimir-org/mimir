@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Mb.Models.Application;
-using Mb.Models.Data;
+using Mb.Models.Data.TypeEditor;
 using Mb.TypeEditor.Data.Contracts;
 using Microsoft.EntityFrameworkCore;
 

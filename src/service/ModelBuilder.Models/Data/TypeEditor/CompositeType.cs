@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Mb.Models.Data
+namespace Mb.Models.Data.TypeEditor
 {
     public class CompositeType
     {

@@ -1,13 +1,10 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Mb.Models.Data.Enums
+namespace Mb.Models.Data.TypeEditor.EnumTypes
 {
-    public class AttributeSource : EnumBase
+    public class Unit : EnumBase
     {
-        [JsonIgnore]
-        public virtual ICollection<Attribute> Attributes { get; set; }
-
         [JsonIgnore]
         public virtual ICollection<AttributeType> AttributeTypes { get; set; }
     }

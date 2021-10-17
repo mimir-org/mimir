@@ -6,7 +6,7 @@ using AutoMapper;
 using Mb.Models.Application.Mimir;
 using Mb.Models.Application.TypeEditor;
 using Mb.Models.Data;
-using Mb.Models.Data.Enums;
+using Mb.Models.Data.TypeEditor.EnumTypes;
 using Mb.Models.Extensions;
 using Mb.TypeEditor.Data.Contracts;
 using Mb.TypeEditor.Services.Contracts;

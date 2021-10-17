@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Mb.Models.Application.TypeEditor;
-using Mb.Models.Data;
+using Mb.Models.Data.TypeEditor;
 using Mb.TypeEditor.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using Mb.Models.Enums;
+﻿using Mb.Models.Enums;
 using Newtonsoft.Json;
 
-namespace Mb.Models.Data
+namespace Mb.Models.Data.TypeEditor
 {
     public class BlobData
     {

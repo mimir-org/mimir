@@ -1,6 +1,6 @@
 ﻿using Mb.Models.Abstract;
 using Mb.Models.Configurations;
-using Mb.Models.Data.Enums;
+using Mb.Models.Data.TypeEditor.EnumTypes;
 
 namespace Mb.TypeEditor.Data.Contracts
 {

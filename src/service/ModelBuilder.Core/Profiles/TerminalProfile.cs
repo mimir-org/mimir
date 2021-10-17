@@ -2,6 +2,7 @@
 using Mb.Data.Contracts;
 using Mb.Models.Application.TypeEditor;
 using Mb.Models.Data;
+using Mb.Models.Data.TypeEditor;
 using Mb.Models.Extensions;
 
 namespace Mb.Core.Profiles

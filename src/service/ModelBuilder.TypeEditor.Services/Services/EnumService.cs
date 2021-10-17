@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Mb.Models.Application;
 using Mb.Models.Application.TypeEditor;
-using Mb.Models.Data.Enums;
-using Mb.Models.Data.Enums.Mapping;
+using Mb.Models.Data.TypeEditor.EnumTypes;
+using Mb.Models.Enums;
 using Mb.Models.Extensions;
 using Mb.TypeEditor.Data.Contracts;
 using Mb.TypeEditor.Services.Contracts;
@@ -60,7 +60,7 @@ namespace Mb.TypeEditor.Services.Services
             foreach (var category in mainTypes)
             {
                 var locationType = ConvertLocationType(category);
-                locationType.LocationSubTypes = locationTypes.Where(x => x.ParentId == category.Id).OrderBy(x => category.Name).Select(ConvertLocationType).ToList();
+                locationType.LocationSubTypes = locationTypes.Where(x => x.ParentId == category.Id).OrderBy(_ => category.Name).Select(ConvertLocationType).ToList();
                 yield return locationType;
             }
         }

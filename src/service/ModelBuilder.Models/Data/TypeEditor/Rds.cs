@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using Mb.Models.Data.Enums;
+using Mb.Models.Data.TypeEditor.EnumTypes;
 using Mb.Models.Enums;
 using Newtonsoft.Json;
 
-namespace Mb.Models.Data
+namespace Mb.Models.Data.TypeEditor
 {
     public class Rds
     {

@@ -1,24 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Mb.Models.Data.TypeEditor.EnumTypes;
+using Mb.Models.Enums;
 
-namespace Mb.Models.Data.Enums.Mapping
+namespace Mb.Models.Extensions
 {
-    public enum EnumType
+    public static class EnumTypeExtensions
     {
-        Unit = 0,
-        AttributeCondition = 1,
-        AttributeQualifier = 2,
-        AttributeSource = 3,
-        RdsCategory = 4,
-        TerminalCategory = 5,
-        AttributeFormat = 6,
-        BuildStatus = 7,
-        PredefinedAttributeCategory = 8,
-        Purpose = 9
-    }
-
-    public static class EnumTypeExtension {
         private static Dictionary<int, Type> EnumTypes { get; set; }
 
         public static Type GetEnumTypeFromEnum(this EnumType enumType)
@@ -31,7 +20,7 @@ namespace Mb.Models.Data.Enums.Mapping
 
             return EnumTypes.TryGetValue((int)enumType, out var value) ? value : typeof(EnumBase);
         }
-        
+
         private static void PopulateEnumTypes()
         {
             EnumTypes.Add(0, typeof(Unit));

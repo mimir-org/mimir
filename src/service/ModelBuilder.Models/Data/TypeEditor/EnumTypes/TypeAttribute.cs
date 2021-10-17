@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Mb.Models.Enums;
 
-namespace Mb.Models.Data.Enums
+namespace Mb.Models.Data.TypeEditor.EnumTypes
 {
     public class TypeAttribute : EnumBase
     {

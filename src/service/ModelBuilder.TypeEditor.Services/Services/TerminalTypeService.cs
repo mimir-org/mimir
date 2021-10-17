@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Mb.Models.Application.TypeEditor;
-using Mb.Models.Data;
+using Mb.Models.Data.TypeEditor;
 using Mb.TypeEditor.Data.Contracts;
 using Mb.TypeEditor.Services.Contracts;
 using Microsoft.EntityFrameworkCore;

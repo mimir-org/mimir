@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Mb.Models.Data;
+using Mb.Models.Data.TypeEditor;
 using Mb.Models.Enums;
 using Mb.TypeEditor.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;

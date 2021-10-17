@@ -1,6 +1,6 @@
 ﻿using Mb.Models.Enums;
 
-namespace Mb.Models.Data
+namespace Mb.Models.Data.TypeEditor
 {
     public class NodeTypeTerminalType
     {
