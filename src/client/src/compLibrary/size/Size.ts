@@ -2,8 +2,8 @@
 
 const Size = {
   // Nodes
-  Node_Width: 140,
-  Node_Length: 90,
+  Node_Width: 170,
+  Node_Length: 100,
 
   // Terminals
   Terminals_Interval: 25,

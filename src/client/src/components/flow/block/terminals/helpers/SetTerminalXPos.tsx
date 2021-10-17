@@ -9,7 +9,7 @@ import { Size } from "../../../../../compLibrary";
  * @returns a number used by the styled component HandleBox.
  */
 const SetTerminalXPos = (count: number, parent: boolean, nodeWith: number, mainConnectNode: boolean) => {
-  const interval = parent ? 50 : Size.Terminals_Interval; // Default horizontal distance between each terminal
+  const interval = parent ? 35 : Size.Terminals_Interval; // Default horizontal distance between each terminal
   let base = nodeWith / 2 - 8; // Middle position
   if (mainConnectNode) base = 220;
 

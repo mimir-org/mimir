@@ -1,4 +1,3 @@
-import { Size } from "../../../../../../compLibrary";
 import { Connector, Node } from "../../../../../../models";
 import { IsInputTerminal } from "../../../../helpers";
 
@@ -12,8 +11,8 @@ const SetNodeLength = (terminals: Connector[], data: Node) => {
     t.visible && !IsInputTerminal(t) && outTerminals++;
   });
 
-  if (inTerminals > maximum) data.length += inTerminals * 10 + Size.Terminals_Interval;
-  else if (outTerminals > maximum) data.length += outTerminals * 10 + Size.Terminals_Interval;
+  if (inTerminals > maximum) data.length += inTerminals * 12;
+  else if (outTerminals > maximum) data.length += outTerminals * 12;
 };
 
 export default SetNodeLength;

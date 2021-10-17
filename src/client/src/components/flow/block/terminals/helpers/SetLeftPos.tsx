@@ -25,10 +25,11 @@ const SetLeftPos = (
   mainConnectNode: boolean
 ) => {
   if (!electro) {
+    // TODO: Make scalable
     if (pos === Position.Left) return -16;
     if (pos === Position.Right && !parent && !mainConnectNode) return Size.Node_Width + 2;
     if (pos === Position.Right && !parent && mainConnectNode) return Size.ConnectView_Width + 2;
-    if (pos === Position.Right && parent && !splitView) return Size.BlockView_Width + 5; // TODO: Make scalable
+    if (pos === Position.Right && parent && !splitView) return Size.BlockView_Width + 5;
     if (pos === Position.Right && parent && splitView) return Size.SplitView_Width;
   }
   if (pos === Position.Top) return SetTerminalXPos(inputCount, parent, nodeWidth, mainConnectNode);
