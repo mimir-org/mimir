@@ -24,16 +24,16 @@ const SetLeftPos = (
   nodeWidth: number,
   mainConnectNode: boolean
 ) => {
-  if (!electro) {
-    // TODO: Make scalable
-    if (pos === Position.Left) return -16;
-    if (pos === Position.Right && !parent && !mainConnectNode) return Size.Node_Width + 2;
-    if (pos === Position.Right && !parent && mainConnectNode) return Size.ConnectView_Width + 2;
-    if (pos === Position.Right && parent && !splitView) return Size.BlockView_Width + 5;
-    if (pos === Position.Right && parent && splitView) return Size.SplitView_Width;
+  if (electro) {
+    if (pos === Position.Top) return SetTerminalXPos(inputCount, parent, nodeWidth, mainConnectNode);
+    if (pos === Position.Bottom) return SetTerminalXPos(outputCount, parent, nodeWidth, mainConnectNode);
+    return;
   }
-  if (pos === Position.Top) return SetTerminalXPos(inputCount, parent, nodeWidth, mainConnectNode);
-  if (pos === Position.Bottom) return SetTerminalXPos(outputCount, parent, nodeWidth, mainConnectNode);
+  if (pos === Position.Left) return -17;
+  if (pos === Position.Right && !parent && !mainConnectNode) return Size.Node_Width + 3;
+  if (pos === Position.Right && !parent && mainConnectNode) return Size.ConnectView_Width + 3;
+  if (pos === Position.Right && parent && !splitView) return Size.BlockView_Width + 5;
+  if (pos === Position.Right && parent && splitView) return Size.SplitView_Width + 5;
 };
 
 export default SetLeftPos;
