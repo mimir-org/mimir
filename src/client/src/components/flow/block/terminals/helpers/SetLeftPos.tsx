@@ -29,11 +29,11 @@ const SetLeftPos = (
     if (pos === Position.Bottom) return SetTerminalXPos(outputCount, parent, nodeWidth, mainConnectNode);
     return;
   }
-  if (pos === Position.Left) return -18;
-  if (pos === Position.Right && !parent && !mainConnectNode) return Size.Node_Width + 4;
-  if (pos === Position.Right && !parent && mainConnectNode) return Size.ConnectView_Width + 4;
+  if (pos === Position.Left) return -17;
+  if (pos === Position.Right && !parent && !mainConnectNode) return Size.Node_Width + 3;
+  if (pos === Position.Right && !parent && mainConnectNode) return Size.ConnectView_Width + 3;
   if (pos === Position.Right && parent && !splitView) return Size.BlockView_Width + 5;
-  if (pos === Position.Right && parent && splitView) return Size.SplitView_Width;
+  if (pos === Position.Right && parent && splitView) return Size.SplitView_Width + 5;
 };
 
 export default SetLeftPos;
