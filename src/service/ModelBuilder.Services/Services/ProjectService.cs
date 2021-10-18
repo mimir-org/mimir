@@ -11,7 +11,7 @@ using Mb.Models.Abstract;
 using Mb.Models.Application;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
-using Mb.Models.Data.TypeEditor.EnumTypes;
+using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
 using Mb.Models.Exceptions;
 using Mb.Services.Contracts;
