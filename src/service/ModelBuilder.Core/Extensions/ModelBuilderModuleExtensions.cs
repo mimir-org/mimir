@@ -3,19 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.Configuration;
 using Mb.Core.Profiles;
-using Mb.Core.Repositories;
-using Mb.Core.Repositories.Contracts;
-using Mb.Core.Services;
-using Mb.Core.Services.Contracts;
-using Mb.Models.Application;
+using Mb.Data.Contracts;
+using Mb.Data.Repositories;
+using Mb.Models.Abstract;
 using Mb.Models.Attributes;
 using Mb.Models.Configurations;
 using Mb.Models.Enums;
-using Mb.Models.Modules;
+using Mb.Services.Contracts;
+using Mb.Services.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +24,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
-using Module = Mb.Models.Modules.Module;
+using Module = Mb.Models.Application.Module;
 
 namespace Mb.Core.Extensions
 {
@@ -55,38 +53,22 @@ namespace Mb.Core.Extensions
             });
 
             // Dependency injection
-            services.AddSingleton<IFileRepository, JsonFileRepository>();
+
             services.AddSingleton<ICommonRepository, CommonRepository>();
-            
+
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<INodeRepository, NodeRepository>();
             services.AddScoped<IEdgeRepository, EdgeRepository>();
-            services.AddScoped<ILibraryRepository, LibraryRepository>();
-            services.AddScoped<IRdsRepository, RdsRepository>();
-            services.AddScoped<IAttributeTypeRepository, AttributeTypeRepository>();
-            services.AddScoped<ILibraryTypeRepository, LibraryTypeRepository>();
             services.AddScoped<IConnectorRepository, ConnectorRepository>();
             services.AddScoped<IAttributeRepository, AttributeRepository>();
             services.AddScoped<IContractorRepository, ContractorRepository>();
-            services.AddScoped<ITerminalTypeRepository, TerminalTypeRepository>();
-            services.AddScoped<IEnumBaseRepository, EnumBaseRepository>();
-            services.AddScoped<INodeTypeTerminalTypeRepository, NodeTypeTerminalTypeRepository>();
-            services.AddScoped<IPredefinedAttributeRepository, PredefinedAttributeRepository>();
-            services.AddScoped<IBlobDataRepository, BlobDataRepository>();
-            services.AddScoped<ITransportTypeRepository, TransportTypeRepository>();
-            services.AddScoped<IInterfaceTypeRepository, InterfaceTypeRepository>();
             services.AddScoped<ITransportRepository, TransportRepository>();
             services.AddScoped<IInterfaceRepository, InterfaceRepository>();
-            services.AddScoped<INodeTypeRepository, NodeTypeRepository>();
-            services.AddScoped<ICompositeTypeRepository, CompositeTypeRepository>();
             services.AddScoped<ICompositeRepository, CompositeRepository>();
 
-            services.AddScoped<ITypeEditorService, TypeEditorService>();
-            services.AddScoped<ISeedingService, SeedingService>();
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<ILibraryService, LibraryService>();
             services.AddScoped<ICommonService, CommonService>();
-            services.AddScoped<IEnumService, EnumService>();
             services.AddScoped<INodeService, NodeService>();
 
             services.AddHttpContextAccessor();
@@ -95,11 +77,11 @@ namespace Mb.Core.Extensions
 
             // Automatic dependency injection for all modules
             var moduleService = new ModuleService();
-            services.AddServicesWithAttributeOfType<SingletonAttribute>(moduleService?.Assemblies ?? new List<Assembly>());
-            services.AddServicesWithAttributeOfType<ScopeAttribute>(moduleService?.Assemblies ?? new List<Assembly>());
-            services.AddServicesWithAttributeOfType<TransientAttribute>(moduleService?.Assemblies ?? new List<Assembly>());
+            services.AddServicesWithAttributeOfType<SingletonAttribute>(moduleService.Assemblies ?? new List<Assembly>());
+            services.AddServicesWithAttributeOfType<ScopeAttribute>(moduleService.Assemblies ?? new List<Assembly>());
+            services.AddServicesWithAttributeOfType<TransientAttribute>(moduleService.Assemblies ?? new List<Assembly>());
 
-            services.AddSingleton<IModuleService>(x => moduleService);
+            services.AddSingleton<IModuleService>(_ => moduleService);
             var modules = moduleService.Modules.Where(x => x.ModuleType == ModuleType.Plugin || x.ModuleType == ModuleType.SyncService || x.ModuleType == ModuleType.Parser).ToList();
 
             // Auto-mapper
@@ -118,14 +100,14 @@ namespace Mb.Core.Extensions
             cfg.AddProfile(new CompositeProfile(provider.GetService<ICommonRepository>()));
 
             // Create profiles
-            cfg.CreateProfiles(modules);
+            cfg.CreateProfiles(provider, modules);
 
             var mapperConfig = new MapperConfiguration(cfg);
-            services.AddSingleton(s => mapperConfig.CreateMapper());
+            services.AddSingleton(_ => mapperConfig.CreateMapper());
 
             // Add modules
-            services.CreateModules(configuration, modules);
-            
+            services.CreateModules(provider, configuration, modules);
+
             return services;
         }
 
@@ -133,20 +115,10 @@ namespace Mb.Core.Extensions
         {
             using var serviceScope = app.ApplicationServices.CreateScope();
             var context = serviceScope.ServiceProvider.GetRequiredService<ModelBuilderDbContext>();
-            var seedingService = serviceScope.ServiceProvider.GetRequiredService<ISeedingService>();
             var moduleService = serviceScope.ServiceProvider.GetRequiredService<IModuleService>();
-            var logger = serviceScope.ServiceProvider.GetRequiredService<ILogger<TypeEditorService>>();
+            var logger = serviceScope.ServiceProvider.GetRequiredService<ILogger<IModuleService>>();
 
             context.Database.Migrate();
-
-            
-            var awaiter = seedingService.LoadDataFromFiles().ConfigureAwait(true).GetAwaiter();
-            while (!awaiter.IsCompleted)
-            {
-                logger.LogInformation("Starting initialize db");
-                Thread.Sleep(2000);
-            }
-
             var moduleReaderAwaiter = moduleService.InitialModules().ConfigureAwait(true).GetAwaiter();
 
             while (!moduleReaderAwaiter.IsCompleted)
@@ -160,36 +132,51 @@ namespace Mb.Core.Extensions
 
         #region Private Methods
 
-        private static void CreateModules(this IServiceCollection services, IConfiguration configuration, IEnumerable<Module> modules)
+        private static void CreateModules(this IServiceCollection services, IServiceProvider provider, IConfiguration configuration, IEnumerable<Module> modules)
         {
-            // Create modules
-            foreach (var module in modules)
-            {
-                module.Instance.CreateModule(services, configuration);
-                if (module.ModuleType == ModuleType.SyncService)
-                {
-                    if (module.Instance is IModelBuilderSyncService service)
-                        service.ReceiveData();
-                }
-                    
-            }
-        }
+            var logger = provider.GetService<ILogger<IModuleService>>();
 
-        private static void CreateProfiles(this IMapperConfigurationExpression cfg, IEnumerable<Module> modules)
-        {
             // Create modules
             foreach (var module in modules)
             {
-                var profiles = module.Instance.GetProfiles()?.ToList();
-                if (profiles != null && profiles.Any())
+                try
                 {
-                    cfg.AddProfiles(profiles);
+                    module.Instance.CreateModule(services, configuration);
+                    if (module.ModuleType == ModuleType.SyncService)
+                    {
+                        if (module.Instance is IModelBuilderSyncService service)
+                            service.ReceiveData();
+                    }
+                }
+                catch (Exception e)
+                {
+                    logger.LogError($"Module error: ({module.Name}), {e.Message}");
                 }
             }
         }
 
+        private static void CreateProfiles(this IMapperConfigurationExpression cfg, IServiceProvider provider, IEnumerable<Module> modules)
+        {
+            var logger = provider.GetService<ILogger<IModuleService>>();
+
+            // Create modules
+            foreach (var module in modules)
+            {
+                try
+                {
+                    var profiles = module.Instance.GetProfiles()?.ToList();
+                    if (profiles != null && profiles.Any())
+                    {
+                        cfg.AddProfiles(profiles);
+                    }
+                }
+                catch (Exception e)
+                {
+                    logger.LogError($"Module error: ({module.Name}), {e.Message}");
+                }
+            }
+        }
 
         #endregion
-
     }
 }

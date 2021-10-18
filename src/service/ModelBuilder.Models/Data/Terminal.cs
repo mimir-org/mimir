@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Mb.Models.Data.Enums;
+using Mb.Models.Data.TypeEditor.EnumTypes;
 using Newtonsoft.Json;
 
 namespace Mb.Models.Data

@@ -33,7 +33,7 @@ const ToolBar = ({ libOpen, explorerOpen, treeView, filterMenuOpen, electro }: P
         </OptionsElement>
         {!treeView && (
           <OptionsElement treeView={treeView} onClick={() => Click.OnElectro(dispatch, electro)}>
-            <img src={!electro ? Icons.Vertical : Icons.Horizontal} alt="Electro" />
+            <img src={electro ? Icons.Vertical : Icons.Horizontal} alt="Electro" />
           </OptionsElement>
         )}
         <OptionsElement

@@ -6,11 +6,11 @@ namespace Mb.Models.Enums
     [Flags]
     public enum Aspect
     {
-        [Display(Name = "None")]
-        None = 0,
+        [Display(Name = "Not set")]
+        NotSet = 0,
 
-        [Display(Name = "Not Set")]
-        NotSet = 1,
+        [Display(Name = "None")]
+        None = 1,
 
         [Display(Name = "Function")]
         Function = 2,

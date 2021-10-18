@@ -14,7 +14,7 @@ export { default as SquareBox } from "./Inputs/SquareBox";
 
 // List
 export { default as ListElementCategoryWrapper } from "./List/ListElementCategoryWrapper";
-export { default as RdsCategoryElement } from "./List/RdsCategoryElement";
+export { default as ListCategoryElement } from "./List/ListCategoryElement";
 export { default as RdsListElement } from "./List/RdsListElement";
 export { default as TerminalName } from "./List/TerminalName";
 export { default as TerminalListElement } from "./List/TerminalListElement";

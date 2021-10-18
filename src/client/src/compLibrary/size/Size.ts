@@ -2,8 +2,11 @@
 
 const Size = {
   // Nodes
-  Node_Width: 130,
-  Node_Length: 80,
+  Node_Width: 170,
+  Node_Length: 100,
+
+  // Terminals
+  Terminals_Interval: 25,
 
   // SplitView
   SplitView_Width: 650,
@@ -17,7 +20,7 @@ const Size = {
   BlockView_MarginRight: 200,
   BlockView_MarginTop: 140,
   BlockView_BackgroundMargin: 10,
-  ConnectView_Width: 400,
+  ConnectView_Width: 450,
   ConnectView_Length: 180,
 
   // Modules

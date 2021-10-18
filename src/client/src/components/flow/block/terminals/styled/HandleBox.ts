@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 interface Props {
-  top: string;
-  left: string;
+  top: number;
+  left: number;
   visible: boolean;
 }
 
@@ -11,8 +11,8 @@ const HandleBox = styled.div<Props>`
   .react-flow__handle-block {
     position: absolute;
     visibility: ${(props) => !props.visible && "hidden"} !important;
-    top: ${(props) => props.top};
-    left: ${(props) => props.left};
+    top: ${(props) => props.top}px;
+    left: ${(props) => props.left}px;
   }
 `;
 

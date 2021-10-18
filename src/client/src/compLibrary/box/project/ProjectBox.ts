@@ -13,8 +13,8 @@ const ProjectBox = styled.div<Props>`
   width: ${(props) => (props.small ? "308px" : props.width ? props.width + "px" : "auto")};
   height: ${(props) => (props.small ? "281px" : "auto")};
   height: ${(props) => (props.small ? "281px" : props.height ? props.height + "px" : "auto")};
-  max-width: 502px;
-  max-height: 463px;
+  max-width: 730px;
+  max-height: 500px;
   margin: auto;
   border: 2px solid ${Color.BlueMagenta};
   background-color: ${Color.White};

@@ -22,9 +22,9 @@ export function* saveType(action) {
     let url = "";
 
     if (createLibraryType.libraryId) {
-      url = process.env.REACT_APP_API_BASE_URL + "typeeditor/" + createLibraryType.libraryId;
+      url = process.env.REACT_APP_API_BASE_URL + "librarytype/" + createLibraryType.libraryId;
     } else {
-      url = process.env.REACT_APP_API_BASE_URL + "typeeditor";
+      url = process.env.REACT_APP_API_BASE_URL + "librarytype";
     }
 
     const response = yield call(post, url, createLibraryType);
@@ -93,17 +93,10 @@ export function* saveType(action) {
 
 export function* getInitialData(action: TypeEditorActionTypes) {
   try {
-    const aspectUrl = process.env.REACT_APP_API_BASE_URL + "typeeditor/aspects";
-    const objectsUrl = process.env.REACT_APP_API_BASE_URL + "typeeditor/objects";
     const purposesUrl = process.env.REACT_APP_API_BASE_URL + "enum/9";
-
-    const aspectResponse = yield call(get, aspectUrl);
-    const objectResponse = yield call(get, objectsUrl);
     const purposesResponse = yield call(get, purposesUrl);
 
     const payload = {
-      aspects: aspectResponse.data,
-      objectTypes: objectResponse.data,
       purposes: purposesResponse.data,
     };
 
@@ -128,7 +121,7 @@ export function* getInitialData(action: TypeEditorActionTypes) {
 export function* getRDS(action) {
   try {
     const aspect = action.payload != null ? action.payload.aspect : Aspect.NotSet;
-    const rdsURL = process.env.REACT_APP_API_BASE_URL + "typeeditor/rds/" + aspect;
+    const rdsURL = process.env.REACT_APP_API_BASE_URL + "rds/" + aspect;
 
     const rdsResponse = yield call(get, rdsURL);
 
@@ -154,7 +147,7 @@ export function* getRDS(action) {
 
 export function* getTerminals(action) {
   try {
-    const terminalURL = process.env.REACT_APP_API_BASE_URL + "typeeditor/terminalsbycategory";
+    const terminalURL = process.env.REACT_APP_API_BASE_URL + "terminaltype/category";
 
     const terminalResponse = yield call(get, terminalURL);
 
@@ -181,7 +174,7 @@ export function* getTerminals(action) {
 export function* getAttributes(action) {
   try {
     const aspect = action.payload != null ? action.payload.aspect : Aspect.NotSet;
-    const attributesURL = process.env.REACT_APP_API_BASE_URL + "typeeditor/attributes/" + aspect;
+    const attributesURL = process.env.REACT_APP_API_BASE_URL + "attributetype/" + aspect;
 
     const attributesResponse = yield call(get, attributesURL);
 
@@ -233,7 +226,7 @@ export function* getLocationTypes(action) {
 
 export function* getPredefinedAttributes(action) {
   try {
-    const predefinedAttributesURL = process.env.REACT_APP_API_BASE_URL + "typeeditor/predefined-attributes";
+    const predefinedAttributesURL = process.env.REACT_APP_API_BASE_URL + "attributetype/predefined-attributes";
 
     const predefinedAttributesResponse = yield call(get, predefinedAttributesURL);
 
@@ -259,7 +252,7 @@ export function* getPredefinedAttributes(action) {
 
 export function* getblobData() {
   try {
-    const url = process.env.REACT_APP_API_BASE_URL + "common/blob/";
+    const url = process.env.REACT_APP_API_BASE_URL + "blob/";
     const response = yield call(get, url);
 
     // This is a bad request
@@ -317,7 +310,7 @@ export function* getSelectedNode(action) {
   try {
     const selectedNodeURL =
       process.env.REACT_APP_API_BASE_URL +
-      "typeeditor/librarytype/" +
+      "librarytype/" +
       action.payload.selectedType +
       "/" +
       action.payload.filter;
@@ -348,7 +341,7 @@ export function* getSelectedNode(action) {
 
 export function* getSimpleTypes(action) {
   try {
-    const simpleTypeslURL = process.env.REACT_APP_API_BASE_URL + "typeeditor/compositetype";
+    const simpleTypeslURL = process.env.REACT_APP_API_BASE_URL + "librarytype/compositetype";
 
     const simpleTypesURLResponse = yield call(get, simpleTypeslURL);
 

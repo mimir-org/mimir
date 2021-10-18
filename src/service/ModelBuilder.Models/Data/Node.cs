@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Mb.Models.Data.Enums;
+using Mb.Models.Data.TypeEditor.EnumTypes;
 using Mb.Models.Enums;
 using Newtonsoft.Json;
 

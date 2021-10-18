@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using AutoMapper;
-using Mb.Core.Extensions;
-using Mb.Core.Repositories.Contracts;
+using Mb.Data.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Data;
-using Mb.Models.Data.Enums;
+using Mb.Services.Extensions;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 

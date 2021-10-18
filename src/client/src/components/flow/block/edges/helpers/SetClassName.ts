@@ -1,0 +1,16 @@
+import { Connector } from "../../../../../models";
+import { IsFulfilledByTerminal, IsFunction, IsLocationTerminal, IsProduct } from "../../../helpers";
+
+const SetClassName = (data: any): string => {
+  let defaultClassName = "react-flow__edge-path ";
+  const sourceConn = data.source.connectors?.find((x: Connector) => x.id === data.edge.fromConnector.id) as Connector;
+
+  if (IsLocationTerminal(sourceConn)) defaultClassName += "has-location";
+  else if (IsFulfilledByTerminal(sourceConn)) defaultClassName += "fulfilled-by";
+  if (IsProduct(data.source)) defaultClassName += "-product";
+  else if (IsFunction(data.source)) defaultClassName += "-function";
+
+  return defaultClassName;
+};
+
+export default SetClassName;

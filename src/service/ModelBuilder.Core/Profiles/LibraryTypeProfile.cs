@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
-using Mb.Core.Repositories.Contracts;
+using Mb.Data.Contracts;
 using Mb.Models.Application;
+using Mb.Models.Application.TypeEditor;
 using Mb.Models.Data;
+using Mb.Models.Data.TypeEditor;
 using Mb.Models.Enums;
 using Mb.Models.Extensions;
-using NodeType = Mb.Models.Data.NodeType;
 
 namespace Mb.Core.Profiles
 {

@@ -1,4 +1,4 @@
-﻿using Mb.Models.Data.Enums;
+﻿using Mb.Models.Data.TypeEditor.EnumTypes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

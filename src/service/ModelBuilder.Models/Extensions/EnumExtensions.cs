@@ -4,8 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using Mb.Models.Application;
-using Mb.Models.Data.Enums;
-using Mb.Models.Data.Enums.Mapping;
+using Mb.Models.Data.TypeEditor.EnumTypes;
 using Attribute = System.Attribute;
 
 namespace Mb.Models.Extensions
@@ -101,6 +100,21 @@ namespace Mb.Models.Extensions
             return Enum.GetValues(typeof(T))
                 .Cast<Enum>()
                 .ToDictionary(t => (int)(object)t, t => t.GetDisplayName());
+        }
+    }
+
+    public class EnumMapper
+    {
+        public T CreateEnum<T>(CreateEnum item) where T : EnumBase, new()
+        {
+            var model = new T
+            {
+                Name = item.Name,
+                Description = item.Description,
+                SemanticReference = item.SemanticReference
+            };
+
+            return model;
         }
     }
 }

@@ -12,14 +12,16 @@ const findParentNode = (currentNode: Node, project: Project): Node => {
 const GetReferenceDesignation = (node: Node, project: Project): string => {
   if (!node || !project || !project.nodes || !project.edges) return "";
 
-  let ref = "";
+  let refs = [];
+
   let nextNode = node;
 
   while (nextNode) {
-    ref += nextNode?.rds ? GetRdsId(nextNode) : "";
+    if (nextNode?.rds) refs.push(GetRdsId(nextNode));
     nextNode = findParentNode(nextNode, project);
   }
-  return ref;
+
+  return refs.reverse().join("");
 };
 
 export default GetReferenceDesignation;

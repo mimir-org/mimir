@@ -3,14 +3,14 @@ import { TerminalsMenuComponent } from ".";
 import { Connector, Node } from "../../../../models";
 import { GetMenuIcon } from "./helpers";
 import { TerminalsBox } from "./styled";
-import { IsAspectNode, IsInputTerminal, IsLocation } from "../../helpers";
+import { IsAspectNode, IsInputTerminal } from "../../helpers";
 
 interface Props {
   node: Node;
   inputMenuOpen: boolean;
   outputMenuOpen: boolean;
   terminals: Connector[];
-  isParent: boolean;
+  parent: boolean;
   menuBox: boolean;
   mainConnectNode: boolean;
   showInTerminalMenu: any;
@@ -29,7 +29,7 @@ const TerminalsComponent = ({
   inputMenuOpen,
   outputMenuOpen,
   terminals,
-  isParent,
+  parent,
   menuBox,
   mainConnectNode,
   showInTerminalMenu,
@@ -44,25 +44,25 @@ const TerminalsComponent = ({
     <>
       <TerminalsBox
         visible={menuBox && !IsAspectNode(node) && inTerminals.length > 0}
-        isParent={isParent || mainConnectNode}
-        isInput={true}
+        parent={parent || mainConnectNode}
+        input={true}
         mainConnectNode={mainConnectNode}
       >
         <img
-          src={GetMenuIcon(node, isParent, true, mainConnectNode)}
+          src={GetMenuIcon(node, parent, true, mainConnectNode)}
           alt="menu"
           onClick={() => Click.OnInputMenu(showInTerminalMenu, inputMenuOpen)}
         />
       </TerminalsBox>
 
       <TerminalsBox
-        visible={menuBox && !IsAspectNode(node) && !IsLocation(node) && outTerminals.length > 0}
-        isParent={isParent || mainConnectNode}
-        isInput={false}
+        visible={menuBox && !IsAspectNode(node) && outTerminals.length > 0}
+        parent={parent || mainConnectNode}
+        input={false}
         mainConnectNode={mainConnectNode}
       >
         <img
-          src={GetMenuIcon(node, isParent, false, mainConnectNode)}
+          src={GetMenuIcon(node, parent, false, mainConnectNode)}
           alt="menu"
           onClick={() => Click.OnOutputMenu(showOutTerminalMenu, outputMenuOpen)}
         />
@@ -71,8 +71,8 @@ const TerminalsComponent = ({
       {inputMenuOpen && (
         <TerminalsMenuComponent
           node={node}
-          parent={isParent}
-          isInput={true}
+          parent={parent}
+          input={true}
           splitView={splitView}
           terminals={inTerminals}
           visible={inputMenuOpen}
@@ -83,8 +83,8 @@ const TerminalsComponent = ({
       {outputMenuOpen && (
         <TerminalsMenuComponent
           node={node}
-          parent={isParent}
-          isInput={false}
+          parent={parent}
+          input={false}
           splitView={splitView}
           visible={outputMenuOpen}
           terminals={outTerminals}
