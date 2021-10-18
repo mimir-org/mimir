@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Mb.Models.Application;
 using Mb.Models.Data;
+using Mb.Models.Exceptions;
 using Mb.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -59,6 +60,43 @@ namespace Mb.Core.Controllers.V1
             {
                 var createdSubProject = await _projectService.CreateProject(subProjectAm);
                 return StatusCode(201, createdSubProject);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
+        /// Get a sub project by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(Project), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetSubProject(string id)
+        {
+            if (string.IsNullOrWhiteSpace(id))
+                return BadRequest("The id can not be null or empty");
+
+            try
+            {
+                var data = await _projectService.GetProject(id);
+
+                if(data is { IsSubProject: false }) 
+                    return BadRequest("This is not a subProject");
+
+                return Ok(data);
+            }
+            catch (ModelBuilderNotFoundException)
+            {
+                return NoContent();
             }
             catch (Exception e)
             {
