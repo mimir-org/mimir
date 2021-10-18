@@ -277,21 +277,35 @@ namespace Mb.Services.Services
         public async Task<Project> CreateProject(SubProjectAm subProjectAm)
         {
             if (subProjectAm == null)
-                throw new ModelBuilderInvalidOperationException("SubProject: Object is 'null'");
+                throw new ModelBuilderInvalidOperationException("Object is 'null'");
 
             if (subProjectAm.Nodes == null || !subProjectAm.Nodes.Any())
-                throw new ModelBuilderInvalidOperationException("SubProject: No nodes selected");
+                throw new ModelBuilderInvalidOperationException("No nodes selected");
+
+            if(subProjectAm.Nodes.GroupBy(x => x).Where(g => g.Count() > 1).Select(y => y.Key).ToList().Any())
+                throw new ModelBuilderInvalidOperationException("Duplicate node id's detected");
 
             foreach (var node in subProjectAm.Nodes)
-                if(node.Length < 37)
-                    throw new ModelBuilderInvalidOperationException($"SubProject: Invalid node id: {node}");
+            {
+                if (string.IsNullOrWhiteSpace(node) || node.Length < 37)
+                    throw new ModelBuilderInvalidOperationException($"Invalid node id: {node}");
+
+                if (!_nodeRepository.GetAll().Any(x => x.Id == node))
+                    throw new ModelBuilderInvalidOperationException($"Node {node} not found");
+            }
 
             if (subProjectAm.Edges != null && subProjectAm.Edges.Any())
             {
+                if (subProjectAm.Edges.GroupBy(x => x).Where(g => g.Count() > 1).Select(y => y.Key).ToList().Any())
+                    throw new ModelBuilderInvalidOperationException("Duplicate edge id's detected");
+
                 foreach (var edge in subProjectAm.Edges)
                 {
-                    if (edge.Length < 37)
-                        throw new ModelBuilderInvalidOperationException($"SubProject: Invalid edge id: {edge}");
+                    if(string.IsNullOrWhiteSpace(edge) || edge.Length < 37)
+                        throw new ModelBuilderInvalidOperationException($"Invalid edge id: {edge}");
+
+                    if (!_edgeRepository.GetAll().Any(x => x.Id == edge))
+                        throw new ModelBuilderInvalidOperationException($"Edge {edge} not found");
                 }
             }
 
@@ -302,30 +316,30 @@ namespace Mb.Services.Services
                 Version = subProjectAm.Version,
             };
 
-            var subProject = CreateInitProject(subProjectToCreate, true);
+            var initSubProjectCreated = CreateInitProject(subProjectToCreate, true);
 
-            await _projectRepository.CreateAsync(subProject);
+            await _projectRepository.CreateAsync(initSubProjectCreated);
             await _projectRepository.SaveAsync();
 
-            _projectRepository.Detach(subProject);
+            _projectRepository.Detach(initSubProjectCreated);
 
-            foreach (var node in subProject.Nodes)
+            foreach (var node in initSubProjectCreated.Nodes)
                 _nodeRepository.Detach(node);
 
             foreach (var nodeId in subProjectAm.Nodes)
-                subProject.Nodes.Add(new Node { Id = nodeId });
+                initSubProjectCreated.Nodes.Add(new Node { Id = nodeId });
 
             if(subProjectAm.Edges != null && subProjectAm.Edges.Any())
             {
-                subProject.Edges ??= new List<Edge>();
+                initSubProjectCreated.Edges ??= new List<Edge>();
 
                 foreach (var edgeId in subProjectAm.Edges)
-                    subProject.Edges.Add(new Edge { Id = edgeId });
+                    initSubProjectCreated.Edges.Add(new Edge { Id = edgeId });
             }
 
-            var projectAm = _mapper.Map<ProjectAm>(subProject);
-            var updatedProject = await UpdateProject(subProject.Id, projectAm);
-            return updatedProject;
+            var projectAm = _mapper.Map<ProjectAm>(initSubProjectCreated);
+            var subProjectCreated = await UpdateProject(initSubProjectCreated.Id, projectAm);
+            return subProjectCreated;
         }
 
         /// <summary>
