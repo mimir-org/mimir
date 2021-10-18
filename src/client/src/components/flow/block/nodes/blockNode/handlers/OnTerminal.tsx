@@ -6,8 +6,8 @@ import { SetTerminalOrder } from "../../../helpers";
 const OnTerminalClick = (conn: Connector, data: Node, dispatch: any, edges: Edge[]) => {
   let [inputOrder, outputOrder] = SetTerminalOrder(data, conn.relationType);
 
-  // if (IsInputTerminal(conn)) outputOrder = 0;
-  // if (!IsInputTerminal(conn)) inputOrder = 0;
+  if (IsInputTerminal(conn)) outputOrder = 0;
+  if (!IsInputTerminal(conn)) inputOrder = 0;
 
   dispatch(changeActiveConnector(data, conn.id, !conn.visible, inputOrder, outputOrder));
 

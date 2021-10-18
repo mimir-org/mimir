@@ -72,7 +72,6 @@ const GetBlockHandleType = (
     if (IsInputTerminal(conn) && IsTransportTerminal(conn)) {
       return ["target", Position.Left];
     }
-    return ["source", Position.Right];
   }
 };
 
