@@ -287,14 +287,21 @@ export function deleteProjectError(key: string) {
   };
 }
 
-export function changeActiveConnector(node: Node, connectorId: string, visible: boolean, order: number) {
+export function changeActiveConnector(
+  node: Node,
+  connectorId: string,
+  visible: boolean,
+  inputOrder: number,
+  outputOrder: number
+) {
   return {
     type: Types.CHANGE_ACTIVE_CONNECTOR,
     payload: {
       node,
       connectorId,
       visible,
-      order,
+      inputOrder,
+      outputOrder,
     },
   };
 }

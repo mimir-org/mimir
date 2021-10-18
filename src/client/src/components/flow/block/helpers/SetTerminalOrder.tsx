@@ -1,11 +1,16 @@
 import { Node, RelationType } from "../../../../models";
+import { IsInputTerminal } from "../../helpers";
 
-const SetTerminalOrder = (node: Node, order: number, type: RelationType) => {
+const SetTerminalOrder = (node: Node, type: RelationType) => {
+  let inputOrder = 0;
+  let outputOrder = 0;
+
   node.connectors.forEach((conn) => {
-    if (conn.visible && conn.relationType === type) order++;
+    if (conn.visible && conn.relationType === type && IsInputTerminal(conn)) inputOrder++;
+    if (conn.visible && conn.relationType === type && !IsInputTerminal(conn)) outputOrder++;
   });
 
-  return order;
+  return [inputOrder, outputOrder];
 };
 
 export default SetTerminalOrder;

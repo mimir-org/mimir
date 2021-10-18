@@ -3,8 +3,8 @@ import { changeActiveConnector } from "../../../../../../redux/store/project/act
 import { SetTerminalOrder } from "../../../helpers";
 
 const OnConnectorClick = (conn: Connector, data: Node, dispatch: any) => {
-  const order = SetTerminalOrder(data, 0, conn.relationType);
-  dispatch(changeActiveConnector(data, conn.id, !conn.visible, order));
+  const [inputOrder, outputOrder] = SetTerminalOrder(data, conn.relationType);
+  dispatch(changeActiveConnector(data, conn.id, !conn.visible, inputOrder, outputOrder));
 };
 
 export default OnConnectorClick;

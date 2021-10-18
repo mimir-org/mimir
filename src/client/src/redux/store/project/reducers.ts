@@ -518,7 +518,8 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
                       ? {
                           ...conn,
                           visible: action.payload.visible,
-                          order: action.payload.order,
+                          inputOrder: action.payload.inputOrder,
+                          outputOrder: action.payload.outputOrder,
                         }
                       : conn
                   ),

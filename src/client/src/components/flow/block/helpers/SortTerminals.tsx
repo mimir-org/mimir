@@ -7,15 +7,17 @@ import { IsInputTerminal, IsOutputTerminal } from "../../helpers";
  * @returns an ordered list
  */
 function SortTerminals(terminals: Connector[]) {
-  terminals.sort((a: Connector, b: Connector) => {
-    if (a.type < b.type) return -1;
-    if (a.type > b.type) return 1;
-    if (IsInputTerminal(a) && IsInputTerminal(b) && a.name < b.name) return -1;
-    if (IsInputTerminal(a) && IsInputTerminal(b) && a.name > b.name) return 1;
-    if (IsOutputTerminal(a) && IsOutputTerminal(b) && a.name < b.name) return -1;
-    if (IsOutputTerminal(a) && IsOutputTerminal(b) && a.name > b.name) return 1;
-    return 0;
-  });
+  // terminals.sort((a: Connector, b: Connector) => {
+  // if (a.order < b.order) return -1;
+  // if (a.order > b.order) return 1;
+  // if (a.type < b.type) return -1;
+  // if (a.type > b.type) return 1;
+  // if (IsInputTerminal(a) && IsInputTerminal(b) && a.name < b.name) return -1;
+  // if (IsInputTerminal(a) && IsInputTerminal(b) && a.name > b.name) return 1;
+  // if (IsOutputTerminal(a) && IsOutputTerminal(b) && a.name < b.name) return -1;
+  // if (IsOutputTerminal(a) && IsOutputTerminal(b) && a.name > b.name) return 1;
+  // return 0;
+  // });
 
   return terminals;
 }

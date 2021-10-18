@@ -82,20 +82,9 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
         onMouseOver={() => Click.OnHover(showTerminalBox, showConnectBox)}
         onMouseOut={() => Click.OnMouseOut(showTerminalBox, showConnectBox)}
       >
-        <HandleComponent
-          node={node}
-          nodes={nodes}
-          length={mainConnectNode ? mainConnectNode.length : data.length}
-          width={mainConnectNode ? mainConnectNode.width : data.width}
-          terminals={terminals}
-          parent={false}
-          splitView={splitView}
-          electro={electro}
-          mainConnectNode={mainConnectNode?.id === data.id}
-        />
         <BlockNodeNameBox>{data.label ?? data.name}</BlockNodeNameBox>
-        {data.id !== mainConnectNode?.id && <Symbol base64={data.symbol} text={data.name} />}
-        {data.id === mainConnectNode?.id && <div className="line" />}
+        {!mainConnectNode && <Symbol base64={data.symbol} text={data.name} />}
+        {mainConnectNode && <div className="line" />}
 
         <TerminalsComponent
           node={data}
@@ -109,6 +98,17 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
           mainConnectNode={data.id === mainConnectNode?.id}
           showInTerminalMenu={showInTerminalMenu}
           showOutTerminalMenu={showOutTerminalMenu}
+        />
+        <HandleComponent
+          node={node}
+          nodes={nodes}
+          length={mainConnectNode ? mainConnectNode.length : data.length}
+          width={mainConnectNode ? mainConnectNode.width : data.width}
+          terminals={terminals}
+          parent={false}
+          splitView={splitView}
+          electro={electro}
+          mainConnectNode={mainConnectNode?.id === data.id}
         />
         {!IsChildConnectNode(mainConnectNodes, data.id) && (
           <ConnectViewComponent

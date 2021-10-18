@@ -47,7 +47,6 @@ export const LOCK_UNLOCK_COMPOSITE_ATTRIBUTE = "LOCK_UNLOCK_COMPOSITE_ATTRIBUTE"
 export const LOCK_UNLOCK_NODE_TERMINAL_ATTRIBUTE = "LOCK_UNLOCK_NODE_TERMINAL_ATTRIBUTE";
 export const LOCK_UNLOCK_TRANSPORT_TERMINAL_ATTRIBUTE = "LOCK_UNLOCK_TRANSPORT_TERMINAL_ATTRIBUTE";
 export const LOCK_UNLOCK_INTERFACE_TERMINAL_ATTRIBUTE = "LOCK_UNLOCK_INTERFACE_TERMINAL_ATTRIBUTE";
-
 export const LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR = "LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR";
 
 // State types
@@ -294,7 +293,8 @@ interface ChangeActiveConnector {
     node: Node;
     connectorId: string;
     visible: boolean;
-    order: number;
+    inputOrder: number;
+    outputOrder: number;
   };
 }
 export interface ExportProjectFileAction {

@@ -19,7 +19,7 @@ const OnChange = (
         dispatch(setEdgeVisibility(element, !element.isHidden));
       } else {
         const connNode = GetConnectorNode(element);
-        dispatch(changeActiveConnector(connNode, element.id, !element.visible, 0));
+        dispatch(changeActiveConnector(connNode, element.id, !element.visible, 0, 0));
       }
     });
   }

@@ -34,34 +34,48 @@ const HandleComponent = ({
   mainConnectNode,
 }: Props) => {
   const className = "react-flow__handle-block";
-  let inputs = 0;
-  let outputs = 0;
+
+  terminals.forEach((x) => {
+    if (IsInputTerminal(x)) console.log("her ", x.inputOrder);
+    // console.log("her ", x.order);
+  });
 
   return (
     <div key={CreateId()}>
       {terminals.map((conn) => {
         const [type, pos] = GetBlockHandleType(conn, node?.isSelected, splitView, electro);
-        IsInputTerminal(conn) ? inputs++ : outputs++;
 
         return (
-          <HandleBox
-            visible={conn.visible}
-            id={"handle-" + conn.id}
-            key={"key-" + conn.id}
-            top={SetTopPos(pos, electro, parent, inputs, outputs, length, mainConnectNode)}
-            left={SetLeftPos(pos, electro, parent, inputs, outputs, splitView, width, mainConnectNode)}
-          >
-            <ConnectorIcon style={{ fill: GetTerminalColor(conn) }} className={className} />
-            <Handle
-              key={CreateId()}
-              type={type}
-              style={electro ? { marginLeft: "7px" } : { marginRight: "7px", marginTop: "7px" }}
-              position={pos}
-              id={conn.id}
-              className={className}
-              isValidConnection={(connection) => IsValidConnection(connection, nodes, terminals)}
-            />
-          </HandleBox>
+          <>
+            <HandleBox
+              visible={conn.visible}
+              id={"handle-" + conn.id}
+              key={"key-" + conn.id}
+              // top={conn.order * 20}
+              top={SetTopPos(pos, electro, parent, conn.inputOrder, conn.outputOrder, length, mainConnectNode)}
+              left={SetLeftPos(
+                pos,
+                electro,
+                parent,
+                conn.inputOrder,
+                conn.outputOrder,
+                splitView,
+                width,
+                mainConnectNode
+              )}
+            >
+              <ConnectorIcon style={{ fill: GetTerminalColor(conn) }} className={className} />
+              <Handle
+                key={CreateId()}
+                type={type}
+                style={electro ? { marginLeft: "7px" } : { marginRight: "7px", marginTop: "7px" }}
+                position={pos}
+                id={conn.id}
+                className={className}
+                isValidConnection={(connection) => IsValidConnection(connection, nodes, terminals)}
+              />
+            </HandleBox>
+          </>
         );
       })}
     </div>
