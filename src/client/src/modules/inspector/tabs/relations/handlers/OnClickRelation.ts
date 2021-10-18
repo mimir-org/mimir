@@ -1,27 +1,14 @@
-import { Size } from "../../../../../compLibrary";
-import { Connector, Edge, Node } from "../../../../../models";
-import { MODULE_TYPE } from "../../../../../models/project";
-import { setModuleVisibility } from "../../../../../redux/store/modules/actions";
-import { SetPanelHeight } from "../../../helpers";
-import { changeInspectorTab } from "../../../redux/tabs/actions";
-import { setActiveEdge, setActiveNode } from "../../../../../redux/store/project/actions";
+import { Edge, Node } from "../../../../../models";
+import { OnClickNode } from ".";
 
-const OnClickRelation = (node: Node, conn: Connector, relationEdges: Map<string, Edge>, dispatch: any) => {
-  const toNode = FindToNodeByConnector(node, conn, relationEdges);
+const OnClickRelation = (node: Node, edge: Edge, dispatch: any) => {
+  const toNode = FindToNodeByConnector(node, edge);
 
-  dispatch(setActiveEdge(null, false));
-  dispatch(setActiveNode(toNode.id, true));
-  dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, true, true));
-  dispatch(changeInspectorTab(3));
-
-  const panel = document.getElementById("InspectorModule");
-  if (panel.style.height === Size.ModuleClosed + "px") SetPanelHeight(Size.ModuleOpen);
+  OnClickNode(toNode, dispatch);
 };
 
-const FindToNodeByConnector = (node: Node, conn: Connector, edges: Map<string, Edge>): Node => {
-  const edge = edges.get(conn.id);
-
-  return edge.fromNodeId === node.id ? edge.toNode : edge.fromNode;
+const FindToNodeByConnector = (node: Node, edge: Edge): Node => {
+  return edge.fromNode.id === node.id ? edge.toNode : edge.fromNode;
 };
 
 export { OnClickRelation };

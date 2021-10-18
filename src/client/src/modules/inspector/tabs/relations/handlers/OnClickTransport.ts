@@ -5,7 +5,7 @@ import { setActiveEdge, setActiveNode } from "../../../../../redux/store/project
 const OnClickTransport = (edge: Edge, dispatch: any) => {
   dispatch(setActiveEdge(edge.id, true));
   dispatch(setActiveNode(null, false));
-  dispatch(changeInspectorTab(0));
+  dispatch(changeInspectorTab(3));
 };
 
 export { OnClickTransport };
