@@ -21,6 +21,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const [terminalButton, showTerminalButton] = useState(false);
   const [inTerminalMenu, showInTerminalMenu] = useState(false);
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
+  const updateNodeInternals = useUpdateNodeInternals();
   const nodes = useSelector<RootState>((s) => s.projectState.project.nodes) as Node[];
   const splitView = useSelector<RootState>((s) => s.splitView.visible) as boolean;
   const splitNode = useSelector<RootState>((s) => s.splitView.node) as Node;
@@ -37,7 +38,6 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
     }
   }, [data]);
 
-  const updateNodeInternals = useUpdateNodeInternals();
   useEffect(() => {
     updateNodeInternals(node?.id);
   }, [node, updateNodeInternals]);

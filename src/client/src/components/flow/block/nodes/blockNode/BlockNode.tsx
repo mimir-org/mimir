@@ -27,6 +27,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const [terminalBox, showTerminalBox] = useState(false);
   const [connectBox, showConnectBox] = useState(false);
   const [connectMenu, showConnectMenu] = useState(false);
+  const updateNodeInternals = useUpdateNodeInternals();
 
   const nodes = useSelector<RootState>((s) => s.projectState.project?.nodes) as Node[];
   const edges = useSelector<RootState>((s) => s.projectState.project?.edges) as Edge[];
@@ -72,7 +73,6 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
     }
   }
 
-  const updateNodeInternals = useUpdateNodeInternals();
   useEffect(() => {
     updateNodeInternals(node?.id);
   }, [node, updateNodeInternals]);
