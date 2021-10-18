@@ -133,11 +133,12 @@ namespace RdfParserModule
             var version = GetObjects(projectId.ToString(), "owl:versionInfo").First();
 
             Graph.Id = "import.rdf_" + Guid.NewGuid(); //projectId.ToString() + Guid.NewGuid();
-            Graph.NormalId = NormaliseID(projectId.ToString());
             Graph.Label = label.ToString();
             Graph.Name = label.ToString();
             Graph.Version = version.ToString();
         }
+
+
 
         public INode GetParent(string nodeId)
         {
@@ -501,14 +502,37 @@ namespace RdfParserModule
 
             }).ToList();
 
+            var parents = new List<ParserNode>();
             foreach (var node in nodes)
             {
                 node.Label = GetObjects(node.Id, "rdfs:label")[0].ToString();
                 node.Name = node.Label;
 
                 var parent = GetParent(node.Id);
-            }
+                ParserNode parentNode;
+                try
+                {
+                    parentNode = Graph.GetNode(parent.ToString());
+                }
+                catch
+                {
+                    parentNode = new ParserNode
+                    {
+                        Id = parent.ToString(),
+                        Aspect = Aspect.Function,
+                        SemanticReference = parent.ToString(),
+                        IsRoot = false,
+                        Terminals = new List<ParserTerminal>(),
+                        Version = "0.0",
+                        MasterProjectId = Graph.Id
+                    };
 
+                    parents.Add(parentNode);
+                }
+
+                node.HasParent = parentNode;
+            }
+            nodes.AddRange(parents);
             return nodes;
         }
     }
