@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using Mb.Models.Application;
-using Mb.Models.Data.Enums;
+using Mb.Models.Application.TypeEditor;
+using Mb.Models.Data.TypeEditor.EnumTypes;
 using Mb.Models.Exceptions;
 
 namespace Mb.Models.Extensions

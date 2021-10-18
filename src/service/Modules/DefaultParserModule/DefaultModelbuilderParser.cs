@@ -2,9 +2,9 @@
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using Mb.Models.Abstract;
 using Mb.Models.Application;
 using Mb.Models.Data;
-using Mb.Models.Modules;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;

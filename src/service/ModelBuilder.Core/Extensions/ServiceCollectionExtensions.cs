@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Mb.Models.Attributes;
+using Mb.Models.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Mb.Core.Extensions
@@ -27,8 +28,8 @@ namespace Mb.Core.Extensions
             foreach (var serviceType in serviceTypes)
             {
                 var implementations = serviceType.GetImplementations(assembliesToBeScanned);
-                
-                if(implementations.Any())
+
+                if (implementations.Any())
                     serviceCollection.CreateServiceDescriptorsFromImplementationList(serviceType, implementations, serviceLifetime);
                 else
                     serviceCollection.CreateServiceDescriptorsFromServiceType(serviceType, serviceLifetime);
@@ -37,7 +38,7 @@ namespace Mb.Core.Extensions
 
         public static void CreateServiceDescriptorsFromImplementationList(this IServiceCollection serviceCollection, Type serviceType, List<Type> implementations, ServiceLifetime serviceLifetime)
         {
-            if(implementations == null || !implementations.Any())
+            if (implementations == null || !implementations.Any())
                 return;
 
             foreach (var implementation in implementations)
@@ -59,9 +60,9 @@ namespace Mb.Core.Extensions
 
         public static void CreateServiceDescriptorsFromServiceType(this IServiceCollection serviceCollection, Type serviceType, ServiceLifetime serviceLifetime)
         {
-            if (!serviceType.IsClass) 
+            if (!serviceType.IsClass)
                 return;
-            
+
             var isAlreadyRegistered = serviceCollection.Any(s => s.ServiceType == serviceType && s.ImplementationType == serviceType);
 
             if (!isAlreadyRegistered)

@@ -2,9 +2,10 @@ import { addNode, createEdge, setActiveNode } from "../../../redux/store/project
 import { IsBlockView } from "../block/helpers";
 import { GetEdgeType } from "../tree/helpers";
 import { ConvertToEdge, ConvertToNode } from "../converters";
-import { CreateBlockNode, CreateTreeEdge, CreateTreeNode } from "../creators";
+import { BuildTreeEdge, BuildTreeNode } from "../tree/builders";
 import { BlobData, LibItem, Project, GetFileData } from "../../../models";
 import { LibraryState } from "../../../redux/store/library/types";
+import { BuildBlockNode } from "../block/builders";
 import {
   CreateId,
   GetSelectedNode,
@@ -35,13 +36,13 @@ const useOnDrop = (
       const data = await GetFileData(event, project);
       data[0].forEach((node) => {
         dispatch(addNode(node));
-        setElements((es) => es.concat(CreateTreeNode(node)));
+        setElements((es) => es.concat(BuildTreeNode(node)));
       });
 
       data[1].forEach((edge) => {
         dispatch(createEdge(edge));
         const edgeType = GetEdgeType(edge.fromConnector);
-        setElements((es) => es.concat(CreateTreeEdge(edge, edgeType, project.nodes)));
+        setElements((es) => es.concat(BuildTreeEdge(edge, edgeType, project.nodes)));
       });
     })();
   } else {
@@ -82,8 +83,8 @@ const useOnDrop = (
     });
 
     IsBlockView()
-      ? setElements((es) => es.concat(CreateBlockNode(targetNode, null, project.nodes)))
-      : setElements((es) => es.concat(CreateTreeNode(targetNode)));
+      ? setElements((es) => es.concat(BuildBlockNode(targetNode, null, project.nodes)))
+      : setElements((es) => es.concat(BuildTreeNode(targetNode)));
 
     if (sourceNode && sourceNode.aspect === targetNode.aspect) {
       targetNode.level = sourceNode.level + 1;
@@ -96,7 +97,7 @@ const useOnDrop = (
       dispatch(createEdge(partofEdge));
 
       const edgeType = GetEdgeType(sourceConn);
-      setElements((es) => es.concat(CreateTreeEdge(partofEdge, edgeType, project.nodes)));
+      setElements((es) => es.concat(BuildTreeEdge(partofEdge, edgeType, project.nodes)));
     }
 
     dispatch(addNode(targetNode));

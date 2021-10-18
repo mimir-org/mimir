@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const BlockNodeNameBox = styled.div`
-  padding: 12px 5px 0px 5px;
+  padding: 27px 7px 0px 7px;
   margin-bottom: 9px;
   height: 25px;
   font-weight: bold;

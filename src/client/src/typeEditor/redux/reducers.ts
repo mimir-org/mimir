@@ -21,8 +21,6 @@ const initialState: Types.TypeEditorState = {
     symbolId: "",
     compositeTypes: [] as string[],
   } as CreateLibraryType,
-  aspects: {},
-  objectTypes: {},
   purposes: [],
   rdsList: [],
   terminals: [],
@@ -46,8 +44,6 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
       return {
         ...state,
         fetching: false,
-        aspects: action.payload.aspects,
-        objectTypes: action.payload.objectTypes,
         purposes: action.payload.purposes,
       };
     case Types.FETCHING_RDS:

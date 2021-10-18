@@ -7,32 +7,29 @@
 
   .project_list_labels {
     display: flex;
-    flex-direction: row;
     font-weight: normal;
     font-size: 14px;
-    color: #000000;
+    color: #000;
     margin: -10px 0px 0px 0px;
     border-bottom: 1px solid #272738;
+    height: auto;
 
     p {
       margin: 0px;
     }
 
     .project_name {
-      width: auto;
-      position: relative;
+      width: 45%;
     }
 
     .project_owner {
-      width: auto;
-      position: relative;
-      left: 65px;
+      width: 35%;
+      margin-left: 10px;
     }
 
     .last_edited {
-      width: auto;
-      position: relative;
-      left: 242px;
+      width: 15%;
+      margin-left: 10px;
     }
   }
 

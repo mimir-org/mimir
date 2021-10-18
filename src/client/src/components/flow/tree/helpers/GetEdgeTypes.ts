@@ -1,4 +1,4 @@
-import { DefaultEdgeType, PartEdgeType, RelationEdgeType, TransportEdgeType } from "../../edges";
+import { DefaultEdgeType, PartEdgeType, RelationEdgeType, TransportEdgeType } from "../edges";
 
 const GetEdgeTypes = {
   DefaultEdgeType: DefaultEdgeType,
