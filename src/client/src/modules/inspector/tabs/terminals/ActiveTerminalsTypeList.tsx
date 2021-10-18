@@ -7,7 +7,7 @@ interface Props {
   connectorType: ConnectorType;
   expanded: boolean;
   terminals: Connector[];
-  selectedTerminalId: string;
+  selectedTerminal: Connector;
   onTypeClick: (type: TerminalType, connectorType: ConnectorType) => void;
   onSelectTerminal: (item: Connector) => void;
 }
@@ -17,16 +17,18 @@ function ActiveTerminalsTypeList({
   connectorType,
   expanded,
   terminals,
-  selectedTerminalId,
+  selectedTerminal,
   onTypeClick,
   onSelectTerminal,
 }: Props) {
-  const selectedTerminal = terminals.find((term) => term.id === selectedTerminalId);
   const formatTerminalTypeName = (name: string) => `${name} [${ConnectorType[connectorType].toLowerCase()}]`;
 
   return (
     <TerminalsListElementWrapper>
-      <TerminalTypeListElement onClick={() => onTypeClick(terminalType, connectorType)} isSelected={!!selectedTerminal}>
+      <TerminalTypeListElement
+        onClick={() => onTypeClick(terminalType, connectorType)}
+        isSelected={selectedTerminal.terminalTypeId === terminalType.id && selectedTerminal.type === connectorType}
+      >
         <div className="numTypeTerminals">{terminals.length}</div>
         {formatTerminalTypeName(terminalType.name)}
         <img

@@ -31,7 +31,7 @@ const TerminalsComponent = ({ element }: Props) => {
       <TerminalsSelector
         terminals={terminals}
         terminalCategories={terminalCategories}
-        selectedTerminalId={selectedTerminalId}
+        selectedTerminal={selectedTerminal}
         onSelectTerminal={(item: Connector) => setSelectedTerminalId(item.id)}
       />
       {selectedTerminal && (

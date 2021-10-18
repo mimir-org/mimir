@@ -8,11 +8,11 @@ import { TerminalsColumn } from "./styled";
 interface Props {
   terminals: Connector[];
   terminalCategories: TerminalCategory[];
-  selectedTerminalId: string;
+  selectedTerminal: Connector;
   onSelectTerminal: (item: any) => void;
 }
 
-function TerminalsSelector({ terminals, terminalCategories, selectedTerminalId, onSelectTerminal }: Props) {
+function TerminalsSelector({ terminals, terminalCategories, selectedTerminal, onSelectTerminal }: Props) {
   const [searchString, setSearchString] = useState("");
   const filteredTerminals = useMemo(
     () => FilterBySearchString(terminals, terminalCategories, searchString),
@@ -25,7 +25,7 @@ function TerminalsSelector({ terminals, terminalCategories, selectedTerminalId, 
       <ActiveTerminalsList
         terminals={filteredTerminals}
         terminalCategories={terminalCategories}
-        selectedTerminalId={selectedTerminalId}
+        selectedTerminal={selectedTerminal}
         onSelectTerminal={onSelectTerminal}
       />
     </TerminalsColumn>
