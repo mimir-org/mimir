@@ -9,8 +9,8 @@ import { ConnectorIcon } from "../../../../assets/icons/connectors";
 interface Props {
   node: Node;
   nodes: Node[];
-  width: number;
   length: number;
+  width: number;
   terminals: Connector[];
   parent: boolean;
   splitView: boolean;
@@ -43,26 +43,13 @@ const HandleComponent = ({
             <HandleBox
               visible={conn.visible}
               id={"handle-" + conn.id}
-              key={"key-" + conn.id}
-              top={SetTopPos(pos, electro, parent, conn.inputOrder, conn.outputOrder, length, mainConnectNode)}
-              left={SetLeftPos(
-                pos,
-                electro,
-                parent,
-                conn.inputOrder,
-                conn.outputOrder,
-                splitView,
-                width,
-                mainConnectNode
-              )}
+              top={SetTopPos(pos, electro, parent, conn.order, length, mainConnectNode)}
+              left={SetLeftPos(pos, electro, parent, conn.order, splitView, width, mainConnectNode)}
             >
               <ConnectorIcon style={{ fill: GetTerminalColor(conn) }} className={"react-flow__handle-block"} />
               <Handle
-                key={CreateId()}
                 type={type}
-                style={{
-                  marginTop: "7px",
-                }}
+                style={electro ? { marginLeft: "7px" } : { marginTop: "7px" }}
                 position={pos}
                 id={conn.id}
                 className={"react-flow__handle-block"}

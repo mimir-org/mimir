@@ -7,8 +7,7 @@ import { Size } from "../../../../../compLibrary";
  * @param pos
  * @param electro
  * @param parent
- * @param inputCount
- * @param outputCount
+ * @param order
  * @param splitView
  * @param nodeWidth
  * @param mainConnectNode
@@ -18,17 +17,13 @@ const SetLeftPos = (
   pos: Position,
   electro: boolean,
   parent: boolean,
-  inputCount: number,
-  outputCount: number,
+  order: number,
   splitView: boolean,
   nodeWidth: number,
   mainConnectNode: boolean
 ) => {
-  if (electro) {
-    if (pos === Position.Top) return SetTerminalXPos(inputCount, parent, nodeWidth, mainConnectNode);
-    if (pos === Position.Bottom) return SetTerminalXPos(outputCount, parent, nodeWidth, mainConnectNode);
-    return;
-  }
+  if (electro) return SetTerminalXPos(order, parent, nodeWidth, mainConnectNode);
+
   if (pos === Position.Left) return -17;
   if (pos === Position.Right && !parent && !mainConnectNode) return Size.Node_Width + 3;
   if (pos === Position.Right && !parent && mainConnectNode) return Size.ConnectView_Width + 3;

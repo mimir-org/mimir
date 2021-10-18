@@ -1,6 +1,6 @@
 import { RootState } from "../../../../../redux/store";
 import { memo, FC, useState, useEffect } from "react";
-import { NodeProps } from "react-flow-renderer";
+import { NodeProps, useUpdateNodeInternals } from "react-flow-renderer";
 import { NodeBox } from "../../../styled";
 import { BlockNodeNameBox } from "../../styled";
 import { HandleComponent, TerminalsComponent } from "../../terminals";
@@ -25,6 +25,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const splitView = useSelector<RootState>((s) => s.splitView.visible) as boolean;
   const splitNode = useSelector<RootState>((s) => s.splitView.node) as Node;
   const electro = useSelector<RootState>((s) => s.electro.visible) as boolean;
+  const node = nodes.find((x) => x.id === data?.id);
   if (data) data.width = Size.Node_Width;
 
   // Enforce size change of node
@@ -35,6 +36,11 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
       locationNode.style.height = `${data.length}px`;
     }
   }, [data]);
+
+  const updateNodeInternals = useUpdateNodeInternals();
+  useEffect(() => {
+    updateNodeInternals(node?.id);
+  }, [node, updateNodeInternals]);
 
   return (
     <>

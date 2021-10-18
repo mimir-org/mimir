@@ -7,8 +7,7 @@ import { SetTerminalYPos } from "./";
  * @param pos
  * @param electro
  * @param parent
- * @param inputCount
- * @param outputCount
+ * @param order
  * @param nodeHeight
  * @param mainConnectNode
  * @returns a number used by the styled component HandleBox.
@@ -17,16 +16,12 @@ const SetTopPos = (
   pos: Position,
   electro: boolean,
   parent: boolean,
-  inputCount: number,
-  outputCount: number,
+  order: number,
   nodeHeight: number,
   mainConnectNode: boolean
 ) => {
-  if (!electro) {
-    if (pos === Position.Left) return SetTerminalYPos(inputCount, parent, nodeHeight, mainConnectNode);
-    if (pos === Position.Right) return SetTerminalYPos(outputCount, parent, nodeHeight, mainConnectNode);
-    return;
-  }
+  if (!electro) return SetTerminalYPos(order, parent, nodeHeight, mainConnectNode);
+
   if (pos === Position.Top && !parent) return -17;
   if (pos === Position.Top && parent) return -15;
   if (pos === Position.Bottom && !parent && !mainConnectNode) return Size.Node_Length + 3;

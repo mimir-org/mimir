@@ -293,8 +293,7 @@ interface ChangeActiveConnector {
     node: Node;
     connectorId: string;
     visible: boolean;
-    inputOrder: number;
-    outputOrder: number;
+    order: number;
   };
 }
 export interface ExportProjectFileAction {

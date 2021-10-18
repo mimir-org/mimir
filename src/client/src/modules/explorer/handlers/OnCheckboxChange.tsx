@@ -27,17 +27,7 @@ const OnCheckboxChange = (dispatch: any, splitView: boolean, node: Node, selecte
   // In SplitView two boxes can be checked, one for ActiveNode(left) and one for SplitViewParent(right)
   if (node === selectedNode) dispatch(setActiveNode(node.id, true));
   if (node !== selectedNode && node.aspect === selectedNode.aspect) dispatch(setActiveNode(node.id, true));
-
-  if (node !== selectedNode && node.aspect !== selectedNode.aspect) {
-    if (!IsLocation(splitViewNode)) {
-      if (IsLocation(node)) {
-        setTimeout(() => {
-          window.location.reload(); // Reload required because of Flow displaying wrong position for terminals
-        }, 100);
-      }
-    }
-    dispatch(setSplitParentNode(node));
-  }
+  if (node !== selectedNode && node.aspect !== selectedNode.aspect) dispatch(setSplitParentNode(node));
 };
 
 export default OnCheckboxChange;
