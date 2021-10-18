@@ -8,7 +8,7 @@ interface Props<T> {
   items: T[];
   label: string;
   getName: (item: T) => string;
-  getColor: (item: T) => string;
+  getColor: (item: T, index: number) => string;
   onClick: (item: T) => void;
 }
 
@@ -16,9 +16,9 @@ const RelationsContent = <T extends RelationItem>({ items, label, getName, getCo
   <RelationsColumn>
     <RelationsHeader>{label}</RelationsHeader>
     <TerminalList hasItems={items.length > 0}>
-      {items?.map((item) => {
+      {items?.map((item, i) => {
         return (
-          <ListElement onClick={() => onClick(item)} key={item.id} color={getColor(item)}>
+          <ListElement onClick={() => onClick(item)} key={item.id} color={getColor(item, i)}>
             {getName(item)}
           </ListElement>
         );

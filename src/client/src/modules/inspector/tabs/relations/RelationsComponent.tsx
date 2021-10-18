@@ -6,8 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import { OnClickNode, OnClickRelation, OnClickTerminal, OnClickTransport } from "./handlers";
 import { GetRelations } from "./helpers/GetRelations";
-import { GetRelationColor } from "../../helpers";
-import { Color } from "../../../../compLibrary";
 import { InspectorElement } from "../../types";
 import { IsEdge, IsNode } from "../../helpers/IsType";
 import {
@@ -18,6 +16,8 @@ import {
   GetNameTransport,
   GetTerminals,
   GetNameNode,
+  GetActiveRelationColor,
+  GetListItemColor,
 } from "./helpers";
 
 interface Props {
@@ -43,7 +43,7 @@ const RelationComponent = ({ element }: Props) => {
               items={GetRelations(element, edges)}
               label={TextResources.Inspector_Relations_Relationships}
               getName={(edge) => GetNameRelation(edge, element)}
-              getColor={(edge) => GetRelationColor(edge.fromConnector)}
+              getColor={(edge, index) => GetActiveRelationColor(edge.fromConnector, index)}
               onClick={(edge) => OnClickRelation(element, edge, dispatch)}
             />
           )}
@@ -51,14 +51,14 @@ const RelationComponent = ({ element }: Props) => {
             items={inputTerminals}
             label={TextResources.Inspector_Relations_Terminal_Input}
             getName={(terminal) => GetNameTerminal(terminal, transports)}
-            getColor={(conn) => GetRelationColor(conn)}
+            getColor={(_, index) => GetListItemColor(index)}
             onClick={OnClickTerminal}
           />
           <RelationsContent
             items={outputTerminals}
             label={TextResources.Inspector_Relations_Terminal_Output}
             getName={(terminal) => GetNameTerminal(terminal, transports)}
-            getColor={(conn) => GetRelationColor(conn)}
+            getColor={(_, index) => GetListItemColor(index)}
             onClick={OnClickTerminal}
           />
           {IsNode(element) && (
@@ -66,7 +66,7 @@ const RelationComponent = ({ element }: Props) => {
               items={transports}
               label={TextResources.Inspector_Relations_Transport}
               getName={(edge) => GetNameTransport(edge, element)}
-              getColor={(_) => Color.FunctionHeader}
+              getColor={(_, index) => GetListItemColor(index)}
               onClick={(edge) => OnClickTransport(edge, dispatch)}
             />
           )}
@@ -75,7 +75,7 @@ const RelationComponent = ({ element }: Props) => {
               items={[element.fromNode, element.toNode]}
               label={TextResources.Inspector_Relations_Nodes}
               getName={(node) => GetNameNode(element, node)}
-              getColor={(_) => Color.FunctionHeader}
+              getColor={(_, index) => GetListItemColor(index)}
               onClick={(node) => OnClickNode(node, dispatch)}
             />
           )}
