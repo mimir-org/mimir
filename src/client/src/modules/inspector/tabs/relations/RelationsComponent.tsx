@@ -20,7 +20,7 @@ const RelationComponent = ({ node }: Props) => {
   const connectors = node.connectors;
   const hasConnectors = connectors.length > 0;
   const edges = useSelector<RootState>((state) => state.projectState.project.edges) as Edge[];
-  const [relations, relationEdges] = GetRelations(connectors, edges);
+  const relations = GetRelations(node, edges);
 
   const [inputTerminals, outputTerminals, transports] = GetTerminalsAndTransports(connectors, edges, node);
 
@@ -31,9 +31,9 @@ const RelationComponent = ({ node }: Props) => {
           <RelationsContent
             items={relations}
             label={TextResources.Inspector_Relations_Relationships}
-            getName={(conn) => GetNameRelation(conn, relationEdges)}
-            getColor={(conn) => GetRelationColor(conn)}
-            onClick={(conn) => OnClickRelation(node, conn, relationEdges, dispatch)}
+            getName={(edge) => GetNameRelation(edge, node)}
+            getColor={(edge) => GetRelationColor(edge.fromConnector)}
+            onClick={(edge) => OnClickRelation(node, edge, dispatch)}
           />
           <RelationsContent
             items={inputTerminals}
