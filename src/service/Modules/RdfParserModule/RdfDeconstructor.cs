@@ -132,8 +132,8 @@ namespace RdfParserModule
             var label = GetObjects(projectId.ToString(), "rdfs:label").First();
             //var version = Store.GetTriplesWithSubjectPredicate(projectId, RdfGraph.CreateUriNode("owl:versionInfo"));
             var version = GetObjects(projectId.ToString(), "owl:versionInfo").First();
-            
-            Graph.Id = projectId.ToString() + " Test import 4";
+
+            Graph.Id = "import.rdf_" + Guid.NewGuid(); //projectId.ToString() + Guid.NewGuid();
             Graph.NormalId = NormaliseID(projectId.ToString());
             Graph.Label = label.ToString();
             Graph.Name = label.ToString();
