@@ -1,48 +1,24 @@
 import { useDispatch } from "react-redux";
-import { useState } from "react";
-import { IsBlockView } from "../../flow/block/helpers";
-import { Connector, Edge, Node, RelationType } from "../../../models";
-import { MenuSubHeader } from "../../../compLibrary/box/menus";
+import { Connector, Edge } from "../../../models";
 import { OnChange } from "./handlers";
-import { CheckBlockEdges, CheckEdges, IsChecked } from "./helpers";
 
 interface Props {
-  conn?: Connector;
-  type: RelationType | string;
-  name: string;
-  header: boolean;
-  node?: Node;
+  conn: Connector;
   edges: Edge[];
 }
 
-const FilterContent = ({ conn, type, name, header, node, edges }: Props) => {
+const FilterContent = ({ conn, edges }: Props) => {
   const dispatch = useDispatch();
-  const isVisible = name !== null;
+  const edge = edges.find((x) => x.fromConnectorId === conn.id);
+  const visible = true;
 
-  let selectedElements = !IsBlockView() ? CheckEdges(edges, type, node) : CheckBlockEdges(edges, type);
-  const [, setChecked] = useState(IsChecked(type, edges, conn, node, name));
-
-  return header ? (
-    <label className={"checkbox"}>
-      <input
-        type="checkbox"
-        checked={IsChecked(type, edges, conn, node, name)}
-        onChange={() => OnChange(edges, setChecked, dispatch, selectedElements, type, name, node, conn)}
-      />
-      <span className="checkmark"></span>
-      <MenuSubHeader>{name}</MenuSubHeader>
-    </label>
-  ) : (
+  return (
     <label className={"checkbox-filter"}>
-      {isVisible && (
+      {visible && (
         <>
-          <input
-            type="checkbox"
-            checked={IsChecked(type, edges, conn, node, name)}
-            onChange={() => OnChange(edges, setChecked, dispatch, selectedElements, type, name, node, conn)}
-          />
+          <input type="checkbox" checked={!edge.isHidden} onChange={() => OnChange(edge, dispatch)} />
           <span className="checkmark-filter"></span>
-          {name}
+          {conn.name}
         </>
       )}
     </label>
