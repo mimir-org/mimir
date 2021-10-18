@@ -30,6 +30,7 @@
 }
 
 .react-flow__node-AspectFunction {
+  border: 3px solid #fbc913 !important;
   &.selected {
     border: 3px solid #fbc913 !important;
   }
@@ -42,23 +43,29 @@
 }
 
 .react-flow__node-Function {
-  background: #fef445;
+  background-color: #fef445;
+  border: 3px solid #fef445;
+  &:hover,
   &.selected {
-    border: 3px solid #fbc913 !important;
+    border-color: #fbc913 !important;
   }
 }
 
 .react-flow__node-Product {
-  background: #47dde6;
+  background-color: #00f0ff;
+  border: 3px solid #00f0ff;
+  &:hover,
   &.selected {
-    border: 3px solid #069098 !important;
+    border-color: #069098 !important;
   }
 }
 
 .react-flow__node-Location {
-  background: #fa00ff;
+  background-color: #fa00ff;
+  border: 3px solid #fa00ff;
+  &:hover,
   &.selected {
-    border: 3px solid #a300a7 !important;
+    border-color: #a300a7 !important;
   }
 }
 
@@ -75,27 +82,30 @@
 
 .react-flow__node-BlockFunctionNode {
   background-color: #fef445;
+  border: 3px solid #fef445;
   &:hover,
   &.selected {
-    border: 3px solid #fbc913 !important;
+    border-color: #fbc913 !important;
     box-shadow: none;
   }
 }
 
 .react-flow__node-BlockLocationNode {
   background-color: #fa00ff;
+  border: 3px solid #fa00ff;
   &:hover,
   &.selected {
-    border: 3px solid #a300a7 !important;
+    border-color: #a300a7 !important;
     box-shadow: none;
   }
 }
 
 .react-flow__node-BlockProductNode {
+  border: 3px solid #00f0ff;
   background-color: #00f0ff;
   &:hover,
   &.selected {
-    border: 3px solid #069098 !important;
+    border-color: #069098 !important;
     box-shadow: none;
   }
 }

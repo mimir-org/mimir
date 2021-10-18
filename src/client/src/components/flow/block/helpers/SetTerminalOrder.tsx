@@ -6,8 +6,8 @@ const SetTerminalOrder = (node: Node, type: RelationType) => {
   let outputOrder = 0;
 
   node.connectors.forEach((conn) => {
-    if (conn.visible && conn.relationType === type && IsInputTerminal(conn)) inputOrder++;
-    if (conn.visible && conn.relationType === type && !IsInputTerminal(conn)) outputOrder++;
+    if (IsInputTerminal(conn) && conn.visible && conn.relationType === type) ++inputOrder;
+    if (!IsInputTerminal(conn) && conn.visible && conn.relationType === type) ++outputOrder;
   });
 
   return [inputOrder, outputOrder];

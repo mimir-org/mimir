@@ -35,24 +35,20 @@ const HandleComponent = ({
 }: Props) => {
   const className = "react-flow__handle-block";
 
-  terminals.forEach((x) => {
-    if (IsInputTerminal(x)) console.log("her ", x.inputOrder);
-    // console.log("her ", x.order);
-  });
-
   return (
     <div key={CreateId()}>
       {terminals.map((conn) => {
         const [type, pos] = GetBlockHandleType(conn, node?.isSelected, splitView, electro);
 
+        if (IsInputTerminal(conn)) console.log(conn.inputOrder);
         return (
           <>
             <HandleBox
               visible={conn.visible}
               id={"handle-" + conn.id}
               key={"key-" + conn.id}
-              // top={conn.order * 20}
-              top={SetTopPos(pos, electro, parent, conn.inputOrder, conn.outputOrder, length, mainConnectNode)}
+              top={IsInputTerminal(conn) ? conn.inputOrder * 20 : conn.outputOrder * 20}
+              // top={SetTopPos(pos, electro, parent, conn.inputOrder, conn.outputOrder, length, mainConnectNode)}
               left={SetLeftPos(
                 pos,
                 electro,
