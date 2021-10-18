@@ -274,19 +274,32 @@ namespace Mb.Services.Services
         /// </summary>
         /// <param name="subProjectAm"></param>
         /// <returns></returns>
-        public async Task<Project> CreateProject(SubProjectAm subprojectAm)
+        public async Task<Project> CreateProject(SubProjectAm subProjectAm)
         {
-            if (subprojectAm == null)
-                throw new ModelBuilderInvalidOperationException("Object is 'null'");
+            if (subProjectAm == null)
+                throw new ModelBuilderInvalidOperationException("SubProject: Object is 'null'");
 
-            if (subprojectAm.Nodes == null || !subprojectAm.Nodes.Any())
-                throw new ModelBuilderInvalidOperationException("No nodes in object");
+            if (subProjectAm.Nodes == null || !subProjectAm.Nodes.Any())
+                throw new ModelBuilderInvalidOperationException("SubProject: No nodes selected");
+
+            foreach (var node in subProjectAm.Nodes)
+                if(node.Length < 37)
+                    throw new ModelBuilderInvalidOperationException($"SubProject: Invalid node id: {node}");
+
+            if (subProjectAm.Edges != null && subProjectAm.Edges.Any())
+            {
+                foreach (var edge in subProjectAm.Edges)
+                {
+                    if (edge.Length < 37)
+                        throw new ModelBuilderInvalidOperationException($"SubProject: Invalid edge id: {edge}");
+                }
+            }
 
             var subProjectToCreate = new CreateProject
             {
-                Name = subprojectAm.Name,
-                Description = subprojectAm.Description,
-                Version = subprojectAm.Version,
+                Name = subProjectAm.Name,
+                Description = subProjectAm.Description,
+                Version = subProjectAm.Version,
             };
 
             var subProject = CreateInitProject(subProjectToCreate, true);
@@ -299,20 +312,20 @@ namespace Mb.Services.Services
             foreach (var node in subProject.Nodes)
                 _nodeRepository.Detach(node);
 
-            foreach (var nodeId in subprojectAm.Nodes)
+            foreach (var nodeId in subProjectAm.Nodes)
                 subProject.Nodes.Add(new Node { Id = nodeId });
 
-            if(subprojectAm?.Edges != null && subprojectAm.Edges.Any())
+            if(subProjectAm.Edges != null && subProjectAm.Edges.Any())
             {
                 subProject.Edges ??= new List<Edge>();
 
-                foreach (var edgeId in subprojectAm.Edges)
+                foreach (var edgeId in subProjectAm.Edges)
                     subProject.Edges.Add(new Edge { Id = edgeId });
             }
 
             var projectAm = _mapper.Map<ProjectAm>(subProject);
-            var updatetProject = await UpdateProject(subProject.Id, projectAm);
-            return updatetProject;
+            var updatedProject = await UpdateProject(subProject.Id, projectAm);
+            return updatedProject;
         }
 
         /// <summary>
@@ -792,6 +805,10 @@ namespace Mb.Services.Services
             if (string.IsNullOrWhiteSpace(createProject?.Name))
                 throw new ModelBuilderInvalidOperationException(
                     "You need to give the new project a name");
+
+            if (createProject.Name.Length < 2)
+                throw new ModelBuilderInvalidOperationException(
+                    "Project name must be minimum 2 characters");
 
             if (_projectRepository.GetAll().Any(x => x.Name.ToLower() == createProject.Name.ToLower()))
                 throw new ModelBuilderInvalidOperationException(
