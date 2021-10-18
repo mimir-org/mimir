@@ -27,7 +27,7 @@ function ActiveTerminalsTypeList({
     <TerminalsListElementWrapper>
       <TerminalTypeListElement
         onClick={() => onTypeClick(terminalType, connectorType)}
-        isSelected={selectedTerminal.terminalTypeId === terminalType.id && selectedTerminal.type === connectorType}
+        isSelected={selectedTerminal?.terminalTypeId === terminalType.id && selectedTerminal?.type === connectorType}
       >
         <div className="numTypeTerminals">{terminals.length}</div>
         {formatTerminalTypeName(terminalType.name)}

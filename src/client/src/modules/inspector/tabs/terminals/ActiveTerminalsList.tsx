@@ -64,8 +64,8 @@ function ActiveTerminalsList({ terminals, terminalCategories, selectedTerminal, 
             </TerminalsCategoryListElement>
             {categoryExpanded &&
               category.items.map((terminalType) => {
-                const inputTerminals = inputTerminalsByTerminalType.get(category.id);
-                const outputTerminals = outputTerminalsByTerminalType.get(category.id);
+                const inputTerminals = inputTerminalsByTerminalType.get(terminalType.id);
+                const outputTerminals = outputTerminalsByTerminalType.get(terminalType.id);
 
                 const terminalTypeListProps = {
                   terminalType: terminalType,
@@ -78,7 +78,7 @@ function ActiveTerminalsList({ terminals, terminalCategories, selectedTerminal, 
                       selectedTypesIds,
                       setSelectedTypesIds
                     ),
-                  onSelectTerminal: onSelectTerminal,
+                  onSelectTerminal,
                 };
 
                 return (

@@ -4,7 +4,10 @@ export const GetNumTerminalsByCategory = (terminals: Connector[]): Map<string, n
   let numterminalsByCategory = new Map();
 
   for (let terminal of terminals) {
-    numterminalsByCategory.set(terminal.terminalCategoryId, numterminalsByCategory.get(terminal.terminalCategoryId) + 1);
+    numterminalsByCategory.set(
+      terminal.terminalCategoryId,
+      (numterminalsByCategory.get(terminal.terminalCategoryId) ?? 0) + 1
+    );
   }
 
   return numterminalsByCategory;
