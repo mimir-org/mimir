@@ -112,10 +112,11 @@ namespace RdfParserModule
             //var nodes = _mapper.Map<List<NodeAm>>(parserNodes);
             //var edges = _mapper.Map<List<EdgeAm>>(GetTransports());
 
-            Graph.Nodes = parserNodes;
-            Graph.Edges = GetTransports();
+            parserEdges.AddRange(GetTransports());
 
-            Console.WriteLine("got edges");
+            Graph.Nodes = parserNodes;
+            Graph.Edges = parserEdges;
+            
 
             Project = _mapper.Map<ProjectAm>(Graph);
 
@@ -136,6 +137,14 @@ namespace RdfParserModule
             Graph.Label = label.ToString();
             Graph.Name = label.ToString();
             Graph.Version = version.ToString();
+        }
+
+        public INode GetParent(string nodeId)
+        {
+            // There should always only be one parent, so we can just get the First element
+            var parent = Store.GetTriplesWithSubjectPredicate(RdfGraph.CreateUriNode(new Uri(nodeId)), RdfGraph.CreateUriNode("imf:hasParent")).Select(t=>t.Subject).ToList().First();
+
+            return parent;
         }
 
         public List<ParserNode> GetRootNodes()
@@ -403,11 +412,17 @@ namespace RdfParserModule
                     {
                         node.InputTerminal = term;
                         node.InputTerminalId = term.Id;
+
+                        edge.InputTerminal = term;
+                        edge.InputTerminalId = term.Id;
                     }
                     else
                     {
                         node.OutputTerminal = term;
                         node.OutputTerminalId = term.Id;
+
+                        edge.InputTerminal = term;
+                        edge.InputTerminalId = term.Id;
                     }
 
                     if (term.FromConnectorId != null)
@@ -490,6 +505,8 @@ namespace RdfParserModule
             {
                 node.Label = GetObjects(node.Id, "rdfs:label")[0].ToString();
                 node.Name = node.Label;
+
+                var parent = GetParent(node.Id);
             }
 
             return nodes;

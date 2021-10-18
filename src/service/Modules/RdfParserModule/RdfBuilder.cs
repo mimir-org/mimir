@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
 using Mb.Models.Data;
-using Mb.Models.Data.Enums;
+using Mb.Models.Data.TypeEditor.EnumTypes;
+using Mb.Models.Enums;
 using Mb.Models.Enums;
 using RdfParserModule.Properties;
 using VDS.RDF;
