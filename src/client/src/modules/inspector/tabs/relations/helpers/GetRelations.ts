@@ -1,24 +1,15 @@
-import { Connector, Edge } from "../../../../../models";
+import { IsRelationEdge } from "../../../../../components/flow/helpers/IsRelationEdge";
+import { Node, Edge } from "../../../../../models";
 
-const GetRelations = (connectors: Connector[], edges: Edge[]): [Connector[], Map<string, Edge>] => {
-  const relations: Connector[] = [];
-  const relationEdges: Map<string, Edge> = new Map();
+const GetRelations = (node: Node, edges: Edge[]): Edge[] =>
+  edges
+    .filter((e) => IsRelationEdge(e) && (e.fromNode.id === node.id || e.toNode.id === node.id))
+    .sort((a, b) =>
+      a.fromConnector.relationType === b.fromConnector.relationType
+        ? CompareNodeToFirst(a, node)
+        : a.fromConnector.relationType - b.fromConnector.relationType
+    );
 
-  for (let connector of connectors) {
-    let edge: Edge;
-
-    if (
-      connector.relationType &&
-      (edge = edges.find((e) => e.fromConnector.id === connector.id || e.toConnector.id === connector.id))
-    ) {
-      relations.push(connector);
-      relationEdges.set(connector.id, edge);
-    }
-  }
-
-  relations.sort((a, b) => (a.relationType === b.relationType ? a.type - b.type : a.relationType - b.relationType));
-
-  return [relations, relationEdges];
-};
+const CompareNodeToFirst = (edge: Edge, node: Node) => (edge.fromNode.id === node.id ? 1 : -1);
 
 export { GetRelations };
