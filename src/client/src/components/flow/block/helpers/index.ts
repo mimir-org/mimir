@@ -2,7 +2,6 @@ export { default as GetBlockHandleType } from "./GetBlockHandleType";
 export { default as ShowBlockViewEdge } from "./ShowBlockViewEdge";
 export { default as IsBlockView } from "./IsBlockView";
 export { default as IsSplitView } from "./IsSplitView";
-export { default as SortTerminals } from "./SortTerminals";
 export { default as GetSelectedBlockNode } from "./GetSelectedBlockNode";
 export { default as SetTerminalOrder } from "./SetTerminalOrder";
 export { default as OnBlockClick } from "./OnBlockClick";

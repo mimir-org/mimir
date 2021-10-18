@@ -1,5 +1,5 @@
 import { Node, Connector } from "../../../../models";
-import { Handle, useUpdateNodeInternals } from "react-flow-renderer";
+import { Handle } from "react-flow-renderer";
 import { GetBlockHandleType } from "../../block/helpers";
 import { IsValidConnection, SetTopPos, SetLeftPos, GetTerminalColor } from "./helpers";
 import { HandleBox } from "./styled";
@@ -32,54 +32,48 @@ const HandleComponent = ({
   splitView,
   electro,
   mainConnectNode,
-}: Props) => {
-  const className = "react-flow__handle-block";
-  const updateNodeInternals = useUpdateNodeInternals();
-  updateNodeInternals(node?.id);
+}: Props) => (
+  <>
+    {terminals.map((conn) => {
+      const [type, pos] = GetBlockHandleType(conn, node?.isSelected, splitView, electro);
 
-  return (
-    <>
-      {terminals.map((conn) => {
-        const [type, pos] = GetBlockHandleType(conn, node?.isSelected, splitView, electro);
-
-        return (
-          <div key={CreateId()}>
-            {conn.visible && (
-              <HandleBox
-                visible={conn.visible}
-                id={"handle-" + conn.id}
-                key={"key-" + conn.id}
-                top={SetTopPos(pos, electro, parent, conn.inputOrder, conn.outputOrder, length, mainConnectNode)}
-                left={SetLeftPos(
-                  pos,
-                  electro,
-                  parent,
-                  conn.inputOrder,
-                  conn.outputOrder,
-                  splitView,
-                  width,
-                  mainConnectNode
-                )}
-              >
-                <ConnectorIcon style={{ fill: GetTerminalColor(conn) }} className={className} />
-                <Handle
-                  key={CreateId()}
-                  type={type}
-                  style={{
-                    marginTop: "7px",
-                  }}
-                  position={pos}
-                  id={conn.id}
-                  className={className}
-                  isValidConnection={(connection) => IsValidConnection(connection, nodes, terminals)}
-                />
-              </HandleBox>
-            )}
-          </div>
-        );
-      })}
-    </>
-  );
-};
+      return (
+        <div key={CreateId()}>
+          {conn.visible && (
+            <HandleBox
+              visible={conn.visible}
+              id={"handle-" + conn.id}
+              key={"key-" + conn.id}
+              top={SetTopPos(pos, electro, parent, conn.inputOrder, conn.outputOrder, length, mainConnectNode)}
+              left={SetLeftPos(
+                pos,
+                electro,
+                parent,
+                conn.inputOrder,
+                conn.outputOrder,
+                splitView,
+                width,
+                mainConnectNode
+              )}
+            >
+              <ConnectorIcon style={{ fill: GetTerminalColor(conn) }} className={"react-flow__handle-block"} />
+              <Handle
+                key={CreateId()}
+                type={type}
+                style={{
+                  marginTop: "7px",
+                }}
+                position={pos}
+                id={conn.id}
+                className={"react-flow__handle-block"}
+                isValidConnection={(connection) => IsValidConnection(connection, nodes, terminals)}
+              />
+            </HandleBox>
+          )}
+        </div>
+      );
+    })}
+  </>
+);
 
 export default HandleComponent;

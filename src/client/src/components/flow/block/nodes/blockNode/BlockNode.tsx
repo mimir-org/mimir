@@ -1,7 +1,7 @@
 import * as Click from "./handlers";
 import { ResizeConnectNode, SetConnectNodeColor, GetConnectChildren } from "../../connectView/helpers";
 import { memo, FC, useState, useEffect } from "react";
-import { NodeProps } from "react-flow-renderer";
+import { NodeProps, useUpdateNodeInternals } from "react-flow-renderer";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../../redux/store";
 import { Node, Edge } from "../../../../../models";
@@ -71,6 +71,11 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
       flowNode.style.height = `${data.length}px`;
     }
   }
+
+  const updateNodeInternals = useUpdateNodeInternals();
+  useEffect(() => {
+    updateNodeInternals(node?.id);
+  }, [node, updateNodeInternals]);
 
   return (
     <>
