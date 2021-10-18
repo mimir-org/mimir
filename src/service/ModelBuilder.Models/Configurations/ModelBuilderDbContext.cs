@@ -1,6 +1,6 @@
 ﻿using Mb.Models.Data;
+using Mb.Models.Data.Enums;
 using Mb.Models.Data.TypeEditor;
-using Mb.Models.Data.TypeEditor.EnumTypes;
 using Microsoft.EntityFrameworkCore;
 
 namespace Mb.Models.Configurations
