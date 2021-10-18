@@ -216,7 +216,7 @@ namespace Mb.Services.Services
         /// <returns></returns>
         public async Task<Project> CreateProject(CreateProject createProject)
         {
-            var project = CreateInitProject(createProject);
+            var project = CreateInitProject(createProject, false);
             await _projectRepository.CreateAsync(project);
             await _projectRepository.SaveAsync();
             return project;
@@ -267,6 +267,52 @@ namespace Mb.Services.Services
 
             var updatedProject = await GetProject(newProject.Id);
             return updatedProject;
+        }
+
+        /// <summary>
+        /// Create a new sub project based on an existing project. 
+        /// </summary>
+        /// <param name="subProjectAm"></param>
+        /// <returns></returns>
+        public async Task<Project> CreateProject(SubProjectAm subprojectAm)
+        {
+            if (subprojectAm == null)
+                throw new ModelBuilderInvalidOperationException("Object is 'null'");
+
+            if (subprojectAm.Nodes == null || !subprojectAm.Nodes.Any())
+                throw new ModelBuilderInvalidOperationException("No nodes in object");
+
+            var subProjectToCreate = new CreateProject
+            {
+                Name = subprojectAm.Name,
+                Description = subprojectAm.Description,
+                Version = subprojectAm.Version,
+            };
+
+            var subProject = CreateInitProject(subProjectToCreate, true);
+
+            await _projectRepository.CreateAsync(subProject);
+            await _projectRepository.SaveAsync();
+
+            _projectRepository.Detach(subProject);
+
+            foreach (var node in subProject.Nodes)
+                _nodeRepository.Detach(node);
+
+            foreach (var nodeId in subprojectAm.Nodes)
+                subProject.Nodes.Add(new Node { Id = nodeId });
+
+            if(subprojectAm?.Edges != null && subprojectAm.Edges.Any())
+            {
+                subProject.Edges ??= new List<Edge>();
+
+                foreach (var edgeId in subprojectAm.Edges)
+                    subProject.Edges.Add(new Edge { Id = edgeId });
+            }
+
+            var projectAm = _mapper.Map<ProjectAm>(subProject);
+            var updatetProject = await UpdateProject(subProject.Id, projectAm);
+            return updatetProject;
         }
 
         /// <summary>
@@ -517,7 +563,7 @@ namespace Mb.Services.Services
         /// <returns>List of locked node id></returns>
         public IEnumerable<string> GetLockedNodes(string projectId)
         {
-            return projectId == null 
+            return string.IsNullOrWhiteSpace(projectId)
                 ? _nodeRepository.FindBy(x => x.IsLocked).Select(x => x.Id)
                 : _nodeRepository.FindBy(x => x.IsLocked && x.MasterProjectId == projectId).Select(x => x.Id);
         }
@@ -530,9 +576,9 @@ namespace Mb.Services.Services
         /// <returns>List of locked attribute id></returns>
         public IEnumerable<string> GetLockedAttributes(string projectId)
         {
-            return projectId == null
+            return string.IsNullOrWhiteSpace(projectId)
                 ? _attributeRepository.FindBy(x => x.IsLocked).Select(x => x.Id)
-                : _attributeRepository.FindBy(x => x.IsLocked && x.Node != null && x.Node.MasterProjectId == projectId).Select(x => x.Id);
+                : _attributeRepository.FindBy(x => x.IsLocked && x.Node.MasterProjectId == projectId).Select(x => x.Id);
         }
 
         /// <summary>
@@ -741,8 +787,16 @@ namespace Mb.Services.Services
             return children.Aggregate(order, (current, child) => ResolveNodeLevelAndOrder(child, project, level + 1, current + 1));
         }
 
-        private Project CreateInitProject(CreateProject createProject)
+        private Project CreateInitProject(CreateProject createProject, bool isSubProject)
         {
+            if (string.IsNullOrWhiteSpace(createProject?.Name))
+                throw new ModelBuilderInvalidOperationException(
+                    "You need to give the new project a name");
+
+            if (_projectRepository.GetAll().Any(x => x.Name.ToLower() == createProject.Name.ToLower()))
+                throw new ModelBuilderInvalidOperationException(
+                    "There already exist a project with the same name");
+
             var pid = _commonRepository.CreateUniqueId();
             var project = new Project
             {
@@ -750,6 +804,7 @@ namespace Mb.Services.Services
                 Version = createProject.Version,
                 Name = createProject.Name,
                 Description = createProject.Description,
+                IsSubProject = isSubProject,
                 ProjectOwner = _contextAccessor.GetName(),
                 Updated = DateTime.Now.ToUniversalTime(),
                 UpdatedBy = _contextAccessor.GetName(),
