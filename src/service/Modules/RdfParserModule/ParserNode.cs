@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Mb.Models.Enums;
+
 namespace RdfParserModule
 {
     public class ParserNode
@@ -15,7 +17,7 @@ namespace RdfParserModule
         public bool IsLocked { get; set; }
         public string StatusId { get; set; }
         public string MasterProjectId { get; set; }
-        public string Aspect { get; set; }
+        public Aspect Aspect { get; set; }
         public bool IsRoot { get; set; }
         public decimal Length { get; set; }
         public decimal Width { get; set; }
@@ -30,5 +32,13 @@ namespace RdfParserModule
         {
             return Label ?? Id;
         }
+    }
+
+    public class ParserTransport : ParserNode
+    {
+        public ParserTerminal InputTerminal { get; set; }
+        public ParserTerminal OutputTerminal { get; set; }
+        public string InputTerminalId { get; set; }
+        public string OutputTerminalId { get; set; }
     }
 }
