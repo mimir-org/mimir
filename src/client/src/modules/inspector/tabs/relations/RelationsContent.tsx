@@ -1,8 +1,8 @@
-import { Connector, Edge } from "../../../../models";
+import { Node, Connector, Edge } from "../../../../models";
 import { ListElement } from "../../styled";
 import { RelationsColumn, RelationsHeader, TerminalList } from "./styled";
 
-type RelationItem = Connector | Edge;
+type RelationItem = Node | Connector | Edge;
 
 interface Props<T> {
   items: T[];
