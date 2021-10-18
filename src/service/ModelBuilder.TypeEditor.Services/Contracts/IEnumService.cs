@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Mb.Models.Application;
 using Mb.Models.Application.TypeEditor;
-using Mb.Models.Data.TypeEditor.EnumTypes;
+using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
 
 namespace Mb.TypeEditor.Services.Contracts
