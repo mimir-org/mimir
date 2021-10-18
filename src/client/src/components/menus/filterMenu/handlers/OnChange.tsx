@@ -14,10 +14,10 @@ const OnChange = (
 ) => {
   if (edges) {
     setChecked(IsChecked(type, edges, conn, node, name));
+
     elements.forEach((element) => {
-      if (IsEdge(element)) {
-        dispatch(setEdgeVisibility(element, !element.isHidden));
-      } else {
+      if (IsEdge(element)) dispatch(setEdgeVisibility(element, !element.isHidden));
+      else {
         const connNode = GetConnectorNode(element);
         dispatch(changeActiveConnector(connNode, element.id, !element.visible, 0));
       }
