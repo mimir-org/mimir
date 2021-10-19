@@ -50,7 +50,7 @@ const TerminalsComponent = ({ element }: Props) => {
 
 const categoryTypeSelector = createSelector(
   (state: RootState) => state.typeEditor.terminals,
-  (terminals) => terminals
+  (terminals) => terminals ?? []
 );
 
 export default TerminalsComponent;

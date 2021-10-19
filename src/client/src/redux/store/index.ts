@@ -18,6 +18,7 @@ import { parametersReducer } from "../../modules/inspector/tabs/parameters/redux
 import { electroViewReducer } from "../store/electro/reducers";
 import { sagas } from "../sagas";
 import { persistStore, persistReducer } from "redux-persist";
+import { useDispatch } from "react-redux";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -54,6 +55,11 @@ const persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof rootReducers>;
 // eslint-disable-next-line import/no-anonymous-default-export
+
+export type AppDispatch = typeof store.dispatch;
+
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+
 export default { store, persistor };
 
 sagaMiddleware.run(sagas);

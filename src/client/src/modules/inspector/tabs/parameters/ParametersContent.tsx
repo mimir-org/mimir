@@ -8,8 +8,9 @@ import { Menu, Header, ParametersRowWrapper, ParametersContentWrapper } from "./
 import { OnChangeFilterChoice, OnClearAllFilters } from "./handlers";
 import { FilterDict } from "./redux/types";
 import { ParameterRow } from "./";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { InspectorElement, InspectorParametersElement, InspectorTerminalsElement } from "../../types";
+import { filterSelector, selectedFilterSelector } from "./selectors";
 
 interface Props {
   parametersElement: InspectorParametersElement;
@@ -27,18 +28,17 @@ const ParametersContent = ({
   const dispatch = useDispatch();
   const attributes = parametersElement.attributes;
 
-  const attributeFilters =
-    (useSelector<RootState>((state) => state.commonState.filters) as CombinedAttributeFilter[]).filter((x) =>
-      attributes.find((att) => att.key === x.name)
-    ) ?? [];
-
-  const selectedFilters =
-    (useSelector<RootState>(
-      (state) => state.parametersReducer.selectedAttributeFilters[parametersElement.id]
-    ) as FilterDict) ?? {};
-
+  const attributeFilters = useSelector<RootState>((state) =>
+    filterSelector(state, attributes)
+  ) as CombinedAttributeFilter[];
+  const selectedFilters = useSelector<RootState>((state) =>
+    selectedFilterSelector(state, parametersElement.id)
+  ) as FilterDict;
   const hasFilters = Object.keys(selectedFilters).length > 0;
-  const attributeCombinations = GetAttributeCombinations(attributeFilters, attributes);
+  const attributeCombinations = useMemo(
+    () => GetAttributeCombinations(attributeFilters, attributes),
+    [attributeFilters, attributes]
+  );
 
   const maxNumSelectedCombinations = Math.max(
     ...Object.values(selectedFilters).map((combinations) => combinations.length)
@@ -92,4 +92,5 @@ const ParametersContent = ({
     </ParametersContentWrapper>
   );
 };
+
 export default ParametersContent;
