@@ -232,6 +232,15 @@ namespace RdfParserModule.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to mimir:hasMasterProject.
+        /// </summary>
+        internal static string hasMasterProject {
+            get {
+                return ResourceManager.GetString("hasMasterProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to imf:hasOutputTerminal.
         /// </summary>
         internal static string hasOutputTerminal {

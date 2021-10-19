@@ -8,6 +8,7 @@ using AutoMapper;
 using Mb.Models.Application;
 using Mb.Models.Enums;
 using Mb.Models.Extensions;
+using RdfParserModule.Properties;
 using VDS.RDF;
 using VDS.RDF.Ontology;
 using VDS.RDF.Parsing;
@@ -79,31 +80,9 @@ namespace RdfParserModule
 
                 parserNodes.Add(funcObj);
             }
-
-            var locationObjects = GetAllLocationObjects();
-            foreach (var locObj in locationObjects)
-            {
-                parserNodes.Add(locObj);
-            }
-
-
-            var roots = GetRootNodes();
-            foreach (var r in roots.Select(root => new ParserNode()
-            {
-                IsRoot = root.IsRoot,
-                Name = root.Name,
-                Id = root.Id,
-                NormalId = NormaliseID(root.Id),
-                Label = root.Label,
-                StatusId = root.StatusId,
-                Version = root.Version,
-                Terminals = new List<ParserTerminal>(),
-                Aspect = root.Aspect,
-                MasterProjectId = Graph.Id
-            }))
-            {
-                parserNodes.Add(r);
-            }
+            
+            parserNodes.AddRange(GetAllLocationObjects());
+            parserNodes.AddRange(GetRootNodes());
 
 
             AddAspectRelation("Part Of");
@@ -157,7 +136,6 @@ namespace RdfParserModule
             {
                 IsRoot = true,
                 Id = node.ToString(),
-                NormalId = NormaliseID(node.ToString()),
                 StatusId = "4590637F39B6BA6F39C74293BE9138DF",
                 Version = "0.0",
                 MasterProjectId = Graph.Id
@@ -279,7 +257,6 @@ namespace RdfParserModule
                 var inTerms = GetObjects(nodeId, "imf:hasInputTerminal").Select(obj => new ParserTerminal
                 {
                     Id = obj.ToString(),
-                    NormalId = NormaliseID(obj.ToString()),
                     Type = ConnectorType.Input,
                     SemanticReference = obj.ToString(),
                     NodeId = nodeId
@@ -294,7 +271,6 @@ namespace RdfParserModule
                 var outTerms = GetObjects(nodeId, "imf:hasOutputTerminal").Select(obj => new ParserTerminal
                 {
                     Id = obj.ToString(),
-                    NormalId = NormaliseID(obj.ToString()),
                     Type = ConnectorType.Output,
                     SemanticReference = obj.ToString(),
                     NodeId = nodeId
@@ -307,7 +283,6 @@ namespace RdfParserModule
                     if (connection != null)
                     {
                         o.ToConnectorId = connection.First().ToString();
-                        o.NormalToConnectorId = o.ToConnectorId;
                     }
                     var label = GetObjects(o.Id, "rdfs:label");
                     if (label == null) continue;
@@ -315,15 +290,21 @@ namespace RdfParserModule
                     o.Label = label[0].ToString();
                     o.Name = o.Label.Replace(" Output", "").Replace(" Input", "");
 
-                    // Du må finne Category Name. Dette manglar på eksport.
-                    // Døme: Energy Electrical, Material Granulate, Material Fluid, Energy Mechanical, Information
-                    var transmitter = GetObjects(o.Id, "rdf:type")
-                        .Where(node => node.ToString().Contains("Transmitter")).First();
-                    var categoryName = transmitter.ToString().Split("Transmitter-").Last().Split("-").First();
+                    try
+                    {
+                        var transmitter = GetObjects(o.Id, "rdf:type")
+                            .Where(node => node.ToString().Contains("Transmitter")).First();
+                        var categoryName = transmitter.ToString().Split("Transmitter-").Last().Split("-").First();
 
-                    var (termcatId, termTypeId) = o.Name.CreateCategoryIdAndTerminalTypeId(categoryName);
-                    o.TerminalCategoryId = termcatId;
-                    o.TerminalTypeId = termTypeId;
+                        var (termcatId, termTypeId) = o.Name.CreateCategoryIdAndTerminalTypeId(categoryName);
+                        o.TerminalCategoryId = termcatId;
+                        o.TerminalTypeId = termTypeId;
+                    }
+                    catch(Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
+
                 }
 
                 foreach (var o in inTerms)
@@ -332,7 +313,6 @@ namespace RdfParserModule
                     if (connection != null)
                     {
                         o.FromConnectorId = connection.First().ToString();
-                        o.NormalFromConnectorId = o.FromConnectorId;
                     }
                     var label = GetObjects(o.Id, "rdfs:label");
 
@@ -349,6 +329,15 @@ namespace RdfParserModule
                 Console.WriteLine(e);
                 return null;
             }
+        }
+
+        public INode GetMasterProject(string nodeId)
+        {
+            var sub = RdfGraph.CreateUriNode(new Uri(nodeId));
+            var pred = RdfGraph.CreateUriNode(Resources.hasMasterProject);
+            var node = Store.GetTriplesWithSubjectPredicate(sub, pred).Select(t => t.Object).First();
+
+            return node;
         }
 
         public List<ParserEdge> GetTransports()

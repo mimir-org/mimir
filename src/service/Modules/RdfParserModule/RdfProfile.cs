@@ -37,16 +37,24 @@ namespace RdfParserModule
                 .ForMember(dest => dest.InputTerminalId, opt => opt.MapFrom(src => NormaliseID(src.InputTerminalId)))
                 .ForMember(dest => dest.OutputTerminalId, opt => opt.MapFrom(src => NormaliseID(src.OutputTerminalId)))
                 .ForMember(dest => dest.InputTerminal, opt => opt.MapFrom(src => src.InputTerminal))
-                .ForMember(dest => dest.OutputTerminal, opt => opt.MapFrom(src => src.OutputTerminal));
+                .ForMember(dest => dest.OutputTerminal, opt => opt.MapFrom(src => src.OutputTerminal))
+                .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => new List<AttributeAm>()));
 
             CreateMap<ParserConnector, ConnectorAm>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => NormaliseID(src.Id)))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type))
-                .ForMember(dest => dest.Visible, opt => opt.MapFrom(src => true));
+                .ForMember(dest => dest.Visible, opt => opt.MapFrom(src => src.Visible()))
+                .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => NormaliseID(src.NodeId)));
+
+            CreateMap<ParserTerminal, TerminalAm>()
+                .ForMember(dest => dest.TerminalCategoryId, opt => opt.MapFrom(src => src.TerminalCategoryId))
+                .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.TerminalTypeId))
+                .IncludeBase<ParserConnector, ConnectorAm>();
 
             CreateMap<ParserRelation, RelationAm>()
-                .ForMember(dest => dest.RelationType, opt => opt.MapFrom(src => src.Relation));
+                .ForMember(dest => dest.RelationType, opt => opt.MapFrom(src => src.Relation))
+                .IncludeBase<ParserConnector, ConnectorAm>(); ;
 
             CreateMap<ParserGraph, ProjectAm>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => NormaliseID(src.Id)))
