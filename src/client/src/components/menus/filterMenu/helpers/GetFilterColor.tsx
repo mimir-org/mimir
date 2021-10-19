@@ -12,6 +12,7 @@ const GetFilterColor = (conn: Connector, nodes: Node[]) => {
   if (conn.color) return conn.color;
   if (IsFulfilledByTerminal(conn)) return Color.ProductMain;
   if (IsLocationTerminal(conn)) return Color.LocationMain;
+
   if (IsPartOfTerminal(conn)) {
     const fromNode = nodes.find((n) => n.id === conn.nodeId);
     if (IsFunction(fromNode)) return Color.FunctionMain;

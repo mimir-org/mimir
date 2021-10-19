@@ -19,17 +19,17 @@ const FilterMenu = () => {
   const edges = project?.edges;
   const nodes = project?.nodes;
 
-  const transportTerminals = [] as Connector[];
+  const transportTerminals = new Set<Connector>();
   const transportLabel = TextResources.Relations_Transport;
-  const relationsTerminals = [] as Connector[];
+  const relationsTerminals = new Set<Connector>();
   const relationsLabel = TextResources.Relations;
-  const partOfTerminals = [] as Connector[];
+  const partOfTerminals = new Set<Connector>();
   const partOfLabel = TextResources.Relations_PartOf_Relationship;
 
   edges.forEach((e) => {
-    if (IsTransportTerminal(e.fromConnector)) transportTerminals.push(e.fromConnector);
-    if (IsLocationTerminal(e.fromConnector)) relationsTerminals.push(e.fromConnector);
-    if (IsPartOfTerminal(e.fromConnector)) partOfTerminals.push(e.fromConnector);
+    if (IsTransportTerminal(e.fromConnector)) transportTerminals.add(e.fromConnector);
+    if (IsLocationTerminal(e.fromConnector)) relationsTerminals.add(e.fromConnector);
+    if (IsPartOfTerminal(e.fromConnector)) partOfTerminals.add(e.fromConnector);
   });
 
   return (
@@ -40,14 +40,14 @@ const FilterMenu = () => {
           label={transportLabel}
           nodes={nodes}
           edges={edges}
-          onChange={(edge) => OnChange(edge, dispatch)}
+          onChange={(edge) => OnChange(edge, edges, dispatch)}
         />
         <FilterDropdown
           terminals={relationsTerminals}
           label={relationsLabel}
           nodes={nodes}
           edges={edges}
-          onChange={(edge) => OnChange(edge, dispatch)}
+          onChange={(edge) => OnChange(edge, edges, dispatch)}
         />
         {!IsBlockView() && (
           <FilterDropdown
@@ -55,7 +55,7 @@ const FilterMenu = () => {
             label={partOfLabel}
             nodes={nodes}
             edges={edges}
-            onChange={(edge) => OnChange(edge, dispatch)}
+            onChange={(edge) => OnChange(edge, edges, dispatch)}
           />
         )}
       </MenuColumn>
