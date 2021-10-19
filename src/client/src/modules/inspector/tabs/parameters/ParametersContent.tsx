@@ -1,16 +1,14 @@
-import { RootState } from "../../../../redux/store";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useUniqueParametricAppSelector } from "../../../../redux/store";
 import { TextResources } from "../../../../assets/text";
 import { Dropdown } from "./styled/dropdown/parameter";
 import { CombinedAttributeFilter } from "../../../../models";
 import { GetAttributeCombinations, GetParametersColor } from "./helpers";
 import { Menu, Header, ParametersRowWrapper, ParametersContentWrapper } from "./styled";
 import { OnChangeFilterChoice, OnClearAllFilters } from "./handlers";
-import { FilterDict } from "./redux/types";
 import { ParameterRow } from "./";
 import { useMemo, useState } from "react";
 import { InspectorElement, InspectorParametersElement, InspectorTerminalsElement } from "../../types";
-import { filterSelector, selectedFilterSelector } from "./selectors";
+import { makeFilterSelector, makeSelectedFilterSelector } from "./selectors";
 
 interface Props {
   parametersElement: InspectorParametersElement;
@@ -25,15 +23,11 @@ const ParametersContent = ({
   terminalParentElement,
   elementIsLocked,
 }: Props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const attributes = parametersElement.attributes;
 
-  const attributeFilters = useSelector<RootState>((state) =>
-    filterSelector(state, attributes)
-  ) as CombinedAttributeFilter[];
-  const selectedFilters = useSelector<RootState>((state) =>
-    selectedFilterSelector(state, parametersElement.id)
-  ) as FilterDict;
+  const attributeFilters = useUniqueParametricAppSelector(makeFilterSelector, attributes);
+  const selectedFilters = useUniqueParametricAppSelector(makeSelectedFilterSelector, parametersElement.id);
   const hasFilters = Object.keys(selectedFilters).length > 0;
   const attributeCombinations = useMemo(
     () => GetAttributeCombinations(attributeFilters, attributes),
