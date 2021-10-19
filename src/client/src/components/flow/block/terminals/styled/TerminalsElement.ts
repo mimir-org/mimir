@@ -11,6 +11,7 @@ const TerminalsElement = styled.div`
   padding: 5px 30px 0px 0px;
   height: 20px;
   display: flex;
+  z-index: 4;
 
   .text {
     margin-left: 40px;

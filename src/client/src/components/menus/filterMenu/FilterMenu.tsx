@@ -6,11 +6,16 @@ import { IsLibrary, IsLocationTerminal, IsPartOfTerminal, IsTransportTerminal } 
 import { Dropdown } from "./dropdown/";
 import { TextResources } from "../../../assets/text";
 
+/**
+ * Menu to filter terminals and edges
+ * @returns a menu with multiple drop-down menus
+ */
 const FilterMenu = () => {
   const dispatch = useDispatch();
   const project = useSelector<RootState>((s) => s.projectState.project) as Project;
   const libraryOpen = useSelector<RootState>((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible) as boolean;
   const edges = project?.edges;
+  const nodes = project?.nodes;
 
   const transportTerminals = [] as Connector[];
   const transportLabel = TextResources.Relations_Transport;
@@ -28,9 +33,21 @@ const FilterMenu = () => {
   return (
     <FilterMenuBox libraryOpen={libraryOpen}>
       <MenuColumn>
-        <Dropdown terminals={transportTerminals} label={transportLabel} edges={edges} dispatch={dispatch} />
-        <Dropdown terminals={relationsTerminals} label={relationsLabel} edges={edges} dispatch={dispatch} />
-        <Dropdown terminals={partOfTerminals} label={partOfLabel} edges={edges} dispatch={dispatch} />
+        <Dropdown
+          terminals={transportTerminals}
+          label={transportLabel}
+          nodes={nodes}
+          edges={edges}
+          dispatch={dispatch}
+        />
+        <Dropdown
+          terminals={relationsTerminals}
+          label={relationsLabel}
+          nodes={nodes}
+          edges={edges}
+          dispatch={dispatch}
+        />
+        <Dropdown terminals={partOfTerminals} label={partOfLabel} nodes={nodes} edges={edges} dispatch={dispatch} />
       </MenuColumn>
     </FilterMenuBox>
   );

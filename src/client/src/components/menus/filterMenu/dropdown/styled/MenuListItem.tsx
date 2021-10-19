@@ -3,7 +3,7 @@ import { Color, FontSize } from "../../../../../compLibrary";
 
 const MenuListItem = styled.div`
   display: flex;
-  max-height: 31px;
+  height: 31px;
   align-items: center;
   border-width: 1px 0px 0px 0px;
   border-style: solid;

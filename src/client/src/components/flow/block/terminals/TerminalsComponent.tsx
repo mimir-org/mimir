@@ -15,7 +15,6 @@ interface Props {
   mainConnectNode: boolean;
   showInTerminalMenu: any;
   showOutTerminalMenu: any;
-  splitView: boolean;
   onClick: (conn: Connector) => void;
 }
 
@@ -34,7 +33,6 @@ const TerminalsComponent = ({
   mainConnectNode,
   showInTerminalMenu,
   showOutTerminalMenu,
-  splitView,
   onClick,
 }: Props) => {
   const inTerminals = terminals.filter((t) => IsInputTerminal(t));
@@ -73,7 +71,6 @@ const TerminalsComponent = ({
           node={node}
           parent={parent}
           input={true}
-          splitView={splitView}
           terminals={inTerminals}
           visible={inputMenuOpen}
           onClick={onClick}
@@ -85,7 +82,6 @@ const TerminalsComponent = ({
           node={node}
           parent={parent}
           input={false}
-          splitView={splitView}
           visible={outputMenuOpen}
           terminals={outTerminals}
           onClick={onClick}
