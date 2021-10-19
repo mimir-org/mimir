@@ -6,7 +6,7 @@ import { IsPartOfTerminal } from "../../../flow/helpers";
 import { GetFilterColor, GetPartOfName } from "../helpers";
 
 interface Props {
-  terminals: Set<Connector>;
+  terminals: Connector[];
   label: string;
   nodes: Node[];
   edges: Edge[];
@@ -16,8 +16,6 @@ interface Props {
 const FilterDropdown = ({ terminals, label, nodes, edges, onChange }: Props) => {
   const [listOpen, setListOpen] = useState(false);
 
-  const a = Array.from(terminals);
-
   return (
     <MenuWrapper>
       <MenuHeader onClick={() => setListOpen(!listOpen)}>
@@ -26,7 +24,7 @@ const FilterDropdown = ({ terminals, label, nodes, edges, onChange }: Props) => 
       </MenuHeader>
       {listOpen && (
         <MenuList>
-          {a.map((conn) => {
+          {terminals.map((conn) => {
             const edge = edges.find((x) => x.fromConnectorId === conn.id);
             let name = conn.name;
             if (IsPartOfTerminal(conn)) name += GetPartOfName(conn, nodes);

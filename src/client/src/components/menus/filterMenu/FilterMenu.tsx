@@ -1,11 +1,12 @@
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { Connector, Project } from "../../../models";
 import { FilterMenuBox, MenuColumn } from "../../../compLibrary/box/menus";
-import { IsLibrary, IsLocationTerminal, IsPartOfTerminal, IsTransportTerminal } from "../../flow/helpers";
+import { IsFamily, IsLibrary, IsLocationTerminal, IsPartOfTerminal, IsTransportTerminal } from "../../flow/helpers";
 import { FilterDropdown } from "./dropdown/";
 import { TextResources } from "../../../assets/text";
 import { IsBlockView } from "../../flow/block/helpers";
 import { OnChange } from "./handlers";
+import { GetConnectorNode } from "./helpers";
 
 /**
  * Menu to filter terminals and edges
@@ -18,17 +19,32 @@ const FilterMenu = () => {
   const edges = project?.edges;
   const nodes = project?.nodes;
 
-  const transportTerminals = new Set<Connector>();
+  const transportTerminals = [] as Connector[];
   const transportLabel = TextResources.Relations_Transport;
-  const relationsTerminals = new Set<Connector>();
+  const relationsTerminals = [] as Connector[];
   const relationsLabel = TextResources.Relations;
-  const partOfTerminals = new Set<Connector>();
+  const partOfTerminals = [] as Connector[];
   const partOfLabel = TextResources.Relations_PartOf_Relationship;
 
   edges.forEach((e) => {
-    if (IsTransportTerminal(e.fromConnector)) transportTerminals.add(e.fromConnector);
-    if (IsLocationTerminal(e.fromConnector)) relationsTerminals.add(e.fromConnector);
-    if (IsPartOfTerminal(e.fromConnector)) partOfTerminals.add(e.fromConnector);
+    if (IsTransportTerminal(e.fromConnector)) {
+      if (!transportTerminals.some((conn) => conn.terminalTypeId === e.fromConnector.terminalTypeId))
+        transportTerminals.push(e.fromConnector);
+    }
+    if (IsLocationTerminal(e.fromConnector)) {
+      if (!relationsTerminals.some((conn) => IsLocationTerminal(conn))) relationsTerminals.push(e.fromConnector);
+    }
+    if (IsPartOfTerminal(e.fromConnector)) {
+      const sourceNode = GetConnectorNode(e.fromConnector);
+      let exists = false;
+
+      partOfTerminals.forEach((conn) => {
+        let source = GetConnectorNode(conn);
+        if (IsFamily(source, sourceNode)) exists = true;
+      });
+
+      if (!exists) partOfTerminals.push(e.fromConnector);
+    }
   });
 
   return (
