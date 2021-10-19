@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { TextResources } from "../../../../../assets/text";
 import { Node, Edge } from "../../../../../models";
 import { RootState } from "../../../../../redux/store";
-import { HandleComponent, TerminalsComponent } from "../../terminals";
+import { HandleComponent, TerminalsContainerComponent } from "../../terminals";
 import { Size } from "../../../../../compLibrary";
 import { GetParentColor } from "./helpers";
 import { OnParentClick, OnChildClick, OnConnectorClick } from "./handlers";
@@ -55,7 +55,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         onParentClick={() => OnParentClick(dispatch, node, nodes, edges)}
         onChildClick={() => OnChildClick(dispatch, node, nodes, edges)}
       />
-      <TerminalsComponent
+      <TerminalsContainerComponent
         node={node}
         inputMenuOpen={inTerminalMenu}
         outputMenuOpen={outTerminalMenu}

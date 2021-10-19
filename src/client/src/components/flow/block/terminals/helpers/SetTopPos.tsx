@@ -25,11 +25,13 @@ const SetTopPos = (
   if (!electro) {
     if (pos === Position.Left) return SetTerminalYPos(inputCount, parent, nodeHeight, mainConnectNode);
     if (pos === Position.Right) return SetTerminalYPos(outputCount, parent, nodeHeight, mainConnectNode);
+    return;
   }
-  if (pos === Position.Top) return -18;
+  if (pos === Position.Top && !parent) return -17;
+  if (pos === Position.Top && parent) return -15;
   if (pos === Position.Bottom && !parent && !mainConnectNode) return Size.Node_Length + 3;
   if (pos === Position.Bottom && !parent && mainConnectNode) return nodeHeight + 3;
-  if (pos === Position.Bottom && parent) return 605;
+  if (pos === Position.Bottom && parent) return 602;
 };
 
 export default SetTopPos;

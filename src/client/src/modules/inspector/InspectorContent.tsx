@@ -14,7 +14,7 @@ const InspectorContent = ({ element, index }: Props) => (
   <>
     {index === 1 && <ParametersComponent element={element} />}
     {index === 2 && <TerminalsComponent element={element} />}
-    {index === 3 && IsNode(element) && <RelationsComponent node={element} />}
+    {index === 3 && <RelationsComponent element={element} />}
     {index === 4 && IsNode(element) && <SimpleTypesComponent node={element} />}
   </>
 );
