@@ -12,11 +12,10 @@ const MenuList = styled.div`
   position: absolute;
   top: 38px;
   left: 0;
-  z-index: 1;
   width: 100%;
-  max-height: 250px;
-  overflow-y: auto;
+  max-height: 850px;
   margin-left: 10px;
+  z-index: 1;
 `;
 
 export default MenuList;

@@ -7,7 +7,7 @@ interface Props {
 const ColorBar = styled.div<Props>`
   background-color: ${(props) => props.color};
   width: 14px;
-  height: 32px;
+  height: inherit;
   position: relative;
   left: 35px;
   margin-right: 10px;

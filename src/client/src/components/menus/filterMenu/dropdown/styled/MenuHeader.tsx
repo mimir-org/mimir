@@ -22,6 +22,10 @@ const MenuHeader = styled.div`
     margin-right: 4px;
     padding: 5px;
   }
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export default MenuHeader;

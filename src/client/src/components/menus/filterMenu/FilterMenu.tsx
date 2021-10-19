@@ -3,8 +3,10 @@ import { RootState } from "../../../redux/store";
 import { Connector, Project } from "../../../models";
 import { FilterMenuBox, MenuColumn } from "../../../compLibrary/box/menus";
 import { IsLibrary, IsLocationTerminal, IsPartOfTerminal, IsTransportTerminal } from "../../flow/helpers";
-import { Dropdown } from "./dropdown/";
+import { FilterDropdown } from "./dropdown/";
 import { TextResources } from "../../../assets/text";
+import { IsBlockView } from "../../flow/block/helpers";
+import { OnChange } from "./handlers";
 
 /**
  * Menu to filter terminals and edges
@@ -33,21 +35,29 @@ const FilterMenu = () => {
   return (
     <FilterMenuBox libraryOpen={libraryOpen}>
       <MenuColumn>
-        <Dropdown
+        <FilterDropdown
           terminals={transportTerminals}
           label={transportLabel}
           nodes={nodes}
           edges={edges}
-          dispatch={dispatch}
+          onChange={(edge) => OnChange(edge, dispatch)}
         />
-        <Dropdown
+        <FilterDropdown
           terminals={relationsTerminals}
           label={relationsLabel}
           nodes={nodes}
           edges={edges}
-          dispatch={dispatch}
+          onChange={(edge) => OnChange(edge, dispatch)}
         />
-        <Dropdown terminals={partOfTerminals} label={partOfLabel} nodes={nodes} edges={edges} dispatch={dispatch} />
+        {!IsBlockView() && (
+          <FilterDropdown
+            terminals={partOfTerminals}
+            label={partOfLabel}
+            nodes={nodes}
+            edges={edges}
+            onChange={(edge) => OnChange(edge, dispatch)}
+          />
+        )}
       </MenuColumn>
     </FilterMenuBox>
   );

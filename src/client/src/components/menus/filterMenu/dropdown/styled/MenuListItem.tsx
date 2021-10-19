@@ -10,7 +10,6 @@ const MenuListItem = styled.div`
   border-color: ${Color.DarkGrey};
   font-size: ${FontSize.Standard};
   color: ${Color.Black};
-  background-color: ${Color.White};
   cursor: pointer;
   width: 100%;
   z-index: 1;
@@ -31,6 +30,10 @@ const MenuListItem = styled.div`
     p {
       text-decoration: underline;
     }
+  }
+
+  &:first-child {
+    border: none;
   }
 `;
 
