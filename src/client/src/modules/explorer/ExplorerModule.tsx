@@ -15,10 +15,10 @@ import { ExplorerIcon } from "../../assets/icons/modules";
  */
 export const ExplorerModule = () => {
   const dispatch = useAppDispatch();
+  const type = MODULE_TYPE.EXPLORER;
   const project = useAppSelector((s) => s.projectState.project) as Project;
   const isOpen = useAppSelector((s) => s.modules.types.find((x) => x.type === type).visible);
   const animate = useAppSelector((s) => s.modules.types.find((x) => x.type === type).animate);
-  const type = MODULE_TYPE.EXPLORER;
 
   const start = isOpen ? Size.ModuleClosed : Size.ModuleOpen;
   const stop = isOpen ? Size.ModuleOpen : Size.ModuleClosed;

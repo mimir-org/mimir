@@ -1,5 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../../../redux/store";
 import { MENU_TYPE } from "../../../../models/project";
 import { CloseIcon } from "../../../../assets/icons/close";
 import { TextResources } from "../../../../assets/text";
@@ -10,9 +9,9 @@ import { OnReturnClick, OnSaveClick } from "./handlers";
 import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../../../../compLibrary/box/project";
 
 export const ExportLibraryFileMenu = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [fileName, setFileName] = useState("");
-  const isOpen = useSelector<RootState>((s) => s.menu.activeMenu === MENU_TYPE.SAVE_LIBRARY_FILE_MENU) as boolean;
+  const isOpen = useAppSelector((s) => s.menu.activeMenu === MENU_TYPE.SAVE_LIBRARY_FILE_MENU);
 
   return (
     <ProjectBox width={Size.MenuSmall_Width} height={Size.MenuSmall_Height} visible={isOpen}>

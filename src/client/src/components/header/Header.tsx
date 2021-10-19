@@ -1,7 +1,6 @@
 import * as Click from "./handlers";
 import * as Icons from "../../assets/icons/header";
-import { RootState } from "../../redux/store";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { VIEW_TYPE } from "../../models/project";
 import { ToolBar } from "./";
 import { MenuMainHeader } from "../../compLibrary/box/menus";
@@ -10,15 +9,15 @@ import { IsExplorer, IsLibrary } from "../flow/helpers";
 import { HeaderBox, LogoBox } from "../../compLibrary/box/header/";
 
 const Header = () => {
-  const dispatch = useDispatch();
-  const projectState = useSelector<RootState>((state) => state.projectState) as ProjectState;
-  const darkMode = useSelector<RootState>((state) => state.darkMode.active) as boolean;
-  const filterMenuOpen = useSelector<RootState>((state) => state.menu.filterMenuVisibility) as boolean;
-  const accountMenuOpen = useSelector<RootState>((state) => state.menu.accountMenuVisibility) as boolean;
-  const libOpen = useSelector<RootState>((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible) as boolean;
-  const explorerOpen = useSelector<RootState>((s) => s.modules.types.find((x) => IsExplorer(x.type)).visible) as boolean;
-  const treeView = useSelector<RootState>((s) => s.flow.view === VIEW_TYPE.TREEVIEW) as boolean;
-  const electro = useSelector<RootState>((s) => s.electro.visible) as boolean;
+  const dispatch = useAppDispatch();
+  const projectState = useAppSelector((s) => s.projectState) as ProjectState;
+  const darkMode = useAppSelector((s) => s.darkMode.active);
+  const filterMenuOpen = useAppSelector((s) => s.menu.filterMenuVisibility);
+  const accountMenuOpen = useAppSelector((s) => s.menu.accountMenuVisibility);
+  const libOpen = useAppSelector((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible);
+  const explorerOpen = useAppSelector((s) => s.modules.types.find((x) => IsExplorer(x.type)).visible);
+  const treeView = useAppSelector((s) => s.flow.view === VIEW_TYPE.TREEVIEW);
+  const electro = useAppSelector((s) => s.electro.visible);
 
   return (
     <>
