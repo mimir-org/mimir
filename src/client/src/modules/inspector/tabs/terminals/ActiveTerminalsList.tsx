@@ -1,37 +1,47 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Color } from "../../../../compLibrary";
 import { TerminalCategory } from "../../../../typeEditor/helpers/GetFilteredTerminalsList";
 import { Connector, ConnectorType, TerminalType } from "../../../../models";
 import { ActiveTerminalsTypeList } from "./";
 import { OnCategoryClick, OnTypeClick } from "./handlers";
-import { FilterTerminalCategories, FormatTypeId } from "./helpers";
-import { IsInputTerminal, IsOutputTerminal } from "../../../../components/flow/helpers";
+import {
+  FilterTerminalCategories,
+  FormatTypeId,
+  GetInputAndOutputTerminalsByTerminalType,
+  GetNumTerminalsByCategory,
+} from "./helpers";
 import { ExpandAccordionIcon, CollapseAccordionIcon } from "../../../../assets/icons/toogle";
 import { TerminalsListElementWrapper, TerminalsCategoryListElement } from "./styled/activeTerminalList";
 
 interface Props {
   terminals: Connector[];
   terminalCategories: TerminalCategory[];
-  selectedTerminalId: string;
+  selectedTerminal: Connector;
   onSelectTerminal: (item: Connector) => void;
 }
 
-function ActiveTerminalsList({ terminals, terminalCategories, selectedTerminalId, onSelectTerminal }: Props) {
+function ActiveTerminalsList({ terminals, terminalCategories, selectedTerminal, onSelectTerminal }: Props) {
   const [selectedCategoriesIds, setSelectedCategoriesIds] = useState<string[]>([]);
   const [selectedTypesIds, setSelectedTypesIds] = useState<string[]>([]);
-  const filteredCategories = FilterTerminalCategories(terminalCategories, terminals);
-  const isCategoryExpanded = (category: TerminalCategory) => selectedCategoriesIds.includes(category.id);
+  const filteredCategories = useMemo(
+    () => FilterTerminalCategories(terminalCategories, terminals),
+    [terminalCategories, terminals]
+  );
+  const [inputTerminalsByTerminalType, outputTerminalsByTerminalType] = useMemo(
+    () => GetInputAndOutputTerminalsByTerminalType(terminals),
+    [terminals]
+  );
+  const numTerminalsByCategoryId = useMemo(() => GetNumTerminalsByCategory(terminals), [terminals]);
 
+  const isCategoryExpanded = (category: TerminalCategory) => selectedCategoriesIds.includes(category.id);
   const isTypeExpanded = (type: TerminalType, connectorType: ConnectorType) =>
     selectedTypesIds.includes(FormatTypeId(type, connectorType));
-
-  const selectedTerminal = terminals.find((term) => term.id === selectedTerminalId);
 
   return (
     <>
       {filteredCategories.map((category, i) => {
         const categoryExpanded = isCategoryExpanded(category);
-        const numCategoryTerminals = terminals.filter((term) => term.terminalCategoryId === category.id).length;
+        const numCategoryTerminals = numTerminalsByCategoryId.get(category.id);
 
         return (
           <TerminalsListElementWrapper key={category.id}>
@@ -54,18 +64,13 @@ function ActiveTerminalsList({ terminals, terminalCategories, selectedTerminalId
             </TerminalsCategoryListElement>
             {categoryExpanded &&
               category.items.map((terminalType) => {
-                const inputTerminals = terminals.filter(
-                  (terminal) => terminal.terminalTypeId === terminalType.id && IsInputTerminal(terminal)
-                );
-
-                const outputTerminals = terminals.filter(
-                  (terminal) => terminal.terminalTypeId === terminalType.id && IsOutputTerminal(terminal)
-                );
+                const inputTerminals = inputTerminalsByTerminalType.get(terminalType.id);
+                const outputTerminals = outputTerminalsByTerminalType.get(terminalType.id);
 
                 const terminalTypeListProps = {
                   terminalType: terminalType,
-                  selectedTerminalId: selectedTerminalId,
-                  onTypeClick: (type, connectorType) =>
+                  selectedTerminal: selectedTerminal,
+                  onTypeClick: (type: TerminalType, connectorType: ConnectorType) =>
                     OnTypeClick(
                       type,
                       connectorType,
@@ -73,7 +78,7 @@ function ActiveTerminalsList({ terminals, terminalCategories, selectedTerminalId
                       selectedTypesIds,
                       setSelectedTypesIds
                     ),
-                  onSelectTerminal: onSelectTerminal,
+                  onSelectTerminal,
                 };
 
                 return (

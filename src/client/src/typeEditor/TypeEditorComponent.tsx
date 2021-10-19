@@ -1,7 +1,5 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux/store";
-import { TypeEditorState } from "./redux/types";
+import { useAppDispatch, useAppSelector } from "../redux/store";
 import { ListType } from "./TypeEditorList";
 import { CloseIcon } from "../assets/icons/close";
 import { CheckIcon } from "../assets/icons/checkmark";
@@ -43,8 +41,8 @@ import {
  * @returns the visual Type Editor window
  */
 export const TypeEditorComponent = () => {
-  const dispatch = useDispatch();
-  const state = useSelector<RootState>((s) => s.typeEditor) as TypeEditorState;
+  const dispatch = useAppDispatch();
+  const state = useAppSelector((s) => s.typeEditor);
 
   useEffect(() => {
     dispatch(getInitialData());
