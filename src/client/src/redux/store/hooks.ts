@@ -1,6 +1,12 @@
-import { createSelector, OutputParametricSelector, OutputSelector, ParametricSelector } from "@reduxjs/toolkit";
+import {
+  createSelector,
+  OutputParametricSelector,
+  OutputSelector,
+  ParametricSelector,
+  Selector,
+} from "@reduxjs/toolkit";
 import { useMemo } from "react";
-import { useDispatch, TypedUseSelectorHook, useSelector, Selector } from "react-redux";
+import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
 import { RootState } from ".";
 
 /**
@@ -22,6 +28,9 @@ export const createParametricAppSelector: <R1, R2, P, T>(
   selector2: ParametricSelector<RootState, P, R2>,
   combiner: (res1: R1, res2: R2) => T
 ) => OutputParametricSelector<RootState, P, T, (res1: R1, res2: R2) => T> = createSelector;
+
+export const combineAppSelectors = <R, T>(selectors: Selector<RootState, R>[], combiner: (...res: R[]) => T) =>
+  createSelector<RootState, R, T>(selectors, combiner);
 
 /**
  * Custom useSelector hook with type linting.
