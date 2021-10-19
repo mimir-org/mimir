@@ -285,13 +285,13 @@ namespace Mb.Services.Services
             if(subProjectAm.Nodes.GroupBy(x => x).Where(g => g.Count() > 1).Select(y => y.Key).ToList().Any())
                 throw new ModelBuilderInvalidOperationException("Duplicate node id's detected");
 
-            foreach (var node in subProjectAm.Nodes)
+            foreach (var nodeId in subProjectAm.Nodes)
             {
-                if (string.IsNullOrWhiteSpace(node) || node.Length < 37)
-                    throw new ModelBuilderInvalidOperationException($"Invalid node id: {node}");
+                if (string.IsNullOrWhiteSpace(nodeId))
+                    throw new ModelBuilderInvalidOperationException($"Node id can't be null or empty");
 
-                if (!_nodeRepository.GetAll().Any(x => x.Id == node))
-                    throw new ModelBuilderInvalidOperationException($"Node {node} not found");
+                if (!_nodeRepository.GetAll().Any(x => x.Id == nodeId))
+                    throw new ModelBuilderInvalidOperationException($"Node {nodeId} not found");
             }
 
             if (subProjectAm.Edges != null && subProjectAm.Edges.Any())
@@ -299,13 +299,13 @@ namespace Mb.Services.Services
                 if (subProjectAm.Edges.GroupBy(x => x).Where(g => g.Count() > 1).Select(y => y.Key).ToList().Any())
                     throw new ModelBuilderInvalidOperationException("Duplicate edge id's detected");
 
-                foreach (var edge in subProjectAm.Edges)
+                foreach (var edgeId in subProjectAm.Edges)
                 {
-                    if(string.IsNullOrWhiteSpace(edge) || edge.Length < 37)
-                        throw new ModelBuilderInvalidOperationException($"Invalid edge id: {edge}");
+                    if(string.IsNullOrWhiteSpace(edgeId))
+                        throw new ModelBuilderInvalidOperationException($"Edge id can't be null or empty");
 
-                    if (!_edgeRepository.GetAll().Any(x => x.Id == edge))
-                        throw new ModelBuilderInvalidOperationException($"Edge {edge} not found");
+                    if (!_edgeRepository.GetAll().Any(x => x.Id == edgeId))
+                        throw new ModelBuilderInvalidOperationException($"Edge {edgeId} not found");
                 }
             }
 
