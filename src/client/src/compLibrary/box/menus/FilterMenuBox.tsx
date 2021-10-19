@@ -10,8 +10,7 @@ const FilterMenuBox = styled.div<Props>`
   top: 97px;
   right: ${(props) => (!props.isLibraryOpen ? Size.ModuleClosed + Size.Margin : Size.ModuleOpen + Size.Margin)}px;
   background: ${Color.White};
-  padding-bottom: 6px;
-  padding-top: 8px;
+  padding: 8px 0px 6px 0px;
   min-width: ${Size.ModuleOpen}px;
   border-style: solid;
   border-color: ${Color.Grey};

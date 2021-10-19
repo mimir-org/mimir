@@ -13,6 +13,7 @@ const TextResources = {
   Module_Inspector: "Inspector",
 
   // Relations
+  Relations: "Relations",
   Relations_PartOf_Relationship: "Part of Relationship",
   Relation_PartOf: "Part of",
   Relations_HasLocation: "Has Location",
