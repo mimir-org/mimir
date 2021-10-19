@@ -3,7 +3,7 @@ import { RootState } from "../../../redux/store";
 import { Connector, Project } from "../../../models";
 import { FilterMenuBox, MenuColumn } from "../../../compLibrary/box/menus";
 import { IsLibrary, IsLocationTerminal, IsPartOfTerminal, IsTransportTerminal } from "../../flow/helpers";
-import { Dropdown } from "./styled/dropdown/";
+import { Dropdown } from "./dropdown/";
 import { TextResources } from "../../../assets/text";
 
 const FilterMenu = () => {
@@ -26,7 +26,7 @@ const FilterMenu = () => {
   });
 
   return (
-    <FilterMenuBox isLibraryOpen={libraryOpen}>
+    <FilterMenuBox libraryOpen={libraryOpen}>
       <MenuColumn>
         <Dropdown terminals={transportTerminals} label={transportLabel} edges={edges} dispatch={dispatch} />
         <Dropdown terminals={relationsTerminals} label={relationsLabel} edges={edges} dispatch={dispatch} />
