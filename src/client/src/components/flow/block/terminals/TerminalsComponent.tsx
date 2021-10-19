@@ -23,7 +23,7 @@ interface Props {
  * @param param0
  * @returns two buttons to activate two drop-down menus of input and output terminals.
  */
-const TerminalsComponent = ({
+const TerminalsContainerComponent = ({
   node,
   inputMenuOpen,
   outputMenuOpen,
@@ -91,4 +91,4 @@ const TerminalsComponent = ({
     </>
   );
 };
-export default TerminalsComponent;
+export default TerminalsContainerComponent;

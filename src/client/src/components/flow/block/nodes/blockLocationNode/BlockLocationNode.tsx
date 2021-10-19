@@ -3,7 +3,7 @@ import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, useUpdateNodeInternals } from "react-flow-renderer";
 import { NodeBox } from "../../../styled";
 import { BlockNodeNameBox } from "../../styled";
-import { HandleComponent, TerminalsComponent } from "../../terminals";
+import { HandleComponent, TerminalsContainerComponent } from "../../terminals";
 import { useDispatch, useSelector } from "react-redux";
 import { Node } from "../../../../../models";
 import { OnHover, OnMouseOut, OnConnectorClick } from "./handlers";
@@ -55,7 +55,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
         <BlockNodeNameBox>{data.label ?? data.name}</BlockNodeNameBox>
         <Symbol base64={data.symbol} text={data.name} />
 
-        <TerminalsComponent
+        <TerminalsContainerComponent
           node={data}
           inputMenuOpen={inTerminalMenu}
           outputMenuOpen={outTerminalMenu}

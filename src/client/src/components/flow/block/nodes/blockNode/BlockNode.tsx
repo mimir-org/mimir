@@ -8,7 +8,7 @@ import { Node, Edge } from "../../../../../models";
 import { Size } from "../../../../../compLibrary";
 import { IsFunction, IsProduct } from "../../../helpers";
 import { NodeBox } from "../../../styled";
-import { TerminalsComponent, HandleComponent } from "../../terminals";
+import { TerminalsContainerComponent, HandleComponent } from "../../terminals";
 import { ConnectViewComponent } from "../../connectView";
 import { IsChildConnectNode, IsConnectNodeChecked, SetNodeWidth, SetNodeLength } from "./helpers";
 import { FilterTerminals, FindAllEdges, GetNodeByDataId } from "../../helpers";
@@ -91,7 +91,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
         {!mainConnectNode && <Symbol base64={data.symbol} text={data.name} />}
         {mainConnectNode && <div className="line" />}
 
-        <TerminalsComponent
+        <TerminalsContainerComponent
           node={data}
           inputMenuOpen={inTerminalMenu}
           outputMenuOpen={outTerminalMenu}
