@@ -2,9 +2,6 @@ import { TextResources } from "../../assets/text";
 import { LegendModule } from "../../modules/legend";
 import { LibraryComponent } from "./index";
 import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../redux/store";
-import { LibraryState } from "../../redux/store/library/types";
 import { searchLibrary } from "../../redux/store/library/actions";
 import { AnimatedModule, Size } from "../../compLibrary";
 import { GetLibCategories } from "./helpers";
@@ -15,13 +12,14 @@ import { GetSelectedNode } from "../../components/flow/helpers";
 import { OnLibraryClick, OnLegendClick } from "./handlers";
 import { Project } from "../../models";
 import { LegendIcon, LibraryIcon } from "../../assets/icons/modules";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 
 /**
  * Component for Mimir's type library and Legend Module (to be removed).
  * @returns a module with a drop-down of Types and a search input.
  */
 const LibraryModule = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const lib = MODULE_TYPE.LIBRARY;
   const legend = MODULE_TYPE.LEGEND;
   const search = (text: string) => dispatch(searchLibrary(text));
@@ -30,13 +28,13 @@ const LibraryModule = () => {
     dispatch(searchLibrary(""));
   }, [dispatch]);
 
-  const libState = useSelector<RootState>((s) => s.library) as LibraryState;
-  const project = useSelector<RootState>((s) => s.projectState?.project) as Project;
-  const splitView = useSelector<RootState>((s) => s.splitView.visible) as boolean;
-  const legendOpen = useSelector<RootState>((s) => s.modules.types.find((x) => x.type === legend).visible) as boolean;
-  const animate = useSelector<RootState>((s) => s.modules.types.find((x) => x.type === lib).animate) as boolean;
-  const libOpen = useSelector<RootState>((s) => s.modules.types.find((x) => x.type === lib).visible) as boolean;
-  const animateLegend = useSelector<RootState>((s) => s.modules.types.find((x) => x.type === legend).animate) as boolean;
+  const project = useAppSelector((s) => s.projectState?.project) as Project;
+  const libState = useAppSelector((s) => s.library);
+  const splitView = useAppSelector((s) => s.splitView.visible);
+  const legendOpen = useAppSelector((s) => s.modules.types.find((x) => x.type === legend).visible);
+  const animate = useAppSelector((s) => s.modules.types.find((x) => x.type === lib).animate);
+  const libOpen = useAppSelector((s) => s.modules.types.find((x) => x.type === lib).visible);
+  const animateLegend = useAppSelector((s) => s.modules.types.find((x) => x.type === legend).animate);
 
   const selectedNode = GetSelectedNode();
   const startLib = libOpen ? Size.ModuleClosed : Size.ModuleOpen;

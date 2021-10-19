@@ -1,5 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { Connector, Project } from "../../../models";
 import { FilterMenuBox, MenuColumn } from "../../../compLibrary/box/menus";
 import { IsLibrary, IsLocationTerminal, IsPartOfTerminal, IsTransportTerminal } from "../../flow/helpers";
@@ -13,9 +12,9 @@ import { OnChange } from "./handlers";
  * @returns a menu with multiple drop-down menus
  */
 const FilterMenu = () => {
-  const dispatch = useDispatch();
-  const project = useSelector<RootState>((s) => s.projectState.project) as Project;
-  const libraryOpen = useSelector<RootState>((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible) as boolean;
+  const dispatch = useAppDispatch();
+  const project = useAppSelector((s) => s.projectState.project) as Project;
+  const libraryOpen = useAppSelector((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible);
   const edges = project?.edges;
   const nodes = project?.nodes;
 

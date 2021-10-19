@@ -1,10 +1,9 @@
-import { RootState } from "../../../../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, useUpdateNodeInternals } from "react-flow-renderer";
 import { NodeBox } from "../../../styled";
 import { BlockNodeNameBox } from "../../styled";
 import { HandleComponent, TerminalsContainerComponent } from "../../terminals";
-import { useDispatch, useSelector } from "react-redux";
 import { Node } from "../../../../../models";
 import { OnHover, OnMouseOut, OnConnectorClick } from "./handlers";
 import { FilterTerminals, GetNodeByDataId } from "../../helpers";
@@ -17,15 +16,15 @@ import { Size } from "../../../../../compLibrary";
  * @returns a Location Node of the Flow node type with Mimir styling and functionality.
  */
 const BlockLocationNode: FC<NodeProps> = ({ data }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [terminalButton, showTerminalButton] = useState(false);
   const [inTerminalMenu, showInTerminalMenu] = useState(false);
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
   const updateNodeInternals = useUpdateNodeInternals();
-  const nodes = useSelector<RootState>((s) => s.projectState.project.nodes) as Node[];
-  const splitView = useSelector<RootState>((s) => s.splitView.visible) as boolean;
-  const splitNode = useSelector<RootState>((s) => s.splitView.node) as Node;
-  const electro = useSelector<RootState>((s) => s.electro.visible) as boolean;
+  const nodes = useAppSelector((s) => s.projectState.project.nodes) as Node[];
+  const splitView = useAppSelector((s) => s.splitView.visible);
+  const splitNode = useAppSelector((s) => s.splitView.node) as Node;
+  const electro = useAppSelector((s) => s.electro.visible);
   const node = nodes.find((x) => x.id === data?.id);
   if (data) data.width = Size.Node_Width;
 

@@ -1,9 +1,8 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
-import { useDispatch, useSelector } from "react-redux";
 import { TextResources } from "../../../../../assets/text";
 import { Node, Edge } from "../../../../../models";
-import { RootState } from "../../../../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
 import { HandleComponent, TerminalsContainerComponent } from "../../terminals";
 import { Size } from "../../../../../compLibrary";
 import { GetParentColor } from "./helpers";
@@ -18,14 +17,14 @@ import { FilterTerminals, GetNodeByDataId, FindAllEdges } from "../../helpers";
  * @returns a parent node of the Flow node type with Mimir styling and functionality.
  */
 const BlockParentNode: FC<NodeProps> = ({ data }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [inTerminalMenu, showInTerminalMenu] = useState(false);
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
-  const nodes = useSelector<RootState>((s) => s.projectState.project?.nodes) as Node[];
-  const edges = useSelector<RootState>((s) => s.projectState.project?.edges) as Edge[];
-  const splitView = useSelector<RootState>((s) => s.splitView.visible) as boolean;
-  const splitNode = useSelector<RootState>((s) => s.splitView.node) as Node;
-  const electro = useSelector<RootState>((s) => s.electro.visible) as boolean;
+  const nodes = useAppSelector((s) => s.projectState.project?.nodes) as Node[];
+  const edges = useAppSelector((s) => s.projectState.project?.edges) as Edge[];
+  const splitView = useAppSelector((s) => s.splitView.visible);
+  const splitNode = useAppSelector((s) => s.splitView.node) as Node;
+  const electro = useAppSelector((s) => s.electro.visible);
   const node = nodes?.find((x) => x.id === data.id);
   if (node) node.width = Size.BlockView_Width;
 

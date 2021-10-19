@@ -1,5 +1,4 @@
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { ProjectComponent, SplitViewComponent } from "./";
 import { TextResources } from "../../assets/text";
 import { MODULE_TYPE } from "../../models/project";
@@ -15,11 +14,11 @@ import { ExplorerIcon } from "../../assets/icons/modules";
  * @returns a module where all nodes in Mimir are listed.
  */
 export const ExplorerModule = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const project = useAppSelector((s) => s.projectState.project) as Project;
+  const isOpen = useAppSelector((s) => s.modules.types.find((x) => x.type === type).visible);
+  const animate = useAppSelector((s) => s.modules.types.find((x) => x.type === type).animate);
   const type = MODULE_TYPE.EXPLORER;
-  const project = useSelector<RootState>((s) => s.projectState.project) as Project;
-  const isOpen = useSelector<RootState>((s) => s.modules.types.find((x) => x.type === type).visible) as boolean;
-  const animate = useSelector<RootState>((s) => s.modules.types.find((x) => x.type === type).animate) as boolean;
 
   const start = isOpen ? Size.ModuleClosed : Size.ModuleOpen;
   const stop = isOpen ? Size.ModuleOpen : Size.ModuleClosed;

@@ -2,8 +2,7 @@ import * as Click from "./handlers";
 import { ResizeConnectNode, SetConnectNodeColor, GetConnectChildren } from "../../connectView/helpers";
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, useUpdateNodeInternals } from "react-flow-renderer";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
 import { Node, Edge } from "../../../../../models";
 import { Size } from "../../../../../compLibrary";
 import { IsFunction, IsProduct } from "../../../helpers";
@@ -21,7 +20,7 @@ import { BlockNodeNameBox } from "../../styled";
  * @returns a Function or Product Node of the Flow node type with Mimir styling and functionality.
  */
 const BlockNode: FC<NodeProps> = ({ data }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [inTerminalMenu, showInTerminalMenu] = useState(false);
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
   const [terminalBox, showTerminalBox] = useState(false);
@@ -29,16 +28,16 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const [connectMenu, showConnectMenu] = useState(false);
   const updateNodeInternals = useUpdateNodeInternals();
 
-  const nodes = useSelector<RootState>((s) => s.projectState.project?.nodes) as Node[];
-  const edges = useSelector<RootState>((s) => s.projectState.project?.edges) as Edge[];
-  const splitView = useSelector<RootState>((s) => s.splitView.visible) as boolean;
-  const splitNode = useSelector<RootState>((s) => s.splitView.node) as Node;
-  const electro = useSelector<RootState>((s) => s.electro.visible) as boolean;
+  const nodes = useAppSelector((s) => s.projectState.project?.nodes) as Node[];
+  const edges = useAppSelector((s) => s.projectState.project?.edges) as Edge[];
+  const splitView = useAppSelector((s) => s.splitView.visible);
+  const splitNode = useAppSelector((s) => s.splitView.node) as Node;
+  const electro = useAppSelector((s) => s.electro.visible);
+  const mainConnectNodes = useAppSelector((s) => s.connectView?.mainNodes);
   const type = IsFunction(data) ? "BlockFunctionNode-" : "BlockProductNode-";
   const node = nodes?.find((x) => x.id === data.id);
   const terminals = FilterTerminals(data, splitView, splitNode);
 
-  const mainConnectNodes = useSelector<RootState>((s) => s.connectView?.mainNodes) as Node[];
   const connectChildren = GetConnectChildren(data, nodes, edges);
   const mainConnectNode = mainConnectNodes.find((x) => x.id === data.id);
   const connectNodes = mainConnectNode?.connectNodes;

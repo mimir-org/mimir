@@ -1,7 +1,5 @@
 import * as Click from "./handlers";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../../redux/store/index";
-import { UserState } from "../../../redux/store/user/types";
+import { useAppSelector, useAppDispatch } from "../../../redux/store";
 import { ProjectState } from "../../../redux/store/project/types";
 import { GetMenuElement } from "./helpers";
 import { MENU_TYPE } from "../../../models/project";
@@ -18,11 +16,10 @@ import { setAccountMenuVisibility } from "../project/redux/actions";
 import { useOutsideClick } from "./hooks/useOutsideClick";
 
 const AccountMenu = () => {
-  const dispatch = useDispatch();
-  const projectState = useSelector<RootState>((state) => state.projectState) as ProjectState;
-  const userState = useSelector<RootState>((state) => state.userState) as UserState;
-  const activeMenu = useSelector<RootState>((state) => state.menu.activeMenu) as string;
-
+  const dispatch = useAppDispatch();
+  const projectState = useAppSelector((state) => state.projectState) as ProjectState;
+  const userState = useAppSelector((state) => state.userState);
+  const activeMenu = useAppSelector((state) => state.menu.activeMenu);
   const menuRef = useRef(null);
 
   useOutsideClick(menuRef, () => !activeMenu && dispatch(setAccountMenuVisibility(false)));

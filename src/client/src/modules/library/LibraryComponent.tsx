@@ -4,8 +4,7 @@ import { SearchIcon } from "../../assets/icons/common";
 import { SearchInput } from "../../compLibrary";
 import { LibraryCategoryComponent } from ".";
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+import { useAppSelector } from "../../redux/store";
 import { LibBody, SearchIconBox } from "../../compLibrary/box/library";
 import { TypeEditorModule } from "../../typeEditor";
 
@@ -18,7 +17,7 @@ const LibraryComponent = ({ categories, search }: Props) => {
   const [selectedElement, setSelectedElement] = useState("");
   const [selectedElementType, setSelectedElementType] = useState(null);
   const type = MODULE_TYPE.LEGEND;
-  const legendOpen = useSelector<RootState>((s) => s.modules.types.find((x) => x.type === type).visible) as boolean;
+  const legendOpen = useAppSelector((s) => s.modules.types.find((x) => x.type === type).visible);
 
   const onChange = (e: { target: { value: any } }) => search(e.target.value);
 
