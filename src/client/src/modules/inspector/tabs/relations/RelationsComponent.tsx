@@ -1,9 +1,8 @@
-import { Edge } from "../../../../models";
 import { RelationsContent } from ".";
 import { RelationsBody } from "./styled";
 import { TextResources } from "../../../../assets/text";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../../redux/store";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "../../../../redux/store";
 import { OnClickNode, OnClickRelation, OnClickTerminal, OnClickTransport } from "./handlers";
 import { GetRelations } from "./helpers/GetRelations";
 import { InspectorElement } from "../../types";
@@ -19,6 +18,8 @@ import {
   GetActiveRelationColor,
   GetListItemColor,
 } from "./helpers";
+import { edgesSelector } from "./selectors";
+import { useMemo } from "react";
 
 interface Props {
   element: InspectorElement;
@@ -27,12 +28,12 @@ interface Props {
 const RelationComponent = ({ element }: Props) => {
   const dispatch = useDispatch();
 
-  const edges = useSelector<RootState>((state) => state.projectState.project.edges) as Edge[];
+  const edges = useAppSelector(edgesSelector);
+  const connectors = useMemo(() => GetConnectors(element), [element]);
+  const [inputTerminals, outputTerminals] = useMemo(() => GetTerminals(connectors, edges), [connectors, edges]);
+  const transports = useMemo(() => GetTransports(edges, element), [edges, element]);
 
-  const connectors = GetConnectors(element);
   const hasConnectors = connectors.length > 0;
-  const [inputTerminals, outputTerminals] = GetTerminals(connectors, edges);
-  const transports = GetTransports(edges, element);
 
   return (
     <RelationsBody>

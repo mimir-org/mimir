@@ -1,6 +1,6 @@
-import { createSelector, OutputParametricSelector } from "@reduxjs/toolkit";
+import { createSelector, OutputParametricSelector, OutputSelector, ParametricSelector } from "@reduxjs/toolkit";
 import { useMemo } from "react";
-import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
+import { useDispatch, TypedUseSelectorHook, useSelector, Selector } from "react-redux";
 import { RootState } from ".";
 
 /**
@@ -9,10 +9,19 @@ import { RootState } from ".";
 export const useAppDispatch = useDispatch;
 
 /**
- * Custom createSelector hook used within application.
+ * Custom createSelector hook used within application, with type linting.
  */
 
-export const createAppSelector = createSelector;
+export const createAppSelector: <R, T>(
+  selector: Selector<RootState, R>,
+  combiner: (res: R) => T
+) => OutputSelector<RootState, T, (res: R) => T> = createSelector;
+
+export const createParametricAppSelector: <R1, R2, P, T>(
+  selector1: ParametricSelector<RootState, P, R1>,
+  selector2: ParametricSelector<RootState, P, R2>,
+  combiner: (res1: R1, res2: R2) => T
+) => OutputParametricSelector<RootState, P, T, (res1: R1, res2: R2) => T> = createSelector;
 
 /**
  * Custom useSelector hook with type linting.
@@ -31,7 +40,7 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
  * @example
  * const values = useParametricAppSelector(selector, props);
  */
-export const useParametricAppSelector = <P, R>(selector: OutputParametricSelector<RootState, P, R, any>, props: P) => {
+export const useParametricAppSelector = <P, R, C>(selector: OutputParametricSelector<RootState, P, R, C>, props: P) => {
   return useAppSelector((state) => selector(state, props));
 };
 
@@ -41,9 +50,6 @@ export const useParametricAppSelector = <P, R>(selector: OutputParametricSelecto
  * Simplifies the following pattern:
  *
  * @example
- *
- *
- *
  * const selector = useMemo(selectorFactoryFunc, [selectorFactoryFunc])
  * const values = useAppSelector((state) => selector(state, props))
  *
