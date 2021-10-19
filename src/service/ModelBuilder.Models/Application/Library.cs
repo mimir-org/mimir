@@ -7,5 +7,6 @@ namespace Mb.Models.Application
         public ICollection<LibraryNodeItem> ObjectBlocks { get; set; }
         public ICollection<LibraryInterfaceItem> Interfaces { get; set; }
         public ICollection<LibraryTransportItem> Transports { get; set; }
+        public ICollection<LibrarySubProjectItem> SubProjects { get; set; }
     }
 }
