@@ -16,7 +16,10 @@ class Connector {
   terminalCategory: EnumBase;
   attributes: Attribute[];
   terminalTypeId: string;
-  order: number;
+
+  // Only client
+  inputOrder: number;
+  outputOrder: number;
 
   // Relation
   relationType: RelationType;

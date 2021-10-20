@@ -10,7 +10,7 @@ interface Props {
   label: string;
   nodes: Node[];
   edges: Edge[];
-  onChange: (edge: Edge) => void;
+  onChange: (item: Edge) => void;
 }
 
 const FilterDropdown = ({ terminals, label, nodes, edges, onChange }: Props) => {

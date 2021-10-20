@@ -2,7 +2,7 @@ import { Node } from "../../../../models";
 import { FlowElement } from "react-flow-renderer";
 import { IsSplitView } from "../helpers";
 import { SetConnectNodePos } from "../connectView/helpers/position";
-import { GetNodeTypeString, SetBlockNodePos } from "./helpers";
+import { GetNodeTypeString, SetBlockNodePos, SetConnectorOrder } from "./helpers";
 
 /**
  * Component to create a node in BlockView.
@@ -13,6 +13,8 @@ import { GetNodeTypeString, SetBlockNodePos } from "./helpers";
  */
 const BuildBlockNode = (node: Node, connectNode: Node, allNodes: Node[]) => {
   if (!node) return null;
+
+  SetConnectorOrder(node);
 
   const connectNodes = connectNode?.connectNodes ?? [];
   const type = GetNodeTypeString(node);

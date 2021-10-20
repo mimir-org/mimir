@@ -3,7 +3,7 @@ import { Handle } from "react-flow-renderer";
 import { GetBlockHandleType } from "../../block/helpers";
 import { IsValidConnection, SetTopPos, SetLeftPos, GetTerminalColor } from "./helpers";
 import { HandleBox } from "./styled";
-import { CreateId } from "../../helpers";
+import { CreateId, IsInputTerminal } from "../../helpers";
 import { ConnectorIcon } from "../../../../assets/icons/connectors";
 
 interface Props {
@@ -36,6 +36,7 @@ const HandleComponent = ({
   <>
     {terminals.map((conn) => {
       const [type, pos] = GetBlockHandleType(conn, node?.isSelected, splitView, electro);
+      const order = IsInputTerminal(conn) ? conn.inputOrder : conn.outputOrder;
 
       return (
         <div key={CreateId()}>
@@ -43,8 +44,8 @@ const HandleComponent = ({
             <HandleBox
               visible={conn.visible}
               id={"handle-" + conn.id}
-              top={SetTopPos(pos, electro, parent, conn.order, length, mainConnectNode)}
-              left={SetLeftPos(pos, electro, parent, conn.order, splitView, width, mainConnectNode)}
+              top={SetTopPos(pos, electro, parent, order, length, mainConnectNode)}
+              left={SetLeftPos(pos, electro, parent, order, splitView, width, mainConnectNode)}
             >
               <ConnectorIcon style={{ fill: GetTerminalColor(conn) }} className={"react-flow__handle-block"} />
               <Handle

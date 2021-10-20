@@ -1,7 +1,7 @@
 import * as Types from "./types";
 import { Edge, Node, ProjectSimple } from "../../../models";
 import { GetUpdatedEdgeInnerWithTerminalAttributeIsLocked, TraverseTree } from "./helpers/";
-import { IsAspectNode } from "../../../components/flow/helpers";
+import { IsAspectNode, IsFamily } from "../../../components/flow/helpers";
 import { GetUpdatedEdgeInnerWithTerminalAttributeValue } from "./helpers";
 
 const initialState: Types.ProjectState = {
@@ -196,7 +196,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           ...state,
           project: {
             ...state.project,
-            nodes: nodeList.map((x) => (action.payload.node.aspect === x.aspect ? { ...x, isHidden: isHidden } : x)),
+            nodes: nodeList.map((x) => (IsFamily(action.payload.node, x) ? { ...x, isHidden: isHidden } : x)),
             edges: edgeList.map((edge) =>
               node.aspect === edge.fromNode.aspect || node.aspect === edge.toNode.aspect || edge.fromNode === node
                 ? { ...edge, isHidden: isHidden }
@@ -510,7 +510,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         project: {
           ...state.project,
           nodes: state.project.nodes.map((n) =>
-            n?.id === action.payload.node?.id
+            n?.id === action.payload.nodeId
               ? {
                   ...n,
                   connectors: n.connectors.map((conn) =>
@@ -518,7 +518,8 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
                       ? {
                           ...conn,
                           visible: action.payload.visible,
-                          order: action.payload.order,
+                          inputOrder: action.payload.inputOrder,
+                          outputOrder: action.payload.outputOrder,
                         }
                       : conn
                   ),

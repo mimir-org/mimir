@@ -3,6 +3,7 @@ import { Node, Connector } from "../../../models";
 import { IsDirectChild } from "../block/helpers";
 import {
   IsChildOf,
+  IsFamily,
   IsFulfilledByTerminal,
   IsFunction,
   IsLocation,
@@ -61,7 +62,7 @@ function validSplitView(activeNode: Node, splitNode: Node, from: Node, to: Node,
       IsLocation(to) &&
       IsLocationTerminal(fromC) &&
       IsLocationTerminal(toC) &&
-      from.aspect === activeNode.aspect &&
+      IsFamily(from, activeNode) &&
       IsDirectChild(from, activeNode) &&
       IsDirectChild(to, activeNode) &&
       IsDirectChild(from, splitNode) &&

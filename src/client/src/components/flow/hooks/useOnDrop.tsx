@@ -9,6 +9,7 @@ import { BuildBlockNode } from "../block/builders";
 import {
   CreateId,
   GetSelectedNode,
+  IsFamily,
   IsInputTerminal,
   IsOutputTerminal,
   IsPartOfTerminal,
@@ -86,7 +87,7 @@ const useOnDrop = (
       ? setElements((es) => es.concat(BuildBlockNode(targetNode, null, project.nodes)))
       : setElements((es) => es.concat(BuildTreeNode(targetNode)));
 
-    if (sourceNode && sourceNode.aspect === targetNode.aspect) {
+    if (sourceNode && IsFamily(sourceNode, targetNode)) {
       targetNode.level = sourceNode.level + 1;
       const sourceConn = sourceNode.connectors?.find((x) => IsPartOfTerminal(x) && IsOutputTerminal(x));
       const targetConn = targetNode.connectors?.find((x) => IsPartOfTerminal(x) && IsInputTerminal(x));

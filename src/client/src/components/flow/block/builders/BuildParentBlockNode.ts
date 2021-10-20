@@ -3,6 +3,7 @@ import { TextResources } from "../../../../assets/text";
 import { Position } from "../../../../compLibrary";
 import { Node } from "../../../../models";
 import { CreateId } from "../../helpers";
+import { SetConnectorOrder } from "./helpers";
 
 /**
  * Component to create a parent node in BlockView.
@@ -13,6 +14,8 @@ import { CreateId } from "../../helpers";
  */
 const BuildParentBlockNode = (node: Node, splitView: boolean, isSplitViewNode: boolean) => {
   if (!node) return null;
+
+  SetConnectorOrder(node);
 
   const type = TextResources.Type_BlockParentNode;
   let position = { x: Position.FunctionBlock_xPos, y: 100 };

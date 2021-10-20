@@ -290,10 +290,11 @@ interface DeleteProjectErrorAction {
 interface ChangeActiveConnector {
   type: typeof CHANGE_ACTIVE_CONNECTOR;
   payload: {
-    node: Node;
+    nodeId: string;
     connectorId: string;
     visible: boolean;
-    order: number;
+    inputOrder: number;
+    outputOrder: number;
   };
 }
 export interface ExportProjectFileAction {
