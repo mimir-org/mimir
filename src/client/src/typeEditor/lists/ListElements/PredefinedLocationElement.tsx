@@ -75,7 +75,7 @@ export const PredefinedLocationElement = ({ attributeName, values, isMultiSelect
       </TerminalCategoryWrapper>
       {isSelected && (
         <SelectValue isSelected={isSelected}>
-          <ValueHeader onClick={() => setExpandList(!expandList)}>
+          <ValueHeader onClick={() => setExpandList(!expandList)} multiSelect={isMultiSelect}>
             <p className="selectedValues">
               {Object.entries(getValues())
                 .filter(([_key, value]) => value === true)
