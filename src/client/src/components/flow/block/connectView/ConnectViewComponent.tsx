@@ -58,9 +58,9 @@ const ConnectViewComponent = ({
               <div className="text" onClick={() => onClick(n)}>
                 {n.label ?? n.name}
               </div>
-              <label className={"checkbox-block"}>
+              <label className={"checkbox-terminals"}>
                 <input type="checkbox" checked={isChecked(n, connectNodes)} onChange={() => onClick(n)} />
-                <span className="checkmark-block"></span>
+                <span className="checkmark-terminals"></span>
               </label>
             </Element>
           );

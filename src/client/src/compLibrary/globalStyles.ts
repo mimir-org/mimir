@@ -18,13 +18,14 @@ const GlobalStyle = createGlobalStyle`
     cursor: pointer;
     font-size: 14px;
   }
-  .checkbox-block  {
+
+  .checkbox-block, .checkbox-terminals {
     position: absolute;
     cursor: pointer;
     left: 7px;
   }
 
-  .checkbox-block input {
+  .checkbox-block input, .checkbox-terminals input {
     position: absolute;
     opacity: 0;    
     z-index:1;
@@ -35,8 +36,7 @@ const GlobalStyle = createGlobalStyle`
     opacity: 0;
   }
  
-  .checkmark,
-  .checkmark-footer {
+  .checkmark {
     position: absolute;
     left: 0;
     height: 15px;
@@ -45,6 +45,7 @@ const GlobalStyle = createGlobalStyle`
     border: 2px solid ${Color.BlueMagenta};
     border-radius: 3px;
   }
+
   .checkmark-block {
     position: absolute;
     left: 0px;
@@ -55,35 +56,43 @@ const GlobalStyle = createGlobalStyle`
     border-radius: 2px;
   }
 
-  .checkmark-footer {
-    left: 5px;
-    top: -5px;
+  .checkmark-terminals {
+    position: absolute;
+    left: 0px;
+    height: 11px;
+    width: 11px;
+    background-color: ${Color.White};
+    border: 2px solid ${Color.DarkGrey};
+    border-radius: 2px;
   }
+
   .checkbox input:checked ~ .checkmark {
     background-color: ${Color.BlueMagenta};
   }
-  .checkbox input:checked ~ .checkmark-footer {
-    background-color: ${Color.White};
-  }
+
   .checkbox-block input:checked ~ .checkmark-block {
     background-color: ${Color.BlueMagenta};
   }
 
+  .checkbox-terminals input:checked ~ .checkmark-terminals {
+    background-color: ${Color.DarkGrey};
+  }
+
   .checkmark:after,
-  .checkmark-footer:after,
-  .checkmark-block:after {
+  .checkmark-block:after,
+  .checkmark-terminals:after {
     content: "";
     position: absolute;
     display: none;
   }
+
   .checkbox input:checked ~ .checkmark:after,
   .checkbox-block input:checked ~ .checkmark-block:after,
-  .checkbox input:checked ~ .checkmark-footer:after {
+  .checkbox-terminals input:checked ~ .checkmark-terminals:after {
     display: block;
   }
   
-  .checkbox .checkmark:after,
-  .checkmark-footer:after {
+  .checkbox .checkmark:after {
     left: 5px;
     top: 0px;
     width: 4px;
@@ -94,7 +103,9 @@ const GlobalStyle = createGlobalStyle`
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
   }
-  .checkmark-block:after {
+
+  .checkmark-block:after,
+  .checkmark-terminals:after {
     left: 3px;
     top: -1px;
     width: 3px;
@@ -106,13 +117,6 @@ const GlobalStyle = createGlobalStyle`
     transform: rotate(45deg);
   }
 
-  .checkbox .checkmark-footer:after {
-    border: solid ${Color.BlueMagenta};
-    border-width: 0 2px 2px 0;
-    -webkit-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg);
-  }
 
   /* SCROLLBAR*/ 
   ::-webkit-scrollbar {

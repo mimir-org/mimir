@@ -32,7 +32,12 @@ const MenuListItem = styled.div`
   }
 
   &:first-child {
+    border-radius: 5px 5px 0px 0px;
     border: none;
+  }
+
+  &:last-child {
+    border-radius: 0px 0px 5px 5px;
   }
 `;
 

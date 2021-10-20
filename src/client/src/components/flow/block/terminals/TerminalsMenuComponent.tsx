@@ -37,9 +37,9 @@ const TerminalsMenuComponent = ({ node, parent, input, terminals, visible, onCli
             <div className="text" onClick={() => onClick(conn)}>
               {conn.name}
             </div>
-            <label className={"checkbox-block"}>
+            <label className={"checkbox-terminals"}>
               <input type="checkbox" checked={conn.visible} onChange={() => onClick(conn)} />
-              <span className="checkmark-block"></span>
+              <span className="checkmark-terminals"></span>
             </label>
           </TerminalsElement>
         ))}

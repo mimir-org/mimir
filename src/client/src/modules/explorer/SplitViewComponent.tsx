@@ -25,14 +25,6 @@ export const SplitViewComponent = () => {
   return (
     <FooterBox visible={visible}>
       <FooterContent active={active}>
-        <label className={"checkbox"}>
-          <input
-            type="checkbox"
-            checked={active}
-            onChange={() => OnChange(dispatch, active, setActive, selectedNode, splitNode)}
-          />
-          <span className="checkmark-footer"></span>
-        </label>
         <div onClick={() => OnChange(dispatch, active, setActive, selectedNode, splitNode)}>
           {TextResources.Split_View}
         </div>

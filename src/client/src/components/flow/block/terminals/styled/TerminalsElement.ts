@@ -31,6 +31,7 @@ const TerminalsElement = styled.div`
 
     :first-child {
       border-top-right-radius: 4px;
+      border-top-left-radius: 4px;
     }
 
     :last-child {
