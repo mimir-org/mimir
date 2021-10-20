@@ -24,6 +24,7 @@ import {
   projectSelector,
   useAppDispatch,
   useAppSelector,
+  userStateSelector,
 } from "../../../redux/store";
 
 /**
@@ -37,6 +38,7 @@ const FlowTree = () => {
   const [elements, setElements] = useState<Elements>();
   const darkMode = useAppSelector(darkModeSelector);
   const project = useAppSelector(projectSelector);
+  const userState = useAppSelector(userStateSelector);
   const icons = useAppSelector(iconSelector);
   const library = useAppSelector(librarySelector);
   const inspectorOpen = useAppSelector(isInspectorOpenSelector);
@@ -66,7 +68,17 @@ const FlowTree = () => {
   };
 
   const OnDrop = (event) => {
-    return useOnDrop(project, event, dispatch, setElements, reactFlowInstance, reactFlowWrapper, icons, library);
+    return useOnDrop(
+      project,
+      event,
+      dispatch,
+      setElements,
+      reactFlowInstance,
+      reactFlowWrapper,
+      icons,
+      library,
+      userState.user
+    );
   };
 
   const OnElementClick = (_event, element) => {

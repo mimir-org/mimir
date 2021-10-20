@@ -6,3 +6,4 @@ export { default as Attribute } from "./Attribute";
 export { default as Transport, TRANSPORT_KIND } from "./Transport";
 export { default as Interface, INTERFACE_KIND } from "./Interface";
 export { default as Composite, COMPOSITE_KIND } from "./Composite";
+export { default as WebSocket } from "./WebSocket";

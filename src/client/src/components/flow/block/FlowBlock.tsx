@@ -26,6 +26,7 @@ import {
   splitViewNodeSelector,
   splitViewSelector,
   useAppDispatch,
+  userStateSelector,
 } from "../../../redux/store";
 
 /**
@@ -46,6 +47,7 @@ const FlowBlock = () => {
   const library = useAppSelector(librarySelector);
   const inspectorOpen = useAppSelector(isInspectorOpenSelector);
   const electro = useAppSelector(isElectroVisibleSelector);
+  const userState = useAppSelector(userStateSelector);
   const node = GetSelectedNode();
   const showBackground = IsLocation(splitViewNode) || IsLocation(node);
 
@@ -79,7 +81,17 @@ const FlowBlock = () => {
   };
 
   const OnDrop = (event) => {
-    return useOnDrop(project, event, dispatch, setElements, reactFlowInstance, reactFlowWrapper, icons, library);
+    return useOnDrop(
+      project,
+      event,
+      dispatch,
+      setElements,
+      reactFlowInstance,
+      reactFlowWrapper,
+      icons,
+      library,
+      userState.user
+    );
   };
 
   const OnElementClick = (_event, element) => {
