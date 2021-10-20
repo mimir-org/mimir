@@ -14,7 +14,7 @@ interface Props {
 const InspectorTabs = ({ project, element }: Props) => {
   const shouldShowParameters = IsNode(element) || (IsEdge(element) && !IsRelationEdge(element));
   const shouldShowTerminals = IsNode(element) || (IsEdge(element) && !IsRelationEdge(element));
-  const shouldShowRelations = IsNode(element);
+  const shouldShowRelations = IsNode(element) || (IsEdge(element) && !IsRelationEdge(element));
   const shouldShowSimpleTypes = IsNode(element) && IsProduct(element);
 
   return (

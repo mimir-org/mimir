@@ -6,10 +6,12 @@ interface Props {
 }
 
 const ListElement = styled.div<Props>`
-  padding: 10px;
-  min-width: 250px;
+  padding: 5px 10px;
+  min-width: 230px;
+  height: 20px;
   font-size: ${FontSize.Medium};
   display: flex;
+  align-items: center;
   background-color: ${(props) => props.color};
   border-bottom: 1px solid ${Color.DarkGrey};
 

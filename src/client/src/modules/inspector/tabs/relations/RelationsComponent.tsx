@@ -1,61 +1,83 @@
-import { Edge, Node } from "../../../../models";
 import { RelationsContent } from ".";
 import { RelationsBody } from "./styled";
 import { TextResources } from "../../../../assets/text";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../../redux/store";
-import { OnClickRelation, OnClickTerminal, OnClickTransport } from "./handlers";
+import { useAppSelector, edgeSelector, useAppDispatch } from "../../../../redux/store";
+import { OnClickNode, OnClickRelation, OnClickTerminal, OnClickTransport } from "./handlers";
 import { GetRelations } from "./helpers/GetRelations";
-import { GetRelationColor } from "../../helpers";
-import { Color } from "../../../../compLibrary";
-import { GetNameRelation, GetNameTerminal, GetNameTransport } from "./helpers/GetName";
-import GetTerminalsAndTransports from "./helpers/GetTerminals";
+import { InspectorElement } from "../../types";
+import { IsEdge, IsNode } from "../../helpers/IsType";
+import { useMemo } from "react";
+import {
+  GetTransports,
+  GetConnectors,
+  GetNameRelation,
+  GetNameTerminal,
+  GetNameTransport,
+  GetTerminals,
+  GetNameNode,
+  GetActiveRelationColor,
+  GetListItemColor,
+} from "./helpers";
 
 interface Props {
-  node: Node;
+  element: InspectorElement;
 }
 
-const RelationComponent = ({ node }: Props) => {
-  const dispatch = useDispatch();
-  const connectors = node.connectors;
-  const hasConnectors = connectors.length > 0;
-  const edges = useSelector<RootState>((state) => state.projectState.project.edges) as Edge[];
-  const [relations, relationEdges] = GetRelations(connectors, edges);
+const RelationComponent = ({ element }: Props) => {
+  const dispatch = useAppDispatch();
 
-  const [inputTerminals, outputTerminals, transports] = GetTerminalsAndTransports(connectors, edges, node);
+  const edges = useAppSelector(edgeSelector);
+  const connectors = useMemo(() => GetConnectors(element), [element]);
+  const [inputTerminals, outputTerminals] = useMemo(() => GetTerminals(connectors, edges), [connectors, edges]);
+  const transports = useMemo(() => GetTransports(edges, element), [edges, element]);
+
+  const hasConnectors = connectors.length > 0;
 
   return (
     <RelationsBody>
       {hasConnectors && (
         <>
-          <RelationsContent
-            items={relations}
-            label={TextResources.Inspector_Relations_Relationships}
-            getName={(conn) => GetNameRelation(conn, relationEdges)}
-            getColor={(conn) => GetRelationColor(conn)}
-            onClick={(conn) => OnClickRelation(node, conn, relationEdges, dispatch)}
-          />
+          {IsNode(element) && (
+            <RelationsContent
+              items={GetRelations(element, edges)}
+              label={TextResources.Inspector_Relations_Relationships}
+              getName={(edge) => GetNameRelation(edge, element)}
+              getColor={(edge, index) => GetActiveRelationColor(edge.fromConnector, index)}
+              onClick={(edge) => OnClickRelation(element, edge, dispatch)}
+            />
+          )}
           <RelationsContent
             items={inputTerminals}
             label={TextResources.Inspector_Relations_Terminal_Input}
             getName={(terminal) => GetNameTerminal(terminal, transports)}
-            getColor={(conn) => GetRelationColor(conn)}
+            getColor={(_, index) => GetListItemColor(index)}
             onClick={OnClickTerminal}
           />
           <RelationsContent
             items={outputTerminals}
             label={TextResources.Inspector_Relations_Terminal_Output}
             getName={(terminal) => GetNameTerminal(terminal, transports)}
-            getColor={(conn) => GetRelationColor(conn)}
+            getColor={(_, index) => GetListItemColor(index)}
             onClick={OnClickTerminal}
           />
-          <RelationsContent
-            items={transports}
-            label={TextResources.Inspector_Relations_Transport}
-            getName={(edge) => GetNameTransport(edge, node)}
-            getColor={(_) => Color.FunctionHeader}
-            onClick={(edge) => OnClickTransport(edge, dispatch)}
-          />
+          {IsNode(element) && (
+            <RelationsContent
+              items={transports}
+              label={TextResources.Inspector_Relations_Transport}
+              getName={(edge) => GetNameTransport(edge, element)}
+              getColor={(_, index) => GetListItemColor(index)}
+              onClick={(edge) => OnClickTransport(edge, dispatch)}
+            />
+          )}
+          {IsEdge(element) && (
+            <RelationsContent
+              items={[element.fromNode, element.toNode]}
+              label={TextResources.Inspector_Relations_Nodes}
+              getName={(node) => GetNameNode(element, node)}
+              getColor={(_, index) => GetListItemColor(index)}
+              onClick={(node) => OnClickNode(node, dispatch)}
+            />
+          )}
         </>
       )}
     </RelationsBody>

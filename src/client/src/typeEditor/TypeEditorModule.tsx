@@ -1,10 +1,10 @@
-import { useDispatch } from "react-redux";
 import { ObjectType } from "../models";
 import { TextResources } from "../assets/text";
 import { NewTypeIcon, EditTypeIcon } from "../assets/icons/type";
 import { TypeEditorBox, TypeEditorBoxContent } from "../compLibrary/box";
 import { getSelectedNode, openTypeEditor } from "./redux/actions";
 import { GetLibraryType } from "./helpers";
+import { useAppDispatch } from "../redux/store";
 
 interface Props {
   selectedElement: string;
@@ -17,7 +17,7 @@ interface Props {
  * @returns buttons to add or edit a type in library module
  */
 export const TypeEditorModule = ({ selectedElement, selectedElementType, onChange }: Props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const onClick = () => {
     if (selectedElement && selectedElementType !== ObjectType.NotSet) {

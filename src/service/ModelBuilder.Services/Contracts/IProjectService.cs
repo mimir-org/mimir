@@ -14,6 +14,7 @@ namespace Mb.Services.Contracts
         Task<Project> ImportProject(ProjectAm project);
         Task<Project> CreateProject(CreateProject createProject);
         Task<Project> CreateProject(ProjectAm project);
+        Task<Project> CreateProject(SubProjectAm subProjectAm);
         Task<Project> UpdateProject(string id, ProjectAm project);
         Task DeleteProject(string projectId);
         Task<(byte[] file, FileFormat format)> CreateFile(string projectId, string parser);

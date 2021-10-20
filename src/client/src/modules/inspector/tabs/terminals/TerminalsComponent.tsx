@@ -1,11 +1,10 @@
-import { Connector, TerminalType } from "../../../../models";
+import { Connector } from "../../../../models";
 import { TerminalsSelector } from "./";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { ParametersContent } from "../parameters";
 import { TerminalsWrapper } from "./styled/TerminalsWrapper";
 import { TerminalsParametersWrapper } from "./styled/TerminalsParametersWrapper";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../redux/store";
+import { useAppSelector, terminalTypeSelector } from "../../../../redux/store";
 import { GetFilteredTerminalsList } from "../../../../typeEditor/helpers";
 import { InspectorElement } from "../../types";
 import { GetTerminalParentElement, GetTerminals } from "./helpers";
@@ -15,21 +14,23 @@ interface Props {
 }
 
 const TerminalsComponent = ({ element }: Props) => {
-  const categoryTypes = (useSelector<RootState>((state) => state.typeEditor.terminals) as TerminalType[]) ?? [];
-  const terminals = GetTerminals(element);
   const terminalParentElement = GetTerminalParentElement(element);
-  const terminalCategories = GetFilteredTerminalsList(categoryTypes);
+  const categoryTypes = useAppSelector(terminalTypeSelector);
   const [selectedTerminalId, setSelectedTerminalId] = useState<string>(null);
-  const onSelectTerminal = (item: Connector) => setSelectedTerminalId(item.id);
-  const selectedTerminal = terminals.find((terminal) => terminal.id === selectedTerminalId);
+  const terminals = useMemo(() => GetTerminals(element), [element]);
+  const terminalCategories = useMemo(() => GetFilteredTerminalsList(categoryTypes), [categoryTypes]);
+  const selectedTerminal = useMemo(
+    () => terminals.find((terminal) => terminal.id === selectedTerminalId),
+    [selectedTerminalId, terminals]
+  );
 
   return (
     <TerminalsWrapper>
       <TerminalsSelector
         terminals={terminals}
         terminalCategories={terminalCategories}
-        selectedTerminalId={selectedTerminalId}
-        onSelectTerminal={onSelectTerminal}
+        selectedTerminal={selectedTerminal}
+        onSelectTerminal={(item: Connector) => setSelectedTerminalId(item.id)}
       />
       {selectedTerminal && (
         <TerminalsParametersWrapper>

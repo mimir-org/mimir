@@ -4,13 +4,7 @@ import { Header } from "../header";
 import { Spinner, SpinnerWrapper } from "../../compLibrary/animated";
 import { GlobalStyle } from "../../compLibrary";
 import { AppBox } from "../../compLibrary/box/app";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
-import { ProjectState } from "../../redux/store/project/types";
-import { LibraryState } from "../../redux/store/library/types";
-import { UserState } from "../../redux/store/user/types";
-import { CommonState } from "../../redux/store/common/types";
-import { TypeEditorState } from "../../typeEditor/redux/types";
+import { useAppSelector, isFetchingSelector } from "../../redux/store";
 import { Login } from "../../compLibrary/box/menus";
 import { LoginIcon } from "../../assets/icons/login";
 import { TextResources } from "../../assets/text";
@@ -31,21 +25,7 @@ const App = ({ pca }: AppProps) => {
   const navigationClient = new ModelBuilderNavigationClient(history);
   pca.setNavigationClient(navigationClient);
 
-  const projectState = useSelector<RootState>((state) => state.projectState) as ProjectState;
-  const libraryState = useSelector<RootState>((state) => state.library) as LibraryState;
-  const userState = useSelector<RootState>((state) => state.library) as UserState;
-  const commonState = useSelector<RootState>((state) => state.commonState) as CommonState;
-  const typeEditorState = useSelector<RootState>((state) => state.typeEditor) as TypeEditorState;
-
-  function isFetching() {
-    return (
-      projectState.fetching ||
-      libraryState.fetching ||
-      userState.fetching ||
-      commonState.fetching ||
-      typeEditorState.fetching
-    );
-  }
+  const isFetching = useAppSelector(isFetchingSelector);
 
   const login = () => {
     msalInstance.loginRedirect();
@@ -56,10 +36,10 @@ const App = ({ pca }: AppProps) => {
       <AuthenticatedTemplate>
         <Header />
         <GlobalStyle />
-        <SpinnerWrapper fetching={isFetching()}>
+        <SpinnerWrapper fetching={isFetching}>
           <Spinner />
         </SpinnerWrapper>
-        <AppBox fetching={isFetching()}>
+        <AppBox fetching={isFetching}>
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/home" component={Home} />

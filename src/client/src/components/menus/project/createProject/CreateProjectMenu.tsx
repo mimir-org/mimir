@@ -1,6 +1,5 @@
 import * as Handlers from "./handlers";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../../../redux/store";
+import { isActiveMenuSelector, useAppDispatch, useParametricAppSelector } from "../../../../redux/store";
 import { MENU_TYPE } from "../../../../models/project";
 import { CloseIcon } from "../../../../assets/icons/close";
 import { TextResources } from "../../../../assets/text";
@@ -10,9 +9,9 @@ import { Button } from "../../../../compLibrary/buttons";
 import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../../../../compLibrary/box/project";
 
 export const CreateProjectMenu = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [projectName, setProjectName] = useState("");
-  const isOpen = useSelector<RootState>((state) => state.menu.activeMenu === MENU_TYPE.CREATE_PROJECT_MENU) as boolean;
+  const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.CREATE_PROJECT_MENU);
 
   return (
     <>

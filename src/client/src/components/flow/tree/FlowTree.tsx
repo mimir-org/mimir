@@ -1,18 +1,13 @@
 import * as Helpers from "./helpers/";
 import ReactFlow, { ReactFlowProvider, Elements } from "react-flow-renderer";
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../redux/store/index";
 import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
 import { FullScreenComponent } from "../../../compLibrary/controls";
 import { Size } from "../../../compLibrary";
-import { BlobData } from "../../../models";
-import { ProjectState } from "../../../redux/store/project/types";
 import { IsBlockView } from "../block/helpers";
 import { changeInspectorTab } from "../../../modules/inspector/redux/tabs/actions";
 import { GetSelectedNode, SetDarkModeColor } from "../helpers";
 import { BuildTreeElements } from "../tree/builders";
-import { LibraryState } from "../../../redux/store/library/types";
 import { setModuleVisibility } from "../../../redux/store/modules/actions";
 import { MODULE_TYPE } from "../../../models/project";
 import { getBlobData } from "../../../typeEditor/redux/actions";
@@ -21,22 +16,30 @@ import { updatePosition, setActiveNode, setActiveEdge, setActiveBlockNode } from
 import { changeInspectorHeight } from "../../../modules/inspector/redux/height/actions";
 import { FlowManipulator } from "./FlowManipulator";
 import { OnTreeClick } from "./handlers/";
+import {
+  darkModeSelector,
+  iconSelector,
+  isInspectorOpenSelector,
+  librarySelector,
+  projectSelector,
+  useAppDispatch,
+  useAppSelector,
+} from "../../../redux/store";
 
 /**
  * Component for the Flow library in TreeView
  * @returns a scene with Flow elements and Mimir nodes, transports and edges.
  */
 const FlowTree = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>();
-  const darkMode = useSelector<RootState>((s) => s.darkMode.active) as boolean;
-  const projectState = useSelector<RootState>((s) => s.projectState) as ProjectState;
-  const icons = useSelector<RootState>((s) => s.typeEditor.icons) as BlobData[];
-  const library = useSelector<RootState>((s) => s.library) as LibraryState;
-  const inspectorOpen = useSelector<RootState>((s) => s.modules.types[0].visible) as boolean;
-  const project = projectState?.project;
+  const darkMode = useAppSelector(darkModeSelector);
+  const project = useAppSelector(projectSelector);
+  const icons = useAppSelector(iconSelector);
+  const library = useAppSelector(librarySelector);
+  const inspectorOpen = useAppSelector(isInspectorOpenSelector);
   const node = GetSelectedNode();
   const selectedNodeId = useMemo(() => node?.id ?? project?.edges.find((edge) => edge.isSelected)?.id, [project, node]);
 

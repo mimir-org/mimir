@@ -1,22 +1,20 @@
-import { Connector, Edge, Node } from "../../../../../models";
-import { IsInputTerminal, IsOutputTerminal, IsTransportTerminal } from "../../../../../components/flow/helpers";
+import { Connector, Edge } from "../../../../../models";
+import { IsInputTerminal, IsOutputTerminal } from "../../../../../components/flow/helpers";
+import { InspectorElement } from "../../../types";
+import { IsEdge, IsNode } from "../../../helpers/IsType";
 
-const GetTerminalsAndTransports = (
-  connectors: Connector[],
-  edges: Edge[],
-  node: Node
-): [Connector[], Connector[], Edge[]] => {
-  const transports = edges.filter(
-    (e) => (e.toNodeId === node.id || e.fromNodeId === node.id) && IsTransportTerminal(e.fromConnector)
-  );
+export const GetTransports = (edges: Edge[], element: InspectorElement): Edge[] => {
+  if (IsNode(element))
+    return edges.filter((e) => (e.toNodeId === element.id || e.fromNodeId === element.id) && e.transport !== null);
+  if (IsEdge(element)) return [element];
+};
 
-  const inputTerminals = connectors.filter((x) => x.terminalTypeId && IsInputTerminal(x) && HasEdge(transports, x));
-  const outputTerminals = connectors.filter((x) => x.terminalTypeId && IsOutputTerminal(x) && HasEdge(transports, x));
+export const GetTerminals = (connectors: Connector[], edges: Edge[]): [Connector[], Connector[]] => {
+  const inputTerminals = connectors.filter((x) => x.terminalTypeId && IsInputTerminal(x) && HasEdge(edges, x));
+  const outputTerminals = connectors.filter((x) => x.terminalTypeId && IsOutputTerminal(x) && HasEdge(edges, x));
 
-  return [inputTerminals, outputTerminals, transports];
+  return [inputTerminals, outputTerminals];
 };
 
 const HasEdge = (edges: Edge[], conn: Connector) =>
   edges.find((e) => e.fromConnector.id === conn.id || e.toConnector.id === conn.id);
-
-export default GetTerminalsAndTransports;

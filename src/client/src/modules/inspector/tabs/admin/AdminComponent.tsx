@@ -1,8 +1,13 @@
 import { GetInspectorText, GetTabsColor } from "../../helpers";
 import { useCallback } from "react";
-import { RootState } from "../../../../redux/store";
-import { useDispatch, useSelector } from "react-redux";
-import { EnumBase, Project } from "../../../../models";
+import {
+  isInspectorTabOpenSelector,
+  statusSelector,
+  useAppDispatch,
+  useAppSelector,
+  useParametricAppSelector,
+} from "../../../../redux/store";
+import { Project } from "../../../../models";
 import { changeInspectorTab } from "../../redux/tabs/actions";
 import { TabHeader, TabBody, TabTitle } from "../../styled";
 import { InspectorElement } from "../../types";
@@ -15,9 +20,9 @@ interface Props {
 }
 
 const AdminComponent = ({ element, project, index }: Props) => {
-  const dispatch = useDispatch();
-  const isTabOpen = useSelector<RootState>((s) => s.inspector.tabs[index].visible) as boolean;
-  const statuses = useSelector<RootState>((s) => s.commonState.statuses) as EnumBase[];
+  const dispatch = useAppDispatch();
+  const isTabOpen = useParametricAppSelector(isInspectorTabOpenSelector, index);
+  const statuses = useAppSelector(statusSelector);
 
   const onClick = useCallback(() => {
     dispatch(changeInspectorTab(index));

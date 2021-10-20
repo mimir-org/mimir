@@ -1,6 +1,5 @@
 import React from "react";
 import moment from "moment/moment.js";
-import { useDispatch } from "react-redux";
 import { TextResources } from "../../../../assets/text";
 import { TabColumn } from "../../styled";
 import { FontSize, Input, Textarea } from "../../../../compLibrary";
@@ -10,6 +9,7 @@ import { IsAspectNode, IsLocation, IsProduct } from "../../../../components/flow
 import { IsBlockView } from "../../../../components/flow/block/helpers";
 import { changeNodeValue } from "../../../../redux/store/project/actions";
 import { Dropdown } from "../../../../compLibrary/dropdown/mimir";
+import { useAppDispatch } from "../../../../redux/store";
 
 type Event = React.ChangeEvent<HTMLInputElement>;
 
@@ -20,7 +20,7 @@ interface Props {
 }
 
 const AdminContent = ({ node, project, statuses }: Props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const onChange = (key: string, value: any) => dispatch(changeNodeValue(node.id, key, value));
 
   return (
