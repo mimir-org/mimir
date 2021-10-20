@@ -54,8 +54,8 @@ export const LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR = "LOCK_UNLOCK_ATTRIBUTE_SUC
 export interface ProjectState {
   fetching: boolean;
   creating: boolean;
-  project: Project | null;
-  projectList: [] | null;
+  project: Project;
+  projectList: [];
   apiError: ApiError[];
 }
 
