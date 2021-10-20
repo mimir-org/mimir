@@ -8,10 +8,9 @@ const MenuListItem = styled.div`
   border-width: 1px 0px 0px 0px;
   border-style: solid;
   border-color: ${Color.DarkGrey};
-  font-size: ${FontSize.Standard};
+  font-size: ${FontSize.Medium};
   color: ${Color.Black};
   cursor: pointer;
-  width: 100%;
   z-index: 1;
 
   p {

@@ -7,7 +7,6 @@ const MenuHeader = styled.div`
   align-items: center;
   justify-content: space-between;
   height: 28px;
-  width: 280px;
   background: ${Color.White};
   border: 1px solid ${Color.Black};
   border-radius: 5px;

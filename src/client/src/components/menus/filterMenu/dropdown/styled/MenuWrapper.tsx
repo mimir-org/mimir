@@ -11,7 +11,7 @@ const MenuWrapper = styled.div`
   color: ${Color.Black};
   position: relative;
   padding-left: 10px;
-  width: 270px;
+  width: 250px;
 
   .label {
     margin-bottom: 4px;

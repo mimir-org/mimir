@@ -1,5 +1,5 @@
 import { memo, FC, useState, useEffect } from "react";
-import { NodeProps } from "react-flow-renderer";
+import { NodeProps, useUpdateNodeInternals } from "react-flow-renderer";
 import { TextResources } from "../../../../../assets/text";
 import { Node, Edge } from "../../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
@@ -25,6 +25,8 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const splitView = useAppSelector((s) => s.splitView.visible);
   const splitNode = useAppSelector((s) => s.splitView.node) as Node;
   const electro = useAppSelector((s) => s.electro.visible);
+  const updateNodeInternals = useUpdateNodeInternals();
+
   const node = nodes?.find((x) => x.id === data.id);
   if (node) node.width = Size.BlockView_Width;
 
@@ -41,6 +43,10 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
     const allEdges = FindAllEdges();
     allEdges.style.zIndex = "3";
   }, []);
+
+  useEffect(() => {
+    updateNodeInternals(node?.id);
+  }, [node, updateNodeInternals]);
 
   if (splitView) node.width = Size.SplitView_Width;
 

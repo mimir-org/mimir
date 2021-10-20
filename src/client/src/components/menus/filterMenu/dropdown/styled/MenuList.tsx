@@ -10,9 +10,9 @@ const MenuList = styled.div`
   border-radius: 5px;
   background-color: inherit;
   position: absolute;
-  top: 38px;
+  top: 32px;
   left: 0;
-  width: 100%;
+  width: inherit;
   max-height: 850px;
   margin-left: 10px;
   z-index: 1;

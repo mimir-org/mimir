@@ -24,25 +24,6 @@ const GlobalStyle = createGlobalStyle`
     left: 7px;
   }
 
-  .checkbox-filter  {
-    display: flex;
-    position: relative;
-    padding-left: 25px;
-    padding-top: 2px;
-    cursor: pointer;
-    font-size: 14px;
-
-    &:nth-child(odd){
-      left:160px;     
-      top:-19px;
-    } 
-  }
-
-  .checkbox-filter input {
-    position: absolute;
-    opacity: 0;
-  }
-
   .checkbox-block input {
     position: absolute;
     opacity: 0;    
@@ -61,7 +42,7 @@ const GlobalStyle = createGlobalStyle`
     height: 15px;
     width: 15px;
     background-color: ${Color.White};
-    border: 2px solid ${Color.GreyHeader};
+    border: 2px solid ${Color.BlueMagenta};
     border-radius: 3px;
   }
   .checkmark-block {
@@ -70,19 +51,8 @@ const GlobalStyle = createGlobalStyle`
     height: 11px;
     width: 11px;
     background-color: ${Color.White};
-    border: 2px solid ${Color.DarkGrey};
+    border: 2px solid ${Color.BlueMagenta};
     border-radius: 2px;
-  }
-
-  .checkmark-filter {
-    position: absolute;
-    left: 0;
-    height: 15px;
-    width: 15px;
-    background-color: ${Color.White};
-    border: 2px solid ${Color.GreyHeader};
-    border-radius: 3px;
-    margin-top:-1px;
   }
 
   .checkmark-footer {
@@ -90,29 +60,24 @@ const GlobalStyle = createGlobalStyle`
     top: -5px;
   }
   .checkbox input:checked ~ .checkmark {
-    background-color: ${Color.GreyHeader};
+    background-color: ${Color.BlueMagenta};
   }
   .checkbox input:checked ~ .checkmark-footer {
     background-color: ${Color.White};
   }
   .checkbox-block input:checked ~ .checkmark-block {
-    background-color: ${Color.DarkGrey};
-  }
-  .checkbox-filter input:checked ~ .checkmark-filter {
-    background-color: ${Color.GreyHeader};
+    background-color: ${Color.BlueMagenta};
   }
 
   .checkmark:after,
   .checkmark-footer:after,
-  .checkmark-block:after,
-  .checkmark-filter:after {
+  .checkmark-block:after {
     content: "";
     position: absolute;
     display: none;
   }
   .checkbox input:checked ~ .checkmark:after,
   .checkbox-block input:checked ~ .checkmark-block:after,
-  .checkbox-filter input:checked ~ .checkmark-filter:after,
   .checkbox input:checked ~ .checkmark-footer:after {
     display: block;
   }
@@ -134,18 +99,6 @@ const GlobalStyle = createGlobalStyle`
     top: -1px;
     width: 3px;
     height: 8px;
-    border: solid ${Color.White};
-    border-width: 0 2px 2px 0;
-    -webkit-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg);
-  }
-
-  .checkmark-filter:after {
-    left: 5px;
-    top: 0px;
-    width: 4px;
-    height: 10px;
     border: solid ${Color.White};
     border-width: 0 2px 2px 0;
     -webkit-transform: rotate(45deg);
