@@ -1,10 +1,10 @@
-import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { IsBlockView } from "../../flow/block/helpers";
 import { Connector, Edge, Node, RelationType } from "../../../models";
 import { MenuSubHeader } from "../../../compLibrary/box/menus";
 import { OnChange } from "./handlers";
 import { CheckBlockEdges, CheckEdges, IsChecked } from "./helpers";
+import { useAppDispatch } from "../../../redux/store";
 
 interface Props {
   conn?: Connector;
@@ -16,7 +16,7 @@ interface Props {
 }
 
 const FilterContent = ({ conn, type, name, header, node, edges }: Props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const isVisible = name !== null;
 
   let selectedElements = !IsBlockView() ? CheckEdges(edges, type, node) : CheckBlockEdges(edges, type);

@@ -1,12 +1,12 @@
 import { RelationsContent } from ".";
 import { RelationsBody } from "./styled";
 import { TextResources } from "../../../../assets/text";
-import { useDispatch } from "react-redux";
-import { useAppSelector } from "../../../../redux/store";
+import { useAppSelector, edgeSelector, useAppDispatch } from "../../../../redux/store";
 import { OnClickNode, OnClickRelation, OnClickTerminal, OnClickTransport } from "./handlers";
 import { GetRelations } from "./helpers/GetRelations";
 import { InspectorElement } from "../../types";
 import { IsEdge, IsNode } from "../../helpers/IsType";
+import { useMemo } from "react";
 import {
   GetTransports,
   GetConnectors,
@@ -18,17 +18,15 @@ import {
   GetActiveRelationColor,
   GetListItemColor,
 } from "./helpers";
-import { edgesSelector } from "./selectors";
-import { useMemo } from "react";
 
 interface Props {
   element: InspectorElement;
 }
 
 const RelationComponent = ({ element }: Props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const edges = useAppSelector(edgesSelector);
+  const edges = useAppSelector(edgeSelector);
   const connectors = useMemo(() => GetConnectors(element), [element]);
   const [inputTerminals, outputTerminals] = useMemo(() => GetTerminals(connectors, edges), [connectors, edges]);
   const transports = useMemo(() => GetTransports(edges, element), [edges, element]);

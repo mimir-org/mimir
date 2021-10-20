@@ -1,9 +1,9 @@
 import * as Click from "./handlers";
 import * as Icons from "../../assets/icons/header";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { ViewType, VIEW_TYPE } from "../../models/project";
 import { OptionsBox, OptionsElement, ToolBarBox } from "../../compLibrary/box/header/";
+import { useAppDispatch } from "../../redux/store";
 
 interface Props {
   libOpen: boolean;
@@ -22,7 +22,7 @@ interface Props {
  * @returns a menu with icons for different features.
  */
 const ToolBar = ({ libOpen, explorerOpen, treeView, filterMenuOpen, electro }: Props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { push } = useHistory();
 
   return (

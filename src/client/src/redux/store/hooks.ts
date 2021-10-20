@@ -23,14 +23,22 @@ export const createAppSelector: <R, T>(
   combiner: (res: R) => T
 ) => OutputSelector<RootState, T, (res: R) => T> = createSelector;
 
+/**
+ * Custom createSelector hook used within application, with type linting, allowing for props as parameters.
+ */
 export const createParametricAppSelector: <R1, R2, P, T>(
   selector1: ParametricSelector<RootState, P, R1>,
   selector2: ParametricSelector<RootState, P, R2>,
   combiner: (res1: R1, res2: R2) => T
 ) => OutputParametricSelector<RootState, P, T, (res1: R1, res2: R2) => T> = createSelector;
 
-export const combineAppSelectors = <R, T>(selectors: Selector<RootState, R>[], combiner: (...res: R[]) => T) =>
-  createSelector<RootState, R, T>(selectors, combiner);
+/**
+ * Custom createSelector hook used within application, with type linting, allowing for combining a list of selectors into a single selector.
+ */
+export const combineAppSelectors: <R, T>(
+  selectors: Selector<RootState, R>[],
+  combiner: (...res: R[]) => T
+) => OutputSelector<RootState, T, (...res: R[]) => T> = createSelector;
 
 /**
  * Custom useSelector hook with type linting.

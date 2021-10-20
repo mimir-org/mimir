@@ -1,9 +1,15 @@
 import { Size } from "..";
 import { ExpandIcon, CloseIcon } from "../../assets/icons/controls";
-import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { OnToggleClick } from "./handlers";
-import { heightSelector, isInspectorOpenSelector, isLibOpenSelector, isOpenSelector } from "./selectors";
 import { FullScreenButton } from "./styled";
+import {
+  useAppDispatch,
+  useAppSelector,
+  isOpenSelector,
+  isLibOpenSelector,
+  isInspectorOpenSelector,
+  heightSelector,
+} from "../../redux/store";
 
 const FullScreenComponent = () => {
   const dispatch = useAppDispatch();

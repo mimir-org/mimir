@@ -1,4 +1,3 @@
-import { useAppDispatch, useUniqueParametricAppSelector } from "../../../../redux/store";
 import { TextResources } from "../../../../assets/text";
 import { Dropdown } from "./styled/dropdown/parameter";
 import { CombinedAttributeFilter } from "../../../../models";
@@ -8,7 +7,12 @@ import { OnChangeFilterChoice, OnClearAllFilters } from "./handlers";
 import { ParameterRow } from "./";
 import { useMemo, useState } from "react";
 import { InspectorElement, InspectorParametersElement, InspectorTerminalsElement } from "../../types";
-import { makeFilterSelector, makeSelectedFilterSelector } from "./selectors";
+import {
+  useAppDispatch,
+  useUniqueParametricAppSelector,
+  makeFilterSelector,
+  makeSelectedFilterSelector,
+} from "../../../../redux/store";
 
 interface Props {
   parametersElement: InspectorParametersElement;

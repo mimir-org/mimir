@@ -4,7 +4,7 @@ import { Header } from "../header";
 import { Spinner, SpinnerWrapper } from "../../compLibrary/animated";
 import { GlobalStyle } from "../../compLibrary";
 import { AppBox } from "../../compLibrary/box/app";
-import { useAppSelector } from "../../redux/store";
+import { useAppSelector, isFetchingSelector } from "../../redux/store";
 import { Login } from "../../compLibrary/box/menus";
 import { LoginIcon } from "../../assets/icons/login";
 import { TextResources } from "../../assets/text";
@@ -14,7 +14,6 @@ import { IPublicClientApplication } from "@azure/msal-browser";
 import { ModelBuilderNavigationClient } from "../../models/webclient";
 import { msalInstance } from "../..";
 import { MsalProvider, AuthenticatedTemplate, UnauthenticatedTemplate } from "@azure/msal-react";
-import { isFetchingSelector } from "./selectors";
 
 // Props
 type AppProps = {

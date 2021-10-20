@@ -1,6 +1,5 @@
-import { RootState } from "../../redux/store";
+import { isAccountMenuOpenSelector, isFilterMenuOpenSelector, useAppDispatch, useAppSelector } from "../../redux/store";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { ExplorerModule } from "../../modules/explorer";
 import { InspectorModule } from "../../modules/inspector";
@@ -24,9 +23,9 @@ interface RouteParams {
  * @returns a JSX Element containing all the modules and components.
  */
 const Home = () => {
-  const dispatch = useDispatch();
-  const accountMenuOpen = useSelector<RootState>((state) => state.menu.accountMenuVisibility) as boolean;
-  const filterMenuOpen = useSelector<RootState>((state) => state.menu.filterMenuVisibility) as boolean;
+  const dispatch = useAppDispatch();
+  const isAccountMenuOpen = useAppSelector(isAccountMenuOpenSelector);
+  const isFilterMenuOpen = useAppSelector(isFilterMenuOpenSelector);
   const params = useParams<RouteParams>();
 
   useEffect(() => {
@@ -42,8 +41,8 @@ const Home = () => {
   return (
     <>
       <ExplorerModule />
-      {accountMenuOpen && <AccountMenu />}
-      {filterMenuOpen && <FilterMenu />}
+      {isAccountMenuOpen && <AccountMenu />}
+      {isFilterMenuOpen && <FilterMenu />}
       <FlowModule route={params} dispatch={dispatch} />
       <InspectorModule />
       <LibraryModule />

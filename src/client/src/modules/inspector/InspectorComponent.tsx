@@ -1,8 +1,7 @@
 import { GetInspectorText, GetTabId, GetTabsColor } from "./helpers";
 import { InspectorContent } from ".";
 import { useCallback } from "react";
-import { RootState } from "../../redux/store";
-import { useDispatch, useSelector } from "react-redux";
+import { makeIsInspectorTabOpenSelector, useAppDispatch, useUniqueParametricAppSelector } from "../../redux/store";
 import { changeInspectorTab } from "./redux/tabs/actions";
 import { TabHeader, TabBody, NodeInfo, TabTitle } from "./styled";
 import { InspectorElement } from "./types";
@@ -14,8 +13,8 @@ interface Props {
 }
 
 const InspectorComponent = ({ element, index }: Props) => {
-  const dispatch = useDispatch();
-  const isTabOpen = useSelector<RootState>((state) => state.inspector.tabs[index]?.visible) as boolean;
+  const dispatch = useAppDispatch();
+  const isTabOpen = useUniqueParametricAppSelector(makeIsInspectorTabOpenSelector, index);
 
   const onClick = useCallback(() => {
     dispatch(changeInspectorTab(index));
