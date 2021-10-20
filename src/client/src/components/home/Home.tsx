@@ -5,7 +5,6 @@ import { ExplorerModule } from "../../modules/explorer";
 import { InspectorModule } from "../../modules/inspector";
 import { LibraryModule } from "../../modules/library";
 import { AccountMenu } from "../menus/accountMenu";
-import { FilterMenu } from "../menus/filterMenu";
 import { getUser } from "../../redux/store/user/actions";
 import { search } from "../../redux/store/project/actions";
 import { FlowModule } from "../flow";
@@ -13,6 +12,9 @@ import { ErrorModule } from "../../modules/error";
 import { TypeEditorComponent } from "../../typeEditor";
 import { getContractors, getStatuses, getAttributeFilters } from "../../redux/store/common/actions";
 import { importLibraryInterfaceTypes, importLibraryTransportTypes } from "../../redux/store/library/actions";
+import { IsBlockView } from "../flow/block/helpers";
+import { TreeFilterMenu } from "../menus/filterMenu/tree";
+import { BlockFilterMenu } from "../menus/filterMenu/block";
 
 interface RouteParams {
   type: string;
@@ -25,7 +27,8 @@ interface RouteParams {
 const Home = () => {
   const dispatch = useAppDispatch();
   const accountMenuOpen = useAppSelector((state) => state.menu.accountMenuVisibility);
-  const filterMenuOpen = useAppSelector((state) => state.menu.filterMenuVisibility);
+  const filterMenuOpen = useAppSelector((state) => state.menu.treeFilterMenuVisibility);
+  const filterMenuBlockOpen = useAppSelector((state) => state.menu.blockFilterMenuVisibility);
   const params = useParams<RouteParams>();
 
   useEffect(() => {
@@ -42,7 +45,8 @@ const Home = () => {
     <>
       <ExplorerModule />
       {accountMenuOpen && <AccountMenu />}
-      {filterMenuOpen && <FilterMenu />}
+      {!IsBlockView() && filterMenuOpen && <TreeFilterMenu />}
+      {IsBlockView() && filterMenuBlockOpen && <BlockFilterMenu />}
       <FlowModule route={params} dispatch={dispatch} />
       <InspectorModule />
       <LibraryModule />

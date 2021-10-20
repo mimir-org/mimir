@@ -12,7 +12,8 @@ const Header = () => {
   const dispatch = useAppDispatch();
   const projectState = useAppSelector((s) => s.projectState) as ProjectState;
   const darkMode = useAppSelector((s) => s.darkMode.active);
-  const filterMenuOpen = useAppSelector((s) => s.menu.filterMenuVisibility);
+  const filterMenuOpen = useAppSelector((s) => s.menu.treeFilterMenuVisibility);
+  const filterMenuBlockOpen = useAppSelector((s) => s.menu.blockFilterMenuVisibility);
   const accountMenuOpen = useAppSelector((s) => s.menu.accountMenuVisibility);
   const libOpen = useAppSelector((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible);
   const explorerOpen = useAppSelector((s) => s.modules.types.find((x) => IsExplorer(x.type)).visible);
@@ -37,6 +38,7 @@ const Header = () => {
         explorerOpen={explorerOpen}
         treeView={treeView}
         filterMenuOpen={filterMenuOpen}
+        filterMenuBlockOpen={filterMenuBlockOpen}
         electro={electro}
       />
     </>

@@ -1,5 +1,7 @@
-import { setFilterMenuVisibility } from "../../menus/project/redux/actions";
+import { setTreeFilterMenuVisibility, setBlockFilterMenuVisibility } from "../../menus/project/redux/actions";
 
-const OnFilter = (dispatch: any, open: boolean) => dispatch(setFilterMenuVisibility(!open));
+const OnFilter = (dispatch: any, open: boolean, treeView: boolean) => {
+  treeView ? dispatch(setTreeFilterMenuVisibility(!open)) : dispatch(setBlockFilterMenuVisibility(!open));
+};
 
 export default OnFilter;
