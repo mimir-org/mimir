@@ -26,8 +26,7 @@ const FilterDropdown = ({ terminals, label, nodes, edges, onChange }: Props) => 
         <MenuList>
           {terminals.map((conn) => {
             const edge = edges.find((x) => x.fromConnectorId === conn.id);
-            let name = conn.name;
-            if (IsPartOfTerminal(conn)) name += GetPartOfName(conn, nodes);
+            const name = IsPartOfTerminal(conn) ? GetPartOfName(conn, nodes) : conn.name;
 
             return (
               <MenuListItem onClick={() => onChange(edge)} key={conn.id}>
