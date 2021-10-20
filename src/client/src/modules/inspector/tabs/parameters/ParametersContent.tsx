@@ -1,15 +1,18 @@
-import { RootState } from "../../../../redux/store";
-import { useDispatch, useSelector } from "react-redux";
 import { TextResources } from "../../../../assets/text";
 import { Dropdown } from "./styled/dropdown/parameter";
 import { CombinedAttributeFilter } from "../../../../models";
 import { GetAttributeCombinations, GetParametersColor } from "./helpers";
 import { Menu, Header, ParametersRowWrapper, ParametersContentWrapper } from "./styled";
 import { OnChangeFilterChoice, OnClearAllFilters } from "./handlers";
-import { FilterDict } from "./redux/types";
 import { ParameterRow } from "./";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { InspectorElement, InspectorParametersElement, InspectorTerminalsElement } from "../../types";
+import {
+  useAppDispatch,
+  useUniqueParametricAppSelector,
+  makeFilterSelector,
+  makeSelectedFilterSelector,
+} from "../../../../redux/store";
 
 interface Props {
   parametersElement: InspectorParametersElement;
@@ -24,21 +27,16 @@ const ParametersContent = ({
   terminalParentElement,
   elementIsLocked,
 }: Props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const attributes = parametersElement.attributes;
 
-  const attributeFilters =
-    (useSelector<RootState>((state) => state.commonState.filters) as CombinedAttributeFilter[]).filter((x) =>
-      attributes.find((att) => att.key === x.name)
-    ) ?? [];
-
-  const selectedFilters =
-    (useSelector<RootState>(
-      (state) => state.parametersReducer.selectedAttributeFilters[parametersElement.id]
-    ) as FilterDict) ?? {};
-
+  const attributeFilters = useUniqueParametricAppSelector(makeFilterSelector, attributes);
+  const selectedFilters = useUniqueParametricAppSelector(makeSelectedFilterSelector, parametersElement.id);
   const hasFilters = Object.keys(selectedFilters).length > 0;
-  const attributeCombinations = GetAttributeCombinations(attributeFilters, attributes);
+  const attributeCombinations = useMemo(
+    () => GetAttributeCombinations(attributeFilters, attributes),
+    [attributeFilters, attributes]
+  );
 
   const maxNumSelectedCombinations = Math.max(
     ...Object.values(selectedFilters).map((combinations) => combinations.length)
@@ -92,4 +90,5 @@ const ParametersContent = ({
     </ParametersContentWrapper>
   );
 };
+
 export default ParametersContent;

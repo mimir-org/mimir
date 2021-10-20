@@ -1,11 +1,11 @@
 import "./searchbar.scss";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { search } from "../../../../redux/store/project/actions";
 import { GetIcon } from "../helpers";
+import { useAppDispatch } from "../../../../redux/store";
 
 export const SearchBar = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [searchbarInput, setSearchbarInput] = useState("");
 
   const onChange = (e) => {

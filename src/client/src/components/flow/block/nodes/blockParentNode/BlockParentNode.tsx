@@ -1,16 +1,22 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
-import { useDispatch, useSelector } from "react-redux";
 import { TextResources } from "../../../../../assets/text";
-import { Node, Edge } from "../../../../../models";
-import { RootState } from "../../../../../redux/store";
-import { HandleComponent, TerminalsComponent } from "../../terminals";
+import { HandleComponent, TerminalsContainerComponent } from "../../terminals";
 import { Size } from "../../../../../compLibrary";
 import { GetParentColor } from "./helpers";
 import { OnParentClick, OnChildClick, OnConnectorClick } from "./handlers";
 import { BlockComponent } from "./";
 import { BlockMessageBox } from "../../styled";
 import { FilterTerminals, GetNodeByDataId, FindAllEdges } from "../../helpers";
+import {
+  edgeSelector,
+  isElectroVisibleSelector,
+  nodeSelector,
+  splitViewNodeSelector,
+  splitViewSelector,
+  useAppDispatch,
+  useAppSelector,
+} from "../../../../../redux/store";
 
 /**
  * Component for the large parent block in BlockView.
@@ -18,14 +24,14 @@ import { FilterTerminals, GetNodeByDataId, FindAllEdges } from "../../helpers";
  * @returns a parent node of the Flow node type with Mimir styling and functionality.
  */
 const BlockParentNode: FC<NodeProps> = ({ data }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [inTerminalMenu, showInTerminalMenu] = useState(false);
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
-  const nodes = useSelector<RootState>((s) => s.projectState.project?.nodes) as Node[];
-  const edges = useSelector<RootState>((s) => s.projectState.project?.edges) as Edge[];
-  const splitView = useSelector<RootState>((s) => s.splitView.visible) as boolean;
-  const splitNode = useSelector<RootState>((s) => s.splitView.node) as Node;
-  const electro = useSelector<RootState>((s) => s.electro.visible) as boolean;
+  const nodes = useAppSelector(nodeSelector);
+  const edges = useAppSelector(edgeSelector);
+  const splitView = useAppSelector(splitViewSelector);
+  const splitNode = useAppSelector(splitViewNodeSelector);
+  const electro = useAppSelector(isElectroVisibleSelector);
   const node = nodes?.find((x) => x.id === data.id);
   if (node) node.width = Size.BlockView_Width;
 
@@ -55,7 +61,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         onParentClick={() => OnParentClick(dispatch, node, nodes, edges)}
         onChildClick={() => OnChildClick(dispatch, node, nodes, edges)}
       />
-      <TerminalsComponent
+      <TerminalsContainerComponent
         node={node}
         inputMenuOpen={inTerminalMenu}
         outputMenuOpen={outTerminalMenu}

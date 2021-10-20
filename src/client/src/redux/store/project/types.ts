@@ -55,8 +55,8 @@ export const CHANGE_NODE_UPDATED = "CHANGE_NODE_UPDATED";
 export interface ProjectState {
   fetching: boolean;
   creating: boolean;
-  project: Project | null;
-  projectList: [] | null;
+  project: Project;
+  projectList: [];
   apiError: ApiError[];
 }
 

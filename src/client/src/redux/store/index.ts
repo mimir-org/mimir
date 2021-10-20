@@ -53,6 +53,12 @@ const store = createStore(persistedReducer, {}, composeEnhancer(applyMiddleware(
 const persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof rootReducers>;
+
+export type AppDispatch = typeof store.dispatch;
+
+export * from "./hooks";
+export * from "./selectors";
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default { store, persistor };
 

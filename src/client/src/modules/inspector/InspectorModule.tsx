@@ -1,14 +1,21 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+import {
+  isAnimatedModuleSelector,
+  isExplorerOpenSelector,
+  isInspectorOpenSelector,
+  isLibOpenSelector,
+  projectSelector,
+  useAppDispatch,
+  useAppSelector,
+  useParametricAppSelector,
+} from "../../redux/store";
 import { Size } from "../../compLibrary";
 import { MODULE_TYPE } from "../../models/project";
 import { IsBlockView } from "../../components/flow/block/helpers";
-import { Project } from "../../models";
 import { DragResizePanel } from "./helpers";
 import { AnimatedInspector, ResizePanel } from "./styled";
 import { InspectorHeader } from ".";
-import { GetSelectedNode, IsExplorer, IsLibrary } from "../../components/flow/helpers";
+import { GetSelectedNode } from "../../components/flow/helpers";
 import { InspectorElement } from "./types";
 
 /**
@@ -16,13 +23,13 @@ import { InspectorElement } from "./types";
  * @returns a module with multiple tabs for different operations.
  */
 const InspectorModule = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const type = MODULE_TYPE.INSPECTOR;
-  const project = useSelector<RootState>((s) => s.projectState.project) as Project;
-  const animate = useSelector<RootState>((s) => s.modules.types.find((x) => x.type === type).animate) as boolean;
-  const inspectorOpen = useSelector<RootState>((s) => s.modules.types.find((x) => x.type === type).visible) as boolean;
-  const libOpen = useSelector<RootState>((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible) as boolean;
-  const explorerOpen = useSelector<RootState>((s) => s.modules.types.find((x) => IsExplorer(x.type)).visible) as boolean;
+  const project = useAppSelector(projectSelector);
+  const animate = useParametricAppSelector(isAnimatedModuleSelector, type);
+  const inspectorOpen = useAppSelector(isInspectorOpenSelector);
+  const libOpen = useAppSelector(isLibOpenSelector);
+  const explorerOpen = useAppSelector(isExplorerOpenSelector);
 
   const stop = inspectorOpen ? Size.ModuleOpen : Size.ModuleClosed;
   const start = inspectorOpen ? Size.ModuleClosed : Size.ModuleOpen;
