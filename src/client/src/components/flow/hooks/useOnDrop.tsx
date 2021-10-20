@@ -3,7 +3,7 @@ import { IsBlockView } from "../block/helpers";
 import { GetEdgeType } from "../tree/helpers";
 import { ConvertToEdge, ConvertToNode } from "../converters";
 import { BuildTreeEdge, BuildTreeNode } from "../tree/builders";
-import { BlobData, LibItem, Project, GetFileData } from "../../../models";
+import { BlobData, LibItem, Project, GetFileData, User } from "../../../models";
 import { LibraryState } from "../../../redux/store/library/types";
 import { BuildBlockNode } from "../block/builders";
 import {
@@ -23,7 +23,8 @@ const useOnDrop = (
   reactFlowInstance: any,
   reactFlowWrapper: any,
   icons: BlobData[],
-  library: LibraryState
+  library: LibraryState,
+  user: User
 ) => {
   const sourceNode = GetSelectedNode();
   const isFile = event.dataTransfer.files && event.dataTransfer.files.length > 0;
@@ -58,7 +59,7 @@ const useOnDrop = (
         y: event.clientY - reactFlowBounds.top,
       });
 
-    const targetNode = ConvertToNode(data, position, project.id, icons);
+    const targetNode = ConvertToNode(data, position, project.id, icons, user);
 
     targetNode.composites?.forEach((c) => {
       var compositeId = CreateId();

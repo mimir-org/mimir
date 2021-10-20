@@ -6,7 +6,7 @@ import { RootState } from "../../../redux/store/index";
 import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
 import { FullScreenComponent } from "../../../compLibrary/controls";
 import { Size } from "../../../compLibrary";
-import { BlobData } from "../../../models";
+import { BlobData, User } from "../../../models";
 import { ProjectState } from "../../../redux/store/project/types";
 import { IsBlockView } from "../block/helpers";
 import { changeInspectorTab } from "../../../modules/inspector/redux/tabs/actions";
@@ -35,6 +35,7 @@ const FlowTree = () => {
   const projectState = useSelector<RootState>((s) => s.projectState) as ProjectState;
   const icons = useSelector<RootState>((s) => s.typeEditor.icons) as BlobData[];
   const library = useSelector<RootState>((s) => s.library) as LibraryState;
+  const user = useSelector<RootState>((s) => s.userState?.user) as User;
   const inspectorOpen = useSelector<RootState>((s) => s.modules.types[0].visible) as boolean;
   const project = projectState?.project;
   const node = GetSelectedNode();
@@ -63,7 +64,7 @@ const FlowTree = () => {
   };
 
   const OnDrop = (event) => {
-    return useOnDrop(project, event, dispatch, setElements, reactFlowInstance, reactFlowWrapper, icons, library);
+    return useOnDrop(project, event, dispatch, setElements, reactFlowInstance, reactFlowWrapper, icons, library, user);
   };
 
   const OnElementClick = (_event, element) => {

@@ -16,7 +16,7 @@ import { connectViewReducer } from "../../components/flow/block/connectView/redu
 import { darkModeReducer } from "./darkMode/reducers";
 import { parametersReducer } from "../../modules/inspector/tabs/parameters/redux/reducers";
 import { electroViewReducer } from "../store/electro/reducers";
-import { sagas } from "../sagas";
+import { rootSaga } from "../sagas";
 import { persistStore, persistReducer } from "redux-persist";
 
 const sagaMiddleware = createSagaMiddleware();
@@ -56,4 +56,4 @@ export type RootState = ReturnType<typeof rootReducers>;
 // eslint-disable-next-line import/no-anonymous-default-export
 export default { store, persistor };
 
-sagaMiddleware.run(sagas);
+sagaMiddleware.run(rootSaga);

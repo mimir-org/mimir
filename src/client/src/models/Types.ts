@@ -176,6 +176,12 @@ export interface CombinedAttributeFilter {
   combinedAttributes: CombinedAttribute[];
 }
 
+export interface Contractor {
+  id: string;
+  name: string;
+  domain: string;
+}
+
 export const SETTING_KEY = {
   PREFERED_TYPE: "PREFERED_TYPE",
 };

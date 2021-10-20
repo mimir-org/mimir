@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Mb.Models.Attributes;
 using Mb.Models.Data.Enums;
@@ -66,6 +67,14 @@ namespace Mb.Models.Application
         public string Symbol { get; set; }
 
         public Purpose Purpose { get; set; }
+
+        public DateTime? Created { get; set; }
+        
+        public string CreatedBy { get; set; }
+        
+        public DateTime? Updated { get; set; }
+        
+        public string UpdatedBy { get; set; }
 
         public ICollection<ConnectorAm> Connectors { get; set; }
 

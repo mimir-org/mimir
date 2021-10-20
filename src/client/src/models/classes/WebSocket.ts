@@ -2,7 +2,7 @@ import { HubConnectionBuilder, HubConnection } from "@microsoft/signalr";
 import { Dispatch } from "react";
 // import { updatePositionReceived } from "../../redux/store/project/actions";
 // import { NodePosition } from "../Types";
-import { default as reduxStore } from "./../../redux/store/index";
+// import { default as reduxStore } from "./../../redux/store/index";
 
 let instance = null;
 
@@ -42,8 +42,8 @@ class WebSocket {
 
           methods.forEach(name => {
             this._connection.on(name, (data) => {
-              console.log(data);
-              if (name === "ReceiveNodePosition") {
+              if (name === "ReceiveNode") {
+                console.log(data);
                 // const position = data as NodePosition;
                 // reduxStore.store.dispatch(updatePositionReceived(position.nodeId, position.x, position.y));
               }
