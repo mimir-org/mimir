@@ -12,15 +12,14 @@ import { IsChildConnectNode, IsConnectNodeChecked, SetNodeWidth, SetNodeLength }
 import { FilterTerminals, FindAllEdges, GetNodeByDataId } from "../../helpers";
 import { Symbol } from "../../../../../compLibrary/symbol";
 import { BlockNodeNameBox } from "../../styled";
+import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
 import {
   edgeSelector,
-  isElectroVisibleSelector,
-  mainConnectNodesSelector,
+  isElectroSelector,
+  mainConnectSelector,
   nodeSelector,
-  splitViewNodeSelector,
+  splitNodeSelector,
   splitViewSelector,
-  useAppDispatch,
-  useAppSelector,
 } from "../../../../../redux/store";
 
 /**
@@ -40,9 +39,9 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const nodes = useAppSelector(nodeSelector);
   const edges = useAppSelector(edgeSelector);
   const splitView = useAppSelector(splitViewSelector);
-  const splitViewNode = useAppSelector(splitViewNodeSelector) as Node;
-  const electro = useAppSelector(isElectroVisibleSelector);
-  const mainConnectNodes = useAppSelector(mainConnectNodesSelector);
+  const splitViewNode = useAppSelector(splitNodeSelector) as Node;
+  const electro = useAppSelector(isElectroSelector);
+  const mainConnectNodes = useAppSelector(mainConnectSelector);
 
   const type = IsFunction(data) ? "BlockFunctionNode-" : "BlockProductNode-";
   const node = nodes?.find((x) => x.id === data.id);

@@ -16,14 +16,13 @@ import { updatePosition, setActiveNode, setActiveEdge, setActiveBlockNode } from
 import { changeInspectorHeight } from "../../../modules/inspector/redux/height/actions";
 import { FlowManipulator } from "./FlowManipulator";
 import { OnTreeClick } from "./handlers/";
+import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import {
   darkModeSelector,
   iconSelector,
   inspectorOpenSelector,
   librarySelector,
   projectSelector,
-  useAppDispatch,
-  useAppSelector,
   userStateSelector,
 } from "../../../redux/store";
 

@@ -1,4 +1,4 @@
-import { splitViewNodeSelector, splitViewSelector, useAppDispatch, useAppSelector } from "../../redux/store";
+import { splitNodeSelector, splitViewSelector, useAppDispatch, useAppSelector } from "../../redux/store";
 import { FooterBox, FooterContent } from "../../compLibrary/box/footer";
 import { TextResources } from "../../assets/text";
 import { useEffect, useState } from "react";
@@ -9,7 +9,7 @@ import { GetSelectedNode, IsLocation } from "../../components/flow/helpers";
 export const SplitViewComponent = () => {
   const dispatch = useAppDispatch();
   const splitView = useAppSelector(splitViewSelector);
-  const splitNode = useAppSelector(splitViewNodeSelector);
+  const splitNode = useAppSelector(splitNodeSelector);
   const [visible, setVisible] = useState(IsBlockView());
   const [active, setActive] = useState(splitView);
 

@@ -3,17 +3,16 @@ import * as Icons from "../../assets/icons/header";
 import { ToolBar } from "./";
 import { MenuMainHeader } from "../../compLibrary/box/menus";
 import { HeaderBox, LogoBox } from "../../compLibrary/box/header/";
+import { useAppDispatch, useAppSelector } from "../../redux/store/hooks";
 import {
   darkModeSelector,
   accountMenuOpenSelector,
-  isElectroVisibleSelector,
+  isElectroSelector,
   explorerOpenSelector,
   filterMenuOpenSelector,
   libOpenSelector,
   treeViewSelector,
   projectSelector,
-  useAppDispatch,
-  useAppSelector,
 } from "../../redux/store";
 
 const Header = () => {
@@ -25,7 +24,7 @@ const Header = () => {
   const libOpen = useAppSelector(libOpenSelector);
   const explorerOpen = useAppSelector(explorerOpenSelector);
   const treeView = useAppSelector(treeViewSelector);
-  const electro = useAppSelector(isElectroVisibleSelector);
+  const electro = useAppSelector(isElectroSelector);
 
   return (
     <>

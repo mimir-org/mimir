@@ -6,14 +6,8 @@ import { IsBlockView } from "../../components/flow/block/helpers";
 import { ModuleHead, ModuleBody } from "../../compLibrary/box/modules";
 import { OnToggleClick } from "./handlers";
 import { ExplorerIcon } from "../../assets/icons/modules";
-import {
-  animatedModuleSelector,
-  explorerOpenSelector,
-  projectSelector,
-  useAppDispatch,
-  useAppSelector,
-  useParametricAppSelector,
-} from "../../redux/store";
+import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store/hooks";
+import { animatedModuleSelector, explorerOpenSelector, projectSelector } from "../../redux/store";
 
 /**
  * Component for the Explorer Module in Mimir.

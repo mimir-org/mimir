@@ -138,7 +138,7 @@ export const makeIsInspectorTabOpenSelector = () =>
     (tabs, index) => tabs[index]?.visible
   );
 
-export const isInspectorTabOpenSelector = makeIsInspectorTabOpenSelector();
+export const inspectorTabOpenSelector = makeIsInspectorTabOpenSelector();
 
 export const heightSelector = createAppSelector(
   (state) => state.inspectorHeight.height,
@@ -160,12 +160,12 @@ export const splitViewSelector = createAppSelector(
   (visible) => visible
 );
 
-export const splitViewNodeSelector = createAppSelector(
+export const splitNodeSelector = createAppSelector(
   (state) => state.splitView.node,
   (node) => node
 );
 
-export const mainConnectNodesSelector = createAppSelector(
+export const mainConnectSelector = createAppSelector(
   (state) => state.connectView.mainNodes,
   (mainNodes) => mainNodes
 );
@@ -175,7 +175,7 @@ export const iconSelector = createAppSelector(
   (icons) => icons
 );
 
-export const isElectroVisibleSelector = createAppSelector(
+export const isElectroSelector = createAppSelector(
   (state) => state.electro.visible,
   (visible) => visible
 );

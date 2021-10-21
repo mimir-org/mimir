@@ -14,18 +14,17 @@ import { EDGE_TYPE, EdgeType, BackgroundVariant, MODULE_TYPE } from "../../../mo
 import { changeInspectorHeight } from "../../../modules/inspector/redux/height/actions";
 import { SetPanelHeight } from "../../../modules/inspector/helpers";
 import { SetSplitViewBackground } from "./helpers";
+import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import {
   inspectorOpenSelector,
-  useAppSelector,
   darkModeSelector,
   iconSelector,
-  isElectroVisibleSelector,
+  isElectroSelector,
   librarySelector,
-  mainConnectNodesSelector,
+  mainConnectSelector,
   projectSelector,
-  splitViewNodeSelector,
+  splitNodeSelector,
   splitViewSelector,
-  useAppDispatch,
   userStateSelector,
 } from "../../../redux/store";
 
@@ -41,12 +40,12 @@ const FlowBlock = () => {
   const darkMode = useAppSelector(darkModeSelector);
   const project = useAppSelector(projectSelector);
   const splitView = useAppSelector(splitViewSelector);
-  const splitViewNode = useAppSelector(splitViewNodeSelector);
-  const mainConnectNodes = useAppSelector(mainConnectNodesSelector);
+  const splitViewNode = useAppSelector(splitNodeSelector);
+  const mainConnectNodes = useAppSelector(mainConnectSelector);
   const icons = useAppSelector(iconSelector);
   const library = useAppSelector(librarySelector);
   const inspectorOpen = useAppSelector(inspectorOpenSelector);
-  const electro = useAppSelector(isElectroVisibleSelector);
+  const electro = useAppSelector(isElectroSelector);
   const userState = useAppSelector(userStateSelector);
   const node = GetSelectedNode();
   const showBackground = IsLocation(splitViewNode) || IsLocation(node);

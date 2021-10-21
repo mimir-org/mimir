@@ -9,14 +9,13 @@ import { BlockComponent } from "./";
 import { BlockMessageBox } from "../../styled";
 import { FilterTerminals, GetNodeByDataId, FindAllEdges } from "../../helpers";
 import { Node } from "../../../../../models";
+import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
 import {
   edgeSelector,
-  isElectroVisibleSelector,
+  isElectroSelector,
   nodeSelector,
-  splitViewNodeSelector,
+  splitNodeSelector,
   splitViewSelector,
-  useAppDispatch,
-  useAppSelector,
 } from "../../../../../redux/store";
 
 /**
@@ -31,8 +30,8 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const nodes = useAppSelector(nodeSelector);
   const edges = useAppSelector(edgeSelector);
   const splitView = useAppSelector(splitViewSelector);
-  const splitNode = useAppSelector(splitViewNodeSelector) as Node;
-  const electro = useAppSelector(isElectroVisibleSelector);
+  const splitNode = useAppSelector(splitNodeSelector) as Node;
+  const electro = useAppSelector(isElectroSelector);
   const updateNodeInternals = useUpdateNodeInternals();
   const node = nodes?.find((x) => x.id === data.id);
   if (node) node.width = Size.BlockView_Width;

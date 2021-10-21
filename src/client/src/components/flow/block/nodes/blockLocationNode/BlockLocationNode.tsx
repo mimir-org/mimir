@@ -8,14 +8,8 @@ import { OnHover, OnMouseOut, OnConnectorClick } from "./handlers";
 import { FilterTerminals, GetNodeByDataId } from "../../helpers";
 import { Symbol } from "../../../../../compLibrary/symbol";
 import { Size } from "../../../../../compLibrary";
-import {
-  isElectroVisibleSelector,
-  nodeSelector,
-  splitViewNodeSelector,
-  splitViewSelector,
-  useAppDispatch,
-  useAppSelector,
-} from "../../../../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
+import { isElectroSelector, nodeSelector, splitNodeSelector, splitViewSelector } from "../../../../../redux/store";
 
 /**
  * Component for a Location Node in BlockView.
@@ -30,8 +24,8 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const updateNodeInternals = useUpdateNodeInternals();
   const nodes = useAppSelector(nodeSelector);
   const splitView = useAppSelector(splitViewSelector);
-  const splitNode = useAppSelector(splitViewNodeSelector) as Node;
-  const electro = useAppSelector(isElectroVisibleSelector);
+  const splitNode = useAppSelector(splitNodeSelector) as Node;
+  const electro = useAppSelector(isElectroSelector);
   const node = nodes.find((x) => x.id === data?.id);
   if (data) data.width = Size.Node_Width;
 

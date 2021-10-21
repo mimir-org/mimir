@@ -11,6 +11,7 @@ import { MODULE_TYPE } from "../../models/project";
 import { GetSelectedNode } from "../../components/flow/helpers";
 import { OnLibraryClick, OnLegendClick } from "./handlers";
 import { LegendIcon, LibraryIcon } from "../../assets/icons/modules";
+import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store/hooks";
 import {
   animatedModuleSelector,
   legendOpenSelector,
@@ -18,9 +19,6 @@ import {
   librarySelector,
   projectSelector,
   splitViewSelector,
-  useAppDispatch,
-  useAppSelector,
-  useParametricAppSelector,
 } from "../../redux/store";
 
 /**

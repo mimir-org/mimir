@@ -7,15 +7,13 @@ import { AnimatedInspector, ResizePanel } from "./styled";
 import { InspectorHeader } from ".";
 import { GetSelectedNode } from "../../components/flow/helpers";
 import { InspectorElement } from "./types";
+import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store/hooks";
 import {
   animatedModuleSelector,
   explorerOpenSelector,
   inspectorOpenSelector,
   libOpenSelector,
   projectSelector,
-  useAppDispatch,
-  useAppSelector,
-  useParametricAppSelector,
 } from "../../redux/store";
 
 /**
