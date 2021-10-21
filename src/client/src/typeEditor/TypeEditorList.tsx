@@ -7,6 +7,7 @@ import {
   PredefinedLocationElement,
   SimpleTypeElement,
   AttributeElement,
+  LocationAttributeElement,
 } from "./lists/";
 import {
   GetListLabel,
@@ -14,7 +15,6 @@ import {
   GetDefaultTerminal,
   GetDefaultTerminals,
   ShowObjectBlock,
-  ShowBlockAttributes,
   RemoveHover,
   RemoveBackground,
   SwitchBackground,
@@ -94,8 +94,18 @@ export const TypeEditorList = ({ createLibraryType, items, discipline, disabled,
                   onChange={(key, data) => onChange(key, data)}
                 />
               ))
-            : ShowBlockAttributes(listType)
-            ? GetFilteredList(listType, items, createLibraryType, discipline).map((element) => (
+            : null}
+          {listType === ListType.LocationAttributes
+            ? GetFilteredList(listType, items, createLibraryType).map((element) => (
+                <LocationAttributeElement
+                  key={element.id}
+                  attribute={element}
+                  onChange={(key, data) => onChange(key, data)}
+                  defaultValue={createLibraryType?.attributeTypes}
+                />
+              ))
+            : listType === ListType.ObjectAttributes &&
+              GetFilteredList(listType, items, createLibraryType, discipline).map((element) => (
                 <AttributeElement
                   key={element.discipline}
                   discipline={element.discipline}
@@ -103,17 +113,16 @@ export const TypeEditorList = ({ createLibraryType, items, discipline, disabled,
                   onChange={(key, data) => onChange(key, data)}
                   defaultValue={createLibraryType?.attributeTypes}
                 />
-              ))
-            : listType === ListType.SimpleTypes
-            ? GetFilteredList(listType, items, createLibraryType).map((element) => (
-                <SimpleTypeElement
-                  key={element.id}
-                  simpleType={element}
-                  onChange={(key, data) => onChange(key, data)}
-                  defaultValue={createLibraryType?.compositeTypes}
-                />
-              ))
-            : null}
+              ))}
+          {listType === ListType.SimpleTypes &&
+            GetFilteredList(listType, items, createLibraryType).map((element) => (
+              <SimpleTypeElement
+                key={element.id}
+                simpleType={element}
+                onChange={(key, data) => onChange(key, data)}
+                defaultValue={createLibraryType?.compositeTypes}
+              />
+            ))}
         </ListElementsContainer>
       )}
     </ListWrapper>
