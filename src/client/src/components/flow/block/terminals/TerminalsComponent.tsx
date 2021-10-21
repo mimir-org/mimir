@@ -11,6 +11,7 @@ interface Props {
   outputMenuOpen: boolean;
   terminals: Connector[];
   parent: boolean;
+  electro: boolean;
   menuBox: boolean;
   mainConnectNode: boolean;
   showInTerminalMenu: any;
@@ -29,6 +30,7 @@ const TerminalsContainerComponent = ({
   outputMenuOpen,
   terminals,
   parent,
+  electro,
   menuBox,
   mainConnectNode,
   showInTerminalMenu,
@@ -73,6 +75,7 @@ const TerminalsContainerComponent = ({
           input={true}
           terminals={inTerminals}
           visible={inputMenuOpen}
+          electro={electro}
           onClick={onClick}
           onBlur={() => Click.OnBlur(showInTerminalMenu, inputMenuOpen)}
         />
@@ -83,6 +86,7 @@ const TerminalsContainerComponent = ({
           parent={parent}
           input={false}
           visible={outputMenuOpen}
+          electro={electro}
           terminals={outTerminals}
           onClick={onClick}
           onBlur={() => Click.OnBlur(showOutTerminalMenu, outputMenuOpen)}

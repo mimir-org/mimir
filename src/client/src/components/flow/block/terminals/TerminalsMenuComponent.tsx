@@ -8,6 +8,7 @@ interface Props {
   input: boolean;
   terminals: Connector[];
   visible: boolean;
+  electro: boolean;
   onClick: (conn: Connector) => void;
   onBlur: () => void;
 }
@@ -17,7 +18,7 @@ interface Props {
  * @param param0
  * @returns a drop-down menu with a node's input or output terminals.
  */
-const TerminalsMenuComponent = ({ node, parent, input, terminals, visible, onClick, onBlur }: Props) => {
+const TerminalsMenuComponent = ({ node, parent, input, terminals, visible, onClick, onBlur, electro }: Props) => {
   const hasActiveTerminals = terminals.some((conn) => conn.visible);
 
   return (
@@ -29,7 +30,7 @@ const TerminalsMenuComponent = ({ node, parent, input, terminals, visible, onCli
         parent={parent}
         input={input}
         color={GetMenuColor(node)}
-        xPos={SetMenuXPos(parent, hasActiveTerminals, node?.width)}
+        xPos={SetMenuXPos(parent, electro, hasActiveTerminals, node?.width)}
       >
         {terminals.map((conn) => (
           <TerminalsElement key={conn.id}>

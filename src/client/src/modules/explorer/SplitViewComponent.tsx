@@ -12,7 +12,6 @@ export const SplitViewComponent = () => {
   const splitNode = useAppSelector(splitNodeSelector);
   const [visible, setVisible] = useState(IsBlockView());
   const [active, setActive] = useState(splitView);
-
   const selectedNode = GetSelectedNode();
 
   useEffect(() => {
