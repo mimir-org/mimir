@@ -2,6 +2,7 @@ import { CombinedAttribute } from "../../../../../models";
 
 export const ADD_ATTRIBUTE_FILTER = "ADD_ATTRIBUTE_FILTER";
 export const REMOVE_ATTRIBUTE_FILTER = "REMOVE_ATTRIBUTE_FILTER";
+export const ADD_ALL_ATTRIBUTE_FILTERS = "ADD_ALL_ATTRIBUTE_FILTERS";
 export const REMOVE_ALL_ATTRIBUTE_FILTERS = "REMOVE_ALL_ATTRIBUTE_FILTERS";
 export const ADD_COMBINED_ATTRIBUTE = "ADD_COMBINED_ATTRIBUTE";
 export const REMOVE_COMBINED_ATTRIBUTE = "REMOVE_COMBINED_ATTRIBUTE";
@@ -24,6 +25,11 @@ export interface AddAttributeFilter {
 export interface RemoveAttributeFilter {
   type: typeof REMOVE_ATTRIBUTE_FILTER;
   payload: { elementId: string; filterName: string };
+}
+
+export interface AddAllAttributeFilters {
+  type: typeof ADD_ALL_ATTRIBUTE_FILTERS;
+  payload: { elementId: string; filterNames: string[] };
 }
 
 export interface RemoveAllAttributeFilters {
@@ -52,6 +58,7 @@ export interface RemoveCombinedAttribute {
 export type ParametersActionTypes =
   | AddAttributeFilter
   | RemoveAttributeFilter
+  | AddAllAttributeFilters
   | RemoveAllAttributeFilters
   | AddCombinedAttribute
   | RemoveCombinedAttribute;
