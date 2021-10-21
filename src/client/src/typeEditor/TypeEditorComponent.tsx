@@ -14,6 +14,7 @@ import {
   ChooseProperties,
   TypePreviewColumn,
   SaveButton,
+  TypeEditorInspectorWrapper,
 } from "./styled";
 import {
   GetSelectedIcon,
@@ -167,10 +168,14 @@ export const TypeEditorComponent = () => {
                 </SaveButton>
               </TypePreviewColumn>
             </ChooseProperties>
-            {state.createLibraryType.aspect &&
-              (state.createLibraryType.objectType || state.createLibraryType.locationType) && (
+            {!!(
+              state.createLibraryType.aspect &&
+              (state.createLibraryType.objectType || state.createLibraryType.locationType)
+            ) && (
+              <TypeEditorInspectorWrapper>
                 <TypeEditorInspector createLibraryType={state.createLibraryType} />
-              )}
+              </TypeEditorInspectorWrapper>
+            )}
           </TypeEditorContent>
         </TypeEditorWrapper>
       )}

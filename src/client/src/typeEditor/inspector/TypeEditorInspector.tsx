@@ -12,8 +12,6 @@ import {
   useParametricAppSelector,
   isAnimatedModuleSelector,
   isInspectorOpenSelector,
-  isLibOpenSelector,
-  isExplorerOpenSelector,
   iconSelector,
   attributeTypeSelector,
 } from "../../redux/store";
@@ -30,8 +28,6 @@ export const TypeEditorInspector = ({ createLibraryType }: Props) => {
   const project = useAppSelector(projectSelector);
   const animate = useParametricAppSelector(isAnimatedModuleSelector, type);
   const inspectorOpen = useAppSelector(isInspectorOpenSelector);
-  const libOpen = useAppSelector(isLibOpenSelector);
-  const explorerOpen = useAppSelector(isExplorerOpenSelector);
   const icons = useAppSelector(iconSelector);
   const attributeTypes = useAppSelector(attributeTypeSelector);
 
@@ -49,14 +45,16 @@ export const TypeEditorInspector = ({ createLibraryType }: Props) => {
   }, [dispatch]);
   return (
     <AnimatedInspector
-      id="InspectorModule"
+      id="TypeEditorInspectorModule"
       type={type}
-      isLibraryOpen={libOpen}
-      isExplorerOpen={explorerOpen}
+      isLibraryOpen={false}
+      isExplorerOpen={false}
       isInspectorOpen={inspectorOpen}
+      isTypeEditor={true}
       start={start}
       stop={stop}
       run={animate}
+      zIndex={110}
     >
       <ResizePanel id="ResizePanel" />
       <InspectorHeader

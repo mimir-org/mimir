@@ -8,7 +8,9 @@ interface Props {
   library: boolean;
   explorer: boolean;
   inspectorOpen: boolean;
+  isTypeEditor: boolean;
   height: number;
+  zIndex: number;
 }
 
 const Animation = ({ start, stop, run }: Props) => keyframes`

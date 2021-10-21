@@ -34,6 +34,7 @@ const ParametersContent = ({
   const dispatch = useAppDispatch();
 
   const attributes = attributeLikeItems ?? GetAttributes(parametersElement);
+  const isCreateLibraryType = IsCreateLibraryType(parametersElement);
 
   const attributeFilters = useUniqueParametricAppSelector(makeFilterSelector, attributes);
   const selectedFilters = useUniqueParametricAppSelector(makeSelectedFilterSelector, parametersElement.id);
@@ -65,10 +66,17 @@ const ParametersContent = ({
             items={attributeFilters}
             selectedItems={selectedFilters}
           />
-          <div className="link" onClick={() => OnClearAllFilters(parametersElement.id, dispatch)}>
+
+          <div
+            className={`link ${isCreateLibraryType && "hide-link"}`}
+            onClick={() => !isCreateLibraryType && OnClearAllFilters(parametersElement.id, dispatch)}
+          >
             {TextResources.Inspector_Params_Clear_All}
           </div>
-          <div className="link" onClick={() => OnShowAllFilters(parametersElement.id, attributeFilters, dispatch)}>
+          <div
+            className={`link ${isCreateLibraryType && "hide-link"}`}
+            onClick={() => !isCreateLibraryType && OnShowAllFilters(parametersElement.id, attributeFilters, dispatch)}
+          >
             {TextResources.Inspector_Params_Default}
           </div>
         </Menu>

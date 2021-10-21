@@ -35,6 +35,7 @@ const Box = styled.div`
   }
 
   .hide-icon {
+    visibility: hidden;
     svg:hover {
       cursor: default;
     }

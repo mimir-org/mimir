@@ -66,8 +66,8 @@ function ParameterRow({
               <RemoveIconComponent
                 width={26}
                 height={26}
-                fill={isCreateLibraryType ? bodyColor : headerColor}
-                stroke={isCreateLibraryType ? bodyColor : headerColor}
+                fill={headerColor}
+                stroke={headerColor}
                 onClick={() => !isCreateLibraryType && OnChangeFilterChoice(element.id, filterName, true, dispatch)}
               />
             </div>

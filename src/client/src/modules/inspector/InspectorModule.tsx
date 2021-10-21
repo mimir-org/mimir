@@ -55,6 +55,7 @@ const InspectorModule = () => {
       start={start}
       stop={stop}
       run={animate}
+      zIndex={5}
     >
       <ResizePanel id="ResizePanel" />
       <InspectorHeader project={project} element={element} dispatch={dispatch} open={inspectorOpen} type={type} />
