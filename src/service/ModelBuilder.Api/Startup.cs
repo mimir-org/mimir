@@ -90,10 +90,10 @@ namespace Mb.Api
 
             app.UseModelBuilderModule().UseTypeEditorModule();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-        }
+        //    app.UseEndpoints(endpoints =>
+        //    {
+        //        endpoints.MapControllers();
+        //    });
+        //}
     }
 }

@@ -144,6 +144,7 @@ namespace Mb.Core.Extensions
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers();
                 endpoints.MapHub<ModelBuilderHub>("/mimir");
             });
 
