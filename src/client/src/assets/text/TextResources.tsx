@@ -236,6 +236,7 @@ const TextResources = {
   // Visual Filter
   Filter_Toggle_Terminals: "Toggle all terminals",
   Filter_Toggle_Active_Terminals: "Toggle all active terminals",
+  Filter_Toggle_Inactive_Terminals: "Toggle all inactive terminals",
 };
 
 export default TextResources;

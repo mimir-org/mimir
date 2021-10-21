@@ -52,6 +52,7 @@ class Node {
   isSelected: boolean | false;
   isBlockSelected: boolean | false;
   isHidden: boolean | false;
+  blockVisible: boolean | false;
 
   kind: string = NODE_KIND;
 

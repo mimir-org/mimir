@@ -316,7 +316,7 @@ const ConvertNodes = (nodes: Node[]): NodeAm[] => {
       created: node.created,
       createdBy: node.createdBy,
       updated: node.updated,
-      updatedBy: node.updatedBy
+      updatedBy: node.updatedBy,
     } as NodeAm;
 
     convertedNodes.push(n);

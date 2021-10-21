@@ -13,7 +13,17 @@ import { setActiveNode, setActiveBlockNode, setActiveEdge } from "../../../redux
  * @param selectedNode
  * @param splitViewNode
  */
-const OnCheckboxChange = (dispatch: any, splitView: boolean, node: Node, selectedNode: Node, splitViewNode: Node) => {
+const OnCheckboxChange = (
+  dispatch: any,
+  splitView: boolean,
+  node: Node,
+  selectedNode: Node,
+  splitViewNode: Node,
+  nodes: Node[]
+) => {
+  nodes.forEach((n) => {
+    if (n.id !== node.id || n.id !== selectedNode.id) n.blockVisible = false;
+  });
   if (IsConnectView()) dispatch(removeMainNodes());
 
   if (!splitView) {
@@ -21,6 +31,7 @@ const OnCheckboxChange = (dispatch: any, splitView: boolean, node: Node, selecte
       ? dispatch(setActiveNode(node.id, true))
       : dispatch(setActiveEdge(null, false));
     dispatch(setActiveBlockNode(node.id));
+
     return;
   }
 

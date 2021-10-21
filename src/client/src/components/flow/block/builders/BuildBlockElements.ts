@@ -23,7 +23,6 @@ const BuildBlockElements = (
   const elements: Elements = [];
   const connectView = mainConnectNodes?.length > 0;
   const allNodes = project.nodes;
-
   const parentBlock = BuildParentBlockNode(selectedNode, splitView, false);
   parentBlock && elements.push(parentBlock);
 

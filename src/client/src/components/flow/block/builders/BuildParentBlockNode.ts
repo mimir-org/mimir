@@ -14,6 +14,7 @@ import { SetConnectorOrder } from "./helpers";
  */
 const BuildParentBlockNode = (node: Node, splitView: boolean, isSplitViewNode: boolean) => {
   if (!node) return null;
+  node.blockVisible = true;
 
   SetConnectorOrder(node);
 
