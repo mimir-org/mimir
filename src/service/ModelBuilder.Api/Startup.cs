@@ -40,10 +40,7 @@ namespace Mb.Api
             {
                 "http://localhost:3000",
                 "https://modelbuilder-dev-client.azurewebsites.net",
-                "https://modelbuilder-test-client.azurewebsites.net",
-                "ws://localhost:3000",
-                "ws://modelbuilder-dev-client.azurewebsites.net",
-                "ws://modelbuilder-test-client.azurewebsites.net"
+                "https://modelbuilder-test-client.azurewebsites.net"
             };
 
 
@@ -53,6 +50,7 @@ namespace Mb.Api
                 options.AddPolicy("CorsPolicy", builder =>
                 {
                     builder.AllowAnyOrigin()
+                        .SetIsOriginAllowed((host) => true)
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials()
@@ -64,7 +62,8 @@ namespace Mb.Api
             services.AddRouting(o => o.LowercaseUrls = true);
 
             // Add Azure Active Directory Module and Swagger Module
-            var (swaggerConfiguration, activeDirectoryConfiguration) = services.AddAzureActiveDirectoryModule(Configuration);
+            var (swaggerConfiguration, activeDirectoryConfiguration) =
+                services.AddAzureActiveDirectoryModule(Configuration);
             _activeDirectoryConfiguration = activeDirectoryConfiguration;
             _swaggerConfiguration = swaggerConfiguration;
 
@@ -80,7 +79,7 @@ namespace Mb.Api
 
             if (!env.IsDevelopment())
                 app.UseHttpsRedirection();
-            
+
 
             app.UseCors("CorsPolicy");
             app.UseRouting();
@@ -90,10 +89,11 @@ namespace Mb.Api
 
             app.UseModelBuilderModule().UseTypeEditorModule();
 
-        //    app.UseEndpoints(endpoints =>
-        //    {
-        //        endpoints.MapControllers();
-        //    });
-        //}
+            //    app.UseEndpoints(endpoints =>
+            //    {
+            //        endpoints.MapControllers();
+            //    });
+            
+        }
     }
 }
