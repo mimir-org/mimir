@@ -3,9 +3,9 @@ import { Dropdown } from "./styled/dropdown/parameter";
 import { CombinedAttributeFilter } from "../../../../models";
 import { GetAttributeCombinations, GetParametersColor } from "./helpers";
 import { Menu, Header, ParametersRowWrapper, ParametersContentWrapper } from "./styled";
-import { OnChangeFilterChoice, OnClearAllFilters, OnShowAllFilters } from "./handlers";
+import { OnChangeFilterChoice, OnClearAllFilters, OnShowAllFilters, OnIsCreateLibraryType } from "./handlers";
 import { ParameterRow } from "./";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AttributeLikeItem, InspectorElement, InspectorParametersElement, InspectorTerminalsElement } from "../../types";
 import {
   useAppDispatch,
@@ -14,6 +14,7 @@ import {
   makeSelectedFilterSelector,
 } from "../../../../redux/store";
 import { GetAttributes } from "./helpers/GetAttributes";
+import { IsCreateLibraryType } from "../../helpers/IsType";
 
 interface Props {
   parametersElement: InspectorParametersElement;
@@ -31,6 +32,7 @@ const ParametersContent = ({
   attributeLikeItems,
 }: Props) => {
   const dispatch = useAppDispatch();
+
   const attributes = attributeLikeItems ?? GetAttributes(parametersElement);
 
   const attributeFilters = useUniqueParametricAppSelector(makeFilterSelector, attributes);
@@ -40,6 +42,11 @@ const ParametersContent = ({
     () => GetAttributeCombinations(attributeFilters, attributes),
     [attributeFilters, attributes]
   );
+
+  useEffect(() => {
+    IsCreateLibraryType(parametersElement) &&
+      OnIsCreateLibraryType(parametersElement, attributeFilters, selectedFilters, attributeCombinations, dispatch);
+  }, [parametersElement, attributeFilters, selectedFilters, attributeCombinations, dispatch]);
 
   const maxNumSelectedCombinations = Math.max(
     ...Object.values(selectedFilters).map((combinations) => combinations.length)

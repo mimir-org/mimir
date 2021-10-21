@@ -83,7 +83,7 @@ function ActiveTerminalsList({ terminals, terminalCategories, selectedTerminal, 
 
                 return (
                   <React.Fragment key={terminalType.id}>
-                    {inputTerminals.length > 0 && (
+                    {inputTerminals?.length > 0 && (
                       <ActiveTerminalsTypeList
                         {...terminalTypeListProps}
                         terminals={inputTerminals}
@@ -91,7 +91,7 @@ function ActiveTerminalsList({ terminals, terminalCategories, selectedTerminal, 
                         expanded={isTypeExpanded(terminalType, ConnectorType.Input)}
                       />
                     )}
-                    {outputTerminals.length > 0 && (
+                    {outputTerminals?.length > 0 && (
                       <ActiveTerminalsTypeList
                         {...terminalTypeListProps}
                         terminals={outputTerminals}

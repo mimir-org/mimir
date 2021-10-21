@@ -14,7 +14,7 @@ import {
 import { useMemo } from "react";
 import { AttributeLikeItem, InspectorElement, InspectorParametersElement, InspectorTerminalsElement } from "../../types";
 import { GetAttributes } from "./helpers/GetAttributes";
-import { GetAttributeLikeItemKey } from "../../helpers/IsType";
+import { GetAttributeLikeItemKey, IsCreateLibraryType } from "../../helpers/IsType";
 
 const FILTER_ENTITY_WIDTH: number = 191;
 
@@ -50,25 +50,25 @@ function ParameterRow({
   const attributes = attributeLikeItems ?? GetAttributes(element);
   const attributeKey = GetAttributeLikeItemKey(attributes?.[0]);
 
+  const isCreateLibraryType = IsCreateLibraryType(element);
+
   const bodyWidth = useMemo(
     () => maxNumSelectedCombinations * PARAMETER_ENTITY_WIDTH + FILTER_ENTITY_WIDTH,
     [maxNumSelectedCombinations]
   );
-
-  console.log(attributes);
 
   return (
     <>
       <Body width={bodyWidth}>
         <Entity width={FILTER_ENTITY_WIDTH}>
           <Box color={bodyColor} id="ParametersBox">
-            <div className="icon">
+            <div className={`icon ${isCreateLibraryType && "hide-icon"}`}>
               <RemoveIconComponent
                 width={26}
                 height={26}
-                fill={headerColor}
-                stroke={headerColor}
-                onClick={() => OnChangeFilterChoice(element.id, filterName, true, dispatch)}
+                fill={isCreateLibraryType ? bodyColor : headerColor}
+                stroke={isCreateLibraryType ? bodyColor : headerColor}
+                onClick={() => !isCreateLibraryType && OnChangeFilterChoice(element.id, filterName, true, dispatch)}
               />
             </div>
             <div className="text">{filterName}</div>

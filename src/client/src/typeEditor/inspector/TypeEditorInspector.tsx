@@ -15,8 +15,9 @@ import {
   isLibOpenSelector,
   isExplorerOpenSelector,
   iconSelector,
-  selectedAttributeTypeSelector,
+  attributeTypeSelector,
 } from "../../redux/store";
+import { useMemoArrayCompare } from "../helpers/useMemoArrayCompare";
 
 interface Props {
   createLibraryType: CreateLibraryType;
@@ -32,8 +33,13 @@ export const TypeEditorInspector = ({ createLibraryType }: Props) => {
   const libOpen = useAppSelector(isLibOpenSelector);
   const explorerOpen = useAppSelector(isExplorerOpenSelector);
   const icons = useAppSelector(iconSelector);
+  const attributeTypes = useAppSelector(attributeTypeSelector);
 
-  const attributeLikeItems = useParametricAppSelector(selectedAttributeTypeSelector, createLibraryType.attributeTypes);
+  const attributeLikeItems = useMemoArrayCompare(
+    () => attributeTypes.filter((attr) => createLibraryType.attributeTypes.find((attrId) => attrId === attr.id)),
+    [attributeTypes, createLibraryType.attributeTypes],
+    createLibraryType.attributeTypes
+  );
 
   const stop = inspectorOpen ? Size.ModuleOpen : Size.ModuleClosed;
   const start = inspectorOpen ? Size.ModuleClosed : Size.ModuleOpen;

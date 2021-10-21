@@ -15,10 +15,12 @@ interface Props {
 
 const InspectorTabs = ({ project, element, attributeLikeItems }: Props) => {
   const shouldShowParameters =
-    IsNode(element) || IsCreateLibraryType(element) || (IsEdge(element) && !IsRelationEdge(element));
+    IsNode(element) ||
+    (IsCreateLibraryType(element) && element.purpose) ||
+    (IsEdge(element) && !IsRelationEdge(element));
   const shouldShowTerminals =
     IsNode(element) ||
-    (IsCreateLibraryType(element) && !IsLocation(element.aspect)) ||
+    (IsCreateLibraryType(element) && !IsLocation(element.aspect) && element.terminalTypes.length > 0) ||
     (IsEdge(element) && !IsRelationEdge(element));
   const shouldShowRelations = IsNode(element) || (IsEdge(element) && !IsRelationEdge(element));
   const shouldShowSimpleTypes = IsNode(element) && IsProduct(element);

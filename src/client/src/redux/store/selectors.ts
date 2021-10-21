@@ -1,5 +1,4 @@
-import { createSelector } from "reselect";
-import { AttributeType, Edge, Node, Project } from "../../models";
+import { Edge, Node, Project } from "../../models";
 import { MODULE_TYPE, VIEW_TYPE } from "../../models/project";
 import { GetAttributeLikeItemKey } from "../../modules/inspector/helpers/IsType";
 import { AttributeLikeItem } from "../../modules/inspector/types";
@@ -188,14 +187,9 @@ export const edgeSelector = createAppSelector(
   (edges) => (edges ?? []) as Edge[]
 );
 
-export const selectedAttributeTypeSelector = createParametricAppSelector(
-  (state) => [...state.typeEditor.attributes],
-  (_, attributeIds: string[]) => attributeIds,
-  (attributes, attributeIds) =>
-    createSelector<any, AttributeType[], AttributeLikeItem[]>(
-      (_) => [...attributes],
-      (_attributes) => _attributes.filter((attr) => attributeIds.find((attrId) => attrId === attr.id))
-    )(undefined)
+export const attributeTypeSelector = createAppSelector(
+  (state) => state.typeEditor.attributes,
+  (attributeTypes) => attributeTypes
 );
 
 export const terminalTypeSelector = createAppSelector(
@@ -216,6 +210,7 @@ export const makeFilterSelector = () =>
       if (!attributes?.length || attributes.length === 0) {
         return [];
       }
+
       const key = GetAttributeLikeItemKey(attributes[0]);
 
       return filters.filter((x) => attributes.find((att) => att[key] === x.name)) ?? [];

@@ -1,12 +1,15 @@
 import { CombinedAttribute, CombinedAttributeFilter } from "../../../../../models";
 import { GetAttributeLikeItemKey } from "../../../helpers/IsType";
-import { AttributeLikeItem } from "../../../types";
+import { AttributeLikeItem, CombinedAttributeDict } from "../../../types";
 
 /**
  * Expects attributes not to be a mixed list of Attribute and AttributeType.
  */
-const GetAttributeCombinations = (attributeFilters: CombinedAttributeFilter[], attributes: AttributeLikeItem[]) => {
-  const combinations = {};
+const GetAttributeCombinations = (
+  attributeFilters: CombinedAttributeFilter[],
+  attributes: AttributeLikeItem[]
+): CombinedAttributeDict => {
+  const combinations: CombinedAttributeDict = {};
 
   if (!attributes?.length || attributes.length === 0) {
     return combinations;

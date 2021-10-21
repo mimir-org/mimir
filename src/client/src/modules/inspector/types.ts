@@ -8,6 +8,7 @@ import {
   CreateLibraryType,
   Attribute,
   AttributeType,
+  CombinedAttribute,
 } from "../../models";
 
 /**
@@ -28,3 +29,5 @@ export type InspectorTerminalsElement = Node | Transport | Interface | CreateLib
 export type InspectorParametersElement = InspectorTerminalsElement | Connector | Composite;
 
 export type AttributeLikeItem = Attribute | AttributeType;
+
+export type CombinedAttributeDict = { [name: string]: CombinedAttribute[] };
