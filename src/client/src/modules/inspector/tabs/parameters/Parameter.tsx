@@ -8,25 +8,30 @@ import { Attribute, CombinedAttribute, EnumBase } from "../../../../models";
 import { WarningIcon, HelpIcon } from "../../../../assets/icons/common";
 import { LockClosedParameterComponent, LockOpenComponent } from "../../../../assets/icons/lock";
 import { CloseIcon } from "../../../../assets/icons/close";
+import { AttributeLikeItem } from "../../types";
+import { GetAttributeLikeItemKey, IsAttribute } from "../../helpers/IsType";
 
 export const PARAMETER_ENTITY_WIDTH: number = 255;
 
 interface Props {
-  attribute: Attribute;
+  attribute: AttributeLikeItem;
   combination: CombinedAttribute;
   isNodeLocked: boolean;
   headerColor: string;
   bodyColor: string;
-  onChange: (id: string, value: string, unit: EnumBase, nodeId: string) => void;
+  onChange: (id: string, value: string, unit: EnumBase) => void;
   onLock: (attribute: Attribute, isLocked: boolean) => void;
   onClose: (id: string) => void;
 }
 
 function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColor, onLock, onClose, onChange }: Props) {
-  const [value, setValue] = useState(attribute.value ?? "");
-  const [unit, setUnit] = useState<EnumBase>(attribute.unit || attribute.units?.[0]);
+  const [value, setValue] = useState(IsAttribute(attribute) ? attribute.value ?? "" : "");
+  const [unit, setUnit] = useState<EnumBase>(
+    IsAttribute(attribute) ? attribute.unit || attribute.units?.[0] : attribute.units?.[0]
+  );
+  const attributeKey = GetAttributeLikeItemKey(attribute);
 
-  const isDisabled = () => isNodeLocked || attribute.isLocked;
+  const isDisabled = () => (IsAttribute(attribute) ? isNodeLocked || attribute.isLocked : false);
 
   return (
     <Entity width={PARAMETER_ENTITY_WIDTH}>
@@ -36,7 +41,7 @@ function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColo
             <img src={WarningIcon} className="warningIcon" alt="icon" />
           )}
 
-          <div className="parameterHeader">{attribute.key}</div>
+          <div className="parameterHeader">{attribute[attributeKey]}</div>
           <div className="icons">
             <img src={HelpIcon} className="parameterIcon" alt="icon" onClick={() => null} />
 
@@ -44,12 +49,12 @@ function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColo
               <LockClosedParameterComponent
                 className="parameterIcon lockIcon"
                 fill={headerColor}
-                onClick={() => onLock(attribute, !attribute.isLocked)}
+                onClick={() => IsAttribute(attribute) && onLock(attribute, !attribute.isLocked)}
               />
             ) : (
               <LockOpenComponent
                 className="parameterIcon lockIcon"
-                onClick={() => onLock(attribute, !attribute.isLocked)}
+                onClick={() => IsAttribute(attribute) && onLock(attribute, !attribute.isLocked)}
               />
             )}
 
@@ -69,7 +74,7 @@ function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColo
             value={value}
             type="text"
             onChange={(e) => setValue(e.target.value)}
-            onBlur={() => onChange(attribute.id, value, unit, attribute.nodeId)}
+            onBlur={() => onChange(attribute.id, value, unit)}
           />
           <div className="parameterDropdown">
             <CompDropdown
@@ -80,7 +85,7 @@ function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColo
               valueProp="value"
               onChange={(_unit) => {
                 setUnit(_unit);
-                onChange(attribute.id, value, unit, attribute.nodeId);
+                onChange(attribute.id, value, unit);
               }}
               borderRadius={2}
               borderColor={Color.InspectorGreyBorder}

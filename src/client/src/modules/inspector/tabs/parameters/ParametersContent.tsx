@@ -6,19 +6,21 @@ import { Menu, Header, ParametersRowWrapper, ParametersContentWrapper } from "./
 import { OnChangeFilterChoice, OnClearAllFilters } from "./handlers";
 import { ParameterRow } from "./";
 import { useMemo, useState } from "react";
-import { InspectorElement, InspectorParametersElement, InspectorTerminalsElement } from "../../types";
+import { AttributeLikeItem, InspectorElement, InspectorParametersElement, InspectorTerminalsElement } from "../../types";
 import {
   useAppDispatch,
   useUniqueParametricAppSelector,
   makeFilterSelector,
   makeSelectedFilterSelector,
 } from "../../../../redux/store";
+import { GetAttributes } from "./helpers/GetAttributes";
 
 interface Props {
   parametersElement: InspectorParametersElement;
   inspectorParentElement?: InspectorElement;
   terminalParentElement?: InspectorTerminalsElement;
   elementIsLocked: boolean;
+  attributeLikeItems?: AttributeLikeItem[];
 }
 
 const ParametersContent = ({
@@ -26,9 +28,10 @@ const ParametersContent = ({
   inspectorParentElement,
   terminalParentElement,
   elementIsLocked,
+  attributeLikeItems,
 }: Props) => {
   const dispatch = useAppDispatch();
-  const attributes = parametersElement.attributes;
+  const attributes = attributeLikeItems ?? GetAttributes(parametersElement);
 
   const attributeFilters = useUniqueParametricAppSelector(makeFilterSelector, attributes);
   const selectedFilters = useUniqueParametricAppSelector(makeSelectedFilterSelector, parametersElement.id);
@@ -78,6 +81,7 @@ const ParametersContent = ({
                 terminalParentElement={terminalParentElement}
                 combinations={attributeCombinations[filterName]}
                 selectedCombinations={selectedCombinations}
+                attributeLikeItems={attributeLikeItems}
                 maxNumSelectedCombinations={maxNumSelectedCombinations}
                 filterName={filterName}
                 headerColor={headerColor}

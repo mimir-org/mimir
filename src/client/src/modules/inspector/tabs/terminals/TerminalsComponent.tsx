@@ -8,6 +8,7 @@ import { useAppSelector, terminalTypeSelector } from "../../../../redux/store";
 import { GetFilteredTerminalsList } from "../../../../typeEditor/helpers";
 import { InspectorElement } from "../../types";
 import { GetTerminalParentElement, GetTerminals } from "./helpers";
+import { IsCreateLibraryType } from "../../helpers/IsType";
 
 interface Props {
   element: InspectorElement;
@@ -24,6 +25,8 @@ const TerminalsComponent = ({ element }: Props) => {
     [selectedTerminalId, terminals]
   );
 
+  const elementIsLocked = !IsCreateLibraryType(element) ? element.isLocked : false;
+
   return (
     <TerminalsWrapper>
       <TerminalsSelector
@@ -38,7 +41,7 @@ const TerminalsComponent = ({ element }: Props) => {
             parametersElement={selectedTerminal}
             inspectorParentElement={element}
             terminalParentElement={terminalParentElement}
-            elementIsLocked={element.isLocked}
+            elementIsLocked={elementIsLocked}
           />
         </TerminalsParametersWrapper>
       )}

@@ -21,8 +21,8 @@ export function* saveType(action) {
     const createLibraryType = action.payload.libraryType as CreateLibraryType;
     let url = "";
 
-    if (createLibraryType.libraryId) {
-      url = process.env.REACT_APP_API_BASE_URL + "librarytype/" + createLibraryType.libraryId;
+    if (createLibraryType.id) {
+      url = process.env.REACT_APP_API_BASE_URL + "librarytype/" + createLibraryType.id;
     } else {
       url = process.env.REACT_APP_API_BASE_URL + "librarytype";
     }
@@ -59,11 +59,11 @@ export function* saveType(action) {
     });
 
     // Remove item from library
-    if (createLibraryType.libraryId) {
+    if (createLibraryType.id) {
       yield statePut({
         type: REMOVE_LIBRARY_ITEM,
         payload: {
-          id: createLibraryType.libraryId,
+          id: createLibraryType.id,
         },
       });
     }
@@ -309,15 +309,11 @@ export function* getblobData() {
 export function* getSelectedNode(action) {
   try {
     const selectedNodeURL =
-      process.env.REACT_APP_API_BASE_URL +
-      "librarytype/" +
-      action.payload.selectedType +
-      "/" +
-      action.payload.filter;
+      process.env.REACT_APP_API_BASE_URL + "librarytype/" + action.payload.selectedType + "/" + action.payload.filter;
 
     const selectedNodeResponse = yield call(get, selectedNodeURL);
     const createLibraryType = selectedNodeResponse.data as CreateLibraryType;
-    createLibraryType.libraryId = action.payload.selectedType;
+    createLibraryType.id = action.payload.selectedType;
 
     const payload = {
       selectedNode: selectedNodeResponse.data,

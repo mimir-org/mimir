@@ -159,19 +159,15 @@ export const TypeEditorComponent = () => {
                 />
                 <SaveButton onClick={onSave}>
                   <p>
-                    {state.createLibraryType.libraryId === null
+                    {state.createLibraryType.id === null
                       ? TextResources.TypeEditor_Button_Add
                       : TextResources.TypeEditor_Button_Edit}
                   </p>
-                  <img
-                    src={state.createLibraryType.libraryId === null ? LibraryIcon : CheckIcon}
-                    alt="icon"
-                    className="icon"
-                  />
+                  <img src={state.createLibraryType.id === null ? LibraryIcon : CheckIcon} alt="icon" className="icon" />
                 </SaveButton>
               </TypePreviewColumn>
             </ChooseProperties>
-            <TypeEditorInspector />
+            <TypeEditorInspector createLibraryType={state.createLibraryType} />
           </TypeEditorContent>
         </TypeEditorWrapper>
       )}

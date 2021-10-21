@@ -1,5 +1,8 @@
-import { Attribute, Edge, Node, Project } from "../../models";
+import { createSelector } from "reselect";
+import { AttributeType, Edge, Node, Project } from "../../models";
 import { MODULE_TYPE, VIEW_TYPE } from "../../models/project";
+import { GetAttributeLikeItemKey } from "../../modules/inspector/helpers/IsType";
+import { AttributeLikeItem } from "../../modules/inspector/types";
 import { createAppSelector, combineAppSelectors, createParametricAppSelector } from "../../redux/store";
 import { ProjectState } from "./project/types";
 
@@ -185,6 +188,16 @@ export const edgeSelector = createAppSelector(
   (edges) => (edges ?? []) as Edge[]
 );
 
+export const selectedAttributeTypeSelector = createParametricAppSelector(
+  (state) => [...state.typeEditor.attributes],
+  (_, attributeIds: string[]) => attributeIds,
+  (attributes, attributeIds) =>
+    createSelector<any, AttributeType[], AttributeLikeItem[]>(
+      (_) => [...attributes],
+      (_attributes) => _attributes.filter((attr) => attributeIds.find((attrId) => attrId === attr.id))
+    )(undefined)
+);
+
 export const terminalTypeSelector = createAppSelector(
   (state) => state.typeEditor.terminals,
   (terminals) => terminals ?? []
@@ -198,8 +211,15 @@ export const nodeSelector = createAppSelector(
 export const makeFilterSelector = () =>
   createParametricAppSelector(
     (state) => state.commonState.filters,
-    (_, attributes: Attribute[]) => attributes,
-    (filters, attributes) => filters.filter((x) => attributes.find((att) => att.key === x.name)) ?? []
+    (_, attributes: AttributeLikeItem[]) => attributes,
+    (filters, attributes) => {
+      if (!attributes?.length || attributes.length === 0) {
+        return [];
+      }
+      const key = GetAttributeLikeItemKey(attributes[0]);
+
+      return filters.filter((x) => attributes.find((att) => att[key] === x.name)) ?? [];
+    }
   );
 export const makeSelectedFilterSelector = () =>
   createParametricAppSelector(

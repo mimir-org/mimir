@@ -12,7 +12,9 @@ import {
   OnChangeAttributeCombinationChoice,
 } from "./handlers";
 import { useMemo } from "react";
-import { InspectorElement, InspectorParametersElement, InspectorTerminalsElement } from "../../types";
+import { AttributeLikeItem, InspectorElement, InspectorParametersElement, InspectorTerminalsElement } from "../../types";
+import { GetAttributes } from "./helpers/GetAttributes";
+import { GetAttributeLikeItemKey } from "../../helpers/IsType";
 
 const FILTER_ENTITY_WIDTH: number = 191;
 
@@ -23,6 +25,7 @@ interface Props {
   terminalParentElement?: InspectorTerminalsElement;
   combinations: CombinedAttribute[];
   selectedCombinations: CombinedAttribute[];
+  attributeLikeItems?: AttributeLikeItem[];
   maxNumSelectedCombinations: number;
   filterName: string;
   headerColor: string;
@@ -37,18 +40,22 @@ function ParameterRow({
   terminalParentElement,
   combinations,
   selectedCombinations,
+  attributeLikeItems,
   maxNumSelectedCombinations,
   filterName,
   headerColor,
   bodyColor,
   dispatch,
 }: Props) {
-  const attributes = element.attributes;
+  const attributes = attributeLikeItems ?? GetAttributes(element);
+  const attributeKey = GetAttributeLikeItemKey(attributes?.[0]);
 
   const bodyWidth = useMemo(
     () => maxNumSelectedCombinations * PARAMETER_ENTITY_WIDTH + FILTER_ENTITY_WIDTH,
     [maxNumSelectedCombinations]
   );
+
+  console.log(attributes);
 
   return (
     <>
@@ -81,7 +88,7 @@ function ParameterRow({
           <Parameter
             key={combination.combined}
             attribute={attributes.find(
-              (attr) => attr.key === filterName && DoesCombinationMatchAttribute(combination, attr)
+              (attr) => attr[attributeKey] === filterName && DoesCombinationMatchAttribute(combination, attr)
             )}
             combination={combination}
             isNodeLocked={elementIsLocked}

@@ -79,6 +79,7 @@ export interface TerminalType {
   terminalCategoryId: string;
   terminalCategory: EnumBase;
   semanticReference: string;
+  attributes: AttributeType[];
 }
 
 export interface TerminalTypeItem {
@@ -88,6 +89,7 @@ export interface TerminalTypeItem {
   connectorType: ConnectorType;
   number: number;
   categoryId: string;
+  attributes: AttributeType[];
 }
 
 export interface Purpose {
@@ -110,23 +112,6 @@ export interface LocationType {
   description: string;
   semanticReference: string;
   locationSubTypes: LocationType[];
-}
-
-export interface CreateLibraryType {
-  libraryId: string;
-  name: string;
-  aspect: Aspect;
-  objectType: ObjectType;
-  purpose: string;
-  semanticReference: string;
-  rdsId: string;
-  terminalTypes: TerminalTypeItem[];
-  attributeTypes: string[];
-  locationType: string;
-  predefinedAttributes: PredefinedAttribute[];
-  terminalTypeId: string;
-  symbolId: string;
-  compositeTypes: string[];
 }
 
 export interface User {

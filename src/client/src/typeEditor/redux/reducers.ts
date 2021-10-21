@@ -6,7 +6,7 @@ const initialState: Types.TypeEditorState = {
   fetching: false,
   creating: false,
   createLibraryType: {
-    libraryId: null,
+    id: null,
     name: "",
     aspect: Aspect.NotSet,
     objectType: ObjectType.NotSet,
@@ -108,7 +108,7 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
         visible: false,
         createLibraryType: {
           ...state.createLibraryType,
-          libraryId: null,
+          id: null,
           name: "",
           aspect: Aspect.NotSet,
           objectType: ObjectType.NotSet,
@@ -166,9 +166,9 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
         ...state,
         fetching: false,
         visible: true,
-        createLibraryType: {
+        createLibraryType: new CreateLibraryType({
           ...state.createLibraryType,
-          libraryId: null,
+          id: null,
           name: "",
           aspect: Aspect.NotSet,
           objectType: ObjectType.NotSet,
@@ -182,7 +182,7 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
           terminalTypeId: "",
           symbolId: "",
           compositeTypes: [] as string[],
-        },
+        } as CreateLibraryType),
       };
     case Types.CLOSE_TYPE_EDITOR:
       return {
@@ -191,7 +191,7 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
         visible: false,
         createLibraryType: {
           ...state.createLibraryType,
-          libraryId: null,
+          id: null,
           name: "",
           aspect: Aspect.NotSet,
           objectType: ObjectType.NotSet,
