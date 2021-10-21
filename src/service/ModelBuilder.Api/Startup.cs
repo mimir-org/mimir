@@ -52,12 +52,11 @@ namespace Mb.Api
             {
                 options.AddPolicy("CorsPolicy", builder =>
                 {
-                    builder
-                        .AllowAnyHeader()
+                    builder.AllowAnyOrigin()
                         .AllowAnyMethod()
+                        .AllowAnyHeader()
                         .AllowCredentials()
-                        .SetIsOriginAllowedToAllowWildcardSubdomains()
-                        .SetIsOriginAllowed(_ => true);
+                        .WithOrigins(origins.ToArray());
                 });
             });
 
