@@ -1,6 +1,6 @@
 import { Node } from "../../../../models";
 
-const GetTerminals = (nodes: Node[]) => {
+const GetAllTerminals = (nodes: Node[]) => {
   const terminals = [];
 
   nodes.forEach((n) => {
@@ -12,4 +12,4 @@ const GetTerminals = (nodes: Node[]) => {
   return terminals;
 };
 
-export default GetTerminals;
+export default GetAllTerminals;

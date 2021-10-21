@@ -104,8 +104,13 @@ export const treeViewSelector = createAppSelector(
   (view) => view === VIEW_TYPE.TREEVIEW
 );
 
-export const filterMenuOpenSelector = createAppSelector(
+export const treeFilterSelector = createAppSelector(
   (state) => state.menu.treeFilterMenuVisibility,
+  (filterMenuVisibility) => filterMenuVisibility
+);
+
+export const blockFilterSelector = createAppSelector(
+  (state) => state.menu.blockFilterMenuVisibility,
   (filterMenuVisibility) => filterMenuVisibility
 );
 

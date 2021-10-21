@@ -5,7 +5,7 @@ import { IsLibrary } from "../../../flow/helpers";
 import { FilterDropdown, FilterTerminalDropdown } from "../dropdown";
 import { TextResources } from "../../../../assets/text";
 import { OnChange, OnTerminalChange } from "../handlers";
-import { GetTerminals, PopulateFilterLists } from "../helpers";
+import { GetActiveTerminals, GetAllTerminals, PopulateFilterLists } from "../helpers";
 
 /**
  * Menu to filter terminals and edges in BlockView.
@@ -22,7 +22,8 @@ const BlockFilterMenu = () => {
   const relationItems = [] as Connector[];
   const transportLabel = TextResources.Relations_Transport;
   const relationLabel = TextResources.Relations;
-  const activeTerminals = GetTerminals(nodes);
+  const activeTerminals = GetActiveTerminals(nodes, edges);
+  const allTerminals = GetAllTerminals(nodes);
 
   PopulateFilterLists(edges, transportItems, relationItems, []);
 
@@ -44,10 +45,11 @@ const BlockFilterMenu = () => {
           onChange={(edge) => OnChange(edge, edges, dispatch)}
         />
         <FilterTerminalDropdown
-          terminals={activeTerminals}
+          activeTerminals={activeTerminals}
+          allTerminals={allTerminals}
           label={"Terminals"}
-          nodes={nodes}
-          onChange={() => OnTerminalChange(activeTerminals, dispatch)}
+          onAllTerminalsChange={() => OnTerminalChange(allTerminals, dispatch)}
+          onActiveTerminalsChange={() => OnTerminalChange(activeTerminals, dispatch)}
         />
       </MenuColumn>
     </FilterMenuBox>

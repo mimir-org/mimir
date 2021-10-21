@@ -9,7 +9,8 @@ import {
   accountMenuOpenSelector,
   isElectroSelector,
   explorerOpenSelector,
-  filterMenuOpenSelector,
+  treeFilterSelector,
+  blockFilterSelector,
   libOpenSelector,
   treeViewSelector,
   projectSelector,
@@ -19,7 +20,8 @@ const Header = () => {
   const dispatch = useAppDispatch();
   const project = useAppSelector(projectSelector);
   const darkMode = useAppSelector(darkModeSelector);
-  const filterMenuOpen = useAppSelector(filterMenuOpenSelector);
+  const treeFilterMenuOpen = useAppSelector(treeFilterSelector);
+  const blockFilterMenuOpen = useAppSelector(blockFilterSelector);
   const isAccountMenuOpen = useAppSelector(accountMenuOpenSelector);
   const libOpen = useAppSelector(libOpenSelector);
   const explorerOpen = useAppSelector(explorerOpenSelector);
@@ -48,8 +50,8 @@ const Header = () => {
         libOpen={libOpen}
         explorerOpen={explorerOpen}
         treeView={treeView}
-        filterMenuOpen={filterMenuOpen}
-        filterMenuBlockOpen={filterMenuOpen}
+        treeFilter={treeFilterMenuOpen}
+        blockFilter={blockFilterMenuOpen}
         electro={electro}
       />
     </>

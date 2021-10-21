@@ -9,20 +9,17 @@ interface Props {
   libOpen: boolean;
   explorerOpen: boolean;
   treeView: boolean;
-  filterMenuOpen: boolean;
-  filterMenuBlockOpen: boolean;
+  treeFilter: boolean;
+  blockFilter: boolean;
   electro: boolean;
 }
 
 /**
  * Component for the ToolBar - the menu bar at the top of Mimir.
- * @param dispatch
- * @param libOpen
- * @param explorerOpen
- * @param treeView
+ * @param interface
  * @returns a menu with icons for different features.
  */
-const ToolBar = ({ libOpen, explorerOpen, treeView, filterMenuOpen, filterMenuBlockOpen, electro }: Props) => {
+const ToolBar = ({ libOpen, explorerOpen, treeView, treeFilter, blockFilter, electro }: Props) => {
   const dispatch = useAppDispatch();
   const { push } = useHistory();
 
@@ -31,7 +28,7 @@ const ToolBar = ({ libOpen, explorerOpen, treeView, filterMenuOpen, filterMenuBl
       <OptionsBox>
         <OptionsElement
           treeView={treeView}
-          onClick={() => Click.OnFilter(dispatch, treeView ? filterMenuOpen : filterMenuBlockOpen, treeView)}
+          onClick={() => Click.OnFilter(dispatch, treeView ? treeFilter : blockFilter, treeView)}
         >
           <img src={Icons.Filter} alt="visual-filter" />
         </OptionsElement>

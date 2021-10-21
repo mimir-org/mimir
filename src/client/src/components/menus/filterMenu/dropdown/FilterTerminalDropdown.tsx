@@ -1,16 +1,24 @@
 import { useState } from "react";
 import { MenuWrapper, MenuHeader, MenuList, MenuListItem, CheckboxWrapper } from "./styled";
 import { ExpandIcon, CollapseIcon } from "../../../../assets/icons/chevron";
-import { Connector, Node } from "../../../../models";
+import { Connector } from "../../../../models";
+import { TextResources } from "../../../../assets/text";
 
 interface Props {
-  terminals: Connector[];
+  activeTerminals: Connector[];
+  allTerminals: Connector[];
   label: string;
-  nodes: Node[];
-  onChange: () => void;
+  onActiveTerminalsChange: () => void;
+  onAllTerminalsChange: () => void;
 }
 
-const FilterDropdown = ({ terminals, label, nodes, onChange }: Props) => {
+const FilterTerminalDropdown = ({
+  activeTerminals,
+  allTerminals,
+  label,
+  onActiveTerminalsChange,
+  onAllTerminalsChange,
+}: Props) => {
   const [listOpen, setListOpen] = useState(false);
 
   return (
@@ -21,23 +29,27 @@ const FilterDropdown = ({ terminals, label, nodes, onChange }: Props) => {
       </MenuHeader>
       {listOpen && (
         <MenuList>
-          <MenuListItem onClick={() => onChange()}>
+          <MenuListItem onClick={() => onAllTerminalsChange()}>
             <CheckboxWrapper>
               <label className={"checkbox-block"}>
-                <input type="checkbox" checked={terminals[0].visible} onChange={() => onChange()} />
+                <input type="checkbox" checked={allTerminals[0]?.visible} onChange={() => onAllTerminalsChange()} />
                 <span className="checkmark-block"></span>
               </label>
             </CheckboxWrapper>
-            <p>Toggle all terminals</p>
+            <p>{TextResources.Filter_Toggle_Terminals}</p>
           </MenuListItem>
-          <MenuListItem onClick={() => onChange()}>
+          <MenuListItem onClick={() => onActiveTerminalsChange()}>
             <CheckboxWrapper>
               <label className={"checkbox-block"}>
-                <input type="checkbox" checked={terminals[0].visible} onChange={() => onChange()} />
+                <input
+                  type="checkbox"
+                  checked={activeTerminals[0]?.visible}
+                  onChange={() => onActiveTerminalsChange()}
+                />
                 <span className="checkmark-block"></span>
               </label>
             </CheckboxWrapper>
-            <p>Toggle all active terminals</p>
+            <p>{TextResources.Filter_Toggle_Active_Terminals}</p>
           </MenuListItem>
         </MenuList>
       )}
@@ -45,4 +57,4 @@ const FilterDropdown = ({ terminals, label, nodes, onChange }: Props) => {
   );
 };
 
-export default FilterDropdown;
+export default FilterTerminalDropdown;

@@ -1,4 +1,5 @@
-import { accountMenuOpenSelector, filterMenuOpenSelector, useAppDispatch, useAppSelector } from "../../redux/store";
+import { accountMenuOpenSelector, treeFilterSelector, blockFilterSelector } from "../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../redux/store/hooks";
 import { useEffect } from "react";
 import { useParams } from "react-router";
 import { ExplorerModule } from "../../modules/explorer";
@@ -27,7 +28,9 @@ interface RouteParams {
 const Home = () => {
   const dispatch = useAppDispatch();
   const accountMenuOpen = useAppSelector(accountMenuOpenSelector);
-  const filterMenuOpen = useAppSelector(filterMenuOpenSelector);
+  const treeFilter = useAppSelector(treeFilterSelector);
+  const blockFilter = useAppSelector(blockFilterSelector);
+
   const params = useParams<RouteParams>();
 
   useEffect(() => {
@@ -44,8 +47,8 @@ const Home = () => {
     <>
       <ExplorerModule />
       {accountMenuOpen && <AccountMenu />}
-      {!IsBlockView() && filterMenuOpen && <TreeFilterMenu />}
-      {IsBlockView() && filterMenuOpen && <BlockFilterMenu />}
+      {!IsBlockView() && treeFilter && <TreeFilterMenu />}
+      {IsBlockView() && blockFilter && <BlockFilterMenu />}
       <FlowModule route={params} dispatch={dispatch} />
       <InspectorModule />
       <LibraryModule />
