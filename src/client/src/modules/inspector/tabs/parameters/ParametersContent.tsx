@@ -3,7 +3,7 @@ import { Dropdown } from "./styled/dropdown/parameter";
 import { CombinedAttributeFilter } from "../../../../models";
 import { GetAttributeCombinations, GetParametersColor } from "./helpers";
 import { Menu, Header, ParametersRowWrapper, ParametersContentWrapper } from "./styled";
-import { OnChangeFilterChoice, OnClearAllFilters } from "./handlers";
+import { OnChangeFilterChoice, OnClearAllFilters, OnShowAllFilters } from "./handlers";
 import { ParameterRow } from "./";
 import { useMemo, useState } from "react";
 import { AttributeLikeItem, InspectorElement, InspectorParametersElement, InspectorTerminalsElement } from "../../types";
@@ -61,7 +61,9 @@ const ParametersContent = ({
           <div className="link" onClick={() => OnClearAllFilters(parametersElement.id, dispatch)}>
             {TextResources.Inspector_Params_Clear_All}
           </div>
-          <div className="link">{TextResources.Inspector_Params_Default}</div>
+          <div className="link" onClick={() => OnShowAllFilters(parametersElement.id, attributeFilters, dispatch)}>
+            {TextResources.Inspector_Params_Default}
+          </div>
         </Menu>
         <hr />
       </Header>

@@ -1,7 +1,9 @@
 import { CombinedAttribute } from "../../../../../models";
 import {
+  AddAllAttributeFilters,
   AddAttributeFilter,
   AddCombinedAttribute,
+  ADD_ALL_ATTRIBUTE_FILTERS,
   ADD_ATTRIBUTE_FILTER,
   ADD_COMBINED_ATTRIBUTE,
   RemoveAllAttributeFilters,
@@ -23,6 +25,13 @@ export function removeAttributeFilter(elementId: string, filterName: string): Re
   return {
     type: REMOVE_ATTRIBUTE_FILTER,
     payload: { elementId, filterName },
+  };
+}
+
+export function addAllAttributeFilters(elementId: string, filterNames: string[]): AddAllAttributeFilters {
+  return {
+    type: ADD_ALL_ATTRIBUTE_FILTERS,
+    payload: { elementId, filterNames },
   };
 }
 
