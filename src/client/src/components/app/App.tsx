@@ -8,14 +8,14 @@ import { useAppSelector, isFetchingSelector } from "../../redux/store";
 import { Login } from "../../compLibrary/box/menus";
 import { LoginIcon } from "../../assets/icons/login";
 import { TextResources } from "../../assets/text";
-import { WebSocket } from "../../models";
+// import { WebSocket } from "../../models";
+// import { useDispatch } from "react-redux";
 
 // MSAL imports
 import { IPublicClientApplication } from "@azure/msal-browser";
 import { ModelBuilderNavigationClient } from "../../models/webclient";
 import { msalInstance } from "../..";
 import { MsalProvider, AuthenticatedTemplate, UnauthenticatedTemplate } from "@azure/msal-react";
-import { useDispatch } from "react-redux";
 
 // Props
 type AppProps = {
@@ -33,10 +33,10 @@ const App = ({ pca }: AppProps) => {
   };
 
   // Start the websocket endpoint
-  const websocket = new WebSocket();
-  const dispatch = useDispatch();
-  websocket.setDispatcher(dispatch);
-  websocket.start();
+  // const websocket = new WebSocket();
+  // const dispatch = useDispatch();
+  // websocket.setDispatcher(dispatch);
+  // websocket.start();
 
   return (
     <MsalProvider instance={pca}>
