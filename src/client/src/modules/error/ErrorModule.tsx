@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { ErrorBox, ErrorItem, ErrorHeaderBox } from ".";
 import { ProjectBody } from "../../compLibrary/box/project";
 import { CloseIcon } from "../../assets/icons/close";
@@ -10,6 +9,15 @@ import { deleteCommonError } from "../../redux/store/common/actions";
 import { deleteLibraryError } from "../../redux/store/library/actions";
 import { deleteUserError } from "../../redux/store/user/actions";
 import { deleteTypeEditorError } from "../../typeEditor/redux/actions";
+import {
+  commonStateSelector,
+  librarySelector,
+  projectStateSelector,
+  typeEditorStateSelector,
+  useAppDispatch,
+  useAppSelector,
+  userStateSelector,
+} from "../../redux/store";
 
 interface ErrorMessage {
   key: string;
@@ -22,11 +30,11 @@ const ErrorModule = () => {
   const dispatch = useAppDispatch();
   const [visible, setVisible] = useState(false);
   const [errors, setErrors] = useState([] as ErrorMessage[]);
-  const projectState = useAppSelector((state) => state.projectState);
-  const libraryState = useAppSelector((state) => state.library);
-  const userState = useAppSelector((state) => state.userState);
-  const commonState = useAppSelector((state) => state.commonState);
-  const typeEditorState = useAppSelector((state) => state.typeEditor);
+  const projectState = useAppSelector(projectStateSelector);
+  const libraryState = useAppSelector(librarySelector);
+  const userState = useAppSelector(userStateSelector);
+  const commonState = useAppSelector(commonStateSelector);
+  const typeEditorState = useAppSelector(typeEditorStateSelector);
 
   const closeHeader = () => {
     if (errors) {

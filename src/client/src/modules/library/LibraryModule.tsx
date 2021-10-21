@@ -10,9 +10,18 @@ import { LegendIcons } from "../../compLibrary/box/library";
 import { MODULE_TYPE } from "../../models/project";
 import { GetSelectedNode } from "../../components/flow/helpers";
 import { OnLibraryClick, OnLegendClick } from "./handlers";
-import { Project } from "../../models";
 import { LegendIcon, LibraryIcon } from "../../assets/icons/modules";
-import { useAppDispatch, useAppSelector } from "../../redux/store";
+import {
+  animatedModuleSelector,
+  legendOpenSelector,
+  libOpenSelector,
+  librarySelector,
+  projectSelector,
+  splitViewSelector,
+  useAppDispatch,
+  useAppSelector,
+  useParametricAppSelector,
+} from "../../redux/store";
 
 /**
  * Component for Mimir's type library and Legend Module (to be removed).
@@ -28,13 +37,13 @@ const LibraryModule = () => {
     dispatch(searchLibrary(""));
   }, [dispatch]);
 
-  const project = useAppSelector((s) => s.projectState?.project) as Project;
-  const libState = useAppSelector((s) => s.library);
-  const splitView = useAppSelector((s) => s.splitView.visible);
-  const legendOpen = useAppSelector((s) => s.modules.types.find((x) => x.type === legend).visible);
-  const animate = useAppSelector((s) => s.modules.types.find((x) => x.type === lib).animate);
-  const libOpen = useAppSelector((s) => s.modules.types.find((x) => x.type === lib).visible);
-  const animateLegend = useAppSelector((s) => s.modules.types.find((x) => x.type === legend).animate);
+  const libState = useAppSelector(librarySelector);
+  const project = useAppSelector(projectSelector);
+  const splitView = useAppSelector(splitViewSelector);
+  const legendOpen = useAppSelector(legendOpenSelector);
+  const animate = useParametricAppSelector(animatedModuleSelector, lib);
+  const libOpen = useAppSelector(libOpenSelector);
+  const animateLegend = useParametricAppSelector(animatedModuleSelector, legend);
 
   const selectedNode = GetSelectedNode();
   const startLib = libOpen ? Size.ModuleClosed : Size.ModuleOpen;

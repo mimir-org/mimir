@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from "../../../../redux/store";
+import { isActiveMenuSelector, useAppDispatch, useParametricAppSelector } from "../../../../redux/store";
 import { MENU_TYPE } from "../../../../models/project";
 import { CloseIcon } from "../../../../assets/icons/close";
 import { TextResources } from "../../../../assets/text";
@@ -11,7 +11,7 @@ import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../../../../compL
 export const ExportLibraryFileMenu = () => {
   const dispatch = useAppDispatch();
   const [fileName, setFileName] = useState("");
-  const isOpen = useAppSelector((s) => s.menu.activeMenu === MENU_TYPE.SAVE_LIBRARY_FILE_MENU);
+  const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.SAVE_LIBRARY_FILE_MENU);
 
   return (
     <ProjectBox width={Size.MenuSmall_Width} height={Size.MenuSmall_Height} visible={isOpen}>

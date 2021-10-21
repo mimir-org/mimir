@@ -760,6 +760,23 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
       };
     }
 
+    case Types.CHANGE_NODE_UPDATED:
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          nodes: state.project.nodes.map((x) =>
+            x.id === action.payload.nodeId
+              ? {
+                  ...x,
+                  updated: action.payload.updated,
+                  updatedBy: action.payload.user.name,
+                }
+              : x
+          ),
+        },
+      };
+
     default:
       return state;
   }

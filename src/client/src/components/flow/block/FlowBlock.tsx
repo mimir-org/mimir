@@ -1,12 +1,9 @@
 import ReactFlow, { ReactFlowProvider, Elements, Background } from "react-flow-renderer";
 import { useState, useRef, useEffect, useCallback } from "react";
-import { useAppSelector, useAppDispatch } from "../../../redux/store/";
 import { FullScreenComponent } from "../../../compLibrary/controls";
 import { Color, Size } from "../../../compLibrary";
 import { BackgroundBox } from "./styled";
 import { changeInspectorTab } from "../../../modules/inspector/redux/tabs/actions";
-import { Node } from "../../../models";
-import { ProjectState } from "../../../redux/store/project/types";
 import { GetBlockEdgeTypes, IsBlockView, OnBlockClick } from "../block/helpers";
 import { BuildBlockElements } from "./builders";
 import { useOnConnect, useOnDrop, useOnRemove, useOnDragStop } from "../hooks";
@@ -17,6 +14,20 @@ import { EDGE_TYPE, EdgeType, BackgroundVariant, MODULE_TYPE } from "../../../mo
 import { changeInspectorHeight } from "../../../modules/inspector/redux/height/actions";
 import { SetPanelHeight } from "../../../modules/inspector/helpers";
 import { SetSplitViewBackground } from "./helpers";
+import {
+  inspectorOpenSelector,
+  useAppSelector,
+  darkModeSelector,
+  iconSelector,
+  isElectroVisibleSelector,
+  librarySelector,
+  mainConnectNodesSelector,
+  projectSelector,
+  splitViewNodeSelector,
+  splitViewSelector,
+  useAppDispatch,
+  userStateSelector,
+} from "../../../redux/store";
 
 /**
  * Component for the Flow library in BlockView
@@ -27,25 +38,25 @@ const FlowBlock = () => {
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>();
-  const darkMode = useAppSelector((s) => s.darkMode.active);
-  const projectState = useAppSelector((s) => s.projectState) as ProjectState;
-  const splitView = useAppSelector((s) => s.splitView.visible);
-  const splitNode = useAppSelector((s) => s.splitView.node) as Node;
-  const mainConnectNodes = useAppSelector((s) => s.connectView.mainNodes);
-  const icons = useAppSelector((s) => s.typeEditor.icons);
-  const library = useAppSelector((s) => s.library);
-  const inspectorOpen = useAppSelector((s) => s.modules.types[0].visible);
-  const electro = useAppSelector((s) => s.electro.visible);
+  const darkMode = useAppSelector(darkModeSelector);
+  const project = useAppSelector(projectSelector);
+  const splitView = useAppSelector(splitViewSelector);
+  const splitViewNode = useAppSelector(splitViewNodeSelector);
+  const mainConnectNodes = useAppSelector(mainConnectNodesSelector);
+  const icons = useAppSelector(iconSelector);
+  const library = useAppSelector(librarySelector);
+  const inspectorOpen = useAppSelector(inspectorOpenSelector);
+  const electro = useAppSelector(isElectroVisibleSelector);
+  const userState = useAppSelector(userStateSelector);
   const node = GetSelectedNode();
-  const showBackground = IsLocation(splitNode) || IsLocation(node);
-  const project = projectState?.project;
+  const showBackground = IsLocation(splitViewNode) || IsLocation(node);
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(BuildBlockElements(project, node, splitView, splitNode, mainConnectNodes));
+      setElements(BuildBlockElements(project, node, splitView, splitViewNode, mainConnectNodes));
       return setReactFlowInstance(_reactFlowInstance);
     },
-    [project, node, splitView, splitNode, mainConnectNodes]
+    [project, node, splitView, splitViewNode, mainConnectNodes]
   );
 
   const OnElementsRemove = (elementsToRemove) => {
@@ -70,7 +81,17 @@ const FlowBlock = () => {
   };
 
   const OnDrop = (event) => {
-    return useOnDrop(project, event, dispatch, setElements, reactFlowInstance, reactFlowWrapper, icons, library);
+    return useOnDrop(
+      project,
+      event,
+      dispatch,
+      setElements,
+      reactFlowInstance,
+      reactFlowWrapper,
+      icons,
+      library,
+      userState.user
+    );
   };
 
   const OnElementClick = (_event, element) => {
@@ -117,7 +138,7 @@ const FlowBlock = () => {
               <BackgroundBox
                 visible={showBackground}
                 splitView={splitView}
-                right={SetSplitViewBackground(node, splitNode)}
+                right={SetSplitViewBackground(node, splitViewNode)}
               >
                 <Background size={0.5} color={Color.Grey} variant={BackgroundVariant.Lines} />
               </BackgroundBox>

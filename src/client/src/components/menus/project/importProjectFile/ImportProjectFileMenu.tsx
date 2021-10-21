@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from "../../../../redux/store";
+import { isActiveMenuSelector, useAppDispatch, useParametricAppSelector } from "../../../../redux/store";
 import { MENU_TYPE } from "../../../../models/project";
 import { FileData } from "../../../../models";
 import { ProjectAm } from "../../../../redux/sagas/project/ConvertProject";
@@ -12,7 +12,7 @@ import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../../../../compL
 
 export const ImportProjectFileMenu = () => {
   const dispatch = useAppDispatch();
-  const isOpen = useAppSelector((s) => s.menu.activeMenu === MENU_TYPE.IMPORT_PROJECT_FILE_MENU);
+  const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.IMPORT_PROJECT_FILE_MENU);
 
   const [openFileSelector, { filesContent, plainFiles }] = useFilePicker({
     multiple: false,

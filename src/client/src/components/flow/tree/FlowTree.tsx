@@ -1,11 +1,9 @@
 import * as Helpers from "./helpers/";
 import ReactFlow, { ReactFlowProvider, Elements } from "react-flow-renderer";
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
 import { FullScreenComponent } from "../../../compLibrary/controls";
 import { Size } from "../../../compLibrary";
-import { ProjectState } from "../../../redux/store/project/types";
 import { IsBlockView } from "../block/helpers";
 import { changeInspectorTab } from "../../../modules/inspector/redux/tabs/actions";
 import { GetSelectedNode, SetDarkModeColor } from "../helpers";
@@ -18,6 +16,16 @@ import { updatePosition, setActiveNode, setActiveEdge, setActiveBlockNode } from
 import { changeInspectorHeight } from "../../../modules/inspector/redux/height/actions";
 import { FlowManipulator } from "./FlowManipulator";
 import { OnTreeClick } from "./handlers/";
+import {
+  darkModeSelector,
+  iconSelector,
+  inspectorOpenSelector,
+  librarySelector,
+  projectSelector,
+  useAppDispatch,
+  useAppSelector,
+  userStateSelector,
+} from "../../../redux/store";
 
 /**
  * Component for the Flow library in TreeView
@@ -28,12 +36,12 @@ const FlowTree = () => {
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>();
-  const darkMode = useAppSelector((s) => s.darkMode.active);
-  const projectState = useAppSelector((s) => s.projectState) as ProjectState;
-  const icons = useAppSelector((s) => s.typeEditor.icons);
-  const library = useAppSelector((s) => s.library);
-  const inspectorOpen = useAppSelector((s) => s.modules.types[0].visible);
-  const project = projectState?.project;
+  const darkMode = useAppSelector(darkModeSelector);
+  const project = useAppSelector(projectSelector);
+  const userState = useAppSelector(userStateSelector);
+  const icons = useAppSelector(iconSelector);
+  const library = useAppSelector(librarySelector);
+  const inspectorOpen = useAppSelector(inspectorOpenSelector);
   const node = GetSelectedNode();
   const selectedNodeId = useMemo(() => node?.id ?? project?.edges.find((edge) => edge.isSelected)?.id, [project, node]);
 
@@ -60,7 +68,17 @@ const FlowTree = () => {
   };
 
   const OnDrop = (event) => {
-    return useOnDrop(project, event, dispatch, setElements, reactFlowInstance, reactFlowWrapper, icons, library);
+    return useOnDrop(
+      project,
+      event,
+      dispatch,
+      setElements,
+      reactFlowInstance,
+      reactFlowWrapper,
+      icons,
+      library,
+      userState.user
+    );
   };
 
   const OnElementClick = (_event, element) => {

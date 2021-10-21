@@ -1,8 +1,6 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, useUpdateNodeInternals } from "react-flow-renderer";
 import { TextResources } from "../../../../../assets/text";
-import { Node, Edge } from "../../../../../models";
-import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
 import { HandleComponent, TerminalsContainerComponent } from "../../terminals";
 import { Size } from "../../../../../compLibrary";
 import { GetParentColor } from "./helpers";
@@ -10,6 +8,16 @@ import { OnParentClick, OnChildClick, OnConnectorClick } from "./handlers";
 import { BlockComponent } from "./";
 import { BlockMessageBox } from "../../styled";
 import { FilterTerminals, GetNodeByDataId, FindAllEdges } from "../../helpers";
+import { Node } from "../../../../../models";
+import {
+  edgeSelector,
+  isElectroVisibleSelector,
+  nodeSelector,
+  splitViewNodeSelector,
+  splitViewSelector,
+  useAppDispatch,
+  useAppSelector,
+} from "../../../../../redux/store";
 
 /**
  * Component for the large parent block in BlockView.
@@ -20,13 +28,12 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
   const [inTerminalMenu, showInTerminalMenu] = useState(false);
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
-  const nodes = useAppSelector((s) => s.projectState.project?.nodes) as Node[];
-  const edges = useAppSelector((s) => s.projectState.project?.edges) as Edge[];
-  const splitView = useAppSelector((s) => s.splitView.visible);
-  const splitNode = useAppSelector((s) => s.splitView.node) as Node;
-  const electro = useAppSelector((s) => s.electro.visible);
+  const nodes = useAppSelector(nodeSelector);
+  const edges = useAppSelector(edgeSelector);
+  const splitView = useAppSelector(splitViewSelector);
+  const splitNode = useAppSelector(splitViewNodeSelector) as Node;
+  const electro = useAppSelector(isElectroVisibleSelector);
   const updateNodeInternals = useUpdateNodeInternals();
-
   const node = nodes?.find((x) => x.id === data.id);
   if (node) node.width = Size.BlockView_Width;
 

@@ -1,7 +1,11 @@
 import styled from "styled-components";
 import { FontSize, Color } from "../../../compLibrary";
 
-const ValueHeader = styled.div`
+interface Props {
+  multiSelect: boolean;
+}
+
+const ValueHeader = styled.div<Props>`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -19,10 +23,15 @@ const ValueHeader = styled.div`
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    text-transform: capitalize;
+    text-transform: ${(props) => props.multiSelect && "capitalize"};
+
     margin: 2px 13px 2px 13px;
     font-size: ${FontSize.Medium};
     color: ${Color.Black};
+  }
+
+  .selectedValues::first-letter {
+    text-transform: capitalize;
   }
 
   img {

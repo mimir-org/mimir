@@ -1,4 +1,4 @@
-import { useAppSelector } from "../../../../redux/store";
+import { isActiveMenuSelector, useParametricAppSelector } from "../../../../redux/store";
 import { ProjectState } from "../../../../redux/store/project/types";
 import { MENU_TYPE } from "../../../../models/project";
 import { CloseIcon } from "../../../../assets/icons/close";
@@ -16,7 +16,7 @@ interface Props {
 
 export const ExportProjectFileMenu = ({ projectState, dispatch }: Props) => {
   const [fileName, setFileName] = useState("");
-  const isOpen = useAppSelector((s) => s.menu.activeMenu === MENU_TYPE.SAVE_PROJECT_FILE_MENU);
+  const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.SAVE_PROJECT_FILE_MENU);
 
   return (
     <ProjectBox width={Size.MenuSmall_Width} height={Size.MenuSmall_Height} visible={isOpen}>

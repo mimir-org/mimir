@@ -1,6 +1,4 @@
 import * as Click from "./handlers";
-import { useAppSelector, useAppDispatch } from "../../../redux/store";
-import { ProjectState } from "../../../redux/store/project/types";
 import { GetMenuElement } from "./helpers";
 import { MENU_TYPE } from "../../../models/project";
 import { OpenProjectMenu } from "../project/openProject";
@@ -11,18 +9,31 @@ import { ExportLibraryFileMenu } from "../project/exportLibraryFile/ExportLibrar
 import { ImportFileLibraryMenu } from "../project/importLibrary/ImportFileLibraryMenu";
 import { MenuLine, AccountMenuBox, ProjectMenuBox } from "../../../compLibrary/box/menus";
 import { TextResources } from "../../../assets/text";
-import { useRef } from "react";
+import { useCallback, useRef } from "react";
 import { setAccountMenuVisibility } from "../project/redux/actions";
 import { useOutsideClick } from "./hooks/useOutsideClick";
+import {
+  activeMenuSelector,
+  projectStateSelector,
+  useAppDispatch,
+  useAppSelector,
+  userStateSelector,
+} from "../../../redux/store/index";
 
 const AccountMenu = () => {
   const dispatch = useAppDispatch();
-  const projectState = useAppSelector((state) => state.projectState) as ProjectState;
-  const userState = useAppSelector((state) => state.userState);
-  const activeMenu = useAppSelector((state) => state.menu.activeMenu);
+  const projectState = useAppSelector(projectStateSelector);
+  const userState = useAppSelector(userStateSelector);
+  const activeMenu = useAppSelector(activeMenuSelector);
+
   const menuRef = useRef(null);
 
-  useOutsideClick(menuRef, () => !activeMenu && dispatch(setAccountMenuVisibility(false)));
+  const onOutsideClick = useCallback(
+    () => !activeMenu && dispatch(setAccountMenuVisibility(false)),
+    [activeMenu, dispatch]
+  );
+
+  useOutsideClick(menuRef, onOutsideClick);
 
   return (
     <>

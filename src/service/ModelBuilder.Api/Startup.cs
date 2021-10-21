@@ -77,12 +77,12 @@ namespace Mb.Api
             // Use Azure Active Directory Module and Swagger Module
             app.UseAzureActiveDirectoryModule(_activeDirectoryConfiguration, _swaggerConfiguration);
 
+            app.UseModelBuilderModule().UseTypeEditorModule();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
-
-            app.UseModelBuilderModule().UseTypeEditorModule();
         }
     }
 }

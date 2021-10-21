@@ -1,4 +1,4 @@
-import { Project, Node, Edge, CommitPackage } from "../../../models";
+import { Project, Node, Edge, CommitPackage, User } from "../../../models";
 import { ProjectAm } from "../../sagas/project/ConvertProject";
 import { ApiError } from "../../../models/webclient";
 export const SAVE_PROJECT = "SAVE_PROJECT";
@@ -48,13 +48,14 @@ export const LOCK_UNLOCK_NODE_TERMINAL_ATTRIBUTE = "LOCK_UNLOCK_NODE_TERMINAL_AT
 export const LOCK_UNLOCK_TRANSPORT_TERMINAL_ATTRIBUTE = "LOCK_UNLOCK_TRANSPORT_TERMINAL_ATTRIBUTE";
 export const LOCK_UNLOCK_INTERFACE_TERMINAL_ATTRIBUTE = "LOCK_UNLOCK_INTERFACE_TERMINAL_ATTRIBUTE";
 export const LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR = "LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR";
+export const CHANGE_NODE_UPDATED = "CHANGE_NODE_UPDATED";
 
 // State types
 export interface ProjectState {
   fetching: boolean;
   creating: boolean;
-  project: Project | null;
-  projectList: [] | null;
+  project: Project;
+  projectList: [];
   apiError: ApiError[];
 }
 
@@ -425,6 +426,15 @@ export interface LockUnlockAttributeFinished {
   };
 }
 
+export interface ChangeNodeUpdated {
+  type: typeof CHANGE_NODE_UPDATED;
+  payload: {
+    nodeId: string;
+    updated: Date;
+    user: User;
+  };
+}
+
 export type LockUnlockAttributeUnion =
   | LockUnlockNodeAttribute
   | LockUnlockTransportAttribute
@@ -481,4 +491,5 @@ export type ProjectActionTypes =
   | LockUnlockCompositeAttribute
   | LockUnlockAttributeFinished
   | CommitProject
-  | CommitProjectFinished;
+  | CommitProjectFinished
+  | ChangeNodeUpdated;

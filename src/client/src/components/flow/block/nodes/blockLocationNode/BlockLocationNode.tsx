@@ -1,4 +1,3 @@
-import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, useUpdateNodeInternals } from "react-flow-renderer";
 import { NodeBox } from "../../../styled";
@@ -9,6 +8,14 @@ import { OnHover, OnMouseOut, OnConnectorClick } from "./handlers";
 import { FilterTerminals, GetNodeByDataId } from "../../helpers";
 import { Symbol } from "../../../../../compLibrary/symbol";
 import { Size } from "../../../../../compLibrary";
+import {
+  isElectroVisibleSelector,
+  nodeSelector,
+  splitViewNodeSelector,
+  splitViewSelector,
+  useAppDispatch,
+  useAppSelector,
+} from "../../../../../redux/store";
 
 /**
  * Component for a Location Node in BlockView.
@@ -21,10 +28,10 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const [inTerminalMenu, showInTerminalMenu] = useState(false);
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
   const updateNodeInternals = useUpdateNodeInternals();
-  const nodes = useAppSelector((s) => s.projectState.project.nodes) as Node[];
-  const splitView = useAppSelector((s) => s.splitView.visible);
-  const splitNode = useAppSelector((s) => s.splitView.node) as Node;
-  const electro = useAppSelector((s) => s.electro.visible);
+  const nodes = useAppSelector(nodeSelector);
+  const splitView = useAppSelector(splitViewSelector);
+  const splitNode = useAppSelector(splitViewNodeSelector) as Node;
+  const electro = useAppSelector(isElectroVisibleSelector);
   const node = nodes.find((x) => x.id === data?.id);
   if (data) data.width = Size.Node_Width;
 

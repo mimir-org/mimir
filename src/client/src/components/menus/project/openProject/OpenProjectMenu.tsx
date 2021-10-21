@@ -1,6 +1,6 @@
 import * as Click from "./handlers";
 import { SearchBar, ProjectList } from ".";
-import { useAppSelector } from "../../../../redux/store";
+import { isActiveMenuSelector, useParametricAppSelector } from "../../../../redux/store";
 import { MENU_TYPE } from "../../../../models/project";
 import { CloseIcon } from "../../../../assets/icons/close";
 import { Button } from "../../../../compLibrary/buttons";
@@ -21,7 +21,7 @@ export const OpenProjectMenu = ({ projectState, dispatch }: Props) => {
   const projects = projectState.projectList as ProjectSimple[];
   const project = projects?.find((x) => x.selected);
   const projectId = project?.id;
-  const isOpen = useAppSelector((s) => s.menu.activeMenu === MENU_TYPE.OPEN_PROJECT_MENU);
+  const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.OPEN_PROJECT_MENU);
 
   return (
     <>
