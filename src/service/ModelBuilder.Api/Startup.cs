@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using ApplicationInsightsLoggingModule;
 using AzureActiveDirectoryModule;
 using AzureActiveDirectoryModule.Models;
@@ -35,17 +36,28 @@ namespace Mb.Api
                 //o.SerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
             });
 
+            var origins = new List<string>()
+            {
+                "http://localhost:3000",
+                "https://modelbuilder-dev-client.azurewebsites.net",
+                "https://modelbuilder-test-client.azurewebsites.net",
+                "ws://localhost:3000",
+                "ws://modelbuilder-dev-client.azurewebsites.net",
+                "ws://modelbuilder-test-client.azurewebsites.net"
+            };
+
 
             // Add Cors policy
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", builder =>
                 {
-                    builder.WithOrigins("http://localhost:3000", "https://modelbuilder-dev-client.azurewebsites.net", "https://modelbuilder-test-client.azurewebsites.net")
+                    builder
                         .AllowAnyHeader()
                         .AllowAnyMethod()
                         .AllowCredentials()
-                        .SetIsOriginAllowedToAllowWildcardSubdomains();
+                        .SetIsOriginAllowedToAllowWildcardSubdomains()
+                        .SetIsOriginAllowed(_ => true);
                 });
             });
 
