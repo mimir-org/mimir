@@ -6,6 +6,7 @@ import {
   ADD_COMBINED_ATTRIBUTE,
   REMOVE_COMBINED_ATTRIBUTE,
   ReducerState,
+  ADD_ALL_ATTRIBUTE_FILTERS,
 } from "./types";
 
 const initialState: ReducerState = {
@@ -23,6 +24,24 @@ export function parametersReducer(state = initialState, action: ParametersAction
           ...state.selectedAttributeFilters[elementId],
           [filterName]: [],
         },
+      };
+
+      return {
+        ...state,
+        selectedAttributeFilters,
+      };
+    }
+
+    case ADD_ALL_ATTRIBUTE_FILTERS: {
+      const { elementId, filterNames } = action.payload;
+
+      const allFilters = {};
+
+      filterNames.forEach((filterName) => (allFilters[filterName] = []));
+
+      const selectedAttributeFilters = {
+        ...state.selectedAttributeFilters,
+        [elementId]: allFilters,
       };
 
       return {
