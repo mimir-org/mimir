@@ -16,9 +16,7 @@ export const AttributeElement = ({ discipline, attributes, defaultValue, onChang
   };
   return (
     <ListElementCategoryWrapper>
-      <ListCategoryElement>
-        <p>{Discipline[discipline]}</p>
-      </ListCategoryElement>
+      <ListCategoryElement>{discipline && <p>{Discipline[discipline]}</p>}</ListCategoryElement>
       {attributes.map((element) => (
         <ListElem key={element.id} isSelected={isSelected(element.id)}>
           <SquareBox>
