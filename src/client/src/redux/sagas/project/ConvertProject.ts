@@ -84,6 +84,9 @@ export interface NodeAm {
   aspect: Aspect;
   isRoot: boolean;
   purpose: Purpose;
+  created: Date;
+  updated: Date;
+  updatedBy: string;
 }
 
 export interface EdgeAm {
@@ -310,6 +313,10 @@ const ConvertNodes = (nodes: Node[]): NodeAm[] => {
       aspect: node.aspect,
       isRoot: node.isRoot,
       purpose: node.purpose,
+      created: node.created,
+      createdBy: node.createdBy,
+      updated: node.updated,
+      updatedBy: node.updatedBy
     } as NodeAm;
 
     convertedNodes.push(n);

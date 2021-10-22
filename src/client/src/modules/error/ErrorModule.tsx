@@ -1,11 +1,4 @@
 import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { ProjectState } from "../../redux/store/project/types";
-import { LibraryState } from "../../redux/store/library/types";
-import { UserState } from "../../redux/store/user/types";
-import { CommonState } from "../../redux/store/common/types";
-import { TypeEditorState } from "../../typeEditor/redux/types";
-import { RootState } from "../../redux/store";
 import { ErrorBox, ErrorItem, ErrorHeaderBox } from ".";
 import { ProjectBody } from "../../compLibrary/box/project";
 import { CloseIcon } from "../../assets/icons/close";
@@ -16,6 +9,15 @@ import { deleteCommonError } from "../../redux/store/common/actions";
 import { deleteLibraryError } from "../../redux/store/library/actions";
 import { deleteUserError } from "../../redux/store/user/actions";
 import { deleteTypeEditorError } from "../../typeEditor/redux/actions";
+import {
+  commonStateSelector,
+  librarySelector,
+  projectStateSelector,
+  typeEditorStateSelector,
+  useAppDispatch,
+  useAppSelector,
+  userStateSelector,
+} from "../../redux/store";
 
 interface ErrorMessage {
   key: string;
@@ -25,14 +27,14 @@ interface ErrorMessage {
 }
 
 const ErrorModule = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [visible, setVisible] = useState(false);
   const [errors, setErrors] = useState([] as ErrorMessage[]);
-  const projectState = useSelector<RootState>((state) => state.projectState) as ProjectState;
-  const libraryState = useSelector<RootState>((state) => state.library) as LibraryState;
-  const userState = useSelector<RootState>((state) => state.userState) as UserState;
-  const commonState = useSelector<RootState>((state) => state.commonState) as CommonState;
-  const typeEditorState = useSelector<RootState>((state) => state.typeEditor) as TypeEditorState;
+  const projectState = useAppSelector(projectStateSelector);
+  const libraryState = useAppSelector(librarySelector);
+  const userState = useAppSelector(userStateSelector);
+  const commonState = useAppSelector(commonStateSelector);
+  const typeEditorState = useAppSelector(typeEditorStateSelector);
 
   const closeHeader = () => {
     if (errors) {

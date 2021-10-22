@@ -1,8 +1,4 @@
 import * as Click from "./handlers";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../../redux/store/index";
-import { UserState } from "../../../redux/store/user/types";
-import { ProjectState } from "../../../redux/store/project/types";
 import { GetMenuElement } from "./helpers";
 import { MENU_TYPE } from "../../../models/project";
 import { OpenProjectMenu } from "../project/openProject";
@@ -13,19 +9,31 @@ import { ExportLibraryFileMenu } from "../project/exportLibraryFile/ExportLibrar
 import { ImportFileLibraryMenu } from "../project/importLibrary/ImportFileLibraryMenu";
 import { MenuLine, AccountMenuBox, ProjectMenuBox } from "../../../compLibrary/box/menus";
 import { TextResources } from "../../../assets/text";
-import { useRef } from "react";
+import { useCallback, useRef } from "react";
 import { setAccountMenuVisibility } from "../project/redux/actions";
 import { useOutsideClick } from "./hooks/useOutsideClick";
+import {
+  activeMenuSelector,
+  projectStateSelector,
+  useAppDispatch,
+  useAppSelector,
+  userStateSelector,
+} from "../../../redux/store/index";
 
 const AccountMenu = () => {
-  const dispatch = useDispatch();
-  const projectState = useSelector<RootState>((state) => state.projectState) as ProjectState;
-  const userState = useSelector<RootState>((state) => state.userState) as UserState;
-  const activeMenu = useSelector<RootState>((state) => state.menu.activeMenu) as string;
+  const dispatch = useAppDispatch();
+  const projectState = useAppSelector(projectStateSelector);
+  const userState = useAppSelector(userStateSelector);
+  const activeMenu = useAppSelector(activeMenuSelector);
 
   const menuRef = useRef(null);
 
-  useOutsideClick(menuRef, () => !activeMenu && dispatch(setAccountMenuVisibility(false)));
+  const onOutsideClick = useCallback(
+    () => !activeMenu && dispatch(setAccountMenuVisibility(false)),
+    [activeMenu, dispatch]
+  );
+
+  useOutsideClick(menuRef, onOutsideClick);
 
   return (
     <>

@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Mb.Data.Contracts;
 using Mb.Models.Application;
 using Mb.Services.Contracts;
 using Mb.TypeEditor.Data.Contracts;
@@ -9,10 +12,14 @@ namespace Mb.Services.Services
     public class LibraryService : ILibraryService
     {
         private readonly ILibraryRepository _libraryRepository;
+        private readonly IProjectRepository _projectRepository;
+        private readonly IMapper _mapper;
 
-        public LibraryService(ILibraryRepository libraryRepository)
+        public LibraryService(ILibraryRepository libraryRepository, IProjectRepository projectRepository, IMapper mapper)
         {
             _libraryRepository = libraryRepository;
+            _projectRepository = projectRepository;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -26,7 +33,8 @@ namespace Mb.Services.Services
             {
                 ObjectBlocks = _libraryRepository.GetNodeTypes(searchString).ToList(),
                 Transports = _libraryRepository.GetTransportTypes(searchString).ToList(),
-                Interfaces = _libraryRepository.GetInterfaceTypes(searchString).ToList()
+                Interfaces = _libraryRepository.GetInterfaceTypes(searchString).ToList(),
+                SubProjects = GetSubProjects(searchString).ToList()
             };
 
             return library;
@@ -57,6 +65,28 @@ namespace Mb.Services.Services
         public IEnumerable<LibraryInterfaceItem> GetInterfaceTypes()
         {
             return _libraryRepository.GetInterfaceTypes().ToList();
+        }
+
+        /// <summary>
+        /// Get all sub projects
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<LibrarySubProjectItem> GetSubProjects(string searchString = null)
+        {
+            if (string.IsNullOrWhiteSpace(searchString))
+            {
+                return _projectRepository.GetAll()
+                    .Where(x => x.IsSubProject)
+                    .ProjectTo<LibrarySubProjectItem>(_mapper.ConfigurationProvider)
+                    .OrderBy(x => x.Name)
+                    .ToList();
+            }
+
+            return _projectRepository.GetAll()
+                .Where(x => x.IsSubProject && x.Name.ToLower().Contains(searchString.ToLower()))
+                .ProjectTo<LibrarySubProjectItem>(_mapper.ConfigurationProvider)
+                .OrderBy(x => x.Name)
+                .ToList();
         }
     }
 }

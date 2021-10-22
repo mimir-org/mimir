@@ -1,25 +1,30 @@
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../redux/store";
 import { ProjectComponent, SplitViewComponent } from "./";
 import { TextResources } from "../../assets/text";
 import { MODULE_TYPE } from "../../models/project";
 import { AnimatedModule, Size } from "../../compLibrary";
 import { IsBlockView } from "../../components/flow/block/helpers";
 import { ModuleHead, ModuleBody } from "../../compLibrary/box/modules";
-import { Project } from "../../models";
 import { OnToggleClick } from "./handlers";
 import { ExplorerIcon } from "../../assets/icons/modules";
+import {
+  isAnimatedModuleSelector,
+  isExplorerOpenSelector,
+  projectSelector,
+  useAppDispatch,
+  useAppSelector,
+  useParametricAppSelector,
+} from "../../redux/store";
 
 /**
  * Component for the Explorer Module in Mimir.
  * @returns a module where all nodes in Mimir are listed.
  */
 export const ExplorerModule = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const type = MODULE_TYPE.EXPLORER;
-  const project = useSelector<RootState>((s) => s.projectState.project) as Project;
-  const isOpen = useSelector<RootState>((s) => s.modules.types.find((x) => x.type === type).visible) as boolean;
-  const animate = useSelector<RootState>((s) => s.modules.types.find((x) => x.type === type).animate) as boolean;
+  const project = useAppSelector(projectSelector);
+  const isOpen = useAppSelector(isExplorerOpenSelector);
+  const animate = useParametricAppSelector(isAnimatedModuleSelector, type);
 
   const start = isOpen ? Size.ModuleClosed : Size.ModuleOpen;
   const stop = isOpen ? Size.ModuleOpen : Size.ModuleClosed;

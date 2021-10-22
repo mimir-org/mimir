@@ -4,8 +4,7 @@ import { useMemo, useState } from "react";
 import { ParametersContent } from "../parameters";
 import { TerminalsWrapper } from "./styled/TerminalsWrapper";
 import { TerminalsParametersWrapper } from "./styled/TerminalsParametersWrapper";
-import { createSelector } from "@reduxjs/toolkit";
-import { RootState, useAppSelector } from "../../../../redux/store";
+import { useAppSelector, terminalTypeSelector } from "../../../../redux/store";
 import { GetFilteredTerminalsList } from "../../../../typeEditor/helpers";
 import { InspectorElement } from "../../types";
 import { GetTerminalParentElement, GetTerminals } from "./helpers";
@@ -16,7 +15,7 @@ interface Props {
 
 const TerminalsComponent = ({ element }: Props) => {
   const terminalParentElement = GetTerminalParentElement(element);
-  const categoryTypes = useAppSelector(categoryTypeSelector);
+  const categoryTypes = useAppSelector(terminalTypeSelector);
   const [selectedTerminalId, setSelectedTerminalId] = useState<string>(null);
   const terminals = useMemo(() => GetTerminals(element), [element]);
   const terminalCategories = useMemo(() => GetFilteredTerminalsList(categoryTypes), [categoryTypes]);
@@ -46,10 +45,5 @@ const TerminalsComponent = ({ element }: Props) => {
     </TerminalsWrapper>
   );
 };
-
-const categoryTypeSelector = createSelector(
-  (state: RootState) => state.typeEditor.terminals,
-  (terminals) => terminals ?? []
-);
 
 export default TerminalsComponent;

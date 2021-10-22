@@ -1,4 +1,4 @@
-import { CombinedAttributeFilter, EnumBase } from "../../../models";
+import { CombinedAttributeFilter, Contractor, EnumBase } from "../../../models";
 import { ApiError } from "../../../models/webclient";
 export const FETCHING_CONTRACTORS = "FETCHING_CONTRACTORS";
 export const DELETE_COMMON_ERROR = "DELETE_COMMON_ERROR";
@@ -16,13 +16,6 @@ export interface CommonState {
   filters: CombinedAttributeFilter[] | null;
   statuses: EnumBase[] | null;
   apiError: ApiError[];
-}
-
-// Models
-export interface Contractor {
-  id: string;
-  name: string;
-  domain: string;
 }
 
 // Action types

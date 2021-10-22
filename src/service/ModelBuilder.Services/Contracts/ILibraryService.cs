@@ -9,5 +9,6 @@ namespace Mb.Services.Contracts
         IEnumerable<LibraryNodeItem> GetNodeTypes();
         IEnumerable<LibraryTransportItem> GetTransportTypes();
         IEnumerable<LibraryInterfaceItem> GetInterfaceTypes();
+        IEnumerable<LibrarySubProjectItem> GetSubProjects(string searchString = null);
     }
 }
