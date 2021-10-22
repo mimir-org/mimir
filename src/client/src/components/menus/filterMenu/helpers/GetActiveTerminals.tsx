@@ -1,28 +1,33 @@
-import { Connector, EDGE_KIND } from "../../../../models";
+import { Edge, Node, EDGE_KIND } from "../../../../models";
 import { EDGE_TYPE } from "../../../../models/project";
 
 const GetActiveTerminals = (elements: any[], nodes: any[]) => {
-  const terminals: Connector[] = [];
+  const activeElements: any[] = [];
   const edgeTypes = Object.values(EDGE_TYPE);
 
   elements?.forEach((elem) => {
     const isEdge = edgeTypes.some((x) => x === elem.type?.toString() || elem.kind === EDGE_KIND);
 
     if (isEdge) {
-      const sourceConnId = elem?.data.edge.fromConnectorId;
-      const targetConnId = elem?.data.edge.toConnectorId;
-      const sourceNodeId = elem?.data.edge.fromNodeId;
-      const targetNodeId = elem?.data.edge.toNodeId;
-      const sourceNode = nodes.find((n) => n.data.id === sourceNodeId);
-      const targetNode = nodes.find((n) => n.data.id === targetNodeId);
-      const sourceConn = sourceNode.data.connectors?.find((c: Connector) => c.id === sourceConnId) as Connector;
-      const targetConn = targetNode.data.connectors?.find((c: Connector) => c.id === targetConnId) as Connector;
+      const edge = elem.data.edge as Edge;
 
-      if (sourceConn) terminals.push(sourceConn);
-      if (targetConn) terminals.push(targetConn);
+      const sourceConnId = edge.fromConnectorId;
+      const targetConnId = edge.toConnectorId;
+      const sourceNodeId = edge.fromNodeId;
+      const targetNodeId = edge.toNodeId;
+
+      const sourceNode = nodes.find((n) => n.data.id === sourceNodeId).data as Node;
+      const targetNode = nodes.find((n) => n.data.id === targetNodeId).data as Node;
+
+      const sourceConn = sourceNode.connectors?.find((c) => c.id === sourceConnId);
+      const targetConn = targetNode.connectors?.find((c) => c.id === targetConnId);
+
+      activeElements.push(edge);
+      activeElements.push(sourceConn);
+      activeElements.push(targetConn);
     }
   });
-  return terminals;
+  return activeElements;
 };
 
 export default GetActiveTerminals;

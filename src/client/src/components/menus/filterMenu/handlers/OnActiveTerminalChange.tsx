@@ -1,9 +1,16 @@
-import { Connector } from "../../../../models";
+import { EDGE_KIND } from "../../../../models";
+import { EDGE_TYPE } from "../../../../models/project";
 import { changeActiveConnector } from "../../../../redux/store/project/actions";
 
-const OnActiveTerminalChange = (terminals: Connector[], dispatch: any) => {
-  terminals.forEach((c) => {
-    dispatch(changeActiveConnector(c?.nodeId, c?.id, !c?.visible, c?.inputOrder, c?.outputOrder));
+const OnActiveTerminalChange = (activeElements: any[], dispatch: any, visible: boolean) => {
+  const edgeTypes = Object.values(EDGE_TYPE);
+
+  // Toggle active terminals and edges
+  activeElements.forEach((elem) => {
+    const isEdge = edgeTypes.some((x) => x === elem.type?.toString() || elem.kind === EDGE_KIND);
+
+    if (isEdge) elem.isHidden = visible;
+    else dispatch(changeActiveConnector(elem?.nodeId, elem?.id, !visible, elem?.inputOrder, elem?.outputOrder));
   });
 };
 

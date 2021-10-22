@@ -41,13 +41,13 @@ const FilterTerminalDropdown = ({ allTerminals, activeTerminals, inactiveTermina
             <p>{TextResources.Filter_Show_Terminals}</p>
           </MenuListItem>
 
-          <MenuListItem onClick={() => OnActiveTerminalChange(activeTerminals, dispatch)}>
+          <MenuListItem onClick={() => OnActiveTerminalChange(activeTerminals, dispatch, activeTerminalsChecked)}>
             <CheckboxWrapper>
               <label className={"checkbox-block"}>
                 <input
                   type="checkbox"
                   checked={activeTerminalsChecked}
-                  onChange={() => OnActiveTerminalChange(activeTerminals, dispatch)}
+                  onChange={() => OnActiveTerminalChange(activeTerminals, dispatch, activeTerminalsChecked)}
                 />
                 <span className="checkmark-block"></span>
               </label>
