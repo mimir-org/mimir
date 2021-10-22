@@ -1,8 +1,8 @@
-import { Edge, EDGE_KIND } from "../../../../models";
+import { EDGE_KIND } from "../../../../models";
 import { EDGE_TYPE } from "../../../../models/project";
 
 const GetEdges = (elements: any[]) => {
-  const edges: Edge[] = [];
+  const edges: any[] = [];
   const edgeTypes = Object.values(EDGE_TYPE);
 
   elements?.forEach((elem) => {

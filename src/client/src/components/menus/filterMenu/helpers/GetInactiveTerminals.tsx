@@ -4,7 +4,7 @@ const GetInactiveTerminals = (nodes: Node[]) => {
   const terminals = [];
 
   nodes.forEach((n) => {
-    n.connectors.forEach((c) => {
+    n.connectors?.forEach((c) => {
       if (!c.visible) terminals.push(c);
     });
   });

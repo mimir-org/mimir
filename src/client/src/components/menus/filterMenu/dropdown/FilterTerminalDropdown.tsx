@@ -15,8 +15,8 @@ interface Props {
 
 const FilterTerminalDropdown = ({ allTerminals, activeTerminals, inactiveTerminals, label, dispatch }: Props) => {
   const [listOpen, setListOpen] = useState(false);
-  const activeTerminalsChecked = activeTerminals.some((c) => c.visible);
-  const allTerminalsChecked = !allTerminals.some((c) => !c.visible);
+  const activeTerminalsChecked = activeTerminals.some((c) => c?.visible);
+  const allTerminalsChecked = !allTerminals.some((c) => !c?.visible);
 
   return (
     <MenuWrapper>
