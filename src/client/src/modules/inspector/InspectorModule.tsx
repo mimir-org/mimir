@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useRef } from "react";
 import {
   isAnimatedModuleSelector,
   isExplorerOpenSelector,
@@ -12,11 +12,11 @@ import {
 import { Size } from "../../compLibrary";
 import { MODULE_TYPE } from "../../models/project";
 import { IsBlockView } from "../../components/flow/block/helpers";
-import { DragResizePanel } from "./helpers";
 import { AnimatedInspector, ResizePanel } from "./styled";
 import { InspectorHeader } from ".";
 import { GetSelectedNode } from "../../components/flow/helpers";
 import { InspectorElement } from "./types";
+import { useDragResizePanel } from "./helpers/useDragResizePanel";
 
 /**
  * Component for the Inspector Module that shows the data for each object in Flow.
@@ -39,12 +39,12 @@ const InspectorModule = () => {
   const edge = edges.find((x) => x.isSelected);
   const node = IsBlockView() ? nodes?.find((x) => x.isBlockSelected) : GetSelectedNode();
 
+  const inspectorRef = useRef(null);
+  const resizePanelRef = useRef(null);
+
   const element: InspectorElement = node || edge;
 
-  useEffect(() => {
-    DragResizePanel(dispatch);
-  }, [dispatch]);
-
+  useDragResizePanel(inspectorRef, resizePanelRef, dispatch);
   return (
     <AnimatedInspector
       id="InspectorModule"
@@ -56,8 +56,9 @@ const InspectorModule = () => {
       stop={stop}
       run={animate}
       zIndex={5}
+      forwardRef={inspectorRef}
     >
-      <ResizePanel id="ResizePanel" />
+      <ResizePanel id="ResizePanel" ref={resizePanelRef} />
       <InspectorHeader project={project} element={element} dispatch={dispatch} open={inspectorOpen} type={type} />
     </AnimatedInspector>
   );

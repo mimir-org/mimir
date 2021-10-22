@@ -1,9 +1,9 @@
-import { useEffect } from "react";
+import { useRef } from "react";
 import { Size } from "../../compLibrary";
 import { CreateLibraryType } from "../../models";
 import { MODULE_TYPE } from "../../models/project";
 import { InspectorHeader } from "../../modules/inspector";
-import { DragResizePanel } from "../../modules/inspector/helpers";
+import { useDragResizePanel } from "../../modules/inspector/helpers/useDragResizePanel";
 import { AnimatedInspector, ResizePanel } from "../../modules/inspector/styled";
 import {
   useAppDispatch,
@@ -37,15 +37,16 @@ export const TypeEditorInspector = ({ createLibraryType }: Props) => {
     createLibraryType.attributeTypes
   );
 
+  const inspectorRef = useRef(null);
+  const resizePanelRef = useRef(null);
+
   const stop = inspectorOpen ? Size.ModuleOpen : Size.ModuleClosed;
   const start = inspectorOpen ? Size.ModuleClosed : Size.ModuleOpen;
 
-  useEffect(() => {
-    DragResizePanel(dispatch);
-  }, [dispatch]);
+  useDragResizePanel(inspectorRef, resizePanelRef, dispatch, 355);
+
   return (
     <AnimatedInspector
-      id="TypeEditorInspectorModule"
       type={type}
       isLibraryOpen={false}
       isExplorerOpen={false}
@@ -55,8 +56,9 @@ export const TypeEditorInspector = ({ createLibraryType }: Props) => {
       stop={stop}
       run={animate}
       zIndex={110}
+      forwardRef={inspectorRef}
     >
-      <ResizePanel id="ResizePanel" />
+      <ResizePanel ref={resizePanelRef} />
       <InspectorHeader
         project={project}
         element={createLibraryType}
