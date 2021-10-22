@@ -1,19 +1,24 @@
-import { Node, Edge } from "../../../../models";
-import { IsTransportTerminal } from "../../../flow/helpers";
+import { Connector, Node, EDGE_KIND } from "../../../../models";
+import { EDGE_TYPE } from "../../../../models/project";
 
-const GetActiveTerminals = (nodes: Node[], edges: Edge[]) => {
-  const terminals = [];
+const GetActiveTerminals = (elements: any[], nodes: Node[]) => {
+  const terminals: Connector[] = [];
+  const edgeTypes = Object.values(EDGE_TYPE);
 
-  edges.forEach((e) => {
-    const fromConn = e.fromConnector;
-    const toConn = e.toConnector;
-    if (IsTransportTerminal(fromConn) && IsTransportTerminal(toConn)) {
-      const sourceNode = nodes.find((n) => n.id === fromConn.nodeId);
-      const targetNode = nodes.find((n) => n.id === toConn.nodeId);
-      const sourceTerminal = sourceNode.connectors.find((c) => c.id === fromConn.id);
-      const targetTerminal = targetNode.connectors.find((c) => c.id === toConn.id);
-      if (sourceTerminal) terminals.push(sourceTerminal);
-      if (targetTerminal) terminals.push(targetTerminal);
+  elements?.forEach((elem) => {
+    const isEdge = edgeTypes.some((x) => x === elem.type?.toString() || elem.kind === EDGE_KIND);
+
+    if (isEdge) {
+      const sourceConnId = elem?.data.edge.fromConnectorId;
+      const targetConnId = elem?.data.edge.toConnectorId;
+      const sourceNodeId = elem?.data.edge.fromNodeId;
+      const targetNodeId = elem?.data.edge.toNodeId;
+      const sourceNode = nodes.find((n) => n.id === sourceNodeId);
+      const targetNode = nodes.find((n) => n.id === targetNodeId);
+      const sourceConn = sourceNode.connectors.find((c) => c.id === sourceConnId);
+      const targetConn = targetNode.connectors.find((c) => c.id === targetConnId);
+      terminals.push(sourceConn);
+      terminals.push(targetConn);
     }
   });
 

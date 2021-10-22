@@ -1,4 +1,4 @@
-import { Node, Project } from "../../../models";
+import { Node } from "../../../models";
 import { splitNodeSelector, splitViewSelector, useAppDispatch, useAppSelector } from "../../../redux/store";
 import { GetSelectedNode } from "../../../components/flow/helpers";
 import { OnCheckboxChange } from "../handlers";
@@ -6,16 +6,14 @@ import { OnCheckboxChange } from "../handlers";
 interface Props {
   node: Node;
   inputLabel: string;
-  project: Project;
 }
 /**
  * Checkbox used in the Explorer in BlockView
  * @param interface
  * @returns a checkbox
  */
-export const CheckboxBlock = ({ node, inputLabel, project }: Props) => {
+export const CheckboxBlock = ({ node, inputLabel }: Props) => {
   const dispatch = useAppDispatch();
-  const nodes = project?.nodes;
   const splitView = useAppSelector(splitViewSelector);
   const splitViewNode = useAppSelector(splitNodeSelector);
   const selectedNode = GetSelectedNode();
@@ -27,7 +25,7 @@ export const CheckboxBlock = ({ node, inputLabel, project }: Props) => {
       <input
         type="checkbox"
         checked={isChecked}
-        onChange={() => OnCheckboxChange(dispatch, splitView, node, selectedNode, splitViewNode, nodes)}
+        onChange={() => OnCheckboxChange(dispatch, splitView, node, selectedNode, splitViewNode)}
       />
       <span className="checkmark"></span>
       <label className="checkbox_label">{inputLabel}</label>

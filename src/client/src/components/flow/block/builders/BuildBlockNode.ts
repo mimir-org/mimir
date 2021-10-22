@@ -13,9 +13,8 @@ import { GetNodeTypeString, SetBlockNodePos, SetConnectorOrder } from "./helpers
  */
 const BuildBlockNode = (node: Node, connectNode: Node, allNodes: Node[]) => {
   if (!node) return null;
-  node.blockVisible = true;
 
-  // SetConnectorOrder(node);
+  SetConnectorOrder(node);
 
   const connectNodes = connectNode?.connectNodes ?? [];
   const type = GetNodeTypeString(node);

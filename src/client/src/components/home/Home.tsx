@@ -48,7 +48,7 @@ const Home = () => {
       <ExplorerModule />
       {accountMenuOpen && <AccountMenu />}
       {!IsBlockView() && treeFilter && <TreeFilterMenu />}
-      {IsBlockView() && blockFilter && <BlockFilterMenu />}
+      {/* {IsBlockView() && blockFilter && <BlockFilterMenu />} */}
       <FlowModule route={params} dispatch={dispatch} />
       <InspectorModule />
       <LibraryModule />

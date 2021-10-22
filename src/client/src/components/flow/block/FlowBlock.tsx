@@ -27,6 +27,7 @@ import {
   splitViewSelector,
   userStateSelector,
 } from "../../../redux/store";
+import { BlockFilterMenu } from "../../menus/filterMenu/block";
 
 /**
  * Component for the Flow library in BlockView
@@ -142,6 +143,7 @@ const FlowBlock = () => {
                 <Background size={0.5} color={Color.Grey} variant={BackgroundVariant.Lines} />
               </BackgroundBox>
             </ReactFlow>
+            <BlockFilterMenu elements={elements} />
           </div>
         </ReactFlowProvider>
       )}

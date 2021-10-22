@@ -30,7 +30,7 @@ export const AspectComponent = ({
     {IsAspectNode(node) && <img src={GetAspectIcon(node)} alt="aspect-icon" className="icon"></img>}
     <div className="checkbox_container">
       {IsBlockView() ? (
-        <CheckboxBlock node={node} inputLabel={label} project={project} />
+        <CheckboxBlock node={node} inputLabel={label} />
       ) : (
         <Checkbox node={node} project={project} inputLabel={label} />
       )}

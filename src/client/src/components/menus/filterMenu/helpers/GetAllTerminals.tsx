@@ -1,12 +1,19 @@
-import { Node } from "../../../../models";
+import { Connector, EDGE_KIND } from "../../../../models";
+import { EDGE_TYPE } from "../../../../models/project";
+import { IsTransportTerminal } from "../../../flow/helpers";
 
-const GetAllTerminals = (nodes: Node[]) => {
-  const terminals = [];
+const GetAllTerminals = (elements: any[]) => {
+  const terminals: Connector[] = [];
+  const edgeTypes = Object.values(EDGE_TYPE);
 
-  nodes.forEach((n) => {
-    n.connectors.forEach((c) => {
-      terminals.push(c);
-    });
+  elements?.forEach((elem) => {
+    const isEdge = edgeTypes.some((x) => x === elem.type?.toString() || elem.kind === EDGE_KIND);
+
+    if (!isEdge) {
+      elem?.data.connectors?.forEach((c: Connector) => {
+        if (IsTransportTerminal(c)) terminals.push(c);
+      });
+    }
   });
 
   return terminals;

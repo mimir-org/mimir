@@ -234,9 +234,9 @@ const TextResources = {
   RDS_Location: "++",
 
   // Visual Filter
-  Filter_Toggle_Terminals: "Toggle all terminals",
-  Filter_Toggle_Active_Terminals: "Toggle all active terminals",
-  Filter_Toggle_Inactive_Terminals: "Toggle all inactive terminals",
+  Filter_Show_Terminals: "Show all terminals",
+  Filter_Show_Active_Terminals: "Show all active terminals",
+  Filter_Show_Inactive_Terminals: "Show all inactive terminals",
 };
 
 export default TextResources;
