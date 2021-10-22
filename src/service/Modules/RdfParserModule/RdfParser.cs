@@ -53,8 +53,7 @@ namespace RdfParserModule
             var valueAsString = Encoding.UTF8.GetString(data, 0, data.Length);
 
             var rdf = new RdfDeconstructor(_mapper);
-            rdf.LoadGraph(valueAsString);
-            rdf.MakeProject();
+            rdf.MakeProject(valueAsString);
 
             return Task.FromResult(rdf.Project);
         }

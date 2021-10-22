@@ -7,7 +7,7 @@ namespace RdfParserModule
     {
         public string Prefix { get; set; }
         public string Id { get; set; }
-        public string NormalId { get; set; }
+        public string Iri { get; set; }
         public string Name { get; set; }
         public string Version { get; set; }
         public string Label { get; set; }

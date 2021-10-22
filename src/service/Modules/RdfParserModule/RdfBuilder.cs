@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -25,29 +24,6 @@ namespace RdfParserModule
         public IUriNode ProductRoot;
 
 
-        private IDictionary<string, string> GetNamespaces()
-        {
-            IDictionary<string, string> namespaces = new Dictionary<string, string>()
-            {
-                // Kanskje midlertidig ontologi for RDS-klassar (for Mimir)
-                {Resources.mimirPrefix.Replace(":", ""), "http://equinor.com/mimir#"}, // String range removes ':' from prefix which is needed elsewhere
-                {Resources.equinorPrefix.Replace(":", ""), "http://equinor.com#"},
-                {"imf", "http://example.com/imf#"},
-                {"rds", "http://example.com/rds"},
-                {"cw", "http://example.com/rds/cw#"},
-                {"og1", "http://example.com/rds/og1#"},
-                {"og2", "http://example.com/rds/og2#"},
-                {"og3", "http://example.com/rds/og3#"},
-                {"ps", "http://example.com/rds/ps#"},
-                {"rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#"},
-                {"rdfs", "http://www.w3.org/2000/01/rdf-schema#"},
-                {"xsd", "http://www.w3.org/2001/XMLSchema#"},
-                {"owl", "http://www.w3.org/2002/07/owl#"},
-                {"xml", "http://www.w3.org/XML/1998/namespace"}
-            };
-
-            return namespaces;
-        }
         private IGraph BaseGraph()
         {
             // IMF Ontology: https://raw.githubusercontent.com/Sirius-sfi/aas-imf/main/imf-ontology/imf-202109.owl
@@ -57,18 +33,6 @@ namespace RdfParserModule
             var filePath = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}/Data/ontologies.owl";
             ontology.LoadFromFile(filePath, new TurtleParser());
 
-
-            //IDictionary<string, string> namespaces = GetNamespaces();
-
-            //foreach(KeyValuePair<string, string> ns in namespaces)
-            //{
-            //    var prefix = ns.Key;
-            //    var uri = ns.Value;
-
-            //    ontology.NamespaceMap.AddNamespace(prefix, new Uri(uri));
-            //}
-
-
             return ontology;
 
         }
@@ -76,15 +40,13 @@ namespace RdfParserModule
         private string IDtoIRI(string prefix, string id, string qualifier = "")
         {
             id = id.Replace("equinor.com_", "");
-            //id = id.Replace("_", "/");
+
             if (string.IsNullOrEmpty(qualifier))
             {
                 return prefix + "ID" + id;
             }
-            else
-            {
-                return prefix + "ID" + id + "/" + qualifier;
-            }
+
+            return prefix + "ID" + id + "/" + qualifier;
         }
 
 
@@ -130,8 +92,7 @@ namespace RdfParserModule
 
             foreach (var node in Project.Nodes)
             {
-                var nodeId = Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, node.Id));              
-
+                var nodeId = Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, node.Id));
 
                 if (node.IsRoot)
                 {
@@ -249,10 +210,8 @@ namespace RdfParserModule
                 foreach (var attribute in attributes)
                 {
                     var value = attribute.Value;
-                    if (value is null)
-                    {
-                        continue;
-                    }
+                    if (value is null) continue;
+
                     var attributeNode = Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, attribute.Id));
 
                     var attributeTypeNode = Graph.CreateUriNode(IDtoIRI(Resources.equinorPrefix, attribute.AttributeTypeId));
@@ -456,9 +415,8 @@ namespace RdfParserModule
         {
             var writer = new T();
 
-            var data = StringWriter.Write(Graph, writer);
+            return StringWriter.Write(Graph, writer);
 
-            return data;
         }
         public byte[] GetBytes<T>() where T : IRdfWriter, new()
         {

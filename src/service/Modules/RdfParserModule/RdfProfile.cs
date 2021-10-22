@@ -2,11 +2,10 @@
 using System.Text.RegularExpressions;
 using AutoMapper;
 using Mb.Models.Application;
-using Mb.Models.Data;
 
 namespace RdfParserModule
 {
-    class RdfProfile : Profile
+    public class RdfProfile : Profile
     {
         public RdfProfile()
         {

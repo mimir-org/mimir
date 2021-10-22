@@ -5,7 +5,7 @@ namespace RdfParserModule
     public class ParserGraph
     {
         public string Id { get; set; }
-        public string NormalId { get; set; }
+        public string Iri { get; set; }
         public string Name { get; set; }
         public string Label { get; set; }
         public bool IsSubProject { get; set; }
@@ -13,11 +13,11 @@ namespace RdfParserModule
         public ICollection<ParserNode> Nodes { get; set; }
         public ICollection<ParserEdge> Edges { get; set; }
 
-        public ParserNode GetNode(string nodeId)
+        public ParserNode GetNode(string nodeIri)
         {
             foreach (var node in Nodes)
             {
-                if (node.Id == nodeId)
+                if (node.Iri == nodeIri)
                 {
                     return node;
                 }

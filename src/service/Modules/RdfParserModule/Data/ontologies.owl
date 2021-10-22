@@ -10,6 +10,9 @@
 @prefix og1: <http://example.com/rds/og1#>.
 @prefix og2: <http://example.com/rds/og2#>.
 @prefix og3: <http://example.com/rds/og3#>.
+@prefix og4: <http://example.com/rds/og4#>.
+@prefix og5: <http://example.com/rds/og5#>.
+@prefix og6: <http://example.com/rds/og6#>.
 @prefix ps: <http://example.com/rds/ps#>.
 @prefix xml: <http://www.w3.org/XML/1998/namespace>.
 @base <http://equinor.com/ontologies>.
