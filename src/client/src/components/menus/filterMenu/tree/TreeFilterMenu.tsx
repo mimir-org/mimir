@@ -1,22 +1,25 @@
 import { useAppDispatch, useAppSelector } from "../../../../redux/store";
-import { Connector, Project } from "../../../../models";
+import { Connector } from "../../../../models";
 import { FilterMenuBox, MenuColumn } from "../../../../compLibrary/box/menus";
 import { IsLibrary } from "../../../flow/helpers";
 import { FilterDropdown } from "../dropdown";
 import { TextResources } from "../../../../assets/text";
 import { OnChange } from "../handlers";
-import { PopulateFilterLists } from "../helpers";
+import { GetEdges, GetNodes, PopulateFilterLists } from "../helpers";
+
+interface Props {
+  elements: any[];
+}
 
 /**
  * Menu to filter terminals and edges in TreeView.
  * @returns a menu with multiple drop-down menus
  */
-const TreeFilterMenu = () => {
+const TreeFilterMenu = ({ elements }: Props) => {
   const dispatch = useAppDispatch();
-  const project = useAppSelector((s) => s.projectState.project) as Project;
-  const libraryOpen = useAppSelector((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible);
-  const edges = project?.edges;
-  const nodes = project?.nodes;
+  const libOpen = useAppSelector((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible);
+  const edges = GetEdges(elements);
+  const nodes = GetNodes(elements);
 
   const transportItems = [] as Connector[];
   const relationItems = [] as Connector[];
@@ -28,7 +31,7 @@ const TreeFilterMenu = () => {
   PopulateFilterLists(edges, transportItems, relationItems, partOfItems);
 
   return (
-    <FilterMenuBox libraryOpen={libraryOpen}>
+    <FilterMenuBox libraryOpen={libOpen}>
       <MenuColumn>
         <FilterDropdown
           terminals={transportItems}

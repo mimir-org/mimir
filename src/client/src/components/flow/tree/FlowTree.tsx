@@ -17,12 +17,14 @@ import { changeInspectorHeight } from "../../../modules/inspector/redux/height/a
 import { FlowManipulator } from "./FlowManipulator";
 import { OnTreeClick } from "./handlers/";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
+import { TreeFilterMenu } from "../../menus/filterMenu/tree";
 import {
   darkModeSelector,
   iconSelector,
   inspectorOpenSelector,
   librarySelector,
   projectSelector,
+  treeFilterSelector,
   userStateSelector,
 } from "../../../redux/store";
 
@@ -41,6 +43,7 @@ const FlowTree = () => {
   const icons = useAppSelector(iconSelector);
   const library = useAppSelector(librarySelector);
   const inspectorOpen = useAppSelector(inspectorOpenSelector);
+  const treeFilter = useAppSelector(treeFilterSelector);
   const node = GetSelectedNode();
   const selectedNodeId = useMemo(() => node?.id ?? project?.edges.find((edge) => edge.isSelected)?.id, [project, node]);
 
@@ -127,6 +130,7 @@ const FlowTree = () => {
             <FullScreenComponent />
             <FlowManipulator elements={elements} selectedId={selectedNodeId} />
           </ReactFlow>
+          {treeFilter && <TreeFilterMenu elements={elements} />}
         </ReactFlowProvider>
       )}
     </>

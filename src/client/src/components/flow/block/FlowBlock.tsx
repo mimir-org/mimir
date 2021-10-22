@@ -15,6 +15,7 @@ import { changeInspectorHeight } from "../../../modules/inspector/redux/height/a
 import { SetPanelHeight } from "../../../modules/inspector/helpers";
 import { SetSplitViewBackground } from "./helpers";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
+import { BlockFilterMenu } from "../../menus/filterMenu/block";
 import {
   inspectorOpenSelector,
   darkModeSelector,
@@ -26,8 +27,8 @@ import {
   splitNodeSelector,
   splitViewSelector,
   userStateSelector,
+  blockFilterSelector,
 } from "../../../redux/store";
-import { BlockFilterMenu } from "../../menus/filterMenu/block";
 
 /**
  * Component for the Flow library in BlockView
@@ -48,6 +49,8 @@ const FlowBlock = () => {
   const inspectorOpen = useAppSelector(inspectorOpenSelector);
   const electro = useAppSelector(isElectroSelector);
   const userState = useAppSelector(userStateSelector);
+  const blockFilter = useAppSelector(blockFilterSelector);
+
   const node = GetSelectedNode();
   const showBackground = IsLocation(splitViewNode) || IsLocation(node);
 
@@ -143,7 +146,7 @@ const FlowBlock = () => {
                 <Background size={0.5} color={Color.Grey} variant={BackgroundVariant.Lines} />
               </BackgroundBox>
             </ReactFlow>
-            <BlockFilterMenu elements={elements} />
+            {blockFilter && <BlockFilterMenu elements={elements} />}
           </div>
         </ReactFlowProvider>
       )}
