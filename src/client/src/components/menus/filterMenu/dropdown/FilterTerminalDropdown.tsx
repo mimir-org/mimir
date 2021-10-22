@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { MenuWrapper, MenuHeader, MenuList, MenuListItem, CheckboxWrapper } from "./styled";
+import { MenuWrapper, MenuHeader, MenuList } from "./styled";
 import { ExpandIcon, CollapseIcon } from "../../../../assets/icons/chevron";
 import { Connector } from "../../../../models";
 import { TextResources } from "../../../../assets/text";
 import { OnAllTerminalsChange, OnActiveTerminalChange } from "../handlers";
+import { FilterTerminalElement } from ".";
 
 interface Props {
   allTerminals: Connector[];
@@ -13,6 +14,11 @@ interface Props {
   dispatch: any;
 }
 
+/**
+ * Component in Visual Filter for terminals.
+ * @param interface
+ * @returns a drop-down menu for a node's terminals.
+ */
 const FilterTerminalDropdown = ({ allTerminals, activeTerminals, inactiveTerminals, label, dispatch }: Props) => {
   const [listOpen, setListOpen] = useState(false);
   const activeTerminalsChecked = activeTerminals.some((c) => c?.visible);
@@ -27,47 +33,17 @@ const FilterTerminalDropdown = ({ allTerminals, activeTerminals, inactiveTermina
 
       {listOpen && (
         <MenuList>
-          <MenuListItem onClick={() => OnAllTerminalsChange(allTerminals, dispatch, allTerminalsChecked)}>
-            <CheckboxWrapper>
-              <label className={"checkbox-block"}>
-                <input
-                  type="checkbox"
-                  checked={allTerminalsChecked}
-                  onChange={() => OnAllTerminalsChange(allTerminals, dispatch, allTerminalsChecked)}
-                />
-                <span className="checkmark-block"></span>
-              </label>
-            </CheckboxWrapper>
-            <p>{TextResources.Filter_Show_Terminals}</p>
-          </MenuListItem>
+          <FilterTerminalElement
+            checked={allTerminalsChecked}
+            label={TextResources.Filter_Show_Terminals}
+            onChange={() => OnAllTerminalsChange(allTerminals, dispatch, allTerminalsChecked)}
+          />
 
-          <MenuListItem onClick={() => OnActiveTerminalChange(activeTerminals, dispatch, activeTerminalsChecked)}>
-            <CheckboxWrapper>
-              <label className={"checkbox-block"}>
-                <input
-                  type="checkbox"
-                  checked={activeTerminalsChecked}
-                  onChange={() => OnActiveTerminalChange(activeTerminals, dispatch, activeTerminalsChecked)}
-                />
-                <span className="checkmark-block"></span>
-              </label>
-            </CheckboxWrapper>
-            <p>{TextResources.Filter_Show_Active_Terminals}</p>
-          </MenuListItem>
-
-          {/* <MenuListItem onClick={() => onInactiveTerminalsChange()}>
-            <CheckboxWrapper>
-              <label className={"checkbox-block"}>
-                <input
-                  type="checkbox"
-                  checked={inactiveTerminals[0]?.visible}
-                  onChange={() => onInactiveTerminalsChange()}
-                />
-                <span className="checkmark-block"></span>
-              </label>
-            </CheckboxWrapper>
-            <p>{TextResources.Filter_Toggle_Inactive_Terminals}</p>
-          </MenuListItem> */}
+          <FilterTerminalElement
+            checked={activeTerminalsChecked}
+            label={TextResources.Filter_Show_Active_Terminals}
+            onChange={() => OnActiveTerminalChange(activeTerminals, dispatch, activeTerminalsChecked)}
+          />
         </MenuList>
       )}
     </MenuWrapper>
