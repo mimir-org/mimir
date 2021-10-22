@@ -1,6 +1,12 @@
 import { Edge, Node, EDGE_KIND } from "../../../../models";
 import { EDGE_TYPE } from "../../../../models/project";
 
+/**
+ * Method to find a node's active terminals - terminals that have an edge
+ * @param elements
+ * @param nodes
+ * @returns a list of active terminals and edges
+ */
 const GetActiveTerminals = (elements: any[], nodes: any[]) => {
   const activeElements: any[] = [];
   const edgeTypes = Object.values(EDGE_TYPE);
@@ -11,16 +17,11 @@ const GetActiveTerminals = (elements: any[], nodes: any[]) => {
     if (isEdge) {
       const edge = elem.data.edge as Edge;
 
-      const sourceConnId = edge.fromConnectorId;
-      const targetConnId = edge.toConnectorId;
-      const sourceNodeId = edge.fromNodeId;
-      const targetNodeId = edge.toNodeId;
+      const sourceNode = nodes.find((n) => n.data.id === edge.fromNodeId).data as Node;
+      const targetNode = nodes.find((n) => n.data.id === edge.toNodeId).data as Node;
 
-      const sourceNode = nodes.find((n) => n.data.id === sourceNodeId).data as Node;
-      const targetNode = nodes.find((n) => n.data.id === targetNodeId).data as Node;
-
-      const sourceConn = sourceNode.connectors?.find((c) => c.id === sourceConnId);
-      const targetConn = targetNode.connectors?.find((c) => c.id === targetConnId);
+      const sourceConn = sourceNode.connectors.find((c) => c.id === edge.fromConnectorId);
+      const targetConn = targetNode.connectors.find((c) => c.id === edge.toConnectorId);
 
       activeElements.push(edge);
       activeElements.push(sourceConn);
