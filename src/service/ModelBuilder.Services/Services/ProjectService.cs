@@ -312,8 +312,7 @@ namespace Mb.Services.Services
             var subProjectToCreate = new CreateProject
             {
                 Name = subProjectAm.Name,
-                Description = subProjectAm.Description,
-                Version = subProjectAm.Version,
+                Description = subProjectAm.Description
             };
 
             var initSubProjectCreated = CreateInitProject(subProjectToCreate, true);
@@ -346,9 +345,9 @@ namespace Mb.Services.Services
         /// Update a project, if the project does not exist, a ModelBuilderNotFoundException will be thrown.
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="project"></param>
+        /// <param name="projectAm"></param>
         /// <returns></returns>
-        public async Task<Project> UpdateProject(string id, ProjectAm project)
+        public async Task<Project> UpdateProject(string id, ProjectAm projectAm)
         {
             var originalProject = await _projectRepository
                 .FindBy(x => x.Id == id)
@@ -378,24 +377,27 @@ namespace Mb.Services.Services
                 throw new ModelBuilderNotFoundException($"The project with id:{id}, could not be found.");
 
             // Cast connectors
-            CastConnectors(project);
+            CastConnectors(projectAm);
 
             // Remap and create new id's
-            Remap(project);
+            Remap(projectAm);
 
             // Edges
             var existingEdges = originalProject.Edges.ToList();
-            var deleteEdges = existingEdges.Where(x => project.Edges.All(y => y.Id != x.Id)).ToList();
-            var subDeleteEdges = (await _edgeRepository.DeleteEdges(deleteEdges, project.Id)).ToList();
+            var deleteEdges = existingEdges.Where(x => projectAm.Edges.All(y => y.Id != x.Id)).ToList();
+            var subDeleteEdges = (await _edgeRepository.DeleteEdges(deleteEdges, projectAm.Id)).ToList();
 
             // Nodes
             var existingNodes = originalProject.Nodes.ToList();
-            var deleteNodes = existingNodes.Where(x => project.Nodes.All(y => y.Id != x.Id)).ToList();
-            var subDeleteNodes = (await _nodeRepository.DeleteNodes(deleteNodes, project.Id)).ToList();
+            var deleteNodes = existingNodes.Where(x => projectAm.Nodes.All(y => y.Id != x.Id)).ToList();
+            var subDeleteNodes = (await _nodeRepository.DeleteNodes(deleteNodes, projectAm.Id)).ToList();
 
+            //Determine if project version should be incremented
+            SetProjectVersion(originalProject, projectAm);
+            
             // Map new data
-            _mapper.Map(project, originalProject);
-
+            _mapper.Map(projectAm, originalProject);
+            
             var subNodes = _nodeRepository.UpdateInsert(existingNodes, originalProject).ToList();
             var subEdges = _edgeRepository.UpdateInsert(existingEdges, originalProject).ToList();
 
@@ -404,7 +406,7 @@ namespace Mb.Services.Services
             _projectRepository.Update(originalProject);
             await _projectRepository.SaveAsync();
             _projectRepository.Detach(originalProject);
-
+            
             // Resolve
             await ResolveSubProjects(subNodes, subDeleteNodes, subEdges, subDeleteEdges, originalProject.Id);
 
@@ -617,11 +619,9 @@ namespace Mb.Services.Services
         {
             // TODO: We are missing UX here to define what to do in this workflow. For now, we only send data.
 
-            if (package == null)
+            if (string.IsNullOrWhiteSpace(package?.ProjectId))
                 throw new ModelBuilderNullReferenceException("Can't commit a null reference commit package");
 
-            var project = await GetProject(package.ProjectId);
-            
             if (_moduleService.Modules.All(x => !string.Equals(x.Name, package.Parser, StringComparison.CurrentCultureIgnoreCase)))
                 throw new ModelBuilderModuleException($"There is no parser with key: {package.Parser}");
 
@@ -631,6 +631,8 @@ namespace Mb.Services.Services
                 throw new ModelBuilderModuleException($"There is no sender module");
 
             var parser = _moduleService.Resolve<IModelBuilderParser>(package.Parser);
+
+            var project = await GetProject(package.ProjectId);
             var data = await parser.SerializeProject(project);
             var projectString = System.Text.Encoding.UTF8.GetString(data);
 
@@ -651,6 +653,7 @@ namespace Mb.Services.Services
                 if(sender.Instance is IModelBuilderSyncService client)
                 {
                     await client.SendData(export);
+                    SetProjectCommitVersion(project.Id);
                 }
             }
         }
@@ -722,8 +725,9 @@ namespace Mb.Services.Services
             }
         }
 
-        private Node CreateInitAspectNode(Aspect aspect, string version, string projectId)
+        private Node CreateInitAspectNode(Aspect aspect, string projectId)
         {
+            const string version = "1.0";
             const decimal positionY = 5.0m;
             const string connectorName = "PartOf";
 
@@ -816,6 +820,8 @@ namespace Mb.Services.Services
 
         private Project CreateInitProject(CreateProject createProject, bool isSubProject)
         {
+            const string version = "1.0.0";
+
             if (string.IsNullOrWhiteSpace(createProject?.Name))
                 throw new ModelBuilderInvalidOperationException(
                     "You need to give the new project a name");
@@ -832,7 +838,7 @@ namespace Mb.Services.Services
             var project = new Project
             {
                 Id = pid,
-                Version = createProject.Version,
+                Version = version,
                 Name = createProject.Name,
                 Description = createProject.Description,
                 IsSubProject = isSubProject,
@@ -841,9 +847,9 @@ namespace Mb.Services.Services
                 UpdatedBy = _contextAccessor.GetName(),
                 Nodes = new List<Node>
                 {
-                    CreateInitAspectNode(Aspect.Function, createProject.Version, pid),
-                    CreateInitAspectNode(Aspect.Product, createProject.Version, pid),
-                    CreateInitAspectNode(Aspect.Location, createProject.Version, pid)
+                    CreateInitAspectNode(Aspect.Function, pid),
+                    CreateInitAspectNode(Aspect.Product, pid),
+                    CreateInitAspectNode(Aspect.Location, pid)
                 }
             };
 
@@ -993,6 +999,58 @@ namespace Mb.Services.Services
                 }
                 composite.NodeId = newNodeId;
             }
+        }
+
+        private void SetProjectVersion(Project originalProject, ProjectAm projectAm)
+        {
+            if (originalProject == null || string.IsNullOrWhiteSpace(originalProject.Id) || 
+                projectAm == null || string.IsNullOrWhiteSpace(projectAm.Id))
+                return;
+
+            //TODO: The rules for when to trigger major/minor version incrementation is not finalized!
+
+            if (originalProject.IsSubProject != projectAm.IsSubProject)
+            {
+                originalProject.IncrementMinorVersion();
+                return;
+            }
+
+            if (originalProject.Name != projectAm.Name)
+            {
+                originalProject.IncrementMinorVersion();
+                return;
+            }
+
+            if (originalProject.Description != projectAm.Description)
+            {
+                originalProject.IncrementMinorVersion();
+                return;
+            }
+
+            if (originalProject.Nodes?.Count != projectAm.Nodes?.Count)
+            {
+                originalProject.IncrementMinorVersion();
+                return;
+            }
+
+            if (originalProject.Edges?.Count != projectAm.Edges?.Count)
+            {
+                originalProject.IncrementMinorVersion();
+                return;
+            }
+
+        }
+
+        private async void SetProjectCommitVersion(string projectId)
+        {
+            if (string.IsNullOrWhiteSpace(projectId))
+                return;
+
+            var projectCommitVersionUpdate = _projectRepository.FindBy(x => x.Id == projectId).First();
+            projectCommitVersionUpdate.IncrementCommitVersion();
+            _projectRepository.Update(projectCommitVersionUpdate);
+            await _projectRepository.SaveAsync();
+            _projectRepository.Detach(projectCommitVersionUpdate);
         }
 
         #endregion
