@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useRef } from "react";
-import { Dispatch } from "redux";
+import { Action, Dispatch } from "redux";
 import { Size } from "../../../compLibrary";
-import { changeInspectorHeight } from "../redux/height/actions";
 
 const BORDER_SIZE = 44;
 
@@ -9,6 +8,7 @@ export const useDragResizePanel = (
   inspectorRef: React.MutableRefObject<HTMLDivElement>,
   resizePanelRef: React.MutableRefObject<HTMLDivElement>,
   dispatch: Dispatch,
+  changeInspectorHeightAction: (height: number) => Action,
   maxHeight?: number
 ) => {
   let prevYRef = useRef<number>();
@@ -24,8 +24,8 @@ export const useDragResizePanel = (
   );
 
   const onMouseUpCallback = useCallback(
-    () => onMouseUp(inspectorRef, resizeCallback, dispatch),
-    [inspectorRef, resizeCallback, dispatch]
+    () => onMouseUp(inspectorRef, resizeCallback, dispatch, changeInspectorHeightAction),
+    [inspectorRef, resizeCallback, dispatch, changeInspectorHeightAction]
   );
 
   useEffect(() => {
@@ -71,11 +71,12 @@ const onMouseDown = (
 const onMouseUp = (
   inspectorRef: React.MutableRefObject<HTMLDivElement>,
   resizeCallBack: (e: MouseEvent) => void,
-  dispatch: Dispatch
+  dispatch: Dispatch,
+  changeInspectorHeightAction: (height: number) => Action
 ) => {
   if (inspectorRef.current) {
     const height = parseInt(getComputedStyle(inspectorRef.current).height);
-    if (height !== Size.ModuleClosed && height !== Size.ModuleOpen) dispatch(changeInspectorHeight(height));
+    if (height !== Size.ModuleClosed && height !== Size.ModuleOpen) dispatch(changeInspectorHeightAction(height));
   }
 
   document.removeEventListener("mousemove", resizeCallBack);

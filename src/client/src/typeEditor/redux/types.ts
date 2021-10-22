@@ -43,6 +43,8 @@ export const REMOVE_TERMINALTYPE_BY_CATEGORY = "REMOVE_TERMINALTYPE_BY_CATEGORY"
 export const SAVE_LIBRARY_TYPE = "SAVE_LIBRARY_TYPE";
 export const SAVE_LIBRARY_TYPE_SUCCESS_OR_ERROR = "SAVE_LIBRARY_TYPE_SUCCESS_OR_ERROR";
 export const DELETE_TYPE_EDITOR_ERROR = "DELETE_TYPE_EDITOR_ERROR";
+export const CHANGE_TYPE_EDITOR_INSPECTOR_HEIGHT = "CHANGE_TYPE_EDITOR_INSPECTOR_HEIGHT";
+export const CHANGE_TYPE_EDITOR_INSPECTOR_VISIBILITY = "CHANGE_TYPE_EDITOR_INSPECTOR_VISIBILITY";
 
 // State types
 export interface TypeEditorState {
@@ -59,6 +61,10 @@ export interface TypeEditorState {
   simpleTypes: CompositeType[];
   apiError: ApiError[];
   icons: BlobData[];
+  inspector: {
+    visibility: boolean;
+    height: number;
+  };
 }
 
 // Action types
@@ -237,6 +243,20 @@ interface DeleteTypeEditorErrorAction {
   };
 }
 
+interface ChangeTypeEditorInspectorHeight {
+  type: typeof CHANGE_TYPE_EDITOR_INSPECTOR_HEIGHT;
+  payload: {
+    height: number;
+  };
+}
+
+interface ChangeTypeEditorInspectorVisibility {
+  type: typeof CHANGE_TYPE_EDITOR_INSPECTOR_VISIBILITY;
+  payload: {
+    visibility: boolean;
+  };
+}
+
 export type TypeEditorActionTypes =
   | FetchingInitialDataAction
   | FetchingInitialDataActionFinished
@@ -265,4 +285,6 @@ export type TypeEditorActionTypes =
   | RemoveTerminalTypeByCategory
   | SaveLibraryType
   | SaveLibraryTypeFinished
-  | DeleteTypeEditorErrorAction;
+  | DeleteTypeEditorErrorAction
+  | ChangeTypeEditorInspectorHeight
+  | ChangeTypeEditorInspectorVisibility;

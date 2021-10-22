@@ -148,3 +148,17 @@ export function deleteTypeEditorError(key: string) {
     },
   };
 }
+
+export function changeTypeEditorInspectorHeight(height: number) {
+  return {
+    type: Types.CHANGE_TYPE_EDITOR_INSPECTOR_HEIGHT,
+    payload: { height },
+  };
+}
+
+export function changeTypeEditorInspectorVisibility(visibility: boolean) {
+  return {
+    type: Types.CHANGE_TYPE_EDITOR_INSPECTOR_VISIBILITY,
+    payload: { visibility },
+  };
+}

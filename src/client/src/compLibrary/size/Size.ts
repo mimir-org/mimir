@@ -28,6 +28,9 @@ const Size = {
   ModuleClosed: 45,
   Margin: 2,
 
+  //TypeEditor
+  TypeEditorInspectorOpen: 335,
+
   // Menus
   TopMenu_Height: 56,
   MenuSmall_Width: 320,

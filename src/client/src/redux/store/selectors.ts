@@ -197,6 +197,11 @@ export const terminalTypeSelector = createAppSelector(
   (terminals) => terminals ?? []
 );
 
+export const isTypeEditorInspectorOpen = createAppSelector(
+  (state) => state.typeEditor.inspector.visibility,
+  (visibility) => visibility
+);
+
 export const nodeSelector = createAppSelector(
   (state) => state.projectState.project.nodes,
   (nodes) => (nodes ?? []) as Node[]

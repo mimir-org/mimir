@@ -13,6 +13,7 @@ import { IsAspectNode } from "../../components/flow/helpers";
 import { AttributeLikeItem, InspectorElement } from "./types";
 import { IsCreateLibraryType, IsEdge, IsNode } from "./helpers/IsType";
 import { GetSelectedIcon } from "../../typeEditor/helpers";
+import { Action } from "redux";
 
 interface Props {
   project: Project;
@@ -20,12 +21,25 @@ interface Props {
   dispatch: any;
   open: boolean;
   type: string;
-  inspectorRef?: React.MutableRefObject<HTMLDivElement>;
+  inspectorRef: React.MutableRefObject<HTMLDivElement>;
+  changeInspectorVisibilityAction: (visibility: boolean) => Action;
+  changeInspectorHeightAction: (height: number) => Action;
   attributeLikeItems?: AttributeLikeItem[];
   icons?: BlobData[];
 }
 
-const InspectorHeader = ({ project, element, dispatch, open, type, inspectorRef, icons, attributeLikeItems }: Props) => {
+const InspectorHeader = ({
+  project,
+  element,
+  dispatch,
+  open,
+  type,
+  inspectorRef,
+  changeInspectorVisibilityAction,
+  changeInspectorHeightAction,
+  icons,
+  attributeLikeItems,
+}: Props) => {
   const [validated, setValidated] = useState(false);
 
   const deleteDisabled = IsNode(element) && IsAspectNode(element);
@@ -76,18 +90,25 @@ const InspectorHeader = ({ project, element, dispatch, open, type, inspectorRef,
             />
           </>
         )}
-        <Title onClick={() => Click.OnToggle(dispatch, type, open, inspectorRef)}>
+        <Title
+          onClick={() =>
+            Click.OnToggle(dispatch, open, inspectorRef, changeInspectorVisibilityAction, changeInspectorHeightAction)
+          }
+        >
           {TextResources.Module_Inspector}
         </Title>
         <ToggleBox>
           <img
             src={open ? DownIcon : UpIcon}
             alt="toggle-icon"
-            onClick={() => Click.OnToggle(dispatch, type, open, inspectorRef)}
+            onClick={() =>
+              Click.OnToggle(dispatch, open, inspectorRef, changeInspectorVisibilityAction, changeInspectorHeightAction)
+            }
           />
         </ToggleBox>
       </ButtonWrapper>
     </Menu>
   );
 };
+
 export default InspectorHeader;

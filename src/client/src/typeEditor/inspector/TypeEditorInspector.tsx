@@ -1,4 +1,4 @@
-import { useCallback, useRef } from "react";
+import { useRef } from "react";
 import { Size } from "../../compLibrary";
 import { CreateLibraryType } from "../../models";
 import { MODULE_TYPE } from "../../models/project";
@@ -11,11 +11,12 @@ import {
   projectSelector,
   useParametricAppSelector,
   isAnimatedModuleSelector,
-  isInspectorOpenSelector,
   iconSelector,
   attributeTypeSelector,
+  isTypeEditorInspectorOpen,
 } from "../../redux/store";
 import { useMemoArrayCompare } from "../helpers/useMemoArrayCompare";
+import { changeTypeEditorInspectorHeight, changeTypeEditorInspectorVisibility } from "../redux/actions";
 
 interface Props {
   createLibraryType: CreateLibraryType;
@@ -27,7 +28,7 @@ export const TypeEditorInspector = ({ createLibraryType }: Props) => {
   const type = MODULE_TYPE.INSPECTOR;
   const project = useAppSelector(projectSelector);
   const animate = useParametricAppSelector(isAnimatedModuleSelector, type);
-  const inspectorOpen = useAppSelector(isInspectorOpenSelector);
+  const inspectorOpen = useAppSelector(isTypeEditorInspectorOpen);
   const icons = useAppSelector(iconSelector);
   const attributeTypes = useAppSelector(attributeTypeSelector);
 
@@ -40,10 +41,10 @@ export const TypeEditorInspector = ({ createLibraryType }: Props) => {
   const inspectorRef = useRef(null);
   const resizePanelRef = useRef(null);
 
-  const stop = inspectorOpen ? Size.ModuleOpen : Size.ModuleClosed;
-  const start = inspectorOpen ? Size.ModuleClosed : Size.ModuleOpen;
+  const stop = inspectorOpen ? Size.TypeEditorInspectorOpen : Size.ModuleClosed;
+  const start = inspectorOpen ? Size.ModuleClosed : Size.TypeEditorInspectorOpen;
 
-  useDragResizePanel(inspectorRef, resizePanelRef, dispatch, 355);
+  useDragResizePanel(inspectorRef, resizePanelRef, dispatch, changeTypeEditorInspectorHeight, 355);
 
   return (
     <AnimatedInspector
@@ -69,6 +70,8 @@ export const TypeEditorInspector = ({ createLibraryType }: Props) => {
         icons={icons}
         attributeLikeItems={attributeLikeItems}
         inspectorRef={inspectorRef}
+        changeInspectorVisibilityAction={changeTypeEditorInspectorVisibility}
+        changeInspectorHeightAction={changeTypeEditorInspectorHeight}
       />
     </AnimatedInspector>
   );

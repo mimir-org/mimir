@@ -1,5 +1,6 @@
 import * as Types from "./types";
 import { CreateLibraryType, Aspect, ObjectType, BlobData, TerminalTypeItem, PredefinedAttribute } from "../../models";
+import { Size } from "../../compLibrary";
 
 const initialState: Types.TypeEditorState = {
   visible: false,
@@ -30,6 +31,10 @@ const initialState: Types.TypeEditorState = {
   simpleTypes: [],
   apiError: [],
   icons: [] as BlobData[],
+  inspector: {
+    visibility: false,
+    height: Size.ModuleClosed,
+  },
 };
 
 // TODO: Refactor to reduce complexity
@@ -293,6 +298,22 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
       return {
         ...state,
         apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== action.payload.key) : state.apiError,
+      };
+    case Types.CHANGE_TYPE_EDITOR_INSPECTOR_HEIGHT:
+      return {
+        ...state,
+        inspector: {
+          ...state.inspector,
+          height: action.payload.height,
+        },
+      };
+    case Types.CHANGE_TYPE_EDITOR_INSPECTOR_VISIBILITY:
+      return {
+        ...state,
+        inspector: {
+          ...state.inspector,
+          visibility: action.payload.visibility,
+        },
       };
     default:
       return state;

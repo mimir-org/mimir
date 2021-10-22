@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useCallback, useRef } from "react";
 import {
   isAnimatedModuleSelector,
   isExplorerOpenSelector,
@@ -17,6 +17,8 @@ import { InspectorHeader } from ".";
 import { GetSelectedNode } from "../../components/flow/helpers";
 import { InspectorElement } from "./types";
 import { useDragResizePanel } from "./helpers/useDragResizePanel";
+import { changeInspectorHeight } from "./redux/height/actions";
+import { setModuleVisibility } from "../../redux/store/modules/actions";
 
 interface Props {
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
@@ -47,7 +49,9 @@ const InspectorModule = ({ inspectorRef }: Props) => {
 
   const element: InspectorElement = node || edge;
 
-  useDragResizePanel(inspectorRef, resizePanelRef, dispatch);
+  useDragResizePanel(inspectorRef, resizePanelRef, dispatch, changeInspectorHeight);
+  const changeInspectorVisibilityAction = useCallback((open: boolean) => setModuleVisibility(type, open, true), [type]);
+
   return (
     <AnimatedInspector
       id="InspectorModule"
@@ -69,6 +73,8 @@ const InspectorModule = ({ inspectorRef }: Props) => {
         open={inspectorOpen}
         type={type}
         inspectorRef={inspectorRef}
+        changeInspectorVisibilityAction={changeInspectorVisibilityAction}
+        changeInspectorHeightAction={changeInspectorHeight}
       />
     </AnimatedInspector>
   );
