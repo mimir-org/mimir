@@ -20,11 +20,12 @@ interface Props {
   dispatch: any;
   open: boolean;
   type: string;
+  inspectorRef?: React.MutableRefObject<HTMLDivElement>;
   attributeLikeItems?: AttributeLikeItem[];
   icons?: BlobData[];
 }
 
-const InspectorHeader = ({ project, element, dispatch, open, type, icons, attributeLikeItems }: Props) => {
+const InspectorHeader = ({ project, element, dispatch, open, type, inspectorRef, icons, attributeLikeItems }: Props) => {
   const [validated, setValidated] = useState(false);
 
   const deleteDisabled = IsNode(element) && IsAspectNode(element);
@@ -68,16 +69,22 @@ const InspectorHeader = ({ project, element, dispatch, open, type, icons, attrib
               visible={true}
             />
             <InspectorButton
-              onClick={() => !deleteDisabled && Click.OnDelete(project, element, dispatch)}
+              onClick={() => !deleteDisabled && Click.OnDelete(project, element, dispatch, inspectorRef)}
               type={!deleteDisabled ? InspectorButtonType.Delete : InspectorButtonType.DeleteDisabled}
               visible={true}
               disabled={deleteDisabled}
             />
           </>
         )}
-        <Title onClick={() => Click.OnToggle(dispatch, type, open)}>{TextResources.Module_Inspector}</Title>
+        <Title onClick={() => Click.OnToggle(dispatch, type, open, inspectorRef)}>
+          {TextResources.Module_Inspector}
+        </Title>
         <ToggleBox>
-          <img src={open ? DownIcon : UpIcon} alt="toggle-icon" onClick={() => Click.OnToggle(dispatch, type, open)} />
+          <img
+            src={open ? DownIcon : UpIcon}
+            alt="toggle-icon"
+            onClick={() => Click.OnToggle(dispatch, type, open, inspectorRef)}
+          />
         </ToggleBox>
       </ButtonWrapper>
     </Menu>

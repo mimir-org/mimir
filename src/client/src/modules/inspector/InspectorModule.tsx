@@ -18,11 +18,15 @@ import { GetSelectedNode } from "../../components/flow/helpers";
 import { InspectorElement } from "./types";
 import { useDragResizePanel } from "./helpers/useDragResizePanel";
 
+interface Props {
+  inspectorRef: React.MutableRefObject<HTMLDivElement>;
+}
+
 /**
  * Component for the Inspector Module that shows the data for each object in Flow.
  * @returns a module with multiple tabs for different operations.
  */
-const InspectorModule = () => {
+const InspectorModule = ({ inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
   const type = MODULE_TYPE.INSPECTOR;
   const project = useAppSelector(projectSelector);
@@ -39,7 +43,6 @@ const InspectorModule = () => {
   const edge = edges.find((x) => x.isSelected);
   const node = IsBlockView() ? nodes?.find((x) => x.isBlockSelected) : GetSelectedNode();
 
-  const inspectorRef = useRef(null);
   const resizePanelRef = useRef(null);
 
   const element: InspectorElement = node || edge;
@@ -59,7 +62,14 @@ const InspectorModule = () => {
       forwardRef={inspectorRef}
     >
       <ResizePanel id="ResizePanel" ref={resizePanelRef} />
-      <InspectorHeader project={project} element={element} dispatch={dispatch} open={inspectorOpen} type={type} />
+      <InspectorHeader
+        project={project}
+        element={element}
+        dispatch={dispatch}
+        open={inspectorOpen}
+        type={type}
+        inspectorRef={inspectorRef}
+      />
     </AnimatedInspector>
   );
 };

@@ -14,7 +14,7 @@ import { changeInspectorHeight } from "../../../../modules/inspector/redux/heigh
  * @param project
  * @returns void
  */
-const OnTreeClick = (e: any, dispatch: any, project: Project) => {
+const OnTreeClick = (e: any, dispatch: any, project: Project, inspectorRef: React.MutableRefObject<HTMLDivElement>) => {
   if (!project) return;
 
   // Close Inspector if no node/edge is selected
@@ -23,7 +23,7 @@ const OnTreeClick = (e: any, dispatch: any, project: Project) => {
     dispatch(setActiveNode(null, false));
     dispatch(setActiveEdge(null, false));
     dispatch(changeInspectorHeight(Size.ModuleClosed));
-    SetPanelHeight(Size.ModuleClosed); // TODO: remove
+    SetPanelHeight(inspectorRef, Size.ModuleClosed); // TODO: remove
     return;
   }
 

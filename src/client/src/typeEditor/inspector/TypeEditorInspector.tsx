@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useCallback, useRef } from "react";
 import { Size } from "../../compLibrary";
 import { CreateLibraryType } from "../../models";
 import { MODULE_TYPE } from "../../models/project";
@@ -47,6 +47,7 @@ export const TypeEditorInspector = ({ createLibraryType }: Props) => {
 
   return (
     <AnimatedInspector
+      id="TypeEditorInspectorModule"
       type={type}
       isLibraryOpen={false}
       isExplorerOpen={false}
@@ -67,6 +68,7 @@ export const TypeEditorInspector = ({ createLibraryType }: Props) => {
         type={type}
         icons={icons}
         attributeLikeItems={attributeLikeItems}
+        inspectorRef={inspectorRef}
       />
     </AnimatedInspector>
   );

@@ -9,7 +9,12 @@ import { removeEdge, removeNode } from "../../../redux/store/project/actions";
 import { GetSelectedBlockNode, IsBlockView } from "../block/helpers";
 import { GetSelectedNode, IsAspectNode } from "../helpers";
 
-const useOnRemove = (elements: any[], setElements: any, dispatch: any) => {
+const useOnRemove = (
+  elements: any[],
+  setElements: any,
+  dispatch: any,
+  inspectorRef: React.MutableRefObject<HTMLDivElement>
+) => {
   const verifiedList: any[] = [];
   const selectedNode = GetSelectedNode();
   const selectedBlockNode = GetSelectedBlockNode();
@@ -32,7 +37,7 @@ const useOnRemove = (elements: any[], setElements: any, dispatch: any) => {
   });
 
   dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, false, true));
-  SetPanelHeight(Size.ModuleClosed);
+  SetPanelHeight(inspectorRef, Size.ModuleClosed);
   dispatch(changeInspectorHeight(Size.ModuleClosed));
 
   return setElements((els) => removeElements(verifiedList, els));

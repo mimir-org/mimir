@@ -29,11 +29,15 @@ import {
   userStateSelector,
 } from "../../../redux/store";
 
+interface Props {
+  inspectorRef: React.MutableRefObject<HTMLDivElement>;
+}
+
 /**
  * Component for the Flow library in BlockView
  * @returns a scene with Flow elements and Mimir nodes, transports and edges.
  */
-const FlowBlock = () => {
+const FlowBlock = ({ inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
@@ -64,7 +68,7 @@ const FlowBlock = () => {
     project.edges?.forEach((edge) => {
       if (edge.fromNodeId === nodeToRemove.id || edge.toNodeId === nodeToRemove.id) elementsToRemove.push(edge);
     });
-    return useOnRemove(elementsToRemove, setElements, dispatch);
+    return useOnRemove(elementsToRemove, setElements, dispatch, inspectorRef);
   };
 
   const OnConnect = (params) => {
@@ -102,7 +106,7 @@ const FlowBlock = () => {
 
     if (!inspectorOpen) {
       dispatch(changeInspectorHeight(Size.ModuleOpen));
-      SetPanelHeight(Size.ModuleOpen);
+      SetPanelHeight(inspectorRef, Size.ModuleOpen);
     }
   };
 
@@ -134,7 +138,7 @@ const FlowBlock = () => {
               onClick={(e) => OnBlockClick(e, dispatch, project)}
               onlyRenderVisibleElements={true}
             >
-              <FullScreenComponent />
+              <FullScreenComponent inspectorRef={inspectorRef} />
               <BackgroundBox
                 visible={showBackground}
                 splitView={splitView}

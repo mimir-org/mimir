@@ -15,7 +15,12 @@ import {
   UpdateSiblingIndexOnNodeDelete,
 } from "../../../components/flow/helpers";
 
-const OnDeleteClick = (project: Project, element: InspectorElement, dispatch: any) => {
+const OnDeleteClick = (
+  project: Project,
+  element: InspectorElement,
+  dispatch: Dispatch,
+  inspectorRef: React.MutableRefObject<HTMLDivElement>
+) => {
   if (IsNode(element)) {
     HandleNodeDelete(element, project, dispatch);
   } else if (IsEdge(element)) {
@@ -24,7 +29,7 @@ const OnDeleteClick = (project: Project, element: InspectorElement, dispatch: an
 
   dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, false, true));
   dispatch(changeInspectorHeight(Size.ModuleClosed));
-  SetPanelHeight(Size.ModuleClosed);
+  SetPanelHeight(inspectorRef, Size.ModuleClosed);
 };
 
 const HandleNodeDelete = (node: Node, project: Project, dispatch: Dispatch) => {
