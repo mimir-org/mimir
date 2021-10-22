@@ -13,6 +13,7 @@ using Mb.Models.Attributes;
 using Mb.Models.Configurations;
 using Mb.Models.Enums;
 using Mb.Services.Contracts;
+using Mb.Services.Hubs;
 using Mb.Services.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -23,6 +24,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 using Module = Mb.Models.Application.Module;
 
@@ -108,6 +111,13 @@ namespace Mb.Core.Extensions
             // Add modules
             services.CreateModules(provider, configuration, modules);
 
+            services.AddSignalR()
+                .AddNewtonsoftJsonProtocol(o =>
+                {
+                    o.PayloadSerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                    o.PayloadSerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                });
+
             return services;
         }
 
@@ -126,6 +136,17 @@ namespace Mb.Core.Extensions
                 logger.LogInformation("Reading modules");
                 Thread.Sleep(2000);
             }
+
+            var webSocketOptions = new WebSocketOptions
+            {
+                KeepAliveInterval = TimeSpan.FromSeconds(120),
+            };
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapHub<ModelBuilderHub>("/mimir");
+            });
 
             return app;
         }

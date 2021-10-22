@@ -35,6 +35,7 @@ export { default as GetSelectedNode } from "./GetSelectedNode";
 export { default as GetSelectedEdge } from "./GetSelectedEdge";
 
 export { GetOtherNodeFromEdgeViaConnector, GetOtherNodeFromEdgeViaNode } from "./GetOtherNodeFromEdge";
+export { default as GetDateNowUtc } from "./GetDateNowUtc";
 
 export * from "./SetSiblingRDS";
 export * from "./types";

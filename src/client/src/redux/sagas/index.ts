@@ -1,6 +1,4 @@
-import { all, takeEvery } from "redux-saga/effects";
-import { FETCHING_CONTRACTORS, FETCHING_STATUSES, FETCHING_COMBINED_ATTRIBUTE_FILTERS } from "../store/common/types";
-import { getContractors, getStatuses, getAttributeFilters } from "./common/saga";
+import { all, spawn, takeEvery } from "redux-saga/effects";
 import { FETCHING_USER } from "./../store/user/types";
 import { searchLibrary, exportLibrary, importLibrary, getTransportTypes, getInterfaceTypes } from "./library/saga";
 import {
@@ -59,10 +57,12 @@ import {
   getSelectedNode,
   getSimpleTypes,
 } from "./typeEditor/saga";
+import { commonSaga } from "./common";
+import { nodeSaga } from "./node";
 
 //TODO: Add takeEvery for LOCK_UNLOCK on
 
-export function* sagas() {
+function* sagas() {
   yield all([
     takeEvery(FETCHING_LIBRARY, searchLibrary),
     takeEvery(FETCHING_USER, getUser),
@@ -70,7 +70,6 @@ export function* sagas() {
     takeEvery(FETCHING_PROJECT, getProject),
     takeEvery(SEARCH_PROJECT, searchProject),
     takeEvery(SAVE_PROJECT, updateProject),
-    takeEvery(FETCHING_CONTRACTORS, getContractors),
     takeEvery(FETCHING_INITIAL_DATA, getInitialData),
     takeEvery(FETCHING_INITIAL_DATA, getLocationTypes),
     takeEvery(FETCHING_INITIAL_DATA, getRDS),
@@ -80,7 +79,6 @@ export function* sagas() {
     takeEvery(FETCHING_INITIAL_DATA, getSimpleTypes),
     takeEvery(FETCHING_TYPE, getSelectedNode),
     takeEvery(SAVE_LIBRARY_TYPE, saveType),
-    takeEvery(FETCHING_STATUSES, getStatuses),
     takeEvery(EXPORT_PROJECT_TO_FILE, exportProjectFile),
     takeEvery(IMPORT_PROJECT, importProject),
     takeEvery(EXPORT_LIBRARY, exportLibrary),
@@ -97,6 +95,11 @@ export function* sagas() {
     takeEvery(FETCHING_LIBRARY_TRANSPORT_TYPES, getTransportTypes),
     takeEvery(FETCHING_LIBRARY_INTERFACE_TYPES, getInterfaceTypes),
     takeEvery(COMMIT_PROJECT, commitProject),
-    takeEvery(FETCHING_COMBINED_ATTRIBUTE_FILTERS, getAttributeFilters),
   ]);
+}
+
+export function* rootSaga() {
+  yield spawn(sagas);
+  yield spawn(commonSaga);
+  yield spawn(nodeSaga);
 }

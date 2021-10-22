@@ -27,7 +27,7 @@ interface Props {
   filterName: string;
   headerColor: string;
   bodyColor: string;
-  dispatch: Dispatch<any>;
+  dispatch: Dispatch;
 }
 
 function ParameterRow({

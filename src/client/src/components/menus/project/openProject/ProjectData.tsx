@@ -1,8 +1,8 @@
 import Moment from "react-moment";
-import { useDispatch } from "react-redux";
 import { changeSelectedProject } from "../../../../redux/store/project/actions";
 import { ProjectSimple } from "../../../../models";
 import "./projectdata.scss";
+import { useAppDispatch } from "../../../../redux/store";
 
 interface Props {
   projects: ProjectSimple[];
@@ -13,7 +13,7 @@ interface Props {
 }
 
 export const ProjectDataComponent = ({ projects, projectId, projectName, projectOwner, updated }: Props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const isSelected = projects.find((x) => x.id === projectId).selected;
   const onClick = () => dispatch(changeSelectedProject(projectId));
 

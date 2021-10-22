@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { TerminalCategory } from "../../../../typeEditor/helpers/GetFilteredTerminalsList";
 import { Connector } from "../../../../models";
 import { ActiveTerminalsList, TerminalsSearchBar } from "./";
@@ -8,25 +8,24 @@ import { TerminalsColumn } from "./styled";
 interface Props {
   terminals: Connector[];
   terminalCategories: TerminalCategory[];
-  selectedTerminalId: string;
+  selectedTerminal: Connector;
   onSelectTerminal: (item: any) => void;
 }
 
-function TerminalsSelector({ terminals, terminalCategories, selectedTerminalId, onSelectTerminal }: Props) {
+function TerminalsSelector({ terminals, terminalCategories, selectedTerminal, onSelectTerminal }: Props) {
   const [searchString, setSearchString] = useState("");
-  const filteredTerminals = FilterBySearchString(terminals, terminalCategories, searchString);
-
-  const onChange = (value: string) => {
-    setSearchString(value);
-  };
+  const filteredTerminals = useMemo(
+    () => FilterBySearchString(terminals, terminalCategories, searchString),
+    [terminals, terminalCategories, searchString]
+  );
 
   return (
     <TerminalsColumn>
-      <TerminalsSearchBar searchString={searchString} onChange={onChange} />
+      <TerminalsSearchBar searchString={searchString} onChange={(value) => setSearchString(value)} />
       <ActiveTerminalsList
         terminals={filteredTerminals}
         terminalCategories={terminalCategories}
-        selectedTerminalId={selectedTerminalId}
+        selectedTerminal={selectedTerminal}
         onSelectTerminal={onSelectTerminal}
       />
     </TerminalsColumn>

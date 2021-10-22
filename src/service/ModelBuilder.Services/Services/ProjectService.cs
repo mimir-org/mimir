@@ -776,7 +776,9 @@ namespace Mb.Services.Services
                 Aspect = aspect,
                 Length = null,
                 Height = null,
-                Cost = null
+                Cost = null,
+                Created = DateTime.Now.ToUniversalTime(),
+                CreatedBy = _contextAccessor.GetName()
             };
 
             var connector = new Relation

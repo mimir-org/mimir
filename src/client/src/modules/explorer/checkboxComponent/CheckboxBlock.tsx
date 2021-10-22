@@ -1,6 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
 import { Node } from "../../../models";
-import { RootState } from "../../../redux/store";
+import { splitViewNodeSelector, splitViewSelector, useAppDispatch, useAppSelector } from "../../../redux/store";
 import { GetSelectedNode } from "../../../components/flow/helpers";
 import { OnCheckboxChange } from "../handlers";
 
@@ -14,9 +13,9 @@ interface Props {
  * @returns a checkbox
  */
 export const CheckboxBlock = ({ node, inputLabel }: Props) => {
-  const dispatch = useDispatch();
-  const splitView = useSelector<RootState>((state) => state.splitView.visible) as boolean;
-  const splitViewNode = useSelector<RootState>((state) => state.splitView.node) as Node;
+  const dispatch = useAppDispatch();
+  const splitView = useAppSelector(splitViewSelector);
+  const splitViewNode = useAppSelector(splitViewNodeSelector);
   const selectedNode = GetSelectedNode();
   const isSplitViewNode = splitViewNode?.id === node.id;
   const isChecked = splitView ? node === selectedNode || isSplitViewNode : node === selectedNode;

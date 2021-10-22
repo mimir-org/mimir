@@ -1,21 +1,14 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/store";
+import { isLibOpenSelector, projectSelector, useAppSelector } from "../../../redux/store";
 import { FilterContent } from ".";
-import { Aspect, Project, RelationType } from "../../../models";
+import { Aspect, RelationType } from "../../../models";
 import { FilterMenuBox, MenuColumn } from "../../../compLibrary/box/menus";
 import { AddElement } from "./helpers";
 import { TextResources } from "../../../assets/text";
-import {
-  CreateId,
-  FilterElement,
-  IsLibrary,
-  IsLocationTerminal,
-  IsPartOfTerminal,
-  IsTransportTerminal,
-} from "../../flow/helpers";
+import { CreateId, FilterElement, IsLocationTerminal, IsPartOfTerminal, IsTransportTerminal } from "../../flow/helpers";
 
 const FilterMenu = () => {
-  const project = useSelector<RootState>((state) => state.projectState.project) as Project;
+  const project = useAppSelector(projectSelector);
+  const isLibraryOpen = useAppSelector(isLibOpenSelector);
   const nodes = project?.nodes?.filter((x) => !x.isHidden) ?? [];
   const edges = project?.edges;
   let elements = [] as FilterElement[];
@@ -51,10 +44,6 @@ const FilterMenu = () => {
       isPartOf = true;
     }
   });
-
-  const isLibraryOpen = useSelector<RootState>(
-    (state) => state.modules.types.find((x) => IsLibrary(x.type)).visible
-  ) as boolean;
 
   // TODO: refactor
   return (
