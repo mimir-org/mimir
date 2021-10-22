@@ -3,7 +3,7 @@ import { Color } from "../../../compLibrary";
 
 const TypeEditorInspectorWrapper = styled.div`
   display: flex;
-  margin-top: auto;
+  margin-top: 35px;
   position: relative;
   background-color: ${Color.Grey};
   z-index: 105;
