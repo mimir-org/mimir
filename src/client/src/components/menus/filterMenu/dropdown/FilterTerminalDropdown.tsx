@@ -3,13 +3,13 @@ import { MenuWrapper, MenuHeader, MenuList } from "./styled";
 import { ExpandIcon, CollapseIcon } from "../../../../assets/icons/chevron";
 import { Connector } from "../../../../models";
 import { TextResources } from "../../../../assets/text";
-import { OnAllTerminalsChange, OnActiveTerminalChange } from "../handlers";
+import { OnAllTerminalsChange, OnActiveTerminalChange, OnInactiveTerminalChange } from "../handlers";
 import { FilterTerminalElement } from ".";
 
 interface Props {
   allTerminals: Connector[];
   activeTerminals: Connector[];
-  inactiveTerminals: Connector[];
+  inActiveTerminals: Connector[];
   label: string;
   dispatch: any;
 }
@@ -19,10 +19,11 @@ interface Props {
  * @param interface
  * @returns a drop-down menu for a node's terminals.
  */
-const FilterTerminalDropdown = ({ allTerminals, activeTerminals, inactiveTerminals, label, dispatch }: Props) => {
+const FilterTerminalDropdown = ({ allTerminals, activeTerminals, inActiveTerminals, label, dispatch }: Props) => {
   const [listOpen, setListOpen] = useState(false);
-  const activeTerminalsChecked = activeTerminals.some((c) => c?.visible);
   const allTerminalsChecked = !allTerminals.some((c) => !c?.visible);
+  const activeTerminalsChecked = activeTerminals.some((c) => c?.visible);
+  const inActiveTerminalsChecked = inActiveTerminals.some((c) => c?.visible);
 
   return (
     <MenuWrapper>
@@ -43,6 +44,12 @@ const FilterTerminalDropdown = ({ allTerminals, activeTerminals, inactiveTermina
             checked={activeTerminalsChecked}
             label={TextResources.Filter_Show_Active_Terminals}
             onChange={() => OnActiveTerminalChange(activeTerminals, dispatch, activeTerminalsChecked)}
+          />
+
+          <FilterTerminalElement
+            checked={inActiveTerminalsChecked}
+            label={TextResources.Filter_Show_Inactive_Terminals}
+            onChange={() => OnInactiveTerminalChange(inActiveTerminals, dispatch, activeTerminalsChecked)}
           />
         </MenuList>
       )}

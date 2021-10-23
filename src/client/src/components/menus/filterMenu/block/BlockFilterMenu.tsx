@@ -24,7 +24,7 @@ interface Props {
  */
 const BlockFilterMenu = ({ elements }: Props) => {
   const dispatch = useAppDispatch();
-  const libraryOpen = useAppSelector((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible);
+  const libOpen = useAppSelector((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible);
   const edges = GetEdges(elements);
   const nodes = GetNodes(elements);
 
@@ -33,13 +33,13 @@ const BlockFilterMenu = ({ elements }: Props) => {
   const transportLabel = TextResources.Relations_Transport;
   const relationLabel = TextResources.Relations;
   const activeTerminals = GetActiveTerminals(elements, nodes);
-  const inactiveTerminals = GetInactiveTerminals(nodes);
+  const inActiveTerminals = GetInactiveTerminals(nodes);
   const allTerminals = GetAllTerminals(elements);
 
   PopulateFilterLists(edges, transportItems, relationItems, []);
 
   return (
-    <FilterMenuBox libraryOpen={libraryOpen}>
+    <FilterMenuBox libraryOpen={libOpen}>
       <MenuColumn>
         <FilterDropdown
           terminals={transportItems}
@@ -58,7 +58,7 @@ const BlockFilterMenu = ({ elements }: Props) => {
         <FilterTerminalDropdown
           allTerminals={allTerminals}
           activeTerminals={activeTerminals}
-          inactiveTerminals={inactiveTerminals}
+          inActiveTerminals={inActiveTerminals}
           label={"Terminals"}
           dispatch={dispatch}
         />
