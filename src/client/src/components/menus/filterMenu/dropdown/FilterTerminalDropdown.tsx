@@ -3,7 +3,7 @@ import { MenuWrapper, MenuHeader, MenuList } from "./styled";
 import { ExpandIcon, CollapseIcon } from "../../../../assets/icons/chevron";
 import { Connector } from "../../../../models";
 import { TextResources } from "../../../../assets/text";
-import { OnAllTerminalsChange, OnActiveTerminalChange, OnInactiveTerminalChange } from "../handlers";
+import { OnActiveTerminalChange } from "../handlers";
 import { FilterTerminalElement } from ".";
 
 interface Props {
@@ -21,9 +21,7 @@ interface Props {
  */
 const FilterTerminalDropdown = ({ allTerminals, activeTerminals, inActiveTerminals, label, dispatch }: Props) => {
   const [listOpen, setListOpen] = useState(false);
-  const allTerminalsChecked = !allTerminals.some((c) => !c?.visible);
   const activeTerminalsChecked = activeTerminals.some((c) => c?.visible);
-  const inActiveTerminalsChecked = inActiveTerminals.some((c) => c?.visible);
 
   return (
     <MenuWrapper>
@@ -34,11 +32,11 @@ const FilterTerminalDropdown = ({ allTerminals, activeTerminals, inActiveTermina
 
       {listOpen && (
         <MenuList>
-          <FilterTerminalElement
-            checked={allTerminalsChecked}
+          {/* <FilterTerminalElement
+            checked={terminalsChecked}
             label={TextResources.Filter_Show_Terminals}
-            onChange={() => OnAllTerminalsChange(allTerminals, dispatch, allTerminalsChecked)}
-          />
+            onChange={() => OnAllTerminalsChange(allTerminals, dispatch, terminalsChecked)}
+          /> */}
 
           <FilterTerminalElement
             checked={activeTerminalsChecked}
@@ -46,11 +44,11 @@ const FilterTerminalDropdown = ({ allTerminals, activeTerminals, inActiveTermina
             onChange={() => OnActiveTerminalChange(activeTerminals, dispatch, activeTerminalsChecked)}
           />
 
-          <FilterTerminalElement
+          {/* <FilterTerminalElement
             checked={inActiveTerminalsChecked}
             label={TextResources.Filter_Show_Inactive_Terminals}
             onChange={() => OnInactiveTerminalChange(inActiveTerminals, dispatch, activeTerminalsChecked)}
-          />
+          /> */}
         </MenuList>
       )}
     </MenuWrapper>

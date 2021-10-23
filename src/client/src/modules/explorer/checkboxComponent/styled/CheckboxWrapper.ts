@@ -30,6 +30,11 @@ const CheckboxWrapper = styled.label<Props>`
     border: 2px solid ${Color.BlueMagenta};
     border-radius: 3px;
   }
+
+  .label {
+    position: relative;
+    top: 1px;
+  }
 `;
 
 export default CheckboxWrapper;

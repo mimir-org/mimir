@@ -50,7 +50,6 @@ const FlowBlock = () => {
   const electro = useAppSelector(isElectroSelector);
   const userState = useAppSelector(userStateSelector);
   const blockFilter = useAppSelector(blockFilterSelector);
-
   const node = GetSelectedNode();
   const showBackground = IsLocation(splitViewNode) || IsLocation(node);
 

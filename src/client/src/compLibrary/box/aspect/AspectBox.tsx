@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Color } from "../..";
-import { UseIndentLevel, GetAspectColor, GetExplorerColor } from "../../../assets/helpers";
+import { UseIndentLevel, GetAspectColor } from "../../../assets/helpers";
+import { GetExplorerColor } from "../../../modules/explorer/helpers";
 import { Node } from "../../../models";
 
 interface Props {
