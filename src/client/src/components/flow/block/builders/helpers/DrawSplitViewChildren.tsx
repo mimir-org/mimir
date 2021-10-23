@@ -1,7 +1,6 @@
 import { Elements } from "react-flow-renderer";
 import { BuildSplitViewChildNode } from "..";
 import { Node, Edge } from "../../../../../models";
-import { IsFamily } from "../../../helpers";
 import { IsDirectChild } from "../../helpers";
 
 /**
@@ -14,9 +13,9 @@ import { IsDirectChild } from "../../helpers";
 const DrawSplitViewChildren = (edges: Edge[], nodes: Node[], splitViewNode: Node, elements: Elements<any>) => {
   if (splitViewNode) {
     edges.forEach((edge) => {
-      if (edge.fromNodeId === splitViewNode.id && IsFamily(splitViewNode, edge.toNode)) {
+      if (edge.fromNodeId === splitViewNode.id && splitViewNode.aspect === edge.toNode.aspect) {
         const toNode = nodes.find((node) => node.id === edge.toNodeId && IsDirectChild(node, splitViewNode));
-        if (toNode) elements.push(BuildSplitViewChildNode(toNode));
+        if (toNode) elements.push(BuildSplitViewChildNode(toNode, splitViewNode));
       }
     });
   }

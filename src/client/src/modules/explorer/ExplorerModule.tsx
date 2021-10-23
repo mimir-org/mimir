@@ -1,4 +1,4 @@
-import { ProjectComponent, SplitViewComponent } from "./";
+import { ProjectComponent } from "./";
 import { TextResources } from "../../assets/text";
 import { MODULE_TYPE } from "../../models/project";
 import { AnimatedModule, Size } from "../../compLibrary";
@@ -31,7 +31,6 @@ export const ExplorerModule = () => {
       </ModuleHead>
       <ModuleBody visible={isOpen} explorer isBlockView={IsBlockView()}>
         {project && <ProjectComponent project={project} nodes={project.nodes ?? []} />}
-        <SplitViewComponent />
       </ModuleBody>
     </AnimatedModule>
   );

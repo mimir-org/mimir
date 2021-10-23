@@ -6,7 +6,7 @@ import { FullScreenComponent } from "../../../compLibrary/controls";
 import { Size } from "../../../compLibrary";
 import { IsBlockView } from "../block/helpers";
 import { changeInspectorTab } from "../../../modules/inspector/redux/tabs/actions";
-import { GetSelectedNode, SetDarkModeColor } from "../helpers";
+import { GetParent, GetSelectedNode, SetDarkModeColor } from "../helpers";
 import { BuildTreeElements } from "../tree/builders";
 import { setModuleVisibility } from "../../../redux/store/modules/actions";
 import { MODULE_TYPE } from "../../../models/project";
@@ -45,6 +45,7 @@ const FlowTree = () => {
   const inspectorOpen = useAppSelector(inspectorOpenSelector);
   const treeFilter = useAppSelector(treeFilterSelector);
   const node = GetSelectedNode();
+  const parent = GetParent(node);
   const selectedNodeId = useMemo(() => node?.id ?? project?.edges.find((edge) => edge.isSelected)?.id, [project, node]);
 
   const OnDragOver = (event: any) => event.preventDefault();
@@ -79,7 +80,8 @@ const FlowTree = () => {
       reactFlowWrapper,
       icons,
       library,
-      userState.user
+      userState.user,
+      parent
     );
   };
 

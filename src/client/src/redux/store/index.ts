@@ -16,6 +16,7 @@ import { connectViewReducer } from "../../components/flow/block/connectView/redu
 import { darkModeReducer } from "./darkMode/reducers";
 import { parametersReducer } from "../../modules/inspector/tabs/parameters/redux/reducers";
 import { electroViewReducer } from "../store/electro/reducers";
+import { resizeReducer } from "./resize/reducers";
 import { rootSaga } from "../sagas";
 import { persistStore, persistReducer } from "redux-persist";
 
@@ -40,6 +41,7 @@ const rootReducers = combineReducers({
   commonState: commonReducer,
   darkMode: darkModeReducer,
   parametersReducer: parametersReducer,
+  resizing: resizeReducer,
 });
 
 const persistConfig = {

@@ -9,5 +9,6 @@ export { default as FindAllEdges } from "./FindAllEdges";
 export { default as SetSplitViewBackground } from "./SetSplitViewBackground";
 export { default as FilterTerminals } from "./FilterTerminals";
 export { default as IsDirectChild } from "./IsDirectChild";
+export { default as IsOffPage } from "./IsOffPage";
 
 export { default as GetBlockEdgeTypes } from "./GetBlockEdgeTypes";

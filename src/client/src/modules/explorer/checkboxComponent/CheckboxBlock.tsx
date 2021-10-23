@@ -1,11 +1,12 @@
-import { Node } from "../../../models";
-import { splitNodeSelector, splitViewSelector, useAppDispatch, useAppSelector } from "../../../redux/store";
+import { Node, Project } from "../../../models";
+import { splitNodeSelector, useAppDispatch, useAppSelector } from "../../../redux/store";
 import { GetSelectedNode } from "../../../components/flow/helpers";
-import { OnCheckboxChange } from "../handlers";
+import { OnBlockChange } from "../handlers";
 import { CheckboxWrapper } from "./styled";
-import { GetCheckboxColor } from "../helpers";
+import { GetCheckboxColor, IsChecked } from "../helpers";
 
 interface Props {
+  project: Project;
   node: Node;
   inputLabel: string;
 }
@@ -14,20 +15,17 @@ interface Props {
  * @param interface
  * @returns a checkbox
  */
-export const CheckboxBlock = ({ node, inputLabel }: Props) => {
+export const CheckboxBlock = ({ project, node, inputLabel }: Props) => {
   const dispatch = useAppDispatch();
-  const splitView = useAppSelector(splitViewSelector);
-  const splitViewNode = useAppSelector(splitNodeSelector);
+  const splitNode = useAppSelector(splitNodeSelector);
   const selectedNode = GetSelectedNode();
-  const isSplitViewNode = splitViewNode?.id === node.id;
-  const isChecked = splitView ? node === selectedNode || isSplitViewNode : node === selectedNode;
 
   return (
     <CheckboxWrapper color={GetCheckboxColor(node)}>
       <input
         type="checkbox"
-        checked={isChecked}
-        onChange={() => OnCheckboxChange(dispatch, splitView, node, selectedNode, splitViewNode)}
+        checked={IsChecked(node, selectedNode, splitNode)}
+        onChange={() => OnBlockChange(node, project, selectedNode, splitNode, dispatch)}
       />
       <div className="checkmark"></div>
       <div className="label">{inputLabel}</div>

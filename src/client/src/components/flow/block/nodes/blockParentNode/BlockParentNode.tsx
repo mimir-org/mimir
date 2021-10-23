@@ -1,22 +1,14 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, useUpdateNodeInternals } from "react-flow-renderer";
-import { TextResources } from "../../../../../assets/text";
 import { HandleComponent, TerminalsContainerComponent } from "../../terminals";
 import { Size } from "../../../../../compLibrary";
 import { GetParentColor } from "./helpers";
 import { OnParentClick, OnChildClick, OnConnectorClick } from "./handlers";
 import { BlockComponent } from "./";
-import { BlockMessageBox } from "../../styled";
 import { FilterTerminals, GetNodeByDataId, FindAllEdges } from "../../helpers";
 import { Node } from "../../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
-import {
-  edgeSelector,
-  isElectroSelector,
-  nodeSelector,
-  splitNodeSelector,
-  splitViewSelector,
-} from "../../../../../redux/store";
+import { edgeSelector, isElectroSelector, nodeSelector, splitNodeSelector } from "../../../../../redux/store";
 
 /**
  * Component for the large parent block in BlockView.
@@ -29,7 +21,6 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
   const nodes = useAppSelector(nodeSelector);
   const edges = useAppSelector(edgeSelector);
-  const splitView = useAppSelector(splitViewSelector);
   const splitNode = useAppSelector(splitNodeSelector) as Node;
   const electro = useAppSelector(isElectroSelector);
   const updateNodeInternals = useUpdateNodeInternals();
@@ -39,10 +30,8 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   // Enforce size change of node
   useEffect(() => {
     const parentNode = GetNodeByDataId(data.id);
-    if (splitView) {
-      parentNode.style.width = `${Size.SplitView_Width}px`;
-    } else parentNode.style.width = `${Size.BlockView_Width}px`;
-  }, [data, splitView]);
+    parentNode.style.width = `${Size.BlockView_Width}px`;
+  }, [data]);
 
   // Force z-index to display edges in ConnectView
   useEffect(() => {
@@ -54,16 +43,14 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
     updateNodeInternals(node?.id);
   }, [node, updateNodeInternals]);
 
-  if (splitView) node.width = Size.SplitView_Width;
-
   return (
     <>
       <BlockComponent
+        dispatch={dispatch}
         node={node}
         color={GetParentColor(node)}
-        splitView={splitView}
         selected={node?.isBlockSelected}
-        onParentClick={() => OnParentClick(dispatch, node, nodes, edges)}
+        onParentClick={() => OnParentClick(dispatch, node)}
         onChildClick={() => OnChildClick(dispatch, node, nodes, edges)}
       />
       <TerminalsContainerComponent
@@ -72,7 +59,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         outputMenuOpen={outTerminalMenu}
         parent={true}
         electro={electro}
-        terminals={FilterTerminals(node, splitView, splitNode)}
+        terminals={FilterTerminals(node, false, splitNode)}
         onClick={(conn) => OnConnectorClick(conn, dispatch, edges, nodes)}
         menuBox={true}
         mainConnectNode={false}
@@ -85,17 +72,11 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         nodes={nodes}
         length={node?.length}
         width={node?.width}
-        terminals={FilterTerminals(node, splitView, splitNode)}
-        splitView={splitView}
+        terminals={FilterTerminals(node, false, splitNode)}
+        splitView={false}
         electro={electro}
         mainConnectNode={false}
       />
-
-      {splitView && !splitNode && (
-        <BlockMessageBox>
-          <p>{TextResources.BlockView_Select_Message}</p>
-        </BlockMessageBox>
-      )}
     </>
   );
 };

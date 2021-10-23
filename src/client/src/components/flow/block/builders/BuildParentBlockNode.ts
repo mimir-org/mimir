@@ -1,26 +1,21 @@
 import { FlowElement } from "react-flow-renderer";
 import { TextResources } from "../../../../assets/text";
-import { Position } from "../../../../compLibrary";
 import { Node } from "../../../../models";
 import { CreateId } from "../../helpers";
-import { SetConnectorOrder } from "./helpers";
 
 /**
  * Component to create a parent node in BlockView.
  * @param node
- * @param splitView
- * @param isSplitViewNode
  * @returns a FlowElement, the big box in BlockView.
  */
-const BuildParentBlockNode = (node: Node, splitView: boolean, isSplitViewNode: boolean) => {
+const BuildParentBlockNode = (node: Node) => {
   if (!node) return null;
-
-  SetConnectorOrder(node);
+  const rezising = false;
 
   const type = TextResources.Type_BlockParentNode;
-  let position = { x: Position.FunctionBlock_xPos, y: 100 };
-
-  if (splitView && isSplitViewNode) position.x = Position.FunctionBlock_xPos + 750; // TODO: remove magic number
+  const position = { x: node.positionBlockX, y: node.positionBlockY };
+  let draggable = false;
+  if (!rezising) draggable = true;
 
   return {
     key: CreateId(),
@@ -28,9 +23,9 @@ const BuildParentBlockNode = (node: Node, splitView: boolean, isSplitViewNode: b
     type: type,
     data: node,
     position: position,
-    isHidden: node.isHidden,
+    isHidden: false,
     isSelected: true,
-    draggable: false,
+    draggable: draggable,
     selectable: true,
   } as FlowElement;
 };
