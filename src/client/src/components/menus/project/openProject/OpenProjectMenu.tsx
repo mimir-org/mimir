@@ -40,6 +40,8 @@ export const OpenProjectMenu = ({ projectState, dispatch }: Props) => {
         <MessageComponent
           handleSave={() => Click.OnSave(dispatch, projectId, setConfirm)}
           handleNoSave={() => Click.OnNoSave(dispatch, projectId, setConfirm)}
+          showConfirm={confirm}
+          setConfirm={setConfirm}
         />
       )}
     </>

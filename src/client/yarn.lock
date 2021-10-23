@@ -11467,7 +11467,7 @@
   "resolved" "https://registry.npmjs.org/react-redux-loading-hook/-/react-redux-loading-hook-1.0.2.tgz"
   "version" "1.0.2"
 
-"react-redux@^7.2.1", "react-redux@^7.2.2":
+"react-redux@^7.2.2":
   "integrity" "sha512-8+CQ1EvIVFkYL/vu6Olo7JFLWop1qRUeb46sGtIMDCSpgwPQq8fPLpirIB0iTqFe9XYEFPHssdX8/UwN6pAkEA=="
   "resolved" "https://registry.npmjs.org/react-redux/-/react-redux-7.2.2.tgz"
   "version" "7.2.2"
@@ -11717,7 +11717,7 @@
   "resolved" "https://registry.npmjs.org/redux-thunk/-/redux-thunk-2.3.0.tgz"
   "version" "2.3.0"
 
-"redux@^2.0.0 || ^3.0.0 || ^4.0.0-0", "redux@^4.0.0", "redux@^4.0.4", "redux@^4.0.5", "redux@^4.1.0", "redux@>4.0.0":
+"redux@^4.0.0", "redux@^4.0.4", "redux@^4.0.5", "redux@^4.1.0":
   "integrity" "sha512-hZQZdDEM25UY2P493kPYuKqviVwZ58lEmGQNeQ+gXa+U0gYPUBf7NKYazbe3m+bs/DzM/ahN12DbF+NG8i0CWw=="
   "resolved" "https://registry.npmjs.org/redux/-/redux-4.1.1.tgz"
   "version" "4.1.1"
