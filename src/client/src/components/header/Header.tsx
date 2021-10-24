@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/store/hooks";
 import {
   darkModeSelector,
   accountMenuOpenSelector,
-  isElectroSelector,
+  electroSelector,
   explorerOpenSelector,
   treeFilterSelector,
   blockFilterSelector,
@@ -26,7 +26,7 @@ const Header = () => {
   const libOpen = useAppSelector(libOpenSelector);
   const explorerOpen = useAppSelector(explorerOpenSelector);
   const treeView = useAppSelector(treeViewSelector);
-  const electro = useAppSelector(isElectroSelector);
+  const electro = useAppSelector(electroSelector);
 
   return (
     <>

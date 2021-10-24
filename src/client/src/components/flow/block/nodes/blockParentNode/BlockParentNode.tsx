@@ -8,7 +8,7 @@ import { BlockComponent } from "./";
 import { FilterTerminals, GetNodeByDataId, FindAllEdges } from "../../helpers";
 import { Node } from "../../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
-import { edgeSelector, isElectroSelector, nodeSelector, secondaryNodeSelector } from "../../../../../redux/store";
+import { edgeSelector, electroSelector, nodeSelector, secondaryNodeSelector } from "../../../../../redux/store";
 
 /**
  * Component for the large parent block in BlockView.
@@ -22,10 +22,11 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const nodes = useAppSelector(nodeSelector);
   const edges = useAppSelector(edgeSelector);
   const secondaryNode = useAppSelector(secondaryNodeSelector) as Node;
-  const electro = useAppSelector(isElectroSelector);
+  const electro = useAppSelector(electroSelector);
   const updateNodeInternals = useUpdateNodeInternals();
   const node = nodes?.find((x) => x.id === data.id);
   if (node) node.width = Size.BlockView_Width;
+  const terminals = FilterTerminals(data, secondaryNode);
 
   // Enforce size change of node
   useEffect(() => {
@@ -53,7 +54,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         outputMenuOpen={outTerminalMenu}
         parent={true}
         electro={electro}
-        terminals={FilterTerminals(node, false, secondaryNode)}
+        terminals={terminals}
         onClick={(conn) => OnConnectorClick(conn, dispatch, edges, nodes)}
         menuBox={true}
         mainConnectNode={false}
@@ -66,7 +67,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         nodes={nodes}
         length={node?.length}
         width={node?.width}
-        terminals={FilterTerminals(node, false, secondaryNode)}
+        terminals={terminals}
         electro={electro}
         mainConnectNode={false}
       />

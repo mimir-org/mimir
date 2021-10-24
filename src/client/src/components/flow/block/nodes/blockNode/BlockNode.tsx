@@ -15,7 +15,7 @@ import { BlockNodeNameBox } from "../../styled";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
 import {
   edgeSelector,
-  isElectroSelector,
+  electroSelector,
   mainConnectSelector,
   nodeSelector,
   secondaryNodeSelector,
@@ -38,12 +38,12 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const nodes = useAppSelector(nodeSelector);
   const edges = useAppSelector(edgeSelector);
   const secondaryNode = useAppSelector(secondaryNodeSelector) as Node;
-  const electro = useAppSelector(isElectroSelector);
+  const electro = useAppSelector(electroSelector);
   const mainConnectNodes = useAppSelector(mainConnectSelector);
 
   const type = IsFunction(data) ? "BlockFunctionNode-" : "BlockProductNode-";
   const node = nodes?.find((x) => x.id === data.id);
-  const terminals = FilterTerminals(data, false, secondaryNode);
+  const terminals = FilterTerminals(data, secondaryNode);
   const connectChildren = GetConnectChildren(data, nodes, edges);
   const mainConnectNode = mainConnectNodes.find((x) => x.id === data.id);
   const connectNodes = mainConnectNode?.connectNodes;
@@ -59,10 +59,10 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
     ResizeConnectNode(connectNodes?.length, mainConnectNode, data);
   }, [mainConnectNode, data, connectNodes, mainConnectNodes]);
 
-  // useEffect(() => {
-  //   ResizeConnectNode(connectNodes?.length, mainConnectNode?.id, data);
-  //   SetConnectNodeColor(mainConnectNode?.id, connectNodes, data);
-  // }, [mainConnectNode, data, connectNodes]);
+  useEffect(() => {
+    ResizeConnectNode(connectNodes?.length, mainConnectNode, data);
+    SetConnectNodeColor(mainConnectNode?.id, connectNodes, data);
+  }, [mainConnectNode, data, connectNodes]);
 
   // Force z-index to display edges in ConnectView
   useEffect(() => {
@@ -73,15 +73,6 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   }, [mainConnectNode]);
 
   electro ? SetNodeWidth(terminals, data) : SetNodeLength(terminals, data);
-
-  // Remove in new BlockView
-  // if (mainConnectNodes.length === 0) {
-  //   const flowNode = GetNodeByDataId(data.id);
-  //   if (flowNode) {
-  //     flowNode.style.width = `${data.width}px`;
-  //     flowNode.style.height = `${data.length}px`;
-  //   }
-  // }
 
   useEffect(() => {
     updateNodeInternals(node?.id);

@@ -13,7 +13,7 @@ import { Node } from "../../../models";
 import {
   darkModeSelector,
   iconSelector,
-  isElectroSelector,
+  electroSelector,
   librarySelector,
   mainConnectSelector,
   projectSelector,
@@ -37,7 +37,7 @@ const FlowBlock = () => {
   const mainConnectNodes = useAppSelector(mainConnectSelector);
   const icons = useAppSelector(iconSelector);
   const lib = useAppSelector(librarySelector);
-  const electro = useAppSelector(isElectroSelector);
+  const electro = useAppSelector(electroSelector);
   const userState = useAppSelector(userStateSelector);
   const blockFilter = useAppSelector(blockFilterSelector);
   const node = GetSelectedNode();
@@ -115,8 +115,9 @@ const FlowBlock = () => {
               onNodeDragStop={OnNodeDragStop}
               onElementClick={OnElementClick}
               zoomOnScroll={true}
-              paneMoveable={false}
+              paneMoveable={true}
               zoomOnDoubleClick={false}
+              defaultZoom={0.8}
               onClick={(e) => OnBlockClick(e, dispatch, project)}
               onlyRenderVisibleElements={true}
             >

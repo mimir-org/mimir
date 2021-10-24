@@ -180,7 +180,7 @@ export const iconSelector = createAppSelector(
   (icons) => icons
 );
 
-export const isElectroSelector = createAppSelector(
+export const electroSelector = createAppSelector(
   (state) => state.electro.visible,
   (visible) => visible
 );
