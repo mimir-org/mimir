@@ -19,6 +19,7 @@ const BuildParentSecondaryNode = (primaryNode: Node, secondaryNode: Node) => {
   const position = { x: secondaryNode.positionBlockX, y: secondaryNode.positionBlockY };
 
   DetectCollision(position, primaryNode);
+  secondaryNode.isHidden = false;
 
   return {
     key: CreateId(),

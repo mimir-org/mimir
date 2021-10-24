@@ -191,7 +191,7 @@ export const terminalTypeSelector = createAppSelector(
 );
 
 export const nodeSelector = createAppSelector(
-  (state) => state.projectState.project.nodes,
+  (state) => state.projectState?.project?.nodes,
   (nodes) => (nodes ?? []) as Node[]
 );
 

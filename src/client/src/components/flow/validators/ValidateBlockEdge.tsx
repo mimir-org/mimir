@@ -37,12 +37,13 @@ function validBlockView(activeNode: Node, from: Node, to: Node, fromC: Connector
   if (IsLocation(activeNode)) {
     return IsLocationTerminal(fromC) && IsLocationTerminal(toC);
   }
-  if (IsProduct(activeNode)) {
-    return IsFulfilledByTerminal(fromC) && IsFulfilledByTerminal(toC);
-  }
 
   if (IsFunction(activeNode)) {
     return IsTransportTerminal(fromC) && IsTransportTerminal(toC);
+  }
+
+  if (IsProduct(activeNode)) {
+    return IsTransportTerminal(fromC) && IsTransportTerminal(toC) && IsProduct(from) && IsProduct(to);
   }
 }
 
