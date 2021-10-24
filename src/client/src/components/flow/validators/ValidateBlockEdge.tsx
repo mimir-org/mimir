@@ -18,23 +18,21 @@ import {
  * @param activeNode
  * @param fromNode
  * @param toNode
- * @param splitNode
+ * @param secondaryNode
  * @param fromConnector
  * @param toConnector
- * @param splitView
  * @returns a boolean value.
  */
 const ValidateBlockEdge = (
   activeNode: Node,
   fromNode: Node,
   toNode: Node,
-  splitNode: Node,
+  secondaryNode: Node,
   fromConnector: Connector,
-  toConnector: Connector,
-  splitView: boolean
+  toConnector: Connector
 ) => {
-  if (!splitView && !IsConnectView()) return validBlockView(activeNode, fromNode, toNode);
-  if (splitView) return validSplitView(activeNode, splitNode, fromNode, toNode, fromConnector, toConnector);
+  if (!IsConnectView()) return validBlockView(activeNode, fromNode, toNode);
+  // if (splitView) return validSplitView(activeNode, secondaryNode, fromNode, toNode, fromConnector, toConnector);
   if (IsConnectView()) return validConnectView(activeNode, fromNode, toNode, fromConnector, toConnector);
   return false;
 };

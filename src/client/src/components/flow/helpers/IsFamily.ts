@@ -1,7 +1,7 @@
-import { Node } from "../../../models";
+import { LibItem, Node } from "../../../models";
 
-const IsFamily = (node: Node, nodeToCheck: Node) => {
-  return node?.aspect === nodeToCheck?.aspect;
+const IsFamily = (element: Node | LibItem, elementToCheck: Node | LibItem) => {
+  return element?.aspect === elementToCheck?.aspect;
 };
 
 export default IsFamily;

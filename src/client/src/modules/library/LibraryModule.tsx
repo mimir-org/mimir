@@ -18,7 +18,6 @@ import {
   libOpenSelector,
   librarySelector,
   projectSelector,
-  splitViewSelector,
 } from "../../redux/store";
 
 /**
@@ -37,7 +36,6 @@ const LibraryModule = () => {
 
   const libState = useAppSelector(librarySelector);
   const project = useAppSelector(projectSelector);
-  const splitView = useAppSelector(splitViewSelector);
   const legendOpen = useAppSelector(legendOpenSelector);
   const animate = useParametricAppSelector(animatedModuleSelector, lib);
   const libOpen = useAppSelector(libOpenSelector);
@@ -61,7 +59,7 @@ const LibraryModule = () => {
         <p className="text">{TextResources.Module_Library}</p>
       </ModuleHead>
       <ModuleBody visible={libOpen}>
-        <LibraryComponent categories={GetLibCategories(selectedNode, splitView, libState)} search={search} />
+        <LibraryComponent categories={GetLibCategories(selectedNode, libState)} search={search} />
       </ModuleBody>
 
       <AnimatedModule start={startLegend} stop={stopLegend} run={animateLegend} type={legend} id="LegendModule">

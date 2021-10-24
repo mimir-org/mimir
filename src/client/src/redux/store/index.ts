@@ -11,7 +11,7 @@ import { moduleReducer } from "./modules/reducers";
 import { menuReducer } from "../../components/menus/project/redux/reducers";
 import { commonReducer } from "./common/reducers";
 import { flowReducer } from "./flow/reducers";
-import { splitViewReducer } from "./splitView/reducers";
+import { secondaryReducer } from "./secondaryNode/reducers";
 import { connectViewReducer } from "../../components/flow/block/connectView/redux/reducers";
 import { darkModeReducer } from "./darkMode/reducers";
 import { parametersReducer } from "../../modules/inspector/tabs/parameters/redux/reducers";
@@ -35,7 +35,7 @@ const rootReducers = combineReducers({
   modules: moduleReducer,
   menu: menuReducer,
   flow: flowReducer,
-  splitView: splitViewReducer,
+  secondaryReducer: secondaryReducer,
   electro: electroViewReducer,
   connectView: connectViewReducer,
   commonState: commonReducer,

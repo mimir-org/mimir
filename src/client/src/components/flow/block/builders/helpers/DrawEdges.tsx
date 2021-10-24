@@ -8,10 +8,11 @@ import { EdgeType, EDGE_TYPE } from "../../../../../models/project";
  * @param edges
  * @param nodes
  * @param elements
+ * @param secondaryNode
  */
-const DrawEdges = (edges: Edge[], nodes: Node[], elements: Elements<any>) => {
+const DrawEdges = (edges: Edge[], nodes: Node[], elements: Elements<any>, secondaryNode: Node) => {
   edges.forEach((edge) => {
-    const blockEdge = BuildBlockEdge(nodes, edge, EDGE_TYPE.BLOCK as EdgeType);
+    const blockEdge = BuildBlockEdge(nodes, edge, EDGE_TYPE.BLOCK as EdgeType, secondaryNode);
     if (blockEdge) elements.push(blockEdge);
   });
 };

@@ -160,13 +160,8 @@ export const projectSelector = createAppSelector(
   (project) => project as Project
 );
 
-export const splitViewSelector = createAppSelector(
-  (state) => state.splitView.visible,
-  (visible) => visible
-);
-
 export const secondaryNodeSelector = createAppSelector(
-  (state) => state.splitView.node,
+  (state) => state.secondaryReducer.node,
   (node) => node
 );
 

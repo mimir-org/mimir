@@ -28,9 +28,9 @@ const BlockComponent = ({ node, color, selected, dispatch }: Props) => {
           <p className="text">={node?.label ?? node?.name}</p>
         </Header>
       </Banner>
-      <ResizeButton id="ResizeParent">
+      {/* <ResizeButton id="ResizeParent">
         <img src={ResizeIcon} alt="resize" className="icon" />
-      </ResizeButton>
+      </ResizeButton> */}
     </Block>
   );
 };
