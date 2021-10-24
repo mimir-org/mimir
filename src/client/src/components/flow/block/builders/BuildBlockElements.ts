@@ -1,7 +1,7 @@
 import { Elements } from "react-flow-renderer";
 import { Node, Project } from "../../../../models";
 import { BuildParentBlockNode, BuildParentSecondaryNode } from ".";
-import { DrawChildNodes, DrawConnectViewChildren, DrawEdges, DrawSplitViewChildren } from "./helpers";
+import { DrawChildNodes, DrawConnectViewChildren, DrawEdges, DrawSecondaryChildren } from "./helpers";
 
 /**
  * Component to draw all nodes and edges in BlockView.
@@ -35,7 +35,7 @@ const BuildBlockElements = (
 
   DrawChildNodes(project.edges, allNodes, selectedNode, elements, parentNode);
   DrawEdges(project.edges, allNodes, elements, secondaryNode);
-  secondaryNode && DrawSplitViewChildren(project.edges, allNodes, secondaryNode, elements);
+  secondaryNode && DrawSecondaryChildren(project.edges, allNodes, secondaryNode, elements);
   connectView && DrawConnectViewChildren(mainConnectNodes, elements, allNodes, parentNode);
 
   return elements;

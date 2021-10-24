@@ -8,11 +8,6 @@ const Size = {
   // Terminals
   Terminals_Interval: 25,
 
-  // SplitView
-  SplitView_Width: 650,
-  SplitView_Height: 600,
-  SplitView_MarginLeft: 150,
-
   // BlockView
   BlockView_Width: 950,
   BlockView_Height: 800,

@@ -3,7 +3,7 @@ import { FlowElement } from "react-flow-renderer";
 import { GetNodeTypeString, SetBlockNodePos, SetConnectorOrder, SetOffPageNodePos } from "./helpers";
 import { IsOffPage } from "../helpers";
 
-const BuildSplitViewChildNode = (node: Node, parent: Node) => {
+const BuildSecondaryChildNode = (node: Node, parent: Node) => {
   if (!node) return null;
   const type = GetNodeTypeString(node);
 
@@ -28,4 +28,4 @@ const BuildSplitViewChildNode = (node: Node, parent: Node) => {
   } as FlowElement;
 };
 
-export default BuildSplitViewChildNode;
+export default BuildSecondaryChildNode;

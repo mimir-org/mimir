@@ -33,7 +33,7 @@ const HandleComponent = ({ node, nodes, length, width, terminals, parent, electr
             visible={conn.visible}
             id={"handle-" + conn.id}
             top={SetTopPos(pos, electro, parent, order, length, mainConnectNode)}
-            left={SetLeftPos(pos, electro, parent, order, false, width, mainConnectNode)}
+            left={SetLeftPos(pos, electro, parent, order, width, mainConnectNode)}
           >
             <ConnectorIcon style={{ fill: GetTerminalColor(conn) }} className={"react-flow__handle-block"} />
             <Handle
