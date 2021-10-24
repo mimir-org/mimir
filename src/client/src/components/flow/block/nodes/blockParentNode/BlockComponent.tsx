@@ -1,6 +1,5 @@
 import { Node } from "../../../../../models";
-import { ResizeIcon } from "../../../../../assets/icons/resize";
-import { Banner, Block, Header, ResizeButton } from "./styled";
+import { Banner, Block, Header } from "./styled";
 import { OnResize } from "./handlers";
 import { useEffect } from "react";
 

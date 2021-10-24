@@ -1,15 +1,11 @@
-import { IsConnectView } from "../block/connectView/helpers";
 import { Node, Connector } from "../../../models";
-import { IsDirectChild } from "../block/helpers";
 import {
-  IsChildOf,
-  IsFamily,
   IsFulfilledByTerminal,
   IsFunction,
   IsLocation,
   IsLocationTerminal,
+  IsPartOfTerminal,
   IsProduct,
-  IsSiblingNodes,
   IsTransportTerminal,
 } from "../helpers";
 
@@ -31,53 +27,43 @@ const ValidateBlockEdge = (
   fromConnector: Connector,
   toConnector: Connector
 ) => {
-  if (!IsConnectView()) return validBlockView(activeNode, fromNode, toNode);
-  // if (splitView) return validSplitView(activeNode, secondaryNode, fromNode, toNode, fromConnector, toConnector);
-  if (IsConnectView()) return validConnectView(activeNode, fromNode, toNode, fromConnector, toConnector);
+  if (IsPartOfTerminal(fromConnector) || IsPartOfTerminal(toConnector)) return false;
+  if (!secondaryNode) return validBlockView(activeNode, fromNode, toNode, fromConnector, toConnector);
+  if (secondaryNode) return validSecondaryView(activeNode, secondaryNode, fromNode, toNode, fromConnector, toConnector);
   return false;
 };
 
-function validBlockView(active: Node, from: Node, to: Node) {
-  if (!IsLocation(active)) return IsSiblingNodes(from, to) && IsChildOf(to, active) && IsChildOf(from, active);
-}
-
-function validSplitView(activeNode: Node, splitNode: Node, from: Node, to: Node, fromC: Connector, toC: Connector) {
-  if (!splitNode) return IsSiblingNodes(from, to) && IsChildOf(from, activeNode);
-
-  if (splitNode && !IsLocation(splitNode)) {
-    return (
-      IsDirectChild(from, activeNode) &&
-      IsDirectChild(to, activeNode) &&
-      IsDirectChild(from, splitNode) &&
-      IsDirectChild(to, splitNode) &&
-      IsFulfilledByTerminal(fromC) &&
-      IsFulfilledByTerminal(toC)
-    );
+function validBlockView(activeNode: Node, from: Node, to: Node, fromC: Connector, toC: Connector) {
+  if (IsLocation(activeNode)) {
+    return IsLocationTerminal(fromC) && IsLocationTerminal(toC);
+  }
+  if (IsProduct(activeNode)) {
+    return IsFulfilledByTerminal(fromC) && IsFulfilledByTerminal(toC);
   }
 
-  if (IsLocation(splitNode)) {
-    return (
-      IsLocation(to) &&
-      IsLocationTerminal(fromC) &&
-      IsLocationTerminal(toC) &&
-      IsFamily(from, activeNode) &&
-      IsDirectChild(from, activeNode) &&
-      IsDirectChild(to, activeNode) &&
-      IsDirectChild(from, splitNode) &&
-      IsDirectChild(to, splitNode)
-    );
+  if (IsFunction(activeNode)) {
+    return IsTransportTerminal(fromC) && IsTransportTerminal(toC);
   }
 }
 
-function validConnectView(activeNode: Node, fromNode: Node, toNode: Node, fromConn: Connector, toConn: Connector) {
-  return (
-    (fromNode !== activeNode &&
-      IsTransportTerminal(fromConn) &&
-      IsTransportTerminal(toConn) &&
-      IsFunction(fromNode) &&
-      IsFunction(toNode)) ||
-    (IsProduct(fromNode) && IsProduct(toNode))
-  );
+function validSecondaryView(
+  activeNode: Node,
+  secondaryNode: Node,
+  from: Node,
+  to: Node,
+  fromC: Connector,
+  toC: Connector
+) {
+  if (IsLocation(secondaryNode)) {
+    return IsLocationTerminal(fromC) && IsLocationTerminal(toC);
+  }
+  if (IsProduct(secondaryNode)) {
+    return IsFulfilledByTerminal(fromC) && IsFulfilledByTerminal(toC);
+  }
+
+  if (IsFunction(secondaryNode)) {
+    return IsTransportTerminal(fromC) && IsTransportTerminal(toC);
+  }
 }
 
 export default ValidateBlockEdge;

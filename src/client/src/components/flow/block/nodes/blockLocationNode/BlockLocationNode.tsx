@@ -40,7 +40,8 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
 
   useEffect(() => {
     updateNodeInternals(node?.id);
-  }, [node, updateNodeInternals]);
+    updateNodeInternals(secondaryNode?.id);
+  }, [node, secondaryNode, updateNodeInternals]);
 
   return (
     <>
