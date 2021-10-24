@@ -2,6 +2,7 @@ import { FlowElement } from "react-flow-renderer";
 import { TextResources } from "../../../../assets/text";
 import { Node } from "../../../../models";
 import { CreateId } from "../../helpers";
+import { SetConnectorOrder } from "./helpers";
 
 /**
  * Component to create a parent node in BlockView.
@@ -10,12 +11,11 @@ import { CreateId } from "../../helpers";
  */
 const BuildParentBlockNode = (node: Node) => {
   if (!node) return null;
-  const rezising = false;
+
+  SetConnectorOrder(node);
 
   const type = TextResources.Type_BlockParentNode;
   const position = { x: node.positionBlockX, y: node.positionBlockY };
-  let draggable = false;
-  if (!rezising) draggable = true;
 
   return {
     key: CreateId(),
@@ -25,7 +25,7 @@ const BuildParentBlockNode = (node: Node) => {
     position: position,
     isHidden: false,
     isSelected: true,
-    draggable: draggable,
+    draggable: true,
     selectable: true,
   } as FlowElement;
 };

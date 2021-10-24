@@ -1,7 +1,7 @@
 import { Elements } from "react-flow-renderer";
 import { BuildBlockNode } from "../";
 import { Node, Edge } from "../../../../../models";
-import { IsPartOfTerminal } from "../../../helpers";
+import { IsFamily, IsPartOfTerminal } from "../../../helpers";
 import { IsOffPage } from "../../helpers";
 
 /**
@@ -30,7 +30,7 @@ const DrawChildNodes = (
 function validateEdge(edge: Edge, selectedNode: Node) {
   return (
     edge.fromNodeId === selectedNode?.id &&
-    (selectedNode?.aspect === edge.toNode.aspect || IsOffPage(edge.toNode)) &&
+    (IsFamily(selectedNode, edge.toNode) || IsOffPage(edge.toNode)) &&
     IsPartOfTerminal(edge.toConnector)
   );
 }

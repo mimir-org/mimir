@@ -1,23 +1,22 @@
 import { Size } from "../../../../../compLibrary";
-import { Node } from "../../../../../models";
 
 /**
  * Function to force a node to fit within the parent block in BlockView.
- * @param node
- * @param parent
+ * @param nodePos
+ * @param parentPos
  * @returns an updated position, containing X and Y values.
  */
-const SetOffPageNodePos = (node: Node, parent: Node) => {
-  const yMax = parent.positionBlockY + Size.BlockView_Height - 50;
-  const yMin = parent.positionBlockY + 50;
-  const xPos = parent.positionBlockX + 650;
+const SetOffPageNodePos = (nodePos: { x: number; y: number }, parentPos: { x: number; y: number }) => {
+  const yMax = parentPos.y + Size.BlockView_Height - 50;
+  const yMin = parentPos.y + 50;
+  const xPos = parentPos.x + 650;
 
-  if (node.positionBlockY < yMin) node.positionBlockY = yMin;
-  if (node.positionBlockY > yMax) node.positionBlockY = yMax;
-  if (node.positionBlockX < xPos) node.positionBlockX = xPos;
-  if (node.positionBlockX > xPos) node.positionBlockX = xPos;
+  if (nodePos.y < yMin) nodePos.y = yMin;
+  if (nodePos.y > yMax) nodePos.y = yMax;
+  if (nodePos.x < xPos) nodePos.x = xPos;
+  if (nodePos.x > xPos) nodePos.x = xPos;
 
-  return { x: node.positionBlockX, y: node.positionBlockY };
+  return { x: nodePos.x, y: nodePos.y };
 };
 
 export default SetOffPageNodePos;

@@ -9,7 +9,7 @@ import { NodeBox } from "../../../styled";
 import { TerminalsContainerComponent, HandleComponent } from "../../terminals";
 import { ConnectViewComponent } from "../../connectView";
 import { IsChildConnectNode, IsConnectNodeChecked, SetNodeWidth, SetNodeLength } from "./helpers";
-import { FilterTerminals, FindAllEdges, GetNodeByDataId } from "../../helpers";
+import { FilterTerminals, FindAllEdges } from "../../helpers";
 import { Symbol } from "../../../../../compLibrary/symbol";
 import { BlockNodeNameBox } from "../../styled";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
@@ -19,7 +19,6 @@ import {
   mainConnectSelector,
   nodeSelector,
   splitNodeSelector,
-  splitViewSelector,
 } from "../../../../../redux/store";
 
 /**
@@ -38,14 +37,13 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
 
   const nodes = useAppSelector(nodeSelector);
   const edges = useAppSelector(edgeSelector);
-  const splitView = useAppSelector(splitViewSelector);
-  const splitViewNode = useAppSelector(splitNodeSelector) as Node;
+  const secondaryNode = useAppSelector(splitNodeSelector) as Node;
   const electro = useAppSelector(isElectroSelector);
   const mainConnectNodes = useAppSelector(mainConnectSelector);
 
   const type = IsFunction(data) ? "BlockFunctionNode-" : "BlockProductNode-";
   const node = nodes?.find((x) => x.id === data.id);
-  const terminals = FilterTerminals(data, splitView, splitViewNode);
+  const terminals = FilterTerminals(data, false, secondaryNode);
   const connectChildren = GetConnectChildren(data, nodes, edges);
   const mainConnectNode = mainConnectNodes.find((x) => x.id === data.id);
   const connectNodes = mainConnectNode?.connectNodes;
@@ -61,6 +59,11 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
     ResizeConnectNode(connectNodes?.length, mainConnectNode, data);
   }, [mainConnectNode, data, connectNodes, mainConnectNodes]);
 
+  // useEffect(() => {
+  //   ResizeConnectNode(connectNodes?.length, mainConnectNode?.id, data);
+  //   SetConnectNodeColor(mainConnectNode?.id, connectNodes, data);
+  // }, [mainConnectNode, data, connectNodes]);
+
   // Force z-index to display edges in ConnectView
   useEffect(() => {
     if (mainConnectNode) {
@@ -72,13 +75,13 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   electro ? SetNodeWidth(terminals, data) : SetNodeLength(terminals, data);
 
   // Remove in new BlockView
-  if (mainConnectNodes.length === 0) {
-    const flowNode = GetNodeByDataId(data.id);
-    if (flowNode) {
-      flowNode.style.width = `${data.width}px`;
-      flowNode.style.height = `${data.length}px`;
-    }
-  }
+  // if (mainConnectNodes.length === 0) {
+  //   const flowNode = GetNodeByDataId(data.id);
+  //   if (flowNode) {
+  //     flowNode.style.width = `${data.width}px`;
+  //     flowNode.style.height = `${data.length}px`;
+  //   }
+  // }
 
   useEffect(() => {
     updateNodeInternals(node?.id);
@@ -118,7 +121,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
           width={mainConnectNode ? mainConnectNode.width : data.width}
           terminals={terminals}
           parent={false}
-          splitView={splitView}
+          splitView={false}
           electro={electro}
           mainConnectNode={mainConnectNode?.id === data.id}
         />

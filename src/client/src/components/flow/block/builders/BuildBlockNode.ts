@@ -2,7 +2,7 @@ import { Node } from "../../../../models";
 import { FlowElement } from "react-flow-renderer";
 import { IsOffPage } from "../helpers";
 import { SetConnectNodePos } from "../connectView/helpers/position";
-import { GetNodeTypeString, SetBlockNodePos, SetOffPageNodePos } from "./helpers";
+import { GetNodeTypeString, SetBlockNodePos, SetOffPageNodePos, SetConnectorOrder } from "./helpers";
 import { CreateId } from "../../helpers";
 
 /**
@@ -10,17 +10,21 @@ import { CreateId } from "../../helpers";
  * @param node
  * @param connectNode
  * @param allNodes - all nodes in Mimir
- * @param parentNode
+ * @param parent
  * @returns a node of the type FlowElement.
  */
-const BuildBlockNode = (node: Node, connectNode: Node, allNodes: Node[], parentNode: Node) => {
+const BuildBlockNode = (node: Node, connectNode: Node, allNodes: Node[], parent: Node) => {
   if (!node) return null;
-
-  const connectNodes = connectNode?.connectNodes ?? [];
   const type = GetNodeTypeString(node);
+  const connectNodes = connectNode?.connectNodes ?? [];
+
+  const nodePos = { x: node.positionBlockX, y: node.positionBlockY };
+  const parentPos = { x: parent.positionBlockX, y: parent.positionBlockY };
+
+  SetConnectorOrder(node);
 
   // Force node to fit Block
-  let position = !IsOffPage(node) ? SetBlockNodePos(node, parentNode) : SetOffPageNodePos(node, parentNode);
+  let position = !IsOffPage(node) ? SetBlockNodePos(nodePos, parentPos) : SetOffPageNodePos(nodePos, parentPos);
 
   if (connectNodes.some((n) => n.id === node.id))
     position = SetConnectNodePos(node, connectNode.id, connectNodes, allNodes);

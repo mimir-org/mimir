@@ -3,7 +3,7 @@ import { NodeProps, useUpdateNodeInternals } from "react-flow-renderer";
 import { HandleComponent, TerminalsContainerComponent } from "../../terminals";
 import { Size } from "../../../../../compLibrary";
 import { GetParentColor } from "./helpers";
-import { OnParentClick, OnChildClick, OnConnectorClick } from "./handlers";
+import { OnConnectorClick } from "./handlers";
 import { BlockComponent } from "./";
 import { FilterTerminals, GetNodeByDataId, FindAllEdges } from "../../helpers";
 import { Node } from "../../../../../models";
@@ -45,14 +45,8 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
 
   return (
     <>
-      <BlockComponent
-        dispatch={dispatch}
-        node={node}
-        color={GetParentColor(node)}
-        selected={node?.isBlockSelected}
-        onParentClick={() => OnParentClick(dispatch, node)}
-        onChildClick={() => OnChildClick(dispatch, node, nodes, edges)}
-      />
+      <BlockComponent dispatch={dispatch} node={node} color={GetParentColor(node)} selected={node?.isBlockSelected} />
+
       <TerminalsContainerComponent
         node={node}
         inputMenuOpen={inTerminalMenu}

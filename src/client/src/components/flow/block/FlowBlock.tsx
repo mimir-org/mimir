@@ -9,6 +9,7 @@ import { GetSelectedNode, GetBlockNodeTypes, SetDarkModeColor, GetParent } from 
 import { EDGE_TYPE, EdgeType } from "../../../models/project";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { BlockFilterMenu } from "../../menus/filterMenu/block";
+import { Node } from "../../../models";
 import {
   darkModeSelector,
   iconSelector,
@@ -32,7 +33,7 @@ const FlowBlock = () => {
   const [elements, setElements] = useState<Elements>();
   const darkMode = useAppSelector(darkModeSelector);
   const project = useAppSelector(projectSelector);
-  const splitNode = useAppSelector(splitNodeSelector);
+  const secondaryNode = useAppSelector(splitNodeSelector) as Node;
   const mainConnectNodes = useAppSelector(mainConnectSelector);
   const icons = useAppSelector(iconSelector);
   const lib = useAppSelector(librarySelector);
@@ -44,10 +45,10 @@ const FlowBlock = () => {
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(BuildBlockElements(project, node, splitNode, mainConnectNodes, parent));
+      setElements(BuildBlockElements(project, node, secondaryNode, mainConnectNodes, parent));
       return setReactFlowInstance(_reactFlowInstance);
     },
-    [project, node, splitNode, mainConnectNodes, parent]
+    [project, node, secondaryNode, mainConnectNodes, parent]
   );
 
   const OnElementsRemove = (elementsToRemove) => {
@@ -114,7 +115,7 @@ const FlowBlock = () => {
               onNodeDragStop={OnNodeDragStop}
               onElementClick={OnElementClick}
               zoomOnScroll={true}
-              paneMoveable={false}
+              paneMoveable={true}
               zoomOnDoubleClick={false}
               onClick={(e) => OnBlockClick(e, dispatch, project)}
               onlyRenderVisibleElements={true}
