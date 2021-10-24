@@ -119,7 +119,7 @@ const FlowBlock = () => {
               zoomOnDoubleClick={false}
               defaultZoom={0.8}
               onClick={(e) => OnBlockClick(e, dispatch, project)}
-              // onlyRenderVisibleElements={true}
+              onlyRenderVisibleElements={true}
             >
               <FullScreenComponent />
             </ReactFlow>

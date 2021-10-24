@@ -25,9 +25,7 @@ const BuildBlockNode = (node: Node, connectNode: Node, allNodes: Node[], parent:
 
   // Force node to fit Block
   let position = !IsOffPage(node) ? SetBlockNodePos(nodePos, parentPos) : SetOffPageNodePos(nodePos, parentPos);
-
-  if (connectNodes.some((n) => n.id === node.id))
-    position = SetConnectNodePos(node, connectNode.id, connectNodes, allNodes);
+  if (connectNodes.some((n) => n.id === node.id)) position = SetConnectNodePos(node, connectNode.id, connectNodes, allNodes);
 
   return {
     key: CreateId(),

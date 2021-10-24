@@ -531,9 +531,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
     case Types.EXPORT_PROJECT_TO_FILE:
       return {
         ...state,
-        apiError: state.apiError
-          ? state.apiError.filter((elem) => elem.key !== Types.EXPORT_PROJECT_TO_FILE)
-          : state.apiError,
+        apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== Types.EXPORT_PROJECT_TO_FILE) : state.apiError,
       };
 
     case Types.EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR:

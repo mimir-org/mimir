@@ -43,11 +43,7 @@ const LibraryComponent = ({ categories, search }: Props) => {
             />
           );
         })}
-        <TypeEditorModule
-          selectedElement={selectedElement}
-          selectedElementType={selectedElementType}
-          onChange={typeEditorOpen}
-        />
+        <TypeEditorModule selectedElement={selectedElement} selectedElementType={selectedElementType} onChange={typeEditorOpen} />
       </LibBody>
     </>
   );

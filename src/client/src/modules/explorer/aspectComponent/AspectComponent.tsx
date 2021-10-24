@@ -16,16 +16,7 @@ interface Props {
   expanded: boolean;
   onElementExpanded: (expanded: boolean, nodeId: string) => void;
 }
-export const AspectComponent = ({
-  node,
-  label,
-  project,
-  expanded,
-  indent,
-  isLeaf,
-  isRoot,
-  onElementExpanded,
-}: Props) => (
+export const AspectComponent = ({ node, label, project, expanded, indent, isLeaf, isRoot, onElementExpanded }: Props) => (
   <AspectBox indent={indent} node={node} isRoot={isRoot}>
     {IsAspectNode(node) && <img src={GetAspectIcon(node)} alt="aspect-icon" className="icon"></img>}
     <div className="container">

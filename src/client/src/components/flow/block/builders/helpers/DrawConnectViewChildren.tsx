@@ -9,12 +9,7 @@ import { Node } from "../../../../../models";
  * @param allNodes
  * @param parentNode
  */
-const DrawConnectViewChildren = (
-  mainConnectNodes: Node[],
-  elements: Elements<any>,
-  allNodes: Node[],
-  parentNode: Node
-) => {
+const DrawConnectViewChildren = (mainConnectNodes: Node[], elements: Elements<any>, allNodes: Node[], parentNode: Node) => {
   mainConnectNodes.forEach((mainNode) => {
     mainNode.connectNodes?.forEach((node) => {
       const connectNode = allNodes.find((n) => n.id === node.id);

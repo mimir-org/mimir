@@ -32,12 +32,7 @@ const Header = () => {
     <>
       <HeaderBox>
         <MenuMainHeader isOpen={isAccountMenuOpen}>
-          <img
-            src={Icons.User}
-            alt="icon"
-            className="icon"
-            onClick={() => Click.OnAccount(dispatch, isAccountMenuOpen)}
-          />
+          <img src={Icons.User} alt="icon" className="icon" onClick={() => Click.OnAccount(dispatch, isAccountMenuOpen)} />
           <div className="projectName" onClick={() => Click.OnAccount(dispatch, isAccountMenuOpen)}>
             {project && project.name}
           </div>

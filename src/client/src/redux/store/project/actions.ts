@@ -151,12 +151,7 @@ export function changeNodeValue(nodeId: string, propName: string, propValue: any
   };
 }
 
-export function changeNodeAttributeValue(
-  id: string,
-  node: Node,
-  value: string,
-  unitId: string
-): Types.ChangeNodeAttributeValue {
+export function changeNodeAttributeValue(id: string, node: Node, value: string, unitId: string): Types.ChangeNodeAttributeValue {
   return {
     type: Types.CHANGE_NODE_ATTRIBUTE_VALUE,
     payload: {
@@ -335,11 +330,7 @@ export function setIsLockedNode(node: Node, project: Project, isLocked: boolean)
   };
 }
 
-export function setIsLockedNodeAttribute(
-  attribute: Attribute,
-  nodeId: string,
-  isLocked: boolean
-): Types.LockUnlockNodeAttribute {
+export function setIsLockedNodeAttribute(attribute: Attribute, nodeId: string, isLocked: boolean): Types.LockUnlockNodeAttribute {
   return {
     type: Types.LOCK_UNLOCK_NODE_ATTRIBUTE,
     payload: {

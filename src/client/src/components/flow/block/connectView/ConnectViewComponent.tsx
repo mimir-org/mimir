@@ -38,10 +38,7 @@ const ConnectViewComponent = ({
   onBlur,
 }: Props) => (
   <>
-    <ConnectViewBox
-      visible={connectBox && children.length > 0}
-      onClick={() => Click.OnConnectMenu(showConnectMenu, visible)}
-    >
+    <ConnectViewBox visible={connectBox && children.length > 0} onClick={() => Click.OnConnectMenu(showConnectMenu, visible)}>
       <img src={IsFunction(node) ? ConnectFunctionMenu : ConnectProductMenu} alt="menu" />
     </ConnectViewBox>
 
@@ -66,9 +63,7 @@ const ConnectViewComponent = ({
           );
         })}
         <Element color={IsFunction(node) ? Color.FunctionSelected : Color.ProductSelected}>
-          <Footer onClick={() => Click.OnSelectAll(dispatch, node, children)}>
-            {TextResources.ConnectMenu_Select_All}
-          </Footer>
+          <Footer onClick={() => Click.OnSelectAll(dispatch, node, children)}>{TextResources.ConnectMenu_Select_All}</Footer>
           <Footer onClick={() => Click.OnClearAll(dispatch, node)}>{TextResources.ConnectMenu_Clear}</Footer>
         </Element>
       </Menu>

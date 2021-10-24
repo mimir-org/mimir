@@ -12,13 +12,7 @@ import { GetSelectedNode } from "../../components/flow/helpers";
 import { OnLibraryClick, OnLegendClick } from "./handlers";
 import { LegendIcon, LibraryIcon } from "../../assets/icons/modules";
 import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store/hooks";
-import {
-  animatedModuleSelector,
-  legendOpenSelector,
-  libOpenSelector,
-  librarySelector,
-  projectSelector,
-} from "../../redux/store";
+import { animatedModuleSelector, legendOpenSelector, libOpenSelector, librarySelector, projectSelector } from "../../redux/store";
 
 /**
  * Component for Mimir's type library and Legend Module (to be removed).
@@ -50,12 +44,7 @@ const LibraryModule = () => {
   return (
     <AnimatedModule start={startLib} stop={stopLib} run={animate} type={lib} id="LibraryModule">
       <ModuleHead library visible={libOpen}>
-        <img
-          className="icon"
-          src={LibraryIcon}
-          alt="toggle"
-          onClick={() => OnLibraryClick(dispatch, libOpen, lib, legend)}
-        />
+        <img className="icon" src={LibraryIcon} alt="toggle" onClick={() => OnLibraryClick(dispatch, libOpen, lib, legend)} />
         <p className="text">{TextResources.Module_Library}</p>
       </ModuleHead>
       <ModuleBody visible={libOpen}>

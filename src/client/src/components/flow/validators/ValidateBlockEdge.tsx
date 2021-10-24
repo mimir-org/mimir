@@ -47,14 +47,7 @@ function validBlockView(activeNode: Node, from: Node, to: Node, fromC: Connector
   }
 }
 
-function validSecondaryView(
-  activeNode: Node,
-  secondaryNode: Node,
-  from: Node,
-  to: Node,
-  fromC: Connector,
-  toC: Connector
-) {
+function validSecondaryView(activeNode: Node, secondaryNode: Node, from: Node, to: Node, fromC: Connector, toC: Connector) {
   if (IsLocation(secondaryNode)) {
     return IsLocationTerminal(fromC) && IsLocationTerminal(toC);
   }

@@ -1,13 +1,12 @@
 import { FC, memo } from "react";
 import { NodeProps } from "react-flow-renderer";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../../redux/store";
-import { Node } from "../../../../../models";
+import { projectSelector, useAppSelector } from "../../../../../redux/store";
 import { OffPageRequired } from "../../../../../assets/icons/offpage";
 import { HandleComponent } from "../../terminals";
 
 const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
-  const nodes = useSelector<RootState>((s) => s.projectState.project.nodes) as Node[];
+  const project = useAppSelector(projectSelector);
+  const nodes = project?.nodes;
   const type = "BlockOffPageNode-";
 
   return (

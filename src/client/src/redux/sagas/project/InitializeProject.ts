@@ -9,13 +9,8 @@ export const InitializeProject = (project: Project): Project => {
   project.nodes = project.nodes.map((node) => {
     let initNode = new Node(node);
 
-    if (initNode.composites.length > 0) {
-      initNode.composites = initNode.composites.map((composite) => new Composite(composite));
-    }
-
-    if (initNode.connectors.length > 0) {
-      initNode.connectors = initNode.connectors.map((connector) => new Connector(connector));
-    }
+    if (initNode.composites.length > 0) initNode.composites = initNode.composites.map((composite) => new Composite(composite));
+    if (initNode.connectors.length > 0) initNode.connectors = initNode.connectors.map((connector) => new Connector(connector));
 
     return initNode;
   });

@@ -12,13 +12,7 @@ import { IsOffPage } from "../../helpers";
  * @param elements
  * @param parentNode
  */
-const DrawChildNodes = (
-  edges: Edge[],
-  allNodes: Node[],
-  selectedNode: Node,
-  elements: Elements<any>,
-  parentNode: Node
-) => {
+const DrawChildNodes = (edges: Edge[], allNodes: Node[], selectedNode: Node, elements: Elements<any>, parentNode: Node) => {
   edges.forEach((edge) => {
     if (validateEdge(edge, selectedNode)) {
       const toNode = allNodes.find((n) => n.id === edge.toNode.id);
