@@ -5,15 +5,15 @@ import { IsLocation, IsLocationTerminal, IsTransportTerminal, IsFulfilledByTermi
  * Component to filter the terminals displayed on the nodes in BlockView.
  * @param n the selected node
  * @param splitView is splitView activated
- * @param splitNode selected SplitNode, if any
+ * @param secondaryNode selected secondaryNode, if any
  * @returns a filtered list.
  */
-const FilterTerminals = (n: Node, splitView: boolean, splitNode: Node) => {
+const FilterTerminals = (n: Node, splitView: boolean, secondaryNode: Node) => {
   let terminals: Connector[] = [];
   if (n === undefined) return [];
 
   n.connectors?.forEach((c) => {
-    validate(n, splitNode, c, splitView) && terminals.push(c);
+    validate(n, secondaryNode, c, splitView) && terminals.push(c);
   });
   return terminals;
 };

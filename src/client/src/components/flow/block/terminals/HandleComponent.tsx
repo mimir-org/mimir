@@ -13,7 +13,6 @@ interface Props {
   width: number;
   terminals: Connector[];
   parent: boolean;
-  splitView: boolean;
   electro: boolean;
   mainConnectNode: boolean;
 }
@@ -22,20 +21,10 @@ interface Props {
  * @param interface
  * @returns a Mimir terminal in form of a Flow Handle element with an icon on top.
  */
-const HandleComponent = ({
-  node,
-  nodes,
-  length,
-  width,
-  terminals,
-  parent,
-  splitView,
-  electro,
-  mainConnectNode,
-}: Props) => (
+const HandleComponent = ({ node, nodes, length, width, terminals, parent, electro, mainConnectNode }: Props) => (
   <>
     {terminals.map((conn) => {
-      const [type, pos] = GetBlockHandleType(conn, node?.isSelected, splitView, electro);
+      const [type, pos] = GetBlockHandleType(conn, node?.isSelected, false, electro);
       const order = IsInputTerminal(conn) ? conn.inputOrder : conn.outputOrder;
 
       return (
@@ -44,7 +33,7 @@ const HandleComponent = ({
             visible={conn.visible}
             id={"handle-" + conn.id}
             top={SetTopPos(pos, electro, parent, order, length, mainConnectNode)}
-            left={SetLeftPos(pos, electro, parent, order, splitView, width, mainConnectNode)}
+            left={SetLeftPos(pos, electro, parent, order, false, width, mainConnectNode)}
           >
             <ConnectorIcon style={{ fill: GetTerminalColor(conn) }} className={"react-flow__handle-block"} />
             <Handle

@@ -17,7 +17,7 @@ import {
   librarySelector,
   mainConnectSelector,
   projectSelector,
-  splitNodeSelector,
+  secondaryNodeSelector,
   userStateSelector,
   blockFilterSelector,
 } from "../../../redux/store";
@@ -33,7 +33,7 @@ const FlowBlock = () => {
   const [elements, setElements] = useState<Elements>();
   const darkMode = useAppSelector(darkModeSelector);
   const project = useAppSelector(projectSelector);
-  const secondaryNode = useAppSelector(splitNodeSelector) as Node;
+  const secondaryNode = useAppSelector(secondaryNodeSelector) as Node;
   const mainConnectNodes = useAppSelector(mainConnectSelector);
   const icons = useAppSelector(iconSelector);
   const lib = useAppSelector(librarySelector);
@@ -115,7 +115,7 @@ const FlowBlock = () => {
               onNodeDragStop={OnNodeDragStop}
               onElementClick={OnElementClick}
               zoomOnScroll={true}
-              paneMoveable={true}
+              paneMoveable={false}
               zoomOnDoubleClick={false}
               onClick={(e) => OnBlockClick(e, dispatch, project)}
               onlyRenderVisibleElements={true}

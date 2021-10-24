@@ -8,7 +8,7 @@ import { BlockComponent } from "./";
 import { FilterTerminals, GetNodeByDataId, FindAllEdges } from "../../helpers";
 import { Node } from "../../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
-import { edgeSelector, isElectroSelector, nodeSelector, splitNodeSelector } from "../../../../../redux/store";
+import { edgeSelector, isElectroSelector, nodeSelector, secondaryNodeSelector } from "../../../../../redux/store";
 
 /**
  * Component for the large parent block in BlockView.
@@ -21,7 +21,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
   const nodes = useAppSelector(nodeSelector);
   const edges = useAppSelector(edgeSelector);
-  const splitNode = useAppSelector(splitNodeSelector) as Node;
+  const secondaryNode = useAppSelector(secondaryNodeSelector) as Node;
   const electro = useAppSelector(isElectroSelector);
   const updateNodeInternals = useUpdateNodeInternals();
   const node = nodes?.find((x) => x.id === data.id);
@@ -53,7 +53,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         outputMenuOpen={outTerminalMenu}
         parent={true}
         electro={electro}
-        terminals={FilterTerminals(node, false, splitNode)}
+        terminals={FilterTerminals(node, false, secondaryNode)}
         onClick={(conn) => OnConnectorClick(conn, dispatch, edges, nodes)}
         menuBox={true}
         mainConnectNode={false}
@@ -66,8 +66,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         nodes={nodes}
         length={node?.length}
         width={node?.width}
-        terminals={FilterTerminals(node, false, splitNode)}
-        splitView={false}
+        terminals={FilterTerminals(node, false, secondaryNode)}
         electro={electro}
         mainConnectNode={false}
       />

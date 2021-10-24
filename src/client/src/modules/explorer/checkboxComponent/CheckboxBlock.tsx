@@ -1,5 +1,5 @@
 import { Node, Project } from "../../../models";
-import { splitNodeSelector, useAppDispatch, useAppSelector } from "../../../redux/store";
+import { secondaryNodeSelector, useAppDispatch, useAppSelector } from "../../../redux/store";
 import { GetSelectedNode } from "../../../components/flow/helpers";
 import { OnBlockChange } from "../handlers";
 import { CheckboxWrapper } from "./styled";
@@ -17,7 +17,7 @@ interface Props {
  */
 export const CheckboxBlock = ({ project, node, inputLabel }: Props) => {
   const dispatch = useAppDispatch();
-  const splitNode = useAppSelector(splitNodeSelector);
+  const splitNode = useAppSelector(secondaryNodeSelector);
   const selectedNode = GetSelectedNode();
 
   return (

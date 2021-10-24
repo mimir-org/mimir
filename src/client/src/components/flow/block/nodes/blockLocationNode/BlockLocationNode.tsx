@@ -9,7 +9,7 @@ import { FilterTerminals, GetNodeByDataId } from "../../helpers";
 import { Symbol } from "../../../../../compLibrary/symbol";
 import { Size } from "../../../../../compLibrary";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
-import { isElectroSelector, nodeSelector, splitNodeSelector, splitViewSelector } from "../../../../../redux/store";
+import { isElectroSelector, nodeSelector, secondaryNodeSelector } from "../../../../../redux/store";
 
 /**
  * Component for a Location Node in BlockView.
@@ -23,8 +23,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
   const updateNodeInternals = useUpdateNodeInternals();
   const nodes = useAppSelector(nodeSelector);
-  const splitView = useAppSelector(splitViewSelector);
-  const splitNode = useAppSelector(splitNodeSelector) as Node;
+  const secondaryNode = useAppSelector(secondaryNodeSelector) as Node;
   const electro = useAppSelector(isElectroSelector);
   const node = nodes.find((x) => x.id === data?.id);
   if (data) data.width = Size.Node_Width;
@@ -59,7 +58,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
           node={data}
           inputMenuOpen={inTerminalMenu}
           outputMenuOpen={outTerminalMenu}
-          terminals={FilterTerminals(data, splitView, splitNode)}
+          terminals={FilterTerminals(data, false, secondaryNode)}
           parent={false}
           electro={electro}
           onClick={(conn) => OnConnectorClick(conn, data, dispatch)}
@@ -75,9 +74,8 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
         nodes={nodes}
         length={data?.length}
         width={data?.width}
-        terminals={FilterTerminals(data, splitView, splitNode)}
+        terminals={FilterTerminals(data, false, secondaryNode)}
         parent={false}
-        splitView={splitView}
         electro={electro}
         mainConnectNode={false}
       />

@@ -18,7 +18,7 @@ import {
   isElectroSelector,
   mainConnectSelector,
   nodeSelector,
-  splitNodeSelector,
+  secondaryNodeSelector,
 } from "../../../../../redux/store";
 
 /**
@@ -37,7 +37,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
 
   const nodes = useAppSelector(nodeSelector);
   const edges = useAppSelector(edgeSelector);
-  const secondaryNode = useAppSelector(splitNodeSelector) as Node;
+  const secondaryNode = useAppSelector(secondaryNodeSelector) as Node;
   const electro = useAppSelector(isElectroSelector);
   const mainConnectNodes = useAppSelector(mainConnectSelector);
 
@@ -121,7 +121,6 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
           width={mainConnectNode ? mainConnectNode.width : data.width}
           terminals={terminals}
           parent={false}
-          splitView={false}
           electro={electro}
           mainConnectNode={mainConnectNode?.id === data.id}
         />

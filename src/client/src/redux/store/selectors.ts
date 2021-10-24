@@ -165,7 +165,7 @@ export const splitViewSelector = createAppSelector(
   (visible) => visible
 );
 
-export const splitNodeSelector = createAppSelector(
+export const secondaryNodeSelector = createAppSelector(
   (state) => state.splitView.node,
   (node) => node
 );
