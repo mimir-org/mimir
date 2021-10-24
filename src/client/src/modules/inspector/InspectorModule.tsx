@@ -8,13 +8,7 @@ import { InspectorHeader } from ".";
 import { GetSelectedNode } from "../../components/flow/helpers";
 import { InspectorElement } from "./types";
 import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store/hooks";
-import {
-  animatedModuleSelector,
-  explorerOpenSelector,
-  inspectorOpenSelector,
-  libOpenSelector,
-  projectSelector,
-} from "../../redux/store";
+import { animatedModuleSelector, explorerSelector, inspectorSelector, libOpenSelector, projectSelector } from "../../redux/store";
 
 /**
  * Component for the Inspector Module that shows the data for each object in Flow.
@@ -25,9 +19,9 @@ const InspectorModule = () => {
   const type = MODULE_TYPE.INSPECTOR;
   const project = useAppSelector(projectSelector);
   const animate = useParametricAppSelector(animatedModuleSelector, type);
-  const inspectorOpen = useAppSelector(inspectorOpenSelector);
+  const inspectorOpen = useAppSelector(inspectorSelector);
   const libOpen = useAppSelector(libOpenSelector);
-  const explorerOpen = useAppSelector(explorerOpenSelector);
+  const explorerOpen = useAppSelector(explorerSelector);
 
   const stop = inspectorOpen ? Size.ModuleOpen : Size.ModuleClosed;
   const start = inspectorOpen ? Size.ModuleClosed : Size.ModuleOpen;

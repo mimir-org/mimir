@@ -7,7 +7,7 @@ import { ModuleHead, ModuleBody } from "../../compLibrary/box/modules";
 import { OnToggleClick } from "./handlers";
 import { ExplorerIcon } from "../../assets/icons/modules";
 import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store/hooks";
-import { animatedModuleSelector, explorerOpenSelector, projectSelector } from "../../redux/store";
+import { animatedModuleSelector, explorerSelector, projectSelector } from "../../redux/store";
 
 /**
  * Component for the Explorer Module in Mimir.
@@ -17,7 +17,7 @@ export const ExplorerModule = () => {
   const dispatch = useAppDispatch();
   const type = MODULE_TYPE.EXPLORER;
   const project = useAppSelector(projectSelector);
-  const isOpen = useAppSelector(explorerOpenSelector);
+  const isOpen = useAppSelector(explorerSelector);
   const animate = useParametricAppSelector(animatedModuleSelector, type);
 
   const start = isOpen ? Size.ModuleClosed : Size.ModuleOpen;

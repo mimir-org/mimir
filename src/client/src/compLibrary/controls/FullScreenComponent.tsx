@@ -7,7 +7,7 @@ import {
   useAppSelector,
   isOpenSelector,
   libOpenSelector,
-  inspectorOpenSelector,
+  inspectorSelector,
   heightSelector,
 } from "../../redux/store";
 
@@ -15,7 +15,7 @@ const FullScreenComponent = () => {
   const dispatch = useAppDispatch();
   const isOpen = useAppSelector(isOpenSelector);
   const isLibOpen = useAppSelector(libOpenSelector);
-  const isInspectorOpen = useAppSelector(inspectorOpenSelector);
+  const isInspectorOpen = useAppSelector(inspectorSelector);
   let height = useAppSelector(heightSelector);
 
   if (height === undefined) height = isInspectorOpen ? Size.ModuleOpen : Size.ModuleClosed;

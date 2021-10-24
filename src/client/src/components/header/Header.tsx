@@ -6,13 +6,13 @@ import { HeaderBox, LogoBox } from "../../compLibrary/box/header/";
 import { useAppDispatch, useAppSelector } from "../../redux/store/hooks";
 import {
   darkModeSelector,
-  accountMenuOpenSelector,
+  accountMenuSelector,
   electroSelector,
-  explorerOpenSelector,
+  explorerSelector,
   treeFilterSelector,
   blockFilterSelector,
   libOpenSelector,
-  treeViewSelector,
+  treeSelector,
   projectSelector,
 } from "../../redux/store";
 
@@ -22,18 +22,18 @@ const Header = () => {
   const darkMode = useAppSelector(darkModeSelector);
   const treeFilterMenuOpen = useAppSelector(treeFilterSelector);
   const blockFilterMenuOpen = useAppSelector(blockFilterSelector);
-  const isAccountMenuOpen = useAppSelector(accountMenuOpenSelector);
+  const accountMenuOpen = useAppSelector(accountMenuSelector);
   const libOpen = useAppSelector(libOpenSelector);
-  const explorerOpen = useAppSelector(explorerOpenSelector);
-  const treeView = useAppSelector(treeViewSelector);
+  const explorerOpen = useAppSelector(explorerSelector);
+  const treeView = useAppSelector(treeSelector);
   const electro = useAppSelector(electroSelector);
 
   return (
     <>
       <HeaderBox>
-        <MenuMainHeader isOpen={isAccountMenuOpen}>
-          <img src={Icons.User} alt="icon" className="icon" onClick={() => Click.OnAccount(dispatch, isAccountMenuOpen)} />
-          <div className="projectName" onClick={() => Click.OnAccount(dispatch, isAccountMenuOpen)}>
+        <MenuMainHeader isOpen={accountMenuOpen}>
+          <img src={Icons.User} alt="icon" className="icon" onClick={() => Click.OnAccount(dispatch, accountMenuOpen)} />
+          <div className="projectName" onClick={() => Click.OnAccount(dispatch, accountMenuOpen)}>
             {project && project.name}
           </div>
         </MenuMainHeader>

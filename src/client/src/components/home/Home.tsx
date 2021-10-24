@@ -1,4 +1,4 @@
-import { accountMenuOpenSelector } from "../../redux/store";
+import { accountMenuSelector } from "../../redux/store";
 import { useAppDispatch, useAppSelector } from "../../redux/store/hooks";
 import { useEffect } from "react";
 import { useParams } from "react-router";
@@ -24,7 +24,7 @@ interface RouteParams {
  */
 const Home = () => {
   const dispatch = useAppDispatch();
-  const accountMenuOpen = useAppSelector(accountMenuOpenSelector);
+  const accountMenuOpen = useAppSelector(accountMenuSelector);
   const params = useParams<RouteParams>();
 
   useEffect(() => {

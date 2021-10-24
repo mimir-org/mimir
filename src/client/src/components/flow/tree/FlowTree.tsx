@@ -21,7 +21,7 @@ import { TreeFilterMenu } from "../../menus/filterMenu/tree";
 import {
   darkModeSelector,
   iconSelector,
-  inspectorOpenSelector,
+  inspectorSelector,
   librarySelector,
   projectSelector,
   treeFilterSelector,
@@ -34,15 +34,15 @@ import {
  */
 const FlowTree = () => {
   const dispatch = useAppDispatch();
-  const reactFlowWrapper = useRef(null);
-  const [reactFlowInstance, setReactFlowInstance] = useState(null);
+  const flowWrapper = useRef(null);
+  const [flowInstance, setFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>();
   const darkMode = useAppSelector(darkModeSelector);
   const project = useAppSelector(projectSelector);
   const userState = useAppSelector(userStateSelector);
   const icons = useAppSelector(iconSelector);
   const library = useAppSelector(librarySelector);
-  const inspectorOpen = useAppSelector(inspectorOpenSelector);
+  const inspectorOpen = useAppSelector(inspectorSelector);
   const treeFilter = useAppSelector(treeFilterSelector);
   const node = GetSelectedNode();
   const parent = GetParent(node);
@@ -58,7 +58,7 @@ const FlowTree = () => {
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
       setElements(BuildTreeElements(project));
-      return setReactFlowInstance(_reactFlowInstance);
+      return setFlowInstance(_reactFlowInstance);
     },
     [project]
   );
@@ -71,18 +71,7 @@ const FlowTree = () => {
   };
 
   const OnDrop = (event) => {
-    return useOnDrop(
-      project,
-      event,
-      dispatch,
-      setElements,
-      reactFlowInstance,
-      reactFlowWrapper,
-      icons,
-      library,
-      userState.user,
-      parent
-    );
+    return useOnDrop(project, event, dispatch, setElements, flowInstance, flowWrapper, icons, library, userState.user, parent);
   };
 
   const OnElementClick = (_event, element) => {
@@ -100,8 +89,8 @@ const FlowTree = () => {
   // Rerender
   useEffect(() => {
     SetDarkModeColor(darkMode);
-    OnLoad(reactFlowInstance);
-  }, [OnLoad, reactFlowInstance, darkMode]);
+    OnLoad(flowInstance);
+  }, [OnLoad, flowInstance, darkMode]);
 
   // Get symbols from TypeEditor
   useEffect(() => {
@@ -112,7 +101,7 @@ const FlowTree = () => {
     <>
       {!IsBlockView() && (
         <ReactFlowProvider>
-          <div className="reactflow-wrapper" ref={reactFlowWrapper}></div>
+          <div className="reactflow-wrapper" ref={flowWrapper}></div>
           <ReactFlow
             elements={elements}
             onConnect={OnConnect}
@@ -124,6 +113,8 @@ const FlowTree = () => {
             onElementClick={OnElementClick}
             nodeTypes={Helpers.GetNodeTypes}
             edgeTypes={Helpers.GetEdgeTypes}
+            defaultZoom={0.7}
+            defaultPosition={[700, 300]}
             snapToGrid={true}
             snapGrid={[5, 5]}
             zoomOnDoubleClick={false}

@@ -28,8 +28,8 @@ import {
  */
 const FlowBlock = () => {
   const dispatch = useAppDispatch();
-  const reactFlowWrapper = useRef(null);
-  const [reactFlowInstance, setReactFlowInstance] = useState(null);
+  const flowWrapper = useRef(null);
+  const [flowInstance, setFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>();
   const darkMode = useAppSelector(darkModeSelector);
   const project = useAppSelector(projectSelector);
@@ -46,7 +46,7 @@ const FlowBlock = () => {
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
       setElements(BuildBlockElements(project, node, secondaryNode, mainConnectNodes, parent));
-      return setReactFlowInstance(_reactFlowInstance);
+      return setFlowInstance(_reactFlowInstance);
     },
     [project, node, secondaryNode, mainConnectNodes, parent]
   );
@@ -73,18 +73,7 @@ const FlowBlock = () => {
   };
 
   const OnDrop = (event) => {
-    return useOnDrop(
-      project,
-      event,
-      dispatch,
-      setElements,
-      reactFlowInstance,
-      reactFlowWrapper,
-      icons,
-      lib,
-      userState.user,
-      parent
-    );
+    return useOnDrop(project, event, dispatch, setElements, flowInstance, flowWrapper, icons, lib, userState.user, parent);
   };
 
   const OnElementClick = (_event, element) => {
@@ -95,14 +84,14 @@ const FlowBlock = () => {
   // Rerender
   useEffect(() => {
     SetDarkModeColor(darkMode);
-    OnLoad(reactFlowInstance);
-  }, [OnLoad, reactFlowInstance, darkMode, electro]);
+    OnLoad(flowInstance);
+  }, [OnLoad, flowInstance, darkMode, electro]);
 
   return (
     <>
       {IsBlockView() && (
         <ReactFlowProvider>
-          <div className="reactflow-wrapper" ref={reactFlowWrapper}>
+          <div className="reactflow-wrapper" ref={flowWrapper}>
             <ReactFlow
               elements={elements}
               nodeTypes={GetBlockNodeTypes}
@@ -117,7 +106,10 @@ const FlowBlock = () => {
               zoomOnScroll={true}
               paneMoveable={true}
               zoomOnDoubleClick={false}
-              defaultZoom={0.8}
+              defaultZoom={0.7}
+              snapToGrid={true}
+              snapGrid={[5, 5]}
+              defaultPosition={[1600, 900]}
               onClick={(e) => OnBlockClick(e, dispatch, project)}
               onlyRenderVisibleElements={true}
             >

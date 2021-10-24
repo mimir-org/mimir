@@ -37,11 +37,7 @@ export const isFetchingSelector = combineAppSelectors(
     isTypeEditorFetchingSelector,
   ],
   (isProjectStateFetching, isLibraryStateFetching, isUserStateFetching, isCommonStateFetching, isTypeEditorFetching) =>
-    isProjectStateFetching ||
-    isLibraryStateFetching ||
-    isUserStateFetching ||
-    isCommonStateFetching ||
-    isTypeEditorFetching
+    isProjectStateFetching || isLibraryStateFetching || isUserStateFetching || isCommonStateFetching || isTypeEditorFetching
 );
 
 export const projectStateSelector = createAppSelector(
@@ -84,12 +80,12 @@ export const libOpenSelector = createAppSelector(
   (types) => types.find((m) => m.type === MODULE_TYPE.LIBRARY).visible
 );
 
-export const inspectorOpenSelector = createAppSelector(
+export const inspectorSelector = createAppSelector(
   (state) => state.modules.types,
   (types) => types.find((m) => m.type === MODULE_TYPE.INSPECTOR).visible
 );
 
-export const explorerOpenSelector = createAppSelector(
+export const explorerSelector = createAppSelector(
   (state) => state.modules.types,
   (types) => types.find((m) => m.type === MODULE_TYPE.EXPLORER).visible
 );
@@ -99,7 +95,7 @@ export const legendOpenSelector = createAppSelector(
   (types) => types.find((m) => m.type === MODULE_TYPE.LEGEND).visible
 );
 
-export const treeViewSelector = createAppSelector(
+export const treeSelector = createAppSelector(
   (state) => state.flow.view,
   (view) => view === VIEW_TYPE.TREEVIEW
 );
@@ -114,7 +110,7 @@ export const blockFilterSelector = createAppSelector(
   (filterMenuVisibility) => filterMenuVisibility
 );
 
-export const accountMenuOpenSelector = createAppSelector(
+export const accountMenuSelector = createAppSelector(
   (state) => state.menu.accountMenuVisibility,
   (accountMenuVisibility) => accountMenuVisibility
 );

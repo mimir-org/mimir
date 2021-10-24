@@ -2,7 +2,7 @@ import { FlowElement } from "react-flow-renderer";
 import { TextResources } from "../../../../assets/text";
 import { Node } from "../../../../models";
 import { CreateId } from "../../helpers";
-import { DetectCollision, SetConnectorOrder } from "./helpers";
+import { SetConnectorOrder } from "./helpers";
 
 /**
  * Component to create a secondary node in BlockView.
@@ -18,7 +18,7 @@ const BuildParentSecondaryNode = (primaryNode: Node, secondaryNode: Node) => {
   const type = TextResources.Type_BlockParentNode;
   const position = { x: secondaryNode.positionBlockX, y: secondaryNode.positionBlockY };
 
-  DetectCollision(position, primaryNode);
+  // DetectCollision(position, primaryNode);
   secondaryNode.isHidden = false;
 
   return {
@@ -27,8 +27,8 @@ const BuildParentSecondaryNode = (primaryNode: Node, secondaryNode: Node) => {
     type: type,
     data: secondaryNode,
     position: position,
-    isHidden: false,
-    isSelected: true,
+    isHidden: secondaryNode.isHidden,
+    isSelected: secondaryNode.isSelected,
     draggable: true,
     selectable: true,
   } as FlowElement;
