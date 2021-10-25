@@ -1,35 +1,51 @@
 import { setActiveBlockNode, setActiveNode, setNodeVisibility } from "../../../redux/store/project/actions";
-import { Node } from "../../../models";
-import { setSecondaryNode } from "../../../redux/store/secondaryNode/actions";
+import { Node, Project } from "../../../models";
+import { setSecondaryNode, removeSecondaryNode } from "../../../redux/store/secondaryNode/actions";
 import { IsDirectChild } from "../../../components/flow/block/helpers";
+import { IsFamily } from "../../../components/flow/helpers";
 
-export const OnBlockChange = (node: Node, selectedNode: Node, secondaryNode: Node, dispatch: any) => {
+/**
+ * Component to handle all clicks on checkboxes in the BlockView's Explorer Module.
+ * @param project
+ * @param node
+ * @param selectedNode
+ * @param secondaryNode
+ * @param dispatch
+ */
+export const OnBlockChange = (project: Project, node: Node, selectedNode: Node, secondaryNode: Node, dispatch: any) => {
+  let isParent = false;
+  const edge = project?.edges.find((e) => e.fromNodeId === node?.id);
+  if (edge) isParent = true;
+
   const activeNode = !node.isSelected ? node.id : null;
 
-  // Set one node
+  if (selectedNode) {
+    // Toggle off selectedNode
+    if (node?.id === selectedNode?.id) dispatch(setActiveNode(null, false));
+  }
+
+  //Set one node
   if (!selectedNode) {
     dispatch(setActiveNode(activeNode, !node.isSelected));
     dispatch(setActiveBlockNode(activeNode));
-    dispatch(setSecondaryNode(null));
+    dispatch(removeSecondaryNode());
   }
 
-  if (selectedNode) {
-    // Set SecondaryNode
-    if (node.id !== selectedNode.id && node.id !== secondaryNode?.id && !IsDirectChild(node, selectedNode)) {
-      dispatch(setSecondaryNode(node));
-      dispatch(setActiveNode(selectedNode.id, true));
-    }
-    // Remove SecondaryNode
-    if (node.id === secondaryNode?.id) dispatch(setSecondaryNode(null));
-
-    if (node.id === selectedNode.id) {
-      dispatch(setActiveNode(activeNode, !node.isSelected));
-    }
-    // Toggle visibility on child nodes
-    if (IsDirectChild(node, selectedNode)) {
-      dispatch(setNodeVisibility(node, false));
-    }
+  // Set SecondaryNode
+  if (selectedNode && node?.id !== selectedNode.id && node?.id !== secondaryNode?.id) {
+    dispatch(setSecondaryNode(node));
+    project.nodes.forEach((n) => {
+      if (n.id !== selectedNode.id && n.id !== node.id && !IsDirectChild(n, selectedNode) && !IsFamily(n, selectedNode))
+        n.isHidden = true;
+    });
   }
+
+  // Remove SecondaryNode
+  if (selectedNode && node?.id === secondaryNode?.id) {
+    dispatch(removeSecondaryNode());
+  }
+
+  dispatch(setNodeVisibility(node, isParent));
 };
 
 export default OnBlockChange;

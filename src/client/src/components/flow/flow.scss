@@ -24,21 +24,23 @@
 }
 
 .react-flow__node-AspectLocation {
+  &:hover,
   &.selected {
-    border: 3px solid #a300a7 !important;
+    border: 3px solid #a300a7;
   }
 }
 
 .react-flow__node-AspectFunction {
-  border: 3px solid #fbc913 !important;
+  &:hover,
   &.selected {
-    border: 3px solid #fbc913 !important;
+    border: 3px solid #fbc913;
   }
 }
 
 .react-flow__node-AspectProduct {
+  &:hover,
   &.selected {
-    border: 3px solid #069098 !important;
+    border: 3px solid #069098;
   }
 }
 

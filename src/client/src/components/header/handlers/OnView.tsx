@@ -1,6 +1,6 @@
 import { ViewType, VIEW_TYPE } from "../../../models/project";
 import { changeFlowView } from "../../../redux/store/flow/actions";
-import { setSecondaryNode } from "../../../redux/store/secondaryNode/actions";
+import { removeSecondaryNode } from "../../../redux/store/secondaryNode/actions";
 import { GetSelectedNode } from "../../flow/helpers";
 
 const OnView = (view: ViewType, dispatch: any, push) => {
@@ -10,7 +10,7 @@ const OnView = (view: ViewType, dispatch: any, push) => {
   if (view === VIEW_TYPE.BLOCKVIEW && !selectedNode) return;
 
   dispatch(changeFlowView(view));
-  dispatch(setSecondaryNode(null));
+  dispatch(removeSecondaryNode());
 
   push(`/home/${view}`);
 };

@@ -196,7 +196,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           ...state,
           project: {
             ...state.project,
-            nodes: nodeList.map((n) => (IsFamily(action.payload.node, n) ? { ...n, isHidden: isHidden } : n)),
+            nodes: nodeList.map((n) => (IsFamily(node, n) ? { ...n, isHidden: isHidden } : n)),
             edges: edgeList.map((edge) =>
               IsFamily(node, edge.fromNode) || IsFamily(node, edge.toNode) || edge.fromNode === node
                 ? { ...edge, isHidden: isHidden }
