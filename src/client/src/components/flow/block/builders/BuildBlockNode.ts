@@ -33,7 +33,7 @@ const BuildBlockNode = (node: Node, connectNode: Node, allNodes: Node[], parent:
     type: type,
     data: node,
     position: position,
-    isHidden: false,
+    isHidden: node.isHidden,
     isSelected: node.isSelected,
     draggable: true,
     selectable: true,

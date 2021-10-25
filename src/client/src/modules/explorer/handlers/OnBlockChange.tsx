@@ -1,15 +1,12 @@
 import { setActiveBlockNode, setActiveNode, setNodeVisibility } from "../../../redux/store/project/actions";
-import { Node, Project } from "../../../models";
+import { Node } from "../../../models";
 import { setSecondaryNode } from "../../../redux/store/secondaryNode/actions";
 import { IsDirectChild } from "../../../components/flow/block/helpers";
 
-export const OnBlockChange = (node: Node, project: Project, selectedNode: Node, secondaryNode: Node, dispatch: any) => {
-  let isParent = false;
-  const edge = project.edges?.find((x) => x.fromNodeId === node.id);
-  if (edge) isParent = true;
-
+export const OnBlockChange = (node: Node, selectedNode: Node, secondaryNode: Node, dispatch: any) => {
   const activeNode = !node.isSelected ? node.id : null;
 
+  // Set one node
   if (!selectedNode) {
     dispatch(setActiveNode(activeNode, !node.isSelected));
     dispatch(setActiveBlockNode(activeNode));
@@ -17,15 +14,22 @@ export const OnBlockChange = (node: Node, project: Project, selectedNode: Node, 
   }
 
   if (selectedNode) {
-    if (node.id === secondaryNode?.id) dispatch(setSecondaryNode(null));
+    // Set SecondaryNode
     if (node.id !== selectedNode.id && node.id !== secondaryNode?.id && !IsDirectChild(node, selectedNode)) {
       dispatch(setSecondaryNode(node));
       dispatch(setActiveNode(selectedNode.id, true));
     }
-    if (node.id === selectedNode.id) dispatch(setActiveNode(activeNode, !node.isSelected));
-  }
+    // Remove SecondaryNode
+    if (node.id === secondaryNode?.id) dispatch(setSecondaryNode(null));
 
-  dispatch(setNodeVisibility(node, isParent));
+    if (node.id === selectedNode.id) {
+      dispatch(setActiveNode(activeNode, !node.isSelected));
+    }
+    // Toggle visibility on child nodes
+    if (IsDirectChild(node, selectedNode)) {
+      dispatch(setNodeVisibility(node, false));
+    }
+  }
 };
 
 export default OnBlockChange;
