@@ -23,6 +23,7 @@ interface Props {
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
   changeInspectorVisibilityAction: (visibility: boolean) => Action;
   changeInspectorHeightAction: (height: number) => Action;
+  onToggle?: Function;
   attributeLikeItems?: AttributeLikeItem[];
   icons?: BlobData[];
 }
@@ -35,6 +36,7 @@ const InspectorHeader = ({
   inspectorRef,
   changeInspectorVisibilityAction,
   changeInspectorHeightAction,
+  onToggle = Click.OnToggle,
   icons,
   attributeLikeItems,
 }: Props) => {
@@ -90,7 +92,7 @@ const InspectorHeader = ({
         )}
         <Title
           onClick={() =>
-            Click.OnToggle(dispatch, open, inspectorRef, changeInspectorVisibilityAction, changeInspectorHeightAction)
+            onToggle(dispatch, open, inspectorRef, changeInspectorVisibilityAction, changeInspectorHeightAction)
           }
         >
           {TextResources.Module_Inspector}
@@ -100,7 +102,7 @@ const InspectorHeader = ({
             src={open ? DownIcon : UpIcon}
             alt="toggle-icon"
             onClick={() =>
-              Click.OnToggle(dispatch, open, inspectorRef, changeInspectorVisibilityAction, changeInspectorHeightAction)
+              onToggle(dispatch, open, inspectorRef, changeInspectorVisibilityAction, changeInspectorHeightAction)
             }
           />
         </ToggleBox>

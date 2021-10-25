@@ -62,8 +62,8 @@ export const commonStateSelector = createAppSelector(
 );
 
 export const typeEditorStateSelector = createAppSelector(
-  (state) => state.commonState,
-  (commonState) => commonState
+  (state) => state.typeEditor,
+  (typeEditor) => typeEditor
 );
 
 export const librarySelector = createAppSelector(
