@@ -1,27 +1,29 @@
 import { Size } from "../../../../../compLibrary";
-import { Node } from "../../../../../models";
 
 /**
  * Function to force a node to fit within the parent block in BlockView.
- * @param node
- * @param splitView
+ * @param nodePos
+ * @param parentPos
  * @returns an updated position, containing X and Y values.
  */
-const SetBlockNodePos = (node: Node, splitView: boolean) => {
-  const yMax = Size.BlockView_Height;
-  const yMin = Size.BlockView_MarginTop;
+const SetBlockNodePos = (nodePos: { x: number; y: number }, parentPos: { x: number; y: number }) => {
+  const parentX = parentPos.x;
+  const parentY = parentPos.y;
+  let nodeY = nodePos.y;
+  let nodeX = nodePos.x;
+  const margin = 20;
 
-  const xMax = splitView
-    ? Size.SplitView_Width + Size.BlockView_MarginRight
-    : Size.BlockView_Width + Size.BlockView_MarginRight;
-  const xMin = Size.BlockView_MarginLeft;
+  const xMin = parentX;
+  const xMax = parentX + Size.BlockView_Width - Size.Node_Width;
+  const yMin = parentY + margin;
+  const yMax = parentY + Size.BlockView_Height - Size.Node_Length;
 
-  if (node.positionBlockY < yMin) node.positionBlockY = yMin;
-  if (node.positionBlockY > yMax) node.positionBlockY = yMax;
-  if (node.positionBlockX < xMin) node.positionBlockX = xMin;
-  if (node.positionBlockX > xMax) node.positionBlockX = xMax;
+  if (nodeX < xMin) nodeX = xMin + margin;
+  if (nodeX > xMax) nodeX = xMax - margin;
+  if (nodeY < yMin) nodeY = yMin + margin * 2;
+  if (nodeY > yMax) nodeY = yMax - margin;
 
-  return { x: node.positionBlockX, y: node.positionBlockY };
+  return { x: nodeX, y: nodeY };
 };
 
 export default SetBlockNodePos;

@@ -1,4 +1,9 @@
-import { CHANGE_ACTIVE_MENU, SET_ACCOUNT_MENU_VISIBILITY, SET_FILTER_MENU_VISIBILITY } from "./types";
+import {
+  CHANGE_ACTIVE_MENU,
+  SET_ACCOUNT_MENU_VISIBILITY,
+  SET_TREE_FILTER_MENU_VISIBILITY,
+  SET_BLOCK_FILTER_MENU_VISIBILITY,
+} from "./types";
 
 export function setAccountMenuVisibility(visibility: boolean) {
   return {
@@ -9,9 +14,18 @@ export function setAccountMenuVisibility(visibility: boolean) {
   };
 }
 
-export function setFilterMenuVisibility(visibility: boolean) {
+export function setTreeFilterMenuVisibility(visibility: boolean) {
   return {
-    type: SET_FILTER_MENU_VISIBILITY,
+    type: SET_TREE_FILTER_MENU_VISIBILITY,
+    payload: {
+      visibility,
+    },
+  };
+}
+
+export function setBlockFilterMenuVisibility(visibility: boolean) {
+  return {
+    type: SET_BLOCK_FILTER_MENU_VISIBILITY,
     payload: {
       visibility,
     },

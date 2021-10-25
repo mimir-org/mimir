@@ -1,32 +1,25 @@
-import ReactFlow, { ReactFlowProvider, Elements, Background } from "react-flow-renderer";
+import ReactFlow, { ReactFlowProvider, Elements } from "react-flow-renderer";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { FullScreenComponent } from "../../../compLibrary/controls";
-import { Color, Size } from "../../../compLibrary";
-import { BackgroundBox } from "./styled";
-import { changeInspectorTab } from "../../../modules/inspector/redux/tabs/actions";
 import { GetBlockEdgeTypes, IsBlockView, OnBlockClick } from "../block/helpers";
 import { BuildBlockElements } from "./builders";
 import { useOnConnect, useOnDrop, useOnRemove, useOnDragStop } from "../hooks";
-import { setModuleVisibility } from "../../../redux/store/modules/actions";
 import { setActiveBlockNode, setActiveEdge } from "../../../redux/store/project/actions";
-import { GetSelectedNode, GetBlockNodeTypes, IsLocation, SetDarkModeColor } from "../helpers";
-import { EDGE_TYPE, EdgeType, BackgroundVariant, MODULE_TYPE } from "../../../models/project";
-import { changeInspectorHeight } from "../../../modules/inspector/redux/height/actions";
-import { SetPanelHeight } from "../../../modules/inspector/helpers";
-import { SetSplitViewBackground } from "./helpers";
+import { GetSelectedNode, GetBlockNodeTypes, SetDarkModeColor, GetParent } from "../helpers";
+import { EDGE_TYPE, EdgeType } from "../../../models/project";
+import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
+import { BlockFilterMenu } from "../../menus/filterMenu/block";
+import { Node } from "../../../models";
 import {
-  isInspectorOpenSelector,
-  useAppSelector,
   darkModeSelector,
   iconSelector,
-  isElectroVisibleSelector,
+  electroSelector,
   librarySelector,
-  mainConnectNodesSelector,
+  mainConnectSelector,
   projectSelector,
-  splitViewNodeSelector,
-  splitViewSelector,
-  useAppDispatch,
+  secondaryNodeSelector,
   userStateSelector,
+  blockFilterSelector,
 } from "../../../redux/store";
 
 /**
@@ -35,28 +28,27 @@ import {
  */
 const FlowBlock = () => {
   const dispatch = useAppDispatch();
-  const reactFlowWrapper = useRef(null);
-  const [reactFlowInstance, setReactFlowInstance] = useState(null);
+  const flowWrapper = useRef(null);
+  const [flowInstance, setFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>();
   const darkMode = useAppSelector(darkModeSelector);
   const project = useAppSelector(projectSelector);
-  const splitView = useAppSelector(splitViewSelector);
-  const splitViewNode = useAppSelector(splitViewNodeSelector);
-  const mainConnectNodes = useAppSelector(mainConnectNodesSelector);
+  const secondaryNode = useAppSelector(secondaryNodeSelector) as Node;
+  const mainConnectNodes = useAppSelector(mainConnectSelector);
   const icons = useAppSelector(iconSelector);
-  const library = useAppSelector(librarySelector);
-  const inspectorOpen = useAppSelector(isInspectorOpenSelector);
-  const electro = useAppSelector(isElectroVisibleSelector);
+  const lib = useAppSelector(librarySelector);
+  const electro = useAppSelector(electroSelector);
   const userState = useAppSelector(userStateSelector);
+  const blockFilter = useAppSelector(blockFilterSelector);
   const node = GetSelectedNode();
-  const showBackground = IsLocation(splitViewNode) || IsLocation(node);
+  const parent = GetParent(node);
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(BuildBlockElements(project, node, splitView, splitViewNode, mainConnectNodes));
-      return setReactFlowInstance(_reactFlowInstance);
+      setElements(BuildBlockElements(project, node, secondaryNode, mainConnectNodes, parent));
+      return setFlowInstance(_reactFlowInstance);
     },
-    [project, node, splitView, splitViewNode, mainConnectNodes]
+    [project, node, secondaryNode, mainConnectNodes, parent]
   );
 
   const OnElementsRemove = (elementsToRemove) => {
@@ -68,7 +60,7 @@ const FlowBlock = () => {
   };
 
   const OnConnect = (params) => {
-    return useOnConnect(params, project, setElements, dispatch, EDGE_TYPE.BLOCK as EdgeType, library);
+    return useOnConnect(params, project, setElements, dispatch, EDGE_TYPE.BLOCK as EdgeType, lib);
   };
 
   const OnDragOver = (event) => {
@@ -81,42 +73,25 @@ const FlowBlock = () => {
   };
 
   const OnDrop = (event) => {
-    return useOnDrop(
-      project,
-      event,
-      dispatch,
-      setElements,
-      reactFlowInstance,
-      reactFlowWrapper,
-      icons,
-      library,
-      userState.user
-    );
+    return useOnDrop(project, event, dispatch, setElements, flowInstance, flowWrapper, icons, lib, userState.user, parent);
   };
 
   const OnElementClick = (_event, element) => {
     dispatch(setActiveEdge(null, false));
     dispatch(setActiveBlockNode(element.id));
-    dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, true, true));
-    dispatch(changeInspectorTab(0));
-
-    if (!inspectorOpen) {
-      dispatch(changeInspectorHeight(Size.ModuleOpen));
-      SetPanelHeight(Size.ModuleOpen);
-    }
   };
 
   // Rerender
   useEffect(() => {
     SetDarkModeColor(darkMode);
-    OnLoad(reactFlowInstance);
-  }, [OnLoad, reactFlowInstance, darkMode, electro]);
+    OnLoad(flowInstance);
+  }, [OnLoad, flowInstance, darkMode, electro]);
 
   return (
     <>
       {IsBlockView() && (
         <ReactFlowProvider>
-          <div className="reactflow-wrapper" ref={reactFlowWrapper}>
+          <div className="reactflow-wrapper" ref={flowWrapper}>
             <ReactFlow
               elements={elements}
               nodeTypes={GetBlockNodeTypes}
@@ -128,21 +103,19 @@ const FlowBlock = () => {
               onDragOver={OnDragOver}
               onNodeDragStop={OnNodeDragStop}
               onElementClick={OnElementClick}
-              zoomOnScroll={false}
-              paneMoveable={false}
+              zoomOnScroll={true}
+              paneMoveable={true}
               zoomOnDoubleClick={false}
+              defaultZoom={0.7}
+              snapToGrid={true}
+              snapGrid={[5, 5]}
+              defaultPosition={[1600, 900]}
               onClick={(e) => OnBlockClick(e, dispatch, project)}
               onlyRenderVisibleElements={true}
             >
               <FullScreenComponent />
-              <BackgroundBox
-                visible={showBackground}
-                splitView={splitView}
-                right={SetSplitViewBackground(node, splitViewNode)}
-              >
-                <Background size={0.5} color={Color.Grey} variant={BackgroundVariant.Lines} />
-              </BackgroundBox>
             </ReactFlow>
+            {blockFilter && <BlockFilterMenu elements={elements} />}
           </div>
         </ReactFlowProvider>
       )}

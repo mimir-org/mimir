@@ -1,26 +1,25 @@
 import * as Click from "./handlers";
 import { ResizeConnectNode, SetConnectNodeColor, GetConnectChildren } from "../../connectView/helpers";
 import { memo, FC, useState, useEffect } from "react";
-import { NodeProps } from "react-flow-renderer";
-import {
-  edgeSelector,
-  isElectroVisibleSelector,
-  mainConnectNodesSelector,
-  nodeSelector,
-  splitViewNodeSelector,
-  splitViewSelector,
-  useAppDispatch,
-  useAppSelector,
-} from "../../../../../redux/store";
+import { NodeProps, useUpdateNodeInternals } from "react-flow-renderer";
+import { Node } from "../../../../../models";
 import { Size } from "../../../../../compLibrary";
 import { IsFunction, IsProduct } from "../../../helpers";
 import { NodeBox } from "../../../styled";
 import { TerminalsContainerComponent, HandleComponent } from "../../terminals";
 import { ConnectViewComponent } from "../../connectView";
 import { IsChildConnectNode, IsConnectNodeChecked, SetNodeWidth, SetNodeLength } from "./helpers";
-import { FilterTerminals, FindAllEdges, GetNodeByDataId } from "../../helpers";
+import { FilterTerminals, FindAllEdges } from "../../helpers";
 import { Symbol } from "../../../../../compLibrary/symbol";
 import { BlockNodeNameBox } from "../../styled";
+import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
+import {
+  edgeSelector,
+  electroSelector,
+  mainConnectSelector,
+  nodeSelector,
+  secondaryNodeSelector,
+} from "../../../../../redux/store";
 
 /**
  * Component for a Function or Product Node in BlockView.
@@ -34,17 +33,17 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const [terminalBox, showTerminalBox] = useState(false);
   const [connectBox, showConnectBox] = useState(false);
   const [connectMenu, showConnectMenu] = useState(false);
+  const updateNodeInternals = useUpdateNodeInternals();
 
   const nodes = useAppSelector(nodeSelector);
   const edges = useAppSelector(edgeSelector);
-  const splitView = useAppSelector(splitViewSelector);
-  const splitViewNode = useAppSelector(splitViewNodeSelector);
-  const electro = useAppSelector(isElectroVisibleSelector);
+  const secondaryNode = useAppSelector(secondaryNodeSelector) as Node;
+  const electro = useAppSelector(electroSelector);
+  const mainConnectNodes = useAppSelector(mainConnectSelector);
+
   const type = IsFunction(data) ? "BlockFunctionNode-" : "BlockProductNode-";
   const node = nodes?.find((x) => x.id === data.id);
-  const terminals = FilterTerminals(data, splitView, splitViewNode);
-
-  const mainConnectNodes = useAppSelector(mainConnectNodesSelector);
+  const terminals = FilterTerminals(data, secondaryNode);
   const connectChildren = GetConnectChildren(data, nodes, edges);
   const mainConnectNode = mainConnectNodes.find((x) => x.id === data.id);
   const connectNodes = mainConnectNode?.connectNodes;
@@ -68,16 +67,12 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
     }
   }, [mainConnectNode]);
 
-  electro ? SetNodeWidth(terminals, data) : SetNodeLength(terminals, data);
+  useEffect(() => {
+    updateNodeInternals(node?.id);
+    updateNodeInternals(secondaryNode?.id);
+  }, [node, secondaryNode, updateNodeInternals]);
 
-  // Remove in new BlockView
-  if (mainConnectNodes.length === 0) {
-    const flowNode = GetNodeByDataId(data.id);
-    if (flowNode) {
-      flowNode.style.width = `${data.width}px`;
-      flowNode.style.height = `${data.length}px`;
-    }
-  }
+  electro ? SetNodeWidth(terminals, data) : SetNodeLength(terminals, data);
 
   return (
     <>
@@ -89,20 +84,9 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
         onMouseOver={() => Click.OnHover(showTerminalBox, showConnectBox)}
         onMouseOut={() => Click.OnMouseOut(showTerminalBox, showConnectBox)}
       >
-        <HandleComponent
-          node={node}
-          nodes={nodes}
-          length={mainConnectNode ? mainConnectNode.length : data.length}
-          width={mainConnectNode ? mainConnectNode.width : data.width}
-          terminals={terminals}
-          parent={false}
-          splitView={splitView}
-          electro={electro}
-          mainConnectNode={mainConnectNode?.id === data.id}
-        />
         <BlockNodeNameBox>{data.label ?? data.name}</BlockNodeNameBox>
-        {data.id !== mainConnectNode?.id && <Symbol base64={data.symbol} text={data.name} />}
-        {data.id === mainConnectNode?.id && <div className="line" />}
+        {!mainConnectNode && <Symbol base64={data.symbol} text={data.name} />}
+        {mainConnectNode && <div className="line" />}
 
         <TerminalsContainerComponent
           node={data}
@@ -110,12 +94,22 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
           outputMenuOpen={outTerminalMenu}
           terminals={terminals}
           parent={false}
-          splitView={splitView}
+          electro={electro}
           onClick={(conn) => Click.OnTerminal(conn, data, dispatch, edges)}
           menuBox={terminalBox}
           mainConnectNode={data.id === mainConnectNode?.id}
           showInTerminalMenu={showInTerminalMenu}
           showOutTerminalMenu={showOutTerminalMenu}
+        />
+        <HandleComponent
+          node={node}
+          nodes={nodes}
+          length={mainConnectNode ? mainConnectNode.length : data.length}
+          width={mainConnectNode ? mainConnectNode.width : data.width}
+          terminals={terminals}
+          parent={false}
+          electro={electro}
+          mainConnectNode={mainConnectNode?.id === data.id}
         />
         {!IsChildConnectNode(mainConnectNodes, data.id) && (
           <ConnectViewComponent

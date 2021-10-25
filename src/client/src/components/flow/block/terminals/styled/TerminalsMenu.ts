@@ -2,12 +2,10 @@ import styled from "styled-components";
 import { Color } from "../../../../../compLibrary";
 
 interface Props {
-  color: string;
   parent: boolean;
   input: boolean;
-  connectView: boolean;
-  splitView: boolean;
-  width: number;
+  xPos: number;
+  color: string;
 }
 
 /** Styled component that displays the drop-down menu for a nodes' terminals. */
@@ -21,11 +19,8 @@ const TerminalsMenu = styled.div<Props>`
   width: max-content;
   position: absolute;
   top: ${(props) => (props.parent ? 3 : 5)}px;
-  left: ${(props) =>
-    !props.input && !props.parent ? props.width + 22 : !props.input && props.parent && props.width + 6}px;
-
-  right: ${(props) =>
-    props.input && !props.parent ? props.width + 22 : props.input && props.parent && props.width + 6}px;
+  left: ${(props) => (!props.input ? props.xPos + "px" : "unset")};
+  right: ${(props) => (props.input ? props.xPos + "px" : "unset")};
 `;
 
 export default TerminalsMenu;

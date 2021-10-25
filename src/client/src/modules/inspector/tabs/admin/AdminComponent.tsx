@@ -1,17 +1,12 @@
 import { GetInspectorText, GetTabsColor } from "../../helpers";
 import { useCallback } from "react";
-import {
-  isInspectorTabOpenSelector,
-  statusSelector,
-  useAppDispatch,
-  useAppSelector,
-  useParametricAppSelector,
-} from "../../../../redux/store";
 import { Project } from "../../../../models";
 import { changeInspectorTab } from "../../redux/tabs/actions";
 import { TabHeader, TabBody, TabTitle } from "../../styled";
 import { InspectorElement } from "../../types";
 import { GetAdminContent } from "./GetAdminContent";
+import { inspectorTabOpenSelector, statusSelector } from "../../../../redux/store";
+import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../../../redux/store/hooks";
 
 interface Props {
   element: InspectorElement;
@@ -21,7 +16,7 @@ interface Props {
 
 const AdminComponent = ({ element, project, index }: Props) => {
   const dispatch = useAppDispatch();
-  const isTabOpen = useParametricAppSelector(isInspectorTabOpenSelector, index);
+  const isTabOpen = useParametricAppSelector(inspectorTabOpenSelector, index);
   const statuses = useAppSelector(statusSelector);
 
   const onClick = useCallback(() => {

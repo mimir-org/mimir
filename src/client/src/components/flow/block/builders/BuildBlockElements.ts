@@ -1,41 +1,42 @@
 import { Elements } from "react-flow-renderer";
 import { Node, Project } from "../../../../models";
-import { BuildParentBlockNode } from ".";
-import { DrawChildNodes, DrawConnectViewChildren, DrawEdges, DrawSplitViewChildren } from "./helpers";
+import { BuildParentBlockNode, BuildParentSecondaryNode } from ".";
+import { DrawChildNodes, DrawConnectViewChildren, DrawEdges, DrawSecondaryChildren } from "./helpers";
 
 /**
  * Component to draw all nodes and edges in BlockView.
  * @param project
  * @param selectedNode
- * @param splitView
- * @param splitViewNode
+ * @param secondaryNode
  * @param mainConnectNodes
+ * @param parentNode
  * @returns all Elements.
  */
 const BuildBlockElements = (
   project: Project,
   selectedNode: Node,
-  splitView: boolean,
-  splitViewNode: Node,
-  mainConnectNodes: Node[]
+  secondaryNode: Node,
+  mainConnectNodes: Node[],
+  parentNode: Node
 ) => {
   if (!project) return;
   const elements: Elements = [];
   const connectView = mainConnectNodes?.length > 0;
   const allNodes = project.nodes;
 
-  const parentBlock = BuildParentBlockNode(selectedNode, splitView, false);
+  const parentBlock = BuildParentBlockNode(selectedNode);
   parentBlock && elements.push(parentBlock);
 
-  if (splitViewNode) {
-    const parentSplitBlock = BuildParentBlockNode(splitViewNode, true, true);
-    parentSplitBlock && elements.push(parentSplitBlock);
+  if (secondaryNode) {
+    const secondary = project.nodes.find((x) => x.id === secondaryNode.id);
+    const parentSecondaryBlock = BuildParentSecondaryNode(selectedNode, secondary);
+    parentSecondaryBlock && elements.push(parentSecondaryBlock);
   }
 
-  DrawChildNodes(project.edges, allNodes, selectedNode, elements);
-  DrawEdges(project.edges, allNodes, elements);
-  splitView && splitViewNode && DrawSplitViewChildren(project.edges, allNodes, splitViewNode, elements);
-  connectView && DrawConnectViewChildren(mainConnectNodes, elements, allNodes);
+  DrawChildNodes(project.edges, allNodes, selectedNode, elements, parentNode);
+  DrawEdges(project.edges, allNodes, elements, secondaryNode);
+  secondaryNode && DrawSecondaryChildren(project.edges, allNodes, secondaryNode, elements);
+  connectView && DrawConnectViewChildren(mainConnectNodes, elements, allNodes, parentNode);
 
   return elements;
 };

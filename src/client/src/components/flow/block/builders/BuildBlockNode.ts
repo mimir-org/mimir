@@ -1,34 +1,39 @@
 import { Node } from "../../../../models";
 import { FlowElement } from "react-flow-renderer";
-import { IsSplitView } from "../helpers";
+import { IsOffPage } from "../helpers";
 import { SetConnectNodePos } from "../connectView/helpers/position";
-import { GetNodeTypeString, SetBlockNodePos } from "./helpers";
+import { GetNodeTypeString, SetBlockNodePos, SetOffPageNodePos, SetConnectorOrder } from "./helpers";
+import { CreateId } from "../../helpers";
 
 /**
  * Component to create a node in BlockView.
  * @param node
  * @param connectNode
  * @param allNodes - all nodes in Mimir
+ * @param parent
  * @returns a node of the type FlowElement.
  */
-const BuildBlockNode = (node: Node, connectNode: Node, allNodes: Node[]) => {
+const BuildBlockNode = (node: Node, connectNode: Node, allNodes: Node[], parent: Node) => {
   if (!node) return null;
-
-  const connectNodes = connectNode?.connectNodes ?? [];
   const type = GetNodeTypeString(node);
+  const connectNodes = connectNode?.connectNodes ?? [];
+
+  const nodePos = { x: node.positionBlockX, y: node.positionBlockY };
+  const parentPos = { x: parent.positionBlockX, y: parent.positionBlockY };
+
+  SetConnectorOrder(node);
 
   // Force node to fit Block
-  let position = SetBlockNodePos(node, IsSplitView());
-
-  if (connectNodes.some((n) => n.id === node.id))
-    position = SetConnectNodePos(node, connectNode.id, connectNodes, allNodes);
+  let position = !IsOffPage(node) ? SetBlockNodePos(nodePos, parentPos) : SetOffPageNodePos(nodePos, parentPos);
+  if (connectNodes.some((n) => n.id === node.id)) position = SetConnectNodePos(node, connectNode.id, connectNodes, allNodes);
 
   return {
+    key: CreateId(),
     id: node.id,
     type: type,
     data: node,
     position: position,
-    isHidden: node.isHidden,
+    isHidden: false,
     isSelected: node.isSelected,
     draggable: true,
     selectable: true,

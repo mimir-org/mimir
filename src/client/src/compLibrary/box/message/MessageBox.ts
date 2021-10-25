@@ -17,6 +17,13 @@ const MessageBox = styled.div`
   box-shadow: 0px 5px 6px rgba(0, 0, 0, 0.15);
   z-index: 6;
 
+  .icon {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+  }
+
   .message {
     text-align: center;
   }

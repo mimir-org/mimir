@@ -1,6 +1,6 @@
 import { ViewType, VIEW_TYPE } from "../../../models/project";
 import { changeFlowView } from "../../../redux/store/flow/actions";
-import { setSplitParentNode, setSplitView } from "../../../redux/store/splitView/actions";
+import { setSecondaryNode } from "../../../redux/store/secondaryNode/actions";
 import { GetSelectedNode } from "../../flow/helpers";
 
 const OnView = (view: ViewType, dispatch: any, push) => {
@@ -10,8 +10,7 @@ const OnView = (view: ViewType, dispatch: any, push) => {
   if (view === VIEW_TYPE.BLOCKVIEW && !selectedNode) return;
 
   dispatch(changeFlowView(view));
-  dispatch(setSplitParentNode(null));
-  dispatch(setSplitView(false));
+  dispatch(setSecondaryNode(null));
 
   push(`/home/${view}`);
 };

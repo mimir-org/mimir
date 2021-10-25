@@ -1,13 +1,3 @@
-import { Connector, Node, RelationType } from "../../../models";
-
-export interface FilterElement {
-  id: string;
-  type: RelationType | string;
-  conn: Connector;
-  name: string;
-  fromNode?: Node;
-}
-
 export interface GetCenterParams {
   sourceX: number;
   sourceY: number;

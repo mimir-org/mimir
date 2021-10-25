@@ -37,11 +37,7 @@ export const isFetchingSelector = combineAppSelectors(
     isTypeEditorFetchingSelector,
   ],
   (isProjectStateFetching, isLibraryStateFetching, isUserStateFetching, isCommonStateFetching, isTypeEditorFetching) =>
-    isProjectStateFetching ||
-    isLibraryStateFetching ||
-    isUserStateFetching ||
-    isCommonStateFetching ||
-    isTypeEditorFetching
+    isProjectStateFetching || isLibraryStateFetching || isUserStateFetching || isCommonStateFetching || isTypeEditorFetching
 );
 
 export const projectStateSelector = createAppSelector(
@@ -79,37 +75,42 @@ export const isOpenSelector = createAppSelector(
   (types) => !!types.find((m) => m.visible)
 );
 
-export const isLibOpenSelector = createAppSelector(
+export const libOpenSelector = createAppSelector(
   (state) => state.modules.types,
   (types) => types.find((m) => m.type === MODULE_TYPE.LIBRARY).visible
 );
 
-export const isInspectorOpenSelector = createAppSelector(
+export const inspectorSelector = createAppSelector(
   (state) => state.modules.types,
   (types) => types.find((m) => m.type === MODULE_TYPE.INSPECTOR).visible
 );
 
-export const isExplorerOpenSelector = createAppSelector(
+export const explorerSelector = createAppSelector(
   (state) => state.modules.types,
   (types) => types.find((m) => m.type === MODULE_TYPE.EXPLORER).visible
 );
 
-export const isLegendOpenSelector = createAppSelector(
+export const legendOpenSelector = createAppSelector(
   (state) => state.modules.types,
   (types) => types.find((m) => m.type === MODULE_TYPE.LEGEND).visible
 );
 
-export const isTreeViewSelector = createAppSelector(
+export const treeSelector = createAppSelector(
   (state) => state.flow.view,
   (view) => view === VIEW_TYPE.TREEVIEW
 );
 
-export const isFilterMenuOpenSelector = createAppSelector(
-  (state) => state.menu.filterMenuVisibility,
+export const treeFilterSelector = createAppSelector(
+  (state) => state.menu.treeFilterMenuVisibility,
   (filterMenuVisibility) => filterMenuVisibility
 );
 
-export const isAccountMenuOpenSelector = createAppSelector(
+export const blockFilterSelector = createAppSelector(
+  (state) => state.menu.blockFilterMenuVisibility,
+  (filterMenuVisibility) => filterMenuVisibility
+);
+
+export const accountMenuSelector = createAppSelector(
   (state) => state.menu.accountMenuVisibility,
   (accountMenuVisibility) => accountMenuVisibility
 );
@@ -125,7 +126,7 @@ export const isActiveMenuSelector = createParametricAppSelector(
   (activeMenu, menuType) => activeMenu === menuType
 );
 
-export const isAnimatedModuleSelector = createParametricAppSelector(
+export const animatedModuleSelector = createParametricAppSelector(
   (state) => state.modules.types,
   (_, type: string) => type,
   (types, type) => types.find((t) => t.type === type).animate
@@ -138,7 +139,7 @@ export const makeIsInspectorTabOpenSelector = () =>
     (tabs, index) => tabs[index]?.visible
   );
 
-export const isInspectorTabOpenSelector = makeIsInspectorTabOpenSelector();
+export const inspectorTabOpenSelector = makeIsInspectorTabOpenSelector();
 
 export const heightSelector = createAppSelector(
   (state) => state.inspectorHeight.height,
@@ -155,17 +156,12 @@ export const projectSelector = createAppSelector(
   (project) => project as Project
 );
 
-export const splitViewSelector = createAppSelector(
-  (state) => state.splitView.visible,
-  (visible) => visible
-);
-
-export const splitViewNodeSelector = createAppSelector(
-  (state) => state.splitView.node,
+export const secondaryNodeSelector = createAppSelector(
+  (state) => state.secondaryReducer.node,
   (node) => node
 );
 
-export const mainConnectNodesSelector = createAppSelector(
+export const mainConnectSelector = createAppSelector(
   (state) => state.connectView.mainNodes,
   (mainNodes) => mainNodes
 );
@@ -175,7 +171,7 @@ export const iconSelector = createAppSelector(
   (icons) => icons
 );
 
-export const isElectroVisibleSelector = createAppSelector(
+export const electroSelector = createAppSelector(
   (state) => state.electro.visible,
   (visible) => visible
 );
@@ -191,7 +187,7 @@ export const terminalTypeSelector = createAppSelector(
 );
 
 export const nodeSelector = createAppSelector(
-  (state) => state.projectState.project.nodes,
+  (state) => state.projectState?.project?.nodes,
   (nodes) => (nodes ?? []) as Node[]
 );
 

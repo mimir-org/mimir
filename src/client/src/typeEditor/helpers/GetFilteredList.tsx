@@ -1,6 +1,6 @@
 import { CreateLibraryType, Discipline } from "../../models";
 import { ListType } from "../TypeEditorList";
-import { GetFilteredRdsList, GetFilteredTerminalsList, GetFilteredAttributesList } from ".";
+import { GetFilteredRdsList, GetFilteredTerminalsList, GetFilteredAttributesList, GetAttributesList } from ".";
 
 const GetFilteredList = (
   listType: ListType,
@@ -19,7 +19,7 @@ const GetFilteredList = (
     case ListType.ObjectAttributes:
       return GetFilteredAttributesList(items, aspect, discipline);
     case ListType.LocationAttributes:
-      return GetFilteredAttributesList(items, aspect, discipline);
+      return GetAttributesList(items, aspect);
     case ListType.SimpleTypes:
       return items;
     default:

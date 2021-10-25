@@ -6,7 +6,7 @@ import { FullScreenComponent } from "../../../compLibrary/controls";
 import { Size } from "../../../compLibrary";
 import { IsBlockView } from "../block/helpers";
 import { changeInspectorTab } from "../../../modules/inspector/redux/tabs/actions";
-import { GetSelectedNode, SetDarkModeColor } from "../helpers";
+import { GetParent, GetSelectedNode, SetDarkModeColor } from "../helpers";
 import { BuildTreeElements } from "../tree/builders";
 import { setModuleVisibility } from "../../../redux/store/modules/actions";
 import { MODULE_TYPE } from "../../../models/project";
@@ -16,14 +16,15 @@ import { updatePosition, setActiveNode, setActiveEdge, setActiveBlockNode } from
 import { changeInspectorHeight } from "../../../modules/inspector/redux/height/actions";
 import { FlowManipulator } from "./FlowManipulator";
 import { OnTreeClick } from "./handlers/";
+import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
+import { TreeFilterMenu } from "../../menus/filterMenu/tree";
 import {
   darkModeSelector,
   iconSelector,
-  isInspectorOpenSelector,
+  inspectorSelector,
   librarySelector,
   projectSelector,
-  useAppDispatch,
-  useAppSelector,
+  treeFilterSelector,
   userStateSelector,
 } from "../../../redux/store";
 
@@ -33,16 +34,18 @@ import {
  */
 const FlowTree = () => {
   const dispatch = useAppDispatch();
-  const reactFlowWrapper = useRef(null);
-  const [reactFlowInstance, setReactFlowInstance] = useState(null);
+  const flowWrapper = useRef(null);
+  const [flowInstance, setFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>();
   const darkMode = useAppSelector(darkModeSelector);
   const project = useAppSelector(projectSelector);
   const userState = useAppSelector(userStateSelector);
   const icons = useAppSelector(iconSelector);
   const library = useAppSelector(librarySelector);
-  const inspectorOpen = useAppSelector(isInspectorOpenSelector);
+  const inspectorOpen = useAppSelector(inspectorSelector);
+  const treeFilter = useAppSelector(treeFilterSelector);
   const node = GetSelectedNode();
+  const parent = GetParent(node);
   const selectedNodeId = useMemo(() => node?.id ?? project?.edges.find((edge) => edge.isSelected)?.id, [project, node]);
 
   const OnDragOver = (event: any) => event.preventDefault();
@@ -55,7 +58,7 @@ const FlowTree = () => {
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
       setElements(BuildTreeElements(project));
-      return setReactFlowInstance(_reactFlowInstance);
+      return setFlowInstance(_reactFlowInstance);
     },
     [project]
   );
@@ -68,17 +71,7 @@ const FlowTree = () => {
   };
 
   const OnDrop = (event) => {
-    return useOnDrop(
-      project,
-      event,
-      dispatch,
-      setElements,
-      reactFlowInstance,
-      reactFlowWrapper,
-      icons,
-      library,
-      userState.user
-    );
+    return useOnDrop(project, event, dispatch, setElements, flowInstance, flowWrapper, icons, library, userState.user, parent);
   };
 
   const OnElementClick = (_event, element) => {
@@ -96,8 +89,8 @@ const FlowTree = () => {
   // Rerender
   useEffect(() => {
     SetDarkModeColor(darkMode);
-    OnLoad(reactFlowInstance);
-  }, [OnLoad, reactFlowInstance, darkMode]);
+    OnLoad(flowInstance);
+  }, [OnLoad, flowInstance, darkMode]);
 
   // Get symbols from TypeEditor
   useEffect(() => {
@@ -108,7 +101,7 @@ const FlowTree = () => {
     <>
       {!IsBlockView() && (
         <ReactFlowProvider>
-          <div className="reactflow-wrapper" ref={reactFlowWrapper}></div>
+          <div className="reactflow-wrapper" ref={flowWrapper}></div>
           <ReactFlow
             elements={elements}
             onConnect={OnConnect}
@@ -120,6 +113,8 @@ const FlowTree = () => {
             onElementClick={OnElementClick}
             nodeTypes={Helpers.GetNodeTypes}
             edgeTypes={Helpers.GetEdgeTypes}
+            defaultZoom={0.7}
+            defaultPosition={[700, 300]}
             snapToGrid={true}
             snapGrid={[5, 5]}
             zoomOnDoubleClick={false}
@@ -128,6 +123,7 @@ const FlowTree = () => {
             <FullScreenComponent />
             <FlowManipulator elements={elements} selectedId={selectedNodeId} />
           </ReactFlow>
+          {treeFilter && <TreeFilterMenu elements={elements} />}
         </ReactFlowProvider>
       )}
     </>

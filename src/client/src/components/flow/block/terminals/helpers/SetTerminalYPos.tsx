@@ -11,7 +11,8 @@ const SetTerminalYPos = (count: number, parent: boolean, nodeHeight: number, mai
   let base = parent ? 290 : nodeHeight / 2 - 7; // Middle Position
   if (mainConnectNode) base = 200;
 
-  if (count === 0 || count === 1) return base;
+  if (count === 0) return base;
+  if (count === 1) return base + interval;
 
   // Even-numbered terminals stacked upwards
   if (count % 2 === 0) return base - interval * (count / 2);

@@ -3,41 +3,37 @@ import * as Icons from "../../assets/icons/header";
 import { ToolBar } from "./";
 import { MenuMainHeader } from "../../compLibrary/box/menus";
 import { HeaderBox, LogoBox } from "../../compLibrary/box/header/";
+import { useAppDispatch, useAppSelector } from "../../redux/store/hooks";
 import {
   darkModeSelector,
-  isAccountMenuOpenSelector,
-  isElectroVisibleSelector,
-  isExplorerOpenSelector,
-  isFilterMenuOpenSelector,
-  isLibOpenSelector,
-  isTreeViewSelector,
+  accountMenuSelector,
+  electroSelector,
+  explorerSelector,
+  treeFilterSelector,
+  blockFilterSelector,
+  libOpenSelector,
+  treeSelector,
   projectSelector,
-  useAppDispatch,
-  useAppSelector,
 } from "../../redux/store";
 
 const Header = () => {
   const dispatch = useAppDispatch();
   const project = useAppSelector(projectSelector);
   const darkMode = useAppSelector(darkModeSelector);
-  const isFilterMenuOpen = useAppSelector(isFilterMenuOpenSelector);
-  const isAccountMenuOpen = useAppSelector(isAccountMenuOpenSelector);
-  const isLibOpen = useAppSelector(isLibOpenSelector);
-  const isExplorerOpen = useAppSelector(isExplorerOpenSelector);
-  const isTreeView = useAppSelector(isTreeViewSelector);
-  const electro = useAppSelector(isElectroVisibleSelector);
+  const treeFilterMenuOpen = useAppSelector(treeFilterSelector);
+  const blockFilterMenuOpen = useAppSelector(blockFilterSelector);
+  const accountMenuOpen = useAppSelector(accountMenuSelector);
+  const libOpen = useAppSelector(libOpenSelector);
+  const explorerOpen = useAppSelector(explorerSelector);
+  const treeView = useAppSelector(treeSelector);
+  const electro = useAppSelector(electroSelector);
 
   return (
     <>
       <HeaderBox>
-        <MenuMainHeader isOpen={isAccountMenuOpen}>
-          <img
-            src={Icons.User}
-            alt="icon"
-            className="icon"
-            onClick={() => Click.OnAccount(dispatch, isAccountMenuOpen)}
-          />
-          <div className="projectName" onClick={() => Click.OnAccount(dispatch, isAccountMenuOpen)}>
+        <MenuMainHeader isOpen={accountMenuOpen}>
+          <img src={Icons.User} alt="icon" className="icon" onClick={() => Click.OnAccount(dispatch, accountMenuOpen)} />
+          <div className="projectName" onClick={() => Click.OnAccount(dispatch, accountMenuOpen)}>
             {project && project.name}
           </div>
         </MenuMainHeader>
@@ -46,10 +42,11 @@ const Header = () => {
         </LogoBox>
       </HeaderBox>
       <ToolBar
-        libOpen={isLibOpen}
-        explorerOpen={isExplorerOpen}
-        treeView={isTreeView}
-        filterMenuOpen={isFilterMenuOpen}
+        libOpen={libOpen}
+        explorerOpen={explorerOpen}
+        treeView={treeView}
+        treeFilter={treeFilterMenuOpen}
+        blockFilter={blockFilterMenuOpen}
         electro={electro}
       />
     </>

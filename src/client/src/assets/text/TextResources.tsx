@@ -13,6 +13,7 @@ const TextResources = {
   Module_Inspector: "Inspector",
 
   // Relations
+  Relations: "Relations",
   Relations_PartOf_Relationship: "Part of Relationship",
   Relation_PartOf: "Part of",
   Relations_HasLocation: "Has Location",
@@ -217,7 +218,6 @@ const TextResources = {
   Error_NoActiveAccount: "No active account. Verify a user has been signed in and setActiveAccount has been called",
 
   // BlockView
-  BlockView_Select_Message: "Please select an additional object from the Explorer Module",
   ConnectMenu_Select_All: "Select all",
   ConnectMenu_Clear: "Clear all",
 
@@ -231,6 +231,11 @@ const TextResources = {
   RDS_Function: "=",
   RDS_Product: "-",
   RDS_Location: "++",
+
+  // Visual Filter
+  Filter_Show_Terminals: "Show all terminals",
+  Filter_Show_Active_Terminals: "Show all active terminals",
+  Filter_Show_Inactive_Terminals: "Show all inactive terminals",
 };
 
 export default TextResources;

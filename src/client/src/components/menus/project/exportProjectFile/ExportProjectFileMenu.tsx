@@ -17,6 +17,7 @@ interface Props {
 export const ExportProjectFileMenu = ({ projectState, dispatch }: Props) => {
   const [fileName, setFileName] = useState("");
   const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.SAVE_PROJECT_FILE_MENU);
+
   return (
     <ProjectBox width={Size.MenuSmall_Width} height={Size.MenuSmall_Height} visible={isOpen}>
       <ProjectBody>

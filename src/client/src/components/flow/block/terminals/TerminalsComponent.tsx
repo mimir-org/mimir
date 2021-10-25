@@ -11,11 +11,11 @@ interface Props {
   outputMenuOpen: boolean;
   terminals: Connector[];
   parent: boolean;
+  electro: boolean;
   menuBox: boolean;
   mainConnectNode: boolean;
   showInTerminalMenu: any;
   showOutTerminalMenu: any;
-  splitView: boolean;
   onClick: (conn: Connector) => void;
 }
 
@@ -30,11 +30,11 @@ const TerminalsContainerComponent = ({
   outputMenuOpen,
   terminals,
   parent,
+  electro,
   menuBox,
   mainConnectNode,
   showInTerminalMenu,
   showOutTerminalMenu,
-  splitView,
   onClick,
 }: Props) => {
   const inTerminals = terminals.filter((t) => IsInputTerminal(t));
@@ -73,9 +73,9 @@ const TerminalsContainerComponent = ({
           node={node}
           parent={parent}
           input={true}
-          splitView={splitView}
           terminals={inTerminals}
           visible={inputMenuOpen}
+          electro={electro}
           onClick={onClick}
           onBlur={() => Click.OnBlur(showInTerminalMenu, inputMenuOpen)}
         />
@@ -85,8 +85,8 @@ const TerminalsContainerComponent = ({
           node={node}
           parent={parent}
           input={false}
-          splitView={splitView}
           visible={outputMenuOpen}
+          electro={electro}
           terminals={outTerminals}
           onClick={onClick}
           onBlur={() => Click.OnBlur(showOutTerminalMenu, outputMenuOpen)}

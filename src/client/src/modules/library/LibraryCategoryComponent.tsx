@@ -40,9 +40,7 @@ const LibraryCategoryComponent = ({ category, selectedElement, setSelectedElemen
                 setNewSelectedElementType(node.libraryType);
               }}
               draggable={node.libraryType === ObjectType.ObjectBlock}
-              onDragStart={(event) =>
-                node.libraryType === ObjectType.ObjectBlock && onDragStart(event, JSON.stringify(node))
-              }
+              onDragStart={(event) => node.libraryType === ObjectType.ObjectBlock && onDragStart(event, JSON.stringify(node))}
               key={node.id}
             >
               {node.name}
