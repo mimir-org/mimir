@@ -1,13 +1,13 @@
 import styled from "styled-components";
-import { Color } from "../../../compLibrary";
+import { Color, Size } from "../../../compLibrary";
 
 const TypeEditorInspectorWrapper = styled.div`
   display: flex;
-  margin-top: 35px;
+  margin-top: auto;
   position: relative;
   background-color: ${Color.Grey};
   z-index: 105;
-  height: 355px;
+  height: ${Size.ModuleClosed}px;
 
   & > div {
     background: ${Color.LightGrey};

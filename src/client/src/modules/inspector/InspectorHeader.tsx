@@ -13,14 +13,13 @@ import { IsAspectNode } from "../../components/flow/helpers";
 import { AttributeLikeItem, InspectorElement } from "./types";
 import { IsCreateLibraryType, IsEdge, IsNode } from "./helpers/IsType";
 import { GetSelectedIcon } from "../../typeEditor/helpers";
-import { Action } from "redux";
+import { Action, Dispatch } from "redux";
 
 interface Props {
   project: Project;
   element: InspectorElement;
-  dispatch: any;
+  dispatch: Dispatch;
   open: boolean;
-  type: string;
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
   changeInspectorVisibilityAction: (visibility: boolean) => Action;
   changeInspectorHeightAction: (height: number) => Action;
@@ -33,7 +32,6 @@ const InspectorHeader = ({
   element,
   dispatch,
   open,
-  type,
   inspectorRef,
   changeInspectorVisibilityAction,
   changeInspectorHeightAction,

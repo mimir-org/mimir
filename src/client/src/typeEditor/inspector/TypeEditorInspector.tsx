@@ -44,11 +44,16 @@ export const TypeEditorInspector = ({ createLibraryType }: Props) => {
   const stop = inspectorOpen ? Size.TypeEditorInspectorOpen : Size.ModuleClosed;
   const start = inspectorOpen ? Size.ModuleClosed : Size.TypeEditorInspectorOpen;
 
-  useDragResizePanel(inspectorRef, resizePanelRef, dispatch, changeTypeEditorInspectorHeight, 355);
+  useDragResizePanel(
+    inspectorRef,
+    resizePanelRef,
+    dispatch,
+    changeTypeEditorInspectorHeight,
+    Size.TypeEditorInspectorOpen
+  );
 
   return (
     <AnimatedInspector
-      id="TypeEditorInspectorModule"
       type={type}
       isLibraryOpen={false}
       isExplorerOpen={false}
@@ -66,7 +71,6 @@ export const TypeEditorInspector = ({ createLibraryType }: Props) => {
         element={createLibraryType}
         dispatch={dispatch}
         open={inspectorOpen}
-        type={type}
         icons={icons}
         attributeLikeItems={attributeLikeItems}
         inspectorRef={inspectorRef}

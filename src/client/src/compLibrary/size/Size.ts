@@ -29,7 +29,7 @@ const Size = {
   Margin: 2,
 
   //TypeEditor
-  TypeEditorInspectorOpen: 335,
+  TypeEditorInspectorOpen: 345,
 
   // Menus
   TopMenu_Height: 56,

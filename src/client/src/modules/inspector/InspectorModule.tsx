@@ -71,7 +71,6 @@ const InspectorModule = ({ inspectorRef }: Props) => {
         element={element}
         dispatch={dispatch}
         open={inspectorOpen}
-        type={type}
         inspectorRef={inspectorRef}
         changeInspectorVisibilityAction={changeInspectorVisibilityAction}
         changeInspectorHeightAction={changeInspectorHeight}
