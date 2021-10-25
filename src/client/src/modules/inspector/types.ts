@@ -9,6 +9,8 @@ import {
   Attribute,
   AttributeType,
   CombinedAttribute,
+  TerminalType,
+  TerminalTypeItem,
 } from "../../models";
 
 /**
@@ -31,3 +33,5 @@ export type InspectorParametersElement = InspectorTerminalsElement | Connector |
 export type AttributeLikeItem = Attribute | AttributeType;
 
 export type CombinedAttributeDict = { [name: string]: CombinedAttribute[] };
+
+export type TerminalLikeItem = Connector | TerminalTypeItem;

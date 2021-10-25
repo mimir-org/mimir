@@ -19,12 +19,12 @@ export const ObjectBlockElement = ({ name, categoryId, terminalTypes, onChange, 
   const terminalsQuantity = defaultTerminals?.length;
 
   const defaultTerminal = {
-    terminalId: CreateId(),
+    id: CreateId(),
     terminalTypeId: "",
     selected: false,
     connectorType: ConnectorType.Input,
     number: 1,
-    categoryId: categoryId,
+    terminalCategoryId: categoryId,
   } as TerminalTypeItem;
 
   const onCategoryAdd = (terminal: TerminalTypeItem) => {
@@ -40,7 +40,7 @@ export const ObjectBlockElement = ({ name, categoryId, terminalTypes, onChange, 
     let terminalsArray = [];
     if (terminalsQuantity > 0) {
       terminalsArray = defaultTerminals.map((t) => {
-        t.terminalId = CreateId();
+        t.id = CreateId();
         return t;
       });
       return terminalsArray.map((t) => {

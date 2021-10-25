@@ -28,10 +28,9 @@ const SearchDropDown = ({ value, placeHolder, list, onChange }: Props) => {
     list;
 
   const valueChanged = (_e, id: string, name: string) => {
-    value = id;
     setSearchString(name);
     setIsListOpen(false);
-    onChange(value);
+    onChange(id, name);
   };
 
   const showListItems = () => {

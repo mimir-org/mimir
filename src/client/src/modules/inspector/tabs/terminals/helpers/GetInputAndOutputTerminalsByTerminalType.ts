@@ -1,19 +1,20 @@
-import { IsInputTerminal } from "../../../../../components/flow/helpers";
-import { Connector } from "../../../../../models";
+import { IsInputTerminalLikeItem } from "../../../../../components/flow/helpers";
+import { TerminalLikeItem } from "../../../types";
 
-export const GetInputAndOutputTerminalsByTerminalType = (terminals: Connector[]) => {
-  let inputTerminalsByCategory = new Map<string, Connector[]>();
-  let outputTerminalsByCategory = new Map<string, Connector[]>();
+export const GetInputAndOutputTerminalsByTerminalType = (terminals: TerminalLikeItem[]) => {
+  let inputTerminalsByCategory = new Map<string, TerminalLikeItem[]>();
+  let outputTerminalsByCategory = new Map<string, TerminalLikeItem[]>();
 
   for (let terminal of terminals) {
-    if (IsInputTerminal(terminal)) InsertMapWithDefault(terminal.terminalTypeId, terminal, inputTerminalsByCategory);
+    if (IsInputTerminalLikeItem(terminal))
+      InsertMapWithDefault(terminal.terminalTypeId, terminal, inputTerminalsByCategory);
     else InsertMapWithDefault(terminal.terminalTypeId, terminal, outputTerminalsByCategory);
   }
 
   return [inputTerminalsByCategory, outputTerminalsByCategory];
 };
 
-const InsertMapWithDefault = (key: string, value: Connector, map: Map<string, Connector[]>) => {
+const InsertMapWithDefault = (key: string, value: TerminalLikeItem, map: Map<string, TerminalLikeItem[]>) => {
   if (!map.has(key)) {
     map.set(key, []);
   }

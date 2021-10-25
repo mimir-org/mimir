@@ -2,7 +2,7 @@ import { InspectorComponent } from ".";
 import { Project } from "../../models";
 import { AdminComponent } from "./tabs/admin";
 import { IsProduct } from "../../components/flow/helpers";
-import { AttributeLikeItem, InspectorElement } from "./types";
+import { AttributeLikeItem, InspectorElement, TerminalLikeItem } from "./types";
 import { IsCreateLibraryType, IsEdge, IsNode } from "./helpers/IsType";
 import { IsRelationEdge } from "../../components/flow/helpers/IsRelationEdge";
 import { IsLocation } from "../../typeEditor/helpers";
@@ -11,9 +11,10 @@ interface Props {
   project: Project;
   element: InspectorElement;
   attributeLikeItems?: AttributeLikeItem[];
+  terminalLikeItems?: TerminalLikeItem[];
 }
 
-const InspectorTabs = ({ project, element, attributeLikeItems }: Props) => {
+const InspectorTabs = ({ project, element, attributeLikeItems, terminalLikeItems }: Props) => {
   const shouldShowParameters =
     IsNode(element) ||
     (IsCreateLibraryType(element) && element.purpose) ||
@@ -33,7 +34,9 @@ const InspectorTabs = ({ project, element, attributeLikeItems }: Props) => {
           {shouldShowParameters && (
             <InspectorComponent element={element} index={1} attributeLikeItems={attributeLikeItems} />
           )}
-          {shouldShowTerminals && <InspectorComponent element={element} index={2} />}
+          {shouldShowTerminals && (
+            <InspectorComponent element={element} index={2} terminalLikeItems={terminalLikeItems} />
+          )}
           {shouldShowRelations && <InspectorComponent element={element} index={3} />}
           {shouldShowSimpleTypes && <InspectorComponent element={element} index={4} />}
         </>

@@ -83,12 +83,13 @@ export interface TerminalType {
 }
 
 export interface TerminalTypeItem {
-  terminalId: string;
+  id: string;
+  name: string;
   terminalTypeId: string;
   selected: boolean | false;
   connectorType: ConnectorType;
   number: number;
-  categoryId: string;
+  terminalCategoryId: string;
   attributes: AttributeType[];
 }
 

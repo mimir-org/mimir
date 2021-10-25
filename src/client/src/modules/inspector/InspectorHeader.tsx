@@ -10,7 +10,7 @@ import { InspectorTabs } from ".";
 import { useState } from "react";
 import { InspectorButtonType } from "../../compLibrary/buttons/inspector/InspectorButton";
 import { IsAspectNode } from "../../components/flow/helpers";
-import { AttributeLikeItem, InspectorElement } from "./types";
+import { AttributeLikeItem, InspectorElement, TerminalLikeItem } from "./types";
 import { IsCreateLibraryType, IsEdge, IsNode } from "./helpers/IsType";
 import { GetSelectedIcon } from "../../typeEditor/helpers";
 import { Action, Dispatch } from "redux";
@@ -25,6 +25,7 @@ interface Props {
   changeInspectorHeightAction: (height: number) => Action;
   onToggle?: Function;
   attributeLikeItems?: AttributeLikeItem[];
+  terminalLikeItems?: TerminalLikeItem[];
   icons?: BlobData[];
 }
 
@@ -39,6 +40,7 @@ const InspectorHeader = ({
   onToggle = Click.OnToggle,
   icons,
   attributeLikeItems,
+  terminalLikeItems,
 }: Props) => {
   const [validated, setValidated] = useState(false);
 
@@ -46,7 +48,14 @@ const InspectorHeader = ({
 
   return (
     <Menu id="InspectorHeader" color={GetInspectorColor(element)}>
-      {project && <InspectorTabs project={project} element={element} attributeLikeItems={attributeLikeItems} />}
+      {project && (
+        <InspectorTabs
+          project={project}
+          element={element}
+          attributeLikeItems={attributeLikeItems}
+          terminalLikeItems={terminalLikeItems}
+        />
+      )}
 
       {IsNode(element) && (
         <NodeInfo>

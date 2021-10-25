@@ -4,16 +4,17 @@ import { useCallback } from "react";
 import { makeIsInspectorTabOpenSelector, useAppDispatch, useUniqueParametricAppSelector } from "../../redux/store";
 import { changeInspectorTab } from "./redux/tabs/actions";
 import { TabHeader, TabBody, NodeInfo, TabTitle } from "./styled";
-import { AttributeLikeItem, InspectorElement } from "./types";
+import { AttributeLikeItem, InspectorElement, TerminalLikeItem } from "./types";
 import { IsNode } from "./helpers/IsType";
 
 interface Props {
   element?: InspectorElement;
   index: number;
   attributeLikeItems?: AttributeLikeItem[];
+  terminalLikeItems?: TerminalLikeItem[];
 }
 
-const InspectorComponent = ({ element, index, attributeLikeItems }: Props) => {
+const InspectorComponent = ({ element, index, attributeLikeItems, terminalLikeItems }: Props) => {
   const dispatch = useAppDispatch();
   const isTabOpen = useUniqueParametricAppSelector(makeIsInspectorTabOpenSelector, index);
 
@@ -30,7 +31,12 @@ const InspectorComponent = ({ element, index, attributeLikeItems }: Props) => {
 
       {isTabOpen && (
         <TabBody id={GetTabId(index)}>
-          <InspectorContent element={element} index={index} attributeLikeItems={attributeLikeItems} />
+          <InspectorContent
+            element={element}
+            index={index}
+            attributeLikeItems={attributeLikeItems}
+            terminalLikeItems={terminalLikeItems}
+          />
         </TabBody>
       )}
     </>

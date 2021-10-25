@@ -1,15 +1,16 @@
-import { Connector, ConnectorType, TerminalType } from "../../../../models";
+import { ConnectorType, TerminalType } from "../../../../models";
 import { TerminalTypeListElement, TerminalsListElementWrapper, TerminalListElement } from "./styled/activeTerminalList";
 import { ExpandAccordionNestedIcon, CollapseAccordionNestedIcon } from "../../../../assets/icons/toogle";
+import { TerminalLikeItem } from "../../types";
 
 interface Props {
   terminalType: TerminalType;
   connectorType: ConnectorType;
   expanded: boolean;
-  terminals: Connector[];
-  selectedTerminal: Connector;
+  terminals: TerminalLikeItem[];
+  selectedTerminal: TerminalLikeItem;
   onTypeClick: (type: TerminalType, connectorType: ConnectorType) => void;
-  onSelectTerminal: (item: Connector) => void;
+  onSelectTerminal: (item: TerminalLikeItem) => void;
 }
 
 function ActiveTerminalsTypeList({

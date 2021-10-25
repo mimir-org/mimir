@@ -12,12 +12,13 @@ import {
 } from "./helpers";
 import { ExpandAccordionIcon, CollapseAccordionIcon } from "../../../../assets/icons/toogle";
 import { TerminalsListElementWrapper, TerminalsCategoryListElement } from "./styled/activeTerminalList";
+import { TerminalLikeItem } from "../../types";
 
 interface Props {
-  terminals: Connector[];
+  terminals: TerminalLikeItem[];
   terminalCategories: TerminalCategory[];
-  selectedTerminal: Connector;
-  onSelectTerminal: (item: Connector) => void;
+  selectedTerminal: TerminalLikeItem;
+  onSelectTerminal: (item: TerminalLikeItem) => void;
 }
 
 function ActiveTerminalsList({ terminals, terminalCategories, selectedTerminal, onSelectTerminal }: Props) {
