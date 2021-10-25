@@ -59,11 +59,6 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
     ResizeConnectNode(connectNodes?.length, mainConnectNode, data);
   }, [mainConnectNode, data, connectNodes, mainConnectNodes]);
 
-  useEffect(() => {
-    ResizeConnectNode(connectNodes?.length, mainConnectNode, data);
-    SetConnectNodeColor(mainConnectNode?.id, connectNodes, data);
-  }, [mainConnectNode, data, connectNodes]);
-
   // Force z-index to display edges in ConnectView
   useEffect(() => {
     if (mainConnectNode) {
@@ -72,11 +67,12 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
     }
   }, [mainConnectNode]);
 
-  electro ? SetNodeWidth(terminals, data) : SetNodeLength(terminals, data);
-
   useEffect(() => {
     updateNodeInternals(node?.id);
-  }, [node, updateNodeInternals]);
+    updateNodeInternals(secondaryNode?.id);
+  }, [node, secondaryNode, updateNodeInternals]);
+
+  electro ? SetNodeWidth(terminals, data) : SetNodeLength(terminals, data);
 
   return (
     <>
