@@ -9,7 +9,10 @@ const SetNewSelectedElement = (
   setSelectedElement: any
 ) => {
   setSelectedElement(item.id);
-  if (!customCategory?.nodes?.includes(item)) dispatch(addCustomCategoryNode(item));
+
+  if (!customCategory?.nodes?.some((n) => n.id === item.id)) {
+    dispatch(addCustomCategoryNode(item));
+  }
 };
 
 export default SetNewSelectedElement;
