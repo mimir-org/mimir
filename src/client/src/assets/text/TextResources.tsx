@@ -142,7 +142,7 @@ const TextResources = {
   TypeEditor_Purpose: "Purpose",
   TypeEditor_Type_Name: "Type name",
   TypeEditor_Symbol: "Symbol",
-  TypeEditor_Properties_RDS: "Choose RDS String",
+  TypeEditor_Properties_RDS: "Choose or search for RDS...",
   TypeEditor_Properties_Terminals: "Select Terminal Types",
   TypeEditor_Properties_Terminal_Type: "Choose Terminal Type",
   TypeEditor_Properties_Add_Terminal: "Add",

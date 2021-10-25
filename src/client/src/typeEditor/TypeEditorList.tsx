@@ -1,5 +1,6 @@
 import { CreateLibraryType, Discipline } from "../models";
 import { ListElementsContainer, ListLabel, ListWrapper } from "../compLibrary";
+import { useState } from "react";
 import {
   RDSElement,
   ObjectBlockElement,
@@ -8,6 +9,7 @@ import {
   SimpleTypeElement,
   AttributeElement,
   LocationAttributeElement,
+  ListSearch,
 } from "./lists/";
 import {
   GetListLabel,
@@ -42,9 +44,14 @@ interface Props {
 }
 
 export const TypeEditorList = ({ createLibraryType, items, discipline, disabled, listType, onChange }: Props) => {
+  const isRds = listType === ListType.Rds;
+  const [listitems, setListItems] = useState(isRds && items);
   return (
     <ListWrapper wide={GetWidth(listType)} disabled={disabled}>
-      <ListLabel>{GetListLabel(listType, createLibraryType)}</ListLabel>
+      {isRds && (
+        <ListSearch placeHolder={GetListLabel(listType, createLibraryType)} list={items} setlistItems={setListItems} />
+      )}
+      <ListLabel removeBorderBottom={isRds}>{!isRds && GetListLabel(listType, createLibraryType)}</ListLabel>
       {!disabled && (
         <ListElementsContainer
           hover={RemoveHover(listType)}
@@ -52,7 +59,7 @@ export const TypeEditorList = ({ createLibraryType, items, discipline, disabled,
           switchBackground={SwitchBackground(listType)}
         >
           {listType === ListType.Rds
-            ? GetFilteredList(listType, items, createLibraryType).map((element) => (
+            ? GetFilteredList(listType, listitems, createLibraryType).map((element) => (
                 <RDSElement
                   key={element.name}
                   category={element.name}
