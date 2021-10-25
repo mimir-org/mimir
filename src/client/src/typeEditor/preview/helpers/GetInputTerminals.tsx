@@ -3,7 +3,7 @@ import { ConnectorType, CreateLibraryType, TerminalType } from "../../../models"
 const GetInputTerminals = (createLibraryType: CreateLibraryType, terminals: any[]): TerminalType[] => {
   let terminalsArray: TerminalType[] = [];
   createLibraryType?.terminalTypes
-    .filter((t) => t.connectorType === ConnectorType.Input)
+    .filter((t) => t.type === ConnectorType.Input)
     .forEach((t) => {
       terminals.forEach((x) => {
         x.value.forEach((y) => {

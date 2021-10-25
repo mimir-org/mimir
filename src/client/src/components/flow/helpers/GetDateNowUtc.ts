@@ -4,7 +4,7 @@
  */
 const GetDateNowUtc = (): Date => {
   const currTimestamp = Date.now();
-  const utcDateString = (new Date(currTimestamp)).toUTCString();
+  const utcDateString = new Date(currTimestamp).toUTCString();
   return new Date(utcDateString);
 };
 

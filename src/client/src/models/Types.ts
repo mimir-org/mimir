@@ -87,7 +87,7 @@ export interface TerminalTypeItem {
   name: string;
   terminalTypeId: string;
   selected: boolean | false;
-  connectorType: ConnectorType;
+  type: ConnectorType;
   number: number;
   terminalCategoryId: string;
   attributes: AttributeType[];

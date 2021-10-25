@@ -27,17 +27,17 @@ const SearchDropDown = ({ value, placeHolder, list, onChange }: Props) => {
       list.filter((x) => x && x.name && x.name.toLowerCase().includes(searchString.toLowerCase()))) ||
     list;
 
-  const valueChanged = (_e, id: string, name: string) => {
-    setSearchString(name);
+  const valueChanged = (item) => {
+    setSearchString(item.name);
     setIsListOpen(false);
-    onChange(id, name);
+    onChange(item);
   };
 
   const showListItems = () => {
     const filteredList = isInArray ? list : filter;
     return filteredList.map((item) => {
       return (
-        <SearchBarListItem key={item.id} onClick={(e: any) => valueChanged(e, item.id, item.name)}>
+        <SearchBarListItem key={item.id} onClick={() => valueChanged(item)}>
           <p>{item.name}</p>
         </SearchBarListItem>
       );

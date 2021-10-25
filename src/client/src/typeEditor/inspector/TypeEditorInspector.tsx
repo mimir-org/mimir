@@ -16,7 +16,6 @@ import {
   iconSelector,
   attributeTypeSelector,
   isTypeEditorInspectorOpen,
-  terminalTypeSelector,
 } from "../../redux/store";
 import { useMemoArrayCompare } from "../helpers/useMemoArrayCompare";
 import { changeTypeEditorInspectorHeight, changeTypeEditorInspectorVisibility } from "../redux/actions";
@@ -35,23 +34,11 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
   const inspectorOpen = useAppSelector(isTypeEditorInspectorOpen);
   const icons = useAppSelector(iconSelector);
   const attributeTypes = useAppSelector(attributeTypeSelector);
-  const terminalTypes = useAppSelector(terminalTypeSelector);
 
   const attributeLikeItems = useMemoArrayCompare(
     () => attributeTypes.filter((attr) => createLibraryType.attributeTypes.find((attrId) => attrId === attr.id)),
     [attributeTypes, createLibraryType.attributeTypes],
     createLibraryType.attributeTypes
-  );
-
-  console.log(createLibraryType.terminalTypes);
-
-  const terminalLikeItems = useMemoArrayCompare(
-    () =>
-      terminalTypes.filter((term) =>
-        createLibraryType.terminalTypes.find((termItem) => termItem.terminalTypeId === term.id)
-      ),
-    [terminalTypes, createLibraryType.terminalTypes],
-    createLibraryType.terminalTypes
   );
 
   const inspectorRef = useRef(null);
@@ -106,7 +93,7 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
         open={inspectorOpen}
         icons={icons}
         attributeLikeItems={attributeLikeItems}
-        terminalLikeItems={terminalLikeItems}
+        terminalLikeItems={createLibraryType.terminalTypes}
         inspectorRef={inspectorRef}
         changeInspectorVisibilityAction={changeTypeEditorInspectorVisibility}
         changeInspectorHeightAction={changeTypeEditorInspectorHeight}

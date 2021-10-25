@@ -5,3 +5,4 @@ export * from "./GetTerminals";
 export * from "./GetTerminalParentElement";
 export * from "./GetInputAndOutputTerminalsByTerminalType";
 export * from "./GetNumTerminalsByCategory";
+export * from "./GetAttributeLikeItems";

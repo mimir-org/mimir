@@ -43,6 +43,7 @@ const TerminalsComponent = ({ element, terminalLikeItems }: Props) => {
             inspectorParentElement={element}
             terminalParentElement={terminalParentElement}
             elementIsLocked={elementIsLocked}
+            attributeLikeItems={selectedTerminal.attributes}
           />
         </TerminalsParametersWrapper>
       )}

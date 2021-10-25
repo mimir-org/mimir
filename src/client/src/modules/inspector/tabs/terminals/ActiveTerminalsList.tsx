@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { Color } from "../../../../compLibrary";
 import { TerminalCategory } from "../../../../typeEditor/helpers/GetFilteredTerminalsList";
-import { Connector, ConnectorType, TerminalType } from "../../../../models";
+import { ConnectorType, TerminalType } from "../../../../models";
 import { ActiveTerminalsTypeList } from "./";
 import { OnCategoryClick, OnTypeClick } from "./handlers";
 import {

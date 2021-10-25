@@ -11,9 +11,10 @@ interface Props {
 }
 
 const AddTerminal = ({ terminals, defaultTerminal, onChange }: Props) => {
-  const onTerminalIdChange = (id: string, name: string) => {
-    defaultTerminal.terminalTypeId = id;
-    defaultTerminal.name = name;
+  const onTerminalIdChange = (item: TerminalType) => {
+    defaultTerminal.terminalTypeId = item.id;
+    defaultTerminal.name = item.name;
+    defaultTerminal.attributes = item.attributes;
     onChange("update", defaultTerminal);
   };
 
@@ -23,7 +24,7 @@ const AddTerminal = ({ terminals, defaultTerminal, onChange }: Props) => {
   };
 
   const onDirectionChange = (item: number) => {
-    defaultTerminal.connectorType = Number(item);
+    defaultTerminal.type = Number(item);
     onChange("update", defaultTerminal);
   };
 
@@ -32,13 +33,13 @@ const AddTerminal = ({ terminals, defaultTerminal, onChange }: Props) => {
       <NumericValueInput value={defaultTerminal.number.toString()} onChange={(item: number) => onQuantityChange(item)} />
       <SearchDropDown
         value={defaultTerminal.terminalTypeId}
-        onChange={(id: string, name: string) => onTerminalIdChange(id, name)}
+        onChange={(item) => onTerminalIdChange(item)}
         placeHolder={TextResources.TypeEditor_Search}
         list={terminals as SearchDropDownItem[]}
       />
       <DirectionalDropdown
         onChange={(item: number) => onDirectionChange(item)}
-        value={defaultTerminal ? Number(defaultTerminal.connectorType) : Number(ConnectorType.Input)}
+        value={defaultTerminal ? Number(defaultTerminal.type) : Number(ConnectorType.Input)}
       />
       <button onClick={() => onChange("remove", defaultTerminal)}>
         <img src={CloseIcon} alt="delete" className="delete-icon" />

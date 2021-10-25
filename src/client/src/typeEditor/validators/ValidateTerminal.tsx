@@ -5,7 +5,7 @@ const ValidateTerminal = (terminal: TerminalTypeItem) => {
     terminal.number > 0 &&
     terminal.number &&
     terminal.terminalTypeId !== "" &&
-    (terminal.connectorType === 0 || terminal.connectorType === 1)
+    (terminal.type === 0 || terminal.type === 1)
   );
 };
 
