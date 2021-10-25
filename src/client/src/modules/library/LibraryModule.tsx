@@ -56,7 +56,11 @@ const LibraryModule = () => {
         <p className="text">{TextResources.Module_Library}</p>
       </ModuleHead>
       <ModuleBody visible={libOpen}>
-        <LibraryComponent categories={GetLibCategories(selectedNode, splitView, libState)} search={search} />
+        <LibraryComponent
+          categories={GetLibCategories(selectedNode, splitView, libState)}
+          search={search}
+          dispatch={dispatch}
+        />
       </ModuleBody>
 
       <AnimatedModule start={startLegend} stop={stopLegend} run={animateLegend} type={legend} id="LegendModule">

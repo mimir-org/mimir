@@ -12,13 +12,15 @@ import { TypeEditorModule } from "../../typeEditor";
 interface Props {
   categories: LibraryCategory[];
   search: Function;
+  dispatch: any;
 }
 
-const LibraryComponent = ({ categories, search }: Props) => {
+const LibraryComponent = ({ categories, search, dispatch }: Props) => {
   const [selectedElement, setSelectedElement] = useState("");
   const [selectedElementType, setSelectedElementType] = useState(null);
   const type = MODULE_TYPE.LEGEND;
   const legendOpen = useSelector<RootState>((s) => s.modules.types.find((x) => x.type === type).visible) as boolean;
+  const customCategory = useSelector<RootState>((s) => s.customCategory) as LibraryCategory;
 
   const onChange = (e: { target: { value: any } }) => search(e.target.value);
 
@@ -42,9 +44,20 @@ const LibraryComponent = ({ categories, search }: Props) => {
               setSelectedElementType={setSelectedElementType}
               key={category.name}
               category={category}
+              customCategory={customCategory}
+              dispatch={dispatch}
             />
           );
         })}
+        <LibraryCategoryComponent
+          selectedElement={selectedElement}
+          setSelectedElement={setSelectedElement}
+          setSelectedElementType={setSelectedElementType}
+          key={customCategory.name}
+          category={customCategory}
+          customCategory={customCategory}
+          dispatch={dispatch}
+        />
         <TypeEditorModule
           selectedElement={selectedElement}
           selectedElementType={selectedElementType}

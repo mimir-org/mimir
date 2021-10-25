@@ -17,6 +17,7 @@ import { darkModeReducer } from "./darkMode/reducers";
 import { parametersReducer } from "../../modules/inspector/tabs/parameters/redux/reducers";
 import { electroViewReducer } from "../store/electro/reducers";
 import { sagas } from "../sagas";
+import { customCategoryReducer } from "../store/customCategory/reducers";
 import { persistStore, persistReducer } from "redux-persist";
 
 const sagaMiddleware = createSagaMiddleware();
@@ -40,6 +41,7 @@ const rootReducers = combineReducers({
   commonState: commonReducer,
   darkMode: darkModeReducer,
   parametersReducer: parametersReducer,
+  customCategory: customCategoryReducer,
 });
 
 const persistConfig = {

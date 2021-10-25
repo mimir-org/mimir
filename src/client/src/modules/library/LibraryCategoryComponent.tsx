@@ -4,15 +4,25 @@ import { ObjectType } from "../../models";
 import { GetObjectIcon, GetAspectColor } from "../../assets/helpers";
 import { ExpandIcon, CollapseIcon } from "../../assets/icons/chevron";
 import { LibCategory, LibCategoryElement, LibElement, LibElementIcon } from "../../compLibrary/box/library";
+import { SetNewSelectedElement, SetNewSelectedElementType } from "./helpers";
 
 interface Props {
+  customCategory: LibraryCategory;
   category: LibraryCategory;
   selectedElement: string;
   setSelectedElement: any;
   setSelectedElementType: any;
+  dispatch: any;
 }
 
-const LibraryCategoryComponent = ({ category, selectedElement, setSelectedElement, setSelectedElementType }: Props) => {
+const LibraryCategoryComponent = ({
+  category,
+  customCategory,
+  selectedElement,
+  setSelectedElement,
+  setSelectedElementType,
+  dispatch,
+}: Props) => {
   const [expanded, setExpanded] = useState(false);
   const expandIcon = expanded ? ExpandIcon : CollapseIcon;
 
@@ -20,9 +30,6 @@ const LibraryCategoryComponent = ({ category, selectedElement, setSelectedElemen
     event.dataTransfer.setData("application/reactflow", node);
     event.dataTransfer.effectAllowed = "move";
   };
-
-  const setNewSelectedElement = (id: string) => setSelectedElement(id);
-  const setNewSelectedElementType = (libraryType: ObjectType) => setSelectedElementType(libraryType);
 
   return (
     <>
@@ -36,8 +43,8 @@ const LibraryCategoryComponent = ({ category, selectedElement, setSelectedElemen
             <LibElement
               active={selectedElement === node.id}
               onClick={() => {
-                setNewSelectedElement(node.id);
-                setNewSelectedElementType(node.libraryType);
+                SetNewSelectedElement(node, customCategory, dispatch, setSelectedElement);
+                SetNewSelectedElementType(node.libraryType, setSelectedElementType);
               }}
               draggable={node.libraryType === ObjectType.ObjectBlock}
               onDragStart={(event) =>
