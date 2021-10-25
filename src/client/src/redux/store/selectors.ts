@@ -95,6 +95,11 @@ export const legendOpenSelector = createAppSelector(
   (types) => types.find((m) => m.type === MODULE_TYPE.LEGEND).visible
 );
 
+export const customCategorySelector = createAppSelector(
+  (state) => state.customCategory,
+  (customCategory) => customCategory
+);
+
 export const treeSelector = createAppSelector(
   (state) => state.flow.view,
   (view) => view === VIEW_TYPE.TREEVIEW

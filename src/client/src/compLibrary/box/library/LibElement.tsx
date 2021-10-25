@@ -8,7 +8,8 @@ interface Props {
 const LibElement = styled.div<Props>`
   width: 286px;
   height: 36px;
-  border: ${(props) => (props.active ? "1px solid black" : "1px solid" + Color.DarkerGrey)};
+  border: 1px solid;
+  border-color: ${(props) => (props.active ? Color.Black : Color.DarkerGrey)};
   border-style: ${(props) => (props.active ? "dashed" : "default")};
   border-radius: 3px;
   background-color: ${Color.White};
@@ -19,7 +20,7 @@ const LibElement = styled.div<Props>`
   justify-content: space-between;
   font-size: ${FontSize.SubHeader};
   padding-left: 10px;
-  cursor: pointer;
+  cursor: grab;
 `;
 
 export default LibElement;
