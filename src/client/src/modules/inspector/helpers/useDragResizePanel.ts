@@ -20,25 +20,23 @@ export const useDragResizePanel = (
     [prevYRef, inspectorRef, siblingRef, maxHeight]
   );
 
-  const onMouseDownCallback = useCallback(
-    (e: MouseEvent) => onMouseDown(e, prevYRef, resizeCallback),
-    [prevYRef, resizeCallback]
-  );
-
   const onMouseUpCallback = useCallback(
     () => onMouseUp(inspectorRef, resizeCallback, dispatch, changeInspectorHeightAction),
     [inspectorRef, resizeCallback, dispatch, changeInspectorHeightAction]
   );
 
+  const onMouseDownCallback = useCallback(
+    (e: MouseEvent) => onMouseDown(e, prevYRef, resizeCallback, onMouseUpCallback),
+    [prevYRef, resizeCallback, onMouseUpCallback]
+  );
+
   useEffect(() => {
     if (resizePanelRef.current) {
       resizePanelRef.current.addEventListener("mousedown", onMouseDownCallback);
-      document.addEventListener("mouseup", onMouseUpCallback);
     }
 
     return () => {
       document.removeEventListener("mousemove", resizeCallback);
-      document.removeEventListener("mouseup", onMouseUpCallback);
     };
   }, [inspectorRef, resizePanelRef, maxHeight, dispatch, resizeCallback, onMouseDownCallback, onMouseUpCallback]);
 };
@@ -53,7 +51,7 @@ const resize = (
   const dy = prevYRef.current - e.clientY;
   prevYRef.current = e.clientY;
 
-  let prevHeight = parseInt(getComputedStyle(inspectorRef.current).height);
+  let prevHeight = getComputedHeight(inspectorRef);
 
   let newHeight = prevHeight + dy;
 
@@ -62,25 +60,28 @@ const resize = (
   } else if (newHeight < MIN_HEIGHT) {
     newHeight = MIN_HEIGHT;
   }
-  inspectorRef.current.style.height = newHeight + "px";
+
+  setHeightProperty(inspectorRef, newHeight);
 
   if (siblingRef) {
-    let prevSiblingHeight = parseInt(getComputedStyle(siblingRef.current).height);
+    let prevSiblingHeight = getComputedHeight(siblingRef);
 
     let newSiblingHeight = prevSiblingHeight - (newHeight - prevHeight);
 
-    siblingRef.current.style.height = newSiblingHeight + "px";
+    setHeightProperty(siblingRef, newSiblingHeight);
   }
 };
 
 const onMouseDown = (
   e: MouseEvent,
   prevYRef: React.MutableRefObject<number>,
-  resizeCallback: (e: MouseEvent) => void
+  resizeCallback: (e: MouseEvent) => void,
+  onMouseUpCallback: () => void
 ) => {
   if (e.offsetY < BORDER_SIZE) {
     prevYRef.current = e.clientY;
     document.addEventListener("mousemove", resizeCallback);
+    document.addEventListener("mouseup", onMouseUpCallback, { once: true });
   }
 };
 
@@ -91,9 +92,16 @@ const onMouseUp = (
   changeInspectorHeightAction: (height: number) => Action
 ) => {
   if (inspectorRef.current) {
-    const height = parseInt(getComputedStyle(inspectorRef.current).height);
+    const height = getComputedHeight(inspectorRef);
     if (height !== Size.ModuleClosed && height !== Size.ModuleOpen) dispatch(changeInspectorHeightAction(height));
   }
 
   document.removeEventListener("mousemove", resizeCallback);
+};
+
+const getComputedHeight = (ref: React.MutableRefObject<HTMLDivElement>) =>
+  parseInt(getComputedStyle(ref.current).height);
+
+const setHeightProperty = (ref: React.MutableRefObject<HTMLDivElement>, height: number) => {
+  ref.current.style.height = height + "px";
 };
