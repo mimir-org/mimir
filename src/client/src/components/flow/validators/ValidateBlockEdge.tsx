@@ -1,6 +1,6 @@
 import { Node, Connector } from "../../../models";
 import {
-  IsFulfilledByTerminal,
+  IsProductTerminal,
   IsFunction,
   IsLocation,
   IsLocationTerminal,
@@ -52,7 +52,7 @@ function validSecondaryView(activeNode: Node, secondaryNode: Node, from: Node, t
     return IsLocationTerminal(fromC) && IsLocationTerminal(toC);
   }
   if (IsProduct(secondaryNode)) {
-    return IsFulfilledByTerminal(fromC) && IsFulfilledByTerminal(toC);
+    return IsProductTerminal(fromC) && IsProductTerminal(toC);
   }
 
   if (IsFunction(secondaryNode)) {

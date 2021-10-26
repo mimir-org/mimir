@@ -1,5 +1,5 @@
 import { Connector, Node } from "../../../../models";
-import { IsLocation, IsLocationTerminal, IsTransportTerminal, IsFulfilledByTerminal } from "../../helpers";
+import { IsLocation, IsLocationTerminal, IsTransportTerminal, IsProductTerminal } from "../../helpers";
 
 /**
  * Component to filter the terminals displayed on the nodes in BlockView.
@@ -22,7 +22,7 @@ function validate(n: Node, secondaryNode: Node, c: Connector) {
 
   if (secondaryNode) {
     if (IsLocation(secondaryNode)) return IsLocationTerminal(c);
-    if (!IsLocation(n)) return IsFulfilledByTerminal(c);
+    if (!IsLocation(n)) return IsProductTerminal(c);
   }
 
   if (!IsLocation(n)) return IsTransportTerminal(c);

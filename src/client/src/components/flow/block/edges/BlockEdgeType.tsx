@@ -1,7 +1,7 @@
 import "./BlockEdge.scss";
 import { ArrowHeadType, getBezierPath, getMarkerEnd, getSmoothStepPath } from "react-flow-renderer";
 import { Connector } from "../../../../models";
-import { IsLocationTerminal, IsFulfilledByTerminal } from "../../helpers";
+import { IsLocationTerminal, IsProductTerminal } from "../../helpers";
 import { SetClassName, GetStyle } from "./helpers";
 
 export default function BlockEdgeType({
@@ -18,7 +18,7 @@ export default function BlockEdgeType({
   const markerEnd = getMarkerEnd(ArrowHeadType.ArrowClosed, markerEndId);
   const fromConn = data.source.connectors?.find((conn: Connector) => conn.id === data.edge.fromConnectorId) as Connector;
   const hasLocation = IsLocationTerminal(fromConn);
-  const hasProduct = IsFulfilledByTerminal(fromConn);
+  const hasProduct = IsProductTerminal(fromConn);
 
   const smooth = getSmoothStepPath({
     sourceX,
@@ -44,20 +44,8 @@ export default function BlockEdgeType({
         <path id={id} style={GetStyle(fromConn)} className="react-flow__edge-path" d={smooth} markerEnd={markerEnd} />
       ) : (
         <>
-          <path
-            id={id}
-            style={GetStyle(fromConn)}
-            className={SetClassName(data) + ""}
-            d={bezier}
-            markerEnd={markerEnd}
-          />
-          <path
-            id={id}
-            style={GetStyle(fromConn)}
-            className={SetClassName(data) + "--dashed"}
-            d={bezier}
-            markerEnd={markerEnd}
-          />
+          <path id={id} style={GetStyle(fromConn)} className={SetClassName(data) + ""} d={bezier} markerEnd={markerEnd} />
+          <path id={id} style={GetStyle(fromConn)} className={SetClassName(data) + "--dashed"} d={bezier} markerEnd={markerEnd} />
         </>
       )}
     </>

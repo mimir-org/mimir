@@ -11,4 +11,5 @@ export { default as GetNodes } from "./GetNodes";
 
 export { ValidateTransportItem } from "./ValidateItem";
 export { ValidateRelationItem } from "./ValidateItem";
+export { ValidateFulfilledByItem } from "./ValidateItem";
 export { ValidatePartOfItem } from "./ValidateItem";
