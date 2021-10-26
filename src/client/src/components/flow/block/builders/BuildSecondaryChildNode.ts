@@ -15,8 +15,6 @@ const BuildSecondaryChildNode = (node: Node, parent: Node) => {
 
   // Force node to fit Block
   let position = !IsOffPage(node) ? SetBlockNodePos(nodePos, parentPos) : SetOffPageNodePos(nodePos, parentPos);
-  node.isHidden = false;
-  parent.isHidden = false;
 
   return {
     key: CreateId(),

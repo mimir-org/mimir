@@ -166,7 +166,7 @@ export const secondaryNodeSelector = createAppSelector(
   (node) => node
 );
 
-export const mainConnectSelector = createAppSelector(
+export const connectSelector = createAppSelector(
   (state) => state.connectView.mainNodes,
   (mainNodes) => mainNodes
 );

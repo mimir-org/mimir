@@ -13,13 +13,7 @@ import { FilterTerminals, FindAllEdges } from "../../helpers";
 import { Symbol } from "../../../../../compLibrary/symbol";
 import { BlockNodeNameBox } from "../../styled";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
-import {
-  edgeSelector,
-  electroSelector,
-  mainConnectSelector,
-  nodeSelector,
-  secondaryNodeSelector,
-} from "../../../../../redux/store";
+import { edgeSelector, electroSelector, connectSelector, nodeSelector, secondaryNodeSelector } from "../../../../../redux/store";
 
 /**
  * Component for a Function or Product Node in BlockView.
@@ -39,7 +33,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const edges = useAppSelector(edgeSelector);
   const secondaryNode = useAppSelector(secondaryNodeSelector) as Node;
   const electro = useAppSelector(electroSelector);
-  const mainConnectNodes = useAppSelector(mainConnectSelector);
+  const mainConnectNodes = useAppSelector(connectSelector);
 
   const type = IsFunction(data) ? "BlockFunctionNode-" : "BlockProductNode-";
   const node = nodes?.find((x) => x.id === data.id);
@@ -55,7 +49,6 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
 
   useEffect(() => {
     SetConnectNodeColor(mainConnectNode?.id, connectNodes, data);
-    if (connectNodes?.length === undefined) return;
     ResizeConnectNode(connectNodes?.length, mainConnectNode, data);
   }, [mainConnectNode, data, connectNodes, mainConnectNodes]);
 
