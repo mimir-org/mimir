@@ -254,13 +254,17 @@ namespace RdfParserModule
                     terminal.Label = label[0].ToString();
                     terminal.Name = terminal.Label.Replace(" Output", "").Replace(" Input", "");
 
-                    var transmitter = GetObjects(terminal.Id, "rdf:type").First(node => node.ToString().Contains("Transmitter-"));
 
-                    var categoryName = transmitter.ToString().Split("Transmitter-").Last().Split("-").First();
+                    var terminalTypes = GetObjects(terminal.Id, "rdf:type");
+                    if (terminalTypes.Count == 0)
+                    {
+                        var transmitter = terminalTypes.First(node => node.ToString().Contains("Transmitter-"));
+                        var categoryName = transmitter.ToString().Split("Transmitter-").Last().Split("-").First();
 
-                    var (termcatId, termTypeId) = terminal.Name.CreateCategoryIdAndTerminalTypeId(categoryName);
-                    terminal.TerminalCategoryId = termcatId;
-                    terminal.TerminalTypeId = termTypeId;
+                        var (termcatId, termTypeId) = terminal.Name.CreateCategoryIdAndTerminalTypeId(categoryName);
+                        terminal.TerminalCategoryId = termcatId;
+                        terminal.TerminalTypeId = termTypeId;
+                    }
                 }
 
 
