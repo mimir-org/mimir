@@ -1,8 +1,9 @@
+import { IsFamily } from "../../../components/flow/helpers";
 import { Node, LibItem } from "../../../models";
 
-const ValidateLibComponent = (libNode: LibItem, selectedNode: Node, isBlockView: boolean, isSplitView: boolean) => {
+const ValidateLibComponent = (libNode: LibItem, selectedNode: Node, isBlockView: boolean) => {
   if (!isBlockView) return true;
-  return !isSplitView && selectedNode?.aspect === libNode.aspect;
+  return IsFamily(selectedNode, libNode);
 };
 
 export default ValidateLibComponent;

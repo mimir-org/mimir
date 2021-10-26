@@ -4,19 +4,21 @@ import { SearchIcon } from "../../assets/icons/common";
 import { SearchInput } from "../../compLibrary";
 import { LibraryCategoryComponent } from ".";
 import { useState } from "react";
-import { isLegendOpenSelector, useAppSelector } from "../../redux/store";
+import { customCategorySelector, legendOpenSelector, useAppSelector } from "../../redux/store";
 import { LibBody, SearchIconBox } from "../../compLibrary/box/library";
 import { TypeEditorModule } from "../../typeEditor";
 
 interface Props {
   categories: LibraryCategory[];
   search: Function;
+  dispatch: any;
 }
 
-const LibraryComponent = ({ categories, search }: Props) => {
+const LibraryComponent = ({ categories, search, dispatch }: Props) => {
   const [selectedElement, setSelectedElement] = useState("");
   const [selectedElementType, setSelectedElementType] = useState(null);
-  const legendOpen = useAppSelector(isLegendOpenSelector);
+  const legendOpen = useAppSelector(legendOpenSelector);
+  const customCategory = useAppSelector(customCategorySelector);
 
   const onChange = (e: { target: { value: any } }) => search(e.target.value);
 
@@ -40,14 +42,21 @@ const LibraryComponent = ({ categories, search }: Props) => {
               setSelectedElementType={setSelectedElementType}
               key={category.name}
               category={category}
+              customCategory={customCategory}
+              dispatch={dispatch}
             />
           );
         })}
-        <TypeEditorModule
+        <LibraryCategoryComponent
           selectedElement={selectedElement}
-          selectedElementType={selectedElementType}
-          onChange={typeEditorOpen}
+          setSelectedElement={setSelectedElement}
+          setSelectedElementType={setSelectedElementType}
+          key={customCategory.name}
+          category={customCategory}
+          customCategory={customCategory}
+          dispatch={dispatch}
         />
+        <TypeEditorModule selectedElement={selectedElement} selectedElementType={selectedElementType} onChange={typeEditorOpen} />
       </LibBody>
     </>
   );

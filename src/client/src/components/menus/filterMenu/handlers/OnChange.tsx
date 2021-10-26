@@ -1,28 +1,27 @@
-import { Node, Edge, RelationType, Connector } from "../../../../models";
-import { GetConnectorNode, IsChecked, IsEdge } from "../helpers";
-import { changeActiveConnector, setEdgeVisibility } from "../../../../redux/store/project/actions";
+import { Edge } from "../../../../models";
+import { setEdgeVisibility } from "../../../../redux/store/project/actions";
+import { IsFamily, IsLocationTerminal, IsPartOfTerminal, IsTransportTerminal } from "../../../flow/helpers";
+import { GetConnectorNode } from "../helpers";
 
-const OnChange = (
-  edges: Edge[],
-  setChecked: any,
-  dispatch: any,
-  elements: any[],
-  type: RelationType | string,
-  name: string,
-  node: Node,
-  conn: Connector
-) => {
-  if (edges) {
-    setChecked(IsChecked(type, edges, conn, node, name));
-    elements.forEach((element) => {
-      if (IsEdge(element)) {
-        dispatch(setEdgeVisibility(element, !element.isHidden));
-      } else {
-        const connNode = GetConnectorNode(element);
-        dispatch(changeActiveConnector(connNode, element.id, !element.visible, 0));
-      }
-    });
-  }
+const OnChange = (actualEdge: Edge, edges: Edge[], dispatch: any) => {
+  const partOf = IsPartOfTerminal(actualEdge.fromConnector);
+  const location = IsLocationTerminal(actualEdge.fromConnector);
+  const transport = IsTransportTerminal(actualEdge.fromConnector);
+
+  // Find edges to be displayed or hidden
+  edges.forEach((e) => {
+    if (partOf && IsPartOfTerminal(e.fromConnector)) {
+      const source = GetConnectorNode(e.fromConnector);
+      IsFamily(source, actualEdge.fromNode) && dispatch(setEdgeVisibility(e, !e.isHidden));
+    }
+
+    if (transport && IsTransportTerminal(e.fromConnector)) {
+      if (e.fromConnector?.terminalTypeId === actualEdge.fromConnector?.terminalTypeId)
+        dispatch(setEdgeVisibility(e, !e.isHidden));
+    }
+
+    if (location && IsLocationTerminal(e.fromConnector)) dispatch(setEdgeVisibility(e, !e.isHidden));
+  });
 };
 
 export default OnChange;

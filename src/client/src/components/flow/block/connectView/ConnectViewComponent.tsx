@@ -38,10 +38,7 @@ const ConnectViewComponent = ({
   onBlur,
 }: Props) => (
   <>
-    <ConnectViewBox
-      visible={connectBox && children.length > 0}
-      onClick={() => Click.OnConnectMenu(showConnectMenu, visible)}
-    >
+    <ConnectViewBox visible={connectBox && children.length > 0} onClick={() => Click.OnConnectMenu(showConnectMenu, visible)}>
       <img src={IsFunction(node) ? ConnectFunctionMenu : ConnectProductMenu} alt="menu" />
     </ConnectViewBox>
 
@@ -58,17 +55,15 @@ const ConnectViewComponent = ({
               <div className="text" onClick={() => onClick(n)}>
                 {n.label ?? n.name}
               </div>
-              <label className={"checkbox-block"}>
+              <label className={"checkbox-terminals"}>
                 <input type="checkbox" checked={isChecked(n, connectNodes)} onChange={() => onClick(n)} />
-                <span className="checkmark-block"></span>
+                <span className="checkmark-terminals"></span>
               </label>
             </Element>
           );
         })}
         <Element color={IsFunction(node) ? Color.FunctionSelected : Color.ProductSelected}>
-          <Footer onClick={() => Click.OnSelectAll(dispatch, node, children)}>
-            {TextResources.ConnectMenu_Select_All}
-          </Footer>
+          <Footer onClick={() => Click.OnSelectAll(dispatch, node, children)}>{TextResources.ConnectMenu_Select_All}</Footer>
           <Footer onClick={() => Click.OnClearAll(dispatch, node)}>{TextResources.ConnectMenu_Clear}</Footer>
         </Element>
       </Menu>

@@ -151,12 +151,7 @@ export function changeNodeValue(nodeId: string, propName: string, propValue: any
   };
 }
 
-export function changeNodeAttributeValue(
-  id: string,
-  node: Node,
-  value: string,
-  unitId: string
-): Types.ChangeNodeAttributeValue {
+export function changeNodeAttributeValue(id: string, node: Node, value: string, unitId: string): Types.ChangeNodeAttributeValue {
   return {
     type: Types.CHANGE_NODE_ATTRIBUTE_VALUE,
     payload: {
@@ -287,14 +282,21 @@ export function deleteProjectError(key: string) {
   };
 }
 
-export function changeActiveConnector(node: Node, connectorId: string, visible: boolean, order: number) {
+export function changeActiveConnector(
+  nodeId: string,
+  connectorId: string,
+  visible: boolean,
+  inputOrder: number,
+  outputOrder: number
+) {
   return {
     type: Types.CHANGE_ACTIVE_CONNECTOR,
     payload: {
-      node,
+      nodeId,
       connectorId,
       visible,
-      order,
+      inputOrder,
+      outputOrder,
     },
   };
 }
@@ -328,11 +330,7 @@ export function setIsLockedNode(node: Node, project: Project, isLocked: boolean)
   };
 }
 
-export function setIsLockedNodeAttribute(
-  attribute: Attribute,
-  nodeId: string,
-  isLocked: boolean
-): Types.LockUnlockNodeAttribute {
+export function setIsLockedNodeAttribute(attribute: Attribute, nodeId: string, isLocked: boolean): Types.LockUnlockNodeAttribute {
   return {
     type: Types.LOCK_UNLOCK_NODE_ATTRIBUTE,
     payload: {

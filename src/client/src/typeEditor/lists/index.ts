@@ -4,4 +4,6 @@ export { default as TransportInterfaceElement } from "./ListElements/TransportIn
 export { default as PredefinedLocationElement } from "./ListElements/PredefinedLocationElement";
 export { default as SimpleTypeElement } from "./ListElements/SimpleTypeElement";
 export { default as AttributeElement } from "./ListElements/AttributeElement";
+export { default as LocationAttributeElement } from "./ListElements/LocationAttributeElement";
 export { default as AddTerminalComponent } from "./ListElements/AddTerminal/AddTerminalComponent";
+export { default as ListSearch } from "./ListElements/ListSearch";

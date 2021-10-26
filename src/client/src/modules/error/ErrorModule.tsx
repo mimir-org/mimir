@@ -9,13 +9,12 @@ import { deleteCommonError } from "../../redux/store/common/actions";
 import { deleteLibraryError } from "../../redux/store/library/actions";
 import { deleteUserError } from "../../redux/store/user/actions";
 import { deleteTypeEditorError } from "../../typeEditor/redux/actions";
+import { useAppDispatch, useAppSelector } from "../../redux/store/hooks";
 import {
   commonStateSelector,
   librarySelector,
   projectStateSelector,
   typeEditorStateSelector,
-  useAppDispatch,
-  useAppSelector,
   userStateSelector,
 } from "../../redux/store";
 

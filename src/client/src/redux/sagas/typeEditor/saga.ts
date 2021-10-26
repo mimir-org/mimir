@@ -21,11 +21,8 @@ export function* saveType(action) {
     const createLibraryType = action.payload.libraryType as CreateLibraryType;
     let url = "";
 
-    if (createLibraryType.libraryId) {
-      url = process.env.REACT_APP_API_BASE_URL + "librarytype/" + createLibraryType.libraryId;
-    } else {
-      url = process.env.REACT_APP_API_BASE_URL + "librarytype";
-    }
+    if (createLibraryType.libraryId) url = process.env.REACT_APP_API_BASE_URL + "librarytype/" + createLibraryType.libraryId;
+    else url = process.env.REACT_APP_API_BASE_URL + "librarytype";
 
     const response = yield call(post, url, createLibraryType);
 
@@ -201,7 +198,6 @@ export function* getAttributes(action) {
 export function* getLocationTypes(action) {
   try {
     const locationTypesURL = process.env.REACT_APP_API_BASE_URL + "enum/location-types";
-
     const locationTypesResponse = yield call(get, locationTypesURL);
 
     const payload = {
@@ -227,7 +223,6 @@ export function* getLocationTypes(action) {
 export function* getPredefinedAttributes(action) {
   try {
     const predefinedAttributesURL = process.env.REACT_APP_API_BASE_URL + "attributetype/predefined-attributes";
-
     const predefinedAttributesResponse = yield call(get, predefinedAttributesURL);
 
     const payload = {
@@ -309,11 +304,7 @@ export function* getblobData() {
 export function* getSelectedNode(action) {
   try {
     const selectedNodeURL =
-      process.env.REACT_APP_API_BASE_URL +
-      "librarytype/" +
-      action.payload.selectedType +
-      "/" +
-      action.payload.filter;
+      process.env.REACT_APP_API_BASE_URL + "librarytype/" + action.payload.selectedType + "/" + action.payload.filter;
 
     const selectedNodeResponse = yield call(get, selectedNodeURL);
     const createLibraryType = selectedNodeResponse.data as CreateLibraryType;
@@ -342,7 +333,6 @@ export function* getSelectedNode(action) {
 export function* getSimpleTypes(action) {
   try {
     const simpleTypeslURL = process.env.REACT_APP_API_BASE_URL + "librarytype/compositetype";
-
     const simpleTypesURLResponse = yield call(get, simpleTypeslURL);
 
     const payload = {

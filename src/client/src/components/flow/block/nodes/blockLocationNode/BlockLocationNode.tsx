@@ -1,20 +1,15 @@
 import { memo, FC, useState, useEffect } from "react";
-import { NodeProps } from "react-flow-renderer";
+import { NodeProps, useUpdateNodeInternals } from "react-flow-renderer";
 import { NodeBox } from "../../../styled";
 import { BlockNodeNameBox } from "../../styled";
 import { HandleComponent, TerminalsContainerComponent } from "../../terminals";
+import { Node } from "../../../../../models";
 import { OnHover, OnMouseOut, OnConnectorClick } from "./handlers";
 import { FilterTerminals, GetNodeByDataId } from "../../helpers";
 import { Symbol } from "../../../../../compLibrary/symbol";
 import { Size } from "../../../../../compLibrary";
-import {
-  isElectroVisibleSelector,
-  nodeSelector,
-  splitViewNodeSelector,
-  splitViewSelector,
-  useAppDispatch,
-  useAppSelector,
-} from "../../../../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
+import { electroSelector, nodeSelector, secondaryNodeSelector } from "../../../../../redux/store";
 
 /**
  * Component for a Location Node in BlockView.
@@ -26,10 +21,12 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const [terminalButton, showTerminalButton] = useState(false);
   const [inTerminalMenu, showInTerminalMenu] = useState(false);
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
+  const updateNodeInternals = useUpdateNodeInternals();
   const nodes = useAppSelector(nodeSelector);
-  const splitView = useAppSelector(splitViewSelector);
-  const splitNode = useAppSelector(splitViewNodeSelector);
-  const electro = useAppSelector(isElectroVisibleSelector);
+  const secondaryNode = useAppSelector(secondaryNodeSelector) as Node;
+  const electro = useAppSelector(electroSelector);
+  const node = nodes.find((x) => x.id === data?.id);
+  const terminals = FilterTerminals(data, secondaryNode);
   if (data) data.width = Size.Node_Width;
 
   // Enforce size change of node
@@ -40,6 +37,11 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
       locationNode.style.height = `${data.length}px`;
     }
   }, [data]);
+
+  useEffect(() => {
+    updateNodeInternals(node?.id);
+    updateNodeInternals(secondaryNode?.id);
+  }, [node, secondaryNode, updateNodeInternals]);
 
   return (
     <>
@@ -58,9 +60,9 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
           node={data}
           inputMenuOpen={inTerminalMenu}
           outputMenuOpen={outTerminalMenu}
-          terminals={FilterTerminals(data, splitView, splitNode)}
+          terminals={terminals}
           parent={false}
-          splitView={splitView}
+          electro={electro}
           onClick={(conn) => OnConnectorClick(conn, data, dispatch)}
           menuBox={terminalButton}
           mainConnectNode={false}
@@ -74,9 +76,8 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
         nodes={nodes}
         length={data?.length}
         width={data?.width}
-        terminals={FilterTerminals(data, splitView, splitNode)}
+        terminals={terminals}
         parent={false}
-        splitView={splitView}
         electro={electro}
         mainConnectNode={false}
       />

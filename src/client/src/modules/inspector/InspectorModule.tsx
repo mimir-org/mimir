@@ -1,14 +1,4 @@
 import { useEffect } from "react";
-import {
-  isAnimatedModuleSelector,
-  isExplorerOpenSelector,
-  isInspectorOpenSelector,
-  isLibOpenSelector,
-  projectSelector,
-  useAppDispatch,
-  useAppSelector,
-  useParametricAppSelector,
-} from "../../redux/store";
 import { Size } from "../../compLibrary";
 import { MODULE_TYPE } from "../../models/project";
 import { IsBlockView } from "../../components/flow/block/helpers";
@@ -17,6 +7,8 @@ import { AnimatedInspector, ResizePanel } from "./styled";
 import { InspectorHeader } from ".";
 import { GetSelectedNode } from "../../components/flow/helpers";
 import { InspectorElement } from "./types";
+import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store/hooks";
+import { animatedModuleSelector, explorerSelector, inspectorSelector, libOpenSelector, projectSelector } from "../../redux/store";
 
 /**
  * Component for the Inspector Module that shows the data for each object in Flow.
@@ -26,10 +18,10 @@ const InspectorModule = () => {
   const dispatch = useAppDispatch();
   const type = MODULE_TYPE.INSPECTOR;
   const project = useAppSelector(projectSelector);
-  const animate = useParametricAppSelector(isAnimatedModuleSelector, type);
-  const inspectorOpen = useAppSelector(isInspectorOpenSelector);
-  const libOpen = useAppSelector(isLibOpenSelector);
-  const explorerOpen = useAppSelector(isExplorerOpenSelector);
+  const animate = useParametricAppSelector(animatedModuleSelector, type);
+  const inspectorOpen = useAppSelector(inspectorSelector);
+  const libOpen = useAppSelector(libOpenSelector);
+  const explorerOpen = useAppSelector(explorerSelector);
 
   const stop = inspectorOpen ? Size.ModuleOpen : Size.ModuleClosed;
   const start = inspectorOpen ? Size.ModuleClosed : Size.ModuleOpen;

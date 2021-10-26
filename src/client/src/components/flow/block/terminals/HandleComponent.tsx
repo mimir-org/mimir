@@ -9,11 +9,10 @@ import { ConnectorIcon } from "../../../../assets/icons/connectors";
 interface Props {
   node: Node;
   nodes: Node[];
-  width: number;
   length: number;
+  width: number;
   terminals: Connector[];
   parent: boolean;
-  splitView: boolean;
   electro: boolean;
   mainConnectNode: boolean;
 }
@@ -22,50 +21,34 @@ interface Props {
  * @param interface
  * @returns a Mimir terminal in form of a Flow Handle element with an icon on top.
  */
-const HandleComponent = ({
-  node,
-  nodes,
-  length,
-  width,
-  terminals,
-  parent,
-  splitView,
-  electro,
-  mainConnectNode,
-}: Props) => {
-  const className = "react-flow__handle-block";
-  let inputs = 0;
-  let outputs = 0;
+const HandleComponent = ({ node, nodes, length, width, terminals, parent, electro, mainConnectNode }: Props) => (
+  <>
+    {terminals.map((conn) => {
+      const [type, pos] = GetBlockHandleType(conn, node?.isSelected, false, electro);
+      const order = IsInputTerminal(conn) ? conn.inputOrder : conn.outputOrder;
 
-  return (
-    <div key={CreateId()}>
-      {terminals.map((conn) => {
-        const [type, pos] = GetBlockHandleType(conn, node?.isSelected, splitView, electro);
-        IsInputTerminal(conn) ? inputs++ : outputs++;
-
-        return (
+      return (
+        <div key={CreateId()}>
           <HandleBox
             visible={conn.visible}
             id={"handle-" + conn.id}
-            key={"key-" + conn.id}
-            top={SetTopPos(pos, electro, parent, inputs, outputs, length, mainConnectNode)}
-            left={SetLeftPos(pos, electro, parent, inputs, outputs, splitView, width, mainConnectNode)}
+            top={SetTopPos(pos, electro, parent, order, length, mainConnectNode)}
+            left={SetLeftPos(pos, electro, parent, order, width, mainConnectNode)}
           >
-            <ConnectorIcon style={{ fill: GetTerminalColor(conn) }} className={className} />
+            <ConnectorIcon style={{ fill: GetTerminalColor(conn) }} className={"react-flow__handle-block"} />
             <Handle
-              key={CreateId()}
               type={type}
-              style={electro ? { marginLeft: "7px" } : { marginRight: "7px", marginTop: "7px" }}
+              style={electro ? { marginLeft: "7px" } : { marginTop: "7px" }}
               position={pos}
               id={conn.id}
-              className={className}
+              className={"react-flow__handle-block"}
               isValidConnection={(connection) => IsValidConnection(connection, nodes, terminals)}
             />
           </HandleBox>
-        );
-      })}
-    </div>
-  );
-};
+        </div>
+      );
+    })}
+  </>
+);
 
 export default HandleComponent;

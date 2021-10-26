@@ -58,12 +58,6 @@ export const VIEW_TYPE = {
   TYPE_EDITOR: "type-editor",
 };
 
-export type SplitViewPosition = keyof typeof SPLITVIEW_POSITION;
-export const SPLITVIEW_POSITION = {
-  RIGHT: "right",
-  LEFT: "left",
-};
-
 export interface LibraryCategory {
   name: string;
   nodes: LibItem[];
