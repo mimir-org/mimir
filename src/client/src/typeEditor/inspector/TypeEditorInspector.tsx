@@ -1,4 +1,4 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { Action, Dispatch } from "redux";
 import { Size } from "../../compLibrary";
 import { CreateLibraryType } from "../../models";
@@ -41,15 +41,11 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
     createLibraryType.attributeTypes
   );
 
-  const initialRender = useRef(false);
+  const initialRenderCompleted = useRef(false);
 
-  const isInitialRender = () => {
-    if (!initialRender.current) {
-      initialRender.current = true;
-      return true;
-    }
-    return false;
-  };
+  useEffect(() => {
+    initialRenderCompleted.current = true;
+  }, []);
 
   const inspectorRef = useRef(null);
   const resizePanelRef = useRef(null);
@@ -91,7 +87,7 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
       isTypeEditor={true}
       start={start}
       stop={stop}
-      run={isInitialRender() ? false : animate}
+      run={initialRenderCompleted.current ? animate : false}
       zIndex={110}
       forwardRef={inspectorRef}
     >
