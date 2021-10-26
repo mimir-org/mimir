@@ -19,13 +19,20 @@ const NumericValueInput = ({ value, onChange }: Props) => {
   const handleChange = (e: any) => {
     var num = parseInt(e.target.value) || 0;
     setQuantity(num.toString());
-    onChange(num);
   };
 
   return (
     <NumericInput>
       <label className={"quantity"}>
-        <input type="number" min="0" max="30" placeholder="0" onChange={handleChange} value={quantity} />
+        <input
+          type="number"
+          min="0"
+          max="30"
+          placeholder="0"
+          onChange={handleChange}
+          onBlur={() => onChange(quantity)}
+          value={quantity}
+        />
         <span className="number"></span>
       </label>
     </NumericInput>
