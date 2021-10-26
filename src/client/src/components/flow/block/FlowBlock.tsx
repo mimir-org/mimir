@@ -12,7 +12,7 @@ import { BlockFilterMenu } from "../../menus/filterMenu/block";
 import { Node } from "../../../models";
 import { IsDirectChild } from "../../../components/flow/block/helpers";
 import { IsFamily } from "../../../components/flow/helpers";
-
+import { ExplorerModule } from "../../../modules/explorer";
 import {
   darkModeSelector,
   iconSelector,
@@ -24,7 +24,6 @@ import {
   userStateSelector,
   blockFilterSelector,
 } from "../../../redux/store";
-import { ExplorerModule } from "../../../modules/explorer";
 
 /**
  * Component for the Flow library in BlockView

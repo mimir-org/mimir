@@ -26,9 +26,9 @@ const TerminalsMenuComponent = ({ node, parent, input, terminals, visible, onCli
       <TerminalsMenu
         id={"terminals-menu-" + node.id}
         tabIndex={0}
-        onBlur={onBlur}
         parent={parent}
         input={input}
+        onBlur={onBlur}
         color={GetMenuColor(node)}
         xPos={SetMenuXPos(parent, electro, hasActiveTerminals, node?.width)}
       >
@@ -38,9 +38,9 @@ const TerminalsMenuComponent = ({ node, parent, input, terminals, visible, onCli
             <div className="text" onClick={() => onClick(conn)}>
               {conn.name}
             </div>
-            <label className={"checkbox-terminals"}>
+            <label className={"checkbox-block"}>
               <input type="checkbox" checked={conn.visible} onChange={() => onClick(conn)} />
-              <span className="checkmark-terminals"></span>
+              <span className="checkmark-block"></span>
             </label>
           </TerminalsElement>
         ))}

@@ -18,6 +18,7 @@ import { FlowManipulator } from "./FlowManipulator";
 import { OnTreeClick } from "./handlers/";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { TreeFilterMenu } from "../../menus/filterMenu/tree";
+import { ExplorerModule } from "../../../modules/explorer";
 import {
   darkModeSelector,
   iconSelector,
@@ -123,6 +124,7 @@ const FlowTree = () => {
             <FullScreenComponent />
             <FlowManipulator elements={elements} selectedId={selectedNodeId} />
           </ReactFlow>
+          <ExplorerModule elements={elements} />
           {treeFilter && <TreeFilterMenu elements={elements} />}
         </ReactFlowProvider>
       )}

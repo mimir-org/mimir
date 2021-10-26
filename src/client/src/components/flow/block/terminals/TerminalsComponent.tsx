@@ -43,7 +43,7 @@ const TerminalsContainerComponent = ({
   return (
     <>
       <TerminalsBox
-        visible={menuBox && !IsAspectNode(node) && inTerminals.length > 0}
+        visible={menuBox && !IsAspectNode(node) && outTerminals.length > 0}
         parent={parent || mainConnectNode}
         input={true}
         mainConnectNode={mainConnectNode}
