@@ -41,6 +41,16 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
     createLibraryType.attributeTypes
   );
 
+  const initialRender = useRef(false);
+
+  const isInitialRender = () => {
+    if (!initialRender.current) {
+      initialRender.current = true;
+      return true;
+    }
+    return false;
+  };
+
   const inspectorRef = useRef(null);
   const resizePanelRef = useRef(null);
 
@@ -81,7 +91,7 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
       isTypeEditor={true}
       start={start}
       stop={stop}
-      run={animate}
+      run={isInitialRender() ? false : animate}
       zIndex={110}
       forwardRef={inspectorRef}
     >

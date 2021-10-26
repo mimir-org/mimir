@@ -169,17 +169,15 @@ export const TypeEditorComponent = () => {
                 </SaveButton>
               </TypePreviewColumn>
             </ChooseProperties>
-            {!!(
-              state.createLibraryType.aspect &&
-              (state.createLibraryType.objectType || state.createLibraryType.locationType)
-            ) && (
-              <TypeEditorInspectorWrapper>
+
+            <TypeEditorInspectorWrapper>
+              {!!state.createLibraryType.aspect && (
                 <TypeEditorInspector
                   createLibraryType={state.createLibraryType}
                   typeEditorPropertiesRef={typeEditorPropertiesRef}
                 />
-              </TypeEditorInspectorWrapper>
-            )}
+              )}
+            </TypeEditorInspectorWrapper>
           </TypeEditorContent>
         </TypeEditorWrapper>
       )}

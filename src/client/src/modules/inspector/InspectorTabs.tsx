@@ -15,6 +15,7 @@ interface Props {
 }
 
 const InspectorTabs = ({ project, element, attributeLikeItems, terminalLikeItems }: Props) => {
+  const shouldShowAdmin = !IsCreateLibraryType(element) || !!element.objectType;
   const shouldShowParameters =
     IsNode(element) ||
     (IsCreateLibraryType(element) && element.purpose) ||
@@ -30,7 +31,7 @@ const InspectorTabs = ({ project, element, attributeLikeItems, terminalLikeItems
     <>
       {element && (
         <>
-          <AdminComponent element={element} project={project} index={0} />
+          {shouldShowAdmin && <AdminComponent element={element} project={project} index={0} />}
           {shouldShowParameters && (
             <InspectorComponent element={element} index={1} attributeLikeItems={attributeLikeItems} />
           )}
