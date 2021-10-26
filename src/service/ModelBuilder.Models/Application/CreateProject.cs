@@ -9,9 +9,5 @@ namespace Mb.Models.Application
 
         [Required]
         public string Description { get; set; }
-
-        [Required]
-        [RegularExpression(@"^(?=.*[1-9])\d+(\.[0-9]?)?$", ErrorMessage = "The version format must be at x.y")]
-        public string Version { get; set; }
     }
 }
