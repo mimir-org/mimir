@@ -2,7 +2,7 @@ import { removeMainNodes } from "../../../components/flow/block/connectView/redu
 import { Node } from "../../../models";
 import { setSplitParentNode } from "../../../redux/store/splitView/actions";
 import { IsConnectView } from "../../../components/flow/block/connectView/helpers";
-import { IsFunction, IsProduct, IsLocation } from "../../../components/flow/helpers";
+import { IsFunction, IsProduct, IsLocation, IsFamily } from "../../../components/flow/helpers";
 import { setActiveNode, setActiveBlockNode, setActiveEdge } from "../../../redux/store/project/actions";
 
 /**
@@ -26,11 +26,11 @@ const OnCheckboxChange = (dispatch: any, splitView: boolean, node: Node, selecte
 
   // In SplitView two boxes can be checked, one for ActiveNode(left) and one for SplitViewParent(right)
   if (node === selectedNode) dispatch(setActiveNode(node.id, true));
-  if (node !== selectedNode && node.aspect === selectedNode.aspect) dispatch(setActiveNode(node.id, true));
+  if (node !== selectedNode && IsFamily(node, selectedNode)) dispatch(setActiveNode(node.id, true));
 
-  if (node !== selectedNode && node.aspect !== selectedNode.aspect) {
-    if (!IsLocation(splitViewNode)) {
-      if (IsLocation(node)) {
+  if (node !== selectedNode && !IsFamily(node, selectedNode)) {
+    if (!IsLocation(splitViewNode) || !IsProduct(splitViewNode)) {
+      if (IsLocation(node) || IsProduct(node)) {
         setTimeout(() => {
           window.location.reload(); // Reload required because of Flow displaying wrong position for terminals
         }, 100);

@@ -1,7 +1,7 @@
 import * as Click from "./handlers";
 import { TerminalsMenuComponent } from ".";
 import { Connector, Node } from "../../../../models";
-import { GetMenuIcon } from "./helpers";
+import { GetMenuIcon, ShowTerminalsInputBox } from "./helpers";
 import { TerminalsBox } from "./styled";
 import { IsAspectNode, IsInputTerminal } from "../../helpers";
 
@@ -45,7 +45,7 @@ const TerminalsComponent = ({
   return (
     <>
       <TerminalsBox
-        visible={menuBox && !IsAspectNode(node) && inTerminals.length > 0}
+        visible={ShowTerminalsInputBox(splitView, menuBox, node, inTerminals)}
         parent={parent || mainConnectNode}
         input={true}
         mainConnectNode={mainConnectNode}
