@@ -10,8 +10,6 @@ import { EDGE_TYPE, EdgeType } from "../../../models/project";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { BlockFilterMenu } from "../../menus/filterMenu/block";
 import { Node } from "../../../models";
-import { IsDirectChild } from "../../../components/flow/block/helpers";
-import { IsFamily } from "../../../components/flow/helpers";
 import { ExplorerModule } from "../../../modules/explorer";
 import {
   darkModeSelector,
@@ -89,18 +87,6 @@ const FlowBlock = () => {
     SetDarkModeColor(darkMode);
     OnLoad(flowInstance);
   }, [OnLoad, flowInstance, darkMode, electro]);
-
-  // Hide unselected nodes on first render
-  useEffect(() => {
-    project?.nodes.forEach((n) => {
-      n.isHidden = true;
-    });
-
-    project?.nodes.forEach((n) => {
-      if (n?.id === node?.id) n.isHidden = false;
-      if (IsDirectChild(n, node) && IsFamily(n, node)) n.isHidden = false;
-    });
-  }, []);
 
   return (
     <>
