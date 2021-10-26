@@ -67,7 +67,7 @@ const LibraryCategoryComponent = ({
                 )}
               </LibElementIcon>
               <LibElementClose
-                visible={category.name === "Favorites"}
+                visible={customCategory.nodes.includes(node)}
                 onClick={() => OnCloseElementClick(dispatch, node)}
               >
                 <img src={CloseIcon} alt="close" />
