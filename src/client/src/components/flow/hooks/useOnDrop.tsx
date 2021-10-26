@@ -96,7 +96,6 @@ const useOnDrop = (
       const partofEdge = ConvertToEdge(CreateId(), sourceConn, targetConn, sourceNode, targetNode, project.id, library);
 
       SetSiblingIndexOnNodeDrop(targetNode, project, sourceNode);
-
       dispatch(createEdge(partofEdge));
 
       const edgeType = GetEdgeType(sourceConn);
@@ -104,6 +103,7 @@ const useOnDrop = (
     }
 
     dispatch(addNode(targetNode));
+
     if (!IsBlockView()) dispatch(setActiveNode(targetNode.id, true));
   }
 };

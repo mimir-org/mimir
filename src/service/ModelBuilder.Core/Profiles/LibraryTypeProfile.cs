@@ -186,7 +186,7 @@ namespace Mb.Core.Profiles
                 CreateRelationConnector(RelationType.PartOf, ConnectorType.Output, "Part of Relationship"),
                 CreateRelationConnector(RelationType.HasLocation, ConnectorType.Input, "Has Location"),
                 CreateRelationConnector(RelationType.HasLocation, ConnectorType.Output, "Has Location"),
-                CreateRelationConnector(RelationType.FulfilledBy, ConnectorType.Output, "Fulfilled By"),
+                CreateRelationConnector(RelationType.FulfilledBy, ConnectorType.Input, "Fulfilled By"),
                 CreateRelationConnector(RelationType.FulfilledBy, ConnectorType.Output, "Fulfilled By")
             };
 

@@ -2,12 +2,7 @@ import { Node, Connector } from "../../../models";
 import { GetAspectPartColor } from "../../../assets/helpers";
 import { TextResources } from "../../../assets/text";
 import { Color } from "../../../compLibrary";
-import {
-  IsFulfilledByTerminal,
-  IsLocationTerminal,
-  IsPartOfTerminal,
-  IsTransportTerminal,
-} from "../../../components/flow/helpers";
+import { IsProductTerminal, IsLocationTerminal, IsPartOfTerminal, IsTransportTerminal } from "../../../components/flow/helpers";
 
 const GetLegendInfo = (conn: Connector, node: Node) => {
   let color = "";
@@ -31,7 +26,7 @@ const GetLegendInfo = (conn: Connector, node: Node) => {
     return [name, color];
   }
 
-  if (IsFulfilledByTerminal(conn)) {
+  if (IsProductTerminal(conn)) {
     name = conn.name;
     color = GetAspectPartColor(node.aspect);
     return [name, color];

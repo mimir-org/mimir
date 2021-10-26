@@ -10,6 +10,7 @@ import { EDGE_TYPE, EdgeType } from "../../../models/project";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { BlockFilterMenu } from "../../menus/filterMenu/block";
 import { Node } from "../../../models";
+import { ExplorerModule } from "../../../modules/explorer";
 import {
   darkModeSelector,
   iconSelector,
@@ -115,6 +116,8 @@ const FlowBlock = () => {
             >
               <FullScreenComponent />
             </ReactFlow>
+
+            <ExplorerModule elements={elements} />
             {blockFilter && <BlockFilterMenu elements={elements} />}
           </div>
         </ReactFlowProvider>

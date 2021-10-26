@@ -2,7 +2,6 @@ import { accountMenuSelector } from "../../redux/store";
 import { useAppDispatch, useAppSelector } from "../../redux/store/hooks";
 import { useEffect } from "react";
 import { useParams } from "react-router";
-import { ExplorerModule } from "../../modules/explorer";
 import { InspectorModule } from "../../modules/inspector";
 import { LibraryModule } from "../../modules/library";
 import { AccountMenu } from "../menus/accountMenu";
@@ -39,7 +38,6 @@ const Home = () => {
 
   return (
     <>
-      <ExplorerModule />
       {accountMenuOpen && <AccountMenu />}
       <FlowModule route={params} dispatch={dispatch} />
       <InspectorModule />

@@ -24,21 +24,23 @@
 }
 
 .react-flow__node-AspectLocation {
+  &:hover,
   &.selected {
-    border: 3px solid #a300a7 !important;
+    border: 3px solid #a300a7;
   }
 }
 
 .react-flow__node-AspectFunction {
-  border: 3px solid #fbc913 !important;
+  &:hover,
   &.selected {
-    border: 3px solid #fbc913 !important;
+    border: 3px solid #fbc913;
   }
 }
 
 .react-flow__node-AspectProduct {
+  &:hover,
   &.selected {
-    border: 3px solid #069098 !important;
+    border: 3px solid #069098;
   }
 }
 
@@ -113,7 +115,7 @@
 .react-flow__node-BlockParentNode {
   border-radius: 10px;
   width: 950px;
-  height: 600px;
+  height: 800px;
   box-shadow: 0 5px 5px 0px rgba(0, 0, 0, 0.2);
   z-index: 1 !important;
 }

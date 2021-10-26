@@ -1,7 +1,7 @@
 import { Connector } from "../../../../models";
 import { HandleType, Position } from "react-flow-renderer";
 import {
-  IsFulfilledByTerminal,
+  IsProductTerminal,
   IsInputTerminal,
   IsOutputTerminal,
   IsLocationTerminal,
@@ -17,12 +17,7 @@ import {
  * @param electro
  * @returns a tuple with position and type.
  */
-const GetBlockHandleType = (
-  conn: Connector,
-  selected: boolean,
-  splitView: boolean,
-  electro: boolean
-): [HandleType, Position] => {
+const GetBlockHandleType = (conn: Connector, selected: boolean, splitView: boolean, electro: boolean): [HandleType, Position] => {
   // TODO: Refactor
 
   if (electro) {
@@ -32,7 +27,7 @@ const GetBlockHandleType = (
         if (IsOutputTerminal(conn)) return ["source", Position.Bottom];
       }
     }
-    if (IsOutputTerminal(conn) && (IsLocationTerminal(conn) || IsFulfilledByTerminal(conn) || IsPartOfTerminal(conn))) {
+    if (IsOutputTerminal(conn) && (IsLocationTerminal(conn) || IsProductTerminal(conn) || IsPartOfTerminal(conn))) {
       return ["source", Position.Bottom];
     }
 
@@ -40,7 +35,7 @@ const GetBlockHandleType = (
       return ["source", Position.Bottom];
     }
 
-    if (IsInputTerminal(conn) && (IsLocationTerminal(conn) || IsFulfilledByTerminal(conn) || IsPartOfTerminal(conn))) {
+    if (IsInputTerminal(conn) && (IsLocationTerminal(conn) || IsProductTerminal(conn) || IsPartOfTerminal(conn))) {
       return ["target", Position.Top];
     }
 
@@ -57,7 +52,7 @@ const GetBlockHandleType = (
         if (IsOutputTerminal(conn)) return ["target", Position.Right];
       }
     }
-    if (IsOutputTerminal(conn) && (IsLocationTerminal(conn) || IsFulfilledByTerminal(conn) || IsPartOfTerminal(conn))) {
+    if (IsOutputTerminal(conn) && (IsLocationTerminal(conn) || IsProductTerminal(conn) || IsPartOfTerminal(conn))) {
       return ["source", Position.Right];
     }
 
@@ -65,7 +60,7 @@ const GetBlockHandleType = (
       return ["source", Position.Right];
     }
 
-    if (IsInputTerminal(conn) && (IsLocationTerminal(conn) || IsFulfilledByTerminal(conn) || IsPartOfTerminal(conn))) {
+    if (IsInputTerminal(conn) && (IsLocationTerminal(conn) || IsProductTerminal(conn) || IsPartOfTerminal(conn))) {
       return ["target", Position.Left];
     }
 

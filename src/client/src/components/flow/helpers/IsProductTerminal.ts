@@ -1,7 +1,7 @@
 import { Connector, RelationType } from "../../../models";
 
-const IsFulfilledByTerminal = (conn: Connector) => {
+const IsProductTerminal = (conn: Connector) => {
   return conn?.relationType === RelationType.FulfilledBy;
 };
 
-export default IsFulfilledByTerminal;
+export default IsProductTerminal;
