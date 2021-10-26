@@ -16,7 +16,7 @@ import {
   iconSelector,
   electroSelector,
   librarySelector,
-  mainConnectSelector,
+  connectSelector,
   projectSelector,
   secondaryNodeSelector,
   userStateSelector,
@@ -35,7 +35,7 @@ const FlowBlock = () => {
   const darkMode = useAppSelector(darkModeSelector);
   const project = useAppSelector(projectSelector);
   const secondaryNode = useAppSelector(secondaryNodeSelector) as Node;
-  const mainConnectNodes = useAppSelector(mainConnectSelector);
+  const mainConnectNodes = useAppSelector(connectSelector);
   const icons = useAppSelector(iconSelector);
   const lib = useAppSelector(librarySelector);
   const electro = useAppSelector(electroSelector);

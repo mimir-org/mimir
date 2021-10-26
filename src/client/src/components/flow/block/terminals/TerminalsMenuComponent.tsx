@@ -1,6 +1,6 @@
 import { Connector, Node } from "../../../../models";
 import { GetMenuColor, GetTerminalColor, SetMenuXPos } from "./helpers";
-import { TerminalsMenu, TerminalsElement, ColorBar } from "./styled";
+import { TerminalsMenu, TerminalsElement, ColorBar, CheckboxWrapper } from "./styled";
 
 interface Props {
   node: Node;
@@ -38,10 +38,10 @@ const TerminalsMenuComponent = ({ node, parent, input, terminals, visible, onCli
             <div className="text" onClick={() => onClick(conn)}>
               {conn.name}
             </div>
-            <label className={"checkbox-block"}>
+            <CheckboxWrapper>
               <input type="checkbox" checked={conn.visible} onChange={() => onClick(conn)} />
-              <span className="checkmark-block"></span>
-            </label>
+              <div className="checkmark"></div>
+            </CheckboxWrapper>
           </TerminalsElement>
         ))}
       </TerminalsMenu>
