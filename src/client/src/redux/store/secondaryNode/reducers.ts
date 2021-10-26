@@ -17,5 +17,6 @@ export function secondaryReducer(state = initialState, action: SecondaryActionTy
       ...state,
       node: null,
     };
-  } else return state;
+  }
+  return state;
 }

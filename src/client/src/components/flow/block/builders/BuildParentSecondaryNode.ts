@@ -27,7 +27,7 @@ const BuildParentSecondaryNode = (primaryNode: Node, secondaryNode: Node) => {
     type: type,
     data: secondaryNode,
     position: position,
-    isHidden: secondaryNode.isHidden,
+    isHidden: false,
     isSelected: secondaryNode.isSelected,
     draggable: true,
     selectable: true,

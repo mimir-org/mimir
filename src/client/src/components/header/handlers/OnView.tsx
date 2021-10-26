@@ -9,8 +9,8 @@ const OnView = (view: ViewType, dispatch: any, push) => {
   // BlockView can only be opened when a node is selected
   if (view === VIEW_TYPE.BLOCKVIEW && !selectedNode) return;
 
-  dispatch(changeFlowView(view));
   dispatch(removeSecondaryNode());
+  dispatch(changeFlowView(view));
 
   push(`/home/${view}`);
 };

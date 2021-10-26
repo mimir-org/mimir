@@ -207,6 +207,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
       }
 
       if (isParent) {
+        console.log("parent", node);
         let elements: (Node | Edge)[] = [];
         elements.push(node);
 
@@ -216,7 +217,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           ...state,
           project: {
             ...state.project,
-            nodes: state.project.nodes.map((x) => (elements.includes(x) ? { ...x, isHidden: isHidden } : x)),
+            nodes: nodeList.map((x) => (elements.includes(x) ? { ...x, isHidden: isHidden } : x)),
             edges: edgeList.map((edge) =>
               elements.includes(edge) || edge.toNode === node ? { ...edge, isHidden: isHidden } : edge
             ),
@@ -228,23 +229,21 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         ...state,
         project: {
           ...state.project,
-          nodes: state.project.nodes.map((x) => (x.id === action.payload.node.id ? { ...x, isHidden: isHidden } : x)),
-          edges: edgeList.map((edge) =>
-            edge.fromNodeId === node.id || edge.toNodeId === node.id ? { ...edge, isHidden: isHidden } : edge
-          ),
+          nodes: nodeList.map((n) => (n.id === node.id ? { ...n, isHidden: isHidden } : n)),
+          edges: edgeList.map((e) => (e.fromNodeId === node.id || e.toNodeId === node.id ? { ...e, isHidden: isHidden } : e)),
         },
       };
     }
 
     case Types.SET_ACTIVE_NODE: {
       const nodeId = action.payload.nodeId;
+      const allNodes = state.project.nodes;
+      const active = action.payload.isActive;
       return {
         ...state,
         project: {
           ...state.project,
-          nodes: state.project.nodes.map((x) =>
-            x.id === nodeId ? { ...x, isSelected: action.payload.isActive } : { ...x, isSelected: false }
-          ),
+          nodes: allNodes.map((x) => (x.id === nodeId ? { ...x, isSelected: active } : { ...x, isSelected: false })),
           edges: state.project.edges,
         },
       };
@@ -252,26 +251,26 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
 
     case Types.SET_ACTIVE_EDGE: {
       const edgeId = action.payload.edgeId;
+      const edges = state.project.edges;
+      const active = action.payload.isActive;
       return {
         ...state,
         project: {
           ...state.project,
-          edges: state.project.edges.map((edge) =>
-            edge.id === edgeId ? { ...edge, isSelected: action.payload.isActive } : { ...edge, isSelected: false }
-          ),
+          edges: edges.map((edge) => (edge.id === edgeId ? { ...edge, isSelected: active } : { ...edge, isSelected: false })),
         },
       };
     }
 
     case Types.SET_ACTIVE_BLOCKNODE:
       const blockId = action.payload.nodeId;
+      const nodes = state.project.nodes;
+
       return {
         ...state,
         project: {
           ...state.project,
-          nodes: state.project.nodes.map((x) =>
-            x.id === blockId ? { ...x, isBlockSelected: true } : { ...x, isBlockSelected: false }
-          ),
+          nodes: nodes.map((x) => (x.id === blockId ? { ...x, isBlockSelected: true } : { ...x, isBlockSelected: false })),
           edges: state.project.edges,
         },
       };

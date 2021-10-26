@@ -14,7 +14,8 @@ const Block = styled.div<Props>`
   border-radius: 10px;
   border: 2px solid;
   border-color: ${Color.DarkGrey};
-  background-color: ${Color.White};
+  /* background-color: ${Color.White}; */
+  background-color: transparent;
   width: ${Size.BlockView_Width - 4}px;
 `;
 
