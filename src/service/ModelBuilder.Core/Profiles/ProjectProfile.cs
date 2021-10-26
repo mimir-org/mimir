@@ -15,6 +15,7 @@ namespace Mb.Core.Profiles
             CreateMap<Project, ProjectSimple>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
                 .ForMember(dest => dest.ProjectOwner, opt => opt.MapFrom(src => src.ProjectOwner))
                 .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => src.UpdatedBy))
@@ -22,7 +23,7 @@ namespace Mb.Core.Profiles
 
             CreateMap<ProjectAm, Project>()
                 .ForMember(dest => dest.Id, opt => opt.UseDestinationValue())
-                .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
+                .ForMember(dest => dest.Version, opt => opt.Ignore())
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.IsSubProject, opt => opt.MapFrom(src => src.IsSubProject))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))

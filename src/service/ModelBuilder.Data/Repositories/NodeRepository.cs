@@ -5,6 +5,7 @@ using Mb.Data.Contracts;
 using Mb.Models.Abstract;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
+using Mb.Models.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
@@ -28,13 +29,13 @@ namespace Mb.Data.Repositories
             if (project?.Nodes == null || !project.Nodes.Any())
                 yield break;
 
-            var updates = original != null
+            var newNodes = original != null
                 ? project.Nodes.Where(x => original.All(y => y.Id != x.Id)).ToList()
                 : new List<Node>();
 
             foreach (var node in project.Nodes)
             {
-                if (updates.Any(x => x.Id == node.Id))
+                if (newNodes.Any(x => x.Id == node.Id))
                 {
                     if (node.MasterProjectId != project.Id)
                     {
@@ -52,6 +53,7 @@ namespace Mb.Data.Repositories
                         }
                     }
 
+                    node.Version = "1.0";
                     _compositeRepository.AttachWithAttributes(node.Composites, EntityState.Added);
                     _connectorRepository.AttachWithAttributes(node.Connectors, EntityState.Added);
                     Attach(node, EntityState.Added);
@@ -69,6 +71,8 @@ namespace Mb.Data.Repositories
                             _attributeRepository.Attach(attribute, EntityState.Modified);
                         }
                     }
+
+                    SetNodeVersion(original?.FirstOrDefault(x => x.Id == node.Id), node);
 
                     _compositeRepository.AttachWithAttributes(node.Composites, EntityState.Modified);
                     _connectorRepository.AttachWithAttributes(node.Connectors, EntityState.Modified);
@@ -97,5 +101,152 @@ namespace Mb.Data.Repositories
 
             return subNodes;
         }
+
+        #region Private
+
+        private void SetNodeVersion(Node originalNode, Node node)
+        {
+            if(originalNode?.Id == null || string.IsNullOrWhiteSpace(node?.Id))
+                return;
+
+            //TODO: The rules for when to trigger major/minor version incrementation is not finalized!
+
+            //Rds
+            if (originalNode.Rds != node.Rds)
+            {
+                node.Version = originalNode.Version.IncrementMinorVersion();
+                return;
+            }
+            
+            //Contractor
+                if (originalNode.Contractor != node.Contractor)
+            {
+                node.Version = originalNode.Version.IncrementMinorVersion();
+                return;
+            }
+
+            //Description
+            if (originalNode.Description != node.Description)
+            {
+                node.Version = originalNode.Version.IncrementMinorVersion();
+                return;
+            }
+
+            //SemanticReference
+            if (originalNode.SemanticReference != node.SemanticReference)
+            {
+                node.Version = originalNode.Version.IncrementMinorVersion();
+                return;
+            }
+
+            //TagNumber
+            if (originalNode.TagNumber != node.TagNumber)
+            {
+                node.Version = originalNode.Version.IncrementMinorVersion();
+                return;
+            }
+
+            //Name
+            if (originalNode.Name != node.Name)
+            {
+                node.Version = originalNode.Version.IncrementMinorVersion();
+                return;
+            }
+
+            //Label
+            if (originalNode.Label != node.Label)
+            {
+                node.Version = originalNode.Version.IncrementMinorVersion();
+                return;
+            }
+
+            //StatusId
+            if (originalNode.StatusId != node.StatusId)
+            {
+                node.Version = originalNode.Version.IncrementMinorVersion();
+                return;
+            }
+
+            //Aspect
+            if (originalNode.Aspect != node.Aspect)
+            {
+                node.Version = originalNode.Version.IncrementMinorVersion();
+                return;
+            }
+
+            //IsRoot
+            if (originalNode.IsRoot != node.IsRoot)
+            {
+                node.Version = originalNode.Version.IncrementMinorVersion(); //Major
+                return;
+            }
+
+            //MasterProjectId
+            if (originalNode.MasterProjectId != node.MasterProjectId)
+            {
+                node.Version = originalNode.Version.IncrementMinorVersion(); //Major
+                return;
+            }
+
+            //Symbol
+            if (originalNode.Symbol != node.Symbol)
+            {
+                node.Version = originalNode.Version.IncrementMinorVersion();
+                return;
+            }
+
+            //PurposeString
+            if (originalNode.PurposeString != node.PurposeString)
+            {
+                node.Version = originalNode.Version.IncrementMinorVersion();
+                return;
+            }
+
+            //Connectors
+            if (originalNode.Connectors?.Count != node.Connectors?.Count)
+            {
+                node.Version = originalNode.Version.IncrementMinorVersion();
+                return;
+            }
+
+            //Attributes
+            if (originalNode.Attributes?.Count != node.Attributes?.Count)
+            {
+                node.Version = originalNode.Version.IncrementMinorVersion();
+                return;
+            }
+
+            //Composites
+            if (originalNode.Composites?.Count != node.Composites?.Count)
+            {
+                node.Version = originalNode.Version.IncrementMinorVersion();
+            }
+
+            //FromEdges
+            if (originalNode.FromEdges?.Count != node.FromEdges?.Count)
+            {
+                node.Version = originalNode.Version.IncrementMinorVersion();
+                return;
+            }
+
+            //ToEdges
+            if (originalNode.ToEdges?.Count != node.ToEdges?.Count)
+            {
+                node.Version = originalNode.Version.IncrementMinorVersion();
+                return;
+            }
+
+            //Cost
+            if (originalNode.Cost != node.Cost)
+            {
+                node.Version = originalNode.Version.IncrementMinorVersion();
+                return;
+            }
+
+            node.Version = originalNode.Version;
+
+        }
+
+        #endregion Private
     }
 }
