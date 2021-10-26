@@ -6,6 +6,8 @@ export { default as IsTransport } from "./IsTransport";
 export { default as IsInterface } from "./IsInterface";
 export { default as IsObjectBlock } from "./IsObjectBlock";
 export { default as IsNotSet } from "./IsNotSet";
+export { default as IsRds } from "./IsRds";
+export { default as IsObjectAttributes } from "./IsObjectAttributes";
 
 // filters
 export { default as GetAspects } from "./GetAspects";

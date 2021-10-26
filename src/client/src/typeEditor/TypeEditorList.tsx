@@ -23,6 +23,8 @@ import {
   IsTransport,
   IsInterface,
   GetWidth,
+  IsRds,
+  IsObjectAttributes,
 } from "./helpers";
 
 export enum ListType {
@@ -44,14 +46,20 @@ interface Props {
 }
 
 export const TypeEditorList = ({ createLibraryType, items, discipline, disabled, listType, onChange }: Props) => {
-  const isRds = listType === ListType.Rds;
-  const [listitems, setListItems] = useState(isRds && items);
+  const [listitems, setListItems] = useState((IsRds(listType) || IsObjectAttributes(listType)) && items);
   return (
     <ListWrapper wide={GetWidth(listType)} disabled={disabled}>
-      {isRds && (
-        <ListSearch placeHolder={GetListLabel(listType, createLibraryType)} list={items} setlistItems={setListItems} />
+      {(IsRds(listType) || IsObjectAttributes(listType)) && (
+        <ListSearch
+          listType={listType}
+          placeHolder={GetListLabel(listType, createLibraryType)}
+          list={items}
+          setlistItems={setListItems}
+        />
       )}
-      <ListLabel removeBorderBottom={isRds}>{!isRds && GetListLabel(listType, createLibraryType)}</ListLabel>
+      {/* <ListLabel removeBorderBottom={IsRds(listType) || IsObjectAttributes(listType)}>
+        {(!IsRds(listType) || !IsObjectAttributes(listType)) && GetListLabel(listType, createLibraryType)}
+      </ListLabel> */}
       {!disabled && (
         <ListElementsContainer
           hover={RemoveHover(listType)}
@@ -112,7 +120,7 @@ export const TypeEditorList = ({ createLibraryType, items, discipline, disabled,
                 />
               ))
             : listType === ListType.ObjectAttributes &&
-              GetFilteredList(listType, items, createLibraryType, discipline).map((element) => (
+              GetFilteredList(listType, listitems, createLibraryType, discipline).map((element) => (
                 <AttributeElement
                   key={element.discipline}
                   discipline={element.discipline}

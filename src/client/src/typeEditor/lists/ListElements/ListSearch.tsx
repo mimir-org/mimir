@@ -1,23 +1,23 @@
 import { useState, useEffect } from "react";
 import { SearchIcon } from "../../../assets/icons/common";
 import { ListSearchBar } from "../../../compLibrary";
-import { Rds } from "../../../models";
-
+import { AttributeType, Rds } from "../../../models";
+import { ListType } from "../../TypeEditorList";
+import { GetListFilter, CheckIsInArray } from "./helpers";
 interface Props {
+  listType: ListType;
   placeHolder?: string;
   onChange?: Function;
-  list?: any[];
+  list?: Rds[] | AttributeType[];
   setlistItems: any;
 }
 
-const ListSearch = ({ placeHolder, list, setlistItems }: Props) => {
+const ListSearch = ({ listType, placeHolder, list, setlistItems }: Props) => {
   const [searchString, setSearchString] = useState("");
-  const filter = list?.filter(
-    (x) => x.name.match(new RegExp(searchString, "i")) || x.code.match(new RegExp(searchString, "i"))
-  );
+  const filter = GetListFilter(searchString, listType, list);
 
-  const filterListItems = (): Rds[] => {
-    const isInArray = list.find((x) => x.name === searchString || x.code === searchString);
+  const filterListItems = (): Rds[] | AttributeType[] => {
+    const isInArray = CheckIsInArray(searchString, listType, list);
     return isInArray ? list : filter;
   };
 
