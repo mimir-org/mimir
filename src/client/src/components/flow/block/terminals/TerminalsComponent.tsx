@@ -11,6 +11,7 @@ interface Props {
   outputMenuOpen: boolean;
   terminals: Connector[];
   parent: boolean;
+  electro: boolean;
   menuBox: boolean;
   mainConnectNode: boolean;
   showInTerminalMenu: any;
@@ -30,6 +31,7 @@ const TerminalsComponent = ({
   outputMenuOpen,
   terminals,
   parent,
+  electro,
   menuBox,
   mainConnectNode,
   showInTerminalMenu,
@@ -73,6 +75,7 @@ const TerminalsComponent = ({
           node={node}
           parent={parent}
           input={true}
+          electro={electro}
           splitView={splitView}
           terminals={inTerminals}
           visible={inputMenuOpen}
@@ -85,6 +88,7 @@ const TerminalsComponent = ({
           node={node}
           parent={parent}
           input={false}
+          electro={electro}
           splitView={splitView}
           visible={outputMenuOpen}
           terminals={outTerminals}

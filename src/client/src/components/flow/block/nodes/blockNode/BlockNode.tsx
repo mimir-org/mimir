@@ -103,6 +103,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
           outputMenuOpen={outTerminalMenu}
           terminals={terminals}
           parent={false}
+          electro={electro}
           splitView={splitView}
           onClick={(conn) => Click.OnTerminal(conn, data, dispatch, edges)}
           menuBox={terminalBox}

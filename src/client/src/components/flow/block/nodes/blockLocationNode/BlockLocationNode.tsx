@@ -55,6 +55,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
           outputMenuOpen={outTerminalMenu}
           terminals={FilterTerminals(data, splitView, splitNode)}
           parent={false}
+          electro={electro}
           splitView={splitView}
           onClick={(conn) => OnConnectorClick(conn, data, dispatch)}
           menuBox={terminalButton}

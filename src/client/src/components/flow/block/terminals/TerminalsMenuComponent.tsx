@@ -1,6 +1,5 @@
 import { Connector, Node } from "../../../../models";
-import { IsMainConnectNode } from "../../block/connectView/helpers";
-import { GetMenuColor, GetTerminalColor } from "./helpers";
+import { GetMenuColor, GetTerminalColor, SetMenuXPos } from "./helpers";
 import { TerminalsMenu, TerminalsElement, ColorBar } from "./styled";
 
 interface Props {
@@ -10,6 +9,7 @@ interface Props {
   splitView: boolean;
   terminals: Connector[];
   visible: boolean;
+  electro: boolean;
   onClick: (conn: Connector) => void;
   onBlur: () => void;
 }
@@ -19,31 +19,34 @@ interface Props {
  * @param param0
  * @returns a drop-down menu with a nodes' input or output terminals.
  */
-const TerminalsMenuComponent = ({ node, parent, input, splitView, terminals, visible, onClick, onBlur }: Props) =>
-  visible && (
-    <TerminalsMenu
-      splitView={splitView}
-      parent={parent}
-      input={input}
-      connectView={IsMainConnectNode(node.id)}
-      tabIndex={0}
-      onBlur={onBlur}
-      color={GetMenuColor(node)}
-      width={node.width}
-    >
-      {terminals.map((conn) => (
-        <TerminalsElement key={conn.id}>
-          <ColorBar color={GetTerminalColor(conn)} />
-          <div className="text" onClick={() => onClick(conn)}>
-            {conn.name}
-          </div>
-          <label className={"checkbox-block"}>
-            <input type="checkbox" checked={conn.visible} onChange={() => onClick(conn)} />
-            <span className="checkmark-block"></span>
-          </label>
-        </TerminalsElement>
-      ))}
-    </TerminalsMenu>
+const TerminalsMenuComponent = ({ node, parent, input, terminals, visible, onClick, onBlur, electro }: Props) => {
+  const hasActiveTerminals = terminals.some((conn) => conn.visible);
+
+  return (
+    visible && (
+      <TerminalsMenu
+        parent={parent}
+        input={input}
+        tabIndex={0}
+        onBlur={onBlur}
+        color={GetMenuColor(node)}
+        xPos={SetMenuXPos(parent, electro, hasActiveTerminals, node?.width)}
+      >
+        {terminals.map((conn) => (
+          <TerminalsElement key={conn.id}>
+            <ColorBar color={GetTerminalColor(conn)} />
+            <div className="text" onClick={() => onClick(conn)}>
+              {conn.name}
+            </div>
+            <label className={"checkbox-block"}>
+              <input type="checkbox" checked={conn.visible} onChange={() => onClick(conn)} />
+              <span className="checkmark-block"></span>
+            </label>
+          </TerminalsElement>
+        ))}
+      </TerminalsMenu>
+    )
   );
+};
 
 export default TerminalsMenuComponent;
