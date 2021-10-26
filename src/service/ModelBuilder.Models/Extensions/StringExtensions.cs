@@ -88,8 +88,7 @@ namespace Mb.Models.Extensions
             if (string.IsNullOrWhiteSpace(version))
                 return version;
 
-            var versionStringReplace = version.Replace(".", ",").Trim();
-            var versionStringSplit = versionStringReplace.Split(",");
+            var versionStringSplit = version.Trim().Split(".");
 
             if (versionStringSplit.Length is < 2 or > 3)
                 return version;

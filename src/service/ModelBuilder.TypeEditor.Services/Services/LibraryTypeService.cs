@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -102,8 +103,10 @@ namespace Mb.TypeEditor.Services.Services
         /// </summary>
         /// <param name="id"></param>
         /// <param name="createLibraryType"></param>
+        /// <param name="updateMajorVersion"></param>
+        /// <param name="updateMinorVersion"></param>
         /// <returns></returns>
-        public async Task<T> UpdateLibraryType<T>(string id, CreateLibraryType createLibraryType) where T : class, new()
+        public async Task<T> UpdateLibraryType<T>(string id, CreateLibraryType createLibraryType, bool updateMajorVersion, bool updateMinorVersion) where T : class, new()
         {
             if (string.IsNullOrEmpty(id))
                 throw new ModelBuilderNullReferenceException("Can't update a type without an id");
@@ -113,21 +116,30 @@ namespace Mb.TypeEditor.Services.Services
 
             var existingType = await GetTypeById(id);
 
-            if (existingType == null)
+            if (existingType?.Id == null)
                 throw new ModelBuilderNotFoundException($"There is no type with id:{id} to update.");
 
-            //TODO: Delete og create new version?
-            var createNewFromExistingVersion = true;
-
-            if (createNewFromExistingVersion)
+            if (updateMajorVersion || updateMinorVersion)
             {
-                createLibraryType.Version = existingType.Version.IncrementMinorVersion();
-                createLibraryType.TypeId = existingType.Id;
+                var existingTypeVersions = GetAllTypes()
+                    .Where(x => x.TypeId == existingType.TypeId)
+                    .OrderBy(x => double.Parse(x.Version, CultureInfo.InvariantCulture)).ToList();
+                
+                createLibraryType.Version = updateMajorVersion ? 
+                    existingTypeVersions[^1].Version.IncrementMajorVersion() : 
+                    existingTypeVersions[^1].Version.IncrementMinorVersion();
+
+                createLibraryType.TypeId = existingTypeVersions[0].TypeId;
+
                 return await CreateLibraryType<T>(createLibraryType, true);
             }
 
+            createLibraryType.Version = existingType.Version;
+            createLibraryType.TypeId = existingType.TypeId;
+
             await DeleteType(id);
-            return await CreateLibraryType<T>(createLibraryType, false);
+
+            return await CreateLibraryType<T>(createLibraryType, true);
         }
 
         /// <summary>
@@ -404,6 +416,7 @@ namespace Mb.TypeEditor.Services.Services
                         continue;
                 }
             }
+
 
             return createdLibraryTypes;
         }
