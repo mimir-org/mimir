@@ -26,8 +26,8 @@ export const OnBlockChange = (node: Node, selectedNode: Node, secondaryNode: Nod
 
   // Set one node
   if (!selectedNode) {
-    dispatch(setActiveNode(node.id, !node.isSelected));
-    dispatch(setActiveBlockNode(node.id));
+    dispatch(setActiveNode(node?.id, !node.isSelected));
+    dispatch(setActiveBlockNode(node?.id));
     return;
   }
 

@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { ViewType, VIEW_TYPE } from "../../models/project";
 import { OptionsBox, OptionsElement, ToolBarBox } from "../../compLibrary/box/header/";
 import { useAppDispatch } from "../../redux/store";
+import { useEffect } from "react";
 
 interface Props {
   libOpen: boolean;
@@ -22,6 +23,10 @@ interface Props {
 const ToolBar = ({ libOpen, explorerOpen, treeView, treeFilter, blockFilter, electro }: Props) => {
   const dispatch = useAppDispatch();
   const { push } = useHistory();
+
+  useEffect(() => {
+    console.log("test");
+  }, [electro]);
 
   return (
     <ToolBarBox id="ToolBar" libOpen={libOpen} explorerOpen={explorerOpen}>

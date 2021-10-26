@@ -1,4 +1,6 @@
 import { setElectroView } from "../../../redux/store/electro/actions";
+import { setActiveNode } from "../../../redux/store/project/actions";
+import { GetSelectedNode } from "../../flow/helpers";
 
 /**
  * Function to toggle Electro mode on/off. In Electro mode termials are displayed vertically.
@@ -7,9 +9,8 @@ import { setElectroView } from "../../../redux/store/electro/actions";
  */
 const OnElectro = (dispatch: any, open: boolean) => {
   dispatch(setElectroView(!open));
-  setTimeout(() => {
-    window.location.reload(); // Reload required because of Flow displaying wrong position for terminals
-  }, 100);
+  const selectedNode = GetSelectedNode();
+  dispatch(setActiveNode(selectedNode.id, true));
 };
 
 export default OnElectro;
