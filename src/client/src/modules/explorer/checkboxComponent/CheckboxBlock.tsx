@@ -6,6 +6,7 @@ import { CheckboxWrapper } from "./styled";
 import { GetCheckboxColor } from "../helpers";
 
 interface Props {
+  elements: any[];
   project: Project;
   node: Node;
   inputLabel: string;
@@ -15,7 +16,7 @@ interface Props {
  * @param interface
  * @returns a checkbox
  */
-export const CheckboxBlock = ({ project, node, inputLabel }: Props) => {
+export const CheckboxBlock = ({ elements, project, node, inputLabel }: Props) => {
   const dispatch = useAppDispatch();
   const secondaryNode = useAppSelector(secondaryNodeSelector);
   const selectedNode = GetSelectedNode();
@@ -25,7 +26,7 @@ export const CheckboxBlock = ({ project, node, inputLabel }: Props) => {
       <input
         type="checkbox"
         checked={!node?.isHidden ?? false}
-        onChange={() => OnBlockChange(project, node, selectedNode, secondaryNode, dispatch)}
+        onChange={() => OnBlockChange(project, elements, node, selectedNode, secondaryNode, dispatch)}
       />
       <div className="checkmark"></div>
       <div className="label">{inputLabel}</div>

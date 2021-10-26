@@ -24,6 +24,7 @@ import {
   userStateSelector,
   blockFilterSelector,
 } from "../../../redux/store";
+import { ExplorerModule } from "../../../modules/explorer";
 
 /**
  * Component for the Flow library in BlockView
@@ -130,6 +131,8 @@ const FlowBlock = () => {
             >
               <FullScreenComponent />
             </ReactFlow>
+
+            <ExplorerModule elements={elements} />
             {blockFilter && <BlockFilterMenu elements={elements} />}
           </div>
         </ReactFlowProvider>

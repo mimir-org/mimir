@@ -7,12 +7,20 @@ import { IsFamily } from "../../../components/flow/helpers";
 /**
  * Component to handle all clicks on checkboxes in the BlockView's Explorer Module.
  * @param project
+ * @param elements
  * @param node
  * @param selectedNode
  * @param secondaryNode
  * @param dispatch
  */
-export const OnBlockChange = (project: Project, node: Node, selectedNode: Node, secondaryNode: Node, dispatch: any) => {
+export const OnBlockChange = (
+  project: Project,
+  elements: any[],
+  node: Node,
+  selectedNode: Node,
+  secondaryNode: Node,
+  dispatch: any
+) => {
   let isParent = false;
   const edge = project?.edges.find((e) => e.fromNodeId === node?.id);
   if (edge) isParent = true;
@@ -32,10 +40,17 @@ export const OnBlockChange = (project: Project, node: Node, selectedNode: Node, 
   }
 
   // Set SecondaryNode
-  if (selectedNode && node?.id !== selectedNode.id && node?.id !== secondaryNode?.id) {
+  if (node?.id !== selectedNode?.id && node?.id !== secondaryNode?.id && !IsFamily(node, selectedNode)) {
     dispatch(setSecondaryNode(node));
     project.nodes.forEach((n) => {
-      if (n.id !== selectedNode.id && n.id !== node.id && !IsDirectChild(n, selectedNode) && !IsFamily(n, selectedNode))
+      if (
+        n.id !== selectedNode?.id &&
+        n.id !== node?.id &&
+        !IsDirectChild(n, node)
+        // !IsDirectChild(n, node) &&
+        // !IsFamily(n, selectedNode) &&
+        // !IsFamily(n, node)
+      )
         n.isHidden = true;
     });
   }
