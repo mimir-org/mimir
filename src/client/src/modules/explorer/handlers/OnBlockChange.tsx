@@ -14,6 +14,7 @@ export const OnBlockChange = (node: Node, selectedNode: Node, secondaryNode: Nod
   if (selectedNode && secondaryNode) {
     if (node === selectedNode && node !== secondaryNode) {
       dispatch(setActiveNode(secondaryNode.id, true));
+      dispatch(removeSecondaryNode());
       return;
     }
   }
