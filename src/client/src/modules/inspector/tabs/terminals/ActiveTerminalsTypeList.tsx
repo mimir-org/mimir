@@ -1,7 +1,9 @@
 import { ConnectorType, TerminalType } from "../../../../models";
 import { TerminalTypeListElement, TerminalsListElementWrapper, TerminalListElement } from "./styled/activeTerminalList";
 import { ExpandAccordionNestedIcon, CollapseAccordionNestedIcon } from "../../../../assets/icons/toogle";
-import { TerminalLikeItem } from "../../types";
+import { SelectedTerminalIdentifier, TerminalLikeItem } from "../../types";
+import { useCallback, useMemo } from "react";
+import { formatTerminalTypeName, CountNumberOfTerminals, GetNumberOfTerminals } from "./helpers";
 
 interface Props {
   terminalType: TerminalType;
@@ -9,8 +11,9 @@ interface Props {
   expanded: boolean;
   terminals: TerminalLikeItem[];
   selectedTerminal: TerminalLikeItem;
+  selectedTerminalIdentifier: SelectedTerminalIdentifier;
   onTypeClick: (type: TerminalType, connectorType: ConnectorType) => void;
-  onSelectTerminal: (item: TerminalLikeItem) => void;
+  onSelectTerminal: (identifier: SelectedTerminalIdentifier) => void;
 }
 
 function ActiveTerminalsTypeList({
@@ -19,10 +22,28 @@ function ActiveTerminalsTypeList({
   expanded,
   terminals,
   selectedTerminal,
+  selectedTerminalIdentifier,
   onTypeClick,
   onSelectTerminal,
 }: Props) {
-  const formatTerminalTypeName = (name: string) => `${name} [${ConnectorType[connectorType].toLowerCase()}]`;
+  const numTerminals = useMemo(() => CountNumberOfTerminals(terminals), [terminals]);
+
+  const renderTerminalListElement = useCallback(
+    (terminal: TerminalLikeItem) => {
+      let numberOfItemsToRender = GetNumberOfTerminals(terminal);
+
+      return [...Array(numberOfItemsToRender).keys()].map((i) => (
+        <TerminalListElement
+          key={terminal.id + i}
+          isSelected={selectedTerminalIdentifier?.id === terminal.id && selectedTerminalIdentifier?.index === i}
+          onClick={() => onSelectTerminal({ id: terminal.id, index: i })}
+        >
+          {formatTerminalTypeName(terminal.name, connectorType)}
+        </TerminalListElement>
+      ));
+    },
+    [onSelectTerminal, connectorType, selectedTerminalIdentifier]
+  );
 
   return (
     <TerminalsListElementWrapper>
@@ -30,24 +51,15 @@ function ActiveTerminalsTypeList({
         onClick={() => onTypeClick(terminalType, connectorType)}
         isSelected={selectedTerminal?.terminalTypeId === terminalType.id && selectedTerminal?.type === connectorType}
       >
-        <div className="numTypeTerminals">{terminals.length}</div>
-        {formatTerminalTypeName(terminalType.name)}
+        <div className="numTypeTerminals">{numTerminals}</div>
+        {formatTerminalTypeName(terminalType.name, connectorType)}
         <img
           src={expanded ? ExpandAccordionNestedIcon : CollapseAccordionNestedIcon}
           className="dropdownIcon"
           alt="expand-icon"
         />
       </TerminalTypeListElement>
-      {expanded &&
-        terminals.map((terminal) => (
-          <TerminalListElement
-            key={terminal.id}
-            isSelected={selectedTerminal?.id === terminal.id}
-            onClick={() => onSelectTerminal(terminal)}
-          >
-            {formatTerminalTypeName(terminal.name)}
-          </TerminalListElement>
-        ))}
+      {expanded && terminals.map((terminal) => renderTerminalListElement(terminal))}
     </TerminalsListElementWrapper>
   );
 }

@@ -34,3 +34,8 @@ export type AttributeLikeItem = Attribute | AttributeType;
 export type CombinedAttributeDict = { [name: string]: CombinedAttribute[] };
 
 export type TerminalLikeItem = Connector | TerminalTypeItem;
+
+export type SelectedTerminalIdentifier = {
+  id: string;
+  index: number;
+};

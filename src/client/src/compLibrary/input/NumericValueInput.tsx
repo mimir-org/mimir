@@ -7,18 +7,18 @@ interface Props {
 }
 
 const NumericValueInput = ({ value, onChange }: Props) => {
-  const [quantity, setQuantity] = useState("1");
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     if (value) {
       var num = parseInt(value) || 0;
-      setQuantity(num.toString());
+      setQuantity(num);
     }
   }, [value]);
 
   const handleChange = (e: any) => {
     var num = parseInt(e.target.value) || 0;
-    setQuantity(num.toString());
+    setQuantity(num);
   };
 
   return (

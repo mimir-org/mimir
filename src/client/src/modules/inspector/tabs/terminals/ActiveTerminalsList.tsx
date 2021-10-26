@@ -12,16 +12,23 @@ import {
 } from "./helpers";
 import { ExpandAccordionIcon, CollapseAccordionIcon } from "../../../../assets/icons/toogle";
 import { TerminalsListElementWrapper, TerminalsCategoryListElement } from "./styled/activeTerminalList";
-import { TerminalLikeItem } from "../../types";
+import { SelectedTerminalIdentifier, TerminalLikeItem } from "../../types";
 
 interface Props {
   terminals: TerminalLikeItem[];
   terminalCategories: TerminalCategory[];
   selectedTerminal: TerminalLikeItem;
-  onSelectTerminal: (item: TerminalLikeItem) => void;
+  selectedTerminalIdentifier: SelectedTerminalIdentifier;
+  onSelectTerminal: (identifier: SelectedTerminalIdentifier) => void;
 }
 
-function ActiveTerminalsList({ terminals, terminalCategories, selectedTerminal, onSelectTerminal }: Props) {
+function ActiveTerminalsList({
+  terminals,
+  terminalCategories,
+  selectedTerminal,
+  selectedTerminalIdentifier,
+  onSelectTerminal,
+}: Props) {
   const [selectedCategoriesIds, setSelectedCategoriesIds] = useState<string[]>([]);
   const [selectedTypesIds, setSelectedTypesIds] = useState<string[]>([]);
   const filteredCategories = useMemo(
@@ -71,6 +78,7 @@ function ActiveTerminalsList({ terminals, terminalCategories, selectedTerminal, 
                 const terminalTypeListProps = {
                   terminalType: terminalType,
                   selectedTerminal: selectedTerminal,
+                  selectedTerminalIdentifier: selectedTerminalIdentifier,
                   onTypeClick: (type: TerminalType, connectorType: ConnectorType) =>
                     OnTypeClick(
                       type,

@@ -1,4 +1,3 @@
-import { Connector } from "../../../../models";
 import { TerminalsSelector } from "./";
 import { useMemo, useState } from "react";
 import { ParametersContent } from "../parameters";
@@ -6,7 +5,7 @@ import { TerminalsWrapper } from "./styled/TerminalsWrapper";
 import { TerminalsParametersWrapper } from "./styled/TerminalsParametersWrapper";
 import { useAppSelector, terminalTypeSelector } from "../../../../redux/store";
 import { GetFilteredTerminalsList } from "../../../../typeEditor/helpers";
-import { InspectorElement, TerminalLikeItem } from "../../types";
+import { InspectorElement, SelectedTerminalIdentifier, TerminalLikeItem } from "../../types";
 import { GetTerminalParentElement, GetTerminals } from "./helpers";
 import { IsCreateLibraryType } from "../../helpers/IsType";
 
@@ -18,12 +17,12 @@ interface Props {
 const TerminalsComponent = ({ element, terminalLikeItems }: Props) => {
   const terminalParentElement = GetTerminalParentElement(element);
   const categoryTypes = useAppSelector(terminalTypeSelector);
-  const [selectedTerminalId, setSelectedTerminalId] = useState<string>(null);
+  const [selectedTerminalIdentifier, setSelectedTerminalIdentifier] = useState<SelectedTerminalIdentifier>(null);
   const terminals = terminalLikeItems ?? GetTerminals(element);
   const terminalCategories = useMemo(() => GetFilteredTerminalsList(categoryTypes), [categoryTypes]);
   const selectedTerminal = useMemo(
-    () => terminals.find((terminal) => terminal.id === selectedTerminalId),
-    [selectedTerminalId, terminals]
+    () => terminals.find((terminal) => terminal.id === selectedTerminalIdentifier?.id),
+    [selectedTerminalIdentifier, terminals]
   );
 
   const elementIsLocked = !IsCreateLibraryType(element) ? element.isLocked : false;
@@ -34,7 +33,8 @@ const TerminalsComponent = ({ element, terminalLikeItems }: Props) => {
         terminals={terminals}
         terminalCategories={terminalCategories}
         selectedTerminal={selectedTerminal}
-        onSelectTerminal={(item: Connector) => setSelectedTerminalId(item.id)}
+        selectedTerminalIdentifier={selectedTerminalIdentifier}
+        onSelectTerminal={(identifier: SelectedTerminalIdentifier) => setSelectedTerminalIdentifier(identifier)}
       />
       {selectedTerminal && (
         <TerminalsParametersWrapper>
