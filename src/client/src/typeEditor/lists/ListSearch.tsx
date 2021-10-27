@@ -1,22 +1,25 @@
 import { useState, useEffect } from "react";
-import { SearchIcon } from "../../../assets/icons/common";
-import { ListSearchBar } from "../../../compLibrary";
-import { AttributeType, Rds } from "../../../models";
-import { ListType } from "../../TypeEditorList";
-import { GetListFilter, CheckIsInArray } from "./helpers";
+import { ListSearchBar } from "../../compLibrary";
+import { SearchIcon } from "../../assets/icons/common";
+import { ListType } from "../TypeEditorList";
+import { CheckIsInArray, GetListFilter } from "./ListElements/helpers";
+import { Rds, TerminalType, AttributeType, CompositeType, PredefinedAttribute } from "../../models";
+
 interface Props {
   listType: ListType;
-  placeHolder?: string;
-  onChange?: Function;
-  list?: Rds[] | AttributeType[];
+  placeHolder: string;
+  list: Rds[] | TerminalType[] | AttributeType[] | CompositeType[] | PredefinedAttribute[];
   setlistItems: any;
 }
+/**Searchbar component at the top of a list that filter the elements in the list
+ * @returns a visual searchbar
+ */
 
 const ListSearch = ({ listType, placeHolder, list, setlistItems }: Props) => {
   const [searchString, setSearchString] = useState("");
   const filter = GetListFilter(searchString, listType, list);
 
-  const filterListItems = (): Rds[] | AttributeType[] => {
+  const filterListItems = (): Rds[] | TerminalType[] | AttributeType[] | CompositeType[] | PredefinedAttribute[] => {
     const isInArray = CheckIsInArray(searchString, listType, list);
     return isInArray ? list : filter;
   };

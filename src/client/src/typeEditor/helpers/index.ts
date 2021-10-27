@@ -7,7 +7,11 @@ export { default as IsInterface } from "./IsInterface";
 export { default as IsObjectBlock } from "./IsObjectBlock";
 export { default as IsNotSet } from "./IsNotSet";
 export { default as IsRds } from "./IsRds";
+export { default as IsTerminal } from "./IsTerminal";
 export { default as IsObjectAttributes } from "./IsObjectAttributes";
+export { default as IsLocationAttributes } from "./IsLocationAttributes";
+export { default as IsSimpleTypes } from "./IsSimpleTypes";
+export { default as IsPredefinedAttributes } from "./IsPredefinedAttributes";
 
 // filters
 export { default as GetAspects } from "./GetAspects";
