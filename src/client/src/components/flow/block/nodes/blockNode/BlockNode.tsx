@@ -53,12 +53,12 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   }, [mainConnectNode, data, connectNodes, mainConnectNodes]);
 
   // Force z-index to display edges in ConnectView
-  useEffect(() => {
-    if (mainConnectNode) {
-      const allEdges = FindAllEdges();
-      allEdges.style.zIndex = "3";
-    }
-  }, [mainConnectNode]);
+  // useEffect(() => {
+  //   if (mainConnectNode) {
+  //     const allEdges = FindAllEdges();
+  //     allEdges.style.zIndex = "3";
+  //   }
+  // }, [mainConnectNode]);
 
   useEffect(() => {
     updateNodeInternals(node?.id);
@@ -66,6 +66,8 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   }, [node, secondaryNode, updateNodeInternals]);
 
   electro ? SetNodeWidth(terminals, data) : SetNodeLength(terminals, data);
+
+  const test = document.getElementById("terminals-menu-equinor.com_ec36d459-059d-47ef-a0de-ffc4683c4366");
 
   return (
     <>

@@ -171,8 +171,8 @@
   cursor: grab;
 }
 
-.react-flow__edges {
-  z-index: 2;
+.terminals-dropdown {
+  z-index: 5 !important;
 }
 
 .react-flow__handle.connectable {

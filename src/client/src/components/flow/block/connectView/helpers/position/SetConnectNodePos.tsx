@@ -1,5 +1,4 @@
 import { Node } from "../../../../../../models";
-import { Size } from "../../../../../../compLibrary";
 
 /**
  * Function to force child nodes in the ConnectViewBlock to fit in the parent block.
@@ -17,18 +16,18 @@ const SetConnectNodePos = (node: Node, mainConnectNodeId: string, connectNodes: 
   xPos = setXPos(node, xPos, connectNodes);
   yPos = setYPos(node, yPos, connectNodes);
 
-  if (node !== mainNode) {
-    node.positionBlockX = xPos;
-    node.positionBlockY = yPos;
+  if (node === mainNode) {
+    xPos = node.positionBlockX;
+    yPos = node.positionBlockY;
   }
 
-  return { x: node.positionBlockX, y: node.positionBlockY };
+  return { x: xPos, y: yPos };
 };
 
 function setXPos(node: Node, xPos: number, connectNodes: Node[]) {
-  const leftMargin = 55;
-  const rightMargin = 260;
-  const center = 155;
+  const leftMargin = 40;
+  const rightMargin = 310;
+  const center = 175;
 
   if (connectNodes.length === 1) return xPos + center;
 
@@ -41,19 +40,18 @@ function setXPos(node: Node, xPos: number, connectNodes: Node[]) {
 }
 
 function setYPos(node: Node, yPos: number, connectNodes: Node[]) {
-  const yMargin = 30;
-  const marginTop = Size.Node_Length - 15;
-  let increaseYPos = 1;
+  const marginTop = 70;
+  let intervalY = 150;
   yPos += marginTop;
-  let test = 4;
-  let increment = 1;
-  // TODO: make algo and remove funky variables
+
+  // TODO: Make scalable
   connectNodes?.forEach((elem, i) => {
     if (i > 1 && node.id === elem.id) {
-      if (i > 3 && i < 6) increaseYPos += test * increment;
-      if (i >= 6 && i < 8) increaseYPos += test * (increment * 2);
-      if (i >= 8 && i < 10) increaseYPos += test * (increment * 3);
-      return (yPos += Size.Node_Length + yMargin * increaseYPos);
+      if (i >= 2 && i < 4) yPos += intervalY;
+      if (i >= 4 && i < 6) yPos += intervalY * 2;
+      if (i >= 6 && i < 8) yPos += intervalY * 3;
+      if (i >= 8 && i < 10) yPos += intervalY * 4;
+      if (i >= 10 && i < 12) yPos += intervalY * 6;
     }
   });
 

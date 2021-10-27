@@ -6,8 +6,8 @@ const IsChecked = (elements: any[], node: Node) => {
   let checked = false;
 
   elements?.forEach((elem) => {
-    const isEdge = edgeTypes.some((x) => x === elem.type?.toString() || elem.kind === EDGE_KIND);
-    if (!isEdge) if (node.id === elem.data.id) checked = true;
+    const isEdge = edgeTypes.some((x) => x === elem?.type?.toString() || elem?.kind === EDGE_KIND);
+    if (!isEdge) if (node.id === elem?.data.id) checked = true;
   });
   return checked;
 };

@@ -14,7 +14,7 @@ import { CreateId } from "../../helpers";
  * @returns a node of the type FlowElement.
  */
 const BuildBlockNode = (node: Node, connectNode: Node, allNodes: Node[], parent: Node) => {
-  if (!node) return null;
+  if (!node || !parent) return null;
   const type = GetNodeTypeString(node);
   const connectNodes = connectNode?.connectNodes ?? [];
 
