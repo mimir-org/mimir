@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Size } from "../../compLibrary";
+import { GetPropertiesHeight } from "../helpers/GetPropertiesHeight";
 
 const ChooseProperties = styled.div`
   display: flex;
@@ -7,7 +7,7 @@ const ChooseProperties = styled.div`
   justify-content: space-between;
   margin: 0px 20px;
   position: relative;
-  height: ${Size.TypeEditorPropertiesFull}px;
+  height: ${GetPropertiesHeight(true)}px;
 `;
 
 export default ChooseProperties;

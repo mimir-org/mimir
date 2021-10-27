@@ -19,6 +19,7 @@ import {
   terminalTypeSelector,
 } from "../../redux/store";
 import { GetFilteredTerminalTypeExtendedList } from "../helpers";
+import { GetPropertiesHeight } from "../helpers/GetPropertiesHeight";
 import { changeTypeEditorInspectorHeight, changeTypeEditorInspectorVisibility } from "../redux/actions";
 
 interface Props {
@@ -78,7 +79,7 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
       _dispatch(changeInspectorVisibilityAction(!open));
       _dispatch(changeInspectorHeightAction(open ? Size.ModuleClosed : Size.TypeEditorInspectorOpen));
       SetPanelHeight(_inspectorRef, open ? Size.ModuleClosed : Size.TypeEditorInspectorOpen);
-      SetPanelHeight(typeEditorPropertiesRef, open ? Size.TypeEditorPropertiesFull : Size.TypeEditorPropertiesShrunk);
+      SetPanelHeight(typeEditorPropertiesRef, GetPropertiesHeight(open));
     },
     [typeEditorPropertiesRef]
   );

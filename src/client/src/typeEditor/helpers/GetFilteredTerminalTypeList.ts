@@ -7,8 +7,6 @@ export const GetFilteredTerminalTypeExtendedList = (
   let terminals: TerminalTypeExtended[] = [];
   let terminalTypes = terminalTypeDict.map((obj) => obj.value).flat();
 
-  console.log("running use memo array for terminalTypes");
-
   for (let terminalTypeItem of terminalTypeItems) {
     let terminalType = terminalTypes.find((term) => terminalTypeItem.terminalTypeId === term.id);
 

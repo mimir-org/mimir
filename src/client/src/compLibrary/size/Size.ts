@@ -30,8 +30,8 @@ const Size = {
 
   //TypeEditor
   TypeEditorInspectorOpen: 355,
-  TypeEditorPropertiesFull: 725,
-  TypeEditorPropertiesShrunk: 415,
+  TypeEditorPropertiesFull_1080: 605,
+  TypeEditorPropertiesShrunk_1080: 295,
 
   // Menus
   TopMenu_Height: 56,
