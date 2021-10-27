@@ -15,9 +15,9 @@ export { default as IsFunction } from "./IsFunction";
 export { default as IsProduct } from "./IsProduct";
 export { default as IsFamily } from "./IsFamily";
 
-export { default as IsTransportTerminal } from "./IsTransportTerminal";
+export { default as IsTransport } from "./IsTransport";
 export { default as IsLocationTerminal } from "./IsLocationTerminal";
-export { default as IsPartOfTerminal } from "./IsPartOfTerminal";
+export { default as IsPartOf } from "./IsPartOf";
 export { default as IsProductTerminal } from "./IsProductTerminal";
 export { default as IsInputTerminal } from "./IsInputTerminal";
 export { default as IsOutputTerminal } from "./IsOutputTerminal";

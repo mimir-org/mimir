@@ -33,10 +33,7 @@ export const CreateProjectMenu = () => {
           </ButtonBox>
           {projectName && (
             <ButtonBox>
-              <Button
-                onClick={() => Handlers.OnProjectCreateClick(dispatch, projectName)}
-                type={TextResources.Account_Create}
-              />
+              <Button onClick={() => Handlers.OnProjectCreateClick(dispatch, projectName)} type={TextResources.Account_Create} />
             </ButtonBox>
           )}
         </ProjectBody>

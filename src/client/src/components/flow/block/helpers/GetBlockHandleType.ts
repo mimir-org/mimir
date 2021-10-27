@@ -1,13 +1,6 @@
 import { Connector } from "../../../../models";
 import { HandleType, Position } from "react-flow-renderer";
-import {
-  IsProductTerminal,
-  IsInputTerminal,
-  IsOutputTerminal,
-  IsLocationTerminal,
-  IsPartOfTerminal,
-  IsTransportTerminal,
-} from "../../helpers";
+import { IsProductTerminal, IsInputTerminal, IsOutputTerminal, IsLocationTerminal, IsPartOf, IsTransport } from "../../helpers";
 
 /**
  * Function to give a handle/terminal a position and type.
@@ -27,19 +20,19 @@ const GetBlockHandleType = (conn: Connector, selected: boolean, splitView: boole
         if (IsOutputTerminal(conn)) return ["source", Position.Bottom];
       }
     }
-    if (IsOutputTerminal(conn) && (IsLocationTerminal(conn) || IsProductTerminal(conn) || IsPartOfTerminal(conn))) {
+    if (IsOutputTerminal(conn) && (IsLocationTerminal(conn) || IsProductTerminal(conn) || IsPartOf(conn))) {
       return ["source", Position.Bottom];
     }
 
-    if (IsOutputTerminal(conn) && IsTransportTerminal(conn)) {
+    if (IsOutputTerminal(conn) && IsTransport(conn)) {
       return ["source", Position.Bottom];
     }
 
-    if (IsInputTerminal(conn) && (IsLocationTerminal(conn) || IsProductTerminal(conn) || IsPartOfTerminal(conn))) {
+    if (IsInputTerminal(conn) && (IsLocationTerminal(conn) || IsProductTerminal(conn) || IsPartOf(conn))) {
       return ["target", Position.Top];
     }
 
-    if (IsInputTerminal(conn) && IsTransportTerminal(conn)) {
+    if (IsInputTerminal(conn) && IsTransport(conn)) {
       return ["target", Position.Top];
     }
     return ["source", Position.Bottom];
@@ -52,19 +45,19 @@ const GetBlockHandleType = (conn: Connector, selected: boolean, splitView: boole
         if (IsOutputTerminal(conn)) return ["target", Position.Right];
       }
     }
-    if (IsOutputTerminal(conn) && (IsLocationTerminal(conn) || IsProductTerminal(conn) || IsPartOfTerminal(conn))) {
+    if (IsOutputTerminal(conn) && (IsLocationTerminal(conn) || IsProductTerminal(conn) || IsPartOf(conn))) {
       return ["source", Position.Right];
     }
 
-    if (IsOutputTerminal(conn) && IsTransportTerminal(conn)) {
+    if (IsOutputTerminal(conn) && IsTransport(conn)) {
       return ["source", Position.Right];
     }
 
-    if (IsInputTerminal(conn) && (IsLocationTerminal(conn) || IsProductTerminal(conn) || IsPartOfTerminal(conn))) {
+    if (IsInputTerminal(conn) && (IsLocationTerminal(conn) || IsProductTerminal(conn) || IsPartOf(conn))) {
       return ["target", Position.Left];
     }
 
-    if (IsInputTerminal(conn) && IsTransportTerminal(conn)) {
+    if (IsInputTerminal(conn) && IsTransport(conn)) {
       return ["target", Position.Left];
     }
   }

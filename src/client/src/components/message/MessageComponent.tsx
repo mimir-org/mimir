@@ -3,6 +3,7 @@ import { Button } from "../../compLibrary/buttons";
 import { MessageBox } from "../../compLibrary/box/message";
 import { ButtonWrap } from "./styled";
 import { CloseIcon } from "../../assets/icons/close";
+
 interface Props {
   handleSave: () => void;
   handleNoSave: () => void;

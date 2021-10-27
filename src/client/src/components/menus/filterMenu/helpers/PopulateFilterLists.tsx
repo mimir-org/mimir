@@ -1,6 +1,6 @@
 import { ValidateRelationItem, ValidatePartOfItem, ValidateTransportItem, ValidateFulfilledByItem } from ".";
 import { Connector, Edge } from "../../../../models";
-import { IsLocationTerminal, IsPartOfTerminal, IsTransportTerminal, IsProductTerminal } from "../../../flow/helpers";
+import { IsLocationTerminal, IsPartOf, IsTransport, IsProductTerminal } from "../../../flow/helpers";
 
 /**
  * Method to add content to the drop-down menus in FilterMenu.
@@ -13,10 +13,10 @@ const PopulateFilterList = (edges: Edge[], transportItems: Connector[], relation
   edges.forEach((e) => {
     const sourceConn = e.fromConnector;
 
-    if (IsTransportTerminal(sourceConn)) ValidateTransportItem(transportItems, sourceConn);
+    if (IsTransport(sourceConn)) ValidateTransportItem(transportItems, sourceConn);
     if (IsLocationTerminal(sourceConn)) ValidateRelationItem(relationItems, sourceConn);
     if (IsProductTerminal(sourceConn)) ValidateFulfilledByItem(relationItems, sourceConn);
-    if (IsPartOfTerminal(sourceConn)) ValidatePartOfItem(partOfItems, sourceConn);
+    if (IsPartOf(sourceConn)) ValidatePartOfItem(partOfItems, sourceConn);
   });
 };
 export default PopulateFilterList;

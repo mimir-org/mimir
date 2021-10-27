@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { BlockFilterMenu } from "../../menus/filterMenu/block";
 import { Node } from "../../../models";
 import { ExplorerModule } from "../../../modules/explorer";
+import { MapComponent } from "../map";
 import {
   darkModeSelector,
   iconSelector,
@@ -108,12 +109,11 @@ const FlowBlock = () => {
               paneMoveable={true}
               zoomOnDoubleClick={false}
               defaultZoom={0.7}
-              snapToGrid={true}
-              snapGrid={[5, 5]}
-              defaultPosition={[1600, 900]}
+              defaultPosition={[1500, 1000]}
               onClick={(e) => OnBlockClick(e, dispatch, project)}
               onlyRenderVisibleElements={true}
             >
+              <MapComponent />
               <FullScreenComponent />
             </ReactFlow>
 

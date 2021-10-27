@@ -20,14 +20,9 @@ const AccountMenu = () => {
   const projectState = useAppSelector(projectStateSelector);
   const userState = useAppSelector(userStateSelector);
   const activeMenu = useAppSelector(activeMenuSelector);
-
   const menuRef = useRef(null);
 
-  const onOutsideClick = useCallback(
-    () => !activeMenu && dispatch(setAccountMenuVisibility(false)),
-    [activeMenu, dispatch]
-  );
-
+  const onOutsideClick = useCallback(() => !activeMenu && dispatch(setAccountMenuVisibility(false)), [activeMenu, dispatch]);
   useOutsideClick(menuRef, onOutsideClick);
 
   return (

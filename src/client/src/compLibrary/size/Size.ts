@@ -9,8 +9,8 @@ const Size = {
   Terminals_Interval: 25,
 
   // BlockView
-  BlockView_Width: 950,
-  BlockView_Height: 800,
+  BlockView_Width: 1000,
+  BlockView_Height: 920,
   BlockView_MarginLeft: 380,
   BlockView_MarginRight: 200,
   BlockView_MarginTop: 140,

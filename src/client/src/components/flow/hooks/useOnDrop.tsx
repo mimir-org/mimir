@@ -12,7 +12,7 @@ import {
   IsFamily,
   IsInputTerminal,
   IsOutputTerminal,
-  IsPartOfTerminal,
+  IsPartOf,
   SetSiblingIndexOnNodeDrop,
 } from "./../helpers";
 
@@ -91,8 +91,8 @@ const useOnDrop = (
 
     if (sourceNode && IsFamily(sourceNode, targetNode)) {
       targetNode.level = sourceNode.level + 1;
-      const sourceConn = sourceNode.connectors?.find((x) => IsPartOfTerminal(x) && IsOutputTerminal(x));
-      const targetConn = targetNode.connectors?.find((x) => IsPartOfTerminal(x) && IsInputTerminal(x));
+      const sourceConn = sourceNode.connectors?.find((x) => IsPartOf(x) && IsOutputTerminal(x));
+      const targetConn = targetNode.connectors?.find((x) => IsPartOf(x) && IsInputTerminal(x));
       const partofEdge = ConvertToEdge(CreateId(), sourceConn, targetConn, sourceNode, targetNode, project.id, library);
 
       SetSiblingIndexOnNodeDrop(targetNode, project, sourceNode);
