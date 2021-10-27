@@ -11,9 +11,10 @@ import { TypeEditorModule } from "../../typeEditor";
 interface Props {
   categories: LibraryCategory[];
   search: Function;
+  dispatch: any;
 }
 
-const LibraryComponent = ({ categories, search }: Props) => {
+const LibraryComponent = ({ categories, search, dispatch }: Props) => {
   const [selectedElement, setSelectedElement] = useState("");
   const [selectedElementType, setSelectedElementType] = useState(null);
   const legendOpen = useAppSelector(legendOpenSelector);
@@ -41,6 +42,8 @@ const LibraryComponent = ({ categories, search }: Props) => {
               setSelectedElementType={setSelectedElementType}
               key={category.name}
               category={category}
+              customCategory={customCategory}
+              dispatch={dispatch}
             />
           );
         })}
