@@ -109,6 +109,7 @@ const FlowBlock = () => {
               paneMoveable={true}
               zoomOnDoubleClick={false}
               defaultZoom={0.7}
+              defaultPosition={[1500, 1000]}
               onClick={(e) => OnBlockClick(e, dispatch, project)}
               onlyRenderVisibleElements={true}
             >
