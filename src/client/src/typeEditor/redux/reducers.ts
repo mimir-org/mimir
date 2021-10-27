@@ -6,7 +6,7 @@ const initialState: Types.TypeEditorState = {
   visible: false,
   fetching: false,
   creating: false,
-  createLibraryType: {
+  createLibraryType: new CreateLibraryType({
     id: null,
     name: "",
     aspect: Aspect.NotSet,
@@ -21,7 +21,7 @@ const initialState: Types.TypeEditorState = {
     terminalTypeId: "",
     symbolId: "",
     compositeTypes: [] as string[],
-  } as CreateLibraryType,
+  } as CreateLibraryType),
   purposes: [],
   rdsList: [],
   terminals: [],
@@ -111,7 +111,7 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
         ...state,
         fetching: true,
         visible: false,
-        createLibraryType: {
+        createLibraryType: new CreateLibraryType({
           ...state.createLibraryType,
           id: null,
           name: "",
@@ -127,14 +127,14 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
           terminalTypeId: "",
           symbolId: "",
           compositeTypes: [] as string[],
-        },
+        }),
       };
     case Types.FETCHING_TYPE_SUCCESS_OR_ERROR:
       return {
         ...state,
         fetching: false,
         visible: true,
-        createLibraryType: action.payload.selectedNode,
+        createLibraryType: new CreateLibraryType(action.payload.selectedNode),
       };
     case Types.FETCHING_BLOB_DATA:
       return {
@@ -194,7 +194,7 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
         ...state,
         fetching: false,
         visible: false,
-        createLibraryType: {
+        createLibraryType: new CreateLibraryType({
           ...state.createLibraryType,
           id: null,
           name: "",
@@ -210,7 +210,7 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
           terminalTypeId: "",
           symbolId: "",
           compositeTypes: [] as string[],
-        },
+        }),
       };
     case Types.UPDATE_CREATELIBRARYTYPE:
       return {
@@ -274,7 +274,7 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
       return {
         ...state,
         fetching: false,
-        createLibraryType: {
+        createLibraryType: new CreateLibraryType({
           ...state.createLibraryType,
           name: "",
           aspect: Aspect.NotSet,
@@ -289,7 +289,7 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
           terminalTypeId: "",
           symbolId: "",
           compositeTypes: [] as string[],
-        },
+        }),
         apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
     case Types.DELETE_TYPE_EDITOR_ERROR:
