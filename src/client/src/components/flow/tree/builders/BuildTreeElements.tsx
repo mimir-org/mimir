@@ -9,7 +9,7 @@ const BuildTreeElements = (project: Project): Elements => {
   if (!project) return elements;
 
   project.nodes?.forEach((node) => {
-    let treeNode = BuildTreeNode(node);
+    const treeNode = BuildTreeNode(node);
     if (treeNode) elements.push(treeNode);
   });
 

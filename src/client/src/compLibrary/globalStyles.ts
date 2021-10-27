@@ -11,13 +11,13 @@ const GlobalStyle = createGlobalStyle`
   };
 
   /* CHECKBOX  */ 
-  .checkbox-block, .checkbox-terminals {
+  .checkbox-block {
     position: absolute;
     cursor: pointer;
     left: 7px;
   }
 
-  .checkbox-block input, .checkbox-terminals input {
+  .checkbox-block input {
     position: absolute;
     opacity: 0;    
     z-index: 1;
@@ -33,38 +33,17 @@ const GlobalStyle = createGlobalStyle`
     border-radius: 2px;
   }
 
-  .checkmark-terminals {
-    position: absolute;
-    left: 0px;
-    height: 11px;
-    width: 11px;
-    background-color: ${Color.White};
-    border: 2px solid ${Color.DarkGrey};
-    border-radius: 2px;
-  }
-
   .checkbox-block input:checked ~ .checkmark-block {
     background-color: ${Color.BlueMagenta};
   }
-
-  .checkbox-terminals input:checked ~ .checkmark-terminals {
-    background-color: ${Color.DarkGrey};
-  }
  
-  .checkmark-block:after,
-  .checkmark-terminals:after {
-    content: "";
-    position: absolute;
-    display: none;
-  }
-  
-  .checkbox-block input:checked ~ .checkmark-block:after,
-  .checkbox-terminals input:checked ~ .checkmark-terminals:after {
+  .checkbox-block input:checked ~ .checkmark-block:after {
     display: block;
   }
   
-  .checkmark-block:after,
-  .checkmark-terminals:after {
+  .checkmark-block:after {
+    content: "";
+    position: absolute;
     left: 3px;
     top: -1px;
     width: 3px;

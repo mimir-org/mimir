@@ -10,12 +10,14 @@ import { EDGE_TYPE, EdgeType } from "../../../models/project";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { BlockFilterMenu } from "../../menus/filterMenu/block";
 import { Node } from "../../../models";
+import { ExplorerModule } from "../../../modules/explorer";
+import { MapComponent } from "../map";
 import {
   darkModeSelector,
   iconSelector,
   electroSelector,
   librarySelector,
-  mainConnectSelector,
+  connectSelector,
   projectSelector,
   secondaryNodeSelector,
   userStateSelector,
@@ -34,7 +36,7 @@ const FlowBlock = () => {
   const darkMode = useAppSelector(darkModeSelector);
   const project = useAppSelector(projectSelector);
   const secondaryNode = useAppSelector(secondaryNodeSelector) as Node;
-  const mainConnectNodes = useAppSelector(mainConnectSelector);
+  const mainConnectNodes = useAppSelector(connectSelector);
   const icons = useAppSelector(iconSelector);
   const lib = useAppSelector(librarySelector);
   const electro = useAppSelector(electroSelector);
@@ -107,14 +109,15 @@ const FlowBlock = () => {
               paneMoveable={true}
               zoomOnDoubleClick={false}
               defaultZoom={0.7}
-              snapToGrid={true}
-              snapGrid={[5, 5]}
-              defaultPosition={[1600, 900]}
+              defaultPosition={[1500, 1000]}
               onClick={(e) => OnBlockClick(e, dispatch, project)}
               onlyRenderVisibleElements={true}
             >
+              <MapComponent />
               <FullScreenComponent />
             </ReactFlow>
+
+            <ExplorerModule elements={elements} />
             {blockFilter && <BlockFilterMenu elements={elements} />}
           </div>
         </ReactFlowProvider>

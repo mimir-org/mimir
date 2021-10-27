@@ -18,10 +18,10 @@ import { parametersReducer } from "../../modules/inspector/tabs/parameters/redux
 import { electroViewReducer } from "../store/electro/reducers";
 import { resizeReducer } from "./resize/reducers";
 import { rootSaga } from "../sagas";
+import { customCategoryReducer } from "../store/customCategory/reducers";
 import { persistStore, persistReducer } from "redux-persist";
 
 const sagaMiddleware = createSagaMiddleware();
-
 const composeEnhancer = (process.env.NODE_ENV !== "production" && window["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__"]) || compose;
 
 const rootReducers = combineReducers({
@@ -41,6 +41,7 @@ const rootReducers = combineReducers({
   darkMode: darkModeReducer,
   parametersReducer: parametersReducer,
   resizing: resizeReducer,
+  customCategory: customCategoryReducer,
 });
 
 const persistConfig = {

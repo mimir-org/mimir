@@ -159,6 +159,7 @@ namespace Mb.Core.Profiles
             CreateMap<Project, LibrarySubProjectItem>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
                 .ForMember(dest => dest.ProjectOwner, opt => opt.MapFrom(src => src.ProjectOwner))
                 .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => src.UpdatedBy))
@@ -173,7 +174,7 @@ namespace Mb.Core.Profiles
                 CreateRelationConnector(RelationType.PartOf, ConnectorType.Output, "Part of Relationship"),
                 CreateRelationConnector(RelationType.HasLocation, ConnectorType.Input, "Has Location"),
                 CreateRelationConnector(RelationType.HasLocation, ConnectorType.Output, "Has Location"),
-                CreateRelationConnector(RelationType.FulfilledBy, ConnectorType.Output, "Fulfilled By"),
+                CreateRelationConnector(RelationType.FulfilledBy, ConnectorType.Input, "Fulfilled By"),
                 CreateRelationConnector(RelationType.FulfilledBy, ConnectorType.Output, "Fulfilled By")
             };
 

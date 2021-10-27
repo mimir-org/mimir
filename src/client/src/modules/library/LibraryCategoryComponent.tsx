@@ -3,7 +3,10 @@ import { LibraryCategory } from "../../models/project";
 import { ObjectType } from "../../models";
 import { GetObjectIcon, GetAspectColor } from "../../assets/helpers";
 import { ExpandIcon, CollapseIcon } from "../../assets/icons/chevron";
-import { LibCategory, LibCategoryElement, LibElement, LibElementIcon } from "../../compLibrary/box/library";
+import { SetNewSelectedElement, SetNewSelectedElementType } from "./helpers";
+import { CloseIcon } from "../../assets/icons/close";
+import { OnCloseElementClick } from "./handlers";
+import { LibCategory, LibCategoryElement, LibElement, LibElementClose, LibElementIcon } from "../../compLibrary/box/library";
 
 interface Props {
   category: LibraryCategory;
@@ -49,6 +52,9 @@ const LibraryCategoryComponent = ({ category, selectedElement, setSelectedElemen
                   <img src={GetObjectIcon(node)} alt="aspect-icon" className="icon" draggable="false"></img>
                 )}
               </LibElementIcon>
+              <LibElementClose visible={customCategory.nodes.includes(node)} onClick={() => OnCloseElementClick(dispatch, node)}>
+                <img src={CloseIcon} alt="close" />
+              </LibElementClose>
             </LibElement>
           );
         })}

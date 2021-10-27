@@ -1,5 +1,10 @@
 import { LibraryCategory } from "../../../models/project";
-import { ADD_CUSTOM_CATEGORY_NODE, AddCustomCategoryNode, REMOVE_CUSTOM_CATEGORY_NODES } from "./types";
+import {
+  AddCustomCategoryNode,
+  ADD_CUSTOM_CATEGORY_NODE,
+  REMOVE_CUSTOM_CATEGORY_NODES,
+  REMOVE_CUSTOM_CATEGORY_NODE,
+} from "./types";
 
 const initialState = {
   name: "Favorites",
@@ -11,6 +16,13 @@ export function customCategoryReducer(state = initialState, action: AddCustomCat
     return {
       ...state,
       nodes: [...state.nodes, action.payload.node],
+    };
+  }
+
+  if (action.type === REMOVE_CUSTOM_CATEGORY_NODE) {
+    return {
+      ...state,
+      nodes: state.nodes.filter((n) => n.id !== action.payload.node.id),
     };
   }
 

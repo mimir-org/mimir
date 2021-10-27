@@ -1,6 +1,6 @@
 import { Connector, Node } from "../../../../models";
 import { GetMenuColor, GetTerminalColor, SetMenuXPos } from "./helpers";
-import { TerminalsMenu, TerminalsElement, ColorBar } from "./styled";
+import { TerminalsMenu, TerminalsElement, ColorBar, CheckboxWrapper } from "./styled";
 
 interface Props {
   node: Node;
@@ -26,9 +26,9 @@ const TerminalsMenuComponent = ({ node, parent, input, terminals, visible, onCli
       <TerminalsMenu
         id={"terminals-menu-" + node.id}
         tabIndex={0}
-        onBlur={onBlur}
         parent={parent}
         input={input}
+        onBlur={onBlur}
         color={GetMenuColor(node)}
         xPos={SetMenuXPos(parent, electro, hasActiveTerminals, node?.width)}
       >
@@ -38,10 +38,10 @@ const TerminalsMenuComponent = ({ node, parent, input, terminals, visible, onCli
             <div className="text" onClick={() => onClick(conn)}>
               {conn.name}
             </div>
-            <label className={"checkbox-terminals"}>
+            <CheckboxWrapper>
               <input type="checkbox" checked={conn.visible} onChange={() => onClick(conn)} />
-              <span className="checkmark-terminals"></span>
-            </label>
+              <div className="checkmark"></div>
+            </CheckboxWrapper>
           </TerminalsElement>
         ))}
       </TerminalsMenu>

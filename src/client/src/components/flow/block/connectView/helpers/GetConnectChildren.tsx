@@ -1,4 +1,4 @@
-import { IsPartOfTerminal } from "../../../helpers";
+import { IsPartOf } from "../../../helpers";
 import { Edge, Node } from "../../../../../models";
 
 /**
@@ -12,7 +12,7 @@ const GetConnectChildren = (parentNode: Node, nodes: Node[], edges: Edge[]): Nod
   let children: Node[] = [];
 
   edges?.forEach((edge) => {
-    if (edge.fromNodeId === parentNode.id && edge.toNode?.aspect === parentNode?.aspect && IsPartOfTerminal(edge.toConnector)) {
+    if (edge.fromNodeId === parentNode.id && edge.toNode?.aspect === parentNode?.aspect && IsPartOf(edge.toConnector)) {
       const toNode = nodes?.find((node) => node.id === edge.toNodeId);
       if (toNode) children.push(toNode);
     }

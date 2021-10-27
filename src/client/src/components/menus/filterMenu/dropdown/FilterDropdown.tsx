@@ -2,7 +2,7 @@ import { useState } from "react";
 import { MenuWrapper, MenuHeader, MenuList, MenuListItem, CheckboxWrapper, ColorBar } from "./styled";
 import { ExpandIcon, CollapseIcon } from "../../../../assets/icons/chevron";
 import { Connector, Edge, Node } from "../../../../models";
-import { IsPartOfTerminal } from "../../../flow/helpers";
+import { IsPartOf } from "../../../flow/helpers";
 import { GetFilterColor, GetPartOfName } from "../helpers";
 
 interface Props {
@@ -26,7 +26,7 @@ const FilterDropdown = ({ terminals, label, nodes, edges, onChange }: Props) => 
         <MenuList>
           {terminals.map((conn) => {
             const edge = edges.find((x) => x.fromConnectorId === conn.id);
-            const name = IsPartOfTerminal(conn) ? GetPartOfName(conn, nodes) : conn.name;
+            const name = IsPartOf(conn) ? GetPartOfName(conn, nodes) : conn.name;
 
             return (
               <MenuListItem onClick={() => onChange(edge)} key={conn.id}>

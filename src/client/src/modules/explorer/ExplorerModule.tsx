@@ -13,7 +13,7 @@ import { animatedModuleSelector, explorerSelector, projectSelector } from "../..
  * Component for the Explorer Module in Mimir.
  * @returns a module where all nodes in Mimir are listed.
  */
-export const ExplorerModule = () => {
+export const ExplorerModule = ({ elements }) => {
   const dispatch = useAppDispatch();
   const type = MODULE_TYPE.EXPLORER;
   const project = useAppSelector(projectSelector);
@@ -30,7 +30,7 @@ export const ExplorerModule = () => {
         <p className="text">{TextResources.Module_Explorer}</p>
       </ModuleHead>
       <ModuleBody visible={isOpen} explorer isBlockView={IsBlockView()}>
-        {project && <ProjectComponent project={project} nodes={project.nodes ?? []} />}
+        {project && <ProjectComponent project={project} elements={elements} nodes={project.nodes ?? []} />}
       </ModuleBody>
     </AnimatedModule>
   );

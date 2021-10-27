@@ -1,7 +1,7 @@
 import { Connector, RelationType } from "../../../models";
 
-const IsPartOfTerminal = (conn: Connector) => {
+const IsPartOf = (conn: Connector) => {
   return conn?.relationType === RelationType.PartOf;
 };
 
-export default IsPartOfTerminal;
+export default IsPartOf;

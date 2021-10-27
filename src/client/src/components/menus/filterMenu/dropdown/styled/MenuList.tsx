@@ -12,7 +12,7 @@ const MenuList = styled.div`
   position: absolute;
   top: 32px;
   left: 0;
-  width: inherit;
+  width: 96%;
   max-height: 850px;
   margin-left: 10px;
   z-index: 1;

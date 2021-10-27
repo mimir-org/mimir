@@ -1,8 +1,8 @@
 import Moment from "react-moment";
 import { changeSelectedProject } from "../../../../redux/store/project/actions";
 import { ProjectSimple } from "../../../../models";
-import "./projectdata.scss";
 import { useAppDispatch } from "../../../../redux/store";
+import "./projectdata.scss";
 
 interface Props {
   projects: ProjectSimple[];

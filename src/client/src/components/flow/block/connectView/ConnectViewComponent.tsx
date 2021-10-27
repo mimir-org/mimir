@@ -3,7 +3,7 @@ import { Node } from "../../../../models";
 import { ConnectFunctionMenu, ConnectProductMenu } from "../../../../assets/icons/connectView";
 import { TextResources } from "../../../../assets/text";
 import { CalculateMenuPos } from "./helpers/position";
-import { ConnectViewBox, Menu, Element, Footer } from "./styled";
+import { ConnectViewBox, Menu, Element, Footer, CheckboxWrapper } from "./styled";
 import { IsFunction } from "../../helpers";
 import { Color } from "../../../../compLibrary";
 
@@ -55,10 +55,10 @@ const ConnectViewComponent = ({
               <div className="text" onClick={() => onClick(n)}>
                 {n.label ?? n.name}
               </div>
-              <label className={"checkbox-terminals"}>
+              <CheckboxWrapper>
                 <input type="checkbox" checked={isChecked(n, connectNodes)} onChange={() => onClick(n)} />
-                <span className="checkmark-terminals"></span>
-              </label>
+                <div className="checkmark"></div>
+              </CheckboxWrapper>
             </Element>
           );
         })}
