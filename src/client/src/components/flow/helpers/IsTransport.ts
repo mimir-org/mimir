@@ -1,7 +1,7 @@
 import { Connector } from "../../../models";
 
-const IsTransportTerminal = (conn: Connector) => {
+const IsTransport = (conn: Connector) => {
   return conn?.terminalCategoryId !== undefined;
 };
 
-export default IsTransportTerminal;
+export default IsTransport;

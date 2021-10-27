@@ -7,5 +7,3 @@ export { default as SetLeftPos } from "./SetLeftPos";
 export { default as SetMenuXPos } from "./SetMenuXPos";
 export { default as GetTerminalColor } from "./GetTerminalColor";
 export { default as GetMenuColor } from "./GetMenuColor";
-
-export { default as ShowTerminalsInputBox } from "./ShowTerminalsInputBox";

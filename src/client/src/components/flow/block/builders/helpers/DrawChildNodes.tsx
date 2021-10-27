@@ -1,7 +1,7 @@
 import { Elements } from "react-flow-renderer";
 import { BuildBlockNode } from "../";
 import { Node, Edge } from "../../../../../models";
-import { IsFamily, IsPartOfTerminal } from "../../../helpers";
+import { IsFamily, IsPartOf } from "../../../helpers";
 import { IsOffPage } from "../../helpers";
 
 /**
@@ -25,7 +25,7 @@ function validateEdge(edge: Edge, selectedNode: Node) {
   return (
     edge.fromNodeId === selectedNode?.id &&
     (IsFamily(selectedNode, edge.toNode) || IsOffPage(edge.toNode)) &&
-    IsPartOfTerminal(edge.toConnector)
+    IsPartOf(edge.toConnector)
   );
 }
 

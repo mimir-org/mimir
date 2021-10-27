@@ -107,10 +107,10 @@ const FlowBlock = () => {
               zoomOnScroll={true}
               paneMoveable={true}
               zoomOnDoubleClick={false}
-              defaultZoom={0.7}
+              defaultZoom={0.9}
               snapToGrid={true}
               snapGrid={[5, 5]}
-              defaultPosition={[1600, 900]}
+              defaultPosition={[2100, 1070]}
               onClick={(e) => OnBlockClick(e, dispatch, project)}
               onlyRenderVisibleElements={true}
             >
