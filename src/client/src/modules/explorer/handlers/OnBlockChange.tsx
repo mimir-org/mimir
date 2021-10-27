@@ -1,7 +1,7 @@
 import { setActiveBlockNode, setActiveNode, setNodeVisibility } from "../../../redux/store/project/actions";
 import { Node } from "../../../models";
 import { setSecondaryNode, removeSecondaryNode } from "../../../redux/store/secondaryNode/actions";
-import { IsFamily } from "../../../components/flow/helpers";
+import { IsFamily, IsParentOf } from "../../../components/flow/helpers";
 import { IsDirectChild } from "../../../components/flow/block/helpers";
 
 /**
@@ -21,10 +21,8 @@ export const OnBlockChange = (node: Node, selectedNode: Node, secondaryNode: Nod
   }
 
   // Handling same Aspect
-  if (selectedNode && IsFamily(node, selectedNode)) {
-    if (IsDirectChild(node, selectedNode)) dispatch(setNodeVisibility(node, true));
-    if (!IsDirectChild(node, selectedNode)) dispatch(setSecondaryNode(node));
-    if (!IsDirectChild(node, selectedNode) && node === secondaryNode) dispatch(removeSecondaryNode());
+  if (selectedNode && IsFamily(node, selectedNode) && node !== selectedNode) {
+    validateSameAspect(node, selectedNode, secondaryNode, dispatch);
     return;
   }
 
@@ -52,5 +50,11 @@ export const OnBlockChange = (node: Node, selectedNode: Node, secondaryNode: Nod
     dispatch(removeSecondaryNode());
   }
 };
+
+function validateSameAspect(node: Node, selectedNode: Node, secondaryNode, dispatch: any) {
+  if (IsDirectChild(node, selectedNode)) dispatch(setNodeVisibility(node, true));
+  if (!IsDirectChild(node, selectedNode) && !IsParentOf(node, selectedNode)) dispatch(setSecondaryNode(node));
+  if (!IsDirectChild(node, selectedNode) && node === secondaryNode) dispatch(removeSecondaryNode());
+}
 
 export default OnBlockChange;
