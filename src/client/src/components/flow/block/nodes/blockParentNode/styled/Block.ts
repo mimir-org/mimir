@@ -15,6 +15,7 @@ const Block = styled.div<Props>`
   border: 2px solid;
   border-color: ${Color.DarkGrey};
   width: ${Size.BlockView_Width - 4}px;
+  background-color: ${Color.White};
 `;
 
 export default Block;

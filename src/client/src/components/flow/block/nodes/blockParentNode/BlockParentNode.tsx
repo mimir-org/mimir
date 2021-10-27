@@ -1,7 +1,7 @@
 import { memo, FC, useState, useEffect } from "react";
-import { NodeProps, useUpdateNodeInternals } from "react-flow-renderer";
+import { Background, BackgroundVariant, NodeProps, useUpdateNodeInternals } from "react-flow-renderer";
 import { HandleComponent, TerminalsContainerComponent } from "../../terminals";
-import { Size } from "../../../../../compLibrary";
+import { Color, Size } from "../../../../../compLibrary";
 import { GetParentColor } from "./helpers";
 import { OnConnectorClick } from "./handlers";
 import { BlockComponent } from "./";
@@ -9,6 +9,7 @@ import { FilterTerminals, GetNodeByDataId } from "../../helpers";
 import { Node } from "../../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
 import { edgeSelector, electroSelector, nodeSelector, secondaryNodeSelector } from "../../../../../redux/store";
+import { IsLocation } from "../../../helpers";
 
 /**
  * Component for the large parent block in BlockView.
@@ -66,6 +67,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         electro={electro}
         connectNode={false}
       />
+      {IsLocation(data) && <Background style={{ zIndex: 1 }} variant={BackgroundVariant.Lines} color={Color.Grey} gap={20} />}
     </>
   );
 };

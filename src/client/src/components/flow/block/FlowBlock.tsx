@@ -1,4 +1,4 @@
-import ReactFlow, { ReactFlowProvider, Elements } from "react-flow-renderer";
+import ReactFlow, { ReactFlowProvider, Elements, Background } from "react-flow-renderer";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { FullScreenComponent } from "../../../compLibrary/controls";
 import { GetBlockEdgeTypes, IsBlockView, OnBlockClick } from "../block/helpers";
@@ -89,6 +89,13 @@ const FlowBlock = () => {
     OnLoad(flowInstance);
   }, [OnLoad, flowInstance, darkMode, electro]);
 
+  const defaultX = node?.positionBlockX ?? 0;
+  const defaultY = node?.positionBlockY ?? 0;
+
+  console.log({ defaultX });
+  console.log({ defaultY });
+  console.log(window.screen.width);
+
   return (
     <>
       {IsBlockView() && (
@@ -109,10 +116,11 @@ const FlowBlock = () => {
               paneMoveable={true}
               zoomOnDoubleClick={false}
               defaultZoom={0.7}
-              defaultPosition={[1500, 1000]}
+              // defaultPosition={[defaultX, defaultY]}
               onClick={(e) => OnBlockClick(e, dispatch, project)}
               onlyRenderVisibleElements={true}
             >
+              <Background />
               <MapComponent />
               <FullScreenComponent />
             </ReactFlow>
