@@ -119,12 +119,16 @@ namespace Mb.TypeEditor.Services.Services
             if (existingType?.Id == null)
                 throw new ModelBuilderNotFoundException($"There is no type with id:{id} to update.");
 
+            var existingTypeVersions = GetAllTypes()
+                .Where(x => x.TypeId == existingType.TypeId)
+                .OrderBy(x => double.Parse(x.Version, CultureInfo.InvariantCulture)).ToList();
+
+            if (double.Parse(existingType.Version, CultureInfo.InvariantCulture) <
+                double.Parse(existingTypeVersions[^1].Version, CultureInfo.InvariantCulture))
+                throw new ModelBuilderInvalidOperationException($"Not allowed to edit previous {existingType.Version} version. Latest version is {existingTypeVersions[^1].Version}");
+
             if (updateMajorVersion || updateMinorVersion)
             {
-                var existingTypeVersions = GetAllTypes()
-                    .Where(x => x.TypeId == existingType.TypeId)
-                    .OrderBy(x => double.Parse(x.Version, CultureInfo.InvariantCulture)).ToList();
-                
                 createLibraryType.Version = updateMajorVersion ? 
                     existingTypeVersions[^1].Version.IncrementMajorVersion() : 
                     existingTypeVersions[^1].Version.IncrementMinorVersion();
