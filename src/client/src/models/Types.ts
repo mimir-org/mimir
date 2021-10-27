@@ -83,14 +83,25 @@ export interface TerminalType {
 }
 
 export interface TerminalTypeItem {
-  id: string;
-  name: string;
+  terminalId: string;
   terminalTypeId: string;
   selected: boolean | false;
-  type: ConnectorType;
+  connectorType: ConnectorType;
   number: number;
-  terminalCategoryId: string;
-  attributes: AttributeType[];
+  categoryId: string;
+}
+
+export interface TerminalTypeExtended extends TerminalType {
+  type: ConnectorType;
+  terminalTypeId: string;
+  number: number;
+}
+
+export type TerminalTypeDict = TerminalTypeDictItem[];
+
+export interface TerminalTypeDictItem {
+  key: string;
+  value: TerminalType[];
 }
 
 export interface Purpose {

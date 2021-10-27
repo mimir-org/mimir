@@ -9,7 +9,8 @@ import {
   Attribute,
   AttributeType,
   CombinedAttribute,
-  TerminalTypeItem,
+  TerminalTypeExtended,
+  ConnectorType,
 } from "../../models";
 
 /**
@@ -33,9 +34,10 @@ export type AttributeLikeItem = Attribute | AttributeType;
 
 export type CombinedAttributeDict = { [name: string]: CombinedAttribute[] };
 
-export type TerminalLikeItem = Connector | TerminalTypeItem;
+export type TerminalLikeItem = Connector | TerminalTypeExtended;
 
 export type SelectedTerminalIdentifier = {
   id: string;
+  connectorType: ConnectorType;
   index: number;
 };

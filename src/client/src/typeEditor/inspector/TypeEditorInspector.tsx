@@ -16,7 +16,9 @@ import {
   iconSelector,
   attributeTypeSelector,
   isTypeEditorInspectorOpen,
+  terminalTypeSelector,
 } from "../../redux/store";
+import { GetFilteredTerminalTypeExtendedList } from "../helpers";
 import { useMemoArrayCompare } from "../helpers/useMemoArrayCompare";
 import { changeTypeEditorInspectorHeight, changeTypeEditorInspectorVisibility } from "../redux/actions";
 
@@ -34,11 +36,20 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
   const inspectorOpen = useAppSelector(isTypeEditorInspectorOpen);
   const icons = useAppSelector(iconSelector);
   const attributeTypes = useAppSelector(attributeTypeSelector);
+  const terminalTypes = useAppSelector(terminalTypeSelector);
+  const stop = inspectorOpen ? Size.TypeEditorInspectorOpen : Size.ModuleClosed;
+  const start = inspectorOpen ? Size.ModuleClosed : Size.TypeEditorInspectorOpen;
 
   const attributeLikeItems = useMemoArrayCompare(
     () => attributeTypes.filter((attr) => createLibraryType.attributeTypes.find((attrId) => attrId === attr.id)),
     [attributeTypes, createLibraryType.attributeTypes],
     createLibraryType.attributeTypes
+  );
+
+  const terminalLikeItems = useMemoArrayCompare(
+    () => GetFilteredTerminalTypeExtendedList(terminalTypes, createLibraryType.terminalTypes),
+    [terminalTypes, createLibraryType.terminalTypes],
+    createLibraryType.terminalTypes
   );
 
   const initialRenderCompleted = useRef(false);
@@ -49,9 +60,6 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
 
   const inspectorRef = useRef(null);
   const resizePanelRef = useRef(null);
-
-  const stop = inspectorOpen ? Size.TypeEditorInspectorOpen : Size.ModuleClosed;
-  const start = inspectorOpen ? Size.ModuleClosed : Size.TypeEditorInspectorOpen;
 
   useDragResizePanel(
     inspectorRef,
@@ -99,7 +107,7 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
         open={inspectorOpen}
         icons={icons}
         attributeLikeItems={attributeLikeItems}
-        terminalLikeItems={createLibraryType.terminalTypes}
+        terminalLikeItems={terminalLikeItems}
         inspectorRef={inspectorRef}
         changeInspectorVisibilityAction={changeTypeEditorInspectorVisibility}
         changeInspectorHeightAction={changeTypeEditorInspectorHeight}

@@ -13,8 +13,6 @@ interface Props {
 const AddTerminal = ({ terminals, defaultTerminal, onChange }: Props) => {
   const onTerminalIdChange = (item: TerminalType) => {
     defaultTerminal.terminalTypeId = item.id;
-    defaultTerminal.name = item.name;
-    defaultTerminal.attributes = item.attributes;
     onChange("update", defaultTerminal);
   };
 
@@ -24,7 +22,7 @@ const AddTerminal = ({ terminals, defaultTerminal, onChange }: Props) => {
   };
 
   const onDirectionChange = (item: number) => {
-    defaultTerminal.type = Number(item);
+    defaultTerminal.connectorType = Number(item);
     onChange("update", defaultTerminal);
   };
 
@@ -39,7 +37,7 @@ const AddTerminal = ({ terminals, defaultTerminal, onChange }: Props) => {
       />
       <DirectionalDropdown
         onChange={(item: number) => onDirectionChange(item)}
-        value={defaultTerminal ? Number(defaultTerminal.type) : Number(ConnectorType.Input)}
+        value={defaultTerminal ? Number(defaultTerminal.connectorType) : Number(ConnectorType.Input)}
       />
       <button onClick={() => onChange("remove", defaultTerminal)}>
         <img src={CloseIcon} alt="delete" className="delete-icon" />

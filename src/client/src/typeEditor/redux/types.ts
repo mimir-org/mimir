@@ -4,7 +4,6 @@ import {
   AttributeType,
   CreateLibraryType,
   Rds,
-  TerminalType,
   TerminalTypeItem,
   Aspect,
   Purpose,
@@ -13,6 +12,7 @@ import {
   BlobData,
   LibraryFilter,
   CompositeType,
+  TerminalTypeDict,
 } from "../../models";
 
 export const FETCHING_INITIAL_DATA = "FETCHING_INITIAL_DATA";
@@ -54,7 +54,7 @@ export interface TypeEditorState {
   createLibraryType: CreateLibraryType;
   purposes: Purpose[];
   rdsList: Rds[];
-  terminals: TerminalType[];
+  terminals: TerminalTypeDict;
   attributes: AttributeType[];
   locationTypes: LocationType[];
   predefinedAttributes: PredefinedAttribute[];
@@ -104,7 +104,7 @@ interface FetchingTerminalsAction {
 interface FetchingTerminalsActionFinished {
   type: typeof FETCHING_TERMINALS_SUCCESS_OR_ERROR;
   payload: {
-    terminals: TerminalType[];
+    terminals: TerminalTypeDict;
   };
 }
 

@@ -234,7 +234,9 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
         createLibraryType: {
           ...state.createLibraryType,
           terminalTypes: [
-            ...state.createLibraryType.terminalTypes.filter((terminal) => terminal.id !== action.payload.terminal.id),
+            ...state.createLibraryType.terminalTypes.filter(
+              (terminal) => terminal.terminalId !== action.payload.terminal.terminalId
+            ),
           ],
         },
       };
@@ -245,7 +247,7 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
           ...state.createLibraryType,
           terminalTypes: [
             ...state.createLibraryType.terminalTypes.map((terminal) =>
-              terminal.id === action.payload.terminal.id ? action.payload.terminal : terminal
+              terminal.terminalId === action.payload.terminal.terminalId ? action.payload.terminal : terminal
             ),
           ],
         },
@@ -257,7 +259,7 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
           ...state.createLibraryType,
           terminalTypes: [
             ...state.createLibraryType.terminalTypes.filter(
-              (terminal) => terminal.terminalCategoryId !== action.payload.categoryId
+              (terminal) => terminal.categoryId !== action.payload.categoryId
             ),
           ],
         },

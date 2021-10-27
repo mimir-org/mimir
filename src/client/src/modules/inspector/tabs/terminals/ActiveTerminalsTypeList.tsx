@@ -35,8 +35,12 @@ function ActiveTerminalsTypeList({
       return [...Array(numberOfItemsToRender).keys()].map((i) => (
         <TerminalListElement
           key={terminal.id + i}
-          isSelected={selectedTerminalIdentifier?.id === terminal.id && selectedTerminalIdentifier?.index === i}
-          onClick={() => onSelectTerminal({ id: terminal.id, index: i })}
+          isSelected={
+            selectedTerminalIdentifier?.id === terminal.id &&
+            selectedTerminalIdentifier?.index === i &&
+            selectedTerminalIdentifier?.connectorType === connectorType
+          }
+          onClick={() => onSelectTerminal({ id: terminal.id, index: i, connectorType: connectorType })}
         >
           {formatTerminalTypeName(terminal.name, connectorType)}
         </TerminalListElement>
@@ -49,7 +53,10 @@ function ActiveTerminalsTypeList({
     <TerminalsListElementWrapper>
       <TerminalTypeListElement
         onClick={() => onTypeClick(terminalType, connectorType)}
-        isSelected={selectedTerminal?.terminalTypeId === terminalType.id && selectedTerminal?.type === connectorType}
+        isSelected={
+          selectedTerminal?.terminalTypeId === terminalType.id &&
+          selectedTerminalIdentifier?.connectorType === connectorType
+        }
       >
         <div className="numTypeTerminals">{numTerminals}</div>
         {formatTerminalTypeName(terminalType.name, connectorType)}
