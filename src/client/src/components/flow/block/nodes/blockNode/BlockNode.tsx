@@ -102,7 +102,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
           terminals={terminals}
           parent={false}
           electro={electro}
-          mainConnectNode={mainConnectNode?.id === data.id}
+          connectNode={mainConnectNode?.id === data.id}
         />
         {!IsChildConnectNode(mainConnectNodes, data.id) && (
           <ConnectViewComponent

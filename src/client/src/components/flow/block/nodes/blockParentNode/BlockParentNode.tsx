@@ -70,7 +70,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         width={node?.width}
         terminals={terminals}
         electro={electro}
-        mainConnectNode={false}
+        connectNode={false}
       />
     </>
   );
