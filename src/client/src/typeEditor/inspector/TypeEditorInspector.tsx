@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { Action, Dispatch } from "redux";
 import { Size } from "../../compLibrary";
 import { CreateLibraryType } from "../../models";
@@ -19,7 +19,6 @@ import {
   terminalTypeSelector,
 } from "../../redux/store";
 import { GetFilteredTerminalTypeExtendedList } from "../helpers";
-import { useMemoArrayCompare } from "../helpers/useMemoArrayCompare";
 import { changeTypeEditorInspectorHeight, changeTypeEditorInspectorVisibility } from "../redux/actions";
 
 interface Props {
@@ -40,16 +39,14 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
   const stop = inspectorOpen ? Size.TypeEditorInspectorOpen : Size.ModuleClosed;
   const start = inspectorOpen ? Size.ModuleClosed : Size.TypeEditorInspectorOpen;
 
-  const attributeLikeItems = useMemoArrayCompare(
+  const attributeLikeItems = useMemo(
     () => attributeTypes.filter((attr) => createLibraryType.attributeTypes.find((attrId) => attrId === attr.id)),
-    [attributeTypes, createLibraryType.attributeTypes],
-    createLibraryType.attributeTypes
+    [attributeTypes, createLibraryType.attributeTypes]
   );
 
-  const terminalLikeItems = useMemoArrayCompare(
+  const terminalLikeItems = useMemo(
     () => GetFilteredTerminalTypeExtendedList(terminalTypes, createLibraryType.terminalTypes),
-    [terminalTypes, createLibraryType.terminalTypes],
-    createLibraryType.terminalTypes
+    [terminalTypes, createLibraryType.terminalTypes]
   );
 
   const initialRenderCompleted = useRef(false);
