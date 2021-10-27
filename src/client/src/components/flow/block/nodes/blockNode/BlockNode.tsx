@@ -53,12 +53,12 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   }, [mainConnectNode, data, connectNodes, mainConnectNodes]);
 
   // Force z-index to display edges in ConnectView
-  useEffect(() => {
-    if (mainConnectNode) {
-      const allEdges = FindAllEdges();
-      allEdges.style.zIndex = "3";
-    }
-  }, [mainConnectNode]);
+  // useEffect(() => {
+  //   if (mainConnectNode) {
+  //     const allEdges = FindAllEdges();
+  //     allEdges.style.zIndex = "3";
+  //   }
+  // }, [mainConnectNode]);
 
   useEffect(() => {
     updateNodeInternals(node?.id);
@@ -102,7 +102,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
           terminals={terminals}
           parent={false}
           electro={electro}
-          mainConnectNode={mainConnectNode?.id === data.id}
+          connectNode={mainConnectNode?.id === data.id}
         />
         {!IsChildConnectNode(mainConnectNodes, data.id) && (
           <ConnectViewComponent

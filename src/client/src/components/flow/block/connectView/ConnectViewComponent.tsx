@@ -46,7 +46,7 @@ const ConnectViewComponent = ({
       <Menu
         bottom={CalculateMenuPos(children.length)}
         tabIndex={0}
-        onBlur={onBlur}
+        // onBlur={onBlur}
         color={IsFunction(node) ? Color.FunctionSelected : Color.ProductSelected}
       >
         {children.map((n: Node) => {
