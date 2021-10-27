@@ -21,8 +21,6 @@ interface Props {
 const TerminalsMenuComponent = ({ node, parent, input, terminals, visible, onClick, onBlur, electro }: Props) => {
   const hasActiveTerminals = terminals.some((conn) => conn.visible);
 
-  const test = document.getElementById("terminals-menu-equinor.com_ec36d459-059d-47ef-a0de-ffc4683c4366");
-
   return (
     visible && (
       <TerminalsMenu

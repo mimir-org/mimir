@@ -172,7 +172,11 @@
 }
 
 .terminals-dropdown {
-  z-index: 5 !important;
+  z-index: 4 !important;
+}
+
+.react-flow__edges {
+  z-index: 4;
 }
 
 .react-flow__handle.connectable {

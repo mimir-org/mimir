@@ -67,8 +67,6 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
 
   electro ? SetNodeWidth(terminals, data) : SetNodeLength(terminals, data);
 
-  const test = document.getElementById("terminals-menu-equinor.com_ec36d459-059d-47ef-a0de-ffc4683c4366");
-
   return (
     <>
       <NodeBox
