@@ -9,7 +9,7 @@ import { NodeBox } from "../../../styled";
 import { TerminalsContainerComponent, HandleComponent } from "../../terminals";
 import { ConnectViewComponent } from "../../connectView";
 import { IsChildConnectNode, IsConnectNodeChecked, SetNodeWidth, SetNodeLength } from "./helpers";
-import { FilterTerminals, FindAllEdges } from "../../helpers";
+import { FilterTerminals } from "../../helpers";
 import { Symbol } from "../../../../../compLibrary/symbol";
 import { BlockNodeNameBox } from "../../styled";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
@@ -51,14 +51,6 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
     SetConnectNodeColor(mainConnectNode?.id, connectNodes, data);
     ResizeConnectNode(connectNodes?.length, mainConnectNode, data);
   }, [mainConnectNode, data, connectNodes, mainConnectNodes]);
-
-  // Force z-index to display edges in ConnectView
-  // useEffect(() => {
-  //   if (mainConnectNode) {
-  //     const allEdges = FindAllEdges();
-  //     allEdges.style.zIndex = "3";
-  //   }
-  // }, [mainConnectNode]);
 
   useEffect(() => {
     updateNodeInternals(node?.id);
