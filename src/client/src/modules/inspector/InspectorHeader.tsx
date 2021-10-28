@@ -10,7 +10,7 @@ import { InspectorTabs } from ".";
 import { useState } from "react";
 import { InspectorButtonType } from "../../compLibrary/buttons/inspector/InspectorButton";
 import { IsAspectNode } from "../../components/flow/helpers";
-import { AttributeLikeItem, InspectorElement, TerminalLikeItem } from "./types";
+import { AttributeLikeItem, CompositeLikeItem, InspectorElement, TerminalLikeItem } from "./types";
 import { IsCreateLibraryType, IsEdge, IsNode } from "./helpers/IsType";
 import { GetSelectedIcon } from "../../typeEditor/helpers";
 import { Action, Dispatch } from "redux";
@@ -26,6 +26,7 @@ interface Props {
   onToggle?: Function;
   attributeLikeItems?: AttributeLikeItem[];
   terminalLikeItems?: TerminalLikeItem[];
+  compositeLikeItems?: CompositeLikeItem[];
   icons?: BlobData[];
 }
 
@@ -41,6 +42,7 @@ const InspectorHeader = ({
   icons,
   attributeLikeItems,
   terminalLikeItems,
+  compositeLikeItems,
 }: Props) => {
   const [validated, setValidated] = useState(false);
 
@@ -54,6 +56,7 @@ const InspectorHeader = ({
           element={element}
           attributeLikeItems={attributeLikeItems}
           terminalLikeItems={terminalLikeItems}
+          compositeLikeItems={compositeLikeItems}
         />
       )}
 
@@ -100,9 +103,7 @@ const InspectorHeader = ({
           </>
         )}
         <Title
-          onClick={() =>
-            onToggle(dispatch, open, inspectorRef, changeInspectorVisibilityAction, changeInspectorHeightAction)
-          }
+          onClick={() => onToggle(dispatch, open, inspectorRef, changeInspectorVisibilityAction, changeInspectorHeightAction)}
         >
           {TextResources.Module_Inspector}
         </Title>
@@ -110,9 +111,7 @@ const InspectorHeader = ({
           <img
             src={open ? DownIcon : UpIcon}
             alt="toggle-icon"
-            onClick={() =>
-              onToggle(dispatch, open, inspectorRef, changeInspectorVisibilityAction, changeInspectorHeightAction)
-            }
+            onClick={() => onToggle(dispatch, open, inspectorRef, changeInspectorVisibilityAction, changeInspectorHeightAction)}
           />
         </ToggleBox>
       </ButtonWrapper>

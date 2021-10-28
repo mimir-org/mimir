@@ -11,6 +11,7 @@ import {
   CombinedAttribute,
   TerminalTypeExtended,
   ConnectorType,
+  CompositeType,
 } from "../../models";
 
 /**
@@ -28,13 +29,15 @@ export type InspectorTerminalsElement = Node | Transport | Interface | CreateLib
  * Union type of possible top elements chosen for parameters view in inspector, i.e. what element owns the attributes shown in parameters view.
  * This can either be attributes directly on the object itself (Node, Transport, Interface, Composite), or on it's terminals (via terminals view).
  */
-export type InspectorParametersElement = InspectorTerminalsElement | TerminalLikeItem | Composite;
+export type InspectorParametersElement = InspectorTerminalsElement | TerminalLikeItem | CompositeLikeItem;
 
 export type AttributeLikeItem = Attribute | AttributeType;
 
 export type CombinedAttributeDict = { [name: string]: CombinedAttribute[] };
 
 export type TerminalLikeItem = Connector | TerminalTypeExtended;
+
+export type CompositeLikeItem = Composite | CompositeType;
 
 export type SelectedTerminalIdentifier = {
   id: string;

@@ -144,11 +144,18 @@ export interface BlobData {
   discipline: Discipline;
 }
 
-export interface CompositeType {
+export interface CompositeTypeResponse {
   id: string;
   name: string;
   semanticReference: string;
   attributeTypes: AttributeType[];
+}
+
+export interface CompositeType {
+  id: string;
+  name: string;
+  semanticReference: string;
+  attributes: AttributeType[];
 }
 
 export interface CommitPackage {

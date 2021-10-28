@@ -17,6 +17,7 @@ import {
   isTypeEditorInspectorOpen,
   terminalTypeSelector,
   animatedModuleSelector,
+  simpleTypeSelector,
 } from "../../redux/store";
 import { GetFilteredTerminalTypeExtendedList } from "../helpers";
 import { GetPropertiesHeight } from "../helpers/GetPropertiesHeight";
@@ -37,6 +38,7 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
   const icons = useAppSelector(iconSelector);
   const attributeTypes = useAppSelector(attributeTypeSelector);
   const terminalTypes = useAppSelector(terminalTypeSelector);
+  const simpleTypes = useAppSelector(simpleTypeSelector);
   const stop = inspectorOpen ? Size.TypeEditorInspectorOpen : Size.ModuleClosed;
   const start = inspectorOpen ? Size.ModuleClosed : Size.TypeEditorInspectorOpen;
 
@@ -48,6 +50,11 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
   const terminalLikeItems = useMemo(
     () => GetFilteredTerminalTypeExtendedList(terminalTypes, createLibraryType.terminalTypes),
     [terminalTypes, createLibraryType.terminalTypes]
+  );
+
+  const compositeLikeItems = useMemo(
+    () => simpleTypes.filter((simp) => createLibraryType.compositeTypes.find((comp) => simp.id === comp)),
+    [simpleTypes, createLibraryType.compositeTypes]
   );
 
   const initialRenderCompleted = useRef(false);
@@ -106,6 +113,7 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
         icons={icons}
         attributeLikeItems={attributeLikeItems}
         terminalLikeItems={terminalLikeItems}
+        compositeLikeItems={compositeLikeItems}
         inspectorRef={inspectorRef}
         changeInspectorVisibilityAction={changeTypeEditorInspectorVisibility}
         changeInspectorHeightAction={changeTypeEditorInspectorHeight}

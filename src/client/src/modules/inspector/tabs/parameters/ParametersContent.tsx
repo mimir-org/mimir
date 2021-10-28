@@ -45,13 +45,11 @@ const ParametersContent = ({
   );
 
   useEffect(() => {
-    IsCreateLibraryType(parametersElement) &&
+    IsCreateLibraryType(inspectorParentElement) &&
       OnIsCreateLibraryType(parametersElement, attributeFilters, selectedFilters, attributeCombinations, dispatch);
-  }, [parametersElement, attributeFilters, selectedFilters, attributeCombinations, dispatch]);
+  }, [inspectorParentElement, parametersElement, attributeFilters, selectedFilters, attributeCombinations, dispatch]);
 
-  const maxNumSelectedCombinations = Math.max(
-    ...Object.values(selectedFilters).map((combinations) => combinations.length)
-  );
+  const maxNumSelectedCombinations = Math.max(...Object.values(selectedFilters).map((combinations) => combinations.length));
 
   const [colorMapping] = useState(new Map<string, [string, string]>());
 

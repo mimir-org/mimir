@@ -5,12 +5,7 @@ import { DoesCombinationMatchAttribute } from "./helpers";
 import { Body, Entity, Box } from "./styled";
 import { CombinationDropdown } from "./CombinationDropdown";
 import { RemoveIconComponent } from "../../../../assets/icons/close";
-import {
-  OnChangeParameterValue,
-  OnChangeFilterChoice,
-  OnLockParameter,
-  OnChangeAttributeCombinationChoice,
-} from "./handlers";
+import { OnChangeParameterValue, OnChangeFilterChoice, OnLockParameter, OnChangeAttributeCombinationChoice } from "./handlers";
 import { useMemo } from "react";
 import { AttributeLikeItem, InspectorElement, InspectorParametersElement, InspectorTerminalsElement } from "../../types";
 import { GetAttributes } from "./helpers/GetAttributes";
@@ -50,7 +45,7 @@ function ParameterRow({
   const attributes = attributeLikeItems ?? GetAttributes(element);
   const attributeKey = GetAttributeLikeItemKey(attributes?.[0]);
 
-  const isCreateLibraryType = IsCreateLibraryType(element);
+  const isCreateLibraryType = IsCreateLibraryType(inspectorParentElement);
 
   const bodyWidth = useMemo(
     () => maxNumSelectedCombinations * PARAMETER_ENTITY_WIDTH + FILTER_ENTITY_WIDTH,
@@ -95,15 +90,7 @@ function ParameterRow({
             headerColor={headerColor}
             bodyColor={bodyColor}
             onChange={(id, value, unit) =>
-              OnChangeParameterValue(
-                element,
-                inspectorParentElement,
-                terminalParentElement,
-                id,
-                value,
-                unit?.id,
-                dispatch
-              )
+              OnChangeParameterValue(element, inspectorParentElement, terminalParentElement, id, value, unit?.id, dispatch)
             }
             onLock={(attribute, isLocked) =>
               OnLockParameter(

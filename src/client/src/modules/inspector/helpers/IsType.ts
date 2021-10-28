@@ -36,5 +36,4 @@ export const IsAttribute = (element: any): element is Attribute => element?.kind
 
 type AttributeLikeItemKey = "key" | "entity";
 
-export const GetAttributeLikeItemKey = (item: AttributeLikeItem): AttributeLikeItemKey =>
-  IsAttribute(item) ? "key" : "entity";
+export const GetAttributeLikeItemKey = (item: AttributeLikeItem): AttributeLikeItemKey => (IsAttribute(item) ? "key" : "entity");

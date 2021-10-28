@@ -1,11 +1,11 @@
 import { Dispatch } from "redux";
-import { CombinedAttributeFilter, CreateLibraryType } from "../../../../../models";
-import { CombinedAttributeDict } from "../../../types";
+import { CombinedAttributeFilter } from "../../../../../models";
+import { CombinedAttributeDict, InspectorParametersElement } from "../../../types";
 import { addAllAttributeFilters, addCombinedAttribute } from "../redux/actions";
 import { FilterDict } from "../redux/types";
 
 export const OnIsCreateLibraryType = (
-  createLibraryType: CreateLibraryType,
+  parametersElement: InspectorParametersElement,
   attributeFilters: CombinedAttributeFilter[],
   selectedFilters: FilterDict,
   attributeCombinations: CombinedAttributeDict,
@@ -14,14 +14,14 @@ export const OnIsCreateLibraryType = (
   if (attributeFilters.length !== Object.keys(selectedFilters).length) {
     dispatch(
       addAllAttributeFilters(
-        createLibraryType.id,
+        parametersElement.id,
         attributeFilters.map((filter) => filter.name)
       )
     );
 
     attributeFilters.forEach((filter) =>
       attributeCombinations[filter.name].forEach((combination) =>
-        dispatch(addCombinedAttribute(createLibraryType.id, filter.name, combination))
+        dispatch(addCombinedAttribute(parametersElement.id, filter.name, combination))
       )
     );
   }
