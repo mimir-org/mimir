@@ -1,5 +1,5 @@
 /**
- * Method to set the terminals menu's X position.
+ * Method to set the terminal menu's X position.
  * @param parent
  * @param electro
  * @param hasActiveTerminals

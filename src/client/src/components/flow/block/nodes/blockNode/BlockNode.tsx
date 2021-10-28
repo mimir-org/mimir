@@ -3,7 +3,7 @@ import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, useUpdateNodeInternals } from "react-flow-renderer";
 import { Node } from "../../../../../models";
 import { Size } from "../../../../../compLibrary";
-import { IsFunction, IsProduct } from "../../../helpers";
+import { GetSelectedNode, IsFunction, IsProduct } from "../../../helpers";
 import { NodeBox } from "../../../styled";
 import { TerminalsContainerComponent, HandleComponent } from "../../terminals";
 import { SetNodeWidth, SetNodeLength } from "./helpers";
@@ -32,7 +32,8 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
 
   const type = IsFunction(data) ? "BlockFunctionNode-" : "BlockProductNode-";
   const node = nodes?.find((x) => x.id === data.id);
-  const terminals = FilterTerminals(data, secondaryNode);
+  const selectedNode = GetSelectedNode();
+  const terminals = FilterTerminals(data, selectedNode, secondaryNode);
 
   data.width = Size.Node_Width;
   data.length = Size.Node_Height;

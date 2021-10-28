@@ -4,6 +4,7 @@ import { setBlockNodeSize } from "../../../redux/actions";
 
 /**
  * Function to update the ParentNode's size. The size changes if two nodes are displayed in BlockView.
+ * The size is based on the client's screen size.
  * @param node
  * @param secondaryNode
  * @param dispatch

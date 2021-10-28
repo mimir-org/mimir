@@ -7,7 +7,7 @@ import { OnConnectorClick } from "./handlers";
 import { BlockComponent } from "./";
 import { FilterTerminals } from "../../helpers";
 import { Node } from "../../../../../models";
-import { IsLocation } from "../../../helpers";
+import { GetSelectedNode, IsLocation } from "../../../helpers";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
 import { edgeSelector, electroSelector, nodeSelector, nodeSizeSelector, secondaryNodeSelector } from "../../../../../redux/store";
 
@@ -26,10 +26,11 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const electro = useAppSelector(electroSelector);
   const parentNodeSize = useAppSelector(nodeSizeSelector);
   const updateNodeInternals = useUpdateNodeInternals();
+  const selectedNode = GetSelectedNode();
   const node = nodes?.find((x) => x.id === data.id);
   if (node) node.blockWidth = parentNodeSize?.width;
 
-  const terminals = FilterTerminals(data, secondaryNode);
+  const terminals = FilterTerminals(data, selectedNode, secondaryNode);
 
   useEffect(() => {
     updateNodeInternals(node?.id);
