@@ -4,15 +4,20 @@ import { TerminalCategory } from "../../../../typeEditor/helpers/GetFilteredTerm
 import { ConnectorType, TerminalType } from "../../../../models";
 import { ActiveTerminalsTypeList } from "./";
 import { OnCategoryClick, OnTypeClick } from "./handlers";
+import { ExpandAccordionIcon, CollapseAccordionIcon } from "../../../../assets/icons/toogle";
+import { SelectedTerminalIdentifier, TerminalLikeItem } from "../../types";
 import {
   FilterTerminalCategories,
   FormatTypeId,
   GetInputAndOutputTerminalsByTerminalType,
   GetNumTerminalsByCategory,
 } from "./helpers";
-import { ExpandAccordionIcon, CollapseAccordionIcon } from "../../../../assets/icons/toogle";
-import { TerminalsListElementWrapper, TerminalsCategoryListElement } from "./styled/activeTerminalList";
-import { SelectedTerminalIdentifier, TerminalLikeItem } from "../../types";
+
+import {
+  TerminalsListElementWrapper,
+  TerminalsCategoryListElement,
+  ActiveTerminalListWrapper,
+} from "./styled/activeTerminalList";
 
 interface Props {
   terminals: TerminalLikeItem[];
@@ -46,7 +51,7 @@ function ActiveTerminalsList({
     selectedTypesIds.includes(FormatTypeId(type, connectorType));
 
   return (
-    <>
+    <ActiveTerminalListWrapper>
       {filteredCategories.map((category, i) => {
         const categoryExpanded = isCategoryExpanded(category);
         const numCategoryTerminals = numTerminalsByCategoryId.get(category.id);
@@ -114,7 +119,7 @@ function ActiveTerminalsList({
           </TerminalsListElementWrapper>
         );
       })}
-    </>
+    </ActiveTerminalListWrapper>
   );
 }
 
