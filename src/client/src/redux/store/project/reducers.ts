@@ -207,8 +207,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
       }
 
       if (isParent) {
-        console.log("parent", node);
-        let elements: (Node | Edge)[] = [];
+        const elements: (Node | Edge)[] = [];
         elements.push(node);
 
         TraverseTree(edgeList, nodeList, node, elements);

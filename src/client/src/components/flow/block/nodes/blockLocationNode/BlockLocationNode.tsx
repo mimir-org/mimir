@@ -79,7 +79,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
         terminals={terminals}
         parent={false}
         electro={electro}
-        mainConnectNode={false}
+        connectNode={false}
       />
     </>
   );

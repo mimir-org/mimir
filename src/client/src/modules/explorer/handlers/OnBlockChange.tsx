@@ -1,10 +1,13 @@
-import { setActiveBlockNode, setActiveNode } from "../../../redux/store/project/actions";
+import { setActiveBlockNode, setActiveNode, setNodeVisibility } from "../../../redux/store/project/actions";
 import { Node } from "../../../models";
 import { setSecondaryNode, removeSecondaryNode } from "../../../redux/store/secondaryNode/actions";
-import { IsFamily } from "../../../components/flow/helpers";
+import { IsFamily, IsParentOf } from "../../../components/flow/helpers";
+import { IsDirectChild } from "../../../components/flow/block/helpers";
 
 /**
  * Component to handle all clicks on checkboxes in the BlockView's Explorer Module.
+ * Currently two parentNodes can be displayed at the same time - selectedNode and secondaryNode
+ * Two parentNodes of the same Aspect can also be displayed, unless it is a direct parent/child relation.
  * @param node
  * @param selectedNode
  * @param secondaryNode
@@ -17,6 +20,12 @@ export const OnBlockChange = (node: Node, selectedNode: Node, secondaryNode: Nod
       dispatch(removeSecondaryNode());
       return;
     }
+  }
+
+  // Handling same Aspect
+  if (selectedNode && IsFamily(node, selectedNode) && node !== selectedNode) {
+    validateSiblings(node, selectedNode, secondaryNode, dispatch);
+    return;
   }
 
   // Toggle off selectedNode
@@ -39,9 +48,13 @@ export const OnBlockChange = (node: Node, selectedNode: Node, secondaryNode: Nod
   }
 
   // Remove SecondaryNode
-  if (selectedNode && node === secondaryNode) {
-    dispatch(removeSecondaryNode());
-  }
+  if (node === secondaryNode) dispatch(removeSecondaryNode());
 };
+
+function validateSiblings(node: Node, selected: Node, secondary: Node, dispatch: any) {
+  if (IsDirectChild(node, selected)) dispatch(setNodeVisibility(node, true));
+  if (!IsDirectChild(node, selected) && !IsParentOf(node, selected)) dispatch(setSecondaryNode(node));
+  if (!IsDirectChild(node, selected) && node === secondary) dispatch(removeSecondaryNode());
+}
 
 export default OnBlockChange;

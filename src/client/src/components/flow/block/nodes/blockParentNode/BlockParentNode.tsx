@@ -5,7 +5,7 @@ import { Size } from "../../../../../compLibrary";
 import { GetParentColor } from "./helpers";
 import { OnConnectorClick } from "./handlers";
 import { BlockComponent } from "./";
-import { FilterTerminals, GetNodeByDataId, FindAllEdges } from "../../helpers";
+import { FilterTerminals, GetNodeByDataId } from "../../helpers";
 import { Node } from "../../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
 import { edgeSelector, electroSelector, nodeSelector, secondaryNodeSelector } from "../../../../../redux/store";
@@ -33,12 +33,6 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
     const parentNode = GetNodeByDataId(data.id);
     parentNode.style.width = `${Size.BlockView_Width}px`;
   }, [data]);
-
-  // Force z-index to display edges in ConnectView
-  useEffect(() => {
-    const allEdges = FindAllEdges();
-    allEdges.style.zIndex = "3";
-  }, []);
 
   useEffect(() => {
     updateNodeInternals(node?.id);
@@ -70,7 +64,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         width={node?.width}
         terminals={terminals}
         electro={electro}
-        mainConnectNode={false}
+        connectNode={false}
       />
     </>
   );

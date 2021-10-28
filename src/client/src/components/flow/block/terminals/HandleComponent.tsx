@@ -14,14 +14,14 @@ interface Props {
   terminals: Connector[];
   parent: boolean;
   electro: boolean;
-  mainConnectNode: boolean;
+  connectNode: boolean;
 }
 /**
  * Component for the terminals displayed on the nodes in BlockView.
  * @param interface
  * @returns a Mimir terminal in form of a Flow Handle element with an icon on top.
  */
-const HandleComponent = ({ node, nodes, length, width, terminals, parent, electro, mainConnectNode }: Props) => (
+const HandleComponent = ({ node, nodes, length, width, terminals, parent, electro, connectNode }: Props) => (
   <>
     {terminals.map((conn) => {
       const [type, pos] = GetBlockHandleType(conn, node?.isSelected, false, electro);
@@ -32,8 +32,8 @@ const HandleComponent = ({ node, nodes, length, width, terminals, parent, electr
           <HandleBox
             visible={conn.visible}
             id={"handle-" + conn.id}
-            top={SetTopPos(pos, electro, parent, order, length, mainConnectNode)}
-            left={SetLeftPos(pos, electro, parent, order, width, mainConnectNode)}
+            top={SetTopPos(conn, pos, electro, parent, order, length, connectNode)}
+            left={SetLeftPos(conn, pos, electro, parent, order, width, connectNode)}
           >
             <ConnectorIcon style={{ fill: GetTerminalColor(conn) }} className={"react-flow__handle-block"} />
             <Handle
