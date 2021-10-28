@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Mb.Models.Extensions;
 
 namespace Mb.Models.Data
 {
@@ -14,7 +15,6 @@ namespace Mb.Models.Data
         public bool IsSubProject { get; set; }
 
         [Required]
-        [RegularExpression(@"^(?=.*[1-9])\d+(\.[0-9]?)?$", ErrorMessage = "The version format must be at x.y")]
         public string Version { get; set; }
 
         [Required]
@@ -35,6 +35,29 @@ namespace Mb.Models.Data
         public virtual ICollection<Node> Nodes { get; set; }
         public virtual ICollection<Edge> Edges { get; set; }
 
-        
+        public void IncrementMajorVersion()
+        {
+            if (Version.Length == 3)
+                Version += ".0";
+
+            Version = Version.IncrementMajorVersion();
+        }
+
+        public void IncrementMinorVersion()
+        {
+            if (Version.Length == 3)
+                Version += ".0";
+
+            Version = Version.IncrementMinorVersion();
+        }
+
+        public void IncrementCommitVersion()
+        {
+            if (Version.Length == 3)
+                Version += ".0";
+
+            Version = Version.IncrementCommitVersion();
+        }
+
     }
 }

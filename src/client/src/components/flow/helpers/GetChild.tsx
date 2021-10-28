@@ -1,4 +1,4 @@
-import { IsPartOfTerminal } from ".";
+import { IsPartOf } from ".";
 import { Node, Edge } from "../../../models";
 
 /**
@@ -11,7 +11,7 @@ import { Node, Edge } from "../../../models";
 
 // TODO: this is used to traverse down one step in BlockView. How to find the correct child node will be defined later.
 const GetChild = (node: Node, nodes: Node[], edges: Edge[]) => {
-  const childEdge = edges.find((e) => e.fromNodeId === node.id && IsPartOfTerminal(e.toConnector));
+  const childEdge = edges.find((e) => e.fromNodeId === node.id && IsPartOf(e.toConnector));
   const childNode = nodes.find((n) => n.id === childEdge?.toNodeId);
 
   return childNode ?? node;

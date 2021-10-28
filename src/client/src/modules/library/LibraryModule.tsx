@@ -11,17 +11,8 @@ import { MODULE_TYPE } from "../../models/project";
 import { GetSelectedNode } from "../../components/flow/helpers";
 import { OnLibraryClick, OnLegendClick } from "./handlers";
 import { LegendIcon, LibraryIcon } from "../../assets/icons/modules";
-import {
-  isAnimatedModuleSelector,
-  isLegendOpenSelector,
-  isLibOpenSelector,
-  librarySelector,
-  projectSelector,
-  splitViewSelector,
-  useAppDispatch,
-  useAppSelector,
-  useParametricAppSelector,
-} from "../../redux/store";
+import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store/hooks";
+import { animatedModuleSelector, legendOpenSelector, libOpenSelector, librarySelector, projectSelector } from "../../redux/store";
 
 /**
  * Component for Mimir's type library and Legend Module (to be removed).
@@ -39,11 +30,10 @@ const LibraryModule = () => {
 
   const libState = useAppSelector(librarySelector);
   const project = useAppSelector(projectSelector);
-  const splitView = useAppSelector(splitViewSelector);
-  const legendOpen = useAppSelector(isLegendOpenSelector);
-  const animate = useParametricAppSelector(isAnimatedModuleSelector, lib);
-  const libOpen = useAppSelector(isLibOpenSelector);
-  const animateLegend = useParametricAppSelector(isAnimatedModuleSelector, legend);
+  const legendOpen = useAppSelector(legendOpenSelector);
+  const animate = useParametricAppSelector(animatedModuleSelector, lib);
+  const libOpen = useAppSelector(libOpenSelector);
+  const animateLegend = useParametricAppSelector(animatedModuleSelector, legend);
 
   const selectedNode = GetSelectedNode();
   const startLib = libOpen ? Size.ModuleClosed : Size.ModuleOpen;
@@ -54,16 +44,11 @@ const LibraryModule = () => {
   return (
     <AnimatedModule start={startLib} stop={stopLib} run={animate} type={lib} id="LibraryModule">
       <ModuleHead library visible={libOpen}>
-        <img
-          className="icon"
-          src={LibraryIcon}
-          alt="toggle"
-          onClick={() => OnLibraryClick(dispatch, libOpen, lib, legend)}
-        />
+        <img className="icon" src={LibraryIcon} alt="toggle" onClick={() => OnLibraryClick(dispatch, libOpen, lib, legend)} />
         <p className="text">{TextResources.Module_Library}</p>
       </ModuleHead>
       <ModuleBody visible={libOpen}>
-        <LibraryComponent categories={GetLibCategories(selectedNode, splitView, libState)} search={search} />
+        <LibraryComponent categories={GetLibCategories(selectedNode, libState)} search={search} dispatch={dispatch} />
       </ModuleBody>
 
       <AnimatedModule start={startLegend} stop={stopLegend} run={animateLegend} type={legend} id="LegendModule">

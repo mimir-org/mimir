@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -6,6 +8,7 @@ using Mb.Models.Application.TypeEditor;
 using Mb.Models.Data.TypeEditor;
 using Mb.Models.Enums;
 using Mb.Models.Exceptions;
+using Mb.Models.Extensions;
 using Mb.TypeEditor.Data.Contracts;
 using Mb.TypeEditor.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
@@ -54,7 +57,8 @@ namespace Mb.TypeEditor.Services.Services
                     .ThenInclude(y => y.AttributeTypes)
                     .FirstOrDefaultAsync();
             }
-            else if (libraryTypeComponent is TransportType)
+
+            if (libraryTypeComponent is TransportType)
             {
                 return await _libraryTypeComponentRepository.FindBy(x => x.Id == id)
                     .OfType<TransportType>()
@@ -62,7 +66,8 @@ namespace Mb.TypeEditor.Services.Services
                     .Include(x => x.AttributeTypes)
                     .FirstOrDefaultAsync();
             }
-            else if (libraryTypeComponent is InterfaceType)
+            
+            if (libraryTypeComponent is InterfaceType)
             {
                 return await _libraryTypeComponentRepository.FindBy(x => x.Id == id)
                     .OfType<InterfaceType>()
@@ -80,108 +85,7 @@ namespace Mb.TypeEditor.Services.Services
         /// <returns></returns>
         public async Task<IEnumerable<LibraryType>> CreateLibraryTypes(ICollection<CreateLibraryType> createLibraryTypes)
         {
-            var createdLibraryTypes = new List<LibraryType>();
-
-            if (createLibraryTypes == null || !createLibraryTypes.Any())
-                return createdLibraryTypes;
-
-            foreach (var createLibraryType in createLibraryTypes)
-            {
-                if (createLibraryType.Aspect == Aspect.Location)
-                    createLibraryType.ObjectType = ObjectType.ObjectBlock;
-
-                LibraryType libraryType = createLibraryType.ObjectType switch
-                {
-                    ObjectType.ObjectBlock => _mapper.Map<NodeType>(createLibraryType),
-                    ObjectType.Interface => _mapper.Map<InterfaceType>(createLibraryType),
-                    ObjectType.Transport => _mapper.Map<TransportType>(createLibraryType),
-                    _ => null
-                };
-
-                if (libraryType?.Id == null)
-                    return null;
-
-                var existingType = await _libraryTypeComponentRepository.GetAsync(libraryType.Id);
-                if (existingType != null)
-                    throw new ModelBuilderDuplicateException($"The type with id:{libraryType.Id} already exist.");
-
-                switch (libraryType)
-                {
-                    case NodeType nt:
-                        {
-                            if (nt.AttributeTypes != null && nt.AttributeTypes.Any())
-                            {
-                                foreach (var attributeType in nt.AttributeTypes)
-                                {
-                                    _attributeTypeRepository.Attach(attributeType, EntityState.Unchanged);
-                                }
-                            }
-
-                            if (nt.CompositeTypes != null && nt.CompositeTypes.Any())
-                            {
-                                foreach (var compositeType in nt.CompositeTypes)
-                                {
-                                    _compositeTypeRepository.Attach(compositeType, EntityState.Unchanged);
-                                }
-                            }
-
-                            await _libraryTypeComponentRepository.CreateAsync(nt);
-                            await _libraryTypeComponentRepository.SaveAsync();
-
-                            if (nt.AttributeTypes != null && nt.AttributeTypes.Any())
-                            {
-                                foreach (var attributeType in nt.AttributeTypes)
-                                {
-                                    _attributeTypeRepository.Detach(attributeType);
-                                }
-                            }
-
-                            if (nt.CompositeTypes != null && nt.CompositeTypes.Any())
-                            {
-                                foreach (var compositeType in nt.CompositeTypes)
-                                {
-                                    _compositeTypeRepository.Detach(compositeType);
-                                }
-                            }
-
-                            createdLibraryTypes.Add(nt);
-                            continue;
-                        }
-                    case InterfaceType it:
-                        await _libraryTypeComponentRepository.CreateAsync(it);
-                        await _libraryTypeComponentRepository.SaveAsync();
-                        createdLibraryTypes.Add(it);
-                        continue;
-                    case TransportType tt:
-                        {
-                            if (tt.AttributeTypes != null && tt.AttributeTypes.Any())
-                            {
-                                foreach (var attributeType in tt.AttributeTypes)
-                                {
-                                    _attributeTypeRepository.Attach(attributeType, EntityState.Unchanged);
-                                }
-                            }
-
-                            await _libraryTypeComponentRepository.CreateAsync(tt);
-                            await _libraryTypeComponentRepository.SaveAsync();
-
-                            if (tt.AttributeTypes != null && tt.AttributeTypes.Any())
-                            {
-                                foreach (var attributeType in tt.AttributeTypes)
-                                {
-                                    _attributeTypeRepository.Detach(attributeType);
-                                }
-                            }
-
-                            createdLibraryTypes.Add(tt);
-                            continue;
-                        }
-                    default:
-                        continue;
-                }
-            }
-
-            return createdLibraryTypes;
+            return await CreateLibraryTypes(createLibraryTypes, false);
         }
 
         /// <summary>
@@ -191,15 +95,7 @@ namespace Mb.TypeEditor.Services.Services
         /// <returns></returns>
         public async Task<T> CreateLibraryType<T>(CreateLibraryType createLibraryType) where T : class, new()
         {
-            if (createLibraryType == null)
-                return null;
-
-            var data = (await CreateLibraryTypes(new List<CreateLibraryType> { createLibraryType }))?.FirstOrDefault();
-            if (data == null)
-                throw new ModelBuilderNullReferenceException("Could not create type");
-
-            var obj = await _libraryRepository.GetLibraryItem<T>(data.Id);
-            return obj;
+           return await CreateLibraryType<T>(createLibraryType, false);
         }
 
         /// <summary>
@@ -207,8 +103,10 @@ namespace Mb.TypeEditor.Services.Services
         /// </summary>
         /// <param name="id"></param>
         /// <param name="createLibraryType"></param>
+        /// <param name="updateMajorVersion"></param>
+        /// <param name="updateMinorVersion"></param>
         /// <returns></returns>
-        public async Task<T> UpdateLibraryType<T>(string id, CreateLibraryType createLibraryType) where T : class, new()
+        public async Task<T> UpdateLibraryType<T>(string id, CreateLibraryType createLibraryType, bool updateMajorVersion, bool updateMinorVersion) where T : class, new()
         {
             if (string.IsNullOrEmpty(id))
                 throw new ModelBuilderNullReferenceException("Can't update a type without an id");
@@ -217,11 +115,35 @@ namespace Mb.TypeEditor.Services.Services
                 throw new ModelBuilderNullReferenceException("Can't update a null type");
 
             var existingType = await GetTypeById(id);
-            if (existingType == null)
+
+            if (existingType?.Id == null)
                 throw new ModelBuilderNotFoundException($"There is no type with id:{id} to update.");
 
+            var existingTypeVersions = GetAllTypes()
+                .Where(x => x.TypeId == existingType.TypeId)
+                .OrderBy(x => double.Parse(x.Version, CultureInfo.InvariantCulture)).ToList();
+
+            if (double.Parse(existingType.Version, CultureInfo.InvariantCulture) <
+                double.Parse(existingTypeVersions[^1].Version, CultureInfo.InvariantCulture))
+                throw new ModelBuilderInvalidOperationException($"Not allowed to edit previous {existingType.Version} version. Latest version is {existingTypeVersions[^1].Version}");
+
+            if (updateMajorVersion || updateMinorVersion)
+            {
+                createLibraryType.Version = updateMajorVersion ? 
+                    existingTypeVersions[^1].Version.IncrementMajorVersion() : 
+                    existingTypeVersions[^1].Version.IncrementMinorVersion();
+
+                createLibraryType.TypeId = existingTypeVersions[0].TypeId;
+
+                return await CreateLibraryType<T>(createLibraryType, true);
+            }
+
+            createLibraryType.Version = existingType.Version;
+            createLibraryType.TypeId = existingType.TypeId;
+
             await DeleteType(id);
-            return await CreateLibraryType<T>(createLibraryType);
+
+            return await CreateLibraryType<T>(createLibraryType, true);
         }
 
         /// <summary>
@@ -329,6 +251,7 @@ namespace Mb.TypeEditor.Services.Services
         {
             var newType = _mapper.Map<CompositeType>(compositeType);
             var existingType = await _compositeTypeRepository.GetAsync(newType.Id);
+
             if (existingType != null)
                 throw new ModelBuilderDuplicateException($"Type with name {compositeType.Name} already exist.");
 
@@ -339,6 +262,7 @@ namespace Mb.TypeEditor.Services.Services
 
             await _compositeTypeRepository.CreateAsync(newType);
             await _compositeTypeRepository.SaveAsync();
+
             return newType;
         }
 
@@ -360,6 +284,7 @@ namespace Mb.TypeEditor.Services.Services
         public async Task DeleteType(string id)
         {
             var existingType = await GetTypeById(id);
+
             if (existingType == null)
                 throw new ModelBuilderNotFoundException($"Could not delete type with id: {id}. The type was not found.");
 
@@ -378,6 +303,153 @@ namespace Mb.TypeEditor.Services.Services
             await _libraryTypeComponentRepository.SaveAsync();
         }
 
-        
+        #region Private
+
+        private async Task<IEnumerable<LibraryType>> CreateLibraryTypes(ICollection<CreateLibraryType> createLibraryTypes, bool createNewFromExistingVersion)
+        {
+            var createdLibraryTypes = new List<LibraryType>();
+
+            if (createLibraryTypes == null || !createLibraryTypes.Any())
+                return createdLibraryTypes;
+
+            foreach (var createLibraryType in createLibraryTypes)
+            {
+                if (!createNewFromExistingVersion)
+                    createLibraryType.Version = "1.0";
+                
+                if (createLibraryType.Aspect == Aspect.Location)
+                    createLibraryType.ObjectType = ObjectType.ObjectBlock;
+
+                LibraryType libraryType = createLibraryType.ObjectType switch
+                {
+                    ObjectType.ObjectBlock => _mapper.Map<NodeType>(createLibraryType),
+                    ObjectType.Interface => _mapper.Map<InterfaceType>(createLibraryType),
+                    ObjectType.Transport => _mapper.Map<TransportType>(createLibraryType),
+                    _ => null
+                };
+
+                if (libraryType?.Id == null)
+                    return null;
+
+                libraryType.TypeId = !createNewFromExistingVersion ? libraryType.Id : createLibraryType.TypeId;
+
+                switch (libraryType)
+                {
+                    case NodeType nt:
+                        {
+                            if (nt.AttributeTypes != null && nt.AttributeTypes.Any())
+                            {
+                                foreach (var attributeType in nt.AttributeTypes)
+                                {
+                                    _attributeTypeRepository.Attach(attributeType, EntityState.Unchanged);
+                                }
+                            }
+
+                            if (nt.CompositeTypes != null && nt.CompositeTypes.Any())
+                            {
+                                foreach (var compositeType in nt.CompositeTypes)
+                                {
+                                    _compositeTypeRepository.Attach(compositeType, EntityState.Unchanged);
+                                }
+                            }
+
+                            try
+                            {
+                                await _libraryTypeComponentRepository.CreateAsync(nt);
+                                await _libraryTypeComponentRepository.SaveAsync();
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine(e);
+                                throw;
+                            }
+                            
+
+                            if (nt.AttributeTypes != null && nt.AttributeTypes.Any())
+                            {
+                                foreach (var attributeType in nt.AttributeTypes)
+                                {
+                                    _attributeTypeRepository.Detach(attributeType);
+                                }
+                            }
+
+                            if (nt.CompositeTypes != null && nt.CompositeTypes.Any())
+                            {
+                                foreach (var compositeType in nt.CompositeTypes)
+                                {
+                                    _compositeTypeRepository.Detach(compositeType);
+                                }
+                            }
+
+                            createdLibraryTypes.Add(nt);
+                            continue;
+                        }
+
+                    case InterfaceType it:
+                        await _libraryTypeComponentRepository.CreateAsync(it);
+                        await _libraryTypeComponentRepository.SaveAsync();
+                        createdLibraryTypes.Add(it);
+                        continue;
+
+                    case TransportType tt:
+                        {
+                            if (tt.AttributeTypes != null && tt.AttributeTypes.Any())
+                            {
+                                foreach (var attributeType in tt.AttributeTypes)
+                                {
+                                    _attributeTypeRepository.Attach(attributeType, EntityState.Unchanged);
+                                }
+                            }
+
+                            await _libraryTypeComponentRepository.CreateAsync(tt);
+                            await _libraryTypeComponentRepository.SaveAsync();
+
+                            if (tt.AttributeTypes != null && tt.AttributeTypes.Any())
+                            {
+                                foreach (var attributeType in tt.AttributeTypes)
+                                {
+                                    _attributeTypeRepository.Detach(attributeType);
+                                }
+                            }
+
+                            createdLibraryTypes.Add(tt);
+                            continue;
+                        }
+
+                    default:
+                        continue;
+                }
+            }
+
+
+            return createdLibraryTypes;
+        }
+
+        private async Task<T> CreateLibraryType<T>(CreateLibraryType createLibraryType, bool createNewFromExistingVersion) where T : class, new()
+        {
+            if (createLibraryType == null)
+                return null;
+
+            var data = (await CreateLibraryTypes(new List<CreateLibraryType> { createLibraryType }, createNewFromExistingVersion))?.FirstOrDefault();
+
+            if (data == null)
+                throw new ModelBuilderNullReferenceException("Could not create type");
+
+            var obj = await _libraryRepository.GetLibraryItem<T>(data.Id);
+            return obj;
+        }
+
+        private void SetLibraryTypeVersion(LibraryType newLibraryType, LibraryType existingLibraryType)
+        {
+            if (string.IsNullOrWhiteSpace(newLibraryType?.Version) || string.IsNullOrWhiteSpace(existingLibraryType?.Version))
+                throw new ModelBuilderInvalidOperationException("'Null' error when setting version for library type");
+
+            //TODO: The rules for when to trigger major/minor version incrementation is not finalized!
+
+            //libraryType.Version = existingType.Version.IncrementMinorVersion();
+
+        }
+
+        #endregion Private
     }
 }

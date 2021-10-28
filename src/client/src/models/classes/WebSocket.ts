@@ -3,13 +3,11 @@ import { Dispatch } from "react";
 
 let instance = null;
 class WebSocket {
-
   private _connection: HubConnection;
   private _running: boolean;
   private _dispatch: Dispatch<any>;
 
   constructor() {
-
     if (instance) {
       return instance;
     }
@@ -26,7 +24,6 @@ class WebSocket {
   }
 
   public start() {
-
     if (this._connection && !this._running) {
       this._connection
         .start()
@@ -38,9 +35,7 @@ class WebSocket {
             console.log(data);
           });
         })
-        .catch((e: any) => {
-
-        })
+        .catch((e: any) => {});
     }
   }
 

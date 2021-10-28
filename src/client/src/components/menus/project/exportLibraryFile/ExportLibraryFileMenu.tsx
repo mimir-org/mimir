@@ -32,10 +32,7 @@ export const ExportLibraryFileMenu = () => {
         </ButtonBox>
         {fileName && (
           <ButtonBox>
-            <Button
-              onClick={() => OnSaveClick(dispatch, fileName)}
-              type={TextResources.Account_Export_File_Library_Label}
-            />
+            <Button onClick={() => OnSaveClick(dispatch, fileName)} type={TextResources.Account_Export_File_Library_Label} />
           </ButtonBox>
         )}
       </ProjectBody>

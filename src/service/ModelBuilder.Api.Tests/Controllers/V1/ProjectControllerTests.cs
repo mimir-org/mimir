@@ -20,8 +20,7 @@ namespace ModelBuilder.Api.Tests.Controllers.V1
             var createProject = new CreateProject
             {
                 Name = "Automatic test",
-                Description = "Integration test",
-                Version = "1.0"
+                Description = "Integration test"
             };
 
             var response = await client.PostAsJsonAsync($"{Version}/project", createProject);

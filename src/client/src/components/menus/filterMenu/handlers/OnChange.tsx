@@ -1,28 +1,32 @@
-import { Node, Edge, RelationType, Connector } from "../../../../models";
-import { GetConnectorNode, IsChecked, IsEdge } from "../helpers";
-import { changeActiveConnector, setEdgeVisibility } from "../../../../redux/store/project/actions";
+import { Edge } from "../../../../models";
+import { setEdgeVisibility } from "../../../../redux/store/project/actions";
+import { GetConnectorNode } from "../helpers";
+import { IsFamily, IsProductTerminal, IsLocationTerminal, IsPartOf, IsTransport } from "../../../flow/helpers";
 
-const OnChange = (
-  edges: Edge[],
-  setChecked: any,
-  dispatch: any,
-  elements: any[],
-  type: RelationType | string,
-  name: string,
-  node: Node,
-  conn: Connector
-) => {
-  if (edges) {
-    setChecked(IsChecked(type, edges, conn, node, name));
-    elements.forEach((element) => {
-      if (IsEdge(element)) {
-        dispatch(setEdgeVisibility(element, !element.isHidden));
-      } else {
-        const connNode = GetConnectorNode(element);
-        dispatch(changeActiveConnector(connNode, element.id, !element.visible, 0));
-      }
-    });
-  }
+const OnChange = (actualEdge: Edge, edges: Edge[], dispatch: any) => {
+  const partOf = IsPartOf(actualEdge.fromConnector);
+  const location = IsLocationTerminal(actualEdge.fromConnector);
+  const fulfilledBy = IsProductTerminal(actualEdge.fromConnector);
+  const transport = IsTransport(actualEdge.fromConnector);
+
+  // Find edges to be displayed or hidden
+  edges.forEach((e) => {
+    // PartOf
+    if (partOf && IsPartOf(e.fromConnector)) {
+      const source = GetConnectorNode(e.fromConnector);
+      IsFamily(source, actualEdge.fromNode) && dispatch(setEdgeVisibility(e, !e.isHidden));
+    }
+
+    // Transport
+    if (transport && IsTransport(e.fromConnector)) {
+      if (e.fromConnector?.terminalTypeId === actualEdge.fromConnector?.terminalTypeId)
+        dispatch(setEdgeVisibility(e, !e.isHidden));
+    }
+
+    // Relations
+    if ((location && IsLocationTerminal(e.fromConnector)) || (fulfilledBy && IsProductTerminal(e.fromConnector)))
+      dispatch(setEdgeVisibility(e, !e.isHidden));
+  });
 };
 
 export default OnChange;

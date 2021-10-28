@@ -6,12 +6,19 @@ export { default as IsTransport } from "./IsTransport";
 export { default as IsInterface } from "./IsInterface";
 export { default as IsObjectBlock } from "./IsObjectBlock";
 export { default as IsNotSet } from "./IsNotSet";
+export { default as IsRds } from "./IsRds";
+export { default as IsTerminal } from "./IsTerminal";
+export { default as IsObjectAttributes } from "./IsObjectAttributes";
+export { default as IsLocationAttributes } from "./IsLocationAttributes";
+export { default as IsSimpleTypes } from "./IsSimpleTypes";
+export { default as IsPredefinedAttributes } from "./IsPredefinedAttributes";
 
 // filters
 export { default as GetAspects } from "./GetAspects";
 export { default as GetObjectTypes } from "./GetObjectTypes";
 export { default as GetPurposes } from "./GetPurposes";
 export { default as GetLocationTypes } from "./GetLocationTypes";
+export { default as GetAttributesList } from "./GetAttributesList";
 export { default as GetFilteredBlobData } from "./GetFilteredBlobData";
 export { default as GetFilteredRdsList } from "./GetFilteredRdsList";
 export { default as GetFilteredTerminalsList } from "./GetFilteredTerminalsList";
@@ -31,7 +38,6 @@ export { default as GetSelectedTerminal } from "./GetSelectedTerminal";
 export { default as GetSelectedDiscipline } from "./GetSelectedDiscipline";
 export { default as GetLibraryType } from "./GetLibraryType";
 export { default as ShowObjectBlock } from "./ShowObjectBlock";
-export { default as ShowBlockAttributes } from "./ShowBlockAttributes";
 export { default as FieldValidator } from "./FieldValidator";
 
 // styling helpers

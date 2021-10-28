@@ -1,6 +1,5 @@
-const OnHover = (showTerminalButton, showConnectButton) => {
+const OnHover = (showTerminalButton) => {
   showTerminalButton(true);
-  showConnectButton(true);
 };
 
 export default OnHover;

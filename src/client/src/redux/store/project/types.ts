@@ -47,7 +47,6 @@ export const LOCK_UNLOCK_COMPOSITE_ATTRIBUTE = "LOCK_UNLOCK_COMPOSITE_ATTRIBUTE"
 export const LOCK_UNLOCK_NODE_TERMINAL_ATTRIBUTE = "LOCK_UNLOCK_NODE_TERMINAL_ATTRIBUTE";
 export const LOCK_UNLOCK_TRANSPORT_TERMINAL_ATTRIBUTE = "LOCK_UNLOCK_TRANSPORT_TERMINAL_ATTRIBUTE";
 export const LOCK_UNLOCK_INTERFACE_TERMINAL_ATTRIBUTE = "LOCK_UNLOCK_INTERFACE_TERMINAL_ATTRIBUTE";
-
 export const LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR = "LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR";
 export const CHANGE_NODE_UPDATED = "CHANGE_NODE_UPDATED";
 
@@ -292,10 +291,11 @@ interface DeleteProjectErrorAction {
 interface ChangeActiveConnector {
   type: typeof CHANGE_ACTIVE_CONNECTOR;
   payload: {
-    node: Node;
+    nodeId: string;
     connectorId: string;
     visible: boolean;
-    order: number;
+    inputOrder: number;
+    outputOrder: number;
   };
 }
 export interface ExportProjectFileAction {

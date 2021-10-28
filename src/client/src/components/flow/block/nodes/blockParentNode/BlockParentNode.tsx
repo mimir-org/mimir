@@ -1,22 +1,15 @@
 import { memo, FC, useState, useEffect } from "react";
-import { NodeProps } from "react-flow-renderer";
-import { TextResources } from "../../../../../assets/text";
+import { Background, BackgroundVariant, NodeProps, useUpdateNodeInternals } from "react-flow-renderer";
 import { HandleComponent, TerminalsContainerComponent } from "../../terminals";
-import { Size } from "../../../../../compLibrary";
+import { Color, Size } from "../../../../../compLibrary";
 import { GetParentColor } from "./helpers";
-import { OnParentClick, OnChildClick, OnConnectorClick } from "./handlers";
+import { OnConnectorClick } from "./handlers";
 import { BlockComponent } from "./";
-import { BlockMessageBox } from "../../styled";
-import { FilterTerminals, GetNodeByDataId, FindAllEdges } from "../../helpers";
-import {
-  edgeSelector,
-  isElectroVisibleSelector,
-  nodeSelector,
-  splitViewNodeSelector,
-  splitViewSelector,
-  useAppDispatch,
-  useAppSelector,
-} from "../../../../../redux/store";
+import { FilterTerminals, GetNodeByDataId } from "../../helpers";
+import { Node } from "../../../../../models";
+import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
+import { edgeSelector, electroSelector, nodeSelector, secondaryNodeSelector } from "../../../../../redux/store";
+import { IsLocation } from "../../../helpers";
 
 /**
  * Component for the large parent block in BlockView.
@@ -29,48 +22,37 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
   const nodes = useAppSelector(nodeSelector);
   const edges = useAppSelector(edgeSelector);
-  const splitView = useAppSelector(splitViewSelector);
-  const splitNode = useAppSelector(splitViewNodeSelector);
-  const electro = useAppSelector(isElectroVisibleSelector);
+  const secondaryNode = useAppSelector(secondaryNodeSelector) as Node;
+  const electro = useAppSelector(electroSelector);
+  const updateNodeInternals = useUpdateNodeInternals();
   const node = nodes?.find((x) => x.id === data.id);
   if (node) node.width = Size.BlockView_Width;
+  const terminals = FilterTerminals(data, secondaryNode);
 
   // Enforce size change of node
   useEffect(() => {
     const parentNode = GetNodeByDataId(data.id);
-    if (splitView) {
-      parentNode.style.width = `${Size.SplitView_Width}px`;
-    } else parentNode.style.width = `${Size.BlockView_Width}px`;
-  }, [data, splitView]);
+    parentNode.style.width = `${Size.BlockView_Width}px`;
+  }, [data]);
 
-  // Force z-index to display edges in ConnectView
   useEffect(() => {
-    const allEdges = FindAllEdges();
-    allEdges.style.zIndex = "3";
-  }, []);
-
-  if (splitView) node.width = Size.SplitView_Width;
+    updateNodeInternals(node?.id);
+    updateNodeInternals(secondaryNode?.id);
+  }, [node, secondaryNode, updateNodeInternals]);
 
   return (
     <>
-      <BlockComponent
-        node={node}
-        color={GetParentColor(node)}
-        splitView={splitView}
-        selected={node?.isBlockSelected}
-        onParentClick={() => OnParentClick(dispatch, node, nodes, edges)}
-        onChildClick={() => OnChildClick(dispatch, node, nodes, edges)}
-      />
+      <BlockComponent dispatch={dispatch} node={node} color={GetParentColor(node)} selected={node?.isBlockSelected} />
+
       <TerminalsContainerComponent
         node={node}
         inputMenuOpen={inTerminalMenu}
         outputMenuOpen={outTerminalMenu}
         parent={true}
-        splitView={splitView}
-        terminals={FilterTerminals(node, splitView, splitNode)}
+        electro={electro}
+        terminals={terminals}
         onClick={(conn) => OnConnectorClick(conn, dispatch, edges, nodes)}
         menuBox={true}
-        mainConnectNode={false}
         showInTerminalMenu={showInTerminalMenu}
         showOutTerminalMenu={showOutTerminalMenu}
       />
@@ -80,17 +62,10 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         nodes={nodes}
         length={node?.length}
         width={node?.width}
-        terminals={FilterTerminals(node, splitView, splitNode)}
-        splitView={splitView}
+        terminals={terminals}
         electro={electro}
-        mainConnectNode={false}
       />
-
-      {splitView && !splitNode && (
-        <BlockMessageBox>
-          <p>{TextResources.BlockView_Select_Message}</p>
-        </BlockMessageBox>
-      )}
+      {IsLocation(data) && <Background style={{ zIndex: 1 }} variant={BackgroundVariant.Lines} color={Color.Grey} gap={20} />}
     </>
   );
 };

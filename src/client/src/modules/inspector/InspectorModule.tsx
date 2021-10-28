@@ -1,14 +1,3 @@
-import { useCallback, useRef } from "react";
-import {
-  isAnimatedModuleSelector,
-  isExplorerOpenSelector,
-  isInspectorOpenSelector,
-  isLibOpenSelector,
-  projectSelector,
-  useAppDispatch,
-  useAppSelector,
-  useParametricAppSelector,
-} from "../../redux/store";
 import { Size } from "../../compLibrary";
 import { MODULE_TYPE } from "../../models/project";
 import { IsBlockView } from "../../components/flow/block/helpers";
@@ -19,6 +8,9 @@ import { InspectorElement } from "./types";
 import { useDragResizePanel } from "./helpers/useDragResizePanel";
 import { changeInspectorHeight } from "./redux/height/actions";
 import { setModuleVisibility } from "../../redux/store/modules/actions";
+import { useCallback, useRef } from "react";
+import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store/hooks";
+import { animatedModuleSelector, explorerSelector, inspectorSelector, libOpenSelector, projectSelector } from "../../redux/store";
 
 interface Props {
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
@@ -32,10 +24,10 @@ const InspectorModule = ({ inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
   const type = MODULE_TYPE.INSPECTOR;
   const project = useAppSelector(projectSelector);
-  const animate = useParametricAppSelector(isAnimatedModuleSelector, type);
-  const inspectorOpen = useAppSelector(isInspectorOpenSelector);
-  const libOpen = useAppSelector(isLibOpenSelector);
-  const explorerOpen = useAppSelector(isExplorerOpenSelector);
+  const animate = useParametricAppSelector(animatedModuleSelector, type);
+  const inspectorOpen = useAppSelector(inspectorSelector);
+  const libOpen = useAppSelector(libOpenSelector);
+  const explorerOpen = useAppSelector(explorerSelector);
 
   const stop = inspectorOpen ? Size.ModuleOpen : Size.ModuleClosed;
   const start = inspectorOpen ? Size.ModuleClosed : Size.ModuleOpen;

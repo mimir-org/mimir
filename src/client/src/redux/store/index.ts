@@ -11,18 +11,17 @@ import { moduleReducer } from "./modules/reducers";
 import { menuReducer } from "../../components/menus/project/redux/reducers";
 import { commonReducer } from "./common/reducers";
 import { flowReducer } from "./flow/reducers";
-import { splitViewReducer } from "./splitView/reducers";
-import { connectViewReducer } from "../../components/flow/block/connectView/redux/reducers";
+import { secondaryReducer } from "./secondaryNode/reducers";
 import { darkModeReducer } from "./darkMode/reducers";
 import { parametersReducer } from "../../modules/inspector/tabs/parameters/redux/reducers";
 import { electroViewReducer } from "../store/electro/reducers";
+import { resizeReducer } from "./resize/reducers";
 import { rootSaga } from "../sagas";
+import { customCategoryReducer } from "../store/customCategory/reducers";
 import { persistStore, persistReducer } from "redux-persist";
 
 const sagaMiddleware = createSagaMiddleware();
-
-const composeEnhancer =
-  (process.env.NODE_ENV !== "production" && window["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__"]) || compose;
+const composeEnhancer = (process.env.NODE_ENV !== "production" && window["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__"]) || compose;
 
 const rootReducers = combineReducers({
   library: libraryReducer,
@@ -34,12 +33,13 @@ const rootReducers = combineReducers({
   modules: moduleReducer,
   menu: menuReducer,
   flow: flowReducer,
-  splitView: splitViewReducer,
+  secondaryReducer: secondaryReducer,
   electro: electroViewReducer,
-  connectView: connectViewReducer,
   commonState: commonReducer,
   darkMode: darkModeReducer,
   parametersReducer: parametersReducer,
+  resizing: resizeReducer,
+  customCategory: customCategoryReducer,
 });
 
 const persistConfig = {
@@ -53,9 +53,7 @@ const store = createStore(persistedReducer, {}, composeEnhancer(applyMiddleware(
 const persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof rootReducers>;
-
 export type AppDispatch = typeof store.dispatch;
-
 export * from "./hooks";
 export * from "./selectors";
 

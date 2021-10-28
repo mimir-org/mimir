@@ -7,7 +7,7 @@ const LegendComponent = (project: Project) => {
 
   if (!project) return legends;
   const edges = project.edges;
-  const nodes = project.nodes?.filter((x) => !x.isHidden);
+  const nodes = project.nodes?.filter((node) => !node.isHidden);
 
   nodes?.forEach((node) => {
     legends.push.apply(legends, AddLegend(node, edges));

@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
+using Mb.Models.Extensions;
 using Newtonsoft.Json;
 
 namespace Mb.Models.Data
@@ -66,7 +67,7 @@ namespace Mb.Models.Data
 
         public string CreatedBy { get; set; }
 
-        [RegularExpression(@"^(?=.*[1-9])\d+(\.[0-9]?)?$", ErrorMessage = "The version format must be at x.y")]
+        [Required]
         public string Version { get; set; }
 
         public Aspect Aspect { get; set; }
@@ -113,5 +114,14 @@ namespace Mb.Models.Data
         // Required only for product aspect
         public decimal? Cost { get; set; }
 
+        public void IncrementMinorVersion()
+        {
+            Version = Version.IncrementMinorVersion();
+        }
+
+        public void IncrementMajorVersion()
+        {
+            Version = Version.IncrementMajorVersion();
+        }
     }
 }

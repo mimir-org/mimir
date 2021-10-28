@@ -1,11 +1,9 @@
-import { isAccountMenuOpenSelector, isFilterMenuOpenSelector, useAppDispatch, useAppSelector } from "../../redux/store";
+import { accountMenuSelector, useAppDispatch, useAppSelector } from "../../redux/store";
 import { useEffect, useRef } from "react";
 import { useParams } from "react-router";
-import { ExplorerModule } from "../../modules/explorer";
 import { InspectorModule } from "../../modules/inspector";
 import { LibraryModule } from "../../modules/library";
 import { AccountMenu } from "../menus/accountMenu";
-import { FilterMenu } from "../menus/filterMenu";
 import { getUser } from "../../redux/store/user/actions";
 import { search } from "../../redux/store/project/actions";
 import { FlowModule } from "../flow";
@@ -24,8 +22,7 @@ export interface RouteParams {
  */
 const Home = () => {
   const dispatch = useAppDispatch();
-  const isAccountMenuOpen = useAppSelector(isAccountMenuOpenSelector);
-  const isFilterMenuOpen = useAppSelector(isFilterMenuOpenSelector);
+  const accountMenuOpen = useAppSelector(accountMenuSelector);
   const params = useParams<RouteParams>();
   const inspectorRef = useRef(null);
 
@@ -41,9 +38,7 @@ const Home = () => {
 
   return (
     <>
-      <ExplorerModule />
-      {isAccountMenuOpen && <AccountMenu />}
-      {isFilterMenuOpen && <FilterMenu />}
+      {accountMenuOpen && <AccountMenu />}
       <FlowModule inspectorRef={inspectorRef} route={params} dispatch={dispatch} />
       <InspectorModule inspectorRef={inspectorRef} />
       <LibraryModule />

@@ -6,8 +6,8 @@ import {
   useAppDispatch,
   useAppSelector,
   isOpenSelector,
-  isLibOpenSelector,
-  isInspectorOpenSelector,
+  libOpenSelector,
+  inspectorSelector,
   heightSelector,
 } from "../../redux/store";
 
@@ -18,8 +18,8 @@ interface Props {
 const FullScreenComponent = ({ inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
   const isOpen = useAppSelector(isOpenSelector);
-  const isLibOpen = useAppSelector(isLibOpenSelector);
-  const isInspectorOpen = useAppSelector(isInspectorOpenSelector);
+  const isLibOpen = useAppSelector(libOpenSelector);
+  const isInspectorOpen = useAppSelector(inspectorSelector);
   let height = useAppSelector(heightSelector);
 
   if (height === undefined) height = isInspectorOpen ? Size.ModuleOpen : Size.ModuleClosed;

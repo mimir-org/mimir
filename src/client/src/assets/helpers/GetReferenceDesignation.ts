@@ -5,15 +5,13 @@ import { FindParentEdge } from "../../modules/explorer/helpers/ParentNode";
 
 const findParentNode = (currentNode: Node, project: Project): Node => {
   if (!currentNode || IsAspectNode(currentNode)) return null;
-
   return FindParentEdge(currentNode, project)?.fromNode;
 };
 
 const GetReferenceDesignation = (node: Node, project: Project): string => {
   if (!node || !project || !project.nodes || !project.edges) return "";
 
-  let refs = [];
-
+  const refs = [];
   let nextNode = node;
 
   while (nextNode) {

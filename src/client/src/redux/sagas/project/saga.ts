@@ -391,7 +391,6 @@ export function* commitProject(action: CommitProject) {
 
 export function* lockUnlockNode(action: LockUnlockNode) {
   try {
-
     const url = process.env.REACT_APP_API_BASE_URL + "project/node/lockunlock";
     const response = yield call(post, url, action.payload);
 

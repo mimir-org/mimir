@@ -3,19 +3,19 @@ import { Color, Size } from "../../../../../../compLibrary";
 
 interface Props {
   selected: boolean;
-  width: number;
 }
 
 const Block = styled.div<Props>`
   position: absolute;
   opacity: 1 !important;
   z-index: 1;
-  cursor: ${(props) => (props.selected ? "default" : "pointer")};
+  cursor: ${(props) => (props.selected ? "grab" : "pointer")};
   height: ${Size.BlockView_Height - 4}px;
   border-radius: 10px;
   border: 2px solid;
   border-color: ${Color.DarkGrey};
-  width: ${(props) => props.width}px;
+  width: ${Size.BlockView_Width - 4}px;
+  background-color: ${Color.White};
 `;
 
 export default Block;

@@ -3,15 +3,16 @@ import { IsBlockView } from "../block/helpers";
 import { GetEdgeType } from "../tree/helpers";
 import { ConvertToEdge, ConvertToNode } from "../converters";
 import { BuildTreeEdge, BuildTreeNode } from "../tree/builders";
-import { BlobData, LibItem, Project, GetFileData, User } from "../../../models";
+import { BlobData, LibItem, Project, GetFileData, User, Node } from "../../../models";
 import { LibraryState } from "../../../redux/store/library/types";
 import { BuildBlockNode } from "../block/builders";
 import {
   CreateId,
   GetSelectedNode,
+  IsFamily,
   IsInputTerminal,
   IsOutputTerminal,
-  IsPartOfTerminal,
+  IsPartOf,
   SetSiblingIndexOnNodeDrop,
 } from "./../helpers";
 
@@ -24,7 +25,8 @@ const useOnDrop = (
   reactFlowWrapper: any,
   icons: BlobData[],
   library: LibraryState,
-  user: User
+  user: User,
+  parentNode: Node
 ) => {
   const sourceNode = GetSelectedNode();
   const isFile = event.dataTransfer.files && event.dataTransfer.files.length > 0;
@@ -84,17 +86,16 @@ const useOnDrop = (
     });
 
     IsBlockView()
-      ? setElements((es) => es.concat(BuildBlockNode(targetNode, null, project.nodes)))
+      ? setElements((es) => es.concat(BuildBlockNode(targetNode, parentNode)))
       : setElements((es) => es.concat(BuildTreeNode(targetNode)));
 
-    if (sourceNode && sourceNode.aspect === targetNode.aspect) {
+    if (sourceNode && IsFamily(sourceNode, targetNode)) {
       targetNode.level = sourceNode.level + 1;
-      const sourceConn = sourceNode.connectors?.find((x) => IsPartOfTerminal(x) && IsOutputTerminal(x));
-      const targetConn = targetNode.connectors?.find((x) => IsPartOfTerminal(x) && IsInputTerminal(x));
+      const sourceConn = sourceNode.connectors?.find((x) => IsPartOf(x) && IsOutputTerminal(x));
+      const targetConn = targetNode.connectors?.find((x) => IsPartOf(x) && IsInputTerminal(x));
       const partofEdge = ConvertToEdge(CreateId(), sourceConn, targetConn, sourceNode, targetNode, project.id, library);
 
       SetSiblingIndexOnNodeDrop(targetNode, project, sourceNode);
-
       dispatch(createEdge(partofEdge));
 
       const edgeType = GetEdgeType(sourceConn);
@@ -103,7 +104,7 @@ const useOnDrop = (
 
     dispatch(addNode(targetNode));
 
-    dispatch(setActiveNode(targetNode.id, true));
+    if (!IsBlockView()) dispatch(setActiveNode(targetNode.id, true));
   }
 };
 

@@ -1,34 +1,32 @@
-import { SortTerminals } from ".";
 import { Connector, Node } from "../../../../models";
-import { IsLocation, IsLocationTerminal, IsTransportTerminal, IsFulfilledByTerminal } from "../../helpers";
+import { IsLocation, IsLocationTerminal, IsTransport, IsProductTerminal, IsInputTerminal, IsProduct } from "../../helpers";
 
 /**
  * Component to filter the terminals displayed on the nodes in BlockView.
- * @param n the selected node
- * @param splitView is splitView activated
- * @param splitNode selected SplitNode, if any
- * @returns a call to SortTerminals that sorts the filtered list.
+ * @param node the selected node
+ * @param secondaryNode selected secondaryNode, if any
+ * @returns a filtered list.
  */
-const FilterTerminals = (n: Node, splitView: boolean, splitNode: Node) => {
+const FilterTerminals = (node: Node, secondaryNode: Node) => {
   let terminals: Connector[] = [];
-  if (n === undefined) return [];
+  if (!node) return [];
 
-  n.connectors?.forEach((c) => {
-    validate(n, splitNode, c, splitView) && terminals.push(c);
+  node.connectors?.forEach((c) => {
+    validate(node, secondaryNode, c) && terminals.push(c);
   });
-  return SortTerminals(terminals);
+  return terminals;
 };
 
-function validate(n: Node, splitNode: Node, c: Connector, splitView: boolean) {
-  if (!splitView) return (IsLocation(n) && IsLocationTerminal(c)) || (!IsLocation(n) && IsTransportTerminal(c));
-
-  if (splitNode) {
-    if (IsLocation(splitNode)) return IsLocationTerminal(c);
-    if (!IsLocation(n)) return IsFulfilledByTerminal(c);
+function validate(n: Node, secondary: Node, c: Connector) {
+  if (secondary) {
+    if (IsLocation(secondary) && !IsLocation(n)) return IsLocationTerminal(c) && !IsInputTerminal(c);
+    if (IsLocation(secondary)) return IsLocationTerminal(c);
+    if (IsProduct(secondary) && !IsProduct(n)) return IsProductTerminal(c) && !IsInputTerminal(c);
+    if (IsProduct(secondary)) return IsProductTerminal(c);
   }
 
-  if (!IsLocation(n)) return IsTransportTerminal(c);
-  return false;
+  if (IsLocation(n)) return IsLocationTerminal(c);
+  return IsTransport(c);
 }
 
 export default FilterTerminals;
