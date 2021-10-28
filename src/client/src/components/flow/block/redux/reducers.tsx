@@ -3,6 +3,7 @@ import { Size } from "../../../../compLibrary";
 
 const initialState = {
   width: Size.BlockView_Width,
+  length: Size.BlockView_Length,
 };
 
 export function blockNodeSizeReducer(state = initialState, action: BlockNodeSizeActionTypes) {
@@ -10,6 +11,7 @@ export function blockNodeSizeReducer(state = initialState, action: BlockNodeSize
     return {
       ...state,
       width: action.payload.width,
+      length: action.payload.length,
     };
   }
   return state;

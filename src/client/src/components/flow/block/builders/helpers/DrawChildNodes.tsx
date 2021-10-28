@@ -11,7 +11,7 @@ import { IsOffPage } from "../../helpers";
  * @param selectedNode
  * @param elements
  * @param parentNode
- * @param parentNodeWidth
+ * @param parentNodeSize
  */
 const DrawChildNodes = (
   edges: Edge[],
@@ -19,12 +19,12 @@ const DrawChildNodes = (
   selectedNode: Node,
   elements: Elements<any>,
   parentNode: Node,
-  parentNodeWidth: number
+  parentNodeSize: { width: number; length: number }
 ) => {
   edges.forEach((edge) => {
     if (validateEdge(edge, selectedNode)) {
       const toNode = allNodes.find((n) => n.id === edge.toNode.id);
-      if (toNode) elements.push(BuildBlockNode(toNode, parentNode, parentNodeWidth));
+      if (toNode) elements.push(BuildBlockNode(toNode, parentNode, parentNodeSize));
     }
   });
 };

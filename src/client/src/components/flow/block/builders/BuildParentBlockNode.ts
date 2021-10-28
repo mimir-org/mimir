@@ -15,7 +15,11 @@ const BuildParentBlockNode = (node: Node) => {
   SetConnectorOrder(node);
 
   const type = TextResources.Type_BlockParentNode;
-  const position = { x: node.positionBlockX, y: node.positionBlockY };
+  const parentX = 400;
+  const parentY = 80;
+  const position = { x: parentX, y: parentY };
+  node.positionBlockX = position.x;
+  node.positionBlockY = position.y;
 
   return {
     key: CreateId(),
@@ -25,7 +29,7 @@ const BuildParentBlockNode = (node: Node) => {
     position: position,
     isHidden: false,
     isSelected: node.isSelected,
-    draggable: true,
+    draggable: false,
     selectable: true,
   } as FlowElement;
 };

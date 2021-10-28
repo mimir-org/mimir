@@ -9,17 +9,22 @@ import { setBlockNodeSize } from "../../../redux/actions";
  * @param dispatch
  */
 function SetParentNodeSize(node: Node, secondaryNode: Node, dispatch: any) {
-  const margin = 500;
   const screenWidth = window.screen.width;
-  // const screenHeight = window.screen.height;
+  const screenHeight = window.screen.height;
+  const marginX = screenWidth / 5;
+  const marginY = 250;
 
-  const width = secondaryNode ? screenWidth / 2 : screenWidth - margin;
+  const width = secondaryNode ? screenWidth - marginX * 3 : screenWidth - marginX;
+  const length = screenHeight - marginY;
 
   // Update the Flow parentNode
   const parentNode = GetNodeByDataId(node.id);
-  if (parentNode) parentNode.style.width = `${width}px`;
+  if (parentNode) {
+    parentNode.style.width = `${width}px`;
+    parentNode.style.height = `${length}px`;
+  }
 
-  dispatch(setBlockNodeSize(width));
+  dispatch(setBlockNodeSize(width, length));
 }
 
 export default SetParentNodeSize;

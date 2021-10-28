@@ -9,7 +9,7 @@ import { DrawChildNodes, DrawEdges, DrawSecondaryChildren } from "./helpers";
  * @param selectedNode
  * @param secondaryNode
  * @param parentNode
- * @param parentNodeWidth
+ * @param parentNodeSize
  * @returns all Elements.
  */
 const BuildBlockElements = (
@@ -17,7 +17,7 @@ const BuildBlockElements = (
   selectedNode: Node,
   secondaryNode: Node,
   parentNode: Node,
-  parentNodeWidth: number
+  parentNodeSize: { width: number; length: number }
 ) => {
   if (!project) return;
   const elements: Elements = [];
@@ -32,9 +32,9 @@ const BuildBlockElements = (
     parentSecondaryBlock && elements.push(parentSecondaryBlock);
   }
 
-  DrawChildNodes(project.edges, allNodes, selectedNode, elements, parentNode, parentNodeWidth);
+  DrawChildNodes(project.edges, allNodes, selectedNode, elements, parentNode, parentNodeSize);
   DrawEdges(project.edges, allNodes, elements, secondaryNode);
-  secondaryNode && DrawSecondaryChildren(project.edges, allNodes, secondaryNode, elements, parentNodeWidth);
+  secondaryNode && DrawSecondaryChildren(project.edges, allNodes, secondaryNode, elements, parentNodeSize);
 
   return elements;
 };

@@ -47,6 +47,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         color={GetParentColor(node)}
         selected={node?.isBlockSelected}
         width={parentNodeSize.width}
+        length={parentNodeSize.length}
       />
 
       <TerminalsContainerComponent

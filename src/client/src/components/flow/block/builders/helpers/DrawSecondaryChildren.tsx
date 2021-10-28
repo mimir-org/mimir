@@ -10,14 +10,14 @@ import { IsDirectChild } from "../../helpers";
  * @param nodes
  * @param secondary
  * @param elements
- * @param parentNodeWidth
+ * @param parentNodeSize
  */
 const DrawSecondaryChildren = (
   edges: Edge[],
   nodes: Node[],
   secondary: Node,
   elements: Elements<any>,
-  parentNodeWidth: number
+  parentNodeSize: { width: number; length: number }
 ) => {
   if (secondary) {
     edges.forEach((edge) => {
@@ -25,7 +25,7 @@ const DrawSecondaryChildren = (
         const toNode = nodes.find((n) => n.id === edge.toNodeId && IsDirectChild(n, secondary));
         const parent = nodes.find((n) => n.id === secondary.id);
 
-        if (toNode && parent) elements.push(BuildSecondaryChildNode(toNode, parent, parentNodeWidth));
+        if (toNode && parent) elements.push(BuildSecondaryChildNode(toNode, parent, parentNodeSize));
       }
     });
   }

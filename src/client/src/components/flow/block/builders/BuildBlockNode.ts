@@ -8,10 +8,10 @@ import { CreateId } from "../../helpers";
  * Component to create a node in BlockView.
  * @param node
  * @param parent
- * @param parentNodeWidth
+ * @param parentNodeSize
  * @returns a node of the type FlowElement.
  */
-const BuildBlockNode = (node: Node, parent: Node, parentNodeWidth: number) => {
+const BuildBlockNode = (node: Node, parent: Node, parentNodeSize: { width: number; length: number }) => {
   if (!node || !parent) return null;
   const type = GetNodeTypeString(node);
 
@@ -21,9 +21,7 @@ const BuildBlockNode = (node: Node, parent: Node, parentNodeWidth: number) => {
   SetConnectorOrder(node);
 
   // Force node to fit Block
-  const position = !IsOffPage(node)
-    ? SetBlockNodePos(nodePos, parentPos, parentNodeWidth)
-    : SetOffPageNodePos(nodePos, parentPos);
+  const position = !IsOffPage(node) ? SetBlockNodePos(nodePos, parentPos, parentNodeSize) : SetOffPageNodePos(nodePos, parentPos);
 
   return {
     key: CreateId(),

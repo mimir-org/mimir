@@ -47,7 +47,7 @@ const FlowBlock = () => {
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(BuildBlockElements(project, node, secondaryNode, parent, parentNodeSize.width));
+      setElements(BuildBlockElements(project, node, secondaryNode, parent, parentNodeSize));
       return setFlowInstance(_reactFlowInstance);
     },
     [project, node, secondaryNode, parent, parentNodeSize]
@@ -106,7 +106,7 @@ const FlowBlock = () => {
               onNodeDragStop={OnNodeDragStop}
               onElementClick={OnElementClick}
               zoomOnScroll={true}
-              paneMoveable={false}
+              paneMoveable={true}
               zoomOnDoubleClick={false}
               defaultZoom={0.9}
               onClick={(e) => OnBlockClick(e, dispatch, project)}
