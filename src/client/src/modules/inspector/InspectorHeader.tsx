@@ -50,15 +50,13 @@ const InspectorHeader = ({
 
   return (
     <Menu id="InspectorHeader" color={GetInspectorColor(element)}>
-      {project && (
-        <InspectorTabs
-          project={project}
-          element={element}
-          attributeLikeItems={attributeLikeItems}
-          terminalLikeItems={terminalLikeItems}
-          compositeLikeItems={compositeLikeItems}
-        />
-      )}
+      <InspectorTabs
+        project={project}
+        element={element}
+        attributeLikeItems={attributeLikeItems}
+        terminalLikeItems={terminalLikeItems}
+        compositeLikeItems={compositeLikeItems}
+      />
 
       {IsNode(element) && (
         <NodeInfo>
