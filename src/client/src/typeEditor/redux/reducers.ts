@@ -135,6 +135,10 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
         fetching: false,
         visible: true,
         createLibraryType: new CreateLibraryType(action.payload.selectedNode),
+        inspector: {
+          visibility: false,
+          height: Size.ModuleClosed,
+        },
       };
     case Types.FETCHING_BLOB_DATA:
       return {
@@ -188,6 +192,10 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
           symbolId: "",
           compositeTypes: [] as string[],
         } as CreateLibraryType),
+        inspector: {
+          visibility: false,
+          height: Size.ModuleClosed,
+        },
       };
     case Types.CLOSE_TYPE_EDITOR:
       return {
@@ -211,6 +219,10 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
           symbolId: "",
           compositeTypes: [] as string[],
         }),
+        inspector: {
+          visibility: false,
+          height: Size.ModuleClosed,
+        },
       };
     case Types.UPDATE_CREATELIBRARYTYPE:
       return {
@@ -293,6 +305,10 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
           compositeTypes: [] as string[],
         }),
         apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
+        inspector: {
+          visibility: false,
+          height: Size.ModuleClosed,
+        },
       };
     case Types.DELETE_TYPE_EDITOR_ERROR:
       return {
