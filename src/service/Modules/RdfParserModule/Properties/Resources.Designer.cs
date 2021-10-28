@@ -349,7 +349,7 @@ namespace RdfParserModule.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to rdfs:label.
+        ///   Looks up a localized string similar to skos:prefLabel.
         /// </summary>
         internal static string label {
             get {

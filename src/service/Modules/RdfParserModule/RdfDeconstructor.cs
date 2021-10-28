@@ -227,14 +227,14 @@ namespace RdfParserModule
 
             var terminals = new List<ParserTerminal>();
 
-            var inputTerminals = GetObjects(nodeId, "imf:hasInputTerminal").Select(obj => new ParserTerminal
+            var inputTerminals = GetObjects(nodeId, "imf:hasInTerminal").Select(obj => new ParserTerminal
             {
                 Id = obj.ToString(),
                 Type = ConnectorType.Input,
                 NodeId = nodeId
             }).ToList();
 
-            var outputTerminals = GetObjects(nodeId, "imf:hasOutputTerminal").Select(obj => new ParserTerminal
+            var outputTerminals = GetObjects(nodeId, "imf:hasOutTerminal").Select(obj => new ParserTerminal
             {
                 Id = obj.ToString(),
                 Type = ConnectorType.Output,
@@ -269,6 +269,7 @@ namespace RdfParserModule
 
 
                 var connection = GetObjects(terminal.Id, "imf:connectedTo");
+
                 if (connection is null) continue;
                 switch (terminal.Type)
                 {
@@ -291,7 +292,7 @@ namespace RdfParserModule
         {
             var nodeId = node.Id;
 
-            var inTerms = GetObjects(nodeId, "imf:hasInputTerminal").Select(obj => new ParserTerminal
+            var inTerms = GetObjects(nodeId, "imf:hasInTerminal").Select(obj => new ParserTerminal
             {
                 Id = obj.ToString(),
                 Type = ConnectorType.Input,
@@ -304,7 +305,7 @@ namespace RdfParserModule
             // Den som INPUT er connectedTo er jo FromConnectorId
             // Og den som OUTPUT er connectedTo er ToConnectorId
 
-            var outTerms = GetObjects(nodeId, "imf:hasOutputTerminal").Select(obj => new ParserTerminal
+            var outTerms = GetObjects(nodeId, "imf:hasOutTerminal").Select(obj => new ParserTerminal
             {
                 Id = obj.ToString(),
                 Type = ConnectorType.Output,
@@ -436,30 +437,24 @@ namespace RdfParserModule
 
                         edge.InputTerminal = term;
                         edge.InputTerminalId = term.Id;
+
+                        edge.FromConnectorId = term.FromConnectorId;
                     }
-                    else
+                    else if (term.Type == ConnectorType.Output)
                     {
                         node.OutputTerminal = term;
                         node.OutputTerminalId = term.Id;
 
                         edge.OutputTerminal = term;
                         edge.OutputTerminalId = term.Id;
+                        
+                        edge.ToConnectorId = term.ToConnectorId;
+
+                        var termPred = new string[] { "imf:hasTerminal", "imf:hasOutTerminal", "imf:hasInTerminal" };
+                        var toNodeList = GetSubjects(termPred, term.ToConnectorId, true);
+                        //if (toNodeList is null) continue;
+                        edge.ToNodeId = toNodeList.First().ToString();
                     }
-
-                    //if (term.FromConnectorId != null)
-                    //{
-                    //    edge.FromConnectorId = term.FromConnectorId;
-                    //}
-
-                    //if (term.ToConnectorId != null)
-                    //{
-                    //    edge.ToConnectorId = term.ToConnectorId;
-
-                    //    var termPred = new string[] { "imf:hasTerminal", "imf:hasOutputTerminal", "imf:hasInputTerminal" };
-                    //    var toNodeList = GetSubjects(termPred, term.ToConnectorId, true);
-                    //    if (toNodeList is null) continue;
-                    //    edge.ToNodeId = toNodeList.First().ToString();
-                    //}
                 }
                 edges.Add(edge);
             }

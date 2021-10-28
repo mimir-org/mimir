@@ -22,6 +22,7 @@ namespace RdfParserModule
         public IUriNode FunctionRoot;
         public IUriNode LocationRoot;
         public IUriNode ProductRoot;
+        
 
 
         private IGraph BaseGraph()

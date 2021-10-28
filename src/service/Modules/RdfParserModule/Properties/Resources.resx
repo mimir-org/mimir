@@ -214,7 +214,7 @@
     <value>imf:isAspectOf</value>
   </data>
   <data name="label" xml:space="preserve">
-    <value>rdfs:label</value>
+    <value>skos:prefLabel</value>
   </data>
   <data name="Location" xml:space="preserve">
     <value>imf:Location</value>
