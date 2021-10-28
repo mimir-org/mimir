@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../redux/store";
+import { useEffect, useRef } from "react";
+import { typeEditorStateSelector, useAppDispatch, useAppSelector } from "../redux/store";
 import { ListType } from "./TypeEditorList";
 import { CloseIcon } from "../assets/icons/close";
 import { CheckIcon } from "../assets/icons/checkmark";
@@ -14,6 +14,7 @@ import {
   ChooseProperties,
   TypePreviewColumn,
   SaveButton,
+  TypeEditorInspectorWrapper,
 } from "./styled";
 import {
   GetSelectedIcon,
@@ -42,7 +43,8 @@ import {
  */
 export const TypeEditorComponent = () => {
   const dispatch = useAppDispatch();
-  const state = useAppSelector((s) => s.typeEditor);
+  const state = useAppSelector(typeEditorStateSelector);
+  const typeEditorPropertiesRef = useRef(null);
 
   useEffect(() => {
     dispatch(getInitialData());
@@ -90,7 +92,7 @@ export const TypeEditorComponent = () => {
               locationTypes={state?.locationTypes}
               purposes={state?.purposes}
             />
-            <ChooseProperties>
+            <ChooseProperties ref={typeEditorPropertiesRef}>
               <TypeEditorList
                 items={state?.rdsList}
                 createLibraryType={state?.createLibraryType}
@@ -159,19 +161,23 @@ export const TypeEditorComponent = () => {
                 />
                 <SaveButton onClick={onSave}>
                   <p>
-                    {state.createLibraryType.libraryId === null
+                    {state.createLibraryType.id === null
                       ? TextResources.TypeEditor_Button_Add
                       : TextResources.TypeEditor_Button_Edit}
                   </p>
-                  <img
-                    src={state.createLibraryType.libraryId === null ? LibraryIcon : CheckIcon}
-                    alt="icon"
-                    className="icon"
-                  />
+                  <img src={state.createLibraryType.id === null ? LibraryIcon : CheckIcon} alt="icon" className="icon" />
                 </SaveButton>
               </TypePreviewColumn>
             </ChooseProperties>
-            <TypeEditorInspector />
+
+            <TypeEditorInspectorWrapper>
+              {!!state.createLibraryType.aspect && (
+                <TypeEditorInspector
+                  createLibraryType={state.createLibraryType}
+                  typeEditorPropertiesRef={typeEditorPropertiesRef}
+                />
+              )}
+            </TypeEditorInspectorWrapper>
           </TypeEditorContent>
         </TypeEditorWrapper>
       )}

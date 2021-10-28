@@ -37,7 +37,7 @@ export const ObjectBlockElement = ({ name, categoryId, terminalTypes, onChange, 
   };
 
   const showTerminals = () => {
-    let terminalsArray = [];
+    let terminalsArray: TerminalTypeItem[] = [];
     if (terminalsQuantity > 0) {
       terminalsArray = defaultTerminals.map((t) => {
         t.terminalId = CreateId();

@@ -1,5 +1,5 @@
 import { ListType } from "../../../TypeEditorList";
-import { Rds, TerminalType, AttributeType, CompositeType, PredefinedAttribute } from "../../../../models";
+import { Rds, AttributeType, CompositeType, PredefinedAttribute, TerminalTypeDict } from "../../../../models";
 import {
   IsRds,
   IsTerminal,
@@ -12,8 +12,8 @@ import {
 const GetListFilter = (
   searchString: string,
   listType: ListType,
-  list: Rds[] | TerminalType[] | AttributeType[] | CompositeType[] | PredefinedAttribute[]
-): Rds[] | TerminalType[] | AttributeType[] | CompositeType[] | PredefinedAttribute[] => {
+  list: Rds[] | TerminalTypeDict | AttributeType[] | CompositeType[] | PredefinedAttribute[]
+): Rds[] | TerminalTypeDict | AttributeType[] | CompositeType[] | PredefinedAttribute[] => {
   let filter: any[] = list;
   if (list) {
     if (IsRds(listType))

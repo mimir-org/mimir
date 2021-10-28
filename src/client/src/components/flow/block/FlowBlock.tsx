@@ -24,11 +24,15 @@ import {
   nodeSizeSelector,
 } from "../../../redux/store";
 
+interface Props {
+  inspectorRef: React.MutableRefObject<HTMLDivElement>;
+}
+
 /**
  * Component for the Flow library in BlockView
  * @returns a scene with Flow elements and Mimir nodes, transports and edges.
  */
-const FlowBlock = () => {
+const FlowBlock = ({ inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
   const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState(null);
@@ -58,7 +62,7 @@ const FlowBlock = () => {
     project.edges?.forEach((edge) => {
       if (edge.fromNodeId === nodeToRemove.id || edge.toNodeId === nodeToRemove.id) elementsToRemove.push(edge);
     });
-    return useOnRemove(elementsToRemove, setElements, dispatch);
+    return useOnRemove(elementsToRemove, setElements, dispatch, inspectorRef);
   };
 
   const OnConnect = (params) => {
@@ -114,7 +118,7 @@ const FlowBlock = () => {
             >
               <Background />
               <MapComponent />
-              <FullScreenComponent />
+              <FullScreenComponent inspectorRef={inspectorRef} />
             </ReactFlow>
 
             <ExplorerModule elements={elements} />

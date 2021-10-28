@@ -2,7 +2,15 @@ import { useState } from "react";
 import { ListWrapper } from "../compLibrary";
 import { ListContent, ListSearch } from "./lists/";
 import { GetListLabel, GetWidth } from "./helpers";
-import { CreateLibraryType, Discipline, Rds, TerminalType, PredefinedAttribute, AttributeType, CompositeType } from "../models";
+import {
+  CreateLibraryType,
+  Discipline,
+  Rds,
+  PredefinedAttribute,
+  AttributeType,
+  CompositeType,
+  TerminalTypeDict,
+} from "../models";
 
 export enum ListType {
   Rds = 0,
@@ -15,7 +23,7 @@ export enum ListType {
 }
 interface Props {
   createLibraryType: CreateLibraryType;
-  items: Rds[] | TerminalType[] | AttributeType[] | CompositeType[] | PredefinedAttribute[];
+  items: Rds[] | TerminalTypeDict | AttributeType[] | CompositeType[] | PredefinedAttribute[];
   discipline?: Discipline;
   disabled?: boolean;
   listType: ListType;

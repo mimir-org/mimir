@@ -13,7 +13,7 @@ const MenuList = styled.div`
   top: 38px;
   left: 0;
   z-index: 1;
-  width: 100%;
+  width: 96.25%;
   max-height: 250px;
   overflow-y: auto;
   margin-left: 10px;

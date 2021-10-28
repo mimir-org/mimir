@@ -19,7 +19,7 @@ export { default as IsTransport } from "./IsTransport";
 export { default as IsLocationTerminal } from "./IsLocationTerminal";
 export { default as IsPartOf } from "./IsPartOf";
 export { default as IsProductTerminal } from "./IsProductTerminal";
-export { default as IsInputTerminal } from "./IsInputTerminal";
+export { IsInputTerminal } from "./IsInputTerminal";
 export { default as IsOutputTerminal } from "./IsOutputTerminal";
 
 export { default as IsExplorer } from "./IsExplorer";

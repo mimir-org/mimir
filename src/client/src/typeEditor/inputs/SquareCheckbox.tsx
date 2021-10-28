@@ -22,7 +22,7 @@ export const SquareCheckbox = ({ id, name, label, defaultValue, onChange }: Prop
 
   const onCheckboxChange = () => {
     if (label === Label.attributeTypes || label === Label.compositeTypes) {
-      let array = defaultValue;
+      let array = [...defaultValue];
       if (id && isSelected()) {
         array = array.filter((a) => a !== id);
       } else if (id && !isSelected() && array) {

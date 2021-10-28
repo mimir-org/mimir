@@ -14,7 +14,6 @@ const ListWrapper = styled.div<Props>`
   font-size: ${FontSize.Small};
   font-weight: ${FontWeight.Normal};
   flex: ${(props) => (props.wide === undefined ? 1 : props.wide)};
-  height: ${(props) => (props.height === undefined ? 523 : props.height)}px;
   margin-right: ${(props) => (props.right === undefined ? 15 : props.right)}px;
   opacity: ${(props) => (props.disabled ? 0.4 : 1)};
 `;

@@ -1,26 +1,39 @@
 import React, { useMemo, useState } from "react";
 import { Color } from "../../../../compLibrary";
 import { TerminalCategory } from "../../../../typeEditor/helpers/GetFilteredTerminalsList";
-import { Connector, ConnectorType, TerminalType } from "../../../../models";
+import { ConnectorType, TerminalType } from "../../../../models";
 import { ActiveTerminalsTypeList } from "./";
 import { OnCategoryClick, OnTypeClick } from "./handlers";
+import { ExpandAccordionIcon, CollapseAccordionIcon } from "../../../../assets/icons/toogle";
+import { SelectedTerminalIdentifier, TerminalLikeItem } from "../../types";
 import {
   FilterTerminalCategories,
   FormatTypeId,
   GetInputAndOutputTerminalsByTerminalType,
   GetNumTerminalsByCategory,
 } from "./helpers";
-import { ExpandAccordionIcon, CollapseAccordionIcon } from "../../../../assets/icons/toogle";
-import { TerminalsListElementWrapper, TerminalsCategoryListElement } from "./styled/activeTerminalList";
+
+import {
+  TerminalsListElementWrapper,
+  TerminalsCategoryListElement,
+  ActiveTerminalListWrapper,
+} from "./styled/activeTerminalList";
 
 interface Props {
-  terminals: Connector[];
+  terminals: TerminalLikeItem[];
   terminalCategories: TerminalCategory[];
-  selectedTerminal: Connector;
-  onSelectTerminal: (item: Connector) => void;
+  selectedTerminal: TerminalLikeItem;
+  selectedTerminalIdentifier: SelectedTerminalIdentifier;
+  onSelectTerminal: (identifier: SelectedTerminalIdentifier) => void;
 }
 
-function ActiveTerminalsList({ terminals, terminalCategories, selectedTerminal, onSelectTerminal }: Props) {
+function ActiveTerminalsList({
+  terminals,
+  terminalCategories,
+  selectedTerminal,
+  selectedTerminalIdentifier,
+  onSelectTerminal,
+}: Props) {
   const [selectedCategoriesIds, setSelectedCategoriesIds] = useState<string[]>([]);
   const [selectedTypesIds, setSelectedTypesIds] = useState<string[]>([]);
   const filteredCategories = useMemo(
@@ -38,7 +51,7 @@ function ActiveTerminalsList({ terminals, terminalCategories, selectedTerminal, 
     selectedTypesIds.includes(FormatTypeId(type, connectorType));
 
   return (
-    <>
+    <ActiveTerminalListWrapper>
       {filteredCategories.map((category, i) => {
         const categoryExpanded = isCategoryExpanded(category);
         const numCategoryTerminals = numTerminalsByCategoryId.get(category.id);
@@ -70,6 +83,7 @@ function ActiveTerminalsList({ terminals, terminalCategories, selectedTerminal, 
                 const terminalTypeListProps = {
                   terminalType: terminalType,
                   selectedTerminal: selectedTerminal,
+                  selectedTerminalIdentifier: selectedTerminalIdentifier,
                   onTypeClick: (type: TerminalType, connectorType: ConnectorType) =>
                     OnTypeClick(
                       type,
@@ -83,7 +97,7 @@ function ActiveTerminalsList({ terminals, terminalCategories, selectedTerminal, 
 
                 return (
                   <React.Fragment key={terminalType.id}>
-                    {inputTerminals.length > 0 && (
+                    {inputTerminals?.length > 0 && (
                       <ActiveTerminalsTypeList
                         {...terminalTypeListProps}
                         terminals={inputTerminals}
@@ -91,7 +105,7 @@ function ActiveTerminalsList({ terminals, terminalCategories, selectedTerminal, 
                         expanded={isTypeExpanded(terminalType, ConnectorType.Input)}
                       />
                     )}
-                    {outputTerminals.length > 0 && (
+                    {outputTerminals?.length > 0 && (
                       <ActiveTerminalsTypeList
                         {...terminalTypeListProps}
                         terminals={outputTerminals}
@@ -105,7 +119,7 @@ function ActiveTerminalsList({ terminals, terminalCategories, selectedTerminal, 
           </TerminalsListElementWrapper>
         );
       })}
-    </>
+    </ActiveTerminalListWrapper>
   );
 }
 

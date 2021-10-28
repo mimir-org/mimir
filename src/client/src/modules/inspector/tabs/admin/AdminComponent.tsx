@@ -32,7 +32,7 @@ const AdminComponent = ({ element, project, index }: Props) => {
       {isTabOpen && (
         <TabBody id="admininfo">
           <hr />
-          {element && project && <div className="container">{GetAdminContent(element, project, statuses)}</div>}
+          {element && <div className="container">{GetAdminContent(element, project, statuses)}</div>}
         </TabBody>
       )}
     </>
