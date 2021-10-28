@@ -1,27 +1,19 @@
 import { Elements } from "react-flow-renderer";
 import { Node, Project } from "../../../../models";
 import { BuildParentBlockNode, BuildParentSecondaryNode } from ".";
-import { DrawChildNodes, DrawConnectViewChildren, DrawEdges, DrawSecondaryChildren } from "./helpers";
+import { DrawChildNodes, DrawEdges, DrawSecondaryChildren } from "./helpers";
 
 /**
  * Component to draw all nodes and edges in BlockView.
  * @param project
  * @param selectedNode
  * @param secondaryNode
- * @param mainConnectNodes
  * @param parentNode
  * @returns all Elements.
  */
-const BuildBlockElements = (
-  project: Project,
-  selectedNode: Node,
-  secondaryNode: Node,
-  mainConnectNodes: Node[],
-  parentNode: Node
-) => {
+const BuildBlockElements = (project: Project, selectedNode: Node, secondaryNode: Node, parentNode: Node) => {
   if (!project) return;
   const elements: Elements = [];
-  const connectView = mainConnectNodes?.length > 0;
   const allNodes = project.nodes;
 
   const parentBlock = BuildParentBlockNode(selectedNode);
@@ -36,7 +28,6 @@ const BuildBlockElements = (
   DrawChildNodes(project.edges, allNodes, selectedNode, elements, parentNode);
   DrawEdges(project.edges, allNodes, elements, secondaryNode);
   secondaryNode && DrawSecondaryChildren(project.edges, allNodes, secondaryNode, elements);
-  connectView && DrawConnectViewChildren(mainConnectNodes, elements, allNodes, parentNode);
 
   return elements;
 };

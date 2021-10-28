@@ -2,6 +2,12 @@ import { Size } from "../../../../../../compLibrary";
 import { Connector, Node } from "../../../../../../models";
 import { IsInputTerminal } from "../../../../helpers";
 
+/**
+ * Component to resize a Node in Electro view based on the amount of visual terminals.
+ * @param terminals
+ * @param data
+ * @returns the new value for Node width
+ */
 const SetNodeWidth = (terminals: Connector[], data: Node) => {
   const maximum = 5;
   let inTerminals = 0;

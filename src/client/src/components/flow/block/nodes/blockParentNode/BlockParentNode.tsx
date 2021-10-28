@@ -53,7 +53,6 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         terminals={terminals}
         onClick={(conn) => OnConnectorClick(conn, dispatch, edges, nodes)}
         menuBox={true}
-        mainConnectNode={false}
         showInTerminalMenu={showInTerminalMenu}
         showOutTerminalMenu={showOutTerminalMenu}
       />
@@ -65,7 +64,6 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         width={node?.width}
         terminals={terminals}
         electro={electro}
-        connectNode={false}
       />
       {IsLocation(data) && <Background style={{ zIndex: 1 }} variant={BackgroundVariant.Lines} color={Color.Grey} gap={20} />}
     </>

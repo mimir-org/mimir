@@ -166,11 +166,6 @@ export const secondaryNodeSelector = createAppSelector(
   (node) => node
 );
 
-export const connectSelector = createAppSelector(
-  (state) => state.connectView.mainNodes,
-  (mainNodes) => mainNodes
-);
-
 export const iconSelector = createAppSelector(
   (state) => state.typeEditor.icons,
   (icons) => icons
@@ -182,7 +177,7 @@ export const electroSelector = createAppSelector(
 );
 
 export const edgeSelector = createAppSelector(
-  (state) => state.projectState.project.edges,
+  (state) => state.projectState.project?.edges,
   (edges) => (edges ?? []) as Edge[]
 );
 

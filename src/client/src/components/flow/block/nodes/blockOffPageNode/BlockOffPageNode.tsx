@@ -21,7 +21,6 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
         terminals={data.connectors}
         parent={false}
         electro={false}
-        connectNode={false}
       />
     </div>
   );

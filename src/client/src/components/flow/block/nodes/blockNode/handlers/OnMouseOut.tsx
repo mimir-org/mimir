@@ -1,6 +1,5 @@
-const OnMouseOut = (showTerminalButton: any, showConnectButton: any) => {
+const OnMouseOut = (showTerminalButton: any) => {
   showTerminalButton(false);
-  showConnectButton(false);
 };
 
 export default OnMouseOut;

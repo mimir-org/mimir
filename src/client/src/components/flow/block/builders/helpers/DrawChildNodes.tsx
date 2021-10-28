@@ -16,7 +16,7 @@ const DrawChildNodes = (edges: Edge[], allNodes: Node[], selectedNode: Node, ele
   edges.forEach((edge) => {
     if (validateEdge(edge, selectedNode)) {
       const toNode = allNodes.find((n) => n.id === edge.toNode.id);
-      if (toNode) elements.push(BuildBlockNode(toNode, null, allNodes, parentNode));
+      if (toNode) elements.push(BuildBlockNode(toNode, parentNode));
     }
   });
 };

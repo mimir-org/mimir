@@ -45,9 +45,6 @@ class Node {
   // Required only for product aspect
   cost: number;
 
-  // TODO: fix
-  connectNodes: Node[];
-
   // Only for client
   isSelected: boolean | false;
   isBlockSelected: boolean | false;

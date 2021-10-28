@@ -65,7 +65,6 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
           electro={electro}
           onClick={(conn) => OnConnectorClick(conn, data, dispatch)}
           menuBox={terminalButton}
-          mainConnectNode={false}
           showInTerminalMenu={showInTerminalMenu}
           showOutTerminalMenu={showOutTerminalMenu}
         />
@@ -79,7 +78,6 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
         terminals={terminals}
         parent={false}
         electro={electro}
-        connectNode={false}
       />
     </>
   );

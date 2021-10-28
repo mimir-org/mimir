@@ -86,7 +86,7 @@ const useOnDrop = (
     });
 
     IsBlockView()
-      ? setElements((es) => es.concat(BuildBlockNode(targetNode, null, project.nodes, parentNode)))
+      ? setElements((es) => es.concat(BuildBlockNode(targetNode, parentNode)))
       : setElements((es) => es.concat(BuildTreeNode(targetNode)));
 
     if (sourceNode && IsFamily(sourceNode, targetNode)) {

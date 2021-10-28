@@ -7,5 +7,4 @@ export { default as DetectCollision } from "./DetectCollision";
 
 export { default as DrawChildNodes } from "./DrawChildNodes";
 export { default as DrawSecondaryChildren } from "./DrawSecondaryChildren";
-export { default as DrawConnectViewChildren } from "./DrawConnectViewChildren";
 export { default as DrawEdges } from "./DrawEdges";

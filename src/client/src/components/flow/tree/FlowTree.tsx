@@ -115,9 +115,7 @@ const FlowTree = () => {
             nodeTypes={Helpers.GetNodeTypes}
             edgeTypes={Helpers.GetEdgeTypes}
             defaultZoom={0.7}
-            defaultPosition={[700, 300]}
-            snapToGrid={true}
-            snapGrid={[5, 5]}
+            defaultPosition={[700, 150]}
             zoomOnDoubleClick={false}
             onClick={(e) => OnTreeClick(e, dispatch, project)}
           >

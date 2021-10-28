@@ -17,7 +17,6 @@ import {
   iconSelector,
   electroSelector,
   librarySelector,
-  connectSelector,
   projectSelector,
   secondaryNodeSelector,
   userStateSelector,
@@ -36,7 +35,6 @@ const FlowBlock = () => {
   const darkMode = useAppSelector(darkModeSelector);
   const project = useAppSelector(projectSelector);
   const secondaryNode = useAppSelector(secondaryNodeSelector) as Node;
-  const mainConnectNodes = useAppSelector(connectSelector);
   const icons = useAppSelector(iconSelector);
   const lib = useAppSelector(librarySelector);
   const electro = useAppSelector(electroSelector);
@@ -47,10 +45,10 @@ const FlowBlock = () => {
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(BuildBlockElements(project, node, secondaryNode, mainConnectNodes, parent));
+      setElements(BuildBlockElements(project, node, secondaryNode, parent));
       return setFlowInstance(_reactFlowInstance);
     },
-    [project, node, secondaryNode, mainConnectNodes, parent]
+    [project, node, secondaryNode, parent]
   );
 
   const OnElementsRemove = (elementsToRemove) => {
@@ -89,13 +87,6 @@ const FlowBlock = () => {
     OnLoad(flowInstance);
   }, [OnLoad, flowInstance, darkMode, electro]);
 
-  const defaultX = node?.positionBlockX ?? 0;
-  const defaultY = node?.positionBlockY ?? 0;
-
-  console.log({ defaultX });
-  console.log({ defaultY });
-  console.log(window.screen.width);
-
   return (
     <>
       {IsBlockView() && (
@@ -113,10 +104,9 @@ const FlowBlock = () => {
               onNodeDragStop={OnNodeDragStop}
               onElementClick={OnElementClick}
               zoomOnScroll={true}
-              paneMoveable={true}
+              paneMoveable={false}
               zoomOnDoubleClick={false}
-              defaultZoom={0.7}
-              // defaultPosition={[defaultX, defaultY]}
+              defaultZoom={0.9}
               onClick={(e) => OnBlockClick(e, dispatch, project)}
               onlyRenderVisibleElements={true}
             >
