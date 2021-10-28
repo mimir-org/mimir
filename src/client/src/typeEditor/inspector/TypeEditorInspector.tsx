@@ -12,11 +12,11 @@ import {
   useAppSelector,
   projectSelector,
   useParametricAppSelector,
-  isAnimatedModuleSelector,
   iconSelector,
   attributeTypeSelector,
   isTypeEditorInspectorOpen,
   terminalTypeSelector,
+  animatedModuleSelector,
 } from "../../redux/store";
 import { GetFilteredTerminalTypeExtendedList } from "../helpers";
 import { GetPropertiesHeight } from "../helpers/GetPropertiesHeight";
@@ -32,7 +32,7 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
 
   const type = MODULE_TYPE.INSPECTOR;
   const project = useAppSelector(projectSelector);
-  const animate = useParametricAppSelector(isAnimatedModuleSelector, type);
+  const animate = useParametricAppSelector(animatedModuleSelector, type);
   const inspectorOpen = useAppSelector(isTypeEditorInspectorOpen);
   const icons = useAppSelector(iconSelector);
   const attributeTypes = useAppSelector(attributeTypeSelector);

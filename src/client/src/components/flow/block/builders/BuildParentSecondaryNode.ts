@@ -3,7 +3,7 @@ import { TextResources } from "../../../../assets/text";
 import { Size } from "../../../../compLibrary";
 import { Node } from "../../../../models";
 import { CreateId } from "../../helpers";
-import { DetectCollision, SetConnectorOrder } from "./helpers";
+import { SetConnectorOrder } from "./helpers";
 
 /**
  * Component to create a secondary node in BlockView.
@@ -17,7 +17,7 @@ const BuildParentSecondaryNode = (primaryNode: Node, secondaryNode: Node) => {
   SetConnectorOrder(secondaryNode);
 
   const type = TextResources.Type_BlockParentNode;
-  const nodePos = { x: secondaryNode.positionBlockX, y: secondaryNode.positionBlockY };
+  //const nodePos = { x: secondaryNode.positionBlockX, y: secondaryNode.positionBlockY };
   // const position = DetectCollision(nodePos, primaryNode);
   const position = { x: primaryNode.positionBlockX + Size.BlockView_Width + 150, y: primaryNode.positionBlockY };
 
