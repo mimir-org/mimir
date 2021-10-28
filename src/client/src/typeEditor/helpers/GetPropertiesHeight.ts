@@ -1,17 +1,13 @@
 import { Size } from "../../compLibrary";
 
-const CLIENT_HEIGHT_BASELINE = 927;
-
 /**
- * Calculate height of Choose Properties lists in Type Editor.
- * Uses a clientHeight of 927px (Firefox 1080p) as baseline.
- * @param isFull
- * @returns
+ * Calculate and return height of Choose Properties lists in Type Editor.
+ * @param isFull Whether to use full size of Properties list, or shrunk. Inverse of whether Inspector is open.
+ * @returns Height of Properties list
  */
 export const GetPropertiesHeight = (isFull: boolean): number => {
   return (
-    (isFull ? Size.TypeEditorPropertiesFull_BASELINE : Size.TypeEditorPropertiesShrunk_BASELINE) +
-    document.body.clientHeight -
-    CLIENT_HEIGHT_BASELINE
+    document.body.clientHeight +
+    (isFull ? Size.TypeEditorPropertiesFull_BASELINE : Size.TypeEditorPropertiesShrunk_BASELINE)
   );
 };
