@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { Color, Size } from "../../compLibrary";
 
 const TypeEditorWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   position: fixed;
   top: ${Size.TopMenu_Height}px;
   left: calc(1.6px + ${Size.ModuleClosed}px);

@@ -1,7 +1,6 @@
+import { Action } from "redux";
 import { Size } from "../../../compLibrary";
-import { setModuleVisibility } from "../../../redux/store/modules/actions";
 import { SetPanelHeight } from "../helpers";
-import { changeInspectorHeight } from "../redux/height/actions";
 
 /**
  * Function to open/close the Inspector Module.
@@ -9,15 +8,16 @@ import { changeInspectorHeight } from "../redux/height/actions";
  * @param type - Module type
  * @param open
  */
-const OnToggleClick = (dispatch: any, type: string, open: boolean) => {
-  dispatch(setModuleVisibility(type, !open, true));
-  if (open) {
-    dispatch(changeInspectorHeight(Size.ModuleClosed));
-    SetPanelHeight(Size.ModuleClosed);
-  } else {
-    dispatch(changeInspectorHeight(Size.ModuleOpen));
-    SetPanelHeight(Size.ModuleOpen);
-  }
+const OnToggleClick = (
+  dispatch: any,
+  open: boolean,
+  inspectorRef: React.MutableRefObject<HTMLDivElement>,
+  changeInspectorVisibilityAction: (visibility: boolean) => Action,
+  changeInspectorHeightAction: (height: number) => Action
+) => {
+  dispatch(changeInspectorVisibilityAction(!open));
+  dispatch(changeInspectorHeightAction(open ? Size.ModuleClosed : Size.ModuleOpen));
+  SetPanelHeight(inspectorRef, open ? Size.ModuleClosed : Size.ModuleOpen);
 };
 
 export default OnToggleClick;

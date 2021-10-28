@@ -1,7 +1,7 @@
-import { Connector, ConnectorType } from "../../../models";
+import { ConnectorType } from "../../../models";
 
-const IsInputTerminal = (terminal: Connector) => {
+import { TerminalLikeItem } from "../../../modules/inspector/types";
+
+export const IsInputTerminal = (terminal: TerminalLikeItem) => {
   return terminal?.type === ConnectorType.Input;
 };
-
-export default IsInputTerminal;

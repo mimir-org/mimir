@@ -13,10 +13,10 @@ import {
   CreateLibraryType,
   Discipline,
   Rds,
-  TerminalType,
   PredefinedAttribute,
   AttributeType,
   CompositeType,
+  TerminalTypeDict,
 } from "../../models";
 import {
   IsTransport,
@@ -33,8 +33,8 @@ import {
 interface Props {
   disabled?: boolean;
   listType: ListType;
-  items: Rds[] | TerminalType[] | AttributeType[] | CompositeType[] | PredefinedAttribute[];
-  listItems: Rds[] | TerminalType[] | AttributeType[] | CompositeType[] | PredefinedAttribute[];
+  items: Rds[] | TerminalTypeDict | AttributeType[] | CompositeType[] | PredefinedAttribute[];
+  listItems: Rds[] | TerminalTypeDict | AttributeType[] | CompositeType[] | PredefinedAttribute[];
   createLibraryType: CreateLibraryType;
   discipline?: Discipline;
   onChange: Function;

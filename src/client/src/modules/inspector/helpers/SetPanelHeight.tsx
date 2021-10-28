@@ -1,7 +1,7 @@
-const SetPanelHeight = (height: number) => {
-  const module = "InspectorModule";
-  const panel = document.getElementById(module);
-  panel.style.height = height + "px";
+const SetPanelHeight = (inspectorRef: React.MutableRefObject<HTMLDivElement>, height: number) => {
+  if (inspectorRef.current) {
+    inspectorRef.current.style.height = height + "px";
+  }
 };
 
 export default SetPanelHeight;

@@ -5,14 +5,11 @@ import { DoesCombinationMatchAttribute } from "./helpers";
 import { Body, Entity, Box } from "./styled";
 import { CombinationDropdown } from "./CombinationDropdown";
 import { RemoveIconComponent } from "../../../../assets/icons/close";
-import {
-  OnChangeParameterValue,
-  OnChangeFilterChoice,
-  OnLockParameter,
-  OnChangeAttributeCombinationChoice,
-} from "./handlers";
+import { OnChangeParameterValue, OnChangeFilterChoice, OnLockParameter, OnChangeAttributeCombinationChoice } from "./handlers";
 import { useMemo } from "react";
-import { InspectorElement, InspectorParametersElement, InspectorTerminalsElement } from "../../types";
+import { AttributeLikeItem, InspectorElement, InspectorParametersElement, InspectorTerminalsElement } from "../../types";
+import { GetAttributes } from "./helpers/GetAttributes";
+import { GetAttributeLikeItemKey, IsCreateLibraryType } from "../../helpers/IsType";
 
 const FILTER_ENTITY_WIDTH: number = 191;
 
@@ -23,6 +20,7 @@ interface Props {
   terminalParentElement?: InspectorTerminalsElement;
   combinations: CombinedAttribute[];
   selectedCombinations: CombinedAttribute[];
+  attributeLikeItems?: AttributeLikeItem[];
   maxNumSelectedCombinations: number;
   filterName: string;
   headerColor: string;
@@ -37,13 +35,17 @@ function ParameterRow({
   terminalParentElement,
   combinations,
   selectedCombinations,
+  attributeLikeItems,
   maxNumSelectedCombinations,
   filterName,
   headerColor,
   bodyColor,
   dispatch,
 }: Props) {
-  const attributes = element.attributes;
+  const attributes = attributeLikeItems ?? GetAttributes(element);
+  const attributeKey = GetAttributeLikeItemKey(attributes?.[0]);
+
+  const isCreateLibraryType = IsCreateLibraryType(inspectorParentElement);
 
   const bodyWidth = useMemo(
     () => maxNumSelectedCombinations * PARAMETER_ENTITY_WIDTH + FILTER_ENTITY_WIDTH,
@@ -55,13 +57,13 @@ function ParameterRow({
       <Body width={bodyWidth}>
         <Entity width={FILTER_ENTITY_WIDTH}>
           <Box color={bodyColor} id="ParametersBox">
-            <div className="icon">
+            <div className={`icon ${isCreateLibraryType && "hide-icon"}`}>
               <RemoveIconComponent
                 width={26}
                 height={26}
                 fill={headerColor}
                 stroke={headerColor}
-                onClick={() => OnChangeFilterChoice(element.id, filterName, true, dispatch)}
+                onClick={() => !isCreateLibraryType && OnChangeFilterChoice(element.id, filterName, true, dispatch)}
               />
             </div>
             <div className="text">{filterName}</div>
@@ -81,22 +83,14 @@ function ParameterRow({
           <Parameter
             key={combination.combined}
             attribute={attributes.find(
-              (attr) => attr.key === filterName && DoesCombinationMatchAttribute(combination, attr)
+              (attr) => attr[attributeKey] === filterName && DoesCombinationMatchAttribute(combination, attr)
             )}
             combination={combination}
             isNodeLocked={elementIsLocked}
             headerColor={headerColor}
             bodyColor={bodyColor}
             onChange={(id, value, unit) =>
-              OnChangeParameterValue(
-                element,
-                inspectorParentElement,
-                terminalParentElement,
-                id,
-                value,
-                unit?.id,
-                dispatch
-              )
+              OnChangeParameterValue(element, inspectorParentElement, terminalParentElement, id, value, unit?.id, dispatch)
             }
             onLock={(attribute, isLocked) =>
               OnLockParameter(

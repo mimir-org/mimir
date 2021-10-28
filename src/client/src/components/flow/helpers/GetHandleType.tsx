@@ -1,6 +1,6 @@
 import { Position, HandleType } from "react-flow-renderer";
 import { Connector } from "../../../models";
-import IsInputTerminal from "./IsInputTerminal";
+import { IsInputTerminal } from "./IsInputTerminal";
 import { IsProductTerminal, IsLocationTerminal, IsPartOf, IsTransport } from "../helpers";
 
 const GetHandleType = (conn: Connector): [HandleType, Position] => {

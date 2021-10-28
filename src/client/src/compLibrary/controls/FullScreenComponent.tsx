@@ -11,7 +11,11 @@ import {
   heightSelector,
 } from "../../redux/store";
 
-const FullScreenComponent = () => {
+interface Props {
+  inspectorRef: React.MutableRefObject<HTMLDivElement>;
+}
+
+const FullScreenComponent = ({ inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
   const isOpen = useAppSelector(isOpenSelector);
   const isLibOpen = useAppSelector(libOpenSelector);
@@ -22,7 +26,11 @@ const FullScreenComponent = () => {
 
   return (
     <FullScreenButton libraryOpen={isLibOpen} height={height}>
-      <img src={isOpen ? ExpandIcon : CloseIcon} alt="fullscreen" onClick={() => OnToggleClick(dispatch, isOpen)} />
+      <img
+        src={isOpen ? ExpandIcon : CloseIcon}
+        alt="fullscreen"
+        onClick={() => OnToggleClick(dispatch, isOpen, inspectorRef)}
+      />
     </FullScreenButton>
   );
 };
