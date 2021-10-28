@@ -1,15 +1,15 @@
 import { memo, FC, useState, useEffect } from "react";
 import { Background, BackgroundVariant, NodeProps, useUpdateNodeInternals } from "react-flow-renderer";
 import { HandleComponent, TerminalsContainerComponent } from "../../terminals";
-import { Color, Size } from "../../../../../compLibrary";
-import { GetParentColor } from "./helpers";
+import { Color } from "../../../../../compLibrary";
+import { GetParentColor, SetParentNodeSize } from "./helpers";
 import { OnConnectorClick } from "./handlers";
 import { BlockComponent } from "./";
-import { FilterTerminals, GetNodeByDataId } from "../../helpers";
+import { FilterTerminals } from "../../helpers";
 import { Node } from "../../../../../models";
-import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
-import { edgeSelector, electroSelector, nodeSelector, secondaryNodeSelector } from "../../../../../redux/store";
 import { IsLocation } from "../../../helpers";
+import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
+import { edgeSelector, electroSelector, nodeSelector, nodeSizeSelector, secondaryNodeSelector } from "../../../../../redux/store";
 
 /**
  * Component for the large parent block in BlockView.
@@ -24,25 +24,30 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const edges = useAppSelector(edgeSelector);
   const secondaryNode = useAppSelector(secondaryNodeSelector) as Node;
   const electro = useAppSelector(electroSelector);
+  const parentNodeSize = useAppSelector(nodeSizeSelector);
   const updateNodeInternals = useUpdateNodeInternals();
   const node = nodes?.find((x) => x.id === data.id);
-  if (node) node.width = Size.BlockView_Width;
+  if (node) node.width = parentNodeSize.width;
   const terminals = FilterTerminals(data, secondaryNode);
-
-  // Enforce size change of node
-  useEffect(() => {
-    const parentNode = GetNodeByDataId(data.id);
-    parentNode.style.width = `${Size.BlockView_Width}px`;
-  }, [data]);
 
   useEffect(() => {
     updateNodeInternals(node?.id);
     updateNodeInternals(secondaryNode?.id);
   }, [node, secondaryNode, updateNodeInternals]);
 
+  useEffect(() => {
+    SetParentNodeSize(node, secondaryNode, dispatch); // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [secondaryNode]);
+
   return (
     <>
-      <BlockComponent dispatch={dispatch} node={node} color={GetParentColor(node)} selected={node?.isBlockSelected} />
+      <BlockComponent
+        dispatch={dispatch}
+        node={node}
+        color={GetParentColor(node)}
+        selected={node?.isBlockSelected}
+        width={parentNodeSize.width}
+      />
 
       <TerminalsContainerComponent
         node={node}

@@ -21,6 +21,7 @@ import {
   secondaryNodeSelector,
   userStateSelector,
   blockFilterSelector,
+  nodeSizeSelector,
 } from "../../../redux/store";
 
 /**
@@ -42,13 +43,14 @@ const FlowBlock = () => {
   const blockFilter = useAppSelector(blockFilterSelector);
   const node = GetSelectedNode();
   const parent = GetParent(node);
+  const parentNodeSize = useAppSelector(nodeSizeSelector);
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(BuildBlockElements(project, node, secondaryNode, parent));
+      setElements(BuildBlockElements(project, node, secondaryNode, parent, parentNodeSize.width));
       return setFlowInstance(_reactFlowInstance);
     },
-    [project, node, secondaryNode, parent]
+    [project, node, secondaryNode, parent, parentNodeSize]
   );
 
   const OnElementsRemove = (elementsToRemove) => {

@@ -151,6 +151,11 @@ export const heightSelector = createAppSelector(
   (height) => height
 );
 
+export const nodeSizeSelector = createAppSelector(
+  (state) => state.blockNodeSize,
+  (width) => width
+);
+
 export const darkModeSelector = createAppSelector(
   (state) => state.darkMode.active,
   (active) => active

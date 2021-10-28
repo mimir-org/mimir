@@ -16,6 +16,7 @@ import { darkModeReducer } from "./darkMode/reducers";
 import { parametersReducer } from "../../modules/inspector/tabs/parameters/redux/reducers";
 import { electroViewReducer } from "../store/electro/reducers";
 import { resizeReducer } from "./resize/reducers";
+import { blockNodeSizeReducer } from "../../components/flow/block/redux/reducers";
 import { rootSaga } from "../sagas";
 import { customCategoryReducer } from "../store/customCategory/reducers";
 import { persistStore, persistReducer } from "redux-persist";
@@ -40,6 +41,7 @@ const rootReducers = combineReducers({
   parametersReducer: parametersReducer,
   resizing: resizeReducer,
   customCategory: customCategoryReducer,
+  blockNodeSize: blockNodeSizeReducer,
 });
 
 const persistConfig = {

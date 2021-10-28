@@ -10,15 +10,22 @@ import { IsDirectChild } from "../../helpers";
  * @param nodes
  * @param secondary
  * @param elements
+ * @param parentNodeWidth
  */
-const DrawSecondaryChildren = (edges: Edge[], nodes: Node[], secondary: Node, elements: Elements<any>) => {
+const DrawSecondaryChildren = (
+  edges: Edge[],
+  nodes: Node[],
+  secondary: Node,
+  elements: Elements<any>,
+  parentNodeWidth: number
+) => {
   if (secondary) {
     edges.forEach((edge) => {
       if (edge.fromNodeId === secondary.id && IsFamily(secondary, edge.toNode)) {
         const toNode = nodes.find((n) => n.id === edge.toNodeId && IsDirectChild(n, secondary));
         const parent = nodes.find((n) => n.id === secondary.id);
 
-        if (toNode && parent) elements.push(BuildSecondaryChildNode(toNode, parent));
+        if (toNode && parent) elements.push(BuildSecondaryChildNode(toNode, parent, parentNodeWidth));
       }
     });
   }

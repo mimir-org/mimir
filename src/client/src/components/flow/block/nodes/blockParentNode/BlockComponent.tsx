@@ -8,6 +8,7 @@ interface Props {
   node: Node;
   color: string;
   selected: boolean;
+  width: number;
 }
 
 /**
@@ -15,13 +16,13 @@ interface Props {
  * @param interface
  * @returns a container that sits on top of a Flow node
  */
-const BlockComponent = ({ node, color, selected, dispatch }: Props) => {
+const BlockComponent = ({ node, color, selected, dispatch, width }: Props) => {
   useEffect(() => {
     OnResize(node?.id, dispatch);
   }, [node, dispatch]);
 
   return (
-    <Block id={"function-block-" + node?.id} selected={selected}>
+    <Block id={"function-block-" + node?.id} selected={selected} width={width}>
       <Banner color={color}>
         <Header>
           <p className="text">={node?.label ?? node?.name}</p>

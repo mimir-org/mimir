@@ -4,7 +4,7 @@ import { Node } from "../../../../../models";
 const DetectCollision = (position: { x: number; y: number }, primaryNode: Node) => {
   const xMargin = 100;
   const width = Size.BlockView_Width;
-  const height = Size.BlockView_Height;
+  const height = Size.BlockView_Length;
   const primaryX = primaryNode.positionBlockX;
   const primaryY = primaryNode.positionBlockY;
 
