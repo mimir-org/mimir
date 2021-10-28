@@ -10,7 +10,7 @@ import { Size } from "../../../../../compLibrary";
 const SetBlockNodePos = (
   nodePos: { x: number; y: number },
   parentPos: { x: number; y: number },
-  parentNodeSize: { width: number; length: number }
+  parentNodeSize: { width: number; height: number }
 ) => {
   const parentX = parentPos.x;
   const parentY = parentPos.y;
@@ -19,9 +19,9 @@ const SetBlockNodePos = (
   const margin = 20;
 
   const xMin = parentX;
-  const xMax = parentX + parentNodeSize.width - Size.Node_Width;
+  const xMax = parentX + parentNodeSize?.width - Size.Node_Width;
   const yMin = parentY + margin;
-  const yMax = parentY + parentNodeSize.length - Size.Node_Length;
+  const yMax = parentY + parentNodeSize?.height - Size.Node_Height;
 
   if (nodeX < xMin) nodeX = xMin + margin;
   if (nodeX > xMax) nodeX = xMax - margin;

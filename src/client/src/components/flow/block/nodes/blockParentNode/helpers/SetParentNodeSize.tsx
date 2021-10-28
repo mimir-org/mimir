@@ -15,16 +15,16 @@ function SetParentNodeSize(node: Node, secondaryNode: Node, dispatch: any) {
   const marginY = 250;
 
   const width = secondaryNode ? screenWidth - marginX * 3 : screenWidth - marginX;
-  const length = screenHeight - marginY;
+  const height = screenHeight - marginY;
 
   // Update the Flow parentNode
   const parentNode = GetNodeByDataId(node.id);
   if (parentNode) {
     parentNode.style.width = `${width}px`;
-    parentNode.style.height = `${length}px`;
+    parentNode.style.height = `${height}px`;
   }
 
-  dispatch(setBlockNodeSize(width, length));
+  dispatch(setBlockNodeSize(width, height));
 }
 
 export default SetParentNodeSize;

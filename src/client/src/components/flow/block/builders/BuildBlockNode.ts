@@ -11,7 +11,7 @@ import { CreateId } from "../../helpers";
  * @param parentNodeSize
  * @returns a node of the type FlowElement.
  */
-const BuildBlockNode = (node: Node, parent: Node, parentNodeSize: { width: number; length: number }) => {
+const BuildBlockNode = (node: Node, parent: Node, parentNodeSize: { width: number; height: number }) => {
   if (!node || !parent) return null;
   const type = GetNodeTypeString(node);
 

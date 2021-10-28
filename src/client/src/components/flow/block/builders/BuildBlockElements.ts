@@ -17,7 +17,7 @@ const BuildBlockElements = (
   selectedNode: Node,
   secondaryNode: Node,
   parentNode: Node,
-  parentNodeSize: { width: number; length: number }
+  parentNodeSize: { width: number; height: number }
 ) => {
   if (!project) return;
   const elements: Elements = [];

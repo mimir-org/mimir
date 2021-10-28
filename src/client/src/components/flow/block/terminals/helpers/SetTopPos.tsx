@@ -22,7 +22,7 @@ const SetTopPos = (conn: Connector, pos: Position, electro: boolean, parent: boo
 
   if (pos === Position.Top && !parent) return -17;
   if (pos === Position.Top && parent) return -15;
-  if (pos === Position.Bottom && !parent) return Size.Node_Length + 3;
+  if (pos === Position.Bottom && !parent) return Size.Node_Height + 3;
   if (pos === Position.Bottom && parent) return 602;
 };
 

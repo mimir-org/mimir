@@ -17,7 +17,7 @@ const DrawSecondaryChildren = (
   nodes: Node[],
   secondary: Node,
   elements: Elements<any>,
-  parentNodeSize: { width: number; length: number }
+  parentNodeSize: { width: number; height: number }
 ) => {
   if (secondary) {
     edges.forEach((edge) => {

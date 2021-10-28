@@ -16,7 +16,7 @@ const BuildParentSecondaryNode = (primaryNode: Node, secondaryNode: Node) => {
 
   const type = TextResources.Type_BlockParentNode;
   const margin = 100;
-  const position = { x: primaryNode.positionBlockX + primaryNode.width + margin, y: primaryNode.positionBlockY };
+  const position = { x: primaryNode.positionBlockX + primaryNode.blockWidth + margin, y: primaryNode.positionBlockY };
 
   secondaryNode.positionBlockX = position.x;
   secondaryNode.positionBlockY = position.y;

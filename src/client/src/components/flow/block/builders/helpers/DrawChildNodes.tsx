@@ -19,7 +19,7 @@ const DrawChildNodes = (
   selectedNode: Node,
   elements: Elements<any>,
   parentNode: Node,
-  parentNodeSize: { width: number; length: number }
+  parentNodeSize: { width: number; height: number }
 ) => {
   edges.forEach((edge) => {
     if (validateEdge(edge, selectedNode)) {

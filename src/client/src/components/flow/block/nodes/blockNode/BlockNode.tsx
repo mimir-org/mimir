@@ -35,7 +35,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const terminals = FilterTerminals(data, secondaryNode);
 
   data.width = Size.Node_Width;
-  data.length = Size.Node_Length;
+  data.length = Size.Node_Height;
 
   useEffect(() => {
     updateNodeInternals(node?.id);

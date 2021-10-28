@@ -88,7 +88,7 @@ const useOnDrop = (
 
     IsBlockView()
       ? setElements((es) =>
-          es.concat(BuildBlockNode(targetNode, parentNode, { width: Size.Node_Width, length: Size.Node_Length }))
+          es.concat(BuildBlockNode(targetNode, parentNode, { width: Size.Node_Width, height: Size.Node_Height }))
         )
       : setElements((es) => es.concat(BuildTreeNode(targetNode)));
 

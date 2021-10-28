@@ -4,7 +4,7 @@ import { GetNodeTypeString, SetBlockNodePos, SetConnectorOrder, SetOffPageNodePo
 import { IsOffPage } from "../helpers";
 import { CreateId } from "../../helpers";
 
-const BuildSecondaryChildNode = (node: Node, parent: Node, parentNodeSize: { width: number; length: number }) => {
+const BuildSecondaryChildNode = (node: Node, parent: Node, parentNodeSize: { width: number; height: number }) => {
   if (!node) return null;
   const type = GetNodeTypeString(node);
 

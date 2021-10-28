@@ -150,12 +150,12 @@ export const inspectorTabOpenSelector = makeIsInspectorTabOpenSelector();
 
 export const heightSelector = createAppSelector(
   (state) => state.inspectorHeight.height,
-  (height) => height
+  (width) => width
 );
 
 export const nodeSizeSelector = createAppSelector(
-  (state) => state.blockNodeSize,
-  (width) => width
+  (state) => state.blockNodeSize.size,
+  (size) => size
 );
 
 export const darkModeSelector = createAppSelector(

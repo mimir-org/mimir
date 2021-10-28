@@ -27,7 +27,8 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const parentNodeSize = useAppSelector(nodeSizeSelector);
   const updateNodeInternals = useUpdateNodeInternals();
   const node = nodes?.find((x) => x.id === data.id);
-  if (node) node.width = parentNodeSize.width;
+  if (node) node.blockWidth = parentNodeSize?.width;
+
   const terminals = FilterTerminals(data, secondaryNode);
 
   useEffect(() => {
@@ -46,8 +47,8 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         node={node}
         color={GetParentColor(node)}
         selected={node?.isBlockSelected}
-        width={parentNodeSize.width}
-        length={parentNodeSize.length}
+        width={parentNodeSize?.width}
+        height={parentNodeSize?.height}
       />
 
       <TerminalsContainerComponent

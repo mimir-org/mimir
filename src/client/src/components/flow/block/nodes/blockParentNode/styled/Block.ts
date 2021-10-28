@@ -4,7 +4,7 @@ import { Color } from "../../../../../../compLibrary";
 interface Props {
   selected: boolean;
   width: number;
-  length: number;
+  height: number;
 }
 
 const Block = styled.div<Props>`
@@ -13,7 +13,7 @@ const Block = styled.div<Props>`
   z-index: 1;
   cursor: ${(props) => (props.selected ? "grab" : "pointer")};
   width: ${(props) => props.width}px;
-  height: ${(props) => props.length}px;
+  height: ${(props) => props.height}px;
   border-radius: 10px;
   border: 2px solid;
   border-color: ${Color.DarkGrey};
