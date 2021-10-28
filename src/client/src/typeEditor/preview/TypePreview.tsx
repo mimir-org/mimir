@@ -5,16 +5,7 @@ import { ListLabel, ListWrapper } from "../../compLibrary";
 import { PreviewArea, InfoWrapper } from "../styled";
 import { IsTransportOrInterface } from "./helpers";
 import { TransportIcon, InterfaceIcon } from "../../assets/icons/type";
-import {
-  IsFunction,
-  IsLocation,
-  IsProduct,
-  IsObjectBlock,
-  IsTransport,
-  IsInterface,
-  GetListLabel,
-  GetWidth,
-} from "../helpers";
+import { IsFunction, IsLocation, IsProduct, IsObjectBlock, IsTransport, IsInterface, GetListLabel, GetWidth } from "../helpers";
 
 interface Props {
   createLibraryType: CreateLibraryType;
@@ -30,12 +21,14 @@ interface Props {
  * @returns the visual type preview area
  */
 export const TypePreview = ({ createLibraryType, rds, terminal, inputTerminals, outputTerminals, symbol }: Props) => {
+  const aspect = createLibraryType?.aspect;
+  const objectType = createLibraryType?.objectType;
   const rdsLabel = rds ? rds.code + " - " + rds.name : null;
+
   const showObjectBlock = () => {
     if (
-      (IsLocation(createLibraryType?.aspect) && createLibraryType?.locationType !== "") ||
-      (IsFunction(createLibraryType?.aspect) && IsObjectBlock(createLibraryType?.objectType)) ||
-      IsProduct(createLibraryType?.aspect)
+      (IsLocation(aspect) && createLibraryType?.locationType !== "") ||
+      ((IsFunction(aspect) || IsProduct(aspect)) && IsObjectBlock(objectType))
     ) {
       return (
         <ObjectBlock
@@ -56,15 +49,15 @@ export const TypePreview = ({ createLibraryType, rds, terminal, inputTerminals, 
       <PreviewArea>
         {showObjectBlock()}
         {IsTransportOrInterface(createLibraryType) && (
-          <InfoWrapper namepadding={IsTransport(createLibraryType?.objectType)}>
-            <p className="rdsName">{rds?.name}</p>
+          <InfoWrapper namepadding={IsTransport(objectType)}>
+            <p className="rdsName">{rdsLabel}</p>
             <p className="typeName">{createLibraryType?.name}</p>
           </InfoWrapper>
         )}
-        {IsFunction(createLibraryType?.aspect) && IsTransport(createLibraryType?.objectType) && (
+        {(IsFunction(aspect) || IsProduct(aspect)) && IsTransport(objectType) && (
           <TransportIcon style={{ stroke: terminal?.color, fill: terminal?.color }}></TransportIcon>
         )}
-        {IsFunction(createLibraryType?.aspect) && IsInterface(createLibraryType?.objectType) && (
+        {(IsFunction(aspect) || IsProduct(aspect)) && IsInterface(objectType) && (
           <InterfaceIcon style={{ stroke: terminal?.color, fill: terminal?.color }}></InterfaceIcon>
         )}
       </PreviewArea>

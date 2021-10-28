@@ -1,5 +1,5 @@
 import { BlobData, CreateLibraryType, TerminalType } from "../../models";
-import { GetBlockColor } from "./helpers";
+import { GetBlockColor, GetBlockHeight } from "./helpers";
 import { PreviewObjectBlock, InfoWrapper, InputOutputTerminals, Terminals } from "../styled";
 import { ConnectorIcon } from "../../assets/icons/connectors";
 import { Symbol } from "../../compLibrary/symbol";
@@ -19,31 +19,24 @@ interface Props {
  */
 export const ObjectBlock = ({ createLibraryType, rdsLabel, inputTerminals, outputTerminals, symbol }: Props) => {
   const aspect = createLibraryType?.aspect;
+  const inputCount = inputTerminals?.length;
+  const outputCount = outputTerminals?.length;
 
   const showTerminals = (input: boolean): any[] => {
     let terminalsArray = [];
-    if (input) {
-      inputTerminals?.forEach((t, index) => {
-        terminalsArray.push(
-          <span key={index}>
-            <ConnectorIcon style={{ fill: t.color }} />
-          </span>
-        );
-      });
-    } else {
-      outputTerminals?.forEach((t, index) => {
-        terminalsArray.push(
-          <span key={index}>
-            <ConnectorIcon style={{ fill: t.color }} />
-          </span>
-        );
-      });
-    }
+    const inputOutputArray = input ? inputTerminals : outputTerminals;
+    inputOutputArray?.forEach((t, index) => {
+      terminalsArray.push(
+        <span key={index}>
+          <ConnectorIcon style={{ fill: t.color }} />
+        </span>
+      );
+    });
     return terminalsArray;
   };
 
   return (
-    <PreviewObjectBlock blockColor={GetBlockColor(aspect)}>
+    <PreviewObjectBlock blockHeight={GetBlockHeight(inputCount, outputCount)} blockColor={GetBlockColor(aspect)}>
       <InputOutputTerminals>
         {inputTerminals && <Terminals input={true}>{showTerminals(true)}</Terminals>}
         {outputTerminals && <Terminals input={false}>{showTerminals(false)}</Terminals>}
