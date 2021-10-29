@@ -45,9 +45,7 @@ const useOnConnect = (
     dispatch(createEdge(currentEdge));
   } else currentEdge = existingEdge;
 
-  if (IsPartOf(currentEdge.fromConnector)) {
-    UpdateSiblingIndexOnEdgeConnect(currentEdge, project, dispatch);
-  }
+  if (IsPartOf(currentEdge.fromConnector)) UpdateSiblingIndexOnEdgeConnect(currentEdge, project, dispatch);
 
   return setElements((els) => {
     return addEdge(

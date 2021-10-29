@@ -8,8 +8,8 @@ interface Props {
 }
 
 const ExplorerLine = styled.div<Props>`
-  opacity: ${(props) => (props.isRoot ? 1 : 0)};
-  height: 3px;
+  visibility: ${(props) => !props.isRoot && "hidden"};
+  height: ${(props) => props.isRoot && 2}px;
   background-color: ${(props) => GetExplorerColor(props.node)};
 `;
 
