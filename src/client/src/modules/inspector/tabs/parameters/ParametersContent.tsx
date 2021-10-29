@@ -34,7 +34,7 @@ const ParametersContent = ({
   const dispatch = useAppDispatch();
 
   const attributes = attributeLikeItems ?? GetAttributes(parametersElement);
-  const isCreateLibraryType = IsCreateLibraryType(parametersElement);
+  const isCreateLibraryType = IsCreateLibraryType(inspectorParentElement);
 
   const attributeFilters = useUniqueParametricAppSelector(makeFilterSelector, attributes);
   const selectedFilters = useUniqueParametricAppSelector(makeSelectedFilterSelector, parametersElement.id);
