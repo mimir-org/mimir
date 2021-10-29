@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from "../../../../redux/store";
 import { Connector } from "../../../../models";
 import { FilterMenuBox, MenuColumn } from "../../../../compLibrary/box/menus";
-import { FilterElement } from ".";
+import { FilterElement } from "../";
 import { IsLibrary } from "../../../flow/helpers";
 import { FilterDropdown, FilterTerminalDropdown } from "../dropdown";
 import { TextResources } from "../../../../assets/text";

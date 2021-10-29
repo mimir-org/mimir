@@ -1,5 +1,5 @@
-import { CheckboxWrapper } from "../dropdown/styled";
-import { ElementBox } from "../styled";
+import { CheckboxWrapper } from "./dropdown/styled";
+import { ElementBox } from "./styled";
 
 interface Props {
   label: string;
