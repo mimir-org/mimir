@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { ListSearchBar } from "../../compLibrary";
 import { SearchIcon } from "../../assets/icons/common";
 import { ListType } from "../TypeEditorList";
-import { CheckIsInArray, GetListFilter } from "./ListElements/helpers";
+import { GetListFilter } from "./ListElements/helpers";
 import { Rds, AttributeType, CompositeType, PredefinedAttribute, TerminalTypeDict } from "../../models";
 
 interface Props {
@@ -17,11 +17,9 @@ interface Props {
 
 const ListSearch = ({ listType, placeHolder, list, setlistItems }: Props) => {
   const [searchString, setSearchString] = useState("");
-  const filter = GetListFilter(searchString, listType, list);
 
   const filterListItems = (): Rds[] | TerminalTypeDict | AttributeType[] | CompositeType[] | PredefinedAttribute[] => {
-    const isInArray = CheckIsInArray(searchString, listType, list);
-    return isInArray ? list : filter;
+    return searchString ? GetListFilter(searchString, listType, list) : list;
   };
 
   useEffect(() => {
