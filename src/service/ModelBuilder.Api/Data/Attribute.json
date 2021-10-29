@@ -1843,5 +1843,143 @@
     "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2", // Unsigned integer
     "selectType": "None",
     "discipline": "Electrical"
+  },
+  {
+    "entity": "IP rating",
+    "qualifierId": "23BE80E317DA30DBAAA862D672FD1E87", // NotSet
+    "sourceId": "E4AC50788784BA83FAAD1821E2F1E662", // NotSet
+    "conditionId": "424EE17AEA18CAEB3DB3409D2C0A467A", // NotSet
+    "units": null,
+    "aspect": "Product",
+    "formatId": "8F862EE92B0ECBE913616212F57BDB88", // String
+    "selectType": "None",
+    "discipline": "None"
+  },
+  {
+    "entity": "Coating system",
+    "qualifierId": "23BE80E317DA30DBAAA862D672FD1E87", // NotSet
+    "sourceId": "E4AC50788784BA83FAAD1821E2F1E662", // NotSet
+    "conditionId": "424EE17AEA18CAEB3DB3409D2C0A467A", // NotSet
+    "units": null,
+    "aspect": "Product",
+    "formatId": "8F862EE92B0ECBE913616212F57BDB88", // String
+    "selectType": "None",
+    "discipline": "None"
+  },
+  {
+    "entity": "Colour code",
+    "qualifierId": "23BE80E317DA30DBAAA862D672FD1E87", // NotSet
+    "sourceId": "E4AC50788784BA83FAAD1821E2F1E662", // NotSet
+    "conditionId": "424EE17AEA18CAEB3DB3409D2C0A467A", // NotSet
+    "units": null,
+    "aspect": "Product",
+    "formatId": "8F862EE92B0ECBE913616212F57BDB88", // String
+    "selectType": "None",
+    "discipline": "None"
+  },
+  {
+    "entity": "Ex/ATEX rating",
+    "qualifierId": "23BE80E317DA30DBAAA862D672FD1E87", // NotSet
+    "sourceId": "E4AC50788784BA83FAAD1821E2F1E662", // NotSet
+    "conditionId": "424EE17AEA18CAEB3DB3409D2C0A467A", // NotSet
+    "units": null,
+    "aspect": "Product",
+    "formatId": "8F862EE92B0ECBE913616212F57BDB88", // String
+    "selectType": "None",
+    "discipline": "None"
+  },
+  {
+    "entity": "Noise level",
+    "qualifierId": "23BE80E317DA30DBAAA862D672FD1E87", // NotSet
+    "sourceId": "E4AC50788784BA83FAAD1821E2F1E662", // NotSet
+    "conditionId": "424EE17AEA18CAEB3DB3409D2C0A467A", // NotSet
+    "units": [
+      "0B997D4BBEF35B3BA298741C49EF70C7" // db 
+    ],
+    "aspect": "Product",
+    "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2", // Unsigned int
+    "selectType": "None",
+    "discipline": "None"
+  },
+  {
+    "entity": "Pressure rating",
+    "qualifierId": "23BE80E317DA30DBAAA862D672FD1E87", // NotSet
+    "sourceId": "E4AC50788784BA83FAAD1821E2F1E662", // NotSet
+    "conditionId": "424EE17AEA18CAEB3DB3409D2C0A467A", // NotSet
+    "units": null,
+    "aspect": "Product",
+    "formatId": "8F862EE92B0ECBE913616212F57BDB88", // String
+    "selectType": "None",
+    "discipline": "None"
+  },
+  {
+    "entity": "Cooling code",
+    "qualifierId": "23BE80E317DA30DBAAA862D672FD1E87", // NotSet
+    "sourceId": "E4AC50788784BA83FAAD1821E2F1E662", // NotSet
+    "conditionId": "424EE17AEA18CAEB3DB3409D2C0A467A", // NotSet
+    "units": null,
+    "aspect": "Product",
+    "formatId": "8F862EE92B0ECBE913616212F57BDB88", // String
+    "selectType": "SingleSelect",
+    "selectValues": [
+      "IC410",
+      "IC411",
+      "IC416",
+      "IC418"
+    ],
+    "discipline": "None"
+  },
+  {
+    "entity": "Design code",
+    "qualifierId": "23BE80E317DA30DBAAA862D672FD1E87", // NotSet
+    "sourceId": "E4AC50788784BA83FAAD1821E2F1E662", // NotSet
+    "conditionId": "424EE17AEA18CAEB3DB3409D2C0A467A", // NotSet
+    "units": null,
+    "aspect": "Product",
+    "formatId": "8F862EE92B0ECBE913616212F57BDB88", // String
+    "selectType": "None",
+    "discipline": "None"
+  },
+  {
+    "entity": "Temperature class",
+    "qualifierId": "23BE80E317DA30DBAAA862D672FD1E87", // NotSet
+    "sourceId": "E4AC50788784BA83FAAD1821E2F1E662", // NotSet
+    "conditionId": "424EE17AEA18CAEB3DB3409D2C0A467A", // NotSet
+    "units": null,
+    "aspect": "Product",
+    "formatId": "8F862EE92B0ECBE913616212F57BDB88", // String
+    "selectType": "None",
+    "discipline": "None"
+  },
+  {
+    "entity": "Requirements standard",
+    "qualifierId": "23BE80E317DA30DBAAA862D672FD1E87", // NotSet
+    "sourceId": "E4AC50788784BA83FAAD1821E2F1E662", // NotSet
+    "conditionId": "424EE17AEA18CAEB3DB3409D2C0A467A", // NotSet
+    "units": null,
+    "aspect": "Product",
+    "formatId": "8F862EE92B0ECBE913616212F57BDB88", // String
+    "selectType": "SingleSelect",
+    "selectValues": [
+      "IEC60529",
+      "NEMA 250",
+      "Norsok M501",
+      "ISO 20340",
+      "RAL",
+      "Pantone",
+      "IEC 60079",
+      "NFPA 70",
+      "IEC 60534-8-3",
+      "ANSI B16.34",
+      "EN12516",
+      "IEC 60034-6",
+      "IEEE",
+      "API",
+      "NEMA",
+      "IEC",
+      "IEC/EN 60034-1"
+    ],
+    "discipline": "None"
   }
 ]
+
