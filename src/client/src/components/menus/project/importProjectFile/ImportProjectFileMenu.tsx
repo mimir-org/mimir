@@ -23,7 +23,6 @@ export const ImportProjectFileMenu = () => {
 
   const data = () => {
     if (!filesContent || filesContent.length <= 0) return null;
-
     const fileData = filesContent[0] as FileData;
     return JSON.parse(fileData.content) as ProjectAm;
   };
@@ -48,10 +47,7 @@ export const ImportProjectFileMenu = () => {
         </ButtonBox>
         {plainFiles?.length > 0 && data() && (
           <ButtonBox>
-            <Button
-              onClick={() => OnProjectSaveClick(dispatch, data)}
-              type={TextResources.Account_Import_Label_File_Button}
-            />
+            <Button onClick={() => OnProjectSaveClick(dispatch, data)} type={TextResources.Account_Import_Label_File_Button} />
           </ButtonBox>
         )}
       </ProjectBody>

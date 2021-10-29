@@ -1,7 +1,7 @@
 import { Elements } from "react-flow-renderer";
 import { BuildBlockNode } from "../";
 import { Node, Edge } from "../../../../../models";
-import { IsFamily, IsPartOfTerminal } from "../../../helpers";
+import { IsFamily, IsPartOf } from "../../../helpers";
 import { IsOffPage } from "../../helpers";
 
 /**
@@ -11,12 +11,20 @@ import { IsOffPage } from "../../helpers";
  * @param selectedNode
  * @param elements
  * @param parentNode
+ * @param parentNodeSize
  */
-const DrawChildNodes = (edges: Edge[], allNodes: Node[], selectedNode: Node, elements: Elements<any>, parentNode: Node) => {
+const DrawChildNodes = (
+  edges: Edge[],
+  allNodes: Node[],
+  selectedNode: Node,
+  elements: Elements<any>,
+  parentNode: Node,
+  parentNodeSize: { width: number; height: number }
+) => {
   edges.forEach((edge) => {
     if (validateEdge(edge, selectedNode)) {
       const toNode = allNodes.find((n) => n.id === edge.toNode.id);
-      if (toNode) elements.push(BuildBlockNode(toNode, null, allNodes, parentNode));
+      if (toNode) elements.push(BuildBlockNode(toNode, parentNode, parentNodeSize));
     }
   });
 };
@@ -25,7 +33,7 @@ function validateEdge(edge: Edge, selectedNode: Node) {
   return (
     edge.fromNodeId === selectedNode?.id &&
     (IsFamily(selectedNode, edge.toNode) || IsOffPage(edge.toNode)) &&
-    IsPartOfTerminal(edge.toConnector)
+    IsPartOf(edge.toConnector)
   );
 }
 

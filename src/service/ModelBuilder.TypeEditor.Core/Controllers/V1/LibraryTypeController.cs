@@ -189,12 +189,14 @@ namespace Mb.TypeEditor.Core.Controllers.V1
         /// </summary>
         /// <param name="id"></param>
         /// <param name="libraryType"></param>
+        /// <param name="updateMajorVersion"></param>
+        /// <param name="updateMinorVersion"></param>
         /// <returns></returns>
         [HttpPost("{id}")]
         [ProducesResponseType(typeof(LibraryType), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> UpdateLibraryType(string id, [FromBody] CreateLibraryType libraryType)
+        public async Task<IActionResult> UpdateLibraryType(string id, [FromBody] CreateLibraryType libraryType, bool updateMajorVersion = false, bool updateMinorVersion = false)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -204,14 +206,14 @@ namespace Mb.TypeEditor.Core.Controllers.V1
                 switch (libraryType.ObjectType)
                 {
                     case ObjectType.ObjectBlock:
-                        var ob = await _libraryTypeService.UpdateLibraryType<LibraryNodeItem>(id, libraryType);
+                        var ob = await _libraryTypeService.UpdateLibraryType<LibraryNodeItem>(id, libraryType, updateMajorVersion, updateMinorVersion);
                         return Ok(ob);
                     case ObjectType.Transport:
-                        var ln = await _libraryTypeService.UpdateLibraryType<LibraryTransportItem>(id, libraryType);
+                        var ln = await _libraryTypeService.UpdateLibraryType<LibraryTransportItem>(id, libraryType, updateMajorVersion, updateMinorVersion);
                         return Ok(ln);
                     case ObjectType.Interface:
                         var libraryInterfaceItem =
-                            await _libraryTypeService.UpdateLibraryType<LibraryInterfaceItem>(id, libraryType);
+                            await _libraryTypeService.UpdateLibraryType<LibraryInterfaceItem>(id, libraryType, updateMajorVersion, updateMinorVersion);
                         return Ok(libraryInterfaceItem);
                     default:
                         throw new ModelBuilderInvalidOperationException(

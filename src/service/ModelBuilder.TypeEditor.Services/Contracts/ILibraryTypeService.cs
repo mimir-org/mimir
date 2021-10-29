@@ -12,7 +12,7 @@ namespace Mb.TypeEditor.Services.Contracts
         IEnumerable<CreateLibraryType> GetAllTypes();
         Task<IEnumerable<LibraryType>> CreateLibraryTypes(ICollection<CreateLibraryType> createLibraryTypes);
         Task<T> CreateLibraryType<T>(CreateLibraryType createLibraryType) where T : class, new();
-        Task<T> UpdateLibraryType<T>(string id, CreateLibraryType createLibraryType) where T : class, new();
+        Task<T> UpdateLibraryType<T>(string id, CreateLibraryType createLibraryType, bool updateMajorVersion, bool updateMinorVersion) where T : class, new();
         Task DeleteType(string id);
         Task<CreateLibraryType> ConvertToCreateLibraryType(string id, LibraryFilter filter);
         Task<CompositeType> CreateCompositeType(CompositeTypeAm compositeType);

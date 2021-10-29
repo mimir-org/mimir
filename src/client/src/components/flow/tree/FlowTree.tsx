@@ -18,6 +18,7 @@ import { FlowManipulator } from "./FlowManipulator";
 import { OnTreeClick } from "./handlers/";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { TreeFilterMenu } from "../../menus/filterMenu/tree";
+import { ExplorerModule } from "../../../modules/explorer";
 import {
   darkModeSelector,
   iconSelector,
@@ -28,11 +29,15 @@ import {
   userStateSelector,
 } from "../../../redux/store";
 
+interface Props {
+  inspectorRef: React.MutableRefObject<HTMLDivElement>;
+}
+
 /**
  * Component for the Flow library in TreeView
  * @returns a scene with Flow elements and Mimir nodes, transports and edges.
  */
-const FlowTree = () => {
+const FlowTree = ({ inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
   const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState(null);
@@ -52,7 +57,7 @@ const FlowTree = () => {
   const OnNodeDragStop = (_event: any, n: any) => dispatch(updatePosition(n.id, n.position.x, n.position.y));
 
   const OnElementsRemove = (elementsToRemove: any[]) => {
-    return useOnRemove(elementsToRemove, setElements, dispatch);
+    return useOnRemove(elementsToRemove, setElements, dispatch, inspectorRef);
   };
 
   const OnLoad = useCallback(
@@ -82,7 +87,7 @@ const FlowTree = () => {
     dispatch(changeInspectorTab(0));
     if (!inspectorOpen) {
       dispatch(changeInspectorHeight(Size.ModuleOpen));
-      SetPanelHeight(Size.ModuleOpen);
+      SetPanelHeight(inspectorRef, Size.ModuleOpen);
     }
   };
 
@@ -114,15 +119,14 @@ const FlowTree = () => {
             nodeTypes={Helpers.GetNodeTypes}
             edgeTypes={Helpers.GetEdgeTypes}
             defaultZoom={0.7}
-            defaultPosition={[700, 300]}
-            snapToGrid={true}
-            snapGrid={[5, 5]}
+            defaultPosition={[700, 150]}
             zoomOnDoubleClick={false}
-            onClick={(e) => OnTreeClick(e, dispatch, project)}
+            onClick={(e) => OnTreeClick(e, dispatch, project, inspectorRef)}
           >
-            <FullScreenComponent />
+            <FullScreenComponent inspectorRef={inspectorRef} />
             <FlowManipulator elements={elements} selectedId={selectedNodeId} />
           </ReactFlow>
+          <ExplorerModule elements={elements} />
           {treeFilter && <TreeFilterMenu elements={elements} />}
         </ReactFlowProvider>
       )}

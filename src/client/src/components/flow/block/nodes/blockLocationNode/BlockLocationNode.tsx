@@ -10,6 +10,7 @@ import { Symbol } from "../../../../../compLibrary/symbol";
 import { Size } from "../../../../../compLibrary";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
 import { electroSelector, nodeSelector, secondaryNodeSelector } from "../../../../../redux/store";
+import { GetSelectedNode } from "../../../helpers";
 
 /**
  * Component for a Location Node in BlockView.
@@ -25,8 +26,9 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const nodes = useAppSelector(nodeSelector);
   const secondaryNode = useAppSelector(secondaryNodeSelector) as Node;
   const electro = useAppSelector(electroSelector);
+  const selectedNode = GetSelectedNode();
   const node = nodes.find((x) => x.id === data?.id);
-  const terminals = FilterTerminals(data, secondaryNode);
+  const terminals = FilterTerminals(data, selectedNode, secondaryNode);
   if (data) data.width = Size.Node_Width;
 
   // Enforce size change of node
@@ -65,7 +67,6 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
           electro={electro}
           onClick={(conn) => OnConnectorClick(conn, data, dispatch)}
           menuBox={terminalButton}
-          mainConnectNode={false}
           showInTerminalMenu={showInTerminalMenu}
           showOutTerminalMenu={showOutTerminalMenu}
         />
@@ -79,7 +80,6 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
         terminals={terminals}
         parent={false}
         electro={electro}
-        mainConnectNode={false}
       />
     </>
   );

@@ -321,6 +321,52 @@ namespace Mb.Core.Migrations
                     b.ToTable("Edge");
                 });
 
+            modelBuilder.Entity("Mb.Models.Data.Enums.EnumBase", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("Id");
+
+                    b.Property<string>("Aspect")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Aspect");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Description");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InternalType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("InternalType");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Name");
+
+                    b.Property<string>("ParentId")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("ParentId");
+
+                    b.Property<string>("SemanticReference")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("SemanticReference");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
+
+                    b.ToTable("Enum");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("EnumBase");
+                });
+
             modelBuilder.Entity("Mb.Models.Data.Interface", b =>
                 {
                     b.Property<string>("Id")
@@ -693,52 +739,6 @@ namespace Mb.Core.Migrations
                     b.ToTable("CompositeType");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.TypeEditor.EnumTypes.EnumBase", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("Id");
-
-                    b.Property<string>("Aspect")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Aspect");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Description");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("InternalType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("InternalType");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Name");
-
-                    b.Property<string>("ParentId")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("ParentId");
-
-                    b.Property<string>("SemanticReference")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("SemanticReference");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ParentId");
-
-                    b.ToTable("Enum");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("EnumBase");
-                });
-
             modelBuilder.Entity("Mb.Models.Data.TypeEditor.LibraryType", b =>
                 {
                     b.Property<string>("Id")
@@ -767,6 +767,16 @@ namespace Mb.Core.Migrations
                     b.Property<string>("SemanticReference")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("SemanticReference");
+
+                    b.Property<string>("TypeId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("TypeId");
+
+                    b.Property<string>("Version")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Version");
 
                     b.HasKey("Id");
 
@@ -982,44 +992,44 @@ namespace Mb.Core.Migrations
                     b.HasDiscriminator().HasValue("Terminal");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.TypeEditor.EnumTypes.AttributeCondition", b =>
+            modelBuilder.Entity("Mb.Models.Data.Enums.AttributeCondition", b =>
                 {
-                    b.HasBaseType("Mb.Models.Data.TypeEditor.EnumTypes.EnumBase");
+                    b.HasBaseType("Mb.Models.Data.Enums.EnumBase");
 
                     b.HasDiscriminator().HasValue("AttributeCondition");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.TypeEditor.EnumTypes.AttributeFormat", b =>
+            modelBuilder.Entity("Mb.Models.Data.Enums.AttributeFormat", b =>
                 {
-                    b.HasBaseType("Mb.Models.Data.TypeEditor.EnumTypes.EnumBase");
+                    b.HasBaseType("Mb.Models.Data.Enums.EnumBase");
 
                     b.HasDiscriminator().HasValue("AttributeFormat");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.TypeEditor.EnumTypes.AttributeQualifier", b =>
+            modelBuilder.Entity("Mb.Models.Data.Enums.AttributeQualifier", b =>
                 {
-                    b.HasBaseType("Mb.Models.Data.TypeEditor.EnumTypes.EnumBase");
+                    b.HasBaseType("Mb.Models.Data.Enums.EnumBase");
 
                     b.HasDiscriminator().HasValue("AttributeQualifier");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.TypeEditor.EnumTypes.AttributeSource", b =>
+            modelBuilder.Entity("Mb.Models.Data.Enums.AttributeSource", b =>
                 {
-                    b.HasBaseType("Mb.Models.Data.TypeEditor.EnumTypes.EnumBase");
+                    b.HasBaseType("Mb.Models.Data.Enums.EnumBase");
 
                     b.HasDiscriminator().HasValue("AttributeSource");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.TypeEditor.EnumTypes.BuildStatus", b =>
+            modelBuilder.Entity("Mb.Models.Data.Enums.BuildStatus", b =>
                 {
-                    b.HasBaseType("Mb.Models.Data.TypeEditor.EnumTypes.EnumBase");
+                    b.HasBaseType("Mb.Models.Data.Enums.EnumBase");
 
                     b.HasDiscriminator().HasValue("BuildStatus");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.TypeEditor.EnumTypes.Purpose", b =>
+            modelBuilder.Entity("Mb.Models.Data.Enums.Purpose", b =>
                 {
-                    b.HasBaseType("Mb.Models.Data.TypeEditor.EnumTypes.EnumBase");
+                    b.HasBaseType("Mb.Models.Data.Enums.EnumBase");
 
                     b.Property<string>("Discipline")
                         .IsRequired()
@@ -1029,16 +1039,16 @@ namespace Mb.Core.Migrations
                     b.HasDiscriminator().HasValue("Purpose");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.TypeEditor.EnumTypes.RdsCategory", b =>
+            modelBuilder.Entity("Mb.Models.Data.Enums.RdsCategory", b =>
                 {
-                    b.HasBaseType("Mb.Models.Data.TypeEditor.EnumTypes.EnumBase");
+                    b.HasBaseType("Mb.Models.Data.Enums.EnumBase");
 
                     b.HasDiscriminator().HasValue("RdsCategory");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.TypeEditor.EnumTypes.TerminalCategory", b =>
+            modelBuilder.Entity("Mb.Models.Data.Enums.TerminalCategory", b =>
                 {
-                    b.HasBaseType("Mb.Models.Data.TypeEditor.EnumTypes.EnumBase");
+                    b.HasBaseType("Mb.Models.Data.Enums.EnumBase");
 
                     b.Property<string>("Color")
                         .HasColumnType("nvarchar(max)");
@@ -1046,16 +1056,16 @@ namespace Mb.Core.Migrations
                     b.HasDiscriminator().HasValue("TerminalCategory");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.TypeEditor.EnumTypes.TypeAttribute", b =>
+            modelBuilder.Entity("Mb.Models.Data.Enums.TypeAttribute", b =>
                 {
-                    b.HasBaseType("Mb.Models.Data.TypeEditor.EnumTypes.EnumBase");
+                    b.HasBaseType("Mb.Models.Data.Enums.EnumBase");
 
                     b.HasDiscriminator().HasValue("TypeAttribute");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.TypeEditor.EnumTypes.Unit", b =>
+            modelBuilder.Entity("Mb.Models.Data.Enums.Unit", b =>
                 {
-                    b.HasBaseType("Mb.Models.Data.TypeEditor.EnumTypes.EnumBase");
+                    b.HasBaseType("Mb.Models.Data.Enums.EnumBase");
 
                     b.HasDiscriminator().HasValue("Unit");
                 });
@@ -1110,7 +1120,7 @@ namespace Mb.Core.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Mb.Models.Data.TypeEditor.EnumTypes.Unit", null)
+                    b.HasOne("Mb.Models.Data.Enums.Unit", null)
                         .WithMany()
                         .HasForeignKey("UnitId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1154,12 +1164,12 @@ namespace Mb.Core.Migrations
                         .HasForeignKey("CompositeId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Mb.Models.Data.TypeEditor.EnumTypes.AttributeCondition", "Condition")
+                    b.HasOne("Mb.Models.Data.Enums.AttributeCondition", "Condition")
                         .WithMany("Attributes")
                         .HasForeignKey("ConditionId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Mb.Models.Data.TypeEditor.EnumTypes.AttributeFormat", "Format")
+                    b.HasOne("Mb.Models.Data.Enums.AttributeFormat", "Format")
                         .WithMany("Attributes")
                         .HasForeignKey("FormatId")
                         .OnDelete(DeleteBehavior.NoAction);
@@ -1173,12 +1183,12 @@ namespace Mb.Core.Migrations
                         .HasForeignKey("NodeId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Mb.Models.Data.TypeEditor.EnumTypes.AttributeQualifier", "Qualifier")
+                    b.HasOne("Mb.Models.Data.Enums.AttributeQualifier", "Qualifier")
                         .WithMany("Attributes")
                         .HasForeignKey("QualifierId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Mb.Models.Data.TypeEditor.EnumTypes.AttributeSource", "Source")
+                    b.HasOne("Mb.Models.Data.Enums.AttributeSource", "Source")
                         .WithMany("Attributes")
                         .HasForeignKey("SourceId")
                         .OnDelete(DeleteBehavior.NoAction);
@@ -1288,6 +1298,16 @@ namespace Mb.Core.Migrations
                     b.Navigation("Transport");
                 });
 
+            modelBuilder.Entity("Mb.Models.Data.Enums.EnumBase", b =>
+                {
+                    b.HasOne("Mb.Models.Data.Enums.EnumBase", "Parent")
+                        .WithMany("Children")
+                        .HasForeignKey("ParentId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Parent");
+                });
+
             modelBuilder.Entity("Mb.Models.Data.Interface", b =>
                 {
                     b.HasOne("Mb.Models.Data.Terminal", "InputTerminal")
@@ -1315,7 +1335,7 @@ namespace Mb.Core.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Mb.Models.Data.TypeEditor.EnumTypes.BuildStatus", "Status")
+                    b.HasOne("Mb.Models.Data.Enums.BuildStatus", "Status")
                         .WithMany("Nodes")
                         .HasForeignKey("StatusId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -1347,22 +1367,22 @@ namespace Mb.Core.Migrations
 
             modelBuilder.Entity("Mb.Models.Data.TypeEditor.AttributeType", b =>
                 {
-                    b.HasOne("Mb.Models.Data.TypeEditor.EnumTypes.AttributeCondition", "Condition")
+                    b.HasOne("Mb.Models.Data.Enums.AttributeCondition", "Condition")
                         .WithMany("AttributeTypes")
                         .HasForeignKey("ConditionId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Mb.Models.Data.TypeEditor.EnumTypes.AttributeFormat", "Format")
+                    b.HasOne("Mb.Models.Data.Enums.AttributeFormat", "Format")
                         .WithMany("AttributeTypes")
                         .HasForeignKey("FormatId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Mb.Models.Data.TypeEditor.EnumTypes.AttributeQualifier", "Qualifier")
+                    b.HasOne("Mb.Models.Data.Enums.AttributeQualifier", "Qualifier")
                         .WithMany("AttributeTypes")
                         .HasForeignKey("QualifierId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Mb.Models.Data.TypeEditor.EnumTypes.AttributeSource", "Source")
+                    b.HasOne("Mb.Models.Data.Enums.AttributeSource", "Source")
                         .WithMany("AttributeTypes")
                         .HasForeignKey("SourceId")
                         .OnDelete(DeleteBehavior.NoAction);
@@ -1376,19 +1396,9 @@ namespace Mb.Core.Migrations
                     b.Navigation("Source");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.TypeEditor.EnumTypes.EnumBase", b =>
-                {
-                    b.HasOne("Mb.Models.Data.TypeEditor.EnumTypes.EnumBase", "Parent")
-                        .WithMany("Children")
-                        .HasForeignKey("ParentId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("Parent");
-                });
-
             modelBuilder.Entity("Mb.Models.Data.TypeEditor.LibraryType", b =>
                 {
-                    b.HasOne("Mb.Models.Data.TypeEditor.EnumTypes.Purpose", "Purpose")
+                    b.HasOne("Mb.Models.Data.Enums.Purpose", "Purpose")
                         .WithMany("LibraryTypes")
                         .HasForeignKey("PurposeId")
                         .OnDelete(DeleteBehavior.NoAction);
@@ -1422,7 +1432,7 @@ namespace Mb.Core.Migrations
 
             modelBuilder.Entity("Mb.Models.Data.TypeEditor.Rds", b =>
                 {
-                    b.HasOne("Mb.Models.Data.TypeEditor.EnumTypes.RdsCategory", "RdsCategory")
+                    b.HasOne("Mb.Models.Data.Enums.RdsCategory", "RdsCategory")
                         .WithMany("RdsList")
                         .HasForeignKey("RdsCategoryId")
                         .OnDelete(DeleteBehavior.NoAction);
@@ -1432,7 +1442,7 @@ namespace Mb.Core.Migrations
 
             modelBuilder.Entity("Mb.Models.Data.TypeEditor.TerminalType", b =>
                 {
-                    b.HasOne("Mb.Models.Data.TypeEditor.EnumTypes.TerminalCategory", "TerminalCategory")
+                    b.HasOne("Mb.Models.Data.Enums.TerminalCategory", "TerminalCategory")
                         .WithMany("TerminalTypes")
                         .HasForeignKey("TerminalCategoryId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -1517,7 +1527,7 @@ namespace Mb.Core.Migrations
 
             modelBuilder.Entity("Mb.Models.Data.Terminal", b =>
                 {
-                    b.HasOne("Mb.Models.Data.TypeEditor.EnumTypes.TerminalCategory", "TerminalCategory")
+                    b.HasOne("Mb.Models.Data.Enums.TerminalCategory", "TerminalCategory")
                         .WithMany("Terminals")
                         .HasForeignKey("TerminalCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1558,6 +1568,11 @@ namespace Mb.Core.Migrations
                     b.Navigation("ToEdges");
                 });
 
+            modelBuilder.Entity("Mb.Models.Data.Enums.EnumBase", b =>
+                {
+                    b.Navigation("Children");
+                });
+
             modelBuilder.Entity("Mb.Models.Data.Interface", b =>
                 {
                     b.Navigation("Attributes");
@@ -1583,11 +1598,6 @@ namespace Mb.Core.Migrations
                     b.Navigation("Attributes");
 
                     b.Navigation("Edges");
-                });
-
-            modelBuilder.Entity("Mb.Models.Data.TypeEditor.EnumTypes.EnumBase", b =>
-                {
-                    b.Navigation("Children");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.TypeEditor.Rds", b =>
@@ -1617,50 +1627,50 @@ namespace Mb.Core.Migrations
                     b.Navigation("OutputTransports");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.TypeEditor.EnumTypes.AttributeCondition", b =>
+            modelBuilder.Entity("Mb.Models.Data.Enums.AttributeCondition", b =>
                 {
                     b.Navigation("Attributes");
 
                     b.Navigation("AttributeTypes");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.TypeEditor.EnumTypes.AttributeFormat", b =>
+            modelBuilder.Entity("Mb.Models.Data.Enums.AttributeFormat", b =>
                 {
                     b.Navigation("Attributes");
 
                     b.Navigation("AttributeTypes");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.TypeEditor.EnumTypes.AttributeQualifier", b =>
+            modelBuilder.Entity("Mb.Models.Data.Enums.AttributeQualifier", b =>
                 {
                     b.Navigation("Attributes");
 
                     b.Navigation("AttributeTypes");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.TypeEditor.EnumTypes.AttributeSource", b =>
+            modelBuilder.Entity("Mb.Models.Data.Enums.AttributeSource", b =>
                 {
                     b.Navigation("Attributes");
 
                     b.Navigation("AttributeTypes");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.TypeEditor.EnumTypes.BuildStatus", b =>
+            modelBuilder.Entity("Mb.Models.Data.Enums.BuildStatus", b =>
                 {
                     b.Navigation("Nodes");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.TypeEditor.EnumTypes.Purpose", b =>
+            modelBuilder.Entity("Mb.Models.Data.Enums.Purpose", b =>
                 {
                     b.Navigation("LibraryTypes");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.TypeEditor.EnumTypes.RdsCategory", b =>
+            modelBuilder.Entity("Mb.Models.Data.Enums.RdsCategory", b =>
                 {
                     b.Navigation("RdsList");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.TypeEditor.EnumTypes.TerminalCategory", b =>
+            modelBuilder.Entity("Mb.Models.Data.Enums.TerminalCategory", b =>
                 {
                     b.Navigation("Terminals");
 

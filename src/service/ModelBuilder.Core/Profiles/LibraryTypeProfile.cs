@@ -17,7 +17,9 @@ namespace Mb.Core.Profiles
         public LibraryTypeProfile(ICommonRepository commonRepository)
         {
             CreateMap<CreateLibraryType, NodeType>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => $"{src.Key}-{commonRepository.GetDomain()}".CreateMd5()))
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => $"{src.Key}-{commonRepository.GetDomain()}-{src.Version}".CreateMd5()))
+                .ForMember(dest => dest.TypeId, opt => opt.MapFrom(src => src.TypeId))
+                .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
                 .ForMember(dest => dest.RdsId, opt => opt.MapFrom(src => src.RdsId))
@@ -35,7 +37,9 @@ namespace Mb.Core.Profiles
                 });
 
             CreateMap<CreateLibraryType, TransportType>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => $"{src.Key}-{commonRepository.GetDomain()}".CreateMd5()))
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => $"{src.Key}-{commonRepository.GetDomain()}-{src.Version}".CreateMd5()))
+                .ForMember(dest => dest.TypeId, opt => opt.MapFrom(src => src.TypeId))
+                .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
                 .ForMember(dest => dest.RdsId, opt => opt.MapFrom(src => src.RdsId))
@@ -46,7 +50,9 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.AttributeTypes, opt => opt.MapFrom(src => CreateAttributeTypes(src.AttributeTypes.ToList()).ToList()));
 
             CreateMap<CreateLibraryType, InterfaceType>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => $"{src.Key}-{commonRepository.GetDomain()}".CreateMd5()))
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => $"{src.Key}-{commonRepository.GetDomain()}-{src.Version}".CreateMd5()))
+                .ForMember(dest => dest.TypeId, opt => opt.MapFrom(src => src.TypeId))
+                .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
                 .ForMember(dest => dest.RdsId, opt => opt.MapFrom(src => src.RdsId))
@@ -56,6 +62,8 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.TerminalTypeId));
 
             CreateMap<NodeType, CreateLibraryType>()
+                .ForMember(dest => dest.TypeId, opt => opt.MapFrom(src => src.TypeId))
+                .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => src.Aspect))
                 .ForMember(dest => dest.ObjectType, opt => opt.MapFrom(src => ObjectType.ObjectBlock))
@@ -75,6 +83,8 @@ namespace Mb.Core.Profiles
                 });
 
             CreateMap<TransportType, CreateLibraryType>()
+                .ForMember(dest => dest.TypeId, opt => opt.MapFrom(src => src.TypeId))
+                .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => src.Aspect))
                 .ForMember(dest => dest.ObjectType, opt => opt.MapFrom(src => ObjectType.Transport))
@@ -90,6 +100,8 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => src.PurposeId));
 
             CreateMap<InterfaceType, CreateLibraryType>()
+                .ForMember(dest => dest.TypeId, opt => opt.MapFrom(src => src.TypeId))
+                .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => src.Aspect))
                 .ForMember(dest => dest.ObjectType, opt => opt.MapFrom(src => ObjectType.Interface))
@@ -159,6 +171,7 @@ namespace Mb.Core.Profiles
             CreateMap<Project, LibrarySubProjectItem>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
                 .ForMember(dest => dest.ProjectOwner, opt => opt.MapFrom(src => src.ProjectOwner))
                 .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => src.UpdatedBy))
@@ -173,7 +186,7 @@ namespace Mb.Core.Profiles
                 CreateRelationConnector(RelationType.PartOf, ConnectorType.Output, "Part of Relationship"),
                 CreateRelationConnector(RelationType.HasLocation, ConnectorType.Input, "Has Location"),
                 CreateRelationConnector(RelationType.HasLocation, ConnectorType.Output, "Has Location"),
-                CreateRelationConnector(RelationType.FulfilledBy, ConnectorType.Output, "Fulfilled By"),
+                CreateRelationConnector(RelationType.FulfilledBy, ConnectorType.Input, "Fulfilled By"),
                 CreateRelationConnector(RelationType.FulfilledBy, ConnectorType.Output, "Fulfilled By")
             };
 

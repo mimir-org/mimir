@@ -8,17 +8,24 @@ import { IsDirectChild } from "../../helpers";
  * Component to draw all secondaryNode children nodes in BlockView.
  * @param edges
  * @param nodes
- * @param secondaryNode
+ * @param secondary
  * @param elements
+ * @param parentNodeSize
  */
-const DrawSecondaryChildren = (edges: Edge[], nodes: Node[], secondaryNode: Node, elements: Elements<any>) => {
-  if (secondaryNode) {
+const DrawSecondaryChildren = (
+  edges: Edge[],
+  nodes: Node[],
+  secondary: Node,
+  elements: Elements<any>,
+  parentNodeSize: { width: number; height: number }
+) => {
+  if (secondary) {
     edges.forEach((edge) => {
-      if (edge.fromNodeId === secondaryNode.id && IsFamily(secondaryNode, edge.toNode)) {
-        const toNode = nodes.find((node) => node.id === edge.toNodeId && IsDirectChild(node, secondaryNode));
-        const parentNode = nodes.find((node) => node.id === secondaryNode.id);
+      if (edge.fromNodeId === secondary.id && IsFamily(secondary, edge.toNode)) {
+        const toNode = nodes.find((n) => n.id === edge.toNodeId && IsDirectChild(n, secondary));
+        const parent = nodes.find((n) => n.id === secondary.id);
 
-        if (toNode && parentNode) elements.push(BuildSecondaryChildNode(toNode, parentNode));
+        if (toNode && parent) elements.push(BuildSecondaryChildNode(toNode, parent, parentNodeSize));
       }
     });
   }

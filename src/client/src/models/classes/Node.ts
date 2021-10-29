@@ -45,13 +45,12 @@ class Node {
   // Required only for product aspect
   cost: number;
 
-  // TODO: fix
-  connectNodes: Node[];
-
   // Only for client
   isSelected: boolean | false;
   isBlockSelected: boolean | false;
   isHidden: boolean | false;
+  blockWidth: number;
+  blockHeight: number;
 
   kind: string = NODE_KIND;
 

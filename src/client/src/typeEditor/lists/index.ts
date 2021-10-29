@@ -1,3 +1,6 @@
+export { default as ListSearch } from "./ListSearch";
+export { default as ListContent } from "./ListContent";
+
 export { default as RDSElement } from "./ListElements/RDSElement";
 export { default as ObjectBlockElement } from "./ListElements/ObjectBlockElement";
 export { default as TransportInterfaceElement } from "./ListElements/TransportInterfaceElement";

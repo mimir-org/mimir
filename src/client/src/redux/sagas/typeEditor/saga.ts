@@ -1,7 +1,7 @@
 import { call, put as statePut } from "redux-saga/effects";
 import { ADD_LIBRARY_ITEM, REMOVE_LIBRARY_ITEM } from "../../store/library/types";
 import { get, post, GetBadResponseData, ApiError } from "../../../models/webclient";
-import { Aspect, CreateLibraryType } from "../../../models";
+import { Aspect, CompositeType, CompositeTypeResponse, CreateLibraryType } from "../../../models";
 import {
   FETCHING_TYPE_SUCCESS_OR_ERROR,
   FETCHING_INITIAL_SUCCESS_OR_ERROR,
@@ -21,7 +21,7 @@ export function* saveType(action) {
     const createLibraryType = action.payload.libraryType as CreateLibraryType;
     let url = "";
 
-    if (createLibraryType.libraryId) url = process.env.REACT_APP_API_BASE_URL + "librarytype/" + createLibraryType.libraryId;
+    if (createLibraryType.id) url = process.env.REACT_APP_API_BASE_URL + "librarytype/" + createLibraryType.id;
     else url = process.env.REACT_APP_API_BASE_URL + "librarytype";
 
     const response = yield call(post, url, createLibraryType);
@@ -56,11 +56,11 @@ export function* saveType(action) {
     });
 
     // Remove item from library
-    if (createLibraryType.libraryId) {
+    if (createLibraryType.id) {
       yield statePut({
         type: REMOVE_LIBRARY_ITEM,
         payload: {
-          id: createLibraryType.libraryId,
+          id: createLibraryType.id,
         },
       });
     }
@@ -308,7 +308,7 @@ export function* getSelectedNode(action) {
 
     const selectedNodeResponse = yield call(get, selectedNodeURL);
     const createLibraryType = selectedNodeResponse.data as CreateLibraryType;
-    createLibraryType.libraryId = action.payload.selectedType;
+    createLibraryType.id = action.payload.selectedType;
 
     const payload = {
       selectedNode: selectedNodeResponse.data,
@@ -336,7 +336,9 @@ export function* getSimpleTypes(action) {
     const simpleTypesURLResponse = yield call(get, simpleTypeslURL);
 
     const payload = {
-      simpleTypes: simpleTypesURLResponse.data,
+      simpleTypes: (simpleTypesURLResponse.data as Array<CompositeTypeResponse>).map((comp) => {
+        return { ...comp, attributes: comp.attributeTypes } as CompositeType;
+      }),
     };
 
     yield statePut({

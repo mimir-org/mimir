@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 interface Props {
   visible: boolean;
-  mainConnectNode: boolean;
   input: boolean;
   parent: boolean;
 }
@@ -11,7 +10,7 @@ interface Props {
 const TerminalsBox = styled.div<Props>`
   visibility: ${(props) => !props.visible && "hidden"};
   position: absolute;
-  top: ${(props) => (props.mainConnectNode ? 8 : 6)}px;
+  top: 6px;
   cursor: pointer;
   z-index: 1;
 

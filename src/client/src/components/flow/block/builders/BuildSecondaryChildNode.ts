@@ -2,8 +2,9 @@ import { Node } from "../../../../models";
 import { FlowElement } from "react-flow-renderer";
 import { GetNodeTypeString, SetBlockNodePos, SetConnectorOrder, SetOffPageNodePos } from "./helpers";
 import { IsOffPage } from "../helpers";
+import { CreateId } from "../../helpers";
 
-const BuildSecondaryChildNode = (node: Node, parent: Node) => {
+const BuildSecondaryChildNode = (node: Node, parent: Node, parentNodeSize: { width: number; height: number }) => {
   if (!node) return null;
   const type = GetNodeTypeString(node);
 
@@ -13,9 +14,10 @@ const BuildSecondaryChildNode = (node: Node, parent: Node) => {
   SetConnectorOrder(node);
 
   // Force node to fit Block
-  let position = !IsOffPage(node) ? SetBlockNodePos(nodePos, parentPos) : SetOffPageNodePos(nodePos, parentPos);
+  const position = !IsOffPage(node) ? SetBlockNodePos(nodePos, parentPos, parentNodeSize) : SetOffPageNodePos(nodePos, parentPos);
 
   return {
+    key: CreateId(),
     id: node.id,
     type: type,
     data: node,

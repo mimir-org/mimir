@@ -1,13 +1,5 @@
 import { Node, Connector } from "../../../models";
-import {
-  IsFulfilledByTerminal,
-  IsFunction,
-  IsLocation,
-  IsLocationTerminal,
-  IsPartOfTerminal,
-  IsProduct,
-  IsTransportTerminal,
-} from "../helpers";
+import { IsProductTerminal, IsFunction, IsLocation, IsLocationTerminal, IsPartOf, IsProduct, IsTransport } from "../helpers";
 
 /**
  * Validator for an edge in BlockView, where different rules apply for each state.
@@ -27,7 +19,7 @@ const ValidateBlockEdge = (
   fromConnector: Connector,
   toConnector: Connector
 ) => {
-  if (IsPartOfTerminal(fromConnector) || IsPartOfTerminal(toConnector)) return false;
+  if (IsPartOf(fromConnector) || IsPartOf(toConnector)) return false;
   if (!secondaryNode) return validBlockView(activeNode, fromNode, toNode, fromConnector, toConnector);
   if (secondaryNode) return validSecondaryView(activeNode, secondaryNode, fromNode, toNode, fromConnector, toConnector);
   return false;
@@ -39,11 +31,11 @@ function validBlockView(activeNode: Node, from: Node, to: Node, fromC: Connector
   }
 
   if (IsFunction(activeNode)) {
-    return IsTransportTerminal(fromC) && IsTransportTerminal(toC);
+    return IsTransport(fromC) && IsTransport(toC);
   }
 
   if (IsProduct(activeNode)) {
-    return IsTransportTerminal(fromC) && IsTransportTerminal(toC) && IsProduct(from) && IsProduct(to);
+    return IsTransport(fromC) && IsTransport(toC) && IsProduct(from) && IsProduct(to);
   }
 }
 
@@ -52,11 +44,11 @@ function validSecondaryView(activeNode: Node, secondaryNode: Node, from: Node, t
     return IsLocationTerminal(fromC) && IsLocationTerminal(toC);
   }
   if (IsProduct(secondaryNode)) {
-    return IsFulfilledByTerminal(fromC) && IsFulfilledByTerminal(toC);
+    return IsProductTerminal(fromC) && IsProductTerminal(toC);
   }
 
   if (IsFunction(secondaryNode)) {
-    return IsTransportTerminal(fromC) && IsTransportTerminal(toC);
+    return IsTransport(fromC) && IsTransport(toC);
   }
 }
 

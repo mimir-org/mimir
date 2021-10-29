@@ -1,7 +1,7 @@
 import { FlowElement } from "react-flow-renderer";
 import { Edge, Node } from "../../../models";
 import { EdgeType, EDGE_TYPE } from "../../../models/project";
-import { IsTransportTerminal } from "../helpers";
+import { IsTransport } from "../helpers";
 
 /**
  * Function to convert a Mimir Edge to a FlowElement that interacts with the Flow library.
@@ -20,7 +20,7 @@ const ConvertEdgeToFlow = (edge: Edge, edgeType: EdgeType, sourceNode: Node, tar
     sourceHandle: edge.fromConnectorId,
     targetHandle: edge.toConnectorId,
     arrowHeadType: null,
-    animated: edgeType === EDGE_TYPE.TRANSPORT || IsTransportTerminal(edge.fromConnector),
+    animated: edgeType === EDGE_TYPE.TRANSPORT || IsTransport(edge.fromConnector),
     label: "",
     data: {
       source: sourceNode,

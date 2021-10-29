@@ -133,7 +133,7 @@ namespace Mb.Core.Controllers.V1
         /// <summary>
         /// Import a new project
         /// </summary>
-        /// <param name="project"></param>
+        /// <param name="projectAm"></param>
         /// <returns></returns>
         [HttpPost("import")]
         [ProducesResponseType(typeof(Project), StatusCodes.Status200OK)]
@@ -142,15 +142,15 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> ImportProject([FromBody] ProjectAm project)
+        public async Task<IActionResult> ImportProject([FromBody] ProjectAm projectAm)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                var data = await _projectService.ImportProject(project);
-                return Ok(data);
+                var project = await _projectService.ImportProject(projectAm);
+                return Ok(project);
             }
             catch (ModelBuilderDuplicateException e)
             {
@@ -167,7 +167,7 @@ namespace Mb.Core.Controllers.V1
         /// Import a new project
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="project"></param>
+        /// <param name="projectAm"></param>
         /// <returns></returns>
         [HttpPost("update/{id}")]
         [ProducesResponseType(typeof(Project), StatusCodes.Status200OK)]
@@ -176,15 +176,15 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> UpdateProject(string id, [FromBody] ProjectAm project)
+        public async Task<IActionResult> UpdateProject(string id, [FromBody] ProjectAm projectAm)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                var data = await _projectService.UpdateProject(id, project);
-                return Ok(data);
+                var project = await _projectService.UpdateProject(id, projectAm);
+                return Ok(project);
             }
             catch (ModelBuilderDuplicateException e)
             {

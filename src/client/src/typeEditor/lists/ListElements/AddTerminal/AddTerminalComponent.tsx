@@ -1,18 +1,18 @@
-import { TerminalTypeItem, ConnectorType } from "../../../../models";
+import { TerminalTypeItem, ConnectorType, TerminalType } from "../../../../models";
 import { AddTerminalElement } from "../../../styled";
 import { TextResources } from "../../../../assets/text";
 import { CloseIcon } from "../../../../assets/icons/close";
 import { NumericValueInput, SearchDropDown, SearchDropDownItem, DirectionalDropdown } from "../../../../compLibrary";
 
 interface Props {
-  terminals: any[];
+  terminals: TerminalType[];
   defaultTerminal: TerminalTypeItem;
   onChange: Function;
 }
 
 const AddTerminal = ({ terminals, defaultTerminal, onChange }: Props) => {
-  const onTerminalIdChange = (id: string) => {
-    defaultTerminal.terminalTypeId = id;
+  const onTerminalIdChange = (item: TerminalType) => {
+    defaultTerminal.terminalTypeId = item.id;
     onChange("update", defaultTerminal);
   };
 
@@ -31,7 +31,7 @@ const AddTerminal = ({ terminals, defaultTerminal, onChange }: Props) => {
       <NumericValueInput value={defaultTerminal.number.toString()} onChange={(item: number) => onQuantityChange(item)} />
       <SearchDropDown
         value={defaultTerminal.terminalTypeId}
-        onChange={(id: string) => onTerminalIdChange(id)}
+        onChange={(item) => onTerminalIdChange(item)}
         placeHolder={TextResources.TypeEditor_Search}
         list={terminals as SearchDropDownItem[]}
       />

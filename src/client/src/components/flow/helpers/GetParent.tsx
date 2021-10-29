@@ -1,5 +1,5 @@
 import red from "../../../redux/store";
-import { IsPartOfTerminal } from ".";
+import { IsPartOf } from ".";
 import { Node, Edge } from "../../../models";
 
 /**
@@ -13,7 +13,7 @@ const GetParent = (childNode: Node) => {
   const edges = red.store.getState().projectState.project?.edges as Edge[];
   const nodes = red.store.getState().projectState.project?.nodes as Node[];
 
-  const parentEdge = edges?.find((e) => e.toNodeId === childNode?.id && IsPartOfTerminal(e.toConnector));
+  const parentEdge = edges?.find((e) => e.toNodeId === childNode?.id && IsPartOf(e.toConnector));
   const parentNode = nodes?.find((n) => n.id === parentEdge?.fromNodeId);
 
   return parentNode ?? childNode;

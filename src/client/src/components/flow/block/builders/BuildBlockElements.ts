@@ -1,27 +1,26 @@
 import { Elements } from "react-flow-renderer";
 import { Node, Project } from "../../../../models";
 import { BuildParentBlockNode, BuildParentSecondaryNode } from ".";
-import { DrawChildNodes, DrawConnectViewChildren, DrawEdges, DrawSecondaryChildren } from "./helpers";
+import { DrawChildNodes, DrawEdges, DrawSecondaryChildren } from "./helpers";
 
 /**
  * Component to draw all nodes and edges in BlockView.
  * @param project
  * @param selectedNode
  * @param secondaryNode
- * @param mainConnectNodes
  * @param parentNode
+ * @param parentNodeSize
  * @returns all Elements.
  */
 const BuildBlockElements = (
   project: Project,
   selectedNode: Node,
   secondaryNode: Node,
-  mainConnectNodes: Node[],
-  parentNode: Node
+  parentNode: Node,
+  parentNodeSize: { width: number; height: number }
 ) => {
   if (!project) return;
   const elements: Elements = [];
-  const connectView = mainConnectNodes?.length > 0;
   const allNodes = project.nodes;
 
   const parentBlock = BuildParentBlockNode(selectedNode);
@@ -33,10 +32,9 @@ const BuildBlockElements = (
     parentSecondaryBlock && elements.push(parentSecondaryBlock);
   }
 
-  DrawChildNodes(project.edges, allNodes, selectedNode, elements, parentNode);
+  DrawChildNodes(project.edges, allNodes, selectedNode, elements, parentNode, parentNodeSize);
   DrawEdges(project.edges, allNodes, elements, secondaryNode);
-  secondaryNode && DrawSecondaryChildren(project.edges, allNodes, secondaryNode, elements);
-  connectView && DrawConnectViewChildren(mainConnectNodes, elements, allNodes, parentNode);
+  secondaryNode && DrawSecondaryChildren(project.edges, allNodes, secondaryNode, elements, parentNodeSize);
 
   return elements;
 };

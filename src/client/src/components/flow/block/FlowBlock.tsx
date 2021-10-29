@@ -1,4 +1,4 @@
-import ReactFlow, { ReactFlowProvider, Elements } from "react-flow-renderer";
+import ReactFlow, { ReactFlowProvider, Elements, Background } from "react-flow-renderer";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { FullScreenComponent } from "../../../compLibrary/controls";
 import { GetBlockEdgeTypes, IsBlockView, OnBlockClick } from "../block/helpers";
@@ -10,23 +10,29 @@ import { EDGE_TYPE, EdgeType } from "../../../models/project";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { BlockFilterMenu } from "../../menus/filterMenu/block";
 import { Node } from "../../../models";
+import { ExplorerModule } from "../../../modules/explorer";
+import { MapComponent } from "../map";
 import {
   darkModeSelector,
   iconSelector,
   electroSelector,
   librarySelector,
-  mainConnectSelector,
   projectSelector,
   secondaryNodeSelector,
   userStateSelector,
   blockFilterSelector,
+  nodeSizeSelector,
 } from "../../../redux/store";
+
+interface Props {
+  inspectorRef: React.MutableRefObject<HTMLDivElement>;
+}
 
 /**
  * Component for the Flow library in BlockView
  * @returns a scene with Flow elements and Mimir nodes, transports and edges.
  */
-const FlowBlock = () => {
+const FlowBlock = ({ inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
   const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState(null);
@@ -34,7 +40,6 @@ const FlowBlock = () => {
   const darkMode = useAppSelector(darkModeSelector);
   const project = useAppSelector(projectSelector);
   const secondaryNode = useAppSelector(secondaryNodeSelector) as Node;
-  const mainConnectNodes = useAppSelector(mainConnectSelector);
   const icons = useAppSelector(iconSelector);
   const lib = useAppSelector(librarySelector);
   const electro = useAppSelector(electroSelector);
@@ -42,13 +47,14 @@ const FlowBlock = () => {
   const blockFilter = useAppSelector(blockFilterSelector);
   const node = GetSelectedNode();
   const parent = GetParent(node);
+  const parentNodeSize = useAppSelector(nodeSizeSelector);
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(BuildBlockElements(project, node, secondaryNode, mainConnectNodes, parent));
+      setElements(BuildBlockElements(project, node, secondaryNode, parent, parentNodeSize));
       return setFlowInstance(_reactFlowInstance);
     },
-    [project, node, secondaryNode, mainConnectNodes, parent]
+    [project, node, secondaryNode, parent, parentNodeSize]
   );
 
   const OnElementsRemove = (elementsToRemove) => {
@@ -56,7 +62,7 @@ const FlowBlock = () => {
     project.edges?.forEach((edge) => {
       if (edge.fromNodeId === nodeToRemove.id || edge.toNodeId === nodeToRemove.id) elementsToRemove.push(edge);
     });
-    return useOnRemove(elementsToRemove, setElements, dispatch);
+    return useOnRemove(elementsToRemove, setElements, dispatch, inspectorRef);
   };
 
   const OnConnect = (params) => {
@@ -106,15 +112,16 @@ const FlowBlock = () => {
               zoomOnScroll={true}
               paneMoveable={true}
               zoomOnDoubleClick={false}
-              defaultZoom={0.7}
-              snapToGrid={true}
-              snapGrid={[5, 5]}
-              defaultPosition={[1600, 900]}
+              defaultZoom={0.9}
               onClick={(e) => OnBlockClick(e, dispatch, project)}
               onlyRenderVisibleElements={true}
             >
-              <FullScreenComponent />
+              <Background />
+              <MapComponent />
+              <FullScreenComponent inspectorRef={inspectorRef} />
             </ReactFlow>
+
+            <ExplorerModule elements={elements} />
             {blockFilter && <BlockFilterMenu elements={elements} />}
           </div>
         </ReactFlowProvider>

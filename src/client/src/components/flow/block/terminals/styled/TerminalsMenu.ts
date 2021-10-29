@@ -14,7 +14,6 @@ const TerminalsMenu = styled.div<Props>`
   border-color: ${(props) => props.color};
   background-color: ${Color.White};
   border-radius: 5px;
-  z-index: 4;
   min-width: 150px;
   width: max-content;
   position: absolute;

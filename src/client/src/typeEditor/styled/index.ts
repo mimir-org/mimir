@@ -37,7 +37,7 @@ export { default as InfoWrapper } from "./Preview/InfoWrapper";
 export { default as SaveButton } from "./Preview/SaveButton";
 
 // Inspector
-export { default as Inspector } from "./Inspector/TypeEditorInspector";
+export { default as TypeEditorInspectorWrapper } from "./Inspector/TypeEditorInspectorWrapper";
 
 // Misc
 export { default as ErrorMessageBox } from "./ErrorMessageBox";

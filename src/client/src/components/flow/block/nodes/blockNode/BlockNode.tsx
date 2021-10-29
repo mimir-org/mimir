@@ -1,25 +1,17 @@
 import * as Click from "./handlers";
-import { ResizeConnectNode, SetConnectNodeColor, GetConnectChildren } from "../../connectView/helpers";
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, useUpdateNodeInternals } from "react-flow-renderer";
 import { Node } from "../../../../../models";
 import { Size } from "../../../../../compLibrary";
-import { IsFunction, IsProduct } from "../../../helpers";
+import { GetSelectedNode, IsFunction, IsProduct } from "../../../helpers";
 import { NodeBox } from "../../../styled";
 import { TerminalsContainerComponent, HandleComponent } from "../../terminals";
-import { ConnectViewComponent } from "../../connectView";
-import { IsChildConnectNode, IsConnectNodeChecked, SetNodeWidth, SetNodeLength } from "./helpers";
-import { FilterTerminals, FindAllEdges } from "../../helpers";
+import { SetNodeWidth, SetNodeLength } from "./helpers";
+import { FilterTerminals } from "../../helpers";
 import { Symbol } from "../../../../../compLibrary/symbol";
 import { BlockNodeNameBox } from "../../styled";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
-import {
-  edgeSelector,
-  electroSelector,
-  mainConnectSelector,
-  nodeSelector,
-  secondaryNodeSelector,
-} from "../../../../../redux/store";
+import { edgeSelector, electroSelector, nodeSelector, secondaryNodeSelector } from "../../../../../redux/store";
 
 /**
  * Component for a Function or Product Node in BlockView.
@@ -31,41 +23,20 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const [inTerminalMenu, showInTerminalMenu] = useState(false);
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
   const [terminalBox, showTerminalBox] = useState(false);
-  const [connectBox, showConnectBox] = useState(false);
-  const [connectMenu, showConnectMenu] = useState(false);
   const updateNodeInternals = useUpdateNodeInternals();
 
   const nodes = useAppSelector(nodeSelector);
   const edges = useAppSelector(edgeSelector);
   const secondaryNode = useAppSelector(secondaryNodeSelector) as Node;
   const electro = useAppSelector(electroSelector);
-  const mainConnectNodes = useAppSelector(mainConnectSelector);
 
   const type = IsFunction(data) ? "BlockFunctionNode-" : "BlockProductNode-";
   const node = nodes?.find((x) => x.id === data.id);
-  const terminals = FilterTerminals(data, secondaryNode);
-  const connectChildren = GetConnectChildren(data, nodes, edges);
-  const mainConnectNode = mainConnectNodes.find((x) => x.id === data.id);
-  const connectNodes = mainConnectNode?.connectNodes;
+  const selectedNode = GetSelectedNode();
+  const terminals = FilterTerminals(data, selectedNode, secondaryNode);
 
-  if (!mainConnectNode) {
-    data.width = Size.Node_Width;
-    data.length = Size.Node_Length;
-  }
-
-  useEffect(() => {
-    SetConnectNodeColor(mainConnectNode?.id, connectNodes, data);
-    if (connectNodes?.length === undefined) return;
-    ResizeConnectNode(connectNodes?.length, mainConnectNode, data);
-  }, [mainConnectNode, data, connectNodes, mainConnectNodes]);
-
-  // Force z-index to display edges in ConnectView
-  useEffect(() => {
-    if (mainConnectNode) {
-      const allEdges = FindAllEdges();
-      allEdges.style.zIndex = "3";
-    }
-  }, [mainConnectNode]);
+  data.width = Size.Node_Width;
+  data.length = Size.Node_Height;
 
   useEffect(() => {
     updateNodeInternals(node?.id);
@@ -79,14 +50,13 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
       <NodeBox
         id={type + data.id}
         product={IsProduct(data)}
-        width={mainConnectNode ? mainConnectNode.width : data.width}
-        length={mainConnectNode ? mainConnectNode.length : data.length}
-        onMouseOver={() => Click.OnHover(showTerminalBox, showConnectBox)}
-        onMouseOut={() => Click.OnMouseOut(showTerminalBox, showConnectBox)}
+        width={data.width}
+        length={data.length}
+        onMouseOver={() => Click.OnHover(showTerminalBox)}
+        onMouseOut={() => Click.OnMouseOut(showTerminalBox)}
       >
         <BlockNodeNameBox>{data.label ?? data.name}</BlockNodeNameBox>
-        {!mainConnectNode && <Symbol base64={data.symbol} text={data.name} />}
-        {mainConnectNode && <div className="line" />}
+        <Symbol base64={data.symbol} text={data.name} />
 
         <TerminalsContainerComponent
           node={data}
@@ -97,34 +67,18 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
           electro={electro}
           onClick={(conn) => Click.OnTerminal(conn, data, dispatch, edges)}
           menuBox={terminalBox}
-          mainConnectNode={data.id === mainConnectNode?.id}
           showInTerminalMenu={showInTerminalMenu}
           showOutTerminalMenu={showOutTerminalMenu}
         />
         <HandleComponent
           node={node}
           nodes={nodes}
-          length={mainConnectNode ? mainConnectNode.length : data.length}
-          width={mainConnectNode ? mainConnectNode.width : data.width}
+          length={data.length}
+          width={data.width}
           terminals={terminals}
           parent={false}
           electro={electro}
-          mainConnectNode={mainConnectNode?.id === data.id}
         />
-        {!IsChildConnectNode(mainConnectNodes, data.id) && (
-          <ConnectViewComponent
-            node={data}
-            visible={connectMenu}
-            children={connectChildren}
-            connectNodes={connectNodes}
-            onClick={(n) => Click.OnConnect(n, data, dispatch, connectNodes, showConnectMenu)}
-            isChecked={IsConnectNodeChecked}
-            connectBox={connectBox}
-            showConnectMenu={showConnectMenu}
-            dispatch={dispatch}
-            onBlur={() => Click.OnBlur(showConnectMenu, connectMenu)}
-          />
-        )}
       </NodeBox>
     </>
   );

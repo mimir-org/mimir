@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { ActiveSimpleTypesList, SimpleTypesSearchBar } from "./";
 import { TerminalsColumn } from "../terminals/styled";
-import { Composite } from "../../../../models";
+import { CompositeLikeItem } from "../../types";
 
 interface Props {
-  simpleTypes: Composite[];
-  onSelect: (item: Composite) => void;
+  simpleTypes: CompositeLikeItem[];
+  selectedSimpleTypeId: string;
+  onSelect: (item: CompositeLikeItem) => void;
 }
 
-function SimpleTypesSelector({ simpleTypes, onSelect }: Props) {
+function SimpleTypesSelector({ simpleTypes, onSelect, selectedSimpleTypeId }: Props) {
   const [searchString, setSearchString] = useState("");
   const onChange = (value: string) => {
     setSearchString(value);
@@ -17,7 +18,7 @@ function SimpleTypesSelector({ simpleTypes, onSelect }: Props) {
   return (
     <TerminalsColumn>
       <SimpleTypesSearchBar searchString={searchString} onChange={onChange} />
-      <ActiveSimpleTypesList simpleTypes={simpleTypes} onSelect={onSelect} />
+      <ActiveSimpleTypesList simpleTypes={simpleTypes} selectedSimpleTypeId={selectedSimpleTypeId} onSelect={onSelect} />
     </TerminalsColumn>
   );
 }

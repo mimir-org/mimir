@@ -1,14 +1,15 @@
 import { memo, FC, useState, useEffect } from "react";
-import { NodeProps, useUpdateNodeInternals } from "react-flow-renderer";
+import { Background, BackgroundVariant, NodeProps, useUpdateNodeInternals } from "react-flow-renderer";
 import { HandleComponent, TerminalsContainerComponent } from "../../terminals";
-import { Size } from "../../../../../compLibrary";
-import { GetParentColor } from "./helpers";
+import { Color } from "../../../../../compLibrary";
+import { GetParentColor, SetParentNodeSize } from "./helpers";
 import { OnConnectorClick } from "./handlers";
 import { BlockComponent } from "./";
-import { FilterTerminals, GetNodeByDataId, FindAllEdges } from "../../helpers";
+import { FilterTerminals } from "../../helpers";
 import { Node } from "../../../../../models";
+import { GetSelectedNode, IsLocation } from "../../../helpers";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
-import { edgeSelector, electroSelector, nodeSelector, secondaryNodeSelector } from "../../../../../redux/store";
+import { edgeSelector, electroSelector, nodeSelector, nodeSizeSelector, secondaryNodeSelector } from "../../../../../redux/store";
 
 /**
  * Component for the large parent block in BlockView.
@@ -23,31 +24,33 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const edges = useAppSelector(edgeSelector);
   const secondaryNode = useAppSelector(secondaryNodeSelector) as Node;
   const electro = useAppSelector(electroSelector);
+  const parentNodeSize = useAppSelector(nodeSizeSelector);
   const updateNodeInternals = useUpdateNodeInternals();
+  const selectedNode = GetSelectedNode();
   const node = nodes?.find((x) => x.id === data.id);
-  if (node) node.width = Size.BlockView_Width;
-  const terminals = FilterTerminals(data, secondaryNode);
+  if (node) node.blockWidth = parentNodeSize?.width;
 
-  // Enforce size change of node
-  useEffect(() => {
-    const parentNode = GetNodeByDataId(data.id);
-    parentNode.style.width = `${Size.BlockView_Width}px`;
-  }, [data]);
-
-  // Force z-index to display edges in ConnectView
-  useEffect(() => {
-    const allEdges = FindAllEdges();
-    allEdges.style.zIndex = "3";
-  }, []);
+  const terminals = FilterTerminals(data, selectedNode, secondaryNode);
 
   useEffect(() => {
     updateNodeInternals(node?.id);
     updateNodeInternals(secondaryNode?.id);
   }, [node, secondaryNode, updateNodeInternals]);
 
+  useEffect(() => {
+    SetParentNodeSize(node, secondaryNode, dispatch); // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [secondaryNode]);
+
   return (
     <>
-      <BlockComponent dispatch={dispatch} node={node} color={GetParentColor(node)} selected={node?.isBlockSelected} />
+      <BlockComponent
+        dispatch={dispatch}
+        node={node}
+        color={GetParentColor(node)}
+        selected={node?.isBlockSelected}
+        width={parentNodeSize?.width}
+        height={parentNodeSize?.height}
+      />
 
       <TerminalsContainerComponent
         node={node}
@@ -58,7 +61,6 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         terminals={terminals}
         onClick={(conn) => OnConnectorClick(conn, dispatch, edges, nodes)}
         menuBox={true}
-        mainConnectNode={false}
         showInTerminalMenu={showInTerminalMenu}
         showOutTerminalMenu={showOutTerminalMenu}
       />
@@ -70,8 +72,8 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         width={node?.width}
         terminals={terminals}
         electro={electro}
-        mainConnectNode={false}
       />
+      {IsLocation(data) && <Background style={{ zIndex: 1 }} variant={BackgroundVariant.Lines} color={Color.Grey} gap={20} />}
     </>
   );
 };

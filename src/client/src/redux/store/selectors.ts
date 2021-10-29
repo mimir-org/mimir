@@ -1,5 +1,7 @@
-import { Attribute, Edge, Node, Project } from "../../models";
+import { Edge, Node, Project } from "../../models";
 import { MODULE_TYPE, VIEW_TYPE } from "../../models/project";
+import { GetAttributeLikeItemKey } from "../../modules/inspector/helpers/IsType";
+import { AttributeLikeItem } from "../../modules/inspector/types";
 import { createAppSelector, combineAppSelectors, createParametricAppSelector } from "../../redux/store";
 import { ProjectState } from "./project/types";
 
@@ -56,8 +58,8 @@ export const commonStateSelector = createAppSelector(
 );
 
 export const typeEditorStateSelector = createAppSelector(
-  (state) => state.commonState,
-  (commonState) => commonState
+  (state) => state.typeEditor,
+  (typeEditor) => typeEditor
 );
 
 export const librarySelector = createAppSelector(
@@ -93,6 +95,11 @@ export const explorerSelector = createAppSelector(
 export const legendOpenSelector = createAppSelector(
   (state) => state.modules.types,
   (types) => types.find((m) => m.type === MODULE_TYPE.LEGEND).visible
+);
+
+export const customCategorySelector = createAppSelector(
+  (state) => state.customCategory,
+  (customCategory) => customCategory
 );
 
 export const treeSelector = createAppSelector(
@@ -143,7 +150,12 @@ export const inspectorTabOpenSelector = makeIsInspectorTabOpenSelector();
 
 export const heightSelector = createAppSelector(
   (state) => state.inspectorHeight.height,
-  (height) => height
+  (width) => width
+);
+
+export const nodeSizeSelector = createAppSelector(
+  (state) => state.blockNodeSize.size,
+  (size) => size
 );
 
 export const darkModeSelector = createAppSelector(
@@ -161,11 +173,6 @@ export const secondaryNodeSelector = createAppSelector(
   (node) => node
 );
 
-export const mainConnectSelector = createAppSelector(
-  (state) => state.connectView.mainNodes,
-  (mainNodes) => mainNodes
-);
-
 export const iconSelector = createAppSelector(
   (state) => state.typeEditor.icons,
   (icons) => icons
@@ -177,13 +184,28 @@ export const electroSelector = createAppSelector(
 );
 
 export const edgeSelector = createAppSelector(
-  (state) => state.projectState.project.edges,
+  (state) => state.projectState.project?.edges,
   (edges) => (edges ?? []) as Edge[]
+);
+
+export const attributeTypeSelector = createAppSelector(
+  (state) => state.typeEditor.attributes,
+  (attributeTypes) => attributeTypes
 );
 
 export const terminalTypeSelector = createAppSelector(
   (state) => state.typeEditor.terminals,
   (terminals) => terminals ?? []
+);
+
+export const simpleTypeSelector = createAppSelector(
+  (state) => state.typeEditor.simpleTypes,
+  (simpleTypes) => simpleTypes ?? []
+);
+
+export const isTypeEditorInspectorOpen = createAppSelector(
+  (state) => state.typeEditor.inspector.visibility,
+  (visibility) => visibility
 );
 
 export const nodeSelector = createAppSelector(
@@ -194,8 +216,16 @@ export const nodeSelector = createAppSelector(
 export const makeFilterSelector = () =>
   createParametricAppSelector(
     (state) => state.commonState.filters,
-    (_, attributes: Attribute[]) => attributes,
-    (filters, attributes) => filters.filter((x) => attributes.find((att) => att.key === x.name)) ?? []
+    (_, attributes: AttributeLikeItem[]) => attributes,
+    (filters, attributes) => {
+      if (!attributes?.length || attributes.length === 0) {
+        return [];
+      }
+
+      const key = GetAttributeLikeItemKey(attributes[0]);
+
+      return filters.filter((x) => attributes.find((att) => att[key] === x.name)) ?? [];
+    }
   );
 export const makeSelectedFilterSelector = () =>
   createParametricAppSelector(

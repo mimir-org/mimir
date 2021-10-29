@@ -1,6 +1,12 @@
 import { Connector, Node } from "../../../../../../models";
 import { IsInputTerminal } from "../../../../helpers";
 
+/**
+ * Component to resize a Node based on the amount of visual terminals.
+ * @param terminals
+ * @param data
+ * @returns the new value for Node length
+ */
 const SetNodeLength = (terminals: Connector[], data: Node) => {
   const maximum = 5;
   let inTerminals = 0;

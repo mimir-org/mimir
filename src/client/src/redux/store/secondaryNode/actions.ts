@@ -1,5 +1,5 @@
 import { Node } from "../../../models";
-import { SET_SECONDARY_NODE } from "./types";
+import { SET_SECONDARY_NODE, REMOVE_SECONDARY_NODE } from "./types";
 
 export function setSecondaryNode(node: Node) {
   return {
@@ -7,5 +7,12 @@ export function setSecondaryNode(node: Node) {
     payload: {
       node,
     },
+  };
+}
+
+export function removeSecondaryNode() {
+  return {
+    type: REMOVE_SECONDARY_NODE,
+    payload: null,
   };
 }
