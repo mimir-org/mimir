@@ -4,8 +4,9 @@ import { FilterMenuBox, MenuColumn } from "../../../../compLibrary/box/menus";
 import { IsLibrary } from "../../../flow/helpers";
 import { FilterDropdown } from "../dropdown";
 import { TextResources } from "../../../../assets/text";
-import { OnChange } from "../handlers";
-import { GetEdges, GetNodes, PopulateFilterLists } from "../helpers";
+import { OnAnimationChange, OnChange } from "../handlers";
+import { GetEdges, GetNodes, IsAnimationChecked, PopulateFilterLists } from "../helpers";
+import { FilterElement } from "..";
 
 interface Props {
   elements: any[];
@@ -33,6 +34,11 @@ const TreeFilterMenu = ({ elements }: Props) => {
   return (
     <FilterMenuBox libraryOpen={libOpen}>
       <MenuColumn>
+        <FilterElement
+          label={"Animation"}
+          onChange={() => OnAnimationChange(edges, dispatch)}
+          isChecked={IsAnimationChecked(edges)}
+        />
         <FilterDropdown
           terminals={transportItems}
           label={transportLabel}
