@@ -5,6 +5,7 @@ import { AspectBox } from "../../../compLibrary/box/aspect";
 import { Checkbox, CheckboxBlock } from "../checkboxComponent";
 import { IsBlockView } from "../../../components/flow/block/helpers";
 import { GetAspectIcon } from "../../../assets/helpers";
+import { ExplorerLine } from "./styled";
 
 interface Props {
   node: Node;
@@ -28,25 +29,28 @@ export const AspectComponent = ({
   elements,
   onElementExpanded,
 }: Props) => (
-  <AspectBox indent={indent} node={node} isRoot={isRoot}>
-    {IsAspectNode(node) && <img src={GetAspectIcon(node)} alt="aspect-icon" className="icon"></img>}
-    <div className="container">
-      {IsBlockView() ? (
-        <CheckboxBlock elements={elements} node={node} inputLabel={label} />
-      ) : (
-        <Checkbox node={node} project={project} inputLabel={label} />
+  <>
+    <AspectBox indent={indent} node={node} isRoot={isRoot}>
+      {IsAspectNode(node) && <img src={GetAspectIcon(node)} alt="aspect-icon" className="icon"></img>}
+      <div className="container">
+        {IsBlockView() ? (
+          <CheckboxBlock elements={elements} node={node} inputLabel={label} />
+        ) : (
+          <Checkbox node={node} project={project} inputLabel={label} />
+        )}
+      </div>
+
+      {!isLeaf && (
+        <img
+          className="expandIcon"
+          src={expanded ? ExpandIcon : CollapseIcon}
+          alt="expand-icon"
+          onClick={() => onElementExpanded(!expanded, node.id)}
+        ></img>
       )}
-    </div>
-    <div className="line" />
-    {!isLeaf && (
-      <img
-        className="expandIcon"
-        src={expanded ? ExpandIcon : CollapseIcon}
-        alt="expand-icon"
-        onClick={() => onElementExpanded(!expanded, node.id)}
-      ></img>
-    )}
-  </AspectBox>
+    </AspectBox>
+    <ExplorerLine isRoot={node?.isRoot} node={node} />
+  </>
 );
 
 export default AspectComponent;
