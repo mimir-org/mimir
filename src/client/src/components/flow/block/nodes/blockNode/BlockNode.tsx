@@ -2,12 +2,11 @@ import * as Click from "./handlers";
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, useUpdateNodeInternals } from "react-flow-renderer";
 import { Node } from "../../../../../models";
-import { Size } from "../../../../../compLibrary";
 import { GetSelectedNode, IsFunction, IsProduct } from "../../../helpers";
 import { NodeBox } from "../../../styled";
 import { TerminalsContainerComponent, HandleComponent } from "../../terminals";
 import { SetNodeWidth, SetNodeLength } from "./helpers";
-import { FilterTerminals, FindAllEdges } from "../../helpers";
+import { FilterTerminals } from "../../helpers";
 import { Symbol } from "../../../../../compLibrary/symbol";
 import { BlockNodeNameBox } from "../../styled";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
@@ -35,51 +34,41 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const selectedNode = GetSelectedNode();
   const terminals = FilterTerminals(data, selectedNode, secondaryNode);
 
-  data.width = Size.Node_Width;
-  data.length = Size.Node_Height;
-
   useEffect(() => {
     updateNodeInternals(node?.id);
     updateNodeInternals(secondaryNode?.id);
   }, [node, secondaryNode, updateNodeInternals]);
 
-  electro ? SetNodeWidth(terminals, data) : SetNodeLength(terminals, data);
-
-  // Force correct z-index
-  useEffect(() => {
-    const allEdges = FindAllEdges();
-    allEdges.style.zIndex = "3";
-  }, []);
+  electro ? SetNodeWidth(terminals, node) : SetNodeLength(terminals, node);
 
   return (
     <NodeBox
-      id={type + data.id}
-      product={IsProduct(data)}
-      width={data.width}
-      length={data.length}
+      id={type + node.id}
+      product={IsProduct(node)}
+      width={node.width}
+      length={node.length}
       onMouseOver={() => Click.OnHover(showTerminalBox)}
       onMouseOut={() => Click.OnMouseOut(showTerminalBox)}
     >
-      <BlockNodeNameBox>{data.label ?? data.name}</BlockNodeNameBox>
-      <Symbol base64={data.symbol} text={data.name} />
+      <BlockNodeNameBox>{node.label ?? node.name}</BlockNodeNameBox>
+      <Symbol base64={node.symbol} text={node.name} />
 
       <TerminalsContainerComponent
-        node={data}
+        node={node}
         inputMenuOpen={inTerminalMenu}
         outputMenuOpen={outTerminalMenu}
         terminals={terminals}
         parent={false}
         electro={electro}
-        onClick={(conn) => Click.OnTerminal(conn, data, dispatch, edges)}
+        onClick={(conn) => Click.OnTerminal(conn, node, dispatch, edges)}
         menuBox={terminalBox}
         showInTerminalMenu={showInTerminalMenu}
         showOutTerminalMenu={showOutTerminalMenu}
       />
       <HandleComponent
-        node={node}
         nodes={nodes}
-        height={node.blockHeight}
-        width={node.blockWidth}
+        height={node.length}
+        width={node.width}
         terminals={terminals}
         parent={false}
         electro={electro}

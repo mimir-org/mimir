@@ -7,7 +7,6 @@ import { Node } from "../../../../../models";
 import { OnHover, OnMouseOut, OnConnectorClick } from "./handlers";
 import { FilterTerminals, GetNodeByDataId } from "../../helpers";
 import { Symbol } from "../../../../../compLibrary/symbol";
-import { Size } from "../../../../../compLibrary";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
 import { electroSelector, nodeSelector, secondaryNodeSelector } from "../../../../../redux/store";
 import { GetSelectedNode } from "../../../helpers";
@@ -28,17 +27,16 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const electro = useAppSelector(electroSelector);
   const selectedNode = GetSelectedNode();
   const node = nodes.find((x) => x.id === data?.id);
-  const terminals = FilterTerminals(data, selectedNode, secondaryNode);
-  if (data) data.width = Size.Node_Width;
+  const terminals = FilterTerminals(node, selectedNode, secondaryNode);
 
   // Enforce size change of node
   useEffect(() => {
-    const locationNode = GetNodeByDataId(data.id);
+    const locationNode = GetNodeByDataId(node.id);
     if (locationNode) {
-      locationNode.style.width = `${data.width}px`;
-      locationNode.style.height = `${data.length}px`;
+      locationNode.style.width = `${node.width}px`;
+      locationNode.style.height = `${node.length}px`;
     }
-  }, [data]);
+  }, [node]);
 
   useEffect(() => {
     updateNodeInternals(node?.id);
@@ -47,31 +45,30 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
 
   return (
     <NodeBox
-      id={"BlockLocationNode-" + data.id}
-      width={data?.width}
-      length={data?.length}
+      id={"BlockLocationNode-" + node.id}
+      width={node?.width}
+      length={node?.length}
       product={false}
       onMouseOver={() => OnHover(showTerminalButton)}
       onMouseOut={() => OnMouseOut(showTerminalButton)}
     >
-      <BlockNodeNameBox>{data.label ?? data.name}</BlockNodeNameBox>
-      <Symbol base64={data.symbol} text={data.name} />
+      <BlockNodeNameBox>{node.label ?? node.name}</BlockNodeNameBox>
+      <Symbol base64={node.symbol} text={node.name} />
 
       <TerminalsContainerComponent
-        node={data}
+        node={node}
         inputMenuOpen={inTerminalMenu}
         outputMenuOpen={outTerminalMenu}
         terminals={terminals}
         parent={false}
         electro={electro}
-        onClick={(conn) => OnConnectorClick(conn, data, dispatch)}
+        onClick={(conn) => OnConnectorClick(conn, node, dispatch)}
         menuBox={terminalButton}
         showInTerminalMenu={showInTerminalMenu}
         showOutTerminalMenu={showOutTerminalMenu}
       />
 
       <HandleComponent
-        node={data}
         nodes={nodes}
         height={node?.blockHeight}
         width={node?.blockWidth}

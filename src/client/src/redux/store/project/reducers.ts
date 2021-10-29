@@ -200,6 +200,22 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         },
       };
 
+    case Types.SET_LOCATION_NODE_SIZE:
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          nodes: state.project.nodes.map((x) =>
+            x.id === action.payload.nodeId
+              ? {
+                  ...x,
+                  [action.payload.key]: action.payload.value,
+                }
+              : x
+          ),
+        },
+      };
+
     case Types.SET_NODE_VISIBILITY: {
       const node = action.payload.node;
       const nodeList = state.project.nodes;

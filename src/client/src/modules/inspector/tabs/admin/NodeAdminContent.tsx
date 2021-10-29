@@ -7,7 +7,7 @@ import { EnumBase, Node, Project } from "../../../../models";
 import { GetRdsId, GetReferenceDesignation } from "../../../../assets/helpers";
 import { IsAspectNode, IsLocation, IsProduct } from "../../../../components/flow/helpers";
 import { IsBlockView } from "../../../../components/flow/block/helpers";
-import { changeNodeValue } from "../../../../redux/store/project/actions";
+import { changeNodeValue, setLocationNodeSize } from "../../../../redux/store/project/actions";
 import { Dropdown } from "../../../../compLibrary/dropdown/mimir";
 import { useAppDispatch } from "../../../../redux/store";
 
@@ -22,6 +22,7 @@ interface Props {
 const AdminContent = ({ node, project, statuses }: Props) => {
   const dispatch = useAppDispatch();
   const onChange = (key: string, value: any) => dispatch(changeNodeValue(node.id, key, value));
+  const onSizeChange = (key: string, value: number) => dispatch(setLocationNodeSize(node.id, key, value));
 
   return (
     <>
@@ -32,13 +33,7 @@ const AdminContent = ({ node, project, statuses }: Props) => {
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_RDS}</div>
-          <Input
-            fontSize={FontSize.Standard}
-            readOnly={true}
-            value={GetRdsId(node) ?? ""}
-            onChange={() => null}
-            inputType=""
-          />
+          <Input fontSize={FontSize.Standard} readOnly={true} value={GetRdsId(node) ?? ""} onChange={() => null} inputType="" />
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Semantic_Id}</div>
@@ -68,13 +63,7 @@ const AdminContent = ({ node, project, statuses }: Props) => {
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Updated_By}</div>
-          <Input
-            fontSize={FontSize.Standard}
-            readOnly={true}
-            value={node.updatedBy ?? ""}
-            onChange={() => null}
-            inputType=""
-          />
+          <Input fontSize={FontSize.Standard} readOnly={true} value={node.updatedBy ?? ""} onChange={() => null} inputType="" />
         </div>
       </TabColumn>
       <TabColumn width={125}>
@@ -115,7 +104,7 @@ const AdminContent = ({ node, project, statuses }: Props) => {
               fontSize={FontSize.Standard}
               readOnly={IsAspectNode(node)}
               value={node.width ?? ""}
-              onChange={(e: Event) => onChange("width", e.target.value)}
+              onChange={(e: Event) => onSizeChange("width", Number(e.target.value))}
               inputType=""
             />
           </div>
@@ -126,7 +115,7 @@ const AdminContent = ({ node, project, statuses }: Props) => {
             <Input
               fontSize={FontSize.Standard}
               value={node.height ?? ""}
-              onChange={(e: Event) => onChange("height", e.target.value)}
+              onChange={(e: Event) => onSizeChange("height", Number(e.target.value))}
               inputType=""
               readOnly={true}
             />
@@ -150,13 +139,7 @@ const AdminContent = ({ node, project, statuses }: Props) => {
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Version}</div>
-          <Input
-            fontSize={FontSize.Standard}
-            readOnly={true}
-            value={node.version ?? ""}
-            onChange={() => null}
-            inputType=""
-          />
+          <Input fontSize={FontSize.Standard} readOnly={true} value={node.version ?? ""} onChange={() => null} inputType="" />
         </div>
         {IsProduct(node) && (
           <div>
@@ -178,7 +161,7 @@ const AdminContent = ({ node, project, statuses }: Props) => {
               fontSize={FontSize.Standard}
               readOnly={IsAspectNode(node)}
               value={node.length ?? ""}
-              onChange={(e: Event) => onChange("length", e.target.value)}
+              onChange={(e: Event) => onSizeChange("length", Number(e.target.value))}
               inputType=""
             />
           </div>

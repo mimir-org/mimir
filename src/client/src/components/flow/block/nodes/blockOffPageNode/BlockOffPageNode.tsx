@@ -14,7 +14,6 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
       <img src={OffPageRequired} alt="menu" style={{ pointerEvents: "none" }} />
 
       <HandleComponent
-        node={data}
         nodes={nodes}
         height={data?.length}
         width={data?.width}
