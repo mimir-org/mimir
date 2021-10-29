@@ -214,7 +214,7 @@ namespace RdfParserModule.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to imf:hasInputTerminal.
+        ///   Looks up a localized string similar to imf:hasInTerminal.
         /// </summary>
         internal static string hasInputTerminal {
             get {
@@ -241,7 +241,7 @@ namespace RdfParserModule.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to imf:hasOutputTerminal.
+        ///   Looks up a localized string similar to imf:hasOutTerminal.
         /// </summary>
         internal static string hasOutputTerminal {
             get {
@@ -349,7 +349,7 @@ namespace RdfParserModule.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to skos:prefLabel.
+        ///   Looks up a localized string similar to rdfs:label.
         /// </summary>
         internal static string label {
             get {

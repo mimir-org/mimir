@@ -169,7 +169,7 @@
     <value>imf:hasChild</value>
   </data>
   <data name="hasInputTerminal" xml:space="preserve">
-    <value>imf:hasInputTerminal</value>
+    <value>imf:hasInTerminal</value>
   </data>
   <data name="hasLocation" xml:space="preserve">
     <value>imf:hasLocation</value>
@@ -178,7 +178,7 @@
     <value>mimir:hasMasterProject</value>
   </data>
   <data name="hasOutputTerminal" xml:space="preserve">
-    <value>imf:hasOutputTerminal</value>
+    <value>imf:hasOutTerminal</value>
   </data>
   <data name="hasParent" xml:space="preserve">
     <value>imf:hasParent</value>
@@ -214,7 +214,7 @@
     <value>imf:isAspectOf</value>
   </data>
   <data name="label" xml:space="preserve">
-    <value>skos:prefLabel</value>
+    <value>rdfs:label</value>
   </data>
   <data name="Location" xml:space="preserve">
     <value>imf:Location</value>

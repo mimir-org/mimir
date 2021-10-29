@@ -154,6 +154,18 @@ namespace RdfParserModule
                 ToNodeId = nodeB.Id
             };
 
+
+            var transport = new TransportAm
+            {
+                Id = transportId,
+                Name = "Kul transport",
+                InputTerminalId = transportInId,
+                OutputTerminalId = transportOutId
+            };
+
+            edge.Transport = transport;
+
+
             nodeA.Connectors = new List<ConnectorAm> { nodeAOutTerminal };
             nodeB.Connectors = new List<ConnectorAm> { nodeBInTerminal };
 

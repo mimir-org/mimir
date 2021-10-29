@@ -12,6 +12,7 @@ using RdfParserModule.Properties;
 using VDS.RDF;
 using VDS.RDF.Ontology;
 using VDS.RDF.Parsing;
+using VDS.RDF.Query;
 using INode = VDS.RDF.INode;
 
 namespace RdfParserModule
@@ -82,12 +83,13 @@ namespace RdfParserModule
             var integratedObject = RdfGraph.CreateUriNode("imf:IntegratedObject");
             var projectId = Store.GetTriplesWithObject(integratedObject).Select(t => t.Subject).ToList().First();
             
-            var label = GetObjects(projectId.ToString(), "rdfs:label").First();
+            var label = GetLabel(projectId.ToString());
             var version = GetObjects(projectId.ToString(), "owl:versionInfo").First();
 
             Graph.Id = "import.rdf_" + Guid.NewGuid(); //projectId.ToString() + Guid.NewGuid();
-            Graph.Label = label.ToString();
-            Graph.Name = label.ToString();
+            Graph.Iri = Graph.Id;
+            Graph.Label = label;
+            Graph.Name = label;
             Graph.Version = version.ToString();
         }
 
@@ -101,7 +103,7 @@ namespace RdfParserModule
 
         public List<ParserNode> GetRootNodes()
         {
-            var p = RdfGraph.CreateUriNode("imf:isAspectOf");
+            var p = RdfGraph.CreateUriNode(Resources.isAspectOf);
             var list = Store.GetTriplesWithPredicate(p).Select(t => t.Subject).ToList();
 
             var roots = list.Select(node => new ParserNode
@@ -116,7 +118,8 @@ namespace RdfParserModule
 
             foreach (var node in roots)
             {
-                var label = GetObjects(node.Id, "rdfs:label")[0].ToString();
+                var label = GetLabel(node.Id);
+                
                 if (label.ToLower().Contains("function"))
                 {
                     node.Label = "Function";
@@ -142,29 +145,51 @@ namespace RdfParserModule
 
         public List<INode> GetObjects(string subject, string predicate)
         {
-            var s = RdfGraph.GetUriNode(new Uri(subject));
-            var p = RdfGraph.CreateUriNode(predicate);
-            var list = Store.GetTriplesWithSubjectPredicate(s, p).Select(t => t.Object).ToList();
+            var subjectNode = GetOrCreateUriNode(subject);
+            var predicateNode = GetOrCreateUriNode(predicate);
+            return Store.GetTriplesWithSubjectPredicate(subjectNode, predicateNode).Select(triple => triple.Object).ToList();
+        }
 
-            if (list.Count is 0)
+        public List<INode> GetObjects(string subject, string[] predicates)
+        {
+            var resultList = new List<INode>();
+            foreach (var predicate in predicates)
             {
-                return null;
+                resultList.AddRange(GetObjects(subject, predicate));
+            }
+            return resultList;
+        }
+
+        private INode GetOrCreateUriNode(string iri)
+        {
+            // If the 'iri' is a qname we want to make sure it isn't passed as if it's a 'proper' Uri
+            if (!Uri.IsWellFormedUriString(iri, UriKind.RelativeOrAbsolute))
+            {
+                return RdfGraph.GetUriNode(iri) ?? RdfGraph.CreateUriNode(iri);
             }
 
+            // But if it is a URI, we want to make sure it doesn't get mistaken for a qname
+            return RdfGraph.GetUriNode(new Uri(iri)) ?? RdfGraph.CreateUriNode(new Uri(iri));
+        }
+
+        public List<INode> GetSubjects(string predicate, string obj)
+        {
+            var objectNode = GetOrCreateUriNode(obj);
+            var predicateNode = GetOrCreateUriNode(predicate);
+
+            var list = Store.GetTriplesWithPredicateObject(predicateNode, objectNode).Select(triple => triple.Subject).ToList();
             return list;
         }
 
-        public List<INode> GetSubjects(string[] predicates, string obj, bool objId = false)
+        public List<INode> GetSubjects(string[] predicates, string obj)
         {
-            var list = new List<INode>();
+            var resultList = new List<INode>();
             foreach (var predicate in predicates)
             {
-                var p = RdfGraph.CreateUriNode(predicate);
-                var o = objId ? RdfGraph.GetUriNode(new Uri(obj)) : RdfGraph.CreateUriNode(obj);
-                list.AddRange(Store.GetTriplesWithPredicateObject(p, o).Select(t => t.Subject).ToList());
+                resultList.AddRange(GetSubjects(predicate, obj));
             }
 
-            return list.Count is 0 ? null : list;
+            return resultList;
         }
 
         public void AddAspectRelation(string relation)
@@ -173,13 +198,13 @@ namespace RdfParserModule
             switch (relation)
             {
                 case "Has Location":
-                    predicate = RdfGraph.CreateUriNode("imf:hasLocation");
+                    predicate = RdfGraph.CreateUriNode(Resources.hasLocation);
                     break;
                 case "Part Of":
-                    predicate = RdfGraph.CreateUriNode("imf:hasParent");
+                    predicate = RdfGraph.CreateUriNode(Resources.hasParent);
                     break;
                 case "Fulfilled By":
-                    predicate = RdfGraph.CreateUriNode("imf:fulfilledBy");
+                    predicate = RdfGraph.CreateUriNode(Resources.fulfilledBy);
                     break;
                 default:
                     return;
@@ -227,14 +252,14 @@ namespace RdfParserModule
 
             var terminals = new List<ParserTerminal>();
 
-            var inputTerminals = GetObjects(nodeId, "imf:hasInTerminal").Select(obj => new ParserTerminal
+            var inputTerminals = GetObjects(nodeId, Resources.hasInputTerminal).Select(obj => new ParserTerminal
             {
                 Id = obj.ToString(),
                 Type = ConnectorType.Input,
                 NodeId = nodeId
             }).ToList();
 
-            var outputTerminals = GetObjects(nodeId, "imf:hasOutTerminal").Select(obj => new ParserTerminal
+            var outputTerminals = GetObjects(nodeId, Resources.hasOutputTerminal).Select(obj => new ParserTerminal
             {
                 Id = obj.ToString(),
                 Type = ConnectorType.Output,
@@ -246,12 +271,12 @@ namespace RdfParserModule
 
             foreach (var terminal in terminals)
             {
-
-                var label = GetObjects(terminal.Id, "rdfs:label");
+                
+                var label = GetLabel(terminal.Id);
 
                 if (label != null)
                 {
-                    terminal.Label = label[0].ToString();
+                    terminal.Label = label;
                     terminal.Name = terminal.Label.Replace(" Output", "").Replace(" Input", "");
 
 
@@ -261,26 +286,26 @@ namespace RdfParserModule
                         var transmitter = terminalTypes.First(node => node.ToString().Contains("Transmitter-"));
                         var categoryName = transmitter.ToString().Split("Transmitter-").Last().Split("-").First();
 
-                        var (termcatId, termTypeId) = terminal.Name.CreateCategoryIdAndTerminalTypeId(categoryName);
-                        terminal.TerminalCategoryId = termcatId;
+                        var (termCatId, termTypeId) = terminal.Name.CreateCategoryIdAndTerminalTypeId(categoryName);
+                        terminal.TerminalCategoryId = termCatId;
                         terminal.TerminalTypeId = termTypeId;
                     }
                 }
 
 
-                var connection = GetObjects(terminal.Id, "imf:connectedTo");
+                var connection = GetObjects(terminal.Id, Resources.connectedTo);
 
-                if (connection is null) continue;
+                if (connection.Count is 0) continue;
                 switch (terminal.Type)
                 {
                     case ConnectorType.Input:
                         terminal.FromConnectorId = connection.First().ToString();
-
                         break;
                     case ConnectorType.Output:
                         terminal.ToConnectorId = connection.First().ToString();
-
                         break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
             }
 
@@ -335,11 +360,10 @@ namespace RdfParserModule
                 catch
                 {
                 }
+                
+                var label = GetLabel(o.Id);
 
-                var label = GetObjects(o.Id, "rdfs:label");
-                if (label == null) continue;
-
-                o.Label = label[0].ToString();
+                o.Label = label;
                 o.Name = o.Label.Replace(" Output", "").Replace(" Input", "");
             }
 
@@ -350,10 +374,9 @@ namespace RdfParserModule
                 {
                     o.FromConnectorId = connection.First().ToString();
                 }
-                var label = GetObjects(o.Id, "rdfs:label");
 
-                if (label == null) continue;
-                o.Label = label[0].ToString();
+                var label = GetLabel(o.Id);
+                o.Label = label;
                 o.Name = o.Label.Replace(" Output", "").Replace(" Input", "");
             }
             outTerms.AddRange(inTerms);
@@ -371,7 +394,197 @@ namespace RdfParserModule
             return node;
         }
 
+        private ParserTerminal GetTransportInTerminal(string transportIri)
+        {
+            var inTerminals = GetObjects(transportIri, Resources.hasInputTerminal);
+
+            if (inTerminals.Count != 1)
+            {
+                throw new Exception("A transport should only ever have one, 1, input terminal");
+            }
+
+            var inputTerminal = inTerminals.First();
+
+            var inTerminal = new ParserTerminal
+            {
+                Id = inputTerminal.ToString(),
+                Iri = inputTerminal.ToString(),
+                Type = ConnectorType.Input
+            };
+
+            var fromConnectors = GetObjects(inTerminal.Iri, Resources.connectedTo);
+            if (fromConnectors.Count != 1)
+            {
+                throw new Exception("A terminal can only be connected to one, 1, other terminal");
+            }
+
+            var fromConnector = fromConnectors.First().ToString();
+            inTerminal.FromConnectorIri = fromConnector;
+            inTerminal.FromConnectorId = fromConnector;
+
+
+            var fromNodes = GetSubjects(Resources.hasOutputTerminal, inTerminal.FromConnectorIri);
+            if (fromNodes is null || fromNodes.Count != 1)
+            {
+                throw new Exception("A connector can only belong to one, 1, aspect object");
+            }
+
+            var fromNode = fromNodes.First().ToString();
+            inTerminal.NodeId = fromNode;
+
+            var inputTerminalLabel = GetLabel(inTerminal.Iri);
+            inTerminal.Name = inputTerminalLabel;
+            
+
+            return inTerminal;
+        }
+
+        private string GetLabel(string iri)
+        {
+            var node = RdfGraph.GetUriNode(new Uri(iri));
+            var labelPredicate = RdfGraph.CreateUriNode(Resources.label);
+
+            var labels = Store.GetTriplesWithSubjectPredicate(node, labelPredicate).Select(t => t.Object).ToList();
+
+            if (labels.Count < 1)
+            {
+                throw new Exception("There should always be at least one, 1, label");
+            }
+
+            var label = labels.First();
+            if (label is ILiteralNode l)
+            {
+                return l.Value;
+            }
+
+            throw new Exception("A label has to be a string");
+        }
+
+        private Aspect GetAspect(string iri)
+        {
+            var node = RdfGraph.GetUriNode(new Uri(iri));
+            var hasAspectPredicate = RdfGraph.CreateUriNode(Resources.hasAspect);
+
+            var aspects = Store.GetTriplesWithSubjectPredicate(node, hasAspectPredicate).Select(t => t.Object).ToList();
+
+            switch (aspects.Count)
+            {
+                case < 1:
+                    throw new Exception("There should always be at least one, 1, aspect");
+            }
+
+            var aspectNode = aspects.First();
+
+            if (aspectNode is not ILiteralNode literal) return Aspect.NotSet;
+            try
+            {
+                return Enum.Parse<Aspect>(literal.Value);
+            }
+            catch
+            {
+                return Aspect.NotSet;
+            }
+        }
+
+        private ParserTerminal GetTransportOutTerminal(string transportIri)
+        {
+            var outTerminals = GetObjects(transportIri, Resources.hasOutputTerminal);
+
+            if (outTerminals.Count != 1)
+            {
+                throw new Exception("A transport should only ever have one, 1, output terminal");
+            }
+
+            var outputTerminal = outTerminals.First();
+
+            var outTerminal = new ParserTerminal
+            {
+                Id = outputTerminal.ToString(),
+                Iri = outputTerminal.ToString(),
+                Type = ConnectorType.Output
+            };
+
+            var toConnectors = GetObjects(outTerminal.Iri, Resources.connectedTo);
+            if (toConnectors.Count != 1)
+            {
+                throw new Exception("A terminal can only be connected to one, 1, other terminal");
+            }
+
+            var toConnector = toConnectors.First().ToString();
+            outTerminal.ToConnectorIri= toConnector;
+            outTerminal.ToConnectorId = toConnector;
+
+            var toNodes = GetSubjects(Resources.hasInputTerminal, outTerminal.ToConnectorIri);
+            if (toNodes.Count != 1)
+            {
+                throw new Exception("A connector can only belong to one, 1, aspect object");
+            }
+
+            var toNode = toNodes.First().ToString();
+            outTerminal.NodeId = toNode;
+
+            var outputTerminalLabel = GetLabel(outTerminal.Iri);
+            outTerminal.Name = outputTerminalLabel;
+
+            return outTerminal;
+        }
+
         public List<ParserEdge> GetTransports()
+        {
+            var pred = new string[] { "rdf:type" };
+            var transports = GetSubjects(pred, Resources.Transport);
+
+            var transportNodes = transports.Select(transport => new ParserTransport
+            {
+                Id = transport.ToString(),
+                Iri = transport.ToString(),
+                SemanticReference = transport.ToString(),
+                IsTransport = true,
+                StatusId = "4590637F39B6BA6F39C74293BE9138DF",
+                Version = "0.0",
+                Terminals = new List<ParserTerminal>(),
+                MasterProjectId = Graph.Id
+            }).ToList();
+
+
+            var edges = new List<ParserEdge>();
+            foreach (var transport in transportNodes)
+            {
+                var inTerminal = GetTransportInTerminal(transport.Iri);
+                var outTerminal = GetTransportOutTerminal(transport.Iri);
+                
+                transport.Name = GetLabel(transport.Iri);
+                
+                transport.Aspect = GetAspect(transport.Iri);
+
+                transport.InputTerminal = inTerminal;
+                transport.InputTerminalId = inTerminal.Iri;
+
+                transport.OutputTerminal = outTerminal;
+                transport.OutputTerminalId = outTerminal.Iri;
+
+                var edge = new ParserEdge
+                {
+                    FromConnectorId = inTerminal.FromConnectorId,
+                    ToConnectorId = outTerminal.ToConnectorId,
+                    OutputTerminal = outTerminal,
+                    OutputTerminalId = outTerminal.Iri,
+                    InputTerminal = inTerminal,
+                    InputTerminalId = inTerminal.Iri,
+                    MasterProjectId = Graph.Id,
+                    Transport = transport,
+                    ToNodeId = outTerminal.NodeId,
+                    FromNodeId = inTerminal.NodeId
+                };
+
+                edges.Add(edge);
+            }
+
+            return edges;
+        }
+
+        [Obsolete]
+        public List<ParserEdge> OldGetTransports()
         {
             var pred = new string[] { "rdf:type" };
             var transports = GetSubjects(pred, "imf:Transport");
@@ -379,6 +592,7 @@ namespace RdfParserModule
             var nodes = transports.Select(node => new ParserTransport
             {
                 Id = node.ToString(),
+                Iri = node.ToString(),
                 SemanticReference = node.ToString(),
                 IsTransport = true,
                 StatusId = "4590637F39B6BA6F39C74293BE9138DF",
@@ -394,29 +608,19 @@ namespace RdfParserModule
             
             foreach (var node in nodes)
             {
-                node.Label = GetObjects(node.Id, "rdfs:label")[0].ToString();
-                node.Name = node.Label;
-                var aspect = GetObjects(node.Id, "imf:hasAspect")[0].ToString();
+                var label = GetLabel(node.Iri);
 
-                switch (aspect)
-                {
-                    case "Function":
-                        node.Aspect = Aspect.Function;
-                        break;
-                    case "Location":
-                        node.Aspect = Aspect.Location;
-                        break;
-                    case "Product":
-                        node.Aspect = Aspect.Product;
-                        break;
-                }
+                node.Label = label;
+                node.Name = label;
+                node.Aspect = GetAspect(node.Iri);
 
-                //var terms = GetTerminalsOnNode(node);
-                var terms = NewGetTerminalsOfNode(node);
+                var terms = GetTerminalsOnNode(node);
+
+
 
                 var edge = new ParserEdge()
                 {
-                    FromNodeId = node.Id,
+                    FromNodeId = node.Iri,
                     MasterProjectId = Graph.Id,
                     Transport = node
                 };
@@ -451,8 +655,7 @@ namespace RdfParserModule
                         edge.ToConnectorId = term.ToConnectorId;
 
                         var termPred = new string[] { "imf:hasTerminal", "imf:hasOutTerminal", "imf:hasInTerminal" };
-                        var toNodeList = GetSubjects(termPred, term.ToConnectorId, true);
-                        //if (toNodeList is null) continue;
+                        var toNodeList = GetSubjects(termPred, term.ToConnectorId);
                         edge.ToNodeId = toNodeList.First().ToString();
                     }
                 }
@@ -484,8 +687,9 @@ namespace RdfParserModule
 
             foreach (var node in nodes)
             {
-                node.Label = GetObjects(node.Id, "rdfs:label")[0].ToString();
-                node.Name = node.Label;
+                var label = GetLabel(node.Id);
+                node.Label = label;
+                node.Name = label;
             }
 
             return nodes;
@@ -494,8 +698,8 @@ namespace RdfParserModule
         public List<ParserNode> GetAllFunctionObjectsWithTerminals()
         {
 
-            var pred = RdfGraph.CreateUriNode("imf:hasAspect");
-            var obj = RdfGraph.CreateUriNode("imf:Function");
+            var pred = RdfGraph.CreateUriNode(Resources.hasAspect);
+            var obj = RdfGraph.CreateUriNode(Resources.Function);
 
             var subs = Store.GetTriplesWithPredicateObject(pred, obj).Select(t => t.Subject).ToList();
 
@@ -516,8 +720,9 @@ namespace RdfParserModule
             var parents = new List<ParserNode>();
             foreach (var node in nodes)
             {
-                node.Label = GetObjects(node.Id, "rdfs:label")[0].ToString();
-                node.Name = node.Label;
+                var label = GetLabel(node.Id);
+                node.Label = label;
+                node.Name = label;
 
                 var parent = GetParent(node.Id);
                 ParserNode parentNode;
@@ -535,7 +740,9 @@ namespace RdfParserModule
                         IsRoot = false,
                         Terminals = new List<ParserTerminal>(),
                         Version = "0.0",
-                        MasterProjectId = Graph.Id
+                        MasterProjectId = Graph.Id,
+                        Label = GetLabel(parent.ToString()),
+                        Name = GetLabel(parent.ToString())
                     };
 
                     parents.Add(parentNode);
