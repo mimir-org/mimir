@@ -21,6 +21,7 @@ import {
 } from "../../store/project/types";
 
 export function* getProject(action) {
+  console.log(action);
   try {
     const url = process.env.REACT_APP_API_BASE_URL + "project/" + action.payload;
     const response = yield call(get, url);

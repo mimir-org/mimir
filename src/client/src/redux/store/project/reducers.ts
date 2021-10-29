@@ -184,6 +184,22 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         },
       };
 
+    case Types.SET_EDGE_ANIMATION:
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          edges: state.project.edges.map((edge) =>
+            edge.id === action.payload.edge.id
+              ? {
+                  ...edge,
+                  animated: action.payload.animated,
+                }
+              : edge
+          ),
+        },
+      };
+
     case Types.SET_NODE_VISIBILITY: {
       const node = action.payload.node;
       const nodeList = state.project.nodes;

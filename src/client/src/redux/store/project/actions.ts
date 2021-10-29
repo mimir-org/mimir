@@ -105,6 +105,13 @@ export function setEdgeVisibility(edge: Edge, isHidden: boolean) {
   };
 }
 
+export function setEdgeAnimation(edge: Edge, animated: boolean) {
+  return {
+    type: Types.SET_EDGE_ANIMATION,
+    payload: { edge, animated },
+  };
+}
+
 export function setActiveNode(nodeId: string, isActive: boolean) {
   return {
     type: Types.SET_ACTIVE_NODE,
