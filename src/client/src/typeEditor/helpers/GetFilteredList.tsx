@@ -1,12 +1,12 @@
-import { CreateLibraryType, Discipline } from "../../models";
+import { CreateLibraryType } from "../../models";
 import { ListType } from "../TypeEditorList";
 import { GetFilteredRdsList, GetFilteredTerminalsList, GetFilteredAttributesList, GetAttributesList } from ".";
 
 const GetFilteredList = (
   listType: ListType,
   items: any,
-  createLibraryType: CreateLibraryType,
-  discipline?: Discipline
+  createLibraryType: CreateLibraryType
+  // discipline?: Discipline
 ): any[] => {
   const aspect = createLibraryType?.aspect;
   switch (listType) {
@@ -17,7 +17,7 @@ const GetFilteredList = (
     case ListType.PredefinedAttributes:
       return items;
     case ListType.ObjectAttributes:
-      return GetFilteredAttributesList(items, aspect, discipline);
+      return GetFilteredAttributesList(items, aspect);
     case ListType.LocationAttributes:
       return GetAttributesList(items, aspect);
     case ListType.SimpleTypes:
