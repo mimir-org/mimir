@@ -66,7 +66,7 @@ namespace Mb.TypeEditor.Services.Services
                     .Include(x => x.AttributeTypes)
                     .FirstOrDefaultAsync();
             }
-            
+
             if (libraryTypeComponent is InterfaceType)
             {
                 return await _libraryTypeComponentRepository.FindBy(x => x.Id == id)
@@ -95,7 +95,7 @@ namespace Mb.TypeEditor.Services.Services
         /// <returns></returns>
         public async Task<T> CreateLibraryType<T>(CreateLibraryType createLibraryType) where T : class, new()
         {
-           return await CreateLibraryType<T>(createLibraryType, false);
+            return await CreateLibraryType<T>(createLibraryType, false);
         }
 
         /// <summary>
@@ -129,8 +129,8 @@ namespace Mb.TypeEditor.Services.Services
 
             if (updateMajorVersion || updateMinorVersion)
             {
-                createLibraryType.Version = updateMajorVersion ? 
-                    existingTypeVersions[^1].Version.IncrementMajorVersion() : 
+                createLibraryType.Version = updateMajorVersion ?
+                    existingTypeVersions[^1].Version.IncrementMajorVersion() :
                     existingTypeVersions[^1].Version.IncrementMinorVersion();
 
                 createLibraryType.TypeId = existingTypeVersions[0].TypeId;
@@ -267,6 +267,43 @@ namespace Mb.TypeEditor.Services.Services
         }
 
         /// <summary>
+        /// Create simple types
+        /// </summary>
+        /// <param name="compositeTypes"></param>
+        /// <returns></returns>
+        public async Task CreateCompositeTypes(ICollection<CompositeTypeAm> compositeTypes)
+        {
+            if (compositeTypes == null || !compositeTypes.Any())
+                return;
+
+            foreach (var typeAm in compositeTypes)
+            {
+                var newType = _mapper.Map<CompositeType>(typeAm);
+                var existingType = await _compositeTypeRepository.GetAsync(newType.Id);
+
+                if (existingType != null)
+                {
+                    _compositeTypeRepository.Detach(existingType);
+                    continue;
+                }
+
+                foreach (var attribute in newType.AttributeTypes)
+                {
+                    _attributeTypeRepository.Attach(attribute, EntityState.Unchanged);
+                }
+
+                await _compositeTypeRepository.CreateAsync(newType);
+                await _compositeTypeRepository.SaveAsync();
+                _compositeTypeRepository.Detach(newType);
+
+                foreach (var attribute in newType.AttributeTypes)
+                {
+                    _attributeTypeRepository.Detach(attribute);
+                }
+            }
+        }
+
+        /// <summary>
         /// Get all simple types
         /// </summary>
         /// <returns></returns>
@@ -316,7 +353,7 @@ namespace Mb.TypeEditor.Services.Services
             {
                 if (!createNewFromExistingVersion)
                     createLibraryType.Version = "1.0";
-                
+
                 if (createLibraryType.Aspect == Aspect.Location)
                     createLibraryType.ObjectType = ObjectType.ObjectBlock;
 
@@ -363,7 +400,7 @@ namespace Mb.TypeEditor.Services.Services
                                 Console.WriteLine(e);
                                 throw;
                             }
-                            
+
 
                             if (nt.AttributeTypes != null && nt.AttributeTypes.Any())
                             {
