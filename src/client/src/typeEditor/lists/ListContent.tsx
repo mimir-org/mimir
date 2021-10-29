@@ -107,7 +107,7 @@ export const ListContent = ({ disabled, listType, items, listItems, createLibrar
                 />
               ))
             : listType === ListType.ObjectAttributes &&
-              GetFilteredList(listType, listItems, createLibraryType, discipline).map((element) => (
+              GetFilteredList(listType, listItems, createLibraryType).map((element) => (
                 <AttributeElement
                   key={element.discipline}
                   discipline={element.discipline}
