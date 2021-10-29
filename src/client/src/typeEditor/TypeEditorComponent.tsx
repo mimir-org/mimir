@@ -126,9 +126,7 @@ export const TypeEditorComponent = () => {
                 createLibraryType={state?.createLibraryType}
                 items={state?.attributes}
                 discipline={GetSelectedDiscipline(state.createLibraryType?.purpose, state?.purposes)}
-                listType={
-                  IsLocation(state?.createLibraryType.aspect) ? ListType.LocationAttributes : ListType.ObjectAttributes
-                }
+                listType={IsLocation(state?.createLibraryType.aspect) ? ListType.LocationAttributes : ListType.ObjectAttributes}
                 onChange={(key, data) => onChange(key, data)}
               />
               {IsProduct(state?.createLibraryType.aspect) && (
@@ -145,16 +143,13 @@ export const TypeEditorComponent = () => {
                   createLibraryType={state?.createLibraryType}
                   rds={GetSelectedRds(state?.createLibraryType, state.rdsList)}
                   inputTerminals={
-                    state?.createLibraryType.terminalTypes &&
-                    GetInputTerminals(state?.createLibraryType, state?.terminals)
+                    state?.createLibraryType.terminalTypes && GetInputTerminals(state?.createLibraryType, state?.terminals)
                   }
                   outputTerminals={
-                    state?.createLibraryType.terminalTypes &&
-                    GetOutputTerminals(state?.createLibraryType, state?.terminals)
+                    state?.createLibraryType.terminalTypes && GetOutputTerminals(state?.createLibraryType, state?.terminals)
                   }
                   terminal={
-                    state?.createLibraryType.terminalTypeId &&
-                    GetSelectedTerminal(state?.createLibraryType, state?.terminals)
+                    state?.createLibraryType.terminalTypeId && GetSelectedTerminal(state?.createLibraryType, state?.terminals)
                   }
                   symbol={GetSelectedIcon(state?.createLibraryType, state?.icons)}
                   // disabled={FieldValidator(state, "add")}
