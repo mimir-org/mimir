@@ -78,8 +78,8 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
       <HandleComponent
         node={node}
         nodes={nodes}
-        length={data.length}
-        width={data.width}
+        height={node.blockHeight}
+        width={node.blockWidth}
         terminals={terminals}
         parent={false}
         electro={electro}

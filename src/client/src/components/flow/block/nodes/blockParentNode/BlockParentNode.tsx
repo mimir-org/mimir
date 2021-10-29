@@ -68,8 +68,8 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         node={node}
         parent={true}
         nodes={nodes}
-        length={node?.length}
-        width={node?.width}
+        height={node?.blockHeight}
+        width={node?.blockWidth}
         terminals={terminals}
         electro={electro}
       />

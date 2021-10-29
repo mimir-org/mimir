@@ -30,7 +30,7 @@ const TerminalsMenuComponent = ({ node, parent, input, terminals, visible, onCli
         input={input}
         onBlur={onBlur}
         color={GetMenuColor(node)}
-        xPos={SetMenuXPos(parent, electro, hasActiveTerminals, node?.width)}
+        xPos={SetMenuXPos(parent, electro, hasActiveTerminals, node?.blockWidth)}
       >
         {terminals.map((conn) => (
           <TerminalsElement key={conn.id}>

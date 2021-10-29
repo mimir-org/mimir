@@ -9,7 +9,7 @@ import { ConnectorIcon } from "../../../../assets/icons/connectors";
 interface Props {
   node: Node;
   nodes: Node[];
-  length: number;
+  height: number;
   width: number;
   terminals: Connector[];
   parent: boolean;
@@ -20,7 +20,7 @@ interface Props {
  * @param interface
  * @returns a Mimir terminal in form of a Flow Handle element with an icon on top.
  */
-const HandleComponent = ({ node, nodes, length, width, terminals, parent, electro }: Props) => (
+const HandleComponent = ({ node, nodes, height, width, terminals, parent, electro }: Props) => (
   <>
     {terminals.map((conn) => {
       const [type, pos] = GetBlockHandleType(conn, node?.isSelected, false, electro);
@@ -31,7 +31,7 @@ const HandleComponent = ({ node, nodes, length, width, terminals, parent, electr
           <HandleBox
             visible={conn.visible}
             id={"handle-" + conn.id}
-            top={SetTopPos(conn, pos, electro, parent, order, length)}
+            top={SetTopPos(conn, pos, electro, parent, order, height)}
             left={SetLeftPos(conn, pos, electro, parent, order, width)}
           >
             <ConnectorIcon style={{ fill: GetTerminalColor(conn) }} className={"react-flow__handle-block"} />
