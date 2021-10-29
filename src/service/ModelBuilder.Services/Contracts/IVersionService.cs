@@ -7,11 +7,14 @@ namespace Mb.Services.Contracts
 {
     public interface IVersionService
     {
+        Task<VersionCm> GetVersion(int versionId);
         Task<IEnumerable<VersionCm>> GetVersions();
         Task<IEnumerable<VersionCm>> GetVersionTypes(string typeId);
-        Task<Project> GetVersionProject(int id);
-        Task<IEnumerable<Project>> GetVersionsProject(string typeId);
+
+        Task<Project> GetProject(int versionId);
+        Task<IEnumerable<Project>> GetProjects(string typeId);
+
         Task<VersionCm> CreateVersion(string projectId);
-        Task DeleteVersion(int id);
+        Task DeleteVersion(int versionId);
     }
 }

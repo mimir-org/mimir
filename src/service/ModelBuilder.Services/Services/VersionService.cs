@@ -32,6 +32,20 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
+        /// Returns a VersionCm
+        /// </summary>
+        /// <returns>VersionCm</returns>
+        public async Task<VersionCm> GetVersion(int versionId)
+        {
+            var version = await Task.Run(() => _versionRepository.FindBy(x => x.Id == versionId).First());
+
+            if(version == null)
+                throw new ModelBuilderInvalidOperationException($"Version with id {versionId} not found");
+
+            return _mapper.Map<VersionCm>(version);
+        }
+
+        /// <summary>
         /// Returns a list with all versions
         /// </summary>
         /// <returns>List of VersionCm</returns>
@@ -58,13 +72,13 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
-        /// Returns a Project based on the version id (param: version table 'id') 
+        /// Returns a specific version of a Project
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="versionId"></param>
         /// <returns>Project</returns>
-        public async Task<Project> GetVersionProject(int id)
+        public async Task<Project> GetProject(int versionId)
         {
-            var data = await Task.Run(() => _versionRepository.FindBy(x => x.Id == id)?.First()?.Data);
+            var data = await Task.Run(() => _versionRepository.FindBy(x => x.Id == versionId)?.First()?.Data);
 
             if (data == null)
                 throw new ModelBuilderInvalidOperationException("Version not found");
@@ -73,11 +87,11 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
-        /// Returns a list of Project. All versions of a Project (param: version table 'typeId')
+        /// Returns a Project list with all versions of a Project
         /// </summary>
         /// <param name="typeId"></param>
         /// <returns>List of Project</returns>
-        public async Task<IEnumerable<Project>> GetVersionsProject(string typeId)
+        public async Task<IEnumerable<Project>> GetProjects(string typeId)
         {
             var versions = await Task.Run(
                 () => _versionRepository.GetAll()
@@ -90,7 +104,7 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
-        /// Create a new version of an existing Project. Returns the created VersionCm (param: 'projectId')
+        /// Create a new version of an existing Project. Returns the created VersionCm
         /// </summary>
         /// <param name="projectId"></param>
         /// <returns>VersionCm</returns>
@@ -128,14 +142,14 @@ namespace Mb.Services.Services
             return _mapper.Map<VersionCm>(version);
         }
 
-         /// <summary>
-        /// Delete a version (param: id in table 'Version')
+        /// <summary>
+        /// Delete a version
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns>Status200OK</returns>
-        public async Task DeleteVersion(int id)
+        /// <param name="versionId"></param>
+        /// <returns></returns>
+        public async Task DeleteVersion(int versionId)
         {
-            await _versionRepository.Delete(id);
+            await _versionRepository.Delete(versionId);
             await _versionRepository.SaveAsync();
         }
     }
