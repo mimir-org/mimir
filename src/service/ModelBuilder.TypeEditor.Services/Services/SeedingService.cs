@@ -34,6 +34,7 @@ namespace Mb.TypeEditor.Services.Services
         public const string PredefinedAttributeFileName = "predefined_attribute";
         public const string PurposeFileName = "purpose";
         public const string SymbolFileName = "symbol";
+        public const string SimpleTypeFileName = "simple_type";
 
         private readonly IFileRepository _fileRepository;
         private readonly IEnumBaseRepository _enumBaseRepository;
@@ -43,8 +44,9 @@ namespace Mb.TypeEditor.Services.Services
         private readonly IAttributeTypeService _attributeTypeService;
         private readonly IRdsService _rdsService;
         private readonly IBlobDataService _blobDataService;
+        private readonly ILibraryTypeService _libraryTypeService;
 
-        public SeedingService(IFileRepository fileRepository, IEnumBaseRepository enumBaseRepository, IMapper mapper, ILogger<SeedingService> logger, ITerminalTypeService terminalTypeService, IAttributeTypeService attributeTypeService, IRdsService rdsService, IBlobDataService blobDataService)
+        public SeedingService(IFileRepository fileRepository, IEnumBaseRepository enumBaseRepository, IMapper mapper, ILogger<SeedingService> logger, ITerminalTypeService terminalTypeService, IAttributeTypeService attributeTypeService, IRdsService rdsService, IBlobDataService blobDataService, ILibraryTypeService libraryTypeService)
         {
             _fileRepository = fileRepository;
             _enumBaseRepository = enumBaseRepository;
@@ -53,6 +55,7 @@ namespace Mb.TypeEditor.Services.Services
             _attributeTypeService = attributeTypeService;
             _rdsService = rdsService;
             _blobDataService = blobDataService;
+            _libraryTypeService = libraryTypeService;
         }
 
         /// <summary>
@@ -89,6 +92,7 @@ namespace Mb.TypeEditor.Services.Services
                 var predefinedAttributeFiles = fileList.Where(x => x.ToLower().Equals(PredefinedAttributeFileName)).ToList();
                 var purposeFiles = fileList.Where(x => x.ToLower().Equals(PurposeFileName)).ToList();
                 var symbolFileNames = fileList.Where(x => x.ToLower().Equals(SymbolFileName)).ToList();
+                var simpleTypeFileNames = fileList.Where(x => x.ToLower().Equals(SimpleTypeFileName)).ToList();
 
                 //var libraries = _fileRepository.ReadAllFiles<LibraryType>(libraryFiles).ToList();
 
@@ -102,6 +106,7 @@ namespace Mb.TypeEditor.Services.Services
                 var buildStatuses = _fileRepository.ReadAllFiles<BuildStatus>(buildStatusFiles).ToList();
                 var typeAttributes = _fileRepository.ReadAllFiles<TypeAttribute>(typeAttributeFiles).ToList();
                 var symbols = _fileRepository.ReadAllFiles<BlobDataAm>(symbolFileNames).ToList();
+                var simpleTypes = _fileRepository.ReadAllFiles<CompositeTypeAm>(simpleTypeFileNames).ToList();
 
                 //var contractors = _fileRepository.ReadAllFiles<Contractor>(contractorFiles).ToList();
                 var attributes = _fileRepository.ReadAllFiles<CreateAttributeType>(attributeFiles).ToList();
@@ -132,6 +137,7 @@ namespace Mb.TypeEditor.Services.Services
                 await _rdsService.CreateRdsAsync(rds);
                 await _attributeTypeService.CreatePredefinedAttributes(predefinedAttributes);
                 await _blobDataService.CreateBlobData(symbols);
+                await _libraryTypeService.CreateCompositeTypes(simpleTypes);
 
             }
             catch (Exception e)

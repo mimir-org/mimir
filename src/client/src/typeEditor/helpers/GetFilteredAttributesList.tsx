@@ -1,10 +1,10 @@
-import { Aspect, Discipline } from "../../models";
+import { Aspect } from "../../models";
 
-const GetFilteredAttributesList = (attributes: any[], aspect: Aspect, discipline: Discipline): any[] => {
+const GetFilteredAttributesList = (attributes: any[], aspect: Aspect): any[] => {
   if (!attributes || attributes.length <= 0) return [] as any[];
   const attributesByAspect = attributes.filter((x) => aspect & x.aspect);
   const attributesByDiscipline = [];
-  const disciplinesArray = [...new Set(attributes.map((a) => discipline & a.discipline))];
+  const disciplinesArray = [...new Set(attributes.map((a) => a.discipline))];
   disciplinesArray.forEach((d) => {
     const dis = { discipline: d, items: [] };
     attributesByAspect.forEach((a) => {
