@@ -44,7 +44,7 @@ export const TypePreview = ({ createLibraryType, rds, terminal, inputTerminals, 
   };
 
   return (
-    <ListWrapper wide={GetWidth(ListType.Preview)} right={0}>
+    <ListWrapper hideOverflow wide={GetWidth(ListType.Preview)} right={0}>
       <ListLabel preview={true}>{GetListLabel(ListType.Preview, createLibraryType)}</ListLabel>
       <PreviewArea>
         {showObjectBlock()}
