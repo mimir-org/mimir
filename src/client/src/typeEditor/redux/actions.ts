@@ -162,3 +162,10 @@ export function changeTypeEditorInspectorVisibility(visibility: boolean) {
     payload: { visibility },
   };
 }
+
+export function changeTypeEditorInspectorTab(index: number) {
+  return {
+    type: Types.CHANGE_TYPE_EDITOR_INSPECTOR_TAB,
+    payload: { index },
+  };
+}

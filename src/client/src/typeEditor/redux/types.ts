@@ -45,6 +45,7 @@ export const SAVE_LIBRARY_TYPE_SUCCESS_OR_ERROR = "SAVE_LIBRARY_TYPE_SUCCESS_OR_
 export const DELETE_TYPE_EDITOR_ERROR = "DELETE_TYPE_EDITOR_ERROR";
 export const CHANGE_TYPE_EDITOR_INSPECTOR_HEIGHT = "CHANGE_TYPE_EDITOR_INSPECTOR_HEIGHT";
 export const CHANGE_TYPE_EDITOR_INSPECTOR_VISIBILITY = "CHANGE_TYPE_EDITOR_INSPECTOR_VISIBILITY";
+export const CHANGE_TYPE_EDITOR_INSPECTOR_TAB = "CHANGE_TYPE_EDITOR_INSPECTOR_TAB";
 
 // State types
 export interface TypeEditorState {
@@ -64,6 +65,7 @@ export interface TypeEditorState {
   inspector: {
     visibility: boolean;
     height: number;
+    activeTabIndex: number;
   };
 }
 
@@ -257,6 +259,13 @@ interface ChangeTypeEditorInspectorVisibility {
   };
 }
 
+interface ChangeTypeEditorInspectorTab {
+  type: typeof CHANGE_TYPE_EDITOR_INSPECTOR_TAB;
+  payload: {
+    index: number;
+  };
+}
+
 export type TypeEditorActionTypes =
   | FetchingInitialDataAction
   | FetchingInitialDataActionFinished
@@ -287,4 +296,5 @@ export type TypeEditorActionTypes =
   | SaveLibraryTypeFinished
   | DeleteTypeEditorErrorAction
   | ChangeTypeEditorInspectorHeight
-  | ChangeTypeEditorInspectorVisibility;
+  | ChangeTypeEditorInspectorVisibility
+  | ChangeTypeEditorInspectorTab;

@@ -10,7 +10,14 @@ import { changeInspectorHeight } from "./redux/height/actions";
 import { setModuleVisibility } from "../../redux/store/modules/actions";
 import { useCallback, useRef } from "react";
 import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store/hooks";
-import { animatedModuleSelector, explorerSelector, inspectorSelector, libOpenSelector, projectSelector } from "../../redux/store";
+import {
+  animatedModuleSelector,
+  explorerSelector,
+  inspectorActiveTabSelector,
+  inspectorSelector,
+  libOpenSelector,
+  projectSelector,
+} from "../../redux/store";
 
 interface Props {
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
@@ -25,6 +32,7 @@ const InspectorModule = ({ inspectorRef }: Props) => {
   const type = MODULE_TYPE.INSPECTOR;
   const project = useAppSelector(projectSelector);
   const animate = useParametricAppSelector(animatedModuleSelector, type);
+  const activeTabIndex = useAppSelector(inspectorActiveTabSelector);
   const inspectorOpen = useAppSelector(inspectorSelector);
   const libOpen = useAppSelector(libOpenSelector);
   const explorerOpen = useAppSelector(explorerSelector);
@@ -63,6 +71,7 @@ const InspectorModule = ({ inspectorRef }: Props) => {
         element={element}
         dispatch={dispatch}
         open={inspectorOpen}
+        activeTabIndex={activeTabIndex}
         inspectorRef={inspectorRef}
         changeInspectorVisibilityAction={changeInspectorVisibilityAction}
         changeInspectorHeightAction={changeInspectorHeight}
