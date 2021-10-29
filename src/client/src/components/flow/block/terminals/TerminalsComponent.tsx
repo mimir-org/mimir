@@ -20,7 +20,7 @@ interface Props {
 
 /**
  * Component for the terminals menu on the nodes in BlockView.
- * @param param0
+ * @param interface
  * @returns two buttons to activate two drop-down menus of input and output terminals.
  */
 const TerminalsContainerComponent = ({

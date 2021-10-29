@@ -9,8 +9,6 @@ interface Props {
 
 const Block = styled.div<Props>`
   position: absolute;
-  opacity: 1 !important;
-  z-index: 1;
   cursor: ${(props) => (props.selected ? "grab" : "pointer")};
   width: ${(props) => props.width}px;
   height: ${(props) => props.height}px;

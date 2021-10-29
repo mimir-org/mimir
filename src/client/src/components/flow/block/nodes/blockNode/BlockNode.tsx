@@ -7,7 +7,7 @@ import { GetSelectedNode, IsFunction, IsProduct } from "../../../helpers";
 import { NodeBox } from "../../../styled";
 import { TerminalsContainerComponent, HandleComponent } from "../../terminals";
 import { SetNodeWidth, SetNodeLength } from "./helpers";
-import { FilterTerminals } from "../../helpers";
+import { FilterTerminals, FindAllEdges } from "../../helpers";
 import { Symbol } from "../../../../../compLibrary/symbol";
 import { BlockNodeNameBox } from "../../styled";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
@@ -45,42 +45,46 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
 
   electro ? SetNodeWidth(terminals, data) : SetNodeLength(terminals, data);
 
-  return (
-    <>
-      <NodeBox
-        id={type + data.id}
-        product={IsProduct(data)}
-        width={data.width}
-        length={data.length}
-        onMouseOver={() => Click.OnHover(showTerminalBox)}
-        onMouseOut={() => Click.OnMouseOut(showTerminalBox)}
-      >
-        <BlockNodeNameBox>{data.label ?? data.name}</BlockNodeNameBox>
-        <Symbol base64={data.symbol} text={data.name} />
+  // Force correct z-index
+  useEffect(() => {
+    const allEdges = FindAllEdges();
+    allEdges.style.zIndex = "3";
+  }, []);
 
-        <TerminalsContainerComponent
-          node={data}
-          inputMenuOpen={inTerminalMenu}
-          outputMenuOpen={outTerminalMenu}
-          terminals={terminals}
-          parent={false}
-          electro={electro}
-          onClick={(conn) => Click.OnTerminal(conn, data, dispatch, edges)}
-          menuBox={terminalBox}
-          showInTerminalMenu={showInTerminalMenu}
-          showOutTerminalMenu={showOutTerminalMenu}
-        />
-        <HandleComponent
-          node={node}
-          nodes={nodes}
-          length={data.length}
-          width={data.width}
-          terminals={terminals}
-          parent={false}
-          electro={electro}
-        />
-      </NodeBox>
-    </>
+  return (
+    <NodeBox
+      id={type + data.id}
+      product={IsProduct(data)}
+      width={data.width}
+      length={data.length}
+      onMouseOver={() => Click.OnHover(showTerminalBox)}
+      onMouseOut={() => Click.OnMouseOut(showTerminalBox)}
+    >
+      <BlockNodeNameBox>{data.label ?? data.name}</BlockNodeNameBox>
+      <Symbol base64={data.symbol} text={data.name} />
+
+      <TerminalsContainerComponent
+        node={data}
+        inputMenuOpen={inTerminalMenu}
+        outputMenuOpen={outTerminalMenu}
+        terminals={terminals}
+        parent={false}
+        electro={electro}
+        onClick={(conn) => Click.OnTerminal(conn, data, dispatch, edges)}
+        menuBox={terminalBox}
+        showInTerminalMenu={showInTerminalMenu}
+        showOutTerminalMenu={showOutTerminalMenu}
+      />
+      <HandleComponent
+        node={node}
+        nodes={nodes}
+        length={data.length}
+        width={data.width}
+        terminals={terminals}
+        parent={false}
+        electro={electro}
+      />
+    </NodeBox>
   );
 };
 

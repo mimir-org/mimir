@@ -15,7 +15,7 @@ interface Props {
 
 /**
  * Component for the drop-down menu of terminals.
- * @param param0
+ * @param interface
  * @returns a drop-down menu with a node's input or output terminals.
  */
 const TerminalsMenuComponent = ({ node, parent, input, terminals, visible, onClick, onBlur, electro }: Props) => {

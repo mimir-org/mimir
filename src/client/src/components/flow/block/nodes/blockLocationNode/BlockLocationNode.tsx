@@ -46,31 +46,29 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   }, [node, secondaryNode, updateNodeInternals]);
 
   return (
-    <>
-      <NodeBox
-        id={"BlockLocationNode-" + data.id}
-        width={data?.width}
-        length={data?.length}
-        product={false}
-        onMouseOver={() => OnHover(showTerminalButton)}
-        onMouseOut={() => OnMouseOut(showTerminalButton)}
-      >
-        <BlockNodeNameBox>{data.label ?? data.name}</BlockNodeNameBox>
-        <Symbol base64={data.symbol} text={data.name} />
+    <NodeBox
+      id={"BlockLocationNode-" + data.id}
+      width={data?.width}
+      length={data?.length}
+      product={false}
+      onMouseOver={() => OnHover(showTerminalButton)}
+      onMouseOut={() => OnMouseOut(showTerminalButton)}
+    >
+      <BlockNodeNameBox>{data.label ?? data.name}</BlockNodeNameBox>
+      <Symbol base64={data.symbol} text={data.name} />
 
-        <TerminalsContainerComponent
-          node={data}
-          inputMenuOpen={inTerminalMenu}
-          outputMenuOpen={outTerminalMenu}
-          terminals={terminals}
-          parent={false}
-          electro={electro}
-          onClick={(conn) => OnConnectorClick(conn, data, dispatch)}
-          menuBox={terminalButton}
-          showInTerminalMenu={showInTerminalMenu}
-          showOutTerminalMenu={showOutTerminalMenu}
-        />
-      </NodeBox>
+      <TerminalsContainerComponent
+        node={data}
+        inputMenuOpen={inTerminalMenu}
+        outputMenuOpen={outTerminalMenu}
+        terminals={terminals}
+        parent={false}
+        electro={electro}
+        onClick={(conn) => OnConnectorClick(conn, data, dispatch)}
+        menuBox={terminalButton}
+        showInTerminalMenu={showInTerminalMenu}
+        showOutTerminalMenu={showOutTerminalMenu}
+      />
 
       <HandleComponent
         node={data}
@@ -81,7 +79,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
         parent={false}
         electro={electro}
       />
-    </>
+    </NodeBox>
   );
 };
 
