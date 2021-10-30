@@ -1,5 +1,4 @@
 export { default as GetBlockHandleType } from "./GetBlockHandleType";
-export { default as ShowBlockViewEdge } from "./ShowBlockViewEdge";
 export { default as IsBlockView } from "./IsBlockView";
 export { default as GetSelectedBlockNode } from "./GetSelectedBlockNode";
 export { default as OnBlockClick } from "./OnBlockClick";

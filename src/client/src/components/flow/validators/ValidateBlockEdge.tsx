@@ -2,39 +2,29 @@ import { Node, Connector } from "../../../models";
 import { IsProductTerminal, IsFunction, IsLocation, IsLocationTerminal, IsPartOf, IsProduct, IsTransport } from "../helpers";
 
 /**
- * Validator for an edge in BlockView, where different rules apply for each state.
+ * Validator for an edge in BlockView, where different rules apply for each Aspect.
  * @param activeNode
- * @param fromNode
- * @param toNode
  * @param secondaryNode
  * @param fromConnector
  * @param toConnector
  * @returns a boolean value.
  */
-const ValidateBlockEdge = (
-  activeNode: Node,
-  fromNode: Node,
-  toNode: Node,
-  secondaryNode: Node,
-  fromConnector: Connector,
-  toConnector: Connector
-) => {
+const ValidateBlockEdge = (activeNode: Node, secondaryNode: Node, fromConnector: Connector, toConnector: Connector) => {
   if (IsPartOf(fromConnector) || IsPartOf(toConnector)) return false;
-  if (!secondaryNode) return validBlockView(activeNode, fromNode, toNode, fromConnector, toConnector);
-  if (secondaryNode) return validSecondaryView(activeNode, secondaryNode, fromConnector, toConnector);
-  return false;
+  if (secondaryNode) return validSecondaryEdge(activeNode, secondaryNode, fromConnector, toConnector);
+  return validEdge(activeNode, fromConnector, toConnector);
 };
 
-function validBlockView(activeNode: Node, from: Node, to: Node, fromC: Connector, toC: Connector) {
-  if (IsLocation(activeNode)) return IsLocationTerminal(fromC) && IsLocationTerminal(toC);
-  if (IsFunction(activeNode)) return IsTransport(fromC) && IsTransport(toC);
-  if (IsProduct(activeNode)) return IsTransport(fromC) && IsTransport(toC) && IsProduct(from) && IsProduct(to);
+function validEdge(activeNode: Node, source: Connector, target: Connector) {
+  if (IsLocation(activeNode)) return IsLocationTerminal(source) && IsLocationTerminal(target);
+  if (IsFunction(activeNode)) return IsTransport(source) && IsTransport(target);
+  if (IsProduct(activeNode)) return IsTransport(source) && IsTransport(target);
 }
 
-function validSecondaryView(activeNode: Node, secondaryNode: Node, fromC: Connector, toC: Connector) {
-  if (IsLocation(secondaryNode)) return IsLocationTerminal(fromC) && IsLocationTerminal(toC);
-  if (IsProduct(secondaryNode)) return IsProductTerminal(fromC) && IsProductTerminal(toC);
-  if (IsFunction(secondaryNode)) return IsTransport(fromC) && IsTransport(toC);
+function validSecondaryEdge(activeNode: Node, secondaryNode: Node, source: Connector, target: Connector) {
+  if (IsLocation(secondaryNode)) return IsLocationTerminal(source) && IsLocationTerminal(target);
+  if (IsProduct(secondaryNode)) return IsProductTerminal(source) && IsProductTerminal(target);
+  if (IsFunction(secondaryNode)) return IsTransport(source) && IsTransport(target);
 }
 
 export default ValidateBlockEdge;
