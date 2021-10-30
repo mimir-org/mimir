@@ -69,7 +69,7 @@ export interface EdgeEvent {
   sourceId: string;
 }
 
-export enum BackgroundVariant {
-  Lines = "lines",
-  Dots = "dots",
+export interface BlockNodeSize {
+  width: number;
+  height: number;
 }

@@ -1,5 +1,5 @@
 import { Edge, Node, Project } from "../../models";
-import { MODULE_TYPE, VIEW_TYPE } from "../../models/project";
+import { BlockNodeSize, MODULE_TYPE, VIEW_TYPE } from "../../models/project";
 import { GetAttributeLikeItemKey } from "../../modules/inspector/helpers/IsType";
 import { AttributeLikeItem } from "../../modules/inspector/types";
 import { createAppSelector, combineAppSelectors, createParametricAppSelector } from "../../redux/store";
@@ -155,7 +155,7 @@ export const heightSelector = createAppSelector(
 
 export const nodeSizeSelector = createAppSelector(
   (state) => state.blockNodeSize.size,
-  (size) => size
+  (size) => size as BlockNodeSize
 );
 
 export const darkModeSelector = createAppSelector(

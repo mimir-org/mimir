@@ -6,8 +6,10 @@ import { IsProductTerminal, IsLocationTerminal, IsPartOf, IsTransport } from "..
 const GetHandleType = (conn: Connector): [HandleType, Position] => {
   if (IsInputTerminal(conn) && IsPartOf(conn)) return ["target", Position.Top];
   if (!IsInputTerminal(conn) && IsPartOf(conn)) return ["source", Position.Bottom];
+
   if (IsInputTerminal(conn) && IsTransport(conn)) return ["target", Position.Left];
   if (!IsInputTerminal(conn) && IsTransport(conn)) return ["source", Position.Right];
+
   if (IsInputTerminal(conn) && (IsLocationTerminal(conn) || IsProductTerminal(conn))) return ["target", Position.Left];
   if (!IsInputTerminal(conn) && (IsLocationTerminal(conn) || IsProductTerminal(conn))) return ["source", Position.Right];
 };

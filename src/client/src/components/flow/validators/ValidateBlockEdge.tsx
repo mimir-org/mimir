@@ -1,5 +1,5 @@
 import { Node, Connector } from "../../../models";
-import { IsProductTerminal, IsFunction, IsLocation, IsLocationTerminal, IsPartOf, IsProduct, IsTransport } from "../helpers";
+import { IsLocation, IsPartOf, IsProduct, IsTransportConnection, IsProductConnection, IsLocationConnection } from "../helpers";
 
 /**
  * Validator for an edge in BlockView, where different rules apply for each Aspect.
@@ -16,15 +16,17 @@ const ValidateBlockEdge = (activeNode: Node, secondaryNode: Node, fromConnector:
 };
 
 function validEdge(activeNode: Node, source: Connector, target: Connector) {
-  if (IsLocation(activeNode)) return IsLocationTerminal(source) && IsLocationTerminal(target);
-  if (IsFunction(activeNode)) return IsTransport(source) && IsTransport(target);
-  if (IsProduct(activeNode)) return IsTransport(source) && IsTransport(target);
+  if (IsLocation(activeNode)) return IsLocationConnection(source, target);
+  return IsTransportConnection(source, target);
 }
 
 function validSecondaryEdge(activeNode: Node, secondaryNode: Node, source: Connector, target: Connector) {
-  if (IsLocation(secondaryNode)) return IsLocationTerminal(source) && IsLocationTerminal(target);
-  if (IsProduct(secondaryNode)) return IsProductTerminal(source) && IsProductTerminal(target);
-  if (IsFunction(secondaryNode)) return IsTransport(source) && IsTransport(target);
+  if (IsLocation(secondaryNode)) return IsLocationConnection(source, target);
+  if (IsProduct(secondaryNode)) return IsProductConnection(source, target);
+
+  if (IsProduct(activeNode)) return IsProductConnection(source, target);
+  if (IsLocation(activeNode)) return IsLocationConnection(source, target);
+  return IsTransportConnection(source, target);
 }
 
 export default ValidateBlockEdge;

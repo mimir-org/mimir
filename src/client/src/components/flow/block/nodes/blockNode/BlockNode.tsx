@@ -61,7 +61,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
         parent={false}
         electro={electro}
         onClick={(conn) => Click.OnTerminal(conn, node, dispatch, edges)}
-        menuBox={terminalBox}
+        showMenuBox={terminalBox}
         showInTerminalMenu={showInTerminalMenu}
         showOutTerminalMenu={showOutTerminalMenu}
       />

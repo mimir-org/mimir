@@ -1,6 +1,7 @@
 import { Elements } from "react-flow-renderer";
 import { BuildSecondaryChildNode } from "..";
 import { Node, Edge } from "../../../../../models";
+import { BlockNodeSize } from "../../../../../models/project";
 import { IsFamily } from "../../../helpers";
 import { IsDirectChild } from "../../helpers";
 
@@ -17,15 +18,15 @@ const DrawSecondaryChildren = (
   nodes: Node[],
   secondary: Node,
   elements: Elements<any>,
-  parentNodeSize: { width: number; height: number }
+  parentNodeSize: BlockNodeSize
 ) => {
   if (secondary) {
     edges.forEach((edge) => {
       if (edge.fromNodeId === secondary.id && IsFamily(secondary, edge.toNode)) {
-        const toNode = nodes.find((n) => n.id === edge.toNodeId && IsDirectChild(n, secondary));
+        const targetNode = nodes.find((n) => n.id === edge.toNodeId && IsDirectChild(n, secondary));
         const parent = nodes.find((n) => n.id === secondary.id);
 
-        if (toNode && parent) elements.push(BuildSecondaryChildNode(toNode, parent, parentNodeSize));
+        if (targetNode && parent) elements.push(BuildSecondaryChildNode(targetNode, parent, parentNodeSize));
       }
     });
   }

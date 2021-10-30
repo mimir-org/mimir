@@ -18,7 +18,7 @@ import { GetSelectedNode } from "../../../helpers";
  */
 const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
-  const [terminalButton, showTerminalButton] = useState(false);
+  const [terminalBox, showTerminalBox] = useState(false);
   const [inTerminalMenu, showInTerminalMenu] = useState(false);
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
   const updateNodeInternals = useUpdateNodeInternals();
@@ -49,8 +49,8 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
       width={node?.width}
       length={node?.length}
       product={false}
-      onMouseOver={() => OnHover(showTerminalButton)}
-      onMouseOut={() => OnMouseOut(showTerminalButton)}
+      onMouseOver={() => OnHover(showTerminalBox)}
+      onMouseOut={() => OnMouseOut(showTerminalBox)}
     >
       <BlockNodeNameBox>{node.label ?? node.name}</BlockNodeNameBox>
       <Symbol base64={node.symbol} text={node.name} />
@@ -63,7 +63,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
         parent={false}
         electro={electro}
         onClick={(conn) => OnConnectorClick(conn, node, dispatch)}
-        menuBox={terminalButton}
+        showMenuBox={terminalBox}
         showInTerminalMenu={showInTerminalMenu}
         showOutTerminalMenu={showOutTerminalMenu}
       />
