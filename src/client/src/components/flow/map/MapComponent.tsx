@@ -7,7 +7,7 @@ import { heightSelector, inspectorSelector, libOpenSelector, useAppSelector } fr
 const MiniMapComponent = () => {
   const libOpen = useAppSelector(libOpenSelector);
   const inspectorOpen = useAppSelector(inspectorSelector);
-  let height = useAppSelector(heightSelector);
+  let height = useAppSelector(heightSelector) as number;
   if (!height) height = inspectorOpen ? Size.ModuleOpen : Size.ModuleClosed;
 
   return (

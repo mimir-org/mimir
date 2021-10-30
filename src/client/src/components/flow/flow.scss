@@ -168,6 +168,7 @@
 .dndflow .reactflow-wrapper {
   flex: 1;
   height: 100%;
+  width: 100%;
 }
 
 .react-flow__nodes {
@@ -176,6 +177,11 @@
 
 .react-flow__edge {
   cursor: grab;
+}
+
+.react-flow__renderer {
+  left: 420px;
+  top: 80px;
 }
 
 .terminals-dropdown {

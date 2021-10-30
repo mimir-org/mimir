@@ -21,35 +21,20 @@ const ValidateBlockEdge = (
 ) => {
   if (IsPartOf(fromConnector) || IsPartOf(toConnector)) return false;
   if (!secondaryNode) return validBlockView(activeNode, fromNode, toNode, fromConnector, toConnector);
-  if (secondaryNode) return validSecondaryView(activeNode, secondaryNode, fromNode, toNode, fromConnector, toConnector);
+  if (secondaryNode) return validSecondaryView(activeNode, secondaryNode, fromConnector, toConnector);
   return false;
 };
 
 function validBlockView(activeNode: Node, from: Node, to: Node, fromC: Connector, toC: Connector) {
-  if (IsLocation(activeNode)) {
-    return IsLocationTerminal(fromC) && IsLocationTerminal(toC);
-  }
-
-  if (IsFunction(activeNode)) {
-    return IsTransport(fromC) && IsTransport(toC);
-  }
-
-  if (IsProduct(activeNode)) {
-    return IsTransport(fromC) && IsTransport(toC) && IsProduct(from) && IsProduct(to);
-  }
+  if (IsLocation(activeNode)) return IsLocationTerminal(fromC) && IsLocationTerminal(toC);
+  if (IsFunction(activeNode)) return IsTransport(fromC) && IsTransport(toC);
+  if (IsProduct(activeNode)) return IsTransport(fromC) && IsTransport(toC) && IsProduct(from) && IsProduct(to);
 }
 
-function validSecondaryView(activeNode: Node, secondaryNode: Node, from: Node, to: Node, fromC: Connector, toC: Connector) {
-  if (IsLocation(secondaryNode)) {
-    return IsLocationTerminal(fromC) && IsLocationTerminal(toC);
-  }
-  if (IsProduct(secondaryNode)) {
-    return IsProductTerminal(fromC) && IsProductTerminal(toC);
-  }
-
-  if (IsFunction(secondaryNode)) {
-    return IsTransport(fromC) && IsTransport(toC);
-  }
+function validSecondaryView(activeNode: Node, secondaryNode: Node, fromC: Connector, toC: Connector) {
+  if (IsLocation(secondaryNode)) return IsLocationTerminal(fromC) && IsLocationTerminal(toC);
+  if (IsProduct(secondaryNode)) return IsProductTerminal(fromC) && IsProductTerminal(toC);
+  if (IsFunction(secondaryNode)) return IsTransport(fromC) && IsTransport(toC);
 }
 
 export default ValidateBlockEdge;

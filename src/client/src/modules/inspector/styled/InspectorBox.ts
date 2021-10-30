@@ -21,6 +21,7 @@ const InspectorBox = styled.div<Props>`
   z-index: ${(props) => props.zIndex};
   position: absolute;
   bottom: 0px;
+  background-color: ${Color.GreyInspector};
   right: ${(props) => (props.isLibraryOpen ? Size.ModuleOpen + Size.Margin : Size.ModuleClosed + Size.Margin)}px;
   left: ${(props) => (props.isExplorerOpen ? Size.ModuleOpen + Size.Margin : Size.ModuleClosed + Size.Margin)}px;
   overflow-x: auto;
