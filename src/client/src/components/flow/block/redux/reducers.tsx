@@ -13,7 +13,7 @@ export function blockNodeSizeReducer(state = initialState, action: BlockNodeSize
   if (action.type === SET_BLOCKNODE_SIZE) {
     return {
       ...state,
-      size: { width: action.payload.width, height: action.payload.length },
+      size: { width: action.payload.width, length: action.payload.length },
     };
   }
   return state;

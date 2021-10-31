@@ -113,6 +113,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
               paneMoveable={true}
               zoomOnDoubleClick={false}
               defaultZoom={0.9}
+              defaultPosition={[450, 80]}
               onClick={(e) => OnBlockClick(e, dispatch, project)}
               onlyRenderVisibleElements={true}
             >
