@@ -19,8 +19,8 @@ const GetActiveTerminals = (elements: any[], nodes: Node[]) => {
 
       const sourceNode = nodes.find((n) => n.id === edge.fromNodeId);
       const targetNode = nodes.find((n) => n.id === edge.toNodeId);
-      const sourceConn = sourceNode.connectors.find((c) => c.id === edge.fromConnectorId);
-      const targetConn = targetNode.connectors.find((c) => c.id === edge.toConnectorId);
+      const sourceConn = sourceNode?.connectors.find((c) => c.id === edge.fromConnectorId);
+      const targetConn = targetNode?.connectors.find((c) => c.id === edge.toConnectorId);
 
       activeElements.push(edge);
       activeElements.push(sourceConn);

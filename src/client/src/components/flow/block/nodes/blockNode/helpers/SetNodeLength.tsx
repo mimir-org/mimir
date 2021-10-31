@@ -1,3 +1,4 @@
+import { Size } from "../../../../../../compLibrary";
 import { Connector, Node } from "../../../../../../models";
 import { IsInputTerminal } from "../../../../helpers";
 
@@ -20,6 +21,7 @@ const SetNodeLength = (terminals: Connector[], node: Node) => {
 
   if (inTerminals > maximum) node.length = inTerminals * increaseY;
   else if (outTerminals > maximum) node.length = outTerminals * increaseY;
+  node.width = Size.Node_Width;
 };
 
 export default SetNodeLength;
