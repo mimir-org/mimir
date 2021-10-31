@@ -11,39 +11,42 @@ interface Props {
   nodes: Node[];
   edges: Edge[];
   onChange: (item: Edge) => void;
+  visible: boolean;
 }
 
-const FilterDropdown = ({ terminals, label, nodes, edges, onChange }: Props) => {
+const FilterDropdown = ({ terminals, label, nodes, edges, onChange, visible }: Props) => {
   const [listOpen, setListOpen] = useState(false);
 
   return (
-    <MenuWrapper>
-      <MenuHeader onClick={() => setListOpen(!listOpen)}>
-        <p>{label}</p>
-        <img src={listOpen ? ExpandIcon : CollapseIcon} alt="expand-icon" />
-      </MenuHeader>
-      {listOpen && (
-        <MenuList>
-          {terminals.map((conn) => {
-            const edge = edges.find((x) => x.fromConnectorId === conn.id);
-            const name = IsPartOf(conn) ? GetPartOfName(conn, nodes) : conn.name;
+    visible && (
+      <MenuWrapper>
+        <MenuHeader onClick={() => setListOpen(!listOpen)}>
+          <p>{label}</p>
+          <img src={listOpen ? ExpandIcon : CollapseIcon} alt="expand-icon" />
+        </MenuHeader>
+        {listOpen && (
+          <MenuList>
+            {terminals.map((conn) => {
+              const edge = edges.find((x) => x.fromConnectorId === conn.id);
+              const name = IsPartOf(conn) ? GetPartOfName(conn, nodes) : conn.name;
 
-            return (
-              <MenuListItem onClick={() => onChange(edge)} key={conn.id}>
-                <CheckboxWrapper>
-                  <label className={"checkbox-block"}>
-                    <input type="checkbox" checked={!edge.isHidden} onChange={() => onChange(edge)} />
-                    <span className="checkmark-block"></span>
-                  </label>
-                </CheckboxWrapper>
-                <ColorBar color={GetFilterColor(conn, nodes)} />
-                <p>{name}</p>
-              </MenuListItem>
-            );
-          })}
-        </MenuList>
-      )}
-    </MenuWrapper>
+              return (
+                <MenuListItem onClick={() => onChange(edge)} key={conn.id}>
+                  <CheckboxWrapper>
+                    <label className={"checkbox-block"}>
+                      <input type="checkbox" checked={!edge.isHidden} onChange={() => onChange(edge)} />
+                      <span className="checkmark-block"></span>
+                    </label>
+                  </CheckboxWrapper>
+                  <ColorBar color={GetFilterColor(conn, nodes)} />
+                  <p>{name}</p>
+                </MenuListItem>
+              );
+            })}
+          </MenuList>
+        )}
+      </MenuWrapper>
+    )
   );
 };
 

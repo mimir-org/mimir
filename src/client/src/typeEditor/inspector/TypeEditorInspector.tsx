@@ -18,10 +18,15 @@ import {
   terminalTypeSelector,
   animatedModuleSelector,
   simpleTypeSelector,
+  typeEditorInspectorActiveTabSelector,
 } from "../../redux/store";
 import { GetFilteredTerminalTypeExtendedList } from "../helpers";
 import { GetPropertiesHeight } from "../helpers/GetPropertiesHeight";
-import { changeTypeEditorInspectorHeight, changeTypeEditorInspectorVisibility } from "../redux/actions";
+import {
+  changeTypeEditorInspectorHeight,
+  changeTypeEditorInspectorTab,
+  changeTypeEditorInspectorVisibility,
+} from "../redux/actions";
 
 interface Props {
   createLibraryType: CreateLibraryType;
@@ -35,6 +40,7 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
   const project = useAppSelector(projectSelector);
   const animate = useParametricAppSelector(animatedModuleSelector, type);
   const inspectorOpen = useAppSelector(isTypeEditorInspectorOpen);
+  const activeTabIndex = useAppSelector(typeEditorInspectorActiveTabSelector);
   const icons = useAppSelector(iconSelector);
   const attributeTypes = useAppSelector(attributeTypeSelector);
   const terminalTypes = useAppSelector(terminalTypeSelector);
@@ -110,6 +116,7 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
         element={createLibraryType}
         dispatch={dispatch}
         open={inspectorOpen}
+        activeTabIndex={activeTabIndex}
         icons={icons}
         attributeLikeItems={attributeLikeItems}
         terminalLikeItems={terminalLikeItems}
@@ -117,6 +124,7 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
         inspectorRef={inspectorRef}
         changeInspectorVisibilityAction={changeTypeEditorInspectorVisibility}
         changeInspectorHeightAction={changeTypeEditorInspectorHeight}
+        changeInspectorTabAction={changeTypeEditorInspectorTab}
         onToggle={onToggleWrapped}
       />
     </AnimatedInspector>

@@ -2,7 +2,6 @@ import * as Click from "./handlers";
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, useUpdateNodeInternals } from "react-flow-renderer";
 import { Node } from "../../../../../models";
-import { Size } from "../../../../../compLibrary";
 import { GetSelectedNode, IsFunction, IsProduct } from "../../../helpers";
 import { NodeBox } from "../../../styled";
 import { TerminalsContainerComponent, HandleComponent } from "../../terminals";
@@ -29,58 +28,52 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const edges = useAppSelector(edgeSelector);
   const secondaryNode = useAppSelector(secondaryNodeSelector) as Node;
   const electro = useAppSelector(electroSelector);
-
   const type = IsFunction(data) ? "BlockFunctionNode-" : "BlockProductNode-";
   const node = nodes?.find((x) => x.id === data.id);
   const selectedNode = GetSelectedNode();
   const terminals = FilterTerminals(data, selectedNode, secondaryNode);
-
-  data.width = Size.Node_Width;
-  data.length = Size.Node_Height;
 
   useEffect(() => {
     updateNodeInternals(node?.id);
     updateNodeInternals(secondaryNode?.id);
   }, [node, secondaryNode, updateNodeInternals]);
 
-  electro ? SetNodeWidth(terminals, data) : SetNodeLength(terminals, data);
+  if (!node) return null;
+  electro ? SetNodeWidth(terminals, node) : SetNodeLength(terminals, node);
 
   return (
-    <>
-      <NodeBox
-        id={type + data.id}
-        product={IsProduct(data)}
-        width={data.width}
-        length={data.length}
-        onMouseOver={() => Click.OnHover(showTerminalBox)}
-        onMouseOut={() => Click.OnMouseOut(showTerminalBox)}
-      >
-        <BlockNodeNameBox>{data.label ?? data.name}</BlockNodeNameBox>
-        <Symbol base64={data.symbol} text={data.name} />
+    <NodeBox
+      id={type + node.id}
+      product={IsProduct(node)}
+      width={node.width}
+      length={node.length}
+      onMouseOver={() => Click.OnHover(showTerminalBox)}
+      onMouseOut={() => Click.OnMouseOut(showTerminalBox)}
+    >
+      <BlockNodeNameBox>{node.label ?? node.name}</BlockNodeNameBox>
+      <Symbol base64={node.symbol} text={node.name} />
 
-        <TerminalsContainerComponent
-          node={data}
-          inputMenuOpen={inTerminalMenu}
-          outputMenuOpen={outTerminalMenu}
-          terminals={terminals}
-          parent={false}
-          electro={electro}
-          onClick={(conn) => Click.OnTerminal(conn, data, dispatch, edges)}
-          menuBox={terminalBox}
-          showInTerminalMenu={showInTerminalMenu}
-          showOutTerminalMenu={showOutTerminalMenu}
-        />
-        <HandleComponent
-          node={node}
-          nodes={nodes}
-          length={data.length}
-          width={data.width}
-          terminals={terminals}
-          parent={false}
-          electro={electro}
-        />
-      </NodeBox>
-    </>
+      <TerminalsContainerComponent
+        node={node}
+        inputMenuOpen={inTerminalMenu}
+        outputMenuOpen={outTerminalMenu}
+        terminals={terminals}
+        parent={false}
+        electro={electro}
+        onClick={(conn) => Click.OnTerminal(conn, node, dispatch, edges)}
+        showMenuBox={terminalBox}
+        showInTerminalMenu={showInTerminalMenu}
+        showOutTerminalMenu={showOutTerminalMenu}
+      />
+      <HandleComponent
+        nodes={nodes}
+        length={node.length}
+        width={node.width}
+        terminals={terminals}
+        parent={false}
+        electro={electro}
+      />
+    </NodeBox>
   );
 };
 

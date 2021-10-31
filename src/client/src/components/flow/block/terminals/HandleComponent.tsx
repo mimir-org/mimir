@@ -7,7 +7,6 @@ import { CreateId, IsInputTerminal } from "../../helpers";
 import { ConnectorIcon } from "../../../../assets/icons/connectors";
 
 interface Props {
-  node: Node;
   nodes: Node[];
   length: number;
   width: number;
@@ -20,10 +19,10 @@ interface Props {
  * @param interface
  * @returns a Mimir terminal in form of a Flow Handle element with an icon on top.
  */
-const HandleComponent = ({ node, nodes, length, width, terminals, parent, electro }: Props) => (
+const HandleComponent = ({ nodes, length, width, terminals, parent, electro }: Props) => (
   <>
     {terminals.map((conn) => {
-      const [type, pos] = GetBlockHandleType(conn, node?.isSelected, false, electro);
+      const [type, pos] = GetBlockHandleType(conn, electro);
       const order = IsInputTerminal(conn) ? conn.inputOrder : conn.outputOrder;
 
       return (

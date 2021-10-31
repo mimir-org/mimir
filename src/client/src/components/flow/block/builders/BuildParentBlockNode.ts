@@ -15,9 +15,7 @@ const BuildParentBlockNode = (node: Node) => {
   SetConnectorOrder(node);
 
   const type = TextResources.Type_BlockParentNode;
-  const parentX = 400;
-  const parentY = 80;
-  const position = { x: parentX, y: parentY };
+  const position = { x: 0, y: 0 };
   node.positionBlockX = position.x;
   node.positionBlockY = position.y;
 

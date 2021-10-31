@@ -1,5 +1,4 @@
 import { Position } from "react-flow-renderer";
-import { Size } from "../../../../../compLibrary";
 import { Connector } from "../../../../../models";
 import { IsProductTerminal, IsLocationTerminal } from "../../../helpers";
 import { SetTerminalYPos } from "./";
@@ -11,19 +10,18 @@ import { SetTerminalYPos } from "./";
  * @param electro
  * @param parent
  * @param order
- * @param nodeHeight
+ * @param nodeLength
  * @returns a number used by the styled component HandleBox.
  */
-const SetTopPos = (conn: Connector, pos: Position, electro: boolean, parent: boolean, order: number, nodeHeight: number) => {
+const SetTopPos = (conn: Connector, pos: Position, electro: boolean, parent: boolean, order: number, nodeLength: number) => {
   if (!electro) {
     if (IsProductTerminal(conn) || IsLocationTerminal(conn)) return 50;
-    return SetTerminalYPos(order, parent, nodeHeight);
+    return SetTerminalYPos(order, parent, nodeLength);
   }
 
   if (pos === Position.Top && !parent) return -17;
   if (pos === Position.Top && parent) return -15;
-  if (pos === Position.Bottom && !parent) return Size.Node_Height + 3;
-  if (pos === Position.Bottom && parent) return 602;
+  if (pos === Position.Bottom) return nodeLength + 3;
 };
 
 export default SetTopPos;

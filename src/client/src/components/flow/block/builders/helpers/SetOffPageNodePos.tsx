@@ -7,7 +7,7 @@ import { Size } from "../../../../../compLibrary";
  * @returns an updated position, containing X and Y values.
  */
 const SetOffPageNodePos = (nodePos: { x: number; y: number }, parentPos: { x: number; y: number }) => {
-  const yMax = parentPos.y + Size.BlockView_Height - 50;
+  const yMax = parentPos.y + Size.BlockView_Length - 50;
   const yMin = parentPos.y + 50;
   const xPos = parentPos.x + 650;
 

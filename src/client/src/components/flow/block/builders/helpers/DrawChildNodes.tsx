@@ -1,6 +1,7 @@
 import { Elements } from "react-flow-renderer";
 import { BuildBlockNode } from "../";
 import { Node, Edge } from "../../../../../models";
+import { BlockNodeSize } from "../../../../../models/project";
 import { IsFamily, IsPartOf } from "../../../helpers";
 import { IsOffPage } from "../../helpers";
 
@@ -19,7 +20,7 @@ const DrawChildNodes = (
   selectedNode: Node,
   elements: Elements<any>,
   parentNode: Node,
-  parentNodeSize: { width: number; height: number }
+  parentNodeSize: BlockNodeSize
 ) => {
   edges.forEach((edge) => {
     if (validateEdge(edge, selectedNode)) {

@@ -5,11 +5,11 @@ import { IsInputTerminal } from "../../../../helpers";
 /**
  * Component to resize a Node in Electro view based on the amount of visual terminals.
  * @param terminals
- * @param data
- * @returns the new value for Node width
+ * @param node
  */
-const SetNodeWidth = (terminals: Connector[], data: Node) => {
+const SetNodeWidth = (terminals: Connector[], node: Node) => {
   const maximum = 5;
+  const increaseX = 30;
   let inTerminals = 0;
   let outTerminals = 0;
 
@@ -18,8 +18,10 @@ const SetNodeWidth = (terminals: Connector[], data: Node) => {
     t.visible && !IsInputTerminal(t) && outTerminals++;
   });
 
-  if (inTerminals > maximum) data.width += inTerminals * 10 + Size.Terminals_Interval;
-  else if (outTerminals > maximum) data.width += outTerminals * 10 + Size.Terminals_Interval;
+  if (inTerminals > maximum) node.width = inTerminals * increaseX;
+  if (outTerminals > maximum) node.width = outTerminals * increaseX;
+  if (inTerminals === 0 && outTerminals === 0) node.width = Size.Node_Width;
+  node.length = Size.Node_Length;
 };
 
 export default SetNodeWidth;

@@ -20,9 +20,11 @@ interface Props {
   element: InspectorElement;
   dispatch: Dispatch;
   open: boolean;
+  activeTabIndex: number;
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
   changeInspectorVisibilityAction: (visibility: boolean) => Action;
   changeInspectorHeightAction: (height: number) => Action;
+  changeInspectorTabAction?: (index: number) => Action;
   onToggle?: Function;
   attributeLikeItems?: AttributeLikeItem[];
   terminalLikeItems?: TerminalLikeItem[];
@@ -35,9 +37,11 @@ const InspectorHeader = ({
   element,
   dispatch,
   open,
+  activeTabIndex,
   inspectorRef,
   changeInspectorVisibilityAction,
   changeInspectorHeightAction,
+  changeInspectorTabAction,
   onToggle = Click.OnToggle,
   icons,
   attributeLikeItems,
@@ -53,9 +57,11 @@ const InspectorHeader = ({
       <InspectorTabs
         project={project}
         element={element}
+        activeTabIndex={activeTabIndex}
         attributeLikeItems={attributeLikeItems}
         terminalLikeItems={terminalLikeItems}
         compositeLikeItems={compositeLikeItems}
+        changeInspectorTabAction={changeInspectorTabAction}
       />
 
       {IsNode(element) && (

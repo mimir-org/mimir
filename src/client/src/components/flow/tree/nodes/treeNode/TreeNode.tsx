@@ -4,6 +4,7 @@ import { Connector, Node } from "../../../../../models";
 import { Symbol } from "../../../../../compLibrary/symbol";
 import { TreeNodeWrapper, TreeHandleBox, TreeNodeNameBox } from "./styled";
 import { GetHandleType, IsPartOf } from "../../../helpers";
+import { FindAllNodes } from "../../../block/helpers";
 
 /**
  * Component to display a node in TreeView.
@@ -13,10 +14,6 @@ import { GetHandleType, IsPartOf } from "../../../helpers";
 const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
   const [isHover, setIsHover] = useState(false);
   const [timer, setTimer] = useState(false);
-
-  const connectorIsVisible = (conn: Connector) => {
-    return IsPartOf(conn) && isHover;
-  };
 
   useEffect(() => {
     if (timer) {
@@ -30,6 +27,12 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
     }
   }, [timer]);
 
+  // Force correct z-index
+  useEffect(() => {
+    const allNodes = FindAllNodes();
+    allNodes.style.zIndex = "5";
+  }, []);
+
   const mouseNodeLeave = () => setTimer(true);
 
   return (
@@ -42,7 +45,7 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}
             key={"handle-treeview-" + conn.id}
-            visible={connectorIsVisible(conn)}
+            visible={IsPartOf(conn) && isHover}
             position={positionHandler}
           >
             <Handle type={typeHandler} position={positionHandler} id={conn.id} className="function-treeview-handler" />

@@ -124,6 +124,18 @@
   z-index: 1 !important;
 }
 
+.react-flow__edge-BlockEdgeType {
+  &:hover {
+    cursor: grab;
+  }
+
+  &.selected {
+    .react-flow__edge-path {
+      stroke: black !important;
+    }
+  }
+}
+
 // COMMON
 .react-flow__handle {
   position: absolute;
@@ -156,11 +168,7 @@
 .dndflow .reactflow-wrapper {
   flex: 1;
   height: 100%;
-}
-
-.react-flow__node {
-  opacity: 1 !important;
-  padding: 0px !important;
+  width: 100%;
 }
 
 .react-flow__nodes {
@@ -172,7 +180,7 @@
 }
 
 .terminals-dropdown {
-  z-index: 6 !important;
+  z-index: 5 !important;
 }
 
 .react-flow__edges {

@@ -349,7 +349,7 @@ namespace RdfParserModule
                             continue;
                     }
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     //TODO Check why we end up here.
                     //TODO Something about s/o being in the Store, but not in the ParserGraph
@@ -438,7 +438,7 @@ namespace RdfParserModule
 
                 return outTerms;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Console.WriteLine("Terminal error!");
                 return null;

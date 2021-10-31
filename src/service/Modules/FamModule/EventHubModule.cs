@@ -34,13 +34,11 @@ namespace EventHubModule
 
         public void CreateModule(IServiceCollection services, IConfiguration configuration)
         {
-            var connectionString = Environment.GetEnvironmentVariable("EventHubConfiguration_ConnectionString");
             var eventHubSection = configuration.GetSection(nameof(EventHubConfiguration));
             var eventHubConfiguration = new EventHubConfiguration();
             eventHubSection.Bind(eventHubConfiguration);
 
-            if (!string.IsNullOrEmpty(connectionString))
-                eventHubConfiguration.ConnectionString = connectionString.Trim();
+            UpdateFromEnvironmentVariables(eventHubConfiguration);
 
             services.AddSingleton(Options.Create(eventHubConfiguration));
             _provider = services.BuildServiceProvider();
@@ -66,6 +64,38 @@ namespace EventHubModule
                 consumer.DataReceived += ProcessData;
                 await consumer.RunAsync();
             }
+        }
+
+        private void UpdateFromEnvironmentVariables(EventHubConfiguration configuration)
+        {
+            // Producer
+            var producerConnectionString = Environment.GetEnvironmentVariable("EventHubConfiguration_ProducerConnectionString");
+            var producerEventHubName = Environment.GetEnvironmentVariable("EventHubConfiguration_ProducerEventHubName");
+
+            if (!string.IsNullOrEmpty(producerConnectionString))
+                configuration.ProducerConnectionString = producerConnectionString.Trim();
+
+            if (!string.IsNullOrEmpty(producerEventHubName))
+                configuration.ProducerEventHubName = producerEventHubName.Trim();
+
+            // Consumer
+            var consumerConnectionString = Environment.GetEnvironmentVariable("EventHubConfiguration_ConsumerConnectionString");
+            var consumerEventHubName = Environment.GetEnvironmentVariable("EventHubConfiguration_ConsumerEventHubName");
+            var consumerBlobStorageConnectionString = Environment.GetEnvironmentVariable("EventHubConfiguration_ConsumerBlobStorageConnectionString");
+            var consumerBlobContainerName = Environment.GetEnvironmentVariable("EventHubConfiguration_ConsumerBlobContainerName");
+
+            if (!string.IsNullOrEmpty(consumerConnectionString))
+                configuration.ConsumerConnectionString = consumerConnectionString.Trim();
+
+            if (!string.IsNullOrEmpty(consumerEventHubName))
+                configuration.ConsumerEventHubName = consumerEventHubName.Trim();
+
+            if (!string.IsNullOrEmpty(consumerBlobStorageConnectionString))
+                configuration.ConsumerBlobStorageConnectionString = consumerBlobStorageConnectionString.Trim();
+
+            if (!string.IsNullOrEmpty(consumerBlobContainerName))
+                configuration.ConsumerBlobContainerName = consumerBlobContainerName.Trim();
+
         }
 
         private void ProcessData(object? sender, ImfData e)

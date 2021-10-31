@@ -1,54 +1,52 @@
 import { Node, Connector } from "../../../models";
-import { IsProductTerminal, IsFunction, IsLocation, IsLocationTerminal, IsPartOf, IsProduct, IsTransport } from "../helpers";
+import {
+  IsLocation,
+  IsPartOf,
+  IsProduct,
+  IsTransportConnection,
+  IsProductConnection,
+  IsLocationConnection,
+  IsFunction,
+} from "../helpers";
 
 /**
- * Validator for an edge in BlockView, where different rules apply for each state.
+ * Validator for an edge in BlockView, where different rules apply for each Aspect.
  * @param activeNode
- * @param fromNode
- * @param toNode
  * @param secondaryNode
+ * @param toNode
+ * @param fromNode
  * @param fromConnector
  * @param toConnector
  * @returns a boolean value.
  */
 const ValidateBlockEdge = (
   activeNode: Node,
-  fromNode: Node,
-  toNode: Node,
   secondaryNode: Node,
+  toNode: Node,
+  fromNode: Node,
   fromConnector: Connector,
   toConnector: Connector
 ) => {
   if (IsPartOf(fromConnector) || IsPartOf(toConnector)) return false;
-  if (!secondaryNode) return validBlockView(activeNode, fromNode, toNode, fromConnector, toConnector);
-  if (secondaryNode) return validSecondaryView(activeNode, secondaryNode, fromNode, toNode, fromConnector, toConnector);
-  return false;
+  if (!secondaryNode) return validEdge(activeNode, toNode, fromNode, fromConnector, toConnector);
+  if (secondaryNode) return validSecondaryEdge(activeNode, secondaryNode, fromConnector, toConnector);
 };
 
-function validBlockView(activeNode: Node, from: Node, to: Node, fromC: Connector, toC: Connector) {
-  if (IsLocation(activeNode)) {
-    return IsLocationTerminal(fromC) && IsLocationTerminal(toC);
-  }
-
-  if (IsFunction(activeNode)) {
-    return IsTransport(fromC) && IsTransport(toC);
-  }
-
-  if (IsProduct(activeNode)) {
-    return IsTransport(fromC) && IsTransport(toC) && IsProduct(from) && IsProduct(to);
-  }
+function validEdge(activeNode: Node, toNode: Node, fromNode: Node, source: Connector, target: Connector) {
+  if (IsLocation(activeNode)) return IsLocationConnection(source, target) && IsLocation(toNode) && IsLocation(fromNode);
+  if (IsFunction(activeNode)) return IsTransportConnection(source, target) && IsFunction(toNode) && IsFunction(fromNode);
+  if (IsProduct(activeNode)) return IsTransportConnection(source, target);
+  return false;
 }
 
-function validSecondaryView(activeNode: Node, secondaryNode: Node, from: Node, to: Node, fromC: Connector, toC: Connector) {
-  if (IsLocation(secondaryNode)) {
-    return IsLocationTerminal(fromC) && IsLocationTerminal(toC);
-  }
-  if (IsProduct(secondaryNode)) {
-    return IsProductTerminal(fromC) && IsProductTerminal(toC);
-  }
+function validSecondaryEdge(activeNode: Node, secondaryNode: Node, source: Connector, target: Connector) {
+  if (IsLocation(secondaryNode)) return IsLocationConnection(source, target);
+  if (IsProduct(secondaryNode)) return IsProductConnection(source, target);
 
   if (IsFunction(secondaryNode)) {
-    return IsTransport(fromC) && IsTransport(toC);
+    if (IsProduct(activeNode)) return IsProductConnection(source, target);
+    if (IsLocation(activeNode)) return IsLocationConnection(source, target);
+    return IsTransportConnection(source, target);
   }
 }
 

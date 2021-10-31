@@ -1,11 +1,11 @@
 const Size = {
   // Nodes
   Node_Width: 170,
-  Node_Height: 100,
+  Node_Length: 100,
 
   // BlockView
   BlockView_Width: 1000,
-  BlockView_Height: 920,
+  BlockView_Length: 920,
 
   // Terminals
   Terminals_Interval: 25,

@@ -28,7 +28,10 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const updateNodeInternals = useUpdateNodeInternals();
   const selectedNode = GetSelectedNode();
   const node = nodes?.find((x) => x.id === data.id);
-  if (node) node.blockWidth = parentNodeSize?.width;
+  if (node) {
+    node.blockWidth = parentNodeSize?.width;
+    node.blockLength = parentNodeSize?.length;
+  }
 
   const terminals = FilterTerminals(data, selectedNode, secondaryNode);
 
@@ -49,7 +52,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         color={GetParentColor(node)}
         selected={node?.isBlockSelected}
         width={parentNodeSize?.width}
-        height={parentNodeSize?.height}
+        height={parentNodeSize?.length}
       />
 
       <TerminalsContainerComponent
@@ -60,16 +63,15 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         electro={electro}
         terminals={terminals}
         onClick={(conn) => OnConnectorClick(conn, dispatch, edges, nodes)}
-        menuBox={true}
+        showMenuBox={true}
         showInTerminalMenu={showInTerminalMenu}
         showOutTerminalMenu={showOutTerminalMenu}
       />
       <HandleComponent
-        node={node}
         parent={true}
         nodes={nodes}
-        length={node?.length}
-        width={node?.width}
+        length={node?.blockLength}
+        width={node?.blockWidth}
         terminals={terminals}
         electro={electro}
       />

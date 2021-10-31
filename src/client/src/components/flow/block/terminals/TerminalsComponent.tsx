@@ -12,7 +12,7 @@ interface Props {
   terminals: Connector[];
   parent: boolean;
   electro: boolean;
-  menuBox: boolean;
+  showMenuBox: boolean;
   showInTerminalMenu: any;
   showOutTerminalMenu: any;
   onClick: (conn: Connector) => void;
@@ -20,7 +20,7 @@ interface Props {
 
 /**
  * Component for the terminals menu on the nodes in BlockView.
- * @param param0
+ * @param interface
  * @returns two buttons to activate two drop-down menus of input and output terminals.
  */
 const TerminalsContainerComponent = ({
@@ -30,7 +30,7 @@ const TerminalsContainerComponent = ({
   terminals,
   parent,
   electro,
-  menuBox,
+  showMenuBox,
   showInTerminalMenu,
   showOutTerminalMenu,
   onClick,
@@ -40,7 +40,7 @@ const TerminalsContainerComponent = ({
 
   return (
     <>
-      <TerminalsBox visible={menuBox && !IsAspectNode(node) && inTerminals.length > 0} parent={parent} input={true}>
+      <TerminalsBox visible={showMenuBox && !IsAspectNode(node) && !!inTerminals.length} parent={parent} input={true}>
         <img
           src={GetMenuIcon(node, parent, true)}
           alt="menu"
@@ -48,7 +48,7 @@ const TerminalsContainerComponent = ({
         />
       </TerminalsBox>
 
-      <TerminalsBox visible={menuBox && !IsAspectNode(node) && outTerminals.length > 0} parent={parent} input={false}>
+      <TerminalsBox visible={showMenuBox && !IsAspectNode(node) && !!outTerminals.length} parent={parent} input={false}>
         <img
           src={GetMenuIcon(node, parent, false)}
           alt="menu"

@@ -112,6 +112,13 @@ export function setEdgeAnimation(edge: Edge, animated: boolean) {
   };
 }
 
+export function setLocationNodeSize(nodeId: string, key: string, value: number) {
+  return {
+    type: Types.SET_LOCATION_NODE_SIZE,
+    payload: { nodeId, key, value },
+  };
+}
+
 export function setActiveNode(nodeId: string, isActive: boolean) {
   return {
     type: Types.SET_ACTIVE_NODE,

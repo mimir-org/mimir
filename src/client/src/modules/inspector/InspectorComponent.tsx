@@ -1,27 +1,38 @@
 import { GetInspectorText, GetTabId, GetTabsColor } from "./helpers";
 import { InspectorContent } from ".";
 import { useCallback } from "react";
-import { makeIsInspectorTabOpenSelector, useAppDispatch, useUniqueParametricAppSelector } from "../../redux/store";
+import { useAppDispatch } from "../../redux/store";
 import { changeInspectorTab } from "./redux/tabs/actions";
 import { TabHeader, TabBody, NodeInfo, TabTitle } from "./styled";
 import { AttributeLikeItem, CompositeLikeItem, InspectorElement, TerminalLikeItem } from "./types";
 import { IsNode } from "./helpers/IsType";
+import { Action } from "redux";
 
 interface Props {
   element?: InspectorElement;
   index: number;
+  activeTabIndex: number;
   attributeLikeItems?: AttributeLikeItem[];
   terminalLikeItems?: TerminalLikeItem[];
   compositeLikeItems?: CompositeLikeItem[];
+  changeInspectorTabAction?: (index: number) => Action;
 }
 
-const InspectorComponent = ({ element, index, attributeLikeItems, terminalLikeItems, compositeLikeItems }: Props) => {
+const InspectorComponent = ({
+  element,
+  index,
+  activeTabIndex,
+  attributeLikeItems,
+  terminalLikeItems,
+  compositeLikeItems,
+  changeInspectorTabAction = changeInspectorTab,
+}: Props) => {
   const dispatch = useAppDispatch();
-  const isTabOpen = useUniqueParametricAppSelector(makeIsInspectorTabOpenSelector, index);
+  const isTabOpen = activeTabIndex === index;
 
   const onClick = useCallback(() => {
-    dispatch(changeInspectorTab(index));
-  }, [dispatch, index]);
+    dispatch(changeInspectorTabAction(index));
+  }, [dispatch, changeInspectorTabAction, index]);
 
   return (
     <>

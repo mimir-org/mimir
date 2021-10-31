@@ -3,6 +3,7 @@ import { FlowElement } from "react-flow-renderer";
 import { IsOffPage } from "../helpers";
 import { GetNodeTypeString, SetBlockNodePos, SetOffPageNodePos, SetConnectorOrder } from "./helpers";
 import { CreateId } from "../../helpers";
+import { BlockNodeSize } from "../../../../models/project";
 
 /**
  * Component to create a node in BlockView.
@@ -11,7 +12,7 @@ import { CreateId } from "../../helpers";
  * @param parentNodeSize
  * @returns a node of the type FlowElement.
  */
-const BuildBlockNode = (node: Node, parent: Node, parentNodeSize: { width: number; height: number }) => {
+const BuildBlockNode = (node: Node, parent: Node, parentNodeSize: BlockNodeSize) => {
   if (!node || !parent) return null;
   const type = GetNodeTypeString(node);
 

@@ -23,6 +23,7 @@ export const SET_EDGE_ANIMATION = "SET_EDGE_ANIMATION";
 export const SET_ACTIVE_NODE = "SET_ACTIVE_NODE";
 export const SET_ACTIVE_BLOCKNODE = "SET_ACTIVE_BLOCKNODE";
 export const SET_ACTIVE_EDGE = "SET_ACTIVE_EDGE";
+export const SET_LOCATION_NODE_SIZE = "SET_LOCATION_NODE_SIZE";
 export const CHANGE_SELECTED_PROJECT = "CHANGE_SELECTED_PROJECT";
 export const CHANGE_ALL_NODES = "CHANGE_ALL_NODES";
 export const CHANGE_NODE_PROP_VALUE = "CHANGE_NODE_PROP_VALUE";
@@ -158,6 +159,15 @@ interface SetEdgeAnimation {
   payload: {
     edge: Edge;
     animated: boolean;
+  };
+}
+
+interface SetLocationNodeSize {
+  type: typeof SET_LOCATION_NODE_SIZE;
+  payload: {
+    nodeId: string;
+    key: string;
+    value: number;
   };
 }
 
@@ -471,6 +481,7 @@ export type ProjectActionTypes =
   | SetActiveNode
   | SetActiveEdge
   | SetActiveBlockNode
+  | SetLocationNodeSize
   | SaveProjectAction
   | SaveProjectActionFinished
   | ChangeSelectedProject
