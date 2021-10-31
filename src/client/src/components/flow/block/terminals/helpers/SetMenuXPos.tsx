@@ -9,12 +9,15 @@ import { Node } from "../../../../../models";
  * @returns a numeric value.
  */
 const SetMenuXPos = (parent: boolean, electro: boolean, hasActiveTerminals: boolean, node: Node) => {
-  if (electro) return node.width + 5;
+  if (electro) {
+    if (parent) return node.blockWidth + 5;
+    return node.width + 5;
+  }
 
   if (hasActiveTerminals && !parent) return node.width + 22;
   if (hasActiveTerminals && parent) return node.blockWidth + 22;
   if (!hasActiveTerminals && !parent) return node.width + 5;
-  if (!hasActiveTerminals && parent) return node.width + 5;
+  if (!hasActiveTerminals && parent) return node.blockWidth + 5;
 };
 
 export default SetMenuXPos;

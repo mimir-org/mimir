@@ -1,4 +1,5 @@
 import { Size } from "../../../../../compLibrary";
+import { BlockNodeSize } from "../../../../../models/project";
 
 /**
  * Function to force a node to fit within the parent block in BlockView.
@@ -10,7 +11,7 @@ import { Size } from "../../../../../compLibrary";
 const SetBlockNodePos = (
   nodePos: { x: number; y: number },
   parentPos: { x: number; y: number },
-  parentNodeSize: { width: number; height: number }
+  parentNodeSize: BlockNodeSize
 ) => {
   const parentX = parentPos.x;
   const parentY = parentPos.y;
@@ -21,7 +22,7 @@ const SetBlockNodePos = (
   const xMin = parentX;
   const xMax = parentX + parentNodeSize?.width - Size.Node_Width;
   const yMin = parentY + margin;
-  const yMax = parentY + parentNodeSize?.height - Size.Node_Height;
+  const yMax = parentY + parentNodeSize?.length - Size.Node_Length;
 
   if (nodeX < xMin) nodeX = xMin + margin;
   if (nodeX > xMax) nodeX = xMax - margin;

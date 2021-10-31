@@ -4,7 +4,7 @@ export interface SetBlockNodeSize {
   type: typeof SET_BLOCKNODE_SIZE;
   payload: {
     width: number;
-    height: number;
+    length: number;
   };
 }
 

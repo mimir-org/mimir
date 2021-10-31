@@ -38,6 +38,7 @@ const TreeFilterMenu = ({ elements }: Props) => {
           label={"Animation"}
           onChange={() => OnAnimationChange(edges, dispatch)}
           isChecked={IsAnimationChecked(edges)}
+          visible={!!transportItems.length}
         />
         <FilterDropdown
           terminals={transportItems}
@@ -45,6 +46,7 @@ const TreeFilterMenu = ({ elements }: Props) => {
           nodes={nodes}
           edges={edges}
           onChange={(edge) => OnChange(edge, edges, dispatch)}
+          visible={!!transportItems.length}
         />
         <FilterDropdown
           terminals={relationItems}
@@ -52,6 +54,7 @@ const TreeFilterMenu = ({ elements }: Props) => {
           nodes={nodes}
           edges={edges}
           onChange={(edge) => OnChange(edge, edges, dispatch)}
+          visible={!!relationItems.length}
         />
         <FilterDropdown
           terminals={partOfItems}
@@ -59,6 +62,7 @@ const TreeFilterMenu = ({ elements }: Props) => {
           nodes={nodes}
           edges={edges}
           onChange={(edge) => OnChange(edge, edges, dispatch)}
+          visible={!!partOfItems.length}
         />
       </MenuColumn>
     </FilterMenuBox>

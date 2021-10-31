@@ -28,7 +28,6 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const edges = useAppSelector(edgeSelector);
   const secondaryNode = useAppSelector(secondaryNodeSelector) as Node;
   const electro = useAppSelector(electroSelector);
-
   const type = IsFunction(data) ? "BlockFunctionNode-" : "BlockProductNode-";
   const node = nodes?.find((x) => x.id === data.id);
   const selectedNode = GetSelectedNode();
@@ -39,6 +38,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
     updateNodeInternals(secondaryNode?.id);
   }, [node, secondaryNode, updateNodeInternals]);
 
+  if (!node) return null;
   electro ? SetNodeWidth(terminals, node) : SetNodeLength(terminals, node);
 
   return (
@@ -67,7 +67,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
       />
       <HandleComponent
         nodes={nodes}
-        height={node.length}
+        length={node.length}
         width={node.width}
         terminals={terminals}
         parent={false}

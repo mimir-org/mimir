@@ -22,6 +22,8 @@ const BlockComponent = ({ node, color, selected, dispatch, width, height }: Prop
     OnResize(node?.id, dispatch);
   }, [node, dispatch]);
 
+  console.log(height);
+  console.log(width);
   return (
     <Block id={"function-block-" + node?.id} selected={selected} width={width} height={height}>
       <Banner color={color}>

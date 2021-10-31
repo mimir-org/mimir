@@ -40,7 +40,7 @@ const TerminalsContainerComponent = ({
 
   return (
     <>
-      <TerminalsBox visible={showMenuBox && !IsAspectNode(node) && inTerminals.length > 0} parent={parent} input={true}>
+      <TerminalsBox visible={showMenuBox && !IsAspectNode(node) && !!inTerminals.length} parent={parent} input={true}>
         <img
           src={GetMenuIcon(node, parent, true)}
           alt="menu"
@@ -48,7 +48,7 @@ const TerminalsContainerComponent = ({
         />
       </TerminalsBox>
 
-      <TerminalsBox visible={showMenuBox && !IsAspectNode(node) && outTerminals.length > 0} parent={parent} input={false}>
+      <TerminalsBox visible={showMenuBox && !IsAspectNode(node) && !!outTerminals.length} parent={parent} input={false}>
         <img
           src={GetMenuIcon(node, parent, false)}
           alt="menu"

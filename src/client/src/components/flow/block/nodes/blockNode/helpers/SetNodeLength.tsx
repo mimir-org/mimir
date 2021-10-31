@@ -4,11 +4,12 @@ import { IsInputTerminal } from "../../../../helpers";
 /**
  * Component to resize a Node based on the amount of visual terminals.
  * @param terminals
- * @param data
+ * @param node
  * @returns the new value for Node length
  */
-const SetNodeLength = (terminals: Connector[], data: Node) => {
+const SetNodeLength = (terminals: Connector[], node: Node) => {
   const maximum = 5;
+  const increaseY = 20;
   let inTerminals = 0;
   let outTerminals = 0;
 
@@ -17,8 +18,8 @@ const SetNodeLength = (terminals: Connector[], data: Node) => {
     t.visible && !IsInputTerminal(t) && outTerminals++;
   });
 
-  if (inTerminals > maximum) data.length += inTerminals * 12;
-  else if (outTerminals > maximum) data.length += outTerminals * 12;
+  if (inTerminals > maximum) node.length = inTerminals * increaseY;
+  else if (outTerminals > maximum) node.length = outTerminals * increaseY;
 };
 
 export default SetNodeLength;

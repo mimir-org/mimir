@@ -47,6 +47,7 @@ const BlockFilterMenu = ({ elements }: Props) => {
           label={"Animation"}
           onChange={() => OnAnimationChange(edges, dispatch)}
           isChecked={IsAnimationChecked(edges)}
+          visible={!!transportItems.length}
         />
         <FilterDropdown
           terminals={transportItems}
@@ -54,6 +55,7 @@ const BlockFilterMenu = ({ elements }: Props) => {
           nodes={nodes}
           edges={edges}
           onChange={(edge) => OnChange(edge, edges, dispatch)}
+          visible={!!transportItems.length}
         />
         <FilterDropdown
           terminals={relationItems}
@@ -61,6 +63,7 @@ const BlockFilterMenu = ({ elements }: Props) => {
           nodes={nodes}
           edges={edges}
           onChange={(edge) => OnChange(edge, edges, dispatch)}
+          visible={!!relationItems.length}
         />
         <FilterTerminalDropdown
           allTerminals={allTerminals}

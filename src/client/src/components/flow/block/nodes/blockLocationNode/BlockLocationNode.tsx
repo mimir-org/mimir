@@ -70,7 +70,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
 
       <HandleComponent
         nodes={nodes}
-        height={node?.blockHeight}
+        length={node?.blockLength}
         width={node?.blockWidth}
         terminals={terminals}
         parent={false}
