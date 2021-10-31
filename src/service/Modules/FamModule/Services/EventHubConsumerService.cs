@@ -22,11 +22,11 @@ namespace EventHubModule.Services
 
         public EventHubConsumerService(IOptions<EventHubConfiguration> eventHubConfiguration)
         {
-            if (eventHubConfiguration?.Value == null || !eventHubConfiguration.Value.HasValidConsumerConfiguration())
-            {
-                _hasValidConfiguration = false;
+            _hasValidConfiguration = eventHubConfiguration?.Value != null &&
+                                     eventHubConfiguration.Value.HasValidConsumerConfiguration();
+
+            if (!_hasValidConfiguration)
                 return;
-            }
 
             var blobContainerClient = new BlobContainerClient(eventHubConfiguration?.Value?.ConsumerBlobStorageConnectionString, eventHubConfiguration?.Value?.ConsumerBlobContainerName);
             _client = new EventProcessorClient(blobContainerClient, EventHubConsumerClient.DefaultConsumerGroupName, eventHubConfiguration?.Value?.ConsumerConnectionString, eventHubConfiguration?.Value?.ConsumerEventHubName);

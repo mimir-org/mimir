@@ -120,7 +120,7 @@ namespace EventHubModule
             if(string.IsNullOrEmpty(e.Document))
                 throw new ModelBuilderModuleException("Can't process data. Document is null or empty in EventModule.");
 
-            var project = parser.DeserializeProjectAm(Encoding.ASCII.GetBytes(e.Document))?.Result;
+            //var project = parser.DeserializeProjectAm(Encoding.ASCII.GetBytes(e.Document))?.Result;
             // TODO: Send project to project service for processing.
         }
     }
