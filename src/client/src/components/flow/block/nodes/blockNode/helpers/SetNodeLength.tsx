@@ -18,8 +18,8 @@ const SetNodeLength = (terminals: Connector[], node: Node) => {
     t.visible && !IsInputTerminal(t) && outTerminals++;
   });
 
-  if (inTerminals > maximum) node.length = node.length + inTerminals * increaseY;
-  if (outTerminals > maximum) node.length = node.length + outTerminals * increaseY;
+  if (inTerminals > maximum) node.length = inTerminals * increaseY;
+  if (outTerminals > maximum) node.length = outTerminals * increaseY;
   if (inTerminals === 0 && outTerminals === 0) node.length = Size.Node_Length;
   node.width = Size.Node_Width;
 };
