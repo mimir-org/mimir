@@ -18,10 +18,17 @@ namespace EventHubModule.Services
         private readonly EventProcessorClient _client;
         private CancellationToken _cancellationToken;
         private int _failedNumber;
+        private readonly bool _hasValidConfiguration;
 
         public EventHubConsumerService(IOptions<EventHubConfiguration> eventHubConfiguration)
         {
-            var blobContainerClient = new BlobContainerClient(eventHubConfiguration?.Value?.BlobStorageConnectionString, eventHubConfiguration?.Value?.BlobContainerName);
+            if (eventHubConfiguration?.Value == null || !eventHubConfiguration.Value.HasValidConsumerConfiguration())
+            {
+                _hasValidConfiguration = false;
+                return;
+            }
+
+            var blobContainerClient = new BlobContainerClient(eventHubConfiguration?.Value?.ConsumerBlobStorageConnectionString, eventHubConfiguration?.Value?.ConsumerBlobContainerName);
             _client = new EventProcessorClient(blobContainerClient, EventHubConsumerClient.DefaultConsumerGroupName, eventHubConfiguration?.Value?.ConsumerConnectionString, eventHubConfiguration?.Value?.ConsumerEventHubName);
             _client.ProcessEventAsync += ProcessEventHandler;
             _client.ProcessErrorAsync += ProcessErrorHandler;
@@ -29,6 +36,9 @@ namespace EventHubModule.Services
 
         public async Task RunAsync(CancellationToken cancellationToken = new())
         {
+            if (!_hasValidConfiguration)
+                return;
+
             _cancellationToken = cancellationToken;
             await _client.StartProcessingAsync(_cancellationToken);
 

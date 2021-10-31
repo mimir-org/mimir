@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,13 +21,13 @@ namespace EventHubModule.Services
 
         public async Task SendDataAsync<T>(List<T> data) where T: class
         {
-            if (string.IsNullOrEmpty(_eventHubConfiguration?.ConnectionString) || string.IsNullOrEmpty(_eventHubConfiguration?.ConnectionString))
-                throw new Exception("The configuration connection or event hub name string is missing");
+            if (_eventHubConfiguration == null || !_eventHubConfiguration.HasValidProducerConfiguration())
+                return;
 
             if(data == null || !data.Any())
                 return;
 
-            await using var producer = new EventHubProducerClient(_eventHubConfiguration?.ConnectionString, _eventHubConfiguration?.EventHubName);
+            await using var producer = new EventHubProducerClient(_eventHubConfiguration?.ProducerConnectionString, _eventHubConfiguration?.ProducerEventHubName);
             using var eventBatch = await producer.CreateBatchAsync();
             foreach (var item in data)
             {
