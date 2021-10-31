@@ -148,6 +148,11 @@ export const makeIsInspectorTabOpenSelector = () =>
 
 export const inspectorTabOpenSelector = makeIsInspectorTabOpenSelector();
 
+export const inspectorActiveTabSelector = createAppSelector(
+  (state) => state.inspector.tabs,
+  (tabs) => tabs.indexOf(tabs.find((t) => t.visible))
+);
+
 export const heightSelector = createAppSelector(
   (state) => state.inspectorHeight.height,
   (width) => width
@@ -206,6 +211,11 @@ export const simpleTypeSelector = createAppSelector(
 export const isTypeEditorInspectorOpen = createAppSelector(
   (state) => state.typeEditor.inspector.visibility,
   (visibility) => visibility
+);
+
+export const typeEditorInspectorActiveTabSelector = createAppSelector(
+  (state) => state.typeEditor.inspector.activeTabIndex,
+  (activeTabIndex) => activeTabIndex
 );
 
 export const nodeSelector = createAppSelector(

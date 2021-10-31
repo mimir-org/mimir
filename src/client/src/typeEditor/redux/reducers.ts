@@ -34,6 +34,7 @@ const initialState: Types.TypeEditorState = {
   inspector: {
     visibility: false,
     height: Size.ModuleClosed,
+    activeTabIndex: null,
   },
 };
 
@@ -138,6 +139,7 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
         inspector: {
           visibility: false,
           height: Size.ModuleClosed,
+          activeTabIndex: null,
         },
       };
     case Types.FETCHING_BLOB_DATA:
@@ -195,6 +197,7 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
         inspector: {
           visibility: false,
           height: Size.ModuleClosed,
+          activeTabIndex: null,
         },
       };
     case Types.CLOSE_TYPE_EDITOR:
@@ -222,6 +225,7 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
         inspector: {
           visibility: false,
           height: Size.ModuleClosed,
+          activeTabIndex: null,
         },
       };
     case Types.UPDATE_CREATELIBRARYTYPE:
@@ -270,9 +274,7 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
         createLibraryType: {
           ...state.createLibraryType,
           terminalTypes: [
-            ...state.createLibraryType.terminalTypes.filter(
-              (terminal) => terminal.categoryId !== action.payload.categoryId
-            ),
+            ...state.createLibraryType.terminalTypes.filter((terminal) => terminal.categoryId !== action.payload.categoryId),
           ],
         },
       };
@@ -280,9 +282,7 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
       return {
         ...state,
         fetching: true,
-        apiError: state.apiError
-          ? state.apiError.filter((elem) => elem.key !== Types.SAVE_LIBRARY_TYPE)
-          : state.apiError,
+        apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== Types.SAVE_LIBRARY_TYPE) : state.apiError,
       };
     case Types.SAVE_LIBRARY_TYPE_SUCCESS_OR_ERROR:
       return {
@@ -308,6 +308,7 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
         inspector: {
           visibility: false,
           height: Size.ModuleClosed,
+          activeTabIndex: null,
         },
       };
     case Types.DELETE_TYPE_EDITOR_ERROR:
@@ -329,6 +330,14 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
         inspector: {
           ...state.inspector,
           visibility: action.payload.visibility,
+        },
+      };
+    case Types.CHANGE_TYPE_EDITOR_INSPECTOR_TAB:
+      return {
+        ...state,
+        inspector: {
+          ...state.inspector,
+          activeTabIndex: action.payload.index,
         },
       };
     default:
