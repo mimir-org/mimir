@@ -4,7 +4,7 @@ import { Connector, Node } from "../../../../../models";
 import { Symbol } from "../../../../../compLibrary/symbol";
 import { TreeNodeWrapper, TreeHandleBox, TreeNodeNameBox } from "./styled";
 import { GetHandleType, IsPartOf } from "../../../helpers";
-import { FindAllEdges } from "../../../block/helpers";
+import { FindAllNodes } from "../../../block/helpers";
 
 /**
  * Component to display a node in TreeView.
@@ -29,8 +29,8 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
 
   // Force correct z-index
   useEffect(() => {
-    const allEdges = FindAllEdges();
-    allEdges.style.zIndex = "2";
+    const allNodes = FindAllNodes();
+    allNodes.style.zIndex = "5";
   }, []);
 
   const mouseNodeLeave = () => setTimer(true);
