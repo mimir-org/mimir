@@ -13,6 +13,7 @@ import { Size } from "../../../compLibrary";
  */
 const ConvertToNode = (data: LibItem, position, projectId: string, icons: BlobData[], user: User) => {
   const now = GetDateNowUtc();
+
   return new Node({
     id: CreateId(),
     rds: data.rds,

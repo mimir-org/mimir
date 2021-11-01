@@ -109,8 +109,8 @@ const FlowTree = ({ inspectorRef }: Props) => {
         onElementClick={OnElementClick}
         nodeTypes={Helpers.GetNodeTypes}
         edgeTypes={Helpers.GetEdgeTypes}
-        defaultZoom={0.9}
-        defaultPosition={[300, 90]}
+        defaultZoom={0.7}
+        defaultPosition={[800, 100]}
         zoomOnDoubleClick={false}
         onClick={(e) => OnTreeClick(e, dispatch, project, inspectorRef)}
       >

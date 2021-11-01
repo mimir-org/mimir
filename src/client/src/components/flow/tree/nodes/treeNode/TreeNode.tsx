@@ -1,10 +1,10 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
 import { Connector, Node } from "../../../../../models";
-import { Symbol } from "../../../../../compLibrary/symbol";
-import { TreeNodeWrapper, TreeHandleBox, TreeNodeNameBox, LogoBox, SymbolBox } from "./styled";
-import { GetCompanyLogo, GetHandleType, IsPartOf } from "../../../helpers";
+import { TreeNodeWrapper, TreeHandleBox } from "./styled";
+import { GetHandleType, IsPartOf } from "../../../helpers";
 import { FindAllNodes } from "../../../block/helpers";
+import { TreeLogoComponent } from "../../logo";
 
 /**
  * Component to display a node in TreeView.
@@ -52,13 +52,7 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
           </TreeHandleBox>
         );
       })}
-      <TreeNodeNameBox>{data.label ?? data.name}</TreeNodeNameBox>
-      <LogoBox>
-        <img src={GetCompanyLogo("Equinor")} alt="logo" className="logo" />
-      </LogoBox>
-      <SymbolBox>
-        <Symbol base64={data.symbol} text={data.name} />
-      </SymbolBox>
+      <TreeLogoComponent node={data} />
     </TreeNodeWrapper>
   );
 };
