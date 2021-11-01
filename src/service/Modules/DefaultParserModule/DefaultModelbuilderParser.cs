@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -29,9 +30,12 @@ namespace DefaultParserModule
             return null;
         }
 
-        public string GetName()
+        public ModuleDescription GetModuleDescription()
         {
-            return "Default";
+            return new ModuleDescription
+            {
+                Id = new Guid("5BA4A44C-8E06-49ED-8EE4-CD88FDB78C67"), Name = "Mimir JSON"
+            };
         }
 
         public FileFormat GetFileFormat()

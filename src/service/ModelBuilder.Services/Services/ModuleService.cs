@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Mb.Models.Abstract;
+using Mb.Models.Data;
 using Mb.Models.Enums;
 using Mb.Models.Exceptions;
 using Mb.Services.Contracts;
@@ -31,12 +32,12 @@ namespace Mb.Services.Services
             return Task.CompletedTask;
         }
 
-        public T Resolve<T>(string name) where T : IModuleInterface
+        public T Resolve<T>(Guid id) where T : IModuleInterface
         {
-            if (string.IsNullOrEmpty(name))
-                throw new ModelBuilderModuleException("Module name is required");
+            if (id == Guid.Empty)
+                throw new ModelBuilderModuleException("Module id is required");
 
-            var instance = Modules.FirstOrDefault(x => string.Equals(x.Name, name, StringComparison.CurrentCultureIgnoreCase))?.Instance;
+            var instance = Modules.FirstOrDefault(x => string.Equals(x.ModuleDescription.Id.ToString(), id.ToString(), StringComparison.CurrentCultureIgnoreCase))?.Instance;
             if (instance is T obj)
             {
                 return obj;
@@ -64,7 +65,7 @@ namespace Mb.Services.Services
                 
                 data.Add(new Models.Application.Module
                 {
-                    Name = obj.GetName() ?? Guid.NewGuid().ToString(),
+                    ModuleDescription = obj.GetModuleDescription() ?? new ModuleDescription {Id = Guid.Empty, Name = "Missing description"},
                     Instance = obj,
                     ModuleType = moduleType
                 });

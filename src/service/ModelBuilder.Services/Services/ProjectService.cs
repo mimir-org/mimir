@@ -481,16 +481,16 @@ namespace Mb.Services.Services
         /// Create a json byte array based on project id
         /// </summary>
         /// <param name="projectId"></param>
-        /// <param name="parser"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<(byte[] file, FileFormat format)> CreateFile(string projectId, string parser)
+        public async Task<(byte[] file, FileFormat format)> CreateFile(string projectId, Guid id)
         {
             var project = await GetProject(projectId);
 
-            if (_moduleService.Modules.All(x => !string.Equals(x.Name, parser, StringComparison.CurrentCultureIgnoreCase)))
-                throw new ModelBuilderModuleException($"There is no parser with key: {parser}");
+            if (_moduleService.Modules.All(x => x.ModuleDescription != null && x.ModuleDescription.Id != Guid.Empty && !string.Equals(x.ModuleDescription.Id.ToString(), id.ToString(), StringComparison.CurrentCultureIgnoreCase)))
+                throw new ModelBuilderModuleException($"There is no parser with id: {id}");
 
-            var par = _moduleService.Resolve<IModelBuilderParser>(parser);
+            var par = _moduleService.Resolve<IModelBuilderParser>(id);
             var data = await par.SerializeProject(project);
             return (data, par.GetFileFormat());
         }
@@ -500,17 +500,17 @@ namespace Mb.Services.Services
         /// </summary>
         /// <param name="file"></param>
         /// <param name="cancellationToken"></param>
-        /// <param name="parser"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<Project> CreateFromFile(IFormFile file, CancellationToken cancellationToken, string parser)
+        public async Task<Project> CreateFromFile(IFormFile file, CancellationToken cancellationToken, Guid id)
         {
             await using var stream = new MemoryStream();
             await file.CopyToAsync(stream, cancellationToken);
 
-            if (_moduleService.Modules.All(x => !string.Equals(x.Name, parser, StringComparison.CurrentCultureIgnoreCase)))
-                throw new ModelBuilderModuleException($"There is no parser with key: {parser}");
+            if (_moduleService.Modules.All(x => x.ModuleDescription != null && x.ModuleDescription.Id != Guid.Empty && !string.Equals(x.ModuleDescription.Id.ToString(), id.ToString(), StringComparison.CurrentCultureIgnoreCase)))
+                throw new ModelBuilderModuleException($"There is no parser with key: {id}");
 
-            var par = _moduleService.Resolve<IModelBuilderParser>(parser);
+            var par = _moduleService.Resolve<IModelBuilderParser>(id);
             var project = await par.DeserializeProjectAm(stream.ToArray());
             return await ImportProject(project);
         }
@@ -622,15 +622,15 @@ namespace Mb.Services.Services
             if (string.IsNullOrWhiteSpace(package?.ProjectId))
                 throw new ModelBuilderNullReferenceException("Can't commit a null reference commit package");
 
-            if (_moduleService.Modules.All(x => !string.Equals(x.Name, package.Parser, StringComparison.CurrentCultureIgnoreCase)))
+            if (_moduleService.Modules.All(x =>x.ModuleDescription != null && x.ModuleDescription.Id != Guid.Empty && !string.Equals(x.ModuleDescription.Id.ToString(), package.Parser, StringComparison.CurrentCultureIgnoreCase)))
                 throw new ModelBuilderModuleException($"There is no parser with key: {package.Parser}");
 
             var senders = _moduleService.Modules.Where(x => x.Instance is IModelBuilderSyncService).ToList();
 
             if (!senders.Any())
-                throw new ModelBuilderModuleException($"There is no sender module");
+                throw new ModelBuilderModuleException("There is no sender module");
 
-            var parser = _moduleService.Resolve<IModelBuilderParser>(package.Parser);
+            var parser = _moduleService.Resolve<IModelBuilderParser>(new Guid(package.Parser));
 
             var project = await GetProject(package.ProjectId);
             var data = await parser.SerializeProject(project);
@@ -656,6 +656,17 @@ namespace Mb.Services.Services
                     await SetProjectCommitVersion(project.Id);
                 }
             }
+        }
+
+        /// <summary>
+        /// Check if project exists
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns></returns>
+        public async Task<bool> ProjectExist(string projectId)
+        {
+            var project = await _projectRepository.GetAsync(projectId);
+            return project != null;
         }
 
         #region Private methods
