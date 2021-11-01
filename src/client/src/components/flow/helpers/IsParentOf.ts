@@ -10,7 +10,7 @@ import red from "../../../redux/store";
  */
 const IsParentOf = (parentNode: Node, childNode: Node) => {
   const edges = red.store.getState().projectState.project.edges as Edge[];
-  const edge = edges.find((e) => e.toNode.id === childNode?.id && e.fromNode.id === parentNode?.id);
+  const edge = edges?.find((e) => e.toNode?.id === childNode?.id && e.fromNode?.id === parentNode?.id);
 
   return edge && IsPartOf(edge.fromConnector);
 };

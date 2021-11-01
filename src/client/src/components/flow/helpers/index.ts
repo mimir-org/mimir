@@ -39,5 +39,7 @@ export { default as GetSelectedBlockNode } from "./GetSelectedBlockNode";
 export { GetOtherNodeFromEdgeViaConnector, GetOtherNodeFromEdgeViaNode } from "./GetOtherNodeFromEdge";
 export { default as GetDateNowUtc } from "./GetDateNowUtc";
 
+export { default as GetCompanyLogo } from "./GetCompanyLogo";
+
 export * from "./SetSiblingRDS";
 export * from "./types";

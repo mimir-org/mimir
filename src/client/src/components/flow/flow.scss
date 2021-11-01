@@ -6,8 +6,8 @@
 .react-flow__node-Product,
 .react-flow__node-Location {
   border-radius: 10px;
-  width: 120px;
-  height: 75px;
+  width: 170px;
+  height: 100px;
   font-size: 11px;
   color: #222;
   text-align: center;
@@ -110,6 +110,13 @@
     border-color: #069098 !important;
     box-shadow: none;
   }
+}
+
+.react-flow__node-BlockOffPageNode {
+  width: 19px;
+  height: 13px;
+  background-color: transparent;
+  z-index: 5 !important;
 }
 
 .react-flow__node-BlockParentNode {

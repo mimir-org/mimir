@@ -15,14 +15,15 @@ const SetBlockNodePos = (
 ) => {
   const parentX = parentPos.x;
   const parentY = parentPos.y;
-  let nodeY = nodePos.y;
-  let nodeX = nodePos.x;
   const margin = 20;
 
   const xMin = parentX;
   const xMax = parentX + parentNodeSize?.width - Size.Node_Width;
   const yMin = parentY + margin;
   const yMax = parentY + parentNodeSize?.length - Size.Node_Length;
+
+  let nodeY = nodePos.y;
+  let nodeX = nodePos.x;
 
   if (nodeX < xMin) nodeX = xMin + margin;
   if (nodeX > xMax) nodeX = xMax - margin;
