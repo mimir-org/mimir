@@ -7,6 +7,7 @@ using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage.Blobs;
 using EventHubModule.Contracts;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
@@ -20,10 +21,9 @@ namespace EventHubModule.Services
         private int _failedNumber;
         private readonly bool _hasValidConfiguration;
 
-        public EventHubConsumerService(IOptions<EventHubConfiguration> eventHubConfiguration)
+        public EventHubConsumerService(IOptions<EventHubConfiguration> eventHubConfiguration, ILogger<EventHubConsumerService<T>> logger)
         {
-            _hasValidConfiguration = eventHubConfiguration?.Value != null &&
-                                     eventHubConfiguration.Value.HasValidConsumerConfiguration();
+            _hasValidConfiguration = eventHubConfiguration?.Value != null && eventHubConfiguration.Value.HasValidConsumerConfiguration();
 
             if (!_hasValidConfiguration)
                 return;
