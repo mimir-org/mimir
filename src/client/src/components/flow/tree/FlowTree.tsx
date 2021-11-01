@@ -10,7 +10,6 @@ import { GetParent, GetSelectedNode, SetDarkModeColor } from "../helpers";
 import { BuildTreeElements } from "../tree/builders";
 import { setModuleVisibility } from "../../../redux/store/modules/actions";
 import { MODULE_TYPE } from "../../../models/project";
-import { getBlobData } from "../../../typeEditor/redux/actions";
 import { SetPanelHeight } from "../../../modules/inspector/helpers";
 import { updatePosition, setActiveNode, setActiveEdge, setActiveBlockNode } from "../../../redux/store/project/actions";
 import { changeInspectorHeight } from "../../../modules/inspector/redux/height/actions";
@@ -96,11 +95,6 @@ const FlowTree = ({ inspectorRef }: Props) => {
     SetDarkModeColor(darkMode);
     OnLoad(flowInstance);
   }, [OnLoad, flowInstance, darkMode]);
-
-  // Get symbols from TypeEditor
-  useEffect(() => {
-    dispatch(getBlobData());
-  }, [dispatch]);
 
   return (
     <>
