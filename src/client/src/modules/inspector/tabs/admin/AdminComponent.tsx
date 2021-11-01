@@ -2,12 +2,13 @@ import { GetInspectorText, GetTabsColor } from "../../helpers";
 import { useCallback } from "react";
 import { Project } from "../../../../models";
 import { changeInspectorTab } from "../../redux/tabs/actions";
-import { TabHeader, TabBody, TabTitle } from "../../styled";
+import { TabHeader, TabBody, TabTitle, AdminInfoLogoBox } from "../../styled";
 import { InspectorElement } from "../../types";
 import { GetAdminContent } from "./GetAdminContent";
 import { statusSelector } from "../../../../redux/store";
 import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
 import { Action } from "redux";
+import { AibelLogo } from "../../../../assets/icons/aibel";
 
 interface Props {
   element: InspectorElement;
@@ -34,6 +35,9 @@ const AdminComponent = ({ element, project, index, activeTabIndex, changeInspect
 
       {isTabOpen && (
         <TabBody id="admininfo">
+          <AdminInfoLogoBox>
+            <img src={AibelLogo} alt="logo" className="logo" />
+          </AdminInfoLogoBox>
           <hr />
           {element && <div className="container">{GetAdminContent(element, project, statuses)}</div>}
         </TabBody>

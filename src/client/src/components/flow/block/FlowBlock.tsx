@@ -11,7 +11,6 @@ import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { BlockFilterMenu } from "../../menus/filterMenu/block";
 import { Node } from "../../../models";
 import { ExplorerModule } from "../../../modules/explorer";
-import { MapComponent } from "../map";
 import {
   darkModeSelector,
   iconSelector,
@@ -126,7 +125,6 @@ const FlowBlock = ({ inspectorRef }: Props) => {
           onlyRenderVisibleElements={true}
         >
           <Background />
-          <MapComponent />
           <FullScreenComponent inspectorRef={inspectorRef} />
         </ReactFlow>
 
