@@ -13,6 +13,11 @@ const Menu = styled.div`
     text-decoration: underline;
     cursor: pointer;
   }
+
+  .hide-link {
+    cursor: default;
+    visibility: hidden;
+  }
 `;
 
 export default Menu;

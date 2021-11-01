@@ -16,6 +16,7 @@ namespace Mb.TypeEditor.Services.Contracts
         Task DeleteType(string id);
         Task<CreateLibraryType> ConvertToCreateLibraryType(string id, LibraryFilter filter);
         Task<CompositeType> CreateCompositeType(CompositeTypeAm compositeType);
+        Task CreateCompositeTypes(ICollection<CompositeTypeAm> compositeTypes);
         IEnumerable<CompositeType> GetCompositeTypes();
     }
 }

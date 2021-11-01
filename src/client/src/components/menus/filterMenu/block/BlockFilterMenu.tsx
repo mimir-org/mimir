@@ -1,16 +1,18 @@
 import { useAppDispatch, useAppSelector } from "../../../../redux/store";
 import { Connector } from "../../../../models";
 import { FilterMenuBox, MenuColumn } from "../../../../compLibrary/box/menus";
+import { FilterElement } from "../";
 import { IsLibrary } from "../../../flow/helpers";
 import { FilterDropdown, FilterTerminalDropdown } from "../dropdown";
 import { TextResources } from "../../../../assets/text";
-import { OnChange } from "../handlers";
+import { OnAnimationChange, OnChange } from "../handlers";
 import {
   GetActiveTerminals,
   GetAllTerminals,
   GetEdges,
   GetInactiveTerminals,
   GetNodes,
+  IsAnimationChecked,
   PopulateFilterLists,
 } from "../helpers";
 
@@ -41,12 +43,19 @@ const BlockFilterMenu = ({ elements }: Props) => {
   return (
     <FilterMenuBox libraryOpen={libOpen}>
       <MenuColumn>
+        <FilterElement
+          label={"Animation"}
+          onChange={() => OnAnimationChange(edges, dispatch)}
+          isChecked={IsAnimationChecked(edges)}
+          visible={!!transportItems.length}
+        />
         <FilterDropdown
           terminals={transportItems}
           label={transportLabel}
           nodes={nodes}
           edges={edges}
           onChange={(edge) => OnChange(edge, edges, dispatch)}
+          visible={!!transportItems.length}
         />
         <FilterDropdown
           terminals={relationItems}
@@ -54,6 +63,7 @@ const BlockFilterMenu = ({ elements }: Props) => {
           nodes={nodes}
           edges={edges}
           onChange={(edge) => OnChange(edge, edges, dispatch)}
+          visible={!!relationItems.length}
         />
         <FilterTerminalDropdown
           allTerminals={allTerminals}

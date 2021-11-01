@@ -37,21 +37,19 @@ class Node {
   attributes: Attribute[];
   composites: Composite[];
 
-  // Only for location aspect
   length: number;
   width: number;
-  height: number;
+  height: number; // Only for location aspect
 
   // Required only for product aspect
   cost: number;
-
-  // TODO: fix
-  connectNodes: Node[];
 
   // Only for client
   isSelected: boolean | false;
   isBlockSelected: boolean | false;
   isHidden: boolean | false;
+  blockWidth: number;
+  blockLength: number;
 
   kind: string = NODE_KIND;
 

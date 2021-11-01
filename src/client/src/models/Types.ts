@@ -79,6 +79,7 @@ export interface TerminalType {
   terminalCategoryId: string;
   terminalCategory: EnumBase;
   semanticReference: string;
+  attributes: AttributeType[];
 }
 
 export interface TerminalTypeItem {
@@ -88,6 +89,19 @@ export interface TerminalTypeItem {
   connectorType: ConnectorType;
   number: number;
   categoryId: string;
+}
+
+export interface TerminalTypeExtended extends TerminalType {
+  type: ConnectorType;
+  terminalTypeId: string;
+  number: number;
+}
+
+export type TerminalTypeDict = TerminalTypeDictItem[];
+
+export interface TerminalTypeDictItem {
+  key: string;
+  value: TerminalType[];
 }
 
 export interface Purpose {
@@ -112,23 +126,6 @@ export interface LocationType {
   locationSubTypes: LocationType[];
 }
 
-export interface CreateLibraryType {
-  libraryId: string;
-  name: string;
-  aspect: Aspect;
-  objectType: ObjectType;
-  purpose: string;
-  semanticReference: string;
-  rdsId: string;
-  terminalTypes: TerminalTypeItem[];
-  attributeTypes: string[];
-  locationType: string;
-  predefinedAttributes: PredefinedAttribute[];
-  terminalTypeId: string;
-  symbolId: string;
-  compositeTypes: string[];
-}
-
 export interface User {
   username: string;
   name: string;
@@ -147,11 +144,18 @@ export interface BlobData {
   discipline: Discipline;
 }
 
-export interface CompositeType {
+export interface CompositeTypeResponse {
   id: string;
   name: string;
   semanticReference: string;
   attributeTypes: AttributeType[];
+}
+
+export interface CompositeType {
+  id: string;
+  name: string;
+  semanticReference: string;
+  attributes: AttributeType[];
 }
 
 export interface CommitPackage {

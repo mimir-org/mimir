@@ -6,6 +6,7 @@ import { BuildTreeEdge, BuildTreeNode } from "../tree/builders";
 import { BlobData, LibItem, Project, GetFileData, User, Node } from "../../../models";
 import { LibraryState } from "../../../redux/store/library/types";
 import { BuildBlockNode } from "../block/builders";
+import { Size } from "../../../compLibrary";
 import {
   CreateId,
   GetSelectedNode,
@@ -86,7 +87,9 @@ const useOnDrop = (
     });
 
     IsBlockView()
-      ? setElements((es) => es.concat(BuildBlockNode(targetNode, null, project.nodes, parentNode)))
+      ? setElements((es) =>
+          es.concat(BuildBlockNode(targetNode, parentNode, { width: Size.Node_Width, length: Size.Node_Length }))
+        )
       : setElements((es) => es.concat(BuildTreeNode(targetNode)));
 
     if (sourceNode && IsFamily(sourceNode, targetNode)) {

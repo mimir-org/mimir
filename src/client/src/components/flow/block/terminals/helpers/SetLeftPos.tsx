@@ -1,6 +1,5 @@
 import { Position } from "react-flow-renderer";
 import { SetTerminalXPos } from ".";
-import { Size } from "../../../../../compLibrary";
 import { Connector } from "../../../../../models";
 import { IsLocationTerminal, IsProductTerminal } from "../../../helpers";
 
@@ -12,27 +11,17 @@ import { IsLocationTerminal, IsProductTerminal } from "../../../helpers";
  * @param parent
  * @param order
  * @param nodeWidth
- * @param mainConnectNode
  * @returns a number used by the styled component HandleBox.
  */
-const SetLeftPos = (
-  conn: Connector,
-  pos: Position,
-  electro: boolean,
-  parent: boolean,
-  order: number,
-  nodeWidth: number,
-  mainConnectNode: boolean
-) => {
+const SetLeftPos = (conn: Connector, pos: Position, electro: boolean, parent: boolean, order: number, nodeWidth: number) => {
   if (electro) {
     if (IsProductTerminal(conn) || IsLocationTerminal(conn)) return 80;
-    return SetTerminalXPos(order, parent, nodeWidth, mainConnectNode);
+    return SetTerminalXPos(order, parent, nodeWidth);
   }
 
   if (pos === Position.Left) return -17;
-  if (pos === Position.Right && !parent && !mainConnectNode) return Size.Node_Width + 3;
-  if (pos === Position.Right && !parent && mainConnectNode) return Size.ConnectView_Width + 3;
-  if (pos === Position.Right && parent) return Size.BlockView_Width + 5;
+  if (pos === Position.Right && !parent) return nodeWidth + 3;
+  if (pos === Position.Right && parent) return nodeWidth + 5;
 };
 
 export default SetLeftPos;

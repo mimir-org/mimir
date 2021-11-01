@@ -2,13 +2,13 @@ import { useState, useEffect } from "react";
 import { ListSearchBar } from "../../compLibrary";
 import { SearchIcon } from "../../assets/icons/common";
 import { ListType } from "../TypeEditorList";
-import { CheckIsInArray, GetListFilter } from "./ListElements/helpers";
-import { Rds, TerminalType, AttributeType, CompositeType, PredefinedAttribute } from "../../models";
+import { GetListFilter } from "./ListElements/helpers";
+import { Rds, AttributeType, CompositeType, PredefinedAttribute, TerminalTypeDict } from "../../models";
 
 interface Props {
   listType: ListType;
   placeHolder: string;
-  list: Rds[] | TerminalType[] | AttributeType[] | CompositeType[] | PredefinedAttribute[];
+  list: Rds[] | TerminalTypeDict | AttributeType[] | CompositeType[] | PredefinedAttribute[];
   setlistItems: any;
 }
 /**Searchbar component at the top of a list that filter the elements in the list
@@ -17,11 +17,9 @@ interface Props {
 
 const ListSearch = ({ listType, placeHolder, list, setlistItems }: Props) => {
   const [searchString, setSearchString] = useState("");
-  const filter = GetListFilter(searchString, listType, list);
 
-  const filterListItems = (): Rds[] | TerminalType[] | AttributeType[] | CompositeType[] | PredefinedAttribute[] => {
-    const isInArray = CheckIsInArray(searchString, listType, list);
-    return isInArray ? list : filter;
+  const filterListItems = (): Rds[] | TerminalTypeDict | AttributeType[] | CompositeType[] | PredefinedAttribute[] => {
+    return searchString ? GetListFilter(searchString, listType, list) : list;
   };
 
   useEffect(() => {

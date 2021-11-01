@@ -5,23 +5,26 @@ import { changeInspectorTab } from "../../redux/tabs/actions";
 import { TabHeader, TabBody, TabTitle } from "../../styled";
 import { InspectorElement } from "../../types";
 import { GetAdminContent } from "./GetAdminContent";
-import { inspectorTabOpenSelector, statusSelector } from "../../../../redux/store";
-import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../../../redux/store/hooks";
+import { statusSelector } from "../../../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
+import { Action } from "redux";
 
 interface Props {
   element: InspectorElement;
   project: Project;
   index: number;
+  activeTabIndex: number;
+  changeInspectorTabAction?: (index: number) => Action;
 }
 
-const AdminComponent = ({ element, project, index }: Props) => {
+const AdminComponent = ({ element, project, index, activeTabIndex, changeInspectorTabAction = changeInspectorTab }: Props) => {
   const dispatch = useAppDispatch();
-  const isTabOpen = useParametricAppSelector(inspectorTabOpenSelector, index);
   const statuses = useAppSelector(statusSelector);
+  const isTabOpen = activeTabIndex === index;
 
   const onClick = useCallback(() => {
-    dispatch(changeInspectorTab(index));
-  }, [dispatch, index]);
+    dispatch(changeInspectorTabAction(index));
+  }, [dispatch, changeInspectorTabAction, index]);
 
   return (
     <>
@@ -32,7 +35,7 @@ const AdminComponent = ({ element, project, index }: Props) => {
       {isTabOpen && (
         <TabBody id="admininfo">
           <hr />
-          {element && project && <div className="container">{GetAdminContent(element, project, statuses)}</div>}
+          {element && <div className="container">{GetAdminContent(element, project, statuses)}</div>}
         </TabBody>
       )}
     </>

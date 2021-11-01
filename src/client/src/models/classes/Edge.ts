@@ -1,7 +1,6 @@
 import { Aspect, Connector, Node, Transport, Interface } from "..";
 
 export type isEdge = keyof Edge;
-
 export const EDGE_KIND: string = "Edge";
 
 class Edge {
@@ -32,6 +31,9 @@ class Edge {
   isSelected: boolean;
 
   kind: string = EDGE_KIND;
+
+  // Only client
+  animated: boolean | false;
 
   constructor(edge: Edge) {
     Object.assign(this, edge);

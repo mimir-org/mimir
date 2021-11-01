@@ -7,7 +7,7 @@ import { IsDirectChild } from "../../../components/flow/block/helpers";
 /**
  * Component to handle all clicks on checkboxes in the BlockView's Explorer Module.
  * Currently two parentNodes can be displayed at the same time - selectedNode and secondaryNode
- * Two parentNodes of the same Aspect can also be displayed, unless it is a direct parent/child relation.
+ * Two parentNodes of the same Aspect can be displayed, unless it is a direct parent/child relation.
  * @param node
  * @param selectedNode
  * @param secondaryNode

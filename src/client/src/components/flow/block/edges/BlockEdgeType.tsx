@@ -1,4 +1,3 @@
-import "./BlockEdge.scss";
 import { ArrowHeadType, getBezierPath, getMarkerEnd, getSmoothStepPath } from "react-flow-renderer";
 import { Connector } from "../../../../models";
 import { IsLocationTerminal, IsProductTerminal } from "../../helpers";
@@ -51,5 +50,3 @@ export default function BlockEdgeType({
     </>
   );
 }
-// const arrowStyle = document.body.style;
-// arrowStyle.setProperty("--arrow-color", fromConnector?.color);

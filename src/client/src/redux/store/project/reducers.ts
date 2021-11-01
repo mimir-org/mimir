@@ -184,6 +184,38 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         },
       };
 
+    case Types.SET_EDGE_ANIMATION:
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          edges: state.project.edges.map((edge) =>
+            edge.id === action.payload.edge.id
+              ? {
+                  ...edge,
+                  animated: action.payload.animated,
+                }
+              : edge
+          ),
+        },
+      };
+
+    case Types.SET_LOCATION_NODE_SIZE:
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          nodes: state.project.nodes.map((x) =>
+            x.id === action.payload.nodeId
+              ? {
+                  ...x,
+                  [action.payload.key]: action.payload.value,
+                }
+              : x
+          ),
+        },
+      };
+
     case Types.SET_NODE_VISIBILITY: {
       const node = action.payload.node;
       const nodeList = state.project.nodes;

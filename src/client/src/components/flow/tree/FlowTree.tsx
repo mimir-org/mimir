@@ -29,11 +29,15 @@ import {
   userStateSelector,
 } from "../../../redux/store";
 
+interface Props {
+  inspectorRef: React.MutableRefObject<HTMLDivElement>;
+}
+
 /**
  * Component for the Flow library in TreeView
  * @returns a scene with Flow elements and Mimir nodes, transports and edges.
  */
-const FlowTree = () => {
+const FlowTree = ({ inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
   const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState(null);
@@ -53,7 +57,7 @@ const FlowTree = () => {
   const OnNodeDragStop = (_event: any, n: any) => dispatch(updatePosition(n.id, n.position.x, n.position.y));
 
   const OnElementsRemove = (elementsToRemove: any[]) => {
-    return useOnRemove(elementsToRemove, setElements, dispatch);
+    return useOnRemove(elementsToRemove, setElements, dispatch, inspectorRef);
   };
 
   const OnLoad = useCallback(
@@ -83,7 +87,7 @@ const FlowTree = () => {
     dispatch(changeInspectorTab(0));
     if (!inspectorOpen) {
       dispatch(changeInspectorHeight(Size.ModuleOpen));
-      SetPanelHeight(Size.ModuleOpen);
+      SetPanelHeight(inspectorRef, Size.ModuleOpen);
     }
   };
 
@@ -114,14 +118,12 @@ const FlowTree = () => {
             onElementClick={OnElementClick}
             nodeTypes={Helpers.GetNodeTypes}
             edgeTypes={Helpers.GetEdgeTypes}
-            defaultZoom={0.7}
-            defaultPosition={[700, 300]}
-            snapToGrid={true}
-            snapGrid={[5, 5]}
+            defaultZoom={0.9}
+            defaultPosition={[300, 90]}
             zoomOnDoubleClick={false}
-            onClick={(e) => OnTreeClick(e, dispatch, project)}
+            onClick={(e) => OnTreeClick(e, dispatch, project, inspectorRef)}
           >
-            <FullScreenComponent />
+            <FullScreenComponent inspectorRef={inspectorRef} />
             <FlowManipulator elements={elements} selectedId={selectedNodeId} />
           </ReactFlow>
           <ExplorerModule elements={elements} />

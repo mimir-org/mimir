@@ -4,7 +4,6 @@ import {
   AttributeType,
   CreateLibraryType,
   Rds,
-  TerminalType,
   TerminalTypeItem,
   Aspect,
   Purpose,
@@ -13,6 +12,7 @@ import {
   BlobData,
   LibraryFilter,
   CompositeType,
+  TerminalTypeDict,
 } from "../../models";
 
 export const FETCHING_INITIAL_DATA = "FETCHING_INITIAL_DATA";
@@ -43,6 +43,9 @@ export const REMOVE_TERMINALTYPE_BY_CATEGORY = "REMOVE_TERMINALTYPE_BY_CATEGORY"
 export const SAVE_LIBRARY_TYPE = "SAVE_LIBRARY_TYPE";
 export const SAVE_LIBRARY_TYPE_SUCCESS_OR_ERROR = "SAVE_LIBRARY_TYPE_SUCCESS_OR_ERROR";
 export const DELETE_TYPE_EDITOR_ERROR = "DELETE_TYPE_EDITOR_ERROR";
+export const CHANGE_TYPE_EDITOR_INSPECTOR_HEIGHT = "CHANGE_TYPE_EDITOR_INSPECTOR_HEIGHT";
+export const CHANGE_TYPE_EDITOR_INSPECTOR_VISIBILITY = "CHANGE_TYPE_EDITOR_INSPECTOR_VISIBILITY";
+export const CHANGE_TYPE_EDITOR_INSPECTOR_TAB = "CHANGE_TYPE_EDITOR_INSPECTOR_TAB";
 
 // State types
 export interface TypeEditorState {
@@ -52,13 +55,18 @@ export interface TypeEditorState {
   createLibraryType: CreateLibraryType;
   purposes: Purpose[];
   rdsList: Rds[];
-  terminals: TerminalType[];
+  terminals: TerminalTypeDict;
   attributes: AttributeType[];
   locationTypes: LocationType[];
   predefinedAttributes: PredefinedAttribute[];
   simpleTypes: CompositeType[];
   apiError: ApiError[];
   icons: BlobData[];
+  inspector: {
+    visibility: boolean;
+    height: number;
+    activeTabIndex: number;
+  };
 }
 
 // Action types
@@ -98,7 +106,7 @@ interface FetchingTerminalsAction {
 interface FetchingTerminalsActionFinished {
   type: typeof FETCHING_TERMINALS_SUCCESS_OR_ERROR;
   payload: {
-    terminals: TerminalType[];
+    terminals: TerminalTypeDict;
   };
 }
 
@@ -237,6 +245,27 @@ interface DeleteTypeEditorErrorAction {
   };
 }
 
+interface ChangeTypeEditorInspectorHeight {
+  type: typeof CHANGE_TYPE_EDITOR_INSPECTOR_HEIGHT;
+  payload: {
+    height: number;
+  };
+}
+
+interface ChangeTypeEditorInspectorVisibility {
+  type: typeof CHANGE_TYPE_EDITOR_INSPECTOR_VISIBILITY;
+  payload: {
+    visibility: boolean;
+  };
+}
+
+interface ChangeTypeEditorInspectorTab {
+  type: typeof CHANGE_TYPE_EDITOR_INSPECTOR_TAB;
+  payload: {
+    index: number;
+  };
+}
+
 export type TypeEditorActionTypes =
   | FetchingInitialDataAction
   | FetchingInitialDataActionFinished
@@ -265,4 +294,7 @@ export type TypeEditorActionTypes =
   | RemoveTerminalTypeByCategory
   | SaveLibraryType
   | SaveLibraryTypeFinished
-  | DeleteTypeEditorErrorAction;
+  | DeleteTypeEditorErrorAction
+  | ChangeTypeEditorInspectorHeight
+  | ChangeTypeEditorInspectorVisibility
+  | ChangeTypeEditorInspectorTab;

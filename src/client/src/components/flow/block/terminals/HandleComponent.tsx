@@ -7,24 +7,22 @@ import { CreateId, IsInputTerminal } from "../../helpers";
 import { ConnectorIcon } from "../../../../assets/icons/connectors";
 
 interface Props {
-  node: Node;
   nodes: Node[];
   length: number;
   width: number;
   terminals: Connector[];
   parent: boolean;
   electro: boolean;
-  connectNode: boolean;
 }
 /**
  * Component for the terminals displayed on the nodes in BlockView.
  * @param interface
  * @returns a Mimir terminal in form of a Flow Handle element with an icon on top.
  */
-const HandleComponent = ({ node, nodes, length, width, terminals, parent, electro, connectNode }: Props) => (
+const HandleComponent = ({ nodes, length, width, terminals, parent, electro }: Props) => (
   <>
     {terminals.map((conn) => {
-      const [type, pos] = GetBlockHandleType(conn, node?.isSelected, false, electro);
+      const [type, pos] = GetBlockHandleType(conn, electro);
       const order = IsInputTerminal(conn) ? conn.inputOrder : conn.outputOrder;
 
       return (
@@ -32,8 +30,8 @@ const HandleComponent = ({ node, nodes, length, width, terminals, parent, electr
           <HandleBox
             visible={conn.visible}
             id={"handle-" + conn.id}
-            top={SetTopPos(conn, pos, electro, parent, order, length, connectNode)}
-            left={SetLeftPos(conn, pos, electro, parent, order, width, connectNode)}
+            top={SetTopPos(conn, pos, electro, parent, order, length)}
+            left={SetLeftPos(conn, pos, electro, parent, order, width)}
           >
             <ConnectorIcon style={{ fill: GetTerminalColor(conn) }} className={"react-flow__handle-block"} />
             <Handle

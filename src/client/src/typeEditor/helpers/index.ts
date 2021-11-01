@@ -23,6 +23,7 @@ export { default as GetFilteredBlobData } from "./GetFilteredBlobData";
 export { default as GetFilteredRdsList } from "./GetFilteredRdsList";
 export { default as GetFilteredTerminalsList } from "./GetFilteredTerminalsList";
 export { default as GetFilteredAttributesList } from "./GetFilteredAttributesList";
+export * from "./GetFilteredTerminalTypeList";
 
 // component helpers
 export { default as GetObjectTypeDescription } from "./GetObjectTypeDescription";
