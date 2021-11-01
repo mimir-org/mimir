@@ -405,8 +405,12 @@ namespace Mb.Services.Services
 
             _projectRepository.Update(originalProject);
             await _projectRepository.SaveAsync();
-            _projectRepository.Detach(originalProject);
-            
+
+            _projectRepository.Context.ChangeTracker.Clear();
+            _nodeRepository.Context.ChangeTracker.Clear();
+            _edgeRepository.Context.ChangeTracker.Clear();
+            _attributeRepository.Context.ChangeTracker.Clear();
+
             // Resolve
             await ResolveSubProjects(subNodes, subDeleteNodes, subEdges, subDeleteEdges, originalProject.Id);
 
@@ -633,6 +637,16 @@ namespace Mb.Services.Services
             var parser = _moduleService.Resolve<IModelBuilderParser>(new Guid(package.Parser));
 
             var project = await GetProject(package.ProjectId);
+            project.IsSubProject = true;
+
+            var currentUserName = _contextAccessor.GetName();
+            
+            foreach (var node in project.Nodes)
+            {
+                node.IsLocked = true;
+                node.IsLockedBy = currentUserName;
+            }
+
             var data = await parser.SerializeProject(project);
             var projectString = System.Text.Encoding.UTF8.GetString(data);
 
@@ -665,8 +679,12 @@ namespace Mb.Services.Services
         /// <returns></returns>
         public async Task<bool> ProjectExist(string projectId)
         {
-            var project = await _projectRepository.GetAsync(projectId);
-            return project != null;
+            var project = await _projectRepository.FindBy(x => x.Id == projectId).FirstOrDefaultAsync();
+            if (project == null)
+                return false;
+
+            _projectRepository.Detach(project);
+            return true;
         }
 
         #region Private methods

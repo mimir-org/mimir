@@ -6,5 +6,6 @@ namespace Mb.Data.Contracts
 {
     public interface IProjectRepository : IGenericRepository<ModelBuilderDbContext, Project>
     {
+        
     }
 }

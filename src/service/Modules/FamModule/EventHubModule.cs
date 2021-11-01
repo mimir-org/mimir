@@ -138,7 +138,7 @@ namespace EventHubModule
 
             try
             {
-                var project = parser.DeserializeProjectAm(Encoding.ASCII.GetBytes(e.Document))?.Result;
+                var project = parser.DeserializeProjectAm(Encoding.UTF8.GetBytes(e.Document))?.Result;
                 if (project == null)
                 {
                     logger.LogError($"Can't parse project with ID: {e.ProjectId}.");
@@ -146,10 +146,9 @@ namespace EventHubModule
                 }
 
                 var hasProject = projectService.ProjectExist(project.Id).Result;
-                if (hasProject)
-                    projectService.UpdateProject(project.Id, project);
-                else
-                    projectService.CreateProject(project);
+                _ = hasProject ? 
+                    projectService.UpdateProject(project.Id, project).Result : 
+                    projectService.CreateProject(project).Result;
             }
             catch (Exception ex)
             {
