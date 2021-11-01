@@ -1,7 +1,11 @@
 import styled from "styled-components";
 
-const HeaderBox = styled.div`
-  margin-bottom: 40px;
+interface Props {
+  marginBottom?: number;
+}
+
+const HeaderBox = styled.div<Props>`
+  margin-bottom: ${(props) => (props.marginBottom ? props.marginBottom + "px" : "40px")};
   display: inline-flex;
   align-items: center;
 

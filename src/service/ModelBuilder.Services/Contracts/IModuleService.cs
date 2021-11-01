@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 using Mb.Models.Abstract;
@@ -11,6 +12,6 @@ namespace Mb.Services.Contracts
         List<Assembly> Assemblies { get; }
         List<Module> Modules { get; set; }
         Task InitialModules();
-        T Resolve<T>(string name) where T : IModuleInterface;
+        T Resolve<T>(Guid id) where T : IModuleInterface;
     }
 }

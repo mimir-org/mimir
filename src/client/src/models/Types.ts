@@ -185,6 +185,10 @@ export interface Contractor {
   name: string;
   domain: string;
 }
+export interface ModuleDescription {
+  id: string;
+  name: string;
+}
 
 export const SETTING_KEY = {
   PREFERED_TYPE: "PREFERED_TYPE",

@@ -8,7 +8,7 @@ import { search } from "../../redux/store/project/actions";
 import { FlowModule } from "../flow";
 import { ErrorModule } from "../../modules/error";
 import { TypeEditorComponent } from "../../typeEditor";
-import { getContractors, getStatuses, getAttributeFilters } from "../../redux/store/common/actions";
+import { getContractors, getStatuses, getAttributeFilters, getParsers } from "../../redux/store/common/actions";
 import { importLibraryInterfaceTypes, importLibraryTransportTypes, searchLibrary } from "../../redux/store/library/actions";
 import { getBlobData } from "../../typeEditor/redux/actions";
 
@@ -29,6 +29,7 @@ const Home = () => {
     dispatch(searchLibrary(""));
     dispatch(getUser());
     dispatch(getContractors());
+    dispatch(getParsers());
     dispatch(getStatuses());
     dispatch(getAttributeFilters());
     dispatch(getBlobData());

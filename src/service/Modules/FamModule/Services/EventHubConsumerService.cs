@@ -18,7 +18,6 @@ namespace EventHubModule.Services
         public event EventHandler<T> DataReceived;
         private readonly EventProcessorClient _client;
         private CancellationToken _cancellationToken;
-        private int _failedNumber;
         private readonly bool _hasValidConfiguration;
 
         public EventHubConsumerService(IOptions<EventHubConfiguration> eventHubConfiguration, ILogger<EventHubConsumerService<T>> logger)
@@ -72,15 +71,9 @@ namespace EventHubModule.Services
                 OnDataReceived(obj);
                 await arg.UpdateCheckpointAsync(arg.CancellationToken);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Console.WriteLine(e.Message);
-                _failedNumber += 1;
-                if (_failedNumber > 5)
-                {
-                    await arg.UpdateCheckpointAsync(arg.CancellationToken);
-                    _failedNumber = 0;
-                }
+                
             }
         }
 
