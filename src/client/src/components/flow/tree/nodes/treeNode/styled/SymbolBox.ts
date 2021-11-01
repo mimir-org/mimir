@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const SymbolBox = styled.div`
   position: absolute;
-  bottom: -2px;
+  bottom: -4px;
   left: 72px;
 `;
 
