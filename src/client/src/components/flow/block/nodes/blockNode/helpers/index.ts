@@ -1,2 +1,1 @@
-export { default as SetNodeWidth } from "./SetNodeWidth";
-export { default as SetNodeLength } from "./SetNodeLength";
+export { default as SetNodeSize } from "./SetNodeSize";
