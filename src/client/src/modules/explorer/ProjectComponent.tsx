@@ -4,6 +4,7 @@ import { IsAspectNode } from "../../components/flow/helpers";
 import { HasChildren, IsAncestorInSet } from "./helpers/ParentNode";
 import { useState } from "react";
 import { SortNodesWithIndent } from "./helpers/SortNodesWithIndent";
+import { IsOffPage } from "../../components/flow/block/helpers";
 
 interface Props {
   project: Project;
@@ -13,6 +14,7 @@ interface Props {
 
 export const ProjectComponent = ({ project, elements, nodes }: Props) => {
   const [closedNodes, setClosedNodes] = useState(new Set<string>());
+  nodes = nodes.filter((n) => !IsOffPage(n));
 
   const onExpandElement = (_expanded: boolean, nodeId: string) => {
     _expanded ? closedNodes.delete(nodeId) : closedNodes.add(nodeId);

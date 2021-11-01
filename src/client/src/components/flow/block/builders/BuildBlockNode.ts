@@ -22,7 +22,9 @@ const BuildBlockNode = (node: Node, parent: Node, parentNodeSize: BlockNodeSize)
   SetConnectorOrder(node);
 
   // Force node to fit Block
-  const position = !IsOffPage(node) ? SetBlockNodePos(nodePos, parentPos, parentNodeSize) : SetOffPageNodePos(nodePos, parentPos);
+  const position = !IsOffPage(node)
+    ? SetBlockNodePos(nodePos, parentPos, parentNodeSize)
+    : SetOffPageNodePos(nodePos, parentPos, parentNodeSize);
 
   return {
     key: CreateId(),
