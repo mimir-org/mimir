@@ -4,7 +4,6 @@ import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
 import { FullScreenComponent } from "../../../compLibrary/controls";
 import { Size } from "../../../compLibrary";
-import { IsBlockView } from "../block/helpers";
 import { changeInspectorTab } from "../../../modules/inspector/redux/tabs/actions";
 import { GetParent, GetSelectedNode, SetDarkModeColor } from "../helpers";
 import { BuildTreeElements } from "../tree/builders";
@@ -103,34 +102,30 @@ const FlowTree = ({ inspectorRef }: Props) => {
   }, [dispatch]);
 
   return (
-    <>
-      {!IsBlockView() && (
-        <ReactFlowProvider>
-          <div className="reactflow-wrapper" ref={flowWrapper}></div>
-          <ReactFlow
-            elements={elements}
-            onConnect={OnConnect}
-            onElementsRemove={OnElementsRemove}
-            onLoad={OnLoad}
-            onDrop={OnDrop}
-            onDragOver={OnDragOver}
-            onNodeDragStop={OnNodeDragStop}
-            onElementClick={OnElementClick}
-            nodeTypes={Helpers.GetNodeTypes}
-            edgeTypes={Helpers.GetEdgeTypes}
-            defaultZoom={0.9}
-            defaultPosition={[300, 90]}
-            zoomOnDoubleClick={false}
-            onClick={(e) => OnTreeClick(e, dispatch, project, inspectorRef)}
-          >
-            <FullScreenComponent inspectorRef={inspectorRef} />
-            <FlowManipulator elements={elements} selectedId={selectedNodeId} />
-          </ReactFlow>
-          <ExplorerModule elements={elements} />
-          {treeFilter && <TreeFilterMenu elements={elements} />}
-        </ReactFlowProvider>
-      )}
-    </>
+    <ReactFlowProvider>
+      <div className="reactflow-wrapper" ref={flowWrapper}></div>
+      <ReactFlow
+        elements={elements}
+        onConnect={OnConnect}
+        onElementsRemove={OnElementsRemove}
+        onLoad={OnLoad}
+        onDrop={OnDrop}
+        onDragOver={OnDragOver}
+        onNodeDragStop={OnNodeDragStop}
+        onElementClick={OnElementClick}
+        nodeTypes={Helpers.GetNodeTypes}
+        edgeTypes={Helpers.GetEdgeTypes}
+        defaultZoom={0.9}
+        defaultPosition={[300, 90]}
+        zoomOnDoubleClick={false}
+        onClick={(e) => OnTreeClick(e, dispatch, project, inspectorRef)}
+      >
+        <FullScreenComponent inspectorRef={inspectorRef} />
+        <FlowManipulator elements={elements} selectedId={selectedNodeId} />
+      </ReactFlow>
+      <ExplorerModule elements={elements} />
+      {treeFilter && <TreeFilterMenu elements={elements} />}
+    </ReactFlowProvider>
   );
 };
 
