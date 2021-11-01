@@ -1,8 +1,8 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using EventHubModule.Contracts;
@@ -34,12 +34,21 @@ namespace EventHubModule
 
         public void CreateModule(IServiceCollection services, IConfiguration configuration)
         {
-            var eventHubSection = configuration.GetSection(nameof(EventHubConfiguration));
+            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory());
+
+            builder.AddJsonFile("appsettings.json");
+            builder.AddJsonFile($"appsettings.{environment}.json", true);
+            builder.AddJsonFile("appsettings.local.json", true);
+            builder.AddEnvironmentVariables();
+
+            var config = builder.Build();
+
             var eventHubConfiguration = new EventHubConfiguration();
-            eventHubSection.Bind(eventHubConfiguration);
+            var eventHubConfigSection = config.GetSection(nameof(EventHubConfiguration));
+            eventHubConfigSection.Bind(eventHubConfiguration);
 
             UpdateFromEnvironmentVariables(eventHubConfiguration);
-
             services.AddSingleton(Options.Create(eventHubConfiguration));
             _provider = services.BuildServiceProvider();
         }
