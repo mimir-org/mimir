@@ -113,12 +113,10 @@
 }
 
 .react-flow__node-BlockOffPageNode {
-  border-radius: 10px;
-  width: 100px;
-  height: 100px;
-  background-color: red;
-  box-shadow: 0 5px 5px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1 !important;
+  width: 19px;
+  height: 13px;
+  background-color: transparent;
+  z-index: 5 !important;
 }
 
 .react-flow__node-BlockParentNode {

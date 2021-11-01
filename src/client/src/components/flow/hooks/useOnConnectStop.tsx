@@ -5,18 +5,14 @@ import { CreateOffPageNode } from "../block/helpers";
 import { CreateOffPageData } from "../block/helpers/CreateOffPageNode";
 import { Project } from "../../../models";
 
-const useOnConnectStop = (e, project: Project, reactFlowInstance, nodeId: string, dispatch: any) => {
+const useOnConnectStop = (e, project: Project, nodeId: string, dispatch: any) => {
   e.preventDefault();
   const edgeEvent = LoadEventData("edgeEvent") as EdgeEvent;
 
   if (edgeEvent) {
-    const position = reactFlowInstance.project({
-      x: e.clientX,
-      y: e.clientY,
-    });
+    const position = { x: e.clientX, y: e.clientY };
 
     const createOffPageData = {
-      parentNodeId: nodeId,
       fromNodeId: edgeEvent.nodeId,
       fromConnectorId: edgeEvent.sourceId,
       x: position.x,

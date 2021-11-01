@@ -1,7 +1,7 @@
 import ReactFlow, { ReactFlowProvider, Elements, Background } from "react-flow-renderer";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { FullScreenComponent } from "../../../compLibrary/controls";
-import { GetBlockEdgeTypes, OnBlockClick } from "../block/helpers";
+import { GetBlockEdgeTypes, OnBlockClick, IsOffPage } from "../block/helpers";
 import { BuildBlockElements } from "./builders";
 import { useOnConnect, useOnDrop, useOnRemove, useOnDragStop, useOnConnectStart, useOnConnectStop } from "../hooks";
 import { setActiveBlockNode, setActiveEdge } from "../../../redux/store/project/actions";
@@ -74,7 +74,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   };
 
   const OnConnectStop = (e) => {
-    return useOnConnectStop(e, project, flowInstance, node.id, dispatch);
+    return useOnConnectStop(e, project, node.id, dispatch);
   };
 
   const OnDragOver = (event) => {
@@ -130,8 +130,8 @@ const FlowBlock = ({ inspectorRef }: Props) => {
           <FullScreenComponent inspectorRef={inspectorRef} />
         </ReactFlow>
 
-        <ExplorerModule elements={elements} />
-        {blockFilter && <BlockFilterMenu elements={elements} />}
+        <ExplorerModule elements={elements?.filter((elem) => !IsOffPage(elem?.data))} />
+        {blockFilter && <BlockFilterMenu elements={elements?.filter((elem) => !IsOffPage(elem?.data))} />}
       </div>
     </ReactFlowProvider>
   );
