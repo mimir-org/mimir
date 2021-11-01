@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Mb.Models.Application;
 using Mb.Models.Data.TypeEditor;
 using Mb.TypeEditor.Data.Contracts;
@@ -45,6 +44,7 @@ namespace Mb.TypeEditor.Data.Repositories
                     .Include("CompositeTypes.AttributeTypes")
                     .Include("CompositeTypes.AttributeTypes.Units")
                     .Include(x => x.Purpose)
+                    .AsSplitQuery()
                     .ToList();
             }
             else
@@ -64,61 +64,67 @@ namespace Mb.TypeEditor.Data.Repositories
                     .Include("CompositeTypes.AttributeTypes")
                     .Include("CompositeTypes.AttributeTypes.Units")
                     .Include(x => x.Purpose)
+                    .AsSplitQuery()
                     .ToList();
             }
 
-            foreach (var nodeType in allNodeTypes)
-            {
-                yield return _mapper.Map<LibraryNodeItem>(nodeType);
-            }
+            return _mapper.Map<List<LibraryNodeItem>>(allNodeTypes);
         }
 
         public IEnumerable<LibraryInterfaceItem> GetInterfaceTypes(string searchString = null)
         {
             if (string.IsNullOrEmpty(searchString))
             {
-                return _interfaceTypeRepository.GetAll()
+                var result1 = _interfaceTypeRepository.GetAll()
                     .Include(x => x.Rds)
                     .Include("Rds.RdsCategory")
                     .Include(x => x.Purpose)
-                    .ProjectTo<LibraryInterfaceItem>(_mapper.ConfigurationProvider)
                     .OrderBy(x => x.Name)
+                    .AsSplitQuery()
                     .ToList();
+
+                return _mapper.Map<List<LibraryInterfaceItem>>(result1);
             }
 
-            return _interfaceTypeRepository.GetAll()
+            var result2 = _interfaceTypeRepository.GetAll()
                 .Where(x => x.Name.ToLower().Contains(searchString.ToLower()))
                 .Include(x => x.Rds)
                 .Include("Rds.RdsCategory")
                 .Include(x => x.Purpose)
-                .ProjectTo<LibraryInterfaceItem>(_mapper.ConfigurationProvider)
                 .OrderBy(x => x.Name)
+                .AsSplitQuery()
                 .ToList();
+
+            return _mapper.Map<List<LibraryInterfaceItem>>(result2);
         }
 
         public IEnumerable<LibraryTransportItem> GetTransportTypes(string searchString = null)
         {
             if (string.IsNullOrEmpty(searchString))
             {
-                return _transportTypeRepository.GetAll()
+                var result1 = _transportTypeRepository.GetAll()
                     .Include(x => x.AttributeTypes)
                     .Include(x => x.Rds)
                     .Include("Rds.RdsCategory")
                     .Include(x => x.Purpose)
-                    .ProjectTo<LibraryTransportItem>(_mapper.ConfigurationProvider)
                     .OrderBy(x => x.Name)
+                    .AsSplitQuery()
                     .ToList();
+
+                return _mapper.Map<List<LibraryTransportItem>>(result1);
             }
 
-            return _transportTypeRepository.GetAll()
+            var result2 = _transportTypeRepository.GetAll()
                 .Where(x => x.Name.ToLower().Contains(searchString.ToLower()))
                 .Include(x => x.AttributeTypes)
                 .Include(x => x.Rds)
                 .Include("Rds.RdsCategory")
                 .Include(x => x.Purpose)
-                .ProjectTo<LibraryTransportItem>(_mapper.ConfigurationProvider)
                 .OrderBy(x => x.Name)
+                .AsSplitQuery()
                 .ToList();
+
+            return _mapper.Map<List<LibraryTransportItem>>(result2);
         }
 
         public async Task<T> GetLibraryItem<T>(string id) where T : class, new()
@@ -139,6 +145,7 @@ namespace Mb.TypeEditor.Data.Repositories
                     .Include("CompositeTypes.AttributeTypes")
                     .Include("CompositeTypes.AttributeTypes.Units")
                     .Include(x => x.Purpose)
+                    .AsSplitQuery()
                     .FirstOrDefaultAsync();
 
                 return _mapper.Map<T>(nodeType);
@@ -151,7 +158,9 @@ namespace Mb.TypeEditor.Data.Repositories
                     .Include("Rds.RdsCategory")
                     .Include(x => x.Purpose)
                     .OrderBy(x => x.Name)
+                    .AsSplitQuery()
                     .FirstOrDefaultAsync();
+
                 return _mapper.Map<T>(interfaceType);
             }
 
@@ -163,7 +172,9 @@ namespace Mb.TypeEditor.Data.Repositories
                     .Include("Rds.RdsCategory")
                     .Include(x => x.Purpose)
                     .OrderBy(x => x.Name)
+                    .AsSplitQuery()
                     .FirstOrDefaultAsync();
+
                 return _mapper.Map<T>(transportType);
             }
 

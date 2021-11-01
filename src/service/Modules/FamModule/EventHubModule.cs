@@ -1,8 +1,8 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using EventHubModule.Contracts;
@@ -13,6 +13,7 @@ using Mb.Models.Exceptions;
 using Mb.Services.Contracts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 // ReSharper disable StringLiteralTypo
 
@@ -34,12 +35,21 @@ namespace EventHubModule
 
         public void CreateModule(IServiceCollection services, IConfiguration configuration)
         {
-            var eventHubSection = configuration.GetSection(nameof(EventHubConfiguration));
+            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory());
+
+            builder.AddJsonFile("appsettings.json");
+            builder.AddJsonFile($"appsettings.{environment}.json", true);
+            builder.AddJsonFile("appsettings.local.json", true);
+            builder.AddEnvironmentVariables();
+
+            var config = builder.Build();
+
             var eventHubConfiguration = new EventHubConfiguration();
-            eventHubSection.Bind(eventHubConfiguration);
+            var eventHubConfigSection = config.GetSection(nameof(EventHubConfiguration));
+            eventHubConfigSection.Bind(eventHubConfiguration);
 
             UpdateFromEnvironmentVariables(eventHubConfiguration);
-
             services.AddSingleton(Options.Create(eventHubConfiguration));
             _provider = services.BuildServiceProvider();
         }
@@ -120,6 +130,7 @@ namespace EventHubModule
             if(string.IsNullOrEmpty(e.Document))
                 throw new ModelBuilderModuleException("Can't process data. Document is null or empty in EventModule.");
 
+            
             //var project = parser.DeserializeProjectAm(Encoding.ASCII.GetBytes(e.Document))?.Result;
             // TODO: Send project to project service for processing.
         }
