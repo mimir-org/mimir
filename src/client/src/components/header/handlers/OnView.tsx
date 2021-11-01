@@ -3,7 +3,7 @@ import { changeFlowView } from "../../../redux/store/flow/actions";
 import { removeSecondaryNode } from "../../../redux/store/secondaryNode/actions";
 import { GetSelectedNode } from "../../flow/helpers";
 
-const OnView = (view: ViewType, dispatch: any, push) => {
+const OnView = (view: ViewType, dispatch: any) => {
   const selectedNode = GetSelectedNode();
 
   // BlockView can only be opened when a node is selected
@@ -11,8 +11,6 @@ const OnView = (view: ViewType, dispatch: any, push) => {
 
   dispatch(removeSecondaryNode());
   dispatch(changeFlowView(view));
-
-  push(`/home/${view}`);
 };
 
 export default OnView;

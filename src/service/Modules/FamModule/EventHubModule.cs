@@ -13,6 +13,7 @@ using Mb.Models.Exceptions;
 using Mb.Services.Contracts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 // ReSharper disable StringLiteralTypo
 
@@ -129,8 +130,7 @@ namespace EventHubModule
             if(string.IsNullOrEmpty(e.Document))
                 throw new ModelBuilderModuleException("Can't process data. Document is null or empty in EventModule.");
 
-            Console.WriteLine($"Mottatt data: {e.Id}:{e.ReceivingDomain}");
-
+            
             //var project = parser.DeserializeProjectAm(Encoding.ASCII.GetBytes(e.Document))?.Result;
             // TODO: Send project to project service for processing.
         }

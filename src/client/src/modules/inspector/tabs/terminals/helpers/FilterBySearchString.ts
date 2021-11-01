@@ -5,7 +5,7 @@ export const FilterBySearchString = (
   terminals: TerminalLikeItem[],
   terminalCategories: TerminalCategory[],
   searchString: string
-) =>
+): TerminalLikeItem[] =>
   (searchString &&
     searchString.length > 0 &&
     terminals.filter(

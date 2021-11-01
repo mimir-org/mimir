@@ -28,12 +28,21 @@ interface Props {
   disabled?: boolean;
   listType: ListType;
   onChange: Function;
+  onTerminalTypeIdChange?: (terminalTypeId: string) => void;
 }
 /**
  * A generic list-component in Type editor
  * @returns a visual Type Editor list
  */
-export const TypeEditorList = ({ createLibraryType, items, discipline, disabled, listType, onChange }: Props) => {
+export const TypeEditorList = ({
+  createLibraryType,
+  items,
+  discipline,
+  disabled,
+  listType,
+  onChange,
+  onTerminalTypeIdChange,
+}: Props) => {
   const [filteredListItems, setListItems] = useState(items);
   return (
     <ListWrapper wide={GetWidth(listType)} disabled={disabled}>
@@ -51,6 +60,7 @@ export const TypeEditorList = ({ createLibraryType, items, discipline, disabled,
         createLibraryType={createLibraryType}
         discipline={discipline}
         onChange={(key, data) => onChange(key, data)}
+        onTerminalTypeIdChange={onTerminalTypeIdChange}
       />
     </ListWrapper>
   );
