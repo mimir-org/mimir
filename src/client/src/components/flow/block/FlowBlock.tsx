@@ -21,6 +21,7 @@ import {
   userStateSelector,
   blockFilterSelector,
   nodeSizeSelector,
+  animatedEdgeSelector,
 } from "../../../redux/store";
 
 interface Props {
@@ -44,9 +45,11 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   const electro = useAppSelector(electroSelector);
   const userState = useAppSelector(userStateSelector);
   const blockFilter = useAppSelector(blockFilterSelector);
+  const parentNodeSize = useAppSelector(nodeSizeSelector);
+  const animatedEdge = useAppSelector(animatedEdgeSelector);
+
   const node = GetSelectedNode();
   const parent = GetParent(node);
-  const parentNodeSize = useAppSelector(nodeSizeSelector);
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
@@ -65,7 +68,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   };
 
   const OnConnect = (params) => {
-    return useOnConnect(params, project, setElements, dispatch, EDGE_TYPE.BLOCK as EdgeType, lib);
+    return useOnConnect(params, project, setElements, dispatch, EDGE_TYPE.BLOCK as EdgeType, lib, animatedEdge);
   };
 
   // const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
@@ -129,7 +132,9 @@ const FlowBlock = ({ inspectorRef }: Props) => {
         </ReactFlow>
 
         <ExplorerModule elements={elements?.filter((elem) => !IsOffPage(elem?.data))} />
-        {blockFilter && <BlockFilterMenu elements={elements?.filter((elem) => !IsOffPage(elem?.data))} />}
+        {blockFilter && (
+          <BlockFilterMenu elements={elements?.filter((elem) => !IsOffPage(elem?.data))} edgeAnimation={animatedEdge} />
+        )}
       </div>
     </ReactFlowProvider>
   );

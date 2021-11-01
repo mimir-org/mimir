@@ -6,25 +6,18 @@ import { IsLibrary } from "../../../flow/helpers";
 import { FilterDropdown, FilterTerminalDropdown } from "../dropdown";
 import { TextResources } from "../../../../assets/text";
 import { OnAnimationChange, OnChange } from "../handlers";
-import {
-  GetActiveTerminals,
-  GetAllTerminals,
-  GetEdges,
-  GetInactiveTerminals,
-  GetNodes,
-  IsAnimationChecked,
-  PopulateFilterLists,
-} from "../helpers";
+import { GetActiveTerminals, GetAllTerminals, GetEdges, GetInactiveTerminals, GetNodes, PopulateFilterLists } from "../helpers";
 
 interface Props {
   elements: any[];
+  edgeAnimation: boolean;
 }
 
 /**
  * Menu to filter terminals and edges in BlockView.
  * @returns a menu with multiple drop-down menus.
  */
-const BlockFilterMenu = ({ elements }: Props) => {
+const BlockFilterMenu = ({ elements, edgeAnimation }: Props) => {
   const dispatch = useAppDispatch();
   const libOpen = useAppSelector((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible);
   const edges = GetEdges(elements);
@@ -45,8 +38,8 @@ const BlockFilterMenu = ({ elements }: Props) => {
       <MenuColumn>
         <FilterElement
           label={"Animation"}
-          onChange={() => OnAnimationChange(edges, dispatch)}
-          isChecked={IsAnimationChecked(edges)}
+          onChange={() => OnAnimationChange(edges, dispatch, edgeAnimation)}
+          isChecked={edgeAnimation}
           visible={!!transportItems.length}
         />
         <FilterDropdown

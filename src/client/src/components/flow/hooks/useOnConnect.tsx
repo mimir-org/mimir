@@ -13,7 +13,8 @@ const useOnConnect = (
   setElements: any,
   dispatch: any,
   edgeType: EdgeType,
-  library: LibraryState
+  library: LibraryState,
+  animatedEdge: boolean
 ) => {
   SaveEventData(null, "edgeEvent");
   const createdId = CreateId();
@@ -41,7 +42,7 @@ const useOnConnect = (
   );
 
   if (!existingEdge) {
-    currentEdge = ConvertToEdge(createdId, sourceConn, targetConn, sourceNode, targetNode, project.id, library);
+    currentEdge = ConvertToEdge(createdId, sourceConn, targetConn, sourceNode, targetNode, project.id, library, animatedEdge);
     dispatch(createEdge(currentEdge));
   } else currentEdge = existingEdge;
 
@@ -55,7 +56,7 @@ const useOnConnect = (
         type: edgeType,
         arrowHeadType: null,
         label: "",
-        animated: edgeType === EDGE_TYPE.TRANSPORT,
+        animated: edgeType === EDGE_TYPE.TRANSPORT && animatedEdge,
         data: {
           source: sourceNode,
           target: targetNode,
