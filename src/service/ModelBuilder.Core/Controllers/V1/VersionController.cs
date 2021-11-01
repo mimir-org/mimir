@@ -39,36 +39,7 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
-        /// Returns a VersionCm
-        /// </summary>
-        /// <returns>VersionCm</returns>
-        [HttpGet("{versionId}")]
-        [ProducesResponseType(typeof(VersionCm), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Get(string versionId)
-        {
-            try
-            {
-                var versionCm = await _versionService.GetVersion(int.Parse(versionId));
-                return Ok(versionCm);
-            }
-            catch (ModelBuilderNotFoundException)
-            {
-                return NoContent();
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
-        }
-
-        /// <summary>
-        /// Returns a list with all versions
+        /// Returns all
         /// </summary>
         /// <returns>List of VersionCm</returns>
         [HttpGet]
@@ -78,11 +49,11 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAllVersions()
         {
             try
             {
-                var versionCmList = await _versionService.GetVersions();
+                var versionCmList = await _versionService.GetAllVersions();
                 return Ok(versionCmList);
             }
             catch (ModelBuilderNotFoundException)
@@ -101,18 +72,18 @@ namespace Mb.Core.Controllers.V1
         /// </summary>
         /// <param name="typeId"></param>
         /// <returns>List of VersionCm</returns>
-        [HttpGet("type/{typeId}")]
+        [HttpGet("{typeId}")]
         [ProducesResponseType(typeof(IEnumerable<VersionCm>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetAllTypes(string typeId)
+        public async Task<IActionResult> GetAllVersions(string typeId)
         {
             try
             {
-                var versionCmList = await _versionService.GetVersionTypes(typeId);
+                var versionCmList = await _versionService.GetAllVersions(typeId);
                 return Ok(versionCmList);
             }
             catch (ModelBuilderNotFoundException)
@@ -129,51 +100,21 @@ namespace Mb.Core.Controllers.V1
         /// <summary>
         /// Returns a specific version of a Project
         /// </summary>
-        /// <param name="versionId"></param>
+        /// <param name="id"></param>
         /// <returns>Project</returns>
-        [HttpGet("project/{versionId}")]
+        [HttpGet("{id}/project")]
         [ProducesResponseType(typeof(Project), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetProject(string versionId)
+        public async Task<IActionResult> GetProject(string id)
         {
             try
             {
-                var project = await _versionService.GetProject(int.Parse(versionId));
+                var project = await _versionService.GetProject(int.Parse(id));
                 return Ok(project);
-            }
-            catch (ModelBuilderNotFoundException)
-            {
-                return NoContent();
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
-        }
-
-        /// <summary>
-        /// Returns a Project list with all versions of a Project
-        /// </summary>
-        /// <param name="typeId"></param>
-        /// <returns>List of Project</returns>
-        [HttpGet("projects/{typeId}")]
-        [ProducesResponseType(typeof(IEnumerable<Project>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetProjects(string typeId)
-        {
-            try
-            {
-                var projects = await _versionService.GetProjects(typeId);
-                return Ok(projects);
             }
             catch (ModelBuilderNotFoundException)
             {
@@ -191,7 +132,7 @@ namespace Mb.Core.Controllers.V1
         /// </summary>
         /// <param name="projectId"></param>
         /// <returns>VersionCm</returns>
-        [HttpPost("project/{projectId}")]
+        [HttpPost("{projectId}")]
         [ProducesResponseType(typeof(VersionCm), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -219,7 +160,7 @@ namespace Mb.Core.Controllers.V1
         /// <summary>
         /// Delete a version. Returns 200OK
         /// </summary>
-        /// <param name="versionId"></param>
+        /// <param name="id"></param>
         /// <returns>Status200OK</returns>
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -228,11 +169,11 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteVersion(string versionId)
+        public async Task<IActionResult> DeleteVersion(string id)
         {
             try
             {
-                await _versionService.DeleteVersion(int.Parse(versionId));
+                await _versionService.DeleteVersion(int.Parse(id));
                 return Ok();
             }
             catch (ModelBuilderNotFoundException)

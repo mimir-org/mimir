@@ -32,24 +32,10 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
-        /// Returns a VersionCm
-        /// </summary>
-        /// <returns>VersionCm</returns>
-        public async Task<VersionCm> GetVersion(int versionId)
-        {
-            var version = await Task.Run(() => _versionRepository.FindBy(x => x.Id == versionId).First());
-
-            if(version == null)
-                throw new ModelBuilderInvalidOperationException($"Version with id {versionId} not found");
-
-            return _mapper.Map<VersionCm>(version);
-        }
-
-        /// <summary>
         /// Returns a list with all versions
         /// </summary>
         /// <returns>List of VersionCm</returns>
-        public async Task<IEnumerable<VersionCm>> GetVersions()
+        public async Task<IEnumerable<VersionCm>> GetAllVersions()
         {
             return await Task.Run(() => _versionRepository.GetAll()
                 .ProjectTo<VersionCm>(_mapper.ConfigurationProvider)
@@ -62,7 +48,7 @@ namespace Mb.Services.Services
         /// </summary>
         /// <param name="typeId"></param>
         /// <returns>List of VersionCm</returns>
-        public async Task<IEnumerable<VersionCm>> GetVersionTypes(string typeId)
+        public async Task<IEnumerable<VersionCm>> GetAllVersions(string typeId)
         {
             return await Task.Run(() => _versionRepository.GetAll()
                 .Where(x => x.TypeId == typeId)
@@ -74,33 +60,16 @@ namespace Mb.Services.Services
         /// <summary>
         /// Returns a specific version of a Project
         /// </summary>
-        /// <param name="versionId"></param>
+        /// <param name="id"></param>
         /// <returns>Project</returns>
-        public async Task<Project> GetProject(int versionId)
+        public async Task<Project> GetProject(int id)
         {
-            var data = await Task.Run(() => _versionRepository.FindBy(x => x.Id == versionId)?.First()?.Data);
+            var data = await Task.Run(() => _versionRepository.FindBy(x => x.Id == id)?.First()?.Data);
 
             if (data == null)
                 throw new ModelBuilderInvalidOperationException("Version not found");
 
             return JsonConvert.DeserializeObject<Project>(data);
-        }
-
-        /// <summary>
-        /// Returns a Project list with all versions of a Project
-        /// </summary>
-        /// <param name="typeId"></param>
-        /// <returns>List of Project</returns>
-        public async Task<IEnumerable<Project>> GetProjects(string typeId)
-        {
-            var versions = await Task.Run(
-                () => _versionRepository.GetAll()
-                    .Where(x => x.TypeId == typeId)
-                    .OrderBy(x => x.Ver)
-                    .ToList()
-                );
-
-            return versions.Select(version => JsonConvert.DeserializeObject<Project>(version.Data)).ToList();
         }
 
         /// <summary>
@@ -145,11 +114,11 @@ namespace Mb.Services.Services
         /// <summary>
         /// Delete a version
         /// </summary>
-        /// <param name="versionId"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        public async Task DeleteVersion(int versionId)
+        public async Task DeleteVersion(int id)
         {
-            await _versionRepository.Delete(versionId);
+            await _versionRepository.Delete(id);
             await _versionRepository.SaveAsync();
         }
     }
