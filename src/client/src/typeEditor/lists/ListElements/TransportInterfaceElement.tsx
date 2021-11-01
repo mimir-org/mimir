@@ -1,32 +1,47 @@
 import { useState } from "react";
-import { TerminalType } from "../../../models";
+import { ConnectorType, TerminalType, TerminalTypeItem } from "../../../models";
 import { ListType, RoundCheckbox } from "../../inputs/RoundCheckbox";
 import { TerminalListElement, TerminalCategoryWrapper, RoundBox } from "../../styled";
 import { ExpandIcon, CollapseIcon } from "../../../assets/icons/chevron";
 import { TextResources } from "../../../assets/text";
-import {
-  SearchBarWrapper,
-  SearchBarContainer,
-  SearchBar,
-  SearchBarList,
-  SearchBarListItem,
-} from "../../../compLibrary/";
+import { SearchBarWrapper, SearchBarContainer, SearchBar, SearchBarList, SearchBarListItem } from "../../../compLibrary/";
+import { CreateId } from "../../../components/flow/helpers";
 
 interface Props {
   categoryName: string;
   terminalTypes: TerminalType[];
   onChange: Function;
   defaultTerminal?: TerminalType;
+  onTerminalTypeIdChange: (terminalTypeId: string) => void;
 }
 
-export const TransportInterfaceElement = ({ categoryName, terminalTypes, onChange, defaultTerminal }: Props) => {
+export const TransportInterfaceElement = ({
+  categoryName,
+  terminalTypes,
+  onChange,
+  defaultTerminal,
+  onTerminalTypeIdChange,
+}: Props) => {
   const [searchbarInput, setSearchbarInput] = useState(defaultTerminal ? defaultTerminal.name : "");
   const [expandList, setExpandList] = useState(false);
   const filter = terminalTypes?.filter((t) => t.name.match(new RegExp(searchbarInput, "i")));
 
-  const handleTerminalClick = (terminal) => {
+  const defaultTerminalItem = {
+    terminalId: CreateId(),
+    terminalTypeId: "",
+    selected: false,
+    connectorType: ConnectorType.Input,
+    number: 1,
+    categoryId: defaultTerminal?.terminalCategoryId,
+  } as TerminalTypeItem;
+
+  const handleTerminalClick = (terminal: TerminalType) => {
     setSearchbarInput(terminal.name);
-    onChange("terminalTypeId", terminal.id);
+
+    defaultTerminalItem.terminalTypeId = terminal.id;
+    defaultTerminalItem.categoryId = terminal.terminalCategoryId;
+
+    onChange("terminalTypeId", defaultTerminalItem);
     setExpandList(!expandList);
   };
 
@@ -71,7 +86,7 @@ export const TransportInterfaceElement = ({ categoryName, terminalTypes, onChang
             listType={ListType.Terminals}
             checked={isSelected()}
             defaultValue={terminalTypes[0].id}
-            onChange={onChange}
+            onChange={(_, terminalTypeId: string) => onTerminalTypeIdChange(terminalTypeId)}
           />
         </RoundBox>
         {isSelected() && (

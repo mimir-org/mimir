@@ -122,6 +122,13 @@ export function removeTerminalTypeByCategory(categoryId: string) {
   };
 }
 
+export function clearAllTerminalTypes(): Types.ClearAllTerminalTypes {
+  return {
+    type: Types.CLEAR_ALL_TERMINALTYPES,
+    payload: null,
+  };
+}
+
 export function updateTerminalType(terminal: TerminalTypeItem) {
   return {
     type: Types.UPDATE_TERMINALTYPE,
