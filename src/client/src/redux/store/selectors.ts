@@ -97,6 +97,11 @@ export const legendOpenSelector = createAppSelector(
   (types) => types.find((m) => m.type === MODULE_TYPE.LEGEND).visible
 );
 
+export const animatedEdgeSelector = createAppSelector(
+  (state) => state.edgeAnimation.animated,
+  (animated) => animated
+);
+
 export const customCategorySelector = createAppSelector(
   (state) => state.customCategory,
   (customCategory) => customCategory
