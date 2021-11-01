@@ -109,6 +109,7 @@ namespace AzureActiveDirectoryModule
                     c.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
                 }
 
+                c.ConfigObject.AdditionalItems.Add("syntaxHighlight", false);
                 c.OAuthClientId(azureConfig.ClientId);
                 c.OAuthAppName("Azure Active Directory");
                 c.DisplayOperationId();
