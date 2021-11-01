@@ -50,7 +50,7 @@ export const CommitProjectMenu = ({ contractors, parsers, projectId }: Props) =>
             <ButtonBox>
               <Button
                 onClick={() => Handlers.OnCommitProjectClick(dispatch, projectId, parser.id, contractor.domain)}
-                type={TextResources.Account_Create}
+                type={TextResources.Account_Commit_Button}
               />
             </ButtonBox>
           )}

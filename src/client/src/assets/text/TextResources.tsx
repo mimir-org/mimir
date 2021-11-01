@@ -187,6 +187,7 @@ const TextResources = {
   Account_Commit: "CommitProject",
   Account_Commit_Contractor_Label: "Send to contractor",
   Account_Commit_Parser_Label: "Data type",
+  Account_Commit_Button: "Commit",
   Account_Logout_Label: "Log out",
   Account_Open_Label: "Open a project",
   Account_Create_Label: "Create a project",
