@@ -1,5 +1,5 @@
 import { Edge, Node, Project } from "../../models";
-import { BlockNodeSize, MODULE_TYPE, VIEW_TYPE } from "../../models/project";
+import { BlockNodeSize, MODULE_TYPE, ViewType, VIEW_TYPE } from "../../models/project";
 import { GetAttributeLikeItemKey } from "../../modules/inspector/helpers/IsType";
 import { AttributeLikeItem } from "../../modules/inspector/types";
 import { createAppSelector, combineAppSelectors, createParametricAppSelector } from "../../redux/store";
@@ -105,6 +105,11 @@ export const customCategorySelector = createAppSelector(
 export const treeSelector = createAppSelector(
   (state) => state.flow.view,
   (view) => view === VIEW_TYPE.TREEVIEW
+);
+
+export const flowViewSelector = createAppSelector(
+  (state) => state.flow.view,
+  (view) => view as ViewType
 );
 
 export const treeFilterSelector = createAppSelector(
