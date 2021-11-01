@@ -653,7 +653,7 @@ namespace Mb.Services.Services
                 if(sender.Instance is IModelBuilderSyncService client)
                 {
                     await client.SendData(export);
-                    SetProjectCommitVersion(project.Id);
+                    await SetProjectCommitVersion(project.Id);
                 }
             }
         }
@@ -1043,7 +1043,7 @@ namespace Mb.Services.Services
 
         }
 
-        private async void SetProjectCommitVersion(string projectId)
+        private async Task SetProjectCommitVersion(string projectId)
         {
             if (string.IsNullOrWhiteSpace(projectId))
                 return;
