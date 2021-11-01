@@ -1,8 +1,7 @@
 import { TextResources } from "../../assets/text";
 import { LegendModule } from "../../modules/legend";
 import { LibraryComponent } from "./index";
-import { useEffect, useMemo, useState } from "react";
-import { searchLibrary } from "../../redux/store/library/actions";
+import { useMemo, useState } from "react";
 import { AnimatedModule, Size } from "../../compLibrary";
 import { GetFilteredLibCategories, GetLibCategories } from "./helpers";
 import { ModuleBody, ModuleHead } from "../../compLibrary/box/modules";
@@ -40,10 +39,6 @@ const LibraryModule = () => {
 
   const libCategories = useMemo(() => GetLibCategories(selectedNode, libState), [selectedNode, libState]);
   const filteredCategories = useMemo(() => GetFilteredLibCategories(libCategories, searchString), [libCategories, searchString]);
-
-  useEffect(() => {
-    dispatch(searchLibrary(""));
-  }, [dispatch]);
 
   return (
     <AnimatedModule start={startLib} stop={stopLib} run={animate} type={lib} id="LibraryModule">
