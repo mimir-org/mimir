@@ -5,21 +5,19 @@ import { CreateOffPageNode } from "../block/helpers";
 import { CreateOffPageData } from "../block/helpers/CreateOffPageNode";
 import { Project } from "../../../models";
 
-const useOnConnectStop = (e, project: Project, nodeId: string, dispatch: any) => {
+const useOnConnectStop = (e, project: Project, dispatch: any) => {
   e.preventDefault();
   const edgeEvent = LoadEventData("edgeEvent") as EdgeEvent;
 
   if (edgeEvent) {
-    const position = { x: e.clientX, y: e.clientY };
-
-    const createOffPageData = {
-      fromNodeId: edgeEvent.nodeId,
-      fromConnectorId: edgeEvent.sourceId,
-      x: position.x,
-      y: position.y,
+    const offPageData = {
+      sourceNodeId: edgeEvent.nodeId,
+      sourceConnectorId: edgeEvent.sourceId,
+      x: e.clientX,
+      y: e.clientY,
     } as CreateOffPageData;
 
-    const node = CreateOffPageNode(project, createOffPageData);
+    const node = CreateOffPageNode(project, offPageData);
 
     dispatch(addNode(node.node));
     dispatch(createEdge(node.partOfEdge));

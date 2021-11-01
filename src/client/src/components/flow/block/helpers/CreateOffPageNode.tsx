@@ -8,17 +8,22 @@ export interface OffPageNodeCreator {
 }
 
 export interface CreateOffPageData {
-  fromNodeId: string;
-  fromConnectorId: string;
+  sourceNodeId: string;
+  sourceConnectorId: string;
   x: number;
   y: number;
 }
-
+/**
+ * Component to create an OffPageNode.
+ * @param project
+ * @param data
+ * @returns the data type OffPageNodeCreator
+ */
 const CreateOffPageNode = (project: Project, data: CreateOffPageData) => {
   const nodes = project?.nodes;
-  const fromNode = nodes?.find((x) => x.id === data.fromNodeId);
-  const fromNodeConnector = fromNode?.connectors.find((x) => x.id === data.fromConnectorId);
-  const fromNodePartOfConnector = fromNode?.connectors.find((x) => IsPartOf(x) && !IsInputTerminal(x));
+  const sourceNode = nodes?.find((x) => x.id === data.sourceNodeId);
+  const sourceConnector = sourceNode?.connectors.find((x) => x.id === data.sourceConnectorId);
+  const sourcePartOfConnector = sourceNode?.connectors.find((x) => IsPartOf(x) && !IsInputTerminal(x));
 
   const offPageNode = {
     id: CreateId(),
@@ -37,14 +42,14 @@ const CreateOffPageNode = (project: Project, data: CreateOffPageData) => {
     name: "TransportConnector",
     type: ConnectorType.Input,
     nodeId: offPageNode.id,
-    terminalCategory: fromNodeConnector.terminalCategory,
-    terminalCategoryId: fromNodeConnector.terminalCategoryId,
+    terminalCategory: sourceConnector.terminalCategory,
+    terminalCategoryId: sourceConnector.terminalCategoryId,
     attributes: [],
     semanticReference: "",
     inputOrder: 0,
     outputOrder: 0,
     visible: true,
-    color: fromNodeConnector.color,
+    color: sourceConnector.color,
     kind: CONNECTOR_KIND,
   } as Connector;
 
@@ -63,12 +68,12 @@ const CreateOffPageNode = (project: Project, data: CreateOffPageData) => {
 
   const partofEdge = {
     id: CreateId(),
-    fromConnector: fromNodePartOfConnector,
-    fromConnectorId: fromNodePartOfConnector?.id,
+    fromConnector: sourcePartOfConnector,
+    fromConnectorId: sourcePartOfConnector?.id,
     toConnector: partOfConnector,
     toConnectorId: partOfConnector?.id,
-    fromNode: fromNode,
-    fromNodeId: fromNode.id,
+    fromNode: sourceNode,
+    fromNodeId: sourceNode.id,
     toNode: offPageNode,
     toNodeId: offPageNode.id,
     isHidden: false,
@@ -76,12 +81,12 @@ const CreateOffPageNode = (project: Project, data: CreateOffPageData) => {
 
   const transportEdge = {
     id: CreateId(),
-    fromConnector: fromNodeConnector,
-    fromConnectorId: fromNodeConnector?.id,
+    fromConnector: sourceConnector,
+    fromConnectorId: sourceConnector?.id,
     toConnector: targetConnector,
     toConnectorId: targetConnector?.id,
-    fromNode: fromNode,
-    fromNodeId: fromNode.id,
+    fromNode: sourceNode,
+    fromNodeId: sourceNode.id,
     toNode: offPageNode,
     toNodeId: offPageNode.id,
     isHidden: false,
