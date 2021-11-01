@@ -21,7 +21,6 @@ import {
   GetSelectedRds,
   GetSelectedTerminal,
   IsLocation,
-  IsObjectBlock,
   IsProduct,
   GetWidth,
   GetSelectedDiscipline,
@@ -36,7 +35,9 @@ import {
   updateTerminalType,
   removeTerminalTypeByCategory,
   saveLibraryType,
+  clearAllTerminalTypes,
 } from "./redux/actions";
+import { ConnectorType, TerminalTypeItem } from "../models";
 /**
  * Component for adding or editing a type
  * @returns the visual Type Editor window
@@ -64,15 +65,25 @@ export const TypeEditorComponent = () => {
     dispatch(closeTypeEditor());
   };
 
-  const onTerminalCategoryChange = (key: string, value: any) => {
+  const onTerminalTypeIdChange = (terminalTypeId: string) => {
+    dispatch(clearAllTerminalTypes());
+    dispatch(updateValue("terminalTypeId", terminalTypeId));
+  };
+
+  const onTerminalCategoryChange = (key: string, terminalTypeItem: TerminalTypeItem) => {
     if (key === "add") {
-      dispatch(addTerminalType(value));
+      dispatch(addTerminalType(terminalTypeItem));
     } else if (key === "remove") {
-      dispatch(removeTerminalType(value));
+      dispatch(removeTerminalType(terminalTypeItem));
     } else if (key === "update") {
-      dispatch(updateTerminalType(value));
+      dispatch(updateTerminalType(terminalTypeItem));
     } else if (key === "removeAll") {
-      dispatch(removeTerminalTypeByCategory(value));
+      dispatch(removeTerminalTypeByCategory(terminalTypeItem.categoryId));
+    } else if (key === "terminalTypeId") {
+      dispatch(removeTerminalTypeByCategory(terminalTypeItem.categoryId));
+      dispatch(addTerminalType({ ...terminalTypeItem, connectorType: ConnectorType.Input }));
+      dispatch(addTerminalType({ ...terminalTypeItem, connectorType: ConnectorType.Output }));
+      dispatch(updateValue(key, terminalTypeItem.terminalTypeId));
     }
   };
 
@@ -105,11 +116,8 @@ export const TypeEditorComponent = () => {
                   items={state?.terminals}
                   createLibraryType={state?.createLibraryType}
                   listType={ListType.Terminals}
-                  onChange={
-                    IsObjectBlock(state?.createLibraryType.objectType)
-                      ? (key, data) => onTerminalCategoryChange(key, data)
-                      : (key, data) => onChange(key, data)
-                  }
+                  onChange={(key, data) => onTerminalCategoryChange(key, data)}
+                  onTerminalTypeIdChange={onTerminalTypeIdChange}
                   // disabled={ModeEdit(mode) ? false : FieldValidator(state, "rds")}
                 />
               )}
