@@ -22,6 +22,7 @@ const AdminComponent = ({ element, project, index, activeTabIndex, changeInspect
   const dispatch = useAppDispatch();
   const statuses = useAppSelector(statusSelector);
   const isTabOpen = activeTabIndex === index;
+  const company = process.env.REACT_APP_COMPANY;
 
   const onClick = useCallback(() => {
     dispatch(changeInspectorTabAction(index));
@@ -36,7 +37,7 @@ const AdminComponent = ({ element, project, index, activeTabIndex, changeInspect
       {isTabOpen && (
         <TabBody id="admininfo">
           <AdminInfoLogoBox>
-            <img src={GetCompanyLogo("Equinor")} alt="logo" className="logo" />
+            <img src={GetCompanyLogo(company)} alt="logo" className="logo" />
           </AdminInfoLogoBox>
           <hr />
           {element && <div className="container">{GetAdminContent(element, project, statuses)}</div>}

@@ -106,7 +106,6 @@ const useOnDrop = (
     }
 
     dispatch(addNode(targetNode));
-
     if (!IsBlockView()) dispatch(setActiveNode(targetNode.id, true));
   }
 };
