@@ -1,4 +1,5 @@
 import { Node, Connector } from "../../../models";
+import { IsOffPage } from "../block/helpers";
 import {
   IsLocation,
   IsPartOf,
@@ -33,9 +34,12 @@ const ValidateBlockEdge = (
 };
 
 function validEdge(activeNode: Node, toNode: Node, fromNode: Node, source: Connector, target: Connector) {
+  if (IsOffPage(toNode)) return true;
+
   if (IsLocation(activeNode)) return IsLocationConnection(source, target) && IsLocation(toNode) && IsLocation(fromNode);
   if (IsFunction(activeNode)) return IsTransportConnection(source, target) && IsFunction(toNode) && IsFunction(fromNode);
   if (IsProduct(activeNode)) return IsTransportConnection(source, target);
+
   return false;
 }
 

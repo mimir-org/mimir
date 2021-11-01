@@ -2,8 +2,8 @@ import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
 import { Connector, Node } from "../../../../../models";
 import { Symbol } from "../../../../../compLibrary/symbol";
-import { TreeNodeWrapper, TreeHandleBox, TreeNodeNameBox } from "./styled";
-import { GetHandleType, IsPartOf } from "../../../helpers";
+import { TreeNodeWrapper, TreeHandleBox, TreeNodeNameBox, LogoBox, SymbolBox } from "./styled";
+import { GetCompanyLogo, GetHandleType, IsPartOf } from "../../../helpers";
 import { FindAllNodes } from "../../../block/helpers";
 
 /**
@@ -53,7 +53,12 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
         );
       })}
       <TreeNodeNameBox>{data.label ?? data.name}</TreeNodeNameBox>
-      <Symbol base64={data.symbol} text={data.name} />
+      <LogoBox>
+        <img src={GetCompanyLogo("Equinor")} alt="logo" className="logo" />
+      </LogoBox>
+      <SymbolBox>
+        <Symbol base64={data.symbol} text={data.name} />
+      </SymbolBox>
     </TreeNodeWrapper>
   );
 };

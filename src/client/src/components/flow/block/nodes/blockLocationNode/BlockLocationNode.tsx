@@ -1,7 +1,7 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, useUpdateNodeInternals } from "react-flow-renderer";
 import { NodeBox } from "../../../styled";
-import { BlockNodeNameBox } from "../../styled";
+import { BlockNodeNameBox, LogoBox, SymbolBox } from "../styled";
 import { HandleComponent, TerminalsContainerComponent } from "../../terminals";
 import { Connector, Node } from "../../../../../models";
 import { OnHover, OnMouseOut, OnConnectorClick } from "./handlers";
@@ -9,6 +9,7 @@ import { FilterTerminals, GetNodeByDataId } from "../../helpers";
 import { Symbol } from "../../../../../compLibrary/symbol";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
 import { electroSelector, nodeSelector, secondaryNodeSelector } from "../../../../../redux/store";
+import { GetCompanyLogo } from "../../../helpers";
 
 /**
  * Component for a Location Node in BlockView.
@@ -56,7 +57,12 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
       onMouseOut={() => OnMouseOut(showTerminalBox)}
     >
       <BlockNodeNameBox>{node.label ?? node.name}</BlockNodeNameBox>
-      <Symbol base64={node.symbol} text={node.name} />
+      <LogoBox>
+        <img src={GetCompanyLogo("Equinor")} alt="logo" className="logo" />
+      </LogoBox>
+      <SymbolBox>
+        <Symbol base64={node.symbol} text={node.name} />{" "}
+      </SymbolBox>
 
       <TerminalsContainerComponent
         node={node}
