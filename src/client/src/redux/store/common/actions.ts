@@ -4,6 +4,7 @@ import {
   FETCHING_STATUSES,
   DELETE_COMMON_ERROR,
   FETCHING_COMBINED_ATTRIBUTE_FILTERS,
+  FETCHING_PARSERS,
 } from "./types";
 
 export function getContractors(): CommonActionTypes {
@@ -32,6 +33,13 @@ export function getStatuses(): CommonActionTypes {
 export function getAttributeFilters(): CommonActionTypes {
   return {
     type: FETCHING_COMBINED_ATTRIBUTE_FILTERS,
+    payload: null,
+  };
+}
+
+export function getParsers(): CommonActionTypes {
+  return {
+    type: FETCHING_PARSERS,
     payload: null,
   };
 }

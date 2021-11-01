@@ -171,7 +171,7 @@ namespace Mb.Core.Extensions
                 }
                 catch (Exception e)
                 {
-                    logger.LogError($"Module error: ({module.Name}), {e.Message}");
+                    logger.LogError($"Module error: ({module?.ModuleDescription?.Name}), {e.Message}");
                 }
             }
         }
@@ -193,7 +193,7 @@ namespace Mb.Core.Extensions
                 }
                 catch (Exception e)
                 {
-                    logger.LogError($"Module error: ({module.Name}), {e.Message}");
+                    logger.LogError($"Module error: ({module?.ModuleDescription?.Name}), {e.Message}");
                 }
             }
         }
