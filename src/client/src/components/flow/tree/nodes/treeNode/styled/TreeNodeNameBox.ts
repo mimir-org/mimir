@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const TreeNodeNameBox = styled.div`
-  margin-top: 15px;
+  margin-top: 17px;
   padding: 0px 5px 0px 5px;
   height: 15px;
   font-weight: bold;

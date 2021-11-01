@@ -8,7 +8,8 @@ const LogoBox = styled.div`
   align-items: center;
   height: 25px;
   width: 60px;
-  left: 53px;
+  left: 50%;
+  transform: translateX(-50%);
 
   .logo {
     position: relative;

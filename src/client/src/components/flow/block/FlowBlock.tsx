@@ -3,7 +3,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { FullScreenComponent } from "../../../compLibrary/controls";
 import { GetBlockEdgeTypes, OnBlockClick, IsOffPage } from "../block/helpers";
 import { BuildBlockElements } from "./builders";
-import { useOnConnect, useOnDrop, useOnRemove, useOnDragStop, useOnConnectStart, useOnConnectStop } from "../hooks";
+import { useOnConnect, useOnDrop, useOnRemove, useOnDragStop } from "../hooks";
 import { setActiveBlockNode, setActiveEdge } from "../../../redux/store/project/actions";
 import { GetSelectedNode, GetBlockNodeTypes, SetDarkModeColor, GetParent } from "../helpers";
 import { EDGE_TYPE, EdgeType } from "../../../models/project";
@@ -68,13 +68,13 @@ const FlowBlock = ({ inspectorRef }: Props) => {
     return useOnConnect(params, project, setElements, dispatch, EDGE_TYPE.BLOCK as EdgeType, lib);
   };
 
-  const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
-    return useOnConnectStart(e, { nodeId, handleType, handleId });
-  };
+  // const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
+  //   return useOnConnectStart(e, { nodeId, handleType, handleId });
+  // };
 
-  const OnConnectStop = (e) => {
-    return useOnConnectStop(e, project, dispatch);
-  };
+  // const OnConnectStop = (e) => {
+  //   return useOnConnectStop(e, project, dispatch);
+  // };
 
   const OnDragOver = (event) => {
     event.preventDefault();
@@ -108,8 +108,8 @@ const FlowBlock = ({ inspectorRef }: Props) => {
           nodeTypes={GetBlockNodeTypes}
           edgeTypes={GetBlockEdgeTypes}
           onConnect={OnConnect}
-          onConnectStart={OnConnectStart}
-          onConnectStop={OnConnectStop}
+          // onConnectStart={OnConnectStart}
+          // onConnectStop={OnConnectStop}
           onElementsRemove={OnElementsRemove}
           onLoad={OnLoad}
           onDrop={OnDrop}
