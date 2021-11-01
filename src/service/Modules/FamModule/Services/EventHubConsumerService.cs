@@ -7,6 +7,7 @@ using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage.Blobs;
 using EventHubModule.Contracts;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
@@ -19,11 +20,12 @@ namespace EventHubModule.Services
         private CancellationToken _cancellationToken;
         private int _failedNumber;
         private readonly bool _hasValidConfiguration;
+        private readonly ILogger<EventHubConsumerService<T>> logger;
 
-        public EventHubConsumerService(IOptions<EventHubConfiguration> eventHubConfiguration)
+        public EventHubConsumerService(IOptions<EventHubConfiguration> eventHubConfiguration, ILogger<EventHubConsumerService<T>> logger)
         {
-            _hasValidConfiguration = eventHubConfiguration?.Value != null &&
-                                     eventHubConfiguration.Value.HasValidConsumerConfiguration();
+            this.logger = logger;
+            _hasValidConfiguration = eventHubConfiguration?.Value != null && eventHubConfiguration.Value.HasValidConsumerConfiguration();
 
             if (!_hasValidConfiguration)
                 return;
@@ -36,9 +38,12 @@ namespace EventHubModule.Services
 
         public async Task RunAsync(CancellationToken cancellationToken = new())
         {
+            logger.LogInformation("Starting EventHub Conusmer...");
+
             if (!_hasValidConfiguration)
                 return;
 
+            logger.LogInformation("EventHub Conusmer Started");
             _cancellationToken = cancellationToken;
             await _client.StartProcessingAsync(_cancellationToken);
 
