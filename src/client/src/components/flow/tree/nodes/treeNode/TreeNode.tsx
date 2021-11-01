@@ -56,7 +56,7 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
       })}
       <TreeNodeNameBox>{data.label ?? data.name}</TreeNodeNameBox>
       <LogoBox>
-        <img src={AibelLogo} alt="logo" className="logo" />
+        <img src={EquinorLogo} alt="logo" className="logo" />
       </LogoBox>
       <SymbolBox>
         <Symbol base64={data.symbol} text={data.name} />

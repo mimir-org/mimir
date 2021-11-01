@@ -7,7 +7,7 @@ const LogoBox = styled.div`
   flex-direction: column;
   align-items: center;
   height: 35px;
-  background-color: red;
+  /* background-color: red; */
 
   .logo {
     position: relative;
@@ -16,7 +16,7 @@ const LogoBox = styled.div`
 
     width: auto;
     max-width: 88px;
-    background-color: royalblue;
+    /* background-color: royalblue; */
   }
 `;
 
