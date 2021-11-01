@@ -15,6 +15,7 @@ import { BlockNodeSize } from "../../../../models/project";
 const BuildBlockNode = (node: Node, parent: Node, parentNodeSize: BlockNodeSize) => {
   if (!node || !parent) return null;
   const type = GetNodeTypeString(node);
+  console.log(node.label);
 
   const nodePos = { x: node.positionBlockX, y: node.positionBlockY };
   const parentPos = { x: parent.positionBlockX, y: parent.positionBlockY };

@@ -225,6 +225,7 @@ const TextResources = {
   Type_BlockFunction: "BlockFunctionNode",
   Type_BlockProduct: "BlockProductNode",
   Type_BlockParentNode: "BlockParentNode",
+  Type_OffPageNode: "OffPageNode",
 
   // RDS
   RDS_Function: "=",

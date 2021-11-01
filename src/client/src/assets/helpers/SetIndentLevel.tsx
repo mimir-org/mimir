@@ -11,7 +11,7 @@ const SetIndentLevel = (node: Node, count: number): number => {
 
   count++;
 
-  const nextNode = nodes.find((x) => x.id === edge.fromNode.id);
+  const nextNode = nodes?.find((x) => x.id === edge.fromNode?.id);
   if (!nextNode) return count;
 
   return SetIndentLevel(nextNode, count);
