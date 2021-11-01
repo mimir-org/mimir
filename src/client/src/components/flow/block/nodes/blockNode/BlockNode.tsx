@@ -2,16 +2,15 @@ import * as Click from "./handlers";
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, useUpdateNodeInternals } from "react-flow-renderer";
 import { Connector, Node } from "../../../../../models";
-import { GetCompanyLogo, IsFunction, IsProduct } from "../../../helpers";
+import { IsFunction, IsProduct } from "../../../helpers";
 import { NodeBox } from "../../../styled";
 import { TerminalsContainerComponent, HandleComponent } from "../../terminals";
 import { SetNodeSize } from "./helpers";
 import { FilterTerminals } from "../../helpers";
-import { Symbol } from "../../../../../compLibrary/symbol";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
 import { edgeSelector, electroSelector, nodeSelector, secondaryNodeSelector } from "../../../../../redux/store";
 import { Size } from "../../../../../compLibrary";
-import { LogoBox, SymbolBox, BlockNodeNameBox } from "../styled";
+import { BlockLogoComponent } from "../../logo";
 
 /**
  * Component for a Function or Product Node in BlockView.
@@ -63,13 +62,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
       onMouseOver={() => Click.OnHover(showTerminalBox)}
       onMouseOut={() => Click.OnMouseOut(showTerminalBox)}
     >
-      <BlockNodeNameBox>{node.label ?? node.name}</BlockNodeNameBox>
-      <LogoBox>
-        <img src={GetCompanyLogo("Equinor")} alt="logo" className="logo" />
-      </LogoBox>
-      <SymbolBox>
-        <Symbol base64={node.symbol} text={node.name} />{" "}
-      </SymbolBox>
+      <BlockLogoComponent node={node} />
 
       <TerminalsContainerComponent
         node={node}
