@@ -3,13 +3,12 @@ import { NodeProps, useUpdateNodeInternals } from "react-flow-renderer";
 import { NodeBox } from "../../../styled";
 import { BlockNodeNameBox } from "../../styled";
 import { HandleComponent, TerminalsContainerComponent } from "../../terminals";
-import { Node } from "../../../../../models";
+import { Connector, Node } from "../../../../../models";
 import { OnHover, OnMouseOut, OnConnectorClick } from "./handlers";
 import { FilterTerminals, GetNodeByDataId } from "../../helpers";
 import { Symbol } from "../../../../../compLibrary/symbol";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
 import { electroSelector, nodeSelector, secondaryNodeSelector } from "../../../../../redux/store";
-import { GetSelectedNode } from "../../../helpers";
 
 /**
  * Component for a Location Node in BlockView.
@@ -21,33 +20,37 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const [terminalBox, showTerminalBox] = useState(false);
   const [inTerminalMenu, showInTerminalMenu] = useState(false);
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
+  const [terminals, setTerminals]: [Connector[], any] = useState([]);
   const updateNodeInternals = useUpdateNodeInternals();
   const nodes = useAppSelector(nodeSelector);
   const secondaryNode = useAppSelector(secondaryNodeSelector) as Node;
   const electro = useAppSelector(electroSelector);
-  const selectedNode = GetSelectedNode();
   const node = nodes.find((x) => x.id === data?.id);
-  const terminals = FilterTerminals(node, selectedNode, secondaryNode);
+
+  useEffect(() => {
+    setTerminals(FilterTerminals(node?.connectors, secondaryNode));
+  }, [secondaryNode, node?.connectors]);
 
   // Enforce size change of node
   useEffect(() => {
-    const locationNode = GetNodeByDataId(node.id);
+    const locationNode = GetNodeByDataId(node?.id);
     if (locationNode) {
-      locationNode.style.width = `${node.width}px`;
-      locationNode.style.height = `${node.length}px`;
+      locationNode.style.width = `${node?.width}px`;
+      locationNode.style.height = `${node?.length}px`;
     }
   }, [node]);
 
   useEffect(() => {
     updateNodeInternals(node?.id);
-    updateNodeInternals(secondaryNode?.id);
-  }, [node, secondaryNode, updateNodeInternals]);
+  });
+
+  if (!node) return null;
 
   return (
     <NodeBox
       id={"BlockLocationNode-" + node.id}
-      width={node?.width}
-      length={node?.length}
+      width={node.width}
+      length={node.length}
       product={false}
       onMouseOver={() => OnHover(showTerminalBox)}
       onMouseOut={() => OnMouseOut(showTerminalBox)}
@@ -70,8 +73,8 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
 
       <HandleComponent
         nodes={nodes}
-        length={node?.blockLength}
-        width={node?.blockWidth}
+        length={node.blockLength}
+        width={node.blockWidth}
         terminals={terminals}
         parent={false}
         electro={electro}

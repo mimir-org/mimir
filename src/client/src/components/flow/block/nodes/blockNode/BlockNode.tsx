@@ -1,16 +1,17 @@
 import * as Click from "./handlers";
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, useUpdateNodeInternals } from "react-flow-renderer";
-import { Node } from "../../../../../models";
-import { GetSelectedNode, IsFunction, IsProduct } from "../../../helpers";
+import { Connector, Node } from "../../../../../models";
+import { IsFunction, IsProduct } from "../../../helpers";
 import { NodeBox } from "../../../styled";
 import { TerminalsContainerComponent, HandleComponent } from "../../terminals";
-import { SetNodeWidth, SetNodeLength } from "./helpers";
+import { SetNodeSize } from "./helpers";
 import { FilterTerminals } from "../../helpers";
 import { Symbol } from "../../../../../compLibrary/symbol";
 import { BlockNodeNameBox } from "../../styled";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
 import { edgeSelector, electroSelector, nodeSelector, secondaryNodeSelector } from "../../../../../redux/store";
+import { Size } from "../../../../../compLibrary";
 
 /**
  * Component for a Function or Product Node in BlockView.
@@ -22,24 +23,36 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const [inTerminalMenu, showInTerminalMenu] = useState(false);
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
   const [terminalBox, showTerminalBox] = useState(false);
-  const updateNodeInternals = useUpdateNodeInternals();
+  const [terminals, setTerminals]: [Connector[], any] = useState([]);
+  const [width, setWidth] = useState(Size.Node_Width);
+  const [length, setLength] = useState(Size.Node_Length);
 
+  const updateNodeInternals = useUpdateNodeInternals();
   const nodes = useAppSelector(nodeSelector);
   const edges = useAppSelector(edgeSelector);
   const secondaryNode = useAppSelector(secondaryNodeSelector) as Node;
   const electro = useAppSelector(electroSelector);
   const type = IsFunction(data) ? "BlockFunctionNode-" : "BlockProductNode-";
   const node = nodes?.find((x) => x.id === data.id);
-  const selectedNode = GetSelectedNode();
-  const terminals = FilterTerminals(data, selectedNode, secondaryNode);
+
+  useEffect(() => {
+    setTerminals(FilterTerminals(node?.connectors, secondaryNode));
+  }, [secondaryNode, node?.connectors]);
+
+  useEffect(() => {
+    const size = SetNodeSize(terminals, electro);
+    setWidth(size.width);
+    setLength(size.length);
+  }, [electro, terminals]);
 
   useEffect(() => {
     updateNodeInternals(node?.id);
-    updateNodeInternals(secondaryNode?.id);
-  }, [node, secondaryNode, updateNodeInternals]);
+  });
 
   if (!node) return null;
-  electro ? SetNodeWidth(terminals, node) : SetNodeLength(terminals, node);
+
+  node.width = width;
+  node.length = length;
 
   return (
     <NodeBox
