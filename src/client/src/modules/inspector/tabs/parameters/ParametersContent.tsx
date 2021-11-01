@@ -73,7 +73,9 @@ const ParametersContent = ({
           </div>
           <div
             className={`link ${isCreateLibraryType && "hide-link"}`}
-            onClick={() => !isCreateLibraryType && OnShowAllFilters(parametersElement.id, attributeFilters, dispatch)}
+            onClick={() =>
+              !isCreateLibraryType && OnShowAllFilters(parametersElement.id, attributeFilters, attributeCombinations, dispatch)
+            }
           >
             {TextResources.Inspector_Params_Default}
           </div>
