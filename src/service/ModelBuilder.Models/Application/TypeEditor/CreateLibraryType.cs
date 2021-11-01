@@ -46,7 +46,8 @@ namespace Mb.Models.Application.TypeEditor
         [JsonIgnore]
         public string Version { get; set; }
 
-        [JsonIgnore] public string TypeId { get; set; }
+        [JsonIgnore] 
+        public string TypeId { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
