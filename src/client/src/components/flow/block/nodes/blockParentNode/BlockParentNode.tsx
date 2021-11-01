@@ -1,13 +1,13 @@
 import { memo, FC, useState, useEffect } from "react";
-import { Background, BackgroundVariant, NodeProps, useUpdateNodeInternals } from "react-flow-renderer";
+import { Background, BackgroundVariant, NodeProps } from "react-flow-renderer";
 import { HandleComponent, TerminalsContainerComponent } from "../../terminals";
 import { Color } from "../../../../../compLibrary";
 import { GetParentColor, SetParentNodeSize } from "./helpers";
 import { OnConnectorClick } from "./handlers";
 import { BlockComponent } from "./";
 import { FilterTerminals } from "../../helpers";
-import { Node } from "../../../../../models";
-import { GetSelectedNode, IsLocation } from "../../../helpers";
+import { Connector, Node } from "../../../../../models";
+import { IsLocation } from "../../../helpers";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
 import { edgeSelector, electroSelector, nodeSelector, nodeSizeSelector, secondaryNodeSelector } from "../../../../../redux/store";
 
@@ -20,29 +20,26 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
   const [inTerminalMenu, showInTerminalMenu] = useState(false);
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
+  const [terminals, setTerminals]: [Connector[], any] = useState([]);
   const nodes = useAppSelector(nodeSelector);
   const edges = useAppSelector(edgeSelector);
   const secondaryNode = useAppSelector(secondaryNodeSelector) as Node;
   const electro = useAppSelector(electroSelector);
   const parentNodeSize = useAppSelector(nodeSizeSelector);
-  const updateNodeInternals = useUpdateNodeInternals();
-  const selectedNode = GetSelectedNode();
   const node = nodes?.find((x) => x.id === data.id);
-  if (node) {
-    node.blockWidth = parentNodeSize?.width;
-    node.blockLength = parentNodeSize?.length;
-  }
-
-  const terminals = FilterTerminals(data, selectedNode, secondaryNode);
 
   useEffect(() => {
-    updateNodeInternals(node?.id);
-    updateNodeInternals(secondaryNode?.id);
-  }, [node, secondaryNode, updateNodeInternals]);
+    setTerminals(FilterTerminals(node?.connectors, secondaryNode));
+  }, [secondaryNode, node?.connectors]);
 
   useEffect(() => {
     SetParentNodeSize(node, secondaryNode, dispatch); // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [secondaryNode]);
+
+  if (!node) return null;
+
+  node.blockWidth = parentNodeSize?.width;
+  node.blockLength = parentNodeSize?.length;
 
   return (
     <>
@@ -50,7 +47,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         dispatch={dispatch}
         node={node}
         color={GetParentColor(node)}
-        selected={node?.isBlockSelected}
+        selected={node.isBlockSelected}
         width={parentNodeSize?.width}
         height={parentNodeSize?.length}
       />
@@ -70,8 +67,8 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
       <HandleComponent
         parent={true}
         nodes={nodes}
-        length={node?.blockLength}
-        width={node?.blockWidth}
+        length={node.blockLength}
+        width={node.blockWidth}
         terminals={terminals}
         electro={electro}
       />

@@ -19,7 +19,7 @@ function SetParentNodeSize(node: Node, secondaryNode: Node, dispatch: any) {
   const length = screenHeight - marginY;
 
   // Update the Flow parentNode
-  const parentNode = GetNodeByDataId(node.id);
+  const parentNode = GetNodeByDataId(node?.id);
   if (parentNode) {
     parentNode.style.width = `${width}px`;
     parentNode.style.height = `${length}px`;

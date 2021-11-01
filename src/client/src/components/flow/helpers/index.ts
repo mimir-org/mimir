@@ -34,6 +34,7 @@ export { default as SetDarkModeColor } from "./SetDarkModeColor";
 export { default as GetNodeType } from "./GetNodeType";
 export { default as GetHandleType } from "./GetHandleType";
 export { default as GetSelectedNode } from "./GetSelectedNode";
+export { default as GetSelectedBlockNode } from "./GetSelectedBlockNode";
 
 export { GetOtherNodeFromEdgeViaConnector, GetOtherNodeFromEdgeViaNode } from "./GetOtherNodeFromEdge";
 export { default as GetDateNowUtc } from "./GetDateNowUtc";
