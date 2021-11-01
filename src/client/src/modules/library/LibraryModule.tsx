@@ -1,10 +1,10 @@
 import { TextResources } from "../../assets/text";
 import { LegendModule } from "../../modules/legend";
 import { LibraryComponent } from "./index";
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { searchLibrary } from "../../redux/store/library/actions";
 import { AnimatedModule, Size } from "../../compLibrary";
-import { GetLibCategories } from "./helpers";
+import { GetFilteredLibCategories, GetLibCategories } from "./helpers";
 import { ModuleBody, ModuleHead } from "../../compLibrary/box/modules";
 import { LegendIcons } from "../../compLibrary/box/library";
 import { MODULE_TYPE } from "../../models/project";
@@ -20,14 +20,11 @@ import { animatedModuleSelector, legendOpenSelector, libOpenSelector, librarySel
  */
 const LibraryModule = () => {
   const dispatch = useAppDispatch();
+
   const lib = MODULE_TYPE.LIBRARY;
   const legend = MODULE_TYPE.LEGEND;
-  const search = (text: string) => dispatch(searchLibrary(text));
 
-  useEffect(() => {
-    dispatch(searchLibrary(""));
-  }, [dispatch]);
-
+  const [searchString, setSearchString] = useState("");
   const libState = useAppSelector(librarySelector);
   const project = useAppSelector(projectSelector);
   const legendOpen = useAppSelector(legendOpenSelector);
@@ -41,6 +38,13 @@ const LibraryModule = () => {
   const startLegend = legendOpen ? Size.ModuleClosed : Size.ModuleOpen;
   const stopLegend = legendOpen ? Size.ModuleOpen : Size.ModuleClosed;
 
+  const libCategories = useMemo(() => GetLibCategories(selectedNode, libState), [selectedNode, libState]);
+  const filteredCategories = useMemo(() => GetFilteredLibCategories(libCategories, searchString), [libCategories, searchString]);
+
+  useEffect(() => {
+    dispatch(searchLibrary(""));
+  }, [dispatch]);
+
   return (
     <AnimatedModule start={startLib} stop={stopLib} run={animate} type={lib} id="LibraryModule">
       <ModuleHead library visible={libOpen}>
@@ -48,7 +52,7 @@ const LibraryModule = () => {
         <p className="text">{TextResources.Module_Library}</p>
       </ModuleHead>
       <ModuleBody visible={libOpen}>
-        <LibraryComponent categories={GetLibCategories(selectedNode, libState)} search={search} dispatch={dispatch} />
+        <LibraryComponent categories={filteredCategories} search={(text: string) => setSearchString(text)} dispatch={dispatch} />
       </ModuleBody>
 
       <AnimatedModule start={startLegend} stop={stopLegend} run={animateLegend} type={legend} id="LegendModule">
