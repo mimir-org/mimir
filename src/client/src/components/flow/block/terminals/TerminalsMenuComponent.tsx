@@ -1,6 +1,6 @@
 import { Connector, Node } from "../../../../models";
 import { GetMenuColor, GetTerminalColor, SetMenuXPos } from "./helpers";
-import { TerminalsMenu, TerminalsElement, ColorBar } from "./styled";
+import { TerminalsMenu, TerminalsElement, ColorBar, CheckboxWrapper } from "./styled";
 
 interface Props {
   node: Node;
@@ -15,7 +15,7 @@ interface Props {
 
 /**
  * Component for the drop-down menu of terminals.
- * @param param0
+ * @param interface
  * @returns a drop-down menu with a node's input or output terminals.
  */
 const TerminalsMenuComponent = ({ node, parent, input, terminals, visible, onClick, onBlur, electro }: Props) => {
@@ -24,13 +24,13 @@ const TerminalsMenuComponent = ({ node, parent, input, terminals, visible, onCli
   return (
     visible && (
       <TerminalsMenu
-        id={"terminals-menu-" + node.id}
+        className={"terminals-dropdown"}
         tabIndex={0}
-        onBlur={onBlur}
         parent={parent}
         input={input}
+        onBlur={onBlur}
         color={GetMenuColor(node)}
-        xPos={SetMenuXPos(parent, electro, hasActiveTerminals, node?.width)}
+        xPos={SetMenuXPos(parent, electro, hasActiveTerminals, node)}
       >
         {terminals.map((conn) => (
           <TerminalsElement key={conn.id}>
@@ -38,10 +38,10 @@ const TerminalsMenuComponent = ({ node, parent, input, terminals, visible, onCli
             <div className="text" onClick={() => onClick(conn)}>
               {conn.name}
             </div>
-            <label className={"checkbox-terminals"}>
+            <CheckboxWrapper>
               <input type="checkbox" checked={conn.visible} onChange={() => onClick(conn)} />
-              <span className="checkmark-terminals"></span>
-            </label>
+              <div className="checkmark"></div>
+            </CheckboxWrapper>
           </TerminalsElement>
         ))}
       </TerminalsMenu>

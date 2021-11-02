@@ -1,15 +1,23 @@
+import { Node } from "../../../../../models";
+
 /**
- * Method to set the terminals menu's X position.
+ * Method to set the terminal menu's X position.
  * @param parent
  * @param electro
  * @param hasActiveTerminals
- * @param width
+ * @param node
  * @returns a numeric value.
  */
-const SetMenuXPos = (parent: boolean, electro: boolean, hasActiveTerminals: boolean, width: number) => {
-  if (electro) return width + 5;
-  if ((hasActiveTerminals && !parent) || (hasActiveTerminals && parent)) return width + 22;
-  if ((!hasActiveTerminals && !parent) || (!hasActiveTerminals && parent)) return width + 5;
+const SetMenuXPos = (parent: boolean, electro: boolean, hasActiveTerminals: boolean, node: Node) => {
+  if (electro) {
+    if (parent) return node.blockWidth + 5;
+    return node.width + 5;
+  }
+
+  if (hasActiveTerminals && !parent) return node.width + 22;
+  if (hasActiveTerminals && parent) return node.blockWidth + 22;
+  if (!hasActiveTerminals && !parent) return node.width + 5;
+  if (!hasActiveTerminals && parent) return node.blockWidth + 5;
 };
 
 export default SetMenuXPos;

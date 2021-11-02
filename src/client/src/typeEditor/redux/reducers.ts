@@ -1,12 +1,13 @@
 import * as Types from "./types";
 import { CreateLibraryType, Aspect, ObjectType, BlobData, TerminalTypeItem, PredefinedAttribute } from "../../models";
+import { Size } from "../../compLibrary";
 
 const initialState: Types.TypeEditorState = {
   visible: false,
   fetching: false,
   creating: false,
-  createLibraryType: {
-    libraryId: null,
+  createLibraryType: new CreateLibraryType({
+    id: null,
     name: "",
     aspect: Aspect.NotSet,
     objectType: ObjectType.NotSet,
@@ -20,7 +21,7 @@ const initialState: Types.TypeEditorState = {
     terminalTypeId: "",
     symbolId: "",
     compositeTypes: [] as string[],
-  } as CreateLibraryType,
+  } as CreateLibraryType),
   purposes: [],
   rdsList: [],
   terminals: [],
@@ -30,6 +31,11 @@ const initialState: Types.TypeEditorState = {
   simpleTypes: [],
   apiError: [],
   icons: [] as BlobData[],
+  inspector: {
+    visibility: false,
+    height: Size.ModuleClosed,
+    activeTabIndex: null,
+  },
 };
 
 // TODO: Refactor to reduce complexity
@@ -106,9 +112,9 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
         ...state,
         fetching: true,
         visible: false,
-        createLibraryType: {
+        createLibraryType: new CreateLibraryType({
           ...state.createLibraryType,
-          libraryId: null,
+          id: null,
           name: "",
           aspect: Aspect.NotSet,
           objectType: ObjectType.NotSet,
@@ -122,14 +128,19 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
           terminalTypeId: "",
           symbolId: "",
           compositeTypes: [] as string[],
-        },
+        }),
       };
     case Types.FETCHING_TYPE_SUCCESS_OR_ERROR:
       return {
         ...state,
         fetching: false,
         visible: true,
-        createLibraryType: action.payload.selectedNode,
+        createLibraryType: new CreateLibraryType(action.payload.selectedNode),
+        inspector: {
+          visibility: false,
+          height: Size.ModuleClosed,
+          activeTabIndex: null,
+        },
       };
     case Types.FETCHING_BLOB_DATA:
       return {
@@ -166,9 +177,9 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
         ...state,
         fetching: false,
         visible: true,
-        createLibraryType: {
+        createLibraryType: new CreateLibraryType({
           ...state.createLibraryType,
-          libraryId: null,
+          id: null,
           name: "",
           aspect: Aspect.NotSet,
           objectType: ObjectType.NotSet,
@@ -182,6 +193,11 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
           terminalTypeId: "",
           symbolId: "",
           compositeTypes: [] as string[],
+        } as CreateLibraryType),
+        inspector: {
+          visibility: false,
+          height: Size.ModuleClosed,
+          activeTabIndex: null,
         },
       };
     case Types.CLOSE_TYPE_EDITOR:
@@ -189,9 +205,9 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
         ...state,
         fetching: false,
         visible: false,
-        createLibraryType: {
+        createLibraryType: new CreateLibraryType({
           ...state.createLibraryType,
-          libraryId: null,
+          id: null,
           name: "",
           aspect: Aspect.NotSet,
           objectType: ObjectType.NotSet,
@@ -205,6 +221,11 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
           terminalTypeId: "",
           symbolId: "",
           compositeTypes: [] as string[],
+        }),
+        inspector: {
+          visibility: false,
+          height: Size.ModuleClosed,
+          activeTabIndex: null,
         },
       };
     case Types.UPDATE_CREATELIBRARYTYPE:
@@ -253,25 +274,29 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
         createLibraryType: {
           ...state.createLibraryType,
           terminalTypes: [
-            ...state.createLibraryType.terminalTypes.filter(
-              (terminal) => terminal.categoryId !== action.payload.categoryId
-            ),
+            ...state.createLibraryType.terminalTypes.filter((terminal) => terminal.categoryId !== action.payload.categoryId),
           ],
+        },
+      };
+    case Types.CLEAR_ALL_TERMINALTYPES:
+      return {
+        ...state,
+        createLibraryType: {
+          ...state.createLibraryType,
+          terminalTypes: [],
         },
       };
     case Types.SAVE_LIBRARY_TYPE:
       return {
         ...state,
         fetching: true,
-        apiError: state.apiError
-          ? state.apiError.filter((elem) => elem.key !== Types.SAVE_LIBRARY_TYPE)
-          : state.apiError,
+        apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== Types.SAVE_LIBRARY_TYPE) : state.apiError,
       };
     case Types.SAVE_LIBRARY_TYPE_SUCCESS_OR_ERROR:
       return {
         ...state,
         fetching: false,
-        createLibraryType: {
+        createLibraryType: new CreateLibraryType({
           ...state.createLibraryType,
           name: "",
           aspect: Aspect.NotSet,
@@ -286,13 +311,42 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
           terminalTypeId: "",
           symbolId: "",
           compositeTypes: [] as string[],
-        },
+        }),
         apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
+        inspector: {
+          visibility: false,
+          height: Size.ModuleClosed,
+          activeTabIndex: null,
+        },
       };
     case Types.DELETE_TYPE_EDITOR_ERROR:
       return {
         ...state,
         apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== action.payload.key) : state.apiError,
+      };
+    case Types.CHANGE_TYPE_EDITOR_INSPECTOR_HEIGHT:
+      return {
+        ...state,
+        inspector: {
+          ...state.inspector,
+          height: action.payload.height,
+        },
+      };
+    case Types.CHANGE_TYPE_EDITOR_INSPECTOR_VISIBILITY:
+      return {
+        ...state,
+        inspector: {
+          ...state.inspector,
+          visibility: action.payload.visibility,
+        },
+      };
+    case Types.CHANGE_TYPE_EDITOR_INSPECTOR_TAB:
+      return {
+        ...state,
+        inspector: {
+          ...state.inspector,
+          activeTabIndex: action.payload.index,
+        },
       };
     default:
       return state;

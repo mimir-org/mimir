@@ -6,8 +6,8 @@
 .react-flow__node-Product,
 .react-flow__node-Location {
   border-radius: 10px;
-  width: 120px;
-  height: 75px;
+  width: 170px;
+  height: 100px;
   font-size: 11px;
   color: #222;
   text-align: center;
@@ -24,21 +24,23 @@
 }
 
 .react-flow__node-AspectLocation {
+  &:hover,
   &.selected {
-    border: 3px solid #a300a7 !important;
+    border: 3px solid #a300a7;
   }
 }
 
 .react-flow__node-AspectFunction {
-  border: 3px solid #fbc913 !important;
+  &:hover,
   &.selected {
-    border: 3px solid #fbc913 !important;
+    border: 3px solid #fbc913;
   }
 }
 
 .react-flow__node-AspectProduct {
+  &:hover,
   &.selected {
-    border: 3px solid #069098 !important;
+    border: 3px solid #069098;
   }
 }
 
@@ -110,16 +112,35 @@
   }
 }
 
+.react-flow__node-BlockOffPageNode {
+  width: 19px;
+  height: 13px;
+  background-color: transparent;
+  z-index: 5 !important;
+}
+
 .react-flow__node-BlockParentNode {
   border-radius: 10px;
-  width: 950px;
-  height: 600px;
+  width: 1000px;
+  height: 920px;
   box-shadow: 0 5px 5px 0px rgba(0, 0, 0, 0.2);
   z-index: 1 !important;
 }
 
 .react-flow__node-FunctionBlock {
   z-index: 1 !important;
+}
+
+.react-flow__edge-BlockEdgeType {
+  &:hover {
+    cursor: grab;
+  }
+
+  &.selected {
+    .react-flow__edge-path {
+      stroke: black !important;
+    }
+  }
 }
 
 // COMMON
@@ -154,11 +175,7 @@
 .dndflow .reactflow-wrapper {
   flex: 1;
   height: 100%;
-}
-
-.react-flow__node {
-  opacity: 1 !important;
-  padding: 0px !important;
+  width: 100%;
 }
 
 .react-flow__nodes {
@@ -169,25 +186,18 @@
   cursor: grab;
 }
 
+.terminals-dropdown {
+  z-index: 5 !important;
+}
+
 .react-flow__edges {
-  z-index: 2;
+  z-index: 4 !important;
 }
 
 .react-flow__handle.connectable {
   cursor: crosshair;
 }
 
-.react-flow__controls {
-  position: absolute;
-  z-index: 5;
-  bottom: 15px !important;
-  left: 20px !important;
-}
-
-.react-flow__minimap {
-  background-color: #f8f8f8;
-  box-shadow: 0px -3px 5px rgba(0, 0, 0, 0.15);
-  margin-bottom: 10px;
-  max-height: 78px;
-  max-width: 161px;
-}
+// .react-flow__connection-path {
+//   stroke: black !important;
+// }

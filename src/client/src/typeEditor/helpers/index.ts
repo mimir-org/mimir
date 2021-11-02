@@ -6,6 +6,12 @@ export { default as IsTransport } from "./IsTransport";
 export { default as IsInterface } from "./IsInterface";
 export { default as IsObjectBlock } from "./IsObjectBlock";
 export { default as IsNotSet } from "./IsNotSet";
+export { default as IsRds } from "./IsRds";
+export { default as IsTerminal } from "./IsTerminal";
+export { default as IsObjectAttributes } from "./IsObjectAttributes";
+export { default as IsLocationAttributes } from "./IsLocationAttributes";
+export { default as IsSimpleTypes } from "./IsSimpleTypes";
+export { default as IsPredefinedAttributes } from "./IsPredefinedAttributes";
 
 // filters
 export { default as GetAspects } from "./GetAspects";
@@ -17,6 +23,7 @@ export { default as GetFilteredBlobData } from "./GetFilteredBlobData";
 export { default as GetFilteredRdsList } from "./GetFilteredRdsList";
 export { default as GetFilteredTerminalsList } from "./GetFilteredTerminalsList";
 export { default as GetFilteredAttributesList } from "./GetFilteredAttributesList";
+export * from "./GetFilteredTerminalTypeList";
 
 // component helpers
 export { default as GetObjectTypeDescription } from "./GetObjectTypeDescription";

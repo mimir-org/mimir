@@ -1,5 +1,5 @@
-import { CreateId, GetDateNowUtc, IsLocation } from "../helpers";
-import { BlobData, LibItem, Node, User } from "../../../models";
+import { CreateId, GetDateNowUtc } from "../helpers";
+import { BlobData, Connector, LibItem, Node, User } from "../../../models";
 import { Size } from "../../../compLibrary";
 
 /**
@@ -13,6 +13,7 @@ import { Size } from "../../../compLibrary";
  */
 const ConvertToNode = (data: LibItem, position, projectId: string, icons: BlobData[], user: User) => {
   const now = GetDateNowUtc();
+
   return new Node({
     id: CreateId(),
     rds: data.rds,
@@ -23,7 +24,7 @@ const ConvertToNode = (data: LibItem, position, projectId: string, icons: BlobDa
     positionY: position.y,
     positionBlockX: position.x,
     positionBlockY: position.y,
-    connectors: data.connectors,
+    connectors: data.connectors.map((c) => new Connector(c)),
     attributes: data.attributes,
     composites: data.composites,
     aspect: data.aspect,
@@ -34,8 +35,8 @@ const ConvertToNode = (data: LibItem, position, projectId: string, icons: BlobDa
     level: 0,
     cost: null,
     height: null,
-    length: IsLocation(data) ? Size.Node_Length : null,
-    width: IsLocation(data) ? Size.Node_Width : null,
+    length: Size.Node_Length,
+    width: Size.Node_Width,
     purpose: data.purpose,
     created: now,
     createdBy: user?.name,

@@ -2,6 +2,7 @@ import { Elements } from "react-flow-renderer";
 import { BuildTreeEdge, BuildTreeNode } from ".";
 import { GetEdgeType } from "../helpers";
 import { Project, Edge } from "../../../../models";
+import { IsOffPage } from "../../block/helpers";
 
 const BuildTreeElements = (project: Project): Elements => {
   const elements: Elements = [];
@@ -9,13 +10,15 @@ const BuildTreeElements = (project: Project): Elements => {
   if (!project) return elements;
 
   project.nodes?.forEach((node) => {
-    let treeNode = BuildTreeNode(node);
+    let treeNode = null;
+    if (!IsOffPage(node)) treeNode = BuildTreeNode(node);
     if (treeNode) elements.push(treeNode);
   });
 
   project.edges?.forEach((edge: Edge) => {
     const edgeType = GetEdgeType(edge.fromConnector);
-    const treeEdge = BuildTreeEdge(edge, edgeType, project.nodes);
+    let treeEdge = null;
+    if (!IsOffPage(edge.toNode)) treeEdge = BuildTreeEdge(edge, edgeType, project.nodes);
     if (treeEdge) elements.push(treeEdge);
   });
 

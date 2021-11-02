@@ -30,9 +30,13 @@ namespace RdfParserModule
             return new List<Profile> { new RdfProfile() };
         }
 
-        public string GetName()
+        public ModuleDescription GetModuleDescription()
         {
-            return "rdfparser";
+            return new ModuleDescription
+            {
+                Id = new Guid("59ED4298-EE6A-443D-A465-35053E9B4581"),
+                Name = "Mimir RDF"
+            };
         }
 
         public Task<byte[]> SerializeProject(Project project)

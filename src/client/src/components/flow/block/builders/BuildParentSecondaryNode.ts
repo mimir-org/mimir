@@ -12,14 +12,14 @@ import { SetConnectorOrder } from "./helpers";
  */
 const BuildParentSecondaryNode = (primaryNode: Node, secondaryNode: Node) => {
   if (!primaryNode || !secondaryNode) return null;
-
   SetConnectorOrder(secondaryNode);
 
   const type = TextResources.Type_BlockParentNode;
-  const position = { x: secondaryNode.positionBlockX, y: secondaryNode.positionBlockY };
+  const margin = 100;
+  const position = { x: primaryNode.positionBlockX + primaryNode.blockWidth + margin, y: primaryNode.positionBlockY };
 
-  // DetectCollision(position, primaryNode);
-  secondaryNode.isHidden = false;
+  secondaryNode.positionBlockX = position.x;
+  secondaryNode.positionBlockY = position.y;
 
   return {
     key: CreateId(),
@@ -27,9 +27,9 @@ const BuildParentSecondaryNode = (primaryNode: Node, secondaryNode: Node) => {
     type: type,
     data: secondaryNode,
     position: position,
-    isHidden: secondaryNode.isHidden,
+    isHidden: false,
     isSelected: secondaryNode.isSelected,
-    draggable: true,
+    draggable: false,
     selectable: true,
   } as FlowElement;
 };

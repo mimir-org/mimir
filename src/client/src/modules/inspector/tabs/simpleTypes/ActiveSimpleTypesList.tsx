@@ -1,13 +1,14 @@
 import { Color } from "../../../../compLibrary";
-import { Composite } from "../../../../models";
+import { CompositeLikeItem } from "../../types";
 import { TerminalsListElementWrapper, TerminalsCategoryListElement } from "../terminals/styled/activeTerminalList";
 
 interface Props {
-  simpleTypes: Composite[];
-  onSelect: (item: Composite) => void;
+  simpleTypes: CompositeLikeItem[];
+  selectedSimpleTypeId: string;
+  onSelect: (item: CompositeLikeItem) => void;
 }
 
-function ActiveSimpleTypesList({ simpleTypes, onSelect }: Props) {
+function ActiveSimpleTypesList({ simpleTypes, selectedSimpleTypeId, onSelect }: Props) {
   return (
     <>
       {simpleTypes.map((type, i) => {
@@ -15,6 +16,7 @@ function ActiveSimpleTypesList({ simpleTypes, onSelect }: Props) {
           <TerminalsListElementWrapper key={type.id}>
             <TerminalsCategoryListElement
               radius={0}
+              isSelected={selectedSimpleTypeId === type.id}
               onClick={() => onSelect(type)}
               color={i % 2 ? undefined : Color.LightPurple}
             >

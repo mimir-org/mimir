@@ -4,18 +4,20 @@ import { FilterMenuBox, MenuColumn } from "../../../../compLibrary/box/menus";
 import { IsLibrary } from "../../../flow/helpers";
 import { FilterDropdown } from "../dropdown";
 import { TextResources } from "../../../../assets/text";
-import { OnChange } from "../handlers";
+import { OnAnimationChange, OnChange } from "../handlers";
 import { GetEdges, GetNodes, PopulateFilterLists } from "../helpers";
+import { FilterElement } from "..";
 
 interface Props {
   elements: any[];
+  edgeAnimation: boolean;
 }
 
 /**
  * Menu to filter terminals and edges in TreeView.
  * @returns a menu with multiple drop-down menus
  */
-const TreeFilterMenu = ({ elements }: Props) => {
+const TreeFilterMenu = ({ elements, edgeAnimation }: Props) => {
   const dispatch = useAppDispatch();
   const libOpen = useAppSelector((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible);
   const edges = GetEdges(elements);
@@ -33,12 +35,19 @@ const TreeFilterMenu = ({ elements }: Props) => {
   return (
     <FilterMenuBox libraryOpen={libOpen}>
       <MenuColumn>
+        <FilterElement
+          label={"Animation"}
+          onChange={() => OnAnimationChange(edges, dispatch, edgeAnimation)}
+          isChecked={edgeAnimation}
+          visible={!!transportItems.length}
+        />
         <FilterDropdown
           terminals={transportItems}
           label={transportLabel}
           nodes={nodes}
           edges={edges}
           onChange={(edge) => OnChange(edge, edges, dispatch)}
+          visible={!!transportItems.length}
         />
         <FilterDropdown
           terminals={relationItems}
@@ -46,6 +55,7 @@ const TreeFilterMenu = ({ elements }: Props) => {
           nodes={nodes}
           edges={edges}
           onChange={(edge) => OnChange(edge, edges, dispatch)}
+          visible={!!relationItems.length}
         />
         <FilterDropdown
           terminals={partOfItems}
@@ -53,6 +63,7 @@ const TreeFilterMenu = ({ elements }: Props) => {
           nodes={nodes}
           edges={edges}
           onChange={(edge) => OnChange(edge, edges, dispatch)}
+          visible={!!partOfItems.length}
         />
       </MenuColumn>
     </FilterMenuBox>

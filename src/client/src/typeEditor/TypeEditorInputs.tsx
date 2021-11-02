@@ -2,15 +2,7 @@ import { TextResources } from "../assets/text";
 import { TextInput, TypeInfo, TypeNameInput } from "./styled";
 import { Dropdown } from "../compLibrary/dropdown/typeEditor";
 import { BlobData, CreateLibraryType, LocationType, Purpose } from "../models";
-import {
-  GetAspects,
-  GetFilteredBlobData,
-  GetLocationTypes,
-  GetObjectTypes,
-  GetPurposes,
-  GetSelectedDiscipline,
-  IsLocation,
-} from "./helpers";
+import { GetAspects, GetFilteredBlobData, GetLocationTypes, GetObjectTypes, GetPurposes, IsLocation } from "./helpers";
 
 interface Props {
   onChange: Function;
@@ -74,7 +66,7 @@ const TypeEditorInputs = ({ onChange, createLibraryType, icons, locationTypes, p
       </TypeNameInput>
       <Dropdown
         label={TextResources.TypeEditor_Symbol}
-        items={GetFilteredBlobData(icons, GetSelectedDiscipline(createLibraryType?.purpose, purposes))}
+        items={GetFilteredBlobData(icons)} // GetSelectedDiscipline(createLibraryType?.purpose, purposes)
         onChange={(data: any) => {
           onChange("symbolId", data);
         }}

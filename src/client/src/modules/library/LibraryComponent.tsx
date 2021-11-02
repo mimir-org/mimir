@@ -7,11 +7,12 @@ import { useState } from "react";
 import { customCategorySelector, legendOpenSelector, useAppSelector } from "../../redux/store";
 import { LibBody, SearchIconBox } from "../../compLibrary/box/library";
 import { TypeEditorModule } from "../../typeEditor";
+import { Dispatch } from "redux";
 
 interface Props {
   categories: LibraryCategory[];
-  search: Function;
-  dispatch: any;
+  search: (text: string) => void;
+  dispatch: Dispatch;
 }
 
 const LibraryComponent = ({ categories, search, dispatch }: Props) => {

@@ -4,13 +4,11 @@ import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
 import { FullScreenComponent } from "../../../compLibrary/controls";
 import { Size } from "../../../compLibrary";
-import { IsBlockView } from "../block/helpers";
 import { changeInspectorTab } from "../../../modules/inspector/redux/tabs/actions";
 import { GetParent, GetSelectedNode, SetDarkModeColor } from "../helpers";
 import { BuildTreeElements } from "../tree/builders";
 import { setModuleVisibility } from "../../../redux/store/modules/actions";
 import { MODULE_TYPE } from "../../../models/project";
-import { getBlobData } from "../../../typeEditor/redux/actions";
 import { SetPanelHeight } from "../../../modules/inspector/helpers";
 import { updatePosition, setActiveNode, setActiveEdge, setActiveBlockNode } from "../../../redux/store/project/actions";
 import { changeInspectorHeight } from "../../../modules/inspector/redux/height/actions";
@@ -18,7 +16,9 @@ import { FlowManipulator } from "./FlowManipulator";
 import { OnTreeClick } from "./handlers/";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { TreeFilterMenu } from "../../menus/filterMenu/tree";
+import { ExplorerModule } from "../../../modules/explorer";
 import {
+  animatedEdgeSelector,
   darkModeSelector,
   iconSelector,
   inspectorSelector,
@@ -28,11 +28,15 @@ import {
   userStateSelector,
 } from "../../../redux/store";
 
+interface Props {
+  inspectorRef: React.MutableRefObject<HTMLDivElement>;
+}
+
 /**
  * Component for the Flow library in TreeView
  * @returns a scene with Flow elements and Mimir nodes, transports and edges.
  */
-const FlowTree = () => {
+const FlowTree = ({ inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
   const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState(null);
@@ -44,6 +48,7 @@ const FlowTree = () => {
   const library = useAppSelector(librarySelector);
   const inspectorOpen = useAppSelector(inspectorSelector);
   const treeFilter = useAppSelector(treeFilterSelector);
+  const animatedEdge = useAppSelector(animatedEdgeSelector);
   const node = GetSelectedNode();
   const parent = GetParent(node);
   const selectedNodeId = useMemo(() => node?.id ?? project?.edges.find((edge) => edge.isSelected)?.id, [project, node]);
@@ -52,7 +57,7 @@ const FlowTree = () => {
   const OnNodeDragStop = (_event: any, n: any) => dispatch(updatePosition(n.id, n.position.x, n.position.y));
 
   const OnElementsRemove = (elementsToRemove: any[]) => {
-    return useOnRemove(elementsToRemove, setElements, dispatch);
+    return useOnRemove(elementsToRemove, setElements, dispatch, inspectorRef);
   };
 
   const OnLoad = useCallback(
@@ -67,7 +72,7 @@ const FlowTree = () => {
     const fromNode = project.nodes.find((x) => x.id === params.source);
     const fromConnector = fromNode.connectors.find((x) => x.id === params.sourceHandle);
     const edgeType = Helpers.GetEdgeType(fromConnector);
-    return useOnConnect(params, project, setElements, dispatch, edgeType, library);
+    return useOnConnect(params, project, setElements, dispatch, edgeType, library, animatedEdge);
   };
 
   const OnDrop = (event) => {
@@ -82,7 +87,7 @@ const FlowTree = () => {
     dispatch(changeInspectorTab(0));
     if (!inspectorOpen) {
       dispatch(changeInspectorHeight(Size.ModuleOpen));
-      SetPanelHeight(Size.ModuleOpen);
+      SetPanelHeight(inspectorRef, Size.ModuleOpen);
     }
   };
 
@@ -92,41 +97,31 @@ const FlowTree = () => {
     OnLoad(flowInstance);
   }, [OnLoad, flowInstance, darkMode]);
 
-  // Get symbols from TypeEditor
-  useEffect(() => {
-    dispatch(getBlobData());
-  }, [dispatch]);
-
   return (
-    <>
-      {!IsBlockView() && (
-        <ReactFlowProvider>
-          <div className="reactflow-wrapper" ref={flowWrapper}></div>
-          <ReactFlow
-            elements={elements}
-            onConnect={OnConnect}
-            onElementsRemove={OnElementsRemove}
-            onLoad={OnLoad}
-            onDrop={OnDrop}
-            onDragOver={OnDragOver}
-            onNodeDragStop={OnNodeDragStop}
-            onElementClick={OnElementClick}
-            nodeTypes={Helpers.GetNodeTypes}
-            edgeTypes={Helpers.GetEdgeTypes}
-            defaultZoom={0.7}
-            defaultPosition={[700, 300]}
-            snapToGrid={true}
-            snapGrid={[5, 5]}
-            zoomOnDoubleClick={false}
-            onClick={(e) => OnTreeClick(e, dispatch, project)}
-          >
-            <FullScreenComponent />
-            <FlowManipulator elements={elements} selectedId={selectedNodeId} />
-          </ReactFlow>
-          {treeFilter && <TreeFilterMenu elements={elements} />}
-        </ReactFlowProvider>
-      )}
-    </>
+    <ReactFlowProvider>
+      <div className="reactflow-wrapper" ref={flowWrapper}></div>
+      <ReactFlow
+        elements={elements}
+        onConnect={OnConnect}
+        onElementsRemove={OnElementsRemove}
+        onLoad={OnLoad}
+        onDrop={OnDrop}
+        onDragOver={OnDragOver}
+        onNodeDragStop={OnNodeDragStop}
+        onElementClick={OnElementClick}
+        nodeTypes={Helpers.GetNodeTypes}
+        edgeTypes={Helpers.GetEdgeTypes}
+        defaultZoom={0.7}
+        defaultPosition={[800, 100]}
+        zoomOnDoubleClick={false}
+        onClick={(e) => OnTreeClick(e, dispatch, project, inspectorRef)}
+      >
+        <FullScreenComponent inspectorRef={inspectorRef} />
+        <FlowManipulator elements={elements} selectedId={selectedNodeId} />
+      </ReactFlow>
+      <ExplorerModule elements={elements} />
+      {treeFilter && <TreeFilterMenu elements={elements} edgeAnimation={animatedEdge} />}
+    </ReactFlowProvider>
   );
 };
 

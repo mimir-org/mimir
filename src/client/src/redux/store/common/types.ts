@@ -1,4 +1,4 @@
-import { CombinedAttributeFilter, Contractor, EnumBase } from "../../../models";
+import { CombinedAttributeFilter, Contractor, EnumBase, ModuleDescription } from "../../../models";
 import { ApiError } from "../../../models/webclient";
 export const FETCHING_CONTRACTORS = "FETCHING_CONTRACTORS";
 export const DELETE_COMMON_ERROR = "DELETE_COMMON_ERROR";
@@ -6,13 +6,15 @@ export const FETCHING_CONTRACTORS_SUCCESS_OR_ERROR = "FETCHING_CONTRACTORS_SUCCE
 export const FETCHING_STATUSES = "FETCHING_STATUSES";
 export const FETCHING_STATUSES_SUCCESS_OR_ERROR = "FETCHING_STATUSES_SUCCESS_OR_ERROR";
 export const FETCHING_COMBINED_ATTRIBUTE_FILTERS = "FETCHING_COMBINED_ATTRIBUTE_FILTERS";
-export const FETCHING_COMBINED_ATTRIBUTE_FILTERS_SUCCESS_OR_ERROR =
-  "FETCHING_COMBINED_ATTRIBUTE_FILTERS_SUCCESS_OR_ERROR";
+export const FETCHING_COMBINED_ATTRIBUTE_FILTERS_SUCCESS_OR_ERROR = "FETCHING_COMBINED_ATTRIBUTE_FILTERS_SUCCESS_OR_ERROR";
+export const FETCHING_PARSERS = "FETCHING_PARSERS";
+export const FETCHING_PARSERS_SUCCESS_OR_ERROR = "FETCHING_PARSERS_SUCCESS_OR_ERROR";
 
 // State types
 export interface CommonState {
   fetching: boolean;
   contractors: Contractor[] | null;
+  parsers: ModuleDescription[] | null;
   filters: CombinedAttributeFilter[] | null;
   statuses: EnumBase[] | null;
   apiError: ApiError[];
@@ -62,6 +64,19 @@ interface FetchingCombinedAttributeFilterFinished {
   };
 }
 
+interface FetchingParsersAction {
+  type: typeof FETCHING_PARSERS;
+  payload: null;
+}
+
+interface FetchingParsersSuccessOrErrorAction {
+  type: typeof FETCHING_PARSERS_SUCCESS_OR_ERROR;
+  payload: {
+    parsers: ModuleDescription[];
+    apiError: ApiError;
+  };
+}
+
 export type CommonActionTypes =
   | FetchingContractorsAction
   | FetchingContractorsSuccessOrErrorAction
@@ -69,4 +84,6 @@ export type CommonActionTypes =
   | FetchingStatusesAction
   | FetchingStatusesSuccessOrErrorAction
   | FetchingCombinedAttributeFilter
-  | FetchingCombinedAttributeFilterFinished;
+  | FetchingCombinedAttributeFilterFinished
+  | FetchingParsersAction
+  | FetchingParsersSuccessOrErrorAction;

@@ -6,13 +6,14 @@ import { BuildTreeEdge, BuildTreeNode } from "../tree/builders";
 import { BlobData, LibItem, Project, GetFileData, User, Node } from "../../../models";
 import { LibraryState } from "../../../redux/store/library/types";
 import { BuildBlockNode } from "../block/builders";
+import { Size } from "../../../compLibrary";
 import {
   CreateId,
   GetSelectedNode,
   IsFamily,
   IsInputTerminal,
   IsOutputTerminal,
-  IsPartOfTerminal,
+  IsPartOf,
   SetSiblingIndexOnNodeDrop,
 } from "./../helpers";
 
@@ -86,17 +87,18 @@ const useOnDrop = (
     });
 
     IsBlockView()
-      ? setElements((es) => es.concat(BuildBlockNode(targetNode, null, project.nodes, parentNode)))
+      ? setElements((es) =>
+          es.concat(BuildBlockNode(targetNode, parentNode, { width: Size.Node_Width, length: Size.Node_Length }))
+        )
       : setElements((es) => es.concat(BuildTreeNode(targetNode)));
 
     if (sourceNode && IsFamily(sourceNode, targetNode)) {
       targetNode.level = sourceNode.level + 1;
-      const sourceConn = sourceNode.connectors?.find((x) => IsPartOfTerminal(x) && IsOutputTerminal(x));
-      const targetConn = targetNode.connectors?.find((x) => IsPartOfTerminal(x) && IsInputTerminal(x));
-      const partofEdge = ConvertToEdge(CreateId(), sourceConn, targetConn, sourceNode, targetNode, project.id, library);
+      const sourceConn = sourceNode.connectors?.find((x) => IsPartOf(x) && IsOutputTerminal(x));
+      const targetConn = targetNode.connectors?.find((x) => IsPartOf(x) && IsInputTerminal(x));
+      const partofEdge = ConvertToEdge(CreateId(), sourceConn, targetConn, sourceNode, targetNode, project.id, library, false);
 
       SetSiblingIndexOnNodeDrop(targetNode, project, sourceNode);
-
       dispatch(createEdge(partofEdge));
 
       const edgeType = GetEdgeType(sourceConn);

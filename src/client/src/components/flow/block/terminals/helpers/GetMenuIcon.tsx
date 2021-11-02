@@ -7,21 +7,18 @@ import { IsFunction, IsLocation, IsProduct } from "../../../helpers";
  * @param node
  * @param isParent
  * @param isInput
- * @params mainConnectNode
  * @returns an icon
  */
-const GetMenuIcon = (node: Node, isParent: boolean, isInput: boolean, mainConnectNode: boolean) => {
+const GetMenuIcon = (node: Node, isParent: boolean, isInput: boolean) => {
   if (isParent) return Icons.ParentMenu;
   if (IsLocation(node)) return Icons.LocationInputMenu;
 
   if (IsFunction(node)) {
-    if (mainConnectNode) return Icons.ParentMenu;
     if (isInput) return Icons.FunctionInputMenu;
     return Icons.FunctionOutputMenu;
   }
 
   if (IsProduct(node)) {
-    if (mainConnectNode) return Icons.ParentMenu;
     if (isInput) return Icons.ProductInputMenu;
     return Icons.ProductOutputMenu;
   }

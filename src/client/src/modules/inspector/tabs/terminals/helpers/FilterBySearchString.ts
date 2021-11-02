@@ -1,11 +1,11 @@
 import { TerminalCategory } from "../../../../../typeEditor/helpers/GetFilteredTerminalsList";
-import { Connector } from "../../../../../models";
+import { TerminalLikeItem } from "../../../types";
 
 export const FilterBySearchString = (
-  terminals: Connector[],
+  terminals: TerminalLikeItem[],
   terminalCategories: TerminalCategory[],
   searchString: string
-) =>
+): TerminalLikeItem[] =>
   (searchString &&
     searchString.length > 0 &&
     terminals.filter(

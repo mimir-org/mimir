@@ -1,27 +1,24 @@
-/* All static sizes used in Mimir  */
-
 const Size = {
   // Nodes
   Node_Width: 170,
   Node_Length: 100,
 
+  // BlockView
+  BlockView_Width: 1000,
+  BlockView_Length: 920,
+
   // Terminals
   Terminals_Interval: 25,
-
-  // BlockView
-  BlockView_Width: 950,
-  BlockView_Height: 800,
-  BlockView_MarginLeft: 380,
-  BlockView_MarginRight: 200,
-  BlockView_MarginTop: 140,
-  BlockView_BackgroundMargin: 10,
-  ConnectView_Width: 450,
-  ConnectView_Length: 180,
 
   // Modules
   ModuleOpen: 331,
   ModuleClosed: 45,
   Margin: 2,
+
+  //TypeEditor
+  TypeEditorInspectorOpen: 355,
+  TypeEditorPropertiesFull_BASELINE: -322,
+  TypeEditorPropertiesShrunk_BASELINE: -632,
 
   // Menus
   TopMenu_Height: 56,

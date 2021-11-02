@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Mb.Models.Abstract;
 using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Services.Contracts;
@@ -25,11 +26,13 @@ namespace Mb.Core.Controllers.V1
     {
         private readonly ILogger<CommonController> _logger;
         private readonly ICommonService _commonService;
+        private readonly IModuleService _moduleService;
 
-        public CommonController(ICommonService commonService, ILogger<CommonController> logger)
+        public CommonController(ICommonService commonService, ILogger<CommonController> logger, IModuleService moduleService)
         {
             _commonService = commonService;
             _logger = logger;
+            _moduleService = moduleService;
         }
 
         /// <summary>
@@ -40,6 +43,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(typeof(ICollection<Contractor>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Authorize(Policy = "Read")]
         public IActionResult GetContractors()
         {
             try
@@ -63,6 +67,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Policy = "Read")]
         public IActionResult GetCombinedAttributes()
         {
             if (!ModelState.IsValid)
@@ -72,6 +77,34 @@ namespace Mb.Core.Controllers.V1
             {
                 var result = _commonService.GetAllCombinedAttributeFilters().ToList();
                 return Ok(result);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
+        /// Get all registered parsers
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("parser")]
+        [ProducesResponseType(typeof(ICollection<ModuleDescription>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Policy = "Read")]
+        public IActionResult GetParsers()
+        {
+            try
+            {
+                var data = _moduleService.Modules
+                    .Where(x => x.Instance is IModelBuilderParser)
+                    .Select(x => x.ModuleDescription)
+                    .ToList();
+
+                return Ok(data);
             }
             catch (Exception e)
             {

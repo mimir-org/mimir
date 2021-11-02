@@ -22,9 +22,9 @@ namespace AasParserModule
             return null;
         }
 
-        public string GetName()
+        public ModuleDescription GetModuleDescription()
         {
-            return "AasParser";
+            throw new NotImplementedException();
         }
 
         public FileFormat GetFileFormat()

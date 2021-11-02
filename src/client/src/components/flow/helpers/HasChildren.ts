@@ -1,5 +1,5 @@
 import red from "../../../redux/store";
-import { IsPartOfTerminal } from ".";
+import { IsPartOf } from ".";
 import { Node, Edge } from "../../../models";
 
 /**
@@ -11,7 +11,7 @@ const HasChildren = (node: Node) => {
   const edges = red.store.getState().projectState.project?.edges as Edge[];
   const edge = edges?.find((e) => e.fromNodeId === node?.id);
 
-  return edge && IsPartOfTerminal(edge.fromConnector);
+  return edge && IsPartOf(edge.fromConnector);
 };
 
 export default HasChildren;

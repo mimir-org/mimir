@@ -6,10 +6,11 @@ const PreviewArea = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 420px;
+  height: calc(100% - 50px);
   background: #f7f7f7;
   border: 1px solid ${Color.Black};
   border-radius: 5px;
+  overflow: hidden;
 
   p {
     font-family: ${FontType.Standard};

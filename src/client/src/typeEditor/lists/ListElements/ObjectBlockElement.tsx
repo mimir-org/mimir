@@ -10,7 +10,7 @@ interface Props {
   name: string;
   terminalTypes: TerminalType[];
   categoryId: string;
-  onChange: Function;
+  onChange: (key: string, value: TerminalTypeItem) => void;
   defaultTerminals?: TerminalTypeItem[];
 }
 
@@ -37,7 +37,7 @@ export const ObjectBlockElement = ({ name, categoryId, terminalTypes, onChange, 
   };
 
   const showTerminals = () => {
-    let terminalsArray = [];
+    let terminalsArray: TerminalTypeItem[] = [];
     if (terminalsQuantity > 0) {
       terminalsArray = defaultTerminals.map((t) => {
         t.terminalId = CreateId();
@@ -67,7 +67,7 @@ export const ObjectBlockElement = ({ name, categoryId, terminalTypes, onChange, 
           {name}
         </p>
         {terminalsQuantity > 0 && (
-          <button className="delete-button" onClick={() => onChange("removeAll", categoryId)}>
+          <button className="delete-button" onClick={() => onChange("removeAll", defaultTerminal)}>
             <p className="delete-text">{TextResources.TypeEditor_Properties_Clear_All_Terminal}</p>
           </button>
         )}

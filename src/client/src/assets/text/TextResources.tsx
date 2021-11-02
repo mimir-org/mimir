@@ -144,15 +144,15 @@ const TextResources = {
   TypeEditor_Purpose: "Purpose",
   TypeEditor_Type_Name: "Type name",
   TypeEditor_Symbol: "Symbol",
-  TypeEditor_Properties_RDS: "Choose or search for RDS...",
-  TypeEditor_Properties_Terminals: "Select Terminal Types",
-  TypeEditor_Properties_Terminal_Type: "Choose Terminal Type",
+  TypeEditor_Properties_RDS: "Choose or search RDS String...",
+  TypeEditor_Properties_Terminals: "Select or search Terminal Types...",
+  TypeEditor_Properties_Terminal_Type: "Search and choose Terminal Type...",
   TypeEditor_Properties_Add_Terminal: "Add",
   TypeEditor_Properties_Clear_All_Terminal: "Clear all",
-  TypeEditor_Properties_Predefined_Location_Attributes: "Select Predefined Location Attributes",
-  TypeEditor_Properties_Block_Attributes: "Select Block Attributes",
-  TypeEditor_Properties_Location_Attributes: "Select Location Attributes",
-  TypeEditor_Properties_Simple_Types: "Select Simple Types",
+  TypeEditor_Properties_Predefined_Location_Attributes: "Select or search Predefined Location Attributes...",
+  TypeEditor_Properties_Block_Attributes: "Select or search Block Attributes...",
+  TypeEditor_Properties_Location_Attributes: "Select or search Location Attributes...",
+  TypeEditor_Properties_Simple_Types: "Select or search Simple Types...",
   TypeEditor_New_Type_Preview: "Type Preview:",
   TypeEditor_Preview_Info: "Click on preview objects to see inspector info",
   TypeEditor_Button_Add: "Add to Library",
@@ -172,8 +172,7 @@ const TextResources = {
   TypeEditor_Error_Terminals: "Please select one or more terminals.",
   TypeEditor_Error_Terminals_Block:
     "Please select one or more terminals. An Object Block must have at least one input terminal, and one output terminal.",
-  TypeEditor_Error_TerminalsType:
-    "You can only select two of each terminal, one must be input, the other must be output.",
+  TypeEditor_Error_TerminalsType: "You can only select two of each terminal, one must be input, the other must be output.",
   TypeEditor_Error_Terminals_Interface: "Please select a terminal type.",
 
   // AccountModule
@@ -186,6 +185,9 @@ const TextResources = {
   Account_Import_Lib_Label: "Import library",
   Account_Commit_Label: "Commit project",
   Account_Commit: "CommitProject",
+  Account_Commit_Contractor_Label: "Send to contractor",
+  Account_Commit_Parser_Label: "Data type",
+  Account_Commit_Button: "Commit",
   Account_Logout_Label: "Log out",
   Account_Open_Label: "Open a project",
   Account_Create_Label: "Create a project",
@@ -216,6 +218,8 @@ const TextResources = {
   Error_SaveUpdateProject: "Could not create or update project",
   Error_ServerUnavailable: "The server is unavailable",
   Error_NoActiveAccount: "No active account. Verify a user has been signed in and setActiveAccount has been called",
+  Error_Forbidden: "Access denied",
+  Error_Server: "Internal server error",
 
   // BlockView
   ConnectMenu_Select_All: "Select all",
@@ -226,6 +230,7 @@ const TextResources = {
   Type_BlockFunction: "BlockFunctionNode",
   Type_BlockProduct: "BlockProductNode",
   Type_BlockParentNode: "BlockParentNode",
+  Type_OffPageNode: "BlockOffPageNode",
 
   // RDS
   RDS_Function: "=",

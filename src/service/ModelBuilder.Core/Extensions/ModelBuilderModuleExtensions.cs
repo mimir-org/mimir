@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -24,6 +25,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
@@ -46,10 +48,25 @@ namespace Mb.Core.Extensions
         public static IServiceCollection AddModelBuilderModule(this IServiceCollection services, IConfiguration configuration)
         {
             // ModelBuilder Configuration configurations
-            var modelBuilderSection = configuration.GetSection(nameof(ModelBuilderConfiguration));
+            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory());
+
+            builder.AddJsonFile("appsettings.json");
+            builder.AddJsonFile($"appsettings.{environment}.json", true);
+            builder.AddJsonFile("appsettings.local.json", true);
+            builder.AddEnvironmentVariables();
+
+            var config = builder.Build();
+
             var modelBuilderConfiguration = new ModelBuilderConfiguration();
+            var modelBuilderSection = config.GetSection(nameof(ModelBuilderConfiguration));
             modelBuilderSection.Bind(modelBuilderConfiguration);
-            services.Configure<ModelBuilderConfiguration>(modelBuilderSection.Bind);
+
+            var domain = Environment.GetEnvironmentVariable("ModelBuilderConfiguration_Domain");
+            if (!string.IsNullOrEmpty(domain))
+                modelBuilderConfiguration.Domain = domain;
+
+            services.AddSingleton(Options.Create(modelBuilderConfiguration));
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.SuppressModelStateInvalidFilter = true;
@@ -171,7 +188,7 @@ namespace Mb.Core.Extensions
                 }
                 catch (Exception e)
                 {
-                    logger.LogError($"Module error: ({module.Name}), {e.Message}");
+                    logger.LogError($"Module error: ({module?.ModuleDescription?.Name}), {e.Message}");
                 }
             }
         }
@@ -193,7 +210,7 @@ namespace Mb.Core.Extensions
                 }
                 catch (Exception e)
                 {
-                    logger.LogError($"Module error: ({module.Name}), {e.Message}");
+                    logger.LogError($"Module error: ({module?.ModuleDescription?.Name}), {e.Message}");
                 }
             }
         }

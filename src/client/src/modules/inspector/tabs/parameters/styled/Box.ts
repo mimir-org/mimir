@@ -33,5 +33,12 @@ const Box = styled.div`
       cursor: pointer;
     }
   }
+
+  .hide-icon {
+    visibility: hidden;
+    svg:hover {
+      cursor: default;
+    }
+  }
 `;
 export default Box;

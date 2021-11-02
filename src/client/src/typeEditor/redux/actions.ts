@@ -122,6 +122,13 @@ export function removeTerminalTypeByCategory(categoryId: string) {
   };
 }
 
+export function clearAllTerminalTypes(): Types.ClearAllTerminalTypes {
+  return {
+    type: Types.CLEAR_ALL_TERMINALTYPES,
+    payload: null,
+  };
+}
+
 export function updateTerminalType(terminal: TerminalTypeItem) {
   return {
     type: Types.UPDATE_TERMINALTYPE,
@@ -146,5 +153,26 @@ export function deleteTypeEditorError(key: string) {
     payload: {
       key,
     },
+  };
+}
+
+export function changeTypeEditorInspectorHeight(height: number) {
+  return {
+    type: Types.CHANGE_TYPE_EDITOR_INSPECTOR_HEIGHT,
+    payload: { height },
+  };
+}
+
+export function changeTypeEditorInspectorVisibility(visibility: boolean) {
+  return {
+    type: Types.CHANGE_TYPE_EDITOR_INSPECTOR_VISIBILITY,
+    payload: { visibility },
+  };
+}
+
+export function changeTypeEditorInspectorTab(index: number) {
+  return {
+    type: Types.CHANGE_TYPE_EDITOR_INSPECTOR_TAB,
+    payload: { index },
   };
 }

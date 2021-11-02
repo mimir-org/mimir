@@ -6,13 +6,7 @@ import { ExpandIcon, CollapseIcon } from "../../assets/icons/chevron";
 import { SetNewSelectedElement, SetNewSelectedElementType } from "./helpers";
 import { CloseIcon } from "../../assets/icons/close";
 import { OnCloseElementClick } from "./handlers";
-import {
-  LibCategory,
-  LibCategoryElement,
-  LibElement,
-  LibElementClose,
-  LibElementIcon,
-} from "../../compLibrary/box/library";
+import { LibCategory, LibCategoryElement, LibElement, LibElementClose, LibElementIcon } from "../../compLibrary/box/library";
 
 interface Props {
   customCategory: LibraryCategory;
@@ -64,10 +58,7 @@ const LibraryCategoryComponent = ({
                   <img src={GetObjectIcon(node)} alt="aspect-icon" className="icon" draggable="false"></img>
                 )}
               </LibElementIcon>
-              <LibElementClose
-                visible={category.name === "Favorites"}
-                onClick={() => OnCloseElementClick(dispatch, node)}
-              >
+              <LibElementClose visible={customCategory.nodes.includes(node)} onClick={() => OnCloseElementClick(dispatch, node)}>
                 <img src={CloseIcon} alt="close" />
               </LibElementClose>
             </LibElement>

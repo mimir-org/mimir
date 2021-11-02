@@ -3,22 +3,25 @@ import { Dropdown } from "./styled/dropdown/parameter";
 import { CombinedAttributeFilter } from "../../../../models";
 import { GetAttributeCombinations, GetParametersColor } from "./helpers";
 import { Menu, Header, ParametersRowWrapper, ParametersContentWrapper } from "./styled";
-import { OnChangeFilterChoice, OnClearAllFilters, OnShowAllFilters } from "./handlers";
+import { OnChangeFilterChoice, OnClearAllFilters, OnShowAllFilters, OnIsCreateLibraryType } from "./handlers";
 import { ParameterRow } from "./";
-import { useMemo, useState } from "react";
-import { InspectorElement, InspectorParametersElement, InspectorTerminalsElement } from "../../types";
+import { useEffect, useMemo, useState } from "react";
+import { AttributeLikeItem, InspectorElement, InspectorParametersElement, InspectorTerminalsElement } from "../../types";
 import {
   useAppDispatch,
   useUniqueParametricAppSelector,
   makeFilterSelector,
   makeSelectedFilterSelector,
 } from "../../../../redux/store";
+import { GetAttributes } from "./helpers/GetAttributes";
+import { IsCreateLibraryType } from "../../helpers/IsType";
 
 interface Props {
   parametersElement: InspectorParametersElement;
   inspectorParentElement?: InspectorElement;
   terminalParentElement?: InspectorTerminalsElement;
   elementIsLocked: boolean;
+  attributeLikeItems?: AttributeLikeItem[];
 }
 
 const ParametersContent = ({
@@ -26,9 +29,12 @@ const ParametersContent = ({
   inspectorParentElement,
   terminalParentElement,
   elementIsLocked,
+  attributeLikeItems,
 }: Props) => {
   const dispatch = useAppDispatch();
-  const attributes = parametersElement.attributes;
+
+  const attributes = attributeLikeItems ?? GetAttributes(parametersElement);
+  const isCreateLibraryType = IsCreateLibraryType(inspectorParentElement);
 
   const attributeFilters = useUniqueParametricAppSelector(makeFilterSelector, attributes);
   const selectedFilters = useUniqueParametricAppSelector(makeSelectedFilterSelector, parametersElement.id);
@@ -38,9 +44,12 @@ const ParametersContent = ({
     [attributeFilters, attributes]
   );
 
-  const maxNumSelectedCombinations = Math.max(
-    ...Object.values(selectedFilters).map((combinations) => combinations.length)
-  );
+  useEffect(() => {
+    IsCreateLibraryType(inspectorParentElement) &&
+      OnIsCreateLibraryType(parametersElement, attributeFilters, selectedFilters, attributeCombinations, dispatch);
+  }, [inspectorParentElement, parametersElement, attributeFilters, selectedFilters, attributeCombinations, dispatch]);
+
+  const maxNumSelectedCombinations = Math.max(...Object.values(selectedFilters).map((combinations) => combinations.length));
 
   const [colorMapping] = useState(new Map<string, [string, string]>());
 
@@ -55,10 +64,19 @@ const ParametersContent = ({
             items={attributeFilters}
             selectedItems={selectedFilters}
           />
-          <div className="link" onClick={() => OnClearAllFilters(parametersElement.id, dispatch)}>
+
+          <div
+            className={`link ${isCreateLibraryType && "hide-link"}`}
+            onClick={() => !isCreateLibraryType && OnClearAllFilters(parametersElement.id, dispatch)}
+          >
             {TextResources.Inspector_Params_Clear_All}
           </div>
-          <div className="link" onClick={() => OnShowAllFilters(parametersElement.id, attributeFilters, dispatch)}>
+          <div
+            className={`link ${isCreateLibraryType && "hide-link"}`}
+            onClick={() =>
+              !isCreateLibraryType && OnShowAllFilters(parametersElement.id, attributeFilters, attributeCombinations, dispatch)
+            }
+          >
             {TextResources.Inspector_Params_Default}
           </div>
         </Menu>
@@ -80,6 +98,7 @@ const ParametersContent = ({
                 terminalParentElement={terminalParentElement}
                 combinations={attributeCombinations[filterName]}
                 selectedCombinations={selectedCombinations}
+                attributeLikeItems={attributeLikeItems}
                 maxNumSelectedCombinations={maxNumSelectedCombinations}
                 filterName={filterName}
                 headerColor={headerColor}

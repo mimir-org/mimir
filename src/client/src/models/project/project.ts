@@ -49,6 +49,7 @@ export const MENU_TYPE = {
   IMPORT_PROJECT_FILE_MENU: "ImportProjectFile",
   SAVE_LIBRARY_FILE_MENU: "SaveLibraryFile",
   IMPORT_LIBRARY_FILE_MENU: "ImportLibraryFile",
+  COMMIT_PROJECT: "CommitProject"
 };
 
 export type ViewType = keyof typeof VIEW_TYPE;
@@ -69,7 +70,7 @@ export interface EdgeEvent {
   sourceId: string;
 }
 
-export enum BackgroundVariant {
-  Lines = "lines",
-  Dots = "dots",
+export interface BlockNodeSize {
+  width: number;
+  length: number;
 }

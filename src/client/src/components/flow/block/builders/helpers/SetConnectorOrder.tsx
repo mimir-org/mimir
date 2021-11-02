@@ -10,14 +10,8 @@ const SetConnectorOrder = (node: Node) => {
   let outputOrder = 0;
 
   node.connectors.forEach((conn) => {
-    if (conn.visible && IsInputTerminal(conn)) {
-      conn.inputOrder = inputOrder;
-      inputOrder++;
-    }
-    if (conn.visible && !IsInputTerminal(conn)) {
-      conn.outputOrder = outputOrder;
-      outputOrder++;
-    }
+    if (conn.visible && IsInputTerminal(conn)) conn.inputOrder = inputOrder++;
+    if (conn.visible && !IsInputTerminal(conn)) conn.outputOrder = outputOrder++;
   });
 };
 

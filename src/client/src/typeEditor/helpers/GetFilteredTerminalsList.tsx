@@ -1,4 +1,4 @@
-import { TerminalType } from "../../models";
+import { TerminalType, TerminalTypeDict } from "../../models";
 
 export type TerminalCategory = {
   id: string;
@@ -6,7 +6,7 @@ export type TerminalCategory = {
   items: TerminalType[];
 };
 
-const GetFilteredTerminalsList = (terminals: any[]): TerminalCategory[] => {
+const GetFilteredTerminalsList = (terminals: TerminalTypeDict): TerminalCategory[] => {
   const categories = [];
   if (!terminals || terminals.length <= 0) return [] as any[];
 
@@ -16,14 +16,14 @@ const GetFilteredTerminalsList = (terminals: any[]): TerminalCategory[] => {
       id: terminalCategory?.value[0].terminalCategoryId,
       items: [],
     } as TerminalCategory;
-    terminalCategory?.value.forEach((element, index) => {
+    terminalCategory?.value.forEach((element) => {
       cat.items.push({
         id: element.id,
         name: element.name,
         color: element.color,
         terminalCategoryId: element.terminalCategoryId,
         terminalCategory: element.terminalCategory,
-        semanticReference: element.semanticReferance,
+        semanticReference: element.semanticReference,
       } as TerminalType);
     });
     categories.push(cat);

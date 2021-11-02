@@ -1,9 +1,10 @@
 import * as Types from "./types";
-import { CombinedAttributeFilter } from "../../../models";
+import { CombinedAttributeFilter, ModuleDescription } from "../../../models";
 
 const initialState: Types.CommonState = {
   fetching: false,
   contractors: [],
+  parsers: [] as ModuleDescription[],
   filters: [] as CombinedAttributeFilter[],
   statuses: [],
   apiError: [],
@@ -70,6 +71,25 @@ export function commonReducer(state = initialState, action: Types.CommonActionTy
         filters: action.payload.filters,
         apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
+
+    case Types.FETCHING_PARSERS:
+      return {
+        ...state,
+        fetching: true,
+        parsers: [],
+        apiError: state.apiError
+          ? state.apiError.filter((elem) => elem.key !== Types.FETCHING_PARSERS)
+          : state.apiError,
+      };
+
+    case Types.FETCHING_PARSERS_SUCCESS_OR_ERROR:
+      return {
+        ...state,
+        fetching: false,
+        parsers: action.payload.parsers,
+        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
+      };
+
     default:
       return state;
   }

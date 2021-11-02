@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../redux/store";
+import { useEffect, useRef } from "react";
+import { typeEditorStateSelector, useAppDispatch, useAppSelector } from "../redux/store";
 import { ListType } from "./TypeEditorList";
 import { CloseIcon } from "../assets/icons/close";
 import { CheckIcon } from "../assets/icons/checkmark";
@@ -14,13 +14,13 @@ import {
   ChooseProperties,
   TypePreviewColumn,
   SaveButton,
+  TypeEditorInspectorWrapper,
 } from "./styled";
 import {
   GetSelectedIcon,
   GetSelectedRds,
   GetSelectedTerminal,
   IsLocation,
-  IsObjectBlock,
   IsProduct,
   GetWidth,
   GetSelectedDiscipline,
@@ -35,14 +35,17 @@ import {
   updateTerminalType,
   removeTerminalTypeByCategory,
   saveLibraryType,
+  clearAllTerminalTypes,
 } from "./redux/actions";
+import { ConnectorType, TerminalTypeItem } from "../models";
 /**
  * Component for adding or editing a type
  * @returns the visual Type Editor window
  */
 export const TypeEditorComponent = () => {
   const dispatch = useAppDispatch();
-  const state = useAppSelector((s) => s.typeEditor);
+  const state = useAppSelector(typeEditorStateSelector);
+  const typeEditorPropertiesRef = useRef(null);
 
   useEffect(() => {
     dispatch(getInitialData());
@@ -62,15 +65,25 @@ export const TypeEditorComponent = () => {
     dispatch(closeTypeEditor());
   };
 
-  const onTerminalCategoryChange = (key: string, value: any) => {
+  const onTerminalTypeIdChange = (terminalTypeId: string) => {
+    dispatch(clearAllTerminalTypes());
+    dispatch(updateValue("terminalTypeId", terminalTypeId));
+  };
+
+  const onTerminalCategoryChange = (key: string, terminalTypeItem: TerminalTypeItem) => {
     if (key === "add") {
-      dispatch(addTerminalType(value));
+      dispatch(addTerminalType(terminalTypeItem));
     } else if (key === "remove") {
-      dispatch(removeTerminalType(value));
+      dispatch(removeTerminalType(terminalTypeItem));
     } else if (key === "update") {
-      dispatch(updateTerminalType(value));
+      dispatch(updateTerminalType(terminalTypeItem));
     } else if (key === "removeAll") {
-      dispatch(removeTerminalTypeByCategory(value));
+      dispatch(removeTerminalTypeByCategory(terminalTypeItem.categoryId));
+    } else if (key === "terminalTypeId") {
+      dispatch(removeTerminalTypeByCategory(terminalTypeItem.categoryId));
+      dispatch(addTerminalType({ ...terminalTypeItem, connectorType: ConnectorType.Input }));
+      dispatch(addTerminalType({ ...terminalTypeItem, connectorType: ConnectorType.Output }));
+      dispatch(updateValue(key, terminalTypeItem.terminalTypeId));
     }
   };
 
@@ -90,7 +103,7 @@ export const TypeEditorComponent = () => {
               locationTypes={state?.locationTypes}
               purposes={state?.purposes}
             />
-            <ChooseProperties>
+            <ChooseProperties ref={typeEditorPropertiesRef}>
               <TypeEditorList
                 items={state?.rdsList}
                 createLibraryType={state?.createLibraryType}
@@ -103,11 +116,8 @@ export const TypeEditorComponent = () => {
                   items={state?.terminals}
                   createLibraryType={state?.createLibraryType}
                   listType={ListType.Terminals}
-                  onChange={
-                    IsObjectBlock(state?.createLibraryType.objectType)
-                      ? (key, data) => onTerminalCategoryChange(key, data)
-                      : (key, data) => onChange(key, data)
-                  }
+                  onChange={(key, data) => onTerminalCategoryChange(key, data)}
+                  onTerminalTypeIdChange={onTerminalTypeIdChange}
                   // disabled={ModeEdit(mode) ? false : FieldValidator(state, "rds")}
                 />
               )}
@@ -124,9 +134,7 @@ export const TypeEditorComponent = () => {
                 createLibraryType={state?.createLibraryType}
                 items={state?.attributes}
                 discipline={GetSelectedDiscipline(state.createLibraryType?.purpose, state?.purposes)}
-                listType={
-                  IsLocation(state?.createLibraryType.aspect) ? ListType.LocationAttributes : ListType.ObjectAttributes
-                }
+                listType={IsLocation(state?.createLibraryType.aspect) ? ListType.LocationAttributes : ListType.ObjectAttributes}
                 onChange={(key, data) => onChange(key, data)}
               />
               {IsProduct(state?.createLibraryType.aspect) && (
@@ -143,35 +151,36 @@ export const TypeEditorComponent = () => {
                   createLibraryType={state?.createLibraryType}
                   rds={GetSelectedRds(state?.createLibraryType, state.rdsList)}
                   inputTerminals={
-                    state?.createLibraryType.terminalTypes &&
-                    GetInputTerminals(state?.createLibraryType, state?.terminals)
+                    state?.createLibraryType.terminalTypes && GetInputTerminals(state?.createLibraryType, state?.terminals)
                   }
                   outputTerminals={
-                    state?.createLibraryType.terminalTypes &&
-                    GetOutputTerminals(state?.createLibraryType, state?.terminals)
+                    state?.createLibraryType.terminalTypes && GetOutputTerminals(state?.createLibraryType, state?.terminals)
                   }
                   terminal={
-                    state?.createLibraryType.terminalTypeId &&
-                    GetSelectedTerminal(state?.createLibraryType, state?.terminals)
+                    state?.createLibraryType.terminalTypeId && GetSelectedTerminal(state?.createLibraryType, state?.terminals)
                   }
                   symbol={GetSelectedIcon(state?.createLibraryType, state?.icons)}
                   // disabled={FieldValidator(state, "add")}
                 />
                 <SaveButton onClick={onSave}>
                   <p>
-                    {state.createLibraryType.libraryId === null
+                    {state.createLibraryType.id === null
                       ? TextResources.TypeEditor_Button_Add
                       : TextResources.TypeEditor_Button_Edit}
                   </p>
-                  <img
-                    src={state.createLibraryType.libraryId === null ? LibraryIcon : CheckIcon}
-                    alt="icon"
-                    className="icon"
-                  />
+                  <img src={state.createLibraryType.id === null ? LibraryIcon : CheckIcon} alt="icon" className="icon" />
                 </SaveButton>
               </TypePreviewColumn>
             </ChooseProperties>
-            <TypeEditorInspector />
+
+            <TypeEditorInspectorWrapper>
+              {!!state.createLibraryType.aspect && (
+                <TypeEditorInspector
+                  createLibraryType={state.createLibraryType}
+                  typeEditorPropertiesRef={typeEditorPropertiesRef}
+                />
+              )}
+            </TypeEditorInspectorWrapper>
           </TypeEditorContent>
         </TypeEditorWrapper>
       )}

@@ -1,18 +1,25 @@
 import { useMemo, useState } from "react";
 import { TerminalCategory } from "../../../../typeEditor/helpers/GetFilteredTerminalsList";
-import { Connector } from "../../../../models";
 import { ActiveTerminalsList, TerminalsSearchBar } from "./";
 import { FilterBySearchString } from "./helpers";
 import { TerminalsColumn } from "./styled";
+import { SelectedTerminalIdentifier, TerminalLikeItem } from "../../types";
 
 interface Props {
-  terminals: Connector[];
+  terminals: TerminalLikeItem[];
   terminalCategories: TerminalCategory[];
-  selectedTerminal: Connector;
-  onSelectTerminal: (item: any) => void;
+  selectedTerminal: TerminalLikeItem;
+  selectedTerminalIdentifier: SelectedTerminalIdentifier;
+  onSelectTerminal: (identifier: SelectedTerminalIdentifier) => void;
 }
 
-function TerminalsSelector({ terminals, terminalCategories, selectedTerminal, onSelectTerminal }: Props) {
+function TerminalsSelector({
+  terminals,
+  terminalCategories,
+  selectedTerminal,
+  selectedTerminalIdentifier,
+  onSelectTerminal,
+}: Props) {
   const [searchString, setSearchString] = useState("");
   const filteredTerminals = useMemo(
     () => FilterBySearchString(terminals, terminalCategories, searchString),
@@ -26,6 +33,7 @@ function TerminalsSelector({ terminals, terminalCategories, selectedTerminal, on
         terminals={filteredTerminals}
         terminalCategories={terminalCategories}
         selectedTerminal={selectedTerminal}
+        selectedTerminalIdentifier={selectedTerminalIdentifier}
         onSelectTerminal={onSelectTerminal}
       />
     </TerminalsColumn>

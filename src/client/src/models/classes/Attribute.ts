@@ -1,5 +1,7 @@
 import { Discipline, EnumBase, SelectType } from "..";
 
+export const ATTRIBUTE_KIND = "Attribute";
+
 class Attribute {
   id: string;
   key: string;
@@ -26,8 +28,12 @@ class Attribute {
   selectType: SelectType;
   discipline: Discipline;
 
+  kind: string = ATTRIBUTE_KIND;
+
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
-  constructor() {}
+  constructor(attribute: Attribute) {
+    Object.assign(this, attribute);
+  }
 }
 
 export default Attribute;

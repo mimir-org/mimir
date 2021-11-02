@@ -46,6 +46,7 @@ namespace Mb.TypeEditor.Core.Controllers.V1
         [HttpGet("{aspect}")]
         [ProducesResponseType(typeof(ICollection<AttributeType>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize(Policy = "Read")]
         public IActionResult GetAttributeTypes(Aspect aspect)
         {
             try
@@ -67,6 +68,7 @@ namespace Mb.TypeEditor.Core.Controllers.V1
         [HttpGet("predefined-attributes")]
         [ProducesResponseType(typeof(ICollection<PredefinedAttributeAm>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize(Policy = "Read")]
         public IActionResult GetPredefinedAttributes()
         {
             try
@@ -95,6 +97,7 @@ namespace Mb.TypeEditor.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Authorize(Policy = "Edit")]
         public async Task<IActionResult> CreateAttributeType([FromBody] CreateAttributeType createAttributeType)
         {
             if (!ModelState.IsValid)
