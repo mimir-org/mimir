@@ -29,14 +29,13 @@ const InspectorTabs = ({
   compositeLikeItems,
   changeInspectorTabAction = changeInspectorTab,
 }: Props) => {
-  const [shouldShowAdmin, shouldShowParameters, shouldShowTerminals, shouldShowRelations, shouldShowSimpleTypes] =
-    ShouldShowTabs(element);
+  const [shouldShowAdmin, ...shouldShowTabs] = ShouldShowTabs(element);
 
   const tabs = [
-    shouldShowParameters && <ParametersComponent element={element} attributeLikeItems={attributeLikeItems} />,
-    shouldShowTerminals && <TerminalsComponent element={element} terminalLikeItems={terminalLikeItems} />,
-    shouldShowRelations && <RelationsComponent element={element} />,
-    shouldShowSimpleTypes && <SimpleTypesComponent element={element} compositeLikeItems={compositeLikeItems} />,
+    <ParametersComponent element={element} attributeLikeItems={attributeLikeItems} />,
+    <TerminalsComponent element={element} terminalLikeItems={terminalLikeItems} />,
+    <RelationsComponent element={element} />,
+    <SimpleTypesComponent element={element} compositeLikeItems={compositeLikeItems} />,
   ];
 
   return (
@@ -52,17 +51,20 @@ const InspectorTabs = ({
               changeInspectorTabAction={changeInspectorTabAction}
             />
           )}
-          {tabs.map((tab, i) => (
-            <InspectorTabWrapper
-              key={i}
-              element={element}
-              index={i + 1}
-              activeTabIndex={activeTabIndex}
-              changeInspectorTabAction={changeInspectorTabAction}
-            >
-              {tab}
-            </InspectorTabWrapper>
-          ))}
+          {tabs.map(
+            (tab, i) =>
+              shouldShowTabs[i] && (
+                <InspectorTabWrapper
+                  key={i}
+                  element={element}
+                  index={i + 1}
+                  activeTabIndex={activeTabIndex}
+                  changeInspectorTabAction={changeInspectorTabAction}
+                >
+                  {tab}
+                </InspectorTabWrapper>
+              )
+          )}
         </>
       )}
     </>

@@ -5,7 +5,7 @@ import { IsCreateLibraryType, IsNode, IsEdge } from "./IsType";
 import { IsProduct } from "../../../components/flow/helpers";
 
 export const ShouldShowTabs = (element: InspectorElement) => {
-  const shouldShowAdmin = !IsCreateLibraryType(element) || !!element.objectType;
+  const shouldShowAdmin = !IsCreateLibraryType(element) || !!element.objectType || !!element.locationType;
   const shouldShowParameters =
     IsNode(element) ||
     (IsCreateLibraryType(element) && element.attributeTypes.length > 0) ||
