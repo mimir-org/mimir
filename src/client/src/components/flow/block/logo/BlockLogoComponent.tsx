@@ -19,7 +19,7 @@ const BlockLogoComponent = ({ node }: Props) => {
     <>
       <BlockNodeNameBox>{node.label ?? node.name}</BlockNodeNameBox>
       <LogoBox>
-        <img src={GetCompanyLogo(company)} alt="logo" className="logo" />
+        <img src={GetCompanyLogo(company, node)} alt="logo" className="logo" />
       </LogoBox>
       <SymbolBox>
         <Symbol base64={node.symbol} text={node.name} />{" "}
