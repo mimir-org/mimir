@@ -174,5 +174,13 @@
     "discipline": "Structural",
     "aspect": "NotSet",
     "parentId": null
+  },
+  {
+    "name": "None",
+    "description": null,
+    "semanticReference": null,
+    "discipline": "None",
+    "aspect": "NotSet",
+    "parentId": null
   }
 ]
