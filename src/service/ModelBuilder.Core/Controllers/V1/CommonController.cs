@@ -43,6 +43,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(typeof(ICollection<Contractor>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Authorize(Policy = "Read")]
         public IActionResult GetContractors()
         {
             try
@@ -66,6 +67,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Policy = "Read")]
         public IActionResult GetCombinedAttributes()
         {
             if (!ModelState.IsValid)
@@ -92,6 +94,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Policy = "Read")]
         public IActionResult GetParsers()
         {
             try

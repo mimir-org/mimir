@@ -218,6 +218,8 @@ const TextResources = {
   Error_SaveUpdateProject: "Could not create or update project",
   Error_ServerUnavailable: "The server is unavailable",
   Error_NoActiveAccount: "No active account. Verify a user has been signed in and setActiveAccount has been called",
+  Error_Forbidden: "Access denied",
+  Error_Server: "Internal server error",
 
   // BlockView
   ConnectMenu_Select_All: "Select all",

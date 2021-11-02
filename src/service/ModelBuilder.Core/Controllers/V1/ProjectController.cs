@@ -52,6 +52,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Authorize(Policy = "Edit")]
         public async Task<IActionResult> CreateNewProject([FromBody] CreateProject project)
         {
             if (!ModelState.IsValid)
@@ -79,6 +80,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Authorize(Policy = "Read")]
         public IActionResult GetBySearch(string name)
         {
             try
@@ -105,6 +107,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Policy = "Read")]
         public async Task<IActionResult> GetById(string id)
         {
             if (string.IsNullOrEmpty(id))
@@ -138,6 +141,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Policy = "Edit")]
         public async Task<IActionResult> ImportProject([FromBody] ProjectAm projectAm)
         {
             if (!ModelState.IsValid)
@@ -172,6 +176,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Policy = "Edit")]
         public async Task<IActionResult> UpdateProject(string id, [FromBody] ProjectAm projectAm)
         {
             if (!ModelState.IsValid)
@@ -207,6 +212,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> DeleteProject(string id)
         {
             try
@@ -240,6 +246,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Policy = "Read")]
         public async Task<IActionResult> DownloadProject(string id, string parser)
         {
             try
@@ -276,6 +283,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Policy = "Edit")]
         public async Task<IActionResult> UploadProject(string parser, IFormFile file, CancellationToken cancellationToken)
         {
             try
@@ -313,6 +321,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Policy = "Edit")]
         public async Task<IActionResult> LockUnlockNode([FromBody] LockUnlockNodeAm lockUnlockAm)
         {
             if (!ModelState.IsValid)
@@ -345,6 +354,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Policy = "Edit")]
         public async Task<IActionResult> LockUnlockAttribute([FromBody] LockUnlockAttributeAm lockUnlockAttributeAm)
         {
             if (!ModelState.IsValid)
@@ -379,6 +389,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Policy = "Read")]
         public IActionResult GetLockedNodes(string projectId)
         {
             if (!ModelState.IsValid)
@@ -408,6 +419,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Policy = "Read")]
         public IActionResult GetLockedAttributes(string projectId)
         {
             if (!ModelState.IsValid)

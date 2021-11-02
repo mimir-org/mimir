@@ -46,7 +46,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [Authorize(Roles = "Mimir_Administrator")]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> CommitProject(CommitPackage package)
         {
             if (!ModelState.IsValid)
@@ -83,7 +83,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [Authorize(Roles = "Mimir_Administrator")]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> TestSendData()
         {
             try
