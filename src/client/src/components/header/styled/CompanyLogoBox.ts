@@ -1,19 +1,9 @@
 import styled from "styled-components";
 
-interface Props {
-  equinor: boolean;
-}
-
-// TODO: Fix after demo
-const CompanyLogoBox = styled.div<Props>`
-  position: absolute;
+const CompanyLogoBox = styled.div`
+  display: flex;
   height: 35px;
-
-  .logo {
-    position: relative;
-    right: 115px;
-    bottom: ${(props) => (props.equinor ? 6 : -3)}px;
-  }
+  width: 88px;
 `;
 
 export default CompanyLogoBox;
