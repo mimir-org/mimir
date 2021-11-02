@@ -8,9 +8,9 @@ interface Props {
   visible: boolean;
 }
 /**
- * Component for a single element in the Visual Filter
+ * Component for a single element in the Visual Filter.
  * @param interface
- * @returns a checkbox
+ * @returns a checkbox with a label.
  */
 const FilterElement = ({ label, onChange, isChecked, visible }: Props) => {
   return (
