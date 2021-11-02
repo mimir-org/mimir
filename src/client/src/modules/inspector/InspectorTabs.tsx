@@ -1,12 +1,14 @@
-import { InspectorComponent } from ".";
 import { Project } from "../../models";
 import { AdminComponent } from "./tabs/admin";
-import { IsProduct } from "../../components/flow/helpers";
 import { AttributeLikeItem, CompositeLikeItem, InspectorElement, TerminalLikeItem } from "./types";
-import { IsCreateLibraryType, IsEdge, IsNode } from "./helpers/IsType";
-import { IsRelationEdge } from "../../components/flow/helpers/IsRelationEdge";
-import { IsLocation } from "../../typeEditor/helpers";
 import { Action } from "redux";
+import InspectorTabWrapper from "./InspectorTabWrapper";
+import { changeInspectorTab } from "./redux/tabs/actions";
+import { ParametersComponent } from "./tabs/parameters";
+import { RelationsComponent } from "./tabs/relations";
+import { SimpleTypesComponent } from "./tabs/simpleTypes";
+import { TerminalsComponent } from "./tabs/terminals";
+import { ShouldShowTabs } from "./helpers";
 
 interface Props {
   project: Project;
@@ -25,19 +27,17 @@ const InspectorTabs = ({
   attributeLikeItems,
   terminalLikeItems,
   compositeLikeItems,
-  changeInspectorTabAction,
+  changeInspectorTabAction = changeInspectorTab,
 }: Props) => {
-  const shouldShowAdmin = !IsCreateLibraryType(element) || !!element.objectType;
-  const shouldShowParameters =
-    IsNode(element) ||
-    (IsCreateLibraryType(element) && element.attributeTypes.length > 0) ||
-    (IsEdge(element) && !IsRelationEdge(element));
-  const shouldShowTerminals =
-    IsNode(element) ||
-    (IsCreateLibraryType(element) && !IsLocation(element.aspect) && element.terminalTypes.length > 0) ||
-    (IsEdge(element) && !IsRelationEdge(element));
-  const shouldShowRelations = IsNode(element) || (IsEdge(element) && !IsRelationEdge(element));
-  const shouldShowSimpleTypes = (IsNode(element) && IsProduct(element)) || (IsCreateLibraryType(element) && IsProduct(element));
+  const [shouldShowAdmin, shouldShowParameters, shouldShowTerminals, shouldShowRelations, shouldShowSimpleTypes] =
+    ShouldShowTabs(element);
+
+  const tabs = [
+    shouldShowParameters && <ParametersComponent element={element} attributeLikeItems={attributeLikeItems} />,
+    shouldShowTerminals && <TerminalsComponent element={element} terminalLikeItems={terminalLikeItems} />,
+    shouldShowRelations && <RelationsComponent element={element} />,
+    shouldShowSimpleTypes && <SimpleTypesComponent element={element} compositeLikeItems={compositeLikeItems} />,
+  ];
 
   return (
     <>
@@ -52,41 +52,17 @@ const InspectorTabs = ({
               changeInspectorTabAction={changeInspectorTabAction}
             />
           )}
-          {shouldShowParameters && (
-            <InspectorComponent
+          {tabs.map((tab, i) => (
+            <InspectorTabWrapper
+              key={i}
               element={element}
-              index={1}
-              activeTabIndex={activeTabIndex}
-              attributeLikeItems={attributeLikeItems}
-              changeInspectorTabAction={changeInspectorTabAction}
-            />
-          )}
-          {shouldShowTerminals && (
-            <InspectorComponent
-              element={element}
-              index={2}
-              activeTabIndex={activeTabIndex}
-              terminalLikeItems={terminalLikeItems}
-              changeInspectorTabAction={changeInspectorTabAction}
-            />
-          )}
-          {shouldShowRelations && (
-            <InspectorComponent
-              element={element}
-              index={3}
+              index={i + 1}
               activeTabIndex={activeTabIndex}
               changeInspectorTabAction={changeInspectorTabAction}
-            />
-          )}
-          {shouldShowSimpleTypes && (
-            <InspectorComponent
-              element={element}
-              index={4}
-              activeTabIndex={activeTabIndex}
-              compositeLikeItems={compositeLikeItems}
-              changeInspectorTabAction={changeInspectorTabAction}
-            />
-          )}
+            >
+              {tab}
+            </InspectorTabWrapper>
+          ))}
         </>
       )}
     </>
