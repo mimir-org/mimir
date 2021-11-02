@@ -24,15 +24,24 @@ namespace RdfParserModule
         public TripleStore Store { get; set; }
         public ProjectAm Project { get; set; }
 
+
+        public List<ParserNode> parserNodes;
+        public List<ParserEdge> parserEdges;
+
         private readonly IMapper _mapper;
+        private string _domain;
 
         public RdfDeconstructor(IMapper mapper)
         {
             _mapper = mapper;
+            _domain = "equinor.com";
+            parserNodes = new List<ParserNode>();
+            parserEdges = new List<ParserEdge>();
         }
 
         public void LoadGraph(string valueAsString)
         {
+
             RdfGraph = new OntologyGraph();
             var filePath = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}/Data/ontologies.owl";
             RdfGraph.LoadFromFile(filePath, new TurtleParser());
@@ -59,9 +68,6 @@ namespace RdfParserModule
                 Edges = new List<ParserEdge>()
             };
             GetProjectInformation();
-
-            var parserNodes = new List<ParserNode>();
-            var parserEdges = new List<ParserEdge>();
             
             parserNodes.AddRange(GetAllFunctionObjectsWithTerminals());
             parserNodes.AddRange(GetAllLocationObjects());
@@ -72,11 +78,45 @@ namespace RdfParserModule
 
             parserEdges.AddRange(GetTransports());
 
+            ResolvePartOfRelation(parserNodes);
+
             Graph.Nodes = parserNodes;
             Graph.Edges = parserEdges;
 
             Project = _mapper.Map<ProjectAm>(Graph);
         }
+
+        private void ResolvePartOfRelation(List<ParserNode> nodes)
+        {
+            foreach (var node in nodes)
+            {
+                if (node.HasParent is not null)
+                {
+                    var fromConnector = new ParserTerminal
+                    {
+                        Id = $"{_domain}_{Guid.NewGuid()}"
+                    };
+                    var toConnector = new ParserTerminal
+                    {
+                        Id = $"{_domain}_{Guid.NewGuid()}"
+                    };
+
+                    var relation = new ParserRelation
+                    {
+                        FromConnectorId = fromConnector.Id,
+                        ToConnectorId = toConnector.Id,
+                        Relation = RelationType.PartOf
+                    };
+
+                    node.Terminals.Add(fromConnector);
+                    node.Terminals.Add(toConnector);
+
+                    
+
+                }
+            }
+        }
+
 
         public void GetProjectInformation()
         {
@@ -96,7 +136,7 @@ namespace RdfParserModule
         public INode GetParent(string nodeId)
         {
             // There should always only be one parent, so we can just get the First element
-            var parent = Store.GetTriplesWithSubjectPredicate(RdfGraph.CreateUriNode(new Uri(nodeId)), RdfGraph.CreateUriNode("imf:hasParent")).Select(t=>t.Subject).ToList().First();
+            var parent = Store.GetTriplesWithSubjectPredicate(RdfGraph.CreateUriNode(new Uri(nodeId)), RdfGraph.CreateUriNode(Resources.hasParent)).Select(t=>t.Subject).ToList().First();
 
             return parent;
         }
@@ -147,7 +187,14 @@ namespace RdfParserModule
         {
             var subjectNode = GetOrCreateUriNode(subject);
             var predicateNode = GetOrCreateUriNode(predicate);
-            return Store.GetTriplesWithSubjectPredicate(subjectNode, predicateNode).Select(triple => triple.Object).ToList();
+            var resultList = Store.GetTriplesWithSubjectPredicate(subjectNode, predicateNode).Select(triple => triple.Object).ToList();
+
+            if (resultList.Count < 1)
+            {
+                return null;
+            }
+
+            return resultList;
         }
 
         public List<INode> GetObjects(string subject, string[] predicates)
@@ -162,14 +209,25 @@ namespace RdfParserModule
 
         private INode GetOrCreateUriNode(string iri)
         {
-            // If the 'iri' is a qname we want to make sure it isn't passed as if it's a 'proper' Uri
-            if (!Uri.IsWellFormedUriString(iri, UriKind.RelativeOrAbsolute))
+            Regex isHttpRegex = new Regex(@"http(s)*");
+
+            if (isHttpRegex.IsMatch(iri))
             {
-                return RdfGraph.GetUriNode(iri) ?? RdfGraph.CreateUriNode(iri);
+                var uri = new Uri(iri);
+                return RdfGraph.GetUriNode(uri) ?? RdfGraph.CreateUriNode(uri);
+            }
+            return RdfGraph.GetUriNode(iri) ?? RdfGraph.CreateUriNode(iri);
+
+
+            // If true then 'iri' should not be a q-name, so we set it as a URI so it isn't misinterperated as 
+            if (Uri.IsWellFormedUriString(iri, UriKind.Absolute))
+            {
+                var uri = new Uri(iri);
+                return RdfGraph.GetUriNode(uri) ?? RdfGraph.CreateUriNode(uri);
             }
 
-            // But if it is a URI, we want to make sure it doesn't get mistaken for a qname
-            return RdfGraph.GetUriNode(new Uri(iri)) ?? RdfGraph.CreateUriNode(new Uri(iri));
+            // Check to see if 'iri' is NOT a wellformed URI, because then it should be a q-name
+            return RdfGraph.GetUriNode(iri) ?? RdfGraph.CreateUriNode(iri);
         }
 
         public List<INode> GetSubjects(string predicate, string obj)
@@ -295,7 +353,7 @@ namespace RdfParserModule
 
                 var connection = GetObjects(terminal.Id, Resources.connectedTo);
 
-                if (connection.Count is 0) continue;
+                if (connection is null) continue;
                 switch (terminal.Type)
                 {
                     case ConnectorType.Input:
@@ -349,12 +407,11 @@ namespace RdfParserModule
 
                 try
                 {
-                    var transmitter = GetObjects(o.Id, "rdf:type")
-                        .Where(node => node.ToString().Contains("Transmitter")).First();
+                    var transmitter = GetObjects(o.Id, "rdf:type").First(node => node.ToString().Contains("Transmitter"));
                     var categoryName = transmitter.ToString().Split("Transmitter-").Last().Split("-").First();
 
-                    var (termcatId, termTypeId) = o.Name.CreateCategoryIdAndTerminalTypeId(categoryName);
-                    o.TerminalCategoryId = termcatId;
+                    var (termCatId, termTypeId) = o.Name.CreateCategoryIdAndTerminalTypeId(categoryName);
+                    o.TerminalCategoryId = termCatId;
                     o.TerminalTypeId = termTypeId;
                 }
                 catch
@@ -413,7 +470,7 @@ namespace RdfParserModule
             };
 
             var fromConnectors = GetObjects(inTerminal.Iri, Resources.connectedTo);
-            if (fromConnectors.Count != 1)
+            if (fromConnectors is null || fromConnectors.Count != 1)
             {
                 throw new Exception("A terminal can only be connected to one, 1, other terminal");
             }
