@@ -7,9 +7,9 @@ namespace Mb.Services.Contracts
     public interface ILibraryService
     {
         Task<Library> GetLibTypes(string searchString);
-        Task<ICollection<LibraryNodeItem>> GetNodeTypes();
-        Task<ICollection<LibraryTransportItem>> GetTransportTypes();
-        Task<ICollection<LibraryInterfaceItem>> GetInterfaceTypes();
-        Task<ICollection<LibrarySubProjectItem>> GetSubProjects(string searchString = null);
+        Task<IEnumerable<LibraryNodeItem>> GetNodeTypes();
+        Task<IEnumerable<LibraryTransportItem>> GetTransportTypes();
+        Task<IEnumerable<LibraryInterfaceItem>> GetInterfaceTypes();
+        Task<IEnumerable<LibrarySubProjectItem>> GetSubProjects(string searchString = null);
     }
 }
