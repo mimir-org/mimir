@@ -37,7 +37,7 @@ const AdminComponent = ({ element, project, index, activeTabIndex, changeInspect
       {isTabOpen && (
         <TabBody id="admininfo">
           <AdminInfoLogoBox>
-            <img src={GetCompanyLogo(company)} alt="logo" className="logo" />
+            <img src={GetCompanyLogo(company, null)} alt="logo" className="logo" />
           </AdminInfoLogoBox>
           <hr />
           {element && <div className="container">{GetAdminContent(element, project, statuses)}</div>}
