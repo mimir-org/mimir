@@ -14,6 +14,7 @@ import { AttributeLikeItem, CompositeLikeItem, InspectorElement, TerminalLikeIte
 import { IsCreateLibraryType, IsEdge, IsNode } from "./helpers/IsType";
 import { GetSelectedIcon } from "../../typeEditor/helpers";
 import { Action, Dispatch } from "redux";
+import { IsBlockView } from "../../components/flow/block/helpers";
 
 interface Props {
   project: Project;
@@ -49,8 +50,7 @@ const InspectorHeader = ({
   compositeLikeItems,
 }: Props) => {
   const [validated, setValidated] = useState(false);
-  const selectedNode = GetSelectedNode();
-  const deleteDisabled = IsNode(element) && (IsAspectNode(element) || element === selectedNode);
+  const deleteDisabled = IsNode(element) && (IsAspectNode(element) || (IsBlockView() && element === GetSelectedNode()));
 
   return (
     <Menu id="InspectorHeader" color={GetInspectorColor(element)}>
