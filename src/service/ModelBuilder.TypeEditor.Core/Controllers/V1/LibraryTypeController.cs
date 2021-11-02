@@ -47,6 +47,7 @@ namespace Mb.TypeEditor.Core.Controllers.V1
         [HttpGet("")]
         [ProducesResponseType(typeof(ICollection<LibraryType>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize(Policy = "Read")]
         public IActionResult GetAllLibraryTypes()
         {
             try
@@ -71,6 +72,7 @@ namespace Mb.TypeEditor.Core.Controllers.V1
         [ProducesResponseType(typeof(CreateLibraryType), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Policy = "Read")]
         public async Task<IActionResult> CreateLibraryType([Required] string id, [Required] LibraryFilter filter)
         {
             if (!ModelState.IsValid)
@@ -106,6 +108,7 @@ namespace Mb.TypeEditor.Core.Controllers.V1
         [ProducesResponseType(typeof(IEnumerable<CompositeType>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Authorize(Policy = "Read")]
         public IActionResult GetCompositeTypes()
         {
             try
@@ -133,6 +136,7 @@ namespace Mb.TypeEditor.Core.Controllers.V1
         [ProducesResponseType(typeof(LibraryType), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Policy = "Edit")]
         public async Task<IActionResult> CreateLibraryType([FromBody] CreateLibraryType libraryType)
         {
             if (!ModelState.IsValid)
@@ -196,6 +200,7 @@ namespace Mb.TypeEditor.Core.Controllers.V1
         [ProducesResponseType(typeof(LibraryType), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Policy = "Edit")]
         public async Task<IActionResult> UpdateLibraryType(string id, [FromBody] CreateLibraryType libraryType, bool updateMajorVersion = false, bool updateMinorVersion = false)
         {
             if (!ModelState.IsValid)
@@ -246,6 +251,7 @@ namespace Mb.TypeEditor.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Policy = "Edit")]
         public async Task<IActionResult> CreateCompositeType(CompositeTypeAm compositeType)
         {
             try
@@ -282,6 +288,7 @@ namespace Mb.TypeEditor.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> DeleteType(string id)
         {
             if (string.IsNullOrEmpty(id))

@@ -42,6 +42,7 @@ namespace Mb.TypeEditor.Core.Controllers.V1
         [HttpGet("")]
         [ProducesResponseType(typeof(ICollection<TerminalType>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize(Policy = "Read")]
         public IActionResult GetTerminalTypes()
         {
             try
@@ -63,6 +64,7 @@ namespace Mb.TypeEditor.Core.Controllers.V1
         [HttpGet("category")]
         [ProducesResponseType(typeof(Dictionary<string, TerminalType>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize(Policy = "Read")]
         public IActionResult GetTerminalTypesByCategory()
         {
             try
@@ -87,6 +89,7 @@ namespace Mb.TypeEditor.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Authorize(Policy = "Edit")]
         public async Task<IActionResult> CreateTerminalType([FromBody] CreateTerminalType createTerminalType)
         {
             if (!ModelState.IsValid)
