@@ -18,7 +18,6 @@ import {
   projectSelector,
 } from "../../redux/store";
 
-// TODO: Fix after demo
 const Header = () => {
   const dispatch = useAppDispatch();
   const project = useAppSelector(projectSelector);
@@ -36,13 +35,13 @@ const Header = () => {
     <>
       <HeaderBox>
         <MenuMainHeader isOpen={accountMenuOpen}>
+          <CompanyLogoBox>
+            <img src={GetHeaderCompanyLogo(company)} alt="logo" />
+          </CompanyLogoBox>
           <div className="projectName" onClick={() => Click.OnAccount(dispatch, accountMenuOpen)}>
             {project && project.name}
           </div>
           <img src={Icons.User} alt="icon" className="icon" onClick={() => Click.OnAccount(dispatch, accountMenuOpen)} />
-          <CompanyLogoBox equinor={company === "equinor.com"}>
-            <img src={GetHeaderCompanyLogo(company)} alt="logo" className="logo" />
-          </CompanyLogoBox>
         </MenuMainHeader>
         <LogoBox>
           <img src={Icons.Mimir} alt="mimir-icon" onClick={() => Click.OnDarkMode(dispatch, darkMode)} />
