@@ -92,27 +92,32 @@ namespace RdfParserModule
             {
                 if (node.HasParent is not null)
                 {
-                    var fromConnector = new ParserTerminal
+                    var fromConnector = new ParserRelation
                     {
-                        Id = $"{_domain}_{Guid.NewGuid()}"
-                    };
-                    var toConnector = new ParserTerminal
-                    {
-                        Id = $"{_domain}_{Guid.NewGuid()}"
-                    };
-
-                    var relation = new ParserRelation
-                    {
-                        FromConnectorId = fromConnector.Id,
-                        ToConnectorId = toConnector.Id,
+                        Id = $"{_domain}_{Guid.NewGuid()}",
+                        Name = "Part of Relationship",
                         Relation = RelationType.PartOf
                     };
-
+                    var toConnector = new ParserRelation
+                    {
+                        Id = $"{_domain}_{Guid.NewGuid()}",
+                        Name = "Part of Relationship",
+                        Relation = RelationType.PartOf
+                    };
+                    
                     node.Terminals.Add(fromConnector);
                     node.Terminals.Add(toConnector);
 
-                    
+                    var edge = new ParserEdge
+                    {
+                        FromConnectorId = fromConnector.Id,
+                        ToConnectorId = toConnector.Id,
+                        FromNodeId = node.Id,
+                        ToNodeId = node.HasParent.Id,
+                        MasterProjectId = Graph.Id
+                    };
 
+                    parserEdges.Add(edge);
                 }
             }
         }
@@ -219,15 +224,15 @@ namespace RdfParserModule
             return RdfGraph.GetUriNode(iri) ?? RdfGraph.CreateUriNode(iri);
 
 
-            // If true then 'iri' should not be a q-name, so we set it as a URI so it isn't misinterperated as 
-            if (Uri.IsWellFormedUriString(iri, UriKind.Absolute))
-            {
-                var uri = new Uri(iri);
-                return RdfGraph.GetUriNode(uri) ?? RdfGraph.CreateUriNode(uri);
-            }
+            //// If true then 'iri' should not be a q-name, so we set it as a URI so it isn't misinterperated as 
+            //if (Uri.IsWellFormedUriString(iri, UriKind.Absolute))
+            //{
+            //    var uri = new Uri(iri);
+            //    return RdfGraph.GetUriNode(uri) ?? RdfGraph.CreateUriNode(uri);
+            //}
 
-            // Check to see if 'iri' is NOT a wellformed URI, because then it should be a q-name
-            return RdfGraph.GetUriNode(iri) ?? RdfGraph.CreateUriNode(iri);
+            //// Check to see if 'iri' is NOT a wellformed URI, because then it should be a q-name
+            //return RdfGraph.GetUriNode(iri) ?? RdfGraph.CreateUriNode(iri);
         }
 
         public List<INode> GetSubjects(string predicate, string obj)
@@ -304,11 +309,11 @@ namespace RdfParserModule
             }
         }
 
-        public List<ParserTerminal> NewGetTerminalsOfNode(ParserNode node)
+        public List<ParserConnector> NewGetTerminalsOfNode(ParserNode node)
         {
             var nodeId = node.Id;
 
-            var terminals = new List<ParserTerminal>();
+            var terminals = new List<ParserConnector>();
 
             var inputTerminals = GetObjects(nodeId, Resources.hasInputTerminal).Select(obj => new ParserTerminal
             {
@@ -341,12 +346,16 @@ namespace RdfParserModule
                     var terminalTypes = GetObjects(terminal.Id, "rdf:type");
                     if (terminalTypes.Count == 0)
                     {
-                        var transmitter = terminalTypes.First(node => node.ToString().Contains("Transmitter-"));
-                        var categoryName = transmitter.ToString().Split("Transmitter-").Last().Split("-").First();
+                        if (terminal is ParserTerminal t)
+                        {
+                            var transmitter = terminalTypes.First(node => node.ToString().Contains("Transmitter-"));
+                            var categoryName = transmitter.ToString().Split("Transmitter-").Last().Split("-").First();
 
-                        var (termCatId, termTypeId) = terminal.Name.CreateCategoryIdAndTerminalTypeId(categoryName);
-                        terminal.TerminalCategoryId = termCatId;
-                        terminal.TerminalTypeId = termTypeId;
+                            var (termCatId, termTypeId) = terminal.Name.CreateCategoryIdAndTerminalTypeId(categoryName);
+                            t.TerminalCategoryId = termCatId;
+                            t.TerminalTypeId = termTypeId;
+                        }
+    
                     }
                 }
 
@@ -599,7 +608,7 @@ namespace RdfParserModule
                 IsTransport = true,
                 StatusId = "4590637F39B6BA6F39C74293BE9138DF",
                 Version = "0.0",
-                Terminals = new List<ParserTerminal>(),
+                Terminals = new List<ParserConnector>(),
                 MasterProjectId = Graph.Id
             }).ToList();
 
@@ -654,7 +663,7 @@ namespace RdfParserModule
                 IsTransport = true,
                 StatusId = "4590637F39B6BA6F39C74293BE9138DF",
                 Version = "0.0",
-                Terminals = new List<ParserTerminal>(),
+                Terminals = new List<ParserConnector>(),
                 MasterProjectId = Graph.Id
             }).ToList();
 
@@ -767,7 +776,7 @@ namespace RdfParserModule
                 Id = node.ToString(),
                 SemanticReference = node.ToString(),
                 IsRoot = false,
-                Terminals = new List<ParserTerminal>(),
+                Terminals = new List<ParserConnector>(),
                 StatusId = "4590637F39B6BA6F39C74293BE9138DF",
                 Version = "0.0",
                 MasterProjectId = Graph.Id
@@ -795,7 +804,7 @@ namespace RdfParserModule
                         Aspect = Aspect.Function,
                         SemanticReference = parent.ToString(),
                         IsRoot = false,
-                        Terminals = new List<ParserTerminal>(),
+                        Terminals = new List<ParserConnector>(),
                         Version = "0.0",
                         MasterProjectId = Graph.Id,
                         Label = GetLabel(parent.ToString()),
