@@ -14,6 +14,7 @@ interface Props {
   parent: boolean;
   electro: boolean;
 }
+
 /**
  * Component for the terminals displayed on the nodes in BlockView.
  * @param interface

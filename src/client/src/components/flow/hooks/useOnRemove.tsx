@@ -15,7 +15,8 @@ const useOnRemove = (elements: any[], setElements: any, dispatch: any, inspector
   const selectedBlockNode = GetSelectedBlockNode();
   const blockView = IsBlockView();
   const edgeTypes = Object.values(EDGE_TYPE);
-  elements = elements.filter((el) => !IsAspectNode(el.data));
+
+  elements = elements.filter((el) => !IsAspectNode(el.data) && el !== selectedNode);
 
   elements.forEach((elem) => {
     const isEdge = edgeTypes.some((x) => x === elem.type?.toString() || elem.kind === EDGE_KIND);
