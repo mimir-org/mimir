@@ -1,10 +1,10 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
 import { Connector, Node } from "../../../../../models";
-import { Symbol } from "../../../../../compLibrary/symbol";
-import { TreeNodeWrapper, TreeHandleBox, TreeNodeNameBox } from "./styled";
+import { TreeNodeWrapper, TreeHandleBox } from "./styled";
 import { GetHandleType, IsPartOf } from "../../../helpers";
 import { FindAllNodes } from "../../../block/helpers";
+import { TreeLogoComponent } from "../../logo";
 
 /**
  * Component to display a node in TreeView.
@@ -52,8 +52,7 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
           </TreeHandleBox>
         );
       })}
-      <TreeNodeNameBox>{data.label ?? data.name}</TreeNodeNameBox>
-      <Symbol base64={data.symbol} text={data.name} />
+      <TreeLogoComponent node={data} />
     </TreeNodeWrapper>
   );
 };

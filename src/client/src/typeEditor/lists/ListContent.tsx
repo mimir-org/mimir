@@ -38,6 +38,7 @@ interface Props {
   createLibraryType: CreateLibraryType;
   discipline?: Discipline;
   onChange: Function;
+  onTerminalTypeIdChange?: (terminalTypeId: string) => void;
 }
 /**
  * Component that shows content in list based on list type
@@ -45,7 +46,16 @@ interface Props {
  * @returns list-elements based on search and list type
  */
 
-export const ListContent = ({ disabled, listType, items, listItems, createLibraryType, discipline, onChange }: Props) => {
+export const ListContent = ({
+  disabled,
+  listType,
+  items,
+  listItems,
+  createLibraryType,
+  discipline,
+  onChange,
+  onTerminalTypeIdChange,
+}: Props) => {
   return (
     <>
       {!disabled && (
@@ -84,6 +94,7 @@ export const ListContent = ({ disabled, listType, items, listItems, createLibrar
                   terminalTypes={element.items}
                   defaultTerminal={GetDefaultTerminal(listType, createLibraryType, items)}
                   onChange={(key, data) => onChange(key, data)}
+                  onTerminalTypeIdChange={onTerminalTypeIdChange}
                 />
               ))
             : listType === ListType.PredefinedAttributes &&

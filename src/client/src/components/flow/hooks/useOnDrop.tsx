@@ -96,7 +96,7 @@ const useOnDrop = (
       targetNode.level = sourceNode.level + 1;
       const sourceConn = sourceNode.connectors?.find((x) => IsPartOf(x) && IsOutputTerminal(x));
       const targetConn = targetNode.connectors?.find((x) => IsPartOf(x) && IsInputTerminal(x));
-      const partofEdge = ConvertToEdge(CreateId(), sourceConn, targetConn, sourceNode, targetNode, project.id, library);
+      const partofEdge = ConvertToEdge(CreateId(), sourceConn, targetConn, sourceNode, targetNode, project.id, library, false);
 
       SetSiblingIndexOnNodeDrop(targetNode, project, sourceNode);
       dispatch(createEdge(partofEdge));
@@ -106,7 +106,6 @@ const useOnDrop = (
     }
 
     dispatch(addNode(targetNode));
-
     if (!IsBlockView()) dispatch(setActiveNode(targetNode.id, true));
   }
 };

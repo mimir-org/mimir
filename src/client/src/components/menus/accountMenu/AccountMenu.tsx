@@ -12,12 +12,14 @@ import { TextResources } from "../../../assets/text";
 import { useCallback, useRef } from "react";
 import { setAccountMenuVisibility } from "../project/redux/actions";
 import { useOutsideClick } from "./hooks/useOutsideClick";
-import { activeMenuSelector, projectStateSelector, userStateSelector } from "../../../redux/store/";
+import { activeMenuSelector, commonStateSelector, projectStateSelector, userStateSelector } from "../../../redux/store/";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
+import { CommitProjectMenu } from "../project/commitProject";
 
 const AccountMenu = () => {
   const dispatch = useAppDispatch();
   const projectState = useAppSelector(projectStateSelector);
+  const commonState = useAppSelector(commonStateSelector);
   const userState = useAppSelector(userStateSelector);
   const activeMenu = useAppSelector(activeMenuSelector);
   const menuRef = useRef(null);
@@ -48,6 +50,11 @@ const AccountMenu = () => {
         <ImportProjectFileMenu />
         <ExportLibraryFileMenu />
         <ImportFileLibraryMenu />
+        <CommitProjectMenu
+          contractors={commonState.contractors}
+          parsers={commonState.parsers}
+          projectId={projectState?.project?.id}
+        />
       </ProjectMenuBox>
     </>
   );

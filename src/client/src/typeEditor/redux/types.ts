@@ -40,6 +40,7 @@ export const ADD_TERMINALTYPE = "ADD_TERMINALTYPE";
 export const REMOVE_TERMINALTYPE = "REMOVE_TERMINALTYPE";
 export const UPDATE_TERMINALTYPE = "UPDATE_TERMINALTYPE";
 export const REMOVE_TERMINALTYPE_BY_CATEGORY = "REMOVE_TERMINALTYPE_BY_CATEGORY";
+export const CLEAR_ALL_TERMINALTYPES = "CLEAR_ALL_TERMINALTYPES";
 export const SAVE_LIBRARY_TYPE = "SAVE_LIBRARY_TYPE";
 export const SAVE_LIBRARY_TYPE_SUCCESS_OR_ERROR = "SAVE_LIBRARY_TYPE_SUCCESS_OR_ERROR";
 export const DELETE_TYPE_EDITOR_ERROR = "DELETE_TYPE_EDITOR_ERROR";
@@ -225,6 +226,11 @@ export interface RemoveTerminalTypeByCategory {
   payload: { categoryId: string };
 }
 
+export interface ClearAllTerminalTypes {
+  type: typeof CLEAR_ALL_TERMINALTYPES;
+  payload: {};
+}
+
 interface SaveLibraryType {
   type: typeof SAVE_LIBRARY_TYPE;
   payload: {
@@ -291,6 +297,7 @@ export type TypeEditorActionTypes =
   | AddTerminalType
   | RemoveTerminalType
   | UpdateTerminalType
+  | ClearAllTerminalTypes
   | RemoveTerminalTypeByCategory
   | SaveLibraryType
   | SaveLibraryTypeFinished

@@ -185,6 +185,9 @@ const TextResources = {
   Account_Import_Lib_Label: "Import library",
   Account_Commit_Label: "Commit project",
   Account_Commit: "CommitProject",
+  Account_Commit_Contractor_Label: "Send to contractor",
+  Account_Commit_Parser_Label: "Data type",
+  Account_Commit_Button: "Commit",
   Account_Logout_Label: "Log out",
   Account_Open_Label: "Open a project",
   Account_Create_Label: "Create a project",
@@ -215,6 +218,8 @@ const TextResources = {
   Error_SaveUpdateProject: "Could not create or update project",
   Error_ServerUnavailable: "The server is unavailable",
   Error_NoActiveAccount: "No active account. Verify a user has been signed in and setActiveAccount has been called",
+  Error_Forbidden: "Access denied",
+  Error_Server: "Internal server error",
 
   // BlockView
   ConnectMenu_Select_All: "Select all",
@@ -225,6 +230,7 @@ const TextResources = {
   Type_BlockFunction: "BlockFunctionNode",
   Type_BlockProduct: "BlockProductNode",
   Type_BlockParentNode: "BlockParentNode",
+  Type_OffPageNode: "BlockOffPageNode",
 
   // RDS
   RDS_Function: "=",

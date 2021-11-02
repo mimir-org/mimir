@@ -1,4 +1,4 @@
-import { Aspect, ObjectType, TerminalTypeItem, PredefinedAttribute } from "..";
+import { Aspect, ObjectType, TerminalTypeItem, PredefinedAttribute, ConnectorType } from "..";
 
 export const CREATE_LIBRARY_KIND: string = "CreateLibraryType";
 
@@ -22,5 +22,19 @@ export class CreateLibraryType {
 
   constructor(createLibraryType: CreateLibraryType) {
     Object.assign(this, createLibraryType);
+
+    if (!this.attributeTypes) this.attributeTypes = [];
+
+    if (!this.terminalTypes) {
+      const defaultTerminalTypeItem = {
+        number: 1,
+        terminalTypeId: this.terminalTypeId,
+        connectorType: ConnectorType.Input,
+      } as TerminalTypeItem;
+
+      this.terminalTypes = [defaultTerminalTypeItem, { ...defaultTerminalTypeItem, connectorType: ConnectorType.Output }];
+    }
+
+    if (!this.compositeTypes) this.compositeTypes = [];
   }
 }

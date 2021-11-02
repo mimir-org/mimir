@@ -1,4 +1,4 @@
-import { Switch, Route, useHistory } from "react-router";
+import { useHistory } from "react-router";
 import { Home } from "../home/";
 import { Header } from "../header";
 import { Spinner, SpinnerWrapper } from "../../compLibrary/animated";
@@ -47,11 +47,7 @@ const App = ({ pca }: AppProps) => {
           <Spinner />
         </SpinnerWrapper>
         <AppBox fetching={isFetching}>
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/home" component={Home} />
-            <Route path="/home/:type" component={Home} />
-          </Switch>
+          <Home />
         </AppBox>
       </AuthenticatedTemplate>
       <UnauthenticatedTemplate>

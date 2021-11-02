@@ -7,11 +7,10 @@ import { NodeBox } from "../../../styled";
 import { TerminalsContainerComponent, HandleComponent } from "../../terminals";
 import { SetNodeSize } from "./helpers";
 import { FilterTerminals } from "../../helpers";
-import { Symbol } from "../../../../../compLibrary/symbol";
-import { BlockNodeNameBox } from "../../styled";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
 import { edgeSelector, electroSelector, nodeSelector, secondaryNodeSelector } from "../../../../../redux/store";
 import { Size } from "../../../../../compLibrary";
+import { BlockLogoComponent } from "../../logo";
 
 /**
  * Component for a Function or Product Node in BlockView.
@@ -63,8 +62,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
       onMouseOver={() => Click.OnHover(showTerminalBox)}
       onMouseOut={() => Click.OnMouseOut(showTerminalBox)}
     >
-      <BlockNodeNameBox>{node.label ?? node.name}</BlockNodeNameBox>
-      <Symbol base64={node.symbol} text={node.name} />
+      <BlockLogoComponent node={node} />
 
       <TerminalsContainerComponent
         node={node}

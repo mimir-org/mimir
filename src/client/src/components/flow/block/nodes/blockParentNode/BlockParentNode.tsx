@@ -50,6 +50,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         selected={node.isBlockSelected}
         width={parentNodeSize?.width}
         height={parentNodeSize?.length}
+        hasChildren={terminals.length > 0}
       />
 
       <TerminalsContainerComponent

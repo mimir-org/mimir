@@ -16,7 +16,8 @@ const ConvertToEdge = (
   sourceNode: Node,
   targetNode: Node,
   projectId: string,
-  library: LibraryState
+  library: LibraryState,
+  animatedEdge: boolean
 ) => {
   return new Edge({
     id: id,
@@ -32,7 +33,7 @@ const ConvertToEdge = (
     masterProjectId: projectId,
     transport: ConvertToTransport(sourceConn, library),
     interface: ConvertToInterface(sourceConn, library),
-    animated: IsTransport(sourceConn),
+    animated: IsTransport(sourceConn) && animatedEdge,
   } as Edge);
 };
 

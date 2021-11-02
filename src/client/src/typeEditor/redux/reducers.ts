@@ -278,6 +278,14 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
           ],
         },
       };
+    case Types.CLEAR_ALL_TERMINALTYPES:
+      return {
+        ...state,
+        createLibraryType: {
+          ...state.createLibraryType,
+          terminalTypes: [],
+        },
+      };
     case Types.SAVE_LIBRARY_TYPE:
       return {
         ...state,

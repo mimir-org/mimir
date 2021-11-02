@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Mb.Models.Abstract;
 using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Exceptions;
@@ -30,19 +29,16 @@ namespace Mb.Core.Controllers.V1
     {
         private readonly IProjectService _projectService;
         private readonly ILogger<ProjectController> _logger;
-        private readonly IModuleService _moduleService;
 
         /// <summary>
         /// Project Controller Constructor
         /// </summary>
         /// <param name="projectService"></param>
         /// <param name="logger"></param>
-        /// <param name="moduleService"></param>
-        public ProjectController(IProjectService projectService, ILogger<ProjectController> logger, IModuleService moduleService)
+        public ProjectController(IProjectService projectService, ILogger<ProjectController> logger)
         {
             _projectService = projectService;
             _logger = logger;
-            _moduleService = moduleService;
         }
 
         /// <summary>
@@ -56,6 +52,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Authorize(Policy = "Edit")]
         public async Task<IActionResult> CreateNewProject([FromBody] CreateProject project)
         {
             if (!ModelState.IsValid)
@@ -83,6 +80,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Authorize(Policy = "Read")]
         public IActionResult GetBySearch(string name)
         {
             try
@@ -109,6 +107,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Policy = "Read")]
         public async Task<IActionResult> GetById(string id)
         {
             if (string.IsNullOrEmpty(id))
@@ -142,6 +141,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Policy = "Edit")]
         public async Task<IActionResult> ImportProject([FromBody] ProjectAm projectAm)
         {
             if (!ModelState.IsValid)
@@ -176,6 +176,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Policy = "Edit")]
         public async Task<IActionResult> UpdateProject(string id, [FromBody] ProjectAm projectAm)
         {
             if (!ModelState.IsValid)
@@ -211,6 +212,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> DeleteProject(string id)
         {
             try
@@ -244,11 +246,12 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Policy = "Read")]
         public async Task<IActionResult> DownloadProject(string id, string parser)
         {
             try
             {
-                var (file, format) = await _projectService.CreateFile(id, parser);
+                var (file, format) = await _projectService.CreateFile(id, new Guid(parser));
                 return File(file, format.ContentType, $"project_{id}.{format.FileExtension}");
             }
             catch (ModelBuilderModuleException e)
@@ -280,6 +283,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Policy = "Edit")]
         public async Task<IActionResult> UploadProject(string parser, IFormFile file, CancellationToken cancellationToken)
         {
             try
@@ -287,7 +291,7 @@ namespace Mb.Core.Controllers.V1
                 if (!file.ValidateJsonFile())
                     return BadRequest("Invalid file extension. The file must be a json file");
 
-                var createdProject = await _projectService.CreateFromFile(file, cancellationToken, parser);
+                var createdProject = await _projectService.CreateFromFile(file, cancellationToken, new Guid(parser));
                 return CreatedAtAction(nameof(GetById), new { id = createdProject.Id }, createdProject);
             }
             catch (ModelBuilderModuleException e)
@@ -308,33 +312,6 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
-        /// Get all registered parsers
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("parser")]
-        [ProducesResponseType(typeof(ICollection<string>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult GetParsers()
-        {
-            try
-            {
-                var data = _moduleService.Modules
-                    .Where(x => x.Instance is IModelBuilderParser)
-                    .Select(x => x.Name)
-                    .ToList();
-
-                return Ok(data);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
-        }
-
-        /// <summary>
         /// Locks or unlocks a node (including all attributes on the node) and all children nodes and attributes
         /// </summary>
         /// <param name="lockUnlockAm"></param>
@@ -344,6 +321,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Policy = "Edit")]
         public async Task<IActionResult> LockUnlockNode([FromBody] LockUnlockNodeAm lockUnlockAm)
         {
             if (!ModelState.IsValid)
@@ -376,6 +354,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Policy = "Edit")]
         public async Task<IActionResult> LockUnlockAttribute([FromBody] LockUnlockAttributeAm lockUnlockAttributeAm)
         {
             if (!ModelState.IsValid)
@@ -410,6 +389,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Policy = "Read")]
         public IActionResult GetLockedNodes(string projectId)
         {
             if (!ModelState.IsValid)
@@ -439,6 +419,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Policy = "Read")]
         public IActionResult GetLockedAttributes(string projectId)
         {
             if (!ModelState.IsValid)

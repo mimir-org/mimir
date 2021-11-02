@@ -1,7 +1,7 @@
 import ReactFlow, { ReactFlowProvider, Elements, Background } from "react-flow-renderer";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { FullScreenComponent } from "../../../compLibrary/controls";
-import { GetBlockEdgeTypes, IsBlockView, OnBlockClick } from "../block/helpers";
+import { GetBlockEdgeTypes, OnBlockClick, IsOffPage } from "../block/helpers";
 import { BuildBlockElements } from "./builders";
 import { useOnConnect, useOnDrop, useOnRemove, useOnDragStop } from "../hooks";
 import { setActiveBlockNode, setActiveEdge } from "../../../redux/store/project/actions";
@@ -11,7 +11,6 @@ import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { BlockFilterMenu } from "../../menus/filterMenu/block";
 import { Node } from "../../../models";
 import { ExplorerModule } from "../../../modules/explorer";
-import { MapComponent } from "../map";
 import {
   darkModeSelector,
   iconSelector,
@@ -22,6 +21,7 @@ import {
   userStateSelector,
   blockFilterSelector,
   nodeSizeSelector,
+  animatedEdgeSelector,
 } from "../../../redux/store";
 
 interface Props {
@@ -45,9 +45,11 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   const electro = useAppSelector(electroSelector);
   const userState = useAppSelector(userStateSelector);
   const blockFilter = useAppSelector(blockFilterSelector);
+  const parentNodeSize = useAppSelector(nodeSizeSelector);
+  const animatedEdge = useAppSelector(animatedEdgeSelector);
+
   const node = GetSelectedNode();
   const parent = GetParent(node);
-  const parentNodeSize = useAppSelector(nodeSizeSelector);
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
@@ -66,8 +68,16 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   };
 
   const OnConnect = (params) => {
-    return useOnConnect(params, project, setElements, dispatch, EDGE_TYPE.BLOCK as EdgeType, lib);
+    return useOnConnect(params, project, setElements, dispatch, EDGE_TYPE.BLOCK as EdgeType, lib, animatedEdge);
   };
+
+  // const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
+  //   return useOnConnectStart(e, { nodeId, handleType, handleId });
+  // };
+
+  // const OnConnectStop = (e) => {
+  //   return useOnConnectStop(e, project, dispatch);
+  // };
 
   const OnDragOver = (event) => {
     event.preventDefault();
@@ -94,40 +104,39 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   }, [OnLoad, flowInstance, darkMode, electro]);
 
   return (
-    <>
-      {IsBlockView() && (
-        <ReactFlowProvider>
-          <div className="reactflow-wrapper" ref={flowWrapper}>
-            <ReactFlow
-              elements={elements}
-              nodeTypes={GetBlockNodeTypes}
-              edgeTypes={GetBlockEdgeTypes}
-              onConnect={OnConnect}
-              onElementsRemove={OnElementsRemove}
-              onLoad={OnLoad}
-              onDrop={OnDrop}
-              onDragOver={OnDragOver}
-              onNodeDragStop={OnNodeDragStop}
-              onElementClick={OnElementClick}
-              zoomOnScroll={true}
-              paneMoveable={true}
-              zoomOnDoubleClick={false}
-              defaultZoom={0.9}
-              defaultPosition={[450, 80]}
-              onClick={(e) => OnBlockClick(e, dispatch, project)}
-              onlyRenderVisibleElements={true}
-            >
-              <Background />
-              <MapComponent />
-              <FullScreenComponent inspectorRef={inspectorRef} />
-            </ReactFlow>
+    <ReactFlowProvider>
+      <div className="reactflow-wrapper" ref={flowWrapper}>
+        <ReactFlow
+          elements={elements}
+          nodeTypes={GetBlockNodeTypes}
+          edgeTypes={GetBlockEdgeTypes}
+          onConnect={OnConnect}
+          // onConnectStart={OnConnectStart}
+          // onConnectStop={OnConnectStop}
+          onElementsRemove={OnElementsRemove}
+          onLoad={OnLoad}
+          onDrop={OnDrop}
+          onDragOver={OnDragOver}
+          onNodeDragStop={OnNodeDragStop}
+          onElementClick={OnElementClick}
+          zoomOnScroll={true}
+          paneMoveable={true}
+          zoomOnDoubleClick={false}
+          defaultZoom={0.9}
+          defaultPosition={[450, 80]}
+          onClick={(e) => OnBlockClick(e, dispatch, project)}
+          onlyRenderVisibleElements={true}
+        >
+          <Background />
+          <FullScreenComponent inspectorRef={inspectorRef} />
+        </ReactFlow>
 
-            <ExplorerModule elements={elements} />
-            {blockFilter && <BlockFilterMenu elements={elements} />}
-          </div>
-        </ReactFlowProvider>
-      )}
-    </>
+        <ExplorerModule elements={elements?.filter((elem) => !IsOffPage(elem?.data))} />
+        {blockFilter && (
+          <BlockFilterMenu elements={elements?.filter((elem) => !IsOffPage(elem?.data))} edgeAnimation={animatedEdge} />
+        )}
+      </div>
+    </ReactFlowProvider>
   );
 };
 

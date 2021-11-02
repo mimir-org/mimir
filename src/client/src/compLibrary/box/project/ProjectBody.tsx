@@ -1,8 +1,12 @@
 import styled from "styled-components";
 
-const ProjectBody = styled.div`
+interface Props {
+  removeHeight?: boolean;
+}
+
+const ProjectBody = styled.div<Props>`
   padding: 0px 12px;
-  height: 100%;
+  height: ${(props) => (props.removeHeight ? "" : "100%")};
   display: flex;
   flex-direction: column;
 `;

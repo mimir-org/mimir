@@ -5,18 +5,19 @@ import { IsLibrary } from "../../../flow/helpers";
 import { FilterDropdown } from "../dropdown";
 import { TextResources } from "../../../../assets/text";
 import { OnAnimationChange, OnChange } from "../handlers";
-import { GetEdges, GetNodes, IsAnimationChecked, PopulateFilterLists } from "../helpers";
+import { GetEdges, GetNodes, PopulateFilterLists } from "../helpers";
 import { FilterElement } from "..";
 
 interface Props {
   elements: any[];
+  edgeAnimation: boolean;
 }
 
 /**
  * Menu to filter terminals and edges in TreeView.
  * @returns a menu with multiple drop-down menus
  */
-const TreeFilterMenu = ({ elements }: Props) => {
+const TreeFilterMenu = ({ elements, edgeAnimation }: Props) => {
   const dispatch = useAppDispatch();
   const libOpen = useAppSelector((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible);
   const edges = GetEdges(elements);
@@ -36,8 +37,8 @@ const TreeFilterMenu = ({ elements }: Props) => {
       <MenuColumn>
         <FilterElement
           label={"Animation"}
-          onChange={() => OnAnimationChange(edges, dispatch)}
-          isChecked={IsAnimationChecked(edges)}
+          onChange={() => OnAnimationChange(edges, dispatch, edgeAnimation)}
+          isChecked={edgeAnimation}
           visible={!!transportItems.length}
         />
         <FilterDropdown

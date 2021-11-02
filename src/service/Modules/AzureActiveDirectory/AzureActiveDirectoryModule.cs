@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using AzureActiveDirectoryModule.Models;
+using Mb.Models.Const;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +26,13 @@ namespace AzureActiveDirectoryModule
                     options => { activeDirectorySection.Bind(options); })
                 .EnableTokenAcquisitionToCallDownstreamApi(options => activeDirectorySection.Bind(options))
                 .AddDistributedTokenCaches();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(Policies.Admin, policy => policy.RequireRole(Roles.MimirAdministrator));
+                options.AddPolicy(Policies.Edit, policy => policy.RequireRole(Roles.MimirAdministrator, Roles.MimirContributor));
+                options.AddPolicy(Policies.Read, policy => policy.RequireRole(Roles.MimirAdministrator, Roles.MimirContributor, Roles.MimirReader));
+            });
 
             var activeDirectoryConfiguration = new AzureActiveDirectoryConfiguration();
             activeDirectorySection.Bind(activeDirectoryConfiguration);
@@ -109,6 +117,7 @@ namespace AzureActiveDirectoryModule
                     c.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
                 }
 
+                c.ConfigObject.AdditionalItems.Add("syntaxHighlight", false);
                 c.OAuthClientId(azureConfig.ClientId);
                 c.OAuthAppName("Azure Active Directory");
                 c.DisplayOperationId();

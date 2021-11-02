@@ -43,7 +43,7 @@ namespace Mb.Core.Controllers.V1
         /// <summary>
         /// Create a new subProject
         /// </summary>
-        /// <param name="subProject"></param>
+        /// <param name="subProjectAm"></param>
         /// <returns></returns>
         [HttpPost("")]
         [ProducesResponseType(typeof(Project), StatusCodes.Status201Created)]
@@ -51,6 +51,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Authorize(Policy = "Edit")]
         public async Task<IActionResult> CreateSubProject([FromBody] SubProjectAm subProjectAm)
         {
             if (!ModelState.IsValid)
@@ -80,6 +81,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Policy = "Read")]
         public async Task<IActionResult> GetSubProject(string id)
         {
             if (string.IsNullOrWhiteSpace(id))
