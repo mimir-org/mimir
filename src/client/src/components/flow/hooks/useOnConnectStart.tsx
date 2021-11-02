@@ -3,6 +3,7 @@ import { SaveEventData } from "../../../redux/store/localStorage/localStorage";
 
 const onConnectStart = (e, { nodeId, handleType, handleId }) => {
   e.preventDefault();
+
   const eventdata = {
     nodeId: nodeId,
     handleType: handleType,
