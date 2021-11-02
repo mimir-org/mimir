@@ -9,7 +9,7 @@ import { Menu, Title, NodeInfo, ToggleBox, ButtonWrapper } from "./styled";
 import { InspectorTabs } from ".";
 import { useState } from "react";
 import { InspectorButtonType } from "../../compLibrary/buttons/inspector/InspectorButton";
-import { IsAspectNode } from "../../components/flow/helpers";
+import { GetSelectedNode, IsAspectNode } from "../../components/flow/helpers";
 import { AttributeLikeItem, CompositeLikeItem, InspectorElement, TerminalLikeItem } from "./types";
 import { IsCreateLibraryType, IsEdge, IsNode } from "./helpers/IsType";
 import { GetSelectedIcon } from "../../typeEditor/helpers";
@@ -49,8 +49,8 @@ const InspectorHeader = ({
   compositeLikeItems,
 }: Props) => {
   const [validated, setValidated] = useState(false);
-
-  const deleteDisabled = IsNode(element) && IsAspectNode(element);
+  const selectedNode = GetSelectedNode();
+  const deleteDisabled = IsNode(element) && (IsAspectNode(element) || element === selectedNode);
 
   return (
     <Menu id="InspectorHeader" color={GetInspectorColor(element)}>
