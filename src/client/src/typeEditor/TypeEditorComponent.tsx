@@ -24,6 +24,7 @@ import {
   IsProduct,
   GetWidth,
   GetSelectedDiscipline,
+  ResetRedux,
 } from "./helpers";
 import {
   closeTypeEditor,
@@ -57,6 +58,7 @@ export const TypeEditorComponent = () => {
   };
 
   const onChange = (key: string, value: any) => {
+    ResetRedux(dispatch, key, value);
     dispatch(updateValue(key, value));
   };
 
