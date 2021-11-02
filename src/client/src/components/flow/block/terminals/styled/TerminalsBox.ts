@@ -12,7 +12,7 @@ const TerminalsBox = styled.div<Props>`
   position: absolute;
   top: 6px;
   cursor: pointer;
-  z-index: 1;
+  z-index: 2;
 
   left: ${(props) => (props.input && props.parent ? "9px" : props.input && !props.parent ? "-1px" : "unset")};
   right: ${(props) => (!props.input && props.parent ? "7px" : !props.input && !props.parent ? "-1px" : "unset")};

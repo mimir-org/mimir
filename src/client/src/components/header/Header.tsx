@@ -4,6 +4,8 @@ import { ToolBar } from "./";
 import { MenuMainHeader } from "../../compLibrary/box/menus";
 import { HeaderBox, LogoBox } from "../../compLibrary/box/header/";
 import { useAppDispatch, useAppSelector } from "../../redux/store/hooks";
+import { GetHeaderCompanyLogo } from "../flow/helpers";
+import { CompanyLogoBox } from "./styled";
 import {
   darkModeSelector,
   accountMenuSelector,
@@ -16,6 +18,7 @@ import {
   projectSelector,
 } from "../../redux/store";
 
+// TODO: Fix after demo
 const Header = () => {
   const dispatch = useAppDispatch();
   const project = useAppSelector(projectSelector);
@@ -27,15 +30,19 @@ const Header = () => {
   const explorerOpen = useAppSelector(explorerSelector);
   const treeView = useAppSelector(treeSelector);
   const electro = useAppSelector(electroSelector);
+  const company = process.env.REACT_APP_COMPANY;
 
   return (
     <>
       <HeaderBox>
         <MenuMainHeader isOpen={accountMenuOpen}>
-          <img src={Icons.User} alt="icon" className="icon" onClick={() => Click.OnAccount(dispatch, accountMenuOpen)} />
           <div className="projectName" onClick={() => Click.OnAccount(dispatch, accountMenuOpen)}>
             {project && project.name}
           </div>
+          <img src={Icons.User} alt="icon" className="icon" onClick={() => Click.OnAccount(dispatch, accountMenuOpen)} />
+          <CompanyLogoBox equinor={company === "equinor.com"}>
+            <img src={GetHeaderCompanyLogo(company)} alt="logo" className="logo" />
+          </CompanyLogoBox>
         </MenuMainHeader>
         <LogoBox>
           <img src={Icons.Mimir} alt="mimir-icon" onClick={() => Click.OnDarkMode(dispatch, darkMode)} />
