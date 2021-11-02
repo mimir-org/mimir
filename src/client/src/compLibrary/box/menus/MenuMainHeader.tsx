@@ -23,6 +23,7 @@ const MenuMainHeader = styled.div`
   .icon {
     display: flex;
     z-index: 1;
+    margin-left: 10px;
   }
 `;
 
