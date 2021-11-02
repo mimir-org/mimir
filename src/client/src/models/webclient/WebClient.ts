@@ -25,7 +25,7 @@ export async function http<T>(request: RequestInfo): Promise<HttpResponse<T>> {
     response = await fetch(request);
 
     if (!isValidStatus(response.status)) {
-      throw new Error();
+      throw new Error(errorMessage(response));
     }
 
     if (hasContent(response)) {
@@ -34,12 +34,24 @@ export async function http<T>(request: RequestInfo): Promise<HttpResponse<T>> {
 
     return response;
   } catch (e) {
-    throw new Error(TextResources.Error_ServerUnavailable);
+    throw new Error(e);
   }
 }
 
 const isValidStatus = (status: number) => (status >= 200 && status < 300) || status === 400;
 const hasContent = <T>(response: HttpResponse<T>) => response.status !== 204;
+
+const errorMessage = <T>(response: HttpResponse<T>) => {
+  if (response.status >= 401 && response.status <= 403) {
+    return TextResources.Error_Forbidden;
+  }
+
+  if (response.status >= 500) {
+    return TextResources.Error_Server;
+  }
+
+  return TextResources.Error_ServerUnavailable
+}
 
 export async function get<T>(
   path: string,

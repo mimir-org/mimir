@@ -46,6 +46,7 @@ namespace Mb.TypeEditor.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Authorize(Policy = "Edit")]
         public async Task<IActionResult> CreateNewEnum([FromBody] CreateEnum createEnum)
         {
             if (!ModelState.IsValid)
@@ -73,6 +74,7 @@ namespace Mb.TypeEditor.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Authorize(Policy = "Read")]
         public IActionResult GetAllEnumsOfType([FromRoute]EnumType enumType)
         {
             try
@@ -96,6 +98,7 @@ namespace Mb.TypeEditor.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Authorize(Policy = "Read")]
         public IActionResult GetLocationTypes()
         {
             try

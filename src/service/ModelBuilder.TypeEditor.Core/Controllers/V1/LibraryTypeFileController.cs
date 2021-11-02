@@ -43,6 +43,7 @@ namespace Mb.TypeEditor.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Policy = "Read")]
         public IActionResult ExportTypes()
         {
             try
@@ -70,6 +71,7 @@ namespace Mb.TypeEditor.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Policy = "Edit")]
         public async Task<IActionResult> UploadTypes(IFormFile file, CancellationToken cancellationToken)
         {
             try

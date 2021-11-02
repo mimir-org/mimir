@@ -45,6 +45,7 @@ namespace Mb.TypeEditor.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Authorize(Policy = "Read")]
         public IActionResult GetBlobData()
         {
             try
@@ -74,6 +75,7 @@ namespace Mb.TypeEditor.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Authorize(Policy = "Edit")]
         public async Task<IActionResult> CreateOrUpdateBlob([FromBody] BlobDataAm blobData)
         {
             if (!ModelState.IsValid)

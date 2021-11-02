@@ -42,6 +42,7 @@ namespace Mb.TypeEditor.Core.Controllers.V1
         [HttpGet("{aspect}")]
         [ProducesResponseType(typeof(ICollection<Rds>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize(Policy = "Read")]
         public IActionResult GetRdsCodes(Aspect aspect)
         {
             try
