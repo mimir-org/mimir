@@ -3,19 +3,107 @@ import { IsBlockView } from "../block/helpers";
 import { GetEdgeType } from "../tree/helpers";
 import { ConvertToEdge, ConvertToNode } from "../converters";
 import { BuildTreeEdge, BuildTreeNode } from "../tree/builders";
-import { BlobData, LibItem, Project, GetFileData, User, Node } from "../../../models";
+import {
+  BlobData,
+  LibItem,
+  Project,
+  User,
+  Node,
+  LibrarySubProjectItem,
+  Edge,
+  RelationType,
+  ConnectorType,
+} from "../../../models";
 import { LibraryState } from "../../../redux/store/library/types";
 import { BuildBlockNode } from "../block/builders";
 import { Size } from "../../../compLibrary";
 import {
   CreateId,
   GetSelectedNode,
+  IsAspectNode,
   IsFamily,
   IsInputTerminal,
   IsOutputTerminal,
   IsPartOf,
+  IsSubProject,
   SetSiblingIndexOnNodeDrop,
 } from "./../helpers";
+import { get } from "../../../models/webclient/WebClient";
+import { InitializeProject } from "../../../redux/sagas/project";
+
+const GetProject = async (projectId: string): Promise<Project> => {
+  try {
+    const url = process.env.REACT_APP_API_BASE_URL + "subproject/" + projectId;
+    const response = await get(url);
+    if (response.ok) {
+      return InitializeProject(response.data as Project);
+    }
+    return null;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const GetProjectData = async (event: any, project: Project, subProject: Project): Promise<[Node[], Edge[]]> => {
+  try {
+    if (!subProject?.isSubProject) return [[], []];
+
+    let targetNodeId = event.target?.attributes["data-id"]?.value;
+
+    if (!targetNodeId) {
+      targetNodeId = event.target?.offsetParent?.attributes["data-id"]?.value;
+    }
+
+    if (!targetNodeId) return [[], []];
+
+    const targetNode = project.nodes.find((x) => x.id === targetNodeId);
+    if (!targetNode) return [[], []];
+
+    const targetnodeConnector = targetNode.connectors.find(
+      (x) => x.relationType === RelationType.PartOf && x.type === ConnectorType.Output
+    );
+
+    if (!targetnodeConnector) return [[], []];
+
+    // Add data to current project
+    // Find the rootnode for current location
+    const rootNode = subProject.nodes.find((x) => x.isRoot && IsFamily(x, targetNode));
+
+    // Find the connector that should do a remap
+    const rootNodeConnector = rootNode.connectors.find(
+      (x) => x.relationType === RelationType.PartOf && x.type === ConnectorType.Output
+    );
+
+    // Find edges that should change parent
+    const edges = subProject.edges.filter((x) => x.fromConnectorId === rootNodeConnector.id);
+
+    // Remap edges
+    edges.forEach((edge) => {
+      edge.id = CreateId();
+      edge.fromConnectorId = targetnodeConnector.id;
+      edge.fromNodeId = targetNode.id;
+      edge.fromConnector = targetnodeConnector;
+      edge.fromNode = targetNode;
+      edge.masterProjectId = project.id;
+    });
+
+    const nodesToCreate = subProject.nodes.filter(
+      (x) => !x.isRoot && IsFamily(x, targetNode) && !project.nodes.find((y) => y.id === x.id)
+    );
+
+    const edgesToCreate = subProject.edges.filter(
+      (x) => IsFamily(x.fromNode, targetNode) && !IsAspectNode(x.fromNode) && !project.edges.find((y) => y.id === x.id)
+    );
+
+    nodesToCreate.forEach((node) => {
+      node.positionY = node.positionY + targetNode.positionY;
+    });
+
+    return [nodesToCreate, edgesToCreate];
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 const useOnDrop = (
   project: Project,
@@ -30,14 +118,18 @@ const useOnDrop = (
   parentNode: Node
 ) => {
   const sourceNode = GetSelectedNode();
-  const isFile = event.dataTransfer.files && event.dataTransfer.files.length > 0;
+  // const isFile = event.dataTransfer.files && event.dataTransfer.files.length > 0;
+  const isSubProject = IsSubProject(event);
 
-  if (isFile && !IsBlockView()) {
+  if (isSubProject && !IsBlockView()) {
     event.stopPropagation();
     event.preventDefault();
+    const eventData = JSON.parse(event.dataTransfer.getData("application/reactflow")) as LibrarySubProjectItem;
 
     (async () => {
-      const data = await GetFileData(event, project);
+      const subProject = await GetProject(eventData.id);
+      const data = await GetProjectData(event, project, subProject);
+
       data[0].forEach((node) => {
         dispatch(addNode(node));
         setElements((es) => es.concat(BuildTreeNode(node)));
@@ -49,7 +141,7 @@ const useOnDrop = (
         setElements((es) => es.concat(BuildTreeEdge(edge, edgeType, project.nodes)));
       });
     })();
-  } else {
+  } else if (!isSubProject) {
     event.preventDefault();
     const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
     const data = JSON.parse(event.dataTransfer.getData("application/reactflow")) as LibItem;
@@ -107,6 +199,10 @@ const useOnDrop = (
 
     dispatch(addNode(targetNode));
     if (!IsBlockView()) dispatch(setActiveNode(targetNode.id, true));
+  } else {
+    event.stopPropagation();
+    event.preventDefault();
+    return;
   }
 };
 
