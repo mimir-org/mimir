@@ -1,7 +1,8 @@
 import { Node } from "../../../../../models";
-import { Banner, Block, Header } from "./styled";
+import { Banner, Block, Header, LogoBox } from "./styled";
 import { OnResize } from "./handlers";
 import { useEffect } from "react";
+import { GetCompanyLogo } from "../../../helpers";
 
 interface Props {
   dispatch: any;
@@ -10,6 +11,7 @@ interface Props {
   selected: boolean;
   width: number;
   height: number;
+  hasChildren: boolean;
 }
 
 /**
@@ -17,7 +19,9 @@ interface Props {
  * @param interface
  * @returns a container that sits on top of a Flow node
  */
-const BlockComponent = ({ node, color, selected, dispatch, width, height }: Props) => {
+const BlockComponent = ({ node, color, selected, dispatch, width, height, hasChildren }: Props) => {
+  const company = process.env.REACT_APP_COMPANY;
+
   useEffect(() => {
     OnResize(node?.id, dispatch);
   }, [node, dispatch]);
@@ -28,6 +32,9 @@ const BlockComponent = ({ node, color, selected, dispatch, width, height }: Prop
         <Header>
           <p className="text">={node?.label ?? node?.name}</p>
         </Header>
+        <LogoBox hasChildren={hasChildren}>
+          <img src={GetCompanyLogo(company, node)} alt="logo" className="logo" />
+        </LogoBox>
       </Banner>
       {/* <ResizeButton id="ResizeParent">
         <img src={ResizeIcon} alt="resize" className="icon" />
