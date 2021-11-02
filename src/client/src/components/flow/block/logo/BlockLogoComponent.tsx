@@ -5,6 +5,7 @@ import { Symbol } from "../../../../compLibrary/symbol";
 
 interface Props {
   node: Node;
+  parent: boolean;
 }
 
 /**
@@ -12,17 +13,17 @@ interface Props {
  * @param interface
  * @returns name,logo and symbol.
  */
-const BlockLogoComponent = ({ node }: Props) => {
+const BlockLogoComponent = ({ node, parent }: Props) => {
   const company = process.env.REACT_APP_COMPANY;
 
   return (
     <>
       <BlockNodeNameBox>{node.label ?? node.name}</BlockNodeNameBox>
       <LogoBox>
-        <img src={GetCompanyLogo(company, node)} alt="logo" className="logo" />
+        <img src={GetCompanyLogo(company, node, parent)} alt="logo" className="logo" />
       </LogoBox>
       <SymbolBox>
-        <Symbol base64={node.symbol} text={node.name} />{" "}
+        <Symbol base64={node.symbol} text={node.name} />
       </SymbolBox>
     </>
   );
