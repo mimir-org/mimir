@@ -3,7 +3,7 @@ import { Edge, Node } from "../../../models";
 import { EdgeType } from "../../../models/project";
 
 /**
- * Function to convert a Mimir Edge to a FlowElement that interacts with the Flow library.
+ * Function to convert a Mimir Edge to a FlowElement that interacts with the Flow Library.
  * @param edge
  * @param edgeType
  * @param sourceNode
