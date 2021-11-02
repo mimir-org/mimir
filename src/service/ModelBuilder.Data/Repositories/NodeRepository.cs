@@ -7,6 +7,7 @@ using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Mb.Models.Extensions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
 namespace Mb.Data.Repositories
@@ -16,15 +17,17 @@ namespace Mb.Data.Repositories
         private readonly IConnectorRepository _connectorRepository;
         private readonly IAttributeRepository _attributeRepository;
         private readonly ICompositeRepository _compositeRepository;
+        private readonly ModelBuilderConfiguration _modelBuilderConfiguration;
 
-        public NodeRepository(ModelBuilderDbContext dbContext, IConnectorRepository connectorRepository, IAttributeRepository attributeRepository, ICompositeRepository compositeRepository) : base(dbContext)
+        public NodeRepository(ModelBuilderDbContext dbContext, IConnectorRepository connectorRepository, IAttributeRepository attributeRepository, ICompositeRepository compositeRepository, IOptions<ModelBuilderConfiguration> modelBuilderConfiguration) : base(dbContext)
         {
             _connectorRepository = connectorRepository;
             _attributeRepository = attributeRepository;
             _compositeRepository = compositeRepository;
+            _modelBuilderConfiguration = modelBuilderConfiguration?.Value;
         }
 
-        public IEnumerable<Node> UpdateInsert(ICollection<Node> original, Project project)
+        public IEnumerable<Node> UpdateInsert(ICollection<Node> original, Project project, string invokedByDomain)
         {
             if (project?.Nodes == null || !project.Nodes.Any())
                 yield break;
@@ -37,7 +40,7 @@ namespace Mb.Data.Repositories
             {
                 if (newNodes.Any(x => x.Id == node.Id))
                 {
-                    if (node.MasterProjectId != project.Id)
+                    if (node.MasterProjectId != project.Id || _modelBuilderConfiguration.Domain != invokedByDomain)
                     {
                         Attach(node, EntityState.Unchanged);
                         yield return node;
@@ -81,13 +84,13 @@ namespace Mb.Data.Repositories
             }
         }
 
-        public async Task<IEnumerable<Node>> DeleteNodes(ICollection<Node> delete, string projectId)
+        public async Task<IEnumerable<Node>> DeleteNodes(ICollection<Node> delete, string projectId, string invokedByDomain)
         {
             var subNodes = new List<Node>();
 
             foreach (var node in delete)
             {
-                if (node.MasterProjectId != projectId)
+                if (node.MasterProjectId != projectId || _modelBuilderConfiguration.Domain != invokedByDomain)
                 {
                     subNodes.Add(node);
                     continue;
