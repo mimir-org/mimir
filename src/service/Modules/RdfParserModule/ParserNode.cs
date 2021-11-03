@@ -23,7 +23,7 @@ namespace RdfParserModule
         public bool IsTransport { get; set; }
         public ICollection<ParserConnector> Terminals { get; set; }
         public ICollection<ParserEdge> Edges { get; set; }
-        public ParserNode HasParent { get; set; }
+        public string parentId { get; set; }
         public ParserNode HasLocation { get; set; }
         public ParserNode FulfilledBy { get; set; }
 

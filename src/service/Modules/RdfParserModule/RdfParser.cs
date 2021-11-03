@@ -9,7 +9,6 @@ using Mb.Models.Abstract;
 using Mb.Models.Enums;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using VDS.RDF.JsonLd.Processors;
 using VDS.RDF.Writing;
 
 namespace RdfParserModule

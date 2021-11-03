@@ -17,7 +17,7 @@ namespace RdfParserModule
         {
             foreach (var node in Nodes)
             {
-                if (node.Iri == nodeIri)
+                if (node.Id == nodeIri)
                 {
                     return node;
                 }

@@ -13,8 +13,8 @@
         public string MasterProjectId { get; set; }
         public ParserNode Transport { get; set; }
         public ParserNode Interface { get; set; }
-        public ParserTerminal InputTerminal { get; set; }
-        public ParserTerminal OutputTerminal { get; set; }
+        public ParserConnector InputTerminal { get; set; }
+        public ParserConnector OutputTerminal { get; set; }
         public string InputTerminalId { get; set; }
         public string OutputTerminalId { get; set; }
     }
