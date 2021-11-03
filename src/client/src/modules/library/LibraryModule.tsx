@@ -51,7 +51,7 @@ const LibraryModule = () => {
           categories={filteredCategories}
           search={(text: string) => setSearchString(text)}
           dispatch={dispatch}
-          subProjects={libState?.subProjectTypes}
+          subProjects={libState?.subProjectTypes?.filter((x) => x.id !== project.id)}
         />
       </ModuleBody>
 
