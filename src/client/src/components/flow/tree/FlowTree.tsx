@@ -3,7 +3,6 @@ import ReactFlow, { ReactFlowProvider, Elements } from "react-flow-renderer";
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
 import { FullScreenComponent } from "../../../compLibrary/controls";
-import { changeInspectorTab } from "../../../modules/inspector/redux/tabs/actions";
 import { GetParent, GetSelectedNode, SetDarkModeColor } from "../helpers";
 import { BuildTreeElements } from "../tree/builders";
 import { updatePosition } from "../../../redux/store/project/actions";
