@@ -2,20 +2,22 @@ import { TextResources } from "../../assets/text";
 import { LibraryCategory } from "../../models/project";
 import { SearchIcon } from "../../assets/icons/common";
 import { SearchInput } from "../../compLibrary";
-import { LibraryCategoryComponent } from ".";
+import { LibraryCategoryComponent, LibrarySubPageComponent } from ".";
 import { useState } from "react";
 import { customCategorySelector, legendOpenSelector, useAppSelector } from "../../redux/store";
 import { LibBody, SearchIconBox } from "../../compLibrary/box/library";
 import { TypeEditorModule } from "../../typeEditor";
 import { Dispatch } from "redux";
+import { LibrarySubProjectItem } from "../../models";
 
 interface Props {
   categories: LibraryCategory[];
   search: (text: string) => void;
   dispatch: Dispatch;
+  subProjects?: LibrarySubProjectItem[];
 }
 
-const LibraryComponent = ({ categories, search, dispatch }: Props) => {
+const LibraryComponent = ({ categories, search, dispatch, subProjects }: Props) => {
   const [selectedElement, setSelectedElement] = useState("");
   const [selectedElementType, setSelectedElementType] = useState(null);
   const legendOpen = useAppSelector(legendOpenSelector);
@@ -57,6 +59,7 @@ const LibraryComponent = ({ categories, search, dispatch }: Props) => {
           customCategory={customCategory}
           dispatch={dispatch}
         />
+        <LibrarySubPageComponent dispatch={dispatch} subProjects={subProjects} />
         <TypeEditorModule selectedElement={selectedElement} selectedElementType={selectedElementType} onChange={typeEditorOpen} />
       </LibBody>
     </>

@@ -19,7 +19,7 @@ const TreeLogoComponent = ({ node }: Props) => {
     <>
       <TreeNodeNameBox>{node.label ?? node.name}</TreeNodeNameBox>
       <LogoBox>
-        <img src={GetCompanyLogo(company, node)} alt="logo" className="logo" />
+        <img src={GetCompanyLogo(company, node, false)} alt="logo" className="logo" />
       </LogoBox>
       <SymbolBox>
         <Symbol base64={node.symbol} text={node.name} />{" "}

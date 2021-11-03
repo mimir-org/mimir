@@ -54,7 +54,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
       onMouseOver={() => OnHover(showTerminalBox)}
       onMouseOut={() => OnMouseOut(showTerminalBox)}
     >
-      <BlockLogoComponent node={node} />
+      <BlockLogoComponent node={node} parent={false} />
 
       <TerminalsContainerComponent
         node={node}
@@ -71,8 +71,8 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
 
       <HandleComponent
         nodes={nodes}
-        length={node.blockLength}
-        width={node.blockWidth}
+        length={node.length}
+        width={node.width}
         terminals={terminals}
         parent={false}
         electro={electro}
