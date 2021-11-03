@@ -67,7 +67,7 @@ const GetProjectData = async (event: any, project: Project, subProject: Project)
 
     return [nodesToCreate, edgesToCreate];
   } catch (error) {
-    console.log(error);
+    throw new Error(error);
   }
 };
 

@@ -1,8 +1,9 @@
 import { AibelLogo } from "../../../assets/icons/aibel/inspector";
 import { EquinorLogo } from "../../../assets/icons/equinor/inspector";
 import { Node } from "../../../models";
+import { InspectorElement } from "../../../modules/inspector/types";
 
-const GetInspectorCompanyLogo = (company: string, node: Node) => {
+const GetInspectorCompanyLogo = (company: string, node: Node | InspectorElement) => {
   let companyValue = company;
 
   const split = node?.id.split("_");
