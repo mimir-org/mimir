@@ -25,6 +25,7 @@ const ConvertEdgeToFlow = (edge: Edge, edgeType: EdgeType, sourceNode: Node, tar
       source: sourceNode,
       target: targetNode,
       edge: edge,
+      isSelected: edge.isSelected,
     },
     isHidden: edge.isHidden,
     parentType: sourceNode?.aspect,

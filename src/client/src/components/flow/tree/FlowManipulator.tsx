@@ -1,19 +1,21 @@
-import { useEffect } from "react";
+import { memo, useEffect } from "react";
 import { Elements, useStoreActions } from "react-flow-renderer";
 
 interface Props {
-  elements: Elements<any>;
-  selectedId: string;
+  elements: Elements;
+  selectedIds: string[];
 }
 
-export function FlowManipulator({ elements, selectedId }: Props) {
+const FlowManipulator = ({ elements, selectedIds }: Props) => {
   const setSelected = useStoreActions((state) => state.setSelectedElements);
 
   useEffect(() => {
     if (elements) {
-      setSelected(elements.filter((ele) => ele.id === selectedId));
+      setSelected(elements.filter((ele) => selectedIds.find((id) => ele.id === id)));
     }
-  }, [elements, selectedId, setSelected]);
+  }, [elements, selectedIds, setSelected]);
 
   return null;
-}
+};
+
+export default memo(FlowManipulator);

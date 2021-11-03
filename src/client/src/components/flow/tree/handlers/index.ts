@@ -1,1 +1,1 @@
-export { default as OnTreeClick } from "./OnTreeClick";
+export * from "./OnSelectionChange";
