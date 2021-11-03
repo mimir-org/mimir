@@ -4,7 +4,7 @@ import { FilterMenuBox, MenuColumn } from "../../../../compLibrary/box/menus";
 import { IsLibrary } from "../../../flow/helpers";
 import { FilterDropdown } from "../dropdown";
 import { TextResources } from "../../../../assets/text";
-import { OnAnimationChange, OnChange } from "../handlers";
+import { OnAnimationChange, OnChange, OnAllTransportsChange } from "../handlers";
 import { GetEdges, GetNodes, PopulateFilterLists } from "../helpers";
 import { FilterElement } from "..";
 
@@ -36,9 +36,15 @@ const TreeFilterMenu = ({ elements, edgeAnimation }: Props) => {
     <FilterMenuBox libraryOpen={libOpen}>
       <MenuColumn>
         <FilterElement
-          label={"Animation"}
+          label={"Edge animation"}
           onChange={() => OnAnimationChange(edges, dispatch, edgeAnimation)}
           isChecked={edgeAnimation}
+          visible={!!transportItems.length}
+        />
+        <FilterElement
+          label={"Show all transport edges"}
+          onChange={() => OnAllTransportsChange(edges, dispatch)}
+          isChecked={!edges.some((x) => x.isHidden)}
           visible={!!transportItems.length}
         />
         <FilterDropdown
