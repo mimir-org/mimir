@@ -59,5 +59,7 @@ namespace Mb.Models.Data
             Version = Version.IncrementCommitVersion();
         }
 
+        public string Domain => Id.ResolveDomain();
+
     }
 }
