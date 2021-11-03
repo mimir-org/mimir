@@ -40,6 +40,8 @@ export { GetOtherNodeFromEdgeViaConnector, GetOtherNodeFromEdgeViaNode } from ".
 export { default as GetDateNowUtc } from "./GetDateNowUtc";
 
 export { default as GetCompanyLogo } from "./GetCompanyLogo";
+export { default as GetInspectorCompanyLogo } from "./GetInspectorCompanyLogo";
+export { default as GetHeaderCompanyLogo } from "./GetHeaderCompanyLogo";
 
 export * from "./SetSiblingRDS";
 export * from "./types";

@@ -5,7 +5,7 @@ import { FilterElement } from "../";
 import { IsLibrary } from "../../../flow/helpers";
 import { FilterDropdown, FilterTerminalDropdown } from "../dropdown";
 import { TextResources } from "../../../../assets/text";
-import { OnAnimationChange, OnChange } from "../handlers";
+import { OnAnimationChange, OnAllTransportsChange, OnChange } from "../handlers";
 import { GetActiveTerminals, GetAllTerminals, GetEdges, GetInactiveTerminals, GetNodes, PopulateFilterLists } from "../helpers";
 
 interface Props {
@@ -37,9 +37,15 @@ const BlockFilterMenu = ({ elements, edgeAnimation }: Props) => {
     <FilterMenuBox libraryOpen={libOpen}>
       <MenuColumn>
         <FilterElement
-          label={"Animation"}
+          label={"Edge animation"}
           onChange={() => OnAnimationChange(edges, dispatch, edgeAnimation)}
           isChecked={edgeAnimation}
+          visible={!!transportItems.length}
+        />
+        <FilterElement
+          label={"Show all transport edges"}
+          onChange={() => OnAllTransportsChange(edges, dispatch)}
+          isChecked={!edges.some((x) => x.isHidden)}
           visible={!!transportItems.length}
         />
         <FilterDropdown
