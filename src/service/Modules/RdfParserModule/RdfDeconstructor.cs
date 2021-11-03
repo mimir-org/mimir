@@ -109,15 +109,6 @@ namespace RdfParserModule
                 // The parent should always be present if there is a parentId
                 var parent = GetNode(node.parentId);
 
-                var fromConnector = new ParserRelation
-                {
-                    Id = $"{_domain}_{Guid.NewGuid()}",
-                    Name = "Part of Relationship",
-                    Relation = RelationType.PartOf,
-                    Type = ConnectorType.Output
-                };
-                node.Terminals.Add(fromConnector);
-
                 var toConnector = new ParserRelation
                 {
                     Id = $"{_domain}_{Guid.NewGuid()}",
@@ -125,15 +116,24 @@ namespace RdfParserModule
                     Relation = RelationType.PartOf,
                     Type = ConnectorType.Input
                 };
-                parent.Terminals.Add(toConnector);
+                node.Terminals.Add(toConnector);
+
+                var fromConnector = new ParserRelation
+                {
+                    Id = $"{_domain}_{Guid.NewGuid()}",
+                    Name = "Part of Relationship",
+                    Relation = RelationType.PartOf,
+                    Type = ConnectorType.Output
+                };
+                parent.Terminals.Add(fromConnector);
 
 
                 var edge = new ParserEdge
                 {
                     FromConnectorId = fromConnector.Id,
                     ToConnectorId = toConnector.Id,
-                    FromNodeId = node.Id,
-                    ToNodeId = parent.Id,
+                    FromNodeId = parent.Id,
+                    ToNodeId = node.Id,
                     MasterProjectId = Graph.Id,
                     InputTerminal = fromConnector,
                     OutputTerminal = toConnector
@@ -152,7 +152,7 @@ namespace RdfParserModule
             var label = GetLabel(projectId.ToString());
             var version = GetObjects(projectId.ToString(), "owl:versionInfo").First();
 
-            Graph.Id = "import.rdf_ef524e6a-6eb7-414c-99d5-abb4f1225a3f"; //projectId.ToString() + Guid.NewGuid();
+            Graph.Id = $"import.rdf_{Guid.NewGuid()}"; //projectId.ToString() + Guid.NewGuid();
             Graph.Iri = Graph.Id;
             Graph.Label = label;
             Graph.Name = label;
@@ -165,7 +165,7 @@ namespace RdfParserModule
             var hasParent = RdfGraph.CreateUriNode(Resources.hasParent);
 
             // There should always only be one parent, so we can just get the first element via Single
-            var parent = Store.GetTriplesWithSubjectPredicate(node, hasParent).Single().Subject;
+            var parent = Store.GetTriplesWithSubjectPredicate(node, hasParent).Single().Object;
 
             return parent;
         }
@@ -190,7 +190,8 @@ namespace RdfParserModule
                 Id = node.ToString(),
                 StatusId = "4590637F39B6BA6F39C74293BE9138DF",
                 Version = "0.0",
-                MasterProjectId = Graph.Id
+                MasterProjectId = Graph.Id,
+                Terminals = new List<ParserConnector>()
 
             }).ToList();
 
@@ -346,22 +347,36 @@ namespace RdfParserModule
 
             var connectors = new List<ParserConnector>();
 
-            var inputTerminals = GetObjects(nodeId, Resources.hasInputTerminal).Select(obj => new ParserTerminal
-            {
-                Id = obj.ToString(),
-                Type = ConnectorType.Input,
-                NodeId = nodeId
-            }).ToList();
+            var inputTerminalNodes = GetObjects(nodeId, Resources.hasInputTerminal);
+            var outputTerminalNodes = GetObjects(nodeId, Resources.hasOutputTerminal);
 
-            var outputTerminals = GetObjects(nodeId, Resources.hasOutputTerminal).Select(obj => new ParserTerminal
+            if (inputTerminalNodes is not null)
             {
-                Id = obj.ToString(),
-                Type = ConnectorType.Output,
-                NodeId = nodeId
-            }).ToList();
+                var inputTerminals = GetObjects(nodeId, Resources.hasInputTerminal).Select(obj => new ParserTerminal
+                {
+                    Id = obj.ToString(),
+                    Type = ConnectorType.Input,
+                    NodeId = nodeId
+                }).ToList();
 
-            connectors.AddRange(inputTerminals);
-            connectors.AddRange(outputTerminals);
+                connectors.AddRange(inputTerminals);
+            }
+            if (outputTerminalNodes is not null)
+            {
+                var outputTerminals = GetObjects(nodeId, Resources.hasOutputTerminal).Select(obj => new ParserTerminal
+                {
+                    Id = obj.ToString(),
+                    Type = ConnectorType.Output,
+                    NodeId = nodeId
+                }).ToList();
+
+                connectors.AddRange(outputTerminals);
+            }
+
+            if (connectors.Count is 0)
+            {
+                return new List<ParserConnector>();
+            }
 
             foreach (var connector in connectors)
             {
@@ -375,19 +390,12 @@ namespace RdfParserModule
 
                     if (connector is ParserTerminal terminal)
                     {
-                        var terminalTypes = GetObjects(connector.Id, Resources.type);
-                        if (terminalTypes is not null)
-                        {
-                            var transmitter = terminalTypes.First(tNode => tNode.ToString().Contains("Transmitter-"));
-                            var terminalCategoryId = transmitter.ToString().Split("Transmitter-").Last().Split("-").First();
-                            var terminalTypeName = transmitter.ToString().Split("Transmitter-").Last().Split("-").Last()
-                                .Replace("%20", " ");
-                            
+                        var (termCatId, termTypeId) = GetTerminalCategoryIdAndTerminalTypeId(terminal);
 
-                            var (termCatId, termTypeId) = terminalTypeName.Trim().CreateCategoryIdAndTerminalTypeId(terminalCategoryId);
-                            terminal.TerminalCategoryId = termCatId;
-                            terminal.TerminalTypeId = termTypeId;
-                        }
+                        if (termCatId is null || termTypeId is null) continue;
+
+                        terminal.TerminalCategoryId = termCatId;
+                        terminal.TerminalTypeId = termTypeId;
                     }
                 }
 
@@ -410,8 +418,29 @@ namespace RdfParserModule
             return connectors;
         }
 
+        private (string termCatId, string termTypeId) GetTerminalCategoryIdAndTerminalTypeId(ParserTerminal terminal)
+        {
+            var terminalTypes = GetObjects(terminal.Id, Resources.type);
 
-        
+            if (terminalTypes is null) return (null, null);
+
+            try
+            {
+                var transmitter = terminalTypes.First(tNode => tNode.ToString().Contains("Transmitter-"));
+                var terminalCategoryId = transmitter.ToString().Split("Transmitter-").Last().Split("-").First();
+                var terminalTypeName = transmitter.ToString().Split("Transmitter-").Last().Split("-").Last()
+                    .Replace("%20", " ");
+
+
+                return terminalTypeName.Trim().CreateCategoryIdAndTerminalTypeId(terminalCategoryId);
+            }
+            catch
+            {
+                return (null, null);
+            }
+
+        }
+
 
         public INode GetMasterProject(string nodeId)
         {
@@ -439,6 +468,15 @@ namespace RdfParserModule
                 Iri = inputTerminal.ToString(),
                 Type = ConnectorType.Input
             };
+
+            var (termCatId, termTypeId) = GetTerminalCategoryIdAndTerminalTypeId(inTerminal);
+
+            if (termCatId is not null || termTypeId is not null)
+            {
+                inTerminal.TerminalCategoryId = termCatId;
+                inTerminal.TerminalTypeId = termTypeId;
+            }
+
 
             var fromConnectors = GetObjects(inTerminal.Iri, Resources.connectedTo);
             if (fromConnectors is null || fromConnectors.Count != 1)
@@ -531,6 +569,14 @@ namespace RdfParserModule
                 Iri = outputTerminal.ToString(),
                 Type = ConnectorType.Output
             };
+
+            var (termCatId, termTypeId) = GetTerminalCategoryIdAndTerminalTypeId(outTerminal);
+
+            if (termCatId is not null || termTypeId is not null)
+            {
+                outTerminal.TerminalCategoryId = termCatId;
+                outTerminal.TerminalTypeId = termTypeId;
+            }
 
             var toConnectors = GetObjects(outTerminal.Iri, Resources.connectedTo);
             if (toConnectors.Count != 1)
