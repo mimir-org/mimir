@@ -13,7 +13,7 @@ import { IsLocation, IsProduct, IsTransportConnection, IsProductConnection, IsLo
  */
 const ValidateBlockEdge = (selectedNode: Node, secondaryNode: Node, fromNode: Node, source: Connector, target: Connector) => {
   if (!secondaryNode) return validEdge(selectedNode, fromNode, source, target);
-  if (secondaryNode) return validSecondaryEdge(selectedNode, secondaryNode, source, target);
+  if (secondaryNode) return validSecondaryEdge(selectedNode, secondaryNode, fromNode, source, target);
 };
 
 function validEdge(selectedNode: Node, fromNode: Node, source: Connector, target: Connector) {
@@ -23,13 +23,13 @@ function validEdge(selectedNode: Node, fromNode: Node, source: Connector, target
   return IsTransportConnection(source, target) && IsFunction(fromNode);
 }
 
-function validSecondaryEdge(selectedNode: Node, secondaryNode: Node, source: Connector, target: Connector) {
-  if (IsLocation(secondaryNode)) return IsLocationConnection(source, target);
-  if (IsProduct(secondaryNode)) return IsProductConnection(source, target);
+function validSecondaryEdge(selectedNode: Node, secondaryNode: Node, fromNode: Node, source: Connector, target: Connector) {
+  if (IsLocation(secondaryNode)) return IsLocationConnection(source, target) && IsDirectChild(fromNode, selectedNode);
+  if (IsProduct(secondaryNode)) return IsProductConnection(source, target) && IsDirectChild(fromNode, selectedNode);
 
   if (IsFunction(secondaryNode)) {
-    if (IsProduct(selectedNode)) return IsProductConnection(source, target);
-    if (IsLocation(selectedNode)) return IsLocationConnection(source, target);
+    if (IsProduct(selectedNode)) return IsProductConnection(source, target) && IsDirectChild(fromNode, secondaryNode);
+    if (IsLocation(selectedNode)) return IsLocationConnection(source, target) && IsDirectChild(fromNode, secondaryNode);
     return IsTransportConnection(source, target);
   }
 }
