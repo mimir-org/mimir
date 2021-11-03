@@ -24,7 +24,7 @@ namespace Mb.TypeEditor.Data.Repositories
             _nodeTypeRepository = nodeTypeRepository;
         }
 
-        public async Task<ICollection<LibraryNodeItem>> GetNodeTypes(string searchString = null)
+        public async Task<IEnumerable<LibraryNodeItem>> GetNodeTypes(string searchString = null)
         {
             var nodeTypes = await _nodeTypeRepository.GetAll()
                 .Include(x => x.AttributeTypes)
@@ -41,15 +41,22 @@ namespace Mb.TypeEditor.Data.Repositories
                 .Include("CompositeTypes.AttributeTypes.Units")
                 .Include(x => x.Purpose)
                 .AsSplitQuery()
-                .ToListAsync();
+                .ToArrayAsync();
 
             if (!string.IsNullOrWhiteSpace(searchString))
-                nodeTypes = nodeTypes.Where(x => x.Name.ToLower().Contains(searchString.ToLower())).ToList();
-            
-            return _mapper.Map<List<LibraryNodeItem>>(nodeTypes);
+                nodeTypes = nodeTypes.Where(x => x.Name.ToLower().Contains(searchString.ToLower())).ToArray();
+
+            var libraryNodeItems = new List<LibraryNodeItem>();
+
+            Parallel.ForEach(nodeTypes, x =>
+            {
+                libraryNodeItems.Add(_mapper.Map<LibraryNodeItem>(x));
+            });
+
+            return libraryNodeItems;
         }
 
-        public async Task<ICollection<LibraryInterfaceItem>> GetInterfaceTypes(string searchString = null)
+        public async Task<IEnumerable<LibraryInterfaceItem>> GetInterfaceTypes(string searchString = null)
         {
 
             var interfaceTypes = await _interfaceTypeRepository.GetAll()
@@ -58,15 +65,22 @@ namespace Mb.TypeEditor.Data.Repositories
                 .Include(x => x.Purpose)
                 .OrderBy(x => x.Name)
                 .AsSplitQuery()
-                .ToListAsync();
+                .ToArrayAsync();
 
             if (!string.IsNullOrWhiteSpace(searchString))
-                interfaceTypes = interfaceTypes.Where(x => x.Name.ToLower().Contains(searchString.ToLower())).ToList();
+                interfaceTypes = interfaceTypes.Where(x => x.Name.ToLower().Contains(searchString.ToLower())).ToArray();
 
-            return _mapper.Map<List<LibraryInterfaceItem>>(interfaceTypes);
+            var libraryInterfaceItem = new List<LibraryInterfaceItem>();
+
+            Parallel.ForEach(interfaceTypes, x =>
+            {
+                libraryInterfaceItem.Add(_mapper.Map<LibraryInterfaceItem>(x));
+            });
+
+            return libraryInterfaceItem;
         }
 
-        public async Task<ICollection<LibraryTransportItem>> GetTransportTypes(string searchString = null)
+        public async Task<IEnumerable<LibraryTransportItem>> GetTransportTypes(string searchString = null)
         {
             var transportTypes = await _transportTypeRepository.GetAll()
                 .Include(x => x.AttributeTypes)
@@ -75,12 +89,19 @@ namespace Mb.TypeEditor.Data.Repositories
                 .Include(x => x.Purpose)
                 .OrderBy(x => x.Name)
                 .AsSplitQuery()
-                .ToListAsync();
+                .ToArrayAsync();
 
             if (!string.IsNullOrWhiteSpace(searchString))
-                transportTypes = transportTypes.Where(x => x.Name.ToLower().Contains(searchString.ToLower())).ToList();
+                transportTypes = transportTypes.Where(x => x.Name.ToLower().Contains(searchString.ToLower())).ToArray();
 
-            return _mapper.Map<List<LibraryTransportItem>>(transportTypes);
+            var libraryTransportItems = new List<LibraryTransportItem>();
+
+            Parallel.ForEach(transportTypes, x =>
+            {
+                libraryTransportItems.Add(_mapper.Map<LibraryTransportItem>(x));
+            });
+
+            return libraryTransportItems;
         }
 
         public async Task<T> GetLibraryItem<T>(string id) where T : class, new()

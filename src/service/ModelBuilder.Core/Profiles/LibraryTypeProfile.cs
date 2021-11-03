@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Mb.Data.Contracts;
 using Mb.Models.Application;
@@ -135,7 +136,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => src.Purpose))
                 .AfterMap((src, dest, context) =>
                 {
-                    dest.Connectors = CreateConnectors(src.TerminalTypes, context);
+                    dest.Connectors = Task.Run(() => CreateConnectors(src.TerminalTypes, context)).Result;
                 });
 
             CreateMap<TransportType, LibraryTransportItem>()
@@ -178,40 +179,51 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated));
         }
 
-        private List<Connector> CreateConnectors(ICollection<NodeTypeTerminalType> terminalTypes, ResolutionContext context)
+        private async Task<List<Connector>> CreateConnectors(ICollection<NodeTypeTerminalType> nodeTypeTerminalTypes, ResolutionContext context)
         {
+            //Run these in 6 parallel threads
+            var partOfInput = CreateRelationConnector(RelationType.PartOf, ConnectorType.Input, "Part of Relationship");
+            var partOfOutput = CreateRelationConnector(RelationType.PartOf, ConnectorType.Output, "Part of Relationship");
+            var hasLocationInput = CreateRelationConnector(RelationType.HasLocation, ConnectorType.Input, "Has Location");
+            var hasLocationOutput = CreateRelationConnector(RelationType.HasLocation, ConnectorType.Output, "Has Location");
+            var fulfilledByInput = CreateRelationConnector(RelationType.FulfilledBy, ConnectorType.Input, "Fulfilled By");
+            var fulfilledByOutput = CreateRelationConnector(RelationType.FulfilledBy, ConnectorType.Output, "Fulfilled By");
+
+            //Wait for all threads to finish
+            await Task.WhenAll(partOfInput, partOfOutput, hasLocationInput, hasLocationOutput, fulfilledByInput, fulfilledByOutput);
+
             var connectors = new List<Connector>
             {
-                CreateRelationConnector(RelationType.PartOf, ConnectorType.Input, "Part of Relationship"),
-                CreateRelationConnector(RelationType.PartOf, ConnectorType.Output, "Part of Relationship"),
-                CreateRelationConnector(RelationType.HasLocation, ConnectorType.Input, "Has Location"),
-                CreateRelationConnector(RelationType.HasLocation, ConnectorType.Output, "Has Location"),
-                CreateRelationConnector(RelationType.FulfilledBy, ConnectorType.Input, "Fulfilled By"),
-                CreateRelationConnector(RelationType.FulfilledBy, ConnectorType.Output, "Fulfilled By")
+                await partOfInput,
+                await partOfOutput,
+                await hasLocationInput,
+                await hasLocationOutput,
+                await fulfilledByInput,
+                await fulfilledByOutput
             };
 
-            if (terminalTypes == null) 
+            if (nodeTypeTerminalTypes == null) 
                 return connectors;
-            
-            foreach (var nodeTypeTerminalType in terminalTypes)
-            {
-                if(nodeTypeTerminalType.Number <= 0)
-                    continue;
 
-                for (var i = 0; i < nodeTypeTerminalType.Number; i++)
+            Parallel.ForEach(nodeTypeTerminalTypes, nodeTypeTerminalType =>
+            {
+                if (nodeTypeTerminalType.Number > 0)
                 {
-                    var terminal = context.Mapper.Map<Terminal>(nodeTypeTerminalType.TerminalType);
-                    terminal.Type = nodeTypeTerminalType.ConnectorType;
-                    connectors.Add(terminal);
+                    Parallel.For(0, nodeTypeTerminalType.Number, index =>
+                    {
+                        var terminal = context.Mapper.Map<Terminal>(nodeTypeTerminalType.TerminalType);
+                        terminal.Type = nodeTypeTerminalType.ConnectorType;
+                        connectors.Add(terminal);
+                    });
                 }
-            }
+            });
 
             return connectors;
         }
 
-        private static Connector CreateRelationConnector(RelationType relationType, ConnectorType connectorType, string name)
+        private async Task<Connector> CreateRelationConnector(RelationType relationType, ConnectorType connectorType, string name)
         {
-            return new Relation
+            var relation = new Relation
             {
                 Id = Guid.NewGuid().ToString(),
                 Name = name,
@@ -221,6 +233,8 @@ namespace Mb.Core.Profiles
                 Node = null,
                 SemanticReference = null
             };
+
+            return await Task.Run(() => relation);
         }
 
         private static IEnumerable<NodeTypeTerminalType> CreateTerminalTypes(IReadOnlyCollection<TerminalTypeItem> terminalTypes, string nodeId)

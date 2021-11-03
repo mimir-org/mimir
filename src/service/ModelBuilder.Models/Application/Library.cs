@@ -5,8 +5,8 @@ namespace Mb.Models.Application
     public class Library
     {
         public IEnumerable<LibraryNodeItem> ObjectBlocks { get; set; }
-        public ICollection<LibraryInterfaceItem> Interfaces { get; set; }
-        public ICollection<LibraryTransportItem> Transports { get; set; }
-        public ICollection<LibrarySubProjectItem> SubProjects { get; set; }
+        public IEnumerable<LibraryInterfaceItem> Interfaces { get; set; }
+        public IEnumerable<LibraryTransportItem> Transports { get; set; }
+        public IEnumerable<LibrarySubProjectItem> SubProjects { get; set; }
     }
 }

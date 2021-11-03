@@ -50,7 +50,7 @@ namespace Mb.Services.Services
         /// Get all node types
         /// </summary>
         /// <returns></returns>
-        public async Task<ICollection<LibraryNodeItem>> GetNodeTypes()
+        public async Task<IEnumerable<LibraryNodeItem>> GetNodeTypes()
         {
             return await _libraryRepository.GetNodeTypes();
         }
@@ -59,7 +59,7 @@ namespace Mb.Services.Services
         /// Get all transport types
         /// </summary>
         /// <returns></returns>
-        public async Task<ICollection<LibraryTransportItem>> GetTransportTypes()
+        public async Task<IEnumerable<LibraryTransportItem>> GetTransportTypes()
         {
             return await _libraryRepository.GetTransportTypes();
         }
@@ -68,7 +68,7 @@ namespace Mb.Services.Services
         /// Get all interface types
         /// </summary>
         /// <returns></returns>
-        public async Task<ICollection<LibraryInterfaceItem>> GetInterfaceTypes()
+        public async Task<IEnumerable<LibraryInterfaceItem>> GetInterfaceTypes()
         {
             return await _libraryRepository.GetInterfaceTypes();
 
@@ -78,17 +78,24 @@ namespace Mb.Services.Services
         /// Get all sub projects
         /// </summary>
         /// <returns></returns>
-        public async Task<ICollection<LibrarySubProjectItem>> GetSubProjects(string searchString = null)
+        public async Task<IEnumerable<LibrarySubProjectItem>> GetSubProjects(string searchString = null)
         {
             var projects = await _projectRepository.GetAll()
                 .Where(x => x.IsSubProject)
                 .OrderBy(x => x.Name)
-                .ToListAsync();
+                .ToArrayAsync();
 
             if (!string.IsNullOrWhiteSpace(searchString))
-                projects = projects.Where(x => x.Name.ToLower().Contains(searchString.ToLower())).ToList();
+                projects = projects.Where(x => x.Name.ToLower().Contains(searchString.ToLower())).ToArray();
 
-            return _mapper.Map<List<LibrarySubProjectItem>>(projects);
+            var librarySubProjectItems = new List<LibrarySubProjectItem>();
+
+            Parallel.ForEach(projects, x =>
+            {
+                librarySubProjectItems.Add(_mapper.Map<LibrarySubProjectItem>(x));
+            });
+
+            return librarySubProjectItems;
         }
     }
 }
