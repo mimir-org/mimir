@@ -62,7 +62,7 @@ namespace EventHubModule
 
         public async Task SendData<T>(T data) where T : class
         {
-            var datalist = new List<T> {data};
+            var datalist = new List<T> { data };
             var eventHubProducerService = _provider?.GetService<IEventHubProducerService>();
 
             if (eventHubProducerService == null)
@@ -119,40 +119,42 @@ namespace EventHubModule
             var moduleService = _provider?.GetService<IModuleService>();
             var projectService = _provider?.GetService<IProjectService>();
             var logger = _provider?.GetService<ILogger<EventHubModule>>();
-            
-            if (moduleService == null)
-                throw new ModelBuilderModuleException("Can't process data. ModuleService is null in EventHubModule.");
-
-            if (projectService == null)
-                throw new ModelBuilderModuleException("Can't process data. ProjectService is null in EventHubModule.");
-
-            var parserModule = moduleService.Modules.FirstOrDefault(x => x.ModuleType == ModuleType.Parser && string.Equals(x.ModuleDescription.Id.ToString(), e.Parser, StringComparison.CurrentCultureIgnoreCase));
-            if(parserModule == null)
-                throw new ModelBuilderModuleException($"Can't process data. Can't find a parser with name: {e.Parser} in EventHubModule.");
-
-            if (!(parserModule.Instance is IModelBuilderParser parser))
-                throw new ModelBuilderModuleException("Can't process data. Parser is not of type IModelBuilderParser in EventHubModule.");
-
-            if(string.IsNullOrEmpty(e.Document))
-                throw new ModelBuilderModuleException("Can't process data. Document is null or empty in EventModule.");
 
             try
             {
+                if (moduleService == null)
+                    throw new ModelBuilderModuleException("Can't process data. ModuleService is null in EventHubModule.");
+
+                if (projectService == null)
+                    throw new ModelBuilderModuleException("Can't process data. ProjectService is null in EventHubModule.");
+
+                var parserModule = moduleService.Modules.FirstOrDefault(x => x.ModuleType == ModuleType.Parser && string.Equals(x.ModuleDescription.Id.ToString(), e.Parser, StringComparison.CurrentCultureIgnoreCase));
+                if (parserModule == null)
+                    throw new ModelBuilderModuleException($"Can't process data. Can't find a parser with name: {e.Parser} in EventHubModule.");
+
+                if (!(parserModule.Instance is IModelBuilderParser parser))
+                    throw new ModelBuilderModuleException("Can't process data. Parser is not of type IModelBuilderParser in EventHubModule.");
+
+                if (string.IsNullOrEmpty(e.Document))
+                    throw new ModelBuilderModuleException("Can't process data. Document is null or empty in EventModule.");
+
+
                 var project = parser.DeserializeProjectAm(Encoding.UTF8.GetBytes(e.Document))?.Result;
+                
                 if (project == null)
                 {
-                    logger.LogError($"Can't parse project with ID: {e.ProjectId}.");
+                    logger?.LogError($"Can't parse project with ID: {e.ProjectId}.");
                     return;
                 }
 
                 var hasProject = projectService.ProjectExist(project.Id).Result;
-                _ = hasProject ? 
-                    projectService.UpdateProject(project.Id, project).Result : 
+                _ = hasProject ?
+                    projectService.UpdateProject(project.Id, project).Result :
                     projectService.CreateProject(project).Result;
             }
             catch (Exception ex)
             {
-                logger.LogError($"Can't parse project with ID: {e.ProjectId}. Error: {ex.Message}");
+                logger?.LogError($"Can't parse project with ID: {e.ProjectId}. Error: {ex.Message}");
             }
         }
     }

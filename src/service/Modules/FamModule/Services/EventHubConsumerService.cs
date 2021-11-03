@@ -19,9 +19,11 @@ namespace EventHubModule.Services
         private readonly EventProcessorClient _client;
         private CancellationToken _cancellationToken;
         private readonly bool _hasValidConfiguration;
+        private readonly ILogger<EventHubConsumerService<T>> _logger;
 
         public EventHubConsumerService(IOptions<EventHubConfiguration> eventHubConfiguration, ILogger<EventHubConsumerService<T>> logger)
         {
+            _logger = logger;
             _hasValidConfiguration = eventHubConfiguration?.Value != null && eventHubConfiguration.Value.HasValidConsumerConfiguration();
 
             if (!_hasValidConfiguration)
@@ -36,19 +38,27 @@ namespace EventHubModule.Services
         public async Task RunAsync(CancellationToken cancellationToken = new())
         {
             if (!_hasValidConfiguration)
+            {
+                _logger.LogError("EventHub missing configuration");
                 return;
+            }
 
             _cancellationToken = cancellationToken;
+            _logger.LogInformation("EventHub starting processing data");
+
             await _client.StartProcessingAsync(_cancellationToken);
 
             while (!_cancellationToken.IsCancellationRequested)
             {
                 await Task.Delay(1000, _cancellationToken);
             }
+
+            _logger.LogInformation("EventHub stopping processing data");
         }
 
         public async Task StopAsync()
         {
+            _logger.LogInformation("EventHub shutting down");
             await Task.Delay(TimeSpan.FromSeconds(30), _cancellationToken);
             await _client.StopProcessingAsync(_cancellationToken);
         }
@@ -60,6 +70,7 @@ namespace EventHubModule.Services
 
         private async Task ProcessErrorHandler(ProcessErrorEventArgs arg)
         {
+            _logger.LogError($"EventHub - ProcessErrorHandler - {arg.Exception.Message}");
             await StopAsync();
         }
 
@@ -71,9 +82,9 @@ namespace EventHubModule.Services
                 OnDataReceived(obj);
                 await arg.UpdateCheckpointAsync(arg.CancellationToken);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                
+                _logger.LogError($"EventHub - ProcessEventHandler  Error - {e.Message}");
             }
         }
 
