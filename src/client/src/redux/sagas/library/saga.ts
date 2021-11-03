@@ -33,6 +33,7 @@ export function* searchLibrary(action: LibraryActionTypes) {
         nodeTypes: [],
         transportTypes: [],
         interfaceTypes: [],
+        subProjectTypes: [],
         apiError: apiError,
       };
 
@@ -47,6 +48,7 @@ export function* searchLibrary(action: LibraryActionTypes) {
       nodeTypes: response.data.objectBlocks,
       transportTypes: response.data.transports,
       interfaceTypes: response.data.interfaces,
+      subProjectTypes: response.data.subProjects,
       apiError: null,
     };
 
@@ -65,6 +67,7 @@ export function* searchLibrary(action: LibraryActionTypes) {
       nodeTypes: [],
       transportTypes: [],
       interfaceTypes: [],
+      subProjectTypes: [],
       apiError: apiError,
     };
 
