@@ -5,6 +5,7 @@ import { Project } from "../../../../models";
 import { MODULE_TYPE } from "../../../../models/project";
 import { SetPanelHeight } from "../../../../modules/inspector/helpers";
 import { changeInspectorHeight } from "../../../../modules/inspector/redux/height/actions";
+import { changeInspectorTab } from "../../../../modules/inspector/redux/tabs/actions";
 import { setModuleVisibility } from "../../../../redux/store/modules/actions";
 import { setActiveNode, setActiveEdge, setActiveBlockNode } from "../../../../redux/store/project/actions";
 
@@ -26,6 +27,7 @@ export const handleNodeSelect = (
   dispatch(setActiveNode(element.id, true));
   dispatch(setActiveBlockNode(element.id));
   dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, true, true));
+  dispatch(changeInspectorTab(0));
   if (!inspectorOpen) {
     dispatch(changeInspectorHeight(Size.ModuleOpen));
     SetPanelHeight(inspectorRef, Size.ModuleOpen);
@@ -36,6 +38,7 @@ export const handleEdgeSelect = (element: FlowElement, project: Project, dispatc
   const edge = project.edges.find((x) => x.id === element.id);
   dispatch(setActiveEdge(edge?.id, true));
   dispatch(setActiveNode(null, false));
+  dispatch(changeInspectorTab(0));
 };
 
 export const handleMultiSelect = () => {};

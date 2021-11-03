@@ -6,7 +6,7 @@ import { InspectorElement } from "../../../modules/inspector/types";
 const GetInspectorCompanyLogo = (company: string, node: Node | InspectorElement) => {
   let companyValue = company;
 
-  const split = node?.id.split("_");
+  const split = node?.id?.split("_");
   if (split && split.length === 2) companyValue = split[0];
 
   if (companyValue === "aibel.com") return AibelLogo;

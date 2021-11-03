@@ -3,7 +3,7 @@ import { AttributeLikeItem, CompositeLikeItem, InspectorElement, TerminalLikeIte
 import { Action } from "redux";
 import InspectorTabWrapper from "./InspectorTabWrapper";
 import { changeInspectorTab } from "./redux/tabs/actions";
-import { GetActiveTabIndexOrDefault, ShouldShowTabs } from "./helpers";
+import { ShouldShowTabs } from "./helpers";
 import { ParametersComponent, TerminalsComponent, RelationsComponent, SimpleTypesComponent, AdminComponent } from "./tabs";
 
 interface Props {
@@ -27,7 +27,6 @@ const InspectorTabs = ({
 }: Props) => {
   const [shouldShowAdmin, ...shouldShowTabs] = ShouldShowTabs(element);
 
-  const activeOrDefaultTabIndex = GetActiveTabIndexOrDefault(activeTabIndex, element);
   const tabs = [
     <ParametersComponent element={element} attributeLikeItems={attributeLikeItems} />,
     <TerminalsComponent element={element} terminalLikeItems={terminalLikeItems} />,
@@ -44,7 +43,7 @@ const InspectorTabs = ({
               element={element}
               project={project}
               index={0}
-              activeTabIndex={activeOrDefaultTabIndex}
+              activeTabIndex={activeTabIndex}
               changeInspectorTabAction={changeInspectorTabAction}
             />
           )}
@@ -55,7 +54,7 @@ const InspectorTabs = ({
                   key={i}
                   element={element}
                   index={i + 1}
-                  activeTabIndex={activeOrDefaultTabIndex}
+                  activeTabIndex={activeTabIndex}
                   changeInspectorTabAction={changeInspectorTabAction}
                 >
                   {tab}

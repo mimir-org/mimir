@@ -8,4 +8,3 @@ export { useDragResizePanel } from "./useDragResizePanel";
 export { default as SetPanelHeight } from "./SetPanelHeight";
 export * from "./GetInspectorHeaderText";
 export * from "./ShouldShowTabs";
-export * from "./GetActiveTabIndexOrDefault";
