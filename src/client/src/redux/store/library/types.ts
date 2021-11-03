@@ -1,4 +1,4 @@
-import { LibItem, CreateLibraryType, ObjectType } from "../../../models";
+import { LibItem, CreateLibraryType, ObjectType, LibrarySubProjectItem } from "../../../models";
 import { ApiError } from "../../../models/webclient";
 export const FETCHING_LIBRARY = "FETCHING_LIBRARY";
 export const DELETE_LIBRARY_ERROR = "DELETE_LIBRARY_ERROR";
@@ -21,6 +21,7 @@ export interface LibraryState {
   apiError: ApiError[];
   transportTypes: LibItem[];
   interfaceTypes: LibItem[];
+  subProjectTypes: LibrarySubProjectItem[];
 }
 
 // Action types
@@ -34,6 +35,7 @@ interface FetchLibraryActionFinished {
     nodeTypes: LibItem[];
     transportTypes: LibItem[];
     interfaceTypes: LibItem[];
+    subProjectTypes: LibrarySubProjectItem[];
     apiError: ApiError;
   };
 }

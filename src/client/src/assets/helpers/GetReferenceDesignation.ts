@@ -19,6 +19,8 @@ const GetReferenceDesignation = (node: Node, project: Project): string => {
     nextNode = findParentNode(nextNode, project);
   }
 
+  refs.push(`<${project.name.toUpperCase()}>`);
+
   return refs.reverse().join("");
 };
 

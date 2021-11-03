@@ -85,11 +85,13 @@ namespace Mb.Core.Extensions
             services.AddScoped<ITransportRepository, TransportRepository>();
             services.AddScoped<IInterfaceRepository, InterfaceRepository>();
             services.AddScoped<ICompositeRepository, CompositeRepository>();
+            services.AddScoped<IVersionRepository, VersionRepository>();
 
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<ILibraryService, LibraryService>();
             services.AddScoped<ICommonService, CommonService>();
             services.AddScoped<INodeService, NodeService>();
+            services.AddScoped<IVersionService, VersionService>();
 
             services.AddHttpContextAccessor();
             services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
@@ -118,6 +120,7 @@ namespace Mb.Core.Extensions
             cfg.AddProfile(new TransportProfile(provider.GetService<ICommonRepository>()));
             cfg.AddProfile(new InterfaceProfile(provider.GetService<ICommonRepository>()));
             cfg.AddProfile(new CompositeProfile(provider.GetService<ICommonRepository>()));
+            cfg.AddProfile(new VersionProfile(provider.GetService<ICommonRepository>()));
 
             // Create profiles
             cfg.CreateProfiles(provider, modules);

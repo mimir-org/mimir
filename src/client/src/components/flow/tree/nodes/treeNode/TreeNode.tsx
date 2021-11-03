@@ -3,7 +3,6 @@ import { NodeProps, Handle } from "react-flow-renderer";
 import { Connector, Node } from "../../../../../models";
 import { TreeNodeWrapper, TreeHandleBox } from "./styled";
 import { GetHandleType, IsPartOf } from "../../../helpers";
-import { FindAllNodes } from "../../../block/helpers";
 import { TreeLogoComponent } from "../../logo";
 
 /**
@@ -26,12 +25,6 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
       };
     }
   }, [timer]);
-
-  // Force correct z-index
-  useEffect(() => {
-    const allNodes = FindAllNodes();
-    allNodes.style.zIndex = "5";
-  }, []);
 
   const mouseNodeLeave = () => setTimer(true);
 

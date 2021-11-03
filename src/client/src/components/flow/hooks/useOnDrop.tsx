@@ -3,17 +3,20 @@ import { IsBlockView } from "../block/helpers";
 import { GetEdgeType } from "../tree/helpers";
 import { ConvertToEdge, ConvertToNode } from "../converters";
 import { BuildTreeEdge, BuildTreeNode } from "../tree/builders";
-import { BlobData, LibItem, Project, GetFileData, User, Node } from "../../../models";
+import { BlobData, LibItem, Project, User, Node, LibrarySubProjectItem } from "../../../models";
 import { LibraryState } from "../../../redux/store/library/types";
 import { BuildBlockNode } from "../block/builders";
 import { Size } from "../../../compLibrary";
 import {
   CreateId,
+  GetProjectData,
   GetSelectedNode,
+  GetSubProject,
   IsFamily,
   IsInputTerminal,
   IsOutputTerminal,
   IsPartOf,
+  IsSubProject,
   SetSiblingIndexOnNodeDrop,
 } from "./../helpers";
 
@@ -30,14 +33,17 @@ const useOnDrop = (
   parentNode: Node
 ) => {
   const sourceNode = GetSelectedNode();
-  const isFile = event.dataTransfer.files && event.dataTransfer.files.length > 0;
+  const isSubProject = IsSubProject(event);
 
-  if (isFile && !IsBlockView()) {
+  if (isSubProject && !IsBlockView()) {
     event.stopPropagation();
     event.preventDefault();
+    const eventData = JSON.parse(event.dataTransfer.getData("application/reactflow")) as LibrarySubProjectItem;
 
     (async () => {
-      const data = await GetFileData(event, project);
+      const subProject = await GetSubProject(eventData.id);
+      const data = await GetProjectData(event, project, subProject);
+
       data[0].forEach((node) => {
         dispatch(addNode(node));
         setElements((es) => es.concat(BuildTreeNode(node)));
@@ -49,7 +55,7 @@ const useOnDrop = (
         setElements((es) => es.concat(BuildTreeEdge(edge, edgeType, project.nodes)));
       });
     })();
-  } else {
+  } else if (!isSubProject) {
     event.preventDefault();
     const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
     const data = JSON.parse(event.dataTransfer.getData("application/reactflow")) as LibItem;
@@ -107,6 +113,10 @@ const useOnDrop = (
 
     dispatch(addNode(targetNode));
     if (!IsBlockView()) dispatch(setActiveNode(targetNode.id, true));
+  } else {
+    event.stopPropagation();
+    event.preventDefault();
+    return;
   }
 };
 

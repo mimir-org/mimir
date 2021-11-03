@@ -11,8 +11,11 @@ import { IsFunction, IsLocation, IsProduct } from "../../../helpers";
  */
 const GetMenuIcon = (node: Node, isParent: boolean, isInput: boolean) => {
   if (isParent) return Icons.ParentMenu;
-  if (IsLocation(node)) return Icons.LocationInputMenu;
 
+  if (IsLocation(node)) {
+    if (isInput) return Icons.LocationInputMenu;
+    return Icons.LocationOutputMenu;
+  }
   if (IsFunction(node)) {
     if (isInput) return Icons.FunctionInputMenu;
     return Icons.FunctionOutputMenu;
