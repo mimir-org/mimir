@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
@@ -389,18 +388,8 @@ namespace Mb.TypeEditor.Services.Services
                                     _compositeTypeRepository.Attach(compositeType, EntityState.Unchanged);
                                 }
                             }
-
-                            try
-                            {
-                                await _libraryTypeComponentRepository.CreateAsync(nt);
-                                await _libraryTypeComponentRepository.SaveAsync();
-                            }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine(e);
-                                throw;
-                            }
-
+                            await _libraryTypeComponentRepository.CreateAsync(nt);
+                            await _libraryTypeComponentRepository.SaveAsync();
 
                             if (nt.AttributeTypes != null && nt.AttributeTypes.Any())
                             {

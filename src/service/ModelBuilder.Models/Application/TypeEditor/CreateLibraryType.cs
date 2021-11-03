@@ -21,6 +21,7 @@ namespace Mb.Models.Application.TypeEditor
         [Required]
         public string RdsId { get; set; }
 
+        [Required]
         public string Purpose { get; set; }
 
         // NodeType (Object Block)
