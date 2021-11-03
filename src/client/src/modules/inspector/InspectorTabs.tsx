@@ -1,12 +1,10 @@
-import { InspectorComponent } from ".";
 import { Project } from "../../models";
-import { AdminComponent } from "./tabs/admin";
-import { IsProduct } from "../../components/flow/helpers";
 import { AttributeLikeItem, CompositeLikeItem, InspectorElement, TerminalLikeItem } from "./types";
-import { IsCreateLibraryType, IsEdge, IsNode } from "./helpers/IsType";
-import { IsRelationEdge } from "../../components/flow/helpers/IsRelationEdge";
-import { IsLocation } from "../../typeEditor/helpers";
 import { Action } from "redux";
+import InspectorTabWrapper from "./InspectorTabWrapper";
+import { changeInspectorTab } from "./redux/tabs/actions";
+import { ShouldShowTabs } from "./helpers";
+import { ParametersComponent, TerminalsComponent, RelationsComponent, SimpleTypesComponent, AdminComponent } from "./tabs";
 
 interface Props {
   project: Project;
@@ -25,19 +23,16 @@ const InspectorTabs = ({
   attributeLikeItems,
   terminalLikeItems,
   compositeLikeItems,
-  changeInspectorTabAction,
+  changeInspectorTabAction = changeInspectorTab,
 }: Props) => {
-  const shouldShowAdmin = !IsCreateLibraryType(element) || !!element.objectType;
-  const shouldShowParameters =
-    IsNode(element) ||
-    (IsCreateLibraryType(element) && element.attributeTypes.length > 0) ||
-    (IsEdge(element) && !IsRelationEdge(element));
-  const shouldShowTerminals =
-    IsNode(element) ||
-    (IsCreateLibraryType(element) && !IsLocation(element.aspect) && element.terminalTypes.length > 0) ||
-    (IsEdge(element) && !IsRelationEdge(element));
-  const shouldShowRelations = IsNode(element) || (IsEdge(element) && !IsRelationEdge(element));
-  const shouldShowSimpleTypes = (IsNode(element) && IsProduct(element)) || (IsCreateLibraryType(element) && IsProduct(element));
+  const [shouldShowAdmin, ...shouldShowTabs] = ShouldShowTabs(element);
+
+  const tabs = [
+    <ParametersComponent element={element} attributeLikeItems={attributeLikeItems} />,
+    <TerminalsComponent element={element} terminalLikeItems={terminalLikeItems} />,
+    <RelationsComponent element={element} />,
+    <SimpleTypesComponent element={element} compositeLikeItems={compositeLikeItems} />,
+  ];
 
   return (
     <>
@@ -52,40 +47,19 @@ const InspectorTabs = ({
               changeInspectorTabAction={changeInspectorTabAction}
             />
           )}
-          {shouldShowParameters && (
-            <InspectorComponent
-              element={element}
-              index={1}
-              activeTabIndex={activeTabIndex}
-              attributeLikeItems={attributeLikeItems}
-              changeInspectorTabAction={changeInspectorTabAction}
-            />
-          )}
-          {shouldShowTerminals && (
-            <InspectorComponent
-              element={element}
-              index={2}
-              activeTabIndex={activeTabIndex}
-              terminalLikeItems={terminalLikeItems}
-              changeInspectorTabAction={changeInspectorTabAction}
-            />
-          )}
-          {shouldShowRelations && (
-            <InspectorComponent
-              element={element}
-              index={3}
-              activeTabIndex={activeTabIndex}
-              changeInspectorTabAction={changeInspectorTabAction}
-            />
-          )}
-          {shouldShowSimpleTypes && (
-            <InspectorComponent
-              element={element}
-              index={4}
-              activeTabIndex={activeTabIndex}
-              compositeLikeItems={compositeLikeItems}
-              changeInspectorTabAction={changeInspectorTabAction}
-            />
+          {tabs.map(
+            (tab, i) =>
+              shouldShowTabs[i] && (
+                <InspectorTabWrapper
+                  key={i}
+                  element={element}
+                  index={i + 1}
+                  activeTabIndex={activeTabIndex}
+                  changeInspectorTabAction={changeInspectorTabAction}
+                >
+                  {tab}
+                </InspectorTabWrapper>
+              )
           )}
         </>
       )}
