@@ -38,7 +38,7 @@ namespace Mb.Data.Repositories
             {
                 if (newEdges.Any(x => x.Id == edge.Id))
                 {
-                    if (edge.MasterProjectId != project.Id || _modelBuilderConfiguration.Domain != invokedByDomain)
+                    if (edge.MasterProjectId != project.Id)
                     {
                         Attach(edge, EntityState.Unchanged);
                         yield return edge;
@@ -53,6 +53,13 @@ namespace Mb.Data.Repositories
                 {
                     if (edge.MasterProjectId != project.Id)
                         continue;
+
+                    // Parties is not allowed changed our edge
+                    if (_modelBuilderConfiguration.Domain == edge.Domain && _modelBuilderConfiguration.Domain != invokedByDomain)
+                    {
+                        Detach(edge);
+                        continue;
+                    }
 
                     _transportRepository.UpdateInsert(edge.Transport, EntityState.Modified);
                     _interfaceRepository.UpdateInsert(edge.Interface, EntityState.Modified);
@@ -70,14 +77,21 @@ namespace Mb.Data.Repositories
 
             foreach (var edge in delete)
             {
-                if (edge.MasterProjectId != null && edge.MasterProjectId != projectId && _modelBuilderConfiguration.Domain != invokedByDomain)
+                if (edge.MasterProjectId != null && edge.MasterProjectId != projectId)
                 {
                     subEdges.Add(edge);
                     continue;
                 }
 
+                // Parties is not allowed delete our edge
+                if (_modelBuilderConfiguration.Domain == edge.Domain && _modelBuilderConfiguration.Domain != invokedByDomain)
+                {
+                    Detach(edge);
+                    continue;
+                }
+
                 //Attributes - Transport (delete)
-                if(edge.Transport?.Attributes != null && edge.Transport.Attributes.Any())
+                if (edge.Transport?.Attributes != null && edge.Transport.Attributes.Any())
                     _attributeRepository.Attach(edge.Transport.Attributes, EntityState.Deleted);
 
                 //Attributes - Interface (delete)

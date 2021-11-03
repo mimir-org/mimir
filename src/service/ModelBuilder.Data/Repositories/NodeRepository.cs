@@ -40,7 +40,7 @@ namespace Mb.Data.Repositories
             {
                 if (newNodes.Any(x => x.Id == node.Id))
                 {
-                    if (node.MasterProjectId != project.Id || _modelBuilderConfiguration.Domain != invokedByDomain)
+                    if (node.MasterProjectId != project.Id)
                     {
                         Attach(node, EntityState.Unchanged);
                         yield return node;
@@ -56,7 +56,7 @@ namespace Mb.Data.Repositories
                         }
                     }
 
-                    node.Version = "1.0";
+                    node.Version = _modelBuilderConfiguration.Domain != node.Domain ? string.IsNullOrEmpty(node.Version) ? "1.0" : node.Version : "1.0";
                     _compositeRepository.AttachWithAttributes(node.Composites, EntityState.Added);
                     _connectorRepository.AttachWithAttributes(node.Connectors, EntityState.Added);
                     Attach(node, EntityState.Added);
@@ -65,6 +65,13 @@ namespace Mb.Data.Repositories
                 {
                     if (node.MasterProjectId != project.Id)
                         continue;
+
+                    // Parties is not allowed changed our node
+                    if (_modelBuilderConfiguration.Domain == node.Domain && _modelBuilderConfiguration.Domain != invokedByDomain)
+                    {
+                        Detach(node);
+                        continue;
+                    }
 
                     if (node.Attributes != null)
                     {
@@ -90,11 +97,19 @@ namespace Mb.Data.Repositories
 
             foreach (var node in delete)
             {
-                if (node.MasterProjectId != projectId || _modelBuilderConfiguration.Domain != invokedByDomain)
+                if (node.MasterProjectId != projectId)
                 {
                     subNodes.Add(node);
                     continue;
                 }
+
+                // Parties is not allowed delete our node
+                if (_modelBuilderConfiguration.Domain == node.Domain && _modelBuilderConfiguration.Domain != invokedByDomain)
+                {
+                    Detach(node);
+                    continue;
+                }
+
                 _attributeRepository.Attach(node.Attributes, EntityState.Deleted);
                 _compositeRepository.AttachWithAttributes(node.Composites, EntityState.Deleted);
                 _connectorRepository.AttachWithAttributes(node.Connectors, EntityState.Deleted);
