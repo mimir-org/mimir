@@ -1,14 +1,10 @@
 import { Project } from "../../models";
-import { AdminComponent } from "./tabs/admin";
 import { AttributeLikeItem, CompositeLikeItem, InspectorElement, TerminalLikeItem } from "./types";
 import { Action } from "redux";
 import InspectorTabWrapper from "./InspectorTabWrapper";
 import { changeInspectorTab } from "./redux/tabs/actions";
-import { ParametersComponent } from "./tabs/parameters";
-import { RelationsComponent } from "./tabs/relations";
-import { SimpleTypesComponent } from "./tabs/simpleTypes";
-import { TerminalsComponent } from "./tabs/terminals";
 import { ShouldShowTabs } from "./helpers";
+import { ParametersComponent, TerminalsComponent, RelationsComponent, SimpleTypesComponent, AdminComponent } from "./tabs";
 
 interface Props {
   project: Project;
