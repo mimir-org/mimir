@@ -42,6 +42,9 @@ export { default as GetDateNowUtc } from "./GetDateNowUtc";
 export { default as GetCompanyLogo } from "./GetCompanyLogo";
 export { default as GetInspectorCompanyLogo } from "./GetInspectorCompanyLogo";
 export { default as IsSubProject } from "./IsSubProject";
+export { default as GetHeaderCompanyLogo } from "./GetHeaderCompanyLogo";
+export { default as GetProjectData } from "./GetProjectData";
+export { default as GetSubProject } from "./GetSubProject";
 
 export * from "./SetSiblingRDS";
 export * from "./types";
