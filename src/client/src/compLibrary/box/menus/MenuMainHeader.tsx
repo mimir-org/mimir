@@ -1,28 +1,27 @@
 import styled from "styled-components";
 import { Color } from "../..";
 
-const MenuMainHeader = styled.div`
+interface Props {
+  isOpen: boolean;
+}
+
+const MenuMainHeader = styled.div<Props>`
   display: flex;
-  position: absolute;
-  right: 2px;
-  top: 4px;
-  padding: 11px 15px 0px 31px;
-  cursor: pointer;
-  color: ${Color.White};
-  background-color: ${Color.BlueMagenta};
-  font-weight: ${(props: { isOpen: boolean }) => props.isOpen && "bold"};
+  float: right;
+  margin: 10px 10px 0px 0px;
 
   .projectName {
-    display: flex;
-    padding-left: 5px;
-    margin-top: 3px;
-    z-index: 6;
+    margin-top: 10px;
+    color: ${Color.White};
+    font-weight: ${(props) => props.isOpen && "bold"};
+    margin-left: 30px;
+    padding-left: ${(props) => !props.isOpen && 1}px;
     cursor: pointer;
   }
 
   .icon {
-    display: flex;
-    z-index: 1;
+    margin: 3px 0px 0px 10px;
+    cursor: pointer;
   }
 `;
 

@@ -6,9 +6,9 @@ namespace Mb.TypeEditor.Data.Contracts
 {
     public interface ILibraryRepository
     {
-        IEnumerable<LibraryNodeItem> GetNodeTypes(string searchString = null);
-        IEnumerable<LibraryInterfaceItem> GetInterfaceTypes(string searchString = null);
-        IEnumerable<LibraryTransportItem> GetTransportTypes(string searchString = null);
+        Task<IEnumerable<LibraryNodeItem>> GetNodeTypes(string searchString = null);
+        Task<IEnumerable<LibraryInterfaceItem>> GetInterfaceTypes(string searchString = null);
+        Task<IEnumerable<LibraryTransportItem>> GetTransportTypes(string searchString = null);
         Task<T> GetLibraryItem<T>(string id) where T : class, new();
     }
 }

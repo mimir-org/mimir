@@ -9,6 +9,7 @@ const AdminInfoLogoBox = styled.div`
   .logo {
     position: absolute;
     bottom: 0px;
+    pointer-events: none;
   }
 `;
 

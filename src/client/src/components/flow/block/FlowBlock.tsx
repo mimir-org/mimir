@@ -1,4 +1,4 @@
-import ReactFlow, { ReactFlowProvider, Elements, Background } from "react-flow-renderer";
+import ReactFlow, { ReactFlowProvider, Elements } from "react-flow-renderer";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { FullScreenComponent } from "../../../compLibrary/controls";
 import { GetBlockEdgeTypes, OnBlockClick, IsOffPage } from "../block/helpers";
@@ -127,7 +127,6 @@ const FlowBlock = ({ inspectorRef }: Props) => {
           onClick={(e) => OnBlockClick(e, dispatch, project)}
           onlyRenderVisibleElements={true}
         >
-          <Background />
           <FullScreenComponent inspectorRef={inspectorRef} />
         </ReactFlow>
 

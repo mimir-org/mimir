@@ -442,11 +442,13 @@ namespace Mb.Services.Services
             foreach (var subNode in subNodes)
             {
                 originalProject.Nodes.Add(subNode);
+                _nodeRepository.Attach(subNode, EntityState.Unchanged);
             }
 
             foreach (var subEdge in subEdges)
             {
                 originalProject.Edges.Add(subEdge);
+                _edgeRepository.Attach(subEdge, EntityState.Unchanged);
             }
 
             originalProject.Nodes = originalProject.Nodes.Where(x => subDeleteNodes.All(y => y.Id != x.Id)).ToList();
