@@ -24,14 +24,12 @@ function validEdge(selectedNode: Node, fromNode: Node, source: Connector, target
 }
 
 function validSecondaryEdge(selectedNode: Node, secondaryNode: Node, fromNode: Node, source: Connector, target: Connector) {
-  // if (!IsDirectChild(fromNode, selectedNode)) return false;
-
-  if (IsLocation(secondaryNode)) return IsLocationConnection(source, target);
-  if (IsProduct(secondaryNode)) return IsProductConnection(source, target);
+  if (IsLocation(secondaryNode)) return IsLocationConnection(source, target) && IsDirectChild(fromNode, selectedNode);
+  if (IsProduct(secondaryNode)) return IsProductConnection(source, target) && IsDirectChild(fromNode, selectedNode);
 
   if (IsFunction(secondaryNode)) {
-    if (IsProduct(selectedNode)) return IsProductConnection(source, target);
-    if (IsLocation(selectedNode)) return IsLocationConnection(source, target);
+    if (IsProduct(selectedNode)) return IsProductConnection(source, target) && IsDirectChild(fromNode, secondaryNode);
+    if (IsLocation(selectedNode)) return IsLocationConnection(source, target) && IsDirectChild(fromNode, secondaryNode);
     return IsTransportConnection(source, target);
   }
 }
