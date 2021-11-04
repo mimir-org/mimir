@@ -1,7 +1,6 @@
 import { Aspect, ObjectType, TerminalTypeItem, PredefinedAttribute, ConnectorType } from "..";
 
 export const CREATE_LIBRARY_KIND: string = "CreateLibraryType";
-
 export class CreateLibraryType {
   id: string;
   name: string;

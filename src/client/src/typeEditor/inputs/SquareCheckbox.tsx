@@ -30,7 +30,7 @@ export const SquareCheckbox = ({ id, name, label, defaultValue, onChange }: Prop
       }
       onChange(Label[label], array);
     } else if (label === Label.Terminals) {
-      onChange(onChange);
+      onChange();
     }
   };
 

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ListWrapper } from "../compLibrary";
 import { ListContent, ListSearch } from "./lists/";
 import { GetListLabel, GetWidth } from "./helpers";
+import { OnPropertyChangeFunction, OnTerminalCategoryChangeFunction } from "./types";
 import {
   CreateLibraryType,
   Discipline,
@@ -27,8 +28,8 @@ interface Props {
   discipline?: Discipline;
   disabled?: boolean;
   listType: ListType;
-  onChange: Function;
-  onTerminalTypeIdChange?: (terminalTypeId: string) => void;
+  onPropertyChange?: OnPropertyChangeFunction;
+  onTerminalCategoryChange?: OnTerminalCategoryChangeFunction;
 }
 /**
  * A generic list-component in Type editor
@@ -40,8 +41,8 @@ export const TypeEditorList = ({
   discipline,
   disabled,
   listType,
-  onChange,
-  onTerminalTypeIdChange,
+  onPropertyChange,
+  onTerminalCategoryChange,
 }: Props) => {
   const [filteredListItems, setListItems] = useState(items);
   return (
@@ -59,8 +60,8 @@ export const TypeEditorList = ({
         listItems={filteredListItems}
         createLibraryType={createLibraryType}
         discipline={discipline}
-        onChange={(key, data) => onChange(key, data)}
-        onTerminalTypeIdChange={onTerminalTypeIdChange}
+        onPropertyChange={(key, data) => onPropertyChange(key, data)}
+        onTerminalCategoryChange={(key, data) => onTerminalCategoryChange(key, data)}
       />
     </ListWrapper>
   );

@@ -2,11 +2,12 @@ import { AttributeType } from "../../../models";
 import { ListElem } from "../../../compLibrary";
 import { SquareBox } from "../../styled";
 import { SquareCheckbox, Label } from "../../inputs/SquareCheckbox";
+import { OnPropertyChangeFunction } from "../../types";
 
 interface Props {
   attribute: AttributeType;
   defaultValue?: string[];
-  onChange: Function;
+  onChange: OnPropertyChangeFunction;
 }
 
 export const AttributeElement = ({ attribute, defaultValue, onChange }: Props) => {

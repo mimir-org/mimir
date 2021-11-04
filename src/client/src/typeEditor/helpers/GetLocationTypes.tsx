@@ -1,8 +1,8 @@
-import { DropDownItem } from "../../compLibrary/dropdown/typeEditor/Dropdown";
+import { DropDownCategoryItem } from "../../compLibrary/dropdown/typeEditor/Dropdown";
 import { LocationType } from "../../models";
 
-const GetLocationTypes = (locations: LocationType[]): DropDownItem[] => {
-  const categories = [] as DropDownItem[];
+const GetLocationTypes = (locations: LocationType[]): DropDownCategoryItem<LocationType>[] => {
+  const categories = [] as DropDownCategoryItem<LocationType>[];
   if (!locations || locations.length <= 0) return categories;
 
   locations.forEach((category) => {
@@ -13,7 +13,7 @@ const GetLocationTypes = (locations: LocationType[]): DropDownItem[] => {
         name: element.name,
         description: element.name,
         image: null,
-        items: [],
+        value: element,
       });
     });
     categories.push(cat);
