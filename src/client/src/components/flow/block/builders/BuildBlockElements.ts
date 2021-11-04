@@ -11,6 +11,7 @@ import { BlockNodeSize } from "../../../../models/project";
  * @param secondaryNode
  * @param parentNode
  * @param parentNodeSize
+ * @param animatedEdge
  * @returns all Elements.
  */
 const BuildBlockElements = (
@@ -18,7 +19,8 @@ const BuildBlockElements = (
   selectedNode: Node,
   secondaryNode: Node,
   parentNode: Node,
-  parentNodeSize: BlockNodeSize
+  parentNodeSize: BlockNodeSize,
+  animatedEdge: boolean
 ) => {
   if (!project) return;
   const elements: Elements = [];
@@ -35,7 +37,7 @@ const BuildBlockElements = (
   }
 
   DrawChildNodes(edges, nodes, selectedNode, elements, parentNode, parentNodeSize);
-  DrawEdges(edges, nodes, elements, secondaryNode);
+  DrawEdges(edges, nodes, elements, secondaryNode, animatedEdge);
   secondaryNode && DrawSecondaryChildren(edges, nodes, secondaryNode, elements, parentNodeSize);
 
   return elements;

@@ -54,10 +54,10 @@ const FlowBlock = ({ inspectorRef }: Props) => {
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(BuildBlockElements(project, node, secondaryNode, parent, parentNodeSize));
+      setElements(BuildBlockElements(project, node, secondaryNode, parent, parentNodeSize, animatedEdge));
       return setFlowInstance(_reactFlowInstance);
     },
-    [project, node, secondaryNode, parent, parentNodeSize]
+    [project, node, secondaryNode, parent, parentNodeSize, animatedEdge]
   );
 
   const OnElementsRemove = (elementsToRemove) => {
@@ -90,7 +90,19 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   };
 
   const OnDrop = (event) => {
-    return useOnDrop(project, event, dispatch, setElements, flowInstance, flowWrapper, icons, lib, userState.user, parent);
+    return useOnDrop(
+      project,
+      event,
+      dispatch,
+      setElements,
+      flowInstance,
+      flowWrapper,
+      icons,
+      lib,
+      userState.user,
+      parent,
+      animatedEdge
+    );
   };
 
   const OnElementClick = (_event, element) => {
