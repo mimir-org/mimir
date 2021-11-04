@@ -1,7 +1,8 @@
 import { IsLocation, IsProduct, IsObjectBlock, IsTransport, IsInterface } from ".";
-import { updateValue } from "../redux/actions";
+import { CreateLibraryType } from "../../models";
+import { clearAllTerminalTypes, updateValue } from "../redux/actions";
 
-const ResetRedux = (dispatch: any, key: string, value: any) => {
+const ResetRedux = (dispatch: any, key: keyof CreateLibraryType, value: any) => {
   if (key === "aspect" && IsLocation(value)) {
     dispatch(updateValue("terminalTypes", []));
     dispatch(updateValue("attributeTypes", []));
@@ -19,6 +20,9 @@ const ResetRedux = (dispatch: any, key: string, value: any) => {
   }
   if (key === "objectType" && (IsTransport(value) || IsInterface(value))) {
     dispatch(updateValue("terminalTypes", []));
+  }
+  if (key === "terminalTypeId") {
+    dispatch(clearAllTerminalTypes());
   }
 };
 

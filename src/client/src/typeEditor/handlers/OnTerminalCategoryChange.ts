@@ -1,5 +1,6 @@
 import { Dispatch } from "redux";
 import { TerminalTypeItem, ConnectorType } from "../../models";
+import { TerminalCategoryChangeKey } from "../types";
 import {
   addTerminalType,
   removeTerminalType,
@@ -8,7 +9,11 @@ import {
   updateValue,
 } from "../redux/actions";
 
-export const OnTerminalCategoryChange = (key: string, terminalTypeItem: TerminalTypeItem, dispatch: Dispatch) => {
+export const OnTerminalCategoryChange = (
+  key: TerminalCategoryChangeKey,
+  terminalTypeItem: TerminalTypeItem,
+  dispatch: Dispatch
+) => {
   if (key === "add") {
     dispatch(addTerminalType(terminalTypeItem));
   } else if (key === "remove") {

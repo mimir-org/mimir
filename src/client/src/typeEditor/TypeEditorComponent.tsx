@@ -7,7 +7,8 @@ import { LibraryIcon } from "../assets/icons/modules";
 import { TextResources } from "../assets/text";
 import { GetInputTerminals, GetOutputTerminals } from "./preview/helpers";
 import { TypeEditorList, TypeEditorInputs, TypePreview, TypeEditorInspector } from "./";
-import { OnCloseEditor, OnPropertyChange, OnSave, OnTerminalCategoryChange, OnTerminalTypeIdChange } from "./handlers";
+import { OnCloseEditor, OnPropertyChange, OnSave, OnTerminalCategoryChange } from "./handlers";
+import { getInitialData, getBlobData } from "./redux/actions";
 import {
   TypeEditorWrapper,
   TypeEditorContent,
@@ -26,8 +27,6 @@ import {
   GetWidth,
   GetSelectedDiscipline,
 } from "./helpers";
-import { getInitialData, getBlobData } from "./redux/actions";
-
 /**
  * Component for adding or editing a type
  * @returns the visual Type Editor window
@@ -63,15 +62,15 @@ export const TypeEditorComponent = () => {
                 items={state?.rdsList}
                 createLibraryType={state?.createLibraryType}
                 listType={ListType.Rds}
-                onChange={(key, data) => OnPropertyChange(key, data, dispatch)}
+                onPropertyChange={(key, data) => OnPropertyChange(key, data, dispatch)}
               />
               {!IsLocation(state?.createLibraryType.aspect) && (
                 <TypeEditorList
                   items={state?.terminals}
                   createLibraryType={state?.createLibraryType}
                   listType={ListType.Terminals}
-                  onChange={(key, data) => OnTerminalCategoryChange(key, data, dispatch)}
-                  onTerminalTypeIdChange={(terminalTypeId) => OnTerminalTypeIdChange(terminalTypeId, dispatch)}
+                  onPropertyChange={(key, data) => OnPropertyChange(key, data, dispatch)}
+                  onTerminalCategoryChange={(key, data) => OnTerminalCategoryChange(key, data, dispatch)}
                 />
               )}
               {IsLocation(state?.createLibraryType.aspect) && (
@@ -79,7 +78,7 @@ export const TypeEditorComponent = () => {
                   items={state?.predefinedAttributes}
                   createLibraryType={state?.createLibraryType}
                   listType={ListType.PredefinedAttributes}
-                  onChange={(key, data) => OnPropertyChange(key, data, dispatch)}
+                  onPropertyChange={(key, data) => OnPropertyChange(key, data, dispatch)}
                 />
               )}
               <TypeEditorList
@@ -87,14 +86,14 @@ export const TypeEditorComponent = () => {
                 items={state?.attributes}
                 discipline={GetSelectedDiscipline(state.createLibraryType?.purpose, state?.purposes)}
                 listType={IsLocation(state?.createLibraryType.aspect) ? ListType.LocationAttributes : ListType.ObjectAttributes}
-                onChange={(key, data) => OnPropertyChange(key, data, dispatch)}
+                onPropertyChange={(key, data) => OnPropertyChange(key, data, dispatch)}
               />
               {IsProduct(state?.createLibraryType.aspect) && (
                 <TypeEditorList
                   items={state?.simpleTypes}
                   createLibraryType={state?.createLibraryType}
                   listType={ListType.SimpleTypes}
-                  onChange={(key, data) => OnPropertyChange(key, data, dispatch)}
+                  onPropertyChange={(key, data) => OnPropertyChange(key, data, dispatch)}
                 />
               )}
               <TypePreviewColumn wide={GetWidth(ListType.Preview)}>

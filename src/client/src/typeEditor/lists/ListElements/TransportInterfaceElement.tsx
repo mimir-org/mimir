@@ -6,20 +6,21 @@ import { ExpandIcon, CollapseIcon } from "../../../assets/icons/chevron";
 import { TextResources } from "../../../assets/text";
 import { SearchBarWrapper, SearchBarContainer, SearchBar, SearchBarList, SearchBarListItem } from "../../../compLibrary/";
 import { CreateId } from "../../../components/flow/helpers";
+import { OnPropertyChangeFunction, OnTerminalCategoryChangeFunction } from "../../types";
 
 interface Props {
   categoryName: string;
   terminalTypes: TerminalType[];
-  onChange: Function;
+  onPropertyChange: OnPropertyChangeFunction;
+  onTerminalCategoryChange: OnTerminalCategoryChangeFunction;
   defaultTerminal?: TerminalType;
-  onTerminalTypeIdChange?: (terminalTypeId: string) => void;
 }
 
 export const TransportInterfaceElement = ({
   categoryName,
   terminalTypes,
-  onChange,
-  onTerminalTypeIdChange,
+  onPropertyChange,
+  onTerminalCategoryChange,
   defaultTerminal,
 }: Props) => {
   const [searchbarInput, setSearchbarInput] = useState(defaultTerminal ? defaultTerminal.name : "");
@@ -41,7 +42,7 @@ export const TransportInterfaceElement = ({
     defaultTerminalItem.terminalTypeId = terminal.id;
     defaultTerminalItem.categoryId = terminal.terminalCategoryId;
 
-    onChange("terminalTypeId", defaultTerminalItem);
+    onTerminalCategoryChange("terminalTypeId", defaultTerminalItem);
     setExpandList(!expandList);
   };
 
@@ -86,7 +87,7 @@ export const TransportInterfaceElement = ({
             listType={ListType.Terminals}
             checked={isSelected()}
             defaultValue={terminalTypes[0].id}
-            onChange={(_, terminalTypeId) => onTerminalTypeIdChange(terminalTypeId)}
+            onChange={(key, terminalTypeId) => onPropertyChange(key, terminalTypeId)}
           />
         </RoundBox>
         {isSelected() && (

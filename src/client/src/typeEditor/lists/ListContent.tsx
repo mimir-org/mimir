@@ -1,5 +1,7 @@
 import { ListElementsContainer } from "../../compLibrary";
 import { ListType } from "../TypeEditorList";
+import { useMemo } from "react";
+import { OnPropertyChangeFunction, OnTerminalCategoryChangeFunction } from "../types";
 import {
   RDSElement,
   ObjectBlockElement,
@@ -37,8 +39,8 @@ interface Props {
   listItems: Rds[] | TerminalTypeDict | AttributeType[] | CompositeType[] | PredefinedAttribute[];
   createLibraryType: CreateLibraryType;
   discipline?: Discipline;
-  onChange: Function;
-  onTerminalTypeIdChange?: (terminalTypeId: string) => void;
+  onPropertyChange?: OnPropertyChangeFunction;
+  onTerminalCategoryChange?: OnTerminalCategoryChangeFunction;
 }
 /**
  * Component that shows content in list based on list type
@@ -52,10 +54,13 @@ export const ListContent = ({
   items,
   listItems,
   createLibraryType,
-  onChange,
-  onTerminalTypeIdChange,
+  onPropertyChange,
+  onTerminalCategoryChange,
 }: Props) => {
-  const filteredList = GetFilteredList(listType, listItems, createLibraryType);
+  const filteredList = useMemo(
+    () => GetFilteredList(listType, listItems, createLibraryType),
+    [listType, listItems, createLibraryType]
+  );
 
   return (
     <>
@@ -71,7 +76,7 @@ export const ListContent = ({
                 key={element.name}
                 category={element.name}
                 rds={element.items}
-                onChange={(key, data) => onChange(key, data)}
+                onChange={(key, data) => onPropertyChange(key, data)}
                 defaultValue={createLibraryType?.rdsId}
               />
             ))}
@@ -83,7 +88,7 @@ export const ListContent = ({
                   categoryId={element.id}
                   defaultTerminals={GetDefaultTerminals(element.id, createLibraryType)}
                   terminalTypes={element.items}
-                  onChange={(key, data) => onChange(key, data)}
+                  onChange={(key, data) => onTerminalCategoryChange(key, data)}
                 />
               ))
             : listType === ListType.Terminals &&
@@ -94,8 +99,8 @@ export const ListContent = ({
                   categoryName={element.name}
                   terminalTypes={element.items}
                   defaultTerminal={GetDefaultTerminal(listType, createLibraryType, items)}
-                  onChange={(key, data) => onChange(key, data)}
-                  onTerminalTypeIdChange={onTerminalTypeIdChange}
+                  onPropertyChange={onPropertyChange}
+                  onTerminalCategoryChange={(key, data) => onTerminalCategoryChange(key, data)}
                 />
               ))
             : listType === ListType.PredefinedAttributes &&
@@ -106,7 +111,7 @@ export const ListContent = ({
                   values={element.values}
                   isMultiSelect={element.isMultiSelect}
                   defaultValue={createLibraryType?.predefinedAttributes}
-                  onChange={(key, data) => onChange(key, data)}
+                  onChange={(key, data) => onPropertyChange(key, data)}
                 />
               ))}
           {listType === ListType.LocationAttributes
@@ -114,7 +119,7 @@ export const ListContent = ({
                 <LocationAttributeElement
                   key={element.id}
                   attribute={element}
-                  onChange={(key, data) => onChange(key, data)}
+                  onChange={(key, data) => onPropertyChange(key, data)}
                   defaultValue={createLibraryType?.attributeTypes}
                 />
               ))
@@ -124,7 +129,7 @@ export const ListContent = ({
                   key={element.discipline}
                   discipline={element.discipline}
                   attributes={element.items}
-                  onChange={(key, data) => onChange(key, data)}
+                  onChange={(key, data) => onPropertyChange(key, data)}
                   defaultValue={createLibraryType?.attributeTypes}
                 />
               ))}
@@ -133,7 +138,7 @@ export const ListContent = ({
               <SimpleTypeElement
                 key={element.id}
                 simpleType={element}
-                onChange={(key, data) => onChange(key, data)}
+                onChange={(key, data) => onPropertyChange(key, data)}
                 defaultValue={createLibraryType?.compositeTypes}
               />
             ))}

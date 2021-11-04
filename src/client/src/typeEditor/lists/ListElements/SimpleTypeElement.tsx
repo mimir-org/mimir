@@ -2,10 +2,11 @@ import { CompositeType } from "../../../models";
 import { ListElem } from "../../../compLibrary";
 import { SquareBox } from "../../styled";
 import { SquareCheckbox, Label } from "../../inputs/SquareCheckbox";
+import { OnPropertyChangeFunction } from "../../types";
 
 interface Props {
   simpleType: CompositeType;
-  onChange: Function;
+  onChange: OnPropertyChangeFunction;
   defaultValue?: string[];
 }
 

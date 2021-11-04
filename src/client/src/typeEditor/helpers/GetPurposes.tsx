@@ -1,9 +1,9 @@
-import { DropDownItem } from "../../compLibrary/dropdown/typeEditor/Dropdown";
+import { DropDownCategoryItem } from "../../compLibrary/dropdown/typeEditor/Dropdown";
 import { Purpose } from "../../models";
 import { CreateId } from "../../components/flow/helpers";
 
-const GetPurposes = (purposes: Purpose[]): DropDownItem[] => {
-  const categories = [] as DropDownItem[];
+const GetPurposes = (purposes: Purpose[]): DropDownCategoryItem<Purpose>[] => {
+  const categories = [] as DropDownCategoryItem<Purpose>[];
   categories.push({ id: CreateId(), name: "Purposes", description: "Purpose", image: null, items: [] });
   purposes.forEach((purpose) => {
     categories[0].items.push({
@@ -11,7 +11,7 @@ const GetPurposes = (purposes: Purpose[]): DropDownItem[] => {
       name: purpose.name,
       description: purpose.name,
       image: null,
-      items: [],
+      value: purpose,
     });
   });
   return categories;
