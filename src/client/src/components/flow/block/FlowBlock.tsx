@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { BlockFilterMenu } from "../../menus/filterMenu/block";
 import { Node } from "../../../models";
 import { ExplorerModule } from "../../../modules/explorer";
+import { ConnectionLine } from "./edges";
 import {
   darkModeSelector,
   iconSelector,
@@ -126,6 +127,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
           defaultPosition={[450, 80]}
           onClick={(e) => OnBlockClick(e, dispatch, project)}
           onlyRenderVisibleElements={true}
+          connectionLineComponent={ConnectionLine}
         >
           <FullScreenComponent inspectorRef={inspectorRef} />
         </ReactFlow>
