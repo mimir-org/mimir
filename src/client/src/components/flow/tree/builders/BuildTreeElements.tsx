@@ -4,7 +4,7 @@ import { GetEdgeType } from "../helpers";
 import { Project, Edge } from "../../../../models";
 import { IsOffPage } from "../../block/helpers";
 
-const BuildTreeElements = (project: Project): Elements => {
+const BuildTreeElements = (project: Project, animated: boolean): Elements => {
   const elements: Elements = [];
 
   if (!project) return elements;
@@ -18,7 +18,7 @@ const BuildTreeElements = (project: Project): Elements => {
   project.edges?.forEach((edge: Edge) => {
     const edgeType = GetEdgeType(edge.fromConnector);
     let treeEdge = null;
-    if (!IsOffPage(edge.toNode)) treeEdge = BuildTreeEdge(edge, edgeType, project.nodes);
+    if (!IsOffPage(edge.toNode)) treeEdge = BuildTreeEdge(edge, edgeType, project.nodes, animated);
     if (treeEdge) elements.push(treeEdge);
   });
 
