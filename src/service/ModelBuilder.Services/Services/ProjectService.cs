@@ -18,6 +18,7 @@ using Mb.Services.Contracts;
 using Mb.Services.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Attribute = Mb.Models.Data.Attribute;
@@ -36,11 +37,12 @@ namespace Mb.Services.Services
         private readonly IModuleService _moduleService;
         private readonly IAttributeRepository _attributeRepository;
         private readonly ModelBuilderConfiguration _modelBuilderConfiguration;
+        private readonly ILogger<ProjectService> _logger;
 
         public ProjectService(IProjectRepository projectRepository, IMapper mapper,
             IHttpContextAccessor contextAccessor, INodeRepository nodeRepository, IEdgeRepository edgeRepository,
             ICommonRepository commonRepository, IConnectorRepository connectorRepository, IModuleService moduleService,
-            IAttributeRepository attributeRepository, IOptions<ModelBuilderConfiguration> modelBuilderConfiguration)
+            IAttributeRepository attributeRepository, IOptions<ModelBuilderConfiguration> modelBuilderConfiguration, ILogger<ProjectService> logger)
         {
             _projectRepository = projectRepository;
             _mapper = mapper;
@@ -51,6 +53,7 @@ namespace Mb.Services.Services
             _connectorRepository = connectorRepository;
             _moduleService = moduleService;
             _attributeRepository = attributeRepository;
+            _logger = logger;
             _modelBuilderConfiguration = modelBuilderConfiguration?.Value;
         }
 
@@ -230,43 +233,56 @@ namespace Mb.Services.Services
         /// <returns></returns>
         public async Task<Project> CreateProject(ProjectAm project)
         {
-            var existingProject = await GetProject(project.Id, true);
-
-            if (existingProject != null)
-                throw new ModelBuilderDuplicateException($"Project already exist - id: {project.Id}");
-
-            if (_edgeRepository.GetAll().AsEnumerable().Any(x => project.Edges.Any(y => y.Id == x.Id)))
-                throw new ModelBuilderDuplicateException("One or more edges already exist");
-
-            if (_nodeRepository.GetAll().AsEnumerable().Any(x => project.Nodes.Any(y => y.Id == x.Id)))
-                throw new ModelBuilderDuplicateException("One or more nodes already exist");
-
-            var allConnectors = project.Nodes.AsEnumerable().SelectMany(x => x.Connectors).ToList();
-            if (_connectorRepository.GetAll().AsEnumerable().Any(x => allConnectors.Any(y => y.Id == x.Id)))
-                throw new ModelBuilderDuplicateException("One or more connectors already exist");
-
-            // Cast connectors
-            CastConnectors(project);
-
-            // Remap and create new id's
-            Remap(project);
-
-            // Create an empty project
-            var newProject = new Project
+            try
             {
-                ProjectOwner = _contextAccessor.GetName(),
-                UpdatedBy = _contextAccessor.GetName(),
-                Updated = DateTime.Now.ToUniversalTime()
-            };
+                var existingProject = await GetProject(project.Id, true);
 
-            // Map data
-            _mapper.Map(project, newProject);
+                if (existingProject != null)
+                    throw new ModelBuilderDuplicateException($"Project already exist - id: {project.Id}");
 
-            await _projectRepository.CreateAsync(newProject);
-            await _projectRepository.SaveAsync();
+                if (_edgeRepository.GetAll().AsEnumerable().Any(x => project.Edges.Any(y => y.Id == x.Id)))
+                    throw new ModelBuilderDuplicateException("One or more edges already exist");
 
-            var updatedProject = await GetProject(newProject.Id);
-            return updatedProject;
+                if (_nodeRepository.GetAll().AsEnumerable().Any(x => project.Nodes.Any(y => y.Id == x.Id)))
+                    throw new ModelBuilderDuplicateException("One or more nodes already exist");
+
+                var allConnectors = project.Nodes.AsEnumerable().SelectMany(x => x.Connectors).ToList();
+                if (_connectorRepository.GetAll().AsEnumerable().Any(x => allConnectors.Any(y => y.Id == x.Id)))
+                    throw new ModelBuilderDuplicateException("One or more connectors already exist");
+
+                // Cast connectors
+                CastConnectors(project);
+
+                // Remap and create new id's
+                Remap(project);
+
+                // Create an empty project
+                var newProject = new Project
+                {
+                    ProjectOwner = _contextAccessor.GetName(),
+                    UpdatedBy = _contextAccessor.GetName(),
+                    Updated = DateTime.Now.ToUniversalTime()
+                };
+
+                // Map data
+                _mapper.Map(project, newProject);
+
+                await _projectRepository.CreateAsync(newProject);
+                await _projectRepository.SaveAsync();
+
+                var updatedProject = await GetProject(newProject.Id);
+                ClearAllChangeTracker();
+                return updatedProject;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Can not create project with name: {project?.Name}. Error: {e.Message}");
+                throw;
+            }
+            finally
+            {
+                ClearAllChangeTracker();
+            }
         }
 
         /// <summary>
@@ -276,69 +292,82 @@ namespace Mb.Services.Services
         /// <returns></returns>
         public async Task<Project> CreateProject(SubProjectAm subProjectAm)
         {
-            if (subProjectAm == null)
-                throw new ModelBuilderInvalidOperationException("Object is 'null'");
-
-            if (subProjectAm.Nodes == null || !subProjectAm.Nodes.Any())
-                throw new ModelBuilderInvalidOperationException("No nodes selected");
-
-            if(subProjectAm.Nodes.GroupBy(x => x).Where(g => g.Count() > 1).Select(y => y.Key).ToList().Any())
-                throw new ModelBuilderInvalidOperationException("Duplicate node id's detected");
-
-            foreach (var nodeId in subProjectAm.Nodes)
+            try
             {
-                if (string.IsNullOrWhiteSpace(nodeId))
-                    throw new ModelBuilderInvalidOperationException($"Node id can't be null or empty");
+                if (subProjectAm == null)
+                    throw new ModelBuilderInvalidOperationException("Object is 'null'");
 
-                if (!_nodeRepository.GetAll().Any(x => x.Id == nodeId))
-                    throw new ModelBuilderInvalidOperationException($"Node {nodeId} not found");
-            }
+                if (subProjectAm.Nodes == null || !subProjectAm.Nodes.Any())
+                    throw new ModelBuilderInvalidOperationException("No nodes selected");
 
-            if (subProjectAm.Edges != null && subProjectAm.Edges.Any())
-            {
-                if (subProjectAm.Edges.GroupBy(x => x).Where(g => g.Count() > 1).Select(y => y.Key).ToList().Any())
-                    throw new ModelBuilderInvalidOperationException("Duplicate edge id's detected");
+                if (subProjectAm.Nodes.GroupBy(x => x).Where(g => g.Count() > 1).Select(y => y.Key).ToList().Any())
+                    throw new ModelBuilderInvalidOperationException("Duplicate node id's detected");
 
-                foreach (var edgeId in subProjectAm.Edges)
+                foreach (var nodeId in subProjectAm.Nodes)
                 {
-                    if(string.IsNullOrWhiteSpace(edgeId))
-                        throw new ModelBuilderInvalidOperationException($"Edge id can't be null or empty");
+                    if (string.IsNullOrWhiteSpace(nodeId))
+                        throw new ModelBuilderInvalidOperationException($"Node id can't be null or empty");
 
-                    if (!_edgeRepository.GetAll().Any(x => x.Id == edgeId))
-                        throw new ModelBuilderInvalidOperationException($"Edge {edgeId} not found");
+                    if (!_nodeRepository.GetAll().Any(x => x.Id == nodeId))
+                        throw new ModelBuilderInvalidOperationException($"Node {nodeId} not found");
                 }
+
+                if (subProjectAm.Edges != null && subProjectAm.Edges.Any())
+                {
+                    if (subProjectAm.Edges.GroupBy(x => x).Where(g => g.Count() > 1).Select(y => y.Key).ToList().Any())
+                        throw new ModelBuilderInvalidOperationException("Duplicate edge id's detected");
+
+                    foreach (var edgeId in subProjectAm.Edges)
+                    {
+                        if (string.IsNullOrWhiteSpace(edgeId))
+                            throw new ModelBuilderInvalidOperationException($"Edge id can't be null or empty");
+
+                        if (!_edgeRepository.GetAll().Any(x => x.Id == edgeId))
+                            throw new ModelBuilderInvalidOperationException($"Edge {edgeId} not found");
+                    }
+                }
+
+                var subProjectToCreate = new CreateProject
+                {
+                    Name = subProjectAm.Name,
+                    Description = subProjectAm.Description
+                };
+
+                var initSubProjectCreated = CreateInitProject(subProjectToCreate, true);
+
+                await _projectRepository.CreateAsync(initSubProjectCreated);
+                await _projectRepository.SaveAsync();
+
+                _projectRepository.Detach(initSubProjectCreated);
+
+                foreach (var node in initSubProjectCreated.Nodes)
+                    _nodeRepository.Detach(node);
+
+                foreach (var nodeId in subProjectAm.Nodes)
+                    initSubProjectCreated.Nodes.Add(new Node {Id = nodeId});
+
+                if (subProjectAm.Edges != null && subProjectAm.Edges.Any())
+                {
+                    initSubProjectCreated.Edges ??= new List<Edge>();
+
+                    foreach (var edgeId in subProjectAm.Edges)
+                        initSubProjectCreated.Edges.Add(new Edge {Id = edgeId});
+                }
+
+                var projectAm = _mapper.Map<ProjectAm>(initSubProjectCreated);
+                var subProjectCreated = await UpdateProject(initSubProjectCreated.Id, projectAm, _modelBuilderConfiguration.Domain);
+                ClearAllChangeTracker();
+                return subProjectCreated;
             }
-
-            var subProjectToCreate = new CreateProject
+            catch (Exception e)
             {
-                Name = subProjectAm.Name,
-                Description = subProjectAm.Description
-            };
-
-            var initSubProjectCreated = CreateInitProject(subProjectToCreate, true);
-
-            await _projectRepository.CreateAsync(initSubProjectCreated);
-            await _projectRepository.SaveAsync();
-
-            _projectRepository.Detach(initSubProjectCreated);
-
-            foreach (var node in initSubProjectCreated.Nodes)
-                _nodeRepository.Detach(node);
-
-            foreach (var nodeId in subProjectAm.Nodes)
-                initSubProjectCreated.Nodes.Add(new Node { Id = nodeId });
-
-            if(subProjectAm.Edges != null && subProjectAm.Edges.Any())
-            {
-                initSubProjectCreated.Edges ??= new List<Edge>();
-
-                foreach (var edgeId in subProjectAm.Edges)
-                    initSubProjectCreated.Edges.Add(new Edge { Id = edgeId });
+                _logger.LogError($"Can not create sub project with name: {subProjectAm?.Name}. Error: {e.Message}");
+                throw;
             }
-
-            var projectAm = _mapper.Map<ProjectAm>(initSubProjectCreated);
-            var subProjectCreated = await UpdateProject(initSubProjectCreated.Id, projectAm, _modelBuilderConfiguration.Domain);
-            return subProjectCreated;
+            finally
+            {
+                ClearAllChangeTracker();
+            }
         }
 
         /// <summary>
@@ -352,39 +381,40 @@ namespace Mb.Services.Services
         {
             if (string.IsNullOrWhiteSpace(invokedByDomain))
                 throw new ModelBuilderInvalidOperationException("Domain can't be null or empty");
+            try
+            {
+                var originalProject = await _projectRepository
+                    .FindBy(x => x.Id == id)
+                    .Include(x => x.Edges)
+                    .Include("Edges.Transport")
+                    .Include("Edges.Transport.Attributes")
+                    .Include("Edges.Transport.InputTerminal")
+                    .Include("Edges.Transport.InputTerminal.Attributes")
+                    .Include("Edges.Transport.OutputTerminal")
+                    .Include("Edges.Transport.OutputTerminal.Attributes")
+                    .Include("Edges.Interface")
+                    .Include("Edges.Interface.InputTerminal")
+                    .Include("Edges.Interface.InputTerminal.Attributes")
+                    .Include("Edges.Interface.OutputTerminal")
+                    .Include("Edges.Interface.OutputTerminal.Attributes")
+                    .Include(x => x.Nodes)
+                    .Include("Nodes.Attributes")
+                    .Include("Nodes.Connectors")
+                    .Include("Nodes.Connectors.Attributes")
+                    .Include("Nodes.Composites")
+                    .Include("Nodes.Composites.Attributes")
+                    .AsSplitQuery()
+                    .OrderByDescending(x => x.Name)
+                    .FirstOrDefaultAsync();
 
-            var originalProject = await _projectRepository
-                .FindBy(x => x.Id == id)
-                .Include(x => x.Edges)
-                .Include("Edges.Transport")
-                .Include("Edges.Transport.Attributes")
-                .Include("Edges.Transport.InputTerminal")
-                .Include("Edges.Transport.InputTerminal.Attributes")
-                .Include("Edges.Transport.OutputTerminal")
-                .Include("Edges.Transport.OutputTerminal.Attributes")
-                .Include("Edges.Interface")
-                .Include("Edges.Interface.InputTerminal")
-                .Include("Edges.Interface.InputTerminal.Attributes")
-                .Include("Edges.Interface.OutputTerminal")
-                .Include("Edges.Interface.OutputTerminal.Attributes")
-                .Include(x => x.Nodes)
-                .Include("Nodes.Attributes")
-                .Include("Nodes.Connectors")
-                .Include("Nodes.Connectors.Attributes")
-                .Include("Nodes.Composites")
-                .Include("Nodes.Composites.Attributes")
-                .AsSplitQuery()
-                .OrderByDescending(x => x.Name)
-                .FirstOrDefaultAsync();
+                if (originalProject == null)
+                    throw new ModelBuilderNotFoundException($"The project with id:{id}, could not be found.");
 
-            if (originalProject == null)
-                throw new ModelBuilderNotFoundException($"The project with id:{id}, could not be found.");
+                // Cast connectors
+                CastConnectors(projectAm);
 
-            // Cast connectors
-            CastConnectors(projectAm);
-
-            // Remap and create new id's
-            Remap(projectAm);
+                // Remap and create new id's
+                Remap(projectAm);
 
             // Edges
             var existingEdges = originalProject.Edges.ToList();
@@ -405,58 +435,78 @@ namespace Mb.Services.Services
             var subNodes = _nodeRepository.UpdateInsert(existingNodes, originalProject, invokedByDomain).ToList();
             var subEdges = _edgeRepository.UpdateInsert(existingEdges, originalProject, invokedByDomain).ToList();
 
-            ResolveLevelAndOrder(originalProject);
+                ResolveLevelAndOrder(originalProject);
 
-            _projectRepository.Update(originalProject);
-            await _projectRepository.SaveAsync();
+                _projectRepository.Update(originalProject);
+                await _projectRepository.SaveAsync();
+                ClearAllChangeTracker();
 
-            _projectRepository.Context.ChangeTracker.Clear();
-            _nodeRepository.Context.ChangeTracker.Clear();
-            _edgeRepository.Context.ChangeTracker.Clear();
-            _attributeRepository.Context.ChangeTracker.Clear();
-
-            // Resolve
-            await ResolveSubProjects(subNodes, subDeleteNodes, subEdges, subDeleteEdges, originalProject.Id);
+                // Resolve
+                await ResolveSubProjects(subNodes, subDeleteNodes, subEdges, subDeleteEdges, originalProject.Id);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Can not update project with id: {id}. Error: {e.Message}");
+                throw;
+            }
+            finally
+            {
+                ClearAllChangeTracker();
+            }
 
             // Return project from database
             return await GetProject(id);
         }
 
-        private async Task ResolveSubProjects(ICollection<Node> subNodes, ICollection<Node> subDeleteNodes,
-            ICollection<Edge> subEdges, ICollection<Edge> subDeleteEdges, string projectId)
+        private async Task ResolveSubProjects(ICollection<Node> subNodes, ICollection<Node> subDeleteNodes, ICollection<Edge> subEdges, ICollection<Edge> subDeleteEdges, string projectId)
         {
-            if (!subNodes.Any() && !subDeleteNodes.Any() && !subEdges.Any() && !subDeleteEdges.Any())
-                return;
-
-            var originalProject = await _projectRepository
-                .FindBy(x => x.Id == projectId, false)
-                .Include(x => x.Edges)
-                .Include(x => x.Nodes)
-                .Include("Nodes.Attributes")
-                .Include("Nodes.Connectors")
-                .Include("Nodes.Connectors.Attributes")
-                .AsSplitQuery()
-                .OrderByDescending(x => x.Name)
-                .FirstOrDefaultAsync();
-
-            foreach (var subNode in subNodes)
+            try
             {
-                originalProject.Nodes.Add(subNode);
-                _nodeRepository.Attach(subNode, EntityState.Unchanged);
-            }
+                if (!subNodes.Any() && !subDeleteNodes.Any() && !subEdges.Any() && !subDeleteEdges.Any())
+                    return;
 
-            foreach (var subEdge in subEdges)
+                var originalProject = await _projectRepository
+                    .FindBy(x => x.Id == projectId, false)
+                    .Include(x => x.Edges)
+                    .Include(x => x.Nodes)
+                    .Include("Nodes.Attributes")
+                    .Include("Nodes.Connectors")
+                    .Include("Nodes.Connectors.Attributes")
+                    .AsSplitQuery()
+                    .OrderByDescending(x => x.Name)
+                    .FirstOrDefaultAsync();
+
+                foreach (var subNode in subNodes)
+                {
+                    originalProject.Nodes.Add(subNode);
+                    _nodeRepository.Attach(subNode, EntityState.Unchanged);
+                }
+
+                foreach (var subEdge in subEdges)
+                {
+                    originalProject.Edges.Add(subEdge);
+                    _edgeRepository.Attach(subEdge, EntityState.Unchanged);
+                }
+
+                originalProject.Nodes =
+                    originalProject.Nodes.Where(x => subDeleteNodes.All(y => y.Id != x.Id)).ToList();
+                originalProject.Edges =
+                    originalProject.Edges.Where(x => subDeleteEdges.All(y => y.Id != x.Id)).ToList();
+
+                _projectRepository.Update(originalProject);
+                await _projectRepository.SaveAsync();
+                _projectRepository.Detach(originalProject);
+                ClearAllChangeTracker();
+            }
+            catch (Exception e)
             {
-                originalProject.Edges.Add(subEdge);
-                _edgeRepository.Attach(subEdge, EntityState.Unchanged);
+                _logger.LogError($"Can not resolve sub projects for project with id: {projectId}. Error: {e.Message}");
+                throw;
             }
-
-            originalProject.Nodes = originalProject.Nodes.Where(x => subDeleteNodes.All(y => y.Id != x.Id)).ToList();
-            originalProject.Edges = originalProject.Edges.Where(x => subDeleteEdges.All(y => y.Id != x.Id)).ToList();
-
-            _projectRepository.Update(originalProject);
-            await _projectRepository.SaveAsync();
-            _projectRepository.Detach(originalProject);
+            finally
+            {
+                ClearAllChangeTracker();
+            }
         }
 
         /// <summary>
@@ -586,7 +636,7 @@ namespace Mb.Services.Services
             node.IsLockedBy = node.IsLocked ? userName : null;
 
             var nodeAttributes = allAttributesInProject.Where(x => x.NodeId == node.Id);
-            
+
             LockUnlockAttributes(nodeAttributes, node, userName);
             LockUnlockNodesAndAttributesRecursive(node, allNodesInProject, allAttributesInProject, allEdgesInProject, userName);
 
@@ -632,7 +682,7 @@ namespace Mb.Services.Services
             if (string.IsNullOrWhiteSpace(package?.ProjectId))
                 throw new ModelBuilderNullReferenceException("Can't commit a null reference commit package");
 
-            if (_moduleService.Modules.All(x =>x.ModuleDescription != null && x.ModuleDescription.Id != Guid.Empty && !string.Equals(x.ModuleDescription.Id.ToString(), package.Parser, StringComparison.CurrentCultureIgnoreCase)))
+            if (_moduleService.Modules.All(x => x.ModuleDescription != null && x.ModuleDescription.Id != Guid.Empty && !string.Equals(x.ModuleDescription.Id.ToString(), package.Parser, StringComparison.CurrentCultureIgnoreCase)))
                 throw new ModelBuilderModuleException($"There is no parser with key: {package.Parser}");
 
             var senders = _moduleService.Modules.Where(x => x.Instance is IModelBuilderSyncService).ToList();
@@ -646,7 +696,7 @@ namespace Mb.Services.Services
             project.IsSubProject = true;
 
             var currentUserName = _contextAccessor.GetName();
-            
+
             foreach (var node in project.Nodes)
             {
                 node.IsLocked = true;
@@ -670,7 +720,7 @@ namespace Mb.Services.Services
 
             foreach (var sender in senders)
             {
-                if(sender.Instance is IModelBuilderSyncService client)
+                if (sender.Instance is IModelBuilderSyncService client)
                 {
                     await client.SendData(export);
                     await SetProjectCommitVersion(project.Id);
@@ -696,10 +746,10 @@ namespace Mb.Services.Services
         #region Private methods
 
         private void LockUnlockNodesAndAttributesRecursive(
-            Node parentNode, 
-            IQueryable<Node> allNodesInProject, 
-            IQueryable<Attribute> allAttributesInProject, 
-            IQueryable<Edge> allEdgesInProject,  
+            Node parentNode,
+            IQueryable<Node> allNodesInProject,
+            IQueryable<Attribute> allAttributesInProject,
+            IQueryable<Edge> allEdgesInProject,
             string userName)
         {
             if (parentNode?.Id == null)
@@ -707,7 +757,7 @@ namespace Mb.Services.Services
 
             var edges = allEdgesInProject.Where(x => x.FromNodeId == parentNode.Id);
 
-            if(!edges.Any())
+            if (!edges.Any())
                 return;
 
             foreach (var edge in edges)
@@ -720,17 +770,17 @@ namespace Mb.Services.Services
                 if (childNode?.Id == null)
                     continue;
 
-                if(childNode.IsLocked == parentNode.IsLocked)
+                if (childNode.IsLocked == parentNode.IsLocked)
                     continue;
 
-                if(childNode.IsLocked && userName != childNode.IsLockedBy)
+                if (childNode.IsLocked && userName != childNode.IsLockedBy)
                     continue;
 
                 if (childNode.Level > parentNode.Level)
                 {
                     childNode.IsLocked = parentNode.IsLocked;
                     childNode.IsLockedBy = childNode.IsLocked ? userName : null;
-                    
+
                     var nodeAttributes = allAttributesInProject.Where(x => x.NodeId == childNode.Id);
                     LockUnlockAttributes(nodeAttributes, childNode, userName);
                 }
@@ -954,13 +1004,13 @@ namespace Mb.Services.Services
 
         private void RemapTransport(EdgeAm edge)
         {
-            if(edge.Transport == null)
+            if (edge.Transport == null)
                 return;
 
             if (!_commonRepository.HasValidId(edge.Transport.Id))
             {
                 var newTransportId = _commonRepository.CreateUniqueId();
-                
+
                 if (edge.Transport.Attributes != null)
                 {
                     foreach (var attribute in edge.Transport.Attributes)
@@ -971,7 +1021,7 @@ namespace Mb.Services.Services
 
 
                 edge.Transport.Id = newTransportId;
-                
+
             }
         }
 
@@ -1040,7 +1090,7 @@ namespace Mb.Services.Services
 
         private void SetProjectVersion(Project originalProject, ProjectAm projectAm)
         {
-            if (originalProject == null || string.IsNullOrWhiteSpace(originalProject.Id) || 
+            if (originalProject == null || string.IsNullOrWhiteSpace(originalProject.Id) ||
                 projectAm == null || string.IsNullOrWhiteSpace(projectAm.Id))
                 return;
 
@@ -1088,6 +1138,15 @@ namespace Mb.Services.Services
             _projectRepository.Update(projectCommitVersionUpdate);
             await _projectRepository.SaveAsync();
             _projectRepository.Detach(projectCommitVersionUpdate);
+        }
+
+        private void ClearAllChangeTracker()
+        {
+            _projectRepository?.Context?.ChangeTracker?.Clear();
+            _nodeRepository?.Context?.ChangeTracker?.Clear();
+            _edgeRepository?.Context?.ChangeTracker?.Clear();
+            _connectorRepository?.Context?.ChangeTracker?.Clear();
+            _attributeRepository?.Context?.ChangeTracker?.Clear();
         }
 
         #endregion

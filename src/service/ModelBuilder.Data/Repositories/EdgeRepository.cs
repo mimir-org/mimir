@@ -36,6 +36,8 @@ namespace Mb.Data.Repositories
 
             foreach (var edge in project.Edges)
             {
+                ResetEdgeBeforeSave(edge);
+                
                 if (newEdges.Any(x => x.Id == edge.Id))
                 {
                     if (edge.MasterProjectId != project.Id)
@@ -149,6 +151,14 @@ namespace Mb.Data.Repositories
             }
 
             return subEdges;
+        }
+
+        private void ResetEdgeBeforeSave(Edge edge)
+        {
+            edge.FromConnector = null;
+            edge.ToConnector = null;
+            edge.FromNode = null;
+            edge.ToNode = null;
         }
     }
 }
