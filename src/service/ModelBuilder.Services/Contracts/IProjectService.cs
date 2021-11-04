@@ -16,7 +16,7 @@ namespace Mb.Services.Contracts
         Task<Project> CreateProject(CreateProject createProject);
         Task<Project> CreateProject(ProjectAm project);
         Task<Project> CreateProject(SubProjectAm subProjectAm);
-        Task<Project> UpdateProject(string id, ProjectAm project);
+        Task<Project> UpdateProject(string id, ProjectAm project, string invokedByDomain);
         Task DeleteProject(string projectId);
         Task<(byte[] file, FileFormat format)> CreateFile(string projectId, Guid id);
         Task<Project> CreateFromFile(IFormFile file, CancellationToken cancellationToken, Guid id);

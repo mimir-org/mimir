@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Mb.Models.Application;
-using Mb.Models.Data.TypeEditor;
 using Mb.TypeEditor.Data.Contracts;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,7 +15,8 @@ namespace Mb.TypeEditor.Data.Repositories
         private readonly INodeTypeRepository _nodeTypeRepository;
         private readonly IMapper _mapper;
 
-        public LibraryRepository(IMapper mapper, ITransportTypeRepository transportTypeRepository, IInterfaceTypeRepository interfaceTypeRepository, INodeTypeRepository nodeTypeRepository)
+        public LibraryRepository(IMapper mapper, ITransportTypeRepository transportTypeRepository,
+            IInterfaceTypeRepository interfaceTypeRepository, INodeTypeRepository nodeTypeRepository)
         {
             _mapper = mapper;
             _transportTypeRepository = transportTypeRepository;
@@ -24,107 +24,84 @@ namespace Mb.TypeEditor.Data.Repositories
             _nodeTypeRepository = nodeTypeRepository;
         }
 
-        public IEnumerable<LibraryNodeItem> GetNodeTypes(string searchString = null)
+        public async Task<IEnumerable<LibraryNodeItem>> GetNodeTypes(string searchString = null)
         {
-            List<NodeType> allNodeTypes;
+            var nodeTypes = await _nodeTypeRepository.GetAll()
+                .Include(x => x.AttributeTypes)
+                .Include("AttributeTypes.Units")
+                .Include(x => x.TerminalTypes)
+                .Include("TerminalTypes.TerminalType")
+                .Include("TerminalTypes.TerminalType.TerminalCategory")
+                .Include("TerminalTypes.TerminalType.Attributes")
+                .Include("TerminalTypes.TerminalType.Attributes.Units")
+                .Include(x => x.Rds)
+                .Include("Rds.RdsCategory")
+                .Include(x => x.CompositeTypes)
+                .Include("CompositeTypes.AttributeTypes")
+                .Include("CompositeTypes.AttributeTypes.Units")
+                .Include(x => x.Purpose)
+                .AsSplitQuery()
+                .ToArrayAsync();
 
-            if (string.IsNullOrEmpty(searchString))
-            {
-                allNodeTypes = _nodeTypeRepository.GetAll()
-                    .Include(x => x.AttributeTypes)
-                    .Include("AttributeTypes.Units")
-                    .Include(x => x.TerminalTypes)
-                    .Include("TerminalTypes.TerminalType")
-                    .Include("TerminalTypes.TerminalType.TerminalCategory")
-                    .Include("TerminalTypes.TerminalType.Attributes")
-                    .Include("TerminalTypes.TerminalType.Attributes.Units")
-                    .Include(x => x.Rds)
-                    .Include("Rds.RdsCategory")
-                    .Include(x => x.CompositeTypes)
-                    .Include("CompositeTypes.AttributeTypes")
-                    .Include("CompositeTypes.AttributeTypes.Units")
-                    .Include(x => x.Purpose)
-                    .AsSplitQuery()
-                    .ToList();
-            }
-            else
-            {
-                allNodeTypes = _nodeTypeRepository.GetAll()
-                    .Where(x => x.Name.ToLower().Contains(searchString.ToLower()))
-                    .Include(x => x.AttributeTypes)
-                    .Include("AttributeTypes.Units")
-                    .Include(x => x.TerminalTypes)
-                    .Include("TerminalTypes.TerminalType")
-                    .Include("TerminalTypes.TerminalType.TerminalCategory")
-                    .Include("TerminalTypes.TerminalType.Attributes")
-                    .Include("TerminalTypes.TerminalType.Attributes.Units")
-                    .Include(x => x.Rds)
-                    .Include("Rds.RdsCategory")
-                    .Include(x => x.CompositeTypes)
-                    .Include("CompositeTypes.AttributeTypes")
-                    .Include("CompositeTypes.AttributeTypes.Units")
-                    .Include(x => x.Purpose)
-                    .AsSplitQuery()
-                    .ToList();
-            }
+            if (!string.IsNullOrWhiteSpace(searchString))
+                nodeTypes = nodeTypes.Where(x => x.Name.ToLower().Contains(searchString.ToLower())).ToArray();
 
-            return _mapper.Map<List<LibraryNodeItem>>(allNodeTypes);
+            var libraryNodeItems = new List<LibraryNodeItem>();
+
+            Parallel.ForEach(nodeTypes, x =>
+            {
+                libraryNodeItems.Add(_mapper.Map<LibraryNodeItem>(x));
+            });
+
+            return libraryNodeItems;
         }
 
-        public IEnumerable<LibraryInterfaceItem> GetInterfaceTypes(string searchString = null)
+        public async Task<IEnumerable<LibraryInterfaceItem>> GetInterfaceTypes(string searchString = null)
         {
-            if (string.IsNullOrEmpty(searchString))
-            {
-                var result1 = _interfaceTypeRepository.GetAll()
-                    .Include(x => x.Rds)
-                    .Include("Rds.RdsCategory")
-                    .Include(x => x.Purpose)
-                    .OrderBy(x => x.Name)
-                    .AsSplitQuery()
-                    .ToList();
 
-                return _mapper.Map<List<LibraryInterfaceItem>>(result1);
-            }
-
-            var result2 = _interfaceTypeRepository.GetAll()
-                .Where(x => x.Name.ToLower().Contains(searchString.ToLower()))
+            var interfaceTypes = await _interfaceTypeRepository.GetAll()
                 .Include(x => x.Rds)
                 .Include("Rds.RdsCategory")
                 .Include(x => x.Purpose)
                 .OrderBy(x => x.Name)
                 .AsSplitQuery()
-                .ToList();
+                .ToArrayAsync();
 
-            return _mapper.Map<List<LibraryInterfaceItem>>(result2);
+            if (!string.IsNullOrWhiteSpace(searchString))
+                interfaceTypes = interfaceTypes.Where(x => x.Name.ToLower().Contains(searchString.ToLower())).ToArray();
+
+            var libraryInterfaceItem = new List<LibraryInterfaceItem>();
+
+            Parallel.ForEach(interfaceTypes, x =>
+            {
+                libraryInterfaceItem.Add(_mapper.Map<LibraryInterfaceItem>(x));
+            });
+
+            return libraryInterfaceItem;
         }
 
-        public IEnumerable<LibraryTransportItem> GetTransportTypes(string searchString = null)
+        public async Task<IEnumerable<LibraryTransportItem>> GetTransportTypes(string searchString = null)
         {
-            if (string.IsNullOrEmpty(searchString))
-            {
-                var result1 = _transportTypeRepository.GetAll()
-                    .Include(x => x.AttributeTypes)
-                    .Include(x => x.Rds)
-                    .Include("Rds.RdsCategory")
-                    .Include(x => x.Purpose)
-                    .OrderBy(x => x.Name)
-                    .AsSplitQuery()
-                    .ToList();
-
-                return _mapper.Map<List<LibraryTransportItem>>(result1);
-            }
-
-            var result2 = _transportTypeRepository.GetAll()
-                .Where(x => x.Name.ToLower().Contains(searchString.ToLower()))
+            var transportTypes = await _transportTypeRepository.GetAll()
                 .Include(x => x.AttributeTypes)
                 .Include(x => x.Rds)
                 .Include("Rds.RdsCategory")
                 .Include(x => x.Purpose)
                 .OrderBy(x => x.Name)
                 .AsSplitQuery()
-                .ToList();
+                .ToArrayAsync();
 
-            return _mapper.Map<List<LibraryTransportItem>>(result2);
+            if (!string.IsNullOrWhiteSpace(searchString))
+                transportTypes = transportTypes.Where(x => x.Name.ToLower().Contains(searchString.ToLower())).ToArray();
+
+            var libraryTransportItems = new List<LibraryTransportItem>();
+
+            Parallel.ForEach(transportTypes, x =>
+            {
+                libraryTransportItems.Add(_mapper.Map<LibraryTransportItem>(x));
+            });
+
+            return libraryTransportItems;
         }
 
         public async Task<T> GetLibraryItem<T>(string id) where T : class, new()

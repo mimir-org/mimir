@@ -3,6 +3,9 @@ import { FontSize } from "../../../../compLibrary";
 
 const ElementBox = styled.div`
   position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
   margin-left: 5px;
   margin-bottom: 30px;
 
@@ -11,6 +14,7 @@ const ElementBox = styled.div`
     margin-left: 22px;
     bottom: 1px;
     font-size: ${FontSize.Standard};
+    width: 220px;
   }
 `;
 

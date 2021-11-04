@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Mb.Models.Extensions;
 
 namespace Mb.Models.Data
 {
@@ -32,5 +33,7 @@ namespace Mb.Models.Data
         public virtual Project MasterProject { get; set; }
         public bool IsTemplateEdge { get; set; }
         public virtual ICollection<Project> Projects { get; set; }
+
+        public string Domain => Id.ResolveDomain();
     }
 }

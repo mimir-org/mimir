@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Mb.Models.Application;
 using Mb.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
@@ -42,11 +43,11 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(Policy = "Read")]
-        public IActionResult GetAll(string name)
+        public async Task<IActionResult> GetAll(string name)
         {
             try
             {
-                var data = _libraryService.GetLibTypes(name);
+                var data = await _libraryService.GetLibTypes(name);
                 return Ok(data);
             }
             catch (Exception e)
@@ -66,12 +67,12 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(Policy = "Read")]
-        public IActionResult GetNodes()
+        public async Task<IActionResult> GetNodes()
         {
             try
             {
-                var data = _libraryService.GetNodeTypes().ToList();
-                return Ok(data);
+                var data = await _libraryService.GetNodeTypes();
+                return Ok(data.ToList());
             }
             catch (Exception e)
             {
@@ -90,12 +91,12 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize(Policy = "Read")]
-        public IActionResult GetTransports()
+        public async Task<IActionResult> GetTransports()
         {
             try
             {
-                var transportTypes = _libraryService.GetTransportTypes().ToList();
-                return Ok(transportTypes);
+                var transportTypes = await _libraryService.GetTransportTypes();
+                return Ok(transportTypes.ToList());
             }
             catch (Exception e)
             {
@@ -114,12 +115,12 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize(Policy = "Read")]
-        public IActionResult GetInterfaces()
+        public async Task<IActionResult> GetInterfaces()
         {
             try
             {
-                var interfaceTypes = _libraryService.GetInterfaceTypes().ToList();
-                return Ok(interfaceTypes);
+                var interfaceTypes = await _libraryService.GetInterfaceTypes();
+                return Ok(interfaceTypes.ToList());
             }
             catch (Exception e)
             {
@@ -138,12 +139,12 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize(Policy = "Read")]
-        public IActionResult GetSubProjects()
+        public async Task<IActionResult> GetSubProjects()
         {
             try
             {
-                var subProjects = _libraryService.GetSubProjects().ToList();
-                return Ok(subProjects);
+                var subProjects = await _libraryService.GetSubProjects();
+                return Ok(subProjects.ToList());
             }
             catch (Exception e)
             {

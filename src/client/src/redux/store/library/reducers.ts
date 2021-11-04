@@ -7,6 +7,7 @@ const initialState: Types.LibraryState = {
   apiError: [],
   transportTypes: [],
   interfaceTypes: [],
+  subProjectTypes: [],
 };
 
 export function libraryReducer(state = initialState, action: Types.LibraryActionTypes) {
@@ -27,6 +28,7 @@ export function libraryReducer(state = initialState, action: Types.LibraryAction
         nodeTypes: action.payload.nodeTypes,
         transportTypes: action.payload.transportTypes,
         interfaceTypes: action.payload.interfaceTypes,
+        subProjectTypes: action.payload.subProjectTypes,
         apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
 

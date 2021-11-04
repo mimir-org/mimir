@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Color, FontSize } from "../..";
 
 interface Props {
-  active: boolean;
+  active?: boolean;
 }
 
 const LibElement = styled.div<Props>`
