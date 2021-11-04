@@ -35,7 +35,7 @@ export default function BlockEdgeType({ id, sourceX, sourceY, targetX, targetY, 
   return (
     <>
       {!hasLocation && !hasProduct ? (
-        <path id={id} style={GetStyle(sourceConn)} className="react-flow__edge-path" d={smoothPath} markerEnd={getMarkerEnd()} />
+        <path id={id} style={GetStyle(sourceConn)} className="react-flow__edge-path" d={smoothPath} markerEnd={markerEnd} />
       ) : (
         <>
           <path id={id} style={GetStyle(sourceConn)} className={SetClassName(data) + ""} d={bezierPath} markerEnd={markerEnd} />

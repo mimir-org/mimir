@@ -24,7 +24,6 @@ const TerminalsMenuComponent = ({ node, parent, input, terminals, visible, onCli
   return (
     visible && (
       <TerminalsMenu
-        className={"terminals-dropdown"}
         tabIndex={0}
         parent={parent}
         input={input}

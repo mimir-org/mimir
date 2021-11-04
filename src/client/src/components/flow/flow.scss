@@ -134,6 +134,11 @@
 .react-flow__edge-BlockEdgeType {
   &:hover {
     cursor: grab;
+
+    .react-flow__edge-path {
+      stroke-width: 4px !important;
+    }
+    transition: stroke-width 2ms ease-in-out;
   }
 
   &.selected {
@@ -158,20 +163,6 @@
   display: flex;
 }
 
-.dndflow .dndnode {
-  height: 25px;
-  width: 150px;
-  padding: 4px;
-  border: 1px solid #1a192b;
-  font-size: 14px;
-  border-radius: 2px;
-  margin-bottom: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: grab;
-}
-
 .dndflow .reactflow-wrapper {
   flex: 1;
   height: 100%;
@@ -186,18 +177,10 @@
   cursor: grab;
 }
 
-.terminals-dropdown {
-  z-index: 5 !important;
-}
-
 .react-flow__edges {
   z-index: 2;
 }
 
 .react-flow__handle.connectable {
   cursor: crosshair;
-}
-
-#react-flow__arrowclosed {
-  background-color: yellowgreen !important;
 }

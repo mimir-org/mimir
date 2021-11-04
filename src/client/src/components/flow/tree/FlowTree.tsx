@@ -1,5 +1,5 @@
 import * as Helpers from "./helpers/";
-import ReactFlow, { ReactFlowProvider, Elements } from "react-flow-renderer";
+import ReactFlow, { ReactFlowProvider, Elements, Background } from "react-flow-renderer";
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
 import { FullScreenComponent } from "../../../compLibrary/controls";
@@ -128,6 +128,7 @@ const FlowTree = ({ inspectorRef }: Props) => {
         zoomOnDoubleClick={false}
         onClick={(e) => OnTreeClick(e, dispatch, project, inspectorRef)}
       >
+        <Background />
         <FullScreenComponent inspectorRef={inspectorRef} />
         <FlowManipulator elements={elements} selectedId={selectedNodeId} />
       </ReactFlow>
