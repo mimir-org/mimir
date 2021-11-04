@@ -1,25 +1,24 @@
 import { ArrowHeadType, getBezierPath, getMarkerEnd, getSmoothStepPath } from "react-flow-renderer";
+import { Color } from "../../../../compLibrary";
 import { Connector } from "../../../../models";
 import { IsLocationTerminal, IsProductTerminal } from "../../helpers";
+import { GetTerminalColor } from "../terminals/helpers";
 import { SetClassName, GetStyle } from "./helpers";
 
-export default function BlockEdgeType({
-  id,
-  sourceX,
-  sourceY,
-  targetX,
-  targetY,
-  sourcePosition,
-  targetPosition,
-  data,
-  markerEndId,
-}) {
-  const markerEnd = getMarkerEnd(ArrowHeadType.ArrowClosed, markerEndId);
-  const fromConn = data.source.connectors?.find((conn: Connector) => conn.id === data.edge.fromConnectorId) as Connector;
-  const hasLocation = IsLocationTerminal(fromConn);
-  const hasProduct = IsProductTerminal(fromConn);
+/**
+ * Component for an Edge in BlockView.
+ * @param param0
+ * @returns a connection line between to Nodes.
+ */
+export default function BlockEdgeType({ id, sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data }) {
+  const markerEnd = getMarkerEnd(ArrowHeadType.Arrow, null);
+  const sourceConn = data.source.connectors?.find((conn: Connector) => conn.id === data.edge.fromConnectorId) as Connector;
+  const hasLocation = IsLocationTerminal(sourceConn);
+  const hasProduct = IsProductTerminal(sourceConn);
+  const color = GetTerminalColor(sourceConn);
+  const marginX = 3;
 
-  const smooth = getSmoothStepPath({
+  const smoothPath = getSmoothStepPath({
     sourceX,
     sourceY,
     targetX,
@@ -28,7 +27,7 @@ export default function BlockEdgeType({
     targetPosition,
   });
 
-  const bezier = getBezierPath({
+  const bezierPath = getBezierPath({
     sourceX,
     sourceY,
     sourcePosition,
@@ -40,11 +39,20 @@ export default function BlockEdgeType({
   return (
     <>
       {!hasLocation && !hasProduct ? (
-        <path id={id} style={GetStyle(fromConn)} className="react-flow__edge-path" d={smooth} markerEnd={markerEnd} />
+        <>
+          <path id={id} style={GetStyle(sourceConn)} className="react-flow__edge-path" d={smoothPath} />
+          <circle cx={targetX - marginX} cy={targetY} fill={Color.White} r={3} stroke={color} strokeWidth={1.5} />
+        </>
       ) : (
         <>
-          <path id={id} style={GetStyle(fromConn)} className={SetClassName(data) + ""} d={bezier} markerEnd={markerEnd} />
-          <path id={id} style={GetStyle(fromConn)} className={SetClassName(data) + "--dashed"} d={bezier} markerEnd={markerEnd} />
+          <path id={id} style={GetStyle(sourceConn)} className={SetClassName(data) + ""} d={bezierPath} markerEnd={markerEnd} />
+          <path
+            id={id}
+            style={GetStyle(sourceConn)}
+            className={SetClassName(data) + "--dashed"}
+            d={bezierPath}
+            markerEnd={markerEnd}
+          />
         </>
       )}
     </>

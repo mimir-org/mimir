@@ -8,14 +8,14 @@ interface Props {
 const OptionsElement = styled.div<Props>`
   cursor: pointer;
   position: absolute;
-  display: inline;
+  display: flex;
+  margin-left: auto;
   border-left: 1px solid ${Color.Grey};
   border-right: 1px solid ${Color.Grey};
   padding: 12px;
-  top: -60px;
-  right: -200px;
+  bottom: -1px;
   height: 17px;
-  width: 20px;
+  width: 17px;
   text-align: center;
   transition: right 0.2s ease-in-out;
   background-color: transparent;
