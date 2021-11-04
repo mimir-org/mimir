@@ -12,15 +12,15 @@ interface Props {
   terminalTypes: TerminalType[];
   onChange: Function;
   defaultTerminal?: TerminalType;
-  onTerminalTypeIdChange: (terminalTypeId: string) => void;
+  onTerminalTypeIdChange?: (terminalTypeId: string) => void;
 }
 
 export const TransportInterfaceElement = ({
   categoryName,
   terminalTypes,
   onChange,
-  defaultTerminal,
   onTerminalTypeIdChange,
+  defaultTerminal,
 }: Props) => {
   const [searchbarInput, setSearchbarInput] = useState(defaultTerminal ? defaultTerminal.name : "");
   const [expandList, setExpandList] = useState(false);
@@ -86,7 +86,7 @@ export const TransportInterfaceElement = ({
             listType={ListType.Terminals}
             checked={isSelected()}
             defaultValue={terminalTypes[0].id}
-            onChange={(_, terminalTypeId: string) => onTerminalTypeIdChange(terminalTypeId)}
+            onChange={(_, terminalTypeId) => onTerminalTypeIdChange(terminalTypeId)}
           />
         </RoundBox>
         {isSelected() && (

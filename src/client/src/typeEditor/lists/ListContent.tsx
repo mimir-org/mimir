@@ -52,10 +52,11 @@ export const ListContent = ({
   items,
   listItems,
   createLibraryType,
-  discipline,
   onChange,
   onTerminalTypeIdChange,
 }: Props) => {
+  const filteredList = GetFilteredList(listType, listItems, createLibraryType);
+
   return (
     <>
       {!disabled && (
@@ -65,7 +66,7 @@ export const ListContent = ({
           switchBackground={SwitchBackground(listType)}
         >
           {listType === ListType.Rds &&
-            GetFilteredList(listType, listItems, createLibraryType).map((element) => (
+            filteredList.map((element) => (
               <RDSElement
                 key={element.name}
                 category={element.name}
@@ -75,7 +76,7 @@ export const ListContent = ({
               />
             ))}
           {ShowObjectBlock(listType, createLibraryType)
-            ? GetFilteredList(listType, listItems, createLibraryType).map((element) => (
+            ? filteredList.map((element) => (
                 <ObjectBlockElement
                   key={element.name}
                   name={element.name}
@@ -87,7 +88,7 @@ export const ListContent = ({
               ))
             : listType === ListType.Terminals &&
               (IsTransport(createLibraryType.objectType) || IsInterface(createLibraryType.objectType))
-            ? GetFilteredList(listType, listItems, createLibraryType).map((element) => (
+            ? filteredList.map((element) => (
                 <TransportInterfaceElement
                   key={element.name}
                   categoryName={element.name}
@@ -98,7 +99,7 @@ export const ListContent = ({
                 />
               ))
             : listType === ListType.PredefinedAttributes &&
-              GetFilteredList(listType, listItems, createLibraryType).map((element) => (
+              filteredList.map((element) => (
                 <PredefinedLocationElement
                   key={element.key}
                   attributeName={element.key}
@@ -109,7 +110,7 @@ export const ListContent = ({
                 />
               ))}
           {listType === ListType.LocationAttributes
-            ? GetFilteredList(listType, listItems, createLibraryType).map((element) => (
+            ? filteredList.map((element) => (
                 <LocationAttributeElement
                   key={element.id}
                   attribute={element}
@@ -118,7 +119,7 @@ export const ListContent = ({
                 />
               ))
             : listType === ListType.ObjectAttributes &&
-              GetFilteredList(listType, listItems, createLibraryType).map((element) => (
+              filteredList.map((element) => (
                 <AttributeElement
                   key={element.discipline}
                   discipline={element.discipline}
@@ -128,7 +129,7 @@ export const ListContent = ({
                 />
               ))}
           {listType === ListType.SimpleTypes &&
-            GetFilteredList(listType, listItems, createLibraryType).map((element) => (
+            filteredList.map((element) => (
               <SimpleTypeElement
                 key={element.id}
                 simpleType={element}
