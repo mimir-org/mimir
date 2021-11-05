@@ -6,35 +6,38 @@ interface Props {
 }
 
 const CheckboxTreeWrapper = styled.label<Props>`
-  display: flex;
-  position: relative;
-  padding: 2px 0px 0px 25px;
-  cursor: pointer;
-  font-size: 14px;
-
   input {
-    position: absolute;
-    opacity: 0;
+    appearance: none; // Hide native checkbox
+    position: relative;
+    display: flex;
+    top: 2px;
+    cursor: pointer;
+    height: 20px;
+    width: 20px;
+    border: 2px solid ${Color.BlueMagenta};
+    background-color: ${Color.White};
+    border-radius: 3px;
   }
 
-  input:checked ~ .checkmark {
+  input::before {
+    content: "";
+    height: 16px;
+    width: 16px;
+    transform: scale(0);
+    transition: 200ms transform ease-in-out;
     background-color: ${(props) => props.color};
   }
 
-  .checkmark {
-    position: absolute;
-    left: 0;
-    height: 15px;
-    width: 15px;
-    background-color: ${Color.White};
-    border: 2px solid ${Color.BlueMagenta};
-    border-radius: 3px;
+  input:checked::before {
+    transform: scale(1);
   }
 
   .label {
     position: relative;
-    top: 1px;
-    font-size: ${FontSize.Medium};
+    bottom: 19px;
+    left: 30px;
+    max-width: 240px;
+    font-size: ${FontSize.Standard};
   }
 `;
 

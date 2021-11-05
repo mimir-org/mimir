@@ -8,7 +8,7 @@ interface Props {
   project: Project;
   inputLabel: string;
 }
-export const Checkbox = ({ node, project, inputLabel }: Props) => (
+export const CheckboxTree = ({ node, project, inputLabel }: Props) => (
   <CheckboxTreeWrapper color={GetCheckboxColor(node)}>
     <input type="checkbox" checked={!node?.isHidden ?? false} onChange={ChangeNodeDisplay(node, project)} />
     <div className="checkmark"></div>
@@ -16,4 +16,4 @@ export const Checkbox = ({ node, project, inputLabel }: Props) => (
   </CheckboxTreeWrapper>
 );
 
-export default Checkbox;
+export default CheckboxTree;

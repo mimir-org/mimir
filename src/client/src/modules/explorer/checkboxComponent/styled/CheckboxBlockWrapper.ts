@@ -8,39 +8,39 @@ interface Props {
 }
 
 const CheckboxBlockWrapper = styled.label<Props>`
-  input[type="checkbox"] {
+  input {
+    appearance: none; // Hide native checkbox
     position: relative;
-    margin-left: 0px;
+    display: flex;
+    top: 2px;
     cursor: pointer;
-    appearance: none;
-    display: grid;
-    place-content: center;
-    height: 18px;
-    width: 18px;
+    height: 20px;
+    width: 20px;
     border: 2px solid ${Color.BlueMagenta};
     background-color: ${Color.White};
     border-radius: 3px;
-    transform: translateY(-0.075em);
   }
 
-  input[type="checkbox"]::before {
+  input::before {
     content: "";
-    height: ${(props) => (props.isSelectedNode || props.isSecondaryNode ? 14 : 8)}px;
-    width: ${(props) => (props.isSelectedNode || props.isSecondaryNode ? 14 : 8)}px;
+    height: ${(props) => (props.isSelectedNode || props.isSecondaryNode ? 16 : 10)}px;
+    width: ${(props) => (props.isSelectedNode || props.isSecondaryNode ? 16 : 12)}px;
     transform: scale(0);
     transition: 120ms transform ease-in-out;
     background-color: ${(props) => props.color};
   }
 
-  input[type="checkbox"]:checked::before {
+  input:checked::before {
     transform: scale(1);
+    margin: ${(props) => !props.isSelectedNode && !props.isSecondaryNode && "3px 3px 3px 3px"};
   }
 
   .label {
     position: relative;
-    top: 4px;
-    left: 25px;
-    font-size: ${FontSize.Medium};
+    bottom: 19px;
+    left: 30px;
+    max-width: 240px;
+    font-size: ${FontSize.Standard};
   }
 `;
 
