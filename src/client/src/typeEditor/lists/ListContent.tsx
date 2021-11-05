@@ -11,15 +11,7 @@ import {
   LocationAttributeElement,
   SimpleTypeElement,
 } from ".";
-import {
-  CreateLibraryType,
-  Discipline,
-  Rds,
-  PredefinedAttribute,
-  AttributeType,
-  CompositeType,
-  TerminalTypeDict,
-} from "../../models";
+import { CreateLibraryType, Rds, PredefinedAttribute, AttributeType, CompositeType, TerminalTypeDict } from "../../models";
 import {
   IsTransport,
   IsInterface,
@@ -38,7 +30,6 @@ interface Props {
   items: Rds[] | TerminalTypeDict | AttributeType[] | CompositeType[] | PredefinedAttribute[];
   listItems: Rds[] | TerminalTypeDict | AttributeType[] | CompositeType[] | PredefinedAttribute[];
   createLibraryType: CreateLibraryType;
-  discipline?: Discipline;
   onPropertyChange?: OnPropertyChangeFunction;
   onTerminalCategoryChange?: OnTerminalCategoryChangeFunction;
 }
