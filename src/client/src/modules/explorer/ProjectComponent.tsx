@@ -3,7 +3,7 @@ import { AspectComponent } from "./aspectComponent/AspectComponent";
 import { HasChildren, IsAncestorInSet } from "./helpers/ParentNode";
 import { useState } from "react";
 import { SortNodesWithIndent } from "./helpers/SortNodesWithIndent";
-import { IsOffPage } from "../../components/flow/block/helpers";
+import { IsOffPage } from "../../helpers";
 
 interface Props {
   project: Project;

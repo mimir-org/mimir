@@ -1,9 +1,8 @@
 import { Elements } from "react-flow-renderer";
 import { BuildSecondaryChildNode } from "..";
-import { IsFamily } from "../../../../../helpers";
+import { IsFamily, IsDirectChild } from "../../../../../helpers";
 import { Node, Edge } from "../../../../../models";
 import { BlockNodeSize } from "../../../../../models/project";
-import { IsDirectChild } from "../../helpers";
 
 /**
  * Component to draw all secondaryNode children nodes in BlockView.

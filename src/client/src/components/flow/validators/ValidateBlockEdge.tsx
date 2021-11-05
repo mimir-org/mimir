@@ -1,6 +1,5 @@
-import { IsFunction, IsLocation, IsProduct } from "../../../helpers";
+import { IsFunction, IsLocation, IsProduct, IsDirectChild } from "../../../helpers";
 import { Node, Connector } from "../../../models";
-import { IsDirectChild } from "../block/helpers";
 import { IsTransportConnection, IsProductConnection, IsLocationConnection } from "../helpers";
 
 /**

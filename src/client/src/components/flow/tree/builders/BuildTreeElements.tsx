@@ -2,7 +2,7 @@ import { Elements } from "react-flow-renderer";
 import { BuildTreeEdge, BuildTreeNode } from ".";
 import { GetEdgeType } from "../helpers";
 import { Project, Edge } from "../../../../models";
-import { IsOffPage } from "../../block/helpers";
+import { IsOffPage } from "../../../../helpers";
 
 const BuildTreeElements = (project: Project, animated: boolean): Elements => {
   const elements: Elements = [];

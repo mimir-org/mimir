@@ -1,7 +1,7 @@
 import { GetRdsId } from ".";
-import { Node, Project } from "../../models";
-import { IsAspectNode } from "../../helpers";
-import { FindParentEdge } from "../../modules/explorer/helpers/ParentNode";
+import { Node, Project } from "../models";
+import { IsAspectNode } from "../helpers";
+import { FindParentEdge } from "../modules/explorer/helpers/ParentNode";
 
 const findParentNode = (currentNode: Node, project: Project): Node => {
   if (!currentNode || IsAspectNode(currentNode)) return null;

@@ -1,10 +1,9 @@
 import { Elements } from "react-flow-renderer";
 import { BuildBlockNode } from "../";
-import { IsFamily } from "../../../../../helpers";
+import { IsFamily, IsOffPage } from "../../../../../helpers";
 import { Node, Edge } from "../../../../../models";
 import { BlockNodeSize } from "../../../../../models/project";
 import { IsPartOf } from "../../../helpers";
-import { IsOffPage } from "../../helpers";
 
 /**
  * Component to draw all children nodes in BlockView.

@@ -1,6 +1,5 @@
-import { SetIndentLevel } from "../../../assets/helpers";
 import { IsParentOf } from "../../../components/flow/helpers";
-import { IsAspectNode } from "../../../helpers";
+import { IsAspectNode, SetIndentLevel } from "../../../helpers";
 import { Node } from "../../../models";
 
 const SortNodesWithIndent = (nodes: Node[]): [Node, number][] => {

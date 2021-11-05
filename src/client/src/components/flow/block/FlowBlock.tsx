@@ -1,7 +1,7 @@
 import ReactFlow, { ReactFlowProvider, Elements } from "react-flow-renderer";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { FullScreenComponent } from "../../../compLibrary/controls";
-import { GetBlockEdgeTypes, OnBlockClick, IsOffPage } from "../block/helpers";
+import { GetBlockEdgeTypes, OnBlockClick } from "../block/helpers";
 import { BuildBlockElements } from "./builders";
 import { useOnConnect, useOnDrop, useOnRemove, useOnDragStop } from "../hooks";
 import { setActiveBlockNode, setActiveEdge } from "../../../redux/store/project/actions";
@@ -12,7 +12,7 @@ import { BlockFilterMenu } from "../../menus/filterMenu/block";
 import { Node } from "../../../models";
 import { ExplorerModule } from "../../../modules/explorer";
 import { ConnectionLine } from "./edges";
-import { SetDarkModeColor } from "../../../helpers";
+import { IsOffPage, SetDarkModeColor } from "../../../helpers";
 import {
   darkModeSelector,
   iconSelector,

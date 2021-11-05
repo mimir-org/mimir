@@ -1,5 +1,5 @@
-import * as Icons from "../../assets/icons/aspects";
-import { Aspect, Node } from "../../models";
+import * as Icons from "../assets/icons/aspects";
+import { Aspect, Node } from "../models";
 
 const GetAspectIcon = (node: Node): string => {
   if (node.aspect === Aspect.Function) return Icons.Function;

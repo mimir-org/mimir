@@ -1,5 +1,5 @@
-import { LibItem, ObjectType } from "../../models";
-import { LibNodeInterface, LibNodeTransport } from "../../assets/icons/library";
+import { LibItem, ObjectType } from "../models";
+import { LibNodeInterface, LibNodeTransport } from "../assets/icons/library";
 
 const GetObjectIcon = (item: LibItem) => {
   if (item.libraryType === ObjectType.Interface) return LibNodeInterface;

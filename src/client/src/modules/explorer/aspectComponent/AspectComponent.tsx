@@ -2,8 +2,7 @@ import { ExpandIcon, CollapseIcon } from "../../../assets/icons/chevron";
 import { Node, Project } from "../../../models";
 import { AspectBox } from "../../../compLibrary/box/aspect";
 import { CheckboxTree, CheckboxBlock } from "../checkboxComponent";
-import { IsBlockView, IsAspectNode } from "../../../helpers";
-import { GetAspectIcon } from "../../../assets/helpers";
+import { IsBlockView, IsAspectNode, GetAspectIcon } from "../../../helpers";
 import { ExplorerLine } from "./styled";
 
 interface Props {

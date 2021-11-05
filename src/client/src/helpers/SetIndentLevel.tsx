@@ -1,6 +1,6 @@
-import red from "../../redux/store";
-import { Node, Edge } from "../../models";
-import { IsPartOf } from "../../components/flow/helpers";
+import red from "../redux/store";
+import { Node, Edge } from "../models";
+import { IsPartOf } from "../components/flow/helpers";
 
 const SetIndentLevel = (node: Node, count: number): number => {
   const edges = red.store.getState().projectState.project.edges as Edge[];
