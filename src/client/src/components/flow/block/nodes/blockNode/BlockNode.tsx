@@ -2,7 +2,6 @@ import * as Click from "./handlers";
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, useUpdateNodeInternals } from "react-flow-renderer";
 import { Connector, Node } from "../../../../../models";
-import { IsFunction, IsProduct } from "../../../helpers";
 import { NodeBox } from "../../../styled";
 import { TerminalsContainerComponent, HandleComponent } from "../../terminals";
 import { SetNodeSize } from "./helpers";
@@ -11,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks
 import { edgeSelector, electroSelector, nodeSelector, secondaryNodeSelector } from "../../../../../redux/store";
 import { Size } from "../../../../../compLibrary";
 import { BlockLogoComponent } from "../../logo";
+import { IsFunction, IsProduct } from "../../../../../helpers";
 
 /**
  * Component for a Function or Product Node in BlockView.

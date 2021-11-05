@@ -1,4 +1,4 @@
-import { IsAspectNode } from "../../../components/flow/helpers";
+import { IsAspectNode } from "../../../helpers";
 import { GetSelectedIcon } from "../../../typeEditor/helpers";
 import { NodeInfo } from "../styled";
 import { InspectorElement } from "../types";

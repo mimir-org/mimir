@@ -1,26 +1,15 @@
 // TREEVIEW
 .react-flow__node-AspectLocation,
 .react-flow__node-AspectFunction,
-.react-flow__node-AspectProduct,
-.react-flow__node-Function,
-.react-flow__node-Product,
-.react-flow__node-Location {
-  border-radius: 10px;
-  width: 170px;
-  height: 100px;
-  font-size: 11px;
-  color: #222;
-  text-align: center;
-  box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.2);
-}
-
-.react-flow__node-AspectLocation,
-.react-flow__node-AspectFunction,
 .react-flow__node-AspectProduct {
   border: none;
   width: 90px;
   height: 52px;
   box-shadow: none;
+  border-radius: 10px;
+  font-size: 11px;
+  color: #222;
+  text-align: center;
 }
 
 .react-flow__node-AspectLocation {
@@ -41,33 +30,6 @@
   &:hover,
   &.selected {
     border: 3px solid #069098;
-  }
-}
-
-.react-flow__node-Function {
-  background-color: #fef445;
-  border: 3px solid #fef445;
-  &:hover,
-  &.selected {
-    border-color: #fbc913 !important;
-  }
-}
-
-.react-flow__node-Product {
-  background-color: #00f0ff;
-  border: 3px solid #00f0ff;
-  &:hover,
-  &.selected {
-    border-color: #069098 !important;
-  }
-}
-
-.react-flow__node-Location {
-  background-color: #fa00ff;
-  border: 3px solid #fa00ff;
-  &:hover,
-  &.selected {
-    border-color: #a300a7 !important;
   }
 }
 

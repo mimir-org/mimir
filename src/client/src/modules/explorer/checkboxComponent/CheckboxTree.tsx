@@ -1,7 +1,7 @@
 import { Node, Project } from "../../../models";
 import { ChangeNodeDisplay } from "../helpers/ChangeNodeDisplay";
 import { CheckboxTreeWrapper } from "./styled";
-import { GetCheckboxColor } from "../helpers";
+import { GetAspectColor } from "../../../helpers";
 
 interface Props {
   node: Node;
@@ -9,7 +9,7 @@ interface Props {
   inputLabel: string;
 }
 export const CheckboxTree = ({ node, project, inputLabel }: Props) => (
-  <CheckboxTreeWrapper color={GetCheckboxColor(node)}>
+  <CheckboxTreeWrapper color={GetAspectColor(node, "selected")}>
     <input type="checkbox" checked={!node?.isHidden ?? false} onChange={ChangeNodeDisplay(node, project)} />
     <div className="checkmark"></div>
     <div className="label">{inputLabel}</div>

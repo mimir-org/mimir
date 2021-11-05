@@ -1,4 +1,4 @@
-import { Aspect, CreateLibraryType, LibItem, Node } from "../../../models";
+import { Aspect, CreateLibraryType, LibItem, Node } from "../models";
 
 const IsLocation = (node: Node | LibItem | CreateLibraryType) => {
   return node?.aspect === Aspect.Location;

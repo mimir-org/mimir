@@ -1,4 +1,4 @@
-import { Node } from "../../../models";
+import { Node } from "../models";
 
 const IsAspectNode = (node: Node) => {
   return node?.isRoot;

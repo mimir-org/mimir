@@ -1,6 +1,6 @@
-import { IsLocation, IsProduct } from ".";
 import { AibelLogo, AibelInvertedLogo } from "../../../assets/icons/aibel/nodes";
 import { EquinorLogo, EquinorInvertedLogo } from "../../../assets/icons/equinor/nodes";
+import { IsLocation, IsProduct } from "../../../helpers";
 import { Node } from "../../../models";
 
 const GetCompanyLogo = (company: string, node: Node, parent: boolean) => {

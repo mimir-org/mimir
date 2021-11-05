@@ -8,7 +8,7 @@ interface Props {
 }
 
 /**
- * Component to show name, symbol and logo for a BlockNode.
+ * Component to show name, symbol and logo for a TreeNode.
  * @param interface
  * @returns name,logo and symbol.
  */

@@ -1,7 +1,7 @@
 import { ProjectComponent } from "./";
 import { MODULE_TYPE } from "../../models/project";
 import { AnimatedModule, Size } from "../../compLibrary";
-import { IsBlockView } from "../../components/flow/block/helpers";
+import { IsBlockView } from "../../helpers";
 import { ModuleHead, ModuleBody } from "../../compLibrary/box/modules";
 import { OnToggleClick } from "./handlers";
 import { ExplorerIcon } from "../../assets/icons/modules";

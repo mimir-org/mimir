@@ -1,12 +1,12 @@
 import { useAppDispatch, useAppSelector } from "../../../../redux/store";
 import { Connector } from "../../../../models";
 import { FilterMenuBox, MenuColumn } from "../../../../compLibrary/box/menus";
-import { IsLibrary } from "../../../flow/helpers";
 import { FilterDropdown } from "../dropdown";
 import { TextResources } from "../../../../assets/text";
 import { OnAnimationChange, OnChange, OnAllTransportsChange } from "../handlers";
 import { GetEdges, GetNodes, PopulateFilterLists } from "../helpers";
 import { FilterElement } from "..";
+import { IsLibrary } from "../../../../helpers";
 
 interface Props {
   elements: any[];

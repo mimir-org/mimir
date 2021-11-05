@@ -1,9 +1,8 @@
 import { ExpandIcon, CollapseIcon } from "../../../assets/icons/chevron";
 import { Node, Project } from "../../../models";
-import { IsAspectNode } from "../../../components/flow/helpers";
 import { AspectBox } from "../../../compLibrary/box/aspect";
 import { CheckboxTree, CheckboxBlock } from "../checkboxComponent";
-import { IsBlockView } from "../../../components/flow/block/helpers";
+import { IsBlockView, IsAspectNode } from "../../../helpers";
 import { GetAspectIcon } from "../../../assets/helpers";
 import { ExplorerLine } from "./styled";
 

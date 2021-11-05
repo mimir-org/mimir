@@ -1,5 +1,4 @@
 import { addNode, createEdge, setActiveNode } from "../../../redux/store/project/actions";
-import { IsBlockView } from "../block/helpers";
 import { GetEdgeType } from "../tree/helpers";
 import { ConvertToEdge, ConvertToNode } from "../converters";
 import { BuildTreeEdge, BuildTreeNode } from "../tree/builders";
@@ -7,12 +6,12 @@ import { BlobData, LibItem, Project, User, Node, LibrarySubProjectItem } from ".
 import { LibraryState } from "../../../redux/store/library/types";
 import { BuildBlockNode } from "../block/builders";
 import { Size } from "../../../compLibrary";
+import { IsBlockView, IsFamily } from "../../../helpers";
 import {
   CreateId,
   GetProjectData,
   GetSelectedNode,
   GetSubProject,
-  IsFamily,
   IsInputTerminal,
   IsOutputTerminal,
   IsPartOf,

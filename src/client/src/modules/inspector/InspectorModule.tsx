@@ -1,6 +1,6 @@
 import { Size } from "../../compLibrary";
 import { MODULE_TYPE } from "../../models/project";
-import { IsBlockView } from "../../components/flow/block/helpers";
+import { IsBlockView } from "../../helpers";
 import { AnimatedInspector, ResizePanel } from "./styled";
 import { InspectorHeader } from ".";
 import { GetSelectedNode } from "../../components/flow/helpers";

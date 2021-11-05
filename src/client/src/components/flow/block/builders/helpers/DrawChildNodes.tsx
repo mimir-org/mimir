@@ -1,8 +1,9 @@
 import { Elements } from "react-flow-renderer";
 import { BuildBlockNode } from "../";
+import { IsFamily } from "../../../../../helpers";
 import { Node, Edge } from "../../../../../models";
 import { BlockNodeSize } from "../../../../../models/project";
-import { IsFamily, IsPartOf } from "../../../helpers";
+import { IsPartOf } from "../../../helpers";
 import { IsOffPage } from "../../helpers";
 
 /**

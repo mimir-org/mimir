@@ -1,5 +1,6 @@
+import { GetAspectColor } from "../../../../helpers";
 import { Connector, Node } from "../../../../models";
-import { GetMenuColor, GetTerminalColor, SetMenuXPos } from "./helpers";
+import { GetTerminalColor, SetMenuXPos } from "./helpers";
 import { TerminalsMenu, TerminalsElement, ColorBar, CheckboxWrapper } from "./styled";
 
 interface Props {
@@ -28,7 +29,7 @@ const TerminalsMenuComponent = ({ node, parent, input, terminals, visible, onCli
         parent={parent}
         input={input}
         onBlur={onBlur}
-        color={GetMenuColor(node)}
+        color={GetAspectColor(node, "selected")}
         xPos={SetMenuXPos(parent, electro, hasActiveTerminals, node)}
       >
         {terminals.map((conn) => (

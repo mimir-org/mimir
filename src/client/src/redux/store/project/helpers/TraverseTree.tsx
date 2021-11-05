@@ -1,4 +1,5 @@
-import { IsFamily, IsPartOf } from "../../../../components/flow/helpers";
+import { IsPartOf } from "../../../../components/flow/helpers";
+import { IsFamily } from "../../../../helpers";
 import { Edge, Node } from "../../../../models";
 
 const TraverseTree = (edgeList: Edge[], nodeList: Node[], parentNode: Node, elements: (Node | Edge)[]) => {

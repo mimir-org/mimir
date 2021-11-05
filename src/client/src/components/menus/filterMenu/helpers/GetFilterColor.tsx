@@ -1,6 +1,7 @@
 import { Color } from "../../../../compLibrary";
+import { IsFunction, IsProduct } from "../../../../helpers";
 import { Connector, Node } from "../../../../models";
-import { IsProductTerminal, IsFunction, IsLocationTerminal, IsPartOf, IsProduct } from "../../../flow/helpers";
+import { IsProductTerminal, IsLocationTerminal, IsPartOf } from "../../../flow/helpers";
 
 const GetFilterColor = (conn: Connector, nodes: Node[]) => {
   if (conn.color) return conn.color;

@@ -1,4 +1,4 @@
-import { MODULE_TYPE } from "../../../models/project";
+import { MODULE_TYPE } from "../models/project";
 
 const IsLibrary = (module: string) => {
   return module === MODULE_TYPE.LIBRARY;

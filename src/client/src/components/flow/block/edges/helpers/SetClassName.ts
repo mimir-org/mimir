@@ -1,5 +1,6 @@
+import { IsFunction, IsProduct } from "../../../../../helpers";
 import { Connector } from "../../../../../models";
-import { IsProductTerminal, IsFunction, IsLocationTerminal, IsProduct } from "../../../helpers";
+import { IsProductTerminal, IsLocationTerminal } from "../../../helpers";
 
 const SetClassName = (data: any): string => {
   let defaultClassName = "react-flow__edge-path ";

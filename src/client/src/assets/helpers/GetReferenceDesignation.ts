@@ -1,6 +1,6 @@
 import { GetRdsId } from ".";
 import { Node, Project } from "../../models";
-import { IsAspectNode } from "../../components/flow/helpers";
+import { IsAspectNode } from "../../helpers";
 import { FindParentEdge } from "../../modules/explorer/helpers/ParentNode";
 
 const findParentNode = (currentNode: Node, project: Project): Node => {

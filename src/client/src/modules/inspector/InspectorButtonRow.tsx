@@ -9,8 +9,8 @@ import { IsCreateLibraryType, IsNode } from "./helpers/IsType";
 import { ButtonWrapper, Title, ToggleBox } from "./styled";
 import { InspectorElement } from "./types";
 import { useState } from "react";
-import { IsBlockView } from "../../components/flow/block/helpers";
-import { IsAspectNode, GetSelectedNode } from "../../components/flow/helpers";
+import { IsBlockView, IsAspectNode } from "../../helpers";
+import { GetSelectedNode } from "../../components/flow/helpers";
 
 interface Props {
   project: Project;

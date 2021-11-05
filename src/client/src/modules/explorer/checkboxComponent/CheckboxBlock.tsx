@@ -3,7 +3,8 @@ import { secondaryNodeSelector, useAppDispatch, useAppSelector } from "../../../
 import { GetSelectedNode } from "../../../components/flow/helpers";
 import { OnBlockChange } from "../handlers";
 import { CheckboxBlockWrapper } from "./styled";
-import { GetCheckboxColor, IsChecked } from "../helpers";
+import { IsChecked } from "../helpers";
+import { GetAspectColor } from "../../../helpers";
 
 interface Props {
   elements: any[];
@@ -23,7 +24,11 @@ export const CheckboxBlock = ({ elements, node, inputLabel }: Props) => {
   const isSecondaryNode = node === secondaryNode;
 
   return (
-    <CheckboxBlockWrapper color={GetCheckboxColor(node)} isSelectedNode={isSelectedNode} isSecondaryNode={isSecondaryNode}>
+    <CheckboxBlockWrapper
+      color={GetAspectColor(node, "selected")}
+      isSelectedNode={isSelectedNode}
+      isSecondaryNode={isSecondaryNode}
+    >
       <input
         type="checkbox"
         checked={IsChecked(elements, node)}
