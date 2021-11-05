@@ -1,12 +1,13 @@
 import { ListType, RoundCheckbox } from "../../inputs/RoundCheckbox";
 import { Rds } from "../../../models";
 import { ListElementCategoryWrapper, ListCategoryElement, RdsListElement, RoundBox } from "../../styled";
+import { OnPropertyChangeFunction } from "../../types";
 
 interface Props {
   category: string;
   rds: Rds[];
   defaultValue: string;
-  onChange: Function;
+  onChange: OnPropertyChangeFunction;
 }
 
 export const RDSElement = ({ category, rds, defaultValue, onChange }: Props) => {

@@ -6,6 +6,7 @@ using Mb.Models.Abstract;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace Mb.Data.Repositories
 {
@@ -15,16 +16,18 @@ namespace Mb.Data.Repositories
         private readonly ITransportRepository _transportRepository;
         private readonly IInterfaceRepository _interfaceRepository;
         private readonly IConnectorRepository _connectorRepository;
+        private readonly ModelBuilderConfiguration _modelBuilderConfiguration;
 
-        public EdgeRepository(ModelBuilderDbContext dbContext, IAttributeRepository attributeRepository, ITransportRepository transportRepository, IInterfaceRepository interfaceRepository, IConnectorRepository connectorRepository) : base(dbContext)
+        public EdgeRepository(ModelBuilderDbContext dbContext, IAttributeRepository attributeRepository, ITransportRepository transportRepository, IInterfaceRepository interfaceRepository, IConnectorRepository connectorRepository, IOptions<ModelBuilderConfiguration> modelBuilderConfiguration) : base(dbContext)
         {
             _attributeRepository = attributeRepository;
             _transportRepository = transportRepository;
             _interfaceRepository = interfaceRepository;
             _connectorRepository = connectorRepository;
+            _modelBuilderConfiguration = modelBuilderConfiguration?.Value;
         }
 
-        public IEnumerable<Edge> UpdateInsert(ICollection<Edge> original, Project project)
+        public IEnumerable<Edge> UpdateInsert(ICollection<Edge> original, Project project, string invokedByDomain)
         {
             if (project?.Edges == null || !project.Edges.Any() || original == null)
                 yield break;
@@ -53,6 +56,13 @@ namespace Mb.Data.Repositories
                     if (edge.MasterProjectId != project.Id)
                         continue;
 
+                    // Parties is not allowed changed our edge
+                    if (_modelBuilderConfiguration.Domain == edge.Domain && _modelBuilderConfiguration.Domain != invokedByDomain)
+                    {
+                        Detach(edge);
+                        continue;
+                    }
+
                     _transportRepository.UpdateInsert(edge.Transport, EntityState.Modified);
                     _interfaceRepository.UpdateInsert(edge.Interface, EntityState.Modified);
                     Attach(edge, EntityState.Modified);
@@ -60,7 +70,7 @@ namespace Mb.Data.Repositories
             }
         }
 
-        public async Task<IEnumerable<Edge>> DeleteEdges(ICollection<Edge> delete, string projectId)
+        public async Task<IEnumerable<Edge>> DeleteEdges(ICollection<Edge> delete, string projectId, string invokedByDomain)
         {
             var subEdges = new List<Edge>();
 
@@ -75,8 +85,15 @@ namespace Mb.Data.Repositories
                     continue;
                 }
 
+                // Parties is not allowed delete our edge
+                if (_modelBuilderConfiguration.Domain == edge.Domain && _modelBuilderConfiguration.Domain != invokedByDomain)
+                {
+                    Detach(edge);
+                    continue;
+                }
+
                 //Attributes - Transport (delete)
-                if(edge.Transport?.Attributes != null && edge.Transport.Attributes.Any())
+                if (edge.Transport?.Attributes != null && edge.Transport.Attributes.Any())
                     _attributeRepository.Attach(edge.Transport.Attributes, EntityState.Deleted);
 
                 //Attributes - Interface (delete)

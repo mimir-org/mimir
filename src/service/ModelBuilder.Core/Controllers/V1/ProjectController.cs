@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Mb.Models.Application;
+using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Mb.Models.Exceptions;
 using Mb.Models.Extensions;
@@ -12,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Mb.Core.Controllers.V1
@@ -29,16 +31,19 @@ namespace Mb.Core.Controllers.V1
     {
         private readonly IProjectService _projectService;
         private readonly ILogger<ProjectController> _logger;
+        private readonly ModelBuilderConfiguration _modelBuilderConfiguration;
 
         /// <summary>
         /// Project Controller Constructor
         /// </summary>
         /// <param name="projectService"></param>
         /// <param name="logger"></param>
-        public ProjectController(IProjectService projectService, ILogger<ProjectController> logger)
+        /// <param name="modelBuilderConfiguration"></param>
+        public ProjectController(IProjectService projectService, ILogger<ProjectController> logger, IOptions<ModelBuilderConfiguration> modelBuilderConfiguration)
         {
             _projectService = projectService;
             _logger = logger;
+            _modelBuilderConfiguration = modelBuilderConfiguration?.Value;
         }
 
         /// <summary>
@@ -184,7 +189,7 @@ namespace Mb.Core.Controllers.V1
 
             try
             {
-                var project = await _projectService.UpdateProject(id, projectAm);
+                var project = await _projectService.UpdateProject(id, projectAm, _modelBuilderConfiguration.Domain);
                 return Ok(project);
             }
             catch (ModelBuilderDuplicateException e)

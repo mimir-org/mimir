@@ -1,10 +1,9 @@
-import { DropDownItem } from "../../compLibrary/dropdown/typeEditor/Dropdown";
+import { DropDownCategoryItem } from "../../compLibrary/dropdown/typeEditor/Dropdown";
 import { BlobData } from "../../models";
 import { CreateId } from "../../components/flow/helpers";
 
-const GetFilteredBlobData = (blobs: BlobData[]): DropDownItem[] => {
-  // blobs = blobs.filter((b) => discipline & b.discipline);
-  const categories = [] as DropDownItem[];
+const GetFilteredBlobData = (blobs: BlobData[]): DropDownCategoryItem<BlobData>[] => {
+  const categories = [] as DropDownCategoryItem<BlobData>[];
   categories.push({ id: CreateId(), name: "Blobs", description: "Symbol", image: null, items: [] });
   blobs.forEach((blob) => {
     categories[0].items.push({
@@ -12,7 +11,7 @@ const GetFilteredBlobData = (blobs: BlobData[]): DropDownItem[] => {
       description: blob.name,
       name: blob.name,
       image: blob.data,
-      items: [],
+      value: blob,
     });
   });
 
