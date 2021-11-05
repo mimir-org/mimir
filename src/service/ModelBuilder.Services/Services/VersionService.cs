@@ -12,6 +12,7 @@ using Mb.Services.Contracts;
 using Mb.Services.Extensions;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Version = Mb.Models.Data.Version;
 
 namespace Mb.Services.Services
@@ -22,6 +23,7 @@ namespace Mb.Services.Services
         private readonly IProjectService _projectService;
         private readonly IHttpContextAccessor _contextAccessor;
         private readonly IMapper _mapper;
+        private readonly JsonSerializerSettings _jsonSerializerSettings;
 
         public VersionService(IVersionRepository versionRepository, IProjectService projectService, IMapper mapper, IHttpContextAccessor contextAccessor)
         {
@@ -29,6 +31,13 @@ namespace Mb.Services.Services
             _projectService = projectService;
             _mapper = mapper;
             _contextAccessor = contextAccessor;
+
+            _jsonSerializerSettings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+            };
+
         }
 
         /// <summary>
@@ -98,7 +107,7 @@ namespace Mb.Services.Services
                 Name = project.Name,
                 Created = DateTime.Now.ToUniversalTime(),
                 CreatedBy = _contextAccessor.GetName(),
-                Data = JsonConvert.SerializeObject(project)
+                Data = JsonConvert.SerializeObject(project, _jsonSerializerSettings)
             };
 
             await _versionRepository.CreateAsync(version);
