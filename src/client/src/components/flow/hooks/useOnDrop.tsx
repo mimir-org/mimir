@@ -30,7 +30,8 @@ const useOnDrop = (
   icons: BlobData[],
   library: LibraryState,
   user: User,
-  parentNode: Node
+  parentNode: Node,
+  animatedEdge: boolean
 ) => {
   const sourceNode = GetSelectedNode();
   const isSubProject = IsSubProject(event);
@@ -52,7 +53,7 @@ const useOnDrop = (
       data[1].forEach((edge) => {
         dispatch(createEdge(edge));
         const edgeType = GetEdgeType(edge.fromConnector);
-        setElements((es) => es.concat(BuildTreeEdge(edge, edgeType, project.nodes)));
+        setElements((es) => es.concat(BuildTreeEdge(edge, edgeType, project.nodes, animatedEdge)));
       });
     })();
   } else if (!isSubProject) {
@@ -108,7 +109,7 @@ const useOnDrop = (
       dispatch(createEdge(partofEdge));
 
       const edgeType = GetEdgeType(sourceConn);
-      setElements((es) => es.concat(BuildTreeEdge(partofEdge, edgeType, project.nodes)));
+      setElements((es) => es.concat(BuildTreeEdge(partofEdge, edgeType, project.nodes, animatedEdge)));
     }
 
     dispatch(addNode(targetNode));

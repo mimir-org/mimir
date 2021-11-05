@@ -5,12 +5,13 @@ import { CreateId } from "../../../components/flow/helpers";
 import { AddIcon } from "../../../assets/icons/type";
 import { ConnectorType, TerminalType, TerminalTypeItem } from "../../../models";
 import { TerminalListElement, TerminalCategoryWrapper, AddTerminalWrapper } from "../../styled";
+import { OnTerminalCategoryChangeFunction, TerminalCategoryChangeKey } from "../../types";
 
 interface Props {
   name: string;
   terminalTypes: TerminalType[];
   categoryId: string;
-  onChange: (key: string, value: TerminalTypeItem) => void;
+  onChange: OnTerminalCategoryChangeFunction;
   defaultTerminals?: TerminalTypeItem[];
 }
 
@@ -32,7 +33,7 @@ export const ObjectBlockElement = ({ name, categoryId, terminalTypes, onChange, 
     onChange("add", terminal);
   };
 
-  const onCategoryUpdateOrRemove = (key: string, terminal: TerminalTypeItem) => {
+  const onCategoryUpdateOrRemove = (key: TerminalCategoryChangeKey, terminal: TerminalTypeItem) => {
     onChange(key, terminal);
   };
 

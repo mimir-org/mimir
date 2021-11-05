@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Mb.Data.Contracts;
 using Mb.Models.Application;
 using Mb.Services.Contracts;
 using Mb.TypeEditor.Data.Contracts;
+using Microsoft.EntityFrameworkCore;
 
 namespace Mb.Services.Services
 {
@@ -27,14 +28,19 @@ namespace Mb.Services.Services
         /// </summary>
         /// <param name="searchString"></param>
         /// <returns></returns>
-        public Library GetLibTypes(string searchString)
+        public async Task<Library> GetLibTypes(string searchString)
         {
+            var objectBlocks = await _libraryRepository.GetNodeTypes(searchString);
+            var transports = await _libraryRepository.GetTransportTypes(searchString);
+            var interfaces = await _libraryRepository.GetInterfaceTypes(searchString);
+            var subProjects = await GetSubProjects(searchString);
+            
             var library = new Library
             {
-                ObjectBlocks = _libraryRepository.GetNodeTypes(searchString).ToList(),
-                Transports = _libraryRepository.GetTransportTypes(searchString).ToList(),
-                Interfaces = _libraryRepository.GetInterfaceTypes(searchString).ToList(),
-                SubProjects = GetSubProjects(searchString).ToList()
+                ObjectBlocks = objectBlocks.ToList(),
+                Transports = transports.ToList(),
+                Interfaces = interfaces.ToList(),
+                SubProjects = subProjects.ToList()
             };
 
             return library;
@@ -44,49 +50,52 @@ namespace Mb.Services.Services
         /// Get all node types
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<LibraryNodeItem> GetNodeTypes()
+        public async Task<IEnumerable<LibraryNodeItem>> GetNodeTypes()
         {
-            return _libraryRepository.GetNodeTypes().ToList();
+            return await _libraryRepository.GetNodeTypes();
         }
 
         /// <summary>
         /// Get all transport types
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<LibraryTransportItem> GetTransportTypes()
+        public async Task<IEnumerable<LibraryTransportItem>> GetTransportTypes()
         {
-            return _libraryRepository.GetTransportTypes().ToList();
+            return await _libraryRepository.GetTransportTypes();
         }
 
         /// <summary>
         /// Get all interface types
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<LibraryInterfaceItem> GetInterfaceTypes()
+        public async Task<IEnumerable<LibraryInterfaceItem>> GetInterfaceTypes()
         {
-            return _libraryRepository.GetInterfaceTypes().ToList();
+            return await _libraryRepository.GetInterfaceTypes();
+
         }
 
         /// <summary>
         /// Get all sub projects
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<LibrarySubProjectItem> GetSubProjects(string searchString = null)
+        public async Task<IEnumerable<LibrarySubProjectItem>> GetSubProjects(string searchString = null)
         {
-            if (string.IsNullOrWhiteSpace(searchString))
-            {
-                return _projectRepository.GetAll()
-                    .Where(x => x.IsSubProject)
-                    .ProjectTo<LibrarySubProjectItem>(_mapper.ConfigurationProvider)
-                    .OrderBy(x => x.Name)
-                    .ToList();
-            }
-
-            return _projectRepository.GetAll()
-                .Where(x => x.IsSubProject && x.Name.ToLower().Contains(searchString.ToLower()))
-                .ProjectTo<LibrarySubProjectItem>(_mapper.ConfigurationProvider)
+            var projects = await _projectRepository.GetAll()
+                .Where(x => x.IsSubProject)
                 .OrderBy(x => x.Name)
-                .ToList();
+                .ToArrayAsync();
+
+            if (!string.IsNullOrWhiteSpace(searchString))
+                projects = projects.Where(x => x.Name.ToLower().Contains(searchString.ToLower())).ToArray();
+
+            var librarySubProjectItems = new List<LibrarySubProjectItem>();
+
+            Parallel.ForEach(projects, x =>
+            {
+                librarySubProjectItems.Add(_mapper.Map<LibrarySubProjectItem>(x));
+            });
+
+            return librarySubProjectItems;
         }
     }
 }

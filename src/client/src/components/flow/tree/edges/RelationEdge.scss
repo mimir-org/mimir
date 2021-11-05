@@ -39,13 +39,13 @@
 }
 
 .has-location-function {
-  stroke-dasharray: 6.5 !important;
-  stroke: #fa00ff !important;
+  stroke-dasharray: 4.5 !important;
+  stroke: #a300a7 !important;
   fill: none !important;
 
   &--dashed {
-    stroke: #fef445 !important;
-    opacity: 0.5 !important;
+    stroke: #fa00ff !important;
+    opacity: 0.1 !important;
     fill: none !important;
   }
 }
@@ -63,13 +63,13 @@
 }
 
 .fulfilled-by-function {
-  stroke-dasharray: 6.5 !important;
-  stroke: #00f0ff !important;
+  stroke-dasharray: 4.5 !important;
+  stroke: #069098 !important;
   fill: none !important;
 
   &--dashed {
-    stroke: #fef445 !important;
-    opacity: 0.5 !important;
+    stroke: #069098 !important;
+    opacity: 0.1 !important;
     fill: none !important;
   }
 }

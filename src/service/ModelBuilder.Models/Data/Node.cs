@@ -123,5 +123,7 @@ namespace Mb.Models.Data
         {
             Version = Version.IncrementMajorVersion();
         }
+
+        public string Domain => Id.ResolveDomain();
     }
 }

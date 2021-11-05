@@ -62,10 +62,10 @@ const FlowTree = ({ inspectorRef }: Props) => {
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(BuildTreeElements(project));
+      setElements(BuildTreeElements(project, animatedEdge));
       return setFlowInstance(_reactFlowInstance);
     },
-    [project]
+    [project, animatedEdge]
   );
 
   const OnConnect = (params) => {
@@ -76,7 +76,19 @@ const FlowTree = ({ inspectorRef }: Props) => {
   };
 
   const OnDrop = (event) => {
-    return useOnDrop(project, event, dispatch, setElements, flowInstance, flowWrapper, icons, library, userState.user, parent);
+    return useOnDrop(
+      project,
+      event,
+      dispatch,
+      setElements,
+      flowInstance,
+      flowWrapper,
+      icons,
+      library,
+      userState.user,
+      parent,
+      animatedEdge
+    );
   };
 
   const OnElementClick = (_event, element) => {

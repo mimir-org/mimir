@@ -78,6 +78,12 @@ namespace Mb.Models.Extensions
             return IncrementVersion(version, false, false, true);
         }
 
+        public static string ResolveDomain(this string id)
+        {
+            var idSplit = id.Split('_', StringSplitOptions.RemoveEmptyEntries);
+            return idSplit.Length != 2 ? string.Empty : idSplit[0];
+        }
+
 
         #region Private
 

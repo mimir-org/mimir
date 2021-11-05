@@ -4,6 +4,7 @@ import { SquareCheckbox } from "../../inputs";
 import { ExpandIcon, CollapseIcon } from "../../../assets/icons/chevron";
 import { OnMultipleValuesChange, OnSingleValueChange } from "./helpers";
 import { Label } from "../../inputs/SquareCheckbox";
+import { OnPropertyChangeFunction } from "../../types";
 import {
   TerminalListElement,
   TerminalCategoryWrapper,
@@ -19,7 +20,7 @@ interface Props {
   values: object;
   isMultiSelect: boolean;
   defaultValue?: PredefinedAttribute[];
-  onChange: Function;
+  onChange: OnPropertyChangeFunction;
 }
 
 export const PredefinedLocationElement = ({ attributeName, values, isMultiSelect, defaultValue, onChange }: Props) => {
