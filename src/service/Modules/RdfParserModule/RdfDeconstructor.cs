@@ -689,26 +689,29 @@ namespace RdfParserModule
 
         public List<INode> GetFunctionalSystemBlocks()
         {
-            var hasAspect = RdfGraph.CreateUriNode(Resources.hasAspect);
-            var function = RdfGraph.CreateUriNode(Resources.Function);
+            var type = GetOrCreateUriNode(Resources.type);
+            var fsb = GetOrCreateUriNode(Resources.FSB);
 
-            var ds = new InMemoryDataset(RdfGraph);
-            var processor = new LeviathanQueryProcessor(ds);
-            var parser = new SparqlQueryParser();
-            var query = parser.ParseFromString(@"
-                        PREFIX imf: <http://example.com/imf#>
-                        SELECT ?node WHERE {
-                            ?node imf:hasAspect imf:Function .
-                            FILTER NOT EXISTS{ ?node a imf:Terminal . }
-                            FILTER NOT EXISTS{ ?node a imf:Transport . }                             
-                        }
-            ");
+            return Store.GetTriplesWithPredicateObject(type, fsb).Select(t => t.Subject).ToList();
 
-            var result = processor.ProcessQuery(query) as SparqlResultSet;
-            return result.Results.Select(r => r["node"]).ToList();
-            //tempStore.Add(result);
 
-            //return tempStore.Triples.Select(t => t.Subject).ToList();
+            //var hasAspect = RdfGraph.CreateUriNode(Resources.hasAspect);
+            //var function = RdfGraph.CreateUriNode(Resources.Function);
+
+            //var ds = new InMemoryDataset(RdfGraph);
+            //var processor = new LeviathanQueryProcessor(ds);
+            //var parser = new SparqlQueryParser();
+            //var query = parser.ParseFromString(@"
+            //            PREFIX imf: <http://example.com/imf#>
+            //            SELECT ?node WHERE {
+            //                ?node imf:hasAspect imf:Function .
+            //                FILTER NOT EXISTS{ ?node a imf:Terminal . }
+            //                FILTER NOT EXISTS{ ?node a imf:Transport . }                             
+            //            }
+            //");
+
+            //var result = processor.ProcessQuery(query) as SparqlResultSet;
+            //return result.Results.Select(r => r["node"]).ToList();
         }
 
         public List<ParserNode> GetAllFunctionObjectsWithTerminals()

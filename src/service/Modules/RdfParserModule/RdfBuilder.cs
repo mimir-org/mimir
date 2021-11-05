@@ -114,10 +114,10 @@ namespace RdfParserModule
                     }
 
                     Graph.Assert(new Triple(nodeId, label, Graph.CreateLiteralNode(Project.Name + " " + node.Aspect)));
-
                     continue;
                 }
 
+                Graph.Assert(new Triple(nodeId, type, Graph.CreateUriNode(Resources.FSB)));
                 Graph.Assert(new Triple(nodeId, label, Graph.CreateLiteralNode(node.Rds + " " +node.Label)));
 
                 
