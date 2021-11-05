@@ -26,7 +26,7 @@ const CheckboxBlockWrapper = styled.label<Props>`
     height: ${(props) => (props.isSelectedNode || props.isSecondaryNode ? 16 : 10)}px;
     width: ${(props) => (props.isSelectedNode || props.isSecondaryNode ? 16 : 12)}px;
     transform: scale(0);
-    transition: 120ms transform ease-in-out;
+    transition: 250ms transform ease-in-out;
     background-color: ${(props) => props.color};
   }
 
