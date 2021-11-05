@@ -13,6 +13,9 @@ const AspectBox = styled.div<Props>`
   display: flex;
   flex-direction: row;
   cursor: pointer;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  overflow: hidden;
   margin-top: ${(props) => (props.isRoot ? 12 : 0)}px;
   padding-left: ${(props) => (props.isRoot ? 5 : UseIndentLevel(props.indent))}px;
   background-color: ${(props) => (props.isRoot ? Color.LightGrey : GetAspectColor(props.node, true))};
@@ -24,7 +27,7 @@ const AspectBox = styled.div<Props>`
 
   .icon {
     position: relative;
-    bottom: 1px;
+    top: 1px;
     left: 10px;
   }
 

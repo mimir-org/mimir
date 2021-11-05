@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import { Color } from "../../../../compLibrary";
+import { Color, FontSize } from "../../../../compLibrary";
 
 interface Props {
   color: string;
 }
 
-const CheckboxWrapper = styled.label<Props>`
+const CheckboxTreeWrapper = styled.label<Props>`
   display: flex;
   position: relative;
   padding: 2px 0px 0px 25px;
@@ -34,7 +34,8 @@ const CheckboxWrapper = styled.label<Props>`
   .label {
     position: relative;
     top: 1px;
+    font-size: ${FontSize.Medium};
   }
 `;
 
-export default CheckboxWrapper;
+export default CheckboxTreeWrapper;
