@@ -4,6 +4,7 @@ import { Size } from "../../../../../../compLibrary";
 interface Props {
   colorMain: string;
   colorSelected: string;
+  isSelected: boolean;
 }
 
 const TreeNodeBox = styled.div<Props>`
@@ -13,12 +14,12 @@ const TreeNodeBox = styled.div<Props>`
   font-size: 11px;
   text-align: center;
   box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.2);
-
   background-color: ${(props) => props.colorMain};
-  border: 3px solid ${(props) => props.colorMain};
+  border: 3px solid;
+  border-color: ${(props) => (props.isSelected ? props.colorSelected : props.colorMain)};
+  transition: border 200ms ease-in-out;
 
-  &:hover,
-  &.selected {
+  &:hover {
     border-color: ${(props) => props.colorSelected} !important;
   }
 `;

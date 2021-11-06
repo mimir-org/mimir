@@ -1,15 +1,17 @@
 import { ArrowHeadType, getMarkerEnd } from "react-flow-renderer";
+import { Color } from "../../../../compLibrary";
 import { Connector } from "../../../../models";
-import { GetTerminalColor } from "../terminals/helpers";
+import { GetTerminalColor } from "../../block/terminals/helpers";
 
 /**
- * Component to give custom styling to the edge dragged from a Terminal.
+ * Component to give custom styling to the edge dragged from a Terminal in TreeView.
  * @param param0
  * @returns a line from a Node's terminal.
  */
-const ConnectionLine = ({ sourceX, sourceY, targetX, targetY, connectionLineType, sourceHandle, sourceNode }) => {
+const TreeConnectionLine = ({ sourceX, sourceY, targetX, targetY, connectionLineType, sourceHandle, sourceNode }) => {
   const connector = sourceNode.data?.connectors.find((conn: Connector) => conn.id === sourceHandle.id) as Connector;
-  const color = GetTerminalColor(connector);
+  console.log({ connector });
+  const color = Color.FunctionMain;
   const markerEnd = getMarkerEnd(ArrowHeadType.ArrowClosed, null);
 
   return (
@@ -17,10 +19,9 @@ const ConnectionLine = ({ sourceX, sourceY, targetX, targetY, connectionLineType
       <path
         style={GetStyle(color)}
         className="animated"
-        d={`M${sourceX},${sourceY} C ${sourceX} ${targetY} ${sourceX} ${targetY} ${targetX},${targetY}`}
+        d={`M${sourceX},${sourceY} C ${sourceX} ${targetY + 100} ${sourceX} ${targetY + 100} ${targetX},${targetY}`}
         markerEnd={markerEnd}
       />
-      {/* <circle cx={targetX} cy={targetY} fill={Color.White} r={3} stroke={color} strokeWidth={1.5} /> */}
     </g>
   );
 };
@@ -33,4 +34,4 @@ function GetStyle(color: string) {
   };
 }
 
-export default ConnectionLine;
+export default TreeConnectionLine;

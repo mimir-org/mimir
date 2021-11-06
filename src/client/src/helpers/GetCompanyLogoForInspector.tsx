@@ -3,7 +3,7 @@ import { EquinorLogo } from "../assets/icons/equinor/inspector";
 import { Node } from "../models";
 import { InspectorElement } from "../modules/inspector/types";
 
-const GetInspectorCompanyLogo = (company: string, node: Node | InspectorElement) => {
+const GetCompanyLogoForInspector = (company: string, node: Node | InspectorElement) => {
   let companyValue = company;
 
   const split = node?.id?.split("_");
@@ -14,4 +14,4 @@ const GetInspectorCompanyLogo = (company: string, node: Node | InspectorElement)
   return null;
 };
 
-export default GetInspectorCompanyLogo;
+export default GetCompanyLogoForInspector;

@@ -8,7 +8,7 @@ import { GetAdminContent } from "./GetAdminContent";
 import { statusSelector } from "../../../../redux/store";
 import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
 import { Action } from "redux";
-import { GetInspectorCompanyLogo } from "../../../../helpers";
+import { GetCompanyLogoForInspector } from "../../../../helpers";
 
 interface Props {
   element: InspectorElement;
@@ -37,7 +37,7 @@ const AdminComponent = ({ element, project, index, activeTabIndex, changeInspect
       {isTabOpen && (
         <TabBody id="admininfo">
           <AdminInfoLogoBox>
-            <img src={GetInspectorCompanyLogo(company, element)} alt="logo" className="logo" />
+            <img src={GetCompanyLogoForInspector(company, element)} alt="logo" className="logo" />
           </AdminInfoLogoBox>
           <hr />
           {element && <div className="container">{GetAdminContent(element, project, statuses)}</div>}

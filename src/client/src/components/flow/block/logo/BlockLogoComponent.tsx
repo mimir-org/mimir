@@ -1,7 +1,7 @@
 import { LogoBox, SymbolBox, BlockNodeNameBox } from "./styled";
 import { Node } from "../../../../models";
 import { Symbol } from "../../../../compLibrary/symbol";
-import { GetCompanyLogo } from "../../../../helpers";
+import { GetCompanyLogoForNode } from "../../../../helpers";
 
 interface Props {
   node: Node;
@@ -20,7 +20,7 @@ const BlockLogoComponent = ({ node, parent }: Props) => {
     <>
       <BlockNodeNameBox>{node.label ?? node.name}</BlockNodeNameBox>
       <LogoBox>
-        <img src={GetCompanyLogo(company, node, parent)} alt="logo" className="logo" />
+        <img src={GetCompanyLogoForNode(company, node, parent)} alt="logo" className="logo" />
       </LogoBox>
       <SymbolBox>
         <Symbol base64={node.symbol} text={node.name} />

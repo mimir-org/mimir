@@ -18,6 +18,7 @@ import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { TreeFilterMenu } from "../../menus/filterMenu/tree";
 import { ExplorerModule } from "../../../modules/explorer";
 import { SetDarkModeColor, GetSelectedNode } from "../../../helpers";
+import { TreeConnectionLine } from "./edges";
 import {
   animatedEdgeSelector,
   darkModeSelector,
@@ -128,6 +129,7 @@ const FlowTree = ({ inspectorRef }: Props) => {
         defaultPosition={[800, 100]}
         zoomOnDoubleClick={false}
         onClick={(e) => OnTreeClick(e, dispatch, project, inspectorRef)}
+        connectionLineComponent={TreeConnectionLine}
       >
         <Background />
         <FullScreenComponent inspectorRef={inspectorRef} />

@@ -1,9 +1,9 @@
 import { AibelLogo, AibelInvertedLogo } from "../assets/icons/aibel/nodes";
 import { EquinorLogo, EquinorInvertedLogo } from "../assets/icons/equinor/nodes";
-import { IsLocation, IsProduct } from "./";
+import { IsLocation, IsProduct } from ".";
 import { Node } from "../models";
 
-const GetCompanyLogo = (company: string, node: Node, parent: boolean) => {
+const GetCompanyLogoForNode = (company: string, node: Node, parent: boolean) => {
   let companyValue = company;
 
   const split = node?.id.split("_");
@@ -17,4 +17,4 @@ const GetCompanyLogo = (company: string, node: Node, parent: boolean) => {
   return null;
 };
 
-export default GetCompanyLogo;
+export default GetCompanyLogoForNode;

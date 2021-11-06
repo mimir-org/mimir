@@ -1,10 +1,10 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
 import { AspectColorType, Connector, Node } from "../../../../../models";
-import { TreeNodeWrapper, TreeHandleBox, TreeNodeBox } from "./styled";
+import { TreeHandleBox, TreeNodeBox } from "./styled";
 import { GetHandleType, IsPartOf } from "../../../helpers";
 import { TreeLogoComponent } from "../../logo";
-import { GetAspectColor } from "../../../../../helpers";
+import { GetAspectColor, GetSelectedNode } from "../../../../../helpers";
 
 /**
  * Component to display a node in TreeView.
@@ -33,25 +33,26 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
     <TreeNodeBox
       colorMain={GetAspectColor(data, AspectColorType.Main)}
       colorSelected={GetAspectColor(data, AspectColorType.Selected)}
+      isSelected={data === GetSelectedNode()}
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => mouseNodeLeave()}
     >
-      <TreeNodeWrapper onMouseEnter={() => setIsHover(true)} onMouseLeave={() => mouseNodeLeave()}>
-        {data.connectors?.map((conn: Connector) => {
-          const [typeHandler, positionHandler] = GetHandleType(conn);
+      {data.connectors?.map((conn: Connector) => {
+        const [typeHandler, positionHandler] = GetHandleType(conn);
 
-          return (
-            <TreeHandleBox
-              onMouseEnter={() => setIsHover(true)}
-              onMouseLeave={() => setIsHover(false)}
-              key={"handle-treeview-" + conn.id}
-              visible={IsPartOf(conn) && isHover}
-              position={positionHandler}
-            >
-              <Handle type={typeHandler} position={positionHandler} id={conn.id} className="function-treeview-handler" />
-            </TreeHandleBox>
-          );
-        })}
-        <TreeLogoComponent node={data} />
-      </TreeNodeWrapper>
+        return (
+          <TreeHandleBox
+            onMouseEnter={() => setIsHover(true)}
+            onMouseLeave={() => setIsHover(false)}
+            key={"handle-treeview-" + conn.id}
+            visible={IsPartOf(conn) && isHover}
+            position={positionHandler}
+          >
+            <Handle type={typeHandler} position={positionHandler} id={conn.id} className="function-treeview-handler" />
+          </TreeHandleBox>
+        );
+      })}
+      <TreeLogoComponent node={data} />
     </TreeNodeBox>
   );
 };
