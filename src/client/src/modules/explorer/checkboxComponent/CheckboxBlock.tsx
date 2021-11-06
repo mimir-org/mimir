@@ -1,6 +1,6 @@
 import { Node } from "../../../models";
 import { secondaryNodeSelector, useAppDispatch, useAppSelector } from "../../../redux/store";
-import { GetSelectedNode } from "../../../components/flow/helpers";
+import { GetSelectedNode } from "../../../helpers";
 import { OnBlockChange } from "../handlers";
 import { CheckboxBlockWrapper } from "./styled";
 import { IsChecked } from "../helpers";

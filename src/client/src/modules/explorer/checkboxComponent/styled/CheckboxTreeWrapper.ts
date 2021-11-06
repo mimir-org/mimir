@@ -21,7 +21,6 @@ const CheckboxTreeWrapper = styled.label<Props>`
 
   input::before {
     content: "";
-    height: 16px;
     width: 16px;
     transform: scale(0);
     transition: 250ms transform ease-in-out;

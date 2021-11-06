@@ -2,7 +2,7 @@ import { Node } from "../../../../../models";
 import { Banner, Block, Header, LogoBox } from "./styled";
 import { OnResize } from "./handlers";
 import { useEffect } from "react";
-import { GetCompanyLogo } from "../../../helpers";
+import { GetCompanyLogo } from "../../../../../helpers";
 
 interface Props {
   dispatch: any;

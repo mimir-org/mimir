@@ -8,7 +8,7 @@ import { GetAdminContent } from "./GetAdminContent";
 import { statusSelector } from "../../../../redux/store";
 import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
 import { Action } from "redux";
-import { GetInspectorCompanyLogo } from "../../../../components/flow/helpers";
+import { GetInspectorCompanyLogo } from "../../../../helpers";
 
 interface Props {
   element: InspectorElement;

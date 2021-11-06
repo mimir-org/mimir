@@ -1,6 +1,6 @@
-import { IsFunction, IsLocation, IsProduct } from "../../../../helpers";
+import { GetSelectedNode, IsFunction, IsLocation, IsProduct } from "../../../../helpers";
 import { Connector, Node } from "../../../../models";
-import { IsLocationTerminal, IsTransport, IsProductTerminal, GetSelectedNode } from "../../helpers";
+import { IsLocationTerminal, IsTransport, IsProductTerminal } from "../../helpers";
 
 /**
  * Component to filter the terminals displayed on the nodes in BlockView.

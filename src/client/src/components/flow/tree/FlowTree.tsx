@@ -5,7 +5,7 @@ import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
 import { FullScreenComponent } from "../../../compLibrary/controls";
 import { Size } from "../../../compLibrary";
 import { changeInspectorTab } from "../../../modules/inspector/redux/tabs/actions";
-import { GetParent, GetSelectedNode } from "../helpers";
+import { GetParent } from "../helpers";
 import { BuildTreeElements } from "../tree/builders";
 import { setModuleVisibility } from "../../../redux/store/modules/actions";
 import { MODULE_TYPE } from "../../../models/project";
@@ -17,7 +17,7 @@ import { OnTreeClick } from "./handlers/";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { TreeFilterMenu } from "../../menus/filterMenu/tree";
 import { ExplorerModule } from "../../../modules/explorer";
-import { SetDarkModeColor } from "../../../helpers";
+import { SetDarkModeColor, GetSelectedNode } from "../../../helpers";
 import {
   animatedEdgeSelector,
   darkModeSelector,

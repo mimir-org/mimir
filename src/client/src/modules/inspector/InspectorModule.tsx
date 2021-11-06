@@ -3,7 +3,7 @@ import { MODULE_TYPE } from "../../models/project";
 import { IsBlockView } from "../../helpers";
 import { AnimatedInspector, ResizePanel } from "./styled";
 import { InspectorHeader } from ".";
-import { GetSelectedNode } from "../../components/flow/helpers";
+import { GetSelectedNode } from "../../helpers";
 import { InspectorElement } from "./types";
 import { useDragResizePanel } from "./helpers/useDragResizePanel";
 import { changeInspectorHeight } from "./redux/height/actions";

@@ -6,11 +6,10 @@ import { BlobData, LibItem, Project, User, Node, LibrarySubProjectItem } from ".
 import { LibraryState } from "../../../redux/store/library/types";
 import { BuildBlockNode } from "../block/builders";
 import { Size } from "../../../compLibrary";
-import { IsBlockView, IsFamily } from "../../../helpers";
+import { GetSelectedNode, IsBlockView, IsFamily } from "../../../helpers";
 import {
   CreateId,
   GetProjectData,
-  GetSelectedNode,
   GetSubProject,
   IsInputTerminal,
   IsOutputTerminal,

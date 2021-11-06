@@ -5,14 +5,14 @@ import { GetBlockEdgeTypes, OnBlockClick } from "../block/helpers";
 import { BuildBlockElements } from "./builders";
 import { useOnConnect, useOnDrop, useOnRemove, useOnDragStop } from "../hooks";
 import { setActiveBlockNode, setActiveEdge } from "../../../redux/store/project/actions";
-import { GetSelectedNode, GetBlockNodeTypes, GetParent } from "../helpers";
+import { GetBlockNodeTypes, GetParent } from "../helpers";
 import { EDGE_TYPE, EdgeType } from "../../../models/project";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { BlockFilterMenu } from "../../menus/filterMenu/block";
 import { Node } from "../../../models";
 import { ExplorerModule } from "../../../modules/explorer";
 import { ConnectionLine } from "./edges";
-import { IsOffPage, SetDarkModeColor } from "../../../helpers";
+import { IsOffPage, SetDarkModeColor, GetSelectedNode } from "../../../helpers";
 import {
   darkModeSelector,
   iconSelector,

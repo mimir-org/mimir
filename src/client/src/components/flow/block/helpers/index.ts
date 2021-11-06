@@ -1,5 +1,4 @@
 export { default as GetBlockHandleType } from "./GetBlockHandleType";
-export { default as GetSelectedBlockNode } from "./GetSelectedBlockNode";
 export { default as OnBlockClick } from "./OnBlockClick";
 export { default as GetNodeByDataId } from "./GetNodeByDataId";
 export { default as FindAllNodes } from "./FindAllNodes";

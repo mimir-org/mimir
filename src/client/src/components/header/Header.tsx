@@ -4,8 +4,8 @@ import { ToolBar } from "./";
 import { MenuMainHeader } from "../../compLibrary/box/menus";
 import { HeaderBox, LogoBox } from "../../compLibrary/box/header/";
 import { useAppDispatch, useAppSelector } from "../../redux/store/hooks";
-import { GetHeaderCompanyLogo } from "../flow/helpers";
 import { CompanyLogoBox } from "./styled";
+import { GetHeaderCompanyLogo } from "../../helpers";
 import {
   darkModeSelector,
   accountMenuSelector,

@@ -1,7 +1,7 @@
 import { LogoBox, SymbolBox, BlockNodeNameBox } from "./styled";
 import { Node } from "../../../../models";
-import { GetCompanyLogo } from "../../helpers";
 import { Symbol } from "../../../../compLibrary/symbol";
+import { GetCompanyLogo } from "../../../../helpers";
 
 interface Props {
   node: Node;

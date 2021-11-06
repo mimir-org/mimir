@@ -10,7 +10,7 @@ import { ButtonWrapper, Title, ToggleBox } from "./styled";
 import { InspectorElement } from "./types";
 import { useState } from "react";
 import { IsBlockView, IsAspectNode } from "../../helpers";
-import { GetSelectedNode } from "../../components/flow/helpers";
+import { GetSelectedNode } from "../../helpers";
 
 interface Props {
   project: Project;
