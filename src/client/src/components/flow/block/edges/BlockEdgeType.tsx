@@ -13,6 +13,7 @@ export default function BlockEdgeType({ id, sourceX, sourceY, targetX, targetY, 
   const sourceConn = data.source.connectors?.find((conn: Connector) => conn.id === data.edge.fromConnectorId) as Connector;
   const hasLocation = IsLocationTerminal(sourceConn);
   const hasProduct = IsProductTerminal(sourceConn);
+  const visible = !data?.edge.isHidden;
 
   const smoothPath = getSmoothStepPath({
     sourceX,
@@ -35,13 +36,25 @@ export default function BlockEdgeType({ id, sourceX, sourceY, targetX, targetY, 
   return (
     <>
       {!hasLocation && !hasProduct ? (
-        <path id={id} style={GetStyle(sourceConn)} className="react-flow__edge-path" d={smoothPath} markerEnd={markerEnd} />
+        <path
+          id={id}
+          style={GetStyle(sourceConn, visible)}
+          className="react-flow__edge-path"
+          d={smoothPath}
+          markerEnd={markerEnd}
+        />
       ) : (
         <>
-          <path id={id} style={GetStyle(sourceConn)} className={SetClassName(data) + ""} d={bezierPath} markerEnd={markerEnd} />
           <path
             id={id}
-            style={GetStyle(sourceConn)}
+            style={GetStyle(sourceConn, visible)}
+            className={SetClassName(data) + ""}
+            d={bezierPath}
+            markerEnd={markerEnd}
+          />
+          <path
+            id={id}
+            style={GetStyle(sourceConn, visible)}
             className={SetClassName(data) + "--dashed"}
             d={bezierPath}
             markerEnd={markerEnd}

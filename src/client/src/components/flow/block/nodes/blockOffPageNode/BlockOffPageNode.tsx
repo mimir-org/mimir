@@ -3,6 +3,7 @@ import { NodeProps } from "react-flow-renderer";
 import { projectSelector, useAppSelector } from "../../../../../redux/store";
 import { OffPageRequired } from "../../../../../assets/icons/offpage";
 import { HandleComponent } from "../../terminals";
+import { OffPageBox } from "./styled";
 
 const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
   const project = useAppSelector(projectSelector);
@@ -10,8 +11,8 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
   const type = "BlockOffPageNode-";
 
   return (
-    <div id={type + data.id}>
-      <img src={OffPageRequired} alt="menu" style={{ pointerEvents: "none" }} />
+    <OffPageBox id={type + data.id}>
+      <img src={OffPageRequired} alt="menu" className="logo" />
 
       <HandleComponent
         nodes={nodes}
@@ -21,7 +22,7 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
         parent={false}
         electro={false}
       />
-    </div>
+    </OffPageBox>
   );
 };
 

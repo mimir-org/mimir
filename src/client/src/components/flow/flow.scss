@@ -1,15 +1,4 @@
 // BLOCKVIEW
-.react-flow__node-BlockOffPageNode {
-  width: 19px;
-  height: 13px;
-  background-color: transparent;
-  z-index: 5 !important;
-}
-
-.react-flow__node-FunctionBlock {
-  z-index: 1 !important;
-}
-
 .react-flow__edge-BlockEdgeType {
   &:hover {
     cursor: grab;
