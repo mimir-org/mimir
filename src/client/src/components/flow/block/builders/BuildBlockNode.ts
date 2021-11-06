@@ -32,7 +32,7 @@ const BuildBlockNode = (node: Node, parent: Node, parentNodeSize: BlockNodeSize)
     type: type,
     data: node,
     position: position,
-    isHidden: node.isHidden,
+    isHidden: false,
     isSelected: node.isSelected,
     draggable: true,
     selectable: true,

@@ -59,6 +59,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
       product={IsProduct(node)}
       width={node.width}
       length={node.length}
+      visible={!node.isHidden}
       colorMain={GetAspectColor(data, AspectColorType.Main)}
       colorSelected={GetAspectColor(data, AspectColorType.Selected)}
       isSelected={node === GetSelectedBlockNode()}
