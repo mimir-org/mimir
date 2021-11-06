@@ -1,4 +1,4 @@
-import { Node, Connector } from "../../../models";
+import { Node, Connector, AspectColorType } from "../../../models";
 import { TextResources } from "../../../assets/text";
 import { Color } from "../../../compLibrary";
 import { IsProductTerminal, IsLocationTerminal, IsPartOf, IsTransport } from "../../../components/flow/helpers";
@@ -16,7 +16,7 @@ const GetLegendInfo = (conn: Connector, node: Node) => {
 
   if (IsPartOf(conn)) {
     name = TextResources.Relations_PartOf_Relationship;
-    color = GetAspectColor(node, "main");
+    color = GetAspectColor(node, AspectColorType.Main);
     return [name, color];
   }
 
@@ -28,7 +28,7 @@ const GetLegendInfo = (conn: Connector, node: Node) => {
 
   if (IsProductTerminal(conn)) {
     name = conn.name;
-    color = GetAspectColor(node, "main");
+    color = GetAspectColor(node, AspectColorType.Main);
     return [name, color];
   }
 };

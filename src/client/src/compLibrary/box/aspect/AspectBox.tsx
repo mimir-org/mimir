@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Color } from "../..";
 import { UseIndentLevel, GetAspectColor } from "../../../helpers";
-import { Node } from "../../../models";
+import { AspectColorType, Node } from "../../../models";
 
 interface Props {
   node: Node;
@@ -13,7 +13,7 @@ const AspectBox = styled.div<Props>`
   cursor: pointer;
   max-height: 30px;
   padding-left: ${(props) => (props.node.isRoot ? 5 : UseIndentLevel(props.indent))}px;
-  background-color: ${(props) => (props.node.isRoot ? Color.LightGrey : GetAspectColor(props.node, "main", true))};
+  background-color: ${(props) => (props.node.isRoot ? Color.LightGrey : GetAspectColor(props.node, AspectColorType.Main, true))};
   margin-top: ${(props) => props.node.isRoot && "7px"};
 
   &:hover {

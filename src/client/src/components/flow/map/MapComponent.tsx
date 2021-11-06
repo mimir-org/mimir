@@ -3,6 +3,7 @@ import { MapWrapper } from "./styled";
 import { Size } from "../../../compLibrary";
 import { heightSelector, inspectorSelector, libOpenSelector, useAppSelector } from "../../../redux/store";
 import { GetAspectColor } from "../../../helpers";
+import { AspectColorType } from "../../../models";
 
 const MiniMapComponent = () => {
   const libOpen = useAppSelector(libOpenSelector);
@@ -14,10 +15,10 @@ const MiniMapComponent = () => {
     <MapWrapper height={height} libOpen={libOpen}>
       <MiniMap
         nodeStrokeColor={(node: any) => {
-          return GetAspectColor(node, "selected");
+          return GetAspectColor(node, AspectColorType.Selected);
         }}
         nodeColor={(node: any) => {
-          return GetAspectColor(node, "header");
+          return GetAspectColor(node, AspectColorType.Header);
         }}
         nodeStrokeWidth={20}
       />

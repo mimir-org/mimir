@@ -6,7 +6,7 @@ import { SetParentNodeSize } from "./helpers";
 import { OnConnectorClick } from "./handlers";
 import { BlockComponent } from "./";
 import { FilterTerminals } from "../../helpers";
-import { Connector, Node } from "../../../../../models";
+import { AspectColorType, Connector, Node } from "../../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
 import { edgeSelector, electroSelector, nodeSelector, nodeSizeSelector, secondaryNodeSelector } from "../../../../../redux/store";
 import { GetAspectColor, IsLocation } from "../../../../../helpers";
@@ -46,7 +46,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
       <BlockComponent
         dispatch={dispatch}
         node={node}
-        color={GetAspectColor(node, "header")}
+        color={GetAspectColor(node, AspectColorType.Header)}
         selected={node.isBlockSelected}
         width={parentNodeSize?.width}
         height={parentNodeSize?.length}

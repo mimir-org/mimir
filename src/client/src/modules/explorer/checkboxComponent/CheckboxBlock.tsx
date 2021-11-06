@@ -1,10 +1,9 @@
-import { Node } from "../../../models";
+import { AspectColorType, Node } from "../../../models";
 import { secondaryNodeSelector, useAppDispatch, useAppSelector } from "../../../redux/store";
-import { GetSelectedNode } from "../../../helpers";
+import { GetSelectedNode, GetAspectColor } from "../../../helpers";
 import { OnBlockChange } from "../handlers";
 import { CheckboxBlockWrapper } from "./styled";
 import { IsChecked } from "../helpers";
-import { GetAspectColor } from "../../../helpers";
 
 interface Props {
   elements: any[];
@@ -25,7 +24,7 @@ export const CheckboxBlock = ({ elements, node, inputLabel }: Props) => {
 
   return (
     <CheckboxBlockWrapper
-      color={GetAspectColor(node, "selected")}
+      color={GetAspectColor(node, AspectColorType.Selected)}
       isSelectedNode={isSelectedNode}
       isSecondaryNode={isSecondaryNode}
     >

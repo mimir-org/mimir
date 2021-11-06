@@ -1,6 +1,6 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
-import { Connector, Node } from "../../../../../models";
+import { AspectColorType, Connector, Node } from "../../../../../models";
 import { TreeNodeWrapper, TreeHandleBox, TreeNodeBox } from "./styled";
 import { GetHandleType, IsPartOf } from "../../../helpers";
 import { TreeLogoComponent } from "../../logo";
@@ -30,7 +30,10 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
   const mouseNodeLeave = () => setTimer(true);
 
   return (
-    <TreeNodeBox colorMain={GetAspectColor(data, "main")} colorSelected={GetAspectColor(data, "selected")}>
+    <TreeNodeBox
+      colorMain={GetAspectColor(data, AspectColorType.Main)}
+      colorSelected={GetAspectColor(data, AspectColorType.Selected)}
+    >
       <TreeNodeWrapper onMouseEnter={() => setIsHover(true)} onMouseLeave={() => mouseNodeLeave()}>
         {data.connectors?.map((conn: Connector) => {
           const [typeHandler, positionHandler] = GetHandleType(conn);

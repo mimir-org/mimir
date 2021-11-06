@@ -55,3 +55,10 @@ export enum SelectType {
   SingleSelect = 1,
   MultiSelect = 2,
 }
+
+export enum AspectColorType {
+  Main = 0,
+  Selected = 1,
+  Header = 2,
+  Tab = 3,
+}
