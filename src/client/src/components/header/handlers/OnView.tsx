@@ -1,7 +1,7 @@
 import { ViewType, VIEW_TYPE } from "../../../models/project";
 import { changeFlowView } from "../../../redux/store/flow/actions";
 import { removeSecondaryNode } from "../../../redux/store/secondaryNode/actions";
-import { GetSelectedNode } from "../../flow/helpers";
+import { GetSelectedNode } from "../../../helpers";
 
 const OnView = (view: ViewType, dispatch: any) => {
   const selectedNode = GetSelectedNode();

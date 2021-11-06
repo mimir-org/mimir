@@ -1,9 +1,10 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
-import { Connector, Node } from "../../../../../models";
-import { TreeNodeWrapper, TreeHandleBox } from "./styled";
+import { AspectColorType, Connector, Node } from "../../../../../models";
+import { TreeHandleBox, TreeNodeBox } from "./styled";
 import { GetHandleType, IsPartOf } from "../../../helpers";
 import { TreeLogoComponent } from "../../logo";
+import { GetAspectColor, GetSelectedNode } from "../../../../../helpers";
 
 /**
  * Component to display a node in TreeView.
@@ -29,7 +30,14 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
   const mouseNodeLeave = () => setTimer(true);
 
   return (
-    <TreeNodeWrapper onMouseEnter={() => setIsHover(true)} onMouseLeave={() => mouseNodeLeave()}>
+    <TreeNodeBox
+      colorMain={GetAspectColor(data, AspectColorType.Main)}
+      colorSelected={GetAspectColor(data, AspectColorType.Selected)}
+      isSelected={data === GetSelectedNode()}
+      visible={!data.isHidden}
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => mouseNodeLeave()}
+    >
       {data.connectors?.map((conn: Connector) => {
         const [typeHandler, positionHandler] = GetHandleType(conn);
 
@@ -46,7 +54,7 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
         );
       })}
       <TreeLogoComponent node={data} />
-    </TreeNodeWrapper>
+    </TreeNodeBox>
   );
 };
 

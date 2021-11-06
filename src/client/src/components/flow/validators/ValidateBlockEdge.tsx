@@ -1,6 +1,6 @@
+import { IsFunction, IsLocation, IsProduct, IsDirectChild } from "../../../helpers";
 import { Node, Connector } from "../../../models";
-import { IsDirectChild } from "../block/helpers";
-import { IsLocation, IsProduct, IsTransportConnection, IsProductConnection, IsLocationConnection, IsFunction } from "../helpers";
+import { IsTransportConnection, IsProductConnection, IsLocationConnection } from "../helpers";
 
 /**
  * Validator for an edge in BlockView, where different rules apply for each Aspect.

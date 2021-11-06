@@ -1,10 +1,9 @@
 import { Project, Node } from "../../models";
 import { AspectComponent } from "./aspectComponent/AspectComponent";
-import { IsAspectNode } from "../../components/flow/helpers";
 import { HasChildren, IsAncestorInSet } from "./helpers/ParentNode";
 import { useState } from "react";
 import { SortNodesWithIndent } from "./helpers/SortNodesWithIndent";
-import { IsOffPage } from "../../components/flow/block/helpers";
+import { IsOffPage } from "../../helpers";
 
 interface Props {
   project: Project;
@@ -34,7 +33,6 @@ export const ProjectComponent = ({ project, elements, nodes }: Props) => {
             label={node.label}
             indent={indent}
             expanded={!closedNodes.has(node.id)}
-            isRoot={IsAspectNode(node)}
             isLeaf={!HasChildren(node, project)}
             project={project}
             elements={elements}

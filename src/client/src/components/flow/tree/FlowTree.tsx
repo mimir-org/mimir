@@ -1,11 +1,11 @@
 import * as Helpers from "./helpers/";
-import ReactFlow, { ReactFlowProvider, Elements } from "react-flow-renderer";
+import ReactFlow, { ReactFlowProvider, Elements, Background } from "react-flow-renderer";
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
 import { FullScreenComponent } from "../../../compLibrary/controls";
 import { Size } from "../../../compLibrary";
 import { changeInspectorTab } from "../../../modules/inspector/redux/tabs/actions";
-import { GetParent, GetSelectedNode, SetDarkModeColor } from "../helpers";
+import { GetParent } from "../helpers";
 import { BuildTreeElements } from "../tree/builders";
 import { setModuleVisibility } from "../../../redux/store/modules/actions";
 import { MODULE_TYPE } from "../../../models/project";
@@ -17,6 +17,8 @@ import { OnTreeClick } from "./handlers/";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { TreeFilterMenu } from "../../menus/filterMenu/tree";
 import { ExplorerModule } from "../../../modules/explorer";
+import { SetDarkModeColor, GetSelectedNode } from "../../../helpers";
+import { TreeConnectionLine } from "./edges";
 import {
   animatedEdgeSelector,
   darkModeSelector,
@@ -127,7 +129,9 @@ const FlowTree = ({ inspectorRef }: Props) => {
         defaultPosition={[800, 100]}
         zoomOnDoubleClick={false}
         onClick={(e) => OnTreeClick(e, dispatch, project, inspectorRef)}
+        connectionLineComponent={TreeConnectionLine}
       >
+        <Background />
         <FullScreenComponent inspectorRef={inspectorRef} />
         <FlowManipulator elements={elements} selectedId={selectedNodeId} />
       </ReactFlow>

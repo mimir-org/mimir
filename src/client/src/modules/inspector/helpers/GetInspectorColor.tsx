@@ -1,5 +1,5 @@
 import { Color } from "../../../compLibrary";
-import { IsFunction, IsLocation, IsProduct } from "../../../components/flow/helpers";
+import { IsFunction, IsLocation, IsProduct } from "../../../helpers";
 import { IsCreateLibraryType, IsEdge, IsNode } from "./IsType";
 import { InspectorElement } from "../types";
 

@@ -7,7 +7,7 @@ import { GetFilteredLibCategories, GetLibCategories } from "./helpers";
 import { ModuleBody, ModuleHead } from "../../compLibrary/box/modules";
 import { LegendIcons } from "../../compLibrary/box/library";
 import { MODULE_TYPE } from "../../models/project";
-import { GetSelectedNode } from "../../components/flow/helpers";
+import { GetSelectedNode } from "../../helpers";
 import { OnLibraryClick, OnLegendClick } from "./handlers";
 import { LegendIcon, LibraryIcon } from "../../assets/icons/modules";
 import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store/hooks";

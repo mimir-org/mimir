@@ -39,7 +39,7 @@
 }
 
 .has-location-function {
-  stroke-dasharray: 4.5 !important;
+  stroke-dasharray: 5.5 !important;
   stroke: #a300a7 !important;
   fill: none !important;
 
@@ -63,13 +63,13 @@
 }
 
 .fulfilled-by-function {
-  stroke-dasharray: 4.5 !important;
+  stroke-dasharray: 5.5 !important;
   stroke: #069098 !important;
   fill: none !important;
 
   &--dashed {
     stroke: #069098 !important;
-    opacity: 0.1 !important;
+    opacity: 0.2 !important;
     fill: none !important;
   }
 }

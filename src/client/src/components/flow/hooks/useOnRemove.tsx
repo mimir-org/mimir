@@ -1,13 +1,12 @@
 import { removeElements } from "react-flow-renderer";
 import { Size } from "../../../compLibrary";
+import { GetSelectedNode, IsAspectNode, IsBlockView, GetSelectedBlockNode } from "../../../helpers";
 import { EDGE_KIND } from "../../../models";
 import { EDGE_TYPE, MODULE_TYPE } from "../../../models/project";
 import { SetPanelHeight } from "../../../modules/inspector/helpers";
 import { changeInspectorHeight } from "../../../modules/inspector/redux/height/actions";
 import { setModuleVisibility } from "../../../redux/store/modules/actions";
 import { removeEdge, removeNode } from "../../../redux/store/project/actions";
-import { GetSelectedBlockNode, IsBlockView } from "../block/helpers";
-import { GetSelectedNode, IsAspectNode } from "../helpers";
 
 const useOnRemove = (elements: any[], setElements: any, dispatch: any, inspectorRef: React.MutableRefObject<HTMLDivElement>) => {
   const verifiedList: any[] = [];

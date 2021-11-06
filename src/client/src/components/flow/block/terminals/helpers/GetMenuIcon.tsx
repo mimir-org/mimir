@@ -1,6 +1,6 @@
 import * as Icons from "../../../../../assets/icons/terminalsMenu";
+import { IsFunction, IsLocation, IsProduct } from "../../../../../helpers";
 import { Node } from "../../../../../models";
-import { IsFunction, IsLocation, IsProduct } from "../../../helpers";
 
 /**
  * Function to get an icon for the terminals menu in BlockView.
