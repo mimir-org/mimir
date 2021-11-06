@@ -23,7 +23,7 @@ const CheckboxTreeWrapper = styled.label<Props>`
     content: "";
     width: 16px;
     transform: scale(0);
-    transition: 400ms transform;
+    transition: 440ms transform;
     background-color: ${(props) => props.color};
   }
 
