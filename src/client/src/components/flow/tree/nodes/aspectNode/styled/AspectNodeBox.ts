@@ -14,7 +14,7 @@ const AspectNodeBox = styled.div<Props>`
   border-radius: 10px;
   border: 3px solid;
   border-color: ${(props) => (props.isSelected ? props.colorMain : "transparent")};
-  transition: border 200ms ease-in-out;
+  transition: border 250ms ease-in-out;
 
   &:hover,
   &.selected {

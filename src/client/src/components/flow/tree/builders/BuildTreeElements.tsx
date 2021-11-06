@@ -1,8 +1,9 @@
 import { Elements } from "react-flow-renderer";
-import { BuildTreeEdge, BuildTreeNode } from ".";
+import { BuildTreeEdge } from ".";
 import { GetEdgeType } from "../helpers";
 import { Project, Edge } from "../../../../models";
 import { IsOffPage } from "../../../../helpers";
+import { ConvertNodeToFlow } from "../../converters";
 
 const BuildTreeElements = (project: Project, animated: boolean): Elements => {
   const elements: Elements = [];
@@ -11,7 +12,7 @@ const BuildTreeElements = (project: Project, animated: boolean): Elements => {
 
   project.nodes?.forEach((node) => {
     let treeNode = null;
-    if (!IsOffPage(node)) treeNode = BuildTreeNode(node);
+    if (!IsOffPage(node)) treeNode = ConvertNodeToFlow(node);
     if (treeNode) elements.push(treeNode);
   });
 

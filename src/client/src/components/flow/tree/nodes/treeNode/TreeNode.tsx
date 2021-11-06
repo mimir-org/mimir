@@ -34,6 +34,7 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
       colorMain={GetAspectColor(data, AspectColorType.Main)}
       colorSelected={GetAspectColor(data, AspectColorType.Selected)}
       isSelected={data === GetSelectedNode()}
+      visible={!data.isHidden}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => mouseNodeLeave()}
     >

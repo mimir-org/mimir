@@ -5,10 +5,12 @@ import { GetNodeType } from "../helpers";
 /**
  * Function to convert a Mimir Node to a FlowElement that interacts with the Flow library.
  * @param node
- * @param position
  * @returns a FlowElement
  */
-const ConvertNodeToFlow = (node: Node, position: any) => {
+const ConvertNodeToFlow = (node: Node) => {
+  if (!node) return null;
+  const position = { x: node.positionX, y: node.positionY };
+
   return {
     id: node.id,
     type: GetNodeType(node),

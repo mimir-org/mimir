@@ -5,6 +5,7 @@ interface Props {
   colorMain: string;
   colorSelected: string;
   isSelected: boolean;
+  visible: boolean;
 }
 
 const TreeNodeBox = styled.div<Props>`
@@ -17,7 +18,8 @@ const TreeNodeBox = styled.div<Props>`
   background-color: ${(props) => props.colorMain};
   border: 3px solid;
   border-color: ${(props) => (props.isSelected ? props.colorSelected : props.colorMain)};
-  transition: border 200ms ease-in-out;
+  opacity: ${(props) => (props.visible ? 1 : 0)};
+  transition: border 250ms ease-in-out, opacity 250ms ease-in-out;
 
   &:hover {
     border-color: ${(props) => props.colorSelected} !important;
