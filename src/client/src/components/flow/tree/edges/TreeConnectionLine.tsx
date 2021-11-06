@@ -1,27 +1,37 @@
-import { ArrowHeadType, getMarkerEnd } from "react-flow-renderer";
-import { Color } from "../../../../compLibrary";
-import { Connector } from "../../../../models";
-import { GetTerminalColor } from "../../block/terminals/helpers";
+import { ArrowHeadType, getMarkerEnd, getSmoothStepPath } from "react-flow-renderer";
+import { GetAspectColor } from "../../../../helpers";
+import { AspectColorType } from "../../../../models";
 
 /**
  * Component to give custom styling to the edge dragged from a Terminal in TreeView.
  * @param param0
  * @returns a line from a Node's terminal.
  */
-const TreeConnectionLine = ({ sourceX, sourceY, targetX, targetY, connectionLineType, sourceHandle, sourceNode }) => {
-  const connector = sourceNode.data?.connectors.find((conn: Connector) => conn.id === sourceHandle.id) as Connector;
-  console.log({ connector });
-  const color = Color.FunctionMain;
+const TreeConnectionLine = ({
+  sourceX,
+  sourceY,
+  targetX,
+  targetY,
+  connectionLineType,
+  sourceHandle,
+  sourceNode,
+  sourcePosition,
+  targetPosition,
+}) => {
+  const color = GetAspectColor(sourceNode?.data, AspectColorType.Main);
   const markerEnd = getMarkerEnd(ArrowHeadType.ArrowClosed, null);
+  const smoothPath = getSmoothStepPath({
+    sourceX,
+    sourceY,
+    sourcePosition,
+    targetX,
+    targetY,
+    targetPosition,
+  });
 
   return (
     <g>
-      <path
-        style={GetStyle(color)}
-        className="animated"
-        d={`M${sourceX},${sourceY} C ${sourceX} ${targetY + 100} ${sourceX} ${targetY + 100} ${targetX},${targetY}`}
-        markerEnd={markerEnd}
-      />
+      <path style={GetStyle(color)} d={smoothPath} markerEnd={markerEnd} />
     </g>
   );
 };
@@ -30,7 +40,7 @@ function GetStyle(color: string) {
   return {
     fill: "none",
     stroke: color,
-    strokeWidth: 2,
+    strokeWidth: 1.5,
   };
 }
 
