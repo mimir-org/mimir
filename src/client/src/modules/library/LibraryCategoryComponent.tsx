@@ -53,7 +53,7 @@ const LibraryCategoryComponent = ({
               key={node.id}
             >
               {node.name}
-              <LibElementIcon color={GetAspectColor(node, AspectColorType.Main, true)}>
+              <LibElementIcon color={GetAspectColor(node, AspectColorType.Main, false)}>
                 {(node.libraryType === ObjectType.Interface || node.libraryType === ObjectType.Transport) && (
                   <img src={GetObjectIcon(node)} alt="aspect-icon" className="icon" draggable="false"></img>
                 )}

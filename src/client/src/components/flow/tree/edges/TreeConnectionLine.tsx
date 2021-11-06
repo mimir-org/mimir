@@ -13,7 +13,6 @@ const TreeConnectionLine = ({
   targetX,
   targetY,
   connectionLineType,
-  sourceHandle,
   sourceNode,
   sourcePosition,
   targetPosition,
