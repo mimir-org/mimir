@@ -1,11 +1,4 @@
 // BLOCKVIEW
-.react-flow__node-BlockOffPageNode {
-  width: 19px;
-  height: 13px;
-  background-color: transparent;
-  z-index: 5 !important;
-}
-
 .react-flow__edge-BlockEdgeType {
   &:hover {
     cursor: grab;
@@ -45,7 +38,7 @@
 }
 
 .react-flow__nodes {
-  z-index: 2;
+  z-index: 3;
 }
 
 .react-flow__edge {
@@ -53,7 +46,7 @@
 }
 
 .react-flow__edges {
-  z-index: 3;
+  z-index: 2;
 }
 
 .react-flow__handle.connectable {
