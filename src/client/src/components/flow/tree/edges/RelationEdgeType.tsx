@@ -1,6 +1,7 @@
 import "./RelationEdge.scss";
 import { getBezierPath, getMarkerEnd } from "react-flow-renderer";
 import { Aspect, Connector, Node, RelationType } from "../../../../models";
+import { GetEdgeStyle } from "./helpers";
 
 export default function RelationEdgeType({
   id,
@@ -16,7 +17,7 @@ export default function RelationEdgeType({
 }) {
   const markerEnd = getMarkerEnd(arrowHeadType, markerEndId);
 
-  const edgePathBezier = getBezierPath({
+  const bezierPath = getBezierPath({
     sourceX,
     sourceY,
     sourcePosition,
@@ -25,22 +26,15 @@ export default function RelationEdgeType({
     targetPosition,
   });
 
-  const getStyle = () => {
-    const fromConnector = data.source.connectors?.find((x: { id: any }) => x.id === data.edge.fromConnector.id);
-    return {
-      stroke: fromConnector?.mediaColor,
-      strokeWidth: 2,
-    };
-  };
+  const sourceConnector = data.source.connectors?.find((x) => x.id === data.edge.fromConnector.id);
+  const color = sourceConnector?.mediaColor ?? sourceConnector?.color;
 
   const getClassName = (source: Node): string => {
     let defaultClassName = "react-flow__edge-path ";
 
-    const fromConnector = data.source.connectors?.find(
-      (x: { id: any }) => x.id === data.edge.fromConnector.id
-    ) as Connector;
+    const sourceConn = data.source.connectors?.find((x: { id: any }) => x.id === data.edge.fromConnector.id) as Connector;
 
-    switch (fromConnector?.relationType) {
+    switch (sourceConn?.relationType) {
       case RelationType.HasLocation:
         defaultClassName += "has-location";
         break;
@@ -69,18 +63,18 @@ export default function RelationEdgeType({
     <>
       <path
         id={id}
-        style={getStyle()}
+        style={GetEdgeStyle(color, !data?.edge.isHidden)}
         className={getClassName(data.source) + ""}
-        d={edgePathBezier}
+        d={bezierPath}
         markerEnd={markerEnd}
       />
-      <path
+      {/* <path
         id={id}
-        style={getStyle()}
+        style={GetStyle(color, !data?.edge.isHidden)}
         className={getClassName(data.source) + "--dashed"}
-        d={edgePathBezier}
+        d={bezierPath}
         markerEnd={markerEnd}
-      />
+      /> */}
     </>
   );
 }

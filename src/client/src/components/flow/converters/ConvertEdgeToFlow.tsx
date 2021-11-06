@@ -28,7 +28,7 @@ const ConvertEdgeToFlow = (edge: Edge, edgeType: EdgeType, sourceNode: Node, tar
       target: targetNode,
       edge: edge,
     },
-    isHidden: edge.isHidden,
+    isHidden: false, // Opacity is controlled by the styled component
     parentType: sourceNode?.aspect,
     targetType: targetNode?.aspect,
   } as FlowElement;
