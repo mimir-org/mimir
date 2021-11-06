@@ -22,8 +22,8 @@ const NodeBox = styled.div<Props>`
   border: 3px solid;
   border-color: ${(props) => (props.isSelected ? props.colorSelected : props.colorMain)};
   box-shadow: ${(props) => (!props.isSelected ? "0 5px 5px -2px rgba(0, 0, 0, 0.2)" : "none")};
-  transition: border 250ms ease-in-out, box-shadow 250ms ease-in-out;
-  z-index: 2;
+  transition: border 250ms ease-in-out, box-shadow 250ms ease-in-out, height 250ms ease-in-out, width 250ms ease-in-out;
+  z-index: 2 !important;
 
   &:hover {
     border-color: ${(props) => props.colorSelected} !important;
