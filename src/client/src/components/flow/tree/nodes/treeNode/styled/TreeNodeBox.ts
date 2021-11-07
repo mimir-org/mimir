@@ -19,7 +19,7 @@ const TreeNodeBox = styled.div<Props>`
   border: 3px solid;
   border-color: ${(props) => (props.isSelected ? props.colorSelected : props.colorMain)};
   opacity: ${(props) => (props.visible ? 1 : 0)};
-  transition: border 500ms, opacity 500ms;
+  transition: border 250ms, opacity 250ms;
 
   &:hover {
     border-color: ${(props) => props.colorSelected} !important;

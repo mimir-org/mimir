@@ -1,21 +1,3 @@
-// BLOCKVIEW
-.react-flow__edge-BlockEdgeType {
-  &:hover {
-    cursor: grab;
-
-    .react-flow__edge-path {
-      stroke-width: 4px !important;
-    }
-    transition: stroke-width 2ms ease-in-out;
-  }
-
-  &.selected {
-    .react-flow__edge-path {
-      stroke: black !important;
-    }
-  }
-}
-
 // COMMON
 .react-flow__handle {
   position: absolute;
@@ -51,4 +33,93 @@
 
 .react-flow__handle.connectable {
   cursor: crosshair;
+}
+
+#react-flow__arrowclosed {
+  :first-child {
+    fill: var(--arrow-color);
+    stroke: var(--arrow-color);
+  }
+}
+.react-flow__pane {
+  z-index: 0;
+}
+
+// TREEVIEW
+// Part edge
+.path-partEdge {
+  stroke-width: 3px;
+  fill: none;
+  pointer-events: all;
+}
+
+.react-flow__edge-PartEdgeType {
+  &:hover {
+    .path-partEdge {
+      stroke: #d9d9d9 !important;
+    }
+  }
+
+  &.selected {
+    .path-partEdge {
+      stroke: black !important;
+    }
+  }
+}
+
+// Transport edge
+.path-edgeTransport {
+  stroke-width: 3px !important;
+  fill: none;
+  pointer-events: all;
+}
+
+.react-flow__edge-TransportEdgeType {
+  &:hover {
+    .path-edgeTransport {
+      stroke: #d9d9d9 !important;
+    }
+  }
+  &.selected {
+    .path-edgeTransport {
+      stroke: black !important;
+    }
+  }
+}
+
+// Relation edge
+.path-edgeRelation {
+  stroke-width: 3px !important;
+  fill: none;
+  pointer-events: all;
+}
+
+.react-flow__edge-RelationEdgeType {
+  &:hover {
+    .path-edgeRelation {
+      stroke: #d9d9d9 !important;
+    }
+  }
+
+  &.selected {
+    .path-edgeRelation {
+      stroke: black !important;
+    }
+  }
+}
+
+// BLOCKVIEW
+.react-flow__edge-BlockEdgeType {
+  &:hover {
+    .react-flow__edge-path {
+      stroke-width: 4px !important;
+    }
+    transition: stroke-width 2ms ease-in-out;
+  }
+
+  &.selected {
+    .react-flow__edge-path {
+      stroke: black !important;
+    }
+  }
 }
