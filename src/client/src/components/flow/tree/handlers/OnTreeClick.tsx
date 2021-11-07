@@ -16,19 +16,20 @@ import { changeInspectorHeight } from "../../../../modules/inspector/redux/heigh
  */
 const OnTreeClick = (e: any, dispatch: any, project: Project, inspectorRef: React.MutableRefObject<HTMLDivElement>) => {
   if (!project) return;
+  const target = e.target.classList;
 
   // Close Inspector if no node/edge is selected
-  // if (e.target.className === "react-flow__pane") {
-  //   dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, false, true));
-  //   dispatch(setActiveNode(null, false));
-  //   dispatch(setActiveEdge(null, false));
-  //   dispatch(changeInspectorHeight(Size.ModuleClosed));
-  //   SetPanelHeight(inspectorRef, Size.ModuleClosed); // TODO: remove
-  //   return;
-  // }
+  if (e.target.className === "react-flow__pane") {
+    dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, false, true));
+    dispatch(setActiveNode(null, false));
+    dispatch(setActiveEdge(null, false));
+    dispatch(changeInspectorHeight(Size.ModuleClosed));
+    SetPanelHeight(inspectorRef, Size.ModuleClosed); // TODO: remove
+    return;
+  }
 
   // Handle select Edge
-  if (e.target.classList.contains("react-flow__edge-path")) {
+  if (target.contains("path-edgeTransport") || target.contains("path-partEdge") || target.contains("path-edgeRelation")) {
     const edge = project.edges.find((x) => x.id === e.target.id);
     dispatch(setActiveEdge(edge?.id, true));
     dispatch(setActiveNode(null, false));

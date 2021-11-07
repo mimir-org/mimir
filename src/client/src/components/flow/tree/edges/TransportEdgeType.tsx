@@ -1,4 +1,3 @@
-import "./TransportEdge.scss";
 import { ArrowHeadType, getMarkerEnd, getSmoothStepPath } from "react-flow-renderer";
 import { Connector } from "../../../../models";
 import { GetEdgeStyle } from "./helpers";
@@ -16,7 +15,7 @@ export default function TransportEdgeType({
 }) {
   const markerEnd = getMarkerEnd(ArrowHeadType.ArrowClosed, markerEndId);
 
-  const edgePathSmoothStep = getSmoothStepPath({
+  const smoothStep = getSmoothStepPath({
     sourceX,
     sourceY,
     sourcePosition,
@@ -32,8 +31,8 @@ export default function TransportEdgeType({
     <path
       id={id}
       style={GetEdgeStyle(color, !data?.edge.isHidden)}
-      className="react-flow__edge-path"
-      d={edgePathSmoothStep}
+      className="path-edgeTransport"
+      d={smoothStep}
       markerEnd={markerEnd}
     />
   );
