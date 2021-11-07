@@ -1,6 +1,11 @@
 import { getBezierPath, getMarkerEnd } from "react-flow-renderer";
-import { GetRelationEdgeStyle } from "./helpers";
+import { GetRelationEdgeStyle } from "../../helpers";
 
+/**
+ * Component for RelationEdges in TreeView.
+ * @param params
+ * @returns an horizontal hasLocation/fulfilledBy edge.
+ */
 export default function RelationEdgeType({
   id,
   sourceX,

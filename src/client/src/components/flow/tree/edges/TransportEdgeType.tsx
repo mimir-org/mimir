@@ -1,7 +1,12 @@
 import { ArrowHeadType, getMarkerEnd, getSmoothStepPath } from "react-flow-renderer";
 import { Connector } from "../../../../models";
-import { GetEdgeStyle } from "./helpers";
+import { GetEdgeStyle } from "../../helpers";
 
+/**
+ * Component for TransportEdges in TreeView.
+ * @param params
+ * @returns a horizontal transport edge between Product/Function nodes.
+ */
 export default function TransportEdgeType({
   id,
   sourceX,
@@ -14,6 +19,8 @@ export default function TransportEdgeType({
   markerEndId,
 }) {
   const markerEnd = getMarkerEnd(ArrowHeadType.ArrowClosed, markerEndId);
+  const sourceConnector = data.source.connectors?.find((x) => x.id === data.edge.fromConnector.id) as Connector;
+  const color = sourceConnector?.color;
 
   const smoothStep = getSmoothStepPath({
     sourceX,
@@ -23,9 +30,6 @@ export default function TransportEdgeType({
     targetY,
     targetPosition,
   });
-
-  const fromConnector = data.source.connectors?.find((x) => x.id === data.edge.fromConnector.id) as Connector;
-  const color = fromConnector?.color;
 
   return (
     <path

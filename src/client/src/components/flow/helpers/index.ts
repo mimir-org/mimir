@@ -30,5 +30,8 @@ export { default as IsSubProject } from "./IsSubProject";
 export { default as GetProjectData } from "./GetProjectData";
 export { default as GetSubProject } from "./GetSubProject";
 
+export { default as GetEdgeStyle } from "./GetEdgeStyle";
+export { default as GetRelationEdgeStyle } from "./GetRelationEdgeStyle";
+
 export * from "./SetSiblingRDS";
 export * from "./types";
