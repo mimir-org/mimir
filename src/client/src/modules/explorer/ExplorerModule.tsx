@@ -7,12 +7,19 @@ import { OnToggleClick } from "./handlers";
 import { ExplorerIcon } from "../../assets/icons/modules";
 import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store/hooks";
 import { animatedModuleSelector, explorerSelector, projectSelector } from "../../redux/store";
+import { Node } from "../../models";
+
+interface Props {
+  elements: any[];
+  selectedNode: Node;
+  secondaryNode: Node;
+}
 
 /**
  * Component for the Explorer Module in Mimir.
  * @returns a module where all nodes in Mimir are listed.
  */
-export const ExplorerModule = ({ elements }) => {
+export const ExplorerModule = ({ elements, selectedNode, secondaryNode }: Props) => {
   const dispatch = useAppDispatch();
   const type = MODULE_TYPE.EXPLORER;
   const project = useAppSelector(projectSelector);
@@ -29,7 +36,15 @@ export const ExplorerModule = ({ elements }) => {
         <p className="text">{type}</p>
       </ModuleHead>
       <ModuleBody visible={isOpen} explorer isBlockView={IsBlockView()}>
-        {project && <ProjectComponent project={project} elements={elements} nodes={project.nodes ?? []} />}
+        {project && (
+          <ProjectComponent
+            project={project}
+            elements={elements}
+            nodes={project.nodes ?? []}
+            selectedNode={selectedNode}
+            secondaryNode={secondaryNode}
+          />
+        )}
       </ModuleBody>
     </AnimatedModule>
   );

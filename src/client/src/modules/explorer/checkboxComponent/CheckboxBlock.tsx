@@ -1,32 +1,29 @@
 import { AspectColorType, Node } from "../../../models";
-import { secondaryNodeSelector, useAppDispatch, useAppSelector } from "../../../redux/store";
-import { GetSelectedNode, GetAspectColor } from "../../../helpers";
+import { useAppDispatch } from "../../../redux/store";
+import { GetAspectColor } from "../../../helpers";
 import { OnBlockChange } from "../handlers";
 import { CheckboxBlockWrapper } from "./styled";
-import { IsChecked } from "../helpers";
+import { IsMiniCheckBox, IsChecked } from "./helpers";
 
 interface Props {
   elements: any[];
   node: Node;
   inputLabel: string;
+  selectedNode: Node;
+  secondaryNode: Node;
 }
 /**
  * Checkbox used in the Explorer in BlockView
  * @param interface
- * @returns a checkbox
+ * @returns a checkbox with different styling for parentNodes and childNodes.
  */
-export const CheckboxBlock = ({ elements, node, inputLabel }: Props) => {
+export const CheckboxBlock = ({ elements, node, inputLabel, selectedNode, secondaryNode }: Props) => {
   const dispatch = useAppDispatch();
-  const secondaryNode = useAppSelector(secondaryNodeSelector);
-  const selectedNode = GetSelectedNode();
-  const isSelectedNode = node === selectedNode;
-  const isSecondaryNode = node === secondaryNode;
 
   return (
     <CheckboxBlockWrapper
       color={GetAspectColor(node, AspectColorType.Selected)}
-      isSelectedNode={isSelectedNode}
-      isSecondaryNode={isSecondaryNode}
+      miniCheckBox={IsMiniCheckBox(node, selectedNode, secondaryNode)}
     >
       <input
         type="checkbox"

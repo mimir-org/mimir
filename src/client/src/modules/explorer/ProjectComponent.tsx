@@ -9,9 +9,11 @@ interface Props {
   project: Project;
   elements: any[];
   nodes: Node[];
+  selectedNode: Node;
+  secondaryNode: Node;
 }
 
-export const ProjectComponent = ({ project, elements, nodes }: Props) => {
+export const ProjectComponent = ({ project, elements, nodes, selectedNode, secondaryNode }: Props) => {
   const [closedNodes, setClosedNodes] = useState(new Set<string>());
   nodes = nodes.filter((n) => !IsOffPage(n));
 
@@ -36,6 +38,8 @@ export const ProjectComponent = ({ project, elements, nodes }: Props) => {
             isLeaf={!HasChildren(node, project)}
             project={project}
             elements={elements}
+            selectedNode={selectedNode}
+            secondaryNode={secondaryNode}
             onElementExpanded={onExpandElement}
           />
         );

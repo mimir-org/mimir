@@ -1,5 +1,5 @@
-import { Node, EDGE_KIND } from "../../../models";
-import { EDGE_TYPE } from "../../../models/project";
+import { Node, EDGE_KIND } from "../../../../models";
+import { EDGE_TYPE } from "../../../../models/project";
 
 const IsChecked = (elements: any[], node: Node) => {
   const edgeTypes = Object.values(EDGE_TYPE);
