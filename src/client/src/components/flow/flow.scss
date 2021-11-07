@@ -1,13 +1,4 @@
 // COMMON
-.react-flow__handle {
-  position: absolute;
-  width: 15px !important;
-  height: 15px !important;
-  border-radius: 0 !important;
-  border: none !important;
-  background-color: transparent !important;
-}
-
 .dndflow {
   height: 100%;
   display: flex;
@@ -33,6 +24,15 @@
 
 .react-flow__handle.connectable {
   cursor: crosshair;
+}
+
+.react-flow__handle {
+  position: absolute;
+  width: 15px !important;
+  height: 15px !important;
+  border-radius: 0 !important;
+  border: none !important;
+  background-color: transparent !important;
 }
 
 #react-flow__arrowclosed {
@@ -112,9 +112,8 @@
 .react-flow__edge-BlockEdgeType {
   &:hover {
     .react-flow__edge-path {
-      stroke-width: 4px !important;
+      stroke: #d9d9d9 !important;
     }
-    transition: stroke-width 2ms ease-in-out;
   }
 
   &.selected {
