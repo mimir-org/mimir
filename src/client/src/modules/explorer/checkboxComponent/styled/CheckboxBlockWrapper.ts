@@ -3,8 +3,7 @@ import { Color, FontSize } from "../../../../compLibrary";
 
 interface Props {
   color: string;
-  isSelectedNode: boolean;
-  isSecondaryNode: boolean;
+  miniCheckBox: boolean;
 }
 
 const CheckboxBlockWrapper = styled.label<Props>`
@@ -23,16 +22,17 @@ const CheckboxBlockWrapper = styled.label<Props>`
 
   input::before {
     content: "";
-    height: ${(props) => (props.isSelectedNode || props.isSecondaryNode ? 16 : 10)}px;
-    width: ${(props) => (props.isSelectedNode || props.isSecondaryNode ? 16 : 12)}px;
+    height: ${(props) => (!props.miniCheckBox ? 16 : 8)}px;
+    width: ${(props) => (!props.miniCheckBox ? 20 : 14)}px;
+    background-color: ${(props) => props.color};
     transform: scale(0);
     transition: 250ms transform ease-in-out;
-    background-color: ${(props) => props.color};
   }
 
   input:checked::before {
     transform: scale(1);
-    margin: ${(props) => !props.isSelectedNode && !props.isSecondaryNode && "3px 3px 3px 3px"};
+    margin: ${(props) => props.miniCheckBox && "4px"};
+    transition: 250ms transform ease-in-out;
   }
 
   .label {
