@@ -1,6 +1,6 @@
 import { ArrowHeadType, getBezierPath, getMarkerEnd, getSmoothStepPath } from "react-flow-renderer";
 import { Connector } from "../../../../models";
-import { GetEdgeStyle, GetRelationEdgeStyle, IsLocationTerminal, IsProductTerminal } from "../../helpers";
+import { GetEdgeStyle, GetEdgeRelationStyle, IsLocationTerminal, IsProductTerminal } from "../../helpers";
 
 /**
  * Component for an Edge in BlockView.
@@ -36,18 +36,12 @@ const BlockEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition, tar
   return (
     <>
       {!hasLocation && !hasProduct ? (
-        <path
-          id={id}
-          style={GetEdgeStyle(color, visible)}
-          className="react-flow__edge-path"
-          d={smoothPath}
-          markerEnd={markerEnd}
-        />
+        <path id={id} style={GetEdgeStyle(color, visible)} className="path-blockEdge" d={smoothPath} markerEnd={markerEnd} />
       ) : (
         <path
           id={id}
-          style={GetRelationEdgeStyle(data.target, visible)}
-          className="react-flow__edge-path"
+          style={GetEdgeRelationStyle(data.target, visible)}
+          className="path-blockEdge"
           d={bezierPath}
           markerEnd={markerEnd}
         />

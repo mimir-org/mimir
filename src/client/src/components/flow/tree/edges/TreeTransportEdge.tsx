@@ -25,7 +25,7 @@ const TreeTransportEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosit
     <path
       id={id}
       style={GetEdgeStyle(color, !data?.edge.isHidden)}
-      className="path-edgeTransport"
+      className="path-transportEdge"
       d={smoothStep}
       markerEnd={markerEnd}
     />

@@ -29,7 +29,7 @@ const OnTreeClick = (e: any, dispatch: any, project: Project, inspectorRef: Reac
   }
 
   // Handle select Edge
-  if (target.contains("path-edgeTransport") || target.contains("path-partEdge") || target.contains("path-edgeRelation")) {
+  if (target.contains("path-transportEdge") || target.contains("path-partEdge") || target.contains("path-relationEdge")) {
     const edge = project.edges.find((x) => x.id === e.target.id);
     dispatch(setActiveEdge(edge?.id, true));
     dispatch(setActiveNode(null, false));

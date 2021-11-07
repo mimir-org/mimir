@@ -1,4 +1,3 @@
-// COMMON
 .dndflow {
   height: 100%;
   display: flex;
@@ -11,15 +10,11 @@
 }
 
 .react-flow__nodes {
-  z-index: 3;
-}
-
-.react-flow__edge {
-  cursor: grab;
+  z-index: 2;
 }
 
 .react-flow__edges {
-  z-index: 2;
+  z-index: 3;
 }
 
 .react-flow__handle.connectable {
@@ -41,83 +36,35 @@
     stroke: var(--arrow-color);
   }
 }
-.react-flow__pane {
-  z-index: 0;
-}
 
-// TREEVIEW
-// Part edge
-.path-partEdge {
-  stroke-width: 3px;
+.path-transportEdge,
+.path-partEdge,
+.path-relationEdge,
+.path-blockEdge {
+  stroke-width: 2px !important;
   fill: none;
   pointer-events: all;
+  cursor: grab;
 }
 
-.react-flow__edge-PartEdgeType {
-  &:hover {
-    .path-partEdge {
-      stroke: #d9d9d9 !important;
-    }
-  }
-
-  &.selected {
-    .path-partEdge {
-      stroke: black !important;
-    }
-  }
-}
-
-// Transport edge
-.path-edgeTransport {
-  stroke-width: 3px !important;
-  fill: none;
-  pointer-events: all;
-}
-
-.react-flow__edge-TransportEdgeType {
-  &:hover {
-    .path-edgeTransport {
-      stroke: #d9d9d9 !important;
-    }
-  }
-  &.selected {
-    .path-edgeTransport {
-      stroke: black !important;
-    }
-  }
-}
-
-// Relation edge
-.path-edgeRelation {
-  stroke-width: 3px !important;
-  fill: none;
-  pointer-events: all;
-}
-
-.react-flow__edge-RelationEdgeType {
-  &:hover {
-    .path-edgeRelation {
-      stroke: #d9d9d9 !important;
-    }
-  }
-
-  &.selected {
-    .path-edgeRelation {
-      stroke: black !important;
-    }
-  }
-}
-
-// BLOCKVIEW
+.react-flow__edge-PartEdgeType,
+.react-flow__edge-RelationEdgeType,
+.react-flow__edge-TransportEdgeType,
 .react-flow__edge-BlockEdgeType {
   &:hover {
-    .react-flow__edge-path {
+    .path-relationEdge,
+    .path-transportEdge,
+    .path-partEdge,
+    .path-blockEdge {
       stroke: #d9d9d9 !important;
     }
   }
 
   &.selected {
-    .react-flow__edge-path {
+    .path-relationEdge,
+    .path-transportEdge,
+    .path-partEdge,
+    .path-blockEdge {
       stroke: black !important;
     }
   }

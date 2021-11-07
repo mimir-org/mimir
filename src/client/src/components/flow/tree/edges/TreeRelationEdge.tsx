@@ -1,5 +1,5 @@
 import { getBezierPath, getMarkerEnd } from "react-flow-renderer";
-import { GetRelationEdgeStyle } from "../../helpers";
+import { GetEdgeRelationStyle } from "../../helpers";
 
 /**
  * Component for RelationEdges in TreeView.
@@ -32,8 +32,8 @@ const TreeRelationEdge = ({
   return (
     <path
       id={id}
-      style={GetRelationEdgeStyle(data.target, !data?.edge.isHidden)}
-      className={"path-edgeRelation"}
+      style={GetEdgeRelationStyle(data.target, !data?.edge.isHidden)}
+      className={"path-relationEdge"}
       d={bezierPath}
       markerEnd={markerEnd}
     />

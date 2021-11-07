@@ -11,9 +11,10 @@ import { setActiveBlockNode, setActiveEdge } from "../../../../redux/store/proje
  */
 const OnBlockClick = (e: any, dispatch: any, project: Project) => {
   if (!project) return;
+  const target = e.target.classList;
 
   // Handle select Edge
-  if (e.target.classList.contains("react-flow__edge-path")) {
+  if (target.contains("path-blockEdge")) {
     const edge = project.edges.find((x) => x.id === e.target.id);
     dispatch(setActiveEdge(edge?.id, true));
     dispatch(setActiveBlockNode(null));

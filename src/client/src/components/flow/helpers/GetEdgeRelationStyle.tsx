@@ -2,7 +2,7 @@ import { Color } from "../../../compLibrary";
 import { IsLocation, IsProduct } from "../../../helpers";
 import { Node } from "../../../models";
 
-const GetRelationEdgeStyle = (source: Node, visible: boolean) => {
+const GetEdgeRelationStyle = (source: Node, visible: boolean) => {
   const getColor = () => {
     if (IsLocation(source)) return Color.LocationSelected;
     if (IsProduct(source)) return Color.ProductSelected;
@@ -17,4 +17,4 @@ const GetRelationEdgeStyle = (source: Node, visible: boolean) => {
   };
 };
 
-export default GetRelationEdgeStyle;
+export default GetEdgeRelationStyle;
