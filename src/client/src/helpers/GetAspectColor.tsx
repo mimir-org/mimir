@@ -2,6 +2,13 @@ import { Color } from "../compLibrary";
 import { AspectColorType, LibItem, Node } from "../models";
 import { IsFunction, IsLocation, IsProduct } from "./";
 
+/**
+ * Component to get the color for a given item.
+ * @param node
+ * @param colorType
+ * @param isTransparent
+ * @returns the color according to the chosen criteriums.
+ */
 const GetAspectColor = (node: Node | LibItem, colorType: AspectColorType, isTransparent?: boolean) => {
   if (isTransparent) {
     if (IsFunction(node)) return "rgba(251, 201, 19, 0.1)";

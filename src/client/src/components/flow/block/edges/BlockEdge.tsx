@@ -36,18 +36,12 @@ const BlockEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition, tar
   return (
     <>
       {!hasLocation && !hasProduct ? (
-        <path
-          id={id}
-          style={GetEdgeStyle(color, visible)}
-          className="react-flow__edge-path"
-          d={smoothPath}
-          markerEnd={markerEnd}
-        />
+        <path id={id} style={GetEdgeStyle(color, visible)} className="path-blockEdge" d={smoothPath} markerEnd={markerEnd} />
       ) : (
         <path
           id={id}
           style={GetRelationEdgeStyle(data.target, visible)}
-          className="react-flow__edge-path"
+          className="path-blockEdge"
           d={bezierPath}
           markerEnd={markerEnd}
         />

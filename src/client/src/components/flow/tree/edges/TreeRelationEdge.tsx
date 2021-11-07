@@ -33,7 +33,7 @@ const TreeRelationEdge = ({
     <path
       id={id}
       style={GetRelationEdgeStyle(data.target, !data?.edge.isHidden)}
-      className={"path-edgeRelation"}
+      className={"path-relationEdge"}
       d={bezierPath}
       markerEnd={markerEnd}
     />

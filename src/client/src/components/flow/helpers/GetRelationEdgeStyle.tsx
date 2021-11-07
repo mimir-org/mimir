@@ -11,7 +11,7 @@ const GetRelationEdgeStyle = (source: Node, visible: boolean) => {
   return {
     stroke: getColor(),
     strokeDasharray: 2.5,
-    strokeWidth: "2px",
+    strokeWidth: "3px",
     opacity: visible ? 1 : 0,
     transition: "opacity 250ms",
   };
