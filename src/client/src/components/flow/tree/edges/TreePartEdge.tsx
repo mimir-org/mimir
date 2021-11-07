@@ -8,7 +8,7 @@ import { GetEdgeStyle } from "../../helpers";
  * @param params
  * @returns a vertical edge between nodes of the same Aspect.
  */
-export default function PartEdgeType({ id, sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data }) {
+const TreePartEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data }) => {
   const color = GetAspectColor(data.edge.fromNode, AspectColorType.Main);
   const style = GetEdgeStyle(color, !data.edge.isHidden);
 
@@ -22,4 +22,6 @@ export default function PartEdgeType({ id, sourceX, sourceY, targetX, targetY, s
   });
 
   return <path id={id} style={style} className="path-partEdge" d={edgePathSmoothStep} markerEnd={null} />;
-}
+};
+
+export default TreePartEdge;
