@@ -7,17 +7,7 @@ import { GetEdgeStyle } from "../../helpers";
  * @param params
  * @returns a horizontal transport edge between Product/Function nodes.
  */
-export default function TransportEdgeType({
-  id,
-  sourceX,
-  sourceY,
-  targetX,
-  targetY,
-  sourcePosition,
-  targetPosition,
-  data,
-  markerEndId,
-}) {
+const TreeTransportEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data, markerEndId }) => {
   const markerEnd = getMarkerEnd(ArrowHeadType.ArrowClosed, markerEndId);
   const sourceConnector = data.source.connectors?.find((x) => x.id === data.edge.fromConnector.id) as Connector;
   const color = sourceConnector?.color;
@@ -40,4 +30,5 @@ export default function TransportEdgeType({
       markerEnd={markerEnd}
     />
   );
-}
+};
+export default TreeTransportEdge;

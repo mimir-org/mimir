@@ -4,7 +4,7 @@ import { AspectColorType } from "../../../../models";
 
 /**
  * Component to give custom styling to the edge dragged from a Terminal in TreeView.
- * @param param0
+ * @param params
  * @returns a line from a Node's terminal.
  */
 const TreeConnectionLine = ({

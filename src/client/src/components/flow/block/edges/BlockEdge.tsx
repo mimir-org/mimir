@@ -5,17 +5,15 @@ import { GetEdgeStyle, GetRelationEdgeStyle, IsLocationTerminal, IsProductTermin
 /**
  * Component for an Edge in BlockView.
  * @param params
- * @returns a connection line between two Nodes.
+ * @returns a TransportEdge or RelationEdge in BlockView.
  */
-export default function BlockEdgeType({ id, sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data }) {
+const BlockEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data }) => {
   const markerEnd = getMarkerEnd(ArrowHeadType.ArrowClosed, null);
   const sourceConn = data.source.connectors?.find((conn: Connector) => conn.id === data.edge.fromConnectorId) as Connector;
   const hasLocation = IsLocationTerminal(sourceConn);
   const hasProduct = IsProductTerminal(sourceConn);
   const visible = !data?.edge.isHidden;
-
-  const sourceConnector = data.source.connectors?.find((x) => x.id === data.edge.fromConnector.id) as Connector;
-  const color = sourceConnector?.color;
+  const color = sourceConn?.color;
 
   const smoothPath = getSmoothStepPath({
     sourceX,
@@ -56,4 +54,6 @@ export default function BlockEdgeType({ id, sourceX, sourceY, targetX, targetY, 
       )}
     </>
   );
-}
+};
+
+export default BlockEdge;

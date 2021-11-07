@@ -6,7 +6,7 @@ import { GetRelationEdgeStyle } from "../../helpers";
  * @param params
  * @returns an horizontal hasLocation/fulfilledBy edge.
  */
-export default function RelationEdgeType({
+const TreeRelationEdge = ({
   id,
   sourceX,
   sourceY,
@@ -17,7 +17,7 @@ export default function RelationEdgeType({
   data,
   arrowHeadType,
   markerEndId,
-}) {
+}) => {
   const markerEnd = getMarkerEnd(arrowHeadType, markerEndId);
 
   const bezierPath = getBezierPath({
@@ -38,4 +38,6 @@ export default function RelationEdgeType({
       markerEnd={markerEnd}
     />
   );
-}
+};
+
+export default TreeRelationEdge;
