@@ -11,7 +11,6 @@ interface Props {
 export const CheckboxTree = ({ node, project, inputLabel }: Props) => (
   <CheckboxTreeWrapper color={GetAspectColor(node, AspectColorType.Selected)}>
     <input type="checkbox" checked={!node?.isHidden ?? false} onChange={ChangeNodeDisplay(node, project)} />
-    <div className="checkmark"></div>
     <div className="label">{inputLabel}</div>
   </CheckboxTreeWrapper>
 );
