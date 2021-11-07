@@ -1,10 +1,3 @@
-#react-flow__arrowclosed {
-  :first-child {
-    fill: var(--arrow-color);
-    stroke: var(--arrow-color);
-  }
-}
-
 .react-flow__edge-TransportEdgeType {
   &.selected {
     .react-flow__edge-path {

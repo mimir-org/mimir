@@ -52,3 +52,10 @@
 .react-flow__handle.connectable {
   cursor: crosshair;
 }
+
+#react-flow__arrowclosed {
+  :first-child {
+    fill: var(--arrow-color);
+    stroke: var(--arrow-color);
+  }
+}

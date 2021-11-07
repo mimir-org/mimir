@@ -18,14 +18,14 @@ const OnTreeClick = (e: any, dispatch: any, project: Project, inspectorRef: Reac
   if (!project) return;
 
   // Close Inspector if no node/edge is selected
-  if (e.target.className === "react-flow__pane") {
-    dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, false, true));
-    dispatch(setActiveNode(null, false));
-    dispatch(setActiveEdge(null, false));
-    dispatch(changeInspectorHeight(Size.ModuleClosed));
-    SetPanelHeight(inspectorRef, Size.ModuleClosed); // TODO: remove
-    return;
-  }
+  // if (e.target.className === "react-flow__pane") {
+  //   dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, false, true));
+  //   dispatch(setActiveNode(null, false));
+  //   dispatch(setActiveEdge(null, false));
+  //   dispatch(changeInspectorHeight(Size.ModuleClosed));
+  //   SetPanelHeight(inspectorRef, Size.ModuleClosed); // TODO: remove
+  //   return;
+  // }
 
   // Handle select Edge
   if (e.target.classList.contains("react-flow__edge-path")) {
