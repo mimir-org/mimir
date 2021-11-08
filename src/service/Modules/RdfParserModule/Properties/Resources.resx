@@ -138,6 +138,9 @@
   <data name="context" xml:space="preserve">
     <value>imf:context</value>
   </data>
+  <data name="desc" xml:space="preserve">
+    <value>rdfs:comment</value>
+  </data>
   <data name="equinorPrefix" xml:space="preserve">
     <value>eq:</value>
   </data>

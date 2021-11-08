@@ -124,6 +124,15 @@ namespace RdfParserModule.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to rdfs:comment.
+        /// </summary>
+        internal static string desc {
+            get {
+                return ResourceManager.GetString("desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to eq:.
         /// </summary>
         internal static string equinorPrefix {
