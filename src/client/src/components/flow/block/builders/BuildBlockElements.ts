@@ -37,8 +37,8 @@ const BuildBlockElements = (
   }
 
   DrawChildNodes(edges, nodes, selectedNode, elements, parentNode, parentNodeSize);
-  DrawEdges(edges, nodes, elements, secondaryNode, animatedEdge);
   secondaryNode && DrawSecondaryChildren(edges, nodes, secondaryNode, elements, parentNodeSize);
+  DrawEdges(edges, nodes, elements, secondaryNode, animatedEdge);
 
   return elements;
 };

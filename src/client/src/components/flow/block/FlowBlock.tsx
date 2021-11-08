@@ -49,7 +49,6 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   const blockFilter = useAppSelector(blockFilterSelector);
   const parentNodeSize = useAppSelector(nodeSizeSelector);
   const animatedEdge = useAppSelector(animatedEdgeSelector);
-
   const node = GetSelectedNode();
   const parent = GetParent(node);
 

@@ -13,9 +13,10 @@ const ModuleBody = styled.div<Props>`
   opacity: ${(props) => (props.visible ? 1 : 0)};
   transition: opacity 0.2s ease-in-out;
   bottom: ${(props) => props.legend && "0"};
-  overflow-y: auto;
+  overflow-y: scroll;
+  overflow-x: hidden;
   height: 100%;
-  max-height: ${(props) => (props.legend ? "265px" : props.explorer && props.isBlockView ? "79%" : "89%")};
+  max-height: ${(props) => (props.legend ? "265px" : "89%")};
 
   @media screen and (max-height: 1100px) {
     max-height: ${(props) => props.explorer && props.isBlockView && 76}%;

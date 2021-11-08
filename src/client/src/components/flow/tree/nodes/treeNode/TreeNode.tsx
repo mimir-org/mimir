@@ -10,7 +10,7 @@ import { FindAllNodes } from "../../../block/helpers";
 /**
  * Component to display a node in TreeView.
  * @param data the data for the node.
- * @returns a node in the FlowTree context.
+ * @returns a Mimir Node in the FlowTree context.
  */
 const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
   const [isHover, setIsHover] = useState(false);

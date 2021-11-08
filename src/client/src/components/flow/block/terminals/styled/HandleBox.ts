@@ -13,7 +13,6 @@ const HandleBox = styled.div<Props>`
     opacity: ${(props) => (!props.visible ? 0 : 1)};
     top: ${(props) => props.top}px;
     left: ${(props) => props.left}px;
-
     transition: top 0.2s ease-out, left 0.2s ease-out;
   }
 `;
