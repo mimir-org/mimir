@@ -3,7 +3,8 @@ import { TerminalsMenuComponent } from ".";
 import { Connector, Node } from "../../../../models";
 import { GetMenuIcon } from "./helpers";
 import { TerminalsBox } from "./styled";
-import { IsAspectNode, IsInputTerminal } from "../../helpers";
+import { IsInputTerminal } from "../../helpers";
+import { IsAspectNode } from "../../../../helpers";
 
 interface Props {
   node: Node;

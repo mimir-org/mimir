@@ -4,12 +4,10 @@ import { TextResources } from "../../../../assets/text";
 import { TabColumn } from "../../styled";
 import { FontSize, Input, Textarea } from "../../../../compLibrary";
 import { EnumBase, Node, Project } from "../../../../models";
-import { GetRdsId, GetReferenceDesignation } from "../../../../assets/helpers";
-import { IsAspectNode, IsLocation, IsProduct } from "../../../../components/flow/helpers";
-import { IsBlockView } from "../../../../components/flow/block/helpers";
 import { changeNodeValue, setLocationNodeSize } from "../../../../redux/store/project/actions";
 import { Dropdown } from "../../../../compLibrary/dropdown/mimir";
 import { useAppDispatch } from "../../../../redux/store";
+import { IsAspectNode, IsLocation, IsProduct, GetRdsId, GetReferenceDesignation, IsBlockView } from "../../../../helpers";
 
 type Event = React.ChangeEvent<HTMLInputElement>;
 

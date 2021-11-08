@@ -1,175 +1,6 @@
-// TREEVIEW
-.react-flow__node-AspectLocation,
-.react-flow__node-AspectFunction,
-.react-flow__node-AspectProduct,
-.react-flow__node-Function,
-.react-flow__node-Product,
-.react-flow__node-Location {
-  border-radius: 10px;
-  width: 170px;
-  height: 100px;
-  font-size: 11px;
-  color: #222;
-  text-align: center;
-  box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.2);
-}
-
-.react-flow__node-AspectLocation,
-.react-flow__node-AspectFunction,
-.react-flow__node-AspectProduct {
-  border: none;
-  width: 90px;
-  height: 52px;
-  box-shadow: none;
-}
-
-.react-flow__node-AspectLocation {
-  &:hover,
-  &.selected {
-    border: 3px solid #a300a7;
-  }
-}
-
-.react-flow__node-AspectFunction {
-  &:hover,
-  &.selected {
-    border: 3px solid #fbc913;
-  }
-}
-
-.react-flow__node-AspectProduct {
-  &:hover,
-  &.selected {
-    border: 3px solid #069098;
-  }
-}
-
-.react-flow__node-Function {
-  background-color: #fef445;
-  border: 3px solid #fef445;
-  &:hover,
-  &.selected {
-    border-color: #fbc913 !important;
-  }
-}
-
-.react-flow__node-Product {
-  background-color: #00f0ff;
-  border: 3px solid #00f0ff;
-  &:hover,
-  &.selected {
-    border-color: #069098 !important;
-  }
-}
-
-.react-flow__node-Location {
-  background-color: #fa00ff;
-  border: 3px solid #fa00ff;
-  &:hover,
-  &.selected {
-    border-color: #a300a7 !important;
-  }
-}
-
-// BLOCKVIEW
-.react-flow__node-BlockFunctionNode,
-.react-flow__node-BlockLocationNode,
-.react-flow__node-BlockProductNode {
-  border-radius: 10px;
-  font-size: 11px;
-  color: #222;
-  text-align: center;
-  box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.2);
-}
-
-.react-flow__node-BlockFunctionNode {
-  background-color: #fef445;
-  border: 3px solid #fef445;
-  &:hover,
-  &.selected {
-    border-color: #fbc913 !important;
-    box-shadow: none;
-  }
-}
-
-.react-flow__node-BlockLocationNode {
-  background-color: #fa00ff;
-  border: 3px solid #fa00ff;
-  &:hover,
-  &.selected {
-    border-color: #a300a7 !important;
-    box-shadow: none;
-  }
-}
-
-.react-flow__node-BlockProductNode {
-  border: 3px solid #00f0ff;
-  background-color: #00f0ff;
-  &:hover,
-  &.selected {
-    border-color: #069098 !important;
-    box-shadow: none;
-  }
-}
-
-.react-flow__node-BlockOffPageNode {
-  width: 19px;
-  height: 13px;
-  background-color: transparent;
-  z-index: 5 !important;
-}
-
-.react-flow__node-BlockParentNode {
-  border-radius: 10px;
-  width: 1000px;
-  height: 920px;
-  box-shadow: 0 5px 5px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1 !important;
-}
-
-.react-flow__node-FunctionBlock {
-  z-index: 1 !important;
-}
-
-.react-flow__edge-BlockEdgeType {
-  &:hover {
-    cursor: grab;
-  }
-
-  &.selected {
-    .react-flow__edge-path {
-      stroke: black !important;
-    }
-  }
-}
-
-// COMMON
-.react-flow__handle {
-  position: absolute;
-  width: 15px !important;
-  height: 15px !important;
-  border-radius: 0 !important;
-  border: none !important;
-  background-color: transparent !important;
-}
-
 .dndflow {
   height: 100%;
   display: flex;
-}
-
-.dndflow .dndnode {
-  height: 25px;
-  width: 150px;
-  padding: 4px;
-  border: 1px solid #1a192b;
-  font-size: 14px;
-  border-radius: 2px;
-  margin-bottom: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: grab;
 }
 
 .dndflow .reactflow-wrapper {
@@ -179,25 +10,62 @@
 }
 
 .react-flow__nodes {
-  z-index: 3;
-}
-
-.react-flow__edge {
-  cursor: grab;
-}
-
-.terminals-dropdown {
-  z-index: 5 !important;
+  z-index: 2;
 }
 
 .react-flow__edges {
-  z-index: 2;
+  z-index: 3 !important;
 }
 
 .react-flow__handle.connectable {
   cursor: crosshair;
 }
 
-// .react-flow__connection-path {
-//   stroke: black !important;
-// }
+.react-flow__handle {
+  position: absolute;
+  width: 15px !important;
+  height: 15px !important;
+  border-radius: 0 !important;
+  border: none !important;
+  background-color: transparent !important;
+}
+
+#react-flow__arrowclosed {
+  :first-child {
+    fill: var(--arrow-color);
+    stroke: var(--arrow-color);
+  }
+}
+
+.path-transportEdge,
+.path-partEdge,
+.path-relationEdge,
+.path-blockEdge {
+  stroke-width: 2px !important;
+  fill: none;
+  pointer-events: all;
+  cursor: grab;
+}
+
+.react-flow__edge-PartEdgeType,
+.react-flow__edge-RelationEdgeType,
+.react-flow__edge-TransportEdgeType,
+.react-flow__edge-BlockEdgeType {
+  &:hover {
+    .path-relationEdge,
+    .path-transportEdge,
+    .path-partEdge,
+    .path-blockEdge {
+      stroke: #d9d9d9 !important;
+    }
+  }
+
+  &.selected {
+    .path-relationEdge,
+    .path-transportEdge,
+    .path-partEdge,
+    .path-blockEdge {
+      stroke: black !important;
+    }
+  }
+}

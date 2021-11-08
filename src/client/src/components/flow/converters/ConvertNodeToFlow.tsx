@@ -3,18 +3,20 @@ import { Node } from "../../../models";
 import { GetNodeType } from "../helpers";
 
 /**
- * Function to convert a Mimir Node to a FlowElement that interacts with the Flow library.
+ * Component to convert a Mimir Node to a FlowElement that interacts with the Flow library.
  * @param node
- * @param position
  * @returns a FlowElement
  */
-const ConvertNodeToFlow = (node: Node, position: any) => {
+const ConvertNodeToFlow = (node: Node) => {
+  if (!node) return null;
+  const position = { x: node.positionX, y: node.positionY };
+
   return {
     id: node.id,
     type: GetNodeType(node),
     data: node,
     position: position,
-    isHidden: node.isHidden,
+    isHidden: false, // Opacity is controlled by the styled component
     isSelected: node.isSelected,
     draggable: true,
     selectable: true,

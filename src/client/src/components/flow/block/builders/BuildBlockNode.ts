@@ -1,9 +1,9 @@
 import { Node } from "../../../../models";
 import { FlowElement } from "react-flow-renderer";
-import { IsOffPage } from "../helpers";
 import { GetNodeTypeString, SetBlockNodePos, SetOffPageNodePos, SetConnectorOrder } from "./helpers";
 import { CreateId } from "../../helpers";
 import { BlockNodeSize } from "../../../../models/project";
+import { IsOffPage } from "../../../../helpers";
 
 /**
  * Component to create a node in BlockView.
@@ -32,7 +32,7 @@ const BuildBlockNode = (node: Node, parent: Node, parentNodeSize: BlockNodeSize)
     type: type,
     data: node,
     position: position,
-    isHidden: node.isHidden,
+    isHidden: false,
     isSelected: node.isSelected,
     draggable: true,
     selectable: true,

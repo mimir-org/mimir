@@ -1,15 +1,17 @@
 import * as Helpers from "./helpers/";
-import ReactFlow, { Elements } from "react-flow-renderer";
-import { useState, useRef, useEffect, useCallback } from "react";
 import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
 import { FullScreenComponent } from "../../../compLibrary/controls";
-import { GetParent, GetSelectedNode, SetDarkModeColor } from "../helpers";
+import { GetParent } from "../helpers";
 import { BuildTreeElements } from "../tree/builders";
-import { updatePosition } from "../../../redux/store/project/actions";
 import { handleEdgeSelect, handleNoSelect, handleNodeSelect, handleMultiSelect } from "./handlers/";
+import ReactFlow, { Elements, Background } from "react-flow-renderer";
+import { useState, useRef, useEffect, useCallback } from "react";
+import { updatePosition } from "../../../redux/store/project/actions";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { TreeFilterMenu } from "../../menus/filterMenu/tree";
 import { ExplorerModule } from "../../../modules/explorer";
+import { TreeConnectionLine } from "./edges";
+import { GetSelectedNode, SetDarkModeColor } from "../../../helpers";
 import {
   animatedEdgeSelector,
   darkModeSelector,
@@ -54,10 +56,10 @@ const FlowTree = ({ inspectorRef }: Props) => {
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(BuildTreeElements(project));
+      setElements(BuildTreeElements(project, animatedEdge));
       return setFlowInstance(_reactFlowInstance);
     },
-    [project]
+    [project, animatedEdge]
   );
 
   const OnConnect = (params) => {
@@ -68,7 +70,19 @@ const FlowTree = ({ inspectorRef }: Props) => {
   };
 
   const OnDrop = (event) => {
-    return useOnDrop(project, event, dispatch, setElements, flowInstance, flowWrapper, icons, library, userState.user, parent);
+    return useOnDrop(
+      project,
+      event,
+      dispatch,
+      setElements,
+      flowInstance,
+      flowWrapper,
+      icons,
+      library,
+      userState.user,
+      parent,
+      animatedEdge
+    );
   };
 
   const onSelectionChange = (selectedElements: Elements) => {
@@ -107,10 +121,12 @@ const FlowTree = ({ inspectorRef }: Props) => {
         zoomOnDoubleClick={false}
         multiSelectionKeyCode={"Control"}
         onSelectionChange={(e) => onSelectionChange(e)}
+        connectionLineComponent={TreeConnectionLine}
       >
+        <Background />
         <FullScreenComponent inspectorRef={inspectorRef} />
       </ReactFlow>
-      <ExplorerModule elements={elements} />
+      <ExplorerModule elements={elements} selectedNode={node} secondaryNode={null} />
       {treeFilter && <TreeFilterMenu elements={elements} edgeAnimation={animatedEdge} />}
     </>
   );

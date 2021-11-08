@@ -1,14 +1,14 @@
 import { LogoBox, SymbolBox, TreeNodeNameBox } from "./styled";
 import { Node } from "../../../../models";
-import { GetCompanyLogo } from "../../helpers";
 import { Symbol } from "../../../../compLibrary/symbol";
+import { GetCompanyLogoForNode } from "../../../../helpers";
 
 interface Props {
   node: Node;
 }
 
 /**
- * Component to show name, symbol and logo for a BlockNode.
+ * Component to show name, symbol and logo for a TreeNode.
  * @param interface
  * @returns name,logo and symbol.
  */
@@ -19,10 +19,10 @@ const TreeLogoComponent = ({ node }: Props) => {
     <>
       <TreeNodeNameBox>{node.label ?? node.name}</TreeNodeNameBox>
       <LogoBox>
-        <img src={GetCompanyLogo(company, node, false)} alt="logo" className="logo" />
+        <img src={GetCompanyLogoForNode(company, node, false)} alt="logo" className="logo" />
       </LogoBox>
       <SymbolBox>
-        <Symbol base64={node.symbol} text={node.name} />{" "}
+        <Symbol base64={node.symbol} text={node.name} />
       </SymbolBox>
     </>
   );

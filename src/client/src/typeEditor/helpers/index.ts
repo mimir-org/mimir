@@ -39,6 +39,7 @@ export { default as GetSelectedDiscipline } from "./GetSelectedDiscipline";
 export { default as GetLibraryType } from "./GetLibraryType";
 export { default as ShowObjectBlock } from "./ShowObjectBlock";
 export { default as FieldValidator } from "./FieldValidator";
+export { default as ResetRedux } from "./ResetRedux";
 
 // styling helpers
 export { default as GetWidth } from "./GetWidth";

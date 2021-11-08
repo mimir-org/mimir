@@ -1,6 +1,7 @@
 import { FlowElement } from "react-flow-renderer";
 import { Edge, Node } from "../../../models";
 import { EdgeType } from "../../../models/project";
+import { IsTransport } from "../helpers";
 
 /**
  * Function to convert a Mimir Edge to a FlowElement that interacts with the Flow Library.
@@ -8,9 +9,10 @@ import { EdgeType } from "../../../models/project";
  * @param edgeType
  * @param sourceNode
  * @param targetNode
+ * @param animated
  * @returns a Flow Element.
  */
-const ConvertEdgeToFlow = (edge: Edge, edgeType: EdgeType, sourceNode: Node, targetNode: Node) => {
+const ConvertEdgeToFlow = (edge: Edge, edgeType: EdgeType, sourceNode: Node, targetNode: Node, animated: boolean) => {
   return {
     id: edge.id,
     type: edgeType,
@@ -19,7 +21,7 @@ const ConvertEdgeToFlow = (edge: Edge, edgeType: EdgeType, sourceNode: Node, tar
     sourceHandle: edge.fromConnectorId,
     targetHandle: edge.toConnectorId,
     arrowHeadType: null,
-    animated: edge.animated,
+    animated: animated && IsTransport(edge.fromConnector),
     label: "",
     data: {
       source: sourceNode,
@@ -27,7 +29,7 @@ const ConvertEdgeToFlow = (edge: Edge, edgeType: EdgeType, sourceNode: Node, tar
       edge: edge,
       isSelected: edge.isSelected,
     },
-    isHidden: edge.isHidden,
+    isHidden: false, // Opacity is controlled by the styled component
     parentType: sourceNode?.aspect,
     targetType: targetNode?.aspect,
   } as FlowElement;

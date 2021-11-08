@@ -1,12 +1,13 @@
 import { GetObjectTypeDescription } from ".";
-import { DropDownItem } from "../../compLibrary/dropdown/typeEditor/Dropdown";
+import { DropDownCategoryItem } from "../../compLibrary/dropdown/typeEditor/Dropdown";
 import { Aspect, ObjectType } from "../../models";
 import { CreateId } from "../../components/flow/helpers";
+import { ObjectTypeKey } from "../types";
 
 const stringIsNumber = (value) => isNaN(Number(value)) === false;
 
-const GetObjectTypes = (aspect: Aspect): DropDownItem[] => {
-  const categories = [] as DropDownItem[];
+const GetObjectTypes = (aspect: Aspect): DropDownCategoryItem<ObjectTypeKey>[] => {
+  const categories = [] as DropDownCategoryItem<ObjectTypeKey>[];
   categories.push({ id: CreateId(), name: "ObjectType", description: "Object Type", image: null, items: [] });
 
   Object.keys(ObjectType)
@@ -17,7 +18,7 @@ const GetObjectTypes = (aspect: Aspect): DropDownItem[] => {
         name: ObjectType[item],
         description: GetObjectTypeDescription(aspect, Number(item)),
         image: null,
-        items: [],
+        value: ObjectType[item] as ObjectTypeKey,
       });
     });
 

@@ -10,9 +10,11 @@ interface Props {
 const HandleBox = styled.div<Props>`
   .react-flow__handle-block {
     position: absolute;
-    visibility: ${(props) => !props.visible && "hidden"} !important;
+    opacity: ${(props) => (!props.visible ? 0 : 1)};
     top: ${(props) => props.top}px;
     left: ${(props) => props.left}px;
+
+    transition: opacity 250ms ease-in-out, top 350ms ease-out, left 350ms ease-out;
   }
 `;
 

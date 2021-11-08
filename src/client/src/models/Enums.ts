@@ -5,7 +5,6 @@ export enum Aspect {
   Product = 4,
   Location = 8,
 }
-
 export enum ConnectorType {
   Input = 0,
   Output = 1,
@@ -55,4 +54,11 @@ export enum SelectType {
   None = 0,
   SingleSelect = 1,
   MultiSelect = 2,
+}
+
+export enum AspectColorType {
+  Main = 0,
+  Selected = 1,
+  Header = 2,
+  Tab = 3,
 }

@@ -2,12 +2,13 @@ import { AttributeType, Discipline } from "../../../models";
 import { ListElem } from "../../../compLibrary";
 import { ListElementCategoryWrapper, ListCategoryElement, SquareBox } from "../../styled";
 import { SquareCheckbox, Label } from "../../inputs/SquareCheckbox";
+import { OnPropertyChangeFunction } from "../../types";
 
 interface Props {
   discipline: Discipline;
   attributes: AttributeType[];
   defaultValue?: string[];
-  onChange: Function;
+  onChange: OnPropertyChangeFunction;
 }
 
 export const AttributeElement = ({ discipline, attributes, defaultValue, onChange }: Props) => {

@@ -1,20 +1,17 @@
 import { addNode, createEdge, setActiveNode } from "../../../redux/store/project/actions";
-import { IsBlockView } from "../block/helpers";
 import { GetEdgeType } from "../tree/helpers";
-import { ConvertToEdge, ConvertToNode } from "../converters";
-import { BuildTreeEdge, BuildTreeNode } from "../tree/builders";
+import { ConvertNodeToFlow, ConvertToEdge, ConvertToNode } from "../converters";
+import { BuildTreeEdge } from "../tree/builders";
 import { BlobData, LibItem, Project, User, Node, LibrarySubProjectItem } from "../../../models";
 import { LibraryState } from "../../../redux/store/library/types";
 import { BuildBlockNode } from "../block/builders";
 import { Size } from "../../../compLibrary";
+import { GetSelectedNode, IsBlockView, IsFamily } from "../../../helpers";
 import {
   CreateId,
   GetProjectData,
-  GetSelectedNode,
   GetSubProject,
-  IsFamily,
   IsInputTerminal,
-  IsOutputTerminal,
   IsPartOf,
   IsSubProject,
   SetSiblingIndexOnNodeDrop,
@@ -30,7 +27,8 @@ const useOnDrop = (
   icons: BlobData[],
   library: LibraryState,
   user: User,
-  parentNode: Node
+  parentNode: Node,
+  animatedEdge: boolean
 ) => {
   const sourceNode = GetSelectedNode();
   const isSubProject = IsSubProject(event);
@@ -46,13 +44,13 @@ const useOnDrop = (
 
       data[0].forEach((node) => {
         dispatch(addNode(node));
-        setElements((es) => es.concat(BuildTreeNode(node)));
+        setElements((es) => es.concat(ConvertNodeToFlow(node)));
       });
 
       data[1].forEach((edge) => {
         dispatch(createEdge(edge));
         const edgeType = GetEdgeType(edge.fromConnector);
-        setElements((es) => es.concat(BuildTreeEdge(edge, edgeType, project.nodes)));
+        setElements((es) => es.concat(BuildTreeEdge(edge, edgeType, project.nodes, animatedEdge)));
       });
     })();
   } else if (!isSubProject) {
@@ -96,11 +94,11 @@ const useOnDrop = (
       ? setElements((es) =>
           es.concat(BuildBlockNode(targetNode, parentNode, { width: Size.Node_Width, length: Size.Node_Length }))
         )
-      : setElements((es) => es.concat(BuildTreeNode(targetNode)));
+      : setElements((es) => es.concat(ConvertNodeToFlow(targetNode)));
 
     if (sourceNode && IsFamily(sourceNode, targetNode)) {
       targetNode.level = sourceNode.level + 1;
-      const sourceConn = sourceNode.connectors?.find((x) => IsPartOf(x) && IsOutputTerminal(x));
+      const sourceConn = sourceNode.connectors?.find((x) => IsPartOf(x) && !IsInputTerminal(x));
       const targetConn = targetNode.connectors?.find((x) => IsPartOf(x) && IsInputTerminal(x));
       const partofEdge = ConvertToEdge(CreateId(), sourceConn, targetConn, sourceNode, targetNode, project.id, library, false);
 
@@ -108,7 +106,7 @@ const useOnDrop = (
       dispatch(createEdge(partofEdge));
 
       const edgeType = GetEdgeType(sourceConn);
-      setElements((es) => es.concat(BuildTreeEdge(partofEdge, edgeType, project.nodes)));
+      setElements((es) => es.concat(BuildTreeEdge(partofEdge, edgeType, project.nodes, animatedEdge)));
     }
 
     dispatch(addNode(targetNode));

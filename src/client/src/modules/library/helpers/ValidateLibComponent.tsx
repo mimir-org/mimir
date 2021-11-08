@@ -1,4 +1,4 @@
-import { IsFamily } from "../../../components/flow/helpers";
+import { IsFamily } from "../../../helpers";
 import { Node, LibItem } from "../../../models";
 
 const ValidateLibComponent = (libNode: LibItem, selectedNode: Node, isBlockView: boolean) => {

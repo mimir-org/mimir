@@ -1,10 +1,11 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, Handle } from "react-flow-renderer";
 import { TreeHandleBox } from "../treeNode/styled";
-import { Connector, Node } from "../../../../../models";
+import { AspectColorType, Connector, Node } from "../../../../../models";
 import { GetFlowAspectIcon, GetHandleType } from "../../../helpers";
 import { OnMouseLeave } from "./handlers";
 import { AspectNodeBox } from "./styled";
+import { GetAspectColor, GetSelectedNode } from "../../../../../helpers";
 
 const AspectNode: FC<NodeProps<Node>> = ({ data }) => {
   const [isHover, setIsHover] = useState(false);
@@ -23,7 +24,12 @@ const AspectNode: FC<NodeProps<Node>> = ({ data }) => {
   }, [timer]);
 
   return (
-    <div onMouseEnter={() => setIsHover(true)} onMouseLeave={() => OnMouseLeave(setTimer)}>
+    <AspectNodeBox
+      colorMain={GetAspectColor(data, AspectColorType.Main)}
+      isSelected={data === GetSelectedNode()}
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => OnMouseLeave(setTimer)}
+    >
       {data.connectors?.map((conn: Connector) => {
         const [typeHandler, positionHandler] = GetHandleType(conn);
         return (
@@ -45,11 +51,9 @@ const AspectNode: FC<NodeProps<Node>> = ({ data }) => {
         );
       })}
 
-      <AspectNodeBox>
-        <div>{GetFlowAspectIcon(data.aspect)}</div>
-        {data.label ?? data.name}
-      </AspectNodeBox>
-    </div>
+      <div>{GetFlowAspectIcon(data.aspect)}</div>
+      {data.label ?? data.name}
+    </AspectNodeBox>
   );
 };
 

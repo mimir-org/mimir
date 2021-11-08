@@ -1,8 +1,9 @@
 import { MiniMap } from "react-flow-renderer";
 import { MapWrapper } from "./styled";
-import { GetMapColor, GetStrokeColor } from "./helpers";
 import { Size } from "../../../compLibrary";
 import { heightSelector, inspectorSelector, libOpenSelector, useAppSelector } from "../../../redux/store";
+import { GetAspectColor } from "../../../helpers";
+import { AspectColorType } from "../../../models";
 
 const MiniMapComponent = () => {
   const libOpen = useAppSelector(libOpenSelector);
@@ -14,10 +15,10 @@ const MiniMapComponent = () => {
     <MapWrapper height={height} libOpen={libOpen}>
       <MiniMap
         nodeStrokeColor={(node: any) => {
-          return GetStrokeColor(node);
+          return GetAspectColor(node, AspectColorType.Selected);
         }}
         nodeColor={(node: any) => {
-          return GetMapColor(node);
+          return GetAspectColor(node, AspectColorType.Header);
         }}
         nodeStrokeWidth={20}
       />
