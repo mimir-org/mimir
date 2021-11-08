@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
+using Mb.Models.Enums;
+
 namespace RdfParserModule
 {
     public class ParserNode
     {
         public string Prefix { get; set; }
         public string Id { get; set; }
-        public string NormalId { get; set; }
+        public string Iri { get; set; }
         public string Name { get; set; }
         public string Version { get; set; }
         public string Label { get; set; }
@@ -14,14 +16,14 @@ namespace RdfParserModule
         public bool IsLocked { get; set; }
         public string StatusId { get; set; }
         public string MasterProjectId { get; set; }
-        public string Aspect { get; set; }
+        public Aspect Aspect { get; set; }
         public bool IsRoot { get; set; }
         public decimal Length { get; set; }
         public decimal Width { get; set; }
         public bool IsTransport { get; set; }
-        public ICollection<ParserTerminal> Terminals { get; set; }
+        public ICollection<ParserConnector> Terminals { get; set; }
         public ICollection<ParserEdge> Edges { get; set; }
-        public ParserNode HasParent { get; set; }
+        public string parentId { get; set; }
         public ParserNode HasLocation { get; set; }
         public ParserNode FulfilledBy { get; set; }
 
@@ -29,5 +31,13 @@ namespace RdfParserModule
         {
             return Label ?? Id;
         }
+    }
+
+    public class ParserTransport : ParserNode
+    {
+        public ParserTerminal InputTerminal { get; set; }
+        public ParserTerminal OutputTerminal { get; set; }
+        public string InputTerminalId { get; set; }
+        public string OutputTerminalId { get; set; }
     }
 }
