@@ -8,3 +8,5 @@ export { default as DrawProductChildren } from "./DrawProductChildren";
 
 export { default as DrawSecondaryChildren } from "./DrawSecondaryChildren";
 export { default as DrawBlockEdges } from "./DrawBlockEdges";
+
+export { default as TraverseProductNodes } from "./TraverseProductNodes";

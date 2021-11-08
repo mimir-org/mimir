@@ -37,13 +37,15 @@ const BuildBlockElements = (
     parentSecondaryBlock && elements.push(parentSecondaryBlock);
   }
 
+  // Product nodes has a different view
   if (IsProduct(selectedNode)) {
     DrawProductChildren(edges, nodes, selectedNode, elements, parentNode, parentNodeSize, animatedEdge);
-  } else {
-    DrawChildNodes(edges, nodes, selectedNode, elements, parentNode, parentNodeSize);
-    secondaryNode && DrawSecondaryChildren(edges, nodes, secondaryNode, elements, parentNodeSize);
-    DrawBlockEdges(edges, nodes, elements, secondaryNode, animatedEdge);
+    return elements;
   }
+
+  DrawChildNodes(edges, nodes, selectedNode, elements, parentNode, parentNodeSize);
+  secondaryNode && DrawSecondaryChildren(edges, nodes, secondaryNode, elements, parentNodeSize);
+  DrawBlockEdges(edges, nodes, elements, secondaryNode, animatedEdge);
 
   return elements;
 };
