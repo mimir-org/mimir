@@ -13,7 +13,7 @@ const ModuleBody = styled.div<Props>`
   opacity: ${(props) => (props.visible ? 1 : 0)};
   transition: opacity 0.2s ease-in-out;
   bottom: ${(props) => props.legend && "0"};
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   height: 100%;
   max-height: ${(props) => (props.legend ? "265px" : "89%")};
