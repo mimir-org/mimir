@@ -35,6 +35,16 @@ namespace Mb.Models.Data
         public virtual ICollection<Node> Nodes { get; set; }
         public virtual ICollection<Edge> Edges { get; set; }
 
+        public Project()
+        {
+
+        }
+
+        public Project(string iri)
+        {
+
+        }
+
         public void IncrementMajorVersion()
         {
             if (Version.Length == 3)
@@ -60,6 +70,6 @@ namespace Mb.Models.Data
         }
 
         public string Domain => Id.ResolveDomain();
-
+        public string Iri => Id.ResolveProjectIri();
     }
 }

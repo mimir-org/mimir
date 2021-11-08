@@ -125,5 +125,16 @@ namespace Mb.Models.Data
         }
 
         public string Domain => Id.ResolveDomain();
+        public string Iri => Id.ResolveNodeIri();
+
+        public Node()
+        {
+
+        }
+
+        public Node(string iri)
+        {
+
+        }
     }
 }

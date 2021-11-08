@@ -83,7 +83,24 @@ namespace Mb.Models.Extensions
             var idSplit = id.Split('_', StringSplitOptions.RemoveEmptyEntries);
             return idSplit.Length != 2 ? string.Empty : idSplit[0];
         }
+        
+        public static string ResolveProjectIri(this string id)
+        {
+            var idSplit = id.Split('_', StringSplitOptions.RemoveEmptyEntries);
+            return idSplit.Length != 2 ? string.Empty : idSplit[0];
+        }
 
+        public static string ResolveEdgeIri(this string id)
+        {
+            var idSplit = id.Split('_', StringSplitOptions.RemoveEmptyEntries);
+            return idSplit.Length != 2 ? string.Empty : idSplit[0];
+        }
+
+        public static string ResolveNodeIri(this string id)
+        {
+            var idSplit = id.Split('_', StringSplitOptions.RemoveEmptyEntries);
+            return idSplit.Length != 2 ? string.Empty : idSplit[0];
+        }
 
         #region Private
 

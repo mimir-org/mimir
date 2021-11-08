@@ -35,5 +35,16 @@ namespace Mb.Models.Data
         public virtual ICollection<Project> Projects { get; set; }
 
         public string Domain => Id.ResolveDomain();
+        public string Iri => Id.ResolveEdgeIri();
+
+        public Edge()
+        {
+
+        }
+
+        public Edge(string iri)
+        {
+
+        }
     }
 }
