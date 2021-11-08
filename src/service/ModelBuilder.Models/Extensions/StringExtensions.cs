@@ -41,17 +41,17 @@ namespace Mb.Models.Extensions
             return sb.ToString();
         }
 
-        public static (string terminalCategoryId, string terminalTypeId) CreateCategoryIdAndTerminalTypeId(this string terminalName, string categoryName)
+        public static (string terminalCategoryId, string terminalTypeId) CreateCategoryIdAndTerminalTypeId(this string terminalName, string terminalCategoryId)
         {
-            if (string.IsNullOrEmpty(categoryName) || string.IsNullOrEmpty(terminalName))
+            if (string.IsNullOrEmpty(terminalCategoryId) || string.IsNullOrEmpty(terminalName))
                 throw new ModelBuilderNullReferenceException("Category and terminal can't be null");
 
             var category = new TerminalCategory
             {
-                Name = categoryName
+                Id = terminalCategoryId
             };
 
-            category.Id = category.Key.CreateMd5();
+            //category.Id = category.Key.CreateMd5();
             var createTerminalType = new CreateTerminalType
             {
                 Name = terminalName,
