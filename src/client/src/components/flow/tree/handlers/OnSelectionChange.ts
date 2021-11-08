@@ -9,10 +9,13 @@ import { changeInspectorTab } from "../../../../modules/inspector/redux/tabs/act
 import { setModuleVisibility } from "../../../../redux/store/modules/actions";
 import { setActiveNode, setActiveEdge, setActiveBlockNode } from "../../../../redux/store/project/actions";
 
-export const handleNoSelect = (inspectorRef: React.MutableRefObject<HTMLDivElement>, dispatch: Dispatch) => {
+export const handleNoSelect = (project: Project, inspectorRef: React.MutableRefObject<HTMLDivElement>, dispatch: Dispatch) => {
   dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, false, true));
-  dispatch(setActiveNode(null, false));
-  dispatch(setActiveEdge(null, false));
+  if (project) {
+    dispatch(setActiveNode(null, false));
+    dispatch(setActiveEdge(null, false));
+  }
+
   dispatch(changeInspectorHeight(Size.ModuleClosed));
   SetPanelHeight(inspectorRef, Size.ModuleClosed); // TODO: remove
 };
@@ -41,4 +44,7 @@ export const handleEdgeSelect = (element: FlowElement, project: Project, dispatc
   dispatch(changeInspectorTab(0));
 };
 
-export const handleMultiSelect = () => {};
+export const handleMultiSelect = (dispatch: Dispatch) => {
+  dispatch(setActiveNode(null, false));
+  dispatch(setActiveEdge(null, false));
+};

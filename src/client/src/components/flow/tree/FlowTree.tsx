@@ -1,13 +1,12 @@
 import * as Helpers from "./helpers/";
-import ReactFlow, { ReactFlowProvider, Elements } from "react-flow-renderer";
-import { useState, useRef, useEffect, useCallback, useMemo } from "react";
+import ReactFlow, { Elements } from "react-flow-renderer";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
 import { FullScreenComponent } from "../../../compLibrary/controls";
 import { GetParent, GetSelectedNode, SetDarkModeColor } from "../helpers";
 import { BuildTreeElements } from "../tree/builders";
 import { updatePosition } from "../../../redux/store/project/actions";
-import FlowManipulator from "./FlowManipulator";
-import { handleEdgeSelect, handleNoSelect, handleNodeSelect } from "./handlers/";
+import { handleEdgeSelect, handleNoSelect, handleNodeSelect, handleMultiSelect } from "./handlers/";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { TreeFilterMenu } from "../../menus/filterMenu/tree";
 import { ExplorerModule } from "../../../modules/explorer";
@@ -45,7 +44,6 @@ const FlowTree = ({ inspectorRef }: Props) => {
   const animatedEdge = useAppSelector(animatedEdgeSelector);
   const node = GetSelectedNode();
   const parent = GetParent(node);
-  const selectedIds = useMemo(() => elements?.filter((ele) => ele.data.isSelected).map((ele) => ele.id) ?? [], [elements]);
 
   const OnDragOver = (event: any) => event.preventDefault();
   const OnNodeDragStop = (_event: any, n: any) => dispatch(updatePosition(n.id, n.position.x, n.position.y));
@@ -73,13 +71,15 @@ const FlowTree = ({ inspectorRef }: Props) => {
     return useOnDrop(project, event, dispatch, setElements, flowInstance, flowWrapper, icons, library, userState.user, parent);
   };
 
-  const onSelectionChange = (_elements: Elements) => {
-    if (_elements === null) {
-      handleNoSelect(inspectorRef, dispatch);
-    } else if (_elements.length === 1 && Helpers.GetNodeTypes[_elements[0]?.type]) {
-      handleNodeSelect(_elements[0], inspectorOpen, inspectorRef, dispatch);
-    } else if (_elements.length === 1 && Helpers.GetEdgeTypes[_elements[0]?.type]) {
-      handleEdgeSelect(_elements[0], project, dispatch);
+  const onSelectionChange = (selectedElements: Elements) => {
+    if (selectedElements === null) {
+      handleNoSelect(project, inspectorRef, dispatch);
+    } else if (selectedElements.length === 1 && Helpers.GetNodeTypes[selectedElements[0]?.type]) {
+      handleNodeSelect(selectedElements[0], inspectorOpen, inspectorRef, dispatch);
+    } else if (selectedElements.length === 1 && Helpers.GetEdgeTypes[selectedElements[0]?.type]) {
+      handleEdgeSelect(selectedElements[0], project, dispatch);
+    } else if (selectedElements.length > 1) {
+      handleMultiSelect(dispatch);
     }
   };
 
@@ -90,7 +90,7 @@ const FlowTree = ({ inspectorRef }: Props) => {
   }, [OnLoad, flowInstance, darkMode]);
 
   return (
-    <ReactFlowProvider>
+    <>
       <div className="reactflow-wrapper" ref={flowWrapper}></div>
       <ReactFlow
         elements={elements}
@@ -109,11 +109,10 @@ const FlowTree = ({ inspectorRef }: Props) => {
         onSelectionChange={(e) => onSelectionChange(e)}
       >
         <FullScreenComponent inspectorRef={inspectorRef} />
-        <FlowManipulator elements={elements} selectedIds={selectedIds} />
       </ReactFlow>
       <ExplorerModule elements={elements} />
       {treeFilter && <TreeFilterMenu elements={elements} edgeAnimation={animatedEdge} />}
-    </ReactFlowProvider>
+    </>
   );
 };
 

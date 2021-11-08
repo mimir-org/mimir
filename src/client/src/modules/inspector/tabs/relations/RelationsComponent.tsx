@@ -17,6 +17,7 @@ import {
   GetNameNode,
   GetActiveRelationColor,
   GetListItemColor,
+  useSelectFlowElements,
 } from "./helpers";
 
 interface Props {
@@ -30,6 +31,7 @@ const RelationComponent = ({ element }: Props) => {
   const connectors = useMemo(() => GetConnectors(element), [element]);
   const [inputTerminals, outputTerminals] = useMemo(() => GetTerminals(connectors, edges), [connectors, edges]);
   const transports = useMemo(() => GetTransports(edges, element), [edges, element]);
+  const [setActiveNodeElement, setActiveEdgeElement] = useSelectFlowElements();
 
   const hasConnectors = connectors.length > 0;
 
@@ -43,7 +45,7 @@ const RelationComponent = ({ element }: Props) => {
               label={TextResources.Inspector_Relations_Relationships}
               getName={(edge) => GetNameRelation(edge, element)}
               getColor={(edge, index) => GetActiveRelationColor(edge.fromConnector, index)}
-              onClick={(edge) => OnClickRelation(element, edge, dispatch)}
+              onClick={(edge) => OnClickRelation(element, edge, setActiveNodeElement, dispatch)}
             />
           )}
           <RelationsContent
@@ -66,7 +68,7 @@ const RelationComponent = ({ element }: Props) => {
               label={TextResources.Inspector_Relations_Transport}
               getName={(edge) => GetNameTransport(edge, element)}
               getColor={(_, index) => GetListItemColor(index)}
-              onClick={(edge) => OnClickTransport(edge, dispatch)}
+              onClick={(edge) => OnClickTransport(edge, setActiveEdgeElement, dispatch)}
             />
           )}
           {IsEdge(element) && (
@@ -75,7 +77,7 @@ const RelationComponent = ({ element }: Props) => {
               label={TextResources.Inspector_Relations_Nodes}
               getName={(node) => GetNameNode(element, node)}
               getColor={(_, index) => GetListItemColor(index)}
-              onClick={(node) => OnClickNode(node, dispatch)}
+              onClick={(node) => OnClickNode(node, setActiveNodeElement, dispatch)}
             />
           )}
         </>
