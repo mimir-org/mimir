@@ -1,7 +1,7 @@
 import { Position } from "react-flow-renderer";
 import { SetTerminalXPos } from ".";
 import { Connector } from "../../../../../models";
-import { IsLocationTerminal, IsProductTerminal } from "../../../helpers";
+import { IsLocationTerminal, IsPartOf, IsProductTerminal } from "../../../helpers";
 
 /**
  * Component to set the left position of a terminal in BlockView
@@ -18,7 +18,7 @@ const SetLeftPos = (conn: Connector, pos: Position, electro: boolean, parent: bo
     if (IsProductTerminal(conn) || IsLocationTerminal(conn)) return 80;
     return SetTerminalXPos(order, parent, nodeWidth);
   }
-
+  if (IsPartOf(conn)) return nodeWidth / 2;
   if (pos === Position.Left) return -17;
   if (pos === Position.Right && !parent) return nodeWidth + 3;
   if (pos === Position.Right && parent) return nodeWidth + 5;

@@ -1,6 +1,6 @@
 import { Position } from "react-flow-renderer";
 import { Connector } from "../../../../../models";
-import { IsProductTerminal, IsLocationTerminal } from "../../../helpers";
+import { IsProductTerminal, IsLocationTerminal, IsPartOf } from "../../../helpers";
 import { SetTerminalYPos } from "./";
 
 /**
@@ -15,6 +15,8 @@ import { SetTerminalYPos } from "./";
  */
 const SetTopPos = (conn: Connector, pos: Position, electro: boolean, parent: boolean, order: number, nodeLength: number) => {
   if (!electro) {
+    if (IsPartOf(conn) && pos === Position.Top) return -20;
+    if (IsPartOf(conn) && pos === Position.Bottom) return nodeLength;
     if (IsProductTerminal(conn) || IsLocationTerminal(conn)) return 50;
     return SetTerminalYPos(order, parent, nodeLength);
   }

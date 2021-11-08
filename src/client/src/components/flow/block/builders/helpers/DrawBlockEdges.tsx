@@ -12,7 +12,7 @@ import { IsPartOf } from "../../../helpers";
  * @param secondaryNode
  * @param animatedEdge
  */
-const DrawEdges = (edges: Edge[], nodes: Node[], elements: Elements<any>, secondaryNode: Node, animatedEdge: boolean) => {
+const DrawBlockEdges = (edges: Edge[], nodes: Node[], elements: Elements<any>, secondaryNode: Node, animatedEdge: boolean) => {
   edges.forEach((edge) => {
     if (!IsPartOf(edge.fromConnector)) {
       const blockEdge = BuildBlockEdge(nodes, edge, EDGE_TYPE.BLOCK as EdgeType, secondaryNode, animatedEdge);
@@ -21,4 +21,4 @@ const DrawEdges = (edges: Edge[], nodes: Node[], elements: Elements<any>, second
   });
 };
 
-export default DrawEdges;
+export default DrawBlockEdges;

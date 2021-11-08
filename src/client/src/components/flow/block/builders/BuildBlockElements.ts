@@ -1,8 +1,9 @@
 import { Elements } from "react-flow-renderer";
 import { Node, Project } from "../../../../models";
 import { BuildParentBlockNode, BuildParentSecondaryNode } from ".";
-import { DrawChildNodes, DrawEdges, DrawSecondaryChildren } from "./helpers";
+import { DrawChildNodes, DrawProductChildren, DrawBlockEdges, DrawSecondaryChildren } from "./helpers";
 import { BlockNodeSize } from "../../../../models/project";
+import { IsProduct } from "../../../../helpers";
 
 /**
  * Component to draw all nodes and edges in BlockView.
@@ -36,9 +37,13 @@ const BuildBlockElements = (
     parentSecondaryBlock && elements.push(parentSecondaryBlock);
   }
 
-  DrawChildNodes(edges, nodes, selectedNode, elements, parentNode, parentNodeSize);
-  secondaryNode && DrawSecondaryChildren(edges, nodes, secondaryNode, elements, parentNodeSize);
-  DrawEdges(edges, nodes, elements, secondaryNode, animatedEdge);
+  if (IsProduct(selectedNode)) {
+    DrawProductChildren(edges, nodes, selectedNode, elements, parentNode, parentNodeSize, animatedEdge);
+  } else {
+    DrawChildNodes(edges, nodes, selectedNode, elements, parentNode, parentNodeSize);
+    secondaryNode && DrawSecondaryChildren(edges, nodes, secondaryNode, elements, parentNodeSize);
+    DrawBlockEdges(edges, nodes, elements, secondaryNode, animatedEdge);
+  }
 
   return elements;
 };

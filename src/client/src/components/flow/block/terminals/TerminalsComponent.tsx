@@ -3,7 +3,7 @@ import { TerminalsMenuComponent } from ".";
 import { Connector, Node } from "../../../../models";
 import { GetMenuIcon } from "./helpers";
 import { TerminalsBox } from "./styled";
-import { IsInputTerminal } from "../../helpers";
+import { IsInputTerminal, IsPartOf } from "../../helpers";
 import { IsAspectNode } from "../../../../helpers";
 
 interface Props {
@@ -36,8 +36,8 @@ const TerminalsContainerComponent = ({
   showOutTerminalMenu,
   onClick,
 }: Props) => {
-  const inTerminals = terminals.filter((t) => IsInputTerminal(t));
-  const outTerminals = terminals.filter((t) => !IsInputTerminal(t));
+  const inTerminals = terminals.filter((t) => IsInputTerminal(t) && !IsPartOf(t));
+  const outTerminals = terminals.filter((t) => !IsInputTerminal(t) && !IsPartOf(t));
 
   return (
     <>

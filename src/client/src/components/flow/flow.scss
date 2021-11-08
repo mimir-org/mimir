@@ -40,7 +40,8 @@
 .path-transportEdge,
 .path-partEdge,
 .path-relationEdge,
-.path-blockEdge {
+.path-blockEdge,
+.path-blockPartEdge {
   stroke-width: 2px !important;
   fill: none;
   pointer-events: all;
@@ -50,12 +51,14 @@
 .react-flow__edge-PartEdgeType,
 .react-flow__edge-RelationEdgeType,
 .react-flow__edge-TransportEdgeType,
-.react-flow__edge-BlockEdgeType {
+.react-flow__edge-BlockEdgeType,
+.react-flow__edge-BlockPartEdgeType {
   &:hover {
     .path-relationEdge,
     .path-transportEdge,
     .path-partEdge,
-    .path-blockEdge {
+    .path-blockEdge,
+    .path-blockPartEdge {
       stroke: #d9d9d9 !important;
     }
   }
@@ -64,7 +67,8 @@
     .path-relationEdge,
     .path-transportEdge,
     .path-partEdge,
-    .path-blockEdge {
+    .path-blockEdge,
+    .path-blockPartEdge {
       stroke: black !important;
     }
   }

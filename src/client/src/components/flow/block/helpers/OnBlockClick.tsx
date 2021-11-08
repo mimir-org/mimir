@@ -14,7 +14,7 @@ const OnBlockClick = (e: any, dispatch: any, project: Project) => {
   const target = e.target.classList;
 
   // Handle select Edge
-  if (target.contains("path-blockEdge")) {
+  if (target.contains("path-blockEdge") || target.contains("path-blockPartEdge")) {
     const edge = project.edges.find((x) => x.id === e.target.id);
     dispatch(setActiveEdge(edge?.id, true));
     dispatch(setActiveBlockNode(null));

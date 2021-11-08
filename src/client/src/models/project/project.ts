@@ -17,8 +17,8 @@ export const ATTRIBUTE_TAB = {
 
 export type EdgeType = keyof typeof EDGE_TYPE;
 export const EDGE_TYPE = {
-  DEFAULT: "DefaultEdgeType",
   BLOCK: "BlockEdgeType",
+  BLOCK_PART: "BlockPartEdgeType",
   PART: "PartEdgeType",
   RELATION: "RelationEdgeType",
   TRANSPORT: "TransportEdgeType",
