@@ -3,4 +3,3 @@ export * from "./GetConnectors";
 export * from "./GetRelations";
 export * from "./GetTerminals";
 export * from "./GetColor";
-export * from "./useSelectFlowElements";

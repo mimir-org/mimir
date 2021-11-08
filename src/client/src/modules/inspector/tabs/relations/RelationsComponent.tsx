@@ -17,8 +17,8 @@ import {
   GetNameNode,
   GetActiveRelationColor,
   GetListItemColor,
-  useSelectFlowElements,
 } from "./helpers";
+import { useSelectFlowElements } from "../../../../helpers";
 
 interface Props {
   element: InspectorElement;
