@@ -6,14 +6,13 @@ import { CreateId } from "../../helpers";
 /**
  * Component to create a Product Node in BlockView.
  * @param node
- * @returns a node of the type FlowElement.
+ * @returns a Product Node of the type FlowElement.
  */
 const BuildBlockNode = (node: Node) => {
   if (!node) return null;
   const type = GetNodeTypeString(node);
 
   const position = { x: node.positionBlockX, y: node.positionBlockY };
-
   SetConnectorOrder(node);
 
   return {

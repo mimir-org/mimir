@@ -4,19 +4,10 @@ import { Color } from "../../../../compLibrary";
 /**
  * Component for a PartOfEdge in BlockView used only by Product Nodes.
  * @param params
- * @returns a vertical PartOfEdge between Product Nodes.
+ * @returns a PartOfEdge between Product Nodes.
  */
 const BlockPartEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data }) => {
   const visible = !data?.edge.isHidden;
-
-  const GetEdgeStyle = () => {
-    return {
-      stroke: Color.ProductMain,
-      strokeWidth: "2px",
-      opacity: visible ? 1 : 0,
-      transition: "opacity 250ms",
-    };
-  };
 
   const smoothPath = getSmoothStepPath({
     sourceX,
@@ -27,7 +18,15 @@ const BlockPartEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition,
     targetPosition,
   });
 
-  return <path id={id} style={GetEdgeStyle()} className="path-blockPartEdge" d={smoothPath} />;
+  return <path id={id} style={GetPartEdgeStyle(visible)} className="path-blockPartEdge" d={smoothPath} />;
 };
 
+function GetPartEdgeStyle(visible: boolean) {
+  return {
+    stroke: Color.ProductHeader,
+    strokeWidth: "2px",
+    opacity: visible ? 0.4 : 0,
+    transition: "opacity 250ms",
+  };
+}
 export default BlockPartEdge;

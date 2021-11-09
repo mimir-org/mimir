@@ -19,6 +19,7 @@ function TraverseProductNodes(edges: Edge[], nodes: Node[], selectedNode: Node, 
     }
   });
 
+  // Base case
   if (children.length === 0) return;
 
   children.forEach((node) => {

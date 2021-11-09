@@ -1,7 +1,7 @@
 import { Position } from "react-flow-renderer";
 import { SetTerminalXPos } from ".";
 import { Connector } from "../../../../../models";
-import { IsLocationTerminal, IsPartOf, IsProductTerminal } from "../../../helpers";
+import { IsInputTerminal, IsLocationTerminal, IsPartOf, IsProductTerminal } from "../../../helpers";
 
 /**
  * Component to set the left position of a terminal in BlockView
@@ -14,14 +14,22 @@ import { IsLocationTerminal, IsPartOf, IsProductTerminal } from "../../../helper
  * @returns a number used by the styled component HandleBox.
  */
 const SetLeftPos = (conn: Connector, pos: Position, electro: boolean, parent: boolean, order: number, nodeWidth: number) => {
-  if (electro) {
-    if (IsProductTerminal(conn) || IsLocationTerminal(conn)) return 80;
-    return SetTerminalXPos(order, parent, nodeWidth);
+  const marginX = 17;
+  const marginXSmall = 5;
+
+  if (!electro) {
+    if (IsPartOf(conn)) return nodeWidth / 2;
+    if (pos === Position.Right) return nodeWidth + marginXSmall;
+    return -marginX;
   }
-  if (IsPartOf(conn)) return nodeWidth / 2;
-  if (pos === Position.Left) return -17;
-  if (pos === Position.Right && !parent) return nodeWidth + 3;
-  if (pos === Position.Right && parent) return nodeWidth + 5;
+
+  if (IsPartOf(conn)) {
+    if (IsInputTerminal(conn)) return -marginX;
+    return nodeWidth + marginXSmall;
+  }
+
+  if (IsProductTerminal(conn) || IsLocationTerminal(conn)) return nodeWidth / 2 - marginXSmall;
+  return SetTerminalXPos(order, parent, nodeWidth);
 };
 
 export default SetLeftPos;
