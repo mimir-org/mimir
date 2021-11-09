@@ -158,7 +158,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
           <BlockFilterMenu elements={elements?.filter((elem) => !IsOffPage(elem?.data))} edgeAnimation={animatedEdge} />
         )}
       </div>
-      <LocationModule visible={showLocation3D && IsLocation(node)} />
+      <LocationModule visible={showLocation3D && IsLocation(node)} selectedNode={node} />
     </ReactFlowProvider>
   );
 };
