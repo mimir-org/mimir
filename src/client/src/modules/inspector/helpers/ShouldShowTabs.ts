@@ -9,7 +9,7 @@ export const ShouldShowTabs = (element: InspectorElement) => {
   const shouldShowParameters =
     IsNode(element) ||
     (IsCreateLibraryType(element) && element.attributeTypes.length > 0) ||
-    (IsEdge(element) && !IsRelationEdge(element));
+    (IsEdge(element) && !IsRelationEdge(element) && !!(element.transport || element.interface));
   const shouldShowTerminals =
     IsNode(element) ||
     (IsCreateLibraryType(element) && !IsLocation(element.aspect) && element.terminalTypes.length > 0) ||

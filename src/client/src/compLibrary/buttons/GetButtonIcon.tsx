@@ -17,6 +17,7 @@ const GetButtonIcon = (type: string) => {
   if (type === TextResources.Account_Export_File_Library_Label) return ProjectIcons.ExportLibrary;
   if (type === TextResources.Account_Import_Library_File) return ProjectIcons.ImportLibrary;
   if (type === TextResources.Account_Commit_Button) return ProjectIcons.CommitProject;
+  if (type === TextResources.Account_SubProject_Create) return ProjectIcons.CreateSubProject;
 };
 
 export default GetButtonIcon;
