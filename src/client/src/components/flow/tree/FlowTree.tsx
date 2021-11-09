@@ -3,7 +3,6 @@ import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
 import { FullScreenComponent } from "../../../compLibrary/controls";
 import { GetParent } from "../helpers";
 import { BuildTreeElements } from "../tree/builders";
-import { handleEdgeSelect, handleNoSelect, handleNodeSelect, handleMultiSelect } from "./handlers/";
 import ReactFlow, { Elements, Background } from "react-flow-renderer";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { updatePosition } from "../../../redux/store/project/actions";
@@ -22,6 +21,7 @@ import {
   treeFilterSelector,
   userStateSelector,
 } from "../../../redux/store";
+import { handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";
 
 interface Props {
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
@@ -91,7 +91,7 @@ const FlowTree = ({ inspectorRef }: Props) => {
     } else if (selectedElements.length === 1 && Helpers.GetNodeTypes[selectedElements[0]?.type]) {
       handleNodeSelect(selectedElements[0], inspectorOpen, inspectorRef, dispatch);
     } else if (selectedElements.length === 1 && Helpers.GetEdgeTypes[selectedElements[0]?.type]) {
-      handleEdgeSelect(selectedElements[0], project, dispatch);
+      handleEdgeSelect(selectedElements[0], inspectorOpen, inspectorRef, dispatch);
     } else if (selectedElements.length > 1) {
       handleMultiSelect(dispatch);
     }

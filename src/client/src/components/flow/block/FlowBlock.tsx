@@ -1,7 +1,7 @@
-import ReactFlow, { ReactFlowProvider, Elements, Background } from "react-flow-renderer";
+import ReactFlow, { Elements, Background } from "react-flow-renderer";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { FullScreenComponent } from "../../../compLibrary/controls";
-import { GetBlockEdgeTypes, OnBlockClick } from "../block/helpers";
+import { GetBlockEdgeTypes } from "../block/helpers";
 import { BuildBlockElements } from "./builders";
 import { useOnConnect, useOnDrop, useOnRemove, useOnDragStop } from "../hooks";
 import { setActiveBlockNode, setActiveEdge } from "../../../redux/store/project/actions";
@@ -25,6 +25,7 @@ import {
   nodeSizeSelector,
   animatedEdgeSelector,
 } from "../../../redux/store";
+import { changeInspectorTab } from "../../../modules/inspector/redux/tabs/actions";
 
 interface Props {
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
@@ -106,56 +107,60 @@ const FlowBlock = ({ inspectorRef }: Props) => {
     );
   };
 
-  const OnElementClick = (_event, element) => {
-    dispatch(setActiveEdge(null, false));
-    dispatch(setActiveBlockNode(element.id));
-  };
-
   // Rerender
   useEffect(() => {
     SetDarkModeColor(darkMode);
     OnLoad(flowInstance);
   }, [OnLoad, flowInstance, darkMode, electro]);
 
-  return (
-    <ReactFlowProvider>
-      <div className="reactflow-wrapper" ref={flowWrapper}>
-        <ReactFlow
-          elements={elements}
-          nodeTypes={GetBlockNodeTypes}
-          edgeTypes={GetBlockEdgeTypes}
-          onConnect={OnConnect}
-          // onConnectStart={OnConnectStart}
-          // onConnectStop={OnConnectStop}
-          onElementsRemove={OnElementsRemove}
-          onLoad={OnLoad}
-          onDrop={OnDrop}
-          onDragOver={OnDragOver}
-          onNodeDragStop={OnNodeDragStop}
-          onElementClick={OnElementClick}
-          zoomOnScroll={true}
-          paneMoveable={true}
-          zoomOnDoubleClick={false}
-          defaultZoom={0.9}
-          defaultPosition={[450, 80]}
-          onClick={(e) => OnBlockClick(e, dispatch, project)}
-          onlyRenderVisibleElements={true}
-          connectionLineComponent={BlockConnectionLine}
-        >
-          <Background />
-          <FullScreenComponent inspectorRef={inspectorRef} />
-        </ReactFlow>
+  const onSelectionChange = (selectedElements: Elements) => {
+    if (selectedElements?.length === 1 && GetBlockNodeTypes[selectedElements[0]?.type]) {
+      dispatch(setActiveEdge(null, false));
+      dispatch(setActiveBlockNode(selectedElements[0].id));
+    } else if (selectedElements?.length === 1 && GetBlockEdgeTypes[selectedElements[0]?.type]) {
+      dispatch(setActiveEdge(selectedElements[0]?.id, true));
+      dispatch(setActiveBlockNode(null));
+      dispatch(changeInspectorTab(0));
+    }
+  };
 
-        <ExplorerModule
-          elements={elements?.filter((elem) => !IsOffPage(elem?.data))}
-          selectedNode={node}
-          secondaryNode={secondaryNode}
-        />
-        {blockFilter && (
-          <BlockFilterMenu elements={elements?.filter((elem) => !IsOffPage(elem?.data))} edgeAnimation={animatedEdge} />
-        )}
-      </div>
-    </ReactFlowProvider>
+  return (
+    <div className="reactflow-wrapper" ref={flowWrapper}>
+      <ReactFlow
+        elements={elements}
+        nodeTypes={GetBlockNodeTypes}
+        edgeTypes={GetBlockEdgeTypes}
+        onConnect={OnConnect}
+        // onConnectStart={OnConnectStart}
+        // onConnectStop={OnConnectStop}
+        onElementsRemove={OnElementsRemove}
+        onLoad={OnLoad}
+        onDrop={OnDrop}
+        onDragOver={OnDragOver}
+        onNodeDragStop={OnNodeDragStop}
+        zoomOnScroll={true}
+        paneMoveable={true}
+        zoomOnDoubleClick={false}
+        defaultZoom={0.9}
+        defaultPosition={[450, 80]}
+        onlyRenderVisibleElements={true}
+        multiSelectionKeyCode={"Control"}
+        connectionLineComponent={BlockConnectionLine}
+        onSelectionChange={(e) => onSelectionChange(e)}
+      >
+        <Background />
+        <FullScreenComponent inspectorRef={inspectorRef} />
+      </ReactFlow>
+
+      <ExplorerModule
+        elements={elements?.filter((elem) => !IsOffPage(elem?.data))}
+        selectedNode={node}
+        secondaryNode={secondaryNode}
+      />
+      {blockFilter && (
+        <BlockFilterMenu elements={elements?.filter((elem) => !IsOffPage(elem?.data))} edgeAnimation={animatedEdge} />
+      )}
+    </div>
   );
 };
 
