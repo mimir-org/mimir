@@ -24,16 +24,16 @@ const DrawProductChildren = (
   const productChildren: Node[] = [];
   TraverseProductNodes(edges, allNodes, selectedNode, productChildren);
 
-  productChildren.forEach((node) => {
-    const productChildNode = BuildBlockProductNode(node);
-    productChildNode && elements.push(productChildNode);
-  });
-
   edges?.forEach((edge: Edge) => {
     let productEdge = null;
     if (ValidateProductEdge(edge.fromNode, edge.fromConnector, edge.toConnector))
       productEdge = BuildBlockEdge(allNodes, edge, GetBlockEdgeType(edge.fromConnector), null, animatedEdge);
     productEdge && elements.push(productEdge);
+  });
+
+  productChildren.forEach((node) => {
+    const productChildNode = BuildBlockProductNode(node);
+    productChildNode && elements.push(productChildNode);
   });
 };
 

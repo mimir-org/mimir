@@ -25,6 +25,7 @@ import {
   nodeSizeSelector,
   animatedEdgeSelector,
 } from "../../../redux/store";
+import { Color } from "../../../compLibrary";
 
 interface Props {
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
@@ -150,6 +151,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
         multiSelectionKeyCode={"Control"}
         connectionLineComponent={BlockConnectionLine}
         onSelectionChange={(e) => onSelectionChange(e)}
+        arrowHeadColor={Color.ProductMain}
       >
         <Background />
         <FullScreenComponent inspectorRef={inspectorRef} />

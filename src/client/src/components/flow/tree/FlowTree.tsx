@@ -86,6 +86,8 @@ const FlowTree = ({ inspectorRef }: Props) => {
   };
 
   const onSelectionChange = (selectedElements: Elements) => {
+    console.log({ selectedElements });
+
     if (selectedElements === null) {
       handleNoSelect(project, inspectorRef, dispatch);
     } else if (selectedElements.length === 1 && Helpers.GetNodeTypes[selectedElements[0]?.type]) {
