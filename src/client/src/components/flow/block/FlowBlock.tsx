@@ -4,7 +4,6 @@ import { FullScreenComponent } from "../../../compLibrary/controls";
 import { GetBlockEdgeTypes } from "../block/helpers";
 import { BuildBlockElements } from "./builders";
 import { useOnConnect, useOnDrop, useOnRemove, useOnDragStop } from "../hooks";
-import { setActiveBlockNode, setActiveEdge } from "../../../redux/store/project/actions";
 import { GetBlockNodeTypes, GetParent } from "../helpers";
 import { EDGE_TYPE, EdgeType } from "../../../models/project";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
@@ -13,6 +12,7 @@ import { Node } from "../../../models";
 import { ExplorerModule } from "../../../modules/explorer";
 import { BlockConnectionLine } from "./edges";
 import { IsOffPage, SetDarkModeColor, GetSelectedNode } from "../../../helpers";
+import { CloseInspector, handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";
 import {
   darkModeSelector,
   iconSelector,
@@ -25,7 +25,6 @@ import {
   nodeSizeSelector,
   animatedEdgeSelector,
 } from "../../../redux/store";
-import { changeInspectorTab } from "../../../modules/inspector/redux/tabs/actions";
 
 interface Props {
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
@@ -107,6 +106,10 @@ const FlowBlock = ({ inspectorRef }: Props) => {
     );
   };
 
+  useEffect(() => {
+    CloseInspector(inspectorRef, dispatch);
+  }, [inspectorRef, dispatch]);
+
   // Rerender
   useEffect(() => {
     SetDarkModeColor(darkMode);
@@ -114,13 +117,14 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   }, [OnLoad, flowInstance, darkMode, electro]);
 
   const onSelectionChange = (selectedElements: Elements) => {
-    if (selectedElements?.length === 1 && GetBlockNodeTypes[selectedElements[0]?.type]) {
-      dispatch(setActiveEdge(null, false));
-      dispatch(setActiveBlockNode(selectedElements[0].id));
-    } else if (selectedElements?.length === 1 && GetBlockEdgeTypes[selectedElements[0]?.type]) {
-      dispatch(setActiveEdge(selectedElements[0]?.id, true));
-      dispatch(setActiveBlockNode(null));
-      dispatch(changeInspectorTab(0));
+    if (selectedElements === null) {
+      handleNoSelect(project, inspectorRef, dispatch, true);
+    } else if (selectedElements.length === 1 && GetBlockNodeTypes[selectedElements[0]?.type]) {
+      handleNodeSelect(selectedElements[0], false, inspectorRef, dispatch, true);
+    } else if (selectedElements.length === 1 && GetBlockEdgeTypes[selectedElements[0]?.type]) {
+      handleEdgeSelect(selectedElements[0], false, inspectorRef, dispatch, true);
+    } else if (selectedElements.length > 1) {
+      handleMultiSelect(dispatch, true);
     }
   };
 

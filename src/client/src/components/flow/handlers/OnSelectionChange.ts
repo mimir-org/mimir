@@ -9,50 +9,69 @@ import { changeInspectorTab } from "../../../modules/inspector/redux/tabs/action
 import { setModuleVisibility } from "../../../redux/store/modules/actions";
 import { setActiveNode, setActiveEdge, setActiveBlockNode } from "../../../redux/store/project/actions";
 
-export const handleNoSelect = (project: Project, inspectorRef: React.MutableRefObject<HTMLDivElement>, dispatch: Dispatch) => {
-  dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, false, true));
+export const handleNoSelect = (
+  project: Project,
+  inspectorRef: React.MutableRefObject<HTMLDivElement>,
+  dispatch: Dispatch,
+  isBlock = false
+) => {
   if (project) {
-    dispatch(setActiveNode(null, false));
+    isBlock ? dispatch(setActiveBlockNode(null)) : dispatch(setActiveNode(null, false));
     dispatch(setActiveEdge(null, false));
   }
 
-  dispatch(changeInspectorHeight(Size.ModuleClosed));
-  SetPanelHeight(inspectorRef, Size.ModuleClosed); // TODO: remove
+  CloseInspector(inspectorRef, dispatch);
 };
 
 export const handleNodeSelect = (
   element: FlowElement,
   inspectorOpen: boolean,
   inspectorRef: React.MutableRefObject<HTMLDivElement>,
-  dispatch: Dispatch
+  dispatch: Dispatch,
+  isBlock = false
 ) => {
   dispatch(setActiveEdge(null, false));
-  dispatch(setActiveNode(element.id, true));
-  dispatch(setActiveBlockNode(element.id));
-  dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, true, true));
-  dispatch(changeInspectorTab(0));
-  if (!inspectorOpen) {
-    dispatch(changeInspectorHeight(Size.ModuleOpen));
-    SetPanelHeight(inspectorRef, Size.ModuleOpen);
-  }
+  isBlock ? dispatch(setActiveBlockNode(element.id)) : dispatch(setActiveNode(element.id, true));
+  OpenInspector(inspectorOpen, inspectorRef, isBlock, dispatch);
 };
 
 export const handleEdgeSelect = (
   element: FlowElement,
   inspectorOpen: boolean,
   inspectorRef: React.MutableRefObject<HTMLDivElement>,
-  dispatch: Dispatch
+  dispatch: Dispatch,
+  isBlock = false
 ) => {
   dispatch(setActiveEdge(element?.id, true));
-  dispatch(setActiveNode(null, false));
+  isBlock ? dispatch(setActiveBlockNode(null)) : dispatch(setActiveNode(null, false));
+  OpenInspector(inspectorOpen, inspectorRef, isBlock, dispatch);
+};
+
+export const handleMultiSelect = (dispatch: Dispatch, isBlock = false) => {
+  isBlock ? dispatch(setActiveBlockNode(null)) : dispatch(setActiveNode(null, false));
+  dispatch(setActiveEdge(null, false));
+};
+
+export const OpenInspector = (
+  inspectorOpen: boolean,
+  inspectorRef: React.MutableRefObject<HTMLDivElement>,
+  isBlock: boolean,
+  dispatch: Dispatch
+) => {
   dispatch(changeInspectorTab(0));
-  if (!inspectorOpen) {
-    dispatch(changeInspectorHeight(Size.ModuleOpen));
-    SetPanelHeight(inspectorRef, Size.ModuleOpen);
+
+  if (!isBlock) {
+    dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, true, true));
+
+    if (!inspectorOpen) {
+      dispatch(changeInspectorHeight(Size.ModuleOpen));
+      SetPanelHeight(inspectorRef, Size.ModuleOpen);
+    }
   }
 };
 
-export const handleMultiSelect = (dispatch: Dispatch) => {
-  dispatch(setActiveNode(null, false));
-  dispatch(setActiveEdge(null, false));
+export const CloseInspector = (inspectorRef: React.MutableRefObject<HTMLDivElement>, dispatch: Dispatch) => {
+  dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, false, true));
+  dispatch(changeInspectorHeight(Size.ModuleClosed));
+  SetPanelHeight(inspectorRef, Size.ModuleClosed);
 };
