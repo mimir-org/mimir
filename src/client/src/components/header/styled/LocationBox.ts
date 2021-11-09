@@ -1,7 +1,10 @@
 import styled from "styled-components";
 import { Color } from "../../../compLibrary";
 
-const LocationBox = styled.div`
+interface Props {
+  active: boolean;
+}
+const LocationBox = styled.div<Props>`
   position: absolute;
   display: flex;
   bottom: -1px;
@@ -9,6 +12,7 @@ const LocationBox = styled.div`
   height: 41px;
   width: 60px;
   border-right: 1px solid ${Color.Grey};
+  background-color: ${(props) => props.active && Color.LocationHeader};
 
   &:hover {
     cursor: pointer;

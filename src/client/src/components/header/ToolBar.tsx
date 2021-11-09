@@ -23,7 +23,7 @@ interface Props {
  */
 const ToolBar = ({ libOpen, explorerOpen, treeView, treeFilter, blockFilter, electro }: Props) => {
   const dispatch = useAppDispatch();
-  const location3DVisible = useAppSelector(location3DSelector);
+  const location3DActive = useAppSelector(location3DSelector);
   const selectedNode = GetSelectedNode();
 
   return (
@@ -49,7 +49,7 @@ const ToolBar = ({ libOpen, explorerOpen, treeView, treeFilter, blockFilter, ele
         </OptionsElement>
       </OptionsBox>
       {IsBlockView() && IsLocation(selectedNode) && (
-        <LocationBox onClick={() => Click.OnLocation3D(dispatch, location3DVisible)}>
+        <LocationBox onClick={() => Click.OnLocation3D(dispatch, location3DActive)} active={location3DActive}>
           <img src={Location} alt={"location3D"} className="logo" />
         </LocationBox>
       )}

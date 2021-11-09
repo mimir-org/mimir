@@ -3,6 +3,7 @@ import { Node } from "../../../models";
 import { setSecondaryNode, removeSecondaryNode } from "../../../redux/store/secondaryNode/actions";
 import { IsParentOf } from "../../../components/flow/helpers";
 import { IsFamily, IsDirectChild } from "../../../helpers";
+import { setLocation3D } from "../../location/redux/actions";
 
 /**
  * Component to handle all clicks on checkboxes in the BlockView's Explorer Module.
@@ -14,6 +15,8 @@ import { IsFamily, IsDirectChild } from "../../../helpers";
  * @param dispatch
  */
 export const OnBlockChange = (node: Node, selectedNode: Node, secondaryNode: Node, dispatch: any) => {
+  dispatch(setLocation3D(false));
+
   if (selectedNode && secondaryNode) {
     if (node === selectedNode && node !== secondaryNode) {
       dispatch(setActiveNode(secondaryNode.id, true));
