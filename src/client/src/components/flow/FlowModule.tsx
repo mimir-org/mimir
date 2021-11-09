@@ -17,8 +17,8 @@ interface Props {
 const FlowModule = ({ inspectorRef, flowView }: Props) => {
   return (
     <div className="dndflow">
-      {/* {flowView === VIEW_TYPE.TREEVIEW && <FlowTree inspectorRef={inspectorRef} />} */}
-      {flowView === VIEW_TYPE.TREEVIEW && <LocationModule visible={true} />}
+      {flowView === VIEW_TYPE.TREEVIEW && <FlowTree inspectorRef={inspectorRef} />}
+      {/* {flowView === VIEW_TYPE.TREEVIEW && <LocationModule visible={true} />} */}
       {flowView === VIEW_TYPE.BLOCKVIEW && <FlowBlock inspectorRef={inspectorRef} />}
       {flowView === VIEW_TYPE.TYPE_EDITOR && <TypeEditorComponent />}
     </div>

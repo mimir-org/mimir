@@ -3,23 +3,39 @@ import * as THREE from "three";
 import { OnRender, OnWindowResize } from "./handlers";
 import { CreateCamera, CreateControls, CreateLights, CreateRenderer, CreateScene } from "./helpers";
 import { LocationModuleWrapper } from "./styled";
+import { EquinorLogo, EquinorTestLogo } from "../../assets/icons/equinor/nodes";
 
 interface Props {
   visible: boolean;
 }
 
 const createCube = (scene: THREE.Scene) => {
-  const cubeGeometry = new THREE.BoxGeometry(500, 700, 200);
+  const cubeGeometry = new THREE.BoxGeometry(680, 350, 200);
 
-  const mesh = new THREE.Mesh(
-    cubeGeometry,
-    new THREE.MeshPhongMaterial({
-      color: 0x156289,
-      emissive: 0x072534,
-      side: THREE.DoubleSide,
-      shading: THREE.FlatShading,
-    })
-  );
+  const texture = new THREE.TextureLoader().load(EquinorTestLogo);
+  console.log({ texture });
+  console.log({ EquinorTestLogo });
+  // immediately use the texture for material creation
+  // const material = new THREE.MeshBasicMaterial({ map: texture });
+
+  texture.encoding = THREE.sRGBEncoding;
+  texture.anisotropy = 16;
+  const material = new THREE.MeshStandardMaterial({
+    map: texture,
+  });
+  const mesh = new THREE.Mesh(cubeGeometry, material);
+
+  // const mesh = new THREE.Mesh(
+  //   cubeGeometry,
+  //   new THREE.MeshPhongMaterial({
+  //     color: 0x156289,
+  //     emissive: 0x072534,
+  //     side: THREE.DoubleSide,
+  //     shading: THREE.FlatShading,
+  //   })
+  // );
+
+  // const mesh = new THREE.Mesh(cubeGeometry, material);
 
   const line = new THREE.LineSegments(
     new THREE.WireframeGeometry(cubeGeometry),
@@ -33,6 +49,7 @@ const createCube = (scene: THREE.Scene) => {
 
   scene.add(mesh);
   scene.add(line);
+  // scene.add(material);
 };
 
 const LocationModule = ({ visible }: Props) => {
