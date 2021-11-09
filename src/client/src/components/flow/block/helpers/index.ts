@@ -6,4 +6,5 @@ export { default as FindAllEdges } from "./FindAllEdges";
 export { default as FilterTerminals } from "./FilterTerminals";
 export { default as CreateOffPageNode } from "./CreateOffPageNode";
 
+export { default as GetBlockEdgeType } from "./GetBlockEdgeType";
 export { default as GetBlockEdgeTypes } from "./GetBlockEdgeTypes";

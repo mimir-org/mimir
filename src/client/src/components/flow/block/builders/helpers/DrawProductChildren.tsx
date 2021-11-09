@@ -5,6 +5,7 @@ import { IsProduct, IsAspectNode } from "../../../../../helpers";
 import { Node, Edge, Connector } from "../../../../../models";
 import { BlockNodeSize, EdgeType, EDGE_TYPE } from "../../../../../models/project";
 import { IsPartOf, IsTransportConnection } from "../../../helpers";
+import { GetBlockEdgeType } from "../../helpers";
 
 /**
  * Component to draw all children of a selected Product Node in BlockView.
@@ -36,7 +37,7 @@ const DrawProductChildren = (
   edges?.forEach((edge: Edge) => {
     let productEdge = null;
     if (ValidateProductEdge(edge.fromNode, edge.fromConnector, edge.toConnector))
-      productEdge = BuildBlockEdge(allNodes, edge, EDGE_TYPE.BLOCK_PART as EdgeType, null, animatedEdge);
+      productEdge = BuildBlockEdge(allNodes, edge, GetBlockEdgeType(edge.fromConnector), null, animatedEdge);
     productEdge && elements.push(productEdge);
   });
 };
