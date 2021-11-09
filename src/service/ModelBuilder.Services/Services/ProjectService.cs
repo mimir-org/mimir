@@ -431,9 +431,9 @@ namespace Mb.Services.Services
             
             // Map new data
             _mapper.Map(projectAm, originalProject);
-            
+
             var subNodes = _nodeRepository.UpdateInsert(existingNodes, originalProject, invokedByDomain).ToList();
-            var subEdges = _edgeRepository.UpdateInsert(existingEdges, originalProject, invokedByDomain).ToList();
+            var subEdges = _edgeRepository.UpdateInsert(existingEdges, originalProject, invokedByDomain, _contextAccessor.GetName()).ToList();
 
                 ResolveLevelAndOrder(originalProject);
 
@@ -863,7 +863,8 @@ namespace Mb.Services.Services
                 Height = null,
                 Cost = null,
                 Created = DateTime.Now.ToUniversalTime(),
-                CreatedBy = _contextAccessor.GetName()
+                CreatedBy = _contextAccessor.GetName(),
+                CreatedFromTypeId = null
             };
 
             var connector = new Relation

@@ -35,6 +35,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated ?? DateTime.Now.ToUniversalTime()))
                 .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
                 .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy))
+                .ForMember(dest => dest.CreatedFromTypeId, opt => opt.MapFrom(src => src.CreatedFromTypeId))
                 .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
                 .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => src.Aspect))
                 .ForMember(dest => dest.IsRoot, opt => opt.MapFrom(src => src.IsRoot))
@@ -79,6 +80,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => src.Aspect))
                 .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
                 .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy))
+                .ForMember(dest => dest.CreatedFromTypeId, opt => opt.MapFrom(src => src.CreatedFromTypeId))
                 .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated))
                 .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => src.UpdatedBy))
                 .ForMember(dest => dest.IsRoot, opt => opt.MapFrom(src => src.IsRoot));

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Mb.Data.Contracts;
@@ -27,7 +28,7 @@ namespace Mb.Data.Repositories
             _modelBuilderConfiguration = modelBuilderConfiguration?.Value;
         }
 
-        public IEnumerable<Edge> UpdateInsert(ICollection<Edge> original, Project project, string invokedByDomain)
+        public IEnumerable<Edge> UpdateInsert(ICollection<Edge> original, Project project, string invokedByDomain, string contextAccessor)
         {
             if (project?.Edges == null || !project.Edges.Any() || original == null)
                 yield break;
@@ -47,8 +48,11 @@ namespace Mb.Data.Repositories
                         continue;
                     }
 
+                    SetEdgeProperties(edge, true, contextAccessor);
+
                     _transportRepository.UpdateInsert(edge.Transport, EntityState.Added);
                     _interfaceRepository.UpdateInsert(edge.Interface, EntityState.Added);
+
                     Attach(edge, EntityState.Added);
                 }
                 else
@@ -63,13 +67,16 @@ namespace Mb.Data.Repositories
                         continue;
                     }
 
+                    SetEdgeProperties(edge, false, contextAccessor);
+
                     _transportRepository.UpdateInsert(edge.Transport, EntityState.Modified);
                     _interfaceRepository.UpdateInsert(edge.Interface, EntityState.Modified);
+
                     Attach(edge, EntityState.Modified);
                 }
             }
         }
-
+        
         public async Task<IEnumerable<Edge>> DeleteEdges(ICollection<Edge> delete, string projectId, string invokedByDomain)
         {
             var subEdges = new List<Edge>();
@@ -159,6 +166,32 @@ namespace Mb.Data.Repositories
             edge.ToConnector = null;
             edge.FromNode = null;
             edge.ToNode = null;
+        }
+
+        private void SetEdgeProperties(Edge edge, bool isNewEdge, string contextAccessor)
+        {
+            var dateTimeNow = DateTime.Now.ToUniversalTime();
+
+            edge.Transport.UpdatedBy = contextAccessor;
+            edge.Transport.Updated = dateTimeNow;
+
+            edge.Interface.UpdatedBy = contextAccessor;
+            edge.Interface.Updated = dateTimeNow;
+
+            if (!isNewEdge)
+                return;
+
+            //TODO: Versioning
+
+            const string version = "1.0";
+
+            edge.Transport.Version = version;
+            edge.Transport.CreatedBy = contextAccessor;
+            edge.Transport.Created = dateTimeNow;
+
+            edge.Interface.Version = version;
+            edge.Interface.CreatedBy = contextAccessor;
+            edge.Interface.Created = dateTimeNow;
         }
     }
 }

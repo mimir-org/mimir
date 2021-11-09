@@ -7,5 +7,7 @@ namespace Mb.Models.Data.Enums
     {
         [JsonIgnore]
         public virtual ICollection<Node> Nodes { get; set; }
+        public virtual ICollection<Interface> Interfaces { get; set; }
+        public virtual ICollection<Transport> Transports { get; set; }
     }
 }
