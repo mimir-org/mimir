@@ -25,10 +25,10 @@ const CreateCube = (scene: THREE.Scene) => {
 
   scene.add(mesh);
   scene.add(line);
-}
+};
 
 const CreateCubes = (scene: THREE.Scene, parent: Node, children: Node[]) => {
   CreateCube(scene);
-}
+};
 
 export default CreateCubes;

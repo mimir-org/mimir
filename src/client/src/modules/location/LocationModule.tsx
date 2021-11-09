@@ -15,7 +15,7 @@ const LocationModule = ({ visible }: Props) => {
   const [controls] = useState(CreateControls(renderer, camera));
 
   useEffect(() => {
-    mountRef.current.appendChild(renderer.domElement);
+    mountRef.current?.appendChild(renderer.domElement);
     CreateLights(scene);
 
     CreateCubes(scene, null, []);
@@ -24,12 +24,14 @@ const LocationModule = ({ visible }: Props) => {
     window.addEventListener("resize", () => OnWindowResize(renderer, camera), false);
 
     OnRender(renderer, scene, camera);
-  }, [camera, controls, renderer, scene]);
+  }, [camera, controls, renderer, scene, visible]);
 
   return (
-    <LocationModuleWrapper>
-      <div ref={mountRef} />
-    </LocationModuleWrapper>
+    visible && (
+      <LocationModuleWrapper id="Location3D">
+        <div ref={mountRef} />
+      </LocationModuleWrapper>
+    )
   );
 };
 export default LocationModule;
