@@ -2,7 +2,6 @@ import { FlowTree } from "./tree";
 import { FlowBlock } from "./block";
 import { ViewType, VIEW_TYPE } from "../../models/project";
 import { TypeEditorComponent } from "../../typeEditor";
-import { LocationModule } from "../../modules/location";
 
 interface Props {
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
