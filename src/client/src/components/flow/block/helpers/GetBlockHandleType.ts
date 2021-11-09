@@ -9,12 +9,7 @@ import { IsInputTerminal, IsPartOf } from "../../helpers";
  * @returns a tuple with type and position.
  */
 const GetBlockHandleType = (conn: Connector, electro: boolean): [HandleType, Position] => {
-  if (electro) {
-    if (IsInputTerminal(conn)) return ["target", Position.Top];
-    return ["source", Position.Bottom];
-  }
-
-  if (IsPartOf(conn)) {
+  if (electro || IsPartOf(conn)) {
     if (IsInputTerminal(conn)) return ["target", Position.Top];
     return ["source", Position.Bottom];
   }
