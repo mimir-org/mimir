@@ -2,6 +2,7 @@ import { FlowTree } from "./tree";
 import { FlowBlock } from "./block";
 import { ViewType, VIEW_TYPE } from "../../models/project";
 import { TypeEditorComponent } from "../../typeEditor";
+import { LocationModule } from "../../modules/location";
 
 interface Props {
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
@@ -16,7 +17,8 @@ interface Props {
 const FlowModule = ({ inspectorRef, flowView }: Props) => {
   return (
     <div className="dndflow">
-      {flowView === VIEW_TYPE.TREEVIEW && <FlowTree inspectorRef={inspectorRef} />}
+      {/* {flowView === VIEW_TYPE.TREEVIEW && <FlowTree inspectorRef={inspectorRef} />} */}
+      {flowView === VIEW_TYPE.TREEVIEW && <LocationModule visible={true} />}
       {flowView === VIEW_TYPE.BLOCKVIEW && <FlowBlock inspectorRef={inspectorRef} />}
       {flowView === VIEW_TYPE.TYPE_EDITOR && <TypeEditorComponent />}
     </div>
