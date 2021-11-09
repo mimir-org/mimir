@@ -1,6 +1,6 @@
 import { Elements } from "react-flow-renderer";
 import { Node, Project } from "../../../../models";
-import { BuildParentBlockNode, BuildParentSecondaryNode } from ".";
+import { BuildParentBlockNode, BuildParentSecondaryNode, BuildParentProductNode } from ".";
 import { DrawChildNodes, DrawProductChildren, DrawBlockEdges, DrawSecondaryChildren } from "./helpers";
 import { BlockNodeSize } from "../../../../models/project";
 import { IsProduct } from "../../../../helpers";
@@ -28,6 +28,15 @@ const BuildBlockElements = (
   const nodes = project.nodes;
   const edges = project.edges;
 
+  // Product nodes has a different view
+  if (IsProduct(selectedNode)) {
+    const parentProduct = BuildParentProductNode(selectedNode);
+    parentProduct && elements.push(parentProduct);
+
+    DrawProductChildren(edges, nodes, selectedNode, elements, animatedEdge);
+    return elements;
+  }
+
   const parentBlock = BuildParentBlockNode(selectedNode);
   parentBlock && elements.push(parentBlock);
 
@@ -35,12 +44,6 @@ const BuildBlockElements = (
     const secondary = nodes.find((x) => x.id === secondaryNode.id);
     const parentSecondaryBlock = BuildParentSecondaryNode(selectedNode, secondary);
     parentSecondaryBlock && elements.push(parentSecondaryBlock);
-  }
-
-  // Product nodes has a different view
-  if (IsProduct(selectedNode)) {
-    DrawProductChildren(edges, nodes, selectedNode, elements, parentNode, parentNodeSize, animatedEdge);
-    return elements;
   }
 
   DrawChildNodes(edges, nodes, selectedNode, elements, parentNode, parentNodeSize);
