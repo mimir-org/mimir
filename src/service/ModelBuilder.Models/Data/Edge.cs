@@ -34,17 +34,10 @@ namespace Mb.Models.Data
         public bool IsTemplateEdge { get; set; }
         public virtual ICollection<Project> Projects { get; set; }
 
-        public string Domain => Id.ResolveDomain();
-        public string Iri => Id.ResolveEdgeIri();
+        [Required]
+        public string Domain { get; set; }
 
-        public Edge()
-        {
-
-        }
-
-        public Edge(string iri)
-        {
-
-        }
+        [Required]
+        public string Iri { get; set; }
     }
 }

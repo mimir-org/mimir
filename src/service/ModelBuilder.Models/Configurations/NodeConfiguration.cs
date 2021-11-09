@@ -12,10 +12,8 @@ namespace Mb.Models.Configurations
             builder.ToTable("Node");
             builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
             builder.Property(p => p.Rds).HasColumnName("Rds").IsRequired(false);
-            builder.Property(p => p.Contractor).HasColumnName("Contractor").IsRequired(false);
             builder.Property(p => p.Description).HasColumnName("Description").IsRequired(false);
             builder.Property(p => p.SemanticReference).HasColumnName("SemanticReference");
-            builder.Property(p => p.TagNumber).HasColumnName("TagNumber");
             builder.Property(p => p.Name).HasColumnName("Name").IsRequired();
             builder.Property(p => p.Label).HasColumnName("Label").IsRequired(false);
             builder.Property(p => p.PositionX).HasColumnName("PositionX").HasColumnType("decimal(18,4)").IsRequired();

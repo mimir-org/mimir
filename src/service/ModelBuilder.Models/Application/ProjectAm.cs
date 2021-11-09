@@ -14,6 +14,12 @@ namespace Mb.Models.Application
         [Required]
         public bool IsSubProject { get; set; }
 
+        [Required]
+        public string Domain { get; set; }
+
+        [Required]
+        public string Iri { get; set; }
+
         public string Version { get; set; }
         public string Description { get; set; }
         public string ProjectOwner { get; set; }
@@ -23,5 +29,16 @@ namespace Mb.Models.Application
         public ICollection<NodeAm> Nodes { get; set; }
 
         public ICollection<EdgeAm> Edges { get; set; }
+
+        public ProjectAm()
+        {
+
+        }
+
+        public ProjectAm(string iri, string domain)
+        {
+            //if(!string.IsNullOrEmpty(iri))
+
+        }
     }
 }

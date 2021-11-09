@@ -31,19 +31,14 @@ namespace Mb.Models.Data
         [Required]
         public DateTime Updated { get; set; }
 
+        [Required]
+        public string Domain { get; set; }
+
+        [Required]
+        public string Iri { get; set; }
 
         public virtual ICollection<Node> Nodes { get; set; }
         public virtual ICollection<Edge> Edges { get; set; }
-
-        public Project()
-        {
-
-        }
-
-        public Project(string iri)
-        {
-
-        }
 
         public void IncrementMajorVersion()
         {
@@ -68,8 +63,5 @@ namespace Mb.Models.Data
 
             Version = Version.IncrementCommitVersion();
         }
-
-        public string Domain => Id.ResolveDomain();
-        public string Iri => Id.ResolveProjectIri();
     }
 }

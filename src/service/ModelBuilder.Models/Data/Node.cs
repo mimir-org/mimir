@@ -15,15 +15,17 @@ namespace Mb.Models.Data
         [Required]
         public string Id { get; set; }
 
-        public string Rds { get; set; }
+        [Required]
+        public string Domain { get; set; }
 
-        public string Contractor { get; set; }
+        [Required]
+        public string Iri { get; set; }
+
+        public string Rds { get; set; }
 
         public string Description { get; set; }
 
         public string SemanticReference { get; set; }
-
-        public string TagNumber { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -122,19 +124,6 @@ namespace Mb.Models.Data
         public void IncrementMajorVersion()
         {
             Version = Version.IncrementMajorVersion();
-        }
-
-        public string Domain => Id.ResolveDomain();
-        public string Iri => Id.ResolveNodeIri();
-
-        public Node()
-        {
-
-        }
-
-        public Node(string iri)
-        {
-
         }
     }
 }

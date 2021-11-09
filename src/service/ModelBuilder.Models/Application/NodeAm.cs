@@ -22,11 +22,7 @@ namespace Mb.Models.Application
 
         public string Rds { get; set; }
 
-        public string Contractor { get; set; }
-
         public string SemanticReference { get; set; }
-
-        public string TagNumber { get; set; }
 
         public string Description { get; set; }
 
