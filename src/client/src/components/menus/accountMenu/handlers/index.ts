@@ -7,3 +7,4 @@ export { default as OnImportProject } from "./OnImportProjectFile";
 export { default as OnSaveLibrary } from "./OnSaveLibraryFile";
 export { default as OnImportLibrary } from "./OnImportLibraryFile";
 export { default as OnCommit } from "./OnCommitClick";
+export * from "./OnCreateSubprojectClick";

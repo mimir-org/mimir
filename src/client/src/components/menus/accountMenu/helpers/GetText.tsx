@@ -10,6 +10,7 @@ const GetText = (type: string) => {
   if (type === TextResources.Account_Import_Project) return TextResources.Account_Import_File;
   if (type === TextResources.Account_Import_Lib_Label) return TextResources.Account_Import_Library_File;
   if (type === TextResources.Account_Commit) return TextResources.Account_Commit_Label;
+  if (type === TextResources.Account_SubProject_Create) return TextResources.Account_SubProject_Create_Label;
 };
 
 export default GetText;

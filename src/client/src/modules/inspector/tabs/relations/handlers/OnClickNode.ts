@@ -4,9 +4,10 @@ import { setActiveEdge, setActiveNode } from "../../../../../redux/store/project
 import { changeInspectorTab } from "../../../redux/tabs/actions";
 import { Node } from "../../../../../models";
 
-export const OnClickNode = (node: Node, dispatch: any) => {
+export const OnClickNode = (node: Node, setActiveFlowElement: (elementId: string) => void, dispatch: any) => {
   dispatch(setActiveEdge(null, false));
   dispatch(setActiveNode(node.id, true));
   dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, true, true));
   dispatch(changeInspectorTab(3));
+  setActiveFlowElement(node.id);
 };

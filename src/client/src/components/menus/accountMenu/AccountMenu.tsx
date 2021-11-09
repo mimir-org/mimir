@@ -15,6 +15,8 @@ import { useOutsideClick } from "./hooks/useOutsideClick";
 import { activeMenuSelector, commonStateSelector, projectStateSelector, userStateSelector } from "../../../redux/store/";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { CommitProjectMenu } from "../project/commitProject";
+import { CreateSubProjectMenu } from "../project/createSubProject";
+import { useSelectedFlowElements } from "../../../helpers/UseSelectedFlowElements";
 
 const AccountMenu = () => {
   const dispatch = useAppDispatch();
@@ -23,6 +25,8 @@ const AccountMenu = () => {
   const userState = useAppSelector(userStateSelector);
   const activeMenu = useAppSelector(activeMenuSelector);
   const menuRef = useRef(null);
+
+  const [selectedNodeIds, selectedEdgeIds] = useSelectedFlowElements();
 
   const onOutsideClick = useCallback(() => !activeMenu && dispatch(setAccountMenuVisibility(false)), [activeMenu, dispatch]);
   useOutsideClick(menuRef, onOutsideClick);
@@ -36,6 +40,7 @@ const AccountMenu = () => {
         <GetMenuElement type={TextResources.Account_Save_Library} onClick={() => Click.OnSaveLibrary(dispatch)} />
         <GetMenuElement type={TextResources.Account_Save_File} onClick={() => Click.OnSaveFile(dispatch)} />
         <GetMenuElement type={TextResources.Account_Commit} onClick={() => Click.OnCommit(dispatch, projectState)} />
+        <GetMenuElement type={TextResources.Account_SubProject_Create} onClick={() => Click.OnCreateSubprojectClick(dispatch)} />
         <MenuLine />
         <GetMenuElement type={TextResources.Account_Import_Project} onClick={() => Click.OnImportProject(dispatch)} />
         <GetMenuElement type={TextResources.Account_Import_Lib_Label} onClick={() => Click.OnImportLibrary(dispatch)} />
@@ -55,6 +60,7 @@ const AccountMenu = () => {
           parsers={commonState.parsers}
           projectId={projectState?.project?.id}
         />
+        <CreateSubProjectMenu nodeIds={selectedNodeIds} edgeIds={selectedEdgeIds} />
       </ProjectMenuBox>
     </>
   );

@@ -1,24 +1,16 @@
 import * as Helpers from "./helpers/";
-import ReactFlow, { ReactFlowProvider, Elements, Background } from "react-flow-renderer";
-import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
 import { FullScreenComponent } from "../../../compLibrary/controls";
-import { Size } from "../../../compLibrary";
-import { changeInspectorTab } from "../../../modules/inspector/redux/tabs/actions";
 import { GetParent } from "../helpers";
 import { BuildTreeElements } from "../tree/builders";
-import { setModuleVisibility } from "../../../redux/store/modules/actions";
-import { MODULE_TYPE } from "../../../models/project";
-import { SetPanelHeight } from "../../../modules/inspector/helpers";
-import { updatePosition, setActiveNode, setActiveEdge } from "../../../redux/store/project/actions";
-import { changeInspectorHeight } from "../../../modules/inspector/redux/height/actions";
-import { FlowManipulator } from "./FlowManipulator";
-import { OnTreeClick } from "./handlers/";
+import ReactFlow, { Elements, Background } from "react-flow-renderer";
+import { useState, useRef, useEffect, useCallback } from "react";
+import { updatePosition } from "../../../redux/store/project/actions";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { TreeFilterMenu } from "../../menus/filterMenu/tree";
 import { ExplorerModule } from "../../../modules/explorer";
-import { SetDarkModeColor, GetSelectedNode } from "../../../helpers";
 import { TreeConnectionLine } from "./edges";
+import { GetSelectedNode, SetDarkModeColor } from "../../../helpers";
 import {
   animatedEdgeSelector,
   darkModeSelector,
@@ -29,6 +21,7 @@ import {
   treeFilterSelector,
   userStateSelector,
 } from "../../../redux/store";
+import { handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";
 
 interface Props {
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
@@ -53,7 +46,6 @@ const FlowTree = ({ inspectorRef }: Props) => {
   const animatedEdge = useAppSelector(animatedEdgeSelector);
   const node = GetSelectedNode();
   const parent = GetParent(node);
-  const selectedNodeId = useMemo(() => node?.id ?? project?.edges.find((edge) => edge.isSelected)?.id, [project, node]);
 
   const OnDragOver = (event: any) => event.preventDefault();
   const OnNodeDragStop = (_event: any, n: any) => dispatch(updatePosition(n.id, n.position.x, n.position.y));
@@ -93,14 +85,15 @@ const FlowTree = ({ inspectorRef }: Props) => {
     );
   };
 
-  const OnElementClick = (_event, element) => {
-    dispatch(setActiveEdge(null, false));
-    dispatch(setActiveNode(element.id, true));
-    dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, true, true));
-    dispatch(changeInspectorTab(0));
-    if (!inspectorOpen) {
-      dispatch(changeInspectorHeight(Size.ModuleOpen));
-      SetPanelHeight(inspectorRef, Size.ModuleOpen);
+  const onSelectionChange = (selectedElements: Elements) => {
+    if (selectedElements === null) {
+      handleNoSelect(project, inspectorRef, dispatch);
+    } else if (selectedElements.length === 1 && Helpers.GetNodeTypes[selectedElements[0]?.type]) {
+      handleNodeSelect(selectedElements[0], inspectorOpen, inspectorRef, dispatch);
+    } else if (selectedElements.length === 1 && Helpers.GetEdgeTypes[selectedElements[0]?.type]) {
+      handleEdgeSelect(selectedElements[0], inspectorOpen, inspectorRef, dispatch);
+    } else if (selectedElements.length > 1) {
+      handleMultiSelect(dispatch);
     }
   };
 
@@ -111,7 +104,7 @@ const FlowTree = ({ inspectorRef }: Props) => {
   }, [OnLoad, flowInstance, darkMode]);
 
   return (
-    <ReactFlowProvider>
+    <>
       <div className="reactflow-wrapper" ref={flowWrapper}></div>
       <ReactFlow
         elements={elements}
@@ -121,23 +114,22 @@ const FlowTree = ({ inspectorRef }: Props) => {
         onDrop={OnDrop}
         onDragOver={OnDragOver}
         onNodeDragStop={OnNodeDragStop}
-        onElementClick={OnElementClick}
         nodeTypes={Helpers.GetNodeTypes}
         edgeTypes={Helpers.GetEdgeTypes}
         defaultZoom={0.7}
         defaultPosition={[800, 100]}
         zoomOnDoubleClick={false}
-        onClick={(e) => OnTreeClick(e, dispatch, project, inspectorRef)}
+        multiSelectionKeyCode={"Control"}
+        onSelectionChange={(e) => onSelectionChange(e)}
         connectionLineComponent={TreeConnectionLine}
       >
         <Background />
         <FullScreenComponent inspectorRef={inspectorRef} />
-        <FlowManipulator elements={elements} selectedId={selectedNodeId} />
       </ReactFlow>
 
       <ExplorerModule elements={elements} selectedNode={node} secondaryNode={null} />
       {treeFilter && <TreeFilterMenu elements={elements} edgeAnimation={animatedEdge} />}
-    </ReactFlowProvider>
+    </>
   );
 };
 
