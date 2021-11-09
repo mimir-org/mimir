@@ -178,6 +178,11 @@ export const darkModeSelector = createAppSelector(
   (active) => active
 );
 
+export const location3DSelector = createAppSelector(
+  (state) => state.location3D.active,
+  (active) => active
+);
+
 export const projectSelector = createAppSelector(
   (state) => state.projectState.project,
   (project) => project as Project

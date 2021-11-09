@@ -3,23 +3,15 @@ import * as THREE from "three";
 import { OnRender, OnWindowResize } from "./handlers";
 import { CreateCamera, CreateControls, CreateLights, CreateRenderer, CreateScene } from "./helpers";
 import { LocationModuleWrapper } from "./styled";
-import { EquinorLogo, EquinorTestLogo } from "../../assets/icons/equinor/nodes";
-
-interface Props {
-  visible: boolean;
-}
+import { EquinorTestLogo } from "../../assets/icons/equinor/nodes";
 
 const createCube = (scene: THREE.Scene) => {
   const cubeGeometry = new THREE.BoxGeometry(680, 350, 200);
 
   const texture = new THREE.TextureLoader().load(EquinorTestLogo);
-  console.log({ texture });
-  console.log({ EquinorTestLogo });
-  // immediately use the texture for material creation
-  // const material = new THREE.MeshBasicMaterial({ map: texture });
-
   texture.encoding = THREE.sRGBEncoding;
   texture.anisotropy = 16;
+
   const material = new THREE.MeshStandardMaterial({
     map: texture,
   });
@@ -49,8 +41,11 @@ const createCube = (scene: THREE.Scene) => {
 
   scene.add(mesh);
   scene.add(line);
-  // scene.add(material);
 };
+
+interface Props {
+  visible: boolean;
+}
 
 const LocationModule = ({ visible }: Props) => {
   const mountRef = useRef(null);
@@ -60,21 +55,22 @@ const LocationModule = ({ visible }: Props) => {
   const [controls] = useState(CreateControls(renderer, camera));
 
   useEffect(() => {
-    mountRef.current.appendChild(renderer.domElement);
+    mountRef.current?.appendChild(renderer.domElement);
     CreateLights(scene);
-
     createCube(scene);
 
     controls.addEventListener("change", () => OnRender(renderer, scene, camera));
     window.addEventListener("resize", () => OnWindowResize(renderer, camera), false);
 
     OnRender(renderer, scene, camera);
-  }, [camera, controls, renderer, scene]);
+  }, [camera, controls, renderer, scene, visible]);
 
   return (
-    <LocationModuleWrapper>
-      <div ref={mountRef} />
-    </LocationModuleWrapper>
+    visible && (
+      <LocationModuleWrapper id="Location3D">
+        <div ref={mountRef} />
+      </LocationModuleWrapper>
+    )
   );
 };
 export default LocationModule;

@@ -12,7 +12,8 @@ import { BlockFilterMenu } from "../../menus/filterMenu/block";
 import { Node } from "../../../models";
 import { ExplorerModule } from "../../../modules/explorer";
 import { BlockConnectionLine } from "./edges";
-import { IsOffPage, SetDarkModeColor, GetSelectedNode } from "../../../helpers";
+import { IsOffPage, SetDarkModeColor, GetSelectedNode, IsLocation } from "../../../helpers";
+import { LocationModule } from "../../../modules/location";
 import {
   darkModeSelector,
   iconSelector,
@@ -24,8 +25,8 @@ import {
   blockFilterSelector,
   nodeSizeSelector,
   animatedEdgeSelector,
+  location3DSelector,
 } from "../../../redux/store";
-import { LocationModule } from "../../../modules/location";
 
 interface Props {
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
@@ -50,6 +51,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   const blockFilter = useAppSelector(blockFilterSelector);
   const parentNodeSize = useAppSelector(nodeSizeSelector);
   const animatedEdge = useAppSelector(animatedEdgeSelector);
+  const showLocation3D = useAppSelector(location3DSelector);
 
   const node = GetSelectedNode();
   const parent = GetParent(node);
@@ -156,7 +158,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
           <BlockFilterMenu elements={elements?.filter((elem) => !IsOffPage(elem?.data))} edgeAnimation={animatedEdge} />
         )}
       </div>
-      <LocationModule visible={true} />
+      <LocationModule visible={showLocation3D && IsLocation(node)} />
     </ReactFlowProvider>
   );
 };

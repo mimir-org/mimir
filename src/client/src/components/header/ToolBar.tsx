@@ -1,8 +1,10 @@
 import * as Click from "./handlers";
 import * as Icons from "../../assets/icons/header";
+import { Location } from "../../assets/icons/aspects";
 import { ViewType, VIEW_TYPE } from "../../models/project";
 import { OptionsBox, OptionsElement, ToolBarBox } from "../../compLibrary/box/header/";
-import { useAppDispatch } from "../../redux/store";
+import { location3DSelector, useAppDispatch, useAppSelector } from "../../redux/store";
+import { GetSelectedNode, IsBlockView, IsLocation } from "../../helpers";
 
 interface Props {
   libOpen: boolean;
@@ -20,6 +22,9 @@ interface Props {
  */
 const ToolBar = ({ libOpen, explorerOpen, treeView, treeFilter, blockFilter, electro }: Props) => {
   const dispatch = useAppDispatch();
+  const location3DVisible = useAppSelector(location3DSelector);
+  const selectedNode = GetSelectedNode();
+  const visible = IsLocation(selectedNode);
 
   return (
     <ToolBarBox id="ToolBar" libOpen={libOpen} explorerOpen={explorerOpen}>
@@ -43,6 +48,15 @@ const ToolBar = ({ libOpen, explorerOpen, treeView, treeFilter, blockFilter, ele
           <img src={treeView ? Icons.TreeViewActive : Icons.TreeView} alt={VIEW_TYPE.TREEVIEW} className="logo" />
         </OptionsElement>
       </OptionsBox>
+      {IsBlockView() && visible && (
+        <div
+          onClick={() => Click.OnLocation3D(dispatch, location3DVisible)}
+          className="location3D"
+          style={{ position: "absolute", bottom: "8px", left: "15px", cursor: "pointer" }}
+        >
+          <img src={Location} alt={"location3D"} />
+        </div>
+      )}
     </ToolBarBox>
   );
 };
