@@ -7,6 +7,7 @@ import { OnAnimationChange, OnChange, OnAllTransportsChange } from "../handlers"
 import { GetEdges, GetNodes, PopulateFilterLists } from "../helpers";
 import { FilterElement } from "..";
 import { IsLibrary } from "../../../../helpers";
+import { IsTransport } from "../../../flow/helpers";
 
 interface Props {
   elements: any[];
@@ -41,7 +42,7 @@ const TreeFilterMenu = ({ elements, edgeAnimation }: Props) => {
         <FilterElement
           label={TextResources.Filter_Show_Transport}
           onChange={() => OnAllTransportsChange(edges, dispatch)}
-          isChecked={!edges.some((x) => x.isHidden)}
+          isChecked={!edges.some((x) => x.isHidden && IsTransport(x.fromConnector))}
           visible={!!transportItems.length}
         />
         <FilterDropdown

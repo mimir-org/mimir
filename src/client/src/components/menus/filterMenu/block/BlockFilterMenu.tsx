@@ -7,6 +7,7 @@ import { TextResources } from "../../../../assets/text";
 import { OnAnimationChange, OnAllTransportsChange, OnChange } from "../handlers";
 import { GetActiveTerminals, GetAllTerminals, GetEdges, GetInactiveTerminals, GetNodes, PopulateFilterLists } from "../helpers";
 import { IsLibrary } from "../../../../helpers";
+import { IsTransport } from "../../../flow/helpers";
 
 interface Props {
   elements: any[];
@@ -45,7 +46,7 @@ const BlockFilterMenu = ({ elements, edgeAnimation }: Props) => {
         <FilterElement
           label={TextResources.Filter_Show_Transport}
           onChange={() => OnAllTransportsChange(edges, dispatch)}
-          isChecked={!edges.some((x) => x.isHidden)}
+          isChecked={!edges.some((x) => x.isHidden && IsTransport(x.fromConnector))}
           visible={!!transportItems.length}
         />
         <FilterDropdown
