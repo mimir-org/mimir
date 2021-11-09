@@ -4,8 +4,8 @@ import { ToolBar } from "./";
 import { MenuMainHeader } from "../../compLibrary/box/menus";
 import { HeaderBox, LogoBox } from "../../compLibrary/box/header/";
 import { useAppDispatch, useAppSelector } from "../../redux/store/hooks";
-import { GetHeaderCompanyLogo } from "../flow/helpers";
 import { CompanyLogoBox } from "./styled";
+import { GetCompanyLogoForHeader } from "../../helpers";
 import {
   darkModeSelector,
   accountMenuSelector,
@@ -36,7 +36,7 @@ const Header = () => {
       <HeaderBox>
         <MenuMainHeader isOpen={accountMenuOpen}>
           <CompanyLogoBox>
-            <img src={GetHeaderCompanyLogo(company)} alt="logo" />
+            <img src={GetCompanyLogoForHeader(company)} alt="logo" />
           </CompanyLogoBox>
           <div className="projectName" onClick={() => Click.OnAccount(dispatch, accountMenuOpen)}>
             {project && project.name}

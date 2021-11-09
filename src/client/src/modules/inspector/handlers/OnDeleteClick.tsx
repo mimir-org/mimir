@@ -8,12 +8,8 @@ import { changeInspectorHeight } from "../redux/height/actions";
 import { InspectorElement } from "../types";
 import { IsEdge, IsNode } from "../helpers/IsType";
 import { Dispatch } from "redux";
-import {
-  IsAspectNode,
-  IsPartOf,
-  UpdateSiblingIndexOnEdgeDelete,
-  UpdateSiblingIndexOnNodeDelete,
-} from "../../../components/flow/helpers";
+import { IsAspectNode } from "../../../helpers";
+import { IsPartOf, UpdateSiblingIndexOnEdgeDelete, UpdateSiblingIndexOnNodeDelete } from "../../../components/flow/helpers";
 
 const OnDeleteClick = (
   project: Project,

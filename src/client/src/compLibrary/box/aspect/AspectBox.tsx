@@ -1,21 +1,24 @@
 import styled from "styled-components";
 import { Color } from "../..";
-import { UseIndentLevel, GetAspectColor } from "../../../assets/helpers";
-import { Node } from "../../../models";
+import { UseIndentLevel, GetAspectColor } from "../../../helpers";
+import { AspectColorType, Node } from "../../../models";
 
 interface Props {
   node: Node;
-  isRoot: boolean;
   indent: number;
 }
 
 const AspectBox = styled.div<Props>`
   display: flex;
-  flex-direction: row;
   cursor: pointer;
-  margin-top: ${(props) => (props.isRoot ? 12 : 0)}px;
-  padding-left: ${(props) => (props.isRoot ? 5 : UseIndentLevel(props.indent))}px;
-  background-color: ${(props) => (props.isRoot ? Color.LightGrey : GetAspectColor(props.node, true))};
+  max-height: 30px;
+  padding-left: ${(props) => (props.node.isRoot ? 5 : UseIndentLevel(props.indent))}px;
+  background-color: ${(props) => (props.node.isRoot ? Color.LightGrey : GetAspectColor(props.node, AspectColorType.Main, true))};
+  margin-top: ${(props) => props.node.isRoot && "7px"};
+
+  &:hover {
+    background-color: ${Color.LightBlue};
+  }
 
   .expandIcon {
     position: relative;
@@ -24,15 +27,14 @@ const AspectBox = styled.div<Props>`
 
   .icon {
     position: relative;
-    bottom: 1px;
+    top: -1px;
     left: 10px;
+    pointer-events: none;
   }
 
   .container {
     flex: 2;
-    padding-top: 5px;
-    margin-bottom: 9px;
-    padding-left: ${(props) => (props.isRoot ? 22 : 5)}px;
+    margin-left: ${(props) => props.node.isRoot && "18px"};
   }
 `;
 

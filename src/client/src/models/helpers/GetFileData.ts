@@ -2,8 +2,9 @@ import { Project, Edge, Node } from "..";
 import { ProjectAm } from "../../redux/sagas/project/ConvertProject";
 import { ConnectorType, RelationType } from "../Enums";
 import { post } from "../../models/webclient";
-import { CreateId, IsAspectNode, IsFamily } from "../../components/flow/helpers";
+import { CreateId } from "../../components/flow/helpers";
 import { TextResources } from "../../assets/text";
+import { IsAspectNode, IsFamily } from "../../helpers";
 
 const readFile = (event: any): Promise<any> => {
   return new Promise((resolve, reject) => {
@@ -22,11 +23,7 @@ const readFile = (event: any): Promise<any> => {
 const GetFileData = async (event: any, project: Project): Promise<[Node[], Edge[]]> => {
   try {
     let targetNodeId = event.target?.attributes["data-id"]?.value;
-
-    if (!targetNodeId) {
-      targetNodeId = event.target?.offsetParent?.attributes["data-id"]?.value;
-    }
-
+    if (!targetNodeId) targetNodeId = event.target?.offsetParent?.attributes["data-id"]?.value;
     if (!targetNodeId) return [[], []];
 
     const targetNode = project.nodes.find((x) => x.id === targetNodeId);

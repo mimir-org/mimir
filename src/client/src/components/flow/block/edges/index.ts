@@ -1,2 +1,2 @@
-export { default as BlockEdgeType } from "./BlockEdgeType";
-export { default as ConnectionLine } from "./ConnectionLine";
+export { default as BlockEdge } from "./BlockEdge";
+export { default as BlockConnectionLine } from "./BlockConnectionLine";

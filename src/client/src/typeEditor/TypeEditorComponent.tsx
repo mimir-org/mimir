@@ -9,6 +9,7 @@ import { GetInputTerminals, GetOutputTerminals } from "./preview/helpers";
 import { TypeEditorList, TypeEditorInputs, TypePreview, TypeEditorInspector } from "./";
 import { OnCloseEditor, OnPropertyChange, OnSave, OnTerminalCategoryChange } from "./handlers";
 import { getInitialData, getBlobData } from "./redux/actions";
+import { GetSelectedIcon, GetSelectedRds, GetSelectedTerminal, IsLocation, IsProduct, GetWidth } from "./helpers";
 import {
   TypeEditorWrapper,
   TypeEditorContent,
@@ -18,15 +19,6 @@ import {
   SaveButton,
   TypeEditorInspectorWrapper,
 } from "./styled";
-import {
-  GetSelectedIcon,
-  GetSelectedRds,
-  GetSelectedTerminal,
-  IsLocation,
-  IsProduct,
-  GetWidth,
-  GetSelectedDiscipline,
-} from "./helpers";
 /**
  * Component for adding or editing a type
  * @returns the visual Type Editor window
@@ -84,7 +76,6 @@ export const TypeEditorComponent = () => {
               <TypeEditorList
                 createLibraryType={state?.createLibraryType}
                 items={state?.attributes}
-                discipline={GetSelectedDiscipline(state.createLibraryType?.purpose, state?.purposes)}
                 listType={IsLocation(state?.createLibraryType.aspect) ? ListType.LocationAttributes : ListType.ObjectAttributes}
                 onPropertyChange={(key, data) => OnPropertyChange(key, data, dispatch)}
               />

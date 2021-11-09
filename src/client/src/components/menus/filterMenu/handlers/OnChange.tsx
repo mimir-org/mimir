@@ -1,7 +1,8 @@
 import { Edge } from "../../../../models";
 import { setEdgeVisibility } from "../../../../redux/store/project/actions";
 import { GetConnectorNode } from "../helpers";
-import { IsFamily, IsProductTerminal, IsLocationTerminal, IsPartOf, IsTransport } from "../../../flow/helpers";
+import { IsProductTerminal, IsLocationTerminal, IsPartOf, IsTransport } from "../../../flow/helpers";
+import { IsFamily } from "../../../../helpers";
 
 const OnChange = (actualEdge: Edge, edges: Edge[], dispatch: any) => {
   const partOf = IsPartOf(actualEdge.fromConnector);

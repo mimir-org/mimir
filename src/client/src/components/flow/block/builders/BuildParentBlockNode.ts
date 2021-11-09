@@ -28,7 +28,7 @@ const BuildParentBlockNode = (node: Node) => {
     isHidden: false,
     isSelected: node.isSelected,
     draggable: false,
-    selectable: true,
+    selectable: false,
   } as FlowElement;
 };
 

@@ -3,7 +3,7 @@ import { ValidateLibComponent } from ".";
 import { Node } from "../../../models";
 import { LibraryCategory } from "../../../models/project";
 import { LibraryState } from "../../../redux/store/library/types";
-import { IsBlockView } from "../../../components/flow/block/helpers";
+import { IsBlockView } from "../../../helpers";
 
 const GetLibCategories = (selectedNode: Node, state: LibraryState): LibraryCategory[] => {
   var allCategories = [];

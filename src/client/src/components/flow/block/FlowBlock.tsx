@@ -1,17 +1,18 @@
-import ReactFlow, { ReactFlowProvider, Elements } from "react-flow-renderer";
+import ReactFlow, { ReactFlowProvider, Elements, Background } from "react-flow-renderer";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { FullScreenComponent } from "../../../compLibrary/controls";
-import { GetBlockEdgeTypes, OnBlockClick, IsOffPage } from "../block/helpers";
+import { GetBlockEdgeTypes, OnBlockClick } from "../block/helpers";
 import { BuildBlockElements } from "./builders";
 import { useOnConnect, useOnDrop, useOnRemove, useOnDragStop } from "../hooks";
 import { setActiveBlockNode, setActiveEdge } from "../../../redux/store/project/actions";
-import { GetSelectedNode, GetBlockNodeTypes, SetDarkModeColor, GetParent } from "../helpers";
+import { GetBlockNodeTypes, GetParent } from "../helpers";
 import { EDGE_TYPE, EdgeType } from "../../../models/project";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { BlockFilterMenu } from "../../menus/filterMenu/block";
 import { Node } from "../../../models";
 import { ExplorerModule } from "../../../modules/explorer";
-import { ConnectionLine } from "./edges";
+import { BlockConnectionLine } from "./edges";
+import { IsOffPage, SetDarkModeColor, GetSelectedNode } from "../../../helpers";
 import {
   darkModeSelector,
   iconSelector,
@@ -139,12 +140,17 @@ const FlowBlock = ({ inspectorRef }: Props) => {
           defaultPosition={[450, 80]}
           onClick={(e) => OnBlockClick(e, dispatch, project)}
           onlyRenderVisibleElements={true}
-          connectionLineComponent={ConnectionLine}
+          connectionLineComponent={BlockConnectionLine}
         >
+          <Background />
           <FullScreenComponent inspectorRef={inspectorRef} />
         </ReactFlow>
 
-        <ExplorerModule elements={elements?.filter((elem) => !IsOffPage(elem?.data))} />
+        <ExplorerModule
+          elements={elements?.filter((elem) => !IsOffPage(elem?.data))}
+          selectedNode={node}
+          secondaryNode={secondaryNode}
+        />
         {blockFilter && (
           <BlockFilterMenu elements={elements?.filter((elem) => !IsOffPage(elem?.data))} edgeAnimation={animatedEdge} />
         )}

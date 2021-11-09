@@ -2,14 +2,14 @@ import { memo, FC, useState, useEffect } from "react";
 import { Background, BackgroundVariant, NodeProps } from "react-flow-renderer";
 import { HandleComponent, TerminalsContainerComponent } from "../../terminals";
 import { Color } from "../../../../../compLibrary";
-import { GetParentColor, SetParentNodeSize } from "./helpers";
+import { SetParentNodeSize } from "./helpers";
 import { OnConnectorClick } from "./handlers";
 import { BlockComponent } from "./";
 import { FilterTerminals } from "../../helpers";
-import { Connector, Node } from "../../../../../models";
-import { IsLocation } from "../../../helpers";
+import { AspectColorType, Connector, Node } from "../../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
 import { edgeSelector, electroSelector, nodeSelector, nodeSizeSelector, secondaryNodeSelector } from "../../../../../redux/store";
+import { GetAspectColor, IsLocation } from "../../../../../helpers";
 
 /**
  * Component for the large parent block in BlockView.
@@ -46,7 +46,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
       <BlockComponent
         dispatch={dispatch}
         node={node}
-        color={GetParentColor(node)}
+        color={GetAspectColor(node, AspectColorType.Header)}
         selected={node.isBlockSelected}
         width={parentNodeSize?.width}
         height={parentNodeSize?.length}

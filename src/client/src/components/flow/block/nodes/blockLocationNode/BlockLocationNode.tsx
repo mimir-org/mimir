@@ -2,12 +2,13 @@ import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, useUpdateNodeInternals } from "react-flow-renderer";
 import { NodeBox } from "../../../styled";
 import { HandleComponent, TerminalsContainerComponent } from "../../terminals";
-import { Connector, Node } from "../../../../../models";
+import { AspectColorType, Connector, Node } from "../../../../../models";
 import { OnHover, OnMouseOut, OnConnectorClick } from "./handlers";
 import { FilterTerminals, GetNodeByDataId } from "../../helpers";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
 import { electroSelector, nodeSelector, secondaryNodeSelector } from "../../../../../redux/store";
 import { BlockLogoComponent } from "../../logo";
+import { GetAspectColor, GetSelectedBlockNode } from "../../../../../helpers";
 
 /**
  * Component for a Location Node in BlockView.
@@ -51,6 +52,10 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
       width={node.width}
       length={node.length}
       product={false}
+      visible={!node.isHidden}
+      colorMain={GetAspectColor(data, AspectColorType.Main)}
+      colorSelected={GetAspectColor(data, AspectColorType.Selected)}
+      isSelected={node === GetSelectedBlockNode()}
       onMouseOver={() => OnHover(showTerminalBox)}
       onMouseOut={() => OnMouseOut(showTerminalBox)}
     >

@@ -3,15 +3,7 @@ import { ListWrapper } from "../compLibrary";
 import { ListContent, ListSearch } from "./lists/";
 import { GetListLabel, GetWidth } from "./helpers";
 import { OnPropertyChangeFunction, OnTerminalCategoryChangeFunction } from "./types";
-import {
-  CreateLibraryType,
-  Discipline,
-  Rds,
-  PredefinedAttribute,
-  AttributeType,
-  CompositeType,
-  TerminalTypeDict,
-} from "../models";
+import { CreateLibraryType, Rds, PredefinedAttribute, AttributeType, CompositeType, TerminalTypeDict } from "../models";
 
 export enum ListType {
   Rds = 0,
@@ -25,7 +17,6 @@ export enum ListType {
 interface Props {
   createLibraryType: CreateLibraryType;
   items: Rds[] | TerminalTypeDict | AttributeType[] | CompositeType[] | PredefinedAttribute[];
-  discipline?: Discipline;
   disabled?: boolean;
   listType: ListType;
   onPropertyChange?: OnPropertyChangeFunction;
@@ -38,7 +29,6 @@ interface Props {
 export const TypeEditorList = ({
   createLibraryType,
   items,
-  discipline,
   disabled,
   listType,
   onPropertyChange,
@@ -59,7 +49,6 @@ export const TypeEditorList = ({
         items={items}
         listItems={filteredListItems}
         createLibraryType={createLibraryType}
-        discipline={discipline}
         onPropertyChange={(key, data) => onPropertyChange(key, data)}
         onTerminalCategoryChange={(key, data) => onTerminalCategoryChange(key, data)}
       />

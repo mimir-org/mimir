@@ -2,7 +2,7 @@ import { Node } from "../../../../../models";
 import { Banner, Block, Header, LogoBox } from "./styled";
 import { OnResize } from "./handlers";
 import { useEffect } from "react";
-import { GetCompanyLogo } from "../../../helpers";
+import { GetCompanyLogoForNode } from "../../../../../helpers";
 
 interface Props {
   dispatch: any;
@@ -33,7 +33,7 @@ const BlockComponent = ({ node, color, selected, dispatch, width, height, hasChi
           <p className="text">={node?.label ?? node?.name}</p>
         </Header>
         <LogoBox hasChildren={hasChildren}>
-          <img src={GetCompanyLogo(company, node, hasChildren)} alt="logo" className="logo" />
+          <img src={GetCompanyLogoForNode(company, node, hasChildren)} alt="logo" className="logo" />
         </LogoBox>
       </Banner>
       {/* <ResizeButton id="ResizeParent">

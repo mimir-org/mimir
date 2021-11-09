@@ -1,19 +1,25 @@
 import { ProjectComponent } from "./";
-import { TextResources } from "../../assets/text";
 import { MODULE_TYPE } from "../../models/project";
 import { AnimatedModule, Size } from "../../compLibrary";
-import { IsBlockView } from "../../components/flow/block/helpers";
+import { IsBlockView } from "../../helpers";
 import { ModuleHead, ModuleBody } from "../../compLibrary/box/modules";
 import { OnToggleClick } from "./handlers";
 import { ExplorerIcon } from "../../assets/icons/modules";
 import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store/hooks";
 import { animatedModuleSelector, explorerSelector, projectSelector } from "../../redux/store";
+import { Node } from "../../models";
+
+interface Props {
+  elements: any[];
+  selectedNode: Node;
+  secondaryNode: Node;
+}
 
 /**
  * Component for the Explorer Module in Mimir.
  * @returns a module where all nodes in Mimir are listed.
  */
-export const ExplorerModule = ({ elements }) => {
+export const ExplorerModule = ({ elements, selectedNode, secondaryNode }: Props) => {
   const dispatch = useAppDispatch();
   const type = MODULE_TYPE.EXPLORER;
   const project = useAppSelector(projectSelector);
@@ -27,10 +33,18 @@ export const ExplorerModule = ({ elements }) => {
     <AnimatedModule type={type} start={start} stop={stop} run={animate} id="ExplorerModule">
       <ModuleHead explorer visible={isOpen}>
         <img className="icon" src={ExplorerIcon} alt="toggle" onClick={() => OnToggleClick(dispatch, isOpen, type)} />
-        <p className="text">{TextResources.Module_Explorer}</p>
+        <p className="text">{type}</p>
       </ModuleHead>
       <ModuleBody visible={isOpen} explorer isBlockView={IsBlockView()}>
-        {project && <ProjectComponent project={project} elements={elements} nodes={project.nodes ?? []} />}
+        {project && (
+          <ProjectComponent
+            project={project}
+            elements={elements}
+            nodes={project.nodes ?? []}
+            selectedNode={selectedNode}
+            secondaryNode={secondaryNode}
+          />
+        )}
       </ModuleBody>
     </AnimatedModule>
   );
