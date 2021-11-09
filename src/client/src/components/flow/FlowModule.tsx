@@ -13,14 +13,11 @@ interface Props {
  * @param route the route type
  * @returns a JSX element containing either TreeView, BlockView or the TypeEditor
  */
-const FlowModule = ({ inspectorRef, flowView }: Props) => {
-  return (
-    <div className="dndflow">
-      {flowView === VIEW_TYPE.TREEVIEW && <FlowTree inspectorRef={inspectorRef} />}
-      {flowView === VIEW_TYPE.BLOCKVIEW && <FlowBlock inspectorRef={inspectorRef} />}
-      {flowView === VIEW_TYPE.TYPE_EDITOR && <TypeEditorComponent />}
-    </div>
-  );
-};
-
+const FlowModule = ({ inspectorRef, flowView }: Props) => (
+  <div className="dndflow">
+    {flowView === VIEW_TYPE.TREEVIEW && <FlowTree inspectorRef={inspectorRef} />}
+    {flowView === VIEW_TYPE.BLOCKVIEW && <FlowBlock inspectorRef={inspectorRef} />}
+    {flowView === VIEW_TYPE.TYPE_EDITOR && <TypeEditorComponent />}
+  </div>
+);
 export default FlowModule;

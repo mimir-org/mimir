@@ -8,7 +8,7 @@ import { CreateId } from "../../helpers";
  * @param node
  * @returns a Product Node of the type FlowElement.
  */
-const BuildBlockNode = (node: Node) => {
+const BuildProductBlockNode = (node: Node) => {
   if (!node) return null;
   const type = GetNodeTypeString(node);
 
@@ -26,7 +26,8 @@ const BuildBlockNode = (node: Node) => {
     draggable: true,
     selectable: true,
     connectable: true,
+    style: { zIndex: 20 },
   } as FlowElement;
 };
 
-export default BuildBlockNode;
+export default BuildProductBlockNode;
