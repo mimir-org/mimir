@@ -18,7 +18,7 @@ const ValidateBlockEdge = (selectedNode: Node, secondaryNode: Node, fromNode: No
 
 function validEdge(selectedNode: Node, fromNode: Node, source: Connector, target: Connector) {
   if (!IsDirectChild(fromNode, selectedNode)) return false;
-  if (IsProduct(selectedNode)) return (IsTransportConnection(source, target) && IsProduct(fromNode)) || IsPartOf(source);
+  if (IsProduct(selectedNode)) return (IsTransportConnection(source, target) || IsPartOf(source)) && IsProduct(fromNode);
   if (IsLocation(selectedNode)) return IsLocationConnection(source, target) && IsLocation(fromNode);
   return IsTransportConnection(source, target) && IsFunction(fromNode);
 }
