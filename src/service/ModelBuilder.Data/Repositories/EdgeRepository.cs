@@ -172,11 +172,17 @@ namespace Mb.Data.Repositories
         {
             var dateTimeNow = DateTime.Now.ToUniversalTime();
 
-            edge.Transport.UpdatedBy = contextAccessor;
-            edge.Transport.Updated = dateTimeNow;
+            if(!string.IsNullOrWhiteSpace(edge?.Transport?.UpdatedBy))
+                edge.Transport.UpdatedBy = contextAccessor;
 
-            edge.Interface.UpdatedBy = contextAccessor;
-            edge.Interface.Updated = dateTimeNow;
+            if (edge?.Transport?.Updated != null)
+                edge.Transport.Updated = dateTimeNow;
+
+            if (!string.IsNullOrWhiteSpace(edge?.Interface?.UpdatedBy))
+                edge.Interface.UpdatedBy = contextAccessor;
+
+            if (edge?.Interface?.Updated != null)
+                edge.Interface.Updated = dateTimeNow;
 
             if (!isNewEdge)
                 return;
@@ -185,13 +191,23 @@ namespace Mb.Data.Repositories
 
             const string version = "1.0";
 
-            edge.Transport.Version = version;
-            edge.Transport.CreatedBy = contextAccessor;
-            edge.Transport.Created = dateTimeNow;
+            if(!string.IsNullOrWhiteSpace(edge?.Transport?.Version))
+                edge.Transport.Version = version;
 
-            edge.Interface.Version = version;
-            edge.Interface.CreatedBy = contextAccessor;
-            edge.Interface.Created = dateTimeNow;
+            if (!string.IsNullOrWhiteSpace(edge?.Transport?.CreatedBy))
+                edge.Transport.CreatedBy = contextAccessor;
+
+            if (edge?.Transport?.Created != null)
+                edge.Transport.Created = dateTimeNow;
+
+            if (!string.IsNullOrWhiteSpace(edge?.Interface?.Version))
+                edge.Interface.Version = version;
+
+            if (!string.IsNullOrWhiteSpace(edge?.Interface?.CreatedBy))
+                edge.Interface.CreatedBy = contextAccessor;
+
+            if (edge?.Interface?.Created != null)
+                edge.Interface.Created = dateTimeNow;
         }
     }
 }
