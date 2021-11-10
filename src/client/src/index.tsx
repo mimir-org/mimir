@@ -9,6 +9,7 @@ import { PersistGate } from "redux-persist/integration/react";
 // MSAL imports
 import { msalConfig } from "./models/webclient/MsalConfig";
 import { PublicClientApplication, EventType, EventMessage, AuthenticationResult } from "@azure/msal-browser";
+import { ReactFlowProvider } from "react-flow-renderer";
 
 const rootElement = document.getElementById("root");
 export const msalInstance = new PublicClientApplication(msalConfig);
@@ -26,11 +27,13 @@ msalInstance.addEventCallback((event: EventMessage) => {
 
 ReactDOM.render(
   <Provider store={red.store}>
-    <PersistGate loading={null} persistor={red.persistor}>
-      <BrowserRouter forceRefresh={true}>
-        <App pca={msalInstance} />
-      </BrowserRouter>
-    </PersistGate>
+    <ReactFlowProvider>
+      <PersistGate loading={null} persistor={red.persistor}>
+        <BrowserRouter forceRefresh={true}>
+          <App pca={msalInstance} />
+        </BrowserRouter>
+      </PersistGate>
+    </ReactFlowProvider>
   </Provider>,
   rootElement
 );
