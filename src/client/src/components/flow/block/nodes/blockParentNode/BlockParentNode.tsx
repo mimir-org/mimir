@@ -9,7 +9,7 @@ import { FilterTerminals } from "../../helpers";
 import { AspectColorType, Connector, Node } from "../../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
 import { edgeSelector, electroSelector, nodeSelector, nodeSizeSelector, secondaryNodeSelector } from "../../../../../redux/store";
-import { GetAspectColor, IsLocation } from "../../../../../helpers";
+import { GetAspectColor } from "../../../../../helpers";
 
 /**
  * Component for the large parent block in BlockView.
@@ -74,7 +74,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         terminals={terminals}
         electro={electro}
       />
-      {IsLocation(data) && <Background variant={BackgroundVariant.Lines} color={Color.Grey} gap={20} />}
+      <Background variant={BackgroundVariant.Lines} color={Color.Grey} gap={20} />
     </>
   );
 };

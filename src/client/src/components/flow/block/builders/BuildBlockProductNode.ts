@@ -26,7 +26,6 @@ const BuildProductBlockNode = (node: Node) => {
     draggable: true,
     selectable: true,
     connectable: true,
-    style: { zIndex: 20 },
   } as FlowElement;
 };
 

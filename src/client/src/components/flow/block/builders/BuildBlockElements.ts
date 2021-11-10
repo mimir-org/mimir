@@ -28,7 +28,7 @@ const BuildBlockElements = (
   const nodes = project.nodes;
   const edges = project.edges;
 
-  // Product nodes has a different view
+  // Product nodes have a different view
   if (IsProduct(selectedNode)) {
     const parentProduct = BuildParentProductNode(selectedNode);
     parentProduct && elements.push(parentProduct);
