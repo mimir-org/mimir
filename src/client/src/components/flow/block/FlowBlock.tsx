@@ -1,5 +1,5 @@
 import ReactFlow, { Elements, Background } from "react-flow-renderer";
-import { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { FullScreenComponent } from "../../../compLibrary/controls";
 import { GetBlockEdgeTypes } from "../block/helpers";
 import { BuildBlockElements } from "./builders";
@@ -90,20 +90,18 @@ const FlowBlock = ({ inspectorRef }: Props) => {
     return useOnDragStop(_event, activeNode, dispatch);
   };
 
-  const OnDrop = (event) => {
-    return useOnDrop(
-      project,
+  const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    return useOnDrop({
       event,
-      dispatch,
-      setElements,
-      flowInstance,
-      flowWrapper,
+      project,
+      user: userState.user,
       icons,
-      lib,
-      userState.user,
-      parent,
-      animatedEdge
-    );
+      library: lib,
+      reactFlowInstance: flowInstance,
+      reactFlowWrapper: flowWrapper,
+      setElements,
+      dispatch,
+    });
   };
 
   useEffect(() => {
