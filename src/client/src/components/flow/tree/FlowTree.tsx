@@ -127,7 +127,7 @@ const FlowTree = ({ inspectorRef }: Props) => {
         <FullScreenComponent inspectorRef={inspectorRef} />
       </ReactFlow>
 
-      <ExplorerModule elements={elements} selectedNode={node} secondaryNode={null} />
+      <ExplorerModule elements={elements} />
       {treeFilter && <TreeFilterMenu elements={elements} edgeAnimation={animatedEdge} />}
     </>
   );

@@ -1,21 +1,20 @@
-import { Project, Node } from "../../models";
+import { Node } from "../../models";
 import { AspectComponent } from "./aspectComponent/AspectComponent";
 import { HasChildren, IsAncestorInSet } from "./helpers/ParentNode";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { SortNodesWithIndent } from "./helpers/SortNodesWithIndent";
 import { IsOffPage } from "../../helpers";
+import { projectSelector, useAppSelector } from "../../redux/store";
 
 interface Props {
-  project: Project;
   elements: any[];
-  nodes: Node[];
-  selectedNode: Node;
-  secondaryNode: Node;
 }
 
-export const ProjectComponent = ({ project, elements, nodes, selectedNode, secondaryNode }: Props) => {
+export const ProjectComponent = ({ elements }: Props) => {
   const [closedNodes, setClosedNodes] = useState(new Set<string>());
-  nodes = nodes.filter((n) => !IsOffPage(n));
+  const project = useAppSelector(projectSelector);
+  const nodes = project?.nodes?.filter((n) => !IsOffPage(n));
+  const selectedNode = nodes?.find((node) => node.isSelected);
 
   const onExpandElement = (_expanded: boolean, nodeId: string) => {
     _expanded ? closedNodes.delete(nodeId) : closedNodes.add(nodeId);
@@ -39,7 +38,7 @@ export const ProjectComponent = ({ project, elements, nodes, selectedNode, secon
             project={project}
             elements={elements}
             selectedNode={selectedNode}
-            secondaryNode={secondaryNode}
+            secondaryNode={null}
             onElementExpanded={onExpandElement}
           />
         );
@@ -48,4 +47,4 @@ export const ProjectComponent = ({ project, elements, nodes, selectedNode, secon
   );
 };
 
-export default ProjectComponent;
+export default memo(ProjectComponent);

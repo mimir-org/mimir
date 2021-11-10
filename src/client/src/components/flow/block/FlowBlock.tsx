@@ -154,11 +154,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
         <FullScreenComponent inspectorRef={inspectorRef} />
       </ReactFlow>
 
-      <ExplorerModule
-        elements={elements?.filter((elem) => !IsOffPage(elem?.data))}
-        selectedNode={node}
-        secondaryNode={secondaryNode}
-      />
+      <ExplorerModule elements={elements} />
       {blockFilter && (
         <BlockFilterMenu elements={elements?.filter((elem) => !IsOffPage(elem?.data))} edgeAnimation={animatedEdge} />
       )}

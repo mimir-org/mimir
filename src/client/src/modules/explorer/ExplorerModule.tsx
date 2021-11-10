@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { ProjectComponent } from "./";
 import { MODULE_TYPE } from "../../models/project";
 import { AnimatedModule, Size } from "../../compLibrary";
@@ -6,28 +7,25 @@ import { ModuleHead, ModuleBody } from "../../compLibrary/box/modules";
 import { OnToggleClick } from "./handlers";
 import { ExplorerIcon } from "../../assets/icons/modules";
 import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store/hooks";
-import { animatedModuleSelector, explorerSelector, projectSelector } from "../../redux/store";
-import { Node } from "../../models";
+import { animatedModuleSelector, explorerSelector } from "../../redux/store";
 
 interface Props {
-  elements: any[];
-  selectedNode: Node;
-  secondaryNode: Node;
+  elements?: any[];
 }
 
 /**
  * Component for the Explorer Module in Mimir.
  * @returns a module where all nodes in Mimir are listed.
  */
-export const ExplorerModule = ({ elements, selectedNode, secondaryNode }: Props) => {
+export const ExplorerModule = ({ elements }: Props) => {
   const dispatch = useAppDispatch();
   const type = MODULE_TYPE.EXPLORER;
-  const project = useAppSelector(projectSelector);
   const isOpen = useAppSelector(explorerSelector);
   const animate = useParametricAppSelector(animatedModuleSelector, type);
 
   const start = isOpen ? Size.ModuleClosed : Size.ModuleOpen;
   const stop = isOpen ? Size.ModuleOpen : Size.ModuleClosed;
+  console.log("test");
 
   return (
     <AnimatedModule type={type} start={start} stop={stop} run={animate} id="ExplorerModule">
@@ -36,18 +34,14 @@ export const ExplorerModule = ({ elements, selectedNode, secondaryNode }: Props)
         <p className="text">{type}</p>
       </ModuleHead>
       <ModuleBody visible={isOpen} explorer isBlockView={IsBlockView()}>
-        {project && (
+        {/* {project && (
           <ProjectComponent
-            project={project}
             elements={elements}
-            nodes={project.nodes ?? []}
-            selectedNode={selectedNode}
-            secondaryNode={secondaryNode}
           />
-        )}
+        )} */}
       </ModuleBody>
     </AnimatedModule>
   );
 };
 
-export default ExplorerModule;
+export default memo(ExplorerModule);
