@@ -10,9 +10,9 @@ const CreateLights = (scene: THREE.Scene) => {
   lights[1].position.set(1000, 2000, 1000);
   lights[2].position.set(-1000, -2000, -1000);
 
-  scene.add(lights[0]);
-  scene.add(lights[1]);
-  scene.add(lights[2]);
+  scene.current.add(lights[0]);
+  scene.current.add(lights[1]);
+  scene.current.add(lights[2]);
 };
 
 export default CreateLights;

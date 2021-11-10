@@ -7,6 +7,6 @@ const CreateCamera = (): THREE.PerspectiveCamera => {
   camera.position.z = 1250;
 
   return camera;
-}
+};
 
-export default CreateCamera
+export default CreateCamera;

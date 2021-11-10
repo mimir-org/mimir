@@ -1,1 +1,1 @@
-export { default as LocationModuleWrapper } from "./LocationModuleWrapper";
+export { default as LocationModuleBox } from "./LocationModuleBox";
