@@ -28,9 +28,9 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
                 .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => string.IsNullOrEmpty(src.UpdatedBy) ? contextAccessor.GetName() : src.UpdatedBy))
                 .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated ?? DateTime.Now.ToUniversalTime()))
-                .ForMember(dest => dest.Created, opt => opt.Ignore())
-                .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
-                .ForMember(dest => dest.CreatedFromTypeId, opt => opt.MapFrom(src => src.CreatedFromTypeId))
+                .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
+                .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy))
+                .ForMember(dest => dest.LibraryTypeId, opt => opt.MapFrom(src => src.LibraryTypeId))
                 .ForMember(dest => dest.Edges, opt => opt.Ignore());
 
             CreateMap<Transport, TransportAm>()
@@ -51,7 +51,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated))
                 .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
                 .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy))
-                .ForMember(dest => dest.CreatedFromTypeId, opt => opt.MapFrom(src => src.CreatedFromTypeId));
+                .ForMember(dest => dest.LibraryTypeId, opt => opt.MapFrom(src => src.LibraryTypeId));
         }
     }
 }

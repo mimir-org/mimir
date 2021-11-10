@@ -16,7 +16,7 @@ namespace Mb.Models.Application
         public string Label { get; set; }
         public string Description { get; set; }
 
-        [Required]
+        //[Required]
         public string StatusId { get; set; }
         
         public string SemanticReference { get; set; }
@@ -30,8 +30,6 @@ namespace Mb.Models.Application
         public DateTime? Updated { get; set; }
         public DateTime? Created { get; set; }
         public string CreatedBy { get; set; }
-
-        [Required]
-        public string CreatedFromTypeId { get; set; }
+        public string LibraryTypeId { get; set; }
     }
 }

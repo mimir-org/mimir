@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Mb.Models.Data.Enums;
+using Mb.Models.Extensions;
 using Newtonsoft.Json;
 
 namespace Mb.Models.Data
@@ -31,10 +32,20 @@ namespace Mb.Models.Data
         public DateTime Updated { get; set; }
         public DateTime? Created { get; set; }
         public string CreatedBy { get; set; }
-        public string CreatedFromTypeId { get; set; }
+        public string LibraryTypeId { get; set; }
         public BuildStatus Status { get; set; }
 
         [JsonIgnore]
         public ICollection<Edge> Edges { get; set; }
+
+        public void IncrementMinorVersion()
+        {
+            Version = Version.IncrementMinorVersion();
+        }
+
+        public void IncrementMajorVersion()
+        {
+            Version = Version.IncrementMajorVersion();
+        }
     }
 }

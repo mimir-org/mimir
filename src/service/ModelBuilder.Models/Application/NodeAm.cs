@@ -70,7 +70,7 @@ namespace Mb.Models.Application
         
         public string CreatedBy { get; set; }
 
-        public string CreatedFromTypeId { get; set; }
+        public string LibraryTypeId { get; set; }
 
         public DateTime? Updated { get; set; }
         

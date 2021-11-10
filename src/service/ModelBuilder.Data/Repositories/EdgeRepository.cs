@@ -6,6 +6,7 @@ using Mb.Data.Contracts;
 using Mb.Models.Abstract;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
+using Mb.Models.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -178,11 +179,23 @@ namespace Mb.Data.Repositories
             if (edge?.Transport?.Updated != null)
                 edge.Transport.Updated = dateTimeNow;
 
+            if (string.IsNullOrWhiteSpace(edge?.Transport?.StatusId))
+            {
+                if(edge?.Transport != null)
+                    edge.Transport.StatusId = ObjectType.NotSet.ToString();
+            }
+
             if (!string.IsNullOrWhiteSpace(edge?.Interface?.UpdatedBy))
                 edge.Interface.UpdatedBy = contextAccessor;
 
             if (edge?.Interface?.Updated != null)
                 edge.Interface.Updated = dateTimeNow;
+
+            if (string.IsNullOrWhiteSpace(edge?.Interface?.StatusId))
+            {
+                if (edge?.Interface != null)
+                    edge.Interface.StatusId = ObjectType.NotSet.ToString();
+            }
 
             if (!isNewEdge)
                 return;

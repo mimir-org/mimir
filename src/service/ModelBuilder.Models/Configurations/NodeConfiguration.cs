@@ -31,7 +31,7 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.Updated).HasColumnName("Updated").IsRequired();
             builder.Property(p => p.CreatedBy).HasColumnName("CreatedBy").IsRequired();
             builder.Property(p => p.Created).HasColumnName("Created").IsRequired();
-            builder.Property(p => p.CreatedFromTypeId).HasColumnName("CreatedFromTypeId").IsRequired(false).HasDefaultValue(null);
+            builder.Property(p => p.LibraryTypeId).HasColumnName("LibraryTypeId").IsRequired(false).HasDefaultValue(null);
             builder.Property(p => p.Version).HasColumnName("Version").IsRequired();
             builder.Property(p => p.Aspect).HasColumnName("Aspect").IsRequired().HasConversion<string>();
             builder.Property(p => p.IsRoot).HasColumnName("IsRoot").IsRequired();

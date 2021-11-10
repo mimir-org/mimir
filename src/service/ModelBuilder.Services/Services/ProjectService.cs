@@ -393,6 +393,7 @@ namespace Mb.Services.Services
                     .Include("Edges.Transport.OutputTerminal")
                     .Include("Edges.Transport.OutputTerminal.Attributes")
                     .Include("Edges.Interface")
+                    .Include("Edges.Interface.Attributes")
                     .Include("Edges.Interface.InputTerminal")
                     .Include("Edges.Interface.InputTerminal.Attributes")
                     .Include("Edges.Interface.OutputTerminal")
@@ -428,7 +429,7 @@ namespace Mb.Services.Services
 
             //Determine if project version should be incremented
             SetProjectVersion(originalProject, projectAm);
-            
+
             // Map new data
             _mapper.Map(projectAm, originalProject);
 
@@ -864,7 +865,7 @@ namespace Mb.Services.Services
                 Cost = null,
                 Created = DateTime.Now.ToUniversalTime(),
                 CreatedBy = _contextAccessor.GetName(),
-                CreatedFromTypeId = null
+                LibraryTypeId = null
             };
 
             var connector = new Relation

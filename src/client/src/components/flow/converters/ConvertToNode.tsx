@@ -42,6 +42,7 @@ const ConvertToNode = (data: LibItem, position, projectId: string, icons: BlobDa
     createdBy: user?.name,
     updated: now,
     updatedBy: user?.name,
+    libraryTypeId: data.id,
   } as Node);
 };
 

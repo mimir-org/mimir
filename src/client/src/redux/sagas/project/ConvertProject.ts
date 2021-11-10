@@ -85,8 +85,10 @@ export interface NodeAm {
   isRoot: boolean;
   purpose: Purpose;
   created: Date;
+  createdBy: string;
   updated: Date;
   updatedBy: string;
+  libraryTypeId: string;
 }
 
 export interface EdgeAm {
@@ -113,13 +115,23 @@ export interface ProjectAm {
 
 export interface TransportAm {
   id: string;
+  version: string;
+  rds: string;
   name: string;
+  label: string;
+  description: string;
+  statusId: string;
   semanticReference: string;
+  attributes: AttributeAm[];
   inputTerminalId: string;
   inputTerminal: ConnectorAm;
   outputTerminalId: string;
   outputTerminal: ConnectorAm;
-  attributes: AttributeAm[];
+  updatedBy: string;
+  updated: Date;
+  createdBy: string;
+  created: Date;
+  libraryTypeId: string;
 }
 export interface CompositeAm {
   id: string;
@@ -131,12 +143,23 @@ export interface CompositeAm {
 
 export interface InterfaceAm {
   id: string;
+  version: string;
+  rds: string;
   name: string;
+  label: string;
+  description: string;
+  statusId: string;
   semanticReference: string;
+  attributes: AttributeAm[];
   inputTerminalId: string;
   inputTerminal: ConnectorAm;
   outputTerminalId: string;
   outputTerminal: ConnectorAm;
+  updatedBy: string;
+  updated: Date;
+  createdBy: string;
+  created: Date;
+  libraryTypeId: string;
 }
 
 const ConvertUnits = (units: EnumBase[]): UnitAm[] => {
@@ -256,13 +279,23 @@ const ConvertTransport = (data: Transport): TransportAm => {
 
   return {
     id: data.id,
+    version: data.version,
+    rds: data.rds,
     name: data.name,
+    label: data.label,
+    description: data.description,
+    statusId: data.statusId,
     semanticReference: data.semanticReference,
+    attributes: ConvertAttributes(data.attributes),
     inputTerminalId: data.inputTerminalId,
     inputTerminal: ConvertConnector(data.inputTerminal),
     outputTerminalId: data.outputTerminalId,
     outputTerminal: ConvertConnector(data.outputTerminal),
-    attributes: ConvertAttributes(data.attributes),
+    updatedBy: data.updatedBy,
+    updated: data.updated,
+    createdBy: data.createdBy,
+    created: data.created,
+    libraryTypeId: data.libraryTypeId,
   } as TransportAm;
 };
 
@@ -271,12 +304,23 @@ const ConvertInterface = (data: Interface): InterfaceAm => {
 
   return {
     id: data.id,
+    version: data.version,
+    rds: data.rds,
     name: data.name,
+    label: data.label,
+    description: data.description,
+    statusId: data.statusId,
     semanticReference: data.semanticReference,
+    attributes: ConvertAttributes(data.attributes),
     inputTerminalId: data.inputTerminalId,
     inputTerminal: ConvertConnector(data.inputTerminal),
     outputTerminalId: data.outputTerminalId,
     outputTerminal: ConvertConnector(data.outputTerminal),
+    updatedBy: data.updatedBy,
+    updated: data.updated,
+    createdBy: data.createdBy,
+    created: data.created,
+    libraryTypeId: data.libraryTypeId,
   } as InterfaceAm;
 };
 
@@ -317,6 +361,7 @@ const ConvertNodes = (nodes: Node[]): NodeAm[] => {
       createdBy: node.createdBy,
       updated: node.updated,
       updatedBy: node.updatedBy,
+      libraryTypeId: node.libraryTypeId,
     } as NodeAm;
 
     convertedNodes.push(n);

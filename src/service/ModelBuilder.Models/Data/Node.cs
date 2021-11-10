@@ -66,7 +66,7 @@ namespace Mb.Models.Data
 
         public string CreatedBy { get; set; }
 
-        public string CreatedFromTypeId { get; set; }
+        public string LibraryTypeId { get; set; }
 
         [Required]
         public string Version { get; set; }

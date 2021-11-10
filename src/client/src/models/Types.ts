@@ -39,6 +39,8 @@ export interface LibItem {
   rds: string;
   category: string;
   name: string;
+  label: string;
+  description: string;
   aspect: Aspect;
   connectors: Connector[];
   attributes?: Attribute[] | null;
@@ -51,6 +53,11 @@ export interface LibItem {
   terminalTypeId: string;
   libraryType: ObjectType;
   purpose: Purpose;
+  updatedBy: string;
+  updated: Date;
+  createdBy: string;
+  created: Date;
+  libraryTypeId: string;
 }
 
 export interface LibrarySubProjectItem {
