@@ -21,6 +21,7 @@ const InspectorTabWrapper = ({
 }: React.PropsWithChildren<Props>) => {
   const dispatch = useAppDispatch();
   const isTabOpen = activeTabIndex === index;
+
   const onClick = useCallback(() => {
     dispatch(changeInspectorTabAction(index));
   }, [dispatch, changeInspectorTabAction, index]);
