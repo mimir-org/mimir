@@ -1,4 +1,4 @@
-import ReactFlow, { Elements, Background } from "react-flow-renderer";
+import ReactFlow, { Elements } from "react-flow-renderer";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { FullScreenComponent } from "../../../compLibrary/controls";
 import { GetBlockEdgeTypes } from "../block/helpers";
@@ -25,7 +25,6 @@ import {
   nodeSizeSelector,
   animatedEdgeSelector,
 } from "../../../redux/store";
-import { Color } from "../../../compLibrary";
 
 interface Props {
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
@@ -151,9 +150,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
         multiSelectionKeyCode={"Control"}
         connectionLineComponent={BlockConnectionLine}
         onSelectionChange={(e) => onSelectionChange(e)}
-        arrowHeadColor={Color.ProductMain}
       >
-        <Background />
         <FullScreenComponent inspectorRef={inspectorRef} />
       </ReactFlow>
 

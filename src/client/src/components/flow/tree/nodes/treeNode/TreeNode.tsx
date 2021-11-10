@@ -5,7 +5,6 @@ import { TreeHandleBox, TreeNodeBox } from "./styled";
 import { GetHandleType, IsPartOf } from "../../../helpers";
 import { TreeLogoComponent } from "../../logo";
 import { GetAspectColor, GetSelectedNode } from "../../../../../helpers";
-import { FindAllNodes } from "../../../block/helpers";
 
 /**
  * Component to display a node in TreeView.
@@ -29,12 +28,6 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
   }, [timer]);
 
   const mouseNodeLeave = () => setTimer(true);
-
-  // Force correct z-index
-  useEffect(() => {
-    const nodes = FindAllNodes();
-    if (nodes) nodes.style.zIndex = "4";
-  }, []);
 
   return (
     <TreeNodeBox

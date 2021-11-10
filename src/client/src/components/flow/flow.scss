@@ -10,7 +10,7 @@
 }
 
 .react-flow__nodes {
-  z-index: 2;
+  z-index: 3;
 }
 
 .react-flow__edges {
@@ -30,12 +30,12 @@
   background-color: transparent !important;
 }
 
-// #react-flow__arrowclosed {
-//   :first-child {
-//     fill: var(--arrow-color);
-//     stroke: var(--arrow-color);
-//   }
-// }
+#react-flow__arrowclosed {
+  :first-child {
+    fill: var(--arrow-color);
+    stroke: var(--arrow-color);
+  }
+}
 
 .path-transportEdge,
 .path-partEdge,

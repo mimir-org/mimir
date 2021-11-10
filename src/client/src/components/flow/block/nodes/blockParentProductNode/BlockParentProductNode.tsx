@@ -4,12 +4,12 @@ import { HandleComponent, TerminalsContainerComponent } from "../../terminals";
 import { Color } from "../../../../../compLibrary";
 import { SetParentProductNodeSize } from "./helpers";
 import { OnConnectorClick } from "./handlers";
-import { BlockComponent } from ".";
+import { ParentContainerComponent } from "../parentContainer";
 import { FilterTerminals } from "../../helpers";
 import { AspectColorType, Connector } from "../../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
 import { edgeSelector, electroSelector, nodeSelector, nodeSizeSelector } from "../../../../../redux/store";
-import { GetAspectColor, IsLocation } from "../../../../../helpers";
+import { GetAspectColor } from "../../../../../helpers";
 
 /**
  * Component for a parent Product Node in BlockView.
@@ -32,7 +32,8 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
   }, [node?.connectors]);
 
   useEffect(() => {
-    SetParentProductNodeSize(node, dispatch); // eslint-disable-next-line react-hooks/exhaustive-deps
+    SetParentProductNodeSize(node, dispatch);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!node) return null;
@@ -42,7 +43,7 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
 
   return (
     <>
-      <BlockComponent
+      <ParentContainerComponent
         dispatch={dispatch}
         node={node}
         color={GetAspectColor(node, AspectColorType.Header)}
@@ -72,7 +73,7 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
         terminals={terminals}
         electro={electro}
       />
-      {IsLocation(data) && <Background style={{ zIndex: 1 }} variant={BackgroundVariant.Lines} color={Color.Grey} gap={20} />}
+      <Background variant={BackgroundVariant.Dots} color={Color.Black} gap={20} />
     </>
   );
 };

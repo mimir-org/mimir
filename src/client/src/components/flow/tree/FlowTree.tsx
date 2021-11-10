@@ -1,9 +1,9 @@
 import * as Helpers from "./helpers/";
+import ReactFlow, { Elements, Background } from "react-flow-renderer";
 import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
 import { FullScreenComponent } from "../../../compLibrary/controls";
 import { GetParent } from "../helpers";
 import { BuildTreeElements } from "../tree/builders";
-import ReactFlow, { Elements, Background } from "react-flow-renderer";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { updatePosition } from "../../../redux/store/project/actions";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
@@ -11,6 +11,7 @@ import { TreeFilterMenu } from "../../menus/filterMenu/tree";
 import { ExplorerModule } from "../../../modules/explorer";
 import { TreeConnectionLine } from "./edges";
 import { GetSelectedNode, SetDarkModeColor } from "../../../helpers";
+import { handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";
 import {
   animatedEdgeSelector,
   darkModeSelector,
@@ -21,7 +22,6 @@ import {
   treeFilterSelector,
   userStateSelector,
 } from "../../../redux/store";
-import { handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";
 
 interface Props {
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
@@ -86,8 +86,6 @@ const FlowTree = ({ inspectorRef }: Props) => {
   };
 
   const onSelectionChange = (selectedElements: Elements) => {
-    console.log({ selectedElements });
-
     if (selectedElements === null) {
       handleNoSelect(project, inspectorRef, dispatch);
     } else if (selectedElements.length === 1 && Helpers.GetNodeTypes[selectedElements[0]?.type]) {
