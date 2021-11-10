@@ -9,7 +9,6 @@ import { EDGE_TYPE, EdgeType } from "../../../models/project";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { BlockFilterMenu } from "../../menus/filterMenu/block";
 import { Node } from "../../../models";
-import { ExplorerModule } from "../../../modules/explorer";
 import { BlockConnectionLine } from "./edges";
 import { IsOffPage, SetDarkModeColor, GetSelectedNode } from "../../../helpers";
 import { CloseInspector, handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";
@@ -154,7 +153,6 @@ const FlowBlock = ({ inspectorRef }: Props) => {
         <FullScreenComponent inspectorRef={inspectorRef} />
       </ReactFlow>
 
-      <ExplorerModule elements={elements} />
       {blockFilter && (
         <BlockFilterMenu elements={elements?.filter((elem) => !IsOffPage(elem?.data))} edgeAnimation={animatedEdge} />
       )}

@@ -9,23 +9,18 @@ import { ExplorerIcon } from "../../assets/icons/modules";
 import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store/hooks";
 import { animatedModuleSelector, explorerSelector } from "../../redux/store";
 
-interface Props {
-  elements?: any[];
-}
-
 /**
  * Component for the Explorer Module in Mimir.
  * @returns a module where all nodes in Mimir are listed.
  */
-export const ExplorerModule = ({ elements }: Props) => {
+export const ExplorerModule = () => {
   const dispatch = useAppDispatch();
-  const type = MODULE_TYPE.EXPLORER;
   const isOpen = useAppSelector(explorerSelector);
+  const type = MODULE_TYPE.EXPLORER;
   const animate = useParametricAppSelector(animatedModuleSelector, type);
 
   const start = isOpen ? Size.ModuleClosed : Size.ModuleOpen;
   const stop = isOpen ? Size.ModuleOpen : Size.ModuleClosed;
-  console.log("test");
 
   return (
     <AnimatedModule type={type} start={start} stop={stop} run={animate} id="ExplorerModule">
@@ -34,11 +29,7 @@ export const ExplorerModule = ({ elements }: Props) => {
         <p className="text">{type}</p>
       </ModuleHead>
       <ModuleBody visible={isOpen} explorer isBlockView={IsBlockView()}>
-        {/* {project && (
-          <ProjectComponent
-            elements={elements}
-          />
-        )} */}
+        <ProjectComponent />
       </ModuleBody>
     </AnimatedModule>
   );

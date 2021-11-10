@@ -4,17 +4,13 @@ import { HasChildren, IsAncestorInSet } from "./helpers/ParentNode";
 import { memo, useState } from "react";
 import { SortNodesWithIndent } from "./helpers/SortNodesWithIndent";
 import { IsOffPage } from "../../helpers";
-import { projectSelector, useAppSelector } from "../../redux/store";
+import { projectSelector, secondaryNodeSelector, useAppSelector } from "../../redux/store";
 
-interface Props {
-  elements: any[];
-}
-
-export const ProjectComponent = ({ elements }: Props) => {
+export const ProjectComponent = () => {
   const [closedNodes, setClosedNodes] = useState(new Set<string>());
   const project = useAppSelector(projectSelector);
   const nodes = project?.nodes?.filter((n) => !IsOffPage(n));
-  const selectedNode = nodes?.find((node) => node.isSelected);
+  const secondaryNode = useAppSelector(secondaryNodeSelector) as Node;
 
   const onExpandElement = (_expanded: boolean, nodeId: string) => {
     _expanded ? closedNodes.delete(nodeId) : closedNodes.add(nodeId);
@@ -36,9 +32,7 @@ export const ProjectComponent = ({ elements }: Props) => {
             expanded={!closedNodes.has(node.id)}
             isLeaf={!HasChildren(node, project)}
             project={project}
-            elements={elements}
-            selectedNode={selectedNode}
-            secondaryNode={null}
+            secondaryNode={secondaryNode}
             onElementExpanded={onExpandElement}
           />
         );

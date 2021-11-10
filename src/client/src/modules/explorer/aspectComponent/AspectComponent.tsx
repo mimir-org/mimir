@@ -9,26 +9,13 @@ interface Props {
   node: Node;
   label: string;
   indent: number;
-  project: Project;
   isLeaf: boolean;
   expanded: boolean;
-  elements: any[];
-  selectedNode: Node;
+  project: Project;
   secondaryNode: Node;
   onElementExpanded: (expanded: boolean, nodeId: string) => void;
 }
-export const AspectComponent = ({
-  node,
-  label,
-  project,
-  expanded,
-  indent,
-  isLeaf,
-  elements,
-  selectedNode,
-  secondaryNode,
-  onElementExpanded,
-}: Props) => (
+export const AspectComponent = ({ node, label, expanded, indent, isLeaf, project, secondaryNode, onElementExpanded }: Props) => (
   <>
     <AspectBox indent={indent} node={node}>
       {IsAspectNode(node) && <img src={GetAspectIcon(node)} alt="aspect-icon" className="icon"></img>}
@@ -36,13 +23,7 @@ export const AspectComponent = ({
         {!IsBlockView() ? (
           <CheckboxTree node={node} project={project} inputLabel={label} />
         ) : (
-          <CheckboxBlock
-            elements={elements}
-            node={node}
-            inputLabel={label}
-            selectedNode={selectedNode}
-            secondaryNode={secondaryNode}
-          />
+          <CheckboxBlock project={project} node={node} inputLabel={label} secondaryNode={secondaryNode} />
         )}
       </div>
 

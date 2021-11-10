@@ -8,7 +8,6 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { updatePosition } from "../../../redux/store/project/actions";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { TreeFilterMenu } from "../../menus/filterMenu/tree";
-import { ExplorerModule } from "../../../modules/explorer";
 import { TreeConnectionLine } from "./edges";
 import { GetSelectedNode, SetDarkModeColor } from "../../../helpers";
 import { handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";
@@ -127,7 +126,6 @@ const FlowTree = ({ inspectorRef }: Props) => {
         <FullScreenComponent inspectorRef={inspectorRef} />
       </ReactFlow>
 
-      <ExplorerModule elements={elements} />
       {treeFilter && <TreeFilterMenu elements={elements} edgeAnimation={animatedEdge} />}
     </>
   );

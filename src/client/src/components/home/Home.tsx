@@ -12,6 +12,7 @@ import { getContractors, getStatuses, getAttributeFilters, getParsers } from "..
 import { importLibraryInterfaceTypes, importLibraryTransportTypes, searchLibrary } from "../../redux/store/library/actions";
 import { getBlobData } from "../../typeEditor/redux/actions";
 import { Header } from "../header";
+import { ExplorerModule } from "../../modules/explorer/ExplorerModule";
 
 /**
  * The main component for Mimir
@@ -40,6 +41,7 @@ const Home = () => {
     <>
       <Header />
       {accountMenuOpen && <AccountMenu />}
+      <ExplorerModule />
       <FlowModule inspectorRef={inspectorRef} flowView={flowView} />
       <InspectorModule inspectorRef={inspectorRef} />
       <LibraryModule />
