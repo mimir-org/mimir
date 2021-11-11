@@ -3,7 +3,7 @@ import { changeActiveMenu } from "../../../project/redux/actions";
 
 const OnOpenClick = (dispatch: any, setConfirm: any) => {
   setConfirm(true);
-  dispatch(changeActiveMenu(MENU_TYPE.ACCOUNT_MENU));
+  dispatch(changeActiveMenu(MENU_TYPE.PROJECT_MENU));
 };
 
 export default OnOpenClick;

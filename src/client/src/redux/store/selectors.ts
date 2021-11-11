@@ -132,9 +132,14 @@ export const blockFilterSelector = createAppSelector(
   (filterMenuVisibility) => filterMenuVisibility
 );
 
-export const accountMenuSelector = createAppSelector(
-  (state) => state.menu.accountMenuVisibility,
-  (accountMenuVisibility) => accountMenuVisibility
+export const projectMenuSelector = createAppSelector(
+  (state) => state.menu.projectMenuVisibility,
+  (projectMenuVisibility) => projectMenuVisibility
+);
+
+export const userMenuSelector = createAppSelector(
+  (state) => state.menu.userMenuVisibility,
+  (userMenuVisibility) => userMenuVisibility
 );
 
 export const activeMenuSelector = createAppSelector(

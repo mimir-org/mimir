@@ -1,4 +1,4 @@
-import { setAccountMenuVisibility } from "../../../project/redux/actions";
+import { setProjectMenuVisibility } from "../../../project/redux/actions";
 import { get } from "../../../../../redux/store/project/actions";
 
 const OnSaveClick = (dispatch: any, projectId: string, setConfirm: any) => {
@@ -6,7 +6,7 @@ const OnSaveClick = (dispatch: any, projectId: string, setConfirm: any) => {
   setConfirm(false);
   dispatch(get(projectId));
   // dispatch(save(currentProject));
-  dispatch(setAccountMenuVisibility(false));
+  dispatch(setProjectMenuVisibility(false));
 };
 
 export default OnSaveClick;

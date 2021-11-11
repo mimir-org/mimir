@@ -4,11 +4,10 @@ import { ToolBar } from "./";
 import { MenuMainHeader } from "../../compLibrary/box/menus";
 import { HeaderBox, LogoBox } from "../../compLibrary/box/header/";
 import { useAppDispatch, useAppSelector } from "../../redux/store/hooks";
-import { CompanyLogoBox } from "./styled";
+import { CompanyLogoBox, ProjectBox, UserBox } from "./styled";
 import { GetCompanyLogoForHeader } from "../../helpers";
 import {
-  darkModeSelector,
-  accountMenuSelector,
+  projectMenuSelector,
   electroSelector,
   explorerSelector,
   treeFilterSelector,
@@ -16,15 +15,16 @@ import {
   libOpenSelector,
   treeSelector,
   projectSelector,
+  userMenuSelector,
 } from "../../redux/store";
 
 const Header = () => {
   const dispatch = useAppDispatch();
   const project = useAppSelector(projectSelector);
-  const darkMode = useAppSelector(darkModeSelector);
   const treeFilterMenuOpen = useAppSelector(treeFilterSelector);
   const blockFilterMenuOpen = useAppSelector(blockFilterSelector);
-  const accountMenuOpen = useAppSelector(accountMenuSelector);
+  const projectMenuOpen = useAppSelector(projectMenuSelector);
+  const userMenuOpen = useAppSelector(userMenuSelector);
   const libOpen = useAppSelector(libOpenSelector);
   const explorerOpen = useAppSelector(explorerSelector);
   const treeView = useAppSelector(treeSelector);
@@ -34,17 +34,21 @@ const Header = () => {
   return (
     <>
       <HeaderBox id="Header">
-        <MenuMainHeader isOpen={accountMenuOpen}>
+        <MenuMainHeader>
+          <UserBox isOpen={userMenuOpen} onClick={() => Click.OnUser(dispatch, userMenuOpen)}>
+            <img src={Icons.User} alt="icon" className="icon" onClick={() => Click.OnUser(dispatch, userMenuOpen)} />
+          </UserBox>
           <CompanyLogoBox>
             <img src={GetCompanyLogoForHeader(company)} alt="logo" />
           </CompanyLogoBox>
-          <div className="projectName" onClick={() => Click.OnAccount(dispatch, accountMenuOpen)}>
-            {project && project.name}
-          </div>
-          <img src={Icons.User} alt="icon" className="icon" onClick={() => Click.OnAccount(dispatch, accountMenuOpen)} />
         </MenuMainHeader>
+
+        <ProjectBox isOpen={projectMenuOpen} onClick={() => Click.OnProject(dispatch, projectMenuOpen)}>
+          {project && project.name}
+        </ProjectBox>
+
         <LogoBox>
-          <img src={Icons.Mimir} alt="mimir-icon" onClick={() => Click.OnDarkMode(dispatch, darkMode)} />
+          <img src={Icons.Mimir} alt="mimir-icon" />
         </LogoBox>
       </HeaderBox>
       <ToolBar

@@ -5,6 +5,7 @@ const CompanyLogoBox = styled.div`
   height: 35px;
   width: 88px;
   pointer-events: none;
+  margin-right: 70px;
 `;
 
 export default CompanyLogoBox;

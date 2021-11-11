@@ -1,7 +1,8 @@
 import * as Types from "./types";
 
 const initialState: Types.MenuState = {
-  accountMenuVisibility: false,
+  projectMenuVisibility: false,
+  userMenuVisibility: false,
   treeFilterMenuVisibility: false,
   blockFilterMenuVisibility: false,
   activeMenu: null,
@@ -16,10 +17,16 @@ export function menuReducer(state = initialState, action: Types.MenuActionTypes)
       };
     }
 
-    case Types.SET_ACCOUNT_MENU_VISIBILITY:
+    case Types.SET_PROJECT_MENU_VISIBILITY:
       return {
         ...state,
-        accountMenuVisibility: action.payload.visibility,
+        projectMenuVisibility: action.payload.visibility,
+      };
+
+    case Types.SET_USER_MENU_VISIBILITY:
+      return {
+        ...state,
+        userMenuVisibility: action.payload.visibility,
       };
 
     case Types.SET_TREE_FILTER_MENU_VISIBILITY:

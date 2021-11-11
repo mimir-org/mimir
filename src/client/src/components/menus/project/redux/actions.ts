@@ -1,13 +1,23 @@
 import {
   CHANGE_ACTIVE_MENU,
-  SET_ACCOUNT_MENU_VISIBILITY,
+  SET_PROJECT_MENU_VISIBILITY,
+  SET_USER_MENU_VISIBILITY,
   SET_TREE_FILTER_MENU_VISIBILITY,
   SET_BLOCK_FILTER_MENU_VISIBILITY,
 } from "./types";
 
-export function setAccountMenuVisibility(visibility: boolean) {
+export function setProjectMenuVisibility(visibility: boolean) {
   return {
-    type: SET_ACCOUNT_MENU_VISIBILITY,
+    type: SET_PROJECT_MENU_VISIBILITY,
+    payload: {
+      visibility,
+    },
+  };
+}
+
+export function setUserMenuVisibility(visibility: boolean) {
+  return {
+    type: SET_USER_MENU_VISIBILITY,
     payload: {
       visibility,
     },
