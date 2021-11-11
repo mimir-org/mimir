@@ -19,7 +19,7 @@ interface Props {
  * @param interface
  * @returns a container that sits on top of a Flow node
  */
-const BlockComponent = ({ node, color, selected, dispatch, width, height, hasChildren }: Props) => {
+const ParentContainerComponent = ({ node, color, selected, dispatch, width, height, hasChildren }: Props) => {
   const company = process.env.REACT_APP_COMPANY;
 
   useEffect(() => {
@@ -42,4 +42,4 @@ const BlockComponent = ({ node, color, selected, dispatch, width, height, hasChi
     </Block>
   );
 };
-export default BlockComponent;
+export default ParentContainerComponent;

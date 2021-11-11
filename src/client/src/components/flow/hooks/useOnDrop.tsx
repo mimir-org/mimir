@@ -3,6 +3,8 @@ import { ConvertToEdge, ConvertToNode } from "../converters";
 import { BlobData, LibItem, Project, User, Node, LibrarySubProjectItem, Composite, Connector, Attribute } from "../../../models";
 import { LibraryState } from "../../../redux/store/library/types";
 import { GetSelectedNode, IsBlockView, IsFamily } from "../../../helpers";
+import { Dispatch } from "redux";
+import { Elements, OnLoadParams } from "react-flow-renderer";
 import {
   CreateId,
   GetProjectData,
@@ -12,8 +14,6 @@ import {
   IsSubProject,
   SetSiblingIndexOnNodeDrop,
 } from "./../helpers";
-import { Dispatch } from "redux";
-import { Elements, OnLoadParams } from "react-flow-renderer";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
 

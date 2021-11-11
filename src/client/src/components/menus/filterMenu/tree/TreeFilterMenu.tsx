@@ -7,6 +7,7 @@ import { OnAnimationChange, OnChange, OnAllTransportsChange } from "../handlers"
 import { GetEdges, GetNodes, PopulateFilterLists } from "../helpers";
 import { FilterElement } from "..";
 import { IsLibrary } from "../../../../helpers";
+import { IsTransport } from "../../../flow/helpers";
 
 interface Props {
   elements: any[];
@@ -26,9 +27,6 @@ const TreeFilterMenu = ({ elements, edgeAnimation }: Props) => {
   const transportItems = [] as Connector[];
   const relationItems = [] as Connector[];
   const partOfItems = [] as Connector[];
-  const transportLabel = TextResources.Relations_Transport;
-  const relationLabel = TextResources.Relations;
-  const partOfLabel = TextResources.Relations_PartOf_Relationship;
 
   PopulateFilterLists(edges, transportItems, relationItems, partOfItems);
 
@@ -36,20 +34,20 @@ const TreeFilterMenu = ({ elements, edgeAnimation }: Props) => {
     <FilterMenuBox libraryOpen={libOpen}>
       <MenuColumn>
         <FilterElement
-          label={"Edge animation"}
+          label={TextResources.Filter_Edge_Animation}
           onChange={() => OnAnimationChange(edges, dispatch, edgeAnimation)}
           isChecked={edgeAnimation}
           visible={!!transportItems.length}
         />
         <FilterElement
-          label={"Show all transport edges"}
+          label={TextResources.Filter_Show_Transport}
           onChange={() => OnAllTransportsChange(edges, dispatch)}
-          isChecked={!edges.some((x) => x.isHidden)}
+          isChecked={!edges.some((x) => x.isHidden && IsTransport(x.fromConnector))}
           visible={!!transportItems.length}
         />
         <FilterDropdown
           terminals={transportItems}
-          label={transportLabel}
+          label={TextResources.Relations_Transport}
           nodes={nodes}
           edges={edges}
           onChange={(edge) => OnChange(edge, edges, dispatch)}
@@ -57,7 +55,7 @@ const TreeFilterMenu = ({ elements, edgeAnimation }: Props) => {
         />
         <FilterDropdown
           terminals={relationItems}
-          label={relationLabel}
+          label={TextResources.Relations}
           nodes={nodes}
           edges={edges}
           onChange={(edge) => OnChange(edge, edges, dispatch)}
@@ -65,7 +63,7 @@ const TreeFilterMenu = ({ elements, edgeAnimation }: Props) => {
         />
         <FilterDropdown
           terminals={partOfItems}
-          label={partOfLabel}
+          label={TextResources.Relations_PartOf_Relationship}
           nodes={nodes}
           edges={edges}
           onChange={(edge) => OnChange(edge, edges, dispatch)}

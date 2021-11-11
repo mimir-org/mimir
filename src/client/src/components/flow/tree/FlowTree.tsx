@@ -7,9 +7,9 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { updatePosition } from "../../../redux/store/project/actions";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { TreeFilterMenu } from "../../menus/filterMenu/tree";
-import { ExplorerModule } from "../../../modules/explorer";
 import { TreeConnectionLine } from "./edges";
-import { GetSelectedNode, SetDarkModeColor } from "../../../helpers";
+import { SetDarkModeColor } from "../../../helpers";
+import { handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";
 import {
   animatedEdgeSelector,
   darkModeSelector,
@@ -20,7 +20,6 @@ import {
   treeFilterSelector,
   userStateSelector,
 } from "../../../redux/store";
-import { handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";
 
 interface Props {
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
@@ -43,7 +42,6 @@ const FlowTree = ({ inspectorRef }: Props) => {
   const inspectorOpen = useAppSelector(inspectorSelector);
   const treeFilter = useAppSelector(treeFilterSelector);
   const animatedEdge = useAppSelector(animatedEdgeSelector);
-  const node = GetSelectedNode();
 
   const OnDragOver = (event: any) => event.preventDefault();
   const OnNodeDragStop = (_event: any, n: any) => dispatch(updatePosition(n.id, n.position.x, n.position.y));
@@ -95,9 +93,12 @@ const FlowTree = ({ inspectorRef }: Props) => {
 
   // Rerender
   useEffect(() => {
-    SetDarkModeColor(darkMode);
     OnLoad(flowInstance);
-  }, [OnLoad, flowInstance, darkMode]);
+  }, [OnLoad, flowInstance]);
+
+  useEffect(() => {
+    SetDarkModeColor(darkMode);
+  }, [darkMode]);
 
   return (
     <>
@@ -122,7 +123,7 @@ const FlowTree = ({ inspectorRef }: Props) => {
         <Background />
         <FullScreenComponent inspectorRef={inspectorRef} />
       </ReactFlow>
-      <ExplorerModule elements={elements} selectedNode={node} secondaryNode={null} />
+
       {treeFilter && <TreeFilterMenu elements={elements} edgeAnimation={animatedEdge} />}
     </>
   );

@@ -33,10 +33,6 @@
   background: #d8d8ec;
 }
 
-.project_data:nth-of-type(odd) {
-  background: rgba(255, 255, 255, 0.15);
-}
-
 .selected_project {
   border: 1px solid #272738;
   font-weight: bold;
@@ -44,4 +40,8 @@
 
 .not_selected {
   border: none;
+}
+
+.project_data:hover {
+  background: #d9e6ff;
 }

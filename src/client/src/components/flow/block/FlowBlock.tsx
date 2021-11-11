@@ -1,4 +1,4 @@
-import ReactFlow, { Elements, Background } from "react-flow-renderer";
+import ReactFlow, { Elements } from "react-flow-renderer";
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { FullScreenComponent } from "../../../compLibrary/controls";
 import { GetBlockEdgeTypes } from "../block/helpers";
@@ -9,14 +9,13 @@ import { EDGE_TYPE, EdgeType } from "../../../models/project";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { BlockFilterMenu } from "../../menus/filterMenu/block";
 import { Node } from "../../../models";
-import { ExplorerModule } from "../../../modules/explorer";
 import { BlockConnectionLine } from "./edges";
-import { IsOffPage, SetDarkModeColor, GetSelectedNode } from "../../../helpers";
+import { IsOffPage, GetSelectedNode, SetDarkModeColor } from "../../../helpers";
 import { CloseInspector, handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";
+import { updateBlockElements } from "../../../modules/explorer/redux/actions";
 import {
-  darkModeSelector,
   iconSelector,
-  electroSelector,
+  darkModeSelector,
   librarySelector,
   projectSelector,
   secondaryNodeSelector,
@@ -44,12 +43,10 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   const secondaryNode = useAppSelector(secondaryNodeSelector) as Node;
   const icons = useAppSelector(iconSelector);
   const lib = useAppSelector(librarySelector);
-  const electro = useAppSelector(electroSelector);
   const userState = useAppSelector(userStateSelector);
   const blockFilter = useAppSelector(blockFilterSelector);
   const parentNodeSize = useAppSelector(nodeSizeSelector);
   const animatedEdge = useAppSelector(animatedEdgeSelector);
-
   const node = GetSelectedNode();
   const parent = GetParent(node);
 
@@ -110,9 +107,16 @@ const FlowBlock = ({ inspectorRef }: Props) => {
 
   // Rerender
   useEffect(() => {
-    SetDarkModeColor(darkMode);
     OnLoad(flowInstance);
-  }, [OnLoad, flowInstance, darkMode, electro]);
+  }, [OnLoad, flowInstance]);
+
+  useEffect(() => {
+    dispatch(updateBlockElements(elements));
+  }, [elements, dispatch]);
+
+  useEffect(() => {
+    SetDarkModeColor(darkMode);
+  }, [darkMode]);
 
   const onSelectionChange = (selectedElements: Elements) => {
     if (selectedElements === null) {
@@ -150,15 +154,9 @@ const FlowBlock = ({ inspectorRef }: Props) => {
         connectionLineComponent={BlockConnectionLine}
         onSelectionChange={(e) => onSelectionChange(e)}
       >
-        <Background />
         <FullScreenComponent inspectorRef={inspectorRef} />
       </ReactFlow>
 
-      <ExplorerModule
-        elements={elements?.filter((elem) => !IsOffPage(elem?.data))}
-        selectedNode={node}
-        secondaryNode={secondaryNode}
-      />
       {blockFilter && (
         <BlockFilterMenu elements={elements?.filter((elem) => !IsOffPage(elem?.data))} edgeAnimation={animatedEdge} />
       )}

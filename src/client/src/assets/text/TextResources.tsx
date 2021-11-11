@@ -170,8 +170,6 @@ const TextResources = {
   TypeEditor_Error_Attributes: "Please add one or more attributes.",
   TypeEditor_Error_Location_Attributes: "Please add one or more location attributes.",
   TypeEditor_Error_Terminals: "Please select one or more terminals.",
-  TypeEditor_Error_Terminals_Block:
-    "Please select one or more terminals. An Object Block must have at least one input terminal, and one output terminal.",
   TypeEditor_Error_TerminalsType: "You can only select two of each terminal, one must be input, the other must be output.",
   TypeEditor_Error_Terminals_Interface: "Please select a terminal type.",
 
@@ -233,6 +231,7 @@ const TextResources = {
   Type_BlockFunction: "BlockFunctionNode",
   Type_BlockProduct: "BlockProductNode",
   Type_BlockParentNode: "BlockParentNode",
+  Type_BlockParentProductNode: "BlockParentProductNode",
   Type_OffPageNode: "BlockOffPageNode",
 
   // RDS
@@ -241,9 +240,12 @@ const TextResources = {
   RDS_Location: "++",
 
   // Visual Filter
+  Filter_Terminals: "Terminals",
   Filter_Show_Terminals: "Show all terminals",
   Filter_Show_Active_Terminals: "Show all active terminals",
   Filter_Show_Inactive_Terminals: "Show all inactive terminals",
+  Filter_Show_Transport: "Show all transport edges",
+  Filter_Edge_Animation: "Edge animation",
 };
 
 export default TextResources;

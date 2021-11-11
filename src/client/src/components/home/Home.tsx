@@ -11,6 +11,8 @@ import { TypeEditorComponent } from "../../typeEditor";
 import { getContractors, getStatuses, getAttributeFilters, getParsers } from "../../redux/store/common/actions";
 import { importLibraryInterfaceTypes, importLibraryTransportTypes, searchLibrary } from "../../redux/store/library/actions";
 import { getBlobData } from "../../typeEditor/redux/actions";
+import { Header } from "../header";
+import { ExplorerModule } from "../../modules/explorer/ExplorerModule";
 
 /**
  * The main component for Mimir
@@ -37,7 +39,9 @@ const Home = () => {
 
   return (
     <>
+      <Header />
       {accountMenuOpen && <AccountMenu />}
+      <ExplorerModule />
       <FlowModule inspectorRef={inspectorRef} flowView={flowView} />
       <InspectorModule inspectorRef={inspectorRef} />
       <LibraryModule />

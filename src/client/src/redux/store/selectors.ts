@@ -107,6 +107,11 @@ export const customCategorySelector = createAppSelector(
   (customCategory) => customCategory
 );
 
+export const blockElementsSelector = createAppSelector(
+  (state) => state.blockElements.elements,
+  (elements) => elements
+);
+
 export const treeSelector = createAppSelector(
   (state) => state.flow.view,
   (view) => view === VIEW_TYPE.TREEVIEW
