@@ -1,9 +1,8 @@
 import * as Helpers from "./helpers/";
 import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
 import { FullScreenComponent } from "../../../compLibrary/controls";
-import { GetParent } from "../helpers";
 import { BuildTreeElements } from "../tree/builders";
-import ReactFlow, { Elements, Background } from "react-flow-renderer";
+import ReactFlow, { Elements, Background, OnLoadParams } from "react-flow-renderer";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { updatePosition } from "../../../redux/store/project/actions";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
@@ -34,7 +33,7 @@ interface Props {
 const FlowTree = ({ inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
   const flowWrapper = useRef(null);
-  const [flowInstance, setFlowInstance] = useState(null);
+  const [flowInstance, setFlowInstance] = useState<OnLoadParams>(null);
   const [elements, setElements] = useState<Elements>();
   const darkMode = useAppSelector(darkModeSelector);
   const project = useAppSelector(projectSelector);
@@ -45,7 +44,6 @@ const FlowTree = ({ inspectorRef }: Props) => {
   const treeFilter = useAppSelector(treeFilterSelector);
   const animatedEdge = useAppSelector(animatedEdgeSelector);
   const node = GetSelectedNode();
-  const parent = GetParent(node);
 
   const OnDragOver = (event: any) => event.preventDefault();
   const OnNodeDragStop = (_event: any, n: any) => dispatch(updatePosition(n.id, n.position.x, n.position.y));
@@ -55,7 +53,7 @@ const FlowTree = ({ inspectorRef }: Props) => {
   };
 
   const OnLoad = useCallback(
-    (_reactFlowInstance) => {
+    (_reactFlowInstance: OnLoadParams) => {
       setElements(BuildTreeElements(project, animatedEdge));
       return setFlowInstance(_reactFlowInstance);
     },
@@ -69,20 +67,18 @@ const FlowTree = ({ inspectorRef }: Props) => {
     return useOnConnect(params, project, setElements, dispatch, edgeType, library, animatedEdge);
   };
 
-  const OnDrop = (event) => {
-    return useOnDrop(
-      project,
+  const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    return useOnDrop({
       event,
-      dispatch,
-      setElements,
-      flowInstance,
-      flowWrapper,
+      project,
+      user: userState.user,
       icons,
       library,
-      userState.user,
-      parent,
-      animatedEdge
-    );
+      reactFlowInstance: flowInstance,
+      reactFlowWrapper: flowWrapper,
+      setElements,
+      dispatch,
+    });
   };
 
   const onSelectionChange = (selectedElements: Elements) => {
