@@ -9,3 +9,5 @@ export { default as Vertical } from "./vertical.svg";
 export { default as User } from "./userClosed.svg";
 export { default as DarkMode } from "./darkmode.svg";
 export { default as UserBackground } from "./userBackground.svg";
+export { default as Settings } from "./settings.svg";
+export { default as Notifications } from "./notifications.svg";

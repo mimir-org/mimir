@@ -8,13 +8,14 @@ const MenuElement = styled.div`
 
   .text {
     position: relative;
-    top: 2px;
-    margin-left: 12px;
+    bottom: 1px;
+    margin-left: 10px;
     display: inline;
     vertical-align: super;
   }
 
   .icon {
+    height: 24px;
     position: relative;
     bottom: 0px;
     left: 0px;
@@ -23,10 +24,6 @@ const MenuElement = styled.div`
   &:hover {
     background-color: ${Color.LightBlue};
     text-decoration: underline;
-  }
-
-  &:last-child {
-    border-radius: 0px 0px 10px 10px;
   }
 `;
 
