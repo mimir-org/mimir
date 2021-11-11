@@ -1,6 +1,6 @@
 import { setElectroView } from "../../../redux/store/electro/actions";
 import { setActiveNode } from "../../../redux/store/project/actions";
-import { GetSelectedNode } from "../../flow/helpers";
+import { GetSelectedNode } from "../../../helpers";
 
 /**
  * Function to toggle Electro mode on/off. In Electro mode termials are displayed vertically.

@@ -2,7 +2,6 @@ const Color = {
   // Common
   BlueMagenta: "#272738",
   LightBlue: "#D9E6FF",
-
   GreyHeader: "#4F4F4F",
   GreyInspector: "#FAFAFA",
   GreyInspectorDisabled: "#C5C5C5",
@@ -11,10 +10,8 @@ const Color = {
   DarkerGrey: "#898787",
   LightGrey: "#FBFBFF",
   LighterGrey: "#F2F2F2",
-
   White: "#fff",
   Black: "#000",
-
   LightCyan: "#CFDADB",
   LightPurple: "#D8D8EC",
   Red: "rgb(255,0,0)",

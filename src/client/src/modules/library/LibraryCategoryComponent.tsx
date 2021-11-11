@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { LibraryCategory } from "../../models/project";
-import { ObjectType } from "../../models";
-import { GetObjectIcon, GetAspectColor } from "../../assets/helpers";
+import { AspectColorType, ObjectType } from "../../models";
 import { ExpandIcon, CollapseIcon } from "../../assets/icons/chevron";
 import { SetNewSelectedElement, SetNewSelectedElementType } from "./helpers";
 import { CloseIcon } from "../../assets/icons/close";
 import { OnCloseElementClick } from "./handlers";
 import { LibCategory, LibCategoryElement, LibElement, LibElementClose, LibElementIcon } from "../../compLibrary/box/library";
+import { GetAspectColor, GetObjectIcon } from "../../helpers";
 
 interface Props {
   customCategory: LibraryCategory;
@@ -53,7 +53,7 @@ const LibraryCategoryComponent = ({
               key={node.id}
             >
               {node.name}
-              <LibElementIcon color={GetAspectColor(node, false)}>
+              <LibElementIcon color={GetAspectColor(node, AspectColorType.Main, false)}>
                 {(node.libraryType === ObjectType.Interface || node.libraryType === ObjectType.Transport) && (
                   <img src={GetObjectIcon(node)} alt="aspect-icon" className="icon" draggable="false"></img>
                 )}

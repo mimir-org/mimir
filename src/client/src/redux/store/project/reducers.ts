@@ -1,7 +1,7 @@
 import * as Types from "./types";
 import { Edge, Node, ProjectSimple } from "../../../models";
 import { GetUpdatedEdgeInnerWithTerminalAttributeIsLocked, TraverseTree } from "./helpers/";
-import { IsAspectNode, IsFamily } from "../../../components/flow/helpers";
+import { IsAspectNode, IsFamily } from "../../../helpers";
 import { GetUpdatedEdgeInnerWithTerminalAttributeValue } from "./helpers";
 
 const initialState: Types.ProjectState = {

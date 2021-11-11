@@ -14,6 +14,11 @@ interface Props {
   visible: boolean;
 }
 
+/**
+ * Component for a drop-down menu in Visual Filter.
+ * @param params
+ * @returns a drop-down menu.
+ */
 const FilterDropdown = ({ terminals, label, nodes, edges, onChange, visible }: Props) => {
   const [listOpen, setListOpen] = useState(false);
 
@@ -28,7 +33,8 @@ const FilterDropdown = ({ terminals, label, nodes, edges, onChange, visible }: P
           <MenuList>
             {terminals.map((conn) => {
               const edge = edges.find((x) => x.fromConnectorId === conn.id);
-              const name = IsPartOf(conn) ? GetPartOfName(conn, nodes) : conn.name;
+              const node = nodes.find((n) => n.id === conn.nodeId);
+              const name = IsPartOf(conn) ? GetPartOfName(conn, node) : conn.name;
 
               return (
                 <MenuListItem onClick={() => onChange(edge)} key={conn.id}>
@@ -38,7 +44,7 @@ const FilterDropdown = ({ terminals, label, nodes, edges, onChange, visible }: P
                       <span className="checkmark-block"></span>
                     </label>
                   </CheckboxWrapper>
-                  <ColorBar color={GetFilterColor(conn, nodes)} />
+                  <ColorBar color={conn.color ?? GetFilterColor(conn, node)} />
                   <p>{name}</p>
                 </MenuListItem>
               );

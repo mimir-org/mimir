@@ -20,6 +20,7 @@ const TerminalsMenu = styled.div<Props>`
   top: ${(props) => (props.parent ? 3 : 5)}px;
   left: ${(props) => (!props.input ? props.xPos + "px" : "unset")};
   right: ${(props) => (props.input ? props.xPos + "px" : "unset")};
+  transition: right 250ms ease-in-out, left 250ms ease-in-out, top 250ms ease-in-out;
 `;
 
 export default TerminalsMenu;

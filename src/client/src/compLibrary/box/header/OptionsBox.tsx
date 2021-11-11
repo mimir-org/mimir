@@ -1,9 +1,8 @@
 import styled from "styled-components";
 
 const OptionsBox = styled.div`
-  position: absolute;
-  right: 18em;
-  top: 60px;
+  width: auto;
+  height: 40px;
 `;
 
 export default OptionsBox;

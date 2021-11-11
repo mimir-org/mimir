@@ -124,6 +124,15 @@ namespace RdfParserModule.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to rdfs:comment.
+        /// </summary>
+        internal static string desc {
+            get {
+                return ResourceManager.GetString("desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to eq:.
         /// </summary>
         internal static string equinorPrefix {
@@ -214,7 +223,7 @@ namespace RdfParserModule.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to imf:hasInputTerminal.
+        ///   Looks up a localized string similar to imf:hasInTerminal.
         /// </summary>
         internal static string hasInputTerminal {
             get {
@@ -232,7 +241,16 @@ namespace RdfParserModule.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to imf:hasOutputTerminal.
+        ///   Looks up a localized string similar to mimir:hasMasterProject.
+        /// </summary>
+        internal static string hasMasterProject {
+            get {
+                return ResourceManager.GetString("hasMasterProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to imf:hasOutTerminal.
         /// </summary>
         internal static string hasOutputTerminal {
             get {

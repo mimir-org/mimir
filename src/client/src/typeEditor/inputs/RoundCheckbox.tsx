@@ -1,3 +1,5 @@
+import { OnPropertyChangeFunction } from "../types";
+
 export enum ListType {
   Rds = 0,
   Terminals = 1,
@@ -8,7 +10,7 @@ interface Props {
   listType: ListType;
   defaultValue?: any;
   checked?: any;
-  onChange: Function;
+  onChange: OnPropertyChangeFunction;
 }
 
 export const RoundCheckbox = ({ id, label, listType, defaultValue, checked, onChange }: Props) => {

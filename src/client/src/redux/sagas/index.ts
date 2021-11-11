@@ -4,12 +4,7 @@ import { commonSaga } from "./common";
 import { nodeSaga } from "./node";
 import { searchLibrary, exportLibrary, importLibrary, getTransportTypes, getInterfaceTypes } from "./library/saga";
 import { getUser } from "./user/saga";
-import {
-  FETCHING_INITIAL_DATA,
-  SAVE_LIBRARY_TYPE,
-  FETCHING_BLOB_DATA,
-  FETCHING_TYPE,
-} from "../../typeEditor/redux/types";
+import { FETCHING_INITIAL_DATA, SAVE_LIBRARY_TYPE, FETCHING_BLOB_DATA, FETCHING_TYPE } from "../../typeEditor/redux/types";
 import {
   FETCHING_LIBRARY,
   EXPORT_LIBRARY,
@@ -33,10 +28,12 @@ import {
   LOCK_UNLOCK_INTERFACE_TERMINAL_ATTRIBUTE,
   LOCK_UNLOCK_TRANSPORT_ATTRIBUTE,
   LOCK_UNLOCK_TRANSPORT_TERMINAL_ATTRIBUTE,
+  CREATING_SUB_PROJECT,
 } from "./../store/project/types";
 import {
   getProject,
   createProject,
+  createSubProject,
   searchProject,
   updateProject,
   exportProjectFile,
@@ -65,6 +62,7 @@ function* sagas() {
     takeEvery(FETCHING_LIBRARY, searchLibrary),
     takeEvery(FETCHING_USER, getUser),
     takeEvery(CREATING_PROJECT, createProject),
+    takeEvery(CREATING_SUB_PROJECT, createSubProject),
     takeEvery(FETCHING_PROJECT, getProject),
     takeEvery(SEARCH_PROJECT, searchProject),
     takeEvery(SAVE_PROJECT, updateProject),

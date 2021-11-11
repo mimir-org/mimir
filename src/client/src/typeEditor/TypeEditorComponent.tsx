@@ -3,10 +3,13 @@ import { typeEditorStateSelector, useAppDispatch, useAppSelector } from "../redu
 import { ListType } from "./TypeEditorList";
 import { CloseIcon } from "../assets/icons/close";
 import { CheckIcon } from "../assets/icons/checkmark";
+import { LibraryIcon } from "../assets/icons/modules";
 import { TextResources } from "../assets/text";
 import { GetInputTerminals, GetOutputTerminals } from "./preview/helpers";
 import { TypeEditorList, TypeEditorInputs, TypePreview, TypeEditorInspector } from "./";
-import { LibraryIcon } from "../assets/icons/modules";
+import { OnCloseEditor, OnPropertyChange, OnSave, OnTerminalCategoryChange } from "./handlers";
+import { getInitialData, getBlobData } from "./redux/actions";
+import { GetSelectedIcon, GetSelectedRds, GetSelectedTerminal, IsLocation, IsProduct, GetWidth } from "./helpers";
 import {
   TypeEditorWrapper,
   TypeEditorContent,
@@ -16,28 +19,6 @@ import {
   SaveButton,
   TypeEditorInspectorWrapper,
 } from "./styled";
-import {
-  GetSelectedIcon,
-  GetSelectedRds,
-  GetSelectedTerminal,
-  IsLocation,
-  IsProduct,
-  GetWidth,
-  GetSelectedDiscipline,
-} from "./helpers";
-import {
-  closeTypeEditor,
-  getInitialData,
-  getBlobData,
-  updateValue,
-  addTerminalType,
-  removeTerminalType,
-  updateTerminalType,
-  removeTerminalTypeByCategory,
-  saveLibraryType,
-  clearAllTerminalTypes,
-} from "./redux/actions";
-import { ConnectorType, TerminalTypeItem } from "../models";
 /**
  * Component for adding or editing a type
  * @returns the visual Type Editor window
@@ -52,41 +33,6 @@ export const TypeEditorComponent = () => {
     dispatch(getBlobData());
   }, [dispatch]);
 
-  const onCloseEditor = () => {
-    dispatch(closeTypeEditor());
-  };
-
-  const onChange = (key: string, value: any) => {
-    dispatch(updateValue(key, value));
-  };
-
-  const onSave = () => {
-    dispatch(saveLibraryType(state.createLibraryType));
-    dispatch(closeTypeEditor());
-  };
-
-  const onTerminalTypeIdChange = (terminalTypeId: string) => {
-    dispatch(clearAllTerminalTypes());
-    dispatch(updateValue("terminalTypeId", terminalTypeId));
-  };
-
-  const onTerminalCategoryChange = (key: string, terminalTypeItem: TerminalTypeItem) => {
-    if (key === "add") {
-      dispatch(addTerminalType(terminalTypeItem));
-    } else if (key === "remove") {
-      dispatch(removeTerminalType(terminalTypeItem));
-    } else if (key === "update") {
-      dispatch(updateTerminalType(terminalTypeItem));
-    } else if (key === "removeAll") {
-      dispatch(removeTerminalTypeByCategory(terminalTypeItem.categoryId));
-    } else if (key === "terminalTypeId") {
-      dispatch(removeTerminalTypeByCategory(terminalTypeItem.categoryId));
-      dispatch(addTerminalType({ ...terminalTypeItem, connectorType: ConnectorType.Input }));
-      dispatch(addTerminalType({ ...terminalTypeItem, connectorType: ConnectorType.Output }));
-      dispatch(updateValue(key, terminalTypeItem.terminalTypeId));
-    }
-  };
-
   return (
     <>
       {state.visible && (
@@ -94,10 +40,10 @@ export const TypeEditorComponent = () => {
           <TypeEditorContent>
             <TypeEditorHeader>
               <p>{TextResources.TypeEditor}</p>
-              <img src={CloseIcon} alt="close-window" onClick={onCloseEditor} />
+              <img src={CloseIcon} alt="close-window" onClick={() => OnCloseEditor(dispatch)} />
             </TypeEditorHeader>
             <TypeEditorInputs
-              onChange={(key, value) => onChange(key, value)}
+              onChange={(key, value) => OnPropertyChange(key, value, dispatch)}
               createLibraryType={state?.createLibraryType}
               icons={state?.icons}
               locationTypes={state?.locationTypes}
@@ -108,17 +54,15 @@ export const TypeEditorComponent = () => {
                 items={state?.rdsList}
                 createLibraryType={state?.createLibraryType}
                 listType={ListType.Rds}
-                onChange={(key, data) => onChange(key, data)}
-                // disabled={ModeEdit(mode) ? false : FieldValidator(state, "rds")}
+                onPropertyChange={(key, data) => OnPropertyChange(key, data, dispatch)}
               />
               {!IsLocation(state?.createLibraryType.aspect) && (
                 <TypeEditorList
                   items={state?.terminals}
                   createLibraryType={state?.createLibraryType}
                   listType={ListType.Terminals}
-                  onChange={(key, data) => onTerminalCategoryChange(key, data)}
-                  onTerminalTypeIdChange={onTerminalTypeIdChange}
-                  // disabled={ModeEdit(mode) ? false : FieldValidator(state, "rds")}
+                  onPropertyChange={(key, data) => OnPropertyChange(key, data, dispatch)}
+                  onTerminalCategoryChange={(key, data) => OnTerminalCategoryChange(key, data, dispatch)}
                 />
               )}
               {IsLocation(state?.createLibraryType.aspect) && (
@@ -126,24 +70,21 @@ export const TypeEditorComponent = () => {
                   items={state?.predefinedAttributes}
                   createLibraryType={state?.createLibraryType}
                   listType={ListType.PredefinedAttributes}
-                  onChange={(key, data) => onChange(key, data)}
-                  // disabled={ModeEdit(mode) ? false : FieldValidator(state, "rds")}
+                  onPropertyChange={(key, data) => OnPropertyChange(key, data, dispatch)}
                 />
               )}
               <TypeEditorList
                 createLibraryType={state?.createLibraryType}
                 items={state?.attributes}
-                discipline={GetSelectedDiscipline(state.createLibraryType?.purpose, state?.purposes)}
                 listType={IsLocation(state?.createLibraryType.aspect) ? ListType.LocationAttributes : ListType.ObjectAttributes}
-                onChange={(key, data) => onChange(key, data)}
+                onPropertyChange={(key, data) => OnPropertyChange(key, data, dispatch)}
               />
               {IsProduct(state?.createLibraryType.aspect) && (
                 <TypeEditorList
                   items={state?.simpleTypes}
                   createLibraryType={state?.createLibraryType}
                   listType={ListType.SimpleTypes}
-                  onChange={(key, data) => onChange(key, data)}
-                  // disabled={ModeEdit(mode) ? false : FieldValidator(state, "rds")}
+                  onPropertyChange={(key, data) => OnPropertyChange(key, data, dispatch)}
                 />
               )}
               <TypePreviewColumn wide={GetWidth(ListType.Preview)}>
@@ -160,9 +101,8 @@ export const TypeEditorComponent = () => {
                     state?.createLibraryType.terminalTypeId && GetSelectedTerminal(state?.createLibraryType, state?.terminals)
                   }
                   symbol={GetSelectedIcon(state?.createLibraryType, state?.icons)}
-                  // disabled={FieldValidator(state, "add")}
                 />
-                <SaveButton onClick={onSave}>
+                <SaveButton onClick={() => OnSave(dispatch, state.createLibraryType)}>
                   <p>
                     {state.createLibraryType.id === null
                       ? TextResources.TypeEditor_Button_Add

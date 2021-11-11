@@ -2,14 +2,14 @@ import { memo, FC, useState, useEffect } from "react";
 import { Background, BackgroundVariant, NodeProps } from "react-flow-renderer";
 import { HandleComponent, TerminalsContainerComponent } from "../../terminals";
 import { Color } from "../../../../../compLibrary";
-import { GetParentColor, SetParentNodeSize } from "./helpers";
+import { SetParentNodeSize } from "./helpers";
 import { OnConnectorClick } from "./handlers";
-import { BlockComponent } from "./";
+import { ParentContainerComponent } from "../parentContainer";
 import { FilterTerminals } from "../../helpers";
-import { Connector, Node } from "../../../../../models";
-import { IsLocation } from "../../../helpers";
+import { AspectColorType, Connector, Node } from "../../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
 import { edgeSelector, electroSelector, nodeSelector, nodeSizeSelector, secondaryNodeSelector } from "../../../../../redux/store";
+import { GetAspectColor, IsLocation } from "../../../../../helpers";
 
 /**
  * Component for the large parent block in BlockView.
@@ -33,7 +33,8 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   }, [secondaryNode, node?.connectors]);
 
   useEffect(() => {
-    SetParentNodeSize(node, secondaryNode, dispatch); // eslint-disable-next-line react-hooks/exhaustive-deps
+    SetParentNodeSize(node, secondaryNode, dispatch);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [secondaryNode]);
 
   if (!node) return null;
@@ -43,10 +44,10 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
 
   return (
     <>
-      <BlockComponent
+      <ParentContainerComponent
         dispatch={dispatch}
         node={node}
-        color={GetParentColor(node)}
+        color={GetAspectColor(node, AspectColorType.Header)}
         selected={node.isBlockSelected}
         width={parentNodeSize?.width}
         height={parentNodeSize?.length}
@@ -73,7 +74,8 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         terminals={terminals}
         electro={electro}
       />
-      {IsLocation(data) && <Background style={{ zIndex: 1 }} variant={BackgroundVariant.Lines} color={Color.Grey} gap={20} />}
+      {IsLocation(node) && <Background variant={BackgroundVariant.Lines} color={Color.Grey} gap={20} />}
+      {!IsLocation(node) && <Background variant={BackgroundVariant.Dots} color={Color.Black} gap={20} />}
     </>
   );
 };

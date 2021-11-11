@@ -1,13 +1,6 @@
+import { GetSelectedNode, IsFunction, IsLocation, IsProduct } from "../../../../helpers";
 import { Connector, Node } from "../../../../models";
-import {
-  IsLocation,
-  IsLocationTerminal,
-  IsTransport,
-  IsProductTerminal,
-  IsProduct,
-  IsFunction,
-  GetSelectedNode,
-} from "../../helpers";
+import { IsLocationTerminal, IsTransport, IsProductTerminal, IsPartOf } from "../../helpers";
 
 /**
  * Component to filter the terminals displayed on the nodes in BlockView.
@@ -30,14 +23,16 @@ function validateTerminal(selected: Node, secondary: Node, c: Connector) {
   if (secondary) {
     if (IsLocation(selected)) return IsLocationTerminal(c);
     if (IsProduct(selected)) return IsProductTerminal(c);
-    if (IsFunction(selected)) return validateFunction(secondary, c);
+    if (IsFunction(selected)) return validateFunctionTerminal(secondary, c);
   }
 
   if (IsLocation(selected)) return IsLocationTerminal(c);
+  if (IsProduct(selected)) return IsPartOf(c) || IsTransport(c); // Product has a separate view
+
   return IsTransport(c);
 }
 
-function validateFunction(secondary: Node, c: Connector) {
+function validateFunctionTerminal(secondary: Node, c: Connector) {
   if (IsFunction(secondary)) return IsTransport(c);
   if (IsProduct(secondary)) return IsProductTerminal(c);
   if (IsLocation(secondary)) return IsLocationTerminal(c);

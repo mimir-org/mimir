@@ -1,9 +1,9 @@
 import { Node } from "../../../../models";
 import { FlowElement } from "react-flow-renderer";
 import { GetNodeTypeString, SetBlockNodePos, SetConnectorOrder, SetOffPageNodePos } from "./helpers";
-import { IsOffPage } from "../helpers";
 import { CreateId } from "../../helpers";
 import { BlockNodeSize } from "../../../../models/project";
+import { IsOffPage } from "../../../../helpers";
 
 const BuildSecondaryChildNode = (node: Node, parent: Node, parentNodeSize: BlockNodeSize) => {
   if (!node) return null;
@@ -25,7 +25,7 @@ const BuildSecondaryChildNode = (node: Node, parent: Node, parentNodeSize: Block
     type: type,
     data: node,
     position: position,
-    isHidden: false,
+    isHidden: node.isHidden,
     isSelected: node.isSelected,
     draggable: true,
     selectable: true,

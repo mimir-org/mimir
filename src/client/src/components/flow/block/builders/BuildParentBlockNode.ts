@@ -7,11 +7,10 @@ import { SetConnectorOrder } from "./helpers";
 /**
  * Component to create a parent node in BlockView.
  * @param node
- * @returns a FlowElement, the big box in BlockView.
+ * @returns a FlowElement, the large box in BlockView.
  */
 const BuildParentBlockNode = (node: Node) => {
   if (!node) return null;
-
   SetConnectorOrder(node);
 
   const type = TextResources.Type_BlockParentNode;
@@ -25,10 +24,10 @@ const BuildParentBlockNode = (node: Node) => {
     type: type,
     data: node,
     position: position,
-    isHidden: false,
+    isHidden: node.isHidden,
     isSelected: node.isSelected,
     draggable: false,
-    selectable: true,
+    selectable: false,
   } as FlowElement;
 };
 

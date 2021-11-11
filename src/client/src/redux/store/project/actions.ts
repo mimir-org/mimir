@@ -41,6 +41,18 @@ export function create(name: string, description: string): Types.ProjectActionTy
   };
 }
 
+export function createSubProject(name: string, description: string, nodes: string[], edges: string[]): Types.CreateSubProject {
+  return {
+    type: Types.CREATING_SUB_PROJECT,
+    payload: {
+      name,
+      description,
+      nodes,
+      edges,
+    },
+  };
+}
+
 export function addNode(node: Node): Types.ProjectActionTypes {
   return {
     type: Types.ADD_NODE,

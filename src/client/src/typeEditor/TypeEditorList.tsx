@@ -2,15 +2,8 @@ import { useState } from "react";
 import { ListWrapper } from "../compLibrary";
 import { ListContent, ListSearch } from "./lists/";
 import { GetListLabel, GetWidth } from "./helpers";
-import {
-  CreateLibraryType,
-  Discipline,
-  Rds,
-  PredefinedAttribute,
-  AttributeType,
-  CompositeType,
-  TerminalTypeDict,
-} from "../models";
+import { OnPropertyChangeFunction, OnTerminalCategoryChangeFunction } from "./types";
+import { CreateLibraryType, Rds, PredefinedAttribute, AttributeType, CompositeType, TerminalTypeDict } from "../models";
 
 export enum ListType {
   Rds = 0,
@@ -24,11 +17,10 @@ export enum ListType {
 interface Props {
   createLibraryType: CreateLibraryType;
   items: Rds[] | TerminalTypeDict | AttributeType[] | CompositeType[] | PredefinedAttribute[];
-  discipline?: Discipline;
   disabled?: boolean;
   listType: ListType;
-  onChange: Function;
-  onTerminalTypeIdChange?: (terminalTypeId: string) => void;
+  onPropertyChange?: OnPropertyChangeFunction;
+  onTerminalCategoryChange?: OnTerminalCategoryChangeFunction;
 }
 /**
  * A generic list-component in Type editor
@@ -37,11 +29,10 @@ interface Props {
 export const TypeEditorList = ({
   createLibraryType,
   items,
-  discipline,
   disabled,
   listType,
-  onChange,
-  onTerminalTypeIdChange,
+  onPropertyChange,
+  onTerminalCategoryChange,
 }: Props) => {
   const [filteredListItems, setListItems] = useState(items);
   return (
@@ -58,9 +49,8 @@ export const TypeEditorList = ({
         items={items}
         listItems={filteredListItems}
         createLibraryType={createLibraryType}
-        discipline={discipline}
-        onChange={(key, data) => onChange(key, data)}
-        onTerminalTypeIdChange={onTerminalTypeIdChange}
+        onPropertyChange={(key, data) => onPropertyChange(key, data)}
+        onTerminalCategoryChange={(key, data) => onTerminalCategoryChange(key, data)}
       />
     </ListWrapper>
   );

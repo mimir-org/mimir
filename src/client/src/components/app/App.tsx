@@ -1,6 +1,5 @@
 import { useHistory } from "react-router";
 import { Home } from "../home/";
-import { Header } from "../header";
 import { Spinner, SpinnerWrapper } from "../../compLibrary/animated";
 import { GlobalStyle } from "../../compLibrary";
 import { AppBox } from "../../compLibrary/box/app";
@@ -41,12 +40,11 @@ const App = ({ pca }: AppProps) => {
   return (
     <MsalProvider instance={pca}>
       <AuthenticatedTemplate>
-        <Header />
         <GlobalStyle />
-        <SpinnerWrapper fetching={isFetching}>
+        <SpinnerWrapper fetching={isFetching} id="loader">
           <Spinner />
         </SpinnerWrapper>
-        <AppBox fetching={isFetching}>
+        <AppBox fetching={isFetching} id="main">
           <Home />
         </AppBox>
       </AuthenticatedTemplate>

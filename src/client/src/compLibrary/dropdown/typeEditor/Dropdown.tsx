@@ -4,32 +4,48 @@ import { LocationTypeCategory } from "../../../typeEditor/styled";
 import { Symbol } from "../../symbol";
 import { DropdownMenuWrapper, DropdownMenuHeader, DropdownMenuList, DropdownMenuListItem } from "./styled";
 
-export interface DropDownItem {
+export interface DropDownCategoryItem<T> {
   id: string;
   name: string;
   description: string;
-  items: DropDownItem[];
+  items: DropDownItem<T>[];
   image: string;
 }
 
-interface Props {
+export interface DropDownItem<T> {
+  id: string;
+  name: string;
+  image: string;
+  description: string;
+  value: T;
+}
+
+interface Props<T> {
   label: string;
-  items: DropDownItem[];
-  onChange: Function;
+  categories: DropDownCategoryItem<T>[];
+  onChange: (value: T) => void;
   defaultValue?: string;
   disabled?: boolean;
   hasCategory?: boolean;
   placeholder?: string;
 }
 
-const Dropdown = ({ label, items, onChange, defaultValue, disabled, hasCategory, placeholder }: Props) => {
+const Dropdown = <T extends unknown>({
+  label,
+  categories,
+  onChange,
+  defaultValue,
+  disabled,
+  hasCategory,
+  placeholder,
+}: Props<T>) => {
   const [isListOpen, setIsListOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null as DropDownItem);
+  const [selectedItem, setSelectedItem] = useState(null as DropDownItem<T>);
 
   const findSelectedItem = useCallback(() => {
-    let selected = null as DropDownItem;
+    let selected = null as DropDownItem<T>;
 
-    items?.forEach((x) => {
+    categories?.forEach((x) => {
       x.items?.forEach((y) => {
         if (y.id === defaultValue) {
           selected = y;
@@ -37,10 +53,10 @@ const Dropdown = ({ label, items, onChange, defaultValue, disabled, hasCategory,
       });
     });
     return selected;
-  }, [defaultValue, items]);
+  }, [defaultValue, categories]);
 
   useEffect(() => {
-    if (!items) {
+    if (!categories) {
       setSelectedItem(null);
       return;
     }
@@ -49,15 +65,15 @@ const Dropdown = ({ label, items, onChange, defaultValue, disabled, hasCategory,
       setSelectedItem(_selectedItem);
       return;
     }
-  }, [defaultValue, findSelectedItem, items]);
+  }, [defaultValue, findSelectedItem, categories]);
 
-  const handleChange = (_e: any, value: DropDownItem) => {
-    setSelectedItem(value);
+  const handleChange = (_e: any, item: DropDownItem<T>) => {
+    setSelectedItem(item);
     setIsListOpen(!isListOpen);
-    onChange(value.id);
+    onChange(item.value);
   };
 
-  const getCategory = (item: DropDownItem) => {
+  const getCategory = (item: DropDownCategoryItem<T>) => {
     return (
       <LocationTypeCategory>
         <p>{item.description}</p>
@@ -65,7 +81,7 @@ const Dropdown = ({ label, items, onChange, defaultValue, disabled, hasCategory,
     );
   };
 
-  const getItems = (items: DropDownItem[]) => {
+  const getItems = (items: DropDownItem<T>[]) => {
     return items?.map((item) => {
       return (
         <div onClick={(e) => handleChange(e, item)} key={item.id}>
@@ -87,9 +103,7 @@ const Dropdown = ({ label, items, onChange, defaultValue, disabled, hasCategory,
           <DropdownMenuHeader>
             {
               <>
-                {selectedItem && selectedItem.image && (
-                  <Symbol base64={selectedItem.image} text={selectedItem.description} />
-                )}
+                {selectedItem && selectedItem.image && <Symbol base64={selectedItem.image} text={selectedItem.description} />}
                 <p>{selectedItem?.description ?? placeholder}</p>
                 <img src={isListOpen ? ExpandIcon : CollapseIcon} alt="expand-icon" />
               </>
@@ -98,7 +112,7 @@ const Dropdown = ({ label, items, onChange, defaultValue, disabled, hasCategory,
         </div>
         {isListOpen && (
           <DropdownMenuList>
-            {items?.map((category) => {
+            {categories?.map((category) => {
               return (
                 <div key={category.name}>
                   {hasCategory && getCategory(category)}

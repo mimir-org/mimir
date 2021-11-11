@@ -1,16 +1,13 @@
-import { CreateId, IsAspectNode, IsFamily } from ".";
+import { CreateId } from ".";
+import { IsAspectNode, IsFamily } from "../../../helpers";
 import { ConnectorType, Edge, Project, RelationType, Node } from "../../../models";
 
-const GetProjectData = async (event: any, project: Project, subProject: Project): Promise<[Node[], Edge[]]> => {
+const GetProjectData = (event: any, project: Project, subProject: Project): [Node[], Edge[]] => {
   try {
     if (!subProject?.isSubProject) return [[], []];
 
     let targetNodeId = event.target?.attributes["data-id"]?.value;
-
-    if (!targetNodeId) {
-      targetNodeId = event.target?.offsetParent?.attributes["data-id"]?.value;
-    }
-
+    if (!targetNodeId) targetNodeId = event.target?.offsetParent?.attributes["data-id"]?.value;
     if (!targetNodeId) return [[], []];
 
     const targetNode = project.nodes.find((x) => x.id === targetNodeId);

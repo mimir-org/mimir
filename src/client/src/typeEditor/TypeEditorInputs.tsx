@@ -1,15 +1,15 @@
 import { TextResources } from "../assets/text";
 import { TextInput, TypeInfo, TypeNameInput } from "./styled";
 import { Dropdown } from "../compLibrary/dropdown/typeEditor";
-import { BlobData, CreateLibraryType, LocationType, Purpose } from "../models";
+import { Aspect, BlobData, CreateLibraryType, LocationType, ObjectType, Purpose } from "../models";
 import { GetAspects, GetFilteredBlobData, GetLocationTypes, GetObjectTypes, GetPurposes, IsLocation } from "./helpers";
-
+import { AspectKey, ObjectTypeKey } from "./types";
 interface Props {
-  onChange: Function;
   createLibraryType: CreateLibraryType;
   icons: BlobData[];
   locationTypes: LocationType[];
   purposes: Purpose[];
+  onChange: <K extends keyof CreateLibraryType>(key: K, value: CreateLibraryType[K]) => void;
 }
 
 const TypeEditorInputs = ({ onChange, createLibraryType, icons, locationTypes, purposes }: Props) => {
@@ -17,18 +17,16 @@ const TypeEditorInputs = ({ onChange, createLibraryType, icons, locationTypes, p
     <TypeInfo>
       <Dropdown
         label={TextResources.TypeEditor_Aspect}
-        items={GetAspects()}
-        onChange={(data: any) => onChange("aspect", Number(data))}
-        // disabled={FieldValidator(state, "symbol")}
+        categories={GetAspects()}
+        onChange={(data: AspectKey) => onChange("aspect", Aspect[data])}
         defaultValue={createLibraryType && createLibraryType.aspect?.toString()}
         placeholder={TextResources.TypeEditor_Aspect_Placeholder}
       />
       {createLibraryType && !IsLocation(createLibraryType.aspect) && (
         <Dropdown
           label={TextResources.TypeEditor_Object_Type}
-          items={GetObjectTypes(createLibraryType.aspect)}
-          onChange={(data: any) => onChange("objectType", Number(data))}
-          // disabled={FieldValidator(state, "symbol")}
+          categories={GetObjectTypes(createLibraryType.aspect)}
+          onChange={(data: ObjectTypeKey) => onChange("objectType", ObjectType[data])}
           defaultValue={createLibraryType && createLibraryType.objectType?.toString()}
           placeholder={TextResources.TypeEditor_Object_Placeholder}
         />
@@ -36,19 +34,17 @@ const TypeEditorInputs = ({ onChange, createLibraryType, icons, locationTypes, p
       {createLibraryType && IsLocation(createLibraryType.aspect) && (
         <Dropdown
           label={TextResources.TypeEditor_Location_Type}
-          items={GetLocationTypes(locationTypes)}
+          categories={GetLocationTypes(locationTypes)}
           hasCategory={true}
-          onChange={(data: any) => onChange("locationType", data)}
-          // disabled={FieldValidator(state, "symbol")}
+          onChange={(data: LocationType) => onChange("locationType", data.id)}
           defaultValue={createLibraryType && createLibraryType.locationType && createLibraryType.locationType.toString()}
           placeholder={TextResources.TypeEditor_Location_Placeholder}
         />
       )}
       <Dropdown
         label={TextResources.TypeEditor_Purpose}
-        items={GetPurposes(purposes)}
-        onChange={(data: any) => onChange("purpose", data)}
-        // disabled={FieldValidator(state, "symbol")}
+        categories={GetPurposes(purposes)}
+        onChange={(data: Purpose) => onChange("purpose", data.id)}
         defaultValue={createLibraryType && createLibraryType.purpose?.toString()}
         placeholder={TextResources.TypeEditor_Purpose_Placeholder}
       />
@@ -61,17 +57,13 @@ const TypeEditorInputs = ({ onChange, createLibraryType, icons, locationTypes, p
           onChange={(e: any) => {
             onChange("name", e.target.value);
           }}
-          //   disabled={FieldValidator(state, "typeName")}
         />
       </TypeNameInput>
       <Dropdown
         label={TextResources.TypeEditor_Symbol}
-        items={GetFilteredBlobData(icons)} // GetSelectedDiscipline(createLibraryType?.purpose, purposes)
-        onChange={(data: any) => {
-          onChange("symbolId", data);
-        }}
+        categories={GetFilteredBlobData(icons)}
+        onChange={(data: BlobData) => onChange("symbolId", data.id)}
         placeholder={TextResources.TypeEditor_Symbol_Placeholder}
-        // disabled={FieldValidator(state, "symbol")}
         defaultValue={createLibraryType && createLibraryType.symbolId}
       />
     </TypeInfo>

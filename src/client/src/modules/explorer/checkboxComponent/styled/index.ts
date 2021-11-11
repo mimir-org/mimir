@@ -1,1 +1,2 @@
-export { default as CheckboxWrapper } from "./CheckboxWrapper";
+export { default as CheckboxBlockWrapper } from "./CheckboxBlockWrapper";
+export { default as CheckboxTreeWrapper } from "./CheckboxTreeWrapper";

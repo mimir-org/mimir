@@ -1,8 +1,7 @@
 import { Aspect, Connector, Node } from "../../../../models";
 
-const GetPartOfName = (conn: Connector, nodes: Node[]) => {
-  const fromNode = nodes.find((n) => n.id === conn.nodeId);
-  return conn.name + " " + Aspect[fromNode.aspect];
+const GetPartOfName = (conn: Connector, node: Node) => {
+  return conn.name + " " + Aspect[node.aspect];
 };
 
 export default GetPartOfName;

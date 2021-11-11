@@ -4,5 +4,9 @@ export { default as SetOffPageNodePos } from "./SetOffPageNodePos";
 export { default as SetConnectorOrder } from "./SetConnectorOrder";
 
 export { default as DrawChildNodes } from "./DrawChildNodes";
+export { default as DrawProductChildren } from "./DrawProductChildren";
+
 export { default as DrawSecondaryChildren } from "./DrawSecondaryChildren";
-export { default as DrawEdges } from "./DrawEdges";
+export { default as DrawBlockEdges } from "./DrawBlockEdges";
+
+export { default as TraverseProductNodes } from "./TraverseProductNodes";
