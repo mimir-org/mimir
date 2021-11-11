@@ -1,13 +1,12 @@
-import { AspectColorType, Node, Project } from "../../../models";
+import { AspectColorType, Node } from "../../../models";
 import { useAppDispatch } from "../../../redux/store";
-import { GetAspectColor } from "../../../helpers";
+import { GetAspectColor, GetSelectedNode } from "../../../helpers";
 import { OnBlockChange } from "../handlers";
 import { CheckboxBlockWrapper } from "./styled";
 import { IsChecked, IsMiniCheckBox } from "./helpers";
 import { Elements } from "react-flow-renderer";
 
 interface Props {
-  project: Project;
   node: Node;
   inputLabel: string;
   secondaryNode: Node;
@@ -18,9 +17,9 @@ interface Props {
  * @param interface
  * @returns a checkbox with different styling for parentNodes and childNodes.
  */
-export const CheckboxBlock = ({ project, node, inputLabel, secondaryNode, elements }: Props) => {
+export const CheckboxBlock = ({ node, inputLabel, secondaryNode, elements }: Props) => {
   const dispatch = useAppDispatch();
-  const selectedNode = project?.nodes.find((n) => n.isSelected);
+  const selectedNode = GetSelectedNode();
 
   return (
     <CheckboxBlockWrapper

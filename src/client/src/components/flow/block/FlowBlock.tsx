@@ -10,11 +10,12 @@ import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { BlockFilterMenu } from "../../menus/filterMenu/block";
 import { Node } from "../../../models";
 import { BlockConnectionLine } from "./edges";
-import { IsOffPage, GetSelectedNode } from "../../../helpers";
+import { IsOffPage, GetSelectedNode, SetDarkModeColor } from "../../../helpers";
 import { CloseInspector, handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";
 import { updateBlockElements } from "../../../modules/explorer/redux/actions";
 import {
   iconSelector,
+  darkModeSelector,
   librarySelector,
   projectSelector,
   secondaryNodeSelector,
@@ -37,6 +38,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>();
+  const darkMode = useAppSelector(darkModeSelector);
   const project = useAppSelector(projectSelector);
   const secondaryNode = useAppSelector(secondaryNodeSelector) as Node;
   const icons = useAppSelector(iconSelector);
@@ -111,6 +113,10 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   useEffect(() => {
     dispatch(updateBlockElements(elements));
   }, [elements, dispatch]);
+
+  useEffect(() => {
+    SetDarkModeColor(darkMode);
+  }, [darkMode]);
 
   const onSelectionChange = (selectedElements: Elements) => {
     if (selectedElements === null) {

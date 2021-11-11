@@ -1,7 +1,7 @@
 import { Node } from "../../models";
 import { AspectComponent } from "./aspectComponent/AspectComponent";
 import { HasChildren, IsAncestorInSet } from "./helpers/ParentNode";
-import { memo, useState } from "react";
+import { useState } from "react";
 import { SortNodesWithIndent } from "./helpers/SortNodesWithIndent";
 import { IsOffPage } from "../../helpers";
 import { blockElementsSelector, projectSelector, secondaryNodeSelector, useAppSelector } from "../../redux/store";
@@ -43,4 +43,4 @@ const ProjectComponent = () => {
   );
 };
 
-export default memo(ProjectComponent);
+export default ProjectComponent;

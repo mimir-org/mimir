@@ -93,9 +93,12 @@ const FlowTree = ({ inspectorRef }: Props) => {
 
   // Rerender
   useEffect(() => {
-    SetDarkModeColor(darkMode);
     OnLoad(flowInstance);
-  }, [OnLoad, flowInstance, darkMode]);
+  }, [OnLoad, flowInstance]);
+
+  useEffect(() => {
+    SetDarkModeColor(darkMode);
+  }, [darkMode]);
 
   return (
     <>

@@ -35,7 +35,7 @@ export const AspectComponent = ({
         {!IsBlockView() ? (
           <CheckboxTree node={node} project={project} inputLabel={label} />
         ) : (
-          <CheckboxBlock project={project} node={node} inputLabel={label} secondaryNode={secondaryNode} elements={elements} />
+          <CheckboxBlock node={node} inputLabel={label} secondaryNode={secondaryNode} elements={elements} />
         )}
       </div>
 

@@ -1,4 +1,3 @@
-import { memo } from "react";
 import { ProjectComponent } from "./";
 import { MODULE_TYPE } from "../../models/project";
 import { AnimatedModule, Size } from "../../compLibrary";
@@ -35,4 +34,4 @@ export const ExplorerModule = () => {
   );
 };
 
-export default memo(ExplorerModule);
+export default ExplorerModule;
