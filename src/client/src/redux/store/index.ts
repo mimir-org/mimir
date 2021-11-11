@@ -20,6 +20,7 @@ import { blockNodeSizeReducer } from "../../components/flow/block/redux/reducers
 import { rootSaga } from "../sagas";
 import { customCategoryReducer } from "../store/customCategory/reducers";
 import { edgeAnimationReducer } from "../store/edgeAnimation/reducers";
+import { blockElementsReducer } from "../../modules/explorer/redux/reducers";
 import { persistStore, persistReducer } from "redux-persist";
 
 const sagaMiddleware = createSagaMiddleware();
@@ -44,6 +45,7 @@ const rootReducers = combineReducers({
   customCategory: customCategoryReducer,
   blockNodeSize: blockNodeSizeReducer,
   edgeAnimation: edgeAnimationReducer,
+  blockElements: blockElementsReducer,
 });
 
 const persistConfig = {

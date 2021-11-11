@@ -4,6 +4,7 @@ import { AspectBox } from "../../../compLibrary/box/aspect";
 import { CheckboxTree, CheckboxBlock } from "../checkboxComponent";
 import { IsBlockView, IsAspectNode, GetAspectIcon } from "../../../helpers";
 import { ExplorerLine } from "./styled";
+import { Elements } from "react-flow-renderer";
 
 interface Props {
   node: Node;
@@ -12,10 +13,21 @@ interface Props {
   isLeaf: boolean;
   expanded: boolean;
   project: Project;
+  elements: Elements<any>;
   secondaryNode: Node;
   onElementExpanded: (expanded: boolean, nodeId: string) => void;
 }
-export const AspectComponent = ({ node, label, expanded, indent, isLeaf, project, secondaryNode, onElementExpanded }: Props) => (
+export const AspectComponent = ({
+  node,
+  label,
+  expanded,
+  indent,
+  isLeaf,
+  project,
+  elements,
+  secondaryNode,
+  onElementExpanded,
+}: Props) => (
   <>
     <AspectBox indent={indent} node={node}>
       {IsAspectNode(node) && <img src={GetAspectIcon(node)} alt="aspect-icon" className="icon"></img>}
@@ -23,7 +35,7 @@ export const AspectComponent = ({ node, label, expanded, indent, isLeaf, project
         {!IsBlockView() ? (
           <CheckboxTree node={node} project={project} inputLabel={label} />
         ) : (
-          <CheckboxBlock project={project} node={node} inputLabel={label} secondaryNode={secondaryNode} />
+          <CheckboxBlock project={project} node={node} inputLabel={label} secondaryNode={secondaryNode} elements={elements} />
         )}
       </div>
 

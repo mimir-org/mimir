@@ -10,12 +10,11 @@ import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { BlockFilterMenu } from "../../menus/filterMenu/block";
 import { Node } from "../../../models";
 import { BlockConnectionLine } from "./edges";
-import { IsOffPage, SetDarkModeColor, GetSelectedNode } from "../../../helpers";
+import { IsOffPage, GetSelectedNode } from "../../../helpers";
 import { CloseInspector, handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";
+import { updateBlockElements } from "../../../modules/explorer/redux/actions";
 import {
-  darkModeSelector,
   iconSelector,
-  electroSelector,
   librarySelector,
   projectSelector,
   secondaryNodeSelector,
@@ -38,12 +37,10 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>();
-  const darkMode = useAppSelector(darkModeSelector);
   const project = useAppSelector(projectSelector);
   const secondaryNode = useAppSelector(secondaryNodeSelector) as Node;
   const icons = useAppSelector(iconSelector);
   const lib = useAppSelector(librarySelector);
-  const electro = useAppSelector(electroSelector);
   const userState = useAppSelector(userStateSelector);
   const blockFilter = useAppSelector(blockFilterSelector);
   const parentNodeSize = useAppSelector(nodeSizeSelector);
@@ -108,9 +105,12 @@ const FlowBlock = ({ inspectorRef }: Props) => {
 
   // Rerender
   useEffect(() => {
-    SetDarkModeColor(darkMode);
     OnLoad(flowInstance);
-  }, [OnLoad, flowInstance, darkMode, electro]);
+  }, [OnLoad, flowInstance]);
+
+  useEffect(() => {
+    dispatch(updateBlockElements(elements));
+  }, [elements]);
 
   const onSelectionChange = (selectedElements: Elements) => {
     if (selectedElements === null) {

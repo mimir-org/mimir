@@ -23,7 +23,7 @@ const BuildParentProductNode = (node: Node) => {
     type: type,
     data: node,
     position: position,
-    isHidden: false,
+    isHidden: node.isHidden,
     isSelected: node.isSelected,
     draggable: false,
     selectable: false,

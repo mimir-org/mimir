@@ -21,7 +21,7 @@ const BuildProductBlockNode = (node: Node) => {
     type: type,
     data: node,
     position: position,
-    isHidden: false,
+    isHidden: node.isHidden,
     isSelected: node.isSelected,
     draggable: true,
     selectable: true,

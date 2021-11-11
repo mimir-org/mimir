@@ -1,3 +1,4 @@
+import { Elements } from "react-flow-renderer";
 import { Edge, Node, Project } from "../../models";
 import { BlockNodeSize, MODULE_TYPE, VIEW_TYPE } from "../../models/project";
 import { GetAttributeLikeItemKey } from "../../modules/inspector/helpers/IsType";
@@ -105,6 +106,11 @@ export const animatedEdgeSelector = createAppSelector(
 export const customCategorySelector = createAppSelector(
   (state) => state.customCategory,
   (customCategory) => customCategory
+);
+
+export const blockElementsSelector = createAppSelector(
+  (state) => state.blockElements.elements,
+  (elements) => elements
 );
 
 export const treeSelector = createAppSelector(

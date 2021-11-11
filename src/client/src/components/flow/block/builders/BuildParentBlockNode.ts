@@ -11,7 +11,6 @@ import { SetConnectorOrder } from "./helpers";
  */
 const BuildParentBlockNode = (node: Node) => {
   if (!node) return null;
-
   SetConnectorOrder(node);
 
   const type = TextResources.Type_BlockParentNode;
@@ -25,7 +24,7 @@ const BuildParentBlockNode = (node: Node) => {
     type: type,
     data: node,
     position: position,
-    isHidden: false,
+    isHidden: node.isHidden,
     isSelected: node.isSelected,
     draggable: false,
     selectable: false,

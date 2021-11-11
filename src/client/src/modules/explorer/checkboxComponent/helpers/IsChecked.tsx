@@ -1,18 +1,17 @@
-import { IsDirectChild, IsFamily, IsProduct } from "../../../../helpers";
-import { Node, Project } from "../../../../models";
+import { Node } from "../../../../models";
+import { EDGE_TYPE } from "../../../../models/project";
 
-const IsChecked = (project: Project, node: Node, selectedNode: Node, secondaryNode: Node) => {
-  if (IsProduct(selectedNode)) {
-    if (node?.id === selectedNode?.id) return true;
-    if (IsFamily(node, selectedNode) && node.level > selectedNode.level) return true;
-  }
+const IsChecked = (elements: any[], node: Node) => {
+  const edgeTypes = Object.values(EDGE_TYPE);
+  let checked = false;
 
-  if (node?.id === selectedNode?.id) return true;
-  if (node?.id === secondaryNode?.id) return true;
-  if (IsFamily(node, selectedNode) && IsDirectChild(node, selectedNode)) return true;
-  if (IsFamily(node, secondaryNode) && IsDirectChild(node, secondaryNode)) return true;
-
-  return false;
+  elements?.forEach((elem) => {
+    const isEdge = edgeTypes.some((x) => x === elem?.type?.toString());
+    if (!isEdge) {
+      if (node?.id === elem?.data?.id && !node.isHidden) checked = true;
+    }
+  });
+  return checked;
 };
 
 export default IsChecked;
