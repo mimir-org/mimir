@@ -21,6 +21,8 @@ import {
  */
 export type InspectorElement = Node | Edge | CreateLibraryType;
 
+export type InspectorAdminElement = Node | Transport | Interface;
+
 /**
  * Union type of possible top elements chosen for terminals view in inspector, i.e. what element owns the terminals shown in terminals view.
  * In the case of InspectorElement which is Edge, the edge's transport/interface owns the terminals.

@@ -166,11 +166,32 @@ export function changeAllNodes(visible: boolean) {
   };
 }
 
-export function changeNodeValue(nodeId: string, propName: string, propValue: any) {
+export function changeNodeValue(nodeId: string, propName: string, propValue: any): Types.ChangeNodePropValue {
   return {
     type: Types.CHANGE_NODE_PROP_VALUE,
     payload: {
       nodeId,
+      propName,
+      propValue,
+    },
+  };
+}
+
+export function changeTransportValue(edgeId: string, propName: string, propValue: any): Types.ChangeTransportPropValue {
+  return {
+    type: Types.CHANGE_TRANSPORT_PROP_VALUE,
+    payload: {
+      edgeId,
+      propName,
+      propValue,
+    },
+  };
+}
+export function changeInterfaceValue(edgeId: string, propName: string, propValue: any): Types.ChangeInterfacePropValue {
+  return {
+    type: Types.CHANGE_INTERFACE_PROP_VALUE,
+    payload: {
+      edgeId,
       propName,
       propValue,
     },
