@@ -110,7 +110,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
 
   useEffect(() => {
     dispatch(updateBlockElements(elements));
-  }, [elements]);
+  }, [elements, dispatch]);
 
   const onSelectionChange = (selectedElements: Elements) => {
     if (selectedElements === null) {

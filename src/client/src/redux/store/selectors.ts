@@ -1,4 +1,3 @@
-import { Elements } from "react-flow-renderer";
 import { Edge, Node, Project } from "../../models";
 import { BlockNodeSize, MODULE_TYPE, VIEW_TYPE } from "../../models/project";
 import { GetAttributeLikeItemKey } from "../../modules/inspector/helpers/IsType";
