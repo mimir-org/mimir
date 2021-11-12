@@ -12,7 +12,7 @@ const AspectBox = styled.div<Props>`
   display: flex;
   cursor: pointer;
   max-height: 30px;
-  padding-left: ${(props) => (props.node.isRoot ? 5 : UseIndentLevel(props.indent))}px;
+  padding-left: 5px;
   background-color: ${(props) => (props.node.isRoot ? Color.LightGrey : GetAspectColor(props.node, AspectColorType.Main, true))};
   margin-top: ${(props) => props.node.isRoot && "7px"};
 
@@ -20,21 +20,28 @@ const AspectBox = styled.div<Props>`
     background-color: ${Color.LightBlue};
   }
 
-  .expandIcon {
-    position: relative;
-    right: 10px;
+  .label {
+    padding: 5px 0px 7px 16px;
+  }
+
+  .expand-icon {
+    margin-left: ${(props) => (props.node.isRoot ? "auto" : "26px")};
+    padding-right: ${(props) => (props.node.isRoot ? 18 : 0)}px;
   }
 
   .icon {
     position: relative;
     top: -1px;
-    left: 10px;
+    left: 6px;
     pointer-events: none;
   }
 
   .container {
-    flex: 2;
-    margin-left: ${(props) => props.node.isRoot && "18px"};
+    display: flex;
+    input,
+    .label {
+      margin-left: ${(props) => UseIndentLevel(props.indent)}px;
+    }
   }
 `;
 
