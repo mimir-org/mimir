@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Color } from "../../../../compLibrary";
 
 const MenuElement = styled.div`
-  padding: 5px 20px 5px 20px;
+  padding: 10px 20px 5px 20px;
   color: ${Color.BlueMagenta};
   cursor: pointer;
 
@@ -31,6 +31,12 @@ const MenuElement = styled.div`
   &:hover {
     background-color: ${Color.LightBlue};
     text-decoration: underline;
+  }
+
+  &:last-child {
+    margin-top: 40px;
+    border-top: 1px solid #d7d8da;
+    border-radius: 0px 0px 10px 10px;
   }
 `;
 
