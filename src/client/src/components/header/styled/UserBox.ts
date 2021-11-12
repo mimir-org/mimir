@@ -19,9 +19,15 @@ const UserBox = styled.div<Props>`
     bottom: 5px;
   }
 
+  .toggle-icon {
+    position: relative;
+    right: 7px;
+    bottom: 20px;
+  }
+
   .initials {
     position: absolute;
-    right: 27px;
+    right: 35px;
     bottom: 5px;
     color: #272838;
     font-size: 14px;

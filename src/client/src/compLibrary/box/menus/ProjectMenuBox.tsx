@@ -12,8 +12,7 @@ const AccountMenuBox = styled.div<Props>`
   background: ${Color.White};
   padding-bottom: 15px;
   height: auto;
-  width: auto;
-  min-width: 280px;
+  width: 290px;
   border-style: solid;
   border-color: ${Color.BlueMagenta};
   border-width: 0px 1px 1px 1px;

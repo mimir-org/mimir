@@ -21,7 +21,7 @@ const UserMenuComponent = () => {
       <UserNameBox>
         <img src={UserBackground} alt="user" className="user-icon" />
         <p className={"initials"}>{GetUserInitials(userState?.user?.name)}</p>
-        <p>{userState.user && userState.user.name}</p>
+        <p>{userState.user && userState?.user?.name}</p>
         <p className="user-title">{TextResources.UserMenu_User}</p>
       </UserNameBox>
 
@@ -38,8 +38,8 @@ const UserMenuComponent = () => {
       <MenuElement onClick={() => OnDarkMode(dispatch, darkMode)}>
         <img src={DarkMode} className="icon" alt="darkmode" />
         <p className="text">{TextResources.UserMenu_DarkMode}</p>
-        <p className="darkmode-text">{darkMode ? TextResources.UserMenu_DarkModeOff : TextResources.UserMenu_DarkModeOn}</p>
-        <img src={darkMode ? OffIcon : OnIcon} className="toggle" alt="toggle" />
+        <p className="darkmode-text">{darkMode ? TextResources.UserMenu_DarkModeOn : TextResources.UserMenu_DarkModeOff}</p>
+        <img src={darkMode ? OnIcon : OffIcon} className="toggle" alt="toggle" />
       </MenuElement>
 
       <MenuElement onClick={() => OnLogOut()}>
