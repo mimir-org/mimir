@@ -2,8 +2,8 @@ import { projectMenuSelector, flowViewSelector, useAppDispatch, useAppSelector, 
 import { useEffect, useRef } from "react";
 import { InspectorModule } from "../../modules/inspector";
 import { LibraryModule } from "../../modules/library";
-import { ProjectMenu } from "../menus/projectMenu";
-import { UserMenu } from "../menus/userMenu";
+import { ProjectMenuComponent } from "../menus/projectMenu";
+import { UserMenuComponent } from "../menus/userMenu";
 import { getUser } from "../../redux/store/user/actions";
 import { search } from "../../redux/store/project/actions";
 import { FlowModule } from "../flow";
@@ -43,8 +43,8 @@ const Home = () => {
   return (
     <>
       <Header />
-      {projectMenuOpen && <ProjectMenu />}
-      {userMenuOpen && <UserMenu />}
+      {projectMenuOpen && <ProjectMenuComponent />}
+      {userMenuOpen && <UserMenuComponent />}
       <ExplorerModule />
       <FlowModule inspectorRef={inspectorRef} flowView={flowView} />
       <InspectorModule inspectorRef={inspectorRef} />

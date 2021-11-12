@@ -1,1 +1,1 @@
-export { default as ProjectMenu } from "./ProjectMenu";
+export { default as ProjectMenuComponent } from "./ProjectMenuComponent";

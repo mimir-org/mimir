@@ -1,4 +1,3 @@
-export { default as OnLogOut } from "./OnLogOutClick";
 export { default as OnOpenClick } from "./OnOpenClick";
 export { default as OnCreate } from "./OnCreateClick";
 export { default as OnSave } from "./OnSaveClick";

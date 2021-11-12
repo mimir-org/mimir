@@ -12,19 +12,18 @@ import { TextResources } from "../../../assets/text";
 import { useCallback, useRef } from "react";
 import { setProjectMenuVisibility } from "../project/redux/actions";
 import { useOutsideClick } from "./hooks/useOutsideClick";
-import { activeMenuSelector, commonStateSelector, projectStateSelector } from "../../../redux/store/";
+import { activeMenuSelector, commonStateSelector, projectStateSelector } from "../../../redux/store";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { CommitProjectMenu } from "../project/commitProject";
 import { CreateSubProjectMenu } from "../project/createSubProject";
 import { useSelectedFlowElements } from "../../../helpers/UseSelectedFlowElements";
 import { ProjectNameBox } from "./styled";
-import { Settings } from "../../../assets/icons/header";
 
 /**
  * Component for the Project Menu.
  * @returns a menu for the Project in the header of Mimir.
  */
-const ProjectMenu = () => {
+const ProjectMenuComponent = () => {
   const dispatch = useAppDispatch();
   const projectState = useAppSelector(projectStateSelector);
   const commonState = useAppSelector(commonStateSelector);
@@ -69,4 +68,4 @@ const ProjectMenu = () => {
   );
 };
 
-export default ProjectMenu;
+export default ProjectMenuComponent;
