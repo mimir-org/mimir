@@ -12,6 +12,20 @@ const MenuElement = styled.div`
     margin-left: 10px;
     display: inline;
     vertical-align: super;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .darkmode-text {
+    position: relative;
+    bottom: 2px;
+    margin-left: 25px;
+    display: inline;
+    vertical-align: super;
+    color: ${Color.TextSecondary};
+    font-size: 12px;
   }
 
   .icon {
@@ -25,12 +39,11 @@ const MenuElement = styled.div`
     height: 24px;
     position: relative;
     bottom: 0px;
-    left: 10px;
+    left: 2px;
   }
 
   &:hover {
     background-color: ${Color.LightBlue};
-    text-decoration: underline;
   }
 
   &:last-child {

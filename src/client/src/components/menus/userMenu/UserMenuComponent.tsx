@@ -1,4 +1,4 @@
-import { DarkMode, Notifications, OffIcon, Settings, UserBackground, LogoutIcon } from "../../../assets/icons/header";
+import { DarkMode, Notifications, OffIcon, OnIcon, Settings, UserBackground, LogoutIcon } from "../../../assets/icons/header";
 import { MENU_TYPE } from "../../../models/project";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { MenuElement, UserMenuBox, UserNameBox } from "./styled";
@@ -38,7 +38,8 @@ const UserMenuComponent = () => {
       <MenuElement onClick={() => OnDarkMode(dispatch, darkMode)}>
         <img src={DarkMode} className="icon" alt="darkmode" />
         <p className="text">{TextResources.UserMenu_DarkMode}</p>
-        <img src={OffIcon} className="toggle" alt="toggle" />
+        <p className="darkmode-text">{darkMode ? TextResources.UserMenu_DarkModeOff : TextResources.UserMenu_DarkModeOn}</p>
+        <img src={darkMode ? OffIcon : OnIcon} className="toggle" alt="toggle" />
       </MenuElement>
 
       <MenuElement onClick={() => OnLogOut()}>

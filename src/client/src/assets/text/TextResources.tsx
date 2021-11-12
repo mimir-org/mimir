@@ -251,6 +251,8 @@ const TextResources = {
   UserMenu_Settings: "User Settings",
   UserMenu_Notifications: "Show all Notifications",
   UserMenu_DarkMode: "Dark Mode",
+  UserMenu_DarkModeOn: "On",
+  UserMenu_DarkModeOff: "Off",
   UserMenu_LogOut: "Log out",
   UserMenu_User: "User",
 };

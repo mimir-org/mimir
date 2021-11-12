@@ -11,4 +11,5 @@ export { default as UserBackground } from "./userBackground.svg";
 export { default as Settings } from "./settings.svg";
 export { default as Notifications } from "./notifications.svg";
 export { default as OffIcon } from "./off.svg";
+export { default as OnIcon } from "./on.svg";
 export { default as LogoutIcon } from "./logout.svg";
