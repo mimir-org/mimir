@@ -18,6 +18,7 @@ import { CommitProjectMenu } from "../project/commitProject";
 import { CreateSubProjectMenu } from "../project/createSubProject";
 import { useSelectedFlowElements } from "../../../helpers/UseSelectedFlowElements";
 import { ProjectNameBox } from "./styled";
+import { Settings } from "../../../assets/icons/header";
 
 /**
  * Component for the Project Menu.

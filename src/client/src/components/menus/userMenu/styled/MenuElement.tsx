@@ -21,6 +21,13 @@ const MenuElement = styled.div`
     left: 0px;
   }
 
+  .toggle {
+    height: 24px;
+    position: relative;
+    bottom: 0px;
+    left: 10px;
+  }
+
   &:hover {
     background-color: ${Color.LightBlue};
     text-decoration: underline;

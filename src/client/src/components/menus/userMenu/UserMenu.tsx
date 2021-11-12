@@ -1,4 +1,4 @@
-import { DarkMode, Notifications, Settings, UserBackground } from "../../../assets/icons/header";
+import { DarkMode, Notifications, OffIcon, Settings, UserBackground } from "../../../assets/icons/header";
 import { MENU_TYPE } from "../../../models/project";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { MenuElement, UserMenuBox, UserNameBox } from "./styled";
@@ -21,7 +21,7 @@ const UserMenu = () => {
         <img src={UserBackground} alt="user" className="user-icon" />
         <p className={"initials"}>{GetUserInitials(userState?.user?.name)}</p>
         <p>{userState.user && userState.user.name}</p>
-        <p className="title">User</p>
+        <p className="user-title">User</p>
       </UserNameBox>
       <MenuElement onClick={() => null}>
         <img src={Settings} className="icon" alt="settings" />
@@ -34,6 +34,7 @@ const UserMenu = () => {
       <MenuElement onClick={() => OnDarkMode(dispatch, darkMode)}>
         <img src={DarkMode} className="icon" alt="darkmode" />
         <p className="text">Dark Mode</p>
+        <img src={OffIcon} className="toggle" alt="toggle" />
       </MenuElement>
     </UserMenuBox>
   );

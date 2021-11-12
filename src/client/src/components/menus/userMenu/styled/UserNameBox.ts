@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Color } from "../../../../compLibrary";
 
 const UserNameBox = styled.div`
   position: relative;
@@ -7,18 +8,19 @@ const UserNameBox = styled.div`
   font-weight: bold;
   margin-left: 20px;
 
-  .title {
+  .user-title {
     position: relative;
     top: -13px;
     font-size: 13px;
     font-weight: normal;
+    color: ${Color.TextSecondary};
   }
 
   .initials {
     position: absolute;
     right: 23px;
     bottom: 16px;
-    color: #272838;
+    color: ${Color.TextIcon};
     font-size: 14px;
     font-weight: normal;
   }
