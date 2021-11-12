@@ -3,22 +3,24 @@ import moment from "moment/moment.js";
 import { TextResources } from "../../../../assets/text";
 import { TabColumn } from "../../styled";
 import { FontSize, Input, Textarea } from "../../../../compLibrary";
-import { Edge, EnumBase, Interface, Transport } from "../../../../models";
+import { Edge, EnumBase, Interface, Project, Transport } from "../../../../models";
 import { changeInterfaceValue, changeTransportValue } from "../../../../redux/store/project/actions";
 import { Dropdown } from "../../../../compLibrary/dropdown/mimir";
 import { useAppDispatch } from "../../../../redux/store";
 import { GetRdsIdEdge } from "../../../../helpers";
+import { GetReferenceDesignationEdge } from "../../../../helpers/GetReferenceDesignation";
 
 type Event = React.ChangeEvent<HTMLInputElement>;
 
 interface Props {
   edge: Edge;
+  project: Project;
   statuses: EnumBase[];
 }
 
 type Element = Transport | Interface;
 
-const TransportInterfaceAdminContent = ({ edge, statuses }: Props) => {
+const TransportInterfaceAdminContent = ({ edge, project, statuses }: Props) => {
   const dispatch = useAppDispatch();
   const onChange = <K extends keyof Element>(key: K, value: Element[K]) =>
     !!edge.transport ? dispatch(changeTransportValue(edge.id, key, value)) : dispatch(changeInterfaceValue(edge.id, key, value));
@@ -97,6 +99,16 @@ const TransportInterfaceAdminContent = ({ edge, statuses }: Props) => {
             onChange={() => null}
             inputType=""
             value={moment(element.created).format("DD/MM/YYYY") ?? ""}
+          />
+        </div>
+        <div>
+          <div>{TextResources.Inspector_Admin_Designation}</div>
+          <Input
+            fontSize={FontSize.Standard}
+            readOnly={true}
+            value={GetReferenceDesignationEdge(edge, project) ?? ""}
+            onChange={() => null}
+            inputType=""
           />
         </div>
       </TabColumn>
