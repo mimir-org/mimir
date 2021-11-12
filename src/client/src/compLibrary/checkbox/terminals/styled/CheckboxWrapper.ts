@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../../../compLibrary";
+import { Color } from "../../../";
 
 const CheckboxWrapper = styled.label`
   cursor: pointer;
@@ -37,11 +37,6 @@ const CheckboxWrapper = styled.label`
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
-  }
-
-  .label {
-    position: relative;
-    top: 1px;
   }
 `;
 

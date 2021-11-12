@@ -32,7 +32,6 @@ const ProjectComponent = () => {
             indent={indent}
             expanded={!closedNodes.has(node.id)}
             isLeaf={!HasChildren(node, project)}
-            project={project}
             elements={elements}
             secondaryNode={secondaryNode}
             onElementExpanded={onExpandElement}

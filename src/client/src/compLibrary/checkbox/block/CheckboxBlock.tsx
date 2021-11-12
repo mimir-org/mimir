@@ -1,38 +1,32 @@
-import { AspectColorType, Node } from "../../../models";
-import { useAppDispatch } from "../../../redux/store";
-import { GetAspectColor, GetSelectedNode } from "../../../helpers";
-import { OnBlockChange } from "../handlers";
-import { CheckboxBlockWrapper } from "./styled";
-import { IsChecked, IsMiniCheckBox } from "./helpers";
 import { Elements } from "react-flow-renderer";
+import { AspectColorType, Node } from "../../../models";
+import { GetAspectColor, GetSelectedNode } from "../../../helpers";
+import { CheckboxWrapper } from "./styled";
+import { IsChecked, IsMiniCheckBox } from "./helpers";
 
 interface Props {
   node: Node;
-  inputLabel: string;
+  label: string;
   secondaryNode: Node;
   elements: Elements<any>;
+  onChange: () => void;
 }
 /**
  * Checkbox used in the Explorer in BlockView
  * @param interface
  * @returns a checkbox with different styling for parentNodes and childNodes.
  */
-export const CheckboxBlock = ({ node, inputLabel, secondaryNode, elements }: Props) => {
-  const dispatch = useAppDispatch();
+const CheckboxBlock = ({ node, label, secondaryNode, elements, onChange }: Props) => {
   const selectedNode = GetSelectedNode();
 
   return (
-    <CheckboxBlockWrapper
+    <CheckboxWrapper
       color={GetAspectColor(node, AspectColorType.Selected)}
       miniCheckBox={IsMiniCheckBox(node, selectedNode, secondaryNode)}
     >
-      <input
-        type="checkbox"
-        checked={IsChecked(elements, node)}
-        onChange={() => OnBlockChange(node, selectedNode, secondaryNode, dispatch)}
-      />
-      <div className="label">{inputLabel}</div>
-    </CheckboxBlockWrapper>
+      <input type="checkbox" checked={IsChecked(elements, node)} onChange={() => onChange()} />
+      <div className="label">{label}</div>
+    </CheckboxWrapper>
   );
 };
 

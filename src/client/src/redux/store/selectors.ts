@@ -195,7 +195,7 @@ export const projectSelector = createAppSelector(
 
 export const secondaryNodeSelector = createAppSelector(
   (state) => state.secondaryReducer.node,
-  (node) => node
+  (node) => node as Node
 );
 
 export const iconSelector = createAppSelector(

@@ -1,28 +1,23 @@
-import { CheckboxWrapper } from "./dropdown/styled";
+import { Checkbox } from "../../../compLibrary/checkbox/common";
 import { ElementBox } from "./styled";
 
 interface Props {
-  label: string;
   onChange: () => void;
   isChecked: boolean;
   visible: boolean;
+  label: string;
 }
 /**
  * Component for a single element in the Visual Filter.
  * @param interface
- * @returns a checkbox with a label.
+ * @returns an element with a checkbox.
  */
-const FilterElement = ({ label, onChange, isChecked, visible }: Props) => {
+const FilterElement = ({ onChange, isChecked, visible, label }: Props) => {
   return (
     visible && (
       <ElementBox>
-        <CheckboxWrapper>
-          <label className={"checkbox-block"}>
-            <input type="checkbox" checked={isChecked} onChange={() => onChange()} />
-            <span className="checkmark-block"></span>
-            <div className="text">{label}</div>
-          </label>
-        </CheckboxWrapper>
+        <Checkbox isChecked={isChecked} onChange={onChange} />
+        {label}
       </ElementBox>
     )
   );
