@@ -33,8 +33,8 @@ const CheckboxTreeWrapper = styled.label<Props>`
 
   .label {
     position: relative;
-    bottom: 19px;
-    left: 30px;
+    bottom: 25px;
+    left: 14px;
     max-width: 240px;
     font-size: ${FontSize.Standard};
   }
