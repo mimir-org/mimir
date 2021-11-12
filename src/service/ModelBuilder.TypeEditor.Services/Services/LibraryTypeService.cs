@@ -412,8 +412,26 @@ namespace Mb.TypeEditor.Services.Services
                         }
 
                     case InterfaceType it:
+
+                        if (it.AttributeTypes != null && it.AttributeTypes.Any())
+                        {
+                            foreach (var attributeType in it.AttributeTypes)
+                            {
+                                _attributeTypeRepository.Attach(attributeType, EntityState.Unchanged);
+                            }
+                        }
+
                         await _libraryTypeComponentRepository.CreateAsync(it);
                         await _libraryTypeComponentRepository.SaveAsync();
+
+                        if (it.AttributeTypes != null && it.AttributeTypes.Any())
+                        {
+                            foreach (var attributeType in it.AttributeTypes)
+                            {
+                                _attributeTypeRepository.Detach(attributeType);
+                            }
+                        }
+
                         createdLibraryTypes.Add(it);
                         continue;
 

@@ -108,6 +108,7 @@ namespace Mb.Services.Services
                 .Include("Edges.Transport.OutputTerminal")
                 .Include("Edges.Transport.OutputTerminal.Attributes")
                 .Include("Edges.Interface")
+                .Include("Edges.Interface.Attributes")
                 .Include("Edges.Interface.InputTerminal")
                 .Include("Edges.Interface.InputTerminal.Attributes")
                 .Include("Edges.Interface.OutputTerminal")

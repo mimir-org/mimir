@@ -1,4 +1,5 @@
-﻿using Mb.Models.Data.TypeEditor;
+﻿using System;
+using Mb.Models.Data.TypeEditor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -17,9 +18,16 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.TypeId).HasColumnName("TypeId").IsRequired();
             builder.Property(p => p.SemanticReference).HasColumnName("SemanticReference").IsRequired(false);
             builder.Property(p => p.PurposeId).HasColumnName("PurposeId").IsRequired(false);
+            builder.Property(p => p.Description).HasColumnName("Description").IsRequired(false);
+            builder.Property(p => p.StatusId).HasColumnName("StatusId").IsRequired().HasDefaultValue("4590637F39B6BA6F39C74293BE9138DF");
+            builder.Property(p => p.UpdatedBy).HasColumnName("UpdatedBy").IsRequired().HasDefaultValue("Unknown");
+            builder.Property(p => p.Updated).HasColumnName("Updated").IsRequired().HasDefaultValue(DateTime.MinValue.ToUniversalTime());
+            builder.Property(p => p.CreatedBy).HasColumnName("CreatedBy").IsRequired().HasDefaultValue("Unknown");
+            builder.Property(p => p.Created).HasColumnName("Created").IsRequired().HasDefaultValue(DateTime.MinValue.ToUniversalTime());
 
             builder.HasOne(x => x.Purpose).WithMany(y => y.LibraryTypes).HasForeignKey(x => x.PurposeId).OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(x => x.Rds).WithMany(y => y.LibraryTypes).HasForeignKey(x => x.RdsId).OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(x => x.Status).WithMany(y => y.LibraryTypes).HasForeignKey(x => x.StatusId).OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
