@@ -6,7 +6,6 @@ export { default as BlockViewActive } from "./blockViewActive.svg";
 export { default as Filter } from "./filter.svg";
 export { default as Horizontal } from "./horizontal.svg";
 export { default as Vertical } from "./vertical.svg";
-export { default as User } from "./userClosed.svg";
 export { default as DarkMode } from "./darkmode.svg";
 export { default as UserBackground } from "./userBackground.svg";
 export { default as Settings } from "./settings.svg";

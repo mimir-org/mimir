@@ -14,6 +14,15 @@ const UserNameBox = styled.div`
     font-weight: normal;
   }
 
+  .initials {
+    position: absolute;
+    right: 23px;
+    bottom: 16px;
+    color: #272838;
+    font-size: 14px;
+    font-weight: normal;
+  }
+
   .user-icon {
     position: absolute;
     right: 16px;

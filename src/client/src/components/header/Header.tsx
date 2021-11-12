@@ -6,6 +6,7 @@ import { HeaderBox, LogoBox } from "../../compLibrary/box/header/";
 import { useAppDispatch, useAppSelector } from "../../redux/store/hooks";
 import { CompanyLogoBox, ProjectBox, UserBox } from "./styled";
 import { GetCompanyLogoForHeader } from "../../helpers";
+import { GetUserInitials } from "../menus/userMenu/helpers";
 import {
   projectMenuSelector,
   electroSelector,
@@ -16,6 +17,7 @@ import {
   treeSelector,
   projectSelector,
   userMenuSelector,
+  userStateSelector,
 } from "../../redux/store";
 
 const Header = () => {
@@ -29,6 +31,8 @@ const Header = () => {
   const explorerOpen = useAppSelector(explorerSelector);
   const treeView = useAppSelector(treeSelector);
   const electro = useAppSelector(electroSelector);
+  const userState = useAppSelector(userStateSelector);
+
   const company = process.env.REACT_APP_COMPANY;
 
   return (
@@ -36,7 +40,8 @@ const Header = () => {
       <HeaderBox id="Header">
         <MenuMainHeader>
           <UserBox isOpen={userMenuOpen} onClick={() => Click.OnUser(dispatch, userMenuOpen)}>
-            <img src={Icons.User} alt="icon" className="icon" onClick={() => Click.OnUser(dispatch, userMenuOpen)} />
+            <img src={Icons.UserBackground} alt="icon" className="icon" onClick={() => Click.OnUser(dispatch, userMenuOpen)} />
+            <p className={"initials"}>{GetUserInitials(userState?.user?.name)}</p>
           </UserBox>
           <CompanyLogoBox>
             <img src={GetCompanyLogoForHeader(company)} alt="logo" />

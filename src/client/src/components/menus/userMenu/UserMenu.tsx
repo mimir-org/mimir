@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { MenuElement, UserMenuBox, UserNameBox } from "./styled";
 import { OnDarkMode } from "./handlers";
 import { darkModeSelector, userStateSelector } from "../../../redux/store";
+import { GetUserInitials } from "./helpers";
 
 /**
  * Component for the User Menu.
@@ -18,6 +19,7 @@ const UserMenu = () => {
     <UserMenuBox id={MENU_TYPE.PROJECT_MENU}>
       <UserNameBox>
         <img src={UserBackground} alt="user" className="user-icon" />
+        <p className={"initials"}>{GetUserInitials(userState?.user?.name)}</p>
         <p>{userState.user && userState.user.name}</p>
         <p className="title">User</p>
       </UserNameBox>
