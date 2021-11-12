@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Mb.Core.Migrations
 {
-    public partial class NewPropertiesTransportInterface : Migration
+    public partial class NodeInterfaceTransportLibrary : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -50,7 +50,7 @@ namespace Mb.Core.Migrations
                 table: "Transport",
                 type: "nvarchar(450)",
                 nullable: false,
-                defaultValue: "23BE80E317DA30DBAAA862D672FD1E87");
+                defaultValue: "4590637F39B6BA6F39C74293BE9138DF");
 
             migrationBuilder.AddColumn<DateTime>(
                 name: "Updated",
@@ -101,6 +101,47 @@ namespace Mb.Core.Migrations
 
             migrationBuilder.AddColumn<DateTime>(
                 name: "Created",
+                table: "LibraryType",
+                type: "datetime2",
+                nullable: false,
+                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc));
+
+            migrationBuilder.AddColumn<string>(
+                name: "CreatedBy",
+                table: "LibraryType",
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "Unknown");
+
+            migrationBuilder.AddColumn<string>(
+                name: "Description",
+                table: "LibraryType",
+                type: "nvarchar(max)",
+                nullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "StatusId",
+                table: "LibraryType",
+                type: "nvarchar(450)",
+                nullable: false,
+                defaultValue: "4590637F39B6BA6F39C74293BE9138DF");
+
+            migrationBuilder.AddColumn<DateTime>(
+                name: "Updated",
+                table: "LibraryType",
+                type: "datetime2",
+                nullable: false,
+                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc));
+
+            migrationBuilder.AddColumn<string>(
+                name: "UpdatedBy",
+                table: "LibraryType",
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "Unknown");
+
+            migrationBuilder.AddColumn<DateTime>(
+                name: "Created",
                 table: "Interface",
                 type: "datetime2",
                 nullable: false,
@@ -142,7 +183,7 @@ namespace Mb.Core.Migrations
                 table: "Interface",
                 type: "nvarchar(450)",
                 nullable: false,
-                defaultValue: "23BE80E317DA30DBAAA862D672FD1E87");
+                defaultValue: "4590637F39B6BA6F39C74293BE9138DF");
 
             migrationBuilder.AddColumn<DateTime>(
                 name: "Updated",
@@ -165,9 +206,20 @@ namespace Mb.Core.Migrations
                 nullable: false,
                 defaultValue: "1.0");
 
+            migrationBuilder.AddColumn<string>(
+                name: "InterfaceTypeId",
+                table: "AttributeType",
+                type: "nvarchar(450)",
+                nullable: true);
+
             migrationBuilder.CreateIndex(
                 name: "IX_Transport_StatusId",
                 table: "Transport",
+                column: "StatusId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LibraryType_StatusId",
+                table: "LibraryType",
                 column: "StatusId");
 
             migrationBuilder.CreateIndex(
@@ -175,9 +227,29 @@ namespace Mb.Core.Migrations
                 table: "Interface",
                 column: "StatusId");
 
+            migrationBuilder.CreateIndex(
+                name: "IX_AttributeType_InterfaceTypeId",
+                table: "AttributeType",
+                column: "InterfaceTypeId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_AttributeType_LibraryType_InterfaceTypeId",
+                table: "AttributeType",
+                column: "InterfaceTypeId",
+                principalTable: "LibraryType",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
+
             migrationBuilder.AddForeignKey(
                 name: "FK_Interface_Enum_StatusId",
                 table: "Interface",
+                column: "StatusId",
+                principalTable: "Enum",
+                principalColumn: "Id");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_LibraryType_Enum_StatusId",
+                table: "LibraryType",
                 column: "StatusId",
                 principalTable: "Enum",
                 principalColumn: "Id");
@@ -193,8 +265,16 @@ namespace Mb.Core.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
+                name: "FK_AttributeType_LibraryType_InterfaceTypeId",
+                table: "AttributeType");
+
+            migrationBuilder.DropForeignKey(
                 name: "FK_Interface_Enum_StatusId",
                 table: "Interface");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_LibraryType_Enum_StatusId",
+                table: "LibraryType");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Transport_Enum_StatusId",
@@ -205,8 +285,16 @@ namespace Mb.Core.Migrations
                 table: "Transport");
 
             migrationBuilder.DropIndex(
+                name: "IX_LibraryType_StatusId",
+                table: "LibraryType");
+
+            migrationBuilder.DropIndex(
                 name: "IX_Interface_StatusId",
                 table: "Interface");
+
+            migrationBuilder.DropIndex(
+                name: "IX_AttributeType_InterfaceTypeId",
+                table: "AttributeType");
 
             migrationBuilder.DropColumn(
                 name: "Created",
@@ -254,6 +342,30 @@ namespace Mb.Core.Migrations
 
             migrationBuilder.DropColumn(
                 name: "Created",
+                table: "LibraryType");
+
+            migrationBuilder.DropColumn(
+                name: "CreatedBy",
+                table: "LibraryType");
+
+            migrationBuilder.DropColumn(
+                name: "Description",
+                table: "LibraryType");
+
+            migrationBuilder.DropColumn(
+                name: "StatusId",
+                table: "LibraryType");
+
+            migrationBuilder.DropColumn(
+                name: "Updated",
+                table: "LibraryType");
+
+            migrationBuilder.DropColumn(
+                name: "UpdatedBy",
+                table: "LibraryType");
+
+            migrationBuilder.DropColumn(
+                name: "Created",
                 table: "Interface");
 
             migrationBuilder.DropColumn(
@@ -291,6 +403,10 @@ namespace Mb.Core.Migrations
             migrationBuilder.DropColumn(
                 name: "Version",
                 table: "Interface");
+
+            migrationBuilder.DropColumn(
+                name: "InterfaceTypeId",
+                table: "AttributeType");
 
             migrationBuilder.AlterColumn<string>(
                 name: "CreatedBy",
