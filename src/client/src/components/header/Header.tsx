@@ -33,7 +33,7 @@ const Header = () => {
 
   return (
     <>
-      <HeaderBox>
+      <HeaderBox id="Header">
         <MenuMainHeader isOpen={accountMenuOpen}>
           <CompanyLogoBox>
             <img src={GetCompanyLogoForHeader(company)} alt="logo" />

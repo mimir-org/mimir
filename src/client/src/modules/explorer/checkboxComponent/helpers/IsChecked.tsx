@@ -1,4 +1,4 @@
-import { Node, EDGE_KIND } from "../../../../models";
+import { Node } from "../../../../models";
 import { EDGE_TYPE } from "../../../../models/project";
 
 const IsChecked = (elements: any[], node: Node) => {
@@ -6,8 +6,10 @@ const IsChecked = (elements: any[], node: Node) => {
   let checked = false;
 
   elements?.forEach((elem) => {
-    const isEdge = edgeTypes.some((x) => x === elem?.type?.toString() || elem?.kind === EDGE_KIND);
-    if (!isEdge) if (node.id === elem?.data.id && !node.isHidden) checked = true;
+    const isEdge = edgeTypes.some((x) => x === elem?.type?.toString());
+    if (!isEdge) {
+      if (node?.id === elem?.data?.id && !node.isHidden) checked = true;
+    }
   });
   return checked;
 };
