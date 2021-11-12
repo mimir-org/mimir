@@ -6,7 +6,7 @@ interface Props {
 }
 
 const MenuElement = styled.div<Props>`
-  padding: 10px 12px 3px 12px;
+  padding: 10px 20px 3px 25px;
   margin-top: 5px;
   color: ${Color.BlueMagenta};
   cursor: ${(props) => !props.logOut && "pointer"};
@@ -24,7 +24,7 @@ const MenuElement = styled.div<Props>`
   }
 
   &:hover {
-    background-color: ${(props) => !props.logOut && Color.DarkGrey};
+    background-color: ${(props) => !props.logOut && Color.LightBlue};
     text-decoration: ${(props) => !props.logOut && "underline"};
   }
 `;

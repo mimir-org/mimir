@@ -2,7 +2,7 @@ import { setActiveBlockNode, setActiveNode, setNodeVisibility } from "../../../r
 import { Node } from "../../../models";
 import { setSecondaryNode, removeSecondaryNode } from "../../../redux/store/secondaryNode/actions";
 import { IsParentOf } from "../../../components/flow/helpers";
-import { IsFamily, IsDirectChild } from "../../../helpers";
+import { IsFamily, IsDirectChild, IsProduct } from "../../../helpers";
 
 /**
  * Component to handle all clicks on checkboxes in the BlockView's Explorer Module.
@@ -20,6 +20,16 @@ export const OnBlockChange = (node: Node, selectedNode: Node, secondaryNode: Nod
       dispatch(removeSecondaryNode());
       return;
     }
+  }
+
+  // Handling Product
+  if (IsProduct(selectedNode)) {
+    if (!IsProduct(node)) {
+      dispatch(setActiveNode(node?.id, !node.isSelected));
+      dispatch(setActiveBlockNode(node?.id));
+    }
+    if (node === selectedNode) dispatch(setActiveNode(null, false));
+    return;
   }
 
   // Handling same Aspect
@@ -43,7 +53,7 @@ export const OnBlockChange = (node: Node, selectedNode: Node, secondaryNode: Nod
 
   // Set SecondaryNode
   if (node !== selectedNode && node !== secondaryNode && !IsFamily(node, selectedNode)) {
-    dispatch(setSecondaryNode(node));
+    if (!IsProduct(selectedNode)) dispatch(setSecondaryNode(node)); // ProductNode can not have a secondary node.
     return;
   }
 

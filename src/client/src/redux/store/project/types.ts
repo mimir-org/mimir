@@ -11,6 +11,8 @@ export const SEARCH_PROJECT_SUCCESS_OR_ERROR = "SEARCH_PROJECT_SUCCESS_OR_ERROR"
 export const FETCHING_PROJECT_SUCCESS_OR_ERROR = "FETCHING_PROJECT_SUCCESS_OR_ERROR";
 export const CREATING_PROJECT = "CREATING_PROJECT";
 export const CREATING_PROJECT_SUCCESS_OR_ERROR = "CREATING_PROJECT_SUCCESS_OR_ERROR";
+export const CREATING_SUB_PROJECT = "CREATING_SUB_PROJECT";
+export const CREATING_SUB_PROJECT_SUCCESS_OR_ERROR = "CREATING_SUB_PROJECT_SUCCESS_OR_ERROR";
 export const ADD_NODE = "ADD_NODE";
 export const REMOVE_NODE = "REMOVE_NODE";
 export const ADD_EDGE = "ADD_EDGE";
@@ -454,6 +456,23 @@ export interface ChangeNodeUpdated {
   };
 }
 
+export interface CreateSubProject {
+  type: typeof CREATING_SUB_PROJECT;
+  payload: {
+    name: string;
+    description: string;
+    nodes: string[];
+    edges: string[];
+  };
+}
+
+export interface CreateSubProjectFinished {
+  type: typeof CREATING_SUB_PROJECT_SUCCESS_OR_ERROR;
+  payload: {
+    apiError: ApiError;
+  };
+}
+
 export type LockUnlockAttributeUnion =
   | LockUnlockNodeAttribute
   | LockUnlockTransportAttribute
@@ -513,4 +532,6 @@ export type ProjectActionTypes =
   | LockUnlockAttributeFinished
   | CommitProject
   | CommitProjectFinished
-  | ChangeNodeUpdated;
+  | ChangeNodeUpdated
+  | CreateSubProject
+  | CreateSubProjectFinished;

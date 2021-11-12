@@ -170,8 +170,6 @@ const TextResources = {
   TypeEditor_Error_Attributes: "Please add one or more attributes.",
   TypeEditor_Error_Location_Attributes: "Please add one or more location attributes.",
   TypeEditor_Error_Terminals: "Please select one or more terminals.",
-  TypeEditor_Error_Terminals_Block:
-    "Please select one or more terminals. An Object Block must have at least one input terminal, and one output terminal.",
   TypeEditor_Error_TerminalsType: "You can only select two of each terminal, one must be input, the other must be output.",
   TypeEditor_Error_Terminals_Interface: "Please select a terminal type.",
 
@@ -192,6 +190,8 @@ const TextResources = {
   Account_Open_Label: "Open a project",
   Account_Create_Label: "Create a project",
   Account_Create_Button_Label: "Create project",
+  Account_SubProject_Create_Label: "Save selection as sub-project",
+  Account_SubProject_Create_Button_Label: "Save selection as sub-project",
   Account_Name_Project_Label: "Name project",
   Account_Name_Project_Placeholder: "New project name...",
   Account_Confirm_Save: " Save this project before opening/starting another?",
@@ -206,6 +206,7 @@ const TextResources = {
   Account_Save_File: "SaveFile",
   Account_Open: "Open",
   Account_Create: "Create",
+  Account_SubProject_Create: "Save Sub-project",
   Account_Cancel: "Cancel",
   Account_Save_Library: "SaveLibrary",
   Account_Import_Project: "ImportProject",
@@ -230,6 +231,7 @@ const TextResources = {
   Type_BlockFunction: "BlockFunctionNode",
   Type_BlockProduct: "BlockProductNode",
   Type_BlockParentNode: "BlockParentNode",
+  Type_BlockParentProductNode: "BlockParentProductNode",
   Type_OffPageNode: "BlockOffPageNode",
 
   // RDS
@@ -238,9 +240,12 @@ const TextResources = {
   RDS_Location: "++",
 
   // Visual Filter
+  Filter_Terminals: "Terminals",
   Filter_Show_Terminals: "Show all terminals",
   Filter_Show_Active_Terminals: "Show all active terminals",
   Filter_Show_Inactive_Terminals: "Show all inactive terminals",
+  Filter_Show_Transport: "Show all transport edges",
+  Filter_Edge_Animation: "Edge animation",
 };
 
 export default TextResources;

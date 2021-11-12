@@ -6,28 +6,26 @@ import { IsBlockView, IsAspectNode, GetAspectIcon } from "../../../helpers";
 import { ExplorerAspectLine } from "./styled";
 import { VisibleComponent } from "../visibleComponent";
 import { LockComponent } from "../lockComponent";
-
+import { Elements } from "react-flow-renderer";
 interface Props {
   node: Node;
   label: string;
   indent: number;
-  project: Project;
   isLeaf: boolean;
   expanded: boolean;
-  elements: any[];
-  selectedNode: Node;
+  project: Project;
+  elements: Elements<any>;
   secondaryNode: Node;
   onElementExpanded: (expanded: boolean, nodeId: string) => void;
 }
 export const AspectComponent = ({
   node,
   label,
-  project,
   expanded,
   indent,
   isLeaf,
+  project,
   elements,
-  selectedNode,
   secondaryNode,
   onElementExpanded,
 }: Props) => (
@@ -47,13 +45,7 @@ export const AspectComponent = ({
           {!IsBlockView() ? (
             <CheckboxTree node={node} project={project} inputLabel={label} />
           ) : (
-            <CheckboxBlock
-              elements={elements}
-              node={node}
-              inputLabel={label}
-              selectedNode={selectedNode}
-              secondaryNode={secondaryNode}
-            />
+            <CheckboxBlock node={node} inputLabel={label} secondaryNode={secondaryNode} elements={elements} />
           )}
         </div>
       )}
