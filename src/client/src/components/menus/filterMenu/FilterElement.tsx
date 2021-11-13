@@ -16,8 +16,8 @@ const FilterElement = ({ onChange, isChecked, visible, label }: Props) => {
   return (
     visible && (
       <ElementBox>
-        <Checkbox isChecked={isChecked} onChange={onChange} />
-        {label}
+        <Checkbox isChecked={isChecked} onChange={() => onChange()} />
+        <div className="text">{label}</div>
       </ElementBox>
     )
   );

@@ -12,7 +12,7 @@ interface Props {
 }
 /**
  * Component for opening Type Editor window
- * @param param0
+ * @param interface
  * @returns buttons to add or edit a type in library module
  */
 export const TypeEditorModule = ({ selectedElement, selectedElementType, onChange }: Props) => {

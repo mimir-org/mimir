@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { PredefinedAttribute } from "../../../models";
-import { SquareCheckbox } from "../../inputs";
+import { CheckboxContainer } from "../../inputs";
 import { ExpandIcon, CollapseIcon } from "../../../assets/icons/chevron";
 import { OnMultipleValuesChange, OnSingleValueChange } from "./helpers";
-import { Label } from "../../inputs/SquareCheckbox";
+import { Label } from "../../inputs/CheckboxContainer";
 import { OnPropertyChangeFunction } from "../../types";
 import {
   TerminalListElement,
@@ -12,7 +12,6 @@ import {
   ValueHeader,
   ValuesListWrapper,
   ValuesListItem,
-  SquareBox,
 } from "../../styled";
 
 interface Props {
@@ -48,9 +47,8 @@ export const PredefinedLocationElement = ({ attributeName, values, isMultiSelect
     if (isSelected) {
       attribute = defaultValue.find((a) => a.key === attributeName);
       return attribute.values;
-    } else {
-      return values;
     }
+    return values;
   };
 
   const onSingleValueCheckboxChange = (e) => {
@@ -64,15 +62,13 @@ export const PredefinedLocationElement = ({ attributeName, values, isMultiSelect
   return (
     <TerminalListElement>
       <TerminalCategoryWrapper isSelected={isSelected}>
-        <SquareBox>
-          <SquareCheckbox
-            id={attributeName}
-            name={attributeName}
-            label={Label.Terminals}
-            defaultValue={defaultValue}
-            onChange={onCheckboxChange}
-          />
-        </SquareBox>
+        <CheckboxContainer
+          id={attributeName}
+          name={attributeName}
+          label={Label.Terminals}
+          defaultValue={defaultValue}
+          onChange={onCheckboxChange}
+        />
       </TerminalCategoryWrapper>
       {isSelected && (
         <SelectValue isSelected={isSelected}>
@@ -101,31 +97,29 @@ export const PredefinedLocationElement = ({ attributeName, values, isMultiSelect
               {Object.entries(getValues()).map(([key, value]) => {
                 return (
                   <ValuesListItem key={key}>
-                    <SquareBox>
-                      <label className={"squarecheckbox"}>
-                        {isMultiSelect ? (
-                          <input
-                            type="checkbox"
-                            defaultChecked={value}
-                            id={key}
-                            onChange={() => onMultipleValuesCheckboxChange([key, value])}
-                          />
-                        ) : (
-                          <input
-                            type="radio"
-                            defaultChecked={value}
-                            name="attribute"
-                            value={key}
-                            id={key}
-                            onChange={onSingleValueCheckboxChange}
-                          />
-                        )}
-                        <span className="scheckmark"></span>
-                        <label className="label" htmlFor={key}>
-                          {key}
-                        </label>
+                    <label className={"squarecheckbox"}>
+                      {isMultiSelect ? (
+                        <input
+                          type="checkbox"
+                          defaultChecked={value}
+                          id={key}
+                          onChange={() => onMultipleValuesCheckboxChange([key, value])}
+                        />
+                      ) : (
+                        <input
+                          type="radio"
+                          defaultChecked={value}
+                          name="attribute"
+                          value={key}
+                          id={key}
+                          onChange={onSingleValueCheckboxChange}
+                        />
+                      )}
+                      <span className="scheckmark"></span>
+                      <label className="label" htmlFor={key}>
+                        {key}
                       </label>
-                    </SquareBox>
+                    </label>
                   </ValuesListItem>
                 );
               })}

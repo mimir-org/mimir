@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ConnectorType, TerminalType, TerminalTypeItem } from "../../../models";
-import { ListType, RoundCheckbox } from "../../inputs/RoundCheckbox";
+import { ListType, RadioButton } from "../../inputs/RadioButton";
 import { TerminalListElement, TerminalCategoryWrapper, RoundBox } from "../../styled";
 import { ExpandIcon, CollapseIcon } from "../../../assets/icons/chevron";
 import { TextResources } from "../../../assets/text";
@@ -81,7 +81,7 @@ export const TransportInterfaceElement = ({
     <TerminalListElement>
       <TerminalCategoryWrapper isSelected={isSelected()}>
         <RoundBox>
-          <RoundCheckbox
+          <RadioButton
             id={categoryName}
             label={categoryName}
             listType={ListType.Terminals}

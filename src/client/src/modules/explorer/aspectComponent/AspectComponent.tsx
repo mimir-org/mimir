@@ -1,14 +1,14 @@
 import { ExpandIcon, CollapseIcon } from "../../../assets/icons/chevron";
-import { Node } from "../../../models";
+import { AspectColorType, Node } from "../../../models";
 import { AspectBox } from "../../../compLibrary/box/aspect";
-import { IsBlockView, IsAspectNode, GetAspectIcon } from "../../../helpers";
+import { IsBlockView, IsAspectNode, GetAspectIcon, GetSelectedNode, GetAspectColor } from "../../../helpers";
 import { ExplorerLine } from "./styled";
 import { Elements } from "react-flow-renderer";
-import { CheckboxTree } from "../../../compLibrary/checkbox/tree";
-import { CheckboxBlock } from "../../../compLibrary/checkbox/block";
-import { ChangeNodeDisplay } from "../helpers";
+import { CheckboxExplorer } from "../../../compLibrary/checkbox/explorer";
+import { ChangeNodeDisplay, IsMiniCheckbox } from "../helpers";
 import { OnBlockChange } from "../handlers";
 import { useAppDispatch } from "../../../redux/store";
+import { IsChecked } from "../../explorer/helpers";
 
 interface Props {
   node: Node;
@@ -22,23 +22,21 @@ interface Props {
 }
 export const AspectComponent = ({ node, label, expanded, indent, isLeaf, elements, secondaryNode, onElementExpanded }: Props) => {
   const dispatch = useAppDispatch();
+  const selectedNode = GetSelectedNode();
+  const blockView = IsBlockView();
 
   return (
     <>
       <AspectBox indent={indent} node={node}>
         {IsAspectNode(node) && <img src={GetAspectIcon(node)} alt="aspect-icon" className="icon"></img>}
         <div className="container">
-          {!IsBlockView() ? (
-            <CheckboxTree node={node} label={label} onChange={ChangeNodeDisplay(node)} />
-          ) : (
-            <CheckboxBlock
-              node={node}
-              label={label}
-              secondaryNode={secondaryNode}
-              elements={elements}
-              onChange={() => OnBlockChange(node, secondaryNode, dispatch)}
-            />
-          )}
+          <CheckboxExplorer
+            label={label}
+            color={GetAspectColor(node, AspectColorType.Selected)}
+            isChecked={blockView ? IsChecked(elements, node) : !node?.isHidden ?? false}
+            isMiniCheckbox={blockView ? IsMiniCheckbox(node, selectedNode, secondaryNode) : false}
+            onChange={() => (blockView ? OnBlockChange(node, secondaryNode, dispatch) : ChangeNodeDisplay(node))}
+          />
         </div>
 
         {!isLeaf && (

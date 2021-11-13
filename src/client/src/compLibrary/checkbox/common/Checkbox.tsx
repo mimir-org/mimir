@@ -1,21 +1,22 @@
 import { CheckboxWrapper } from "./styled";
+import { Color } from "../../";
 
 interface Props {
   isChecked: boolean;
   onChange: () => void;
+  color?: string;
   readOnly?: boolean;
+  id?: string;
 }
 /**
  * A generic checkbox for Mimir.
  * @param interface
  * @returns a checkbox.
  */
-const Checkbox = ({ isChecked, onChange, readOnly }: Props) => (
-  <CheckboxWrapper>
-    <label className={"checkbox-block"}>
-      <input type="checkbox" readOnly={readOnly} checked={isChecked} onChange={() => onChange()} />
-      <span className="checkmark-block"></span>
-    </label>
+const Checkbox = ({ isChecked, onChange, color, readOnly }: Props) => (
+  <CheckboxWrapper color={color ?? Color.BlueMagenta}>
+    <input type="checkbox" readOnly={readOnly} checked={isChecked} onChange={() => onChange()} />
+    <div className="checkmark"></div>
   </CheckboxWrapper>
 );
 

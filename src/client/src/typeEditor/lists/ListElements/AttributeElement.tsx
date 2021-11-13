@@ -1,7 +1,7 @@
 import { AttributeType, Discipline } from "../../../models";
 import { ListElem } from "../../../compLibrary";
-import { ListElementCategoryWrapper, ListCategoryElement, SquareBox } from "../../styled";
-import { SquareCheckbox, Label } from "../../inputs/SquareCheckbox";
+import { ListElementCategoryWrapper, ListCategoryElement } from "../../styled";
+import { CheckboxContainer, Label } from "../../inputs/CheckboxContainer";
 import { OnPropertyChangeFunction } from "../../types";
 
 interface Props {
@@ -15,20 +15,19 @@ export const AttributeElement = ({ discipline, attributes, defaultValue, onChang
   const isSelected = (id: string) => {
     return defaultValue?.includes(id);
   };
+
   return (
     <ListElementCategoryWrapper>
       <ListCategoryElement>{discipline && <p>{Discipline[discipline]}</p>}</ListCategoryElement>
       {attributes.map((element) => (
         <ListElem key={element.id} isSelected={isSelected(element.id)}>
-          <SquareBox>
-            <SquareCheckbox
-              id={element.id}
-              name={element.description}
-              label={Label.attributeTypes}
-              defaultValue={defaultValue}
-              onChange={onChange}
-            />
-          </SquareBox>
+          <CheckboxContainer
+            id={element.id}
+            name={element.description}
+            label={Label.attributeTypes}
+            defaultValue={defaultValue}
+            onChange={onChange}
+          />
         </ListElem>
       ))}
     </ListElementCategoryWrapper>

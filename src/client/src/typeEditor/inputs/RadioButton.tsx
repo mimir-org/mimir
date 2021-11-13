@@ -4,6 +4,7 @@ export enum ListType {
   Rds = 0,
   Terminals = 1,
 }
+
 interface Props {
   id: string;
   label: string;
@@ -13,9 +14,9 @@ interface Props {
   onChange: OnPropertyChangeFunction;
 }
 
-export const RoundCheckbox = ({ id, label, listType, defaultValue, checked, onChange }: Props) => {
-  let rdsIsSelected = listType === ListType.Rds && defaultValue === id;
-  let terminalIsSelected = listType === ListType.Terminals && checked;
+export const RadioButton = ({ id, label, listType, defaultValue, checked, onChange }: Props) => {
+  const rdsIsSelected = listType === ListType.Rds && defaultValue === id;
+  const terminalIsSelected = listType === ListType.Terminals && checked;
 
   const onCheckboxChange = () => {
     if (id !== "" && id) {
@@ -40,4 +41,4 @@ export const RoundCheckbox = ({ id, label, listType, defaultValue, checked, onCh
   );
 };
 
-export default RoundCheckbox;
+export default RadioButton;

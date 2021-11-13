@@ -1,39 +1,38 @@
 import styled from "styled-components";
 import { Color } from "../../..";
 
-const CheckboxWrapper = styled.div`
-  position: absolute;
-  margin-bottom: 14px;
-  left: 3px;
+interface Props {
+  color: string;
+}
 
-  .checkbox-block {
-    position: absolute;
-    cursor: pointer;
-    left: 7px;
-  }
-  .checkbox-block input {
+const CheckboxWrapper = styled.div<Props>`
+  cursor: pointer;
+  position: absolute;
+  left: 7px;
+  padding-bottom: 15px;
+  /* bottom: 5px; */
+
+  input {
     position: absolute;
     opacity: 0;
-    z-index: 1;
+    background-color: ${Color.White};
   }
-  .checkmark-block {
+
+  input:checked ~ .checkmark {
+    background-color: ${(props) => props.color} !important;
+  }
+
+  .checkmark {
     position: absolute;
-    left: 0px;
+    left: 0;
     height: 11px;
     width: 11px;
-    background-color: ${Color.White};
-    border: 2px solid ${Color.BlueMagenta};
-    border-radius: 2px;
-  }
-  .checkbox-block input:checked ~ .checkmark-block {
-    background-color: ${Color.BlueMagenta};
+    background-color: ${Color.White} !important;
+    border: 2px solid ${(props) => props.color};
+    border-radius: 3px;
   }
 
-  .checkbox-block input:checked ~ .checkmark-block:after {
-    display: block;
-  }
-
-  .checkmark-block:after {
+  .checkmark:after {
     content: "";
     position: absolute;
     left: 3px;

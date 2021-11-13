@@ -1,8 +1,12 @@
+import { Checkbox } from "../../compLibrary/checkbox/common";
+import { AttributeName } from "./styled";
+
 export enum Label {
   attributeTypes = 0,
   Terminals = 1,
   compositeTypes = 2,
 }
+
 interface Props {
   id: string;
   name?: string;
@@ -11,13 +15,10 @@ interface Props {
   onChange: Function;
 }
 
-export const SquareCheckbox = ({ id, name, label, defaultValue, onChange }: Props) => {
-  const isSelected = () => {
-    if (label === Label.attributeTypes || label === Label.compositeTypes) {
-      return defaultValue?.includes(id);
-    } else if (label === Label.Terminals) {
-      return defaultValue?.some((a) => a.key === id);
-    }
+export const CheckboxContainer = ({ id, name, label, defaultValue, onChange }: Props) => {
+  const isSelected = (): boolean => {
+    if (label === Label.attributeTypes || label === Label.compositeTypes) return defaultValue?.includes(id);
+    if (label === Label.Terminals) return defaultValue?.some((a) => a.key === id);
   };
 
   const onCheckboxChange = () => {
@@ -35,14 +36,11 @@ export const SquareCheckbox = ({ id, name, label, defaultValue, onChange }: Prop
   };
 
   return (
-    <label className="squarecheckbox">
-      <input type="checkbox" defaultChecked={isSelected()} id={id} onChange={onCheckboxChange} />
-      <span className="scheckmark"></span>
-      <label className="label" htmlFor={id}>
-        {name}
-      </label>
+    <label onClick={() => onCheckboxChange()}>
+      <Checkbox isChecked={isSelected()} onChange={() => onCheckboxChange()} />
+      <AttributeName htmlFor={id}>{name}</AttributeName>
     </label>
   );
 };
 
-export default SquareCheckbox;
+export default CheckboxContainer;
