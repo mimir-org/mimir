@@ -1,6 +1,6 @@
-import { ListType, RadioButton } from "../../inputs/RadioButton";
+import { ListType, RadioButtonContainer } from "../../inputs/RadioButtonContainer";
 import { Rds } from "../../../models";
-import { ListElementCategoryWrapper, ListCategoryElement, RdsListElement, RoundBox } from "../../styled";
+import { ListElementCategoryWrapper, ListCategoryElement, RdsListElement } from "../../styled";
 import { OnPropertyChangeFunction } from "../../types";
 
 interface Props {
@@ -17,15 +17,13 @@ export const RDSElement = ({ category, rds, defaultValue, onChange }: Props) => 
     </ListCategoryElement>
     {rds.map((element) => (
       <RdsListElement key={element.id} isSelected={element.id === defaultValue}>
-        <RoundBox>
-          <RadioButton
-            id={element.id}
-            label={element.code + " - " + element.name}
-            listType={ListType.Rds}
-            onChange={(key, data) => onChange(key, data)}
-            defaultValue={defaultValue}
-          />
-        </RoundBox>
+        <RadioButtonContainer
+          id={element.id}
+          label={element.code + " - " + element.name}
+          listType={ListType.Rds}
+          onChange={(key, data) => onChange(key, data)}
+          defaultValue={defaultValue}
+        />
       </RdsListElement>
     ))}
   </ListElementCategoryWrapper>

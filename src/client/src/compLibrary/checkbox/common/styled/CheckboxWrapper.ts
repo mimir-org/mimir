@@ -14,8 +14,7 @@ const CheckboxWrapper = styled.div<Props>`
 
   input {
     position: absolute;
-    opacity: 0;
-    background-color: ${Color.White};
+    display: none;
   }
 
   input:checked ~ .checkmark {

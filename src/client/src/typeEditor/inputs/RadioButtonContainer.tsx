@@ -1,4 +1,6 @@
 import { OnPropertyChangeFunction } from "../types";
+import { RadioButton } from "../../compLibrary/radioButton";
+import { AttributeName } from "./styled";
 
 export enum ListType {
   Rds = 0,
@@ -14,7 +16,7 @@ interface Props {
   onChange: OnPropertyChangeFunction;
 }
 
-export const RadioButton = ({ id, label, listType, defaultValue, checked, onChange }: Props) => {
+export const RadioButtonContainer = ({ id, label, listType, defaultValue, checked, onChange }: Props) => {
   const rdsIsSelected = listType === ListType.Rds && defaultValue === id;
   const terminalIsSelected = listType === ListType.Terminals && checked;
 
@@ -26,19 +28,15 @@ export const RadioButton = ({ id, label, listType, defaultValue, checked, onChan
   };
 
   return (
-    <label className="roundcheckbox">
-      <input
-        type="checkbox"
-        checked={listType === ListType.Rds ? rdsIsSelected : terminalIsSelected}
+    <>
+      <RadioButton
+        isChecked={listType === ListType.Rds ? rdsIsSelected : terminalIsSelected}
+        onChange={() => onCheckboxChange()}
         id={id}
-        onChange={onCheckboxChange}
       />
-      <span className="checked"></span>
-      <label className="label" htmlFor={id}>
-        {label}
-      </label>
-    </label>
+      <AttributeName htmlFor={id}>{label}</AttributeName>
+    </>
   );
 };
 
-export default RadioButton;
+export default RadioButtonContainer;

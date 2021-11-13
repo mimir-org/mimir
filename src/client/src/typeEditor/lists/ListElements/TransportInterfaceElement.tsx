@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ConnectorType, TerminalType, TerminalTypeItem } from "../../../models";
-import { ListType, RadioButton } from "../../inputs/RadioButton";
-import { TerminalListElement, TerminalCategoryWrapper, RoundBox } from "../../styled";
+import { ListType, RadioButtonContainer } from "../../inputs/RadioButtonContainer";
+import { TerminalListElement, TerminalCategoryWrapper } from "../../styled";
 import { ExpandIcon, CollapseIcon } from "../../../assets/icons/chevron";
 import { TextResources } from "../../../assets/text";
 import { SearchBarWrapper, SearchBarContainer, SearchBar, SearchBarList, SearchBarListItem } from "../../../compLibrary/";
@@ -80,16 +80,14 @@ export const TransportInterfaceElement = ({
   return (
     <TerminalListElement>
       <TerminalCategoryWrapper isSelected={isSelected()}>
-        <RoundBox>
-          <RadioButton
-            id={categoryName}
-            label={categoryName}
-            listType={ListType.Terminals}
-            checked={isSelected()}
-            defaultValue={terminalTypes[0].id}
-            onChange={(key, terminalTypeId) => onPropertyChange(key, terminalTypeId)}
-          />
-        </RoundBox>
+        <RadioButtonContainer
+          id={categoryName}
+          label={categoryName}
+          listType={ListType.Terminals}
+          checked={isSelected()}
+          defaultValue={terminalTypes[0].id}
+          onChange={(key, terminalTypeId) => onPropertyChange(key, terminalTypeId)}
+        />
         {isSelected() && (
           <SearchBarWrapper>
             <SearchBarContainer>
