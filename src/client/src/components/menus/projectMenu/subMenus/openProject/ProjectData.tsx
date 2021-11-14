@@ -2,7 +2,7 @@ import Moment from "react-moment";
 import { changeSelectedProject } from "../../../../../redux/store/project/actions";
 import { ProjectSimple } from "../../../../../models";
 import { useAppDispatch } from "../../../../../redux/store";
-import "./projectdata.scss";
+import { ProjectDataBox } from "./styled";
 
 interface Props {
   projects: ProjectSimple[];
@@ -18,13 +18,13 @@ export const ProjectDataComponent = ({ projects, projectId, projectName, project
   const onClick = () => dispatch(changeSelectedProject(projectId));
 
   return (
-    <div className={"project_data " + (isSelected ? "selected_project" : "not_selected")} onClick={onClick}>
-      <p className="project_name">{projectName}</p>
-      <p className="project_owner">{projectOwner}</p>
-      <p className="last_edited">
+    <ProjectDataBox onClick={onClick} isSelected={isSelected}>
+      <p className="name">{projectName}</p>
+      <p className="owner">{projectOwner}</p>
+      <p className="edited">
         <Moment format="DD/MM/YY h:mm A">{updated}</Moment>
       </p>
-    </div>
+    </ProjectDataBox>
   );
 };
 

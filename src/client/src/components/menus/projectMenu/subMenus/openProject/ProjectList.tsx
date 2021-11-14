@@ -1,20 +1,20 @@
-import "./projectlist.scss";
 import { ProjectData } from "./";
 import { TextResources } from "../../../../../assets/text";
 import { ProjectSimple } from "../../../../../models";
+import { ProjectListBox, ProjectListLabels } from "./styled";
 
 interface Props {
   projectList: ProjectSimple[];
 }
 
 export const ProjectList = ({ projectList }: Props) => (
-  <div className="project_list">
-    <p className="recent_projects_text">{TextResources.Project_Recent}</p>
-    <div className="project_list_labels">
-      <p className="project_name">{TextResources.Project_Recent_Name}</p>
-      <p className="project_owner">{TextResources.Project_Recent_Owner}</p>
-      <p className="last_edited">{TextResources.Project_Recent_Edited}</p>
-    </div>
+  <ProjectListBox>
+    <p className="text">{TextResources.Project_Recent}</p>
+    <ProjectListLabels>
+      <p className="name">{TextResources.Project_Recent_Name}</p>
+      <p className="owner">{TextResources.Project_Recent_Owner}</p>
+      <p className="edited">{TextResources.Project_Recent_Edited}</p>
+    </ProjectListLabels>
     {projectList?.map((project) => {
       return (
         <ProjectData
@@ -27,7 +27,7 @@ export const ProjectList = ({ projectList }: Props) => (
         />
       );
     })}
-  </div>
+  </ProjectListBox>
 );
 
 export default ProjectList;
