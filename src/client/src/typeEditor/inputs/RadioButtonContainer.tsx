@@ -1,5 +1,5 @@
 import { OnPropertyChangeFunction } from "../types";
-import { RadioButton } from "../../compLibrary/radioButton";
+import { RadioButton } from "../../compLibrary/input/radiobutton";
 import { AttributeName } from "./styled";
 
 export enum ListType {

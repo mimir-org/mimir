@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { NumericInput } from "..";
+import { NumericInput } from "./";
 
 interface Props {
   value: string;

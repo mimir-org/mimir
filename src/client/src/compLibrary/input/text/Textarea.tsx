@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import FontSize from "../font/FontSize";
-import Color from "../colors/Color";
+import FontSize from "../../font/FontSize";
+import Color from "../../colors/Color";
 
 interface Props {
   height: number;

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../..";
+import { Color } from "../../../";
 
 const RadioButtonWrapper = styled.label`
   position: relative;

@@ -5,7 +5,7 @@ import { useMemo, useState } from "react";
 import { AnimatedModule, Size } from "../../compLibrary";
 import { GetFilteredLibCategories, GetLibCategories } from "./helpers";
 import { ModuleBody, ModuleHead } from "../../compLibrary/box/modules";
-import { LegendIcons } from "../../compLibrary/box/library";
+import { LegendIcons } from "./styled";
 import { MODULE_TYPE } from "../../models/project";
 import { GetSelectedNode } from "../../helpers";
 import { OnLibraryClick, OnLegendClick } from "./handlers";
