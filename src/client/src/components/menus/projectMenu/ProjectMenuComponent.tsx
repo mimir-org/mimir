@@ -1,20 +1,20 @@
 import * as Click from "./handlers";
+import { useCallback, useRef } from "react";
 import { GetMenuElement } from "./helpers";
 import { MENU_TYPE } from "../../../models/project";
-import { OpenProjectMenu } from "../project/openProject";
-import { CreateProjectMenu } from "../project/createProject";
-import { ExportProjectFileMenu } from "../project/exportProjectFile";
-import { ImportProjectFileMenu } from "../project/importProjectFile/ImportProjectFileMenu";
-import { ExportLibraryFileMenu } from "../project/exportLibraryFile/ExportLibraryFileMenu";
-import { ImportFileLibraryMenu } from "../project/importLibrary/ImportFileLibraryMenu";
+import { OpenProjectMenu } from "../projectMenu/subMenus/openProject";
+import { CreateProjectMenu } from "../projectMenu/subMenus/createProject";
+import { ExportProjectFileMenu } from "../projectMenu/subMenus/exportProjectFile";
+import { ImportProjectFileMenu } from "../projectMenu/subMenus/importProjectFile/ImportProjectFileMenu";
+import { ExportLibraryFileMenu } from "../projectMenu/subMenus/exportLibraryFile/ExportLibraryFileMenu";
+import { ImportFileLibraryMenu } from "../projectMenu/subMenus/importLibrary/ImportFileLibraryMenu";
 import { TextResources } from "../../../assets/text";
-import { useCallback, useRef } from "react";
-import { setProjectMenuVisibility } from "../project/redux/actions";
+import { setProjectMenuVisibility } from "../projectMenu/subMenus/redux/actions";
 import { useOutsideClick } from "./hooks/useOutsideClick";
 import { activeMenuSelector, commonStateSelector, projectStateSelector } from "../../../redux/store";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
-import { CommitProjectMenu } from "../project/commitProject";
-import { CreateSubProjectMenu } from "../project/createSubProject";
+import { CommitProjectMenu } from "../projectMenu/subMenus/commitProject";
+import { CreateSubProjectMenu } from "../projectMenu/subMenus/createSubProject";
 import { useSelectedFlowElements } from "../../../helpers/UseSelectedFlowElements";
 import { ProjectNameBox } from "./styled";
 import { ProjectMenuBox } from "../styled";
@@ -46,7 +46,7 @@ const ProjectMenuComponent = () => {
         <GetMenuElement type={TextResources.Account_Save} onClick={() => Click.OnSave(dispatch, projectState)} />
         <GetMenuElement type={TextResources.Account_Save_Library} onClick={() => Click.OnSaveLibrary(dispatch)} />
         <GetMenuElement type={TextResources.Account_Save_File} onClick={() => Click.OnSaveFile(dispatch)} />
-        <GetMenuElement type={TextResources.Account_Commit} onClick={() => Click.OnCommit(dispatch, projectState)} />
+        <GetMenuElement type={TextResources.Account_Commit} onClick={() => Click.OnCommit(dispatch)} />
         <GetMenuElement type={TextResources.Account_SubProject_Create} onClick={() => Click.OnCreateSubprojectClick(dispatch)} />
         <GetMenuElement type={TextResources.Account_Import_Project} onClick={() => Click.OnImportProject(dispatch)} />
         <GetMenuElement type={TextResources.Account_Import_Lib_Label} onClick={() => Click.OnImportLibrary(dispatch)} />

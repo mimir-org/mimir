@@ -1,4 +1,4 @@
-import { changeActiveMenu, setProjectMenuVisibility } from "../../menus/project/redux/actions";
+import { changeActiveMenu, setProjectMenuVisibility } from "../../menus/projectMenu/subMenus/redux/actions";
 
 const OnProject = (dispatch: any, open: boolean) => {
   if (open) dispatch(changeActiveMenu(null));
