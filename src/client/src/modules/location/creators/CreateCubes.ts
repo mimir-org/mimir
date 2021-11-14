@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { Color } from "../../../compLibrary";
+import { Color } from "../../../compLibrary/colors";
 import { Node } from "../../../models";
 import { GetAttributeMap, GetSize } from "../helpers";
 

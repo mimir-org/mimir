@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { Color, Size } from "../../../compLibrary";
+import { Size } from "../../../compLibrary/size";
+import { Color } from "../../../compLibrary/colors";
 
 interface Props {
   libOpen: boolean;

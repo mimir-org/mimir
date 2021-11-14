@@ -4,7 +4,7 @@ import { FileData } from "../../../../../models";
 import { ProjectAm } from "../../../../../redux/sagas/project/ConvertProject";
 import { CloseIcon } from "../../../../../assets/icons/close";
 import { TextResources } from "../../../../../assets/text";
-import { Size } from "../../../../../compLibrary";
+import { Size } from "../../../../../compLibrary/size";
 import { Button } from "../../../../../compLibrary/buttons";
 import { useFilePicker } from "use-file-picker";
 import { OnReturnClick, OnProjectSaveClick } from "./handlers";

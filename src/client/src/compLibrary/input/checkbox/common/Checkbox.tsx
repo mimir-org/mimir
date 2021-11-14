@@ -1,5 +1,5 @@
 import { CheckboxWrapper } from "./styled";
-import { Color } from "../../../";
+import { Color } from "../../../colors";
 
 interface Props {
   isChecked: boolean;

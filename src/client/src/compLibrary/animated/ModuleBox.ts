@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { MODULE_TYPE } from "../../models/project";
-import { Color, Size } from "..";
+import { Size } from "../size";
+import { Color } from "../colors/";
 
 interface Props {
   type: string;

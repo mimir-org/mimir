@@ -1,7 +1,7 @@
 import { memo, FC, useState, useEffect } from "react";
 import { Background, BackgroundVariant, NodeProps } from "react-flow-renderer";
 import { HandleComponent, TerminalsContainerComponent } from "../../terminals";
-import { Color } from "../../../../../compLibrary";
+import { Color } from "../../../../../compLibrary/colors";
 import { SetParentNodeSize } from "./helpers";
 import { OnConnectorClick } from "./handlers";
 import { ParentContainerComponent } from "../parentContainer";

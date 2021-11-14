@@ -1,4 +1,4 @@
-import { Color } from "../compLibrary";
+import { Color } from "../compLibrary/colors";
 import { AspectColorType, LibItem, Node } from "../models";
 import { IsFunction, IsLocation, IsProduct } from "./";
 

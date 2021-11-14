@@ -1,4 +1,4 @@
-import { Color } from "../../../compLibrary";
+import { Color } from "../../../compLibrary/colors";
 import { IsFunction, IsLocation, IsProduct } from "../../../helpers";
 import { IsCreateLibraryType, IsEdge, IsNode } from "./IsType";
 import { InspectorElement } from "../types";

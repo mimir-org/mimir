@@ -10,11 +10,4 @@ export { default as DropdownList } from "./dropdown/DropdownList";
 export { default as DropdownHeader } from "./dropdown/DropdownHeader";
 export { default as DirectionalDropdown } from "./dropdown/DirectionalDropdown";
 
-export { default as Color } from "./colors/Color";
-export { default as Size } from "./size/Size";
-export { default as AnimatedModule } from "./animated/AnimatedModule";
 export { default as GlobalStyle } from "./globalStyles";
-export { default as ListLabel } from "./list/ListLabel";
-export { default as ListElementsContainer } from "./list/ListElementsContainer";
-export { default as ListElem } from "./list/ListElem";
-export { default as ListWrapper } from "./list/ListWrapper";

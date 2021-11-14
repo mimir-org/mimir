@@ -8,7 +8,7 @@ import { SetNodeSize } from "./helpers";
 import { FilterTerminals } from "../../helpers";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
 import { edgeSelector, electroSelector, nodeSelector, secondaryNodeSelector } from "../../../../../redux/store";
-import { Size } from "../../../../../compLibrary";
+import { Size } from "../../../../../compLibrary/size";
 import { BlockLogoComponent } from "../../logo";
 import { GetAspectColor, GetSelectedBlockNode, IsFunction, IsProduct } from "../../../../../helpers";
 

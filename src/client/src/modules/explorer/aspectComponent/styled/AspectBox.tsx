@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../../compLibrary";
+import { Color } from "../../../../compLibrary/colors";
 import { UseIndentLevel, GetAspectColor } from "../../../../helpers";
 import { AspectColorType, Node } from "../../../../models";
 

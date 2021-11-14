@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import { Color } from "../../../compLibrary";
+import { Color } from "../../../compLibrary/colors";
 
 interface Props {
   active: boolean;
 }
+
 const LocationBox = styled.div<Props>`
   position: absolute;
   display: flex;

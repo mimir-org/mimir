@@ -1,4 +1,4 @@
-import { Size } from "../../../../../compLibrary";
+import { Size } from "../../../../../compLibrary/size";
 
 /**
  * Method to calculate a terminal's X position in BlockView. Terminals are positioned middle-out.

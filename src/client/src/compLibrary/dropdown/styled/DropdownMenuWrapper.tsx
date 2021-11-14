@@ -1,17 +1,22 @@
 import styled from "styled-components";
-import { Color } from "../../";
+import { Color } from "../../colors";
 import { FontSize } from "../../font";
 
-const DropdownMenuWrapper = styled.div`
+interface Props {
+  disabled: boolean;
+}
+
+const DropdownMenuWrapper = styled.div<Props>`
   display: flex;
   flex-direction: column;
   flex: 1;
   margin-right: 15px;
   background-color: ${Color.White};
-  opacity: ${(props: { disabled: boolean }) => (props.disabled ? 0.4 : 1)};
+  opacity: ${(props) => (props.disabled ? 0.4 : 1)};
   font-size: ${FontSize.Standard};
   color: ${Color.Black};
   position: relative;
+
   .label {
     margin-bottom: 4px;
   }

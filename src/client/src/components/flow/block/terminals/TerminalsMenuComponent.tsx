@@ -3,7 +3,7 @@ import { AspectColorType, Connector, Node } from "../../../../models";
 import { GetTerminalColor, SetMenuXPos } from "./helpers";
 import { TerminalsMenu, TerminalsElement, ColorBar } from "./styled";
 import { Checkbox } from "../../../../compLibrary/input/checkbox/common";
-import { Color } from "../../../../compLibrary";
+import { Color } from "../../../../compLibrary/colors";
 
 interface Props {
   node: Node;

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ParameterDescriptor } from "./";
 import { Entity } from "./styled";
-import { Color } from "../../../../compLibrary";
+import { Color } from "../../../../compLibrary/colors";
 import { ParameterBox, ParameterHeader } from "./styled/parameter";
 import { Dropdown as CompDropdown } from "../../../../compLibrary/dropdown/mimir";
 import { Attribute, CombinedAttribute, EnumBase } from "../../../../models";

@@ -1,6 +1,7 @@
 import { ProjectComponent } from "./";
 import { MODULE_TYPE } from "../../models/project";
-import { AnimatedModule, Size } from "../../compLibrary";
+import { AnimatedModule } from "../../compLibrary/animated";
+import { Size } from "../../compLibrary/size";
 import { ModuleHeader, ModuleBody } from "./styled";
 import { OnToggleClick } from "./handlers";
 import { ExplorerIcon } from "../../assets/icons/modules";

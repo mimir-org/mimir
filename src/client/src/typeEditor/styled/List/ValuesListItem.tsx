@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../compLibrary";
+import { Color } from "../../../compLibrary/colors";
 
 const ValuesListItem = styled.div`
   display: flex;

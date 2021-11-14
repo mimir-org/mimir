@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Color } from "../../..";
+import { Color } from "../../../colors";
 import { FontSize } from "../../../font";
 
 interface Props {

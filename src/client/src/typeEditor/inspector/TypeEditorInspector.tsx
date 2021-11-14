@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { Action, Dispatch } from "redux";
-import { Size } from "../../compLibrary";
+import { Size } from "../../compLibrary/size";
 import { CreateLibraryType } from "../../models";
 import { MODULE_TYPE } from "../../models/project";
 import { InspectorHeader } from "../../modules/inspector";

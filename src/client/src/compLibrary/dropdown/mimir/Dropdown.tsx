@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Color } from "../..";
+import { Color } from "../../colors";
 import { ExpandIcon, CollapseIcon } from "../../../assets/icons/chevron";
 import { FontSize } from "../../font";
 import { Symbol } from "../../symbol";
