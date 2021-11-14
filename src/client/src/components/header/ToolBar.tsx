@@ -4,8 +4,7 @@ import { Location } from "../../assets/icons/aspects";
 import { ViewType, VIEW_TYPE } from "../../models/project";
 import { location3DSelector, useAppDispatch, useAppSelector } from "../../redux/store";
 import { GetSelectedNode, IsBlockView, IsLocation } from "../../helpers";
-import { LocationBox } from "./styled";
-import { OptionsBox, OptionsElement, ToolBarBox } from "./styled";
+import { OptionsBox, OptionsElement, ToolBarBox, LocationBox } from "./styled";
 
 interface Props {
   libOpen: boolean;

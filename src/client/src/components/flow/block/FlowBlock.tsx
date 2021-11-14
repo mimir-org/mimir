@@ -135,37 +135,39 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   };
 
   return (
-    <div className="reactflow-wrapper" ref={flowWrapper}>
-      <ReactFlow
-        elements={elements}
-        nodeTypes={GetBlockNodeTypes}
-        edgeTypes={GetBlockEdgeTypes}
-        onConnect={OnConnect}
-        // onConnectStart={OnConnectStart}
-        // onConnectStop={OnConnectStop}
-        onElementsRemove={OnElementsRemove}
-        onLoad={OnLoad}
-        onDrop={OnDrop}
-        onDragOver={OnDragOver}
-        onNodeDragStop={OnNodeDragStop}
-        zoomOnScroll={true}
-        paneMoveable={true}
-        zoomOnDoubleClick={false}
-        defaultZoom={0.9}
-        defaultPosition={[450, 80]}
-        onlyRenderVisibleElements={true}
-        multiSelectionKeyCode={"Control"}
-        connectionLineComponent={BlockConnectionLine}
-        onSelectionChange={(e) => onSelectionChange(e)}
-      >
-        <FullScreenComponent inspectorRef={inspectorRef} />
-      </ReactFlow>
+    <>
+      <div className="reactflow-wrapper" ref={flowWrapper}>
+        <ReactFlow
+          elements={elements}
+          nodeTypes={GetBlockNodeTypes}
+          edgeTypes={GetBlockEdgeTypes}
+          onConnect={OnConnect}
+          // onConnectStart={OnConnectStart}
+          // onConnectStop={OnConnectStop}
+          onElementsRemove={OnElementsRemove}
+          onLoad={OnLoad}
+          onDrop={OnDrop}
+          onDragOver={OnDragOver}
+          onNodeDragStop={OnNodeDragStop}
+          zoomOnScroll={true}
+          paneMoveable={true}
+          zoomOnDoubleClick={false}
+          defaultZoom={0.9}
+          defaultPosition={[450, 80]}
+          onlyRenderVisibleElements={true}
+          multiSelectionKeyCode={"Control"}
+          connectionLineComponent={BlockConnectionLine}
+          onSelectionChange={(e) => onSelectionChange(e)}
+        >
+          <FullScreenComponent inspectorRef={inspectorRef} />
+        </ReactFlow>
 
-      {blockFilter && (
-        <BlockFilterMenu elements={elements?.filter((elem) => !IsOffPage(elem?.data))} edgeAnimation={animatedEdge} />
-      )}
+        {blockFilter && (
+          <BlockFilterMenu elements={elements?.filter((elem) => !IsOffPage(elem?.data))} edgeAnimation={animatedEdge} />
+        )}
+      </div>
       <LocationModule visible={showLocation3D && IsLocation(node)} rootNode={node} nodes={GetChildren(node, project)} />
-    </div>
+    </>
   );
 };
 
