@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const UserNameBox = styled.div`
+const ProjectNameBox = styled.div`
   position: relative;
   top: 0px;
   font-size: 16px;
@@ -21,4 +21,4 @@ const UserNameBox = styled.div`
   }
 `;
 
-export default UserNameBox;
+export default ProjectNameBox;

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../";
+import { Color } from "../../../compLibrary";
 
 const MenuColumn = styled.div`
   padding: 15px 0px 5px 15px;

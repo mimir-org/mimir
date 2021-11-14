@@ -1,6 +1,7 @@
 import { useAppDispatch, useAppSelector } from "../../../../redux/store";
 import { Connector } from "../../../../models";
-import { FilterMenuBox, MenuColumn } from "../../../../compLibrary/box/menus";
+import { FilterMenuBox } from "../styled";
+import { MenuColumn } from "../../styled";
 import { FilterDropdown } from "../dropdown";
 import { TextResources } from "../../../../assets/text";
 import { OnAnimationChange, OnChange, OnAllTransportsChange } from "../handlers";

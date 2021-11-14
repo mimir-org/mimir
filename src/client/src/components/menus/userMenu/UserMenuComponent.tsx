@@ -1,7 +1,7 @@
 import { DarkMode, Notifications, OffIcon, OnIcon, Settings, UserBackground, LogoutIcon } from "../../../assets/icons/header";
 import { MENU_TYPE } from "../../../models/project";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
-import { MenuElement, UserMenuBox, UserNameBox } from "./styled";
+import { UserMenuElement, UserMenuBox, UserNameBox } from "./styled";
 import { OnDarkMode, OnLogOut } from "./handlers";
 import { darkModeSelector, userStateSelector } from "../../../redux/store";
 import { GetUserInitials } from "./helpers";
@@ -25,27 +25,27 @@ const UserMenuComponent = () => {
         <p className="user-title">{TextResources.UserMenu_User}</p>
       </UserNameBox>
 
-      <MenuElement onClick={() => null}>
+      <UserMenuElement onClick={() => null}>
         <img src={Settings} className="icon" alt="settings" />
         <p className="text">{TextResources.UserMenu_Settings}</p>
-      </MenuElement>
+      </UserMenuElement>
 
-      <MenuElement onClick={() => null}>
+      <UserMenuElement onClick={() => null}>
         <img src={Notifications} className="icon" alt="notifications" />
         <p className="text">{TextResources.UserMenu_Notifications}</p>
-      </MenuElement>
+      </UserMenuElement>
 
-      <MenuElement onClick={() => OnDarkMode(dispatch, darkMode)}>
+      <UserMenuElement onClick={() => OnDarkMode(dispatch, darkMode)}>
         <img src={DarkMode} className="icon" alt="darkmode" />
         <p className="text">{TextResources.UserMenu_DarkMode}</p>
         <p className="darkmode-text">{darkMode ? TextResources.UserMenu_DarkModeOn : TextResources.UserMenu_DarkModeOff}</p>
         <img src={darkMode ? OnIcon : OffIcon} className="toggle" alt="toggle" />
-      </MenuElement>
+      </UserMenuElement>
 
-      <MenuElement onClick={() => OnLogOut()}>
+      <UserMenuElement onClick={() => OnLogOut()}>
         <img src={LogoutIcon} className="icon" alt="logout" />
         <p className="text">{TextResources.UserMenu_LogOut}</p>
-      </MenuElement>
+      </UserMenuElement>
     </UserMenuBox>
   );
 };

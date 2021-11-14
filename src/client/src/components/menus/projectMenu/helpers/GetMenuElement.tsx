@@ -1,4 +1,4 @@
-import { MenuElement } from "../../../../compLibrary/box/menus";
+import { MenuElement } from "../../styled";
 import { GetText, GetIcon } from "./";
 
 interface Props {

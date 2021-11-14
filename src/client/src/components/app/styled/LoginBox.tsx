@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { Color, FontSize, FontType } from "../..";
+import { Color, FontSize, FontType } from "../../../compLibrary";
 
-const Login = styled.div`
+const LoginBox = styled.div`
   width: 80px;
   height: 15px;
   display: flex;
@@ -34,4 +34,4 @@ const Login = styled.div`
   }
 `;
 
-export default Login;
+export default LoginBox;

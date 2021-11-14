@@ -7,7 +7,6 @@ import { ExportProjectFileMenu } from "../project/exportProjectFile";
 import { ImportProjectFileMenu } from "../project/importProjectFile/ImportProjectFileMenu";
 import { ExportLibraryFileMenu } from "../project/exportLibraryFile/ExportLibraryFileMenu";
 import { ImportFileLibraryMenu } from "../project/importLibrary/ImportFileLibraryMenu";
-import { ProjectMenuBox } from "../../../compLibrary/box/menus";
 import { TextResources } from "../../../assets/text";
 import { useCallback, useRef } from "react";
 import { setProjectMenuVisibility } from "../project/redux/actions";
@@ -18,6 +17,7 @@ import { CommitProjectMenu } from "../project/commitProject";
 import { CreateSubProjectMenu } from "../project/createSubProject";
 import { useSelectedFlowElements } from "../../../helpers/UseSelectedFlowElements";
 import { ProjectNameBox } from "./styled";
+import { ProjectMenuBox } from "../styled";
 
 /**
  * Component for the Project Menu.
