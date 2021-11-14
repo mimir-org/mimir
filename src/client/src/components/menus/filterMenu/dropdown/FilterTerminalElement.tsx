@@ -1,4 +1,5 @@
-import { CheckboxWrapper, MenuListItem } from "./styled";
+import { Checkbox } from "../../../../compLibrary/checkbox/common";
+import { MenuListItem } from "./styled";
 
 interface Props {
   checked: boolean;
@@ -13,12 +14,8 @@ interface Props {
 
 const FilterTerminalElement = ({ checked, label, onChange }: Props) => (
   <MenuListItem onClick={() => onChange()}>
-    <CheckboxWrapper>
-      <label className={"checkbox-block"}>
-        <input type="checkbox" checked={checked} onChange={() => onChange()} />
-        <span className="checkmark-block"></span>
-      </label>
-    </CheckboxWrapper>
+    <Checkbox isChecked={checked} onChange={() => onChange()} />
+
     <p>{label}</p>
   </MenuListItem>
 );

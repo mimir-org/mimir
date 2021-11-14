@@ -27,6 +27,7 @@ class Attribute {
   selectValues: string[];
   selectType: SelectType;
   discipline: Discipline;
+  tags: Set<string>;
 
   kind: string = ATTRIBUTE_KIND;
 

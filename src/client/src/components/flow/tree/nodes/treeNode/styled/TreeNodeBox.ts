@@ -24,6 +24,10 @@ const TreeNodeBox = styled.div<Props>`
   &:hover {
     border-color: ${(props) => props.colorSelected} !important;
   }
+
+  &.selected {
+    border-color: ${(props) => props.colorSelected} !important;
+  }
 `;
 
 export default TreeNodeBox;

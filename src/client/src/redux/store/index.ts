@@ -8,7 +8,7 @@ import { projectReducer } from "./project/reducers";
 import { inspectorReducer } from "../../modules/inspector/redux/tabs/reducers";
 import { inspectorHeightReducer } from "../../modules/inspector/redux/height/reducers";
 import { moduleReducer } from "./modules/reducers";
-import { menuReducer } from "../../components/menus/project/redux/reducers";
+import { menuReducer } from "../../components/menus/projectMenu/subMenus/redux/reducers";
 import { commonReducer } from "./common/reducers";
 import { flowReducer } from "./flow/reducers";
 import { secondaryReducer } from "./secondaryNode/reducers";
@@ -20,6 +20,8 @@ import { blockNodeSizeReducer } from "../../components/flow/block/redux/reducers
 import { rootSaga } from "../sagas";
 import { customCategoryReducer } from "../store/customCategory/reducers";
 import { edgeAnimationReducer } from "../store/edgeAnimation/reducers";
+import { location3DReducer } from "../../modules/location/redux/reducers";
+import { blockElementsReducer } from "../../modules/explorer/redux/reducers";
 import { persistStore, persistReducer } from "redux-persist";
 
 const sagaMiddleware = createSagaMiddleware();
@@ -44,6 +46,8 @@ const rootReducers = combineReducers({
   customCategory: customCategoryReducer,
   blockNodeSize: blockNodeSizeReducer,
   edgeAnimation: edgeAnimationReducer,
+  location3D: location3DReducer,
+  blockElements: blockElementsReducer,
 });
 
 const persistConfig = {

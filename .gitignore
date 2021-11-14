@@ -354,3 +354,7 @@ MigrationBackup/
 
 /src/service/ModelBuilder.Core/Controllers/V1/TestController.cs
 
+# Terraform
+**/.terraform
+**/.terraform.lock.hcl
+

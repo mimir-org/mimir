@@ -16,6 +16,10 @@ const Color = {
   LightPurple: "#D8D8EC",
   Red: "rgb(255,0,0)",
 
+  // Text
+  TextSecondary: "#8C8C8C",
+  TextIcon: "#272838",
+
   // DarkMode
   DarkModeMain: "#888",
   DarkModeModule: "#A8A8A8",

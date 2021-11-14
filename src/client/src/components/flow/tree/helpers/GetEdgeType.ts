@@ -7,7 +7,6 @@ const GetEdgeType = (conn: Connector): EdgeType => {
   if (IsLocationTerminal(conn)) return EDGE_TYPE.RELATION as EdgeType;
   if (IsProductTerminal(conn)) return EDGE_TYPE.RELATION as EdgeType;
   if (IsTransport(conn)) return EDGE_TYPE.TRANSPORT as EdgeType;
-  return EDGE_TYPE.DEFAULT as EdgeType;
 };
 
 export default GetEdgeType;

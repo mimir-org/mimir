@@ -31,9 +31,7 @@ const DrawChildNodes = (
 };
 
 function validateEdge(edge: Edge, selectedNode: Node) {
-  if (IsOffPage(edge.toNode)) {
-    return IsOffPage(edge.toNode) && IsPartOf(edge.toConnector);
-  }
+  if (IsOffPage(edge.toNode)) return IsOffPage(edge.toNode) && IsPartOf(edge.toConnector);
 
   return (
     edge.fromNodeId === selectedNode?.id &&

@@ -2,24 +2,37 @@ import { setActiveBlockNode, setActiveNode, setNodeVisibility } from "../../../r
 import { Node } from "../../../models";
 import { setSecondaryNode, removeSecondaryNode } from "../../../redux/store/secondaryNode/actions";
 import { IsParentOf } from "../../../components/flow/helpers";
-import { IsFamily, IsDirectChild } from "../../../helpers";
+import { setLocation3D } from "../../location/redux/actions";
+import { IsFamily, IsDirectChild, IsProduct, GetSelectedNode } from "../../../helpers";
 
 /**
  * Component to handle all clicks on checkboxes in the BlockView's Explorer Module.
  * Currently two parentNodes can be displayed at the same time - selectedNode and secondaryNode
  * Two parentNodes of the same Aspect can be displayed, unless it is a direct parent/child relation.
  * @param node
- * @param selectedNode
  * @param secondaryNode
  * @param dispatch
  */
-export const OnBlockChange = (node: Node, selectedNode: Node, secondaryNode: Node, dispatch: any) => {
+export const OnBlockChange = (node: Node, secondaryNode: Node, dispatch: any) => {
+  const selectedNode = GetSelectedNode();
+  dispatch(setLocation3D(false));
+
   if (selectedNode && secondaryNode) {
     if (node === selectedNode && node !== secondaryNode) {
       dispatch(setActiveNode(secondaryNode.id, true));
       dispatch(removeSecondaryNode());
       return;
     }
+  }
+
+  // Handling Product
+  if (IsProduct(selectedNode)) {
+    if (!IsProduct(node)) {
+      dispatch(setActiveNode(node?.id, !node.isSelected));
+      dispatch(setActiveBlockNode(node?.id));
+    }
+    if (node === selectedNode) dispatch(setActiveNode(null, false));
+    return;
   }
 
   // Handling same Aspect
@@ -43,7 +56,7 @@ export const OnBlockChange = (node: Node, selectedNode: Node, secondaryNode: Nod
 
   // Set SecondaryNode
   if (node !== selectedNode && node !== secondaryNode && !IsFamily(node, selectedNode)) {
-    dispatch(setSecondaryNode(node));
+    if (!IsProduct(selectedNode)) dispatch(setSecondaryNode(node)); // ProductNode can not have a secondary node.
     return;
   }
 

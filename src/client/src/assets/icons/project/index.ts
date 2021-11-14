@@ -7,3 +7,4 @@ export { default as CreateProject } from "./createProject.svg";
 export { default as OpenProject } from "./openProject.svg";
 export { default as Save } from "./save.svg";
 export { default as CommitProject } from "./commitProject.svg";
+export { default as CreateSubProject } from "./createSubProject.svg";

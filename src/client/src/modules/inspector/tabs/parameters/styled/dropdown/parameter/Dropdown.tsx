@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { MenuWrapper, MenuHeader, MenuList, MenuListItem, CheckboxWrapper } from "./styled";
+import { MenuWrapper, MenuHeader, MenuList, MenuListItem } from "./styled";
 import { ExpandIcon, CollapseIcon } from "../../../../../../../assets/icons/chevron";
 import { TextResources } from "../../../../../../../assets/text";
 import { CombinedAttributeFilter } from "../../../../../../../models";
 import { FilterDict } from "../../../redux/types";
+import { Checkbox } from "../../../../../../../compLibrary/checkbox/common";
 
 interface Props {
   items: CombinedAttributeFilter[];
@@ -22,10 +23,8 @@ const Dropdown = ({ items, selectedItems, onChange }: Props) => {
     <MenuWrapper>
       <div onClick={(e) => setIsListOpen(!isListOpen)}>
         <MenuHeader>
-          <>
-            <p className="searchText">{TextResources.Inspector_Params_Search}</p>
-            <img src={isListOpen ? ExpandIcon : CollapseIcon} alt="expand-icon" />
-          </>
+          <p className="searchText">{TextResources.Inspector_Params_Search}</p>
+          <img src={isListOpen ? ExpandIcon : CollapseIcon} alt="expand-icon" />
         </MenuHeader>
       </div>
       {isListOpen && (
@@ -35,12 +34,7 @@ const Dropdown = ({ items, selectedItems, onChange }: Props) => {
               <div onClick={() => onChange(item, IsAttributeSelected(item))} key={item.name}>
                 <MenuListItem>
                   <p>{item.name}</p>
-                  <CheckboxWrapper>
-                    <label className={"checkbox-block"}>
-                      <input type="checkbox" checked={IsAttributeSelected(item)} onChange={() => null} />
-                      <span className="checkmark-block"></span>
-                    </label>
-                  </CheckboxWrapper>
+                  <Checkbox isChecked={IsAttributeSelected(item)} onChange={() => null} />
                 </MenuListItem>
               </div>
             );

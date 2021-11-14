@@ -3,7 +3,7 @@ import { Handle } from "react-flow-renderer";
 import { GetBlockHandleType } from "../../block/helpers";
 import { IsValidConnection, SetTopPos, SetLeftPos, GetTerminalColor } from "./helpers";
 import { HandleBox } from "./styled";
-import { CreateId, IsInputTerminal } from "../../helpers";
+import { CreateId, IsInputTerminal, IsPartOf } from "../../helpers";
 import { ConnectorIcon } from "../../../../assets/icons/connectors";
 
 interface Props {
@@ -28,7 +28,7 @@ const HandleComponent = ({ nodes, length, width, terminals, parent, electro }: P
 
       return (
         <HandleBox
-          visible={conn.visible}
+          visible={conn.visible && !IsPartOf(conn)}
           id={"handle-" + conn.id}
           top={SetTopPos(conn, pos, electro, parent, order, length)}
           left={SetLeftPos(conn, pos, electro, parent, order, width)}
