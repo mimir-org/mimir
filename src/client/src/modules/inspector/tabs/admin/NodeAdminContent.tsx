@@ -116,7 +116,7 @@ const AdminContent = ({ node, project, statuses }: Props) => {
               value={node.height ?? ""}
               onChange={(e: Event) => onSizeChange("height", Number(e.target.value))}
               inputType=""
-              readOnly={true}
+              readOnly={IsAspectNode(node)}
             />
           </div>
         )}

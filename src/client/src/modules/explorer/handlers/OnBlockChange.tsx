@@ -2,6 +2,7 @@ import { setActiveBlockNode, setActiveNode, setNodeVisibility } from "../../../r
 import { Node } from "../../../models";
 import { setSecondaryNode, removeSecondaryNode } from "../../../redux/store/secondaryNode/actions";
 import { IsParentOf } from "../../../components/flow/helpers";
+import { setLocation3D } from "../../location/redux/actions";
 import { IsFamily, IsDirectChild, IsProduct, GetSelectedNode } from "../../../helpers";
 
 /**
@@ -14,6 +15,7 @@ import { IsFamily, IsDirectChild, IsProduct, GetSelectedNode } from "../../../he
  */
 export const OnBlockChange = (node: Node, secondaryNode: Node, dispatch: any) => {
   const selectedNode = GetSelectedNode();
+  dispatch(setLocation3D(false));
 
   if (selectedNode && secondaryNode) {
     if (node === selectedNode && node !== secondaryNode) {
