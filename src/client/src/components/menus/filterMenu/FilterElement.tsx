@@ -1,4 +1,5 @@
 import { Checkbox } from "../../../compLibrary/checkbox/common";
+import { CreateId } from "../../flow/helpers";
 import { ElementBox } from "./styled";
 
 interface Props {
@@ -12,14 +13,12 @@ interface Props {
  * @param interface
  * @returns an element with a checkbox.
  */
-const FilterElement = ({ onChange, isChecked, visible, label }: Props) => {
-  return (
-    visible && (
-      <ElementBox>
-        <Checkbox isChecked={isChecked} onChange={() => onChange()} />
-        <div className="text">{label}</div>
-      </ElementBox>
-    )
+const FilterElement = ({ onChange, isChecked, visible, label }: Props) =>
+  visible && (
+    <ElementBox>
+      <Checkbox isChecked={isChecked} onChange={() => onChange()} id={CreateId()} />
+      <div className="text">{label}</div>
+    </ElementBox>
   );
-};
+
 export default FilterElement;

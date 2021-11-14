@@ -1,9 +1,8 @@
 import * as Click from "./handlers";
 import * as Icons from "../../assets/icons/header";
 import { ToolBar } from "./";
-import { HeaderBox, LogoBox } from "../../compLibrary/box/header/";
 import { useAppDispatch, useAppSelector } from "../../redux/store/hooks";
-import { CompanyLogoBox, ProjectBox, UserBox } from "./styled";
+import { CompanyLogoBox, ProjectBox, UserBox, HeaderBox, LogoBox } from "./styled";
 import { GetCompanyLogoForHeader } from "../../helpers";
 import { GetUserInitials } from "../menus/userMenu/helpers";
 import { CollapseWhiteIcon, ExpandWhiteIcon } from "../../assets/icons/toogle";

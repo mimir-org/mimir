@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { Size } from "../../";
+import { Size } from "../../../compLibrary";
 import { SetPanelHeight } from "../../../modules/inspector/helpers";
 import { changeInspectorHeight } from "../../../modules/inspector/redux/height/actions";
 import { setModulesVisibility } from "../../../redux/store/modules/actions";

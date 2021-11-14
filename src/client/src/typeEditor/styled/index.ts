@@ -1,4 +1,6 @@
 // Type Editor
+export { default as TypeEditorBox } from "./TypeEditorBox";
+export { default as TypeEditorBoxContent } from "./TypeEditorBoxContent";
 export { default as TypeEditorWrapper } from "./TypeEditorWrapper";
 export { default as TypeEditorContent } from "./TypeEditorContent";
 export { default as TypeEditorHeader } from "./TypeEditorHeader";

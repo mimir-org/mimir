@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Input, Label, Size } from "../../../../compLibrary";
 import { Button } from "../../../../compLibrary/buttons";
 import { OnReturnClick, OnSaveClick } from "./handlers";
-import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../../../../compLibrary/box/project";
+import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../styled";
 
 export const ExportLibraryFileMenu = () => {
   const dispatch = useAppDispatch();

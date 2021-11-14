@@ -7,7 +7,7 @@ import { Size } from "../../../../compLibrary";
 import { Button } from "../../../../compLibrary/buttons";
 import { useFilePicker } from "use-file-picker";
 import { OnReturnClick, OnSaveClick } from "./handlers";
-import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../../../../compLibrary/box/project";
+import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../styled";
 
 export const ImportFileLibraryMenu = () => {
   const dispatch = useAppDispatch();

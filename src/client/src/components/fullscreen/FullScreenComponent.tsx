@@ -1,4 +1,4 @@
-import { Size } from "..";
+import { Size } from "../../compLibrary";
 import { ExpandIcon, CloseIcon } from "../../assets/icons/controls";
 import { OnToggleClick } from "./handlers";
 import { FullScreenButton } from "./styled";
@@ -26,11 +26,7 @@ const FullScreenComponent = ({ inspectorRef }: Props) => {
 
   return (
     <FullScreenButton libraryOpen={isLibOpen} height={height}>
-      <img
-        src={isOpen ? ExpandIcon : CloseIcon}
-        alt="fullscreen"
-        onClick={() => OnToggleClick(dispatch, isOpen, inspectorRef)}
-      />
+      <img src={isOpen ? ExpandIcon : CloseIcon} alt="fullscreen" onClick={() => OnToggleClick(dispatch, isOpen, inspectorRef)} />
     </FullScreenButton>
   );
 };

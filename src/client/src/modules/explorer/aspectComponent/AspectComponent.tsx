@@ -1,8 +1,7 @@
 import { ExpandIcon, CollapseIcon } from "../../../assets/icons/chevron";
 import { AspectColorType, Node } from "../../../models";
-import { AspectBox } from "../../../compLibrary/box/aspect";
 import { IsBlockView, IsAspectNode, GetAspectIcon, GetSelectedNode, GetAspectColor } from "../../../helpers";
-import { ExplorerLine } from "./styled";
+import { AspectBox, ExplorerLine } from "./styled";
 import { Elements } from "react-flow-renderer";
 import { CheckboxExplorer } from "../../../compLibrary/checkbox/explorer";
 import { ChangeNodeDisplay, IsMiniCheckbox } from "../helpers";

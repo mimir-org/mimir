@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { ErrorBox, ErrorItem, ErrorHeaderBox } from ".";
-import { ProjectBody } from "../../compLibrary/box/project";
+import { ProjectBody } from "../../components/menus/project/styled";
 import { CloseIcon } from "../../assets/icons/close";
 import { TextResources } from "../../assets/text";
 import { BadRequestData } from "../../models/webclient";

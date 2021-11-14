@@ -9,7 +9,7 @@ import { useState } from "react";
 import { MessageComponent } from "../../../message";
 import { ProjectSimple } from "../../../../models";
 import { ProjectState } from "../../../../redux/store/project/types";
-import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../../../../compLibrary/box/project";
+import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../styled";
 
 interface Props {
   projectState: ProjectState;

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "./../../../compLibrary";
+import { Color } from "./../../../../compLibrary";
 
 const ProjectElement = styled.div`
   display: flex;

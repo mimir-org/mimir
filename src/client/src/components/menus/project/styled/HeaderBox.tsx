@@ -5,7 +5,7 @@ interface Props {
 }
 
 const HeaderBox = styled.div<Props>`
-  margin-bottom: ${(props) => (props.marginBottom ? props.marginBottom + "px" : "40px")};
+  margin-bottom: ${(props) => (props.marginBottom ? props.marginBottom : 40)}px;
   display: inline-flex;
   align-items: center;
 

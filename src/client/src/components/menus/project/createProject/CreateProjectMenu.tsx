@@ -6,7 +6,7 @@ import { TextResources } from "../../../../assets/text";
 import { useState } from "react";
 import { Input, Label, Size } from "../../../../compLibrary";
 import { Button } from "../../../../compLibrary/buttons";
-import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../../../../compLibrary/box/project";
+import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../styled";
 
 export const CreateProjectMenu = () => {
   const dispatch = useAppDispatch();

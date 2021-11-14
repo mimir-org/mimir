@@ -38,8 +38,8 @@ const FilterDropdown = ({ terminals, label, nodes, edges, onChange, visible }: P
               const name = IsPartOf(conn) ? GetPartOfName(conn, node) : conn.name;
 
               return (
-                <MenuListItem onClick={() => onChange(edge)} key={conn.id}>
-                  <Checkbox isChecked={!edge.isHidden} onChange={() => onChange(edge)} />
+                <MenuListItem key={conn.id} onClick={() => onChange(edge)}>
+                  <Checkbox isChecked={!edge.isHidden} onChange={() => onChange(edge)} id={conn.id} />
                   <ColorBar color={conn.color ?? GetFilterColor(conn, node)} />
                   <p>{name}</p>
                 </MenuListItem>

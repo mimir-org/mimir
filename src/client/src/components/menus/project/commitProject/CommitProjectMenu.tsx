@@ -6,7 +6,7 @@ import { TextResources } from "../../../../assets/text";
 import { useState } from "react";
 import { Label, Size } from "../../../../compLibrary";
 import { Button } from "../../../../compLibrary/buttons";
-import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../../../../compLibrary/box/project";
+import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../styled";
 import { Dropdown } from "../../../../compLibrary/dropdown/mimir";
 import { Contractor, ModuleDescription } from "../../../../models";
 

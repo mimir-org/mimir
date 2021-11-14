@@ -1,9 +1,9 @@
 import { ObjectType } from "../models";
 import { TextResources } from "../assets/text";
 import { NewTypeIcon, EditTypeIcon } from "../assets/icons/type";
-import { TypeEditorBox, TypeEditorBoxContent } from "../compLibrary/box/typeEditor";
 import { useAppDispatch } from "../redux/store";
 import { OnOpenTypeEditor } from "./handlers";
+import { TypeEditorBox, TypeEditorBoxContent } from "./styled";
 
 interface Props {
   selectedElement: string;

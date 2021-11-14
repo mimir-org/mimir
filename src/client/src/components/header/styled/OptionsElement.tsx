@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../..";
+import { Color } from "../../../compLibrary";
 
 interface Props {
   treeView: boolean;
