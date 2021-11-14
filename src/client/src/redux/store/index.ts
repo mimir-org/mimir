@@ -20,6 +20,7 @@ import { blockNodeSizeReducer } from "../../components/flow/block/redux/reducers
 import { rootSaga } from "../sagas";
 import { customCategoryReducer } from "../store/customCategory/reducers";
 import { edgeAnimationReducer } from "../store/edgeAnimation/reducers";
+import { location3DReducer } from "../../modules/location/redux/reducers";
 import { blockElementsReducer } from "../../modules/explorer/redux/reducers";
 import { persistStore, persistReducer } from "redux-persist";
 
@@ -45,6 +46,7 @@ const rootReducers = combineReducers({
   customCategory: customCategoryReducer,
   blockNodeSize: blockNodeSizeReducer,
   edgeAnimation: edgeAnimationReducer,
+  location3D: location3DReducer,
   blockElements: blockElementsReducer,
 });
 
