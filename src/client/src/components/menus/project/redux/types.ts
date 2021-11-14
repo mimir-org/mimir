@@ -1,17 +1,26 @@
 export const CHANGE_ACTIVE_MENU = "CHANGE_ACTIVE_MENU";
-export const SET_ACCOUNT_MENU_VISIBILITY = "SET_ACCOUNT_MENU_VISIBILITY";
+export const SET_PROJECT_MENU_VISIBILITY = "SET_PROJECT_MENU_VISIBILITY";
+export const SET_USER_MENU_VISIBILITY = "SET_USER_MENU_VISIBILITY";
 export const SET_TREE_FILTER_MENU_VISIBILITY = "SET_TREE_FILTER_MENU_VISIBILITY";
 export const SET_BLOCK_FILTER_MENU_VISIBILITY = "SET_BLOCK_FILTER_MENU_VISIBILITY";
 
 export interface MenuState {
-  accountMenuVisibility: boolean;
+  projectMenuVisibility: boolean;
+  userMenuVisibility: boolean;
   treeFilterMenuVisibility: boolean;
   blockFilterMenuVisibility: boolean;
   activeMenu: string;
 }
 
-export interface SetAccountMenuVisibility {
-  type: typeof SET_ACCOUNT_MENU_VISIBILITY;
+export interface SetProjectMenuVisibility {
+  type: typeof SET_PROJECT_MENU_VISIBILITY;
+  payload: {
+    visibility: boolean;
+  };
+}
+
+export interface SetUserMenuVisibility {
+  type: typeof SET_USER_MENU_VISIBILITY;
   payload: {
     visibility: boolean;
   };
@@ -39,7 +48,8 @@ export interface ChangeActiveMenu {
 }
 
 export type MenuActionTypes =
-  | SetAccountMenuVisibility
+  | SetProjectMenuVisibility
+  | SetUserMenuVisibility
   | SetTreeFilterMenuVisibility
   | SetBlockFilterMenuVisibility
   | ChangeActiveMenu;

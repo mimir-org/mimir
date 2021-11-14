@@ -1,8 +1,8 @@
 import * as Click from "./handlers";
 import * as Icons from "../../assets/icons/header";
 import { ViewType, VIEW_TYPE } from "../../models/project";
-import { OptionsBox, OptionsElement, ToolBarBox } from "../../compLibrary/box/header/";
 import { useAppDispatch } from "../../redux/store";
+import { OptionsBox, OptionsElement, ToolBarBox } from "./styled";
 
 interface Props {
   libOpen: boolean;

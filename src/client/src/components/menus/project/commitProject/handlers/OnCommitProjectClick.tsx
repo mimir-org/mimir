@@ -1,4 +1,4 @@
-import { changeActiveMenu, setAccountMenuVisibility } from "../../redux/actions";
+import { changeActiveMenu, setProjectMenuVisibility } from "../../redux/actions";
 import { commitProject } from "../../../../../redux/store/project/actions";
 import { CommitPackage, CommitStatus } from "../../../../../models";
 
@@ -12,7 +12,7 @@ const OnCommitProjectClick = (dispatch: any, projectId: string, parserId: string
 
   dispatch(commitProject(commitPackage));
   dispatch(changeActiveMenu(null));
-  dispatch(setAccountMenuVisibility(false));
+  dispatch(setProjectMenuVisibility(false));
 };
 
 export default OnCommitProjectClick;

@@ -11,10 +11,10 @@ interface Props {
   list: Rds[] | TerminalTypeDict | AttributeType[] | CompositeType[] | PredefinedAttribute[];
   setlistItems: any;
 }
-/**Searchbar component at the top of a list that filter the elements in the list
+
+/** Searchbar component at the top of a list that filter the elements in the list
  * @returns a visual searchbar
  */
-
 const ListSearch = ({ listType, placeHolder, list, setlistItems }: Props) => {
   const [searchString, setSearchString] = useState("");
 

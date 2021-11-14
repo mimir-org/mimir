@@ -1,4 +1,4 @@
-import { changeActiveMenu, setAccountMenuVisibility } from "../../../project/redux/actions";
+import { changeActiveMenu, setProjectMenuVisibility } from "../../../project/redux/actions";
 import { importLibrary } from "../../../../../redux/store/library/actions";
 import { CreateLibraryType } from "../../../../../models";
 
@@ -6,7 +6,7 @@ const OnSaveClick = (dispatch: any, data: () => CreateLibraryType[]) => {
   const libraryTypes = data();
   dispatch(importLibrary(libraryTypes));
   dispatch(changeActiveMenu(null));
-  dispatch(setAccountMenuVisibility(false));
+  dispatch(setProjectMenuVisibility(false));
 };
 
 export default OnSaveClick;

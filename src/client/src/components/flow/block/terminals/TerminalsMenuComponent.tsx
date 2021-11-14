@@ -1,7 +1,9 @@
 import { GetAspectColor } from "../../../../helpers";
 import { AspectColorType, Connector, Node } from "../../../../models";
 import { GetTerminalColor, SetMenuXPos } from "./helpers";
-import { TerminalsMenu, TerminalsElement, ColorBar, CheckboxWrapper } from "./styled";
+import { TerminalsMenu, TerminalsElement, ColorBar } from "./styled";
+import { Checkbox } from "../../../../compLibrary/checkbox/common";
+import { Color } from "../../../../compLibrary";
 
 interface Props {
   node: Node;
@@ -38,10 +40,7 @@ const TerminalsMenuComponent = ({ node, parent, input, terminals, visible, onCli
             <div className="text" onClick={() => onClick(conn)}>
               {conn.name}
             </div>
-            <CheckboxWrapper>
-              <input type="checkbox" checked={conn.visible} onChange={() => onClick(conn)} />
-              <div className="checkmark"></div>
-            </CheckboxWrapper>
+            <Checkbox isChecked={conn.visible} onChange={() => onClick(conn)} color={Color.DarkGrey} id={conn.id} />
           </TerminalsElement>
         ))}
       </TerminalsMenu>

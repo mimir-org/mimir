@@ -1,4 +1,6 @@
 // Type Editor
+export { default as TypeEditorBox } from "./TypeEditorBox";
+export { default as TypeEditorBoxContent } from "./TypeEditorBoxContent";
 export { default as TypeEditorWrapper } from "./TypeEditorWrapper";
 export { default as TypeEditorContent } from "./TypeEditorContent";
 export { default as TypeEditorHeader } from "./TypeEditorHeader";
@@ -9,8 +11,6 @@ export { default as TextInput } from "./Inputs/TextInput";
 export { default as TypeNameInput } from "./Inputs/TypeNameInput";
 export { default as LocationTypeCategory } from "./Inputs/LocationTypeCategory";
 export { default as LocationSubType } from "./Inputs/LocationSubType";
-export { default as RoundBox } from "./Inputs/RoundBox";
-export { default as SquareBox } from "./Inputs/SquareBox";
 
 // List
 export { default as ListElementCategoryWrapper } from "./List/ListElementCategoryWrapper";
@@ -20,7 +20,7 @@ export { default as TerminalName } from "./List/TerminalName";
 export { default as TerminalListElement } from "./List/TerminalListElement";
 export { default as TerminalCategoryWrapper } from "./List/TerminalCategoryWrapper";
 export { default as AddTerminalWrapper } from "./List/AddTerminalWrapper";
-export { default as AddTerminalElement } from "./List/AddTerminalElement";
+export { default as TerminalElementWrapper } from "./List/TerminalElementWrapper";
 export { default as SelectValue } from "./List/SelectValue";
 export { default as ValueHeader } from "./List/ValueHeader";
 export { default as ValuesListWrapper } from "./List/ValuesListWrapper";

@@ -1,14 +1,13 @@
 import ReactFlow, { Elements } from "react-flow-renderer";
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import { FullScreenComponent } from "../../../compLibrary/controls";
+import { FullScreenComponent } from "../../fullscreen";
 import { GetBlockEdgeTypes } from "../block/helpers";
 import { BuildBlockElements } from "./builders";
 import { useOnConnect, useOnDrop, useOnRemove, useOnDragStop } from "../hooks";
 import { GetBlockNodeTypes, GetParent } from "../helpers";
 import { EDGE_TYPE, EdgeType } from "../../../models/project";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
-import { BlockFilterMenu } from "../../menus/filterMenu/block";
-import { Node } from "../../../models";
+import { BlockFilterMenu } from "../../menus/filterMenu/";
 import { BlockConnectionLine } from "./edges";
 import { IsOffPage, GetSelectedNode, SetDarkModeColor } from "../../../helpers";
 import { CloseInspector, handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";
@@ -40,7 +39,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   const [elements, setElements] = useState<Elements>();
   const darkMode = useAppSelector(darkModeSelector);
   const project = useAppSelector(projectSelector);
-  const secondaryNode = useAppSelector(secondaryNodeSelector) as Node;
+  const secondaryNode = useAppSelector(secondaryNodeSelector);
   const icons = useAppSelector(iconSelector);
   const lib = useAppSelector(librarySelector);
   const userState = useAppSelector(userStateSelector);
