@@ -4,7 +4,7 @@ import { GetTerminalColor } from "../terminals/helpers";
 
 /**
  * Component to give custom styling to the edge dragged from a Terminal in BlockView.
- * @param param0
+ * @param params
  * @returns a line from a Node's terminal.
  */
 const BlockConnectionLine = ({ sourceX, sourceY, targetX, targetY, connectionLineType, sourceHandle, sourceNode }) => {

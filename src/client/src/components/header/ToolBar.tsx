@@ -2,10 +2,10 @@ import * as Click from "./handlers";
 import * as Icons from "../../assets/icons/header";
 import { Location } from "../../assets/icons/aspects";
 import { ViewType, VIEW_TYPE } from "../../models/project";
-import { OptionsBox, OptionsElement, ToolBarBox } from "../../compLibrary/box/header/";
 import { location3DSelector, useAppDispatch, useAppSelector } from "../../redux/store";
 import { GetSelectedNode, IsBlockView, IsLocation } from "../../helpers";
 import { LocationBox } from "./styled";
+import { OptionsBox, OptionsElement, ToolBarBox } from "./styled";
 
 interface Props {
   libOpen: boolean;

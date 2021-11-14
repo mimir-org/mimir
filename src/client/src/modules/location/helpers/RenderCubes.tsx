@@ -26,7 +26,7 @@ const RenderCubes = (
 ) => {
   cubes.current.forEach((cube: THREE.Object3D) => {
     const isRoot = cube.userData.nodeId === rootNodeId;
-    const node = nodes.find((x) => x.id === cube.userData.nodeId);
+    const node = nodes?.find((x) => x?.id === cube.userData.nodeId);
     changeNode(node, cube, isRoot);
   });
 

@@ -17,8 +17,8 @@ export const ATTRIBUTE_TAB = {
 
 export type EdgeType = keyof typeof EDGE_TYPE;
 export const EDGE_TYPE = {
-  DEFAULT: "DefaultEdgeType",
   BLOCK: "BlockEdgeType",
+  BLOCK_PART: "BlockPartEdgeType",
   PART: "PartEdgeType",
   RELATION: "RelationEdgeType",
   TRANSPORT: "TransportEdgeType",
@@ -41,7 +41,8 @@ export const MODULE_TYPE = {
 
 export type MenuType = keyof typeof MENU_TYPE;
 export const MENU_TYPE = {
-  ACCOUNT_MENU: "AccountMenu",
+  USER_MENU: "UserMenu",
+  PROJECT_MENU: "ProjectMenu",
   OPEN_PROJECT_MENU: "OpenProjectMenu",
   CREATE_PROJECT_MENU: "CreateProjectMenu",
   VISUAL_FILTER_MENU: "VisualFilter",
@@ -50,6 +51,7 @@ export const MENU_TYPE = {
   SAVE_LIBRARY_FILE_MENU: "SaveLibraryFile",
   IMPORT_LIBRARY_FILE_MENU: "ImportLibraryFile",
   COMMIT_PROJECT: "CommitProject",
+  CREATE_SUB_PROJECT_MENU: "CreateSubProjectMenu",
 };
 
 export type ViewType = keyof typeof VIEW_TYPE;

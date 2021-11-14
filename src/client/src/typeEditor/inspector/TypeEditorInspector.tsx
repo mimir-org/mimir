@@ -7,6 +7,13 @@ import { InspectorHeader } from "../../modules/inspector";
 import { SetPanelHeight } from "../../modules/inspector/helpers";
 import { useDragResizePanel } from "../../modules/inspector/helpers/useDragResizePanel";
 import { AnimatedInspector, ResizePanel } from "../../modules/inspector/styled";
+import { GetFilteredTerminalTypeExtendedList } from "../helpers";
+import { GetPropertiesHeight } from "../helpers/GetPropertiesHeight";
+import {
+  changeTypeEditorInspectorHeight,
+  changeTypeEditorInspectorTab,
+  changeTypeEditorInspectorVisibility,
+} from "../redux/actions";
 import {
   useAppDispatch,
   useAppSelector,
@@ -20,13 +27,6 @@ import {
   simpleTypeSelector,
   typeEditorInspectorActiveTabSelector,
 } from "../../redux/store";
-import { GetFilteredTerminalTypeExtendedList } from "../helpers";
-import { GetPropertiesHeight } from "../helpers/GetPropertiesHeight";
-import {
-  changeTypeEditorInspectorHeight,
-  changeTypeEditorInspectorTab,
-  changeTypeEditorInspectorVisibility,
-} from "../redux/actions";
 
 interface Props {
   createLibraryType: CreateLibraryType;

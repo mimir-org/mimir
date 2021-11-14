@@ -29,8 +29,8 @@ const CreateCube = (scene: THREE.Scene, node: Node): THREE.Object3D[] => {
     })
   );
 
-  mesh.userData.nodeId = node.id;
-  line.userData.nodeId = node.id;
+  mesh.userData.nodeId = node?.id;
+  line.userData.nodeId = node?.id;
 
   scene.current.add(mesh);
   scene.current.add(line);
@@ -44,9 +44,9 @@ const CreateCube = (scene: THREE.Scene, node: Node): THREE.Object3D[] => {
 const CreateCubes = (scene: THREE.Scene, nodes: Node[]): THREE.Object3D[] => {
   let cubeGeometries = [] as THREE.Object3D[];
 
-  nodes?.forEach(x => {
+  nodes?.forEach((x) => {
     cubeGeometries = cubeGeometries.concat(CreateCube(scene, x));
-  })
+  });
   return cubeGeometries;
 };
 

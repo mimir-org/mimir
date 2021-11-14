@@ -1,12 +1,10 @@
 import { useHistory } from "react-router";
 import { Home } from "../home/";
-import { Header } from "../header";
 import { Spinner, SpinnerWrapper } from "../../compLibrary/animated";
 import { GlobalStyle } from "../../compLibrary";
-import { AppBox } from "../../compLibrary/box/app";
 import { useAppSelector, isFetchingSelector } from "../../redux/store";
-import { Login } from "../../compLibrary/box/menus";
-import { LoginIcon } from "../../assets/icons/login";
+import { LoginBox, AppBox } from "./styled";
+import { LogoutIcon } from "../../assets/icons/header";
 import { TextResources } from "../../assets/text";
 // import { WebSocket } from "../../models";
 // import { useDispatch } from "react-redux";
@@ -41,20 +39,19 @@ const App = ({ pca }: AppProps) => {
   return (
     <MsalProvider instance={pca}>
       <AuthenticatedTemplate>
-        <Header />
         <GlobalStyle />
-        <SpinnerWrapper fetching={isFetching}>
+        <SpinnerWrapper fetching={isFetching} id="loader">
           <Spinner />
         </SpinnerWrapper>
-        <AppBox fetching={isFetching}>
+        <AppBox fetching={isFetching} id="main">
           <Home />
         </AppBox>
       </AuthenticatedTemplate>
       <UnauthenticatedTemplate>
-        <Login onClick={login}>
-          <img src={LoginIcon} alt="icon" className="icon" />
+        <LoginBox onClick={login}>
+          <img src={LogoutIcon} alt="icon" className="icon" />
           <p>{TextResources.Login_Label}</p>
-        </Login>
+        </LoginBox>
       </UnauthenticatedTemplate>
     </MsalProvider>
   );

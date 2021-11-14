@@ -22,7 +22,7 @@ const Size = {
 
   // Menus
   TopMenu_Height: 56,
-  MenuSmall_Width: 320,
+  MenuSmall_Width: 330,
   MenuSmall_Height: 220,
 };
 

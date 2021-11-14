@@ -1,5 +1,5 @@
 import { Edge, Node, Project } from "../../models";
-import { BlockNodeSize, MODULE_TYPE, ViewType, VIEW_TYPE } from "../../models/project";
+import { BlockNodeSize, MODULE_TYPE, VIEW_TYPE } from "../../models/project";
 import { GetAttributeLikeItemKey } from "../../modules/inspector/helpers/IsType";
 import { AttributeLikeItem } from "../../modules/inspector/types";
 import { createAppSelector, combineAppSelectors, createParametricAppSelector } from "../../redux/store";
@@ -107,6 +107,11 @@ export const customCategorySelector = createAppSelector(
   (customCategory) => customCategory
 );
 
+export const blockElementsSelector = createAppSelector(
+  (state) => state.blockElements.elements,
+  (elements) => elements
+);
+
 export const treeSelector = createAppSelector(
   (state) => state.flow.view,
   (view) => view === VIEW_TYPE.TREEVIEW
@@ -114,7 +119,7 @@ export const treeSelector = createAppSelector(
 
 export const flowViewSelector = createAppSelector(
   (state) => state.flow.view,
-  (view) => view as ViewType
+  (view) => view
 );
 
 export const treeFilterSelector = createAppSelector(
@@ -127,9 +132,14 @@ export const blockFilterSelector = createAppSelector(
   (filterMenuVisibility) => filterMenuVisibility
 );
 
-export const accountMenuSelector = createAppSelector(
-  (state) => state.menu.accountMenuVisibility,
-  (accountMenuVisibility) => accountMenuVisibility
+export const projectMenuSelector = createAppSelector(
+  (state) => state.menu.projectMenuVisibility,
+  (projectMenuVisibility) => projectMenuVisibility
+);
+
+export const userMenuSelector = createAppSelector(
+  (state) => state.menu.userMenuVisibility,
+  (userMenuVisibility) => userMenuVisibility
 );
 
 export const activeMenuSelector = createAppSelector(
@@ -190,7 +200,7 @@ export const projectSelector = createAppSelector(
 
 export const secondaryNodeSelector = createAppSelector(
   (state) => state.secondaryReducer.node,
-  (node) => node
+  (node) => node as Node
 );
 
 export const iconSelector = createAppSelector(
