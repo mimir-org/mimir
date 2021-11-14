@@ -19,7 +19,7 @@ ${!run ? (start = stop) : null}
   }  
 `;
 
-const AnimatedModule = styled(ModuleBox)`
+const AnimatedModule = styled((props) => <ModuleBox {...props} />)`
   animation: ${Animation} 0.2s ease-in-out;
 `;
 

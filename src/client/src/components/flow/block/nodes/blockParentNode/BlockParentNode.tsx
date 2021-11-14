@@ -6,7 +6,7 @@ import { SetParentNodeSize } from "./helpers";
 import { OnConnectorClick } from "./handlers";
 import { ParentContainerComponent } from "../parentContainer";
 import { FilterTerminals } from "../../helpers";
-import { AspectColorType, Connector, Node } from "../../../../../models";
+import { AspectColorType, Connector } from "../../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
 import { edgeSelector, electroSelector, nodeSelector, nodeSizeSelector, secondaryNodeSelector } from "../../../../../redux/store";
 import { GetAspectColor, IsLocation } from "../../../../../helpers";
@@ -23,7 +23,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const [terminals, setTerminals]: [Connector[], any] = useState([]);
   const nodes = useAppSelector(nodeSelector);
   const edges = useAppSelector(edgeSelector);
-  const secondaryNode = useAppSelector(secondaryNodeSelector) as Node;
+  const secondaryNode = useAppSelector(secondaryNodeSelector);
   const electro = useAppSelector(electroSelector);
   const parentNodeSize = useAppSelector(nodeSizeSelector);
   const node = nodes?.find((x) => x.id === data.id);
