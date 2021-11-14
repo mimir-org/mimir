@@ -1,5 +1,7 @@
 import styled from "styled-components";
-import { Color, FontSize, FontWeight } from "../../";
+import FontSize from "../../font/FontSize";
+import FontWeight from "../../font/FontWeight";
+import Color from "../../colors/Color";
 
 const SearchInput = styled.input`
   width: 287px;

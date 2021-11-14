@@ -1,7 +1,7 @@
 import { TextResources } from "../../assets/text";
 import { LibraryCategory } from "../../models/project";
 import { SearchIcon } from "../../assets/icons/common";
-import { SearchInput } from "../../compLibrary";
+import { SearchInput } from "../../compLibrary/input/text";
 import { LibraryCategoryComponent, LibrarySubPageComponent } from ".";
 import { useState } from "react";
 import { customCategorySelector, legendOpenSelector, useAppSelector } from "../../redux/store";

@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { Color, FontSize } from "../../../";
+import { Color } from "../../../";
+import { FontSize } from "../../../font";
 
 const DropdownMenuWrapper = styled.div`
   display: flex;

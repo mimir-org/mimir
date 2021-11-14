@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { Color, FontSize, FontType } from "../../../compLibrary";
+import { Color } from "../../../compLibrary";
+import { FontSize, FontType } from "../../../compLibrary/font";
 
 const LoginBox = styled.div`
   width: 80px;

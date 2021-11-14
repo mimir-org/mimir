@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const TransportColor = styled.div`
+const LegendColor = styled.div`
   display: flex;
   margin: 20px 5px 0px 0px;
   width: 90px;
@@ -8,4 +8,4 @@ const TransportColor = styled.div`
   background-color: ${(props: { color: string }) => props.color};
 `;
 
-export default TransportColor;
+export default LegendColor;

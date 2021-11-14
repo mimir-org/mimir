@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { Color, FontWeight } from "../../../compLibrary";
+import { Color } from "../../../compLibrary";
+import { FontWeight } from "../../../compLibrary/font";
 
 const ListCategoryElement = styled.div`
   border-top: 1px solid ${Color.BlueMagenta};

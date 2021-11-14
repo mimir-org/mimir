@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { MODULE_TYPE } from "../../../models/project";
-import { Color, Size } from "./../../../compLibrary";
+import { MODULE_TYPE } from "../../models/project";
+import { Color, Size } from "..";
 
 interface Props {
   type: string;

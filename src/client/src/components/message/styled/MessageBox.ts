@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { Color, FontSize, FontWeight } from "../../";
+import { Color } from "../../../compLibrary";
+import { FontSize, FontWeight } from "../../../compLibrary/font";
 
 const MessageBox = styled.div`
   position: absolute;

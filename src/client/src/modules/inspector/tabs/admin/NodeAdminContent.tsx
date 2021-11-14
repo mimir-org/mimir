@@ -2,7 +2,8 @@ import React from "react";
 import moment from "moment/moment.js";
 import { TextResources } from "../../../../assets/text";
 import { TabColumn } from "../../styled";
-import { FontSize, Input, Textarea } from "../../../../compLibrary";
+import { Input, TextArea } from "../../../../compLibrary/input/text";
+import { FontSize } from "../../../../compLibrary/font";
 import { EnumBase, Node, Project } from "../../../../models";
 import { changeNodeValue, setLocationNodeSize } from "../../../../redux/store/project/actions";
 import { Dropdown } from "../../../../compLibrary/dropdown/mimir";
@@ -168,12 +169,12 @@ const AdminContent = ({ node, project, statuses }: Props) => {
       <TabColumn width={465}>
         <div>
           <div>{TextResources.Inspector_Admin_Description}</div>
-          <Textarea
+          <TextArea
             height={200}
             value={node.description ?? ""}
             readOnly={IsAspectNode(node)}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => onChange("description", e.target.value)}
-          ></Textarea>
+          ></TextArea>
         </div>
       </TabColumn>
     </>

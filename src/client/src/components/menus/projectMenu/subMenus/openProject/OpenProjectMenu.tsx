@@ -1,6 +1,6 @@
 import * as Click from "./handlers";
 import { useState } from "react";
-import { SearchBar, ProjectList } from ".";
+import { SearchBar, ProjectList } from "./";
 import { isActiveMenuSelector, useParametricAppSelector } from "../../../../../redux/store";
 import { MENU_TYPE } from "../../../../../models/project";
 import { CloseIcon } from "../../../../../assets/icons/close";
@@ -42,6 +42,7 @@ export const OpenProjectMenu = ({ projectState, dispatch }: Props) => {
           handleNoSave={() => Click.OnNoSave(dispatch, projectId, setConfirm)}
           showConfirm={confirm}
           setConfirm={setConfirm}
+          text={TextResources.Account_Confirm_Save}
         />
       )}
     </>

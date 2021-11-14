@@ -7,7 +7,7 @@ interface Props {
 }
 
 /**
- * Component for a generic button.
+ * Component for a generic button in Mimir.
  * @param params
  * @returns a button with an icon and text to be used in Mimir.
  */

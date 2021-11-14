@@ -3,7 +3,9 @@ import { TerminalElementWrapper } from "../../../styled";
 import { TextResources } from "../../../../assets/text";
 import { CloseIcon } from "../../../../assets/icons/close";
 import { OnTerminalIdChange, OnDirectionChange, OnQuantityChange } from "./handlers";
-import { NumericValueInput, SearchDropDown, SearchDropDownItem, DirectionalDropdown } from "../../../../compLibrary";
+import { SearchDropDown, DirectionalDropdown } from "../../../../compLibrary";
+import { NumericValueInput } from "../../../../compLibrary/input/text";
+import { SearchDropDownItem } from "../../../../compLibrary/dropdown/SearchDropDown";
 
 interface Props {
   terminals: TerminalType[];

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ParameterDescriptor } from "./";
 import { Entity } from "./styled";
-import { Color, FontSize } from "../../../../compLibrary";
+import { Color } from "../../../../compLibrary";
 import { ParameterBox, ParameterHeader } from "./styled/parameter";
 import { Dropdown as CompDropdown } from "../../../../compLibrary/dropdown/mimir";
 import { Attribute, CombinedAttribute, EnumBase } from "../../../../models";
@@ -10,6 +10,7 @@ import { LockClosedParameterComponent, LockOpenComponent } from "../../../../ass
 import { CloseIcon } from "../../../../assets/icons/close";
 import { AttributeLikeItem } from "../../types";
 import { GetAttributeLikeItemKey, IsAttribute } from "../../helpers/IsType";
+import { FontSize } from "../../../../compLibrary/font";
 
 export const PARAMETER_ENTITY_WIDTH: number = 255;
 
@@ -66,11 +67,7 @@ function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColo
             )}
           </div>
         </ParameterHeader>
-        <ParameterDescriptor
-          qualifier={combination.qualifier}
-          source={combination.source}
-          condition={combination.condition}
-        />
+        <ParameterDescriptor qualifier={combination.qualifier} source={combination.source} condition={combination.condition} />
         <div className="inputContainer">
           <input
             name="parameterInput"

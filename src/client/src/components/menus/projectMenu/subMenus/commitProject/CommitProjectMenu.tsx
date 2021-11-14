@@ -4,11 +4,12 @@ import { isActiveMenuSelector, useAppDispatch, useParametricAppSelector } from "
 import { MENU_TYPE } from "../../../../../models/project";
 import { CloseIcon } from "../../../../../assets/icons/close";
 import { TextResources } from "../../../../../assets/text";
-import { Label, Size } from "../../../../../compLibrary";
+import { Label } from "../../../../../compLibrary/input/text";
 import { Button } from "../../../../../compLibrary/buttons";
 import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../styled";
 import { Dropdown } from "../../../../../compLibrary/dropdown/mimir";
 import { Contractor, ModuleDescription } from "../../../../../models";
+import { Size } from "../../../../../compLibrary/size";
 
 interface Props {
   contractors: Contractor[];

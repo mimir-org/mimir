@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { Color, FontSize } from "../../../../../compLibrary";
+import { Color } from "../../../../../compLibrary";
+import { FontSize } from "../../../../../compLibrary/font";
 
 /** Styled component that displays an element in the drop-down menu for the TerminalsMenu. */
 const TerminalsElement = styled.div`
