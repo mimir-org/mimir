@@ -1,5 +1,5 @@
 import { ModuleBody } from "../../compLibrary/box/modules";
-import { LegendElement, LegendColor } from "../../compLibrary/box/library";
+import { LegendElement, LegendColor } from "./styled";
 import { LegendComponent } from "./";
 import { Project } from "../../models";
 

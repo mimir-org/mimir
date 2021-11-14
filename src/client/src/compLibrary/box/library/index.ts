@@ -1,6 +1,4 @@
-export { default as LegendElement } from "./LegendElement";
 export { default as LegendIcons } from "./LegendIcons";
-export { default as LegendColor } from "./LegendColor";
 
 export { default as LibElement } from "./LibElement";
 export { default as LibElementClose } from "./LibElementClose";
