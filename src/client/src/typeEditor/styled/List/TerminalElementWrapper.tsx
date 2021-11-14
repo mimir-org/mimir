@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const AddTerminalElement = styled.div`
+const TerminalElementWrapper = styled.div`
   display: flex;
   flex-direction: row;
   margin: 3px 10px 2px 16px;
@@ -21,4 +21,4 @@ const AddTerminalElement = styled.div`
   }
 `;
 
-export default AddTerminalElement;
+export default TerminalElementWrapper;

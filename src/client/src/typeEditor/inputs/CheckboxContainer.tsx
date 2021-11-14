@@ -24,21 +24,18 @@ export const CheckboxContainer = ({ id, name, label, defaultValue, onChange }: P
   const onCheckboxChange = () => {
     if (label === Label.attributeTypes || label === Label.compositeTypes) {
       let array = [...defaultValue];
-      if (id && isSelected()) {
-        array = array.filter((a) => a !== id);
-      } else if (id && !isSelected() && array) {
-        array.push(id);
-      }
+      if (id && isSelected()) array = array.filter((a) => a !== id);
+      else if (id && !isSelected() && array) array.push(id);
       onChange(Label[label], array);
-    } else if (label === Label.Terminals) {
-      onChange();
-    }
+    } else if (label === Label.Terminals) onChange();
   };
 
   return (
-    <label onClick={() => onCheckboxChange()}>
+    <label>
       <Checkbox isChecked={isSelected()} onChange={() => onCheckboxChange()} />
-      <AttributeName htmlFor={id}>{name}</AttributeName>
+      <AttributeName htmlFor={id} onClick={() => onCheckboxChange()}>
+        {name}
+      </AttributeName>
     </label>
   );
 };

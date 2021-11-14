@@ -18,7 +18,7 @@ export { default as TerminalName } from "./List/TerminalName";
 export { default as TerminalListElement } from "./List/TerminalListElement";
 export { default as TerminalCategoryWrapper } from "./List/TerminalCategoryWrapper";
 export { default as AddTerminalWrapper } from "./List/AddTerminalWrapper";
-export { default as AddTerminalElement } from "./List/AddTerminalElement";
+export { default as TerminalElementWrapper } from "./List/TerminalElementWrapper";
 export { default as SelectValue } from "./List/SelectValue";
 export { default as ValueHeader } from "./List/ValueHeader";
 export { default as ValuesListWrapper } from "./List/ValuesListWrapper";

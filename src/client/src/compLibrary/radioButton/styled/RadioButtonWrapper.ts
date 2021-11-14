@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Color } from "../..";
 
-const RadioButtonWrapper = styled.div`
+const RadioButtonWrapper = styled.label`
   position: relative;
   cursor: pointer;
   display: flex;
